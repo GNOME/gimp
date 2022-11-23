@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpfileprocview.h
- * Copyright (C) 2004  Sven Neumann <sven@gimp.org>
+ * ligmafileprocview.h
+ * Copyright (C) 2004  Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,49 +18,49 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_FILE_PROC_VIEW_H__
-#define __GIMP_FILE_PROC_VIEW_H__
+#ifndef __LIGMA_FILE_PROC_VIEW_H__
+#define __LIGMA_FILE_PROC_VIEW_H__
 
 
-#define GIMP_TYPE_FILE_PROC_VIEW            (gimp_file_proc_view_get_type ())
-#define GIMP_FILE_PROC_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_FILE_PROC_VIEW, GimpFileProcView))
-#define GIMP_FILE_PROC_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_FILE_PROC_VIEW, GimpFileProcViewClass))
-#define GIMP_IS_FILE_PROC_VIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_FILE_PROC_VIEW))
-#define GIMP_IS_FILE_PROC_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_FILE_PROC_VIEW))
-#define GIMP_FILE_PROC_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_FILE_PROC_VIEW, GimpFileProcViewClass))
+#define LIGMA_TYPE_FILE_PROC_VIEW            (ligma_file_proc_view_get_type ())
+#define LIGMA_FILE_PROC_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_FILE_PROC_VIEW, LigmaFileProcView))
+#define LIGMA_FILE_PROC_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_FILE_PROC_VIEW, LigmaFileProcViewClass))
+#define LIGMA_IS_FILE_PROC_VIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_FILE_PROC_VIEW))
+#define LIGMA_IS_FILE_PROC_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_FILE_PROC_VIEW))
+#define LIGMA_FILE_PROC_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_FILE_PROC_VIEW, LigmaFileProcViewClass))
 
 
-typedef struct _GimpFileProcViewClass GimpFileProcViewClass;
+typedef struct _LigmaFileProcViewClass LigmaFileProcViewClass;
 
-struct _GimpFileProcView
+struct _LigmaFileProcView
 {
   GtkTreeView        parent_instance;
 
   GList             *meta_extensions;
 };
 
-struct _GimpFileProcViewClass
+struct _LigmaFileProcViewClass
 {
   GtkTreeViewClass   parent_class;
 
-  void (* changed) (GimpFileProcView *view);
+  void (* changed) (LigmaFileProcView *view);
 };
 
 
-GType                 gimp_file_proc_view_get_type    (void) G_GNUC_CONST;
+GType                 ligma_file_proc_view_get_type    (void) G_GNUC_CONST;
 
-GtkWidget           * gimp_file_proc_view_new         (Gimp                 *gimp,
+GtkWidget           * ligma_file_proc_view_new         (Ligma                 *ligma,
                                                        GSList               *procedures,
                                                        const gchar          *automatic,
                                                        const gchar          *automatic_help_id);
 
-GimpPlugInProcedure * gimp_file_proc_view_get_proc    (GimpFileProcView     *view,
+LigmaPlugInProcedure * ligma_file_proc_view_get_proc    (LigmaFileProcView     *view,
                                                        gchar               **label,
                                                        GtkFileFilter       **filter);
-gboolean              gimp_file_proc_view_set_proc    (GimpFileProcView     *view,
-                                                       GimpPlugInProcedure  *proc);
+gboolean              ligma_file_proc_view_set_proc    (LigmaFileProcView     *view,
+                                                       LigmaPlugInProcedure  *proc);
 
-gchar               * gimp_file_proc_view_get_help_id (GimpFileProcView     *view);
+gchar               * ligma_file_proc_view_get_help_id (LigmaFileProcView     *view);
 
 
-#endif  /*  __GIMP_FILE_PROC_VIEW_H__  */
+#endif  /*  __LIGMA_FILE_PROC_VIEW_H__  */

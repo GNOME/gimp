@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-2003 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,61 +20,61 @@
 #ifndef __INTERNAL_PROCS_H__
 #define __INTERNAL_PROCS_H__
 
-void   internal_procs_init                (GimpPDB *pdb);
+void   internal_procs_init                (LigmaPDB *pdb);
 
 /* Forward declarations for registering PDB procs */
 
-void   register_brush_procs               (GimpPDB *pdb);
-void   register_brush_select_procs        (GimpPDB *pdb);
-void   register_brushes_procs             (GimpPDB *pdb);
-void   register_buffer_procs              (GimpPDB *pdb);
-void   register_channel_procs             (GimpPDB *pdb);
-void   register_context_procs             (GimpPDB *pdb);
-void   register_debug_procs               (GimpPDB *pdb);
-void   register_display_procs             (GimpPDB *pdb);
-void   register_drawable_procs            (GimpPDB *pdb);
-void   register_drawable_color_procs      (GimpPDB *pdb);
-void   register_drawable_edit_procs       (GimpPDB *pdb);
-void   register_dynamics_procs            (GimpPDB *pdb);
-void   register_edit_procs                (GimpPDB *pdb);
-void   register_file_procs                (GimpPDB *pdb);
-void   register_floating_sel_procs        (GimpPDB *pdb);
-void   register_font_select_procs         (GimpPDB *pdb);
-void   register_fonts_procs               (GimpPDB *pdb);
-void   register_gimp_procs                (GimpPDB *pdb);
-void   register_gimprc_procs              (GimpPDB *pdb);
-void   register_gradient_procs            (GimpPDB *pdb);
-void   register_gradient_select_procs     (GimpPDB *pdb);
-void   register_gradients_procs           (GimpPDB *pdb);
-void   register_help_procs                (GimpPDB *pdb);
-void   register_image_procs               (GimpPDB *pdb);
-void   register_image_color_profile_procs (GimpPDB *pdb);
-void   register_image_convert_procs       (GimpPDB *pdb);
-void   register_image_grid_procs          (GimpPDB *pdb);
-void   register_image_guides_procs        (GimpPDB *pdb);
-void   register_image_sample_points_procs (GimpPDB *pdb);
-void   register_image_select_procs        (GimpPDB *pdb);
-void   register_image_transform_procs     (GimpPDB *pdb);
-void   register_image_undo_procs          (GimpPDB *pdb);
-void   register_item_procs                (GimpPDB *pdb);
-void   register_item_transform_procs      (GimpPDB *pdb);
-void   register_layer_procs               (GimpPDB *pdb);
-void   register_message_procs             (GimpPDB *pdb);
-void   register_paint_tools_procs         (GimpPDB *pdb);
-void   register_palette_procs             (GimpPDB *pdb);
-void   register_palette_select_procs      (GimpPDB *pdb);
-void   register_palettes_procs            (GimpPDB *pdb);
-void   register_pattern_procs             (GimpPDB *pdb);
-void   register_pattern_select_procs      (GimpPDB *pdb);
-void   register_patterns_procs            (GimpPDB *pdb);
-void   register_pdb_procs                 (GimpPDB *pdb);
-void   register_plug_in_procs             (GimpPDB *pdb);
-void   register_plug_in_compat_procs      (GimpPDB *pdb);
-void   register_progress_procs            (GimpPDB *pdb);
-void   register_selection_procs           (GimpPDB *pdb);
-void   register_text_layer_procs          (GimpPDB *pdb);
-void   register_text_tool_procs           (GimpPDB *pdb);
-void   register_unit_procs                (GimpPDB *pdb);
-void   register_vectors_procs             (GimpPDB *pdb);
+void   register_brush_procs               (LigmaPDB *pdb);
+void   register_brush_select_procs        (LigmaPDB *pdb);
+void   register_brushes_procs             (LigmaPDB *pdb);
+void   register_buffer_procs              (LigmaPDB *pdb);
+void   register_channel_procs             (LigmaPDB *pdb);
+void   register_context_procs             (LigmaPDB *pdb);
+void   register_debug_procs               (LigmaPDB *pdb);
+void   register_display_procs             (LigmaPDB *pdb);
+void   register_drawable_procs            (LigmaPDB *pdb);
+void   register_drawable_color_procs      (LigmaPDB *pdb);
+void   register_drawable_edit_procs       (LigmaPDB *pdb);
+void   register_dynamics_procs            (LigmaPDB *pdb);
+void   register_edit_procs                (LigmaPDB *pdb);
+void   register_file_procs                (LigmaPDB *pdb);
+void   register_floating_sel_procs        (LigmaPDB *pdb);
+void   register_font_select_procs         (LigmaPDB *pdb);
+void   register_fonts_procs               (LigmaPDB *pdb);
+void   register_ligma_procs                (LigmaPDB *pdb);
+void   register_ligmarc_procs              (LigmaPDB *pdb);
+void   register_gradient_procs            (LigmaPDB *pdb);
+void   register_gradient_select_procs     (LigmaPDB *pdb);
+void   register_gradients_procs           (LigmaPDB *pdb);
+void   register_help_procs                (LigmaPDB *pdb);
+void   register_image_procs               (LigmaPDB *pdb);
+void   register_image_color_profile_procs (LigmaPDB *pdb);
+void   register_image_convert_procs       (LigmaPDB *pdb);
+void   register_image_grid_procs          (LigmaPDB *pdb);
+void   register_image_guides_procs        (LigmaPDB *pdb);
+void   register_image_sample_points_procs (LigmaPDB *pdb);
+void   register_image_select_procs        (LigmaPDB *pdb);
+void   register_image_transform_procs     (LigmaPDB *pdb);
+void   register_image_undo_procs          (LigmaPDB *pdb);
+void   register_item_procs                (LigmaPDB *pdb);
+void   register_item_transform_procs      (LigmaPDB *pdb);
+void   register_layer_procs               (LigmaPDB *pdb);
+void   register_message_procs             (LigmaPDB *pdb);
+void   register_paint_tools_procs         (LigmaPDB *pdb);
+void   register_palette_procs             (LigmaPDB *pdb);
+void   register_palette_select_procs      (LigmaPDB *pdb);
+void   register_palettes_procs            (LigmaPDB *pdb);
+void   register_pattern_procs             (LigmaPDB *pdb);
+void   register_pattern_select_procs      (LigmaPDB *pdb);
+void   register_patterns_procs            (LigmaPDB *pdb);
+void   register_pdb_procs                 (LigmaPDB *pdb);
+void   register_plug_in_procs             (LigmaPDB *pdb);
+void   register_plug_in_compat_procs      (LigmaPDB *pdb);
+void   register_progress_procs            (LigmaPDB *pdb);
+void   register_selection_procs           (LigmaPDB *pdb);
+void   register_text_layer_procs          (LigmaPDB *pdb);
+void   register_text_tool_procs           (LigmaPDB *pdb);
+void   register_unit_procs                (LigmaPDB *pdb);
+void   register_vectors_procs             (LigmaPDB *pdb);
 
 #endif /* __INTERNAL_PROCS_H__ */

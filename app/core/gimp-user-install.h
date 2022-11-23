@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,25 +15,25 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_USER_INSTALL_H__
-#define __GIMP_USER_INSTALL_H__
+#ifndef __LIGMA_USER_INSTALL_H__
+#define __LIGMA_USER_INSTALL_H__
 
 
-typedef struct _GimpUserInstall GimpUserInstall;
+typedef struct _LigmaUserInstall LigmaUserInstall;
 
-typedef void  (* GimpUserInstallLogFunc) (const gchar *message,
+typedef void  (* LigmaUserInstallLogFunc) (const gchar *message,
                                           gboolean     error,
                                           gpointer     user_data);
 
 
-GimpUserInstall * gimp_user_install_new  (GObject          *gimp,
+LigmaUserInstall * ligma_user_install_new  (GObject          *ligma,
                                           gboolean          verbose);
-gboolean          gimp_user_install_run  (GimpUserInstall  *install,
+gboolean          ligma_user_install_run  (LigmaUserInstall  *install,
                                           gint              scale_factor);
-void              gimp_user_install_free (GimpUserInstall  *install);
+void              ligma_user_install_free (LigmaUserInstall  *install);
 
-void   gimp_user_install_set_log_handler (GimpUserInstall        *install,
-                                          GimpUserInstallLogFunc  log,
+void   ligma_user_install_set_log_handler (LigmaUserInstall        *install,
+                                          LigmaUserInstallLogFunc  log,
                                           gpointer                user_data);
 
 

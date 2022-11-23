@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * gimprectangle.c
+ * ligmarectangle.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -22,12 +22,12 @@
 
 #include <glib.h>
 
-#include "gimprectangle.h"
+#include "ligmarectangle.h"
 
 
 /**
- * SECTION: gimprectangle
- * @title: gimprectangle
+ * SECTION: ligmarectangle
+ * @title: ligmarectangle
  * @short_description: Utility functions dealing with rectangle extents.
  *
  * Utility functions dealing with rectangle extents.
@@ -35,7 +35,7 @@
 
 
 /**
- * gimp_rectangle_intersect:
+ * ligma_rectangle_intersect:
  * @x1:          origin of first rectangle
  * @y1:          origin of first rectangle
  * @width1:      width of first rectangle
@@ -60,7 +60,7 @@
  * Since: 2.4
  **/
 gboolean
-gimp_rectangle_intersect (gint  x1,
+ligma_rectangle_intersect (gint  x1,
                           gint  y1,
                           gint  width1,
                           gint  height1,
@@ -90,7 +90,7 @@ gimp_rectangle_intersect (gint  x1,
 }
 
 /**
- * gimp_rectangle_union:
+ * ligma_rectangle_union:
  * @x1:          origin of first rectangle
  * @y1:          origin of first rectangle
  * @width1:      width of first rectangle
@@ -109,7 +109,7 @@ gimp_rectangle_intersect (gint  x1,
  * Since: 2.8
  **/
 void
-gimp_rectangle_union (gint  x1,
+ligma_rectangle_union (gint  x1,
                       gint  y1,
                       gint  width1,
                       gint  height1,

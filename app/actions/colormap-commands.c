@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,13 +22,13 @@
 
 #include "actions-types.h"
 
-#include "core/gimpchannel-select.h"
-#include "core/gimpcontext.h"
-#include "core/gimpimage.h"
-#include "core/gimpimage-colormap.h"
+#include "core/ligmachannel-select.h"
+#include "core/ligmacontext.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaimage-colormap.h"
 
-#include "widgets/gimpcolormapeditor.h"
-#include "widgets/gimpcolormapselection.h"
+#include "widgets/ligmacolormapeditor.h"
+#include "widgets/ligmacolormapselection.h"
 
 #include "actions.h"
 #include "colormap-commands.h"
@@ -37,63 +37,63 @@
 /*  public functions  */
 
 void
-colormap_edit_color_cmd_callback (GimpAction *action,
+colormap_edit_color_cmd_callback (LigmaAction *action,
                                   GVariant   *value,
                                   gpointer    data)
 {
-  GimpColormapEditor *editor = GIMP_COLORMAP_EDITOR (data);
+  LigmaColormapEditor *editor = LIGMA_COLORMAP_EDITOR (data);
 
-  gimp_colormap_editor_edit_color (editor);
+  ligma_colormap_editor_edit_color (editor);
 }
 
 void
-colormap_add_color_cmd_callback (GimpAction *action,
+colormap_add_color_cmd_callback (LigmaAction *action,
                                  GVariant   *value,
                                  gpointer    data)
 {
-  GimpContext *context;
-  GimpImage   *image;
+  LigmaContext *context;
+  LigmaImage   *image;
   gboolean     background;
   return_if_no_context (context, data);
   return_if_no_image (image, data);
 
   background = (gboolean) g_variant_get_int32 (value);
 
-  if (gimp_image_get_colormap_size (image) < 256)
+  if (ligma_image_get_colormap_size (image) < 256)
     {
-      GimpRGB color;
+      LigmaRGB color;
 
       if (background)
-        gimp_context_get_background (context, &color);
+        ligma_context_get_background (context, &color);
       else
-        gimp_context_get_foreground (context, &color);
+        ligma_context_get_foreground (context, &color);
 
-      gimp_image_add_colormap_entry (image, &color);
-      gimp_image_flush (image);
+      ligma_image_add_colormap_entry (image, &color);
+      ligma_image_flush (image);
     }
 }
 
 void
-colormap_to_selection_cmd_callback (GimpAction *action,
+colormap_to_selection_cmd_callback (LigmaAction *action,
                                     GVariant   *value,
                                     gpointer    data)
 {
-  GimpColormapSelection *selection;
-  GimpColormapEditor    *editor;
-  GimpImage             *image;
+  LigmaColormapSelection *selection;
+  LigmaColormapEditor    *editor;
+  LigmaImage             *image;
   GList                 *drawables;
-  GimpChannelOps         op;
+  LigmaChannelOps         op;
   gint                   col_index;
 
   return_if_no_image (image, data);
 
-  editor    = GIMP_COLORMAP_EDITOR (data);
-  selection = GIMP_COLORMAP_SELECTION (editor->selection);
-  col_index = gimp_colormap_selection_get_index (selection, NULL);
+  editor    = LIGMA_COLORMAP_EDITOR (data);
+  selection = LIGMA_COLORMAP_SELECTION (editor->selection);
+  col_index = ligma_colormap_selection_get_index (selection, NULL);
 
-  op = (GimpChannelOps) g_variant_get_int32 (value);
+  op = (LigmaChannelOps) g_variant_get_int32 (value);
 
-  drawables = gimp_image_get_selected_drawables (image);
+  drawables = ligma_image_get_selected_drawables (image);
   if (g_list_length (drawables) != 1)
     {
       /* We should not reach this anyway as colormap-actions.c normally takes
@@ -104,11 +104,11 @@ colormap_to_selection_cmd_callback (GimpAction *action,
       return;
     }
 
-  gimp_channel_select_by_index (gimp_image_get_mask (image),
+  ligma_channel_select_by_index (ligma_image_get_mask (image),
                                 drawables->data,
                                 col_index, op,
                                 FALSE, 0.0, 0.0);
 
   g_list_free (drawables);
-  gimp_image_flush (image);
+  ligma_image_flush (image);
 }

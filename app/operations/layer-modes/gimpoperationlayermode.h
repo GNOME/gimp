@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationlayermode.h
- * Copyright (C) 2008 Michael Natterer <mitch@gimp.org>
+ * ligmaoperationlayermode.h
+ * Copyright (C) 2008 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,45 +18,45 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OPERATION_LAYER_MODE_H__
-#define __GIMP_OPERATION_LAYER_MODE_H__
+#ifndef __LIGMA_OPERATION_LAYER_MODE_H__
+#define __LIGMA_OPERATION_LAYER_MODE_H__
 
 
 #include <gegl-plugin.h>
 
 
-#define GIMP_TYPE_OPERATION_LAYER_MODE            (gimp_operation_layer_mode_get_type ())
-#define GIMP_OPERATION_LAYER_MODE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OPERATION_LAYER_MODE, GimpOperationLayerMode))
-#define GIMP_OPERATION_LAYER_MODE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  GIMP_TYPE_OPERATION_LAYER_MODE, GimpOperationLayerModeClass))
-#define GIMP_IS_OPERATION_LAYER_MODE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_OPERATION_LAYER_MODE))
-#define GIMP_IS_OPERATION_LAYER_MODE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  GIMP_TYPE_OPERATION_LAYER_MODE))
-#define GIMP_OPERATION_LAYER_MODE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_LAYER_MODE, GimpOperationLayerModeClass))
+#define LIGMA_TYPE_OPERATION_LAYER_MODE            (ligma_operation_layer_mode_get_type ())
+#define LIGMA_OPERATION_LAYER_MODE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_OPERATION_LAYER_MODE, LigmaOperationLayerMode))
+#define LIGMA_OPERATION_LAYER_MODE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  LIGMA_TYPE_OPERATION_LAYER_MODE, LigmaOperationLayerModeClass))
+#define LIGMA_IS_OPERATION_LAYER_MODE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_OPERATION_LAYER_MODE))
+#define LIGMA_IS_OPERATION_LAYER_MODE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  LIGMA_TYPE_OPERATION_LAYER_MODE))
+#define LIGMA_OPERATION_LAYER_MODE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  LIGMA_TYPE_OPERATION_LAYER_MODE, LigmaOperationLayerModeClass))
 
 
-typedef struct _GimpOperationLayerModeClass GimpOperationLayerModeClass;
+typedef struct _LigmaOperationLayerModeClass LigmaOperationLayerModeClass;
 
-struct _GimpOperationLayerMode
+struct _LigmaOperationLayerMode
 {
   GeglOperationPointComposer3  parent_instance;
 
-  GimpLayerMode                layer_mode;
+  LigmaLayerMode                layer_mode;
   gdouble                      opacity;
-  GimpLayerColorSpace          blend_space;
-  GimpLayerColorSpace          composite_space;
-  GimpLayerCompositeMode       composite_mode;
+  LigmaLayerColorSpace          blend_space;
+  LigmaLayerColorSpace          composite_space;
+  LigmaLayerCompositeMode       composite_mode;
   const Babl                  *cached_fish_format;
   const Babl                  *space_fish[3 /* from */][3 /* to */];
 
   gdouble                      prop_opacity;
-  GimpLayerCompositeMode       prop_composite_mode;
+  LigmaLayerCompositeMode       prop_composite_mode;
 
-  GimpLayerModeFunc            function;
-  GimpLayerModeBlendFunc       blend_function;
+  LigmaLayerModeFunc            function;
+  LigmaLayerModeBlendFunc       blend_function;
   gboolean                     is_last_node;
   gboolean                     has_mask;
 };
 
-struct _GimpOperationLayerModeClass
+struct _LigmaOperationLayerModeClass
 {
   GeglOperationPointComposer3Class  parent_class;
 
@@ -79,13 +79,13 @@ struct _GimpOperationLayerModeClass
    * backdrop) that the layer mode affects.  Most modes only affect the
    * overlapping region, and don't need to override this function.
    */
-  GimpLayerCompositeRegion (* get_affected_region) (GimpOperationLayerMode *layer_mode);
+  LigmaLayerCompositeRegion (* get_affected_region) (LigmaOperationLayerMode *layer_mode);
 };
 
 
-GType                    gimp_operation_layer_mode_get_type            (void) G_GNUC_CONST;
+GType                    ligma_operation_layer_mode_get_type            (void) G_GNUC_CONST;
 
-GimpLayerCompositeRegion gimp_operation_layer_mode_get_affected_region (GimpOperationLayerMode *layer_mode);
+LigmaLayerCompositeRegion ligma_operation_layer_mode_get_affected_region (LigmaOperationLayerMode *layer_mode);
 
 
-#endif /* __GIMP_OPERATION_LAYER_MODE_H__ */
+#endif /* __LIGMA_OPERATION_LAYER_MODE_H__ */

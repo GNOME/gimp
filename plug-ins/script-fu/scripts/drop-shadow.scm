@@ -1,4 +1,4 @@
-; GIMP - The GNU Image Manipulation Program
+; LIGMA - The GNU Image Manipulation Program
 ; Copyright (C) 1995 Spencer Kimball and Peter Mattis
 ;
 ; This program is free software: you can redistribute it and/or modify
@@ -21,11 +21,11 @@
 ; 1.00 - initial release
 ; 1.01 - fixed the problem with a remaining copy of the selection
 ; 1.02 - some code cleanup, no real changes
-; 1.03 - can't call gimp-drawable-edit-fill until layer is added to image!
+; 1.03 - can't call ligma-drawable-edit-fill until layer is added to image!
 ; 1.04
 ; 1.05 - replaced deprecated function calls with new ones for 2.8
 ;
-; Copyright (C) 1997-1999 Sven Neumann <sven@gimp.org>
+; Copyright (C) 1997-1999 Sven Neumann <sven@ligma.org>
 ;
 ;
 ; Adds a drop-shadow of the current selection or alpha-channel.
@@ -47,31 +47,31 @@
         (shadow-blur (max shadow-blur 0))
         (shadow-opacity (min shadow-opacity 100))
         (shadow-opacity (max shadow-opacity 0))
-        (type (car (gimp-drawable-type-with-alpha drawable)))
-        (image-width (car (gimp-image-get-width image)))
-        (image-height (car (gimp-image-get-height image)))
+        (type (car (ligma-drawable-type-with-alpha drawable)))
+        (image-width (car (ligma-image-get-width image)))
+        (image-height (car (ligma-image-get-height image)))
         (from-selection 0)
         (active-selection 0)
         (shadow-layer 0)
         )
 
-  (gimp-context-push)
-  (gimp-context-set-defaults)
+  (ligma-context-push)
+  (ligma-context-set-defaults)
 
-  (gimp-image-set-selected-layers image 1 (make-vector 1 drawable))
+  (ligma-image-set-selected-layers image 1 (make-vector 1 drawable))
 
-  (gimp-image-undo-group-start image)
+  (ligma-image-undo-group-start image)
 
-  (gimp-layer-add-alpha drawable)
-  (if (= (car (gimp-selection-is-empty image)) TRUE)
+  (ligma-layer-add-alpha drawable)
+  (if (= (car (ligma-selection-is-empty image)) TRUE)
       (begin
-        (gimp-image-select-item image CHANNEL-OP-REPLACE drawable)
+        (ligma-image-select-item image CHANNEL-OP-REPLACE drawable)
         (set! from-selection FALSE))
       (begin
         (set! from-selection TRUE)
-        (set! active-selection (car (gimp-selection-save image)))))
+        (set! active-selection (car (ligma-selection-save image)))))
 
-  (let* ((selection-bounds (gimp-selection-bounds image))
+  (let* ((selection-bounds (ligma-selection-bounds image))
          (select-offset-x (cadr selection-bounds))
          (select-offset-y (caddr selection-bounds))
          (select-width (- (cadr (cddr selection-bounds)) select-offset-x))
@@ -113,7 +113,7 @@
               (set! new-image-height
                     (+ (+ shadow-height shadow-offset-y) shadow-transl-y)))
 
-          (gimp-image-resize image
+          (ligma-image-resize image
                              new-image-width
                              new-image-height
                              image-offset-x
@@ -121,55 +121,55 @@
         )
     )
 
-    (set! shadow-layer (car (gimp-layer-new image
+    (set! shadow-layer (car (ligma-layer-new image
                                             shadow-width
                                             shadow-height
                                             type
                                             "Drop Shadow"
                                             shadow-opacity
                                             LAYER-MODE-NORMAL)))
-    (gimp-image-set-selected-layers image 1 (make-vector 1 drawable))
-    (gimp-image-insert-layer image shadow-layer 0 -1)
-    (gimp-layer-set-offsets shadow-layer
+    (ligma-image-set-selected-layers image 1 (make-vector 1 drawable))
+    (ligma-image-insert-layer image shadow-layer 0 -1)
+    (ligma-layer-set-offsets shadow-layer
                             shadow-offset-x
                             shadow-offset-y))
 
-  (gimp-drawable-fill shadow-layer FILL-TRANSPARENT)
-  (gimp-context-set-background shadow-color)
-  (gimp-drawable-edit-fill shadow-layer FILL-BACKGROUND)
-  (gimp-selection-none image)
-  (gimp-layer-set-lock-alpha shadow-layer FALSE)
+  (ligma-drawable-fill shadow-layer FILL-TRANSPARENT)
+  (ligma-context-set-background shadow-color)
+  (ligma-drawable-edit-fill shadow-layer FILL-BACKGROUND)
+  (ligma-selection-none image)
+  (ligma-layer-set-lock-alpha shadow-layer FALSE)
   (if (>= shadow-blur 1.0) (plug-in-gauss-rle RUN-NONINTERACTIVE
                                               image
                                               shadow-layer
                                               shadow-blur
                                               TRUE
                                               TRUE))
-  (gimp-item-transform-translate shadow-layer shadow-transl-x shadow-transl-y)
+  (ligma-item-transform-translate shadow-layer shadow-transl-x shadow-transl-y)
 
   (if (= from-selection TRUE)
       (begin
-        (gimp-image-select-item image CHANNEL-OP-REPLACE active-selection)
-        (gimp-drawable-edit-clear shadow-layer)
-        (gimp-image-remove-channel image active-selection)))
+        (ligma-image-select-item image CHANNEL-OP-REPLACE active-selection)
+        (ligma-drawable-edit-clear shadow-layer)
+        (ligma-image-remove-channel image active-selection)))
 
   (if (and
-       (= (car (gimp-layer-is-floating-sel drawable)) 0)
+       (= (car (ligma-layer-is-floating-sel drawable)) 0)
        (= from-selection FALSE))
-      (gimp-image-raise-item image drawable))
+      (ligma-image-raise-item image drawable))
 
-  (gimp-image-set-selected-layers image 1 (make-vector 1 drawable))
-  (gimp-image-undo-group-end image)
-  (gimp-displays-flush)
+  (ligma-image-set-selected-layers image 1 (make-vector 1 drawable))
+  (ligma-image-undo-group-end image)
+  (ligma-displays-flush)
 
-  (gimp-context-pop)
+  (ligma-context-pop)
   )
 )
 
 (script-fu-register "script-fu-drop-shadow"
   _"_Drop Shadow (legacy)..."
   _"Add a drop shadow to the selected region (or alpha)"
-  "Sven Neumann <sven@gimp.org>"
+  "Sven Neumann <sven@ligma.org>"
   "Sven Neumann"
   "1999/12/21"
   "RGB* GRAY*"

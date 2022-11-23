@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationprofiletransform.h
- * Copyright (C) 2016 Michael Natterer <mitch@gimp.org>
+ * ligmaoperationprofiletransform.h
+ * Copyright (C) 2016 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,48 +18,48 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OPERATION_PROFILE_TRANSFORM_H__
-#define __GIMP_OPERATION_PROFILE_TRANSFORM_H__
+#ifndef __LIGMA_OPERATION_PROFILE_TRANSFORM_H__
+#define __LIGMA_OPERATION_PROFILE_TRANSFORM_H__
 
 
 #include <gegl-plugin.h>
 #include <operation/gegl-operation-point-filter.h>
 
 
-#define GIMP_TYPE_OPERATION_PROFILE_TRANSFORM            (gimp_operation_profile_transform_get_type ())
-#define GIMP_OPERATION_PROFILE_TRANSFORM(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OPERATION_PROFILE_TRANSFORM, GimpOperationProfileTransform))
-#define GIMP_OPERATION_PROFILE_TRANSFORM_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  GIMP_TYPE_OPERATION_PROFILE_TRANSFORM, GimpOperationProfileTransformClass))
-#define GIMP_IS_OPERATION_PROFILE_TRANSFORM(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_OPERATION_PROFILE_TRANSFORM))
-#define GIMP_IS_OPERATION_PROFILE_TRANSFORM_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  GIMP_TYPE_OPERATION_PROFILE_TRANSFORM))
-#define GIMP_OPERATION_PROFILE_TRANSFORM_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_PROFILE_TRANSFORM, GimpOperationProfileTransformClass))
+#define LIGMA_TYPE_OPERATION_PROFILE_TRANSFORM            (ligma_operation_profile_transform_get_type ())
+#define LIGMA_OPERATION_PROFILE_TRANSFORM(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_OPERATION_PROFILE_TRANSFORM, LigmaOperationProfileTransform))
+#define LIGMA_OPERATION_PROFILE_TRANSFORM_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  LIGMA_TYPE_OPERATION_PROFILE_TRANSFORM, LigmaOperationProfileTransformClass))
+#define LIGMA_IS_OPERATION_PROFILE_TRANSFORM(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_OPERATION_PROFILE_TRANSFORM))
+#define LIGMA_IS_OPERATION_PROFILE_TRANSFORM_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  LIGMA_TYPE_OPERATION_PROFILE_TRANSFORM))
+#define LIGMA_OPERATION_PROFILE_TRANSFORM_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  LIGMA_TYPE_OPERATION_PROFILE_TRANSFORM, LigmaOperationProfileTransformClass))
 
 
-typedef struct _GimpOperationProfileTransform      GimpOperationProfileTransform;
-typedef struct _GimpOperationProfileTransformClass GimpOperationProfileTransformClass;
+typedef struct _LigmaOperationProfileTransform      LigmaOperationProfileTransform;
+typedef struct _LigmaOperationProfileTransformClass LigmaOperationProfileTransformClass;
 
-struct _GimpOperationProfileTransform
+struct _LigmaOperationProfileTransform
 {
   GeglOperationPointFilter  parent_instance;
 
-  GimpColorProfile         *src_profile;
+  LigmaColorProfile         *src_profile;
   const Babl               *src_format;
 
-  GimpColorProfile         *dest_profile;
+  LigmaColorProfile         *dest_profile;
   const Babl               *dest_format;
 
-  GimpColorRenderingIntent  rendering_intent;
+  LigmaColorRenderingIntent  rendering_intent;
   gboolean                  black_point_compensation;
 
-  GimpColorTransform       *transform;
+  LigmaColorTransform       *transform;
 };
 
-struct _GimpOperationProfileTransformClass
+struct _LigmaOperationProfileTransformClass
 {
   GeglOperationPointFilterClass  parent_class;
 };
 
 
-GType   gimp_operation_profile_transform_get_type (void) G_GNUC_CONST;
+GType   ligma_operation_profile_transform_get_type (void) G_GNUC_CONST;
 
 
-#endif /* __GIMP_OPERATION_PROFILE_TRANSFORM_H__ */
+#endif /* __LIGMA_OPERATION_PROFILE_TRANSFORM_H__ */

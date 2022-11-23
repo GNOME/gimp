@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 2009 Martin Nordholts <martinn@src.gnome.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,54 +24,54 @@
 #include <glib/gstdio.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "dialogs/dialogs-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpchannel.h"
-#include "core/gimpcontext.h"
-#include "core/gimpimage.h"
-#include "core/gimplayer.h"
-#include "core/gimptoolinfo.h"
-#include "core/gimptooloptions.h"
+#include "core/ligma.h"
+#include "core/ligmachannel.h"
+#include "core/ligmacontext.h"
+#include "core/ligmaimage.h"
+#include "core/ligmalayer.h"
+#include "core/ligmatoolinfo.h"
+#include "core/ligmatooloptions.h"
 
-#include "plug-in/gimppluginmanager-file.h"
+#include "plug-in/ligmapluginmanager-file.h"
 
 #include "file/file-open.h"
 #include "file/file-save.h"
 
-#include "widgets/gimpdialogfactory.h"
-#include "widgets/gimpdock.h"
-#include "widgets/gimpdockable.h"
-#include "widgets/gimpdockbook.h"
-#include "widgets/gimpdocked.h"
-#include "widgets/gimpdockwindow.h"
-#include "widgets/gimphelp-ids.h"
-#include "widgets/gimpsessioninfo.h"
-#include "widgets/gimptoolbox.h"
-#include "widgets/gimptooloptionseditor.h"
-#include "widgets/gimpuimanager.h"
-#include "widgets/gimpwidgets-utils.h"
+#include "widgets/ligmadialogfactory.h"
+#include "widgets/ligmadock.h"
+#include "widgets/ligmadockable.h"
+#include "widgets/ligmadockbook.h"
+#include "widgets/ligmadocked.h"
+#include "widgets/ligmadockwindow.h"
+#include "widgets/ligmahelp-ids.h"
+#include "widgets/ligmasessioninfo.h"
+#include "widgets/ligmatoolbox.h"
+#include "widgets/ligmatooloptionseditor.h"
+#include "widgets/ligmauimanager.h"
+#include "widgets/ligmawidgets-utils.h"
 
-#include "display/gimpdisplay.h"
-#include "display/gimpdisplayshell.h"
-#include "display/gimpdisplayshell-scale.h"
-#include "display/gimpdisplayshell-transform.h"
-#include "display/gimpimagewindow.h"
+#include "display/ligmadisplay.h"
+#include "display/ligmadisplayshell.h"
+#include "display/ligmadisplayshell-scale.h"
+#include "display/ligmadisplayshell-transform.h"
+#include "display/ligmaimagewindow.h"
 
 #include "tests.h"
 
-#include "gimp-app-test-utils.h"
+#include "ligma-app-test-utils.h"
 
 
 #define ADD_TEST(function) \
-  g_test_add_data_func ("/gimp-save-and-export/" #function, gimp, function);
+  g_test_add_data_func ("/ligma-save-and-export/" #function, ligma, function);
 
 
-typedef gboolean (*GimpUiTestFunc) (GObject *object);
+typedef gboolean (*LigmaUiTestFunc) (GObject *object);
 
 
 /**
@@ -83,50 +83,50 @@ typedef gboolean (*GimpUiTestFunc) (GObject *object);
 static void
 new_file_has_no_files (gconstpointer    data)
 {
-  Gimp      *gimp  = GIMP (data);
-  GimpImage *image = gimp_test_utils_create_image_from_dialog (gimp);
+  Ligma      *ligma  = LIGMA (data);
+  LigmaImage *image = ligma_test_utils_create_image_from_dialog (ligma);
 
-  g_assert (gimp_image_get_file (image) == NULL);
-  g_assert (gimp_image_get_imported_file (image) == NULL);
-  g_assert (gimp_image_get_exported_file (image) == NULL);
+  g_assert (ligma_image_get_file (image) == NULL);
+  g_assert (ligma_image_get_imported_file (image) == NULL);
+  g_assert (ligma_image_get_exported_file (image) == NULL);
 }
 
 /**
  * opened_xcf_file_files:
  * @data:
  *
- * Tests that GimpImage URIs are correct for an XCF file that has just
+ * Tests that LigmaImage URIs are correct for an XCF file that has just
  * been opened.
  **/
 static void
 opened_xcf_file_files (gconstpointer data)
 {
-  Gimp              *gimp = GIMP (data);
-  GimpImage         *image;
+  Ligma              *ligma = LIGMA (data);
+  LigmaImage         *image;
   GFile             *file;
   gchar             *filename;
-  GimpPDBStatusType  status;
+  LigmaPDBStatusType  status;
 
-  filename = g_build_filename (g_getenv ("GIMP_TESTING_ABS_TOP_SRCDIR"),
-                               "app/tests/files/gimp-2-6-file.xcf",
+  filename = g_build_filename (g_getenv ("LIGMA_TESTING_ABS_TOP_SRCDIR"),
+                               "app/tests/files/ligma-2-6-file.xcf",
                                NULL);
   file = g_file_new_for_path (filename);
   g_free (filename);
 
-  image = file_open_image (gimp,
-                           gimp_get_user_context (gimp),
+  image = file_open_image (ligma,
+                           ligma_get_user_context (ligma),
                            NULL /*progress*/,
                            file,
                            FALSE /*as_new*/,
                            NULL /*file_proc*/,
-                           GIMP_RUN_NONINTERACTIVE,
+                           LIGMA_RUN_NONINTERACTIVE,
                            &status,
                            NULL /*mime_type*/,
                            NULL /*error*/);
 
-  g_assert (g_file_equal (gimp_image_get_file (image), file));
-  g_assert (gimp_image_get_imported_file (image) == NULL);
-  g_assert (gimp_image_get_exported_file (image) == NULL);
+  g_assert (g_file_equal (ligma_image_get_file (image), file));
+  g_assert (ligma_image_get_imported_file (image) == NULL);
+  g_assert (ligma_image_get_exported_file (image) == NULL);
 
   g_object_unref (file);
 }
@@ -140,33 +140,33 @@ opened_xcf_file_files (gconstpointer data)
 static void
 imported_file_files (gconstpointer data)
 {
-  Gimp              *gimp = GIMP (data);
-  GimpImage         *image;
+  Ligma              *ligma = LIGMA (data);
+  LigmaImage         *image;
   GFile             *file;
   gchar             *filename;
-  GimpPDBStatusType  status;
+  LigmaPDBStatusType  status;
 
-  filename = g_build_filename (g_getenv ("GIMP_TESTING_ABS_TOP_SRCDIR"),
-                               "desktop/64x64/gimp.png",
+  filename = g_build_filename (g_getenv ("LIGMA_TESTING_ABS_TOP_SRCDIR"),
+                               "desktop/64x64/ligma.png",
                                NULL);
   g_assert (g_file_test (filename, G_FILE_TEST_EXISTS));
   file = g_file_new_for_path (filename);
   g_free (filename);
 
-  image = file_open_image (gimp,
-                           gimp_get_user_context (gimp),
+  image = file_open_image (ligma,
+                           ligma_get_user_context (ligma),
                            NULL /*progress*/,
                            file,
                            FALSE /*as_new*/,
                            NULL /*file_proc*/,
-                           GIMP_RUN_NONINTERACTIVE,
+                           LIGMA_RUN_NONINTERACTIVE,
                            &status,
                            NULL /*mime_type*/,
                            NULL /*error*/);
 
-  g_assert (gimp_image_get_file (image) == NULL);
-  g_assert (g_file_equal (gimp_image_get_imported_file (image), file));
-  g_assert (gimp_image_get_exported_file (image) == NULL);
+  g_assert (ligma_image_get_file (image) == NULL);
+  g_assert (g_file_equal (ligma_image_get_imported_file (image), file));
+  g_assert (ligma_image_get_exported_file (image) == NULL);
 
   g_object_unref (file);
 }
@@ -181,33 +181,33 @@ imported_file_files (gconstpointer data)
 static void
 saved_imported_file_files (gconstpointer data)
 {
-  Gimp                *gimp = GIMP (data);
-  GimpImage           *image;
+  Ligma                *ligma = LIGMA (data);
+  LigmaImage           *image;
   GFile               *import_file;
   gchar               *import_filename;
   GFile               *save_file;
   gchar               *save_filename;
-  GimpPDBStatusType    status;
-  GimpPlugInProcedure *proc;
+  LigmaPDBStatusType    status;
+  LigmaPlugInProcedure *proc;
 
-  import_filename = g_build_filename (g_getenv ("GIMP_TESTING_ABS_TOP_SRCDIR"),
-                                      "desktop/64x64/gimp.png",
+  import_filename = g_build_filename (g_getenv ("LIGMA_TESTING_ABS_TOP_SRCDIR"),
+                                      "desktop/64x64/ligma.png",
                                       NULL);
   import_file = g_file_new_for_path (import_filename);
   g_free (import_filename);
 
-  save_filename = g_build_filename (g_get_tmp_dir (), "gimp-test.xcf", NULL);
+  save_filename = g_build_filename (g_get_tmp_dir (), "ligma-test.xcf", NULL);
   save_file = g_file_new_for_path (save_filename);
   g_free (save_filename);
 
   /* Import */
-  image = file_open_image (gimp,
-                           gimp_get_user_context (gimp),
+  image = file_open_image (ligma,
+                           ligma_get_user_context (ligma),
                            NULL /*progress*/,
                            import_file,
                            FALSE /*as_new*/,
                            NULL /*file_proc*/,
-                           GIMP_RUN_NONINTERACTIVE,
+                           LIGMA_RUN_NONINTERACTIVE,
                            &status,
                            NULL /*mime_type*/,
                            NULL /*error*/);
@@ -215,25 +215,25 @@ saved_imported_file_files (gconstpointer data)
   g_object_unref (import_file);
 
   /* Save */
-  proc = gimp_plug_in_manager_file_procedure_find (image->gimp->plug_in_manager,
-                                                   GIMP_FILE_PROCEDURE_GROUP_SAVE,
+  proc = ligma_plug_in_manager_file_procedure_find (image->ligma->plug_in_manager,
+                                                   LIGMA_FILE_PROCEDURE_GROUP_SAVE,
                                                    save_file,
                                                    NULL /*error*/);
-  file_save (gimp,
+  file_save (ligma,
              image,
              NULL /*progress*/,
              save_file,
              proc,
-             GIMP_RUN_NONINTERACTIVE,
+             LIGMA_RUN_NONINTERACTIVE,
              TRUE /*change_saved_state*/,
              FALSE /*export_backward*/,
              FALSE /*export_forward*/,
              NULL /*error*/);
 
   /* Assert */
-  g_assert (g_file_equal (gimp_image_get_file (image), save_file));
-  g_assert (gimp_image_get_imported_file (image) == NULL);
-  g_assert (gimp_image_get_exported_file (image) == NULL);
+  g_assert (g_file_equal (ligma_image_get_file (image), save_file));
+  g_assert (ligma_image_get_imported_file (image) == NULL);
+  g_assert (ligma_image_get_exported_file (image) == NULL);
 
   g_file_delete (save_file, NULL, NULL);
   g_object_unref (save_file);
@@ -251,32 +251,32 @@ exported_file_files (gconstpointer data)
 {
   GFile               *save_file;
   gchar               *save_filename;
-  GimpPlugInProcedure *proc;
-  Gimp                *gimp  = GIMP (data);
-  GimpImage           *image = gimp_test_utils_create_image_from_dialog (gimp);
+  LigmaPlugInProcedure *proc;
+  Ligma                *ligma  = LIGMA (data);
+  LigmaImage           *image = ligma_test_utils_create_image_from_dialog (ligma);
 
-  save_filename = g_build_filename (g_get_tmp_dir (), "gimp-test.png", NULL);
+  save_filename = g_build_filename (g_get_tmp_dir (), "ligma-test.png", NULL);
   save_file = g_file_new_for_path (save_filename);
   g_free (save_filename);
 
-  proc = gimp_plug_in_manager_file_procedure_find (image->gimp->plug_in_manager,
-                                                   GIMP_FILE_PROCEDURE_GROUP_EXPORT,
+  proc = ligma_plug_in_manager_file_procedure_find (image->ligma->plug_in_manager,
+                                                   LIGMA_FILE_PROCEDURE_GROUP_EXPORT,
                                                    save_file,
                                                    NULL /*error*/);
-  file_save (gimp,
+  file_save (ligma,
              image,
              NULL /*progress*/,
              save_file,
              proc,
-             GIMP_RUN_NONINTERACTIVE,
+             LIGMA_RUN_NONINTERACTIVE,
              FALSE /*change_saved_state*/,
              FALSE /*export_backward*/,
              TRUE /*export_forward*/,
              NULL /*error*/);
 
-  g_assert (gimp_image_get_file (image) == NULL);
-  g_assert (gimp_image_get_imported_file (image) == NULL);
-  g_assert (g_file_equal (gimp_image_get_exported_file (image), save_file));
+  g_assert (ligma_image_get_file (image) == NULL);
+  g_assert (ligma_image_get_imported_file (image) == NULL);
+  g_assert (g_file_equal (ligma_image_get_exported_file (image), save_file));
 
   g_file_delete (save_file, NULL, NULL);
   g_object_unref (save_file);
@@ -293,60 +293,60 @@ exported_file_files (gconstpointer data)
 static void
 clear_import_file_after_export (gconstpointer data)
 {
-  Gimp                *gimp = GIMP (data);
-  GimpImage           *image;
+  Ligma                *ligma = LIGMA (data);
+  LigmaImage           *image;
   GFile               *file;
   gchar               *filename;
   GFile               *save_file;
   gchar               *save_filename;
-  GimpPlugInProcedure *proc;
-  GimpPDBStatusType    status;
+  LigmaPlugInProcedure *proc;
+  LigmaPDBStatusType    status;
 
-  filename = g_build_filename (g_getenv ("GIMP_TESTING_ABS_TOP_SRCDIR"),
-                               "desktop/64x64/gimp.png",
+  filename = g_build_filename (g_getenv ("LIGMA_TESTING_ABS_TOP_SRCDIR"),
+                               "desktop/64x64/ligma.png",
                                NULL);
   file = g_file_new_for_path (filename);
   g_free (filename);
 
-  image = file_open_image (gimp,
-                           gimp_get_user_context (gimp),
+  image = file_open_image (ligma,
+                           ligma_get_user_context (ligma),
                            NULL /*progress*/,
                            file,
                            FALSE /*as_new*/,
                            NULL /*file_proc*/,
-                           GIMP_RUN_NONINTERACTIVE,
+                           LIGMA_RUN_NONINTERACTIVE,
                            &status,
                            NULL /*mime_type*/,
                            NULL /*error*/);
 
-  g_assert (gimp_image_get_file (image) == NULL);
-  g_assert (g_file_equal (gimp_image_get_imported_file (image), file));
-  g_assert (gimp_image_get_exported_file (image) == NULL);
+  g_assert (ligma_image_get_file (image) == NULL);
+  g_assert (g_file_equal (ligma_image_get_imported_file (image), file));
+  g_assert (ligma_image_get_exported_file (image) == NULL);
 
   g_object_unref (file);
 
-  save_filename = g_build_filename (g_get_tmp_dir (), "gimp-test.png", NULL);
+  save_filename = g_build_filename (g_get_tmp_dir (), "ligma-test.png", NULL);
   save_file = g_file_new_for_path (save_filename);
   g_free (save_filename);
 
-  proc = gimp_plug_in_manager_file_procedure_find (image->gimp->plug_in_manager,
-                                                   GIMP_FILE_PROCEDURE_GROUP_EXPORT,
+  proc = ligma_plug_in_manager_file_procedure_find (image->ligma->plug_in_manager,
+                                                   LIGMA_FILE_PROCEDURE_GROUP_EXPORT,
                                                    save_file,
                                                    NULL /*error*/);
-  file_save (gimp,
+  file_save (ligma,
              image,
              NULL /*progress*/,
              save_file,
              proc,
-             GIMP_RUN_NONINTERACTIVE,
+             LIGMA_RUN_NONINTERACTIVE,
              FALSE /*change_saved_state*/,
              FALSE /*export_backward*/,
              TRUE /*export_forward*/,
              NULL /*error*/);
 
-  g_assert (gimp_image_get_file (image) == NULL);
-  g_assert (gimp_image_get_imported_file (image) == NULL);
-  g_assert (g_file_equal (gimp_image_get_exported_file (image), save_file));
+  g_assert (ligma_image_get_file (image) == NULL);
+  g_assert (ligma_image_get_imported_file (image) == NULL);
+  g_assert (g_file_equal (ligma_image_get_exported_file (image), save_file));
 
   g_file_delete (save_file, NULL, NULL);
   g_object_unref (save_file);
@@ -356,19 +356,19 @@ int
 main(int    argc,
      char **argv)
 {
-  Gimp *gimp   = NULL;
+  Ligma *ligma   = NULL;
   gint  result = -1;
 
-  gimp_test_bail_if_no_display ();
+  ligma_test_bail_if_no_display ();
   gtk_test_init (&argc, &argv, NULL);
 
-  gimp_test_utils_set_gimp3_directory ("GIMP_TESTING_ABS_TOP_SRCDIR",
-                                       "app/tests/gimpdir");
-  gimp_test_utils_setup_menus_path ();
+  ligma_test_utils_set_ligma3_directory ("LIGMA_TESTING_ABS_TOP_SRCDIR",
+                                       "app/tests/ligmadir");
+  ligma_test_utils_setup_menus_path ();
 
-  /* Start up GIMP */
-  gimp = gimp_init_for_gui_testing (TRUE /*show_gui*/);
-  gimp_test_run_mainloop_until_idle ();
+  /* Start up LIGMA */
+  ligma = ligma_init_for_gui_testing (TRUE /*show_gui*/);
+  ligma_test_run_mainloop_until_idle ();
 
   ADD_TEST (new_file_has_no_files);
   ADD_TEST (opened_xcf_file_files);
@@ -381,11 +381,11 @@ main(int    argc,
   result = g_test_run ();
 
   /* Don't write files to the source dir */
-  gimp_test_utils_set_gimp3_directory ("GIMP_TESTING_ABS_TOP_BUILDDIR",
-                                       "app/tests/gimpdir-output");
+  ligma_test_utils_set_ligma3_directory ("LIGMA_TESTING_ABS_TOP_BUILDDIR",
+                                       "app/tests/ligmadir-output");
 
   /* Exit properly so we don't break script-fu plug-in wire */
-  gimp_exit (gimp, TRUE);
+  ligma_exit (ligma, TRUE);
 
   return result;
 }

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1999 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,19 +20,19 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "core/gimpdashpattern.h"
-#include "core/gimpstrokeoptions.h"
+#include "core/ligmadashpattern.h"
+#include "core/ligmastrokeoptions.h"
 
-#include "gimpcellrendererdashes.h"
-#include "gimpdasheditor.h"
-#include "gimpstrokeeditor.h"
+#include "ligmacellrendererdashes.h"
+#include "ligmadasheditor.h"
+#include "ligmastrokeeditor.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -43,67 +43,67 @@ enum
 };
 
 
-static void      gimp_stroke_editor_constructed  (GObject           *object);
-static void      gimp_stroke_editor_set_property (GObject           *object,
+static void      ligma_stroke_editor_constructed  (GObject           *object);
+static void      ligma_stroke_editor_set_property (GObject           *object,
                                                   guint              property_id,
                                                   const GValue      *value,
                                                   GParamSpec        *pspec);
-static void      gimp_stroke_editor_get_property (GObject           *object,
+static void      ligma_stroke_editor_get_property (GObject           *object,
                                                   guint              property_id,
                                                   GValue            *value,
                                                   GParamSpec        *pspec);
 
-static gboolean  gimp_stroke_editor_draw_button  (GtkWidget         *widget,
+static gboolean  ligma_stroke_editor_draw_button  (GtkWidget         *widget,
                                                   cairo_t           *cr,
                                                   gpointer           data);
-static void      gimp_stroke_editor_dash_preset  (GtkWidget         *widget,
-                                                  GimpStrokeOptions *options);
+static void      ligma_stroke_editor_dash_preset  (GtkWidget         *widget,
+                                                  LigmaStrokeOptions *options);
 
-static void      gimp_stroke_editor_combo_fill   (GimpStrokeOptions *options,
+static void      ligma_stroke_editor_combo_fill   (LigmaStrokeOptions *options,
                                                   GtkComboBox       *box);
 
 
-G_DEFINE_TYPE (GimpStrokeEditor, gimp_stroke_editor, GIMP_TYPE_FILL_EDITOR)
+G_DEFINE_TYPE (LigmaStrokeEditor, ligma_stroke_editor, LIGMA_TYPE_FILL_EDITOR)
 
-#define parent_class gimp_stroke_editor_parent_class
+#define parent_class ligma_stroke_editor_parent_class
 
 
 static void
-gimp_stroke_editor_class_init (GimpStrokeEditorClass *klass)
+ligma_stroke_editor_class_init (LigmaStrokeEditorClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->constructed  = gimp_stroke_editor_constructed;
-  object_class->set_property = gimp_stroke_editor_set_property;
-  object_class->get_property = gimp_stroke_editor_get_property;
+  object_class->constructed  = ligma_stroke_editor_constructed;
+  object_class->set_property = ligma_stroke_editor_set_property;
+  object_class->get_property = ligma_stroke_editor_get_property;
 
   g_object_class_install_property (object_class, PROP_OPTIONS,
                                    g_param_spec_object ("options", NULL, NULL,
-                                                        GIMP_TYPE_STROKE_OPTIONS,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_TYPE_STROKE_OPTIONS,
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_RESOLUTION,
                                    g_param_spec_double ("resolution", NULL, NULL,
-                                                        GIMP_MIN_RESOLUTION,
-                                                        GIMP_MAX_RESOLUTION,
+                                                        LIGMA_MIN_RESOLUTION,
+                                                        LIGMA_MAX_RESOLUTION,
                                                         72.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
-gimp_stroke_editor_init (GimpStrokeEditor *editor)
+ligma_stroke_editor_init (LigmaStrokeEditor *editor)
 {
 }
 
 static void
-gimp_stroke_editor_constructed (GObject *object)
+ligma_stroke_editor_constructed (GObject *object)
 {
-  GimpFillEditor    *fill_editor = GIMP_FILL_EDITOR (object);
-  GimpStrokeEditor  *editor      = GIMP_STROKE_EDITOR (object);
-  GimpStrokeOptions *options;
-  GimpEnumStore     *store;
+  LigmaFillEditor    *fill_editor = LIGMA_FILL_EDITOR (object);
+  LigmaStrokeEditor  *editor      = LIGMA_STROKE_EDITOR (object);
+  LigmaStrokeOptions *options;
+  LigmaEnumStore     *store;
   GEnumClass        *enum_class;
   GEnumValue        *value;
   GtkWidget         *scale;
@@ -120,9 +120,9 @@ gimp_stroke_editor_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_assert (GIMP_IS_STROKE_OPTIONS (fill_editor->options));
+  ligma_assert (LIGMA_IS_STROKE_OPTIONS (fill_editor->options));
 
-  options = GIMP_STROKE_OPTIONS (fill_editor->options);
+  options = LIGMA_STROKE_OPTIONS (fill_editor->options);
 
   box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (editor), box, FALSE, FALSE, 0);
@@ -132,18 +132,18 @@ gimp_stroke_editor_constructed (GObject *object)
   gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  size = gimp_prop_size_entry_new (G_OBJECT (options),
+  size = ligma_prop_size_entry_new (G_OBJECT (options),
                                    "width", FALSE, "unit",
-                                   "%a", GIMP_SIZE_ENTRY_UPDATE_SIZE,
+                                   "%a", LIGMA_SIZE_ENTRY_UPDATE_SIZE,
                                    editor->resolution);
-  gimp_size_entry_set_pixel_digits (GIMP_SIZE_ENTRY (size), 1);
+  ligma_size_entry_set_pixel_digits (LIGMA_SIZE_ENTRY (size), 1);
   gtk_box_pack_start (GTK_BOX (box), size, FALSE, FALSE, 0);
 
   expander = gtk_expander_new_with_mnemonic (_("_Line Style"));
   gtk_box_pack_start (GTK_BOX (editor), expander, FALSE, FALSE, 0);
   gtk_widget_show (expander);
 
-  frame = gimp_frame_new ("<expander>");
+  frame = ligma_frame_new ("<expander>");
   gtk_container_add (GTK_CONTAINER (expander), frame);
   gtk_widget_show (frame);
 
@@ -153,28 +153,28 @@ gimp_stroke_editor_constructed (GObject *object)
   gtk_container_add (GTK_CONTAINER (frame), grid);
   gtk_widget_show (grid);
 
-  box = gimp_prop_enum_icon_box_new (G_OBJECT (options), "cap-style",
-                                     "gimp-cap", 0, 0);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
+  box = ligma_prop_enum_icon_box_new (G_OBJECT (options), "cap-style",
+                                     "ligma-cap", 0, 0);
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, row++,
                             _("_Cap style:"), 0.0, 0.5,
                             box, 2);
 
-  box = gimp_prop_enum_icon_box_new (G_OBJECT (options), "join-style",
-                                     "gimp-join", 0, 0);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
+  box = ligma_prop_enum_icon_box_new (G_OBJECT (options), "join-style",
+                                     "ligma-join", 0, 0);
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, row++,
                             _("_Join style:"), 0.0, 0.5,
                             box, 2);
 
-  scale = gimp_prop_scale_entry_new (G_OBJECT (options), "miter-limit",
+  scale = ligma_prop_scale_entry_new (G_OBJECT (options), "miter-limit",
                                      NULL, 1.0, FALSE, 0.0, 0.0);
-  gtk_widget_hide (gimp_labeled_get_label (GIMP_LABELED (scale)));
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
+  gtk_widget_hide (ligma_labeled_get_label (LIGMA_LABELED (scale)));
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, row++,
                             _("_Miter limit:"),
                             0.0, 0.5, scale, 2);
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, row++,
                             _("Dash pattern:"), 0.0, 0.5,
                             frame, 2);
 
@@ -182,7 +182,7 @@ gimp_stroke_editor_constructed (GObject *object)
   gtk_container_add (GTK_CONTAINER (frame), box);
   gtk_widget_show (box);
 
-  dash_editor = gimp_dash_editor_new (options);
+  dash_editor = ligma_dash_editor_new (options);
 
   button = g_object_new (GTK_TYPE_BUTTON,
                          "width-request", 14,
@@ -191,10 +191,10 @@ gimp_stroke_editor_constructed (GObject *object)
   gtk_widget_show (button);
 
   g_signal_connect_object (button, "clicked",
-                           G_CALLBACK (gimp_dash_editor_shift_left),
+                           G_CALLBACK (ligma_dash_editor_shift_left),
                            dash_editor, G_CONNECT_SWAPPED);
   g_signal_connect_after (button, "draw",
-                          G_CALLBACK (gimp_stroke_editor_draw_button),
+                          G_CALLBACK (ligma_stroke_editor_draw_button),
                           button);
 
   gtk_box_pack_start (GTK_BOX (box), dash_editor, TRUE, TRUE, 0);
@@ -207,69 +207,69 @@ gimp_stroke_editor_constructed (GObject *object)
   gtk_widget_show (button);
 
   g_signal_connect_object (button, "clicked",
-                           G_CALLBACK (gimp_dash_editor_shift_right),
+                           G_CALLBACK (ligma_dash_editor_shift_right),
                            dash_editor, G_CONNECT_SWAPPED);
   g_signal_connect_after (button, "draw",
-                          G_CALLBACK (gimp_stroke_editor_draw_button),
+                          G_CALLBACK (ligma_stroke_editor_draw_button),
                           NULL);
 
 
-  store = g_object_new (GIMP_TYPE_ENUM_STORE,
-                        "enum-type",      GIMP_TYPE_DASH_PRESET,
-                        "user-data-type", GIMP_TYPE_DASH_PATTERN,
+  store = g_object_new (LIGMA_TYPE_ENUM_STORE,
+                        "enum-type",      LIGMA_TYPE_DASH_PRESET,
+                        "user-data-type", LIGMA_TYPE_DASH_PATTERN,
                         NULL);
 
-  enum_class = g_type_class_ref (GIMP_TYPE_DASH_PRESET);
+  enum_class = g_type_class_ref (LIGMA_TYPE_DASH_PRESET);
 
   for (value = enum_class->values; value->value_name; value++)
     {
       GtkTreeIter  iter = { 0, };
       const gchar *desc;
 
-      desc = gimp_enum_value_get_desc (enum_class, value);
+      desc = ligma_enum_value_get_desc (enum_class, value);
 
       gtk_list_store_append (GTK_LIST_STORE (store), &iter);
       gtk_list_store_set (GTK_LIST_STORE (store), &iter,
-                          GIMP_INT_STORE_VALUE, value->value,
-                          GIMP_INT_STORE_LABEL, desc,
+                          LIGMA_INT_STORE_VALUE, value->value,
+                          LIGMA_INT_STORE_LABEL, desc,
                           -1);
     }
 
   g_type_class_unref (enum_class);
 
-  box = gimp_enum_combo_box_new_with_model (store);
+  box = ligma_enum_combo_box_new_with_model (store);
   g_object_unref (store);
 
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (box), GIMP_DASH_CUSTOM);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
+  ligma_int_combo_box_set_active (LIGMA_INT_COMBO_BOX (box), LIGMA_DASH_CUSTOM);
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, row++,
                             _("Dash _preset:"), 0.0, 0.5,
                             box, 2);
 
-  cell = g_object_new (GIMP_TYPE_CELL_RENDERER_DASHES,
+  cell = g_object_new (LIGMA_TYPE_CELL_RENDERER_DASHES,
                        "xpad", 2,
                        NULL);
   gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (box), cell, FALSE);
   gtk_cell_layout_add_attribute (GTK_CELL_LAYOUT (box), cell,
-                                 "pattern", GIMP_INT_STORE_USER_DATA);
+                                 "pattern", LIGMA_INT_STORE_USER_DATA);
 
-  gimp_stroke_editor_combo_fill (options, GTK_COMBO_BOX (box));
+  ligma_stroke_editor_combo_fill (options, GTK_COMBO_BOX (box));
 
   g_signal_connect (box, "changed",
-                    G_CALLBACK (gimp_stroke_editor_dash_preset),
+                    G_CALLBACK (ligma_stroke_editor_dash_preset),
                     options);
   g_signal_connect_object (options, "dash-info-changed",
-                           G_CALLBACK (gimp_int_combo_box_set_active),
+                           G_CALLBACK (ligma_int_combo_box_set_active),
                            box, G_CONNECT_SWAPPED);
 }
 
 static void
-gimp_stroke_editor_set_property (GObject      *object,
+ligma_stroke_editor_set_property (GObject      *object,
                                  guint         property_id,
                                  const GValue *value,
                                  GParamSpec   *pspec)
 {
-  GimpFillEditor   *fill_editor = GIMP_FILL_EDITOR (object);
-  GimpStrokeEditor *editor      = GIMP_STROKE_EDITOR (object);
+  LigmaFillEditor   *fill_editor = LIGMA_FILL_EDITOR (object);
+  LigmaStrokeEditor *editor      = LIGMA_STROKE_EDITOR (object);
 
   switch (property_id)
     {
@@ -290,13 +290,13 @@ gimp_stroke_editor_set_property (GObject      *object,
 }
 
 static void
-gimp_stroke_editor_get_property (GObject    *object,
+ligma_stroke_editor_get_property (GObject    *object,
                                  guint       property_id,
                                  GValue     *value,
                                  GParamSpec *pspec)
 {
-  GimpFillEditor   *fill_editor = GIMP_FILL_EDITOR (object);
-  GimpStrokeEditor *editor      = GIMP_STROKE_EDITOR (object);
+  LigmaFillEditor   *fill_editor = LIGMA_FILL_EDITOR (object);
+  LigmaStrokeEditor *editor      = LIGMA_STROKE_EDITOR (object);
 
   switch (property_id)
     {
@@ -315,13 +315,13 @@ gimp_stroke_editor_get_property (GObject    *object,
 }
 
 GtkWidget *
-gimp_stroke_editor_new (GimpStrokeOptions *options,
+ligma_stroke_editor_new (LigmaStrokeOptions *options,
                         gdouble            resolution,
                         gboolean           edit_context)
 {
-  g_return_val_if_fail (GIMP_IS_STROKE_OPTIONS (options), NULL);
+  g_return_val_if_fail (LIGMA_IS_STROKE_OPTIONS (options), NULL);
 
-  return g_object_new (GIMP_TYPE_STROKE_EDITOR,
+  return g_object_new (LIGMA_TYPE_STROKE_EDITOR,
                        "options",      options,
                        "resolution",   resolution,
                        "edit-context", edit_context ? TRUE : FALSE,
@@ -329,7 +329,7 @@ gimp_stroke_editor_new (GimpStrokeOptions *options,
 }
 
 static gboolean
-gimp_stroke_editor_draw_button (GtkWidget *widget,
+ligma_stroke_editor_draw_button (GtkWidget *widget,
                                 cairo_t   *cr,
                                 gpointer   data)
 {
@@ -356,36 +356,36 @@ gimp_stroke_editor_draw_button (GtkWidget *widget,
 }
 
 static void
-gimp_stroke_editor_dash_preset (GtkWidget         *widget,
-                                GimpStrokeOptions *options)
+ligma_stroke_editor_dash_preset (GtkWidget         *widget,
+                                LigmaStrokeOptions *options)
 {
   gint value;
 
-  if (gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), &value) &&
-      value != GIMP_DASH_CUSTOM)
+  if (ligma_int_combo_box_get_active (LIGMA_INT_COMBO_BOX (widget), &value) &&
+      value != LIGMA_DASH_CUSTOM)
     {
-      gimp_stroke_options_take_dash_pattern (options, value, NULL);
+      ligma_stroke_options_take_dash_pattern (options, value, NULL);
     }
 }
 
 static void
-gimp_stroke_editor_combo_update (GtkTreeModel      *model,
+ligma_stroke_editor_combo_update (GtkTreeModel      *model,
                                  GParamSpec        *pspec,
-                                 GimpStrokeOptions *options)
+                                 LigmaStrokeOptions *options)
 {
   GtkTreeIter iter;
 
-  if (gimp_int_store_lookup_by_value (model, GIMP_DASH_CUSTOM, &iter))
+  if (ligma_int_store_lookup_by_value (model, LIGMA_DASH_CUSTOM, &iter))
     {
       gtk_list_store_set (GTK_LIST_STORE (model), &iter,
-                          GIMP_INT_STORE_USER_DATA,
-                          gimp_stroke_options_get_dash_info (options),
+                          LIGMA_INT_STORE_USER_DATA,
+                          ligma_stroke_options_get_dash_info (options),
                           -1);
     }
 }
 
 static void
-gimp_stroke_editor_combo_fill (GimpStrokeOptions *options,
+ligma_stroke_editor_combo_fill (LigmaStrokeOptions *options,
                                GtkComboBox       *box)
 {
   GtkTreeModel *model = gtk_combo_box_get_model (box);
@@ -399,28 +399,28 @@ gimp_stroke_editor_combo_fill (GimpStrokeOptions *options,
       gint value;
 
       gtk_tree_model_get (model, &iter,
-                          GIMP_INT_STORE_VALUE, &value,
+                          LIGMA_INT_STORE_VALUE, &value,
                           -1);
 
-      if (value == GIMP_DASH_CUSTOM)
+      if (value == LIGMA_DASH_CUSTOM)
         {
           gtk_list_store_set (GTK_LIST_STORE (model), &iter,
-                              GIMP_INT_STORE_USER_DATA,
-                              gimp_stroke_options_get_dash_info (options),
+                              LIGMA_INT_STORE_USER_DATA,
+                              ligma_stroke_options_get_dash_info (options),
                               -1);
 
           g_signal_connect_object (options, "notify::dash-info",
-                                   G_CALLBACK (gimp_stroke_editor_combo_update),
+                                   G_CALLBACK (ligma_stroke_editor_combo_update),
                                    model, G_CONNECT_SWAPPED);
         }
       else
         {
-          GArray *pattern = gimp_dash_pattern_new_from_preset (value);
+          GArray *pattern = ligma_dash_pattern_new_from_preset (value);
 
           gtk_list_store_set (GTK_LIST_STORE (model), &iter,
-                              GIMP_INT_STORE_USER_DATA, pattern,
+                              LIGMA_INT_STORE_USER_DATA, pattern,
                               -1);
-          gimp_dash_pattern_free (pattern);
+          ligma_dash_pattern_free (pattern);
         }
     }
 }

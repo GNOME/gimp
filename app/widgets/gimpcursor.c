@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -27,7 +27,7 @@
 
 #include "widgets-types.h"
 
-#include "gimpcursor.h"
+#include "ligmacursor.h"
 
 
 #define cursor_default_hot_x 10
@@ -43,9 +43,9 @@
 #define cursor_color_picker_hot_y 30
 
 
-typedef struct _GimpCursor GimpCursor;
+typedef struct _LigmaCursor LigmaCursor;
 
-struct _GimpCursor
+struct _LigmaCursor
 {
   const gchar *resource_name;
   const gint   hot_x;
@@ -56,9 +56,9 @@ struct _GimpCursor
 };
 
 
-static GimpCursor gimp_cursors[] =
+static LigmaCursor ligma_cursors[] =
 {
-  /* these have to match up with enum GimpCursorType in widgets-enums.h */
+  /* these have to match up with enum LigmaCursorType in widgets-enums.h */
 
   {
     "cursor-none",
@@ -162,9 +162,9 @@ static GimpCursor gimp_cursors[] =
   }
 };
 
-static GimpCursor gimp_tool_cursors[] =
+static LigmaCursor ligma_tool_cursors[] =
 {
-  /* these have to match up with enum GimpToolCursorType in widgets-enums.h */
+  /* these have to match up with enum LigmaToolCursorType in widgets-enums.h */
 
   { NULL },
   { "tool-rect-select" },
@@ -207,9 +207,9 @@ static GimpCursor gimp_tool_cursors[] =
   { "tool-hand" }
 };
 
-static GimpCursor gimp_cursor_modifiers[] =
+static LigmaCursor ligma_cursor_modifiers[] =
 {
-  /* these have to match up with enum GimpCursorModifier in widgets-enums.h */
+  /* these have to match up with enum LigmaCursorModifier in widgets-enums.h */
 
   { NULL },
   { "modifier-bad" },
@@ -231,7 +231,7 @@ static GimpCursor gimp_cursor_modifiers[] =
 
 
 static const GdkPixbuf *
-get_cursor_pixbuf (GimpCursor *cursor,
+get_cursor_pixbuf (LigmaCursor *cursor,
                    gint        scale_factor)
 {
   gchar  *resource_path;
@@ -239,7 +239,7 @@ get_cursor_pixbuf (GimpCursor *cursor,
 
   if (! cursor->pixbuf)
     {
-      resource_path = g_strconcat ("/org/gimp/tool-cursors/",
+      resource_path = g_strconcat ("/org/ligma/tool-cursors/",
                                    cursor->resource_name,
                                    ".png", NULL);
 
@@ -257,7 +257,7 @@ get_cursor_pixbuf (GimpCursor *cursor,
 
   if (scale_factor == 2 && ! cursor->pixbuf_x2)
     {
-      resource_path = g_strconcat ("/org/gimp/tool-cursors/",
+      resource_path = g_strconcat ("/org/ligma/tool-cursors/",
                                    cursor->resource_name,
                                    "-x2.png", NULL);
 
@@ -293,16 +293,16 @@ get_cursor_pixbuf (GimpCursor *cursor,
 }
 
 GdkCursor *
-gimp_cursor_new (GdkWindow          *window,
-                 GimpHandedness      cursor_handedness,
-                 GimpCursorType      cursor_type,
-                 GimpToolCursorType  tool_cursor,
-                 GimpCursorModifier  modifier)
+ligma_cursor_new (GdkWindow          *window,
+                 LigmaHandedness      cursor_handedness,
+                 LigmaCursorType      cursor_type,
+                 LigmaToolCursorType  tool_cursor,
+                 LigmaCursorModifier  modifier)
 {
   GdkDisplay *display;
-  GimpCursor *bmcursor   = NULL;
-  GimpCursor *bmmodifier = NULL;
-  GimpCursor *bmtool     = NULL;
+  LigmaCursor *bmcursor   = NULL;
+  LigmaCursor *bmmodifier = NULL;
+  LigmaCursor *bmtool     = NULL;
   GdkCursor  *cursor;
   GdkPixbuf  *pixbuf;
   gint        scale_factor;
@@ -310,85 +310,85 @@ gimp_cursor_new (GdkWindow          *window,
   gint        hot_y;
 
   g_return_val_if_fail (GDK_IS_WINDOW (window), NULL);
-  g_return_val_if_fail (cursor_type < GIMP_CURSOR_LAST, NULL);
+  g_return_val_if_fail (cursor_type < LIGMA_CURSOR_LAST, NULL);
 
   display = gdk_window_get_display (window);
 
-  if (cursor_type <= (GimpCursorType) GDK_LAST_CURSOR)
+  if (cursor_type <= (LigmaCursorType) GDK_LAST_CURSOR)
     return gdk_cursor_new_for_display (display, (GdkCursorType) cursor_type);
 
-  g_return_val_if_fail (cursor_type >= GIMP_CURSOR_NONE, NULL);
+  g_return_val_if_fail (cursor_type >= LIGMA_CURSOR_NONE, NULL);
 
   /*  disallow the small tool cursor with some cursors
    */
-  if (cursor_type <= GIMP_CURSOR_NONE         ||
-      cursor_type == GIMP_CURSOR_CROSSHAIR    ||
-      cursor_type == GIMP_CURSOR_ZOOM         ||
-      cursor_type == GIMP_CURSOR_COLOR_PICKER ||
-      cursor_type >= GIMP_CURSOR_LAST)
+  if (cursor_type <= LIGMA_CURSOR_NONE         ||
+      cursor_type == LIGMA_CURSOR_CROSSHAIR    ||
+      cursor_type == LIGMA_CURSOR_ZOOM         ||
+      cursor_type == LIGMA_CURSOR_COLOR_PICKER ||
+      cursor_type >= LIGMA_CURSOR_LAST)
     {
-      tool_cursor = GIMP_TOOL_CURSOR_NONE;
+      tool_cursor = LIGMA_TOOL_CURSOR_NONE;
     }
 
   /*  don't allow anything with the empty cursor
    */
-  if (cursor_type == GIMP_CURSOR_NONE)
+  if (cursor_type == LIGMA_CURSOR_NONE)
     {
-      tool_cursor = GIMP_TOOL_CURSOR_NONE;
-      modifier    = GIMP_CURSOR_MODIFIER_NONE;
+      tool_cursor = LIGMA_TOOL_CURSOR_NONE;
+      modifier    = LIGMA_CURSOR_MODIFIER_NONE;
     }
 
   /*  some more sanity checks
    */
-  if (cursor_type == GIMP_CURSOR_MOVE &&
-      modifier    == GIMP_CURSOR_MODIFIER_MOVE)
+  if (cursor_type == LIGMA_CURSOR_MOVE &&
+      modifier    == LIGMA_CURSOR_MODIFIER_MOVE)
     {
-      modifier = GIMP_CURSOR_MODIFIER_NONE;
+      modifier = LIGMA_CURSOR_MODIFIER_NONE;
     }
 
   /*  when cursor is "corner" or "side" sides must be exchanged for
    *  left-hand-mice-flipping of pixbuf below
    */
 
-  if (cursor_handedness == GIMP_HANDEDNESS_LEFT)
+  if (cursor_handedness == LIGMA_HANDEDNESS_LEFT)
     {
       switch (cursor_type)
         {
-        case GIMP_CURSOR_CORNER_TOP_LEFT:
-          cursor_type = GIMP_CURSOR_CORNER_TOP_RIGHT; break;
+        case LIGMA_CURSOR_CORNER_TOP_LEFT:
+          cursor_type = LIGMA_CURSOR_CORNER_TOP_RIGHT; break;
 
-        case GIMP_CURSOR_CORNER_TOP_RIGHT:
-          cursor_type = GIMP_CURSOR_CORNER_TOP_LEFT; break;
+        case LIGMA_CURSOR_CORNER_TOP_RIGHT:
+          cursor_type = LIGMA_CURSOR_CORNER_TOP_LEFT; break;
 
-        case GIMP_CURSOR_CORNER_LEFT:
-          cursor_type = GIMP_CURSOR_CORNER_RIGHT; break;
+        case LIGMA_CURSOR_CORNER_LEFT:
+          cursor_type = LIGMA_CURSOR_CORNER_RIGHT; break;
 
-        case GIMP_CURSOR_CORNER_RIGHT:
-          cursor_type = GIMP_CURSOR_CORNER_LEFT; break;
+        case LIGMA_CURSOR_CORNER_RIGHT:
+          cursor_type = LIGMA_CURSOR_CORNER_LEFT; break;
 
-        case GIMP_CURSOR_CORNER_BOTTOM_LEFT:
-          cursor_type = GIMP_CURSOR_CORNER_BOTTOM_RIGHT; break;
+        case LIGMA_CURSOR_CORNER_BOTTOM_LEFT:
+          cursor_type = LIGMA_CURSOR_CORNER_BOTTOM_RIGHT; break;
 
-        case GIMP_CURSOR_CORNER_BOTTOM_RIGHT:
-          cursor_type = GIMP_CURSOR_CORNER_BOTTOM_LEFT; break;
+        case LIGMA_CURSOR_CORNER_BOTTOM_RIGHT:
+          cursor_type = LIGMA_CURSOR_CORNER_BOTTOM_LEFT; break;
 
-        case GIMP_CURSOR_SIDE_TOP_LEFT:
-          cursor_type = GIMP_CURSOR_SIDE_TOP_RIGHT; break;
+        case LIGMA_CURSOR_SIDE_TOP_LEFT:
+          cursor_type = LIGMA_CURSOR_SIDE_TOP_RIGHT; break;
 
-        case GIMP_CURSOR_SIDE_TOP_RIGHT:
-          cursor_type = GIMP_CURSOR_SIDE_TOP_LEFT; break;
+        case LIGMA_CURSOR_SIDE_TOP_RIGHT:
+          cursor_type = LIGMA_CURSOR_SIDE_TOP_LEFT; break;
 
-        case GIMP_CURSOR_SIDE_LEFT:
-          cursor_type = GIMP_CURSOR_SIDE_RIGHT; break;
+        case LIGMA_CURSOR_SIDE_LEFT:
+          cursor_type = LIGMA_CURSOR_SIDE_RIGHT; break;
 
-        case GIMP_CURSOR_SIDE_RIGHT:
-          cursor_type = GIMP_CURSOR_SIDE_LEFT; break;
+        case LIGMA_CURSOR_SIDE_RIGHT:
+          cursor_type = LIGMA_CURSOR_SIDE_LEFT; break;
 
-        case GIMP_CURSOR_SIDE_BOTTOM_LEFT:
-          cursor_type = GIMP_CURSOR_SIDE_BOTTOM_RIGHT; break;
+        case LIGMA_CURSOR_SIDE_BOTTOM_LEFT:
+          cursor_type = LIGMA_CURSOR_SIDE_BOTTOM_RIGHT; break;
 
-        case GIMP_CURSOR_SIDE_BOTTOM_RIGHT:
-          cursor_type = GIMP_CURSOR_SIDE_BOTTOM_LEFT; break;
+        case LIGMA_CURSOR_SIDE_BOTTOM_RIGHT:
+          cursor_type = LIGMA_CURSOR_SIDE_BOTTOM_LEFT; break;
 
         default:
           break;
@@ -397,23 +397,23 @@ gimp_cursor_new (GdkWindow          *window,
 
   /*  prepare the main cursor  */
 
-  cursor_type -= GIMP_CURSOR_NONE;
-  bmcursor = &gimp_cursors[cursor_type];
+  cursor_type -= LIGMA_CURSOR_NONE;
+  bmcursor = &ligma_cursors[cursor_type];
 
   /*  prepare the tool cursor  */
 
-  if (tool_cursor > GIMP_TOOL_CURSOR_NONE &&
-      tool_cursor < GIMP_TOOL_CURSOR_LAST)
+  if (tool_cursor > LIGMA_TOOL_CURSOR_NONE &&
+      tool_cursor < LIGMA_TOOL_CURSOR_LAST)
     {
-      bmtool = &gimp_tool_cursors[tool_cursor];
+      bmtool = &ligma_tool_cursors[tool_cursor];
     }
 
   /*  prepare the cursor modifier  */
 
-  if (modifier > GIMP_CURSOR_MODIFIER_NONE &&
-      modifier < GIMP_CURSOR_MODIFIER_LAST)
+  if (modifier > LIGMA_CURSOR_MODIFIER_NONE &&
+      modifier < LIGMA_CURSOR_MODIFIER_LAST)
     {
-      bmmodifier = &gimp_cursor_modifiers[modifier];
+      bmmodifier = &ligma_cursor_modifiers[modifier];
     }
 
   scale_factor = gdk_window_get_scale_factor (window);
@@ -448,7 +448,7 @@ gimp_cursor_new (GdkWindow          *window,
 
   /*  flip the cursor if mouse setting is left-handed  */
 
-  if (cursor_handedness == GIMP_HANDEDNESS_LEFT)
+  if (cursor_handedness == LIGMA_HANDEDNESS_LEFT)
     {
       GdkPixbuf *flipped = gdk_pixbuf_flip (pixbuf, TRUE);
       gint       width   = gdk_pixbuf_get_width (flipped);
@@ -473,7 +473,7 @@ gimp_cursor_new (GdkWindow          *window,
        * Windows doesn't handle scaled cursors at all
        * Broadway does not appear to support surface cursors at all,
        * let alone scaled surface cursors.
-       * https://gitlab.gnome.org/GNOME/gimp/-/merge_requests/545#note_1388777
+       * https://gitlab.gnome.org/GNOME/ligma/-/merge_requests/545#note_1388777
        */
       if (FALSE                            ||
 #ifdef GDK_WINDOWING_WAYLAND
@@ -505,11 +505,11 @@ gimp_cursor_new (GdkWindow          *window,
 }
 
 void
-gimp_cursor_set (GtkWidget          *widget,
-                 GimpHandedness      cursor_handedness,
-                 GimpCursorType      cursor_type,
-                 GimpToolCursorType  tool_cursor,
-                 GimpCursorModifier  modifier)
+ligma_cursor_set (GtkWidget          *widget,
+                 LigmaHandedness      cursor_handedness,
+                 LigmaCursorType      cursor_type,
+                 LigmaToolCursorType  tool_cursor,
+                 LigmaCursorModifier  modifier)
 {
   GdkWindow *window;
   GdkCursor *cursor;
@@ -519,7 +519,7 @@ gimp_cursor_set (GtkWidget          *widget,
 
   window = gtk_widget_get_window (widget);
 
-  cursor = gimp_cursor_new (window,
+  cursor = ligma_cursor_new (window,
                             cursor_handedness,
                             cursor_type,
                             tool_cursor,
@@ -530,27 +530,27 @@ gimp_cursor_set (GtkWidget          *widget,
   gdk_display_flush (gdk_window_get_display (window));
 }
 
-GimpCursorType
-gimp_cursor_rotate (GimpCursorType  cursor,
+LigmaCursorType
+ligma_cursor_rotate (LigmaCursorType  cursor,
                     gdouble         angle)
 {
-  if (cursor >= GIMP_CURSOR_CORNER_TOP &&
-      cursor <= GIMP_CURSOR_SIDE_TOP_LEFT)
+  if (cursor >= LIGMA_CURSOR_CORNER_TOP &&
+      cursor <= LIGMA_CURSOR_SIDE_TOP_LEFT)
     {
       gint offset = (gint) (angle / 45 + 0.5);
 
-      if (cursor < GIMP_CURSOR_SIDE_TOP)
+      if (cursor < LIGMA_CURSOR_SIDE_TOP)
         {
           cursor += offset;
 
-          if (cursor > GIMP_CURSOR_CORNER_TOP_LEFT)
+          if (cursor > LIGMA_CURSOR_CORNER_TOP_LEFT)
             cursor -= 8;
         }
       else
         {
           cursor += offset;
 
-          if (cursor > GIMP_CURSOR_SIDE_TOP_LEFT)
+          if (cursor > LIGMA_CURSOR_SIDE_TOP_LEFT)
             cursor -= 8;
         }
    }

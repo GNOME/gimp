@@ -2,7 +2,7 @@
 
 use warnings;
 
-# This is gimp-mkenums, a perl script based on glib-mkenums.
+# This is ligma-mkenums, a perl script based on glib-mkenums.
 # It can be used just like glib-mkenums but offers one extra
 # feature: The keyword "desc" is recognized in trigraphs and
 # allows to specify a literal description of the enum value.
@@ -13,7 +13,7 @@ use warnings;
 use Text::ParseWords;
 use File::Basename;
 
-# gimp-mkenums
+# ligma-mkenums
 # Information about the current enumeration
 my $flags;                      # Is enumeration a bitmask?
 my $option_lowercase_name;      # A lower case name to use as part of the *_get_type() function, instead of the one that we guess.
@@ -145,15 +145,15 @@ sub parse_entries {
 }
 
 sub version {
-    print STDERR "gimp-mkenums based on glib-mkenums version glib-2.0\n";
-    print STDERR "gimp-mkenums comes with ABSOLUTELY NO WARRANTY.\n";
-    print STDERR "You may redistribute copies of gimp-mkenums under the terms\n";
+    print STDERR "ligma-mkenums based on glib-mkenums version glib-2.0\n";
+    print STDERR "ligma-mkenums comes with ABSOLUTELY NO WARRANTY.\n";
+    print STDERR "You may redistribute copies of ligma-mkenums under the terms\n";
     print STDERR "of the GNU General Public License which can be found in the\n";
-    print STDERR "GIMP source package.";
+    print STDERR "LIGMA source package.";
     exit 0;
 }
 sub usage {
-    print STDERR "Usage: gimp-mkenums [options] [files...]\n";
+    print STDERR "Usage: ligma-mkenums [options] [files...]\n";
     print STDERR "  --fhead <text>             output file header\n";
     print STDERR "  --fprod <text>             per input file production\n";
     print STDERR "  --ftail <text>             output file trailer\n";
@@ -229,7 +229,7 @@ while ($_ = $ARGV[0], /^-/) {
 # put auto-generation comment
 {
     my $comment = $comment_tmpl;
-    $comment =~ s/\@comment\@/Generated data (by gimp-mkenums)/;
+    $comment =~ s/\@comment\@/Generated data (by ligma-mkenums)/;
     print "\n" . $comment . "\n\n";
 }
 

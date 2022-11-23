@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationreplace.c
- * Copyright (C) 2008 Michael Natterer <mitch@gimp.org>
+ * ligmaoperationreplace.c
+ * Copyright (C) 2008 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,18 +26,18 @@
 
 #include "../operations-types.h"
 
-#include "gimp-layer-modes.h"
-#include "gimpoperationreplace.h"
+#include "ligma-layer-modes.h"
+#include "ligmaoperationreplace.h"
 
 
-static GeglRectangle              gimp_operation_replace_get_bounding_box    (GeglOperation        *op);
+static GeglRectangle              ligma_operation_replace_get_bounding_box    (GeglOperation        *op);
 
-static gboolean                   gimp_operation_replace_parent_process      (GeglOperation        *op,
+static gboolean                   ligma_operation_replace_parent_process      (GeglOperation        *op,
                                                                               GeglOperationContext *context,
                                                                               const gchar          *output_prop,
                                                                               const GeglRectangle  *result,
                                                                               gint                  level);
-static gboolean                   gimp_operation_replace_process             (GeglOperation          *op,
+static gboolean                   ligma_operation_replace_process             (GeglOperation          *op,
                                                                               void                   *in,
                                                                               void                   *layer,
                                                                               void                   *mask,
@@ -45,49 +45,49 @@ static gboolean                   gimp_operation_replace_process             (Ge
                                                                               glong                   samples,
                                                                               const GeglRectangle    *roi,
                                                                               gint                    level);
-static GimpLayerCompositeRegion   gimp_operation_replace_get_affected_region (GimpOperationLayerMode *layer_mode);
+static LigmaLayerCompositeRegion   ligma_operation_replace_get_affected_region (LigmaOperationLayerMode *layer_mode);
 
 
-G_DEFINE_TYPE (GimpOperationReplace, gimp_operation_replace,
-               GIMP_TYPE_OPERATION_LAYER_MODE)
+G_DEFINE_TYPE (LigmaOperationReplace, ligma_operation_replace,
+               LIGMA_TYPE_OPERATION_LAYER_MODE)
 
-#define parent_class gimp_operation_replace_parent_class
+#define parent_class ligma_operation_replace_parent_class
 
 
 static void
-gimp_operation_replace_class_init (GimpOperationReplaceClass *klass)
+ligma_operation_replace_class_init (LigmaOperationReplaceClass *klass)
 {
   GeglOperationClass          *operation_class  = GEGL_OPERATION_CLASS (klass);
-  GimpOperationLayerModeClass *layer_mode_class = GIMP_OPERATION_LAYER_MODE_CLASS (klass);
+  LigmaOperationLayerModeClass *layer_mode_class = LIGMA_OPERATION_LAYER_MODE_CLASS (klass);
 
   gegl_operation_class_set_keys (operation_class,
-                                 "name",        "gimp:replace",
-                                 "description", "GIMP replace mode operation",
+                                 "name",        "ligma:replace",
+                                 "description", "LIGMA replace mode operation",
                                  NULL);
 
-  operation_class->get_bounding_box     = gimp_operation_replace_get_bounding_box;
+  operation_class->get_bounding_box     = ligma_operation_replace_get_bounding_box;
 
-  layer_mode_class->parent_process      = gimp_operation_replace_parent_process;
-  layer_mode_class->process             = gimp_operation_replace_process;
-  layer_mode_class->get_affected_region = gimp_operation_replace_get_affected_region;
+  layer_mode_class->parent_process      = ligma_operation_replace_parent_process;
+  layer_mode_class->process             = ligma_operation_replace_process;
+  layer_mode_class->get_affected_region = ligma_operation_replace_get_affected_region;
 }
 
 static void
-gimp_operation_replace_init (GimpOperationReplace *self)
+ligma_operation_replace_init (LigmaOperationReplace *self)
 {
 }
 
 static GeglRectangle
-gimp_operation_replace_get_bounding_box (GeglOperation *op)
+ligma_operation_replace_get_bounding_box (GeglOperation *op)
 {
-  GimpOperationLayerMode   *self     = (gpointer) op;
+  LigmaOperationLayerMode   *self     = (gpointer) op;
   GeglRectangle            *in_rect;
   GeglRectangle            *aux_rect;
   GeglRectangle            *aux2_rect;
   GeglRectangle             src_rect = {};
   GeglRectangle             dst_rect = {};
   GeglRectangle             result;
-  GimpLayerCompositeRegion  included_region;
+  LigmaLayerCompositeRegion  included_region;
 
   in_rect   = gegl_operation_source_get_bounding_box (op, "input");
   aux_rect  = gegl_operation_source_get_bounding_box (op, "aux");
@@ -106,41 +106,41 @@ gimp_operation_replace_get_bounding_box (GeglOperation *op)
 
   if (self->is_last_node)
     {
-      included_region = GIMP_LAYER_COMPOSITE_REGION_SOURCE;
+      included_region = LIGMA_LAYER_COMPOSITE_REGION_SOURCE;
     }
   else
     {
-      included_region = gimp_layer_mode_get_included_region (self->layer_mode,
+      included_region = ligma_layer_mode_get_included_region (self->layer_mode,
                                                              self->composite_mode);
     }
 
   if (self->prop_opacity == 0.0)
-    included_region &= ~GIMP_LAYER_COMPOSITE_REGION_SOURCE;
+    included_region &= ~LIGMA_LAYER_COMPOSITE_REGION_SOURCE;
   else if (self->prop_opacity == 1.0 && ! aux2_rect)
-    included_region &= ~GIMP_LAYER_COMPOSITE_REGION_DESTINATION;
+    included_region &= ~LIGMA_LAYER_COMPOSITE_REGION_DESTINATION;
 
   gegl_rectangle_intersect (&result, &src_rect, &dst_rect);
 
-  if (included_region & GIMP_LAYER_COMPOSITE_REGION_SOURCE)
+  if (included_region & LIGMA_LAYER_COMPOSITE_REGION_SOURCE)
     gegl_rectangle_bounding_box (&result, &result, &src_rect);
 
-  if (included_region & GIMP_LAYER_COMPOSITE_REGION_DESTINATION)
+  if (included_region & LIGMA_LAYER_COMPOSITE_REGION_DESTINATION)
     gegl_rectangle_bounding_box (&result, &result, &dst_rect);
 
   return result;
 }
 
 static gboolean
-gimp_operation_replace_parent_process (GeglOperation        *op,
+ligma_operation_replace_parent_process (GeglOperation        *op,
                                        GeglOperationContext *context,
                                        const gchar          *output_prop,
                                        const GeglRectangle  *result,
                                        gint                  level)
 {
-  GimpOperationLayerMode   *layer_mode = (gpointer) op;
-  GimpLayerCompositeRegion  included_region;
+  LigmaOperationLayerMode   *layer_mode = (gpointer) op;
+  LigmaLayerCompositeRegion  included_region;
 
-  included_region = gimp_layer_mode_get_included_region
+  included_region = ligma_layer_mode_get_included_region
     (layer_mode->layer_mode, layer_mode->composite_mode);
 
   /* if the layer's opacity is 100%, it has no mask, and its composite mode
@@ -149,7 +149,7 @@ gimp_operation_replace_parent_process (GeglOperation        *op,
    */
   if (layer_mode->opacity == 1.0                       &&
       ! gegl_operation_context_get_object (context, "aux2") &&
-      (included_region & GIMP_LAYER_COMPOSITE_REGION_SOURCE))
+      (included_region & LIGMA_LAYER_COMPOSITE_REGION_SOURCE))
     {
       GObject *aux;
 
@@ -160,7 +160,7 @@ gimp_operation_replace_parent_process (GeglOperation        *op,
       return TRUE;
     }
   /* the opposite case, where the opacity is 0%, is handled by
-   * GimpOperationLayerMode.
+   * LigmaOperationLayerMode.
    */
   else if (layer_mode->opacity == 0.0)
     {
@@ -170,7 +170,7 @@ gimp_operation_replace_parent_process (GeglOperation        *op,
    * same abyss (or if the abyss is irrelevant) -- we can just pass either of
    * them directly as output.
    */
-  else if (included_region == GIMP_LAYER_COMPOSITE_REGION_UNION)
+  else if (included_region == LIGMA_LAYER_COMPOSITE_REGION_UNION)
     {
       GObject *input;
       GObject *aux;
@@ -215,12 +215,12 @@ gimp_operation_replace_parent_process (GeglOperation        *op,
         }
     }
 
-  return GIMP_OPERATION_LAYER_MODE_CLASS (parent_class)->parent_process (
+  return LIGMA_OPERATION_LAYER_MODE_CLASS (parent_class)->parent_process (
     op, context, output_prop, result, level);
 }
 
 static gboolean
-gimp_operation_replace_process (GeglOperation       *op,
+ligma_operation_replace_process (GeglOperation       *op,
                                 void                *in_p,
                                 void                *layer_p,
                                 void                *mask_p,
@@ -229,7 +229,7 @@ gimp_operation_replace_process (GeglOperation       *op,
                                 const GeglRectangle *roi,
                                 gint                 level)
 {
-  GimpOperationLayerMode *layer_mode = (gpointer) op;
+  LigmaOperationLayerMode *layer_mode = (gpointer) op;
   gfloat                 *in         = in_p;
   gfloat                 *out        = out_p;
   gfloat                 *layer      = layer_p;
@@ -239,8 +239,8 @@ gimp_operation_replace_process (GeglOperation       *op,
 
   switch (layer_mode->composite_mode)
     {
-    case GIMP_LAYER_COMPOSITE_UNION:
-    case GIMP_LAYER_COMPOSITE_AUTO:
+    case LIGMA_LAYER_COMPOSITE_UNION:
+    case LIGMA_LAYER_COMPOSITE_AUTO:
       while (samples--)
         {
           gfloat opacity_value = opacity;
@@ -272,7 +272,7 @@ gimp_operation_replace_process (GeglOperation       *op,
         }
       break;
 
-    case GIMP_LAYER_COMPOSITE_CLIP_TO_BACKDROP:
+    case LIGMA_LAYER_COMPOSITE_CLIP_TO_BACKDROP:
       while (samples--)
         {
           gfloat opacity_value = opacity;
@@ -297,7 +297,7 @@ gimp_operation_replace_process (GeglOperation       *op,
         }
       break;
 
-    case GIMP_LAYER_COMPOSITE_CLIP_TO_LAYER:
+    case LIGMA_LAYER_COMPOSITE_CLIP_TO_LAYER:
       while (samples--)
         {
           gfloat opacity_value = opacity;
@@ -323,7 +323,7 @@ gimp_operation_replace_process (GeglOperation       *op,
         }
       break;
 
-    case GIMP_LAYER_COMPOSITE_INTERSECTION:
+    case LIGMA_LAYER_COMPOSITE_INTERSECTION:
       memset (out, 0, 4 * samples * sizeof (gfloat));
       break;
     }
@@ -331,13 +331,13 @@ gimp_operation_replace_process (GeglOperation       *op,
   return TRUE;
 }
 
-static GimpLayerCompositeRegion
-gimp_operation_replace_get_affected_region (GimpOperationLayerMode *layer_mode)
+static LigmaLayerCompositeRegion
+ligma_operation_replace_get_affected_region (LigmaOperationLayerMode *layer_mode)
 {
-  GimpLayerCompositeRegion affected_region = GIMP_LAYER_COMPOSITE_REGION_INTERSECTION;
+  LigmaLayerCompositeRegion affected_region = LIGMA_LAYER_COMPOSITE_REGION_INTERSECTION;
 
   if (layer_mode->prop_opacity != 0.0)
-    affected_region |= GIMP_LAYER_COMPOSITE_REGION_DESTINATION;
+    affected_region |= LIGMA_LAYER_COMPOSITE_REGION_DESTINATION;
 
   /* if opacity != 1.0, or we have a mask, then we also affect SOURCE, but this
    * is considered the case anyway, so no need for special handling.

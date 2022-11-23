@@ -14,8 +14,8 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import gi
-gi.require_version('Gimp', '3.0')
-from gi.repository import Gimp
+gi.require_version('Ligma', '3.0')
+from gi.repository import Ligma
 from gi.repository import GObject
 from gi.repository import GLib
 from gi.repository import Gio
@@ -26,10 +26,10 @@ def _(message): return GLib.dgettext(None, message)
 
 
 def make_gradient(palette, num_segments, num_colors):
-    gradient = Gimp.gradient_new(palette)
+    gradient = Ligma.gradient_new(palette)
 
     if (num_segments > 1):
-        Gimp.gradient_segment_range_split_uniform(gradient, 0, -1,
+        Ligma.gradient_segment_range_split_uniform(gradient, 0, -1,
                                                   num_segments)
 
     for color_number in range(0,num_segments):
@@ -37,15 +37,15 @@ def make_gradient(palette, num_segments, num_colors):
             color_number_next = 0
         else:
             color_number_next = color_number + 1
-        _, color_left = Gimp.palette_entry_get_color(palette, color_number)
-        _, color_right = Gimp.palette_entry_get_color(palette, color_number_next)
-        Gimp.gradient_segment_set_left_color(gradient,
+        _, color_left = Ligma.palette_entry_get_color(palette, color_number)
+        _, color_right = Ligma.palette_entry_get_color(palette, color_number_next)
+        Ligma.gradient_segment_set_left_color(gradient,
                                              color_number, color_left,
                                              100.0)
-        Gimp.gradient_segment_set_right_color(gradient,
+        Ligma.gradient_segment_set_right_color(gradient,
                                               color_number, color_right,
                                               100.0)
-    Gimp.context_set_gradient(gradient)
+    Ligma.context_set_gradient(gradient)
     return gradient
 
 def run(procedure, args, data):
@@ -54,11 +54,11 @@ def run(procedure, args, data):
     if args.length() > 1:
         palette = args.index(1)
     if palette == '' or palette is None:
-        palette = Gimp.context_get_palette()
-    (exists, num_colors) = Gimp.palette_get_info(palette)
+        palette = Ligma.context_get_palette()
+    (exists, num_colors) = Ligma.palette_get_info(palette)
     if not exists:
         error = 'Unknown palette: {}'.format(palette)
-        return procedure.new_return_values(Gimp.PDBStatusType.CALLING_ERROR,
+        return procedure.new_return_values(Ligma.PDBStatusType.CALLING_ERROR,
                                            GLib.Error(error))
 
     if procedure.get_name() == 'python-fu-palette-to-gradient':
@@ -71,9 +71,9 @@ def run(procedure, args, data):
     # Unfortunately even though the argument is (nullable), pygobject
     # looks like it may have a bug. So workaround is to just set a
     # generic GLib.Error() since anyway the error won't be process with
-    # GIMP_PDB_SUCCESS status.
+    # LIGMA_PDB_SUCCESS status.
     # See pygobject#351
-    retval = procedure.new_return_values(Gimp.PDBStatusType.SUCCESS, GLib.Error())
+    retval = procedure.new_return_values(Ligma.PDBStatusType.SUCCESS, GLib.Error())
 
     # XXX: I don't try to get the GValue with retval.index(1) because it
     # actually return a string (cf. pygobject#353). Just create a new
@@ -84,10 +84,10 @@ def run(procedure, args, data):
 
     return retval
 
-class PaletteToGradient (Gimp.PlugIn):
+class PaletteToGradient (Ligma.PlugIn):
     ## Parameter: run mode ##
-    @GObject.Property(type=Gimp.RunMode,
-                      default=Gimp.RunMode.NONINTERACTIVE,
+    @GObject.Property(type=Ligma.RunMode,
+                      default=Ligma.RunMode.NONINTERACTIVE,
                       nick="Run mode", blurb="The run mode")
     def run_mode(self):
         '''The run mode (unused)'''
@@ -122,17 +122,17 @@ class PaletteToGradient (Gimp.PlugIn):
     def new_gradient(self, new_gradient):
         self.new_gradient = new_gradient
 
-    ## GimpPlugIn virtual methods ##
+    ## LigmaPlugIn virtual methods ##
     def do_set_i18n(self, procname):
-        return True, 'gimp30-python', None
+        return True, 'ligma30-python', None
 
     def do_query_procedures(self):
         return ['python-fu-palette-to-gradient',
                 'python-fu-palette-to-gradient-repeating']
 
     def do_create_procedure(self, name):
-        procedure = Gimp.Procedure.new(self, name,
-                                       Gimp.PDBProcType.PLUGIN,
+        procedure = Ligma.Procedure.new(self, name,
+                                       Ligma.PDBProcType.PLUGIN,
                                        run, None)
         if name == 'python-fu-palette-to-gradient':
             procedure.set_menu_label(_("Palette to _Gradient"))
@@ -161,4 +161,4 @@ class PaletteToGradient (Gimp.PlugIn):
 
         return procedure
 
-Gimp.main(PaletteToGradient.__gtype__, sys.argv)
+Ligma.main(PaletteToGradient.__gtype__, sys.argv)

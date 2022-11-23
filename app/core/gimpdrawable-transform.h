@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-2001 Spencer Kimball, Peter Mattis, and others
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,80 +15,80 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DRAWABLE_TRANSFORM_H__
-#define __GIMP_DRAWABLE_TRANSFORM_H__
+#ifndef __LIGMA_DRAWABLE_TRANSFORM_H__
+#define __LIGMA_DRAWABLE_TRANSFORM_H__
 
 
-GeglBuffer          * gimp_drawable_transform_buffer_affine      (GimpDrawable            *drawable,
-                                                                  GimpContext             *context,
+GeglBuffer          * ligma_drawable_transform_buffer_affine      (LigmaDrawable            *drawable,
+                                                                  LigmaContext             *context,
                                                                   GeglBuffer              *orig_buffer,
                                                                   gint                     orig_offset_x,
                                                                   gint                     orig_offset_y,
-                                                                  const GimpMatrix3       *matrix,
-                                                                  GimpTransformDirection   direction,
-                                                                  GimpInterpolationType    interpolation_type,
-                                                                  GimpTransformResize      clip_result,
-                                                                  GimpColorProfile       **buffer_profile,
+                                                                  const LigmaMatrix3       *matrix,
+                                                                  LigmaTransformDirection   direction,
+                                                                  LigmaInterpolationType    interpolation_type,
+                                                                  LigmaTransformResize      clip_result,
+                                                                  LigmaColorProfile       **buffer_profile,
                                                                   gint                    *new_offset_x,
                                                                   gint                    *new_offset_y,
-                                                                  GimpProgress            *progress);
-GeglBuffer          * gimp_drawable_transform_buffer_flip        (GimpDrawable            *drawable,
-                                                                  GimpContext             *context,
+                                                                  LigmaProgress            *progress);
+GeglBuffer          * ligma_drawable_transform_buffer_flip        (LigmaDrawable            *drawable,
+                                                                  LigmaContext             *context,
                                                                   GeglBuffer              *orig_buffer,
                                                                   gint                     orig_offset_x,
                                                                   gint                     orig_offset_y,
-                                                                  GimpOrientationType      flip_type,
+                                                                  LigmaOrientationType      flip_type,
                                                                   gdouble                  axis,
                                                                   gboolean                 clip_result,
-                                                                  GimpColorProfile       **buffer_profile,
+                                                                  LigmaColorProfile       **buffer_profile,
                                                                   gint                    *new_offset_x,
                                                                   gint                    *new_offset_y);
 
-GeglBuffer          * gimp_drawable_transform_buffer_rotate      (GimpDrawable            *drawable,
-                                                                  GimpContext             *context,
+GeglBuffer          * ligma_drawable_transform_buffer_rotate      (LigmaDrawable            *drawable,
+                                                                  LigmaContext             *context,
                                                                   GeglBuffer              *buffer,
                                                                   gint                     orig_offset_x,
                                                                   gint                     orig_offset_y,
-                                                                  GimpRotationType         rotate_type,
+                                                                  LigmaRotationType         rotate_type,
                                                                   gdouble                  center_x,
                                                                   gdouble                  center_y,
                                                                   gboolean                 clip_result,
-                                                                  GimpColorProfile       **buffer_profile,
+                                                                  LigmaColorProfile       **buffer_profile,
                                                                   gint                    *new_offset_x,
                                                                   gint                    *new_offset_y);
 
-GimpDrawable         * gimp_drawable_transform_affine            (GimpDrawable            *drawable,
-                                                                  GimpContext             *context,
-                                                                  const GimpMatrix3       *matrix,
-                                                                  GimpTransformDirection   direction,
-                                                                  GimpInterpolationType    interpolation_type,
-                                                                  GimpTransformResize      clip_result,
-                                                                  GimpProgress            *progress);
+LigmaDrawable         * ligma_drawable_transform_affine            (LigmaDrawable            *drawable,
+                                                                  LigmaContext             *context,
+                                                                  const LigmaMatrix3       *matrix,
+                                                                  LigmaTransformDirection   direction,
+                                                                  LigmaInterpolationType    interpolation_type,
+                                                                  LigmaTransformResize      clip_result,
+                                                                  LigmaProgress            *progress);
 
-GimpDrawable         * gimp_drawable_transform_flip              (GimpDrawable            *drawable,
-                                                                  GimpContext             *context,
-                                                                  GimpOrientationType      flip_type,
+LigmaDrawable         * ligma_drawable_transform_flip              (LigmaDrawable            *drawable,
+                                                                  LigmaContext             *context,
+                                                                  LigmaOrientationType      flip_type,
                                                                   gdouble                  axis,
                                                                   gboolean                 clip_result);
 
-GimpDrawable         * gimp_drawable_transform_rotate            (GimpDrawable            *drawable,
-                                                                  GimpContext             *context,
-                                                                  GimpRotationType         rotate_type,
+LigmaDrawable         * ligma_drawable_transform_rotate            (LigmaDrawable            *drawable,
+                                                                  LigmaContext             *context,
+                                                                  LigmaRotationType         rotate_type,
                                                                   gdouble                  center_x,
                                                                   gdouble                  center_y,
                                                                   gboolean                 clip_result);
 
-GeglBuffer           * gimp_drawable_transform_cut               (GList                   *drawables,
-                                                                  GimpContext             *context,
+GeglBuffer           * ligma_drawable_transform_cut               (GList                   *drawables,
+                                                                  LigmaContext             *context,
                                                                   gint                    *offset_x,
                                                                   gint                    *offset_y,
                                                                   gboolean                *new_layer);
-GimpDrawable         * gimp_drawable_transform_paste             (GimpDrawable            *drawable,
+LigmaDrawable         * ligma_drawable_transform_paste             (LigmaDrawable            *drawable,
                                                                   GeglBuffer              *buffer,
-                                                                  GimpColorProfile        *buffer_profile,
+                                                                  LigmaColorProfile        *buffer_profile,
                                                                   gint                     offset_x,
                                                                   gint                     offset_y,
                                                                   gboolean                 new_layer);
 
 
-#endif  /*  __GIMP_DRAWABLE_TRANSFORM_H__  */
+#endif  /*  __LIGMA_DRAWABLE_TRANSFORM_H__  */

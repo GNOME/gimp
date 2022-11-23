@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,12 +19,12 @@
 #define __GUI_UNIQUE_H__
 
 #ifdef G_OS_WIN32
-#define GIMP_UNIQUE_WIN32_WINDOW_CLASS  L"GimpWin32UniqueHandler"
-#define GIMP_UNIQUE_WIN32_WINDOW_NAME   L"GimpProxy"
+#define LIGMA_UNIQUE_WIN32_WINDOW_CLASS  L"LigmaWin32UniqueHandler"
+#define LIGMA_UNIQUE_WIN32_WINDOW_NAME   L"LigmaProxy"
 #endif
 
 
-void  gui_unique_init (Gimp *gimp);
+void  gui_unique_init (Ligma *ligma);
 void  gui_unique_exit (void);
 
 

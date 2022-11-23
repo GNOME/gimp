@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,7 +17,7 @@
 
 #include "config.h"
 
-#include "libgimp/gimp.h"
+#include "libligma/ligma.h"
 
 #include "script-fu-eval.h"
 
@@ -25,28 +25,28 @@
 #include "script-fu-intl.h"
 
 
-GimpValueArray *
-script_fu_eval_run (GimpProcedure        *procedure,
-                    GimpRunMode           run_mode,
+LigmaValueArray *
+script_fu_eval_run (LigmaProcedure        *procedure,
+                    LigmaRunMode           run_mode,
                     const gchar          *code,
-                    const GimpValueArray *args)
+                    const LigmaValueArray *args)
 {
   GString           *output = g_string_new (NULL);
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  LigmaPDBStatusType  status = LIGMA_PDB_SUCCESS;
 
   script_fu_set_run_mode (run_mode);
   script_fu_redirect_output_to_gstr (output);
 
   switch (run_mode)
     {
-    case GIMP_RUN_NONINTERACTIVE:
+    case LIGMA_RUN_NONINTERACTIVE:
       if (script_fu_interpret_string (code) != 0)
-        status = GIMP_PDB_EXECUTION_ERROR;
+        status = LIGMA_PDB_EXECUTION_ERROR;
       break;
 
-    case GIMP_RUN_INTERACTIVE:
-    case GIMP_RUN_WITH_LAST_VALS:
-      status        = GIMP_PDB_CALLING_ERROR;
+    case LIGMA_RUN_INTERACTIVE:
+    case LIGMA_RUN_WITH_LAST_VALS:
+      status        = LIGMA_PDB_CALLING_ERROR;
       g_string_assign (output, _("Script-Fu evaluation mode only allows "
                                  "non-interactive invocation"));
       break;
@@ -55,15 +55,15 @@ script_fu_eval_run (GimpProcedure        *procedure,
       break;
     }
 
-  if (status != GIMP_PDB_SUCCESS && output->len > 0)
+  if (status != LIGMA_PDB_SUCCESS && output->len > 0)
     {
       GError *error = g_error_new_literal (g_quark_from_string("scriptfu"), 0,
                                            g_string_free (output, FALSE));
 
-      return gimp_procedure_new_return_values (procedure, status, error);
+      return ligma_procedure_new_return_values (procedure, status, error);
     }
 
   g_string_free (output, TRUE);
 
-  return gimp_procedure_new_return_values (procedure, status, NULL);
+  return ligma_procedure_new_return_values (procedure, status, NULL);
 }

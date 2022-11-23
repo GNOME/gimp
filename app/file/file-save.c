@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995, 1996, 1997 Spencer Kimball and Peter Mattis
  * Copyright (C) 1997 Josh MacDonald
  *
@@ -23,67 +23,67 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "core/core-types.h"
 
-#include "config/gimpcoreconfig.h"
+#include "config/ligmacoreconfig.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontext.h"
-#include "core/gimpdocumentlist.h"
-#include "core/gimpdrawable.h"
-#include "core/gimpimage.h"
-#include "core/gimpimagefile.h"
-#include "core/gimpparamspecs.h"
-#include "core/gimpprogress.h"
+#include "core/ligma.h"
+#include "core/ligmacontext.h"
+#include "core/ligmadocumentlist.h"
+#include "core/ligmadrawable.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaimagefile.h"
+#include "core/ligmaparamspecs.h"
+#include "core/ligmaprogress.h"
 
-#include "pdb/gimppdb.h"
+#include "pdb/ligmapdb.h"
 
-#include "plug-in/gimppluginprocedure.h"
+#include "plug-in/ligmapluginprocedure.h"
 
 #include "file-remote.h"
 #include "file-save.h"
-#include "gimp-file.h"
+#include "ligma-file.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /*  public functions  */
 
-GimpPDBStatusType
-file_save (Gimp                *gimp,
-           GimpImage           *image,
-           GimpProgress        *progress,
+LigmaPDBStatusType
+file_save (Ligma                *ligma,
+           LigmaImage           *image,
+           LigmaProgress        *progress,
            GFile               *file,
-           GimpPlugInProcedure *file_proc,
-           GimpRunMode          run_mode,
+           LigmaPlugInProcedure *file_proc,
+           LigmaRunMode          run_mode,
            gboolean             change_saved_state,
            gboolean             export_backward,
            gboolean             export_forward,
            GError             **error)
 {
-  GimpValueArray    *return_vals;
+  LigmaValueArray    *return_vals;
   GFile             *orig_file;
-  GimpPDBStatusType  status     = GIMP_PDB_EXECUTION_ERROR;
+  LigmaPDBStatusType  status     = LIGMA_PDB_EXECUTION_ERROR;
   GFile             *local_file = NULL;
   gboolean           mounted    = TRUE;
   GError            *my_error   = NULL;
   GList             *drawables_list;
-  GimpDrawable     **drawables  = NULL;
+  LigmaDrawable     **drawables  = NULL;
   gint               n_drawables;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), GIMP_PDB_CALLING_ERROR);
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), GIMP_PDB_CALLING_ERROR);
-  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress),
-                        GIMP_PDB_CALLING_ERROR);
-  g_return_val_if_fail (G_IS_FILE (file), GIMP_PDB_CALLING_ERROR);
-  g_return_val_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (file_proc),
-                        GIMP_PDB_CALLING_ERROR);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), LIGMA_PDB_CALLING_ERROR);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), LIGMA_PDB_CALLING_ERROR);
+  g_return_val_if_fail (progress == NULL || LIGMA_IS_PROGRESS (progress),
+                        LIGMA_PDB_CALLING_ERROR);
+  g_return_val_if_fail (G_IS_FILE (file), LIGMA_PDB_CALLING_ERROR);
+  g_return_val_if_fail (LIGMA_IS_PLUG_IN_PROCEDURE (file_proc),
+                        LIGMA_PDB_CALLING_ERROR);
   g_return_val_if_fail ((export_backward && export_forward) == FALSE,
-                        GIMP_PDB_CALLING_ERROR);
+                        LIGMA_PDB_CALLING_ERROR);
   g_return_val_if_fail (error == NULL || *error == NULL,
-                        GIMP_PDB_CALLING_ERROR);
+                        LIGMA_PDB_CALLING_ERROR);
 
   orig_file = file;
 
@@ -91,9 +91,9 @@ file_save (Gimp                *gimp,
   g_object_ref (image);
   g_object_ref (orig_file);
 
-  gimp_image_saving (image);
+  ligma_image_saving (image);
 
-  drawables_list = gimp_image_get_selected_drawables (image);
+  drawables_list = ligma_image_get_selected_drawables (image);
 
   if (drawables_list)
     {
@@ -101,7 +101,7 @@ file_save (Gimp                *gimp,
       gint   i;
 
       n_drawables = g_list_length (drawables_list);
-      drawables = g_new (GimpDrawable *, n_drawables);
+      drawables = g_new (LigmaDrawable *, n_drawables);
       for (iter = drawables_list, i = 0; iter; iter = iter->next, i++)
         drawables[i] = iter->data;
 
@@ -155,7 +155,7 @@ file_save (Gimp                *gimp,
     }
 
   if (! g_file_is_native (file) &&
-      ! file_remote_mount_file (gimp, file, progress, &my_error))
+      ! file_remote_mount_file (ligma, file, progress, &my_error))
     {
       if (my_error)
         {
@@ -168,7 +168,7 @@ file_save (Gimp                *gimp,
         }
       else
         {
-          status = GIMP_PDB_CANCEL;
+          status = LIGMA_PDB_CANCEL;
 
           goto out;
         }
@@ -180,7 +180,7 @@ file_save (Gimp                *gimp,
 
       if (! my_path)
         {
-          local_file = file_remote_upload_image_prepare (gimp, file, progress,
+          local_file = file_remote_upload_image_prepare (ligma, file, progress,
                                                          &my_error);
 
           if (! local_file)
@@ -188,7 +188,7 @@ file_save (Gimp                *gimp,
               if (my_error)
                 g_propagate_error (error, my_error);
               else
-                status = GIMP_PDB_CANCEL;
+                status = LIGMA_PDB_CANCEL;
 
               goto out;
             }
@@ -200,36 +200,36 @@ file_save (Gimp                *gimp,
     }
 
   return_vals =
-    gimp_pdb_execute_procedure_by_name (image->gimp->pdb,
-                                        gimp_get_user_context (gimp),
+    ligma_pdb_execute_procedure_by_name (image->ligma->pdb,
+                                        ligma_get_user_context (ligma),
                                         progress, error,
-                                        gimp_object_get_name (file_proc),
-                                        GIMP_TYPE_RUN_MODE,     run_mode,
-                                        GIMP_TYPE_IMAGE,        image,
+                                        ligma_object_get_name (file_proc),
+                                        LIGMA_TYPE_RUN_MODE,     run_mode,
+                                        LIGMA_TYPE_IMAGE,        image,
                                         G_TYPE_INT,             n_drawables,
-                                        GIMP_TYPE_OBJECT_ARRAY, drawables,
+                                        LIGMA_TYPE_OBJECT_ARRAY, drawables,
                                         G_TYPE_FILE,            file,
                                         G_TYPE_NONE);
-  status = g_value_get_enum (gimp_value_array_index (return_vals, 0));
+  status = g_value_get_enum (ligma_value_array_index (return_vals, 0));
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
   g_clear_pointer (&drawables, g_free);
 
   if (local_file)
     {
-      if (status == GIMP_PDB_SUCCESS)
+      if (status == LIGMA_PDB_SUCCESS)
         {
           GError *my_error = NULL;
 
-          if (! file_remote_upload_image_finish (gimp, orig_file, local_file,
+          if (! file_remote_upload_image_finish (ligma, orig_file, local_file,
                                                  progress, &my_error))
             {
-              status = GIMP_PDB_EXECUTION_ERROR;
+              status = LIGMA_PDB_EXECUTION_ERROR;
 
               if (my_error)
                 g_propagate_error (error, my_error);
               else
-                status = GIMP_PDB_CANCEL;
+                status = LIGMA_PDB_CANCEL;
             }
         }
 
@@ -237,23 +237,23 @@ file_save (Gimp                *gimp,
       g_object_unref (local_file);
     }
 
-  if (status == GIMP_PDB_SUCCESS)
+  if (status == LIGMA_PDB_SUCCESS)
     {
-      GimpDocumentList *documents;
-      GimpImagefile    *imagefile;
+      LigmaDocumentList *documents;
+      LigmaImagefile    *imagefile;
 
       if (change_saved_state)
         {
-          gimp_image_set_file (image, orig_file);
-          gimp_image_set_save_proc (image, file_proc);
+          ligma_image_set_file (image, orig_file);
+          ligma_image_set_save_proc (image, file_proc);
 
           /* Forget the import source when we save. We interpret a
            * save as that the user is not interested in being able
            * to quickly export back to the original any longer
            */
-          gimp_image_set_imported_file (image, NULL);
+          ligma_image_set_imported_file (image, NULL);
 
-          gimp_image_clean_all (image);
+          ligma_image_clean_all (image);
         }
       else if (export_backward)
         {
@@ -261,55 +261,55 @@ file_save (Gimp                *gimp,
            * change nothing about export/import flags, only set
            * the export state to clean
            */
-          gimp_image_export_clean_all (image);
+          ligma_image_export_clean_all (image);
         }
       else if (export_forward)
         {
           /* Remember the last entered Export URI for the image. We
            * only need to do this explicitly when exporting. It
-           * happens implicitly when saving since the GimpObject name
-           * of a GimpImage is the last-save URI
+           * happens implicitly when saving since the LigmaObject name
+           * of a LigmaImage is the last-save URI
            */
-          gimp_image_set_exported_file (image, orig_file);
-          gimp_image_set_export_proc (image, file_proc);
+          ligma_image_set_exported_file (image, orig_file);
+          ligma_image_set_export_proc (image, file_proc);
 
           /* An image can not be considered both exported and imported
            * at the same time, so stop consider it as imported now
            * that we consider it exported.
            */
-          gimp_image_set_imported_file (image, NULL);
+          ligma_image_set_imported_file (image, NULL);
 
-          gimp_image_export_clean_all (image);
+          ligma_image_export_clean_all (image);
         }
 
       if (export_backward || export_forward)
-        gimp_image_exported (image, orig_file);
+        ligma_image_exported (image, orig_file);
       else
-        gimp_image_saved (image, orig_file);
+        ligma_image_saved (image, orig_file);
 
-      documents = GIMP_DOCUMENT_LIST (image->gimp->documents);
+      documents = LIGMA_DOCUMENT_LIST (image->ligma->documents);
 
-      imagefile = gimp_document_list_add_file (documents, orig_file,
+      imagefile = ligma_document_list_add_file (documents, orig_file,
                                                g_slist_nth_data (file_proc->mime_types_list, 0));
 
       /* only save a thumbnail if we are saving as XCF, see bug #25272 */
-      if (GIMP_PROCEDURE (file_proc)->proc_type == GIMP_PDB_PROC_TYPE_INTERNAL)
-        gimp_imagefile_save_thumbnail (imagefile,
+      if (LIGMA_PROCEDURE (file_proc)->proc_type == LIGMA_PDB_PROC_TYPE_INTERNAL)
+        ligma_imagefile_save_thumbnail (imagefile,
                                        g_slist_nth_data (file_proc->mime_types_list, 0),
                                        image,
                                        NULL);
     }
-  else if (status != GIMP_PDB_CANCEL)
+  else if (status != LIGMA_PDB_CANCEL)
     {
       if (error && *error == NULL)
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("%s plug-in could not save image"),
-                       gimp_procedure_get_label (GIMP_PROCEDURE (file_proc)));
+                       ligma_procedure_get_label (LIGMA_PROCEDURE (file_proc)));
         }
     }
 
-  gimp_image_flush (image);
+  ligma_image_flush (image);
 
  out:
   g_object_unref (orig_file);

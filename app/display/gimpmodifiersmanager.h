@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpmodifiersmanager.h
+ * ligmamodifiersmanager.h
  * Copyright (C) 2022 Jehan
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,66 +18,66 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_MODIFIERS_MANAGER_H__
-#define __GIMP_MODIFIERS_MANAGER_H__
+#ifndef __LIGMA_MODIFIERS_MANAGER_H__
+#define __LIGMA_MODIFIERS_MANAGER_H__
 
 
-#define GIMP_TYPE_MODIFIERS_MANAGER            (gimp_modifiers_manager_get_type ())
-#define GIMP_MODIFIERS_MANAGER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_MODIFIERS_MANAGER, GimpModifiersManager))
-#define GIMP_MODIFIERS_MANAGER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_MODIFIERS_MANAGER, GimpModifiersManagerClass))
-#define GIMP_IS_MODIFIERS_MANAGER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_MODIFIERS_MANAGER))
-#define GIMP_IS_MODIFIERS_MANAGER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_MODIFIERS_MANAGER))
-#define GIMP_MODIFIERS_MANAGER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_MODIFIERS_MANAGER, GimpModifiersManagerClass))
+#define LIGMA_TYPE_MODIFIERS_MANAGER            (ligma_modifiers_manager_get_type ())
+#define LIGMA_MODIFIERS_MANAGER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_MODIFIERS_MANAGER, LigmaModifiersManager))
+#define LIGMA_MODIFIERS_MANAGER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_MODIFIERS_MANAGER, LigmaModifiersManagerClass))
+#define LIGMA_IS_MODIFIERS_MANAGER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_MODIFIERS_MANAGER))
+#define LIGMA_IS_MODIFIERS_MANAGER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_MODIFIERS_MANAGER))
+#define LIGMA_MODIFIERS_MANAGER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_MODIFIERS_MANAGER, LigmaModifiersManagerClass))
 
 
-typedef struct _GimpModifiersManagerPrivate  GimpModifiersManagerPrivate;
-typedef struct _GimpModifiersManagerClass    GimpModifiersManagerClass;
+typedef struct _LigmaModifiersManagerPrivate  LigmaModifiersManagerPrivate;
+typedef struct _LigmaModifiersManagerClass    LigmaModifiersManagerClass;
 
 /**
- * GimpModifiersManager:
+ * LigmaModifiersManager:
  *
  * Contains modifiers configuration for canvas interaction.
  */
-struct _GimpModifiersManager
+struct _LigmaModifiersManager
 {
   GObject                      parent_instance;
 
-  GimpModifiersManagerPrivate *p;
+  LigmaModifiersManagerPrivate *p;
 };
 
-struct _GimpModifiersManagerClass
+struct _LigmaModifiersManagerClass
 {
   GObjectClass                 parent_class;
 };
 
 
-GType                  gimp_modifiers_manager_get_type      (void) G_GNUC_CONST;
+GType                  ligma_modifiers_manager_get_type      (void) G_GNUC_CONST;
 
-GimpModifiersManager * gimp_modifiers_manager_new           (void);
+LigmaModifiersManager * ligma_modifiers_manager_new           (void);
 
-GimpModifierAction     gimp_modifiers_manager_get_action    (GimpModifiersManager *manager,
+LigmaModifierAction     ligma_modifiers_manager_get_action    (LigmaModifiersManager *manager,
                                                              GdkDevice            *device,
                                                              guint                 button,
                                                              GdkModifierType       modifiers,
                                                              const gchar         **action_desc);
 
-/* Protected functions: only use them from GimpModifiersEditor */
+/* Protected functions: only use them from LigmaModifiersEditor */
 
-GList                * gimp_modifiers_manager_get_modifiers (GimpModifiersManager *manager,
+GList                * ligma_modifiers_manager_get_modifiers (LigmaModifiersManager *manager,
                                                              GdkDevice            *device,
                                                              guint                 button);
 
-void                   gimp_modifiers_manager_set           (GimpModifiersManager *manager,
+void                   ligma_modifiers_manager_set           (LigmaModifiersManager *manager,
                                                              GdkDevice            *device,
                                                              guint                 button,
                                                              GdkModifierType       modifiers,
-                                                             GimpModifierAction    action,
+                                                             LigmaModifierAction    action,
                                                              const gchar          *action_desc);
-void                   gimp_modifiers_manager_remove        (GimpModifiersManager *manager,
+void                   ligma_modifiers_manager_remove        (LigmaModifiersManager *manager,
                                                              GdkDevice            *device,
                                                              guint                 button,
                                                              GdkModifierType       modifiers);
-void                   gimp_modifiers_manager_clear         (GimpModifiersManager *manager);
+void                   ligma_modifiers_manager_clear         (LigmaModifiersManager *manager);
 
 
-#endif  /* __GIMP_MODIFIERS_MANAGER_H__ */
+#endif  /* __LIGMA_MODIFIERS_MANAGER_H__ */

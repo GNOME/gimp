@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimptriviallycancelablewaitable.h
+ * ligmatriviallycancelablewaitable.h
  * Copyright (C) 2018 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,40 +18,40 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TRIVIALLY_CANCELABLE_WAITABLE_H__
-#define __GIMP_TRIVIALLY_CANCELABLE_WAITABLE_H__
+#ifndef __LIGMA_TRIVIALLY_CANCELABLE_WAITABLE_H__
+#define __LIGMA_TRIVIALLY_CANCELABLE_WAITABLE_H__
 
 
-#include "gimpuncancelablewaitable.h"
+#include "ligmauncancelablewaitable.h"
 
 
-#define GIMP_TYPE_TRIVIALLY_CANCELABLE_WAITABLE            (gimp_trivially_cancelable_waitable_get_type ())
-#define GIMP_TRIVIALLY_CANCELABLE_WAITABLE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TRIVIALLY_CANCELABLE_WAITABLE, GimpTriviallyCancelableWaitable))
-#define GIMP_TRIVIALLY_CANCELABLE_WAITABLE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TRIVIALLY_CANCELABLE_WAITABLE, GimpTriviallyCancelableWaitableClass))
-#define GIMP_IS_TRIVIALLY_CANCELABLE_WAITABLE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_TRIVIALLY_CANCELABLE_WAITABLE))
-#define GIMP_IS_TRIVIALLY_CANCELABLE_WAITABLE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_TRIVIALLY_CANCELABLE_WAITABLE))
-#define GIMP_TRIVIALLY_CANCELABLE_WAITABLE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_TRIVIALLY_CANCELABLE_WAITABLE, GimpTriviallyCancelableWaitableClass))
+#define LIGMA_TYPE_TRIVIALLY_CANCELABLE_WAITABLE            (ligma_trivially_cancelable_waitable_get_type ())
+#define LIGMA_TRIVIALLY_CANCELABLE_WAITABLE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_TRIVIALLY_CANCELABLE_WAITABLE, LigmaTriviallyCancelableWaitable))
+#define LIGMA_TRIVIALLY_CANCELABLE_WAITABLE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_TRIVIALLY_CANCELABLE_WAITABLE, LigmaTriviallyCancelableWaitableClass))
+#define LIGMA_IS_TRIVIALLY_CANCELABLE_WAITABLE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_TRIVIALLY_CANCELABLE_WAITABLE))
+#define LIGMA_IS_TRIVIALLY_CANCELABLE_WAITABLE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_TRIVIALLY_CANCELABLE_WAITABLE))
+#define LIGMA_TRIVIALLY_CANCELABLE_WAITABLE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_TRIVIALLY_CANCELABLE_WAITABLE, LigmaTriviallyCancelableWaitableClass))
 
 
-typedef struct _GimpTriviallyCancelableWaitablePrivate GimpTriviallyCancelableWaitablePrivate;
-typedef struct _GimpTriviallyCancelableWaitableClass   GimpTriviallyCancelableWaitableClass;
+typedef struct _LigmaTriviallyCancelableWaitablePrivate LigmaTriviallyCancelableWaitablePrivate;
+typedef struct _LigmaTriviallyCancelableWaitableClass   LigmaTriviallyCancelableWaitableClass;
 
-struct _GimpTriviallyCancelableWaitable
+struct _LigmaTriviallyCancelableWaitable
 {
-  GimpUncancelableWaitable                parent_instance;
+  LigmaUncancelableWaitable                parent_instance;
 
-  GimpTriviallyCancelableWaitablePrivate *priv;
+  LigmaTriviallyCancelableWaitablePrivate *priv;
 };
 
-struct _GimpTriviallyCancelableWaitableClass
+struct _LigmaTriviallyCancelableWaitableClass
 {
-  GimpUncancelableWaitableClass  parent_class;
+  LigmaUncancelableWaitableClass  parent_class;
 };
 
 
-GType          gimp_trivially_cancelable_waitable_get_type (void) G_GNUC_CONST;
+GType          ligma_trivially_cancelable_waitable_get_type (void) G_GNUC_CONST;
 
-GimpWaitable * gimp_trivially_cancelable_waitable_new      (GimpWaitable *waitable);
+LigmaWaitable * ligma_trivially_cancelable_waitable_new      (LigmaWaitable *waitable);
 
 
-#endif /* __GIMP_TRIVIALLY_CANCELABLE_WAITABLE_H__ */
+#endif /* __LIGMA_TRIVIALLY_CANCELABLE_WAITABLE_H__ */

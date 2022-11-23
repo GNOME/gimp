@@ -1,28 +1,28 @@
 
-/* Generated data (by gimp-mkenums) */
+/* Generated data (by ligma-mkenums) */
 
 #include "stamp-text-enums.h"
 #include "config.h"
 #include <gio/gio.h>
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 #include "text-enums.h"
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 /* enumerations from "text-enums.h" */
 GType
-gimp_text_box_mode_get_type (void)
+ligma_text_box_mode_get_type (void)
 {
   static const GEnumValue values[] =
   {
-    { GIMP_TEXT_BOX_DYNAMIC, "GIMP_TEXT_BOX_DYNAMIC", "dynamic" },
-    { GIMP_TEXT_BOX_FIXED, "GIMP_TEXT_BOX_FIXED", "fixed" },
+    { LIGMA_TEXT_BOX_DYNAMIC, "LIGMA_TEXT_BOX_DYNAMIC", "dynamic" },
+    { LIGMA_TEXT_BOX_FIXED, "LIGMA_TEXT_BOX_FIXED", "fixed" },
     { 0, NULL, NULL }
   };
 
-  static const GimpEnumDesc descs[] =
+  static const LigmaEnumDesc descs[] =
   {
-    { GIMP_TEXT_BOX_DYNAMIC, NC_("text-box-mode", "Dynamic"), NULL },
-    { GIMP_TEXT_BOX_FIXED, NC_("text-box-mode", "Fixed"), NULL },
+    { LIGMA_TEXT_BOX_DYNAMIC, NC_("text-box-mode", "Dynamic"), NULL },
+    { LIGMA_TEXT_BOX_FIXED, NC_("text-box-mode", "Fixed"), NULL },
     { 0, NULL, NULL }
   };
 
@@ -30,30 +30,30 @@ gimp_text_box_mode_get_type (void)
 
   if (G_UNLIKELY (! type))
     {
-      type = g_enum_register_static ("GimpTextBoxMode", values);
-      gimp_type_set_translation_context (type, "text-box-mode");
-      gimp_enum_set_value_descriptions (type, descs);
+      type = g_enum_register_static ("LigmaTextBoxMode", values);
+      ligma_type_set_translation_context (type, "text-box-mode");
+      ligma_enum_set_value_descriptions (type, descs);
     }
 
   return type;
 }
 
 GType
-gimp_text_outline_get_type (void)
+ligma_text_outline_get_type (void)
 {
   static const GEnumValue values[] =
   {
-    { GIMP_TEXT_OUTLINE_NONE, "GIMP_TEXT_OUTLINE_NONE", "none" },
-    { GIMP_TEXT_OUTLINE_STROKE_ONLY, "GIMP_TEXT_OUTLINE_STROKE_ONLY", "stroke-only" },
-    { GIMP_TEXT_OUTLINE_STROKE_FILL, "GIMP_TEXT_OUTLINE_STROKE_FILL", "stroke-fill" },
+    { LIGMA_TEXT_OUTLINE_NONE, "LIGMA_TEXT_OUTLINE_NONE", "none" },
+    { LIGMA_TEXT_OUTLINE_STROKE_ONLY, "LIGMA_TEXT_OUTLINE_STROKE_ONLY", "stroke-only" },
+    { LIGMA_TEXT_OUTLINE_STROKE_FILL, "LIGMA_TEXT_OUTLINE_STROKE_FILL", "stroke-fill" },
     { 0, NULL, NULL }
   };
 
-  static const GimpEnumDesc descs[] =
+  static const LigmaEnumDesc descs[] =
   {
-    { GIMP_TEXT_OUTLINE_NONE, NC_("text-outline", "Filled"), NULL },
-    { GIMP_TEXT_OUTLINE_STROKE_ONLY, NC_("text-outline", "Outlined"), NULL },
-    { GIMP_TEXT_OUTLINE_STROKE_FILL, NC_("text-outline", "Outlined and filled"), NULL },
+    { LIGMA_TEXT_OUTLINE_NONE, NC_("text-outline", "Filled"), NULL },
+    { LIGMA_TEXT_OUTLINE_STROKE_ONLY, NC_("text-outline", "Outlined"), NULL },
+    { LIGMA_TEXT_OUTLINE_STROKE_FILL, NC_("text-outline", "Outlined and filled"), NULL },
     { 0, NULL, NULL }
   };
 
@@ -61,9 +61,9 @@ gimp_text_outline_get_type (void)
 
   if (G_UNLIKELY (! type))
     {
-      type = g_enum_register_static ("GimpTextOutline", values);
-      gimp_type_set_translation_context (type, "text-outline");
-      gimp_enum_set_value_descriptions (type, descs);
+      type = g_enum_register_static ("LigmaTextOutline", values);
+      ligma_type_set_translation_context (type, "text-outline");
+      ligma_enum_set_value_descriptions (type, descs);
     }
 
   return type;

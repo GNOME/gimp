@@ -5,12 +5,12 @@ Name=GNU Image Manipulation Program
 GenericName=Image Editor
 Comment=Create images and edit photographs
 # Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-Keywords=GIMP;graphic;design;illustration;painting;
-Exec=@GIMP_COMMAND@ %U
-TryExec=gimp-@GIMP_APP_VERSION@
-Icon=gimp
+Keywords=LIGMA;graphic;design;illustration;painting;
+Exec=@LIGMA_COMMAND@ %U
+TryExec=ligma-@LIGMA_APP_VERSION@
+Icon=ligma
 Terminal=false
 Categories=Graphics;2DGraphics;RasterGraphics;GTK;
 StartupNotify=true
 MimeType=@MIME_TYPES@
-StartupWMClass=gimp-@GIMP_APP_VERSION@
+StartupWMClass=ligma-@LIGMA_APP_VERSION@

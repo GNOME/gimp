@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpanchor.c
- * Copyright (C) 2002 Simon Budig  <simon@gimp.org>
+ * ligmaanchor.c
+ * Copyright (C) 2002 Simon Budig  <simon@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,16 +24,16 @@
 
 #include "vectors-types.h"
 
-#include "gimpanchor.h"
+#include "ligmaanchor.h"
 
 
-G_DEFINE_BOXED_TYPE (GimpAnchor, gimp_anchor, gimp_anchor_copy, gimp_anchor_free)
+G_DEFINE_BOXED_TYPE (LigmaAnchor, ligma_anchor, ligma_anchor_copy, ligma_anchor_free)
 
-GimpAnchor *
-gimp_anchor_new (GimpAnchorType    type,
-                 const GimpCoords *position)
+LigmaAnchor *
+ligma_anchor_new (LigmaAnchorType    type,
+                 const LigmaCoords *position)
 {
-  GimpAnchor *anchor = g_slice_new0 (GimpAnchor);
+  LigmaAnchor *anchor = g_slice_new0 (LigmaAnchor);
 
   anchor->type = type;
 
@@ -43,18 +43,18 @@ gimp_anchor_new (GimpAnchorType    type,
   return anchor;
 }
 
-GimpAnchor *
-gimp_anchor_copy (const GimpAnchor *anchor)
+LigmaAnchor *
+ligma_anchor_copy (const LigmaAnchor *anchor)
 {
   g_return_val_if_fail (anchor != NULL, NULL);
 
-  return g_slice_dup (GimpAnchor, anchor);
+  return g_slice_dup (LigmaAnchor, anchor);
 }
 
 void
-gimp_anchor_free (GimpAnchor *anchor)
+ligma_anchor_free (LigmaAnchor *anchor)
 {
   g_return_if_fail (anchor != NULL);
 
-  g_slice_free (GimpAnchor, anchor);
+  g_slice_free (LigmaAnchor, anchor);
 }

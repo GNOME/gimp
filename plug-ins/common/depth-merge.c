@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * Depth Merge -- Combine two image layers via corresponding depth maps
@@ -24,10 +24,10 @@
 
 #include "config.h"
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 #define DEBUG
@@ -42,7 +42,7 @@
 #define PLUG_IN_PROC    "plug-in-depth-merge"
 #define PLUG_IN_VERSION "August 1998"
 #define PLUG_IN_BINARY  "depth-merge"
-#define PLUG_IN_ROLE    "gimp-depth-merge"
+#define PLUG_IN_ROLE    "ligma-depth-merge"
 
 #define PREVIEW_SIZE    256
 
@@ -85,11 +85,11 @@ typedef struct _DepthMerge
   DepthMergeInterface *interface;
   DepthMergeParams     params;
 
-  GimpDrawable        *resultDrawable;
-  GimpDrawable        *source1Drawable;
-  GimpDrawable        *source2Drawable;
-  GimpDrawable        *depthMap1Drawable;
-  GimpDrawable        *depthMap2Drawable;
+  LigmaDrawable        *resultDrawable;
+  LigmaDrawable        *source1Drawable;
+  LigmaDrawable        *source2Drawable;
+  LigmaDrawable        *depthMap1Drawable;
+  LigmaDrawable        *depthMap2Drawable;
   gint                 selectionX;
   gint                 selectionY;
   gint                 selectionWidth;
@@ -103,12 +103,12 @@ typedef struct _MergeClass MergeClass;
 
 struct _Merge
 {
-  GimpPlugIn parent_instance;
+  LigmaPlugIn parent_instance;
 };
 
 struct _MergeClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -117,16 +117,16 @@ struct _MergeClass
 
 GType                   merge_get_type         (void) G_GNUC_CONST;
 
-static GList          * merge_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * merge_create_procedure (GimpPlugIn           *plug_in,
+static GList          * merge_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * merge_create_procedure (LigmaPlugIn           *plug_in,
                                                const gchar          *name);
 
-static GimpValueArray * merge_run              (GimpProcedure        *procedure,
-                                                GimpRunMode           run_mode,
-                                                GimpImage            *image,
+static LigmaValueArray * merge_run              (LigmaProcedure        *procedure,
+                                                LigmaRunMode           run_mode,
+                                                LigmaImage            *image,
                                                 gint                  n_drawables,
-                                                GimpDrawable        **drawables,
-                                                const GimpValueArray *args,
+                                                LigmaDrawable        **drawables,
+                                                const LigmaValueArray *args,
                                                 gpointer              run_data);
 
 static void      DepthMerge_initParams              (DepthMerge    *dm);
@@ -145,8 +145,8 @@ static void      DepthMerge_buildPreviewSourceImage (DepthMerge    *dm);
 static void      DepthMerge_updatePreview           (DepthMerge    *dm);
 
 
-static gboolean  dm_constraint                      (GimpImage     *image,
-                                                     GimpItem      *item,
+static gboolean  dm_constraint                      (LigmaImage     *image,
+                                                     LigmaItem      *item,
                                                      gpointer       data);
 
 static void      dialogSource1ChangedCallback       (GtkWidget     *widget,
@@ -158,30 +158,30 @@ static void      dialogDepthMap1ChangedCallback     (GtkWidget     *widget,
 static void      dialogDepthMap2ChangedCallback     (GtkWidget     *widget,
                                                      DepthMerge    *dm);
 
-static void      dialogValueScaleUpdateCallback     (GimpLabelSpin  *scale,
+static void      dialogValueScaleUpdateCallback     (LigmaLabelSpin  *scale,
                                                      gfloat         *value);
 
 static void      util_fillReducedBuffer             (guchar        *dest,
                                                      const Babl    *dest_format,
                                                      gint           destWidth,
                                                      gint           destHeight,
-                                                     GimpDrawable  *sourceDrawable,
+                                                     LigmaDrawable  *sourceDrawable,
                                                      gint           x0,
                                                      gint           y0,
                                                      gint           sourceWidth,
                                                      gint           sourceHeight);
 
 
-G_DEFINE_TYPE (Merge, merge, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Merge, merge, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (MERGE_TYPE)
+LIGMA_MAIN (MERGE_TYPE)
 DEFINE_STD_SET_I18N
 
 
 static void
 merge_class_init (MergeClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = merge_query_procedures;
   plug_in_class->create_procedure = merge_create_procedure;
@@ -194,31 +194,31 @@ merge_init (Merge *merge)
 }
 
 static GList *
-merge_query_procedures (GimpPlugIn *plug_in)
+merge_query_procedures (LigmaPlugIn *plug_in)
 {
   return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
 }
 
-static GimpProcedure *
-merge_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+merge_create_procedure (LigmaPlugIn  *plug_in,
                        const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_image_procedure_new (plug_in, name,
+                                            LIGMA_PDB_PROC_TYPE_PLUGIN,
                                             merge_run, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "RGB*, GRAY*");
-      gimp_procedure_set_sensitivity_mask (procedure,
-                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
+      ligma_procedure_set_image_types (procedure, "RGB*, GRAY*");
+      ligma_procedure_set_sensitivity_mask (procedure,
+                                           LIGMA_PROCEDURE_SENSITIVE_DRAWABLE);
 
-      gimp_procedure_set_menu_label (procedure, _("_Depth Merge..."));
-      gimp_procedure_add_menu_path (procedure, "<Image>/Filters/Combine");
+      ligma_procedure_set_menu_label (procedure, _("_Depth Merge..."));
+      ligma_procedure_add_menu_path (procedure, "<Image>/Filters/Combine");
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         _("Combine two images using depth "
                                           "maps (z-buffers)"),
                                         "Taking as input two full-color, "
@@ -228,54 +228,54 @@ merge_create_procedure (GimpPlugIn  *plug_in,
                                         "on which is closer (has a lower depth "
                                         "map value) at each point.",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Sean Cier",
                                       "Sean Cier",
                                       PLUG_IN_VERSION);
 
-      GIMP_PROC_ARG_DRAWABLE (procedure, "source-1",
+      LIGMA_PROC_ARG_DRAWABLE (procedure, "source-1",
                               "Source 1",
                               "Source 1",
                               TRUE,
                               G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DRAWABLE (procedure, "source-2",
+      LIGMA_PROC_ARG_DRAWABLE (procedure, "source-2",
                               "Source 2",
                               "Source 2",
                               TRUE,
                               G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DRAWABLE (procedure, "depth-map-1",
+      LIGMA_PROC_ARG_DRAWABLE (procedure, "depth-map-1",
                               "Depth map 1",
                               "Depth map 1",
                               TRUE,
                               G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DRAWABLE (procedure, "depth-map-2",
+      LIGMA_PROC_ARG_DRAWABLE (procedure, "depth-map-2",
                               "Depth map 2",
                               "Depth map 2",
                               TRUE,
                               G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "overlap",
+      LIGMA_PROC_ARG_DOUBLE (procedure, "overlap",
                             "Overlap",
                             "Overlap",
                             0, 2, 0,
                             G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "offset",
+      LIGMA_PROC_ARG_DOUBLE (procedure, "offset",
                             "Offset",
                             "Depth relative offset",
                             -1, 1, 0,
                             G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "scale-1",
+      LIGMA_PROC_ARG_DOUBLE (procedure, "scale-1",
                             "Scale 1",
                             "Depth relative scale 1",
                             -1, 1, 1,
                             G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "scale-2",
+      LIGMA_PROC_ARG_DOUBLE (procedure, "scale-2",
                             "Scale 2",
                             "Depth relative scale 2",
                             -1, 1, 1,
@@ -285,16 +285,16 @@ merge_create_procedure (GimpPlugIn  *plug_in,
   return procedure;
 }
 
-static GimpValueArray *
-merge_run (GimpProcedure        *procedure,
-           GimpRunMode           run_mode,
-           GimpImage            *image,
+static LigmaValueArray *
+merge_run (LigmaProcedure        *procedure,
+           LigmaRunMode           run_mode,
+           LigmaImage            *image,
            gint                  n_drawables,
-           GimpDrawable        **drawables,
-           const GimpValueArray *args,
+           LigmaDrawable        **drawables,
+           const LigmaValueArray *args,
            gpointer              run_data)
 {
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   DepthMerge    dm;
 
   gegl_init (NULL, NULL);
@@ -303,12 +303,12 @@ merge_run (GimpProcedure        *procedure,
     {
       GError *error = NULL;
 
-      g_set_error (&error, GIMP_PLUG_IN_ERROR, 0,
+      g_set_error (&error, LIGMA_PLUG_IN_ERROR, 0,
                    _("Procedure '%s' only works with one drawable."),
                    PLUG_IN_PROC);
 
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_CALLING_ERROR,
                                                error);
     }
   else
@@ -320,53 +320,53 @@ merge_run (GimpProcedure        *procedure,
 
   switch (run_mode)
     {
-    case GIMP_RUN_INTERACTIVE:
-      gimp_get_data (PLUG_IN_PROC, &dm.params);
+    case LIGMA_RUN_INTERACTIVE:
+      ligma_get_data (PLUG_IN_PROC, &dm.params);
 
-      dm.params.result_id = gimp_item_get_id (GIMP_ITEM (drawable));
+      dm.params.result_id = ligma_item_get_id (LIGMA_ITEM (drawable));
 
       if (! DepthMerge_construct (&dm))
         {
-          gimp_procedure_new_return_values (procedure,
-                                            GIMP_PDB_SUCCESS,
+          ligma_procedure_new_return_values (procedure,
+                                            LIGMA_PDB_SUCCESS,
                                             NULL);
         }
 
       if (!DepthMerge_dialog (&dm))
         {
-          gimp_procedure_new_return_values (procedure,
-                                            GIMP_PDB_CANCEL,
+          ligma_procedure_new_return_values (procedure,
+                                            LIGMA_PDB_CANCEL,
                                             NULL);
         }
       break;
 
-    case GIMP_RUN_NONINTERACTIVE:
-      dm.params.result_id    = gimp_item_get_id (GIMP_ITEM (drawable));
+    case LIGMA_RUN_NONINTERACTIVE:
+      dm.params.result_id    = ligma_item_get_id (LIGMA_ITEM (drawable));
 
-      dm.params.source1_id   = GIMP_VALUES_GET_DRAWABLE_ID (args, 0);
-      dm.params.source2_id   = GIMP_VALUES_GET_DRAWABLE_ID (args, 1);
-      dm.params.depthMap1_id = GIMP_VALUES_GET_DRAWABLE_ID (args, 2);
-      dm.params.depthMap2_id = GIMP_VALUES_GET_DRAWABLE_ID (args, 3);
-      dm.params.overlap      = GIMP_VALUES_GET_DOUBLE      (args, 4);
-      dm.params.offset       = GIMP_VALUES_GET_DOUBLE      (args, 5);
-      dm.params.scale1       = GIMP_VALUES_GET_DOUBLE      (args, 6);
-      dm.params.scale2       = GIMP_VALUES_GET_DOUBLE      (args, 7);
+      dm.params.source1_id   = LIGMA_VALUES_GET_DRAWABLE_ID (args, 0);
+      dm.params.source2_id   = LIGMA_VALUES_GET_DRAWABLE_ID (args, 1);
+      dm.params.depthMap1_id = LIGMA_VALUES_GET_DRAWABLE_ID (args, 2);
+      dm.params.depthMap2_id = LIGMA_VALUES_GET_DRAWABLE_ID (args, 3);
+      dm.params.overlap      = LIGMA_VALUES_GET_DOUBLE      (args, 4);
+      dm.params.offset       = LIGMA_VALUES_GET_DOUBLE      (args, 5);
+      dm.params.scale1       = LIGMA_VALUES_GET_DOUBLE      (args, 6);
+      dm.params.scale2       = LIGMA_VALUES_GET_DOUBLE      (args, 7);
 
       if (! DepthMerge_construct (&dm))
         {
-          gimp_procedure_new_return_values (procedure,
-                                            GIMP_PDB_SUCCESS,
+          ligma_procedure_new_return_values (procedure,
+                                            LIGMA_PDB_SUCCESS,
                                             NULL);
         }
       break;
 
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_get_data (PLUG_IN_PROC, &dm.params);
+    case LIGMA_RUN_WITH_LAST_VALS:
+      ligma_get_data (PLUG_IN_PROC, &dm.params);
 
       if (!DepthMerge_construct (&dm))
         {
-          gimp_procedure_new_return_values (procedure,
-                                            GIMP_PDB_SUCCESS,
+          ligma_procedure_new_return_values (procedure,
+                                            LIGMA_PDB_SUCCESS,
                                             NULL);
         }
       break;
@@ -374,22 +374,22 @@ merge_run (GimpProcedure        *procedure,
 
   if (! DepthMerge_execute (&dm))
     {
-      gimp_procedure_new_return_values (procedure,
-                                        GIMP_PDB_EXECUTION_ERROR,
+      ligma_procedure_new_return_values (procedure,
+                                        LIGMA_PDB_EXECUTION_ERROR,
                                         NULL);
     }
   else
     {
-      if (run_mode != GIMP_RUN_NONINTERACTIVE)
-        gimp_displays_flush ();
+      if (run_mode != LIGMA_RUN_NONINTERACTIVE)
+        ligma_displays_flush ();
 
-      if (run_mode == GIMP_RUN_INTERACTIVE)
-        gimp_set_data (PLUG_IN_PROC, &dm.params, sizeof (DepthMergeParams));
+      if (run_mode == LIGMA_RUN_INTERACTIVE)
+        ligma_set_data (PLUG_IN_PROC, &dm.params, sizeof (DepthMergeParams));
     }
 
   DepthMerge_destroy (&dm);
 
-  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
+  return ligma_procedure_new_return_values (procedure, LIGMA_PDB_SUCCESS, NULL);
 }
 
 /* ----- DepthMerge ----- */
@@ -413,9 +413,9 @@ DepthMerge_construct (DepthMerge *dm)
 {
   dm->interface = NULL;
 
-  dm->resultDrawable = gimp_drawable_get_by_id (dm->params.result_id);
+  dm->resultDrawable = ligma_drawable_get_by_id (dm->params.result_id);
 
-  if (! gimp_drawable_mask_intersect (dm->resultDrawable,
+  if (! ligma_drawable_mask_intersect (dm->resultDrawable,
                                       &(dm->selectionX), &(dm->selectionY),
                                       &(dm->selectionWidth),
                                       &(dm->selectionHeight)))
@@ -423,13 +423,13 @@ DepthMerge_construct (DepthMerge *dm)
       return FALSE;
     }
 
-  dm->resultHasAlpha = gimp_drawable_has_alpha (dm->resultDrawable);
+  dm->resultHasAlpha = ligma_drawable_has_alpha (dm->resultDrawable);
 
-  dm->source1Drawable = gimp_drawable_get_by_id (dm->params.source1_id);
-  dm->source2Drawable = gimp_drawable_get_by_id (dm->params.source2_id);
+  dm->source1Drawable = ligma_drawable_get_by_id (dm->params.source1_id);
+  dm->source2Drawable = ligma_drawable_get_by_id (dm->params.source2_id);
 
-  dm->depthMap1Drawable = gimp_drawable_get_by_id (dm->params.depthMap1_id);
-  dm->depthMap2Drawable = gimp_drawable_get_by_id (dm->params.depthMap2_id);
+  dm->depthMap1Drawable = ligma_drawable_get_by_id (dm->params.depthMap1_id);
+  dm->depthMap2Drawable = ligma_drawable_get_by_id (dm->params.depthMap2_id);
 
   dm->params.overlap = CLAMP (dm->params.overlap, 0, 2);
   dm->params.offset  = CLAMP (dm->params.offset, -1, 1);
@@ -466,7 +466,7 @@ DepthMerge_execute (DepthMerge *dm)
   guchar       *resultRow;
   guchar       *tempRow;
 
-  gimp_progress_init (_("Depth-merging"));
+  ligma_progress_init (_("Depth-merging"));
 
   resultRow    = g_new (guchar, dm->selectionWidth * 4);
   source1Row   = g_new (guchar, dm->selectionWidth * 4);
@@ -477,7 +477,7 @@ DepthMerge_execute (DepthMerge *dm)
 
   if (dm->source1Drawable)
     {
-      source1_buffer = gimp_drawable_get_buffer (dm->source1Drawable);
+      source1_buffer = ligma_drawable_get_buffer (dm->source1Drawable);
     }
   else
     {
@@ -492,7 +492,7 @@ DepthMerge_execute (DepthMerge *dm)
 
   if (dm->source2Drawable)
     {
-      source2_buffer = gimp_drawable_get_buffer (dm->source2Drawable);
+      source2_buffer = ligma_drawable_get_buffer (dm->source2Drawable);
     }
   else
     {
@@ -507,7 +507,7 @@ DepthMerge_execute (DepthMerge *dm)
 
   if (dm->depthMap1Drawable)
     {
-      depthMap1_buffer = gimp_drawable_get_buffer (dm->depthMap1Drawable);
+      depthMap1_buffer = ligma_drawable_get_buffer (dm->depthMap1Drawable);
     }
   else
     {
@@ -519,7 +519,7 @@ DepthMerge_execute (DepthMerge *dm)
 
   if (dm->depthMap2Drawable)
     {
-      depthMap2_buffer = gimp_drawable_get_buffer (dm->depthMap2Drawable);
+      depthMap2_buffer = ligma_drawable_get_buffer (dm->depthMap2Drawable);
     }
   else
     {
@@ -529,7 +529,7 @@ DepthMerge_execute (DepthMerge *dm)
         }
     }
 
-  result_buffer = gimp_drawable_get_shadow_buffer (dm->resultDrawable);
+  result_buffer = ligma_drawable_get_shadow_buffer (dm->resultDrawable);
 
   for (y = dm->selectionY; y < (dm->selectionY + dm->selectionHeight); y++)
     {
@@ -580,7 +580,7 @@ DepthMerge_execute (DepthMerge *dm)
                        babl_format ("R'G'B'A u8"), resultRow,
                        GEGL_AUTO_ROWSTRIDE);
 
-      gimp_progress_update ((double)(y-dm->selectionY) /
+      ligma_progress_update ((double)(y-dm->selectionY) /
                             (double)(dm->selectionHeight - 1));
     }
 
@@ -591,7 +591,7 @@ DepthMerge_execute (DepthMerge *dm)
   g_free (depthMap2Row);
   g_free (tempRow);
 
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 
   if (source1_buffer)
     g_object_unref (source1_buffer);
@@ -607,8 +607,8 @@ DepthMerge_execute (DepthMerge *dm)
 
   g_object_unref (result_buffer);
 
-  gimp_drawable_merge_shadow (dm->resultDrawable, TRUE);
-  gimp_drawable_update (dm->resultDrawable,
+  ligma_drawable_merge_shadow (dm->resultDrawable, TRUE);
+  ligma_drawable_update (dm->resultDrawable,
                         dm->selectionX, dm->selectionY,
                         dm->selectionWidth, dm->selectionHeight);
 
@@ -723,24 +723,24 @@ DepthMerge_dialog (DepthMerge *dm)
 
   dm->interface = g_new0 (DepthMergeInterface, 1);
 
-  gimp_ui_init (PLUG_IN_BINARY);
+  ligma_ui_init (PLUG_IN_BINARY);
 
   dm->interface->dialog =
-    dialog = gimp_dialog_new (_("Depth Merge"), PLUG_IN_ROLE,
+    dialog = ligma_dialog_new (_("Depth Merge"), PLUG_IN_ROLE,
                               NULL, 0,
-                              gimp_standard_help_func, PLUG_IN_PROC,
+                              ligma_standard_help_func, PLUG_IN_PROC,
 
                               _("_Cancel"), GTK_RESPONSE_CANCEL,
                               _("_OK"),     GTK_RESPONSE_OK,
 
                               NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  gimp_window_set_transient (GTK_WINDOW (dialog));
+  ligma_window_set_transient (GTK_WINDOW (dialog));
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
@@ -760,7 +760,7 @@ DepthMerge_dialog (DepthMerge *dm)
 
   dm->interface->previewWidth  = MIN (dm->selectionWidth,  PREVIEW_SIZE);
   dm->interface->previewHeight = MIN (dm->selectionHeight, PREVIEW_SIZE);
-  dm->interface->preview = gimp_preview_area_new ();
+  dm->interface->preview = ligma_preview_area_new ();
   gtk_widget_set_size_request (dm->interface->preview,
                                dm->interface->previewWidth,
                                dm->interface->previewHeight);
@@ -781,8 +781,8 @@ DepthMerge_dialog (DepthMerge *dm)
   gtk_grid_attach (GTK_GRID (grid), label, 0, 0, 1, 1);
   gtk_widget_show (label);
 
-  combo = gimp_drawable_combo_box_new (dm_constraint, dm, NULL);
-  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), dm->params.source1_id,
+  combo = ligma_drawable_combo_box_new (dm_constraint, dm, NULL);
+  ligma_int_combo_box_connect (LIGMA_INT_COMBO_BOX (combo), dm->params.source1_id,
                               G_CALLBACK (dialogSource1ChangedCallback),
                               dm, NULL);
 
@@ -795,9 +795,9 @@ DepthMerge_dialog (DepthMerge *dm)
   gtk_grid_attach (GTK_GRID (grid), label, 0, 1, 1, 1);
   gtk_widget_show (label);
 
-  combo = gimp_drawable_combo_box_new (dm_constraint, dm, NULL);
+  combo = ligma_drawable_combo_box_new (dm_constraint, dm, NULL);
   gtk_widget_set_margin_bottom (combo, 6);
-  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), dm->params.depthMap1_id,
+  ligma_int_combo_box_connect (LIGMA_INT_COMBO_BOX (combo), dm->params.depthMap1_id,
                               G_CALLBACK (dialogDepthMap1ChangedCallback),
                               dm, NULL);
 
@@ -809,8 +809,8 @@ DepthMerge_dialog (DepthMerge *dm)
   gtk_grid_attach (GTK_GRID (grid), label, 0, 2, 1, 1);
   gtk_widget_show (label);
 
-  combo = gimp_drawable_combo_box_new (dm_constraint, dm, NULL);
-  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), dm->params.source2_id,
+  combo = ligma_drawable_combo_box_new (dm_constraint, dm, NULL);
+  ligma_int_combo_box_connect (LIGMA_INT_COMBO_BOX (combo), dm->params.source2_id,
                               G_CALLBACK (dialogSource2ChangedCallback),
                               dm, NULL);
 
@@ -823,9 +823,9 @@ DepthMerge_dialog (DepthMerge *dm)
   gtk_grid_attach (GTK_GRID (grid), label, 0, 3, 1, 1);
   gtk_widget_show (label);
 
-  combo = gimp_drawable_combo_box_new (dm_constraint, dm, NULL);
+  combo = ligma_drawable_combo_box_new (dm_constraint, dm, NULL);
   gtk_widget_set_margin_bottom (combo, 6);
-  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), dm->params.depthMap2_id,
+  ligma_int_combo_box_connect (LIGMA_INT_COMBO_BOX (combo), dm->params.depthMap2_id,
                               G_CALLBACK (dialogDepthMap2ChangedCallback),
                               dm, NULL);
 
@@ -833,8 +833,8 @@ DepthMerge_dialog (DepthMerge *dm)
   gtk_widget_show (combo);
 
   /* Numeric parameters */
-  scale = gimp_scale_entry_new (_("O_verlap:"), dm->params.overlap, 0, 2, 3);
-  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 0.001, 0.01);
+  scale = ligma_scale_entry_new (_("O_verlap:"), dm->params.overlap, 0, 2, 3);
+  ligma_label_spin_set_increments (LIGMA_LABEL_SPIN (scale), 0.001, 0.01);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (dialogValueScaleUpdateCallback),
                     &(dm->params.overlap));
@@ -842,8 +842,8 @@ DepthMerge_dialog (DepthMerge *dm)
   gtk_grid_attach (GTK_GRID (grid), scale, 0, 4, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new (_("O_ffset:"), dm->params.offset, -1, 1, 3);
-  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 0.001, 0.01);
+  scale = ligma_scale_entry_new (_("O_ffset:"), dm->params.offset, -1, 1, 3);
+  ligma_label_spin_set_increments (LIGMA_LABEL_SPIN (scale), 0.001, 0.01);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (dialogValueScaleUpdateCallback),
                     &(dm->params.offset));
@@ -851,8 +851,8 @@ DepthMerge_dialog (DepthMerge *dm)
   gtk_grid_attach (GTK_GRID (grid), scale, 0, 5, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new (_("Sc_ale 1:"), dm->params.scale1, -1, 1, 3);
-  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 0.001, 0.01);
+  scale = ligma_scale_entry_new (_("Sc_ale 1:"), dm->params.scale1, -1, 1, 3);
+  ligma_label_spin_set_increments (LIGMA_LABEL_SPIN (scale), 0.001, 0.01);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (dialogValueScaleUpdateCallback),
                     &(dm->params.scale1));
@@ -860,8 +860,8 @@ DepthMerge_dialog (DepthMerge *dm)
   gtk_grid_attach (GTK_GRID (grid), scale, 0, 6, 3, 1);
   gtk_widget_show (scale);
 
-  scale = gimp_scale_entry_new (_("Sca_le 2:"), dm->params.scale2, -1, 1, 3);
-  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 0.001, 0.01);
+  scale = ligma_scale_entry_new (_("Sca_le 2:"), dm->params.scale2, -1, 1, 3);
+  ligma_label_spin_set_increments (LIGMA_LABEL_SPIN (scale), 0.001, 0.01);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (dialogValueScaleUpdateCallback),
                     &(dm->params.scale2));
@@ -874,7 +874,7 @@ DepthMerge_dialog (DepthMerge *dm)
   gtk_widget_show (dm->interface->dialog);
   DepthMerge_updatePreview (dm);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dm->interface->dialog)) == GTK_RESPONSE_OK);
+  run = (ligma_dialog_run (LIGMA_DIALOG (dm->interface->dialog)) == GTK_RESPONSE_OK);
 
   gtk_widget_destroy (dm->interface->dialog);
   dm->interface->dialog = NULL;
@@ -961,11 +961,11 @@ DepthMerge_updatePreview (DepthMerge *dm)
                                dm->interface->previewWidth);
     }
 
-  gimp_preview_area_draw (GIMP_PREVIEW_AREA (dm->interface->preview),
+  ligma_preview_area_draw (LIGMA_PREVIEW_AREA (dm->interface->preview),
                           0, 0,
                           dm->interface->previewWidth,
                           dm->interface->previewHeight,
-                          GIMP_RGBA_IMAGE,
+                          LIGMA_RGBA_IMAGE,
                           resultRGBA,
                           dm->interface->previewWidth * 4);
   g_free(resultRGBA);
@@ -974,30 +974,30 @@ DepthMerge_updatePreview (DepthMerge *dm)
 /* ----- Callbacks ----- */
 
 static gboolean
-dm_constraint (GimpImage *image,
-               GimpItem  *item,
+dm_constraint (LigmaImage *image,
+               LigmaItem  *item,
                gpointer   data)
 {
   DepthMerge   *dm       = data;
-  GimpDrawable *drawable = GIMP_DRAWABLE (item);
+  LigmaDrawable *drawable = LIGMA_DRAWABLE (item);
 
-  return ((gimp_drawable_get_width (drawable) ==
-           gimp_drawable_get_width (dm->resultDrawable)) &&
-          (gimp_drawable_get_height (drawable) ==
-           gimp_drawable_get_height (dm->resultDrawable)) &&
-          ((gimp_drawable_is_rgb (drawable) &&
-            (gimp_drawable_is_rgb (dm->resultDrawable))) ||
-           gimp_drawable_is_gray (drawable)));
+  return ((ligma_drawable_get_width (drawable) ==
+           ligma_drawable_get_width (dm->resultDrawable)) &&
+          (ligma_drawable_get_height (drawable) ==
+           ligma_drawable_get_height (dm->resultDrawable)) &&
+          ((ligma_drawable_is_rgb (drawable) &&
+            (ligma_drawable_is_rgb (dm->resultDrawable))) ||
+           ligma_drawable_is_gray (drawable)));
 }
 
 static void
 dialogSource1ChangedCallback (GtkWidget  *widget,
                               DepthMerge *dm)
 {
-  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget),
+  ligma_int_combo_box_get_active (LIGMA_INT_COMBO_BOX (widget),
                                  &dm->params.source1_id);
 
-  dm->source1Drawable = gimp_drawable_get_by_id (dm->params.source1_id);
+  dm->source1Drawable = ligma_drawable_get_by_id (dm->params.source1_id);
 
   util_fillReducedBuffer (dm->interface->previewSource1,
                           babl_format ("R'G'B'A u8"),
@@ -1014,10 +1014,10 @@ static void
 dialogSource2ChangedCallback (GtkWidget  *widget,
                               DepthMerge *dm)
 {
-  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget),
+  ligma_int_combo_box_get_active (LIGMA_INT_COMBO_BOX (widget),
                                  &dm->params.source2_id);
 
-  dm->source2Drawable = gimp_drawable_get_by_id (dm->params.source2_id);
+  dm->source2Drawable = ligma_drawable_get_by_id (dm->params.source2_id);
 
   util_fillReducedBuffer (dm->interface->previewSource2,
                           babl_format ("R'G'B'A u8"),
@@ -1034,10 +1034,10 @@ static void
 dialogDepthMap1ChangedCallback (GtkWidget  *widget,
                                 DepthMerge *dm)
 {
-  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget),
+  ligma_int_combo_box_get_active (LIGMA_INT_COMBO_BOX (widget),
                                  &dm->params.depthMap1_id);
 
-  dm->depthMap1Drawable = gimp_drawable_get_by_id (dm->params.depthMap1_id);
+  dm->depthMap1Drawable = ligma_drawable_get_by_id (dm->params.depthMap1_id);
 
   util_fillReducedBuffer (dm->interface->previewDepthMap1,
                           babl_format ("Y' u8"),
@@ -1054,10 +1054,10 @@ static void
 dialogDepthMap2ChangedCallback (GtkWidget  *widget,
                                 DepthMerge *dm)
 {
-  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget),
+  ligma_int_combo_box_get_active (LIGMA_INT_COMBO_BOX (widget),
                                  &dm->params.depthMap2_id);
 
-  dm->depthMap2Drawable = gimp_drawable_get_by_id (dm->params.depthMap2_id);
+  dm->depthMap2Drawable = ligma_drawable_get_by_id (dm->params.depthMap2_id);
 
   util_fillReducedBuffer (dm->interface->previewDepthMap2,
                           babl_format ("Y' u8"),
@@ -1071,12 +1071,12 @@ dialogDepthMap2ChangedCallback (GtkWidget  *widget,
 }
 
 static void
-dialogValueScaleUpdateCallback (GimpLabelSpin *scale,
+dialogValueScaleUpdateCallback (LigmaLabelSpin *scale,
                                 gfloat        *value)
 {
   DepthMerge *dm = g_object_get_data (G_OBJECT (scale), "dm");
 
-  *value = (gfloat) gimp_label_spin_get_value (scale);
+  *value = (gfloat) ligma_label_spin_get_value (scale);
 
   DepthMerge_updatePreview (dm);
 }
@@ -1088,7 +1088,7 @@ util_fillReducedBuffer (guchar       *dest,
                         const Babl   *dest_format,
                         gint          destWidth,
                         gint          destHeight,
-                        GimpDrawable *sourceDrawable,
+                        LigmaDrawable *sourceDrawable,
                         gint          x0,
                         gint          y0,
                         gint          sourceWidth,
@@ -1116,7 +1116,7 @@ util_fillReducedBuffer (guchar       *dest,
   reducedRowBuffer      = g_new (guchar, destWidth   * destBPP);
   sourceRowOffsetLookup = g_new (int, destWidth);
 
-  buffer = gimp_drawable_get_buffer (sourceDrawable);
+  buffer = ligma_drawable_get_buffer (sourceDrawable);
 
   for (x = 0; x < destWidth; x++)
     sourceRowOffsetLookup[x] = (x * (sourceWidth - 1) / (destWidth - 1)) * destBPP;

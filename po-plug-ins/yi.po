@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2004-12-28 15:41+0100\n"
 "PO-Revision-Date: 2003-03-19\n"
 "Last-Translator: Raphael Finkel <raphael@cs.uky.edu>\n"
@@ -19,7 +19,7 @@ msgstr ""
 #: plug-ins/gflare/gflare.c:891
 #, c-format
 msgid ""
-"No %s in gimprc:\n"
+"No %s in ligmarc:\n"
 "You need to add an entry like\n"
 "(%s \"%s\")\n"
 "to your %s file."
@@ -27,7 +27,7 @@ msgstr ""
 
 #: plug-ins/FractalExplorer/Dialogs.c:543
 #: plug-ins/FractalExplorer/Dialogs.c:1647 plug-ins/imagemap/imap_about.c:39
-#: plug-ins/print/gimp_main_window.c:367
+#: plug-ins/print/ligma_main_window.c:367
 msgid "About"
 msgstr ""
 
@@ -607,7 +607,7 @@ msgstr "ריכטונג"
 
 #: plug-ins/Lighting/lighting_ui.c:417 plug-ins/MapObject/mapobject_ui.c:694
 #: plug-ins/MapObject/mapobject_ui.c:1021
-#: plug-ins/print/gimp_main_window.c:464
+#: plug-ins/print/ligma_main_window.c:464
 msgid "Position"
 msgstr "פּאָזיציע"
 
@@ -823,7 +823,7 @@ msgstr ""
 msgid "Lighting Effects"
 msgstr ""
 
-#: plug-ins/Lighting/lighting_ui.c:982 plug-ins/gimpressionist/preview.c:181
+#: plug-ins/Lighting/lighting_ui.c:982 plug-ins/ligmaressionist/preview.c:181
 #: plug-ins/imagemap/imap_polygon.c:514
 msgid "_Update"
 msgstr ""
@@ -1047,22 +1047,22 @@ msgid "Back:"
 msgstr ""
 
 #: plug-ins/MapObject/mapobject_ui.c:1133
-#: plug-ins/print/gimp_main_window.c:523
+#: plug-ins/print/ligma_main_window.c:523
 msgid "Top:"
 msgstr ""
 
 #: plug-ins/MapObject/mapobject_ui.c:1133
-#: plug-ins/print/gimp_main_window.c:564
+#: plug-ins/print/ligma_main_window.c:564
 msgid "Bottom:"
 msgstr ""
 
 #: plug-ins/MapObject/mapobject_ui.c:1134
-#: plug-ins/print/gimp_main_window.c:510
+#: plug-ins/print/ligma_main_window.c:510
 msgid "Left:"
 msgstr ""
 
 #: plug-ins/MapObject/mapobject_ui.c:1134
-#: plug-ins/print/gimp_main_window.c:536
+#: plug-ins/print/ligma_main_window.c:536
 msgid "Right:"
 msgstr ""
 
@@ -1100,7 +1100,7 @@ msgid "Images for the Cap Faces"
 msgstr ""
 
 #: plug-ins/MapObject/mapobject_ui.c:1262
-#: plug-ins/print/gimp_main_window.c:1102
+#: plug-ins/print/ligma_main_window.c:1102
 msgid "Size"
 msgstr "גרײס"
 
@@ -1219,7 +1219,7 @@ msgstr ""
 #: plug-ins/common/tile.c:266 plug-ins/common/winclipboard.c:579
 #: plug-ins/common/xbm.c:867 plug-ins/faxg3/faxg3.c:465
 #: plug-ins/fits/fits.c:506 plug-ins/gfig/gfig-dialog.c:1286
-#: plug-ins/gimpressionist/general.c:121 plug-ins/sgi/sgi.c:376
+#: plug-ins/ligmaressionist/general.c:121 plug-ins/sgi/sgi.c:376
 #: plug-ins/twain/twain.c:571 plug-ins/winsnap/winsnap.c:1152
 msgid "Background"
 msgstr "הינטערגרונט"
@@ -1504,7 +1504,7 @@ msgid "Min (x-d, -), (0.5 < x)"
 msgstr ""
 
 #: plug-ins/common/CML_explorer.c:202 plug-ins/common/sunras.c:1594
-#: plug-ins/print/gimp_main_window.c:1645
+#: plug-ins/print/ligma_main_window.c:1645
 msgid "Standard"
 msgstr ""
 
@@ -1585,8 +1585,8 @@ msgid "Randoms from seed (shared)"
 msgstr ""
 
 #: plug-ins/common/CML_explorer.c:302 plug-ins/common/CML_explorer.c:310
-#: plug-ins/common/decompose.c:143 plug-ins/gimpressionist/orientation.c:162
-#: plug-ins/gimpressionist/size.c:165
+#: plug-ins/common/decompose.c:143 plug-ins/ligmaressionist/orientation.c:162
+#: plug-ins/ligmaressionist/size.c:165
 msgid "Hue"
 msgstr ""
 
@@ -1596,8 +1596,8 @@ msgid "Saturation"
 msgstr ""
 
 #: plug-ins/common/CML_explorer.c:304 plug-ins/common/CML_explorer.c:312
-#: plug-ins/common/decompose.c:145 plug-ins/gimpressionist/orientation.c:138
-#: plug-ins/gimpressionist/size.c:141
+#: plug-ins/common/decompose.c:145 plug-ins/ligmaressionist/orientation.c:138
+#: plug-ins/ligmaressionist/size.c:141
 msgid "Value"
 msgstr "באַטרעף"
 
@@ -2357,7 +2357,7 @@ msgid "_Psychobilly"
 msgstr ""
 
 #: plug-ins/common/checkerboard.c:365 plug-ins/common/papertile.c:287
-#: plug-ins/gimpressionist/sizemap.c:487
+#: plug-ins/ligmaressionist/sizemap.c:487
 msgid "_Size:"
 msgstr ""
 
@@ -2438,7 +2438,7 @@ msgid "Hue:"
 msgstr ""
 
 #. Gray: Circle: Spinbutton 2
-#: plug-ins/common/compose.c:149 plug-ins/print/gimp_color_window.c:364
+#: plug-ins/common/compose.c:149 plug-ins/print/ligma_color_window.c:364
 #: plug-ins/rcm/rcm_dialog.c:479
 msgid "Saturation:"
 msgstr ""
@@ -2452,17 +2452,17 @@ msgid "CMY"
 msgstr ""
 
 #: plug-ins/common/compose.c:155 plug-ins/common/compose.c:162
-#: plug-ins/common/fp.c:220 plug-ins/print/gimp_color_window.c:307
+#: plug-ins/common/fp.c:220 plug-ins/print/ligma_color_window.c:307
 msgid "Cyan:"
 msgstr ""
 
 #: plug-ins/common/compose.c:156 plug-ins/common/compose.c:163
-#: plug-ins/common/fp.c:222 plug-ins/print/gimp_color_window.c:326
+#: plug-ins/common/fp.c:222 plug-ins/print/ligma_color_window.c:326
 msgid "Magenta:"
 msgstr ""
 
 #: plug-ins/common/compose.c:157 plug-ins/common/compose.c:164
-#: plug-ins/common/fp.c:221 plug-ins/print/gimp_color_window.c:345
+#: plug-ins/common/fp.c:221 plug-ins/print/ligma_color_window.c:345
 msgid "Yellow:"
 msgstr ""
 
@@ -2766,8 +2766,8 @@ msgid "Curve Bend"
 msgstr ""
 
 #. Preview area, top of column
-#: plug-ins/common/curve_bend.c:1273 plug-ins/gimpressionist/orientmap.c:567
-#: plug-ins/gimpressionist/sizemap.c:437
+#: plug-ins/common/curve_bend.c:1273 plug-ins/ligmaressionist/orientmap.c:567
+#: plug-ins/ligmaressionist/sizemap.c:437
 msgid "Preview"
 msgstr "פֿאָרױסװײַז"
 
@@ -3118,7 +3118,7 @@ msgstr ""
 #.
 #. * Filter type controls...
 #.
-#: plug-ins/common/despeckle.c:444 plug-ins/gimpressionist/orientmap.c:616
+#: plug-ins/common/despeckle.c:444 plug-ins/ligmaressionist/orientmap.c:616
 msgid "Type"
 msgstr "טיפּ"
 
@@ -3294,7 +3294,7 @@ msgstr ""
 msgid "_Normalize"
 msgstr "נאָרמאַל"
 
-#: plug-ins/common/dog.c:336 plug-ins/gimpressionist/paper.c:149
+#: plug-ins/common/dog.c:336 plug-ins/ligmaressionist/paper.c:149
 msgid "_Invert"
 msgstr ""
 
@@ -3824,7 +3824,7 @@ msgid "_RLE"
 msgstr ""
 
 #: plug-ins/common/gbr.c:130 plug-ins/common/gbr.c:151
-msgid "GIMP brush"
+msgid "LIGMA brush"
 msgstr ""
 
 #: plug-ins/common/gbr.c:369 plug-ins/common/gbr.c:381
@@ -3833,7 +3833,7 @@ msgstr ""
 
 #: plug-ins/common/gbr.c:392
 #, c-format
-msgid "Error in GIMP brush file '%s'"
+msgid "Error in LIGMA brush file '%s'"
 msgstr ""
 
 #: plug-ins/common/gbr.c:400
@@ -3847,7 +3847,7 @@ msgid "Unnamed"
 msgstr ""
 
 #: plug-ins/common/gbr.c:578
-msgid "GIMP brushes are either GRAYSCALE or RGBA"
+msgid "LIGMA brushes are either GRAYSCALE or RGBA"
 msgstr ""
 
 #: plug-ins/common/gbr.c:663
@@ -3860,7 +3860,7 @@ msgid "Spacing:"
 msgstr ""
 
 #: plug-ins/common/gbr.c:694 plug-ins/common/gih.c:904
-#: plug-ins/common/pat.c:521 plug-ins/gimpressionist/presets.c:642
+#: plug-ins/common/pat.c:521 plug-ins/ligmaressionist/presets.c:642
 msgid "Description:"
 msgstr "באַשרײַבונג:"
 
@@ -3873,12 +3873,12 @@ msgid "GEE-SLIME"
 msgstr ""
 
 #: plug-ins/common/gee.c:158 plug-ins/common/gee_zoom.c:191
-msgid "Thank you for choosing GIMP"
+msgid "Thank you for choosing LIGMA"
 msgstr ""
 
 #: plug-ins/common/gee.c:166
 msgid ""
-"A less-obsolete creation of Adam D. Moss / adam@gimp.org / adam@foxbox.org / "
+"A less-obsolete creation of Adam D. Moss / adam@ligma.org / adam@foxbox.org / "
 "1998-2000"
 msgstr ""
 
@@ -3892,7 +3892,7 @@ msgstr ""
 
 #: plug-ins/common/gee_zoom.c:199
 msgid ""
-"An obsolete creation of Adam D. Moss / adam@gimp.org / adam@foxbox.org / "
+"An obsolete creation of Adam D. Moss / adam@ligma.org / adam@foxbox.org / "
 "1998-2000"
 msgstr ""
 
@@ -4033,7 +4033,7 @@ msgid ""
 msgstr ""
 
 #: plug-ins/common/gih.c:205 plug-ins/common/gih.c:226
-msgid "GIMP brush (animated)"
+msgid "LIGMA brush (animated)"
 msgstr ""
 
 #: plug-ins/common/gih.c:319
@@ -4042,11 +4042,11 @@ msgid "Layer %s doesn't have an alpha channel, skipped"
 msgstr ""
 
 #: plug-ins/common/gih.c:490
-msgid "Error in GIMP brush pipe file."
+msgid "Error in LIGMA brush pipe file."
 msgstr ""
 
 #: plug-ins/common/gih.c:556
-msgid "GIMP brush file appears to be corrupted."
+msgid "LIGMA brush file appears to be corrupted."
 msgstr ""
 
 #: plug-ins/common/gih.c:704
@@ -4180,8 +4180,8 @@ msgstr ""
 
 #. Width and Height
 #: plug-ins/common/grid.c:703 plug-ins/common/svg.c:761
-#: plug-ins/common/wmf.c:548 plug-ins/print/gimp_main_window.c:992
-#: plug-ins/print/gimp_main_window.c:1199
+#: plug-ins/common/wmf.c:548 plug-ins/print/ligma_main_window.c:992
+#: plug-ins/print/ligma_main_window.c:1199
 msgid "Width:"
 msgstr "ברײט:"
 
@@ -4208,7 +4208,7 @@ msgid "HTML table"
 msgstr ""
 
 #: plug-ins/common/gtm.c:399
-msgid "GIMP Table Magic"
+msgid "LIGMA Table Magic"
 msgstr ""
 
 #: plug-ins/common/gtm.c:419
@@ -5446,7 +5446,7 @@ msgstr ""
 
 #: plug-ins/common/pat.c:104 plug-ins/common/pat.c:126
 #, fuzzy
-msgid "GIMP pattern"
+msgid "LIGMA pattern"
 msgstr "ציל"
 
 #: plug-ins/common/pat.c:343
@@ -5789,7 +5789,7 @@ msgstr ""
 
 #. Resolution
 #: plug-ins/common/postscript.c:2949 plug-ins/common/svg.c:882
-#: plug-ins/common/wmf.c:669 plug-ins/print/gimp_main_window.c:1087
+#: plug-ins/common/wmf.c:669 plug-ins/print/ligma_main_window.c:1087
 msgid "Resolution:"
 msgstr ""
 
@@ -5819,8 +5819,8 @@ msgid "Gray"
 msgstr ""
 
 #: plug-ins/common/postscript.c:3004 plug-ins/common/xpm.c:469
-#: plug-ins/gimpressionist/color.c:48 plug-ins/gimpressionist/general.c:151
-#: plug-ins/imagemap/imap_menu.c:306 plug-ins/print/gimp_main_window.c:1399
+#: plug-ins/ligmaressionist/color.c:48 plug-ins/ligmaressionist/general.c:151
+#: plug-ins/imagemap/imap_menu.c:306 plug-ins/print/ligma_main_window.c:1399
 msgid "Color"
 msgstr "פֿאַרב"
 
@@ -6746,7 +6746,7 @@ msgstr "הינטערגרונט"
 msgid "Use the background color"
 msgstr "הינטערגרונט"
 
-#: plug-ins/common/spheredesigner.c:280 plug-ins/gimpressionist/general.c:147
+#: plug-ins/common/spheredesigner.c:280 plug-ins/ligmaressionist/general.c:147
 msgid "Solid"
 msgstr ""
 
@@ -6836,7 +6836,7 @@ msgid "Color Selection Dialog"
 msgstr ""
 
 #. Scale
-#: plug-ins/common/spheredesigner.c:2674 plug-ins/gimpressionist/paper.c:176
+#: plug-ins/common/spheredesigner.c:2674 plug-ins/ligmaressionist/paper.c:176
 #: plug-ins/ifscompose/ifscompose.c:572
 msgid "Scale:"
 msgstr ""
@@ -7033,8 +7033,8 @@ msgid "Render Scalable Vector Graphics"
 msgstr ""
 
 #: plug-ins/common/svg.c:767 plug-ins/common/wmf.c:554
-#: plug-ins/print/gimp_main_window.c:1009
-#: plug-ins/print/gimp_main_window.c:1212
+#: plug-ins/print/ligma_main_window.c:1009
+#: plug-ins/print/ligma_main_window.c:1212
 msgid "Height:"
 msgstr "הײך: "
 
@@ -7064,7 +7064,7 @@ msgstr ""
 
 #: plug-ins/common/svg.c:914
 msgid ""
-"Import path elements of the SVG so they can be used with the GIMP path tool"
+"Import path elements of the SVG so they can be used with the LIGMA path tool"
 msgstr ""
 
 #: plug-ins/common/svg.c:927
@@ -7140,7 +7140,7 @@ msgstr ""
 #: plug-ins/common/tiff.c:859
 msgid ""
 "Warning:\n"
-"The image you are loading has 16 bits per channel. GIMP can only handle 8 "
+"The image you are loading has 16 bits per channel. LIGMA can only handle 8 "
 "bit, so it will be converted for you. Information will be lost because of "
 "this conversion."
 msgstr ""
@@ -7268,7 +7268,7 @@ msgstr ""
 
 #: plug-ins/common/uniteditor.c:94
 msgid ""
-"A unit definition will only be saved before GIMP exits if this column is "
+"A unit definition will only be saved before LIGMA exits if this column is "
 "checked."
 msgstr ""
 
@@ -7278,7 +7278,7 @@ msgstr ""
 
 #: plug-ins/common/uniteditor.c:96
 msgid ""
-"This string will be used to identify a unit in GIMP's configuration files."
+"This string will be used to identify a unit in LIGMA's configuration files."
 msgstr ""
 
 #: plug-ins/common/uniteditor.c:98
@@ -7686,7 +7686,7 @@ msgstr ""
 
 #.
 #. if (display_diff_map) {
-#. gimp_display_new(new_image_id);
+#. ligma_display_new(new_image_id);
 #. }
 #.
 #. make sure layer is visible
@@ -7800,7 +7800,7 @@ msgstr ""
 msgid "Can't get Clipboard data."
 msgstr ""
 
-#. ??? gimp_image_convert_rgb (image_ID);
+#. ??? ligma_image_convert_rgb (image_ID);
 #.
 #: plug-ins/common/winclipboard.c:587
 msgid "Pasted"
@@ -7872,7 +7872,7 @@ msgstr ""
 msgid "Higher values restrict the effect to fewer areas of the image"
 msgstr ""
 
-#: plug-ins/common/wind.c:1012 plug-ins/gimpressionist/orientmap.c:669
+#: plug-ins/common/wind.c:1012 plug-ins/ligmaressionist/orientmap.c:669
 msgid "_Strength:"
 msgstr ""
 
@@ -7901,7 +7901,7 @@ msgstr ""
 msgid "StartPage failed"
 msgstr ""
 
-#: plug-ins/common/winprint.c:427 plug-ins/print/print-image-gimp.c:320
+#: plug-ins/common/winprint.c:427 plug-ins/print/print-image-ligma.c:320
 msgid "Printing..."
 msgstr ""
 
@@ -7957,7 +7957,7 @@ msgid "X BitMap image"
 msgstr ""
 
 #: plug-ins/common/xbm.c:241
-msgid "Created with The GIMP"
+msgid "Created with The LIGMA"
 msgstr ""
 
 #: plug-ins/common/xbm.c:804
@@ -8113,50 +8113,50 @@ msgstr ""
 msgid "Nothing to crop."
 msgstr ""
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:128
-#: plug-ins/dbbrowser/gimpprocbrowser.c:142
+#: plug-ins/dbbrowser/ligmaprocbrowser.c:128
+#: plug-ins/dbbrowser/ligmaprocbrowser.c:142
 msgid "Procedure Browser"
 msgstr ""
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:132
-#: plug-ins/dbbrowser/gimpprocbrowser.c:146
+#: plug-ins/dbbrowser/ligmaprocbrowser.c:132
+#: plug-ins/dbbrowser/ligmaprocbrowser.c:146
 #: plug-ins/dbbrowser/plugin-browser.c:548
 msgid "Search by _Name"
 msgstr ""
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:133
-#: plug-ins/dbbrowser/gimpprocbrowser.c:147
+#: plug-ins/dbbrowser/ligmaprocbrowser.c:133
+#: plug-ins/dbbrowser/ligmaprocbrowser.c:147
 msgid "Search by _Blurb"
 msgstr ""
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:224
+#: plug-ins/dbbrowser/ligmaprocbrowser.c:224
 #: plug-ins/dbbrowser/plugin-browser.c:718
 msgid "_Search:"
 msgstr ""
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:386
+#: plug-ins/dbbrowser/ligmaprocbrowser.c:386
 #: plug-ins/dbbrowser/plugin-browser.c:397
 msgid "Searching by name - please wait"
 msgstr ""
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:410
+#: plug-ins/dbbrowser/ligmaprocbrowser.c:410
 msgid "Searching by blurb - please wait"
 msgstr ""
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:421
+#: plug-ins/dbbrowser/ligmaprocbrowser.c:421
 msgid "Searching - please wait"
 msgstr ""
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:428
+#: plug-ins/dbbrowser/ligmaprocbrowser.c:428
 msgid "1 Procedure"
 msgstr ""
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:430
+#: plug-ins/dbbrowser/ligmaprocbrowser.c:430
 #, c-format
 msgid "%d Procedures"
 msgstr ""
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:476
+#: plug-ins/dbbrowser/ligmaprocbrowser.c:476
 #: plug-ins/dbbrowser/plugin-browser.c:516
 msgid "No matches"
 msgstr ""
@@ -8167,45 +8167,45 @@ msgstr ""
 #.
 #. *    Scales
 #.
-#: plug-ins/dbbrowser/gimpprocview.c:133 plug-ins/gflare/gflare.c:2673
+#: plug-ins/dbbrowser/ligmaprocview.c:133 plug-ins/gflare/gflare.c:2673
 #: plug-ins/gflare/gflare.c:3503 plug-ins/gflare/gflare.c:3608
 #: plug-ins/gflare/gflare.c:3745
 msgid "Parameters"
 msgstr ""
 
-#: plug-ins/dbbrowser/gimpprocview.c:146
+#: plug-ins/dbbrowser/ligmaprocview.c:146
 msgid "Return Values"
 msgstr ""
 
-#: plug-ins/dbbrowser/gimpprocview.c:159
+#: plug-ins/dbbrowser/ligmaprocview.c:159
 msgid "Additional Information"
 msgstr ""
 
-#: plug-ins/dbbrowser/gimpprocview.c:198
+#: plug-ins/dbbrowser/ligmaprocview.c:198
 msgid "Author:"
 msgstr "מחבר"
 
-#: plug-ins/dbbrowser/gimpprocview.c:209
+#: plug-ins/dbbrowser/ligmaprocview.c:209
 msgid "Date:"
 msgstr ""
 
-#: plug-ins/dbbrowser/gimpprocview.c:220
+#: plug-ins/dbbrowser/ligmaprocview.c:220
 msgid "Copyright:"
 msgstr ""
 
-#: plug-ins/dbbrowser/gimpprocview.c:319
-msgid "Internal GIMP procedure"
+#: plug-ins/dbbrowser/ligmaprocview.c:319
+msgid "Internal LIGMA procedure"
 msgstr ""
 
-#: plug-ins/dbbrowser/gimpprocview.c:320
-msgid "GIMP Plug-In"
+#: plug-ins/dbbrowser/ligmaprocview.c:320
+msgid "LIGMA Plug-In"
 msgstr ""
 
-#: plug-ins/dbbrowser/gimpprocview.c:321
-msgid "GIMP Extension"
+#: plug-ins/dbbrowser/ligmaprocview.c:321
+msgid "LIGMA Extension"
 msgstr ""
 
-#: plug-ins/dbbrowser/gimpprocview.c:322
+#: plug-ins/dbbrowser/ligmaprocview.c:322
 msgid "Temporary Procedure"
 msgstr ""
 
@@ -8350,8 +8350,8 @@ msgstr ""
 msgid "Same"
 msgstr ""
 
-#: plug-ins/flame/flame.c:732 plug-ins/gimpressionist/orientation.c:146
-#: plug-ins/gimpressionist/size.c:149
+#: plug-ins/flame/flame.c:732 plug-ins/ligmaressionist/orientation.c:146
+#: plug-ins/ligmaressionist/size.c:149
 msgid "Random"
 msgstr ""
 
@@ -8623,7 +8623,7 @@ msgstr ""
 msgid "Max undo:"
 msgstr ""
 
-#: plug-ins/gfig/gfig-dialog.c:1285 plug-ins/gimpressionist/general.c:166
+#: plug-ins/gfig/gfig-dialog.c:1285 plug-ins/ligmaressionist/general.c:166
 msgid "Transparent"
 msgstr ""
 
@@ -8718,8 +8718,8 @@ msgstr "רעכטס"
 msgid "Left"
 msgstr "לינקס"
 
-#: plug-ins/gfig/gfig-dialog.c:1659 plug-ins/gimpressionist/orientation.c:130
-#: plug-ins/print/gimp_main_window.c:500
+#: plug-ins/gfig/gfig-dialog.c:1659 plug-ins/ligmaressionist/orientation.c:130
+#: plug-ins/print/ligma_main_window.c:500
 msgid "Orientation:"
 msgstr ""
 
@@ -8941,7 +8941,7 @@ msgstr ""
 msgid "Second Flares Paint Options"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:3450 plug-ins/gimpressionist/general.c:115
+#: plug-ins/gflare/gflare.c:3450 plug-ins/ligmaressionist/general.c:115
 msgid "_General"
 msgstr ""
 
@@ -9051,625 +9051,625 @@ msgstr ""
 msgid "GFLI 1.3 - Save framestack"
 msgstr ""
 
-#: plug-ins/gimpressionist/brush.c:230
+#: plug-ins/ligmaressionist/brush.c:230
 msgid "Can only save drawables!"
 msgstr ""
 
-#: plug-ins/gimpressionist/brush.c:235
+#: plug-ins/ligmaressionist/brush.c:235
 msgid "Save Brush"
 msgstr ""
 
-#: plug-ins/gimpressionist/brush.c:481
+#: plug-ins/ligmaressionist/brush.c:481
 msgid "_Brush"
 msgstr ""
 
-#: plug-ins/gimpressionist/brush.c:518 plug-ins/print/gimp_color_window.c:407
+#: plug-ins/ligmaressionist/brush.c:518 plug-ins/print/ligma_color_window.c:407
 msgid "Gamma:"
 msgstr ""
 
-#: plug-ins/gimpressionist/brush.c:536
+#: plug-ins/ligmaressionist/brush.c:536
 msgid "Changes the gamma (brightness) of the selected brush"
 msgstr ""
 
-#: plug-ins/gimpressionist/brush.c:544
+#: plug-ins/ligmaressionist/brush.c:544
 msgid "Select:"
 msgstr ""
 
-#: plug-ins/gimpressionist/brush.c:573
+#: plug-ins/ligmaressionist/brush.c:573
 msgid "Aspect ratio:"
 msgstr ""
 
-#: plug-ins/gimpressionist/brush.c:577
+#: plug-ins/ligmaressionist/brush.c:577
 msgid "Specifies the aspect ratio of the brush"
 msgstr ""
 
-#: plug-ins/gimpressionist/brush.c:586 plug-ins/gimpressionist/paper.c:188
+#: plug-ins/ligmaressionist/brush.c:586 plug-ins/ligmaressionist/paper.c:188
 msgid "Relief:"
 msgstr ""
 
-#: plug-ins/gimpressionist/brush.c:590 plug-ins/gimpressionist/paper.c:192
+#: plug-ins/ligmaressionist/brush.c:590 plug-ins/ligmaressionist/paper.c:192
 msgid "Specifies the amount of embossing to apply to the image (in percent)"
 msgstr ""
 
-#: plug-ins/gimpressionist/color.c:42
+#: plug-ins/ligmaressionist/color.c:42
 msgid "Co_lor"
 msgstr ""
 
-#: plug-ins/gimpressionist/color.c:52
+#: plug-ins/ligmaressionist/color.c:52
 msgid "A_verage under brush"
 msgstr ""
 
-#: plug-ins/gimpressionist/color.c:54
+#: plug-ins/ligmaressionist/color.c:54
 msgid "C_enter of brush"
 msgstr ""
 
-#: plug-ins/gimpressionist/color.c:61
+#: plug-ins/ligmaressionist/color.c:61
 msgid "Color is computed from the average of all pixels under the brush"
 msgstr ""
 
-#: plug-ins/gimpressionist/color.c:65
+#: plug-ins/ligmaressionist/color.c:65
 msgid "Samples the color from the pixel in the center of the brush"
 msgstr ""
 
-#: plug-ins/gimpressionist/color.c:76
+#: plug-ins/ligmaressionist/color.c:76
 msgid "Color _noise:"
 msgstr ""
 
-#: plug-ins/gimpressionist/color.c:80
+#: plug-ins/ligmaressionist/color.c:80
 msgid "Adds random noise to the color"
 msgstr ""
 
-#: plug-ins/gimpressionist/general.c:131
+#: plug-ins/ligmaressionist/general.c:131
 msgid "Keep original"
 msgstr ""
 
-#: plug-ins/gimpressionist/general.c:132
+#: plug-ins/ligmaressionist/general.c:132
 msgid "Preserve the original image as a background"
 msgstr ""
 
-#: plug-ins/gimpressionist/general.c:137
+#: plug-ins/ligmaressionist/general.c:137
 msgid "From paper"
 msgstr ""
 
-#: plug-ins/gimpressionist/general.c:138
+#: plug-ins/ligmaressionist/general.c:138
 msgid "Copy the texture of the selected paper as a background"
 msgstr ""
 
-#: plug-ins/gimpressionist/general.c:148
+#: plug-ins/ligmaressionist/general.c:148
 msgid "Solid colored background"
 msgstr ""
 
-#: plug-ins/gimpressionist/general.c:167
+#: plug-ins/ligmaressionist/general.c:167
 msgid "Use a transparent background; Only the strokes painted will be visible"
 msgstr ""
 
-#: plug-ins/gimpressionist/general.c:184
+#: plug-ins/ligmaressionist/general.c:184
 msgid "Paint edges"
 msgstr ""
 
-#: plug-ins/gimpressionist/general.c:189
+#: plug-ins/ligmaressionist/general.c:189
 msgid "Selects if to place strokes all the way out to the edges of the image"
 msgstr ""
 
 #. Tileable checkbox
-#: plug-ins/gimpressionist/general.c:194 plug-ins/maze/maze_face.c:264
+#: plug-ins/ligmaressionist/general.c:194 plug-ins/maze/maze_face.c:264
 msgid "Tileable"
 msgstr ""
 
-#: plug-ins/gimpressionist/general.c:198
+#: plug-ins/ligmaressionist/general.c:198
 msgid "Selects if the resulting image should be seamlessly tileable"
 msgstr ""
 
-#: plug-ins/gimpressionist/general.c:203
+#: plug-ins/ligmaressionist/general.c:203
 msgid "Drop Shadow"
 msgstr ""
 
-#: plug-ins/gimpressionist/general.c:208
+#: plug-ins/ligmaressionist/general.c:208
 msgid "Adds a shadow effect to each brush stroke"
 msgstr ""
 
-#: plug-ins/gimpressionist/general.c:221
+#: plug-ins/ligmaressionist/general.c:221
 msgid "Edge darken:"
 msgstr ""
 
-#: plug-ins/gimpressionist/general.c:225
+#: plug-ins/ligmaressionist/general.c:225
 msgid "How much to \"darken\" the edges of each brush stroke"
 msgstr ""
 
-#: plug-ins/gimpressionist/general.c:230
+#: plug-ins/ligmaressionist/general.c:230
 msgid "Shadow darken:"
 msgstr ""
 
-#: plug-ins/gimpressionist/general.c:234
+#: plug-ins/ligmaressionist/general.c:234
 msgid "How much to \"darken\" the drop shadow"
 msgstr ""
 
-#: plug-ins/gimpressionist/general.c:239
+#: plug-ins/ligmaressionist/general.c:239
 msgid "Shadow depth:"
 msgstr ""
 
-#: plug-ins/gimpressionist/general.c:243
+#: plug-ins/ligmaressionist/general.c:243
 msgid ""
 "The depth of the drop shadow, i.e. how far apart from the object it should be"
 msgstr ""
 
-#: plug-ins/gimpressionist/general.c:248
+#: plug-ins/ligmaressionist/general.c:248
 msgid "Shadow blur:"
 msgstr ""
 
-#: plug-ins/gimpressionist/general.c:252
+#: plug-ins/ligmaressionist/general.c:252
 msgid "How much to blur the drop shadow"
 msgstr ""
 
-#: plug-ins/gimpressionist/general.c:257
+#: plug-ins/ligmaressionist/general.c:257
 msgid "Deviation threshold:"
 msgstr ""
 
-#: plug-ins/gimpressionist/general.c:261
+#: plug-ins/ligmaressionist/general.c:261
 msgid "A bailout-value for adaptive selections"
 msgstr ""
 
-#: plug-ins/gimpressionist/gimp.c:79
-msgid "_GIMPressionist..."
+#: plug-ins/ligmaressionist/ligma.c:79
+msgid "_LIGMAressionist..."
 msgstr ""
 
-#: plug-ins/gimpressionist/gimp.c:350
+#: plug-ins/ligmaressionist/ligma.c:350
 msgid "Painting..."
 msgstr ""
 
-#: plug-ins/gimpressionist/gimpressionist.c:117
-msgid "The GIMPressionist"
+#: plug-ins/ligmaressionist/ligmaressionist.c:117
+msgid "The LIGMAressionist"
 msgstr ""
 
-#: plug-ins/gimpressionist/gimpressionist.c:196
-msgid "Gimpressionist"
+#: plug-ins/ligmaressionist/ligmaressionist.c:196
+msgid "Ligmaressionist"
 msgstr ""
 
-#: plug-ins/gimpressionist/gimpressionist.c:200
+#: plug-ins/ligmaressionist/ligmaressionist.c:200
 msgid "A_bout"
 msgstr ""
 
-#: plug-ins/gimpressionist/orientation.c:74
+#: plug-ins/ligmaressionist/orientation.c:74
 msgid "Or_ientation"
 msgstr ""
 
-#: plug-ins/gimpressionist/orientation.c:88
+#: plug-ins/ligmaressionist/orientation.c:88
 msgid "Directions:"
 msgstr ""
 
-#: plug-ins/gimpressionist/orientation.c:92
+#: plug-ins/ligmaressionist/orientation.c:92
 msgid "The number of directions (i.e. brushes) to use"
 msgstr ""
 
-#: plug-ins/gimpressionist/orientation.c:100
+#: plug-ins/ligmaressionist/orientation.c:100
 msgid "Start angle:"
 msgstr ""
 
-#: plug-ins/gimpressionist/orientation.c:104
+#: plug-ins/ligmaressionist/orientation.c:104
 msgid "The starting angle of the first brush to create"
 msgstr ""
 
-#: plug-ins/gimpressionist/orientation.c:112
+#: plug-ins/ligmaressionist/orientation.c:112
 msgid "Angle span:"
 msgstr ""
 
-#: plug-ins/gimpressionist/orientation.c:116
+#: plug-ins/ligmaressionist/orientation.c:116
 msgid "The angle span of the first brush to create"
 msgstr ""
 
-#: plug-ins/gimpressionist/orientation.c:139
+#: plug-ins/ligmaressionist/orientation.c:139
 msgid ""
 "Let the value (brightness) of the region determine the direction of the "
 "stroke"
 msgstr ""
 
-#: plug-ins/gimpressionist/orientation.c:142
-#: plug-ins/gimpressionist/size.c:145
+#: plug-ins/ligmaressionist/orientation.c:142
+#: plug-ins/ligmaressionist/size.c:145
 msgid "Radius"
 msgstr ""
 
-#: plug-ins/gimpressionist/orientation.c:143
+#: plug-ins/ligmaressionist/orientation.c:143
 msgid ""
 "The distance from the center of the image determines the direction of the "
 "stroke"
 msgstr ""
 
-#: plug-ins/gimpressionist/orientation.c:147
+#: plug-ins/ligmaressionist/orientation.c:147
 msgid "Selects a random direction of each stroke"
 msgstr ""
 
-#: plug-ins/gimpressionist/orientation.c:150
-#: plug-ins/gimpressionist/size.c:153
+#: plug-ins/ligmaressionist/orientation.c:150
+#: plug-ins/ligmaressionist/size.c:153
 msgid "Radial"
 msgstr ""
 
-#: plug-ins/gimpressionist/orientation.c:151
+#: plug-ins/ligmaressionist/orientation.c:151
 msgid "Let the direction from the center determine the direction of the stroke"
 msgstr ""
 
-#: plug-ins/gimpressionist/orientation.c:158
-#: plug-ins/gimpressionist/size.c:161
+#: plug-ins/ligmaressionist/orientation.c:158
+#: plug-ins/ligmaressionist/size.c:161
 msgid "Flowing"
 msgstr ""
 
-#: plug-ins/gimpressionist/orientation.c:159
-#: plug-ins/gimpressionist/size.c:162
+#: plug-ins/ligmaressionist/orientation.c:159
+#: plug-ins/ligmaressionist/size.c:162
 msgid "The strokes follow a \"flowing\" pattern"
 msgstr ""
 
-#: plug-ins/gimpressionist/orientation.c:163
+#: plug-ins/ligmaressionist/orientation.c:163
 msgid "The hue of the region determines the direction of the stroke"
 msgstr ""
 
-#: plug-ins/gimpressionist/orientation.c:166
-#: plug-ins/gimpressionist/size.c:169
+#: plug-ins/ligmaressionist/orientation.c:166
+#: plug-ins/ligmaressionist/size.c:169
 msgid "Adaptive"
 msgstr ""
 
-#: plug-ins/gimpressionist/orientation.c:167
+#: plug-ins/ligmaressionist/orientation.c:167
 msgid "The direction that matches the original image the closest is selected"
 msgstr ""
 
-#: plug-ins/gimpressionist/orientation.c:174
-#: plug-ins/gimpressionist/size.c:178
+#: plug-ins/ligmaressionist/orientation.c:174
+#: plug-ins/ligmaressionist/size.c:178
 msgid "Manual"
 msgstr ""
 
-#: plug-ins/gimpressionist/orientation.c:175
+#: plug-ins/ligmaressionist/orientation.c:175
 msgid "Manually specify the stroke orientation"
 msgstr ""
 
-#: plug-ins/gimpressionist/orientation.c:186
+#: plug-ins/ligmaressionist/orientation.c:186
 msgid "Opens up the Orientation Map Editor"
 msgstr ""
 
-#: plug-ins/gimpressionist/orientmap.c:508
+#: plug-ins/ligmaressionist/orientmap.c:508
 msgid "Orientation Map Editor"
 msgstr ""
 
-#: plug-ins/gimpressionist/orientmap.c:530
+#: plug-ins/ligmaressionist/orientmap.c:530
 msgid "Vectors"
 msgstr ""
 
-#: plug-ins/gimpressionist/orientmap.c:542
+#: plug-ins/ligmaressionist/orientmap.c:542
 msgid ""
 "The vector-field. Left-click to move selected vector, Right-click to point "
 "it towards mouse, Middle-click to add a new vector."
 msgstr ""
 
-#: plug-ins/gimpressionist/orientmap.c:565
-#: plug-ins/gimpressionist/sizemap.c:435
+#: plug-ins/ligmaressionist/orientmap.c:565
+#: plug-ins/ligmaressionist/sizemap.c:435
 msgid "Adjust the preview's brightness"
 msgstr ""
 
-#: plug-ins/gimpressionist/orientmap.c:587
+#: plug-ins/ligmaressionist/orientmap.c:587
 msgid "Select previous vector"
 msgstr ""
 
-#: plug-ins/gimpressionist/orientmap.c:593
+#: plug-ins/ligmaressionist/orientmap.c:593
 msgid "Select next vector"
 msgstr ""
 
-#: plug-ins/gimpressionist/orientmap.c:595
-#: plug-ins/gimpressionist/sizemap.c:466
+#: plug-ins/ligmaressionist/orientmap.c:595
+#: plug-ins/ligmaressionist/sizemap.c:466
 msgid "A_dd"
 msgstr ""
 
-#: plug-ins/gimpressionist/orientmap.c:599
+#: plug-ins/ligmaressionist/orientmap.c:599
 msgid "Add new vector"
 msgstr ""
 
-#: plug-ins/gimpressionist/orientmap.c:601
-#: plug-ins/gimpressionist/sizemap.c:473
+#: plug-ins/ligmaressionist/orientmap.c:601
+#: plug-ins/ligmaressionist/sizemap.c:473
 msgid "_Kill"
 msgstr ""
 
-#: plug-ins/gimpressionist/orientmap.c:605
+#: plug-ins/ligmaressionist/orientmap.c:605
 msgid "Delete selected vector"
 msgstr ""
 
-#: plug-ins/gimpressionist/orientmap.c:620
+#: plug-ins/ligmaressionist/orientmap.c:620
 msgid "_Normal"
 msgstr ""
 
-#: plug-ins/gimpressionist/orientmap.c:621
+#: plug-ins/ligmaressionist/orientmap.c:621
 msgid "Vorte_x"
 msgstr ""
 
-#: plug-ins/gimpressionist/orientmap.c:622
+#: plug-ins/ligmaressionist/orientmap.c:622
 msgid "Vortex_2"
 msgstr ""
 
-#: plug-ins/gimpressionist/orientmap.c:623
+#: plug-ins/ligmaressionist/orientmap.c:623
 msgid "Vortex_3"
 msgstr ""
 
-#: plug-ins/gimpressionist/orientmap.c:629
-#: plug-ins/gimpressionist/sizemap.c:518
+#: plug-ins/ligmaressionist/orientmap.c:629
+#: plug-ins/ligmaressionist/sizemap.c:518
 msgid "_Voronoi"
 msgstr ""
 
-#: plug-ins/gimpressionist/orientmap.c:637
+#: plug-ins/ligmaressionist/orientmap.c:637
 msgid ""
 "Voronoi-mode makes only the vector closest to the given point have any "
 "influence"
 msgstr ""
 
-#: plug-ins/gimpressionist/orientmap.c:647
+#: plug-ins/ligmaressionist/orientmap.c:647
 msgid "A_ngle:"
 msgstr ""
 
-#: plug-ins/gimpressionist/orientmap.c:651
+#: plug-ins/ligmaressionist/orientmap.c:651
 msgid "Change the angle of the selected vector"
 msgstr ""
 
-#: plug-ins/gimpressionist/orientmap.c:658
+#: plug-ins/ligmaressionist/orientmap.c:658
 msgid "Ang_le offset:"
 msgstr ""
 
-#: plug-ins/gimpressionist/orientmap.c:662
+#: plug-ins/ligmaressionist/orientmap.c:662
 msgid "Offset all vectors with a given angle"
 msgstr ""
 
-#: plug-ins/gimpressionist/orientmap.c:673
+#: plug-ins/ligmaressionist/orientmap.c:673
 msgid "Change the strength of the selected vector"
 msgstr ""
 
-#: plug-ins/gimpressionist/orientmap.c:680
+#: plug-ins/ligmaressionist/orientmap.c:680
 msgid "S_trength exp.:"
 msgstr ""
 
-#: plug-ins/gimpressionist/orientmap.c:684
-#: plug-ins/gimpressionist/sizemap.c:513
+#: plug-ins/ligmaressionist/orientmap.c:684
+#: plug-ins/ligmaressionist/sizemap.c:513
 msgid "Change the exponent of the strength"
 msgstr ""
 
-#: plug-ins/gimpressionist/paper.c:120
+#: plug-ins/ligmaressionist/paper.c:120
 msgid "P_aper"
 msgstr ""
 
-#: plug-ins/gimpressionist/paper.c:155
+#: plug-ins/ligmaressionist/paper.c:155
 msgid "Inverts the Papers texture"
 msgstr ""
 
-#: plug-ins/gimpressionist/paper.c:159
+#: plug-ins/ligmaressionist/paper.c:159
 msgid "O_verlay"
 msgstr ""
 
-#: plug-ins/gimpressionist/paper.c:164
+#: plug-ins/ligmaressionist/paper.c:164
 msgid "Applies the paper as it is (without embossing it)"
 msgstr ""
 
-#: plug-ins/gimpressionist/paper.c:180
+#: plug-ins/ligmaressionist/paper.c:180
 msgid "Specifies the scale of the texture (in percent of original file)"
 msgstr ""
 
-#: plug-ins/gimpressionist/placement.c:49
+#: plug-ins/ligmaressionist/placement.c:49
 msgid "Pl_acement"
 msgstr ""
 
-#: plug-ins/gimpressionist/placement.c:55
+#: plug-ins/ligmaressionist/placement.c:55
 msgid "Placement"
 msgstr ""
 
-#: plug-ins/gimpressionist/placement.c:59
+#: plug-ins/ligmaressionist/placement.c:59
 msgid "Randomly"
 msgstr ""
 
-#: plug-ins/gimpressionist/placement.c:63
+#: plug-ins/ligmaressionist/placement.c:63
 msgid "Evenly distributed"
 msgstr ""
 
-#: plug-ins/gimpressionist/placement.c:71
+#: plug-ins/ligmaressionist/placement.c:71
 msgid "Place strokes randomly around the image"
 msgstr ""
 
-#: plug-ins/gimpressionist/placement.c:75
+#: plug-ins/ligmaressionist/placement.c:75
 msgid "The strokes are evenly distributed across the image"
 msgstr ""
 
-#: plug-ins/gimpressionist/placement.c:91
+#: plug-ins/ligmaressionist/placement.c:91
 msgid "Stroke _density:"
 msgstr ""
 
-#: plug-ins/gimpressionist/placement.c:95
+#: plug-ins/ligmaressionist/placement.c:95
 msgid "The relative density of the brush strokes"
 msgstr ""
 
-#: plug-ins/gimpressionist/placement.c:101
+#: plug-ins/ligmaressionist/placement.c:101
 msgid "Centerize"
 msgstr ""
 
-#: plug-ins/gimpressionist/placement.c:107
+#: plug-ins/ligmaressionist/placement.c:107
 msgid "Focus the brush strokes around the center of the image"
 msgstr ""
 
 #.
-#. * gimp_filename_to_utf8 () and g_strerror () return temporary strings
+#. * ligma_filename_to_utf8 () and g_strerror () return temporary strings
 #. * that need not and should not be freed. So this call is OK.
 #. *
-#: plug-ins/gimpressionist/ppmtool.c:630
+#: plug-ins/ligmaressionist/ppmtool.c:630
 #, c-format
 msgid "Failed to save PPM file '%s': %s"
 msgstr ""
 
-#: plug-ins/gimpressionist/presets.c:621
+#: plug-ins/ligmaressionist/presets.c:621
 msgid "Save Current"
 msgstr ""
 
-#: plug-ins/gimpressionist/presets.c:863
-msgid "The Gimpressionist Defaults"
+#: plug-ins/ligmaressionist/presets.c:863
+msgid "The Ligmaressionist Defaults"
 msgstr ""
 
-#: plug-ins/gimpressionist/presets.c:979
+#: plug-ins/ligmaressionist/presets.c:979
 msgid "_Presets"
 msgstr ""
 
-#: plug-ins/gimpressionist/presets.c:994
+#: plug-ins/ligmaressionist/presets.c:994
 msgid "Save current..."
 msgstr ""
 
-#: plug-ins/gimpressionist/presets.c:999
+#: plug-ins/ligmaressionist/presets.c:999
 msgid "Save the current settings to the specified file"
 msgstr ""
 
-#: plug-ins/gimpressionist/presets.c:1027
+#: plug-ins/ligmaressionist/presets.c:1027
 msgid "Reads the selected Preset into memory"
 msgstr ""
 
-#: plug-ins/gimpressionist/presets.c:1033
+#: plug-ins/ligmaressionist/presets.c:1033
 msgid "Deletes the selected Preset"
 msgstr ""
 
-#: plug-ins/gimpressionist/presets.c:1039
+#: plug-ins/ligmaressionist/presets.c:1039
 msgid "Reread the folder of Presets"
 msgstr ""
 
-#: plug-ins/gimpressionist/preview.c:187
+#: plug-ins/ligmaressionist/preview.c:187
 msgid "Refresh the Preview window"
 msgstr ""
 
-#: plug-ins/gimpressionist/preview.c:195
+#: plug-ins/ligmaressionist/preview.c:195
 msgid "Revert to the original image"
 msgstr ""
 
-#: plug-ins/gimpressionist/repaint.c:1160
+#: plug-ins/ligmaressionist/repaint.c:1160
 msgid "Update"
 msgstr "דערהײַנטיק"
 
-#: plug-ins/gimpressionist/size.c:77
+#: plug-ins/ligmaressionist/size.c:77
 msgid "_Size"
 msgstr ""
 
-#: plug-ins/gimpressionist/size.c:91
+#: plug-ins/ligmaressionist/size.c:91
 msgid "Sizes:"
 msgstr ""
 
-#: plug-ins/gimpressionist/size.c:95
+#: plug-ins/ligmaressionist/size.c:95
 msgid "The number of sizes of brushes to use"
 msgstr ""
 
-#: plug-ins/gimpressionist/size.c:103
+#: plug-ins/ligmaressionist/size.c:103
 msgid "Minimum size:"
 msgstr ""
 
-#: plug-ins/gimpressionist/size.c:107
+#: plug-ins/ligmaressionist/size.c:107
 msgid "The smallest brush to create"
 msgstr ""
 
-#: plug-ins/gimpressionist/size.c:115
+#: plug-ins/ligmaressionist/size.c:115
 msgid "Maximum size:"
 msgstr ""
 
-#: plug-ins/gimpressionist/size.c:119
+#: plug-ins/ligmaressionist/size.c:119
 msgid "The largest brush to create"
 msgstr ""
 
-#: plug-ins/gimpressionist/size.c:133
+#: plug-ins/ligmaressionist/size.c:133
 msgid "Size:"
 msgstr "גרײס:"
 
-#: plug-ins/gimpressionist/size.c:142
+#: plug-ins/ligmaressionist/size.c:142
 msgid ""
 "Let the value (brightness) of the region determine the size of the stroke"
 msgstr ""
 
-#: plug-ins/gimpressionist/size.c:146
+#: plug-ins/ligmaressionist/size.c:146
 msgid ""
 "The distance from the center of the image determines the size of the stroke"
 msgstr ""
 
-#: plug-ins/gimpressionist/size.c:150
+#: plug-ins/ligmaressionist/size.c:150
 msgid "Selects a random size for each stroke"
 msgstr ""
 
-#: plug-ins/gimpressionist/size.c:154
+#: plug-ins/ligmaressionist/size.c:154
 msgid "Let the direction from the center determine the size of the stroke"
 msgstr ""
 
-#: plug-ins/gimpressionist/size.c:166
+#: plug-ins/ligmaressionist/size.c:166
 msgid "The hue of the region determines the size of the stroke"
 msgstr ""
 
-#: plug-ins/gimpressionist/size.c:170
+#: plug-ins/ligmaressionist/size.c:170
 msgid "The brush-size that matches the original image the closest is selected"
 msgstr ""
 
-#: plug-ins/gimpressionist/size.c:179
+#: plug-ins/ligmaressionist/size.c:179
 msgid "Manually specify the stroke size"
 msgstr ""
 
-#: plug-ins/gimpressionist/size.c:190
+#: plug-ins/ligmaressionist/size.c:190
 msgid "Opens up the Size Map Editor"
 msgstr ""
 
-#: plug-ins/gimpressionist/sizemap.c:383
+#: plug-ins/ligmaressionist/sizemap.c:383
 msgid "Size Map Editor"
 msgstr ""
 
-#: plug-ins/gimpressionist/sizemap.c:405
+#: plug-ins/ligmaressionist/sizemap.c:405
 msgid "Smvectors"
 msgstr ""
 
-#: plug-ins/gimpressionist/sizemap.c:415
+#: plug-ins/ligmaressionist/sizemap.c:415
 msgid ""
 "The smvector-field. Left-click to move selected smvector, Right-click to "
 "point it towards mouse, Middle-click to add a new smvector."
 msgstr ""
 
-#: plug-ins/gimpressionist/sizemap.c:457
+#: plug-ins/ligmaressionist/sizemap.c:457
 msgid "Select previous smvector"
 msgstr ""
 
-#: plug-ins/gimpressionist/sizemap.c:464
+#: plug-ins/ligmaressionist/sizemap.c:464
 msgid "Select next smvector"
 msgstr ""
 
-#: plug-ins/gimpressionist/sizemap.c:471
+#: plug-ins/ligmaressionist/sizemap.c:471
 msgid "Add new smvector"
 msgstr ""
 
-#: plug-ins/gimpressionist/sizemap.c:478
+#: plug-ins/ligmaressionist/sizemap.c:478
 msgid "Delete selected smvector"
 msgstr ""
 
-#: plug-ins/gimpressionist/sizemap.c:491
+#: plug-ins/ligmaressionist/sizemap.c:491
 msgid "Change the angle of the selected smvector"
 msgstr ""
 
-#: plug-ins/gimpressionist/sizemap.c:498
+#: plug-ins/ligmaressionist/sizemap.c:498
 msgid "S_trength:"
 msgstr ""
 
-#: plug-ins/gimpressionist/sizemap.c:502
+#: plug-ins/ligmaressionist/sizemap.c:502
 msgid "Change the strength of the selected smvector"
 msgstr ""
 
-#: plug-ins/gimpressionist/sizemap.c:509
+#: plug-ins/ligmaressionist/sizemap.c:509
 msgid "St_rength exp.:"
 msgstr ""
 
-#: plug-ins/gimpressionist/sizemap.c:525
+#: plug-ins/ligmaressionist/sizemap.c:525
 msgid ""
 "Voronoi-mode makes only the smvector closest to the given point have any "
 "influence"
 msgstr ""
 
-#. don't translate the gimprc entry
-#: plug-ins/gimpressionist/utils.c:135
+#. don't translate the ligmarc entry
+#: plug-ins/ligmaressionist/utils.c:135
 #, c-format
 msgid ""
 "It is highly recommended to add\n"
-" (gimpressionist-path \"%s\")\n"
-"(or similar) to your gimprc file."
+" (ligmaressionist-path \"%s\")\n"
+"(or similar) to your ligmarc file."
 msgstr ""
 
 #: plug-ins/help/domain.c:175
-msgid "The GIMP help files are not installed."
+msgid "The LIGMA help files are not installed."
 msgstr ""
 
 #: plug-ins/help/domain.c:177
-msgid "There is a problem with the GIMP help files."
+msgid "There is a problem with the LIGMA help files."
 msgstr ""
 
 #: plug-ins/help/domain.c:182
@@ -9689,7 +9689,7 @@ msgid ""
 msgstr ""
 
 #: plug-ins/helpbrowser/dialog.c:157
-msgid "GIMP Help browser"
+msgid "LIGMA Help browser"
 msgstr ""
 
 #: plug-ins/helpbrowser/dialog.c:409
@@ -9900,7 +9900,7 @@ msgid "Clear"
 msgstr "זײַ מבֿטל"
 
 #: plug-ins/imagemap/imap_cmd_create.c:58
-#: plug-ins/imagemap/imap_cmd_gimp_guides.c:151
+#: plug-ins/imagemap/imap_cmd_ligma_guides.c:151
 msgid "Create"
 msgstr ""
 
@@ -9926,41 +9926,41 @@ msgid "Edit Object"
 msgstr ""
 
 #. Create the areas
-#: plug-ins/imagemap/imap_cmd_gimp_guides.c:117
-#: plug-ins/imagemap/imap_cmd_gimp_guides.c:147
-#: plug-ins/imagemap/imap_cmd_gimp_guides.c:251
-msgid "Use Gimp Guides"
+#: plug-ins/imagemap/imap_cmd_ligma_guides.c:117
+#: plug-ins/imagemap/imap_cmd_ligma_guides.c:147
+#: plug-ins/imagemap/imap_cmd_ligma_guides.c:251
+msgid "Use Ligma Guides"
 msgstr ""
 
-#: plug-ins/imagemap/imap_cmd_gimp_guides.c:160
+#: plug-ins/imagemap/imap_cmd_ligma_guides.c:160
 msgid "Al_ternate"
 msgstr ""
 
-#: plug-ins/imagemap/imap_cmd_gimp_guides.c:165
+#: plug-ins/imagemap/imap_cmd_ligma_guides.c:165
 msgid "A_ll"
 msgstr ""
 
-#: plug-ins/imagemap/imap_cmd_gimp_guides.c:169
+#: plug-ins/imagemap/imap_cmd_ligma_guides.c:169
 msgid "Add Additional Guides"
 msgstr ""
 
-#: plug-ins/imagemap/imap_cmd_gimp_guides.c:177
+#: plug-ins/imagemap/imap_cmd_ligma_guides.c:177
 msgid "L_eft Border"
 msgstr ""
 
-#: plug-ins/imagemap/imap_cmd_gimp_guides.c:181
+#: plug-ins/imagemap/imap_cmd_ligma_guides.c:181
 msgid "_Right Border"
 msgstr ""
 
-#: plug-ins/imagemap/imap_cmd_gimp_guides.c:185
+#: plug-ins/imagemap/imap_cmd_ligma_guides.c:185
 msgid "_Upper Border"
 msgstr ""
 
-#: plug-ins/imagemap/imap_cmd_gimp_guides.c:189
+#: plug-ins/imagemap/imap_cmd_ligma_guides.c:189
 msgid "Lo_wer Border"
 msgstr ""
 
-#: plug-ins/imagemap/imap_cmd_gimp_guides.c:197
+#: plug-ins/imagemap/imap_cmd_ligma_guides.c:197
 msgid "_Base URL:"
 msgstr ""
 
@@ -10331,7 +10331,7 @@ msgstr ""
 msgid "Source..."
 msgstr ""
 
-#: plug-ins/imagemap/imap_menu.c:310 plug-ins/print/gimp_main_window.c:1410
+#: plug-ins/imagemap/imap_menu.c:310 plug-ins/print/ligma_main_window.c:1410
 msgid "Grayscale"
 msgstr "שװאַרץ־גרױ־װײַס"
 
@@ -10360,7 +10360,7 @@ msgid "Grid settings..."
 msgstr ""
 
 #: plug-ins/imagemap/imap_menu.c:389
-msgid "Use GIMP guides..."
+msgid "Use LIGMA guides..."
 msgstr ""
 
 #: plug-ins/imagemap/imap_menu.c:391
@@ -10752,69 +10752,69 @@ msgstr ""
 msgid "Page Curl..."
 msgstr ""
 
-#: plug-ins/print/gimp_color_window.c:208
+#: plug-ins/print/ligma_color_window.c:208
 msgid "Print Color Adjust"
 msgstr ""
 
-#: plug-ins/print/gimp_color_window.c:268
+#: plug-ins/print/ligma_color_window.c:268
 msgid "Brightness:"
 msgstr ""
 
-#: plug-ins/print/gimp_color_window.c:276
+#: plug-ins/print/ligma_color_window.c:276
 msgid ""
 "Set the brightness of the print.\n"
 "0 is solid black, 2 is solid white"
 msgstr ""
 
-#: plug-ins/print/gimp_color_window.c:288
+#: plug-ins/print/ligma_color_window.c:288
 msgid "Contrast:"
 msgstr ""
 
-#: plug-ins/print/gimp_color_window.c:296
+#: plug-ins/print/ligma_color_window.c:296
 msgid "Set the contrast of the print"
 msgstr ""
 
-#: plug-ins/print/gimp_color_window.c:315
+#: plug-ins/print/ligma_color_window.c:315
 msgid "Adjust the cyan balance of the print"
 msgstr ""
 
-#: plug-ins/print/gimp_color_window.c:334
+#: plug-ins/print/ligma_color_window.c:334
 msgid "Adjust the magenta balance of the print"
 msgstr ""
 
-#: plug-ins/print/gimp_color_window.c:353
+#: plug-ins/print/ligma_color_window.c:353
 msgid "Adjust the yellow balance of the print"
 msgstr ""
 
-#: plug-ins/print/gimp_color_window.c:372
+#: plug-ins/print/ligma_color_window.c:372
 msgid ""
 "Adjust the saturation (color balance) of the print\n"
 "Use zero saturation to produce grayscale output using color and black inks"
 msgstr ""
 
-#: plug-ins/print/gimp_color_window.c:385
+#: plug-ins/print/ligma_color_window.c:385
 msgid "Density:"
 msgstr ""
 
-#: plug-ins/print/gimp_color_window.c:393
+#: plug-ins/print/ligma_color_window.c:393
 msgid ""
 "Adjust the density (amount of ink) of the print. Reduce the density if the "
 "ink bleeds through the paper or smears; increase the density if black "
 "regions are not solid."
 msgstr ""
 
-#: plug-ins/print/gimp_color_window.c:415
+#: plug-ins/print/ligma_color_window.c:415
 msgid ""
 "Adjust the gamma of the print. Larger values will produce a generally "
 "brighter print, while smaller values will produce a generally darker print. "
 "Black and white will remain the same, unlike with the brightness adjustment."
 msgstr ""
 
-#: plug-ins/print/gimp_color_window.c:432
+#: plug-ins/print/ligma_color_window.c:432
 msgid "Dither Algorithm:"
 msgstr ""
 
-#: plug-ins/print/gimp_color_window.c:440
+#: plug-ins/print/ligma_color_window.c:440
 msgid ""
 "Choose the dither algorithm to be used.\n"
 "Adaptive Hybrid usually produces the best all-around quality.\n"
@@ -10827,24 +10827,24 @@ msgstr ""
 #.
 #. * Create the main dialog
 #.
-#: plug-ins/print/gimp_main_window.c:359
+#: plug-ins/print/ligma_main_window.c:359
 #, c-format
 msgid "%s -- Print v%s"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:368
+#: plug-ins/print/ligma_main_window.c:368
 msgid ""
 "Save\n"
 "Settings"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:369
+#: plug-ins/print/ligma_main_window.c:369
 msgid ""
 "Print and\n"
 "Save Settings"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:438
+#: plug-ins/print/ligma_main_window.c:438
 msgid ""
 "Position the image on the page.\n"
 "Click and drag with the primary button to position the image.\n"
@@ -10858,171 +10858,171 @@ msgid ""
 "to its original position."
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:481
+#: plug-ins/print/ligma_main_window.c:481
 msgid "Auto"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:482
+#: plug-ins/print/ligma_main_window.c:482
 msgid "Portrait"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:483
+#: plug-ins/print/ligma_main_window.c:483
 msgid "Landscape"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:484
+#: plug-ins/print/ligma_main_window.c:484
 msgid "Upside down"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:485
+#: plug-ins/print/ligma_main_window.c:485
 msgid "Seascape"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:495
+#: plug-ins/print/ligma_main_window.c:495
 msgid ""
 "Select the orientation: portrait, landscape, upside down, or seascape "
 "(upside down landscape)"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:514
+#: plug-ins/print/ligma_main_window.c:514
 msgid "Distance from the left of the paper to the image"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:527
+#: plug-ins/print/ligma_main_window.c:527
 msgid "Distance from the top of the paper to the image"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:540
+#: plug-ins/print/ligma_main_window.c:540
 msgid "Distance from the left of the paper to the right of the image"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:550
+#: plug-ins/print/ligma_main_window.c:550
 msgid "Right Border:"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:554
+#: plug-ins/print/ligma_main_window.c:554
 msgid "Distance from the right of the paper to the image"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:568
+#: plug-ins/print/ligma_main_window.c:568
 msgid "Distance from the top of the paper to the bottom of the image"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:578
+#: plug-ins/print/ligma_main_window.c:578
 msgid "Bottom Border:"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:582
+#: plug-ins/print/ligma_main_window.c:582
 msgid "Distance from the bottom of the paper to the image"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:595
+#: plug-ins/print/ligma_main_window.c:595
 msgid "Center:"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:599
+#: plug-ins/print/ligma_main_window.c:599
 msgid "Vertically"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:604
+#: plug-ins/print/ligma_main_window.c:604
 msgid "Center the image vertically on the paper"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:610
+#: plug-ins/print/ligma_main_window.c:610
 msgid "Both"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:615
+#: plug-ins/print/ligma_main_window.c:615
 msgid "Center the image on the paper"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:622
+#: plug-ins/print/ligma_main_window.c:622
 msgid "Horizontally"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:627
+#: plug-ins/print/ligma_main_window.c:627
 msgid "Center the image horizontally on the paper"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:643
+#: plug-ins/print/ligma_main_window.c:643
 msgid "Setup Printer"
 msgstr ""
 
 #.
 #. * Printer driver option menu.
 #.
-#: plug-ins/print/gimp_main_window.c:672
+#: plug-ins/print/ligma_main_window.c:672
 msgid "Printer Model:"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:684
+#: plug-ins/print/ligma_main_window.c:684
 msgid "Select your printer model"
 msgstr ""
 
 #.
 #. * PPD file.
 #.
-#: plug-ins/print/gimp_main_window.c:723
+#: plug-ins/print/ligma_main_window.c:723
 msgid "PPD File:"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:739
+#: plug-ins/print/ligma_main_window.c:739
 msgid "Enter the PPD filename for your printer"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:742
+#: plug-ins/print/ligma_main_window.c:742
 msgid "Browse"
 msgstr "בלעטער"
 
-#: plug-ins/print/gimp_main_window.c:748
+#: plug-ins/print/ligma_main_window.c:748
 msgid "Choose the PPD file for your printer"
 msgstr ""
 
 #.
 #. * Print command.
 #.
-#: plug-ins/print/gimp_main_window.c:758
+#: plug-ins/print/ligma_main_window.c:758
 msgid "Command:"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:771
+#: plug-ins/print/ligma_main_window.c:771
 msgid ""
 "Enter the command to print to your printer. Note: Please do not remove the `-"
 "l' or `-oraw' from the command string, or printing will probably fail!"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:781
+#: plug-ins/print/ligma_main_window.c:781
 msgid "Choose PPD File"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:802
+#: plug-ins/print/ligma_main_window.c:802
 msgid "Define New Printer"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:825 plug-ins/print/gimp_main_window.c:920
+#: plug-ins/print/ligma_main_window.c:825 plug-ins/print/ligma_main_window.c:920
 msgid "Printer name:"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:829
+#: plug-ins/print/ligma_main_window.c:829
 msgid "Enter the name you wish to give this logical printer"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:842
-msgid "About Gimp-Print "
+#: plug-ins/print/ligma_main_window.c:842
+msgid "About Ligma-Print "
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:855
-msgid "Gimp-Print Version "
+#: plug-ins/print/ligma_main_window.c:855
+msgid "Ligma-Print Version "
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:855
+#: plug-ins/print/ligma_main_window.c:855
 msgid ""
 "\n"
 "\n"
 "Copyright (C) 1997-2001 Michael Sweet, Robert Krawitz,\n"
-"and the rest of the Gimp-Print Development Team.\n"
+"and the rest of the Ligma-Print Development Team.\n"
 "\n"
-"Please visit our web site at http://gimp-print.sourceforge.net.\n"
+"Please visit our web site at http://ligma-print.sourceforge.net.\n"
 "\n"
 "This program is free software; you can redistribute it and/or modify\n"
 "it under the terms of the GNU General Public License as published by\n"
@@ -11039,28 +11039,28 @@ msgid ""
 "Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA\n"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:903
+#: plug-ins/print/ligma_main_window.c:903
 msgid "Printer Settings"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:916
+#: plug-ins/print/ligma_main_window.c:916
 msgid ""
 "Select the name of the printer (not the type, or model, of printer) that you "
 "wish to print to"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:926
+#: plug-ins/print/ligma_main_window.c:926
 msgid "Printer model:"
 msgstr ""
 
 #.
 #. * Setup printer button
 #.
-#: plug-ins/print/gimp_main_window.c:937
+#: plug-ins/print/ligma_main_window.c:937
 msgid "Setup printer..."
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:939
+#: plug-ins/print/ligma_main_window.c:939
 msgid ""
 "Choose the printer model, PPD file, and command that is used to print to "
 "this printer"
@@ -11069,219 +11069,219 @@ msgstr ""
 #.
 #. * New printer button
 #.
-#: plug-ins/print/gimp_main_window.c:954
+#: plug-ins/print/ligma_main_window.c:954
 msgid "New printer..."
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:956
+#: plug-ins/print/ligma_main_window.c:956
 msgid ""
 "Define a new logical printer. This can be used to name a collection of "
 "settings that you wish to remember for future use."
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:977
+#: plug-ins/print/ligma_main_window.c:977
 msgid "Size of paper that you wish to print to"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:980
+#: plug-ins/print/ligma_main_window.c:980
 msgid "Media size:"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:989
+#: plug-ins/print/ligma_main_window.c:989
 msgid "Dimensions:"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:1003
+#: plug-ins/print/ligma_main_window.c:1003
 msgid "Width of the paper that you wish to print to"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:1020
+#: plug-ins/print/ligma_main_window.c:1020
 msgid "Height of the paper that you wish to print to"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:1036
+#: plug-ins/print/ligma_main_window.c:1036
 msgid "Type of media you're printing to"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:1039
+#: plug-ins/print/ligma_main_window.c:1039
 msgid "Media type:"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:1052
+#: plug-ins/print/ligma_main_window.c:1052
 msgid "Source (input slot) of media you're printing to"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:1055
+#: plug-ins/print/ligma_main_window.c:1055
 msgid "Media source:"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:1068
+#: plug-ins/print/ligma_main_window.c:1068
 msgid "Type of ink in the printer"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:1071
+#: plug-ins/print/ligma_main_window.c:1071
 msgid "Ink type:"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:1084
+#: plug-ins/print/ligma_main_window.c:1084
 msgid "Resolution and quality of the print"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:1121
+#: plug-ins/print/ligma_main_window.c:1121
 msgid "Scaling:"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:1127
+#: plug-ins/print/ligma_main_window.c:1127
 msgid "Set the scale (size) of the image"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:1152
+#: plug-ins/print/ligma_main_window.c:1152
 msgid "Scale by:"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:1157
+#: plug-ins/print/ligma_main_window.c:1157
 msgid ""
 "Select whether scaling is measured as percent of available page size or "
 "number of output dots per inch"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:1162
+#: plug-ins/print/ligma_main_window.c:1162
 msgid "Percent"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:1169
+#: plug-ins/print/ligma_main_window.c:1169
 msgid "Scale the print to the size of the page"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:1175
+#: plug-ins/print/ligma_main_window.c:1175
 msgid "PPI"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:1181
+#: plug-ins/print/ligma_main_window.c:1181
 msgid "Scale the print to the number of dots per inch"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:1203
+#: plug-ins/print/ligma_main_window.c:1203
 msgid "Set the width of the print"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:1216
+#: plug-ins/print/ligma_main_window.c:1216
 msgid "Set the height of the print"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:1237
+#: plug-ins/print/ligma_main_window.c:1237
 msgid "Units:"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:1242
+#: plug-ins/print/ligma_main_window.c:1242
 msgid "Select the base unit of measurement for printing"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:1245
+#: plug-ins/print/ligma_main_window.c:1245
 msgid "Inch"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:1252
+#: plug-ins/print/ligma_main_window.c:1252
 msgid "Set the base unit of measurement to inches"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:1258
+#: plug-ins/print/ligma_main_window.c:1258
 msgid "cm"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:1264
+#: plug-ins/print/ligma_main_window.c:1264
 msgid "Set the base unit of measurement to centimetres"
 msgstr ""
 
 #.
 #. * The "image size" button
 #.
-#: plug-ins/print/gimp_main_window.c:1274
+#: plug-ins/print/ligma_main_window.c:1274
 msgid ""
 "Use Original\n"
 "Image Size"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:1280
+#: plug-ins/print/ligma_main_window.c:1280
 msgid "Set the print size to the size of the image"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:1303
+#: plug-ins/print/ligma_main_window.c:1303
 msgid "Image / Output Settings"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:1317
+#: plug-ins/print/ligma_main_window.c:1317
 #, fuzzy
 msgid "Image type:"
 msgstr "הײך: "
 
-#: plug-ins/print/gimp_main_window.c:1325
+#: plug-ins/print/ligma_main_window.c:1325
 msgid "Optimize the output for the type of image being printed"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:1329
+#: plug-ins/print/ligma_main_window.c:1329
 msgid "Line art"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:1336
+#: plug-ins/print/ligma_main_window.c:1336
 msgid "Fastest and brightest color for text and line art"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:1343
+#: plug-ins/print/ligma_main_window.c:1343
 msgid "Solid colors"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:1350
+#: plug-ins/print/ligma_main_window.c:1350
 msgid "Best for images dominated by regions of solid color"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:1358
+#: plug-ins/print/ligma_main_window.c:1358
 msgid "Photograph"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:1366
+#: plug-ins/print/ligma_main_window.c:1366
 msgid ""
 "Slowest, but most accurate and smoothest color for continuous tone images "
 "and photographs"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:1389
+#: plug-ins/print/ligma_main_window.c:1389
 msgid "Output type:"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:1396
+#: plug-ins/print/ligma_main_window.c:1396
 msgid "Select the desired output type"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:1405
+#: plug-ins/print/ligma_main_window.c:1405
 msgid "Color output"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:1417
+#: plug-ins/print/ligma_main_window.c:1417
 msgid "Print in shades of gray using black ink"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:1424
+#: plug-ins/print/ligma_main_window.c:1424
 msgid "Black and white"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:1431
+#: plug-ins/print/ligma_main_window.c:1431
 msgid "Print in black and white (no color, and no shades of gray)"
 msgstr ""
 
 #.
 #. *  Color adjust button
 #.
-#: plug-ins/print/gimp_main_window.c:1442
+#: plug-ins/print/ligma_main_window.c:1442
 msgid "Adjust output..."
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:1449
+#: plug-ins/print/ligma_main_window.c:1449
 msgid ""
 "Adjust color balance, brightness, contrast, saturation, and dither algorithm"
 msgstr ""
 
-#: plug-ins/print/gimp_main_window.c:1483
+#: plug-ins/print/ligma_main_window.c:1483
 msgid "Print to File"
 msgstr ""
 
@@ -11482,7 +11482,7 @@ msgid "32 bpp, 8-bit alpha, no palette"
 msgstr ""
 
 #: plug-ins/winicon/icodialog.c:151
-msgid "GIMP Windows Icon Plugin"
+msgid "LIGMA Windows Icon Plugin"
 msgstr ""
 
 #: plug-ins/winicon/icodialog.c:172
@@ -11527,7 +11527,7 @@ msgid "No data captured"
 msgstr ""
 
 #: plug-ins/xjt/xjt.c:475 plug-ins/xjt/xjt.c:493
-msgid "GIMP compressed XJT image"
+msgid "LIGMA compressed XJT image"
 msgstr ""
 
 #: plug-ins/xjt/xjt.c:714

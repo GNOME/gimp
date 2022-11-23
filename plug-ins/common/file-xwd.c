@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  * XWD reading and writing code Copyright (C) 1996 Peter Kirchgessner
  * (email: peter@kirchgessner.net, WWW: http://www.kirchgessner.net)
@@ -37,9 +37,9 @@
  * PK = Peter Kirchgessner, ME = Mattias Engdegård
  * V 1.00, PK, xx-Aug-96: First try
  * V 1.01, PK, 03-Sep-96: Check for bitmap_bit_order
- * V 1.90, PK, 17-Mar-97: Upgrade to work with GIMP V0.99
+ * V 1.90, PK, 17-Mar-97: Upgrade to work with LIGMA V0.99
  *                        Use visual class 3 to write indexed image
- *                        Set gimp b/w-colormap if no xwdcolormap present
+ *                        Set ligma b/w-colormap if no xwdcolormap present
  * V 1.91, PK, 05-Apr-97: Return all arguments, even in case of an error
  * V 1.92, PK, 12-Oct-97: No progress bars for non-interactive mode
  * V 1.93, PK, 11-Apr-98: Fix problem with overwriting memory
@@ -55,16 +55,16 @@
 
 #include <glib/gstdio.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 #define LOAD_PROC      "file-xwd-load"
 #define SAVE_PROC      "file-xwd-save"
 #define PLUG_IN_BINARY "file-xwd"
-#define PLUG_IN_ROLE   "gimp-file-xwd"
+#define PLUG_IN_ROLE   "ligma-file-xwd"
 
 
 typedef gulong  L_CARD32;
@@ -141,12 +141,12 @@ typedef struct _XwdClass XwdClass;
 
 struct _Xwd
 {
-  GimpPlugIn      parent_instance;
+  LigmaPlugIn      parent_instance;
 };
 
 struct _XwdClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -155,36 +155,36 @@ struct _XwdClass
 
 GType                   xwd_get_type         (void) G_GNUC_CONST;
 
-static GList          * xwd_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * xwd_create_procedure (GimpPlugIn           *plug_in,
+static GList          * xwd_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * xwd_create_procedure (LigmaPlugIn           *plug_in,
                                               const gchar          *name);
 
-static GimpValueArray * xwd_load             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
+static LigmaValueArray * xwd_load             (LigmaProcedure        *procedure,
+                                              LigmaRunMode           run_mode,
                                               GFile                *file,
-                                              const GimpValueArray *args,
+                                              const LigmaValueArray *args,
                                               gpointer              run_data);
-static GimpValueArray * xwd_save             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
-                                              GimpImage            *image,
+static LigmaValueArray * xwd_save             (LigmaProcedure        *procedure,
+                                              LigmaRunMode           run_mode,
+                                              LigmaImage            *image,
                                               gint                  n_drawables,
-                                              GimpDrawable        **drawables,
+                                              LigmaDrawable        **drawables,
                                               GFile                *file,
-                                              const GimpValueArray *args,
+                                              const LigmaValueArray *args,
                                               gpointer              run_data);
 
-static GimpImage      * load_image           (GFile                *file,
+static LigmaImage      * load_image           (GFile                *file,
                                               GError              **error);
 static gboolean         save_image           (GFile                *file,
-                                              GimpImage            *image,
-                                              GimpDrawable         *drawable,
+                                              LigmaImage            *image,
+                                              LigmaDrawable         *drawable,
                                               GError              **error);
-static GimpImage      * create_new_image     (GFile                *file,
+static LigmaImage      * create_new_image     (GFile                *file,
                                               guint                 width,
                                               guint                 height,
-                                              GimpImageBaseType     type,
-                                              GimpImageType         gdtype,
-                                              GimpLayer           **layer,
+                                              LigmaImageBaseType     type,
+                                              LigmaImageType         gdtype,
+                                              LigmaLayer           **layer,
                                               GeglBuffer          **buffer);
 
 static int              set_pixelmap         (gint                  ncols,
@@ -196,33 +196,33 @@ static gboolean         get_pixelmap         (L_CARD32              pixelval,
                                               guchar               *green,
                                               guchar               *glue);
 
-static void             set_bw_color_table   (GimpImage            *image);
-static void             set_color_table      (GimpImage            *image,
+static void             set_bw_color_table   (LigmaImage            *image);
+static void             set_color_table      (LigmaImage            *image,
                                               L_XWDFILEHEADER      *xwdhdr,
                                               L_XWDCOLOR           *xwdcolmap);
 
-static GimpImage      * load_xwd_f2_d1_b1    (GFile                *file,
+static LigmaImage      * load_xwd_f2_d1_b1    (GFile                *file,
                                               FILE                 *ifp,
                                               L_XWDFILEHEADER      *xwdhdr,
                                               L_XWDCOLOR           *xwdcolmap);
-static GimpImage      * load_xwd_f2_d8_b8    (GFile                *file,
+static LigmaImage      * load_xwd_f2_d8_b8    (GFile                *file,
                                               FILE                 *ifp,
                                               L_XWDFILEHEADER      *xwdhdr,
                                               L_XWDCOLOR           *xwdcolmap);
-static GimpImage      * load_xwd_f2_d16_b16  (GFile                *file,
+static LigmaImage      * load_xwd_f2_d16_b16  (GFile                *file,
                                               FILE                 *ifp,
                                               L_XWDFILEHEADER      *xwdhdr,
                                               L_XWDCOLOR           *xwdcolmap);
-static GimpImage      * load_xwd_f2_d24_b32  (GFile                *file,
+static LigmaImage      * load_xwd_f2_d24_b32  (GFile                *file,
                                               FILE                 *ifp,
                                               L_XWDFILEHEADER      *xwdhdr,
                                               L_XWDCOLOR           *xwdcolmap,
                                               GError              **error);
-static GimpImage      * load_xwd_f2_d32_b32  (GFile                *file,
+static LigmaImage      * load_xwd_f2_d32_b32  (GFile                *file,
                                               FILE                 *ifp,
                                               L_XWDFILEHEADER      *xwdhdr,
                                               L_XWDCOLOR           *xwdcolmap);
-static GimpImage      * load_xwd_f1_d24_b1   (GFile                *file,
+static LigmaImage      * load_xwd_f1_d24_b1   (GFile                *file,
                                               FILE                 *ifp,
                                               L_XWDFILEHEADER      *xwdhdr,
                                               L_XWDCOLOR           *xwdcolmap,
@@ -262,26 +262,26 @@ static gboolean         write_xwd_cols       (GOutputStream        *output,
                                               GError              **error);
 
 static gint             save_index           (GOutputStream        *output,
-                                              GimpImage            *image,
-                                              GimpDrawable         *drawable,
+                                              LigmaImage            *image,
+                                              LigmaDrawable         *drawable,
                                               gboolean              gray,
                                               GError              **error);
 static gint             save_rgb             (GOutputStream        *output,
-                                              GimpImage            *image,
-                                              GimpDrawable         *drawable,
+                                              LigmaImage            *image,
+                                              LigmaDrawable         *drawable,
                                               GError              **error);
 
 
-G_DEFINE_TYPE (Xwd, xwd, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Xwd, xwd, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (XWD_TYPE)
+LIGMA_MAIN (XWD_TYPE)
 DEFINE_STD_SET_I18N
 
 
 static void
 xwd_class_init (XwdClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = xwd_query_procedures;
   plug_in_class->create_procedure = xwd_create_procedure;
@@ -294,7 +294,7 @@ xwd_init (Xwd *xwd)
 }
 
 static GList *
-xwd_query_procedures (GimpPlugIn *plug_in)
+xwd_query_procedures (LigmaPlugIn *plug_in)
 {
   GList *list = NULL;
 
@@ -304,21 +304,21 @@ xwd_query_procedures (GimpPlugIn *plug_in)
   return list;
 }
 
-static GimpProcedure *
-xwd_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+xwd_create_procedure (LigmaPlugIn  *plug_in,
                       const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, LOAD_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_load_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            xwd_load, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure, _("X window dump"));
+      ligma_procedure_set_menu_label (procedure, _("X window dump"));
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Loads files in the XWD (X Window Dump) "
                                         "format",
                                         "Loads files in the XWD (X Window Dump) "
@@ -326,59 +326,59 @@ xwd_create_procedure (GimpPlugIn  *plug_in,
                                         "by the program xwd. Xwd is an X Window "
                                         "System window dumping utility.",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Peter Kirchgessner",
                                       "Peter Kirchgessner",
                                       "1996");
 
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                           "image/x-xwindowdump");
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "xwd");
-      gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_magics (LIGMA_FILE_PROCEDURE (procedure),
                                       "4,long,0x00000007");
     }
   else if (! strcmp (name, SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_save_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            xwd_save, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "RGB, GRAY, INDEXED");
+      ligma_procedure_set_image_types (procedure, "RGB, GRAY, INDEXED");
 
-      gimp_procedure_set_menu_label (procedure, _("X window dump"));
+      ligma_procedure_set_menu_label (procedure, _("X window dump"));
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Exports files in the XWD (X Window "
                                         "Dump) format",
                                         "XWD exporting handles all image "
                                         "types except those with alpha channels.",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Peter Kirchgessner",
                                       "Peter Kirchgessner",
                                       "1996");
 
-      gimp_file_procedure_set_handles_remote (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_handles_remote (LIGMA_FILE_PROCEDURE (procedure),
                                               TRUE);
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                           "image/x-xwindowdump");
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "xwd");
     }
 
   return procedure;
 }
 
-static GimpValueArray *
-xwd_load (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
+static LigmaValueArray *
+xwd_load (LigmaProcedure        *procedure,
+          LigmaRunMode           run_mode,
           GFile                *file,
-          const GimpValueArray *args,
+          const LigmaValueArray *args,
           gpointer              run_data)
 {
-  GimpValueArray *return_vals;
-  GimpImage      *image;
+  LigmaValueArray *return_vals;
+  LigmaImage      *image;
   GError         *error = NULL;
 
   gegl_init (NULL, NULL);
@@ -386,49 +386,49 @@ xwd_load (GimpProcedure        *procedure,
   image = load_image (file, &error);
 
   if (! image)
-    return gimp_procedure_new_return_values (procedure,
-                                             GIMP_PDB_EXECUTION_ERROR,
+    return ligma_procedure_new_return_values (procedure,
+                                             LIGMA_PDB_EXECUTION_ERROR,
                                              error);
 
-  return_vals = gimp_procedure_new_return_values (procedure,
-                                                  GIMP_PDB_SUCCESS,
+  return_vals = ligma_procedure_new_return_values (procedure,
+                                                  LIGMA_PDB_SUCCESS,
                                                   NULL);
 
-  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
+  LIGMA_VALUES_SET_IMAGE (return_vals, 1, image);
 
   return return_vals;
 }
 
-static GimpValueArray *
-xwd_save (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GimpImage            *image,
+static LigmaValueArray *
+xwd_save (LigmaProcedure        *procedure,
+          LigmaRunMode           run_mode,
+          LigmaImage            *image,
           gint                  n_drawables,
-          GimpDrawable        **drawables,
+          LigmaDrawable        **drawables,
           GFile                *file,
-          const GimpValueArray *args,
+          const LigmaValueArray *args,
           gpointer              run_data)
 {
-  GimpPDBStatusType      status = GIMP_PDB_SUCCESS;
-  GimpExportReturn       export = GIMP_EXPORT_CANCEL;
+  LigmaPDBStatusType      status = LIGMA_PDB_SUCCESS;
+  LigmaExportReturn       export = LIGMA_EXPORT_CANCEL;
   GError                *error = NULL;
 
   gegl_init (NULL, NULL);
 
   switch (run_mode)
     {
-    case GIMP_RUN_INTERACTIVE:
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_ui_init (PLUG_IN_BINARY);
+    case LIGMA_RUN_INTERACTIVE:
+    case LIGMA_RUN_WITH_LAST_VALS:
+      ligma_ui_init (PLUG_IN_BINARY);
 
-      export = gimp_export_image (&image, &n_drawables, &drawables, "XWD",
-                                  GIMP_EXPORT_CAN_HANDLE_RGB  |
-                                  GIMP_EXPORT_CAN_HANDLE_GRAY |
-                                  GIMP_EXPORT_CAN_HANDLE_INDEXED);
+      export = ligma_export_image (&image, &n_drawables, &drawables, "XWD",
+                                  LIGMA_EXPORT_CAN_HANDLE_RGB  |
+                                  LIGMA_EXPORT_CAN_HANDLE_GRAY |
+                                  LIGMA_EXPORT_CAN_HANDLE_INDEXED);
 
-      if (export == GIMP_EXPORT_CANCEL)
-        return gimp_procedure_new_return_values (procedure,
-                                                 GIMP_PDB_CANCEL,
+      if (export == LIGMA_EXPORT_CANCEL)
+        return ligma_procedure_new_return_values (procedure,
+                                                 LIGMA_PDB_CANCEL,
                                                  NULL);
       break;
 
@@ -441,37 +441,37 @@ xwd_save (GimpProcedure        *procedure,
       g_set_error (&error, G_FILE_ERROR, 0,
                    _("TGA format does not support multiple layers."));
 
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_CALLING_ERROR,
                                                error);
     }
 
   if (! save_image (file, image, drawables[0], &error))
     {
-      status = GIMP_PDB_EXECUTION_ERROR;
+      status = LIGMA_PDB_EXECUTION_ERROR;
     }
 
-  if (export == GIMP_EXPORT_EXPORT)
+  if (export == LIGMA_EXPORT_EXPORT)
     {
-      gimp_image_delete (image);
+      ligma_image_delete (image);
       g_free (drawables);
     }
 
-  return gimp_procedure_new_return_values (procedure, status, error);
+  return ligma_procedure_new_return_values (procedure, status, error);
 }
 
-static GimpImage *
+static LigmaImage *
 load_image (GFile   *file,
             GError **error)
 {
   FILE            *ifp;
   gint             depth, bpp;
-  GimpImage       *image = NULL;
+  LigmaImage       *image = NULL;
   L_XWDFILEHEADER  xwdhdr;
   L_XWDCOLOR      *xwdcolmap = NULL;
 
-  gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_file_get_utf8_name (file));
+  ligma_progress_init_printf (_("Opening '%s'"),
+                             ligma_file_get_utf8_name (file));
 
   ifp = g_fopen (g_file_peek_path (file), "rb");
 
@@ -479,7 +479,7 @@ load_image (GFile   *file,
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),
-                   gimp_file_get_utf8_name (file), g_strerror (errno));
+                   ligma_file_get_utf8_name (file), g_strerror (errno));
       goto out;
     }
 
@@ -488,7 +488,7 @@ load_image (GFile   *file,
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Could not read XWD header from '%s'"),
-                   gimp_file_get_utf8_name (file));
+                   ligma_file_get_utf8_name (file));
       goto out;
     }
 
@@ -504,12 +504,12 @@ load_image (GFile   *file,
   /* Position to start of XWDColor structures */
   fseek (ifp, (long)xwdhdr.l_header_size, SEEK_SET);
 
-  /* Guard against insanely huge color maps -- gimp_image_set_colormap() only
+  /* Guard against insanely huge color maps -- ligma_image_set_colormap() only
    * accepts colormaps with 0..256 colors anyway. */
   if (xwdhdr.l_colormap_entries > 256)
     {
       g_message (_("'%s':\nIllegal number of colormap entries: %ld"),
-                 gimp_file_get_utf8_name (file),
+                 ligma_file_get_utf8_name (file),
                  (long)xwdhdr.l_colormap_entries);
       goto out;
     }
@@ -519,7 +519,7 @@ load_image (GFile   *file,
       if (xwdhdr.l_colormap_entries < xwdhdr.l_ncolors)
         {
           g_message (_("'%s':\nNumber of colormap entries < number of colors"),
-                     gimp_file_get_utf8_name (file));
+                     ligma_file_get_utf8_name (file));
           goto out;
         }
 
@@ -549,29 +549,29 @@ load_image (GFile   *file,
   if (xwdhdr.l_pixmap_width <= 0)
     {
       g_message (_("'%s':\nNo image width specified"),
-                 gimp_file_get_utf8_name (file));
+                 ligma_file_get_utf8_name (file));
       goto out;
     }
 
-  if (xwdhdr.l_pixmap_width > GIMP_MAX_IMAGE_SIZE
-      || xwdhdr.l_bytes_per_line > GIMP_MAX_IMAGE_SIZE * 3)
+  if (xwdhdr.l_pixmap_width > LIGMA_MAX_IMAGE_SIZE
+      || xwdhdr.l_bytes_per_line > LIGMA_MAX_IMAGE_SIZE * 3)
     {
-      g_message (_("'%s':\nImage width is larger than GIMP can handle"),
-                 gimp_file_get_utf8_name (file));
+      g_message (_("'%s':\nImage width is larger than LIGMA can handle"),
+                 ligma_file_get_utf8_name (file));
       goto out;
     }
 
   if (xwdhdr.l_pixmap_height <= 0)
     {
       g_message (_("'%s':\nNo image height specified"),
-                 gimp_file_get_utf8_name (file));
+                 ligma_file_get_utf8_name (file));
       goto out;
     }
 
-  if (xwdhdr.l_pixmap_height > GIMP_MAX_IMAGE_SIZE)
+  if (xwdhdr.l_pixmap_height > LIGMA_MAX_IMAGE_SIZE)
     {
-      g_message (_("'%s':\nImage height is larger than GIMP can handle"),
-                 gimp_file_get_utf8_name (file));
+      g_message (_("'%s':\nImage height is larger than LIGMA can handle"),
+                 ligma_file_get_utf8_name (file));
       goto out;
     }
 
@@ -621,13 +621,13 @@ load_image (GFile   *file,
         }
       break;
     }
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 
   if (! image && ! (error && *error))
     g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                  _("XWD-file %s has format %d, depth %d and bits per pixel %d. "
                    "Currently this is not supported."),
-                 gimp_file_get_utf8_name (file),
+                 ligma_file_get_utf8_name (file),
                  (gint) xwdhdr.l_pixmap_format, depth, bpp);
 
 out:
@@ -642,18 +642,18 @@ out:
 
 static gboolean
 save_image (GFile         *file,
-            GimpImage     *image,
-            GimpDrawable  *drawable,
+            LigmaImage     *image,
+            LigmaDrawable  *drawable,
             GError       **error)
 {
   GOutputStream *output;
-  GimpImageType  drawable_type;
+  LigmaImageType  drawable_type;
   gboolean       success;
 
-  drawable_type = gimp_drawable_type (drawable);
+  drawable_type = ligma_drawable_type (drawable);
 
   /*  Make sure we're not exporting an image with an alpha channel  */
-  if (gimp_drawable_has_alpha (drawable))
+  if (ligma_drawable_has_alpha (drawable))
     {
       g_set_error_literal (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                            _("Cannot export images with alpha channels."));
@@ -662,9 +662,9 @@ save_image (GFile         *file,
 
   switch (drawable_type)
     {
-    case GIMP_INDEXED_IMAGE:
-    case GIMP_GRAY_IMAGE:
-    case GIMP_RGB_IMAGE:
+    case LIGMA_INDEXED_IMAGE:
+    case LIGMA_GRAY_IMAGE:
+    case LIGMA_RGB_IMAGE:
       break;
     default:
       g_message (_("Cannot operate on unknown image types."));
@@ -672,29 +672,29 @@ save_image (GFile         *file,
       break;
     }
 
-  gimp_progress_init_printf (_("Exporting '%s'"),
-                             gimp_file_get_utf8_name (file));
+  ligma_progress_init_printf (_("Exporting '%s'"),
+                             ligma_file_get_utf8_name (file));
 
   output = G_OUTPUT_STREAM (g_file_replace (file, NULL, FALSE, 0, NULL, error));
   if (! output)
     {
       g_prefix_error (error,
                       _("Could not open '%s' for writing: "),
-                      gimp_file_get_utf8_name (file));
+                      ligma_file_get_utf8_name (file));
       return FALSE;
     }
 
   switch (drawable_type)
     {
-    case GIMP_INDEXED_IMAGE:
+    case LIGMA_INDEXED_IMAGE:
       success = save_index (output, image, drawable, FALSE, error);
       break;
 
-    case GIMP_GRAY_IMAGE:
+    case LIGMA_GRAY_IMAGE:
       success = save_index (output, image, drawable, TRUE, error);
       break;
 
-    case GIMP_RGB_IMAGE:
+    case LIGMA_RGB_IMAGE:
       success = save_rgb (output, image, drawable, error);
       break;
 
@@ -707,7 +707,7 @@ save_image (GFile         *file,
     {
       g_prefix_error (error,
                       _("Error exporting '%s': "),
-                      gimp_file_get_utf8_name (file));
+                      ligma_file_get_utf8_name (file));
       success = FALSE;
     }
   else if (! success)
@@ -722,7 +722,7 @@ save_image (GFile         *file,
 
   g_object_unref (output);
 
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 
   return success;
 }
@@ -1167,15 +1167,15 @@ get_pixelmap (L_CARD32   pixelval,
 
 
 static void
-set_bw_color_table (GimpImage *image)
+set_bw_color_table (LigmaImage *image)
 {
   static guchar BWColorMap[2*3] = { 255, 255, 255, 0, 0, 0 };
 
 #ifdef XWD_COL_DEBUG
-  g_printf ("Set GIMP b/w-colortable:\n");
+  g_printf ("Set LIGMA b/w-colortable:\n");
 #endif
 
-  gimp_image_set_colormap (image, BWColorMap, 2);
+  ligma_image_set_colormap (image, BWColorMap, 2);
 }
 
 
@@ -1244,7 +1244,7 @@ init_color_table256 (L_XWDFILEHEADER *xwdhdr,
 
 
 static void
-set_color_table (GimpImage       *image,
+set_color_table (LigmaImage       *image,
                  L_XWDFILEHEADER *xwdhdr,
                  L_XWDCOLOR      *xwdcolmap)
 
@@ -1275,40 +1275,40 @@ set_color_table (GimpImage       *image,
     }
 
 #ifdef XWD_COL_DEBUG
-  g_printf ("Set GIMP colortable:\n");
+  g_printf ("Set LIGMA colortable:\n");
   for (j = 0; j < 256; j++)
     g_printf ("%3d: 0x%02x 0x%02x 0x%02x\n", j,
               ColorMap[j*3], ColorMap[j*3+1], ColorMap[j*3+2]);
 #endif
 
-  gimp_image_set_colormap (image, ColorMap, 256);
+  ligma_image_set_colormap (image, ColorMap, 256);
 }
 
 
 
 
 /* Create an image. Sets layer, drawable and rgn. Returns image */
-static GimpImage *
+static LigmaImage *
 create_new_image (GFile               *file,
                   guint                width,
                   guint                height,
-                  GimpImageBaseType    type,
-                  GimpImageType        gdtype,
-                  GimpLayer          **layer,
+                  LigmaImageBaseType    type,
+                  LigmaImageType        gdtype,
+                  LigmaLayer          **layer,
                   GeglBuffer         **buffer)
 {
-  GimpImage *image;
+  LigmaImage *image;
 
-  image = gimp_image_new (width, height, type);
-  gimp_image_set_file (image, file);
+  image = ligma_image_new (width, height, type);
+  ligma_image_set_file (image, file);
 
-  *layer = gimp_layer_new (image, "Background", width, height,
+  *layer = ligma_layer_new (image, "Background", width, height,
                            gdtype,
                            100,
-                           gimp_image_get_default_new_layer_mode (image));
-  gimp_image_insert_layer (image, *layer, NULL, 0);
+                           ligma_image_get_default_new_layer_mode (image));
+  ligma_image_insert_layer (image, *layer, NULL, 0);
 
-  *buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (*layer));
+  *buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (*layer));
 
   return image;
 }
@@ -1316,7 +1316,7 @@ create_new_image (GFile               *file,
 
 /* Load XWD with pixmap_format 2, pixmap_depth 1, bits_per_pixel 1 */
 
-static GimpImage *
+static LigmaImage *
 load_xwd_f2_d1_b1 (GFile           *file,
                    FILE            *ifp,
                    L_XWDFILEHEADER *xwdhdr,
@@ -1331,8 +1331,8 @@ load_xwd_f2_d1_b1 (GFile           *file,
   guchar           bit2byte[256 * 8];
   guchar          *data, *scanline;
   gint             err = 0;
-  GimpImage       *image;
-  GimpLayer       *layer;
+  LigmaImage       *image;
+  LigmaLayer       *layer;
   GeglBuffer      *buffer;
 
 #ifdef XWD_DEBUG
@@ -1342,10 +1342,10 @@ load_xwd_f2_d1_b1 (GFile           *file,
   width  = xwdhdr->l_pixmap_width;
   height = xwdhdr->l_pixmap_height;
 
-  image = create_new_image (file, width, height, GIMP_INDEXED,
-                            GIMP_INDEXED_IMAGE, &layer, &buffer);
+  image = create_new_image (file, width, height, LIGMA_INDEXED,
+                            LIGMA_INDEXED_IMAGE, &layer, &buffer);
 
-  tile_height = gimp_tile_height ();
+  tile_height = ligma_tile_height ();
   data = g_malloc (tile_height * width);
 
   scanline = g_new (guchar, xwdhdr->l_bytes_per_line + 8);
@@ -1432,7 +1432,7 @@ load_xwd_f2_d1_b1 (GFile           *file,
       scan_lines++;
 
       if ((i % 20) == 0)
-        gimp_progress_update ((double)(i+1) / (double)height);
+        ligma_progress_update ((double)(i+1) / (double)height);
 
       if ((scan_lines == tile_height) || ((i+1) == height))
         {
@@ -1460,7 +1460,7 @@ load_xwd_f2_d1_b1 (GFile           *file,
 
 /* Load XWD with pixmap_format 2, pixmap_depth 8, bits_per_pixel 8 */
 
-static GimpImage *
+static LigmaImage *
 load_xwd_f2_d8_b8 (GFile           *file,
                    FILE            *ifp,
                    L_XWDFILEHEADER *xwdhdr,
@@ -1471,8 +1471,8 @@ load_xwd_f2_d8_b8 (GFile           *file,
   gint        grayscale;
   guchar     *dest, *data;
   gint        err = 0;
-  GimpImage  *image;
-  GimpLayer  *layer;
+  LigmaImage  *image;
+  LigmaLayer  *layer;
   GeglBuffer *buffer;
 
 #ifdef XWD_DEBUG
@@ -1499,11 +1499,11 @@ load_xwd_f2_d8_b8 (GFile           *file,
     }
 
   image = create_new_image (file, width, height,
-                            grayscale ? GIMP_GRAY : GIMP_INDEXED,
-                            grayscale ? GIMP_GRAY_IMAGE : GIMP_INDEXED_IMAGE,
+                            grayscale ? LIGMA_GRAY : LIGMA_INDEXED,
+                            grayscale ? LIGMA_GRAY_IMAGE : LIGMA_INDEXED_IMAGE,
                             &layer, &buffer);
 
-  tile_height = gimp_tile_height ();
+  tile_height = ligma_tile_height ();
   data = g_malloc (tile_height * width);
 
   if (!grayscale)
@@ -1538,7 +1538,7 @@ load_xwd_f2_d8_b8 (GFile           *file,
       scan_lines++;
 
       if ((i % 20) == 0)
-        gimp_progress_update ((gdouble) (i + 1) / (gdouble) height);
+        ligma_progress_update ((gdouble) (i + 1) / (gdouble) height);
 
       if ((scan_lines == tile_height) || ((i+1) == height))
         {
@@ -1564,7 +1564,7 @@ load_xwd_f2_d8_b8 (GFile           *file,
 
 /* Load XWD with pixmap_format 2, pixmap_depth up to 16, bits_per_pixel 16 */
 
-static GimpImage *
+static LigmaImage *
 load_xwd_f2_d16_b16 (GFile           *file,
                      FILE            *ifp,
                      L_XWDFILEHEADER *xwdhdr,
@@ -1580,8 +1580,8 @@ load_xwd_f2_d16_b16 (GFile           *file,
   gulong           maxval;
   guchar          *ColorMap, *cm, *data;
   gint             err = 0;
-  GimpImage       *image;
-  GimpLayer       *layer;
+  LigmaImage       *image;
+  LigmaLayer       *layer;
   GeglBuffer      *buffer;
 
 #ifdef XWD_DEBUG
@@ -1591,13 +1591,13 @@ load_xwd_f2_d16_b16 (GFile           *file,
   width  = xwdhdr->l_pixmap_width;
   height = xwdhdr->l_pixmap_height;
 
-  image = create_new_image (file, width, height, GIMP_RGB,
-                            GIMP_RGB_IMAGE, &layer, &buffer);
+  image = create_new_image (file, width, height, LIGMA_RGB,
+                            LIGMA_RGB_IMAGE, &layer, &buffer);
 
-  tile_height = gimp_tile_height ();
+  tile_height = ligma_tile_height ();
   data = g_malloc (tile_height * width * 3);
 
-  /* Get memory for mapping 16 bit XWD-pixel to GIMP-RGB */
+  /* Get memory for mapping 16 bit XWD-pixel to LIGMA-RGB */
   maxval = 0x10000 * 3;
   ColorMap = g_new0 (guchar, maxval);
 
@@ -1623,7 +1623,7 @@ load_xwd_f2_d16_b16 (GFile           *file,
   maxblue = 0; while (bluemask >> (blueshift + maxblue)) maxblue++;
   maxblue = (1 << maxblue) - 1;
 
-  /* Built up the array to map XWD-pixel value to GIMP-RGB */
+  /* Built up the array to map XWD-pixel value to LIGMA-RGB */
   for (red = 0; red <= maxred; red++)
     {
       redval = (red * 255) / maxred;
@@ -1698,7 +1698,7 @@ load_xwd_f2_d16_b16 (GFile           *file,
       scan_lines++;
 
       if ((i % 20) == 0)
-        gimp_progress_update ((double)(i+1) / (double)height);
+        ligma_progress_update ((double)(i+1) / (double)height);
 
       if ((scan_lines == tile_height) || ((i+1) == height))
         {
@@ -1724,7 +1724,7 @@ load_xwd_f2_d16_b16 (GFile           *file,
 
 /* Load XWD with pixmap_format 2, pixmap_depth up to 24, bits_per_pixel 24/32 */
 
-static GimpImage *
+static LigmaImage *
 load_xwd_f2_d24_b32 (GFile            *file,
                      FILE             *ifp,
                      L_XWDFILEHEADER  *xwdhdr,
@@ -1743,8 +1743,8 @@ load_xwd_f2_d24_b32 (GFile            *file,
   guchar          *data;
   PIXEL_MAP        pixel_map;
   gint             err = 0;
-  GimpImage       *image;
-  GimpLayer       *layer;
+  LigmaImage       *image;
+  LigmaLayer       *layer;
   GeglBuffer      *buffer;
 
 #ifdef XWD_DEBUG
@@ -1787,14 +1787,14 @@ load_xwd_f2_d24_b32 (GFile            *file,
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("XWD-file %s is corrupt."),
-                   gimp_file_get_utf8_name (file));
+                   ligma_file_get_utf8_name (file));
       return NULL;
     }
 
-  image = create_new_image (file, width, height, GIMP_RGB,
-                            GIMP_RGB_IMAGE, &layer, &buffer);
+  image = create_new_image (file, width, height, LIGMA_RGB,
+                            LIGMA_RGB_IMAGE, &layer, &buffer);
 
-  tile_height = gimp_tile_height ();
+  tile_height = ligma_tile_height ();
   data = g_malloc (tile_height * width * 3);
 
   /* Set map-arrays for red, green, blue */
@@ -1861,7 +1861,7 @@ load_xwd_f2_d24_b32 (GFile            *file,
             getc (ifp);
 
           if ((i % 20) == 0)
-            gimp_progress_update ((gdouble) (i + 1) / (gdouble) height);
+            ligma_progress_update ((gdouble) (i + 1) / (gdouble) height);
 
           if ((scan_lines == tile_height) || ((i+1) == height))
             {
@@ -1913,7 +1913,7 @@ load_xwd_f2_d24_b32 (GFile            *file,
             getc (ifp);
 
           if ((i % 20) == 0)
-            gimp_progress_update ((gdouble) (i + 1) / (gdouble) height);
+            ligma_progress_update ((gdouble) (i + 1) / (gdouble) height);
 
           if ((scan_lines == tile_height) || ((i+1) == height))
             {
@@ -1939,7 +1939,7 @@ load_xwd_f2_d24_b32 (GFile            *file,
 
 /* Load XWD with pixmap_format 2, pixmap_depth up to 32, bits_per_pixel 32 */
 
-static GimpImage *
+static LigmaImage *
 load_xwd_f2_d32_b32 (GFile           *file,
                      FILE            *ifp,
                      L_XWDFILEHEADER *xwdhdr,
@@ -1957,8 +1957,8 @@ load_xwd_f2_d32_b32 (GFile           *file,
   guchar          *data;
   PIXEL_MAP        pixel_map;
   gint             err = 0;
-  GimpImage       *image;
-  GimpLayer       *layer;
+  LigmaImage       *image;
+  LigmaLayer       *layer;
   GeglBuffer      *buffer;
 
 #ifdef XWD_DEBUG
@@ -1968,10 +1968,10 @@ load_xwd_f2_d32_b32 (GFile           *file,
   width  = xwdhdr->l_pixmap_width;
   height = xwdhdr->l_pixmap_height;
 
-  image = create_new_image (file, width, height, GIMP_RGB,
-                            GIMP_RGBA_IMAGE, &layer, &buffer);
+  image = create_new_image (file, width, height, LIGMA_RGB,
+                            LIGMA_RGBA_IMAGE, &layer, &buffer);
 
-  tile_height = gimp_tile_height ();
+  tile_height = ligma_tile_height ();
   data = g_malloc (tile_height * width * 4);
 
   redmask   = xwdhdr->l_red_mask;
@@ -2073,7 +2073,7 @@ load_xwd_f2_d32_b32 (GFile           *file,
         getc (ifp);
 
       if ((i % 20) == 0)
-        gimp_progress_update ((gdouble) (i + 1) / (gdouble) height);
+        ligma_progress_update ((gdouble) (i + 1) / (gdouble) height);
 
       if ((scan_lines == tile_height) || ((i+1) == height))
         {
@@ -2098,7 +2098,7 @@ load_xwd_f2_d32_b32 (GFile           *file,
 
 /* Load XWD with pixmap_format 1, pixmap_depth up to 24, bits_per_pixel 1 */
 
-static GimpImage *
+static LigmaImage *
 load_xwd_f1_d24_b1 (GFile            *file,
                     FILE             *ifp,
                     L_XWDFILEHEADER  *xwdhdr,
@@ -2121,8 +2121,8 @@ load_xwd_f1_d24_b1 (GFile            *file,
   L_CARD32         pixelval;
   PIXEL_MAP        pixel_map;
   gint             err = 0;
-  GimpImage       *image;
-  GimpLayer       *layer;
+  LigmaImage       *image;
+  LigmaLayer       *layer;
   GeglBuffer      *buffer;
 
 #ifdef XWD_DEBUG
@@ -2187,7 +2187,7 @@ load_xwd_f1_d24_b1 (GFile            *file,
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("XWD-file %s is corrupt."),
-                       gimp_file_get_utf8_name (file));
+                       ligma_file_get_utf8_name (file));
           return NULL;
         }
 
@@ -2201,11 +2201,11 @@ load_xwd_f1_d24_b1 (GFile            *file,
     }
 
   image = create_new_image (file, width, height,
-                            indexed ? GIMP_INDEXED : GIMP_RGB,
-                            indexed ? GIMP_INDEXED_IMAGE : GIMP_RGB_IMAGE,
+                            indexed ? LIGMA_INDEXED : LIGMA_RGB,
+                            indexed ? LIGMA_INDEXED_IMAGE : LIGMA_RGB_IMAGE,
                             &layer, &buffer);
 
-  tile_height = gimp_tile_height ();
+  tile_height = ligma_tile_height ();
   data = g_malloc (tile_height * width * bytes_per_pixel);
 
   ncols = xwdhdr->l_colormap_entries;
@@ -2342,7 +2342,7 @@ load_xwd_f1_d24_b1 (GFile            *file,
             }
         }
 
-      gimp_progress_update ((gdouble) tile_end / (gdouble) height);
+      ligma_progress_update ((gdouble) tile_end / (gdouble) height);
 
       gegl_buffer_set (buffer, GEGL_RECTANGLE (0, tile_start,
                                                width, tile_end-tile_start+1), 0,
@@ -2363,8 +2363,8 @@ load_xwd_f1_d24_b1 (GFile            *file,
 
 static gboolean
 save_index (GOutputStream  *output,
-            GimpImage      *image,
-            GimpDrawable   *drawable,
+            LigmaImage      *image,
+            LigmaDrawable   *drawable,
             gboolean        gray,
             GError        **error)
 {
@@ -2385,10 +2385,10 @@ save_index (GOutputStream  *output,
   g_printf ("save_index ()\n");
 #endif
 
-  buffer      = gimp_drawable_get_buffer (drawable);
+  buffer      = ligma_drawable_get_buffer (drawable);
   width       = gegl_buffer_get_width  (buffer);
   height      = gegl_buffer_get_height (buffer);
-  tile_height = gimp_tile_height ();
+  tile_height = ligma_tile_height ();
 
   if (gray)
     format = babl_format ("Y' u8");
@@ -2423,7 +2423,7 @@ save_index (GOutputStream  *output,
   else
     {
       vclass = 3;
-      cmap = gimp_image_get_colormap (image, &ncolors);
+      cmap = ligma_image_get_colormap (image, &ncolors);
 
       for (j = 0; j < ncolors; j++)
         {
@@ -2497,7 +2497,7 @@ save_index (GOutputStream  *output,
       src += width;
 
       if ((i % 20) == 0)
-        gimp_progress_update ((gdouble) i / (gdouble) height);
+        ligma_progress_update ((gdouble) i / (gdouble) height);
     }
 
  out:
@@ -2509,8 +2509,8 @@ save_index (GOutputStream  *output,
 
 static gboolean
 save_rgb (GOutputStream  *output,
-          GimpImage      *image,
-          GimpDrawable   *drawable,
+          LigmaImage      *image,
+          LigmaDrawable   *drawable,
           GError        **error)
 {
   gint             height, width;
@@ -2528,10 +2528,10 @@ save_rgb (GOutputStream  *output,
   g_printf ("save_rgb ()\n");
 #endif
 
-  buffer      = gimp_drawable_get_buffer (drawable);
+  buffer      = ligma_drawable_get_buffer (drawable);
   width       = gegl_buffer_get_width  (buffer);
   height      = gegl_buffer_get_height (buffer);
-  tile_height = gimp_tile_height ();
+  tile_height = ligma_tile_height ();
   format      = babl_format ("R'G'B' u8");
 
   /* allocate a buffer for retrieving information from the pixel region  */
@@ -2605,7 +2605,7 @@ save_rgb (GOutputStream  *output,
       src += width * 3;
 
       if ((i % 20) == 0)
-        gimp_progress_update ((gdouble) i / (gdouble) height);
+        ligma_progress_update ((gdouble) i / (gdouble) height);
     }
 
  out:

@@ -1,6 +1,6 @@
-# Brazilian Portuguese translation of gimp-python
-# Copyright (C) 2013 gimp-python's COPYRIGHT HOLDER
-# This file is distributed under the same license as the gimp-python package.
+# Brazilian Portuguese translation of ligma-python
+# Copyright (C) 2013 ligma-python's COPYRIGHT HOLDER
+# This file is distributed under the same license as the ligma-python package.
 # Joao S. O. Bueno <gwidion@mpc.com.br>, 2007, 2008.
 # Mateus Gondim R. Batista <gondim.mateus@gmail.com>, 2012.
 # Enrico Nicoletto <liverig@gmail.com>, 2013.
@@ -11,7 +11,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: pt_BR\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2022-06-26 12:26+0000\n"
 "PO-Revision-Date: 2022-07-06 21:03-0300\n"
 "Last-Translator: Maíra Canal <mairacanal@riseup.net>\n"
@@ -510,8 +510,8 @@ msgid "Python _Console"
 msgstr "_Console Python"
 
 #: plug-ins/python/python-console/python-console.py:358
-msgid "Interactive GIMP Python interpreter"
-msgstr "Interpretador interativo de Python no GIMP"
+msgid "Interactive LIGMA Python interpreter"
+msgstr "Interpretador interativo de Python no LIGMA"
 
 #: plug-ins/python/python-console/python-console.py:359
 msgid "Type in commands and see results"
@@ -874,8 +874,8 @@ msgstr ""
 "ativa ou salvar no vetor"
 
 #: plug-ins/python/spyro-plus.py:1749
-msgid "Spyrogimp"
-msgstr "GIMPespiral"
+msgid "Spyroligma"
+msgstr "LIGMAespiral"
 
 #: plug-ins/python/spyro-plus.py:1758 plug-ins/python/spyro-plus.py:2295
 msgid "Draw spyrographs using current tool settings and selection."
@@ -984,8 +984,8 @@ msgstr ""
 "seleção."
 
 #: plug-ins/python/spyro-plus.py:2299
-msgid "Spyrogimp..."
-msgstr "GIMPespiral..."
+msgid "Spyroligma..."
+msgstr "LIGMAespiral..."
 
 #~ msgid "Missing exception information"
 #~ msgstr "Sem informação sobre a exceção"

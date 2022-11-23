@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * gimpdocked.h
- * Copyright (C) 2003  Michael Natterer <mitch@gimp.org>
+ * ligmadocked.h
+ * Copyright (C) 2003  Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,72 +18,72 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DOCKED_H__
-#define __GIMP_DOCKED_H__
+#ifndef __LIGMA_DOCKED_H__
+#define __LIGMA_DOCKED_H__
 
 
-#define GIMP_TYPE_DOCKED (gimp_docked_get_type ())
-G_DECLARE_INTERFACE (GimpDocked, gimp_docked, GIMP, DOCKED, GtkWidget)
+#define LIGMA_TYPE_DOCKED (ligma_docked_get_type ())
+G_DECLARE_INTERFACE (LigmaDocked, ligma_docked, LIGMA, DOCKED, GtkWidget)
 
 
 /**
- * GimpDockedInterface:
+ * LigmaDockedInterface:
  *
  * Interface with common methods for stuff that is docked.
  */
-struct _GimpDockedInterface
+struct _LigmaDockedInterface
 {
   GTypeInterface base_iface;
 
   /*  signals  */
-  void            (* title_changed)       (GimpDocked   *docked);
+  void            (* title_changed)       (LigmaDocked   *docked);
 
   /*  virtual functions  */
-  void            (* set_aux_info)        (GimpDocked   *docked,
+  void            (* set_aux_info)        (LigmaDocked   *docked,
                                            GList        *aux_info);
-  GList         * (* get_aux_info)        (GimpDocked   *docked);
+  GList         * (* get_aux_info)        (LigmaDocked   *docked);
 
-  GtkWidget     * (* get_preview)         (GimpDocked   *docked,
-                                           GimpContext  *context,
+  GtkWidget     * (* get_preview)         (LigmaDocked   *docked,
+                                           LigmaContext  *context,
                                            GtkIconSize   size);
-  gboolean        (* get_prefer_icon)     (GimpDocked   *docked);
-  GimpUIManager * (* get_menu)            (GimpDocked   *docked,
+  gboolean        (* get_prefer_icon)     (LigmaDocked   *docked);
+  LigmaUIManager * (* get_menu)            (LigmaDocked   *docked,
                                            const gchar **ui_path,
                                            gpointer     *popup_data);
-  gchar         * (* get_title)           (GimpDocked   *docked);
+  gchar         * (* get_title)           (LigmaDocked   *docked);
 
-  void            (* set_context)         (GimpDocked   *docked,
-                                           GimpContext  *context);
+  void            (* set_context)         (LigmaDocked   *docked,
+                                           LigmaContext  *context);
 
-  gboolean        (* has_button_bar)      (GimpDocked   *docked);
-  void            (* set_show_button_bar) (GimpDocked   *docked,
+  gboolean        (* has_button_bar)      (LigmaDocked   *docked);
+  void            (* set_show_button_bar) (LigmaDocked   *docked,
                                            gboolean      show);
-  gboolean        (* get_show_button_bar) (GimpDocked   *docked);
+  gboolean        (* get_show_button_bar) (LigmaDocked   *docked);
 };
 
 
-void            gimp_docked_title_changed       (GimpDocked   *docked);
+void            ligma_docked_title_changed       (LigmaDocked   *docked);
 
-void            gimp_docked_set_aux_info        (GimpDocked   *docked,
+void            ligma_docked_set_aux_info        (LigmaDocked   *docked,
                                                  GList        *aux_info);
-GList         * gimp_docked_get_aux_info        (GimpDocked   *docked);
+GList         * ligma_docked_get_aux_info        (LigmaDocked   *docked);
 
-GtkWidget     * gimp_docked_get_preview         (GimpDocked   *docked,
-                                                 GimpContext  *context,
+GtkWidget     * ligma_docked_get_preview         (LigmaDocked   *docked,
+                                                 LigmaContext  *context,
                                                  GtkIconSize   size);
-gboolean        gimp_docked_get_prefer_icon     (GimpDocked   *docked);
-GimpUIManager * gimp_docked_get_menu            (GimpDocked   *docked,
+gboolean        ligma_docked_get_prefer_icon     (LigmaDocked   *docked);
+LigmaUIManager * ligma_docked_get_menu            (LigmaDocked   *docked,
                                                  const gchar **ui_path,
                                                  gpointer     *popup_data);
-gchar         * gimp_docked_get_title           (GimpDocked   *docked);
+gchar         * ligma_docked_get_title           (LigmaDocked   *docked);
 
-void            gimp_docked_set_context         (GimpDocked   *docked,
-                                                 GimpContext  *context);
+void            ligma_docked_set_context         (LigmaDocked   *docked,
+                                                 LigmaContext  *context);
 
-gboolean        gimp_docked_has_button_bar      (GimpDocked   *docked);
-void            gimp_docked_set_show_button_bar (GimpDocked   *docked,
+gboolean        ligma_docked_has_button_bar      (LigmaDocked   *docked);
+void            ligma_docked_set_show_button_bar (LigmaDocked   *docked,
                                                  gboolean      show);
-gboolean        gimp_docked_get_show_button_bar (GimpDocked   *docked);
+gboolean        ligma_docked_get_show_button_bar (LigmaDocked   *docked);
 
 
-#endif  /* __GIMP_DOCKED_H__ */
+#endif  /* __LIGMA_DOCKED_H__ */

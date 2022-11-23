@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * gimppropgui-hue-saturation.c
+ * ligmapropgui-hue-saturation.c
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,21 +22,21 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "propgui-types.h"
 
-#include "operations/gimphuesaturationconfig.h"
-#include "operations/gimpoperationhuesaturation.h"
+#include "operations/ligmahuesaturationconfig.h"
+#include "operations/ligmaoperationhuesaturation.h"
 
-#include "core/gimpcontext.h"
+#include "core/ligmacontext.h"
 
-#include "widgets/gimppropwidgets.h"
+#include "widgets/ligmapropwidgets.h"
 
-#include "gimppropgui.h"
-#include "gimppropgui-hue-saturation.h"
+#include "ligmapropgui.h"
+#include "ligmapropgui-hue-saturation.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 #define COLOR_WIDTH  40
@@ -48,11 +48,11 @@ hue_saturation_config_notify (GObject          *object,
                               const GParamSpec *pspec,
                               GtkWidget        *color_area)
 {
-  GimpHueSaturationConfig *config = GIMP_HUE_SATURATION_CONFIG (object);
-  GimpHueRange             range;
-  GimpRGB                  color;
+  LigmaHueSaturationConfig *config = LIGMA_HUE_SATURATION_CONFIG (object);
+  LigmaHueRange             range;
+  LigmaRGB                  color;
 
-  static const GimpRGB default_colors[7] =
+  static const LigmaRGB default_colors[7] =
   {
     {   0,   0,   0, },
     { 1.0,   0,   0, },
@@ -67,9 +67,9 @@ hue_saturation_config_notify (GObject          *object,
                                               "hue-range"));
   color = default_colors[range];
 
-  gimp_operation_hue_saturation_map (config, &color, range, &color);
+  ligma_operation_hue_saturation_map (config, &color, range, &color);
 
-  gimp_color_area_set_color (GIMP_COLOR_AREA (color_area), &color);
+  ligma_color_area_set_color (LIGMA_COLOR_AREA (color_area), &color);
 }
 
 static void
@@ -78,9 +78,9 @@ hue_saturation_range_callback (GtkWidget *widget,
 {
   if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
     {
-      GimpHueRange range;
+      LigmaHueRange range;
 
-      gimp_radio_button_update (widget, &range);
+      ligma_radio_button_update (widget, &range);
       g_object_set (config,
                     "range", range,
                     NULL);
@@ -92,20 +92,20 @@ hue_saturation_range_notify (GObject          *object,
                              const GParamSpec *pspec,
                              GtkWidget        *range_radio)
 {
-  GimpHueSaturationConfig *config = GIMP_HUE_SATURATION_CONFIG (object);
+  LigmaHueSaturationConfig *config = LIGMA_HUE_SATURATION_CONFIG (object);
 
-  gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (range_radio),
+  ligma_int_radio_group_set_active (GTK_RADIO_BUTTON (range_radio),
                                    config->range);
 }
 
 GtkWidget *
-_gimp_prop_gui_new_hue_saturation (GObject                  *config,
+_ligma_prop_gui_new_hue_saturation (GObject                  *config,
                                    GParamSpec              **param_specs,
                                    guint                     n_param_specs,
                                    GeglRectangle            *area,
-                                   GimpContext              *context,
-                                   GimpCreatePickerFunc      create_picker_func,
-                                   GimpCreateControllerFunc  create_controller_func,
+                                   LigmaContext              *context,
+                                   LigmaCreatePickerFunc      create_picker_func,
+                                   LigmaCreateControllerFunc  create_controller_func,
                                    gpointer                  creator)
 {
   GtkWidget *main_vbox;
@@ -142,11 +142,11 @@ _gimp_prop_gui_new_hue_saturation (GObject                  *config,
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
   g_return_val_if_fail (param_specs != NULL, NULL);
   g_return_val_if_fail (n_param_specs > 0, NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
 
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
 
-  frame = gimp_frame_new (_("Select Primary Color to Adjust"));
+  frame = ligma_frame_new (_("Select Primary Color to Adjust"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
@@ -167,10 +167,10 @@ _gimp_prop_gui_new_hue_saturation (GObject                  *config,
       button = gtk_radio_button_new_with_mnemonic (group,
                                                    gettext (hue_range_grid[i].label));
       group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
-      g_object_set_data (G_OBJECT (button), "gimp-item-data",
+      g_object_set_data (G_OBJECT (button), "ligma-item-data",
                          GINT_TO_POINTER (i));
 
-      gimp_help_set_help_data (button,
+      ligma_help_set_help_data (button,
                                gettext (hue_range_grid[i].tooltip),
                                NULL);
 
@@ -189,7 +189,7 @@ _gimp_prop_gui_new_hue_saturation (GObject                  *config,
       if (i > 0)
         {
           GtkWidget *color_area;
-          GimpRGB    color = { 0, };
+          LigmaRGB    color = { 0, };
 
           frame = gtk_frame_new (NULL);
           gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
@@ -199,7 +199,7 @@ _gimp_prop_gui_new_hue_saturation (GObject                  *config,
                            1, 1);
           gtk_widget_show (frame);
 
-          color_area = gimp_color_area_new (&color, GIMP_COLOR_AREA_FLAT, 0);
+          color_area = ligma_color_area_new (&color, LIGMA_COLOR_AREA_FLAT, 0);
           gtk_widget_set_size_request (color_area, COLOR_WIDTH, COLOR_HEIGHT);
           gtk_container_add (GTK_CONTAINER (frame), color_area);
           gtk_widget_show (color_area);
@@ -222,12 +222,12 @@ _gimp_prop_gui_new_hue_saturation (GObject                  *config,
   gtk_widget_show (grid);
 
   /* Create the 'Overlap' option slider */
-  scale = gimp_prop_spin_scale_new (config, "overlap", 0.01, 0.1, 0);
-  gimp_prop_widget_set_factor (scale, 100.0, 1.0, 10.0, 1);
-  gimp_spin_scale_set_label (GIMP_SPIN_SCALE (scale), _("_Overlap"));
+  scale = ligma_prop_spin_scale_new (config, "overlap", 0.01, 0.1, 0);
+  ligma_prop_widget_set_factor (scale, 100.0, 1.0, 10.0, 1);
+  ligma_spin_scale_set_label (LIGMA_SPIN_SCALE (scale), _("_Overlap"));
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
 
-  frame = gimp_frame_new (_("Adjust Selected Color"));
+  frame = ligma_frame_new (_("Adjust Selected Color"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -236,22 +236,22 @@ _gimp_prop_gui_new_hue_saturation (GObject                  *config,
   gtk_widget_show (vbox);
 
   /*  Create the hue scale widget  */
-  scale = gimp_prop_spin_scale_new (config, "hue",
+  scale = ligma_prop_spin_scale_new (config, "hue",
                                     1.0 / 180.0, 15.0 / 180.0, 0);
-  gimp_prop_widget_set_factor (scale, 180.0, 1.0, 15.0, 1);
-  gimp_spin_scale_set_label (GIMP_SPIN_SCALE (scale), _("_Hue"));
+  ligma_prop_widget_set_factor (scale, 180.0, 1.0, 15.0, 1);
+  ligma_spin_scale_set_label (LIGMA_SPIN_SCALE (scale), _("_Hue"));
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
 
   /*  Create the lightness scale widget  */
-  scale = gimp_prop_spin_scale_new (config, "lightness", 0.01, 0.1, 0);
-  gimp_prop_widget_set_factor (scale, 100.0, 1.0, 10.0, 1);
-  gimp_spin_scale_set_label (GIMP_SPIN_SCALE (scale), _("_Lightness"));
+  scale = ligma_prop_spin_scale_new (config, "lightness", 0.01, 0.1, 0);
+  ligma_prop_widget_set_factor (scale, 100.0, 1.0, 10.0, 1);
+  ligma_spin_scale_set_label (LIGMA_SPIN_SCALE (scale), _("_Lightness"));
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
 
   /*  Create the saturation scale widget  */
-  scale = gimp_prop_spin_scale_new (config, "saturation", 0.01, 0.1, 0);
-  gimp_prop_widget_set_factor (scale, 100.0, 1.0, 10.0, 1);
-  gimp_spin_scale_set_label (GIMP_SPIN_SCALE (scale), _("_Saturation"));
+  scale = ligma_prop_spin_scale_new (config, "saturation", 0.01, 0.1, 0);
+  ligma_prop_widget_set_factor (scale, 100.0, 1.0, 10.0, 1);
+  ligma_spin_scale_set_label (LIGMA_SPIN_SCALE (scale), _("_Saturation"));
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
@@ -263,7 +263,7 @@ _gimp_prop_gui_new_hue_saturation (GObject                  *config,
   gtk_widget_show (button);
 
   g_signal_connect_swapped (button, "clicked",
-                            G_CALLBACK (gimp_hue_saturation_config_reset_range),
+                            G_CALLBACK (ligma_hue_saturation_config_reset_range),
                             config);
 
   g_signal_connect_object (config, "notify::range",

@@ -1,5 +1,5 @@
 /*
- * GIMP - The GNU Image Manipulation Program
+ * LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,11 +20,11 @@
 #define __BMP_SAVE_H__
 
 
-GimpPDBStatusType   save_image (GFile         *file,
-                                GimpImage     *image,
-                                GimpDrawable  *drawable,
-                                GimpRunMode    run_mode,
-                                GimpProcedure *procedure,
+LigmaPDBStatusType   save_image (GFile         *file,
+                                LigmaImage     *image,
+                                LigmaDrawable  *drawable,
+                                LigmaRunMode    run_mode,
+                                LigmaProcedure *procedure,
                                 GObject       *config,
                                 GError       **error);
 

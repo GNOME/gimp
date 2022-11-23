@@ -1,14 +1,14 @@
-# Bulgarian translation of gimp-python po-file.
+# Bulgarian translation of ligma-python po-file.
 # Copyright (C) 2005, 2006, 2007 Free Software Foundation, Inc.
-# This file is distributed under the same license as the GIMP package.
+# This file is distributed under the same license as the LIGMA package.
 # Alexander Shopov <ash@contact.bg>, 2005.
 # Victor Dachev <vdachev@gmail.com>, 2005, 2006, 2007.
 #
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-libgimp trunk\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma-libligma trunk\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2007-07-27 15:54+0300\n"
 "PO-Revision-Date: 2007-07-27 15:57+0300\n"
 "Last-Translator: Victor Dachev <vdachev@gmail.com>\n"
@@ -19,294 +19,294 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
-#: ../plug-ins/pygimp/gimpfu.py:380
+#: ../plug-ins/pyligma/ligmafu.py:380
 msgid "Missing exception information"
 msgstr "Липсва информация за изключенията"
 
-#: ../plug-ins/pygimp/gimpfu.py:389
+#: ../plug-ins/pyligma/ligmafu.py:389
 #, python-format
 msgid "An error occured running %s"
 msgstr "Грешка при стартиране на %s"
 
-#: ../plug-ins/pygimp/gimpfu.py:400
+#: ../plug-ins/pyligma/ligmafu.py:400
 msgid "_More Information"
 msgstr "_Още информация"
 
-#: ../plug-ins/pygimp/gimpfu.py:506 ../plug-ins/pygimp/gimpfu.py:518
-#: ../plug-ins/pygimp/gimpfu.py:524
+#: ../plug-ins/pyligma/ligmafu.py:506 ../plug-ins/pyligma/ligmafu.py:518
+#: ../plug-ins/pyligma/ligmafu.py:524
 msgid "No"
 msgstr "Не"
 
-#: ../plug-ins/pygimp/gimpfu.py:516 ../plug-ins/pygimp/gimpfu.py:524
+#: ../plug-ins/pyligma/ligmafu.py:516 ../plug-ins/pyligma/ligmafu.py:524
 msgid "Yes"
 msgstr "Да"
 
-#: ../plug-ins/pygimp/gimpfu.py:558 ../plug-ins/pygimp/gimpui.py:222
+#: ../plug-ins/pyligma/ligmafu.py:558 ../plug-ins/pyligma/ligmaui.py:222
 msgid "Python-Fu File Selection"
 msgstr "Избор на файл за Python-Fu"
 
-#: ../plug-ins/pygimp/gimpfu.py:569
+#: ../plug-ins/pyligma/ligmafu.py:569
 msgid "Python-Fu Folder Selection"
 msgstr "Избор на папка за Python-Fu"
 
-#: ../plug-ins/pygimp/gimpfu.py:659
+#: ../plug-ins/pyligma/ligmafu.py:659
 #, python-format
 msgid "Invalid input for '%s'"
 msgstr "Грешен изход за „%s“"
 
-#: ../plug-ins/pygimp/gimpui.py:175
+#: ../plug-ins/pyligma/ligmaui.py:175
 msgid "Python-Fu Color Selection"
 msgstr "Избор на цветове за Python-FuFu"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:107
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:107
 msgid "Saving as colored XHTML"
 msgstr "Запазване като оцветен XHTML"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:184
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:184
 msgid "Save as colored XHTML"
 msgstr "Запазване като оцветен XHTML"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:189
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:189
 msgid "Colored XHTML"
 msgstr "Оцветен XHTML"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:196
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:196
 msgid "Character _source"
 msgstr "_Източник на знака"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:197
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:197
 msgid "Source code"
 msgstr "Изходен код"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:198
 msgid "Text file"
 msgstr "Текстови файл"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:199
 msgid "Entry box"
 msgstr "Кутия за въвеждане"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:200
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:200
 msgid "_File to read or characters to use"
 msgstr "_Файл за прочитане или символи за използване"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:202
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:202
 msgid "Fo_nt size in pixels"
 msgstr "Размер на _шрифта в пиксели"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:203
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:203
 msgid "_Write a separate CSS file"
 msgstr "_Записване на отделен CSS файл"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:46
+#: ../plug-ins/pyligma/plug-ins/ligmacons.py:46
 msgid "Python Console"
 msgstr "Python конзола"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:50
+#: ../plug-ins/pyligma/plug-ins/ligmacons.py:50
 msgid "_Browse..."
 msgstr "_Търсене..."
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:132
+#: ../plug-ins/pyligma/plug-ins/ligmacons.py:132
 msgid "Python Procedure Browser"
 msgstr "Python четец на процедури"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:161
+#: ../plug-ins/pyligma/plug-ins/ligmacons.py:161
 #, python-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Не може да бъде отворен „%s“ за запис: %s"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:176
+#: ../plug-ins/pyligma/plug-ins/ligmacons.py:176
 #, python-format
 msgid "Could not write to '%s': %s"
 msgstr "Не може да бъде отворен „%s“ за запис: %s"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:184
+#: ../plug-ins/pyligma/plug-ins/ligmacons.py:184
 msgid "Save Python-Fu Console Output"
 msgstr "Запазване полученото от Python-Fu конзолата"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:218
-msgid "Interactive Gimp-Python interpreter"
-msgstr "Интерактивен Gimp-Python интерпретатор"
+#: ../plug-ins/pyligma/plug-ins/ligmacons.py:218
+msgid "Interactive Ligma-Python interpreter"
+msgstr "Интерактивен Ligma-Python интерпретатор"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:223
+#: ../plug-ins/pyligma/plug-ins/ligmacons.py:223
 msgid "_Console"
 msgstr "_Конзола"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:51
+#: ../plug-ins/pyligma/plug-ins/foggify.py:51
 msgid "Add a layer of fog"
 msgstr "Запазване като оцветен XHTML"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:56
+#: ../plug-ins/pyligma/plug-ins/foggify.py:56
 msgid "_Fog..."
 msgstr "_Мъгла..."
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:61
+#: ../plug-ins/pyligma/plug-ins/foggify.py:61
 msgid "_Layer name"
 msgstr "Име на _слоя"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:61
+#: ../plug-ins/pyligma/plug-ins/foggify.py:61
 msgid "Clouds"
 msgstr "Облаци"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:62
+#: ../plug-ins/pyligma/plug-ins/foggify.py:62
 msgid "_Fog color"
 msgstr "Цвят на _мъглата"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:63
+#: ../plug-ins/pyligma/plug-ins/foggify.py:63
 msgid "_Turbulence"
 msgstr "_Турболентност"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:64
+#: ../plug-ins/pyligma/plug-ins/foggify.py:64
 msgid "Op_acity"
 msgstr "_Плътност"
 
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:45
+#: ../plug-ins/pyligma/plug-ins/palette-offset.py:45
 msgid "Offset the colors in a palette"
 msgstr "Отместване на цветовете в палитра"
 
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:50
+#: ../plug-ins/pyligma/plug-ins/palette-offset.py:50
 msgid "_Offset Palette..."
 msgstr "_Отместена палитра..."
 
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:53
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:57
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:57
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:79
+#: ../plug-ins/pyligma/plug-ins/palette-offset.py:53
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:57
+#: ../plug-ins/pyligma/plug-ins/palette-to-gradient.py:57
+#: ../plug-ins/pyligma/plug-ins/palette-to-gradient.py:79
 msgid "Palette"
 msgstr "Палитра"
 
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:54
+#: ../plug-ins/pyligma/plug-ins/palette-offset.py:54
 msgid "Off_set"
 msgstr "От_местване"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:49
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:49
 msgid "Sort the colors in a palette"
 msgstr "Подреждане на цветовете в палитра"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:54
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:54
 msgid "_Sort Palette..."
 msgstr "_Подреждане на палитрата..."
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:58
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:58
 msgid "Color _model"
 msgstr "Цветови _модел"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:59
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:59
 msgid "RGB"
 msgstr "ЧЗС"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:60
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:60
 msgid "HSV"
 msgstr "ЦНС"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:61
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:61
 msgid "Channel to _sort"
 msgstr "Канал за _подреждане"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:62
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:62
 msgid "Red or Hue"
 msgstr "Червено или Цвят"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:63
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:63
 msgid "Green or Saturation"
 msgstr "Зелено или Насищане"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:64
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:64
 msgid "Blue or Value"
 msgstr "Синьо или Стойност"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:65
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:65
 msgid "_Ascending"
 msgstr "_Възходящо"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:50
+#: ../plug-ins/pyligma/plug-ins/palette-to-gradient.py:50
 msgid "Create a repeating gradient using colors from the palette"
 msgstr "Създаване на повтаряща се преливка, използвайки светове от палитрата"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:55
+#: ../plug-ins/pyligma/plug-ins/palette-to-gradient.py:55
 msgid "Palette to _Repeating Gradient"
 msgstr "Палитра в _Повтаряща се преливка"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:72
+#: ../plug-ins/pyligma/plug-ins/palette-to-gradient.py:72
 msgid "Create a gradient using colors from the palette"
 msgstr "Създаване на преливка с цветове от палитрата"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:77
+#: ../plug-ins/pyligma/plug-ins/palette-to-gradient.py:77
 msgid "Palette to _Gradient"
 msgstr "Палитра в _Преливка"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:57
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:57
 msgid "Slice"
 msgstr "Нарязване"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:416
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:416
 msgid "Cuts an image along its guides, creates images and a HTML table snippet"
 msgstr "Реже изображението по водачите, създава изображения и HTML таблица"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:427
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:427
 msgid "_Slice..."
 msgstr "_Нарязване..."
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:432
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:432
 msgid "Path for HTML export"
 msgstr "Пътека за извеждане на HTML"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:433
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:433
 msgid "Filename for export"
 msgstr "Име на файла за извличане"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:434
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:434
 msgid "Image name prefix"
 msgstr "Префикс на името на изображението"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:435
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:435
 msgid "Image format"
 msgstr "Формат на изображението"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:436
 msgid "Separate image folder"
 msgstr "Отделна папка за изображения"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:438
 msgid "Folder for image export"
 msgstr "Папка за извличане на изображения"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:439
 msgid "Space between table elements"
 msgstr "Разстояние между елементите на таблицата"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:441
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:441
 msgid "Javascript for onmouseover and clicked"
 msgstr "Javascript за поставяне на показалеца и натискане"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:443
 msgid "Skip animation for table caps"
 msgstr "Пропускане на анимацията за етикети на таблица"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:61
+#: ../plug-ins/pyligma/plug-ins/shadow_bevel.py:61
 msgid "Add a drop shadow to a layer, and optionally bevel it"
 msgstr "Добавяне на падаща сянка към слой и по желание релеф"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:66
+#: ../plug-ins/pyligma/plug-ins/shadow_bevel.py:66
 msgid "_Drop Shadow and Bevel..."
 msgstr "_Хвърляне на сянка и релеф..."
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:71
+#: ../plug-ins/pyligma/plug-ins/shadow_bevel.py:71
 msgid "_Shadow blur"
 msgstr "Замъгляване на _сянката"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:72
+#: ../plug-ins/pyligma/plug-ins/shadow_bevel.py:72
 msgid "_Bevel"
 msgstr "_Издиране"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
+#: ../plug-ins/pyligma/plug-ins/shadow_bevel.py:73
 msgid "_Drop shadow"
 msgstr "_Пускане на сянка"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:74
+#: ../plug-ins/pyligma/plug-ins/shadow_bevel.py:74
 msgid "Drop shadow _X displacement"
 msgstr "Отместване по _хоризонтал на сянката"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:75
+#: ../plug-ins/pyligma/plug-ins/shadow_bevel.py:75
 msgid "Drop shadow _Y displacement"
 msgstr "Отместване по _вертикал на сянката"

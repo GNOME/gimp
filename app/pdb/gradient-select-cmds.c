@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-2003 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,26 +25,26 @@
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "pdb-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpdatafactory.h"
-#include "core/gimpgradient.h"
-#include "core/gimpparamspecs.h"
+#include "core/ligma.h"
+#include "core/ligmadatafactory.h"
+#include "core/ligmagradient.h"
+#include "core/ligmaparamspecs.h"
 
-#include "gimppdb.h"
-#include "gimpprocedure.h"
+#include "ligmapdb.h"
+#include "ligmaprocedure.h"
 #include "internal-procs.h"
 
 
-static GimpValueArray *
-gradients_popup_invoker (GimpProcedure         *procedure,
-                         Gimp                  *gimp,
-                         GimpContext           *context,
-                         GimpProgress          *progress,
-                         const GimpValueArray  *args,
+static LigmaValueArray *
+gradients_popup_invoker (LigmaProcedure         *procedure,
+                         Ligma                  *ligma,
+                         LigmaContext           *context,
+                         LigmaProgress          *progress,
+                         const LigmaValueArray  *args,
                          GError               **error)
 {
   gboolean success = TRUE;
@@ -53,186 +53,186 @@ gradients_popup_invoker (GimpProcedure         *procedure,
   const gchar *initial_gradient;
   gint sample_size;
 
-  gradient_callback = g_value_get_string (gimp_value_array_index (args, 0));
-  popup_title = g_value_get_string (gimp_value_array_index (args, 1));
-  initial_gradient = g_value_get_string (gimp_value_array_index (args, 2));
-  sample_size = g_value_get_int (gimp_value_array_index (args, 3));
+  gradient_callback = g_value_get_string (ligma_value_array_index (args, 0));
+  popup_title = g_value_get_string (ligma_value_array_index (args, 1));
+  initial_gradient = g_value_get_string (ligma_value_array_index (args, 2));
+  sample_size = g_value_get_int (ligma_value_array_index (args, 3));
 
   if (success)
     {
       if (sample_size < 1 || sample_size > 10000)
-        sample_size = GIMP_GRADIENT_DEFAULT_SAMPLE_SIZE;
+        sample_size = LIGMA_GRADIENT_DEFAULT_SAMPLE_SIZE;
 
-      if (gimp->no_interface ||
-          ! gimp_pdb_lookup_procedure (gimp->pdb, gradient_callback) ||
-          ! gimp_pdb_dialog_new (gimp, context, progress,
-                                 gimp_data_factory_get_container (gimp->gradient_factory),
+      if (ligma->no_interface ||
+          ! ligma_pdb_lookup_procedure (ligma->pdb, gradient_callback) ||
+          ! ligma_pdb_dialog_new (ligma, context, progress,
+                                 ligma_data_factory_get_container (ligma->gradient_factory),
                                  popup_title, gradient_callback, initial_gradient,
                                  "sample-size", sample_size,
                                  NULL))
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-gradients_close_popup_invoker (GimpProcedure         *procedure,
-                               Gimp                  *gimp,
-                               GimpContext           *context,
-                               GimpProgress          *progress,
-                               const GimpValueArray  *args,
+static LigmaValueArray *
+gradients_close_popup_invoker (LigmaProcedure         *procedure,
+                               Ligma                  *ligma,
+                               LigmaContext           *context,
+                               LigmaProgress          *progress,
+                               const LigmaValueArray  *args,
                                GError               **error)
 {
   gboolean success = TRUE;
   const gchar *gradient_callback;
 
-  gradient_callback = g_value_get_string (gimp_value_array_index (args, 0));
+  gradient_callback = g_value_get_string (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      if (gimp->no_interface ||
-          ! gimp_pdb_lookup_procedure (gimp->pdb, gradient_callback) ||
-          ! gimp_pdb_dialog_close (gimp, gimp_data_factory_get_container (gimp->gradient_factory),
+      if (ligma->no_interface ||
+          ! ligma_pdb_lookup_procedure (ligma->pdb, gradient_callback) ||
+          ! ligma_pdb_dialog_close (ligma, ligma_data_factory_get_container (ligma->gradient_factory),
                                    gradient_callback))
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-gradients_set_popup_invoker (GimpProcedure         *procedure,
-                             Gimp                  *gimp,
-                             GimpContext           *context,
-                             GimpProgress          *progress,
-                             const GimpValueArray  *args,
+static LigmaValueArray *
+gradients_set_popup_invoker (LigmaProcedure         *procedure,
+                             Ligma                  *ligma,
+                             LigmaContext           *context,
+                             LigmaProgress          *progress,
+                             const LigmaValueArray  *args,
                              GError               **error)
 {
   gboolean success = TRUE;
   const gchar *gradient_callback;
   const gchar *gradient_name;
 
-  gradient_callback = g_value_get_string (gimp_value_array_index (args, 0));
-  gradient_name = g_value_get_string (gimp_value_array_index (args, 1));
+  gradient_callback = g_value_get_string (ligma_value_array_index (args, 0));
+  gradient_name = g_value_get_string (ligma_value_array_index (args, 1));
 
   if (success)
     {
-      if (gimp->no_interface ||
-          ! gimp_pdb_lookup_procedure (gimp->pdb, gradient_callback) ||
-          ! gimp_pdb_dialog_set (gimp, gimp_data_factory_get_container (gimp->gradient_factory),
+      if (ligma->no_interface ||
+          ! ligma_pdb_lookup_procedure (ligma->pdb, gradient_callback) ||
+          ! ligma_pdb_dialog_set (ligma, ligma_data_factory_get_container (ligma->gradient_factory),
                                  gradient_callback, gradient_name,
                                  NULL))
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
 void
-register_gradient_select_procs (GimpPDB *pdb)
+register_gradient_select_procs (LigmaPDB *pdb)
 {
-  GimpProcedure *procedure;
+  LigmaProcedure *procedure;
 
   /*
-   * gimp-gradients-popup
+   * ligma-gradients-popup
    */
-  procedure = gimp_procedure_new (gradients_popup_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-gradients-popup");
-  gimp_procedure_set_static_help (procedure,
-                                  "Invokes the Gimp gradients selection.",
+  procedure = ligma_procedure_new (gradients_popup_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-gradients-popup");
+  ligma_procedure_set_static_help (procedure,
+                                  "Invokes the Ligma gradients selection.",
                                   "This procedure opens the gradient selection dialog.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Andy Thomas",
                                          "Andy Thomas",
                                          "1998");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("gradient-callback",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("gradient-callback",
                                                        "gradient callback",
                                                        "The callback PDB proc to call when gradient selection is made",
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("popup-title",
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("popup-title",
                                                        "popup title",
                                                        "Title of the gradient selection dialog",
                                                        FALSE, FALSE, FALSE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("initial-gradient",
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("initial-gradient",
                                                        "initial gradient",
                                                        "The name of the gradient to set as the first selected",
                                                        FALSE, TRUE, FALSE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("sample-size",
                                                  "sample size",
                                                  "Size of the sample to return when the gradient is changed",
                                                  1, 10000, 1,
-                                                 GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                 LIGMA_PARAM_READWRITE | LIGMA_PARAM_NO_VALIDATE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-gradients-close-popup
+   * ligma-gradients-close-popup
    */
-  procedure = gimp_procedure_new (gradients_close_popup_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-gradients-close-popup");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (gradients_close_popup_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-gradients-close-popup");
+  ligma_procedure_set_static_help (procedure,
                                   "Close the gradient selection dialog.",
                                   "This procedure closes an opened gradient selection dialog.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Andy Thomas",
                                          "Andy Thomas",
                                          "1998");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("gradient-callback",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("gradient-callback",
                                                        "gradient callback",
                                                        "The name of the callback registered for this pop-up",
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-gradients-set-popup
+   * ligma-gradients-set-popup
    */
-  procedure = gimp_procedure_new (gradients_set_popup_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-gradients-set-popup");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (gradients_set_popup_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-gradients-set-popup");
+  ligma_procedure_set_static_help (procedure,
                                   "Sets the current gradient in a gradient selection dialog.",
                                   "Sets the current gradient in a gradient selection dialog.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Andy Thomas",
                                          "Andy Thomas",
                                          "1998");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("gradient-callback",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("gradient-callback",
                                                        "gradient callback",
                                                        "The name of the callback registered for this pop-up",
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("gradient-name",
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("gradient-name",
                                                        "gradient name",
                                                        "The name of the gradient to set as selected",
                                                        FALSE, FALSE, FALSE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

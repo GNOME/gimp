@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationcolorbalance.c
- * Copyright (C) 2007 Michael Natterer <mitch@gimp.org>
+ * ligmaoperationcolorbalance.c
+ * Copyright (C) 2007 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,18 +24,18 @@
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmamath/ligmamath.h"
 
 #include "operations-types.h"
 
-#include "gimpcolorbalanceconfig.h"
-#include "gimpoperationcolorbalance.h"
+#include "ligmacolorbalanceconfig.h"
+#include "ligmaoperationcolorbalance.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-static gboolean gimp_operation_color_balance_process (GeglOperation       *operation,
+static gboolean ligma_operation_color_balance_process (GeglOperation       *operation,
                                                       void                *in_buf,
                                                       void                *out_buf,
                                                       glong                samples,
@@ -43,47 +43,47 @@ static gboolean gimp_operation_color_balance_process (GeglOperation       *opera
                                                       gint                 level);
 
 
-G_DEFINE_TYPE (GimpOperationColorBalance, gimp_operation_color_balance,
-               GIMP_TYPE_OPERATION_POINT_FILTER)
+G_DEFINE_TYPE (LigmaOperationColorBalance, ligma_operation_color_balance,
+               LIGMA_TYPE_OPERATION_POINT_FILTER)
 
-#define parent_class gimp_operation_color_balance_parent_class
+#define parent_class ligma_operation_color_balance_parent_class
 
 
 static void
-gimp_operation_color_balance_class_init (GimpOperationColorBalanceClass *klass)
+ligma_operation_color_balance_class_init (LigmaOperationColorBalanceClass *klass)
 {
   GObjectClass                  *object_class    = G_OBJECT_CLASS (klass);
   GeglOperationClass            *operation_class = GEGL_OPERATION_CLASS (klass);
   GeglOperationPointFilterClass *point_class     = GEGL_OPERATION_POINT_FILTER_CLASS (klass);
 
-  object_class->set_property   = gimp_operation_point_filter_set_property;
-  object_class->get_property   = gimp_operation_point_filter_get_property;
+  object_class->set_property   = ligma_operation_point_filter_set_property;
+  object_class->get_property   = ligma_operation_point_filter_get_property;
 
   gegl_operation_class_set_keys (operation_class,
-                                 "name",        "gimp:color-balance",
+                                 "name",        "ligma:color-balance",
                                  "categories",  "color",
                                  "description", _("Adjust color distribution"),
                                  NULL);
 
-  point_class->process = gimp_operation_color_balance_process;
+  point_class->process = ligma_operation_color_balance_process;
 
   g_object_class_install_property (object_class,
-                                   GIMP_OPERATION_POINT_FILTER_PROP_CONFIG,
+                                   LIGMA_OPERATION_POINT_FILTER_PROP_CONFIG,
                                    g_param_spec_object ("config",
                                                         "Config",
                                                         "The config object",
-                                                        GIMP_TYPE_COLOR_BALANCE_CONFIG,
+                                                        LIGMA_TYPE_COLOR_BALANCE_CONFIG,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 }
 
 static void
-gimp_operation_color_balance_init (GimpOperationColorBalance *self)
+ligma_operation_color_balance_init (LigmaOperationColorBalance *self)
 {
 }
 
 static inline gfloat
-gimp_operation_color_balance_map (gfloat  value,
+ligma_operation_color_balance_map (gfloat  value,
                                   gdouble lightness,
                                   gdouble shadows,
                                   gdouble midtones,
@@ -118,15 +118,15 @@ gimp_operation_color_balance_map (gfloat  value,
 }
 
 static gboolean
-gimp_operation_color_balance_process (GeglOperation       *operation,
+ligma_operation_color_balance_process (GeglOperation       *operation,
                                       void                *in_buf,
                                       void                *out_buf,
                                       glong                samples,
                                       const GeglRectangle *roi,
                                       gint                 level)
 {
-  GimpOperationPointFilter *point  = GIMP_OPERATION_POINT_FILTER (operation);
-  GimpColorBalanceConfig   *config = GIMP_COLOR_BALANCE_CONFIG (point->config);
+  LigmaOperationPointFilter *point  = LIGMA_OPERATION_POINT_FILTER (operation);
+  LigmaColorBalanceConfig   *config = LIGMA_COLOR_BALANCE_CONFIG (point->config);
   gfloat                   *src    = in_buf;
   gfloat                   *dest   = out_buf;
 
@@ -142,43 +142,43 @@ gimp_operation_color_balance_process (GeglOperation       *operation,
       gfloat g_n;
       gfloat b_n;
 
-      GimpRGB rgb = { r, g, b};
-      GimpHSL hsl;
+      LigmaRGB rgb = { r, g, b};
+      LigmaHSL hsl;
 
-      gimp_rgb_to_hsl (&rgb, &hsl);
+      ligma_rgb_to_hsl (&rgb, &hsl);
 
-      r_n = gimp_operation_color_balance_map (r, hsl.l,
-                                              config->cyan_red[GIMP_TRANSFER_SHADOWS],
-                                              config->cyan_red[GIMP_TRANSFER_MIDTONES],
-                                              config->cyan_red[GIMP_TRANSFER_HIGHLIGHTS]);
+      r_n = ligma_operation_color_balance_map (r, hsl.l,
+                                              config->cyan_red[LIGMA_TRANSFER_SHADOWS],
+                                              config->cyan_red[LIGMA_TRANSFER_MIDTONES],
+                                              config->cyan_red[LIGMA_TRANSFER_HIGHLIGHTS]);
 
-      g_n = gimp_operation_color_balance_map (g, hsl.l,
-                                              config->magenta_green[GIMP_TRANSFER_SHADOWS],
-                                              config->magenta_green[GIMP_TRANSFER_MIDTONES],
-                                              config->magenta_green[GIMP_TRANSFER_HIGHLIGHTS]);
+      g_n = ligma_operation_color_balance_map (g, hsl.l,
+                                              config->magenta_green[LIGMA_TRANSFER_SHADOWS],
+                                              config->magenta_green[LIGMA_TRANSFER_MIDTONES],
+                                              config->magenta_green[LIGMA_TRANSFER_HIGHLIGHTS]);
 
-      b_n = gimp_operation_color_balance_map (b, hsl.l,
-                                              config->yellow_blue[GIMP_TRANSFER_SHADOWS],
-                                              config->yellow_blue[GIMP_TRANSFER_MIDTONES],
-                                              config->yellow_blue[GIMP_TRANSFER_HIGHLIGHTS]);
+      b_n = ligma_operation_color_balance_map (b, hsl.l,
+                                              config->yellow_blue[LIGMA_TRANSFER_SHADOWS],
+                                              config->yellow_blue[LIGMA_TRANSFER_MIDTONES],
+                                              config->yellow_blue[LIGMA_TRANSFER_HIGHLIGHTS]);
 
       if (config->preserve_luminosity)
         {
-          GimpHSL hsl2;
+          LigmaHSL hsl2;
 
           rgb.r = r_n;
           rgb.g = g_n;
           rgb.b = b_n;
-          gimp_rgb_to_hsl (&rgb, &hsl);
+          ligma_rgb_to_hsl (&rgb, &hsl);
 
           rgb.r = r;
           rgb.g = g;
           rgb.b = b;
-          gimp_rgb_to_hsl (&rgb, &hsl2);
+          ligma_rgb_to_hsl (&rgb, &hsl2);
 
           hsl.l = hsl2.l;
 
-          gimp_hsl_to_rgb (&hsl, &rgb);
+          ligma_hsl_to_rgb (&hsl, &rgb);
 
           r_n = rgb.r;
           g_n = rgb.g;

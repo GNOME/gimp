@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpfileprocedure.h
- * Copyright (C) 2019 Michael Natterer <mitch@gimp.org>
+ * ligmafileprocedure.h
+ * Copyright (C) 2019 Michael Natterer <mitch@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -19,74 +19,74 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_FILE_PROCEDURE_H__
-#define __GIMP_FILE_PROCEDURE_H__
+#ifndef __LIGMA_FILE_PROCEDURE_H__
+#define __LIGMA_FILE_PROCEDURE_H__
 
-#include <libgimp/gimpprocedure.h>
+#include <libligma/ligmaprocedure.h>
 
 G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
 
-#define GIMP_TYPE_FILE_PROCEDURE            (gimp_file_procedure_get_type ())
-#define GIMP_FILE_PROCEDURE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_FILE_PROCEDURE, GimpFileProcedure))
-#define GIMP_FILE_PROCEDURE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_FILE_PROCEDURE, GimpFileProcedureClass))
-#define GIMP_IS_FILE_PROCEDURE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_FILE_PROCEDURE))
-#define GIMP_IS_FILE_PROCEDURE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_FILE_PROCEDURE))
-#define GIMP_FILE_PROCEDURE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_FILE_PROCEDURE, GimpFileProcedureClass))
+#define LIGMA_TYPE_FILE_PROCEDURE            (ligma_file_procedure_get_type ())
+#define LIGMA_FILE_PROCEDURE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_FILE_PROCEDURE, LigmaFileProcedure))
+#define LIGMA_FILE_PROCEDURE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_FILE_PROCEDURE, LigmaFileProcedureClass))
+#define LIGMA_IS_FILE_PROCEDURE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_FILE_PROCEDURE))
+#define LIGMA_IS_FILE_PROCEDURE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_FILE_PROCEDURE))
+#define LIGMA_FILE_PROCEDURE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_FILE_PROCEDURE, LigmaFileProcedureClass))
 
 
-typedef struct _GimpFileProcedure        GimpFileProcedure;
-typedef struct _GimpFileProcedureClass   GimpFileProcedureClass;
-typedef struct _GimpFileProcedurePrivate GimpFileProcedurePrivate;
+typedef struct _LigmaFileProcedure        LigmaFileProcedure;
+typedef struct _LigmaFileProcedureClass   LigmaFileProcedureClass;
+typedef struct _LigmaFileProcedurePrivate LigmaFileProcedurePrivate;
 
-struct _GimpFileProcedure
+struct _LigmaFileProcedure
 {
-  GimpProcedure             parent_instance;
+  LigmaProcedure             parent_instance;
 
-  GimpFileProcedurePrivate *priv;
+  LigmaFileProcedurePrivate *priv;
 };
 
-struct _GimpFileProcedureClass
+struct _LigmaFileProcedureClass
 {
-  GimpProcedureClass parent_class;
+  LigmaProcedureClass parent_class;
 };
 
 
-GType           gimp_file_procedure_get_type        (void) G_GNUC_CONST;
+GType           ligma_file_procedure_get_type        (void) G_GNUC_CONST;
 
-void            gimp_file_procedure_set_format_name (GimpFileProcedure *procedure,
+void            ligma_file_procedure_set_format_name (LigmaFileProcedure *procedure,
                                                      const gchar       *format_name);
-const gchar   * gimp_file_procedure_get_format_name (GimpFileProcedure *procedure);
+const gchar   * ligma_file_procedure_get_format_name (LigmaFileProcedure *procedure);
 
-void            gimp_file_procedure_set_mime_types  (GimpFileProcedure *procedure,
+void            ligma_file_procedure_set_mime_types  (LigmaFileProcedure *procedure,
                                                      const gchar       *mime_types);
-const gchar   * gimp_file_procedure_get_mime_types  (GimpFileProcedure *procedure);
+const gchar   * ligma_file_procedure_get_mime_types  (LigmaFileProcedure *procedure);
 
-void            gimp_file_procedure_set_extensions  (GimpFileProcedure *procedure,
+void            ligma_file_procedure_set_extensions  (LigmaFileProcedure *procedure,
                                                      const gchar       *extensions);
-const gchar   * gimp_file_procedure_get_extensions  (GimpFileProcedure *procedure);
+const gchar   * ligma_file_procedure_get_extensions  (LigmaFileProcedure *procedure);
 
-void            gimp_file_procedure_set_prefixes    (GimpFileProcedure *procedure,
+void            ligma_file_procedure_set_prefixes    (LigmaFileProcedure *procedure,
                                                      const gchar       *prefixes);
-const gchar   * gimp_file_procedure_get_prefixes    (GimpFileProcedure *procedure);
+const gchar   * ligma_file_procedure_get_prefixes    (LigmaFileProcedure *procedure);
 
-void            gimp_file_procedure_set_magics      (GimpFileProcedure *procedure,
+void            ligma_file_procedure_set_magics      (LigmaFileProcedure *procedure,
                                                      const gchar       *magics);
-const gchar   * gimp_file_procedure_get_magics      (GimpFileProcedure *procedure);
+const gchar   * ligma_file_procedure_get_magics      (LigmaFileProcedure *procedure);
 
-void            gimp_file_procedure_set_priority    (GimpFileProcedure *procedure,
+void            ligma_file_procedure_set_priority    (LigmaFileProcedure *procedure,
                                                      gint               priority);
-gint            gimp_file_procedure_get_priority    (GimpFileProcedure *procedure);
+gint            ligma_file_procedure_get_priority    (LigmaFileProcedure *procedure);
 
-void            gimp_file_procedure_set_handles_remote
-                                                    (GimpFileProcedure *procedure,
+void            ligma_file_procedure_set_handles_remote
+                                                    (LigmaFileProcedure *procedure,
                                                      gboolean           handles_remote);
-gboolean        gimp_file_procedure_get_handles_remote
-                                                    (GimpFileProcedure *procedure);
+gboolean        ligma_file_procedure_get_handles_remote
+                                                    (LigmaFileProcedure *procedure);
 
 
 G_END_DECLS
 
-#endif  /*  __GIMP_FILE_PROCEDURE_H__  */
+#endif  /*  __LIGMA_FILE_PROCEDURE_H__  */

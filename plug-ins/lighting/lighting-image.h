@@ -1,20 +1,20 @@
 #ifndef __LIGHTING_IMAGE_H__
 #define __LIGHTING_IMAGE_H__
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
 
-extern GimpDrawable *input_drawable;
-extern GimpDrawable *output_drawable;
+extern LigmaDrawable *input_drawable;
+extern LigmaDrawable *output_drawable;
 extern GeglBuffer   *source_buffer;
 extern GeglBuffer   *dest_buffer;
 
-extern GimpDrawable *bump_drawable;
+extern LigmaDrawable *bump_drawable;
 extern GeglBuffer   *bump_buffer;
 extern const Babl   *bump_format;
 
-extern GimpDrawable *env_drawable;
+extern LigmaDrawable *env_drawable;
 extern GeglBuffer   *env_buffer;
 
 extern guchar          *preview_rgb_data;
@@ -23,7 +23,7 @@ extern cairo_surface_t *preview_surface;
 
 extern glong   maxcounter;
 extern gint    width,height,env_width,env_height;
-extern GimpRGB background;
+extern LigmaRGB background;
 
 extern gint   border_x1, border_y1, border_x2, border_y2;
 
@@ -34,18 +34,18 @@ guchar         peek_map        (GeglBuffer   *buffer,
                                 const Babl   *format,
 				gint          x,
 				gint          y);
-GimpRGB        peek            (gint          x,
+LigmaRGB        peek            (gint          x,
 				gint          y);
-GimpRGB        peek_env_map    (gint          x,
+LigmaRGB        peek_env_map    (gint          x,
 				gint          y);
 void           poke            (gint          x,
 				gint          y,
-				GimpRGB       *color);
+				LigmaRGB       *color);
 gint           check_bounds    (gint          x,
 				gint          y);
-GimpVector3    int_to_pos      (gint          x,
+LigmaVector3    int_to_pos      (gint          x,
 				gint          y);
-GimpVector3    int_to_posf     (gdouble       x,
+LigmaVector3    int_to_posf     (gdouble       x,
 				gdouble       y);
 void           pos_to_int      (gdouble       x,
 				gdouble       y,
@@ -55,7 +55,7 @@ void           pos_to_float    (gdouble       x,
 				gdouble       y,
 				gdouble      *xf,
 				gdouble      *yf);
-GimpRGB        get_image_color (gdouble       u,
+LigmaRGB        get_image_color (gdouble       u,
 				gdouble       v,
 				gint         *inside);
 gdouble        get_map_value   (GeglBuffer   *buffer,
@@ -63,10 +63,10 @@ gdouble        get_map_value   (GeglBuffer   *buffer,
 				gdouble       u,
 				gdouble       v,
 				gint         *inside);
-gint           image_setup     (GimpDrawable *drawable,
+gint           image_setup     (LigmaDrawable *drawable,
 				gint          interactive);
-void           bumpmap_setup   (GimpDrawable *bumpmap);
-void           envmap_setup    (GimpDrawable *envmap);
+void           bumpmap_setup   (LigmaDrawable *bumpmap);
+void           envmap_setup    (LigmaDrawable *envmap);
 
 
 #endif  /* __LIGHTING_IMAGE_H__ */

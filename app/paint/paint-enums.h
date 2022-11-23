@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,8 +20,8 @@
 
 #if 0
    This file is parsed by two scripts, enumgen.pl in pdb,
-   and gimp-mkenums. All enums that are not marked with
-   /*< pdb-skip >*/ are exported to libgimp and the PDB. Enums that are
+   and ligma-mkenums. All enums that are not marked with
+   /*< pdb-skip >*/ are exported to libligma and the PDB. Enums that are
    not marked with /*< skip >*/ are registered with the GType system.
    If you want the enum to be skipped by both scripts, you have to use
    /*< pdb-skip, skip >*/.
@@ -34,40 +34,40 @@
  * enums that are registered with the type system
  */
 
-#define GIMP_TYPE_BRUSH_APPLICATION_MODE (gimp_brush_application_mode_get_type ())
+#define LIGMA_TYPE_BRUSH_APPLICATION_MODE (ligma_brush_application_mode_get_type ())
 
-GType gimp_brush_application_mode_get_type (void) G_GNUC_CONST;
+GType ligma_brush_application_mode_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_BRUSH_HARD,
-  GIMP_BRUSH_SOFT,
-  GIMP_BRUSH_PRESSURE  /*< pdb-skip, skip >*/
-} GimpBrushApplicationMode;
+  LIGMA_BRUSH_HARD,
+  LIGMA_BRUSH_SOFT,
+  LIGMA_BRUSH_PRESSURE  /*< pdb-skip, skip >*/
+} LigmaBrushApplicationMode;
 
 
-#define GIMP_TYPE_PERSPECTIVE_CLONE_MODE (gimp_perspective_clone_mode_get_type ())
+#define LIGMA_TYPE_PERSPECTIVE_CLONE_MODE (ligma_perspective_clone_mode_get_type ())
 
-GType gimp_perspective_clone_mode_get_type (void) G_GNUC_CONST;
+GType ligma_perspective_clone_mode_get_type (void) G_GNUC_CONST;
 
 typedef enum  /*< pdb-skip >*/
 {
-  GIMP_PERSPECTIVE_CLONE_MODE_ADJUST,  /*< desc="Modify Perspective" >*/
-  GIMP_PERSPECTIVE_CLONE_MODE_PAINT    /*< desc="Perspective Clone"  >*/
-} GimpPerspectiveCloneMode;
+  LIGMA_PERSPECTIVE_CLONE_MODE_ADJUST,  /*< desc="Modify Perspective" >*/
+  LIGMA_PERSPECTIVE_CLONE_MODE_PAINT    /*< desc="Perspective Clone"  >*/
+} LigmaPerspectiveCloneMode;
 
 
-#define GIMP_TYPE_SOURCE_ALIGN_MODE (gimp_source_align_mode_get_type ())
+#define LIGMA_TYPE_SOURCE_ALIGN_MODE (ligma_source_align_mode_get_type ())
 
-GType gimp_source_align_mode_get_type (void) G_GNUC_CONST;
+GType ligma_source_align_mode_get_type (void) G_GNUC_CONST;
 
 typedef enum /*< pdb-skip >*/
 {
-  GIMP_SOURCE_ALIGN_NO,          /*< desc="None"        >*/
-  GIMP_SOURCE_ALIGN_YES,         /*< desc="Aligned"     >*/
-  GIMP_SOURCE_ALIGN_REGISTERED,  /*< desc="Registered"  >*/
-  GIMP_SOURCE_ALIGN_FIXED        /*< desc="Fixed"       >*/
-} GimpSourceAlignMode;
+  LIGMA_SOURCE_ALIGN_NO,          /*< desc="None"        >*/
+  LIGMA_SOURCE_ALIGN_YES,         /*< desc="Aligned"     >*/
+  LIGMA_SOURCE_ALIGN_REGISTERED,  /*< desc="Registered"  >*/
+  LIGMA_SOURCE_ALIGN_FIXED        /*< desc="Fixed"       >*/
+} LigmaSourceAlignMode;
 
 
 /*
@@ -76,10 +76,10 @@ typedef enum /*< pdb-skip >*/
 
 typedef enum  /*< skip, pdb-skip >*/
 {
-  GIMP_PAINT_STATE_INIT,    /*  Setup PaintFunc internals                    */
-  GIMP_PAINT_STATE_MOTION,  /*  PaintFunc performs motion-related rendering  */
-  GIMP_PAINT_STATE_FINISH   /*  Cleanup and/or reset PaintFunc operation     */
-} GimpPaintState;
+  LIGMA_PAINT_STATE_INIT,    /*  Setup PaintFunc internals                    */
+  LIGMA_PAINT_STATE_MOTION,  /*  PaintFunc performs motion-related rendering  */
+  LIGMA_PAINT_STATE_FINISH   /*  Cleanup and/or reset PaintFunc operation     */
+} LigmaPaintState;
 
 
 #endif /* __PAINT_ENUMS_H__ */

@@ -1,6 +1,6 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  *
- * gimpnpointdeformationoptions.c
+ * ligmanpointdeformationoptions.c
  * Copyright (C) 2013 Marek Dvoroznak <dvoromar@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,18 +22,18 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "tools-types.h"
 
-#include "widgets/gimppropwidgets.h"
+#include "widgets/ligmapropwidgets.h"
 
-#include "gimpnpointdeformationoptions.h"
-#include "gimptooloptions-gui.h"
+#include "ligmanpointdeformationoptions.h"
+#include "ligmatooloptions-gui.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -48,87 +48,87 @@ enum
 };
 
 
-static void   gimp_n_point_deformation_options_set_property (GObject      *object,
+static void   ligma_n_point_deformation_options_set_property (GObject      *object,
                                                              guint         property_id,
                                                              const GValue *value,
                                                              GParamSpec   *pspec);
-static void   gimp_n_point_deformation_options_get_property (GObject      *object,
+static void   ligma_n_point_deformation_options_get_property (GObject      *object,
                                                              guint         property_id,
                                                              GValue       *value,
                                                              GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE (GimpNPointDeformationOptions, gimp_n_point_deformation_options,
-               GIMP_TYPE_TOOL_OPTIONS)
+G_DEFINE_TYPE (LigmaNPointDeformationOptions, ligma_n_point_deformation_options,
+               LIGMA_TYPE_TOOL_OPTIONS)
 
-#define parent_class gimp_n_point_deformation_options_parent_class
+#define parent_class ligma_n_point_deformation_options_parent_class
 
 
 static void
-gimp_n_point_deformation_options_class_init (GimpNPointDeformationOptionsClass *klass)
+ligma_n_point_deformation_options_class_init (LigmaNPointDeformationOptionsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->set_property = gimp_n_point_deformation_options_set_property;
-  object_class->get_property = gimp_n_point_deformation_options_get_property;
+  object_class->set_property = ligma_n_point_deformation_options_set_property;
+  object_class->get_property = ligma_n_point_deformation_options_get_property;
 
-  GIMP_CONFIG_PROP_DOUBLE  (object_class, PROP_SQUARE_SIZE,
+  LIGMA_CONFIG_PROP_DOUBLE  (object_class, PROP_SQUARE_SIZE,
                             "square-size",
                             _("Density"),
                             _("Density"),
                             5.0, 1000.0, 20.0,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_DOUBLE  (object_class, PROP_RIGIDITY,
+  LIGMA_CONFIG_PROP_DOUBLE  (object_class, PROP_RIGIDITY,
                             "rigidity",
                             _("Rigidity"),
                             _("Rigidity"),
                             1.0, 10000.0, 100.0,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_ASAP_DEFORMATION,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_ASAP_DEFORMATION,
                             "asap-deformation",
                             _("Deformation mode"),
                             _("Deformation mode"),
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_MLS_WEIGHTS,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_MLS_WEIGHTS,
                             "mls-weights",
                             _("Use weights"),
                             _("Use weights"),
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_DOUBLE  (object_class, PROP_MLS_WEIGHTS_ALPHA,
+  LIGMA_CONFIG_PROP_DOUBLE  (object_class, PROP_MLS_WEIGHTS_ALPHA,
                             "mls-weights-alpha",
                             _("Control points influence"),
                             _("Amount of control points' influence"),
                             0.1, 2.0, 1.0,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_MESH_VISIBLE,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_MESH_VISIBLE,
                             "mesh-visible",
                             _("Show lattice"),
                             _("Show lattice"),
                             TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 }
 
 static void
-gimp_n_point_deformation_options_init (GimpNPointDeformationOptions *options)
+ligma_n_point_deformation_options_init (LigmaNPointDeformationOptions *options)
 {
 }
 
 static void
-gimp_n_point_deformation_options_set_property (GObject      *object,
+ligma_n_point_deformation_options_set_property (GObject      *object,
                                                guint         property_id,
                                                const GValue *value,
                                                GParamSpec   *pspec)
 {
-  GimpNPointDeformationOptions *options;
+  LigmaNPointDeformationOptions *options;
 
-  options = GIMP_N_POINT_DEFORMATION_OPTIONS (object);
+  options = LIGMA_N_POINT_DEFORMATION_OPTIONS (object);
 
   switch (property_id)
     {
@@ -158,14 +158,14 @@ gimp_n_point_deformation_options_set_property (GObject      *object,
 }
 
 static void
-gimp_n_point_deformation_options_get_property (GObject    *object,
+ligma_n_point_deformation_options_get_property (GObject    *object,
                                                guint       property_id,
                                                GValue     *value,
                                                GParamSpec *pspec)
 {
-  GimpNPointDeformationOptions *options;
+  LigmaNPointDeformationOptions *options;
 
-  options = GIMP_N_POINT_DEFORMATION_OPTIONS (object);
+  options = LIGMA_N_POINT_DEFORMATION_OPTIONS (object);
 
   switch (property_id)
     {
@@ -195,47 +195,47 @@ gimp_n_point_deformation_options_get_property (GObject    *object,
 }
 
 GtkWidget *
-gimp_n_point_deformation_options_gui (GimpToolOptions *tool_options)
+ligma_n_point_deformation_options_gui (LigmaToolOptions *tool_options)
 {
-  GimpNPointDeformationOptions *npd_options;
+  LigmaNPointDeformationOptions *npd_options;
   GObject                      *config = G_OBJECT (tool_options);
-  GtkWidget                    *vbox   = gimp_tool_options_gui (tool_options);
+  GtkWidget                    *vbox   = ligma_tool_options_gui (tool_options);
   GtkWidget                    *widget;
 
-  npd_options = GIMP_N_POINT_DEFORMATION_OPTIONS (tool_options);
+  npd_options = LIGMA_N_POINT_DEFORMATION_OPTIONS (tool_options);
 
-  widget = gimp_prop_check_button_new (config, "mesh-visible", NULL);
+  widget = ligma_prop_check_button_new (config, "mesh-visible", NULL);
   npd_options->check_mesh_visible = widget;
   gtk_box_pack_start (GTK_BOX (vbox), widget, FALSE, FALSE, 0);
   gtk_widget_set_can_focus (widget, FALSE);
 
-  widget = gimp_prop_spin_scale_new (config, "square-size",
+  widget = ligma_prop_spin_scale_new (config, "square-size",
                                      1.0, 10.0, 0);
   npd_options->scale_square_size = widget;
-  gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (widget), 10.0, 100.0);
+  ligma_spin_scale_set_scale_limits (LIGMA_SPIN_SCALE (widget), 10.0, 100.0);
   gtk_box_pack_start (GTK_BOX (vbox), widget, FALSE, FALSE, 0);
   gtk_widget_set_can_focus (widget, FALSE);
 
-  widget = gimp_prop_spin_scale_new (config, "rigidity",
+  widget = ligma_prop_spin_scale_new (config, "rigidity",
                                      1.0, 10.0, 0);
-  gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (widget), 1.0, 2000.0);
+  ligma_spin_scale_set_scale_limits (LIGMA_SPIN_SCALE (widget), 1.0, 2000.0);
   gtk_box_pack_start (GTK_BOX (vbox), widget, FALSE, FALSE, 0);
   gtk_widget_set_can_focus (widget, FALSE);
 
-  widget = gimp_prop_boolean_radio_frame_new (config, "asap-deformation",
+  widget = ligma_prop_boolean_radio_frame_new (config, "asap-deformation",
                                               NULL,
                                               _("Scale"),
                                               _("Rigid (Rubber)"));
   gtk_box_pack_start (GTK_BOX (vbox), widget, FALSE, FALSE, 0);
   gtk_widget_set_can_focus (widget, FALSE);
 
-  widget = gimp_prop_check_button_new (config, "mls-weights", NULL);
+  widget = ligma_prop_check_button_new (config, "mls-weights", NULL);
   gtk_box_pack_start (GTK_BOX (vbox), widget, FALSE, FALSE, 0);
   gtk_widget_set_can_focus (widget, FALSE);
 
-  widget = gimp_prop_spin_scale_new (config, "mls-weights-alpha",
+  widget = ligma_prop_spin_scale_new (config, "mls-weights-alpha",
                                      0.1, 0.1, 1);
-  gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (widget), 0.1, 2.0);
+  ligma_spin_scale_set_scale_limits (LIGMA_SPIN_SCALE (widget), 0.1, 2.0);
   gtk_box_pack_start (GTK_BOX (vbox), widget, FALSE, FALSE, 0);
   gtk_widget_set_can_focus (widget, FALSE);
 
@@ -244,13 +244,13 @@ gimp_n_point_deformation_options_gui (GimpToolOptions *tool_options)
                           G_BINDING_DEFAULT |
                           G_BINDING_SYNC_CREATE);
 
-  gimp_n_point_deformation_options_set_sensitivity (npd_options, FALSE);
+  ligma_n_point_deformation_options_set_sensitivity (npd_options, FALSE);
 
   return vbox;
 }
 
 void
-gimp_n_point_deformation_options_set_sensitivity (GimpNPointDeformationOptions *npd_options,
+ligma_n_point_deformation_options_set_sensitivity (LigmaNPointDeformationOptions *npd_options,
                                                   gboolean                      tool_active)
 {
   gtk_widget_set_sensitive (npd_options->scale_square_size, ! tool_active);

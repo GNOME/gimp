@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * metadata-rotation-import-dialog.h
@@ -22,8 +22,8 @@
 #define __METADATA_ROTATION_IMPORT_DIALOG_H__
 
 
-GimpMetadataRotationPolicy metadata_rotation_import_dialog_run (GimpImage   *image,
-                                                                GimpContext *context,
+LigmaMetadataRotationPolicy metadata_rotation_import_dialog_run (LigmaImage   *image,
+                                                                LigmaContext *context,
                                                                 GtkWidget   *parent,
                                                                 gboolean    *dont_ask);
 

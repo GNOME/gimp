@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpbrushselect.c
+ * ligmabrushselect.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,7 +20,7 @@
 
 #include "config.h"
 
-#include "gimp.h"
+#include "ligma.h"
 
 
 typedef struct
@@ -35,27 +35,27 @@ typedef struct
   gint                  height;
   gint                  brush_mask_size;
   guchar               *brush_mask_data;
-  GimpRunBrushCallback  callback;
+  LigmaRunBrushCallback  callback;
   gboolean              closing;
   gpointer              data;
   GDestroyNotify        data_destroy;
-} GimpBrushData;
+} LigmaBrushData;
 
 
 /*  local function prototypes  */
 
-static void             gimp_brush_data_free (GimpBrushData        *data);
+static void             ligma_brush_data_free (LigmaBrushData        *data);
 
-static GimpValueArray * gimp_temp_brush_run  (GimpProcedure        *procedure,
-                                              const GimpValueArray *args,
+static LigmaValueArray * ligma_temp_brush_run  (LigmaProcedure        *procedure,
+                                              const LigmaValueArray *args,
                                               gpointer              run_data);
-static gboolean         gimp_temp_brush_idle (GimpBrushData        *data);
+static gboolean         ligma_temp_brush_idle (LigmaBrushData        *data);
 
 
 /*  public functions  */
 
 /**
- * gimp_brush_select_new:
+ * ligma_brush_select_new:
  * @title:      Title of the brush selection dialog.
  * @brush_name: The name of the brush to set as the first selected.
  * @opacity:    The initial opacity of the brush.
@@ -73,130 +73,130 @@ static gboolean         gimp_temp_brush_idle (GimpBrushData        *data);
  *          freed automatically when the dialog is closed.
  **/
 const gchar *
-gimp_brush_select_new (const gchar          *title,
+ligma_brush_select_new (const gchar          *title,
                        const gchar          *brush_name,
                        gdouble               opacity,
                        gint                  spacing,
-                       GimpLayerMode         paint_mode,
-                       GimpRunBrushCallback  callback,
+                       LigmaLayerMode         paint_mode,
+                       LigmaRunBrushCallback  callback,
                        gpointer              data,
                        GDestroyNotify        data_destroy)
 {
-  GimpPlugIn    *plug_in = gimp_get_plug_in ();
-  GimpProcedure *procedure;
+  LigmaPlugIn    *plug_in = ligma_get_plug_in ();
+  LigmaProcedure *procedure;
   gchar         *brush_callback;
-  GimpBrushData *brush_data;
+  LigmaBrushData *brush_data;
 
-  brush_callback = gimp_pdb_temp_procedure_name (gimp_get_pdb ());
+  brush_callback = ligma_pdb_temp_procedure_name (ligma_get_pdb ());
 
-  brush_data = g_slice_new0 (GimpBrushData);
+  brush_data = g_slice_new0 (LigmaBrushData);
 
   brush_data->brush_callback = brush_callback;
   brush_data->callback       = callback;
   brush_data->data           = data;
   brush_data->data_destroy   = data_destroy;
 
-  procedure = gimp_procedure_new (plug_in,
+  procedure = ligma_procedure_new (plug_in,
                                   brush_callback,
-                                  GIMP_PDB_PROC_TYPE_TEMPORARY,
-                                  gimp_temp_brush_run,
+                                  LIGMA_PDB_PROC_TYPE_TEMPORARY,
+                                  ligma_temp_brush_run,
                                   brush_data,
                                   (GDestroyNotify)
-                                  gimp_brush_data_free);
+                                  ligma_brush_data_free);
 
-  GIMP_PROC_ARG_STRING (procedure, "brush-name",
+  LIGMA_PROC_ARG_STRING (procedure, "brush-name",
                         "Brush name",
                         "The brush name",
                         NULL,
                         G_PARAM_READWRITE);
 
-  GIMP_PROC_ARG_DOUBLE (procedure, "opacity",
+  LIGMA_PROC_ARG_DOUBLE (procedure, "opacity",
                         "Opacity",
                         NULL,
                         0.0, 100.0, 100.0,
                         G_PARAM_READWRITE);
 
-  GIMP_PROC_ARG_INT (procedure, "spacing",
+  LIGMA_PROC_ARG_INT (procedure, "spacing",
                      "Spacing",
                      NULL,
                      -1, 1000, 20,
                      G_PARAM_READWRITE);
 
-  GIMP_PROC_ARG_ENUM (procedure, "paint-mode",
+  LIGMA_PROC_ARG_ENUM (procedure, "paint-mode",
                       "Paint mode",
                       NULL,
-                      GIMP_TYPE_LAYER_MODE,
-                      GIMP_LAYER_MODE_NORMAL,
+                      LIGMA_TYPE_LAYER_MODE,
+                      LIGMA_LAYER_MODE_NORMAL,
                       G_PARAM_READWRITE);
 
-  GIMP_PROC_ARG_INT (procedure, "mask-width",
+  LIGMA_PROC_ARG_INT (procedure, "mask-width",
                      "Brush width",
                      NULL,
                      0, 10000, 0,
                      G_PARAM_READWRITE);
 
-  GIMP_PROC_ARG_INT (procedure, "mask-height",
+  LIGMA_PROC_ARG_INT (procedure, "mask-height",
                      "Brush height",
                      NULL,
                      0, 10000, 0,
                      G_PARAM_READWRITE);
 
-  GIMP_PROC_ARG_INT (procedure, "mask-len",
+  LIGMA_PROC_ARG_INT (procedure, "mask-len",
                      "Mask length",
                      "Length of brush mask data",
                      0, G_MAXINT, 0,
                      G_PARAM_READWRITE);
 
-  GIMP_PROC_ARG_UINT8_ARRAY (procedure, "mask-data",
+  LIGMA_PROC_ARG_UINT8_ARRAY (procedure, "mask-data",
                              "Mask data",
                              "The brush mask data",
                              G_PARAM_READWRITE);
 
-  GIMP_PROC_ARG_BOOLEAN (procedure, "closing",
+  LIGMA_PROC_ARG_BOOLEAN (procedure, "closing",
                          "Closing",
                          "If the dialog was closing",
                          FALSE,
                          G_PARAM_READWRITE);
 
-  gimp_plug_in_add_temp_procedure (plug_in, procedure);
+  ligma_plug_in_add_temp_procedure (plug_in, procedure);
   g_object_unref (procedure);
 
-  if (gimp_brushes_popup (brush_callback, title, brush_name,
+  if (ligma_brushes_popup (brush_callback, title, brush_name,
                           opacity, spacing, paint_mode))
     {
       /* Allow callbacks to be watched */
-      gimp_plug_in_extension_enable (plug_in);
+      ligma_plug_in_extension_enable (plug_in);
 
       return brush_callback;
     }
 
-  gimp_plug_in_remove_temp_procedure (plug_in, brush_callback);
+  ligma_plug_in_remove_temp_procedure (plug_in, brush_callback);
 
   return NULL;
 }
 
 void
-gimp_brush_select_destroy (const gchar *brush_callback)
+ligma_brush_select_destroy (const gchar *brush_callback)
 {
-  GimpPlugIn *plug_in = gimp_get_plug_in ();
+  LigmaPlugIn *plug_in = ligma_get_plug_in ();
 
   g_return_if_fail (brush_callback != NULL);
 
-  gimp_plug_in_remove_temp_procedure (plug_in, brush_callback);
+  ligma_plug_in_remove_temp_procedure (plug_in, brush_callback);
 }
 
 
 /*  private functions  */
 
 static void
-gimp_brush_data_free (GimpBrushData *data)
+ligma_brush_data_free (LigmaBrushData *data)
 {
   if (data->idle_id)
     g_source_remove (data->idle_id);
 
   if (data->brush_callback)
     {
-      gimp_brushes_close_popup (data->brush_callback);
+      ligma_brushes_close_popup (data->brush_callback);
       g_free (data->brush_callback);
     }
 
@@ -206,37 +206,37 @@ gimp_brush_data_free (GimpBrushData *data)
   if (data->data_destroy)
     data->data_destroy (data->data);
 
-  g_slice_free (GimpBrushData, data);
+  g_slice_free (LigmaBrushData, data);
 }
 
-static GimpValueArray *
-gimp_temp_brush_run (GimpProcedure        *procedure,
-                     const GimpValueArray *args,
+static LigmaValueArray *
+ligma_temp_brush_run (LigmaProcedure        *procedure,
+                     const LigmaValueArray *args,
                      gpointer              run_data)
 {
-  GimpBrushData *data = run_data;
+  LigmaBrushData *data = run_data;
 
   g_free (data->brush_name);
   g_free (data->brush_mask_data);
 
-  data->brush_name      = GIMP_VALUES_DUP_STRING      (args, 0);
-  data->opacity         = GIMP_VALUES_GET_DOUBLE      (args, 1);
-  data->spacing         = GIMP_VALUES_GET_INT         (args, 2);
-  data->paint_mode      = GIMP_VALUES_GET_ENUM        (args, 3);
-  data->width           = GIMP_VALUES_GET_INT         (args, 4);
-  data->height          = GIMP_VALUES_GET_INT         (args, 5);
-  data->brush_mask_size = GIMP_VALUES_GET_INT         (args, 6);
-  data->brush_mask_data = GIMP_VALUES_DUP_UINT8_ARRAY (args, 7);
-  data->closing         = GIMP_VALUES_GET_BOOLEAN     (args, 8);
+  data->brush_name      = LIGMA_VALUES_DUP_STRING      (args, 0);
+  data->opacity         = LIGMA_VALUES_GET_DOUBLE      (args, 1);
+  data->spacing         = LIGMA_VALUES_GET_INT         (args, 2);
+  data->paint_mode      = LIGMA_VALUES_GET_ENUM        (args, 3);
+  data->width           = LIGMA_VALUES_GET_INT         (args, 4);
+  data->height          = LIGMA_VALUES_GET_INT         (args, 5);
+  data->brush_mask_size = LIGMA_VALUES_GET_INT         (args, 6);
+  data->brush_mask_data = LIGMA_VALUES_DUP_UINT8_ARRAY (args, 7);
+  data->closing         = LIGMA_VALUES_GET_BOOLEAN     (args, 8);
 
   if (! data->idle_id)
-    data->idle_id = g_idle_add ((GSourceFunc) gimp_temp_brush_idle, data);
+    data->idle_id = g_idle_add ((GSourceFunc) ligma_temp_brush_idle, data);
 
-  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
+  return ligma_procedure_new_return_values (procedure, LIGMA_PDB_SUCCESS, NULL);
 }
 
 static gboolean
-gimp_temp_brush_idle (GimpBrushData *data)
+ligma_temp_brush_idle (LigmaBrushData *data)
 {
   data->idle_id = 0;
 
@@ -257,7 +257,7 @@ gimp_temp_brush_idle (GimpBrushData *data)
       gchar *brush_callback = data->brush_callback;
 
       data->brush_callback = NULL;
-      gimp_brush_select_destroy (brush_callback);
+      ligma_brush_select_destroy (brush_callback);
       g_free (brush_callback);
     }
 

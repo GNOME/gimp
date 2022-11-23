@@ -1,7 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
 AM_CPPFLAGS = \
-	-DG_LOG_DOMAIN=\"Gimp-Vectors\"	\
+	-DG_LOG_DOMAIN=\"Ligma-Vectors\"	\
 	-I$(top_builddir)		\
 	-I$(top_srcdir)			\
 	-I$(top_builddir)/app		\
@@ -16,29 +16,29 @@ noinst_LIBRARIES = libappvectors.a
 libappvectors_a_SOURCES = \
 	vectors-enums.h		\
 	vectors-types.h		\
-	gimpanchor.c		\
-	gimpanchor.h		\
-	gimpbezierstroke.h	\
-	gimpbezierstroke.c	\
-	gimpstroke.h		\
-	gimpstroke.c		\
-	gimpstroke-new.h	\
-	gimpstroke-new.c	\
-	gimpvectors.c		\
-	gimpvectors.h		\
-	gimpvectors-compat.c	\
-	gimpvectors-compat.h	\
-	gimpvectors-export.c	\
-	gimpvectors-export.h	\
-	gimpvectors-import.c	\
-	gimpvectors-import.h	\
-	gimpvectors-preview.c	\
-	gimpvectors-preview.h	\
-	gimpvectors-warp.c	\
-	gimpvectors-warp.h	\
-	gimpvectorsmodundo.c	\
-	gimpvectorsmodundo.h	\
-	gimpvectorspropundo.c	\
-	gimpvectorspropundo.h	\
-	gimpvectorsundo.c	\
-	gimpvectorsundo.h
+	ligmaanchor.c		\
+	ligmaanchor.h		\
+	ligmabezierstroke.h	\
+	ligmabezierstroke.c	\
+	ligmastroke.h		\
+	ligmastroke.c		\
+	ligmastroke-new.h	\
+	ligmastroke-new.c	\
+	ligmavectors.c		\
+	ligmavectors.h		\
+	ligmavectors-compat.c	\
+	ligmavectors-compat.h	\
+	ligmavectors-export.c	\
+	ligmavectors-export.h	\
+	ligmavectors-import.c	\
+	ligmavectors-import.h	\
+	ligmavectors-preview.c	\
+	ligmavectors-preview.h	\
+	ligmavectors-warp.c	\
+	ligmavectors-warp.h	\
+	ligmavectorsmodundo.c	\
+	ligmavectorsmodundo.h	\
+	ligmavectorspropundo.c	\
+	ligmavectorspropundo.h	\
+	ligmavectorsundo.c	\
+	ligmavectorsundo.h

@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpviewabledialog.h
- * Copyright (C) 2000 Michael Natterer <mitch@gimp.org>
+ * ligmaviewabledialog.h
+ * Copyright (C) 2000 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,27 +18,27 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_VIEWABLE_DIALOG_H__
-#define __GIMP_VIEWABLE_DIALOG_H__
+#ifndef __LIGMA_VIEWABLE_DIALOG_H__
+#define __LIGMA_VIEWABLE_DIALOG_H__
 
 G_BEGIN_DECLS
 
 
-#define GIMP_TYPE_VIEWABLE_DIALOG            (gimp_viewable_dialog_get_type ())
-#define GIMP_VIEWABLE_DIALOG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_VIEWABLE_DIALOG, GimpViewableDialog))
-#define GIMP_VIEWABLE_DIALOG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_VIEWABLE_DIALOG, GimpViewableDialogClass))
-#define GIMP_IS_VIEWABLE_DIALOG(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_VIEWABLE_DIALOG))
-#define GIMP_IS_VIEWABLE_DIALOG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_VIEWABLE_DIALOG))
-#define GIMP_VIEWABLE_DIALOG_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_VIEWABLE_DIALOG, GimpViewableDialogClass))
+#define LIGMA_TYPE_VIEWABLE_DIALOG            (ligma_viewable_dialog_get_type ())
+#define LIGMA_VIEWABLE_DIALOG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_VIEWABLE_DIALOG, LigmaViewableDialog))
+#define LIGMA_VIEWABLE_DIALOG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_VIEWABLE_DIALOG, LigmaViewableDialogClass))
+#define LIGMA_IS_VIEWABLE_DIALOG(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_VIEWABLE_DIALOG))
+#define LIGMA_IS_VIEWABLE_DIALOG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_VIEWABLE_DIALOG))
+#define LIGMA_VIEWABLE_DIALOG_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_VIEWABLE_DIALOG, LigmaViewableDialogClass))
 
 
-typedef struct _GimpViewableDialogClass  GimpViewableDialogClass;
+typedef struct _LigmaViewableDialogClass  LigmaViewableDialogClass;
 
-struct _GimpViewableDialog
+struct _LigmaViewableDialog
 {
-  GimpDialog   parent_instance;
+  LigmaDialog   parent_instance;
 
-  GimpContext *context;
+  LigmaContext *context;
 
   GList       *viewables;
 
@@ -48,30 +48,30 @@ struct _GimpViewableDialog
   GtkWidget   *viewable_label;
 };
 
-struct _GimpViewableDialogClass
+struct _LigmaViewableDialogClass
 {
-  GimpDialogClass  parent_class;
+  LigmaDialogClass  parent_class;
 };
 
 
-GType       gimp_viewable_dialog_get_type (void) G_GNUC_CONST;
+GType       ligma_viewable_dialog_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_viewable_dialog_new      (GList              *viewables,
-                                           GimpContext        *context,
+GtkWidget * ligma_viewable_dialog_new      (GList              *viewables,
+                                           LigmaContext        *context,
                                            const gchar        *title,
                                            const gchar        *role,
                                            const gchar        *icon_name,
                                            const gchar        *desc,
                                            GtkWidget          *parent,
-                                           GimpHelpFunc        help_func,
+                                           LigmaHelpFunc        help_func,
                                            const gchar        *help_id,
                                            ...) G_GNUC_NULL_TERMINATED;
 
-void    gimp_viewable_dialog_set_viewables (GimpViewableDialog *dialog,
+void    ligma_viewable_dialog_set_viewables (LigmaViewableDialog *dialog,
                                             GList              *viewables,
-                                            GimpContext        *context);
+                                            LigmaContext        *context);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_VIEWABLE_DIALOG_H__ */
+#endif /* __LIGMA_VIEWABLE_DIALOG_H__ */

@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * jpeg-settings.h
- * Copyright (C) 2007 Raphaël Quinet <raphael@gimp.org>
+ * Copyright (C) 2007 Raphaël Quinet <raphael@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,16 +22,16 @@
 #define __JPEG_SETTINGS_H__
 
 gboolean  jpeg_detect_original_settings  (struct jpeg_decompress_struct *cinfo,
-                                          GimpImage       *image);
+                                          LigmaImage       *image);
 
-gboolean  jpeg_restore_original_settings (GimpImage       *image,
+gboolean  jpeg_restore_original_settings (LigmaImage       *image,
                                           gint            *quality,
                                           JpegSubsampling *subsmp,
                                           gint            *num_quant_tables);
 
-guint   **jpeg_restore_original_tables   (GimpImage       *image,
+guint   **jpeg_restore_original_tables   (LigmaImage       *image,
                                           gint             num_quant_tables);
 
-void      jpeg_swap_original_settings    (GimpImage       *image);
+void      jpeg_swap_original_settings    (LigmaImage       *image);
 
 #endif /* __JPEG_SETTINGS_H__ */

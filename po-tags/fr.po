@@ -1,12 +1,12 @@
-# French translation for gimp.
+# French translation for ligma.
 # Copyright (C) 2011 Listed translators
-# This file is distributed under the same license as the gimp package.
+# This file is distributed under the same license as the ligma package.
 #
 # Julien Hardelin <jhardlinATwanadooPOINTfr>, 2011.
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-tags HEAD\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma-tags HEAD\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2011-03-06 10:53+0000\n"
 "PO-Revision-Date: 2011-03-07 09:03+0100\n"
 "Last-Translator: Julien Hardelin <jhardlinATwanadooPOINTfr\n"
@@ -17,10 +17,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: ../data/tags/gimp-tags-default.xml.in.h:1
+#: ../data/tags/ligma-tags-default.xml.in.h:1
 msgid "fuzzy"
 msgstr "Flou"
 
-#: ../data/tags/gimp-tags-default.xml.in.h:2
+#: ../data/tags/ligma-tags-default.xml.in.h:2
 msgid "round"
 msgstr "Arrondi"

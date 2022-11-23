@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimptoolhandlegrid.h
- * Copyright (C) 2017 Michael Natterer <mitch@gimp.org>
+ * ligmatoolhandlegrid.h
+ * Copyright (C) 2017 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,45 +18,45 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TOOL_HANDLE_GRID_H__
-#define __GIMP_TOOL_HANDLE_GRID_H__
+#ifndef __LIGMA_TOOL_HANDLE_GRID_H__
+#define __LIGMA_TOOL_HANDLE_GRID_H__
 
 
-#include "gimptooltransformgrid.h"
+#include "ligmatooltransformgrid.h"
 
 
-#define GIMP_TYPE_TOOL_HANDLE_GRID            (gimp_tool_handle_grid_get_type ())
-#define GIMP_TOOL_HANDLE_GRID(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TOOL_HANDLE_GRID, GimpToolHandleGrid))
-#define GIMP_TOOL_HANDLE_GRID_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TOOL_HANDLE_GRID, GimpToolHandleGridClass))
-#define GIMP_IS_TOOL_HANDLE_GRID(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_TOOL_HANDLE_GRID))
-#define GIMP_IS_TOOL_HANDLE_GRID_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_TOOL_HANDLE_GRID))
-#define GIMP_TOOL_HANDLE_GRID_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_TOOL_HANDLE_GRID, GimpToolHandleGridClass))
+#define LIGMA_TYPE_TOOL_HANDLE_GRID            (ligma_tool_handle_grid_get_type ())
+#define LIGMA_TOOL_HANDLE_GRID(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_TOOL_HANDLE_GRID, LigmaToolHandleGrid))
+#define LIGMA_TOOL_HANDLE_GRID_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_TOOL_HANDLE_GRID, LigmaToolHandleGridClass))
+#define LIGMA_IS_TOOL_HANDLE_GRID(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_TOOL_HANDLE_GRID))
+#define LIGMA_IS_TOOL_HANDLE_GRID_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_TOOL_HANDLE_GRID))
+#define LIGMA_TOOL_HANDLE_GRID_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_TOOL_HANDLE_GRID, LigmaToolHandleGridClass))
 
 
-typedef struct _GimpToolHandleGrid        GimpToolHandleGrid;
-typedef struct _GimpToolHandleGridPrivate GimpToolHandleGridPrivate;
-typedef struct _GimpToolHandleGridClass   GimpToolHandleGridClass;
+typedef struct _LigmaToolHandleGrid        LigmaToolHandleGrid;
+typedef struct _LigmaToolHandleGridPrivate LigmaToolHandleGridPrivate;
+typedef struct _LigmaToolHandleGridClass   LigmaToolHandleGridClass;
 
-struct _GimpToolHandleGrid
+struct _LigmaToolHandleGrid
 {
-  GimpToolTransformGrid      parent_instance;
+  LigmaToolTransformGrid      parent_instance;
 
-  GimpToolHandleGridPrivate *private;
+  LigmaToolHandleGridPrivate *private;
 };
 
-struct _GimpToolHandleGridClass
+struct _LigmaToolHandleGridClass
 {
-  GimpToolTransformGridClass  parent_class;
+  LigmaToolTransformGridClass  parent_class;
 };
 
 
-GType            gimp_tool_handle_grid_get_type (void) G_GNUC_CONST;
+GType            ligma_tool_handle_grid_get_type (void) G_GNUC_CONST;
 
-GimpToolWidget * gimp_tool_handle_grid_new      (GimpDisplayShell  *shell,
+LigmaToolWidget * ligma_tool_handle_grid_new      (LigmaDisplayShell  *shell,
                                                  gdouble            x1,
                                                  gdouble            y1,
                                                  gdouble            x2,
                                                  gdouble            y2);
 
 
-#endif /* __GIMP_TOOL_HANDLE_GRID_H__ */
+#endif /* __LIGMA_TOOL_HANDLE_GRID_H__ */

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1999 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,17 +24,17 @@
 
 #include <cairo.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
 
 #include "core-types.h"
 
-#include "gimpboundary.h"
-#include "gimpbezierdesc.h"
-#include "gimpscanconvert.h"
+#include "ligmaboundary.h"
+#include "ligmabezierdesc.h"
+#include "ligmascanconvert.h"
 
 
-struct _GimpScanConvert
+struct _LigmaScanConvert
 {
   gdouble         ratio_xy;
 
@@ -47,8 +47,8 @@ struct _GimpScanConvert
   /* stroking options */
   gboolean        do_stroke;
   gdouble         width;
-  GimpJoinStyle   join;
-  GimpCapStyle    cap;
+  LigmaJoinStyle   join;
+  LigmaCapStyle    cap;
   gdouble         miter;
   gdouble         dash_offset;
   GArray         *dash_info;
@@ -60,16 +60,16 @@ struct _GimpScanConvert
 /*  public functions  */
 
 /**
- * gimp_scan_convert_new:
+ * ligma_scan_convert_new:
  *
  * Create a new scan conversion context.
  *
- * Returns: a newly allocated #GimpScanConvert context.
+ * Returns: a newly allocated #LigmaScanConvert context.
  */
-GimpScanConvert *
-gimp_scan_convert_new (void)
+LigmaScanConvert *
+ligma_scan_convert_new (void)
 {
-  GimpScanConvert *sc = g_slice_new0 (GimpScanConvert);
+  LigmaScanConvert *sc = g_slice_new0 (LigmaScanConvert);
 
   sc->path_data = g_array_new (FALSE, FALSE, sizeof (cairo_path_data_t));
   sc->ratio_xy = 1.0;
@@ -77,8 +77,8 @@ gimp_scan_convert_new (void)
   return sc;
 }
 
-GimpScanConvert *
-gimp_scan_convert_new_from_boundary (const GimpBoundSeg *bound_segs,
+LigmaScanConvert *
+ligma_scan_convert_new_from_boundary (const LigmaBoundSeg *bound_segs,
                                      gint                n_bound_segs,
                                      gint                offset_x,
                                      gint                offset_y)
@@ -87,17 +87,17 @@ gimp_scan_convert_new_from_boundary (const GimpBoundSeg *bound_segs,
 
   if (bound_segs)
     {
-      GimpBoundSeg *stroke_segs;
+      LigmaBoundSeg *stroke_segs;
       gint          n_stroke_segs;
 
-      stroke_segs = gimp_boundary_sort (bound_segs, n_bound_segs,
+      stroke_segs = ligma_boundary_sort (bound_segs, n_bound_segs,
                                         &n_stroke_segs);
 
       if (stroke_segs)
         {
-          GimpBezierDesc *bezier;
+          LigmaBezierDesc *bezier;
 
-          bezier = gimp_bezier_desc_new_from_bound_segs (stroke_segs,
+          bezier = ligma_bezier_desc_new_from_bound_segs (stroke_segs,
                                                          n_bound_segs,
                                                          n_stroke_segs);
 
@@ -105,14 +105,14 @@ gimp_scan_convert_new_from_boundary (const GimpBoundSeg *bound_segs,
 
           if (bezier)
             {
-              GimpScanConvert *scan_convert;
+              LigmaScanConvert *scan_convert;
 
-              scan_convert = gimp_scan_convert_new ();
+              scan_convert = ligma_scan_convert_new ();
 
-              gimp_bezier_desc_translate (bezier, offset_x, offset_y);
-              gimp_scan_convert_add_bezier (scan_convert, bezier);
+              ligma_bezier_desc_translate (bezier, offset_x, offset_y);
+              ligma_scan_convert_add_bezier (scan_convert, bezier);
 
-              gimp_bezier_desc_free (bezier);
+              ligma_bezier_desc_free (bezier);
 
               return scan_convert;
             }
@@ -123,13 +123,13 @@ gimp_scan_convert_new_from_boundary (const GimpBoundSeg *bound_segs,
 }
 
 /**
- * gimp_scan_convert_free:
- * @sc: a #GimpScanConvert context
+ * ligma_scan_convert_free:
+ * @sc: a #LigmaScanConvert context
  *
  * Frees the resources allocated for @sc.
  */
 void
-gimp_scan_convert_free (GimpScanConvert *sc)
+ligma_scan_convert_free (LigmaScanConvert *sc)
 {
   g_return_if_fail (sc != NULL);
 
@@ -139,18 +139,18 @@ gimp_scan_convert_free (GimpScanConvert *sc)
   if (sc->dash_info)
     g_array_free (sc->dash_info, TRUE);
 
-  g_slice_free (GimpScanConvert, sc);
+  g_slice_free (LigmaScanConvert, sc);
 }
 
 /**
- * gimp_scan_convert_set_pixel_ratio:
- * @sc:       a #GimpScanConvert context
+ * ligma_scan_convert_set_pixel_ratio:
+ * @sc:       a #LigmaScanConvert context
  * @ratio_xy: the aspect ratio of the major coordinate axes
  *
  * Sets the pixel aspect ratio.
  */
 void
-gimp_scan_convert_set_pixel_ratio (GimpScanConvert *sc,
+ligma_scan_convert_set_pixel_ratio (LigmaScanConvert *sc,
                                    gdouble          ratio_xy)
 {
   g_return_if_fail (sc != NULL);
@@ -160,8 +160,8 @@ gimp_scan_convert_set_pixel_ratio (GimpScanConvert *sc,
 }
 
 /**
- * gimp_scan_convert_set_clip_rectangle
- * @sc:     a #GimpScanConvert context
+ * ligma_scan_convert_set_clip_rectangle
+ * @sc:     a #LigmaScanConvert context
  * @x:      horizontal offset of clip rectangle
  * @y:      vertical offset of clip rectangle
  * @width:  width of clip rectangle
@@ -171,7 +171,7 @@ gimp_scan_convert_set_pixel_ratio (GimpScanConvert *sc,
  * restricted to this area.
  */
 void
-gimp_scan_convert_set_clip_rectangle (GimpScanConvert *sc,
+ligma_scan_convert_set_clip_rectangle (LigmaScanConvert *sc,
                                       gint             x,
                                       gint             y,
                                       gint             width,
@@ -187,24 +187,24 @@ gimp_scan_convert_set_clip_rectangle (GimpScanConvert *sc,
 }
 
 /**
- * gimp_scan_convert_add_polyline:
- * @sc:       a #GimpScanConvert context
+ * ligma_scan_convert_add_polyline:
+ * @sc:       a #LigmaScanConvert context
  * @n_points: number of points to add
  * @points:   array of points to add
  * @closed:   whether to close the polyline and make it a polygon
  *
  * Add a polyline with @n_points @points that may be open or closed.
  *
- * Please note that you should use gimp_scan_convert_stroke() if you
+ * Please note that you should use ligma_scan_convert_stroke() if you
  * specify open polygons.
  */
 void
-gimp_scan_convert_add_polyline (GimpScanConvert   *sc,
+ligma_scan_convert_add_polyline (LigmaScanConvert   *sc,
                                 guint              n_points,
-                                const GimpVector2 *points,
+                                const LigmaVector2 *points,
                                 gboolean           closed)
 {
-  GimpVector2        prev = { 0.0, 0.0, };
+  LigmaVector2        prev = { 0.0, 0.0, };
   cairo_path_data_t  pd;
   gint               i;
 
@@ -240,18 +240,18 @@ gimp_scan_convert_add_polyline (GimpScanConvert   *sc,
 }
 
 /**
- * gimp_scan_convert_add_polyline:
- * @sc:     a #GimpScanConvert context
- * @bezier: a #GimpBezierDesc
+ * ligma_scan_convert_add_polyline:
+ * @sc:     a #LigmaScanConvert context
+ * @bezier: a #LigmaBezierDesc
  *
  * Adds a @bezier path to @sc.
  *
- * Please note that you should use gimp_scan_convert_stroke() if you
+ * Please note that you should use ligma_scan_convert_stroke() if you
  * specify open paths.
  **/
 void
-gimp_scan_convert_add_bezier (GimpScanConvert       *sc,
-                              const GimpBezierDesc  *bezier)
+ligma_scan_convert_add_bezier (LigmaScanConvert       *sc,
+                              const LigmaBezierDesc  *bezier)
 {
   g_return_if_fail (sc != NULL);
   g_return_if_fail (bezier != NULL);
@@ -261,8 +261,8 @@ gimp_scan_convert_add_bezier (GimpScanConvert       *sc,
 }
 
 /**
- * gimp_scan_convert_stroke:
- * @sc:          a #GimpScanConvert context
+ * ligma_scan_convert_stroke:
+ * @sc:          a #LigmaScanConvert context
  * @width:       line width in pixels
  * @join:        how lines should be joined
  * @cap:         how to render the end of lines
@@ -272,8 +272,8 @@ gimp_scan_convert_add_bezier (GimpScanConvert       *sc,
  * @dash_offset: offset to apply on the dash pattern
  * @dash_info: (nullable): dash pattern or %NULL for a solid line
  *
- * Stroke the content of a GimpScanConvert. The next
- * gimp_scan_convert_render() will result in the outline of the
+ * Stroke the content of a LigmaScanConvert. The next
+ * ligma_scan_convert_render() will result in the outline of the
  * polygon defined with the commands above.
  *
  * You cannot add additional polygons after this command.
@@ -284,10 +284,10 @@ gimp_scan_convert_add_bezier (GimpScanConvert       *sc,
  * units.
  */
 void
-gimp_scan_convert_stroke (GimpScanConvert *sc,
+ligma_scan_convert_stroke (LigmaScanConvert *sc,
                           gdouble          width,
-                          GimpJoinStyle    join,
-                          GimpCapStyle     cap,
+                          LigmaJoinStyle    join,
+                          LigmaCapStyle     cap,
                           gdouble          miter,
                           gdouble          dash_offset,
                           GArray          *dash_info)
@@ -373,38 +373,38 @@ gimp_scan_convert_stroke (GimpScanConvert *sc,
 
 
 /**
- * gimp_scan_convert_render:
- * @sc:        a #GimpScanConvert context
+ * ligma_scan_convert_render:
+ * @sc:        a #LigmaScanConvert context
  * @buffer:    the #GeglBuffer to render to
  * @off_x:     horizontal offset into the @buffer
  * @off_y:     vertical offset into the @buffer
  * @antialias: whether to apply antialiasiing
  *
- * This is a wrapper around gimp_scan_convert_render_full() that replaces the
+ * This is a wrapper around ligma_scan_convert_render_full() that replaces the
  * content of the @buffer with a rendered form of the path passed in.
  *
  * You cannot add additional polygons after this command.
  */
 void
-gimp_scan_convert_render (GimpScanConvert *sc,
+ligma_scan_convert_render (LigmaScanConvert *sc,
                           GeglBuffer      *buffer,
                           gint             off_x,
                           gint             off_y,
                           gboolean         antialias)
 {
-  gimp_scan_convert_render_full (sc, buffer, off_x, off_y,
+  ligma_scan_convert_render_full (sc, buffer, off_x, off_y,
                                  TRUE, antialias, 1.0);
 }
 
 /**
- * gimp_scan_convert_render_value:
- * @sc:     a #GimpScanConvert context
+ * ligma_scan_convert_render_value:
+ * @sc:     a #LigmaScanConvert context
  * @buffer: the #GeglBuffer to render to
  * @off_x:  horizontal offset into the @buffer
  * @off_y:  vertical offset into the @buffer
  * @value:  value to use for covered pixels
  *
- * This is a wrapper around gimp_scan_convert_render_full() that
+ * This is a wrapper around ligma_scan_convert_render_full() that
  * doesn't do antialiasing but gives control over the value that
  * should be used for pixels covered by the scan conversion. Uncovered
  * pixels are set to zero.
@@ -412,66 +412,66 @@ gimp_scan_convert_render (GimpScanConvert *sc,
  * You cannot add additional polygons after this command.
  */
 void
-gimp_scan_convert_render_value (GimpScanConvert *sc,
+ligma_scan_convert_render_value (LigmaScanConvert *sc,
                                 GeglBuffer      *buffer,
                                 gint             off_x,
                                 gint             off_y,
                                 gdouble          value)
 {
-  gimp_scan_convert_render_full (sc, buffer, off_x, off_y,
+  ligma_scan_convert_render_full (sc, buffer, off_x, off_y,
                                  TRUE, FALSE, value);
 }
 
 /**
- * gimp_scan_convert_compose:
- * @sc:     a #GimpScanConvert context
+ * ligma_scan_convert_compose:
+ * @sc:     a #LigmaScanConvert context
  * @buffer: the #GeglBuffer to render to
  * @off_x:  horizontal offset into the @buffer
  * @off_y:  vertical offset into the @buffer
  *
- * This is a wrapper around of gimp_scan_convert_render_full() that composes
+ * This is a wrapper around of ligma_scan_convert_render_full() that composes
  * the (aliased) scan conversion on top of the content of the @buffer.
  *
  * You cannot add additional polygons after this command.
  */
 void
-gimp_scan_convert_compose (GimpScanConvert *sc,
+ligma_scan_convert_compose (LigmaScanConvert *sc,
                            GeglBuffer      *buffer,
                            gint             off_x,
                            gint             off_y)
 {
-  gimp_scan_convert_render_full (sc, buffer, off_x, off_y,
+  ligma_scan_convert_render_full (sc, buffer, off_x, off_y,
                                  FALSE, FALSE, 1.0);
 }
 
 /**
- * gimp_scan_convert_compose_value:
- * @sc:     a #GimpScanConvert context
+ * ligma_scan_convert_compose_value:
+ * @sc:     a #LigmaScanConvert context
  * @buffer: the #GeglBuffer to render to
  * @off_x:  horizontal offset into the @buffer
  * @off_y:  vertical offset into the @buffer
  * @value:  value to use for covered pixels
  *
- * This is a wrapper around gimp_scan_convert_render_full() that
+ * This is a wrapper around ligma_scan_convert_render_full() that
  * composes the (aliased) scan conversion with value @value on top of the
  * content of the @buffer.
  *
  * You cannot add additional polygons after this command.
  */
 void
-gimp_scan_convert_compose_value (GimpScanConvert *sc,
+ligma_scan_convert_compose_value (LigmaScanConvert *sc,
                                  GeglBuffer      *buffer,
                                  gint             off_x,
                                  gint             off_y,
                                  gdouble          value)
 {
-  gimp_scan_convert_render_full (sc, buffer, off_x, off_y,
+  ligma_scan_convert_render_full (sc, buffer, off_x, off_y,
                                  FALSE, FALSE, value);
 }
 
 /**
- * gimp_scan_convert_render_full:
- * @sc:        a #GimpScanConvert context
+ * ligma_scan_convert_render_full:
+ * @sc:        a #LigmaScanConvert context
  * @buffer:    the #GeglBuffer to render to
  * @off_x:     horizontal offset into the @buffer
  * @off_y:     vertical offset into the @buffer
@@ -488,7 +488,7 @@ gimp_scan_convert_compose_value (GimpScanConvert *sc,
  * You cannot add additional polygons after this command.
  */
 void
-gimp_scan_convert_render_full (GimpScanConvert *sc,
+ligma_scan_convert_render_full (LigmaScanConvert *sc,
                                GeglBuffer      *buffer,
                                gint             off_x,
                                gint             off_y,
@@ -516,7 +516,7 @@ gimp_scan_convert_render_full (GimpScanConvert *sc,
   width  = gegl_buffer_get_width  (buffer);
   height = gegl_buffer_get_height (buffer);
 
-  if (sc->clip && ! gimp_rectangle_intersect (x, y, width, height,
+  if (sc->clip && ! ligma_rectangle_intersect (x, y, width, height,
                                               sc->clip_x, sc->clip_y,
                                               sc->clip_w, sc->clip_h,
                                               &x, &y, &width, &height))
@@ -599,12 +599,12 @@ gimp_scan_convert_render_full (GimpScanConvert *sc,
       if (sc->do_stroke)
         {
           cairo_set_line_cap (cr,
-                              sc->cap == GIMP_CAP_BUTT ? CAIRO_LINE_CAP_BUTT :
-                              sc->cap == GIMP_CAP_ROUND ? CAIRO_LINE_CAP_ROUND :
+                              sc->cap == LIGMA_CAP_BUTT ? CAIRO_LINE_CAP_BUTT :
+                              sc->cap == LIGMA_CAP_ROUND ? CAIRO_LINE_CAP_ROUND :
                               CAIRO_LINE_CAP_SQUARE);
           cairo_set_line_join (cr,
-                               sc->join == GIMP_JOIN_MITER ? CAIRO_LINE_JOIN_MITER :
-                               sc->join == GIMP_JOIN_ROUND ? CAIRO_LINE_JOIN_ROUND :
+                               sc->join == LIGMA_JOIN_MITER ? CAIRO_LINE_JOIN_MITER :
+                               sc->join == LIGMA_JOIN_ROUND ? CAIRO_LINE_JOIN_ROUND :
                                CAIRO_LINE_JOIN_BEVEL);
 
           cairo_set_line_width (cr, sc->width);

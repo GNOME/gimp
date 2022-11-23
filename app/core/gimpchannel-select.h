@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,146 +15,146 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CHANNEL_SELECT_H__
-#define __GIMP_CHANNEL_SELECT_H__
+#ifndef __LIGMA_CHANNEL_SELECT_H__
+#define __LIGMA_CHANNEL_SELECT_H__
 
 
 /*  basic selection functions  */
 
-void   gimp_channel_select_rectangle    (GimpChannel         *channel,
+void   ligma_channel_select_rectangle    (LigmaChannel         *channel,
                                          gint                 x,
                                          gint                 y,
                                          gint                 w,
                                          gint                 h,
-                                         GimpChannelOps       op,
+                                         LigmaChannelOps       op,
                                          gboolean             feather,
                                          gdouble              feather_radius_x,
                                          gdouble              feather_radius_y,
                                          gboolean             push_undo);
-void   gimp_channel_select_ellipse      (GimpChannel         *channel,
+void   ligma_channel_select_ellipse      (LigmaChannel         *channel,
                                          gint                 x,
                                          gint                 y,
                                          gint                 w,
                                          gint                 h,
-                                         GimpChannelOps       op,
+                                         LigmaChannelOps       op,
                                          gboolean             antialias,
                                          gboolean             feather,
                                          gdouble              feather_radius_x,
                                          gdouble              feather_radius_y,
                                          gboolean             push_undo);
-void   gimp_channel_select_round_rect   (GimpChannel         *channel,
+void   ligma_channel_select_round_rect   (LigmaChannel         *channel,
                                          gint                 x,
                                          gint                 y,
                                          gint                 w,
                                          gint                 h,
                                          gdouble              corner_radius_y,
                                          gdouble              corner_radius_x,
-                                         GimpChannelOps       op,
+                                         LigmaChannelOps       op,
                                          gboolean             antialias,
                                          gboolean             feather,
                                          gdouble              feather_radius_x,
                                          gdouble              feather_radius_y,
                                          gboolean             push_undo);
 
-/*  select by GimpScanConvert functions  */
+/*  select by LigmaScanConvert functions  */
 
-void   gimp_channel_select_scan_convert (GimpChannel         *channel,
+void   ligma_channel_select_scan_convert (LigmaChannel         *channel,
                                          const gchar         *undo_desc,
-                                         GimpScanConvert     *scan_convert,
+                                         LigmaScanConvert     *scan_convert,
                                          gint                 offset_x,
                                          gint                 offset_y,
-                                         GimpChannelOps       op,
+                                         LigmaChannelOps       op,
                                          gboolean             antialias,
                                          gboolean             feather,
                                          gdouble              feather_radius_x,
                                          gdouble              feather_radius_y,
                                          gboolean             push_undo);
-void   gimp_channel_select_polygon      (GimpChannel         *channel,
+void   ligma_channel_select_polygon      (LigmaChannel         *channel,
                                          const gchar         *undo_desc,
                                          gint                 n_points,
-                                         const GimpVector2   *points,
-                                         GimpChannelOps       op,
+                                         const LigmaVector2   *points,
+                                         LigmaChannelOps       op,
                                          gboolean             antialias,
                                          gboolean             feather,
                                          gdouble              feather_radius_x,
                                          gdouble              feather_radius_y,
                                          gboolean             push_undo);
-void   gimp_channel_select_vectors      (GimpChannel         *channel,
+void   ligma_channel_select_vectors      (LigmaChannel         *channel,
                                          const gchar         *undo_desc,
-                                         GimpVectors         *vectors,
-                                         GimpChannelOps       op,
+                                         LigmaVectors         *vectors,
+                                         LigmaChannelOps       op,
                                          gboolean             antialias,
                                          gboolean             feather,
                                          gdouble              feather_radius_x,
                                          gdouble              feather_radius_y,
                                          gboolean             push_undo);
-void   gimp_channel_select_buffer       (GimpChannel         *channel,
+void   ligma_channel_select_buffer       (LigmaChannel         *channel,
                                          const gchar         *undo_desc,
                                          GeglBuffer          *add_on,
                                          gint                 offset_x,
                                          gint                 offset_y,
-                                         GimpChannelOps       op,
+                                         LigmaChannelOps       op,
                                          gboolean             feather,
                                          gdouble              feather_radius_x,
                                          gdouble              feather_radius_y);
 
 
-/*  select by GimpChannel functions  */
+/*  select by LigmaChannel functions  */
 
-void   gimp_channel_select_channel      (GimpChannel         *channel,
+void   ligma_channel_select_channel      (LigmaChannel         *channel,
                                          const gchar         *undo_desc,
-                                         GimpChannel         *add_on,
+                                         LigmaChannel         *add_on,
                                          gint                 offset_x,
                                          gint                 offset_y,
-                                         GimpChannelOps       op,
+                                         LigmaChannelOps       op,
                                          gboolean             feather,
                                          gdouble              feather_radius_x,
                                          gdouble              feather_radius_y);
-void   gimp_channel_select_alpha        (GimpChannel         *channel,
-                                         GimpDrawable        *drawable,
-                                         GimpChannelOps       op,
+void   ligma_channel_select_alpha        (LigmaChannel         *channel,
+                                         LigmaDrawable        *drawable,
+                                         LigmaChannelOps       op,
                                          gboolean             feather,
                                          gdouble              feather_radius_x,
                                          gdouble              feather_radius_y);
-void   gimp_channel_select_component    (GimpChannel         *channel,
-                                         GimpChannelType      component,
-                                         GimpChannelOps       op,
+void   ligma_channel_select_component    (LigmaChannel         *channel,
+                                         LigmaChannelType      component,
+                                         LigmaChannelOps       op,
                                          gboolean             feather,
                                          gdouble              feather_radius_x,
                                          gdouble              feather_radius_y);
-void   gimp_channel_select_fuzzy        (GimpChannel         *channel,
-                                         GimpDrawable        *drawable,
+void   ligma_channel_select_fuzzy        (LigmaChannel         *channel,
+                                         LigmaDrawable        *drawable,
                                          gboolean             sample_merged,
                                          gint                 x,
                                          gint                 y,
                                          gfloat               threshold,
                                          gboolean             select_transparent,
-                                         GimpSelectCriterion  select_criterion,
+                                         LigmaSelectCriterion  select_criterion,
                                          gboolean             diagonal_neighbors,
-                                         GimpChannelOps       op,
+                                         LigmaChannelOps       op,
                                          gboolean             antialias,
                                          gboolean             feather,
                                          gdouble              feather_radius_x,
                                          gdouble              feather_radius_y);
-void   gimp_channel_select_by_color     (GimpChannel         *channel,
+void   ligma_channel_select_by_color     (LigmaChannel         *channel,
                                          GList               *drawables,
                                          gboolean             sample_merged,
-                                         const GimpRGB       *color,
+                                         const LigmaRGB       *color,
                                          gfloat               threshold,
                                          gboolean             select_transparent,
-                                         GimpSelectCriterion  select_criterion,
-                                         GimpChannelOps       op,
+                                         LigmaSelectCriterion  select_criterion,
+                                         LigmaChannelOps       op,
                                          gboolean             antialias,
                                          gboolean             feather,
                                          gdouble              feather_radius_x,
                                          gdouble              feather_radius_y);
-void   gimp_channel_select_by_index     (GimpChannel         *channel,
-                                         GimpDrawable        *drawable,
+void   ligma_channel_select_by_index     (LigmaChannel         *channel,
+                                         LigmaDrawable        *drawable,
                                          gint                 index,
-                                         GimpChannelOps       op,
+                                         LigmaChannelOps       op,
                                          gboolean             feather,
                                          gdouble              feather_radius_x,
                                          gdouble              feather_radius_y);
 
 
-#endif  /*  __GIMP_CHANNEL_SELECT_H__  */
+#endif  /*  __LIGMA_CHANNEL_SELECT_H__  */

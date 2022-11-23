@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * This is a plug-in for GIMP.
+ * This is a plug-in for LIGMA.
  *
  * Generates images containing vector type drawings.
  *
@@ -48,7 +48,7 @@ typedef struct
 
 typedef struct
 {
-  GimpChannelOps type;           /* ADD etc .. */
+  LigmaChannelOps type;           /* ADD etc .. */
   gint           antia;          /* Boolean for Antia */
   gint           feather;        /* Feather it ? */
   gdouble        feather_radius; /* Radius to feather */
@@ -68,7 +68,7 @@ void       object_end              (GdkPoint *pnt, gint shift_down);
 
 #define PLUG_IN_PROC   "plug-in-gfig"
 #define PLUG_IN_BINARY "gfig"
-#define PLUG_IN_ROLE   "gimp-gfig"
+#define PLUG_IN_ROLE   "ligma-gfig"
 
 extern gint       line_no;
 extern gint       preview_width, preview_height;
@@ -118,7 +118,7 @@ typedef struct BrushDesc
   gchar         *name;
   gdouble        opacity;
   gint           spacing;
-  GimpLayerMode  paint_mode;
+  LigmaLayerMode  paint_mode;
   gint           width;
   gint           height;
   guchar        *pv_buf;  /* Buffer where brush placed */
@@ -131,8 +131,8 @@ typedef struct
 {
   gboolean     debug_styles;
   gboolean     show_background;  /* show thumbnail of image behind figure */
-  GimpImage    *image;           /* Gimp image */
-  GimpDrawable *drawable;        /* Gimp drawable to paint on */
+  LigmaImage    *image;           /* Ligma image */
+  LigmaDrawable *drawable;        /* Ligma drawable to paint on */
   GFigObj     *current_obj;
   GfigObject  *selected_obj;
   GtkWidget   *preview;
@@ -145,8 +145,8 @@ typedef struct
   GtkWidget   *gradient_select;
   GtkWidget   *fillstyle_combo;
   GtkWidget   *paint_type_toggle;
-  GimpRGB     *fg_color;
-  GimpRGB     *bg_color;
+  LigmaRGB     *fg_color;
+  LigmaRGB     *bg_color;
   gboolean     enable_repaint;
   gboolean     using_new_layer;
 } GFigContext;
@@ -172,7 +172,7 @@ void            scale_to_original_xy (gdouble *list,
                                       gint     size);
 
 void gfig_paint (BrushType     brush_type,
-                 GimpDrawable *drawable,
+                 LigmaDrawable *drawable,
                  gint          seg_count,
                  gdouble       line_pnts[]);
 

@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpfontfactory.h
- * Copyright (C) 2018 Michael Natterer <mitch@gimp.org>
+ * ligmafontfactory.h
+ * Copyright (C) 2018 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,41 +18,41 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_FONT_FACTORY_H__
-#define __GIMP_FONT_FACTORY_H__
+#ifndef __LIGMA_FONT_FACTORY_H__
+#define __LIGMA_FONT_FACTORY_H__
 
 
-#include "core/gimpdatafactory.h"
+#include "core/ligmadatafactory.h"
 
 
-#define GIMP_TYPE_FONT_FACTORY            (gimp_font_factory_get_type ())
-#define GIMP_FONT_FACTORY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_FONT_FACTORY, GimpFontFactory))
-#define GIMP_FONT_FACTORY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_FONT_FACTORY, GimpFontFactoryClass))
-#define GIMP_IS_FONT_FACTORY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_FONT_FACTORY))
-#define GIMP_IS_FONT_FACTORY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_FONT_FACTORY))
-#define GIMP_FONT_FACTORY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_FONT_FACTORY, GimpFontFactoryClass))
+#define LIGMA_TYPE_FONT_FACTORY            (ligma_font_factory_get_type ())
+#define LIGMA_FONT_FACTORY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_FONT_FACTORY, LigmaFontFactory))
+#define LIGMA_FONT_FACTORY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_FONT_FACTORY, LigmaFontFactoryClass))
+#define LIGMA_IS_FONT_FACTORY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_FONT_FACTORY))
+#define LIGMA_IS_FONT_FACTORY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_FONT_FACTORY))
+#define LIGMA_FONT_FACTORY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_FONT_FACTORY, LigmaFontFactoryClass))
 
 
-typedef struct _GimpFontFactoryPrivate GimpFontFactoryPrivate;
-typedef struct _GimpFontFactoryClass   GimpFontFactoryClass;
+typedef struct _LigmaFontFactoryPrivate LigmaFontFactoryPrivate;
+typedef struct _LigmaFontFactoryClass   LigmaFontFactoryClass;
 
-struct _GimpFontFactory
+struct _LigmaFontFactory
 {
-  GimpDataFactory         parent_instance;
+  LigmaDataFactory         parent_instance;
 
-  GimpFontFactoryPrivate *priv;
+  LigmaFontFactoryPrivate *priv;
 };
 
-struct _GimpFontFactoryClass
+struct _LigmaFontFactoryClass
 {
-  GimpDataFactoryClass  parent_class;
+  LigmaDataFactoryClass  parent_class;
 };
 
 
-GType             gimp_font_factory_get_type (void) G_GNUC_CONST;
+GType             ligma_font_factory_get_type (void) G_GNUC_CONST;
 
-GimpDataFactory * gimp_font_factory_new      (Gimp        *gimp,
+LigmaDataFactory * ligma_font_factory_new      (Ligma        *ligma,
                                               const gchar *path_property_name);
 
 
-#endif  /*  __GIMP_FONT_FACTORY_H__  */
+#endif  /*  __LIGMA_FONT_FACTORY_H__  */

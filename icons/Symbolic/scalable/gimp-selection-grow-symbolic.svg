@@ -15,7 +15,7 @@
    width="16.000959"
    version="1.1"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="gimp-selection-grow.svg">
+   sodipodi:docname="ligma-selection-grow.svg">
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -50,7 +50,7 @@
             <dc:title>Barbara Muraus, Jakub Steiner, Klaus Staedtler</dc:title>
           </cc:Agent>
         </dc:contributor>
-        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for GIMP</dc:description>
+        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for LIGMA</dc:description>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -270,7 +270,7 @@
      style="display:inline"
      id="stock">
     <g
-       id="gimp-selection-grow"
+       id="ligma-selection-grow"
        style="display:inline"
        transform="translate(-22.038405,-240.86654)">
       <rect

@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpmodules.c
- * (C) 1999 Austin Donnelly <austin@gimp.org>
+ * ligmamodules.c
+ * (C) 1999 Austin Donnelly <austin@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,60 +22,60 @@
 
 #include <gio/gio.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmodule/gimpmodule.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamodule/ligmamodule.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "core-types.h"
 
-#include "config/gimpcoreconfig.h"
+#include "config/ligmacoreconfig.h"
 
-#include "gimp.h"
-#include "gimp-modules.h"
+#include "ligma.h"
+#include "ligma-modules.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 void
-gimp_modules_init (Gimp *gimp)
+ligma_modules_init (Ligma *ligma)
 {
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
 
-  if (! gimp->no_interface)
+  if (! ligma->no_interface)
     {
-      gimp->module_db = gimp_module_db_new (gimp->be_verbose);
-      gimp->write_modulerc = FALSE;
+      ligma->module_db = ligma_module_db_new (ligma->be_verbose);
+      ligma->write_modulerc = FALSE;
     }
 }
 
 void
-gimp_modules_exit (Gimp *gimp)
+ligma_modules_exit (Ligma *ligma)
 {
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
 
-  g_clear_object (&gimp->module_db);
+  g_clear_object (&ligma->module_db);
 }
 
 void
-gimp_modules_load (Gimp *gimp)
+ligma_modules_load (Ligma *ligma)
 {
   GFile    *file;
   GScanner *scanner;
   gchar    *module_load_inhibit = NULL;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
 
-  if (gimp->no_interface)
+  if (ligma->no_interface)
     return;
 
-  gimp_module_db_set_verbose (gimp->module_db, gimp->be_verbose);
+  ligma_module_db_set_verbose (ligma->module_db, ligma->be_verbose);
 
-  file = gimp_directory_file ("modulerc", NULL);
+  file = ligma_directory_file ("modulerc", NULL);
 
-  if (gimp->be_verbose)
-    g_print ("Parsing '%s'\n", gimp_file_get_utf8_name (file));
+  if (ligma->be_verbose)
+    g_print ("Parsing '%s'\n", ligma_file_get_utf8_name (file));
 
-  scanner = gimp_scanner_new_file (file, NULL);
+  scanner = ligma_scanner_new_file (file, NULL);
   g_object_unref (file);
 
   if (scanner)
@@ -105,7 +105,7 @@ gimp_modules_load (Gimp *gimp)
                 {
                   token = G_TOKEN_STRING;
 
-                  if (! gimp_scanner_parse_string_no_validate (scanner,
+                  if (! ligma_scanner_parse_string_no_validate (scanner,
                                                                &module_load_inhibit))
                     goto error;
                 }
@@ -134,32 +134,32 @@ gimp_modules_load (Gimp *gimp)
 
       if (error)
         {
-          gimp_message_literal (gimp, NULL, GIMP_MESSAGE_ERROR, error->message);
+          ligma_message_literal (ligma, NULL, LIGMA_MESSAGE_ERROR, error->message);
           g_clear_error (&error);
         }
 
-      gimp_scanner_unref (scanner);
+      ligma_scanner_unref (scanner);
     }
 
   if (module_load_inhibit)
     {
-      gimp_module_db_set_load_inhibit (gimp->module_db, module_load_inhibit);
+      ligma_module_db_set_load_inhibit (ligma->module_db, module_load_inhibit);
       g_free (module_load_inhibit);
     }
 
-  gimp_module_db_load (gimp->module_db, gimp->config->module_path);
+  ligma_module_db_load (ligma->module_db, ligma->config->module_path);
 }
 
 static void
 add_to_inhibit_string (gpointer data,
                        gpointer user_data)
 {
-  GimpModule *module = data;
+  LigmaModule *module = data;
   GString    *str    = user_data;
 
-  if (! gimp_module_get_auto_load (module))
+  if (! ligma_module_get_auto_load (module))
     {
-      GFile *file = gimp_module_get_file (module);
+      GFile *file = ligma_module_get_file (module);
       gchar *path = g_file_get_path (file);
 
       g_string_append_c (str, G_SEARCHPATH_SEPARATOR);
@@ -170,65 +170,65 @@ add_to_inhibit_string (gpointer data,
 }
 
 void
-gimp_modules_unload (Gimp *gimp)
+ligma_modules_unload (Ligma *ligma)
 {
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
 
-  if (! gimp->no_interface && gimp->write_modulerc)
+  if (! ligma->no_interface && ligma->write_modulerc)
     {
-      GimpConfigWriter *writer;
+      LigmaConfigWriter *writer;
       GString          *str;
       const gchar      *p;
       GFile            *file;
       GError           *error = NULL;
 
       str = g_string_new (NULL);
-      g_list_foreach (gimp_module_db_get_modules (gimp->module_db),
+      g_list_foreach (ligma_module_db_get_modules (ligma->module_db),
                       add_to_inhibit_string, str);
       if (str->len > 0)
         p = str->str + 1;
       else
         p = "";
 
-      file = gimp_directory_file ("modulerc", NULL);
+      file = ligma_directory_file ("modulerc", NULL);
 
-      if (gimp->be_verbose)
-        g_print ("Writing '%s'\n", gimp_file_get_utf8_name (file));
+      if (ligma->be_verbose)
+        g_print ("Writing '%s'\n", ligma_file_get_utf8_name (file));
 
-      writer = gimp_config_writer_new_from_file (file,
+      writer = ligma_config_writer_new_from_file (file,
                                                  TRUE,
-                                                 "GIMP modulerc",
+                                                 "LIGMA modulerc",
                                                  &error);
       g_object_unref (file);
 
       if (writer)
         {
-          gimp_config_writer_open (writer, "module-load-inhibit");
-          gimp_config_writer_string (writer, p);
-          gimp_config_writer_close (writer);
+          ligma_config_writer_open (writer, "module-load-inhibit");
+          ligma_config_writer_string (writer, p);
+          ligma_config_writer_close (writer);
 
-          gimp_config_writer_finish (writer, "end of modulerc", &error);
+          ligma_config_writer_finish (writer, "end of modulerc", &error);
 
-          gimp->write_modulerc = FALSE;
+          ligma->write_modulerc = FALSE;
         }
 
       g_string_free (str, TRUE);
 
       if (error)
         {
-          gimp_message_literal (gimp, NULL, GIMP_MESSAGE_ERROR, error->message);
+          ligma_message_literal (ligma, NULL, LIGMA_MESSAGE_ERROR, error->message);
           g_clear_error (&error);
         }
     }
 }
 
 void
-gimp_modules_refresh (Gimp *gimp)
+ligma_modules_refresh (Ligma *ligma)
 {
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
 
-  if (! gimp->no_interface)
+  if (! ligma->no_interface)
     {
-      gimp_module_db_refresh (gimp->module_db, gimp->config->module_path);
+      ligma_module_db_refresh (ligma->module_db, ligma->config->module_path);
     }
 }

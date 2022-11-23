@@ -1,5 +1,5 @@
 /*
- * This is a plug-in for GIMP.
+ * This is a plug-in for LIGMA.
  *
  * Generates clickable image maps.
  *
@@ -22,13 +22,13 @@
 
 #include "config.h"
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
 #include "imap_default_dialog.h"
 #include "imap_main.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 static void
@@ -94,9 +94,9 @@ make_default_dialog (const gchar *title)
   data->apply_cb = NULL;
   data->cancel_cb = NULL;
 
-  data->dialog = gimp_dialog_new (title, PLUG_IN_ROLE,
+  data->dialog = ligma_dialog_new (title, PLUG_IN_ROLE,
                                   get_dialog(), 0,
-                                  gimp_standard_help_func, PLUG_IN_PROC,
+                                  ligma_standard_help_func, PLUG_IN_PROC,
                                   NULL);
 
   data->apply = gtk_dialog_add_button (GTK_DIALOG (data->dialog),
@@ -108,7 +108,7 @@ make_default_dialog (const gchar *title)
   data->ok = gtk_dialog_add_button (GTK_DIALOG (data->dialog),
                                     _("_OK"), GTK_RESPONSE_OK);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (data->dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (data->dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_APPLY,
                                            GTK_RESPONSE_CANCEL,

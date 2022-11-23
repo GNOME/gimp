@@ -1,4 +1,4 @@
-/* GIF exporting file filter for GIMP
+/* GIF exporting file filter for LIGMA
  *
  *    Copyright
  *    - Adam D. Moss
@@ -9,7 +9,7 @@
  *
  *
  * Version 4.1.0 - 2003-06-16
- *                        Adam D. Moss - <adam@gimp.org> <adam@foxbox.org>
+ *                        Adam D. Moss - <adam@ligma.org> <adam@foxbox.org>
  */
 /*
  * This filter uses code taken from the "giftopnm" and "ppmtogif" programs
@@ -30,10 +30,10 @@
 
 #include <string.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 #define SAVE_PROC      "file-gif-save"
@@ -57,12 +57,12 @@ typedef struct _GifClass GifClass;
 
 struct _Gif
 {
-  GimpPlugIn      parent_instance;
+  LigmaPlugIn      parent_instance;
 };
 
 struct _GifClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -71,40 +71,40 @@ struct _GifClass
 
 GType                    gif_get_type         (void) G_GNUC_CONST;
 
-static GList           * gif_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure   * gif_create_procedure (GimpPlugIn           *plug_in,
+static GList           * gif_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure   * gif_create_procedure (LigmaPlugIn           *plug_in,
                                                const gchar          *name);
 
-static GimpValueArray  * gif_save             (GimpProcedure        *procedure,
-                                               GimpRunMode           run_mode,
-                                               GimpImage            *image,
+static LigmaValueArray  * gif_save             (LigmaProcedure        *procedure,
+                                               LigmaRunMode           run_mode,
+                                               LigmaImage            *image,
                                                gint                  n_drawables,
-                                               GimpDrawable        **drawables,
+                                               LigmaDrawable        **drawables,
                                                GFile                *file,
-                                               const GimpValueArray *args,
+                                               const LigmaValueArray *args,
                                                gpointer              run_data);
 
 static gboolean          save_image           (GFile                *file,
-                                               GimpImage            *image,
-                                               GimpDrawable         *drawable,
-                                               GimpImage            *orig_image,
+                                               LigmaImage            *image,
+                                               LigmaDrawable         *drawable,
+                                               LigmaImage            *orig_image,
                                                GObject              *config,
                                                GError              **error);
 
-static GimpPDBStatusType sanity_check         (GFile                *file,
-                                               GimpImage           **image,
-                                               GimpRunMode           run_mode,
+static LigmaPDBStatusType sanity_check         (GFile                *file,
+                                               LigmaImage           **image,
+                                               LigmaRunMode           run_mode,
                                                GError              **error);
 static gboolean          bad_bounds_dialog    (void);
 
-static gboolean          save_dialog          (GimpImage            *image,
-                                               GimpProcedure        *procedure,
+static gboolean          save_dialog          (LigmaImage            *image,
+                                               LigmaProcedure        *procedure,
                                                GObject              *config);
 
 
-G_DEFINE_TYPE (Gif, gif, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Gif, gif, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (GIF_TYPE)
+LIGMA_MAIN (GIF_TYPE)
 DEFINE_STD_SET_I18N
 
 
@@ -114,7 +114,7 @@ static gint Interlace; /* For compression code */
 static void
 gif_class_init (GifClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = gif_query_procedures;
   plug_in_class->create_procedure = gif_create_procedure;
@@ -127,28 +127,28 @@ gif_init (Gif *gif)
 }
 
 static GList *
-gif_query_procedures (GimpPlugIn *plug_in)
+gif_query_procedures (LigmaPlugIn *plug_in)
 {
   return  g_list_append (NULL, g_strdup (SAVE_PROC));
 }
 
-static GimpProcedure *
-gif_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+gif_create_procedure (LigmaPlugIn  *plug_in,
                       const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_save_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            gif_save, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "INDEXED*, GRAY*");
+      ligma_procedure_set_image_types (procedure, "INDEXED*, GRAY*");
 
-      gimp_procedure_set_menu_label (procedure, _("GIF image"));
+      ligma_procedure_set_menu_label (procedure, _("GIF image"));
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "exports files in Compuserve GIF "
                                         "file format",
                                         "Export a file in Compuserve GIF "
@@ -160,49 +160,49 @@ gif_create_procedure (GimpPlugIn  *plug_in,
                                         "interpret <50% alpha as transparent. "
                                         "When run non-interactively, the value "
                                         "for the comment is taken from the "
-                                        "'gimp-comment' parasite.  ",
+                                        "'ligma-comment' parasite.  ",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Spencer Kimball, Peter Mattis, "
                                       "Adam Moss, David Koblas",
                                       "Spencer Kimball, Peter Mattis, "
                                       "Adam Moss, David Koblas",
                                       "1995-1997");
 
-      gimp_file_procedure_set_handles_remote (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_handles_remote (LIGMA_FILE_PROCEDURE (procedure),
                                               TRUE);
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                           "image/gif");
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "gif");
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "interlace",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "interlace",
                              "Interlace",
                              "Try to export as interlaced",
                              FALSE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "loop",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "loop",
                              "Loop",
                              "(animated gif) Loop infinitely",
                              TRUE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "number-of-repeats",
+      LIGMA_PROC_ARG_INT (procedure, "number-of-repeats",
                          "Number of repeats",
                          "(animated gif) Number of repeats "
                          "(Ignored if 'loop' is TRUE)",
                          0, G_MAXSHORT - 1, 0,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "default-delay",
+      LIGMA_PROC_ARG_INT (procedure, "default-delay",
                          "Default delay",
                          "(animated gif) Default delay between frames "
                          "in milliseconds",
                          0, G_MAXINT, 100,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "default-dispose",
+      LIGMA_PROC_ARG_INT (procedure, "default-dispose",
                          "Default dispose",
                          "(animated gif) Default disposal type "
                          "(0=`don't care`, "
@@ -211,126 +211,126 @@ gif_create_procedure (GimpPlugIn  *plug_in,
                          0, 2, 0,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "as-animation",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "as-animation",
                              "As animation",
                              "Export GIF as animation?",
                              FALSE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "force-delay",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "force-delay",
                              "Force delay",
                              "(animated gif) Use specified delay for all frames",
                              FALSE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "force-dispose",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "force-dispose",
                              "Force dispose",
                              "(animated gif) Use specified disposal for all frames",
                              FALSE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-comment",
+      LIGMA_PROC_AUX_ARG_BOOLEAN (procedure, "save-comment",
                                  "Save comment",
                                  _("Save the image comment in the GIF file"),
-                                 gimp_export_comment (),
+                                 ligma_export_comment (),
                                  G_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_STRING (procedure, "gimp-comment",
+      LIGMA_PROC_AUX_ARG_STRING (procedure, "ligma-comment",
                                 "Comment",
                                 _("Image comment"),
-                                 gimp_get_default_comment (),
+                                 ligma_get_default_comment (),
                                  G_PARAM_READWRITE);
 
-      gimp_procedure_set_argument_sync (procedure, "gimp-comment",
-                                        GIMP_ARGUMENT_SYNC_PARASITE);
+      ligma_procedure_set_argument_sync (procedure, "ligma-comment",
+                                        LIGMA_ARGUMENT_SYNC_PARASITE);
     }
 
   return procedure;
 }
 
-static GimpValueArray *
-gif_save (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GimpImage            *image,
+static LigmaValueArray *
+gif_save (LigmaProcedure        *procedure,
+          LigmaRunMode           run_mode,
+          LigmaImage            *image,
           gint                  n_drawables,
-          GimpDrawable        **drawables,
+          LigmaDrawable        **drawables,
           GFile                *file,
-          const GimpValueArray *args,
+          const LigmaValueArray *args,
           gpointer              run_data)
 {
-  GimpProcedureConfig *config;
-  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
-  GimpExportReturn     export = GIMP_EXPORT_CANCEL;
-  GimpImage           *orig_image;
-  GimpImage           *sanitized_image = NULL;
+  LigmaProcedureConfig *config;
+  LigmaPDBStatusType    status = LIGMA_PDB_SUCCESS;
+  LigmaExportReturn     export = LIGMA_EXPORT_CANCEL;
+  LigmaImage           *orig_image;
+  LigmaImage           *sanitized_image = NULL;
   GError              *error           = NULL;
 
   gegl_init (NULL, NULL);
 
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_export (config, image, run_mode, args, NULL);
+  config = ligma_procedure_create_config (procedure);
+  ligma_procedure_config_begin_export (config, image, run_mode, args, NULL);
 
   orig_image = image;
 
-  if (run_mode == GIMP_RUN_INTERACTIVE ||
-      run_mode == GIMP_RUN_WITH_LAST_VALS)
-    gimp_ui_init (PLUG_IN_BINARY);
+  if (run_mode == LIGMA_RUN_INTERACTIVE ||
+      run_mode == LIGMA_RUN_WITH_LAST_VALS)
+    ligma_ui_init (PLUG_IN_BINARY);
 
   status = sanity_check (file, &image, run_mode, &error);
 
   /* Get the export options */
-  if (status == GIMP_PDB_SUCCESS)
+  if (status == LIGMA_PDB_SUCCESS)
     {
       /* If the sanity check succeeded, the image_ID will point to a
        * duplicate image to delete later.
        */
       sanitized_image = image;
 
-      if (run_mode == GIMP_RUN_INTERACTIVE)
+      if (run_mode == LIGMA_RUN_INTERACTIVE)
         {
           if (! save_dialog (image, procedure, G_OBJECT (config)))
             {
-              gimp_image_delete (sanitized_image);
+              ligma_image_delete (sanitized_image);
 
-              return gimp_procedure_new_return_values (procedure,
-                                                       GIMP_PDB_CANCEL,
+              return ligma_procedure_new_return_values (procedure,
+                                                       LIGMA_PDB_CANCEL,
                                                        NULL);
             }
         }
     }
 
-  if (status == GIMP_PDB_SUCCESS)
+  if (status == LIGMA_PDB_SUCCESS)
     {
       /* Create an exportable image based on the export options */
       switch (run_mode)
         {
-        case GIMP_RUN_INTERACTIVE:
-        case GIMP_RUN_WITH_LAST_VALS:
+        case LIGMA_RUN_INTERACTIVE:
+        case LIGMA_RUN_WITH_LAST_VALS:
           {
-            GimpExportCapabilities capabilities;
+            LigmaExportCapabilities capabilities;
             gboolean               as_animation;
 
-            capabilities = (GIMP_EXPORT_CAN_HANDLE_INDEXED |
-                            GIMP_EXPORT_CAN_HANDLE_GRAY    |
-                            GIMP_EXPORT_CAN_HANDLE_ALPHA);
+            capabilities = (LIGMA_EXPORT_CAN_HANDLE_INDEXED |
+                            LIGMA_EXPORT_CAN_HANDLE_GRAY    |
+                            LIGMA_EXPORT_CAN_HANDLE_ALPHA);
 
             g_object_get (config,
                           "as-animation", &as_animation,
                           NULL);
 
             if (as_animation)
-              capabilities |= GIMP_EXPORT_CAN_HANDLE_LAYERS;
+              capabilities |= LIGMA_EXPORT_CAN_HANDLE_LAYERS;
 
-            export = gimp_export_image (&image, &n_drawables, &drawables, "GIF",
+            export = ligma_export_image (&image, &n_drawables, &drawables, "GIF",
                                         capabilities);
 
-            if (export == GIMP_EXPORT_CANCEL)
+            if (export == LIGMA_EXPORT_CANCEL)
               {
                 if (sanitized_image)
-                  gimp_image_delete (sanitized_image);
+                  ligma_image_delete (sanitized_image);
 
-                return gimp_procedure_new_return_values (procedure,
-                                                         GIMP_PDB_CANCEL,
+                return ligma_procedure_new_return_values (procedure,
+                                                         LIGMA_PDB_CANCEL,
                                                          NULL);
               }
             break;
@@ -345,30 +345,30 @@ gif_save (GimpProcedure        *procedure,
           g_set_error (&error, G_FILE_ERROR, 0,
                        _("GIF format does not support multiple layers."));
 
-          return gimp_procedure_new_return_values (procedure,
-                                                   GIMP_PDB_CALLING_ERROR,
+          return ligma_procedure_new_return_values (procedure,
+                                                   LIGMA_PDB_CALLING_ERROR,
                                                    error);
         }
 
       if (! save_image (file, image, drawables[0], orig_image, G_OBJECT (config),
                         &error))
         {
-          status = GIMP_PDB_EXECUTION_ERROR;
+          status = LIGMA_PDB_EXECUTION_ERROR;
         }
 
-      gimp_image_delete (sanitized_image);
+      ligma_image_delete (sanitized_image);
     }
 
-  gimp_procedure_config_end_export (config, image, file, status);
+  ligma_procedure_config_end_export (config, image, file, status);
   g_object_unref (config);
 
-  if (export == GIMP_EXPORT_EXPORT)
+  if (export == LIGMA_EXPORT_EXPORT)
     {
-      gimp_image_delete (image);
+      ligma_image_delete (image);
       g_free (drawables);
     }
 
-  return gimp_procedure_new_return_values (procedure, status, error);
+  return ligma_procedure_new_return_values (procedure, status, error);
 }
 
 /* ppmtogif.c - read a portable pixmap and produce a GIF file
@@ -653,10 +653,10 @@ parse_disposal_tag (const gchar *str,
 }
 
 
-static GimpPDBStatusType
+static LigmaPDBStatusType
 sanity_check (GFile        *file,
-              GimpImage   **image,
-              GimpRunMode   run_mode,
+              LigmaImage   **image,
+              LigmaRunMode   run_mode,
               GError      **error)
 {
   GList *layers;
@@ -664,8 +664,8 @@ sanity_check (GFile        *file,
   gint   image_width;
   gint   image_height;
 
-  image_width  = gimp_image_get_width (*image);
-  image_height = gimp_image_get_height (*image);
+  image_width  = ligma_image_get_width (*image);
+  image_height = ligma_image_get_height (*image);
 
   if (image_width > G_MAXUSHORT || image_height > G_MAXUSHORT)
     {
@@ -673,29 +673,29 @@ sanity_check (GFile        *file,
                    _("Unable to export '%s'.  "
                    "The GIF file format does not support images that are "
                    "more than %d pixels wide or tall."),
-                   gimp_file_get_utf8_name (file), G_MAXUSHORT);
+                   ligma_file_get_utf8_name (file), G_MAXUSHORT);
 
-      return GIMP_PDB_EXECUTION_ERROR;
+      return LIGMA_PDB_EXECUTION_ERROR;
     }
 
   /*** Iterate through the layers to make sure they're all ***/
   /*** within the bounds of the image                      ***/
 
-  *image = gimp_image_duplicate (*image);
-  layers = gimp_image_list_layers (*image);
+  *image = ligma_image_duplicate (*image);
+  layers = ligma_image_list_layers (*image);
 
   for (list = layers; list; list = g_list_next (list))
     {
-      GimpDrawable *drawable = list->data;
+      LigmaDrawable *drawable = list->data;
       gint          offset_x;
       gint          offset_y;
 
-      gimp_drawable_get_offsets (drawable, &offset_x, &offset_y);
+      ligma_drawable_get_offsets (drawable, &offset_x, &offset_y);
 
       if (offset_x < 0 ||
           offset_y < 0 ||
-          offset_x + gimp_drawable_get_width (drawable) > image_width ||
-          offset_y + gimp_drawable_get_height (drawable) > image_height)
+          offset_x + ligma_drawable_get_width (drawable) > image_width ||
+          offset_y + ligma_drawable_get_height (drawable) > image_height)
         {
           g_list_free (layers);
 
@@ -704,34 +704,34 @@ sanity_check (GFile        *file,
           /* Do the crop if we can't talk to the user, or if we asked
            * the user and they said yes.
            */
-          if ((run_mode == GIMP_RUN_NONINTERACTIVE) || bad_bounds_dialog ())
+          if ((run_mode == LIGMA_RUN_NONINTERACTIVE) || bad_bounds_dialog ())
             {
-              gimp_image_crop (*image, image_width, image_height, 0, 0);
-              return GIMP_PDB_SUCCESS;
+              ligma_image_crop (*image, image_width, image_height, 0, 0);
+              return LIGMA_PDB_SUCCESS;
             }
           else
             {
-              gimp_image_delete (*image);
-              return GIMP_PDB_CANCEL;
+              ligma_image_delete (*image);
+              return LIGMA_PDB_CANCEL;
             }
         }
     }
 
   g_list_free (layers);
 
-  return GIMP_PDB_SUCCESS;
+  return LIGMA_PDB_SUCCESS;
 }
 
 static gboolean
 save_image (GFile         *file,
-            GimpImage     *image,
-            GimpDrawable  *drawable,
-            GimpImage     *orig_image,
+            LigmaImage     *image,
+            LigmaDrawable  *drawable,
+            LigmaImage     *orig_image,
             GObject       *config,
             GError       **error)
 {
   GeglBuffer    *buffer;
-  GimpImageType  drawable_type;
+  LigmaImageType  drawable_type;
   const Babl    *format = NULL;
   GOutputStream *output;
   gint           Red[MAXCOLORS];
@@ -757,7 +757,7 @@ save_image (GFile         *file,
   gint           Disposal;
   gchar         *layer_name;
 
-  GimpRGB        background;
+  LigmaRGB        background;
   guchar         bgred, bggreen, bgblue;
   guchar         bgindex = 0;
   guint          best_error = 0xFFFFFFFF;
@@ -783,7 +783,7 @@ save_image (GFile         *file,
                 "force-dispose",     &config_use_default_dispose,
                 "as-animation",      &config_as_animation,
                 "save-comment",      &config_save_comment,
-                "gimp-comment",      &config_comment,
+                "ligma-comment",      &config_comment,
                 NULL);
 
   /* The GIF spec says 7bit ASCII for the comment block. */
@@ -814,10 +814,10 @@ save_image (GFile         *file,
     }
 
   /* get a list of layers for this image */
-  layers = gimp_image_list_layers (image);
+  layers = ligma_image_list_layers (image);
   nlayers = g_list_length (layers);
 
-  drawable_type = gimp_drawable_type (layers->data);
+  drawable_type = ligma_drawable_type (layers->data);
 
   /* If the image has multiple layers (i.e. will be animated), a
    * comment, or transparency, then it must be encoded as a GIF89a
@@ -829,15 +829,15 @@ save_image (GFile         *file,
 
       /* Layers can be with or without alpha channel. Make sure we set
        * alpha if there is at least one layer with alpha channel. */
-      if (drawable_type == GIMP_GRAY_IMAGE ||
-          drawable_type == GIMP_INDEXED_IMAGE)
+      if (drawable_type == LIGMA_GRAY_IMAGE ||
+          drawable_type == LIGMA_INDEXED_IMAGE)
         {
           for (list = layers; list; list = g_list_next (list))
             {
-              GimpImageType dr_type = gimp_drawable_type (list->data);
+              LigmaImageType dr_type = ligma_drawable_type (list->data);
 
-              if (dr_type == GIMP_GRAYA_IMAGE ||
-                  dr_type == GIMP_INDEXEDA_IMAGE)
+              if (dr_type == LIGMA_GRAYA_IMAGE ||
+                  dr_type == LIGMA_INDEXEDA_IMAGE)
                 {
                   drawable_type = dr_type;
                   break;
@@ -851,13 +851,13 @@ save_image (GFile         *file,
 
   switch (drawable_type)
     {
-    case GIMP_INDEXEDA_IMAGE:
+    case LIGMA_INDEXEDA_IMAGE:
       is_gif89 = TRUE;
-    case GIMP_INDEXED_IMAGE:
-      cmap = gimp_image_get_colormap (image, &colors);
+    case LIGMA_INDEXED_IMAGE:
+      cmap = ligma_image_get_colormap (image, &colors);
 
-      gimp_context_get_background (&background);
-      gimp_rgb_get_uchar (&background, &bgred, &bggreen, &bgblue);
+      ligma_context_get_background (&background);
+      ligma_rgb_get_uchar (&background, &bgred, &bggreen, &bgblue);
 
       for (i = 0; i < colors; i++)
         {
@@ -872,9 +872,9 @@ save_image (GFile         *file,
           Blue[i]  = bgblue;
         }
       break;
-    case GIMP_GRAYA_IMAGE:
+    case LIGMA_GRAYA_IMAGE:
       is_gif89 = TRUE;
-    case GIMP_GRAY_IMAGE:
+    case LIGMA_GRAY_IMAGE:
       colors = 256;                   /* FIXME: Not ideal. */
       for ( i = 0;  i < 256; i++)
         {
@@ -910,8 +910,8 @@ save_image (GFile         *file,
 
 
   /* init the progress meter */
-  gimp_progress_init_printf (_("Exporting '%s'"),
-                             gimp_file_get_utf8_name (file));
+  ligma_progress_init_printf (_("Exporting '%s'"),
+                             ligma_file_get_utf8_name (file));
 
 
   /* open the destination file for writing */
@@ -946,21 +946,21 @@ save_image (GFile         *file,
        * wasted indices.
        */
       liberalBPP = BitsPerPixel =
-        colors_to_bpp (colors + ((drawable_type==GIMP_INDEXEDA_IMAGE) ? 1 : 0));
+        colors_to_bpp (colors + ((drawable_type==LIGMA_INDEXEDA_IMAGE) ? 1 : 0));
     }
   else
     {
       liberalBPP = BitsPerPixel =
         colors_to_bpp (256);
 
-      if (drawable_type == GIMP_INDEXEDA_IMAGE)
+      if (drawable_type == LIGMA_INDEXEDA_IMAGE)
         {
           g_printerr ("GIF: Too many colors?\n");
         }
     }
 
-  cols = gimp_image_get_width (image);
-  rows = gimp_image_get_height (image);
+  cols = ligma_image_get_width (image);
+  rows = ligma_image_get_height (image);
   Interlace = config_interlace;
   if (! gif_encode_header (output, is_gif89, cols, rows, bgindex,
                            BitsPerPixel, Red, Green, Blue, get_pixel,
@@ -1002,35 +1002,35 @@ save_image (GFile         *file,
        list && i >= 0;
        list = g_list_next (list), i--, cur_progress = (nlayers - i) * rows)
     {
-      GimpDrawable *drawable = list->data;
+      LigmaDrawable *drawable = list->data;
 
-      drawable_type = gimp_drawable_type (drawable);
-      if (drawable_type == GIMP_GRAYA_IMAGE)
+      drawable_type = ligma_drawable_type (drawable);
+      if (drawable_type == LIGMA_GRAYA_IMAGE)
         {
           format = babl_format ("Y'A u8");
         }
-      else if (drawable_type == GIMP_GRAY_IMAGE)
+      else if (drawable_type == LIGMA_GRAY_IMAGE)
         {
           format = babl_format ("Y' u8");
         }
 
-      buffer = gimp_drawable_get_buffer (drawable);
-      gimp_drawable_get_offsets (drawable, &offset_x, &offset_y);
-      cols = gimp_drawable_get_width (drawable);
-      rows = gimp_drawable_get_height (drawable);
+      buffer = ligma_drawable_get_buffer (drawable);
+      ligma_drawable_get_offsets (drawable, &offset_x, &offset_y);
+      cols = ligma_drawable_get_width (drawable);
+      rows = ligma_drawable_get_height (drawable);
       rowstride = cols;
 
       pixels = g_new (guchar, (cols * rows *
-                               (((drawable_type == GIMP_INDEXEDA_IMAGE) ||
-                                 (drawable_type == GIMP_GRAYA_IMAGE)) ? 2 : 1)));
+                               (((drawable_type == LIGMA_INDEXEDA_IMAGE) ||
+                                 (drawable_type == LIGMA_GRAYA_IMAGE)) ? 2 : 1)));
 
       gegl_buffer_get (buffer, GEGL_RECTANGLE (0, 0, cols, rows), 1.0,
                        format, pixels,
                        GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
       /* sort out whether we need to do transparency jiggery-pokery */
-      if ((drawable_type == GIMP_INDEXEDA_IMAGE) ||
-          (drawable_type == GIMP_GRAYA_IMAGE))
+      if ((drawable_type == LIGMA_INDEXEDA_IMAGE) ||
+          (drawable_type == LIGMA_GRAYA_IMAGE))
         {
           /* Try to find an entry which isn't actually used in the
            * image, for a transparency index.
@@ -1077,7 +1077,7 @@ save_image (GFile         *file,
         {
           if (i > 0 && ! config_use_default_dispose)
             {
-              layer_name = gimp_item_get_name (list->next->data);
+              layer_name = ligma_item_get_name (list->next->data);
               Disposal = parse_disposal_tag (layer_name,
                                              config_default_dispose);
               g_free (layer_name);
@@ -1087,7 +1087,7 @@ save_image (GFile         *file,
               Disposal = config_default_dispose;
             }
 
-          layer_name = gimp_item_get_name (GIMP_ITEM (drawable));
+          layer_name = ligma_item_get_name (LIGMA_ITEM (drawable));
           Delay89 = parse_ms_tag (layer_name);
           g_free (layer_name);
 
@@ -1129,7 +1129,7 @@ save_image (GFile         *file,
                                    error))
         return FALSE;
 
-      gimp_progress_update (1.0);
+      ligma_progress_update (1.0);
 
       g_object_unref (buffer);
 
@@ -1161,12 +1161,12 @@ bad_bounds_dialog (void)
                           _("Cr_op"),   GTK_RESPONSE_OK,
                           NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  gimp_window_set_transient (GTK_WINDOW (dialog));
+  ligma_window_set_transient (GTK_WINDOW (dialog));
 
   gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
                                             _("The GIF file format does not "
@@ -1185,8 +1185,8 @@ bad_bounds_dialog (void)
 }
 
 static gboolean
-save_dialog (GimpImage     *image,
-             GimpProcedure *procedure,
+save_dialog (LigmaImage     *image,
+             LigmaProcedure *procedure,
              GObject       *config)
 {
   GtkWidget     *dialog;
@@ -1200,12 +1200,12 @@ save_dialog (GimpImage     *image,
   gboolean       animation_supported;
   gboolean       run;
 
-  g_free (gimp_image_get_layers (image, &n_layers));
+  g_free (ligma_image_get_layers (image, &n_layers));
 
   animation_supported = n_layers > 1;
 
-  dialog = gimp_procedure_dialog_new (procedure,
-                                      GIMP_PROCEDURE_CONFIG (config),
+  dialog = ligma_procedure_dialog_new (procedure,
+                                      LIGMA_PROCEDURE_CONFIG (config),
                                       _("Export Image as GIF"));
 
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
@@ -1215,16 +1215,16 @@ save_dialog (GimpImage     *image,
   gtk_widget_show (main_vbox);
 
   /* Interlace toggle */
-  toggle = gimp_prop_check_button_new (config, "interlace",
+  toggle = ligma_prop_check_button_new (config, "interlace",
                                        _("_Interlace"));
   gtk_box_pack_start (GTK_BOX (main_vbox), toggle, FALSE, FALSE, 0);
 
   /* Comment toggle and frame */
-  frame = gimp_frame_new (NULL);
+  frame = ligma_frame_new (NULL);
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  toggle = gimp_prop_check_button_new (config, "save-comment",
+  toggle = ligma_prop_check_button_new (config, "save-comment",
                                        _("Save c_omment"));
   gtk_frame_set_label_widget (GTK_FRAME (frame), toggle);
 
@@ -1244,7 +1244,7 @@ save_dialog (GimpImage     *image,
 
 #define MAX_COMMENT 240
 
-  text_buffer = gimp_prop_text_buffer_new (config, "gimp-comment",
+  text_buffer = ligma_prop_text_buffer_new (config, "ligma-comment",
                                            MAX_COMMENT);
   gtk_text_view_set_buffer (GTK_TEXT_VIEW (text_view), text_buffer);
   g_object_unref (text_buffer);
@@ -1260,11 +1260,11 @@ save_dialog (GimpImage     *image,
       gboolean      toggle_state;
 
       /* Animation toggle and frame */
-      frame = gimp_frame_new (NULL);
+      frame = ligma_frame_new (NULL);
       gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
 
-      toggle = gimp_prop_check_button_new (config, "as-animation",
+      toggle = ligma_prop_check_button_new (config, "as-animation",
                                            _("As _animation"));
       gtk_frame_set_label_widget (GTK_FRAME (frame), toggle);
 
@@ -1280,16 +1280,16 @@ save_dialog (GimpImage     *image,
 
       /* Number of repeats spin */
       hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-      spin = gimp_prop_spin_button_new (config, "number-of-repeats",
+      spin = ligma_prop_spin_button_new (config, "number-of-repeats",
                                         1, 1, 1);
       gtk_box_pack_start (GTK_BOX (hbox), spin, FALSE, FALSE, 0);
-      gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+      ligma_grid_attach_aligned (GTK_GRID (grid), 0, 0,
                                 _("_Number of repeats:"),
                                 0.0, 0.5,
                                 hbox, 1);
 
       /* Loop Forever toggle */
-      toggle = gimp_prop_check_button_new (config, "loop",
+      toggle = ligma_prop_check_button_new (config, "loop",
                                            _("_Forever"));
       gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
 
@@ -1301,12 +1301,12 @@ save_dialog (GimpImage     *image,
 
       /* Default delay spin */
       hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-      gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+      ligma_grid_attach_aligned (GTK_GRID (grid), 0, 1,
                                 _("_Delay between frames where unspecified:"),
                                 0.0, 0.5,
                                 hbox, 1);
 
-      spin = gimp_prop_spin_button_new (config, "default-delay",
+      spin = ligma_prop_spin_button_new (config, "default-delay",
                                         1, 10, 0);
       gtk_box_pack_start (GTK_BOX (hbox), spin, FALSE, FALSE, 0);
 
@@ -1314,29 +1314,29 @@ save_dialog (GimpImage     *image,
       gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
       gtk_widget_show (label);
 
-      store = gimp_int_store_new (_("I don't care"),
+      store = ligma_int_store_new (_("I don't care"),
                                   DISPOSE_UNSPECIFIED,
                                   _("Cumulative layers (combine)"),
                                   DISPOSE_COMBINE,
                                   _("One frame per layer (replace)"),
                                   DISPOSE_REPLACE,
                                   NULL);
-      combo = gimp_prop_int_combo_box_new (config, "default-dispose",
-                                           GIMP_INT_STORE (store));
+      combo = ligma_prop_int_combo_box_new (config, "default-dispose",
+                                           LIGMA_INT_STORE (store));
       g_object_unref (store);
 
-      gimp_grid_attach_aligned (GTK_GRID (grid), 0, 2,
+      ligma_grid_attach_aligned (GTK_GRID (grid), 0, 2,
                                 _("_Frame disposal where unspecified"),
                                 0.0, 0.5,
                                 combo, 1);
 
       /* The "Always use default values" toggles */
-      toggle = gimp_prop_check_button_new (config, "force-delay",
+      toggle = ligma_prop_check_button_new (config, "force-delay",
                                            _("_Use delay entered above "
                                              "for all frames"));
       gtk_grid_attach (GTK_GRID (grid), toggle, 0, 3, 2, 1);
 
-      toggle = gimp_prop_check_button_new (config, "force-dispose",
+      toggle = ligma_prop_check_button_new (config, "force-dispose",
                                            _("U_se disposal entered above "
                                              "for all frames"));
       gtk_grid_attach (GTK_GRID (grid), toggle, 0, 4, 2, 1);
@@ -1345,11 +1345,11 @@ save_dialog (GimpImage     *image,
     {
       GtkWidget *hint;
 
-      frame = gimp_frame_new (_("Animated GIF"));
+      frame = ligma_frame_new (_("Animated GIF"));
       gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
 
-      hint = gimp_hint_box_new (_("You can only export as animation when the "
+      hint = ligma_hint_box_new (_("You can only export as animation when the "
                                   "image has more than one layer.\n"
                                   "The image you are trying to export only "
                                   "has one layer."));
@@ -1359,7 +1359,7 @@ save_dialog (GimpImage     *image,
 
   gtk_widget_show (dialog);
 
-  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
+  run = ligma_procedure_dialog_run (LIGMA_PROCEDURE_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
 
@@ -1457,7 +1457,7 @@ bump_pixel (void)
       cur_progress++;
 
       if ((cur_progress % 20) == 0)
-        gimp_progress_update ((gdouble) cur_progress / (gdouble) max_progress);
+        ligma_progress_update ((gdouble) cur_progress / (gdouble) max_progress);
 
       curx = 0;
 

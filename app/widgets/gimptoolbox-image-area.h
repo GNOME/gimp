@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,13 +15,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TOOLBOX_IMAGE_AREA_H__
-#define __GIMP_TOOLBOX_IMAGE_AREA_H__
+#ifndef __LIGMA_TOOLBOX_IMAGE_AREA_H__
+#define __LIGMA_TOOLBOX_IMAGE_AREA_H__
 
 
-GtkWidget * gimp_toolbox_image_area_create (GimpToolbox *toolbox,
+GtkWidget * ligma_toolbox_image_area_create (LigmaToolbox *toolbox,
                                             gint         width,
                                             gint         height);
 
 
-#endif  /*  __GIMP_TOOLBOX_IMAGE_AREA_H__  */
+#endif  /*  __LIGMA_TOOLBOX_IMAGE_AREA_H__  */

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,13 +21,13 @@
 gboolean     script_fu_extension_is_busy         (void);
 
 GList *      script_fu_search_path               (void);
-void         script_fu_find_and_register_scripts (GimpPlugIn     *plugin,
+void         script_fu_find_and_register_scripts (LigmaPlugIn     *plugin,
                                                   GList          *paths);
 
-void         script_fu_set_run_mode              (GimpRunMode     run_mode);
+void         script_fu_set_run_mode              (LigmaRunMode     run_mode);
 void         script_fu_init_embedded_interpreter (GList          *paths,
                                                   gboolean        allow_register,
-                                                  GimpRunMode     run_mode);
+                                                  LigmaRunMode     run_mode);
 
 void         script_fu_set_print_flag            (gboolean        should_print);
 void         script_fu_redirect_output_to_gstr   (GString        *output);
@@ -42,10 +42,10 @@ void         script_fu_run_read_eval_print_loop  (void);
 void         script_fu_register_quit_callback         (void (*func) (void));
 void         script_fu_register_post_command_callback (void (*func) (void));
 
-GimpProcedure *script_fu_find_scripts_create_PDB_proc_plugin (GimpPlugIn  *plug_in,
+LigmaProcedure *script_fu_find_scripts_create_PDB_proc_plugin (LigmaPlugIn  *plug_in,
                                                               GList       *paths,
                                                               const gchar *name);
-GList         *script_fu_find_scripts_list_proc_names        (GimpPlugIn  *plug_in,
+GList         *script_fu_find_scripts_list_proc_names        (LigmaPlugIn  *plug_in,
                                                               GList       *paths);
 
 #endif /* __SCRIPT_FU_LIB_H__ */

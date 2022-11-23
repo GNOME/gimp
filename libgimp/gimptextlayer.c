@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2000 Peter Mattis and Spencer Kimball
  *
- * gimptextlayer.c
+ * ligmatextlayer.c
  * Copyright (C) 2022 Jehan
  *
  * This library is free software: you can redistribute it and/or
@@ -21,33 +21,33 @@
 
 #include "config.h"
 
-#include "gimp.h"
+#include "ligma.h"
 
 
-struct _GimpTextLayer
+struct _LigmaTextLayer
 {
-  GimpLayer parent_instance;
+  LigmaLayer parent_instance;
 };
 
 
-static GimpLayer * gimp_text_layer_copy (GimpLayer *layer);
+static LigmaLayer * ligma_text_layer_copy (LigmaLayer *layer);
 
 
-G_DEFINE_TYPE (GimpTextLayer, gimp_text_layer, GIMP_TYPE_LAYER)
+G_DEFINE_TYPE (LigmaTextLayer, ligma_text_layer, LIGMA_TYPE_LAYER)
 
-#define parent_class gimp_text_layer_parent_class
+#define parent_class ligma_text_layer_parent_class
 
 
 static void
-gimp_text_layer_class_init (GimpTextLayerClass *klass)
+ligma_text_layer_class_init (LigmaTextLayerClass *klass)
 {
-  GimpLayerClass *layer_class = GIMP_LAYER_CLASS (klass);
+  LigmaLayerClass *layer_class = LIGMA_LAYER_CLASS (klass);
 
-  layer_class->copy = gimp_text_layer_copy;
+  layer_class->copy = ligma_text_layer_copy;
 }
 
 static void
-gimp_text_layer_init (GimpTextLayer *layer)
+ligma_text_layer_init (LigmaTextLayer *layer)
 {
 }
 
@@ -55,33 +55,33 @@ gimp_text_layer_init (GimpTextLayer *layer)
 /* Public API. */
 
 /**
- * gimp_text_layer_get_by_id:
+ * ligma_text_layer_get_by_id:
  * @layer_id: The layer id.
  *
- * Returns a #GimpTextLayer representing @layer_id. This function calls
- * gimp_item_get_by_id() and returns the item if it is layer or %NULL
+ * Returns a #LigmaTextLayer representing @layer_id. This function calls
+ * ligma_item_get_by_id() and returns the item if it is layer or %NULL
  * otherwise.
  *
- * Returns: (nullable) (transfer none): a #GimpTextLayer for @layer_id or
+ * Returns: (nullable) (transfer none): a #LigmaTextLayer for @layer_id or
  *          %NULL if @layer_id does not represent a valid layer. The
- *          object belongs to libgimp and you must not modify or unref
+ *          object belongs to libligma and you must not modify or unref
  *          it.
  *
  * Since: 3.0
  **/
-GimpTextLayer *
-gimp_text_layer_get_by_id (gint32 layer_id)
+LigmaTextLayer *
+ligma_text_layer_get_by_id (gint32 layer_id)
 {
-  GimpItem *item = gimp_item_get_by_id (layer_id);
+  LigmaItem *item = ligma_item_get_by_id (layer_id);
 
-  if (GIMP_IS_TEXT_LAYER (item))
-    return (GimpTextLayer *) item;
+  if (LIGMA_IS_TEXT_LAYER (item))
+    return (LigmaTextLayer *) item;
 
   return NULL;
 }
 
 /**
- * gimp_text_layer_new:
+ * ligma_text_layer_new:
  * @image:    The image to which to add the layer.
  * @text:     The text to generate (in UTF-8 encoding).
  * @fontname: The name of the font.
@@ -95,46 +95,46 @@ gimp_text_layer_get_by_id (gint32 layer_id)
  * contents, the @fontname, @size and @unit.
  *
  * The new layer still needs to be added to the image, as this is not automatic.
- * Add the new layer with the gimp_image_insert_layer() command. Other
+ * Add the new layer with the ligma_image_insert_layer() command. Other
  * attributes such as layer mask modes, and offsets should be set with explicit
  * procedure calls.
  *
  * Returns: (transfer none): The newly created text layer.
- *          The object belongs to libgimp and you should not free it.
+ *          The object belongs to libligma and you should not free it.
  *
  * Since: 3.0
  */
-GimpTextLayer *
-gimp_text_layer_new (GimpImage   *image,
+LigmaTextLayer *
+ligma_text_layer_new (LigmaImage   *image,
                      const gchar *text,
                      const gchar *fontname,
                      gdouble      size,
-                     GimpUnit     unit)
+                     LigmaUnit     unit)
 {
-  return _gimp_text_layer_new (image, text, fontname, size, unit);
+  return _ligma_text_layer_new (image, text, fontname, size, unit);
 }
 
 
 /*  private functions  */
 
-static GimpLayer *
-gimp_text_layer_copy (GimpLayer *layer)
+static LigmaLayer *
+ligma_text_layer_copy (LigmaLayer *layer)
 {
-  GimpTextLayer *new_layer;
+  LigmaTextLayer *new_layer;
   gchar         *text;
   gchar         *fontname;
   gdouble        size;
-  GimpUnit       unit;
+  LigmaUnit       unit;
 
-  g_return_val_if_fail (GIMP_IS_TEXT_LAYER (layer), NULL);
+  g_return_val_if_fail (LIGMA_IS_TEXT_LAYER (layer), NULL);
 
-  text      = gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer));
-  fontname  = gimp_text_layer_get_font (GIMP_TEXT_LAYER (layer));
-  size      = gimp_text_layer_get_font_size (GIMP_TEXT_LAYER (layer), &unit);
-  new_layer = gimp_text_layer_new (gimp_item_get_image (GIMP_ITEM (layer)),
+  text      = ligma_text_layer_get_text (LIGMA_TEXT_LAYER (layer));
+  fontname  = ligma_text_layer_get_font (LIGMA_TEXT_LAYER (layer));
+  size      = ligma_text_layer_get_font_size (LIGMA_TEXT_LAYER (layer), &unit);
+  new_layer = ligma_text_layer_new (ligma_item_get_image (LIGMA_ITEM (layer)),
                                    text, fontname, size, unit);
   g_free (text);
   g_free (fontname);
 
-  return GIMP_LAYER (new_layer);
+  return LIGMA_LAYER (new_layer);
 }

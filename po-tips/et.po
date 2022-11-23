@@ -1,15 +1,15 @@
-# Gimp'i eesti keele tõlge.
-# Estonian translation of Gimp.
+# Ligma'i eesti keele tõlge.
+# Estonian translation of Ligma.
 #
 # Copyright (C) 2001-2005 Free Software Foundation, Inc.
-# This file is distributed under the same license as the Gimp package.
+# This file is distributed under the same license as the Ligma package.
 #
 # Olle Niit <olle@paalalinn.com>, 2005.
 # Mihkel Tõnnov <mihhkel@gmail.com>, 2009.
 msgid ""
 msgstr ""
-"Project-Id-Version: Gimp-tips\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: Ligma-tips\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2012-11-02 19:35+0000\n"
 "PO-Revision-Date: 2012-12-19 15:27+0300\n"
 "Last-Translator: Mattias Põldaru <mahfiaz@gmail.com>\n"
@@ -21,18 +21,18 @@ msgstr ""
 "X-Generator: Emacs\n"
 
 msgid ""
-"You can get context-sensitive help for most of GIMP's features by pressing "
+"You can get context-sensitive help for most of LIGMA's features by pressing "
 "the F1 key at any time. This also works inside the menus."
 msgstr ""
-"Enamiku GIMP-i vahendite kohta saad asjakohast abi, kui vajutad klahvi F1. "
+"Enamiku LIGMA-i vahendite kohta saad asjakohast abi, kui vajutad klahvi F1. "
 "See töötab ka menüüdes."
 
 msgid ""
-"GIMP uses layers to let you organize your image. Think of them as a stack of "
+"LIGMA uses layers to let you organize your image. Think of them as a stack of "
 "slides or filters, such that looking through them you see a composite of "
 "their contents."
 msgstr ""
-"GIMP võimaldab kasutada pildi korraldamiseks kihte. Mõtle neist kui hulgast "
+"LIGMA võimaldab kasutada pildi korraldamiseks kihte. Mõtle neist kui hulgast "
 "üksteise taha asetatud slaididest või filtritest, milledest korraga läbi "
 "vaadates moodustub tervikpilt."
 
@@ -44,12 +44,12 @@ msgstr ""
 "kihi nimel."
 
 msgid ""
-"When you save an image to work on it again later, try using XCF, GIMP's "
+"When you save an image to work on it again later, try using XCF, LIGMA's "
 "native file format (use the file extension <tt>.xcf</tt>). This preserves "
 "the layers and many aspects of your work-in-progress. Once a project is "
 "completed, you can export it as JPEG, PNG, GIF, etc."
 msgstr ""
-"Kui salvestad pildi, et sellega hiljem edasi töötada, proovi kasutada GIMP-i "
+"Kui salvestad pildi, et sellega hiljem edasi töötada, proovi kasutada LIGMA-i "
 "jaoks loodud XCF-vormingut (kasuta faililaiendit <tt>.xcf</tt>). Sellega "
 "säilitad kihid ja palju nüansse poolelioleva pildi juures. Kui projekt on "
 "lõpetatud, võib selle salvestada JPEG-, PNG-, GIF- või muusse vormingusse."
@@ -96,11 +96,11 @@ msgstr ""
 "kasutama."
 
 msgid ""
-"You can drag and drop many things in GIMP. For example, dragging a color "
+"You can drag and drop many things in LIGMA. For example, dragging a color "
 "from the toolbox or from a color palette and dropping it into an image will "
 "fill the current selection with that color."
 msgstr ""
-"Hiirega lohistades saad GIMP-is palju asju teha. Näiteks tõmmates värvi "
+"Hiirega lohistades saad LIGMA-is palju asju teha. Näiteks tõmmates värvi "
 "tööriistakastist või värvipaletilt pildile, värvub valitud osa pildist seda "
 "värvi."
 
@@ -140,11 +140,11 @@ msgstr ""
 "kiht&quot; või &quot;Ankurda kiht&quot; - või kasuta vastavaid menüükäske."
 
 msgid ""
-"GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>."
+"LIGMA supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>."
 "bz2</tt>, if you have bzip2 installed) to the filename and your image will "
 "be saved compressed. Of course loading compressed images works too."
 msgstr ""
-"GIMP toetab lennult GZIP-pakkimist. Salvestamisel lisa faili nimele <tt>.gz</"
+"LIGMA toetab lennult GZIP-pakkimist. Salvestamisel lisa faili nimele <tt>.gz</"
 "tt> (või <tt>.bz2</tt>, kui bzip2 on installitud) ja sinu pilt salvestatakse "
 "pakitult. Loomulikult toimib ka pakitud piltide avamine."
 
@@ -210,14 +210,14 @@ msgid ""
 "dialog, you can reassign shortcut keys. Do so by bringing up the menu, "
 "selecting a menu item, and pressing the desired key combination. If &quot;"
 "Save Keyboard Shortcuts&quot; is enabled, the key bindings are saved when "
-"you exit GIMP. You should probably disable &quot;Dynamic Keyboard "
+"you exit LIGMA. You should probably disable &quot;Dynamic Keyboard "
 "Shortcuts&quot; afterwards, to prevent accidentally assigning/reassigning "
 "shortcuts."
 msgstr ""
 "Pärast &quot;dünaamiliste kiirklahvide&quot; lubamist seadistusdialoogis "
 "saad kiirklahve ümber määrata. Selleks ava menüü, vali element ja vajuta "
 "soovitud klahvikombinatsiooni. Kui &quot;kiirklahvide salvestamine&quot; on "
-"lubatud, salvestatakse need GIMP-i sulgemisel. Hiljem võiks &quot;"
+"lubatud, salvestatakse need LIGMA-i sulgemisel. Hiljem võiks &quot;"
 "dünaamilised kiirklahvid&quot; vast välja lülitada, et ennetada nende "
 "kogemata muutmist."
 

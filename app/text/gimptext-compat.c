@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpText
- * Copyright (C) 2002-2003  Sven Neumann <sven@gimp.org>
+ * LigmaText
+ * Copyright (C) 2002-2003  Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,31 +24,31 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <pango/pangocairo.h>
 
-#include "libgimpcolor/gimpcolor.h"
+#include "libligmacolor/ligmacolor.h"
 
 #include "text-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpchannel.h"
-#include "core/gimpcontext.h"
-#include "core/gimpdatafactory.h"
-#include "core/gimpimage.h"
-#include "core/gimpdrawable.h"
-#include "core/gimpimage.h"
-#include "core/gimpimage-undo.h"
-#include "core/gimplayer-floating-selection.h"
+#include "core/ligma.h"
+#include "core/ligmachannel.h"
+#include "core/ligmacontext.h"
+#include "core/ligmadatafactory.h"
+#include "core/ligmaimage.h"
+#include "core/ligmadrawable.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaimage-undo.h"
+#include "core/ligmalayer-floating-selection.h"
 
-#include "gimptext.h"
-#include "gimptext-compat.h"
-#include "gimptextlayer.h"
+#include "ligmatext.h"
+#include "ligmatext-compat.h"
+#include "ligmatextlayer.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-GimpLayer *
-text_render (GimpImage    *image,
-             GimpDrawable *drawable,
-             GimpContext  *context,
+LigmaLayer *
+text_render (LigmaImage    *image,
+             LigmaDrawable *drawable,
+             LigmaContext  *context,
              gint          text_x,
              gint          text_y,
              const gchar  *fontname,
@@ -57,21 +57,21 @@ text_render (GimpImage    *image,
              gboolean      antialias)
 {
   PangoFontDescription *desc;
-  GimpText             *gtext;
-  GimpLayer            *layer;
-  GimpRGB               color;
+  LigmaText             *gtext;
+  LigmaLayer            *layer;
+  LigmaRGB               color;
   gchar                *font;
   gdouble               size;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (drawable == NULL || GIMP_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (drawable == NULL || LIGMA_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (drawable == NULL ||
-                        gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+                        ligma_item_is_attached (LIGMA_ITEM (drawable)), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (fontname != NULL, NULL);
   g_return_val_if_fail (text != NULL, NULL);
 
-  if (! gimp_data_factory_data_wait (image->gimp->font_factory))
+  if (! ligma_data_factory_data_wait (image->ligma->font_factory))
     return NULL;
 
   if (border < 0)
@@ -85,9 +85,9 @@ text_render (GimpImage    *image,
 
   pango_font_description_free (desc);
 
-  gimp_context_get_foreground (context, &color);
+  ligma_context_get_foreground (context, &color);
 
-  gtext = g_object_new (GIMP_TYPE_TEXT,
+  gtext = g_object_new (LIGMA_TYPE_TEXT,
                         "text",      text,
                         "font",      font,
                         "font-size", size,
@@ -98,7 +98,7 @@ text_render (GimpImage    *image,
 
   g_free (font);
 
-  layer = gimp_text_layer_new (image, gtext);
+  layer = ligma_text_layer_new (image, gtext);
 
   g_object_unref (gtext);
 
@@ -106,23 +106,23 @@ text_render (GimpImage    *image,
     return NULL;
 
   /*  Start a group undo  */
-  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TEXT,
+  ligma_image_undo_group_start (image, LIGMA_UNDO_GROUP_TEXT,
                                _("Add Text Layer"));
 
   /*  Set the layer offsets  */
-  gimp_item_set_offset (GIMP_ITEM (layer), text_x, text_y);
+  ligma_item_set_offset (LIGMA_ITEM (layer), text_x, text_y);
 
   /*  If there is a selection mask clear it--
    *  this might not always be desired, but in general,
    *  it seems like the correct behavior.
    */
-  if (! gimp_channel_is_empty (gimp_image_get_mask (image)))
-    gimp_channel_clear (gimp_image_get_mask (image), NULL, TRUE);
+  if (! ligma_channel_is_empty (ligma_image_get_mask (image)))
+    ligma_channel_clear (ligma_image_get_mask (image), NULL, TRUE);
 
   if (drawable == NULL)
     {
       /*  If the drawable is NULL, create a new layer  */
-      gimp_image_add_layer (image, layer, NULL, -1, TRUE);
+      ligma_image_add_layer (image, layer, NULL, -1, TRUE);
     }
   else
     {
@@ -131,13 +131,13 @@ text_render (GimpImage    *image,
     }
 
   /*  end the group undo  */
-  gimp_image_undo_group_end (image);
+  ligma_image_undo_group_end (image);
 
   return layer;
 }
 
 gboolean
-text_get_extents (Gimp        *gimp,
+text_get_extents (Ligma        *ligma,
                   const gchar *fontname,
                   const gchar *text,
                   gint        *width,
@@ -151,11 +151,11 @@ text_get_extents (Gimp        *gimp,
   PangoFontMap         *fontmap;
   PangoRectangle        rect;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), FALSE);
   g_return_val_if_fail (fontname != NULL, FALSE);
   g_return_val_if_fail (text != NULL, FALSE);
 
-  if (! gimp_data_factory_data_wait (gimp->font_factory))
+  if (! ligma_data_factory_data_wait (ligma->font_factory))
     return FALSE;
 
   fontmap = pango_cairo_font_map_new_for_font_type (CAIRO_FONT_TYPE_FT);

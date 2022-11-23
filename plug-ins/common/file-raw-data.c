@@ -3,7 +3,7 @@
  * by tim copperfield [timecop@japan.co.jp]
  * http://www.ne.jp/asahi/linux/timecop
  *
- * Updated for Gimp 2.1 by pg@futureware.at and mitch@gimp.org
+ * Updated for Ligma 2.1 by pg@futureware.at and mitch@ligma.org
  *
  * This plugin is not based on any other plugin.
  *
@@ -40,31 +40,31 @@
 #include <io.h>
 #endif
 
-#include "libgimp/gimp.h"
-#include "libgimp/gimpui.h"
+#include "libligma/ligma.h"
+#include "libligma/ligmaui.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 #define LOAD_PROC      "file-raw-load"
 #define LOAD_HGT_PROC  "file-hgt-load"
 #define SAVE_PROC      "file-raw-save"
 #define PLUG_IN_BINARY "file-raw-data"
-#define PLUG_IN_ROLE   "gimp-file-raw-data"
+#define PLUG_IN_ROLE   "ligma-file-raw-data"
 #define PREVIEW_SIZE   350
 
 
-#define GIMP_PLUGIN_HGT_LOAD_ERROR gimp_plugin_hgt_load_error_quark ()
+#define LIGMA_PLUGIN_HGT_LOAD_ERROR ligma_plugin_hgt_load_error_quark ()
 
 typedef enum
 {
-  GIMP_PLUGIN_HGT_LOAD_ARGUMENT_ERROR
-} GimpPluginHGTError;
+  LIGMA_PLUGIN_HGT_LOAD_ARGUMENT_ERROR
+} LigmaPluginHGTError;
 
 static GQuark
-gimp_plugin_hgt_load_error_quark (void)
+ligma_plugin_hgt_load_error_quark (void)
 {
-  return g_quark_from_static_string ("gimp-plugin-hgt-load-error-quark");
+  return g_quark_from_static_string ("ligma-plugin-hgt-load-error-quark");
 }
 
 
@@ -135,10 +135,10 @@ typedef enum
 typedef struct
 {
   FILE         *fp;        /* pointer to the already open file */
-  GeglBuffer   *buffer;    /* gimp drawable buffer             */
-  GimpImage    *image;     /* gimp image                       */
+  GeglBuffer   *buffer;    /* ligma drawable buffer             */
+  LigmaImage    *image;     /* ligma image                       */
   guchar        cmap[768]; /* color map for indexed images     */
-} RawGimpData;
+} RawLigmaData;
 
 
 typedef struct _Raw      Raw;
@@ -146,12 +146,12 @@ typedef struct _RawClass RawClass;
 
 struct _Raw
 {
-  GimpPlugIn      parent_instance;
+  LigmaPlugIn      parent_instance;
 };
 
 struct _RawClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -160,26 +160,26 @@ struct _RawClass
 
 GType                   raw_get_type         (void) G_GNUC_CONST;
 
-static GList          * raw_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * raw_create_procedure (GimpPlugIn           *plug_in,
+static GList          * raw_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * raw_create_procedure (LigmaPlugIn           *plug_in,
                                               const gchar          *name);
 
-static GimpValueArray * raw_load             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
+static LigmaValueArray * raw_load             (LigmaProcedure        *procedure,
+                                              LigmaRunMode           run_mode,
                                               GFile                *file,
-                                              const GimpValueArray *args,
+                                              const LigmaValueArray *args,
                                               gpointer              run_data);
-static GimpValueArray * raw_save             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
-                                              GimpImage            *image,
+static LigmaValueArray * raw_save             (LigmaProcedure        *procedure,
+                                              LigmaRunMode           run_mode,
+                                              LigmaImage            *image,
                                               gint                  n_drawables,
-                                              GimpDrawable        **drawables,
+                                              LigmaDrawable        **drawables,
                                               GFile                *file,
-                                              const GimpValueArray *args,
+                                              const LigmaValueArray *args,
                                               gpointer              run_data);
 
 /* prototypes for the new load functions */
-static gboolean         raw_load_standard    (RawGimpData          *data,
+static gboolean         raw_load_standard    (RawLigmaData          *data,
                                               gint                  width,
                                               gint                  height,
                                               gint                  bpp,
@@ -188,7 +188,7 @@ static gboolean         raw_load_standard    (RawGimpData          *data,
                                               gboolean              is_big_endian,
                                               gboolean              is_signed,
                                               gboolean              is_float);
-static gboolean         raw_load_planar      (RawGimpData          *data,
+static gboolean         raw_load_planar      (RawLigmaData          *data,
                                               gint                  width,
                                               gint                  height,
                                               gint                  bpp,
@@ -197,19 +197,19 @@ static gboolean         raw_load_planar      (RawGimpData          *data,
                                               gboolean              is_big_endian,
                                               gboolean              is_signed,
                                               gboolean              is_float);
-static gboolean         raw_load_gray        (RawGimpData          *data,
+static gboolean         raw_load_gray        (RawLigmaData          *data,
                                               gint                  width,
                                               gint                  height,
                                               gint                  offset,
                                               gint                  bpp,
                                               gint                  bitspp);
-static gboolean         raw_load_rgb565      (RawGimpData          *data,
+static gboolean         raw_load_rgb565      (RawLigmaData          *data,
                                               gint                  width,
                                               gint                  height,
                                               gint                  offset,
                                               RawType               type,
                                               RawEndianness         endianness);
-static gboolean         raw_load_palette     (RawGimpData          *data,
+static gboolean         raw_load_palette     (RawLigmaData          *data,
                                               gint                  palette_offset,
                                               RawPaletteType        palette_type,
                                               GFile                *palette_file);
@@ -231,22 +231,22 @@ static void             rgb_565_to_888       (guint16              *in,
                                               RawType               type,
                                               RawEndianness         endianness);
 
-static GimpImage      * load_image           (GFile                *file,
-                                              GimpProcedureConfig  *config,
+static LigmaImage      * load_image           (GFile                *file,
+                                              LigmaProcedureConfig  *config,
                                               GError              **error);
 static gboolean         save_image           (GFile                *file,
-                                              GimpImage            *image,
-                                              GimpDrawable         *drawable,
-                                              GimpProcedureConfig  *config,
+                                              LigmaImage            *image,
+                                              LigmaDrawable         *drawable,
+                                              LigmaProcedureConfig  *config,
                                               GError              **error);
 
-static void            get_bpp               (GimpProcedureConfig     *config,
+static void            get_bpp               (LigmaProcedureConfig     *config,
                                               gint                    *bpp,
                                               gint                    *bitspp);
-static gboolean        detect_sample_spacing (GimpProcedureConfig     *config,
+static gboolean        detect_sample_spacing (LigmaProcedureConfig     *config,
                                               GFile                   *file,
                                               GError                 **error);
-static void           get_load_config_values (GimpProcedureConfig     *config,
+static void           get_load_config_values (LigmaProcedureConfig     *config,
                                               gint32                  *file_offset,
                                               gint32                  *image_width,
                                               gint32                  *image_height,
@@ -263,27 +263,27 @@ static void             halfp2singles        (uint32_t                *xp,
                                               const uint16_t          *hp,
                                               int                      numel);
 
-static void             preview_update       (GimpPreviewArea         *preview,
+static void             preview_update       (LigmaPreviewArea         *preview,
                                               gboolean                 preview_cmap_update);
-static void             preview_update_size  (GimpPreviewArea         *preview);
-static void             load_config_notify   (GimpProcedureConfig     *config,
+static void             preview_update_size  (LigmaPreviewArea         *preview);
+static void             load_config_notify   (LigmaProcedureConfig     *config,
                                               GParamSpec              *pspec,
-                                              GimpPreviewArea         *preview);
-static void             preview_allocate     (GimpPreviewArea         *preview,
+                                              LigmaPreviewArea         *preview);
+static void             preview_allocate     (LigmaPreviewArea         *preview,
                                               GtkAllocation           *allocation,
                                               gpointer                 user_data);
 static gboolean         load_dialog          (GFile                   *file,
-                                              GimpProcedure           *procedure,
+                                              LigmaProcedure           *procedure,
                                               GObject                 *config,
                                               gboolean                 is_hgt);
-static gboolean         save_dialog          (GimpImage               *image,
-                                              GimpProcedure           *procedure,
+static gboolean         save_dialog          (LigmaImage               *image,
+                                              LigmaProcedure           *procedure,
                                               gboolean                 has_alpha,
                                               GObject                 *config);
 
-G_DEFINE_TYPE (Raw, raw, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Raw, raw, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (RAW_TYPE)
+LIGMA_MAIN (RAW_TYPE)
 DEFINE_STD_SET_I18N
 
 
@@ -294,7 +294,7 @@ static guchar     preview_cmap[1024];
 static void
 raw_class_init (RawClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = raw_query_procedures;
   plug_in_class->create_procedure = raw_create_procedure;
@@ -307,7 +307,7 @@ raw_init (Raw *raw)
 }
 
 static GList *
-raw_query_procedures (GimpPlugIn *plug_in)
+raw_query_procedures (LigmaPlugIn *plug_in)
 {
   GList *list = NULL;
 
@@ -318,68 +318,68 @@ raw_query_procedures (GimpPlugIn *plug_in)
   return list;
 }
 
-static GimpProcedure *
-raw_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+raw_create_procedure (LigmaPlugIn  *plug_in,
                       const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, LOAD_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_load_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            raw_load, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure, _("Raw image data"));
+      ligma_procedure_set_menu_label (procedure, _("Raw image data"));
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Load raw images, specifying image "
                                         "information",
                                         "Load raw images, specifying image "
                                         "information",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "timecop, pg@futureware.at",
                                       "timecop, pg@futureware.at",
                                       "Aug 2004");
 
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "data");
 
       /* Properties for image data. */
 
-      GIMP_PROC_ARG_INT (procedure, "width",
+      LIGMA_PROC_ARG_INT (procedure, "width",
                          "_Width",
                          "Image width in number of pixels",
-                         1, GIMP_MAX_IMAGE_SIZE, PREVIEW_SIZE,
+                         1, LIGMA_MAX_IMAGE_SIZE, PREVIEW_SIZE,
                          G_PARAM_READWRITE);
-      GIMP_PROC_ARG_INT (procedure, "height",
+      LIGMA_PROC_ARG_INT (procedure, "height",
                          "_Height",
                          "Image height in number of pixels",
-                         1, GIMP_MAX_IMAGE_SIZE, PREVIEW_SIZE,
+                         1, LIGMA_MAX_IMAGE_SIZE, PREVIEW_SIZE,
                          G_PARAM_READWRITE);
-      GIMP_PROC_ARG_INT (procedure, "offset",
+      LIGMA_PROC_ARG_INT (procedure, "offset",
                          "O_ffset",
                          "Offset to beginning of image in raw data",
-                         0, GIMP_MAX_IMAGE_SIZE, 0,
+                         0, LIGMA_MAX_IMAGE_SIZE, 0,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "pixel-format",
+      LIGMA_PROC_ARG_INT (procedure, "pixel-format",
                          "Pixel _format",
                          "The layout of pixel data, such as components and their order",
                          RAW_RGB_8BPP, RAW_INDEXEDA, RAW_RGB_8BPP,
                          G_PARAM_READWRITE);
-      GIMP_PROC_ARG_INT (procedure, "data-type",
+      LIGMA_PROC_ARG_INT (procedure, "data-type",
                          "Data t_ype",
                          "Data type used to represent pixel values { RAW_ENCODING_UNSIGNED (0), RAW_ENCODING_SIGNED (1), RAW_ENCODING_FLOAT (2) }",
                          RAW_ENCODING_UNSIGNED, RAW_ENCODING_FLOAT, RAW_ENCODING_UNSIGNED,
                          G_PARAM_READWRITE);
-      GIMP_PROC_ARG_INT (procedure, "endianness",
+      LIGMA_PROC_ARG_INT (procedure, "endianness",
                          "Endianness",
                          "Order of sequences of bytes { RAW_LITTLE_ENDIAN (0), RAW_BIG_ENDIAN (1) }",
                          RAW_LITTLE_ENDIAN, RAW_BIG_ENDIAN, RAW_LITTLE_ENDIAN,
                          G_PARAM_READWRITE);
-      GIMP_PROC_ARG_INT (procedure, "planar-configuration",
+      LIGMA_PROC_ARG_INT (procedure, "planar-configuration",
                          "Planar configuration",
                          "How color pixel data are stored { RAW_PLANAR_CONTIGUOUS (0), RAW_PLANAR_SEPARATE (1) }",
                          RAW_PLANAR_CONTIGUOUS, RAW_PLANAR_SEPARATE, RAW_PLANAR_CONTIGUOUS,
@@ -388,32 +388,32 @@ raw_create_procedure (GimpPlugIn  *plug_in,
 
       /* Properties for palette data. */
 
-      GIMP_PROC_ARG_INT (procedure, "palette-offset",
+      LIGMA_PROC_ARG_INT (procedure, "palette-offset",
                          "Pallette Offse_t",
                          "Offset to beginning of data in the palette file",
-                         0, GIMP_MAX_IMAGE_SIZE, 0,
+                         0, LIGMA_MAX_IMAGE_SIZE, 0,
                          G_PARAM_READWRITE);
-      GIMP_PROC_ARG_INT (procedure, "palette-type",
+      LIGMA_PROC_ARG_INT (procedure, "palette-type",
                          "Palette's la_yout",
                          "The layout for the palette's color channels"
                          "{ RAW_PALETTE_RGB (0), RAW_PALETTE_BGR (1) }",
                          RAW_PALETTE_RGB, RAW_PALETTE_BGR, RAW_PALETTE_RGB,
                          G_PARAM_READWRITE);
-      GIMP_PROC_ARG_FILE (procedure, "palette-file",
+      LIGMA_PROC_ARG_FILE (procedure, "palette-file",
                           "_Palette File",
                           "The file containing palette data",
                           G_PARAM_READWRITE);
     }
   else if (! strcmp (name, LOAD_HGT_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_load_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            raw_load, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure,
+      ligma_procedure_set_menu_label (procedure,
                                      _("Digital Elevation Model data"));
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Load HGT data as images",
                                         "Load Digital Elevation Model data "
                                         "in HGT format from the Shuttle Radar "
@@ -427,14 +427,14 @@ raw_create_procedure (GimpPlugIn  *plug_in,
                                         "instance with the \"Gradient Map\" "
                                         "plug-in.",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       NULL, NULL,
                                       "2017-12-09");
 
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "hgt");
 
-      GIMP_PROC_ARG_INT (procedure, "sample-spacing",
+      LIGMA_PROC_ARG_INT (procedure, "sample-spacing",
                          "_Sample spacing",
                          "The sample spacing of the data. "
                          "(0: auto-detect, 1: SRTM-1, 2: SRTM-3 data)",
@@ -443,33 +443,33 @@ raw_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_save_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            raw_save, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "INDEXED, GRAY, RGB, RGBA");
+      ligma_procedure_set_image_types (procedure, "INDEXED, GRAY, RGB, RGBA");
 
-      gimp_procedure_set_menu_label (procedure, _("Raw image data"));
+      ligma_procedure_set_menu_label (procedure, _("Raw image data"));
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Dump images to disk in raw format",
                                         "Dump images to disk in raw format",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Björn Kautler, Bjoern@Kautler.net",
                                       "Björn Kautler, Bjoern@Kautler.net",
                                       "April 2014");
 
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "data,raw");
 
-      GIMP_PROC_ARG_INT (procedure, "planar-configuration",
+      LIGMA_PROC_ARG_INT (procedure, "planar-configuration",
                          "Planar configuration",
                          "How color pixel data are stored { RAW_PLANAR_CONTIGUOUS (0), RAW_PLANAR_SEPARATE (1) }",
                          RAW_PLANAR_CONTIGUOUS, RAW_PLANAR_SEPARATE, RAW_PLANAR_CONTIGUOUS,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "palette-type",
+      LIGMA_PROC_ARG_INT (procedure, "palette-type",
                          "Palette's layout",
                          "The layout for the palette's color channels"
                          "{ RAW_PALETTE_RGB (0), RAW_PALETTE_BGR (1) }",
@@ -477,34 +477,34 @@ raw_create_procedure (GimpPlugIn  *plug_in,
                          G_PARAM_READWRITE);
     }
 
-  gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
+  ligma_file_procedure_set_format_name (LIGMA_FILE_PROCEDURE (procedure),
                                        _("Raw Data"));
 
   return procedure;
 }
 
-static GimpValueArray *
-raw_load (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
+static LigmaValueArray *
+raw_load (LigmaProcedure        *procedure,
+          LigmaRunMode           run_mode,
           GFile                *file,
-          const GimpValueArray *args,
+          const LigmaValueArray *args,
           gpointer              run_data)
 {
-  GimpValueArray      *return_vals;
-  GimpProcedureConfig *config;
+  LigmaValueArray      *return_vals;
+  LigmaProcedureConfig *config;
   gboolean             is_hgt;
-  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
-  GimpImage           *image  = NULL;
+  LigmaPDBStatusType    status = LIGMA_PDB_SUCCESS;
+  LigmaImage           *image  = NULL;
   GError              *error  = NULL;
 
   gegl_init (NULL, NULL);
 
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, image, run_mode, args);
+  config = ligma_procedure_create_config (procedure);
+  ligma_procedure_config_begin_run (config, image, run_mode, args);
 
-  is_hgt = (! strcmp (gimp_procedure_get_name (procedure), LOAD_HGT_PROC));
+  is_hgt = (! strcmp (ligma_procedure_get_name (procedure), LOAD_HGT_PROC));
 
-  if (run_mode == GIMP_RUN_INTERACTIVE)
+  if (run_mode == LIGMA_RUN_INTERACTIVE)
     {
       preview_fd = g_open (g_file_peek_path (file), O_RDONLY, 0);
       if (preview_fd < 0)
@@ -512,10 +512,10 @@ raw_load (GimpProcedure        *procedure,
           g_set_error (&error,
                        G_FILE_ERROR, g_file_error_from_errno (errno),
                        _("Could not open '%s' for reading: %s"),
-                       gimp_file_get_utf8_name (file),
+                       ligma_file_get_utf8_name (file),
                        g_strerror (errno));
 
-          status = GIMP_PDB_EXECUTION_ERROR;
+          status = LIGMA_PDB_EXECUTION_ERROR;
         }
       else
         {
@@ -526,9 +526,9 @@ raw_load (GimpProcedure        *procedure,
           gboolean show_dialog = (! is_hgt || ! detect_sample_spacing (config, file, &error));
 
           if (error != NULL)
-            status = GIMP_PDB_EXECUTION_ERROR;
+            status = LIGMA_PDB_EXECUTION_ERROR;
           else if (show_dialog && ! load_dialog (file, procedure, G_OBJECT (config), is_hgt))
-            status = GIMP_PDB_CANCEL;
+            status = LIGMA_PDB_CANCEL;
 
           close (preview_fd);
         }
@@ -545,13 +545,13 @@ raw_load (GimpProcedure        *procedure,
           sample_spacing > HGT_SRTM_3)
         {
           g_set_error (&error,
-                       GIMP_PLUGIN_HGT_LOAD_ERROR,
-                       GIMP_PLUGIN_HGT_LOAD_ARGUMENT_ERROR,
+                       LIGMA_PLUGIN_HGT_LOAD_ERROR,
+                       LIGMA_PLUGIN_HGT_LOAD_ARGUMENT_ERROR,
                        _("%d is not a valid sample spacing. "
                          "Valid values are: 0 (auto-detect), 1 and 3."),
                        sample_spacing);
 
-          status = GIMP_PDB_CALLING_ERROR;
+          status = LIGMA_PDB_CALLING_ERROR;
         }
       else if (sample_spacing == HGT_SRTM_AUTO_DETECT &&
                ! detect_sample_spacing (config, file, &error))
@@ -565,9 +565,9 @@ raw_load (GimpProcedure        *procedure,
                            "or its variant is not supported yet. "
                            "Supported HGT files are: SRTM-1 and SRTM-3. "
                            "If you know the variant, run with argument 1 or 3."),
-                         gimp_file_get_utf8_name (file));
+                         ligma_file_get_utf8_name (file));
 
-          status = GIMP_PDB_CALLING_ERROR;
+          status = LIGMA_PDB_CALLING_ERROR;
         }
     }
   else
@@ -576,55 +576,55 @@ raw_load (GimpProcedure        *procedure,
        * things like generate preview etc like to call us non-
        * interactively.  here we stop that.
        */
-      status = GIMP_PDB_CALLING_ERROR;
+      status = LIGMA_PDB_CALLING_ERROR;
     }
 
   /* we are okay, and the user clicked OK in the load dialog */
-  if (status == GIMP_PDB_SUCCESS)
+  if (status == LIGMA_PDB_SUCCESS)
     image = load_image (file, config, &error);
 
-  if (status != GIMP_PDB_SUCCESS && error)
+  if (status != LIGMA_PDB_SUCCESS && error)
     {
       g_printerr ("Loading \"%s\" failed with error: %s",
-                  gimp_file_get_utf8_name (file),
+                  ligma_file_get_utf8_name (file),
                   error->message);
     }
 
-  gimp_procedure_config_end_run (config, status);
+  ligma_procedure_config_end_run (config, status);
   g_object_unref (config);
 
   if (! image)
-    return gimp_procedure_new_return_values (procedure, status, error);
+    return ligma_procedure_new_return_values (procedure, status, error);
 
-  return_vals = gimp_procedure_new_return_values (procedure,
-                                                  GIMP_PDB_SUCCESS,
+  return_vals = ligma_procedure_new_return_values (procedure,
+                                                  LIGMA_PDB_SUCCESS,
                                                   NULL);
 
-  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
+  LIGMA_VALUES_SET_IMAGE (return_vals, 1, image);
 
   return return_vals;
 }
 
-static GimpValueArray *
-raw_save (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GimpImage            *image,
+static LigmaValueArray *
+raw_save (LigmaProcedure        *procedure,
+          LigmaRunMode           run_mode,
+          LigmaImage            *image,
           gint                  n_drawables,
-          GimpDrawable        **drawables,
+          LigmaDrawable        **drawables,
           GFile                *file,
-          const GimpValueArray *args,
+          const LigmaValueArray *args,
           gpointer              run_data)
 {
-  GimpProcedureConfig    *config;
-  GimpPDBStatusType       status = GIMP_PDB_SUCCESS;
-  GimpExportReturn        export = GIMP_EXPORT_CANCEL;
+  LigmaProcedureConfig    *config;
+  LigmaPDBStatusType       status = LIGMA_PDB_SUCCESS;
+  LigmaExportReturn        export = LIGMA_EXPORT_CANCEL;
   RawPlanarConfiguration  planar_conf;
   GError                 *error  = NULL;
 
   gegl_init (NULL, NULL);
 
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_export (config, image, run_mode, args, NULL);
+  config = ligma_procedure_create_config (procedure);
+  ligma_procedure_config_begin_export (config, image, run_mode, args, NULL);
 
   g_object_get (config,
                 "planar-configuration", &planar_conf,
@@ -632,20 +632,20 @@ raw_save (GimpProcedure        *procedure,
 
   if ((planar_conf != RAW_PLANAR_CONTIGUOUS) && (planar_conf != RAW_PLANAR_SEPARATE))
     {
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_CALLING_ERROR,
                                                NULL);
     }
 
-  export = gimp_export_image (&image, &n_drawables, &drawables, "RAW",
-                              GIMP_EXPORT_CAN_HANDLE_RGB     |
-                              GIMP_EXPORT_CAN_HANDLE_GRAY    |
-                              GIMP_EXPORT_CAN_HANDLE_INDEXED |
-                              GIMP_EXPORT_CAN_HANDLE_ALPHA);
+  export = ligma_export_image (&image, &n_drawables, &drawables, "RAW",
+                              LIGMA_EXPORT_CAN_HANDLE_RGB     |
+                              LIGMA_EXPORT_CAN_HANDLE_GRAY    |
+                              LIGMA_EXPORT_CAN_HANDLE_INDEXED |
+                              LIGMA_EXPORT_CAN_HANDLE_ALPHA);
 
-  if (export == GIMP_EXPORT_CANCEL)
-    return gimp_procedure_new_return_values (procedure,
-                                             GIMP_PDB_CANCEL,
+  if (export == LIGMA_EXPORT_CANCEL)
+    return ligma_procedure_new_return_values (procedure,
+                                             LIGMA_PDB_CANCEL,
                                              NULL);
 
   if (n_drawables != 1)
@@ -653,43 +653,43 @@ raw_save (GimpProcedure        *procedure,
       g_set_error (&error, G_FILE_ERROR, 0,
                    _("RAW export does not support multiple layers."));
 
-      if (export == GIMP_EXPORT_EXPORT)
+      if (export == LIGMA_EXPORT_EXPORT)
         {
-          gimp_image_delete (image);
+          ligma_image_delete (image);
           g_free (drawables);
         }
 
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_CALLING_ERROR,
                                                error);
     }
 
-  if (run_mode == GIMP_RUN_INTERACTIVE)
+  if (run_mode == LIGMA_RUN_INTERACTIVE)
     {
       if (! save_dialog (image, procedure,
-                         gimp_drawable_has_alpha (drawables[0]),
+                         ligma_drawable_has_alpha (drawables[0]),
                          G_OBJECT (config)))
-        status = GIMP_PDB_CANCEL;
+        status = LIGMA_PDB_CANCEL;
     }
 
-  if (status == GIMP_PDB_SUCCESS)
+  if (status == LIGMA_PDB_SUCCESS)
     {
       if (! save_image (file, image, drawables[0], config, &error))
         {
-          status = GIMP_PDB_EXECUTION_ERROR;
+          status = LIGMA_PDB_EXECUTION_ERROR;
         }
     }
 
-  gimp_procedure_config_end_export (config, image, file, status);
+  ligma_procedure_config_end_export (config, image, file, status);
   g_object_unref (config);
 
-  if (export == GIMP_EXPORT_EXPORT)
+  if (export == LIGMA_EXPORT_EXPORT)
     {
-      gimp_image_delete (image);
+      ligma_image_delete (image);
       g_free (drawables);
     }
 
-  return gimp_procedure_new_return_values (procedure, status, error);
+  return ligma_procedure_new_return_values (procedure, status, error);
 }
 
 /* get file size from a filen */
@@ -754,7 +754,7 @@ mmap_read (gint    fd,
  * bytes.
  */
 static gboolean
-raw_load_standard (RawGimpData *data,
+raw_load_standard (RawLigmaData *data,
                    gint         width,
                    gint         height,
                    gint         bpp,
@@ -902,7 +902,7 @@ raw_load_standard (RawGimpData *data,
 }
 
 static gboolean
-raw_load_planar (RawGimpData *data,
+raw_load_planar (RawLigmaData *data,
                  gint         width,
                  gint         height,
                  gint         bpp,
@@ -1056,7 +1056,7 @@ raw_load_planar (RawGimpData *data,
  * pixel images - hopefully lots of binaries too
  */
 static gboolean
-raw_load_gray (RawGimpData *data,
+raw_load_gray (RawLigmaData *data,
                gint         width,
                gint         height,
                gint         offset,
@@ -1137,7 +1137,7 @@ raw_load_gray (RawGimpData *data,
 
 /* this handles RGB565 images */
 static gboolean
-raw_load_rgb565 (RawGimpData   *data,
+raw_load_rgb565 (RawLigmaData   *data,
                  gint           width,
                  gint           height,
                  gint           offset,
@@ -1232,7 +1232,7 @@ rgb_565_to_888 (guint16       *in,
 }
 
 static gboolean
-raw_load_palette (RawGimpData    *data,
+raw_load_palette (RawLigmaData    *data,
                   gint            palette_offset,
                   RawPaletteType  palette_type,
                   GFile          *palette_file)
@@ -1279,7 +1279,7 @@ raw_load_palette (RawGimpData    *data,
         }
     }
 
-  gimp_image_set_colormap (data->image, data->cmap, 256);
+  ligma_image_set_colormap (data->image, data->cmap, 256);
 
   return TRUE;
 }
@@ -1288,9 +1288,9 @@ raw_load_palette (RawGimpData    *data,
 
 static gboolean
 save_image (GFile                *file,
-            GimpImage            *image,
-            GimpDrawable         *drawable,
-            GimpProcedureConfig  *config,
+            LigmaImage            *image,
+            LigmaDrawable         *drawable,
+            LigmaProcedureConfig  *config,
             GError              **error)
 {
   GeglBuffer             *buffer;
@@ -1313,9 +1313,9 @@ save_image (GFile                *file,
                 "palette-type",         &palette_type,
                 NULL);
 
-  buffer = gimp_drawable_get_buffer (drawable);
+  buffer = ligma_drawable_get_buffer (drawable);
 
-  format = gimp_drawable_get_format (drawable);
+  format = ligma_drawable_get_format (drawable);
 
   n_components = babl_format_get_n_components (format);
   bpp          = babl_format_get_bytes_per_pixel (format);
@@ -1323,8 +1323,8 @@ save_image (GFile                *file,
 
   g_return_val_if_fail (bpc * n_components == bpp, FALSE);
 
-  if (gimp_drawable_is_indexed (drawable))
-    cmap = gimp_image_get_colormap (image, &palsize);
+  if (ligma_drawable_is_indexed (drawable))
+    cmap = ligma_image_get_colormap (image, &palsize);
 
   width  = gegl_buffer_get_width  (buffer);
   height = gegl_buffer_get_height (buffer);
@@ -1343,7 +1343,7 @@ save_image (GFile                *file,
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for writing: %s"),
-                   gimp_file_get_utf8_name (file), g_strerror (errno));
+                   ligma_file_get_utf8_name (file), g_strerror (errno));
       return FALSE;
     }
 
@@ -1372,7 +1372,7 @@ save_image (GFile                *file,
             {
               g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                            _("Could not open '%s' for writing: %s"),
-                           gimp_filename_to_utf8 (newfile), g_strerror (errno));
+                           ligma_filename_to_utf8 (newfile), g_strerror (errno));
               return FALSE;
             }
 
@@ -1440,16 +1440,16 @@ save_image (GFile                *file,
 }
 
 static void
-get_bpp (GimpProcedureConfig *config,
+get_bpp (LigmaProcedureConfig *config,
          gint                *bpp,
          gint                *bitspp)
 {
-  GimpProcedure *procedure;
+  LigmaProcedure *procedure;
 
-  procedure = gimp_procedure_config_get_procedure (config);
+  procedure = ligma_procedure_config_get_procedure (config);
 
   *bitspp = 8;
-  if (g_strcmp0 (gimp_procedure_get_name (procedure), LOAD_HGT_PROC) == 0)
+  if (g_strcmp0 (ligma_procedure_get_name (procedure), LOAD_HGT_PROC) == 0)
     {
       *bpp = 2;
     }
@@ -1540,7 +1540,7 @@ get_bpp (GimpProcedureConfig *config,
 }
 
 static gboolean
-detect_sample_spacing (GimpProcedureConfig  *config,
+detect_sample_spacing (LigmaProcedureConfig  *config,
                        GFile                *file,
                        GError              **error)
 {
@@ -1553,7 +1553,7 @@ detect_sample_spacing (GimpProcedureConfig  *config,
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for size verification: %s"),
-                   gimp_file_get_utf8_name (file),
+                   ligma_file_get_utf8_name (file),
                    g_strerror (errno));
     }
   else
@@ -1580,7 +1580,7 @@ detect_sample_spacing (GimpProcedureConfig  *config,
 }
 
 static void
-get_load_config_values (GimpProcedureConfig     *config,
+get_load_config_values (LigmaProcedureConfig     *config,
                         gint32                  *file_offset,
                         gint32                  *image_width,
                         gint32                  *image_height,
@@ -1592,11 +1592,11 @@ get_load_config_values (GimpProcedureConfig     *config,
                         RawPaletteType          *palette_type,
                         GFile                  **palette_file)
 {
-  GimpProcedure *procedure;
+  LigmaProcedure *procedure;
 
-  procedure = gimp_procedure_config_get_procedure (config);
+  procedure = ligma_procedure_config_get_procedure (config);
 
-  if (g_strcmp0 (gimp_procedure_get_name (procedure), LOAD_HGT_PROC) == 0)
+  if (g_strcmp0 (ligma_procedure_get_name (procedure), LOAD_HGT_PROC) == 0)
     {
       gint sample_spacing;
 
@@ -1635,16 +1635,16 @@ get_load_config_values (GimpProcedureConfig     *config,
     }
 }
 
-static GimpImage *
+static LigmaImage *
 load_image (GFile                *file,
-            GimpProcedureConfig  *config,
+            LigmaProcedureConfig  *config,
             GError              **error)
 {
-  RawGimpData       *data;
-  GimpLayer         *layer     = NULL;
-  GimpImageType      ltype     = GIMP_RGB_IMAGE;
-  GimpImageBaseType  itype     = GIMP_RGB;
-  GimpPrecision      precision = GIMP_PRECISION_U8_NON_LINEAR;
+  RawLigmaData       *data;
+  LigmaLayer         *layer     = NULL;
+  LigmaImageType      ltype     = LIGMA_RGB_IMAGE;
+  LigmaImageBaseType  itype     = LIGMA_RGB;
+  LigmaPrecision      precision = LIGMA_PRECISION_U8_NON_LINEAR;
   RawType            pixel_format;
   RawEncoding        encoding;
   RawEndianness      endianness;
@@ -1660,10 +1660,10 @@ load_image (GFile                *file,
   RawPaletteType     palette_type;
   GFile             *palette_file;
 
-  data = g_new0 (RawGimpData, 1);
+  data = g_new0 (RawLigmaData, 1);
 
-  gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_file_get_utf8_name (file));
+  ligma_progress_init_printf (_("Opening '%s'"),
+                             ligma_file_get_utf8_name (file));
 
   data->fp = g_fopen (g_file_peek_path (file), "rb");
 
@@ -1671,7 +1671,7 @@ load_image (GFile                *file,
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),
-                   gimp_file_get_utf8_name (file), g_strerror (errno));
+                   ligma_file_get_utf8_name (file), g_strerror (errno));
       return NULL;
     }
 
@@ -1691,9 +1691,9 @@ load_image (GFile                *file,
         {
           bpp = 6;
           if (encoding == RAW_ENCODING_FLOAT)
-            precision = GIMP_PRECISION_HALF_NON_LINEAR;
+            precision = LIGMA_PRECISION_HALF_NON_LINEAR;
           else
-            precision = GIMP_PRECISION_U16_NON_LINEAR;
+            precision = LIGMA_PRECISION_U16_NON_LINEAR;
         }
 
     case RAW_RGB_32BPP:
@@ -1701,129 +1701,129 @@ load_image (GFile                *file,
         {
           bpp = 12;
           if (encoding == RAW_ENCODING_FLOAT)
-            precision = GIMP_PRECISION_FLOAT_NON_LINEAR;
+            precision = LIGMA_PRECISION_FLOAT_NON_LINEAR;
           else
-            precision = GIMP_PRECISION_U32_NON_LINEAR;
+            precision = LIGMA_PRECISION_U32_NON_LINEAR;
         }
 
-      ltype = GIMP_RGB_IMAGE;
-      itype = GIMP_RGB;
+      ltype = LIGMA_RGB_IMAGE;
+      itype = LIGMA_RGB;
       break;
 
     case RAW_RGB565:       /* RGB565 */
     case RAW_BGR565:       /* BGR565 */
       bpp   = 2;
-      ltype = GIMP_RGB_IMAGE;
-      itype = GIMP_RGB;
+      ltype = LIGMA_RGB_IMAGE;
+      itype = LIGMA_RGB;
       break;
 
     case RAW_RGBA_8BPP:       /* RGB + alpha */
       bpp   = 4;
-      ltype = GIMP_RGBA_IMAGE;
-      itype = GIMP_RGB;
+      ltype = LIGMA_RGBA_IMAGE;
+      itype = LIGMA_RGB;
       break;
 
     case RAW_RGBA_16BPP:
       bpp   = 8;
-      ltype = GIMP_RGBA_IMAGE;
-      itype = GIMP_RGB;
+      ltype = LIGMA_RGBA_IMAGE;
+      itype = LIGMA_RGB;
       if (encoding == RAW_ENCODING_FLOAT)
-        precision = GIMP_PRECISION_HALF_NON_LINEAR;
+        precision = LIGMA_PRECISION_HALF_NON_LINEAR;
       else
-        precision = GIMP_PRECISION_U16_NON_LINEAR;
+        precision = LIGMA_PRECISION_U16_NON_LINEAR;
       break;
 
     case RAW_RGBA_32BPP:
       bpp   = 16;
-      ltype = GIMP_RGBA_IMAGE;
-      itype = GIMP_RGB;
+      ltype = LIGMA_RGBA_IMAGE;
+      itype = LIGMA_RGB;
       if (encoding == RAW_ENCODING_FLOAT)
-        precision = GIMP_PRECISION_U32_NON_LINEAR;
+        precision = LIGMA_PRECISION_U32_NON_LINEAR;
       else
-        precision = GIMP_PRECISION_FLOAT_NON_LINEAR;
+        precision = LIGMA_PRECISION_FLOAT_NON_LINEAR;
       break;
 
     case RAW_GRAY_1BPP:
       bpp    = 1;
       bitspp = 1;
-      ltype  = GIMP_RGB_IMAGE;
-      itype  = GIMP_RGB;
+      ltype  = LIGMA_RGB_IMAGE;
+      itype  = LIGMA_RGB;
       break;
     case RAW_GRAY_2BPP:
       bpp    = 1;
       bitspp = 2;
-      ltype  = GIMP_RGB_IMAGE;
-      itype  = GIMP_RGB;
+      ltype  = LIGMA_RGB_IMAGE;
+      itype  = LIGMA_RGB;
       break;
     case RAW_GRAY_4BPP:
       bpp    = 1;
       bitspp = 4;
-      ltype  = GIMP_RGB_IMAGE;
-      itype  = GIMP_RGB;
+      ltype  = LIGMA_RGB_IMAGE;
+      itype  = LIGMA_RGB;
       break;
     case RAW_GRAY_8BPP:
       bpp   = 1;
-      ltype = GIMP_GRAY_IMAGE;
-      itype = GIMP_GRAY;
+      ltype = LIGMA_GRAY_IMAGE;
+      itype = LIGMA_GRAY;
       break;
 
     case RAW_INDEXED:         /* Indexed */
       bpp   = 1;
-      ltype = GIMP_INDEXED_IMAGE;
-      itype = GIMP_INDEXED;
+      ltype = LIGMA_INDEXED_IMAGE;
+      itype = LIGMA_INDEXED;
       break;
 
     case RAW_INDEXEDA:        /* Indexed + alpha */
       bpp   = 2;
-      ltype = GIMP_INDEXEDA_IMAGE;
-      itype = GIMP_INDEXED;
+      ltype = LIGMA_INDEXEDA_IMAGE;
+      itype = LIGMA_INDEXED;
       break;
 
     case RAW_GRAY_16BPP:
       bpp       = 2;
-      ltype     = GIMP_GRAY_IMAGE;
-      itype     = GIMP_GRAY;
+      ltype     = LIGMA_GRAY_IMAGE;
+      itype     = LIGMA_GRAY;
       if (encoding == RAW_ENCODING_FLOAT)
-        precision = GIMP_PRECISION_HALF_NON_LINEAR;
+        precision = LIGMA_PRECISION_HALF_NON_LINEAR;
       else
-        precision = GIMP_PRECISION_U16_NON_LINEAR;
+        precision = LIGMA_PRECISION_U16_NON_LINEAR;
       break;
 
     case RAW_GRAY_32BPP:
       bpp       = 4;
-      ltype     = GIMP_GRAY_IMAGE;
-      itype     = GIMP_GRAY;
+      ltype     = LIGMA_GRAY_IMAGE;
+      itype     = LIGMA_GRAY;
       if (encoding == RAW_ENCODING_FLOAT)
-        precision = GIMP_PRECISION_FLOAT_NON_LINEAR;
+        precision = LIGMA_PRECISION_FLOAT_NON_LINEAR;
       else
-        precision = GIMP_PRECISION_U32_NON_LINEAR;
+        precision = LIGMA_PRECISION_U32_NON_LINEAR;
       break;
 
     case RAW_GRAYA_8BPP:
       bpp       = 2;
-      ltype     = GIMP_GRAYA_IMAGE;
-      itype     = GIMP_GRAY;
-      precision = GIMP_PRECISION_U8_NON_LINEAR;
+      ltype     = LIGMA_GRAYA_IMAGE;
+      itype     = LIGMA_GRAY;
+      precision = LIGMA_PRECISION_U8_NON_LINEAR;
       break;
 
     case RAW_GRAYA_16BPP:
       bpp       = 4;
-      ltype     = GIMP_GRAYA_IMAGE;
-      itype     = GIMP_GRAY;
+      ltype     = LIGMA_GRAYA_IMAGE;
+      itype     = LIGMA_GRAY;
       if (encoding == RAW_ENCODING_FLOAT)
-        precision = GIMP_PRECISION_HALF_NON_LINEAR;
+        precision = LIGMA_PRECISION_HALF_NON_LINEAR;
       else
-        precision = GIMP_PRECISION_U16_NON_LINEAR;
+        precision = LIGMA_PRECISION_U16_NON_LINEAR;
       break;
 
     case RAW_GRAYA_32BPP:
       bpp       = 8;
-      ltype     = GIMP_GRAYA_IMAGE;
-      itype     = GIMP_GRAY;
+      ltype     = LIGMA_GRAYA_IMAGE;
+      itype     = LIGMA_GRAY;
       if (encoding == RAW_ENCODING_FLOAT)
-        precision = GIMP_PRECISION_FLOAT_NON_LINEAR;
+        precision = LIGMA_PRECISION_FLOAT_NON_LINEAR;
       else
-        precision = GIMP_PRECISION_U32_NON_LINEAR;
+        precision = LIGMA_PRECISION_U32_NON_LINEAR;
       break;
     }
 
@@ -1831,15 +1831,15 @@ load_image (GFile                *file,
   if (height > (size / width / bpp * 8 / bitspp))
     height = size / width / bpp * 8 / bitspp;
 
-  data->image = gimp_image_new_with_precision (width, height, itype, precision);
+  data->image = ligma_image_new_with_precision (width, height, itype, precision);
 
-  gimp_image_set_file (data->image, file);
-  layer = gimp_layer_new (data->image, _("Background"),
+  ligma_image_set_file (data->image, file);
+  layer = ligma_layer_new (data->image, _("Background"),
                           width, height, ltype, 100,
-                          gimp_image_get_default_new_layer_mode (data->image));
-  gimp_image_insert_layer (data->image, layer, NULL, 0);
+                          ligma_image_get_default_new_layer_mode (data->image));
+  ligma_image_insert_layer (data->image, layer, NULL, 0);
 
-  data->buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
+  data->buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (layer));
 
   switch (pixel_format)
     {
@@ -1962,10 +1962,10 @@ halfp2singles (uint32_t       *xp,
 }
 
 static void
-preview_update (GimpPreviewArea *preview,
+preview_update (LigmaPreviewArea *preview,
                 gboolean         preview_cmap_update)
 {
-  GimpImageType        preview_type = GIMP_RGB_IMAGE;
+  LigmaImageType        preview_type = LIGMA_RGB_IMAGE;
   gint                 preview_width;
   gint                 preview_height;
   gint32               pos;
@@ -1978,7 +1978,7 @@ preview_update (GimpPreviewArea *preview,
   gboolean             is_signed;
   gboolean             is_float;
 
-  GimpProcedureConfig *config;
+  LigmaProcedureConfig *config;
   RawType              pixel_format;
   RawEncoding          encoding;
   RawEndianness        endianness;
@@ -1991,7 +1991,7 @@ preview_update (GimpPreviewArea *preview,
   gint                 palette_offset;
   RawPaletteType       palette_type;
 
-  gimp_preview_area_get_size (preview, &preview_width, &preview_height);
+  ligma_preview_area_get_size (preview, &preview_width, &preview_height);
 
   config = g_object_get_data (G_OBJECT (preview), "procedure-config");
 
@@ -2001,7 +2001,7 @@ preview_update (GimpPreviewArea *preview,
   width  = MIN (width,  preview_width);
   height = MIN (height, preview_height);
 
-  gimp_preview_area_fill (preview,
+  ligma_preview_area_fill (preview,
                           0, 0, preview_width, preview_height,
                           255, 255, 255);
 
@@ -2027,7 +2027,7 @@ preview_update (GimpPreviewArea *preview,
           bpp = 16;
         }
       n_components = 4;
-      preview_type = GIMP_RGBA_IMAGE;
+      preview_type = LIGMA_RGBA_IMAGE;
 
     case RAW_RGB_8BPP:
       if (bpc == 0)
@@ -2050,7 +2050,7 @@ preview_update (GimpPreviewArea *preview,
       if (n_components == 0)
         {
           n_components = 3;
-          preview_type = GIMP_RGB_IMAGE;
+          preview_type = LIGMA_RGB_IMAGE;
         }
 
     case RAW_GRAYA_8BPP:
@@ -2074,7 +2074,7 @@ preview_update (GimpPreviewArea *preview,
       if (n_components == 0)
         {
           n_components = 2;
-          preview_type = GIMP_GRAYA_IMAGE;
+          preview_type = LIGMA_GRAYA_IMAGE;
         }
 
     case RAW_GRAY_16BPP:
@@ -2093,7 +2093,7 @@ preview_update (GimpPreviewArea *preview,
       if (n_components == 0)
         {
           n_components = 1;
-          preview_type = GIMP_GRAY_IMAGE;
+          preview_type = LIGMA_GRAY_IMAGE;
         }
 
       if (planar_configuration == RAW_PLANAR_CONTIGUOUS)
@@ -2180,7 +2180,7 @@ preview_update (GimpPreviewArea *preview,
                     }
                 }
 
-              gimp_preview_area_draw (preview, 0, y, width, 1,
+              ligma_preview_area_draw (preview, 0, y, width, 1,
                                       preview_type, row, width * n_components);
             }
 
@@ -2271,7 +2271,7 @@ preview_update (GimpPreviewArea *preview,
                     }
                 }
 
-              gimp_preview_area_draw (preview, 0, y, width, 1,
+              ligma_preview_area_draw (preview, 0, y, width, 1,
                                       preview_type, row, width * n_components);
             }
 
@@ -2293,8 +2293,8 @@ preview_update (GimpPreviewArea *preview,
             mmap_read (preview_fd, in, width * 2, pos, width * 2);
             rgb_565_to_888 (in, row, width, pixel_format, endianness);
 
-            gimp_preview_area_draw (preview, 0, y, width, 1,
-                                    GIMP_RGB_IMAGE, row, width * 3);
+            ligma_preview_area_draw (preview, 0, y, width, 1,
+                                    LIGMA_RGB_IMAGE, row, width * 3);
           }
 
         g_free (row);
@@ -2362,8 +2362,8 @@ preview_update (GimpPreviewArea *preview,
               }
           }
 
-        gimp_preview_area_draw (preview, 0, 0, width, height,
-                                GIMP_RGB_IMAGE, out_raw, width * 3);
+        ligma_preview_area_draw (preview, 0, 0, width, height,
+                                LIGMA_RGB_IMAGE, out_raw, width * 3);
         g_free (in_raw);
         g_free (out_raw);
       }
@@ -2439,8 +2439,8 @@ preview_update (GimpPreviewArea *preview,
                       }
                   }
 
-                gimp_preview_area_draw (preview, 0, y, width, 1,
-                                        GIMP_RGBA_IMAGE, row, width * 4);
+                ligma_preview_area_draw (preview, 0, y, width, 1,
+                                        LIGMA_RGBA_IMAGE, row, width * 4);
               }
             else
               {
@@ -2464,8 +2464,8 @@ preview_update (GimpPreviewArea *preview,
                       }
                   }
 
-                gimp_preview_area_draw (preview, 0, y, width, 1,
-                                        GIMP_RGB_IMAGE, row, width * 3);
+                ligma_preview_area_draw (preview, 0, y, width, 1,
+                                        LIGMA_RGB_IMAGE, row, width * 3);
               }
           }
 
@@ -2479,7 +2479,7 @@ preview_update (GimpPreviewArea *preview,
 }
 
 static void
-preview_update_size (GimpPreviewArea *preview)
+preview_update_size (LigmaPreviewArea *preview)
 {
   GObject *config;
   gint     width;
@@ -2512,9 +2512,9 @@ preview_update_size (GimpPreviewArea *preview)
 }
 
 static void
-load_config_notify (GimpProcedureConfig  *config,
+load_config_notify (LigmaProcedureConfig  *config,
                     GParamSpec           *pspec,
-                    GimpPreviewArea      *preview)
+                    LigmaPreviewArea      *preview)
 {
   gboolean preview_cmap_update = FALSE;
   gboolean width_update        = FALSE;
@@ -2590,7 +2590,7 @@ load_config_notify (GimpProcedureConfig  *config,
 }
 
 static void
-preview_allocate (GimpPreviewArea   *preview,
+preview_allocate (LigmaPreviewArea   *preview,
                   GtkAllocation     *allocation,
                   gpointer           user_data)
 {
@@ -2599,7 +2599,7 @@ preview_allocate (GimpPreviewArea   *preview,
 
 static gboolean
 load_dialog (GFile         *file,
-             GimpProcedure *procedure,
+             LigmaProcedure *procedure,
              GObject       *config,
              gboolean       is_hgt)
 {
@@ -2625,10 +2625,10 @@ load_dialog (GFile         *file,
                   "height", &height,
                   NULL);
 
-  gimp_ui_init (PLUG_IN_BINARY);
+  ligma_ui_init (PLUG_IN_BINARY);
 
-  dialog = gimp_procedure_dialog_new (GIMP_PROCEDURE (procedure),
-                                      GIMP_PROCEDURE_CONFIG (config),
+  dialog = ligma_procedure_dialog_new (LIGMA_PROCEDURE (procedure),
+                                      LIGMA_PROCEDURE_CONFIG (config),
                                       _("Load Image from Raw Data"));
 
   /* Preview frame. */
@@ -2644,7 +2644,7 @@ load_dialog (GFile         *file,
   gtk_container_add (GTK_CONTAINER (sw), viewport);
   gtk_widget_show (viewport);
 
-  preview = gimp_preview_area_new ();
+  preview = ligma_preview_area_new ();
   if (is_hgt)
     gtk_widget_set_size_request (preview,
                                  sample_spacing == HGT_SRTM_3 ? 1201 : 3601,
@@ -2664,7 +2664,7 @@ load_dialog (GFile         *file,
                           G_CALLBACK (preview_allocate),
                           NULL);
 
-  frame = gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
+  frame = ligma_procedure_dialog_fill_frame (LIGMA_PROCEDURE_DIALOG (dialog),
                                             "preview-frame", NULL, FALSE,
                                             NULL);
   gtk_container_add (GTK_CONTAINER (frame), sw);
@@ -2688,19 +2688,19 @@ load_dialog (GFile         *file,
        * SRTM-3 data are sampled at three arc-seconds and contain 1201 lines and
        * 1201 samples with similar overlapping rows and columns."
        */
-      store = gimp_int_store_new (_("SRTM-1 (1 arc-second)"),  HGT_SRTM_1,
+      store = ligma_int_store_new (_("SRTM-1 (1 arc-second)"),  HGT_SRTM_1,
                                   _("SRTM-3 (3 arc-seconds)"), HGT_SRTM_3,
                                   NULL);
-      gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
+      ligma_procedure_dialog_get_int_combo (LIGMA_PROCEDURE_DIALOG (dialog),
                                            "sample-spacing",
-                                           GIMP_INT_STORE (store));
+                                           LIGMA_INT_STORE (store));
     }
   else if (! is_hgt)
     {
       /* Generic case for any data. Let's leave choice to select the
        * right type of raw data.
        */
-      store = gimp_int_store_new (_("RGB 8-bit"),              RAW_RGB_8BPP,
+      store = ligma_int_store_new (_("RGB 8-bit"),              RAW_RGB_8BPP,
                                   _("RGB 16-bit"),             RAW_RGB_16BPP,
                                   _("RGB 32-bit"),             RAW_RGB_32BPP,
 
@@ -2725,36 +2725,36 @@ load_dialog (GFile         *file,
                                   _("Indexed"),                RAW_INDEXED,
                                   _("Indexed Alpha"),          RAW_INDEXEDA,
                                   NULL);
-      gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
+      ligma_procedure_dialog_get_int_combo (LIGMA_PROCEDURE_DIALOG (dialog),
                                            "pixel-format",
-                                           GIMP_INT_STORE (store));
+                                           LIGMA_INT_STORE (store));
 
-      store = gimp_int_store_new (_("Unsigned Integer"),       RAW_ENCODING_UNSIGNED,
+      store = ligma_int_store_new (_("Unsigned Integer"),       RAW_ENCODING_UNSIGNED,
                                   _("Signed Integer"),         RAW_ENCODING_SIGNED,
                                   _("Floating Point"),         RAW_ENCODING_FLOAT,
                                   NULL);
-      gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
+      ligma_procedure_dialog_get_int_combo (LIGMA_PROCEDURE_DIALOG (dialog),
                                            "data-type",
-                                           GIMP_INT_STORE (store));
+                                           LIGMA_INT_STORE (store));
 
-      store = gimp_int_store_new (_("Little Endian"),          RAW_LITTLE_ENDIAN,
+      store = ligma_int_store_new (_("Little Endian"),          RAW_LITTLE_ENDIAN,
                                   _("Big Endian"),             RAW_BIG_ENDIAN,
                                   NULL);
-      gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
+      ligma_procedure_dialog_get_int_combo (LIGMA_PROCEDURE_DIALOG (dialog),
                                            "endianness",
-                                           GIMP_INT_STORE (store));
+                                           LIGMA_INT_STORE (store));
 
-      store = gimp_int_store_new (_("Contiguous"), RAW_PLANAR_CONTIGUOUS,
+      store = ligma_int_store_new (_("Contiguous"), RAW_PLANAR_CONTIGUOUS,
                                   _("Planar"),     RAW_PLANAR_SEPARATE,
                                   NULL);
-      gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
+      ligma_procedure_dialog_get_int_combo (LIGMA_PROCEDURE_DIALOG (dialog),
                                            "planar-configuration",
-                                           GIMP_INT_STORE (store));
+                                           LIGMA_INT_STORE (store));
     }
 
   if (is_hgt)
     {
-      gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+      ligma_procedure_dialog_fill_box (LIGMA_PROCEDURE_DIALOG (dialog),
                                       "image-box", "sample-spacing", NULL);
     }
   else
@@ -2764,17 +2764,17 @@ load_dialog (GFile         *file,
 
       file_size = get_file_info (file);
 
-      entry = gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
+      entry = ligma_procedure_dialog_get_scale_entry (LIGMA_PROCEDURE_DIALOG (dialog),
                                                      "offset", 1.0);
-      gimp_scale_entry_set_bounds (GIMP_SCALE_ENTRY (entry), 0, file_size, FALSE);
-      entry = gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
+      ligma_scale_entry_set_bounds (LIGMA_SCALE_ENTRY (entry), 0, file_size, FALSE);
+      entry = ligma_procedure_dialog_get_scale_entry (LIGMA_PROCEDURE_DIALOG (dialog),
                                                      "width", 1.0);
-      gimp_scale_entry_set_bounds (GIMP_SCALE_ENTRY (entry), 1, file_size, FALSE);
-      entry = gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
+      ligma_scale_entry_set_bounds (LIGMA_SCALE_ENTRY (entry), 1, file_size, FALSE);
+      entry = ligma_procedure_dialog_get_scale_entry (LIGMA_PROCEDURE_DIALOG (dialog),
                                                      "height", 1.0);
-      gimp_scale_entry_set_bounds (GIMP_SCALE_ENTRY (entry), 1, file_size, FALSE);
+      ligma_scale_entry_set_bounds (LIGMA_SCALE_ENTRY (entry), 1, file_size, FALSE);
 
-      gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+      ligma_procedure_dialog_fill_box (LIGMA_PROCEDURE_DIALOG (dialog),
                                       "image-box",
                                       "pixel-format",
                                       "data-type", "endianness",
@@ -2783,7 +2783,7 @@ load_dialog (GFile         *file,
                                       NULL);
     }
 
-  frame = gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
+  frame = ligma_procedure_dialog_fill_frame (LIGMA_PROCEDURE_DIALOG (dialog),
                                             "image-frame", NULL, FALSE,
                                             "image-box");
   if (is_hgt)
@@ -2807,25 +2807,25 @@ load_dialog (GFile         *file,
       gtk_frame_set_label (GTK_FRAME (frame), _("Image"));
     }
 
-  store = gimp_int_store_new (_("R, G, B (normal)"),       RAW_PALETTE_RGB,
+  store = ligma_int_store_new (_("R, G, B (normal)"),       RAW_PALETTE_RGB,
                               _("B, G, R, X (BMP style)"), RAW_PALETTE_BGR,
                               NULL);
-  gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
+  ligma_procedure_dialog_get_int_combo (LIGMA_PROCEDURE_DIALOG (dialog),
                                        "palette-type",
-                                       GIMP_INT_STORE (store));
+                                       LIGMA_INT_STORE (store));
 
-  gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+  ligma_procedure_dialog_fill_box (LIGMA_PROCEDURE_DIALOG (dialog),
                                   "palette-box",
                                   "palette-offset",
                                   "palette-type",
                                   "palette-file",
                                   NULL);
-  frame = gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
+  frame = ligma_procedure_dialog_fill_frame (LIGMA_PROCEDURE_DIALOG (dialog),
                                             "palette-frame", NULL, FALSE,
                                             "palette-box");
   gtk_frame_set_label (GTK_FRAME (frame), _("Palette"));
 
-  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+  ligma_procedure_dialog_fill (LIGMA_PROCEDURE_DIALOG (dialog),
                               "preview-frame",
                               "image-frame",
                               "palette-frame",
@@ -2841,7 +2841,7 @@ load_dialog (GFile         *file,
                           G_CALLBACK (load_config_notify),
                           preview);
 
-  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
+  run = ligma_procedure_dialog_run (LIGMA_PROCEDURE_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
 
@@ -2849,8 +2849,8 @@ load_dialog (GFile         *file,
 }
 
 static gboolean
-save_dialog (GimpImage     *image,
-             GimpProcedure *procedure,
+save_dialog (LigmaImage     *image,
+             LigmaProcedure *procedure,
              gboolean       has_alpha,
              GObject       *config)
 {
@@ -2862,12 +2862,12 @@ save_dialog (GimpImage     *image,
   gchar        *planar_label;
   gboolean      run;
 
-  gimp_ui_init (PLUG_IN_BINARY);
+  ligma_ui_init (PLUG_IN_BINARY);
 
-  switch (gimp_image_get_base_type (image))
+  switch (ligma_image_get_base_type (image))
     {
-    case GIMP_RGB:
-    case GIMP_INDEXED:
+    case LIGMA_RGB:
+    case LIGMA_INDEXED:
       if (has_alpha)
         {
           contiguous_sample = "RGBA,RGBA,RGBA";
@@ -2879,7 +2879,7 @@ save_dialog (GimpImage     *image,
           planar_sample     = "RRR,GGG,BBB";
         }
       break;
-    case GIMP_GRAY:
+    case LIGMA_GRAY:
       if (has_alpha)
         {
           contiguous_sample = "YA,YA,YA";
@@ -2906,40 +2906,40 @@ save_dialog (GimpImage     *image,
   else
     planar_label = g_strdup (_("_Planar"));
 
-  dialog = gimp_save_procedure_dialog_new (GIMP_SAVE_PROCEDURE (procedure),
-                                           GIMP_PROCEDURE_CONFIG (config),
+  dialog = ligma_save_procedure_dialog_new (LIGMA_SAVE_PROCEDURE (procedure),
+                                           LIGMA_PROCEDURE_CONFIG (config),
                                            image);
 
   /* Image type combo */
-  store = gimp_int_store_new (contiguous_label, RAW_PLANAR_CONTIGUOUS,
+  store = ligma_int_store_new (contiguous_label, RAW_PLANAR_CONTIGUOUS,
                               planar_label,     RAW_PLANAR_SEPARATE,
                               NULL);
-  gimp_procedure_dialog_get_int_radio (GIMP_PROCEDURE_DIALOG (dialog),
-                                       "planar-configuration", GIMP_INT_STORE (store));
+  ligma_procedure_dialog_get_int_radio (LIGMA_PROCEDURE_DIALOG (dialog),
+                                       "planar-configuration", LIGMA_INT_STORE (store));
 
   /* No need to give a choice for 1-channel cases where both contiguous
    * and planar are the same.
    */
-  gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
+  ligma_procedure_dialog_set_sensitive (LIGMA_PROCEDURE_DIALOG (dialog),
                                        "planar-configuration",
                                        contiguous_sample != NULL,
                                        NULL, NULL, FALSE);
 
   /* Palette type combo */
-  store = gimp_int_store_new (_("_R, G, B (normal)"),       RAW_PALETTE_RGB,
+  store = ligma_int_store_new (_("_R, G, B (normal)"),       RAW_PALETTE_RGB,
                               _("_B, G, R, X (BMP style)"), RAW_PALETTE_BGR,
                               NULL);
-  gimp_procedure_dialog_get_int_radio (GIMP_PROCEDURE_DIALOG (dialog),
-                                       "palette-type", GIMP_INT_STORE (store));
+  ligma_procedure_dialog_get_int_radio (LIGMA_PROCEDURE_DIALOG (dialog),
+                                       "palette-type", LIGMA_INT_STORE (store));
 
-  gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
+  ligma_procedure_dialog_set_sensitive (LIGMA_PROCEDURE_DIALOG (dialog),
                                        "palette-type",
-                                       gimp_image_get_base_type (image) == GIMP_INDEXED,
+                                       ligma_image_get_base_type (image) == LIGMA_INDEXED,
                                        NULL, NULL, FALSE);
-  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog), NULL);
+  ligma_procedure_dialog_fill (LIGMA_PROCEDURE_DIALOG (dialog), NULL);
   gtk_widget_show (dialog);
 
-  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
+  run = ligma_procedure_dialog_run (LIGMA_PROCEDURE_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
 

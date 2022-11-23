@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,38 +23,38 @@
 
 #include "core-types.h"
 
-#include "gimpbezierdesc.h"
-#include "gimpboundary.h"
-#include "gimpbrush.h"
-#include "gimpbrush-boundary.h"
-#include "gimptempbuf.h"
+#include "ligmabezierdesc.h"
+#include "ligmaboundary.h"
+#include "ligmabrush.h"
+#include "ligmabrush-boundary.h"
+#include "ligmatempbuf.h"
 
 
-static GimpBezierDesc *
-gimp_brush_transform_boundary_exact (GimpBrush *brush,
+static LigmaBezierDesc *
+ligma_brush_transform_boundary_exact (LigmaBrush *brush,
                                      gdouble    scale,
                                      gdouble    aspect_ratio,
                                      gdouble    angle,
                                      gboolean   reflect,
                                      gdouble    hardness)
 {
-  const GimpTempBuf *mask;
+  const LigmaTempBuf *mask;
 
-  mask = gimp_brush_transform_mask (brush,
+  mask = ligma_brush_transform_mask (brush,
                                     scale, aspect_ratio,
                                     angle, reflect, hardness);
 
   if (mask)
     {
       GeglBuffer    *buffer;
-      GimpBoundSeg  *bound_segs;
+      LigmaBoundSeg  *bound_segs;
       gint           n_bound_segs;
 
-      buffer = gimp_temp_buf_create_buffer ((GimpTempBuf *) mask);
+      buffer = ligma_temp_buf_create_buffer ((LigmaTempBuf *) mask);
 
-      bound_segs = gimp_boundary_find (buffer, NULL,
+      bound_segs = ligma_boundary_find (buffer, NULL,
                                        babl_format ("Y float"),
-                                       GIMP_BOUNDARY_WITHIN_BOUNDS,
+                                       LIGMA_BOUNDARY_WITHIN_BOUNDS,
                                        0, 0,
                                        gegl_buffer_get_width  (buffer),
                                        gegl_buffer_get_height (buffer),
@@ -65,19 +65,19 @@ gimp_brush_transform_boundary_exact (GimpBrush *brush,
 
       if (bound_segs)
         {
-          GimpBoundSeg *stroke_segs;
+          LigmaBoundSeg *stroke_segs;
           gint          n_stroke_groups;
 
-          stroke_segs = gimp_boundary_sort (bound_segs, n_bound_segs,
+          stroke_segs = ligma_boundary_sort (bound_segs, n_bound_segs,
                                             &n_stroke_groups);
 
           g_free (bound_segs);
 
           if (stroke_segs)
             {
-              GimpBezierDesc *path;
+              LigmaBezierDesc *path;
 
-              path = gimp_bezier_desc_new_from_bound_segs (stroke_segs,
+              path = ligma_bezier_desc_new_from_bound_segs (stroke_segs,
                                                            n_bound_segs,
                                                            n_stroke_groups);
 
@@ -91,21 +91,21 @@ gimp_brush_transform_boundary_exact (GimpBrush *brush,
   return NULL;
 }
 
-static GimpBezierDesc *
-gimp_brush_transform_boundary_approx (GimpBrush *brush,
+static LigmaBezierDesc *
+ligma_brush_transform_boundary_approx (LigmaBrush *brush,
                                       gdouble    scale,
                                       gdouble    aspect_ratio,
                                       gdouble    angle,
                                       gboolean   reflect,
                                       gdouble    hardness)
 {
-  return gimp_brush_transform_boundary_exact (brush,
+  return ligma_brush_transform_boundary_exact (brush,
                                               scale, aspect_ratio,
                                               angle, reflect, hardness);
 }
 
-GimpBezierDesc *
-gimp_brush_real_transform_boundary (GimpBrush *brush,
+LigmaBezierDesc *
+ligma_brush_real_transform_boundary (LigmaBrush *brush,
                                     gdouble    scale,
                                     gdouble    aspect_ratio,
                                     gdouble    angle,
@@ -114,17 +114,17 @@ gimp_brush_real_transform_boundary (GimpBrush *brush,
                                     gint      *width,
                                     gint      *height)
 {
-  gimp_brush_transform_size (brush, scale, aspect_ratio, angle, reflect,
+  ligma_brush_transform_size (brush, scale, aspect_ratio, angle, reflect,
                              width, height);
 
   if (*width < 256 && *height < 256)
     {
-      return gimp_brush_transform_boundary_exact (brush,
+      return ligma_brush_transform_boundary_exact (brush,
                                                   scale, aspect_ratio,
                                                   angle, reflect, hardness);
     }
 
-  return gimp_brush_transform_boundary_approx (brush,
+  return ligma_brush_transform_boundary_approx (brush,
                                                scale, aspect_ratio,
                                                angle, reflect, hardness);
 }

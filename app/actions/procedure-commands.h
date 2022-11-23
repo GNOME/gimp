@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,28 +19,28 @@
 #define __PROCEDURE_COMMANDS_H__
 
 
-GimpValueArray * procedure_commands_get_run_mode_arg (GimpProcedure  *procedure);
-GimpValueArray * procedure_commands_get_data_args    (GimpProcedure  *procedure,
-                                                      GimpObject     *object);
-GimpValueArray * procedure_commands_get_image_args   (GimpProcedure  *procedure,
-                                                      GimpImage      *image);
-GimpValueArray * procedure_commands_get_items_args   (GimpProcedure  *procedure,
-                                                      GimpImage      *image,
+LigmaValueArray * procedure_commands_get_run_mode_arg (LigmaProcedure  *procedure);
+LigmaValueArray * procedure_commands_get_data_args    (LigmaProcedure  *procedure,
+                                                      LigmaObject     *object);
+LigmaValueArray * procedure_commands_get_image_args   (LigmaProcedure  *procedure,
+                                                      LigmaImage      *image);
+LigmaValueArray * procedure_commands_get_items_args   (LigmaProcedure  *procedure,
+                                                      LigmaImage      *image,
                                                       GList          *items);
-GimpValueArray * procedure_commands_get_display_args (GimpProcedure  *procedure,
-                                                      GimpDisplay    *display,
-                                                      GimpObject     *settings);
+LigmaValueArray * procedure_commands_get_display_args (LigmaProcedure  *procedure,
+                                                      LigmaDisplay    *display,
+                                                      LigmaObject     *settings);
 
-gboolean      procedure_commands_run_procedure       (GimpProcedure  *procedure,
-                                                      Gimp           *gimp,
-                                                      GimpProgress   *progress,
-                                                      GimpValueArray *args);
-gboolean      procedure_commands_run_procedure_async (GimpProcedure  *procedure,
-                                                      Gimp           *gimp,
-                                                      GimpProgress   *progress,
-                                                      GimpRunMode     run_mode,
-                                                      GimpValueArray *args,
-                                                      GimpDisplay    *display);
+gboolean      procedure_commands_run_procedure       (LigmaProcedure  *procedure,
+                                                      Ligma           *ligma,
+                                                      LigmaProgress   *progress,
+                                                      LigmaValueArray *args);
+gboolean      procedure_commands_run_procedure_async (LigmaProcedure  *procedure,
+                                                      Ligma           *ligma,
+                                                      LigmaProgress   *progress,
+                                                      LigmaRunMode     run_mode,
+                                                      LigmaValueArray *args,
+                                                      LigmaDisplay    *display);
 
 
 #endif /* __PROCEDURE_COMMANDS_H__ */

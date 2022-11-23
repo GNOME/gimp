@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpcontrollerwheel.c
- * Copyright (C) 2004-2015 Michael Natterer <mitch@gimp.org>
+ * ligmacontrollerwheel.c
+ * Copyright (C) 2004-2015 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,15 +23,15 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "gimpcontrollerwheel.h"
-#include "gimphelp-ids.h"
-#include "gimpwidgets-utils.h"
+#include "ligmacontrollerwheel.h"
+#include "ligmahelp-ids.h"
+#include "ligmawidgets-utils.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 typedef struct _WheelEvent WheelEvent;
@@ -46,19 +46,19 @@ struct _WheelEvent
 };
 
 
-static void          gimp_controller_wheel_constructed     (GObject        *object);
+static void          ligma_controller_wheel_constructed     (GObject        *object);
 
-static gint          gimp_controller_wheel_get_n_events    (GimpController *controller);
-static const gchar * gimp_controller_wheel_get_event_name  (GimpController *controller,
+static gint          ligma_controller_wheel_get_n_events    (LigmaController *controller);
+static const gchar * ligma_controller_wheel_get_event_name  (LigmaController *controller,
                                                             gint            event_id);
-static const gchar * gimp_controller_wheel_get_event_blurb (GimpController *controller,
+static const gchar * ligma_controller_wheel_get_event_blurb (LigmaController *controller,
                                                             gint            event_id);
 
 
-G_DEFINE_TYPE (GimpControllerWheel, gimp_controller_wheel,
-               GIMP_TYPE_CONTROLLER)
+G_DEFINE_TYPE (LigmaControllerWheel, ligma_controller_wheel,
+               LIGMA_TYPE_CONTROLLER)
 
-#define parent_class gimp_controller_wheel_parent_class
+#define parent_class ligma_controller_wheel_parent_class
 
 
 static WheelEvent wheel_events[] =
@@ -166,24 +166,24 @@ static WheelEvent wheel_events[] =
 
 
 static void
-gimp_controller_wheel_class_init (GimpControllerWheelClass *klass)
+ligma_controller_wheel_class_init (LigmaControllerWheelClass *klass)
 {
   GObjectClass        *object_class     = G_OBJECT_CLASS (klass);
-  GimpControllerClass *controller_class = GIMP_CONTROLLER_CLASS (klass);
+  LigmaControllerClass *controller_class = LIGMA_CONTROLLER_CLASS (klass);
 
-  object_class->constructed         = gimp_controller_wheel_constructed;
+  object_class->constructed         = ligma_controller_wheel_constructed;
 
   controller_class->name            = _("Mouse Wheel");
-  controller_class->help_id         = GIMP_HELP_CONTROLLER_WHEEL;
-  controller_class->icon_name       = GIMP_ICON_CONTROLLER_WHEEL;
+  controller_class->help_id         = LIGMA_HELP_CONTROLLER_WHEEL;
+  controller_class->icon_name       = LIGMA_ICON_CONTROLLER_WHEEL;
 
-  controller_class->get_n_events    = gimp_controller_wheel_get_n_events;
-  controller_class->get_event_name  = gimp_controller_wheel_get_event_name;
-  controller_class->get_event_blurb = gimp_controller_wheel_get_event_blurb;
+  controller_class->get_n_events    = ligma_controller_wheel_get_n_events;
+  controller_class->get_event_name  = ligma_controller_wheel_get_event_name;
+  controller_class->get_event_blurb = ligma_controller_wheel_get_event_blurb;
 }
 
 static void
-gimp_controller_wheel_init (GimpControllerWheel *wheel)
+ligma_controller_wheel_init (LigmaControllerWheel *wheel)
 {
   static gboolean events_initialized = FALSE;
 
@@ -207,7 +207,7 @@ gimp_controller_wheel_init (GimpControllerWheel *wheel)
             {
               wevent->blurb =
                 g_strdup_printf ("%s (%s)", gettext (wevent->blurb),
-                                 gimp_get_mod_string (wevent->modifiers));
+                                 ligma_get_mod_string (wevent->modifiers));
             }
           else
             {
@@ -220,7 +220,7 @@ gimp_controller_wheel_init (GimpControllerWheel *wheel)
 }
 
 static void
-gimp_controller_wheel_constructed (GObject *object)
+ligma_controller_wheel_constructed (GObject *object)
 {
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
@@ -231,13 +231,13 @@ gimp_controller_wheel_constructed (GObject *object)
 }
 
 static gint
-gimp_controller_wheel_get_n_events (GimpController *controller)
+ligma_controller_wheel_get_n_events (LigmaController *controller)
 {
   return G_N_ELEMENTS (wheel_events);
 }
 
 static const gchar *
-gimp_controller_wheel_get_event_name (GimpController *controller,
+ligma_controller_wheel_get_event_name (LigmaController *controller,
                                       gint            event_id)
 {
   if (event_id < 0 || event_id >= G_N_ELEMENTS (wheel_events))
@@ -247,7 +247,7 @@ gimp_controller_wheel_get_event_name (GimpController *controller,
 }
 
 static const gchar *
-gimp_controller_wheel_get_event_blurb (GimpController *controller,
+ligma_controller_wheel_get_event_blurb (LigmaController *controller,
                                        gint            event_id)
 {
   if (event_id < 0 || event_id >= G_N_ELEMENTS (wheel_events))
@@ -257,14 +257,14 @@ gimp_controller_wheel_get_event_blurb (GimpController *controller,
 }
 
 gboolean
-gimp_controller_wheel_scroll (GimpControllerWheel  *wheel,
+ligma_controller_wheel_scroll (LigmaControllerWheel  *wheel,
                               const GdkEventScroll *sevent)
 {
   GdkScrollDirection direction;
   GdkModifierType    state;
   gint               i;
 
-  g_return_val_if_fail (GIMP_IS_CONTROLLER_WHEEL (wheel), FALSE);
+  g_return_val_if_fail (LIGMA_IS_CONTROLLER_WHEEL (wheel), FALSE);
   g_return_val_if_fail (sevent != NULL, FALSE);
 
   gdk_event_get_state ((const GdkEvent *) sevent, &state);
@@ -298,16 +298,16 @@ gimp_controller_wheel_scroll (GimpControllerWheel  *wheel,
           (wheel_events[i].modifiers & state) ==
           wheel_events[i].modifiers)
         {
-          GimpControllerEvent         controller_event;
-          GimpControllerEventTrigger *trigger;
+          LigmaControllerEvent         controller_event;
+          LigmaControllerEventTrigger *trigger;
 
-          trigger = (GimpControllerEventTrigger *) &controller_event;
+          trigger = (LigmaControllerEventTrigger *) &controller_event;
 
-          trigger->type     = GIMP_CONTROLLER_EVENT_TRIGGER;
-          trigger->source   = GIMP_CONTROLLER (wheel);
+          trigger->type     = LIGMA_CONTROLLER_EVENT_TRIGGER;
+          trigger->source   = LIGMA_CONTROLLER (wheel);
           trigger->event_id = i;
 
-          return gimp_controller_event (GIMP_CONTROLLER (wheel),
+          return ligma_controller_event (LIGMA_CONTROLLER (wheel),
                                         &controller_event);
         }
     }

@@ -1,7 +1,7 @@
 #!/usr/bin/perl -w
 
-# GIMP - The GNU Image Manipulation Program
-# Copyright (C) 1999-2003 Manish Singh <yosh@gimp.org>
+# LIGMA - The GNU Image Manipulation Program
+# Copyright (C) 1999-2003 Manish Singh <yosh@ligma.org>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,16 +27,16 @@ use lib $srcdir;
 require 'enums.pl';
 require 'util.pl';
 
-*enums = \%Gimp::CodeGen::enums::enums;
+*enums = \%Ligma::CodeGen::enums::enums;
 
-*write_file = \&Gimp::CodeGen::util::write_file;
-*FILE_EXT   = \$Gimp::CodeGen::util::FILE_EXT;
+*write_file = \&Ligma::CodeGen::util::write_file;
+*FILE_EXT   = \$Ligma::CodeGen::util::FILE_EXT;
 
-my $enumfile = "$builddir/libgimp/gimpenums.h$FILE_EXT";
+my $enumfile = "$builddir/libligma/ligmaenums.h$FILE_EXT";
 open ENUMFILE, "> $enumfile" or die "Can't open $enumfile: $!\n";
 
 print ENUMFILE <<'LGPL';
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
  * This library is free software: you can redistribute it and/or
@@ -58,7 +58,7 @@ print ENUMFILE <<'LGPL';
 
 LGPL
 
-my $guard = "__GIMP_ENUMS_H__";
+my $guard = "__LIGMA_ENUMS_H__";
 print ENUMFILE <<HEADER;
 #ifndef $guard
 #define $guard
@@ -68,15 +68,15 @@ G_BEGIN_DECLS
 HEADER
 
 foreach (sort keys %enums) {
-    if (! ($enums{$_}->{header} =~ /libgimp/) &&
+    if (! ($enums{$_}->{header} =~ /libligma/) &&
 	! $enums{$_}->{external}) {
         my $gtype = $func = $_;
 
-	for ($gtype) { s/Gimp//; s/([A-Z][^A-Z]+)/\U$1\E_/g; s/_$// }
-	for ($func) { s/Gimp//; s/([A-Z][^A-Z]+)/\L$1\E_/g; s/_$// }
+	for ($gtype) { s/Ligma//; s/([A-Z][^A-Z]+)/\U$1\E_/g; s/_$// }
+	for ($func) { s/Ligma//; s/([A-Z][^A-Z]+)/\L$1\E_/g; s/_$// }
 
-	print ENUMFILE "\n#define GIMP_TYPE_$gtype (gimp_$func\_get_type ())\n\n";
-	print ENUMFILE "GType gimp_$func\_get_type (void) G_GNUC_CONST;\n\n";
+	print ENUMFILE "\n#define LIGMA_TYPE_$gtype (ligma_$func\_get_type ())\n\n";
+	print ENUMFILE "GType ligma_$func\_get_type (void) G_GNUC_CONST;\n\n";
 
 	print ENUMFILE "/**\n";
 	print ENUMFILE " * $_:\n";
@@ -111,9 +111,9 @@ foreach (sort keys %enums) {
 
 print ENUMFILE <<HEADER;
 
-void           gimp_enums_init           (void);
+void           ligma_enums_init           (void);
 
-const gchar ** gimp_enums_get_type_names (gint *n_type_names);
+const gchar ** ligma_enums_get_type_names (gint *n_type_names);
 
 
 G_END_DECLS
@@ -122,27 +122,27 @@ G_END_DECLS
 HEADER
 
 close ENUMFILE;
-&write_file($enumfile, "$destdir/libgimp");
+&write_file($enumfile, "$destdir/libligma");
 
-$enumfile = "$builddir/libgimp/gimpenums.c.tail$FILE_EXT";
+$enumfile = "$builddir/libligma/ligmaenums.c.tail$FILE_EXT";
 open ENUMFILE, "> $enumfile" or die "Can't open $enumfile: $!\n";
 
 print ENUMFILE <<CODE;
 
-typedef GType (* GimpGetTypeFunc) (void);
+typedef GType (* LigmaGetTypeFunc) (void);
 
-static const GimpGetTypeFunc get_type_funcs[] =
+static const LigmaGetTypeFunc get_type_funcs[] =
 {
 CODE
 
 my $first = 1;
 foreach (sort keys %enums) {
-    if (! ($_ =~ /GimpUnit/)) {
+    if (! ($_ =~ /LigmaUnit/)) {
 	my $enum = $enums{$_};
 	my $func = $_;
 	my $gegl_enum = ($func =~ /Gegl/);
 
-	for ($func) { s/Gimp//; s/Gegl//; s/PDB/Pdb/;
+	for ($func) { s/Ligma//; s/Gegl//; s/PDB/Pdb/;
 		      s/([A-Z][^A-Z]+)/\L$1\E_/g; s/_$// }
 
 	print ENUMFILE ",\n" unless $first;
@@ -150,7 +150,7 @@ foreach (sort keys %enums) {
 	if ($gegl_enum) {
 	    print ENUMFILE "  gegl_$func\_get_type";
 	} else {
-	    print ENUMFILE "  gimp_$func\_get_type";
+	    print ENUMFILE "  ligma_$func\_get_type";
 	}
 
 	$first = 0;
@@ -167,7 +167,7 @@ CODE
 
 $first = 1;
 foreach (sort keys %enums) {
-    if (! ($_ =~ /GimpUnit/)) {
+    if (! ($_ =~ /LigmaUnit/)) {
 	my $enum = $enums{$_};
 	my $gtype = $_;
 
@@ -186,24 +186,24 @@ static gboolean enums_initialized = FALSE;
 
 #if 0
 /*  keep around as documentation how to do compat enums  */
-GType gimp_convert_dither_type_compat_get_type (void);
+GType ligma_convert_dither_type_compat_get_type (void);
 #endif
 
 /**
- * gimp_enums_init:
+ * ligma_enums_init:
  *
  * This function makes sure all the enum types are registered
  * with the #GType system. This is intended for use by language
- * bindings that need the symbols early, before gimp_main is run.
+ * bindings that need the symbols early, before ligma_main is run.
  * It's not necessary for plug-ins to call this directly, because
  * the normal plug-in initialization code will handle it implicitly.
  *
  * Since: 2.4
  **/
 void
-gimp_enums_init (void)
+ligma_enums_init (void)
 {
-  const GimpGetTypeFunc *funcs = get_type_funcs;
+  const LigmaGetTypeFunc *funcs = get_type_funcs;
 #if 0
   GQuark                 quark;
 #endif
@@ -223,22 +223,22 @@ gimp_enums_init (void)
   /*  keep around as documentation how to do compat enums  */
 
   /*  keep compat enum code in sync with app/app.c (app_libs_init)  */
-  quark = g_quark_from_static_string ("gimp-compat-enum");
+  quark = g_quark_from_static_string ("ligma-compat-enum");
 
-  g_type_set_qdata (GIMP_TYPE_CONVERT_DITHER_TYPE, quark,
-		    (gpointer) gimp_convert_dither_type_compat_get_type ());
+  g_type_set_qdata (LIGMA_TYPE_CONVERT_DITHER_TYPE, quark,
+		    (gpointer) ligma_convert_dither_type_compat_get_type ());
 #endif
 
-  gimp_base_compat_enums_init ();
+  ligma_base_compat_enums_init ();
 
   enums_initialized = TRUE;
 }
 
 /**
- * gimp_enums_get_type_names:
+ * ligma_enums_get_type_names:
  * \@n_type_names: (out): return location for the number of names
  *
- * This function gives access to the list of enums registered by libgimp.
+ * This function gives access to the list of enums registered by libligma.
  * The returned array is static and must not be modified.
  *
  * Returns: (transfer none): an array with type names
@@ -246,7 +246,7 @@ gimp_enums_init (void)
  * Since: 2.2
  **/
 const gchar **
-gimp_enums_get_type_names (gint *n_type_names)
+ligma_enums_get_type_names (gint *n_type_names)
 {
   g_return_val_if_fail (n_type_names != NULL, NULL);
 
@@ -257,4 +257,4 @@ gimp_enums_get_type_names (gint *n_type_names)
 CODE
 
 close ENUMFILE;
-&write_file($enumfile, "$destdir/libgimp");
+&write_file($enumfile, "$destdir/libligma");

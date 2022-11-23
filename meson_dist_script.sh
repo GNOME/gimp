@@ -20,7 +20,7 @@ fi
 # outdated data is much more insidious (such as wrong INSTALL
 # information or wrong git information) as it would be silent.
 # See: https://github.com/mesonbuild/meson/issues/10650
-# And: https://gitlab.gnome.org/GNOME/gimp/-/issues/7907
+# And: https://gitlab.gnome.org/GNOME/ligma/-/issues/7907
 # This is why we manually trigger, not only a reconfigure, but also a
 # rebuild of the main project before copying data around.
 

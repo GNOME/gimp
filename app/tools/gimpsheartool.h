@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,42 +15,42 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SHEAR_TOOL_H__
-#define __GIMP_SHEAR_TOOL_H__
+#ifndef __LIGMA_SHEAR_TOOL_H__
+#define __LIGMA_SHEAR_TOOL_H__
 
 
-#include "gimptransformgridtool.h"
+#include "ligmatransformgridtool.h"
 
 
-#define GIMP_TYPE_SHEAR_TOOL            (gimp_shear_tool_get_type ())
-#define GIMP_SHEAR_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_SHEAR_TOOL, GimpShearTool))
-#define GIMP_SHEAR_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_SHEAR_TOOL, GimpShearToolClass))
-#define GIMP_IS_SHEAR_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_SHEAR_TOOL))
-#define GIMP_IS_SHEAR_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_SHEAR_TOOL))
-#define GIMP_SHEAR_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_SHEAR_TOOL, GimpShearToolClass))
+#define LIGMA_TYPE_SHEAR_TOOL            (ligma_shear_tool_get_type ())
+#define LIGMA_SHEAR_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_SHEAR_TOOL, LigmaShearTool))
+#define LIGMA_SHEAR_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_SHEAR_TOOL, LigmaShearToolClass))
+#define LIGMA_IS_SHEAR_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_SHEAR_TOOL))
+#define LIGMA_IS_SHEAR_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_SHEAR_TOOL))
+#define LIGMA_SHEAR_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_SHEAR_TOOL, LigmaShearToolClass))
 
 
-typedef struct _GimpShearTool      GimpShearTool;
-typedef struct _GimpShearToolClass GimpShearToolClass;
+typedef struct _LigmaShearTool      LigmaShearTool;
+typedef struct _LigmaShearToolClass LigmaShearToolClass;
 
-struct _GimpShearTool
+struct _LigmaShearTool
 {
-  GimpTransformGridTool  parent_instance;
+  LigmaTransformGridTool  parent_instance;
 
   GtkAdjustment         *x_adj;
   GtkAdjustment         *y_adj;
 };
 
-struct _GimpShearToolClass
+struct _LigmaShearToolClass
 {
-  GimpTransformGridToolClass  parent_class;
+  LigmaTransformGridToolClass  parent_class;
 };
 
 
-void    gimp_shear_tool_register (GimpToolRegisterCallback  callback,
+void    ligma_shear_tool_register (LigmaToolRegisterCallback  callback,
                                   gpointer                  data);
 
-GType   gimp_shear_tool_get_type (void) G_GNUC_CONST;
+GType   ligma_shear_tool_get_type (void) G_GNUC_CONST;
 
 
-#endif  /*  __GIMP_SHEAR_TOOL_H__  */
+#endif  /*  __LIGMA_SHEAR_TOOL_H__  */

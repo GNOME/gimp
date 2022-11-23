@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * This is a plug-in for GIMP.
+ * This is a plug-in for LIGMA.
  *
  * Tileit - This plugin take an image and makes repeated copies of it.
  *
@@ -38,14 +38,14 @@
 
 #include <string.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 #define PLUG_IN_PROC   "plug-in-small-tiles"
 #define PLUG_IN_BINARY "tile-small"
-#define PLUG_IN_ROLE   "gimp-tile-small"
+#define PLUG_IN_ROLE   "ligma-tile-small"
 
 /***** Magic numbers *****/
 
@@ -88,12 +88,12 @@ typedef struct _TileClass TileClass;
 
 struct _Tile
 {
-  GimpPlugIn parent_instance;
+  LigmaPlugIn parent_instance;
 };
 
 struct _TileClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -102,21 +102,21 @@ struct _TileClass
 
 GType                   tile_get_type         (void) G_GNUC_CONST;
 
-static GList          * tile_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * tile_create_procedure (GimpPlugIn           *plug_in,
+static GList          * tile_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * tile_create_procedure (LigmaPlugIn           *plug_in,
                                                const gchar          *name);
 
-static GimpValueArray * tile_run              (GimpProcedure        *procedure,
-                                               GimpRunMode           run_mode,
-                                               GimpImage            *image,
+static LigmaValueArray * tile_run              (LigmaProcedure        *procedure,
+                                               LigmaRunMode           run_mode,
+                                               LigmaImage            *image,
                                                gint                  n_drawables,
-                                               GimpDrawable        **drawables,
-                                               const GimpValueArray *args,
+                                               LigmaDrawable        **drawables,
+                                               const LigmaValueArray *args,
                                                gpointer              run_data);
 
-static gboolean  tileit_dialog          (GimpDrawable  *drawable);
+static gboolean  tileit_dialog          (LigmaDrawable  *drawable);
 
-static void      tileit_scale_update    (GimpLabelSpin  *entry,
+static void      tileit_scale_update    (LigmaLabelSpin  *entry,
                                          gint           *value);
 
 static void      tileit_exp_update      (GtkWidget     *widget,
@@ -131,7 +131,7 @@ static void      tileit_radio_update    (GtkWidget     *widget,
 static void      tileit_hvtoggle_update (GtkWidget     *widget,
                                          gpointer       data);
 
-static void      do_tiles               (GimpDrawable  *drawable);
+static void      do_tiles               (LigmaDrawable  *drawable);
 static gint      tiles_xy               (gint           width,
                                          gint           height,
                                          gint           x,
@@ -143,16 +143,16 @@ static void      alt_update             (void);
 static void      explicit_update        (gboolean);
 
 static void      dialog_update_preview  (void);
-static void      cache_preview          (GimpDrawable  *drawable);
+static void      cache_preview          (LigmaDrawable  *drawable);
 static gboolean  tileit_preview_draw    (GtkWidget     *widget,
                                          cairo_t       *cr);
 static gboolean  tileit_preview_events  (GtkWidget     *widget,
                                          GdkEvent      *event);
 
 
-G_DEFINE_TYPE (Tile, tile, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Tile, tile, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (TILE_TYPE)
+LIGMA_MAIN (TILE_TYPE)
 DEFINE_STD_SET_I18N
 
 
@@ -228,7 +228,7 @@ static gboolean has_alpha;
 static void
 tile_class_init (TileClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = tile_query_procedures;
   plug_in_class->create_procedure = tile_create_procedure;
@@ -241,41 +241,41 @@ tile_init (Tile *tile)
 }
 
 static GList *
-tile_query_procedures (GimpPlugIn *plug_in)
+tile_query_procedures (LigmaPlugIn *plug_in)
 {
   return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
 }
 
-static GimpProcedure *
-tile_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+tile_create_procedure (LigmaPlugIn  *plug_in,
                        const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_image_procedure_new (plug_in, name,
+                                            LIGMA_PDB_PROC_TYPE_PLUGIN,
                                             tile_run, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "RGB*, GRAY*");
-      gimp_procedure_set_sensitivity_mask (procedure,
-                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
+      ligma_procedure_set_image_types (procedure, "RGB*, GRAY*");
+      ligma_procedure_set_sensitivity_mask (procedure,
+                                           LIGMA_PROCEDURE_SENSITIVE_DRAWABLE);
 
-      gimp_procedure_set_menu_label (procedure, _("_Small Tiles..."));
-      gimp_procedure_add_menu_path (procedure, "<Image>/Filters/Map");
+      ligma_procedure_set_menu_label (procedure, _("_Small Tiles..."));
+      ligma_procedure_add_menu_path (procedure, "<Image>/Filters/Map");
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         _("Tile image into smaller "
                                           "versions of the original"),
                                         "More here later",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Andy Thomas",
                                       "Andy Thomas",
                                       "1997");
 
-      GIMP_PROC_ARG_INT (procedure, "num-tiles",
+      LIGMA_PROC_ARG_INT (procedure, "num-tiles",
                          "Num tiles",
                          "Number of tiles to make",
                          2, MAX_SEGS, 2,
@@ -285,16 +285,16 @@ tile_create_procedure (GimpPlugIn  *plug_in,
   return procedure;
 }
 
-static GimpValueArray *
-tile_run (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GimpImage            *image,
+static LigmaValueArray *
+tile_run (LigmaProcedure        *procedure,
+          LigmaRunMode           run_mode,
+          LigmaImage            *image,
           gint                  n_drawables,
-          GimpDrawable        **drawables,
-          const GimpValueArray *args,
+          LigmaDrawable        **drawables,
+          const LigmaValueArray *args,
           gpointer              run_data)
 {
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gint          pwidth;
   gint          pheight;
 
@@ -304,12 +304,12 @@ tile_run (GimpProcedure        *procedure,
     {
       GError *error = NULL;
 
-      g_set_error (&error, GIMP_PLUG_IN_ERROR, 0,
+      g_set_error (&error, LIGMA_PLUG_IN_ERROR, 0,
                    _("Procedure '%s' only works with one drawable."),
                    PLUG_IN_PROC);
 
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_CALLING_ERROR,
                                                error);
     }
   else
@@ -317,16 +317,16 @@ tile_run (GimpProcedure        *procedure,
       drawable = drawables[0];
     }
 
-  has_alpha = gimp_drawable_has_alpha (drawable);
+  has_alpha = ligma_drawable_has_alpha (drawable);
 
-  if (! gimp_drawable_mask_intersect (drawable,
+  if (! ligma_drawable_mask_intersect (drawable,
                                       &sel_x1,    &sel_y1,
                                       &sel_width, &sel_height))
     {
       g_message (_("Region selected for filter is empty."));
 
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_SUCCESS,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_SUCCESS,
                                                NULL);
     }
 
@@ -351,47 +351,47 @@ tile_run (GimpProcedure        *procedure,
 
   switch (run_mode)
     {
-    case GIMP_RUN_INTERACTIVE:
-      gimp_get_data (PLUG_IN_PROC, &itvals);
+    case LIGMA_RUN_INTERACTIVE:
+      ligma_get_data (PLUG_IN_PROC, &itvals);
 
       if (! tileit_dialog (drawable))
         {
-          return gimp_procedure_new_return_values (procedure,
-                                                   GIMP_PDB_CANCEL,
+          return ligma_procedure_new_return_values (procedure,
+                                                   LIGMA_PDB_CANCEL,
                                                    NULL);
         }
       break;
 
-    case GIMP_RUN_NONINTERACTIVE:
-      itvals.numtiles = GIMP_VALUES_GET_INT (args, 0);
+    case LIGMA_RUN_NONINTERACTIVE:
+      itvals.numtiles = LIGMA_VALUES_GET_INT (args, 0);
       break;
 
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_get_data (PLUG_IN_PROC, &itvals);
+    case LIGMA_RUN_WITH_LAST_VALS:
+      ligma_get_data (PLUG_IN_PROC, &itvals);
       break;
     }
 
-  if (gimp_drawable_is_rgb  (drawable) ||
-      gimp_drawable_is_gray (drawable))
+  if (ligma_drawable_is_rgb  (drawable) ||
+      ligma_drawable_is_gray (drawable))
     {
-      gimp_progress_init (_("Tiling"));
+      ligma_progress_init (_("Tiling"));
 
       do_tiles (drawable);
 
-      if (run_mode != GIMP_RUN_NONINTERACTIVE)
-        gimp_displays_flush ();
+      if (run_mode != LIGMA_RUN_NONINTERACTIVE)
+        ligma_displays_flush ();
 
-      if (run_mode == GIMP_RUN_INTERACTIVE)
-        gimp_set_data (PLUG_IN_PROC, &itvals, sizeof (TileItVals));
+      if (run_mode == LIGMA_RUN_INTERACTIVE)
+        ligma_set_data (PLUG_IN_PROC, &itvals, sizeof (TileItVals));
     }
   else
     {
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_EXECUTION_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_EXECUTION_ERROR,
                                                NULL);
     }
 
-  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
+  return ligma_procedure_new_return_values (procedure, LIGMA_PDB_SUCCESS, NULL);
 }
 
 static GtkWidget *
@@ -410,7 +410,7 @@ spin_button_new (GtkAdjustment **adjustment,  /* return value */
   *adjustment = gtk_adjustment_new (value, lower, upper,
                                     step_increment, page_increment, 0);
 
-  spinbutton = gimp_spin_button_new (*adjustment, climb_rate, digits);
+  spinbutton = ligma_spin_button_new (*adjustment, climb_rate, digits);
 
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
 
@@ -418,7 +418,7 @@ spin_button_new (GtkAdjustment **adjustment,  /* return value */
 }
 
 static gboolean
-tileit_dialog (GimpDrawable *drawable)
+tileit_dialog (LigmaDrawable *drawable)
 {
   GtkWidget     *dlg;
   GtkWidget     *main_vbox;
@@ -435,25 +435,25 @@ tileit_dialog (GimpDrawable *drawable)
   GSList        *orientation_group = NULL;
   gboolean       run;
 
-  gimp_ui_init (PLUG_IN_BINARY);
+  ligma_ui_init (PLUG_IN_BINARY);
 
   cache_preview (drawable); /* Get the preview image */
 
-  dlg = gimp_dialog_new (_("Small Tiles"), PLUG_IN_ROLE,
+  dlg = ligma_dialog_new (_("Small Tiles"), PLUG_IN_ROLE,
                          NULL, 0,
-                         gimp_standard_help_func, PLUG_IN_PROC,
+                         ligma_standard_help_func, PLUG_IN_PROC,
 
                          _("_Cancel"), GTK_RESPONSE_CANCEL,
                          _("_OK"),     GTK_RESPONSE_OK,
 
                          NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  gimp_window_set_transient (GTK_WINDOW (dlg));
+  ligma_window_set_transient (GTK_WINDOW (dlg));
 
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
@@ -474,12 +474,12 @@ tileit_dialog (GimpDrawable *drawable)
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  tint.preview = gimp_preview_area_new ();
+  tint.preview = ligma_preview_area_new ();
   g_object_set (tint.preview,
-                "check-size",          gimp_check_size (),
-                "check-type",          gimp_check_type (),
-                "check-custom-color1", gimp_check_custom_color1 (),
-                "check-custom-color2", gimp_check_custom_color2 (),
+                "check-size",          ligma_check_size (),
+                "check-type",          ligma_check_type (),
+                "check-custom-color1", ligma_check_custom_color1 (),
+                "check-custom-color2", ligma_check_custom_color2 (),
                 NULL);
   gtk_widget_set_size_request (tint.preview, preview_width, preview_height);
   gtk_widget_set_events (GTK_WIDGET (tint.preview), PREVIEW_MASK);
@@ -495,7 +495,7 @@ tileit_dialog (GimpDrawable *drawable)
 
   /* Area for buttons etc */
 
-  frame = gimp_frame_new (_("Flip"));
+  frame = ligma_frame_new (_("Flip"));
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
@@ -549,7 +549,7 @@ tileit_dialog (GimpDrawable *drawable)
   gtk_grid_attach (GTK_GRID (grid), toggle, 0, 0, 4, 1);
   gtk_widget_show (toggle);
 
-  g_object_set_data (G_OBJECT (toggle), "gimp-item-data",
+  g_object_set_data (G_OBJECT (toggle), "ligma-item-data",
                      GINT_TO_POINTER (ALL));
 
   g_signal_connect (toggle, "toggled",
@@ -562,7 +562,7 @@ tileit_dialog (GimpDrawable *drawable)
   gtk_grid_attach (GTK_GRID (grid), toggle, 0, 1, 4, 1);
   gtk_widget_show (toggle);
 
-  g_object_set_data (G_OBJECT (toggle), "gimp-item-data",
+  g_object_set_data (G_OBJECT (toggle), "ligma-item-data",
                      GINT_TO_POINTER (ALT));
 
   g_signal_connect (toggle, "toggled",
@@ -625,7 +625,7 @@ tileit_dialog (GimpDrawable *drawable)
                           spinbutton, "sensitive",
                           G_BINDING_SYNC_CREATE);
 
-  g_object_set_data (G_OBJECT (toggle), "gimp-item-data",
+  g_object_set_data (G_OBJECT (toggle), "ligma-item-data",
                      GINT_TO_POINTER (EXPLICIT));
 
   g_signal_connect (toggle, "toggled",
@@ -648,21 +648,21 @@ tileit_dialog (GimpDrawable *drawable)
 
   /* Widget for selecting the Opacity */
 
-  scale = gimp_scale_entry_new (_("O_pacity:"), opacity, 0, 100, 0);
+  scale = ligma_scale_entry_new (_("O_pacity:"), opacity, 0, 100, 0);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (tileit_scale_update),
                     &opacity);
 
   gtk_widget_show (scale);
-  gtk_widget_set_sensitive (scale, gimp_drawable_has_alpha (drawable));
+  gtk_widget_set_sensitive (scale, ligma_drawable_has_alpha (drawable));
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 6);
 
   /* Lower frame saying how many segments */
-  frame = gimp_frame_new (_("Number of Segments"));
+  frame = ligma_frame_new (_("Number of Segments"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  scale = gimp_scale_entry_new ("_n²", itvals.numtiles, 2, MAX_SEGS, 0);
+  scale = ligma_scale_entry_new ("_n²", itvals.numtiles, 2, MAX_SEGS, 0);
   g_signal_connect (scale, "value-changed",
                     G_CALLBACK (tileit_scale_update),
                     &itvals.numtiles);
@@ -672,7 +672,7 @@ tileit_dialog (GimpDrawable *drawable)
   gtk_widget_show (dlg);
   dialog_update_preview ();
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
+  run = (ligma_dialog_run (LIGMA_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
   gtk_widget_destroy (dlg);
 
@@ -683,7 +683,7 @@ static void
 tileit_hvtoggle_update (GtkWidget *widget,
                         gpointer   data)
 {
-  gimp_toggle_button_update (widget, data);
+  ligma_toggle_button_update (widget, data);
 
   switch (exp_call.type)
     {
@@ -858,7 +858,7 @@ static void
 tileit_radio_update (GtkWidget *widget,
                      gpointer   data)
 {
-  gimp_radio_button_update (widget, data);
+  ligma_radio_button_update (widget, data);
 
   if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
     {
@@ -887,10 +887,10 @@ tileit_radio_update (GtkWidget *widget,
 
 
 static void
-tileit_scale_update (GimpLabelSpin *scale,
+tileit_scale_update (LigmaLabelSpin *scale,
                      gint          *value)
 {
-  *value = RINT (gimp_label_spin_get_value (scale));
+  *value = RINT (ligma_label_spin_get_value (scale));
 
   dialog_update_preview ();
 }
@@ -950,13 +950,13 @@ tileit_exp_update_f (GtkWidget *widget,
 /* The preview_cache will contain the small image */
 
 static void
-cache_preview (GimpDrawable *drawable)
+cache_preview (LigmaDrawable *drawable)
 {
-  GeglBuffer *buffer = gimp_drawable_get_buffer (drawable);
+  GeglBuffer *buffer = ligma_drawable_get_buffer (drawable);
   const Babl *format;
   gdouble     scale;
 
-  if (gimp_drawable_has_alpha (drawable))
+  if (ligma_drawable_has_alpha (drawable))
     format = babl_format ("R'G'B'A u8");
   else
     format = babl_format ("R'G'B' u8");
@@ -979,7 +979,7 @@ cache_preview (GimpDrawable *drawable)
 }
 
 static void
-do_tiles (GimpDrawable *drawable)
+do_tiles (LigmaDrawable *drawable)
 {
   GeglBuffer         *src_buffer;
   GeglBuffer         *dest_buffer;
@@ -992,10 +992,10 @@ do_tiles (GimpDrawable *drawable)
   gint                nc, nr;
   gint                i;
 
-  src_buffer  = gimp_drawable_get_buffer (drawable);
-  dest_buffer = gimp_drawable_get_shadow_buffer (drawable);
+  src_buffer  = ligma_drawable_get_buffer (drawable);
+  dest_buffer = ligma_drawable_get_shadow_buffer (drawable);
 
-  has_alpha = gimp_drawable_has_alpha (drawable);
+  has_alpha = ligma_drawable_has_alpha (drawable);
 
   if (has_alpha)
     format = babl_format ("R'G'B'A u8");
@@ -1050,16 +1050,16 @@ do_tiles (GimpDrawable *drawable)
         }
 
       progress += dest_roi.width * dest_roi.height;
-      gimp_progress_update ((double) progress / max_progress);
+      ligma_progress_update ((double) progress / max_progress);
     }
 
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 
   g_object_unref (src_buffer);
   g_object_unref (dest_buffer);
 
-  gimp_drawable_merge_shadow (drawable, TRUE);
-  gimp_drawable_update (drawable,
+  ligma_drawable_merge_shadow (drawable, TRUE);
+  ligma_drawable_update (drawable,
                         sel_x1, sel_y1, sel_width, sel_height);
 }
 
@@ -1186,9 +1186,9 @@ dialog_update_preview (void)
               preview_width * tint.img_bpp);
     }
 
-  gimp_preview_area_draw (GIMP_PREVIEW_AREA (tint.preview),
+  ligma_preview_area_draw (LIGMA_PREVIEW_AREA (tint.preview),
                           0, 0, preview_width, preview_height,
-                          (tint.img_bpp>3)?GIMP_RGBA_IMAGE:GIMP_RGB_IMAGE,
+                          (tint.img_bpp>3)?LIGMA_RGBA_IMAGE:LIGMA_RGB_IMAGE,
                           buffer,
                           preview_width * tint.img_bpp);
 

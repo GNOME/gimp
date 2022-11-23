@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,20 +21,20 @@
 
 #include <lcms2.h>
 
-/*  These libgimp includes are not needed here at all, but this is a
- *  convenient place to make sure the public libgimp headers are
+/*  These libligma includes are not needed here at all, but this is a
+ *  convenient place to make sure the public libligma headers are
  *  C++-clean. The C++ compiler will choke on stuff like naming
  *  a struct member or parameter "private".
  */
-#include "libgimp/gimp.h"
-#include "libgimp/gimpui.h"
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpmodule/gimpmodule.h"
-#include "libgimpthumb/gimpthumb.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligma/ligma.h"
+#include "libligma/ligmaui.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmaconfig/ligmaconfig.h"
+#include "libligmamodule/ligmamodule.h"
+#include "libligmathumb/ligmathumb.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #if defined(__MINGW32__)
 #ifndef FLT_EPSILON
@@ -222,17 +222,17 @@ struct _EXRLoader
     return has_alpha_ ? 1 : 0;
   }
 
-  GimpColorProfile *getProfile() const {
+  LigmaColorProfile *getProfile() const {
     Chromaticities chromaticities;
     float whiteLuminance = 1.0;
 
-    GimpColorProfile *linear_srgb_profile;
+    LigmaColorProfile *linear_srgb_profile;
     cmsHPROFILE linear_srgb_lcms;
 
-    GimpColorProfile *profile;
+    LigmaColorProfile *profile;
     cmsHPROFILE lcms_profile;
 
-    cmsCIEXYZ *gimp_r_XYZ, *gimp_g_XYZ, *gimp_b_XYZ, *gimp_w_XYZ;
+    cmsCIEXYZ *ligma_r_XYZ, *ligma_g_XYZ, *ligma_b_XYZ, *ligma_w_XYZ;
     cmsCIEXYZ exr_r_XYZ, exr_g_XYZ, exr_b_XYZ, exr_w_XYZ;
 
     // get the color information from the EXR
@@ -274,34 +274,34 @@ struct _EXRLoader
                                           chromaticities.blue.y,
                                           whiteLuminance } };
 
-    // get the primaries + wp from GIMP's internal linear sRGB profile
-    linear_srgb_profile = gimp_color_profile_new_rgb_srgb_linear ();
-    linear_srgb_lcms = gimp_color_profile_get_lcms_profile (linear_srgb_profile);
+    // get the primaries + wp from LIGMA's internal linear sRGB profile
+    linear_srgb_profile = ligma_color_profile_new_rgb_srgb_linear ();
+    linear_srgb_lcms = ligma_color_profile_get_lcms_profile (linear_srgb_profile);
 
-    gimp_r_XYZ = (cmsCIEXYZ *) cmsReadTag (linear_srgb_lcms, cmsSigRedColorantTag);
-    gimp_g_XYZ = (cmsCIEXYZ *) cmsReadTag (linear_srgb_lcms, cmsSigGreenColorantTag);
-    gimp_b_XYZ = (cmsCIEXYZ *) cmsReadTag (linear_srgb_lcms, cmsSigBlueColorantTag);
-    gimp_w_XYZ = (cmsCIEXYZ *) cmsReadTag (linear_srgb_lcms, cmsSigMediaWhitePointTag);
+    ligma_r_XYZ = (cmsCIEXYZ *) cmsReadTag (linear_srgb_lcms, cmsSigRedColorantTag);
+    ligma_g_XYZ = (cmsCIEXYZ *) cmsReadTag (linear_srgb_lcms, cmsSigGreenColorantTag);
+    ligma_b_XYZ = (cmsCIEXYZ *) cmsReadTag (linear_srgb_lcms, cmsSigBlueColorantTag);
+    ligma_w_XYZ = (cmsCIEXYZ *) cmsReadTag (linear_srgb_lcms, cmsSigMediaWhitePointTag);
 
     cmsxyY2XYZ(&exr_r_XYZ, &CameraPrimaries.Red);
     cmsxyY2XYZ(&exr_g_XYZ, &CameraPrimaries.Green);
     cmsxyY2XYZ(&exr_b_XYZ, &CameraPrimaries.Blue);
     cmsxyY2XYZ(&exr_w_XYZ, &whitePoint);
 
-    // ... and check if the data stored in the EXR matches GIMP's internal profile
-    bool exr_is_linear_srgb = XYZ_equal (&exr_r_XYZ, gimp_r_XYZ) &&
-                              XYZ_equal (&exr_g_XYZ, gimp_g_XYZ) &&
-                              XYZ_equal (&exr_b_XYZ, gimp_b_XYZ) &&
-                              XYZ_equal (&exr_w_XYZ, gimp_w_XYZ);
+    // ... and check if the data stored in the EXR matches LIGMA's internal profile
+    bool exr_is_linear_srgb = XYZ_equal (&exr_r_XYZ, ligma_r_XYZ) &&
+                              XYZ_equal (&exr_g_XYZ, ligma_g_XYZ) &&
+                              XYZ_equal (&exr_b_XYZ, ligma_b_XYZ) &&
+                              XYZ_equal (&exr_w_XYZ, ligma_w_XYZ);
 
-    // using GIMP's linear sRGB profile allows to skip the conversion popup
+    // using LIGMA's linear sRGB profile allows to skip the conversion popup
     if (exr_is_linear_srgb)
       return linear_srgb_profile;
 
     // nope, it's something else. Clean up and build a new profile
     g_object_unref (linear_srgb_profile);
 
-    // TODO: maybe factor this out into libgimpcolor/gimpcolorprofile.h ?
+    // TODO: maybe factor this out into libligmacolor/ligmacolorprofile.h ?
     double Parameters[2] = { 1.0, 0.0 };
     cmsToneCurve *Gamma[3];
     Gamma[0] = Gamma[1] = Gamma[2] = cmsBuildParametricToneCurve(0,
@@ -313,7 +313,7 @@ struct _EXRLoader
 
 //     cmsSetProfileVersion (lcms_profile, 2.1);
     cmsMLU *mlu0 = cmsMLUalloc (NULL, 1);
-    cmsMLUsetASCII (mlu0, "en", "US", "(GIMP internal)");
+    cmsMLUsetASCII (mlu0, "en", "US", "(LIGMA internal)");
     cmsMLU *mlu1 = cmsMLUalloc(NULL, 1);
     cmsMLUsetASCII (mlu1, "en", "US", "color profile from EXR chromaticities");
     cmsMLU *mlu2 = cmsMLUalloc(NULL, 1);
@@ -325,7 +325,7 @@ struct _EXRLoader
     cmsMLUfree (mlu1);
     cmsMLUfree (mlu2);
 
-    profile = gimp_color_profile_new_from_lcms_profile (lcms_profile,
+    profile = ligma_color_profile_new_from_lcms_profile (lcms_profile,
                                                         NULL);
     cmsCloseProfile (lcms_profile);
 
@@ -475,7 +475,7 @@ exr_loader_has_alpha (EXRLoader *loader)
   return loader->hasAlpha();
 }
 
-GimpColorProfile *
+LigmaColorProfile *
 exr_loader_get_profile (EXRLoader *loader)
 {
   return loader->getProfile ();

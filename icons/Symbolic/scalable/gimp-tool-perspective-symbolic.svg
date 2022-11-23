@@ -15,7 +15,7 @@
    width="16.000002"
    version="1.1"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="gimp-tool-perspective.svg">
+   sodipodi:docname="ligma-tool-perspective.svg">
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -50,7 +50,7 @@
             <dc:title>Barbara Muraus, Jakub Steiner, Klaus Staedtler</dc:title>
           </cc:Agent>
         </dc:contributor>
-        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for GIMP</dc:description>
+        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for LIGMA</dc:description>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -221,7 +221,7 @@
      id="tools">
     <g
        transform="translate(-67.158849,-55.946331)"
-       id="gimp-tool-perspective"
+       id="ligma-tool-perspective"
        style="display:inline">
       <rect
          y="242"

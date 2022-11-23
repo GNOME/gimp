@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoverlaydialog.c
- * Copyright (C) 2009-2010  Michael Natterer <mitch@gimp.org>
+ * ligmaoverlaydialog.c
+ * Copyright (C) 2009-2010  Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,16 +24,16 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "core/gimptoolinfo.h"
+#include "core/ligmatoolinfo.h"
 
-#include "gimpoverlaydialog.h"
+#include "ligmaoverlaydialog.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -60,105 +60,105 @@ struct _ResponseData
 };
 
 
-static void       gimp_overlay_dialog_constructed   (GObject           *object);
-static void       gimp_overlay_dialog_dispose       (GObject           *object);
-static void       gimp_overlay_dialog_finalize      (GObject           *object);
-static void       gimp_overlay_dialog_set_property  (GObject           *object,
+static void       ligma_overlay_dialog_constructed   (GObject           *object);
+static void       ligma_overlay_dialog_dispose       (GObject           *object);
+static void       ligma_overlay_dialog_finalize      (GObject           *object);
+static void       ligma_overlay_dialog_set_property  (GObject           *object,
                                                      guint              property_id,
                                                      const GValue      *value,
                                                      GParamSpec        *pspec);
-static void       gimp_overlay_dialog_get_property  (GObject           *object,
+static void       ligma_overlay_dialog_get_property  (GObject           *object,
                                                      guint              property_id,
                                                      GValue            *value,
                                                      GParamSpec        *pspec);
 
-static void       gimp_overlay_dialog_get_preferred_width
+static void       ligma_overlay_dialog_get_preferred_width
                                                     (GtkWidget         *widget,
                                                      gint              *minimum_width,
                                                      gint              *natural_width);
-static void       gimp_overlay_dialog_get_preferred_height
+static void       ligma_overlay_dialog_get_preferred_height
                                                     (GtkWidget         *widget,
                                                      gint              *minimum_height,
                                                      gint              *natural_height);
-static void       gimp_overlay_dialog_get_preferred_width_for_height
+static void       ligma_overlay_dialog_get_preferred_width_for_height
                                                     (GtkWidget         *widget,
                                                      gint               height,
                                                      gint              *minimum_width,
                                                      gint              *natural_width);
-static void       gimp_overlay_dialog_get_preferred_height_for_width
+static void       ligma_overlay_dialog_get_preferred_height_for_width
                                                     (GtkWidget         *widget,
                                                      gint               width,
                                                      gint              *minimum_height,
                                                      gint              *natural_height);
-static void       gimp_overlay_dialog_size_allocate (GtkWidget         *widget,
+static void       ligma_overlay_dialog_size_allocate (GtkWidget         *widget,
                                                      GtkAllocation     *allocation);
 
-static void       gimp_overlay_dialog_forall        (GtkContainer      *container,
+static void       ligma_overlay_dialog_forall        (GtkContainer      *container,
                                                      gboolean           include_internals,
                                                      GtkCallback        callback,
                                                      gpointer           callback_data);
 
-static void       gimp_overlay_dialog_detach        (GimpOverlayDialog *dialog);
-static void       gimp_overlay_dialog_real_detach   (GimpOverlayDialog *dialog);
+static void       ligma_overlay_dialog_detach        (LigmaOverlayDialog *dialog);
+static void       ligma_overlay_dialog_real_detach   (LigmaOverlayDialog *dialog);
 
-static void       gimp_overlay_dialog_close         (GimpOverlayDialog *dialog);
-static void       gimp_overlay_dialog_real_close    (GimpOverlayDialog *dialog);
+static void       ligma_overlay_dialog_close         (LigmaOverlayDialog *dialog);
+static void       ligma_overlay_dialog_real_close    (LigmaOverlayDialog *dialog);
 
 static ResponseData * get_response_data                    (GtkWidget         *widget,
                                                             gboolean          create);
 
 
-G_DEFINE_TYPE (GimpOverlayDialog, gimp_overlay_dialog,
-               GIMP_TYPE_OVERLAY_FRAME)
+G_DEFINE_TYPE (LigmaOverlayDialog, ligma_overlay_dialog,
+               LIGMA_TYPE_OVERLAY_FRAME)
 
 static guint signals[LAST_SIGNAL] = { 0, };
 
-#define parent_class gimp_overlay_dialog_parent_class
+#define parent_class ligma_overlay_dialog_parent_class
 
 
 static void
-gimp_overlay_dialog_class_init (GimpOverlayDialogClass *klass)
+ligma_overlay_dialog_class_init (LigmaOverlayDialogClass *klass)
 {
   GObjectClass      *object_class    = G_OBJECT_CLASS (klass);
   GtkWidgetClass    *widget_class    = GTK_WIDGET_CLASS (klass);
   GtkContainerClass *container_class = GTK_CONTAINER_CLASS (klass);
 
-  object_class->constructed   = gimp_overlay_dialog_constructed;
-  object_class->dispose       = gimp_overlay_dialog_dispose;
-  object_class->finalize      = gimp_overlay_dialog_finalize;
-  object_class->get_property  = gimp_overlay_dialog_get_property;
-  object_class->set_property  = gimp_overlay_dialog_set_property;
+  object_class->constructed   = ligma_overlay_dialog_constructed;
+  object_class->dispose       = ligma_overlay_dialog_dispose;
+  object_class->finalize      = ligma_overlay_dialog_finalize;
+  object_class->get_property  = ligma_overlay_dialog_get_property;
+  object_class->set_property  = ligma_overlay_dialog_set_property;
 
-  widget_class->get_preferred_width  = gimp_overlay_dialog_get_preferred_width;
-  widget_class->get_preferred_height = gimp_overlay_dialog_get_preferred_height;
-  widget_class->get_preferred_width_for_height = gimp_overlay_dialog_get_preferred_width_for_height;
-  widget_class->get_preferred_height_for_width = gimp_overlay_dialog_get_preferred_height_for_width;
-  widget_class->size_allocate        = gimp_overlay_dialog_size_allocate;
+  widget_class->get_preferred_width  = ligma_overlay_dialog_get_preferred_width;
+  widget_class->get_preferred_height = ligma_overlay_dialog_get_preferred_height;
+  widget_class->get_preferred_width_for_height = ligma_overlay_dialog_get_preferred_width_for_height;
+  widget_class->get_preferred_height_for_width = ligma_overlay_dialog_get_preferred_height_for_width;
+  widget_class->size_allocate        = ligma_overlay_dialog_size_allocate;
 
-  container_class->forall            = gimp_overlay_dialog_forall;
+  container_class->forall            = ligma_overlay_dialog_forall;
 
-  klass->detach               = gimp_overlay_dialog_real_detach;
-  klass->close                = gimp_overlay_dialog_real_close;
+  klass->detach               = ligma_overlay_dialog_real_detach;
+  klass->close                = ligma_overlay_dialog_real_close;
 
   g_object_class_install_property (object_class, PROP_TITLE,
                                    g_param_spec_string ("title",
                                                         NULL, NULL,
                                                         NULL,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_ICON_NAME,
                                    g_param_spec_string ("icon-name",
                                                         NULL, NULL,
                                                         NULL,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   signals[RESPONSE] =
     g_signal_new ("response",
                   G_OBJECT_CLASS_TYPE (klass),
                   G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (GimpOverlayDialogClass, response),
+                  G_STRUCT_OFFSET (LigmaOverlayDialogClass, response),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   G_TYPE_INT);
@@ -167,7 +167,7 @@ gimp_overlay_dialog_class_init (GimpOverlayDialogClass *klass)
     g_signal_new ("detach",
                   G_OBJECT_CLASS_TYPE (klass),
                   G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
-                  G_STRUCT_OFFSET (GimpOverlayDialogClass, detach),
+                  G_STRUCT_OFFSET (LigmaOverlayDialogClass, detach),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
@@ -175,18 +175,18 @@ gimp_overlay_dialog_class_init (GimpOverlayDialogClass *klass)
     g_signal_new ("close",
                   G_OBJECT_CLASS_TYPE (klass),
                   G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
-                  G_STRUCT_OFFSET (GimpOverlayDialogClass, close),
+                  G_STRUCT_OFFSET (LigmaOverlayDialogClass, close),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   gtk_binding_entry_add_signal (gtk_binding_set_by_class (klass),
                                 GDK_KEY_Escape, 0, "close", 0);
 
-  gtk_widget_class_set_css_name (GTK_WIDGET_CLASS (klass), "GimpOverlayDialog");
+  gtk_widget_class_set_css_name (GTK_WIDGET_CLASS (klass), "LigmaOverlayDialog");
 }
 
 static void
-gimp_overlay_dialog_init (GimpOverlayDialog *dialog)
+ligma_overlay_dialog_init (LigmaOverlayDialog *dialog)
 {
   dialog->header = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
   gtk_widget_set_parent (dialog->header, GTK_WIDGET (dialog));
@@ -200,9 +200,9 @@ gimp_overlay_dialog_init (GimpOverlayDialog *dialog)
 }
 
 static void
-gimp_overlay_dialog_constructed (GObject *object)
+ligma_overlay_dialog_constructed (GObject *object)
 {
-  GimpOverlayDialog *dialog = GIMP_OVERLAY_DIALOG (object);
+  LigmaOverlayDialog *dialog = LIGMA_OVERLAY_DIALOG (object);
   GtkWidget         *label;
   GtkWidget         *button;
   GtkWidget         *image;
@@ -215,7 +215,7 @@ gimp_overlay_dialog_constructed (GObject *object)
   gtk_widget_show (image);
 
   dialog->title_label = label = gtk_label_new (dialog->title);
-  gimp_label_set_attributes (GTK_LABEL (label),
+  ligma_label_set_attributes (GTK_LABEL (label),
                              PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
                              -1);
   gtk_box_pack_start (GTK_BOX (dialog->header), label, TRUE, TRUE, 0);
@@ -227,13 +227,13 @@ gimp_overlay_dialog_constructed (GObject *object)
   gtk_box_pack_end (GTK_BOX (dialog->header), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  image = gtk_image_new_from_icon_name (GIMP_ICON_CLOSE, GTK_ICON_SIZE_MENU);
+  image = gtk_image_new_from_icon_name (LIGMA_ICON_CLOSE, GTK_ICON_SIZE_MENU);
   gtk_image_set_pixel_size (GTK_IMAGE (image), 12);
   gtk_container_add (GTK_CONTAINER (button), image);
   gtk_widget_show (image);
 
   g_signal_connect_object (button, "clicked",
-                           G_CALLBACK (gimp_overlay_dialog_close),
+                           G_CALLBACK (ligma_overlay_dialog_close),
                            G_OBJECT (dialog),
                            G_CONNECT_SWAPPED);
 
@@ -243,25 +243,25 @@ gimp_overlay_dialog_constructed (GObject *object)
   gtk_box_pack_end (GTK_BOX (dialog->header), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  gimp_help_set_help_data (dialog->detach_button,
+  ligma_help_set_help_data (dialog->detach_button,
                            _("Detach dialog from canvas"), NULL);
 
-  image = gtk_image_new_from_icon_name (GIMP_ICON_DETACH,
+  image = gtk_image_new_from_icon_name (LIGMA_ICON_DETACH,
                                         GTK_ICON_SIZE_MENU);
   gtk_image_set_pixel_size (GTK_IMAGE (image), 12);
   gtk_container_add (GTK_CONTAINER (button), image);
   gtk_widget_show (image);
 
   g_signal_connect_object (button, "clicked",
-                           G_CALLBACK (gimp_overlay_dialog_detach),
+                           G_CALLBACK (ligma_overlay_dialog_detach),
                            G_OBJECT (dialog),
                            G_CONNECT_SWAPPED);
 }
 
 static void
-gimp_overlay_dialog_dispose (GObject *object)
+ligma_overlay_dialog_dispose (GObject *object)
 {
-  GimpOverlayDialog *dialog = GIMP_OVERLAY_DIALOG (object);
+  LigmaOverlayDialog *dialog = LIGMA_OVERLAY_DIALOG (object);
 
   if (dialog->header)
     {
@@ -279,9 +279,9 @@ gimp_overlay_dialog_dispose (GObject *object)
 }
 
 static void
-gimp_overlay_dialog_finalize (GObject *object)
+ligma_overlay_dialog_finalize (GObject *object)
 {
-  GimpOverlayDialog *dialog = GIMP_OVERLAY_DIALOG (object);
+  LigmaOverlayDialog *dialog = LIGMA_OVERLAY_DIALOG (object);
 
   g_clear_pointer (&dialog->title,     g_free);
   g_clear_pointer (&dialog->icon_name, g_free);
@@ -290,12 +290,12 @@ gimp_overlay_dialog_finalize (GObject *object)
 }
 
 static void
-gimp_overlay_dialog_set_property (GObject      *object,
+ligma_overlay_dialog_set_property (GObject      *object,
                                   guint         property_id,
                                   const GValue *value,
                                   GParamSpec   *pspec)
 {
-  GimpOverlayDialog *dialog = GIMP_OVERLAY_DIALOG (object);
+  LigmaOverlayDialog *dialog = LIGMA_OVERLAY_DIALOG (object);
 
   switch (property_id)
     {
@@ -321,12 +321,12 @@ gimp_overlay_dialog_set_property (GObject      *object,
 }
 
 static void
-gimp_overlay_dialog_get_property (GObject    *object,
+ligma_overlay_dialog_get_property (GObject    *object,
                                   guint       property_id,
                                   GValue     *value,
                                   GParamSpec *pspec)
 {
-  GimpOverlayDialog *dialog = GIMP_OVERLAY_DIALOG (object);
+  LigmaOverlayDialog *dialog = LIGMA_OVERLAY_DIALOG (object);
 
   switch (property_id)
     {
@@ -345,11 +345,11 @@ gimp_overlay_dialog_get_property (GObject    *object,
 }
 
 static void
-gimp_overlay_dialog_get_preferred_width (GtkWidget *widget,
+ligma_overlay_dialog_get_preferred_width (GtkWidget *widget,
                                          gint      *minimum_width,
                                          gint      *natural_width)
 {
-  GimpOverlayDialog *dialog = GIMP_OVERLAY_DIALOG (widget);
+  LigmaOverlayDialog *dialog = LIGMA_OVERLAY_DIALOG (widget);
   gint               header_minimum;
   gint               header_natural;
   gint               action_minimum;
@@ -369,11 +369,11 @@ gimp_overlay_dialog_get_preferred_width (GtkWidget *widget,
 }
 
 static void
-gimp_overlay_dialog_get_preferred_height (GtkWidget *widget,
+ligma_overlay_dialog_get_preferred_height (GtkWidget *widget,
                                           gint      *minimum_height,
                                           gint      *natural_height)
 {
-  GimpOverlayDialog *dialog = GIMP_OVERLAY_DIALOG (widget);
+  LigmaOverlayDialog *dialog = LIGMA_OVERLAY_DIALOG (widget);
   gint               header_minimum;
   gint               header_natural;
   gint               action_minimum;
@@ -396,12 +396,12 @@ gimp_overlay_dialog_get_preferred_height (GtkWidget *widget,
 }
 
 static void
-gimp_overlay_dialog_get_preferred_width_for_height (GtkWidget *widget,
+ligma_overlay_dialog_get_preferred_width_for_height (GtkWidget *widget,
                                                     gint       height,
                                                     gint      *minimum_width,
                                                     gint      *natural_width)
 {
-  GimpOverlayDialog *dialog = GIMP_OVERLAY_DIALOG (widget);
+  LigmaOverlayDialog *dialog = LIGMA_OVERLAY_DIALOG (widget);
   gint               header_minimum;
   gint               header_natural;
   gint               action_minimum;
@@ -422,12 +422,12 @@ gimp_overlay_dialog_get_preferred_width_for_height (GtkWidget *widget,
 }
 
 static void
-gimp_overlay_dialog_get_preferred_height_for_width (GtkWidget *widget,
+ligma_overlay_dialog_get_preferred_height_for_width (GtkWidget *widget,
                                                     gint       width,
                                                     gint      *minimum_height,
                                                     gint      *natural_height)
 {
-  GimpOverlayDialog *dialog = GIMP_OVERLAY_DIALOG (widget);
+  LigmaOverlayDialog *dialog = LIGMA_OVERLAY_DIALOG (widget);
   gint               header_minimum;
   gint               header_natural;
   gint               action_minimum;
@@ -453,11 +453,11 @@ gimp_overlay_dialog_get_preferred_height_for_width (GtkWidget *widget,
 }
 
 static void
-gimp_overlay_dialog_size_allocate (GtkWidget     *widget,
+ligma_overlay_dialog_size_allocate (GtkWidget     *widget,
                                    GtkAllocation *allocation)
 {
   GtkContainer      *container = GTK_CONTAINER (widget);
-  GimpOverlayDialog *dialog    = GIMP_OVERLAY_DIALOG (widget);
+  LigmaOverlayDialog *dialog    = LIGMA_OVERLAY_DIALOG (widget);
   GtkWidget         *child     = gtk_bin_get_child (GTK_BIN (widget));
   GtkRequisition     header_requisition;
   GtkRequisition     action_requisition;
@@ -504,7 +504,7 @@ gimp_overlay_dialog_size_allocate (GtkWidget     *widget,
 }
 
 static void
-gimp_overlay_dialog_forall (GtkContainer *container,
+ligma_overlay_dialog_forall (GtkContainer *container,
                             gboolean      include_internals,
                             GtkCallback   callback,
                             gpointer      callback_data)
@@ -514,7 +514,7 @@ gimp_overlay_dialog_forall (GtkContainer *container,
 
   if (include_internals)
     {
-      GimpOverlayDialog *dialog = GIMP_OVERLAY_DIALOG (container);
+      LigmaOverlayDialog *dialog = LIGMA_OVERLAY_DIALOG (container);
 
       if (dialog->header)
         (* callback) (dialog->header, callback_data);
@@ -525,92 +525,92 @@ gimp_overlay_dialog_forall (GtkContainer *container,
 }
 
 static void
-gimp_overlay_dialog_detach (GimpOverlayDialog *dialog)
+ligma_overlay_dialog_detach (LigmaOverlayDialog *dialog)
 {
   g_signal_emit (dialog, signals[DETACH], 0);
 }
 
 static void
-gimp_overlay_dialog_real_detach (GimpOverlayDialog *dialog)
+ligma_overlay_dialog_real_detach (LigmaOverlayDialog *dialog)
 {
-  gimp_overlay_dialog_response (dialog, GIMP_RESPONSE_DETACH);
+  ligma_overlay_dialog_response (dialog, LIGMA_RESPONSE_DETACH);
 }
 
 static void
-gimp_overlay_dialog_close (GimpOverlayDialog *dialog)
+ligma_overlay_dialog_close (LigmaOverlayDialog *dialog)
 {
   g_signal_emit (dialog, signals[CLOSE], 0);
 }
 
 static void
-gimp_overlay_dialog_real_close (GimpOverlayDialog *dialog)
+ligma_overlay_dialog_real_close (LigmaOverlayDialog *dialog)
 {
-  gimp_overlay_dialog_response (dialog, GTK_RESPONSE_DELETE_EVENT);
+  ligma_overlay_dialog_response (dialog, GTK_RESPONSE_DELETE_EVENT);
 }
 
 GtkWidget *
-gimp_overlay_dialog_new (GimpToolInfo *tool_info,
+ligma_overlay_dialog_new (LigmaToolInfo *tool_info,
                          const gchar  *desc,
                          ...)
 {
-  GimpOverlayDialog *dialog;
+  LigmaOverlayDialog *dialog;
   const gchar       *icon_name;
   va_list            args;
 
-  g_return_val_if_fail (GIMP_IS_TOOL_INFO (tool_info), NULL);
+  g_return_val_if_fail (LIGMA_IS_TOOL_INFO (tool_info), NULL);
 
-  icon_name = gimp_viewable_get_icon_name (GIMP_VIEWABLE (tool_info));
+  icon_name = ligma_viewable_get_icon_name (LIGMA_VIEWABLE (tool_info));
 
-  dialog = g_object_new (GIMP_TYPE_OVERLAY_DIALOG,
+  dialog = g_object_new (LIGMA_TYPE_OVERLAY_DIALOG,
                          "title",     tool_info->label,
                          "icon-name", icon_name,
                          NULL);
 
   va_start (args, desc);
-  gimp_overlay_dialog_add_buttons_valist (dialog, args);
+  ligma_overlay_dialog_add_buttons_valist (dialog, args);
   va_end (args);
 
   return GTK_WIDGET (dialog);
 }
 
 void
-gimp_overlay_dialog_response (GimpOverlayDialog *dialog,
+ligma_overlay_dialog_response (LigmaOverlayDialog *dialog,
                               gint               response_id)
 {
-  g_return_if_fail (GIMP_IS_OVERLAY_DIALOG (dialog));
+  g_return_if_fail (LIGMA_IS_OVERLAY_DIALOG (dialog));
 
   g_signal_emit (dialog, signals[RESPONSE], 0,
                  response_id);
 }
 
 void
-gimp_overlay_dialog_add_buttons_valist (GimpOverlayDialog *dialog,
+ligma_overlay_dialog_add_buttons_valist (LigmaOverlayDialog *dialog,
                                         va_list            args)
 {
   const gchar *button_text;
   gint         response_id;
 
-  g_return_if_fail (GIMP_IS_OVERLAY_DIALOG (dialog));
+  g_return_if_fail (LIGMA_IS_OVERLAY_DIALOG (dialog));
 
   while ((button_text = va_arg (args, const gchar *)))
     {
       response_id = va_arg (args, gint);
 
-      gimp_overlay_dialog_add_button (dialog, button_text, response_id);
+      ligma_overlay_dialog_add_button (dialog, button_text, response_id);
     }
 }
 
 static void
 action_widget_activated (GtkWidget         *widget,
-                         GimpOverlayDialog *dialog)
+                         LigmaOverlayDialog *dialog)
 {
   ResponseData *ad = get_response_data (widget, FALSE);
 
-  gimp_overlay_dialog_response (dialog, ad->response_id);
+  ligma_overlay_dialog_response (dialog, ad->response_id);
 }
 
 GtkWidget *
-gimp_overlay_dialog_add_button (GimpOverlayDialog *dialog,
+ligma_overlay_dialog_add_button (LigmaOverlayDialog *dialog,
                                 const gchar       *button_text,
                                 gint               response_id)
 {
@@ -619,12 +619,12 @@ gimp_overlay_dialog_add_button (GimpOverlayDialog *dialog,
   guint         signal_id;
   GClosure     *closure;
 
-  g_return_val_if_fail (GIMP_IS_OVERLAY_DIALOG (dialog), NULL);
+  g_return_val_if_fail (LIGMA_IS_OVERLAY_DIALOG (dialog), NULL);
   g_return_val_if_fail (button_text != NULL, NULL);
 
   if (response_id == GTK_RESPONSE_CANCEL ||
       response_id == GTK_RESPONSE_CLOSE  ||
-      response_id == GIMP_RESPONSE_DETACH)
+      response_id == LIGMA_RESPONSE_DETACH)
     return NULL;
 
   button = gtk_button_new_with_mnemonic (button_text);
@@ -652,7 +652,7 @@ gimp_overlay_dialog_add_button (GimpOverlayDialog *dialog,
 }
 
 void
-gimp_overlay_dialog_set_alternative_button_order (GimpOverlayDialog *overlay,
+ligma_overlay_dialog_set_alternative_button_order (LigmaOverlayDialog *overlay,
                                                   gint               n_ids,
                                                   gint              *ids)
 {
@@ -660,21 +660,21 @@ gimp_overlay_dialog_set_alternative_button_order (GimpOverlayDialog *overlay,
 }
 
 void
-gimp_overlay_dialog_set_default_response (GimpOverlayDialog *overlay,
+ligma_overlay_dialog_set_default_response (LigmaOverlayDialog *overlay,
                                           gint               response_id)
 {
   /* TODO */
 }
 
 void
-gimp_overlay_dialog_set_response_sensitive (GimpOverlayDialog *overlay,
+ligma_overlay_dialog_set_response_sensitive (LigmaOverlayDialog *overlay,
                                             gint               response_id,
                                             gboolean           sensitive)
 {
   GList *children;
   GList *list;
 
-  g_return_if_fail (GIMP_IS_OVERLAY_DIALOG (overlay));
+  g_return_if_fail (LIGMA_IS_OVERLAY_DIALOG (overlay));
 
   if (response_id == GTK_RESPONSE_CANCEL ||
       response_id == GTK_RESPONSE_CLOSE)
@@ -682,7 +682,7 @@ gimp_overlay_dialog_set_response_sensitive (GimpOverlayDialog *overlay,
       gtk_widget_set_sensitive (overlay->close_button, sensitive);
     }
 
-  if (response_id == GIMP_RESPONSE_DETACH)
+  if (response_id == LIGMA_RESPONSE_DETACH)
     {
       gtk_widget_set_sensitive (overlay->detach_button, sensitive);
     }
@@ -715,14 +715,14 @@ get_response_data (GtkWidget *widget,
                    gboolean   create)
 {
   ResponseData *ad = g_object_get_data (G_OBJECT (widget),
-                                        "gimp-overlay-dialog-response-data");
+                                        "ligma-overlay-dialog-response-data");
 
   if (! ad && create)
     {
       ad = g_slice_new (ResponseData);
 
       g_object_set_data_full (G_OBJECT (widget),
-                              "gimp-overlay-dialog-response-data",
+                              "ligma-overlay-dialog-response-data",
                               ad, response_data_free);
     }
 

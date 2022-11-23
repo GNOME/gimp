@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,17 +19,17 @@
 
 #include <gtk/gtk.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "gimpressionist.h"
+#include "ligmaressionist.h"
 #include "ppmtool.h"
 #include "size.h"
 #include "infile.h"
 
 #include "preview.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 #define RESPONSE_APPLY 1
@@ -61,7 +61,7 @@ static double
 getsiz_from_gui (double x, double y)
 {
   return getsiz_proto (x,y, numsmvect, smvector,
-                       gimp_label_spin_get_value (GIMP_LABEL_SPIN (smstrexpadjust)),
+                       ligma_label_spin_get_value (LIGMA_LABEL_SPIN (smstrexpadjust)),
                        gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (size_voronoi)));
 }
 
@@ -93,9 +93,9 @@ updatesmpreviewprev (void)
     }
 
 
-  gimp_preview_area_draw (GIMP_PREVIEW_AREA (smpreviewprev),
+  ligma_preview_area_draw (LIGMA_PREVIEW_AREA (smpreviewprev),
                           0, 0, OMWIDTH, OMHEIGHT,
-                          GIMP_RGB_IMAGE,
+                          LIGMA_RGB_IMAGE,
                           nsbuffer.col,
                           OMWIDTH * 3);
 }
@@ -156,9 +156,9 @@ updatesmvectorprev (void)
       ppm_put_rgb (&update_vector_preview_sbuffer, x, y, white);
   }
 
-  gimp_preview_area_draw (GIMP_PREVIEW_AREA (smvectorprev),
+  ligma_preview_area_draw (LIGMA_PREVIEW_AREA (smvectorprev),
                           0, 0, OMWIDTH, OMHEIGHT,
-                          GIMP_RGB_IMAGE,
+                          LIGMA_RGB_IMAGE,
                           update_vector_preview_sbuffer.col,
                           OMWIDTH * 3);
 
@@ -181,8 +181,8 @@ static void
 updatesmsliders (void)
 {
   smadjignore = TRUE;
-  gimp_label_spin_set_value (GIMP_LABEL_SPIN (sizadjust), smvector[selectedsmvector].siz);
-  gimp_label_spin_set_value (GIMP_LABEL_SPIN (smstradjust), smvector[selectedsmvector].str);
+  ligma_label_spin_set_value (LIGMA_LABEL_SPIN (sizadjust), smvector[selectedsmvector].siz);
+  ligma_label_spin_set_value (LIGMA_LABEL_SPIN (smstradjust), smvector[selectedsmvector].str);
   smadjignore = FALSE;
 }
 
@@ -278,7 +278,7 @@ angsmadjmove (GtkWidget *w, gpointer data)
 {
   if (!smadjignore)
     {
-      smvector[selectedsmvector].siz = gimp_label_spin_get_value (GIMP_LABEL_SPIN (sizadjust));
+      smvector[selectedsmvector].siz = ligma_label_spin_get_value (LIGMA_LABEL_SPIN (sizadjust));
       updatesmvectorprev ();
       updatesmpreviewprev ();
     }
@@ -289,7 +289,7 @@ strsmadjmove (GtkWidget *w, gpointer data)
 {
   if (!smadjignore)
     {
-      smvector[selectedsmvector].str = gimp_label_spin_get_value (GIMP_LABEL_SPIN (smstradjust));
+      smvector[selectedsmvector].str = ligma_label_spin_get_value (LIGMA_LABEL_SPIN (smstradjust));
       updatesmvectorprev ();
       updatesmpreviewprev ();
     }
@@ -321,7 +321,7 @@ smresponse (GtkWidget *widget,
           pcvals.size_vectors[i] = smvector[i];
 
         pcvals.num_size_vectors = numsmvect;
-        pcvals.size_strength_exponent = gimp_label_spin_get_value (GIMP_LABEL_SPIN (smstrexpadjust));
+        pcvals.size_strength_exponent = ligma_label_spin_get_value (LIGMA_LABEL_SPIN (smstrexpadjust));
         pcvals.size_voronoi = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (size_voronoi));
       }
       break;
@@ -393,9 +393,9 @@ create_sizemap_dialog (GtkWidget *parent)
       return;
     }
 
-  smwindow = gimp_dialog_new (_("Size Map Editor"), PLUG_IN_ROLE,
+  smwindow = ligma_dialog_new (_("Size Map Editor"), PLUG_IN_ROLE,
                               gtk_widget_get_toplevel (parent), 0,
-                              gimp_standard_help_func, PLUG_IN_PROC,
+                              ligma_standard_help_func, PLUG_IN_PROC,
 
                               _("_Apply"),  RESPONSE_APPLY,
                               _("_Cancel"), GTK_RESPONSE_CANCEL,
@@ -403,7 +403,7 @@ create_sizemap_dialog (GtkWidget *parent)
 
                               NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (smwindow),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (smwindow),
                                            GTK_RESPONSE_OK,
                                            RESPONSE_APPLY,
                                            GTK_RESPONSE_CANCEL,
@@ -432,11 +432,11 @@ create_sizemap_dialog (GtkWidget *parent)
   gtk_widget_show (tmpw);
 
   tmpw = gtk_event_box_new ();
-  gimp_help_set_help_data (tmpw, _("The smvector-field. Left-click to move selected smvector, Right-click to point it towards mouse, Middle-click to add a new smvector."), NULL);
+  ligma_help_set_help_data (tmpw, _("The smvector-field. Left-click to move selected smvector, Right-click to point it towards mouse, Middle-click to add a new smvector."), NULL);
   gtk_box_pack_start (GTK_BOX (hbox), tmpw, FALSE, FALSE, 0);
   tmpw2 = tmpw;
 
-  tmpw = smvectorprev = gimp_preview_area_new ();
+  tmpw = smvectorprev = ligma_preview_area_new ();
   gtk_widget_set_size_request (tmpw, OMWIDTH, OMHEIGHT);
   gtk_container_add (GTK_CONTAINER (tmpw2), tmpw);
   gtk_widget_show (tmpw);
@@ -453,14 +453,14 @@ create_sizemap_dialog (GtkWidget *parent)
   gtk_widget_show (tmpw);
   g_signal_connect (smvectprevbrightadjust, "value-changed",
                     G_CALLBACK (updatesmvectorprev), NULL);
-  gimp_help_set_help_data (tmpw, _("Adjust the preview's brightness"), NULL);
+  ligma_help_set_help_data (tmpw, _("Adjust the preview's brightness"), NULL);
 
   tmpw2 = tmpw = gtk_frame_new (_("Preview"));
   gtk_container_set_border_width (GTK_CONTAINER (tmpw), 2);
   gtk_grid_attach (GTK_GRID (grid1), tmpw, 1, 0, 1, 1);
   gtk_widget_show (tmpw);
 
-  tmpw = smpreviewprev = gimp_preview_area_new ();
+  tmpw = smpreviewprev = ligma_preview_area_new ();
   gtk_widget_set_size_request (tmpw, OMWIDTH, OMHEIGHT);
   gtk_container_add (GTK_CONTAINER (tmpw2), tmpw);
   gtk_widget_show (tmpw);
@@ -476,28 +476,28 @@ create_sizemap_dialog (GtkWidget *parent)
   gtk_widget_show (tmpw);
   g_signal_connect (tmpw, "clicked",
                     G_CALLBACK (smprevclick), NULL);
-  gimp_help_set_help_data (tmpw, _("Select previous smvector"), NULL);
+  ligma_help_set_help_data (tmpw, _("Select previous smvector"), NULL);
 
   next_button = tmpw = gtk_button_new_with_mnemonic ("_>>");
   gtk_box_pack_start (GTK_BOX (hbox),tmpw,FALSE,TRUE,0);
   gtk_widget_show (tmpw);
   g_signal_connect (tmpw, "clicked",
                     G_CALLBACK (smnextclick), NULL);
-  gimp_help_set_help_data (tmpw, _("Select next smvector"), NULL);
+  ligma_help_set_help_data (tmpw, _("Select next smvector"), NULL);
 
   add_button = tmpw = gtk_button_new_with_mnemonic ( _("A_dd"));
   gtk_box_pack_start (GTK_BOX (hbox),tmpw,FALSE,TRUE,0);
   gtk_widget_show (tmpw);
   g_signal_connect (tmpw, "clicked",
                     G_CALLBACK (smaddclick), NULL);
-  gimp_help_set_help_data (tmpw, _("Add new smvector"), NULL);
+  ligma_help_set_help_data (tmpw, _("Add new smvector"), NULL);
 
   kill_button = tmpw = gtk_button_new_with_mnemonic (_("_Kill"));
   gtk_box_pack_start (GTK_BOX (hbox),tmpw,FALSE,TRUE,0);
   gtk_widget_show (tmpw);
   g_signal_connect (tmpw, "clicked",
                     G_CALLBACK (smdeleteclick), NULL);
-  gimp_help_set_help_data (tmpw, _("Delete selected smvector"), NULL);
+  ligma_help_set_help_data (tmpw, _("Delete selected smvector"), NULL);
 
   grid2 = gtk_grid_new ();
   gtk_grid_set_column_spacing (GTK_GRID (grid2), 4);
@@ -505,8 +505,8 @@ create_sizemap_dialog (GtkWidget *parent)
   gtk_widget_show (grid2);
 
   sizadjust =
-    gimp_scale_entry_new (_("_Size:"), 50.0, 0.0, 100.0, 1);
-  gimp_help_set_help_data (sizadjust,
+    ligma_scale_entry_new (_("_Size:"), 50.0, 0.0, 100.0, 1);
+  ligma_help_set_help_data (sizadjust,
                            _("Change the angle of the selected smvector"),
                            NULL);
   g_signal_connect (sizadjust, "value-changed",
@@ -515,9 +515,9 @@ create_sizemap_dialog (GtkWidget *parent)
   gtk_widget_show (sizadjust);
 
   smstradjust =
-    gimp_scale_entry_new (_("S_trength:"), 1.0, 0.1, 5.0, 1);
-  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (smstradjust), 0.1, 0.5);
-  gimp_help_set_help_data (smstradjust,
+    ligma_scale_entry_new (_("S_trength:"), 1.0, 0.1, 5.0, 1);
+  ligma_label_spin_set_increments (LIGMA_LABEL_SPIN (smstradjust), 0.1, 0.5);
+  ligma_help_set_help_data (smstradjust,
                            _("Change the strength of the selected smvector"),
                            NULL);
   g_signal_connect (smstradjust, "value-changed",
@@ -526,9 +526,9 @@ create_sizemap_dialog (GtkWidget *parent)
   gtk_widget_show (smstradjust);
 
   smstrexpadjust =
-    gimp_scale_entry_new (_("St_rength exp.:"), 1.0, 0.1, 10.9, 1);
-  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (smstradjust), 0.1, 0.5);
-  gimp_help_set_help_data (smstrexpadjust,
+    ligma_scale_entry_new (_("St_rength exp.:"), 1.0, 0.1, 10.9, 1);
+  ligma_label_spin_set_increments (LIGMA_LABEL_SPIN (smstradjust), 0.1, 0.5);
+  ligma_help_set_help_data (smstrexpadjust,
                            _("Change the exponent of the strength"),
                            NULL);
   g_signal_connect (smstrexpadjust, "value-changed",
@@ -543,7 +543,7 @@ create_sizemap_dialog (GtkWidget *parent)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tmpw), pcvals.size_voronoi);
   g_signal_connect (tmpw, "clicked",
                     G_CALLBACK (smstrexpsmadjmove), NULL);
-  gimp_help_set_help_data (tmpw, _("Voronoi-mode makes only the smvector closest to the given point have any influence"), NULL);
+  ligma_help_set_help_data (tmpw, _("Voronoi-mode makes only the smvector closest to the given point have any influence"), NULL);
 
   gtk_widget_show (smwindow);
 

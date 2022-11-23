@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,87 +20,87 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "core-types.h"
 
-#include "config/gimpcoreconfig.h"
+#include "config/ligmacoreconfig.h"
 
-#include "gimp.h"
-#include "gimpdocumentlist.h"
-#include "gimpimagefile.h"
+#include "ligma.h"
+#include "ligmadocumentlist.h"
+#include "ligmaimagefile.h"
 
 
-G_DEFINE_TYPE (GimpDocumentList, gimp_document_list, GIMP_TYPE_LIST)
+G_DEFINE_TYPE (LigmaDocumentList, ligma_document_list, LIGMA_TYPE_LIST)
 
 
 static void
-gimp_document_list_class_init (GimpDocumentListClass *klass)
+ligma_document_list_class_init (LigmaDocumentListClass *klass)
 {
 }
 
 static void
-gimp_document_list_init (GimpDocumentList *list)
+ligma_document_list_init (LigmaDocumentList *list)
 {
 }
 
-GimpContainer *
-gimp_document_list_new (Gimp *gimp)
+LigmaContainer *
+ligma_document_list_new (Ligma *ligma)
 {
-  GimpDocumentList *document_list;
+  LigmaDocumentList *document_list;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
 
-  document_list = g_object_new (GIMP_TYPE_DOCUMENT_LIST,
+  document_list = g_object_new (LIGMA_TYPE_DOCUMENT_LIST,
                                 "name",          "document-list",
-                                "children-type", GIMP_TYPE_IMAGEFILE,
-                                "policy",        GIMP_CONTAINER_POLICY_STRONG,
+                                "children-type", LIGMA_TYPE_IMAGEFILE,
+                                "policy",        LIGMA_CONTAINER_POLICY_STRONG,
                                 NULL);
 
-  document_list->gimp = gimp;
+  document_list->ligma = ligma;
 
-  return GIMP_CONTAINER (document_list);
+  return LIGMA_CONTAINER (document_list);
 }
 
-GimpImagefile *
-gimp_document_list_add_file (GimpDocumentList *document_list,
+LigmaImagefile *
+ligma_document_list_add_file (LigmaDocumentList *document_list,
                              GFile            *file,
                              const gchar      *mime_type)
 {
-  Gimp          *gimp;
-  GimpImagefile *imagefile;
-  GimpContainer *container;
+  Ligma          *ligma;
+  LigmaImagefile *imagefile;
+  LigmaContainer *container;
   gchar         *uri;
 
-  g_return_val_if_fail (GIMP_IS_DOCUMENT_LIST (document_list), NULL);
+  g_return_val_if_fail (LIGMA_IS_DOCUMENT_LIST (document_list), NULL);
   g_return_val_if_fail (G_IS_FILE (file), NULL);
 
-  container = GIMP_CONTAINER (document_list);
+  container = LIGMA_CONTAINER (document_list);
 
-  gimp = document_list->gimp;
+  ligma = document_list->ligma;
 
   uri = g_file_get_uri (file);
 
-  imagefile = (GimpImagefile *) gimp_container_get_child_by_name (container,
+  imagefile = (LigmaImagefile *) ligma_container_get_child_by_name (container,
                                                                   uri);
 
   g_free (uri);
 
   if (imagefile)
     {
-      gimp_container_reorder (container, GIMP_OBJECT (imagefile), 0);
+      ligma_container_reorder (container, LIGMA_OBJECT (imagefile), 0);
     }
   else
     {
-      imagefile = gimp_imagefile_new (gimp, file);
-      gimp_container_add (container, GIMP_OBJECT (imagefile));
+      imagefile = ligma_imagefile_new (ligma, file);
+      ligma_container_add (container, LIGMA_OBJECT (imagefile));
       g_object_unref (imagefile);
     }
 
-  gimp_imagefile_set_mime_type (imagefile, mime_type);
+  ligma_imagefile_set_mime_type (imagefile, mime_type);
 
-  if (gimp->config->save_document_history)
-    gimp_recent_list_add_file (gimp, file, mime_type);
+  if (ligma->config->save_document_history)
+    ligma_recent_list_add_file (ligma, file, mime_type);
 
   return imagefile;
 }

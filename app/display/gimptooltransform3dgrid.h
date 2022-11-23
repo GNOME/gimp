@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimptool3dtransformgrid.h
+ * ligmatool3dtransformgrid.h
  * Copyright (C) 2019 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,41 +18,41 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TOOL_TRANSFORM_3D_GRID_H__
-#define __GIMP_TOOL_TRANSFORM_3D_GRID_H__
+#ifndef __LIGMA_TOOL_TRANSFORM_3D_GRID_H__
+#define __LIGMA_TOOL_TRANSFORM_3D_GRID_H__
 
 
-#include "gimptooltransformgrid.h"
+#include "ligmatooltransformgrid.h"
 
 
-#define GIMP_TYPE_TOOL_TRANSFORM_3D_GRID            (gimp_tool_transform_3d_grid_get_type ())
-#define GIMP_TOOL_TRANSFORM_3D_GRID(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TOOL_TRANSFORM_3D_GRID, GimpToolTransform3DGrid))
-#define GIMP_TOOL_TRANSFORM_3D_GRID_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TOOL_TRANSFORM_3D_GRID, GimpToolTransform3DGridClass))
-#define GIMP_IS_TOOL_TRANSFORM_3D_GRID(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_TOOL_TRANSFORM_3D_GRID))
-#define GIMP_IS_TOOL_TRANSFORM_3D_GRID_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_TOOL_TRANSFORM_3D_GRID))
-#define GIMP_TOOL_TRANSFORM_3D_GRID_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_TOOL_TRANSFORM_3D_GRID, GimpToolTransform3DGridClass))
+#define LIGMA_TYPE_TOOL_TRANSFORM_3D_GRID            (ligma_tool_transform_3d_grid_get_type ())
+#define LIGMA_TOOL_TRANSFORM_3D_GRID(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_TOOL_TRANSFORM_3D_GRID, LigmaToolTransform3DGrid))
+#define LIGMA_TOOL_TRANSFORM_3D_GRID_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_TOOL_TRANSFORM_3D_GRID, LigmaToolTransform3DGridClass))
+#define LIGMA_IS_TOOL_TRANSFORM_3D_GRID(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_TOOL_TRANSFORM_3D_GRID))
+#define LIGMA_IS_TOOL_TRANSFORM_3D_GRID_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_TOOL_TRANSFORM_3D_GRID))
+#define LIGMA_TOOL_TRANSFORM_3D_GRID_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_TOOL_TRANSFORM_3D_GRID, LigmaToolTransform3DGridClass))
 
 
-typedef struct _GimpToolTransform3DGrid        GimpToolTransform3DGrid;
-typedef struct _GimpToolTransform3DGridPrivate GimpToolTransform3DGridPrivate;
-typedef struct _GimpToolTransform3DGridClass   GimpToolTransform3DGridClass;
+typedef struct _LigmaToolTransform3DGrid        LigmaToolTransform3DGrid;
+typedef struct _LigmaToolTransform3DGridPrivate LigmaToolTransform3DGridPrivate;
+typedef struct _LigmaToolTransform3DGridClass   LigmaToolTransform3DGridClass;
 
-struct _GimpToolTransform3DGrid
+struct _LigmaToolTransform3DGrid
 {
-  GimpToolTransformGrid     parent_instance;
+  LigmaToolTransformGrid     parent_instance;
 
-  GimpToolTransform3DGridPrivate *priv;
+  LigmaToolTransform3DGridPrivate *priv;
 };
 
-struct _GimpToolTransform3DGridClass
+struct _LigmaToolTransform3DGridClass
 {
-  GimpToolTransformGridClass  parent_class;
+  LigmaToolTransformGridClass  parent_class;
 };
 
 
-GType            gimp_tool_transform_3d_grid_get_type (void) G_GNUC_CONST;
+GType            ligma_tool_transform_3d_grid_get_type (void) G_GNUC_CONST;
 
-GimpToolWidget * gimp_tool_transform_3d_grid_new      (GimpDisplayShell    *shell,
+LigmaToolWidget * ligma_tool_transform_3d_grid_new      (LigmaDisplayShell    *shell,
                                                        gdouble              x1,
                                                        gdouble              y1,
                                                        gdouble              x2,
@@ -62,4 +62,4 @@ GimpToolWidget * gimp_tool_transform_3d_grid_new      (GimpDisplayShell    *shel
                                                        gdouble              camera_z);
 
 
-#endif /* __GIMP_TOOL_TRANSFORM_3D_GRID_H__ */
+#endif /* __LIGMA_TOOL_TRANSFORM_3D_GRID_H__ */

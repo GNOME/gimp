@@ -1,4 +1,4 @@
-/* GIMP plug-in to load and export Paint Shop Pro files (.PSP and .TUB)
+/* LIGMA plug-in to load and export Paint Shop Pro files (.PSP and .TUB)
  *
  * Copyright (C) 1999 Tor Lillqvist
  *
@@ -28,7 +28,7 @@
 #define LOAD_PROC      "file-psp-load"
 #define SAVE_PROC      "file-psp-save"
 #define PLUG_IN_BINARY "file-psp"
-#define PLUG_IN_ROLE   "gimp-file-psp"
+#define PLUG_IN_ROLE   "ligma-file-psp"
 
 /* set to the level of debugging output you want, 0 for none */
 #define PSP_DEBUG 0
@@ -43,11 +43,11 @@
 
 #include <glib/gstdio.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
-#include <libgimpbase/gimpparasiteio.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
+#include <libligmabase/ligmaparasiteio.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 /* Note that the upcoming PSP version 6 writes PSP file format version
@@ -556,8 +556,8 @@ typedef struct
   guint32           active_layer;
   guint16           layer_count;
   guint16           bytes_per_sample;
-  GimpImageBaseType base_type;
-  GimpPrecision     precision;
+  LigmaImageBaseType base_type;
+  LigmaPrecision     precision;
 } PSPimage;
 
 
@@ -566,12 +566,12 @@ typedef struct _PspClass PspClass;
 
 struct _Psp
 {
-  GimpPlugIn      parent_instance;
+  LigmaPlugIn      parent_instance;
 };
 
 struct _PspClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -580,39 +580,39 @@ struct _PspClass
 
 GType                   psp_get_type         (void) G_GNUC_CONST;
 
-static GList          * psp_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * psp_create_procedure (GimpPlugIn           *plug_in,
+static GList          * psp_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * psp_create_procedure (LigmaPlugIn           *plug_in,
                                               const gchar          *name);
 
-static GimpValueArray * psp_load             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
+static LigmaValueArray * psp_load             (LigmaProcedure        *procedure,
+                                              LigmaRunMode           run_mode,
                                               GFile                *file,
-                                              const GimpValueArray *args,
+                                              const LigmaValueArray *args,
                                               gpointer              run_data);
-static GimpValueArray * psp_save             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
-                                              GimpImage            *image,
+static LigmaValueArray * psp_save             (LigmaProcedure        *procedure,
+                                              LigmaRunMode           run_mode,
+                                              LigmaImage            *image,
                                               gint                  n_drawables,
-                                              GimpDrawable        **drawables,
+                                              LigmaDrawable        **drawables,
                                               GFile                *file,
-                                              const GimpValueArray *args,
+                                              const LigmaValueArray *args,
                                               gpointer              run_data);
 
-static GimpImage      * load_image           (GFile                *file,
+static LigmaImage      * load_image           (GFile                *file,
                                               GError              **error);
 static gboolean         save_image           (GFile                *file,
-                                              GimpImage            *image,
+                                              LigmaImage            *image,
                                               gint                  n_drawables,
-                                              GimpDrawable        **drawables,
+                                              LigmaDrawable        **drawables,
                                               GObject              *config,
                                               GError              **error);
-static gboolean         save_dialog          (GimpProcedure        *procedure,
+static gboolean         save_dialog          (LigmaProcedure        *procedure,
                                               GObject              *config);
 
 
-G_DEFINE_TYPE (Psp, psp, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Psp, psp, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (PSP_TYPE)
+LIGMA_MAIN (PSP_TYPE)
 DEFINE_STD_SET_I18N
 
 
@@ -623,7 +623,7 @@ static guint16 psp_ver_minor;
 static void
 psp_class_init (PspClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = psp_query_procedures;
   plug_in_class->create_procedure = psp_create_procedure;
@@ -636,7 +636,7 @@ psp_init (Psp *psp)
 }
 
 static GList *
-psp_query_procedures (GimpPlugIn *plug_in)
+psp_query_procedures (LigmaPlugIn *plug_in)
 {
   GList *list = NULL;
 
@@ -648,21 +648,21 @@ psp_query_procedures (GimpPlugIn *plug_in)
   return list;
 }
 
-static GimpProcedure *
-psp_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+psp_create_procedure (LigmaPlugIn  *plug_in,
                       const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, LOAD_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_load_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            psp_load, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure, _("Paint Shop Pro image"));
+      ligma_procedure_set_menu_label (procedure, _("Paint Shop Pro image"));
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Loads images from the Paint Shop "
                                         "Pro PSP file format",
                                         "This plug-in loads and exports images "
@@ -670,29 +670,29 @@ psp_create_procedure (GimpPlugIn  *plug_in,
                                         "Vector layers aren't handled. "
                                         "Exporting isn't yet implemented.",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Tor Lillqvist",
                                       "Tor Lillqvist",
                                       "1999");
 
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                           "image/x-psp");
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "psp,tub,pspimage,psptube");
-      gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_magics (LIGMA_FILE_PROCEDURE (procedure),
                                       "0,string,Paint\\040Shop\\040Pro\\040Image\\040File\n\032");
     }
   else if (! strcmp (name, SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_save_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            psp_save, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "*");
+      ligma_procedure_set_image_types (procedure, "*");
 
-      gimp_procedure_set_menu_label (procedure, _("Paint Shop Pro image"));
+      ligma_procedure_set_menu_label (procedure, _("Paint Shop Pro image"));
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Exports images in the Paint Shop Pro "
                                         "PSP file format",
                                         "This plug-in loads and exports images "
@@ -700,17 +700,17 @@ psp_create_procedure (GimpPlugIn  *plug_in,
                                         "Vector layers aren't handled. "
                                         "Exporting isn't yet implemented.",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Tor Lillqvist",
                                       "Tor Lillqvist",
                                       "1999");
 
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                           "image/x-psp");
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "psp,tub");
 
-      GIMP_PROC_ARG_INT (procedure, "compression",
+      LIGMA_PROC_ARG_INT (procedure, "compression",
                          "Compression",
                          "Specify 0 for no compression, "
                          "1 for RLE, and 2 for LZ77",
@@ -721,15 +721,15 @@ psp_create_procedure (GimpPlugIn  *plug_in,
   return procedure;
 }
 
-static GimpValueArray *
-psp_load (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
+static LigmaValueArray *
+psp_load (LigmaProcedure        *procedure,
+          LigmaRunMode           run_mode,
           GFile                *file,
-          const GimpValueArray *args,
+          const LigmaValueArray *args,
           gpointer              run_data)
 {
-  GimpValueArray *return_vals;
-  GimpImage      *image;
+  LigmaValueArray *return_vals;
+  LigmaImage      *image;
   GError         *error = NULL;
 
   gegl_init (NULL, NULL);
@@ -737,55 +737,55 @@ psp_load (GimpProcedure        *procedure,
   image = load_image (file, &error);
 
   if (! image)
-    return gimp_procedure_new_return_values (procedure,
-                                             GIMP_PDB_EXECUTION_ERROR,
+    return ligma_procedure_new_return_values (procedure,
+                                             LIGMA_PDB_EXECUTION_ERROR,
                                              error);
 
-  return_vals = gimp_procedure_new_return_values (procedure,
-                                                  GIMP_PDB_SUCCESS,
+  return_vals = ligma_procedure_new_return_values (procedure,
+                                                  LIGMA_PDB_SUCCESS,
                                                   NULL);
 
-  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
+  LIGMA_VALUES_SET_IMAGE (return_vals, 1, image);
 
   return return_vals;
 }
 
-static GimpValueArray *
-psp_save (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GimpImage            *image,
+static LigmaValueArray *
+psp_save (LigmaProcedure        *procedure,
+          LigmaRunMode           run_mode,
+          LigmaImage            *image,
           gint                  n_drawables,
-          GimpDrawable        **drawables,
+          LigmaDrawable        **drawables,
           GFile                *file,
-          const GimpValueArray *args,
+          const LigmaValueArray *args,
           gpointer              run_data)
 {
-  GimpProcedureConfig *config;
-  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
-  GimpExportReturn     export = GIMP_EXPORT_CANCEL;
+  LigmaProcedureConfig *config;
+  LigmaPDBStatusType    status = LIGMA_PDB_SUCCESS;
+  LigmaExportReturn     export = LIGMA_EXPORT_CANCEL;
   GError              *error  = NULL;
 
   gegl_init (NULL, NULL);
 
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, image, run_mode, args);
+  config = ligma_procedure_create_config (procedure);
+  ligma_procedure_config_begin_run (config, image, run_mode, args);
 
   switch (run_mode)
     {
-    case GIMP_RUN_INTERACTIVE:
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_ui_init (PLUG_IN_BINARY);
+    case LIGMA_RUN_INTERACTIVE:
+    case LIGMA_RUN_WITH_LAST_VALS:
+      ligma_ui_init (PLUG_IN_BINARY);
 
-      export = gimp_export_image (&image, &n_drawables, &drawables, "PSP",
-                                  GIMP_EXPORT_CAN_HANDLE_RGB     |
-                                  GIMP_EXPORT_CAN_HANDLE_GRAY    |
-                                  GIMP_EXPORT_CAN_HANDLE_INDEXED |
-                                  GIMP_EXPORT_CAN_HANDLE_ALPHA   |
-                                  GIMP_EXPORT_CAN_HANDLE_LAYERS);
+      export = ligma_export_image (&image, &n_drawables, &drawables, "PSP",
+                                  LIGMA_EXPORT_CAN_HANDLE_RGB     |
+                                  LIGMA_EXPORT_CAN_HANDLE_GRAY    |
+                                  LIGMA_EXPORT_CAN_HANDLE_INDEXED |
+                                  LIGMA_EXPORT_CAN_HANDLE_ALPHA   |
+                                  LIGMA_EXPORT_CAN_HANDLE_LAYERS);
 
-      if (export == GIMP_EXPORT_CANCEL)
-        return gimp_procedure_new_return_values (procedure,
-                                                 GIMP_PDB_CANCEL,
+      if (export == LIGMA_EXPORT_CANCEL)
+        return ligma_procedure_new_return_values (procedure,
+                                                 LIGMA_PDB_CANCEL,
                                                  NULL);
       break;
 
@@ -793,35 +793,35 @@ psp_save (GimpProcedure        *procedure,
       break;
     }
 
-  if (run_mode == GIMP_RUN_INTERACTIVE)
+  if (run_mode == LIGMA_RUN_INTERACTIVE)
     {
       if (! save_dialog (procedure, G_OBJECT (config)))
-        status = GIMP_PDB_CANCEL;
+        status = LIGMA_PDB_CANCEL;
     }
 
-  if (status == GIMP_PDB_SUCCESS)
+  if (status == LIGMA_PDB_SUCCESS)
     {
       if (! save_image (file, image, n_drawables, drawables,
                         G_OBJECT (config), &error))
         {
-          status = GIMP_PDB_EXECUTION_ERROR;
+          status = LIGMA_PDB_EXECUTION_ERROR;
         }
     }
 
-  gimp_procedure_config_end_run (config, status);
+  ligma_procedure_config_end_run (config, status);
   g_object_unref (config);
 
-  if (export == GIMP_EXPORT_EXPORT)
+  if (export == LIGMA_EXPORT_EXPORT)
     {
-      gimp_image_delete (image);
+      ligma_image_delete (image);
       g_free (drawables);
     }
 
-  return gimp_procedure_new_return_values (procedure, status, error);
+  return ligma_procedure_new_return_values (procedure, status, error);
 }
 
 static gboolean
-save_dialog (GimpProcedure *procedure,
+save_dialog (LigmaProcedure *procedure,
              GObject       *config)
 {
   GtkWidget    *dialog;
@@ -829,25 +829,25 @@ save_dialog (GimpProcedure *procedure,
   GtkWidget    *frame;
   gint          run;
 
-  dialog = gimp_procedure_dialog_new (procedure,
-                                      GIMP_PROCEDURE_CONFIG (config),
+  dialog = ligma_procedure_dialog_new (procedure,
+                                      LIGMA_PROCEDURE_CONFIG (config),
                                       _("Export Image as PSP"));
 
   /*  file save type  */
-  store = gimp_int_store_new (C_("compression", "None"), PSP_COMP_NONE,
+  store = ligma_int_store_new (C_("compression", "None"), PSP_COMP_NONE,
                               _("RLE"),                  PSP_COMP_RLE,
                               _("LZ77"),                 PSP_COMP_LZ77,
                               NULL);
-  frame = gimp_prop_int_radio_frame_new (config, "compression",
+  frame = ligma_prop_int_radio_frame_new (config, "compression",
                                          _("Data Compression"),
-                                         GIMP_INT_STORE (store));
+                                         LIGMA_INT_STORE (store));
   gtk_container_set_border_width (GTK_CONTAINER (frame), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       frame, FALSE, FALSE, 0);
 
   gtk_widget_show (dialog);
 
-  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
+  run = ligma_procedure_dialog_run (LIGMA_PROCEDURE_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
 
@@ -1041,11 +1041,11 @@ read_general_image_attribute_block (FILE     *f,
     {
       case 24:
       case 48:
-        ia->base_type = GIMP_RGB;
+        ia->base_type = LIGMA_RGB;
         if (ia->depth == 24)
-          ia->precision = GIMP_PRECISION_U8_NON_LINEAR;
+          ia->precision = LIGMA_PRECISION_U8_NON_LINEAR;
         else
-          ia->precision = GIMP_PRECISION_U16_NON_LINEAR;
+          ia->precision = LIGMA_PRECISION_U16_NON_LINEAR;
         break;
 
       case 1:
@@ -1054,16 +1054,16 @@ read_general_image_attribute_block (FILE     *f,
       case 16:
         if (ia->grayscale && ia->depth >= 8)
           {
-            ia->base_type = GIMP_GRAY;
+            ia->base_type = LIGMA_GRAY;
             if (ia->depth == 8)
-              ia->precision = GIMP_PRECISION_U8_NON_LINEAR;
+              ia->precision = LIGMA_PRECISION_U8_NON_LINEAR;
             else
-              ia->precision = GIMP_PRECISION_U16_NON_LINEAR;
+              ia->precision = LIGMA_PRECISION_U16_NON_LINEAR;
           }
         else if (ia->depth <= 8 && ! ia->grayscale)
           {
-            ia->base_type = GIMP_INDEXED;
-            ia->precision = GIMP_PRECISION_U8_NON_LINEAR;
+            ia->base_type = LIGMA_INDEXED;
+            ia->precision = LIGMA_PRECISION_U8_NON_LINEAR;
           }
         else
         {
@@ -1080,7 +1080,7 @@ read_general_image_attribute_block (FILE     *f,
         break;
     }
 
-    if (ia->precision == GIMP_PRECISION_U16_NON_LINEAR)
+    if (ia->precision == LIGMA_PRECISION_U16_NON_LINEAR)
       ia->bytes_per_sample = 2;
     else
       ia->bytes_per_sample = 1;
@@ -1093,7 +1093,7 @@ read_general_image_attribute_block (FILE     *f,
 
 static gint
 read_creator_block (FILE      *f,
-                    GimpImage *image,
+                    LigmaImage *image,
                     guint      total_len,
                     PSPimage  *ia,
                     GError   **error)
@@ -1110,7 +1110,7 @@ read_creator_block (FILE      *f,
   guint32       __attribute__((unused))appid;
   guint32       __attribute__((unused))appver;
   GString      *comment;
-  GimpParasite *comment_parasite;
+  LigmaParasite *comment_parasite;
 
   data_start = ftell (f);
   comment = g_string_new (NULL);
@@ -1221,12 +1221,12 @@ read_creator_block (FILE      *f,
     }
   if (comment->len > 0)
     {
-      comment_parasite = gimp_parasite_new ("gimp-comment",
-                                            GIMP_PARASITE_PERSISTENT,
+      comment_parasite = ligma_parasite_new ("ligma-comment",
+                                            LIGMA_PARASITE_PERSISTENT,
                                             strlen (comment->str) + 1,
                                             comment->str);
-      gimp_image_attach_parasite (image, comment_parasite);
-      gimp_parasite_free (comment_parasite);
+      ligma_image_attach_parasite (image, comment_parasite);
+      ligma_parasite_free (comment_parasite);
     }
 
   g_string_free (comment, FALSE);
@@ -1236,7 +1236,7 @@ read_creator_block (FILE      *f,
 
 static gint
 read_color_block (FILE      *f,
-                  GimpImage *image,
+                  LigmaImage *image,
                   guint      total_len,
                   PSPimage  *ia,
                   GError   **error)
@@ -1305,7 +1305,7 @@ read_color_block (FILE      *f,
       memcpy (color_palette, tmpmap, color_palette_entries * 3);
       g_free (tmpmap);
 
-      gimp_image_set_colormap (image, color_palette, color_palette_entries);
+      ligma_image_set_colormap (image, color_palette, color_palette_entries);
       g_free (color_palette);
     }
 
@@ -1321,73 +1321,73 @@ swab_rect (guint32 *rect)
   rect[3] = GUINT32_FROM_LE (rect[3]);
 }
 
-static GimpLayerMode
-gimp_layer_mode_from_psp_blend_mode (PSPBlendModes mode)
+static LigmaLayerMode
+ligma_layer_mode_from_psp_blend_mode (PSPBlendModes mode)
 {
   switch (mode)
     {
     case PSP_BLEND_NORMAL:
-      return GIMP_LAYER_MODE_NORMAL_LEGACY;
+      return LIGMA_LAYER_MODE_NORMAL_LEGACY;
 
     case PSP_BLEND_DARKEN:
-      return GIMP_LAYER_MODE_DARKEN_ONLY_LEGACY;
+      return LIGMA_LAYER_MODE_DARKEN_ONLY_LEGACY;
 
     case PSP_BLEND_LIGHTEN:
-      return GIMP_LAYER_MODE_LIGHTEN_ONLY_LEGACY;
+      return LIGMA_LAYER_MODE_LIGHTEN_ONLY_LEGACY;
 
     case PSP_BLEND_HUE:
-      return GIMP_LAYER_MODE_HSV_HUE_LEGACY;
+      return LIGMA_LAYER_MODE_HSV_HUE_LEGACY;
 
     case PSP_BLEND_SATURATION:
-      return GIMP_LAYER_MODE_HSV_SATURATION_LEGACY;
+      return LIGMA_LAYER_MODE_HSV_SATURATION_LEGACY;
 
     case PSP_BLEND_COLOR:
-      return GIMP_LAYER_MODE_HSL_COLOR_LEGACY;
+      return LIGMA_LAYER_MODE_HSL_COLOR_LEGACY;
 
     case PSP_BLEND_LUMINOSITY:
-      return GIMP_LAYER_MODE_HSV_VALUE_LEGACY;   /* ??? */
+      return LIGMA_LAYER_MODE_HSV_VALUE_LEGACY;   /* ??? */
 
     case PSP_BLEND_MULTIPLY:
-      return GIMP_LAYER_MODE_MULTIPLY_LEGACY;
+      return LIGMA_LAYER_MODE_MULTIPLY_LEGACY;
 
     case PSP_BLEND_SCREEN:
-      return GIMP_LAYER_MODE_SCREEN_LEGACY;
+      return LIGMA_LAYER_MODE_SCREEN_LEGACY;
 
     case PSP_BLEND_DISSOLVE:
-      return GIMP_LAYER_MODE_DISSOLVE;
+      return LIGMA_LAYER_MODE_DISSOLVE;
 
     case PSP_BLEND_OVERLAY:
-      return GIMP_LAYER_MODE_OVERLAY;
+      return LIGMA_LAYER_MODE_OVERLAY;
 
     case PSP_BLEND_HARD_LIGHT:
-      return GIMP_LAYER_MODE_HARDLIGHT_LEGACY;
+      return LIGMA_LAYER_MODE_HARDLIGHT_LEGACY;
 
     case PSP_BLEND_SOFT_LIGHT:
-      return GIMP_LAYER_MODE_SOFTLIGHT_LEGACY;
+      return LIGMA_LAYER_MODE_SOFTLIGHT_LEGACY;
 
     case PSP_BLEND_DIFFERENCE:
-      return GIMP_LAYER_MODE_DIFFERENCE_LEGACY;
+      return LIGMA_LAYER_MODE_DIFFERENCE_LEGACY;
 
     case PSP_BLEND_DODGE:
-      return GIMP_LAYER_MODE_DODGE_LEGACY;
+      return LIGMA_LAYER_MODE_DODGE_LEGACY;
 
     case PSP_BLEND_BURN:
-      return GIMP_LAYER_MODE_BURN_LEGACY;
+      return LIGMA_LAYER_MODE_BURN_LEGACY;
 
     case PSP_BLEND_EXCLUSION:
-      return GIMP_LAYER_MODE_EXCLUSION;
+      return LIGMA_LAYER_MODE_EXCLUSION;
 
     case PSP_BLEND_TRUE_HUE:
-      return GIMP_LAYER_MODE_HSV_HUE;
+      return LIGMA_LAYER_MODE_HSV_HUE;
 
     case PSP_BLEND_TRUE_SATURATION:
-      return GIMP_LAYER_MODE_HSV_SATURATION;
+      return LIGMA_LAYER_MODE_HSV_SATURATION;
 
     case PSP_BLEND_TRUE_COLOR:
-      return GIMP_LAYER_MODE_HSL_COLOR;
+      return LIGMA_LAYER_MODE_HSL_COLOR;
 
     case PSP_BLEND_TRUE_LIGHTNESS:
-      return GIMP_LAYER_MODE_HSV_VALUE;
+      return LIGMA_LAYER_MODE_HSV_VALUE;
 
     case PSP_BLEND_ADJUST:
       return -1;                /* ??? */
@@ -1764,7 +1764,7 @@ read_channel_data (FILE        *f,
       break;
     }
 
-  if (ia->base_type == GIMP_INDEXED && ia->depth < 8)
+  if (ia->base_type == LIGMA_INDEXED && ia->depth < 8)
     {
       /* We need to convert 1 and 4 bit to 8 bit indexed */
       upscale_indexed_sub_8 (f, width, height, ia->depth, pixels[0]);
@@ -1843,9 +1843,9 @@ read_raster_layer_info (FILE      *f,
   return TRUE;
 }
 
-static GimpLayer *
+static LigmaLayer *
 read_layer_block (FILE      *f,
-                  GimpImage *image,
+                  LigmaImage *image,
                   guint      total_len,
                   PSPimage  *ia,
                   GError   **error)
@@ -1864,9 +1864,9 @@ read_layer_block (FILE      *f,
   guint32 image_rect[4], saved_image_rect[4], mask_rect[4], saved_mask_rect[4];
   gboolean null_layer, can_handle_layer;
   guint16 bitmap_count, channel_count;
-  GimpImageType drawable_type;
-  GimpLayer *layer = NULL;
-  GimpLayerMode layer_mode;
+  LigmaImageType drawable_type;
+  LigmaLayer *layer = NULL;
+  LigmaLayerMode layer_mode;
   guint32 channel_init_len, channel_total_len;
   guint32 compressed_len, uncompressed_len;
   guint16 bitmap_type, channel_type;
@@ -2001,21 +2001,21 @@ read_layer_block (FILE      *f,
       bitmap_count = GUINT16_FROM_LE (bitmap_count);
       channel_count = GUINT16_FROM_LE (channel_count);
 
-      layer_mode = gimp_layer_mode_from_psp_blend_mode (blend_mode);
+      layer_mode = ligma_layer_mode_from_psp_blend_mode (blend_mode);
       if ((int) layer_mode == -1)
         {
           g_message ("Unsupported PSP layer blend mode %s "
                      "for layer %s, setting layer invisible",
                      blend_mode_name (blend_mode), layer_name);
-          layer_mode = GIMP_LAYER_MODE_NORMAL_LEGACY;
+          layer_mode = LIGMA_LAYER_MODE_NORMAL_LEGACY;
           visibility = FALSE;
         }
 
       width = saved_image_rect[2] - saved_image_rect[0];
       height = saved_image_rect[3] - saved_image_rect[1];
 
-      if ((width < 0) || (width > GIMP_MAX_IMAGE_SIZE)       /* w <= 2^18 */
-          || (height < 0) || (height > GIMP_MAX_IMAGE_SIZE)  /* h <= 2^18 */
+      if ((width < 0) || (width > LIGMA_MAX_IMAGE_SIZE)       /* w <= 2^18 */
+          || (height < 0) || (height > LIGMA_MAX_IMAGE_SIZE)  /* h <= 2^18 */
           || ((width / 256) * (height / 256) >= 8192))       /* w * h < 2^29 */
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
@@ -2054,24 +2054,24 @@ read_layer_block (FILE      *f,
           null_layer = TRUE;
         }
 
-      if (ia->base_type == GIMP_RGB)
+      if (ia->base_type == LIGMA_RGB)
         if (bitmap_count == 1)
-          drawable_type = GIMP_RGB_IMAGE, bytespp = 3;
+          drawable_type = LIGMA_RGB_IMAGE, bytespp = 3;
         else
-          drawable_type = GIMP_RGBA_IMAGE, bytespp = 4;
-      else if (ia->base_type == GIMP_GRAY)
+          drawable_type = LIGMA_RGBA_IMAGE, bytespp = 4;
+      else if (ia->base_type == LIGMA_GRAY)
         if (bitmap_count == 1)
-          drawable_type = GIMP_GRAY_IMAGE, bytespp = 1;
+          drawable_type = LIGMA_GRAY_IMAGE, bytespp = 1;
         else
-          drawable_type = GIMP_GRAYA_IMAGE, bytespp = 2;
+          drawable_type = LIGMA_GRAYA_IMAGE, bytespp = 2;
       else
         if (bitmap_count == 1)
-          drawable_type = GIMP_INDEXED_IMAGE, bytespp = 1;
+          drawable_type = LIGMA_INDEXED_IMAGE, bytespp = 1;
         else
-          drawable_type = GIMP_INDEXEDA_IMAGE, bytespp = 2;
+          drawable_type = LIGMA_INDEXEDA_IMAGE, bytespp = 2;
       bytespp *= ia->bytes_per_sample;
 
-      layer = gimp_layer_new (image, layer_name,
+      layer = ligma_layer_new (image, layer_name,
                               width, height,
                               drawable_type,
                               100.0 * opacity / 255.0,
@@ -2084,16 +2084,16 @@ read_layer_block (FILE      *f,
           return NULL;
         }
 
-      gimp_image_insert_layer (image, layer, NULL, -1);
+      ligma_image_insert_layer (image, layer, NULL, -1);
 
       if (image_rect[0] != 0 || image_rect[1] != 0 || saved_image_rect[0] != 0 || saved_image_rect[1] != 0)
-        gimp_layer_set_offsets (layer,
+        ligma_layer_set_offsets (layer,
                                 image_rect[0] + saved_image_rect[0], image_rect[1] + saved_image_rect[1]);
 
       if (! visibility)
-        gimp_item_set_visible (GIMP_ITEM (layer), FALSE);
+        ligma_item_set_visible (LIGMA_ITEM (layer), FALSE);
 
-      gimp_layer_set_lock_alpha (layer, transparency_protected);
+      ligma_layer_set_lock_alpha (layer, transparency_protected);
 
       if (can_handle_layer)
         {
@@ -2109,7 +2109,7 @@ read_layer_block (FILE      *f,
                 pixels[i] = pixel + width * bytespp * i;
             }
 
-          buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
+          buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (layer));
 
           /* Read the layer channel sub-blocks */
           while (ftell (f) < sub_block_start + sub_total_len)
@@ -2118,7 +2118,7 @@ read_layer_block (FILE      *f,
                                           &channel_total_len, error);
               if (sub_id == -1)
                 {
-                  gimp_image_delete (image);
+                  ligma_image_delete (image);
                   return NULL;
                 }
 
@@ -2238,7 +2238,7 @@ read_layer_block (FILE      *f,
 
 static gint
 read_tube_block (FILE      *f,
-                 GimpImage *image,
+                 LigmaImage *image,
                  guint      total_len,
                  PSPimage  *ia,
                  GError   **error)
@@ -2249,11 +2249,11 @@ read_tube_block (FILE      *f,
   guint32            placement_mode, selection_mode;
   guint32            chunk_len;
   gint               i;
-  GimpPixPipeParams  params;
-  GimpParasite      *pipe_parasite;
+  LigmaPixPipeParams  params;
+  LigmaParasite      *pipe_parasite;
   gchar             *parasite_text;
 
-  gimp_pixpipe_params_init (&params);
+  ligma_pixpipe_params_init (&params);
 
   if (psp_ver_major >= 4)
     {
@@ -2300,13 +2300,13 @@ read_tube_block (FILE      *f,
   selection_mode = GUINT32_FROM_LE (selection_mode);
 
   for (i = 1; i < params.cols; i++)
-    gimp_image_add_vguide (image, (ia->width * i)/params.cols);
+    ligma_image_add_vguide (image, (ia->width * i)/params.cols);
   for (i = 1; i < params.rows; i++)
-    gimp_image_add_hguide (image, (ia->height * i)/params.rows);
+    ligma_image_add_hguide (image, (ia->height * i)/params.rows);
 
   /* We use a parasite to pass in the tube (pipe) parameters in
    * case we will have any use of those, for instance in the gpb
-   * plug-in that exports a GIMP image pipe.
+   * plug-in that exports a LIGMA image pipe.
    */
   params.dim = 1;
   params.cellwidth = ia->width / params.cols;
@@ -2321,15 +2321,15 @@ read_tube_block (FILE      *f,
                            (selection_mode == tsmPressure ? "pressure" :
                             (selection_mode == tsmVelocity ? "velocity" :
                              "default")))));
-  parasite_text = gimp_pixpipe_params_build (&params);
+  parasite_text = ligma_pixpipe_params_build (&params);
 
   IFDBG(2) g_message ("parasite: %s", parasite_text);
 
-  pipe_parasite = gimp_parasite_new ("gimp-brush-pipe-parameters",
-                                     GIMP_PARASITE_PERSISTENT,
+  pipe_parasite = ligma_parasite_new ("ligma-brush-pipe-parameters",
+                                     LIGMA_PARASITE_PERSISTENT,
                                      strlen (parasite_text) + 1, parasite_text);
-  gimp_image_attach_parasite (image, pipe_parasite);
-  gimp_parasite_free (pipe_parasite);
+  ligma_image_attach_parasite (image, pipe_parasite);
+  ligma_parasite_free (pipe_parasite);
   g_free (parasite_text);
 
   return 0;
@@ -2354,7 +2354,7 @@ compression_name (gint compression)
 
 /* The main function for loading PSP-images
  */
-static GimpImage *
+static LigmaImage *
 load_image (GFile   *file,
             GError **error)
 {
@@ -2367,7 +2367,7 @@ load_image (GFile   *file,
   PSPBlockID id = -1;
   gint       block_number;
 
-  GimpImage *image = NULL;
+  LigmaImage *image = NULL;
 
   if (g_stat (g_file_peek_path (file), &st) == -1)
     {
@@ -2380,7 +2380,7 @@ load_image (GFile   *file,
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),
-                   gimp_file_get_utf8_name (file), g_strerror (errno));
+                   ligma_file_get_utf8_name (file), g_strerror (errno));
       return NULL;
     }
 
@@ -2430,7 +2430,7 @@ load_image (GFile   *file,
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("Could not open '%s' for reading: %s"),
-                       gimp_file_get_utf8_name (file),
+                       ligma_file_get_utf8_name (file),
                        _("invalid block size"));
           goto error;
         }
@@ -2454,16 +2454,16 @@ load_image (GFile   *file,
                               ia.width, ia.height,
                               compression_name (ia.compression));
 
-          image = gimp_image_new_with_precision (ia.width, ia.height,
+          image = ligma_image_new_with_precision (ia.width, ia.height,
                                                  ia.base_type, ia.precision);
           if (! image)
             {
               goto error;
             }
 
-          gimp_image_set_file (image, file);
+          ligma_image_set_file (image, file);
 
-          gimp_image_set_resolution (image, ia.resolution, ia.resolution);
+          ligma_image_set_resolution (image, ia.resolution, ia.resolution);
         }
       else
         {
@@ -2568,7 +2568,7 @@ load_image (GFile   *file,
     error:
       fclose (f);
       if (image)
-        gimp_image_delete (image);
+        ligma_image_delete (image);
       return NULL;
     }
 
@@ -2579,9 +2579,9 @@ load_image (GFile   *file,
 
 static gint
 save_image (GFile         *file,
-            GimpImage     *image,
+            LigmaImage     *image,
             gint           n_drawables,
-            GimpDrawable **drawables,
+            LigmaDrawable **drawables,
             GObject       *config,
             GError       **error)
 {

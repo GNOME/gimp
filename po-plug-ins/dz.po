@@ -1,5 +1,5 @@
-# translation of gimp-plug-ins.HEAD-1.po to Dzongkha
-# translation of gimp-plug-ins.HEAD.po to Dzongkha
+# translation of ligma-plug-ins.HEAD-1.po to Dzongkha
+# translation of ligma-plug-ins.HEAD.po to Dzongkha
 # This file is distributed under the same license as the PACKAGE package.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
 # Dorji Tashi <dorjee_doss@hotmail.com>, 2006.
@@ -9,8 +9,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-plug-ins\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma-plug-ins\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2007-03-06 03:38+0000\n"
 "PO-Revision-Date: 2007-03-28 23:59+0530\n"
 "Last-Translator: Tshewang Norbu <bumthap2006@hotmail.com>\n"
@@ -28,10 +28,10 @@ msgstr ""
 #: ../plug-ins/FractalExplorer/Dialogs.c:547
 #: ../plug-ins/gfig/gfig-dialog.c:274
 #: ../plug-ins/gflare/gflare.c:883
-#: ../plug-ins/gimpressionist/utils.c:124
+#: ../plug-ins/ligmaressionist/utils.c:124
 #, c-format
 msgid ""
-"No %s in gimprc:\n"
+"No %s in ligmarc:\n"
 "You need to add an entry like\n"
 "(%s \"%s\")\n"
 "to your %s file."
@@ -443,7 +443,7 @@ msgstr "ཆ་རྩིས་ཚད་བཟུང་ཚུ་སྲུངས།
 #: ../plug-ins/gfig/gfig.c:434
 #: ../plug-ins/gfli/gfli.c:429
 #: ../plug-ins/gfli/gfli.c:464
-#: ../plug-ins/help/gimphelplocale.c:193
+#: ../plug-ins/help/ligmahelplocale.c:193
 #: ../plug-ins/jpeg/jpeg-load.c:88
 #: ../plug-ins/jpeg/jpeg-load.c:874
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:259
@@ -882,8 +882,8 @@ msgid "_Environment Map"
 msgstr "མཐའ་འཁོར་ས་ཁྲ་(_E)"
 
 #: ../plug-ins/Lighting/lighting_ui.c:1011
-#: ../plug-ins/gimpressionist/preview.c:186
-#: ../plug-ins/gimpressionist/repaint.c:1166
+#: ../plug-ins/ligmaressionist/preview.c:186
+#: ../plug-ins/ligmaressionist/repaint.c:1166
 #: ../plug-ins/imagemap/imap_polygon.c:515
 msgid "_Update"
 msgstr "དུས་མཐུན་བཟོ་ནི་(_U)"
@@ -1288,7 +1288,7 @@ msgstr "རྒྱབ་སྐྱོར་མེད་མི་ ཡང་ཅི�
 #: ../plug-ins/faxg3/faxg3.c:464
 #: ../plug-ins/fits/fits.c:508
 #: ../plug-ins/gfig/gfig-dialog.c:1284
-#: ../plug-ins/gimpressionist/general.c:122
+#: ../plug-ins/ligmaressionist/general.c:122
 #: ../plug-ins/jpeg/jpeg-load.c:239
 #: ../plug-ins/jpeg/jpeg-load.c:741
 #: ../plug-ins/sgi/sgi.c:369
@@ -1695,8 +1695,8 @@ msgstr "སོན་ལས་གང་བྱུང་ཚུ་(རུབ་ས�
 #: ../plug-ins/common/CML_explorer.c:300
 #: ../plug-ins/common/CML_explorer.c:308
 #: ../plug-ins/common/decompose.c:188
-#: ../plug-ins/gimpressionist/orientation.c:162
-#: ../plug-ins/gimpressionist/size.c:165
+#: ../plug-ins/ligmaressionist/orientation.c:162
+#: ../plug-ins/ligmaressionist/size.c:165
 msgid "Hue"
 msgstr "ཚོན་མདངས།"
 
@@ -1709,8 +1709,8 @@ msgstr "མཐའ་ཚད།"
 #: ../plug-ins/common/CML_explorer.c:302
 #: ../plug-ins/common/CML_explorer.c:310
 #: ../plug-ins/common/decompose.c:190
-#: ../plug-ins/gimpressionist/orientation.c:138
-#: ../plug-ins/gimpressionist/size.c:141
+#: ../plug-ins/ligmaressionist/orientation.c:138
+#: ../plug-ins/ligmaressionist/size.c:141
 #: ../plug-ins/metadata/interface.c:142
 msgid "Value"
 msgstr "གནས་གོང་།"
@@ -2046,7 +2046,7 @@ msgid "_Use the (invisible) bottom layer as the base"
 msgstr "མཐོང་མ་ཚུགས་མི་མཆུག་གི་བང་རིམ་འདི་གཞི་རྟེན་སྦེ་ལག་ལེན་འཐབ་(_U)"
 
 #: ../plug-ins/common/animationplay.c:154
-msgid "Preview a GIMP layer-based animation"
+msgid "Preview a LIGMA layer-based animation"
 msgstr "ཇི་ཨའི་ཨེམ་པི་བང་རིམ་གཞི་རྟེན་འབད་ཡོད་པའི་བསྒུལ་བཟོ་འདི་ཞིབ་ལྟ་འབད།"
 
 #: ../plug-ins/common/animationplay.c:159
@@ -2566,7 +2566,7 @@ msgstr "(_P)"
 
 #: ../plug-ins/common/checkerboard.c:417
 #: ../plug-ins/common/papertile.c:293
-#: ../plug-ins/gimpressionist/sizemap.c:493
+#: ../plug-ins/ligmaressionist/sizemap.c:493
 msgid "_Size:"
 msgstr "ཚད་:(_S)"
 
@@ -3110,7 +3110,7 @@ msgid "Cannot operate on layers with masks."
 msgstr "གདོང་ཁེབས་ཚུ་དང་མཉམ་བང་རིམ་ཚུ་བཀོལ་སྤྱོད་འབད་མི་བཏུབ།"
 
 #. could not float the selection because selection rectangle
-#. * is completely empty return GIMP_PDB_EXECUTION_ERROR
+#. * is completely empty return LIGMA_PDB_EXECUTION_ERROR
 #.
 #: ../plug-ins/common/curve_bend.c:695
 msgid "Cannot operate on empty selections."
@@ -3125,8 +3125,8 @@ msgstr "གུག་གུགཔ་བཀུག"
 
 #. Preview area, top of column
 #: ../plug-ins/common/curve_bend.c:1232
-#: ../plug-ins/gimpressionist/orientmap.c:574
-#: ../plug-ins/gimpressionist/sizemap.c:443
+#: ../plug-ins/ligmaressionist/orientmap.c:574
+#: ../plug-ins/ligmaressionist/sizemap.c:443
 msgid "Preview"
 msgstr "སྔོན་ལྟ།"
 
@@ -3780,7 +3780,7 @@ msgid "_Normalize"
 msgstr "སྤྱིར་བཏང་བཟོ་བ་(_N)"
 
 #: ../plug-ins/common/dog.c:344
-#: ../plug-ins/gimpressionist/paper.c:149
+#: ../plug-ins/ligmaressionist/paper.c:149
 msgid "_Invert"
 msgstr "གནས་ལོག་འབད་(_I)"
 
@@ -4353,7 +4353,7 @@ msgstr "ཨར་ཨེལ་ཨི་(_R)"
 
 #: ../plug-ins/common/gbr.c:152
 #: ../plug-ins/common/gbr.c:173
-msgid "GIMP brush"
+msgid "LIGMA brush"
 msgstr "ཇི་ཨའི་ཨེམ་པི་པྱིར།"
 
 #: ../plug-ins/common/gbr.c:388
@@ -4363,7 +4363,7 @@ msgstr "རྒྱབ་སྐྱོར་མེད་པའི་པྱིར་
 
 #: ../plug-ins/common/gbr.c:411
 #, c-format
-msgid "Error in GIMP brush file '%s'"
+msgid "Error in LIGMA brush file '%s'"
 msgstr "ཇི་ཨའི་ཨེམ་པི་པྱིར་ཡིག་སྣོད་ '%s'ནང་འཛོལ་བ།"
 
 #: ../plug-ins/common/gbr.c:419
@@ -4379,7 +4379,7 @@ msgid "Unnamed"
 msgstr "མིང་མ་བཏགས་པ།"
 
 #: ../plug-ins/common/gbr.c:607
-msgid "GIMP brushes are either GRAYSCALE or RGBA"
+msgid "LIGMA brushes are either GRAYSCALE or RGBA"
 msgstr "ཇི་ཨའི་ཨེམ་པི་ པྱིར་ཚུ་ གེརེ་སིཀེལ་ ཡང་ཅིན་ ཨར་ཇི་བི་ཨེ་ ཨིན་མས།"
 
 #: ../plug-ins/common/gbr.c:704
@@ -4395,13 +4395,13 @@ msgstr "བར་སྟོང་བཞག་ཐངས་:"
 #: ../plug-ins/common/gbr.c:742
 #: ../plug-ins/common/gih.c:910
 #: ../plug-ins/common/pat.c:541
-#: ../plug-ins/gimpressionist/presets.c:646
+#: ../plug-ins/ligmaressionist/presets.c:646
 msgid "Description:"
 msgstr "འགྲེལ་བཤད་:"
 
 #: ../plug-ins/common/gee.c:99
 #: ../plug-ins/common/gee_zoom.c:121
-msgid "A big hello from the GIMP team!"
+msgid "A big hello from the LIGMA team!"
 msgstr "ཇི་ཨའི་ཨེམ་པི་ནང་ལས་སྐུ་གཟུགས་བཟང་པོ་ཆེན་པོ་ཡོད་!"
 
 #: ../plug-ins/common/gee.c:104
@@ -4411,7 +4411,7 @@ msgstr "གི་སི་ལའིམ།"
 
 #: ../plug-ins/common/gee.c:166
 #: ../plug-ins/common/gee_zoom.c:192
-msgid "Thank You for Choosing GIMP"
+msgid "Thank You for Choosing LIGMA"
 msgstr "ཁྱོད་ཀྱིས་ཇི་ཨའི་ཨེམ་པི་གདམ་ཁ་རྐྱབས་མི་ལུ་བཀའ་དྲིན་ཆེ།"
 
 #: ../plug-ins/common/gee.c:173
@@ -4564,7 +4564,7 @@ msgstr "ཆི་ཨའི་ཨེཕ་:ཡིག་ཐོག་མ་བཀ�
 
 #: ../plug-ins/common/gih.c:207
 #: ../plug-ins/common/gih.c:228
-msgid "GIMP brush (animated)"
+msgid "LIGMA brush (animated)"
 msgstr "ཇི་ཨའི་ཨེམ་པི་ པྱིར་ (བསྒུལ་ཅན་བཟོས་པའི་)"
 
 #: ../plug-ins/common/gih.c:321
@@ -4573,11 +4573,11 @@ msgid "Layer %s doesn't have an alpha channel, skipped"
 msgstr "བང་རིམ་ %s འདི་ལུ་ཨཱལ་ཕ་རྒྱུ་ལམ་མེད་ གོམ་འགྱོ་ཡོདཔ།"
 
 #: ../plug-ins/common/gih.c:492
-msgid "Error in GIMP brush pipe file."
+msgid "Error in LIGMA brush pipe file."
 msgstr "ཇི་ཨའི་ཨེམ་པི་པྱིར་རྒྱུད་དུང་ཡིག་སྣོད་ནང་འཛོལ་བ།"
 
 #: ../plug-ins/common/gih.c:558
-msgid "GIMP brush file appears to be corrupted."
+msgid "LIGMA brush file appears to be corrupted."
 msgstr "ཇི་ཨའི་ཨེམ་པི་པྱིར་ཡིག་སྣོད་ངན་ཅན་ལུ་འབྱུང་ནི་མས།"
 
 #: ../plug-ins/common/gih.c:703
@@ -6076,7 +6076,7 @@ msgstr "ཤོག་ལེབ་ ཊ་ཡིལ་་་་་(_P)"
 
 #: ../plug-ins/common/pat.c:121
 #: ../plug-ins/common/pat.c:143
-msgid "GIMP pattern"
+msgid "LIGMA pattern"
 msgstr "ཇི་ཨའི་ཨེམ་པི་ དཔེ་གཞི།"
 
 #: ../plug-ins/common/pat.c:358
@@ -6515,7 +6515,7 @@ msgstr "པོསིཊི་སིཀིརིཔཊི་སྲུང་བཞ
 #: ../plug-ins/common/postscript.c:1731
 #, c-format
 msgid ""
-"Error starting Ghostscript. Make sure that Ghostscript is installed and - if necessary - use the environment variable GS_PROG to tell GIMP about its location.\n"
+"Error starting Ghostscript. Make sure that Ghostscript is installed and - if necessary - use the environment variable GS_PROG to tell LIGMA about its location.\n"
 "(%s)"
 msgstr ""
 "གྲིབ་ཡིག་འགོ་བཙུགས་ཐངས་འཛོལ་བ། གྲིབ་ཡིག་དེ་གཞི་བཙུགས་འབད་ཡོདཔ་ངེས་ཏིགདང་ - ཉེར་མཁོ་ཡོད་པ་ཅིན་ -མཐའ་འཁོར་འགྱུར་ཅན་ ཇི་ཨེསི_པི་ཨར་ཨོ་ཆི་ཇི་ཨའི་ཨེམ་པི་ལུ་གནས་ཁོངས་འདིའི་སླབ་ནི་ལུ་ལག་ལེན་འཐབ།\n"
@@ -6596,8 +6596,8 @@ msgstr "སྐྱ་ཐལ།"
 
 #: ../plug-ins/common/postscript.c:3187
 #: ../plug-ins/common/xpm.c:468
-#: ../plug-ins/gimpressionist/color.c:48
-#: ../plug-ins/gimpressionist/general.c:152
+#: ../plug-ins/ligmaressionist/color.c:48
+#: ../plug-ins/ligmaressionist/general.c:152
 #: ../plug-ins/imagemap/imap_menu.c:222
 msgid "Color"
 msgstr "ཚོས་གཞི།"
@@ -6756,7 +6756,7 @@ msgid "Unable to save layer with mode '%s'.  Either the PSD file format or the s
 msgstr "བང་རིམ་དང་གཅིག་ཁར་ཐབས་ལམ་'%s' སྲུངས་བཞག་ལུ་མི་ཚུགས་པས། སྤྱིར་བཏང་ཐབས་ལམ་ཚབ་ལག་ལེན་འཐབ་དེ་པི་ཨེསི་ཌི་ཡིག་སྣོད་རྩ་སྒྲིག་ཡང་ན་པ་ལག་ཨིན་སྲུངས་བཞག་འདི་རྒྱབ་སྐྱོར་མི་འབད།"
 
 #: ../plug-ins/common/psd_save.c:529
-msgid "Error: Can't convert GIMP base imagetype to PSD mode"
+msgid "Error: Can't convert LIGMA base imagetype to PSD mode"
 msgstr "འཛོལ་བ་:ཇི་ཨའི་ཨེམ་པི་གཞི་རྟེན་ གཟུགས་བརྙན་གྱི་དབྱེ་བ་འདི་ པི་ཨེསི་ཌི་ཐབས་ལམ་ལུ་ གཞི་བསྒྱུར་འབད་མ་ཚུགས།"
 
 #: ../plug-ins/common/psd_save.c:1434
@@ -7698,7 +7698,7 @@ msgid "Use the background color"
 msgstr "རྒྱབ་གཞི་ཚོས་གཞི་འདི་ལག་ལེན་འཐབ།"
 
 #: ../plug-ins/common/spheredesigner.c:291
-#: ../plug-ins/gimpressionist/general.c:148
+#: ../plug-ins/ligmaressionist/general.c:148
 msgid "Solid"
 msgstr "རགས་པ།"
 
@@ -7788,7 +7788,7 @@ msgstr "སེལ་འཐུ་འབད་བའི་ཌའིལོག་ཚ
 
 #. Scale
 #: ../plug-ins/common/spheredesigner.c:2754
-#: ../plug-ins/gimpressionist/paper.c:176
+#: ../plug-ins/ligmaressionist/paper.c:176
 #: ../plug-ins/ifscompose/ifscompose.c:553
 msgid "Scale:"
 msgstr "ཚད་ཤིང་།"
@@ -8039,7 +8039,7 @@ msgid "Import _paths"
 msgstr "ནང་འདྲེན་འགྲུལ་ལམ་ཚུ།(_p)"
 
 #: ../plug-ins/common/svg.c:912
-msgid "Import path elements of the SVG so they can be used with the GIMP path tool"
+msgid "Import path elements of the SVG so they can be used with the LIGMA path tool"
 msgstr "ཨེསི་ཝི་ཇི་གིས་ཇི་ཨའི་ཨེམ་པི་འགྲུལ་ལམ་ལག་ཆས་དང་གཅིག་ཁར་ལག་ལེན་འཐབ་བཏུབ་པའི་འགྲུལ་ལམ་ཆ་ཤས་ཚུ་ནང་འདྲེན་འབད།"
 
 #: ../plug-ins/common/svg.c:925
@@ -8116,7 +8116,7 @@ msgstr "ཊི་ཨའི་ཨེཕ་ཨེཕ་ རྒྱུ་ལམ།"
 #: ../plug-ins/common/tiff.c:972
 msgid ""
 "Warning:\n"
-"The image you are loading has 16 bits per channel. GIMP can only handle 8 bit, so it will be converted for you. Information will be lost because of this conversion."
+"The image you are loading has 16 bits per channel. LIGMA can only handle 8 bit, so it will be converted for you. Information will be lost because of this conversion."
 msgstr ""
 "ཉེན་བརྡ་\n"
 "ཁྱོད་ཀྱིས་མངོན་གསལ་འབད་མི་གཟུགས་བརྙན་ནང་ལུ་རྒྱུ་ལམ་རེ་རེ་ལུ་བིཊིསི་ ༡༦ རེ་ཡོདཔ་ཨིན། ཁྱོད་ཀྱི་གཞི་བསྒྱུར་འབད་ནིའི་དོན་ལུ་ ཇི་ཨའི་ཨེམ་པི་ གིས་བིཊི་ ༨ རྐྱངམ་ཅིག་ལེགས་སྐྱོང་འབད་བཏུབ། འ་ནི་གཞི་བསྒྱུར་འདི་གིས་འབད་བརྡ་དོན་འདི་བརླག་སྟོར་ཞུགས་ནི་ཨིན།"
@@ -8271,7 +8271,7 @@ msgid "Saved"
 msgstr "སྲུངས་ཡོདཔ།"
 
 #: ../plug-ins/common/uniteditor.c:94
-msgid "A unit definition will only be saved before GIMP exits if this column is checked."
+msgid "A unit definition will only be saved before LIGMA exits if this column is checked."
 msgstr "འ་ནི་ཀེར་ཐིག་ཞིབ་དཔྱད་འབད་འདི་ཡོད་པ་ཅིན་ཆ་ཕྲན་ངེས་ཚིག་འདི་ ཇི་ཨའི་ཨེམ་པི་ ཕྱིར་ཐོན་མ་འབད་བའི་ཧེ་མ་རྐྱངམ་ཅིག་སྲུངས་ཚུགསཔ།"
 
 #: ../plug-ins/common/uniteditor.c:96
@@ -8279,7 +8279,7 @@ msgid "ID"
 msgstr "ཨའི་ཌི།"
 
 #: ../plug-ins/common/uniteditor.c:96
-msgid "This string will be used to identify a unit in GIMP's configuration files."
+msgid "This string will be used to identify a unit in LIGMA's configuration files."
 msgstr "འ་ནི་ཡིག་རྒྱུན་འདི་ཇི་ཨའི་ཨེམ་གི་་་རིམ་སྒྲིག་ཡིག་སྣོད་ཚུ་ནང་ཆ་ཕྲན་ངོས་འཛིན་འབད་ནིའི་དོན་ལུ་ ལག་ལེན་འཐབ་ཨིན།"
 
 #: ../plug-ins/common/uniteditor.c:98
@@ -8339,7 +8339,7 @@ msgid "Create a new unit using the currently selected unit as template"
 msgstr "ཊེམ་པེ་ལེཊི་བཟུམ་སྦེ་ ད་ལྟོ་གསལ་འཐུ་འབད་ཡོད་མི་འདི་གི་ལག་ལེན་གྱི་ཐོག་ལས་ ཆ་ཕྲན་གསརཔ་ཅིག་ གསར་བསྐྲུན་འབད།"
 
 #: ../plug-ins/common/uniteditor.c:145
-msgid "Create or alter units used in GIMP"
+msgid "Create or alter units used in LIGMA"
 msgstr "ཇི་ཨེམ་པི་ནང་ལུ་ ལག་ལེན་འཐབ་ཡོད་པའི་ཆ་ཕྲན་ཚུ་ གསར་བསྐྲུན་ ཡང་ན་ བསྒྱུར་བཅོས་འབད།"
 
 #: ../plug-ins/common/uniteditor.c:150
@@ -8859,7 +8859,7 @@ msgid "Higher values restrict the effect to fewer areas of the image"
 msgstr "གནས་གོང་མཐོ་སུ་ཡོད་མི་ཚུ་གིས་ གཟུགས་བརྙན་གྱི་མངའ་ཁོངས་ཉུང་མི་ལུ་ ནུས་པ་བྱུང་ནི་ལས་ བཀག་དམ་འབདཝ་ཨིན།"
 
 #: ../plug-ins/common/wind.c:1027
-#: ../plug-ins/gimpressionist/orientmap.c:676
+#: ../plug-ins/ligmaressionist/orientmap.c:676
 msgid "_Strength:"
 msgstr "སྟོབས་ཤུགས:"
 
@@ -9159,8 +9159,8 @@ msgid "Same"
 msgstr "གཅིག་པ།"
 
 #: ../plug-ins/flame/flame.c:745
-#: ../plug-ins/gimpressionist/orientation.c:146
-#: ../plug-ins/gimpressionist/size.c:149
+#: ../plug-ins/ligmaressionist/orientation.c:146
+#: ../plug-ins/ligmaressionist/size.c:149
 msgid "Random"
 msgstr "གང་བྱུང་།"
 
@@ -9448,7 +9448,7 @@ msgid "Max undo:"
 msgstr "འབད་བཤོལ་ མང་མཐའ:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1283
-#: ../plug-ins/gimpressionist/general.c:167
+#: ../plug-ins/ligmaressionist/general.c:167
 msgid "Transparent"
 msgstr "དྭངས་གསལ་ཅད།"
 
@@ -9542,7 +9542,7 @@ msgid "Left"
 msgstr "གཡོན།"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1718
-#: ../plug-ins/gimpressionist/orientation.c:130
+#: ../plug-ins/ligmaressionist/orientation.c:130
 msgid "Orientation:"
 msgstr "ཕྱོགས:"
 
@@ -9787,7 +9787,7 @@ msgid "Second Flares Paint Options"
 msgstr "ཕེལེ་ཡརསི་ཚོན་གཏང་ནིའི་གདམ་ཁ་གཉིས་པ།"
 
 #: ../plug-ins/gflare/gflare.c:3455
-#: ../plug-ins/gimpressionist/general.c:116
+#: ../plug-ins/ligmaressionist/general.c:116
 msgid "_General"
 msgstr "སྤྱིར་གཏང་།(_G)"
 
@@ -9905,616 +9905,616 @@ msgstr "ཇི་ཨེཕ་ཨེལ་ཨའི་༡.༣་ གཞི་ཁ�
 msgid "GFLI 1.3 - Save framestack"
 msgstr "ཇི་ཨེཕ་ཨེལ་ཨའི་༡.༣་-གཞི་ཁྲམ་བརྩེགས་ཕུང་སྲུང་བཞག་འབད།"
 
-#: ../plug-ins/gimpressionist/brush.c:230
+#: ../plug-ins/ligmaressionist/brush.c:230
 msgid "Can only save drawables!"
 msgstr "འབྲི་བཏུབ་མི་རྐྱངམ་ཅིག་སྲུང་བཞག་འབད་ཚུགས!"
 
-#: ../plug-ins/gimpressionist/brush.c:235
+#: ../plug-ins/ligmaressionist/brush.c:235
 msgid "Save Brush"
 msgstr "པྱིར་སྲུང་བཞག་འབད།"
 
-#: ../plug-ins/gimpressionist/brush.c:490
+#: ../plug-ins/ligmaressionist/brush.c:490
 msgid "_Brush"
 msgstr "པྱིར།(_B)"
 
-#: ../plug-ins/gimpressionist/brush.c:527
+#: ../plug-ins/ligmaressionist/brush.c:527
 msgid "Gamma:"
 msgstr "གམ་མ:"
 
-#: ../plug-ins/gimpressionist/brush.c:545
+#: ../plug-ins/ligmaressionist/brush.c:545
 msgid "Changes the gamma (brightness) of the selected brush"
 msgstr "སེལ་འཐུ་འབད་ཡོད་པའི་པྱིར་གྱི་གམ་མ(དཀར་མདངས་)དེ་བསྒྱུར་བཅོ་ས་འབདཝ་ཨིན།"
 
-#: ../plug-ins/gimpressionist/brush.c:553
+#: ../plug-ins/ligmaressionist/brush.c:553
 msgid "Select:"
 msgstr "སེལ་འཐུ:"
 
-#: ../plug-ins/gimpressionist/brush.c:582
+#: ../plug-ins/ligmaressionist/brush.c:582
 msgid "Aspect ratio:"
 msgstr "རྣམ་པའི་དཔྱ་དཚ:"
 
-#: ../plug-ins/gimpressionist/brush.c:586
+#: ../plug-ins/ligmaressionist/brush.c:586
 msgid "Specifies the aspect ratio of the brush"
 msgstr "པྱིར་གྱི་རྣམ་པའི་དཔྱ་ཚད་དེ་གསལ་བཀོད་འབདཝ་ཨིན།"
 
-#: ../plug-ins/gimpressionist/brush.c:595
-#: ../plug-ins/gimpressionist/paper.c:188
+#: ../plug-ins/ligmaressionist/brush.c:595
+#: ../plug-ins/ligmaressionist/paper.c:188
 msgid "Relief:"
 msgstr "རི་མོ:"
 
-#: ../plug-ins/gimpressionist/brush.c:599
-#: ../plug-ins/gimpressionist/paper.c:192
+#: ../plug-ins/ligmaressionist/brush.c:599
+#: ../plug-ins/ligmaressionist/paper.c:192
 msgid "Specifies the amount of embossing to apply to the image (in percent)"
 msgstr "གཟུགས་བརྙན་ལུ་འཇུག་སྤྱོད་འབད་ནིའི་དོན་ལུ་ འབུར་རིས་གྱི་བསྡོམས་སེལ་བཀོད་འབདཝ་ཨིན།"
 
-#: ../plug-ins/gimpressionist/color.c:42
+#: ../plug-ins/ligmaressionist/color.c:42
 msgid "Co_lor"
 msgstr "ཚོས་གཞི།(_l)"
 
-#: ../plug-ins/gimpressionist/color.c:52
+#: ../plug-ins/ligmaressionist/color.c:52
 msgid "A_verage under brush"
 msgstr "པྱིར་གྱི་འོག་གི་ཆ་སྙོམས།(_v)"
 
-#: ../plug-ins/gimpressionist/color.c:54
+#: ../plug-ins/ligmaressionist/color.c:54
 msgid "C_enter of brush"
 msgstr "པྱིར་གྱི་དབུས།(_e)"
 
-#: ../plug-ins/gimpressionist/color.c:61
+#: ../plug-ins/ligmaressionist/color.c:61
 msgid "Color is computed from the average of all pixels under the brush"
 msgstr "ཚོས་གཞི་དེ་ པྱིར་གྱི་འོག་ལུ་ཡོད་མི་ པིག་སེལསི་ཆ་མཉམ་ནང་གི་ ཆ་སྙོམས་ནང་ལས་ རྩིས་བརྐྱབ་རྐྱབ་ཨིན།"
 
-#: ../plug-ins/gimpressionist/color.c:65
+#: ../plug-ins/ligmaressionist/color.c:65
 msgid "Samples the color from the pixel in the center of the brush"
 msgstr "པིག་སེལ་ནང་ལས་ཚོས་གཞི་དེ་ པྱིར་གི་དབུས་ལུ་ དཔེ་ཚད་སྟོནམ་ཨིན།"
 
-#: ../plug-ins/gimpressionist/color.c:76
+#: ../plug-ins/ligmaressionist/color.c:76
 msgid "Color _noise:"
 msgstr "ཚོས་གཞི་རྩུབ་སྒྲ:(_n)"
 
-#: ../plug-ins/gimpressionist/color.c:80
+#: ../plug-ins/ligmaressionist/color.c:80
 msgid "Adds random noise to the color"
 msgstr "གང་བྱུང་རྩུབས་སྒྲ་ཚུ་ ཚོས་གཞི་ལུ་ཁ་སྐོང་རྐྱབས།"
 
-#: ../plug-ins/gimpressionist/general.c:132
+#: ../plug-ins/ligmaressionist/general.c:132
 msgid "Keep original"
 msgstr "ངོ་མ་དེ་བཞག"
 
-#: ../plug-ins/gimpressionist/general.c:133
+#: ../plug-ins/ligmaressionist/general.c:133
 msgid "Preserve the original image as a background"
 msgstr "གཟུགས་བརྙན་ངོ་མ་དེ་རྒྱབ་གཞི་སྦེ་ཉམས་སྲུང་འབད།"
 
-#: ../plug-ins/gimpressionist/general.c:138
+#: ../plug-ins/ligmaressionist/general.c:138
 msgid "From paper"
 msgstr "ཤོག་ཀུའི་ནང་ལས།"
 
-#: ../plug-ins/gimpressionist/general.c:139
+#: ../plug-ins/ligmaressionist/general.c:139
 msgid "Copy the texture of the selected paper as a background"
 msgstr "སེལ་འཐུ་འབད་ཡོད་པའི་ཤོག་ཀུ་གི་རེག་བྱ་དེ་ རྒྱབ་གཞི་སྦེ་འདྲ་བཤུས་རྐྱབས།"
 
-#: ../plug-ins/gimpressionist/general.c:149
+#: ../plug-ins/ligmaressionist/general.c:149
 msgid "Solid colored background"
 msgstr "རགས་པའི་ཐོག་ལས་ཚོན་བཏང་ཡོད་མི་རྒྱབ་གཞི།"
 
-#: ../plug-ins/gimpressionist/general.c:168
+#: ../plug-ins/ligmaressionist/general.c:168
 msgid "Use a transparent background; Only the strokes painted will be visible"
 msgstr "རྒྱབ་གཞི་དྭངས་གསལ་ཅན་ཅིག་ལག་ལེན་འཐབ; སི་ཊོག་ཚོན་བཏང་མི་རྐྱངམ་ཅིག་མཐོང་ཚུགས།"
 
-#: ../plug-ins/gimpressionist/general.c:185
+#: ../plug-ins/ligmaressionist/general.c:185
 msgid "Paint edges"
 msgstr "མཐའམ་ཚུ་ཚོན་གཏང་།"
 
-#: ../plug-ins/gimpressionist/general.c:190
+#: ../plug-ins/ligmaressionist/general.c:190
 msgid "Selects if to place strokes all the way out to the edges of the image"
 msgstr "སི་ཊོག་ཚུ་ གཟུགས་བརྙན་གྱི་མཐའ་མའི་ཕྱི་ཁར་ལུ་བཏོན་ནི་ཨིན་པ་ཅིན་ སེལ་འཐུ་འབདཝ་ཨིན།"
 
 #. Tileable checkbox
-#: ../plug-ins/gimpressionist/general.c:195
+#: ../plug-ins/ligmaressionist/general.c:195
 #: ../plug-ins/maze/maze_face.c:316
 msgid "Tileable"
 msgstr "ཊ་ཡིལ་འབད་བཏུབ་མི།"
 
-#: ../plug-ins/gimpressionist/general.c:199
+#: ../plug-ins/ligmaressionist/general.c:199
 msgid "Selects if the resulting image should be seamlessly tileable"
 msgstr "གཟུགས་བརྙན་གྲུབ་འབྲས་སྟོན་མི་དེ་ ཚེམས་སྲུབས་མེད་པའི་ཐོག་ལས་ཊ་ཡིལ་འབད་བཏུབ་མི་ཅིག་དགོ་པ་ཅིན་ སེལ་འཐུ་འབདཝ་ཨིན། "
 
-#: ../plug-ins/gimpressionist/general.c:204
+#: ../plug-ins/ligmaressionist/general.c:204
 msgid "Drop shadow"
 msgstr "གྱིབ་མ་བཀོག་བཞག"
 
-#: ../plug-ins/gimpressionist/general.c:209
+#: ../plug-ins/ligmaressionist/general.c:209
 msgid "Adds a shadow effect to each brush stroke"
 msgstr "པྱིར་སི་ཊོག་རེ་རེ་ལུ་ གྱིབ་མའི་ནུས་པ་ཁ་སྐོང་རྐྱབ་ཨིན།"
 
-#: ../plug-ins/gimpressionist/general.c:222
+#: ../plug-ins/ligmaressionist/general.c:222
 msgid "Edge darken:"
 msgstr "མཐའམ་ གྲིབ་ནག་བཟོ་ནི:"
 
-#: ../plug-ins/gimpressionist/general.c:226
+#: ../plug-ins/ligmaressionist/general.c:226
 msgid "How much to \"darken\" the edges of each brush stroke"
 msgstr "པྱིར་སི་ཊོག་རེ་རེ་གི་མཐའ་མ་ཚུ་\"darken\"ག་དེ་ཅིག་བཟོ་ནི་ཨིན་ན།"
 
-#: ../plug-ins/gimpressionist/general.c:231
+#: ../plug-ins/ligmaressionist/general.c:231
 msgid "Shadow darken:"
 msgstr "གྱིབ་མ་གྲིབ་ནག་བཟོ་ནི:"
 
-#: ../plug-ins/gimpressionist/general.c:235
+#: ../plug-ins/ligmaressionist/general.c:235
 msgid "How much to \"darken\" the drop shadow"
 msgstr "བཀོག་བཞག་ནི་གྱིབ་མ་འདི་ \"darken\"ག་དེ་ཅིག་བཟོ་ནི་ཨིན་ན།"
 
-#: ../plug-ins/gimpressionist/general.c:240
+#: ../plug-ins/ligmaressionist/general.c:240
 msgid "Shadow depth:"
 msgstr "གྱིབ་མཞི་གཏིང་ཚད:"
 
-#: ../plug-ins/gimpressionist/general.c:244
+#: ../plug-ins/ligmaressionist/general.c:244
 msgid "The depth of the drop shadow, i.e. how far apart from the object it should be"
 msgstr "བཀོག་བཞག་ནི་གྱིབ་མ་གི་གཏིང་ཚད་ དེ་ཡང་ དངོས་པོ་དེ་ལས་ག་དེ་ཅིག་གི་ས་ཁར་ལུ་འོང་དགོཔ་ཨིན་ན།"
 
-#: ../plug-ins/gimpressionist/general.c:249
+#: ../plug-ins/ligmaressionist/general.c:249
 msgid "Shadow blur:"
 msgstr "གྱིབ་མ་རབ་རིབ:"
 
-#: ../plug-ins/gimpressionist/general.c:253
+#: ../plug-ins/ligmaressionist/general.c:253
 msgid "How much to blur the drop shadow"
 msgstr "བཀོག་བཞག་ནི་གྱིབ་མ་ག་དེ་ཅིག་རབ་རིབ་སྟོན་ནི་ཨིན་ན།"
 
-#: ../plug-ins/gimpressionist/general.c:258
+#: ../plug-ins/ligmaressionist/general.c:258
 msgid "Deviation threshold:"
 msgstr "ཁ་བསྒྱུར་བའི་ཐེརེཤ་ཧཱོལ:"
 
-#: ../plug-ins/gimpressionist/general.c:262
+#: ../plug-ins/ligmaressionist/general.c:262
 msgid "A bailout-value for adaptive selections"
 msgstr "བལ་ཨའུཊི་-མཐུན་ཅན་སེལ་འཐུའི་དོན་ལུ་གནས་གོང་།"
 
-#: ../plug-ins/gimpressionist/gimp.c:74
+#: ../plug-ins/ligmaressionist/ligma.c:74
 msgid "Performs various artistic operations"
 msgstr "མཛེས་ཆ་ཅན་གྱི་བཀོལ་སྤྱོད་འདྲ་མིན་སྣ་ཚོགས་ ལཱ་འགན་འགྲུབ་ཨིན།"
 
-#: ../plug-ins/gimpressionist/gimp.c:79
-msgid "_GIMPressionist..."
+#: ../plug-ins/ligmaressionist/ligma.c:79
+msgid "_LIGMAressionist..."
 msgstr "ཇི་ཨའི་ཨེམ་པི་ རེ་ཤོ་ནིསིཊི...(_G)"
 
-#: ../plug-ins/gimpressionist/gimp.c:350
+#: ../plug-ins/ligmaressionist/ligma.c:350
 msgid "Painting"
 msgstr "ཚོན་བཏང་ནི།"
 
-#: ../plug-ins/gimpressionist/gimpressionist.c:121
-msgid "GIMPressionist"
+#: ../plug-ins/ligmaressionist/ligmaressionist.c:121
+msgid "LIGMAressionist"
 msgstr "ཇི་ཨའི་ཨེམ་པི་ རེ་ཤོ་ནིསིཊི།"
 
-#: ../plug-ins/gimpressionist/orientation.c:74
+#: ../plug-ins/ligmaressionist/orientation.c:74
 msgid "Or_ientation"
 msgstr "ཕྱོགས:(_i)"
 
-#: ../plug-ins/gimpressionist/orientation.c:88
+#: ../plug-ins/ligmaressionist/orientation.c:88
 msgid "Directions:"
 msgstr "བཀོད་རྒྱ་ཚུ:"
 
-#: ../plug-ins/gimpressionist/orientation.c:92
+#: ../plug-ins/ligmaressionist/orientation.c:92
 msgid "The number of directions (i.e. brushes) to use"
 msgstr "ལག་ལེན་འཐབ་ནི་གི་བཀོད་རྒྱའི་(དེ་ཡང་ པྱིར་ཚུ་)གྱང་ཁ།"
 
-#: ../plug-ins/gimpressionist/orientation.c:100
+#: ../plug-ins/ligmaressionist/orientation.c:100
 msgid "Start angle:"
 msgstr "འགོ་བཙུགས་གྲུ་ཟུར:"
 
-#: ../plug-ins/gimpressionist/orientation.c:104
+#: ../plug-ins/ligmaressionist/orientation.c:104
 msgid "The starting angle of the first brush to create"
 msgstr "གསར་བསྐྲུན་འབད་ནི་གི་ པྱིར་དང་པམ་གྱི་འགོ་བཙུགས་གྲུ་ཟུར།"
 
-#: ../plug-ins/gimpressionist/orientation.c:112
+#: ../plug-ins/ligmaressionist/orientation.c:112
 msgid "Angle span:"
 msgstr "གྲུ་ཟུར་འཕར་ཚད:"
 
-#: ../plug-ins/gimpressionist/orientation.c:116
+#: ../plug-ins/ligmaressionist/orientation.c:116
 msgid "The angle span of the first brush to create"
 msgstr "གསར་བསྐྲུན་འབད་ནི་གི་ པྱིར་དང་པམ་གྱི་གྲུ་ཟུར་གྱི་འཕར་ཚད།"
 
-#: ../plug-ins/gimpressionist/orientation.c:139
+#: ../plug-ins/ligmaressionist/orientation.c:139
 msgid "Let the value (brightness) of the region determine the direction of the stroke"
 msgstr "ལུང་ཕྱོགས་ཀྱི་(དཀར་མདངས་)གནས་གོང་དེ་གིས་ སི་ཊོག་གི་བཀོད་རྒྱ་གཏན་འབེབས་བཟོ་བཅུག"
 
-#: ../plug-ins/gimpressionist/orientation.c:142
-#: ../plug-ins/gimpressionist/size.c:145
+#: ../plug-ins/ligmaressionist/orientation.c:142
+#: ../plug-ins/ligmaressionist/size.c:145
 msgid "Radius"
 msgstr "མཐའ་འཁོར།"
 
-#: ../plug-ins/gimpressionist/orientation.c:143
+#: ../plug-ins/ligmaressionist/orientation.c:143
 msgid "The distance from the center of the image determines the direction of the stroke"
 msgstr "གཟུགས་བརྙན་གྱི་དབུས་ནང་གི་གྱང་ཚད་དེ་གིས་ སི་ཊོག་དེ་གི་བཀོད་རྒྱ་གཏན་འབེབས་བཟཝ་ཨིན།"
 
-#: ../plug-ins/gimpressionist/orientation.c:147
+#: ../plug-ins/ligmaressionist/orientation.c:147
 msgid "Selects a random direction of each stroke"
 msgstr "སི་ཊོག་རེ་རེ་གི་གང་བྱུང་བཀོད་རྒྱ་ཅིག་སེལ་འཐུ་འབད།"
 
-#: ../plug-ins/gimpressionist/orientation.c:150
-#: ../plug-ins/gimpressionist/size.c:153
+#: ../plug-ins/ligmaressionist/orientation.c:150
+#: ../plug-ins/ligmaressionist/size.c:153
 msgid "Radial"
 msgstr "འོད་ཟེར་གྱི།"
 
-#: ../plug-ins/gimpressionist/orientation.c:151
+#: ../plug-ins/ligmaressionist/orientation.c:151
 msgid "Let the direction from the center determine the direction of the stroke"
 msgstr "དབུས་ནང་གི་བཀོད་རྒྱ་དེ་གིས་ སི་ཊོག་གི་བཀོད་རྒྱ་གཏན་འབེབས་བཟོ་བཅུག"
 
-#: ../plug-ins/gimpressionist/orientation.c:158
-#: ../plug-ins/gimpressionist/size.c:161
+#: ../plug-ins/ligmaressionist/orientation.c:158
+#: ../plug-ins/ligmaressionist/size.c:161
 msgid "Flowing"
 msgstr "འོག་གི"
 
-#: ../plug-ins/gimpressionist/orientation.c:159
-#: ../plug-ins/gimpressionist/size.c:162
+#: ../plug-ins/ligmaressionist/orientation.c:159
+#: ../plug-ins/ligmaressionist/size.c:162
 msgid "The strokes follow a \"flowing\" pattern"
 msgstr "སི་ཊོག་ཚུ་གིས་\"flowing\"དཔེ་གཞི་གི་རྗེས་སུ་འབྲངམ་ཨིན།"
 
-#: ../plug-ins/gimpressionist/orientation.c:163
+#: ../plug-ins/ligmaressionist/orientation.c:163
 msgid "The hue of the region determines the direction of the stroke"
 msgstr "ལུང་ཕྱོགས་ཀྱི་ཚོན་མདངས་དེ་གིས་ སི་ཊོག་གི་བཀོད་རྒྱ་དེ་གཏན་འབེབས་བཟོཉ་ཨིན།"
 
-#: ../plug-ins/gimpressionist/orientation.c:166
-#: ../plug-ins/gimpressionist/size.c:169
+#: ../plug-ins/ligmaressionist/orientation.c:166
+#: ../plug-ins/ligmaressionist/size.c:169
 msgid "Adaptive"
 msgstr "མཐུན་ཅན།"
 
-#: ../plug-ins/gimpressionist/orientation.c:167
+#: ../plug-ins/ligmaressionist/orientation.c:167
 msgid "The direction that matches the original image the closest is selected"
 msgstr "གཟུགས་བརྙན་ངོ་མ་དང་མཐའ་ཉེ་ཤོས་མཐུན་སྒྲིག་ཡོད་མི་བཀོད་རྒྱ་དེ་སེལ་འཐུ་འབདཝ་ཨིན།"
 
-#: ../plug-ins/gimpressionist/orientation.c:174
-#: ../plug-ins/gimpressionist/size.c:178
+#: ../plug-ins/ligmaressionist/orientation.c:174
+#: ../plug-ins/ligmaressionist/size.c:178
 msgid "Manual"
 msgstr "ལག་དེབ།"
 
-#: ../plug-ins/gimpressionist/orientation.c:175
+#: ../plug-ins/ligmaressionist/orientation.c:175
 msgid "Manually specify the stroke orientation"
 msgstr "ལག་ཐོག་ལས་ སི་ཊོག་ཕྱོགས་དེ་གསལ་བཀོད་འབད།"
 
-#: ../plug-ins/gimpressionist/orientation.c:186
+#: ../plug-ins/ligmaressionist/orientation.c:186
 msgid "Opens up the Orientation Map Editor"
 msgstr "ཕྱོགས་ཀྱི་ས་ཁྲ་ཞུན་དག་པ་དེ་ཁ་ཕྱེཝ་ཨིན།"
 
-#: ../plug-ins/gimpressionist/orientmap.c:508
+#: ../plug-ins/ligmaressionist/orientmap.c:508
 msgid "Orientation Map Editor"
 msgstr "ཕྱོགས་ཀྱི་ས་ཁྲ་ཞུན་དག་པ།"
 
-#: ../plug-ins/gimpressionist/orientmap.c:537
+#: ../plug-ins/ligmaressionist/orientmap.c:537
 msgid "Vectors"
 msgstr "མཉམ་ཐིག་ཚུ།"
 
-#: ../plug-ins/gimpressionist/orientmap.c:549
+#: ../plug-ins/ligmaressionist/orientmap.c:549
 msgid "The vector-field. Left-click to move selected vector, Right-click to point it towards mouse, Middle-click to add a new vector."
 msgstr "མཉམ་ཐིག་གི་-ས་སྒོ། སེལ་འཐུ་འབད་ཡོད་པའི་མཉམ་ཐིག་སྤོ་བཤུད་འབད་ནིའི་དོན་ལུ་ གཡོན་-ལུ་ཨེབ་གཏང་འབད་ནི་དང་ དེ་མའུསུ་ཁ་ཐུགས་ལུ་དཔག་ནིའི་དོན་ལུ་གཡས་-ལུ་ཨེབ་གཏང་འབད། དེ་ལས་ མཉམ་ཐིག་གསརཔ་ཅིག་ཁ་སྐོང་བརྐྱབ་ནིའི་དོན་ལུ་བར་ན་-ལུ་ཨེབ་གཏང་འབད།"
 
-#: ../plug-ins/gimpressionist/orientmap.c:572
-#: ../plug-ins/gimpressionist/sizemap.c:441
+#: ../plug-ins/ligmaressionist/orientmap.c:572
+#: ../plug-ins/ligmaressionist/sizemap.c:441
 msgid "Adjust the preview's brightness"
 msgstr "སྔོན་བལྟའི་དཀར་མདངས་དེ་བདེ་སྒྲིག་འབད།"
 
-#: ../plug-ins/gimpressionist/orientmap.c:594
+#: ../plug-ins/ligmaressionist/orientmap.c:594
 msgid "Select previous vector"
 msgstr "ཧེ་མམ་གྱི་མཉམ་ཐིག་སེལ་འཐུ་འབད།"
 
-#: ../plug-ins/gimpressionist/orientmap.c:600
+#: ../plug-ins/ligmaressionist/orientmap.c:600
 msgid "Select next vector"
 msgstr "ཤུལ་མམ་གྱི་མཉམ་ཐིག་སེལ་འཐུ་འབད།"
 
-#: ../plug-ins/gimpressionist/orientmap.c:602
-#: ../plug-ins/gimpressionist/sizemap.c:472
+#: ../plug-ins/ligmaressionist/orientmap.c:602
+#: ../plug-ins/ligmaressionist/sizemap.c:472
 msgid "A_dd"
 msgstr "ཁ་སྐོང་།(_d)"
 
-#: ../plug-ins/gimpressionist/orientmap.c:606
+#: ../plug-ins/ligmaressionist/orientmap.c:606
 msgid "Add new vector"
 msgstr "མཉམ་ཐིག་གསརཔ་ཁ་སྐོང་རྐྱབས།"
 
-#: ../plug-ins/gimpressionist/orientmap.c:608
-#: ../plug-ins/gimpressionist/sizemap.c:479
+#: ../plug-ins/ligmaressionist/orientmap.c:608
+#: ../plug-ins/ligmaressionist/sizemap.c:479
 msgid "_Kill"
 msgstr "གསད།(_K)"
 
-#: ../plug-ins/gimpressionist/orientmap.c:612
+#: ../plug-ins/ligmaressionist/orientmap.c:612
 msgid "Delete selected vector"
 msgstr "སེལ་འཐུ་འབད་ཡོད་པའི་མཉམ་ཐིག་བཏོཐ་གཏང་།"
 
-#: ../plug-ins/gimpressionist/orientmap.c:623
+#: ../plug-ins/ligmaressionist/orientmap.c:623
 msgid "Type"
 msgstr "དབྱེ་བ་།"
 
-#: ../plug-ins/gimpressionist/orientmap.c:627
+#: ../plug-ins/ligmaressionist/orientmap.c:627
 msgid "_Normal"
 msgstr "སྤྱིར་གཏང་།(_N)"
 
-#: ../plug-ins/gimpressionist/orientmap.c:628
+#: ../plug-ins/ligmaressionist/orientmap.c:628
 msgid "Vorte_x"
 msgstr "རྩ་མཐུད(_x)"
 
-#: ../plug-ins/gimpressionist/orientmap.c:629
+#: ../plug-ins/ligmaressionist/orientmap.c:629
 msgid "Vortex_2"
 msgstr "རྩ་མཐུད་ ༢ (_2)"
 
-#: ../plug-ins/gimpressionist/orientmap.c:630
+#: ../plug-ins/ligmaressionist/orientmap.c:630
 msgid "Vortex_3"
 msgstr "རྩེ་མཐུད་ ༣ (_3)"
 
-#: ../plug-ins/gimpressionist/orientmap.c:636
-#: ../plug-ins/gimpressionist/sizemap.c:524
+#: ../plug-ins/ligmaressionist/orientmap.c:636
+#: ../plug-ins/ligmaressionist/sizemap.c:524
 msgid "_Voronoi"
 msgstr "ཝོ་རོ་ནོའི།(_V)"
 
-#: ../plug-ins/gimpressionist/orientmap.c:644
+#: ../plug-ins/ligmaressionist/orientmap.c:644
 msgid "Voronoi-mode makes only the vector closest to the given point have any influence"
 msgstr "ཝོ་རོ་ནོའི-ཐབས་ལམ་གྱིས་ མཉམ་ཐིག་རྐྱངམ་ཅིག་ རྒྱུད་བསྐུལ་གང་རུང་ཅིག་ཡོདཔ་བཟོ་ནིའི་དོན་ལུ་ བཀོད་དེ་ཡོད་པའི་ ཡིག་ཚད་ཀྱི་ཐག་ཉེ་ཤོས་སྦེ་བཟོཝ་ཨིན།"
 
-#: ../plug-ins/gimpressionist/orientmap.c:654
+#: ../plug-ins/ligmaressionist/orientmap.c:654
 msgid "A_ngle:"
 msgstr "གྲུ་ཟུར།(_n)"
 
-#: ../plug-ins/gimpressionist/orientmap.c:658
+#: ../plug-ins/ligmaressionist/orientmap.c:658
 msgid "Change the angle of the selected vector"
 msgstr "སེལ་འཐུ་འབད་ཡོད་པའི་མཉམ་ཐིག་གི་གྲུ་ཟུར་དེ་བསྒྱུར་བཅོས་འབད།"
 
-#: ../plug-ins/gimpressionist/orientmap.c:665
+#: ../plug-ins/ligmaressionist/orientmap.c:665
 msgid "Ang_le offset:"
 msgstr "གྲུ་ཟུར་པར་ལེན:(_l)"
 
-#: ../plug-ins/gimpressionist/orientmap.c:669
+#: ../plug-ins/ligmaressionist/orientmap.c:669
 msgid "Offset all vectors with a given angle"
 msgstr "མཉམ་ཐིག་ཆ་མཉམ་ བཀོད་དེ་ཡོད་པའི་གྲུ་ཟུར་གྱི་ཐོག་ལས་ པར་ལེན་འབད།"
 
-#: ../plug-ins/gimpressionist/orientmap.c:680
+#: ../plug-ins/ligmaressionist/orientmap.c:680
 msgid "Change the strength of the selected vector"
 msgstr "སེལ་འཐུ་འབད་ཡོད་པའི་མཉམ་ཐིག་གི་སྟོབས་ཤུགས་དེ་བསྒྱུར་བཅོས་འབད།"
 
-#: ../plug-ins/gimpressionist/orientmap.c:687
+#: ../plug-ins/ligmaressionist/orientmap.c:687
 msgid "S_trength exp.:"
 msgstr "སྟོབས་ཤུགས་ ཨི་ཨེགསི་པི.:(_t)"
 
-#: ../plug-ins/gimpressionist/orientmap.c:691
-#: ../plug-ins/gimpressionist/sizemap.c:519
+#: ../plug-ins/ligmaressionist/orientmap.c:691
+#: ../plug-ins/ligmaressionist/sizemap.c:519
 msgid "Change the exponent of the strength"
 msgstr "སྟོབས་ཤུགས་ཀྱི་བསྒྱུར་གྲངས་དེ་བསྒྱུར་བཅོས་འབད།"
 
-#: ../plug-ins/gimpressionist/paper.c:120
+#: ../plug-ins/ligmaressionist/paper.c:120
 msgid "P_aper"
 msgstr "ཤོག་ཀུ(_a)"
 
-#: ../plug-ins/gimpressionist/paper.c:155
+#: ../plug-ins/ligmaressionist/paper.c:155
 msgid "Inverts the Papers texture"
 msgstr "ཤོག་ལེབ་ཚུ་གི་རེག་བྱ་དེ་གནས་ལོག་འབདཝ་ཨིན།"
 
-#: ../plug-ins/gimpressionist/paper.c:159
+#: ../plug-ins/ligmaressionist/paper.c:159
 msgid "O_verlay"
 msgstr "སྤུར་ཁེབས།(_v)"
 
-#: ../plug-ins/gimpressionist/paper.c:164
+#: ../plug-ins/ligmaressionist/paper.c:164
 msgid "Applies the paper as it is (without embossing it)"
 msgstr "ཤོག་ཀུ་འཇུག་སྤྱོད་འབདཝ་ཨིན་(དེ་ཡང་ འབུར་རིས་མ་བཟོ་བ་འབད་ནི་དེ་གིས་ཨིན)"
 
-#: ../plug-ins/gimpressionist/paper.c:180
+#: ../plug-ins/ligmaressionist/paper.c:180
 msgid "Specifies the scale of the texture (in percent of original file)"
 msgstr "རེག་བྱ་གི་ཚད་ཤིང་དེ་གསལ་བཀོད་འབདཝ་ཨིན་(ཡིག་སྣོད་ངོ་མ་གི་བརྒྱ་ཆའི་ནང་ལུ།)"
 
-#: ../plug-ins/gimpressionist/placement.c:49
+#: ../plug-ins/ligmaressionist/placement.c:49
 msgid "Pl_acement"
 msgstr "བཙུགས་བཞག(_a)"
 
-#: ../plug-ins/gimpressionist/placement.c:55
+#: ../plug-ins/ligmaressionist/placement.c:55
 msgid "Placement"
 msgstr "བཙུགས་བཞག"
 
-#: ../plug-ins/gimpressionist/placement.c:59
+#: ../plug-ins/ligmaressionist/placement.c:59
 msgid "Randomly"
 msgstr "གང་བྱུང་སྦེ།"
 
-#: ../plug-ins/gimpressionist/placement.c:63
+#: ../plug-ins/ligmaressionist/placement.c:63
 msgid "Evenly distributed"
 msgstr "ཆ་ཅན་སྦེ་བགོ་བཀྲམ་འབད་ཡོདཔ།"
 
-#: ../plug-ins/gimpressionist/placement.c:71
+#: ../plug-ins/ligmaressionist/placement.c:71
 msgid "Place strokes randomly around the image"
 msgstr "ས་གནས་ཀྱིས་གཟུགས་བརྙན་བརྒྱུད་དེ་ གང་བྱུང་སྦེ་སི་ཊོག་འབདཝ་ཨིན།"
 
-#: ../plug-ins/gimpressionist/placement.c:75
+#: ../plug-ins/ligmaressionist/placement.c:75
 msgid "The strokes are evenly distributed across the image"
 msgstr "སི་ཊོག་ཚུ་གཟུགས་བརྙན་བརྒྱུད་དེ་ ཆ་ཅན་སྦེ་བགོ་བཀྲམ་འབད་ནུག"
 
-#: ../plug-ins/gimpressionist/placement.c:84
+#: ../plug-ins/ligmaressionist/placement.c:84
 msgid "Centered"
 msgstr "དབུས་སྒྲིག"
 
-#: ../plug-ins/gimpressionist/placement.c:90
+#: ../plug-ins/ligmaressionist/placement.c:90
 msgid "Focus the brush strokes around the center of the image"
 msgstr "པྱིར་སི་ཊོག་ཚུ་ གཟུགས་བརྙན་གྱི་མཐའ་སྐོར་ཏེ་ ཆེད་དམིགས་འབད།"
 
-#: ../plug-ins/gimpressionist/placement.c:102
+#: ../plug-ins/ligmaressionist/placement.c:102
 msgid "Stroke _density:"
 msgstr "སྟུག་ཚད་སི་ཊོག་འབད:(_d)"
 
-#: ../plug-ins/gimpressionist/placement.c:106
+#: ../plug-ins/ligmaressionist/placement.c:106
 msgid "The relative density of the brush strokes"
 msgstr "པྱིར་སི་ཊོག་དེ་གི་ སྔར་སྒྲིག་སྟུག་ཚད།"
 
 #.
-#. * gimp_filename_to_utf8 () and g_strerror () return temporary strings
+#. * ligma_filename_to_utf8 () and g_strerror () return temporary strings
 #. * that need not and should not be freed. So this call is OK.
 #. *
-#: ../plug-ins/gimpressionist/ppmtool.c:632
+#: ../plug-ins/ligmaressionist/ppmtool.c:632
 #, c-format
 msgid "Failed to save PPM file '%s': %s"
 msgstr "པི་པི་ཨེམ་ཡིག་སྣོད་ '%s': %sདེ་སྲུང་བཞག་འབད་ནི་འཐུས་ཤོར་བྱུང་ནུག"
 
-#: ../plug-ins/gimpressionist/presets.c:620
+#: ../plug-ins/ligmaressionist/presets.c:620
 msgid "Save Current"
 msgstr "ད་ལྟོ་གི་སྲུང་བཞག་འབད།"
 
-#: ../plug-ins/gimpressionist/presets.c:874
-msgid "Gimpressionist Defaults"
+#: ../plug-ins/ligmaressionist/presets.c:874
+msgid "Ligmaressionist Defaults"
 msgstr "ཇིམ་པེརི་ཤོ་ནིསིཊི་ སྔོན་སྒྲིག་འབདཝ་ཨིན།"
 
-#: ../plug-ins/gimpressionist/presets.c:995
+#: ../plug-ins/ligmaressionist/presets.c:995
 msgid "_Presets"
 msgstr "སྔར་སྒྲིག་འབདཝ་ཨིན།(_P)"
 
-#: ../plug-ins/gimpressionist/presets.c:1010
+#: ../plug-ins/ligmaressionist/presets.c:1010
 msgid "Save Current..."
 msgstr "ད་ལྟོའི་...སྲུང་བཞག་འབད་།"
 
-#: ../plug-ins/gimpressionist/presets.c:1018
+#: ../plug-ins/ligmaressionist/presets.c:1018
 msgid "Save the current settings to the specified file"
 msgstr "ད་ལྟོའི་སྒྲིག་སྟངས་ཚུ་ གསལ་བཀོད་འབད་ཡོད་པའི་ཡིག་སྣོད་ནང་ལུ་ སྲུང་བཞག་འབད།"
 
-#: ../plug-ins/gimpressionist/presets.c:1046
+#: ../plug-ins/ligmaressionist/presets.c:1046
 msgid "Reads the selected Preset into memory"
 msgstr "སེལ་འཐུ་འབད་ཡོད་པའི་སྔར་སྒྲིག་དེ་ དྲན་ཚད་ནང་ལུ་ ལྷགཔ་ཨིན།"
 
-#: ../plug-ins/gimpressionist/presets.c:1052
+#: ../plug-ins/ligmaressionist/presets.c:1052
 msgid "Deletes the selected Preset"
 msgstr "སེལ་འཐུ་འབད་ཡོད་པའི་སྔར་སྒྲིག་དེ་ བཏོན་གཏངམ་ཨིན།"
 
-#: ../plug-ins/gimpressionist/presets.c:1058
+#: ../plug-ins/ligmaressionist/presets.c:1058
 msgid "Reread the folder of Presets"
 msgstr "སྔར་སྒྲིག་ཚུ་སྣོད་འཛིན་དེ་ལོག་ལྷག"
 
-#: ../plug-ins/gimpressionist/preview.c:192
+#: ../plug-ins/ligmaressionist/preview.c:192
 msgid "Refresh the Preview window"
 msgstr "སྔོན་བལྟའི་སྒོ་སྒྲིག་དེ་ཡང་སེལ་འབད།"
 
-#: ../plug-ins/gimpressionist/preview.c:200
+#: ../plug-ins/ligmaressionist/preview.c:200
 msgid "Revert to the original image"
 msgstr "གཟུགས་བྲཉན་ངོ་མ་དེ་ལུ་ རྒྱབ་ལོག་འབད།"
 
-#: ../plug-ins/gimpressionist/size.c:77
+#: ../plug-ins/ligmaressionist/size.c:77
 msgid "_Size"
 msgstr "ཚད།(_S)"
 
-#: ../plug-ins/gimpressionist/size.c:91
+#: ../plug-ins/ligmaressionist/size.c:91
 msgid "Sizes:"
 msgstr "ཚད་ཚུ:"
 
-#: ../plug-ins/gimpressionist/size.c:95
+#: ../plug-ins/ligmaressionist/size.c:95
 msgid "The number of sizes of brushes to use"
 msgstr "ལག་ལེན་འཐབ་ནི་ཨིན་མི་ པྱིར་ཚུ་གི་ཚད་ཀྱི་གྱངས་ཁ།"
 
-#: ../plug-ins/gimpressionist/size.c:103
+#: ../plug-ins/ligmaressionist/size.c:103
 msgid "Minimum size:"
 msgstr "ཚད་ཉུང་མཐའ:"
 
-#: ../plug-ins/gimpressionist/size.c:107
+#: ../plug-ins/ligmaressionist/size.c:107
 msgid "The smallest brush to create"
 msgstr "གསར་བསྐྲུན་འབད་ནི་གི་པྱིར་ཆུང་ཤོས།"
 
-#: ../plug-ins/gimpressionist/size.c:115
+#: ../plug-ins/ligmaressionist/size.c:115
 msgid "Maximum size:"
 msgstr "ཚད་མང་མཐའ:"
 
-#: ../plug-ins/gimpressionist/size.c:119
+#: ../plug-ins/ligmaressionist/size.c:119
 msgid "The largest brush to create"
 msgstr "གསར་བསྐྲུན་འབད་ནི་གི་ པྱིར་སྦོམ་ཤོས།"
 
-#: ../plug-ins/gimpressionist/size.c:133
+#: ../plug-ins/ligmaressionist/size.c:133
 msgid "Size:"
 msgstr "ཚད:"
 
-#: ../plug-ins/gimpressionist/size.c:142
+#: ../plug-ins/ligmaressionist/size.c:142
 msgid "Let the value (brightness) of the region determine the size of the stroke"
 msgstr "ལུང་ཕྱོགས་ཀྱི་གནས་གོང་(དཀར་མདངས་)དེ་གིས་ སི་ཊོག་གི་ཚད་གཏན་འབེབས་བཟོ་བཅུག"
 
-#: ../plug-ins/gimpressionist/size.c:146
+#: ../plug-ins/ligmaressionist/size.c:146
 msgid "The distance from the center of the image determines the size of the stroke"
 msgstr "གཟུགས་བརྙན་གྱི་དབུས་ནང་ལས་གྱང་ཚད་དེ་གིས་ སི་ཊོག་གི་ཚད་གཏན་འབེབས་བཟོཝ་ཨིན།"
 
-#: ../plug-ins/gimpressionist/size.c:150
+#: ../plug-ins/ligmaressionist/size.c:150
 msgid "Selects a random size for each stroke"
 msgstr "སི་ཊོག་རེ་རེ་གི་དོན་ལུ་ གང་བྱུང་ཚད་ཅིག་སེལ་འཐུ་འབདཝ་ཨིན།"
 
-#: ../plug-ins/gimpressionist/size.c:154
+#: ../plug-ins/ligmaressionist/size.c:154
 msgid "Let the direction from the center determine the size of the stroke"
 msgstr "དབུས་ནང་གི་བཀོད་རྒྱ་དེ་གིས་ སི་ཊོཀ་གི་ཚད་དེ་གཏན་འབེབས་བཟོ་བཅུག "
 
-#: ../plug-ins/gimpressionist/size.c:166
+#: ../plug-ins/ligmaressionist/size.c:166
 msgid "The hue of the region determines the size of the stroke"
 msgstr "ལུང་ཕྱོགས་ཀྱི་ཚོན་མདངས་དེ་གིས་ སི་ཊོཀ་གི་ཚད་གཏན་འབེབས་བཟོཝ་ཨིན།"
 
-#: ../plug-ins/gimpressionist/size.c:170
+#: ../plug-ins/ligmaressionist/size.c:170
 msgid "The brush-size that matches the original image the closest is selected"
 msgstr "གཟུགས་བརྙན་ངོ་མ་དང་ཐག་ཉེ་ཤོས་དང་མཐུན་སྒྲིག་ཡོད་མི་ པྱིར་གི་-ཚད་དེ་གིས་དེ་སེལ་འཐུ་འབདཝ་ཨིན།"
 
-#: ../plug-ins/gimpressionist/size.c:179
+#: ../plug-ins/ligmaressionist/size.c:179
 msgid "Manually specify the stroke size"
 msgstr "སིཊོཀ་གི་ཚད་དེ་ལག་ཐོག་ལས་གསལ་བཀོད་འབད།"
 
-#: ../plug-ins/gimpressionist/size.c:190
+#: ../plug-ins/ligmaressionist/size.c:190
 msgid "Opens up the Size Map Editor"
 msgstr "ས་ཁྲའི་ཚད་ཞུན་དག་པ་དེ་ཁ་ཕྱེཝ་ཨིན།"
 
-#: ../plug-ins/gimpressionist/sizemap.c:383
+#: ../plug-ins/ligmaressionist/sizemap.c:383
 msgid "Size Map Editor"
 msgstr "ས་ཁྲའི་ཚད་ཞུན་དག་པ།"
 
-#: ../plug-ins/gimpressionist/sizemap.c:411
+#: ../plug-ins/ligmaressionist/sizemap.c:411
 msgid "Smvectors"
 msgstr "སེམ་མཉམ་ཐིག་ཚུ།"
 
-#: ../plug-ins/gimpressionist/sizemap.c:421
+#: ../plug-ins/ligmaressionist/sizemap.c:421
 msgid "The smvector-field. Left-click to move selected smvector, Right-click to point it towards mouse, Middle-click to add a new smvector."
 msgstr "སེམ་མཉམ་ཐིག་གི་-ས་སྒོ།  སེམ་མཉམ་ཐིག་སེལ་འཐུ་འབད་ནིའི་དོན་ལུ་ གཡོན-ལུ་ཨེབ་གཏང་འབད་ནི་དང་ དེ་མའུསུ་གི་ཁ་ཐུགས་ལུ་དཔག་ནིའི་དོན་ལུ་ གཡས་-ལུ་ཨེབ་གཏང་འབད་ནི་དང་ དེ་ལས་ སེམ་མཉམ་ཐིག་གསརཔ་ཁ་སྐོང་བརྐྱབ་ནིའི་དོན་ལས་ བར་ན-ལུ་ཨེབ་གཏང་འབད།"
 
-#: ../plug-ins/gimpressionist/sizemap.c:463
+#: ../plug-ins/ligmaressionist/sizemap.c:463
 msgid "Select previous smvector"
 msgstr "ཧེ་མམ་གྱི་སེམ་མཉམ་ཐིག་སེལ་འཐུ་འབད།"
 
-#: ../plug-ins/gimpressionist/sizemap.c:470
+#: ../plug-ins/ligmaressionist/sizemap.c:470
 msgid "Select next smvector"
 msgstr "ཤུལ་མམ་གྱི་སེམ་མཉམ་ཐིག་སེལ་འཐུ་འབད།"
 
-#: ../plug-ins/gimpressionist/sizemap.c:477
+#: ../plug-ins/ligmaressionist/sizemap.c:477
 msgid "Add new smvector"
 msgstr "སེམ་མཉམ་ཐིག་ཁ་སྐོང་རྐྱབས།"
 
-#: ../plug-ins/gimpressionist/sizemap.c:484
+#: ../plug-ins/ligmaressionist/sizemap.c:484
 msgid "Delete selected smvector"
 msgstr "སེལ་འཐུ་འབད་ཡོད་པའི་ སེམ་མཉམ་ཐིག་བཏོན་གཏང་།"
 
-#: ../plug-ins/gimpressionist/sizemap.c:497
+#: ../plug-ins/ligmaressionist/sizemap.c:497
 msgid "Change the angle of the selected smvector"
 msgstr "སེལ་འཐུ་འབད་ཡོད་པའི་སེམ་མཉམ་ཐིག་གི་གྲུ་ཟུར་དེ་བསྒྱུར་བཆཅོས་འབད།"
 
-#: ../plug-ins/gimpressionist/sizemap.c:504
+#: ../plug-ins/ligmaressionist/sizemap.c:504
 msgid "S_trength:"
 msgstr "སྟོབས་ཤུགས:(_t)"
 
-#: ../plug-ins/gimpressionist/sizemap.c:508
+#: ../plug-ins/ligmaressionist/sizemap.c:508
 msgid "Change the strength of the selected smvector"
 msgstr "སེལ་འཐུ་འབད་ཡོད་པའི་སེམ་མཉམ་ཐིག་གི་སྟོབས་ཤུགས་དེ་བསྒྱུར་བཅོས་འབད།"
 
-#: ../plug-ins/gimpressionist/sizemap.c:515
+#: ../plug-ins/ligmaressionist/sizemap.c:515
 msgid "St_rength exp.:"
 msgstr "སྟོབས་ཤུགས་ ཨི་ཨེག་པི.:(_r)"
 
-#: ../plug-ins/gimpressionist/sizemap.c:531
+#: ../plug-ins/ligmaressionist/sizemap.c:531
 msgid "Voronoi-mode makes only the smvector closest to the given point have any influence"
 msgstr "ཝོ་རོ་ནོའི-ཐབས་ལམ་གྱིས་ སེམ་མཉམ་ཐིག་རྐྱངམ་ཅིག་ རྒྱུད་བསྐུལ་གང་རུང་ཅིག་ཡོདཔ་བཟོ་ནིའི་དོན་ལུ་ བཀོད་དེ་ཡོད་པའི་ ཡིག་ཚད་ཀྱི་ཐག་ཉེ་ཤོས་སྦེ་བཟོཝ་ཨིན།"
 
-#: ../plug-ins/help/gimphelpdomain.c:177
-msgid "The GIMP help files are not found."
+#: ../plug-ins/help/ligmahelpdomain.c:177
+msgid "The LIGMA help files are not found."
 msgstr "ཇི་ཨའི་ཨེམ་པི་གྲོགས་རམ་ཡིག་སྣོད་ཚུ་ འཚོལ་མ་ཐོབ།"
 
-#: ../plug-ins/help/gimphelpdomain.c:178
-msgid "Please install the additional help package or use the online user manual at http://docs.gimp.org/."
-msgstr "གྲོགས་རམ་ཐུམ་སྒྲིལ་ཁ་སྐོང་གཞི་བཙུགས་འབད་གནང་ ཡང་ན་ http://docs.gimp.org/.དེ་ལུ་གློག་ཐོག་ལག་ལེན་པའི་ལག་དེབ་དེ་ ལག་ལེན་འཐབ།"
+#: ../plug-ins/help/ligmahelpdomain.c:178
+msgid "Please install the additional help package or use the online user manual at http://docs.ligma.org/."
+msgstr "གྲོགས་རམ་ཐུམ་སྒྲིལ་ཁ་སྐོང་གཞི་བཙུགས་འབད་གནང་ ཡང་ན་ http://docs.ligma.org/.དེ་ལུ་གློག་ཐོག་ལག་ལེན་པའི་ལག་དེབ་དེ་ ལག་ལེན་འཐབ།"
 
-#: ../plug-ins/help/gimphelpdomain.c:184
-msgid "There is a problem with the GIMP help files."
+#: ../plug-ins/help/ligmahelpdomain.c:184
+msgid "There is a problem with the LIGMA help files."
 msgstr "ཇི་ཨའི་ཨེམ་པི་ གྲོགས་རམ་ཡིག་སྣོད་དེ་ལུ་ དཀའ་ངལ་ཅིག་འདུགག"
 
-#: ../plug-ins/help/gimphelpdomain.c:186
+#: ../plug-ins/help/ligmahelpdomain.c:186
 msgid "Please check your installation."
 msgstr "ཁྱོད་རའི་གཞི་བཙུགས་ཞིབ་དཔྱད་འབད་གནང་།"
 
-#: ../plug-ins/help/gimphelpdomain.c:196
+#: ../plug-ins/help/ligmahelpdomain.c:196
 #, c-format
 msgid "Help ID '%s' unknown"
 msgstr "ཨའི་ཌི་ '%s' མ་ཤེས་མི་དེ་ལུ་ གྲོགས་རམ་འབད།"
 
-#: ../plug-ins/help/gimphelplocale.c:218
+#: ../plug-ins/help/ligmahelplocale.c:218
 #, c-format
 msgid ""
 "Parse error in '%s':\n"
@@ -10524,7 +10524,7 @@ msgstr ""
 "%s"
 
 #: ../plug-ins/helpbrowser/dialog.c:227
-msgid "GIMP Help Browser"
+msgid "LIGMA Help Browser"
 msgstr "ཇི་ཨའི་ཨེམ་པི་ གྲོགས་རམ་ བརའུ་ཟར།"
 
 #: ../plug-ins/helpbrowser/dialog.c:322
@@ -10544,7 +10544,7 @@ msgid "Go to the index page"
 msgstr "ཟུར་ཐོའི་ཤོག་ལེབ་དེ་ལུ་འགྱོ།"
 
 #: ../plug-ins/helpbrowser/dialog.c:702
-msgid "Visit the GIMP documentation website"
+msgid "Visit the LIGMA documentation website"
 msgstr "ཇི་ཨའི་ཨེམ་པི་ཡིག་ཐོག་བཀོད་པའི་ ཝེབ་ས་ཁོངས་དེ་ལུ་ བལྟ་སྤྱོད་འབད།"
 
 #: ../plug-ins/helpbrowser/dialog.c:778
@@ -10758,7 +10758,7 @@ msgid "Clear"
 msgstr "བསལ།"
 
 #: ../plug-ins/imagemap/imap_cmd_create.c:58
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:151
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:151
 msgid "Create"
 msgstr "གསར་བསྐྲུན།"
 
@@ -10783,41 +10783,41 @@ msgid "Edit Object"
 msgstr "དངོས་པོ་ཞུན་དག་འབད།"
 
 #. Create the areas
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:117
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:147
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:251
-msgid "Use Gimp Guides"
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:117
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:147
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:251
+msgid "Use Ligma Guides"
 msgstr "ཇིམཔི་ ལམ་སྟོན་པ་ལག་ལེན་འཐབ།"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:160
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:160
 msgid "Al_ternate"
 msgstr "ཐབས་གཞན།(_t)"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:165
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:165
 msgid "A_ll"
 msgstr "ཆ་མཉམ།"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:169
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:169
 msgid "Add Additional Guides"
 msgstr "ལམ་སྟོན་པ་ ཧེང་བཀལ་ཁ་སྐོང་རྐྱབས།"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:177
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:177
 msgid "L_eft border"
 msgstr "གཡོན་གྱི་མཐའ་མཚམས།"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:181
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:181
 msgid "_Right border"
 msgstr "གཡས་ཀྱི་མཐའ་མཚམས།"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:185
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:185
 msgid "_Upper border"
 msgstr "ལྟག་གི་མཐའ་མཚམས།"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:189
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:189
 msgid "Lo_wer border"
 msgstr "འོག་གི་མཐའ་མཚམས།"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:197
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:197
 msgid "_Base URL:"
 msgstr "གཞི་རྟེན་ ཡུ་ཨཱར་ཨེལ:(_B)"
 
@@ -11246,7 +11246,7 @@ msgid "Grid Settings..."
 msgstr "གི་རིཊི་གི་སྒྲིག་སྟངས་ཚུ།"
 
 #: ../plug-ins/imagemap/imap_menu.c:203
-msgid "Use GIMP Guides..."
+msgid "Use LIGMA Guides..."
 msgstr "ཇི་ཨའི་ཨེམ་པི་ ལམ་སྟོན་པ་ལག་ལེན་འཐབ།"
 
 #: ../plug-ins/imagemap/imap_menu.c:205
@@ -11463,7 +11463,7 @@ msgid "According to the EXIF data, this image is rotated."
 msgstr "ཨི་ཨེགསི་ཨའི་ཨེཕ་གི་གནད་སྡུད་དང་འཁྲིལཝ་ད་ གཟུགས་བརྙན་དེ་བསྒྱིར་བཏང་ནུག"
 
 #: ../plug-ins/jpeg/jpeg-exif.c:380
-msgid "Would you like GIMP to rotate it into the standard orientation?"
+msgid "Would you like LIGMA to rotate it into the standard orientation?"
 msgstr "ཁྱོད་ཀྱིས་ཇི་ཨའི་ཨེམ་པི་དེ་ ཕྱོགས་ཚད་ལྡན་ནང་ལུ་ བསྒྱིར་དགོཔ་ཨིན་ན?"
 
 #: ../plug-ins/jpeg/jpeg-load.c:232
@@ -12259,7 +12259,7 @@ msgstr "གནད་སྡུད་ཅིག་ཡང་འཛིན་བཟུ
 
 #: ../plug-ins/xjt/xjt.c:485
 #: ../plug-ins/xjt/xjt.c:503
-msgid "GIMP compressed XJT image"
+msgid "LIGMA compressed XJT image"
 msgstr "ཇི་ཨའི་ཨེམ་པི་གིས་ ཨེགསི་ཇེ་ཊི་གཟུགས་བརྙན་དེ་ཨེབ་བཙུགས་འབད་ནུག"
 
 #: ../plug-ins/xjt/xjt.c:724
@@ -12628,17 +12628,17 @@ msgstr "འཛོལ་བ:ཨེགསི་ཇེ་ཊི་ རྒྱུ་�
 #~ msgstr "དཔར་འཕྲུལ་གསརཔ་ངེས་འཛིན་འབད།"
 #~ msgid "Enter the name you wish to give this logical printer"
 #~ msgstr "གཏན་ཚིག་ཅན་གྱི་དཔར་འཕྲུལ་ལུ་འབྱིན་དགོ་མནོ་མི་ མིང་བཙུགས།"
-#~ msgid "About Gimp-Print "
+#~ msgid "About Ligma-Print "
 #~ msgstr "ཇིམཔི་གི་སྐོར་ལས-དཔར་བསྐྲུན།"
-#~ msgid "Gimp-Print Version "
+#~ msgid "Ligma-Print Version "
 #~ msgstr "ཇིམཔི-ཐོན་རིམ་དཔར་བསྐྲུན་འབད།"
 #~ msgid ""
 #~ "\n"
 #~ "\n"
 #~ "Copyright (C) 1997-2001 Michael Sweet, Robert Krawitz,\n"
-#~ "and the rest of the Gimp-Print Development Team.\n"
+#~ "and the rest of the Ligma-Print Development Team.\n"
 #~ "\n"
-#~ "Please visit our web site at http://gimp-print.sourceforge.net.\n"
+#~ "Please visit our web site at http://ligma-print.sourceforge.net.\n"
 #~ "\n"
 #~ "This program is free software; you can redistribute it and/or modify\n"
 #~ "it under the terms of the GNU General Public License as published by\n"
@@ -12660,7 +12660,7 @@ msgstr "འཛོལ་བ:ཨེགསི་ཇེ་ཊི་ རྒྱུ་�
 #~ "འདྲ་བཤུས་དབང་ཆ་(སི་)༡༩༩༧-༢༠༠༡ མའི་ཅཡིལི་་སུཡིཊི་ རོ་བརཊི་ ཀརྭ་ཝིཛི།\n"
 #~ "དང་ཇིམཔི་-དཔར་བསྐྲུན་ གོང་འཕེལ་གྱི་རུ་ཚན་ལྷག་ལུས།\n"
 #~ "\n"
-#~ "ང་བཅས་ཀྱི་ཝེབ་ས་ཁོངས་http://gimp-print.sourceforge.net.ནང་ལུ་ བལྟ་སྤྱོད་མཛད་གནང་།\n"
+#~ "ང་བཅས་ཀྱི་ཝེབ་ས་ཁོངས་http://ligma-print.sourceforge.net.ནང་ལུ་ བལྟ་སྤྱོད་མཛད་གནང་།\n"
 #~ "\n"
 #~ "ལས་རིམ་འདི་རང་དབང་གི་མཉེན་ཆས་ཨིན་ ཁྱོད་ཀྱིས་འདི་ལོག་བགོ་བཀྲམ་འབད་ནི་དང་/ཡང་ན་ ལེགས་བཅོས་"
 #~ "འབད་ནི་ཚུ་\n"
@@ -12816,7 +12816,7 @@ msgstr "འཛོལ་བ:ཨེགསི་ཇེ་ཊི་ རྒྱུ་�
 #~ msgstr ""
 #~ "ཚོས་གཞིའི་ཚད་སྙོམས་ དཀར་མདངས་ ཚོན་མདངས་ མཐའ་ཚད་ དེ་ལས་ ཌི་ཐར་ ཨཱལ་གོ་རི་དམ་དེ་ བདེ་སྒྲིག་"
 #~ "འབད།"
-#~ msgid "Print the image using the gimp-print drivers"
+#~ msgid "Print the image using the ligma-print drivers"
 #~ msgstr "ཇིམཔི-དཔར་བསྐྲུན་འདྲེན་བྱེད་དེ་ ལག་ལེན་འཐབ་པའི་ཐོག་ལས་ གཞུགས་བརྙན་དཔར་བསྐྲུན་འབད།"
 #~ msgid "Colormap _Rotation..."
 #~ msgstr "ཚོས་གཞི་ཅན་གྱི་ས་ཁྲ་ བསྒྱ��ར་ནི།(_R)"

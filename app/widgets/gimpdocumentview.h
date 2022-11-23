@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpdocumentview.h
- * Copyright (C) 2001 Michael Natterer <mitch@gimp.org>
+ * ligmadocumentview.h
+ * Copyright (C) 2001 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,46 +18,46 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DOCUMENT_VIEW_H__
-#define __GIMP_DOCUMENT_VIEW_H__
+#ifndef __LIGMA_DOCUMENT_VIEW_H__
+#define __LIGMA_DOCUMENT_VIEW_H__
 
 
-#include "gimpcontainereditor.h"
+#include "ligmacontainereditor.h"
 
 
-#define GIMP_TYPE_DOCUMENT_VIEW            (gimp_document_view_get_type ())
-#define GIMP_DOCUMENT_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DOCUMENT_VIEW, GimpDocumentView))
-#define GIMP_DOCUMENT_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DOCUMENT_VIEW, GimpDocumentViewClass))
-#define GIMP_IS_DOCUMENT_VIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DOCUMENT_VIEW))
-#define GIMP_IS_DOCUMENT_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DOCUMENT_VIEW))
-#define GIMP_DOCUMENT_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DOCUMENT_VIEW, GimpDocumentViewClass))
+#define LIGMA_TYPE_DOCUMENT_VIEW            (ligma_document_view_get_type ())
+#define LIGMA_DOCUMENT_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_DOCUMENT_VIEW, LigmaDocumentView))
+#define LIGMA_DOCUMENT_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_DOCUMENT_VIEW, LigmaDocumentViewClass))
+#define LIGMA_IS_DOCUMENT_VIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_DOCUMENT_VIEW))
+#define LIGMA_IS_DOCUMENT_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_DOCUMENT_VIEW))
+#define LIGMA_DOCUMENT_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_DOCUMENT_VIEW, LigmaDocumentViewClass))
 
 
-typedef struct _GimpDocumentViewClass  GimpDocumentViewClass;
+typedef struct _LigmaDocumentViewClass  LigmaDocumentViewClass;
 
-struct _GimpDocumentView
+struct _LigmaDocumentView
 {
-  GimpContainerEditor  parent_instance;
+  LigmaContainerEditor  parent_instance;
 
   GtkWidget           *open_button;
   GtkWidget           *remove_button;
   GtkWidget           *refresh_button;
 };
 
-struct _GimpDocumentViewClass
+struct _LigmaDocumentViewClass
 {
-  GimpContainerEditorClass  parent_class;
+  LigmaContainerEditorClass  parent_class;
 };
 
 
-GType       gimp_document_view_get_type (void) G_GNUC_CONST;
+GType       ligma_document_view_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_document_view_new      (GimpViewType     view_type,
-                                         GimpContainer   *container,
-                                         GimpContext     *context,
+GtkWidget * ligma_document_view_new      (LigmaViewType     view_type,
+                                         LigmaContainer   *container,
+                                         LigmaContext     *context,
                                          gint             view_size,
                                          gint             view_border_width,
-                                         GimpMenuFactory *menu_factory);
+                                         LigmaMenuFactory *menu_factory);
 
 
-#endif  /*  __GIMP_DOCUMENT_VIEW_H__  */
+#endif  /*  __LIGMA_DOCUMENT_VIEW_H__  */

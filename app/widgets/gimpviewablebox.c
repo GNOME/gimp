@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1999 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,99 +20,99 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "config/gimpconfig-utils.h"
+#include "config/ligmaconfig-utils.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontainer.h"
-#include "core/gimpcontext.h"
-#include "core/gimpdatafactory.h"
+#include "core/ligma.h"
+#include "core/ligmacontainer.h"
+#include "core/ligmacontext.h"
+#include "core/ligmadatafactory.h"
 
-#include "gimpcontainerentry.h"
-#include "gimpdialogfactory.h"
-#include "gimppropwidgets.h"
-#include "gimpview.h"
-#include "gimpviewablebutton.h"
-#include "gimpviewablebox.h"
-#include "gimpviewrenderergradient.h"
-#include "gimpwidgets-utils.h"
-#include "gimpwindowstrategy.h"
+#include "ligmacontainerentry.h"
+#include "ligmadialogfactory.h"
+#include "ligmapropwidgets.h"
+#include "ligmaview.h"
+#include "ligmaviewablebutton.h"
+#include "ligmaviewablebox.h"
+#include "ligmaviewrenderergradient.h"
+#include "ligmawidgets-utils.h"
+#include "ligmawindowstrategy.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /*  local function prototypes  */
 
-static GtkWidget * gimp_viewable_box_new       (GimpContainer *container,
-                                                GimpContext   *context,
+static GtkWidget * ligma_viewable_box_new       (LigmaContainer *container,
+                                                LigmaContext   *context,
                                                 const gchar   *label,
                                                 gint           spacing,
-                                                GimpViewType   view_type,
-                                                GimpViewSize   button_view_size,
-                                                GimpViewSize   view_size,
+                                                LigmaViewType   view_type,
+                                                LigmaViewSize   button_view_size,
+                                                LigmaViewSize   view_size,
                                                 const gchar   *dialog_identifier,
                                                 const gchar   *dialog_icon_name,
                                                 const gchar   *dialog_tooltip,
                                                 const gchar   *editor_id,
                                                 const gchar   *editor_tooltip);
 static GtkWidget * view_props_connect          (GtkWidget     *box,
-                                                GimpContext   *context,
+                                                LigmaContext   *context,
                                                 const gchar   *view_type_prop,
                                                 const gchar   *view_size_prop);
-static void   gimp_viewable_box_edit_clicked   (GtkWidget          *widget,
-                                                GimpViewableButton *button);
-static void   gimp_gradient_box_reverse_notify (GObject       *object,
+static void   ligma_viewable_box_edit_clicked   (GtkWidget          *widget,
+                                                LigmaViewableButton *button);
+static void   ligma_gradient_box_reverse_notify (GObject       *object,
                                                 GParamSpec    *pspec,
-                                                GimpView      *view);
-static void   gimp_gradient_box_blend_notify   (GObject       *object,
+                                                LigmaView      *view);
+static void   ligma_gradient_box_blend_notify   (GObject       *object,
                                                 GParamSpec    *pspec,
-                                                GimpView      *view);
+                                                LigmaView      *view);
 
 
 /*  brush boxes  */
 
 static GtkWidget *
-brush_box_new (GimpContainer *container,
-               GimpContext   *context,
+brush_box_new (LigmaContainer *container,
+               LigmaContext   *context,
                const gchar   *label,
                gint           spacing,
-               GimpViewType   view_type,
-               GimpViewSize   view_size,
+               LigmaViewType   view_type,
+               LigmaViewSize   view_size,
                const gchar   *editor_id,
                const gchar   *editor_tooltip)
 {
   if (! container)
-    container = gimp_data_factory_get_container (context->gimp->brush_factory);
+    container = ligma_data_factory_get_container (context->ligma->brush_factory);
 
-  return gimp_viewable_box_new (container, context, label, spacing,
-                                view_type, GIMP_VIEW_SIZE_SMALL, view_size,
-                                "gimp-brush-grid|gimp-brush-list",
-                                GIMP_ICON_BRUSH,
+  return ligma_viewable_box_new (container, context, label, spacing,
+                                view_type, LIGMA_VIEW_SIZE_SMALL, view_size,
+                                "ligma-brush-grid|ligma-brush-list",
+                                LIGMA_ICON_BRUSH,
                                 _("Open the brush selection dialog"),
                                 editor_id, editor_tooltip);
 }
 
 GtkWidget *
-gimp_brush_box_new (GimpContainer *container,
-                    GimpContext   *context,
+ligma_brush_box_new (LigmaContainer *container,
+                    LigmaContext   *context,
                     const gchar   *label,
                     gint           spacing)
 {
-  g_return_val_if_fail (container == NULL || GIMP_IS_CONTAINER (container),
+  g_return_val_if_fail (container == NULL || LIGMA_IS_CONTAINER (container),
                         NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
 
   return brush_box_new (container, context, label, spacing,
-                        GIMP_VIEW_TYPE_GRID, GIMP_VIEW_SIZE_SMALL,
+                        LIGMA_VIEW_TYPE_GRID, LIGMA_VIEW_SIZE_SMALL,
                         NULL, NULL);
 }
 
 GtkWidget *
-gimp_prop_brush_box_new (GimpContainer *container,
-                         GimpContext   *context,
+ligma_prop_brush_box_new (LigmaContainer *container,
+                         LigmaContext   *context,
                          const gchar   *label,
                          gint           spacing,
                          const gchar   *view_type_prop,
@@ -120,12 +120,12 @@ gimp_prop_brush_box_new (GimpContainer *container,
                          const gchar   *editor_id,
                          const gchar   *editor_tooltip)
 {
-  GimpViewType view_type;
-  GimpViewSize view_size;
+  LigmaViewType view_type;
+  LigmaViewSize view_size;
 
-  g_return_val_if_fail (container == NULL || GIMP_IS_CONTAINER (container),
+  g_return_val_if_fail (container == NULL || LIGMA_IS_CONTAINER (container),
                         NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
 
   g_object_get (context,
                 view_type_prop, &view_type,
@@ -143,44 +143,44 @@ gimp_prop_brush_box_new (GimpContainer *container,
 /*  dynamics boxes  */
 
 static GtkWidget *
-dynamics_box_new (GimpContainer *container,
-                  GimpContext   *context,
+dynamics_box_new (LigmaContainer *container,
+                  LigmaContext   *context,
                   const gchar   *label,
                   gint           spacing,
-                  GimpViewType   view_type,
-                  GimpViewSize   view_size,
+                  LigmaViewType   view_type,
+                  LigmaViewSize   view_size,
                   const gchar   *editor_id,
                   const gchar   *editor_tooltip)
 {
   if (! container)
-    container = gimp_data_factory_get_container (context->gimp->dynamics_factory);
+    container = ligma_data_factory_get_container (context->ligma->dynamics_factory);
 
-  return gimp_viewable_box_new (container, context, label, spacing,
-                                view_type, GIMP_VIEW_SIZE_SMALL, view_size,
-                                "gimp-dynamics-list|gimp-dynamics-grid",
-                                GIMP_ICON_DYNAMICS,
+  return ligma_viewable_box_new (container, context, label, spacing,
+                                view_type, LIGMA_VIEW_SIZE_SMALL, view_size,
+                                "ligma-dynamics-list|ligma-dynamics-grid",
+                                LIGMA_ICON_DYNAMICS,
                                 _("Open the dynamics selection dialog"),
                                 editor_id, editor_tooltip);
 }
 
 GtkWidget *
-gimp_dynamics_box_new (GimpContainer *container,
-                       GimpContext   *context,
+ligma_dynamics_box_new (LigmaContainer *container,
+                       LigmaContext   *context,
                        const gchar   *label,
                        gint           spacing)
 {
-  g_return_val_if_fail (container == NULL || GIMP_IS_CONTAINER (container),
+  g_return_val_if_fail (container == NULL || LIGMA_IS_CONTAINER (container),
                         NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
 
   return dynamics_box_new (container, context, label, spacing,
-                           GIMP_VIEW_TYPE_LIST, GIMP_VIEW_SIZE_SMALL,
+                           LIGMA_VIEW_TYPE_LIST, LIGMA_VIEW_SIZE_SMALL,
                            NULL, NULL);
 }
 
 GtkWidget *
-gimp_prop_dynamics_box_new (GimpContainer *container,
-                            GimpContext   *context,
+ligma_prop_dynamics_box_new (LigmaContainer *container,
+                            LigmaContext   *context,
                             const gchar   *label,
                             gint           spacing,
                             const gchar   *view_type_prop,
@@ -188,12 +188,12 @@ gimp_prop_dynamics_box_new (GimpContainer *container,
                             const gchar   *editor_id,
                             const gchar   *editor_tooltip)
 {
-  GimpViewType view_type;
-  GimpViewSize view_size;
+  LigmaViewType view_type;
+  LigmaViewSize view_size;
 
-  g_return_val_if_fail (container == NULL || GIMP_IS_CONTAINER (container),
+  g_return_val_if_fail (container == NULL || LIGMA_IS_CONTAINER (container),
                         NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
 
   g_object_get (context,
                 view_type_prop, &view_type,
@@ -212,52 +212,52 @@ gimp_prop_dynamics_box_new (GimpContainer *container,
 /*  brush boxes  */
 
 static GtkWidget *
-mybrush_box_new (GimpContainer *container,
-                 GimpContext   *context,
+mybrush_box_new (LigmaContainer *container,
+                 LigmaContext   *context,
                  const gchar   *label,
                  gint           spacing,
-                 GimpViewType   view_type,
-                 GimpViewSize   view_size)
+                 LigmaViewType   view_type,
+                 LigmaViewSize   view_size)
 {
   if (! container)
-    container = gimp_data_factory_get_container (context->gimp->mybrush_factory);
+    container = ligma_data_factory_get_container (context->ligma->mybrush_factory);
 
-  return gimp_viewable_box_new (container, context, label, spacing,
-                                view_type, GIMP_VIEW_SIZE_LARGE, view_size,
-                                "gimp-mypaint-brush-grid|gimp-mypaint-brush-list",
-                                GIMP_ICON_BRUSH,
+  return ligma_viewable_box_new (container, context, label, spacing,
+                                view_type, LIGMA_VIEW_SIZE_LARGE, view_size,
+                                "ligma-mypaint-brush-grid|ligma-mypaint-brush-list",
+                                LIGMA_ICON_BRUSH,
                                 _("Open the MyPaint brush selection dialog"),
                                 NULL, NULL);
 }
 
 GtkWidget *
-gimp_mybrush_box_new (GimpContainer *container,
-                      GimpContext   *context,
+ligma_mybrush_box_new (LigmaContainer *container,
+                      LigmaContext   *context,
                       const gchar   *label,
                       gint           spacing)
 {
-  g_return_val_if_fail (container == NULL || GIMP_IS_CONTAINER (container),
+  g_return_val_if_fail (container == NULL || LIGMA_IS_CONTAINER (container),
                         NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
 
   return mybrush_box_new (container, context, label, spacing,
-                          GIMP_VIEW_TYPE_GRID, GIMP_VIEW_SIZE_LARGE);
+                          LIGMA_VIEW_TYPE_GRID, LIGMA_VIEW_SIZE_LARGE);
 }
 
 GtkWidget *
-gimp_prop_mybrush_box_new (GimpContainer *container,
-                           GimpContext   *context,
+ligma_prop_mybrush_box_new (LigmaContainer *container,
+                           LigmaContext   *context,
                            const gchar   *label,
                            gint           spacing,
                            const gchar   *view_type_prop,
                            const gchar   *view_size_prop)
 {
-  GimpViewType view_type = GIMP_VIEW_TYPE_GRID;
-  GimpViewSize view_size = GIMP_VIEW_SIZE_LARGE;
+  LigmaViewType view_type = LIGMA_VIEW_TYPE_GRID;
+  LigmaViewSize view_size = LIGMA_VIEW_SIZE_LARGE;
 
-  g_return_val_if_fail (container == NULL || GIMP_IS_CONTAINER (container),
+  g_return_val_if_fail (container == NULL || LIGMA_IS_CONTAINER (container),
                         NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
 
   if (view_type_prop && view_size_prop)
     g_object_get (context,
@@ -275,52 +275,52 @@ gimp_prop_mybrush_box_new (GimpContainer *container,
 /*  pattern boxes  */
 
 static GtkWidget *
-pattern_box_new (GimpContainer *container,
-                 GimpContext   *context,
+pattern_box_new (LigmaContainer *container,
+                 LigmaContext   *context,
                  const gchar   *label,
                  gint           spacing,
-                 GimpViewType   view_type,
-                 GimpViewSize   view_size)
+                 LigmaViewType   view_type,
+                 LigmaViewSize   view_size)
 {
   if (! container)
-    container = gimp_data_factory_get_container (context->gimp->pattern_factory);
+    container = ligma_data_factory_get_container (context->ligma->pattern_factory);
 
-  return gimp_viewable_box_new (container, context, label, spacing,
-                                view_type, GIMP_VIEW_SIZE_SMALL, view_size,
-                                "gimp-pattern-grid|gimp-pattern-list",
-                                GIMP_ICON_PATTERN,
+  return ligma_viewable_box_new (container, context, label, spacing,
+                                view_type, LIGMA_VIEW_SIZE_SMALL, view_size,
+                                "ligma-pattern-grid|ligma-pattern-list",
+                                LIGMA_ICON_PATTERN,
                                 _("Open the pattern selection dialog"),
                                 NULL, NULL);
 }
 
 GtkWidget *
-gimp_pattern_box_new (GimpContainer *container,
-                      GimpContext   *context,
+ligma_pattern_box_new (LigmaContainer *container,
+                      LigmaContext   *context,
                       const gchar   *label,
                       gint           spacing)
 {
-  g_return_val_if_fail (container == NULL || GIMP_IS_CONTAINER (container),
+  g_return_val_if_fail (container == NULL || LIGMA_IS_CONTAINER (container),
                         NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
 
   return pattern_box_new (container, context, label, spacing,
-                          GIMP_VIEW_TYPE_GRID, GIMP_VIEW_SIZE_SMALL);
+                          LIGMA_VIEW_TYPE_GRID, LIGMA_VIEW_SIZE_SMALL);
 }
 
 GtkWidget *
-gimp_prop_pattern_box_new (GimpContainer *container,
-                           GimpContext   *context,
+ligma_prop_pattern_box_new (LigmaContainer *container,
+                           LigmaContext   *context,
                            const gchar   *label,
                            gint           spacing,
                            const gchar   *view_type_prop,
                            const gchar   *view_size_prop)
 {
-  GimpViewType view_type;
-  GimpViewSize view_size;
+  LigmaViewType view_type;
+  LigmaViewSize view_size;
 
-  g_return_val_if_fail (container == NULL || GIMP_IS_CONTAINER (container),
+  g_return_val_if_fail (container == NULL || LIGMA_IS_CONTAINER (container),
                         NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
 
   g_object_get (context,
                 view_type_prop, &view_type,
@@ -337,12 +337,12 @@ gimp_prop_pattern_box_new (GimpContainer *container,
 /*  gradient boxes  */
 
 static GtkWidget *
-gradient_box_new (GimpContainer *container,
-                  GimpContext   *context,
+gradient_box_new (LigmaContainer *container,
+                  LigmaContext   *context,
                   const gchar   *label,
                   gint           spacing,
-                  GimpViewType   view_type,
-                  GimpViewSize   view_size,
+                  LigmaViewType   view_type,
+                  LigmaViewSize   view_size,
                   const gchar   *reverse_prop,
                   const gchar   *blend_color_space_prop,
                   const gchar   *editor_id,
@@ -353,12 +353,12 @@ gradient_box_new (GimpContainer *container,
   GList     *children;
 
   if (! container)
-    container = gimp_data_factory_get_container (context->gimp->gradient_factory);
+    container = ligma_data_factory_get_container (context->ligma->gradient_factory);
 
-  hbox = gimp_viewable_box_new (container, context, label, spacing,
-                                view_type, GIMP_VIEW_SIZE_SMALL, view_size,
-                                "gimp-gradient-list|gimp-gradient-grid",
-                                GIMP_ICON_GRADIENT,
+  hbox = ligma_viewable_box_new (container, context, label, spacing,
+                                view_type, LIGMA_VIEW_SIZE_SMALL, view_size,
+                                "ligma-gradient-list|ligma-gradient-grid",
+                                LIGMA_ICON_GRADIENT,
                                 _("Open the gradient selection dialog"),
                                 editor_id, editor_tooltip);
 
@@ -366,7 +366,7 @@ gradient_box_new (GimpContainer *container,
   button = children->data;
   g_list_free (children);
 
-  GIMP_VIEWABLE_BUTTON (button)->button_view_size = GIMP_VIEW_SIZE_SMALL;
+  LIGMA_VIEWABLE_BUTTON (button)->button_view_size = LIGMA_VIEW_SIZE_SMALL;
 
   if (reverse_prop)
     {
@@ -375,18 +375,18 @@ gradient_box_new (GimpContainer *container,
       GtkWidget *image;
       gchar     *signal_name;
 
-      toggle = gimp_prop_check_button_new (G_OBJECT (context), reverse_prop,
+      toggle = ligma_prop_check_button_new (G_OBJECT (context), reverse_prop,
                                            NULL);
       gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (toggle), FALSE);
       gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
       gtk_box_reorder_child (GTK_BOX (hbox), toggle, 1);
       gtk_widget_show (toggle);
 
-      gimp_help_set_help_data (toggle, _("Reverse"), NULL);
+      ligma_help_set_help_data (toggle, _("Reverse"), NULL);
 
-      image = gtk_image_new_from_icon_name (GIMP_ICON_OBJECT_FLIP_HORIZONTAL,
+      image = gtk_image_new_from_icon_name (LIGMA_ICON_OBJECT_FLIP_HORIZONTAL,
                                             GTK_ICON_SIZE_MENU);
-      /* gimp_prop_check_button_new() adds the property nick as label of
+      /* ligma_prop_check_button_new() adds the property nick as label of
        * the button by default. */
       gtk_container_remove (GTK_CONTAINER (toggle),
                             gtk_bin_get_child (GTK_BIN (toggle)));
@@ -397,13 +397,13 @@ gradient_box_new (GimpContainer *container,
 
       signal_name = g_strconcat ("notify::", reverse_prop, NULL);
       g_signal_connect_object (context, signal_name,
-                               G_CALLBACK (gimp_gradient_box_reverse_notify),
+                               G_CALLBACK (ligma_gradient_box_reverse_notify),
                                G_OBJECT (view), 0);
       g_free (signal_name);
 
-      gimp_gradient_box_reverse_notify (G_OBJECT (context),
+      ligma_gradient_box_reverse_notify (G_OBJECT (context),
                                         NULL,
-                                        GIMP_VIEW (view));
+                                        LIGMA_VIEW (view));
     }
 
   if (blend_color_space_prop)
@@ -415,39 +415,39 @@ gradient_box_new (GimpContainer *container,
 
       signal_name = g_strconcat ("notify::", blend_color_space_prop, NULL);
       g_signal_connect_object (context, signal_name,
-                               G_CALLBACK (gimp_gradient_box_blend_notify),
+                               G_CALLBACK (ligma_gradient_box_blend_notify),
                                G_OBJECT (view), 0);
       g_free (signal_name);
 
-      gimp_gradient_box_blend_notify (G_OBJECT (context),
+      ligma_gradient_box_blend_notify (G_OBJECT (context),
                                       NULL,
-                                      GIMP_VIEW (view));
+                                      LIGMA_VIEW (view));
     }
 
   return hbox;
 }
 
 GtkWidget *
-gimp_gradient_box_new (GimpContainer *container,
-                       GimpContext   *context,
+ligma_gradient_box_new (LigmaContainer *container,
+                       LigmaContext   *context,
                        const gchar   *label,
                        gint           spacing,
                        const gchar   *reverse_prop,
                        const gchar   *blend_color_space_prop)
 {
-  g_return_val_if_fail (container == NULL || GIMP_IS_CONTAINER (container),
+  g_return_val_if_fail (container == NULL || LIGMA_IS_CONTAINER (container),
                         NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
 
   return gradient_box_new (container, context, label, spacing,
-                           GIMP_VIEW_TYPE_LIST, GIMP_VIEW_SIZE_LARGE,
+                           LIGMA_VIEW_TYPE_LIST, LIGMA_VIEW_SIZE_LARGE,
                            reverse_prop, blend_color_space_prop,
                            NULL, NULL);
 }
 
 GtkWidget *
-gimp_prop_gradient_box_new (GimpContainer *container,
-                            GimpContext   *context,
+ligma_prop_gradient_box_new (LigmaContainer *container,
+                            LigmaContext   *context,
                             const gchar   *label,
                             gint           spacing,
                             const gchar   *view_type_prop,
@@ -457,12 +457,12 @@ gimp_prop_gradient_box_new (GimpContainer *container,
                             const gchar   *editor_id,
                             const gchar   *editor_tooltip)
 {
-  GimpViewType view_type;
-  GimpViewSize view_size;
+  LigmaViewType view_type;
+  LigmaViewSize view_size;
 
-  g_return_val_if_fail (container == NULL || GIMP_IS_CONTAINER (container),
+  g_return_val_if_fail (container == NULL || LIGMA_IS_CONTAINER (container),
                         NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
 
   g_object_get (context,
                 view_type_prop, &view_type,
@@ -482,44 +482,44 @@ gimp_prop_gradient_box_new (GimpContainer *container,
 /*  palette boxes  */
 
 static GtkWidget *
-palette_box_new (GimpContainer *container,
-                 GimpContext   *context,
+palette_box_new (LigmaContainer *container,
+                 LigmaContext   *context,
                  const gchar   *label,
                  gint           spacing,
-                 GimpViewType   view_type,
-                 GimpViewSize   view_size,
+                 LigmaViewType   view_type,
+                 LigmaViewSize   view_size,
                  const gchar   *editor_id,
                  const gchar   *editor_tooltip)
 {
   if (! container)
-    container = gimp_data_factory_get_container (context->gimp->palette_factory);
+    container = ligma_data_factory_get_container (context->ligma->palette_factory);
 
-  return gimp_viewable_box_new (container, context, label, spacing,
-                                view_type, GIMP_VIEW_SIZE_MEDIUM, view_size,
-                                "gimp-palette-list|gimp-palette-grid",
-                                GIMP_ICON_PALETTE,
+  return ligma_viewable_box_new (container, context, label, spacing,
+                                view_type, LIGMA_VIEW_SIZE_MEDIUM, view_size,
+                                "ligma-palette-list|ligma-palette-grid",
+                                LIGMA_ICON_PALETTE,
                                 _("Open the palette selection dialog"),
                                 editor_id, editor_tooltip);
 }
 
 GtkWidget *
-gimp_palette_box_new (GimpContainer *container,
-                      GimpContext   *context,
+ligma_palette_box_new (LigmaContainer *container,
+                      LigmaContext   *context,
                       const gchar   *label,
                       gint           spacing)
 {
-  g_return_val_if_fail (container == NULL || GIMP_IS_CONTAINER (container),
+  g_return_val_if_fail (container == NULL || LIGMA_IS_CONTAINER (container),
                         NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
 
   return palette_box_new (container, context, label, spacing,
-                          GIMP_VIEW_TYPE_LIST, GIMP_VIEW_SIZE_MEDIUM,
+                          LIGMA_VIEW_TYPE_LIST, LIGMA_VIEW_SIZE_MEDIUM,
                           NULL, NULL);
 }
 
 GtkWidget *
-gimp_prop_palette_box_new (GimpContainer *container,
-                           GimpContext   *context,
+ligma_prop_palette_box_new (LigmaContainer *container,
+                           LigmaContext   *context,
                            const gchar   *label,
                            gint           spacing,
                            const gchar   *view_type_prop,
@@ -527,12 +527,12 @@ gimp_prop_palette_box_new (GimpContainer *container,
                            const gchar   *editor_id,
                            const gchar   *editor_tooltip)
 {
-  GimpViewType view_type;
-  GimpViewSize view_size;
+  LigmaViewType view_type;
+  LigmaViewSize view_size;
 
-  g_return_val_if_fail (container == NULL || GIMP_IS_CONTAINER (container),
+  g_return_val_if_fail (container == NULL || LIGMA_IS_CONTAINER (container),
                         NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
 
   g_object_get (context,
                 view_type_prop, &view_type,
@@ -550,52 +550,52 @@ gimp_prop_palette_box_new (GimpContainer *container,
 /*  font boxes  */
 
 static GtkWidget *
-font_box_new (GimpContainer *container,
-              GimpContext   *context,
+font_box_new (LigmaContainer *container,
+              LigmaContext   *context,
               const gchar   *label,
               gint           spacing,
-              GimpViewType   view_type,
-              GimpViewSize   view_size)
+              LigmaViewType   view_type,
+              LigmaViewSize   view_size)
 {
   if (! container)
-    container = gimp_data_factory_get_container (context->gimp->font_factory);
+    container = ligma_data_factory_get_container (context->ligma->font_factory);
 
-  return gimp_viewable_box_new (container, context, label, spacing,
-                                view_type, GIMP_VIEW_SIZE_SMALL, view_size,
-                                "gimp-font-list|gimp-font-grid",
-                                GIMP_ICON_FONT,
+  return ligma_viewable_box_new (container, context, label, spacing,
+                                view_type, LIGMA_VIEW_SIZE_SMALL, view_size,
+                                "ligma-font-list|ligma-font-grid",
+                                LIGMA_ICON_FONT,
                                 _("Open the font selection dialog"),
                                 NULL, NULL);
 }
 
 GtkWidget *
-gimp_font_box_new (GimpContainer *container,
-                   GimpContext   *context,
+ligma_font_box_new (LigmaContainer *container,
+                   LigmaContext   *context,
                    const gchar   *label,
                    gint           spacing)
 {
-  g_return_val_if_fail (container == NULL || GIMP_IS_CONTAINER (container),
+  g_return_val_if_fail (container == NULL || LIGMA_IS_CONTAINER (container),
                         NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
 
   return font_box_new (container, context, label, spacing,
-                       GIMP_VIEW_TYPE_LIST, GIMP_VIEW_SIZE_SMALL);
+                       LIGMA_VIEW_TYPE_LIST, LIGMA_VIEW_SIZE_SMALL);
 }
 
 GtkWidget *
-gimp_prop_font_box_new (GimpContainer *container,
-                        GimpContext   *context,
+ligma_prop_font_box_new (LigmaContainer *container,
+                        LigmaContext   *context,
                         const gchar   *label,
                         gint           spacing,
                         const gchar   *view_type_prop,
                         const gchar   *view_size_prop)
 {
-  GimpViewType view_type;
-  GimpViewSize view_size;
+  LigmaViewType view_type;
+  LigmaViewSize view_size;
 
-  g_return_val_if_fail (container == NULL || GIMP_IS_CONTAINER (container),
+  g_return_val_if_fail (container == NULL || LIGMA_IS_CONTAINER (container),
                         NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
 
   g_object_get (context,
                 view_type_prop, &view_type,
@@ -612,13 +612,13 @@ gimp_prop_font_box_new (GimpContainer *container,
 /*  private functions  */
 
 static GtkWidget *
-gimp_viewable_box_new (GimpContainer *container,
-                       GimpContext   *context,
+ligma_viewable_box_new (LigmaContainer *container,
+                       LigmaContext   *context,
                        const gchar   *label,
                        gint           spacing,
-                       GimpViewType   view_type,
-                       GimpViewSize   button_view_size,
-                       GimpViewSize   view_size,
+                       LigmaViewType   view_type,
+                       LigmaViewSize   button_view_size,
+                       LigmaViewSize   view_size,
                        const gchar   *dialog_identifier,
                        const gchar   *dialog_icon_name,
                        const gchar   *dialog_tooltip,
@@ -633,14 +633,14 @@ gimp_viewable_box_new (GimpContainer *container,
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, spacing);
 
-  button = gimp_viewable_button_new (container, context,
+  button = ligma_viewable_button_new (container, context,
                                      view_type, button_view_size, view_size, 1,
-                                     gimp_dialog_factory_get_singleton (),
+                                     ligma_dialog_factory_get_singleton (),
                                      dialog_identifier,
                                      dialog_icon_name,
                                      dialog_tooltip);
 
-  gimp_view_renderer_set_size_full (GIMP_VIEW (GIMP_VIEWABLE_BUTTON (button)->view)->renderer,
+  ligma_view_renderer_set_size_full (LIGMA_VIEW (LIGMA_VIEWABLE_BUTTON (button)->view)->renderer,
                                     button_view_size, button_view_size, 1);
 
   g_object_set_data (G_OBJECT (hbox), "viewable-button", button);
@@ -660,7 +660,7 @@ gimp_viewable_box_new (GimpContainer *container,
       gtk_widget_show (l);
     }
 
-  entry = gimp_container_entry_new (container, context, view_size, 1);
+  entry = ligma_container_entry_new (container, context, view_size, 1);
 
   /*  set a silly smally size request on the entry to disable
    *  GtkEntry's minimal width of 150 pixels.
@@ -680,21 +680,21 @@ gimp_viewable_box_new (GimpContainer *container,
       gtk_widget_show (edit_button);
 
       if (editor_tooltip)
-        gimp_help_set_help_data (edit_button, editor_tooltip, NULL);
+        ligma_help_set_help_data (edit_button, editor_tooltip, NULL);
 
-      image = gtk_image_new_from_icon_name (GIMP_ICON_EDIT,
+      image = gtk_image_new_from_icon_name (LIGMA_ICON_EDIT,
                                             GTK_ICON_SIZE_BUTTON);
       gtk_widget_set_valign (image, GTK_ALIGN_END);
       gtk_container_add (GTK_CONTAINER (edit_button), image);
       gtk_widget_show (image);
 
       g_object_set_data_full (G_OBJECT (button),
-                              "gimp-viewable-box-editor",
+                              "ligma-viewable-box-editor",
                               g_strdup (editor_id),
                               (GDestroyNotify) g_free);
 
       g_signal_connect (edit_button, "clicked",
-                        G_CALLBACK (gimp_viewable_box_edit_clicked),
+                        G_CALLBACK (ligma_viewable_box_edit_clicked),
                         button);
     }
 
@@ -703,18 +703,18 @@ gimp_viewable_box_new (GimpContainer *container,
 
 static GtkWidget *
 view_props_connect (GtkWidget   *box,
-                    GimpContext *context,
+                    LigmaContext *context,
                     const gchar *view_type_prop,
                     const gchar *view_size_prop)
 {
   GtkWidget *button = g_object_get_data (G_OBJECT (box), "viewable-button");
 
   if (view_type_prop)
-    gimp_config_connect_full (G_OBJECT (context), G_OBJECT (button),
+    ligma_config_connect_full (G_OBJECT (context), G_OBJECT (button),
                               view_type_prop, "popup-view-type");
 
   if (view_size_prop)
-    gimp_config_connect_full (G_OBJECT (context), G_OBJECT (button),
+    ligma_config_connect_full (G_OBJECT (context), G_OBJECT (button),
                               view_size_prop, "popup-view-size");
 
   gtk_widget_show (box);
@@ -723,48 +723,48 @@ view_props_connect (GtkWidget   *box,
 }
 
 static void
-gimp_viewable_box_edit_clicked (GtkWidget          *widget,
-                                GimpViewableButton *button)
+ligma_viewable_box_edit_clicked (GtkWidget          *widget,
+                                LigmaViewableButton *button)
 {
   const gchar *editor_id = g_object_get_data (G_OBJECT (button),
-                                              "gimp-viewable-box-editor");
+                                              "ligma-viewable-box-editor");
 
-  gimp_window_strategy_show_dockable_dialog (GIMP_WINDOW_STRATEGY (gimp_get_window_strategy (button->context->gimp)),
-                                             button->context->gimp,
-                                             gimp_dialog_factory_get_singleton (),
-                                             gimp_widget_get_monitor (widget),
+  ligma_window_strategy_show_dockable_dialog (LIGMA_WINDOW_STRATEGY (ligma_get_window_strategy (button->context->ligma)),
+                                             button->context->ligma,
+                                             ligma_dialog_factory_get_singleton (),
+                                             ligma_widget_get_monitor (widget),
                                              editor_id);
 }
 
 static void
-gimp_gradient_box_reverse_notify (GObject    *object,
+ligma_gradient_box_reverse_notify (GObject    *object,
                                   GParamSpec *pspec,
-                                  GimpView   *view)
+                                  LigmaView   *view)
 {
-  GimpViewRendererGradient *rendergrad;
+  LigmaViewRendererGradient *rendergrad;
   gboolean                  reverse;
 
-  rendergrad = GIMP_VIEW_RENDERER_GRADIENT (view->renderer);
+  rendergrad = LIGMA_VIEW_RENDERER_GRADIENT (view->renderer);
 
   g_object_get (object, "gradient-reverse", &reverse, NULL);
 
-  gimp_view_renderer_gradient_set_reverse (rendergrad, reverse);
+  ligma_view_renderer_gradient_set_reverse (rendergrad, reverse);
 }
 
 static void
-gimp_gradient_box_blend_notify (GObject    *object,
+ligma_gradient_box_blend_notify (GObject    *object,
                                 GParamSpec *pspec,
-                                GimpView   *view)
+                                LigmaView   *view)
 {
-  GimpViewRendererGradient    *rendergrad;
-  GimpGradientBlendColorSpace  blend_color_space;
+  LigmaViewRendererGradient    *rendergrad;
+  LigmaGradientBlendColorSpace  blend_color_space;
 
-  rendergrad = GIMP_VIEW_RENDERER_GRADIENT (view->renderer);
+  rendergrad = LIGMA_VIEW_RENDERER_GRADIENT (view->renderer);
 
   g_object_get (object,
                 "gradient-blend-color-space", &blend_color_space,
                 NULL);
 
-  gimp_view_renderer_gradient_set_blend_color_space (rendergrad,
+  ligma_view_renderer_gradient_set_blend_color_space (rendergrad,
                                                      blend_color_space);
 }

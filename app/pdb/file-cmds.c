@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-2003 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -27,114 +27,114 @@
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "pdb-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpimage.h"
-#include "core/gimplayer.h"
-#include "core/gimpparamspecs.h"
+#include "core/ligma.h"
+#include "core/ligmaimage.h"
+#include "core/ligmalayer.h"
+#include "core/ligmaparamspecs.h"
 #include "file/file-open.h"
 #include "file/file-save.h"
 #include "file/file-utils.h"
-#include "plug-in/gimppluginmanager-file.h"
+#include "plug-in/ligmapluginmanager-file.h"
 
-#include "gimppdb.h"
-#include "gimpprocedure.h"
+#include "ligmapdb.h"
+#include "ligmaprocedure.h"
 #include "internal-procs.h"
 
 
-static GimpValueArray *
-file_load_invoker (GimpProcedure         *procedure,
-                   Gimp                  *gimp,
-                   GimpContext           *context,
-                   GimpProgress          *progress,
-                   const GimpValueArray  *args,
+static LigmaValueArray *
+file_load_invoker (LigmaProcedure         *procedure,
+                   Ligma                  *ligma,
+                   LigmaContext           *context,
+                   LigmaProgress          *progress,
+                   const LigmaValueArray  *args,
                    GError               **error)
 {
-  GimpValueArray      *new_args;
-  GimpValueArray      *return_vals;
-  GimpPlugInProcedure *file_proc;
-  GimpProcedure       *proc;
+  LigmaValueArray      *new_args;
+  LigmaValueArray      *return_vals;
+  LigmaPlugInProcedure *file_proc;
+  LigmaProcedure       *proc;
   GFile               *file;
   gint                 i;
 
-  file = g_value_get_object (gimp_value_array_index (args, 1));
+  file = g_value_get_object (ligma_value_array_index (args, 1));
 
   if (! file)
-    return gimp_procedure_get_return_values (procedure, FALSE,
+    return ligma_procedure_get_return_values (procedure, FALSE,
                                              error ? *error : NULL);
 
-  file_proc = gimp_plug_in_manager_file_procedure_find (gimp->plug_in_manager,
-                                                        GIMP_FILE_PROCEDURE_GROUP_OPEN,
+  file_proc = ligma_plug_in_manager_file_procedure_find (ligma->plug_in_manager,
+                                                        LIGMA_FILE_PROCEDURE_GROUP_OPEN,
                                                         file, error);
 
   if (! file_proc)
-    return gimp_procedure_get_return_values (procedure, FALSE,
+    return ligma_procedure_get_return_values (procedure, FALSE,
                                              error ? *error : NULL);
 
-  proc = GIMP_PROCEDURE (file_proc);
+  proc = LIGMA_PROCEDURE (file_proc);
 
-  new_args = gimp_procedure_get_arguments (proc);
+  new_args = ligma_procedure_get_arguments (proc);
 
-  g_value_transform (gimp_value_array_index (args, 0),
-                     gimp_value_array_index (new_args, 0));
-  g_value_transform (gimp_value_array_index (args, 1),
-                     gimp_value_array_index (new_args, 1));
+  g_value_transform (ligma_value_array_index (args, 0),
+                     ligma_value_array_index (new_args, 0));
+  g_value_transform (ligma_value_array_index (args, 1),
+                     ligma_value_array_index (new_args, 1));
 
   for (i = 2; i < proc->num_args; i++)
     if (G_IS_PARAM_SPEC_STRING (proc->args[i]))
-      g_value_set_static_string (gimp_value_array_index (new_args, i), "");
+      g_value_set_static_string (ligma_value_array_index (new_args, i), "");
 
   return_vals =
-    gimp_pdb_execute_procedure_by_name_args (gimp->pdb,
+    ligma_pdb_execute_procedure_by_name_args (ligma->pdb,
                                              context, progress, error,
-                                             gimp_object_get_name (proc),
+                                             ligma_object_get_name (proc),
                                              new_args);
 
-  gimp_value_array_unref (new_args);
+  ligma_value_array_unref (new_args);
 
-  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) ==
-      GIMP_PDB_SUCCESS)
+  if (g_value_get_enum (ligma_value_array_index (return_vals, 0)) ==
+      LIGMA_PDB_SUCCESS)
     {
-      if (gimp_value_array_length (return_vals) > 1 &&
-          GIMP_VALUE_HOLDS_IMAGE (gimp_value_array_index (return_vals, 1)))
+      if (ligma_value_array_length (return_vals) > 1 &&
+          LIGMA_VALUE_HOLDS_IMAGE (ligma_value_array_index (return_vals, 1)))
         {
-          GimpImage *image =
-            g_value_get_object (gimp_value_array_index (return_vals, 1));
-          gimp_image_set_load_proc (image, file_proc);
+          LigmaImage *image =
+            g_value_get_object (ligma_value_array_index (return_vals, 1));
+          ligma_image_set_load_proc (image, file_proc);
         }
     }
 
   return return_vals;
 }
 
-static GimpValueArray *
-file_load_layer_invoker (GimpProcedure         *procedure,
-                         Gimp                  *gimp,
-                         GimpContext           *context,
-                         GimpProgress          *progress,
-                         const GimpValueArray  *args,
+static LigmaValueArray *
+file_load_layer_invoker (LigmaProcedure         *procedure,
+                         Ligma                  *ligma,
+                         LigmaContext           *context,
+                         LigmaProgress          *progress,
+                         const LigmaValueArray  *args,
                          GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gint run_mode;
-  GimpImage *image;
+  LigmaImage *image;
   GFile *file;
-  GimpLayer *layer = NULL;
+  LigmaLayer *layer = NULL;
 
-  run_mode = g_value_get_enum (gimp_value_array_index (args, 0));
-  image = g_value_get_object (gimp_value_array_index (args, 1));
-  file = g_value_get_object (gimp_value_array_index (args, 2));
+  run_mode = g_value_get_enum (ligma_value_array_index (args, 0));
+  image = g_value_get_object (ligma_value_array_index (args, 1));
+  file = g_value_get_object (ligma_value_array_index (args, 2));
 
   if (success)
     {
       GList             *layers;
-      GimpPDBStatusType  status;
+      LigmaPDBStatusType  status;
 
-      layers = file_open_layers (gimp, context, progress,
+      layers = file_open_layers (ligma, context, progress,
                                  image, FALSE,
                                  file, run_mode, NULL, &status, error);
 
@@ -147,41 +147,41 @@ file_load_layer_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_object (gimp_value_array_index (return_vals, 1), layer);
+    g_value_set_object (ligma_value_array_index (return_vals, 1), layer);
 
   return return_vals;
 }
 
-static GimpValueArray *
-file_load_layers_invoker (GimpProcedure         *procedure,
-                          Gimp                  *gimp,
-                          GimpContext           *context,
-                          GimpProgress          *progress,
-                          const GimpValueArray  *args,
+static LigmaValueArray *
+file_load_layers_invoker (LigmaProcedure         *procedure,
+                          Ligma                  *ligma,
+                          LigmaContext           *context,
+                          LigmaProgress          *progress,
+                          const LigmaValueArray  *args,
                           GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gint run_mode;
-  GimpImage *image;
+  LigmaImage *image;
   GFile *file;
   gint num_layers = 0;
-  GimpLayer **layers = NULL;
+  LigmaLayer **layers = NULL;
 
-  run_mode = g_value_get_enum (gimp_value_array_index (args, 0));
-  image = g_value_get_object (gimp_value_array_index (args, 1));
-  file = g_value_get_object (gimp_value_array_index (args, 2));
+  run_mode = g_value_get_enum (ligma_value_array_index (args, 0));
+  image = g_value_get_object (ligma_value_array_index (args, 1));
+  file = g_value_get_object (ligma_value_array_index (args, 2));
 
   if (success)
     {
       GList             *layer_list;
-      GimpPDBStatusType  status;
+      LigmaPDBStatusType  status;
 
-      layer_list = file_open_layers (gimp, context, progress,
+      layer_list = file_open_layers (ligma, context, progress,
                                      image, FALSE,
                                      file, run_mode, NULL, &status, error);
 
@@ -192,7 +192,7 @@ file_load_layers_invoker (GimpProcedure         *procedure,
 
           num_layers = g_list_length (layer_list);
 
-          layers = g_new (GimpLayer *, num_layers);
+          layers = g_new (LigmaLayer *, num_layers);
 
           for (i = 0, list = layer_list;
                i < num_layers;
@@ -207,95 +207,95 @@ file_load_layers_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
     {
-      g_value_set_int (gimp_value_array_index (return_vals, 1), num_layers);
-      gimp_value_take_object_array (gimp_value_array_index (return_vals, 2), GIMP_TYPE_LAYER, (GObject **) layers, num_layers);
+      g_value_set_int (ligma_value_array_index (return_vals, 1), num_layers);
+      ligma_value_take_object_array (ligma_value_array_index (return_vals, 2), LIGMA_TYPE_LAYER, (GObject **) layers, num_layers);
     }
 
   return return_vals;
 }
 
-static GimpValueArray *
-file_save_invoker (GimpProcedure         *procedure,
-                   Gimp                  *gimp,
-                   GimpContext           *context,
-                   GimpProgress          *progress,
-                   const GimpValueArray  *args,
+static LigmaValueArray *
+file_save_invoker (LigmaProcedure         *procedure,
+                   Ligma                  *ligma,
+                   LigmaContext           *context,
+                   LigmaProgress          *progress,
+                   const LigmaValueArray  *args,
                    GError               **error)
 {
-  GimpValueArray      *new_args;
-  GimpValueArray      *return_vals;
-  GimpPlugInProcedure *file_proc;
+  LigmaValueArray      *new_args;
+  LigmaValueArray      *return_vals;
+  LigmaPlugInProcedure *file_proc;
   GFile               *file;
-  GimpProcedure       *proc;
+  LigmaProcedure       *proc;
   gint                 i;
 
-  file = g_value_get_object (gimp_value_array_index (args, 4));
+  file = g_value_get_object (ligma_value_array_index (args, 4));
 
-  file_proc = gimp_plug_in_manager_file_procedure_find (gimp->plug_in_manager,
-                                                        GIMP_FILE_PROCEDURE_GROUP_SAVE,
+  file_proc = ligma_plug_in_manager_file_procedure_find (ligma->plug_in_manager,
+                                                        LIGMA_FILE_PROCEDURE_GROUP_SAVE,
                                                         file, NULL);
 
   if (! file_proc)
-    file_proc = gimp_plug_in_manager_file_procedure_find (gimp->plug_in_manager,
-                                                          GIMP_FILE_PROCEDURE_GROUP_EXPORT,
+    file_proc = ligma_plug_in_manager_file_procedure_find (ligma->plug_in_manager,
+                                                          LIGMA_FILE_PROCEDURE_GROUP_EXPORT,
                                                           file, error);
 
   if (! file_proc)
-    return gimp_procedure_get_return_values (procedure, FALSE,
+    return ligma_procedure_get_return_values (procedure, FALSE,
                                              error ? *error : NULL);
 
-  proc = GIMP_PROCEDURE (file_proc);
+  proc = LIGMA_PROCEDURE (file_proc);
 
-  new_args = gimp_procedure_get_arguments (proc);
+  new_args = ligma_procedure_get_arguments (proc);
 
-  g_value_transform (gimp_value_array_index (args, 0),
-                     gimp_value_array_index (new_args, 0));
-  g_value_transform (gimp_value_array_index (args, 1),
-                     gimp_value_array_index (new_args, 1));
-  g_value_transform (gimp_value_array_index (args, 2),
-                     gimp_value_array_index (new_args, 2));
-  g_value_transform (gimp_value_array_index (args, 3),
-                     gimp_value_array_index (new_args, 3));
-  g_value_transform (gimp_value_array_index (args, 4),
-                     gimp_value_array_index (new_args, 4));
+  g_value_transform (ligma_value_array_index (args, 0),
+                     ligma_value_array_index (new_args, 0));
+  g_value_transform (ligma_value_array_index (args, 1),
+                     ligma_value_array_index (new_args, 1));
+  g_value_transform (ligma_value_array_index (args, 2),
+                     ligma_value_array_index (new_args, 2));
+  g_value_transform (ligma_value_array_index (args, 3),
+                     ligma_value_array_index (new_args, 3));
+  g_value_transform (ligma_value_array_index (args, 4),
+                     ligma_value_array_index (new_args, 4));
 
   for (i = 5; i < proc->num_args; i++)
     if (G_IS_PARAM_SPEC_STRING (proc->args[i]))
-      g_value_set_static_string (gimp_value_array_index (new_args, i), "");
+      g_value_set_static_string (ligma_value_array_index (new_args, i), "");
 
   return_vals =
-    gimp_pdb_execute_procedure_by_name_args (gimp->pdb,
+    ligma_pdb_execute_procedure_by_name_args (ligma->pdb,
                                              context, progress, error,
-                                             gimp_object_get_name (proc),
+                                             ligma_object_get_name (proc),
                                              new_args);
 
-  gimp_value_array_unref (new_args);
+  ligma_value_array_unref (new_args);
 
   return return_vals;
 }
 
-static GimpValueArray *
-file_load_thumbnail_invoker (GimpProcedure         *procedure,
-                             Gimp                  *gimp,
-                             GimpContext           *context,
-                             GimpProgress          *progress,
-                             const GimpValueArray  *args,
+static LigmaValueArray *
+file_load_thumbnail_invoker (LigmaProcedure         *procedure,
+                             Ligma                  *ligma,
+                             LigmaContext           *context,
+                             LigmaProgress          *progress,
+                             const LigmaValueArray  *args,
                              GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   GFile *file;
   gint width = 0;
   gint height = 0;
   gint thumb_data_count = 0;
   guint8 *thumb_data = NULL;
 
-  file = g_value_get_object (gimp_value_array_index (args, 0));
+  file = g_value_get_object (ligma_value_array_index (args, 0));
 
   if (success)
     {
@@ -315,301 +315,301 @@ file_load_thumbnail_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
     {
-      g_value_set_int (gimp_value_array_index (return_vals, 1), width);
-      g_value_set_int (gimp_value_array_index (return_vals, 2), height);
-      g_value_set_int (gimp_value_array_index (return_vals, 3), thumb_data_count);
-      gimp_value_take_uint8_array (gimp_value_array_index (return_vals, 4), thumb_data, thumb_data_count);
+      g_value_set_int (ligma_value_array_index (return_vals, 1), width);
+      g_value_set_int (ligma_value_array_index (return_vals, 2), height);
+      g_value_set_int (ligma_value_array_index (return_vals, 3), thumb_data_count);
+      ligma_value_take_uint8_array (ligma_value_array_index (return_vals, 4), thumb_data, thumb_data_count);
     }
 
   return return_vals;
 }
 
-static GimpValueArray *
-file_save_thumbnail_invoker (GimpProcedure         *procedure,
-                             Gimp                  *gimp,
-                             GimpContext           *context,
-                             GimpProgress          *progress,
-                             const GimpValueArray  *args,
+static LigmaValueArray *
+file_save_thumbnail_invoker (LigmaProcedure         *procedure,
+                             Ligma                  *ligma,
+                             LigmaContext           *context,
+                             LigmaProgress          *progress,
+                             const LigmaValueArray  *args,
                              GError               **error)
 {
   gboolean success = TRUE;
-  GimpImage *image;
+  LigmaImage *image;
   GFile *file;
 
-  image = g_value_get_object (gimp_value_array_index (args, 0));
-  file = g_value_get_object (gimp_value_array_index (args, 1));
+  image = g_value_get_object (ligma_value_array_index (args, 0));
+  file = g_value_get_object (ligma_value_array_index (args, 1));
 
   if (success)
     {
       success = file_utils_save_thumbnail (image, file);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
 void
-register_file_procs (GimpPDB *pdb)
+register_file_procs (LigmaPDB *pdb)
 {
-  GimpProcedure *procedure;
+  LigmaProcedure *procedure;
 
   /*
-   * gimp-file-load
+   * ligma-file-load
    */
-  procedure = gimp_procedure_new (file_load_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-file-load");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (file_load_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-file-load");
+  ligma_procedure_set_static_help (procedure,
                                   "Loads an image file by invoking the right load handler.",
                                   "This procedure invokes the correct file load handler using magic if possible, and falling back on the file's extension and/or prefix if not.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Josh MacDonald",
                                          "Josh MacDonald",
                                          "1997");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_enum ("run-mode",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_enum ("run-mode",
                                                      "run mode",
                                                      "The run mode",
-                                                     GIMP_TYPE_RUN_MODE,
-                                                     GIMP_RUN_INTERACTIVE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_param_spec_enum_exclude_value (GIMP_PARAM_SPEC_ENUM (procedure->args[0]),
-                                      GIMP_RUN_WITH_LAST_VALS);
-  gimp_procedure_add_argument (procedure,
+                                                     LIGMA_TYPE_RUN_MODE,
+                                                     LIGMA_RUN_INTERACTIVE,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_param_spec_enum_exclude_value (LIGMA_PARAM_SPEC_ENUM (procedure->args[0]),
+                                      LIGMA_RUN_WITH_LAST_VALS);
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_object ("file",
                                                     "file",
                                                     "The file to load",
                                                     G_TYPE_FILE,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_image ("image",
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_image ("image",
                                                           "image",
                                                           "The output image",
                                                           FALSE,
-                                                          GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                          LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-file-load-layer
+   * ligma-file-load-layer
    */
-  procedure = gimp_procedure_new (file_load_layer_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-file-load-layer");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (file_load_layer_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-file-load-layer");
+  ligma_procedure_set_static_help (procedure,
                                   "Loads an image file as a layer for an existing image.",
-                                  "This procedure behaves like the file-load procedure but opens the specified image as a layer for an existing image. The returned layer needs to be added to the existing image with 'gimp-image-insert-layer'.",
+                                  "This procedure behaves like the file-load procedure but opens the specified image as a layer for an existing image. The returned layer needs to be added to the existing image with 'ligma-image-insert-layer'.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Sven Neumann <sven@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Sven Neumann <sven@ligma.org>",
                                          "Sven Neumann",
                                          "2005");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_enum ("run-mode",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_enum ("run-mode",
                                                      "run mode",
                                                      "The run mode",
-                                                     GIMP_TYPE_RUN_MODE,
-                                                     GIMP_RUN_INTERACTIVE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_param_spec_enum_exclude_value (GIMP_PARAM_SPEC_ENUM (procedure->args[0]),
-                                      GIMP_RUN_WITH_LAST_VALS);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                     LIGMA_TYPE_RUN_MODE,
+                                                     LIGMA_RUN_INTERACTIVE,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_param_spec_enum_exclude_value (LIGMA_PARAM_SPEC_ENUM (procedure->args[0]),
+                                      LIGMA_RUN_WITH_LAST_VALS);
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Destination image",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_object ("file",
                                                     "file",
                                                     "The file to load",
                                                     G_TYPE_FILE,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_layer ("layer",
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_layer ("layer",
                                                           "layer",
                                                           "The layer created when loading the image file",
                                                           FALSE,
-                                                          GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                          LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-file-load-layers
+   * ligma-file-load-layers
    */
-  procedure = gimp_procedure_new (file_load_layers_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-file-load-layers");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (file_load_layers_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-file-load-layers");
+  ligma_procedure_set_static_help (procedure,
                                   "Loads an image file as layers for an existing image.",
-                                  "This procedure behaves like the file-load procedure but opens the specified image as layers for an existing image. The returned layers needs to be added to the existing image with 'gimp-image-insert-layer'.",
+                                  "This procedure behaves like the file-load procedure but opens the specified image as layers for an existing image. The returned layers needs to be added to the existing image with 'ligma-image-insert-layer'.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2006");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_enum ("run-mode",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_enum ("run-mode",
                                                      "run mode",
                                                      "The run mode",
-                                                     GIMP_TYPE_RUN_MODE,
-                                                     GIMP_RUN_INTERACTIVE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_param_spec_enum_exclude_value (GIMP_PARAM_SPEC_ENUM (procedure->args[0]),
-                                      GIMP_RUN_WITH_LAST_VALS);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                     LIGMA_TYPE_RUN_MODE,
+                                                     LIGMA_RUN_INTERACTIVE,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_param_spec_enum_exclude_value (LIGMA_PARAM_SPEC_ENUM (procedure->args[0]),
+                                      LIGMA_RUN_WITH_LAST_VALS);
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Destination image",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_object ("file",
                                                     "file",
                                                     "The file to load",
                                                     G_TYPE_FILE,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_int ("num-layers",
                                                      "num layers",
                                                      "The number of loaded layers",
                                                      0, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_object_array ("layers",
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_object_array ("layers",
                                                                  "layers",
                                                                  "The list of loaded layers",
-                                                                 GIMP_TYPE_LAYER,
-                                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                                 LIGMA_TYPE_LAYER,
+                                                                 LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-file-save
+   * ligma-file-save
    */
-  procedure = gimp_procedure_new (file_save_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-file-save");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (file_save_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-file-save");
+  ligma_procedure_set_static_help (procedure,
                                   "Saves a file by extension.",
                                   "This procedure invokes the correct file save handler according to the file's extension and/or prefix.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Josh MacDonald",
                                          "Josh MacDonald",
                                          "1997");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("run-mode",
                                                   "run mode",
                                                   "The run mode",
-                                                  GIMP_TYPE_RUN_MODE,
-                                                  GIMP_RUN_INTERACTIVE,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                  LIGMA_TYPE_RUN_MODE,
+                                                  LIGMA_RUN_INTERACTIVE,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "Input image",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("num-drawables",
                                                  "num drawables",
                                                  "The number of drawables to save",
                                                  1, G_MAXINT32, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_object_array ("drawables",
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_object_array ("drawables",
                                                              "drawables",
                                                              "Drawables to save",
-                                                             GIMP_TYPE_ITEM,
-                                                             GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
-  gimp_procedure_add_argument (procedure,
+                                                             LIGMA_TYPE_ITEM,
+                                                             LIGMA_PARAM_READWRITE | LIGMA_PARAM_NO_VALIDATE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_object ("file",
                                                     "file",
                                                     "The file to save the image in",
                                                     G_TYPE_FILE,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-file-load-thumbnail
+   * ligma-file-load-thumbnail
    */
-  procedure = gimp_procedure_new (file_load_thumbnail_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-file-load-thumbnail");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (file_load_thumbnail_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-file-load-thumbnail");
+  ligma_procedure_set_static_help (procedure,
                                   "Loads the thumbnail for a file.",
-                                  "This procedure tries to load a thumbnail that belongs to the given file. The returned data is an array of colordepth 3 (RGB), regardless of the image type. Width and height of the thumbnail are also returned. Don't use this function if you need a thumbnail of an already opened image, use 'gimp-image-thumbnail' instead.",
+                                  "This procedure tries to load a thumbnail that belongs to the given file. The returned data is an array of colordepth 3 (RGB), regardless of the image type. Width and height of the thumbnail are also returned. Don't use this function if you need a thumbnail of an already opened image, use 'ligma-image-thumbnail' instead.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Adam D. Moss, Sven Neumann",
                                          "Adam D. Moss, Sven Neumann",
                                          "1999-2003");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_object ("file",
                                                     "file",
                                                     "The file that owns the thumbnail to load",
                                                     G_TYPE_FILE,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_int ("width",
                                                      "width",
                                                      "The width of the thumbnail",
                                                      G_MININT32, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_int ("height",
                                                      "height",
                                                      "The height of the thumbnail",
                                                      G_MININT32, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_int ("thumb-data-count",
                                                      "thumb data count",
                                                      "The number of bytes in thumbnail data",
                                                      0, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_uint8_array ("thumb-data",
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_uint8_array ("thumb-data",
                                                                 "thumb data",
                                                                 "The thumbnail data",
-                                                                GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                                LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-file-save-thumbnail
+   * ligma-file-save-thumbnail
    */
-  procedure = gimp_procedure_new (file_save_thumbnail_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-file-save-thumbnail");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (file_save_thumbnail_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-file-save-thumbnail");
+  ligma_procedure_set_static_help (procedure,
                                   "Saves a thumbnail for the given image",
                                   "This procedure saves a thumbnail for the given image according to the Free Desktop Thumbnail Managing Standard. The thumbnail is saved so that it belongs to the given file. This means you have to save the image under this name first, otherwise this procedure will fail. This procedure may become useful if you want to explicitly save a thumbnail with a file.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Josh MacDonald",
                                          "Josh MacDonald",
                                          "1997");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "The image",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_object ("file",
                                                     "file",
                                                     "The file the thumbnail belongs to",
                                                     G_TYPE_FILE,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

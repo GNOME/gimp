@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcriticaldialog.h
- * Copyright (C) 2018  Jehan <jehan@gimp.org>
+ * ligmacriticaldialog.h
+ * Copyright (C) 2018  Jehan <jehan@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,24 +18,24 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CRITICAL_DIALOG_H__
-#define __GIMP_CRITICAL_DIALOG_H__
+#ifndef __LIGMA_CRITICAL_DIALOG_H__
+#define __LIGMA_CRITICAL_DIALOG_H__
 
 G_BEGIN_DECLS
 
 
-#define GIMP_TYPE_CRITICAL_DIALOG            (gimp_critical_dialog_get_type ())
-#define GIMP_CRITICAL_DIALOG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CRITICAL_DIALOG, GimpCriticalDialog))
-#define GIMP_CRITICAL_DIALOG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CRITICAL_DIALOG, GimpCriticalDialogClass))
-#define GIMP_IS_CRITICAL_DIALOG(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CRITICAL_DIALOG))
-#define GIMP_IS_CRITICAL_DIALOG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CRITICAL_DIALOG))
-#define GIMP_CRITICAL_DIALOG_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CRITICAL_DIALOG, GimpCriticalDialogClass))
+#define LIGMA_TYPE_CRITICAL_DIALOG            (ligma_critical_dialog_get_type ())
+#define LIGMA_CRITICAL_DIALOG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_CRITICAL_DIALOG, LigmaCriticalDialog))
+#define LIGMA_CRITICAL_DIALOG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_CRITICAL_DIALOG, LigmaCriticalDialogClass))
+#define LIGMA_IS_CRITICAL_DIALOG(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_CRITICAL_DIALOG))
+#define LIGMA_IS_CRITICAL_DIALOG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_CRITICAL_DIALOG))
+#define LIGMA_CRITICAL_DIALOG_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_CRITICAL_DIALOG, LigmaCriticalDialogClass))
 
 
-typedef struct _GimpCriticalDialog       GimpCriticalDialog;
-typedef struct _GimpCriticalDialogClass  GimpCriticalDialogClass;
+typedef struct _LigmaCriticalDialog       LigmaCriticalDialog;
+typedef struct _LigmaCriticalDialogClass  LigmaCriticalDialogClass;
 
-struct _GimpCriticalDialog
+struct _LigmaCriticalDialog
 {
   GtkDialog        parent_instance;
 
@@ -52,18 +52,18 @@ struct _GimpCriticalDialog
   gchar           *release_date;
 };
 
-struct _GimpCriticalDialogClass
+struct _LigmaCriticalDialogClass
 {
   GtkDialogClass   parent_class;
 };
 
 
-GType       gimp_critical_dialog_get_type (void) G_GNUC_CONST;
+GType       ligma_critical_dialog_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_critical_dialog_new      (const gchar        *title,
+GtkWidget * ligma_critical_dialog_new      (const gchar        *title,
                                            const gchar        *last_version,
                                            gint64              release_timestamp);
-void        gimp_critical_dialog_add      (GtkWidget          *dialog,
+void        ligma_critical_dialog_add      (GtkWidget          *dialog,
                                            const gchar        *message,
                                            const gchar        *trace,
                                            gboolean            is_fatal,
@@ -73,4 +73,4 @@ void        gimp_critical_dialog_add      (GtkWidget          *dialog,
 
 G_END_DECLS
 
-#endif /* __GIMP_CRITICAL_DIALOG_H__ */
+#endif /* __LIGMA_CRITICAL_DIALOG_H__ */

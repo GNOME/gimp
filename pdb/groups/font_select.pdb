@@ -1,4 +1,4 @@
-# GIMP - The GNU Image Manipulation Program
+# LIGMA - The GNU Image Manipulation Program
 # Copyright (C) 1995 Spencer Kimball and Peter Mattis
 
 # This program is free software: you can redistribute it and/or modify
@@ -14,10 +14,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+# "Perlized" from C source by Manish Singh <yosh@ligma.org>
 
 sub fonts_popup {
-    $blurb = 'Invokes the Gimp font selection.';
+    $blurb = 'Invokes the Ligma font selection.';
     $help  = 'This procedure opens the font selection dialog.';
 
     &neo_pdb_misc('2003');
@@ -34,11 +34,11 @@ sub fonts_popup {
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp->no_interface ||
-      ! gimp_pdb_lookup_procedure (gimp->pdb, font_callback) ||
-      ! gimp_data_factory_data_wait (gimp->font_factory)     ||
-      ! gimp_pdb_dialog_new (gimp, context, progress,
-                             gimp_data_factory_get_container (gimp->font_factory),
+  if (ligma->no_interface ||
+      ! ligma_pdb_lookup_procedure (ligma->pdb, font_callback) ||
+      ! ligma_data_factory_data_wait (ligma->font_factory)     ||
+      ! ligma_pdb_dialog_new (ligma, context, progress,
+                             ligma_data_factory_get_container (ligma->font_factory),
                              popup_title, font_callback, initial_font,
                              NULL))
     success = FALSE;
@@ -61,10 +61,10 @@ sub fonts_close_popup {
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp->no_interface ||
-      ! gimp_pdb_lookup_procedure (gimp->pdb, font_callback) ||
-      ! gimp_pdb_dialog_close (gimp,
-                               gimp_data_factory_get_container (gimp->font_factory),
+  if (ligma->no_interface ||
+      ! ligma_pdb_lookup_procedure (ligma->pdb, font_callback) ||
+      ! ligma_pdb_dialog_close (ligma,
+                               ligma_data_factory_get_container (ligma->font_factory),
 			       font_callback))
     success = FALSE;
 }
@@ -88,11 +88,11 @@ sub fonts_set_popup {
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp->no_interface ||
-      ! gimp_pdb_lookup_procedure (gimp->pdb, font_callback) ||
-      ! gimp_data_factory_data_wait (gimp->font_factory)     ||
-      ! gimp_pdb_dialog_set (gimp,
-                             gimp_data_factory_get_container (gimp->font_factory),
+  if (ligma->no_interface ||
+      ! ligma_pdb_lookup_procedure (ligma->pdb, font_callback) ||
+      ! ligma_data_factory_data_wait (ligma->font_factory)     ||
+      ! ligma_pdb_dialog_set (ligma,
+                             ligma_data_factory_get_container (ligma->font_factory),
 			     font_callback, font_name,
                              NULL))
     success = FALSE;
@@ -102,8 +102,8 @@ CODE
 }
 
 
-@headers = qw("core/gimp.h"
-              "core/gimpdatafactory.h");
+@headers = qw("core/ligma.h"
+              "core/ligmadatafactory.h");
 
 @procs = qw(fonts_popup
             fonts_close_popup
@@ -112,7 +112,7 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Font UI';
-$doc_title = 'gimpfontselect';
+$doc_title = 'ligmafontselect';
 $doc_short_desc = 'Functions providing a font selection dialog.';
 $doc_long_desc = 'Functions providing a font selection dialog.';
 

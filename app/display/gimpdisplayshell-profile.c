@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,99 +20,99 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpmath/gimpmath.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmaconfig/ligmaconfig.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "display-types.h"
 
-#include "config/gimpcoreconfig.h"
+#include "config/ligmacoreconfig.h"
 
-#include "gegl/gimp-babl.h"
+#include "gegl/ligma-babl.h"
 
-#include "core/gimpimage.h"
-#include "core/gimpprojectable.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaprojectable.h"
 
-#include "gimpdisplay.h"
-#include "gimpdisplayshell.h"
-#include "gimpdisplayshell-actions.h"
-#include "gimpdisplayshell-filter.h"
-#include "gimpdisplayshell-profile.h"
+#include "ligmadisplay.h"
+#include "ligmadisplayshell.h"
+#include "ligmadisplayshell-actions.h"
+#include "ligmadisplayshell-filter.h"
+#include "ligmadisplayshell-profile.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /*  local function prototypes  */
 
-static void   gimp_display_shell_profile_free        (GimpDisplayShell *shell);
+static void   ligma_display_shell_profile_free        (LigmaDisplayShell *shell);
 
-static void   gimp_display_shell_color_config_notify (GimpColorConfig  *config,
+static void   ligma_display_shell_color_config_notify (LigmaColorConfig  *config,
                                                       const GParamSpec *pspec,
-                                                      GimpDisplayShell *shell);
+                                                      LigmaDisplayShell *shell);
 
 
 /*  public functions  */
 
 void
-gimp_display_shell_profile_init (GimpDisplayShell *shell)
+ligma_display_shell_profile_init (LigmaDisplayShell *shell)
 {
-  GimpColorConfig *color_config;
+  LigmaColorConfig *color_config;
 
-  color_config = GIMP_CORE_CONFIG (shell->display->config)->color_management;
+  color_config = LIGMA_CORE_CONFIG (shell->display->config)->color_management;
 
-  shell->color_config = gimp_config_duplicate (GIMP_CONFIG (color_config));
+  shell->color_config = ligma_config_duplicate (LIGMA_CONFIG (color_config));
 
   /* use after so we are called after the profile cache is invalidated
-   * in gimp_widget_get_color_transform()
+   * in ligma_widget_get_color_transform()
    */
   g_signal_connect_after (shell->color_config, "notify",
-                          G_CALLBACK (gimp_display_shell_color_config_notify),
+                          G_CALLBACK (ligma_display_shell_color_config_notify),
                           shell);
 }
 
 void
-gimp_display_shell_profile_finalize (GimpDisplayShell *shell)
+ligma_display_shell_profile_finalize (LigmaDisplayShell *shell)
 {
   g_clear_object (&shell->color_config);
 
-  gimp_display_shell_profile_free (shell);
+  ligma_display_shell_profile_free (shell);
 }
 
 void
-gimp_display_shell_profile_update (GimpDisplayShell *shell)
+ligma_display_shell_profile_update (LigmaDisplayShell *shell)
 {
-  GimpImage               *image;
-  GimpColorProfile        *src_profile;
+  LigmaImage               *image;
+  LigmaColorProfile        *src_profile;
   const Babl              *src_format;
-  GimpColorProfile        *filter_profile;
+  LigmaColorProfile        *filter_profile;
   const Babl              *filter_format;
   const Babl              *dest_format;
-  GimpColorProfile        *proof_profile;
-  GimpColorRenderingIntent simulation_intent =
-    GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC;
+  LigmaColorProfile        *proof_profile;
+  LigmaColorRenderingIntent simulation_intent =
+    LIGMA_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC;
   gboolean                 simulation_bpc    = FALSE;
 
-  gimp_display_shell_profile_free (shell);
+  ligma_display_shell_profile_free (shell);
 
-  image = gimp_display_get_image (shell->display);
+  image = ligma_display_get_image (shell->display);
 
   if (! image)
     return;
 
-  src_profile = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (shell));
+  src_profile = ligma_color_managed_get_color_profile (LIGMA_COLOR_MANAGED (shell));
 
   if (! src_profile)
     return;
 
-  proof_profile = gimp_color_managed_get_simulation_profile (GIMP_COLOR_MANAGED (image));
-  simulation_intent = gimp_color_managed_get_simulation_intent (GIMP_COLOR_MANAGED (image));
-  simulation_bpc = gimp_color_managed_get_simulation_bpc (GIMP_COLOR_MANAGED (image));
+  proof_profile = ligma_color_managed_get_simulation_profile (LIGMA_COLOR_MANAGED (image));
+  simulation_intent = ligma_color_managed_get_simulation_intent (LIGMA_COLOR_MANAGED (image));
+  simulation_bpc = ligma_color_managed_get_simulation_bpc (LIGMA_COLOR_MANAGED (image));
 
-  src_format = gimp_projectable_get_format (GIMP_PROJECTABLE (image));
+  src_format = ligma_projectable_get_format (LIGMA_PROJECTABLE (image));
 
-  if (gimp_display_shell_has_filter (shell))
+  if (ligma_display_shell_has_filter (shell))
     {
       filter_format  = shell->filter_format;
       filter_profile = shell->filter_profile;
@@ -123,7 +123,7 @@ gimp_display_shell_profile_update (GimpDisplayShell *shell)
       filter_profile = src_profile;
     }
 
-  if (! gimp_display_shell_profile_can_convert_to_u8 (shell))
+  if (! ligma_display_shell_profile_can_convert_to_u8 (shell))
     {
       dest_format = shell->filter_format;
     }
@@ -138,28 +138,28 @@ gimp_display_shell_profile_update (GimpDisplayShell *shell)
               "filter_profile: %s\n"
               "filter_format:  %s\n"
               "dest_format:    %s\n",
-              gimp_color_profile_get_label (src_profile),
+              ligma_color_profile_get_label (src_profile),
               babl_get_name (src_format),
-              gimp_color_profile_get_label (filter_profile),
+              ligma_color_profile_get_label (filter_profile),
               babl_get_name (filter_format),
               babl_get_name (dest_format));
 #endif
 
-  if (! gimp_color_transform_can_gegl_copy (src_profile, filter_profile))
+  if (! ligma_color_transform_can_gegl_copy (src_profile, filter_profile))
     {
       shell->filter_transform =
-        gimp_color_transform_new (src_profile,
+        ligma_color_transform_new (src_profile,
                                   src_format,
                                   filter_profile,
                                   filter_format,
-                                  GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
-                                  GIMP_COLOR_TRANSFORM_FLAGS_BLACK_POINT_COMPENSATION |
-                                  GIMP_COLOR_TRANSFORM_FLAGS_NOOPTIMIZE);
+                                  LIGMA_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                  LIGMA_COLOR_TRANSFORM_FLAGS_BLACK_POINT_COMPENSATION |
+                                  LIGMA_COLOR_TRANSFORM_FLAGS_NOOPTIMIZE);
     }
 
   shell->profile_transform =
-    gimp_widget_get_color_transform (gtk_widget_get_toplevel (GTK_WIDGET (shell)),
-                                     gimp_display_shell_get_color_config (shell),
+    ligma_widget_get_color_transform (gtk_widget_get_toplevel (GTK_WIDGET (shell)),
+                                     ligma_display_shell_get_color_config (shell),
                                      filter_profile,
                                      filter_format,
                                      dest_format,
@@ -189,28 +189,28 @@ gimp_display_shell_profile_update (GimpDisplayShell *shell)
 }
 
 gboolean
-gimp_display_shell_profile_can_convert_to_u8 (GimpDisplayShell *shell)
+ligma_display_shell_profile_can_convert_to_u8 (LigmaDisplayShell *shell)
 {
-  GimpImage *image = gimp_display_get_image (shell->display);
+  LigmaImage *image = ligma_display_get_image (shell->display);
 
   if (image)
     {
-      GimpComponentType component_type;
+      LigmaComponentType component_type;
 
-      if (! gimp_display_shell_has_filter (shell))
-        component_type = gimp_image_get_component_type (image);
+      if (! ligma_display_shell_has_filter (shell))
+        component_type = ligma_image_get_component_type (image);
       else
-        component_type = gimp_babl_format_get_component_type (shell->filter_format);
+        component_type = ligma_babl_format_get_component_type (shell->filter_format);
 
       switch (component_type)
         {
-        case GIMP_COMPONENT_TYPE_U8:
+        case LIGMA_COMPONENT_TYPE_U8:
 #if 0
           /* would like to convert directly for these too, but it
            * produces inferior results, see bug 750874
            */
-        case GIMP_COMPONENT_TYPE_U16:
-        case GIMP_COMPONENT_TYPE_U32:
+        case LIGMA_COMPONENT_TYPE_U16:
+        case LIGMA_COMPONENT_TYPE_U32:
 #endif
           return TRUE;
 
@@ -226,7 +226,7 @@ gimp_display_shell_profile_can_convert_to_u8 (GimpDisplayShell *shell)
 /*  private functions  */
 
 static void
-gimp_display_shell_profile_free (GimpDisplayShell *shell)
+ligma_display_shell_profile_free (LigmaDisplayShell *shell)
 {
   g_clear_object (&shell->profile_transform);
   g_clear_object (&shell->filter_transform);
@@ -236,9 +236,9 @@ gimp_display_shell_profile_free (GimpDisplayShell *shell)
 }
 
 static void
-gimp_display_shell_color_config_notify (GimpColorConfig  *config,
+ligma_display_shell_color_config_notify (LigmaColorConfig  *config,
                                         const GParamSpec *pspec,
-                                        GimpDisplayShell *shell)
+                                        LigmaDisplayShell *shell)
 {
   if (! strcmp (pspec->name, "mode")                                    ||
       ! strcmp (pspec->name, "display-rendering-intent")                ||
@@ -250,21 +250,21 @@ gimp_display_shell_color_config_notify (GimpColorConfig  *config,
       const gchar *action    = NULL;
 
 #define SET_SENSITIVE(action, sensitive) \
-      gimp_display_shell_set_action_sensitive (shell, action, sensitive);
+      ligma_display_shell_set_action_sensitive (shell, action, sensitive);
 
 #define SET_ACTIVE(action, active) \
-      gimp_display_shell_set_action_active (shell, action, active);
+      ligma_display_shell_set_action_active (shell, action, active);
 
-      switch (gimp_color_config_get_mode (config))
+      switch (ligma_color_config_get_mode (config))
         {
-        case GIMP_COLOR_MANAGEMENT_OFF:
+        case LIGMA_COLOR_MANAGEMENT_OFF:
           break;
 
-        case GIMP_COLOR_MANAGEMENT_DISPLAY:
+        case LIGMA_COLOR_MANAGEMENT_DISPLAY:
           managed = TRUE;
           break;
 
-        case GIMP_COLOR_MANAGEMENT_SOFTPROOF:
+        case LIGMA_COLOR_MANAGEMENT_SOFTPROOF:
           managed   = TRUE;
           softproof = TRUE;
           break;
@@ -273,21 +273,21 @@ gimp_display_shell_color_config_notify (GimpColorConfig  *config,
       SET_ACTIVE ("view-color-management-enable", managed);
       SET_ACTIVE ("view-color-management-softproof", softproof);
 
-      switch (gimp_color_config_get_display_intent (config))
+      switch (ligma_color_config_get_display_intent (config))
         {
-        case GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL:
+        case LIGMA_COLOR_RENDERING_INTENT_PERCEPTUAL:
           action = "view-display-intent-perceptual";
           break;
 
-        case GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC:
+        case LIGMA_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC:
           action = "view-display-intent-relative-colorimetric";
           break;
 
-        case GIMP_COLOR_RENDERING_INTENT_SATURATION:
+        case LIGMA_COLOR_RENDERING_INTENT_SATURATION:
           action = "view-display-intent-saturation";
           break;
 
-        case GIMP_COLOR_RENDERING_INTENT_ABSOLUTE_COLORIMETRIC:
+        case LIGMA_COLOR_RENDERING_INTENT_ABSOLUTE_COLORIMETRIC:
           action = "view-display-intent-absolute-colorimetric";
           break;
         }
@@ -301,11 +301,11 @@ gimp_display_shell_color_config_notify (GimpColorConfig  *config,
 
       SET_SENSITIVE ("view-display-black-point-compensation", managed);
       SET_ACTIVE    ("view-display-black-point-compensation",
-                     gimp_color_config_get_display_bpc (config));
+                     ligma_color_config_get_display_bpc (config));
       SET_SENSITIVE ("view-softproof-gamut-check", softproof);
       SET_ACTIVE    ("view-softproof-gamut-check",
-                     gimp_color_config_get_simulation_gamut_check (config));
+                     ligma_color_config_get_simulation_gamut_check (config));
     }
 
-  gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (shell));
+  ligma_color_managed_profile_changed (LIGMA_COLOR_MANAGED (shell));
 }

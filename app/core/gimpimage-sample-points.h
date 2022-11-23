@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,13 +15,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_SAMPLE_POINTS_H__
-#define __GIMP_IMAGE_SAMPLE_POINTS_H__
+#ifndef __LIGMA_IMAGE_SAMPLE_POINTS_H__
+#define __LIGMA_IMAGE_SAMPLE_POINTS_H__
 
 
 /*  public sample point adding API
  */
-GimpSamplePoint * gimp_image_add_sample_point_at_pos (GimpImage        *image,
+LigmaSamplePoint * ligma_image_add_sample_point_at_pos (LigmaImage        *image,
                                                       gint              x,
                                                       gint              y,
                                                       gboolean          push_undo);
@@ -30,31 +30,31 @@ GimpSamplePoint * gimp_image_add_sample_point_at_pos (GimpImage        *image,
  *  point's position and is publicly declared only to be used from
  *  undo
  */
-void              gimp_image_add_sample_point        (GimpImage       *image,
-                                                      GimpSamplePoint *sample_point,
+void              ligma_image_add_sample_point        (LigmaImage       *image,
+                                                      LigmaSamplePoint *sample_point,
                                                       gint             x,
                                                       gint             y);
 
-void              gimp_image_remove_sample_point     (GimpImage       *image,
-                                                      GimpSamplePoint *sample_point,
+void              ligma_image_remove_sample_point     (LigmaImage       *image,
+                                                      LigmaSamplePoint *sample_point,
                                                       gboolean         push_undo);
-void              gimp_image_move_sample_point       (GimpImage       *image,
-                                                      GimpSamplePoint *sample_point,
+void              ligma_image_move_sample_point       (LigmaImage       *image,
+                                                      LigmaSamplePoint *sample_point,
                                                       gint             x,
                                                       gint             y,
                                                       gboolean         push_undo);
-void              gimp_image_set_sample_point_pick_mode
-                                                     (GimpImage       *image,
-                                                      GimpSamplePoint *sample_point,
-                                                      GimpColorPickMode pick_mode,
+void              ligma_image_set_sample_point_pick_mode
+                                                     (LigmaImage       *image,
+                                                      LigmaSamplePoint *sample_point,
+                                                      LigmaColorPickMode pick_mode,
                                                       gboolean         push_undo);
 
-GList           * gimp_image_get_sample_points       (GimpImage       *image);
-GimpSamplePoint * gimp_image_get_sample_point        (GimpImage       *image,
+GList           * ligma_image_get_sample_points       (LigmaImage       *image);
+LigmaSamplePoint * ligma_image_get_sample_point        (LigmaImage       *image,
                                                       guint32          id);
-GimpSamplePoint * gimp_image_get_next_sample_point   (GimpImage       *image,
+LigmaSamplePoint * ligma_image_get_next_sample_point   (LigmaImage       *image,
                                                       guint32          id,
                                                       gboolean        *sample_point_found);
 
 
-#endif /* __GIMP_IMAGE_SAMPLE_POINTS_H__ */
+#endif /* __LIGMA_IMAGE_SAMPLE_POINTS_H__ */

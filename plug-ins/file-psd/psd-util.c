@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GIMP PSD Plug-in
+ * LIGMA PSD Plug-in
  * Copyright 2007 by John Marshall
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,12 +24,12 @@
 #include <errno.h>
 
 #include <glib/gstdio.h>
-#include <libgimp/gimp.h>
+#include <libligma/ligma.h>
 
 #include "psd.h"
 #include "psd-util.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 /*  Local constants  */
 #define MIN_RUN     3
@@ -39,9 +39,9 @@ typedef struct
 {
   const gchar   *name;
   const gchar   *psd_mode;
-  GimpLayerMode  gimp_mode;
+  LigmaLayerMode  ligma_mode;
   gboolean       exact; /* does the modes behave (more-or-less) the same in
-                         * Photoshop and in GIMP?
+                         * Photoshop and in LIGMA?
                          */
 } LayerModeMapping;
 
@@ -51,119 +51,119 @@ static const gchar * get_enum_value_nick (GType type,
 
 /*  Local variables  */
 
-/* mapping table between Photoshop and GIMP modes.  in case a mode matches more
+/* mapping table between Photoshop and LIGMA modes.  in case a mode matches more
  * than one entry (in either direction), the first entry wins.
  */
 static const LayerModeMapping layer_mode_map[] =
 {
-/*  Name             PSD     GIMP                                   Exact?  */
+/*  Name             PSD     LIGMA                                   Exact?  */
 
   /* Normal (ps3) */
-  { "Normal",        "norm", GIMP_LAYER_MODE_NORMAL,                TRUE },
-  { "Normal",        "norm", GIMP_LAYER_MODE_NORMAL_LEGACY,         TRUE },
+  { "Normal",        "norm", LIGMA_LAYER_MODE_NORMAL,                TRUE },
+  { "Normal",        "norm", LIGMA_LAYER_MODE_NORMAL_LEGACY,         TRUE },
 
   /* Dissolve (ps3) */
-  { "Dissolve",      "diss", GIMP_LAYER_MODE_DISSOLVE,              TRUE },
+  { "Dissolve",      "diss", LIGMA_LAYER_MODE_DISSOLVE,              TRUE },
 
   /* Multiply (ps3) */
-  { "Multiply",      "mul ", GIMP_LAYER_MODE_MULTIPLY,              TRUE },
-  { "Multiply",      "mul ", GIMP_LAYER_MODE_MULTIPLY_LEGACY,       TRUE },
+  { "Multiply",      "mul ", LIGMA_LAYER_MODE_MULTIPLY,              TRUE },
+  { "Multiply",      "mul ", LIGMA_LAYER_MODE_MULTIPLY_LEGACY,       TRUE },
 
   /* Screen (ps3) */
-  { "Screen",        "scrn", GIMP_LAYER_MODE_SCREEN,                TRUE },
-  { "Screen",        "scrn", GIMP_LAYER_MODE_SCREEN_LEGACY,         TRUE },
+  { "Screen",        "scrn", LIGMA_LAYER_MODE_SCREEN,                TRUE },
+  { "Screen",        "scrn", LIGMA_LAYER_MODE_SCREEN_LEGACY,         TRUE },
 
   /* Overlay (ps3) */
-  { "Overlay",       "over", GIMP_LAYER_MODE_OVERLAY,               TRUE },
+  { "Overlay",       "over", LIGMA_LAYER_MODE_OVERLAY,               TRUE },
 
   /* Difference (ps3) */
-  { "Difference",    "diff", GIMP_LAYER_MODE_DIFFERENCE,            TRUE },
-  { "Difference",    "diff", GIMP_LAYER_MODE_DIFFERENCE_LEGACY,     TRUE },
+  { "Difference",    "diff", LIGMA_LAYER_MODE_DIFFERENCE,            TRUE },
+  { "Difference",    "diff", LIGMA_LAYER_MODE_DIFFERENCE_LEGACY,     TRUE },
 
   /* Linear Dodge (cs2) */
-  { "Linear Dodge",  "lddg", GIMP_LAYER_MODE_ADDITION,              TRUE },
-  { "Linear Dodge",  "lddg", GIMP_LAYER_MODE_ADDITION_LEGACY,       TRUE },
+  { "Linear Dodge",  "lddg", LIGMA_LAYER_MODE_ADDITION,              TRUE },
+  { "Linear Dodge",  "lddg", LIGMA_LAYER_MODE_ADDITION_LEGACY,       TRUE },
 
   /* Subtract (??) */
-  { "Subtract",      "fsub", GIMP_LAYER_MODE_SUBTRACT,              TRUE },
-  { "Subtract",      "fsub", GIMP_LAYER_MODE_SUBTRACT_LEGACY,       TRUE },
+  { "Subtract",      "fsub", LIGMA_LAYER_MODE_SUBTRACT,              TRUE },
+  { "Subtract",      "fsub", LIGMA_LAYER_MODE_SUBTRACT_LEGACY,       TRUE },
 
   /* Darken (ps3) */
-  { "Darken",        "dark", GIMP_LAYER_MODE_DARKEN_ONLY,           TRUE },
-  { "Darken",        "dark", GIMP_LAYER_MODE_DARKEN_ONLY_LEGACY,    TRUE },
+  { "Darken",        "dark", LIGMA_LAYER_MODE_DARKEN_ONLY,           TRUE },
+  { "Darken",        "dark", LIGMA_LAYER_MODE_DARKEN_ONLY_LEGACY,    TRUE },
 
   /* Lighten (ps3) */
-  { "Ligten",        "lite", GIMP_LAYER_MODE_LIGHTEN_ONLY,          TRUE },
-  { "Ligten",        "lite", GIMP_LAYER_MODE_LIGHTEN_ONLY_LEGACY,   TRUE },
+  { "Ligten",        "lite", LIGMA_LAYER_MODE_LIGHTEN_ONLY,          TRUE },
+  { "Ligten",        "lite", LIGMA_LAYER_MODE_LIGHTEN_ONLY_LEGACY,   TRUE },
 
   /* Hue (ps3) */
-  { "Hue",           "hue ", GIMP_LAYER_MODE_LCH_HUE,               FALSE },
-  { "Hue",           "hue ", GIMP_LAYER_MODE_HSV_HUE,               FALSE },
-  { "Hue",           "hue ", GIMP_LAYER_MODE_HSV_HUE_LEGACY,        FALSE },
+  { "Hue",           "hue ", LIGMA_LAYER_MODE_LCH_HUE,               FALSE },
+  { "Hue",           "hue ", LIGMA_LAYER_MODE_HSV_HUE,               FALSE },
+  { "Hue",           "hue ", LIGMA_LAYER_MODE_HSV_HUE_LEGACY,        FALSE },
 
   /* Saturation (ps3) */
-  { "Saturation",    "sat ", GIMP_LAYER_MODE_LCH_CHROMA,            FALSE },
-  { "Saturation",    "sat ", GIMP_LAYER_MODE_HSV_SATURATION,        FALSE },
-  { "Saturation",    "sat ", GIMP_LAYER_MODE_HSV_SATURATION_LEGACY, FALSE },
+  { "Saturation",    "sat ", LIGMA_LAYER_MODE_LCH_CHROMA,            FALSE },
+  { "Saturation",    "sat ", LIGMA_LAYER_MODE_HSV_SATURATION,        FALSE },
+  { "Saturation",    "sat ", LIGMA_LAYER_MODE_HSV_SATURATION_LEGACY, FALSE },
 
   /* Color (ps3) */
-  { "Color",         "colr", GIMP_LAYER_MODE_LCH_COLOR,             FALSE },
-  { "Color",         "colr", GIMP_LAYER_MODE_HSL_COLOR,             FALSE },
-  { "Color",         "colr", GIMP_LAYER_MODE_HSL_COLOR_LEGACY,      FALSE },
+  { "Color",         "colr", LIGMA_LAYER_MODE_LCH_COLOR,             FALSE },
+  { "Color",         "colr", LIGMA_LAYER_MODE_HSL_COLOR,             FALSE },
+  { "Color",         "colr", LIGMA_LAYER_MODE_HSL_COLOR_LEGACY,      FALSE },
 
   /* Luminosity (ps3) */
-  { "Luminosity",    "lum ", GIMP_LAYER_MODE_LCH_LIGHTNESS,         FALSE },
-  { "Luminosity",    "lum ", GIMP_LAYER_MODE_HSV_VALUE,             FALSE },
-  { "Luminosity",    "lum ", GIMP_LAYER_MODE_HSV_VALUE_LEGACY,      FALSE },
-  { "Luminosity",    "lum ", GIMP_LAYER_MODE_LUMINANCE,             FALSE },
+  { "Luminosity",    "lum ", LIGMA_LAYER_MODE_LCH_LIGHTNESS,         FALSE },
+  { "Luminosity",    "lum ", LIGMA_LAYER_MODE_HSV_VALUE,             FALSE },
+  { "Luminosity",    "lum ", LIGMA_LAYER_MODE_HSV_VALUE_LEGACY,      FALSE },
+  { "Luminosity",    "lum ", LIGMA_LAYER_MODE_LUMINANCE,             FALSE },
 
   /* Divide (??) */
-  { "Divide",        "fdiv", GIMP_LAYER_MODE_DIVIDE,                TRUE },
-  { "Divide",        "fdiv", GIMP_LAYER_MODE_DIVIDE_LEGACY,         TRUE },
+  { "Divide",        "fdiv", LIGMA_LAYER_MODE_DIVIDE,                TRUE },
+  { "Divide",        "fdiv", LIGMA_LAYER_MODE_DIVIDE_LEGACY,         TRUE },
 
   /* Color Dodge (ps6) */
-  { "Color Dodge",   "div ", GIMP_LAYER_MODE_DODGE,                 TRUE },
-  { "Color Dodge",   "div ", GIMP_LAYER_MODE_DODGE_LEGACY,          TRUE },
+  { "Color Dodge",   "div ", LIGMA_LAYER_MODE_DODGE,                 TRUE },
+  { "Color Dodge",   "div ", LIGMA_LAYER_MODE_DODGE_LEGACY,          TRUE },
 
   /* Color Burn (ps6) */
-  { "Color Burn",    "idiv", GIMP_LAYER_MODE_BURN,                  TRUE },
-  { "Color Burn",    "idiv", GIMP_LAYER_MODE_BURN_LEGACY,           TRUE },
+  { "Color Burn",    "idiv", LIGMA_LAYER_MODE_BURN,                  TRUE },
+  { "Color Burn",    "idiv", LIGMA_LAYER_MODE_BURN_LEGACY,           TRUE },
 
   /* Hard Light (ps3) */
-  { "Hard Light",    "hLit", GIMP_LAYER_MODE_HARDLIGHT,             TRUE },
-  { "Hard Light",    "hLit", GIMP_LAYER_MODE_HARDLIGHT_LEGACY,      TRUE },
+  { "Hard Light",    "hLit", LIGMA_LAYER_MODE_HARDLIGHT,             TRUE },
+  { "Hard Light",    "hLit", LIGMA_LAYER_MODE_HARDLIGHT_LEGACY,      TRUE },
 
   /* Soft Light (ps3) */
-  { "Soft Light",    "sLit", GIMP_LAYER_MODE_SOFTLIGHT,             FALSE },
-  { "Soft Light",    "sLit", GIMP_LAYER_MODE_SOFTLIGHT_LEGACY,      FALSE },
-  { "Soft Light",    "sLit", GIMP_LAYER_MODE_OVERLAY_LEGACY,        FALSE },
+  { "Soft Light",    "sLit", LIGMA_LAYER_MODE_SOFTLIGHT,             FALSE },
+  { "Soft Light",    "sLit", LIGMA_LAYER_MODE_SOFTLIGHT_LEGACY,      FALSE },
+  { "Soft Light",    "sLit", LIGMA_LAYER_MODE_OVERLAY_LEGACY,        FALSE },
 
   /* Vivid Light (ps7)*/
-  { "Vivid Light",   "vLit", GIMP_LAYER_MODE_VIVID_LIGHT,           TRUE },
+  { "Vivid Light",   "vLit", LIGMA_LAYER_MODE_VIVID_LIGHT,           TRUE },
 
   /* Pin Light (ps7)*/
-  { "Pin Light",     "pLit", GIMP_LAYER_MODE_PIN_LIGHT,             TRUE },
+  { "Pin Light",     "pLit", LIGMA_LAYER_MODE_PIN_LIGHT,             TRUE },
 
   /* Linear Light (ps7)*/
-  { "Linear Light",  "lLit", GIMP_LAYER_MODE_LINEAR_LIGHT,          TRUE },
+  { "Linear Light",  "lLit", LIGMA_LAYER_MODE_LINEAR_LIGHT,          TRUE },
 
   /* Hard Mix (CS)*/
-  { "Hard Mix",      "hMix", GIMP_LAYER_MODE_HARD_MIX,              TRUE },
+  { "Hard Mix",      "hMix", LIGMA_LAYER_MODE_HARD_MIX,              TRUE },
 
   /* Exclusion (ps6) */
-  { "Exclusion",     "smud", GIMP_LAYER_MODE_EXCLUSION,             TRUE },
+  { "Exclusion",     "smud", LIGMA_LAYER_MODE_EXCLUSION,             TRUE },
 
   /* Linear Burn (ps7)*/
-  { "Linear Burn",   "lbrn", GIMP_LAYER_MODE_LINEAR_BURN,           TRUE },
+  { "Linear Burn",   "lbrn", LIGMA_LAYER_MODE_LINEAR_BURN,           TRUE },
 
   /* Darker Color (??)*/
-  { "Darker Color",  "dkCl", GIMP_LAYER_MODE_LUMA_DARKEN_ONLY,      FALSE },
+  { "Darker Color",  "dkCl", LIGMA_LAYER_MODE_LUMA_DARKEN_ONLY,      FALSE },
 
   /* Lighter Color (??)*/
-  { "Lighter Color", "lgCl", GIMP_LAYER_MODE_LUMA_LIGHTEN_ONLY,     FALSE },
+  { "Lighter Color", "lgCl", LIGMA_LAYER_MODE_LUMA_LIGHTEN_ONLY,     FALSE },
 
   /* Pass Through (CS)*/
-  { "Pass Through",  "pass", GIMP_LAYER_MODE_PASS_THROUGH,          TRUE },
+  { "Pass Through",  "pass", LIGMA_LAYER_MODE_PASS_THROUGH,          TRUE },
 };
 
 
@@ -299,7 +299,7 @@ fread_pascal_string (gint32        *bytes_read,
         }
     }
 
-  utf8_str = gimp_any_to_utf8 (str, len, NULL);
+  utf8_str = ligma_any_to_utf8 (str, len, NULL);
   *bytes_written = strlen (utf8_str);
   g_free (str);
 
@@ -774,21 +774,21 @@ encode_packbits (const gchar *src,
 }
 
 void
-psd_to_gimp_blend_mode (PSDlayer      *psd_layer,
+psd_to_ligma_blend_mode (PSDlayer      *psd_layer,
                         LayerModeInfo *mode_info)
 {
   gint i;
 
-  mode_info->mode            = GIMP_LAYER_MODE_NORMAL;
+  mode_info->mode            = LIGMA_LAYER_MODE_NORMAL;
   /* FIXME: use the image mode to select the correct color spaces.  for now,
    * we use rgb-perceptual blending/compositing unconditionally.
    */
-  mode_info->blend_space     = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL;
-  mode_info->composite_space = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL;
+  mode_info->blend_space     = LIGMA_LAYER_COLOR_SPACE_RGB_PERCEPTUAL;
+  mode_info->composite_space = LIGMA_LAYER_COLOR_SPACE_RGB_PERCEPTUAL;
   if (psd_layer->clipping == 1)
-    mode_info->composite_mode  = GIMP_LAYER_COMPOSITE_CLIP_TO_BACKDROP;
+    mode_info->composite_mode  = LIGMA_LAYER_COMPOSITE_CLIP_TO_BACKDROP;
   else
-    mode_info->composite_mode  = GIMP_LAYER_COMPOSITE_UNION;
+    mode_info->composite_mode  = LIGMA_LAYER_COMPOSITE_UNION;
 
   for (i = 0; i < G_N_ELEMENTS (layer_mode_map); i++)
     {
@@ -796,12 +796,12 @@ psd_to_gimp_blend_mode (PSDlayer      *psd_layer,
         {
           if (! layer_mode_map[i].exact && CONVERSION_WARNINGS)
             {
-              g_message ("GIMP uses a different equation than Photoshop for "
+              g_message ("LIGMA uses a different equation than Photoshop for "
                          "blend mode: %s. Results will differ.",
                          layer_mode_map[i].name);
             }
 
-          mode_info->mode = layer_mode_map[i].gimp_mode;
+          mode_info->mode = layer_mode_map[i].ligma_mode;
 
           return;
         }
@@ -817,53 +817,53 @@ psd_to_gimp_blend_mode (PSDlayer      *psd_layer,
 }
 
 const gchar *
-gimp_to_psd_blend_mode (const LayerModeInfo *mode_info)
+ligma_to_psd_blend_mode (const LayerModeInfo *mode_info)
 {
   gint i;
 
   /* FIXME: select the image mode based on the layer mode color spaces.  for
    * now, we assume rgb-perceptual blending/compositing unconditionally.
    */
-  if (mode_info->blend_space != GIMP_LAYER_COLOR_SPACE_AUTO &&
-      mode_info->blend_space != GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL)
+  if (mode_info->blend_space != LIGMA_LAYER_COLOR_SPACE_AUTO &&
+      mode_info->blend_space != LIGMA_LAYER_COLOR_SPACE_RGB_PERCEPTUAL)
     {
       if (CONVERSION_WARNINGS)
         g_message ("Unsupported blend color space: %s. "
                    "Blend color space reverts to rgb-perceptual",
-                   get_enum_value_nick (GIMP_TYPE_LAYER_COLOR_SPACE,
+                   get_enum_value_nick (LIGMA_TYPE_LAYER_COLOR_SPACE,
                                         mode_info->blend_space));
     }
 
-  if (mode_info->composite_space != GIMP_LAYER_COLOR_SPACE_AUTO &&
-      mode_info->composite_space != GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL)
+  if (mode_info->composite_space != LIGMA_LAYER_COLOR_SPACE_AUTO &&
+      mode_info->composite_space != LIGMA_LAYER_COLOR_SPACE_RGB_PERCEPTUAL)
     {
       if (CONVERSION_WARNINGS)
         g_message ("Unsupported composite color space: %s. "
                    "Composite color space reverts to rgb-perceptual",
-                   get_enum_value_nick (GIMP_TYPE_LAYER_COLOR_SPACE,
+                   get_enum_value_nick (LIGMA_TYPE_LAYER_COLOR_SPACE,
                                         mode_info->composite_space));
     }
 
-  if (mode_info->composite_mode != GIMP_LAYER_COMPOSITE_AUTO &&
-      mode_info->composite_mode != GIMP_LAYER_COMPOSITE_UNION &&
-      mode_info->composite_mode != GIMP_LAYER_COMPOSITE_CLIP_TO_BACKDROP)
+  if (mode_info->composite_mode != LIGMA_LAYER_COMPOSITE_AUTO &&
+      mode_info->composite_mode != LIGMA_LAYER_COMPOSITE_UNION &&
+      mode_info->composite_mode != LIGMA_LAYER_COMPOSITE_CLIP_TO_BACKDROP)
     {
       if (CONVERSION_WARNINGS)
         g_message ("Unsupported composite mode: %s. "
                    "Composite mode reverts to union",
-                   get_enum_value_nick (GIMP_TYPE_LAYER_COMPOSITE_MODE,
+                   get_enum_value_nick (LIGMA_TYPE_LAYER_COMPOSITE_MODE,
                                         mode_info->composite_mode));
     }
 
   for (i = 0; i < G_N_ELEMENTS (layer_mode_map); i++)
     {
-      if (layer_mode_map[i].gimp_mode == mode_info->mode)
+      if (layer_mode_map[i].ligma_mode == mode_info->mode)
         {
           if (! layer_mode_map[i].exact && CONVERSION_WARNINGS)
             {
-              g_message ("GIMP uses a different equation than Photoshop for "
+              g_message ("LIGMA uses a different equation than Photoshop for "
                          "blend mode: %s. Results may differ.",
-                         get_enum_value_nick (GIMP_TYPE_LAYER_MODE,
+                         get_enum_value_nick (LIGMA_TYPE_LAYER_MODE,
                                               mode_info->mode));
             }
 
@@ -873,94 +873,94 @@ gimp_to_psd_blend_mode (const LayerModeInfo *mode_info)
 
   if (CONVERSION_WARNINGS)
     g_message ("Unsupported blend mode: %s. Mode reverts to normal",
-               get_enum_value_nick (GIMP_TYPE_LAYER_MODE, mode_info->mode));
+               get_enum_value_nick (LIGMA_TYPE_LAYER_MODE, mode_info->mode));
 
   return "norm";
 }
 
-GimpColorTag
-psd_to_gimp_layer_color_tag (guint16 layer_color_tag)
+LigmaColorTag
+psd_to_ligma_layer_color_tag (guint16 layer_color_tag)
 {
-  GimpColorTag colorTag;
+  LigmaColorTag colorTag;
 
   switch (layer_color_tag)
     {
     case 1:
-      colorTag = GIMP_COLOR_TAG_RED;
+      colorTag = LIGMA_COLOR_TAG_RED;
       break;
 
     case 2:
-      colorTag = GIMP_COLOR_TAG_ORANGE;
+      colorTag = LIGMA_COLOR_TAG_ORANGE;
       break;
 
     case 3:
-      colorTag = GIMP_COLOR_TAG_YELLOW;
+      colorTag = LIGMA_COLOR_TAG_YELLOW;
       break;
 
     case 4:
-      colorTag = GIMP_COLOR_TAG_GREEN;
+      colorTag = LIGMA_COLOR_TAG_GREEN;
       break;
 
     case 5:
-      colorTag = GIMP_COLOR_TAG_BLUE;
+      colorTag = LIGMA_COLOR_TAG_BLUE;
       break;
 
     case 6:
-      colorTag = GIMP_COLOR_TAG_VIOLET;
+      colorTag = LIGMA_COLOR_TAG_VIOLET;
       break;
 
     case 7:
-      colorTag = GIMP_COLOR_TAG_GRAY;
+      colorTag = LIGMA_COLOR_TAG_GRAY;
       break;
 
     default:
       if (CONVERSION_WARNINGS)
-        g_message ("Unsupported Photoshop layer color tag: %i. GIMP layer color tag set to none.",
+        g_message ("Unsupported Photoshop layer color tag: %i. LIGMA layer color tag set to none.",
                        layer_color_tag);
-      colorTag = GIMP_COLOR_TAG_NONE;
+      colorTag = LIGMA_COLOR_TAG_NONE;
     }
 
   return colorTag;
 }
 
 guint16
-gimp_to_psd_layer_color_tag (GimpColorTag layer_color_tag)
+ligma_to_psd_layer_color_tag (LigmaColorTag layer_color_tag)
 {
   guint16 color_tag;
 
   switch (layer_color_tag)
     {
-    case GIMP_COLOR_TAG_RED:
+    case LIGMA_COLOR_TAG_RED:
         color_tag = 1;
       break;
 
-    case GIMP_COLOR_TAG_ORANGE:
+    case LIGMA_COLOR_TAG_ORANGE:
         color_tag = 2;
       break;
 
-    case GIMP_COLOR_TAG_YELLOW:
+    case LIGMA_COLOR_TAG_YELLOW:
         color_tag = 3;
       break;
 
-    case GIMP_COLOR_TAG_GREEN:
+    case LIGMA_COLOR_TAG_GREEN:
         color_tag = 4;
       break;
 
-    case GIMP_COLOR_TAG_BLUE:
+    case LIGMA_COLOR_TAG_BLUE:
         color_tag = 5;
       break;
 
-    case GIMP_COLOR_TAG_VIOLET:
+    case LIGMA_COLOR_TAG_VIOLET:
         color_tag = 6;
       break;
 
-    case GIMP_COLOR_TAG_GRAY:
+    case LIGMA_COLOR_TAG_GRAY:
         color_tag = 7;
       break;
 
     default:
       if (CONVERSION_WARNINGS)
-        g_message ("Photoshop doesn't support GIMP layer color tag: %i. Photoshop layer color tag set to none.",
+        g_message ("Photoshop doesn't support LIGMA layer color tag: %i. Photoshop layer color tag set to none.",
                    layer_color_tag);
 
       color_tag = 0;
@@ -975,7 +975,7 @@ get_enum_value_nick (GType type,
 {
   const gchar *nick;
 
-  if (gimp_enum_get_value (type, value, NULL, &nick, NULL, NULL))
+  if (ligma_enum_get_value (type, value, NULL, &nick, NULL, NULL))
     {
       return nick;
     }

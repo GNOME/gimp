@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimppdb-private.h
- * Copyright (C) 2019 Michael Natterer <mitch@gimp.org>
+ * ligmapdb-private.h
+ * Copyright (C) 2019 Michael Natterer <mitch@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -19,33 +19,33 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PDB_PRIVATE_H__
-#define __GIMP_PDB_PRIVATE_H__
+#ifndef __LIGMA_PDB_PRIVATE_H__
+#define __LIGMA_PDB_PRIVATE_H__
 
 G_BEGIN_DECLS
 
 
 typedef enum
 {
-  GIMP_PDB_ERROR_FAILED,  /* generic error condition */
-  GIMP_PDB_ERROR_CANCELLED,
-  GIMP_PDB_ERROR_PDB_NOT_FOUND,
-  GIMP_PDB_ERROR_INVALID_ARGUMENT,
-  GIMP_PDB_ERROR_INVALID_RETURN_VALUE,
-  GIMP_PDB_ERROR_INTERNAL_ERROR
-} GimpPdbErrorCode;
+  LIGMA_PDB_ERROR_FAILED,  /* generic error condition */
+  LIGMA_PDB_ERROR_CANCELLED,
+  LIGMA_PDB_ERROR_PDB_NOT_FOUND,
+  LIGMA_PDB_ERROR_INVALID_ARGUMENT,
+  LIGMA_PDB_ERROR_INVALID_RETURN_VALUE,
+  LIGMA_PDB_ERROR_INTERNAL_ERROR
+} LigmaPdbErrorCode;
 
 
-#define GIMP_PDB_ERROR (_gimp_pdb_error_quark ())
+#define LIGMA_PDB_ERROR (_ligma_pdb_error_quark ())
 
-GQuark _gimp_pdb_error_quark (void) G_GNUC_CONST;
+GQuark _ligma_pdb_error_quark (void) G_GNUC_CONST;
 
 
-GimpPDB    * _gimp_pdb_new         (GimpPlugIn *plug_in);
+LigmaPDB    * _ligma_pdb_new         (LigmaPlugIn *plug_in);
 
-GimpPlugIn * _gimp_pdb_get_plug_in (GimpPDB    *pdb);
+LigmaPlugIn * _ligma_pdb_get_plug_in (LigmaPDB    *pdb);
 
 
 G_END_DECLS
 
-#endif  /*  __GIMP_PDB_PRIVATE_H__  */
+#endif  /*  __LIGMA_PDB_PRIVATE_H__  */

@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * vectors-types.h
- * Copyright (C) 2002 Simon Budig  <simon@gimp.org>
+ * Copyright (C) 2002 Simon Budig  <simon@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,11 +27,11 @@
 #include "vectors/vectors-enums.h"
 
 
-typedef struct _GimpAnchor       GimpAnchor;
+typedef struct _LigmaAnchor       LigmaAnchor;
 
-typedef struct _GimpVectors      GimpVectors;
-typedef struct _GimpStroke       GimpStroke;
-typedef struct _GimpBezierStroke GimpBezierStroke;
+typedef struct _LigmaVectors      LigmaVectors;
+typedef struct _LigmaStroke       LigmaStroke;
+typedef struct _LigmaBezierStroke LigmaBezierStroke;
 
 
 #endif /* __VECTORS_TYPES_H__ */

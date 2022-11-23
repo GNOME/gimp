@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,269 +19,269 @@
 #define __DISPLAY_ENUMS_H__
 
 
-#define GIMP_TYPE_BUTTON_PRESS_TYPE (gimp_button_press_type_get_type ())
+#define LIGMA_TYPE_BUTTON_PRESS_TYPE (ligma_button_press_type_get_type ())
 
-GType gimp_button_press_type_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_BUTTON_PRESS_NORMAL,
-  GIMP_BUTTON_PRESS_DOUBLE,
-  GIMP_BUTTON_PRESS_TRIPLE
-} GimpButtonPressType;
-
-
-#define GIMP_TYPE_BUTTON_RELEASE_TYPE (gimp_button_release_type_get_type ())
-
-GType gimp_button_release_type_get_type (void) G_GNUC_CONST;
+GType ligma_button_press_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_BUTTON_RELEASE_NORMAL,
-  GIMP_BUTTON_RELEASE_CANCEL,
-  GIMP_BUTTON_RELEASE_CLICK,
-  GIMP_BUTTON_RELEASE_NO_MOTION
-} GimpButtonReleaseType;
+  LIGMA_BUTTON_PRESS_NORMAL,
+  LIGMA_BUTTON_PRESS_DOUBLE,
+  LIGMA_BUTTON_PRESS_TRIPLE
+} LigmaButtonPressType;
 
 
-#define GIMP_TYPE_COMPASS_ORIENTATION (gimp_compass_orientation_get_type ())
+#define LIGMA_TYPE_BUTTON_RELEASE_TYPE (ligma_button_release_type_get_type ())
 
-GType gimp_compass_orientation_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_COMPASS_ORIENTATION_AUTO,       /*< desc="Auto"       >*/
-  GIMP_COMPASS_ORIENTATION_HORIZONTAL, /*< desc="Horizontal" >*/
-  GIMP_COMPASS_ORIENTATION_VERTICAL    /*< desc="Vertical"   >*/
-} GimpCompassOrientation;
-
-
-#define GIMP_TYPE_CURSOR_PRECISION (gimp_cursor_precision_get_type ())
-
-GType gimp_cursor_precision_get_type (void) G_GNUC_CONST;
+GType ligma_button_release_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_CURSOR_PRECISION_PIXEL_CENTER,
-  GIMP_CURSOR_PRECISION_PIXEL_BORDER,
-  GIMP_CURSOR_PRECISION_SUBPIXEL
-} GimpCursorPrecision;
+  LIGMA_BUTTON_RELEASE_NORMAL,
+  LIGMA_BUTTON_RELEASE_CANCEL,
+  LIGMA_BUTTON_RELEASE_CLICK,
+  LIGMA_BUTTON_RELEASE_NO_MOTION
+} LigmaButtonReleaseType;
 
 
-#define GIMP_TYPE_GUIDES_TYPE (gimp_guides_type_get_type ())
+#define LIGMA_TYPE_COMPASS_ORIENTATION (ligma_compass_orientation_get_type ())
 
-GType gimp_guides_type_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_GUIDES_NONE,          /*< desc="No guides"       >*/
-  GIMP_GUIDES_CENTER_LINES,  /*< desc="Center lines"    >*/
-  GIMP_GUIDES_THIRDS,        /*< desc="Rule of thirds"  >*/
-  GIMP_GUIDES_FIFTHS,        /*< desc="Rule of fifths"  >*/
-  GIMP_GUIDES_GOLDEN,        /*< desc="Golden sections" >*/
-  GIMP_GUIDES_DIAGONALS,     /*< desc="Diagonal lines"  >*/
-  GIMP_GUIDES_N_LINES,       /*< desc="Number of lines" >*/
-  GIMP_GUIDES_SPACING        /*< desc="Line spacing"    >*/
-} GimpGuidesType;
-
-
-#define GIMP_TYPE_HANDLE_TYPE (gimp_handle_type_get_type ())
-
-GType gimp_handle_type_get_type (void) G_GNUC_CONST;
+GType ligma_compass_orientation_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_HANDLE_SQUARE,
-  GIMP_HANDLE_DASHED_SQUARE,
-  GIMP_HANDLE_FILLED_SQUARE,
-  GIMP_HANDLE_CIRCLE,
-  GIMP_HANDLE_DASHED_CIRCLE,
-  GIMP_HANDLE_FILLED_CIRCLE,
-  GIMP_HANDLE_DIAMOND,
-  GIMP_HANDLE_DASHED_DIAMOND,
-  GIMP_HANDLE_FILLED_DIAMOND,
-  GIMP_HANDLE_CROSS,
-  GIMP_HANDLE_CROSSHAIR,
-  GIMP_HANDLE_DROP,
-  GIMP_HANDLE_FILLED_DROP
-} GimpHandleType;
+  LIGMA_COMPASS_ORIENTATION_AUTO,       /*< desc="Auto"       >*/
+  LIGMA_COMPASS_ORIENTATION_HORIZONTAL, /*< desc="Horizontal" >*/
+  LIGMA_COMPASS_ORIENTATION_VERTICAL    /*< desc="Vertical"   >*/
+} LigmaCompassOrientation;
 
 
-#define GIMP_TYPE_HANDLE_ANCHOR (gimp_handle_anchor_get_type ())
+#define LIGMA_TYPE_CURSOR_PRECISION (ligma_cursor_precision_get_type ())
 
-GType gimp_handle_anchor_get_type (void) G_GNUC_CONST;
+GType ligma_cursor_precision_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_HANDLE_ANCHOR_CENTER,
-  GIMP_HANDLE_ANCHOR_NORTH,
-  GIMP_HANDLE_ANCHOR_NORTH_WEST,
-  GIMP_HANDLE_ANCHOR_NORTH_EAST,
-  GIMP_HANDLE_ANCHOR_SOUTH,
-  GIMP_HANDLE_ANCHOR_SOUTH_WEST,
-  GIMP_HANDLE_ANCHOR_SOUTH_EAST,
-  GIMP_HANDLE_ANCHOR_WEST,
-  GIMP_HANDLE_ANCHOR_EAST
-} GimpHandleAnchor;
+  LIGMA_CURSOR_PRECISION_PIXEL_CENTER,
+  LIGMA_CURSOR_PRECISION_PIXEL_BORDER,
+  LIGMA_CURSOR_PRECISION_SUBPIXEL
+} LigmaCursorPrecision;
 
 
-#define GIMP_TYPE_LIMIT_TYPE (gimp_limit_type_get_type ())
+#define LIGMA_TYPE_GUIDES_TYPE (ligma_guides_type_get_type ())
 
-GType gimp_limit_type_get_type (void) G_GNUC_CONST;
+GType ligma_guides_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_LIMIT_CIRCLE,
-  GIMP_LIMIT_SQUARE,
-  GIMP_LIMIT_DIAMOND,
-  GIMP_LIMIT_HORIZONTAL,
-  GIMP_LIMIT_VERTICAL
-} GimpLimitType;
+  LIGMA_GUIDES_NONE,          /*< desc="No guides"       >*/
+  LIGMA_GUIDES_CENTER_LINES,  /*< desc="Center lines"    >*/
+  LIGMA_GUIDES_THIRDS,        /*< desc="Rule of thirds"  >*/
+  LIGMA_GUIDES_FIFTHS,        /*< desc="Rule of fifths"  >*/
+  LIGMA_GUIDES_GOLDEN,        /*< desc="Golden sections" >*/
+  LIGMA_GUIDES_DIAGONALS,     /*< desc="Diagonal lines"  >*/
+  LIGMA_GUIDES_N_LINES,       /*< desc="Number of lines" >*/
+  LIGMA_GUIDES_SPACING        /*< desc="Line spacing"    >*/
+} LigmaGuidesType;
 
 
-#define GIMP_TYPE_PATH_STYLE (gimp_path_style_get_type ())
+#define LIGMA_TYPE_HANDLE_TYPE (ligma_handle_type_get_type ())
 
-GType gimp_path_style_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_PATH_STYLE_DEFAULT,
-  GIMP_PATH_STYLE_VECTORS,
-  GIMP_PATH_STYLE_OUTLINE
-} GimpPathStyle;
-
-
-#define GIMP_TYPE_RECTANGLE_CONSTRAINT (gimp_rectangle_constraint_get_type ())
-
-GType gimp_rectangle_constraint_get_type (void) G_GNUC_CONST;
+GType ligma_handle_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_RECTANGLE_CONSTRAIN_NONE,
-  GIMP_RECTANGLE_CONSTRAIN_IMAGE,
-  GIMP_RECTANGLE_CONSTRAIN_DRAWABLE
-} GimpRectangleConstraint;
+  LIGMA_HANDLE_SQUARE,
+  LIGMA_HANDLE_DASHED_SQUARE,
+  LIGMA_HANDLE_FILLED_SQUARE,
+  LIGMA_HANDLE_CIRCLE,
+  LIGMA_HANDLE_DASHED_CIRCLE,
+  LIGMA_HANDLE_FILLED_CIRCLE,
+  LIGMA_HANDLE_DIAMOND,
+  LIGMA_HANDLE_DASHED_DIAMOND,
+  LIGMA_HANDLE_FILLED_DIAMOND,
+  LIGMA_HANDLE_CROSS,
+  LIGMA_HANDLE_CROSSHAIR,
+  LIGMA_HANDLE_DROP,
+  LIGMA_HANDLE_FILLED_DROP
+} LigmaHandleType;
 
 
-#define GIMP_TYPE_RECTANGLE_FIXED_RULE (gimp_rectangle_fixed_rule_get_type ())
+#define LIGMA_TYPE_HANDLE_ANCHOR (ligma_handle_anchor_get_type ())
 
-GType gimp_rectangle_fixed_rule_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_RECTANGLE_FIXED_ASPECT, /*< desc="Aspect ratio" >*/
-  GIMP_RECTANGLE_FIXED_WIDTH,  /*< desc="Width"        >*/
-  GIMP_RECTANGLE_FIXED_HEIGHT, /*< desc="Height"       >*/
-  GIMP_RECTANGLE_FIXED_SIZE,   /*< desc="Size"         >*/
-} GimpRectangleFixedRule;
-
-
-#define GIMP_TYPE_RECTANGLE_PRECISION (gimp_rectangle_precision_get_type ())
-
-GType gimp_rectangle_precision_get_type (void) G_GNUC_CONST;
+GType ligma_handle_anchor_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_RECTANGLE_PRECISION_INT,
-  GIMP_RECTANGLE_PRECISION_DOUBLE,
-} GimpRectanglePrecision;
+  LIGMA_HANDLE_ANCHOR_CENTER,
+  LIGMA_HANDLE_ANCHOR_NORTH,
+  LIGMA_HANDLE_ANCHOR_NORTH_WEST,
+  LIGMA_HANDLE_ANCHOR_NORTH_EAST,
+  LIGMA_HANDLE_ANCHOR_SOUTH,
+  LIGMA_HANDLE_ANCHOR_SOUTH_WEST,
+  LIGMA_HANDLE_ANCHOR_SOUTH_EAST,
+  LIGMA_HANDLE_ANCHOR_WEST,
+  LIGMA_HANDLE_ANCHOR_EAST
+} LigmaHandleAnchor;
 
 
-#define GIMP_TYPE_TRANSFORM_3D_MODE (gimp_transform_3d_mode_get_type ())
+#define LIGMA_TYPE_LIMIT_TYPE (ligma_limit_type_get_type ())
 
-GType gimp_transform_3d_mode_get_type (void) G_GNUC_CONST;
-
-typedef enum /*< lowercase_name=gimp_transform_3d_mode >*/
-{
-  GIMP_TRANSFORM_3D_MODE_CAMERA,
-  GIMP_TRANSFORM_3D_MODE_MOVE,
-  GIMP_TRANSFORM_3D_MODE_ROTATE
-} GimpTransform3DMode;
-
-
-#define GIMP_TYPE_TRANSFORM_FUNCTION (gimp_transform_function_get_type ())
-
-GType gimp_transform_function_get_type (void) G_GNUC_CONST;
+GType ligma_limit_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_TRANSFORM_FUNCTION_NONE,
-  GIMP_TRANSFORM_FUNCTION_MOVE,
-  GIMP_TRANSFORM_FUNCTION_SCALE,
-  GIMP_TRANSFORM_FUNCTION_ROTATE,
-  GIMP_TRANSFORM_FUNCTION_SHEAR,
-  GIMP_TRANSFORM_FUNCTION_PERSPECTIVE
-} GimpTransformFunction;
+  LIGMA_LIMIT_CIRCLE,
+  LIGMA_LIMIT_SQUARE,
+  LIGMA_LIMIT_DIAMOND,
+  LIGMA_LIMIT_HORIZONTAL,
+  LIGMA_LIMIT_VERTICAL
+} LigmaLimitType;
 
 
-#define GIMP_TYPE_TRANSFORM_HANDLE_MODE (gimp_transform_handle_mode_get_type ())
+#define LIGMA_TYPE_PATH_STYLE (ligma_path_style_get_type ())
 
-GType gimp_transform_handle_mode_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_HANDLE_MODE_ADD_TRANSFORM, /*< desc="Add / Transform" >*/
-  GIMP_HANDLE_MODE_MOVE,          /*< desc="Move"            >*/
-  GIMP_HANDLE_MODE_REMOVE         /*< desc="Remove"          >*/
-} GimpTransformHandleMode;
-
-
-#define GIMP_TYPE_VECTOR_MODE (gimp_vector_mode_get_type ())
-
-GType gimp_vector_mode_get_type (void) G_GNUC_CONST;
+GType ligma_path_style_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_VECTOR_MODE_DESIGN,      /*< desc="Design" >*/
-  GIMP_VECTOR_MODE_EDIT,        /*< desc="Edit"   >*/
-  GIMP_VECTOR_MODE_MOVE         /*< desc="Move"   >*/
-} GimpVectorMode;
+  LIGMA_PATH_STYLE_DEFAULT,
+  LIGMA_PATH_STYLE_VECTORS,
+  LIGMA_PATH_STYLE_OUTLINE
+} LigmaPathStyle;
 
 
-#define GIMP_TYPE_ZOOM_FOCUS (gimp_zoom_focus_get_type ())
+#define LIGMA_TYPE_RECTANGLE_CONSTRAINT (ligma_rectangle_constraint_get_type ())
 
-GType gimp_zoom_focus_get_type (void) G_GNUC_CONST;
+GType ligma_rectangle_constraint_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  LIGMA_RECTANGLE_CONSTRAIN_NONE,
+  LIGMA_RECTANGLE_CONSTRAIN_IMAGE,
+  LIGMA_RECTANGLE_CONSTRAIN_DRAWABLE
+} LigmaRectangleConstraint;
+
+
+#define LIGMA_TYPE_RECTANGLE_FIXED_RULE (ligma_rectangle_fixed_rule_get_type ())
+
+GType ligma_rectangle_fixed_rule_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  LIGMA_RECTANGLE_FIXED_ASPECT, /*< desc="Aspect ratio" >*/
+  LIGMA_RECTANGLE_FIXED_WIDTH,  /*< desc="Width"        >*/
+  LIGMA_RECTANGLE_FIXED_HEIGHT, /*< desc="Height"       >*/
+  LIGMA_RECTANGLE_FIXED_SIZE,   /*< desc="Size"         >*/
+} LigmaRectangleFixedRule;
+
+
+#define LIGMA_TYPE_RECTANGLE_PRECISION (ligma_rectangle_precision_get_type ())
+
+GType ligma_rectangle_precision_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  LIGMA_RECTANGLE_PRECISION_INT,
+  LIGMA_RECTANGLE_PRECISION_DOUBLE,
+} LigmaRectanglePrecision;
+
+
+#define LIGMA_TYPE_TRANSFORM_3D_MODE (ligma_transform_3d_mode_get_type ())
+
+GType ligma_transform_3d_mode_get_type (void) G_GNUC_CONST;
+
+typedef enum /*< lowercase_name=ligma_transform_3d_mode >*/
+{
+  LIGMA_TRANSFORM_3D_MODE_CAMERA,
+  LIGMA_TRANSFORM_3D_MODE_MOVE,
+  LIGMA_TRANSFORM_3D_MODE_ROTATE
+} LigmaTransform3DMode;
+
+
+#define LIGMA_TYPE_TRANSFORM_FUNCTION (ligma_transform_function_get_type ())
+
+GType ligma_transform_function_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  LIGMA_TRANSFORM_FUNCTION_NONE,
+  LIGMA_TRANSFORM_FUNCTION_MOVE,
+  LIGMA_TRANSFORM_FUNCTION_SCALE,
+  LIGMA_TRANSFORM_FUNCTION_ROTATE,
+  LIGMA_TRANSFORM_FUNCTION_SHEAR,
+  LIGMA_TRANSFORM_FUNCTION_PERSPECTIVE
+} LigmaTransformFunction;
+
+
+#define LIGMA_TYPE_TRANSFORM_HANDLE_MODE (ligma_transform_handle_mode_get_type ())
+
+GType ligma_transform_handle_mode_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  LIGMA_HANDLE_MODE_ADD_TRANSFORM, /*< desc="Add / Transform" >*/
+  LIGMA_HANDLE_MODE_MOVE,          /*< desc="Move"            >*/
+  LIGMA_HANDLE_MODE_REMOVE         /*< desc="Remove"          >*/
+} LigmaTransformHandleMode;
+
+
+#define LIGMA_TYPE_VECTOR_MODE (ligma_vector_mode_get_type ())
+
+GType ligma_vector_mode_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  LIGMA_VECTOR_MODE_DESIGN,      /*< desc="Design" >*/
+  LIGMA_VECTOR_MODE_EDIT,        /*< desc="Edit"   >*/
+  LIGMA_VECTOR_MODE_MOVE         /*< desc="Move"   >*/
+} LigmaVectorMode;
+
+
+#define LIGMA_TYPE_ZOOM_FOCUS (ligma_zoom_focus_get_type ())
+
+GType ligma_zoom_focus_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
   /* Make a best guess */
-  GIMP_ZOOM_FOCUS_BEST_GUESS,
+  LIGMA_ZOOM_FOCUS_BEST_GUESS,
 
   /* Use the mouse cursor (if within canvas) */
-  GIMP_ZOOM_FOCUS_POINTER,
+  LIGMA_ZOOM_FOCUS_POINTER,
 
   /* Use the image center */
-  GIMP_ZOOM_FOCUS_IMAGE_CENTER,
+  LIGMA_ZOOM_FOCUS_IMAGE_CENTER,
 
   /* If the image is centered, retain the centering. Else use
    * _BEST_GUESS
    */
-  GIMP_ZOOM_FOCUS_RETAIN_CENTERING_ELSE_BEST_GUESS
+  LIGMA_ZOOM_FOCUS_RETAIN_CENTERING_ELSE_BEST_GUESS
 
-} GimpZoomFocus;
+} LigmaZoomFocus;
 
 
-#define GIMP_TYPE_MODIFIER_ACTION (gimp_modifier_action_get_type ())
+#define LIGMA_TYPE_MODIFIER_ACTION (ligma_modifier_action_get_type ())
 
-GType gimp_modifier_action_get_type (void) G_GNUC_CONST;
+GType ligma_modifier_action_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_MODIFIER_ACTION_NONE,                    /*< desc="No action"                                  >*/
-  GIMP_MODIFIER_ACTION_PANNING,                 /*< desc="Pan"                                        >*/
-  GIMP_MODIFIER_ACTION_ZOOMING,                 /*< desc="Zoom"                                       >*/
-  GIMP_MODIFIER_ACTION_ROTATING,                /*< desc="Rotate View"                                >*/
-  GIMP_MODIFIER_ACTION_STEP_ROTATING,           /*< desc="Rotate View by 15 degree steps"             >*/
-  GIMP_MODIFIER_ACTION_LAYER_PICKING,           /*< desc="Pick a layer"                               >*/
+  LIGMA_MODIFIER_ACTION_NONE,                    /*< desc="No action"                                  >*/
+  LIGMA_MODIFIER_ACTION_PANNING,                 /*< desc="Pan"                                        >*/
+  LIGMA_MODIFIER_ACTION_ZOOMING,                 /*< desc="Zoom"                                       >*/
+  LIGMA_MODIFIER_ACTION_ROTATING,                /*< desc="Rotate View"                                >*/
+  LIGMA_MODIFIER_ACTION_STEP_ROTATING,           /*< desc="Rotate View by 15 degree steps"             >*/
+  LIGMA_MODIFIER_ACTION_LAYER_PICKING,           /*< desc="Pick a layer"                               >*/
 
-  GIMP_MODIFIER_ACTION_MENU,                    /*< desc="Display the menu"                           >*/
+  LIGMA_MODIFIER_ACTION_MENU,                    /*< desc="Display the menu"                           >*/
 
-  GIMP_MODIFIER_ACTION_ACTION,                  /*< desc="Custom action"                              >*/
+  LIGMA_MODIFIER_ACTION_ACTION,                  /*< desc="Custom action"                              >*/
 
-  GIMP_MODIFIER_ACTION_BRUSH_PIXEL_SIZE,        /*< desc="Change brush size in canvas pixels"         >*/
-  GIMP_MODIFIER_ACTION_BRUSH_RADIUS_PIXEL_SIZE, /*< desc="Change brush radius' size in canvas pixels" >*/
-  GIMP_MODIFIER_ACTION_TOOL_OPACITY,            /*< desc="Change tool opacity"                        >*/
-} GimpModifierAction;
+  LIGMA_MODIFIER_ACTION_BRUSH_PIXEL_SIZE,        /*< desc="Change brush size in canvas pixels"         >*/
+  LIGMA_MODIFIER_ACTION_BRUSH_RADIUS_PIXEL_SIZE, /*< desc="Change brush radius' size in canvas pixels" >*/
+  LIGMA_MODIFIER_ACTION_TOOL_OPACITY,            /*< desc="Change tool opacity"                        >*/
+} LigmaModifierAction;
 
 
 /*
@@ -291,10 +291,10 @@ typedef enum
 
 typedef enum  /*< pdb-skip, skip >*/
 {
-  GIMP_HIT_NONE,
-  GIMP_HIT_INDIRECT,
-  GIMP_HIT_DIRECT
-} GimpHit;
+  LIGMA_HIT_NONE,
+  LIGMA_HIT_INDIRECT,
+  LIGMA_HIT_DIRECT
+} LigmaHit;
 
 
 #endif /* __DISPLAY_ENUMS_H__ */

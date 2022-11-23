@@ -1,4 +1,4 @@
 Makefile
 Makefile.in
-gimp-core-pixbufs.gresource.xml
-gimp-icon-pixbufs.gresource.xml
+ligma-core-pixbufs.gresource.xml
+ligma-icon-pixbufs.gresource.xml

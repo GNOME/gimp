@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,22 +15,22 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DISPLAY_SHELL_SCROLLBARS_H__
-#define __GIMP_DISPLAY_SHELL_SCROLLBARS_H__
+#ifndef __LIGMA_DISPLAY_SHELL_SCROLLBARS_H__
+#define __LIGMA_DISPLAY_SHELL_SCROLLBARS_H__
 
 
-void   gimp_display_shell_scrollbars_update           (GimpDisplayShell *shell);
+void   ligma_display_shell_scrollbars_update           (LigmaDisplayShell *shell);
 
-void   gimp_display_shell_scrollbars_setup_horizontal (GimpDisplayShell *shell,
+void   ligma_display_shell_scrollbars_setup_horizontal (LigmaDisplayShell *shell,
                                                        gdouble           value);
-void   gimp_display_shell_scrollbars_setup_vertical   (GimpDisplayShell *shell,
+void   ligma_display_shell_scrollbars_setup_vertical   (LigmaDisplayShell *shell,
                                                        gdouble           value);
 
-void   gimp_display_shell_scrollbars_update_steppers  (GimpDisplayShell *shell,
+void   ligma_display_shell_scrollbars_update_steppers  (LigmaDisplayShell *shell,
                                                        gint              min_offset_x,
                                                        gint              max_offset_x,
                                                        gint              min_offset_y,
                                                        gint              max_offset_y);
 
 
-#endif  /*  __GIMP_DISPLAY_SHELL_SCROLLBARS_H__  */
+#endif  /*  __LIGMA_DISPLAY_SHELL_SCROLLBARS_H__  */

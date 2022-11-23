@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpapp.c
+ * ligmaapp.c
  * Copyright (C) 2021 Niels De Graef <nielsdegraef@gmail.com>
  *
  * This library is distributed in the hope that it will be useful,
@@ -18,56 +18,56 @@
 
 #include <gio/gio.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "core/core-types.h"
 
-#include "core/gimp.h"
+#include "core/ligma.h"
 
-#include "gimpconsoleapp.h"
-#include "gimpcoreapp.h"
+#include "ligmaconsoleapp.h"
+#include "ligmacoreapp.h"
 
-struct _GimpConsoleApp
+struct _LigmaConsoleApp
 {
   GApplication parent_instance;
 };
 
-G_DEFINE_TYPE_WITH_CODE (GimpConsoleApp, gimp_console_app, G_TYPE_APPLICATION,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CORE_APP,
-                                                gimp_console_app_class_init))
+G_DEFINE_TYPE_WITH_CODE (LigmaConsoleApp, ligma_console_app, G_TYPE_APPLICATION,
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_CORE_APP,
+                                                ligma_console_app_class_init))
 
 
 static void
-gimp_console_app_class_init (GimpConsoleAppClass *klass)
+ligma_console_app_class_init (LigmaConsoleAppClass *klass)
 {
   GObjectClass *gobj_class = G_OBJECT_CLASS (klass);
 
-  gobj_class->finalize     = gimp_core_app_finalize;
-  gobj_class->get_property = gimp_core_app_get_property;
-  gobj_class->set_property = gimp_core_app_set_property;
+  gobj_class->finalize     = ligma_core_app_finalize;
+  gobj_class->get_property = ligma_core_app_get_property;
+  gobj_class->set_property = ligma_core_app_set_property;
 
-  gimp_core_app_install_properties (gobj_class);
+  ligma_core_app_install_properties (gobj_class);
 }
 
 static void
-gimp_console_app_init (GimpConsoleApp *self)
+ligma_console_app_init (LigmaConsoleApp *self)
 {
 }
 
 /*  public functions  */
 
 GApplication *
-gimp_console_app_new (Gimp        *gimp,
+ligma_console_app_new (Ligma        *ligma,
                       gboolean     quit,
                       gboolean     as_new,
                       const char **filenames,
                       const char  *batch_interpreter,
                       const char **batch_commands)
 {
-  GimpConsoleApp *app;
+  LigmaConsoleApp *app;
 
-  app = g_object_new (GIMP_TYPE_CONSOLE_APP,
-                      "gimp",              gimp,
+  app = g_object_new (LIGMA_TYPE_CONSOLE_APP,
+                      "ligma",              ligma,
                       "filenames",         filenames,
                       "as-new",            as_new,
 

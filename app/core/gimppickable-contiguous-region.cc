@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,23 +23,23 @@
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmamath/ligmamath.h"
 
 extern "C"
 {
 
 #include "core-types.h"
 
-#include "gegl/gimp-babl.h"
-#include "gegl/gimp-gegl-utils.h"
+#include "gegl/ligma-babl.h"
+#include "gegl/ligma-gegl-utils.h"
 
-#include "gimp-parallel.h"
-#include "gimp-utils.h" /* GIMP_TIMER */
-#include "gimpasync.h"
-#include "gimplineart.h"
-#include "gimppickable.h"
-#include "gimppickable-contiguous-region.h"
+#include "ligma-parallel.h"
+#include "ligma-utils.h" /* LIGMA_TIMER */
+#include "ligmaasync.h"
+#include "ligmalineart.h"
+#include "ligmapickable.h"
+#include "ligmapickable-contiguous-region.h"
 
 
 #define EPSILON 1e-6
@@ -59,7 +59,7 @@ typedef struct
 /*  local function prototypes  */
 
 static const Babl * choose_format         (GeglBuffer          *buffer,
-                                           GimpSelectCriterion  select_criterion,
+                                           LigmaSelectCriterion  select_criterion,
                                            gint                *n_components,
                                            gboolean            *has_alpha);
 static gfloat   pixel_difference          (const gfloat        *col1,
@@ -69,7 +69,7 @@ static gfloat   pixel_difference          (const gfloat        *col1,
                                            gint                 n_components,
                                            gboolean             has_alpha,
                                            gboolean             select_transparent,
-                                           GimpSelectCriterion  select_criterion);
+                                           LigmaSelectCriterion  select_criterion);
 static void     push_segment              (GQueue              *segment_queue,
                                            gint                 y,
                                            gint                 old_y,
@@ -93,7 +93,7 @@ static gboolean find_contiguous_segment   (const gfloat        *col,
                                            gint                 n_components,
                                            gboolean             has_alpha,
                                            gboolean             select_transparent,
-                                           GimpSelectCriterion  select_criterion,
+                                           LigmaSelectCriterion  select_criterion,
                                            gboolean             antialias,
                                            gfloat               threshold,
                                            gint                 initial_x,
@@ -107,7 +107,7 @@ static void     find_contiguous_region    (GeglBuffer          *src_buffer,
                                            gint                 n_components,
                                            gboolean             has_alpha,
                                            gboolean             select_transparent,
-                                           GimpSelectCriterion  select_criterion,
+                                           LigmaSelectCriterion  select_criterion,
                                            gboolean             antialias,
                                            gfloat               threshold,
                                            gboolean             diagonal_neighbors,
@@ -124,11 +124,11 @@ static void            line_art_queue_pixel (GQueue              *queue,
 /*  public functions  */
 
 GeglBuffer *
-gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
+ligma_pickable_contiguous_region_by_seed (LigmaPickable        *pickable,
                                          gboolean             antialias,
                                          gfloat               threshold,
                                          gboolean             select_transparent,
-                                         GimpSelectCriterion  select_criterion,
+                                         LigmaSelectCriterion  select_criterion,
                                          gboolean             diagonal_neighbors,
                                          gint                 x,
                                          gint                 y)
@@ -141,10 +141,10 @@ gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
   gboolean       has_alpha;
   gfloat         start_col[MAX_CHANNELS];
 
-  g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), NULL);
+  g_return_val_if_fail (LIGMA_IS_PICKABLE (pickable), NULL);
 
-  gimp_pickable_flush (pickable);
-  src_buffer = gimp_pickable_get_buffer (pickable);
+  ligma_pickable_flush (pickable);
+  src_buffer = ligma_pickable_get_buffer (pickable);
 
   format = choose_format (src_buffer, select_criterion,
                           &n_components, &has_alpha);
@@ -174,7 +174,7 @@ gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
   if (x >= extent.x && x < (extent.x + extent.width) &&
       y >= extent.y && y < (extent.y + extent.height))
     {
-      GIMP_TIMER_START();
+      LIGMA_TIMER_START();
 
       find_contiguous_region (src_buffer, mask_buffer,
                               format, n_components, has_alpha,
@@ -182,19 +182,19 @@ gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
                               antialias, threshold, diagonal_neighbors,
                               x, y, start_col);
 
-      GIMP_TIMER_END("foo");
+      LIGMA_TIMER_END("foo");
     }
 
   return mask_buffer;
 }
 
 GeglBuffer *
-gimp_pickable_contiguous_region_by_color (GimpPickable        *pickable,
+ligma_pickable_contiguous_region_by_color (LigmaPickable        *pickable,
                                           gboolean             antialias,
                                           gfloat               threshold,
                                           gboolean             select_transparent,
-                                          GimpSelectCriterion  select_criterion,
-                                          const GimpRGB       *color)
+                                          LigmaSelectCriterion  select_criterion,
+                                          const LigmaRGB       *color)
 {
   /*  Scan over the pickable's active layer, finding pixels within the
    *  specified threshold from the given R, G, & B values.  If
@@ -209,7 +209,7 @@ gimp_pickable_contiguous_region_by_color (GimpPickable        *pickable,
   gboolean    has_alpha;
   gfloat      start_col[MAX_CHANNELS];
 
-  g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), NULL);
+  g_return_val_if_fail (LIGMA_IS_PICKABLE (pickable), NULL);
   g_return_val_if_fail (color != NULL, NULL);
 
   /* increase the threshold by EPSILON, to allow for conversion errors,
@@ -220,14 +220,14 @@ gimp_pickable_contiguous_region_by_color (GimpPickable        *pickable,
    */
   threshold += EPSILON;
 
-  gimp_pickable_flush (pickable);
+  ligma_pickable_flush (pickable);
 
-  src_buffer = gimp_pickable_get_buffer (pickable);
+  src_buffer = ligma_pickable_get_buffer (pickable);
 
   format = choose_format (src_buffer, select_criterion,
                           &n_components, &has_alpha);
 
-  gimp_rgba_get_pixel (color, format, start_col);
+  ligma_rgba_get_pixel (color, format, start_col);
 
   if (has_alpha)
     {
@@ -288,10 +288,10 @@ gimp_pickable_contiguous_region_by_color (GimpPickable        *pickable,
 }
 
 GeglBuffer *
-gimp_pickable_contiguous_region_by_line_art (GimpPickable  *pickable,
-                                             GimpLineArt   *line_art,
+ligma_pickable_contiguous_region_by_line_art (LigmaPickable  *pickable,
+                                             LigmaLineArt   *line_art,
                                              GeglBuffer    *fill_buffer,
-                                             const GimpRGB *fill_color,
+                                             const LigmaRGB *fill_color,
                                              gfloat         fill_threshold,
                                              gint           fill_offset_x,
                                              gint           fill_offset_y,
@@ -308,7 +308,7 @@ gimp_pickable_contiguous_region_by_line_art (GimpPickable  *pickable,
   gboolean       filled          = FALSE;
   guchar         start_col;
 
-  g_return_val_if_fail (GIMP_IS_PICKABLE (pickable) || GIMP_IS_LINE_ART (line_art), NULL);
+  g_return_val_if_fail (LIGMA_IS_PICKABLE (pickable) || LIGMA_IS_LINE_ART (line_art), NULL);
 
   if (! line_art)
     {
@@ -316,12 +316,12 @@ gimp_pickable_contiguous_region_by_line_art (GimpPickable  *pickable,
        * but it may not be always possible (for instance when
        * selecting/filling through a PDB call).
        */
-      line_art = gimp_line_art_new ();
-      gimp_line_art_set_input (line_art, pickable);
+      line_art = ligma_line_art_new ();
+      ligma_line_art_set_input (line_art, pickable);
       free_line_art = TRUE;
     }
 
-  src_buffer = gimp_line_art_get (line_art, &distmap);
+  src_buffer = ligma_line_art_get (line_art, &distmap);
   g_return_val_if_fail (src_buffer && distmap, NULL);
 
   if (fill_buffer != NULL)
@@ -335,11 +335,11 @@ gimp_pickable_contiguous_region_by_line_art (GimpPickable  *pickable,
 
       fill_extent = gegl_buffer_get_extent (fill_buffer);
       fill_format = choose_format (fill_buffer,
-                                   GIMP_SELECT_CRITERION_COMPOSITE,
+                                   LIGMA_SELECT_CRITERION_COMPOSITE,
                                    &n_components, &has_alpha);
-      gimp_rgba_get_pixel (fill_color, fill_format, fill_col);
+      ligma_rgba_get_pixel (fill_color, fill_format, fill_col);
 
-      src_buffer = gimp_gegl_buffer_dup (src_buffer);
+      src_buffer = ligma_gegl_buffer_dup (src_buffer);
       gi = gegl_buffer_iterator_new (src_buffer, NULL, 0, NULL,
                                      GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE, 2);
       gegl_buffer_iterator_add (gi, fill_buffer,
@@ -368,7 +368,7 @@ gimp_pickable_contiguous_region_by_line_art (GimpPickable  *pickable,
                                            FALSE,
                                            fill_threshold,
                                            n_components, has_alpha, FALSE,
-                                           GIMP_SELECT_CRITERION_COMPOSITE);
+                                           LIGMA_SELECT_CRITERION_COMPOSITE);
 
                   /* Make the additional fill pixel a closure pixel. */
                   if (diff == 1.0)
@@ -415,7 +415,7 @@ gimp_pickable_contiguous_region_by_line_art (GimpPickable  *pickable,
               y - 1 >= extent.y && y - 1 < (extent.y + extent.height))
             find_contiguous_region (src_buffer, mask_buffer,
                                     format, 1, FALSE,
-                                    FALSE, GIMP_SELECT_CRITERION_COMPOSITE,
+                                    FALSE, LIGMA_SELECT_CRITERION_COMPOSITE,
                                     FALSE, 0.0, FALSE,
                                     x - 1, y - 1, &col);
 
@@ -423,7 +423,7 @@ gimp_pickable_contiguous_region_by_line_art (GimpPickable  *pickable,
               y >= extent.y && y < (extent.y + extent.height))
             find_contiguous_region (src_buffer, mask_buffer,
                                     format, 1, FALSE,
-                                    FALSE, GIMP_SELECT_CRITERION_COMPOSITE,
+                                    FALSE, LIGMA_SELECT_CRITERION_COMPOSITE,
                                     FALSE, 0.0, FALSE,
                                     x - 1, y, &col);
 
@@ -431,7 +431,7 @@ gimp_pickable_contiguous_region_by_line_art (GimpPickable  *pickable,
               y + 1 >= extent.y && y + 1 < (extent.y + extent.height))
             find_contiguous_region (src_buffer, mask_buffer,
                                     format, 1, FALSE,
-                                    FALSE, GIMP_SELECT_CRITERION_COMPOSITE,
+                                    FALSE, LIGMA_SELECT_CRITERION_COMPOSITE,
                                     FALSE, 0.0, FALSE,
                                     x - 1, y + 1, &col);
 
@@ -439,7 +439,7 @@ gimp_pickable_contiguous_region_by_line_art (GimpPickable  *pickable,
               y - 1 >= extent.y && y - 1 < (extent.y + extent.height))
             find_contiguous_region (src_buffer, mask_buffer,
                                     format, 1, FALSE,
-                                    FALSE, GIMP_SELECT_CRITERION_COMPOSITE,
+                                    FALSE, LIGMA_SELECT_CRITERION_COMPOSITE,
                                     FALSE, 0.0, FALSE,
                                     x, y - 1, &col);
 
@@ -447,7 +447,7 @@ gimp_pickable_contiguous_region_by_line_art (GimpPickable  *pickable,
               y + 1 >= extent.y && y + 1 < (extent.y + extent.height))
             find_contiguous_region (src_buffer, mask_buffer,
                                     format, 1, FALSE,
-                                    FALSE, GIMP_SELECT_CRITERION_COMPOSITE,
+                                    FALSE, LIGMA_SELECT_CRITERION_COMPOSITE,
                                     FALSE, 0.0, FALSE,
                                     x, y + 1, &col);
 
@@ -455,7 +455,7 @@ gimp_pickable_contiguous_region_by_line_art (GimpPickable  *pickable,
               y - 1 >= extent.y && y - 1 < (extent.y + extent.height))
             find_contiguous_region (src_buffer, mask_buffer,
                                     format, 1, FALSE,
-                                    FALSE, GIMP_SELECT_CRITERION_COMPOSITE,
+                                    FALSE, LIGMA_SELECT_CRITERION_COMPOSITE,
                                     FALSE, 0.0, FALSE,
                                     x + 1, y - 1, &col);
 
@@ -463,7 +463,7 @@ gimp_pickable_contiguous_region_by_line_art (GimpPickable  *pickable,
               y >= extent.y && y < (extent.y + extent.height))
             find_contiguous_region (src_buffer, mask_buffer,
                                     format, 1, FALSE,
-                                    FALSE, GIMP_SELECT_CRITERION_COMPOSITE,
+                                    FALSE, LIGMA_SELECT_CRITERION_COMPOSITE,
                                     FALSE, 0.0, FALSE,
                                     x + 1, y, &col);
 
@@ -471,7 +471,7 @@ gimp_pickable_contiguous_region_by_line_art (GimpPickable  *pickable,
               y + 1 >= extent.y && y + 1 < (extent.y + extent.height))
             find_contiguous_region (src_buffer, mask_buffer,
                                     format, 1, FALSE,
-                                    FALSE, GIMP_SELECT_CRITERION_COMPOSITE,
+                                    FALSE, LIGMA_SELECT_CRITERION_COMPOSITE,
                                     FALSE, 0.0, FALSE,
                                     x + 1, y + 1, &col);
 
@@ -485,7 +485,7 @@ gimp_pickable_contiguous_region_by_line_art (GimpPickable  *pickable,
 
       find_contiguous_region (src_buffer, mask_buffer,
                               format, 1, FALSE,
-                              FALSE, GIMP_SELECT_CRITERION_COMPOSITE,
+                              FALSE, LIGMA_SELECT_CRITERION_COMPOSITE,
                               FALSE, 0.0, FALSE,
                               x, y, &col);
       filled = TRUE;
@@ -500,7 +500,7 @@ gimp_pickable_contiguous_region_by_line_art (GimpPickable  *pickable,
       gint    line_art_max_grow;
       gint    nx, ny;
 
-      GIMP_TIMER_START();
+      LIGMA_TIMER_START();
       /* The last step of the line art algorithm is to make sure that
        * selections does not leave "holes" between its borders and the
        * line arts, while not stepping over as well.
@@ -678,7 +678,7 @@ gimp_pickable_contiguous_region_by_line_art (GimpPickable  *pickable,
                        0, NULL, mask, GEGL_AUTO_ROWSTRIDE);
       g_free (mask);
 
-      GIMP_TIMER_END("watershed line art");
+      LIGMA_TIMER_END("watershed line art");
     }
   if (free_line_art)
     g_clear_object (&line_art);
@@ -692,7 +692,7 @@ gimp_pickable_contiguous_region_by_line_art (GimpPickable  *pickable,
 
 static const Babl *
 choose_format (GeglBuffer          *buffer,
-               GimpSelectCriterion  select_criterion,
+               LigmaSelectCriterion  select_criterion,
                gint                *n_components,
                gboolean            *has_alpha)
 {
@@ -702,35 +702,35 @@ choose_format (GeglBuffer          *buffer,
 
   switch (select_criterion)
     {
-    case GIMP_SELECT_CRITERION_COMPOSITE:
+    case LIGMA_SELECT_CRITERION_COMPOSITE:
       if (babl_format_is_palette (format))
         format = babl_format ("R'G'B'A float");
       else
-        format = gimp_babl_format (gimp_babl_format_get_base_type (format),
-                                   GIMP_PRECISION_FLOAT_NON_LINEAR,
+        format = ligma_babl_format (ligma_babl_format_get_base_type (format),
+                                   LIGMA_PRECISION_FLOAT_NON_LINEAR,
                                    *has_alpha,
                                    NULL);
       break;
 
-    case GIMP_SELECT_CRITERION_RGB_RED:
-    case GIMP_SELECT_CRITERION_RGB_GREEN:
-    case GIMP_SELECT_CRITERION_RGB_BLUE:
-    case GIMP_SELECT_CRITERION_ALPHA:
+    case LIGMA_SELECT_CRITERION_RGB_RED:
+    case LIGMA_SELECT_CRITERION_RGB_GREEN:
+    case LIGMA_SELECT_CRITERION_RGB_BLUE:
+    case LIGMA_SELECT_CRITERION_ALPHA:
       format = babl_format ("R'G'B'A float");
       break;
 
-    case GIMP_SELECT_CRITERION_HSV_HUE:
-    case GIMP_SELECT_CRITERION_HSV_SATURATION:
-    case GIMP_SELECT_CRITERION_HSV_VALUE:
+    case LIGMA_SELECT_CRITERION_HSV_HUE:
+    case LIGMA_SELECT_CRITERION_HSV_SATURATION:
+    case LIGMA_SELECT_CRITERION_HSV_VALUE:
       format = babl_format ("HSVA float");
       break;
 
-    case GIMP_SELECT_CRITERION_LCH_LIGHTNESS:
+    case LIGMA_SELECT_CRITERION_LCH_LIGHTNESS:
       format = babl_format ("CIE L alpha float");
       break;
 
-    case GIMP_SELECT_CRITERION_LCH_CHROMA:
-    case GIMP_SELECT_CRITERION_LCH_HUE:
+    case LIGMA_SELECT_CRITERION_LCH_CHROMA:
+    case LIGMA_SELECT_CRITERION_LCH_HUE:
       format = babl_format ("CIE LCH(ab) alpha float");
       break;
 
@@ -752,7 +752,7 @@ pixel_difference (const gfloat        *col1,
                   gint                 n_components,
                   gboolean             has_alpha,
                   gboolean             select_transparent,
-                  GimpSelectCriterion  select_criterion)
+                  LigmaSelectCriterion  select_criterion)
 {
   gfloat max = 0.0;
 
@@ -774,7 +774,7 @@ pixel_difference (const gfloat        *col1,
 
       switch (select_criterion)
         {
-        case GIMP_SELECT_CRITERION_COMPOSITE:
+        case LIGMA_SELECT_CRITERION_COMPOSITE:
           for (b = 0; b < n_components; b++)
             {
               diff = fabs (col1[b] - col2[b]);
@@ -783,23 +783,23 @@ pixel_difference (const gfloat        *col1,
             }
           break;
 
-        case GIMP_SELECT_CRITERION_RGB_RED:
+        case LIGMA_SELECT_CRITERION_RGB_RED:
           max = fabs (col1[0] - col2[0]);
           break;
 
-        case GIMP_SELECT_CRITERION_RGB_GREEN:
+        case LIGMA_SELECT_CRITERION_RGB_GREEN:
           max = fabs (col1[1] - col2[1]);
           break;
 
-        case GIMP_SELECT_CRITERION_RGB_BLUE:
+        case LIGMA_SELECT_CRITERION_RGB_BLUE:
           max = fabs (col1[2] - col2[2]);
           break;
 
-        case GIMP_SELECT_CRITERION_ALPHA:
+        case LIGMA_SELECT_CRITERION_ALPHA:
           max = fabs (col1[3] - col2[3]);
           break;
 
-        case GIMP_SELECT_CRITERION_HSV_HUE:
+        case LIGMA_SELECT_CRITERION_HSV_HUE:
           if (col1[1] > EPSILON)
             {
               if (col2[1] > EPSILON)
@@ -827,23 +827,23 @@ pixel_difference (const gfloat        *col1,
             }
           break;
 
-        case GIMP_SELECT_CRITERION_HSV_SATURATION:
+        case LIGMA_SELECT_CRITERION_HSV_SATURATION:
           max = fabs (col1[1] - col2[1]);
           break;
 
-        case GIMP_SELECT_CRITERION_HSV_VALUE:
+        case LIGMA_SELECT_CRITERION_HSV_VALUE:
           max = fabs (col1[2] - col2[2]);
           break;
 
-        case GIMP_SELECT_CRITERION_LCH_LIGHTNESS:
+        case LIGMA_SELECT_CRITERION_LCH_LIGHTNESS:
           max = fabs (col1[0] - col2[0]) / 100.0;
           break;
 
-        case GIMP_SELECT_CRITERION_LCH_CHROMA:
+        case LIGMA_SELECT_CRITERION_LCH_CHROMA:
           max = fabs (col1[1] - col2[1]) / 100.0;
           break;
 
-        case GIMP_SELECT_CRITERION_LCH_HUE:
+        case LIGMA_SELECT_CRITERION_LCH_HUE:
           if (col1[1] > 100.0 * EPSILON)
             {
               if (col2[1] > 100.0 * EPSILON)
@@ -971,7 +971,7 @@ find_contiguous_segment (const gfloat        *col,
                          gint                 n_components,
                          gboolean             has_alpha,
                          gboolean             select_transparent,
-                         GimpSelectCriterion  select_criterion,
+                         LigmaSelectCriterion  select_criterion,
                          gboolean             antialias,
                          gfloat               threshold,
                          gint                 initial_x,
@@ -1074,7 +1074,7 @@ find_contiguous_region (GeglBuffer          *src_buffer,
                         gint                 n_components,
                         gboolean             has_alpha,
                         gboolean             select_transparent,
-                        GimpSelectCriterion  select_criterion,
+                        LigmaSelectCriterion  select_criterion,
                         gboolean             antialias,
                         gfloat               threshold,
                         gboolean             diagonal_neighbors,

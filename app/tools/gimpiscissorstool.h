@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,11 +15,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_ISCISSORS_TOOL_H__
-#define __GIMP_ISCISSORS_TOOL_H__
+#ifndef __LIGMA_ISCISSORS_TOOL_H__
+#define __LIGMA_ISCISSORS_TOOL_H__
 
 
-#include "gimpselectiontool.h"
+#include "ligmaselectiontool.h"
 
 
 /*  The possible states...  */
@@ -47,22 +47,22 @@ typedef struct _ISegment ISegment;
 typedef struct _ICurve   ICurve;
 
 
-#define GIMP_TYPE_ISCISSORS_TOOL            (gimp_iscissors_tool_get_type ())
-#define GIMP_ISCISSORS_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_ISCISSORS_TOOL, GimpIscissorsTool))
-#define GIMP_ISCISSORS_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_ISCISSORS_TOOL, GimpIscissorsToolClass))
-#define GIMP_IS_ISCISSORS_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_ISCISSORS_TOOL))
-#define GIMP_IS_ISCISSORS_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_ISCISSORS_TOOL))
-#define GIMP_ISCISSORS_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_ISCISSORS_TOOL, GimpIscissorsToolClass))
+#define LIGMA_TYPE_ISCISSORS_TOOL            (ligma_iscissors_tool_get_type ())
+#define LIGMA_ISCISSORS_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_ISCISSORS_TOOL, LigmaIscissorsTool))
+#define LIGMA_ISCISSORS_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_ISCISSORS_TOOL, LigmaIscissorsToolClass))
+#define LIGMA_IS_ISCISSORS_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_ISCISSORS_TOOL))
+#define LIGMA_IS_ISCISSORS_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_ISCISSORS_TOOL))
+#define LIGMA_ISCISSORS_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_ISCISSORS_TOOL, LigmaIscissorsToolClass))
 
-#define GIMP_ISCISSORS_TOOL_GET_OPTIONS(t)  (GIMP_ISCISSORS_OPTIONS (gimp_tool_get_options (GIMP_TOOL (t))))
+#define LIGMA_ISCISSORS_TOOL_GET_OPTIONS(t)  (LIGMA_ISCISSORS_OPTIONS (ligma_tool_get_options (LIGMA_TOOL (t))))
 
 
-typedef struct _GimpIscissorsTool      GimpIscissorsTool;
-typedef struct _GimpIscissorsToolClass GimpIscissorsToolClass;
+typedef struct _LigmaIscissorsTool      LigmaIscissorsTool;
+typedef struct _LigmaIscissorsToolClass LigmaIscissorsToolClass;
 
-struct _GimpIscissorsTool
+struct _LigmaIscissorsTool
 {
-  GimpSelectionTool  parent_instance;
+  LigmaSelectionTool  parent_instance;
 
   IscissorsOps    op;
 
@@ -79,19 +79,19 @@ struct _GimpIscissorsTool
   IscissorsState  state;        /*  state of iscissors                      */
 
   GeglBuffer     *gradient_map; /*  lazily filled gradient map              */
-  GimpChannel    *mask;         /*  selection mask                          */
+  LigmaChannel    *mask;         /*  selection mask                          */
 };
 
-struct _GimpIscissorsToolClass
+struct _LigmaIscissorsToolClass
 {
-  GimpSelectionToolClass parent_class;
+  LigmaSelectionToolClass parent_class;
 };
 
 
-void    gimp_iscissors_tool_register (GimpToolRegisterCallback  callback,
+void    ligma_iscissors_tool_register (LigmaToolRegisterCallback  callback,
                                       gpointer                  data);
 
-GType   gimp_iscissors_tool_get_type (void) G_GNUC_CONST;
+GType   ligma_iscissors_tool_get_type (void) G_GNUC_CONST;
 
 
-#endif  /*  __GIMP_ISCISSORS_TOOL_H__  */
+#endif  /*  __LIGMA_ISCISSORS_TOOL_H__  */

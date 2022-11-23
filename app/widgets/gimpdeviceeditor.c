@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpdeviceeditor.c
- * Copyright (C) 2010 Michael Natterer <mitch@gimp.org>
+ * ligmadeviceeditor.c
+ * Copyright (C) 2010 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,43 +23,43 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontext.h"
-#include "core/gimpfilteredcontainer.h"
-#include "core/gimplist.h"
+#include "core/ligma.h"
+#include "core/ligmacontext.h"
+#include "core/ligmafilteredcontainer.h"
+#include "core/ligmalist.h"
 
-#include "gimpcontainerview.h"
-#include "gimpcontainertreestore.h"
-#include "gimpcontainertreeview.h"
-#include "gimpdeviceeditor.h"
-#include "gimpdeviceinfo.h"
-#include "gimpdeviceinfoeditor.h"
-#include "gimpdevicemanager.h"
-#include "gimpdevices.h"
-#include "gimpmessagebox.h"
-#include "gimpmessagedialog.h"
-#include "gimpviewrenderer.h"
+#include "ligmacontainerview.h"
+#include "ligmacontainertreestore.h"
+#include "ligmacontainertreeview.h"
+#include "ligmadeviceeditor.h"
+#include "ligmadeviceinfo.h"
+#include "ligmadeviceinfoeditor.h"
+#include "ligmadevicemanager.h"
+#include "ligmadevices.h"
+#include "ligmamessagebox.h"
+#include "ligmamessagedialog.h"
+#include "ligmaviewrenderer.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
 {
   PROP_0,
-  PROP_GIMP
+  PROP_LIGMA
 };
 
 
-typedef struct _GimpDeviceEditorPrivate GimpDeviceEditorPrivate;
+typedef struct _LigmaDeviceEditorPrivate LigmaDeviceEditorPrivate;
 
-struct _GimpDeviceEditorPrivate
+struct _LigmaDeviceEditorPrivate
 {
-  Gimp      *gimp;
+  Ligma      *ligma;
 
   GQuark     name_changed_handler;
 
@@ -73,67 +73,67 @@ struct _GimpDeviceEditorPrivate
 };
 
 
-#define GIMP_DEVICE_EDITOR_GET_PRIVATE(editor) \
-        ((GimpDeviceEditorPrivate *) gimp_device_editor_get_instance_private ((GimpDeviceEditor *) (editor)))
+#define LIGMA_DEVICE_EDITOR_GET_PRIVATE(editor) \
+        ((LigmaDeviceEditorPrivate *) ligma_device_editor_get_instance_private ((LigmaDeviceEditor *) (editor)))
 
 
-static void   gimp_device_editor_constructed    (GObject           *object);
-static void   gimp_device_editor_dispose        (GObject           *object);
-static void   gimp_device_editor_set_property   (GObject           *object,
+static void   ligma_device_editor_constructed    (GObject           *object);
+static void   ligma_device_editor_dispose        (GObject           *object);
+static void   ligma_device_editor_set_property   (GObject           *object,
                                                  guint              property_id,
                                                  const GValue      *value,
                                                  GParamSpec        *pspec);
-static void   gimp_device_editor_get_property   (GObject           *object,
+static void   ligma_device_editor_get_property   (GObject           *object,
                                                  guint              property_id,
                                                  GValue            *value,
                                                  GParamSpec        *pspec);
 
-static void   gimp_device_editor_add_device     (GimpContainer     *container,
-                                                 GimpDeviceInfo    *info,
-                                                 GimpDeviceEditor  *editor);
-static void   gimp_device_editor_remove_device  (GimpContainer     *container,
-                                                 GimpDeviceInfo    *info,
-                                                 GimpDeviceEditor  *editor);
-static void   gimp_device_editor_device_changed (GimpDeviceInfo    *info,
-                                                 GimpDeviceEditor  *editor);
+static void   ligma_device_editor_add_device     (LigmaContainer     *container,
+                                                 LigmaDeviceInfo    *info,
+                                                 LigmaDeviceEditor  *editor);
+static void   ligma_device_editor_remove_device  (LigmaContainer     *container,
+                                                 LigmaDeviceInfo    *info,
+                                                 LigmaDeviceEditor  *editor);
+static void   ligma_device_editor_device_changed (LigmaDeviceInfo    *info,
+                                                 LigmaDeviceEditor  *editor);
 
-static gboolean gimp_device_editor_select_device (GimpContainerView *view,
+static gboolean ligma_device_editor_select_device (LigmaContainerView *view,
                                                   GList             *viewables,
                                                   GList             *paths,
-                                                  GimpDeviceEditor  *editor);
+                                                  LigmaDeviceEditor  *editor);
 
-static void   gimp_device_editor_delete_clicked (GtkWidget         *button,
-                                                 GimpDeviceEditor  *editor);
+static void   ligma_device_editor_delete_clicked (GtkWidget         *button,
+                                                 LigmaDeviceEditor  *editor);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpDeviceEditor, gimp_device_editor,
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaDeviceEditor, ligma_device_editor,
                             GTK_TYPE_PANED)
 
-#define parent_class gimp_device_editor_parent_class
+#define parent_class ligma_device_editor_parent_class
 
 
 static void
-gimp_device_editor_class_init (GimpDeviceEditorClass *klass)
+ligma_device_editor_class_init (LigmaDeviceEditorClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->constructed  = gimp_device_editor_constructed;
-  object_class->dispose      = gimp_device_editor_dispose;
-  object_class->set_property = gimp_device_editor_set_property;
-  object_class->get_property = gimp_device_editor_get_property;
+  object_class->constructed  = ligma_device_editor_constructed;
+  object_class->dispose      = ligma_device_editor_dispose;
+  object_class->set_property = ligma_device_editor_set_property;
+  object_class->get_property = ligma_device_editor_get_property;
 
-  g_object_class_install_property (object_class, PROP_GIMP,
-                                   g_param_spec_object ("gimp",
+  g_object_class_install_property (object_class, PROP_LIGMA,
+                                   g_param_spec_object ("ligma",
                                                         NULL, NULL,
-                                                        GIMP_TYPE_GIMP,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_TYPE_LIGMA,
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
-gimp_device_editor_init (GimpDeviceEditor *editor)
+ligma_device_editor_init (LigmaDeviceEditor *editor)
 {
-  GimpDeviceEditorPrivate *private = GIMP_DEVICE_EDITOR_GET_PRIVATE (editor);
+  LigmaDeviceEditorPrivate *private = LIGMA_DEVICE_EDITOR_GET_PRIVATE (editor);
   GtkWidget               *vbox;
   GtkWidget               *ebox;
   GtkWidget               *hbox;
@@ -145,21 +145,21 @@ gimp_device_editor_init (GimpDeviceEditor *editor)
   gtk_paned_set_wide_handle (GTK_PANED (editor), TRUE);
 
   gtk_icon_size_lookup (GTK_ICON_SIZE_BUTTON, &icon_width, &icon_height);
-  private->treeview = gimp_container_tree_view_new (NULL, NULL, icon_height, 0);
+  private->treeview = ligma_container_tree_view_new (NULL, NULL, icon_height, 0);
   gtk_widget_set_size_request (private->treeview, 300, -1);
   gtk_paned_pack1 (GTK_PANED (editor), private->treeview, TRUE, FALSE);
   gtk_widget_show (private->treeview);
 
   g_signal_connect_object (private->treeview, "select-items",
-                           G_CALLBACK (gimp_device_editor_select_device),
+                           G_CALLBACK (ligma_device_editor_select_device),
                            G_OBJECT (editor), 0);
 
   private->delete_button =
-    gimp_editor_add_button (GIMP_EDITOR (private->treeview),
+    ligma_editor_add_button (LIGMA_EDITOR (private->treeview),
                             "edit-delete",
                             _("Delete the selected device"),
                             NULL,
-                            G_CALLBACK (gimp_device_editor_delete_clicked),
+                            G_CALLBACK (ligma_device_editor_delete_clicked),
                             NULL,
                             editor);
 
@@ -185,7 +185,7 @@ gimp_device_editor_init (GimpDeviceEditor *editor)
   gtk_widget_set_state_flags (private->label, GTK_STATE_FLAG_SELECTED, TRUE);
   gtk_label_set_xalign (GTK_LABEL (private->label), 0.0);
   gtk_label_set_ellipsize (GTK_LABEL (private->label), PANGO_ELLIPSIZE_END);
-  gimp_label_set_attributes (GTK_LABEL (private->label),
+  ligma_label_set_attributes (GTK_LABEL (private->label),
                              PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
                              -1);
   gtk_box_pack_start (GTK_BOX (hbox), private->label, TRUE, TRUE, 0);
@@ -206,11 +206,11 @@ gimp_device_editor_init (GimpDeviceEditor *editor)
 }
 
 static gboolean
-gimp_device_editor_filter (GimpObject *object,
+ligma_device_editor_filter (LigmaObject *object,
                            gpointer    user_data)
 {
-  GimpDeviceInfo *info   = GIMP_DEVICE_INFO (object);
-  GdkDevice      *device = gimp_device_info_get_device (info, NULL);
+  LigmaDeviceInfo *info   = LIGMA_DEVICE_INFO (object);
+  GdkDevice      *device = ligma_device_info_get_device (info, NULL);
 
   /* In the device editor, we filter out virtual devices (useless from a
    * configuration standpoint) as well as the xtest API device.
@@ -232,79 +232,79 @@ gimp_device_editor_filter (GimpObject *object,
            * this XTEST device which is meant to look like any other
            * device).
            */
-          g_strcmp0 (gimp_object_get_name (info), "Virtual core XTEST pointer") != 0);
+          g_strcmp0 (ligma_object_get_name (info), "Virtual core XTEST pointer") != 0);
 }
 
 static void
-gimp_device_editor_constructed (GObject *object)
+ligma_device_editor_constructed (GObject *object)
 {
-  GimpDeviceEditor        *editor  = GIMP_DEVICE_EDITOR (object);
-  GimpDeviceEditorPrivate *private = GIMP_DEVICE_EDITOR_GET_PRIVATE (editor);
-  GimpContainer           *devices;
-  GimpContainer           *filtered;
-  GimpContext             *context;
+  LigmaDeviceEditor        *editor  = LIGMA_DEVICE_EDITOR (object);
+  LigmaDeviceEditorPrivate *private = LIGMA_DEVICE_EDITOR_GET_PRIVATE (editor);
+  LigmaContainer           *devices;
+  LigmaContainer           *filtered;
+  LigmaContext             *context;
   GList                   *list;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_assert (GIMP_IS_GIMP (private->gimp));
+  ligma_assert (LIGMA_IS_LIGMA (private->ligma));
 
-  devices = GIMP_CONTAINER (gimp_devices_get_manager (private->gimp));
-  filtered = gimp_filtered_container_new (devices, gimp_device_editor_filter, NULL);
+  devices = LIGMA_CONTAINER (ligma_devices_get_manager (private->ligma));
+  filtered = ligma_filtered_container_new (devices, ligma_device_editor_filter, NULL);
 
   /*  connect to "remove" before the container view does so we can get
    *  the stack child stored in its model
    */
   g_signal_connect (devices, "remove",
-                    G_CALLBACK (gimp_device_editor_remove_device),
+                    G_CALLBACK (ligma_device_editor_remove_device),
                     editor);
 
-  gimp_container_view_set_container (GIMP_CONTAINER_VIEW (private->treeview),
+  ligma_container_view_set_container (LIGMA_CONTAINER_VIEW (private->treeview),
                                      filtered);
 
-  context = gimp_context_new (private->gimp, "device-editor-list", NULL);
-  gimp_container_view_set_context (GIMP_CONTAINER_VIEW (private->treeview),
+  context = ligma_context_new (private->ligma, "device-editor-list", NULL);
+  ligma_container_view_set_context (LIGMA_CONTAINER_VIEW (private->treeview),
                                    context);
   g_object_unref (context);
 
   g_signal_connect (devices, "add",
-                    G_CALLBACK (gimp_device_editor_add_device),
+                    G_CALLBACK (ligma_device_editor_add_device),
                     editor);
 
   private->name_changed_handler =
-    gimp_container_add_handler (devices, "name-changed",
-                                G_CALLBACK (gimp_device_editor_device_changed),
+    ligma_container_add_handler (devices, "name-changed",
+                                G_CALLBACK (ligma_device_editor_device_changed),
                                 editor);
 
-  for (list = GIMP_LIST (devices)->queue->head;
+  for (list = LIGMA_LIST (devices)->queue->head;
        list;
        list = g_list_next (list))
     {
-      gimp_device_editor_add_device (devices, list->data, editor);
+      ligma_device_editor_add_device (devices, list->data, editor);
     }
 
   g_object_unref (devices);
 }
 
 static void
-gimp_device_editor_dispose (GObject *object)
+ligma_device_editor_dispose (GObject *object)
 {
-  GimpDeviceEditorPrivate *private = GIMP_DEVICE_EDITOR_GET_PRIVATE (object);
-  GimpContainer           *devices;
+  LigmaDeviceEditorPrivate *private = LIGMA_DEVICE_EDITOR_GET_PRIVATE (object);
+  LigmaContainer           *devices;
 
-  devices = GIMP_CONTAINER (gimp_devices_get_manager (private->gimp));
+  devices = LIGMA_CONTAINER (ligma_devices_get_manager (private->ligma));
 
   g_signal_handlers_disconnect_by_func (devices,
-                                        gimp_device_editor_add_device,
+                                        ligma_device_editor_add_device,
                                         object);
 
   g_signal_handlers_disconnect_by_func (devices,
-                                        gimp_device_editor_remove_device,
+                                        ligma_device_editor_remove_device,
                                         object);
 
   if (private->name_changed_handler)
     {
-      gimp_container_remove_handler (devices, private->name_changed_handler);
+      ligma_container_remove_handler (devices, private->name_changed_handler);
       private->name_changed_handler = 0;
     }
 
@@ -312,17 +312,17 @@ gimp_device_editor_dispose (GObject *object)
 }
 
 static void
-gimp_device_editor_set_property (GObject      *object,
+ligma_device_editor_set_property (GObject      *object,
                                  guint         property_id,
                                  const GValue *value,
                                  GParamSpec   *pspec)
 {
-  GimpDeviceEditorPrivate *private = GIMP_DEVICE_EDITOR_GET_PRIVATE (object);
+  LigmaDeviceEditorPrivate *private = LIGMA_DEVICE_EDITOR_GET_PRIVATE (object);
 
   switch (property_id)
     {
-    case PROP_GIMP:
-      private->gimp = g_value_get_object (value); /* don't ref */
+    case PROP_LIGMA:
+      private->ligma = g_value_get_object (value); /* don't ref */
       break;
 
     default:
@@ -332,17 +332,17 @@ gimp_device_editor_set_property (GObject      *object,
 }
 
 static void
-gimp_device_editor_get_property (GObject    *object,
+ligma_device_editor_get_property (GObject    *object,
                                  guint       property_id,
                                  GValue     *value,
                                  GParamSpec *pspec)
 {
-  GimpDeviceEditorPrivate *private = GIMP_DEVICE_EDITOR_GET_PRIVATE (object);
+  LigmaDeviceEditorPrivate *private = LIGMA_DEVICE_EDITOR_GET_PRIVATE (object);
 
   switch (property_id)
     {
-    case PROP_GIMP:
-      g_value_set_object (value, private->gimp);
+    case PROP_LIGMA:
+      g_value_set_object (value, private->ligma);
       break;
 
     default:
@@ -352,56 +352,56 @@ gimp_device_editor_get_property (GObject    *object,
 }
 
 static void
-gimp_device_editor_add_device (GimpContainer    *container,
-                               GimpDeviceInfo   *info,
-                               GimpDeviceEditor *editor)
+ligma_device_editor_add_device (LigmaContainer    *container,
+                               LigmaDeviceInfo   *info,
+                               LigmaDeviceEditor *editor)
 {
-  GimpDeviceEditorPrivate *private = GIMP_DEVICE_EDITOR_GET_PRIVATE (editor);
+  LigmaDeviceEditorPrivate *private = LIGMA_DEVICE_EDITOR_GET_PRIVATE (editor);
   GtkWidget               *widget;
   GtkTreeIter             *iter;
 
-  widget = gimp_device_info_editor_new (info);
+  widget = ligma_device_info_editor_new (info);
   gtk_stack_add_named (GTK_STACK (private->stack), widget,
-                       gimp_object_get_name (info));
+                       ligma_object_get_name (info));
   gtk_widget_show (widget);
 
-  iter = gimp_container_view_lookup (GIMP_CONTAINER_VIEW (private->treeview),
-                                     GIMP_VIEWABLE (info));
+  iter = ligma_container_view_lookup (LIGMA_CONTAINER_VIEW (private->treeview),
+                                     LIGMA_VIEWABLE (info));
 
   if (iter)
     {
-      GimpContainerTreeView *treeview;
+      LigmaContainerTreeView *treeview;
 
-      treeview = GIMP_CONTAINER_TREE_VIEW (private->treeview);
+      treeview = LIGMA_CONTAINER_TREE_VIEW (private->treeview);
 
       gtk_tree_store_set (GTK_TREE_STORE (treeview->model), iter,
-                          GIMP_CONTAINER_TREE_STORE_COLUMN_USER_DATA, widget,
-                          GIMP_CONTAINER_TREE_STORE_COLUMN_NAME_SENSITIVE,
-                          gimp_device_info_get_device (info, NULL) != NULL,
+                          LIGMA_CONTAINER_TREE_STORE_COLUMN_USER_DATA, widget,
+                          LIGMA_CONTAINER_TREE_STORE_COLUMN_NAME_SENSITIVE,
+                          ligma_device_info_get_device (info, NULL) != NULL,
                           -1);
     }
 }
 
 static void
-gimp_device_editor_remove_device (GimpContainer    *container,
-                                  GimpDeviceInfo   *info,
-                                  GimpDeviceEditor *editor)
+ligma_device_editor_remove_device (LigmaContainer    *container,
+                                  LigmaDeviceInfo   *info,
+                                  LigmaDeviceEditor *editor)
 {
-  GimpDeviceEditorPrivate *private = GIMP_DEVICE_EDITOR_GET_PRIVATE (editor);
+  LigmaDeviceEditorPrivate *private = LIGMA_DEVICE_EDITOR_GET_PRIVATE (editor);
   GtkTreeIter             *iter;
 
-  iter = gimp_container_view_lookup (GIMP_CONTAINER_VIEW (private->treeview),
-                                     GIMP_VIEWABLE (info));
+  iter = ligma_container_view_lookup (LIGMA_CONTAINER_VIEW (private->treeview),
+                                     LIGMA_VIEWABLE (info));
 
   if (iter)
     {
-      GimpContainerTreeView *treeview;
+      LigmaContainerTreeView *treeview;
       GtkWidget             *widget;
 
-      treeview = GIMP_CONTAINER_TREE_VIEW (private->treeview);
+      treeview = LIGMA_CONTAINER_TREE_VIEW (private->treeview);
 
       gtk_tree_model_get (treeview->model, iter,
-                          GIMP_CONTAINER_TREE_STORE_COLUMN_USER_DATA, &widget,
+                          LIGMA_CONTAINER_TREE_STORE_COLUMN_USER_DATA, &widget,
                           -1);
 
       if (widget)
@@ -410,60 +410,60 @@ gimp_device_editor_remove_device (GimpContainer    *container,
 }
 
 static void
-gimp_device_editor_device_changed (GimpDeviceInfo   *info,
-                                   GimpDeviceEditor *editor)
+ligma_device_editor_device_changed (LigmaDeviceInfo   *info,
+                                   LigmaDeviceEditor *editor)
 {
-  GimpDeviceEditorPrivate *private = GIMP_DEVICE_EDITOR_GET_PRIVATE (editor);
+  LigmaDeviceEditorPrivate *private = LIGMA_DEVICE_EDITOR_GET_PRIVATE (editor);
   GtkTreeIter             *iter;
 
-  iter = gimp_container_view_lookup (GIMP_CONTAINER_VIEW (private->treeview),
-                                     GIMP_VIEWABLE (info));
+  iter = ligma_container_view_lookup (LIGMA_CONTAINER_VIEW (private->treeview),
+                                     LIGMA_VIEWABLE (info));
 
   if (iter)
     {
-      GimpContainerTreeView *treeview;
+      LigmaContainerTreeView *treeview;
 
-      treeview = GIMP_CONTAINER_TREE_VIEW (private->treeview);
+      treeview = LIGMA_CONTAINER_TREE_VIEW (private->treeview);
 
       gtk_tree_store_set (GTK_TREE_STORE (treeview->model), iter,
-                          GIMP_CONTAINER_TREE_STORE_COLUMN_NAME_SENSITIVE,
-                          gimp_device_info_get_device (info, NULL) != NULL,
+                          LIGMA_CONTAINER_TREE_STORE_COLUMN_NAME_SENSITIVE,
+                          ligma_device_info_get_device (info, NULL) != NULL,
                           -1);
     }
 }
 
 static gboolean
-gimp_device_editor_select_device (GimpContainerView *view,
+ligma_device_editor_select_device (LigmaContainerView *view,
                                   GList             *viewables,
                                   GList             *paths,
-                                  GimpDeviceEditor  *editor)
+                                  LigmaDeviceEditor  *editor)
 {
-  GimpDeviceEditorPrivate *private = GIMP_DEVICE_EDITOR_GET_PRIVATE (editor);
+  LigmaDeviceEditorPrivate *private = LIGMA_DEVICE_EDITOR_GET_PRIVATE (editor);
 
   g_return_val_if_fail (g_list_length (viewables) < 2, FALSE);
 
   if (viewables)
     {
-      GimpContainerTreeView *treeview;
+      LigmaContainerTreeView *treeview;
       GtkWidget             *widget;
       GtkTreeIter            iter;
       gboolean               iter_valid;
 
-      treeview = GIMP_CONTAINER_TREE_VIEW (private->treeview);
+      treeview = LIGMA_CONTAINER_TREE_VIEW (private->treeview);
 
       for (iter_valid = gtk_tree_model_get_iter_first (treeview->model, &iter);
            iter_valid;
            iter_valid = gtk_tree_model_iter_next (treeview->model, &iter))
         {
-          GimpViewRenderer *renderer;
+          LigmaViewRenderer *renderer;
 
           gtk_tree_model_get (treeview->model, &iter,
-                              GIMP_CONTAINER_TREE_STORE_COLUMN_USER_DATA, &widget,
-                              GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER,  &renderer,
+                              LIGMA_CONTAINER_TREE_STORE_COLUMN_USER_DATA, &widget,
+                              LIGMA_CONTAINER_TREE_STORE_COLUMN_RENDERER,  &renderer,
                               -1);
           if (renderer->viewable == viewables->data && widget)
             {
-              GimpDeviceInfo *info;
+              LigmaDeviceInfo *info;
               gboolean        delete_sensitive = FALSE;
 
               gtk_stack_set_visible_child (GTK_STACK (private->stack), widget);
@@ -471,12 +471,12 @@ gimp_device_editor_select_device (GimpContainerView *view,
               g_object_get (widget ,"info", &info, NULL);
 
               gtk_label_set_text (GTK_LABEL (private->label),
-                                  gimp_object_get_name (info));
+                                  ligma_object_get_name (info));
               gtk_image_set_from_icon_name (GTK_IMAGE (private->image),
-                                            gimp_viewable_get_icon_name (GIMP_VIEWABLE (info)),
+                                            ligma_viewable_get_icon_name (LIGMA_VIEWABLE (info)),
                                             GTK_ICON_SIZE_BUTTON);
 
-              if (! gimp_device_info_get_device (info, NULL))
+              if (! ligma_device_info_get_device (info, NULL))
                 delete_sensitive = TRUE;
 
               gtk_widget_set_sensitive (private->delete_button, delete_sensitive);
@@ -494,11 +494,11 @@ gimp_device_editor_select_device (GimpContainerView *view,
 }
 
 static void
-gimp_device_editor_delete_response (GtkWidget        *dialog,
+ligma_device_editor_delete_response (GtkWidget        *dialog,
                                     gint              response_id,
-                                    GimpDeviceEditor *editor)
+                                    LigmaDeviceEditor *editor)
 {
-  GimpDeviceEditorPrivate *private = GIMP_DEVICE_EDITOR_GET_PRIVATE (editor);
+  LigmaDeviceEditorPrivate *private = LIGMA_DEVICE_EDITOR_GET_PRIVATE (editor);
 
   gtk_widget_destroy (dialog);
 
@@ -506,14 +506,14 @@ gimp_device_editor_delete_response (GtkWidget        *dialog,
     {
       GList *selected;
 
-      if (gimp_container_view_get_selected (GIMP_CONTAINER_VIEW (private->treeview),
+      if (ligma_container_view_get_selected (LIGMA_CONTAINER_VIEW (private->treeview),
                                             &selected, NULL))
         {
-          GimpContainer *devices;
+          LigmaContainer *devices;
 
-          devices = GIMP_CONTAINER (gimp_devices_get_manager (private->gimp));
+          devices = LIGMA_CONTAINER (ligma_devices_get_manager (private->ligma));
 
-          gimp_container_remove (devices, selected->data);
+          ligma_container_remove (devices, selected->data);
 
           g_list_free (selected);
         }
@@ -523,41 +523,41 @@ gimp_device_editor_delete_response (GtkWidget        *dialog,
 }
 
 static void
-gimp_device_editor_delete_clicked (GtkWidget        *button,
-                                   GimpDeviceEditor *editor)
+ligma_device_editor_delete_clicked (GtkWidget        *button,
+                                   LigmaDeviceEditor *editor)
 {
-  GimpDeviceEditorPrivate *private = GIMP_DEVICE_EDITOR_GET_PRIVATE (editor);
+  LigmaDeviceEditorPrivate *private = LIGMA_DEVICE_EDITOR_GET_PRIVATE (editor);
   GtkWidget               *dialog;
   GList                   *selected;
 
-  if (! gimp_container_view_get_selected (GIMP_CONTAINER_VIEW (private->treeview),
+  if (! ligma_container_view_get_selected (LIGMA_CONTAINER_VIEW (private->treeview),
                                           &selected, NULL))
     return;
 
-  dialog = gimp_message_dialog_new (_("Delete Device Settings"),
-                                    GIMP_ICON_DIALOG_QUESTION,
+  dialog = ligma_message_dialog_new (_("Delete Device Settings"),
+                                    LIGMA_ICON_DIALOG_QUESTION,
                                     gtk_widget_get_toplevel (GTK_WIDGET (editor)),
                                     GTK_DIALOG_DESTROY_WITH_PARENT,
-                                    gimp_standard_help_func, NULL,
+                                    ligma_standard_help_func, NULL,
 
                                     _("_Cancel"), GTK_RESPONSE_CANCEL,
                                     _("_Delete"), GTK_RESPONSE_OK,
 
                                     NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
   g_signal_connect (dialog, "response",
-                    G_CALLBACK (gimp_device_editor_delete_response),
+                    G_CALLBACK (ligma_device_editor_delete_response),
                     editor);
 
-  gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+  ligma_message_box_set_primary_text (LIGMA_MESSAGE_DIALOG (dialog)->box,
                                      _("Delete \"%s\"?"),
-                                     gimp_object_get_name (selected->data));
-  gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+                                     ligma_object_get_name (selected->data));
+  ligma_message_box_set_text (LIGMA_MESSAGE_DIALOG (dialog)->box,
                              _("You are about to delete this device's "
                                "stored settings.\n"
                                "The next time this device is plugged, "
@@ -574,11 +574,11 @@ gimp_device_editor_delete_clicked (GtkWidget        *button,
 /*  public functions  */
 
 GtkWidget *
-gimp_device_editor_new (Gimp *gimp)
+ligma_device_editor_new (Ligma *ligma)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
 
-  return g_object_new (GIMP_TYPE_DEVICE_EDITOR,
-                       "gimp", gimp,
+  return g_object_new (LIGMA_TYPE_DEVICE_EDITOR,
+                       "ligma", ligma,
                        NULL);
 }

@@ -1,6 +1,6 @@
 # This file is an outdated incomplete experiment for a Docker-based build environment and won't get you a working build environment. It was created just before our switch to GitLab CI and became mostly obsolete due to this.
 
-# gimpbuilder-base
+# ligmabuilder-base
 
 FROM debian:testing
 
@@ -20,5 +20,5 @@ RUN apt-get install $APT_GET_OPTIONS build-essential devscripts fakeroot quilt d
 # Installing additional dependencies for GEGL
 RUN apt-get install $APT_GET_OPTIONS libglib2.0-dev libjson-c-dev libjson-glib-dev libgexiv2-dev libcairo2-dev libpango1.0-dev libjpeg62-turbo-dev libsuitesparse-dev libspiro-dev libopenexr-dev libwebp-dev
 
-# Installing additional dependencies for GIMP 
+# Installing additional dependencies for LIGMA 
 RUN apt-get install $APT_GET_OPTIONS xsltproc gtk-doc-tools libgtk2.0-dev libtiff5-dev libbz2-dev liblzma-dev librsvg2-dev liblcms2-dev python-cairo-dev python-gtk2-dev glib-networking libaa1-dev libgs-dev libpoppler-glib-dev libmng-dev libwmf-dev libxpm-dev libasound2-dev

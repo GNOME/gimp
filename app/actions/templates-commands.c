@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,27 +20,27 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmaconfig/ligmaconfig.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "actions-types.h"
 
-#include "config/gimpcoreconfig.h"
+#include "config/ligmacoreconfig.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontainer.h"
-#include "core/gimpcontext.h"
-#include "core/gimpimage-new.h"
-#include "core/gimptemplate.h"
+#include "core/ligma.h"
+#include "core/ligmacontainer.h"
+#include "core/ligmacontext.h"
+#include "core/ligmaimage-new.h"
+#include "core/ligmatemplate.h"
 
-#include "widgets/gimpcontainerview.h"
-#include "widgets/gimpdialogfactory.h"
-#include "widgets/gimphelp-ids.h"
-#include "widgets/gimpmessagebox.h"
-#include "widgets/gimpmessagedialog.h"
-#include "widgets/gimptemplateeditor.h"
-#include "widgets/gimptemplateview.h"
-#include "widgets/gimpwidgets-utils.h"
+#include "widgets/ligmacontainerview.h"
+#include "widgets/ligmadialogfactory.h"
+#include "widgets/ligmahelp-ids.h"
+#include "widgets/ligmamessagebox.h"
+#include "widgets/ligmamessagedialog.h"
+#include "widgets/ligmatemplateeditor.h"
+#include "widgets/ligmatemplateview.h"
+#include "widgets/ligmawidgets-utils.h"
 
 #include "dialogs/dialogs.h"
 #include "dialogs/template-options-dialog.h"
@@ -48,28 +48,28 @@
 #include "actions.h"
 #include "templates-commands.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 typedef struct
 {
-  GimpContext   *context;
-  GimpContainer *container;
-  GimpTemplate  *template;
+  LigmaContext   *context;
+  LigmaContainer *container;
+  LigmaTemplate  *template;
 } TemplateDeleteData;
 
 
 /*  local function prototypes  */
 
 static void   templates_new_callback     (GtkWidget          *dialog,
-                                          GimpTemplate       *template,
-                                          GimpTemplate       *edit_template,
-                                          GimpContext        *context,
+                                          LigmaTemplate       *template,
+                                          LigmaTemplate       *edit_template,
+                                          LigmaContext        *context,
                                           gpointer            user_data);
 static void   templates_edit_callback    (GtkWidget          *dialog,
-                                          GimpTemplate       *template,
-                                          GimpTemplate       *edit_template,
-                                          GimpContext        *context,
+                                          LigmaTemplate       *template,
+                                          LigmaTemplate       *edit_template,
+                                          LigmaContext        *context,
                                           gpointer            user_data);
 static void   templates_delete_response  (GtkWidget          *dialog,
                                           gint                response_id,
@@ -80,94 +80,94 @@ static void   templates_delete_data_free (TemplateDeleteData *delete_data);
 /*  public functions */
 
 void
-templates_create_image_cmd_callback (GimpAction *action,
+templates_create_image_cmd_callback (LigmaAction *action,
                                      GVariant   *value,
                                      gpointer    data)
 {
-  Gimp                *gimp;
-  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
-  GimpContainer       *container;
-  GimpContext         *context;
-  GimpTemplate        *template;
-  return_if_no_gimp (gimp, data);
+  Ligma                *ligma;
+  LigmaContainerEditor *editor = LIGMA_CONTAINER_EDITOR (data);
+  LigmaContainer       *container;
+  LigmaContext         *context;
+  LigmaTemplate        *template;
+  return_if_no_ligma (ligma, data);
 
-  container = gimp_container_view_get_container (editor->view);
-  context   = gimp_container_view_get_context (editor->view);
+  container = ligma_container_view_get_container (editor->view);
+  context   = ligma_container_view_get_context (editor->view);
 
-  template = gimp_context_get_template (context);
+  template = ligma_context_get_template (context);
 
-  if (template && gimp_container_have (container, GIMP_OBJECT (template)))
+  if (template && ligma_container_have (container, LIGMA_OBJECT (template)))
     {
       GtkWidget *widget = GTK_WIDGET (editor);
-      GimpImage *image;
+      LigmaImage *image;
 
-      image = gimp_image_new_from_template (gimp, template, context);
-      gimp_create_display (gimp, image, gimp_template_get_unit (template), 1.0,
-                           G_OBJECT (gimp_widget_get_monitor (widget)));
+      image = ligma_image_new_from_template (ligma, template, context);
+      ligma_create_display (ligma, image, ligma_template_get_unit (template), 1.0,
+                           G_OBJECT (ligma_widget_get_monitor (widget)));
       g_object_unref (image);
 
-      gimp_image_new_set_last_template (gimp, template);
+      ligma_image_new_set_last_template (ligma, template);
     }
 }
 
 void
-templates_new_cmd_callback (GimpAction *action,
+templates_new_cmd_callback (LigmaAction *action,
                             GVariant   *value,
                             gpointer    data)
 {
-  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
-  GimpContext         *context;
+  LigmaContainerEditor *editor = LIGMA_CONTAINER_EDITOR (data);
+  LigmaContext         *context;
   GtkWidget           *dialog;
 
-  context = gimp_container_view_get_context (editor->view);
+  context = ligma_container_view_get_context (editor->view);
 
-#define NEW_DIALOG_KEY "gimp-template-new-dialog"
+#define NEW_DIALOG_KEY "ligma-template-new-dialog"
 
-  dialog = dialogs_get_dialog (G_OBJECT (context->gimp), NEW_DIALOG_KEY);
+  dialog = dialogs_get_dialog (G_OBJECT (context->ligma), NEW_DIALOG_KEY);
 
   if (! dialog)
     {
       dialog = template_options_dialog_new (NULL, context,
                                             GTK_WIDGET (editor),
                                             _("New Template"),
-                                            "gimp-template-new",
-                                            GIMP_ICON_TEMPLATE,
+                                            "ligma-template-new",
+                                            LIGMA_ICON_TEMPLATE,
                                             _("Create a New Template"),
-                                            GIMP_HELP_TEMPLATE_NEW,
+                                            LIGMA_HELP_TEMPLATE_NEW,
                                             templates_new_callback,
                                             NULL);
 
-      dialogs_attach_dialog (G_OBJECT (context->gimp), NEW_DIALOG_KEY, dialog);
+      dialogs_attach_dialog (G_OBJECT (context->ligma), NEW_DIALOG_KEY, dialog);
     }
 
   gtk_window_present (GTK_WINDOW (dialog));
 }
 
 void
-templates_duplicate_cmd_callback (GimpAction *action,
+templates_duplicate_cmd_callback (LigmaAction *action,
                                   GVariant   *value,
                                   gpointer    data)
 {
-  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
-  GimpContainer       *container;
-  GimpContext         *context;
-  GimpTemplate        *template;
+  LigmaContainerEditor *editor = LIGMA_CONTAINER_EDITOR (data);
+  LigmaContainer       *container;
+  LigmaContext         *context;
+  LigmaTemplate        *template;
 
-  container = gimp_container_view_get_container (editor->view);
-  context   = gimp_container_view_get_context (editor->view);
+  container = ligma_container_view_get_container (editor->view);
+  context   = ligma_container_view_get_context (editor->view);
 
-  template = gimp_context_get_template (context);
+  template = ligma_context_get_template (context);
 
-  if (template && gimp_container_have (container, GIMP_OBJECT (template)))
+  if (template && ligma_container_have (container, LIGMA_OBJECT (template)))
     {
-      GimpTemplate *new_template;
+      LigmaTemplate *new_template;
 
-      new_template = gimp_config_duplicate (GIMP_CONFIG (template));
+      new_template = ligma_config_duplicate (LIGMA_CONFIG (template));
 
-      gimp_container_add (container, GIMP_OBJECT (new_template));
-      gimp_context_set_by_type (context,
-                                gimp_container_get_children_type (container),
-                                GIMP_OBJECT (new_template));
+      ligma_container_add (container, LIGMA_OBJECT (new_template));
+      ligma_context_set_by_type (context,
+                                ligma_container_get_children_type (container),
+                                LIGMA_OBJECT (new_template));
       g_object_unref (new_template);
 
       templates_edit_cmd_callback (action, value, data);
@@ -175,25 +175,25 @@ templates_duplicate_cmd_callback (GimpAction *action,
 }
 
 void
-templates_edit_cmd_callback (GimpAction *action,
+templates_edit_cmd_callback (LigmaAction *action,
                              GVariant   *value,
                              gpointer    data)
 {
-  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
-  GimpContainer       *container;
-  GimpContext         *context;
-  GimpTemplate        *template;
+  LigmaContainerEditor *editor = LIGMA_CONTAINER_EDITOR (data);
+  LigmaContainer       *container;
+  LigmaContext         *context;
+  LigmaTemplate        *template;
 
-  container = gimp_container_view_get_container (editor->view);
-  context   = gimp_container_view_get_context (editor->view);
+  container = ligma_container_view_get_container (editor->view);
+  context   = ligma_container_view_get_context (editor->view);
 
-  template = gimp_context_get_template (context);
+  template = ligma_context_get_template (context);
 
-  if (template && gimp_container_have (container, GIMP_OBJECT (template)))
+  if (template && ligma_container_have (container, LIGMA_OBJECT (template)))
     {
       GtkWidget *dialog;
 
-#define EDIT_DIALOG_KEY "gimp-template-edit-dialog"
+#define EDIT_DIALOG_KEY "ligma-template-edit-dialog"
 
       dialog = dialogs_get_dialog (G_OBJECT (template), EDIT_DIALOG_KEY);
 
@@ -202,10 +202,10 @@ templates_edit_cmd_callback (GimpAction *action,
           dialog = template_options_dialog_new (template, context,
                                                 GTK_WIDGET (editor),
                                                 _("Edit Template"),
-                                                "gimp-template-edit",
-                                                GIMP_ICON_EDIT,
+                                                "ligma-template-edit",
+                                                LIGMA_ICON_EDIT,
                                                 _("Edit Template"),
-                                                GIMP_HELP_TEMPLATE_EDIT,
+                                                LIGMA_HELP_TEMPLATE_EDIT,
                                                 templates_edit_callback,
                                                 NULL);
 
@@ -217,21 +217,21 @@ templates_edit_cmd_callback (GimpAction *action,
 }
 
 void
-templates_delete_cmd_callback (GimpAction *action,
+templates_delete_cmd_callback (LigmaAction *action,
                                GVariant   *value,
                                gpointer    data)
 {
-  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
-  GimpContainer       *container;
-  GimpContext         *context;
-  GimpTemplate        *template;
+  LigmaContainerEditor *editor = LIGMA_CONTAINER_EDITOR (data);
+  LigmaContainer       *container;
+  LigmaContext         *context;
+  LigmaTemplate        *template;
 
-  container = gimp_container_view_get_container (editor->view);
-  context   = gimp_container_view_get_context (editor->view);
+  container = ligma_container_view_get_container (editor->view);
+  context   = ligma_container_view_get_context (editor->view);
 
-  template = gimp_context_get_template (context);
+  template = ligma_context_get_template (context);
 
-  if (template && gimp_container_have (container, GIMP_OBJECT (template)))
+  if (template && ligma_container_have (container, LIGMA_OBJECT (template)))
     {
       TemplateDeleteData *delete_data = g_slice_new (TemplateDeleteData);
       GtkWidget          *dialog;
@@ -241,16 +241,16 @@ templates_delete_cmd_callback (GimpAction *action,
       delete_data->template  = template;
 
       dialog =
-        gimp_message_dialog_new (_("Delete Template"), "edit-delete",
+        ligma_message_dialog_new (_("Delete Template"), "edit-delete",
                                  GTK_WIDGET (editor), 0,
-                                 gimp_standard_help_func, NULL,
+                                 ligma_standard_help_func, NULL,
 
                                  _("_Cancel"), GTK_RESPONSE_CANCEL,
                                  _("_Delete"), GTK_RESPONSE_OK,
 
                                  NULL);
 
-      gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+      ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                                GTK_RESPONSE_OK,
                                                GTK_RESPONSE_CANCEL,
                                                -1);
@@ -266,11 +266,11 @@ templates_delete_cmd_callback (GimpAction *action,
                         G_CALLBACK (templates_delete_response),
                         delete_data);
 
-      gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+      ligma_message_box_set_primary_text (LIGMA_MESSAGE_DIALOG (dialog)->box,
                                          _("Are you sure you want to delete "
                                            "template '%s' from the list and "
                                            "from disk?"),
-                                         gimp_object_get_name (template));
+                                         ligma_object_get_name (template));
       gtk_widget_show (dialog);
     }
 }
@@ -280,13 +280,13 @@ templates_delete_cmd_callback (GimpAction *action,
 
 static void
 templates_new_callback (GtkWidget    *dialog,
-                        GimpTemplate *template,
-                        GimpTemplate *edit_template,
-                        GimpContext  *context,
+                        LigmaTemplate *template,
+                        LigmaTemplate *edit_template,
+                        LigmaContext  *context,
                         gpointer      user_data)
 {
-  gimp_container_add (context->gimp->templates, GIMP_OBJECT (edit_template));
-  gimp_context_set_template (gimp_get_user_context (context->gimp),
+  ligma_container_add (context->ligma->templates, LIGMA_OBJECT (edit_template));
+  ligma_context_set_template (ligma_get_user_context (context->ligma),
                              edit_template);
 
   gtk_widget_destroy (dialog);
@@ -294,12 +294,12 @@ templates_new_callback (GtkWidget    *dialog,
 
 static void
 templates_edit_callback (GtkWidget    *dialog,
-                         GimpTemplate *template,
-                         GimpTemplate *edit_template,
-                         GimpContext  *context,
+                         LigmaTemplate *template,
+                         LigmaTemplate *edit_template,
+                         LigmaContext  *context,
                          gpointer      user_data)
 {
-  gimp_config_sync (G_OBJECT (edit_template),
+  ligma_config_sync (G_OBJECT (edit_template),
                     G_OBJECT (template), 0);
 
   gtk_widget_destroy (dialog);
@@ -312,25 +312,25 @@ templates_delete_response (GtkWidget          *dialog,
 {
   if (response_id == GTK_RESPONSE_OK)
     {
-      GimpObject *new_active = NULL;
+      LigmaObject *new_active = NULL;
 
       if (delete_data->template ==
-          gimp_context_get_template (delete_data->context))
+          ligma_context_get_template (delete_data->context))
         {
-          new_active = gimp_container_get_neighbor_of (delete_data->container,
-                                                       GIMP_OBJECT (delete_data->template));
+          new_active = ligma_container_get_neighbor_of (delete_data->container,
+                                                       LIGMA_OBJECT (delete_data->template));
         }
 
-      if (gimp_container_have (delete_data->container,
-                               GIMP_OBJECT (delete_data->template)))
+      if (ligma_container_have (delete_data->container,
+                               LIGMA_OBJECT (delete_data->template)))
         {
           if (new_active)
-            gimp_context_set_by_type (delete_data->context,
-                                      gimp_container_get_children_type (delete_data->container),
+            ligma_context_set_by_type (delete_data->context,
+                                      ligma_container_get_children_type (delete_data->container),
                                       new_active);
 
-          gimp_container_remove (delete_data->container,
-                                 GIMP_OBJECT (delete_data->template));
+          ligma_container_remove (delete_data->container,
+                                 LIGMA_OBJECT (delete_data->template));
         }
     }
 

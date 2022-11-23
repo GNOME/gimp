@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimp-3d-transform-utils.h
+ * ligma-3d-transform-utils.h
  * Copyright (C) 2019 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,46 +18,46 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TRANSFORM_3D_UTILS_H__
-#define __GIMP_TRANSFORM_3D_UTILS_H__
+#ifndef __LIGMA_TRANSFORM_3D_UTILS_H__
+#define __LIGMA_TRANSFORM_3D_UTILS_H__
 
 
-gdouble       gimp_transform_3d_angle_of_view_to_focal_length   (gdouble            angle_of_view,
+gdouble       ligma_transform_3d_angle_of_view_to_focal_length   (gdouble            angle_of_view,
                                                                  gdouble            width,
                                                                  gdouble            height);
-gdouble       gimp_transform_3d_focal_length_to_angle_of_view   (gdouble            focal_length,
+gdouble       ligma_transform_3d_focal_length_to_angle_of_view   (gdouble            focal_length,
                                                                  gdouble            width,
                                                                  gdouble            height);
 
-gint          gimp_transform_3d_permutation_to_rotation_order   (const gint         permutation[3]);
-void          gimp_transform_3d_rotation_order_to_permutation   (gint               rotation_order,
+gint          ligma_transform_3d_permutation_to_rotation_order   (const gint         permutation[3]);
+void          ligma_transform_3d_rotation_order_to_permutation   (gint               rotation_order,
                                                                  gint               permutation[3]);
-gint          gimp_transform_3d_rotation_order_reverse          (gint               rotation_order);
+gint          ligma_transform_3d_rotation_order_reverse          (gint               rotation_order);
 
-void          gimp_transform_3d_vector3_rotate                  (GimpVector3       *vector,
-                                                                 const GimpVector3 *axis);
-GimpVector3   gimp_transform_3d_vector3_rotate_val              (GimpVector3        vector,
-                                                                 GimpVector3        axis);
+void          ligma_transform_3d_vector3_rotate                  (LigmaVector3       *vector,
+                                                                 const LigmaVector3 *axis);
+LigmaVector3   ligma_transform_3d_vector3_rotate_val              (LigmaVector3        vector,
+                                                                 LigmaVector3        axis);
 
-void          gimp_transform_3d_matrix3_to_matrix4              (const GimpMatrix3 *matrix3,
-                                                                 GimpMatrix4       *matrix4,
+void          ligma_transform_3d_matrix3_to_matrix4              (const LigmaMatrix3 *matrix3,
+                                                                 LigmaMatrix4       *matrix4,
                                                                  gint               axis);
-void          gimp_transform_3d_matrix4_to_matrix3              (const GimpMatrix4 *matrix4,
-                                                                 GimpMatrix3       *matrix3,
+void          ligma_transform_3d_matrix4_to_matrix3              (const LigmaMatrix4 *matrix4,
+                                                                 LigmaMatrix3       *matrix3,
                                                                  gint               axis);
 
-void          gimp_transform_3d_matrix4_translate               (GimpMatrix4       *matrix,
+void          ligma_transform_3d_matrix4_translate               (LigmaMatrix4       *matrix,
                                                                  gdouble            x,
                                                                  gdouble            y,
                                                                  gdouble            z);
 
-void          gimp_transform_3d_matrix4_rotate                  (GimpMatrix4       *matrix,
-                                                                 const GimpVector3 *axis);
-void          gimp_transform_3d_matrix4_rotate_standard         (GimpMatrix4       *matrix,
+void          ligma_transform_3d_matrix4_rotate                  (LigmaMatrix4       *matrix,
+                                                                 const LigmaVector3 *axis);
+void          ligma_transform_3d_matrix4_rotate_standard         (LigmaMatrix4       *matrix,
                                                                  gint               axis,
                                                                  gdouble            angle);
 
-void          gimp_transform_3d_matrix4_rotate_euler            (GimpMatrix4       *matrix,
+void          ligma_transform_3d_matrix4_rotate_euler            (LigmaMatrix4       *matrix,
                                                                  gint               rotation_order,
                                                                  gdouble            angle_x,
                                                                  gdouble            angle_y,
@@ -65,18 +65,18 @@ void          gimp_transform_3d_matrix4_rotate_euler            (GimpMatrix4    
                                                                  gdouble            pivot_x,
                                                                  gdouble            pivot_y,
                                                                  gdouble            pivot_z);
-void          gimp_transform_3d_matrix4_rotate_euler_decompose  (GimpMatrix4       *matrix,
+void          ligma_transform_3d_matrix4_rotate_euler_decompose  (LigmaMatrix4       *matrix,
                                                                  gint               rotation_order,
                                                                  gdouble           *angle_x,
                                                                  gdouble           *angle_y,
                                                                  gdouble           *angle_z);
 
-void          gimp_transform_3d_matrix4_perspective             (GimpMatrix4       *matrix,
+void          ligma_transform_3d_matrix4_perspective             (LigmaMatrix4       *matrix,
                                                                  gdouble            camera_x,
                                                                  gdouble            camera_y,
                                                                  gdouble            camera_z);
 
-void          gimp_transform_3d_matrix                          (GimpMatrix3       *matrix,
+void          ligma_transform_3d_matrix                          (LigmaMatrix3       *matrix,
                                                                  gdouble            camera_x,
                                                                  gdouble            camera_y,
                                                                  gdouble            camera_z,
@@ -92,4 +92,4 @@ void          gimp_transform_3d_matrix                          (GimpMatrix3    
                                                                  gdouble            pivot_z);
 
 
-#endif /* __GIMP_TRANSFORM_3D_UTILS_H__ */
+#endif /* __LIGMA_TRANSFORM_3D_UTILS_H__ */

@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimptoolrotategrid.c
- * Copyright (C) 2017 Michael Natterer <mitch@gimp.org>
+ * ligmatoolrotategrid.c
+ * Copyright (C) 2017 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,18 +23,18 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
 
 #include "display-types.h"
 
-#include "core/gimp-transform-utils.h"
-#include "core/gimp-utils.h"
+#include "core/ligma-transform-utils.h"
+#include "core/ligma-utils.h"
 
-#include "gimpdisplayshell.h"
-#include "gimptoolrotategrid.h"
+#include "ligmadisplayshell.h"
+#include "ligmatoolrotategrid.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -44,7 +44,7 @@ enum
 };
 
 
-struct _GimpToolRotateGridPrivate
+struct _LigmaToolRotateGridPrivate
 {
   gdouble  angle;
 
@@ -57,68 +57,68 @@ struct _GimpToolRotateGridPrivate
 
 /*  local function prototypes  */
 
-static void   gimp_tool_rotate_grid_set_property (GObject             *object,
+static void   ligma_tool_rotate_grid_set_property (GObject             *object,
                                                   guint                property_id,
                                                   const GValue        *value,
                                                   GParamSpec          *pspec);
-static void   gimp_tool_rotate_grid_get_property (GObject             *object,
+static void   ligma_tool_rotate_grid_get_property (GObject             *object,
                                                   guint                property_id,
                                                   GValue              *value,
                                                   GParamSpec          *pspec);
 
-static gint   gimp_tool_rotate_grid_button_press (GimpToolWidget      *widget,
-                                                  const GimpCoords    *coords,
+static gint   ligma_tool_rotate_grid_button_press (LigmaToolWidget      *widget,
+                                                  const LigmaCoords    *coords,
                                                   guint32              time,
                                                   GdkModifierType      state,
-                                                  GimpButtonPressType  press_type);
-static void   gimp_tool_rotate_grid_motion       (GimpToolWidget      *widget,
-                                                  const GimpCoords    *coords,
+                                                  LigmaButtonPressType  press_type);
+static void   ligma_tool_rotate_grid_motion       (LigmaToolWidget      *widget,
+                                                  const LigmaCoords    *coords,
                                                   guint32              time,
                                                   GdkModifierType      state);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpToolRotateGrid, gimp_tool_rotate_grid,
-                            GIMP_TYPE_TOOL_TRANSFORM_GRID)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaToolRotateGrid, ligma_tool_rotate_grid,
+                            LIGMA_TYPE_TOOL_TRANSFORM_GRID)
 
-#define parent_class gimp_tool_rotate_grid_parent_class
+#define parent_class ligma_tool_rotate_grid_parent_class
 
 
 static void
-gimp_tool_rotate_grid_class_init (GimpToolRotateGridClass *klass)
+ligma_tool_rotate_grid_class_init (LigmaToolRotateGridClass *klass)
 {
   GObjectClass        *object_class = G_OBJECT_CLASS (klass);
-  GimpToolWidgetClass *widget_class = GIMP_TOOL_WIDGET_CLASS (klass);
+  LigmaToolWidgetClass *widget_class = LIGMA_TOOL_WIDGET_CLASS (klass);
 
-  object_class->set_property    = gimp_tool_rotate_grid_set_property;
-  object_class->get_property    = gimp_tool_rotate_grid_get_property;
+  object_class->set_property    = ligma_tool_rotate_grid_set_property;
+  object_class->get_property    = ligma_tool_rotate_grid_get_property;
 
-  widget_class->button_press    = gimp_tool_rotate_grid_button_press;
-  widget_class->motion          = gimp_tool_rotate_grid_motion;
+  widget_class->button_press    = ligma_tool_rotate_grid_button_press;
+  widget_class->motion          = ligma_tool_rotate_grid_motion;
 
   g_object_class_install_property (object_class, PROP_ANGLE,
                                    g_param_spec_double ("angle",
                                                         NULL, NULL,
-                                                        -GIMP_MAX_IMAGE_SIZE,
-                                                        GIMP_MAX_IMAGE_SIZE,
+                                                        -LIGMA_MAX_IMAGE_SIZE,
+                                                        LIGMA_MAX_IMAGE_SIZE,
                                                         0.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 }
 
 static void
-gimp_tool_rotate_grid_init (GimpToolRotateGrid *grid)
+ligma_tool_rotate_grid_init (LigmaToolRotateGrid *grid)
 {
-  grid->private = gimp_tool_rotate_grid_get_instance_private (grid);
+  grid->private = ligma_tool_rotate_grid_get_instance_private (grid);
 }
 
 static void
-gimp_tool_rotate_grid_set_property (GObject      *object,
+ligma_tool_rotate_grid_set_property (GObject      *object,
                                     guint         property_id,
                                     const GValue *value,
                                     GParamSpec   *pspec)
 {
-  GimpToolRotateGrid        *grid    = GIMP_TOOL_ROTATE_GRID (object);
-  GimpToolRotateGridPrivate *private = grid->private;
+  LigmaToolRotateGrid        *grid    = LIGMA_TOOL_ROTATE_GRID (object);
+  LigmaToolRotateGridPrivate *private = grid->private;
 
   switch (property_id)
     {
@@ -133,13 +133,13 @@ gimp_tool_rotate_grid_set_property (GObject      *object,
 }
 
 static void
-gimp_tool_rotate_grid_get_property (GObject    *object,
+ligma_tool_rotate_grid_get_property (GObject    *object,
                                     guint       property_id,
                                     GValue     *value,
                                     GParamSpec *pspec)
 {
-  GimpToolRotateGrid        *grid    = GIMP_TOOL_ROTATE_GRID (object);
-  GimpToolRotateGridPrivate *private = grid->private;
+  LigmaToolRotateGrid        *grid    = LIGMA_TOOL_ROTATE_GRID (object);
+  LigmaToolRotateGridPrivate *private = grid->private;
 
   switch (property_id)
     {
@@ -154,22 +154,22 @@ gimp_tool_rotate_grid_get_property (GObject    *object,
 }
 
 static gint
-gimp_tool_rotate_grid_button_press (GimpToolWidget      *widget,
-                                    const GimpCoords    *coords,
+ligma_tool_rotate_grid_button_press (LigmaToolWidget      *widget,
+                                    const LigmaCoords    *coords,
                                     guint32              time,
                                     GdkModifierType      state,
-                                    GimpButtonPressType  press_type)
+                                    LigmaButtonPressType  press_type)
 {
-  GimpToolRotateGrid        *grid    = GIMP_TOOL_ROTATE_GRID (widget);
-  GimpToolRotateGridPrivate *private = grid->private;
-  GimpTransformHandle        handle;
+  LigmaToolRotateGrid        *grid    = LIGMA_TOOL_ROTATE_GRID (widget);
+  LigmaToolRotateGridPrivate *private = grid->private;
+  LigmaTransformHandle        handle;
 
-  handle = GIMP_TOOL_WIDGET_CLASS (parent_class)->button_press (widget,
+  handle = LIGMA_TOOL_WIDGET_CLASS (parent_class)->button_press (widget,
                                                                 coords, time,
                                                                 state,
                                                                 press_type);
 
-  if (handle == GIMP_TRANSFORM_HANDLE_ROTATION)
+  if (handle == LIGMA_TRANSFORM_HANDLE_ROTATION)
     {
       private->rotate_grab = TRUE;
       private->real_angle  = private->angle;
@@ -185,18 +185,18 @@ gimp_tool_rotate_grid_button_press (GimpToolWidget      *widget,
 }
 
 void
-gimp_tool_rotate_grid_motion (GimpToolWidget   *widget,
-                              const GimpCoords *coords,
+ligma_tool_rotate_grid_motion (LigmaToolWidget   *widget,
+                              const LigmaCoords *coords,
                               guint32           time,
                               GdkModifierType   state)
 {
-  GimpToolRotateGrid        *grid    = GIMP_TOOL_ROTATE_GRID (widget);
-  GimpToolRotateGridPrivate *private = grid->private;
+  LigmaToolRotateGrid        *grid    = LIGMA_TOOL_ROTATE_GRID (widget);
+  LigmaToolRotateGridPrivate *private = grid->private;
   gdouble                    angle1, angle2, angle;
   gdouble                    pivot_x, pivot_y;
   gdouble                    x1, y1, x2, y2;
   gboolean                   constrain;
-  GimpMatrix3                transform;
+  LigmaMatrix3                transform;
 
   if (! private->rotate_grab)
     {
@@ -210,7 +210,7 @@ gimp_tool_rotate_grid_motion (GimpToolWidget   *widget,
 
       g_object_freeze_notify (G_OBJECT (widget));
 
-      GIMP_TOOL_WIDGET_CLASS (parent_class)->motion (widget,
+      LIGMA_TOOL_WIDGET_CLASS (parent_class)->motion (widget,
                                                      coords, time, state);
 
       g_object_get (widget,
@@ -221,8 +221,8 @@ gimp_tool_rotate_grid_motion (GimpToolWidget   *widget,
       if (old_pivot_x != pivot_x ||
           old_pivot_y != pivot_y)
         {
-          gimp_matrix3_identity (&transform);
-          gimp_transform_matrix_rotate_center (&transform,
+          ligma_matrix3_identity (&transform);
+          ligma_transform_matrix_rotate_center (&transform,
                                                pivot_x, pivot_y,
                                                private->angle);
 
@@ -284,8 +284,8 @@ gimp_tool_rotate_grid_motion (GimpToolWidget   *widget,
       angle = private->real_angle;
     }
 
-  gimp_matrix3_identity (&transform);
-  gimp_transform_matrix_rotate_center (&transform, pivot_x, pivot_y, angle);
+  ligma_matrix3_identity (&transform);
+  ligma_transform_matrix_rotate_center (&transform, pivot_x, pivot_y, angle);
 
   g_object_set (widget,
                 "transform", &transform,
@@ -299,8 +299,8 @@ gimp_tool_rotate_grid_motion (GimpToolWidget   *widget,
 
 /*  public functions  */
 
-GimpToolWidget *
-gimp_tool_rotate_grid_new (GimpDisplayShell *shell,
+LigmaToolWidget *
+ligma_tool_rotate_grid_new (LigmaDisplayShell *shell,
                            gdouble           x1,
                            gdouble           y1,
                            gdouble           x2,
@@ -309,14 +309,14 @@ gimp_tool_rotate_grid_new (GimpDisplayShell *shell,
                            gdouble           pivot_y,
                            gdouble           angle)
 {
-  GimpMatrix3 transform;
+  LigmaMatrix3 transform;
 
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
+  g_return_val_if_fail (LIGMA_IS_DISPLAY_SHELL (shell), NULL);
 
-  gimp_matrix3_identity (&transform);
-  gimp_transform_matrix_rotate_center (&transform, pivot_x, pivot_y, angle);
+  ligma_matrix3_identity (&transform);
+  ligma_transform_matrix_rotate_center (&transform, pivot_x, pivot_y, angle);
 
-  return g_object_new (GIMP_TYPE_TOOL_ROTATE_GRID,
+  return g_object_new (LIGMA_TYPE_TOOL_ROTATE_GRID,
                        "shell",     shell,
                        "transform", &transform,
                        "x1",        x1,

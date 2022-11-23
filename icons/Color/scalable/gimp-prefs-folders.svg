@@ -16,7 +16,7 @@
    id="svg12279"
    version="1.1"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="gimp-prefs-folders.svg">
+   sodipodi:docname="ligma-prefs-folders.svg">
   <defs
      id="defs12281">
     <linearGradient
@@ -146,9 +146,9 @@
      transform="translate(0,-1036.3622)">
     <g
        style="display:inline"
-       id="gimp-prefs-folders"
+       id="ligma-prefs-folders"
        transform="matrix(0.99257239,0,0,1,-720.48951,916.36226)"
-       inkscape:export-filename="/home/jehan/dev/src/gimp/icons/Color/16/gimp-prefs-folders.png"
+       inkscape:export-filename="/home/jehan/dev/src/ligma/icons/Color/16/ligma-prefs-folders.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90">
       <rect

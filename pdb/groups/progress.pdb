@@ -1,4 +1,4 @@
-# GIMP - The GNU Image Manipulation Program
+# LIGMA - The GNU Image Manipulation Program
 # Copyright (C) 1995 Spencer Kimball and Peter Mattis
 
 # This program is free software: you can redistribute it and/or modify
@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+# "Perlized" from C source by Manish Singh <yosh@ligma.org>
 
 sub progress_init {
     $blurb = 'Initializes the progress bar for the current plug-in.';
@@ -32,19 +32,19 @@ HELP
 	{ name => 'message', type => 'string', null_ok => 1,
 	  desc => 'Message to use in the progress dialog' },
 	{ name => 'gdisplay', type => 'display', none_ok => 1,
-	  desc => 'GimpDisplay to update progressbar in, or %NULL for a separate
+	  desc => 'LigmaDisplay to update progressbar in, or %NULL for a separate
 		   window' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+  LigmaPlugIn *plug_in = ligma->plug_in_manager->current_plug_in;
 
   if (plug_in && plug_in->open)
     {
-      if (! gimp->no_interface)
-        gimp_plug_in_progress_start (plug_in, message, gdisplay);
+      if (! ligma->no_interface)
+        ligma_plug_in_progress_start (plug_in, message, gdisplay);
     }
   else
     success = FALSE;
@@ -74,12 +74,12 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+  LigmaPlugIn *plug_in = ligma->plug_in_manager->current_plug_in;
 
   if (plug_in && plug_in->open)
     {
-      if (! gimp->no_interface)
-	gimp_plug_in_progress_set_value (plug_in, percentage);
+      if (! ligma->no_interface)
+	ligma_plug_in_progress_set_value (plug_in, percentage);
     }
   else
     success = FALSE;
@@ -94,7 +94,7 @@ sub progress_pulse {
     $help = <<'HELP';
 Updates the progress bar for the current plug-in. It is only valid to
 call this procedure from a plug-in. Use this function instead of
-gimp_progress_update() if you cannot tell how much progress has been
+ligma_progress_update() if you cannot tell how much progress has been
 made. This usually causes the the progress bar to enter "activity
 mode", where a block bounces back and forth.
 HELP
@@ -104,12 +104,12 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+  LigmaPlugIn *plug_in = ligma->plug_in_manager->current_plug_in;
 
   if (plug_in && plug_in->open)
     {
-      if (! gimp->no_interface)
-        gimp_plug_in_progress_pulse (plug_in);
+      if (! ligma->no_interface)
+        ligma_plug_in_progress_pulse (plug_in);
     }
   else
     success = FALSE;
@@ -123,7 +123,7 @@ sub progress_set_text {
 
     $help = <<'HELP';
 This function changes the text in the progress bar for the current
-plug-in. Unlike gimp_progress_init() it does not change the displayed
+plug-in. Unlike ligma_progress_init() it does not change the displayed
 value.
 HELP
 
@@ -137,12 +137,12 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+  LigmaPlugIn *plug_in = ligma->plug_in_manager->current_plug_in;
 
   if (plug_in && plug_in->open)
     {
-      if (! gimp->no_interface)
-        gimp_plug_in_progress_set_text (plug_in, message);
+      if (! ligma->no_interface)
+        ligma_plug_in_progress_set_text (plug_in, message);
     }
   else
     success = FALSE;
@@ -164,13 +164,13 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+  LigmaPlugIn *plug_in = ligma->plug_in_manager->current_plug_in;
 
   if (plug_in && plug_in->open)
     {
-      GimpPlugInProcFrame *proc_frame = gimp_plug_in_get_proc_frame (plug_in);
+      LigmaPlugInProcFrame *proc_frame = ligma_plug_in_get_proc_frame (plug_in);
 
-      gimp_plug_in_progress_end (plug_in, proc_frame);
+      ligma_plug_in_progress_end (plug_in, proc_frame);
     }
   else
     success = FALSE;
@@ -196,12 +196,12 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+  LigmaPlugIn *plug_in = ligma->plug_in_manager->current_plug_in;
 
   if (plug_in && plug_in->open)
     {
-      if (! gimp->no_interface)
-        window = gimp_plug_in_progress_get_window_id (plug_in);
+      if (! ligma->no_interface)
+        window = ligma_plug_in_progress_get_window_id (plug_in);
     }
   else
     success = FALSE;
@@ -231,10 +231,10 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+  LigmaPlugIn *plug_in = ligma->plug_in_manager->current_plug_in;
 
   if (plug_in && plug_in->open)
-    success = gimp_plug_in_progress_install (plug_in, progress_callback);
+    success = ligma_plug_in_progress_install (plug_in, progress_callback);
   else
     success = FALSE;
 }
@@ -247,7 +247,7 @@ sub progress_uninstall {
 
     $help = <<'HELP';
 This function uninstalls any progress callback installed with
-gimp_progress_install() before.
+ligma_progress_install() before.
 HELP
 
     &mitch_pdb_misc('2004', '2.2');
@@ -262,10 +262,10 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+  LigmaPlugIn *plug_in = ligma->plug_in_manager->current_plug_in;
 
   if (plug_in && plug_in->open)
-    success = gimp_plug_in_progress_uninstall (plug_in, progress_callback);
+    success = ligma_plug_in_progress_uninstall (plug_in, progress_callback);
   else
     success = FALSE;
 }
@@ -290,10 +290,10 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+  LigmaPlugIn *plug_in = ligma->plug_in_manager->current_plug_in;
 
   if (plug_in && plug_in->open)
-    success = gimp_plug_in_progress_cancel (plug_in, progress_callback);
+    success = ligma_plug_in_progress_cancel (plug_in, progress_callback);
   else
     success = FALSE;
 }
@@ -302,10 +302,10 @@ CODE
 }
 
 
-@headers = qw("core/gimp.h"
-              "plug-in/gimpplugin.h"
-              "plug-in/gimpplugin-progress.h"
-              "plug-in/gimppluginmanager.h");
+@headers = qw("core/ligma.h"
+              "plug-in/ligmaplugin.h"
+              "plug-in/ligmaplugin-progress.h"
+              "plug-in/ligmapluginmanager.h");
 
 @procs = qw(progress_init
             progress_update
@@ -320,7 +320,7 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Progress';
-$doc_title = 'gimpprogress';
+$doc_title = 'ligmaprogress';
 $doc_short_desc = "Functions for embedding the progress bar into a plug-in's GUI.";
 $doc_long_desc = "Functions for embedding the progress bar into a plug-in's GUI.";
 

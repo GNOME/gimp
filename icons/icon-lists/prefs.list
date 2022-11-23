@@ -1,50 +1,50 @@
 # Preferences Dialog icons
 #
 # All these icons are used as GTK_ICON_SIZE_BUTTON (16px) and GTK_ICON_SIZE_DIALOG (48px)
-# Cf. gimp_prefs_box_add_page() and app/dialogs/preferences-dialog.c
+# Cf. ligma_prefs_box_add_page() and app/dialogs/preferences-dialog.c
 # Check with:
-# grep -rI gimp-prefs-[a-z] app/dialogs/preferences-dialog.c |sed 's/ *"\([^"]*\)",/\1/' |sort |uniq
-gimp-prefs-color-management
+# grep -rI ligma-prefs-[a-z] app/dialogs/preferences-dialog.c |sed 's/ *"\([^"]*\)",/\1/' |sort |uniq
+ligma-prefs-color-management
 # TODO: used twice. "Dialog Defaults" should likely have its own icon.
-gimp-prefs-controllers
-gimp-prefs-default-grid
-gimp-prefs-display
-gimp-prefs-folders
-gimp-prefs-help-system
-gimp-prefs-icon-theme
-gimp-prefs-image-title
-gimp-prefs-image-windows
-gimp-prefs-image-windows-appearance
-gimp-prefs-image-windows-snapping
-gimp-prefs-import-export
-gimp-prefs-input-devices
-gimp-prefs-interface
-gimp-prefs-new-image
-gimp-prefs-playground
-gimp-prefs-system-resources
-gimp-prefs-theme
-gimp-prefs-tool-options
-gimp-prefs-toolbox
-gimp-prefs-window-management
+ligma-prefs-controllers
+ligma-prefs-default-grid
+ligma-prefs-display
+ligma-prefs-folders
+ligma-prefs-help-system
+ligma-prefs-icon-theme
+ligma-prefs-image-title
+ligma-prefs-image-windows
+ligma-prefs-image-windows-appearance
+ligma-prefs-image-windows-snapping
+ligma-prefs-import-export
+ligma-prefs-input-devices
+ligma-prefs-interface
+ligma-prefs-new-image
+ligma-prefs-playground
+ligma-prefs-system-resources
+ligma-prefs-theme
+ligma-prefs-tool-options
+ligma-prefs-toolbox
+ligma-prefs-window-management
 
 # These icon names can't be grepped because they are built from partial
 # strings.
 # See "Folders / <paths>" code section of app/dialogs/preferences-dialog.c
-gimp-prefs-folders-brushes
-gimp-prefs-folders-dynamics
-gimp-prefs-folders-environ
-gimp-prefs-folders-fonts
-gimp-prefs-folders-gradients
-gimp-prefs-folders-icon-themes
-gimp-prefs-folders-interp
-gimp-prefs-folders-modules
-gimp-prefs-folders-mypaint-brushes
-gimp-prefs-folders-palettes
-gimp-prefs-folders-patterns
-gimp-prefs-folders-plug-ins
-gimp-prefs-folders-scripts
-gimp-prefs-folders-themes
-gimp-prefs-folders-tool-presets
+ligma-prefs-folders-brushes
+ligma-prefs-folders-dynamics
+ligma-prefs-folders-environ
+ligma-prefs-folders-fonts
+ligma-prefs-folders-gradients
+ligma-prefs-folders-icon-themes
+ligma-prefs-folders-interp
+ligma-prefs-folders-modules
+ligma-prefs-folders-mypaint-brushes
+ligma-prefs-folders-palettes
+ligma-prefs-folders-patterns
+ligma-prefs-folders-plug-ins
+ligma-prefs-folders-scripts
+ligma-prefs-folders-themes
+ligma-prefs-folders-tool-presets
 
 # Used for debugging preferences page (temporarily? TODO?)
-gimp-wilber-eek
+ligma-wilber-eek

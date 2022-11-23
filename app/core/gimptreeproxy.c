@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimptreeproxy.c
+ * ligmatreeproxy.c
  * Copyright (C) 2020 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,12 +23,12 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "core-types.h"
 
-#include "gimpviewable.h"
-#include "gimptreeproxy.h"
+#include "ligmaviewable.h"
+#include "ligmatreeproxy.h"
 
 
 enum
@@ -39,117 +39,117 @@ enum
 };
 
 
-struct _GimpTreeProxyPrivate
+struct _LigmaTreeProxyPrivate
 {
-  GimpContainer *container;
+  LigmaContainer *container;
   gboolean       flat;
 };
 
 
 /*  local function prototypes  */
 
-static void   gimp_tree_proxy_dispose             (GObject      *object);
-static void   gimp_tree_proxy_set_property        (GObject      *object,
+static void   ligma_tree_proxy_dispose             (GObject      *object);
+static void   ligma_tree_proxy_set_property        (GObject      *object,
                                                    guint         property_id,
                                                    const GValue *value,
                                                    GParamSpec   *pspec);
-static void   gimp_tree_proxy_get_property        (GObject      *object,
+static void   ligma_tree_proxy_get_property        (GObject      *object,
                                                    guint         property_id,
                                                    GValue       *value,
                                                    GParamSpec   *pspec);
 
-static void   gimp_tree_proxy_container_add       (GimpContainer *container,
-                                                   GimpObject    *object,
-                                                   GimpTreeProxy *tree_proxy);
-static void   gimp_tree_proxy_container_remove    (GimpContainer *container,
-                                                   GimpObject    *object,
-                                                   GimpTreeProxy *tree_proxy);
-static void   gimp_tree_proxy_container_reorder   (GimpContainer *container,
-                                                   GimpObject    *object,
+static void   ligma_tree_proxy_container_add       (LigmaContainer *container,
+                                                   LigmaObject    *object,
+                                                   LigmaTreeProxy *tree_proxy);
+static void   ligma_tree_proxy_container_remove    (LigmaContainer *container,
+                                                   LigmaObject    *object,
+                                                   LigmaTreeProxy *tree_proxy);
+static void   ligma_tree_proxy_container_reorder   (LigmaContainer *container,
+                                                   LigmaObject    *object,
                                                    gint           new_index,
-                                                   GimpTreeProxy *tree_proxy);
-static void   gimp_tree_proxy_container_freeze    (GimpContainer *container,
-                                                   GimpTreeProxy *tree_proxy);
-static void   gimp_tree_proxy_container_thaw      (GimpContainer *container,
-                                                   GimpTreeProxy *tree_proxy);
+                                                   LigmaTreeProxy *tree_proxy);
+static void   ligma_tree_proxy_container_freeze    (LigmaContainer *container,
+                                                   LigmaTreeProxy *tree_proxy);
+static void   ligma_tree_proxy_container_thaw      (LigmaContainer *container,
+                                                   LigmaTreeProxy *tree_proxy);
 
-static gint   gimp_tree_proxy_add_container       (GimpTreeProxy *tree_proxy,
-                                                   GimpContainer *container,
+static gint   ligma_tree_proxy_add_container       (LigmaTreeProxy *tree_proxy,
+                                                   LigmaContainer *container,
                                                    gint           index);
-static void   gimp_tree_proxy_remove_container    (GimpTreeProxy *tree_proxy,
-                                                   GimpContainer *container);
+static void   ligma_tree_proxy_remove_container    (LigmaTreeProxy *tree_proxy,
+                                                   LigmaContainer *container);
 
-static gint   gimp_tree_proxy_add_object          (GimpTreeProxy *tree_proxy,
-                                                   GimpObject    *object,
+static gint   ligma_tree_proxy_add_object          (LigmaTreeProxy *tree_proxy,
+                                                   LigmaObject    *object,
                                                    gint           index);
-static void   gimp_tree_proxy_remove_object       (GimpTreeProxy *tree_proxy,
-                                                   GimpObject    *object);
+static void   ligma_tree_proxy_remove_object       (LigmaTreeProxy *tree_proxy,
+                                                   LigmaObject    *object);
 
-static gint   gimp_tree_proxy_find_container      (GimpTreeProxy *tree_proxy,
-                                                   GimpContainer *container);
-static gint   gimp_tree_proxy_find_object         (GimpContainer *container,
-                                                   GimpObject    *object);
+static gint   ligma_tree_proxy_find_container      (LigmaTreeProxy *tree_proxy,
+                                                   LigmaContainer *container);
+static gint   ligma_tree_proxy_find_object         (LigmaContainer *container,
+                                                   LigmaObject    *object);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpTreeProxy, gimp_tree_proxy, GIMP_TYPE_LIST)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaTreeProxy, ligma_tree_proxy, LIGMA_TYPE_LIST)
 
-#define parent_class gimp_tree_proxy_parent_class
+#define parent_class ligma_tree_proxy_parent_class
 
 
 /*  private functions  */
 
 static void
-gimp_tree_proxy_class_init (GimpTreeProxyClass *klass)
+ligma_tree_proxy_class_init (LigmaTreeProxyClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->dispose      = gimp_tree_proxy_dispose;
-  object_class->set_property = gimp_tree_proxy_set_property;
-  object_class->get_property = gimp_tree_proxy_get_property;
+  object_class->dispose      = ligma_tree_proxy_dispose;
+  object_class->set_property = ligma_tree_proxy_set_property;
+  object_class->get_property = ligma_tree_proxy_get_property;
 
   g_object_class_install_property (object_class, PROP_CONTAINER,
                                    g_param_spec_object ("container", NULL, NULL,
-                                                        GIMP_TYPE_CONTAINER,
-                                                        GIMP_PARAM_READWRITE));
+                                                        LIGMA_TYPE_CONTAINER,
+                                                        LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_FLAT,
                                    g_param_spec_boolean ("flat", NULL, NULL,
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                                                         LIGMA_PARAM_READWRITE));
 }
 
 static void
-gimp_tree_proxy_init (GimpTreeProxy *tree_proxy)
+ligma_tree_proxy_init (LigmaTreeProxy *tree_proxy)
 {
-  tree_proxy->priv = gimp_tree_proxy_get_instance_private (tree_proxy);
+  tree_proxy->priv = ligma_tree_proxy_get_instance_private (tree_proxy);
 }
 
 static void
-gimp_tree_proxy_dispose (GObject *object)
+ligma_tree_proxy_dispose (GObject *object)
 {
-  GimpTreeProxy *tree_proxy = GIMP_TREE_PROXY (object);
+  LigmaTreeProxy *tree_proxy = LIGMA_TREE_PROXY (object);
 
-  gimp_tree_proxy_set_container (tree_proxy, NULL);
+  ligma_tree_proxy_set_container (tree_proxy, NULL);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);;
 }
 
 static void
-gimp_tree_proxy_set_property (GObject      *object,
+ligma_tree_proxy_set_property (GObject      *object,
                              guint         property_id,
                              const GValue *value,
                              GParamSpec   *pspec)
 {
-  GimpTreeProxy *tree_proxy = GIMP_TREE_PROXY (object);
+  LigmaTreeProxy *tree_proxy = LIGMA_TREE_PROXY (object);
 
   switch (property_id)
     {
     case PROP_CONTAINER:
-      gimp_tree_proxy_set_container (tree_proxy, g_value_get_object (value));
+      ligma_tree_proxy_set_container (tree_proxy, g_value_get_object (value));
       break;
 
     case PROP_FLAT:
-      gimp_tree_proxy_set_flat (tree_proxy, g_value_get_boolean (value));
+      ligma_tree_proxy_set_flat (tree_proxy, g_value_get_boolean (value));
       break;
 
     default:
@@ -159,12 +159,12 @@ gimp_tree_proxy_set_property (GObject      *object,
 }
 
 static void
-gimp_tree_proxy_get_property (GObject    *object,
+ligma_tree_proxy_get_property (GObject    *object,
                              guint       property_id,
                              GValue     *value,
                              GParamSpec *pspec)
 {
-  GimpTreeProxy *tree_proxy = GIMP_TREE_PROXY (object);
+  LigmaTreeProxy *tree_proxy = LIGMA_TREE_PROXY (object);
 
   switch (property_id)
     {
@@ -183,54 +183,54 @@ gimp_tree_proxy_get_property (GObject    *object,
 }
 
 static void
-gimp_tree_proxy_container_add (GimpContainer *container,
-                               GimpObject    *object,
-                               GimpTreeProxy *tree_proxy)
+ligma_tree_proxy_container_add (LigmaContainer *container,
+                               LigmaObject    *object,
+                               LigmaTreeProxy *tree_proxy)
 {
   gint index;
 
   if (tree_proxy->priv->flat)
     {
-      index = gimp_tree_proxy_find_container (tree_proxy, container) +
-              gimp_tree_proxy_find_object    (container,  object);
+      index = ligma_tree_proxy_find_container (tree_proxy, container) +
+              ligma_tree_proxy_find_object    (container,  object);
     }
   else
     {
-      index = gimp_container_get_child_index (container, object);
+      index = ligma_container_get_child_index (container, object);
     }
 
-  gimp_tree_proxy_add_object (tree_proxy, object, index);
+  ligma_tree_proxy_add_object (tree_proxy, object, index);
 }
 
 static void
-gimp_tree_proxy_container_remove (GimpContainer *container,
-                                  GimpObject    *object,
-                                  GimpTreeProxy *tree_proxy)
+ligma_tree_proxy_container_remove (LigmaContainer *container,
+                                  LigmaObject    *object,
+                                  LigmaTreeProxy *tree_proxy)
 {
-  gimp_tree_proxy_remove_object (tree_proxy, object);
+  ligma_tree_proxy_remove_object (tree_proxy, object);
 }
 
 static void
-gimp_tree_proxy_container_reorder (GimpContainer *container,
-                                   GimpObject    *object,
+ligma_tree_proxy_container_reorder (LigmaContainer *container,
+                                   LigmaObject    *object,
                                    gint           new_index,
-                                   GimpTreeProxy *tree_proxy)
+                                   LigmaTreeProxy *tree_proxy)
 {
   gint index;
 
   if (tree_proxy->priv->flat)
     {
-      index = gimp_tree_proxy_find_container (tree_proxy, container) +
-              gimp_tree_proxy_find_object    (container,  object);
+      index = ligma_tree_proxy_find_container (tree_proxy, container) +
+              ligma_tree_proxy_find_object    (container,  object);
 
-      if (gimp_viewable_get_children (GIMP_VIEWABLE (object)))
+      if (ligma_viewable_get_children (LIGMA_VIEWABLE (object)))
         {
-          gimp_container_freeze (GIMP_CONTAINER (tree_proxy));
+          ligma_container_freeze (LIGMA_CONTAINER (tree_proxy));
 
-          gimp_tree_proxy_remove_object (tree_proxy, object);
-          gimp_tree_proxy_add_object    (tree_proxy, object, index);
+          ligma_tree_proxy_remove_object (tree_proxy, object);
+          ligma_tree_proxy_add_object    (tree_proxy, object, index);
 
-          gimp_container_thaw (GIMP_CONTAINER (tree_proxy));
+          ligma_container_thaw (LIGMA_CONTAINER (tree_proxy));
 
           return;
         }
@@ -240,186 +240,186 @@ gimp_tree_proxy_container_reorder (GimpContainer *container,
       index = new_index;
     }
 
-  gimp_container_reorder (GIMP_CONTAINER (tree_proxy), object, index);
+  ligma_container_reorder (LIGMA_CONTAINER (tree_proxy), object, index);
 }
 
 static void
-gimp_tree_proxy_container_freeze (GimpContainer *container,
-                                  GimpTreeProxy *tree_proxy)
+ligma_tree_proxy_container_freeze (LigmaContainer *container,
+                                  LigmaTreeProxy *tree_proxy)
 {
-  gimp_container_freeze (GIMP_CONTAINER (tree_proxy));
+  ligma_container_freeze (LIGMA_CONTAINER (tree_proxy));
 }
 
 static void
-gimp_tree_proxy_container_thaw (GimpContainer *container,
-                                GimpTreeProxy *tree_proxy)
+ligma_tree_proxy_container_thaw (LigmaContainer *container,
+                                LigmaTreeProxy *tree_proxy)
 {
-  gimp_container_thaw (GIMP_CONTAINER (tree_proxy));
+  ligma_container_thaw (LIGMA_CONTAINER (tree_proxy));
 }
 
 typedef struct
 {
-  GimpTreeProxy *tree_proxy;
+  LigmaTreeProxy *tree_proxy;
   gint           index;
 } AddContainerData;
 
 static void
-gimp_tree_proxy_add_container_func (GimpObject       *object,
+ligma_tree_proxy_add_container_func (LigmaObject       *object,
                                     AddContainerData *data)
 {
-  data->index = gimp_tree_proxy_add_object (data->tree_proxy,
+  data->index = ligma_tree_proxy_add_object (data->tree_proxy,
                                             object, data->index);
 }
 
 static gint
-gimp_tree_proxy_add_container (GimpTreeProxy *tree_proxy,
-                               GimpContainer *container,
+ligma_tree_proxy_add_container (LigmaTreeProxy *tree_proxy,
+                               LigmaContainer *container,
                                gint           index)
 {
   AddContainerData data;
 
   g_signal_connect (container, "add",
-                    G_CALLBACK (gimp_tree_proxy_container_add),
+                    G_CALLBACK (ligma_tree_proxy_container_add),
                     tree_proxy);
   g_signal_connect (container, "remove",
-                    G_CALLBACK (gimp_tree_proxy_container_remove),
+                    G_CALLBACK (ligma_tree_proxy_container_remove),
                     tree_proxy);
   g_signal_connect (container, "reorder",
-                    G_CALLBACK (gimp_tree_proxy_container_reorder),
+                    G_CALLBACK (ligma_tree_proxy_container_reorder),
                     tree_proxy);
   g_signal_connect (container, "freeze",
-                    G_CALLBACK (gimp_tree_proxy_container_freeze),
+                    G_CALLBACK (ligma_tree_proxy_container_freeze),
                     tree_proxy);
   g_signal_connect (container, "thaw",
-                    G_CALLBACK (gimp_tree_proxy_container_thaw),
+                    G_CALLBACK (ligma_tree_proxy_container_thaw),
                     tree_proxy);
 
   data.tree_proxy = tree_proxy;
   data.index      = index;
 
-  gimp_container_freeze (GIMP_CONTAINER (tree_proxy));
+  ligma_container_freeze (LIGMA_CONTAINER (tree_proxy));
 
-  gimp_container_foreach (container,
-                          (GFunc) gimp_tree_proxy_add_container_func,
+  ligma_container_foreach (container,
+                          (GFunc) ligma_tree_proxy_add_container_func,
                           &data);
 
-  gimp_container_thaw (GIMP_CONTAINER (tree_proxy));
+  ligma_container_thaw (LIGMA_CONTAINER (tree_proxy));
 
   return data.index;
 }
 
 static void
-gimp_tree_proxy_remove_container_func (GimpObject    *object,
-                                       GimpTreeProxy *tree_proxy)
+ligma_tree_proxy_remove_container_func (LigmaObject    *object,
+                                       LigmaTreeProxy *tree_proxy)
 {
-  gimp_tree_proxy_remove_object (tree_proxy, object);
+  ligma_tree_proxy_remove_object (tree_proxy, object);
 }
 
 static void
-gimp_tree_proxy_remove_container (GimpTreeProxy *tree_proxy,
-                                  GimpContainer *container)
+ligma_tree_proxy_remove_container (LigmaTreeProxy *tree_proxy,
+                                  LigmaContainer *container)
 {
-  gimp_container_freeze (GIMP_CONTAINER (tree_proxy));
+  ligma_container_freeze (LIGMA_CONTAINER (tree_proxy));
 
-  gimp_container_foreach (container,
-                          (GFunc) gimp_tree_proxy_remove_container_func,
+  ligma_container_foreach (container,
+                          (GFunc) ligma_tree_proxy_remove_container_func,
                           tree_proxy);
 
-  gimp_container_thaw (GIMP_CONTAINER (tree_proxy));
+  ligma_container_thaw (LIGMA_CONTAINER (tree_proxy));
 
   g_signal_handlers_disconnect_by_func (
     container,
-    gimp_tree_proxy_container_add,
+    ligma_tree_proxy_container_add,
     tree_proxy);
   g_signal_handlers_disconnect_by_func (
     container,
-    gimp_tree_proxy_container_remove,
+    ligma_tree_proxy_container_remove,
     tree_proxy);
   g_signal_handlers_disconnect_by_func (
     container,
-    gimp_tree_proxy_container_reorder,
+    ligma_tree_proxy_container_reorder,
     tree_proxy);
   g_signal_handlers_disconnect_by_func (
     container,
-    gimp_tree_proxy_container_freeze,
+    ligma_tree_proxy_container_freeze,
     tree_proxy);
   g_signal_handlers_disconnect_by_func (
     container,
-    gimp_tree_proxy_container_thaw,
+    ligma_tree_proxy_container_thaw,
     tree_proxy);
 }
 
 static gint
-gimp_tree_proxy_add_object (GimpTreeProxy *tree_proxy,
-                            GimpObject    *object,
+ligma_tree_proxy_add_object (LigmaTreeProxy *tree_proxy,
+                            LigmaObject    *object,
                             gint           index)
 {
-  if (index == gimp_container_get_n_children (GIMP_CONTAINER (tree_proxy)))
+  if (index == ligma_container_get_n_children (LIGMA_CONTAINER (tree_proxy)))
     index = -1;
 
   if (tree_proxy->priv->flat)
     {
-      GimpContainer *children;
+      LigmaContainer *children;
 
-      children = gimp_viewable_get_children (GIMP_VIEWABLE (object));
+      children = ligma_viewable_get_children (LIGMA_VIEWABLE (object));
 
       if (children)
-        return gimp_tree_proxy_add_container (tree_proxy, children, index);
+        return ligma_tree_proxy_add_container (tree_proxy, children, index);
     }
 
   if (index >= 0)
     {
-      gimp_container_insert (GIMP_CONTAINER (tree_proxy), object, index);
+      ligma_container_insert (LIGMA_CONTAINER (tree_proxy), object, index);
 
       return index + 1;
     }
   else
     {
-      gimp_container_add (GIMP_CONTAINER (tree_proxy), object);
+      ligma_container_add (LIGMA_CONTAINER (tree_proxy), object);
 
       return index;
     }
 }
 
 static void
-gimp_tree_proxy_remove_object (GimpTreeProxy *tree_proxy,
-                               GimpObject    *object)
+ligma_tree_proxy_remove_object (LigmaTreeProxy *tree_proxy,
+                               LigmaObject    *object)
 {
   if (tree_proxy->priv->flat)
     {
-      GimpContainer *children;
+      LigmaContainer *children;
 
-      children = gimp_viewable_get_children (GIMP_VIEWABLE (object));
+      children = ligma_viewable_get_children (LIGMA_VIEWABLE (object));
 
       if (children)
-        return gimp_tree_proxy_remove_container (tree_proxy, children);
+        return ligma_tree_proxy_remove_container (tree_proxy, children);
     }
 
-  gimp_container_remove (GIMP_CONTAINER (tree_proxy), object);
+  ligma_container_remove (LIGMA_CONTAINER (tree_proxy), object);
 }
 
 typedef struct
 {
-  GimpContainer *container;
+  LigmaContainer *container;
   gint           index;
 } FindContainerData;
 
 static gboolean
-gimp_tree_proxy_find_container_search_func (GimpObject        *object,
+ligma_tree_proxy_find_container_search_func (LigmaObject        *object,
                                             FindContainerData *data)
 {
-  GimpContainer *children;
+  LigmaContainer *children;
 
-  children = gimp_viewable_get_children (GIMP_VIEWABLE (object));
+  children = ligma_viewable_get_children (LIGMA_VIEWABLE (object));
 
   if (children)
     {
       if (children == data->container)
         return TRUE;
 
-      return gimp_container_search (
+      return ligma_container_search (
         children,
-        (GimpContainerSearchFunc) gimp_tree_proxy_find_container_search_func,
+        (LigmaContainerSearchFunc) ligma_tree_proxy_find_container_search_func,
         data) != NULL;
     }
 
@@ -429,8 +429,8 @@ gimp_tree_proxy_find_container_search_func (GimpObject        *object,
 }
 
 static gint
-gimp_tree_proxy_find_container (GimpTreeProxy *tree_proxy,
-                                GimpContainer *container)
+ligma_tree_proxy_find_container (LigmaTreeProxy *tree_proxy,
+                                LigmaContainer *container)
 {
   FindContainerData data;
 
@@ -440,9 +440,9 @@ gimp_tree_proxy_find_container (GimpTreeProxy *tree_proxy,
   data.container = container;
   data.index     = 0;
 
-  if (gimp_container_search (
+  if (ligma_container_search (
         tree_proxy->priv->container,
-        (GimpContainerSearchFunc) gimp_tree_proxy_find_container_search_func,
+        (LigmaContainerSearchFunc) ligma_tree_proxy_find_container_search_func,
         &data))
     {
       return data.index;
@@ -453,26 +453,26 @@ gimp_tree_proxy_find_container (GimpTreeProxy *tree_proxy,
 
 typedef struct
 {
-  GimpObject *object;
+  LigmaObject *object;
   gint        index;
 } FindObjectData;
 
 static gboolean
-gimp_tree_proxy_find_object_search_func (GimpObject     *object,
+ligma_tree_proxy_find_object_search_func (LigmaObject     *object,
                                          FindObjectData *data)
 {
-  GimpContainer *children;
+  LigmaContainer *children;
 
   if (object == data->object)
     return TRUE;
 
-  children = gimp_viewable_get_children (GIMP_VIEWABLE (object));
+  children = ligma_viewable_get_children (LIGMA_VIEWABLE (object));
 
   if (children)
     {
-      return gimp_container_search (
+      return ligma_container_search (
         children,
-        (GimpContainerSearchFunc) gimp_tree_proxy_find_object_search_func,
+        (LigmaContainerSearchFunc) ligma_tree_proxy_find_object_search_func,
         data) != NULL;
     }
 
@@ -482,17 +482,17 @@ gimp_tree_proxy_find_object_search_func (GimpObject     *object,
 }
 
 static gint
-gimp_tree_proxy_find_object (GimpContainer *container,
-                             GimpObject    *object)
+ligma_tree_proxy_find_object (LigmaContainer *container,
+                             LigmaObject    *object)
 {
   FindObjectData data;
 
   data.object = object;
   data.index  = 0;
 
-  if (gimp_container_search (
+  if (ligma_container_search (
         container,
-        (GimpContainerSearchFunc) gimp_tree_proxy_find_object_search_func,
+        (LigmaContainerSearchFunc) ligma_tree_proxy_find_object_search_func,
         &data))
     {
       return data.index;
@@ -504,70 +504,70 @@ gimp_tree_proxy_find_object (GimpContainer *container,
 
 /*  public functions  */
 
-GimpContainer *
-gimp_tree_proxy_new (GType children_type)
+LigmaContainer *
+ligma_tree_proxy_new (GType children_type)
 {
   GTypeClass *children_class;
 
   children_class = g_type_class_ref (children_type);
 
   g_return_val_if_fail (G_TYPE_CHECK_CLASS_TYPE (children_class,
-                                                 GIMP_TYPE_VIEWABLE),
+                                                 LIGMA_TYPE_VIEWABLE),
                         NULL);
 
   g_type_class_unref (children_class);
 
-  return g_object_new (GIMP_TYPE_TREE_PROXY,
+  return g_object_new (LIGMA_TYPE_TREE_PROXY,
                        "children-type", children_type,
-                       "policy",        GIMP_CONTAINER_POLICY_WEAK,
+                       "policy",        LIGMA_CONTAINER_POLICY_WEAK,
                        "append",        TRUE,
                        NULL);
 }
 
-GimpContainer *
-gimp_tree_proxy_new_for_container (GimpContainer *container)
+LigmaContainer *
+ligma_tree_proxy_new_for_container (LigmaContainer *container)
 {
-  GimpTreeProxy *tree_proxy;
+  LigmaTreeProxy *tree_proxy;
 
-  g_return_val_if_fail (GIMP_IS_CONTAINER (container), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTAINER (container), NULL);
 
-  tree_proxy = GIMP_TREE_PROXY (
-    gimp_tree_proxy_new (gimp_container_get_children_type (container)));
+  tree_proxy = LIGMA_TREE_PROXY (
+    ligma_tree_proxy_new (ligma_container_get_children_type (container)));
 
-  gimp_tree_proxy_set_container (tree_proxy, container);
+  ligma_tree_proxy_set_container (tree_proxy, container);
 
-  return GIMP_CONTAINER (tree_proxy);
+  return LIGMA_CONTAINER (tree_proxy);
 }
 
 void
-gimp_tree_proxy_set_container (GimpTreeProxy *tree_proxy,
-                               GimpContainer *container)
+ligma_tree_proxy_set_container (LigmaTreeProxy *tree_proxy,
+                               LigmaContainer *container)
 {
-  g_return_if_fail (GIMP_IS_TREE_PROXY (tree_proxy));
-  g_return_if_fail (container == NULL || GIMP_IS_CONTAINER (container));
+  g_return_if_fail (LIGMA_IS_TREE_PROXY (tree_proxy));
+  g_return_if_fail (container == NULL || LIGMA_IS_CONTAINER (container));
 
   if (container)
     {
       GTypeClass *children_class;
 
       children_class = g_type_class_ref (
-        gimp_container_get_children_type (container));
+        ligma_container_get_children_type (container));
 
       g_return_if_fail (
         G_TYPE_CHECK_CLASS_TYPE (
           children_class,
-          gimp_container_get_children_type (GIMP_CONTAINER (tree_proxy))));
+          ligma_container_get_children_type (LIGMA_CONTAINER (tree_proxy))));
 
       g_type_class_unref (children_class);
     }
 
   if (container != tree_proxy->priv->container)
     {
-      gimp_container_freeze (GIMP_CONTAINER (tree_proxy));
+      ligma_container_freeze (LIGMA_CONTAINER (tree_proxy));
 
       if (tree_proxy->priv->container)
         {
-          gimp_tree_proxy_remove_container (tree_proxy,
+          ligma_tree_proxy_remove_container (tree_proxy,
                                             tree_proxy->priv->container);
         }
 
@@ -575,38 +575,38 @@ gimp_tree_proxy_set_container (GimpTreeProxy *tree_proxy,
 
       if (tree_proxy->priv->container)
         {
-          gimp_tree_proxy_add_container (tree_proxy,
+          ligma_tree_proxy_add_container (tree_proxy,
                                          tree_proxy->priv->container,
                                          -1);
         }
 
-      gimp_container_thaw (GIMP_CONTAINER (tree_proxy));
+      ligma_container_thaw (LIGMA_CONTAINER (tree_proxy));
 
       g_object_notify (G_OBJECT (tree_proxy), "container");
     }
 }
 
-GimpContainer *
-gimp_tree_proxy_get_container (GimpTreeProxy *tree_proxy)
+LigmaContainer *
+ligma_tree_proxy_get_container (LigmaTreeProxy *tree_proxy)
 {
-  g_return_val_if_fail (GIMP_IS_TREE_PROXY (tree_proxy), NULL);
+  g_return_val_if_fail (LIGMA_IS_TREE_PROXY (tree_proxy), NULL);
 
   return tree_proxy->priv->container;
 }
 
 void
-gimp_tree_proxy_set_flat (GimpTreeProxy *tree_proxy,
+ligma_tree_proxy_set_flat (LigmaTreeProxy *tree_proxy,
                           gboolean       flat)
 {
-  g_return_if_fail (GIMP_IS_TREE_PROXY (tree_proxy));
+  g_return_if_fail (LIGMA_IS_TREE_PROXY (tree_proxy));
 
   if (flat != tree_proxy->priv->flat)
     {
-      gimp_container_freeze (GIMP_CONTAINER (tree_proxy));
+      ligma_container_freeze (LIGMA_CONTAINER (tree_proxy));
 
       if (tree_proxy->priv->container)
         {
-          gimp_tree_proxy_remove_container (tree_proxy,
+          ligma_tree_proxy_remove_container (tree_proxy,
                                             tree_proxy->priv->container);
         }
 
@@ -614,21 +614,21 @@ gimp_tree_proxy_set_flat (GimpTreeProxy *tree_proxy,
 
       if (tree_proxy->priv->container)
         {
-          gimp_tree_proxy_add_container (tree_proxy,
+          ligma_tree_proxy_add_container (tree_proxy,
                                          tree_proxy->priv->container,
                                          -1);
         }
 
-      gimp_container_thaw (GIMP_CONTAINER (tree_proxy));
+      ligma_container_thaw (LIGMA_CONTAINER (tree_proxy));
 
       g_object_notify (G_OBJECT (tree_proxy), "flat");
     }
 }
 
 gboolean
-gimp_tree_proxy_get_flat (GimpTreeProxy *tree_proxy)
+ligma_tree_proxy_get_flat (LigmaTreeProxy *tree_proxy)
 {
-  g_return_val_if_fail (GIMP_IS_TREE_PROXY (tree_proxy), FALSE);
+  g_return_val_if_fail (LIGMA_IS_TREE_PROXY (tree_proxy), FALSE);
 
   return tree_proxy->priv->flat;
 }

@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpaction-history.h
+ * ligmaaction-history.h
  * Copyright (C) 2013  Jehan <jehan at girinstud.io>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,29 +18,29 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_ACTION_HISTORY_H__
-#define __GIMP_ACTION_HISTORY_H__
+#ifndef __LIGMA_ACTION_HISTORY_H__
+#define __LIGMA_ACTION_HISTORY_H__
 
 
-typedef gboolean (* GimpActionMatchFunc) (GimpAction  *action,
+typedef gboolean (* LigmaActionMatchFunc) (LigmaAction  *action,
                                           const gchar *keyword,
                                           gint        *section,
-                                          Gimp        *gimp);
+                                          Ligma        *ligma);
 
 
-void       gimp_action_history_init                  (Gimp                *gimp);
-void       gimp_action_history_exit                  (Gimp                *gimp);
+void       ligma_action_history_init                  (Ligma                *ligma);
+void       ligma_action_history_exit                  (Ligma                *ligma);
 
-void       gimp_action_history_clear                 (Gimp                *gimp);
+void       ligma_action_history_clear                 (Ligma                *ligma);
 
-GList    * gimp_action_history_search                (Gimp                *gimp,
-                                                      GimpActionMatchFunc  match_func,
+GList    * ligma_action_history_search                (Ligma                *ligma,
+                                                      LigmaActionMatchFunc  match_func,
                                                       const gchar         *keyword);
 
-gboolean   gimp_action_history_is_blacklisted_action (const gchar         *action_name);
-gboolean   gimp_action_history_is_excluded_action    (const gchar         *action_name);
+gboolean   ligma_action_history_is_blacklisted_action (const gchar         *action_name);
+gboolean   ligma_action_history_is_excluded_action    (const gchar         *action_name);
 
-void       gimp_action_history_action_activated      (GimpAction          *action);
+void       ligma_action_history_action_activated      (LigmaAction          *action);
 
 
-#endif  /* __GIMP_ACTION_HISTORY_H__ */
+#endif  /* __LIGMA_ACTION_HISTORY_H__ */

@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpextension-error.c
- * Copyright (C) 2018 Jehan <jehan@gimp.org>
+ * ligmaextension-error.c
+ * Copyright (C) 2018 Jehan <jehan@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,18 +22,18 @@
 
 #include <glib-object.h>
 
-#include "gimpextension-error.h"
+#include "ligmaextension-error.h"
 
 
 /**
- * gimp_extension_error_quark:
+ * ligma_extension_error_quark:
  *
- * This function is never called directly. Use GIMP_EXTENSION_ERROR() instead.
+ * This function is never called directly. Use LIGMA_EXTENSION_ERROR() instead.
  *
- * Returns: the #GQuark that defines the GimpExtension error domain.
+ * Returns: the #GQuark that defines the LigmaExtension error domain.
  **/
 GQuark
-gimp_extension_error_quark (void)
+ligma_extension_error_quark (void)
 {
-  return g_quark_from_static_string ("gimp-extension-error-quark");
+  return g_quark_from_static_string ("ligma-extension-error-quark");
 }

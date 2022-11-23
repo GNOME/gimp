@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995, 1996, 1997 Spencer Kimball and Peter Mattis
  * Copyright (C) 1997 Josh MacDonald
  *
@@ -23,64 +23,64 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "dialogs-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpimage.h"
-#include "core/gimpimage-undo.h"
-#include "core/gimplayer.h"
-#include "core/gimpprogress.h"
+#include "core/ligma.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaimage-undo.h"
+#include "core/ligmalayer.h"
+#include "core/ligmaprogress.h"
 
 #include "file/file-open.h"
-#include "file/gimp-file.h"
+#include "file/ligma-file.h"
 
-#include "widgets/gimpfiledialog.h"
-#include "widgets/gimphelp-ids.h"
-#include "widgets/gimpopendialog.h"
-#include "widgets/gimpwidgets-utils.h"
+#include "widgets/ligmafiledialog.h"
+#include "widgets/ligmahelp-ids.h"
+#include "widgets/ligmaopendialog.h"
+#include "widgets/ligmawidgets-utils.h"
 
 #include "file-open-dialog.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /*  local function prototypes  */
 
 static void       file_open_dialog_response    (GtkWidget           *dialog,
                                                 gint                 response_id,
-                                                Gimp                *gimp);
-static GimpImage *file_open_dialog_open_image  (GtkWidget           *dialog,
-                                                Gimp                *gimp,
+                                                Ligma                *ligma);
+static LigmaImage *file_open_dialog_open_image  (GtkWidget           *dialog,
+                                                Ligma                *ligma,
                                                 GFile               *file,
-                                                GimpPlugInProcedure *load_proc);
+                                                LigmaPlugInProcedure *load_proc);
 static gboolean   file_open_dialog_open_layers (GtkWidget           *dialog,
-                                                GimpImage           *image,
+                                                LigmaImage           *image,
                                                 GFile               *file,
-                                                GimpPlugInProcedure *load_proc);
+                                                LigmaPlugInProcedure *load_proc);
 
 
 /*  public functions  */
 
 GtkWidget *
-file_open_dialog_new (Gimp *gimp)
+file_open_dialog_new (Ligma *ligma)
 {
   GtkWidget           *dialog;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
 
-  dialog = gimp_open_dialog_new (gimp);
+  dialog = ligma_open_dialog_new (ligma);
 
   gtk_file_chooser_set_select_multiple (GTK_FILE_CHOOSER (dialog), TRUE);
 
-  gimp_file_dialog_load_state (GIMP_FILE_DIALOG (dialog),
-                               "gimp-file-open-dialog-state");
+  ligma_file_dialog_load_state (LIGMA_FILE_DIALOG (dialog),
+                               "ligma-file-open-dialog-state");
 
   g_signal_connect (dialog, "response",
                     G_CALLBACK (file_open_dialog_response),
-                    gimp);
+                    ligma);
 
   return dialog;
 }
@@ -91,16 +91,16 @@ file_open_dialog_new (Gimp *gimp)
 static void
 file_open_dialog_response (GtkWidget *dialog,
                            gint       response_id,
-                           Gimp      *gimp)
+                           Ligma      *ligma)
 {
-  GimpFileDialog *file_dialog = GIMP_FILE_DIALOG (dialog);
-  GimpOpenDialog *open_dialog = GIMP_OPEN_DIALOG (dialog);
+  LigmaFileDialog *file_dialog = LIGMA_FILE_DIALOG (dialog);
+  LigmaOpenDialog *open_dialog = LIGMA_OPEN_DIALOG (dialog);
   GSList         *files;
   GSList         *list;
   gboolean        success = FALSE;
 
-  gimp_file_dialog_save_state (GIMP_FILE_DIALOG (dialog),
-                               "gimp-file-open-dialog-state");
+  ligma_file_dialog_save_state (LIGMA_FILE_DIALOG (dialog),
+                               "ligma-file-open-dialog-state");
 
   if (response_id != GTK_RESPONSE_OK)
     {
@@ -113,11 +113,11 @@ file_open_dialog_response (GtkWidget *dialog,
   files = gtk_file_chooser_get_files (GTK_FILE_CHOOSER (dialog));
 
   if (files)
-    g_object_set_data_full (G_OBJECT (gimp), GIMP_FILE_OPEN_LAST_FILE_KEY,
+    g_object_set_data_full (G_OBJECT (ligma), LIGMA_FILE_OPEN_LAST_FILE_KEY,
                             g_object_ref (files->data),
                             (GDestroyNotify) g_object_unref);
 
-  gimp_file_dialog_set_sensitive (file_dialog, FALSE);
+  ligma_file_dialog_set_sensitive (file_dialog, FALSE);
 
   /* When we are going to open new image windows, unset the transient
    * window. We don't need it since we will use gdk_window_raise() to
@@ -139,10 +139,10 @@ file_open_dialog_response (GtkWidget *dialog,
         {
           if (! file_dialog->image)
             {
-              gimp_open_dialog_set_image (
+              ligma_open_dialog_set_image (
                 open_dialog,
                 file_open_dialog_open_image (dialog,
-                                             gimp,
+                                             ligma,
                                              file,
                                              file_dialog->file_proc),
                 TRUE);
@@ -164,7 +164,7 @@ file_open_dialog_response (GtkWidget *dialog,
       else
         {
           if (file_open_dialog_open_image (dialog,
-                                           gimp,
+                                           ligma,
                                            file,
                                            file_dialog->file_proc))
             {
@@ -186,7 +186,7 @@ file_open_dialog_response (GtkWidget *dialog,
       if (file_dialog->image)
         {
           if (open_dialog->open_as_layers)
-            gimp_image_flush (file_dialog->image);
+            ligma_image_flush (file_dialog->image);
 
           g_object_unref (file_dialog->image);
         }
@@ -198,35 +198,35 @@ file_open_dialog_response (GtkWidget *dialog,
       if (file_dialog->image)
         g_object_unref (file_dialog->image);
 
-      gimp_file_dialog_set_sensitive (file_dialog, TRUE);
+      ligma_file_dialog_set_sensitive (file_dialog, TRUE);
     }
 
   g_slist_free_full (files, (GDestroyNotify) g_object_unref);
 }
 
-static GimpImage *
+static LigmaImage *
 file_open_dialog_open_image (GtkWidget           *dialog,
-                             Gimp                *gimp,
+                             Ligma                *ligma,
                              GFile               *file,
-                             GimpPlugInProcedure *load_proc)
+                             LigmaPlugInProcedure *load_proc)
 {
-  GimpImage         *image;
-  GimpPDBStatusType  status;
+  LigmaImage         *image;
+  LigmaPDBStatusType  status;
   GError            *error = NULL;
 
-  image = file_open_with_proc_and_display (gimp,
-                                           gimp_get_user_context (gimp),
-                                           GIMP_PROGRESS (dialog),
+  image = file_open_with_proc_and_display (ligma,
+                                           ligma_get_user_context (ligma),
+                                           LIGMA_PROGRESS (dialog),
                                            file, FALSE,
                                            load_proc,
-                                           G_OBJECT (gimp_widget_get_monitor (dialog)),
+                                           G_OBJECT (ligma_widget_get_monitor (dialog)),
                                            &status, &error);
 
-  if (! image && status != GIMP_PDB_SUCCESS && status != GIMP_PDB_CANCEL)
+  if (! image && status != LIGMA_PDB_SUCCESS && status != LIGMA_PDB_CANCEL)
     {
-      gimp_message (gimp, G_OBJECT (dialog), GIMP_MESSAGE_ERROR,
+      ligma_message (ligma, G_OBJECT (dialog), LIGMA_MESSAGE_ERROR,
                     _("Opening '%s' failed:\n\n%s"),
-                    gimp_file_get_utf8_name (file), error->message);
+                    ligma_file_get_utf8_name (file), error->message);
       g_clear_error (&error);
     }
 
@@ -235,39 +235,39 @@ file_open_dialog_open_image (GtkWidget           *dialog,
 
 static gboolean
 file_open_dialog_open_layers (GtkWidget           *dialog,
-                              GimpImage           *image,
+                              LigmaImage           *image,
                               GFile               *file,
-                              GimpPlugInProcedure *load_proc)
+                              LigmaPlugInProcedure *load_proc)
 {
   GList             *new_layers;
-  GimpPDBStatusType  status;
+  LigmaPDBStatusType  status;
   GError            *error = NULL;
 
-  new_layers = file_open_layers (image->gimp,
-                                 gimp_get_user_context (image->gimp),
-                                 GIMP_PROGRESS (dialog),
+  new_layers = file_open_layers (image->ligma,
+                                 ligma_get_user_context (image->ligma),
+                                 LIGMA_PROGRESS (dialog),
                                  image, FALSE,
-                                 file, GIMP_RUN_INTERACTIVE, load_proc,
+                                 file, LIGMA_RUN_INTERACTIVE, load_proc,
                                  &status, &error);
 
   if (new_layers)
     {
-      gimp_image_add_layers (image, new_layers,
-                             GIMP_IMAGE_ACTIVE_PARENT, -1,
+      ligma_image_add_layers (image, new_layers,
+                             LIGMA_IMAGE_ACTIVE_PARENT, -1,
                              0, 0,
-                             gimp_image_get_width (image),
-                             gimp_image_get_height (image),
+                             ligma_image_get_width (image),
+                             ligma_image_get_height (image),
                              _("Open layers"));
 
       g_list_free (new_layers);
 
       return TRUE;
     }
-  else if (status != GIMP_PDB_CANCEL)
+  else if (status != LIGMA_PDB_CANCEL)
     {
-      gimp_message (image->gimp, G_OBJECT (dialog), GIMP_MESSAGE_ERROR,
+      ligma_message (image->ligma, G_OBJECT (dialog), LIGMA_MESSAGE_ERROR,
                     _("Opening '%s' failed:\n\n%s"),
-                    gimp_file_get_utf8_name (file), error->message);
+                    ligma_file_get_utf8_name (file), error->message);
       g_clear_error (&error);
     }
 

@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpcontrollerwheel.h
- * Copyright (C) 2004 Michael Natterer <mitch@gimp.org>
+ * ligmacontrollerwheel.h
+ * Copyright (C) 2004 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,39 +18,39 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CONTROLLER_WHEEL_H__
-#define __GIMP_CONTROLLER_WHEEL_H__
+#ifndef __LIGMA_CONTROLLER_WHEEL_H__
+#define __LIGMA_CONTROLLER_WHEEL_H__
 
 
-#define GIMP_ENABLE_CONTROLLER_UNDER_CONSTRUCTION
-#include "libgimpwidgets/gimpcontroller.h"
+#define LIGMA_ENABLE_CONTROLLER_UNDER_CONSTRUCTION
+#include "libligmawidgets/ligmacontroller.h"
 
 
-#define GIMP_TYPE_CONTROLLER_WHEEL            (gimp_controller_wheel_get_type ())
-#define GIMP_CONTROLLER_WHEEL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CONTROLLER_WHEEL, GimpControllerWheel))
-#define GIMP_CONTROLLER_WHEEL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CONTROLLER_WHEEL, GimpControllerWheelClass))
-#define GIMP_IS_CONTROLLER_WHEEL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CONTROLLER_WHEEL))
-#define GIMP_IS_CONTROLLER_WHEEL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CONTROLLER_WHEEL))
-#define GIMP_CONTROLLER_WHEEL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CONTROLLER_WHEEL, GimpControllerWheelClass))
+#define LIGMA_TYPE_CONTROLLER_WHEEL            (ligma_controller_wheel_get_type ())
+#define LIGMA_CONTROLLER_WHEEL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_CONTROLLER_WHEEL, LigmaControllerWheel))
+#define LIGMA_CONTROLLER_WHEEL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_CONTROLLER_WHEEL, LigmaControllerWheelClass))
+#define LIGMA_IS_CONTROLLER_WHEEL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_CONTROLLER_WHEEL))
+#define LIGMA_IS_CONTROLLER_WHEEL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_CONTROLLER_WHEEL))
+#define LIGMA_CONTROLLER_WHEEL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_CONTROLLER_WHEEL, LigmaControllerWheelClass))
 
 
-typedef struct _GimpControllerWheelClass GimpControllerWheelClass;
+typedef struct _LigmaControllerWheelClass LigmaControllerWheelClass;
 
-struct _GimpControllerWheel
+struct _LigmaControllerWheel
 {
-  GimpController parent_instance;
+  LigmaController parent_instance;
 };
 
-struct _GimpControllerWheelClass
+struct _LigmaControllerWheelClass
 {
-  GimpControllerClass parent_class;
+  LigmaControllerClass parent_class;
 };
 
 
-GType      gimp_controller_wheel_get_type (void) G_GNUC_CONST;
+GType      ligma_controller_wheel_get_type (void) G_GNUC_CONST;
 
-gboolean   gimp_controller_wheel_scroll   (GimpControllerWheel  *wheel,
+gboolean   ligma_controller_wheel_scroll   (LigmaControllerWheel  *wheel,
                                            const GdkEventScroll *sevent);
 
 
-#endif /* __GIMP_CONTROLLER_WHEEL_H__ */
+#endif /* __LIGMA_CONTROLLER_WHEEL_H__ */

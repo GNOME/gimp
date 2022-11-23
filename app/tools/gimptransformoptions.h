@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,50 +15,50 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TRANSFORM_OPTIONS_H__
-#define __GIMP_TRANSFORM_OPTIONS_H__
+#ifndef __LIGMA_TRANSFORM_OPTIONS_H__
+#define __LIGMA_TRANSFORM_OPTIONS_H__
 
 
-#include "core/gimptooloptions.h"
+#include "core/ligmatooloptions.h"
 
 
-#define GIMP_TYPE_TRANSFORM_OPTIONS            (gimp_transform_options_get_type ())
-#define GIMP_TRANSFORM_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TRANSFORM_OPTIONS, GimpTransformOptions))
-#define GIMP_TRANSFORM_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TRANSFORM_OPTIONS, GimpTransformOptionsClass))
-#define GIMP_IS_TRANSFORM_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_TRANSFORM_OPTIONS))
-#define GIMP_IS_TRANSFORM_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_TRANSFORM_OPTIONS))
-#define GIMP_TRANSFORM_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_TRANSFORM_OPTIONS, GimpTransformOptionsClass))
+#define LIGMA_TYPE_TRANSFORM_OPTIONS            (ligma_transform_options_get_type ())
+#define LIGMA_TRANSFORM_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_TRANSFORM_OPTIONS, LigmaTransformOptions))
+#define LIGMA_TRANSFORM_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_TRANSFORM_OPTIONS, LigmaTransformOptionsClass))
+#define LIGMA_IS_TRANSFORM_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_TRANSFORM_OPTIONS))
+#define LIGMA_IS_TRANSFORM_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_TRANSFORM_OPTIONS))
+#define LIGMA_TRANSFORM_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_TRANSFORM_OPTIONS, LigmaTransformOptionsClass))
 
 
-typedef struct _GimpTransformOptions      GimpTransformOptions;
-typedef struct _GimpTransformOptionsClass GimpTransformOptionsClass;
+typedef struct _LigmaTransformOptions      LigmaTransformOptions;
+typedef struct _LigmaTransformOptionsClass LigmaTransformOptionsClass;
 
-struct _GimpTransformOptions
+struct _LigmaTransformOptions
 {
-  GimpToolOptions         parent_instance;
+  LigmaToolOptions         parent_instance;
 
-  GimpTransformType       type;
-  GimpTransformDirection  direction;
-  GimpInterpolationType   interpolation;
-  GimpTransformResize     clip;
+  LigmaTransformType       type;
+  LigmaTransformDirection  direction;
+  LigmaInterpolationType   interpolation;
+  LigmaTransformResize     clip;
 
   /*  options gui  */
   GtkWidget              *type_box;
   GtkWidget              *direction_frame;
 };
 
-struct _GimpTransformOptionsClass
+struct _LigmaTransformOptionsClass
 {
-  GimpToolOptionsClass  parent_class;
+  LigmaToolOptionsClass  parent_class;
 };
 
 
-GType       gimp_transform_options_get_type (void) G_GNUC_CONST;
+GType       ligma_transform_options_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_transform_options_gui      (GimpToolOptions *tool_options,
+GtkWidget * ligma_transform_options_gui      (LigmaToolOptions *tool_options,
                                              gboolean         direction,
                                              gboolean         interpolation,
                                              gboolean         clipping);
 
 
-#endif /* __GIMP_TRANSFORM_OPTIONS_H__ */
+#endif /* __LIGMA_TRANSFORM_OPTIONS_H__ */

@@ -1,16 +1,16 @@
-# Gimp'i eesti keele tõlge.
-# Estonian translation of Gimp.
+# Ligma'i eesti keele tõlge.
+# Estonian translation of Ligma.
 #
 # Copyright (C) 2006, 2007 The GNOME Project.
 # Copyright (C) 2001-2005 Free Software Foundation, Inc.
-# This file is distributed under the same license as the Gimp package.
+# This file is distributed under the same license as the Ligma package.
 #
 # Olle Niit <olle@paalalinn.com>, 2005-2007
 # Priit Laes <amd@store20.com>, 2007
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-libgimp\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma-libligma\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2012-12-19 00:04+0000\n"
 "PO-Revision-Date: 2012-12-19 15:57+0300\n"
 "Last-Translator: Mattias Põldaru <mahfiaz@gmail.com>\n"
@@ -655,16 +655,16 @@ msgid "Crop with aspect"
 msgstr "Lõikamine külgede suhtega"
 
 msgctxt "pdb-proc-type"
-msgid "Internal GIMP procedure"
-msgstr "Sisemine GIMP'i potseduur"
+msgid "Internal LIGMA procedure"
+msgstr "Sisemine LIGMA'i potseduur"
 
 msgctxt "pdb-proc-type"
-msgid "GIMP Plug-In"
-msgstr "GIMP'i plugin"
+msgid "LIGMA Plug-In"
+msgstr "LIGMA'i plugin"
 
 msgctxt "pdb-proc-type"
-msgid "GIMP Extension"
-msgstr "GIMP'i laiendus"
+msgid "LIGMA Extension"
+msgstr "LIGMA'i laiendus"
 
 msgctxt "pdb-proc-type"
 msgid "Temporary Procedure"
@@ -714,8 +714,8 @@ msgid "(invalid UTF-8 string)"
 msgstr "(vigane UTF-8 tekstilõik)"
 
 #. *
-#. * SECTION: gimpcolorconfig
-#. * @title: GimpColorConfig
+#. * SECTION: ligmacolorconfig
+#. * @title: LigmaColorConfig
 #. * @short_description: Color management settings.
 #. *
 #. * Color management settings.
@@ -727,11 +727,11 @@ msgid "The color profile of your (primary) monitor."
 msgstr "Sinu (primaarse) monitori värviprofiil."
 
 msgid ""
-"When enabled, GIMP will try to use the display color profile from the "
+"When enabled, LIGMA will try to use the display color profile from the "
 "windowing system.  The configured monitor profile is then only used as a "
 "fallback."
 msgstr ""
-"Kui lubatud, püüab GIMP kasutada graafilise keskkonna värviprofiili. "
+"Kui lubatud, püüab LIGMA kasutada graafilise keskkonna värviprofiili. "
 "Häälestatud monitori profiili kasutatakse ainult siis kui eelnimetatu "
 "ebaõnnestub."
 
@@ -1500,11 +1500,11 @@ msgstr "Sisendseade %03d"
 msgid "MIDI Events"
 msgstr "MIDI sündmused"
 
-msgid "GIMP"
-msgstr "GIMP"
+msgid "LIGMA"
+msgstr "LIGMA"
 
-msgid "GIMP MIDI Input Controller"
-msgstr "GIMP MIDI sisendseade"
+msgid "LIGMA MIDI Input Controller"
+msgstr "LIGMA MIDI sisendseade"
 
 msgid "Protanopia (insensitivity to red)"
 msgstr "Protanopia (tundetu punase suhtes)"

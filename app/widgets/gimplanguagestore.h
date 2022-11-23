@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimplanguagestore.h
- * Copyright (C) 2008, 2009  Sven Neumann <sven@gimp.org>
+ * ligmalanguagestore.h
+ * Copyright (C) 2008, 2009  Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,48 +18,48 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_LANGUAGE_STORE_H__
-#define __GIMP_LANGUAGE_STORE_H__
+#ifndef __LIGMA_LANGUAGE_STORE_H__
+#define __LIGMA_LANGUAGE_STORE_H__
 
 
 enum
 {
-  GIMP_LANGUAGE_STORE_LABEL,
-  GIMP_LANGUAGE_STORE_CODE
+  LIGMA_LANGUAGE_STORE_LABEL,
+  LIGMA_LANGUAGE_STORE_CODE
 };
 
 
-#define GIMP_TYPE_LANGUAGE_STORE            (gimp_language_store_get_type ())
-#define GIMP_LANGUAGE_STORE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_LANGUAGE_STORE, GimpLanguageStore))
-#define GIMP_LANGUAGE_STORE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_LANGUAGE_STORE, GimpLanguageStoreClass))
-#define GIMP_IS_LANGUAGE_STORE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_LANGUAGE_STORE))
-#define GIMP_IS_LANGUAGE_STORE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_LANGUAGE_STORE))
-#define GIMP_LANGUAGE_STORE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_LANGUAGE_STORE, GimpLanguageStoreClass))
+#define LIGMA_TYPE_LANGUAGE_STORE            (ligma_language_store_get_type ())
+#define LIGMA_LANGUAGE_STORE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_LANGUAGE_STORE, LigmaLanguageStore))
+#define LIGMA_LANGUAGE_STORE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_LANGUAGE_STORE, LigmaLanguageStoreClass))
+#define LIGMA_IS_LANGUAGE_STORE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_LANGUAGE_STORE))
+#define LIGMA_IS_LANGUAGE_STORE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_LANGUAGE_STORE))
+#define LIGMA_LANGUAGE_STORE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_LANGUAGE_STORE, LigmaLanguageStoreClass))
 
 
-typedef struct _GimpLanguageStoreClass  GimpLanguageStoreClass;
+typedef struct _LigmaLanguageStoreClass  LigmaLanguageStoreClass;
 
-struct _GimpLanguageStoreClass
+struct _LigmaLanguageStoreClass
 {
   GtkListStoreClass  parent_class;
 
-  void (* add) (GimpLanguageStore *store,
+  void (* add) (LigmaLanguageStore *store,
                 const gchar       *label,
                 const gchar       *code);
 };
 
-struct _GimpLanguageStore
+struct _LigmaLanguageStore
 {
   GtkListStore     parent_instance;
 };
 
 
-GType          gimp_language_store_get_type (void) G_GNUC_CONST;
+GType          ligma_language_store_get_type (void) G_GNUC_CONST;
 
-GtkListStore * gimp_language_store_new      (void);
+GtkListStore * ligma_language_store_new      (void);
 
-gboolean       gimp_language_store_lookup   (GimpLanguageStore *store,
+gboolean       ligma_language_store_lookup   (LigmaLanguageStore *store,
                                              const gchar       *code,
                                              GtkTreeIter       *iter);
 
-#endif  /* __GIMP_LANGUAGE_STORE_H__ */
+#endif  /* __LIGMA_LANGUAGE_STORE_H__ */

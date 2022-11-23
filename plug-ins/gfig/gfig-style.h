@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * This is a plug-in for GIMP.
+ * This is a plug-in for LIGMA.
  *
  * Generates images containing vector type drawings.
  *
@@ -25,7 +25,7 @@
 #ifndef __GFIG_STYLE_H__
 #define __GFIG_STYLE_H__
 
-#include <libgimp/gimpui.h>
+#include <libligma/ligmaui.h>
 
 struct _Style
 {
@@ -43,8 +43,8 @@ struct _Style
   gchar     *pattern;
   gchar     *gradient;
   PaintType  paint_type;
-  GimpRGB    foreground;
-  GimpRGB    background;
+  LigmaRGB    foreground;
+  LigmaRGB    background;
   gboolean   reverselines;
   gint       ref_count;
 };
@@ -66,27 +66,27 @@ void     gfig_style_save_as_attributes     (Style                *style,
 
 void     gfig_save_styles                  (GString              *string);
 
-void     set_foreground_callback           (GimpColorButton      *button,
+void     set_foreground_callback           (LigmaColorButton      *button,
                                             gpointer              data);
 
-void     set_background_callback           (GimpColorButton      *button,
+void     set_background_callback           (LigmaColorButton      *button,
                                             gpointer              data);
 
 void     set_paint_type_callback           (GtkToggleButton      *toggle,
                                             gpointer              data);
 
-void     gfig_brush_changed_callback       (GimpBrushSelectButton *button,
+void     gfig_brush_changed_callback       (LigmaBrushSelectButton *button,
                                             const gchar          *brush_name,
                                             gdouble               opacity,
                                             gint                  spacing,
-                                            GimpLayerMode         paint_mode,
+                                            LigmaLayerMode         paint_mode,
                                             gint                  width,
                                             gint                  height,
                                             const guchar         *mask_data,
                                             gboolean              dialog_closing,
                                             gpointer              user_data);
 
-void     gfig_pattern_changed_callback     (GimpPatternSelectButton *button,
+void     gfig_pattern_changed_callback     (LigmaPatternSelectButton *button,
                                             const gchar          *pattern_name,
                                             gint                  width,
                                             gint                  height,
@@ -95,15 +95,15 @@ void     gfig_pattern_changed_callback     (GimpPatternSelectButton *button,
                                             gboolean              dialog_closing,
                                             gpointer              user_data);
 
-void     gfig_gradient_changed_callback    (GimpGradientSelectButton *button,
+void     gfig_gradient_changed_callback    (LigmaGradientSelectButton *button,
                                             const gchar          *gradient_name,
                                             gint                  width,
                                             const gdouble        *grad_data,
                                             gboolean              dialog_closing,
                                             gpointer              user_data);
 
-void     gfig_rgba_copy                    (GimpRGB              *color1,
-                                            GimpRGB              *color2);
+void     gfig_rgba_copy                    (LigmaRGB              *color1,
+                                            LigmaRGB              *color2);
 
 void     gfig_style_copy                   (Style                *style1,
                                             Style                *style0,
@@ -111,14 +111,14 @@ void     gfig_style_copy                   (Style                *style1,
 
 void     gfig_style_apply                  (Style                *style);
 
-void     gfig_read_gimp_style              (Style                *style,
+void     gfig_read_ligma_style              (Style                *style,
                                             const gchar          *name);
 
 void     gfig_style_set_context_from_style (Style                *style);
 
 void     gfig_style_set_style_from_context (Style                *style);
 
-void     mygimp_brush_info                 (gint                 *width,
+void     myligma_brush_info                 (gint                 *width,
                                             gint                 *height);
 
 Style   *gfig_context_get_current_style    (void);

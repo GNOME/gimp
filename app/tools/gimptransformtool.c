@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-2001 Spencer Kimball, Peter Mattis, and others
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,40 +20,40 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpmath/gimpmath.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "tools-types.h"
 
-#include "config/gimpguiconfig.h"
+#include "config/ligmaguiconfig.h"
 
-#include "core/gimp.h"
-#include "core/gimpdrawable-transform.h"
-#include "core/gimperror.h"
-#include "core/gimpimage.h"
-#include "core/gimpimage-item-list.h"
-#include "core/gimpimage-transform.h"
-#include "core/gimpimage-undo.h"
-#include "core/gimplayer.h"
-#include "core/gimplayermask.h"
-#include "core/gimpprogress.h"
-#include "core/gimp-transform-resize.h"
+#include "core/ligma.h"
+#include "core/ligmadrawable-transform.h"
+#include "core/ligmaerror.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaimage-item-list.h"
+#include "core/ligmaimage-transform.h"
+#include "core/ligmaimage-undo.h"
+#include "core/ligmalayer.h"
+#include "core/ligmalayermask.h"
+#include "core/ligmaprogress.h"
+#include "core/ligma-transform-resize.h"
 
-#include "vectors/gimpvectors.h"
+#include "vectors/ligmavectors.h"
 
-#include "display/gimpdisplay.h"
-#include "display/gimpdisplayshell.h"
+#include "display/ligmadisplay.h"
+#include "display/ligmadisplayshell.h"
 
-#include "widgets/gimpmessagedialog.h"
-#include "widgets/gimpmessagebox.h"
-#include "widgets/gimpwidgets-utils.h"
+#include "widgets/ligmamessagedialog.h"
+#include "widgets/ligmamessagebox.h"
+#include "widgets/ligmawidgets-utils.h"
 
-#include "gimptoolcontrol.h"
-#include "gimptools-utils.h"
-#include "gimptransformoptions.h"
-#include "gimptransformtool.h"
+#include "ligmatoolcontrol.h"
+#include "ligmatools-utils.h"
+#include "ligmatransformoptions.h"
+#include "ligmatransformtool.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /* the minimal ratio between the transformed item size and the image size,
@@ -64,120 +64,120 @@
 
 /*  local function prototypes  */
 
-static void                     gimp_transform_tool_control            (GimpTool           *tool,
-                                                                        GimpToolAction      action,
-                                                                        GimpDisplay        *display);
+static void                     ligma_transform_tool_control            (LigmaTool           *tool,
+                                                                        LigmaToolAction      action,
+                                                                        LigmaDisplay        *display);
 
-static gchar                  * gimp_transform_tool_real_get_undo_desc (GimpTransformTool  *tr_tool);
-static GimpTransformDirection   gimp_transform_tool_real_get_direction (GimpTransformTool  *tr_tool);
-static GeglBuffer             * gimp_transform_tool_real_transform     (GimpTransformTool  *tr_tool,
+static gchar                  * ligma_transform_tool_real_get_undo_desc (LigmaTransformTool  *tr_tool);
+static LigmaTransformDirection   ligma_transform_tool_real_get_direction (LigmaTransformTool  *tr_tool);
+static GeglBuffer             * ligma_transform_tool_real_transform     (LigmaTransformTool  *tr_tool,
                                                                         GList              *objects,
                                                                         GeglBuffer         *orig_buffer,
                                                                         gint                orig_offset_x,
                                                                         gint                orig_offset_y,
-                                                                        GimpColorProfile  **buffer_profile,
+                                                                        LigmaColorProfile  **buffer_profile,
                                                                         gint               *new_offset_x,
                                                                         gint               *new_offset_y);
 
-static void                     gimp_transform_tool_halt               (GimpTransformTool  *tr_tool);
+static void                     ligma_transform_tool_halt               (LigmaTransformTool  *tr_tool);
 
-static gboolean                 gimp_transform_tool_confirm            (GimpTransformTool  *tr_tool,
-                                                                        GimpDisplay        *display);
+static gboolean                 ligma_transform_tool_confirm            (LigmaTransformTool  *tr_tool,
+                                                                        LigmaDisplay        *display);
 
 
-G_DEFINE_TYPE (GimpTransformTool, gimp_transform_tool, GIMP_TYPE_DRAW_TOOL)
+G_DEFINE_TYPE (LigmaTransformTool, ligma_transform_tool, LIGMA_TYPE_DRAW_TOOL)
 
-#define parent_class gimp_transform_tool_parent_class
+#define parent_class ligma_transform_tool_parent_class
 
 
 /*  private functions  */
 
 
 static void
-gimp_transform_tool_class_init (GimpTransformToolClass *klass)
+ligma_transform_tool_class_init (LigmaTransformToolClass *klass)
 {
-  GimpToolClass *tool_class = GIMP_TOOL_CLASS (klass);
+  LigmaToolClass *tool_class = LIGMA_TOOL_CLASS (klass);
 
-  tool_class->control  = gimp_transform_tool_control;
+  tool_class->control  = ligma_transform_tool_control;
 
   klass->recalc_matrix = NULL;
-  klass->get_undo_desc = gimp_transform_tool_real_get_undo_desc;
-  klass->get_direction = gimp_transform_tool_real_get_direction;
-  klass->transform     = gimp_transform_tool_real_transform;
+  klass->get_undo_desc = ligma_transform_tool_real_get_undo_desc;
+  klass->get_direction = ligma_transform_tool_real_get_direction;
+  klass->transform     = ligma_transform_tool_real_transform;
 
   klass->undo_desc     = _("Transform");
   klass->progress_text = _("Transforming");
 }
 
 static void
-gimp_transform_tool_init (GimpTransformTool *tr_tool)
+ligma_transform_tool_init (LigmaTransformTool *tr_tool)
 {
-  gimp_matrix3_identity (&tr_tool->transform);
+  ligma_matrix3_identity (&tr_tool->transform);
   tr_tool->transform_valid = TRUE;
 
   tr_tool->restore_type = FALSE;
 }
 
 static void
-gimp_transform_tool_control (GimpTool       *tool,
-                             GimpToolAction  action,
-                             GimpDisplay    *display)
+ligma_transform_tool_control (LigmaTool       *tool,
+                             LigmaToolAction  action,
+                             LigmaDisplay    *display)
 {
-  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tool);
+  LigmaTransformTool *tr_tool = LIGMA_TRANSFORM_TOOL (tool);
 
   switch (action)
     {
-    case GIMP_TOOL_ACTION_PAUSE:
-    case GIMP_TOOL_ACTION_RESUME:
+    case LIGMA_TOOL_ACTION_PAUSE:
+    case LIGMA_TOOL_ACTION_RESUME:
       break;
 
-    case GIMP_TOOL_ACTION_HALT:
-      gimp_transform_tool_halt (tr_tool);
+    case LIGMA_TOOL_ACTION_HALT:
+      ligma_transform_tool_halt (tr_tool);
       break;
 
-    case GIMP_TOOL_ACTION_COMMIT:
+    case LIGMA_TOOL_ACTION_COMMIT:
       break;
     }
 
-  GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);
+  LIGMA_TOOL_CLASS (parent_class)->control (tool, action, display);
 }
 
 static gchar *
-gimp_transform_tool_real_get_undo_desc (GimpTransformTool *tr_tool)
+ligma_transform_tool_real_get_undo_desc (LigmaTransformTool *tr_tool)
 {
-  return g_strdup (GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->undo_desc);
+  return g_strdup (LIGMA_TRANSFORM_TOOL_GET_CLASS (tr_tool)->undo_desc);
 }
 
-static GimpTransformDirection
-gimp_transform_tool_real_get_direction (GimpTransformTool *tr_tool)
+static LigmaTransformDirection
+ligma_transform_tool_real_get_direction (LigmaTransformTool *tr_tool)
 {
-  GimpTransformOptions *options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
+  LigmaTransformOptions *options = LIGMA_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
 
   return options->direction;
 }
 
 static GeglBuffer *
-gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
+ligma_transform_tool_real_transform (LigmaTransformTool *tr_tool,
                                     GList             *objects,
                                     GeglBuffer        *orig_buffer,
                                     gint               orig_offset_x,
                                     gint               orig_offset_y,
-                                    GimpColorProfile **buffer_profile,
+                                    LigmaColorProfile **buffer_profile,
                                     gint              *new_offset_x,
                                     gint              *new_offset_y)
 {
-  GimpTransformToolClass *klass   = GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool);
-  GimpTool               *tool    = GIMP_TOOL (tr_tool);
-  GimpTransformOptions   *options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tool);
-  GimpContext            *context = GIMP_CONTEXT (options);
+  LigmaTransformToolClass *klass   = LIGMA_TRANSFORM_TOOL_GET_CLASS (tr_tool);
+  LigmaTool               *tool    = LIGMA_TOOL (tr_tool);
+  LigmaTransformOptions   *options = LIGMA_TRANSFORM_TOOL_GET_OPTIONS (tool);
+  LigmaContext            *context = LIGMA_CONTEXT (options);
   GeglBuffer             *ret     = NULL;
-  GimpTransformResize     clip    = options->clip;
-  GimpTransformDirection  direction;
-  GimpProgress           *progress;
+  LigmaTransformResize     clip    = options->clip;
+  LigmaTransformDirection  direction;
+  LigmaProgress           *progress;
 
-  direction = GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->get_direction (tr_tool);
+  direction = LIGMA_TRANSFORM_TOOL_GET_CLASS (tr_tool)->get_direction (tr_tool);
 
-  progress = gimp_progress_start (GIMP_PROGRESS (tool), FALSE,
+  progress = ligma_progress_start (LIGMA_PROGRESS (tool), FALSE,
                                   "%s", klass->progress_text);
 
   while (g_main_context_pending (NULL))
@@ -189,7 +189,7 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
        *  normal drawables.
        */
 
-      ret = gimp_drawable_transform_buffer_affine (objects->data,
+      ret = ligma_drawable_transform_buffer_affine (objects->data,
                                                    context,
                                                    orig_buffer,
                                                    orig_offset_x,
@@ -203,11 +203,11 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
                                                    new_offset_y,
                                                    progress);
     }
-  else if (g_list_length (objects) == 1 && GIMP_IS_IMAGE (objects->data))
+  else if (g_list_length (objects) == 1 && LIGMA_IS_IMAGE (objects->data))
     {
       /*  this happens for images  */
 
-      gimp_image_transform (objects->data, context,
+      ligma_image_transform (objects->data, context,
                             &tr_tool->transform,
                             direction,
                             options->interpolation,
@@ -221,9 +221,9 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
       /*  this happens for entire drawables, paths and layer groups  */
       g_return_val_if_fail (g_list_length (objects) > 0, NULL);
 
-      items = gimp_image_item_list_filter (g_list_copy (objects));
+      items = ligma_image_item_list_filter (g_list_copy (objects));
 
-      gimp_image_item_list_transform (gimp_item_get_image (objects->data),
+      ligma_image_item_list_transform (ligma_item_get_image (objects->data),
                                       items, context,
                                       &tr_tool->transform,
                                       direction,
@@ -234,15 +234,15 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
     }
 
   if (progress)
-    gimp_progress_end (progress);
+    ligma_progress_end (progress);
 
   return ret;
 }
 
 static void
-gimp_transform_tool_halt (GimpTransformTool *tr_tool)
+ligma_transform_tool_halt (LigmaTransformTool *tr_tool)
 {
-  GimpTransformOptions *options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
+  LigmaTransformOptions *options = LIGMA_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
 
   tr_tool->x1 = 0;
   tr_tool->y1 = 0;
@@ -260,40 +260,40 @@ gimp_transform_tool_halt (GimpTransformTool *tr_tool)
 }
 
 static gboolean
-gimp_transform_tool_confirm (GimpTransformTool *tr_tool,
-                             GimpDisplay       *display)
+ligma_transform_tool_confirm (LigmaTransformTool *tr_tool,
+                             LigmaDisplay       *display)
 {
-  GimpTransformOptions *options          = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
-  GimpDisplayShell     *shell            = gimp_display_get_shell (display);
-  GimpImage            *image            = gimp_display_get_image (display);
+  LigmaTransformOptions *options          = LIGMA_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
+  LigmaDisplayShell     *shell            = ligma_display_get_shell (display);
+  LigmaImage            *image            = ligma_display_get_image (display);
   GList                *selected_objects;
   gdouble               max_ratio        = 0.0;
-  GimpObject           *max_ratio_object = NULL;
+  LigmaObject           *max_ratio_object = NULL;
 
-  selected_objects = gimp_transform_tool_get_selected_objects (tr_tool, display);
+  selected_objects = ligma_transform_tool_get_selected_objects (tr_tool, display);
 
-  if (GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->recalc_matrix)
+  if (LIGMA_TRANSFORM_TOOL_GET_CLASS (tr_tool)->recalc_matrix)
     {
-      GimpMatrix3             transform;
-      GimpTransformDirection  direction;
+      LigmaMatrix3             transform;
+      LigmaTransformDirection  direction;
       GeglRectangle           selection_bounds;
       gboolean                selection_empty = TRUE;
       GList                  *objects         = NULL;
       GList                  *iter;
 
       transform = tr_tool->transform;
-      direction = GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->get_direction (
+      direction = LIGMA_TRANSFORM_TOOL_GET_CLASS (tr_tool)->get_direction (
         tr_tool);
 
-      if (direction == GIMP_TRANSFORM_BACKWARD)
-        gimp_matrix3_invert (&transform);
+      if (direction == LIGMA_TRANSFORM_BACKWARD)
+        ligma_matrix3_invert (&transform);
 
-      if (options->type == GIMP_TRANSFORM_TYPE_LAYER)
+      if (options->type == LIGMA_TRANSFORM_TYPE_LAYER)
         {
           for (iter = selected_objects; iter; iter = iter->next)
-            if (! gimp_viewable_get_children (GIMP_VIEWABLE (iter->data)))
+            if (! ligma_viewable_get_children (LIGMA_VIEWABLE (iter->data)))
           {
-            if (gimp_item_bounds (GIMP_ITEM (gimp_image_get_mask (image)),
+            if (ligma_item_bounds (LIGMA_ITEM (ligma_image_get_mask (image)),
                                   &selection_bounds.x,     &selection_bounds.y,
                                   &selection_bounds.width, &selection_bounds.height))
               {
@@ -305,9 +305,9 @@ gimp_transform_tool_confirm (GimpTransformTool *tr_tool,
 
       if (selection_empty  &&
           selected_objects &&
-          GIMP_IS_ITEM (selected_objects->data))
+          LIGMA_IS_ITEM (selected_objects->data))
         {
-          objects = gimp_image_item_list_filter (g_list_copy (selected_objects));
+          objects = ligma_image_item_list_filter (g_list_copy (selected_objects));
           g_list_free (selected_objects);
         }
       else
@@ -315,66 +315,66 @@ gimp_transform_tool_confirm (GimpTransformTool *tr_tool,
           objects = selected_objects;
         }
 
-      if (options->type == GIMP_TRANSFORM_TYPE_IMAGE)
+      if (options->type == LIGMA_TRANSFORM_TYPE_IMAGE)
         {
           objects = g_list_concat (
             objects,
-            gimp_image_item_list_get_list (image,
-                                           GIMP_ITEM_TYPE_ALL,
-                                           GIMP_ITEM_SET_ALL));
+            ligma_image_item_list_get_list (image,
+                                           LIGMA_ITEM_TYPE_ALL,
+                                           LIGMA_ITEM_SET_ALL));
         }
 
       for (iter = objects; iter; iter = g_list_next (iter))
         {
-          GimpObject          *object = iter->data;
-          GimpTransformResize  clip   = options->clip;
+          LigmaObject          *object = iter->data;
+          LigmaTransformResize  clip   = options->clip;
           GeglRectangle        orig_bounds;
           GeglRectangle        new_bounds;
           gdouble              ratio  = 0.0;
 
-          if (GIMP_IS_DRAWABLE (object))
+          if (LIGMA_IS_DRAWABLE (object))
             {
               if (selection_empty)
                 {
-                  GimpItem *item = GIMP_ITEM (object);
+                  LigmaItem *item = LIGMA_ITEM (object);
 
-                  gimp_item_get_offset (item, &orig_bounds.x, &orig_bounds.y);
+                  ligma_item_get_offset (item, &orig_bounds.x, &orig_bounds.y);
 
-                  orig_bounds.width  = gimp_item_get_width  (item);
-                  orig_bounds.height = gimp_item_get_height (item);
+                  orig_bounds.width  = ligma_item_get_width  (item);
+                  orig_bounds.height = ligma_item_get_height (item);
 
-                  clip = gimp_item_get_clip (item, clip);
+                  clip = ligma_item_get_clip (item, clip);
                 }
               else
                 {
                   orig_bounds = selection_bounds;
                 }
             }
-          else if (GIMP_IS_ITEM (object))
+          else if (LIGMA_IS_ITEM (object))
             {
-              GimpItem *item = GIMP_ITEM (object);
+              LigmaItem *item = LIGMA_ITEM (object);
 
-              gimp_item_bounds (item,
+              ligma_item_bounds (item,
                                 &orig_bounds.x,     &orig_bounds.y,
                                 &orig_bounds.width, &orig_bounds.height);
 
-              clip = gimp_item_get_clip (item, clip);
+              clip = ligma_item_get_clip (item, clip);
             }
           else
             {
-              GimpImage *image;
+              LigmaImage *image;
 
-              g_return_val_if_fail (GIMP_IS_IMAGE (object), FALSE);
+              g_return_val_if_fail (LIGMA_IS_IMAGE (object), FALSE);
 
-              image = GIMP_IMAGE (object);
+              image = LIGMA_IMAGE (object);
 
               orig_bounds.x      = 0;
               orig_bounds.y      = 0;
-              orig_bounds.width  = gimp_image_get_width  (image);
-              orig_bounds.height = gimp_image_get_height (image);
+              orig_bounds.width  = ligma_image_get_width  (image);
+              orig_bounds.height = ligma_image_get_height (image);
             }
 
-          gimp_transform_resize_boundary (&transform, clip,
+          ligma_transform_resize_boundary (&transform, clip,
 
                                           orig_bounds.x,
                                           orig_bounds.y,
@@ -393,14 +393,14 @@ gimp_transform_tool_confirm (GimpTransformTool *tr_tool,
             {
               ratio = MAX (ratio,
                            (gdouble) new_bounds.width /
-                           (gdouble) gimp_image_get_width (image));
+                           (gdouble) ligma_image_get_width (image));
             }
 
           if (new_bounds.height > orig_bounds.height)
             {
               ratio = MAX (ratio,
                            (gdouble) new_bounds.height /
-                           (gdouble) gimp_image_get_height (image));
+                           (gdouble) ligma_image_get_height (image));
             }
 
           if (ratio > max_ratio)
@@ -418,31 +418,31 @@ gimp_transform_tool_confirm (GimpTransformTool *tr_tool,
       GtkWidget *dialog;
       gint       response;
 
-      dialog = gimp_message_dialog_new (_("Confirm Transformation"),
-                                        GIMP_ICON_DIALOG_WARNING,
+      dialog = ligma_message_dialog_new (_("Confirm Transformation"),
+                                        LIGMA_ICON_DIALOG_WARNING,
                                         GTK_WIDGET (shell),
                                         GTK_DIALOG_MODAL |
                                         GTK_DIALOG_DESTROY_WITH_PARENT,
-                                        gimp_standard_help_func, NULL,
+                                        ligma_standard_help_func, NULL,
 
                                         _("_Cancel"),    GTK_RESPONSE_CANCEL,
                                         _("_Transform"), GTK_RESPONSE_OK,
 
                                         NULL);
 
-      gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+      ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                                 GTK_RESPONSE_OK,
                                                 GTK_RESPONSE_CANCEL,
                                                 -1);
 
-      if (GIMP_IS_ITEM (max_ratio_object))
+      if (LIGMA_IS_ITEM (max_ratio_object))
         {
-          gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+          ligma_message_box_set_primary_text (LIGMA_MESSAGE_DIALOG (dialog)->box,
                                              _("Transformation creates "
                                                "a very large item."));
 
-          gimp_message_box_set_text (
-            GIMP_MESSAGE_DIALOG (dialog)->box,
+          ligma_message_box_set_text (
+            LIGMA_MESSAGE_DIALOG (dialog)->box,
             _("Applying the transformation will result "
               "in an item that is over %g times larger "
               "than the image."),
@@ -450,12 +450,12 @@ gimp_transform_tool_confirm (GimpTransformTool *tr_tool,
         }
       else
         {
-          gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+          ligma_message_box_set_primary_text (LIGMA_MESSAGE_DIALOG (dialog)->box,
                                              _("Transformation creates "
                                                "a very large image."));
 
-          gimp_message_box_set_text (
-            GIMP_MESSAGE_DIALOG (dialog)->box,
+          ligma_message_box_set_text (
+            LIGMA_MESSAGE_DIALOG (dialog)->box,
             _("Applying the transformation will enlarge "
               "the image by a factor of %g."),
               floor (max_ratio));
@@ -477,25 +477,25 @@ gimp_transform_tool_confirm (GimpTransformTool *tr_tool,
 
 
 gboolean
-gimp_transform_tool_bounds (GimpTransformTool *tr_tool,
-                            GimpDisplay       *display)
+ligma_transform_tool_bounds (LigmaTransformTool *tr_tool,
+                            LigmaDisplay       *display)
 {
-  GimpTransformOptions *options;
-  GimpDisplayShell     *shell;
-  GimpImage            *image;
+  LigmaTransformOptions *options;
+  LigmaDisplayShell     *shell;
+  LigmaImage            *image;
   gboolean              non_empty = TRUE;
 
-  g_return_val_if_fail (GIMP_IS_TRANSFORM_TOOL (tr_tool), FALSE);
+  g_return_val_if_fail (LIGMA_IS_TRANSFORM_TOOL (tr_tool), FALSE);
 
-  options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
-  image   = gimp_display_get_image (display);
-  shell   = gimp_display_get_shell (display);
+  options = LIGMA_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
+  image   = ligma_display_get_image (display);
+  shell   = ligma_display_get_shell (display);
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), FALSE);
 
   switch (options->type)
     {
-    case GIMP_TRANSFORM_TYPE_LAYER:
+    case LIGMA_TRANSFORM_TYPE_LAYER:
       {
         GList *drawables;
         gint   offset_x;
@@ -503,11 +503,11 @@ gimp_transform_tool_bounds (GimpTransformTool *tr_tool,
         gint   x, y;
         gint   width, height;
 
-        drawables = gimp_image_get_selected_drawables (image);
+        drawables = ligma_image_get_selected_drawables (image);
 
-        gimp_item_get_offset (GIMP_ITEM (drawables->data), &offset_x, &offset_y);
+        ligma_item_get_offset (LIGMA_ITEM (drawables->data), &offset_x, &offset_y);
 
-        non_empty = gimp_item_mask_intersect (GIMP_ITEM (drawables->data),
+        non_empty = ligma_item_mask_intersect (LIGMA_ITEM (drawables->data),
                                               &x, &y, &width, &height);
         tr_tool->x1 = x + offset_x;
         tr_tool->y1 = y + offset_y;
@@ -518,9 +518,9 @@ gimp_transform_tool_bounds (GimpTransformTool *tr_tool,
       }
       break;
 
-    case GIMP_TRANSFORM_TYPE_SELECTION:
+    case LIGMA_TRANSFORM_TYPE_SELECTION:
       {
-        gimp_item_bounds (GIMP_ITEM (gimp_image_get_mask (image)),
+        ligma_item_bounds (LIGMA_ITEM (ligma_image_get_mask (image)),
                           &tr_tool->x1, &tr_tool->y1,
                           &tr_tool->x2, &tr_tool->y2);
         tr_tool->x2 += tr_tool->x1;
@@ -528,17 +528,17 @@ gimp_transform_tool_bounds (GimpTransformTool *tr_tool,
       }
       break;
 
-    case GIMP_TRANSFORM_TYPE_PATH:
+    case LIGMA_TRANSFORM_TYPE_PATH:
       {
-        GimpChannel *selection = gimp_image_get_mask (image);
+        LigmaChannel *selection = ligma_image_get_mask (image);
 
         /* if selection is not empty, use its bounds to perform the
          * transformation of the path
          */
 
-        if (! gimp_channel_is_empty (selection))
+        if (! ligma_channel_is_empty (selection))
           {
-            gimp_item_bounds (GIMP_ITEM (selection),
+            ligma_item_bounds (LIGMA_ITEM (selection),
                               &tr_tool->x1, &tr_tool->y1,
                               &tr_tool->x2, &tr_tool->y2);
 
@@ -559,15 +559,15 @@ gimp_transform_tool_bounds (GimpTransformTool *tr_tool,
             tr_tool->x2 = G_MININT;
             tr_tool->y2 = G_MININT;
 
-            for (iter = gimp_image_get_selected_vectors (image); iter; iter = iter->next)
+            for (iter = ligma_image_get_selected_vectors (image); iter; iter = iter->next)
               {
-                GimpItem *item   = iter->data;
+                LigmaItem *item   = iter->data;
                 gint      x;
                 gint      y;
                 gint      width;
                 gint      height;
 
-                if (gimp_item_bounds (item, &x, &y, &width, &height))
+                if (ligma_item_bounds (item, &x, &y, &width, &height))
                   {
                     tr_tool->x1 = MIN (tr_tool->x1, x);
                     tr_tool->y1 = MIN (tr_tool->y1, y);
@@ -580,27 +580,27 @@ gimp_transform_tool_bounds (GimpTransformTool *tr_tool,
               {
                 tr_tool->x1 = 0;
                 tr_tool->y1 = 0;
-                tr_tool->x2 = gimp_image_get_width (image);
-                tr_tool->y2 = gimp_image_get_height (image);
+                tr_tool->x2 = ligma_image_get_width (image);
+                tr_tool->y2 = ligma_image_get_height (image);
               }
           }
       }
 
       break;
 
-    case GIMP_TRANSFORM_TYPE_IMAGE:
+    case LIGMA_TRANSFORM_TYPE_IMAGE:
       if (! shell->show_all)
         {
           tr_tool->x1 = 0;
           tr_tool->y1 = 0;
-          tr_tool->x2 = gimp_image_get_width  (image);
-          tr_tool->y2 = gimp_image_get_height (image);
+          tr_tool->x2 = ligma_image_get_width  (image);
+          tr_tool->y2 = ligma_image_get_height (image);
         }
       else
         {
           GeglRectangle bounding_box;
 
-          bounding_box = gimp_display_shell_get_bounding_box (shell);
+          bounding_box = ligma_display_shell_get_bounding_box (shell);
 
           tr_tool->x1 = bounding_box.x;
           tr_tool->y1 = bounding_box.y;
@@ -614,55 +614,55 @@ gimp_transform_tool_bounds (GimpTransformTool *tr_tool,
 }
 
 void
-gimp_transform_tool_recalc_matrix (GimpTransformTool *tr_tool,
-                                   GimpDisplay       *display)
+ligma_transform_tool_recalc_matrix (LigmaTransformTool *tr_tool,
+                                   LigmaDisplay       *display)
 {
-  g_return_if_fail (GIMP_IS_TRANSFORM_TOOL (tr_tool));
-  g_return_if_fail (GIMP_IS_DISPLAY (display));
+  g_return_if_fail (LIGMA_IS_TRANSFORM_TOOL (tr_tool));
+  g_return_if_fail (LIGMA_IS_DISPLAY (display));
 
   if (tr_tool->x1 == tr_tool->x2 && tr_tool->y1 == tr_tool->y2)
-    gimp_transform_tool_bounds (tr_tool, display);
+    ligma_transform_tool_bounds (tr_tool, display);
 
-  if (GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->recalc_matrix)
-    GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->recalc_matrix (tr_tool);
+  if (LIGMA_TRANSFORM_TOOL_GET_CLASS (tr_tool)->recalc_matrix)
+    LIGMA_TRANSFORM_TOOL_GET_CLASS (tr_tool)->recalc_matrix (tr_tool);
 }
 
 GList *
-gimp_transform_tool_get_selected_objects (GimpTransformTool  *tr_tool,
-                                          GimpDisplay        *display)
+ligma_transform_tool_get_selected_objects (LigmaTransformTool  *tr_tool,
+                                          LigmaDisplay        *display)
 {
-  GimpTransformOptions *options;
-  GimpImage            *image;
+  LigmaTransformOptions *options;
+  LigmaImage            *image;
   GList                *objects = NULL;
 
-  g_return_val_if_fail (GIMP_IS_TRANSFORM_TOOL (tr_tool), NULL);
-  g_return_val_if_fail (GIMP_IS_DISPLAY (display), NULL);
+  g_return_val_if_fail (LIGMA_IS_TRANSFORM_TOOL (tr_tool), NULL);
+  g_return_val_if_fail (LIGMA_IS_DISPLAY (display), NULL);
 
-  options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
+  options = LIGMA_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
 
-  image = gimp_display_get_image (display);
+  image = ligma_display_get_image (display);
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
 
   if (tr_tool->objects)
     return g_list_copy (tr_tool->objects);
 
   switch (options->type)
     {
-    case GIMP_TRANSFORM_TYPE_LAYER:
-      objects = gimp_image_get_selected_drawables (image);
+    case LIGMA_TRANSFORM_TYPE_LAYER:
+      objects = ligma_image_get_selected_drawables (image);
       break;
 
-    case GIMP_TRANSFORM_TYPE_SELECTION:
-      if (! gimp_channel_is_empty (gimp_image_get_mask (image)))
-        objects = g_list_prepend (NULL, gimp_image_get_mask (image));
+    case LIGMA_TRANSFORM_TYPE_SELECTION:
+      if (! ligma_channel_is_empty (ligma_image_get_mask (image)))
+        objects = g_list_prepend (NULL, ligma_image_get_mask (image));
       break;
 
-    case GIMP_TRANSFORM_TYPE_PATH:
-      objects = g_list_copy (gimp_image_get_selected_vectors (image));
+    case LIGMA_TRANSFORM_TYPE_PATH:
+      objects = g_list_copy (ligma_image_get_selected_vectors (image));
       break;
 
-    case GIMP_TRANSFORM_TYPE_IMAGE:
+    case LIGMA_TRANSFORM_TYPE_IMAGE:
       objects = g_list_prepend (NULL, image);
       break;
     }
@@ -671,90 +671,90 @@ gimp_transform_tool_get_selected_objects (GimpTransformTool  *tr_tool,
 }
 
 GList *
-gimp_transform_tool_check_selected_objects (GimpTransformTool  *tr_tool,
-                                            GimpDisplay        *display,
+ligma_transform_tool_check_selected_objects (LigmaTransformTool  *tr_tool,
+                                            LigmaDisplay        *display,
                                             GError            **error)
 {
-  GimpTransformOptions *options;
+  LigmaTransformOptions *options;
   GList                *objects;
   GList                *iter;
   const gchar          *null_message   = NULL;
   const gchar          *locked_message = NULL;
-  GimpItem             *locked_item    = NULL;
-  GimpGuiConfig        *config         = GIMP_GUI_CONFIG (display->gimp->config);
+  LigmaItem             *locked_item    = NULL;
+  LigmaGuiConfig        *config         = LIGMA_GUI_CONFIG (display->ligma->config);
 
-  g_return_val_if_fail (GIMP_IS_TRANSFORM_TOOL (tr_tool), NULL);
-  g_return_val_if_fail (GIMP_IS_DISPLAY (display), NULL);
+  g_return_val_if_fail (LIGMA_IS_TRANSFORM_TOOL (tr_tool), NULL);
+  g_return_val_if_fail (LIGMA_IS_DISPLAY (display), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
+  options = LIGMA_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
 
-  objects = gimp_transform_tool_get_selected_objects (tr_tool, display);
+  objects = ligma_transform_tool_get_selected_objects (tr_tool, display);
 
   switch (options->type)
     {
-    case GIMP_TRANSFORM_TYPE_LAYER:
+    case LIGMA_TRANSFORM_TYPE_LAYER:
       null_message = _("There is no layer to transform.");
 
       for (iter = objects; iter; iter = iter->next)
         {
-          GimpItem *item = iter->data;
+          LigmaItem *item = iter->data;
 
-          if (gimp_item_is_content_locked (item, &locked_item))
+          if (ligma_item_is_content_locked (item, &locked_item))
             locked_message = _("A selected layer's pixels are locked.");
-          else if (gimp_item_is_position_locked (item, &locked_item))
+          else if (ligma_item_is_position_locked (item, &locked_item))
             locked_message = _("A selected layer's position and size are locked.");
 
-          if (! gimp_item_is_visible (item) &&
+          if (! ligma_item_is_visible (item) &&
               ! config->edit_non_visible &&
               ! g_list_find (tr_tool->objects, item)) /* see bug #759194 */
             {
-              g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+              g_set_error_literal (error, LIGMA_ERROR, LIGMA_FAILED,
                                    _("A selected layer is not visible."));
               return NULL;
             }
 
-          if (! gimp_transform_tool_bounds (tr_tool, display))
+          if (! ligma_transform_tool_bounds (tr_tool, display))
             {
-              g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+              g_set_error_literal (error, LIGMA_ERROR, LIGMA_FAILED,
                                    _("The selection does not intersect with a selected layer."));
               return NULL;
             }
         }
       break;
 
-    case GIMP_TRANSFORM_TYPE_SELECTION:
+    case LIGMA_TRANSFORM_TYPE_SELECTION:
       null_message = _("There is no selection to transform.");
 
       for (iter = objects; iter; iter = iter->next)
         {
-          GimpItem *item = iter->data;
+          LigmaItem *item = iter->data;
 
           /* cannot happen, so don't translate these messages */
-          if (gimp_item_is_content_locked (item, &locked_item))
+          if (ligma_item_is_content_locked (item, &locked_item))
             locked_message = "The selection's pixels are locked.";
-          else if (gimp_item_is_position_locked (item, &locked_item))
+          else if (ligma_item_is_position_locked (item, &locked_item))
             locked_message = "The selection's position and size are locked.";
         }
       break;
 
-    case GIMP_TRANSFORM_TYPE_PATH:
+    case LIGMA_TRANSFORM_TYPE_PATH:
       null_message = _("There is no path to transform.");
 
       for (iter = objects; iter; iter = iter->next)
         {
-          GimpItem *item = iter->data;
+          LigmaItem *item = iter->data;
 
-          if (gimp_item_is_content_locked (item, &locked_item))
+          if (ligma_item_is_content_locked (item, &locked_item))
             locked_message = _("The selected path's strokes are locked.");
-          else if (gimp_item_is_position_locked (item, &locked_item))
+          else if (ligma_item_is_position_locked (item, &locked_item))
             locked_message = _("The selected path's position is locked.");
-          else if (! gimp_vectors_get_n_strokes (GIMP_VECTORS (item)))
+          else if (! ligma_vectors_get_n_strokes (LIGMA_VECTORS (item)))
             locked_message = _("The selected path has no strokes.");
         }
       break;
 
-    case GIMP_TRANSFORM_TYPE_IMAGE:
+    case LIGMA_TRANSFORM_TYPE_IMAGE:
       /* cannot happen, so don't translate this message */
       null_message = "There is no image to transform.";
       break;
@@ -762,24 +762,24 @@ gimp_transform_tool_check_selected_objects (GimpTransformTool  *tr_tool,
 
   if (! objects)
     {
-      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED, null_message);
+      g_set_error_literal (error, LIGMA_ERROR, LIGMA_FAILED, null_message);
       if (error)
         {
-          gimp_tools_show_tool_options (display->gimp);
-          gimp_widget_blink (options->type_box);
+          ligma_tools_show_tool_options (display->ligma);
+          ligma_widget_blink (options->type_box);
         }
       return NULL;
     }
 
   if (locked_message)
     {
-      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED, locked_message);
+      g_set_error_literal (error, LIGMA_ERROR, LIGMA_FAILED, locked_message);
       if (error)
         {
           if (locked_item == NULL)
-            locked_item = GIMP_ITEM (objects->data);
+            locked_item = LIGMA_ITEM (objects->data);
 
-          gimp_tools_blink_lock_box (display->gimp, locked_item);
+          ligma_tools_blink_lock_box (display->ligma, locked_item);
         }
       return NULL;
     }
@@ -788,12 +788,12 @@ gimp_transform_tool_check_selected_objects (GimpTransformTool  *tr_tool,
 }
 
 gboolean
-gimp_transform_tool_transform (GimpTransformTool *tr_tool,
-                               GimpDisplay       *display)
+ligma_transform_tool_transform (LigmaTransformTool *tr_tool,
+                               LigmaDisplay       *display)
 {
-  GimpTool             *tool;
-  GimpTransformOptions *options;
-  GimpImage            *image;
+  LigmaTool             *tool;
+  LigmaTransformOptions *options;
+  LigmaImage            *image;
   GList                *selected_objects;
   GeglBuffer           *orig_buffer   = NULL;
   gint                  orig_offset_x = 0;
@@ -801,81 +801,81 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
   GeglBuffer           *new_buffer;
   gint                  new_offset_x;
   gint                  new_offset_y;
-  GimpColorProfile     *buffer_profile;
+  LigmaColorProfile     *buffer_profile;
   gchar                *undo_desc     = NULL;
   gboolean              new_layer     = FALSE;
   GError               *error         = NULL;
 
-  g_return_val_if_fail (GIMP_IS_TRANSFORM_TOOL (tr_tool), FALSE);
-  g_return_val_if_fail (GIMP_IS_DISPLAY (display), FALSE);
+  g_return_val_if_fail (LIGMA_IS_TRANSFORM_TOOL (tr_tool), FALSE);
+  g_return_val_if_fail (LIGMA_IS_DISPLAY (display), FALSE);
 
-  tool    = GIMP_TOOL (tr_tool);
-  options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tool);
-  image   = gimp_display_get_image (display);
+  tool    = LIGMA_TOOL (tr_tool);
+  options = LIGMA_TRANSFORM_TOOL_GET_OPTIONS (tool);
+  image   = ligma_display_get_image (display);
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), FALSE);
 
-  selected_objects = gimp_transform_tool_check_selected_objects (tr_tool, display,
+  selected_objects = ligma_transform_tool_check_selected_objects (tr_tool, display,
                                                                  &error);
 
   if (! selected_objects)
     {
-      gimp_tool_message_literal (tool, display, error->message);
+      ligma_tool_message_literal (tool, display, error->message);
       g_clear_error (&error);
       return FALSE;
     }
 
-  gimp_transform_tool_recalc_matrix (tr_tool, display);
+  ligma_transform_tool_recalc_matrix (tr_tool, display);
 
   if (! tr_tool->transform_valid)
     {
-      gimp_tool_message_literal (tool, display,
+      ligma_tool_message_literal (tool, display,
                                  _("The current transform is invalid"));
       return FALSE;
     }
 
-  if (GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->recalc_matrix &&
-      gimp_matrix3_is_identity (&tr_tool->transform))
+  if (LIGMA_TRANSFORM_TOOL_GET_CLASS (tr_tool)->recalc_matrix &&
+      ligma_matrix3_is_identity (&tr_tool->transform))
     {
       /* No need to commit an identity transformation! */
       return TRUE;
     }
 
-  if (! gimp_transform_tool_confirm (tr_tool, display))
+  if (! ligma_transform_tool_confirm (tr_tool, display))
     return FALSE;
 
-  gimp_set_busy (display->gimp);
+  ligma_set_busy (display->ligma);
 
   /*  We're going to dirty this image, but we want to keep the tool around  */
-  gimp_tool_control_push_preserve (tool->control, TRUE);
+  ligma_tool_control_push_preserve (tool->control, TRUE);
 
-  undo_desc = GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->get_undo_desc (tr_tool);
-  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TRANSFORM, undo_desc);
+  undo_desc = LIGMA_TRANSFORM_TOOL_GET_CLASS (tr_tool)->get_undo_desc (tr_tool);
+  ligma_image_undo_group_start (image, LIGMA_UNDO_GROUP_TRANSFORM, undo_desc);
   g_free (undo_desc);
 
   switch (options->type)
     {
-    case GIMP_TRANSFORM_TYPE_LAYER:
-      if (! gimp_channel_is_empty (gimp_image_get_mask (image)))
+    case LIGMA_TRANSFORM_TYPE_LAYER:
+      if (! ligma_channel_is_empty (ligma_image_get_mask (image)))
         {
-          orig_buffer = gimp_drawable_transform_cut (
+          orig_buffer = ligma_drawable_transform_cut (
             selected_objects,
-            GIMP_CONTEXT (options),
+            LIGMA_CONTEXT (options),
             &orig_offset_x,
             &orig_offset_y,
             &new_layer);
         }
       break;
 
-    case GIMP_TRANSFORM_TYPE_SELECTION:
-    case GIMP_TRANSFORM_TYPE_PATH:
-    case GIMP_TRANSFORM_TYPE_IMAGE:
+    case LIGMA_TRANSFORM_TYPE_SELECTION:
+    case LIGMA_TRANSFORM_TYPE_PATH:
+    case LIGMA_TRANSFORM_TYPE_IMAGE:
       break;
     }
 
   /*  Send the request for the transformation to the tool...
    */
-  new_buffer = GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->transform (
+  new_buffer = LIGMA_TRANSFORM_TOOL_GET_CLASS (tr_tool)->transform (
     tr_tool,
     selected_objects,
     orig_buffer,
@@ -890,13 +890,13 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
 
   switch (options->type)
     {
-    case GIMP_TRANSFORM_TYPE_LAYER:
+    case LIGMA_TRANSFORM_TYPE_LAYER:
       if (new_buffer)
         {
           /*  paste the new transformed image to the image...also implement
            *  undo...
            */
-          gimp_drawable_transform_paste (GIMP_DRAWABLE (selected_objects->data),
+          ligma_drawable_transform_paste (LIGMA_DRAWABLE (selected_objects->data),
                                          new_buffer, buffer_profile,
                                          new_offset_x, new_offset_y,
                                          new_layer);
@@ -904,23 +904,23 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
         }
       break;
 
-    case GIMP_TRANSFORM_TYPE_SELECTION:
-    case GIMP_TRANSFORM_TYPE_PATH:
-    case GIMP_TRANSFORM_TYPE_IMAGE:
+    case LIGMA_TRANSFORM_TYPE_SELECTION:
+    case LIGMA_TRANSFORM_TYPE_PATH:
+    case LIGMA_TRANSFORM_TYPE_IMAGE:
       /*  Nothing to be done  */
       break;
     }
 
-  gimp_image_undo_group_end (image);
+  ligma_image_undo_group_end (image);
 
   /*  We're done dirtying the image, and would like to be restarted if
    *  the image gets dirty while the tool exists
    */
-  gimp_tool_control_pop_preserve (tool->control);
+  ligma_tool_control_pop_preserve (tool->control);
 
-  gimp_unset_busy (display->gimp);
+  ligma_unset_busy (display->ligma);
 
-  gimp_image_flush (image);
+  ligma_image_flush (image);
 
   g_list_free (selected_objects);
 
@@ -928,14 +928,14 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
 }
 
 void
-gimp_transform_tool_set_type (GimpTransformTool *tr_tool,
-                              GimpTransformType  type)
+ligma_transform_tool_set_type (LigmaTransformTool *tr_tool,
+                              LigmaTransformType  type)
 {
-  GimpTransformOptions *options;
+  LigmaTransformOptions *options;
 
-  g_return_if_fail (GIMP_IS_TRANSFORM_TOOL (tr_tool));
+  g_return_if_fail (LIGMA_IS_TRANSFORM_TOOL (tr_tool));
 
-  options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
+  options = LIGMA_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
 
   if (! tr_tool->restore_type)
     tr_tool->saved_type = options->type;

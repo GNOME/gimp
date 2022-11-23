@@ -1,4 +1,4 @@
-# GIMP - The GNU Image Manipulation Program
+# LIGMA - The GNU Image Manipulation Program
 # Copyright (C) 1995 Spencer Kimball and Peter Mattis
 
 # This program is free software: you can redistribute it and/or modify
@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+# "Perlized" from C source by Manish Singh <yosh@ligma.org>
 
 sub drawable_merge_shadow {
     $blurb = 'Merge the shadow buffer with the specified drawable.';
@@ -36,21 +36,21 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("core/gimpdrawable-shadow.h"
-                        "plug-in/gimpplugin.h"
-                        "plug-in/gimppluginmanager.h") ],
+	headers => [ qw("core/ligmadrawable-shadow.h"
+                        "plug-in/ligmaplugin.h"
+                        "plug-in/ligmapluginmanager.h") ],
 	code    => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       const gchar *undo_desc = _("Plug-in");
 
-      if (gimp->plug_in_manager->current_plug_in)
-        undo_desc = gimp_plug_in_get_undo_desc (gimp->plug_in_manager->current_plug_in);
+      if (ligma->plug_in_manager->current_plug_in)
+        undo_desc = ligma_plug_in_get_undo_desc (ligma->plug_in_manager->current_plug_in);
 
-      gimp_drawable_merge_shadow_buffer (drawable, undo, undo_desc);
+      ligma_drawable_merge_shadow_buffer (drawable, undo, undo_desc);
     }
   else
     success = FALSE;
@@ -77,14 +77,14 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("plug-in/gimpplugin-cleanup.h") ],
+	headers => [ qw("plug-in/ligmaplugin-cleanup.h") ],
 	code => <<'CODE'
 {
-  if (gimp->plug_in_manager->current_plug_in)
-    gimp_plug_in_cleanup_remove_shadow (gimp->plug_in_manager->current_plug_in,
+  if (ligma->plug_in_manager->current_plug_in)
+    ligma_plug_in_cleanup_remove_shadow (ligma->plug_in_manager->current_plug_in,
                                         drawable);
 
-  gimp_drawable_free_shadow_buffer (drawable);
+  ligma_drawable_free_shadow_buffer (drawable);
 }
 CODE
     );
@@ -102,7 +102,7 @@ channel, in which case the alpha channel is set to transparent. If the
 drawable has no alpha channel, it is filled to white. No fill leaves
 the drawable's contents undefined.
 
-This procedure is unlike gimp_drawable_edit_fill() or the bucket fill
+This procedure is unlike ligma_drawable_edit_fill() or the bucket fill
 tool because it fills regardless of a selection. Its main purpose is to
 fill a newly created drawable before adding it to the image. This
 operation cannot be undone.
@@ -113,19 +113,19 @@ HELP
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The drawable' },
-	{ name => 'fill_type', type => 'enum GimpFillType',
+	{ name => 'fill_type', type => 'enum LigmaFillType',
 	  desc => 'The type of fill' }
     );
 
     %invoke = (
-	headers => [ qw("core/gimpdrawable-fill.h") ],
+	headers => [ qw("core/ligmadrawable-fill.h") ],
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_modifiable (GIMP_ITEM (drawable),
-                                   GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_modifiable (LIGMA_ITEM (drawable),
+                                   LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
-      gimp_drawable_fill (drawable, context, (GimpFillType) fill_type);
+      ligma_drawable_fill (drawable, context, (LigmaFillType) fill_type);
     }
   else
     success = FALSE;
@@ -161,7 +161,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_drawable_update (drawable, x, y, width, height);
+  ligma_drawable_update (drawable, x, y, width, height);
 }
 CODE
     );
@@ -184,7 +184,7 @@ of the selection can be calculated as (x2 - x1), its height as (y2 - y1).
 
 Note that the returned boolean does NOT correspond with the returned
 region being empty or not, it always returns whether the selection
-is non_empty. See gimp_drawable_mask_intersect() for a boolean
+is non_empty. See ligma_drawable_mask_intersect() for a boolean
 return value which is more useful in most cases.
 HELP
 
@@ -211,8 +211,8 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, 0, error))
-    non_empty = gimp_item_mask_bounds (GIMP_ITEM (drawable), &x1, &y1, &x2, &y2);
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL, 0, error))
+    non_empty = ligma_item_mask_bounds (LIGMA_ITEM (drawable), &x1, &y1, &x2, &y2);
   else
     success = FALSE;
 }
@@ -228,7 +228,7 @@ BLURB
 
     $help = <<'HELP';
 This procedure returns whether there is an intersection between the
-drawable and the selection. Unlike gimp_drawable_mask_bounds(), the
+drawable and the selection. Unlike ligma_drawable_mask_bounds(), the
 intersection's bounds are returned as x, y, width, height.
 
 If there is no selection this function returns TRUE and the returned
@@ -258,8 +258,8 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, 0, error))
-    non_empty = gimp_item_mask_intersect (GIMP_ITEM (drawable),
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL, 0, error))
+    non_empty = ligma_item_mask_intersect (LIGMA_ITEM (drawable),
                                           &x, &y, &width, &height);
   else
     success = FALSE;
@@ -275,7 +275,7 @@ sub drawable_get_format {
 This procedure returns the drawable's Babl format.
 
 Note that the actual PDB procedure only transfers the format's
-encoding. In order to get to the real format, the libbgimp C wrapper
+encoding. In order to get to the real format, the libbligma C wrapper
 must be used.
 HELP
 
@@ -297,10 +297,10 @@ HELP
 	code => <<'CODE'
 {
   /* this only transfers the encoding, losing the space, see the
-   * code in libgimp/gimpdrawable.c which reconstructs the actual
+   * code in libligma/ligmadrawable.c which reconstructs the actual
    * format in the plug-in process
    */
-  format = g_strdup (babl_format_get_encoding (gimp_drawable_get_format (drawable)));
+  format = g_strdup (babl_format_get_encoding (ligma_drawable_get_format (drawable)));
 }
 CODE
     );
@@ -312,8 +312,8 @@ sub drawable_get_thumbnail_format {
     $help = <<'HELP';
 This procedure returns the drawable's thumbnail Babl format.
 
-Thumbnails are always 8-bit images, see gimp_drawable_thumbnail() and
-gimp_drawable_sub_thmbnail().
+Thumbnails are always 8-bit images, see ligma_drawable_thumbnail() and
+ligma_drawable_sub_thmbnail().
 HELP
 
     &mitch_pdb_misc('2019', '2.10.14');
@@ -333,7 +333,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  format = g_strdup (babl_format_get_encoding (gimp_drawable_get_preview_format (drawable)));
+  format = g_strdup (babl_format_get_encoding (ligma_drawable_get_preview_format (drawable)));
 
 }
 CODE
@@ -352,14 +352,14 @@ sub drawable_type {
     );
 
     @outargs = (
-	{ name => 'type', type => 'enum GimpImageType',
+	{ name => 'type', type => 'enum LigmaImageType',
 	  desc => "The drawable's type" }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  type = gimp_babl_format_get_image_type (gimp_drawable_get_format (drawable));
+  type = ligma_babl_format_get_image_type (ligma_drawable_get_format (drawable));
 }
 CODE
     );
@@ -389,7 +389,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  has_alpha = gimp_drawable_has_alpha (drawable);
+  has_alpha = ligma_drawable_has_alpha (drawable);
 }
 CODE
     );
@@ -413,19 +413,19 @@ HELP
     );
 
     @outargs = (
-	{ name => 'type_with_alpha', type => 'enum GimpImageType
-					      (no GIMP_RGB_IMAGE,
-					       GIMP_GRAY_IMAGE,
-					       GIMP_INDEXED_IMAGE)',
+	{ name => 'type_with_alpha', type => 'enum LigmaImageType
+					      (no LIGMA_RGB_IMAGE,
+					       LIGMA_GRAY_IMAGE,
+					       LIGMA_INDEXED_IMAGE)',
 	  desc => "The drawable's type with alpha" }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  const Babl *format = gimp_drawable_get_format_with_alpha (drawable);
+  const Babl *format = ligma_drawable_get_format_with_alpha (drawable);
 
-  type_with_alpha = gimp_babl_format_get_image_type (format);
+  type_with_alpha = ligma_babl_format_get_image_type (format);
 }
 CODE
     );
@@ -454,7 +454,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  is_rgb = gimp_drawable_is_rgb (drawable);
+  is_rgb = ligma_drawable_is_rgb (drawable);
 }
 CODE
     );
@@ -483,7 +483,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  is_gray = gimp_drawable_is_gray (drawable);
+  is_gray = ligma_drawable_is_gray (drawable);
 }
 CODE
     );
@@ -512,7 +512,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  is_indexed = gimp_drawable_is_indexed (drawable);
+  is_indexed = ligma_drawable_is_indexed (drawable);
 }
 CODE
     );
@@ -540,7 +540,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  const Babl *format = gimp_drawable_get_format (drawable);
+  const Babl *format = ligma_drawable_get_format (drawable);
 
   bpp = babl_format_get_bytes_per_pixel (format);
 }
@@ -567,7 +567,7 @@ sub drawable_get_width {
     %invoke = (
 	code => <<'CODE'
 {
-  width = gimp_item_get_width (GIMP_ITEM (drawable));
+  width = ligma_item_get_width (LIGMA_ITEM (drawable));
 }
 CODE
     );
@@ -592,7 +592,7 @@ sub drawable_get_height {
     %invoke = (
 	code => <<'CODE'
 {
-  height = gimp_item_get_height (GIMP_ITEM (drawable));
+  height = ligma_item_get_height (LIGMA_ITEM (drawable));
 }
 CODE
     );
@@ -624,7 +624,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_item_get_offset (GIMP_ITEM (drawable), &offset_x, &offset_y);
+  ligma_item_get_offset (LIGMA_ITEM (drawable), &offset_x, &offset_y);
 }
 CODE
     );
@@ -661,15 +661,15 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  const Babl *format = gimp_drawable_get_format (drawable);
+  const Babl *format = ligma_drawable_get_format (drawable);
 
-  if (x_coord < gimp_item_get_width  (GIMP_ITEM (drawable)) &&
-      y_coord < gimp_item_get_height (GIMP_ITEM (drawable)))
+  if (x_coord < ligma_item_get_width  (LIGMA_ITEM (drawable)) &&
+      y_coord < ligma_item_get_height (LIGMA_ITEM (drawable)))
     {
       num_channels = babl_format_get_bytes_per_pixel (format);
       pixel = g_new0 (guint8, num_channels);
 
-      gegl_buffer_sample (gimp_drawable_get_buffer (drawable),
+      gegl_buffer_sample (ligma_drawable_get_buffer (drawable),
                           x_coord, y_coord, NULL, pixel, format,
                           GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
     }
@@ -709,16 +709,16 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  const Babl *format = gimp_drawable_get_format (drawable);
+  const Babl *format = ligma_drawable_get_format (drawable);
 
-  if (gimp_pdb_item_is_modifiable (GIMP_ITEM (drawable),
-                                   GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
-      x_coord < gimp_item_get_width  (GIMP_ITEM (drawable)) &&
-      y_coord < gimp_item_get_height (GIMP_ITEM (drawable)) &&
+  if (ligma_pdb_item_is_modifiable (LIGMA_ITEM (drawable),
+                                   LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error) &&
+      x_coord < ligma_item_get_width  (LIGMA_ITEM (drawable)) &&
+      y_coord < ligma_item_get_height (LIGMA_ITEM (drawable)) &&
       num_channels == babl_format_get_bytes_per_pixel (format))
     {
-      gegl_buffer_set (gimp_drawable_get_buffer (drawable),
+      gegl_buffer_set (ligma_drawable_get_buffer (drawable),
                        GEGL_RECTANGLE (x_coord, y_coord, 1, 1),
                        0, format, pixel, GEGL_AUTO_ROWSTRIDE);
     }
@@ -768,39 +768,39 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpImage   *image = gimp_item_get_image (GIMP_ITEM (drawable));
-  GimpTempBuf *buf;
+  LigmaImage   *image = ligma_item_get_image (LIGMA_ITEM (drawable));
+  LigmaTempBuf *buf;
   gint         dwidth, dheight;
 
-  gimp_assert (GIMP_VIEWABLE_MAX_PREVIEW_SIZE >= 1024);
+  ligma_assert (LIGMA_VIEWABLE_MAX_PREVIEW_SIZE >= 1024);
 
   /* Adjust the width/height ratio */
-  dwidth  = gimp_item_get_width  (GIMP_ITEM (drawable));
-  dheight = gimp_item_get_height (GIMP_ITEM (drawable));
+  dwidth  = ligma_item_get_width  (LIGMA_ITEM (drawable));
+  dheight = ligma_item_get_height (LIGMA_ITEM (drawable));
 
   if (dwidth > dheight)
     height = MAX (1, (width * dheight) / dwidth);
   else
     width  = MAX (1, (height * dwidth) / dheight);
 
-  if (image->gimp->config->layer_previews)
-    buf = gimp_viewable_get_new_preview (GIMP_VIEWABLE (drawable), context,
+  if (image->ligma->config->layer_previews)
+    buf = ligma_viewable_get_new_preview (LIGMA_VIEWABLE (drawable), context,
                                          width, height);
   else
-    buf = gimp_viewable_get_dummy_preview (GIMP_VIEWABLE (drawable),
+    buf = ligma_viewable_get_dummy_preview (LIGMA_VIEWABLE (drawable),
                                            width, height,
-                                           gimp_drawable_get_preview_format (drawable));
+                                           ligma_drawable_get_preview_format (drawable));
 
   if (buf)
     {
-      actual_width         = gimp_temp_buf_get_width  (buf);
-      actual_height        = gimp_temp_buf_get_height (buf);
-      bpp                  = babl_format_get_bytes_per_pixel (gimp_temp_buf_get_format (buf));
-      thumbnail_data_count = gimp_temp_buf_get_data_size (buf);
-      thumbnail_data       = g_memdup2 (gimp_temp_buf_get_data (buf),
+      actual_width         = ligma_temp_buf_get_width  (buf);
+      actual_height        = ligma_temp_buf_get_height (buf);
+      bpp                  = babl_format_get_bytes_per_pixel (ligma_temp_buf_get_format (buf));
+      thumbnail_data_count = ligma_temp_buf_get_data_size (buf);
+      thumbnail_data       = g_memdup2 (ligma_temp_buf_get_data (buf),
                                         thumbnail_data_count);
 
-      gimp_temp_buf_unref (buf);
+      ligma_temp_buf_unref (buf);
     }
   else
     success = FALSE;
@@ -854,35 +854,35 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("core/gimpdrawable-preview.h") ],
+	headers => [ qw("core/ligmadrawable-preview.h") ],
         code    => <<'CODE'
 {
-  if ((src_x + src_width)  <= gimp_item_get_width  (GIMP_ITEM (drawable)) &&
-      (src_y + src_height) <= gimp_item_get_height (GIMP_ITEM (drawable)))
+  if ((src_x + src_width)  <= ligma_item_get_width  (LIGMA_ITEM (drawable)) &&
+      (src_y + src_height) <= ligma_item_get_height (LIGMA_ITEM (drawable)))
     {
-      GimpImage   *image = gimp_item_get_image (GIMP_ITEM (drawable));
-      GimpTempBuf *buf;
+      LigmaImage   *image = ligma_item_get_image (LIGMA_ITEM (drawable));
+      LigmaTempBuf *buf;
 
-      if (image->gimp->config->layer_previews)
-        buf = gimp_drawable_get_sub_preview (drawable,
+      if (image->ligma->config->layer_previews)
+        buf = ligma_drawable_get_sub_preview (drawable,
                                              src_x, src_y,
                                              src_width, src_height,
                                              dest_width, dest_height);
       else
-        buf = gimp_viewable_get_dummy_preview (GIMP_VIEWABLE (drawable),
+        buf = ligma_viewable_get_dummy_preview (LIGMA_VIEWABLE (drawable),
                                                dest_width, dest_height,
-                                               gimp_drawable_get_preview_format (drawable));
+                                               ligma_drawable_get_preview_format (drawable));
 
       if (buf)
         {
-          width                = gimp_temp_buf_get_width  (buf);
-          height               = gimp_temp_buf_get_height (buf);
-          bpp                  = babl_format_get_bytes_per_pixel (gimp_temp_buf_get_format (buf));
-          thumbnail_data_count = gimp_temp_buf_get_data_size (buf);
-          thumbnail_data       = g_memdup2 (gimp_temp_buf_get_data (buf),
+          width                = ligma_temp_buf_get_width  (buf);
+          height               = ligma_temp_buf_get_height (buf);
+          bpp                  = babl_format_get_bytes_per_pixel (ligma_temp_buf_get_format (buf));
+          thumbnail_data_count = ligma_temp_buf_get_data_size (buf);
+          thumbnail_data       = g_memdup2 (ligma_temp_buf_get_data (buf),
                                             thumbnail_data_count);
 
-          gimp_temp_buf_unref (buf);
+          ligma_temp_buf_unref (buf);
         }
       else
         success = FALSE;
@@ -915,7 +915,7 @@ HELP
 	  desc => 'The drawable to offset' },
 	{ name => 'wrap_around', type => 'boolean',
 	  desc => 'wrap image around or fill vacated regions' },
-	{ name => 'fill_type', type => 'enum GimpOffsetType',
+	{ name => 'fill_type', type => 'enum LigmaOffsetType',
 	  desc => 'fill vacated regions of drawable with background or
 		   transparent' },
 	{ name => 'offset_x', type => 'int32',
@@ -927,10 +927,10 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
-    gimp_drawable_offset (drawable, context, wrap_around, fill_type,
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
+    ligma_drawable_offset (drawable, context, wrap_around, fill_type,
                           offset_x, offset_y);
   else
     success = FALSE;
@@ -947,7 +947,7 @@ Image Segmentation by Uniform Color Clustering, see
 https://www.inf.fu-berlin.de/inst/pubs/tr-b-05-07.pdf
 HELP
 
-    $author    = 'Gerald Friedland <fland@inf.fu-berlin.de>, Kristian Jantz <jantz@inf.fu-berlin.de>, Sven Neumann <sven@gimp.org>';
+    $author    = 'Gerald Friedland <fland@inf.fu-berlin.de>, Kristian Jantz <jantz@inf.fu-berlin.de>, Sven Neumann <sven@ligma.org>';
     $copyright = 'Gerald Friedland';
     $date      = '2005';
     $since     = '2.4';
@@ -955,36 +955,36 @@ HELP
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The drawable' },
-        { name => 'mode', type => 'enum GimpForegroundExtractMode',
+        { name => 'mode', type => 'enum LigmaForegroundExtractMode',
 	  desc => 'The algorithm to use' },
         { name => 'mask', type => 'drawable', desc => 'Tri-Map' }
     );
 
     %invoke = (
-	headers => [ qw("core/gimpdrawable-foreground-extract.h") ],
+	headers => [ qw("core/ligmadrawable-foreground-extract.h") ],
         code    => <<'CODE'
 {
-  if (mode == GIMP_FOREGROUND_EXTRACT_MATTING &&
-      gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, 0, error))
+  if (mode == LIGMA_FOREGROUND_EXTRACT_MATTING &&
+      ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL, 0, error))
     {
-      GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
-      GimpImage      *image       = gimp_item_get_image (GIMP_ITEM (drawable));
+      LigmaPDBContext *pdb_context = LIGMA_PDB_CONTEXT (context);
+      LigmaImage      *image       = ligma_item_get_image (LIGMA_ITEM (drawable));
       GeglBuffer     *buffer;
 
-      buffer = gimp_drawable_foreground_extract (drawable,
-                                                 GIMP_MATTING_ENGINE_GLOBAL,
+      buffer = ligma_drawable_foreground_extract (drawable,
+                                                 LIGMA_MATTING_ENGINE_GLOBAL,
                                                  2,
                                                  2,
                                                  2,
-                                                 gimp_drawable_get_buffer (mask),
+                                                 ligma_drawable_get_buffer (mask),
                                                  progress);
 
-      gimp_channel_select_buffer (gimp_image_get_mask (image),
+      ligma_channel_select_buffer (ligma_image_get_mask (image),
                                   C_("command", "Foreground Select"),
                                   buffer,
                                   0, /* x offset */
                                   0, /* y offset */
-                                  GIMP_CHANNEL_OP_REPLACE,
+                                  LIGMA_CHANNEL_OP_REPLACE,
                                   pdb_context->feather,
                                   pdb_context->feather_radius_x,
                                   pdb_context->feather_radius_y);
@@ -999,17 +999,17 @@ CODE
 }
 
 
-@headers = qw("config/gimpcoreconfig.h"
-              "gegl/gimp-babl.h"
-              "gegl/gimp-babl-compat.h"
-              "core/gimp.h"
-              "core/gimpchannel-select.h"
-              "core/gimpdrawable-offset.h"
-              "core/gimpimage.h"
-              "core/gimptempbuf.h"
-              "gimppdb-utils.h"
-              "gimppdbcontext.h"
-              "gimp-intl.h");
+@headers = qw("config/ligmacoreconfig.h"
+              "gegl/ligma-babl.h"
+              "gegl/ligma-babl-compat.h"
+              "core/ligma.h"
+              "core/ligmachannel-select.h"
+              "core/ligmadrawable-offset.h"
+              "core/ligmaimage.h"
+              "core/ligmatempbuf.h"
+              "ligmapdb-utils.h"
+              "ligmapdbcontext.h"
+              "ligma-intl.h");
 
 @procs = qw(drawable_get_format
             drawable_get_thumbnail_format
@@ -1038,7 +1038,7 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Drawable procedures';
-$doc_title = 'gimpdrawable';
+$doc_title = 'ligmadrawable';
 $doc_short_desc = 'Functions to manipulate drawables.';
 $doc_long_desc = 'Functions to manipulate drawables.';
 

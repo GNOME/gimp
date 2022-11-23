@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -64,7 +64,7 @@ GtkWidget * prefs_color_button_add           (GObject      *config,
                                               GtkGrid      *grid,
                                               gint          grid_top,
                                               GtkSizeGroup *group,
-                                              GimpContext  *context);
+                                              LigmaContext  *context);
 
 GtkWidget * prefs_entry_add                  (GObject      *config,
                                               const gchar  *property_name,

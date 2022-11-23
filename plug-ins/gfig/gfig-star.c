@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * This is a plug-in for GIMP.
+ * This is a plug-in for LIGMA.
  *
  * Generates images containing vector type drawings.
  *
@@ -24,8 +24,8 @@
 
 #include "config.h"
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
 #include "gfig.h"
 #include "gfig-line.h"
@@ -33,7 +33,7 @@
 #include "gfig-star.h"
 #include "gfig-dialog.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 static gint star_num_sides = 3; /* Default to three sided object */
 
@@ -311,17 +311,17 @@ d_paint_star (GfigObject *obj)
 
   if (gfig_context_get_current_style ()->fill_type != FILL_NONE)
     {
-      gimp_context_push ();
-      gimp_context_set_antialias (selopt.antia);
-      gimp_context_set_feather (selopt.feather);
-      gimp_context_set_feather_radius (selopt.feather_radius, selopt.feather_radius);
-      gimp_image_select_polygon (gfig_context->image,
+      ligma_context_push ();
+      ligma_context_set_antialias (selopt.antia);
+      ligma_context_set_feather (selopt.feather);
+      ligma_context_set_feather_radius (selopt.feather_radius, selopt.feather_radius);
+      ligma_image_select_polygon (gfig_context->image,
                                  selopt.type,
                                  i, line_pnts);
-      gimp_context_pop ();
+      ligma_context_pop ();
 
       paint_layer_fill (min_max[0], min_max[1], min_max[2], min_max[3]);
-      gimp_selection_none (gfig_context->image);
+      ligma_selection_none (gfig_context->image);
     }
 
   if (obj->style.paint_type == PAINT_BRUSH_TYPE)

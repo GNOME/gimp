@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: km\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2007-08-14 17:46+0100\n"
 "PO-Revision-Date: 2008-08-25 10:23+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
@@ -19,15 +19,15 @@ msgstr ""
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:547
 #: ../plug-ins/gfig/gfig-dialog.c:274 ../plug-ins/gflare/gflare.c:883
-#: ../plug-ins/gimpressionist/utils.c:124
+#: ../plug-ins/ligmaressionist/utils.c:124
 #, c-format
 msgid ""
-"No %s in gimprc:\n"
+"No %s in ligmarc:\n"
 "You need to add an entry like\n"
 "(%s \"%s\")\n"
 "to your %s file."
 msgstr ""
-"មិន​មាន %s នៅ​ក្នុង gimprc ឡើយ ៖\n"
+"មិន​មាន %s នៅ​ក្នុង ligmarc ឡើយ ៖\n"
 "អ្នក​ត្រូវ​តែ​បន្ថែម​ធាតុ​មួយ​ដូច\n"
 "(%s \"%s\")\n"
 "ទៅ​ឯកសារ %s របស់​អ្នក ។"
@@ -396,7 +396,7 @@ msgstr "រក្សាទុក​ប៉ារ៉ាម៉ែត្រ​ប្
 #: ../plug-ins/common/xwd.c:420 ../plug-ins/faxg3/faxg3.c:219
 #: ../plug-ins/fits/fits.c:345 ../plug-ins/flame/flame.c:411
 #: ../plug-ins/gfig/gfig.c:434 ../plug-ins/gfli/gfli.c:429
-#: ../plug-ins/gfli/gfli.c:464 ../plug-ins/help/gimphelplocale.c:193
+#: ../plug-ins/gfli/gfli.c:464 ../plug-ins/help/ligmahelplocale.c:193
 #: ../plug-ins/jpeg/jpeg-load.c:93 ../plug-ins/jpeg/jpeg-load.c:871
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:271
 #: ../plug-ins/uri/uri-backend-libcurl.c:186 ../plug-ins/winicon/icoload.c:651
@@ -823,8 +823,8 @@ msgid "_Environment Map"
 msgstr "ផែនទី​បរិស្ថាន"
 
 #: ../plug-ins/Lighting/lighting_ui.c:1044
-#: ../plug-ins/gimpressionist/preview.c:186
-#: ../plug-ins/gimpressionist/repaint.c:1166
+#: ../plug-ins/ligmaressionist/preview.c:186
+#: ../plug-ins/ligmaressionist/repaint.c:1166
 #: ../plug-ins/imagemap/imap_polygon.c:515
 msgid "_Update"
 msgstr "ធ្វើឲ្យទាន់​សម័យ"
@@ -1203,7 +1203,7 @@ msgstr "មិន​បាន​​គាំទ្រ ឬ​កម្ពស់�
 #: ../plug-ins/common/tile.c:267 ../plug-ins/common/xbm.c:880
 #: ../plug-ins/faxg3/faxg3.c:464 ../plug-ins/fits/fits.c:511
 #: ../plug-ins/gfig/gfig-dialog.c:1284
-#: ../plug-ins/gimpressionist/general.c:122 ../plug-ins/jpeg/jpeg-load.c:244
+#: ../plug-ins/ligmaressionist/general.c:122 ../plug-ins/jpeg/jpeg-load.c:244
 #: ../plug-ins/jpeg/jpeg-load.c:784 ../plug-ins/sgi/sgi.c:369
 #: ../plug-ins/twain/twain.c:571 ../plug-ins/winsnap/winsnap.c:1155
 msgid "Background"
@@ -1584,8 +1584,8 @@ msgstr "ដោយ​ចៃដន្យ​ពី​ប្រភព (បាន​�
 
 #: ../plug-ins/common/CML_explorer.c:300 ../plug-ins/common/CML_explorer.c:308
 #: ../plug-ins/common/decompose.c:188
-#: ../plug-ins/gimpressionist/orientation.c:162
-#: ../plug-ins/gimpressionist/size.c:165
+#: ../plug-ins/ligmaressionist/orientation.c:162
+#: ../plug-ins/ligmaressionist/size.c:165
 msgid "Hue"
 msgstr "ពណ៌លាំៗ"
 
@@ -1596,8 +1596,8 @@ msgstr "​តិត្ថិភាព"
 
 #: ../plug-ins/common/CML_explorer.c:302 ../plug-ins/common/CML_explorer.c:310
 #: ../plug-ins/common/decompose.c:190
-#: ../plug-ins/gimpressionist/orientation.c:138
-#: ../plug-ins/gimpressionist/size.c:141
+#: ../plug-ins/ligmaressionist/orientation.c:138
+#: ../plug-ins/ligmaressionist/size.c:141
 msgid "Value"
 msgstr "​តម្លៃ"
 
@@ -1929,8 +1929,8 @@ msgid "_Use the (invisible) bottom layer as the base"
 msgstr "ប្រើ​ស្រទាប់​ខាង​ក្រោម (មើល​មិន​ឃើញ) ជា​គោល"
 
 #: ../plug-ins/common/animationplay.c:163
-msgid "Preview a GIMP layer-based animation"
-msgstr "មើល​ចលនា​ដែល​មាន​មូលដ្ឋាន​លើ​ស្រទាប់​របស់​ GIMP ជា​មុន"
+msgid "Preview a LIGMA layer-based animation"
+msgstr "មើល​ចលនា​ដែល​មាន​មូលដ្ឋាន​លើ​ស្រទាប់​របស់​ LIGMA ជា​មុន"
 
 #: ../plug-ins/common/animationplay.c:168
 msgid "_Playback..."
@@ -2444,7 +2444,7 @@ msgid "Checkerboard"
 msgstr "​ក្ដារអុក"
 
 #: ../plug-ins/common/checkerboard.c:412
-#: ../plug-ins/gimpressionist/sizemap.c:493
+#: ../plug-ins/ligmaressionist/sizemap.c:493
 msgid "_Size:"
 msgstr "ទំហំ ៖"
 
@@ -2971,7 +2971,7 @@ msgid "Cannot operate on layers with masks."
 msgstr "មិនអាច​ប្រតិបត្តិលើ​ស្រទាប់​ដែលមាន​របាំង​បានឡើយ​ ។"
 
 #. could not float the selection because selection rectangle
-#. * is completely empty return GIMP_PDB_EXECUTION_ERROR
+#. * is completely empty return LIGMA_PDB_EXECUTION_ERROR
 #.
 #: ../plug-ins/common/curve_bend.c:694
 msgid "Cannot operate on empty selections."
@@ -2985,8 +2985,8 @@ msgstr "ភាព​កោង​នៃ​ខ្សែកោង"
 
 #. Preview area, top of column
 #: ../plug-ins/common/curve_bend.c:1231
-#: ../plug-ins/gimpressionist/orientmap.c:574
-#: ../plug-ins/gimpressionist/sizemap.c:443
+#: ../plug-ins/ligmaressionist/orientmap.c:574
+#: ../plug-ins/ligmaressionist/sizemap.c:443
 msgid "Preview"
 msgstr "​មើល​ជា​មុន"
 
@@ -3600,7 +3600,7 @@ msgstr "កាំ ២ ៖"
 msgid "_Normalize"
 msgstr "ធ្វើ​ឲ្យ​សាមញ្ញ"
 
-#: ../plug-ins/common/dog.c:349 ../plug-ins/gimpressionist/paper.c:149
+#: ../plug-ins/common/dog.c:349 ../plug-ins/ligmaressionist/paper.c:149
 msgid "_Invert"
 msgstr "​ដាក់​បញ្ច្រាស"
 
@@ -4150,8 +4150,8 @@ msgid "_RLE"
 msgstr "RLE"
 
 #: ../plug-ins/common/gbr.c:152 ../plug-ins/common/gbr.c:173
-msgid "GIMP brush"
-msgstr "ជក់ GIMP"
+msgid "LIGMA brush"
+msgstr "ជក់ LIGMA"
 
 #: ../plug-ins/common/gbr.c:388 ../plug-ins/common/gbr.c:400
 msgid "Unsupported brush format"
@@ -4159,8 +4159,8 @@ msgstr "មិន​គាំទ្រ​ទ្រង់ទ្រាយ​ជក
 
 #: ../plug-ins/common/gbr.c:411
 #, c-format
-msgid "Error in GIMP brush file '%s'"
-msgstr "មាន​កំហុស​នៅ​ក្នុង​ឯកសារ​ជក់ GIMP '%s'"
+msgid "Error in LIGMA brush file '%s'"
+msgstr "មាន​កំហុស​នៅ​ក្នុង​ឯកសារ​ជក់ LIGMA '%s'"
 
 #: ../plug-ins/common/gbr.c:419
 #, c-format
@@ -4173,8 +4173,8 @@ msgid "Unnamed"
 msgstr "​គ្មាន​ឈ្មោះ"
 
 #: ../plug-ins/common/gbr.c:607
-msgid "GIMP brushes are either GRAYSCALE or RGBA"
-msgstr "ជក់​របស់ GIMP អាចជា​ មាត្រដ្ឋានប្រផេះ ឬ RGBA"
+msgid "LIGMA brushes are either GRAYSCALE or RGBA"
+msgstr "ជក់​របស់ LIGMA អាចជា​ មាត្រដ្ឋានប្រផេះ ឬ RGBA"
 
 #: ../plug-ins/common/gbr.c:704
 msgid "Save as Brush"
@@ -4186,21 +4186,21 @@ msgid "Spacing:"
 msgstr "គម្លាត ៖"
 
 #: ../plug-ins/common/gbr.c:742 ../plug-ins/common/gih.c:910
-#: ../plug-ins/common/pat.c:541 ../plug-ins/gimpressionist/presets.c:646
+#: ../plug-ins/common/pat.c:541 ../plug-ins/ligmaressionist/presets.c:646
 msgid "Description:"
 msgstr "សេចក្ដីពណ៌នា ៖"
 
 #: ../plug-ins/common/gee.c:99 ../plug-ins/common/gee_zoom.c:121
-msgid "A big hello from the GIMP team!"
-msgstr "ពាក្យ​សួស្ដី​ពី​ក្រុម​របស់ GIMP !"
+msgid "A big hello from the LIGMA team!"
+msgstr "ពាក្យ​សួស្ដី​ពី​ក្រុម​របស់ LIGMA !"
 
 #: ../plug-ins/common/gee.c:104 ../plug-ins/common/gee.c:160
 msgid "Gee Slime"
 msgstr "Gee Slime"
 
 #: ../plug-ins/common/gee.c:166 ../plug-ins/common/gee_zoom.c:192
-msgid "Thank You for Choosing GIMP"
-msgstr "សូម​ថ្លែងអំណរគុណ ដែល​បាន​ជ្រើស​យក GIMP"
+msgid "Thank You for Choosing LIGMA"
+msgstr "សូម​ថ្លែងអំណរគុណ ដែល​បាន​ជ្រើស​យក LIGMA"
 
 #: ../plug-ins/common/gee.c:173
 #, c-format
@@ -4361,8 +4361,8 @@ msgid "The default comment is limited to %d characters."
 msgstr "សេចក្តី​អធិប្បាយ​លំនាំដើម​​គឺត្រូវបាន​កំណត់​ជា​​តួអក្សរ %d ។"
 
 #: ../plug-ins/common/gih.c:207 ../plug-ins/common/gih.c:228
-msgid "GIMP brush (animated)"
-msgstr "ជក់របស់​ GIMP (មានចលនា)"
+msgid "LIGMA brush (animated)"
+msgstr "ជក់របស់​ LIGMA (មានចលនា)"
 
 #: ../plug-ins/common/gih.c:321
 #, c-format
@@ -4370,12 +4370,12 @@ msgid "Layer %s doesn't have an alpha channel, skipped"
 msgstr "ស្រទាប់ %s មិនមាន​ឆានែល​អាល់ហ្វាទេ, វា​បានរំលង"
 
 #: ../plug-ins/common/gih.c:492
-msgid "Error in GIMP brush pipe file."
-msgstr "មាន​កំហុស​នៅក្នុង​ឯកសារ​បំពង់​ GIMP ។"
+msgid "Error in LIGMA brush pipe file."
+msgstr "មាន​កំហុស​នៅក្នុង​ឯកសារ​បំពង់​ LIGMA ។"
 
 #: ../plug-ins/common/gih.c:558
-msgid "GIMP brush file appears to be corrupted."
-msgstr "ឯកសារ​ជក់​របស់ GIMP លេចឡើង​មិន​ត្រឹមត្រូវ ។"
+msgid "LIGMA brush file appears to be corrupted."
+msgstr "ឯកសារ​ជក់​របស់ LIGMA លេចឡើង​មិន​ត្រឹមត្រូវ ។"
 
 #: ../plug-ins/common/gih.c:703
 msgid "Couldn't load one brush in the pipe, giving up."
@@ -5925,8 +5925,8 @@ msgid "_Paper Tile..."
 msgstr "ក្រឡា​ក្រដាស..."
 
 #: ../plug-ins/common/pat.c:121 ../plug-ins/common/pat.c:143
-msgid "GIMP pattern"
-msgstr "លំនាំ​របស់ GIMP"
+msgid "LIGMA pattern"
+msgstr "លំនាំ​របស់ LIGMA"
 
 #: ../plug-ins/common/pat.c:358
 #, c-format
@@ -6213,16 +6213,16 @@ msgid "Invalid X resolution."
 msgstr "គុណភាព​បង្ហាញ​ X មិន​ត្រឹមត្រូវ ។"
 
 #: ../plug-ins/common/pnm.c:540
-msgid "Image width is larger than GIMP can handle."
-msgstr "ទទឹង​រូបភាព​គឺ​ធំជាង​អ្វី​ដែល​ GIMP អាច​គ្រប់គ្រង​បាន ។"
+msgid "Image width is larger than LIGMA can handle."
+msgstr "ទទឹង​រូបភាព​គឺ​ធំជាង​អ្វី​ដែល​ LIGMA អាច​គ្រប់គ្រង​បាន ។"
 
 #: ../plug-ins/common/pnm.c:547
 msgid "Invalid Y resolution."
 msgstr "គុណភាព​បង្ហាញ Y មិន​ត្រឹមត្រូវ ។"
 
 #: ../plug-ins/common/pnm.c:549
-msgid "Image height is larger than GIMP can handle."
-msgstr "កម្ពស់​រូបភាព​គឺ​ធំជាង​អ្វីដែល GIMP អាច​គ្រប់គ្រង ។"
+msgid "Image height is larger than LIGMA can handle."
+msgstr "កម្ពស់​រូបភាព​គឺ​ធំជាង​អ្វីដែល LIGMA អាច​គ្រប់គ្រង ។"
 
 #: ../plug-ins/common/pnm.c:561
 msgid "Invalid maximum value."
@@ -6374,11 +6374,11 @@ msgstr "ការរក្សាទុក​ស្គ្រីប​ក្រោ
 #, c-format
 msgid ""
 "Error starting Ghostscript. Make sure that Ghostscript is installed and - if "
-"necessary - use the environment variable GS_PROG to tell GIMP about its "
+"necessary - use the environment variable GS_PROG to tell LIGMA about its "
 "location.\n"
 "(%s)"
 msgstr ""
-"កំហុស​ក្នុង​ការ​ចាប់ផ្ដើម Ghostscript ។ សូម​ប្រាកដ​ថា Ghostscript ត្រូវ​បាន​ដំឡើង - ប្រសិន​បើ​ចាំបាច់ - ប្រើ​អថេរ​បរិស្ថាន​ GS_PROG ដើម្បី​ប្រាប់ GIMP អំពីទីតាំង​របស់ ។\n"
+"កំហុស​ក្នុង​ការ​ចាប់ផ្ដើម Ghostscript ។ សូម​ប្រាកដ​ថា Ghostscript ត្រូវ​បាន​ដំឡើង - ប្រសិន​បើ​ចាំបាច់ - ប្រើ​អថេរ​បរិស្ថាន​ GS_PROG ដើម្បី​ប្រាប់ LIGMA អំពីទីតាំង​របស់ ។\n"
 "(%s)"
 
 #: ../plug-ins/common/postscript.c:1911 ../plug-ins/common/tiff-load.c:944
@@ -6448,8 +6448,8 @@ msgid "Gray"
 msgstr "ប្រផេះ"
 
 #: ../plug-ins/common/postscript.c:3213 ../plug-ins/common/xpm.c:468
-#: ../plug-ins/gimpressionist/color.c:48
-#: ../plug-ins/gimpressionist/general.c:152
+#: ../plug-ins/ligmaressionist/color.c:48
+#: ../plug-ins/ligmaressionist/general.c:152
 #: ../plug-ins/imagemap/imap_menu.c:213
 msgid "Color"
 msgstr "​ពណ៌"
@@ -6610,8 +6610,8 @@ msgid ""
 msgstr "មិន​អាច​រក្សាទុក​ស្រទាប់​ដោយ​របៀប '%s' ។  មិន​គាំទ្រ​ទ្រង់ទ្រាយ​​ឯកសារ PSD ឬរក្សាទុក​កម្មវិធី​ជំនួយ ដែល​ប្រើ​របៀប​ធម្មតា​ជំនួស ។"
 
 #: ../plug-ins/common/psd-save.c:608
-msgid "Error: Can't convert GIMP base imagetype to PSD mode"
-msgstr "កំហុស ៖ មិន​អាច​បម្លែងប្រភេទ​រូបភាព​ដែល​មាន​មូលដ្ឋាន​លើ GIMP ទៅ​ជា​របៀប PSD"
+msgid "Error: Can't convert LIGMA base imagetype to PSD mode"
+msgstr "កំហុស ៖ មិន​អាច​បម្លែងប្រភេទ​រូបភាព​ដែល​មាន​មូលដ្ឋាន​លើ LIGMA ទៅ​ជា​របៀប PSD"
 
 #: ../plug-ins/common/psd-save.c:1525
 #, c-format
@@ -7546,7 +7546,7 @@ msgid "Use the background color"
 msgstr "ប្រើ​ពណ៌​ផ្ទៃ​ខាងក្រោយ"
 
 #: ../plug-ins/common/spheredesigner.c:291
-#: ../plug-ins/gimpressionist/general.c:148
+#: ../plug-ins/ligmaressionist/general.c:148
 msgid "Solid"
 msgstr "​តាន់"
 
@@ -7636,7 +7636,7 @@ msgstr "ប្រអប់​ជ្រើស​ពណ៌"
 
 #. Scale
 #: ../plug-ins/common/spheredesigner.c:2755
-#: ../plug-ins/gimpressionist/paper.c:176
+#: ../plug-ins/ligmaressionist/paper.c:176
 #: ../plug-ins/ifscompose/ifscompose.c:553
 msgid "Scale:"
 msgstr "មាត្រដ្ឋាន ៖"
@@ -7794,10 +7794,10 @@ msgstr ""
 #, c-format
 msgid ""
 "'%s':\n"
-"Image width is larger than GIMP can handle"
+"Image width is larger than LIGMA can handle"
 msgstr ""
 "'%s':\n"
-"ទទឹង​រូបភាព​ធំជាង​អ្វី​ដែល GIMP អាច​គ្រប់គ្រង​បាន"
+"ទទឹង​រូបភាព​ធំជាង​អ្វី​ដែល LIGMA អាច​គ្រប់គ្រង​បាន"
 
 #: ../plug-ins/common/sunras.c:456 ../plug-ins/common/xbm.c:824
 #: ../plug-ins/common/xwd.c:492
@@ -7814,10 +7814,10 @@ msgstr ""
 #, c-format
 msgid ""
 "'%s':\n"
-"Image height is larger than GIMP can handle"
+"Image height is larger than LIGMA can handle"
 msgstr ""
 "'%s':\n"
-"កម្ពស់​រូបភាព​ធំជាង​អ្វី​ដែល​ GIMP អាច​គ្រប់គ្រង​បាន"
+"កម្ពស់​រូបភាព​ធំជាង​អ្វី​ដែល​ LIGMA អាច​គ្រប់គ្រង​បាន"
 
 #: ../plug-ins/common/sunras.c:502
 msgid "This image depth is not supported"
@@ -7914,8 +7914,8 @@ msgid "Import _paths"
 msgstr "នាំចូល​ផ្លូវ"
 
 #: ../plug-ins/common/svg.c:930
-msgid "Import path elements of the SVG so they can be used with the GIMP path tool"
-msgstr "នាំចូល​ធាតុ​ផ្លូវ​​នៃ SVG ដូចនេះ​ពួកវា​អាច​ត្រូវបាន​ប្រើ​ជាមួយ​ឧបករណ៏​ផ្លូវ GIMP ។"
+msgid "Import path elements of the SVG so they can be used with the LIGMA path tool"
+msgstr "នាំចូល​ធាតុ​ផ្លូវ​​នៃ SVG ដូចនេះ​ពួកវា​អាច​ត្រូវបាន​ប្រើ​ជាមួយ​ឧបករណ៏​ផ្លូវ LIGMA ។"
 
 #: ../plug-ins/common/svg.c:943
 msgid "Merge imported paths"
@@ -7998,12 +7998,12 @@ msgstr "ឆានែល TIFF"
 #: ../plug-ins/common/tiff-load.c:969
 msgid ""
 "Warning:\n"
-"The image you are loading has 16 bits per channel. GIMP can only handle 8 "
+"The image you are loading has 16 bits per channel. LIGMA can only handle 8 "
 "bit, so it will be converted for you. Information will be lost because of "
 "this conversion."
 msgstr ""
 "ការព្រមាន​មាន \n"
-"រូបភាព​ដែល​អ្នក​កំពុង​តែ​ផ្ទុក​​​​មាន ១៦ ប៊ីត​ក្នុង​មួយ​ឆានែល ។ GIMP អាច​ប្រើ​បាន​តែ​ ៨ ប៊ីត​តែប៉ុណ្ណោះ ​វា​នឹង​"
+"រូបភាព​ដែល​អ្នក​កំពុង​តែ​ផ្ទុក​​​​មាន ១៦ ប៊ីត​ក្នុង​មួយ​ឆានែល ។ LIGMA អាច​ប្រើ​បាន​តែ​ ៨ ប៊ីត​តែប៉ុណ្ណោះ ​វា​នឹង​"
 "ត្រូវបាន​បម្លែង​ឲ្យអ្នក​ ។ ព័ត៌មាន​នឹង​ត្រូវបាន​បាត់​បង់​​ដោយសារ​ការបម្លែង​នេះ ។"
 
 #: ../plug-ins/common/tiff-save.c:873
@@ -8154,17 +8154,17 @@ msgstr "បានរក្សា​ទុក"
 
 #: ../plug-ins/common/uniteditor.c:94
 msgid ""
-"A unit definition will only be saved before GIMP exits if this column is "
+"A unit definition will only be saved before LIGMA exits if this column is "
 "checked."
-msgstr "និយមន័យ​ឯកតា​​បាន​តែ​រក្សា​ ​នៅមុន​ពេល​ចេញ​ពី GIMP ប៉ុណ្ណោះ ប្រសិនបើ​​ជួរឈរ​នេះ​ត្រូវបាន​ពិនិត្យ ។"
+msgstr "និយមន័យ​ឯកតា​​បាន​តែ​រក្សា​ ​នៅមុន​ពេល​ចេញ​ពី LIGMA ប៉ុណ្ណោះ ប្រសិនបើ​​ជួរឈរ​នេះ​ត្រូវបាន​ពិនិត្យ ។"
 
 #: ../plug-ins/common/uniteditor.c:96
 msgid "ID"
 msgstr "​លេខ​សម្គាល់"
 
 #: ../plug-ins/common/uniteditor.c:96
-msgid "This string will be used to identify a unit in GIMP's configuration files."
-msgstr "ខ្សែអក្សរ​នេះ​នឹង​ត្រូវ​បាន​ប្រើ​សម្រាប់​បញ្ជាក់​ឯកតា​នៅក្នុង​ឯកសារ​កំណត់​រចនា​សម្ព័ន្ធ​របស់ GIMP ។"
+msgid "This string will be used to identify a unit in LIGMA's configuration files."
+msgstr "ខ្សែអក្សរ​នេះ​នឹង​ត្រូវ​បាន​ប្រើ​សម្រាប់​បញ្ជាក់​ឯកតា​នៅក្នុង​ឯកសារ​កំណត់​រចនា​សម្ព័ន្ធ​របស់ LIGMA ។"
 
 #: ../plug-ins/common/uniteditor.c:98
 msgid "Factor"
@@ -8232,8 +8232,8 @@ msgid "Create a new unit using the currently selected unit as template"
 msgstr "បង្កើត​ឯកត្តា​ថ្មី​ដោយ​ប្រើ​​ឯកត្តា​ដែល​បាន​ជ្រើស​បច្ចុប្បន្ន​ជា​ពុម្ព"
 
 #: ../plug-ins/common/uniteditor.c:145
-msgid "Create or alter units used in GIMP"
-msgstr "បង្កើត ឬ​ប្ដូរ​ឯកត្តា​ដែល​បាន​ប្រើ​នៅ​ក្នុង GIMP"
+msgid "Create or alter units used in LIGMA"
+msgstr "បង្កើត ឬ​ប្ដូរ​ឯកត្តា​ដែល​បាន​ប្រើ​នៅ​ក្នុង LIGMA"
 
 #: ../plug-ins/common/uniteditor.c:150
 msgid "_Unit Editor"
@@ -8746,7 +8746,7 @@ msgstr "ទាំងពីរ"
 msgid "Higher values restrict the effect to fewer areas of the image"
 msgstr "តម្លៃ​ដែលខ្ពស់​ដាក់កម្រិត​​បែបផែន​ដល់ផ្ទៃ​មួយចំនួន​របស់​រូបភាពព"
 
-#: ../plug-ins/common/wind.c:1018 ../plug-ins/gimpressionist/orientmap.c:676
+#: ../plug-ins/common/wind.c:1018 ../plug-ins/ligmaressionist/orientmap.c:676
 msgid "_Strength:"
 msgstr "កម្លាំង ៖"
 
@@ -9026,8 +9026,8 @@ msgstr "ធ្វើ​ឲ្យ​ចៃដន្យ"
 msgid "Same"
 msgstr "ដូចគ្នា"
 
-#: ../plug-ins/flame/flame.c:745 ../plug-ins/gimpressionist/orientation.c:146
-#: ../plug-ins/gimpressionist/size.c:149
+#: ../plug-ins/flame/flame.c:745 ../plug-ins/ligmaressionist/orientation.c:146
+#: ../plug-ins/ligmaressionist/size.c:149
 msgid "Random"
 msgstr "​ចៃដន្យ"
 
@@ -9299,7 +9299,7 @@ msgid "Max undo:"
 msgstr "មិន​ធ្វើ​វិញ​ជាអតិ. ៖"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1283
-#: ../plug-ins/gimpressionist/general.c:167
+#: ../plug-ins/ligmaressionist/general.c:167
 msgid "Transparent"
 msgstr "​ថ្លា"
 
@@ -9392,7 +9392,7 @@ msgid "Left"
 msgstr "​ឆ្វេង"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1718
-#: ../plug-ins/gimpressionist/orientation.c:130
+#: ../plug-ins/ligmaressionist/orientation.c:130
 msgid "Orientation:"
 msgstr "​​ទិស ៖"
 
@@ -9631,7 +9631,7 @@ msgstr "ជម្រើស​គូរ​កាំរស្មី"
 msgid "Second Flares Paint Options"
 msgstr "ជម្រើស​​គូរ​ការបញ្ចាំង​ទីពីរ​​"
 
-#: ../plug-ins/gflare/gflare.c:3455 ../plug-ins/gimpressionist/general.c:116
+#: ../plug-ins/gflare/gflare.c:3455 ../plug-ins/ligmaressionist/general.c:116
 msgid "_General"
 msgstr "ទូទៅ​"
 
@@ -9739,284 +9739,284 @@ msgstr "GFLI 1.3 - ផ្ទុក​គំនរ​ស៊ុម"
 msgid "GFLI 1.3 - Save framestack"
 msgstr "GFLI 1.3 - រក្សាទុក​គំនរ​ស៊ុម"
 
-#: ../plug-ins/gimpressionist/brush.c:230
+#: ../plug-ins/ligmaressionist/brush.c:230
 msgid "Can only save drawables!"
 msgstr "អាច​រក្សាទុក​បាន​​តែ​​ការ​ដែល​អាច​គូរបាន !"
 
-#: ../plug-ins/gimpressionist/brush.c:235
+#: ../plug-ins/ligmaressionist/brush.c:235
 msgid "Save Brush"
 msgstr "រក្សា​​ជក់ទុក​"
 
-#: ../plug-ins/gimpressionist/brush.c:490
+#: ../plug-ins/ligmaressionist/brush.c:490
 msgid "_Brush"
 msgstr "ជក់​"
 
-#: ../plug-ins/gimpressionist/brush.c:527
+#: ../plug-ins/ligmaressionist/brush.c:527
 msgid "Gamma:"
 msgstr "​ហ្គាម៉ា ៖"
 
-#: ../plug-ins/gimpressionist/brush.c:545
+#: ../plug-ins/ligmaressionist/brush.c:545
 msgid "Changes the gamma (brightness) of the selected brush"
 msgstr "ប្តូរ​ហ្គាម៉ា​ (ពន្លឺ) របស់​ជក់​ដែល​បាន​ជ្រើស"
 
-#: ../plug-ins/gimpressionist/brush.c:553
+#: ../plug-ins/ligmaressionist/brush.c:553
 msgid "Select:"
 msgstr "​ជ្រើស ៖"
 
-#: ../plug-ins/gimpressionist/brush.c:582
+#: ../plug-ins/ligmaressionist/brush.c:582
 msgid "Aspect ratio:"
 msgstr "​សមាមាត្រ​ទិដ្ឋភាព ៖"
 
-#: ../plug-ins/gimpressionist/brush.c:586
+#: ../plug-ins/ligmaressionist/brush.c:586
 msgid "Specifies the aspect ratio of the brush"
 msgstr "បញ្ជាក់​សមាមាត្រ​ទិដ្ឋភាព​របស់​ជក់"
 
-#: ../plug-ins/gimpressionist/brush.c:595
-#: ../plug-ins/gimpressionist/paper.c:188
+#: ../plug-ins/ligmaressionist/brush.c:595
+#: ../plug-ins/ligmaressionist/paper.c:188
 msgid "Relief:"
 msgstr "​ក្បាច់ ៖ "
 
-#: ../plug-ins/gimpressionist/brush.c:599
-#: ../plug-ins/gimpressionist/paper.c:192
+#: ../plug-ins/ligmaressionist/brush.c:599
+#: ../plug-ins/ligmaressionist/paper.c:192
 msgid "Specifies the amount of embossing to apply to the image (in percent)"
 msgstr "បញ្ជាក់​ចំនួន​ផុស​​ដើម្បី​អនុវត្ត​ទៅលើ​រូបភាព (ជាភាគរយ)"
 
-#: ../plug-ins/gimpressionist/color.c:42
+#: ../plug-ins/ligmaressionist/color.c:42
 msgid "Co_lor"
 msgstr "ពណ៌"
 
-#: ../plug-ins/gimpressionist/color.c:52
+#: ../plug-ins/ligmaressionist/color.c:52
 msgid "A_verage under brush"
 msgstr "ជក់​ក្រោម​មធ្យម​​"
 
-#: ../plug-ins/gimpressionist/color.c:54
+#: ../plug-ins/ligmaressionist/color.c:54
 msgid "C_enter of brush"
 msgstr "ជក់​កណ្តាល"
 
-#: ../plug-ins/gimpressionist/color.c:61
+#: ../plug-ins/ligmaressionist/color.c:61
 msgid "Color is computed from the average of all pixels under the brush"
 msgstr "ពណ៌​ត្រូវ​បាន​គណនា​​ពី​មធ្យម​នៃ​ភីកសែល​ទាំងអស់​​ពីក្រោម​ជក់"
 
-#: ../plug-ins/gimpressionist/color.c:65
+#: ../plug-ins/ligmaressionist/color.c:65
 msgid "Samples the color from the pixel in the center of the brush"
 msgstr "ធ្វើ​ឲ្យ​ពណ៌​ជា​គំរូ​ពី​​​ភីកសែល​នៅកណ្តាល​ជក់"
 
-#: ../plug-ins/gimpressionist/color.c:76
+#: ../plug-ins/ligmaressionist/color.c:76
 msgid "Color _noise:"
 msgstr "ភាព​មិន​ច្បាស់​នៃ​ពណ៌ ៖"
 
-#: ../plug-ins/gimpressionist/color.c:80
+#: ../plug-ins/ligmaressionist/color.c:80
 msgid "Adds random noise to the color"
 msgstr "បន្ថែម​ភាព​មើល​មិនច្បាស់​ដោយ​ចៃដន្យ​​ទៅ​ឲ្យ​ពណ៌"
 
-#: ../plug-ins/gimpressionist/general.c:132
+#: ../plug-ins/ligmaressionist/general.c:132
 msgid "Keep original"
 msgstr "រក្សាទុក​លំនាំដើម"
 
-#: ../plug-ins/gimpressionist/general.c:133
+#: ../plug-ins/ligmaressionist/general.c:133
 msgid "Preserve the original image as a background"
 msgstr "ការពារ​រូបភាព​ដើម​ជា​ផ្ទៃ​ខាងក្រោយ"
 
-#: ../plug-ins/gimpressionist/general.c:138
+#: ../plug-ins/ligmaressionist/general.c:138
 msgid "From paper"
 msgstr "ពី​ក្រដាស"
 
-#: ../plug-ins/gimpressionist/general.c:139
+#: ../plug-ins/ligmaressionist/general.c:139
 msgid "Copy the texture of the selected paper as a background"
 msgstr "ចម្លង​វាយនភាព​របស់​ក្រដាស​ដែលបាន​ជ្រើស​ជា​ផ្ទៃខាង​ក្រោយ"
 
-#: ../plug-ins/gimpressionist/general.c:149
+#: ../plug-ins/ligmaressionist/general.c:149
 msgid "Solid colored background"
 msgstr "ដាក់ពណ៌​ផ្ទៃ​ខាង​ក្រោយ​​ឲ្យ​តាន់"
 
-#: ../plug-ins/gimpressionist/general.c:168
+#: ../plug-ins/ligmaressionist/general.c:168
 msgid "Use a transparent background; Only the strokes painted will be visible"
 msgstr "ប្រើ​រើ​ផ្ទៃ​ខាងក្រោយ​ថ្លបាន​តែ​គូស​ខ្វាច់​ដែលអាច​មើល​ឃើញណោះ"
 
-#: ../plug-ins/gimpressionist/general.c:185
+#: ../plug-ins/ligmaressionist/general.c:185
 msgid "Paint edges"
 msgstr "គូរ​គែម"
 
-#: ../plug-ins/gimpressionist/general.c:190
+#: ../plug-ins/ligmaressionist/general.c:190
 msgid "Selects if to place strokes all the way out to the edges of the image"
 msgstr "ជ្រើស​ប្រសិនបើ​ដាក់​ខ្វាច់​ទៅ​គ្រប់គែម​នៃ​រូបភាព​​"
 
 #. Tileable checkbox
-#: ../plug-ins/gimpressionist/general.c:195 ../plug-ins/maze/maze_face.c:316
+#: ../plug-ins/ligmaressionist/general.c:195 ../plug-ins/maze/maze_face.c:316
 msgid "Tileable"
 msgstr "អាច​គូរ​ក្រឡា​បាន"
 
-#: ../plug-ins/gimpressionist/general.c:199
+#: ../plug-ins/ligmaressionist/general.c:199
 msgid "Selects if the resulting image should be seamlessly tileable"
 msgstr "ធ្វើ​ការ​ជ្រើស​រើស​ថាតើ​លទ្ធផលរូបភាព​​​គួរតែ​​អាច​គូរ​ក្រឡា​បាន​ដោយ​ធ្វើ​ឲ្យ​គ្មាន​ស្នាម​ថ្នេរ"
 
-#: ../plug-ins/gimpressionist/general.c:204
+#: ../plug-ins/ligmaressionist/general.c:204
 msgid "Drop shadow"
 msgstr "​ទម្លាក់ស្រមោល​"
 
-#: ../plug-ins/gimpressionist/general.c:209
+#: ../plug-ins/ligmaressionist/general.c:209
 msgid "Adds a shadow effect to each brush stroke"
 msgstr "បន្ថែម​បែបផែន​ស្រមោល​ទៅកាន់​​ជក់​ដែល​គូសវាស​និមួយៗ"
 
-#: ../plug-ins/gimpressionist/general.c:222
+#: ../plug-ins/ligmaressionist/general.c:222
 msgid "Edge darken:"
 msgstr "ធ្វើ​ឲ្យ​គែម​ងងឹត ៖"
 
-#: ../plug-ins/gimpressionist/general.c:226
+#: ../plug-ins/ligmaressionist/general.c:226
 msgid "How much to \"darken\" the edges of each brush stroke"
 msgstr "តើត្រូវ​ធ្វើ​ដូចម្តេច​ដើម្បី​​ឲ្យ​គែម​របស់​ជក់​គូសខ្វាច់​និមួយៗ​មាន​ពណ៌ខ្មៅ"
 
-#: ../plug-ins/gimpressionist/general.c:231
+#: ../plug-ins/ligmaressionist/general.c:231
 msgid "Shadow darken:"
 msgstr "ធ្វើ​ឲ្យ​ស្រមោល​ងងឹត ៖"
 
-#: ../plug-ins/gimpressionist/general.c:235
+#: ../plug-ins/ligmaressionist/general.c:235
 msgid "How much to \"darken\" the drop shadow"
 msgstr "តើ​ត្រូវធ្វើដូចម្តេច​ដើម្បី​​ឲ្យ​​ស្រមោល​ធ្លាក់​ទៅជា​ពណ៌​ខ្មៅ"
 
-#: ../plug-ins/gimpressionist/general.c:240
+#: ../plug-ins/ligmaressionist/general.c:240
 msgid "Shadow depth:"
 msgstr "ជម្រៅ​ស្រមោល ៖"
 
-#: ../plug-ins/gimpressionist/general.c:244
+#: ../plug-ins/ligmaressionist/general.c:244
 msgid "The depth of the drop shadow, i.e. how far apart from the object it should be"
 msgstr "ទម្លាក់​ស្រមោល​ជម្រៅ​ ឧទាហរណ៍​ ​តើ​ត្រូវ​មាន​ចម្ងាយ​ប៉ុន្មាន​ពី​ចវត្ថុ​ដែល​វា​ត្រូវ​ការ"
 
-#: ../plug-ins/gimpressionist/general.c:249
+#: ../plug-ins/ligmaressionist/general.c:249
 msgid "Shadow blur:"
 msgstr "ស្រមោល​ព្រិល ៖"
 
-#: ../plug-ins/gimpressionist/general.c:253
+#: ../plug-ins/ligmaressionist/general.c:253
 msgid "How much to blur the drop shadow"
 msgstr "ចំនួន​ដែល​ត្រូវ​ដាក់​ស្រមោល​ឲ្យ​ព្រិល"
 
-#: ../plug-ins/gimpressionist/general.c:258
+#: ../plug-ins/ligmaressionist/general.c:258
 msgid "Deviation threshold:"
 msgstr "កម្រិត​ពន្លឺ​បំបែរ ៖"
 
-#: ../plug-ins/gimpressionist/general.c:262
+#: ../plug-ins/ligmaressionist/general.c:262
 msgid "A bailout-value for adaptive selections"
 msgstr "តម្លៃ​សង្គ្រោះ​សម្រាប់​ជម្រើស​ដែល​អាច​ប្រែ​ប្រួល"
 
-#: ../plug-ins/gimpressionist/gimp.c:74
+#: ../plug-ins/ligmaressionist/ligma.c:74
 msgid "Performs various artistic operations"
 msgstr "អនុវត្ត​ប្រតិបត្តិការវិចិត្រ​ផ្សេង"
 
-#: ../plug-ins/gimpressionist/gimp.c:79
-msgid "_GIMPressionist..."
-msgstr "GIMPressionist..."
+#: ../plug-ins/ligmaressionist/ligma.c:79
+msgid "_LIGMAressionist..."
+msgstr "LIGMAressionist..."
 
-#: ../plug-ins/gimpressionist/gimp.c:350
+#: ../plug-ins/ligmaressionist/ligma.c:350
 msgid "Painting"
 msgstr "កំពុង​គូរ"
 
-#: ../plug-ins/gimpressionist/gimpressionist.c:121
-msgid "GIMPressionist"
-msgstr "GIMPressionist"
+#: ../plug-ins/ligmaressionist/ligmaressionist.c:121
+msgid "LIGMAressionist"
+msgstr "LIGMAressionist"
 
-#: ../plug-ins/gimpressionist/orientation.c:74
+#: ../plug-ins/ligmaressionist/orientation.c:74
 msgid "Or_ientation"
 msgstr "ទិស"
 
-#: ../plug-ins/gimpressionist/orientation.c:88
+#: ../plug-ins/ligmaressionist/orientation.c:88
 msgid "Directions:"
 msgstr "ទិស ៖"
 
-#: ../plug-ins/gimpressionist/orientation.c:92
+#: ../plug-ins/ligmaressionist/orientation.c:92
 msgid "The number of directions (i.e. brushes) to use"
 msgstr "ជ្រើស​​ចំនួន​នៃ​ទិស​ (ឧទាហរណ៍​ ជក់) សម្រាប់​​ប្រើ"
 
-#: ../plug-ins/gimpressionist/orientation.c:100
+#: ../plug-ins/ligmaressionist/orientation.c:100
 msgid "Start angle:"
 msgstr "មុំចាប់ផ្តើម​ ៖"
 
-#: ../plug-ins/gimpressionist/orientation.c:104
+#: ../plug-ins/ligmaressionist/orientation.c:104
 msgid "The starting angle of the first brush to create"
 msgstr "មុំ​ចាប់ផ្តើម​នៃ​ជក់ទី​មួយ​ដែលត្រូវ​បង្កើត"
 
-#: ../plug-ins/gimpressionist/orientation.c:112
+#: ../plug-ins/ligmaressionist/orientation.c:112
 msgid "Angle span:"
 msgstr "ផ្ទៃ​មុំ ៖"
 
-#: ../plug-ins/gimpressionist/orientation.c:116
+#: ../plug-ins/ligmaressionist/orientation.c:116
 msgid "The angle span of the first brush to create"
 msgstr "ផ្ទៃ​មុំ​របស់​ជក់​ដំបូង​ដែល​ត្រូវ​បង្កើត"
 
-#: ../plug-ins/gimpressionist/orientation.c:139
+#: ../plug-ins/ligmaressionist/orientation.c:139
 msgid ""
 "Let the value (brightness) of the region determine the direction of the "
 "stroke"
 msgstr "ទុក​ឲ្យ​តម្លៃ​ (ពន្លឺ) នៃ​តំបន់​កំណត់​ទិស​នៃ​ការ​គូស​វាស"
 
-#: ../plug-ins/gimpressionist/orientation.c:142
-#: ../plug-ins/gimpressionist/size.c:145
+#: ../plug-ins/ligmaressionist/orientation.c:142
+#: ../plug-ins/ligmaressionist/size.c:145
 msgid "Radius"
 msgstr "​កាំ"
 
-#: ../plug-ins/gimpressionist/orientation.c:143
+#: ../plug-ins/ligmaressionist/orientation.c:143
 msgid ""
 "The distance from the center of the image determines the direction of the "
 "stroke"
 msgstr "ចម្ងាយ​ពី​កណ្តាល​​នៃ​រូបភាព​​កំណត់​ទិស​នៃ​ខ្វាច់​"
 
-#: ../plug-ins/gimpressionist/orientation.c:147
+#: ../plug-ins/ligmaressionist/orientation.c:147
 msgid "Selects a random direction of each stroke"
 msgstr "ជ្រើស​ទិស​ចៃដន្យ​នៃខ្វាច់​​និមួយៗ"
 
-#: ../plug-ins/gimpressionist/orientation.c:150
-#: ../plug-ins/gimpressionist/size.c:153
+#: ../plug-ins/ligmaressionist/orientation.c:150
+#: ../plug-ins/ligmaressionist/size.c:153
 msgid "Radial"
 msgstr "​មូល"
 
-#: ../plug-ins/gimpressionist/orientation.c:151
+#: ../plug-ins/ligmaressionist/orientation.c:151
 msgid "Let the direction from the center determine the direction of the stroke"
 msgstr "អនុញ្ញាត​ឲ្យបញ្ជា​ពីការ​កំណត់​ទិសកណ្តាល​​នៃ​ខ្វាច់​​"
 
-#: ../plug-ins/gimpressionist/orientation.c:158
-#: ../plug-ins/gimpressionist/size.c:161
+#: ../plug-ins/ligmaressionist/orientation.c:158
+#: ../plug-ins/ligmaressionist/size.c:161
 msgid "Flowing"
 msgstr "កំពុង​ហូរ"
 
-#: ../plug-ins/gimpressionist/orientation.c:159
-#: ../plug-ins/gimpressionist/size.c:162
+#: ../plug-ins/ligmaressionist/orientation.c:159
+#: ../plug-ins/ligmaressionist/size.c:162
 msgid "The strokes follow a \"flowing\" pattern"
 msgstr "ខ្វាច់ទៅ​តាម​លំនាំ​​ \"ការ​ហូរ\""
 
-#: ../plug-ins/gimpressionist/orientation.c:163
+#: ../plug-ins/ligmaressionist/orientation.c:163
 msgid "The hue of the region determines the direction of the stroke"
 msgstr "ភាព​លាំៗ​នៃ​ពណ៌​របស់​តំបន់​កំណត់​ទិស​​នៃ​ការខ្វាច់​"
 
-#: ../plug-ins/gimpressionist/orientation.c:166
-#: ../plug-ins/gimpressionist/size.c:169
+#: ../plug-ins/ligmaressionist/orientation.c:166
+#: ../plug-ins/ligmaressionist/size.c:169
 msgid "Adaptive"
 msgstr "​អាច​ប្រែប្រួល"
 
-#: ../plug-ins/gimpressionist/orientation.c:167
+#: ../plug-ins/ligmaressionist/orientation.c:167
 msgid "The direction that matches the original image the closest is selected"
 msgstr "ទិស​ដែល​ផ្គូផ្គង​រូបភាព​ដើម​​ជិត​បំផុត​គឺ​ត្រូវ​បាន​ជ្រើស​រើស"
 
-#: ../plug-ins/gimpressionist/orientation.c:174
-#: ../plug-ins/gimpressionist/size.c:178
+#: ../plug-ins/ligmaressionist/orientation.c:174
+#: ../plug-ins/ligmaressionist/size.c:178
 msgid "Manual"
 msgstr "​ដោយ​ដៃ"
 
-#: ../plug-ins/gimpressionist/orientation.c:175
+#: ../plug-ins/ligmaressionist/orientation.c:175
 msgid "Manually specify the stroke orientation"
 msgstr "បញ្ជាក់​ទិស​នៃខ្វាច់​ដោយ​ដៃ"
 
-#: ../plug-ins/gimpressionist/orientation.c:186
+#: ../plug-ins/ligmaressionist/orientation.c:186
 msgid "Opens up the Orientation Map Editor"
 msgstr "បើក​កម្មវិធី​និពន្ធ​ផែនទី​ទិស"
 
-#: ../plug-ins/gimpressionist/orientmap.c:508
+#: ../plug-ins/ligmaressionist/orientmap.c:508
 msgid "Orientation Map Editor"
 msgstr "កម្មវិធី​និពន្ធ​ផែនទី​ទិស"
 
-#: ../plug-ins/gimpressionist/orientmap.c:537
+#: ../plug-ins/ligmaressionist/orientmap.c:537
 msgid "Vectors"
 msgstr "វ៉ិចទ័រ"
 
-#: ../plug-ins/gimpressionist/orientmap.c:549
+#: ../plug-ins/ligmaressionist/orientmap.c:549
 msgid ""
 "The vector-field. Left-click to move selected vector, Right-click to point "
 "it towards mouse, Middle-click to add a new vector."
@@ -10024,279 +10024,279 @@ msgstr ""
 "វាល​វ៉ិចទ័រ​ ។ ចុច​​ខាងឆ្វេង​ដើម្បី​ផ្លាស់ទី​​វ៉ិចទ័រ​ដែល​បាន​ជ្រើស ចុច​ខាងស្តាំ​ដើម្បី​​ចង្អុរ​វា​ទៅ​កណ្តុរ ចុច​កណ្តាល​"
 "ដើម្បី​បន្ថែម​វ៉ិចទ័រ​ថ្មី ។"
 
-#: ../plug-ins/gimpressionist/orientmap.c:572
-#: ../plug-ins/gimpressionist/sizemap.c:441
+#: ../plug-ins/ligmaressionist/orientmap.c:572
+#: ../plug-ins/ligmaressionist/sizemap.c:441
 msgid "Adjust the preview's brightness"
 msgstr "លៃតម្រូវ​ពន្លឺ​របស់​​ការមើល​ជាមុន"
 
-#: ../plug-ins/gimpressionist/orientmap.c:594
+#: ../plug-ins/ligmaressionist/orientmap.c:594
 msgid "Select previous vector"
 msgstr "ជ្រើស​វ៉ិចទ័រ​មុន"
 
-#: ../plug-ins/gimpressionist/orientmap.c:600
+#: ../plug-ins/ligmaressionist/orientmap.c:600
 msgid "Select next vector"
 msgstr "ជ្រើស​វ៉ិចទ័រ​បន្ទាប់"
 
-#: ../plug-ins/gimpressionist/orientmap.c:602
-#: ../plug-ins/gimpressionist/sizemap.c:472
+#: ../plug-ins/ligmaressionist/orientmap.c:602
+#: ../plug-ins/ligmaressionist/sizemap.c:472
 msgid "A_dd"
 msgstr "បន្ថែម"
 
-#: ../plug-ins/gimpressionist/orientmap.c:606
+#: ../plug-ins/ligmaressionist/orientmap.c:606
 msgid "Add new vector"
 msgstr "បន្ថែម​វ៉ិចទ័រ​ថ្មី"
 
-#: ../plug-ins/gimpressionist/orientmap.c:608
-#: ../plug-ins/gimpressionist/sizemap.c:479
+#: ../plug-ins/ligmaressionist/orientmap.c:608
+#: ../plug-ins/ligmaressionist/sizemap.c:479
 msgid "_Kill"
 msgstr "ពិឃាដ"
 
-#: ../plug-ins/gimpressionist/orientmap.c:612
+#: ../plug-ins/ligmaressionist/orientmap.c:612
 msgid "Delete selected vector"
 msgstr "លុប​វ៉ិចទ័រ​ដែល​បាន​ជ្រើស"
 
-#: ../plug-ins/gimpressionist/orientmap.c:623
+#: ../plug-ins/ligmaressionist/orientmap.c:623
 msgid "Type"
 msgstr "​ប្រភេទ"
 
-#: ../plug-ins/gimpressionist/orientmap.c:627
+#: ../plug-ins/ligmaressionist/orientmap.c:627
 msgid "_Normal"
 msgstr "ធម្មតា"
 
-#: ../plug-ins/gimpressionist/orientmap.c:628
+#: ../plug-ins/ligmaressionist/orientmap.c:628
 msgid "Vorte_x"
 msgstr "គំនួប"
 
-#: ../plug-ins/gimpressionist/orientmap.c:629
+#: ../plug-ins/ligmaressionist/orientmap.c:629
 msgid "Vortex_2"
 msgstr "គំនួប​២"
 
-#: ../plug-ins/gimpressionist/orientmap.c:630
+#: ../plug-ins/ligmaressionist/orientmap.c:630
 msgid "Vortex_3"
 msgstr "គំនួប​៣"
 
-#: ../plug-ins/gimpressionist/orientmap.c:636
-#: ../plug-ins/gimpressionist/sizemap.c:524
+#: ../plug-ins/ligmaressionist/orientmap.c:636
+#: ../plug-ins/ligmaressionist/sizemap.c:524
 msgid "_Voronoi"
 msgstr "Voronoi"
 
-#: ../plug-ins/gimpressionist/orientmap.c:644
+#: ../plug-ins/ligmaressionist/orientmap.c:644
 msgid ""
 "Voronoi-mode makes only the vector closest to the given point have any "
 "influence"
 msgstr "របៀប Voronoi បានតែបង្កើត​វ៉ិចទ័រ​​ជិត​បំផុត​ទៅ​នឹង​​ចំនុច​ដែល​បាន​ផ្តល់​ឲ្យ​​ដែលមាន​ឥទ្ធិពល​មួយ​ចំនួន"
 
-#: ../plug-ins/gimpressionist/orientmap.c:654
+#: ../plug-ins/ligmaressionist/orientmap.c:654
 msgid "A_ngle:"
 msgstr "មុំ ៖"
 
-#: ../plug-ins/gimpressionist/orientmap.c:658
+#: ../plug-ins/ligmaressionist/orientmap.c:658
 msgid "Change the angle of the selected vector"
 msgstr "ផ្លាស់ប្តូរ​មុំ​នៃ​វ៉ិចទ័រ​ដែលបាន​ជ្រើស"
 
-#: ../plug-ins/gimpressionist/orientmap.c:665
+#: ../plug-ins/ligmaressionist/orientmap.c:665
 msgid "Ang_le offset:"
 msgstr "មុំ​អុហ្វសិត ៖"
 
-#: ../plug-ins/gimpressionist/orientmap.c:669
+#: ../plug-ins/ligmaressionist/orientmap.c:669
 msgid "Offset all vectors with a given angle"
 msgstr "អុហ្វសិត​​វ៉ិចទ័រ​ទាំងអស់​ជាមួយ​មុំ​ដែល​បាន​ផ្តល់"
 
-#: ../plug-ins/gimpressionist/orientmap.c:680
+#: ../plug-ins/ligmaressionist/orientmap.c:680
 msgid "Change the strength of the selected vector"
 msgstr "ប្តូរកម្លាំង​របស់​វ៉ិចទ័រ​ដែលបាន​ជ្រើស​"
 
-#: ../plug-ins/gimpressionist/orientmap.c:687
+#: ../plug-ins/ligmaressionist/orientmap.c:687
 msgid "S_trength exp.:"
 msgstr "និទស្សន្ត​កម្លាំង ៖"
 
-#: ../plug-ins/gimpressionist/orientmap.c:691
-#: ../plug-ins/gimpressionist/sizemap.c:519
+#: ../plug-ins/ligmaressionist/orientmap.c:691
+#: ../plug-ins/ligmaressionist/sizemap.c:519
 msgid "Change the exponent of the strength"
 msgstr "ផ្លាស់​ប្តូរនិទស្សន្ត​​នៃ​កម្លាំង"
 
-#: ../plug-ins/gimpressionist/paper.c:120
+#: ../plug-ins/ligmaressionist/paper.c:120
 msgid "P_aper"
 msgstr "ក្រដាស"
 
-#: ../plug-ins/gimpressionist/paper.c:155
+#: ../plug-ins/ligmaressionist/paper.c:155
 msgid "Inverts the Papers texture"
 msgstr "ដាក់​ក្រដាស​វាយនភាព​​បញ្ច្រាស"
 
-#: ../plug-ins/gimpressionist/paper.c:159
+#: ../plug-ins/ligmaressionist/paper.c:159
 msgid "O_verlay"
 msgstr "គ្រប​ពីលើ"
 
-#: ../plug-ins/gimpressionist/paper.c:164
+#: ../plug-ins/ligmaressionist/paper.c:164
 msgid "Applies the paper as it is (without embossing it)"
 msgstr "អនុវត្ត​ក្រដាស​ដូច​វា​ (វា​មិន​ក្រឡោត​)"
 
-#: ../plug-ins/gimpressionist/paper.c:180
+#: ../plug-ins/ligmaressionist/paper.c:180
 msgid "Specifies the scale of the texture (in percent of original file)"
 msgstr "បញ្ជាក់​មាត្រដ្ឋាន​នៃ​វាយនភាព (ជាភាគរយ​នៃ​ឯកសារ​ដើម)"
 
-#: ../plug-ins/gimpressionist/placement.c:49
+#: ../plug-ins/ligmaressionist/placement.c:49
 msgid "Pl_acement"
 msgstr "ជំនួស"
 
-#: ../plug-ins/gimpressionist/placement.c:55
+#: ../plug-ins/ligmaressionist/placement.c:55
 msgid "Placement"
 msgstr "ជំនួស"
 
-#: ../plug-ins/gimpressionist/placement.c:59
+#: ../plug-ins/ligmaressionist/placement.c:59
 msgid "Randomly"
 msgstr "ដោយ​ចៃដន្យ"
 
-#: ../plug-ins/gimpressionist/placement.c:63
+#: ../plug-ins/ligmaressionist/placement.c:63
 msgid "Evenly distributed"
 msgstr "ចែក​ស្មើ"
 
-#: ../plug-ins/gimpressionist/placement.c:71
+#: ../plug-ins/ligmaressionist/placement.c:71
 msgid "Place strokes randomly around the image"
 msgstr "ដាក់​ការ​គូស​វាស​​នៅ​ជុំវិញ​រូបភាព​ដោយ​ចៃ​ដន្យ​"
 
-#: ../plug-ins/gimpressionist/placement.c:75
+#: ../plug-ins/ligmaressionist/placement.c:75
 msgid "The strokes are evenly distributed across the image"
 msgstr "ចែកខ្វាច់​​ស្មើ​គ្នា​កាត់​ពីលើ​រូបភាព"
 
-#: ../plug-ins/gimpressionist/placement.c:84
+#: ../plug-ins/ligmaressionist/placement.c:84
 msgid "Centered"
 msgstr "ដាក់​ឲ្យ​ចំកណ្តាល​"
 
-#: ../plug-ins/gimpressionist/placement.c:90
+#: ../plug-ins/ligmaressionist/placement.c:90
 msgid "Focus the brush strokes around the center of the image"
 msgstr "ផ្តោត​ទៅ​លើ​ជក់ខ្វាច់​​​នៅ​ម្តុំ​កណ្តាល​របស់​រូបភាព"
 
-#: ../plug-ins/gimpressionist/placement.c:102
+#: ../plug-ins/ligmaressionist/placement.c:102
 msgid "Stroke _density:"
 msgstr "ដង់​ស៊ីតេ​ការ​គូស​វាស ៖​"
 
-#: ../plug-ins/gimpressionist/placement.c:106
+#: ../plug-ins/ligmaressionist/placement.c:106
 msgid "The relative density of the brush strokes"
 msgstr "ដង់​ស៊ីតេ​ដែល​មាន​ទំនាក់​ទំនងគ្នា​របស់​ជក់​ខ្វាច់​"
 
 #.
-#. * gimp_filename_to_utf8 () and g_strerror () return temporary strings
+#. * ligma_filename_to_utf8 () and g_strerror () return temporary strings
 #. * that need not and should not be freed. So this call is OK.
 #. *
-#: ../plug-ins/gimpressionist/ppmtool.c:632
+#: ../plug-ins/ligmaressionist/ppmtool.c:632
 #, c-format
 msgid "Failed to save PPM file '%s': %s"
 msgstr "ការរក្សាទុក​ឯកសារ PPM '%s': %s បានបរាជ័យ"
 
-#: ../plug-ins/gimpressionist/presets.c:620
+#: ../plug-ins/ligmaressionist/presets.c:620
 msgid "Save Current"
 msgstr "រក្សាទុក​បច្ចុប្បន្ន"
 
-#: ../plug-ins/gimpressionist/presets.c:874
-msgid "Gimpressionist Defaults"
-msgstr "លំនាំ​ដើម​របស់ Gimpressionist"
+#: ../plug-ins/ligmaressionist/presets.c:874
+msgid "Ligmaressionist Defaults"
+msgstr "លំនាំ​ដើម​របស់ Ligmaressionist"
 
-#: ../plug-ins/gimpressionist/presets.c:995
+#: ../plug-ins/ligmaressionist/presets.c:995
 msgid "_Presets"
 msgstr "កំណត់​ជា​មុន"
 
-#: ../plug-ins/gimpressionist/presets.c:1010
+#: ../plug-ins/ligmaressionist/presets.c:1010
 msgid "Save Current..."
 msgstr "រក្សាទុក​បច្ចុប្បន្ន..."
 
-#: ../plug-ins/gimpressionist/presets.c:1018
+#: ../plug-ins/ligmaressionist/presets.c:1018
 msgid "Save the current settings to the specified file"
 msgstr "រក្សាទុក​ការកំណត់​បច្ចុប្បន្ន​ទៅកាន់​ឯកសារ​ដែលបាន​បញ្ជាក់"
 
-#: ../plug-ins/gimpressionist/presets.c:1046
+#: ../plug-ins/ligmaressionist/presets.c:1046
 msgid "Reads the selected Preset into memory"
 msgstr "អាន​ការកំណត់​ជាមុន​ដែល​បាន​ជ្រើស​​ទៅក្នុង​សតិ"
 
-#: ../plug-ins/gimpressionist/presets.c:1052
+#: ../plug-ins/ligmaressionist/presets.c:1052
 msgid "Deletes the selected Preset"
 msgstr "លុប​ការកំណត់​ជាមុន​ដែល​បាន​ជ្រើស"
 
-#: ../plug-ins/gimpressionist/presets.c:1058
+#: ../plug-ins/ligmaressionist/presets.c:1058
 msgid "Reread the folder of Presets"
 msgstr "អាន​ថត​របស់​ការកំណត់​ជាមុន​ម្តងទៀត"
 
-#: ../plug-ins/gimpressionist/preview.c:192
+#: ../plug-ins/ligmaressionist/preview.c:192
 msgid "Refresh the Preview window"
 msgstr "ធ្វើ​ឲ្យ​បង្អួច​មើល​ជាមុន​ស្រស់"
 
-#: ../plug-ins/gimpressionist/preview.c:200
+#: ../plug-ins/ligmaressionist/preview.c:200
 msgid "Revert to the original image"
 msgstr "ត្រឡប់​ទៅ​រូបភាព​ដើម​វិញ"
 
-#: ../plug-ins/gimpressionist/size.c:77
+#: ../plug-ins/ligmaressionist/size.c:77
 msgid "_Size"
 msgstr "ទំហំ"
 
-#: ../plug-ins/gimpressionist/size.c:91
+#: ../plug-ins/ligmaressionist/size.c:91
 msgid "Sizes:"
 msgstr "ទំហំ ៖"
 
-#: ../plug-ins/gimpressionist/size.c:95
+#: ../plug-ins/ligmaressionist/size.c:95
 msgid "The number of sizes of brushes to use"
 msgstr "ចំនួន​ទំហំ​របស់​ជក់​ដែល​ត្រូវ​ប្រើ"
 
-#: ../plug-ins/gimpressionist/size.c:103
+#: ../plug-ins/ligmaressionist/size.c:103
 msgid "Minimum size:"
 msgstr "ទំហំ​អប្បរមា ៖"
 
-#: ../plug-ins/gimpressionist/size.c:107
+#: ../plug-ins/ligmaressionist/size.c:107
 msgid "The smallest brush to create"
 msgstr "ជក់​តូចបំផុត​ដែល​ត្រូវ​បង្កើត"
 
-#: ../plug-ins/gimpressionist/size.c:115
+#: ../plug-ins/ligmaressionist/size.c:115
 msgid "Maximum size:"
 msgstr "ទំហំ​អតិបរមា ៖"
 
-#: ../plug-ins/gimpressionist/size.c:119
+#: ../plug-ins/ligmaressionist/size.c:119
 msgid "The largest brush to create"
 msgstr "ជក់​ធំ​បំផុត​ដែល​ត្រូវ​បង្កើត"
 
-#: ../plug-ins/gimpressionist/size.c:133
+#: ../plug-ins/ligmaressionist/size.c:133
 msgid "Size:"
 msgstr "​ទំហំ ៖"
 
-#: ../plug-ins/gimpressionist/size.c:142
+#: ../plug-ins/ligmaressionist/size.c:142
 msgid "Let the value (brightness) of the region determine the size of the stroke"
 msgstr "ទុក​ឲ្យ​តម្លៃ​(ពន្លឺ)​នៃ​តំបន់​​កំណត់​ទំហំ​នៃ​ការ​គូស​វាស"
 
-#: ../plug-ins/gimpressionist/size.c:146
+#: ../plug-ins/ligmaressionist/size.c:146
 msgid "The distance from the center of the image determines the size of the stroke"
 msgstr "ចម្ងាយ​ពី​ចំណុច​កណ្តាល​​នៃ​រូបភាព ​​កំណត់​ទំហំ​​របស់​ខ្វាច់​"
 
-#: ../plug-ins/gimpressionist/size.c:150
+#: ../plug-ins/ligmaressionist/size.c:150
 msgid "Selects a random size for each stroke"
 msgstr "ជ្រើស​រើស​ទំហំ​ចៃដន្យ​សម្រាប់ខ្វាច់​​និមួយៗ"
 
-#: ../plug-ins/gimpressionist/size.c:154
+#: ../plug-ins/ligmaressionist/size.c:154
 msgid "Let the direction from the center determine the size of the stroke"
 msgstr "អនុញ្ញាត​បញ្ជា​ពី​ចំណុច​កណ្តាល​ កំណត់​ទំហំ​នៃ​ខ្វាច់​"
 
-#: ../plug-ins/gimpressionist/size.c:166
+#: ../plug-ins/ligmaressionist/size.c:166
 msgid "The hue of the region determines the size of the stroke"
 msgstr "​តំបន់​ពណ៌​លាំៗកំណត់​ទំហំ​នៃ​ខ្វាច់​"
 
-#: ../plug-ins/gimpressionist/size.c:170
+#: ../plug-ins/ligmaressionist/size.c:170
 msgid "The brush-size that matches the original image the closest is selected"
 msgstr "ទំហំ​ជក់​ដែល​ផ្គូផ្គង​ទៅ​នឹង​រូបភាព​ដើម​​ជិត​បំផុត​គឺ​ត្រូវបាន​ជ្រើស"
 
-#: ../plug-ins/gimpressionist/size.c:179
+#: ../plug-ins/ligmaressionist/size.c:179
 msgid "Manually specify the stroke size"
 msgstr "បញ្ជាក់​ទំហំ​នៃ​ការ​គូស​​វាស​ដោយ​ដៃ"
 
-#: ../plug-ins/gimpressionist/size.c:190
+#: ../plug-ins/ligmaressionist/size.c:190
 msgid "Opens up the Size Map Editor"
 msgstr "បើក​កម្មវិធី​កែសម្រួល​​ទំហំ​របស់​ផែនទី"
 
-#: ../plug-ins/gimpressionist/sizemap.c:383
+#: ../plug-ins/ligmaressionist/sizemap.c:383
 msgid "Size Map Editor"
 msgstr "កម្មវិធី​កែសម្រួល​ទំហំ​របស់​ផែនទី"
 
-#: ../plug-ins/gimpressionist/sizemap.c:411
+#: ../plug-ins/ligmaressionist/sizemap.c:411
 msgid "Smvectors"
 msgstr "Smvectors"
 
-#: ../plug-ins/gimpressionist/sizemap.c:421
+#: ../plug-ins/ligmaressionist/sizemap.c:421
 msgid ""
 "The smvector-field. Left-click to move selected smvector, Right-click to "
 "point it towards mouse, Middle-click to add a new smvector."
@@ -10304,68 +10304,68 @@ msgstr ""
 "វាល smvector ។ ចុច​ខាងឆ្វេង​ដើម្បី​ផ្លាស់ទី​ smvector ដែល​បាន​ជ្រើស ចុច​ខាងស្តាំ​ដើម្បី​ចង្អុរ​វា​ទៅកាន់​"
 "កណ្តុរ ចុច​កណ្តាល​ដើម្បី​បន្ថែម​ smvector ថ្មី ។"
 
-#: ../plug-ins/gimpressionist/sizemap.c:463
+#: ../plug-ins/ligmaressionist/sizemap.c:463
 msgid "Select previous smvector"
 msgstr "ជ្រើស​​ smvector មុន"
 
-#: ../plug-ins/gimpressionist/sizemap.c:470
+#: ../plug-ins/ligmaressionist/sizemap.c:470
 msgid "Select next smvector"
 msgstr "ជ្រើស​ smvector បន្ទាប់"
 
-#: ../plug-ins/gimpressionist/sizemap.c:477
+#: ../plug-ins/ligmaressionist/sizemap.c:477
 msgid "Add new smvector"
 msgstr "បន្ថែម​ smvector ថ្មី"
 
-#: ../plug-ins/gimpressionist/sizemap.c:484
+#: ../plug-ins/ligmaressionist/sizemap.c:484
 msgid "Delete selected smvector"
 msgstr "លុប smvector ដែល​បាន​ជ្រើស"
 
-#: ../plug-ins/gimpressionist/sizemap.c:497
+#: ../plug-ins/ligmaressionist/sizemap.c:497
 msgid "Change the angle of the selected smvector"
 msgstr "ផ្លាស់​ប្តូរ​មុំ​របស់​ smvector ដែល​បាន​ជ្រើស"
 
-#: ../plug-ins/gimpressionist/sizemap.c:504
+#: ../plug-ins/ligmaressionist/sizemap.c:504
 msgid "S_trength:"
 msgstr "កម្លាំង ៖"
 
-#: ../plug-ins/gimpressionist/sizemap.c:508
+#: ../plug-ins/ligmaressionist/sizemap.c:508
 msgid "Change the strength of the selected smvector"
 msgstr "ផ្លាស់​ប្តូរ​កម្លាំង​​របស់​ smvector ដែល​បាន​ជ្រើស"
 
-#: ../plug-ins/gimpressionist/sizemap.c:515
+#: ../plug-ins/ligmaressionist/sizemap.c:515
 msgid "St_rength exp.:"
 msgstr "និទស្សន្ត​កម្លាំង ៖"
 
-#: ../plug-ins/gimpressionist/sizemap.c:531
+#: ../plug-ins/ligmaressionist/sizemap.c:531
 msgid ""
 "Voronoi-mode makes only the smvector closest to the given point have any "
 "influence"
 msgstr "របៀប Voronoi បានតែ​បង្កើត​​ smvector ​ជិតជាង​គេ​បំផុត​ ដើម្បី​ផ្តល់​​ចំណុច​ជាច្រើន​​ដែល​មាន​​ឥទ្ធិពល​ ។"
 
-#: ../plug-ins/help/gimphelpdomain.c:178
-msgid "The GIMP help files are not found."
-msgstr "រក​ឯកសារ​ជំនួយ​ GIMP មិនឃើញ ។"
+#: ../plug-ins/help/ligmahelpdomain.c:178
+msgid "The LIGMA help files are not found."
+msgstr "រក​ឯកសារ​ជំនួយ​ LIGMA មិនឃើញ ។"
 
-#: ../plug-ins/help/gimphelpdomain.c:179
+#: ../plug-ins/help/ligmahelpdomain.c:179
 msgid ""
 "Please install the additional help package or use the online user manual at "
-"http://docs.gimp.org/."
-msgstr "សូម​ដំឡើង​កញ្ចប់​ជំនួយ​បន្ថែម​​ឬ​ ប្រើ​​សៀវភៅ​ដៃ​អ្នក​ប្រើ​លើ​បណ្តាញ​នៅលើ http://docs.gimp.org/ ។"
+"http://docs.ligma.org/."
+msgstr "សូម​ដំឡើង​កញ្ចប់​ជំនួយ​បន្ថែម​​ឬ​ ប្រើ​​សៀវភៅ​ដៃ​អ្នក​ប្រើ​លើ​បណ្តាញ​នៅលើ http://docs.ligma.org/ ។"
 
-#: ../plug-ins/help/gimphelpdomain.c:185
-msgid "There is a problem with the GIMP help files."
-msgstr "មាន​បញ្ហា​ជាមួយនិង​ឯកសារ​ជំនួយ GIMP ។"
+#: ../plug-ins/help/ligmahelpdomain.c:185
+msgid "There is a problem with the LIGMA help files."
+msgstr "មាន​បញ្ហា​ជាមួយនិង​ឯកសារ​ជំនួយ LIGMA ។"
 
-#: ../plug-ins/help/gimphelpdomain.c:187
+#: ../plug-ins/help/ligmahelpdomain.c:187
 msgid "Please check your installation."
 msgstr "សូម​ពិនិត្យ​ការដំឡើង​របស់​អ្នក ។"
 
-#: ../plug-ins/help/gimphelpdomain.c:197
+#: ../plug-ins/help/ligmahelpdomain.c:197
 #, c-format
 msgid "Help ID '%s' unknown"
 msgstr "មិនស្គាល់​លេខ​សំគាល់​ជំនួយ '%s'"
 
-#: ../plug-ins/help/gimphelplocale.c:215
+#: ../plug-ins/help/ligmahelplocale.c:215
 #, c-format
 msgid ""
 "Parse error in '%s':\n"
@@ -10375,8 +10375,8 @@ msgstr ""
 "%s"
 
 #: ../plug-ins/helpbrowser/dialog.c:216
-msgid "GIMP Help Browser"
-msgstr "កម្មវិធី​រុករក​ជំនួយ GIMP"
+msgid "LIGMA Help Browser"
+msgstr "កម្មវិធី​រុករក​ជំនួយ LIGMA"
 
 #: ../plug-ins/helpbrowser/dialog.c:311
 msgid "Drag and drop this icon to a web browser"
@@ -10395,8 +10395,8 @@ msgid "Go to the index page"
 msgstr "ទៅកាន់​ទំព័រ​លិបិក្រម"
 
 #: ../plug-ins/helpbrowser/dialog.c:745
-msgid "Visit the GIMP documentation website"
-msgstr "ចូលទស្សនា​តំបន់​បណ្តាញ​ឯកសារ GIMP"
+msgid "Visit the LIGMA documentation website"
+msgstr "ចូលទស្សនា​តំបន់​បណ្តាញ​ឯកសារ LIGMA"
 
 #: ../plug-ins/helpbrowser/dialog.c:821
 msgid "Document not found"
@@ -10603,7 +10603,7 @@ msgid "Clear"
 msgstr "​ជម្រះ"
 
 #: ../plug-ins/imagemap/imap_cmd_create.c:58
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:151
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:151
 msgid "Create"
 msgstr "​បង្កើត"
 
@@ -10628,41 +10628,41 @@ msgid "Edit Object"
 msgstr "កែសម្រួល​វត្ថុ"
 
 #. Create the areas
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:117
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:147
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:251
-msgid "Use Gimp Guides"
-msgstr "ប្រើ​កម្មវិធី​នាំផ្លូវ​របស់ Gimp"
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:117
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:147
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:251
+msgid "Use Ligma Guides"
+msgstr "ប្រើ​កម្មវិធី​នាំផ្លូវ​របស់ Ligma"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:160
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:160
 msgid "Al_ternate"
 msgstr "ឆ្លាស់​គ្នា​"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:165
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:165
 msgid "A_ll"
 msgstr "ទាំងអស់"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:169
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:169
 msgid "Add Additional Guides"
 msgstr "ថែម​មគ្គុទ្ទេសក៏​បន្ថែម"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:177
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:177
 msgid "L_eft border"
 msgstr "ដាក់​ស៊ុម​ឆ្វេង"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:181
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:181
 msgid "_Right border"
 msgstr "ដាក់​ស៊ុម​ស្តាំ"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:185
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:185
 msgid "_Upper border"
 msgstr "ដាក់​ស៊ុម​លើ"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:189
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:189
 msgid "Lo_wer border"
 msgstr "ដាក់​ស៊ុម​ក្រោម"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:197
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:197
 msgid "_Base URL:"
 msgstr "URL គោល ៖"
 
@@ -11097,8 +11097,8 @@ msgid "Grid Settings..."
 msgstr "ការ​កំណត់​ក្រឡាចត្រង្គ..."
 
 #: ../plug-ins/imagemap/imap_menu.c:194
-msgid "Use GIMP Guides..."
-msgstr "ប្រើ​មគ្គុទ្ទេសក៍​របស់ GIMP..."
+msgid "Use LIGMA Guides..."
+msgstr "ប្រើ​មគ្គុទ្ទេសក៍​របស់ LIGMA..."
 
 #: ../plug-ins/imagemap/imap_menu.c:196
 msgid "Create Guides..."
@@ -11313,8 +11313,8 @@ msgid "According to the EXIF data, this image is rotated."
 msgstr "ដោយ​យោង​តាម​ទិន្នន័យ EXIF រូបភាព​នេះ​នឹងត្រូវបាន​បង្វិល ។"
 
 #: ../plug-ins/jpeg/jpeg-exif.c:357
-msgid "Would you like GIMP to rotate it into the standard orientation?"
-msgstr "តើ​អ្នក​ចង់​ឲ្យ​ GIMP បង្វិល​វា​នៅក្នុង​ទិស​ខ្នាត​គំរូ​​ឬ ?"
+msgid "Would you like LIGMA to rotate it into the standard orientation?"
+msgstr "តើ​អ្នក​ចង់​ឲ្យ​ LIGMA បង្វិល​វា​នៅក្នុង​ទិស​ខ្នាត​គំរូ​​ឬ ?"
 
 #: ../plug-ins/jpeg/jpeg-load.c:236
 msgid "JPEG preview"
@@ -12054,8 +12054,8 @@ msgid "No data captured"
 msgstr "គ្មាន​ទិន្នន័យ​ដែល​បាន​ចាប់​យក​ទេ"
 
 #: ../plug-ins/xjt/xjt.c:485 ../plug-ins/xjt/xjt.c:503
-msgid "GIMP compressed XJT image"
-msgstr "រូបភាព XJT ដែលបាន​បង្ហាប់​របស់ GIMP"
+msgid "LIGMA compressed XJT image"
+msgstr "រូបភាព XJT ដែលបាន​បង្ហាប់​របស់ LIGMA"
 
 #: ../plug-ins/xjt/xjt.c:724
 #, c-format

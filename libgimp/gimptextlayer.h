@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2000 Peter Mattis and Spencer Kimball
  *
- * gimptextlayer.h
+ * ligmatextlayer.h
  * Copyright (C) 2022 Jehan
  *
  * This library is free software: you can redistribute it and/or
@@ -19,31 +19,31 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_H_INSIDE__) && !defined (GIMP_COMPILATION)
-#error "Only <libgimp/gimp.h> can be included directly."
+#if !defined (__LIGMA_H_INSIDE__) && !defined (LIGMA_COMPILATION)
+#error "Only <libligma/ligma.h> can be included directly."
 #endif
 
-#ifndef __GIMP_TEXT_LAYER_H__
-#define __GIMP_TEXT_LAYER_H__
+#ifndef __LIGMA_TEXT_LAYER_H__
+#define __LIGMA_TEXT_LAYER_H__
 
 G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
 
-#define GIMP_TYPE_TEXT_LAYER (gimp_text_layer_get_type ())
-G_DECLARE_FINAL_TYPE (GimpTextLayer, gimp_text_layer, GIMP, TEXT_LAYER, GimpLayer)
+#define LIGMA_TYPE_TEXT_LAYER (ligma_text_layer_get_type ())
+G_DECLARE_FINAL_TYPE (LigmaTextLayer, ligma_text_layer, LIGMA, TEXT_LAYER, LigmaLayer)
 
 
-GimpTextLayer * gimp_text_layer_get_by_id (gint32       layer_id);
+LigmaTextLayer * ligma_text_layer_get_by_id (gint32       layer_id);
 
-GimpTextLayer * gimp_text_layer_new       (GimpImage   *image,
+LigmaTextLayer * ligma_text_layer_new       (LigmaImage   *image,
                                            const gchar *text,
                                            const gchar *fontname,
                                            gdouble      size,
-                                           GimpUnit     unit);
+                                           LigmaUnit     unit);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_TEXT_LAYER_H__ */
+#endif /* __LIGMA_TEXT_LAYER_H__ */

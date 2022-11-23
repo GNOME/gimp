@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpcolorselector.c
- * Copyright (C) 2002 Michael Natterer <mitch@gimp.org>
+ * ligmacolorselector.c
+ * Copyright (C) 2002 Michael Natterer <mitch@ligma.org>
  *
  * based on:
  * Colour selector module
@@ -28,23 +28,23 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmaconfig/ligmaconfig.h"
 
-#include "gimpwidgetstypes.h"
+#include "ligmawidgetstypes.h"
 
-#include "gimpcolorselector.h"
-#include "gimpicons.h"
-#include "gimpwidgetsmarshal.h"
+#include "ligmacolorselector.h"
+#include "ligmaicons.h"
+#include "ligmawidgetsmarshal.h"
 
 
 /**
- * SECTION: gimpcolorselector
- * @title: GimpColorSelector
- * @short_description: Pluggable GIMP color selector modules.
- * @see_also: #GModule, #GTypeModule, #GimpModule
+ * SECTION: ligmacolorselector
+ * @title: LigmaColorSelector
+ * @short_description: Pluggable LIGMA color selector modules.
+ * @see_also: #GModule, #GTypeModule, #LigmaModule
  *
- * Functions and definitions for creating pluggable GIMP color
+ * Functions and definitions for creating pluggable LIGMA color
  * selector modules.
  **/
 
@@ -58,66 +58,66 @@ enum
 };
 
 
-struct _GimpColorSelectorPrivate
+struct _LigmaColorSelectorPrivate
 {
   gboolean model_visible[3];
 };
 
-#define GET_PRIVATE(obj) (((GimpColorSelector *) (obj))->priv)
+#define GET_PRIVATE(obj) (((LigmaColorSelector *) (obj))->priv)
 
 
-static void   gimp_color_selector_dispose (GObject *object);
+static void   ligma_color_selector_dispose (GObject *object);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpColorSelector, gimp_color_selector,
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaColorSelector, ligma_color_selector,
                             GTK_TYPE_BOX)
 
-#define parent_class gimp_color_selector_parent_class
+#define parent_class ligma_color_selector_parent_class
 
 static guint selector_signals[LAST_SIGNAL] = { 0 };
 
 
 static void
-gimp_color_selector_class_init (GimpColorSelectorClass *klass)
+ligma_color_selector_class_init (LigmaColorSelectorClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->dispose = gimp_color_selector_dispose;
+  object_class->dispose = ligma_color_selector_dispose;
 
   selector_signals[COLOR_CHANGED] =
     g_signal_new ("color-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpColorSelectorClass, color_changed),
+                  G_STRUCT_OFFSET (LigmaColorSelectorClass, color_changed),
                   NULL, NULL,
-                  _gimp_widgets_marshal_VOID__BOXED_BOXED,
+                  _ligma_widgets_marshal_VOID__BOXED_BOXED,
                   G_TYPE_NONE, 2,
-                  GIMP_TYPE_RGB,
-                  GIMP_TYPE_RGB);
+                  LIGMA_TYPE_RGB,
+                  LIGMA_TYPE_RGB);
 
   selector_signals[CHANNEL_CHANGED] =
     g_signal_new ("channel-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpColorSelectorClass, channel_changed),
+                  G_STRUCT_OFFSET (LigmaColorSelectorClass, channel_changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
-                  GIMP_TYPE_COLOR_SELECTOR_CHANNEL);
+                  LIGMA_TYPE_COLOR_SELECTOR_CHANNEL);
 
   selector_signals[MODEL_VISIBLE_CHANGED] =
     g_signal_new ("model-visible-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpColorSelectorClass, model_visible_changed),
+                  G_STRUCT_OFFSET (LigmaColorSelectorClass, model_visible_changed),
                   NULL, NULL,
-                  _gimp_widgets_marshal_VOID__ENUM_BOOLEAN,
+                  _ligma_widgets_marshal_VOID__ENUM_BOOLEAN,
                   G_TYPE_NONE, 2,
-                  GIMP_TYPE_COLOR_SELECTOR_MODEL,
+                  LIGMA_TYPE_COLOR_SELECTOR_MODEL,
                   G_TYPE_BOOLEAN);
 
   klass->name                  = "Unnamed";
   klass->help_id               = NULL;
-  klass->icon_name             = GIMP_ICON_PALETTE;
+  klass->icon_name             = LIGMA_ICON_PALETTE;
 
   klass->set_toggles_visible   = NULL;
   klass->set_toggles_sensitive = NULL;
@@ -132,11 +132,11 @@ gimp_color_selector_class_init (GimpColorSelectorClass *klass)
 }
 
 static void
-gimp_color_selector_init (GimpColorSelector *selector)
+ligma_color_selector_init (LigmaColorSelector *selector)
 {
-  GimpColorSelectorPrivate *priv;
+  LigmaColorSelectorPrivate *priv;
 
-  selector->priv = gimp_color_selector_get_instance_private (selector);
+  selector->priv = ligma_color_selector_get_instance_private (selector);
 
   priv = GET_PRIVATE (selector);
 
@@ -147,20 +147,20 @@ gimp_color_selector_init (GimpColorSelector *selector)
   gtk_orientable_set_orientation (GTK_ORIENTABLE (selector),
                                   GTK_ORIENTATION_VERTICAL);
 
-  gimp_rgba_set (&selector->rgb, 0.0, 0.0, 0.0, 1.0);
-  gimp_rgb_to_hsv (&selector->rgb, &selector->hsv);
+  ligma_rgba_set (&selector->rgb, 0.0, 0.0, 0.0, 1.0);
+  ligma_rgb_to_hsv (&selector->rgb, &selector->hsv);
 
-  selector->channel = GIMP_COLOR_SELECTOR_RED;
+  selector->channel = LIGMA_COLOR_SELECTOR_RED;
 
-  priv->model_visible[GIMP_COLOR_SELECTOR_MODEL_RGB] = TRUE;
-  priv->model_visible[GIMP_COLOR_SELECTOR_MODEL_LCH] = TRUE;
-  priv->model_visible[GIMP_COLOR_SELECTOR_MODEL_HSV] = FALSE;
+  priv->model_visible[LIGMA_COLOR_SELECTOR_MODEL_RGB] = TRUE;
+  priv->model_visible[LIGMA_COLOR_SELECTOR_MODEL_LCH] = TRUE;
+  priv->model_visible[LIGMA_COLOR_SELECTOR_MODEL_HSV] = FALSE;
 }
 
 static void
-gimp_color_selector_dispose (GObject *object)
+ligma_color_selector_dispose (GObject *object)
 {
-  gimp_color_selector_set_config (GIMP_COLOR_SELECTOR (object), NULL);
+  ligma_color_selector_set_config (LIGMA_COLOR_SELECTOR (object), NULL);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -169,45 +169,45 @@ gimp_color_selector_dispose (GObject *object)
 /*  public functions  */
 
 /**
- * gimp_color_selector_new:
+ * ligma_color_selector_new:
  * @selector_type: The #GType of the selector to create.
  * @rgb:           The initial color to be edited.
  * @hsv:           The same color in HSV.
  * @channel:       The selector's initial channel.
  *
- * Creates a new #GimpColorSelector widget of type @selector_type.
+ * Creates a new #LigmaColorSelector widget of type @selector_type.
  *
  * Note that this is mostly internal API to be used by other widgets.
  *
- * Please use gimp_color_selection_new() for the "GIMP-typical" color
- * selection widget. Also see gimp_color_button_new().
+ * Please use ligma_color_selection_new() for the "LIGMA-typical" color
+ * selection widget. Also see ligma_color_button_new().
  *
- * Retunn value: the new #GimpColorSelector widget.
+ * Retunn value: the new #LigmaColorSelector widget.
  **/
 GtkWidget *
-gimp_color_selector_new (GType                     selector_type,
-                         const GimpRGB            *rgb,
-                         const GimpHSV            *hsv,
-                         GimpColorSelectorChannel  channel)
+ligma_color_selector_new (GType                     selector_type,
+                         const LigmaRGB            *rgb,
+                         const LigmaHSV            *hsv,
+                         LigmaColorSelectorChannel  channel)
 {
-  GimpColorSelector *selector;
+  LigmaColorSelector *selector;
 
-  g_return_val_if_fail (g_type_is_a (selector_type, GIMP_TYPE_COLOR_SELECTOR),
+  g_return_val_if_fail (g_type_is_a (selector_type, LIGMA_TYPE_COLOR_SELECTOR),
                         NULL);
   g_return_val_if_fail (rgb != NULL, NULL);
   g_return_val_if_fail (hsv != NULL, NULL);
 
   selector = g_object_new (selector_type, NULL);
 
-  gimp_color_selector_set_color (selector, rgb, hsv);
-  gimp_color_selector_set_channel (selector, channel);
+  ligma_color_selector_set_color (selector, rgb, hsv);
+  ligma_color_selector_set_channel (selector, channel);
 
   return GTK_WIDGET (selector);
 }
 
 /**
- * gimp_color_selector_set_toggles_visible:
- * @selector: A #GimpColorSelector widget.
+ * ligma_color_selector_set_toggles_visible:
+ * @selector: A #LigmaColorSelector widget.
  * @visible:  The new @visible setting.
  *
  * Sets the @visible property of the @selector's toggles.
@@ -216,18 +216,18 @@ gimp_color_selector_new (GType                     selector_type,
  * toggles to switch channels.
  **/
 void
-gimp_color_selector_set_toggles_visible (GimpColorSelector *selector,
+ligma_color_selector_set_toggles_visible (LigmaColorSelector *selector,
                                          gboolean           visible)
 {
-  g_return_if_fail (GIMP_IS_COLOR_SELECTOR (selector));
+  g_return_if_fail (LIGMA_IS_COLOR_SELECTOR (selector));
 
   if (selector->toggles_visible != visible)
     {
-      GimpColorSelectorClass *selector_class;
+      LigmaColorSelectorClass *selector_class;
 
       selector->toggles_visible = visible ? TRUE : FALSE;
 
-      selector_class = GIMP_COLOR_SELECTOR_GET_CLASS (selector);
+      selector_class = LIGMA_COLOR_SELECTOR_GET_CLASS (selector);
 
       if (selector_class->set_toggles_visible)
         selector_class->set_toggles_visible (selector, visible);
@@ -235,26 +235,26 @@ gimp_color_selector_set_toggles_visible (GimpColorSelector *selector,
 }
 
 /**
- * gimp_color_selector_get_toggles_visible:
- * @selector: A #GimpColorSelector widget.
+ * ligma_color_selector_get_toggles_visible:
+ * @selector: A #LigmaColorSelector widget.
  *
  * Returns the @visible property of the @selector's toggles.
  *
- * Returns: %TRUE if the #GimpColorSelector's toggles are visible.
+ * Returns: %TRUE if the #LigmaColorSelector's toggles are visible.
  *
  * Since: 2.10
  **/
 gboolean
-gimp_color_selector_get_toggles_visible (GimpColorSelector *selector)
+ligma_color_selector_get_toggles_visible (LigmaColorSelector *selector)
 {
-  g_return_val_if_fail (GIMP_IS_COLOR_SELECTOR (selector), FALSE);
+  g_return_val_if_fail (LIGMA_IS_COLOR_SELECTOR (selector), FALSE);
 
   return selector->toggles_visible;
 }
 
 /**
- * gimp_color_selector_set_toggles_sensitive:
- * @selector:  A #GimpColorSelector widget.
+ * ligma_color_selector_set_toggles_sensitive:
+ * @selector:  A #LigmaColorSelector widget.
  * @sensitive: The new @sensitive setting.
  *
  * Sets the @sensitive property of the @selector's toggles.
@@ -263,18 +263,18 @@ gimp_color_selector_get_toggles_visible (GimpColorSelector *selector)
  * toggles to switch channels.
  **/
 void
-gimp_color_selector_set_toggles_sensitive (GimpColorSelector *selector,
+ligma_color_selector_set_toggles_sensitive (LigmaColorSelector *selector,
                                            gboolean           sensitive)
 {
-  g_return_if_fail (GIMP_IS_COLOR_SELECTOR (selector));
+  g_return_if_fail (LIGMA_IS_COLOR_SELECTOR (selector));
 
   if (selector->toggles_sensitive != sensitive)
     {
-      GimpColorSelectorClass *selector_class;
+      LigmaColorSelectorClass *selector_class;
 
       selector->toggles_sensitive = sensitive ? TRUE : FALSE;
 
-      selector_class = GIMP_COLOR_SELECTOR_GET_CLASS (selector);
+      selector_class = LIGMA_COLOR_SELECTOR_GET_CLASS (selector);
 
       if (selector_class->set_toggles_sensitive)
         selector_class->set_toggles_sensitive (selector, sensitive);
@@ -282,43 +282,43 @@ gimp_color_selector_set_toggles_sensitive (GimpColorSelector *selector,
 }
 
 /**
- * gimp_color_selector_get_toggles_sensitive:
- * @selector: A #GimpColorSelector widget.
+ * ligma_color_selector_get_toggles_sensitive:
+ * @selector: A #LigmaColorSelector widget.
  *
  * Returns the @sensitive property of the @selector's toggles.
  *
- * Returns: %TRUE if the #GimpColorSelector's toggles are sensitive.
+ * Returns: %TRUE if the #LigmaColorSelector's toggles are sensitive.
  *
  * Since: 2.10
  **/
 gboolean
-gimp_color_selector_get_toggles_sensitive (GimpColorSelector *selector)
+ligma_color_selector_get_toggles_sensitive (LigmaColorSelector *selector)
 {
-  g_return_val_if_fail (GIMP_IS_COLOR_SELECTOR (selector), FALSE);
+  g_return_val_if_fail (LIGMA_IS_COLOR_SELECTOR (selector), FALSE);
 
   return selector->toggles_sensitive;
 }
 
 /**
- * gimp_color_selector_set_show_alpha:
- * @selector:   A #GimpColorSelector widget.
+ * ligma_color_selector_set_show_alpha:
+ * @selector:   A #LigmaColorSelector widget.
  * @show_alpha: The new @show_alpha setting.
  *
  * Sets the @show_alpha property of the @selector widget.
  **/
 void
-gimp_color_selector_set_show_alpha (GimpColorSelector *selector,
+ligma_color_selector_set_show_alpha (LigmaColorSelector *selector,
                                     gboolean           show_alpha)
 {
-  g_return_if_fail (GIMP_IS_COLOR_SELECTOR (selector));
+  g_return_if_fail (LIGMA_IS_COLOR_SELECTOR (selector));
 
   if (show_alpha != selector->show_alpha)
     {
-      GimpColorSelectorClass *selector_class;
+      LigmaColorSelectorClass *selector_class;
 
       selector->show_alpha = show_alpha ? TRUE : FALSE;
 
-      selector_class = GIMP_COLOR_SELECTOR_GET_CLASS (selector);
+      selector_class = LIGMA_COLOR_SELECTOR_GET_CLASS (selector);
 
       if (selector_class->set_show_alpha)
         selector_class->set_show_alpha (selector, show_alpha);
@@ -326,56 +326,56 @@ gimp_color_selector_set_show_alpha (GimpColorSelector *selector,
 }
 
 /**
- * gimp_color_selector_get_show_alpha:
- * @selector: A #GimpColorSelector widget.
+ * ligma_color_selector_get_show_alpha:
+ * @selector: A #LigmaColorSelector widget.
  *
  * Returns the @selector's @show_alpha property.
  *
- * Returns: %TRUE if the #GimpColorSelector has alpha controls.
+ * Returns: %TRUE if the #LigmaColorSelector has alpha controls.
  *
  * Since: 2.10
  **/
 gboolean
-gimp_color_selector_get_show_alpha (GimpColorSelector *selector)
+ligma_color_selector_get_show_alpha (LigmaColorSelector *selector)
 {
-  g_return_val_if_fail (GIMP_IS_COLOR_SELECTOR (selector), FALSE);
+  g_return_val_if_fail (LIGMA_IS_COLOR_SELECTOR (selector), FALSE);
 
   return selector->show_alpha;
 }
 
 /**
- * gimp_color_selector_set_color:
- * @selector: A #GimpColorSelector widget.
+ * ligma_color_selector_set_color:
+ * @selector: A #LigmaColorSelector widget.
  * @rgb:      The new color.
  * @hsv:      The same color in HSV.
  *
  * Sets the color shown in the @selector widget.
  **/
 void
-gimp_color_selector_set_color (GimpColorSelector *selector,
-                               const GimpRGB     *rgb,
-                               const GimpHSV     *hsv)
+ligma_color_selector_set_color (LigmaColorSelector *selector,
+                               const LigmaRGB     *rgb,
+                               const LigmaHSV     *hsv)
 {
-  GimpColorSelectorClass *selector_class;
+  LigmaColorSelectorClass *selector_class;
 
-  g_return_if_fail (GIMP_IS_COLOR_SELECTOR (selector));
+  g_return_if_fail (LIGMA_IS_COLOR_SELECTOR (selector));
   g_return_if_fail (rgb != NULL);
   g_return_if_fail (hsv != NULL);
 
   selector->rgb = *rgb;
   selector->hsv = *hsv;
 
-  selector_class = GIMP_COLOR_SELECTOR_GET_CLASS (selector);
+  selector_class = LIGMA_COLOR_SELECTOR_GET_CLASS (selector);
 
   if (selector_class->set_color)
     selector_class->set_color (selector, rgb, hsv);
 
-  gimp_color_selector_emit_color_changed (selector);
+  ligma_color_selector_emit_color_changed (selector);
 }
 
 /**
- * gimp_color_selector_get_color:
- * @selector: A #GimpColorSelector widget.
+ * ligma_color_selector_get_color:
+ * @selector: A #LigmaColorSelector widget.
  * @rgb:      (out caller-allocates): Return location for the color.
  * @hsv:      (out caller-allocates): Return location for the same same
  *            color in HSV.
@@ -385,11 +385,11 @@ gimp_color_selector_set_color (GimpColorSelector *selector,
  * Since: 2.10
  **/
 void
-gimp_color_selector_get_color (GimpColorSelector *selector,
-                               GimpRGB           *rgb,
-                               GimpHSV           *hsv)
+ligma_color_selector_get_color (LigmaColorSelector *selector,
+                               LigmaRGB           *rgb,
+                               LigmaHSV           *hsv)
 {
-  g_return_if_fail (GIMP_IS_COLOR_SELECTOR (selector));
+  g_return_if_fail (LIGMA_IS_COLOR_SELECTOR (selector));
   g_return_if_fail (rgb != NULL);
   g_return_if_fail (hsv != NULL);
 
@@ -398,8 +398,8 @@ gimp_color_selector_get_color (GimpColorSelector *selector,
 }
 
 /**
- * gimp_color_selector_set_channel:
- * @selector: A #GimpColorSelector widget.
+ * ligma_color_selector_set_channel:
+ * @selector: A #LigmaColorSelector widget.
  * @channel:  The new @channel setting.
  *
  * Sets the @channel property of the @selector widget.
@@ -409,39 +409,39 @@ gimp_color_selector_get_color (GimpColorSelector *selector,
  * This will also update the color model if needed.
  **/
 void
-gimp_color_selector_set_channel (GimpColorSelector        *selector,
-                                 GimpColorSelectorChannel  channel)
+ligma_color_selector_set_channel (LigmaColorSelector        *selector,
+                                 LigmaColorSelectorChannel  channel)
 {
-  g_return_if_fail (GIMP_IS_COLOR_SELECTOR (selector));
+  g_return_if_fail (LIGMA_IS_COLOR_SELECTOR (selector));
 
   if (channel != selector->channel)
     {
-      GimpColorSelectorClass *selector_class;
-      GimpColorSelectorModel  model = -1;
+      LigmaColorSelectorClass *selector_class;
+      LigmaColorSelectorModel  model = -1;
 
       selector->channel = channel;
 
       switch (channel)
         {
-        case GIMP_COLOR_SELECTOR_RED:
-        case GIMP_COLOR_SELECTOR_GREEN:
-        case GIMP_COLOR_SELECTOR_BLUE:
-          model = GIMP_COLOR_SELECTOR_MODEL_RGB;
+        case LIGMA_COLOR_SELECTOR_RED:
+        case LIGMA_COLOR_SELECTOR_GREEN:
+        case LIGMA_COLOR_SELECTOR_BLUE:
+          model = LIGMA_COLOR_SELECTOR_MODEL_RGB;
           break;
 
-        case GIMP_COLOR_SELECTOR_HUE:
-        case GIMP_COLOR_SELECTOR_SATURATION:
-        case GIMP_COLOR_SELECTOR_VALUE:
-          model = GIMP_COLOR_SELECTOR_MODEL_HSV;
+        case LIGMA_COLOR_SELECTOR_HUE:
+        case LIGMA_COLOR_SELECTOR_SATURATION:
+        case LIGMA_COLOR_SELECTOR_VALUE:
+          model = LIGMA_COLOR_SELECTOR_MODEL_HSV;
           break;
 
-        case GIMP_COLOR_SELECTOR_LCH_LIGHTNESS:
-        case GIMP_COLOR_SELECTOR_LCH_CHROMA:
-        case GIMP_COLOR_SELECTOR_LCH_HUE:
-          model = GIMP_COLOR_SELECTOR_MODEL_LCH;
+        case LIGMA_COLOR_SELECTOR_LCH_LIGHTNESS:
+        case LIGMA_COLOR_SELECTOR_LCH_CHROMA:
+        case LIGMA_COLOR_SELECTOR_LCH_HUE:
+          model = LIGMA_COLOR_SELECTOR_MODEL_LCH;
           break;
 
-        case GIMP_COLOR_SELECTOR_ALPHA:
+        case LIGMA_COLOR_SELECTOR_ALPHA:
           /* Alpha channel does not change the color model. */
           break;
 
@@ -451,58 +451,58 @@ gimp_color_selector_set_channel (GimpColorSelector        *selector,
           break;
         }
 
-      selector_class = GIMP_COLOR_SELECTOR_GET_CLASS (selector);
+      selector_class = LIGMA_COLOR_SELECTOR_GET_CLASS (selector);
 
       if (selector_class->set_channel)
         selector_class->set_channel (selector, channel);
 
-      gimp_color_selector_emit_channel_changed (selector);
+      ligma_color_selector_emit_channel_changed (selector);
 
       if (model != -1)
         {
           /*  make visibility of LCH and HSV mutuallky exclusive  */
-          if (model == GIMP_COLOR_SELECTOR_MODEL_HSV)
+          if (model == LIGMA_COLOR_SELECTOR_MODEL_HSV)
             {
-              gimp_color_selector_set_model_visible (selector,
-                                                     GIMP_COLOR_SELECTOR_MODEL_LCH,
+              ligma_color_selector_set_model_visible (selector,
+                                                     LIGMA_COLOR_SELECTOR_MODEL_LCH,
                                                      FALSE);
             }
-          else if (model == GIMP_COLOR_SELECTOR_MODEL_LCH)
+          else if (model == LIGMA_COLOR_SELECTOR_MODEL_LCH)
             {
-              gimp_color_selector_set_model_visible (selector,
-                                                     GIMP_COLOR_SELECTOR_MODEL_HSV,
+              ligma_color_selector_set_model_visible (selector,
+                                                     LIGMA_COLOR_SELECTOR_MODEL_HSV,
                                                      FALSE);
             }
 
-          gimp_color_selector_set_model_visible (selector, model, TRUE);
+          ligma_color_selector_set_model_visible (selector, model, TRUE);
         }
     }
 }
 
 /**
- * gimp_color_selector_get_channel:
- * @selector: A #GimpColorSelector widget.
+ * ligma_color_selector_get_channel:
+ * @selector: A #LigmaColorSelector widget.
  *
  * Returns the @selector's current channel.
  *
- * Returns: The #GimpColorSelectorChannel currently shown by the
+ * Returns: The #LigmaColorSelectorChannel currently shown by the
  * @selector.
  *
  * Since: 2.10
  **/
-GimpColorSelectorChannel
-gimp_color_selector_get_channel (GimpColorSelector *selector)
+LigmaColorSelectorChannel
+ligma_color_selector_get_channel (LigmaColorSelector *selector)
 {
-  g_return_val_if_fail (GIMP_IS_COLOR_SELECTOR (selector),
-                        GIMP_COLOR_SELECTOR_RED);
+  g_return_val_if_fail (LIGMA_IS_COLOR_SELECTOR (selector),
+                        LIGMA_COLOR_SELECTOR_RED);
 
   return selector->channel;
 }
 
 /**
- * gimp_color_selector_set_model_visible:
- * @selector: A #GimpColorSelector widget.
- * @model:    The affected #GimpColorSelectorModel.
+ * ligma_color_selector_set_model_visible:
+ * @selector: A #LigmaColorSelector widget.
+ * @model:    The affected #LigmaColorSelectorModel.
  * @visible:  The new visible setting.
  *
  * Sets the @model visible/invisible on the @selector widget.
@@ -513,13 +513,13 @@ gimp_color_selector_get_channel (GimpColorSelector *selector)
  * Since: 2.10
  **/
 void
-gimp_color_selector_set_model_visible (GimpColorSelector      *selector,
-                                       GimpColorSelectorModel  model,
+ligma_color_selector_set_model_visible (LigmaColorSelector      *selector,
+                                       LigmaColorSelectorModel  model,
                                        gboolean                visible)
 {
-  GimpColorSelectorPrivate *priv;
+  LigmaColorSelectorPrivate *priv;
 
-  g_return_if_fail (GIMP_IS_COLOR_SELECTOR (selector));
+  g_return_if_fail (LIGMA_IS_COLOR_SELECTOR (selector));
 
   priv = GET_PRIVATE (selector);
 
@@ -527,35 +527,35 @@ gimp_color_selector_set_model_visible (GimpColorSelector      *selector,
 
   if (visible != priv->model_visible[model])
     {
-      GimpColorSelectorClass *selector_class;
+      LigmaColorSelectorClass *selector_class;
 
       priv->model_visible[model] = visible;
 
-      selector_class = GIMP_COLOR_SELECTOR_GET_CLASS (selector);
+      selector_class = LIGMA_COLOR_SELECTOR_GET_CLASS (selector);
 
       if (selector_class->set_model_visible)
         selector_class->set_model_visible (selector, model, visible);
 
-      gimp_color_selector_emit_model_visible_changed (selector, model);
+      ligma_color_selector_emit_model_visible_changed (selector, model);
     }
 }
 
 /**
- * gimp_color_selector_get_model_visible:
- * @selector: A #GimpColorSelector widget.
- * @model:    The #GimpColorSelectorModel.
+ * ligma_color_selector_get_model_visible:
+ * @selector: A #LigmaColorSelector widget.
+ * @model:    The #LigmaColorSelectorModel.
  *
  * Returns: whether @model is visible in @selector.
  *
  * Since: 2.10
  **/
 gboolean
-gimp_color_selector_get_model_visible (GimpColorSelector      *selector,
-                                       GimpColorSelectorModel  model)
+ligma_color_selector_get_model_visible (LigmaColorSelector      *selector,
+                                       LigmaColorSelectorModel  model)
 {
-  GimpColorSelectorPrivate *priv;
+  LigmaColorSelectorPrivate *priv;
 
-  g_return_val_if_fail (GIMP_IS_COLOR_SELECTOR (selector), FALSE);
+  g_return_val_if_fail (LIGMA_IS_COLOR_SELECTOR (selector), FALSE);
 
   priv = GET_PRIVATE (selector);
 
@@ -563,51 +563,51 @@ gimp_color_selector_get_model_visible (GimpColorSelector      *selector,
 }
 
 /**
- * gimp_color_selector_emit_color_changed:
- * @selector: A #GimpColorSelector widget.
+ * ligma_color_selector_emit_color_changed:
+ * @selector: A #LigmaColorSelector widget.
  *
  * Emits the "color-changed" signal.
  */
 void
-gimp_color_selector_emit_color_changed (GimpColorSelector *selector)
+ligma_color_selector_emit_color_changed (LigmaColorSelector *selector)
 {
-  g_return_if_fail (GIMP_IS_COLOR_SELECTOR (selector));
+  g_return_if_fail (LIGMA_IS_COLOR_SELECTOR (selector));
 
   g_signal_emit (selector, selector_signals[COLOR_CHANGED], 0,
                  &selector->rgb, &selector->hsv);
 }
 
 /**
- * gimp_color_selector_emit_channel_changed:
- * @selector: A #GimpColorSelector widget.
+ * ligma_color_selector_emit_channel_changed:
+ * @selector: A #LigmaColorSelector widget.
  *
  * Emits the "channel-changed" signal.
  */
 void
-gimp_color_selector_emit_channel_changed (GimpColorSelector *selector)
+ligma_color_selector_emit_channel_changed (LigmaColorSelector *selector)
 {
-  g_return_if_fail (GIMP_IS_COLOR_SELECTOR (selector));
+  g_return_if_fail (LIGMA_IS_COLOR_SELECTOR (selector));
 
   g_signal_emit (selector, selector_signals[CHANNEL_CHANGED], 0,
                  selector->channel);
 }
 
 /**
- * gimp_color_selector_emit_model_visible_changed:
- * @selector: A #GimpColorSelector widget.
- * @model:    The #GimpColorSelectorModel where visibility changed.
+ * ligma_color_selector_emit_model_visible_changed:
+ * @selector: A #LigmaColorSelector widget.
+ * @model:    The #LigmaColorSelectorModel where visibility changed.
  *
  * Emits the "model-visible-changed" signal.
  *
  * Since: 2.10
  */
 void
-gimp_color_selector_emit_model_visible_changed (GimpColorSelector      *selector,
-                                                GimpColorSelectorModel  model)
+ligma_color_selector_emit_model_visible_changed (LigmaColorSelector      *selector,
+                                                LigmaColorSelectorModel  model)
 {
-  GimpColorSelectorPrivate *priv;
+  LigmaColorSelectorPrivate *priv;
 
-  g_return_if_fail (GIMP_IS_COLOR_SELECTOR (selector));
+  g_return_if_fail (LIGMA_IS_COLOR_SELECTOR (selector));
 
   priv = GET_PRIVATE (selector);
 
@@ -616,34 +616,34 @@ gimp_color_selector_emit_model_visible_changed (GimpColorSelector      *selector
 }
 
 /**
- * gimp_color_selector_set_config:
- * @selector: a #GimpColorSelector widget.
- * @config:   a #GimpColorConfig object.
+ * ligma_color_selector_set_config:
+ * @selector: a #LigmaColorSelector widget.
+ * @config:   a #LigmaColorConfig object.
  *
  * Sets the color management configuration to use with this color selector.
  *
  * Since: 2.4
  */
 void
-gimp_color_selector_set_config (GimpColorSelector *selector,
-                                GimpColorConfig   *config)
+ligma_color_selector_set_config (LigmaColorSelector *selector,
+                                LigmaColorConfig   *config)
 {
-  GimpColorSelectorClass *selector_class;
+  LigmaColorSelectorClass *selector_class;
 
-  g_return_if_fail (GIMP_IS_COLOR_SELECTOR (selector));
-  g_return_if_fail (config == NULL || GIMP_IS_COLOR_CONFIG (config));
+  g_return_if_fail (LIGMA_IS_COLOR_SELECTOR (selector));
+  g_return_if_fail (config == NULL || LIGMA_IS_COLOR_CONFIG (config));
 
-  selector_class = GIMP_COLOR_SELECTOR_GET_CLASS (selector);
+  selector_class = LIGMA_COLOR_SELECTOR_GET_CLASS (selector);
 
   if (selector_class->set_config)
     selector_class->set_config (selector, config);
 }
 
 /**
- * gimp_color_selector_set_simulation
- * @selector: a #GimpColorSelector widget.
- * @profile:  a #GimpColorProfile object.
- * @intent:   a #GimpColorRenderingIntent enum.
+ * ligma_color_selector_set_simulation
+ * @selector: a #LigmaColorSelector widget.
+ * @profile:  a #LigmaColorProfile object.
+ * @intent:   a #LigmaColorRenderingIntent enum.
  * @bpc:      a gboolean.
  *
  * Sets the simulation options to use with this color selector.
@@ -651,17 +651,17 @@ gimp_color_selector_set_config (GimpColorSelector *selector,
  * Since: 3.0
  */
 void
-gimp_color_selector_set_simulation (GimpColorSelector *selector,
-                                    GimpColorProfile  *profile,
-                                    GimpColorRenderingIntent intent,
+ligma_color_selector_set_simulation (LigmaColorSelector *selector,
+                                    LigmaColorProfile  *profile,
+                                    LigmaColorRenderingIntent intent,
                                     gboolean           bpc)
 {
-  GimpColorSelectorClass *selector_class;
+  LigmaColorSelectorClass *selector_class;
 
-  g_return_if_fail (GIMP_IS_COLOR_SELECTOR (selector));
-  g_return_if_fail (profile == NULL || GIMP_IS_COLOR_PROFILE (profile));
+  g_return_if_fail (LIGMA_IS_COLOR_SELECTOR (selector));
+  g_return_if_fail (profile == NULL || LIGMA_IS_COLOR_PROFILE (profile));
 
-  selector_class = GIMP_COLOR_SELECTOR_GET_CLASS (selector);
+  selector_class = LIGMA_COLOR_SELECTOR_GET_CLASS (selector);
 
   if (selector_class->set_simulation)
     selector_class->set_simulation (selector, profile, intent, bpc);

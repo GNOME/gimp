@@ -1,12 +1,12 @@
-GIMP Palette
+LIGMA Palette
 Name: Visibone
 Columns: 16
 #
-# Visibone -- GIMP Palette file
+# Visibone -- LIGMA Palette file
 #
 #  Arrangement idea from www.visibone.com
-#  Conversion to GIMP Palette and addition of
-#  hex codes and color names by Tigert <tigert@gimp.org>
+#  Conversion to LIGMA Palette and addition of
+#  hex codes and color names by Tigert <tigert@ligma.org>
 # 
 255 255 255	#FFFFFF - White
 204 204 204	#CCCCCC - Pale Gray

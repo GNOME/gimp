@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * Wilber Cairo rendering
- * Copyright (C) 2008  Sven Neumann <sven@gimp.org>
+ * Copyright (C) 2008  Sven Neumann <sven@ligma.org>
  *
  * Some code here is based on code from librsvg that was originally
  * written by Raph Levien <raph@artofcode.com> for Gill.
@@ -21,25 +21,25 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CAIRO_WILBER_H__
-#define __GIMP_CAIRO_WILBER_H__
+#ifndef __LIGMA_CAIRO_WILBER_H__
+#define __LIGMA_CAIRO_WILBER_H__
 
 
-void   gimp_cairo_wilber_toggle_pointer_eyes (void);
+void   ligma_cairo_wilber_toggle_pointer_eyes (void);
 
 
-void   gimp_cairo_draw_toolbox_wilber        (GtkWidget *widget,
+void   ligma_cairo_draw_toolbox_wilber        (GtkWidget *widget,
                                               cairo_t   *cr);
-void   gimp_cairo_draw_drop_wilber           (GtkWidget *widget,
+void   ligma_cairo_draw_drop_wilber           (GtkWidget *widget,
                                               cairo_t   *cr,
                                               gboolean   blink);
 
-void   gimp_cairo_wilber                     (cairo_t   *cr,
+void   ligma_cairo_wilber                     (cairo_t   *cr,
                                               gdouble    x,
                                               gdouble    y);
-void   gimp_cairo_wilber_get_size            (cairo_t   *cr,
+void   ligma_cairo_wilber_get_size            (cairo_t   *cr,
                                               gdouble   *width,
                                               gdouble   *height);
 
 
-#endif /* __GIMP_CAIRO_WILBER_H__ */
+#endif /* __LIGMA_CAIRO_WILBER_H__ */

@@ -12,19 +12,19 @@
 	#error "Unknown PLATFORM:" + PLATFORM
 #endif
 
-Source: "{#GIMP_DIR}\{#DIR}\*.dll"; DestDir: "{app}"; Components: gimp{#PLATFORM}; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
-Source: "{#GIMP_DIR}\{#DIR}\*.exe"; DestDir: "{app}"; Excludes: "\lib\gimp\{#DIR_VER}\plug-ins\twain\twain.exe,\lib\gimp\{#DIR_VER}\plug-ins\file-ps\file-ps.exe,\bin\gimp.exe,\bin\gimp-console.exe"; Components: gimp{#PLATFORM}; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
+Source: "{#LIGMA_DIR}\{#DIR}\*.dll"; DestDir: "{app}"; Components: ligma{#PLATFORM}; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
+Source: "{#LIGMA_DIR}\{#DIR}\*.exe"; DestDir: "{app}"; Excludes: "\lib\ligma\{#DIR_VER}\plug-ins\twain\twain.exe,\lib\ligma\{#DIR_VER}\plug-ins\file-ps\file-ps.exe,\bin\ligma.exe,\bin\ligma-console.exe"; Components: ligma{#PLATFORM}; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
 #ifdef DEBUG_SYMBOLS
-Source: "{#GIMP_DIR}\{#DIR}\*.debug"; DestDir: "{app}"; Components: gimp{#PLATFORM} and debug; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#LIGMA_DIR}\{#DIR}\*.debug"; DestDir: "{app}"; Components: ligma{#PLATFORM} and debug; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 #endif
-Source: "{#GIMP_DIR}\{#DIR}\lib\gimp\{#DIR_VER}\extensions\*.*"; Excludes: "*.debug"; DestDir: "{app}\lib\gimp\{#DIR_VER}\extensions"; Components: gimp{#PLATFORM}; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
+Source: "{#LIGMA_DIR}\{#DIR}\lib\ligma\{#DIR_VER}\extensions\*.*"; Excludes: "*.debug"; DestDir: "{app}\lib\ligma\{#DIR_VER}\extensions"; Components: ligma{#PLATFORM}; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
 #ifdef DEBUG_SYMBOLS
-Source: "{#GIMP_DIR}\{#DIR}\lib\gimp\{#DIR_VER}\extensions\*.debug"; DestDir: "{app}\lib\gimp\{#DIR_VER}\extensions"; Components: gimp{#PLATFORM} and debug; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
+Source: "{#LIGMA_DIR}\{#DIR}\lib\ligma\{#DIR_VER}\extensions\*.debug"; DestDir: "{app}\lib\ligma\{#DIR_VER}\extensions"; Components: ligma{#PLATFORM} and debug; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
 #endif
 
-Source: "{#GIMP_DIR}\{#DIR}\lib\gimp\{#DIR_VER}\plug-ins\file-ps\file-ps.exe"; DestDir: "{app}\lib\gimp\{#DIR_VER}\plug-ins\file-ps"; Components: gs and gimp{#PLATFORM}; Flags: restartreplace ignoreversion uninsrestartdelete
+Source: "{#LIGMA_DIR}\{#DIR}\lib\ligma\{#DIR_VER}\plug-ins\file-ps\file-ps.exe"; DestDir: "{app}\lib\ligma\{#DIR_VER}\plug-ins\file-ps"; Components: gs and ligma{#PLATFORM}; Flags: restartreplace ignoreversion uninsrestartdelete
 
-Source: "{#GIMP_DIR}\{#DIR}\lib\girepository-1.0\*.*"; DestDir: "{app}\lib\girepository-1.0"; Components: gimp{#PLATFORM}; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
+Source: "{#LIGMA_DIR}\{#DIR}\lib\girepository-1.0\*.*"; DestDir: "{app}\lib\girepository-1.0"; Components: ligma{#PLATFORM}; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
 Source: "{#DEPS_DIR}\{#DDIR}\lib\girepository-1.0\*.*"; DestDir: "{app}\lib\girepository-1.0"; Components: deps{#PLATFORM}; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
 
 Source: "{#DEPS_DIR}\{#DDIR}\bin\*.dll"; DestDir: "{app}\bin"; Excludes: "\bin\libgs*.dll,\bin\lua*.dll"; Components: deps{#PLATFORM}; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
@@ -46,15 +46,15 @@ Source: "{#DEPS_DIR}\{#DDIR}\lib\gio\*.dll"; DestDir: "{app}\lib\gio"; Component
 
 ;python scripts
 #ifdef PYTHON
-Source: "{#DEPS_DIR}\{#DDIR}\bin\python3w.exe"; DestDir: "{app}\bin"; DestName: "pythonw.exe"; Components: py and gimp{#PLATFORM}; Flags: restartreplace uninsrestartdelete ignoreversion
-Source: "{#DEPS_DIR}\{#DDIR}\bin\python3.exe"; DestDir: "{app}\bin"; DestName: "python.exe"; Components: py and gimp{#PLATFORM}; Flags: restartreplace uninsrestartdelete ignoreversion
-Source: "{#DEPS_DIR}\{#DDIR}\bin\libpython3.10.dll"; DestDir: "{app}\bin"; Components: py and gimp{#PLATFORM}; Flags: restartreplace uninsrestartdelete ignoreversion
-Source: "{#DEPS_DIR}\{#DDIR}\lib\python3.10\*"; DestDir: "{app}\lib\python3.10"; Components: py and gimp{#PLATFORM}; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#DEPS_DIR}\{#DDIR}\bin\python3w.exe"; DestDir: "{app}\bin"; DestName: "pythonw.exe"; Components: py and ligma{#PLATFORM}; Flags: restartreplace uninsrestartdelete ignoreversion
+Source: "{#DEPS_DIR}\{#DDIR}\bin\python3.exe"; DestDir: "{app}\bin"; DestName: "python.exe"; Components: py and ligma{#PLATFORM}; Flags: restartreplace uninsrestartdelete ignoreversion
+Source: "{#DEPS_DIR}\{#DDIR}\bin\libpython3.10.dll"; DestDir: "{app}\bin"; Components: py and ligma{#PLATFORM}; Flags: restartreplace uninsrestartdelete ignoreversion
+Source: "{#DEPS_DIR}\{#DDIR}\lib\python3.10\*"; DestDir: "{app}\lib\python3.10"; Components: py and ligma{#PLATFORM}; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 #endif
 
 #ifdef LUA
-Source: "{#DEPS_DIR}\{#DDIR}\bin\luajit.exe"; DestDir: "{app}\bin"; Components: lua and gimp{#PLATFORM}; Flags: restartreplace uninsrestartdelete ignoreversion
-Source: "{#DEPS_DIR}\{#DDIR}\bin\lua51.dll"; DestDir: "{app}\bin"; Components: lua and gimp{#PLATFORM}; Flags: restartreplace uninsrestartdelete ignoreversion
-Source: "{#DEPS_DIR}\{#DDIR}\bin\lua\*"; DestDir: "{app}\bin\lua"; Components: lua and gimp{#PLATFORM}; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
-Source: "{#DEPS_DIR}\{#DDIR}\bin\lgi\*"; DestDir: "{app}\bin\lgi"; Components: lua and gimp{#PLATFORM}; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
+Source: "{#DEPS_DIR}\{#DDIR}\bin\luajit.exe"; DestDir: "{app}\bin"; Components: lua and ligma{#PLATFORM}; Flags: restartreplace uninsrestartdelete ignoreversion
+Source: "{#DEPS_DIR}\{#DDIR}\bin\lua51.dll"; DestDir: "{app}\bin"; Components: lua and ligma{#PLATFORM}; Flags: restartreplace uninsrestartdelete ignoreversion
+Source: "{#DEPS_DIR}\{#DDIR}\bin\lua\*"; DestDir: "{app}\bin\lua"; Components: lua and ligma{#PLATFORM}; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
+Source: "{#DEPS_DIR}\{#DDIR}\bin\lgi\*"; DestDir: "{app}\bin\lgi"; Components: lua and ligma{#PLATFORM}; Flags: recursesubdirs restartreplace ignoreversion uninsrestartdelete
 #endif

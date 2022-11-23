@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 """
-performance-log-viewer.py -- GIMP performance log viewer
+performance-log-viewer.py -- LIGMA performance log viewer
 Copyright (C) 2018  Ell
 
 This program is free software: you can redistribute it and/or modify
@@ -1594,7 +1594,7 @@ class InformationViewer (Gtk.ScrolledWindow):
         def add_element (element):
             name    = {
                 "params":       "Log Parameters",
-                "gimp-version": "GIMP Version",
+                "ligma-version": "LIGMA Version",
                 "env":          "Environment",
                 "gegl-config":  "GEGL Config"
             }.get (element.tag, element.tag)
@@ -3487,7 +3487,7 @@ class LogViewer (Gtk.Window):
             **kwargs)
 
         header = Gtk.HeaderBar (
-            title             = "GIMP Performance Log Viewer",
+            title             = "LIGMA Performance Log Viewer",
             show_close_button = True
         )
         self.header = header

@@ -1,9 +1,9 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * gimpfilteredcontainer.h
+ * ligmafilteredcontainer.h
  * Copyright (C) 2008 Aurimas Juška <aurisj@svn.gnome.org>
- *               2011 Michael Natterer <mitch@gimp.org>
+ *               2011 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,50 +19,50 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_FILTERED_CONTAINER_H__
-#define __GIMP_FILTERED_CONTAINER_H__
+#ifndef __LIGMA_FILTERED_CONTAINER_H__
+#define __LIGMA_FILTERED_CONTAINER_H__
 
 
-#include "gimplist.h"
+#include "ligmalist.h"
 
 
-#define GIMP_TYPE_FILTERED_CONTAINER            (gimp_filtered_container_get_type ())
-#define GIMP_FILTERED_CONTAINER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_FILTERED_CONTAINER, GimpFilteredContainer))
-#define GIMP_FILTERED_CONTAINER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_FILTERED_CONTAINER, GimpFilteredContainerClass))
-#define GIMP_IS_FILTERED_CONTAINER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_FILTERED_CONTAINER))
-#define GIMP_IS_FILTERED_CONTAINER_CLASS(class) (G_TYPE_CHECK_CLASS_TYPE ((class), GIMP_TYPE_FILTERED_CONTAINER))
-#define GIMP_FILTERED_CONTAINER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_FILTERED_CONTAINER, GimpFilteredContainerClass))
+#define LIGMA_TYPE_FILTERED_CONTAINER            (ligma_filtered_container_get_type ())
+#define LIGMA_FILTERED_CONTAINER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_FILTERED_CONTAINER, LigmaFilteredContainer))
+#define LIGMA_FILTERED_CONTAINER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_FILTERED_CONTAINER, LigmaFilteredContainerClass))
+#define LIGMA_IS_FILTERED_CONTAINER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_FILTERED_CONTAINER))
+#define LIGMA_IS_FILTERED_CONTAINER_CLASS(class) (G_TYPE_CHECK_CLASS_TYPE ((class), LIGMA_TYPE_FILTERED_CONTAINER))
+#define LIGMA_FILTERED_CONTAINER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_FILTERED_CONTAINER, LigmaFilteredContainerClass))
 
 
-typedef struct _GimpFilteredContainerClass GimpFilteredContainerClass;
+typedef struct _LigmaFilteredContainerClass LigmaFilteredContainerClass;
 
-struct _GimpFilteredContainer
+struct _LigmaFilteredContainer
 {
-  GimpList              parent_instance;
+  LigmaList              parent_instance;
 
-  GimpContainer        *src_container;
-  GimpObjectFilterFunc  filter_func;
+  LigmaContainer        *src_container;
+  LigmaObjectFilterFunc  filter_func;
   gpointer              filter_data;
 };
 
-struct _GimpFilteredContainerClass
+struct _LigmaFilteredContainerClass
 {
-  GimpContainerClass  parent_class;
+  LigmaContainerClass  parent_class;
 
-  void (* src_add)    (GimpFilteredContainer *filtered_container,
-                       GimpObject            *object);
-  void (* src_remove) (GimpFilteredContainer *filtered_container,
-                       GimpObject            *object);
-  void (* src_freeze) (GimpFilteredContainer *filtered_container);
-  void (* src_thaw)   (GimpFilteredContainer *filtered_container);
+  void (* src_add)    (LigmaFilteredContainer *filtered_container,
+                       LigmaObject            *object);
+  void (* src_remove) (LigmaFilteredContainer *filtered_container,
+                       LigmaObject            *object);
+  void (* src_freeze) (LigmaFilteredContainer *filtered_container);
+  void (* src_thaw)   (LigmaFilteredContainer *filtered_container);
 };
 
 
-GType           gimp_filtered_container_get_type (void) G_GNUC_CONST;
+GType           ligma_filtered_container_get_type (void) G_GNUC_CONST;
 
-GimpContainer * gimp_filtered_container_new      (GimpContainer        *src_container,
-                                                  GimpObjectFilterFunc  filter_func,
+LigmaContainer * ligma_filtered_container_new      (LigmaContainer        *src_container,
+                                                  LigmaObjectFilterFunc  filter_func,
                                                   gpointer              filter_data);
 
 
-#endif  /* __GIMP_FILTERED_CONTAINER_H__ */
+#endif  /* __LIGMA_FILTERED_CONTAINER_H__ */

@@ -1,6 +1,6 @@
-## Makefile.am for gimp/data/patterns/Food
+## Makefile.am for ligma/data/patterns/Food
 
-patternsfooddatadir = $(gimpdatadir)/patterns/Food
+patternsfooddatadir = $(ligmadatadir)/patterns/Food
 
 patternsfooddata_DATA = \
 	choc_swirl.pat		\

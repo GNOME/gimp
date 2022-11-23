@@ -1,4 +1,4 @@
-# GIMP - The GNU Image Manipulation Program
+# LIGMA - The GNU Image Manipulation Program
 # Copyright (C) 1995 Spencer Kimball and Peter Mattis
 
 # This program is free software: you can redistribute it and/or modify
@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+# "Perlized" from C source by Manish Singh <yosh@ligma.org>
 
 sub unit_get_number_of_units {
     $blurb = 'Returns the number of units.';
@@ -26,14 +26,14 @@ sub unit_get_number_of_units {
     $lib_private = 1;
 
     @outargs = (
-	{ name => 'num_units', type => 'int32', libdef => 'GIMP_UNIT_END',
+	{ name => 'num_units', type => 'int32', libdef => 'LIGMA_UNIT_END',
 	  desc => 'The number of units' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  num_units = _gimp_unit_get_number_of_units (gimp);
+  num_units = _ligma_unit_get_number_of_units (ligma);
 }
 CODE
     );
@@ -43,7 +43,7 @@ sub unit_get_number_of_built_in_units {
     $blurb = 'Returns the number of built-in units.';
 
     $help = <<'HELP';
-This procedure returns the number of defined units built-in to GIMP.
+This procedure returns the number of defined units built-in to LIGMA.
 HELP
 
     &mitch_pdb_misc('1999');
@@ -51,14 +51,14 @@ HELP
     $lib_private = 1;
 
     @outargs = (
-	{ name => 'num_units', type => 'int32', libdef => 'GIMP_UNIT_END',
+	{ name => 'num_units', type => 'int32', libdef => 'LIGMA_UNIT_END',
 	  desc => 'The number of built-in units' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  num_units = _gimp_unit_get_number_of_built_in_units (gimp);
+  num_units = _ligma_unit_get_number_of_built_in_units (ligma);
 }
 CODE
     );
@@ -70,7 +70,7 @@ sub unit_new {
     $help = <<'HELP';
 This procedure creates a new unit and returns it's integer ID. Note that the
 new unit will have it's deletion flag set to TRUE, so you will have to set it
-to FALSE with gimp_unit_set_deletion_flag() to make it persistent.
+to FALSE with ligma_unit_set_deletion_flag() to make it persistent.
 HELP
 
     &mitch_pdb_misc('1999');
@@ -97,13 +97,13 @@ HELP
     @outargs = (
 	{ name => 'unit_id', type => 'unit',
 	  desc => "The new unit's ID",
-	  libdef => 'GIMP_UNIT_INCH' }
+	  libdef => 'LIGMA_UNIT_INCH' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  unit_id = _gimp_unit_new (gimp, identifier, factor, digits,
+  unit_id = _ligma_unit_new (ligma, identifier, factor, digits,
                             symbol, abbreviation, singular, plural);
 }
 CODE
@@ -115,7 +115,7 @@ sub unit_get_deletion_flag {
 
     $help = <<'HELP';
 This procedure returns the deletion flag of the unit. If this value is TRUE the
-unit's definition will not be saved in the user's unitrc file on gimp exit.
+unit's definition will not be saved in the user's unitrc file on ligma exit.
 HELP
 
     &mitch_pdb_misc('1999');
@@ -135,7 +135,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  deletion_flag = _gimp_unit_get_deletion_flag (gimp, unit_id);
+  deletion_flag = _ligma_unit_get_deletion_flag (ligma, unit_id);
 }
 CODE
     );
@@ -146,7 +146,7 @@ sub unit_set_deletion_flag {
 
     $help = <<'HELP';
 This procedure sets the unit's deletion flag. If the deletion flag of a unit is
-TRUE on gimp exit, this unit's definition will not be saved in the user's
+TRUE on ligma exit, this unit's definition will not be saved in the user's
 unitrc.
 HELP
 
@@ -164,7 +164,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  _gimp_unit_set_deletion_flag (gimp, unit_id, deletion_flag);
+  _ligma_unit_set_deletion_flag (ligma, unit_id, deletion_flag);
 }
 CODE
     );
@@ -196,7 +196,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  identifier = g_strdup (_gimp_unit_get_identifier (gimp, unit_id));
+  identifier = g_strdup (_ligma_unit_get_identifier (ligma, unit_id));
 }
 CODE
     );
@@ -227,7 +227,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  factor = _gimp_unit_get_factor (gimp, unit_id);
+  factor = _ligma_unit_get_factor (ligma, unit_id);
 }
 CODE
     );
@@ -259,7 +259,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  digits = _gimp_unit_get_digits (gimp, unit_id);
+  digits = _ligma_unit_get_digits (ligma, unit_id);
 }
 CODE
     );
@@ -289,7 +289,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  symbol = g_strdup (_gimp_unit_get_symbol (gimp, unit_id));
+  symbol = g_strdup (_ligma_unit_get_symbol (ligma, unit_id));
 }
 CODE
     );
@@ -319,7 +319,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  abbreviation = g_strdup (_gimp_unit_get_abbreviation (gimp, unit_id));
+  abbreviation = g_strdup (_ligma_unit_get_abbreviation (ligma, unit_id));
 }
 CODE
     );
@@ -346,7 +346,7 @@ sub unit_get_singular {
     %invoke = (
 	code => <<'CODE'
 {
-  singular = g_strdup (_gimp_unit_get_singular (gimp, unit_id));
+  singular = g_strdup (_ligma_unit_get_singular (ligma, unit_id));
 }
 CODE
     );
@@ -373,15 +373,15 @@ sub unit_get_plural {
     %invoke = (
 	code => <<'CODE'
 {
-  plural = g_strdup (_gimp_unit_get_plural (gimp, unit_id));
+  plural = g_strdup (_ligma_unit_get_plural (ligma, unit_id));
 }
 CODE
     );
 }
 
 
-@headers = qw("libgimpbase/gimpbase.h"
-              "core/gimpunit.h");
+@headers = qw("libligmabase/ligmabase.h"
+              "core/ligmaunit.h");
 
 @procs = qw(unit_get_number_of_units
             unit_get_number_of_built_in_units

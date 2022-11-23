@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcontainericonview.h
- * Copyright (C) 2010 Michael Natterer <mitch@gimp.org>
+ * ligmacontainericonview.h
+ * Copyright (C) 2010 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,27 +18,27 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CONTAINER_ICON_VIEW_H__
-#define __GIMP_CONTAINER_ICON_VIEW_H__
+#ifndef __LIGMA_CONTAINER_ICON_VIEW_H__
+#define __LIGMA_CONTAINER_ICON_VIEW_H__
 
 
-#include "gimpcontainerbox.h"
+#include "ligmacontainerbox.h"
 
 
-#define GIMP_TYPE_CONTAINER_ICON_VIEW            (gimp_container_icon_view_get_type ())
-#define GIMP_CONTAINER_ICON_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CONTAINER_ICON_VIEW, GimpContainerIconView))
-#define GIMP_CONTAINER_ICON_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CONTAINER_ICON_VIEW, GimpContainerIconViewClass))
-#define GIMP_IS_CONTAINER_ICON_VIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CONTAINER_ICON_VIEW))
-#define GIMP_IS_CONTAINER_ICON_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CONTAINER_ICON_VIEW))
-#define GIMP_CONTAINER_ICON_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CONTAINER_ICON_VIEW, GimpContainerIconViewClass))
+#define LIGMA_TYPE_CONTAINER_ICON_VIEW            (ligma_container_icon_view_get_type ())
+#define LIGMA_CONTAINER_ICON_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_CONTAINER_ICON_VIEW, LigmaContainerIconView))
+#define LIGMA_CONTAINER_ICON_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_CONTAINER_ICON_VIEW, LigmaContainerIconViewClass))
+#define LIGMA_IS_CONTAINER_ICON_VIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_CONTAINER_ICON_VIEW))
+#define LIGMA_IS_CONTAINER_ICON_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_CONTAINER_ICON_VIEW))
+#define LIGMA_CONTAINER_ICON_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_CONTAINER_ICON_VIEW, LigmaContainerIconViewClass))
 
 
-typedef struct _GimpContainerIconViewClass   GimpContainerIconViewClass;
-typedef struct _GimpContainerIconViewPrivate GimpContainerIconViewPrivate;
+typedef struct _LigmaContainerIconViewClass   LigmaContainerIconViewClass;
+typedef struct _LigmaContainerIconViewPrivate LigmaContainerIconViewPrivate;
 
-struct _GimpContainerIconView
+struct _LigmaContainerIconView
 {
-  GimpContainerBox              parent_instance;
+  LigmaContainerBox              parent_instance;
 
   GtkTreeModel                 *model;
   gint                          n_model_columns;
@@ -48,23 +48,23 @@ struct _GimpContainerIconView
 
   GtkCellRenderer              *renderer_cell;
 
-  Gimp                         *dnd_gimp; /* eek */
+  Ligma                         *dnd_ligma; /* eek */
 
-  GimpContainerIconViewPrivate *priv;
+  LigmaContainerIconViewPrivate *priv;
 };
 
-struct _GimpContainerIconViewClass
+struct _LigmaContainerIconViewClass
 {
-  GimpContainerBoxClass  parent_class;
+  LigmaContainerBoxClass  parent_class;
 };
 
 
-GType       gimp_container_icon_view_get_type (void) G_GNUC_CONST;
+GType       ligma_container_icon_view_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_container_icon_view_new      (GimpContainer *container,
-                                               GimpContext   *context,
+GtkWidget * ligma_container_icon_view_new      (LigmaContainer *container,
+                                               LigmaContext   *context,
                                                gint           view_size,
                                                gint           view_border_width);
 
 
-#endif  /*  __GIMP_CONTAINER_ICON_VIEW_H__  */
+#endif  /*  __LIGMA_CONTAINER_ICON_VIEW_H__  */

@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationcolormode.c
- * Copyright (C) 2008 Michael Natterer <mitch@gimp.org>
+ * ligmaoperationcolormode.c
+ * Copyright (C) 2008 Michael Natterer <mitch@ligma.org>
  *               2012 Ville Sokk <ville.sokk@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,14 +25,14 @@
 #include <cairo.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpcolor/gimpcolor.h"
+#include "libligmacolor/ligmacolor.h"
 
 #include "../operations-types.h"
 
-#include "gimpoperationhslcolorlegacy.h"
+#include "ligmaoperationhslcolorlegacy.h"
 
 
-static gboolean   gimp_operation_hsl_color_legacy_process (GeglOperation       *op,
+static gboolean   ligma_operation_hsl_color_legacy_process (GeglOperation       *op,
                                                            void                *in,
                                                            void                *layer,
                                                            void                *mask,
@@ -42,31 +42,31 @@ static gboolean   gimp_operation_hsl_color_legacy_process (GeglOperation       *
                                                            gint                 level);
 
 
-G_DEFINE_TYPE (GimpOperationHslColorLegacy, gimp_operation_hsl_color_legacy,
-               GIMP_TYPE_OPERATION_LAYER_MODE)
+G_DEFINE_TYPE (LigmaOperationHslColorLegacy, ligma_operation_hsl_color_legacy,
+               LIGMA_TYPE_OPERATION_LAYER_MODE)
 
 
 static void
-gimp_operation_hsl_color_legacy_class_init (GimpOperationHslColorLegacyClass *klass)
+ligma_operation_hsl_color_legacy_class_init (LigmaOperationHslColorLegacyClass *klass)
 {
   GeglOperationClass          *operation_class  = GEGL_OPERATION_CLASS (klass);
-  GimpOperationLayerModeClass *layer_mode_class = GIMP_OPERATION_LAYER_MODE_CLASS (klass);
+  LigmaOperationLayerModeClass *layer_mode_class = LIGMA_OPERATION_LAYER_MODE_CLASS (klass);
 
   gegl_operation_class_set_keys (operation_class,
-                                 "name",        "gimp:hsl-color-legacy",
-                                 "description", "GIMP color mode operation",
+                                 "name",        "ligma:hsl-color-legacy",
+                                 "description", "LIGMA color mode operation",
                                  NULL);
 
-  layer_mode_class->process = gimp_operation_hsl_color_legacy_process;
+  layer_mode_class->process = ligma_operation_hsl_color_legacy_process;
 }
 
 static void
-gimp_operation_hsl_color_legacy_init (GimpOperationHslColorLegacy *self)
+ligma_operation_hsl_color_legacy_init (LigmaOperationHslColorLegacy *self)
 {
 }
 
 static gboolean
-gimp_operation_hsl_color_legacy_process (GeglOperation       *op,
+ligma_operation_hsl_color_legacy_process (GeglOperation       *op,
                                          void                *in_p,
                                          void                *layer_p,
                                          void                *mask_p,
@@ -75,7 +75,7 @@ gimp_operation_hsl_color_legacy_process (GeglOperation       *op,
                                          const GeglRectangle *roi,
                                          gint                 level)
 {
-  GimpOperationLayerMode *layer_mode = (gpointer) op;
+  LigmaOperationLayerMode *layer_mode = (gpointer) op;
   gfloat                 *in         = in_p;
   gfloat                 *out        = out_p;
   gfloat                 *layer      = layer_p;
@@ -84,9 +84,9 @@ gimp_operation_hsl_color_legacy_process (GeglOperation       *op,
 
   while (samples--)
     {
-      GimpHSL layer_hsl, out_hsl;
-      GimpRGB layer_rgb = {layer[0], layer[1], layer[2]};
-      GimpRGB out_rgb   = {in[0], in[1], in[2]};
+      LigmaHSL layer_hsl, out_hsl;
+      LigmaRGB layer_rgb = {layer[0], layer[1], layer[2]};
+      LigmaRGB out_rgb   = {in[0], in[1], in[2]};
       gfloat  comp_alpha, new_alpha;
 
       comp_alpha = MIN (in[ALPHA], layer[ALPHA]) * opacity;
@@ -101,12 +101,12 @@ gimp_operation_hsl_color_legacy_process (GeglOperation       *op,
           gfloat out_tmp[3];
           gfloat ratio = comp_alpha / new_alpha;
 
-          gimp_rgb_to_hsl (&layer_rgb, &layer_hsl);
-          gimp_rgb_to_hsl (&out_rgb, &out_hsl);
+          ligma_rgb_to_hsl (&layer_rgb, &layer_hsl);
+          ligma_rgb_to_hsl (&out_rgb, &out_hsl);
 
           out_hsl.h = layer_hsl.h;
           out_hsl.s = layer_hsl.s;
-          gimp_hsl_to_rgb (&out_hsl, &out_rgb);
+          ligma_hsl_to_rgb (&out_hsl, &out_rgb);
 
           out_tmp[0] = out_rgb.r;
           out_tmp[1] = out_rgb.g;

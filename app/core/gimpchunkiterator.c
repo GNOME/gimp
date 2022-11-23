@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1999 Spencer Kimball and Peter Mattis
  *
- * gimpchunkiterator.c
+ * ligmachunkiterator.c
  * Copyright (C) 2019 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -27,11 +27,11 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpmath/gimpmath.h"
+#include "libligmamath/ligmamath.h"
 
 #include "core-types.h"
 
-#include "gimpchunkiterator.h"
+#include "ligmachunkiterator.h"
 
 
 /* the maximal chunk size */
@@ -54,7 +54,7 @@
 #define TARGET_AREA_HISTORY_SIZE 3
 
 
-struct _GimpChunkIterator
+struct _LigmaChunkIterator
 {
   cairo_region_t *region;
   cairo_region_t *priority_region;
@@ -86,20 +86,20 @@ struct _GimpChunkIterator
 
 /*  local function prototypes  */
 
-static void       gimp_chunk_iterator_set_current_rect   (GimpChunkIterator   *iter,
+static void       ligma_chunk_iterator_set_current_rect   (LigmaChunkIterator   *iter,
                                                           const GeglRectangle *rect);
-static void       gimp_chunk_iterator_merge_current_rect (GimpChunkIterator   *iter);
+static void       ligma_chunk_iterator_merge_current_rect (LigmaChunkIterator   *iter);
 
-static void       gimp_chunk_iterator_merge              (GimpChunkIterator   *iter);
+static void       ligma_chunk_iterator_merge              (LigmaChunkIterator   *iter);
 
-static gboolean   gimp_chunk_iterator_prepare            (GimpChunkIterator   *iter);
+static gboolean   ligma_chunk_iterator_prepare            (LigmaChunkIterator   *iter);
 
-static void       gimp_chunk_iterator_set_target_area    (GimpChunkIterator   *iter,
+static void       ligma_chunk_iterator_set_target_area    (LigmaChunkIterator   *iter,
                                                           gdouble              target_area);
-static gdouble    gimp_chunk_iterator_get_target_area    (GimpChunkIterator   *iter);
-static void       gimp_chunk_iterator_reset_target_area  (GimpChunkIterator   *iter);
+static gdouble    ligma_chunk_iterator_get_target_area    (LigmaChunkIterator   *iter);
+static void       ligma_chunk_iterator_reset_target_area  (LigmaChunkIterator   *iter);
 
-static void       gimp_chunk_iterator_calc_rect          (GimpChunkIterator   *iter,
+static void       ligma_chunk_iterator_calc_rect          (LigmaChunkIterator   *iter,
                                                           GeglRectangle       *rect,
                                                           gboolean             readjust_height);
 
@@ -107,7 +107,7 @@ static void       gimp_chunk_iterator_calc_rect          (GimpChunkIterator   *i
 /*  private functions  */
 
 static void
-gimp_chunk_iterator_set_current_rect (GimpChunkIterator   *iter,
+ligma_chunk_iterator_set_current_rect (LigmaChunkIterator   *iter,
                                       const GeglRectangle *rect)
 {
   cairo_region_subtract_rectangle (iter->current_region,
@@ -121,7 +121,7 @@ gimp_chunk_iterator_set_current_rect (GimpChunkIterator   *iter,
 }
 
 static void
-gimp_chunk_iterator_merge_current_rect (GimpChunkIterator *iter)
+ligma_chunk_iterator_merge_current_rect (LigmaChunkIterator *iter)
 {
   GeglRectangle rect;
 
@@ -159,10 +159,10 @@ gimp_chunk_iterator_merge_current_rect (GimpChunkIterator *iter)
 }
 
 static void
-gimp_chunk_iterator_merge (GimpChunkIterator *iter)
+ligma_chunk_iterator_merge (LigmaChunkIterator *iter)
 {
   /* merge the current rect back to the current region */
-  gimp_chunk_iterator_merge_current_rect (iter);
+  ligma_chunk_iterator_merge_current_rect (iter);
 
   /* merge the priority region back to the global region */
   if (iter->priority_region)
@@ -176,7 +176,7 @@ gimp_chunk_iterator_merge (GimpChunkIterator *iter)
 }
 
 static gboolean
-gimp_chunk_iterator_prepare (GimpChunkIterator *iter)
+ligma_chunk_iterator_prepare (LigmaChunkIterator *iter)
 {
   if (iter->current_x == iter->current_rect.x + iter->current_rect.width)
     {
@@ -229,7 +229,7 @@ gimp_chunk_iterator_prepare (GimpChunkIterator *iter)
           cairo_region_get_rectangle (iter->current_region, 0,
                                       (cairo_rectangle_int_t *) &rect);
 
-          gimp_chunk_iterator_set_current_rect (iter, &rect);
+          ligma_chunk_iterator_set_current_rect (iter, &rect);
         }
     }
 
@@ -244,7 +244,7 @@ compare_double (const gdouble *x,
 }
 
 static void
-gimp_chunk_iterator_set_target_area (GimpChunkIterator *iter,
+ligma_chunk_iterator_set_target_area (LigmaChunkIterator *iter,
                                      gdouble            target_area)
 {
   gdouble target_area_history[TARGET_AREA_HISTORY_SIZE];
@@ -267,7 +267,7 @@ gimp_chunk_iterator_set_target_area (GimpChunkIterator *iter,
 }
 
 static gdouble
-gimp_chunk_iterator_get_target_area (GimpChunkIterator *iter)
+ligma_chunk_iterator_get_target_area (LigmaChunkIterator *iter)
 {
   if (iter->target_area)
     return iter->target_area;
@@ -276,7 +276,7 @@ gimp_chunk_iterator_get_target_area (GimpChunkIterator *iter)
 }
 
 static void
-gimp_chunk_iterator_reset_target_area (GimpChunkIterator *iter)
+ligma_chunk_iterator_reset_target_area (LigmaChunkIterator *iter)
 {
   if (iter->target_area_history_n)
     {
@@ -288,7 +288,7 @@ gimp_chunk_iterator_reset_target_area (GimpChunkIterator *iter)
 }
 
 static void
-gimp_chunk_iterator_calc_rect (GimpChunkIterator *iter,
+ligma_chunk_iterator_calc_rect (LigmaChunkIterator *iter,
                                GeglRectangle     *rect,
                                gboolean           readjust_height)
 {
@@ -298,9 +298,9 @@ gimp_chunk_iterator_calc_rect (GimpChunkIterator *iter,
   gint    offset_y;
 
   if (readjust_height)
-    gimp_chunk_iterator_reset_target_area (iter);
+    ligma_chunk_iterator_reset_target_area (iter);
 
-  target_area = gimp_chunk_iterator_get_target_area (iter);
+  target_area = ligma_chunk_iterator_get_target_area (iter);
 
   aspect_ratio = (gdouble) iter->tile_rect.height /
                  (gdouble) iter->tile_rect.width;
@@ -349,14 +349,14 @@ gimp_chunk_iterator_calc_rect (GimpChunkIterator *iter,
 
 /*  public functions  */
 
-GimpChunkIterator *
-gimp_chunk_iterator_new (cairo_region_t *region)
+LigmaChunkIterator *
+ligma_chunk_iterator_new (cairo_region_t *region)
 {
-  GimpChunkIterator *iter;
+  LigmaChunkIterator *iter;
 
   g_return_val_if_fail (region != NULL, NULL);
 
-  iter = g_slice_new0 (GimpChunkIterator);
+  iter = g_slice_new0 (LigmaChunkIterator);
 
   iter->region         = region;
   iter->current_region = region;
@@ -372,7 +372,7 @@ gimp_chunk_iterator_new (cairo_region_t *region)
 }
 
 void
-gimp_chunk_iterator_set_tile_rect (GimpChunkIterator   *iter,
+ligma_chunk_iterator_set_tile_rect (LigmaChunkIterator   *iter,
                                    const GeglRectangle *rect)
 {
   g_return_if_fail (iter != NULL);
@@ -383,7 +383,7 @@ gimp_chunk_iterator_set_tile_rect (GimpChunkIterator   *iter,
 }
 
 void
-gimp_chunk_iterator_set_priority_rect (GimpChunkIterator   *iter,
+ligma_chunk_iterator_set_priority_rect (LigmaChunkIterator   *iter,
                                        const GeglRectangle *rect)
 {
   const GeglRectangle empty_rect = {};
@@ -397,12 +397,12 @@ gimp_chunk_iterator_set_priority_rect (GimpChunkIterator   *iter,
     {
       iter->priority_rect = *rect;
 
-      gimp_chunk_iterator_merge (iter);
+      ligma_chunk_iterator_merge (iter);
     }
 }
 
 void
-gimp_chunk_iterator_set_interval (GimpChunkIterator *iter,
+ligma_chunk_iterator_set_interval (LigmaChunkIterator *iter,
                                   gdouble            interval)
 {
   g_return_if_fail (iter != NULL);
@@ -427,13 +427,13 @@ gimp_chunk_iterator_set_interval (GimpChunkIterator *iter,
 }
 
 gboolean
-gimp_chunk_iterator_next (GimpChunkIterator *iter)
+ligma_chunk_iterator_next (LigmaChunkIterator *iter)
 {
   g_return_val_if_fail (iter != NULL, FALSE);
 
-  if (! gimp_chunk_iterator_prepare (iter))
+  if (! ligma_chunk_iterator_prepare (iter))
     {
-      gimp_chunk_iterator_stop (iter, TRUE);
+      ligma_chunk_iterator_stop (iter, TRUE);
 
       return FALSE;
     }
@@ -447,7 +447,7 @@ gimp_chunk_iterator_next (GimpChunkIterator *iter)
 }
 
 gboolean
-gimp_chunk_iterator_get_rect (GimpChunkIterator *iter,
+ligma_chunk_iterator_get_rect (LigmaChunkIterator *iter,
                               GeglRectangle     *rect)
 {
   gint64 time;
@@ -455,7 +455,7 @@ gimp_chunk_iterator_get_rect (GimpChunkIterator *iter,
   g_return_val_if_fail (iter != NULL, FALSE);
   g_return_val_if_fail (rect != NULL, FALSE);
 
-  if (! gimp_chunk_iterator_prepare (iter))
+  if (! ligma_chunk_iterator_prepare (iter))
     return FALSE;
 
   time = g_get_monotonic_time ();
@@ -466,7 +466,7 @@ gimp_chunk_iterator_get_rect (GimpChunkIterator *iter,
 
       interval = (gdouble) (time - iter->last_time) / G_TIME_SPAN_SECOND;
 
-      gimp_chunk_iterator_set_target_area (
+      ligma_chunk_iterator_set_target_area (
         iter,
         iter->last_area * iter->interval / interval);
 
@@ -478,18 +478,18 @@ gimp_chunk_iterator_get_rect (GimpChunkIterator *iter,
 
   if (iter->current_x == iter->current_rect.x)
     {
-      gimp_chunk_iterator_calc_rect (iter, rect, TRUE);
+      ligma_chunk_iterator_calc_rect (iter, rect, TRUE);
     }
   else
     {
-      gimp_chunk_iterator_calc_rect (iter, rect, FALSE);
+      ligma_chunk_iterator_calc_rect (iter, rect, FALSE);
 
       if (rect->width * rect->height >=
-          MAX_AREA_RATIO * gimp_chunk_iterator_get_target_area (iter))
+          MAX_AREA_RATIO * ligma_chunk_iterator_get_target_area (iter))
         {
           GeglRectangle old_rect = *rect;
 
-          gimp_chunk_iterator_calc_rect (iter, rect, TRUE);
+          ligma_chunk_iterator_calc_rect (iter, rect, TRUE);
 
           if (rect->height >= old_rect.height)
             *rect = old_rect;
@@ -512,9 +512,9 @@ gimp_chunk_iterator_get_rect (GimpChunkIterator *iter,
                        rect->x;
           rem.height = rect->height;
 
-          gimp_chunk_iterator_merge_current_rect (iter);
+          ligma_chunk_iterator_merge_current_rect (iter);
 
-          gimp_chunk_iterator_set_current_rect (iter, &rem);
+          ligma_chunk_iterator_set_current_rect (iter, &rem);
         }
 
       iter->current_height = rect->height;
@@ -529,7 +529,7 @@ gimp_chunk_iterator_get_rect (GimpChunkIterator *iter,
 }
 
 cairo_region_t *
-gimp_chunk_iterator_stop (GimpChunkIterator *iter,
+ligma_chunk_iterator_stop (LigmaChunkIterator *iter,
                           gboolean           free_region)
 {
   cairo_region_t *result = NULL;
@@ -542,14 +542,14 @@ gimp_chunk_iterator_stop (GimpChunkIterator *iter,
     }
   else
     {
-      gimp_chunk_iterator_merge (iter);
+      ligma_chunk_iterator_merge (iter);
 
       result = iter->region;
     }
 
   g_clear_pointer (&iter->priority_region, cairo_region_destroy);
 
-  g_slice_free (GimpChunkIterator, iter);
+  g_slice_free (LigmaChunkIterator, iter);
 
   return result;
 }

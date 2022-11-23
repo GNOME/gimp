@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpmodules.h
- * (C) 1999 Austin Donnelly <austin@gimp.org>
+ * ligmamodules.h
+ * (C) 1999 Austin Donnelly <austin@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,17 +18,17 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_MODULES_H__
-#define __GIMP_MODULES_H__
+#ifndef __LIGMA_MODULES_H__
+#define __LIGMA_MODULES_H__
 
 
-void   gimp_modules_init    (Gimp *gimp);
-void   gimp_modules_exit    (Gimp *gimp);
+void   ligma_modules_init    (Ligma *ligma);
+void   ligma_modules_exit    (Ligma *ligma);
 
-void   gimp_modules_load    (Gimp *gimp);
-void   gimp_modules_unload  (Gimp *gimp);
+void   ligma_modules_load    (Ligma *ligma);
+void   ligma_modules_unload  (Ligma *ligma);
 
-void   gimp_modules_refresh (Gimp *gimp);
+void   ligma_modules_refresh (Ligma *ligma);
 
 
-#endif  /* __GIMP_MODULES_H__ */
+#endif  /* __LIGMA_MODULES_H__ */

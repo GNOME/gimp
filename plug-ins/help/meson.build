@@ -1,17 +1,17 @@
 plugin_name = 'help'
 
 plugin_sources = [
-  # 'gimp-help-lookup.c',
-  'gimphelp.c',
-  'gimphelpdomain.c',
-  'gimphelpitem.c',
-  'gimphelplocale.c',
-  'gimphelpprogress.c',
+  # 'ligma-help-lookup.c',
+  'ligmahelp.c',
+  'ligmahelpdomain.c',
+  'ligmahelpitem.c',
+  'ligmahelplocale.c',
+  'ligmahelpprogress.c',
 ]
 
 if platform_windows
   plugin_sources += windows.compile_resources(
-    gimp_plugins_rc,
+    ligma_plugins_rc,
     args: [
       '--define', 'ORIGINALFILENAME_STR="@0@"'.format(plugin_name+'.exe'),
       '--define', 'INTERNALNAME_STR="@0@"'    .format(plugin_name),
@@ -35,7 +35,7 @@ help_plugin_lib = static_library('help_plugin',
 executable(plugin_name,
   'help.c',
   dependencies: [
-    libgimpui_dep,
+    libligmaui_dep,
     gio,
     gdk_pixbuf,
   ],
@@ -43,5 +43,5 @@ executable(plugin_name,
     help_plugin_lib,
   ],
   install: true,
-  install_dir: gimpplugindir / 'plug-ins' / plugin_name,
+  install_dir: ligmaplugindir / 'plug-ins' / plugin_name,
 )

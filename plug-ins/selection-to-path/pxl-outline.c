@@ -26,7 +26,7 @@
 #include "edge.h"
 #include "pxl-outline.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 static pixel_outline_type find_one_outline (edge_type,
 			  		    unsigned, unsigned, bitmap_type *);
@@ -78,7 +78,7 @@ find_outline_pixels (void)
 
 /*   printf("width = %d, height = %d\n",BITMAP_WIDTH(marked),BITMAP_HEIGHT(marked)); */
 
-  gimp_progress_init (_("Selection to Path"));
+  ligma_progress_init (_("Selection to Path"));
 
   O_LIST_LENGTH (outline_list) = 0;
   outline_list.data = NULL;
@@ -115,10 +115,10 @@ find_outline_pixels (void)
       }
 
     if ((row & 0xf) == 0)
-	gimp_progress_update (((gdouble)row) / height);
+	ligma_progress_update (((gdouble)row) / height);
   }
 
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 
   local_free_bitmap (&marked);
 

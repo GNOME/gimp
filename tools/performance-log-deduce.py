@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 """
-performance-log-deduce.py -- Deduce GIMP performance log thread state
+performance-log-deduce.py -- Deduce LIGMA performance log thread state
 Copyright (C) 2018  Ell
 
 This program is free software: you can redistribute it and/or modify

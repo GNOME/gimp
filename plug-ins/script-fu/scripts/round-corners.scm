@@ -1,4 +1,4 @@
-; GIMP - The GNU Image Manipulation Program
+; LIGMA - The GNU Image Manipulation Program
 ; Copyright (C) 1995 Spencer Kimball and Peter Mattis
 ;
 ; This program is free software: you can redistribute it and/or modify
@@ -21,7 +21,7 @@
 ; 1.00 - initial release
 ; 1.01 - some code cleanup, no real changes
 ;
-; Copyright (C) 1997-1999 Sven Neumann <sven@gimp.org>
+; Copyright (C) 1997-1999 Sven Neumann <sven@ligma.org>
 ;
 ;
 ; Rounds the corners of an image, optionally adding a drop-shadow and
@@ -49,42 +49,42 @@
   (let* ((shadow-blur (abs shadow-blur))
          (radius (abs radius))
          (diam (* 2 radius))
-         (width (car (gimp-image-get-width img)))
-         (height (car (gimp-image-get-height img)))
+         (width (car (ligma-image-get-width img)))
+         (height (car (ligma-image-get-height img)))
          (image (cond ((= work-on-copy TRUE)
-                       (car (gimp-image-duplicate img)))
+                       (car (ligma-image-duplicate img)))
                       ((= work-on-copy FALSE)
                        img)))
          ; active drawable is not necessarily the active layer
-         (pic-layer (aref (cadr (gimp-image-get-selected-layers image)) 0))
-         (type (car (gimp-drawable-type-with-alpha pic-layer)))
+         (pic-layer (aref (cadr (ligma-image-get-selected-layers image)) 0))
+         (type (car (ligma-drawable-type-with-alpha pic-layer)))
         )
 
-  (gimp-context-push)
-  (gimp-context-set-defaults)
+  (ligma-context-push)
+  (ligma-context-set-defaults)
 
   (if (= work-on-copy TRUE)
-      (gimp-image-undo-disable image)
-      (gimp-image-undo-group-start image)
+      (ligma-image-undo-disable image)
+      (ligma-image-undo-group-start image)
   )
 
   ; add an alpha channel to the image
-  (gimp-layer-add-alpha pic-layer)
+  (ligma-layer-add-alpha pic-layer)
 
   ; round the edges
-  (gimp-selection-none image)
-  (gimp-image-select-rectangle image CHANNEL-OP-ADD 0 0 radius radius)
-  (gimp-image-select-ellipse image CHANNEL-OP-SUBTRACT  0 0 diam diam)
-  (gimp-image-select-rectangle image CHANNEL-OP-ADD (- width radius) 0 radius radius)
-  (gimp-image-select-ellipse image CHANNEL-OP-SUBTRACT (- width diam) 0 diam diam)
-  (gimp-image-select-rectangle image CHANNEL-OP-ADD 0 (- height radius) radius radius)
-  (gimp-image-select-ellipse image CHANNEL-OP-SUBTRACT 0 (- height diam) diam diam)
-  (gimp-image-select-rectangle image CHANNEL-OP-ADD (- width radius) (- height radius)
+  (ligma-selection-none image)
+  (ligma-image-select-rectangle image CHANNEL-OP-ADD 0 0 radius radius)
+  (ligma-image-select-ellipse image CHANNEL-OP-SUBTRACT  0 0 diam diam)
+  (ligma-image-select-rectangle image CHANNEL-OP-ADD (- width radius) 0 radius radius)
+  (ligma-image-select-ellipse image CHANNEL-OP-SUBTRACT (- width diam) 0 diam diam)
+  (ligma-image-select-rectangle image CHANNEL-OP-ADD 0 (- height radius) radius radius)
+  (ligma-image-select-ellipse image CHANNEL-OP-SUBTRACT 0 (- height diam) diam diam)
+  (ligma-image-select-rectangle image CHANNEL-OP-ADD (- width radius) (- height radius)
                     radius radius)
-  (gimp-image-select-ellipse image CHANNEL-OP-SUBTRACT (- width diam) (- height diam)
+  (ligma-image-select-ellipse image CHANNEL-OP-SUBTRACT (- width diam) (- height diam)
                        diam diam)
-  (gimp-drawable-edit-clear pic-layer)
-  (gimp-selection-none image)
+  (ligma-drawable-edit-clear pic-layer)
+  (ligma-selection-none image)
 
   ; optionally add a shadow
   (if (= shadow-toggle TRUE)
@@ -97,40 +97,40 @@
                                '(0 0 0)
                                80
                                TRUE)
-        (set! width (car (gimp-image-get-width image)))
-        (set! height (car (gimp-image-get-height image)))))
+        (set! width (car (ligma-image-get-width image)))
+        (set! height (car (ligma-image-get-height image)))))
 
   ; optionally add a background
   (if (= background-toggle TRUE)
-      (let* ((bg-layer (car (gimp-layer-new image
+      (let* ((bg-layer (car (ligma-layer-new image
                                             width
                                             height
                                             type
                                             "Background"
                                             100
                                             LAYER-MODE-NORMAL))))
-        (gimp-drawable-fill bg-layer FILL-BACKGROUND)
-        (gimp-image-insert-layer image bg-layer 0 -1)
-        (gimp-image-raise-item image pic-layer)
+        (ligma-drawable-fill bg-layer FILL-BACKGROUND)
+        (ligma-image-insert-layer image bg-layer 0 -1)
+        (ligma-image-raise-item image pic-layer)
         (if (= shadow-toggle TRUE)
-            (gimp-image-lower-item image bg-layer))))
+            (ligma-image-lower-item image bg-layer))))
 
 ; clean up after the script
   (if (= work-on-copy TRUE)
-      (gimp-image-undo-enable image)
-      (gimp-image-undo-group-end image)
+      (ligma-image-undo-enable image)
+      (ligma-image-undo-group-end image)
   )
 
   (if (= work-on-copy TRUE)
-      (gimp-display-new image))
-  (gimp-context-pop)
-  (gimp-displays-flush))
+      (ligma-display-new image))
+  (ligma-context-pop)
+  (ligma-displays-flush))
 )
 
 (script-fu-register "script-fu-round-corners"
   _"_Round Corners..."
   _"Round the corners of an image and optionally add a drop-shadow and background"
-  "Sven Neumann <sven@gimp.org>"
+  "Sven Neumann <sven@ligma.org>"
   "Sven Neumann"
   "1999/12/21"
   "RGB* GRAY*"

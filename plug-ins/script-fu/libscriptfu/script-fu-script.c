@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,7 +19,7 @@
 
 #include <string.h>
 
-#include <libgimp/gimp.h>
+#include <libligma/ligma.h>
 
 #include "tinyscheme/scheme-private.h"
 
@@ -36,24 +36,24 @@
  */
 
 static gboolean script_fu_script_param_init (SFScript             *script,
-                                             const GimpValueArray *args,
+                                             const LigmaValueArray *args,
                                              SFArgType             type,
                                              gint                  n);
 static void     script_fu_script_set_proc_metadata (
-                                             GimpProcedure        *procedure,
+                                             LigmaProcedure        *procedure,
                                              SFScript             *script);
 static void     script_fu_script_set_proc_args (
-                                             GimpProcedure        *procedure,
+                                             LigmaProcedure        *procedure,
                                              SFScript             *script,
                                              guint                 first_conveyed_arg);
 static void     script_fu_script_set_drawable_sensitivity (
-                                             GimpProcedure        *procedure,
+                                             LigmaProcedure        *procedure,
                                              SFScript             *script);
 
 static void     script_fu_command_append_drawables (
                                              GString              *s,
                                              guint                 n_drawables,
-                                             GimpDrawable        **drawables);
+                                             LigmaDrawable        **drawables);
 /*
  *  Function definitions
  */
@@ -119,49 +119,49 @@ script_fu_script_free (SFScript *script)
  * and install it as owned by the scriptfu extension PDB proc.
  */
 void
-script_fu_script_install_proc (GimpPlugIn  *plug_in,
+script_fu_script_install_proc (LigmaPlugIn  *plug_in,
                                SFScript    *script)
 {
-  GimpProcedure *procedure;
+  LigmaProcedure *procedure;
 
-  g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
+  g_return_if_fail (LIGMA_IS_PLUG_IN (plug_in));
   g_return_if_fail (script != NULL);
 
   procedure = script_fu_script_create_PDB_procedure (plug_in,
                                                      script,
-                                                     GIMP_PDB_PROC_TYPE_TEMPORARY);
+                                                     LIGMA_PDB_PROC_TYPE_TEMPORARY);
 
-  gimp_plug_in_add_temp_procedure (plug_in, procedure);
+  ligma_plug_in_add_temp_procedure (plug_in, procedure);
   g_object_unref (procedure);
 }
 
 
 /*
- * Create and return a GimpProcedure or its subclass GimpImageProcedure.
+ * Create and return a LigmaProcedure or its subclass LigmaImageProcedure.
  * Caller typically either:
  *    install it owned by self as TEMPORARY type procedure
- *    OR return it as the result of a create_procedure callback from GIMP (PLUGIN type procedure.)
+ *    OR return it as the result of a create_procedure callback from LIGMA (PLUGIN type procedure.)
  *
  * Caller must unref the procedure.
  *
- * Understands ScriptFu's internal run funcs for GimpProcedure and GimpImageProcedure
+ * Understands ScriptFu's internal run funcs for LigmaProcedure and LigmaImageProcedure
  */
-GimpProcedure *
-script_fu_script_create_PDB_procedure (GimpPlugIn     *plug_in,
+LigmaProcedure *
+script_fu_script_create_PDB_procedure (LigmaPlugIn     *plug_in,
                                        SFScript       *script,
-                                       GimpPDBProcType plug_in_type)
+                                       LigmaPDBProcType plug_in_type)
 {
-  GimpProcedure *procedure;
+  LigmaProcedure *procedure;
 
-  if (script->proc_class == GIMP_TYPE_IMAGE_PROCEDURE)
+  if (script->proc_class == LIGMA_TYPE_IMAGE_PROCEDURE)
     {
       g_debug ("script_fu_script_create_PDB_procedure: %s, plugin type %i, image_proc",
                script->name, plug_in_type);
 
-      procedure = gimp_image_procedure_new (
+      procedure = ligma_image_procedure_new (
                                       plug_in, script->name,
                                       plug_in_type,
-                                      (GimpRunImageFunc) script_fu_run_image_procedure,
+                                      (LigmaRunImageFunc) script_fu_run_image_procedure,
                                       script, /* user_data, pointer in extension-script-fu process */
                                       NULL);
 
@@ -169,7 +169,7 @@ script_fu_script_create_PDB_procedure (GimpPlugIn     *plug_in,
 
       /* Script author does not declare image, drawable in script-fu-register-filter,
        * and we don't add to formal args in PDB.
-       * The convenience class GimpImageProcedure already has formal args:
+       * The convenience class LigmaImageProcedure already has formal args:
        * run_mode, image, n_drawables, drawables.
        * "0" means not skip any arguments declared in the script.
        */
@@ -179,23 +179,23 @@ script_fu_script_create_PDB_procedure (GimpPlugIn     *plug_in,
     }
   else
     {
-      g_assert (script->proc_class == GIMP_TYPE_PROCEDURE);
+      g_assert (script->proc_class == LIGMA_TYPE_PROCEDURE);
       g_debug ("script_fu_script_create_PDB_procedure: %s, plugin type %i, ordinary proc",
                script->name, plug_in_type);
 
-      procedure = gimp_procedure_new (plug_in, script->name,
+      procedure = ligma_procedure_new (plug_in, script->name,
                                       plug_in_type,
                                       script_fu_run_procedure,
                                       script, NULL);
 
       script_fu_script_set_proc_metadata (procedure, script);
 
-      gimp_procedure_add_argument (procedure,
+      ligma_procedure_add_argument (procedure,
                                    g_param_spec_enum ("run-mode",
                                                       "Run mode",
                                                       "The run mode",
-                                                      GIMP_TYPE_RUN_MODE,
-                                                      GIMP_RUN_INTERACTIVE,
+                                                      LIGMA_TYPE_RUN_MODE,
+                                                      LIGMA_RUN_INTERACTIVE,
                                                       G_PARAM_READWRITE));
 
       script_fu_script_set_proc_args (procedure, script, 0);
@@ -209,13 +209,13 @@ script_fu_script_create_PDB_procedure (GimpPlugIn     *plug_in,
 }
 
 void
-script_fu_script_uninstall_proc (GimpPlugIn *plug_in,
+script_fu_script_uninstall_proc (LigmaPlugIn *plug_in,
                                  SFScript   *script)
 {
-  g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
+  g_return_if_fail (LIGMA_IS_PLUG_IN (plug_in));
   g_return_if_fail (script != NULL);
 
-  gimp_plug_in_remove_temp_procedure (plug_in, script->name);
+  ligma_plug_in_remove_temp_procedure (plug_in, script->name);
 }
 
 gchar *
@@ -227,7 +227,7 @@ script_fu_script_get_title (SFScript *script)
   g_return_val_if_fail (script != NULL, NULL);
 
   /* strip mnemonics from the menupath */
-  title = gimp_strip_uline (script->menu_label);
+  title = ligma_strip_uline (script->menu_label);
 
   /* if this looks like a full menu path, use only the last part */
   if (title[0] == '<' && (tmp = strrchr (title, '/')) && tmp[1])
@@ -266,7 +266,7 @@ script_fu_script_reset (SFScript *script,
 
 gint
 script_fu_script_collect_standard_args (SFScript             *script,
-                                        const GimpValueArray *args)
+                                        const LigmaValueArray *args)
 {
   gint params_consumed = 0;
 
@@ -339,7 +339,7 @@ script_fu_script_get_command (SFScript *script)
 
 gchar *
 script_fu_script_get_command_from_params (SFScript             *script,
-                                          const GimpValueArray *args)
+                                          const LigmaValueArray *args)
 {
   GString *s;
   gint     i;
@@ -351,7 +351,7 @@ script_fu_script_get_command_from_params (SFScript             *script,
 
   for (i = 0; i < script->n_args; i++)
     {
-      GValue *value = gimp_value_array_index (args, i + 1);
+      GValue *value = ligma_value_array_index (args, i + 1);
 
       g_string_append_c (s, ' ');
 
@@ -372,7 +372,7 @@ script_fu_script_get_command_from_params (SFScript             *script,
 static void
 script_fu_command_append_drawables (GString       *s,
                                     guint          n_drawables,
-                                    GimpDrawable **drawables)
+                                    LigmaDrawable **drawables)
 {
   /* Require non-empty array of drawables. */
   g_assert (n_drawables > 0);
@@ -383,7 +383,7 @@ script_fu_command_append_drawables (GString       *s,
   g_string_append (s, " #(" );
   for (guint i=0; i < n_drawables; i++)
     {
-      g_string_append_printf (s, " %d", gimp_item_get_id ((GimpItem*) drawables[i]));
+      g_string_append_printf (s, " %d", ligma_item_get_id ((LigmaItem*) drawables[i]));
     }
   g_string_append (s, ")" );
   /* Ensure string is like: " #( 1 2 3)" */
@@ -392,10 +392,10 @@ script_fu_command_append_drawables (GString       *s,
 
 gchar *
 script_fu_script_get_command_for_image_proc (SFScript            *script,
-                                             GimpImage            *image,
+                                             LigmaImage            *image,
                                              guint                 n_drawables,
-                                             GimpDrawable        **drawables,
-                                             const GimpValueArray *args)
+                                             LigmaDrawable        **drawables,
+                                             const LigmaValueArray *args)
 {
   GString *s;
 
@@ -406,8 +406,8 @@ script_fu_script_get_command_for_image_proc (SFScript            *script,
 
   /* The command has no run mode. */
 
-  /* scripts use integer ID's for Gimp objects. */
-  g_string_append_printf (s, " %d", gimp_image_get_id (image));
+  /* scripts use integer ID's for Ligma objects. */
+  g_string_append_printf (s, " %d", ligma_image_get_id (image));
 
   /* Not pass n_drawables.
    * An author must use Scheme functions for length of container of drawables.
@@ -421,12 +421,12 @@ script_fu_script_get_command_for_image_proc (SFScript            *script,
   script_fu_command_append_drawables (s, n_drawables, drawables);
 
   /* args contains the "other" args
-   * Iterate over the GimpValueArray.
+   * Iterate over the LigmaValueArray.
    * But script->args should be the same length, and types should match.
    */
-  for (guint i = 0; i < gimp_value_array_length (args); i++)
+  for (guint i = 0; i < ligma_value_array_length (args); i++)
     {
-      GValue *value = gimp_value_array_index (args, i);
+      GValue *value = ligma_value_array_index (args, i);
       g_string_append_c (s, ' ');
       script_fu_arg_append_repr_from_gvalue (&script->args[i],
                                              s,
@@ -442,7 +442,7 @@ script_fu_script_get_command_for_image_proc (SFScript            *script,
  * which does not specify the arity for drawables,
  * is actually a script that takes one and only one drawable.
  * Such plugins are deprecated in v3: each plugin must take container of drawables
- * and declare its drawable arity via gimp_procedure_set_sensitivity_mask.
+ * and declare its drawable arity via ligma_procedure_set_sensitivity_mask.
  */
 void
 script_fu_script_infer_drawable_arity (SFScript *script)
@@ -462,7 +462,7 @@ script_fu_script_infer_drawable_arity (SFScript *script)
 
 static gboolean
 script_fu_script_param_init (SFScript             *script,
-                             const GimpValueArray *args,
+                             const LigmaValueArray *args,
                              SFArgType             type,
                              gint                  n)
 {
@@ -470,68 +470,68 @@ script_fu_script_param_init (SFScript             *script,
 
   if (script->n_args > n &&
       arg->type == type  &&
-      gimp_value_array_length (args) > n + 1)
+      ligma_value_array_length (args) > n + 1)
     {
-      GValue *value = gimp_value_array_index (args, n + 1);
+      GValue *value = ligma_value_array_index (args, n + 1);
 
       switch (type)
         {
         case SF_IMAGE:
-          if (GIMP_VALUE_HOLDS_IMAGE (value))
+          if (LIGMA_VALUE_HOLDS_IMAGE (value))
             {
-              GimpImage *image = g_value_get_object (value);
+              LigmaImage *image = g_value_get_object (value);
 
-              arg->value.sfa_image = gimp_image_get_id (image);
+              arg->value.sfa_image = ligma_image_get_id (image);
               return TRUE;
             }
           break;
 
         case SF_DRAWABLE:
-          if (GIMP_VALUE_HOLDS_DRAWABLE (value))
+          if (LIGMA_VALUE_HOLDS_DRAWABLE (value))
             {
-              GimpItem *item = g_value_get_object (value);
+              LigmaItem *item = g_value_get_object (value);
 
-              arg->value.sfa_drawable = gimp_item_get_id (item);
+              arg->value.sfa_drawable = ligma_item_get_id (item);
               return TRUE;
             }
           break;
 
         case SF_LAYER:
-          if (GIMP_VALUE_HOLDS_LAYER (value))
+          if (LIGMA_VALUE_HOLDS_LAYER (value))
             {
-              GimpItem *item = g_value_get_object (value);
+              LigmaItem *item = g_value_get_object (value);
 
-              arg->value.sfa_layer = gimp_item_get_id (item);
+              arg->value.sfa_layer = ligma_item_get_id (item);
               return TRUE;
             }
           break;
 
         case SF_CHANNEL:
-          if (GIMP_VALUE_HOLDS_CHANNEL (value))
+          if (LIGMA_VALUE_HOLDS_CHANNEL (value))
             {
-              GimpItem *item = g_value_get_object (value);
+              LigmaItem *item = g_value_get_object (value);
 
-              arg->value.sfa_channel = gimp_item_get_id (item);
+              arg->value.sfa_channel = ligma_item_get_id (item);
               return TRUE;
             }
           break;
 
         case SF_VECTORS:
-          if (GIMP_VALUE_HOLDS_VECTORS (value))
+          if (LIGMA_VALUE_HOLDS_VECTORS (value))
             {
-              GimpItem *item = g_value_get_object (value);
+              LigmaItem *item = g_value_get_object (value);
 
-              arg->value.sfa_vectors = gimp_item_get_id (item);
+              arg->value.sfa_vectors = ligma_item_get_id (item);
               return TRUE;
             }
           break;
 
         case SF_DISPLAY:
-          if (GIMP_VALUE_HOLDS_DISPLAY (value))
+          if (LIGMA_VALUE_HOLDS_DISPLAY (value))
             {
-              GimpDisplay *display = g_value_get_object (value);
+              LigmaDisplay *display = g_value_get_object (value);
 
-              arg->value.sfa_display = gimp_display_get_id (display);
+              arg->value.sfa_display = ligma_display_get_id (display);
               return TRUE;
             }
           break;
@@ -546,7 +546,7 @@ script_fu_script_param_init (SFScript             *script,
 
 
 static void
-script_fu_script_set_proc_metadata (GimpProcedure *procedure,
+script_fu_script_set_proc_metadata (LigmaProcedure *procedure,
                                     SFScript      *script)
 {
   const gchar *menu_label = NULL;
@@ -555,16 +555,16 @@ script_fu_script_set_proc_metadata (GimpProcedure *procedure,
   if (strncmp (script->menu_label, "<None>", 6) != 0)
     menu_label = script->menu_label;
 
-  gimp_procedure_set_image_types (procedure, script->image_types);
+  ligma_procedure_set_image_types (procedure, script->image_types);
 
   if (menu_label && strlen (menu_label))
-    gimp_procedure_set_menu_label (procedure, menu_label);
+    ligma_procedure_set_menu_label (procedure, menu_label);
 
-  gimp_procedure_set_documentation (procedure,
+  ligma_procedure_set_documentation (procedure,
                                     script->blurb,
                                     NULL,
                                     script->name);
-  gimp_procedure_set_attribution (procedure,
+  ligma_procedure_set_attribution (procedure,
                                   script->author,
                                   script->copyright,
                                   script->date);
@@ -572,7 +572,7 @@ script_fu_script_set_proc_metadata (GimpProcedure *procedure,
 
 /* Convey formal arguments from SFArg to the PDB. */
 static void
-script_fu_script_set_proc_args (GimpProcedure *procedure,
+script_fu_script_set_proc_args (LigmaProcedure *procedure,
                                 SFScript      *script,
                                 guint          first_conveyed_arg)
 {
@@ -587,30 +587,30 @@ script_fu_script_set_proc_args (GimpProcedure *procedure,
       pspec = script_fu_arg_get_param_spec (&script->args[i],
                                             name,
                                             nick);
-      gimp_procedure_add_argument (procedure, pspec);
+      ligma_procedure_add_argument (procedure, pspec);
     }
 }
 
 /* Convey drawable arity to the PDB.
  * !!! Unless set, sensitivity defaults to drawable arity 1.
- * See libgimp/gimpprocedure.c gimp_procedure_set_sensitivity_mask
+ * See libligma/ligmaprocedure.c ligma_procedure_set_sensitivity_mask
  */
 static void
-script_fu_script_set_drawable_sensitivity (GimpProcedure *procedure, SFScript *script)
+script_fu_script_set_drawable_sensitivity (LigmaProcedure *procedure, SFScript *script)
 {
   switch (script->drawable_arity)
     {
     case SF_TWO_OR_MORE_DRAWABLE:
-      gimp_procedure_set_sensitivity_mask (procedure,
-                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLES );
+      ligma_procedure_set_sensitivity_mask (procedure,
+                                           LIGMA_PROCEDURE_SENSITIVE_DRAWABLES );
       break;
     case SF_ONE_OR_MORE_DRAWABLE:
-      gimp_procedure_set_sensitivity_mask (procedure,
-                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLES |
-                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE );
+      ligma_procedure_set_sensitivity_mask (procedure,
+                                           LIGMA_PROCEDURE_SENSITIVE_DRAWABLES |
+                                           LIGMA_PROCEDURE_SENSITIVE_DRAWABLE );
       break;
     case SF_ONE_DRAWABLE:
-      gimp_procedure_set_sensitivity_mask (procedure, GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
+      ligma_procedure_set_sensitivity_mask (procedure, LIGMA_PROCEDURE_SENSITIVE_DRAWABLE);
       break;
     case SF_NO_DRAWABLE:
       /* menu item always sensitive. */

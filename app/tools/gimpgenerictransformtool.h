@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,45 +15,45 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_GENERIC_TRANSFORM_TOOL_H__
-#define __GIMP_GENERIC_TRANSFORM_TOOL_H__
+#ifndef __LIGMA_GENERIC_TRANSFORM_TOOL_H__
+#define __LIGMA_GENERIC_TRANSFORM_TOOL_H__
 
 
-#include "gimptransformgridtool.h"
+#include "ligmatransformgridtool.h"
 
 
-#define GIMP_TYPE_GENERIC_TRANSFORM_TOOL            (gimp_generic_transform_tool_get_type ())
-#define GIMP_GENERIC_TRANSFORM_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_GENERIC_TRANSFORM_TOOL, GimpGenericTransformTool))
-#define GIMP_GENERIC_TRANSFORM_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_GENERIC_TRANSFORM_TOOL, GimpGenericTransformToolClass))
-#define GIMP_IS_GENERIC_TRANSFORM_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_GENERIC_TRANSFORM_TOOL))
-#define GIMP_IS_GENERIC_TRANSFORM_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_GENERIC_TRANSFORM_TOOL))
-#define GIMP_GENERIC_TRANSFORM_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_GENERIC_TRANSFORM_TOOL, GimpGenericTransformToolClass))
+#define LIGMA_TYPE_GENERIC_TRANSFORM_TOOL            (ligma_generic_transform_tool_get_type ())
+#define LIGMA_GENERIC_TRANSFORM_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_GENERIC_TRANSFORM_TOOL, LigmaGenericTransformTool))
+#define LIGMA_GENERIC_TRANSFORM_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_GENERIC_TRANSFORM_TOOL, LigmaGenericTransformToolClass))
+#define LIGMA_IS_GENERIC_TRANSFORM_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_GENERIC_TRANSFORM_TOOL))
+#define LIGMA_IS_GENERIC_TRANSFORM_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_GENERIC_TRANSFORM_TOOL))
+#define LIGMA_GENERIC_TRANSFORM_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_GENERIC_TRANSFORM_TOOL, LigmaGenericTransformToolClass))
 
 
-typedef struct _GimpGenericTransformToolClass GimpGenericTransformToolClass;
+typedef struct _LigmaGenericTransformToolClass LigmaGenericTransformToolClass;
 
-struct _GimpGenericTransformTool
+struct _LigmaGenericTransformTool
 {
-  GimpTransformGridTool  parent_instance;
+  LigmaTransformGridTool  parent_instance;
 
-  GimpVector2            input_points[4];
-  GimpVector2            output_points[4];
+  LigmaVector2            input_points[4];
+  LigmaVector2            output_points[4];
 
   GtkWidget             *matrix_grid;
   GtkWidget             *matrix_labels[3][3];
   GtkWidget             *invalid_label;
 };
 
-struct _GimpGenericTransformToolClass
+struct _LigmaGenericTransformToolClass
 {
-  GimpTransformGridToolClass  parent_class;
+  LigmaTransformGridToolClass  parent_class;
 
   /*  virtual functions  */
-  void   (* info_to_points) (GimpGenericTransformTool *generic);
+  void   (* info_to_points) (LigmaGenericTransformTool *generic);
 };
 
 
-GType   gimp_generic_transform_tool_get_type (void) G_GNUC_CONST;
+GType   ligma_generic_transform_tool_get_type (void) G_GNUC_CONST;
 
 
-#endif  /*  __GIMP_GENERIC_TRANSFORM_TOOL_H__  */
+#endif  /*  __LIGMA_GENERIC_TRANSFORM_TOOL_H__  */

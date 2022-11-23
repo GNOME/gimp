@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpTextLayer
- * Copyright (C) 2002-2003  Sven Neumann <sven@gimp.org>
+ * LigmaTextLayer
+ * Copyright (C) 2002-2003  Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,141 +23,141 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpmath/gimpmath.h"
+#include "libligmamath/ligmamath.h"
 
 #include "text-types.h"
 
-#include "core/gimp-transform-utils.h"
-#include "core/gimpimage-undo.h"
+#include "core/ligma-transform-utils.h"
+#include "core/ligmaimage-undo.h"
 
-#include "gimptext.h"
-#include "gimptextlayer.h"
-#include "gimptextlayer-transform.h"
+#include "ligmatext.h"
+#include "ligmatextlayer.h"
+#include "ligmatextlayer-transform.h"
 
 
-static GimpItemClass * gimp_text_layer_parent_class (void) G_GNUC_CONST;
+static LigmaItemClass * ligma_text_layer_parent_class (void) G_GNUC_CONST;
 
-static gboolean  gimp_text_layer_get_transformation  (GimpTextLayer *layer,
-                                                      GimpMatrix3   *matrix);
-static gboolean  gimp_text_layer_set_transformation  (GimpTextLayer *layer,
-                                                      GimpMatrix3   *matrix);
+static gboolean  ligma_text_layer_get_transformation  (LigmaTextLayer *layer,
+                                                      LigmaMatrix3   *matrix);
+static gboolean  ligma_text_layer_set_transformation  (LigmaTextLayer *layer,
+                                                      LigmaMatrix3   *matrix);
 
 
 void
-gimp_text_layer_scale (GimpItem               *item,
+ligma_text_layer_scale (LigmaItem               *item,
                        gint                    new_width,
                        gint                    new_height,
                        gint                    new_offset_x,
                        gint                    new_offset_y,
-                       GimpInterpolationType   interpolation_type,
-                       GimpProgress           *progress)
+                       LigmaInterpolationType   interpolation_type,
+                       LigmaProgress           *progress)
 {
   /*  TODO  */
 }
 
 static gboolean
-gimp_text_layer_transform_flip (GimpTextLayer       *layer,
-                                GimpOrientationType  flip_type,
+ligma_text_layer_transform_flip (LigmaTextLayer       *layer,
+                                LigmaOrientationType  flip_type,
                                 gdouble              axis)
 {
-  GimpMatrix3  matrix;
+  LigmaMatrix3  matrix;
 
-  if (! gimp_text_layer_get_transformation (layer, &matrix))
+  if (! ligma_text_layer_get_transformation (layer, &matrix))
     return FALSE;
 
-  gimp_transform_matrix_flip (&matrix, flip_type, axis);
+  ligma_transform_matrix_flip (&matrix, flip_type, axis);
 
-  return gimp_text_layer_set_transformation (layer, &matrix);
+  return ligma_text_layer_set_transformation (layer, &matrix);
 }
 
 void
-gimp_text_layer_flip (GimpItem            *item,
-                      GimpContext         *context,
-                      GimpOrientationType  flip_type,
+ligma_text_layer_flip (LigmaItem            *item,
+                      LigmaContext         *context,
+                      LigmaOrientationType  flip_type,
                       gdouble              axis,
                       gboolean             clip_result)
 {
-  GimpTextLayer *layer = GIMP_TEXT_LAYER (item);
+  LigmaTextLayer *layer = LIGMA_TEXT_LAYER (item);
 
-  if (gimp_text_layer_transform_flip (layer, flip_type, axis))
+  if (ligma_text_layer_transform_flip (layer, flip_type, axis))
     {
-      GimpLayerMask *mask = gimp_layer_get_mask (GIMP_LAYER (layer));
+      LigmaLayerMask *mask = ligma_layer_get_mask (LIGMA_LAYER (layer));
 
       if (mask)
-        gimp_item_flip (GIMP_ITEM (mask), context,
+        ligma_item_flip (LIGMA_ITEM (mask), context,
                         flip_type, axis, clip_result);
     }
   else
     {
-      gimp_text_layer_parent_class ()->flip (item, context,
+      ligma_text_layer_parent_class ()->flip (item, context,
                                              flip_type, axis, clip_result);
     }
 }
 
 static gboolean
-gimp_text_layer_transform_rotate (GimpTextLayer    *layer,
-                                  GimpRotationType  rotate_type,
+ligma_text_layer_transform_rotate (LigmaTextLayer    *layer,
+                                  LigmaRotationType  rotate_type,
                                   gdouble           center_x,
                                   gdouble           center_y)
 {
-  GimpMatrix3  matrix;
+  LigmaMatrix3  matrix;
 
-  if (! gimp_text_layer_get_transformation (layer, &matrix))
+  if (! ligma_text_layer_get_transformation (layer, &matrix))
     return FALSE;
 
-  gimp_transform_matrix_rotate (&matrix, rotate_type, center_x, center_y);
+  ligma_transform_matrix_rotate (&matrix, rotate_type, center_x, center_y);
 
-  return gimp_text_layer_set_transformation (layer, &matrix);
+  return ligma_text_layer_set_transformation (layer, &matrix);
 }
 
 void
-gimp_text_layer_rotate (GimpItem         *item,
-                        GimpContext      *context,
-                        GimpRotationType  rotate_type,
+ligma_text_layer_rotate (LigmaItem         *item,
+                        LigmaContext      *context,
+                        LigmaRotationType  rotate_type,
                         gdouble           center_x,
                         gdouble           center_y,
                         gboolean          clip_result)
 {
-  GimpTextLayer *layer = GIMP_TEXT_LAYER (item);
+  LigmaTextLayer *layer = LIGMA_TEXT_LAYER (item);
 
-  if (! gimp_text_layer_transform_rotate (layer,
+  if (! ligma_text_layer_transform_rotate (layer,
                                           rotate_type, center_x, center_y))
     {
-      GimpLayerMask *mask = gimp_layer_get_mask (GIMP_LAYER (layer));
+      LigmaLayerMask *mask = ligma_layer_get_mask (LIGMA_LAYER (layer));
 
       if (mask)
-        gimp_item_rotate (GIMP_ITEM (mask), context,
+        ligma_item_rotate (LIGMA_ITEM (mask), context,
                           rotate_type, center_x, center_y, clip_result);
     }
   else
     {
-      gimp_text_layer_parent_class ()->rotate (item, context,
+      ligma_text_layer_parent_class ()->rotate (item, context,
                                                rotate_type, center_x, center_y,
                                                clip_result);
     }
 }
 
 void
-gimp_text_layer_transform (GimpItem               *item,
-                           GimpContext            *context,
-                           const GimpMatrix3      *matrix,
-                           GimpTransformDirection  direction,
-                           GimpInterpolationType   interpolation_type,
+ligma_text_layer_transform (LigmaItem               *item,
+                           LigmaContext            *context,
+                           const LigmaMatrix3      *matrix,
+                           LigmaTransformDirection  direction,
+                           LigmaInterpolationType   interpolation_type,
                            gboolean                supersample,
-                           GimpTransformResize     clip_result,
-                           GimpProgress           *progress)
+                           LigmaTransformResize     clip_result,
+                           LigmaProgress           *progress)
 {
   /*  TODO  */
 }
 
-static GimpItemClass *
-gimp_text_layer_parent_class (void)
+static LigmaItemClass *
+ligma_text_layer_parent_class (void)
 {
-  static GimpItemClass *parent_class = NULL;
+  static LigmaItemClass *parent_class = NULL;
 
   if (! parent_class)
     {
-      gpointer klass = g_type_class_peek (GIMP_TYPE_TEXT_LAYER);
+      gpointer klass = g_type_class_peek (LIGMA_TYPE_TEXT_LAYER);
 
       parent_class = g_type_class_peek_parent (klass);
     }
@@ -166,24 +166,24 @@ gimp_text_layer_parent_class (void)
 }
 
 static gboolean
-gimp_text_layer_get_transformation (GimpTextLayer *layer,
-                                    GimpMatrix3   *matrix)
+ligma_text_layer_get_transformation (LigmaTextLayer *layer,
+                                    LigmaMatrix3   *matrix)
 {
   if (! layer->text || layer->modified)
     return FALSE;
 
-  gimp_text_get_transformation (layer->text, matrix);
+  ligma_text_get_transformation (layer->text, matrix);
 
   return TRUE;
 }
 
 static gboolean
-gimp_text_layer_set_transformation (GimpTextLayer *layer,
-                                    GimpMatrix3   *matrix)
+ligma_text_layer_set_transformation (LigmaTextLayer *layer,
+                                    LigmaMatrix3   *matrix)
 {
-  GimpMatrix2  trafo;
+  LigmaMatrix2  trafo;
 
-  if (! gimp_matrix3_is_affine (matrix))
+  if (! ligma_matrix3_is_affine (matrix))
     return FALSE;
 
   trafo.coeff[0][0] = matrix->coeff[0][0];
@@ -191,7 +191,7 @@ gimp_text_layer_set_transformation (GimpTextLayer *layer,
   trafo.coeff[1][0] = matrix->coeff[1][0];
   trafo.coeff[1][1] = matrix->coeff[1][1];
 
-  gimp_text_layer_set (GIMP_TEXT_LAYER (layer), NULL,
+  ligma_text_layer_set (LIGMA_TEXT_LAYER (layer), NULL,
                        "transformation", &trafo,
                        "offset-x",       matrix->coeff[0][2],
                        "offset-y",       matrix->coeff[1][2],

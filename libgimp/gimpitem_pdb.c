@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimpitem_pdb.c
+ * ligmaitem_pdb.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,12 +24,12 @@
 
 #include "stamp-pdbgen.h"
 
-#include "gimp.h"
+#include "ligma.h"
 
 
 /**
- * SECTION: gimpitem
- * @title: gimpitem
+ * SECTION: ligmaitem
+ * @title: ligmaitem
  * @short_description: Functions to manipulate items.
  *
  * Functions to manipulate items.
@@ -37,7 +37,7 @@
 
 
 /**
- * gimp_item_id_is_valid:
+ * ligma_item_id_is_valid:
  * @item_id: The item ID to check.
  *
  * Returns TRUE if the item ID is valid.
@@ -50,31 +50,31 @@
  * Since: 3.0
  **/
 gboolean
-gimp_item_id_is_valid (gint item_id)
+ligma_item_id_is_valid (gint item_id)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean valid = FALSE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_INT, item_id,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-item-id-is-valid",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-item-id-is-valid",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    valid = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    valid = LIGMA_VALUES_GET_BOOLEAN (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return valid;
 }
 
 /**
- * gimp_item_id_is_drawable:
+ * ligma_item_id_is_drawable:
  * @item_id: The item ID.
  *
  * Returns whether the item ID is a drawable.
@@ -86,31 +86,31 @@ gimp_item_id_is_valid (gint item_id)
  * Since: 3.0
  **/
 gboolean
-gimp_item_id_is_drawable (gint item_id)
+ligma_item_id_is_drawable (gint item_id)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean drawable = FALSE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_INT, item_id,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-item-id-is-drawable",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-item-id-is-drawable",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    drawable = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    drawable = LIGMA_VALUES_GET_BOOLEAN (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return drawable;
 }
 
 /**
- * gimp_item_id_is_layer:
+ * ligma_item_id_is_layer:
  * @item_id: The item ID.
  *
  * Returns whether the item ID is a layer.
@@ -122,31 +122,31 @@ gimp_item_id_is_drawable (gint item_id)
  * Since: 3.0
  **/
 gboolean
-gimp_item_id_is_layer (gint item_id)
+ligma_item_id_is_layer (gint item_id)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean layer = FALSE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_INT, item_id,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-item-id-is-layer",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-item-id-is-layer",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    layer = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    layer = LIGMA_VALUES_GET_BOOLEAN (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return layer;
 }
 
 /**
- * gimp_item_id_is_text_layer:
+ * ligma_item_id_is_text_layer:
  * @item_id: The item ID.
  *
  * Returns whether the item ID is a text layer.
@@ -159,31 +159,31 @@ gimp_item_id_is_layer (gint item_id)
  * Since: 3.0
  **/
 gboolean
-gimp_item_id_is_text_layer (gint item_id)
+ligma_item_id_is_text_layer (gint item_id)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean text_layer = FALSE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_INT, item_id,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-item-id-is-text-layer",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-item-id-is-text-layer",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    text_layer = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    text_layer = LIGMA_VALUES_GET_BOOLEAN (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return text_layer;
 }
 
 /**
- * gimp_item_id_is_channel:
+ * ligma_item_id_is_channel:
  * @item_id: The item ID.
  *
  * Returns whether the item ID is a channel.
@@ -195,31 +195,31 @@ gimp_item_id_is_text_layer (gint item_id)
  * Since: 3.0
  **/
 gboolean
-gimp_item_id_is_channel (gint item_id)
+ligma_item_id_is_channel (gint item_id)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean channel = FALSE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_INT, item_id,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-item-id-is-channel",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-item-id-is-channel",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    channel = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    channel = LIGMA_VALUES_GET_BOOLEAN (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return channel;
 }
 
 /**
- * gimp_item_id_is_layer_mask:
+ * ligma_item_id_is_layer_mask:
  * @item_id: The item.
  *
  * Returns whether the item ID is a layer mask.
@@ -232,31 +232,31 @@ gimp_item_id_is_channel (gint item_id)
  * Since: 3.0
  **/
 gboolean
-gimp_item_id_is_layer_mask (gint item_id)
+ligma_item_id_is_layer_mask (gint item_id)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean layer_mask = FALSE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_INT, item_id,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-item-id-is-layer-mask",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-item-id-is-layer-mask",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    layer_mask = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    layer_mask = LIGMA_VALUES_GET_BOOLEAN (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return layer_mask;
 }
 
 /**
- * gimp_item_id_is_selection:
+ * ligma_item_id_is_selection:
  * @item_id: The item ID.
  *
  * Returns whether the item ID is a selection.
@@ -268,31 +268,31 @@ gimp_item_id_is_layer_mask (gint item_id)
  * Since: 3.0
  **/
 gboolean
-gimp_item_id_is_selection (gint item_id)
+ligma_item_id_is_selection (gint item_id)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean selection = FALSE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_INT, item_id,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-item-id-is-selection",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-item-id-is-selection",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    selection = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    selection = LIGMA_VALUES_GET_BOOLEAN (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return selection;
 }
 
 /**
- * gimp_item_id_is_vectors:
+ * ligma_item_id_is_vectors:
  * @item_id: The item ID.
  *
  * Returns whether the item ID is a vectors.
@@ -304,31 +304,31 @@ gimp_item_id_is_selection (gint item_id)
  * Since: 3.0
  **/
 gboolean
-gimp_item_id_is_vectors (gint item_id)
+ligma_item_id_is_vectors (gint item_id)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean vectors = FALSE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_INT, item_id,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-item-id-is-vectors",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-item-id-is-vectors",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    vectors = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    vectors = LIGMA_VALUES_GET_BOOLEAN (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return vectors;
 }
 
 /**
- * gimp_item_get_image:
+ * ligma_item_get_image:
  * @item: The item.
  *
  * Returns the item's image.
@@ -339,32 +339,32 @@ gimp_item_id_is_vectors (gint item_id)
  *
  * Since: 2.8
  **/
-GimpImage *
-gimp_item_get_image (GimpItem *item)
+LigmaImage *
+ligma_item_get_image (LigmaItem *item)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpImage *image = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaImage *image = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_ITEM, item,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_ITEM, item,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-item-get-image",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-item-get-image",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    image = GIMP_VALUES_GET_IMAGE (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    image = LIGMA_VALUES_GET_IMAGE (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return image;
 }
 
 /**
- * gimp_item_delete:
+ * ligma_item_delete:
  * @item: The item to delete.
  *
  * Delete a item.
@@ -380,30 +380,30 @@ gimp_item_get_image (GimpItem *item)
  * Since: 2.8
  **/
 gboolean
-gimp_item_delete (GimpItem *item)
+ligma_item_delete (LigmaItem *item)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_ITEM, item,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_ITEM, item,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-item-delete",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-item-delete",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_item_is_group:
+ * ligma_item_is_group:
  * @item: The item.
  *
  * Returns whether the item is a group item.
@@ -416,31 +416,31 @@ gimp_item_delete (GimpItem *item)
  * Since: 2.8
  **/
 gboolean
-gimp_item_is_group (GimpItem *item)
+ligma_item_is_group (LigmaItem *item)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean group = FALSE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_ITEM, item,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_ITEM, item,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-item-is-group",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-item-is-group",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    group = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    group = LIGMA_VALUES_GET_BOOLEAN (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return group;
 }
 
 /**
- * gimp_item_get_parent:
+ * ligma_item_get_parent:
  * @item: The item.
  *
  * Returns the item's parent item.
@@ -451,32 +451,32 @@ gimp_item_is_group (GimpItem *item)
  *
  * Since: 2.8
  **/
-GimpItem *
-gimp_item_get_parent (GimpItem *item)
+LigmaItem *
+ligma_item_get_parent (LigmaItem *item)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpItem *parent = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaItem *parent = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_ITEM, item,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_ITEM, item,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-item-get-parent",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-item-get-parent",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    parent = GIMP_VALUES_GET_ITEM (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    parent = LIGMA_VALUES_GET_ITEM (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return parent;
 }
 
 /**
- * gimp_item_get_children: (skip)
+ * ligma_item_get_children: (skip)
  * @item: The item.
  * @num_children: (out): The item's number of children.
  *
@@ -485,44 +485,44 @@ gimp_item_get_parent (GimpItem *item)
  * This procedure returns the list of items which are children of the
  * specified item. The order is topmost to bottommost.
  *
- * Returns: (array length=num_children) (element-type GimpItem) (transfer container):
+ * Returns: (array length=num_children) (element-type LigmaItem) (transfer container):
  *          The item's list of children.
  *          The returned value must be freed with g_free().
  *
  * Since: 2.8
  **/
-GimpItem **
-gimp_item_get_children (GimpItem *item,
+LigmaItem **
+ligma_item_get_children (LigmaItem *item,
                         gint     *num_children)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpItem **children = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaItem **children = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_ITEM, item,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_ITEM, item,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-item-get-children",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-item-get-children",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
   *num_children = 0;
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
     {
-      *num_children = GIMP_VALUES_GET_INT (return_vals, 1);
-      { GimpObjectArray *a = g_value_get_boxed (gimp_value_array_index (return_vals, 2)); if (a) children = g_memdup2 (a->data, a->length * sizeof (gpointer)); };
+      *num_children = LIGMA_VALUES_GET_INT (return_vals, 1);
+      { LigmaObjectArray *a = g_value_get_boxed (ligma_value_array_index (return_vals, 2)); if (a) children = g_memdup2 (a->data, a->length * sizeof (gpointer)); };
     }
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return children;
 }
 
 /**
- * gimp_item_get_expanded:
+ * ligma_item_get_expanded:
  * @item: The item.
  *
  * Returns whether the item is expanded.
@@ -534,31 +534,31 @@ gimp_item_get_children (GimpItem *item,
  * Since: 2.10
  **/
 gboolean
-gimp_item_get_expanded (GimpItem *item)
+ligma_item_get_expanded (LigmaItem *item)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean expanded = FALSE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_ITEM, item,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_ITEM, item,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-item-get-expanded",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-item-get-expanded",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    expanded = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    expanded = LIGMA_VALUES_GET_BOOLEAN (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return expanded;
 }
 
 /**
- * gimp_item_set_expanded:
+ * ligma_item_set_expanded:
  * @item: The item.
  * @expanded: TRUE to expand the item, FALSE to collapse the item.
  *
@@ -571,32 +571,32 @@ gimp_item_get_expanded (GimpItem *item)
  * Since: 2.10
  **/
 gboolean
-gimp_item_set_expanded (GimpItem *item,
+ligma_item_set_expanded (LigmaItem *item,
                         gboolean  expanded)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_ITEM, item,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_ITEM, item,
                                           G_TYPE_BOOLEAN, expanded,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-item-set-expanded",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-item-set-expanded",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_item_get_name:
+ * ligma_item_get_name:
  * @item: The item.
  *
  * Get the name of the specified item.
@@ -609,31 +609,31 @@ gimp_item_set_expanded (GimpItem *item,
  * Since: 2.8
  **/
 gchar *
-gimp_item_get_name (GimpItem *item)
+ligma_item_get_name (LigmaItem *item)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gchar *name = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_ITEM, item,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_ITEM, item,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-item-get-name",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-item-get-name",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    name = GIMP_VALUES_DUP_STRING (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    name = LIGMA_VALUES_DUP_STRING (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return name;
 }
 
 /**
- * gimp_item_set_name:
+ * ligma_item_set_name:
  * @item: The item.
  * @name: The new item name.
  *
@@ -646,32 +646,32 @@ gimp_item_get_name (GimpItem *item)
  * Since: 2.8
  **/
 gboolean
-gimp_item_set_name (GimpItem    *item,
+ligma_item_set_name (LigmaItem    *item,
                     const gchar *name)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_ITEM, item,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_ITEM, item,
                                           G_TYPE_STRING, name,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-item-set-name",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-item-set-name",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_item_get_visible:
+ * ligma_item_get_visible:
  * @item: The item.
  *
  * Get the visibility of the specified item.
@@ -683,31 +683,31 @@ gimp_item_set_name (GimpItem    *item,
  * Since: 2.8
  **/
 gboolean
-gimp_item_get_visible (GimpItem *item)
+ligma_item_get_visible (LigmaItem *item)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean visible = FALSE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_ITEM, item,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_ITEM, item,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-item-get-visible",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-item-get-visible",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    visible = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    visible = LIGMA_VALUES_GET_BOOLEAN (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return visible;
 }
 
 /**
- * gimp_item_set_visible:
+ * ligma_item_set_visible:
  * @item: The item.
  * @visible: The new item visibility.
  *
@@ -720,32 +720,32 @@ gimp_item_get_visible (GimpItem *item)
  * Since: 2.8
  **/
 gboolean
-gimp_item_set_visible (GimpItem *item,
+ligma_item_set_visible (LigmaItem *item,
                        gboolean  visible)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_ITEM, item,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_ITEM, item,
                                           G_TYPE_BOOLEAN, visible,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-item-set-visible",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-item-set-visible",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_item_get_lock_content:
+ * ligma_item_get_lock_content:
  * @item: The item.
  *
  * Get the 'lock content' state of the specified item.
@@ -757,31 +757,31 @@ gimp_item_set_visible (GimpItem *item,
  * Since: 2.8
  **/
 gboolean
-gimp_item_get_lock_content (GimpItem *item)
+ligma_item_get_lock_content (LigmaItem *item)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean lock_content = FALSE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_ITEM, item,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_ITEM, item,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-item-get-lock-content",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-item-get-lock-content",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    lock_content = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    lock_content = LIGMA_VALUES_GET_BOOLEAN (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return lock_content;
 }
 
 /**
- * gimp_item_set_lock_content:
+ * ligma_item_set_lock_content:
  * @item: The item.
  * @lock_content: The new item 'lock content' state.
  *
@@ -794,32 +794,32 @@ gimp_item_get_lock_content (GimpItem *item)
  * Since: 2.8
  **/
 gboolean
-gimp_item_set_lock_content (GimpItem *item,
+ligma_item_set_lock_content (LigmaItem *item,
                             gboolean  lock_content)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_ITEM, item,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_ITEM, item,
                                           G_TYPE_BOOLEAN, lock_content,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-item-set-lock-content",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-item-set-lock-content",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_item_get_lock_position:
+ * ligma_item_get_lock_position:
  * @item: The item.
  *
  * Get the 'lock position' state of the specified item.
@@ -831,31 +831,31 @@ gimp_item_set_lock_content (GimpItem *item,
  * Since: 2.10
  **/
 gboolean
-gimp_item_get_lock_position (GimpItem *item)
+ligma_item_get_lock_position (LigmaItem *item)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean lock_position = FALSE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_ITEM, item,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_ITEM, item,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-item-get-lock-position",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-item-get-lock-position",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    lock_position = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    lock_position = LIGMA_VALUES_GET_BOOLEAN (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return lock_position;
 }
 
 /**
- * gimp_item_set_lock_position:
+ * ligma_item_set_lock_position:
  * @item: The item.
  * @lock_position: The new item 'lock position' state.
  *
@@ -868,32 +868,32 @@ gimp_item_get_lock_position (GimpItem *item)
  * Since: 2.10
  **/
 gboolean
-gimp_item_set_lock_position (GimpItem *item,
+ligma_item_set_lock_position (LigmaItem *item,
                              gboolean  lock_position)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_ITEM, item,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_ITEM, item,
                                           G_TYPE_BOOLEAN, lock_position,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-item-set-lock-position",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-item-set-lock-position",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_item_get_lock_visibility:
+ * ligma_item_get_lock_visibility:
  * @item: The item.
  *
  * Get the 'lock visibility' state of the specified item.
@@ -905,31 +905,31 @@ gimp_item_set_lock_position (GimpItem *item,
  * Since: 3.0
  **/
 gboolean
-gimp_item_get_lock_visibility (GimpItem *item)
+ligma_item_get_lock_visibility (LigmaItem *item)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean lock_visibility = FALSE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_ITEM, item,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_ITEM, item,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-item-get-lock-visibility",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-item-get-lock-visibility",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    lock_visibility = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    lock_visibility = LIGMA_VALUES_GET_BOOLEAN (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return lock_visibility;
 }
 
 /**
- * gimp_item_set_lock_visibility:
+ * ligma_item_set_lock_visibility:
  * @item: The item.
  * @lock_visibility: The new item 'lock visibility' state.
  *
@@ -942,32 +942,32 @@ gimp_item_get_lock_visibility (GimpItem *item)
  * Since: 3.0
  **/
 gboolean
-gimp_item_set_lock_visibility (GimpItem *item,
+ligma_item_set_lock_visibility (LigmaItem *item,
                                gboolean  lock_visibility)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_ITEM, item,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_ITEM, item,
                                           G_TYPE_BOOLEAN, lock_visibility,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-item-set-lock-visibility",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-item-set-lock-visibility",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_item_get_color_tag:
+ * ligma_item_get_color_tag:
  * @item: The item.
  *
  * Get the color tag of the specified item.
@@ -978,32 +978,32 @@ gimp_item_set_lock_visibility (GimpItem *item,
  *
  * Since: 2.10
  **/
-GimpColorTag
-gimp_item_get_color_tag (GimpItem *item)
+LigmaColorTag
+ligma_item_get_color_tag (LigmaItem *item)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpColorTag color_tag = 0;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaColorTag color_tag = 0;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_ITEM, item,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_ITEM, item,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-item-get-color-tag",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-item-get-color-tag",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    color_tag = GIMP_VALUES_GET_ENUM (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    color_tag = LIGMA_VALUES_GET_ENUM (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return color_tag;
 }
 
 /**
- * gimp_item_set_color_tag:
+ * ligma_item_set_color_tag:
  * @item: The item.
  * @color_tag: The new item color tag.
  *
@@ -1016,32 +1016,32 @@ gimp_item_get_color_tag (GimpItem *item)
  * Since: 2.10
  **/
 gboolean
-gimp_item_set_color_tag (GimpItem     *item,
-                         GimpColorTag  color_tag)
+ligma_item_set_color_tag (LigmaItem     *item,
+                         LigmaColorTag  color_tag)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_ITEM, item,
-                                          GIMP_TYPE_COLOR_TAG, color_tag,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_ITEM, item,
+                                          LIGMA_TYPE_COLOR_TAG, color_tag,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-item-set-color-tag",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-item-set-color-tag",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_item_get_tattoo:
+ * ligma_item_get_tattoo:
  * @item: The item.
  *
  * Get the tattoo of the specified item.
@@ -1055,31 +1055,31 @@ gimp_item_set_color_tag (GimpItem     *item,
  * Since: 2.8
  **/
 guint
-gimp_item_get_tattoo (GimpItem *item)
+ligma_item_get_tattoo (LigmaItem *item)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   guint tattoo = 0;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_ITEM, item,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_ITEM, item,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-item-get-tattoo",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-item-get-tattoo",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    tattoo = GIMP_VALUES_GET_UINT (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    tattoo = LIGMA_VALUES_GET_UINT (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return tattoo;
 }
 
 /**
- * gimp_item_set_tattoo:
+ * ligma_item_set_tattoo:
  * @item: The item.
  * @tattoo: The new item tattoo.
  *
@@ -1094,32 +1094,32 @@ gimp_item_get_tattoo (GimpItem *item)
  * Since: 2.8
  **/
 gboolean
-gimp_item_set_tattoo (GimpItem *item,
+ligma_item_set_tattoo (LigmaItem *item,
                       guint     tattoo)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_ITEM, item,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_ITEM, item,
                                           G_TYPE_UINT, tattoo,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-item-set-tattoo",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-item-set-tattoo",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_item_attach_parasite:
+ * ligma_item_attach_parasite:
  * @item: The item.
  * @parasite: The parasite to attach to the item.
  *
@@ -1133,32 +1133,32 @@ gimp_item_set_tattoo (GimpItem *item,
  * Since: 2.8
  **/
 gboolean
-gimp_item_attach_parasite (GimpItem           *item,
-                           const GimpParasite *parasite)
+ligma_item_attach_parasite (LigmaItem           *item,
+                           const LigmaParasite *parasite)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_ITEM, item,
-                                          GIMP_TYPE_PARASITE, parasite,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_ITEM, item,
+                                          LIGMA_TYPE_PARASITE, parasite,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-item-attach-parasite",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-item-attach-parasite",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_item_detach_parasite:
+ * ligma_item_detach_parasite:
  * @item: The item.
  * @name: The name of the parasite to detach from the item.
  *
@@ -1172,32 +1172,32 @@ gimp_item_attach_parasite (GimpItem           *item,
  * Since: 2.8
  **/
 gboolean
-gimp_item_detach_parasite (GimpItem    *item,
+ligma_item_detach_parasite (LigmaItem    *item,
                            const gchar *name)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_ITEM, item,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_ITEM, item,
                                           G_TYPE_STRING, name,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-item-detach-parasite",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-item-detach-parasite",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_item_get_parasite:
+ * ligma_item_get_parasite:
  * @item: The item.
  * @name: The name of the parasite to find.
  *
@@ -1209,34 +1209,34 @@ gimp_item_detach_parasite (GimpItem    *item,
  *
  * Since: 2.8
  **/
-GimpParasite *
-gimp_item_get_parasite (GimpItem    *item,
+LigmaParasite *
+ligma_item_get_parasite (LigmaItem    *item,
                         const gchar *name)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpParasite *parasite = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaParasite *parasite = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_ITEM, item,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_ITEM, item,
                                           G_TYPE_STRING, name,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-item-get-parasite",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-item-get-parasite",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    parasite = GIMP_VALUES_DUP_PARASITE (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    parasite = LIGMA_VALUES_DUP_PARASITE (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return parasite;
 }
 
 /**
- * gimp_item_get_parasite_list:
+ * ligma_item_get_parasite_list:
  * @item: The item.
  *
  * List all parasites.
@@ -1250,25 +1250,25 @@ gimp_item_get_parasite (GimpItem    *item,
  * Since: 2.8
  **/
 gchar **
-gimp_item_get_parasite_list (GimpItem *item)
+ligma_item_get_parasite_list (LigmaItem *item)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gchar **parasites = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_ITEM, item,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_ITEM, item,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-item-get-parasite-list",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-item-get-parasite-list",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    parasites = GIMP_VALUES_DUP_STRV (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    parasites = LIGMA_VALUES_DUP_STRV (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return parasites;
 }

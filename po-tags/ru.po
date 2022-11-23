@@ -1,13 +1,13 @@
-# Russian translation of default resources tags in GIMP
-# Copyright (C) 2012 The GIMP team
+# Russian translation of default resources tags in LIGMA
+# Copyright (C) 2012 The LIGMA team
 # This file is distributed under the same license as the PACKAGE package.
 # Александр Прокудин <alexandre.prokoudine@gmail.com>, 2012.
 # Александр Прокудин <alexandre.prokoudine@gmail.com>, 2012.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 2.8 tags\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: LIGMA 2.8 tags\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2012-04-01 13:54+0400\n"
 "PO-Revision-Date: 2012-04-01 13:54+0400\n"
 "Last-Translator: Александр Прокудин <alexandre.prokoudine@gmail.com>\n"
@@ -20,11 +20,11 @@ msgstr ""
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2); 10<=4 && (n%100<10 || n"
 "%100>=20) ? 1 : 2);\n"
 
-#: ../data/tags/gimp-tags-default.xml.in.h:1
+#: ../data/tags/ligma-tags-default.xml.in.h:1
 msgid "round"
 msgstr "круглые"
 
 #. fuzzy as in a feathered, blurred, unfocused, soft brush
-#: ../data/tags/gimp-tags-default.xml.in.h:3
+#: ../data/tags/ligma-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "растушёванные"

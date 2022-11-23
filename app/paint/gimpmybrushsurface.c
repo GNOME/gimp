@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,17 +22,17 @@
 
 #include "paint-types.h"
 
-#include "libgimpmath/gimpmath.h"
+#include "libligmamath/ligmamath.h"
 
 #include <cairo.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
-#include "libgimpcolor/gimpcolor.h"
+#include "libligmacolor/ligmacolor.h"
 
-#include "gimpmybrushoptions.h"
-#include "gimpmybrushsurface.h"
+#include "ligmamybrushoptions.h"
+#include "ligmamybrushsurface.h"
 
 
-struct _GimpMybrushSurface
+struct _LigmaMybrushSurface
 {
   MyPaintSurface surface;
   GeglBuffer *buffer;
@@ -40,8 +40,8 @@ struct _GimpMybrushSurface
   gint        paint_mask_x;
   gint        paint_mask_y;
   GeglRectangle dirty;
-  GimpComponentMask component_mask;
-  GimpMybrushOptions *options;
+  LigmaComponentMask component_mask;
+  LigmaMybrushOptions *options;
 };
 
 /* --- Taken from mypaint-tiled-surface.c --- */
@@ -230,7 +230,7 @@ calculate_dab_roi (float x,
 }
 
 static void
-gimp_mypaint_surface_get_color (MyPaintSurface *base_surface,
+ligma_mypaint_surface_get_color (MyPaintSurface *base_surface,
                                 float           x,
                                 float           y,
                                 float           radius,
@@ -239,7 +239,7 @@ gimp_mypaint_surface_get_color (MyPaintSurface *base_surface,
                                 float          *color_b,
                                 float          *color_a)
 {
-  GimpMybrushSurface *surface = (GimpMybrushSurface *)base_surface;
+  LigmaMybrushSurface *surface = (LigmaMybrushSurface *)base_surface;
   GeglRectangle dabRect;
 
   if (radius < 1.0f)
@@ -336,7 +336,7 @@ gimp_mypaint_surface_get_color (MyPaintSurface *base_surface,
 }
 
 static int
-gimp_mypaint_surface_draw_dab (MyPaintSurface *base_surface,
+ligma_mypaint_surface_draw_dab (MyPaintSurface *base_surface,
                                float           x,
                                float           y,
                                float           radius,
@@ -351,10 +351,10 @@ gimp_mypaint_surface_draw_dab (MyPaintSurface *base_surface,
                                float           lock_alpha,
                                float           colorize)
 {
-  GimpMybrushSurface *surface = (GimpMybrushSurface *)base_surface;
+  LigmaMybrushSurface *surface = (LigmaMybrushSurface *)base_surface;
   GeglBufferIterator *iter;
   GeglRectangle       dabRect;
-  GimpComponentMask   component_mask = surface->component_mask;
+  LigmaComponentMask   component_mask = surface->component_mask;
 
   const float one_over_radius2 = 1.0f / (radius * radius);
   const double angle_rad = angle / 360 * 2 * M_PI;
@@ -450,18 +450,18 @@ gimp_mypaint_surface_draw_dab (MyPaintSurface *base_surface,
                   a = alpha + dst_alpha - alpha * dst_alpha;
                   if (a > 0.0f)
                     {
-                      GimpHSL pixel_hsl, out_hsl;
-                      GimpRGB pixel_rgb = {color_r, color_g, color_b};
-                      GimpRGB out_rgb   = {r, g, b};
+                      LigmaHSL pixel_hsl, out_hsl;
+                      LigmaRGB pixel_rgb = {color_r, color_g, color_b};
+                      LigmaRGB out_rgb   = {r, g, b};
                       float src_term = alpha / a;
                       float dst_term = 1.0f - src_term;
 
-                      gimp_rgb_to_hsl (&pixel_rgb, &pixel_hsl);
-                      gimp_rgb_to_hsl (&out_rgb, &out_hsl);
+                      ligma_rgb_to_hsl (&pixel_rgb, &pixel_hsl);
+                      ligma_rgb_to_hsl (&out_rgb, &out_hsl);
 
                       out_hsl.h = pixel_hsl.h;
                       out_hsl.s = pixel_hsl.s;
-                      gimp_hsl_to_rgb (&out_hsl, &out_rgb);
+                      ligma_hsl_to_rgb (&out_hsl, &out_rgb);
 
                       r = (float)out_rgb.r * src_term + r * dst_term;
                       g = (float)out_rgb.g * src_term + g * dst_term;
@@ -472,15 +472,15 @@ gimp_mypaint_surface_draw_dab (MyPaintSurface *base_surface,
               if (surface->options->no_erasing)
                 a = MAX (a, pixel[ALPHA]);
 
-              if (component_mask != GIMP_COMPONENT_MASK_ALL)
+              if (component_mask != LIGMA_COMPONENT_MASK_ALL)
                 {
-                  if (component_mask & GIMP_COMPONENT_MASK_RED)
+                  if (component_mask & LIGMA_COMPONENT_MASK_RED)
                     pixel[RED]   = r;
-                  if (component_mask & GIMP_COMPONENT_MASK_GREEN)
+                  if (component_mask & LIGMA_COMPONENT_MASK_GREEN)
                     pixel[GREEN] = g;
-                  if (component_mask & GIMP_COMPONENT_MASK_BLUE)
+                  if (component_mask & LIGMA_COMPONENT_MASK_BLUE)
                     pixel[BLUE]  = b;
-                  if (component_mask & GIMP_COMPONENT_MASK_ALPHA)
+                  if (component_mask & LIGMA_COMPONENT_MASK_ALPHA)
                     pixel[ALPHA] = a;
                 }
               else
@@ -502,16 +502,16 @@ gimp_mypaint_surface_draw_dab (MyPaintSurface *base_surface,
 }
 
 static void
-gimp_mypaint_surface_begin_atomic (MyPaintSurface *base_surface)
+ligma_mypaint_surface_begin_atomic (MyPaintSurface *base_surface)
 {
 
 }
 
 static void
-gimp_mypaint_surface_end_atomic (MyPaintSurface   *base_surface,
+ligma_mypaint_surface_end_atomic (MyPaintSurface   *base_surface,
                                  MyPaintRectangle *roi)
 {
-  GimpMybrushSurface *surface = (GimpMybrushSurface *)base_surface;
+  LigmaMybrushSurface *surface = (LigmaMybrushSurface *)base_surface;
 
   roi->x         = surface->dirty.x;
   roi->y         = surface->dirty.y;
@@ -521,32 +521,32 @@ gimp_mypaint_surface_end_atomic (MyPaintSurface   *base_surface,
 }
 
 static void
-gimp_mypaint_surface_destroy (MyPaintSurface *base_surface)
+ligma_mypaint_surface_destroy (MyPaintSurface *base_surface)
 {
-  GimpMybrushSurface *surface = (GimpMybrushSurface *)base_surface;
+  LigmaMybrushSurface *surface = (LigmaMybrushSurface *)base_surface;
 
   g_clear_object (&surface->buffer);
   g_clear_object (&surface->paint_mask);
   g_free (surface);
 }
 
-GimpMybrushSurface *
-gimp_mypaint_surface_new (GeglBuffer         *buffer,
-                          GimpComponentMask   component_mask,
+LigmaMybrushSurface *
+ligma_mypaint_surface_new (GeglBuffer         *buffer,
+                          LigmaComponentMask   component_mask,
                           GeglBuffer         *paint_mask,
                           gint                paint_mask_x,
                           gint                paint_mask_y,
-                          GimpMybrushOptions *options)
+                          LigmaMybrushOptions *options)
 {
-  GimpMybrushSurface *surface = g_malloc0 (sizeof (GimpMybrushSurface));
+  LigmaMybrushSurface *surface = g_malloc0 (sizeof (LigmaMybrushSurface));
 
   mypaint_surface_init ((MyPaintSurface *)surface);
 
-  surface->surface.get_color    = gimp_mypaint_surface_get_color;
-  surface->surface.draw_dab     = gimp_mypaint_surface_draw_dab;
-  surface->surface.begin_atomic = gimp_mypaint_surface_begin_atomic;
-  surface->surface.end_atomic   = gimp_mypaint_surface_end_atomic;
-  surface->surface.destroy      = gimp_mypaint_surface_destroy;
+  surface->surface.get_color    = ligma_mypaint_surface_get_color;
+  surface->surface.draw_dab     = ligma_mypaint_surface_draw_dab;
+  surface->surface.begin_atomic = ligma_mypaint_surface_begin_atomic;
+  surface->surface.end_atomic   = ligma_mypaint_surface_end_atomic;
+  surface->surface.destroy      = ligma_mypaint_surface_destroy;
   surface->component_mask       = component_mask;
   surface->options              = options;
   surface->buffer               = g_object_ref (buffer);

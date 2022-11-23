@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpstrokeeditor.h
- * Copyright (C) 2003 Sven Neumann <sven@gimp.org>
+ * ligmastrokeeditor.h
+ * Copyright (C) 2003 Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,41 +18,41 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_STROKE_EDITOR_H__
-#define __GIMP_STROKE_EDITOR_H__
+#ifndef __LIGMA_STROKE_EDITOR_H__
+#define __LIGMA_STROKE_EDITOR_H__
 
 
-#include "gimpfilleditor.h"
+#include "ligmafilleditor.h"
 
 
-#define GIMP_TYPE_STROKE_EDITOR            (gimp_stroke_editor_get_type ())
-#define GIMP_STROKE_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_STROKE_EDITOR, GimpStrokeEditor))
-#define GIMP_STROKE_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_STROKE_EDITOR, GimpStrokeEditorClass))
-#define GIMP_IS_STROKE_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_STROKE_EDITOR))
-#define GIMP_IS_STROKE_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_STROKE_EDITOR))
-#define GIMP_STROKE_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_STROKE_EDITOR, GimpStrokeEditorClass))
+#define LIGMA_TYPE_STROKE_EDITOR            (ligma_stroke_editor_get_type ())
+#define LIGMA_STROKE_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_STROKE_EDITOR, LigmaStrokeEditor))
+#define LIGMA_STROKE_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_STROKE_EDITOR, LigmaStrokeEditorClass))
+#define LIGMA_IS_STROKE_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_STROKE_EDITOR))
+#define LIGMA_IS_STROKE_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_STROKE_EDITOR))
+#define LIGMA_STROKE_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_STROKE_EDITOR, LigmaStrokeEditorClass))
 
 
-typedef struct _GimpStrokeEditorClass GimpStrokeEditorClass;
+typedef struct _LigmaStrokeEditorClass LigmaStrokeEditorClass;
 
-struct _GimpStrokeEditor
+struct _LigmaStrokeEditor
 {
-  GimpFillEditor  parent_instance;
+  LigmaFillEditor  parent_instance;
 
   gdouble         resolution;
 };
 
-struct _GimpStrokeEditorClass
+struct _LigmaStrokeEditorClass
 {
-  GimpFillEditorClass  parent_class;
+  LigmaFillEditorClass  parent_class;
 };
 
 
-GType       gimp_stroke_editor_get_type (void) G_GNUC_CONST;
+GType       ligma_stroke_editor_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_stroke_editor_new      (GimpStrokeOptions *options,
+GtkWidget * ligma_stroke_editor_new      (LigmaStrokeOptions *options,
                                          gdouble            resolution,
                                          gboolean           edit_context);
 
 
-#endif /* __GIMP_STROKE_EDITOR_H__ */
+#endif /* __LIGMA_STROKE_EDITOR_H__ */

@@ -1,11 +1,11 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * CML_explorer.c
  * Time-stamp: <2000-02-13 18:18:37 yasuhiro>
  * Copyright (C) 1997 Shuji Narazaki <narazaki@InetQ.or.jp>
  * Version: 1.0.11
- * URL: http://www.inetq.or.jp/~narazaki/TheGIMP/
+ * URL: http://www.inetq.or.jp/~narazaki/TheLIGMA/
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -54,7 +54,7 @@
  *    ;
  *      Hue
  *
- *  The old format for CML_explorer included in gimp-0.99.[89] is:
+ *  The old format for CML_explorer included in ligma-0.99.[89] is:
  *    ; CML parameter file (version: 1.0)
  *    ; Hue
  *
@@ -77,16 +77,16 @@
 
 #include <glib/gstdio.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 #define PARAM_FILE_FORMAT_VERSION 1.0
 #define PLUG_IN_PROC              "plug-in-cml-explorer"
 #define PLUG_IN_BINARY            "cml-explorer"
-#define PLUG_IN_ROLE              "gimp-cml-explorer"
+#define PLUG_IN_ROLE              "ligma-cml-explorer"
 #define VALS                      CML_explorer_vals
 #define PROGRESS_UPDATE_NUM        100
 #define CML_LINE_SIZE             1024
@@ -317,12 +317,12 @@ typedef struct _ExplorerClass ExplorerClass;
 
 struct _Explorer
 {
-  GimpPlugIn parent_instance;
+  LigmaPlugIn parent_instance;
 };
 
 struct _ExplorerClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -331,16 +331,16 @@ struct _ExplorerClass
 
 GType                   explorer_get_type         (void) G_GNUC_CONST;
 
-static GList          * explorer_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * explorer_create_procedure (GimpPlugIn           *plug_in,
+static GList          * explorer_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * explorer_create_procedure (LigmaPlugIn           *plug_in,
                                                    const gchar          *name);
 
-static GimpValueArray * explorer_run              (GimpProcedure        *procedure,
-                                                   GimpRunMode           run_mode,
-                                                   GimpImage            *image,
+static LigmaValueArray * explorer_run              (LigmaProcedure        *procedure,
+                                                   LigmaRunMode           run_mode,
+                                                   LigmaImage            *image,
                                                    gint                  n_drawables,
-                                                   GimpDrawable        **drawables,
-                                                   const GimpValueArray *args,
+                                                   LigmaDrawable        **drawables,
+                                                   const LigmaValueArray *args,
                                                    gpointer              run_data);
 
 static gboolean          CML_main_function     (gboolean   preview_p);
@@ -421,9 +421,9 @@ static gdouble parse_line_to_gdouble       (FILE             *file,
                                             gboolean         *flag);
 
 
-G_DEFINE_TYPE (Explorer, explorer, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Explorer, explorer, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (EXPLORER_TYPE)
+LIGMA_MAIN (EXPLORER_TYPE)
 DEFINE_STD_SET_I18N
 
 
@@ -453,7 +453,7 @@ static CML_sensitive_widget_table random_sensitives[RANDOM_SENSITIVES_NUM] =
 };
 
 static GRand        *gr;
-static GimpDrawable *drawable = NULL;
+static LigmaDrawable *drawable = NULL;
 static gint          copy_source = 0;
 static gint          copy_destination = 0;
 static gint          selective_load_source = 0;
@@ -471,7 +471,7 @@ static gint      mem_chank2_size = 0;
 static void
 explorer_class_init (ExplorerClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = explorer_query_procedures;
   plug_in_class->create_procedure = explorer_create_procedure;
@@ -484,38 +484,38 @@ explorer_init (Explorer *explorer)
 }
 
 static GList *
-explorer_query_procedures (GimpPlugIn *plug_in)
+explorer_query_procedures (LigmaPlugIn *plug_in)
 {
   return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
 }
 
-static GimpProcedure *
-explorer_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+explorer_create_procedure (LigmaPlugIn  *plug_in,
                            const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_image_procedure_new (plug_in, name,
+                                            LIGMA_PDB_PROC_TYPE_PLUGIN,
                                             explorer_run, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "RGB*, GRAY*");
-      gimp_procedure_set_sensitivity_mask (procedure,
-                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
+      ligma_procedure_set_image_types (procedure, "RGB*, GRAY*");
+      ligma_procedure_set_sensitivity_mask (procedure,
+                                           LIGMA_PROCEDURE_SENSITIVE_DRAWABLE);
 
-      gimp_procedure_set_menu_label (procedure, _("CML _Explorer..."));
-      gimp_procedure_add_menu_path (procedure,
+      ligma_procedure_set_menu_label (procedure, _("CML _Explorer..."));
+      ligma_procedure_add_menu_path (procedure,
                                     "<Image>/Filters/Render/Pattern");
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         _("Create abstract Coupled-Map "
                                           "Lattice patterns"),
                                         "Make an image of Coupled-Map Lattice "
                                         "(CML). CML is a kind of Cellula "
                                         "Automata on continuous (value) "
-                                        "domain. In GIMP_RUN_NONINTERACTIVE, "
+                                        "domain. In LIGMA_RUN_NONINTERACTIVE, "
                                         "the name of a parameter file is "
                                         "passed as the 4th arg. You can "
                                         "control CML_explorer via parameter "
@@ -524,13 +524,13 @@ explorer_create_procedure (GimpPlugIn  *plug_in,
                                          *  with over 50 args?
                                          */
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Shuji Narazaki (narazaki@InetQ.or.jp); "
-                                      "http://www.inetq.or.jp/~narazaki/TheGIMP/",
+                                      "http://www.inetq.or.jp/~narazaki/TheLIGMA/",
                                       "Shuji Narazaki",
                                       "1997");
 
-      GIMP_PROC_ARG_STRING (procedure, "parameter-uri",
+      LIGMA_PROC_ARG_STRING (procedure, "parameter-uri",
                             "Parameter UTI",
                             "The local file:// URI of parameter file. "
                             "CML_explorer makes an image with its settings.",
@@ -541,25 +541,25 @@ explorer_create_procedure (GimpPlugIn  *plug_in,
   return procedure;
 }
 
-static GimpValueArray *
-explorer_run (GimpProcedure        *procedure,
-              GimpRunMode           run_mode,
-              GimpImage            *image,
+static LigmaValueArray *
+explorer_run (LigmaProcedure        *procedure,
+              LigmaRunMode           run_mode,
+              LigmaImage            *image,
               gint                  n_drawables,
-              GimpDrawable        **drawables,
-              const GimpValueArray *args,
+              LigmaDrawable        **drawables,
+              const LigmaValueArray *args,
               gpointer              run_data)
 {
   if (n_drawables != 1)
     {
       GError *error = NULL;
 
-      g_set_error (&error, GIMP_PLUG_IN_ERROR, 0,
+      g_set_error (&error, LIGMA_PLUG_IN_ERROR, 0,
                    _("Procedure '%s' only works with one drawable."),
                    PLUG_IN_PROC);
 
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_CALLING_ERROR,
                                                error);
     }
   else
@@ -569,26 +569,26 @@ explorer_run (GimpProcedure        *procedure,
 
   switch (run_mode)
     {
-    case GIMP_RUN_INTERACTIVE:
-      gimp_get_data (PLUG_IN_PROC, &VALS);
+    case LIGMA_RUN_INTERACTIVE:
+      ligma_get_data (PLUG_IN_PROC, &VALS);
 
       if (! CML_explorer_dialog ())
-        return gimp_procedure_new_return_values (procedure,
-                                                 GIMP_PDB_CANCEL,
+        return ligma_procedure_new_return_values (procedure,
+                                                 LIGMA_PDB_CANCEL,
                                                  NULL);
       break;
 
-    case GIMP_RUN_NONINTERACTIVE:
+    case LIGMA_RUN_NONINTERACTIVE:
       {
-        const gchar *uri      = GIMP_VALUES_GET_STRING (args, 0);
+        const gchar *uri      = LIGMA_VALUES_GET_STRING (args, 0);
         GFile       *file     = g_file_new_for_uri (uri);
 
         if (! CML_load_parameter_file (g_file_peek_path (file), FALSE))
           {
             g_object_unref (file);
 
-            return gimp_procedure_new_return_values (procedure,
-                                                     GIMP_PDB_CALLING_ERROR,
+            return ligma_procedure_new_return_values (procedure,
+                                                     LIGMA_PDB_CALLING_ERROR,
                                                      NULL);
           }
 
@@ -596,23 +596,23 @@ explorer_run (GimpProcedure        *procedure,
       }
       break;
 
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_get_data (PLUG_IN_PROC, &VALS);
+    case LIGMA_RUN_WITH_LAST_VALS:
+      ligma_get_data (PLUG_IN_PROC, &VALS);
       break;
     }
 
   if (CML_main_function (FALSE))
     {
-      if (run_mode != GIMP_RUN_NONINTERACTIVE)
-        gimp_displays_flush();
+      if (run_mode != LIGMA_RUN_NONINTERACTIVE)
+        ligma_displays_flush();
 
-      if (run_mode == GIMP_RUN_INTERACTIVE)
-        gimp_set_data (PLUG_IN_PROC, &VALS, sizeof (ValueType));
+      if (run_mode == LIGMA_RUN_INTERACTIVE)
+        ligma_set_data (PLUG_IN_PROC, &VALS, sizeof (ValueType));
     }
   else
     {
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_EXECUTION_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_EXECUTION_ERROR,
                                                NULL);
     }
 
@@ -620,7 +620,7 @@ explorer_run (GimpProcedure        *procedure,
   g_free (mem_chank1);
   g_free (mem_chank2);
 
-  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
+  return ligma_procedure_new_return_values (procedure, LIGMA_PDB_SUCCESS, NULL);
 }
 
 static gboolean
@@ -648,13 +648,13 @@ CML_main_function (gboolean preview_p)
   gdouble    *newh, *news, *newv;
   gdouble    *haux, *saux, *vaux;
 
-  if (! gimp_drawable_mask_intersect (drawable,
+  if (! ligma_drawable_mask_intersect (drawable,
                                       &x, &y,
                                       &width_by_pixel, &height_by_pixel))
     return TRUE;
 
-  src_has_alpha = dest_has_alpha = gimp_drawable_has_alpha (drawable);
-  src_is_gray   = dest_is_gray   = gimp_drawable_is_gray (drawable);
+  src_has_alpha = dest_has_alpha = ligma_drawable_has_alpha (drawable);
+  src_is_gray   = dest_is_gray   = ligma_drawable_is_gray (drawable);
 
   if (src_is_gray)
     {
@@ -733,9 +733,9 @@ CML_main_function (gboolean preview_p)
   dest_buf = mem_chank2;
 
   if (! preview_p)
-    dest_buffer = gimp_drawable_get_shadow_buffer (drawable);
+    dest_buffer = ligma_drawable_get_shadow_buffer (drawable);
 
-  src_buffer = gimp_drawable_get_buffer (drawable);
+  src_buffer = ligma_drawable_get_buffer (drawable);
 
   gr = g_rand_new ();
   if (VALS.initial_value == CML_INITIAL_RANDOM_FROM_SEED)
@@ -857,15 +857,15 @@ CML_main_function (gboolean preview_p)
            index++)
         {
           guchar  buffer[4];
-          GimpRGB rgb;
-          GimpHSV hsv;
+          LigmaRGB rgb;
+          LigmaHSV hsv;
 
           gegl_buffer_sample (src_buffer, x + (index * VALS.scale), y, NULL,
                               buffer, src_format,
                               GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
 
-          gimp_rgb_set_uchar (&rgb, buffer[0], buffer[1], buffer[2]);
-          gimp_rgb_to_hsv (&rgb, &hsv);
+          ligma_rgb_set_uchar (&rgb, buffer[0], buffer[1], buffer[2]);
+          ligma_rgb_to_hsv (&rgb, &hsv);
 
           hues[index] = hsv.h;
           sats[index] = hsv.s;
@@ -874,7 +874,7 @@ CML_main_function (gboolean preview_p)
     }
 
   if (! preview_p)
-    gimp_progress_init (_("CML Explorer: evoluting"));
+    ligma_progress_init (_("CML Explorer: evoluting"));
 
   /* rolling start */
   for (index = 0; index < VALS.start_offset; index++)
@@ -914,15 +914,15 @@ CML_main_function (gboolean preview_p)
 
           if (! dest_is_gray)
             {
-              GimpHSV hsv;
-              GimpRGB rgb;
+              LigmaHSV hsv;
+              LigmaRGB rgb;
 
-              gimp_hsv_set (&hsv,
+              ligma_hsv_set (&hsv,
                             (gdouble) h / 255.0,
                             (gdouble) s / 255.0,
                             (gdouble) v / 255.0);
 
-              gimp_hsv_to_rgb (&hsv, &rgb);
+              ligma_hsv_to_rgb (&hsv, &rgb);
 
               r = ROUND (rgb.r * 255.0);
               g = ROUND (rgb.g * 255.0);
@@ -953,14 +953,14 @@ CML_main_function (gboolean preview_p)
                       }
                     else
                       {
-                        GimpRGB rgb;
-                        GimpHSV hsv;
+                        LigmaRGB rgb;
+                        LigmaHSV hsv;
 
                         rgb.r = (gdouble) rgbi[0] / 255.0;
                         rgb.g = (gdouble) rgbi[1] / 255.0;
                         rgb.b = (gdouble) rgbi[2] / 255.0;
 
-                        gimp_rgb_to_hsv (&rgb, &hsv);
+                        ligma_rgb_to_hsv (&rgb, &hsv);
 
                         if (VALS.hue.function != CML_KEEP_VALUES)
                           hsv.h = (gdouble) h / 255.0;
@@ -971,7 +971,7 @@ CML_main_function (gboolean preview_p)
                         if (VALS.val.function != CML_KEEP_VALUES)
                           hsv.v = (gdouble) v / 255.0;
 
-                        gimp_hsv_to_rgb (&hsv, &rgb);
+                        ligma_hsv_to_rgb (&hsv, &rgb);
 
                         r = ROUND (rgb.r * 255.0);
                         g = ROUND (rgb.g * 255.0);
@@ -1002,16 +1002,16 @@ CML_main_function (gboolean preview_p)
 
                 if ((!preview_p) &&
                     (++processed % (total / PROGRESS_UPDATE_NUM + 1)) == 0)
-                  gimp_progress_update ((gdouble) processed / (gdouble) total);
+                  ligma_progress_update ((gdouble) processed / (gdouble) total);
               }
         }
 
       if (preview_p)
         {
-          gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
+          ligma_preview_area_draw (LIGMA_PREVIEW_AREA (preview),
                                   0, dy,
                                   width_by_pixel, keep_height,
-                                  GIMP_RGB_IMAGE,
+                                  LIGMA_RGB_IMAGE,
                                   dest_buf,
                                   dest_bpl);
         }
@@ -1033,12 +1033,12 @@ CML_main_function (gboolean preview_p)
     }
   else
     {
-      gimp_progress_update (1.0);
+      ligma_progress_update (1.0);
 
       g_object_unref (dest_buffer);
 
-      gimp_drawable_merge_shadow (drawable, TRUE);
-      gimp_drawable_update (drawable,
+      ligma_drawable_merge_shadow (drawable, TRUE);
+      ligma_drawable_update (drawable,
                             x, y, width_by_pixel, height_by_pixel);
     }
 
@@ -1339,23 +1339,23 @@ CML_explorer_dialog (void)
   GtkWidget *button;
   gboolean   run;
 
-  gimp_ui_init (PLUG_IN_BINARY);
+  ligma_ui_init (PLUG_IN_BINARY);
 
-  dialog = gimp_dialog_new (_("Coupled-Map-Lattice Explorer"), PLUG_IN_ROLE,
+  dialog = ligma_dialog_new (_("Coupled-Map-Lattice Explorer"), PLUG_IN_ROLE,
                             NULL, 0,
-                            gimp_standard_help_func, PLUG_IN_PROC,
+                            ligma_standard_help_func, PLUG_IN_PROC,
 
                             _("_Cancel"), GTK_RESPONSE_CANCEL,
                             _("_OK"),     GTK_RESPONSE_OK,
 
                             NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  gimp_window_set_transient (GTK_WINDOW (dialog));
+  ligma_window_set_transient (GTK_WINDOW (dialog));
 
   CML_preview_defer = TRUE;
 
@@ -1375,7 +1375,7 @@ CML_explorer_dialog (void)
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  preview = gimp_preview_area_new ();
+  preview = ligma_preview_area_new ();
   gtk_widget_set_size_request (preview,
                                PREVIEW_WIDTH, PREVIEW_HEIGHT);
   gtk_container_add (GTK_CONTAINER (frame), preview);
@@ -1476,7 +1476,7 @@ CML_explorer_dialog (void)
       gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
       gtk_widget_show (vbox);
 
-      frame = gimp_frame_new (_("Channel Independent Parameters"));
+      frame = ligma_frame_new (_("Channel Independent Parameters"));
       gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
 
@@ -1486,9 +1486,9 @@ CML_explorer_dialog (void)
       gtk_container_add (GTK_CONTAINER (frame), grid);
       gtk_widget_show (grid);
 
-      combo = gimp_int_combo_box_new_array (CML_INITIAL_NUM_VALUES,
+      combo = ligma_int_combo_box_new_array (CML_INITIAL_NUM_VALUES,
                                             initial_value_names);
-      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
+      ligma_int_combo_box_set_active (LIGMA_INT_COMBO_BOX (combo),
                                      VALS.initial_value);
 
       g_signal_connect (combo, "changed",
@@ -1497,28 +1497,28 @@ CML_explorer_dialog (void)
 
       CML_explorer_menu_entry_init (&widget_pointers[3][0],
                                     combo, &VALS.initial_value);
-      label = gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+      label = ligma_grid_attach_aligned (GTK_GRID (grid), 0, 0,
                                         _("Initial value:"), 0.0, 0.5,
                                         combo, 2);
       gtk_size_group_add_widget (group, label);
       g_object_unref (group);
 
-      scale = gimp_scale_entry_new (_("Zoom scale:"), VALS.scale, 1, 10, 0);
-      gtk_size_group_add_widget (group, gimp_labeled_get_label (GIMP_LABELED (scale)));
+      scale = ligma_scale_entry_new (_("Zoom scale:"), VALS.scale, 1, 10, 0);
+      gtk_size_group_add_widget (group, ligma_labeled_get_label (LIGMA_LABELED (scale)));
       CML_explorer_int_entry_init (&widget_pointers[3][1],
                                    scale, &VALS.scale);
       gtk_grid_attach (GTK_GRID (grid), scale, 0, 1, 3, 1);
       gtk_widget_show (scale);
 
-      scale = gimp_scale_entry_new (_("Start offset:"), VALS.start_offset, 0, 100, 0);
-      gtk_size_group_add_widget (group, gimp_labeled_get_label (GIMP_LABELED (scale)));
+      scale = ligma_scale_entry_new (_("Start offset:"), VALS.start_offset, 0, 100, 0);
+      gtk_size_group_add_widget (group, ligma_labeled_get_label (LIGMA_LABELED (scale)));
       CML_explorer_int_entry_init (&widget_pointers[3][2],
                                    scale, &VALS.start_offset);
       gtk_grid_attach (GTK_GRID (grid), scale, 0, 2, 3, 1);
       gtk_widget_show (scale);
 
       frame =
-        gimp_frame_new (_("Seed of Random (only for \"From Seed\" Modes)"));
+        ligma_frame_new (_("Seed of Random (only for \"From Seed\" Modes)"));
       gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
 
@@ -1528,8 +1528,8 @@ CML_explorer_dialog (void)
       gtk_container_add (GTK_CONTAINER (frame), grid);
       gtk_widget_show (grid);
 
-      scale = gimp_scale_entry_new (_("Seed:"), VALS.seed, 0, (guint32) -1, 0);
-      gtk_size_group_add_widget (group, gimp_labeled_get_label (GIMP_LABELED (scale)));
+      scale = ligma_scale_entry_new (_("Seed:"), VALS.seed, 0, (guint32) -1, 0);
+      gtk_size_group_add_widget (group, ligma_labeled_get_label (LIGMA_LABELED (scale)));
       CML_explorer_int_entry_init (&widget_pointers[3][3],
                                    scale, &VALS.seed);
       gtk_grid_attach (GTK_GRID (grid), scale, 0, 0, 3, 1);
@@ -1551,7 +1551,7 @@ CML_explorer_dialog (void)
       random_sensitives[4].widget = button;
       random_sensitives[4].logic  = TRUE;
 
-      gimp_help_set_help_data (button,
+      ligma_help_set_help_data (button,
                                _("\"Fix seed\" button is an alias of me.\n"
                                  "The same seed produces the same image, "
                                  "if (1) the widths of images are same "
@@ -1575,7 +1575,7 @@ CML_explorer_dialog (void)
       gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
       gtk_widget_show (vbox);
 
-      frame = gimp_frame_new (_("Copy Settings"));
+      frame = ligma_frame_new (_("Copy Settings"));
       gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
 
@@ -1585,30 +1585,30 @@ CML_explorer_dialog (void)
       gtk_container_add (GTK_CONTAINER (frame), grid);
       gtk_widget_show (grid);
 
-      combo = gimp_int_combo_box_new_array (G_N_ELEMENTS (channel_names),
+      combo = ligma_int_combo_box_new_array (G_N_ELEMENTS (channel_names),
                                             channel_names);
-      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), copy_source);
+      ligma_int_combo_box_set_active (LIGMA_INT_COMBO_BOX (combo), copy_source);
 
       g_signal_connect (combo, "changed",
-                        G_CALLBACK (gimp_int_combo_box_get_active),
+                        G_CALLBACK (ligma_int_combo_box_get_active),
                         &copy_source);
 
-      label = gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+      label = ligma_grid_attach_aligned (GTK_GRID (grid), 0, 0,
                                         _("Source channel:"), 0.0, 0.5,
                                         combo, 1);
       gtk_size_group_add_widget (group, label);
       g_object_unref (group);
 
-      combo = gimp_int_combo_box_new_array (G_N_ELEMENTS (channel_names),
+      combo = ligma_int_combo_box_new_array (G_N_ELEMENTS (channel_names),
                                             channel_names);
-      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
+      ligma_int_combo_box_set_active (LIGMA_INT_COMBO_BOX (combo),
                                      copy_destination);
 
       g_signal_connect (combo, "changed",
-                        G_CALLBACK (gimp_int_combo_box_get_active),
+                        G_CALLBACK (ligma_int_combo_box_get_active),
                         &copy_destination);
 
-      label = gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+      label = ligma_grid_attach_aligned (GTK_GRID (grid), 0, 1,
                                         _("Destination channel:"), 0.0, 0.5,
                                         combo, 1);
       gtk_size_group_add_widget (group, label);
@@ -1621,7 +1621,7 @@ CML_explorer_dialog (void)
                         G_CALLBACK (CML_copy_parameters_callback),
                         &VALS);
 
-      frame = gimp_frame_new (_("Selective Load Settings"));
+      frame = ligma_frame_new (_("Selective Load Settings"));
       gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
 
@@ -1631,31 +1631,31 @@ CML_explorer_dialog (void)
       gtk_container_add (GTK_CONTAINER (frame), grid);
       gtk_widget_show (grid);
 
-      combo = gimp_int_combo_box_new_array (G_N_ELEMENTS (load_channel_names),
+      combo = ligma_int_combo_box_new_array (G_N_ELEMENTS (load_channel_names),
                                             load_channel_names);
-      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
+      ligma_int_combo_box_set_active (LIGMA_INT_COMBO_BOX (combo),
                                      selective_load_source);
 
       g_signal_connect (combo, "changed",
-                        G_CALLBACK (gimp_int_combo_box_get_active),
+                        G_CALLBACK (ligma_int_combo_box_get_active),
                         &selective_load_source);
 
-      label = gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+      label = ligma_grid_attach_aligned (GTK_GRID (grid), 0, 0,
                                         _("Source channel in file:"),
                                         0.0, 0.5,
                                         combo, 1);
       gtk_size_group_add_widget (group, label);
 
-      combo = gimp_int_combo_box_new_array (G_N_ELEMENTS (load_channel_names),
+      combo = ligma_int_combo_box_new_array (G_N_ELEMENTS (load_channel_names),
                                             load_channel_names);
-      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
+      ligma_int_combo_box_set_active (LIGMA_INT_COMBO_BOX (combo),
                                      selective_load_destination);
 
       g_signal_connect (combo, "changed",
-                        G_CALLBACK (gimp_int_combo_box_get_active),
+                        G_CALLBACK (ligma_int_combo_box_get_active),
                         &selective_load_destination);
 
-      label = gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+      label = ligma_grid_attach_aligned (GTK_GRID (grid), 0, 1,
                                         _("Destination channel:"),
                                         0.0, 0.5,
                                         combo, 1);
@@ -1684,7 +1684,7 @@ CML_explorer_dialog (void)
   CML_preview_defer = FALSE;
   preview_update ();
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+  run = (ligma_dialog_run (LIGMA_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
   gtk_widget_destroy (dialog);
   g_free (img);
@@ -1711,8 +1711,8 @@ CML_dialog_channel_panel_new (CML_PARAM *param,
   gtk_container_set_border_width (GTK_CONTAINER (grid), 12);
   gtk_widget_show (grid);
 
-  combo = gimp_int_combo_box_new_array (CML_NUM_VALUES, function_names);
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), param->function);
+  combo = ligma_int_combo_box_new_array (CML_NUM_VALUES, function_names);
+  ligma_int_combo_box_set_active (LIGMA_INT_COMBO_BOX (combo), param->function);
 
   g_signal_connect (combo, "changed",
                     G_CALLBACK (CML_explorer_menu_update),
@@ -1720,14 +1720,14 @@ CML_dialog_channel_panel_new (CML_PARAM *param,
 
   CML_explorer_menu_entry_init (&widget_pointers[channel_id][index],
                                 combo, &param->function);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, index,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, index,
                             _("Function type:"), 0.0, 0.5,
                             combo, 2);
   index++;
 
-  combo = gimp_int_combo_box_new_array (COMP_NUM_VALUES, composition_names);
+  combo = ligma_int_combo_box_new_array (COMP_NUM_VALUES, composition_names);
 
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
+  ligma_int_combo_box_set_active (LIGMA_INT_COMBO_BOX (combo),
                                  param->composition);
 
   g_signal_connect (combo, "changed",
@@ -1736,13 +1736,13 @@ CML_dialog_channel_panel_new (CML_PARAM *param,
 
   CML_explorer_menu_entry_init (&widget_pointers[channel_id][index],
                                 combo, &param->composition);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, index,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, index,
                             _("Composition:"), 0.0, 0.5,
                             combo, 2);
   index++;
 
-  combo = gimp_int_combo_box_new_array (ARRANGE_NUM_VALUES, arrange_names);
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), param->arrange);
+  combo = ligma_int_combo_box_new_array (ARRANGE_NUM_VALUES, arrange_names);
+  ligma_int_combo_box_set_active (LIGMA_INT_COMBO_BOX (combo), param->arrange);
 
   g_signal_connect (combo, "changed",
                     G_CALLBACK (CML_explorer_menu_update),
@@ -1750,7 +1750,7 @@ CML_dialog_channel_panel_new (CML_PARAM *param,
 
   CML_explorer_menu_entry_init (&widget_pointers[channel_id][index],
                                 combo, &param->arrange);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, index,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, index,
                             _("Misc arrange:"), 0.0, 0.5,
                             combo, 2);
   index++;
@@ -1764,58 +1764,58 @@ CML_dialog_channel_panel_new (CML_PARAM *param,
   gtk_widget_show (toggle);
   index++;
 
-  scale = gimp_scale_entry_new (_("Mod. rate:"), param->mod_rate, 0.0, 1.0, 2);
+  scale = ligma_scale_entry_new (_("Mod. rate:"), param->mod_rate, 0.0, 1.0, 2);
   CML_explorer_double_entry_init (&widget_pointers[channel_id][index],
                                   scale, &param->mod_rate);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, index, 3, 1);
   gtk_widget_show (scale);
   index++;
 
-  scale = gimp_scale_entry_new (_("Env. sensitivity:"), param->env_sensitivity, 0.0, 1.0, 2);
+  scale = ligma_scale_entry_new (_("Env. sensitivity:"), param->env_sensitivity, 0.0, 1.0, 2);
   CML_explorer_double_entry_init (&widget_pointers[channel_id][index],
                                   scale, &param->env_sensitivity);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, index, 3, 1);
   gtk_widget_show (scale);
   index++;
 
-  scale = gimp_scale_entry_new (_("Diffusion dist.:"), param->diffusion_dist, 2, 10, 0);
+  scale = ligma_scale_entry_new (_("Diffusion dist.:"), param->diffusion_dist, 2, 10, 0);
   CML_explorer_int_entry_init (&widget_pointers[channel_id][index],
                                scale, &param->diffusion_dist);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, index, 3, 1);
   gtk_widget_show (scale);
   index++;
 
-  scale = gimp_scale_entry_new (_("# of subranges:"), param->range_num, 1, 10, 0);
+  scale = ligma_scale_entry_new (_("# of subranges:"), param->range_num, 1, 10, 0);
   CML_explorer_int_entry_init (&widget_pointers[channel_id][index],
                                scale, &param->range_num);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, index, 3, 1);
   gtk_widget_show (scale);
   index++;
 
-  scale = gimp_scale_entry_new (_("P(ower factor):"), param->power, 0.0, 10.0, 2);
-  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 0.1, 1.0);
+  scale = ligma_scale_entry_new (_("P(ower factor):"), param->power, 0.0, 10.0, 2);
+  ligma_label_spin_set_increments (LIGMA_LABEL_SPIN (scale), 0.1, 1.0);
   CML_explorer_double_entry_init (&widget_pointers[channel_id][index],
                                   scale, &param->power);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, index, 3, 1);
   gtk_widget_show (scale);
   index++;
 
-  scale = gimp_scale_entry_new (_("Parameter k:"), param->parameter_k, 0.0, 10.0, 2);
-  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 0.1, 1.0);
+  scale = ligma_scale_entry_new (_("Parameter k:"), param->parameter_k, 0.0, 10.0, 2);
+  ligma_label_spin_set_increments (LIGMA_LABEL_SPIN (scale), 0.1, 1.0);
   CML_explorer_double_entry_init (&widget_pointers[channel_id][index],
                                   scale, &param->parameter_k);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, index, 3, 1);
   gtk_widget_show (scale);
   index++;
 
-  scale = gimp_scale_entry_new (_("Range low:"), param->range_l, 0.0, 1.0, 2);
+  scale = ligma_scale_entry_new (_("Range low:"), param->range_l, 0.0, 1.0, 2);
   CML_explorer_double_entry_init (&widget_pointers[channel_id][index],
                                   scale, &param->range_l);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, index, 3, 1);
   gtk_widget_show (scale);
   index++;
 
-  scale = gimp_scale_entry_new (_("Range high:"), param->range_h, 0.0, 1.0, 2);
+  scale = ligma_scale_entry_new (_("Range high:"), param->range_h, 0.0, 1.0, 2);
   CML_explorer_double_entry_init (&widget_pointers[channel_id][index],
                                   scale, &param->range_h);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, index, 3, 1);
@@ -1856,7 +1856,7 @@ CML_dialog_advanced_panel_new (void)
     {
       param = (CML_PARAM *)&VALS + channel_id;
 
-      subframe = gimp_frame_new (gettext (channel_names[channel_id]));
+      subframe = ligma_frame_new (gettext (channel_names[channel_id]));
       gtk_box_pack_start (GTK_BOX (vbox), subframe, FALSE, FALSE, 0);
       gtk_widget_show (subframe);
 
@@ -1868,7 +1868,7 @@ CML_dialog_advanced_panel_new (void)
 
       index = 0;
 
-      scale = gimp_scale_entry_new (_("Ch. sensitivity:"), param->ch_sensitivity, 0.0, 1.0, 2);
+      scale = ligma_scale_entry_new (_("Ch. sensitivity:"), param->ch_sensitivity, 0.0, 1.0, 2);
       CML_explorer_double_entry_init (&widget_pointers[channel_id][index +
                                                                   widget_offset],
                                       scale, &param->ch_sensitivity);
@@ -1876,7 +1876,7 @@ CML_dialog_advanced_panel_new (void)
       gtk_widget_show (scale);
       index++;
 
-      scale = gimp_scale_entry_new (_("Mutation rate:"), param->mutation_rate, 0.0, 1.0, 2);
+      scale = ligma_scale_entry_new (_("Mutation rate:"), param->mutation_rate, 0.0, 1.0, 2);
       CML_explorer_double_entry_init (&widget_pointers[channel_id][index +
                                                                   widget_offset],
                                       scale, &param->mutation_rate);
@@ -1884,7 +1884,7 @@ CML_dialog_advanced_panel_new (void)
       gtk_widget_show (scale);
       index++;
 
-      scale = gimp_scale_entry_new (_("Mutation dist.:"), param->mutation_dist, 0.0, 1.0, 2);
+      scale = ligma_scale_entry_new (_("Mutation dist.:"), param->mutation_dist, 0.0, 1.0, 2);
       CML_explorer_double_entry_init (&widget_pointers[channel_id][index +
                                                                   widget_offset],
                                       scale, &param->mutation_dist);
@@ -1908,8 +1908,8 @@ function_graph_draw (GtkWidget *widget,
 {
   gint       x, y;
   gint       rgbi[3];
-  GimpHSV    hsv;
-  GimpRGB    rgb;
+  LigmaHSV    hsv;
+  LigmaRGB    rgb;
   gint       channel_id = GPOINTER_TO_INT (data[0]);
   CML_PARAM *param      = data[1];
 
@@ -1928,11 +1928,11 @@ function_graph_draw (GtkWidget *widget,
       hsv.s = (gdouble) rgbi[1] / 255.0;
       hsv.v = (gdouble) rgbi[2] / 255.0;
 
-      gimp_hsv_to_rgb (&hsv, &rgb);
+      ligma_hsv_to_rgb (&hsv, &rgb);
 
       for (y = 0; y < GRAPHSIZE; y++)
         {
-          GIMP_CAIRO_RGB24_SET_PIXEL((img+(y*img_stride+x*4)),
+          LIGMA_CAIRO_RGB24_SET_PIXEL((img+(y*img_stride+x*4)),
                                      ROUND (rgb.r * 255.0),
                                      ROUND (rgb.g * 255.0),
                                      ROUND (rgb.b * 255.0));
@@ -1976,9 +1976,9 @@ function_graph_new (GtkWidget *widget,
   GtkWidget *frame;
   GtkWidget *preview;
 
-  dialog = gimp_dialog_new (_("Graph of the Current Settings"), PLUG_IN_ROLE,
+  dialog = ligma_dialog_new (_("Graph of the Current Settings"), PLUG_IN_ROLE,
                             gtk_widget_get_toplevel (widget), 0,
-                            gimp_standard_help_func, PLUG_IN_PROC,
+                            ligma_standard_help_func, PLUG_IN_PROC,
 
                             _("_Close"), GTK_RESPONSE_CLOSE,
 
@@ -2001,7 +2001,7 @@ function_graph_new (GtkWidget *widget,
 
   gtk_widget_show (dialog);
 
-  gimp_dialog_run (GIMP_DIALOG (dialog));
+  ligma_dialog_run (LIGMA_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
 }
@@ -2116,7 +2116,7 @@ CML_save_to_file_callback (GtkWidget *widget,
 
                                      NULL);
 
-      gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+      ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                                GTK_RESPONSE_OK,
                                                GTK_RESPONSE_CANCEL,
                                                -1);
@@ -2164,7 +2164,7 @@ CML_save_to_file_response (GtkWidget *dialog,
   if (! file)
     {
       g_message (_("Could not open '%s' for writing: %s"),
-                 gimp_filename_to_utf8 (filename), g_strerror (errno));
+                 ligma_filename_to_utf8 (filename), g_strerror (errno));
       g_free (filename);
       return;
     }
@@ -2219,7 +2219,7 @@ CML_save_to_file_response (GtkWidget *dialog,
   fclose(file);
 
   g_message (_("Parameters were saved to '%s'"),
-             gimp_filename_to_utf8 (filename));
+             ligma_filename_to_utf8 (filename));
 
   g_strlcpy (VALS.last_file_name, filename,
              sizeof (VALS.last_file_name));
@@ -2249,7 +2249,7 @@ CML_load_from_file_callback (GtkWidget *widget,
 
                                      NULL);
 
-      gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+      ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                                GTK_RESPONSE_OK,
                                                GTK_RESPONSE_CANCEL,
                                                -1);
@@ -2337,7 +2337,7 @@ CML_load_parameter_file (const gchar *filename,
   if (!file)
     {
       g_message (_("Could not open '%s' for reading: %s"),
-                 gimp_filename_to_utf8 (filename), g_strerror (errno));
+                 ligma_filename_to_utf8 (filename), g_strerror (errno));
       return FALSE;
     }
   else
@@ -2358,7 +2358,7 @@ CML_load_parameter_file (const gchar *filename,
       if (version == 0)
         {
           if (interactive_mode)
-            gimp_message (_("Error: it's not CML parameter file."));
+            ligma_message (_("Error: it's not CML parameter file."));
           fclose(file);
           return FALSE;
         }
@@ -2366,12 +2366,12 @@ CML_load_parameter_file (const gchar *filename,
         {
           if (version < PARAM_FILE_FORMAT_VERSION)
             g_message (_("Warning: '%s' is an old format file."),
-                       gimp_filename_to_utf8 (filename));
+                       ligma_filename_to_utf8 (filename));
 
           if (PARAM_FILE_FORMAT_VERSION < version)
             g_message (_("Warning: '%s' is a parameter file for a newer "
                          "version of CML Explorer."),
-                       gimp_filename_to_utf8 (filename));
+                       ligma_filename_to_utf8 (filename));
         }
       for (channel_id = 0; flag && (channel_id < 3); channel_id++)
         {
@@ -2432,7 +2432,7 @@ CML_load_parameter_file (const gchar *filename,
   if (! flag)
     {
       if (interactive_mode)
-        gimp_message (_("Error: failed to load parameters"));
+        ligma_message (_("Error: failed to load parameters"));
     }
   else
     {
@@ -2526,7 +2526,7 @@ static void
 CML_explorer_toggle_update (GtkWidget *widget,
                             gpointer   data)
 {
-  gimp_toggle_button_update (widget, data);
+  ligma_toggle_button_update (widget, data);
 
   preview_update ();
 }
@@ -2555,10 +2555,10 @@ CML_explorer_toggle_entry_init (WidgetEntry *widget_entry,
 /*  int adjustment functions  */
 
 static void
-CML_explorer_int_adjustment_update (GimpLabelSpin *scale,
+CML_explorer_int_adjustment_update (LigmaLabelSpin *scale,
                                     gint          *value)
 {
-  *value = (gint) gimp_label_spin_get_value (scale);
+  *value = (gint) ligma_label_spin_get_value (scale);
 
   preview_update ();
 }
@@ -2566,9 +2566,9 @@ CML_explorer_int_adjustment_update (GimpLabelSpin *scale,
 static void
 CML_explorer_int_entry_change_value (WidgetEntry *widget_entry)
 {
-  GimpLabelSpin *scale = GIMP_LABEL_SPIN (widget_entry->widget);
+  LigmaLabelSpin *scale = LIGMA_LABEL_SPIN (widget_entry->widget);
 
-  gimp_label_spin_set_value (scale, *(gint *) (widget_entry->value));
+  ligma_label_spin_set_value (scale, *(gint *) (widget_entry->value));
 }
 
 static void
@@ -2588,10 +2588,10 @@ CML_explorer_int_entry_init (WidgetEntry *widget_entry,
 /*  double adjustment functions  */
 
 static void
-CML_explorer_double_adjustment_update (GimpLabelSpin *scale,
+CML_explorer_double_adjustment_update (LigmaLabelSpin *scale,
                                        gdouble       *value)
 {
-  *value = gimp_label_spin_get_value (scale);
+  *value = ligma_label_spin_get_value (scale);
 
   preview_update ();
 }
@@ -2599,9 +2599,9 @@ CML_explorer_double_adjustment_update (GimpLabelSpin *scale,
 static void
 CML_explorer_double_entry_change_value (WidgetEntry *widget_entry)
 {
-  GimpLabelSpin *scale = GIMP_LABEL_SPIN (widget_entry->widget);
+  LigmaLabelSpin *scale = LIGMA_LABEL_SPIN (widget_entry->widget);
 
-  gimp_label_spin_set_value (scale, *(gdouble *) (widget_entry->value));
+  ligma_label_spin_set_value (scale, *(gdouble *) (widget_entry->value));
 }
 
 static void
@@ -2624,7 +2624,7 @@ static void
 CML_explorer_menu_update (GtkWidget *widget,
                           gpointer   data)
 {
-  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), (gint *) data);
+  ligma_int_combo_box_get_active (LIGMA_INT_COMBO_BOX (widget), (gint *) data);
 
   preview_update ();
 }
@@ -2633,7 +2633,7 @@ static void
 CML_initial_value_menu_update (GtkWidget *widget,
                                gpointer   data)
 {
-  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), (gint *) data);
+  ligma_int_combo_box_get_active (LIGMA_INT_COMBO_BOX (widget), (gint *) data);
 
   CML_initial_value_sensitives_update ();
   preview_update ();
@@ -2642,7 +2642,7 @@ CML_initial_value_menu_update (GtkWidget *widget,
 static void
 CML_explorer_menu_entry_change_value (WidgetEntry *widget_entry)
 {
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (widget_entry->widget),
+  ligma_int_combo_box_set_active (LIGMA_INT_COMBO_BOX (widget_entry->widget),
                                  *(gint *) (widget_entry->value));
 }
 

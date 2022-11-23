@@ -1,5 +1,5 @@
 /*
- * DDS GIMP plugin
+ * DDS LIGMA plugin
  *
  * Copyright (C) 2004-2012 Shawn Kirst <skirst@gmail.com>,
  * with parts (C) 2003 Arne Reuter <homepage@arnereuter.de> where specified.
@@ -21,11 +21,11 @@
 #ifndef __MISC_H__
 #define __MISC_H__
 
-void decode_ycocg_image        (GimpDrawable *drawable,
+void decode_ycocg_image        (LigmaDrawable *drawable,
                                 gboolean      shadow);
-void decode_ycocg_scaled_image (GimpDrawable *drawable,
+void decode_ycocg_scaled_image (LigmaDrawable *drawable,
                                 gboolean      shadow);
-void decode_alpha_exp_image    (GimpDrawable *drawable,
+void decode_alpha_exp_image    (LigmaDrawable *drawable,
                                 gboolean      shadow);
 
 #endif /* __MISC_H__ */

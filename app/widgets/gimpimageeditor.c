@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,47 +22,47 @@
 
 #include "widgets-types.h"
 
-#include "core/gimpcontext.h"
-#include "core/gimpimage.h"
+#include "core/ligmacontext.h"
+#include "core/ligmaimage.h"
 
-#include "gimpdocked.h"
-#include "gimpimageeditor.h"
-#include "gimpuimanager.h"
+#include "ligmadocked.h"
+#include "ligmaimageeditor.h"
+#include "ligmauimanager.h"
 
 
-static void   gimp_image_editor_docked_iface_init (GimpDockedInterface *iface);
+static void   ligma_image_editor_docked_iface_init (LigmaDockedInterface *iface);
 
-static void   gimp_image_editor_set_context    (GimpDocked       *docked,
-                                                GimpContext      *context);
+static void   ligma_image_editor_set_context    (LigmaDocked       *docked,
+                                                LigmaContext      *context);
 
-static void   gimp_image_editor_dispose        (GObject          *object);
+static void   ligma_image_editor_dispose        (GObject          *object);
 
-static void   gimp_image_editor_real_set_image (GimpImageEditor  *editor,
-                                                GimpImage        *image);
-static void   gimp_image_editor_image_flush    (GimpImage        *image,
+static void   ligma_image_editor_real_set_image (LigmaImageEditor  *editor,
+                                                LigmaImage        *image);
+static void   ligma_image_editor_image_flush    (LigmaImage        *image,
                                                 gboolean          invalidate_preview,
-                                                GimpImageEditor  *editor);
+                                                LigmaImageEditor  *editor);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpImageEditor, gimp_image_editor, GIMP_TYPE_EDITOR,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED,
-                                                gimp_image_editor_docked_iface_init))
+G_DEFINE_TYPE_WITH_CODE (LigmaImageEditor, ligma_image_editor, LIGMA_TYPE_EDITOR,
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_DOCKED,
+                                                ligma_image_editor_docked_iface_init))
 
-#define parent_class gimp_image_editor_parent_class
+#define parent_class ligma_image_editor_parent_class
 
 
 static void
-gimp_image_editor_class_init (GimpImageEditorClass *klass)
+ligma_image_editor_class_init (LigmaImageEditorClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->dispose = gimp_image_editor_dispose;
+  object_class->dispose = ligma_image_editor_dispose;
 
-  klass->set_image      = gimp_image_editor_real_set_image;
+  klass->set_image      = ligma_image_editor_real_set_image;
 }
 
 static void
-gimp_image_editor_init (GimpImageEditor *editor)
+ligma_image_editor_init (LigmaImageEditor *editor)
 {
   editor->image = NULL;
 
@@ -70,22 +70,22 @@ gimp_image_editor_init (GimpImageEditor *editor)
 }
 
 static void
-gimp_image_editor_docked_iface_init (GimpDockedInterface *iface)
+ligma_image_editor_docked_iface_init (LigmaDockedInterface *iface)
 {
-  iface->set_context = gimp_image_editor_set_context;
+  iface->set_context = ligma_image_editor_set_context;
 }
 
 static void
-gimp_image_editor_set_context (GimpDocked  *docked,
-                               GimpContext *context)
+ligma_image_editor_set_context (LigmaDocked  *docked,
+                               LigmaContext *context)
 {
-  GimpImageEditor *editor = GIMP_IMAGE_EDITOR (docked);
-  GimpImage       *image  = NULL;
+  LigmaImageEditor *editor = LIGMA_IMAGE_EDITOR (docked);
+  LigmaImage       *image  = NULL;
 
   if (editor->context)
     {
       g_signal_handlers_disconnect_by_func (editor->context,
-                                            gimp_image_editor_set_image,
+                                            ligma_image_editor_set_image,
                                             editor);
 
       g_object_unref (editor->context);
@@ -98,40 +98,40 @@ gimp_image_editor_set_context (GimpDocked  *docked,
       g_object_ref (editor->context);
 
       g_signal_connect_swapped (context, "image-changed",
-                                G_CALLBACK (gimp_image_editor_set_image),
+                                G_CALLBACK (ligma_image_editor_set_image),
                                 editor);
 
-      image = gimp_context_get_image (context);
+      image = ligma_context_get_image (context);
     }
 
-  gimp_image_editor_set_image (editor, image);
+  ligma_image_editor_set_image (editor, image);
 }
 
 static void
-gimp_image_editor_dispose (GObject *object)
+ligma_image_editor_dispose (GObject *object)
 {
-  GimpImageEditor *editor = GIMP_IMAGE_EDITOR (object);
+  LigmaImageEditor *editor = LIGMA_IMAGE_EDITOR (object);
 
   if (editor->image)
-    gimp_image_editor_set_image (editor, NULL);
+    ligma_image_editor_set_image (editor, NULL);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
-gimp_image_editor_real_set_image (GimpImageEditor *editor,
-                                  GimpImage       *image)
+ligma_image_editor_real_set_image (LigmaImageEditor *editor,
+                                  LigmaImage       *image)
 {
   if (editor->image)
     g_signal_handlers_disconnect_by_func (editor->image,
-                                          gimp_image_editor_image_flush,
+                                          ligma_image_editor_image_flush,
                                           editor);
 
   editor->image = image;
 
   if (editor->image)
     g_signal_connect (editor->image, "flush",
-                      G_CALLBACK (gimp_image_editor_image_flush),
+                      G_CALLBACK (ligma_image_editor_image_flush),
                       editor);
 
   gtk_widget_set_sensitive (GTK_WIDGET (editor), image != NULL);
@@ -141,26 +141,26 @@ gimp_image_editor_real_set_image (GimpImageEditor *editor,
 /*  public functions  */
 
 void
-gimp_image_editor_set_image (GimpImageEditor *editor,
-                             GimpImage       *image)
+ligma_image_editor_set_image (LigmaImageEditor *editor,
+                             LigmaImage       *image)
 {
-  g_return_if_fail (GIMP_IS_IMAGE_EDITOR (editor));
-  g_return_if_fail (image == NULL || GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_IMAGE_EDITOR (editor));
+  g_return_if_fail (image == NULL || LIGMA_IS_IMAGE (image));
 
   if (image != editor->image)
     {
-      GIMP_IMAGE_EDITOR_GET_CLASS (editor)->set_image (editor, image);
+      LIGMA_IMAGE_EDITOR_GET_CLASS (editor)->set_image (editor, image);
 
-      if (gimp_editor_get_ui_manager (GIMP_EDITOR (editor)))
-        gimp_ui_manager_update (gimp_editor_get_ui_manager (GIMP_EDITOR (editor)),
-                                gimp_editor_get_popup_data (GIMP_EDITOR (editor)));
+      if (ligma_editor_get_ui_manager (LIGMA_EDITOR (editor)))
+        ligma_ui_manager_update (ligma_editor_get_ui_manager (LIGMA_EDITOR (editor)),
+                                ligma_editor_get_popup_data (LIGMA_EDITOR (editor)));
     }
 }
 
-GimpImage *
-gimp_image_editor_get_image (GimpImageEditor *editor)
+LigmaImage *
+ligma_image_editor_get_image (LigmaImageEditor *editor)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE_EDITOR (editor), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE_EDITOR (editor), NULL);
 
   return editor->image;
 }
@@ -169,11 +169,11 @@ gimp_image_editor_get_image (GimpImageEditor *editor)
 /*  private functions  */
 
 static void
-gimp_image_editor_image_flush (GimpImage       *image,
+ligma_image_editor_image_flush (LigmaImage       *image,
                                gboolean         invalidate_preview,
-                               GimpImageEditor *editor)
+                               LigmaImageEditor *editor)
 {
-  if (gimp_editor_get_ui_manager (GIMP_EDITOR (editor)))
-    gimp_ui_manager_update (gimp_editor_get_ui_manager (GIMP_EDITOR (editor)),
-                            gimp_editor_get_popup_data (GIMP_EDITOR (editor)));
+  if (ligma_editor_get_ui_manager (LIGMA_EDITOR (editor)))
+    ligma_ui_manager_update (ligma_editor_get_ui_manager (LIGMA_EDITOR (editor)),
+                            ligma_editor_get_popup_data (LIGMA_EDITOR (editor)));
 }

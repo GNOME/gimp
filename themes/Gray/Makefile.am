@@ -1,7 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
-themedatadir = $(gimpdatadir)/themes/Gray
+themedatadir = $(ligmadatadir)/themes/Gray
 
-themedata_DATA = gimp.css
+themedata_DATA = ligma.css
 
 EXTRA_DIST = $(themedata_DATA)

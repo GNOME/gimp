@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpbase-private.c
- * Copyright (C) 2003 Sven Neumann <sven@gimp.org>
+ * ligmabase-private.c
+ * Copyright (C) 2003 Sven Neumann <sven@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,51 +23,51 @@
 
 #include <gio/gio.h>
 
-#include "gimpbasetypes.h"
+#include "ligmabasetypes.h"
 
-#include "gimpbase-private.h"
-#include "gimpcompatenums.h"
+#include "ligmabase-private.h"
+#include "ligmacompatenums.h"
 
 
-GimpUnitVtable _gimp_unit_vtable = { NULL, };
+LigmaUnitVtable _ligma_unit_vtable = { NULL, };
 
 
 void
-gimp_base_init (GimpUnitVtable *vtable)
+ligma_base_init (LigmaUnitVtable *vtable)
 {
-  static gboolean gimp_base_initialized = FALSE;
+  static gboolean ligma_base_initialized = FALSE;
 
   g_return_if_fail (vtable != NULL);
 
-  if (gimp_base_initialized)
-    g_error ("gimp_base_init() must only be called once!");
+  if (ligma_base_initialized)
+    g_error ("ligma_base_init() must only be called once!");
 
-  _gimp_unit_vtable = *vtable;
+  _ligma_unit_vtable = *vtable;
 
-  gimp_base_compat_enums_init ();
+  ligma_base_compat_enums_init ();
 
-  gimp_base_initialized = TRUE;
+  ligma_base_initialized = TRUE;
 }
 
 void
-gimp_base_compat_enums_init (void)
+ligma_base_compat_enums_init (void)
 {
 #if 0
-  static gboolean gimp_base_compat_initialized = FALSE;
+  static gboolean ligma_base_compat_initialized = FALSE;
   GQuark          quark;
 
-  if (gimp_base_compat_initialized)
+  if (ligma_base_compat_initialized)
     return;
 
-  quark = g_quark_from_static_string ("gimp-compat-enum");
+  quark = g_quark_from_static_string ("ligma-compat-enum");
 
   /*  This is how a compat enum is registered, leave one here for
    *  documentation purposes, remove it as soon as we get a real
    *  compat enum again
    */
-  g_type_set_qdata (GIMP_TYPE_ADD_MASK_TYPE, quark,
-                    (gpointer) GIMP_TYPE_ADD_MASK_TYPE_COMPAT);
+  g_type_set_qdata (LIGMA_TYPE_ADD_MASK_TYPE, quark,
+                    (gpointer) LIGMA_TYPE_ADD_MASK_TYPE_COMPAT);
 
-  gimp_base_compat_initialized = TRUE;
+  ligma_base_compat_initialized = TRUE;
 #endif
 }

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,38 +15,38 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_FLOATING_SELECTION_UNDO_H__
-#define __GIMP_FLOATING_SELECTION_UNDO_H__
+#ifndef __LIGMA_FLOATING_SELECTION_UNDO_H__
+#define __LIGMA_FLOATING_SELECTION_UNDO_H__
 
 
-#include "gimpitemundo.h"
+#include "ligmaitemundo.h"
 
 
-#define GIMP_TYPE_FLOATING_SELECTION_UNDO            (gimp_floating_selection_undo_get_type ())
-#define GIMP_FLOATING_SELECTION_UNDO(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_FLOATING_SELECTION_UNDO, GimpFloatingSelectionUndo))
-#define GIMP_FLOATING_SELECTION_UNDO_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_FLOATING_SELECTION_UNDO, GimpFloatingSelectionUndoClass))
-#define GIMP_IS_FLOATING_SELECTION_UNDO(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_FLOATING_SELECTION_UNDO))
-#define GIMP_IS_FLOATING_SELECTION_UNDO_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_FLOATING_SELECTION_UNDO))
-#define GIMP_FLOATING_SELECTION_UNDO_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_FLOATING_SELECTION_UNDO, GimpFloatingSelectionUndoClass))
+#define LIGMA_TYPE_FLOATING_SELECTION_UNDO            (ligma_floating_selection_undo_get_type ())
+#define LIGMA_FLOATING_SELECTION_UNDO(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_FLOATING_SELECTION_UNDO, LigmaFloatingSelectionUndo))
+#define LIGMA_FLOATING_SELECTION_UNDO_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_FLOATING_SELECTION_UNDO, LigmaFloatingSelectionUndoClass))
+#define LIGMA_IS_FLOATING_SELECTION_UNDO(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_FLOATING_SELECTION_UNDO))
+#define LIGMA_IS_FLOATING_SELECTION_UNDO_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_FLOATING_SELECTION_UNDO))
+#define LIGMA_FLOATING_SELECTION_UNDO_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_FLOATING_SELECTION_UNDO, LigmaFloatingSelectionUndoClass))
 
 
-typedef struct _GimpFloatingSelectionUndo      GimpFloatingSelectionUndo;
-typedef struct _GimpFloatingSelectionUndoClass GimpFloatingSelectionUndoClass;
+typedef struct _LigmaFloatingSelectionUndo      LigmaFloatingSelectionUndo;
+typedef struct _LigmaFloatingSelectionUndoClass LigmaFloatingSelectionUndoClass;
 
-struct _GimpFloatingSelectionUndo
+struct _LigmaFloatingSelectionUndo
 {
-  GimpItemUndo  parent_instance;
+  LigmaItemUndo  parent_instance;
 
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
 };
 
-struct _GimpFloatingSelectionUndoClass
+struct _LigmaFloatingSelectionUndoClass
 {
-  GimpItemUndoClass  parent_class;
+  LigmaItemUndoClass  parent_class;
 };
 
 
-GType   gimp_floating_selection_undo_get_type (void) G_GNUC_CONST;
+GType   ligma_floating_selection_undo_get_type (void) G_GNUC_CONST;
 
 
-#endif /* __GIMP_FLOATING_SELECTION_UNDO_H__ */
+#endif /* __LIGMA_FLOATING_SELECTION_UNDO_H__ */

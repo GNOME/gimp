@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimpgpparams.c
- * Copyright (C) 2019 Michael Natterer <mitch@gimp.org>
+ * ligmagpparams.c
+ * Copyright (C) 2019 Michael Natterer <mitch@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -25,17 +25,17 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpbase/gimpprotocol.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmabase/ligmaprotocol.h"
 
-#include "gimp.h"
-#include "gimpgpparams.h"
+#include "ligma.h"
+#include "ligmagpparams.h"
 
 
 /*  include the implementation, they are shared between app/ and
- *  libgimp/ but need different headers.
+ *  libligma/ but need different headers.
  */
-#define LIBGIMP_COMPILATION
-#include "gimpgpparams-body.c"
-#undef LIBGIMP_COMPILATION
+#define LIBLIGMA_COMPILATION
+#include "ligmagpparams-body.c"
+#undef LIBLIGMA_COMPILATION

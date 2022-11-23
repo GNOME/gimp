@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * gimppropgui.h
+ * ligmapropgui.h
  * Copyright (C) 2017 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,19 +18,19 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PROP_GUI_EVAL_H__
-#define __GIMP_PROP_GUI_EVAL_H__
+#ifndef __LIGMA_PROP_GUI_EVAL_H__
+#define __LIGMA_PROP_GUI_EVAL_H__
 
 
-gboolean   gimp_prop_eval_boolean (GObject     *config,
+gboolean   ligma_prop_eval_boolean (GObject     *config,
                                    GParamSpec  *pspec,
                                    const gchar *key,
                                    gboolean     default_value);
 
-gchar    * gimp_prop_eval_string  (GObject     *config,
+gchar    * ligma_prop_eval_string  (GObject     *config,
                                    GParamSpec  *pspec,
                                    const gchar *key,
                                    const gchar *default_value);
 
 
-#endif /* __GIMP_PROP_GUI_EVAL_H__ */
+#endif /* __LIGMA_PROP_GUI_EVAL_H__ */

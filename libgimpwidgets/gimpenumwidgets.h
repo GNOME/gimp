@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpenumwidgets.h
- * Copyright (C) 2002-2004  Sven Neumann <sven@gimp.org>
+ * ligmaenumwidgets.h
+ * Copyright (C) 2002-2004  Sven Neumann <sven@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -19,22 +19,22 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
-#error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
+#if !defined (__LIGMA_WIDGETS_H_INSIDE__) && !defined (LIGMA_WIDGETS_COMPILATION)
+#error "Only <libligmawidgets/ligmawidgets.h> can be included directly."
 #endif
 
-#ifndef __GIMP_ENUM_WIDGETS_H__
-#define __GIMP_ENUM_WIDGETS_H__
+#ifndef __LIGMA_ENUM_WIDGETS_H__
+#define __LIGMA_ENUM_WIDGETS_H__
 
 G_BEGIN_DECLS
 
 
-GtkWidget * gimp_enum_radio_box_new               (GType          enum_type,
+GtkWidget * ligma_enum_radio_box_new               (GType          enum_type,
                                                    GCallback      callback,
                                                    gpointer       callback_data,
                                                    GDestroyNotify callback_data_destroy,
                                                    GtkWidget    **first_button);
-GtkWidget * gimp_enum_radio_box_new_with_range    (GType          enum_type,
+GtkWidget * ligma_enum_radio_box_new_with_range    (GType          enum_type,
                                                    gint           minimum,
                                                    gint           maximum,
                                                    GCallback      callback,
@@ -42,13 +42,13 @@ GtkWidget * gimp_enum_radio_box_new_with_range    (GType          enum_type,
                                                    GDestroyNotify callback_data_destroy,
                                                    GtkWidget    **first_button);
 
-GtkWidget * gimp_enum_radio_frame_new             (GType          enum_type,
+GtkWidget * ligma_enum_radio_frame_new             (GType          enum_type,
                                                    GtkWidget     *label_widget,
                                                    GCallback      callback,
                                                    gpointer       callback_data,
                                                    GDestroyNotify callback_data_destroy,
                                                    GtkWidget    **first_button);
-GtkWidget * gimp_enum_radio_frame_new_with_range  (GType          enum_type,
+GtkWidget * ligma_enum_radio_frame_new_with_range  (GType          enum_type,
                                                    gint           minimum,
                                                    gint           maximum,
                                                    GtkWidget     *label_widget,
@@ -57,14 +57,14 @@ GtkWidget * gimp_enum_radio_frame_new_with_range  (GType          enum_type,
                                                    GDestroyNotify callback_data_destroy,
                                                    GtkWidget    **first_button);
 
-GtkWidget * gimp_enum_icon_box_new                (GType          enum_type,
+GtkWidget * ligma_enum_icon_box_new                (GType          enum_type,
                                                    const gchar   *icon_prefix,
                                                    GtkIconSize    icon_size,
                                                    GCallback      callback,
                                                    gpointer       callback_data,
                                                    GDestroyNotify callback_data_destroy,
                                                    GtkWidget    **first_button);
-GtkWidget * gimp_enum_icon_box_new_with_range     (GType          enum_type,
+GtkWidget * ligma_enum_icon_box_new_with_range     (GType          enum_type,
                                                    gint           minimum,
                                                    gint           maximum,
                                                    const gchar   *icon_prefix,
@@ -73,10 +73,10 @@ GtkWidget * gimp_enum_icon_box_new_with_range     (GType          enum_type,
                                                    gpointer       callback_data,
                                                    GDestroyNotify callback_data_destroy,
                                                    GtkWidget    **first_button);
-void        gimp_enum_icon_box_set_child_padding  (GtkWidget     *icon_box,
+void        ligma_enum_icon_box_set_child_padding  (GtkWidget     *icon_box,
                                                    gint           xpad,
                                                    gint           ypad);
 
 G_END_DECLS
 
-#endif  /* __GIMP_ENUM_WIDGETS_H__ */
+#endif  /* __LIGMA_ENUM_WIDGETS_H__ */

@@ -4,21 +4,21 @@ modules_deps = [
 ]
 
 color_selector_libs = [
-  libgimpcolor,
-  libgimpconfig,
-  libgimpmodule,
-  libgimpwidgets,
+  libligmacolor,
+  libligmaconfig,
+  libligmamodule,
+  libligmawidgets,
 ]
 controller_libs = [
-  libgimpmodule,
-  libgimpwidgets,
+  libligmamodule,
+  libligmawidgets,
 ]
 display_filter_libs = [
-  libgimpbase,
-  libgimpcolor,
-  libgimpconfig,
-  libgimpmodule,
-  libgimpwidgets,
+  libligmabase,
+  libligmacolor,
+  libligmaconfig,
+  libligmamodule,
+  libligmawidgets,
 ]
 
 # Name, Sources, deps, link.
@@ -31,7 +31,7 @@ modules = [
     'link': color_selector_libs,
   }, {
     'name': 'color-selector-wheel',
-    'srcs': [ 'color-selector-wheel.c', 'gimpcolorwheel.c', ],
+    'srcs': [ 'color-selector-wheel.c', 'ligmacolorwheel.c', ],
     'link': color_selector_libs,
   }, {
     'name': 'display-filter-clip-warning',
@@ -54,7 +54,7 @@ modules = [
 if have_linuxinput
   modules += {
     'name': 'controller-linux-input',
-    'srcs': [ 'controller-linux-input.c', 'gimpinputdevicestore-gudev.c', ],
+    'srcs': [ 'controller-linux-input.c', 'ligmainputdevicestore-gudev.c', ],
     'deps': gudev,
     'link': controller_libs,
   }
@@ -63,7 +63,7 @@ endif
 if directx.found()
   modules += {
     'name': 'controller-dx-dinput',
-    'srcs': [ 'controller-dx-dinput.c', 'gimpinputdevicestore-dx.c', ],
+    'srcs': [ 'controller-dx-dinput.c', 'ligmainputdevicestore-dx.c', ],
     'deps': directx,
     'link': [ controller_libs, ],
     'link-args': [ '-lrpcrt4', ],
@@ -93,6 +93,6 @@ foreach module : modules
     link_with: link,
     link_args: link_args,
     install: true,
-    install_dir: gimpplugindir / 'modules',
+    install_dir: ligmaplugindir / 'modules',
   )
 endforeach

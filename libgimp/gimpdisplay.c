@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2000 Peter Mattis and Spencer Kimball
  *
- * gimpdisplay.c
+ * ligmadisplay.c
  * Copyright (C) Jehan
  *
  * This library is free software: you can redistribute it and/or
@@ -21,12 +21,12 @@
 
 #include "config.h"
 
-#include "gimp.h"
+#include "ligma.h"
 
-#include "libgimpbase/gimpwire.h" /* FIXME kill this include */
+#include "libligmabase/ligmawire.h" /* FIXME kill this include */
 
-#include "gimpplugin-private.h"
-#include "gimpprocedure-private.h"
+#include "ligmaplugin-private.h"
+#include "ligmaprocedure-private.h"
 
 
 enum
@@ -37,61 +37,61 @@ enum
 };
 
 
-struct _GimpDisplayPrivate
+struct _LigmaDisplayPrivate
 {
   gint id;
 };
 
 
-static void   gimp_display_set_property  (GObject      *object,
+static void   ligma_display_set_property  (GObject      *object,
                                           guint         property_id,
                                           const GValue *value,
                                           GParamSpec   *pspec);
-static void   gimp_display_get_property  (GObject      *object,
+static void   ligma_display_get_property  (GObject      *object,
                                           guint         property_id,
                                           GValue       *value,
                                           GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpDisplay, gimp_display, G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaDisplay, ligma_display, G_TYPE_OBJECT)
 
-#define parent_class gimp_display_parent_class
+#define parent_class ligma_display_parent_class
 
 static GParamSpec *props[N_PROPS] = { NULL, };
 
 
 static void
-gimp_display_class_init (GimpDisplayClass *klass)
+ligma_display_class_init (LigmaDisplayClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->set_property = gimp_display_set_property;
-  object_class->get_property = gimp_display_get_property;
+  object_class->set_property = ligma_display_set_property;
+  object_class->get_property = ligma_display_get_property;
 
   props[PROP_ID] =
     g_param_spec_int ("id",
                       "The display id",
                       "The display id for internal use",
                       0, G_MAXINT32, 0,
-                      GIMP_PARAM_READWRITE |
+                      LIGMA_PARAM_READWRITE |
                       G_PARAM_CONSTRUCT_ONLY);
 
   g_object_class_install_properties (object_class, N_PROPS, props);
 }
 
 static void
-gimp_display_init (GimpDisplay *display)
+ligma_display_init (LigmaDisplay *display)
 {
-  display->priv = gimp_display_get_instance_private (display);
+  display->priv = ligma_display_get_instance_private (display);
 }
 
 static void
-gimp_display_set_property (GObject      *object,
+ligma_display_set_property (GObject      *object,
                            guint         property_id,
                            const GValue *value,
                            GParamSpec   *pspec)
 {
-  GimpDisplay *display = GIMP_DISPLAY (object);
+  LigmaDisplay *display = LIGMA_DISPLAY (object);
 
   switch (property_id)
     {
@@ -106,12 +106,12 @@ gimp_display_set_property (GObject      *object,
 }
 
 static void
-gimp_display_get_property (GObject    *object,
+ligma_display_get_property (GObject    *object,
                            guint       property_id,
                            GValue     *value,
                            GParamSpec *pspec)
 {
-  GimpDisplay *display = GIMP_DISPLAY (object);
+  LigmaDisplay *display = LIGMA_DISPLAY (object);
 
   switch (property_id)
     {
@@ -129,7 +129,7 @@ gimp_display_get_property (GObject    *object,
 /* Public API */
 
 /**
- * gimp_display_get_id:
+ * ligma_display_get_id:
  * @display: The display.
  *
  * Returns: the display ID.
@@ -137,40 +137,40 @@ gimp_display_get_property (GObject    *object,
  * Since: 3.0
  **/
 gint32
-gimp_display_get_id (GimpDisplay *display)
+ligma_display_get_id (LigmaDisplay *display)
 {
   return display ? display->priv->id : -1;
 }
 
 /**
- * gimp_display_get_by_id:
+ * ligma_display_get_by_id:
  * @display_id: The display id.
  *
- * Returns a #GimpDisplay representing @display_id.
+ * Returns a #LigmaDisplay representing @display_id.
  *
- * Returns: (nullable) (transfer none): a #GimpDisplay for @display_id or
+ * Returns: (nullable) (transfer none): a #LigmaDisplay for @display_id or
  *          %NULL if @display_id does not represent a valid display.
- *          The object belongs to libgimp and you must not modify or
+ *          The object belongs to libligma and you must not modify or
  *          unref it.
  *
  * Since: 3.0
  **/
-GimpDisplay *
-gimp_display_get_by_id (gint32 display_id)
+LigmaDisplay *
+ligma_display_get_by_id (gint32 display_id)
 {
   if (display_id > 0)
     {
-      GimpPlugIn    *plug_in   = gimp_get_plug_in ();
-      GimpProcedure *procedure = _gimp_plug_in_get_procedure (plug_in);
+      LigmaPlugIn    *plug_in   = ligma_get_plug_in ();
+      LigmaProcedure *procedure = _ligma_plug_in_get_procedure (plug_in);
 
-      return _gimp_procedure_get_display (procedure, display_id);
+      return _ligma_procedure_get_display (procedure, display_id);
     }
 
   return NULL;
 }
 
 /**
- * gimp_display_is_valid:
+ * ligma_display_is_valid:
  * @display: The display to check.
  *
  * Returns TRUE if the display is valid.
@@ -183,7 +183,7 @@ gimp_display_get_by_id (gint32 display_id)
  * Since: 2.4
  **/
 gboolean
-gimp_display_is_valid (GimpDisplay *display)
+ligma_display_is_valid (LigmaDisplay *display)
 {
-  return gimp_display_id_is_valid (gimp_display_get_id (display));
+  return ligma_display_id_is_valid (ligma_display_get_id (display));
 }

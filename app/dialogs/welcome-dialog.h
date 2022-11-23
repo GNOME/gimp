@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * welcome-dialog.h
@@ -22,7 +22,7 @@
 #define __WELCOME_DIALOG_H__
 
 
-GtkWidget * welcome_dialog_create (Gimp *gimp);
+GtkWidget * welcome_dialog_create (Ligma *ligma);
 
 
 #endif /* __WELCOME_DIALOG_H__ */

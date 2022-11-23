@@ -12,17 +12,17 @@ subdir('tool-presets')
 
 
 meson.add_install_script('sh', '-c',
-  'mkdir -p $MESON_INSTALL_DESTDIR_PREFIX/@0@'.format(gimpdatadir / 'fonts')
+  'mkdir -p $MESON_INSTALL_DESTDIR_PREFIX/@0@'.format(ligmadatadir / 'fonts')
 )
 
 release_conf = configuration_data()
 release_conf.set('REVISION', get_option('revision'))
 
-gimp_release = 'gimp-release'
+ligma_release = 'ligma-release'
 configure_file(
-  input : gimp_release + '.in',
-  output: gimp_release,
+  input : ligma_release + '.in',
+  output: ligma_release,
   configuration: release_conf,
   install: true,
-  install_dir: gimpdatadir,
+  install_dir: ligmadatadir,
 )

@@ -4,7 +4,7 @@ AUTOMAKE_OPTIONS = subdir-objects
 
 libapp = $(top_builddir)/app/libapp.a
 libappwidgets = $(top_builddir)/app/widgets/libappwidgets.a
-libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
+libligmabase = $(top_builddir)/libligmabase/libligmabase-$(LIGMA_API_VERSION).la
 
 if PLATFORM_OSX
 xobjective_c = "-xobjective-c"
@@ -14,22 +14,22 @@ framework_appkit = -framework AppKit
 endif
 
 if OS_WIN32
-bin_PROGRAMS = gimp-debug-tool-@GIMP_TOOL_VERSION@
+bin_PROGRAMS = ligma-debug-tool-@LIGMA_TOOL_VERSION@
 else
 
 if PLATFORM_OSX
-bin_PROGRAMS = gimp-debug-tool-@GIMP_TOOL_VERSION@
+bin_PROGRAMS = ligma-debug-tool-@LIGMA_TOOL_VERSION@
 else
-libexec_PROGRAMS = gimp-debug-tool-@GIMP_TOOL_VERSION@
+libexec_PROGRAMS = ligma-debug-tool-@LIGMA_TOOL_VERSION@
 endif
 
 endif
 
 
-gimp_debug_tool_@GIMP_TOOL_VERSION@_SOURCES = \
-	gimp-debug-tool.c
+ligma_debug_tool_@LIGMA_TOOL_VERSION@_SOURCES = \
+	ligma-debug-tool.c
 
-gimp_debug_tool_@GIMP_TOOL_VERSION@_CPPFLAGS = \
+ligma_debug_tool_@LIGMA_TOOL_VERSION@_CPPFLAGS = \
 	-DCC_VERSION=\""$(CC_VERSION)"\"	\
 	-I$(top_srcdir)/app			\
 	-I$(top_builddir)/app			\
@@ -39,10 +39,10 @@ gimp_debug_tool_@GIMP_TOOL_VERSION@_CPPFLAGS = \
 	$(GTK_CFLAGS)				\
 	$(FONTCONFIG_CFLAGS)
 
-gimp_debug_tool_@GIMP_TOOL_VERSION@_LDADD = \
+ligma_debug_tool_@LIGMA_TOOL_VERSION@_LDADD = \
 	$(libappwidgets)	\
 	$(libapp)		\
-	$(libgimpbase)		\
+	$(libligmabase)		\
 	$(GIO_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(GTK_LIBS)		\
@@ -50,8 +50,8 @@ gimp_debug_tool_@GIMP_TOOL_VERSION@_LDADD = \
 
 
 AM_CPPFLAGS = \
-	-DGIMP_APP_VERSION=\"@GIMP_APP_VERSION@\"		\
-	-DLOCALEDIR=\""$(gimplocaledir)"\"			\
+	-DLIGMA_APP_VERSION=\"@LIGMA_APP_VERSION@\"		\
+	-DLOCALEDIR=\""$(ligmalocaledir)"\"			\
 	-DPREFIX=\""$(prefix)"\"				\
 	-DEXEC_PREFIX=\""$(exec_prefix)"\"			\
 	-DBINDIR=\""$(bindir)"\"				\
@@ -65,11 +65,11 @@ AM_CPPFLAGS = \
 	-DLIBDIR=\""$(libdir)"\"				\
 	-DINFODIR=\""$(infodir)"\"				\
 	-DMANDIR=\""$(mandir)"\"				\
-	-DGIMPPLUGINDIR=\""$(gimpplugindir)"\"			\
-	-DGIMPDATADIR=\""$(gimpdatadir)"\"			\
+	-DLIGMAPLUGINDIR=\""$(ligmaplugindir)"\"			\
+	-DLIGMADATADIR=\""$(ligmadatadir)"\"			\
 	-DCC=\""$(CC)"\"					\
-	-DGIMPDIR=\""$(gimpdir)"\"				\
-	-DGIMP_PLUGIN_VERSION=\""$(GIMP_PLUGIN_VERSION)"\"	\
+	-DLIGMADIR=\""$(ligmadir)"\"				\
+	-DLIGMA_PLUGIN_VERSION=\""$(LIGMA_PLUGIN_VERSION)"\"	\
 	-I$(top_srcdir)						\
 	$(GTK_CFLAGS)						\
 	-I$(includedir)

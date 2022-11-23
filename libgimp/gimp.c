@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimp.c
+ * ligma.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -52,7 +52,7 @@
 #include <gtk/gtk.h> /* need GDK_WINDOWING_FOO defines */
 
 #ifndef G_OS_WIN32
-#include "libgimpbase/gimpsignal.h"
+#include "libligmabase/ligmasignal.h"
 
 #else
 
@@ -90,30 +90,30 @@
 
 #include <locale.h>
 
-#include "gimp.h"
+#include "ligma.h"
 
-#include "libgimpbase/gimpbase-private.h"
-#include "libgimpbase/gimpprotocol.h"
-#include "libgimpbase/gimpwire.h"
+#include "libligmabase/ligmabase-private.h"
+#include "libligmabase/ligmaprotocol.h"
+#include "libligmabase/ligmawire.h"
 
-#include "gimp-debug.h"
-#include "gimp-private.h"
-#include "gimp-shm.h"
-#include "gimpgpparams.h"
-#include "gimppdb-private.h"
-#include "gimpplugin-private.h"
-#include "gimpunitcache.h"
+#include "ligma-debug.h"
+#include "ligma-private.h"
+#include "ligma-shm.h"
+#include "ligmagpparams.h"
+#include "ligmapdb-private.h"
+#include "ligmaplugin-private.h"
+#include "ligmaunitcache.h"
 
-#include "libgimp-intl.h"
+#include "libligma-intl.h"
 
 
-static void   gimp_close        (void);
+static void   ligma_close        (void);
 
 
 #ifdef G_OS_WIN32
 
 #ifdef HAVE_EXCHNDL
-static LONG WINAPI gimp_plugin_sigfatal_handler (PEXCEPTION_POINTERS pExceptionInfo);
+static LONG WINAPI ligma_plugin_sigfatal_handler (PEXCEPTION_POINTERS pExceptionInfo);
 
 static LPTOP_LEVEL_EXCEPTION_FILTER  _prevExceptionFilter    = NULL;
 static gchar                         *plug_in_backtrace_path = NULL;
@@ -121,13 +121,13 @@ static gchar                         *plug_in_backtrace_path = NULL;
 
 #else /* ! G_OS_WIN32 */
 
-static void        gimp_plugin_sigfatal_handler (gint sig_num);
+static void        ligma_plugin_sigfatal_handler (gint sig_num);
 
 #endif /* G_OS_WIN32 */
 
 
-static GimpPlugIn         *PLUG_IN               = NULL;
-static GimpPDB            *PDB                   = NULL;
+static LigmaPlugIn         *PLUG_IN               = NULL;
+static LigmaPDB            *PDB                   = NULL;
 
 static gint                _tile_width           = -1;
 static gint                _tile_height          = -1;
@@ -139,10 +139,10 @@ static gboolean            _export_xmp           = FALSE;
 static gboolean            _export_iptc          = FALSE;
 static gboolean            _export_thumbnail     = TRUE;
 static gint32              _num_processors       = 1;
-static GimpCheckSize       _check_size           = GIMP_CHECK_SIZE_MEDIUM_CHECKS;
-static GimpCheckType       _check_type           = GIMP_CHECK_TYPE_GRAY_CHECKS;
-static GimpRGB             _check_custom_color1  = GIMP_CHECKS_CUSTOM_COLOR1;
-static GimpRGB             _check_custom_color2  = GIMP_CHECKS_CUSTOM_COLOR2;
+static LigmaCheckSize       _check_size           = LIGMA_CHECK_SIZE_MEDIUM_CHECKS;
+static LigmaCheckType       _check_type           = LIGMA_CHECK_TYPE_GRAY_CHECKS;
+static LigmaRGB             _check_custom_color1  = LIGMA_CHECKS_CUSTOM_COLOR1;
+static LigmaRGB             _check_custom_color2  = LIGMA_CHECKS_CUSTOM_COLOR2;
 static gint                _default_display_id   = -1;
 static gchar              *_wm_class             = NULL;
 static gchar              *_display_name         = NULL;
@@ -151,20 +151,20 @@ static guint32             _timestamp            = 0;
 static gchar              *_icon_theme_dir       = NULL;
 static const gchar        *progname              = NULL;
 
-static GimpStackTraceMode  stack_trace_mode      = GIMP_STACK_TRACE_NEVER;
+static LigmaStackTraceMode  stack_trace_mode      = LIGMA_STACK_TRACE_NEVER;
 
 
 /**
- * gimp_main:
- * @plug_in_type: the type of the #GimpPlugIn subclass of the plug-in
+ * ligma_main:
+ * @plug_in_type: the type of the #LigmaPlugIn subclass of the plug-in
  * @argc:         the number of arguments
  * @argv:         (array length=argc): the arguments
  *
  * The main plug-in function that must be called with the plug-in's
- * #GimpPlugIn subclass #GType and the 'argc' and 'argv' that are passed
+ * #LigmaPlugIn subclass #GType and the 'argc' and 'argv' that are passed
  * to the platform's main().
  *
- * See also: GIMP_MAIN(), #GimpPlugIn.
+ * See also: LIGMA_MAIN(), #LigmaPlugIn.
  *
  * Returns: an exit status as defined by the C library,
  *          on success EXIT_SUCCESS.
@@ -172,14 +172,14 @@ static GimpStackTraceMode  stack_trace_mode      = GIMP_STACK_TRACE_NEVER;
  * Since: 3.0
  **/
 gint
-gimp_main (GType  plug_in_type,
+ligma_main (GType  plug_in_type,
            gint   argc,
            gchar *argv[])
 {
   enum
   {
     ARG_PROGNAME,
-    ARG_GIMP,
+    ARG_LIGMA,
     ARG_PROTOCOL_VERSION,
     ARG_READ_FD,
     ARG_WRITE_FD,
@@ -220,7 +220,7 @@ gimp_main (GType  plug_in_type,
     int          n;
 
     w_bin_dir = NULL;
-    install_dir = gimp_installation_directory ();
+    install_dir = ligma_installation_directory ();
     bin_dir = g_build_filename (install_dir, "bin", NULL);
 
     n = MultiByteToWideChar (CP_UTF8, MB_ERR_INVALID_CHARS,
@@ -255,7 +255,7 @@ gimp_main (GType  plug_in_type,
      * system.
      */
     dir = g_build_filename (g_get_user_data_dir (),
-                            GIMPDIR, GIMP_USER_VERSION, "CrashLog",
+                            LIGMADIR, LIGMA_USER_VERSION, "CrashLog",
                             NULL);
     /* Ensure the path exists. */
     g_mkdir_with_parents (dir, 0700);
@@ -271,7 +271,7 @@ gimp_main (GType  plug_in_type,
      * is very important!
      */
     if (! _prevExceptionFilter)
-      _prevExceptionFilter = SetUnhandledExceptionFilter (gimp_plugin_sigfatal_handler);
+      _prevExceptionFilter = SetUnhandledExceptionFilter (ligma_plugin_sigfatal_handler);
 
     ExcHndlInit ();
     ExcHndlSetLogFileNameA (plug_in_backtrace_path);
@@ -298,7 +298,7 @@ gimp_main (GType  plug_in_type,
     p_SetCurrentProcessExplicitAppUserModelID = (t_SetCurrentProcessExplicitAppUserModelID) GetProcAddress (GetModuleHandle ("shell32.dll"),
                                                                                                             "SetCurrentProcessExplicitAppUserModelID");
     if (p_SetCurrentProcessExplicitAppUserModelID)
-      (*p_SetCurrentProcessExplicitAppUserModelID) (L"gimp.GimpApplication");
+      (*p_SetCurrentProcessExplicitAppUserModelID) (L"ligma.LigmaApplication");
   }
 
   /* Check for exe file name with spaces in the path having been split up
@@ -344,14 +344,14 @@ gimp_main (GType  plug_in_type,
 
   g_assert (plug_in_type != G_TYPE_NONE);
 
-  if ((argc != N_ARGS) || (strcmp (argv[ARG_GIMP], "-gimp") != 0))
+  if ((argc != N_ARGS) || (strcmp (argv[ARG_LIGMA], "-ligma") != 0))
     {
-      g_printerr ("%s is a GIMP plug-in and must be run by GIMP to be used\n",
+      g_printerr ("%s is a LIGMA plug-in and must be run by LIGMA to be used\n",
                   argv[ARG_PROGNAME]);
       return EXIT_FAILURE;
     }
 
-  gimp_env_init (TRUE);
+  ligma_env_init (TRUE);
 
   progname = argv[ARG_PROGNAME];
 
@@ -361,32 +361,32 @@ gimp_main (GType  plug_in_type,
 
   protocol_version = atoi (argv[ARG_PROTOCOL_VERSION]);
 
-  if (protocol_version < GIMP_PROTOCOL_VERSION)
+  if (protocol_version < LIGMA_PROTOCOL_VERSION)
     {
       g_printerr ("Could not execute plug-in \"%s\"\n(%s)\n"
-                  "because GIMP is using an older version of the "
+                  "because LIGMA is using an older version of the "
                   "plug-in protocol.\n",
-                  gimp_filename_to_utf8 (g_get_prgname ()),
-                  gimp_filename_to_utf8 (progname));
+                  ligma_filename_to_utf8 (g_get_prgname ()),
+                  ligma_filename_to_utf8 (progname));
       return EXIT_FAILURE;
     }
-  else if (protocol_version > GIMP_PROTOCOL_VERSION)
+  else if (protocol_version > LIGMA_PROTOCOL_VERSION)
     {
       g_printerr ("Could not execute plug-in \"%s\"\n(%s)\n"
                   "because it uses an obsolete version of the "
                   "plug-in protocol.\n",
-                  gimp_filename_to_utf8 (g_get_prgname ()),
-                  gimp_filename_to_utf8 (progname));
+                  ligma_filename_to_utf8 (g_get_prgname ()),
+                  ligma_filename_to_utf8 (progname));
       return EXIT_FAILURE;
     }
 
-  _gimp_debug_init (basename);
+  _ligma_debug_init (basename);
 
   g_free (basename);
 
-  stack_trace_mode = (GimpStackTraceMode) CLAMP (atoi (argv[ARG_STACK_TRACE_MODE]),
-                                                 GIMP_STACK_TRACE_NEVER,
-                                                 GIMP_STACK_TRACE_ALWAYS);
+  stack_trace_mode = (LigmaStackTraceMode) CLAMP (atoi (argv[ARG_STACK_TRACE_MODE]),
+                                                 LIGMA_STACK_TRACE_NEVER,
+                                                 LIGMA_STACK_TRACE_ALWAYS);
 
 #ifndef G_OS_WIN32
 
@@ -395,21 +395,21 @@ gimp_main (GType  plug_in_type,
    * about the program error, and offer debugging if the plug-in
    * has been built with MSVC, and the user has MSVC installed.
    */
-  gimp_signal_private (SIGHUP,  gimp_plugin_sigfatal_handler, 0);
-  gimp_signal_private (SIGINT,  gimp_plugin_sigfatal_handler, 0);
-  gimp_signal_private (SIGQUIT, gimp_plugin_sigfatal_handler, 0);
-  gimp_signal_private (SIGTERM, gimp_plugin_sigfatal_handler, 0);
+  ligma_signal_private (SIGHUP,  ligma_plugin_sigfatal_handler, 0);
+  ligma_signal_private (SIGINT,  ligma_plugin_sigfatal_handler, 0);
+  ligma_signal_private (SIGQUIT, ligma_plugin_sigfatal_handler, 0);
+  ligma_signal_private (SIGTERM, ligma_plugin_sigfatal_handler, 0);
 
-  gimp_signal_private (SIGABRT, gimp_plugin_sigfatal_handler, 0);
-  gimp_signal_private (SIGBUS,  gimp_plugin_sigfatal_handler, 0);
-  gimp_signal_private (SIGSEGV, gimp_plugin_sigfatal_handler, 0);
-  gimp_signal_private (SIGFPE,  gimp_plugin_sigfatal_handler, 0);
+  ligma_signal_private (SIGABRT, ligma_plugin_sigfatal_handler, 0);
+  ligma_signal_private (SIGBUS,  ligma_plugin_sigfatal_handler, 0);
+  ligma_signal_private (SIGSEGV, ligma_plugin_sigfatal_handler, 0);
+  ligma_signal_private (SIGFPE,  ligma_plugin_sigfatal_handler, 0);
 
-  /* Ignore SIGPIPE from crashing Gimp */
-  gimp_signal_private (SIGPIPE, SIG_IGN, 0);
+  /* Ignore SIGPIPE from crashing Ligma */
+  ligma_signal_private (SIGPIPE, SIG_IGN, 0);
 
   /* Restart syscalls interrupted by SIGCHLD */
-  gimp_signal_private (SIGCHLD, SIG_DFL, SA_RESTART);
+  ligma_signal_private (SIGCHLD, SIG_DFL, SA_RESTART);
 
 #endif /* ! G_OS_WIN32 */
 
@@ -440,22 +440,22 @@ gimp_main (GType  plug_in_type,
       G_TYPE_STRING,           G_TYPE_PARAM_STRING,
       G_TYPE_STRV,             G_TYPE_PARAM_BOXED,
 
-      GIMP_TYPE_ARRAY,         GIMP_TYPE_PARAM_ARRAY,
-      GIMP_TYPE_UINT8_ARRAY,   GIMP_TYPE_PARAM_UINT8_ARRAY,
-      GIMP_TYPE_INT32_ARRAY,   GIMP_TYPE_PARAM_INT32_ARRAY,
-      GIMP_TYPE_FLOAT_ARRAY,   GIMP_TYPE_PARAM_FLOAT_ARRAY,
-      GIMP_TYPE_RGB_ARRAY,     GIMP_TYPE_PARAM_RGB_ARRAY,
-      GIMP_TYPE_OBJECT_ARRAY,  GIMP_TYPE_PARAM_OBJECT_ARRAY,
+      LIGMA_TYPE_ARRAY,         LIGMA_TYPE_PARAM_ARRAY,
+      LIGMA_TYPE_UINT8_ARRAY,   LIGMA_TYPE_PARAM_UINT8_ARRAY,
+      LIGMA_TYPE_INT32_ARRAY,   LIGMA_TYPE_PARAM_INT32_ARRAY,
+      LIGMA_TYPE_FLOAT_ARRAY,   LIGMA_TYPE_PARAM_FLOAT_ARRAY,
+      LIGMA_TYPE_RGB_ARRAY,     LIGMA_TYPE_PARAM_RGB_ARRAY,
+      LIGMA_TYPE_OBJECT_ARRAY,  LIGMA_TYPE_PARAM_OBJECT_ARRAY,
 
-      GIMP_TYPE_DISPLAY,       GIMP_TYPE_PARAM_DISPLAY,
-      GIMP_TYPE_IMAGE,         GIMP_TYPE_PARAM_IMAGE,
-      GIMP_TYPE_ITEM,          GIMP_TYPE_PARAM_ITEM,
-      GIMP_TYPE_DRAWABLE,      GIMP_TYPE_PARAM_DRAWABLE,
-      GIMP_TYPE_LAYER,         GIMP_TYPE_PARAM_LAYER,
-      GIMP_TYPE_CHANNEL,       GIMP_TYPE_PARAM_CHANNEL,
-      GIMP_TYPE_LAYER_MASK,    GIMP_TYPE_PARAM_LAYER_MASK,
-      GIMP_TYPE_SELECTION,     GIMP_TYPE_PARAM_SELECTION,
-      GIMP_TYPE_VECTORS,       GIMP_TYPE_PARAM_VECTORS
+      LIGMA_TYPE_DISPLAY,       LIGMA_TYPE_PARAM_DISPLAY,
+      LIGMA_TYPE_IMAGE,         LIGMA_TYPE_PARAM_IMAGE,
+      LIGMA_TYPE_ITEM,          LIGMA_TYPE_PARAM_ITEM,
+      LIGMA_TYPE_DRAWABLE,      LIGMA_TYPE_PARAM_DRAWABLE,
+      LIGMA_TYPE_LAYER,         LIGMA_TYPE_PARAM_LAYER,
+      LIGMA_TYPE_CHANNEL,       LIGMA_TYPE_PARAM_CHANNEL,
+      LIGMA_TYPE_LAYER_MASK,    LIGMA_TYPE_PARAM_LAYER_MASK,
+      LIGMA_TYPE_SELECTION,     LIGMA_TYPE_PARAM_SELECTION,
+      LIGMA_TYPE_VECTORS,       LIGMA_TYPE_PARAM_VECTORS
     };
 
     gint i;
@@ -468,128 +468,128 @@ gimp_main (GType  plug_in_type,
           g_type_class_ref (type);
       }
 
-    gimp_enums_init ();
+    ligma_enums_init ();
   }
 
   /*  initialize units  */
   {
-    GimpUnitVtable vtable;
+    LigmaUnitVtable vtable;
 
-    vtable.unit_get_number_of_units = _gimp_unit_cache_get_number_of_units;
+    vtable.unit_get_number_of_units = _ligma_unit_cache_get_number_of_units;
     vtable.unit_get_number_of_built_in_units =
-      _gimp_unit_cache_get_number_of_built_in_units;
-    vtable.unit_new                 = _gimp_unit_cache_new;
-    vtable.unit_get_deletion_flag   = _gimp_unit_cache_get_deletion_flag;
-    vtable.unit_set_deletion_flag   = _gimp_unit_cache_set_deletion_flag;
-    vtable.unit_get_factor          = _gimp_unit_cache_get_factor;
-    vtable.unit_get_digits          = _gimp_unit_cache_get_digits;
-    vtable.unit_get_identifier      = _gimp_unit_cache_get_identifier;
-    vtable.unit_get_symbol          = _gimp_unit_cache_get_symbol;
-    vtable.unit_get_abbreviation    = _gimp_unit_cache_get_abbreviation;
-    vtable.unit_get_singular        = _gimp_unit_cache_get_singular;
-    vtable.unit_get_plural          = _gimp_unit_cache_get_plural;
+      _ligma_unit_cache_get_number_of_built_in_units;
+    vtable.unit_new                 = _ligma_unit_cache_new;
+    vtable.unit_get_deletion_flag   = _ligma_unit_cache_get_deletion_flag;
+    vtable.unit_set_deletion_flag   = _ligma_unit_cache_set_deletion_flag;
+    vtable.unit_get_factor          = _ligma_unit_cache_get_factor;
+    vtable.unit_get_digits          = _ligma_unit_cache_get_digits;
+    vtable.unit_get_identifier      = _ligma_unit_cache_get_identifier;
+    vtable.unit_get_symbol          = _ligma_unit_cache_get_symbol;
+    vtable.unit_get_abbreviation    = _ligma_unit_cache_get_abbreviation;
+    vtable.unit_get_singular        = _ligma_unit_cache_get_singular;
+    vtable.unit_get_plural          = _ligma_unit_cache_get_plural;
 
-    gimp_base_init (&vtable);
+    ligma_base_init (&vtable);
   }
 
   /*  initialize i18n support  */
   setlocale (LC_ALL, "");
 
-  bindtextdomain (GETTEXT_PACKAGE"-libgimp", gimp_locale_directory ());
+  bindtextdomain (GETTEXT_PACKAGE"-libligma", ligma_locale_directory ());
 #ifdef HAVE_BIND_TEXTDOMAIN_CODESET
-  bind_textdomain_codeset (GETTEXT_PACKAGE"-libgimp", "UTF-8");
+  bind_textdomain_codeset (GETTEXT_PACKAGE"-libligma", "UTF-8");
 #endif
 
-  _gimp_debug_configure (stack_trace_mode);
+  _ligma_debug_configure (stack_trace_mode);
 
   PLUG_IN = g_object_new (plug_in_type,
                           "read-channel",  read_channel,
                           "write-channel", write_channel,
                           NULL);
 
-  g_assert (GIMP_IS_PLUG_IN (PLUG_IN));
+  g_assert (LIGMA_IS_PLUG_IN (PLUG_IN));
 
   if (strcmp (argv[ARG_MODE], "-query") == 0)
     {
-      if (_gimp_get_debug_flags () & GIMP_DEBUG_QUERY)
-        _gimp_debug_stop ();
+      if (_ligma_get_debug_flags () & LIGMA_DEBUG_QUERY)
+        _ligma_debug_stop ();
 
-      _gimp_plug_in_query (PLUG_IN);
+      _ligma_plug_in_query (PLUG_IN);
 
-      gimp_close ();
+      ligma_close ();
 
       return EXIT_SUCCESS;
     }
 
   if (strcmp (argv[ARG_MODE], "-init") == 0)
     {
-      if (_gimp_get_debug_flags () & GIMP_DEBUG_INIT)
-        _gimp_debug_stop ();
+      if (_ligma_get_debug_flags () & LIGMA_DEBUG_INIT)
+        _ligma_debug_stop ();
 
-      _gimp_plug_in_init (PLUG_IN);
+      _ligma_plug_in_init (PLUG_IN);
 
-      gimp_close ();
+      ligma_close ();
 
       return EXIT_SUCCESS;
     }
 
-  if (_gimp_get_debug_flags () & GIMP_DEBUG_RUN)
-    _gimp_debug_stop ();
-  else if (_gimp_get_debug_flags () & GIMP_DEBUG_PID)
+  if (_ligma_get_debug_flags () & LIGMA_DEBUG_RUN)
+    _ligma_debug_stop ();
+  else if (_ligma_get_debug_flags () & LIGMA_DEBUG_PID)
     g_log (G_LOG_DOMAIN, G_LOG_LEVEL_DEBUG, "Here I am!");
 
-  _gimp_plug_in_run (PLUG_IN);
+  _ligma_plug_in_run (PLUG_IN);
 
-  gimp_close ();
+  ligma_close ();
 
   return EXIT_SUCCESS;
 }
 
 /**
- * gimp_get_plug_in:
+ * ligma_get_plug_in:
  *
- * This function returns the plug-in's #GimpPlugIn instance, which is
+ * This function returns the plug-in's #LigmaPlugIn instance, which is
  * a a singleton that can exist exactly once per running plug-in.
  *
- * Returns: (transfer none) (nullable): The plug-in's #GimpPlugIn singleton.
+ * Returns: (transfer none) (nullable): The plug-in's #LigmaPlugIn singleton.
  *
  * Since: 3.0
  **/
-GimpPlugIn *
-gimp_get_plug_in (void)
+LigmaPlugIn *
+ligma_get_plug_in (void)
 {
   return PLUG_IN;
 }
 
 /**
- * gimp_get_pdb:
+ * ligma_get_pdb:
  *
- * This function returns the plug-in's #GimpPDB instance, which is a
+ * This function returns the plug-in's #LigmaPDB instance, which is a
  * singleton that can exist exactly once per running plug-in.
  *
- * Returns: (transfer none) (nullable): The plug-in's #GimpPDB singleton.
+ * Returns: (transfer none) (nullable): The plug-in's #LigmaPDB singleton.
  *
  * Since: 3.0
  **/
-GimpPDB *
-gimp_get_pdb (void)
+LigmaPDB *
+ligma_get_pdb (void)
 {
   if (! PDB)
-    PDB = _gimp_pdb_new (PLUG_IN);
+    PDB = _ligma_pdb_new (PLUG_IN);
 
   return PDB;
 }
 
 /**
- * gimp_quit:
+ * ligma_quit:
  *
- * Forcefully causes the GIMP library to exit and close down its
- * connection to main gimp application. This function never returns.
+ * Forcefully causes the LIGMA library to exit and close down its
+ * connection to main ligma application. This function never returns.
  **/
 void
-gimp_quit (void)
+ligma_quit (void)
 {
-  gimp_close ();
+  ligma_close ();
 
 #if defined G_OS_WIN32 && defined HAVE_EXCHNDL
   if (plug_in_backtrace_path)
@@ -600,39 +600,39 @@ gimp_quit (void)
 }
 
 /**
- * gimp_tile_width:
+ * ligma_tile_width:
  *
- * Returns the tile width GIMP is using.
+ * Returns the tile width LIGMA is using.
  *
  * This is a constant value given at plug-in configuration time.
  *
  * Returns: the tile_width
  **/
 guint
-gimp_tile_width (void)
+ligma_tile_width (void)
 {
   return _tile_width;
 }
 
 /**
- * gimp_tile_height:
+ * ligma_tile_height:
  *
- * Returns the tile height GIMP is using.
+ * Returns the tile height LIGMA is using.
  *
  * This is a constant value given at plug-in configuration time.
  *
  * Returns: the tile_height
  **/
 guint
-gimp_tile_height (void)
+ligma_tile_height (void)
 {
   return _tile_height;
 }
 
 /**
- * gimp_show_help_button:
+ * ligma_show_help_button:
  *
- * Returns whether or not GimpDialog should automatically add a help
+ * Returns whether or not LigmaDialog should automatically add a help
  * button if help_func and help_id are given.
  *
  * This is a constant value given at plug-in configuration time.
@@ -642,13 +642,13 @@ gimp_tile_height (void)
  * Since: 2.2
  **/
 gboolean
-gimp_show_help_button (void)
+ligma_show_help_button (void)
 {
   return _show_help_button;
 }
 
 /**
- * gimp_export_color_profile:
+ * ligma_export_color_profile:
  *
  * Returns whether file plug-ins should default to exporting the
  * image's color profile.
@@ -658,13 +658,13 @@ gimp_show_help_button (void)
  * Since: 2.10.4
  **/
 gboolean
-gimp_export_color_profile (void)
+ligma_export_color_profile (void)
 {
   return _export_color_profile;
 }
 
 /**
- * gimp_export_comment:
+ * ligma_export_comment:
  *
  * Returns whether file plug-ins should default to exporting the
  * image's comment.
@@ -674,13 +674,13 @@ gimp_export_color_profile (void)
  * Since: 3.0
  **/
 gboolean
-gimp_export_comment (void)
+ligma_export_comment (void)
 {
   return _export_comment;
 }
 
 /**
- * gimp_export_exif:
+ * ligma_export_exif:
  *
  * Returns whether file plug-ins should default to exporting Exif
  * metadata, according preferences (original settings is %FALSE since
@@ -691,13 +691,13 @@ gimp_export_comment (void)
  * Since: 2.10
  **/
 gboolean
-gimp_export_exif (void)
+ligma_export_exif (void)
 {
   return _export_exif;
 }
 
 /**
- * gimp_export_xmp:
+ * ligma_export_xmp:
  *
  * Returns whether file plug-ins should default to exporting XMP
  * metadata, according preferences (original settings is %FALSE since
@@ -708,13 +708,13 @@ gimp_export_exif (void)
  * Since: 2.10
  **/
 gboolean
-gimp_export_xmp (void)
+ligma_export_xmp (void)
 {
   return _export_xmp;
 }
 
 /**
- * gimp_export_iptc:
+ * ligma_export_iptc:
  *
  * Returns whether file plug-ins should default to exporting IPTC
  * metadata, according preferences (original settings is %FALSE since
@@ -725,13 +725,13 @@ gimp_export_xmp (void)
  * Since: 2.10
  **/
 gboolean
-gimp_export_iptc (void)
+ligma_export_iptc (void)
 {
   return _export_iptc;
 }
 
 /**
- * gimp_export_thumbnail:
+ * ligma_export_thumbnail:
  *
  * Returns whether file plug-ins should default to exporting the
  * image's comment.
@@ -741,13 +741,13 @@ gimp_export_iptc (void)
  * Since: 3.0
  **/
 gboolean
-gimp_export_thumbnail (void)
+ligma_export_thumbnail (void)
 {
   return _export_thumbnail;
 }
 
 /**
- * gimp_get_num_processors:
+ * ligma_get_num_processors:
  *
  * Returns the number of threads set explicitly by the user in the
  * preferences. This information can be used by plug-ins wishing to
@@ -758,13 +758,13 @@ gimp_export_thumbnail (void)
  * Since: 3.0
  **/
 gint32
-gimp_get_num_processors (void)
+ligma_get_num_processors (void)
 {
   return _num_processors;
 }
 
 /**
- * gimp_check_size:
+ * ligma_check_size:
  *
  * Returns the size of the checkerboard to be used in previews.
  *
@@ -774,14 +774,14 @@ gimp_get_num_processors (void)
  *
  * Since: 2.2
  **/
-GimpCheckSize
-gimp_check_size (void)
+LigmaCheckSize
+ligma_check_size (void)
 {
   return _check_size;
 }
 
 /**
- * gimp_check_type:
+ * ligma_check_type:
  *
  * Returns the type of the checkerboard to be used in previews.
  *
@@ -791,14 +791,14 @@ gimp_check_size (void)
  *
  * Since: 2.2
  **/
-GimpCheckType
-gimp_check_type (void)
+LigmaCheckType
+ligma_check_type (void)
 {
   return _check_type;
 }
 
 /**
- * gimp_check_custom_color1:
+ * ligma_check_custom_color1:
  *
  * Returns the first checkerboard custom color that can
  * be used in previews.
@@ -809,14 +809,14 @@ gimp_check_type (void)
  *
  * Since: 3.0
  **/
-const GimpRGB *
-gimp_check_custom_color1 (void)
+const LigmaRGB *
+ligma_check_custom_color1 (void)
 {
   return &_check_custom_color1;
 }
 
 /**
- * gimp_check_custom_color2:
+ * ligma_check_custom_color2:
  *
  * Returns the second checkerboard custom color that can
  * be used in previews.
@@ -827,14 +827,14 @@ gimp_check_custom_color1 (void)
  *
  * Since: 3.0
  **/
-const GimpRGB *
-gimp_check_custom_color2 (void)
+const LigmaRGB *
+ligma_check_custom_color2 (void)
 {
   return &_check_custom_color2;
 }
 
 /**
- * gimp_default_display:
+ * ligma_default_display:
  *
  * Returns the default display ID. This corresponds to the display the
  * running procedure's menu entry was invoked from.
@@ -842,16 +842,16 @@ gimp_check_custom_color2 (void)
  * This is a constant value given at plug-in configuration time.
  *
  * Returns: (transfer none): the default display ID
- *          The object belongs to libgimp and you should not free it.
+ *          The object belongs to libligma and you should not free it.
  **/
-GimpDisplay *
-gimp_default_display (void)
+LigmaDisplay *
+ligma_default_display (void)
 {
-  return gimp_display_get_by_id (_default_display_id);
+  return ligma_display_get_by_id (_default_display_id);
 }
 
 /**
- * gimp_wm_class:
+ * ligma_wm_class:
  *
  * Returns the window manager class to be used for plug-in windows.
  *
@@ -860,30 +860,30 @@ gimp_default_display (void)
  * Returns: the window manager class
  **/
 const gchar *
-gimp_wm_class (void)
+ligma_wm_class (void)
 {
   return _wm_class;
 }
 
 /**
- * gimp_display_name:
+ * ligma_display_name:
  *
  * Returns the display to be used for plug-in windows.
  *
  * This is a constant value given at plug-in configuration time.
- * Will return %NULL if GIMP has been started with no GUI, either
+ * Will return %NULL if LIGMA has been started with no GUI, either
  * via "--no-interface" flag, or a console build.
  *
  * Returns: the display name
  **/
 const gchar *
-gimp_display_name (void)
+ligma_display_name (void)
 {
   return _display_name;
 }
 
 /**
- * gimp_monitor_number:
+ * ligma_monitor_number:
  *
  * Returns the monitor number to be used for plug-in windows.
  *
@@ -892,13 +892,13 @@ gimp_display_name (void)
  * Returns: the monitor number
  **/
 gint
-gimp_monitor_number (void)
+ligma_monitor_number (void)
 {
   return _monitor_number;
 }
 
 /**
- * gimp_user_time:
+ * ligma_user_time:
  *
  * Returns the timestamp of the user interaction that should be set on
  * the plug-in window. This is handled transparently, plug-in authors
@@ -911,13 +911,13 @@ gimp_monitor_number (void)
  * Since: 2.6
  **/
 guint32
-gimp_user_time (void)
+ligma_user_time (void)
 {
   return _timestamp;
 }
 
 /**
- * gimp_icon_theme_dir:
+ * ligma_icon_theme_dir:
  *
  * Returns the directory of the current icon theme.
  *
@@ -928,20 +928,20 @@ gimp_user_time (void)
  * Since: 2.10.4
  **/
 const gchar *
-gimp_icon_theme_dir (void)
+ligma_icon_theme_dir (void)
 {
   return _icon_theme_dir;
 }
 
 /**
- * gimp_get_progname:
+ * ligma_get_progname:
  *
  * Returns the plug-in's executable name.
  *
  * Returns: the executable name
  **/
 const gchar *
-gimp_get_progname (void)
+ligma_get_progname (void)
 {
   return progname;
 }
@@ -950,12 +950,12 @@ gimp_get_progname (void)
 /*  private functions  */
 
 static void
-gimp_close (void)
+ligma_close (void)
 {
-  if (_gimp_get_debug_flags () & GIMP_DEBUG_QUIT)
-    _gimp_debug_stop ();
+  if (_ligma_get_debug_flags () & LIGMA_DEBUG_QUIT)
+    _ligma_debug_stop ();
 
-  _gimp_plug_in_quit (PLUG_IN);
+  _ligma_plug_in_quit (PLUG_IN);
 
   if (PDB)
     g_object_run_dispose (G_OBJECT (PDB));
@@ -972,7 +972,7 @@ gimp_close (void)
 
 #ifdef HAVE_EXCHNDL
 static LONG WINAPI
-gimp_plugin_sigfatal_handler (PEXCEPTION_POINTERS pExceptionInfo)
+ligma_plugin_sigfatal_handler (PEXCEPTION_POINTERS pExceptionInfo)
 {
   g_printerr ("Plugin signal handler: %s: fatal error\n", progname);
 
@@ -981,7 +981,7 @@ gimp_plugin_sigfatal_handler (PEXCEPTION_POINTERS pExceptionInfo)
   /* For simplicity, do not make a difference between QUERY and ALWAYS
    * on Windows (at least not for now).
    */
-  if (stack_trace_mode != GIMP_STACK_TRACE_NEVER &&
+  if (stack_trace_mode != LIGMA_STACK_TRACE_NEVER &&
       g_file_test (plug_in_backtrace_path, G_FILE_TEST_IS_REGULAR))
     {
       FILE   *stream;
@@ -1000,7 +1000,7 @@ gimp_plugin_sigfatal_handler (PEXCEPTION_POINTERS pExceptionInfo)
       fclose (stream);
     }
 
-  if (_prevExceptionFilter && _prevExceptionFilter != gimp_plugin_sigfatal_handler)
+  if (_prevExceptionFilter && _prevExceptionFilter != ligma_plugin_sigfatal_handler)
     return _prevExceptionFilter (pExceptionInfo);
   else
     return EXCEPTION_CONTINUE_SEARCH;
@@ -1010,7 +1010,7 @@ gimp_plugin_sigfatal_handler (PEXCEPTION_POINTERS pExceptionInfo)
 #else /* ! G_OS_WIN32 */
 
 static void
-gimp_plugin_sigfatal_handler (gint sig_num)
+ligma_plugin_sigfatal_handler (gint sig_num)
 {
   switch (sig_num)
     {
@@ -1030,35 +1030,35 @@ gimp_plugin_sigfatal_handler (gint sig_num)
       g_printerr ("%s: fatal error: %s\n", progname, g_strsignal (sig_num));
       switch (stack_trace_mode)
         {
-        case GIMP_STACK_TRACE_NEVER:
+        case LIGMA_STACK_TRACE_NEVER:
           break;
 
-        case GIMP_STACK_TRACE_QUERY:
+        case LIGMA_STACK_TRACE_QUERY:
           {
             sigset_t sigset;
 
             sigemptyset (&sigset);
             sigprocmask (SIG_SETMASK, &sigset, NULL);
-            gimp_stack_trace_query (progname);
+            ligma_stack_trace_query (progname);
           }
           break;
 
-        case GIMP_STACK_TRACE_ALWAYS:
+        case LIGMA_STACK_TRACE_ALWAYS:
           {
             sigset_t sigset;
 
             sigemptyset (&sigset);
             sigprocmask (SIG_SETMASK, &sigset, NULL);
-            gimp_stack_trace_print (progname, stdout, NULL);
+            ligma_stack_trace_print (progname, stdout, NULL);
           }
           break;
         }
       break;
     }
 
-  /* Do not end with gimp_quit().
+  /* Do not end with ligma_quit().
    * We want the plug-in to continue its normal crash course, otherwise
-   * we won't get the "Plug-in crashed" error in GIMP.
+   * we won't get the "Plug-in crashed" error in LIGMA.
    */
   exit (EXIT_FAILURE);
 }
@@ -1066,7 +1066,7 @@ gimp_plugin_sigfatal_handler (gint sig_num)
 #endif /* G_OS_WIN32 */
 
 void
-_gimp_config (GPConfig *config)
+_ligma_config (GPConfig *config)
 {
   GFile *file;
   gchar *path;
@@ -1094,9 +1094,9 @@ _gimp_config (GPConfig *config)
   if (config->app_name)
     g_set_application_name (config->app_name);
 
-  gimp_cpu_accel_set_use (config->use_cpu_accel);
+  ligma_cpu_accel_set_use (config->use_cpu_accel);
 
-  file = gimp_file_new_for_config_path (config->swap_path, NULL);
+  file = ligma_file_new_for_config_path (config->swap_path, NULL);
   path = g_file_get_path (file);
 
   g_object_set (gegl_config (),
@@ -1111,5 +1111,5 @@ _gimp_config (GPConfig *config)
   g_free (path);
   g_object_unref (file);
 
-  _gimp_shm_open (config->shm_id);
+  _ligma_shm_open (config->shm_id);
 }

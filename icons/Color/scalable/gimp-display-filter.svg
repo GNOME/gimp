@@ -14,7 +14,7 @@
    id="svg30571"
    version="1.1"
    inkscape:version="0.91+devel r"
-   sodipodi:docname="gimp-display-filter.svg">
+   sodipodi:docname="ligma-display-filter.svg">
   <defs
      id="defs30573">
     <linearGradient
@@ -129,7 +129,7 @@
         <g
            transform="matrix(0.96596111,0,0,1.0006489,136.71349,-448.56934)"
            id="g8718"
-           inkscape:label="gimp-display-filter"
+           inkscape:label="ligma-display-filter"
            inkscape:export-xdpi="135"
            inkscape:export-ydpi="135"
            style="fill:#729fcf;stroke:#000000;stroke-width:0.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1">

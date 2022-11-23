@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpscalecombobox.h
- * Copyright (C) 2004, 2008  Sven Neumann <sven@gimp.org>
+ * ligmascalecombobox.h
+ * Copyright (C) 2004, 2008  Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,21 +18,21 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SCALE_COMBO_BOX_H__
-#define __GIMP_SCALE_COMBO_BOX_H__
+#ifndef __LIGMA_SCALE_COMBO_BOX_H__
+#define __LIGMA_SCALE_COMBO_BOX_H__
 
 
-#define GIMP_TYPE_SCALE_COMBO_BOX            (gimp_scale_combo_box_get_type ())
-#define GIMP_SCALE_COMBO_BOX(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_SCALE_COMBO_BOX, GimpScaleComboBox))
-#define GIMP_SCALE_COMBO_BOX_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_SCALE_COMBO_BOX, GimpScaleComboBoxClass))
-#define GIMP_IS_SCALE_COMBO_BOX(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_SCALE_COMBO_BOX))
-#define GIMP_IS_SCALE_COMBO_BOX_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_SCALE_COMBO_BOX))
-#define GIMP_SCALE_COMBO_BOX_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_SCALE_COMBO_BOX, GimpScaleComboBoxClass))
+#define LIGMA_TYPE_SCALE_COMBO_BOX            (ligma_scale_combo_box_get_type ())
+#define LIGMA_SCALE_COMBO_BOX(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_SCALE_COMBO_BOX, LigmaScaleComboBox))
+#define LIGMA_SCALE_COMBO_BOX_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_SCALE_COMBO_BOX, LigmaScaleComboBoxClass))
+#define LIGMA_IS_SCALE_COMBO_BOX(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_SCALE_COMBO_BOX))
+#define LIGMA_IS_SCALE_COMBO_BOX_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_SCALE_COMBO_BOX))
+#define LIGMA_SCALE_COMBO_BOX_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_SCALE_COMBO_BOX, LigmaScaleComboBoxClass))
 
 
-typedef struct _GimpScaleComboBoxClass  GimpScaleComboBoxClass;
+typedef struct _LigmaScaleComboBoxClass  LigmaScaleComboBoxClass;
 
-struct _GimpScaleComboBox
+struct _LigmaScaleComboBox
 {
   GtkComboBox  parent_instance;
 
@@ -41,20 +41,20 @@ struct _GimpScaleComboBox
   GList       *mru;
 };
 
-struct _GimpScaleComboBoxClass
+struct _LigmaScaleComboBoxClass
 {
   GtkComboBoxClass  parent_instance;
 
-  void (* entry_activated) (GimpScaleComboBox *combo_box);
+  void (* entry_activated) (LigmaScaleComboBox *combo_box);
 };
 
 
-GType       gimp_scale_combo_box_get_type   (void) G_GNUC_CONST;
+GType       ligma_scale_combo_box_get_type   (void) G_GNUC_CONST;
 
-GtkWidget * gimp_scale_combo_box_new        (void);
-void        gimp_scale_combo_box_set_scale  (GimpScaleComboBox *combo_box,
+GtkWidget * ligma_scale_combo_box_new        (void);
+void        ligma_scale_combo_box_set_scale  (LigmaScaleComboBox *combo_box,
                                              gdouble            scale);
-gdouble     gimp_scale_combo_box_get_scale  (GimpScaleComboBox *combo_box);
+gdouble     ligma_scale_combo_box_get_scale  (LigmaScaleComboBox *combo_box);
 
 
-#endif  /* __GIMP_SCALE_COMBO_BOX_H__ */
+#endif  /* __LIGMA_SCALE_COMBO_BOX_H__ */

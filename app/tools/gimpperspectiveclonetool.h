@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,58 +15,58 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PERSPECTIVE_CLONE_TOOL_H__
-#define __GIMP_PERSPECTIVE_CLONE_TOOL_H__
+#ifndef __LIGMA_PERSPECTIVE_CLONE_TOOL_H__
+#define __LIGMA_PERSPECTIVE_CLONE_TOOL_H__
 
 
-#include "gimpbrushtool.h"
-#include "gimptransformtool.h"  /* for TransInfo */
+#include "ligmabrushtool.h"
+#include "ligmatransformtool.h"  /* for TransInfo */
 
 
-#define GIMP_TYPE_PERSPECTIVE_CLONE_TOOL            (gimp_perspective_clone_tool_get_type ())
-#define GIMP_PERSPECTIVE_CLONE_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PERSPECTIVE_CLONE_TOOL, GimpPerspectiveCloneTool))
-#define GIMP_PERSPECTIVE_CLONE_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PERSPECTIVE_CLONE_TOOL, GimpPerspectiveCloneToolClass))
-#define GIMP_IS_PERSPECTIVE_CLONE_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PERSPECTIVE_CLONE_TOOL))
-#define GIMP_IS_PERSPECTIVE_CLONE_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PERSPECTIVE_CLONE_TOOL))
-#define GIMP_PERSPECTIVE_CLONE_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PERSPECTIVE_CLONE_TOOL, GimpPerspectiveCloneToolClass))
+#define LIGMA_TYPE_PERSPECTIVE_CLONE_TOOL            (ligma_perspective_clone_tool_get_type ())
+#define LIGMA_PERSPECTIVE_CLONE_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_PERSPECTIVE_CLONE_TOOL, LigmaPerspectiveCloneTool))
+#define LIGMA_PERSPECTIVE_CLONE_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_PERSPECTIVE_CLONE_TOOL, LigmaPerspectiveCloneToolClass))
+#define LIGMA_IS_PERSPECTIVE_CLONE_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_PERSPECTIVE_CLONE_TOOL))
+#define LIGMA_IS_PERSPECTIVE_CLONE_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_PERSPECTIVE_CLONE_TOOL))
+#define LIGMA_PERSPECTIVE_CLONE_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_PERSPECTIVE_CLONE_TOOL, LigmaPerspectiveCloneToolClass))
 
-#define GIMP_PERSPECTIVE_CLONE_TOOL_GET_OPTIONS(t)  (GIMP_PERSPECTIVE_CLONE_OPTIONS (gimp_tool_get_options (GIMP_TOOL (t))))
+#define LIGMA_PERSPECTIVE_CLONE_TOOL_GET_OPTIONS(t)  (LIGMA_PERSPECTIVE_CLONE_OPTIONS (ligma_tool_get_options (LIGMA_TOOL (t))))
 
 
-typedef struct _GimpPerspectiveCloneTool      GimpPerspectiveCloneTool;
-typedef struct _GimpPerspectiveCloneToolClass GimpPerspectiveCloneToolClass;
+typedef struct _LigmaPerspectiveCloneTool      LigmaPerspectiveCloneTool;
+typedef struct _LigmaPerspectiveCloneToolClass LigmaPerspectiveCloneToolClass;
 
-struct _GimpPerspectiveCloneTool
+struct _LigmaPerspectiveCloneTool
 {
-  GimpBrushTool        parent_instance;
+  LigmaBrushTool        parent_instance;
 
-  GimpDisplay         *src_display;
+  LigmaDisplay         *src_display;
   gint                 src_x;
   gint                 src_y;
 
-  GimpMatrix3          transform;      /*  transformation matrix            */
+  LigmaMatrix3          transform;      /*  transformation matrix            */
   TransInfo            trans_info;     /*  transformation info              */
   TransInfo            old_trans_info; /*  for cancelling a drag operation  */
 
   gint                 x1, y1;         /*  upper left hand coordinate       */
   gint                 x2, y2;         /*  lower right hand coords          */
 
-  GimpCursorPrecision  saved_precision;
+  LigmaCursorPrecision  saved_precision;
 
-  GimpToolWidget      *widget;
-  GimpToolWidget      *grab_widget;
+  LigmaToolWidget      *widget;
+  LigmaToolWidget      *grab_widget;
 };
 
-struct _GimpPerspectiveCloneToolClass
+struct _LigmaPerspectiveCloneToolClass
 {
-  GimpBrushToolClass  parent_class;
+  LigmaBrushToolClass  parent_class;
 };
 
 
-void    gimp_perspective_clone_tool_register (GimpToolRegisterCallback  callback,
+void    ligma_perspective_clone_tool_register (LigmaToolRegisterCallback  callback,
                                               gpointer                  data);
 
-GType   gimp_perspective_clone_tool_get_type (void) G_GNUC_CONST;
+GType   ligma_perspective_clone_tool_get_type (void) G_GNUC_CONST;
 
 
-#endif  /*  __GIMP_PERSPECTIVE_CLONE_TOOL_H__  */
+#endif  /*  __LIGMA_PERSPECTIVE_CLONE_TOOL_H__  */

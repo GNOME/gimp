@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,28 +20,28 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "tools-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpguide.h"
-#include "core/gimpimage.h"
-#include "core/gimplayer.h"
-#include "core/gimpchannel.h"
+#include "core/ligma.h"
+#include "core/ligmaguide.h"
+#include "core/ligmaimage.h"
+#include "core/ligmalayer.h"
+#include "core/ligmachannel.h"
 
-#include "vectors/gimpvectors.h"
+#include "vectors/ligmavectors.h"
 
-#include "widgets/gimppivotselector.h"
-#include "widgets/gimppropwidgets.h"
-#include "widgets/gimpwidgets-utils.h"
+#include "widgets/ligmapivotselector.h"
+#include "widgets/ligmapropwidgets.h"
+#include "widgets/ligmawidgets-utils.h"
 
-#include "gimpalignoptions.h"
-#include "gimptooloptions-gui.h"
+#include "ligmaalignoptions.h"
+#include "ligmatooloptions-gui.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 #define ALIGN_VER_N_BUTTONS 3
@@ -67,7 +67,7 @@ enum
   PROP_PIVOT_Y,
 };
 
-struct _GimpAlignOptionsPrivate
+struct _LigmaAlignOptionsPrivate
 {
   gboolean   align_layers;
   gboolean   align_vectors;
@@ -91,45 +91,45 @@ struct _GimpAlignOptionsPrivate
 };
 
 
-static void   gimp_align_options_finalize               (GObject           *object);
-static void   gimp_align_options_set_property           (GObject           *object,
+static void   ligma_align_options_finalize               (GObject           *object);
+static void   ligma_align_options_set_property           (GObject           *object,
                                                          guint              property_id,
                                                          const GValue      *value,
                                                          GParamSpec        *pspec);
-static void   gimp_align_options_get_property           (GObject           *object,
+static void   ligma_align_options_get_property           (GObject           *object,
                                                          guint              property_id,
                                                          GValue            *value,
                                                          GParamSpec        *pspec);
 
-static void   gimp_align_options_image_changed          (GimpContext      *context,
-                                                         GimpImage        *image,
-                                                         GimpAlignOptions *options);
+static void   ligma_align_options_image_changed          (LigmaContext      *context,
+                                                         LigmaImage        *image,
+                                                         LigmaAlignOptions *options);
 
-static void   gimp_align_options_update_area            (GimpAlignOptions *options);
-static void   gimp_align_options_guide_removed          (GimpImage        *image,
-                                                         GimpGuide        *guide,
-                                                         GimpAlignOptions *options);
-static void   gimp_align_options_reference_removed      (GObject          *object,
-                                                         GimpAlignOptions *options);
-static void   gimp_align_options_pivot_changed          (GimpPivotSelector *selector,
-                                                         GimpAlignOptions  *options);
+static void   ligma_align_options_update_area            (LigmaAlignOptions *options);
+static void   ligma_align_options_guide_removed          (LigmaImage        *image,
+                                                         LigmaGuide        *guide,
+                                                         LigmaAlignOptions *options);
+static void   ligma_align_options_reference_removed      (GObject          *object,
+                                                         LigmaAlignOptions *options);
+static void   ligma_align_options_pivot_changed          (LigmaPivotSelector *selector,
+                                                         LigmaAlignOptions  *options);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpAlignOptions, gimp_align_options, GIMP_TYPE_TOOL_OPTIONS)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaAlignOptions, ligma_align_options, LIGMA_TYPE_TOOL_OPTIONS)
 
-#define parent_class gimp_selection_options_parent_class
+#define parent_class ligma_selection_options_parent_class
 
 static guint align_options_signals[LAST_SIGNAL] = { 0 };
 
 
 static void
-gimp_align_options_class_init (GimpAlignOptionsClass *klass)
+ligma_align_options_class_init (LigmaAlignOptionsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->finalize      = gimp_align_options_finalize;
-  object_class->set_property  = gimp_align_options_set_property;
-  object_class->get_property  = gimp_align_options_get_property;
+  object_class->finalize      = ligma_align_options_finalize;
+  object_class->set_property  = ligma_align_options_set_property;
+  object_class->get_property  = ligma_align_options_get_property;
 
   klass->align_button_clicked = NULL;
 
@@ -137,94 +137,94 @@ gimp_align_options_class_init (GimpAlignOptionsClass *klass)
     g_signal_new ("align-button-clicked",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpAlignOptionsClass,
+                  G_STRUCT_OFFSET (LigmaAlignOptionsClass,
                                    align_button_clicked),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
-                  GIMP_TYPE_ALIGNMENT_TYPE);
+                  LIGMA_TYPE_ALIGNMENT_TYPE);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_ALIGN_REFERENCE,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_ALIGN_REFERENCE,
                          "align-reference",
                          _("Relative to"),
                          _("Reference object targets will be aligned on"),
-                         GIMP_TYPE_ALIGN_REFERENCE_TYPE,
-                         GIMP_ALIGN_REFERENCE_IMAGE,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_TYPE_ALIGN_REFERENCE_TYPE,
+                         LIGMA_ALIGN_REFERENCE_IMAGE,
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_ALIGN_LAYERS,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_ALIGN_LAYERS,
                             "align-layers",
                             _("Selected layers"),
                             _("Selected layers will be aligned or distributed by the tool"),
                             TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_ALIGN_VECTORS,
+                            LIGMA_PARAM_STATIC_STRINGS);
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_ALIGN_VECTORS,
                             "align-vectors",
                             _("Selected paths"),
                             _("Selected paths will be aligned or distributed by the tool"),
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_ALIGN_CONTENTS,
+                            LIGMA_PARAM_STATIC_STRINGS);
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_ALIGN_CONTENTS,
                             "align-contents",
                             _("Use extents of layer contents"),
                             _("Instead of aligning or distributing on layer borders, use its content bounding box"),
                             TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_PIVOT_X,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_PIVOT_X,
                            "pivot-x",
                            "X position of the point to align in objects",
                            NULL,
                            0.0, 1.0, 0.5,
-                           GIMP_PARAM_STATIC_STRINGS);
+                           LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_PIVOT_Y,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_PIVOT_Y,
                            "pivot-y",
                            "Y position of the point to align in objects",
                            NULL,
                            0.0, 1.0, 0.5,
-                           GIMP_PARAM_STATIC_STRINGS);
+                           LIGMA_PARAM_STATIC_STRINGS);
 }
 
 static void
-gimp_align_options_init (GimpAlignOptions *options)
+ligma_align_options_init (LigmaAlignOptions *options)
 {
-  options->priv = gimp_align_options_get_instance_private (options);
+  options->priv = ligma_align_options_get_instance_private (options);
 
   options->priv->selected_guides = NULL;
 }
 
 static void
-gimp_align_options_finalize (GObject *object)
+ligma_align_options_finalize (GObject *object)
 {
-  GimpAlignOptions *options = GIMP_ALIGN_OPTIONS (object);
+  LigmaAlignOptions *options = LIGMA_ALIGN_OPTIONS (object);
 
-  if (GIMP_CONTEXT (options)->gimp)
-    gimp_align_options_image_changed (gimp_get_user_context (GIMP_CONTEXT (options)->gimp),
+  if (LIGMA_CONTEXT (options)->ligma)
+    ligma_align_options_image_changed (ligma_get_user_context (LIGMA_CONTEXT (options)->ligma),
                                       NULL, options);
 }
 
 static void
-gimp_align_options_set_property (GObject      *object,
+ligma_align_options_set_property (GObject      *object,
                                  guint         property_id,
                                  const GValue *value,
                                  GParamSpec   *pspec)
 {
-  GimpAlignOptions *options = GIMP_ALIGN_OPTIONS (object);
+  LigmaAlignOptions *options = LIGMA_ALIGN_OPTIONS (object);
 
   switch (property_id)
     {
     case PROP_ALIGN_REFERENCE:
       options->align_reference = g_value_get_enum (value);
-      gimp_align_options_update_area (options);
+      ligma_align_options_update_area (options);
       break;
 
     case PROP_ALIGN_LAYERS:
       options->priv->align_layers = g_value_get_boolean (value);
-      gimp_align_options_update_area (options);
+      ligma_align_options_update_area (options);
       break;
     case PROP_ALIGN_VECTORS:
       options->priv->align_vectors = g_value_get_boolean (value);
-      gimp_align_options_update_area (options);
+      ligma_align_options_update_area (options);
       break;
 
     case PROP_ALIGN_CONTENTS:
@@ -245,12 +245,12 @@ gimp_align_options_set_property (GObject      *object,
 }
 
 static void
-gimp_align_options_get_property (GObject    *object,
+ligma_align_options_get_property (GObject    *object,
                                  guint       property_id,
                                  GValue     *value,
                                  GParamSpec *pspec)
 {
-  GimpAlignOptions *options = GIMP_ALIGN_OPTIONS (object);
+  LigmaAlignOptions *options = LIGMA_ALIGN_OPTIONS (object);
 
   switch (property_id)
     {
@@ -283,10 +283,10 @@ gimp_align_options_get_property (GObject    *object,
 }
 
 static void
-gimp_align_options_button_clicked (GtkButton        *button,
-                                   GimpAlignOptions *options)
+ligma_align_options_button_clicked (GtkButton        *button,
+                                   LigmaAlignOptions *options)
 {
-  GimpAlignmentType action;
+  LigmaAlignmentType action;
 
   action = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (button),
                                                "align-action"));
@@ -296,8 +296,8 @@ gimp_align_options_button_clicked (GtkButton        *button,
 }
 
 static GtkWidget *
-gimp_align_options_button_new (GimpAlignOptions  *options,
-                               GimpAlignmentType  action,
+ligma_align_options_button_new (LigmaAlignOptions  *options,
+                               LigmaAlignmentType  action,
                                GtkWidget         *parent,
                                const gchar       *tooltip)
 {
@@ -307,35 +307,35 @@ gimp_align_options_button_new (GimpAlignOptions  *options,
 
   switch (action)
     {
-    case GIMP_ALIGN_LEFT:
-      icon_name = GIMP_ICON_GRAVITY_WEST;
+    case LIGMA_ALIGN_LEFT:
+      icon_name = LIGMA_ICON_GRAVITY_WEST;
       break;
-    case GIMP_ALIGN_HCENTER:
-      icon_name = GIMP_ICON_CENTER_HORIZONTAL;
+    case LIGMA_ALIGN_HCENTER:
+      icon_name = LIGMA_ICON_CENTER_HORIZONTAL;
       break;
-    case GIMP_ALIGN_RIGHT:
-      icon_name = GIMP_ICON_GRAVITY_EAST;
+    case LIGMA_ALIGN_RIGHT:
+      icon_name = LIGMA_ICON_GRAVITY_EAST;
       break;
-    case GIMP_ALIGN_TOP:
-      icon_name = GIMP_ICON_GRAVITY_NORTH;
+    case LIGMA_ALIGN_TOP:
+      icon_name = LIGMA_ICON_GRAVITY_NORTH;
       break;
-    case GIMP_ALIGN_VCENTER:
-      icon_name = GIMP_ICON_CENTER_VERTICAL;
+    case LIGMA_ALIGN_VCENTER:
+      icon_name = LIGMA_ICON_CENTER_VERTICAL;
       break;
-    case GIMP_ALIGN_BOTTOM:
-      icon_name = GIMP_ICON_GRAVITY_SOUTH;
+    case LIGMA_ALIGN_BOTTOM:
+      icon_name = LIGMA_ICON_GRAVITY_SOUTH;
       break;
-    case GIMP_ARRANGE_HFILL:
-        icon_name = GIMP_ICON_FILL_HORIZONTAL;
+    case LIGMA_ARRANGE_HFILL:
+        icon_name = LIGMA_ICON_FILL_HORIZONTAL;
         break;
-    case GIMP_ARRANGE_VFILL:
-        icon_name = GIMP_ICON_FILL_VERTICAL;
+    case LIGMA_ARRANGE_VFILL:
+        icon_name = LIGMA_ICON_FILL_VERTICAL;
         break;
-    case GIMP_DISTRIBUTE_EVEN_HORIZONTAL_GAP:
-        icon_name = GIMP_ICON_EVEN_HORIZONTAL_GAP;
+    case LIGMA_DISTRIBUTE_EVEN_HORIZONTAL_GAP:
+        icon_name = LIGMA_ICON_EVEN_HORIZONTAL_GAP;
         break;
-    case GIMP_DISTRIBUTE_EVEN_VERTICAL_GAP:
-        icon_name = GIMP_ICON_EVEN_VERTICAL_GAP;
+    case LIGMA_DISTRIBUTE_EVEN_VERTICAL_GAP:
+        icon_name = LIGMA_ICON_EVEN_VERTICAL_GAP;
         break;
     default:
       g_return_val_if_reached (NULL);
@@ -353,23 +353,23 @@ gimp_align_options_button_new (GimpAlignOptions  *options,
   gtk_box_pack_start (GTK_BOX (parent), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  gimp_help_set_help_data (button, tooltip, NULL);
+  ligma_help_set_help_data (button, tooltip, NULL);
 
   g_object_set_data (G_OBJECT (button), "align-action",
                      GINT_TO_POINTER (action));
   g_signal_connect (button, "clicked",
-                    G_CALLBACK (gimp_align_options_button_clicked),
+                    G_CALLBACK (ligma_align_options_button_clicked),
                     options);
 
   return button;
 }
 
 GtkWidget *
-gimp_align_options_gui (GimpToolOptions *tool_options)
+ligma_align_options_gui (LigmaToolOptions *tool_options)
 {
   GObject          *config  = G_OBJECT (tool_options);
-  GimpAlignOptions *options = GIMP_ALIGN_OPTIONS (tool_options);
-  GtkWidget        *vbox    = gimp_tool_options_gui (tool_options);
+  LigmaAlignOptions *options = LIGMA_ALIGN_OPTIONS (tool_options);
+  GtkWidget        *vbox    = ligma_tool_options_gui (tool_options);
   GtkWidget        *widget;
   GtkWidget        *section_vbox;
   GtkWidget        *items_grid;
@@ -380,7 +380,7 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
   gint              n = 0;
 
   /* Selected objects */
-  frame = gimp_frame_new (_("Targets"));
+  frame = ligma_frame_new (_("Targets"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -392,39 +392,39 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
   gtk_container_add (GTK_CONTAINER (section_vbox), items_grid);
   gtk_widget_show (items_grid);
 
-  widget = gimp_prop_check_button_new (config, "align-contents", NULL);
-  widget = gimp_prop_expanding_frame_new (config, "align-layers",
+  widget = ligma_prop_check_button_new (config, "align-contents", NULL);
+  widget = ligma_prop_expanding_frame_new (config, "align-layers",
                                           NULL, widget, NULL);
   gtk_grid_attach (GTK_GRID (items_grid), widget, 0, 0, 1, 1);
 
-  widget = gimp_prop_check_button_new (config, "align-vectors", NULL);
+  widget = ligma_prop_check_button_new (config, "align-vectors", NULL);
   gtk_grid_attach (GTK_GRID (items_grid), widget, 0, 1, 1, 1);
 
-  options->priv->pivot_selector = gimp_pivot_selector_new (0.0, 0.0, 1.0, 1.0);
+  options->priv->pivot_selector = ligma_pivot_selector_new (0.0, 0.0, 1.0, 1.0);
   gtk_widget_set_tooltip_text (options->priv->pivot_selector,
                                _("Set anchor point of targets"));
-  gimp_pivot_selector_set_position (GIMP_PIVOT_SELECTOR (options->priv->pivot_selector),
+  ligma_pivot_selector_set_position (LIGMA_PIVOT_SELECTOR (options->priv->pivot_selector),
                                     options->priv->pivot_x, options->priv->pivot_y);
   gtk_grid_attach (GTK_GRID (items_grid), options->priv->pivot_selector, 1, 0, 1, 2);
   gtk_widget_show (options->priv->pivot_selector);
 
   g_signal_connect (options->priv->pivot_selector, "changed",
-                    G_CALLBACK (gimp_align_options_pivot_changed),
+                    G_CALLBACK (ligma_align_options_pivot_changed),
                     options);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (section_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  widget = gtk_image_new_from_icon_name (GIMP_ICON_CURSOR, GTK_ICON_SIZE_BUTTON);
+  widget = gtk_image_new_from_icon_name (LIGMA_ICON_CURSOR, GTK_ICON_SIZE_BUTTON);
   gtk_box_pack_start (GTK_BOX (hbox), widget, FALSE, FALSE, 0);
   gtk_widget_show (widget);
 
   /* TRANSLATORS: the %s strings are modifiers such as Shift, Alt or Cmd. */
   text = g_strdup_printf (_("%s-pick target guides (%s-%s to add more)"),
-                          gimp_get_mod_string (GDK_MOD1_MASK),
-                          gimp_get_mod_string (gimp_get_extend_selection_mask ()),
-                          gimp_get_mod_string (GDK_MOD1_MASK));
+                          ligma_get_mod_string (GDK_MOD1_MASK),
+                          ligma_get_mod_string (ligma_get_extend_selection_mask ()),
+                          ligma_get_mod_string (GDK_MOD1_MASK));
   widget = gtk_label_new (text);
   gtk_label_set_line_wrap (GTK_LABEL (widget), TRUE);
   gtk_label_set_line_wrap_mode (GTK_LABEL (widget), PANGO_WRAP_WORD);
@@ -438,7 +438,7 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
   options->priv->selected_guides_label = widget;
 
   /* Align frame */
-  frame = gimp_frame_new (_("Align"));
+  frame = ligma_frame_new (_("Align"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -447,8 +447,8 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (section_vbox);
 
   /* Align frame: reference */
-  combo = gimp_prop_enum_combo_box_new (config, "align-reference", 0, 0);
-  gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Relative to"));
+  combo = ligma_prop_enum_combo_box_new (config, "align-reference", 0, 0);
+  ligma_int_combo_box_set_label (LIGMA_INT_COMBO_BOX (combo), _("Relative to"));
   g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
   gtk_box_pack_start (GTK_BOX (section_vbox), combo, FALSE, FALSE, 0);
   options->priv->reference_combo = combo;
@@ -458,7 +458,7 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (hbox);
   options->priv->reference_box = hbox;
 
-  widget = gtk_image_new_from_icon_name (GIMP_ICON_CURSOR, GTK_ICON_SIZE_BUTTON);
+  widget = gtk_image_new_from_icon_name (LIGMA_ICON_CURSOR, GTK_ICON_SIZE_BUTTON);
   gtk_box_pack_start (GTK_BOX (hbox), widget, FALSE, FALSE, 0);
   gtk_widget_show (widget);
 
@@ -479,15 +479,15 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
 
   n = 0;
   options->priv->align_ver_button[n++] =
-    gimp_align_options_button_new (options, GIMP_ALIGN_LEFT, hbox,
+    ligma_align_options_button_new (options, LIGMA_ALIGN_LEFT, hbox,
                                    _("Align anchor points of targets on left edge of reference"));
 
   options->priv->align_ver_button[n++] =
-    gimp_align_options_button_new (options, GIMP_ALIGN_HCENTER, hbox,
+    ligma_align_options_button_new (options, LIGMA_ALIGN_HCENTER, hbox,
                                    _("Align anchor points of targets on vertical middle of reference"));
 
   options->priv->align_ver_button[n++] =
-    gimp_align_options_button_new (options, GIMP_ALIGN_RIGHT, hbox,
+    ligma_align_options_button_new (options, LIGMA_ALIGN_RIGHT, hbox,
                                    _("Align anchor points of targets on right edge of reference"));
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
@@ -496,19 +496,19 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
 
   n = 0;
   options->priv->align_hor_button[n++] =
-    gimp_align_options_button_new (options, GIMP_ALIGN_TOP, hbox,
+    ligma_align_options_button_new (options, LIGMA_ALIGN_TOP, hbox,
                                    _("Align anchor points of targets on top edge of reference"));
 
   options->priv->align_hor_button[n++] =
-    gimp_align_options_button_new (options, GIMP_ALIGN_VCENTER, hbox,
+    ligma_align_options_button_new (options, LIGMA_ALIGN_VCENTER, hbox,
                                    _("Align anchor points of targets on horizontal middle of reference"));
 
   options->priv->align_hor_button[n++] =
-    gimp_align_options_button_new (options, GIMP_ALIGN_BOTTOM, hbox,
+    ligma_align_options_button_new (options, LIGMA_ALIGN_BOTTOM, hbox,
                                    _("Align anchor points of targets on bottom of reference"));
 
   /* Distribute frame */
-  frame = gimp_frame_new (_("Distribute"));
+  frame = ligma_frame_new (_("Distribute"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -522,10 +522,10 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
 
   n = 0;
   options->priv->distr_ver_button[n++] =
-    gimp_align_options_button_new (options, GIMP_ARRANGE_HFILL, hbox,
+    ligma_align_options_button_new (options, LIGMA_ARRANGE_HFILL, hbox,
                                    _("Distribute anchor points of targets evenly in the horizontal"));
   options->priv->distr_ver_button[n++] =
-    gimp_align_options_button_new (options, GIMP_DISTRIBUTE_EVEN_HORIZONTAL_GAP, hbox,
+    ligma_align_options_button_new (options, LIGMA_DISTRIBUTE_EVEN_HORIZONTAL_GAP, hbox,
                                    _("Distribute horizontally with even horizontal gaps"));
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
@@ -534,30 +534,30 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
 
   n = 0;
   options->priv->distr_hor_button[n++] =
-    gimp_align_options_button_new (options, GIMP_ARRANGE_VFILL, hbox,
+    ligma_align_options_button_new (options, LIGMA_ARRANGE_VFILL, hbox,
                                    _("Distribute anchor points of targets evenly in the vertical"));
   options->priv->distr_hor_button[n++] =
-    gimp_align_options_button_new (options, GIMP_DISTRIBUTE_EVEN_VERTICAL_GAP, hbox,
+    ligma_align_options_button_new (options, LIGMA_DISTRIBUTE_EVEN_VERTICAL_GAP, hbox,
                                    _("Distribute vertically with even vertical gaps"));
 
-  g_signal_connect (gimp_get_user_context (GIMP_CONTEXT (options)->gimp),
+  g_signal_connect (ligma_get_user_context (LIGMA_CONTEXT (options)->ligma),
                     "image-changed",
-                    G_CALLBACK (gimp_align_options_image_changed),
+                    G_CALLBACK (ligma_align_options_image_changed),
                     tool_options);
-  gimp_align_options_image_changed (gimp_get_user_context (GIMP_CONTEXT (options)->gimp),
-                                    gimp_context_get_image (gimp_get_user_context (GIMP_CONTEXT (options)->gimp)),
+  ligma_align_options_image_changed (ligma_get_user_context (LIGMA_CONTEXT (options)->ligma),
+                                    ligma_context_get_image (ligma_get_user_context (LIGMA_CONTEXT (options)->ligma)),
                                     options);
 
   return vbox;
 }
 
 GList *
-gimp_align_options_get_objects (GimpAlignOptions *options)
+ligma_align_options_get_objects (LigmaAlignOptions *options)
 {
-  GimpImage *image;
+  LigmaImage *image;
   GList     *objects = NULL;
 
-  image = gimp_context_get_image (gimp_get_user_context (GIMP_CONTEXT (options)->gimp));
+  image = ligma_context_get_image (ligma_get_user_context (LIGMA_CONTEXT (options)->ligma));
 
   if (image)
     {
@@ -565,7 +565,7 @@ gimp_align_options_get_objects (GimpAlignOptions *options)
         {
           GList *layers;
 
-          layers = gimp_image_get_selected_layers (image);
+          layers = ligma_image_get_selected_layers (image);
           layers = g_list_copy (layers);
           objects = g_list_concat (objects, layers);
         }
@@ -573,7 +573,7 @@ gimp_align_options_get_objects (GimpAlignOptions *options)
         {
           GList *vectors;
 
-          vectors = gimp_image_get_selected_vectors (image);
+          vectors = ligma_image_get_selected_vectors (image);
           vectors = g_list_copy (vectors);
           objects = g_list_concat (objects, vectors);
         }
@@ -591,21 +591,21 @@ gimp_align_options_get_objects (GimpAlignOptions *options)
 }
 
 void
-gimp_align_options_get_pivot (GimpAlignOptions *options,
+ligma_align_options_get_pivot (LigmaAlignOptions *options,
                               gdouble          *x,
                               gdouble          *y)
 {
-  gimp_pivot_selector_get_position (GIMP_PIVOT_SELECTOR (options->priv->pivot_selector),
+  ligma_pivot_selector_get_position (LIGMA_PIVOT_SELECTOR (options->priv->pivot_selector),
                                     x, y);
 }
 
 void
-gimp_align_options_pick_reference (GimpAlignOptions *options,
+ligma_align_options_pick_reference (LigmaAlignOptions *options,
                                    GObject          *object)
 {
   if (options->priv->reference)
     g_signal_handlers_disconnect_by_func (options->priv->reference,
-                                          G_CALLBACK (gimp_align_options_reference_removed),
+                                          G_CALLBACK (ligma_align_options_reference_removed),
                                           options);
 
   g_clear_object (&options->priv->reference);
@@ -614,47 +614,47 @@ gimp_align_options_pick_reference (GimpAlignOptions *options,
     {
       options->priv->reference = g_object_ref (object);
 
-      /* Both GimpItem and GimpGuide/GimpAuxItem have a "removed" signal with
+      /* Both LigmaItem and LigmaGuide/LigmaAuxItem have a "removed" signal with
        * similar signature. */
       g_signal_connect_object (options->priv->reference,
                                "removed",
-                               G_CALLBACK (gimp_align_options_reference_removed),
+                               G_CALLBACK (ligma_align_options_reference_removed),
                                options, 0);
     }
 
-  gimp_align_options_update_area (options);
+  ligma_align_options_update_area (options);
 }
 
 GObject *
-gimp_align_options_get_reference (GimpAlignOptions *options,
+ligma_align_options_get_reference (LigmaAlignOptions *options,
                                   gboolean          blink_if_none)
 {
   GObject   *reference = NULL;
-  GimpImage *image;
+  LigmaImage *image;
 
-  image = gimp_context_get_image (gimp_get_user_context (GIMP_CONTEXT (options)->gimp));
+  image = ligma_context_get_image (ligma_get_user_context (LIGMA_CONTEXT (options)->ligma));
 
   if (image)
     {
       switch (options->align_reference)
         {
-        case GIMP_ALIGN_REFERENCE_IMAGE:
+        case LIGMA_ALIGN_REFERENCE_IMAGE:
           reference = G_OBJECT (image);
           break;
-        case GIMP_ALIGN_REFERENCE_SELECTION:
-          reference = G_OBJECT (gimp_image_get_mask (image));
+        case LIGMA_ALIGN_REFERENCE_SELECTION:
+          reference = G_OBJECT (ligma_image_get_mask (image));
           break;
-        case GIMP_ALIGN_REFERENCE_PICK:
+        case LIGMA_ALIGN_REFERENCE_PICK:
           reference = G_OBJECT (options->priv->reference);
           break;
         }
 
       if (reference == NULL && blink_if_none)
         {
-          if (options->align_reference == GIMP_ALIGN_REFERENCE_PICK)
-            gimp_widget_blink (options->priv->reference_box);
+          if (options->align_reference == LIGMA_ALIGN_REFERENCE_PICK)
+            ligma_widget_blink (options->priv->reference_box);
           else
-            gimp_widget_blink (options->priv->reference_combo);
+            ligma_widget_blink (options->priv->reference_combo);
         }
     }
 
@@ -662,14 +662,14 @@ gimp_align_options_get_reference (GimpAlignOptions *options,
 }
 
 gboolean
-gimp_align_options_align_contents (GimpAlignOptions *options)
+ligma_align_options_align_contents (LigmaAlignOptions *options)
 {
   return options->priv->align_contents;
 }
 
 void
-gimp_align_options_pick_guide (GimpAlignOptions *options,
-                               GimpGuide        *guide,
+ligma_align_options_pick_guide (LigmaAlignOptions *options,
+                               LigmaGuide        *guide,
                                gboolean          extend)
 {
   if (! extend)
@@ -685,58 +685,58 @@ gimp_align_options_pick_guide (GimpAlignOptions *options,
         options->priv->selected_guides = g_list_prepend (options->priv->selected_guides, guide);
     }
 
-  gimp_align_options_update_area (options);
+  ligma_align_options_update_area (options);
 }
 
 
 /*  Private functions  */
 
 static void
-gimp_align_options_image_changed (GimpContext      *context,
-                                  GimpImage        *image,
-                                  GimpAlignOptions *options)
+ligma_align_options_image_changed (LigmaContext      *context,
+                                  LigmaImage        *image,
+                                  LigmaAlignOptions *options)
 {
-  GimpImage *prev_image;
+  LigmaImage *prev_image;
 
-  prev_image = g_object_get_data (G_OBJECT (options), "gimp-align-options-image");
+  prev_image = g_object_get_data (G_OBJECT (options), "ligma-align-options-image");
 
   if (image != prev_image)
     {
       /* We cannot keep track of selected guides across image changes. */
       g_clear_pointer (&options->priv->selected_guides, g_list_free);
-      gimp_align_options_pick_reference (options, NULL);
+      ligma_align_options_pick_reference (options, NULL);
 
       if (prev_image)
         {
           g_signal_handlers_disconnect_by_func (prev_image,
-                                                G_CALLBACK (gimp_align_options_update_area),
+                                                G_CALLBACK (ligma_align_options_update_area),
                                                 options);
           g_signal_handlers_disconnect_by_func (prev_image,
-                                                G_CALLBACK (gimp_align_options_guide_removed),
+                                                G_CALLBACK (ligma_align_options_guide_removed),
                                                 options);
         }
       if (image)
         {
           g_signal_connect_object (image, "selected-channels-changed",
-                                   G_CALLBACK (gimp_align_options_update_area),
+                                   G_CALLBACK (ligma_align_options_update_area),
                                    options, G_CONNECT_SWAPPED);
           g_signal_connect_object (image, "selected-layers-changed",
-                                   G_CALLBACK (gimp_align_options_update_area),
+                                   G_CALLBACK (ligma_align_options_update_area),
                                    options, G_CONNECT_SWAPPED);
           g_signal_connect_object (image, "guide-removed",
-                                   G_CALLBACK (gimp_align_options_guide_removed),
+                                   G_CALLBACK (ligma_align_options_guide_removed),
                                    options, 0);
         }
 
-      g_object_set_data (G_OBJECT (options), "gimp-align-options-image", image);
-      gimp_align_options_update_area (options);
+      g_object_set_data (G_OBJECT (options), "ligma-align-options-image", image);
+      ligma_align_options_update_area (options);
     }
 }
 
 static void
-gimp_align_options_update_area (GimpAlignOptions *options)
+ligma_align_options_update_area (LigmaAlignOptions *options)
 {
-  GimpImage *image;
+  LigmaImage *image;
   GList     *layers           = NULL;
   GList     *vectors          = NULL;
   gboolean   enable_ver_align = FALSE;
@@ -746,7 +746,7 @@ gimp_align_options_update_area (GimpAlignOptions *options)
   gint       n_items = 0;
   gchar     *text;
 
-  image = gimp_context_get_image (gimp_get_user_context (GIMP_CONTEXT (options)->gimp));
+  image = ligma_context_get_image (ligma_get_user_context (LIGMA_CONTEXT (options)->ligma));
 
   /* GUI not created yet. */
   if (! options->priv->reference_combo)
@@ -754,8 +754,8 @@ gimp_align_options_update_area (GimpAlignOptions *options)
 
   if (image)
     {
-      layers = gimp_image_get_selected_layers (image);
-      vectors = gimp_image_get_selected_vectors (image);
+      layers = ligma_image_get_selected_layers (image);
+      vectors = ligma_image_get_selected_vectors (image);
 
       if (options->priv->align_layers)
         n_items += g_list_length (layers);
@@ -769,14 +769,14 @@ gimp_align_options_update_area (GimpAlignOptions *options)
     {
       GObject *reference;
 
-      reference = gimp_align_options_get_reference (options, FALSE);
+      reference = ligma_align_options_get_reference (options, FALSE);
 
       enable_ver_align = (reference != NULL &&
-                          (! GIMP_IS_GUIDE (reference) ||
-                           gimp_guide_get_orientation (GIMP_GUIDE (reference)) == GIMP_ORIENTATION_VERTICAL));
+                          (! LIGMA_IS_GUIDE (reference) ||
+                           ligma_guide_get_orientation (LIGMA_GUIDE (reference)) == LIGMA_ORIENTATION_VERTICAL));
       enable_hor_align = (reference != NULL &&
-                          (! GIMP_IS_GUIDE (reference) ||
-                           gimp_guide_get_orientation (GIMP_GUIDE (reference)) == GIMP_ORIENTATION_HORIZONTAL));
+                          (! LIGMA_IS_GUIDE (reference) ||
+                           ligma_guide_get_orientation (LIGMA_GUIDE (reference)) == LIGMA_ORIENTATION_HORIZONTAL));
       enable_ver_distr = enable_hor_distr = (n_items > 2);
     }
   for (gint i = 0; i < ALIGN_VER_N_BUTTONS; i++)
@@ -812,22 +812,22 @@ gimp_align_options_update_area (GimpAlignOptions *options)
 
   /* Update the reference widgets. */
   text = NULL;
-  if (options->align_reference == GIMP_ALIGN_REFERENCE_PICK)
+  if (options->align_reference == LIGMA_ALIGN_REFERENCE_PICK)
     {
       if (options->priv->reference)
         {
           gchar *tmp_txt;
 
-          if (GIMP_IS_LAYER (options->priv->reference))
+          if (LIGMA_IS_LAYER (options->priv->reference))
             tmp_txt = g_strdup_printf (_("Reference layer: %s"),
-                                       gimp_object_get_name (options->priv->reference));
-          else if (GIMP_IS_CHANNEL (options->priv->reference))
+                                       ligma_object_get_name (options->priv->reference));
+          else if (LIGMA_IS_CHANNEL (options->priv->reference))
             tmp_txt = g_strdup_printf (_("Reference channel: %s"),
-                                       gimp_object_get_name (options->priv->reference));
-          else if (GIMP_IS_VECTORS (options->priv->reference))
+                                       ligma_object_get_name (options->priv->reference));
+          else if (LIGMA_IS_VECTORS (options->priv->reference))
             tmp_txt = g_strdup_printf (_("Reference path: %s"),
-                                       gimp_object_get_name (options->priv->reference));
-          else if (GIMP_IS_GUIDE (options->priv->reference))
+                                       ligma_object_get_name (options->priv->reference));
+          else if (LIGMA_IS_GUIDE (options->priv->reference))
             tmp_txt = g_strdup (_("Reference guide"));
           else
             g_return_if_reached ();
@@ -846,9 +846,9 @@ gimp_align_options_update_area (GimpAlignOptions *options)
 }
 
 static void
-gimp_align_options_guide_removed (GimpImage        *image,
-                                  GimpGuide        *guide,
-                                  GimpAlignOptions *options)
+ligma_align_options_guide_removed (LigmaImage        *image,
+                                  LigmaGuide        *guide,
+                                  LigmaAlignOptions *options)
 {
   GList *list;
 
@@ -856,27 +856,27 @@ gimp_align_options_guide_removed (GimpImage        *image,
     options->priv->selected_guides = g_list_delete_link (options->priv->selected_guides, list);
 
   if (G_OBJECT (guide) == options->priv->reference)
-    gimp_align_options_pick_reference (options, NULL);
+    ligma_align_options_pick_reference (options, NULL);
 
-  gimp_align_options_update_area (options);
+  ligma_align_options_update_area (options);
 }
 
 static void
-gimp_align_options_reference_removed (GObject          *object,
-                                      GimpAlignOptions *options)
+ligma_align_options_reference_removed (GObject          *object,
+                                      LigmaAlignOptions *options)
 {
   if (G_OBJECT (object) == options->priv->reference)
-    gimp_align_options_pick_reference (options, NULL);
+    ligma_align_options_pick_reference (options, NULL);
 }
 
 static void
-gimp_align_options_pivot_changed (GimpPivotSelector *selector,
-                                  GimpAlignOptions  *options)
+ligma_align_options_pivot_changed (LigmaPivotSelector *selector,
+                                  LigmaAlignOptions  *options)
 {
   gdouble x;
   gdouble y;
 
-  gimp_pivot_selector_get_position (selector, &x, &y);
+  ligma_pivot_selector_get_position (selector, &x, &y);
   g_object_set (options,
                 "pivot-x", x,
                 "pivot-y", y,

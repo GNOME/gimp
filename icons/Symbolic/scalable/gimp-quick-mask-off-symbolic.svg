@@ -15,7 +15,7 @@
    width="12"
    version="1.1"
    inkscape:version="0.91+devel r"
-   sodipodi:docname="gimp-quick-mask-off.svg">
+   sodipodi:docname="ligma-quick-mask-off.svg">
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -50,7 +50,7 @@
             <dc:title>Barbara Muraus, Jakub Steiner, Klaus Staedtler</dc:title>
           </cc:Agent>
         </dc:contributor>
-        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for GIMP</dc:description>
+        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for LIGMA</dc:description>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -224,7 +224,7 @@
      style="display:inline"
      id="stock">
     <g
-       id="gimp-quick-mask-off"
+       id="ligma-quick-mask-off"
        transform="translate(287.52236,-1001.3186)">
       <path
          style="opacity:0.3;fill:url(#linearGradient7927);fill-opacity:1;stroke:none;stroke-width:1.00349033"

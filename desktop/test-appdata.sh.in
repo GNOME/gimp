@@ -2,9 +2,9 @@
 
 # TODO: use validate-strict when the last errors for a strict validation
 # are fixed.
-appstreamcli validate ${GIMP_TESTING_ABS_TOP_BUILDDIR}/desktop/org.gimp.GIMP.appdata.xml && \
-if [ $(expr @GIMP_MICRO_VERSION@ % 2) = 0 ]; then
-  grep TODO ${GIMP_TESTING_ABS_TOP_BUILDDIR}/desktop/org.gimp.GIMP.appdata.xml
+appstreamcli validate ${LIGMA_TESTING_ABS_TOP_BUILDDIR}/desktop/org.ligma.LIGMA.appdata.xml && \
+if [ $(expr @LIGMA_MICRO_VERSION@ % 2) = 0 ]; then
+  grep TODO ${LIGMA_TESTING_ABS_TOP_BUILDDIR}/desktop/org.ligma.LIGMA.appdata.xml
   if [ $? = 0 ]; then
     echo "ERROR: stable version with remaining TODOs in appdata."
     false

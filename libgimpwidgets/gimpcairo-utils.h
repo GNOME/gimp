@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpcairo-utils.h
- * Copyright (C) 2007 Sven Neumann <sven@gimp.org>
+ * ligmacairo-utils.h
+ * Copyright (C) 2007 Sven Neumann <sven@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -19,18 +19,18 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
-#error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
+#if !defined (__LIGMA_WIDGETS_H_INSIDE__) && !defined (LIGMA_WIDGETS_COMPILATION)
+#error "Only <libligmawidgets/ligmawidgets.h> can be included directly."
 #endif
 
-#ifndef __GIMP_CAIRO_UTILS_H__
-#define __GIMP_CAIRO_UTILS_H__
+#ifndef __LIGMA_CAIRO_UTILS_H__
+#define __LIGMA_CAIRO_UTILS_H__
 
 
-gboolean          gimp_cairo_set_focus_line_pattern     (cairo_t       *cr,
+gboolean          ligma_cairo_set_focus_line_pattern     (cairo_t       *cr,
                                                          GtkWidget     *widget);
 
-cairo_surface_t * gimp_cairo_surface_create_from_pixbuf (GdkPixbuf     *pixbuf);
+cairo_surface_t * ligma_cairo_surface_create_from_pixbuf (GdkPixbuf     *pixbuf);
 
 
-#endif /* __GIMP_CAIRO_UTILS_H__ */
+#endif /* __LIGMA_CAIRO_UTILS_H__ */

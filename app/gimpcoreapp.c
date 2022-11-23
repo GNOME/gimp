@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpapp.c
+ * ligmaapp.c
  * Copyright (C) 2022 Lukas Oberhuber <lukaso@gmail.com>
  *
  * This library is distributed in the hope that it will be useful,
@@ -18,22 +18,22 @@
 
 #include <gio/gio.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "core/core-types.h"
 
-#include "core/gimp.h"
+#include "core/ligma.h"
 
-#include "gimpcoreapp.h"
+#include "ligmacoreapp.h"
 
 
-#define GIMP_CORE_APP_GET_PRIVATE(obj) (gimp_core_app_get_private ((GimpCoreApp *) (obj)))
+#define LIGMA_CORE_APP_GET_PRIVATE(obj) (ligma_core_app_get_private ((LigmaCoreApp *) (obj)))
 
-typedef struct _GimpCoreAppPrivate GimpCoreAppPrivate;
+typedef struct _LigmaCoreAppPrivate LigmaCoreAppPrivate;
 
-struct _GimpCoreAppPrivate
+struct _LigmaCoreAppPrivate
 {
-  Gimp       *gimp;
+  Ligma       *ligma;
   gboolean    as_new;
   gchar     **filenames;
 
@@ -45,115 +45,115 @@ struct _GimpCoreAppPrivate
 
 /*  local function prototypes  */
 
-static GimpCoreAppPrivate * gimp_core_app_get_private      (GimpCoreApp        *app);
-static void                 gimp_core_app_private_finalize (GimpCoreAppPrivate *private);
+static LigmaCoreAppPrivate * ligma_core_app_get_private      (LigmaCoreApp        *app);
+static void                 ligma_core_app_private_finalize (LigmaCoreAppPrivate *private);
 
 
-G_DEFINE_INTERFACE (GimpCoreApp, gimp_core_app, G_TYPE_OBJECT)
+G_DEFINE_INTERFACE (LigmaCoreApp, ligma_core_app, G_TYPE_OBJECT)
 
 static void
-gimp_core_app_default_init (GimpCoreAppInterface *iface)
+ligma_core_app_default_init (LigmaCoreAppInterface *iface)
 {
   /* add properties and signals to the interface here */
   g_object_interface_install_property (iface,
-                                       g_param_spec_object ("gimp",
-                                                            "GIMP",
-                                                            "GIMP root object",
-                                                            GIMP_TYPE_GIMP,
-                                                            GIMP_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
+                                       g_param_spec_object ("ligma",
+                                                            "LIGMA",
+                                                            "LIGMA root object",
+                                                            LIGMA_TYPE_LIGMA,
+                                                            LIGMA_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
   g_object_interface_install_property (iface,
                                        g_param_spec_boxed ("filenames",
                                                            "Files to open at start",
                                                            "Files to open at start",
                                                            G_TYPE_STRV,
-                                                           GIMP_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
+                                                           LIGMA_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
   g_object_interface_install_property (iface,
                                        g_param_spec_boolean ("as-new",
                                                              "Open images as new",
                                                              "Open images as new",
                                                              FALSE,
-                                                             GIMP_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
+                                                             LIGMA_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
 
   g_object_interface_install_property (iface,
                                        g_param_spec_boolean ("quit",
                                                              "Quit",
-                                                             "Quit GIMP immediately after running batch commands",
+                                                             "Quit LIGMA immediately after running batch commands",
                                                              FALSE,
-                                                             GIMP_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
+                                                             LIGMA_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
   g_object_interface_install_property (iface,
                                        g_param_spec_string ("batch-interpreter",
                                                             "The procedure to process batch commands with",
                                                             "The procedure to process batch commands with",
                                                             NULL,
-                                                            GIMP_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
+                                                            LIGMA_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
 
   g_object_interface_install_property (iface,
                                        g_param_spec_boxed ("batch-commands",
                                                            "Batch commands to run",
                                                            "Batch commands to run",
                                                            G_TYPE_STRV,
-                                                           GIMP_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
+                                                           LIGMA_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
 }
 
 
 /* Protected functions. */
 
 void
-gimp_core_app_finalize (GObject *object)
+ligma_core_app_finalize (GObject *object)
 {
   g_object_set_qdata (object,
-                      g_quark_from_static_string ("gimp-core-app-private"),
+                      g_quark_from_static_string ("ligma-core-app-private"),
                       NULL);
 }
 
 /**
- * gimp_container_view_install_properties:
+ * ligma_container_view_install_properties:
  * @klass: the class structure for a type deriving from #GObject
  *
  * Installs the necessary properties for a class implementing
- * #GimpCoreApp. Please call this function in the *_class_init()
+ * #LigmaCoreApp. Please call this function in the *_class_init()
  * function of the child class.
  **/
 void
-gimp_core_app_install_properties (GObjectClass *klass)
+ligma_core_app_install_properties (GObjectClass *klass)
 {
-  g_object_class_override_property (klass, GIMP_CORE_APP_PROP_GIMP, "gimp");
-  g_object_class_override_property (klass, GIMP_CORE_APP_PROP_FILENAMES, "filenames");
-  g_object_class_override_property (klass, GIMP_CORE_APP_PROP_AS_NEW, "as-new");
+  g_object_class_override_property (klass, LIGMA_CORE_APP_PROP_LIGMA, "ligma");
+  g_object_class_override_property (klass, LIGMA_CORE_APP_PROP_FILENAMES, "filenames");
+  g_object_class_override_property (klass, LIGMA_CORE_APP_PROP_AS_NEW, "as-new");
 
-  g_object_class_override_property (klass, GIMP_CORE_APP_PROP_QUIT, "quit");
-  g_object_class_override_property (klass, GIMP_CORE_APP_PROP_BATCH_INTERPRETER, "batch-interpreter");
-  g_object_class_override_property (klass, GIMP_CORE_APP_PROP_BATCH_COMMANDS, "batch-commands");
+  g_object_class_override_property (klass, LIGMA_CORE_APP_PROP_QUIT, "quit");
+  g_object_class_override_property (klass, LIGMA_CORE_APP_PROP_BATCH_INTERPRETER, "batch-interpreter");
+  g_object_class_override_property (klass, LIGMA_CORE_APP_PROP_BATCH_COMMANDS, "batch-commands");
 }
 
 void
-gimp_core_app_set_property (GObject      *object,
+ligma_core_app_set_property (GObject      *object,
                             guint         property_id,
                             const GValue *value,
                             GParamSpec   *pspec)
 {
-  GimpCoreAppPrivate *private;
+  LigmaCoreAppPrivate *private;
 
-  private = GIMP_CORE_APP_GET_PRIVATE (object);
+  private = LIGMA_CORE_APP_GET_PRIVATE (object);
 
   switch (property_id)
     {
-    case GIMP_CORE_APP_PROP_GIMP:
-      private->gimp = g_value_get_object (value);
+    case LIGMA_CORE_APP_PROP_LIGMA:
+      private->ligma = g_value_get_object (value);
       break;
-    case GIMP_CORE_APP_PROP_FILENAMES:
+    case LIGMA_CORE_APP_PROP_FILENAMES:
       private->filenames = g_value_dup_boxed (value);
       break;
-    case GIMP_CORE_APP_PROP_AS_NEW:
+    case LIGMA_CORE_APP_PROP_AS_NEW:
       private->as_new = g_value_get_boolean (value);
       break;
-    case GIMP_CORE_APP_PROP_QUIT:
+    case LIGMA_CORE_APP_PROP_QUIT:
       private->quit = g_value_get_boolean (value);
       break;
-    case GIMP_CORE_APP_PROP_BATCH_INTERPRETER:
+    case LIGMA_CORE_APP_PROP_BATCH_INTERPRETER:
       private->batch_interpreter = g_value_dup_string (value);
       break;
-    case GIMP_CORE_APP_PROP_BATCH_COMMANDS:
+    case LIGMA_CORE_APP_PROP_BATCH_COMMANDS:
       private->batch_commands = g_value_dup_boxed (value);
       break;
     default:
@@ -163,33 +163,33 @@ gimp_core_app_set_property (GObject      *object,
 }
 
 void
-gimp_core_app_get_property (GObject    *object,
+ligma_core_app_get_property (GObject    *object,
                             guint       property_id,
                             GValue     *value,
                             GParamSpec *pspec)
 {
-  GimpCoreAppPrivate *private;
+  LigmaCoreAppPrivate *private;
 
-  private = GIMP_CORE_APP_GET_PRIVATE (object);
+  private = LIGMA_CORE_APP_GET_PRIVATE (object);
 
   switch (property_id)
     {
-    case GIMP_CORE_APP_PROP_GIMP:
-      g_value_set_object (value, private->gimp);
+    case LIGMA_CORE_APP_PROP_LIGMA:
+      g_value_set_object (value, private->ligma);
       break;
-    case GIMP_CORE_APP_PROP_FILENAMES:
+    case LIGMA_CORE_APP_PROP_FILENAMES:
       g_value_set_static_boxed (value, private->filenames);
       break;
-    case GIMP_CORE_APP_PROP_AS_NEW:
+    case LIGMA_CORE_APP_PROP_AS_NEW:
       g_value_set_boolean (value, private->as_new);
       break;
-    case GIMP_CORE_APP_PROP_QUIT:
+    case LIGMA_CORE_APP_PROP_QUIT:
       g_value_set_boolean (value, private->quit);
       break;
-    case GIMP_CORE_APP_PROP_BATCH_INTERPRETER:
+    case LIGMA_CORE_APP_PROP_BATCH_INTERPRETER:
       g_value_set_static_string (value, private->batch_interpreter);
       break;
-    case GIMP_CORE_APP_PROP_BATCH_COMMANDS:
+    case LIGMA_CORE_APP_PROP_BATCH_COMMANDS:
       g_value_set_static_boxed (value, private->batch_commands);
       break;
     default:
@@ -201,135 +201,135 @@ gimp_core_app_get_property (GObject    *object,
 
 /* Public functions. */
 
-Gimp *
-gimp_core_app_get_gimp (GimpCoreApp *self)
+Ligma *
+ligma_core_app_get_ligma (LigmaCoreApp *self)
 {
-  GimpCoreAppPrivate *private;
+  LigmaCoreAppPrivate *private;
 
-  g_return_val_if_fail (GIMP_IS_CORE_APP (self), NULL);
+  g_return_val_if_fail (LIGMA_IS_CORE_APP (self), NULL);
 
-  private = GIMP_CORE_APP_GET_PRIVATE (self);
+  private = LIGMA_CORE_APP_GET_PRIVATE (self);
 
-  return private->gimp;
+  return private->ligma;
 }
 
 gboolean
-gimp_core_app_get_quit (GimpCoreApp *self)
+ligma_core_app_get_quit (LigmaCoreApp *self)
 {
-  GimpCoreAppPrivate *private;
+  LigmaCoreAppPrivate *private;
 
-  g_return_val_if_fail (GIMP_IS_CORE_APP (self), FALSE);
+  g_return_val_if_fail (LIGMA_IS_CORE_APP (self), FALSE);
 
-  private = GIMP_CORE_APP_GET_PRIVATE (self);
+  private = LIGMA_CORE_APP_GET_PRIVATE (self);
 
   return private->quit;
 }
 
 gboolean
-gimp_core_app_get_as_new (GimpCoreApp *self)
+ligma_core_app_get_as_new (LigmaCoreApp *self)
 {
-  GimpCoreAppPrivate *private;
+  LigmaCoreAppPrivate *private;
 
-  g_return_val_if_fail (GIMP_IS_CORE_APP (self), FALSE);
+  g_return_val_if_fail (LIGMA_IS_CORE_APP (self), FALSE);
 
-  private = GIMP_CORE_APP_GET_PRIVATE (self);
+  private = LIGMA_CORE_APP_GET_PRIVATE (self);
 
   return private->as_new;
 }
 
 const gchar **
-gimp_core_app_get_filenames (GimpCoreApp *self)
+ligma_core_app_get_filenames (LigmaCoreApp *self)
 {
-  GimpCoreAppPrivate *private;
+  LigmaCoreAppPrivate *private;
 
-  g_return_val_if_fail (GIMP_IS_CORE_APP (self), NULL);
+  g_return_val_if_fail (LIGMA_IS_CORE_APP (self), NULL);
 
-  private = GIMP_CORE_APP_GET_PRIVATE (self);
+  private = LIGMA_CORE_APP_GET_PRIVATE (self);
 
   return (const gchar **) private->filenames;
 }
 
 const gchar *
-gimp_core_app_get_batch_interpreter (GimpCoreApp *self)
+ligma_core_app_get_batch_interpreter (LigmaCoreApp *self)
 {
-  GimpCoreAppPrivate *private;
+  LigmaCoreAppPrivate *private;
 
-  g_return_val_if_fail (GIMP_IS_CORE_APP (self), NULL);
+  g_return_val_if_fail (LIGMA_IS_CORE_APP (self), NULL);
 
-  private = GIMP_CORE_APP_GET_PRIVATE (self);
+  private = LIGMA_CORE_APP_GET_PRIVATE (self);
 
   return (const gchar *) private->batch_interpreter;
 }
 
 const gchar **
-gimp_core_app_get_batch_commands (GimpCoreApp *self)
+ligma_core_app_get_batch_commands (LigmaCoreApp *self)
 {
-  GimpCoreAppPrivate *private;
+  LigmaCoreAppPrivate *private;
 
-  g_return_val_if_fail (GIMP_IS_CORE_APP (self), NULL);
+  g_return_val_if_fail (LIGMA_IS_CORE_APP (self), NULL);
 
-  private = GIMP_CORE_APP_GET_PRIVATE (self);
+  private = LIGMA_CORE_APP_GET_PRIVATE (self);
 
   return (const gchar **) private->batch_commands;
 }
 
 void
-gimp_core_app_set_exit_status (GimpCoreApp *self, gint exit_status)
+ligma_core_app_set_exit_status (LigmaCoreApp *self, gint exit_status)
 {
-  GimpCoreAppPrivate *private;
+  LigmaCoreAppPrivate *private;
 
-  g_return_if_fail (GIMP_IS_CORE_APP (self));
+  g_return_if_fail (LIGMA_IS_CORE_APP (self));
 
-  private = GIMP_CORE_APP_GET_PRIVATE (self);
+  private = LIGMA_CORE_APP_GET_PRIVATE (self);
 
   private->exit_status = exit_status;
 }
 
 gint
-gimp_core_app_get_exit_status (GimpCoreApp *self)
+ligma_core_app_get_exit_status (LigmaCoreApp *self)
 {
-  GimpCoreAppPrivate *private;
+  LigmaCoreAppPrivate *private;
 
-  g_return_val_if_fail (GIMP_IS_CORE_APP (self), EXIT_FAILURE);
+  g_return_val_if_fail (LIGMA_IS_CORE_APP (self), EXIT_FAILURE);
 
-  private = GIMP_CORE_APP_GET_PRIVATE (self);
+  private = LIGMA_CORE_APP_GET_PRIVATE (self);
 
   return private->exit_status;
 }
 
 /*  Private functions  */
 
-static GimpCoreAppPrivate *
-gimp_core_app_get_private (GimpCoreApp *app)
+static LigmaCoreAppPrivate *
+ligma_core_app_get_private (LigmaCoreApp *app)
 {
-  GimpCoreAppPrivate *private;
+  LigmaCoreAppPrivate *private;
 
   static GQuark private_key = 0;
 
-  g_return_val_if_fail (GIMP_IS_CORE_APP (app), NULL);
+  g_return_val_if_fail (LIGMA_IS_CORE_APP (app), NULL);
 
   if (! private_key)
-    private_key = g_quark_from_static_string ("gimp-core-app-private");
+    private_key = g_quark_from_static_string ("ligma-core-app-private");
 
   private = g_object_get_qdata ((GObject *) app, private_key);
 
   if (! private)
     {
-      private = g_slice_new0 (GimpCoreAppPrivate);
+      private = g_slice_new0 (LigmaCoreAppPrivate);
 
       g_object_set_qdata_full ((GObject *) app, private_key, private,
-                               (GDestroyNotify) gimp_core_app_private_finalize);
+                               (GDestroyNotify) ligma_core_app_private_finalize);
     }
 
   return private;
 }
 
 static void
-gimp_core_app_private_finalize (GimpCoreAppPrivate *private)
+ligma_core_app_private_finalize (LigmaCoreAppPrivate *private)
 {
   g_clear_pointer (&private->filenames, g_strfreev);
   g_clear_pointer (&private->batch_interpreter, g_free);
   g_clear_pointer (&private->batch_commands, g_strfreev);
 
-  g_slice_free (GimpCoreAppPrivate, private);
+  g_slice_free (LigmaCoreAppPrivate, private);
 }

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,41 +15,41 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_COLOR_OPTIONS_H__
-#define __GIMP_COLOR_OPTIONS_H__
+#ifndef __LIGMA_COLOR_OPTIONS_H__
+#define __LIGMA_COLOR_OPTIONS_H__
 
 
-#include "core/gimptooloptions.h"
+#include "core/ligmatooloptions.h"
 
 
-#define GIMP_TYPE_COLOR_OPTIONS            (gimp_color_options_get_type ())
-#define GIMP_COLOR_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_COLOR_OPTIONS, GimpColorOptions))
-#define GIMP_COLOR_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COLOR_OPTIONS, GimpColorOptionsClass))
-#define GIMP_IS_COLOR_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_COLOR_OPTIONS))
-#define GIMP_IS_COLOR_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COLOR_OPTIONS))
-#define GIMP_COLOR_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_COLOR_OPTIONS, GimpColorOptionsClass))
+#define LIGMA_TYPE_COLOR_OPTIONS            (ligma_color_options_get_type ())
+#define LIGMA_COLOR_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_COLOR_OPTIONS, LigmaColorOptions))
+#define LIGMA_COLOR_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_COLOR_OPTIONS, LigmaColorOptionsClass))
+#define LIGMA_IS_COLOR_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_COLOR_OPTIONS))
+#define LIGMA_IS_COLOR_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_COLOR_OPTIONS))
+#define LIGMA_COLOR_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_COLOR_OPTIONS, LigmaColorOptionsClass))
 
 
-typedef struct _GimpColorOptionsClass GimpColorOptionsClass;
+typedef struct _LigmaColorOptionsClass LigmaColorOptionsClass;
 
-struct _GimpColorOptions
+struct _LigmaColorOptions
 {
-  GimpToolOptions  parent_instance;
+  LigmaToolOptions  parent_instance;
 
   gboolean         sample_merged;
   gboolean         sample_average;
   gdouble          average_radius;
 };
 
-struct _GimpColorOptionsClass
+struct _LigmaColorOptionsClass
 {
-  GimpToolOptionsClass  parent_instance;
+  LigmaToolOptionsClass  parent_instance;
 };
 
 
-GType       gimp_color_options_get_type (void) G_GNUC_CONST;
+GType       ligma_color_options_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_color_options_gui      (GimpToolOptions *tool_options);
+GtkWidget * ligma_color_options_gui      (LigmaToolOptions *tool_options);
 
 
-#endif /* __GIMP_COLOR_OPTIONS_H__ */
+#endif /* __LIGMA_COLOR_OPTIONS_H__ */

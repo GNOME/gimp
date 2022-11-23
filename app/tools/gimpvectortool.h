@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * Vector tool
- * Copyright (C) 2003 Simon Budig  <simon@gimp.org>
+ * Copyright (C) 2003 Simon Budig  <simon@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,49 +18,49 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_VECTOR_TOOL_H__
-#define __GIMP_VECTOR_TOOL_H__
+#ifndef __LIGMA_VECTOR_TOOL_H__
+#define __LIGMA_VECTOR_TOOL_H__
 
 
-#include "gimpdrawtool.h"
+#include "ligmadrawtool.h"
 
 
-#define GIMP_TYPE_VECTOR_TOOL            (gimp_vector_tool_get_type ())
-#define GIMP_VECTOR_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_VECTOR_TOOL, GimpVectorTool))
-#define GIMP_VECTOR_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_VECTOR_TOOL, GimpVectorToolClass))
-#define GIMP_IS_VECTOR_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_VECTOR_TOOL))
-#define GIMP_IS_VECTOR_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_VECTOR_TOOL))
-#define GIMP_VECTOR_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_VECTOR_TOOL, GimpVectorToolClass))
+#define LIGMA_TYPE_VECTOR_TOOL            (ligma_vector_tool_get_type ())
+#define LIGMA_VECTOR_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_VECTOR_TOOL, LigmaVectorTool))
+#define LIGMA_VECTOR_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_VECTOR_TOOL, LigmaVectorToolClass))
+#define LIGMA_IS_VECTOR_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_VECTOR_TOOL))
+#define LIGMA_IS_VECTOR_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_VECTOR_TOOL))
+#define LIGMA_VECTOR_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_VECTOR_TOOL, LigmaVectorToolClass))
 
-#define GIMP_VECTOR_TOOL_GET_OPTIONS(t)  (GIMP_VECTOR_OPTIONS (gimp_tool_get_options (GIMP_TOOL (t))))
+#define LIGMA_VECTOR_TOOL_GET_OPTIONS(t)  (LIGMA_VECTOR_OPTIONS (ligma_tool_get_options (LIGMA_TOOL (t))))
 
 
-typedef struct _GimpVectorTool      GimpVectorTool;
-typedef struct _GimpVectorToolClass GimpVectorToolClass;
+typedef struct _LigmaVectorTool      LigmaVectorTool;
+typedef struct _LigmaVectorToolClass LigmaVectorToolClass;
 
-struct _GimpVectorTool
+struct _LigmaVectorTool
 {
-  GimpDrawTool    parent_instance;
+  LigmaDrawTool    parent_instance;
 
-  GimpVectors    *vectors;        /* the current Vector data           */
-  GimpVectorMode  saved_mode;     /* used by modifier_key()            */
+  LigmaVectors    *vectors;        /* the current Vector data           */
+  LigmaVectorMode  saved_mode;     /* used by modifier_key()            */
 
-  GimpToolWidget *widget;
-  GimpToolWidget *grab_widget;
+  LigmaToolWidget *widget;
+  LigmaToolWidget *grab_widget;
 };
 
-struct _GimpVectorToolClass
+struct _LigmaVectorToolClass
 {
-  GimpDrawToolClass  parent_class;
+  LigmaDrawToolClass  parent_class;
 };
 
 
-void    gimp_vector_tool_register    (GimpToolRegisterCallback  callback,
+void    ligma_vector_tool_register    (LigmaToolRegisterCallback  callback,
                                       gpointer                  data);
 
-GType   gimp_vector_tool_get_type    (void) G_GNUC_CONST;
+GType   ligma_vector_tool_get_type    (void) G_GNUC_CONST;
 
-void    gimp_vector_tool_set_vectors (GimpVectorTool           *vector_tool,
-                                      GimpVectors              *vectors);
+void    ligma_vector_tool_set_vectors (LigmaVectorTool           *vector_tool,
+                                      LigmaVectors              *vectors);
 
-#endif  /*  __GIMP_VECTOR_TOOL_H__  */
+#endif  /*  __LIGMA_VECTOR_TOOL_H__  */

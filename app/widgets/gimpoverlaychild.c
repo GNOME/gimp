@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoverlaychild.c
- * Copyright (C) 2009 Michael Natterer <mitch@gimp.org>
+ * ligmaoverlaychild.c
+ * Copyright (C) 2009 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,52 +23,52 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include <libgimpmath/gimpmath.h>
+#include <libligmamath/ligmamath.h>
 
 #include "widgets-types.h"
 
-#include "core/gimp-utils.h"
+#include "core/ligma-utils.h"
 
-#include "gimpoverlaybox.h"
-#include "gimpoverlaychild.h"
-#include "gimpwidgets-utils.h"
+#include "ligmaoverlaybox.h"
+#include "ligmaoverlaychild.h"
+#include "ligmawidgets-utils.h"
 
 
 /*  local function prototypes  */
 
-static void   gimp_overlay_child_transform_bounds (GimpOverlayChild *child,
+static void   ligma_overlay_child_transform_bounds (LigmaOverlayChild *child,
                                                    GdkRectangle     *bounds_child,
                                                    GdkRectangle     *bounds_box);
-static void   gimp_overlay_child_from_embedder    (GdkWindow        *child_window,
+static void   ligma_overlay_child_from_embedder    (GdkWindow        *child_window,
                                                    gdouble           box_x,
                                                    gdouble           box_y,
                                                    gdouble          *child_x,
                                                    gdouble          *child_y,
-                                                   GimpOverlayChild *child);
-static void   gimp_overlay_child_to_embedder      (GdkWindow        *child_window,
+                                                   LigmaOverlayChild *child);
+static void   ligma_overlay_child_to_embedder      (GdkWindow        *child_window,
                                                    gdouble           child_x,
                                                    gdouble           child_y,
                                                    gdouble          *box_x,
                                                    gdouble          *box_y,
-                                                   GimpOverlayChild *child);
+                                                   LigmaOverlayChild *child);
 
 
 /*  public functions  */
 
-GimpOverlayChild *
-gimp_overlay_child_new (GimpOverlayBox *box,
+LigmaOverlayChild *
+ligma_overlay_child_new (LigmaOverlayBox *box,
                         GtkWidget      *widget,
                         gdouble         xalign,
                         gdouble         yalign,
                         gdouble         angle,
                         gdouble         opacity)
 {
-  GimpOverlayChild *child;
+  LigmaOverlayChild *child;
 
-  g_return_val_if_fail (GIMP_IS_OVERLAY_BOX (box), NULL);
+  g_return_val_if_fail (LIGMA_IS_OVERLAY_BOX (box), NULL);
   g_return_val_if_fail (GTK_IS_WIDGET (widget), NULL);
 
-  child = g_slice_new0 (GimpOverlayChild);
+  child = g_slice_new0 (LigmaOverlayChild);
 
   child->widget       = widget;
   child->xalign       = CLAMP (xalign, 0.0, 1.0);
@@ -82,7 +82,7 @@ gimp_overlay_child_new (GimpOverlayBox *box,
   cairo_matrix_init_identity (&child->matrix);
 
   if (gtk_widget_get_realized (GTK_WIDGET (box)))
-    gimp_overlay_child_realize (box, child);
+    ligma_overlay_child_realize (box, child);
 
   gtk_widget_set_parent (widget, GTK_WIDGET (box));
 
@@ -90,34 +90,34 @@ gimp_overlay_child_new (GimpOverlayBox *box,
 }
 
 void
-gimp_overlay_child_free (GimpOverlayBox   *box,
-                         GimpOverlayChild *child)
+ligma_overlay_child_free (LigmaOverlayBox   *box,
+                         LigmaOverlayChild *child)
 {
-  g_return_if_fail (GIMP_IS_OVERLAY_BOX (box));
+  g_return_if_fail (LIGMA_IS_OVERLAY_BOX (box));
   g_return_if_fail (child != NULL);
 
   gtk_widget_unparent (child->widget);
 
   if (gtk_widget_get_realized (GTK_WIDGET (box)))
-    gimp_overlay_child_unrealize (box, child);
+    ligma_overlay_child_unrealize (box, child);
 
-  g_slice_free (GimpOverlayChild, child);
+  g_slice_free (LigmaOverlayChild, child);
 }
 
-GimpOverlayChild *
-gimp_overlay_child_find (GimpOverlayBox *box,
+LigmaOverlayChild *
+ligma_overlay_child_find (LigmaOverlayBox *box,
                          GtkWidget      *widget)
 {
   GList *list;
 
-  g_return_val_if_fail (GIMP_IS_OVERLAY_BOX (box), NULL);
+  g_return_val_if_fail (LIGMA_IS_OVERLAY_BOX (box), NULL);
   g_return_val_if_fail (GTK_IS_WIDGET (widget), NULL);
   g_return_val_if_fail (gtk_widget_get_parent (widget) == GTK_WIDGET (box),
                         NULL);
 
   for (list = box->children; list; list = g_list_next (list))
     {
-      GimpOverlayChild *child = list->data;
+      LigmaOverlayChild *child = list->data;
 
       if (child->widget == widget)
         return child;
@@ -127,8 +127,8 @@ gimp_overlay_child_find (GimpOverlayBox *box,
 }
 
 void
-gimp_overlay_child_realize (GimpOverlayBox   *box,
-                            GimpOverlayChild *child)
+ligma_overlay_child_realize (LigmaOverlayBox   *box,
+                            LigmaOverlayChild *child)
 {
   GtkWidget     *widget;
   GdkDisplay    *display;
@@ -138,7 +138,7 @@ gimp_overlay_child_realize (GimpOverlayBox   *box,
   GdkWindowAttr  attributes;
   gint           attributes_mask;
 
-  g_return_if_fail (GIMP_IS_OVERLAY_BOX (box));
+  g_return_if_fail (LIGMA_IS_OVERLAY_BOX (box));
   g_return_if_fail (child != NULL);
   g_return_if_fail (child->window == NULL);
 
@@ -188,20 +188,20 @@ gimp_overlay_child_realize (GimpOverlayBox   *box,
   g_object_unref (attributes.cursor);
 
   g_signal_connect (child->window, "from-embedder",
-                    G_CALLBACK (gimp_overlay_child_from_embedder),
+                    G_CALLBACK (ligma_overlay_child_from_embedder),
                     child);
   g_signal_connect (child->window, "to-embedder",
-                    G_CALLBACK (gimp_overlay_child_to_embedder),
+                    G_CALLBACK (ligma_overlay_child_to_embedder),
                     child);
 
   gdk_window_show (child->window);
 }
 
 void
-gimp_overlay_child_unrealize (GimpOverlayBox   *box,
-                              GimpOverlayChild *child)
+ligma_overlay_child_unrealize (LigmaOverlayBox   *box,
+                              LigmaOverlayChild *child)
 {
-  g_return_if_fail (GIMP_IS_OVERLAY_BOX (box));
+  g_return_if_fail (LIGMA_IS_OVERLAY_BOX (box));
   g_return_if_fail (child != NULL);
   g_return_if_fail (child->window != NULL);
 
@@ -211,32 +211,32 @@ gimp_overlay_child_unrealize (GimpOverlayBox   *box,
 }
 
 void
-gimp_overlay_child_get_preferred_width (GimpOverlayBox   *box,
-                                        GimpOverlayChild *child,
+ligma_overlay_child_get_preferred_width (LigmaOverlayBox   *box,
+                                        LigmaOverlayChild *child,
                                         gint             *minimum,
                                         gint             *natural)
 {
-  g_return_if_fail (GIMP_IS_OVERLAY_BOX (box));
+  g_return_if_fail (LIGMA_IS_OVERLAY_BOX (box));
   g_return_if_fail (child != NULL);
 
   gtk_widget_get_preferred_width (child->widget, minimum, natural);
 }
 
 void
-gimp_overlay_child_get_preferred_height (GimpOverlayBox   *box,
-                                         GimpOverlayChild *child,
+ligma_overlay_child_get_preferred_height (LigmaOverlayBox   *box,
+                                         LigmaOverlayChild *child,
                                          gint             *minimum,
                                          gint             *natural)
 {
-  g_return_if_fail (GIMP_IS_OVERLAY_BOX (box));
+  g_return_if_fail (LIGMA_IS_OVERLAY_BOX (box));
   g_return_if_fail (child != NULL);
 
   gtk_widget_get_preferred_height (child->widget, minimum, natural);
 }
 
 void
-gimp_overlay_child_size_allocate (GimpOverlayBox   *box,
-                                  GimpOverlayChild *child)
+ligma_overlay_child_size_allocate (LigmaOverlayBox   *box,
+                                  LigmaOverlayChild *child)
 {
   GtkWidget      *widget;
   GtkRequisition  child_requisition;
@@ -244,12 +244,12 @@ gimp_overlay_child_size_allocate (GimpOverlayBox   *box,
   gint            x;
   gint            y;
 
-  g_return_if_fail (GIMP_IS_OVERLAY_BOX (box));
+  g_return_if_fail (LIGMA_IS_OVERLAY_BOX (box));
   g_return_if_fail (child != NULL);
 
   widget = GTK_WIDGET (box);
 
-  gimp_overlay_child_invalidate (box, child);
+  ligma_overlay_child_invalidate (box, child);
 
   gtk_widget_get_preferred_size (child->widget, &child_requisition, NULL);
 
@@ -287,7 +287,7 @@ gimp_overlay_child_size_allocate (GimpOverlayBox   *box,
 
       gtk_widget_get_allocation (widget, &allocation);
 
-      gimp_overlay_child_transform_bounds (child, &child_allocation, &bounds);
+      ligma_overlay_child_transform_bounds (child, &child_allocation, &bounds);
 
       border = gtk_container_get_border_width (GTK_CONTAINER (box));
 
@@ -309,11 +309,11 @@ gimp_overlay_child_size_allocate (GimpOverlayBox   *box,
   /* local transform */
   cairo_matrix_rotate (&child->matrix, child->angle);
 
-  gimp_overlay_child_invalidate (box, child);
+  ligma_overlay_child_invalidate (box, child);
 }
 
 static void
-gimp_overlay_child_clip_fully_opaque (GimpOverlayChild *child,
+ligma_overlay_child_clip_fully_opaque (LigmaOverlayChild *child,
                                       GtkContainer     *container,
                                       cairo_t          *cr)
 {
@@ -326,7 +326,7 @@ gimp_overlay_child_clip_fully_opaque (GimpOverlayChild *child,
     {
       GtkWidget *widget = list->data;
 
-      if (gimp_widget_get_fully_opaque (widget))
+      if (ligma_widget_get_fully_opaque (widget))
         {
           GtkAllocation allocation;
           gint          x, y;
@@ -339,7 +339,7 @@ gimp_overlay_child_clip_fully_opaque (GimpOverlayChild *child,
         }
       else if (GTK_IS_CONTAINER (widget))
         {
-          gimp_overlay_child_clip_fully_opaque (child,
+          ligma_overlay_child_clip_fully_opaque (child,
                                                 GTK_CONTAINER (widget),
                                                 cr);
         }
@@ -349,13 +349,13 @@ gimp_overlay_child_clip_fully_opaque (GimpOverlayChild *child,
 }
 
 gboolean
-gimp_overlay_child_draw (GimpOverlayBox   *box,
-                         GimpOverlayChild *child,
+ligma_overlay_child_draw (LigmaOverlayBox   *box,
+                         LigmaOverlayChild *child,
                          cairo_t          *cr)
 {
   GtkWidget *widget;
 
-  g_return_val_if_fail (GIMP_IS_OVERLAY_BOX (box), FALSE);
+  g_return_val_if_fail (LIGMA_IS_OVERLAY_BOX (box), FALSE);
   g_return_val_if_fail (child != NULL, FALSE);
   g_return_val_if_fail (cr != NULL, FALSE);
 
@@ -368,7 +368,7 @@ gimp_overlay_child_draw (GimpOverlayBox   *box,
 
       gtk_widget_get_allocation (child->widget, &child_allocation);
 
-      gimp_overlay_child_transform_bounds (child, &child_allocation, &bounds);
+      ligma_overlay_child_transform_bounds (child, &child_allocation, &bounds);
 
       if (gtk_widget_get_visible (child->widget))
         {
@@ -382,7 +382,7 @@ gimp_overlay_child_draw (GimpOverlayBox   *box,
           cairo_set_source_surface (cr, surface, 0, 0);
           cairo_paint_with_alpha (cr, child->opacity);
 
-          gimp_overlay_child_clip_fully_opaque (child,
+          ligma_overlay_child_clip_fully_opaque (child,
                                                 GTK_CONTAINER (child->widget),
                                                 cr);
           cairo_clip (cr);
@@ -415,13 +415,13 @@ gimp_overlay_child_draw (GimpOverlayBox   *box,
 }
 
 gboolean
-gimp_overlay_child_damage (GimpOverlayBox   *box,
-                           GimpOverlayChild *child,
+ligma_overlay_child_damage (LigmaOverlayBox   *box,
+                           LigmaOverlayChild *child,
                            GdkEventExpose   *event)
 {
   GtkWidget *widget;
 
-  g_return_val_if_fail (GIMP_IS_OVERLAY_BOX (box), FALSE);
+  g_return_val_if_fail (LIGMA_IS_OVERLAY_BOX (box), FALSE);
   g_return_val_if_fail (child != NULL, FALSE);
   g_return_val_if_fail (event != NULL, FALSE);
 
@@ -441,7 +441,7 @@ gimp_overlay_child_damage (GimpOverlayBox   *box,
 
           cairo_region_get_rectangle (event->region, i, &rect);
 
-          gimp_overlay_child_transform_bounds (child, &rect, &bounds);
+          ligma_overlay_child_transform_bounds (child, &rect, &bounds);
 
           gdk_window_invalidate_rect (gtk_widget_get_window (widget),
                                       &bounds, FALSE);
@@ -454,12 +454,12 @@ gimp_overlay_child_damage (GimpOverlayBox   *box,
 }
 
 void
-gimp_overlay_child_invalidate (GimpOverlayBox   *box,
-                               GimpOverlayChild *child)
+ligma_overlay_child_invalidate (LigmaOverlayBox   *box,
+                               LigmaOverlayChild *child)
 {
   GdkWindow *window;
 
-  g_return_if_fail (GIMP_IS_OVERLAY_BOX (box));
+  g_return_if_fail (LIGMA_IS_OVERLAY_BOX (box));
   g_return_if_fail (child != NULL);
 
   window = gtk_widget_get_window (GTK_WIDGET (box));
@@ -471,7 +471,7 @@ gimp_overlay_child_invalidate (GimpOverlayBox   *box,
 
       gtk_widget_get_allocation (child->widget, &child_allocation);
 
-      gimp_overlay_child_transform_bounds (child, &child_allocation,
+      ligma_overlay_child_transform_bounds (child, &child_allocation,
                                            &bounds);
 
       gdk_window_invalidate_rect (window, &bounds, FALSE);
@@ -479,8 +479,8 @@ gimp_overlay_child_invalidate (GimpOverlayBox   *box,
 }
 
 gboolean
-gimp_overlay_child_pick (GimpOverlayBox   *box,
-                         GimpOverlayChild *child,
+ligma_overlay_child_pick (LigmaOverlayBox   *box,
+                         LigmaOverlayChild *child,
                          gdouble           box_x,
                          gdouble           box_y)
 {
@@ -488,10 +488,10 @@ gimp_overlay_child_pick (GimpOverlayBox   *box,
   gdouble       child_x;
   gdouble       child_y;
 
-  g_return_val_if_fail (GIMP_IS_OVERLAY_BOX (box), FALSE);
+  g_return_val_if_fail (LIGMA_IS_OVERLAY_BOX (box), FALSE);
   g_return_val_if_fail (child != NULL, FALSE);
 
-  gimp_overlay_child_from_embedder (child->window,
+  ligma_overlay_child_from_embedder (child->window,
                                     box_x, box_y,
                                     &child_x, &child_y,
                                     child);
@@ -513,7 +513,7 @@ gimp_overlay_child_pick (GimpOverlayBox   *box,
 /*  private functions  */
 
 static void
-gimp_overlay_child_transform_bounds (GimpOverlayChild *child,
+ligma_overlay_child_transform_bounds (LigmaOverlayChild *child,
                                      GdkRectangle     *bounds_child,
                                      GdkRectangle     *bounds_box)
 {
@@ -544,12 +544,12 @@ gimp_overlay_child_transform_bounds (GimpOverlayChild *child,
 }
 
 static void
-gimp_overlay_child_from_embedder (GdkWindow        *child_window,
+ligma_overlay_child_from_embedder (GdkWindow        *child_window,
                                   gdouble           box_x,
                                   gdouble           box_y,
                                   gdouble          *child_x,
                                   gdouble          *child_y,
-                                  GimpOverlayChild *child)
+                                  LigmaOverlayChild *child)
 {
   cairo_matrix_t inverse = child->matrix;
 
@@ -561,12 +561,12 @@ gimp_overlay_child_from_embedder (GdkWindow        *child_window,
 }
 
 static void
-gimp_overlay_child_to_embedder (GdkWindow        *child_window,
+ligma_overlay_child_to_embedder (GdkWindow        *child_window,
                                 gdouble           child_x,
                                 gdouble           child_y,
                                 gdouble          *box_x,
                                 gdouble          *box_y,
-                                GimpOverlayChild *child)
+                                LigmaOverlayChild *child)
 {
   *box_x = child_x;
   *box_y = child_y;

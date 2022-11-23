@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpparamspecs-desc.h
+ * ligmaparamspecs-desc.h
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -18,12 +18,12 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_H_INSIDE__) && !defined (GIMP_COMPILATION)
-#error "Only <libgimp/gimp.h> can be included directly."
+#if !defined (__LIGMA_H_INSIDE__) && !defined (LIGMA_COMPILATION)
+#error "Only <libligma/ligma.h> can be included directly."
 #endif
 
-#ifndef __GIMP_PARAM_SPECS_DESC_H__
-#define __GIMP_PARAM_SPECS_DESC_H__
+#ifndef __LIGMA_PARAM_SPECS_DESC_H__
+#define __LIGMA_PARAM_SPECS_DESC_H__
 
 G_BEGIN_DECLS
 
@@ -31,9 +31,9 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gchar * gimp_param_spec_get_desc (GParamSpec *pspec);
+gchar * ligma_param_spec_get_desc (GParamSpec *pspec);
 
 
 G_END_DECLS
 
-#endif  /*  __GIMP_PARAM_SPECS_DESC_H__  */
+#endif  /*  __LIGMA_PARAM_SPECS_DESC_H__  */

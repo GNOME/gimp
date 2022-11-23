@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,53 +22,53 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "actions-types.h"
 
-#include "core/gimp.h"
-#include "core/gimp-edit.h"
-#include "core/gimpbuffer.h"
-#include "core/gimpcontainer.h"
-#include "core/gimpdrawable.h"
-#include "core/gimpdrawable-edit.h"
-#include "core/gimpfilloptions.h"
-#include "core/gimplayer.h"
-#include "core/gimplayer-new.h"
-#include "core/gimplayermask.h"
-#include "core/gimpimage.h"
-#include "core/gimpimage-undo.h"
+#include "core/ligma.h"
+#include "core/ligma-edit.h"
+#include "core/ligmabuffer.h"
+#include "core/ligmacontainer.h"
+#include "core/ligmadrawable.h"
+#include "core/ligmadrawable-edit.h"
+#include "core/ligmafilloptions.h"
+#include "core/ligmalayer.h"
+#include "core/ligmalayer-new.h"
+#include "core/ligmalayermask.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaimage-undo.h"
 
-#include "vectors/gimpvectors-import.h"
+#include "vectors/ligmavectors-import.h"
 
-#include "widgets/gimpclipboard.h"
-#include "widgets/gimphelp-ids.h"
-#include "widgets/gimpdialogfactory.h"
-#include "widgets/gimpmessagebox.h"
-#include "widgets/gimpmessagedialog.h"
-#include "widgets/gimpwidgets-utils.h"
-#include "widgets/gimpwindowstrategy.h"
+#include "widgets/ligmaclipboard.h"
+#include "widgets/ligmahelp-ids.h"
+#include "widgets/ligmadialogfactory.h"
+#include "widgets/ligmamessagebox.h"
+#include "widgets/ligmamessagedialog.h"
+#include "widgets/ligmawidgets-utils.h"
+#include "widgets/ligmawindowstrategy.h"
 
-#include "display/gimpdisplay.h"
-#include "display/gimpdisplayshell.h"
-#include "display/gimpdisplayshell-transform.h"
+#include "display/ligmadisplay.h"
+#include "display/ligmadisplayshell.h"
+#include "display/ligmadisplayshell-transform.h"
 
-#include "tools/gimptools-utils.h"
+#include "tools/ligmatools-utils.h"
 #include "tools/tool_manager.h"
 
 #include "actions.h"
 #include "edit-commands.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /*  local function prototypes  */
 
-static gboolean   check_drawable_alpha               (GimpDrawable  *drawable,
+static gboolean   check_drawable_alpha               (LigmaDrawable  *drawable,
                                                       gpointer       data);
-static void       edit_paste                         (GimpDisplay   *display,
-                                                      GimpPasteType  paste_type,
+static void       edit_paste                         (LigmaDisplay   *display,
+                                                      LigmaPasteType  paste_type,
                                                       gboolean       merged,
                                                       gboolean       try_svg);
 static void       cut_named_buffer_callback          (GtkWidget     *widget,
@@ -85,71 +85,71 @@ static void       copy_named_visible_buffer_callback (GtkWidget     *widget,
 /*  public functions  */
 
 void
-edit_undo_cmd_callback (GimpAction *action,
+edit_undo_cmd_callback (LigmaAction *action,
                         GVariant   *value,
                         gpointer    data)
 {
-  GimpImage   *image;
-  GimpDisplay *display;
+  LigmaImage   *image;
+  LigmaDisplay *display;
   return_if_no_image (image, data);
   return_if_no_display (display, data);
 
-  if (tool_manager_undo_active (image->gimp, display) ||
-      gimp_image_undo (image))
+  if (tool_manager_undo_active (image->ligma, display) ||
+      ligma_image_undo (image))
     {
-      gimp_image_flush (image);
+      ligma_image_flush (image);
     }
 }
 
 void
-edit_redo_cmd_callback (GimpAction *action,
+edit_redo_cmd_callback (LigmaAction *action,
                         GVariant   *value,
                         gpointer    data)
 {
-  GimpImage   *image;
-  GimpDisplay *display;
+  LigmaImage   *image;
+  LigmaDisplay *display;
   return_if_no_image (image, data);
   return_if_no_display (display, data);
 
-  if (tool_manager_redo_active (image->gimp, display) ||
-      gimp_image_redo (image))
+  if (tool_manager_redo_active (image->ligma, display) ||
+      ligma_image_redo (image))
     {
-      gimp_image_flush (image);
+      ligma_image_flush (image);
     }
 }
 
 void
-edit_strong_undo_cmd_callback (GimpAction *action,
+edit_strong_undo_cmd_callback (LigmaAction *action,
                                GVariant   *value,
                                gpointer    data)
 {
-  GimpImage *image;
+  LigmaImage *image;
   return_if_no_image (image, data);
 
-  if (gimp_image_strong_undo (image))
-    gimp_image_flush (image);
+  if (ligma_image_strong_undo (image))
+    ligma_image_flush (image);
 }
 
 void
-edit_strong_redo_cmd_callback (GimpAction *action,
+edit_strong_redo_cmd_callback (LigmaAction *action,
                                GVariant   *value,
                                gpointer    data)
 {
-  GimpImage *image;
+  LigmaImage *image;
   return_if_no_image (image, data);
 
-  if (gimp_image_strong_redo (image))
-    gimp_image_flush (image);
+  if (ligma_image_strong_redo (image))
+    ligma_image_flush (image);
 }
 
 void
-edit_undo_clear_cmd_callback (GimpAction *action,
+edit_undo_clear_cmd_callback (LigmaAction *action,
                               GVariant   *value,
                               gpointer    data)
 {
-  GimpImage     *image;
-  GimpUndoStack *undo_stack;
-  GimpUndoStack *redo_stack;
+  LigmaImage     *image;
+  LigmaUndoStack *undo_stack;
+  LigmaUndoStack *redo_stack;
   GtkWidget     *widget;
   GtkWidget     *dialog;
   gchar         *size;
@@ -158,20 +158,20 @@ edit_undo_clear_cmd_callback (GimpAction *action,
   return_if_no_image (image, data);
   return_if_no_widget (widget, data);
 
-  dialog = gimp_message_dialog_new (_("Clear Undo History"),
-                                    GIMP_ICON_DIALOG_WARNING,
+  dialog = ligma_message_dialog_new (_("Clear Undo History"),
+                                    LIGMA_ICON_DIALOG_WARNING,
                                     widget,
                                     GTK_DIALOG_MODAL |
                                     GTK_DIALOG_DESTROY_WITH_PARENT,
-                                    gimp_standard_help_func,
-                                    GIMP_HELP_EDIT_UNDO_CLEAR,
+                                    ligma_standard_help_func,
+                                    LIGMA_HELP_EDIT_UNDO_CLEAR,
 
                                     _("_Cancel"), GTK_RESPONSE_CANCEL,
                                     _("Cl_ear"),  GTK_RESPONSE_OK,
 
                                     NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
@@ -184,43 +184,43 @@ edit_undo_clear_cmd_callback (GimpAction *action,
                            G_CALLBACK (gtk_widget_destroy),
                            dialog, G_CONNECT_SWAPPED);
 
-  gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+  ligma_message_box_set_primary_text (LIGMA_MESSAGE_DIALOG (dialog)->box,
                                      _("Really clear image's undo history?"));
 
-  undo_stack = gimp_image_get_undo_stack (image);
-  redo_stack = gimp_image_get_redo_stack (image);
+  undo_stack = ligma_image_get_undo_stack (image);
+  redo_stack = ligma_image_get_redo_stack (image);
 
-  memsize =  gimp_object_get_memsize (GIMP_OBJECT (undo_stack), &guisize);
+  memsize =  ligma_object_get_memsize (LIGMA_OBJECT (undo_stack), &guisize);
   memsize += guisize;
-  memsize += gimp_object_get_memsize (GIMP_OBJECT (redo_stack), &guisize);
+  memsize += ligma_object_get_memsize (LIGMA_OBJECT (redo_stack), &guisize);
   memsize += guisize;
 
   size = g_format_size (memsize);
 
-  gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+  ligma_message_box_set_text (LIGMA_MESSAGE_DIALOG (dialog)->box,
                              _("Clearing the undo history of this "
                                "image will gain %s of memory."), size);
   g_free (size);
 
-  if (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK)
+  if (ligma_dialog_run (LIGMA_DIALOG (dialog)) == GTK_RESPONSE_OK)
     {
-      gimp_image_undo_disable (image);
-      gimp_image_undo_enable (image);
-      gimp_image_flush (image);
+      ligma_image_undo_disable (image);
+      ligma_image_undo_enable (image);
+      ligma_image_flush (image);
     }
 
   gtk_widget_destroy (dialog);
 }
 
 void
-edit_cut_cmd_callback (GimpAction *action,
+edit_cut_cmd_callback (LigmaAction *action,
                        GVariant   *value,
                        gpointer    data)
 {
-  GimpImage    *image;
+  LigmaImage    *image;
   GList        *drawables;
   GList        *iter;
-  GimpObject   *cut;
+  LigmaObject   *cut;
   GError       *error = NULL;
   return_if_no_drawables (image, drawables, data);
 
@@ -231,17 +231,17 @@ edit_cut_cmd_callback (GimpAction *action,
         return;
       }
 
-  cut = gimp_edit_cut (image, drawables, action_data_get_context (data), &error);
+  cut = ligma_edit_cut (image, drawables, action_data_get_context (data), &error);
 
   if (cut)
     {
-      GimpDisplay *display = action_data_get_display (data);
+      LigmaDisplay *display = action_data_get_display (data);
 
       if (display)
         {
           gchar *msg;
 
-          if (GIMP_IS_IMAGE (cut))
+          if (LIGMA_IS_IMAGE (cut))
             msg = g_strdup_printf (ngettext ("Cut layer to the clipboard.",
                                              "Cut %d layers to the clipboard.",
                                              g_list_length (drawables)),
@@ -249,19 +249,19 @@ edit_cut_cmd_callback (GimpAction *action,
           else
             msg = g_strdup (_("Cut pixels to the clipboard."));
 
-          gimp_message_literal (image->gimp,
-                                G_OBJECT (display), GIMP_MESSAGE_INFO,
+          ligma_message_literal (image->ligma,
+                                G_OBJECT (display), LIGMA_MESSAGE_INFO,
                                 msg);
           g_free (msg);
         }
 
-      gimp_image_flush (image);
+      ligma_image_flush (image);
     }
   else
     {
-      gimp_message_literal (image->gimp,
+      ligma_message_literal (image->ligma,
                             G_OBJECT (action_data_get_display (data)),
-                            GIMP_MESSAGE_WARNING,
+                            LIGMA_MESSAGE_WARNING,
                             error->message);
       g_clear_error (&error);
     }
@@ -269,37 +269,37 @@ edit_cut_cmd_callback (GimpAction *action,
 }
 
 void
-edit_copy_cmd_callback (GimpAction *action,
+edit_copy_cmd_callback (LigmaAction *action,
                         GVariant   *value,
                         gpointer    data)
 {
-  GimpImage    *image;
+  LigmaImage    *image;
   GList        *drawables;
-  GimpObject   *copy;
+  LigmaObject   *copy;
   GError       *error = NULL;
   return_if_no_drawables (image, drawables, data);
 
-  copy = gimp_edit_copy (image, drawables, action_data_get_context (data),
+  copy = ligma_edit_copy (image, drawables, action_data_get_context (data),
                          &error);
 
   if (copy)
     {
-      GimpDisplay *display = action_data_get_display (data);
+      LigmaDisplay *display = action_data_get_display (data);
 
       if (display)
-        gimp_message_literal (image->gimp,
-                              G_OBJECT (display), GIMP_MESSAGE_INFO,
-                              GIMP_IS_IMAGE (copy) ?
+        ligma_message_literal (image->ligma,
+                              G_OBJECT (display), LIGMA_MESSAGE_INFO,
+                              LIGMA_IS_IMAGE (copy) ?
                               _("Copied layer to the clipboard.") :
                               _("Copied pixels to the clipboard."));
 
-      gimp_image_flush (image);
+      ligma_image_flush (image);
     }
   else
     {
-      gimp_message_literal (image->gimp,
+      ligma_message_literal (image->ligma,
                             G_OBJECT (action_data_get_display (data)),
-                            GIMP_MESSAGE_WARNING,
+                            LIGMA_MESSAGE_WARNING,
                             error->message);
       g_clear_error (&error);
     }
@@ -308,52 +308,52 @@ edit_copy_cmd_callback (GimpAction *action,
 }
 
 void
-edit_copy_visible_cmd_callback (GimpAction *action,
+edit_copy_visible_cmd_callback (LigmaAction *action,
                                 GVariant   *value,
                                 gpointer    data)
 {
-  GimpImage *image;
+  LigmaImage *image;
   GError    *error = NULL;
   return_if_no_image (image, data);
 
-  if (gimp_edit_copy_visible (image, action_data_get_context (data), &error))
+  if (ligma_edit_copy_visible (image, action_data_get_context (data), &error))
     {
-      GimpDisplay *display = action_data_get_display (data);
+      LigmaDisplay *display = action_data_get_display (data);
 
       if (display)
-        gimp_message_literal (image->gimp,
-                              G_OBJECT (display), GIMP_MESSAGE_INFO,
+        ligma_message_literal (image->ligma,
+                              G_OBJECT (display), LIGMA_MESSAGE_INFO,
                               _("Copied pixels to the clipboard."));
 
-      gimp_image_flush (image);
+      ligma_image_flush (image);
     }
   else
     {
-      gimp_message_literal (image->gimp,
+      ligma_message_literal (image->ligma,
                             G_OBJECT (action_data_get_display (data)),
-                            GIMP_MESSAGE_WARNING,
+                            LIGMA_MESSAGE_WARNING,
                             error->message);
       g_clear_error (&error);
     }
 }
 
 void
-edit_paste_cmd_callback (GimpAction *action,
+edit_paste_cmd_callback (LigmaAction *action,
                          GVariant   *value,
                          gpointer    data)
 {
-  GimpImage     *image;
-  GimpDisplay   *display    = action_data_get_display (data);
-  GimpPasteType  paste_type = (GimpPasteType) g_variant_get_int32 (value);
-  GimpPasteType  converted_type;
+  LigmaImage     *image;
+  LigmaDisplay   *display    = action_data_get_display (data);
+  LigmaPasteType  paste_type = (LigmaPasteType) g_variant_get_int32 (value);
+  LigmaPasteType  converted_type;
   GList         *drawables;
   gboolean       merged     = FALSE;
 
   return_if_no_image (image, data);
 
-  if (paste_type == GIMP_PASTE_TYPE_FLOATING)
+  if (paste_type == LIGMA_PASTE_TYPE_FLOATING)
     {
-      if (! display || ! gimp_display_get_image (display))
+      if (! display || ! ligma_display_get_image (display))
         {
           edit_paste_as_new_image_cmd_callback (action, value, data);
           return;
@@ -365,42 +365,42 @@ edit_paste_cmd_callback (GimpAction *action,
 
   switch (paste_type)
     {
-    case GIMP_PASTE_TYPE_FLOATING:
-    case GIMP_PASTE_TYPE_FLOATING_IN_PLACE:
-    case GIMP_PASTE_TYPE_FLOATING_INTO:
-    case GIMP_PASTE_TYPE_FLOATING_INTO_IN_PLACE:
+    case LIGMA_PASTE_TYPE_FLOATING:
+    case LIGMA_PASTE_TYPE_FLOATING_IN_PLACE:
+    case LIGMA_PASTE_TYPE_FLOATING_INTO:
+    case LIGMA_PASTE_TYPE_FLOATING_INTO_IN_PLACE:
       edit_paste (display, paste_type, merged, TRUE);
       break;
 
-    case GIMP_PASTE_TYPE_NEW_LAYER:
-    case GIMP_PASTE_TYPE_NEW_LAYER_IN_PLACE:
+    case LIGMA_PASTE_TYPE_NEW_LAYER:
+    case LIGMA_PASTE_TYPE_NEW_LAYER_IN_PLACE:
       edit_paste (display, paste_type, merged, FALSE);
       break;
 
-    case GIMP_PASTE_TYPE_NEW_MERGED_LAYER_OR_FLOATING:
-    case GIMP_PASTE_TYPE_NEW_MERGED_LAYER_OR_FLOATING_IN_PLACE:
+    case LIGMA_PASTE_TYPE_NEW_MERGED_LAYER_OR_FLOATING:
+    case LIGMA_PASTE_TYPE_NEW_MERGED_LAYER_OR_FLOATING_IN_PLACE:
       merged = TRUE;
-    case GIMP_PASTE_TYPE_NEW_LAYER_OR_FLOATING:
-    case GIMP_PASTE_TYPE_NEW_LAYER_OR_FLOATING_IN_PLACE:
-      drawables = gimp_image_get_selected_drawables (image);
+    case LIGMA_PASTE_TYPE_NEW_LAYER_OR_FLOATING:
+    case LIGMA_PASTE_TYPE_NEW_LAYER_OR_FLOATING_IN_PLACE:
+      drawables = ligma_image_get_selected_drawables (image);
 
       if (drawables &&
          (g_list_length (drawables) == 1) &&
-          GIMP_IS_LAYER_MASK (drawables->data))
+          LIGMA_IS_LAYER_MASK (drawables->data))
         {
-          converted_type = (paste_type == GIMP_PASTE_TYPE_NEW_LAYER_OR_FLOATING ||
-                            paste_type == GIMP_PASTE_TYPE_NEW_MERGED_LAYER_OR_FLOATING) ?
-                            GIMP_PASTE_TYPE_FLOATING :
-                            GIMP_PASTE_TYPE_FLOATING_IN_PLACE;
+          converted_type = (paste_type == LIGMA_PASTE_TYPE_NEW_LAYER_OR_FLOATING ||
+                            paste_type == LIGMA_PASTE_TYPE_NEW_MERGED_LAYER_OR_FLOATING) ?
+                            LIGMA_PASTE_TYPE_FLOATING :
+                            LIGMA_PASTE_TYPE_FLOATING_IN_PLACE;
 
           edit_paste (display, converted_type, merged, TRUE);
         }
       else
         {
-          converted_type = (paste_type == GIMP_PASTE_TYPE_NEW_LAYER_OR_FLOATING ||
-                            paste_type == GIMP_PASTE_TYPE_NEW_MERGED_LAYER_OR_FLOATING) ?
-                            GIMP_PASTE_TYPE_NEW_LAYER :
-                            GIMP_PASTE_TYPE_NEW_LAYER_IN_PLACE;
+          converted_type = (paste_type == LIGMA_PASTE_TYPE_NEW_LAYER_OR_FLOATING ||
+                            paste_type == LIGMA_PASTE_TYPE_NEW_MERGED_LAYER_OR_FLOATING) ?
+                            LIGMA_PASTE_TYPE_NEW_LAYER :
+                            LIGMA_PASTE_TYPE_NEW_LAYER_IN_PLACE;
 
           edit_paste (display, converted_type, merged, FALSE);
         }
@@ -411,53 +411,53 @@ edit_paste_cmd_callback (GimpAction *action,
 }
 
 void
-edit_paste_as_new_image_cmd_callback (GimpAction *action,
+edit_paste_as_new_image_cmd_callback (LigmaAction *action,
                                       GVariant   *value,
                                       gpointer    data)
 {
-  Gimp       *gimp;
+  Ligma       *ligma;
   GtkWidget  *widget;
-  GimpObject *paste;
-  GimpImage  *image = NULL;
-  return_if_no_gimp (gimp, data);
+  LigmaObject *paste;
+  LigmaImage  *image = NULL;
+  return_if_no_ligma (ligma, data);
   return_if_no_widget (widget, data);
 
-  paste = gimp_clipboard_get_object (gimp);
+  paste = ligma_clipboard_get_object (ligma);
 
   if (paste)
     {
-      image = gimp_edit_paste_as_new_image (gimp, paste);
+      image = ligma_edit_paste_as_new_image (ligma, paste);
       g_object_unref (paste);
     }
 
   if (image)
     {
-      gimp_create_display (gimp, image, GIMP_UNIT_PIXEL, 1.0,
-                           G_OBJECT (gimp_widget_get_monitor (widget)));
+      ligma_create_display (ligma, image, LIGMA_UNIT_PIXEL, 1.0,
+                           G_OBJECT (ligma_widget_get_monitor (widget)));
       g_object_unref (image);
     }
   else
     {
-      gimp_message_literal (gimp, NULL, GIMP_MESSAGE_WARNING,
+      ligma_message_literal (ligma, NULL, LIGMA_MESSAGE_WARNING,
                             _("There is no image data in the clipboard "
                               "to paste."));
     }
 }
 
 void
-edit_named_cut_cmd_callback (GimpAction *action,
+edit_named_cut_cmd_callback (LigmaAction *action,
                              GVariant   *value,
                              gpointer    data)
 {
-  GimpImage *image;
+  LigmaImage *image;
   GtkWidget *widget;
   GtkWidget *dialog;
   return_if_no_image (image, data);
   return_if_no_widget (widget, data);
 
-  dialog = gimp_query_string_box (_("Cut Named"), widget,
-                                  gimp_standard_help_func,
-                                  GIMP_HELP_BUFFER_CUT,
+  dialog = ligma_query_string_box (_("Cut Named"), widget,
+                                  ligma_standard_help_func,
+                                  LIGMA_HELP_BUFFER_CUT,
                                   _("Enter a name for this buffer"),
                                   NULL,
                                   G_OBJECT (image), "disconnect",
@@ -467,19 +467,19 @@ edit_named_cut_cmd_callback (GimpAction *action,
 }
 
 void
-edit_named_copy_cmd_callback (GimpAction *action,
+edit_named_copy_cmd_callback (LigmaAction *action,
                               GVariant   *value,
                               gpointer    data)
 {
-  GimpImage *image;
+  LigmaImage *image;
   GtkWidget *widget;
   GtkWidget *dialog;
   return_if_no_image (image, data);
   return_if_no_widget (widget, data);
 
-  dialog = gimp_query_string_box (_("Copy Named"), widget,
-                                  gimp_standard_help_func,
-                                  GIMP_HELP_BUFFER_COPY,
+  dialog = ligma_query_string_box (_("Copy Named"), widget,
+                                  ligma_standard_help_func,
+                                  LIGMA_HELP_BUFFER_COPY,
                                   _("Enter a name for this buffer"),
                                   NULL,
                                   G_OBJECT (image), "disconnect",
@@ -489,19 +489,19 @@ edit_named_copy_cmd_callback (GimpAction *action,
 }
 
 void
-edit_named_copy_visible_cmd_callback (GimpAction *action,
+edit_named_copy_visible_cmd_callback (LigmaAction *action,
                                       GVariant   *value,
                                       gpointer    data)
 {
-  GimpImage *image;
+  LigmaImage *image;
   GtkWidget *widget;
   GtkWidget *dialog;
   return_if_no_image (image, data);
   return_if_no_widget (widget, data);
 
-  dialog = gimp_query_string_box (_("Copy Visible Named"), widget,
-                                  gimp_standard_help_func,
-                                  GIMP_HELP_BUFFER_COPY,
+  dialog = ligma_query_string_box (_("Copy Visible Named"), widget,
+                                  ligma_standard_help_func,
+                                  LIGMA_HELP_BUFFER_COPY,
                                   _("Enter a name for this buffer"),
                                   NULL,
                                   G_OBJECT (image), "disconnect",
@@ -511,28 +511,28 @@ edit_named_copy_visible_cmd_callback (GimpAction *action,
 }
 
 void
-edit_named_paste_cmd_callback (GimpAction *action,
+edit_named_paste_cmd_callback (LigmaAction *action,
                                GVariant   *value,
                                gpointer    data)
 {
-  Gimp      *gimp;
+  Ligma      *ligma;
   GtkWidget *widget;
-  return_if_no_gimp (gimp, data);
+  return_if_no_ligma (ligma, data);
   return_if_no_widget (widget, data);
 
-  gimp_window_strategy_show_dockable_dialog (GIMP_WINDOW_STRATEGY (gimp_get_window_strategy (gimp)),
-                                             gimp,
-                                             gimp_dialog_factory_get_singleton (),
-                                             gimp_widget_get_monitor (widget),
-                                             "gimp-buffer-list|gimp-buffer-grid");
+  ligma_window_strategy_show_dockable_dialog (LIGMA_WINDOW_STRATEGY (ligma_get_window_strategy (ligma)),
+                                             ligma,
+                                             ligma_dialog_factory_get_singleton (),
+                                             ligma_widget_get_monitor (widget),
+                                             "ligma-buffer-list|ligma-buffer-grid");
 }
 
 void
-edit_clear_cmd_callback (GimpAction *action,
+edit_clear_cmd_callback (LigmaAction *action,
                          GVariant   *value,
                          gpointer    data)
 {
-  GimpImage *image;
+  LigmaImage *image;
   GList     *drawables;
   GList     *iter;
 
@@ -546,52 +546,52 @@ edit_clear_cmd_callback (GimpAction *action,
         return;
       }
 
-  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_PAINT,
+  ligma_image_undo_group_start (image, LIGMA_UNDO_GROUP_PAINT,
                                _("Clear"));
 
   for (iter = drawables; iter; iter = iter->next)
-    if (! gimp_viewable_get_children (GIMP_VIEWABLE (iter->data)) &&
-        ! gimp_item_is_content_locked (GIMP_ITEM (iter->data), NULL))
-      gimp_drawable_edit_clear (iter->data, action_data_get_context (data));
+    if (! ligma_viewable_get_children (LIGMA_VIEWABLE (iter->data)) &&
+        ! ligma_item_is_content_locked (LIGMA_ITEM (iter->data), NULL))
+      ligma_drawable_edit_clear (iter->data, action_data_get_context (data));
 
-  gimp_image_undo_group_end (image);
-  gimp_image_flush (image);
+  ligma_image_undo_group_end (image);
+  ligma_image_flush (image);
   g_list_free (drawables);
 }
 
 void
-edit_fill_cmd_callback (GimpAction *action,
+edit_fill_cmd_callback (LigmaAction *action,
                         GVariant   *value,
                         gpointer    data)
 {
-  GimpImage       *image;
+  LigmaImage       *image;
   GList           *drawables;
   GList           *iter;
-  GimpFillType     fill_type;
-  GimpFillOptions *options;
+  LigmaFillType     fill_type;
+  LigmaFillOptions *options;
   GError          *error = NULL;
   return_if_no_drawables (image, drawables, data);
 
-  fill_type = (GimpFillType) g_variant_get_int32 (value);
+  fill_type = (LigmaFillType) g_variant_get_int32 (value);
 
-  options = gimp_fill_options_new (action_data_get_gimp (data), NULL, FALSE);
+  options = ligma_fill_options_new (action_data_get_ligma (data), NULL, FALSE);
 
-  if (gimp_fill_options_set_by_fill_type (options,
+  if (ligma_fill_options_set_by_fill_type (options,
                                           action_data_get_context (data),
                                           fill_type, &error))
     {
-      gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_PAINT,
-                                   gimp_fill_options_get_undo_desc (options));
+      ligma_image_undo_group_start (image, LIGMA_UNDO_GROUP_PAINT,
+                                   ligma_fill_options_get_undo_desc (options));
 
       for (iter = drawables; iter; iter = iter->next)
-        gimp_drawable_edit_fill (iter->data, options, NULL);
+        ligma_drawable_edit_fill (iter->data, options, NULL);
 
-      gimp_image_undo_group_end (image);
-      gimp_image_flush (image);
+      ligma_image_undo_group_end (image);
+      ligma_image_flush (image);
     }
   else
     {
-      gimp_message_literal (image->gimp, NULL, GIMP_MESSAGE_WARNING,
+      ligma_message_literal (image->ligma, NULL, LIGMA_MESSAGE_WARNING,
                             error->message);
       g_clear_error (&error);
     }
@@ -604,25 +604,25 @@ edit_fill_cmd_callback (GimpAction *action,
 /*  private functions  */
 
 static gboolean
-check_drawable_alpha (GimpDrawable *drawable,
+check_drawable_alpha (LigmaDrawable *drawable,
                       gpointer      data)
 {
-  GimpLayer *locked_layer = NULL;
+  LigmaLayer *locked_layer = NULL;
 
-  if (gimp_drawable_has_alpha (drawable) &&
-      GIMP_IS_LAYER (drawable)           &&
-      gimp_layer_is_alpha_locked (GIMP_LAYER (drawable), &locked_layer))
+  if (ligma_drawable_has_alpha (drawable) &&
+      LIGMA_IS_LAYER (drawable)           &&
+      ligma_layer_is_alpha_locked (LIGMA_LAYER (drawable), &locked_layer))
     {
-      Gimp        *gimp    = action_data_get_gimp    (data);
-      GimpDisplay *display = action_data_get_display (data);
+      Ligma        *ligma    = action_data_get_ligma    (data);
+      LigmaDisplay *display = action_data_get_display (data);
 
-      if (gimp && display)
+      if (ligma && display)
         {
-          gimp_message_literal (
-            gimp, G_OBJECT (display), GIMP_MESSAGE_WARNING,
+          ligma_message_literal (
+            ligma, G_OBJECT (display), LIGMA_MESSAGE_WARNING,
             _("A selected layer's alpha channel is locked."));
 
-          gimp_tools_blink_lock_box (gimp, GIMP_ITEM (locked_layer));
+          ligma_tools_blink_lock_box (ligma, LIGMA_ITEM (locked_layer));
         }
 
       return FALSE;
@@ -632,34 +632,34 @@ check_drawable_alpha (GimpDrawable *drawable,
 }
 
 static void
-edit_paste (GimpDisplay   *display,
-            GimpPasteType  paste_type,
+edit_paste (LigmaDisplay   *display,
+            LigmaPasteType  paste_type,
             gboolean       merged,
             gboolean       try_svg)
 {
-  GimpImage  *image = gimp_display_get_image (display);
-  GimpObject *paste;
+  LigmaImage  *image = ligma_display_get_image (display);
+  LigmaObject *paste;
 
-  g_return_if_fail (paste_type != GIMP_PASTE_TYPE_NEW_LAYER_OR_FLOATING          &&
-                    paste_type != GIMP_PASTE_TYPE_NEW_LAYER_OR_FLOATING_IN_PLACE &&
-                    paste_type != GIMP_PASTE_TYPE_NEW_MERGED_LAYER_OR_FLOATING   &&
-                    paste_type != GIMP_PASTE_TYPE_NEW_MERGED_LAYER_OR_FLOATING_IN_PLACE);
+  g_return_if_fail (paste_type != LIGMA_PASTE_TYPE_NEW_LAYER_OR_FLOATING          &&
+                    paste_type != LIGMA_PASTE_TYPE_NEW_LAYER_OR_FLOATING_IN_PLACE &&
+                    paste_type != LIGMA_PASTE_TYPE_NEW_MERGED_LAYER_OR_FLOATING   &&
+                    paste_type != LIGMA_PASTE_TYPE_NEW_MERGED_LAYER_OR_FLOATING_IN_PLACE);
 
   if (try_svg)
     {
       gchar *svg;
       gsize  svg_size;
 
-      svg = gimp_clipboard_get_svg (display->gimp, &svg_size);
+      svg = ligma_clipboard_get_svg (display->ligma, &svg_size);
 
       if (svg)
         {
-          if (gimp_vectors_import_buffer (image, svg, svg_size,
+          if (ligma_vectors_import_buffer (image, svg, svg_size,
                                           TRUE, FALSE,
-                                          GIMP_IMAGE_ACTIVE_PARENT, -1,
+                                          LIGMA_IMAGE_ACTIVE_PARENT, -1,
                                           NULL, NULL))
             {
-              gimp_image_flush (image);
+              ligma_image_flush (image);
             }
 
           g_free (svg);
@@ -668,57 +668,57 @@ edit_paste (GimpDisplay   *display,
         }
     }
 
-  paste = gimp_clipboard_get_object (display->gimp);
+  paste = ligma_clipboard_get_object (display->ligma);
 
   if (paste)
     {
-      GimpDisplayShell *shell     = gimp_display_get_shell (display);
-      GList            *drawables = gimp_image_get_selected_drawables (image);
+      LigmaDisplayShell *shell     = ligma_display_get_shell (display);
+      GList            *drawables = ligma_image_get_selected_drawables (image);
       GList            *pasted_layers;
       gint              x, y;
       gint              width, height;
 
       if (g_list_length (drawables) != 1 ||
-          (paste_type != GIMP_PASTE_TYPE_NEW_LAYER &&
-           paste_type != GIMP_PASTE_TYPE_NEW_LAYER_IN_PLACE))
+          (paste_type != LIGMA_PASTE_TYPE_NEW_LAYER &&
+           paste_type != LIGMA_PASTE_TYPE_NEW_LAYER_IN_PLACE))
         {
           if (g_list_length (drawables) != 1)
             {
-              gimp_message_literal (display->gimp, G_OBJECT (display),
-                                    GIMP_MESSAGE_INFO,
+              ligma_message_literal (display->ligma, G_OBJECT (display),
+                                    LIGMA_MESSAGE_INFO,
                                     _("Pasted as new layer because the "
                                       "target is not a single layer or layer mask."));
             }
-          else if (gimp_viewable_get_children (GIMP_VIEWABLE (drawables->data)))
+          else if (ligma_viewable_get_children (LIGMA_VIEWABLE (drawables->data)))
             {
-              gimp_message_literal (display->gimp, G_OBJECT (display),
-                                    GIMP_MESSAGE_INFO,
+              ligma_message_literal (display->ligma, G_OBJECT (display),
+                                    LIGMA_MESSAGE_INFO,
                                     _("Pasted as new layer because the "
                                       "target is a layer group."));
             }
-          else if (gimp_item_is_content_locked (GIMP_ITEM (drawables->data), NULL))
+          else if (ligma_item_is_content_locked (LIGMA_ITEM (drawables->data), NULL))
             {
-              gimp_message_literal (display->gimp, G_OBJECT (display),
-                                    GIMP_MESSAGE_INFO,
+              ligma_message_literal (display->ligma, G_OBJECT (display),
+                                    LIGMA_MESSAGE_INFO,
                                     _("Pasted as new layer because the "
                                       "target's pixels are locked."));
             }
 
-          /* the actual paste-type conversion happens in gimp_edit_paste() */
+          /* the actual paste-type conversion happens in ligma_edit_paste() */
         }
 
-      gimp_display_shell_untransform_viewport (
+      ligma_display_shell_untransform_viewport (
         shell,
-        ! gimp_display_shell_get_infinite_canvas (shell),
+        ! ligma_display_shell_get_infinite_canvas (shell),
         &x, &y, &width, &height);
 
-      if ((pasted_layers = gimp_edit_paste (image, drawables, paste, paste_type,
-                                            gimp_get_user_context (display->gimp),
+      if ((pasted_layers = ligma_edit_paste (image, drawables, paste, paste_type,
+                                            ligma_get_user_context (display->ligma),
                                             merged, x, y, width, height)))
         {
-          gimp_image_set_selected_layers (image, pasted_layers);
+          ligma_image_set_selected_layers (image, pasted_layers);
           g_list_free (pasted_layers);
-          gimp_image_flush (image);
+          ligma_image_flush (image);
         }
 
       g_list_free (drawables);
@@ -726,8 +726,8 @@ edit_paste (GimpDisplay   *display,
     }
   else
     {
-      gimp_message_literal (display->gimp, G_OBJECT (display),
-                            GIMP_MESSAGE_WARNING,
+      ligma_message_literal (display->ligma, G_OBJECT (display),
+                            LIGMA_MESSAGE_WARNING,
                             _("There is no image data in the clipboard "
                               "to paste."));
     }
@@ -738,13 +738,13 @@ cut_named_buffer_callback (GtkWidget   *widget,
                            const gchar *name,
                            gpointer     data)
 {
-  GimpImage *image     = GIMP_IMAGE (data);
-  GList     *drawables = gimp_image_get_selected_drawables (image);
+  LigmaImage *image     = LIGMA_IMAGE (data);
+  GList     *drawables = ligma_image_get_selected_drawables (image);
   GError    *error     = NULL;
 
   if (! drawables)
     {
-      gimp_message_literal (image->gimp, NULL, GIMP_MESSAGE_WARNING,
+      ligma_message_literal (image->ligma, NULL, LIGMA_MESSAGE_WARNING,
                             _("There are no selected layers or channels to cut from."));
       return;
     }
@@ -752,14 +752,14 @@ cut_named_buffer_callback (GtkWidget   *widget,
   if (! (name && strlen (name)))
     name = _("(Unnamed Buffer)");
 
-  if (gimp_edit_named_cut (image, name, drawables,
-                           gimp_get_user_context (image->gimp), &error))
+  if (ligma_edit_named_cut (image, name, drawables,
+                           ligma_get_user_context (image->ligma), &error))
     {
-      gimp_image_flush (image);
+      ligma_image_flush (image);
     }
   else
     {
-      gimp_message_literal (image->gimp, NULL, GIMP_MESSAGE_WARNING,
+      ligma_message_literal (image->ligma, NULL, LIGMA_MESSAGE_WARNING,
                             error->message);
       g_clear_error (&error);
     }
@@ -771,13 +771,13 @@ copy_named_buffer_callback (GtkWidget   *widget,
                             const gchar *name,
                             gpointer     data)
 {
-  GimpImage *image     = GIMP_IMAGE (data);
-  GList     *drawables = gimp_image_get_selected_drawables (image);
+  LigmaImage *image     = LIGMA_IMAGE (data);
+  GList     *drawables = ligma_image_get_selected_drawables (image);
   GError    *error     = NULL;
 
   if (! drawables)
     {
-      gimp_message_literal (image->gimp, NULL, GIMP_MESSAGE_WARNING,
+      ligma_message_literal (image->ligma, NULL, LIGMA_MESSAGE_WARNING,
                             _("There are no selected layers or channels to copy from."));
       return;
     }
@@ -785,14 +785,14 @@ copy_named_buffer_callback (GtkWidget   *widget,
   if (! (name && strlen (name)))
     name = _("(Unnamed Buffer)");
 
-  if (gimp_edit_named_copy (image, name, drawables,
-                            gimp_get_user_context (image->gimp), &error))
+  if (ligma_edit_named_copy (image, name, drawables,
+                            ligma_get_user_context (image->ligma), &error))
     {
-      gimp_image_flush (image);
+      ligma_image_flush (image);
     }
   else
     {
-      gimp_message_literal (image->gimp, NULL, GIMP_MESSAGE_WARNING,
+      ligma_message_literal (image->ligma, NULL, LIGMA_MESSAGE_WARNING,
                             error->message);
       g_clear_error (&error);
     }
@@ -804,21 +804,21 @@ copy_named_visible_buffer_callback (GtkWidget   *widget,
                                     const gchar *name,
                                     gpointer     data)
 {
-  GimpImage *image = GIMP_IMAGE (data);
+  LigmaImage *image = LIGMA_IMAGE (data);
   GError    *error = NULL;
 
   if (! (name && strlen (name)))
     name = _("(Unnamed Buffer)");
 
-  if (gimp_edit_named_copy_visible (image, name,
-                                    gimp_get_user_context (image->gimp),
+  if (ligma_edit_named_copy_visible (image, name,
+                                    ligma_get_user_context (image->ligma),
                                     &error))
     {
-      gimp_image_flush (image);
+      ligma_image_flush (image);
     }
   else
     {
-      gimp_message_literal (image->gimp, NULL, GIMP_MESSAGE_WARNING,
+      ligma_message_literal (image->ligma, NULL, LIGMA_MESSAGE_WARNING,
                             error->message);
       g_clear_error (&error);
     }

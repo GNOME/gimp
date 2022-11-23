@@ -11,7 +11,7 @@ dostuff (){
 	f=$1-$4-`date +%Y-%m-%d`
 
 	mkdir -p combined/$f
-	cp -R -d -L --reflink=auto ./gimp-common$3-$4/* combined/$f
+	cp -R -d -L --reflink=auto ./ligma-common$3-$4/* combined/$f
 	cp -R -d -L --reflink=auto ./$1-$4/* combined/$f
 
 	pushd combined
@@ -32,7 +32,7 @@ dostuff (){
 
 	rm -f etc/gconf/2/path.jhbuild
 
-	rm -f `find -name *.exe | sed -e /gimp/d -e /gspawn/d -e /gdb.exe/d`
+	rm -f `find -name *.exe | sed -e /ligma/d -e /gspawn/d -e /gdb.exe/d`
 
 	if [ "$4" == "i686" ]; then
 		add_dll $dll_loc_32 libstdc++-6.dll
@@ -63,19 +63,19 @@ dostuff (){
 	find -depth -type d -empty -exec rmdir {} \;
 
 	echo "@echo off
-start %~dp0bin\\$2" | unix2dos > run_gimp.bat
+start %~dp0bin\\$2" | unix2dos > run_ligma.bat
 
 	echo "gtk-fallback-icon-theme='gnome'" >> etc/gtk-2.0/gtkrc
 
 	popd
 
-	if [ -e $f/bin/gimp-2.*.exe ]; then
+	if [ -e $f/bin/ligma-2.*.exe ]; then
 		7z a -t7z -m0=lzma -mx=9 -mfb=64 -md=32m -ms=on /tmp/$f.7z $f
 		cat ~/bin/7z.sfx /tmp/$f.7z > $f.exe
 		rm -f /tmp/$f.7z
 	else
 		echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-		echo "!!            GIMP EXECUTABLE NOT FOUND                !!"
+		echo "!!            LIGMA EXECUTABLE NOT FOUND                !!"
 		echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 	fi
 
@@ -85,11 +85,11 @@ start %~dp0bin\\$2" | unix2dos > run_gimp.bat
 }
 
 cd targets
-dostuff gimp-stable gimp-2.8.exe "" i686
-dostuff gimp-dev gimp-2.9.exe "" i686
-dostuff gimp-stable-dbg gimp-2.8.exe "-dbg" i686
-dostuff gimp-dev-dbg gimp-2.9.exe "-dbg" i686
-dostuff gimp-stable gimp-2.8.exe "" x86_64
-dostuff gimp-dev gimp-2.9.exe "" x86_64
-dostuff gimp-stable-dbg gimp-2.8.exe "-dbg" x86_64
-dostuff gimp-dev-dbg gimp-2.9.exe "-dbg" x86_64
+dostuff ligma-stable ligma-2.8.exe "" i686
+dostuff ligma-dev ligma-2.9.exe "" i686
+dostuff ligma-stable-dbg ligma-2.8.exe "-dbg" i686
+dostuff ligma-dev-dbg ligma-2.9.exe "-dbg" i686
+dostuff ligma-stable ligma-2.8.exe "" x86_64
+dostuff ligma-dev ligma-2.9.exe "" x86_64
+dostuff ligma-stable-dbg ligma-2.8.exe "-dbg" x86_64
+dostuff ligma-dev-dbg ligma-2.9.exe "-dbg" x86_64

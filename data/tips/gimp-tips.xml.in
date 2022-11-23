@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE gimp-tips SYSTEM "gimp-tips.dtd">
+<!DOCTYPE ligma-tips SYSTEM "ligma-tips.dtd">
 
-<!-- This is a list of tips for GIMP.                                      -->
+<!-- This is a list of tips for LIGMA.                                      -->
 <!--                                                                       -->
 <!-- The tips parser supports a very basic markup language. You may use    -->
 <!-- the tag b to specify bold text, big to increase the font size and     -->
 <!-- tt to switch to a monospace font.                                     -->
 
-<gimp-tips>
+<ligma-tips>
 
 <!--                                                                       -->
 <!-- Tips for beginners start here                                         -->
@@ -16,39 +16,39 @@
 
   <tip level="beginner">
     <thetip>
-      You can get context-sensitive help for most of GIMP's features by
+      You can get context-sensitive help for most of LIGMA's features by
       pressing the F1 key at any time.  This also works inside the menus.
     </thetip>
   </tip>
-  <tip level="beginner" help="gimp-layer-dialog">
+  <tip level="beginner" help="ligma-layer-dialog">
     <thetip>
-      GIMP uses layers to let you organize your image.  Think of them
+      LIGMA uses layers to let you organize your image.  Think of them
       as a stack of slides or filters, such that looking through them you
       see a composite of their contents.
     </thetip>
   </tip>
-  <tip level="beginner" help="gimp-layer-menu">
+  <tip level="beginner" help="ligma-layer-menu">
     <thetip>
       You can perform many layer operations by right-clicking on the text
       label of a layer in the Layers dialog.
     </thetip>
   </tip>
-  <tip level="beginner" help="gimp-file-save">
+  <tip level="beginner" help="ligma-file-save">
     <thetip>
-      Saving an image uses XCF, GIMP's native file format (file extension
+      Saving an image uses XCF, LIGMA's native file format (file extension
       <tt>.xcf</tt>). This preserves the layers and many aspects of your
       work-in-progress, allowing to work on it again later.
       Once a project is completed, you can export it as JPEG, PNG, GIF, etc.
     </thetip>
   </tip>
-  <tip level="beginner" help="gimp-image-flatten">
+  <tip level="beginner" help="ligma-image-flatten">
     <thetip>
       Most plug-ins work on the current layer of the current image.  In
       some cases, you will have to merge all layers (Image→Flatten Image)
       if you want the plug-in to work on the whole image.
     </thetip>
   </tip>
-  <tip level="beginner" help="gimp-layer-alpha-add">
+  <tip level="beginner" help="ligma-layer-alpha-add">
     <thetip>
       If a layer's name in the Layers dialog is displayed in <b>bold</b>,
       this layer doesn't have an alpha-channel. You can add an alpha-channel
@@ -80,7 +80,7 @@
 
   <tip level="intermediate">
     <thetip>
-      You can drag and drop many things in GIMP.  For example, dragging
+      You can drag and drop many things in LIGMA.  For example, dragging
       a color from the toolbox or from a color palette and dropping it into
       an image will fill the current selection with that color.
     </thetip>
@@ -91,14 +91,14 @@
       (or optionally hold <tt>Spacebar</tt> while you move the mouse).
     </thetip>
   </tip>
-  <tip level="intermediate" help="gimp-concepts-image-grid">
+  <tip level="intermediate" help="ligma-concepts-image-grid">
     <thetip>
       Click and drag on a ruler to place a guide on an image.  All
       dragged selections will snap to the guides.  You can remove
       guides by dragging them off the image with the Move tool.
     </thetip>
   </tip>
-  <tip level="intermediate" help="gimp-file-new">
+  <tip level="intermediate" help="ligma-file-new">
     <thetip>
       You can drag a layer from the Layers dialog and drop it onto the
       toolbox.  This will create a new image containing only that layer.
@@ -114,7 +114,7 @@
   </tip>
   <tip level="intermediate">
     <thetip>
-      GIMP supports gzip compression on the fly.  Just add <tt>.gz</tt>
+      LIGMA supports gzip compression on the fly.  Just add <tt>.gz</tt>
       (or <tt>.bz2</tt>, if you have bzip2 installed) to the filename and
       your image will be saved compressed.  Of course loading compressed
       images works too.
@@ -128,28 +128,28 @@
       current one.
     </thetip>
   </tip>
-  <tip level="intermediate" help="gimp-selection-stroke">
+  <tip level="intermediate" help="ligma-selection-stroke">
     <thetip>
       You can draw simple squares or circles using Edit→Stroke Selection.
       It strokes the edge of your current selection. More complex shapes
       can be drawn using the Path tool or with Filters→Render→Gfig.
     </thetip>
   </tip>
-  <tip level="intermediate" help="gimp-path-stroke">
+  <tip level="intermediate" help="ligma-path-stroke">
     <thetip>
       If you stroke a path (Edit→Stroke Path), the paint tools can
       be used with their current settings.  You can use the Paintbrush in
       gradient mode or even the Eraser or the Smudge tool.
     </thetip>
   </tip>
-  <tip level="intermediate" help="gimp-using-paths">
+  <tip level="intermediate" help="ligma-using-paths">
     <thetip>
       You can create and edit complex selections using the Path tool.
       The Paths dialog allows you to work on multiple paths and to convert
       them to selections.
     </thetip>
   </tip>
-  <tip level="intermediate" help="gimp-using-quickmask">
+  <tip level="intermediate" help="ligma-using-quickmask">
     <thetip>
       You can use the paint tools to change the selection.  Click on the
       &quot;Quick Mask&quot; button at the bottom left of an image window.
@@ -157,7 +157,7 @@
       again to convert it back to a normal selection.
     </thetip>
   </tip>
-  <tip level="intermediate" help="gimp-channel-dialog">
+  <tip level="intermediate" help="ligma-channel-dialog">
     <thetip>
       You can save a selection to a channel (Select→Save to Channel) and
       then modify this channel with any paint tools.  Using the buttons in
@@ -177,7 +177,7 @@
       Preferences dialog, you can reassign shortcut keys. Do so by bringing
       up the menu, selecting a menu item, and pressing the desired key
       combination. If &quot;Save Keyboard Shortcuts&quot; is enabled, the
-      key bindings are saved when you exit GIMP.
+      key bindings are saved when you exit LIGMA.
       You should probably disable &quot;Dynamic Keyboard Shortcuts&quot; 
       afterwards, to prevent accidentally assigning/reassigning shortcuts.
     </thetip>
@@ -208,7 +208,7 @@
       an image (if your window manager doesn't trap those keys...).
     </thetip>
   </tip>
-  <tip level="advanced" help="gimp-tool-bucket-fill">
+  <tip level="advanced" help="ligma-tool-bucket-fill">
     <thetip>
       <tt>Ctrl</tt>-click with the Bucket Fill tool to have it use
       the background color instead of the foreground color.
@@ -216,7 +216,7 @@
       sets the background color instead of the foreground color.
     </thetip>
   </tip>
-  <tip level="advanced" help="gimp-tools-transform">
+  <tip level="advanced" help="ligma-tools-transform">
     <thetip>
       <tt>Ctrl</tt>-drag with the Rotate tool will constrain the
       rotation to 15 degree angles.
@@ -232,4 +232,4 @@
     </thetip>
   </tip>
 
-</gimp-tips>
+</ligma-tips>

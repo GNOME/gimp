@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,12 +20,12 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "core-types.h"
 
-#include "gimpauxitem.h"
-#include "gimpauxitemundo.h"
+#include "ligmaauxitem.h"
+#include "ligmaauxitemundo.h"
 
 
 enum
@@ -35,66 +35,66 @@ enum
 };
 
 
-static void   gimp_aux_item_undo_constructed  (GObject      *object);
-static void   gimp_aux_item_undo_set_property (GObject      *object,
+static void   ligma_aux_item_undo_constructed  (GObject      *object);
+static void   ligma_aux_item_undo_set_property (GObject      *object,
                                                guint         property_id,
                                                const GValue *value,
                                                GParamSpec   *pspec);
-static void   gimp_aux_item_undo_get_property (GObject      *object,
+static void   ligma_aux_item_undo_get_property (GObject      *object,
                                                guint         property_id,
                                                GValue       *value,
                                                GParamSpec   *pspec);
 
-static void   gimp_aux_item_undo_free         (GimpUndo     *undo,
-                                               GimpUndoMode  undo_mode);
+static void   ligma_aux_item_undo_free         (LigmaUndo     *undo,
+                                               LigmaUndoMode  undo_mode);
 
 
-G_DEFINE_ABSTRACT_TYPE (GimpAuxItemUndo, gimp_aux_item_undo, GIMP_TYPE_UNDO)
+G_DEFINE_ABSTRACT_TYPE (LigmaAuxItemUndo, ligma_aux_item_undo, LIGMA_TYPE_UNDO)
 
-#define parent_class gimp_aux_item_undo_parent_class
+#define parent_class ligma_aux_item_undo_parent_class
 
 
 static void
-gimp_aux_item_undo_class_init (GimpAuxItemUndoClass *klass)
+ligma_aux_item_undo_class_init (LigmaAuxItemUndoClass *klass)
 {
   GObjectClass  *object_class = G_OBJECT_CLASS (klass);
-  GimpUndoClass *undo_class   = GIMP_UNDO_CLASS (klass);
+  LigmaUndoClass *undo_class   = LIGMA_UNDO_CLASS (klass);
 
-  object_class->constructed  = gimp_aux_item_undo_constructed;
-  object_class->set_property = gimp_aux_item_undo_set_property;
-  object_class->get_property = gimp_aux_item_undo_get_property;
+  object_class->constructed  = ligma_aux_item_undo_constructed;
+  object_class->set_property = ligma_aux_item_undo_set_property;
+  object_class->get_property = ligma_aux_item_undo_get_property;
 
-  undo_class->free           = gimp_aux_item_undo_free;
+  undo_class->free           = ligma_aux_item_undo_free;
 
   g_object_class_install_property (object_class, PROP_AUX_ITEM,
                                    g_param_spec_object ("aux-item", NULL, NULL,
-                                                        GIMP_TYPE_AUX_ITEM,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_TYPE_AUX_ITEM,
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
-gimp_aux_item_undo_init (GimpAuxItemUndo *undo)
+ligma_aux_item_undo_init (LigmaAuxItemUndo *undo)
 {
 }
 
 static void
-gimp_aux_item_undo_constructed (GObject *object)
+ligma_aux_item_undo_constructed (GObject *object)
 {
-  GimpAuxItemUndo *aux_item_undo = GIMP_AUX_ITEM_UNDO (object);
+  LigmaAuxItemUndo *aux_item_undo = LIGMA_AUX_ITEM_UNDO (object);
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_assert (GIMP_IS_AUX_ITEM (aux_item_undo->aux_item));
+  ligma_assert (LIGMA_IS_AUX_ITEM (aux_item_undo->aux_item));
 }
 
 static void
-gimp_aux_item_undo_set_property (GObject      *object,
+ligma_aux_item_undo_set_property (GObject      *object,
                                  guint         property_id,
                                  const GValue *value,
                                  GParamSpec   *pspec)
 {
-  GimpAuxItemUndo *aux_item_undo = GIMP_AUX_ITEM_UNDO (object);
+  LigmaAuxItemUndo *aux_item_undo = LIGMA_AUX_ITEM_UNDO (object);
 
   switch (property_id)
     {
@@ -109,12 +109,12 @@ gimp_aux_item_undo_set_property (GObject      *object,
 }
 
 static void
-gimp_aux_item_undo_get_property (GObject    *object,
+ligma_aux_item_undo_get_property (GObject    *object,
                                  guint       property_id,
                                  GValue     *value,
                                  GParamSpec *pspec)
 {
-  GimpAuxItemUndo *aux_item_undo = GIMP_AUX_ITEM_UNDO (object);
+  LigmaAuxItemUndo *aux_item_undo = LIGMA_AUX_ITEM_UNDO (object);
 
   switch (property_id)
     {
@@ -129,12 +129,12 @@ gimp_aux_item_undo_get_property (GObject    *object,
 }
 
 static void
-gimp_aux_item_undo_free (GimpUndo     *undo,
-                         GimpUndoMode  undo_mode)
+ligma_aux_item_undo_free (LigmaUndo     *undo,
+                         LigmaUndoMode  undo_mode)
 {
-  GimpAuxItemUndo *aux_item_undo = GIMP_AUX_ITEM_UNDO (undo);
+  LigmaAuxItemUndo *aux_item_undo = LIGMA_AUX_ITEM_UNDO (undo);
 
   g_clear_object (&aux_item_undo->aux_item);
 
-  GIMP_UNDO_CLASS (parent_class)->free (undo, undo_mode);
+  LIGMA_UNDO_CLASS (parent_class)->free (undo, undo_mode);
 }

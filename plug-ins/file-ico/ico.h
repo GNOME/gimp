@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * GIMP Plug-in for Windows Icon files.
+ * LIGMA Plug-in for Windows Icon files.
  * Copyright (C) 2002 Christian Kreibich <christian@whoop.org>.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -33,7 +33,7 @@
 #endif
 
 #define PLUG_IN_BINARY      "file-ico"
-#define PLUG_IN_ROLE        "gimp-file-ico"
+#define PLUG_IN_ROLE        "ligma-file-ico"
 
 #define ICO_PNG_MAGIC       0x474e5089
 #define ICO_ALPHA_THRESHOLD 127

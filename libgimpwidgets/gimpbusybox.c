@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpbusybox.c
+ * ligmabusybox.c
  * Copyright (C) 2018 Ell
  *
  * This library is free software: you can redistribute it and/or
@@ -24,20 +24,20 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
-#include "gimpwidgetstypes.h"
+#include "ligmawidgetstypes.h"
 
-#include "gimpbusybox.h"
-#include "gimpwidgetsutils.h"
+#include "ligmabusybox.h"
+#include "ligmawidgetsutils.h"
 
 
 /**
- * SECTION: gimpbusybox
- * @title: GimpBusyBox
+ * SECTION: ligmabusybox
+ * @title: LigmaBusyBox
  * @short_description: A widget indicating an ongoing operation
  *
- * #GimpBusyBox displays a styled message, providing indication of
+ * #LigmaBusyBox displays a styled message, providing indication of
  * an ongoing operation.
  **/
 
@@ -49,7 +49,7 @@ enum
 };
 
 
-struct _GimpBusyBoxPrivate
+struct _LigmaBusyBoxPrivate
 {
   GtkLabel *label;
 };
@@ -57,34 +57,34 @@ struct _GimpBusyBoxPrivate
 
 /*  local function prototypes  */
 
-static void   gimp_busy_box_set_property (GObject      *object,
+static void   ligma_busy_box_set_property (GObject      *object,
                                           guint         property_id,
                                           const GValue *value,
                                           GParamSpec   *pspec);
-static void   gimp_busy_box_get_property (GObject      *object,
+static void   ligma_busy_box_get_property (GObject      *object,
                                           guint         property_id,
                                           GValue       *value,
                                           GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpBusyBox, gimp_busy_box, GTK_TYPE_BOX)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaBusyBox, ligma_busy_box, GTK_TYPE_BOX)
 
-#define parent_class gimp_busy_box_parent_class
+#define parent_class ligma_busy_box_parent_class
 
 
 /*  private functions  */
 
 
 static void
-gimp_busy_box_class_init (GimpBusyBoxClass *klass)
+ligma_busy_box_class_init (LigmaBusyBoxClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->set_property = gimp_busy_box_set_property;
-  object_class->get_property = gimp_busy_box_get_property;
+  object_class->set_property = ligma_busy_box_set_property;
+  object_class->get_property = ligma_busy_box_get_property;
 
   /**
-   * GimpBusyBox:message:
+   * LigmaBusyBox:message:
    *
    * Specifies the displayed message.
    *
@@ -95,17 +95,17 @@ gimp_busy_box_class_init (GimpBusyBoxClass *klass)
                                                         "Message",
                                                         "The message to display",
                                                         NULL,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 }
 
 static void
-gimp_busy_box_init (GimpBusyBox *box)
+ligma_busy_box_init (LigmaBusyBox *box)
 {
   GtkWidget *spinner;
   GtkWidget *label;
 
-  box->priv = gimp_busy_box_get_instance_private (box);
+  box->priv = ligma_busy_box_get_instance_private (box);
 
   gtk_widget_set_halign (GTK_WIDGET (box), GTK_ALIGN_CENTER);
   gtk_widget_set_valign (GTK_WIDGET (box), GTK_ALIGN_CENTER);
@@ -120,7 +120,7 @@ gimp_busy_box_init (GimpBusyBox *box)
   /* the label */
   label = gtk_label_new (NULL);
   box->priv->label = GTK_LABEL (label);
-  gimp_label_set_attributes (GTK_LABEL (label),
+  ligma_label_set_attributes (GTK_LABEL (label),
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);
   gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
@@ -128,12 +128,12 @@ gimp_busy_box_init (GimpBusyBox *box)
 }
 
 static void
-gimp_busy_box_set_property (GObject      *object,
+ligma_busy_box_set_property (GObject      *object,
                             guint         property_id,
                             const GValue *value,
                             GParamSpec   *pspec)
 {
-  GimpBusyBox *box = GIMP_BUSY_BOX (object);
+  LigmaBusyBox *box = LIGMA_BUSY_BOX (object);
 
   switch (property_id)
     {
@@ -148,12 +148,12 @@ gimp_busy_box_set_property (GObject      *object,
 }
 
 static void
-gimp_busy_box_get_property (GObject    *object,
+ligma_busy_box_get_property (GObject    *object,
                                guint       property_id,
                                GValue     *value,
                                GParamSpec *pspec)
 {
-  GimpBusyBox *box = GIMP_BUSY_BOX (object);
+  LigmaBusyBox *box = LIGMA_BUSY_BOX (object);
 
   switch (property_id)
     {
@@ -172,29 +172,29 @@ gimp_busy_box_get_property (GObject    *object,
 
 
 /**
- * gimp_busy_box_new:
+ * ligma_busy_box_new:
  * @message: (allow-none): the displayed message, or %NULL
  *
- * Creates a new #GimpBusyBox widget.
+ * Creates a new #LigmaBusyBox widget.
  *
- * Returns: A pointer to the new #GimpBusyBox widget.
+ * Returns: A pointer to the new #LigmaBusyBox widget.
  *
  * Since: 2.10.4
  **/
 GtkWidget *
-gimp_busy_box_new (const gchar *message)
+ligma_busy_box_new (const gchar *message)
 {
   if (message == NULL)
     message = "";
 
-  return g_object_new (GIMP_TYPE_BUSY_BOX,
+  return g_object_new (LIGMA_TYPE_BUSY_BOX,
                        "message", message,
                        NULL);
 }
 
 /**
- * gimp_busy_box_set_message:
- * @box:     a #GimpBusyBox
+ * ligma_busy_box_set_message:
+ * @box:     a #LigmaBusyBox
  * @message: the displayed message
  *
  * Sets the displayed message og @box to @message.
@@ -202,10 +202,10 @@ gimp_busy_box_new (const gchar *message)
  * Since: 2.10.4
  **/
 void
-gimp_busy_box_set_message (GimpBusyBox *box,
+ligma_busy_box_set_message (LigmaBusyBox *box,
                            const gchar *message)
 {
-  g_return_if_fail (GIMP_IS_BUSY_BOX (box));
+  g_return_if_fail (LIGMA_IS_BUSY_BOX (box));
   g_return_if_fail (message != NULL);
 
   g_object_set (box,
@@ -214,8 +214,8 @@ gimp_busy_box_set_message (GimpBusyBox *box,
 }
 
 /**
- * gimp_busy_box_get_message:
- * @box: a #GimpBusyBox
+ * ligma_busy_box_get_message:
+ * @box: a #LigmaBusyBox
  *
  * Returns the displayed message of @box.
  *
@@ -224,9 +224,9 @@ gimp_busy_box_set_message (GimpBusyBox *box,
  * Since: 2.10.4
  **/
 const gchar *
-gimp_busy_box_get_message (GimpBusyBox *box)
+ligma_busy_box_get_message (LigmaBusyBox *box)
 {
-  g_return_val_if_fail (GIMP_IS_BUSY_BOX (box), NULL);
+  g_return_val_if_fail (LIGMA_IS_BUSY_BOX (box), NULL);
 
   return gtk_label_get_text (box->priv->label);
 }

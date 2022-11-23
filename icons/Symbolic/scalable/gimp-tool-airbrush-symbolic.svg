@@ -15,7 +15,7 @@
    width="16"
    version="1.1"
    inkscape:version="0.92.2 2405546, 2018-03-11"
-   sodipodi:docname="gimp-tool-airbrush-symbolic.svg">
+   sodipodi:docname="ligma-tool-airbrush-symbolic.svg">
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -54,7 +54,7 @@
             <dc:title>Barbara Muraus, Jakub Steiner, Klaus Staedtler</dc:title>
           </cc:Agent>
         </dc:contributor>
-        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for GIMP</dc:description>
+        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for LIGMA</dc:description>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -365,9 +365,9 @@
   </defs>
   <g
      style="display:inline"
-     id="gimp-tool-airbrush"
+     id="ligma-tool-airbrush"
      transform="translate(-20,-178)"
-     inkscape:label="gimp-tool-airbrush">
+     inkscape:label="ligma-tool-airbrush">
     <rect
        style="color:#bebebe;display:inline;overflow:visible;visibility:visible;opacity:0;fill:none;stroke:none;stroke-width:1;marker:none"
        id="rect2941"

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,26 +15,26 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_BUFFER_H__
-#define __GIMP_BUFFER_H__
+#ifndef __LIGMA_BUFFER_H__
+#define __LIGMA_BUFFER_H__
 
 
-#include "gimpviewable.h"
+#include "ligmaviewable.h"
 
 
-#define GIMP_TYPE_BUFFER            (gimp_buffer_get_type ())
-#define GIMP_BUFFER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_BUFFER, GimpBuffer))
-#define GIMP_BUFFER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_BUFFER, GimpBufferClass))
-#define GIMP_IS_BUFFER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_BUFFER))
-#define GIMP_IS_BUFFER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_BUFFER))
-#define GIMP_BUFFER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_BUFFER, GimpBufferClass))
+#define LIGMA_TYPE_BUFFER            (ligma_buffer_get_type ())
+#define LIGMA_BUFFER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_BUFFER, LigmaBuffer))
+#define LIGMA_BUFFER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_BUFFER, LigmaBufferClass))
+#define LIGMA_IS_BUFFER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_BUFFER))
+#define LIGMA_IS_BUFFER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_BUFFER))
+#define LIGMA_BUFFER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_BUFFER, LigmaBufferClass))
 
 
-typedef struct _GimpBufferClass GimpBufferClass;
+typedef struct _LigmaBufferClass LigmaBufferClass;
 
-struct _GimpBuffer
+struct _LigmaBuffer
 {
-  GimpViewable      parent_instance;
+  LigmaViewable      parent_instance;
 
   GeglBuffer       *buffer;
   gint              offset_x;
@@ -42,50 +42,50 @@ struct _GimpBuffer
 
   gdouble           resolution_x;
   gdouble           resolution_y;
-  GimpUnit          unit;
+  LigmaUnit          unit;
 
-  GimpColorProfile *color_profile;
-  GimpColorProfile *format_profile;
+  LigmaColorProfile *color_profile;
+  LigmaColorProfile *format_profile;
 };
 
-struct _GimpBufferClass
+struct _LigmaBufferClass
 {
-  GimpViewableClass  parent_class;
+  LigmaViewableClass  parent_class;
 };
 
 
-GType              gimp_buffer_get_type          (void) G_GNUC_CONST;
+GType              ligma_buffer_get_type          (void) G_GNUC_CONST;
 
-GimpBuffer       * gimp_buffer_new               (GeglBuffer       *buffer,
+LigmaBuffer       * ligma_buffer_new               (GeglBuffer       *buffer,
                                                   const gchar      *name,
                                                   gint              offset_x,
                                                   gint              offset_y,
                                                   gboolean          copy_pixels);
-GimpBuffer       * gimp_buffer_new_from_pixbuf   (GdkPixbuf        *pixbuf,
+LigmaBuffer       * ligma_buffer_new_from_pixbuf   (GdkPixbuf        *pixbuf,
                                                   const gchar      *name,
                                                   gint              offset_x,
                                                   gint              offset_y);
 
-gint               gimp_buffer_get_width         (GimpBuffer       *buffer);
-gint               gimp_buffer_get_height        (GimpBuffer       *buffer);
-const Babl       * gimp_buffer_get_format        (GimpBuffer       *buffer);
+gint               ligma_buffer_get_width         (LigmaBuffer       *buffer);
+gint               ligma_buffer_get_height        (LigmaBuffer       *buffer);
+const Babl       * ligma_buffer_get_format        (LigmaBuffer       *buffer);
 
-GeglBuffer       * gimp_buffer_get_buffer        (GimpBuffer       *buffer);
+GeglBuffer       * ligma_buffer_get_buffer        (LigmaBuffer       *buffer);
 
-void               gimp_buffer_set_resolution    (GimpBuffer       *buffer,
+void               ligma_buffer_set_resolution    (LigmaBuffer       *buffer,
                                                   gdouble           resolution_x,
                                                   gdouble           resolution_y);
-gboolean           gimp_buffer_get_resolution    (GimpBuffer       *buffer,
+gboolean           ligma_buffer_get_resolution    (LigmaBuffer       *buffer,
                                                   gdouble          *resolution_x,
                                                   gdouble          *resolution_y);
 
-void               gimp_buffer_set_unit          (GimpBuffer       *buffer,
-                                                  GimpUnit          unit);
-GimpUnit           gimp_buffer_get_unit          (GimpBuffer       *buffer);
+void               ligma_buffer_set_unit          (LigmaBuffer       *buffer,
+                                                  LigmaUnit          unit);
+LigmaUnit           ligma_buffer_get_unit          (LigmaBuffer       *buffer);
 
-void               gimp_buffer_set_color_profile (GimpBuffer       *buffer,
-                                                  GimpColorProfile *profile);
-GimpColorProfile * gimp_buffer_get_color_profile (GimpBuffer       *buffer);
+void               ligma_buffer_set_color_profile (LigmaBuffer       *buffer,
+                                                  LigmaColorProfile *profile);
+LigmaColorProfile * ligma_buffer_get_color_profile (LigmaBuffer       *buffer);
 
 
-#endif /* __GIMP_BUFFER_H__ */
+#endif /* __LIGMA_BUFFER_H__ */

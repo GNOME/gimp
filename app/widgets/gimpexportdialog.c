@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpexportdialog.c
+ * ligmaexportdialog.c
  * Copyright (C) 2015 Jehan <jehan@girinstud.io>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,38 +23,38 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "core/gimp.h"
-#include "core/gimp-utils.h"
-#include "core/gimpimage.h"
+#include "core/ligma.h"
+#include "core/ligma-utils.h"
+#include "core/ligmaimage.h"
 
-#include "config/gimpcoreconfig.h"
+#include "config/ligmacoreconfig.h"
 
-#include "file/gimp-file.h"
+#include "file/ligma-file.h"
 
-#include "gimpexportdialog.h"
-#include "gimphelp-ids.h"
+#include "ligmaexportdialog.h"
+#include "ligmahelp-ids.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-G_DEFINE_TYPE (GimpExportDialog, gimp_export_dialog,
-               GIMP_TYPE_FILE_DIALOG)
+G_DEFINE_TYPE (LigmaExportDialog, ligma_export_dialog,
+               LIGMA_TYPE_FILE_DIALOG)
 
-#define parent_class gimp_export_dialog_parent_class
+#define parent_class ligma_export_dialog_parent_class
 
 
 static void
-gimp_export_dialog_class_init (GimpExportDialogClass *klass)
+ligma_export_dialog_class_init (LigmaExportDialogClass *klass)
 {
 }
 
 static void
-gimp_export_dialog_init (GimpExportDialog *dialog)
+ligma_export_dialog_init (LigmaExportDialog *dialog)
 {
 }
 
@@ -62,47 +62,47 @@ gimp_export_dialog_init (GimpExportDialog *dialog)
 /*  public functions  */
 
 GtkWidget *
-gimp_export_dialog_new (Gimp *gimp)
+ligma_export_dialog_new (Ligma *ligma)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
 
-  return g_object_new (GIMP_TYPE_EXPORT_DIALOG,
-                       "gimp",                  gimp,
+  return g_object_new (LIGMA_TYPE_EXPORT_DIALOG,
+                       "ligma",                  ligma,
                        "title",                 _("Export Image"),
-                       "role",                  "gimp-file-export",
-                       "help-id",               GIMP_HELP_FILE_EXPORT_AS,
+                       "role",                  "ligma-file-export",
+                       "help-id",               LIGMA_HELP_FILE_EXPORT_AS,
                        "ok-button-label",       _("_Export"),
 
                        "automatic-label",       _("By Extension"),
-                       "automatic-help-id",     GIMP_HELP_FILE_SAVE_BY_EXTENSION,
+                       "automatic-help-id",     LIGMA_HELP_FILE_SAVE_BY_EXTENSION,
 
                        "action",                GTK_FILE_CHOOSER_ACTION_SAVE,
-                       "file-procs",            GIMP_FILE_PROCEDURE_GROUP_EXPORT,
-                       "file-procs-all-images", GIMP_FILE_PROCEDURE_GROUP_SAVE,
+                       "file-procs",            LIGMA_FILE_PROCEDURE_GROUP_EXPORT,
+                       "file-procs-all-images", LIGMA_FILE_PROCEDURE_GROUP_SAVE,
                        "file-filter-label",     _("All export images"),
                        NULL);
 }
 
 void
-gimp_export_dialog_set_image (GimpExportDialog *dialog,
-                              GimpImage        *image,
-                              GimpObject       *display)
+ligma_export_dialog_set_image (LigmaExportDialog *dialog,
+                              LigmaImage        *image,
+                              LigmaObject       *display)
 {
-  GimpFileDialog *file_dialog;
+  LigmaFileDialog *file_dialog;
   GFile          *dir_file  = NULL;
   GFile          *name_file = NULL;
   GFile          *ext_file  = NULL;
   gchar          *basename;
 
-  g_return_if_fail (GIMP_IS_EXPORT_DIALOG (dialog));
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_EXPORT_DIALOG (dialog));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
 
-  file_dialog = GIMP_FILE_DIALOG (dialog);
+  file_dialog = LIGMA_FILE_DIALOG (dialog);
 
   file_dialog->image = image;
   dialog->display    = display;
 
-  gimp_file_dialog_set_file_proc (file_dialog, NULL);
+  ligma_file_dialog_set_file_proc (file_dialog, NULL);
 
   /* Priority of default paths for Export:
    *
@@ -114,28 +114,28 @@ gimp_export_dialog_set_image (GimpExportDialog *dialog,
    *   6. The default path (usually the OS 'Documents' path)
    */
 
-  dir_file = gimp_image_get_exported_file (image);
+  dir_file = ligma_image_get_exported_file (image);
 
   if (! dir_file)
     dir_file = g_object_get_data (G_OBJECT (image),
-                                  "gimp-image-source-file");
+                                  "ligma-image-source-file");
 
   if (! dir_file)
-    dir_file = gimp_image_get_imported_file (image);
+    dir_file = ligma_image_get_imported_file (image);
 
   if (! dir_file)
-    dir_file = gimp_image_get_file (image);
+    dir_file = ligma_image_get_file (image);
 
   if (! dir_file)
-    dir_file = g_object_get_data (G_OBJECT (file_dialog->gimp),
-                                  GIMP_FILE_SAVE_LAST_FILE_KEY);
+    dir_file = g_object_get_data (G_OBJECT (file_dialog->ligma),
+                                  LIGMA_FILE_SAVE_LAST_FILE_KEY);
 
   if (! dir_file)
-    dir_file = g_object_get_data (G_OBJECT (file_dialog->gimp),
-                                  GIMP_FILE_EXPORT_LAST_FILE_KEY);
+    dir_file = g_object_get_data (G_OBJECT (file_dialog->ligma),
+                                  LIGMA_FILE_EXPORT_LAST_FILE_KEY);
 
   if (! dir_file)
-    dir_file = gimp_file_dialog_get_default_folder (file_dialog);
+    dir_file = ligma_file_dialog_get_default_folder (file_dialog);
 
   /* Priority of default basenames for Export:
    *
@@ -145,16 +145,16 @@ gimp_export_dialog_set_image (GimpExportDialog *dialog,
    *   3. 'Untitled'
    */
 
-  name_file = gimp_image_get_exported_file (image);
+  name_file = ligma_image_get_exported_file (image);
 
   if (! name_file)
-    name_file = gimp_image_get_file (image);
+    name_file = ligma_image_get_file (image);
 
   if (! name_file)
-    name_file = gimp_image_get_imported_file (image);
+    name_file = ligma_image_get_imported_file (image);
 
   if (! name_file)
-    name_file = gimp_image_get_untitled_file (image);
+    name_file = ligma_image_get_untitled_file (image);
 
 
   /* Priority of default type/extension for Export:
@@ -165,14 +165,14 @@ gimp_export_dialog_set_image (GimpExportDialog *dialog,
    *   4. Default file type set in Preferences
    */
 
-  ext_file = gimp_image_get_exported_file (image);
+  ext_file = ligma_image_get_exported_file (image);
 
   if (! ext_file)
-    ext_file = gimp_image_get_imported_file (image);
+    ext_file = ligma_image_get_imported_file (image);
 
   if (! ext_file)
-    ext_file = g_object_get_data (G_OBJECT (file_dialog->gimp),
-                                  GIMP_FILE_EXPORT_LAST_FILE_KEY);
+    ext_file = g_object_get_data (G_OBJECT (file_dialog->ligma),
+                                  LIGMA_FILE_EXPORT_LAST_FILE_KEY);
 
   if (ext_file)
     {
@@ -183,8 +183,8 @@ gimp_export_dialog_set_image (GimpExportDialog *dialog,
       const gchar *extension;
       gchar       *uri;
 
-      gimp_enum_get_value (GIMP_TYPE_EXPORT_FILE_TYPE,
-                           image->gimp->config->export_file_type,
+      ligma_enum_get_value (LIGMA_TYPE_EXPORT_FILE_TYPE,
+                           image->ligma->config->export_file_type,
                            NULL, &extension, NULL, NULL);
 
       uri = g_strconcat ("file:///we/only/care/about/extension.",
@@ -195,14 +195,14 @@ gimp_export_dialog_set_image (GimpExportDialog *dialog,
 
   if (ext_file)
     {
-      GFile *tmp_file = gimp_file_with_new_extension (name_file, ext_file);
-      basename = g_path_get_basename (gimp_file_get_utf8_name (tmp_file));
+      GFile *tmp_file = ligma_file_with_new_extension (name_file, ext_file);
+      basename = g_path_get_basename (ligma_file_get_utf8_name (tmp_file));
       g_object_unref (tmp_file);
       g_object_unref (ext_file);
     }
   else
     {
-      basename = g_path_get_basename (gimp_file_get_utf8_name (name_file));
+      basename = g_path_get_basename (ligma_file_get_utf8_name (name_file));
     }
 
   if (g_file_query_file_type (dir_file, G_FILE_QUERY_INFO_NONE, NULL) ==

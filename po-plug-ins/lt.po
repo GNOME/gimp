@@ -1,6 +1,6 @@
-# Lithuanian translation of GIMP plug-ins.
+# Lithuanian translation of LIGMA plug-ins.
 # Copyright (C) 2002-2008 Free Software Foundation, Inc.
-# This file is distributed under the same license as the Gimp package.
+# This file is distributed under the same license as the Ligma package.
 # Mantas Kriaučiūnas <mantas@akl.lt>, 2002.
 # Eglė Girinaitė <eglyte@centras.lt>, 2002.
 # Žygimantas Beručka <zygis@gnome.org>, 2004-2008.
@@ -8,8 +8,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP plug-ins HEAD\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: LIGMA plug-ins HEAD\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2008-07-17 13:42+0300\n"
 "PO-Revision-Date: 2008-07-17 14:35+0300\n"
 "Last-Translator: Žygimantas Beručka <zygis@gnome.org>\n"
@@ -48,12 +48,12 @@ msgstr "Netinkama spalvų paletė"
 #: ../plug-ins/common/tga.c:428 ../plug-ins/common/tiff-load.c:288
 #: ../plug-ins/common/xbm.c:720 ../plug-ins/common/xwd.c:420
 #: ../plug-ins/faxg3/faxg3.c:219 ../plug-ins/fits/fits.c:345
-#: ../plug-ins/flame/flame.c:411 ../plug-ins/fli/fli-gimp.c:429
-#: ../plug-ins/fli/fli-gimp.c:464
+#: ../plug-ins/flame/flame.c:411 ../plug-ins/fli/fli-ligma.c:429
+#: ../plug-ins/fli/fli-ligma.c:464
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1863
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:931
-#: ../plug-ins/gfig/gfig.c:434 ../plug-ins/help/gimphelplocale.c:222
-#: ../plug-ins/help/gimphelplocale.c:238 ../plug-ins/ico/ico-load.c:651
+#: ../plug-ins/gfig/gfig.c:434 ../plug-ins/help/ligmahelplocale.c:222
+#: ../plug-ins/help/ligmahelplocale.c:238 ../plug-ins/ico/ico-load.c:651
 #: ../plug-ins/ico/ico-load.c:728 ../plug-ins/jpeg/jpeg-load.c:111
 #: ../plug-ins/jpeg/jpeg-load.c:828 ../plug-ins/lighting/lighting-ui.c:1354
 #: ../plug-ins/psd/psd-load.c:125 ../plug-ins/psd/psd-thumb-load.c:78
@@ -79,7 +79,7 @@ msgstr "Nepavyko atverti skaitymui „%s“: %s"
 #: ../plug-ins/common/tiff-load.c:589 ../plug-ins/common/wmf.c:992
 #: ../plug-ins/common/xbm.c:725 ../plug-ins/common/xpm.c:343
 #: ../plug-ins/common/xwd.c:506 ../plug-ins/faxg3/faxg3.c:204
-#: ../plug-ins/fli/fli-gimp.c:469 ../plug-ins/ico/ico-load.c:645
+#: ../plug-ins/fli/fli-ligma.c:469 ../plug-ins/ico/ico-load.c:645
 #: ../plug-ins/jpeg/jpeg-load.c:117 ../plug-ins/psd/psd-load.c:130
 #: ../plug-ins/sgi/sgi.c:318 ../plug-ins/xjt/xjt.c:3344
 #, c-format
@@ -136,7 +136,7 @@ msgstr "Nepalaikomas arba netinkamas paveikslėlio aukštis: %d"
 #: ../plug-ins/common/tiff-load.c:982 ../plug-ins/common/tile.c:267
 #: ../plug-ins/common/xbm.c:880 ../plug-ins/faxg3/faxg3.c:464
 #: ../plug-ins/fits/fits.c:511 ../plug-ins/gfig/gfig-dialog.c:1284
-#: ../plug-ins/gimpressionist/general.c:140 ../plug-ins/jpeg/jpeg-load.c:251
+#: ../plug-ins/ligmaressionist/general.c:140 ../plug-ins/jpeg/jpeg-load.c:251
 #: ../plug-ins/jpeg/jpeg-load.c:759 ../plug-ins/psd/psd-image-res-load.c:995
 #: ../plug-ins/psd/psd-load.c:1511 ../plug-ins/sgi/sgi.c:369
 #: ../plug-ins/twain/twain.c:568 ../plug-ins/win-snap/winsnap.c:1154
@@ -174,7 +174,7 @@ msgstr "Alfa kanalo bus nepaisoma."
 #: ../plug-ins/common/tga.c:1138 ../plug-ins/common/tiff-save.c:671
 #: ../plug-ins/common/xbm.c:1016 ../plug-ins/common/xwd.c:598
 #: ../plug-ins/fits/fits.c:457 ../plug-ins/flame/flame.c:442
-#: ../plug-ins/fli/fli-gimp.c:715
+#: ../plug-ins/fli/fli-ligma.c:715
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1546
 #: ../plug-ins/gfig/gfig.c:794 ../plug-ins/ico/ico-save.c:1020
 #: ../plug-ins/ifs-compose/ifs-compose.c:2379 ../plug-ins/jpeg/jpeg-save.c:320
@@ -197,7 +197,7 @@ msgstr "Nepavyko rašymui atverti „%s“: %s"
 #: ../plug-ins/common/tga.c:1143 ../plug-ins/common/tiff-save.c:681
 #: ../plug-ins/common/xbm.c:1021 ../plug-ins/common/xpm.c:623
 #: ../plug-ins/common/xwd.c:603 ../plug-ins/fits/fits.c:462
-#: ../plug-ins/fli/fli-gimp.c:684 ../plug-ins/ico/ico-save.c:1015
+#: ../plug-ins/fli/fli-ligma.c:684 ../plug-ins/ico/ico-save.c:1015
 #: ../plug-ins/jpeg/jpeg-save.c:278 ../plug-ins/sgi/sgi.c:537
 #: ../plug-ins/xjt/xjt.c:1697
 #, c-format
@@ -262,15 +262,15 @@ msgstr "Kontekstas"
 #. spinbutton 1
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:299
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:377
-#: ../plug-ins/common/color-to-alpha.c:409 ../plug-ins/fli/fli-gimp.c:840
-#: ../plug-ins/fli/fli-gimp.c:910
+#: ../plug-ins/common/color-to-alpha.c:409 ../plug-ins/fli/fli-ligma.c:840
+#: ../plug-ins/fli/fli-ligma.c:910
 msgid "From:"
 msgstr "Nuo:"
 
 #. spinbutton 2
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:325
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:378
-#: ../plug-ins/fli/fli-gimp.c:849 ../plug-ins/fli/fli-gimp.c:919
+#: ../plug-ins/fli/fli-ligma.c:849 ../plug-ins/fli/fli-ligma.c:919
 msgid "To:"
 msgstr "Iki:"
 
@@ -645,8 +645,8 @@ msgid "Optimizing animation"
 msgstr "Optimizuojama animacija"
 
 #: ../plug-ins/common/animation-play.c:163
-msgid "Preview a GIMP layer-based animation"
-msgstr "Peržiūrėti GIMP sluoksniais paremtą animaciją"
+msgid "Preview a LIGMA layer-based animation"
+msgstr "Peržiūrėti LIGMA sluoksniais paremtą animaciją"
 
 #: ../plug-ins/common/animation-play.c:168
 msgid "_Playback..."
@@ -1237,7 +1237,7 @@ msgid "Checkerboard"
 msgstr "Šaškių lenta"
 
 #: ../plug-ins/common/checkerboard.c:412
-#: ../plug-ins/gimpressionist/sizemap.c:511
+#: ../plug-ins/ligmaressionist/sizemap.c:511
 msgid "_Size:"
 msgstr "_Dydis:"
 
@@ -1435,8 +1435,8 @@ msgstr "Atstitiktinės iš sėklos (bendrinama)"
 
 #: ../plug-ins/common/cml-explorer.c:300 ../plug-ins/common/cml-explorer.c:308
 #: ../plug-ins/common/decompose.c:188
-#: ../plug-ins/gimpressionist/orientation.c:180
-#: ../plug-ins/gimpressionist/size.c:183
+#: ../plug-ins/ligmaressionist/orientation.c:180
+#: ../plug-ins/ligmaressionist/size.c:183
 msgid "Hue"
 msgstr "Atspalvis"
 
@@ -1447,8 +1447,8 @@ msgstr "Sodrumas"
 
 #: ../plug-ins/common/cml-explorer.c:302 ../plug-ins/common/cml-explorer.c:310
 #: ../plug-ins/common/decompose.c:190
-#: ../plug-ins/gimpressionist/orientation.c:156
-#: ../plug-ins/gimpressionist/size.c:159
+#: ../plug-ins/ligmaressionist/orientation.c:156
+#: ../plug-ins/ligmaressionist/size.c:159
 msgid "Value"
 msgstr "Reikšmė"
 
@@ -2405,7 +2405,7 @@ msgid "Cannot operate on layers with masks."
 msgstr "Negali veikti sluoksniuose su kaukėmis."
 
 #. could not float the selection because selection rectangle
-#. * is completely empty return GIMP_PDB_EXECUTION_ERROR
+#. * is completely empty return LIGMA_PDB_EXECUTION_ERROR
 #.
 #: ../plug-ins/common/curve-bend.c:694
 msgid "Cannot operate on empty selections."
@@ -2420,8 +2420,8 @@ msgstr "Kreivės linkis"
 #. Preview area, top of column
 #. preview
 #: ../plug-ins/common/curve-bend.c:1231
-#: ../plug-ins/gimpressionist/orientmap.c:592
-#: ../plug-ins/gimpressionist/sizemap.c:461
+#: ../plug-ins/ligmaressionist/orientmap.c:592
+#: ../plug-ins/ligmaressionist/sizemap.c:461
 #: ../plug-ins/print/print-page-layout.c:159
 msgid "Preview"
 msgstr "Peržiūra"
@@ -3041,7 +3041,7 @@ msgstr "_Skersmuo 1:"
 msgid "R_adius 2:"
 msgstr "S_kersmuo 2:"
 
-#: ../plug-ins/common/edge-dog.c:347 ../plug-ins/gimpressionist/paper.c:167
+#: ../plug-ins/common/edge-dog.c:347 ../plug-ins/ligmaressionist/paper.c:167
 msgid "_Invert"
 msgstr "_Invertuoti"
 
@@ -3541,8 +3541,8 @@ msgid "Y_2:"
 msgstr "Y_2:"
 
 #: ../plug-ins/common/gbr.c:152 ../plug-ins/common/gbr.c:173
-msgid "GIMP brush"
-msgstr "GIMP teptukas"
+msgid "LIGMA brush"
+msgstr "LIGMA teptukas"
 
 #: ../plug-ins/common/gbr.c:388 ../plug-ins/common/gbr.c:400
 msgid "Unsupported brush format"
@@ -3550,8 +3550,8 @@ msgstr "Nepalaikomas teptuko formatas"
 
 #: ../plug-ins/common/gbr.c:411
 #, c-format
-msgid "Error in GIMP brush file '%s'"
-msgstr "Klaida GIMP teptuko faile „%s“"
+msgid "Error in LIGMA brush file '%s'"
+msgstr "Klaida LIGMA teptuko faile „%s“"
 
 #: ../plug-ins/common/gbr.c:419
 #, c-format
@@ -3565,8 +3565,8 @@ msgid "Unnamed"
 msgstr "Nepavadinta"
 
 #: ../plug-ins/common/gbr.c:607
-msgid "GIMP brushes are either GRAYSCALE or RGBA"
-msgstr "GIMP teptukai yra GRAYSCALE arba RGBA"
+msgid "LIGMA brushes are either GRAYSCALE or RGBA"
+msgstr "LIGMA teptukai yra GRAYSCALE arba RGBA"
 
 #: ../plug-ins/common/gbr.c:704
 msgid "Save as Brush"
@@ -3578,21 +3578,21 @@ msgid "Spacing:"
 msgstr "Tarpai:"
 
 #: ../plug-ins/common/gbr.c:742 ../plug-ins/common/gih.c:910
-#: ../plug-ins/common/pat.c:541 ../plug-ins/gimpressionist/presets.c:664
+#: ../plug-ins/common/pat.c:541 ../plug-ins/ligmaressionist/presets.c:664
 msgid "Description:"
 msgstr "Aprašymas:"
 
 #: ../plug-ins/common/gee-zoom.c:121 ../plug-ins/common/gee.c:99
-msgid "A big hello from the GIMP team!"
-msgstr "Didžiausi sveikinimai nuo GIMP komandos!"
+msgid "A big hello from the LIGMA team!"
+msgstr "Didžiausi sveikinimai nuo LIGMA komandos!"
 
 #: ../plug-ins/common/gee-zoom.c:126 ../plug-ins/common/gee-zoom.c:186
 msgid "Gee Zoom"
 msgstr "Tai bent mastelis"
 
 #: ../plug-ins/common/gee-zoom.c:192 ../plug-ins/common/gee.c:166
-msgid "Thank You for Choosing GIMP"
-msgstr "Dėkojame, kad pasirinkote GIMP"
+msgid "Thank You for Choosing LIGMA"
+msgstr "Dėkojame, kad pasirinkote LIGMA"
 
 #: ../plug-ins/common/gee-zoom.c:200
 #, c-format
@@ -3768,8 +3768,8 @@ msgid "The default comment is limited to %d characters."
 msgstr "Numatytasis komentaras yra ribojamas iki %d simbolių."
 
 #: ../plug-ins/common/gih.c:207 ../plug-ins/common/gih.c:228
-msgid "GIMP brush (animated)"
-msgstr "GIMP teptukas (animuotas)"
+msgid "LIGMA brush (animated)"
+msgstr "LIGMA teptukas (animuotas)"
 
 #: ../plug-ins/common/gih.c:321
 #, c-format
@@ -3777,12 +3777,12 @@ msgid "Layer %s doesn't have an alpha channel, skipped"
 msgstr "Sluoksnyje %s nėra alfa kanalo, praleidžiama"
 
 #: ../plug-ins/common/gih.c:492
-msgid "Error in GIMP brush pipe file."
-msgstr "Klaida GIMP teptukų konvejerio faile."
+msgid "Error in LIGMA brush pipe file."
+msgstr "Klaida LIGMA teptukų konvejerio faile."
 
 #: ../plug-ins/common/gih.c:558
-msgid "GIMP brush file appears to be corrupted."
-msgstr "Panašu, kad GIMP teptuko failas yra sugadintas."
+msgid "LIGMA brush file appears to be corrupted."
+msgstr "Panašu, kad LIGMA teptuko failas yra sugadintas."
 
 #: ../plug-ins/common/gih.c:703
 msgid "Couldn't load one brush in the pipe, giving up."
@@ -5193,8 +5193,8 @@ msgid "_Use intensity algorithm"
 msgstr "_Naudoti intensyvumo algoritmą"
 
 #: ../plug-ins/common/pat.c:121 ../plug-ins/common/pat.c:143
-msgid "GIMP pattern"
-msgstr "GIMP raštas"
+msgid "LIGMA pattern"
+msgstr "LIGMA raštas"
 
 #: ../plug-ins/common/pat.c:358
 #, c-format
@@ -5512,16 +5512,16 @@ msgid "Invalid X resolution."
 msgstr "Netinkama X raiška."
 
 #: ../plug-ins/common/pnm.c:541
-msgid "Image width is larger than GIMP can handle."
-msgstr "Paveikslėlio plotis yra didesnis, negu GIMP gali apdoroti."
+msgid "Image width is larger than LIGMA can handle."
+msgstr "Paveikslėlio plotis yra didesnis, negu LIGMA gali apdoroti."
 
 #: ../plug-ins/common/pnm.c:548
 msgid "Invalid Y resolution."
 msgstr "Netinkama Y raiška."
 
 #: ../plug-ins/common/pnm.c:550
-msgid "Image height is larger than GIMP can handle."
-msgstr "Paveikslėlio aukštis yra didesnis, nei GIMP gali apdoroti."
+msgid "Image height is larger than LIGMA can handle."
+msgstr "Paveikslėlio aukštis yra didesnis, nei LIGMA gali apdoroti."
 
 #: ../plug-ins/common/pnm.c:562
 msgid "Unsupported maximum value."
@@ -5667,12 +5667,12 @@ msgstr "Į PostScript negalima išsaugti paveikslėlių turinčių alfa kanalą"
 #, c-format
 msgid ""
 "Error starting Ghostscript. Make sure that Ghostscript is installed and - if "
-"necessary - use the environment variable GS_PROG to tell GIMP about its "
+"necessary - use the environment variable GS_PROG to tell LIGMA about its "
 "location.\n"
 "(%s)"
 msgstr ""
 "Klaida paleidžiant Ghostscript. Įsitikinkite, jog Ghostscript įdiegtas ir - "
-"jei būtina - naudokite aplinkos kintamajį GS_PROG nurodyti GIMP jo vietą.\n"
+"jei būtina - naudokite aplinkos kintamajį GS_PROG nurodyti LIGMA jo vietą.\n"
 "(%s)"
 
 #: ../plug-ins/common/postscript.c:1913 ../plug-ins/common/tiff-load.c:984
@@ -5737,8 +5737,8 @@ msgid "B/W"
 msgstr "Juoda/balta"
 
 #: ../plug-ins/common/postscript.c:3215 ../plug-ins/common/xpm.c:468
-#: ../plug-ins/gimpressionist/color.c:66
-#: ../plug-ins/gimpressionist/general.c:170
+#: ../plug-ins/ligmaressionist/color.c:66
+#: ../plug-ins/ligmaressionist/general.c:170
 #: ../plug-ins/imagemap/imap_menu.c:213
 msgid "Color"
 msgstr "Spalva"
@@ -5851,9 +5851,9 @@ msgstr ""
 "išsaugojimo įskiepis to nepalaiko, vietoje to naudojama normali veiksena."
 
 #: ../plug-ins/common/psd-save.c:608
-msgid "Error: Can't convert GIMP base imagetype to PSD mode"
+msgid "Error: Can't convert LIGMA base imagetype to PSD mode"
 msgstr ""
-"Klaida: nepavyko konvertuoti GIMP bazinio paveikslėlio tipo į PSD veikseną"
+"Klaida: nepavyko konvertuoti LIGMA bazinio paveikslėlio tipo į PSD veikseną"
 
 #: ../plug-ins/common/psd-save.c:1535
 #, c-format
@@ -6628,7 +6628,7 @@ msgid "Use the background color"
 msgstr "Naudoti fono spalvą"
 
 #: ../plug-ins/common/sphere-designer.c:291
-#: ../plug-ins/gimpressionist/general.c:166
+#: ../plug-ins/ligmaressionist/general.c:166
 msgid "Solid"
 msgstr "Vientisa"
 
@@ -6724,7 +6724,7 @@ msgstr "Spalvų pasirinkimo dialogas"
 
 #. Scale
 #: ../plug-ins/common/sphere-designer.c:2748
-#: ../plug-ins/gimpressionist/paper.c:194
+#: ../plug-ins/ligmaressionist/paper.c:194
 #: ../plug-ins/ifs-compose/ifs-compose.c:553
 msgid "Scale:"
 msgstr "Mastelis:"
@@ -6835,10 +6835,10 @@ msgstr ""
 #, c-format
 msgid ""
 "'%s':\n"
-"Image width is larger than GIMP can handle"
+"Image width is larger than LIGMA can handle"
 msgstr ""
 "„%s“:\n"
-"Paveikslėlio plotis yra didesnis, negu GIMP gali apdoroti"
+"Paveikslėlio plotis yra didesnis, negu LIGMA gali apdoroti"
 
 #: ../plug-ins/common/sunras.c:456 ../plug-ins/common/xbm.c:824
 #: ../plug-ins/common/xwd.c:492
@@ -6855,10 +6855,10 @@ msgstr ""
 #, c-format
 msgid ""
 "'%s':\n"
-"Image height is larger than GIMP can handle"
+"Image height is larger than LIGMA can handle"
 msgstr ""
 "„%s“:\n"
-"Paveikslėlio aukštis yra didesnis, negu GIMP gali apdoroti"
+"Paveikslėlio aukštis yra didesnis, negu LIGMA gali apdoroti"
 
 #: ../plug-ins/common/sunras.c:502
 msgid "This image depth is not supported"
@@ -6956,9 +6956,9 @@ msgstr "Importuoti _kontūrus"
 
 #: ../plug-ins/common/svg.c:930
 msgid ""
-"Import path elements of the SVG so they can be used with the GIMP path tool"
+"Import path elements of the SVG so they can be used with the LIGMA path tool"
 msgstr ""
-"Importuoti SVG kontūrų elementus tam, kad jie galėtų būti naudojami su GIMP "
+"Importuoti SVG kontūrų elementus tam, kad jie galėtų būti naudojami su LIGMA "
 "kontūrų įrankiu"
 
 #: ../plug-ins/common/svg.c:943
@@ -7054,12 +7054,12 @@ msgstr "TIFF kanalas"
 #: ../plug-ins/common/tiff-load.c:1009 ../plug-ins/psd/psd-load.c:318
 msgid ""
 "Warning:\n"
-"The image you are loading has 16 bits per channel. GIMP can only handle 8 "
+"The image you are loading has 16 bits per channel. LIGMA can only handle 8 "
 "bit, so it will be converted for you. Information will be lost because of "
 "this conversion."
 msgstr ""
 "Dėmesio:\n"
-"Įkeliamas paveikslėlis yra 16-os bitų kanale. GIMP gali apdoroti tik 8 "
+"Įkeliamas paveikslėlis yra 16-os bitų kanale. LIGMA gali apdoroti tik 8 "
 "bitus, taigi jis bus konvertuotas. Dėl šio konvertavimo bus prarasta "
 "informacija."
 
@@ -7309,10 +7309,10 @@ msgstr "Išsaugota"
 
 #: ../plug-ins/common/unit-editor.c:94
 msgid ""
-"A unit definition will only be saved before GIMP exits if this column is "
+"A unit definition will only be saved before LIGMA exits if this column is "
 "checked."
 msgstr ""
-"Vienetų apibrėžimas bus išsaugotas prieš užveriant GIMP, tik jei šis "
+"Vienetų apibrėžimas bus išsaugotas prieš užveriant LIGMA, tik jei šis "
 "stulpelis pažymėtas."
 
 #: ../plug-ins/common/unit-editor.c:96
@@ -7321,9 +7321,9 @@ msgstr "ID"
 
 #: ../plug-ins/common/unit-editor.c:96
 msgid ""
-"This string will be used to identify a unit in GIMP's configuration files."
+"This string will be used to identify a unit in LIGMA's configuration files."
 msgstr ""
-"Ši eilutė bus naudojama identifikuoti vienetui GIMP konfigūracijos failuose."
+"Ši eilutė bus naudojama identifikuoti vienetui LIGMA konfigūracijos failuose."
 
 #: ../plug-ins/common/unit-editor.c:98
 msgid "Factor"
@@ -7393,8 +7393,8 @@ msgid "Create a new unit using the currently selected unit as template"
 msgstr "Sukurti naują vienetą naudojant pasirinktą vienetą kaip trafaretą"
 
 #: ../plug-ins/common/unit-editor.c:145
-msgid "Create or alter units used in GIMP"
-msgstr "Kurti ar keisti vienetus naudojamus GIMP"
+msgid "Create or alter units used in LIGMA"
+msgstr "Kurti ar keisti vienetus naudojamus LIGMA"
 
 #: ../plug-ins/common/unit-editor.c:150
 msgid "U_nits"
@@ -7988,7 +7988,7 @@ msgstr "A_bu"
 msgid "Higher values restrict the effect to fewer areas of the image"
 msgstr "Didesnės reikšmės apriboja efektą iki mažesnių paveikslėlio plotų"
 
-#: ../plug-ins/common/wind.c:1025 ../plug-ins/gimpressionist/orientmap.c:694
+#: ../plug-ins/common/wind.c:1025 ../plug-ins/ligmaressionist/orientmap.c:694
 msgid "_Strength:"
 msgstr "_Stiprumas:"
 
@@ -8254,8 +8254,8 @@ msgstr "_Atsitiktinė"
 msgid "Same"
 msgstr "Ta pati"
 
-#: ../plug-ins/flame/flame.c:746 ../plug-ins/gimpressionist/orientation.c:164
-#: ../plug-ins/gimpressionist/size.c:167
+#: ../plug-ins/flame/flame.c:746 ../plug-ins/ligmaressionist/orientation.c:164
+#: ../plug-ins/ligmaressionist/size.c:167
 msgid "Random"
 msgstr "Atsitiktinė"
 
@@ -8403,38 +8403,38 @@ msgstr "Kitas gradientas"
 msgid "C_amera"
 msgstr "K_amera"
 
-#: ../plug-ins/fli/fli-gimp.c:163 ../plug-ins/fli/fli-gimp.c:183
+#: ../plug-ins/fli/fli-ligma.c:163 ../plug-ins/fli/fli-ligma.c:183
 msgid "AutoDesk FLIC animation"
 msgstr "AutoDesk FLIC animacija"
 
-#: ../plug-ins/fli/fli-gimp.c:529
+#: ../plug-ins/fli/fli-ligma.c:529
 #, c-format
 msgid "Frame (%i)"
 msgstr "Kadras (%i)"
 
-#: ../plug-ins/fli/fli-gimp.c:680
+#: ../plug-ins/fli/fli-ligma.c:680
 msgid "Sorry, I can save only INDEXED and GRAY images."
 msgstr "Galima išsaugoti tik INDEKSUOTUS ir PILKUS paveikslėlius."
 
-#: ../plug-ins/fli/fli-gimp.c:811
+#: ../plug-ins/fli/fli-ligma.c:811
 msgid "GFLI 1.3 - Load framestack"
 msgstr "GFLI 1.3 – Įkelti kadrus"
 
-#: ../plug-ins/fli/fli-gimp.c:879
+#: ../plug-ins/fli/fli-ligma.c:879
 msgid "GFLI 1.3 - Save framestack"
 msgstr "GFLI 1.3 – Išsaugoti kadrus"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:547
-#: ../plug-ins/gfig/gfig-dialog.c:274 ../plug-ins/gimpressionist/utils.c:143
+#: ../plug-ins/gfig/gfig-dialog.c:274 ../plug-ins/ligmaressionist/utils.c:143
 #: ../plug-ins/gradient-flare/gradient-flare.c:882
 #, c-format
 msgid ""
-"No %s in gimprc:\n"
+"No %s in ligmarc:\n"
 "You need to add an entry like\n"
 "(%s \"%s\")\n"
 "to your %s file."
 msgstr ""
-"Jūsų gimprc faile nėra %s:\n"
+"Jūsų ligmarc faile nėra %s:\n"
 "Savo faile %s turite pridėti tokį\n"
 "įrašą kaip, pvz., (%s \"%s\")."
 
@@ -8959,7 +8959,7 @@ msgid "Max undo:"
 msgstr "Maks. atšaukimų:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1283
-#: ../plug-ins/gimpressionist/general.c:185
+#: ../plug-ins/ligmaressionist/general.c:185
 msgid "Transparent"
 msgstr "Permatomas"
 
@@ -9055,7 +9055,7 @@ msgid "Left"
 msgstr "Kairė"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1718
-#: ../plug-ins/gimpressionist/orientation.c:148
+#: ../plug-ins/ligmaressionist/orientation.c:148
 msgid "Orientation:"
 msgstr "Orientacija:"
 
@@ -9116,290 +9116,290 @@ msgstr ""
 msgid "Error trying to open temporary file '%s' for parasite loading: %s"
 msgstr "Klaida bandant atverti laikinąjį failą „%s“ parazito įkėlimui: %s"
 
-#: ../plug-ins/gimpressionist/brush.c:247
+#: ../plug-ins/ligmaressionist/brush.c:247
 msgid "Can only save drawables!"
 msgstr "Galima išsaugoti tik piešiamus!"
 
-#: ../plug-ins/gimpressionist/brush.c:252
+#: ../plug-ins/ligmaressionist/brush.c:252
 msgid "Save Brush"
 msgstr "Išsaugoti teptuką"
 
-#: ../plug-ins/gimpressionist/brush.c:507
+#: ../plug-ins/ligmaressionist/brush.c:507
 msgid "_Brush"
 msgstr "_Teptukas"
 
-#: ../plug-ins/gimpressionist/brush.c:544
+#: ../plug-ins/ligmaressionist/brush.c:544
 msgid "Gamma:"
 msgstr "Gama:"
 
-#: ../plug-ins/gimpressionist/brush.c:562
+#: ../plug-ins/ligmaressionist/brush.c:562
 msgid "Changes the gamma (brightness) of the selected brush"
 msgstr "Keičia pasirinkto teptuko gamą (ryškumą)"
 
-#: ../plug-ins/gimpressionist/brush.c:570
+#: ../plug-ins/ligmaressionist/brush.c:570
 msgid "Select:"
 msgstr "Pasirinkite:"
 
-#: ../plug-ins/gimpressionist/brush.c:599
+#: ../plug-ins/ligmaressionist/brush.c:599
 msgid "Aspect ratio:"
 msgstr "Perspektyvos santykis:"
 
-#: ../plug-ins/gimpressionist/brush.c:603
+#: ../plug-ins/ligmaressionist/brush.c:603
 msgid "Specifies the aspect ratio of the brush"
 msgstr "Nurodo teptuko perspektyvos proporciją"
 
-#: ../plug-ins/gimpressionist/brush.c:612
-#: ../plug-ins/gimpressionist/paper.c:206
+#: ../plug-ins/ligmaressionist/brush.c:612
+#: ../plug-ins/ligmaressionist/paper.c:206
 msgid "Relief:"
 msgstr "Reljefas:"
 
-#: ../plug-ins/gimpressionist/brush.c:616
-#: ../plug-ins/gimpressionist/paper.c:210
+#: ../plug-ins/ligmaressionist/brush.c:616
+#: ../plug-ins/ligmaressionist/paper.c:210
 msgid "Specifies the amount of embossing to apply to the image (in percent)"
 msgstr "Nurodo paveikslėliui pritaikomo įspaudimo dydį (procentais)"
 
-#: ../plug-ins/gimpressionist/color.c:60
+#: ../plug-ins/ligmaressionist/color.c:60
 msgid "Co_lor"
 msgstr "Spa_lva"
 
-#: ../plug-ins/gimpressionist/color.c:70
+#: ../plug-ins/ligmaressionist/color.c:70
 msgid "A_verage under brush"
 msgstr "_Vidurkis po teptuku"
 
-#: ../plug-ins/gimpressionist/color.c:72
+#: ../plug-ins/ligmaressionist/color.c:72
 msgid "C_enter of brush"
 msgstr "Teptuko c_entras"
 
-#: ../plug-ins/gimpressionist/color.c:79
+#: ../plug-ins/ligmaressionist/color.c:79
 msgid "Color is computed from the average of all pixels under the brush"
 msgstr "Spalva yra paskaičiuojama pagal visų pikselių po teptuku vidurkį"
 
-#: ../plug-ins/gimpressionist/color.c:83
+#: ../plug-ins/ligmaressionist/color.c:83
 msgid "Samples the color from the pixel in the center of the brush"
 msgstr "Paima spalvą iš pikselio, esančio teptuko centre"
 
-#: ../plug-ins/gimpressionist/color.c:94
+#: ../plug-ins/ligmaressionist/color.c:94
 msgid "Color _noise:"
 msgstr "Spalvų _trukdžiai:"
 
-#: ../plug-ins/gimpressionist/color.c:98
+#: ../plug-ins/ligmaressionist/color.c:98
 msgid "Adds random noise to the color"
 msgstr "Prideda atsitiktinius spalvos trukdžius"
 
-#: ../plug-ins/gimpressionist/general.c:134
+#: ../plug-ins/ligmaressionist/general.c:134
 #: ../plug-ins/gradient-flare/gradient-flare.c:3528
 msgid "_General"
 msgstr "_Bendra"
 
-#: ../plug-ins/gimpressionist/general.c:150
+#: ../plug-ins/ligmaressionist/general.c:150
 msgid "Keep original"
 msgstr "Palikti originalų"
 
-#: ../plug-ins/gimpressionist/general.c:151
+#: ../plug-ins/ligmaressionist/general.c:151
 msgid "Preserve the original image as a background"
 msgstr "Išsaugoti originalų paveikslėlį kaip foną"
 
-#: ../plug-ins/gimpressionist/general.c:156
+#: ../plug-ins/ligmaressionist/general.c:156
 msgid "From paper"
 msgstr "Iš popieriaus"
 
-#: ../plug-ins/gimpressionist/general.c:157
+#: ../plug-ins/ligmaressionist/general.c:157
 msgid "Copy the texture of the selected paper as a background"
 msgstr "Kopijuoti pasirinkto popieriaus tekstūrą kaip foną"
 
-#: ../plug-ins/gimpressionist/general.c:167
+#: ../plug-ins/ligmaressionist/general.c:167
 msgid "Solid colored background"
 msgstr "Grynos spalvos fonas"
 
-#: ../plug-ins/gimpressionist/general.c:186
+#: ../plug-ins/ligmaressionist/general.c:186
 msgid "Use a transparent background; Only the strokes painted will be visible"
 msgstr "Naudoti permatomą foną; bus matomi tik nupiešti potepiai"
 
-#: ../plug-ins/gimpressionist/general.c:203
+#: ../plug-ins/ligmaressionist/general.c:203
 msgid "Paint edges"
 msgstr "Piešti kraštus"
 
-#: ../plug-ins/gimpressionist/general.c:208
+#: ../plug-ins/ligmaressionist/general.c:208
 msgid "Selects if to place strokes all the way out to the edges of the image"
 msgstr "Nurodo ar piešti potepius iki pat paveikslėlio kraštų"
 
 #. Tileable checkbox
-#: ../plug-ins/gimpressionist/general.c:213 ../plug-ins/maze/maze-dialog.c:278
+#: ../plug-ins/ligmaressionist/general.c:213 ../plug-ins/maze/maze-dialog.c:278
 msgid "Tileable"
 msgstr "Išklojamas"
 
-#: ../plug-ins/gimpressionist/general.c:217
+#: ../plug-ins/ligmaressionist/general.c:217
 msgid "Selects if the resulting image should be seamlessly tileable"
 msgstr "Nurodo, ar gautas paveikslėlis turėtų būti nepastebimai išklojamas"
 
-#: ../plug-ins/gimpressionist/general.c:222
+#: ../plug-ins/ligmaressionist/general.c:222
 msgid "Drop shadow"
 msgstr "Mesti šešėlį"
 
-#: ../plug-ins/gimpressionist/general.c:227
+#: ../plug-ins/ligmaressionist/general.c:227
 msgid "Adds a shadow effect to each brush stroke"
 msgstr "Prideda šešėlio efektą kiekvienam teptuko potepiui"
 
-#: ../plug-ins/gimpressionist/general.c:240
+#: ../plug-ins/ligmaressionist/general.c:240
 msgid "Edge darken:"
 msgstr "Kraštų patamsinimas:"
 
-#: ../plug-ins/gimpressionist/general.c:244
+#: ../plug-ins/ligmaressionist/general.c:244
 msgid "How much to \"darken\" the edges of each brush stroke"
 msgstr "Kiek „patamsinti“ kiekvieno teptuko potepio kraštus"
 
-#: ../plug-ins/gimpressionist/general.c:249
+#: ../plug-ins/ligmaressionist/general.c:249
 msgid "Shadow darken:"
 msgstr "Šešėlio patamsinimas:"
 
-#: ../plug-ins/gimpressionist/general.c:253
+#: ../plug-ins/ligmaressionist/general.c:253
 msgid "How much to \"darken\" the drop shadow"
 msgstr "Kiek „patamsinti“ metamą šešėlį"
 
-#: ../plug-ins/gimpressionist/general.c:258
+#: ../plug-ins/ligmaressionist/general.c:258
 msgid "Shadow depth:"
 msgstr "Šešėlio gylis:"
 
-#: ../plug-ins/gimpressionist/general.c:262
+#: ../plug-ins/ligmaressionist/general.c:262
 msgid ""
 "The depth of the drop shadow, i.e. how far apart from the object it should be"
 msgstr "Metamo šešėlio gylis, t.y. kaip toli nuo objekto jis turėtų būti"
 
-#: ../plug-ins/gimpressionist/general.c:267
+#: ../plug-ins/ligmaressionist/general.c:267
 msgid "Shadow blur:"
 msgstr "Šešėlio išliejimas:"
 
-#: ../plug-ins/gimpressionist/general.c:271
+#: ../plug-ins/ligmaressionist/general.c:271
 msgid "How much to blur the drop shadow"
 msgstr "Kiek išlieti metamą šešėlį"
 
-#: ../plug-ins/gimpressionist/general.c:276
+#: ../plug-ins/ligmaressionist/general.c:276
 msgid "Deviation threshold:"
 msgstr "Nuokrypio slenkstis:"
 
-#: ../plug-ins/gimpressionist/general.c:280
+#: ../plug-ins/ligmaressionist/general.c:280
 msgid "A bailout-value for adaptive selections"
 msgstr ""
 
-#: ../plug-ins/gimpressionist/gimp.c:90
+#: ../plug-ins/ligmaressionist/ligma.c:90
 msgid "Performs various artistic operations"
 msgstr "Atlieka įvairias meniškas operacijas"
 
-#: ../plug-ins/gimpressionist/gimp.c:95
-msgid "_GIMPressionist..."
-msgstr "_GIMPresionistas..."
+#: ../plug-ins/ligmaressionist/ligma.c:95
+msgid "_LIGMAressionist..."
+msgstr "_LIGMAresionistas..."
 
-#: ../plug-ins/gimpressionist/gimp.c:371
+#: ../plug-ins/ligmaressionist/ligma.c:371
 msgid "Painting"
 msgstr "Piešiama"
 
-#: ../plug-ins/gimpressionist/gimpressionist.c:139
-msgid "GIMPressionist"
-msgstr "GIMPresionistas"
+#: ../plug-ins/ligmaressionist/ligmaressionist.c:139
+msgid "LIGMAressionist"
+msgstr "LIGMAresionistas"
 
-#: ../plug-ins/gimpressionist/orientation.c:92
+#: ../plug-ins/ligmaressionist/orientation.c:92
 msgid "Or_ientation"
 msgstr "Or_ientacija"
 
-#: ../plug-ins/gimpressionist/orientation.c:106
+#: ../plug-ins/ligmaressionist/orientation.c:106
 msgid "Directions:"
 msgstr "Kryptys:"
 
-#: ../plug-ins/gimpressionist/orientation.c:110
+#: ../plug-ins/ligmaressionist/orientation.c:110
 msgid "The number of directions (i.e. brushes) to use"
 msgstr "Naudotinų krypčių (t.y. teptukų) kiekis"
 
-#: ../plug-ins/gimpressionist/orientation.c:118
+#: ../plug-ins/ligmaressionist/orientation.c:118
 msgid "Start angle:"
 msgstr "Pradinis kampas:"
 
-#: ../plug-ins/gimpressionist/orientation.c:122
+#: ../plug-ins/ligmaressionist/orientation.c:122
 msgid "The starting angle of the first brush to create"
 msgstr "Pirmo sukurtino teptuko pradinis kampas"
 
-#: ../plug-ins/gimpressionist/orientation.c:130
+#: ../plug-ins/ligmaressionist/orientation.c:130
 msgid "Angle span:"
 msgstr "Kampo ilgis:"
 
-#: ../plug-ins/gimpressionist/orientation.c:134
+#: ../plug-ins/ligmaressionist/orientation.c:134
 msgid "The angle span of the first brush to create"
 msgstr "Pirmo sukurtino teptuko kampo ilgis"
 
-#: ../plug-ins/gimpressionist/orientation.c:157
+#: ../plug-ins/ligmaressionist/orientation.c:157
 msgid ""
 "Let the value (brightness) of the region determine the direction of the "
 "stroke"
 msgstr "Potepio kryptį nurodo regiono reikšmė (ryškumas)"
 
-#: ../plug-ins/gimpressionist/orientation.c:160
-#: ../plug-ins/gimpressionist/size.c:163
+#: ../plug-ins/ligmaressionist/orientation.c:160
+#: ../plug-ins/ligmaressionist/size.c:163
 msgid "Radius"
 msgstr "Spindulys"
 
-#: ../plug-ins/gimpressionist/orientation.c:161
+#: ../plug-ins/ligmaressionist/orientation.c:161
 msgid ""
 "The distance from the center of the image determines the direction of the "
 "stroke"
 msgstr "Potepio kryptį nurodo atstumas nuo paveikslėlio centro"
 
-#: ../plug-ins/gimpressionist/orientation.c:165
+#: ../plug-ins/ligmaressionist/orientation.c:165
 msgid "Selects a random direction of each stroke"
 msgstr "Pasirenkama atsitiktinė kiekvieno potepio kryptis"
 
-#: ../plug-ins/gimpressionist/orientation.c:168
-#: ../plug-ins/gimpressionist/size.c:171
+#: ../plug-ins/ligmaressionist/orientation.c:168
+#: ../plug-ins/ligmaressionist/size.c:171
 msgid "Radial"
 msgstr "Radialinė"
 
-#: ../plug-ins/gimpressionist/orientation.c:169
+#: ../plug-ins/ligmaressionist/orientation.c:169
 msgid "Let the direction from the center determine the direction of the stroke"
 msgstr "Potepio kryptį nurodo kryptis nuo centro"
 
-#: ../plug-ins/gimpressionist/orientation.c:176
-#: ../plug-ins/gimpressionist/size.c:179
+#: ../plug-ins/ligmaressionist/orientation.c:176
+#: ../plug-ins/ligmaressionist/size.c:179
 msgid "Flowing"
 msgstr "„Tekanti“"
 
-#: ../plug-ins/gimpressionist/orientation.c:177
-#: ../plug-ins/gimpressionist/size.c:180
+#: ../plug-ins/ligmaressionist/orientation.c:177
+#: ../plug-ins/ligmaressionist/size.c:180
 msgid "The strokes follow a \"flowing\" pattern"
 msgstr "Potepiai seka „tekantį“ raštą"
 
-#: ../plug-ins/gimpressionist/orientation.c:181
+#: ../plug-ins/ligmaressionist/orientation.c:181
 msgid "The hue of the region determines the direction of the stroke"
 msgstr "Potepio kryptį nurodo regiono atspalvis"
 
-#: ../plug-ins/gimpressionist/orientation.c:184
-#: ../plug-ins/gimpressionist/size.c:187
+#: ../plug-ins/ligmaressionist/orientation.c:184
+#: ../plug-ins/ligmaressionist/size.c:187
 msgid "Adaptive"
 msgstr "Prisitaikanti"
 
-#: ../plug-ins/gimpressionist/orientation.c:185
+#: ../plug-ins/ligmaressionist/orientation.c:185
 msgid "The direction that matches the original image the closest is selected"
 msgstr "Pasirenkama kryptis, kuri labiausiai atitinka originalų paveikslėlį"
 
-#: ../plug-ins/gimpressionist/orientation.c:192
-#: ../plug-ins/gimpressionist/size.c:196
+#: ../plug-ins/ligmaressionist/orientation.c:192
+#: ../plug-ins/ligmaressionist/size.c:196
 msgid "Manual"
 msgstr "Neautomatiniu būdų"
 
-#: ../plug-ins/gimpressionist/orientation.c:193
+#: ../plug-ins/ligmaressionist/orientation.c:193
 msgid "Manually specify the stroke orientation"
 msgstr "Savarankiškai nurodyti potepio orientaciją"
 
-#: ../plug-ins/gimpressionist/orientation.c:204
+#: ../plug-ins/ligmaressionist/orientation.c:204
 msgid "Opens up the Orientation Map Editor"
 msgstr "Atverti padėties plano rengyklę"
 
-#: ../plug-ins/gimpressionist/orientmap.c:526
+#: ../plug-ins/ligmaressionist/orientmap.c:526
 msgid "Orientation Map Editor"
 msgstr "Padėties plano rengyklė"
 
-#: ../plug-ins/gimpressionist/orientmap.c:555
+#: ../plug-ins/ligmaressionist/orientmap.c:555
 msgid "Vectors"
 msgstr "Vektoriai"
 
-#: ../plug-ins/gimpressionist/orientmap.c:567
+#: ../plug-ins/ligmaressionist/orientmap.c:567
 msgid ""
 "The vector-field. Left-click to move selected vector, Right-click to point "
 "it towards mouse, Middle-click to add a new vector."
@@ -9408,63 +9408,63 @@ msgstr ""
 "kairiuoju klavišu; norėdami, kad jis rodytų į pelę, spustelėkite dešiniuoju "
 "pelės klavišu; norėdami pridėti naują vektorių - viduriniuoju pelės klavišu."
 
-#: ../plug-ins/gimpressionist/orientmap.c:590
-#: ../plug-ins/gimpressionist/sizemap.c:459
+#: ../plug-ins/ligmaressionist/orientmap.c:590
+#: ../plug-ins/ligmaressionist/sizemap.c:459
 msgid "Adjust the preview's brightness"
 msgstr "Koreguoti peržiūros ryškumą"
 
-#: ../plug-ins/gimpressionist/orientmap.c:612
+#: ../plug-ins/ligmaressionist/orientmap.c:612
 msgid "Select previous vector"
 msgstr "Pasirinkti ankstesnįjį vektorių"
 
-#: ../plug-ins/gimpressionist/orientmap.c:618
+#: ../plug-ins/ligmaressionist/orientmap.c:618
 msgid "Select next vector"
 msgstr "Pasirinkti sekantįjį vektorių"
 
-#: ../plug-ins/gimpressionist/orientmap.c:620
-#: ../plug-ins/gimpressionist/sizemap.c:490
+#: ../plug-ins/ligmaressionist/orientmap.c:620
+#: ../plug-ins/ligmaressionist/sizemap.c:490
 msgid "A_dd"
 msgstr "Pri_dėti"
 
-#: ../plug-ins/gimpressionist/orientmap.c:624
+#: ../plug-ins/ligmaressionist/orientmap.c:624
 msgid "Add new vector"
 msgstr "Pridėti naują vektorių"
 
-#: ../plug-ins/gimpressionist/orientmap.c:626
-#: ../plug-ins/gimpressionist/sizemap.c:497
+#: ../plug-ins/ligmaressionist/orientmap.c:626
+#: ../plug-ins/ligmaressionist/sizemap.c:497
 msgid "_Kill"
 msgstr "_Ištrinti"
 
-#: ../plug-ins/gimpressionist/orientmap.c:630
+#: ../plug-ins/ligmaressionist/orientmap.c:630
 msgid "Delete selected vector"
 msgstr "Ištrinti pasirinktą vektorių"
 
-#: ../plug-ins/gimpressionist/orientmap.c:641
+#: ../plug-ins/ligmaressionist/orientmap.c:641
 msgid "Type"
 msgstr "Tipas"
 
-#: ../plug-ins/gimpressionist/orientmap.c:645
+#: ../plug-ins/ligmaressionist/orientmap.c:645
 msgid "_Normal"
 msgstr "_Normalus"
 
-#: ../plug-ins/gimpressionist/orientmap.c:646
+#: ../plug-ins/ligmaressionist/orientmap.c:646
 msgid "Vorte_x"
 msgstr "Vorte_x"
 
-#: ../plug-ins/gimpressionist/orientmap.c:647
+#: ../plug-ins/ligmaressionist/orientmap.c:647
 msgid "Vortex_2"
 msgstr "Vortex_2"
 
-#: ../plug-ins/gimpressionist/orientmap.c:648
+#: ../plug-ins/ligmaressionist/orientmap.c:648
 msgid "Vortex_3"
 msgstr "Vortex_3"
 
-#: ../plug-ins/gimpressionist/orientmap.c:654
-#: ../plug-ins/gimpressionist/sizemap.c:542
+#: ../plug-ins/ligmaressionist/orientmap.c:654
+#: ../plug-ins/ligmaressionist/sizemap.c:542
 msgid "_Voronoi"
 msgstr "_Voronoi"
 
-#: ../plug-ins/gimpressionist/orientmap.c:662
+#: ../plug-ins/ligmaressionist/orientmap.c:662
 msgid ""
 "Voronoi-mode makes only the vector closest to the given point have any "
 "influence"
@@ -9472,227 +9472,227 @@ msgstr ""
 "Voronoi veiksenoje įtakos turi tik vektorius esantis arčiausiai nurodyto "
 "taško"
 
-#: ../plug-ins/gimpressionist/orientmap.c:672
+#: ../plug-ins/ligmaressionist/orientmap.c:672
 msgid "A_ngle:"
 msgstr "Ka_mpas:"
 
-#: ../plug-ins/gimpressionist/orientmap.c:676
+#: ../plug-ins/ligmaressionist/orientmap.c:676
 msgid "Change the angle of the selected vector"
 msgstr "Pakeisti pasirinkto vektoriaus kampą"
 
-#: ../plug-ins/gimpressionist/orientmap.c:683
+#: ../plug-ins/ligmaressionist/orientmap.c:683
 msgid "Ang_le offset:"
 msgstr "_Kampo poslinkis:"
 
-#: ../plug-ins/gimpressionist/orientmap.c:687
+#: ../plug-ins/ligmaressionist/orientmap.c:687
 msgid "Offset all vectors with a given angle"
 msgstr "Paslinkti visus vektorius per nurodytą kampą"
 
-#: ../plug-ins/gimpressionist/orientmap.c:698
+#: ../plug-ins/ligmaressionist/orientmap.c:698
 msgid "Change the strength of the selected vector"
 msgstr "Pakeisti pasirinkto vektoriaus stiprumą"
 
-#: ../plug-ins/gimpressionist/orientmap.c:705
+#: ../plug-ins/ligmaressionist/orientmap.c:705
 msgid "S_trength exp.:"
 msgstr "S_tiprumo eksp.:"
 
-#: ../plug-ins/gimpressionist/orientmap.c:709
-#: ../plug-ins/gimpressionist/sizemap.c:537
+#: ../plug-ins/ligmaressionist/orientmap.c:709
+#: ../plug-ins/ligmaressionist/sizemap.c:537
 msgid "Change the exponent of the strength"
 msgstr "Pakeisti stiprumo eksponentę"
 
-#: ../plug-ins/gimpressionist/paper.c:138
+#: ../plug-ins/ligmaressionist/paper.c:138
 msgid "P_aper"
 msgstr "Popie_rius"
 
-#: ../plug-ins/gimpressionist/paper.c:173
+#: ../plug-ins/ligmaressionist/paper.c:173
 msgid "Inverts the Papers texture"
 msgstr "Invertuoja popieriaus tekstūrą"
 
-#: ../plug-ins/gimpressionist/paper.c:177
+#: ../plug-ins/ligmaressionist/paper.c:177
 msgid "O_verlay"
 msgstr "Per_dengimas"
 
-#: ../plug-ins/gimpressionist/paper.c:182
+#: ../plug-ins/ligmaressionist/paper.c:182
 msgid "Applies the paper as it is (without embossing it)"
 msgstr "Pritaiko popierių tokį koks jis yra (nedarant iš jo reljefo)"
 
-#: ../plug-ins/gimpressionist/paper.c:198
+#: ../plug-ins/ligmaressionist/paper.c:198
 msgid "Specifies the scale of the texture (in percent of original file)"
 msgstr "Nurodo tekstūros mastelį (procentais nuo orginalaus failo)"
 
-#: ../plug-ins/gimpressionist/placement.c:67
+#: ../plug-ins/ligmaressionist/placement.c:67
 msgid "Pl_acement"
 msgstr "Išdėst_ymas"
 
-#: ../plug-ins/gimpressionist/placement.c:73
+#: ../plug-ins/ligmaressionist/placement.c:73
 msgid "Placement"
 msgstr "Išdėstymas"
 
-#: ../plug-ins/gimpressionist/placement.c:77
+#: ../plug-ins/ligmaressionist/placement.c:77
 msgid "Randomly"
 msgstr "Atsitiktinai"
 
-#: ../plug-ins/gimpressionist/placement.c:81
+#: ../plug-ins/ligmaressionist/placement.c:81
 msgid "Evenly distributed"
 msgstr "Vienodai paskirstyti"
 
-#: ../plug-ins/gimpressionist/placement.c:89
+#: ../plug-ins/ligmaressionist/placement.c:89
 msgid "Place strokes randomly around the image"
 msgstr "Išmėtyti potepius paveikslėlyje atsitiktinai"
 
-#: ../plug-ins/gimpressionist/placement.c:93
+#: ../plug-ins/ligmaressionist/placement.c:93
 msgid "The strokes are evenly distributed across the image"
 msgstr "Potepiai paveikslėlyje yra paskirstomi lygiai"
 
-#: ../plug-ins/gimpressionist/placement.c:102
+#: ../plug-ins/ligmaressionist/placement.c:102
 msgid "Centered"
 msgstr "Centruota"
 
-#: ../plug-ins/gimpressionist/placement.c:108
+#: ../plug-ins/ligmaressionist/placement.c:108
 msgid "Focus the brush strokes around the center of the image"
 msgstr "Fokusuoti teptukų potepius aplink paveikslėlio centrą"
 
-#: ../plug-ins/gimpressionist/placement.c:120
+#: ../plug-ins/ligmaressionist/placement.c:120
 msgid "Stroke _density:"
 msgstr "Potepių _tankumas:"
 
-#: ../plug-ins/gimpressionist/placement.c:124
+#: ../plug-ins/ligmaressionist/placement.c:124
 msgid "The relative density of the brush strokes"
 msgstr "Santykinis teptuko potepių tankumas"
 
 #.
-#. * gimp_filename_to_utf8 () and g_strerror () return temporary strings
+#. * ligma_filename_to_utf8 () and g_strerror () return temporary strings
 #. * that need not and should not be freed. So this call is OK.
 #. *
-#: ../plug-ins/gimpressionist/ppmtool.c:650
+#: ../plug-ins/ligmaressionist/ppmtool.c:650
 #, c-format
 msgid "Failed to save PPM file '%s': %s"
 msgstr "Nepavyko išsaugoti PPM failo „%s“: %s"
 
-#: ../plug-ins/gimpressionist/presets.c:638
+#: ../plug-ins/ligmaressionist/presets.c:638
 msgid "Save Current"
 msgstr "Išsaugoti esamą"
 
-#: ../plug-ins/gimpressionist/presets.c:892
-msgid "Gimpressionist Defaults"
-msgstr "Gimpressionist numatytieji"
+#: ../plug-ins/ligmaressionist/presets.c:892
+msgid "Ligmaressionist Defaults"
+msgstr "Ligmaressionist numatytieji"
 
-#: ../plug-ins/gimpressionist/presets.c:1013
+#: ../plug-ins/ligmaressionist/presets.c:1013
 msgid "_Presets"
 msgstr "Š_ablonai"
 
-#: ../plug-ins/gimpressionist/presets.c:1028
+#: ../plug-ins/ligmaressionist/presets.c:1028
 msgid "Save Current..."
 msgstr "Išsaugoti esamus..."
 
-#: ../plug-ins/gimpressionist/presets.c:1036
+#: ../plug-ins/ligmaressionist/presets.c:1036
 msgid "Save the current settings to the specified file"
 msgstr "Išsaugoti esamus nustatymus į nurodytą failą"
 
-#: ../plug-ins/gimpressionist/presets.c:1064
+#: ../plug-ins/ligmaressionist/presets.c:1064
 msgid "Reads the selected Preset into memory"
 msgstr "Perskaito pasirinktą raštą į atmintį"
 
-#: ../plug-ins/gimpressionist/presets.c:1070
+#: ../plug-ins/ligmaressionist/presets.c:1070
 msgid "Deletes the selected Preset"
 msgstr "Ištrinti pasirinktą raštą"
 
-#: ../plug-ins/gimpressionist/presets.c:1076
+#: ../plug-ins/ligmaressionist/presets.c:1076
 msgid "Reread the folder of Presets"
 msgstr "Perskaityti raštų aplanką"
 
-#: ../plug-ins/gimpressionist/preview.c:174
-#: ../plug-ins/gimpressionist/repaint.c:1184
+#: ../plug-ins/ligmaressionist/preview.c:174
+#: ../plug-ins/ligmaressionist/repaint.c:1184
 #: ../plug-ins/imagemap/imap_polygon.c:515
 #: ../plug-ins/lighting/lighting-ui.c:1075
 msgid "_Update"
 msgstr "_Atnaujinti"
 
-#: ../plug-ins/gimpressionist/preview.c:180
+#: ../plug-ins/ligmaressionist/preview.c:180
 msgid "Refresh the Preview window"
 msgstr "Atnaujinti peržiūros langą"
 
-#: ../plug-ins/gimpressionist/preview.c:188
+#: ../plug-ins/ligmaressionist/preview.c:188
 msgid "Revert to the original image"
 msgstr "Atstatyti į originalų paveikslėlį"
 
-#: ../plug-ins/gimpressionist/size.c:95
+#: ../plug-ins/ligmaressionist/size.c:95
 msgid "_Size"
 msgstr "_Dydis"
 
-#: ../plug-ins/gimpressionist/size.c:109
+#: ../plug-ins/ligmaressionist/size.c:109
 msgid "Sizes:"
 msgstr "Dydžiai:"
 
-#: ../plug-ins/gimpressionist/size.c:113
+#: ../plug-ins/ligmaressionist/size.c:113
 msgid "The number of sizes of brushes to use"
 msgstr "Naudotinų skirtingų dydžių teptukų skaičius"
 
-#: ../plug-ins/gimpressionist/size.c:121
+#: ../plug-ins/ligmaressionist/size.c:121
 msgid "Minimum size:"
 msgstr "Minimalus dydis:"
 
-#: ../plug-ins/gimpressionist/size.c:125
+#: ../plug-ins/ligmaressionist/size.c:125
 msgid "The smallest brush to create"
 msgstr "Mažiausias sukurtinas teptukas"
 
-#: ../plug-ins/gimpressionist/size.c:133
+#: ../plug-ins/ligmaressionist/size.c:133
 msgid "Maximum size:"
 msgstr "Maksimalus dydis:"
 
-#: ../plug-ins/gimpressionist/size.c:137
+#: ../plug-ins/ligmaressionist/size.c:137
 msgid "The largest brush to create"
 msgstr "Didžiausias sukurtinas teptukas"
 
-#: ../plug-ins/gimpressionist/size.c:151
+#: ../plug-ins/ligmaressionist/size.c:151
 msgid "Size:"
 msgstr "Dydis:"
 
-#: ../plug-ins/gimpressionist/size.c:160
+#: ../plug-ins/ligmaressionist/size.c:160
 msgid ""
 "Let the value (brightness) of the region determine the size of the stroke"
 msgstr "Potepio dydį nurodo regiono reikšmė (ryškumas)"
 
-#: ../plug-ins/gimpressionist/size.c:164
+#: ../plug-ins/ligmaressionist/size.c:164
 msgid ""
 "The distance from the center of the image determines the size of the stroke"
 msgstr "Potepio dydį nurodo atstumas nuo paveikslėlio centro"
 
-#: ../plug-ins/gimpressionist/size.c:168
+#: ../plug-ins/ligmaressionist/size.c:168
 msgid "Selects a random size for each stroke"
 msgstr "Kiekvieno potepio dydis yra atsitiktinis"
 
-#: ../plug-ins/gimpressionist/size.c:172
+#: ../plug-ins/ligmaressionist/size.c:172
 msgid "Let the direction from the center determine the size of the stroke"
 msgstr "Potepio dydį nurodo kryptis nuo centro"
 
-#: ../plug-ins/gimpressionist/size.c:184
+#: ../plug-ins/ligmaressionist/size.c:184
 msgid "The hue of the region determines the size of the stroke"
 msgstr "Potepio dydį nurodo regiono atspalvis"
 
-#: ../plug-ins/gimpressionist/size.c:188
+#: ../plug-ins/ligmaressionist/size.c:188
 msgid "The brush-size that matches the original image the closest is selected"
 msgstr ""
 "Pasirenkamas teptuko dydis labiausiai atitinkantis originalų paveikslėlį"
 
-#: ../plug-ins/gimpressionist/size.c:197
+#: ../plug-ins/ligmaressionist/size.c:197
 msgid "Manually specify the stroke size"
 msgstr "Savarankiškai nurodyti potepio dydį"
 
-#: ../plug-ins/gimpressionist/size.c:208
+#: ../plug-ins/ligmaressionist/size.c:208
 msgid "Opens up the Size Map Editor"
 msgstr "Atverti dydžių plano rengyklę"
 
-#: ../plug-ins/gimpressionist/sizemap.c:401
+#: ../plug-ins/ligmaressionist/sizemap.c:401
 msgid "Size Map Editor"
 msgstr "Dydžių plano rengyklė"
 
-#: ../plug-ins/gimpressionist/sizemap.c:429
+#: ../plug-ins/ligmaressionist/sizemap.c:429
 msgid "Smvectors"
 msgstr "Sm vektoriai"
 
-#: ../plug-ins/gimpressionist/sizemap.c:439
+#: ../plug-ins/ligmaressionist/sizemap.c:439
 msgid ""
 "The smvector-field. Left-click to move selected smvector, Right-click to "
 "point it towards mouse, Middle-click to add a new smvector."
@@ -9701,39 +9701,39 @@ msgstr ""
 "vektorių, dešiniuoju - norėdami, kad jis rodytų į pelę, viduriniuoju - "
 "norėdami pridėti naują sm vektorių."
 
-#: ../plug-ins/gimpressionist/sizemap.c:481
+#: ../plug-ins/ligmaressionist/sizemap.c:481
 msgid "Select previous smvector"
 msgstr "Pasirinkti ankstesnį sm vektorių"
 
-#: ../plug-ins/gimpressionist/sizemap.c:488
+#: ../plug-ins/ligmaressionist/sizemap.c:488
 msgid "Select next smvector"
 msgstr "Pasirinkti sekantį sm vektorių"
 
-#: ../plug-ins/gimpressionist/sizemap.c:495
+#: ../plug-ins/ligmaressionist/sizemap.c:495
 msgid "Add new smvector"
 msgstr "Pridėti naują sm vektorių"
 
-#: ../plug-ins/gimpressionist/sizemap.c:502
+#: ../plug-ins/ligmaressionist/sizemap.c:502
 msgid "Delete selected smvector"
 msgstr "Ištrinti pasirinktą sm vektorių"
 
-#: ../plug-ins/gimpressionist/sizemap.c:515
+#: ../plug-ins/ligmaressionist/sizemap.c:515
 msgid "Change the angle of the selected smvector"
 msgstr "Pakeisti pasirinkto sm vektoriaus kampą"
 
-#: ../plug-ins/gimpressionist/sizemap.c:522
+#: ../plug-ins/ligmaressionist/sizemap.c:522
 msgid "S_trength:"
 msgstr "S_tiprumas:"
 
-#: ../plug-ins/gimpressionist/sizemap.c:526
+#: ../plug-ins/ligmaressionist/sizemap.c:526
 msgid "Change the strength of the selected smvector"
 msgstr "Pakeisti pasirinkto sm vektoriaus stiprumą"
 
-#: ../plug-ins/gimpressionist/sizemap.c:533
+#: ../plug-ins/ligmaressionist/sizemap.c:533
 msgid "St_rength exp.:"
 msgstr "Stip_rumo eksp.:"
 
-#: ../plug-ins/gimpressionist/sizemap.c:549
+#: ../plug-ins/ligmaressionist/sizemap.c:549
 msgid ""
 "Voronoi-mode makes only the smvector closest to the given point have any "
 "influence"
@@ -10022,8 +10022,8 @@ msgstr "A_ntrosios švieselės"
 
 #: ../plug-ins/help-browser/dialog.c:184
 #: ../plug-ins/help-browser/dialog.c:1093
-msgid "GIMP Help Browser"
-msgstr "GIMP žinyno naršyklė"
+msgid "LIGMA Help Browser"
+msgstr "LIGMA žinyno naršyklė"
 
 #: ../plug-ins/help-browser/dialog.c:564
 msgid "Go back one page"
@@ -10078,8 +10078,8 @@ msgid "Toggle the visibility of the sidebar"
 msgstr "Įjungti / išjungti šoninės juostos matomumą"
 
 #: ../plug-ins/help-browser/dialog.c:651
-msgid "Visit the GIMP documentation website"
-msgstr "Aplankykite GIMP dokumentacijos tinklalapį"
+msgid "Visit the LIGMA documentation website"
+msgstr "Aplankykite LIGMA dokumentacijos tinklalapį"
 
 #: ../plug-ins/help-browser/dialog.c:1134
 msgid "Find:"
@@ -10095,38 +10095,38 @@ msgctxt "search"
 msgid "_Next"
 msgstr "_Kitas"
 
-#: ../plug-ins/help/gimphelpdomain.c:181
+#: ../plug-ins/help/ligmahelpdomain.c:181
 #, c-format
 msgid "The help pages for '%s' are not available."
 msgstr "Žinyno puslapiai apie „%s“ neprieinami."
 
-#: ../plug-ins/help/gimphelpdomain.c:187
-msgid "The GIMP user manual is not available."
-msgstr "GIMP naudotojo žinynas neprieinamas."
+#: ../plug-ins/help/ligmahelpdomain.c:187
+msgid "The LIGMA user manual is not available."
+msgstr "LIGMA naudotojo žinynas neprieinamas."
 
-#: ../plug-ins/help/gimphelpdomain.c:188
+#: ../plug-ins/help/ligmahelpdomain.c:188
 msgid ""
 "Please install the additional help package or use the online user manual at "
-"http://docs.gimp.org/."
+"http://docs.ligma.org/."
 msgstr ""
 "Įdiekite papildomą žinyno paketą arba naudokite internetinį naudotojo "
-"žinyną, esantį http://docs.gimp.org/."
+"žinyną, esantį http://docs.ligma.org/."
 
-#: ../plug-ins/help/gimphelpdomain.c:197
+#: ../plug-ins/help/ligmahelpdomain.c:197
 msgid "Perhaps you are missing GIO backends and need to install GVFS?"
 msgstr "Galbūt nėra GIO posistemių ir jums reikia įdiegti GVFS?"
 
-#: ../plug-ins/help/gimphelpdomain.c:216
+#: ../plug-ins/help/ligmahelpdomain.c:216
 #, c-format
 msgid "Help ID '%s' unknown"
 msgstr "Žinyno ID „%s“ nežinomas"
 
-#: ../plug-ins/help/gimphelplocale.c:209
+#: ../plug-ins/help/ligmahelplocale.c:209
 #, c-format
 msgid "Loading index from '%s'"
 msgstr "Įkeliama rodyklė iš „%s“"
 
-#: ../plug-ins/help/gimphelplocale.c:266
+#: ../plug-ins/help/ligmahelplocale.c:266
 #, c-format
 msgid ""
 "Parse error in '%s':\n"
@@ -10409,7 +10409,7 @@ msgid "Clear"
 msgstr "Išvalyti"
 
 #: ../plug-ins/imagemap/imap_cmd_create.c:58
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:151
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:151
 msgid "Create"
 msgstr "Sukurti"
 
@@ -10434,41 +10434,41 @@ msgid "Edit Object"
 msgstr "Keisti objektą"
 
 #. Create the areas
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:117
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:147
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:251
-msgid "Use Gimp Guides"
-msgstr "Naudoti Gimp gaires"
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:117
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:147
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:251
+msgid "Use Ligma Guides"
+msgstr "Naudoti Ligma gaires"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:160
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:160
 msgid "Al_ternate"
 msgstr "Al_ternatyvias"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:165
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:165
 msgid "A_ll"
 msgstr "_Visas"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:169
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:169
 msgid "Add Additional Guides"
 msgstr "Pridėti papildomas gaires"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:177
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:177
 msgid "L_eft border"
 msgstr "_Kairys rėmelis"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:181
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:181
 msgid "_Right border"
 msgstr "_Dešinys rėmelis"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:185
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:185
 msgid "_Upper border"
 msgstr "_Viršutinis rėmelis"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:189
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:189
 msgid "Lo_wer border"
 msgstr "A_patinis rėmelis"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:197
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:197
 msgid "_Base URL:"
 msgstr "_Bazinis URL:"
 
@@ -10900,8 +10900,8 @@ msgid "Grid Settings..."
 msgstr "Tinklelio parametrai..."
 
 #: ../plug-ins/imagemap/imap_menu.c:194
-msgid "Use GIMP Guides..."
-msgstr "Naudoti GIMP gaires..."
+msgid "Use LIGMA Guides..."
+msgstr "Naudoti LIGMA gaires..."
 
 #: ../plug-ins/imagemap/imap_menu.c:196
 msgid "Create Guides..."
@@ -11116,8 +11116,8 @@ msgid "According to the EXIF data, this image is rotated."
 msgstr "Pagal EXIF duomenis, šis paveikslėlis yra pasuktas."
 
 #: ../plug-ins/jpeg/jpeg-exif.c:367
-msgid "Would you like GIMP to rotate it into the standard orientation?"
-msgstr "Ar norite, kad GIMP atsuktų jį į standartinę orientaciją?"
+msgid "Would you like LIGMA to rotate it into the standard orientation?"
+msgstr "Ar norite, kad LIGMA atsuktų jį į standartinę orientaciją?"
 
 #: ../plug-ins/jpeg/jpeg-load.c:243
 msgid "JPEG preview"
@@ -12187,39 +12187,39 @@ msgstr "_Skeneris/fotoaparatas..."
 msgid "Transferring data from scanner/camera"
 msgstr "Perduodami duomenys iš skenerio/fotoaparato"
 
-#: ../plug-ins/uri/gimpmountoperation.c:448
+#: ../plug-ins/uri/ligmamountoperation.c:448
 msgid "Co_nnect"
 msgstr "_Prisijungti"
 
-#: ../plug-ins/uri/gimpmountoperation.c:492
+#: ../plug-ins/uri/ligmamountoperation.c:492
 msgid "Connect _anonymously"
 msgstr "Prisijungti _anonimiškai"
 
-#: ../plug-ins/uri/gimpmountoperation.c:501
+#: ../plug-ins/uri/ligmamountoperation.c:501
 msgid "Connect as u_ser:"
 msgstr "Prisijungti kaip nau_dotojui:"
 
-#: ../plug-ins/uri/gimpmountoperation.c:538
+#: ../plug-ins/uri/ligmamountoperation.c:538
 msgid "_Username:"
 msgstr "_Naudotojo vardas:"
 
-#: ../plug-ins/uri/gimpmountoperation.c:542
+#: ../plug-ins/uri/ligmamountoperation.c:542
 msgid "_Domain:"
 msgstr "_Sritis:"
 
-#: ../plug-ins/uri/gimpmountoperation.c:547
+#: ../plug-ins/uri/ligmamountoperation.c:547
 msgid "_Password:"
 msgstr "_Slaptažodis:"
 
-#: ../plug-ins/uri/gimpmountoperation.c:562
+#: ../plug-ins/uri/ligmamountoperation.c:562
 msgid "_Forget password immediately"
 msgstr "_Iš karto pamiršti slaptažodį"
 
-#: ../plug-ins/uri/gimpmountoperation.c:570
+#: ../plug-ins/uri/ligmamountoperation.c:570
 msgid "_Remember password until you logout"
 msgstr "_Atsiminti slaptažodį, kol neatsijungsite"
 
-#: ../plug-ins/uri/gimpmountoperation.c:578
+#: ../plug-ins/uri/ligmamountoperation.c:578
 msgid "_Remember forever"
 msgstr "_Atsiminti visam laikui"
 
@@ -12365,8 +12365,8 @@ msgid "No data captured"
 msgstr "Duomenų nenufotografuota"
 
 #: ../plug-ins/xjt/xjt.c:485 ../plug-ins/xjt/xjt.c:503
-msgid "GIMP compressed XJT image"
-msgstr "GIMP suglaudintas XJT paveikslėlis"
+msgid "LIGMA compressed XJT image"
+msgstr "LIGMA suglaudintas XJT paveikslėlis"
 
 #: ../plug-ins/xjt/xjt.c:724
 #, c-format

@@ -1,9 +1,9 @@
-# GIMP tool preset file
+# LIGMA tool preset file
 
-(icon-name "gimp-tool-eraser")
+(icon-name "ligma-tool-eraser")
 (name "Eraser Hard")
-(tool-options "GimpEraserOptions"
-    (tool "gimp-eraser-tool")
+(tool-options "LigmaEraserOptions"
+    (tool "ligma-eraser-tool")
     (brush "2. Block 01")
     (dynamics "Pressure Opacity")
     (brush-size 80.000000)
@@ -16,4 +16,4 @@
 (use-palette yes)
 (use-font yes)
 
-# end of GIMP tool preset file
+# end of LIGMA tool preset file

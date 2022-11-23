@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcolorhistory.c
+ * ligmacolorhistory.c
  * Copyright (C) 2015 Jehan <jehan@girinstud.io>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,23 +23,23 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "config/gimpcoreconfig.h"
+#include "config/ligmacoreconfig.h"
 
-#include "core/gimp.h"
-#include "core/gimp-palettes.h"
-#include "core/gimpcontext.h"
-#include "core/gimpimage.h"
-#include "app/core/gimpimage-colormap.h"
-#include "core/gimppalettemru.h"
+#include "core/ligma.h"
+#include "core/ligma-palettes.h"
+#include "core/ligmacontext.h"
+#include "core/ligmaimage.h"
+#include "app/core/ligmaimage-colormap.h"
+#include "core/ligmapalettemru.h"
 
-#include "gimpcolorhistory.h"
+#include "ligmacolorhistory.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 enum
 {
@@ -60,82 +60,82 @@ enum
 #define CHANNEL_EPSILON      1e-3
 
 /* GObject methods */
-static void   gimp_color_history_constructed                    (GObject           *object);
-static void   gimp_color_history_finalize                       (GObject           *object);
-static void   gimp_color_history_set_property                   (GObject           *object,
+static void   ligma_color_history_constructed                    (GObject           *object);
+static void   ligma_color_history_finalize                       (GObject           *object);
+static void   ligma_color_history_set_property                   (GObject           *object,
                                                                  guint              property_id,
                                                                  const GValue      *value,
                                                                  GParamSpec        *pspec);
-static void   gimp_color_history_get_property                   (GObject           *object,
+static void   ligma_color_history_get_property                   (GObject           *object,
                                                                  guint              property_id,
                                                                  GValue            *value,
                                                                  GParamSpec        *pspec);
 
 /* GtkWidget methods */
-static GtkSizeRequestMode gimp_color_history_get_request_mode   (GtkWidget         *widget);
-static void   gimp_color_history_get_preferred_width_for_height (GtkWidget         *widget,
+static GtkSizeRequestMode ligma_color_history_get_request_mode   (GtkWidget         *widget);
+static void   ligma_color_history_get_preferred_width_for_height (GtkWidget         *widget,
                                                                  gint               height,
                                                                  gint              *minimum_width,
                                                                  gint              *natural_width);
-static void   gimp_color_history_get_preferred_height_for_width (GtkWidget         *widget,
+static void   ligma_color_history_get_preferred_height_for_width (GtkWidget         *widget,
                                                                  gint               width,
                                                                  gint              *minimum_height,
                                                                  gint              *natural_height);
-static void   gimp_color_history_size_allocate                  (GtkWidget         *widget,
+static void   ligma_color_history_size_allocate                  (GtkWidget         *widget,
                                                                  GdkRectangle      *allocation);
 
 /* Signal handlers */
-static void   gimp_color_history_color_clicked                  (GtkWidget         *widget,
-                                                                 GimpColorHistory  *history);
+static void   ligma_color_history_color_clicked                  (GtkWidget         *widget,
+                                                                 LigmaColorHistory  *history);
 
-static void   gimp_color_history_palette_dirty                  (GimpColorHistory  *history);
+static void   ligma_color_history_palette_dirty                  (LigmaColorHistory  *history);
 
-static void   gimp_color_history_color_changed                  (GtkWidget         *widget,
+static void   ligma_color_history_color_changed                  (GtkWidget         *widget,
                                                                  gpointer           data);
 
-static void   gimp_color_history_image_changed                  (GimpContext       *context,
-                                                                 GimpImage         *image,
-                                                                 GimpColorHistory  *history);
+static void   ligma_color_history_image_changed                  (LigmaContext       *context,
+                                                                 LigmaImage         *image,
+                                                                 LigmaColorHistory  *history);
 
 /* Utils */
-static void   gimp_color_history_reorganize                     (GimpColorHistory  *history);
+static void   ligma_color_history_reorganize                     (LigmaColorHistory  *history);
 
 
-G_DEFINE_TYPE (GimpColorHistory, gimp_color_history, GTK_TYPE_GRID)
+G_DEFINE_TYPE (LigmaColorHistory, ligma_color_history, GTK_TYPE_GRID)
 
-#define parent_class gimp_color_history_parent_class
+#define parent_class ligma_color_history_parent_class
 
 static guint history_signals[LAST_SIGNAL] = { 0 };
 
 static void
-gimp_color_history_class_init (GimpColorHistoryClass *klass)
+ligma_color_history_class_init (LigmaColorHistoryClass *klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->constructed  = gimp_color_history_constructed;
-  object_class->set_property = gimp_color_history_set_property;
-  object_class->get_property = gimp_color_history_get_property;
-  object_class->finalize     = gimp_color_history_finalize;
+  object_class->constructed  = ligma_color_history_constructed;
+  object_class->set_property = ligma_color_history_set_property;
+  object_class->get_property = ligma_color_history_get_property;
+  object_class->finalize     = ligma_color_history_finalize;
 
-  widget_class->get_request_mode               = gimp_color_history_get_request_mode;
-  widget_class->get_preferred_width_for_height = gimp_color_history_get_preferred_width_for_height;
-  widget_class->get_preferred_height_for_width = gimp_color_history_get_preferred_height_for_width;
-  widget_class->size_allocate                  = gimp_color_history_size_allocate;
+  widget_class->get_request_mode               = ligma_color_history_get_request_mode;
+  widget_class->get_preferred_width_for_height = ligma_color_history_get_preferred_width_for_height;
+  widget_class->get_preferred_height_for_width = ligma_color_history_get_preferred_height_for_width;
+  widget_class->size_allocate                  = ligma_color_history_size_allocate;
 
   history_signals[COLOR_SELECTED] =
     g_signal_new ("color-selected",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpColorHistoryClass, color_selected),
+                  G_STRUCT_OFFSET (LigmaColorHistoryClass, color_selected),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   G_TYPE_POINTER);
 
   g_object_class_install_property (object_class, PROP_CONTEXT,
                                    g_param_spec_object ("context", NULL, NULL,
-                                                        GIMP_TYPE_CONTEXT,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_TYPE_CONTEXT,
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_HISTORY_SIZE,
@@ -143,16 +143,16 @@ gimp_color_history_class_init (GimpColorHistoryClass *klass)
                                                      NULL, NULL,
                                                      2, G_MAXINT,
                                                      DEFAULT_HISTORY_SIZE,
-                                                     GIMP_PARAM_READWRITE |
+                                                     LIGMA_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT));
 
-  gtk_widget_class_set_css_name (GTK_WIDGET_CLASS (klass), "GimpColorHistory");
+  gtk_widget_class_set_css_name (GTK_WIDGET_CLASS (klass), "LigmaColorHistory");
 
   klass->color_selected = NULL;
 }
 
 static void
-gimp_color_history_init (GimpColorHistory *history)
+ligma_color_history_init (LigmaColorHistory *history)
 {
   history->color_areas = NULL;
   history->buttons     = NULL;
@@ -163,32 +163,32 @@ gimp_color_history_init (GimpColorHistory *history)
 }
 
 static void
-gimp_color_history_constructed (GObject *object)
+ligma_color_history_constructed (GObject *object)
 {
-  GimpColorHistory *history = GIMP_COLOR_HISTORY (object);
-  GimpPalette      *palette;
+  LigmaColorHistory *history = LIGMA_COLOR_HISTORY (object);
+  LigmaPalette      *palette;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  palette = gimp_palettes_get_color_history (history->context->gimp);
+  palette = ligma_palettes_get_color_history (history->context->ligma);
 
   g_signal_connect_object (palette, "dirty",
-                           G_CALLBACK (gimp_color_history_palette_dirty),
+                           G_CALLBACK (ligma_color_history_palette_dirty),
                            G_OBJECT (history), G_CONNECT_SWAPPED);
 }
 
 static void
-gimp_color_history_finalize (GObject *object)
+ligma_color_history_finalize (GObject *object)
 {
-  GimpColorHistory *history = GIMP_COLOR_HISTORY (object);
+  LigmaColorHistory *history = LIGMA_COLOR_HISTORY (object);
 
   if (history->context)
     g_signal_handlers_disconnect_by_func (history->context,
-                                          gimp_color_history_image_changed,
+                                          ligma_color_history_image_changed,
                                           history);
   if (history->active_image)
     g_signal_handlers_disconnect_by_func (history->active_image,
-                                          G_CALLBACK (gimp_color_history_palette_dirty),
+                                          G_CALLBACK (ligma_color_history_palette_dirty),
                                           history);
 
   g_clear_pointer (&history->color_areas, g_free);
@@ -198,25 +198,25 @@ gimp_color_history_finalize (GObject *object)
 }
 
 static void
-gimp_color_history_set_property (GObject      *object,
+ligma_color_history_set_property (GObject      *object,
                                  guint         property_id,
                                  const GValue *value,
                                  GParamSpec   *pspec)
 {
-  GimpColorHistory *history = GIMP_COLOR_HISTORY (object);
+  LigmaColorHistory *history = LIGMA_COLOR_HISTORY (object);
 
   switch (property_id)
     {
     case PROP_CONTEXT:
       if (history->context)
         g_signal_handlers_disconnect_by_func (history->context,
-                                              gimp_color_history_image_changed,
+                                              ligma_color_history_image_changed,
                                               history);
 
       if (history->active_image)
         {
           g_signal_handlers_disconnect_by_func (history->active_image,
-                                                G_CALLBACK (gimp_color_history_palette_dirty),
+                                                G_CALLBACK (ligma_color_history_palette_dirty),
                                                 history);
           history->active_image = NULL;
         }
@@ -226,18 +226,18 @@ gimp_color_history_set_property (GObject      *object,
       if (history->context)
         {
           g_signal_connect (history->context, "image-changed",
-                            G_CALLBACK (gimp_color_history_image_changed),
+                            G_CALLBACK (ligma_color_history_image_changed),
                             history);
 
-          history->active_image = gimp_context_get_image (history->context);
+          history->active_image = ligma_context_get_image (history->context);
 
           if (history->active_image)
             {
               g_signal_connect_swapped (history->active_image, "notify::base-type",
-                                        G_CALLBACK (gimp_color_history_palette_dirty),
+                                        G_CALLBACK (ligma_color_history_palette_dirty),
                                         history);
               g_signal_connect_swapped (history->active_image, "colormap-changed",
-                                        G_CALLBACK (gimp_color_history_palette_dirty),
+                                        G_CALLBACK (ligma_color_history_palette_dirty),
                                         history);
             }
         }
@@ -263,7 +263,7 @@ gimp_color_history_set_property (GObject      *object,
 
         for (i = 0; i < history->history_size; i++)
           {
-            GimpRGB black = { 0.0, 0.0, 0.0, 1.0 };
+            LigmaRGB black = { 0.0, 0.0, 0.0, 1.0 };
             gint    row, column;
 
             column = i % (history->history_size / history->n_rows);
@@ -274,26 +274,26 @@ gimp_color_history_set_property (GObject      *object,
             gtk_grid_attach (GTK_GRID (history), button, column, row, 1, 1);
             gtk_widget_show (button);
 
-            color_area = gimp_color_area_new (&black, GIMP_COLOR_AREA_SMALL_CHECKS,
+            color_area = ligma_color_area_new (&black, LIGMA_COLOR_AREA_SMALL_CHECKS,
                                               GDK_BUTTON2_MASK);
-            gimp_color_area_set_color_config (GIMP_COLOR_AREA (color_area),
-                                              history->context->gimp->config->color_management);
+            ligma_color_area_set_color_config (LIGMA_COLOR_AREA (color_area),
+                                              history->context->ligma->config->color_management);
             gtk_container_add (GTK_CONTAINER (button), color_area);
             gtk_widget_show (color_area);
 
             g_signal_connect (button, "clicked",
-                              G_CALLBACK (gimp_color_history_color_clicked),
+                              G_CALLBACK (ligma_color_history_color_clicked),
                               history);
 
             g_signal_connect (color_area, "color-changed",
-                              G_CALLBACK (gimp_color_history_color_changed),
+                              G_CALLBACK (ligma_color_history_color_changed),
                               GINT_TO_POINTER (i));
 
             history->buttons[i]     = button;
             history->color_areas[i] = color_area;
           }
 
-        gimp_color_history_palette_dirty (history);
+        ligma_color_history_palette_dirty (history);
       }
       break;
 
@@ -304,12 +304,12 @@ gimp_color_history_set_property (GObject      *object,
 }
 
 static void
-gimp_color_history_get_property (GObject    *object,
+ligma_color_history_get_property (GObject    *object,
                                  guint       property_id,
                                  GValue     *value,
                                  GParamSpec *pspec)
 {
-  GimpColorHistory *history = GIMP_COLOR_HISTORY (object);
+  LigmaColorHistory *history = LIGMA_COLOR_HISTORY (object);
 
   switch (property_id)
     {
@@ -328,18 +328,18 @@ gimp_color_history_get_property (GObject    *object,
 }
 
 static GtkSizeRequestMode
-gimp_color_history_get_request_mode (GtkWidget *widget)
+ligma_color_history_get_request_mode (GtkWidget *widget)
 {
   return GTK_SIZE_REQUEST_HEIGHT_FOR_WIDTH;
 }
 
 static void
-gimp_color_history_get_preferred_width_for_height (GtkWidget *widget,
+ligma_color_history_get_preferred_width_for_height (GtkWidget *widget,
                                                    gint       height,
                                                    gint      *minimum_width,
                                                    gint      *natural_width)
 {
-  GimpColorHistory *history = GIMP_COLOR_HISTORY (widget);
+  LigmaColorHistory *history = LIGMA_COLOR_HISTORY (widget);
   GtkWidget        *button;
   gint              button_width  = COLOR_AREA_SIZE;
 
@@ -359,12 +359,12 @@ gimp_color_history_get_preferred_width_for_height (GtkWidget *widget,
 }
 
 static void
-gimp_color_history_get_preferred_height_for_width (GtkWidget *widget,
+ligma_color_history_get_preferred_height_for_width (GtkWidget *widget,
                                                    gint       width,
                                                    gint      *minimum_height,
                                                    gint      *natural_height)
 {
-  GimpColorHistory *history = GIMP_COLOR_HISTORY (widget);
+  LigmaColorHistory *history = LIGMA_COLOR_HISTORY (widget);
   GtkWidget        *button;
   gint              button_width  = COLOR_AREA_SIZE;
   gint              button_height = COLOR_AREA_SIZE;
@@ -389,10 +389,10 @@ gimp_color_history_get_preferred_height_for_width (GtkWidget *widget,
 }
 
 static void
-gimp_color_history_size_allocate (GtkWidget    *widget,
+ligma_color_history_size_allocate (GtkWidget    *widget,
                                   GdkRectangle *allocation)
 {
-  GimpColorHistory *history = GIMP_COLOR_HISTORY (widget);
+  LigmaColorHistory *history = LIGMA_COLOR_HISTORY (widget);
   GtkWidget        *button;
   gint              button_width  = COLOR_AREA_SIZE;
   gint              button_height = COLOR_AREA_SIZE;
@@ -423,7 +423,7 @@ gimp_color_history_size_allocate (GtkWidget    *widget,
   if (n_rows != history->n_rows)
     {
       history->n_rows = n_rows;
-      gimp_color_history_reorganize (history);
+      ligma_color_history_reorganize (history);
     }
 
   allocation->height = height;
@@ -434,14 +434,14 @@ gimp_color_history_size_allocate (GtkWidget    *widget,
 /*  Public Functions  */
 
 GtkWidget *
-gimp_color_history_new (GimpContext *context,
+ligma_color_history_new (LigmaContext *context,
                         gint         history_size)
 {
-  GimpColorHistory *history;
+  LigmaColorHistory *history;
 
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
 
-  history = g_object_new (GIMP_TYPE_COLOR_HISTORY,
+  history = g_object_new (LIGMA_TYPE_COLOR_HISTORY,
                           "context",      context,
                           "history-size", history_size,
                           NULL);
@@ -452,15 +452,15 @@ gimp_color_history_new (GimpContext *context,
 /*  Color history callback.  */
 
 static void
-gimp_color_history_color_clicked (GtkWidget        *widget,
-                                  GimpColorHistory *history)
+ligma_color_history_color_clicked (GtkWidget        *widget,
+                                  LigmaColorHistory *history)
 {
-  GimpColorArea *color_area;
-  GimpRGB        color;
+  LigmaColorArea *color_area;
+  LigmaRGB        color;
 
-  color_area = GIMP_COLOR_AREA (gtk_bin_get_child (GTK_BIN (widget)));
+  color_area = LIGMA_COLOR_AREA (gtk_bin_get_child (GTK_BIN (widget)));
 
-  gimp_color_area_get_color (color_area, &color);
+  ligma_color_area_get_color (color_area, &color);
 
   g_signal_emit (history, history_signals[COLOR_SELECTED], 0,
                  &color);
@@ -469,50 +469,50 @@ gimp_color_history_color_clicked (GtkWidget        *widget,
 /* Color history palette callback. */
 
 static void
-gimp_color_history_palette_dirty (GimpColorHistory *history)
+ligma_color_history_palette_dirty (LigmaColorHistory *history)
 {
-  GimpPalette       *palette;
-  GimpPalette       *colormap_palette = NULL;
-  GimpImageBaseType  base_type        = GIMP_RGB;
+  LigmaPalette       *palette;
+  LigmaPalette       *colormap_palette = NULL;
+  LigmaImageBaseType  base_type        = LIGMA_RGB;
   gint               i;
 
-  palette = gimp_palettes_get_color_history (history->context->gimp);
+  palette = ligma_palettes_get_color_history (history->context->ligma);
   if (history->active_image)
     {
-      base_type = gimp_image_get_base_type (history->active_image);
-      if (base_type == GIMP_INDEXED)
-        colormap_palette = gimp_image_get_colormap_palette (history->active_image);
+      base_type = ligma_image_get_base_type (history->active_image);
+      if (base_type == LIGMA_INDEXED)
+        colormap_palette = ligma_image_get_colormap_palette (history->active_image);
     }
 
   for (i = 0; i < history->history_size; i++)
     {
-      GimpPaletteEntry *entry = gimp_palette_get_entry (palette, i);
-      GimpRGB           black = { 0.0, 0.0, 0.0, 1.0 };
-      GimpRGB           color = entry ? entry->color : black;
+      LigmaPaletteEntry *entry = ligma_palette_get_entry (palette, i);
+      LigmaRGB           black = { 0.0, 0.0, 0.0, 1.0 };
+      LigmaRGB           color = entry ? entry->color : black;
       gboolean          oog   = FALSE;
 
       g_signal_handlers_block_by_func (history->color_areas[i],
-                                       gimp_color_history_color_changed,
+                                       ligma_color_history_color_changed,
                                        GINT_TO_POINTER (i));
 
-      gimp_color_area_set_color (GIMP_COLOR_AREA (history->color_areas[i]),
+      ligma_color_area_set_color (LIGMA_COLOR_AREA (history->color_areas[i]),
                                  &color);
       if (/* Common out-of-gamut case */
           (color.r < 0.0 || color.r > 1.0 ||
            color.g < 0.0 || color.g > 1.0 ||
            color.b < 0.0 || color.b > 1.0) ||
           /* Indexed images */
-          (colormap_palette && ! gimp_palette_find_entry (colormap_palette, &color, NULL)) ||
+          (colormap_palette && ! ligma_palette_find_entry (colormap_palette, &color, NULL)) ||
           /* Grayscale images */
-          (base_type == GIMP_GRAY &&
+          (base_type == LIGMA_GRAY &&
            (ABS (color.r - color.g) > CHANNEL_EPSILON ||
             ABS (color.r - color.b) > CHANNEL_EPSILON ||
             ABS (color.g - color.b) > CHANNEL_EPSILON)))
         oog = TRUE;
-      gimp_color_area_set_out_of_gamut (GIMP_COLOR_AREA (history->color_areas[i]), oog);
+      ligma_color_area_set_out_of_gamut (LIGMA_COLOR_AREA (history->color_areas[i]), oog);
 
       g_signal_handlers_unblock_by_func (history->color_areas[i],
-                                         gimp_color_history_color_changed,
+                                         ligma_color_history_color_changed,
                                          GINT_TO_POINTER (i));
     }
 }
@@ -520,50 +520,50 @@ gimp_color_history_palette_dirty (GimpColorHistory *history)
 /* Color area callbacks. */
 
 static void
-gimp_color_history_color_changed (GtkWidget *widget,
+ligma_color_history_color_changed (GtkWidget *widget,
                                   gpointer   data)
 {
-  GimpColorHistory *history;
-  GimpPalette      *palette;
-  GimpRGB           color;
+  LigmaColorHistory *history;
+  LigmaPalette      *palette;
+  LigmaRGB           color;
 
-  history = GIMP_COLOR_HISTORY (gtk_widget_get_ancestor (widget,
-                                                         GIMP_TYPE_COLOR_HISTORY));
+  history = LIGMA_COLOR_HISTORY (gtk_widget_get_ancestor (widget,
+                                                         LIGMA_TYPE_COLOR_HISTORY));
 
-  palette = gimp_palettes_get_color_history (history->context->gimp);
+  palette = ligma_palettes_get_color_history (history->context->ligma);
 
-  gimp_color_area_get_color (GIMP_COLOR_AREA (widget), &color);
+  ligma_color_area_get_color (LIGMA_COLOR_AREA (widget), &color);
 
-  gimp_palette_set_entry_color (palette, GPOINTER_TO_INT (data), &color);
+  ligma_palette_set_entry_color (palette, GPOINTER_TO_INT (data), &color);
 }
 
 static void
-gimp_color_history_image_changed (GimpContext      *context,
-                                  GimpImage        *image,
-                                  GimpColorHistory *history)
+ligma_color_history_image_changed (LigmaContext      *context,
+                                  LigmaImage        *image,
+                                  LigmaColorHistory *history)
 {
   /* Update active image. */
   if (history->active_image)
     g_signal_handlers_disconnect_by_func (history->active_image,
-                                          G_CALLBACK (gimp_color_history_palette_dirty),
+                                          G_CALLBACK (ligma_color_history_palette_dirty),
                                           history);
   history->active_image = image;
   if (image)
     {
       g_signal_connect_swapped (image, "notify::base-type",
-                                G_CALLBACK (gimp_color_history_palette_dirty),
+                                G_CALLBACK (ligma_color_history_palette_dirty),
                                 history);
       g_signal_connect_swapped (image, "colormap-changed",
-                                G_CALLBACK (gimp_color_history_palette_dirty),
+                                G_CALLBACK (ligma_color_history_palette_dirty),
                                 history);
     }
 
   /* Update the palette. */
-  gimp_color_history_palette_dirty (history);
+  ligma_color_history_palette_dirty (history);
 }
 
 static void
-gimp_color_history_reorganize (GimpColorHistory *history)
+ligma_color_history_reorganize (LigmaColorHistory *history)
 {
   GtkWidget   *button;
   gint       i;

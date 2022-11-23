@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,64 +15,64 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SELECTION_TOOL_H__
-#define __GIMP_SELECTION_TOOL_H__
+#ifndef __LIGMA_SELECTION_TOOL_H__
+#define __LIGMA_SELECTION_TOOL_H__
 
 
-#include "gimpdrawtool.h"
+#include "ligmadrawtool.h"
 
 
-#define GIMP_TYPE_SELECTION_TOOL            (gimp_selection_tool_get_type ())
-#define GIMP_SELECTION_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_SELECTION_TOOL, GimpSelectionTool))
-#define GIMP_SELECTION_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_SELECTION_TOOL, GimpSelectionToolClass))
-#define GIMP_IS_SELECTION_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_SELECTION_TOOL))
-#define GIMP_IS_SELECTION_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_SELECTION_TOOL))
-#define GIMP_SELECTION_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_SELECTION_TOOL, GimpSelectionToolClass))
+#define LIGMA_TYPE_SELECTION_TOOL            (ligma_selection_tool_get_type ())
+#define LIGMA_SELECTION_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_SELECTION_TOOL, LigmaSelectionTool))
+#define LIGMA_SELECTION_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_SELECTION_TOOL, LigmaSelectionToolClass))
+#define LIGMA_IS_SELECTION_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_SELECTION_TOOL))
+#define LIGMA_IS_SELECTION_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_SELECTION_TOOL))
+#define LIGMA_SELECTION_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_SELECTION_TOOL, LigmaSelectionToolClass))
 
-#define GIMP_SELECTION_TOOL_GET_OPTIONS(t)  (GIMP_SELECTION_OPTIONS (gimp_tool_get_options (GIMP_TOOL (t))))
+#define LIGMA_SELECTION_TOOL_GET_OPTIONS(t)  (LIGMA_SELECTION_OPTIONS (ligma_tool_get_options (LIGMA_TOOL (t))))
 
 
-typedef struct _GimpSelectionTool      GimpSelectionTool;
-typedef struct _GimpSelectionToolClass GimpSelectionToolClass;
+typedef struct _LigmaSelectionTool      LigmaSelectionTool;
+typedef struct _LigmaSelectionToolClass LigmaSelectionToolClass;
 
-struct _GimpSelectionTool
+struct _LigmaSelectionTool
 {
-  GimpDrawTool    parent_instance;
+  LigmaDrawTool    parent_instance;
 
   SelectFunction  function;         /*  selection function        */
-  GimpChannelOps  saved_operation;  /*  saved tool options state  */
+  LigmaChannelOps  saved_operation;  /*  saved tool options state  */
 
   gint            change_count;
   gboolean        saved_show_selection;
-  GimpUndo       *undo;
-  GimpUndo       *redo;
+  LigmaUndo       *undo;
+  LigmaUndo       *redo;
   gint            idle_id;
 
   gboolean        allow_move;
 };
 
-struct _GimpSelectionToolClass
+struct _LigmaSelectionToolClass
 {
-  GimpDrawToolClass  parent_class;
+  LigmaDrawToolClass  parent_class;
 
   /*  virtual functions  */
-  gboolean (* have_selection) (GimpSelectionTool *sel_tool,
-                               GimpDisplay       *display);
+  gboolean (* have_selection) (LigmaSelectionTool *sel_tool,
+                               LigmaDisplay       *display);
 };
 
 
-GType      gimp_selection_tool_get_type     (void) G_GNUC_CONST;
+GType      ligma_selection_tool_get_type     (void) G_GNUC_CONST;
 
 /*  protected function  */
-gboolean   gimp_selection_tool_start_edit   (GimpSelectionTool *sel_tool,
-                                             GimpDisplay       *display,
-                                             const GimpCoords  *coords);
+gboolean   ligma_selection_tool_start_edit   (LigmaSelectionTool *sel_tool,
+                                             LigmaDisplay       *display,
+                                             const LigmaCoords  *coords);
 
-void       gimp_selection_tool_start_change (GimpSelectionTool *sel_tool,
+void       ligma_selection_tool_start_change (LigmaSelectionTool *sel_tool,
                                              gboolean           create,
-                                             GimpChannelOps     operation);
-void       gimp_selection_tool_end_change   (GimpSelectionTool *sel_tool,
+                                             LigmaChannelOps     operation);
+void       ligma_selection_tool_end_change   (LigmaSelectionTool *sel_tool,
                                              gboolean           cancel);
 
 
-#endif  /* __GIMP_SELECTION_TOOL_H__ */
+#endif  /* __LIGMA_SELECTION_TOOL_H__ */

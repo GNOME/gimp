@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimpimagegrid_pdb.c
+ * ligmaimagegrid_pdb.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,12 +24,12 @@
 
 #include "stamp-pdbgen.h"
 
-#include "gimp.h"
+#include "ligma.h"
 
 
 /**
- * SECTION: gimpimagegrid
- * @title: gimpimagegrid
+ * SECTION: ligmaimagegrid
+ * @title: ligmaimagegrid
  * @short_description: Functions manuipulating an image's grid.
  *
  * Functions manuipulating an image's grid.
@@ -37,7 +37,7 @@
 
 
 /**
- * gimp_image_grid_get_spacing:
+ * ligma_image_grid_get_spacing:
  * @image: The image.
  * @xspacing: (out): The image's grid horizontal spacing.
  * @yspacing: (out): The image's grid vertical spacing.
@@ -52,41 +52,41 @@
  * Since: 2.4
  **/
 gboolean
-gimp_image_grid_get_spacing (GimpImage *image,
+ligma_image_grid_get_spacing (LigmaImage *image,
                              gdouble   *xspacing,
                              gdouble   *yspacing)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-grid-get-spacing",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-grid-get-spacing",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
   *xspacing = 0.0;
   *yspacing = 0.0;
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
   if (success)
     {
-      *xspacing = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
-      *yspacing = GIMP_VALUES_GET_DOUBLE (return_vals, 2);
+      *xspacing = LIGMA_VALUES_GET_DOUBLE (return_vals, 1);
+      *yspacing = LIGMA_VALUES_GET_DOUBLE (return_vals, 2);
     }
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_grid_set_spacing:
+ * ligma_image_grid_set_spacing:
  * @image: The image.
  * @xspacing: The image's grid horizontal spacing.
  * @yspacing: The image's grid vertical spacing.
@@ -101,34 +101,34 @@ gimp_image_grid_get_spacing (GimpImage *image,
  * Since: 2.4
  **/
 gboolean
-gimp_image_grid_set_spacing (GimpImage *image,
+ligma_image_grid_set_spacing (LigmaImage *image,
                              gdouble    xspacing,
                              gdouble    yspacing)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_DOUBLE, xspacing,
                                           G_TYPE_DOUBLE, yspacing,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-grid-set-spacing",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-grid-set-spacing",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_grid_get_offset:
+ * ligma_image_grid_get_offset:
  * @image: The image.
  * @xoffset: (out): The image's grid horizontal offset.
  * @yoffset: (out): The image's grid vertical offset.
@@ -143,41 +143,41 @@ gimp_image_grid_set_spacing (GimpImage *image,
  * Since: 2.4
  **/
 gboolean
-gimp_image_grid_get_offset (GimpImage *image,
+ligma_image_grid_get_offset (LigmaImage *image,
                             gdouble   *xoffset,
                             gdouble   *yoffset)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-grid-get-offset",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-grid-get-offset",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
   *xoffset = 0.0;
   *yoffset = 0.0;
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
   if (success)
     {
-      *xoffset = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
-      *yoffset = GIMP_VALUES_GET_DOUBLE (return_vals, 2);
+      *xoffset = LIGMA_VALUES_GET_DOUBLE (return_vals, 1);
+      *yoffset = LIGMA_VALUES_GET_DOUBLE (return_vals, 2);
     }
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_grid_set_offset:
+ * ligma_image_grid_set_offset:
  * @image: The image.
  * @xoffset: The image's grid horizontal offset.
  * @yoffset: The image's grid vertical offset.
@@ -192,34 +192,34 @@ gimp_image_grid_get_offset (GimpImage *image,
  * Since: 2.4
  **/
 gboolean
-gimp_image_grid_set_offset (GimpImage *image,
+ligma_image_grid_set_offset (LigmaImage *image,
                             gdouble    xoffset,
                             gdouble    yoffset)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_DOUBLE, xoffset,
                                           G_TYPE_DOUBLE, yoffset,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-grid-set-offset",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-grid-set-offset",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_grid_get_foreground_color:
+ * ligma_image_grid_get_foreground_color:
  * @image: The image.
  * @fgcolor: (out caller-allocates): The image's grid foreground color.
  *
@@ -232,34 +232,34 @@ gimp_image_grid_set_offset (GimpImage *image,
  * Since: 2.4
  **/
 gboolean
-gimp_image_grid_get_foreground_color (GimpImage *image,
-                                      GimpRGB   *fgcolor)
+ligma_image_grid_get_foreground_color (LigmaImage *image,
+                                      LigmaRGB   *fgcolor)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-grid-get-foreground-color",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-grid-get-foreground-color",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
   if (success)
-    GIMP_VALUES_GET_RGB (return_vals, 1, &*fgcolor);
+    LIGMA_VALUES_GET_RGB (return_vals, 1, &*fgcolor);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_grid_set_foreground_color:
+ * ligma_image_grid_set_foreground_color:
  * @image: The image.
  * @fgcolor: The new foreground color.
  *
@@ -272,32 +272,32 @@ gimp_image_grid_get_foreground_color (GimpImage *image,
  * Since: 2.4
  **/
 gboolean
-gimp_image_grid_set_foreground_color (GimpImage     *image,
-                                      const GimpRGB *fgcolor)
+ligma_image_grid_set_foreground_color (LigmaImage     *image,
+                                      const LigmaRGB *fgcolor)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
-                                          GIMP_TYPE_RGB, fgcolor,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
+                                          LIGMA_TYPE_RGB, fgcolor,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-grid-set-foreground-color",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-grid-set-foreground-color",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_grid_get_background_color:
+ * ligma_image_grid_get_background_color:
  * @image: The image.
  * @bgcolor: (out caller-allocates): The image's grid background color.
  *
@@ -310,34 +310,34 @@ gimp_image_grid_set_foreground_color (GimpImage     *image,
  * Since: 2.4
  **/
 gboolean
-gimp_image_grid_get_background_color (GimpImage *image,
-                                      GimpRGB   *bgcolor)
+ligma_image_grid_get_background_color (LigmaImage *image,
+                                      LigmaRGB   *bgcolor)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-grid-get-background-color",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-grid-get-background-color",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
   if (success)
-    GIMP_VALUES_GET_RGB (return_vals, 1, &*bgcolor);
+    LIGMA_VALUES_GET_RGB (return_vals, 1, &*bgcolor);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_grid_set_background_color:
+ * ligma_image_grid_set_background_color:
  * @image: The image.
  * @bgcolor: The new background color.
  *
@@ -350,32 +350,32 @@ gimp_image_grid_get_background_color (GimpImage *image,
  * Since: 2.4
  **/
 gboolean
-gimp_image_grid_set_background_color (GimpImage     *image,
-                                      const GimpRGB *bgcolor)
+ligma_image_grid_set_background_color (LigmaImage     *image,
+                                      const LigmaRGB *bgcolor)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
-                                          GIMP_TYPE_RGB, bgcolor,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
+                                          LIGMA_TYPE_RGB, bgcolor,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-grid-set-background-color",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-grid-set-background-color",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_grid_get_style:
+ * ligma_image_grid_get_style:
  * @image: The image.
  *
  * Gets the style of an image's grid.
@@ -386,32 +386,32 @@ gimp_image_grid_set_background_color (GimpImage     *image,
  *
  * Since: 2.4
  **/
-GimpGridStyle
-gimp_image_grid_get_style (GimpImage *image)
+LigmaGridStyle
+ligma_image_grid_get_style (LigmaImage *image)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpGridStyle style = 0;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaGridStyle style = 0;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-grid-get-style",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-grid-get-style",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    style = GIMP_VALUES_GET_ENUM (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    style = LIGMA_VALUES_GET_ENUM (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return style;
 }
 
 /**
- * gimp_image_grid_set_style:
+ * ligma_image_grid_set_style:
  * @image: The image.
  * @style: The image's grid style.
  *
@@ -425,26 +425,26 @@ gimp_image_grid_get_style (GimpImage *image)
  * Since: 2.4
  **/
 gboolean
-gimp_image_grid_set_style (GimpImage     *image,
-                           GimpGridStyle  style)
+ligma_image_grid_set_style (LigmaImage     *image,
+                           LigmaGridStyle  style)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
-                                          GIMP_TYPE_GRID_STYLE, style,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
+                                          LIGMA_TYPE_GRID_STYLE, style,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-grid-set-style",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-grid-set-style",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }

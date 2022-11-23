@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,19 +20,19 @@
 
 
 /*  this check is needed for the extern declaration below to be correct  */
-#ifndef __GIMP_ACTION_GROUP_H__
-#error "widgets/gimpactiongroup.h must be included prior to dialogs-actions.h"
+#ifndef __LIGMA_ACTION_GROUP_H__
+#error "widgets/ligmaactiongroup.h must be included prior to dialogs-actions.h"
 #endif
 
-extern const GimpStringActionEntry dialogs_dockable_actions[];
+extern const LigmaStringActionEntry dialogs_dockable_actions[];
 extern gint                        n_dialogs_dockable_actions;
 
 
-void       dialogs_actions_setup          (GimpActionGroup *group);
-void       dialogs_actions_update         (GimpActionGroup *group,
+void       dialogs_actions_setup          (LigmaActionGroup *group);
+void       dialogs_actions_update         (LigmaActionGroup *group,
                                            gpointer         data);
 
-gboolean   dialogs_actions_toolbox_exists (Gimp            *gimp);
+gboolean   dialogs_actions_toolbox_exists (Ligma            *ligma);
 
 
 #endif /* __DIALOGS_ACTIONS_H__ */

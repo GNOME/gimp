@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1999 Spencer Kimball and Peter Mattis
  *
- * gimpdashboard.c
+ * ligmadashboard.c
  * Copyright (C) 2017 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -52,40 +52,40 @@
 #endif /* HAVE_UNISTD_H && HAVE_FCNTL_H */
 #endif /* ! G_OS_WIN32 */
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "core/gimp.h"
-#include "core/gimp-gui.h"
-#include "core/gimp-utils.h"
-#include "core/gimp-parallel.h"
-#include "core/gimpasync.h"
-#include "core/gimpbacktrace.h"
-#include "core/gimptempbuf.h"
-#include "core/gimpwaitable.h"
+#include "core/ligma.h"
+#include "core/ligma-gui.h"
+#include "core/ligma-utils.h"
+#include "core/ligma-parallel.h"
+#include "core/ligmaasync.h"
+#include "core/ligmabacktrace.h"
+#include "core/ligmatempbuf.h"
+#include "core/ligmawaitable.h"
 
-#include "gimpactiongroup.h"
-#include "gimpdocked.h"
-#include "gimpdashboard.h"
-#include "gimpdialogfactory.h"
-#include "gimphelp-ids.h"
-#include "gimpmeter.h"
-#include "gimpsessioninfo-aux.h"
-#include "gimptoggleaction.h"
-#include "gimpuimanager.h"
-#include "gimpwidgets-utils.h"
-#include "gimpwindowstrategy.h"
+#include "ligmaactiongroup.h"
+#include "ligmadocked.h"
+#include "ligmadashboard.h"
+#include "ligmadialogfactory.h"
+#include "ligmahelp-ids.h"
+#include "ligmameter.h"
+#include "ligmasessioninfo-aux.h"
+#include "ligmatoggleaction.h"
+#include "ligmauimanager.h"
+#include "ligmawidgets-utils.h"
+#include "ligmawindowstrategy.h"
 
-#include "gimp-intl.h"
-#include "gimp-log.h"
-#include "gimp-version.h"
+#include "ligma-intl.h"
+#include "ligma-log.h"
+#include "ligma-version.h"
 
 
-#define DEFAULT_UPDATE_INTERVAL        GIMP_DASHBOARD_UPDATE_INTERVAL_0_25_SEC
-#define DEFAULT_HISTORY_DURATION       GIMP_DASHBOARD_HISTORY_DURATION_60_SEC
+#define DEFAULT_UPDATE_INTERVAL        LIGMA_DASHBOARD_UPDATE_INTERVAL_0_25_SEC
+#define DEFAULT_HISTORY_DURATION       LIGMA_DASHBOARD_HISTORY_DURATION_60_SEC
 #define DEFAULT_LOW_SWAP_SPACE_WARNING TRUE
 
 #define LOW_SWAP_SPACE_WARNING_ON      /* swap occupied is above */ 0.90 /* of swap limit */
@@ -199,7 +199,7 @@ typedef struct _VariableData  VariableData;
 typedef struct _FieldData     FieldData;
 typedef struct _GroupData     GroupData;
 
-typedef void (* VariableFunc) (GimpDashboard *dashboard,
+typedef void (* VariableFunc) (LigmaDashboard *dashboard,
                                Variable       variable);
 
 
@@ -210,7 +210,7 @@ struct _VariableInfo
   const gchar   *description;
   VariableType   type;
   gboolean       exclude_from_log;
-  GimpRGB        color;
+  LigmaRGB        color;
   VariableFunc   sample_func;
   VariableFunc   reset_func;
   gconstpointer  data;
@@ -284,20 +284,20 @@ struct _GroupData
   gboolean          active;
   gdouble           limit;
 
-  GimpToggleAction *action;
+  LigmaToggleAction *action;
   GtkExpander      *expander;
   GtkLabel         *header_values_label;
   GtkButton        *menu_button;
   GtkMenu          *menu;
-  GimpMeter        *meter;
+  LigmaMeter        *meter;
   GtkGrid          *grid;
 
   FieldData        *fields;
 };
 
-struct _GimpDashboardPrivate
+struct _LigmaDashboardPrivate
 {
-  Gimp                         *gimp;
+  Ligma                         *ligma;
 
   VariableData                  variables[N_VARIABLES];
   GroupData                     groups[N_GROUPS];
@@ -311,20 +311,20 @@ struct _GimpDashboardPrivate
   gint                          update_idle_id;
   gint                          low_swap_space_idle_id;
 
-  GimpDashboardUpdateInteval    update_interval;
-  GimpDashboardHistoryDuration  history_duration;
+  LigmaDashboardUpdateInteval    update_interval;
+  LigmaDashboardHistoryDuration  history_duration;
   gboolean                      low_swap_space_warning;
 
   GOutputStream                *log_output;
   GError                       *log_error;
-  GimpDashboardLogParams        log_params;
+  LigmaDashboardLogParams        log_params;
   gint64                        log_start_time;
   gint                          log_n_samples;
   gint                          log_n_markers;
   VariableData                  log_variables[N_VARIABLES];
-  GimpBacktrace                *log_backtrace;
+  LigmaBacktrace                *log_backtrace;
   GHashTable                   *log_addresses;
-  GimpLogHandler                log_log_handler;
+  LigmaLogHandler                log_log_handler;
 
   GtkWidget                    *log_record_button;
   GtkLabel                     *log_add_marker_label;
@@ -333,132 +333,132 @@ struct _GimpDashboardPrivate
 
 /*  local function prototypes  */
 
-static void       gimp_dashboard_docked_iface_init              (GimpDockedInterface *iface);
+static void       ligma_dashboard_docked_iface_init              (LigmaDockedInterface *iface);
 
-static void       gimp_dashboard_constructed                    (GObject             *object);
-static void       gimp_dashboard_dispose                        (GObject             *object);
-static void       gimp_dashboard_finalize                       (GObject             *object);
+static void       ligma_dashboard_constructed                    (GObject             *object);
+static void       ligma_dashboard_dispose                        (GObject             *object);
+static void       ligma_dashboard_finalize                       (GObject             *object);
 
-static void       gimp_dashboard_map                            (GtkWidget           *widget);
-static void       gimp_dashboard_unmap                          (GtkWidget           *widget);
+static void       ligma_dashboard_map                            (GtkWidget           *widget);
+static void       ligma_dashboard_unmap                          (GtkWidget           *widget);
 
-static void       gimp_dashboard_set_aux_info                   (GimpDocked          *docked,
+static void       ligma_dashboard_set_aux_info                   (LigmaDocked          *docked,
                                                                  GList               *aux_info);
-static GList    * gimp_dashboard_get_aux_info                   (GimpDocked          *docked);
+static GList    * ligma_dashboard_get_aux_info                   (LigmaDocked          *docked);
 
-static gboolean   gimp_dashboard_group_expander_button_press    (GimpDashboard       *dashboard,
+static gboolean   ligma_dashboard_group_expander_button_press    (LigmaDashboard       *dashboard,
                                                                  GdkEventButton      *bevent,
                                                                  GtkWidget           *widget);
 
-static void       gimp_dashboard_group_action_toggled           (GimpDashboard       *dashboard,
-                                                                 GimpToggleAction    *action);
-static void       gimp_dashboard_field_menu_item_toggled        (GimpDashboard       *dashboard,
+static void       ligma_dashboard_group_action_toggled           (LigmaDashboard       *dashboard,
+                                                                 LigmaToggleAction    *action);
+static void       ligma_dashboard_field_menu_item_toggled        (LigmaDashboard       *dashboard,
                                                                  GtkCheckMenuItem    *item);
 
-static gpointer   gimp_dashboard_sample                         (GimpDashboard       *dashboard);
+static gpointer   ligma_dashboard_sample                         (LigmaDashboard       *dashboard);
 
-static gboolean   gimp_dashboard_update                         (GimpDashboard       *dashboard);
-static gboolean   gimp_dashboard_low_swap_space                 (GimpDashboard       *dashboard);
+static gboolean   ligma_dashboard_update                         (LigmaDashboard       *dashboard);
+static gboolean   ligma_dashboard_low_swap_space                 (LigmaDashboard       *dashboard);
 
-static void       gimp_dashboard_sample_function                (GimpDashboard       *dashboard,
+static void       ligma_dashboard_sample_function                (LigmaDashboard       *dashboard,
                                                                  Variable             variable);
-static void       gimp_dashboard_sample_gegl_config             (GimpDashboard       *dashboard,
+static void       ligma_dashboard_sample_gegl_config             (LigmaDashboard       *dashboard,
                                                                  Variable             variable);
-static void       gimp_dashboard_sample_gegl_stats              (GimpDashboard       *dashboard,
+static void       ligma_dashboard_sample_gegl_stats              (LigmaDashboard       *dashboard,
                                                                  Variable             variable);
-static void       gimp_dashboard_sample_variable_changed        (GimpDashboard       *dashboard,
+static void       ligma_dashboard_sample_variable_changed        (LigmaDashboard       *dashboard,
                                                                  Variable             variable);
-static void       gimp_dashboard_sample_variable_rate_of_change (GimpDashboard       *dashboard,
+static void       ligma_dashboard_sample_variable_rate_of_change (LigmaDashboard       *dashboard,
                                                                  Variable             variable);
-static void       gimp_dashboard_sample_swap_limit              (GimpDashboard       *dashboard,
+static void       ligma_dashboard_sample_swap_limit              (LigmaDashboard       *dashboard,
                                                                  Variable             variable);
 #ifdef HAVE_CPU_GROUP
-static void       gimp_dashboard_sample_cpu_usage               (GimpDashboard       *dashboard,
+static void       ligma_dashboard_sample_cpu_usage               (LigmaDashboard       *dashboard,
                                                                  Variable             variable);
-static void       gimp_dashboard_sample_cpu_active              (GimpDashboard       *dashboard,
+static void       ligma_dashboard_sample_cpu_active              (LigmaDashboard       *dashboard,
                                                                  Variable             variable);
-static void       gimp_dashboard_sample_cpu_active_time         (GimpDashboard       *dashboard,
+static void       ligma_dashboard_sample_cpu_active_time         (LigmaDashboard       *dashboard,
                                                                  Variable             variable);
 #endif /* HAVE_CPU_GROUP */
 
 #ifdef HAVE_MEMORY_GROUP
-static void       gimp_dashboard_sample_memory_used             (GimpDashboard       *dashboard,
+static void       ligma_dashboard_sample_memory_used             (LigmaDashboard       *dashboard,
                                                                  Variable             variable);
-static void       gimp_dashboard_sample_memory_available        (GimpDashboard       *dashboard,
+static void       ligma_dashboard_sample_memory_available        (LigmaDashboard       *dashboard,
                                                                  Variable             variable);
-static void       gimp_dashboard_sample_memory_size             (GimpDashboard       *dashboard,
+static void       ligma_dashboard_sample_memory_size             (LigmaDashboard       *dashboard,
                                                                  Variable             variable);
 #endif /* HAVE_MEMORY_GROUP */
 
-static void       gimp_dashboard_sample_object                  (GimpDashboard       *dashboard,
+static void       ligma_dashboard_sample_object                  (LigmaDashboard       *dashboard,
                                                                  GObject             *object,
                                                                  Variable             variable);
 
-static void       gimp_dashboard_update_groups                  (GimpDashboard       *dashboard);
-static void       gimp_dashboard_update_group                   (GimpDashboard       *dashboard,
+static void       ligma_dashboard_update_groups                  (LigmaDashboard       *dashboard);
+static void       ligma_dashboard_update_group                   (LigmaDashboard       *dashboard,
                                                                  Group                group);
-static void       gimp_dashboard_update_group_values            (GimpDashboard       *dashboard,
+static void       ligma_dashboard_update_group_values            (LigmaDashboard       *dashboard,
                                                                  Group                group);
 
-static void       gimp_dashboard_group_set_active               (GimpDashboard       *dashboard,
+static void       ligma_dashboard_group_set_active               (LigmaDashboard       *dashboard,
                                                                  Group                group,
                                                                  gboolean             active);
-static void       gimp_dashboard_field_set_active               (GimpDashboard       *dashboard,
+static void       ligma_dashboard_field_set_active               (LigmaDashboard       *dashboard,
                                                                  Group                group,
                                                                  gint                 field,
                                                                  gboolean             active);
 
-static void       gimp_dashboard_reset_unlocked                 (GimpDashboard       *dashboard);
+static void       ligma_dashboard_reset_unlocked                 (LigmaDashboard       *dashboard);
 
-static void       gimp_dashboard_reset_variables                (GimpDashboard       *dashboard);
+static void       ligma_dashboard_reset_variables                (LigmaDashboard       *dashboard);
 
-static gpointer   gimp_dashboard_variable_get_data              (GimpDashboard       *dashboard,
+static gpointer   ligma_dashboard_variable_get_data              (LigmaDashboard       *dashboard,
                                                                  Variable             variable,
                                                                  gsize                size);
 
-static gboolean   gimp_dashboard_variable_to_boolean            (GimpDashboard       *dashboard,
+static gboolean   ligma_dashboard_variable_to_boolean            (LigmaDashboard       *dashboard,
                                                                  Variable             variable);
-static gdouble    gimp_dashboard_variable_to_double             (GimpDashboard       *dashboard,
+static gdouble    ligma_dashboard_variable_to_double             (LigmaDashboard       *dashboard,
                                                                  Variable             variable);
 
-static gchar    * gimp_dashboard_field_to_string                (GimpDashboard       *dashboard,
+static gchar    * ligma_dashboard_field_to_string                (LigmaDashboard       *dashboard,
                                                                  Group                group,
                                                                  gint                 field,
                                                                  gboolean             full);
 
-static gboolean   gimp_dashboard_log_printf                     (GimpDashboard       *dashboard,
+static gboolean   ligma_dashboard_log_printf                     (LigmaDashboard       *dashboard,
                                                                  const gchar         *format,
                                                                  ...) G_GNUC_PRINTF (2, 3);
-static gboolean   gimp_dashboard_log_print_escaped              (GimpDashboard       *dashboard,
+static gboolean   ligma_dashboard_log_print_escaped              (LigmaDashboard       *dashboard,
                                                                  const gchar         *string);
-static gint64     gimp_dashboard_log_time                       (GimpDashboard       *dashboard);
-static void       gimp_dashboard_log_sample                     (GimpDashboard       *dashboard,
+static gint64     ligma_dashboard_log_time                       (LigmaDashboard       *dashboard);
+static void       ligma_dashboard_log_sample                     (LigmaDashboard       *dashboard,
                                                                  gboolean             variables_changed,
                                                                  gboolean             include_current_thread);
-static void       gimp_dashboard_log_add_marker_unlocked        (GimpDashboard       *dashboard,
+static void       ligma_dashboard_log_add_marker_unlocked        (LigmaDashboard       *dashboard,
                                                                  const gchar         *description);
-static void       gimp_dashboard_log_update_highlight           (GimpDashboard       *dashboard);
-static void       gimp_dashboard_log_update_n_markers           (GimpDashboard       *dashboard);
+static void       ligma_dashboard_log_update_highlight           (LigmaDashboard       *dashboard);
+static void       ligma_dashboard_log_update_n_markers           (LigmaDashboard       *dashboard);
 
-static void       gimp_dashboard_log_write_address_map          (GimpDashboard       *dashboard,
+static void       ligma_dashboard_log_write_address_map          (LigmaDashboard       *dashboard,
                                                                  guintptr            *addresses,
                                                                  gint                 n_addresses,
-                                                                 GimpAsync           *async);
-static void       gimp_dashboard_log_write_global_address_map   (GimpAsync           *async,
-                                                                 GimpDashboard       *dashboard);
-static void       gimp_dashboard_log_log_func                   (const gchar         *log_domain,
+                                                                 LigmaAsync           *async);
+static void       ligma_dashboard_log_write_global_address_map   (LigmaAsync           *async,
+                                                                 LigmaDashboard       *dashboard);
+static void       ligma_dashboard_log_log_func                   (const gchar         *log_domain,
                                                                  GLogLevelFlags       log_levels,
                                                                  const gchar         *message,
-                                                                 GimpDashboard       *dashboard);
+                                                                 LigmaDashboard       *dashboard);
 
-static gboolean   gimp_dashboard_field_use_meter_underlay       (Group                group,
+static gboolean   ligma_dashboard_field_use_meter_underlay       (Group                group,
                                                                  gint                 field);
 
-static gchar    * gimp_dashboard_format_rate_of_change          (const gchar         *value);
-static gchar    * gimp_dashboard_format_value                   (VariableType         type,
+static gchar    * ligma_dashboard_format_rate_of_change          (const gchar         *value);
+static gchar    * ligma_dashboard_format_value                   (VariableType         type,
                                                                  gdouble              value);
 
-static void       gimp_dashboard_label_set_text                 (GtkLabel            *label,
+static void       ligma_dashboard_label_set_text                 (GtkLabel            *label,
                                                                  const gchar         *text);
 
 
@@ -474,7 +474,7 @@ static const VariableInfo variables[] =
     .description      = N_("Tile cache occupied size"),
     .type             = VARIABLE_TYPE_SIZE,
     .color            = {0.3, 0.6, 0.3, 1.0},
-    .sample_func      = gimp_dashboard_sample_gegl_stats,
+    .sample_func      = ligma_dashboard_sample_gegl_stats,
     .data             = "tile-cache-total"
   },
 
@@ -484,7 +484,7 @@ static const VariableInfo variables[] =
     .description      = N_("Maximal tile cache occupied size"),
     .type             = VARIABLE_TYPE_SIZE,
     .color            = {0.3, 0.7, 0.8, 1.0},
-    .sample_func      = gimp_dashboard_sample_gegl_stats,
+    .sample_func      = ligma_dashboard_sample_gegl_stats,
     .data             = "tile-cache-total-max"
   },
 
@@ -493,7 +493,7 @@ static const VariableInfo variables[] =
     .title            = NC_("dashboard-variable", "Limit"),
     .description      = N_("Tile cache size limit"),
     .type             = VARIABLE_TYPE_SIZE,
-    .sample_func      = gimp_dashboard_sample_gegl_config,
+    .sample_func      = ligma_dashboard_sample_gegl_config,
     .data             = "tile-cache-size"
   },
 
@@ -502,7 +502,7 @@ static const VariableInfo variables[] =
     .title            = NC_("dashboard-variable", "Compression"),
     .description      = N_("Tile cache compression ratio"),
     .type             = VARIABLE_TYPE_SIZE_RATIO,
-    .sample_func      = gimp_dashboard_sample_gegl_stats,
+    .sample_func      = ligma_dashboard_sample_gegl_stats,
     .data             = "tile-cache-total\0"
                         "tile-cache-total-uncompressed"
   },
@@ -512,7 +512,7 @@ static const VariableInfo variables[] =
     .title            = NC_("dashboard-variable", "Hit/Miss"),
     .description      = N_("Tile cache hit/miss ratio"),
     .type             = VARIABLE_TYPE_INT_RATIO,
-    .sample_func      = gimp_dashboard_sample_gegl_stats,
+    .sample_func      = ligma_dashboard_sample_gegl_stats,
     .data             = "tile-cache-hits\0"
                         "tile-cache-misses"
   },
@@ -526,7 +526,7 @@ static const VariableInfo variables[] =
     .description      = N_("Swap file occupied size"),
     .type             = VARIABLE_TYPE_SIZE,
     .color            = {0.8, 0.2, 0.2, 1.0},
-    .sample_func      = gimp_dashboard_sample_gegl_stats,
+    .sample_func      = ligma_dashboard_sample_gegl_stats,
     .data             = "swap-total"
   },
 
@@ -536,7 +536,7 @@ static const VariableInfo variables[] =
     .description      = N_("Swap file size"),
     .type             = VARIABLE_TYPE_SIZE,
     .color            = {0.8, 0.6, 0.4, 1.0},
-    .sample_func      = gimp_dashboard_sample_gegl_stats,
+    .sample_func      = ligma_dashboard_sample_gegl_stats,
     .data             = "swap-file-size"
   },
 
@@ -545,7 +545,7 @@ static const VariableInfo variables[] =
     .title            = NC_("dashboard-variable", "Limit"),
     .description      = N_("Swap file size limit"),
     .type             = VARIABLE_TYPE_SIZE,
-    .sample_func      = gimp_dashboard_sample_swap_limit,
+    .sample_func      = ligma_dashboard_sample_swap_limit,
   },
 
   [VARIABLE_SWAP_QUEUED] =
@@ -554,7 +554,7 @@ static const VariableInfo variables[] =
     .description      = N_("Size of data queued for writing to the swap"),
     .type             = VARIABLE_TYPE_SIZE,
     .color            = {0.8, 0.8, 0.2, 0.5},
-    .sample_func      = gimp_dashboard_sample_gegl_stats,
+    .sample_func      = ligma_dashboard_sample_gegl_stats,
     .data             = "swap-queued-total"
   },
 
@@ -564,7 +564,7 @@ static const VariableInfo variables[] =
     .description      = N_("Number of times the writing to the swap has been "
                            "stalled, due to a full queue"),
     .type             = VARIABLE_TYPE_INTEGER,
-    .sample_func      = gimp_dashboard_sample_gegl_stats,
+    .sample_func      = ligma_dashboard_sample_gegl_stats,
     .data             = "swap-queue-stalls"
   },
 
@@ -573,7 +573,7 @@ static const VariableInfo variables[] =
     .title            = NC_("dashboard-variable", "Queue full"),
     .description      = N_("Whether the swap queue is full"),
     .type             = VARIABLE_TYPE_BOOLEAN,
-    .sample_func      = gimp_dashboard_sample_variable_changed,
+    .sample_func      = ligma_dashboard_sample_variable_changed,
     .data             = GINT_TO_POINTER (VARIABLE_SWAP_QUEUE_STALLS)
   },
 
@@ -586,7 +586,7 @@ static const VariableInfo variables[] =
     .description      = N_("Total amount of data read from the swap"),
     .type             = VARIABLE_TYPE_SIZE,
     .color            = {0.2, 0.4, 1.0, 0.4},
-    .sample_func      = gimp_dashboard_sample_gegl_stats,
+    .sample_func      = ligma_dashboard_sample_gegl_stats,
     .data             = "swap-read-total"
   },
 
@@ -596,7 +596,7 @@ static const VariableInfo variables[] =
     .description      = N_("The rate at which data is read from the swap"),
     .type             = VARIABLE_TYPE_RATE_OF_CHANGE,
     .color            = {0.2, 0.4, 1.0, 1.0},
-    .sample_func      = gimp_dashboard_sample_variable_rate_of_change,
+    .sample_func      = ligma_dashboard_sample_variable_rate_of_change,
     .data             = GINT_TO_POINTER (VARIABLE_SWAP_READ)
   },
 
@@ -609,7 +609,7 @@ static const VariableInfo variables[] =
     .description      = N_("Total amount of data written to the swap"),
     .type             = VARIABLE_TYPE_SIZE,
     .color            = {0.8, 0.3, 0.2, 0.4},
-    .sample_func      = gimp_dashboard_sample_gegl_stats,
+    .sample_func      = ligma_dashboard_sample_gegl_stats,
     .data             = "swap-write-total"
   },
 
@@ -619,7 +619,7 @@ static const VariableInfo variables[] =
     .description      = N_("The rate at which data is written to the swap"),
     .type             = VARIABLE_TYPE_RATE_OF_CHANGE,
     .color            = {0.8, 0.3, 0.2, 1.0},
-    .sample_func      = gimp_dashboard_sample_variable_rate_of_change,
+    .sample_func      = ligma_dashboard_sample_variable_rate_of_change,
     .data             = GINT_TO_POINTER (VARIABLE_SWAP_WRITTEN)
   },
 
@@ -628,7 +628,7 @@ static const VariableInfo variables[] =
     .title            = NC_("dashboard-variable", "Compression"),
     .description      = N_("Swap compression ratio"),
     .type             = VARIABLE_TYPE_SIZE_RATIO,
-    .sample_func      = gimp_dashboard_sample_gegl_stats,
+    .sample_func      = ligma_dashboard_sample_gegl_stats,
     .data             = "swap-total\0"
                         "swap-total-uncompressed"
   },
@@ -643,7 +643,7 @@ static const VariableInfo variables[] =
     .description      = N_("Total CPU usage"),
     .type             = VARIABLE_TYPE_PERCENTAGE,
     .color            = {0.8, 0.7, 0.2, 1.0},
-    .sample_func      = gimp_dashboard_sample_cpu_usage
+    .sample_func      = ligma_dashboard_sample_cpu_usage
   },
 
   [VARIABLE_CPU_ACTIVE] =
@@ -652,7 +652,7 @@ static const VariableInfo variables[] =
     .description      = N_("Whether the CPU is active"),
     .type             = VARIABLE_TYPE_BOOLEAN,
     .color            = {0.9, 0.8, 0.3, 1.0},
-    .sample_func      = gimp_dashboard_sample_cpu_active
+    .sample_func      = ligma_dashboard_sample_cpu_active
   },
 
   [VARIABLE_CPU_ACTIVE_TIME] =
@@ -661,7 +661,7 @@ static const VariableInfo variables[] =
     .description      = N_("Total amount of time the CPU has been active"),
     .type             = VARIABLE_TYPE_DURATION,
     .color            = {0.8, 0.7, 0.2, 0.4},
-    .sample_func      = gimp_dashboard_sample_cpu_active_time
+    .sample_func      = ligma_dashboard_sample_cpu_active_time
   },
 #endif /* HAVE_CPU_GROUP */
 
@@ -675,7 +675,7 @@ static const VariableInfo variables[] =
     .description      = N_("Amount of memory used by the process"),
     .type             = VARIABLE_TYPE_SIZE,
     .color            = {0.8, 0.5, 0.2, 1.0},
-    .sample_func      = gimp_dashboard_sample_memory_used
+    .sample_func      = ligma_dashboard_sample_memory_used
   },
 
   [VARIABLE_MEMORY_AVAILABLE] =
@@ -684,7 +684,7 @@ static const VariableInfo variables[] =
     .description      = N_("Amount of available physical memory"),
     .type             = VARIABLE_TYPE_SIZE,
     .color            = {0.8, 0.5, 0.2, 0.4},
-    .sample_func      = gimp_dashboard_sample_memory_available
+    .sample_func      = ligma_dashboard_sample_memory_available
   },
 
   [VARIABLE_MEMORY_SIZE] =
@@ -692,7 +692,7 @@ static const VariableInfo variables[] =
     .title            = NC_("dashboard-variable", "Size"),
     .description      = N_("Physical memory size"),
     .type             = VARIABLE_TYPE_SIZE,
-    .sample_func      = gimp_dashboard_sample_memory_size
+    .sample_func      = ligma_dashboard_sample_memory_size
   },
 #endif /* HAVE_MEMORY_GROUP */
 
@@ -704,7 +704,7 @@ static const VariableInfo variables[] =
     .title            = NC_("dashboard-variable", "Mipmapped"),
     .description      = N_("Total size of processed mipmapped data"),
     .type             = VARIABLE_TYPE_SIZE,
-    .sample_func      = gimp_dashboard_sample_gegl_stats,
+    .sample_func      = ligma_dashboard_sample_gegl_stats,
     .data             = "zoom-total"
   },
 
@@ -713,7 +713,7 @@ static const VariableInfo variables[] =
     .title            = NC_("dashboard-variable", "Assigned"),
     .description      = N_("Number of assigned worker threads"),
     .type             = VARIABLE_TYPE_INTEGER,
-    .sample_func      = gimp_dashboard_sample_gegl_stats,
+    .sample_func      = ligma_dashboard_sample_gegl_stats,
     .data             = "assigned-threads"
   },
 
@@ -722,7 +722,7 @@ static const VariableInfo variables[] =
     .title            = NC_("dashboard-variable", "Active"),
     .description      = N_("Number of active worker threads"),
     .type             = VARIABLE_TYPE_INTEGER,
-    .sample_func      = gimp_dashboard_sample_gegl_stats,
+    .sample_func      = ligma_dashboard_sample_gegl_stats,
     .data             = "active-threads"
   },
 
@@ -731,8 +731,8 @@ static const VariableInfo variables[] =
     .title            = NC_("dashboard-variable", "Async"),
     .description      = N_("Number of ongoing asynchronous operations"),
     .type             = VARIABLE_TYPE_INTEGER,
-    .sample_func      = gimp_dashboard_sample_function,
-    .data             = gimp_async_get_n_running
+    .sample_func      = ligma_dashboard_sample_function,
+    .data             = ligma_async_get_n_running
   },
 
   [VARIABLE_TILE_ALLOC_TOTAL] =
@@ -741,7 +741,7 @@ static const VariableInfo variables[] =
     .description      = N_("Total size of tile memory"),
     .type             = VARIABLE_TYPE_SIZE,
     .color            = {0.3, 0.3, 1.0, 1.0},
-    .sample_func      = gimp_dashboard_sample_gegl_stats,
+    .sample_func      = ligma_dashboard_sample_gegl_stats,
     .data             = "tile-alloc-total"
   },
 
@@ -750,20 +750,20 @@ static const VariableInfo variables[] =
     .title            = NC_("dashboard-variable", "Scratch"),
     .description      = N_("Total size of scratch memory"),
     .type             = VARIABLE_TYPE_SIZE,
-    .sample_func      = gimp_dashboard_sample_gegl_stats,
+    .sample_func      = ligma_dashboard_sample_gegl_stats,
     .data             = "scratch-total"
   },
 
   [VARIABLE_TEMP_BUF_TOTAL] =
   { .name             = "temp-buf-total",
     /* Translators:  "TempBuf" is a technical term referring to an internal
-     * GIMP data structure.  It's probably OK to leave it untranslated.
+     * LIGMA data structure.  It's probably OK to leave it untranslated.
      */
     .title            = NC_("dashboard-variable", "TempBuf"),
     .description      = N_("Total size of temporary buffers"),
     .type             = VARIABLE_TYPE_SIZE,
-    .sample_func      = gimp_dashboard_sample_function,
-    .data             = gimp_temp_buf_get_total_memsize
+    .sample_func      = ligma_dashboard_sample_function,
+    .data             = ligma_temp_buf_get_total_memsize
   }
 };
 
@@ -988,37 +988,37 @@ static const GroupInfo groups[] =
 };
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpDashboard, gimp_dashboard, GIMP_TYPE_EDITOR,
-                         G_ADD_PRIVATE (GimpDashboard)
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED,
-                                                gimp_dashboard_docked_iface_init))
+G_DEFINE_TYPE_WITH_CODE (LigmaDashboard, ligma_dashboard, LIGMA_TYPE_EDITOR,
+                         G_ADD_PRIVATE (LigmaDashboard)
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_DOCKED,
+                                                ligma_dashboard_docked_iface_init))
 
-#define parent_class gimp_dashboard_parent_class
+#define parent_class ligma_dashboard_parent_class
 
-static GimpDockedInterface *parent_docked_iface = NULL;
+static LigmaDockedInterface *parent_docked_iface = NULL;
 
 
 /*  private functions  */
 
 
 static void
-gimp_dashboard_class_init (GimpDashboardClass *klass)
+ligma_dashboard_class_init (LigmaDashboardClass *klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->constructed = gimp_dashboard_constructed;
-  object_class->dispose     = gimp_dashboard_dispose;
-  object_class->finalize    = gimp_dashboard_finalize;
+  object_class->constructed = ligma_dashboard_constructed;
+  object_class->dispose     = ligma_dashboard_dispose;
+  object_class->finalize    = ligma_dashboard_finalize;
 
-  widget_class->map         = gimp_dashboard_map;
-  widget_class->unmap       = gimp_dashboard_unmap;
+  widget_class->map         = ligma_dashboard_map;
+  widget_class->unmap       = ligma_dashboard_unmap;
 }
 
 static void
-gimp_dashboard_init (GimpDashboard *dashboard)
+ligma_dashboard_init (LigmaDashboard *dashboard)
 {
-  GimpDashboardPrivate *priv;
+  LigmaDashboardPrivate *priv;
   GtkWidget            *box;
   GtkWidget            *scrolled_window;
   GtkWidget            *viewport;
@@ -1038,7 +1038,7 @@ gimp_dashboard_init (GimpDashboard *dashboard)
   Group                 group;
   gint                  field;
 
-  priv = dashboard->priv = gimp_dashboard_get_instance_private (dashboard);
+  priv = dashboard->priv = ligma_dashboard_get_instance_private (dashboard);
 
   g_mutex_init (&priv->mutex);
   g_cond_init (&priv->cond);
@@ -1110,14 +1110,14 @@ gimp_dashboard_init (GimpDashboard *dashboard)
       gtk_box_pack_start (GTK_BOX (vbox), expander, FALSE, FALSE, 0);
 
       g_object_set_data (G_OBJECT (expander),
-                         "gimp-dashboard-group", GINT_TO_POINTER (group));
+                         "ligma-dashboard-group", GINT_TO_POINTER (group));
       g_signal_connect_swapped (expander, "button-press-event",
-                                G_CALLBACK (gimp_dashboard_group_expander_button_press),
+                                G_CALLBACK (ligma_dashboard_group_expander_button_press),
                                 dashboard);
 
       /* group expander label box */
       hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
-      gimp_help_set_help_data (hbox,
+      ligma_help_set_help_data (hbox,
                                g_dgettext (NULL, group_info->description),
                                NULL);
       gtk_expander_set_label_widget (GTK_EXPANDER (expander), hbox);
@@ -1127,7 +1127,7 @@ gimp_dashboard_init (GimpDashboard *dashboard)
       label = gtk_label_new (g_dpgettext2 (NULL, "dashboard-group",
                                            group_info->title));
       gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-      gimp_label_set_attributes (GTK_LABEL (label),
+      ligma_label_set_attributes (GTK_LABEL (label),
                                  PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
                                  -1);
       gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
@@ -1147,17 +1147,17 @@ gimp_dashboard_init (GimpDashboard *dashboard)
       /* group expander menu button */
       button = gtk_button_new ();
       group_data->menu_button = GTK_BUTTON (button);
-      gimp_help_set_help_data (button, _("Select fields"),
+      ligma_help_set_help_data (button, _("Select fields"),
                                NULL);
       gtk_widget_set_can_focus (button, FALSE);
       gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
       gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
       gtk_widget_show (button);
 
-      image = gtk_image_new_from_icon_name (GIMP_ICON_MENU_LEFT,
+      image = gtk_image_new_from_icon_name (LIGMA_ICON_MENU_LEFT,
                                             GTK_ICON_SIZE_MENU);
       gtk_image_set_pixel_size (GTK_IMAGE (image), 12);
-      gtk_image_set_from_icon_name (GTK_IMAGE (image), GIMP_ICON_MENU_LEFT,
+      gtk_image_set_from_icon_name (GTK_IMAGE (image), LIGMA_ICON_MENU_LEFT,
                                     GTK_ICON_SIZE_MENU);
       gtk_container_add (GTK_CONTAINER (button), image);
       gtk_widget_show (image);
@@ -1181,19 +1181,19 @@ gimp_dashboard_init (GimpDashboard *dashboard)
                               field_info->title ? field_info->title :
                                                   variable_info->title));
               field_data->menu_item = GTK_CHECK_MENU_ITEM (item);
-              gimp_help_set_help_data (item,
+              ligma_help_set_help_data (item,
                                        g_dgettext (NULL, variable_info->description),
                                        NULL);
 
               g_object_set_data (G_OBJECT (item),
-                                 "gimp-dashboard-group", GINT_TO_POINTER (group));
+                                 "ligma-dashboard-group", GINT_TO_POINTER (group));
               g_object_set_data (G_OBJECT (item),
-                                 "gimp-dashboard-field", GINT_TO_POINTER (field));
+                                 "ligma-dashboard-field", GINT_TO_POINTER (field));
               g_signal_connect_swapped (item, "toggled",
-                                        G_CALLBACK (gimp_dashboard_field_menu_item_toggled),
+                                        G_CALLBACK (ligma_dashboard_field_menu_item_toggled),
                                         dashboard);
 
-              gimp_dashboard_field_set_active (dashboard, group, field,
+              ligma_dashboard_field_set_active (dashboard, group, field,
                                                field_info->default_active);
             }
           else
@@ -1206,7 +1206,7 @@ gimp_dashboard_init (GimpDashboard *dashboard)
         }
 
       /* group frame */
-      frame = gimp_frame_new (NULL);
+      frame = ligma_frame_new (NULL);
       gtk_container_add (GTK_CONTAINER (expander), frame);
       gtk_widget_show (frame);
 
@@ -1218,14 +1218,14 @@ gimp_dashboard_init (GimpDashboard *dashboard)
       /* group meter */
       if (group_info->has_meter)
         {
-          meter = gimp_meter_new (group_data->n_meter_values);
-          group_data->meter = GIMP_METER (meter);
-          gimp_help_set_help_data (meter,
+          meter = ligma_meter_new (group_data->n_meter_values);
+          group_data->meter = LIGMA_METER (meter);
+          ligma_help_set_help_data (meter,
                                    g_dgettext (NULL, group_info->description),
                                    NULL);
-          gimp_meter_set_history_resolution (GIMP_METER (meter),
+          ligma_meter_set_history_resolution (LIGMA_METER (meter),
                                              priv->update_interval / 1000.0);
-          gimp_meter_set_history_duration (GIMP_METER (meter),
+          ligma_meter_set_history_duration (LIGMA_METER (meter),
                                            priv->history_duration / 1000.0);
           gtk_box_pack_start (GTK_BOX (vbox2), meter, FALSE, FALSE, 0);
           gtk_widget_show (meter);
@@ -1238,18 +1238,18 @@ gimp_dashboard_init (GimpDashboard *dashboard)
                 {
                   const VariableInfo *variable_info = &variables[field_info->variable];
 
-                  gimp_meter_set_value_color (GIMP_METER (meter),
+                  ligma_meter_set_value_color (LIGMA_METER (meter),
                                               field_info->meter_value - 1,
                                               &variable_info->color);
 
-                  if (gimp_dashboard_field_use_meter_underlay (group, field))
+                  if (ligma_dashboard_field_use_meter_underlay (group, field))
                     {
-                      gimp_meter_set_value_show_in_gauge (GIMP_METER (meter),
+                      ligma_meter_set_value_show_in_gauge (LIGMA_METER (meter),
                                                           field_info->meter_value - 1,
                                                           FALSE);
-                      gimp_meter_set_value_interpolation (GIMP_METER (meter),
+                      ligma_meter_set_value_interpolation (LIGMA_METER (meter),
                                                           field_info->meter_value - 1,
-                                                          GIMP_INTERPOLATION_NONE);
+                                                          LIGMA_INTERPOLATION_NONE);
                     }
                 }
             }
@@ -1263,9 +1263,9 @@ gimp_dashboard_init (GimpDashboard *dashboard)
       gtk_box_pack_start (GTK_BOX (vbox2), grid, FALSE, FALSE, 0);
       gtk_widget_show (grid);
 
-      gimp_dashboard_group_set_active (dashboard, group,
+      ligma_dashboard_group_set_active (dashboard, group,
                                        group_info->default_active);
-      gimp_dashboard_update_group (dashboard, group);
+      ligma_dashboard_update_group (dashboard, group);
     }
 
   /* sampler thread
@@ -1274,30 +1274,30 @@ gimp_dashboard_init (GimpDashboard *dashboard)
    * the main thread is busy
    */
   priv->thread = g_thread_new ("dashboard",
-                               (GThreadFunc) gimp_dashboard_sample,
+                               (GThreadFunc) ligma_dashboard_sample,
                                dashboard);
 }
 
 static void
-gimp_dashboard_docked_iface_init (GimpDockedInterface *iface)
+ligma_dashboard_docked_iface_init (LigmaDockedInterface *iface)
 {
   parent_docked_iface = g_type_interface_peek_parent (iface);
 
   if (! parent_docked_iface)
-    parent_docked_iface = g_type_default_interface_peek (GIMP_TYPE_DOCKED);
+    parent_docked_iface = g_type_default_interface_peek (LIGMA_TYPE_DOCKED);
 
-  iface->set_aux_info = gimp_dashboard_set_aux_info;
-  iface->get_aux_info = gimp_dashboard_get_aux_info;
+  iface->set_aux_info = ligma_dashboard_set_aux_info;
+  iface->get_aux_info = ligma_dashboard_get_aux_info;
 }
 
 static void
-gimp_dashboard_constructed (GObject *object)
+ligma_dashboard_constructed (GObject *object)
 {
-  GimpDashboard        *dashboard = GIMP_DASHBOARD (object);
-  GimpDashboardPrivate *priv = dashboard->priv;
-  GimpUIManager        *ui_manager;
-  GimpActionGroup      *action_group;
-  GimpAction           *action;
+  LigmaDashboard        *dashboard = LIGMA_DASHBOARD (object);
+  LigmaDashboardPrivate *priv = dashboard->priv;
+  LigmaUIManager        *ui_manager;
+  LigmaActionGroup      *action_group;
+  LigmaAction           *action;
   GtkWidget            *button;
   GtkWidget            *box;
   GtkWidget            *image;
@@ -1306,48 +1306,48 @@ gimp_dashboard_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  ui_manager   = gimp_editor_get_ui_manager (GIMP_EDITOR (dashboard));
-  action_group = gimp_ui_manager_get_action_group (ui_manager, "dashboard");
+  ui_manager   = ligma_editor_get_ui_manager (LIGMA_EDITOR (dashboard));
+  action_group = ligma_ui_manager_get_action_group (ui_manager, "dashboard");
 
   /* group actions */
   for (group = FIRST_GROUP; group < N_GROUPS; group++)
     {
       const GroupInfo       *group_info = &groups[group];
       GroupData             *group_data = &priv->groups[group];
-      GimpToggleActionEntry  entry      = {};
+      LigmaToggleActionEntry  entry      = {};
 
       entry.name      = g_strdup_printf ("dashboard-group-%s", group_info->name);
       entry.label     = g_dpgettext2 (NULL, "dashboard-group", group_info->title);
       entry.tooltip   = g_dgettext (NULL, group_info->description);
-      entry.help_id   = GIMP_HELP_DASHBOARD_GROUPS;
+      entry.help_id   = LIGMA_HELP_DASHBOARD_GROUPS;
       entry.is_active = group_data->active;
 
-      gimp_action_group_add_toggle_actions (action_group, "dashboard-groups",
+      ligma_action_group_add_toggle_actions (action_group, "dashboard-groups",
                                             &entry, 1);
 
-      action = gimp_ui_manager_find_action (ui_manager, "dashboard", entry.name);
-      group_data->action = GIMP_TOGGLE_ACTION (action);
+      action = ligma_ui_manager_find_action (ui_manager, "dashboard", entry.name);
+      group_data->action = LIGMA_TOGGLE_ACTION (action);
 
       g_object_set_data (G_OBJECT (action),
-                         "gimp-dashboard-group", GINT_TO_POINTER (group));
+                         "ligma-dashboard-group", GINT_TO_POINTER (group));
       g_signal_connect_swapped (action, "toggled",
-                                G_CALLBACK (gimp_dashboard_group_action_toggled),
+                                G_CALLBACK (ligma_dashboard_group_action_toggled),
                                 dashboard);
 
       g_free ((gpointer) entry.name);
     }
 
-  button = gimp_editor_add_action_button (GIMP_EDITOR (dashboard), "dashboard",
+  button = ligma_editor_add_action_button (LIGMA_EDITOR (dashboard), "dashboard",
                                           "dashboard-log-record", NULL);
   priv->log_record_button = button;
 
-  button = gimp_editor_add_action_button (GIMP_EDITOR (dashboard), "dashboard",
+  button = ligma_editor_add_action_button (LIGMA_EDITOR (dashboard), "dashboard",
                                           "dashboard-log-add-marker",
                                           "dashboard-log-add-empty-marker",
-                                          gimp_get_extend_selection_mask (),
+                                          ligma_get_extend_selection_mask (),
                                           NULL);
 
-  action = gimp_action_group_get_action (action_group,
+  action = ligma_action_group_get_action (action_group,
                                          "dashboard-log-add-marker");
   g_object_bind_property (action, "sensitive",
                           button, "visible",
@@ -1370,23 +1370,23 @@ gimp_dashboard_constructed (GObject *object)
   gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  button = gimp_editor_add_action_button (GIMP_EDITOR (dashboard), "dashboard",
+  button = ligma_editor_add_action_button (LIGMA_EDITOR (dashboard), "dashboard",
                                           "dashboard-reset", NULL);
 
-  action = gimp_action_group_get_action (action_group,
+  action = ligma_action_group_get_action (action_group,
                                          "dashboard-reset");
   g_object_bind_property (action, "sensitive",
                           button, "visible",
                           G_BINDING_DEFAULT | G_BINDING_SYNC_CREATE);
 
-  gimp_action_group_update (action_group, dashboard);
+  ligma_action_group_update (action_group, dashboard);
 }
 
 static void
-gimp_dashboard_dispose (GObject *object)
+ligma_dashboard_dispose (GObject *object)
 {
-  GimpDashboard        *dashboard = GIMP_DASHBOARD (object);
-  GimpDashboardPrivate *priv      = dashboard->priv;
+  LigmaDashboard        *dashboard = LIGMA_DASHBOARD (object);
+  LigmaDashboardPrivate *priv      = dashboard->priv;
 
   if (priv->thread)
     {
@@ -1412,18 +1412,18 @@ gimp_dashboard_dispose (GObject *object)
       priv->low_swap_space_idle_id = 0;
     }
 
-  gimp_dashboard_log_stop_recording (dashboard, NULL);
+  ligma_dashboard_log_stop_recording (dashboard, NULL);
 
-  gimp_dashboard_reset_variables (dashboard);
+  ligma_dashboard_reset_variables (dashboard);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
-gimp_dashboard_finalize (GObject *object)
+ligma_dashboard_finalize (GObject *object)
 {
-  GimpDashboard        *dashboard = GIMP_DASHBOARD (object);
-  GimpDashboardPrivate *priv      = dashboard->priv;
+  LigmaDashboard        *dashboard = LIGMA_DASHBOARD (object);
+  LigmaDashboardPrivate *priv      = dashboard->priv;
   gint                  i;
 
   for (i = FIRST_GROUP; i < N_GROUPS; i++)
@@ -1436,20 +1436,20 @@ gimp_dashboard_finalize (GObject *object)
 }
 
 static void
-gimp_dashboard_map (GtkWidget *widget)
+ligma_dashboard_map (GtkWidget *widget)
 {
-  GimpDashboard *dashboard = GIMP_DASHBOARD (widget);
+  LigmaDashboard *dashboard = LIGMA_DASHBOARD (widget);
 
   GTK_WIDGET_CLASS (parent_class)->map (widget);
 
-  gimp_dashboard_update (dashboard);
+  ligma_dashboard_update (dashboard);
 }
 
 static void
-gimp_dashboard_unmap (GtkWidget *widget)
+ligma_dashboard_unmap (GtkWidget *widget)
 {
-  GimpDashboard        *dashboard = GIMP_DASHBOARD (widget);
-  GimpDashboardPrivate *priv      = dashboard->priv;
+  LigmaDashboard        *dashboard = LIGMA_DASHBOARD (widget);
+  LigmaDashboardPrivate *priv      = dashboard->priv;
 
   g_mutex_lock (&priv->mutex);
 
@@ -1469,11 +1469,11 @@ gimp_dashboard_unmap (GtkWidget *widget)
 #define AUX_INFO_LOW_SWAP_SPACE_WARNING "low-swap-space-warning"
 
 static void
-gimp_dashboard_set_aux_info (GimpDocked *docked,
+ligma_dashboard_set_aux_info (LigmaDocked *docked,
                              GList      *aux_info)
 {
-  GimpDashboard        *dashboard = GIMP_DASHBOARD (docked);
-  GimpDashboardPrivate *priv      = dashboard->priv;
+  LigmaDashboard        *dashboard = LIGMA_DASHBOARD (docked);
+  LigmaDashboardPrivate *priv      = dashboard->priv;
   gchar                *name;
   GList                *list;
 
@@ -1481,35 +1481,35 @@ gimp_dashboard_set_aux_info (GimpDocked *docked,
 
   for (list = aux_info; list; list = g_list_next (list))
     {
-      GimpSessionInfoAux *aux = list->data;
+      LigmaSessionInfoAux *aux = list->data;
 
       if (! strcmp (aux->name, AUX_INFO_UPDATE_INTERVAL))
         {
           gint                       value = atoi (aux->value);
-          GimpDashboardUpdateInteval update_interval;
+          LigmaDashboardUpdateInteval update_interval;
 
-          for (update_interval = GIMP_DASHBOARD_UPDATE_INTERVAL_0_25_SEC;
+          for (update_interval = LIGMA_DASHBOARD_UPDATE_INTERVAL_0_25_SEC;
                update_interval < value &&
-               update_interval < GIMP_DASHBOARD_UPDATE_INTERVAL_4_SEC;
+               update_interval < LIGMA_DASHBOARD_UPDATE_INTERVAL_4_SEC;
                update_interval *= 2);
 
-          gimp_dashboard_set_update_interval (dashboard, update_interval);
+          ligma_dashboard_set_update_interval (dashboard, update_interval);
         }
       else if (! strcmp (aux->name, AUX_INFO_HISTORY_DURATION))
         {
           gint                         value = atoi (aux->value);
-          GimpDashboardHistoryDuration history_duration;
+          LigmaDashboardHistoryDuration history_duration;
 
-          for (history_duration = GIMP_DASHBOARD_HISTORY_DURATION_15_SEC;
+          for (history_duration = LIGMA_DASHBOARD_HISTORY_DURATION_15_SEC;
                history_duration < value &&
-               history_duration < GIMP_DASHBOARD_HISTORY_DURATION_240_SEC;
+               history_duration < LIGMA_DASHBOARD_HISTORY_DURATION_240_SEC;
                history_duration *= 2);
 
-          gimp_dashboard_set_history_duration (dashboard, history_duration);
+          ligma_dashboard_set_history_duration (dashboard, history_duration);
         }
       else if (! strcmp (aux->name, AUX_INFO_LOW_SWAP_SPACE_WARNING))
         {
-          gimp_dashboard_set_low_swap_space_warning (dashboard,
+          ligma_dashboard_set_low_swap_space_warning (dashboard,
                                                      ! strcmp (aux->value, "yes"));
         }
       else
@@ -1528,7 +1528,7 @@ gimp_dashboard_set_aux_info (GimpDocked *docked,
                 {
                   gboolean active = ! strcmp (aux->value, "yes");
 
-                  gimp_dashboard_group_set_active (dashboard, group, active);
+                  ligma_dashboard_group_set_active (dashboard, group, active);
 
                   g_free (name);
                   goto next_aux_info;
@@ -1566,7 +1566,7 @@ gimp_dashboard_set_aux_info (GimpDocked *docked,
                         {
                           gboolean active = ! strcmp (aux->value, "yes");
 
-                          gimp_dashboard_field_set_active (dashboard,
+                          ligma_dashboard_field_set_active (dashboard,
                                                            group, field,
                                                            active);
 
@@ -1582,16 +1582,16 @@ gimp_dashboard_set_aux_info (GimpDocked *docked,
 next_aux_info: ;
     }
 
-  gimp_dashboard_update_groups (dashboard);
+  ligma_dashboard_update_groups (dashboard);
 }
 
 static GList *
-gimp_dashboard_get_aux_info (GimpDocked *docked)
+ligma_dashboard_get_aux_info (LigmaDocked *docked)
 {
-  GimpDashboard        *dashboard = GIMP_DASHBOARD (docked);
-  GimpDashboardPrivate *priv      = dashboard->priv;
+  LigmaDashboard        *dashboard = LIGMA_DASHBOARD (docked);
+  LigmaDashboardPrivate *priv      = dashboard->priv;
   GList                *aux_info;
-  GimpSessionInfoAux   *aux;
+  LigmaSessionInfoAux   *aux;
   gchar                *name;
   gchar                *value;
   Group                 group;
@@ -1602,7 +1602,7 @@ gimp_dashboard_get_aux_info (GimpDocked *docked)
   if (priv->update_interval != DEFAULT_UPDATE_INTERVAL)
     {
       value    = g_strdup_printf ("%d", priv->update_interval);
-      aux      = gimp_session_info_aux_new (AUX_INFO_UPDATE_INTERVAL, value);
+      aux      = ligma_session_info_aux_new (AUX_INFO_UPDATE_INTERVAL, value);
       aux_info = g_list_append (aux_info, aux);
       g_free (value);
     }
@@ -1610,7 +1610,7 @@ gimp_dashboard_get_aux_info (GimpDocked *docked)
   if (priv->history_duration != DEFAULT_HISTORY_DURATION)
     {
       value    = g_strdup_printf ("%d", priv->history_duration);
-      aux      = gimp_session_info_aux_new (AUX_INFO_HISTORY_DURATION, value);
+      aux      = ligma_session_info_aux_new (AUX_INFO_HISTORY_DURATION, value);
       aux_info = g_list_append (aux_info, aux);
       g_free (value);
     }
@@ -1618,7 +1618,7 @@ gimp_dashboard_get_aux_info (GimpDocked *docked)
   if (priv->low_swap_space_warning != DEFAULT_LOW_SWAP_SPACE_WARNING)
     {
       value    = priv->low_swap_space_warning ? "yes" : "no";
-      aux      = gimp_session_info_aux_new (AUX_INFO_LOW_SWAP_SPACE_WARNING, value);
+      aux      = ligma_session_info_aux_new (AUX_INFO_LOW_SWAP_SPACE_WARNING, value);
       aux_info = g_list_append (aux_info, aux);
     }
 
@@ -1633,7 +1633,7 @@ gimp_dashboard_get_aux_info (GimpDocked *docked)
         {
           name     = g_strdup_printf ("%s-active", group_info->name);
           value    = active ? "yes" : "no";
-          aux      = gimp_session_info_aux_new (name, value);
+          aux      = ligma_session_info_aux_new (name, value);
           aux_info = g_list_append (aux_info, aux);
           g_free (name);
         }
@@ -1642,7 +1642,7 @@ gimp_dashboard_get_aux_info (GimpDocked *docked)
         {
           name     = g_strdup_printf ("%s-expanded", group_info->name);
           value    = expanded ? "yes" : "no";
-          aux      = gimp_session_info_aux_new (name, value);
+          aux      = ligma_session_info_aux_new (name, value);
           aux_info = g_list_append (aux_info, aux);
           g_free (name);
         }
@@ -1663,7 +1663,7 @@ gimp_dashboard_get_aux_info (GimpDocked *docked)
                                           group_info->name,
                                           variable_info->name);
                   value    = active ? "yes" : "no";
-                  aux      = gimp_session_info_aux_new (name, value);
+                  aux      = ligma_session_info_aux_new (name, value);
                   aux_info = g_list_append (aux_info, aux);
                   g_free (name);
                 }
@@ -1675,18 +1675,18 @@ gimp_dashboard_get_aux_info (GimpDocked *docked)
 }
 
 static gboolean
-gimp_dashboard_group_expander_button_press (GimpDashboard  *dashboard,
+ligma_dashboard_group_expander_button_press (LigmaDashboard  *dashboard,
                                             GdkEventButton *bevent,
                                             GtkWidget      *widget)
 {
-  GimpDashboardPrivate *priv = dashboard->priv;
+  LigmaDashboardPrivate *priv = dashboard->priv;
   Group                 group;
   GroupData            *group_data;
   GtkAllocation         expander_allocation;
   GtkAllocation         allocation;
 
   group      = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
-                                                   "gimp-dashboard-group"));
+                                                   "ligma-dashboard-group"));
   group_data = &priv->groups[group];
 
   gtk_widget_get_allocation (GTK_WIDGET (group_data->expander),
@@ -1716,49 +1716,49 @@ gimp_dashboard_group_expander_button_press (GimpDashboard  *dashboard,
 }
 
 static void
-gimp_dashboard_group_action_toggled (GimpDashboard    *dashboard,
-                                     GimpToggleAction *action)
+ligma_dashboard_group_action_toggled (LigmaDashboard    *dashboard,
+                                     LigmaToggleAction *action)
 {
-  GimpDashboardPrivate *priv = dashboard->priv;
+  LigmaDashboardPrivate *priv = dashboard->priv;
   Group                 group;
   GroupData            *group_data;
 
   group      = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (action),
-                                                   "gimp-dashboard-group"));
+                                                   "ligma-dashboard-group"));
   group_data = &priv->groups[group];
 
-  group_data->active = gimp_toggle_action_get_active (action);
+  group_data->active = ligma_toggle_action_get_active (action);
 
-  gimp_dashboard_update_group (dashboard, group);
+  ligma_dashboard_update_group (dashboard, group);
 }
 
 static void
-gimp_dashboard_field_menu_item_toggled (GimpDashboard    *dashboard,
+ligma_dashboard_field_menu_item_toggled (LigmaDashboard    *dashboard,
                                         GtkCheckMenuItem *item)
 {
-  GimpDashboardPrivate *priv = dashboard->priv;
+  LigmaDashboardPrivate *priv = dashboard->priv;
   Group                 group;
   GroupData            *group_data;
   gint                  field;
   FieldData            *field_data;
 
   group      = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (item),
-                                                   "gimp-dashboard-group"));
+                                                   "ligma-dashboard-group"));
   group_data = &priv->groups[group];
 
   field      = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (item),
-                                                   "gimp-dashboard-field"));
+                                                   "ligma-dashboard-field"));
   field_data = &group_data->fields[field];
 
   field_data->active = gtk_check_menu_item_get_active (item);
 
-  gimp_dashboard_update_group (dashboard, group);
+  ligma_dashboard_update_group (dashboard, group);
 }
 
 static gpointer
-gimp_dashboard_sample (GimpDashboard *dashboard)
+ligma_dashboard_sample (LigmaDashboard *dashboard)
 {
-  GimpDashboardPrivate *priv                = dashboard->priv;
+  LigmaDashboardPrivate *priv                = dashboard->priv;
   gint64                last_sample_time    = 0;
   gint64                last_update_time    = 0;
   gboolean              seen_low_swap_space = FALSE;
@@ -1812,7 +1812,7 @@ gimp_dashboard_sample (GimpDashboard *dashboard)
 
           /* log sample */
           if (priv->log_output)
-            gimp_dashboard_log_sample (dashboard, variables_changed, FALSE);
+            ligma_dashboard_log_sample (dashboard, variables_changed, FALSE);
 
           /* update gui */
           if (priv->update_now   ||
@@ -1845,11 +1845,11 @@ gimp_dashboard_sample (GimpDashboard *dashboard)
                           else
                             variable = field_info->variable;
 
-                          value = gimp_dashboard_variable_to_double (dashboard,
+                          value = ligma_dashboard_variable_to_double (dashboard,
                                                                      variable);
 
                           if (value &&
-                              gimp_dashboard_field_use_meter_underlay (group,
+                              ligma_dashboard_field_use_meter_underlay (group,
                                                                        field))
                             {
                               value = G_MAXDOUBLE;
@@ -1865,7 +1865,7 @@ gimp_dashboard_sample (GimpDashboard *dashboard)
                         }
                     }
 
-                  gimp_meter_add_sample (group_data->meter, sample);
+                  ligma_meter_add_sample (group_data->meter, sample);
 
                   g_free (sample);
                 }
@@ -1878,7 +1878,7 @@ gimp_dashboard_sample (GimpDashboard *dashboard)
                     {
                       priv->update_idle_id = g_idle_add_full (
                         G_PRIORITY_DEFAULT,
-                        (GSourceFunc) gimp_dashboard_update,
+                        (GSourceFunc) ligma_dashboard_update,
                         dashboard, NULL);
                     }
 
@@ -1900,7 +1900,7 @@ gimp_dashboard_sample (GimpDashboard *dashboard)
                             {
                               priv->low_swap_space_idle_id =
                                 g_idle_add_full (G_PRIORITY_HIGH,
-                                                 (GSourceFunc) gimp_dashboard_low_swap_space,
+                                                 (GSourceFunc) ligma_dashboard_low_swap_space,
                                                  dashboard, NULL);
                             }
 
@@ -1936,15 +1936,15 @@ gimp_dashboard_sample (GimpDashboard *dashboard)
 }
 
 static gboolean
-gimp_dashboard_update (GimpDashboard *dashboard)
+ligma_dashboard_update (LigmaDashboard *dashboard)
 {
-  GimpDashboardPrivate *priv = dashboard->priv;
+  LigmaDashboardPrivate *priv = dashboard->priv;
   Group                 group;
 
   g_mutex_lock (&priv->mutex);
 
   for (group = FIRST_GROUP; group < N_GROUPS; group++)
-    gimp_dashboard_update_group_values (dashboard, group);
+    ligma_dashboard_update_group_values (dashboard, group);
 
   priv->update_idle_id = 0;
 
@@ -1954,11 +1954,11 @@ gimp_dashboard_update (GimpDashboard *dashboard)
 }
 
 static gboolean
-gimp_dashboard_low_swap_space (GimpDashboard *dashboard)
+ligma_dashboard_low_swap_space (LigmaDashboard *dashboard)
 {
-  GimpDashboardPrivate *priv = dashboard->priv;
+  LigmaDashboardPrivate *priv = dashboard->priv;
 
-  if (priv->gimp)
+  if (priv->ligma)
     {
       GdkMonitor *monitor;
       gint        field;
@@ -1972,21 +1972,21 @@ gimp_dashboard_low_swap_space (GimpDashboard *dashboard)
           if (field_info->variable == VARIABLE_SWAP_OCCUPIED ||
               field_info->variable == VARIABLE_SWAP_LIMIT)
             {
-              gimp_dashboard_field_set_active (dashboard,
+              ligma_dashboard_field_set_active (dashboard,
                                                GROUP_SWAP, field, TRUE);
             }
         }
 
-      gimp_dashboard_update_groups (dashboard);
+      ligma_dashboard_update_groups (dashboard);
 
-      monitor = gimp_get_monitor_at_pointer ();
+      monitor = ligma_get_monitor_at_pointer ();
 
-      gimp_window_strategy_show_dockable_dialog (
-        GIMP_WINDOW_STRATEGY (gimp_get_window_strategy (priv->gimp)),
-        priv->gimp,
-        gimp_dialog_factory_get_singleton (),
+      ligma_window_strategy_show_dockable_dialog (
+        LIGMA_WINDOW_STRATEGY (ligma_get_window_strategy (priv->ligma)),
+        priv->ligma,
+        ligma_dialog_factory_get_singleton (),
         monitor,
-        "gimp-dashboard");
+        "ligma-dashboard");
 
       g_mutex_lock (&priv->mutex);
 
@@ -1999,10 +1999,10 @@ gimp_dashboard_low_swap_space (GimpDashboard *dashboard)
 }
 
 static void
-gimp_dashboard_sample_function (GimpDashboard *dashboard,
+ligma_dashboard_sample_function (LigmaDashboard *dashboard,
                                 Variable       variable)
 {
-  GimpDashboardPrivate *priv          = dashboard->priv;
+  LigmaDashboardPrivate *priv          = dashboard->priv;
   const VariableInfo   *variable_info = &variables[variable];
   VariableData         *variable_data = &priv->variables[variable];
 
@@ -2046,29 +2046,29 @@ gimp_dashboard_sample_function (GimpDashboard *dashboard,
 }
 
 static void
-gimp_dashboard_sample_gegl_config (GimpDashboard *dashboard,
+ligma_dashboard_sample_gegl_config (LigmaDashboard *dashboard,
                                    Variable       variable)
 {
-  gimp_dashboard_sample_object (dashboard, G_OBJECT (gegl_config ()), variable);
+  ligma_dashboard_sample_object (dashboard, G_OBJECT (gegl_config ()), variable);
 }
 
 static void
-gimp_dashboard_sample_gegl_stats (GimpDashboard *dashboard,
+ligma_dashboard_sample_gegl_stats (LigmaDashboard *dashboard,
                                   Variable       variable)
 {
-  gimp_dashboard_sample_object (dashboard, G_OBJECT (gegl_stats ()), variable);
+  ligma_dashboard_sample_object (dashboard, G_OBJECT (gegl_stats ()), variable);
 }
 
 static void
-gimp_dashboard_sample_variable_changed (GimpDashboard *dashboard,
+ligma_dashboard_sample_variable_changed (LigmaDashboard *dashboard,
                                         Variable       variable)
 {
-  GimpDashboardPrivate *priv          = dashboard->priv;
+  LigmaDashboardPrivate *priv          = dashboard->priv;
   const VariableInfo   *variable_info = &variables[variable];
   VariableData         *variable_data = &priv->variables[variable];
   Variable              var           = GPOINTER_TO_INT (variable_info->data);
   const VariableData   *var_data      = &priv->variables[var];
-  gpointer              prev_value    = gimp_dashboard_variable_get_data (
+  gpointer              prev_value    = ligma_dashboard_variable_get_data (
                                           dashboard, variable,
                                           sizeof (var_data->value));
 
@@ -2088,7 +2088,7 @@ gimp_dashboard_sample_variable_changed (GimpDashboard *dashboard,
 }
 
 static void
-gimp_dashboard_sample_variable_rate_of_change (GimpDashboard *dashboard,
+ligma_dashboard_sample_variable_rate_of_change (LigmaDashboard *dashboard,
                                                Variable       variable)
 {
   typedef struct
@@ -2098,12 +2098,12 @@ gimp_dashboard_sample_variable_rate_of_change (GimpDashboard *dashboard,
     gdouble  last_value;
   } Data;
 
-  GimpDashboardPrivate *priv          = dashboard->priv;
+  LigmaDashboardPrivate *priv          = dashboard->priv;
   const VariableInfo   *variable_info = &variables[variable];
   VariableData         *variable_data = &priv->variables[variable];
   Variable              var           = GPOINTER_TO_INT (variable_info->data);
   const VariableData   *var_data      = &priv->variables[var];
-  Data                 *data          = gimp_dashboard_variable_get_data (
+  Data                 *data          = ligma_dashboard_variable_get_data (
                                           dashboard, variable, sizeof (Data));
   gint64                time;
 
@@ -2116,7 +2116,7 @@ gimp_dashboard_sample_variable_rate_of_change (GimpDashboard *dashboard,
 
   if (var_data->available)
     {
-      gdouble value = gimp_dashboard_variable_to_double (dashboard, var);
+      gdouble value = ligma_dashboard_variable_to_double (dashboard, var);
 
       if (data->last_available)
         {
@@ -2134,7 +2134,7 @@ gimp_dashboard_sample_variable_rate_of_change (GimpDashboard *dashboard,
 }
 
 static void
-gimp_dashboard_sample_swap_limit (GimpDashboard *dashboard,
+ligma_dashboard_sample_swap_limit (LigmaDashboard *dashboard,
                                   Variable       variable)
 {
   typedef struct
@@ -2144,9 +2144,9 @@ gimp_dashboard_sample_swap_limit (GimpDashboard *dashboard,
     gint64   last_check_time;
   } Data;
 
-  GimpDashboardPrivate *priv          = dashboard->priv;
+  LigmaDashboardPrivate *priv          = dashboard->priv;
   VariableData         *variable_data = &priv->variables[variable];
-  Data                 *data          = gimp_dashboard_variable_get_data (
+  Data                 *data          = ligma_dashboard_variable_get_data (
                                           dashboard, variable, sizeof (Data));
   gint64                time;
 
@@ -2218,7 +2218,7 @@ gimp_dashboard_sample_swap_limit (GimpDashboard *dashboard,
 #ifdef HAVE_SYS_TIMES_H
 
 static void
-gimp_dashboard_sample_cpu_usage (GimpDashboard *dashboard,
+ligma_dashboard_sample_cpu_usage (LigmaDashboard *dashboard,
                                  Variable       variable)
 {
   typedef struct
@@ -2227,9 +2227,9 @@ gimp_dashboard_sample_cpu_usage (GimpDashboard *dashboard,
     clock_t prev_usage;
   } Data;
 
-  GimpDashboardPrivate *priv          = dashboard->priv;
+  LigmaDashboardPrivate *priv          = dashboard->priv;
   VariableData         *variable_data = &priv->variables[variable];
-  Data                 *data          = gimp_dashboard_variable_get_data (
+  Data                 *data          = ligma_dashboard_variable_get_data (
                                           dashboard, variable, sizeof (Data));
   clock_t               curr_clock;
   clock_t               curr_usage;
@@ -2267,7 +2267,7 @@ gimp_dashboard_sample_cpu_usage (GimpDashboard *dashboard,
 #elif defined (G_OS_WIN32)
 
 static void
-gimp_dashboard_sample_cpu_usage (GimpDashboard *dashboard,
+ligma_dashboard_sample_cpu_usage (LigmaDashboard *dashboard,
                                  Variable       variable)
 {
   typedef struct
@@ -2276,9 +2276,9 @@ gimp_dashboard_sample_cpu_usage (GimpDashboard *dashboard,
     guint64 prev_usage;
   } Data;
 
-  GimpDashboardPrivate *priv            = dashboard->priv;
+  LigmaDashboardPrivate *priv            = dashboard->priv;
   VariableData         *variable_data   = &priv->variables[variable];
-  Data                 *data            = gimp_dashboard_variable_get_data (
+  Data                 *data            = ligma_dashboard_variable_get_data (
                                             dashboard, variable, sizeof (Data));
   guint64               curr_time;
   guint64               curr_usage;
@@ -2330,7 +2330,7 @@ gimp_dashboard_sample_cpu_usage (GimpDashboard *dashboard,
 #endif /* G_OS_WIN32 */
 
 static void
-gimp_dashboard_sample_cpu_active (GimpDashboard *dashboard,
+ligma_dashboard_sample_cpu_active (LigmaDashboard *dashboard,
                                   Variable       variable)
 {
   typedef struct
@@ -2338,9 +2338,9 @@ gimp_dashboard_sample_cpu_active (GimpDashboard *dashboard,
     gboolean active;
   } Data;
 
-  GimpDashboardPrivate *priv          = dashboard->priv;
+  LigmaDashboardPrivate *priv          = dashboard->priv;
   VariableData         *variable_data = &priv->variables[variable];
-  Data                 *data          = gimp_dashboard_variable_get_data (
+  Data                 *data          = ligma_dashboard_variable_get_data (
                                           dashboard, variable, sizeof (Data));
   gboolean              active        = FALSE;
 
@@ -2371,7 +2371,7 @@ gimp_dashboard_sample_cpu_active (GimpDashboard *dashboard,
 }
 
 static void
-gimp_dashboard_sample_cpu_active_time (GimpDashboard *dashboard,
+ligma_dashboard_sample_cpu_active_time (LigmaDashboard *dashboard,
                                        Variable       variable)
 {
   typedef struct
@@ -2380,9 +2380,9 @@ gimp_dashboard_sample_cpu_active_time (GimpDashboard *dashboard,
     gint64 active_time;
   } Data;
 
-  GimpDashboardPrivate *priv          = dashboard->priv;
+  LigmaDashboardPrivate *priv          = dashboard->priv;
   VariableData         *variable_data = &priv->variables[variable];
-  Data                 *data          = gimp_dashboard_variable_get_data (
+  Data                 *data          = ligma_dashboard_variable_get_data (
                                           dashboard, variable, sizeof (Data));
   gint64                curr_time;
 
@@ -2407,10 +2407,10 @@ gimp_dashboard_sample_cpu_active_time (GimpDashboard *dashboard,
 #ifdef HAVE_MEMORY_GROUP
 #ifdef PLATFORM_OSX
 static void
-gimp_dashboard_sample_memory_used (GimpDashboard *dashboard,
+ligma_dashboard_sample_memory_used (LigmaDashboard *dashboard,
                                    Variable       variable)
 {
-  GimpDashboardPrivate        *priv          = dashboard->priv;
+  LigmaDashboardPrivate        *priv          = dashboard->priv;
   VariableData                *variable_data = &priv->variables[variable];
 
   variable_data->available = FALSE;
@@ -2437,10 +2437,10 @@ gimp_dashboard_sample_memory_used (GimpDashboard *dashboard,
 }
 
 static void
-gimp_dashboard_sample_memory_available (GimpDashboard *dashboard,
+ligma_dashboard_sample_memory_available (LigmaDashboard *dashboard,
                                         Variable       variable)
 {
-  GimpDashboardPrivate        *priv          = dashboard->priv;
+  LigmaDashboardPrivate        *priv          = dashboard->priv;
   VariableData                *variable_data = &priv->variables[variable];
   vm_statistics_data_t        info;
   mach_msg_type_number_t      infoCount      = HOST_VM_INFO_COUNT;
@@ -2458,10 +2458,10 @@ gimp_dashboard_sample_memory_available (GimpDashboard *dashboard,
 
 #elif defined(G_OS_WIN32)
 static void
-gimp_dashboard_sample_memory_used (GimpDashboard *dashboard,
+ligma_dashboard_sample_memory_used (LigmaDashboard *dashboard,
                                    Variable       variable)
 {
-  GimpDashboardPrivate       *priv          = dashboard->priv;
+  LigmaDashboardPrivate       *priv          = dashboard->priv;
   VariableData               *variable_data = &priv->variables[variable];
   PROCESS_MEMORY_COUNTERS_EX  pmc           = {};
 
@@ -2480,10 +2480,10 @@ gimp_dashboard_sample_memory_used (GimpDashboard *dashboard,
 }
 
 static void
-gimp_dashboard_sample_memory_available (GimpDashboard *dashboard,
+ligma_dashboard_sample_memory_available (LigmaDashboard *dashboard,
                                         Variable       variable)
 {
-  GimpDashboardPrivate *priv          = dashboard->priv;
+  LigmaDashboardPrivate *priv          = dashboard->priv;
   VariableData         *variable_data = &priv->variables[variable];
   MEMORYSTATUSEX        ms;
 
@@ -2504,10 +2504,10 @@ gimp_dashboard_sample_memory_available (GimpDashboard *dashboard,
 #include <sys/sysctl.h>
 
 static void
-gimp_dashboard_sample_memory_used (GimpDashboard *dashboard,
+ligma_dashboard_sample_memory_used (LigmaDashboard *dashboard,
                                    Variable       variable)
 {
-  GimpDashboardPrivate *priv          = dashboard->priv;
+  LigmaDashboardPrivate *priv          = dashboard->priv;
   VariableData         *variable_data = &priv->variables[variable];
   struct rusage         rusage;
 
@@ -2520,10 +2520,10 @@ gimp_dashboard_sample_memory_used (GimpDashboard *dashboard,
 }
 
 static void
-gimp_dashboard_sample_memory_available (GimpDashboard *dashboard,
+ligma_dashboard_sample_memory_available (LigmaDashboard *dashboard,
                                         Variable       variable)
 {
-  GimpDashboardPrivate *priv            = dashboard->priv;
+  LigmaDashboardPrivate *priv            = dashboard->priv;
   VariableData         *variable_data   = &priv->variables[variable];
   int                   mib[]           = { CTL_HW, HW_PHYSMEM64 };
   int64_t               result;
@@ -2539,10 +2539,10 @@ gimp_dashboard_sample_memory_available (GimpDashboard *dashboard,
 
 #else /* ! G_OS_WIN32 && ! PLATFORM_OSX */
 static void
-gimp_dashboard_sample_memory_used (GimpDashboard *dashboard,
+ligma_dashboard_sample_memory_used (LigmaDashboard *dashboard,
                                    Variable       variable)
 {
-  GimpDashboardPrivate *priv          = dashboard->priv;
+  LigmaDashboardPrivate *priv          = dashboard->priv;
   VariableData         *variable_data = &priv->variables[variable];
   static gboolean       initialized   = FALSE;
   static long           page_size;
@@ -2585,10 +2585,10 @@ gimp_dashboard_sample_memory_used (GimpDashboard *dashboard,
 }
 
 static void
-gimp_dashboard_sample_memory_available (GimpDashboard *dashboard,
+ligma_dashboard_sample_memory_available (LigmaDashboard *dashboard,
                                         Variable       variable)
 {
-  GimpDashboardPrivate *priv            = dashboard->priv;
+  LigmaDashboardPrivate *priv            = dashboard->priv;
   VariableData         *variable_data   = &priv->variables[variable];
   static gboolean       initialized     = FALSE;
   static gint64         last_check_time = 0;
@@ -2675,24 +2675,24 @@ gimp_dashboard_sample_memory_available (GimpDashboard *dashboard,
 #endif
 
 static void
-gimp_dashboard_sample_memory_size (GimpDashboard *dashboard,
+ligma_dashboard_sample_memory_size (LigmaDashboard *dashboard,
                                    Variable       variable)
 {
-  GimpDashboardPrivate *priv          = dashboard->priv;
+  LigmaDashboardPrivate *priv          = dashboard->priv;
   VariableData         *variable_data = &priv->variables[variable];
 
-  variable_data->value.size = gimp_get_physical_memory_size ();
+  variable_data->value.size = ligma_get_physical_memory_size ();
   variable_data->available  = variable_data->value.size > 0;
 }
 
 #endif /* HAVE_MEMORY_GROUP */
 
 static void
-gimp_dashboard_sample_object (GimpDashboard *dashboard,
+ligma_dashboard_sample_object (LigmaDashboard *dashboard,
                               GObject       *object,
                               Variable       variable)
 {
-  GimpDashboardPrivate *priv          = dashboard->priv;
+  LigmaDashboardPrivate *priv          = dashboard->priv;
   GObjectClass         *klass         = G_OBJECT_GET_CLASS (object);
   const VariableInfo   *variable_info = &variables[variable];
   VariableData         *variable_data = &priv->variables[variable];
@@ -2806,19 +2806,19 @@ gimp_dashboard_sample_object (GimpDashboard *dashboard,
 }
 
 static void
-gimp_dashboard_update_groups (GimpDashboard *dashboard)
+ligma_dashboard_update_groups (LigmaDashboard *dashboard)
 {
   Group group;
 
   for (group = FIRST_GROUP; group < N_GROUPS; group++)
-    gimp_dashboard_update_group (dashboard, group);
+    ligma_dashboard_update_group (dashboard, group);
 }
 
 static void
-gimp_dashboard_update_group (GimpDashboard *dashboard,
+ligma_dashboard_update_group (LigmaDashboard *dashboard,
                              Group          group)
 {
-  GimpDashboardPrivate *priv       = dashboard->priv;
+  LigmaDashboardPrivate *priv       = dashboard->priv;
   const GroupInfo      *group_info = &groups[group];
   GroupData            *group_data = &priv->groups[group];
   gint                  n_rows;
@@ -2843,7 +2843,7 @@ gimp_dashboard_update_group (GimpDashboard *dashboard,
         {
           if (group_info->has_meter && field_info->meter_value)
             {
-              gimp_meter_set_value_active (group_data->meter,
+              ligma_meter_set_value_active (group_data->meter,
                                            field_info->meter_value - 1,
                                            field_data->active);
             }
@@ -2866,7 +2866,7 @@ gimp_dashboard_update_group (GimpDashboard *dashboard,
         }
     }
 
-  gimp_gtk_container_clear (GTK_CONTAINER (group_data->grid));
+  ligma_gtk_container_clear (GTK_CONTAINER (group_data->grid));
 
   n_rows        = 0;
   add_separator = FALSE;
@@ -2904,9 +2904,9 @@ gimp_dashboard_update_group (GimpDashboard *dashboard,
 
           if (group_info->has_meter && field_info->meter_value)
             {
-              color_area = gimp_color_area_new (&variable_info->color,
-                                                GIMP_COLOR_AREA_FLAT, 0);
-              gimp_help_set_help_data (color_area, description,
+              color_area = ligma_color_area_new (&variable_info->color,
+                                                LIGMA_COLOR_AREA_FLAT, 0);
+              ligma_help_set_help_data (color_area, description,
                                        NULL);
               gtk_widget_set_size_request (color_area, 5, 5);
               gtk_widget_set_valign (color_area, GTK_ALIGN_CENTER);
@@ -2922,7 +2922,7 @@ gimp_dashboard_update_group (GimpDashboard *dashboard,
                                                  variable_info->title));
 
           label = gtk_label_new (str);
-          gimp_help_set_help_data (label, description,
+          ligma_help_set_help_data (label, description,
                                    NULL);
           gtk_label_set_xalign (GTK_LABEL (label), 0.0);
           gtk_grid_attach (group_data->grid, label,
@@ -2933,7 +2933,7 @@ gimp_dashboard_update_group (GimpDashboard *dashboard,
 
           label = gtk_label_new (NULL);
           field_data->value_label = GTK_LABEL (label);
-          gimp_help_set_help_data (label, description,
+          ligma_help_set_help_data (label, description,
                                    NULL);
           gtk_label_set_xalign (GTK_LABEL (label), 0.0);
           gtk_widget_set_hexpand (label, TRUE);
@@ -2952,16 +2952,16 @@ gimp_dashboard_update_group (GimpDashboard *dashboard,
 
   g_mutex_lock (&priv->mutex);
 
-  gimp_dashboard_update_group_values (dashboard, group);
+  ligma_dashboard_update_group_values (dashboard, group);
 
   g_mutex_unlock (&priv->mutex);
 }
 
 static void
-gimp_dashboard_update_group_values (GimpDashboard *dashboard,
+ligma_dashboard_update_group_values (LigmaDashboard *dashboard,
                                     Group          group)
 {
-  GimpDashboardPrivate *priv       = dashboard->priv;
+  LigmaDashboardPrivate *priv       = dashboard->priv;
   const GroupInfo      *group_info = &groups[group];
   GroupData            *group_data = &priv->groups[group];
   gdouble               limit      = 0.0;
@@ -2979,7 +2979,7 @@ gimp_dashboard_update_group_values (GimpDashboard *dashboard,
 
           if (variable_data->available)
             {
-              limit = gimp_dashboard_variable_to_double (dashboard,
+              limit = ligma_dashboard_variable_to_double (dashboard,
                                                         group_info->meter_limit);
             }
           else
@@ -2993,7 +2993,7 @@ gimp_dashboard_update_group_values (GimpDashboard *dashboard,
                     {
                       gdouble value;
 
-                      value = gimp_dashboard_variable_to_double (dashboard,
+                      value = ligma_dashboard_variable_to_double (dashboard,
                                                                  field_info->variable);
 
                       limit = MAX (limit, value);
@@ -3001,18 +3001,18 @@ gimp_dashboard_update_group_values (GimpDashboard *dashboard,
                 }
             }
 
-          gimp_meter_set_range (group_data->meter, 0.0, limit);
+          ligma_meter_set_range (group_data->meter, 0.0, limit);
         }
 
       if (group_info->meter_led)
         {
-          GimpRGB         color  = {0.0, 0.0, 0.0, 1.0};
+          LigmaRGB         color  = {0.0, 0.0, 0.0, 1.0};
           gboolean        active = FALSE;
           const Variable *var;
 
           for (var = group_info->meter_led; *var; var++)
             {
-              if (gimp_dashboard_variable_to_boolean (dashboard, *var))
+              if (ligma_dashboard_variable_to_boolean (dashboard, *var))
                 {
                   const VariableInfo *variable_info = &variables[*var];
 
@@ -3025,9 +3025,9 @@ gimp_dashboard_update_group_values (GimpDashboard *dashboard,
             }
 
           if (active)
-            gimp_meter_set_led_color (group_data->meter, &color);
+            ligma_meter_set_led_color (group_data->meter, &color);
 
-          gimp_meter_set_led_active (group_data->meter, active);
+          ligma_meter_set_led_active (group_data->meter, active);
         }
     }
 
@@ -3044,16 +3044,16 @@ gimp_dashboard_update_group_values (GimpDashboard *dashboard,
         {
           gchar *text;
 
-          text = gimp_dashboard_field_to_string (dashboard,
+          text = ligma_dashboard_field_to_string (dashboard,
                                                  group, field, TRUE);
 
-          gimp_dashboard_label_set_text (field_data->value_label, text);
+          ligma_dashboard_label_set_text (field_data->value_label, text);
 
           g_free (text);
 
           if (field_info->show_in_header)
             {
-              text = gimp_dashboard_field_to_string (dashboard,
+              text = ligma_dashboard_field_to_string (dashboard,
                                                      group, field, FALSE);
 
               if (header_values->len > 0)
@@ -3072,18 +3072,18 @@ gimp_dashboard_update_group_values (GimpDashboard *dashboard,
       g_string_append  (header_values, ")");
     }
 
-  gimp_dashboard_label_set_text (group_data->header_values_label,
+  ligma_dashboard_label_set_text (group_data->header_values_label,
                                  header_values->str);
 
   g_string_free (header_values, TRUE);
 }
 
 static void
-gimp_dashboard_group_set_active (GimpDashboard *dashboard,
+ligma_dashboard_group_set_active (LigmaDashboard *dashboard,
                                  Group          group,
                                  gboolean       active)
 {
-  GimpDashboardPrivate *priv       = dashboard->priv;
+  LigmaDashboardPrivate *priv       = dashboard->priv;
   GroupData            *group_data = &priv->groups[group];
 
   if (active != group_data->active)
@@ -3093,25 +3093,25 @@ gimp_dashboard_group_set_active (GimpDashboard *dashboard,
       if (group_data->action)
         {
           g_signal_handlers_block_by_func (group_data->action,
-                                           gimp_dashboard_group_action_toggled,
+                                           ligma_dashboard_group_action_toggled,
                                            dashboard);
 
-          gimp_toggle_action_set_active (group_data->action, active);
+          ligma_toggle_action_set_active (group_data->action, active);
 
           g_signal_handlers_unblock_by_func (group_data->action,
-                                             gimp_dashboard_group_action_toggled,
+                                             ligma_dashboard_group_action_toggled,
                                              dashboard);
         }
     }
 }
 
 static void
-gimp_dashboard_field_set_active (GimpDashboard *dashboard,
+ligma_dashboard_field_set_active (LigmaDashboard *dashboard,
                                  Group          group,
                                  gint           field,
                                  gboolean       active)
 {
-  GimpDashboardPrivate *priv       = dashboard->priv;
+  LigmaDashboardPrivate *priv       = dashboard->priv;
   GroupData            *group_data = &priv->groups[group];
   FieldData            *field_data = &group_data->fields[field];
 
@@ -3120,42 +3120,42 @@ gimp_dashboard_field_set_active (GimpDashboard *dashboard,
       field_data->active = active;
 
       g_signal_handlers_block_by_func (field_data->menu_item,
-                                       gimp_dashboard_field_menu_item_toggled,
+                                       ligma_dashboard_field_menu_item_toggled,
                                        dashboard);
 
       gtk_check_menu_item_set_active (field_data->menu_item, active);
 
       g_signal_handlers_unblock_by_func (field_data->menu_item,
-                                         gimp_dashboard_field_menu_item_toggled,
+                                         ligma_dashboard_field_menu_item_toggled,
                                          dashboard);
     }
 }
 
 static void
-gimp_dashboard_reset_unlocked (GimpDashboard *dashboard)
+ligma_dashboard_reset_unlocked (LigmaDashboard *dashboard)
 {
-  GimpDashboardPrivate *priv;
+  LigmaDashboardPrivate *priv;
   Group                 group;
 
   priv = dashboard->priv;
 
   gegl_reset_stats ();
 
-  gimp_dashboard_reset_variables (dashboard);
+  ligma_dashboard_reset_variables (dashboard);
 
   for (group = FIRST_GROUP; group < N_GROUPS; group++)
     {
       GroupData *group_data = &priv->groups[group];
 
       if (group_data->meter)
-        gimp_meter_clear_history (group_data->meter);
+        ligma_meter_clear_history (group_data->meter);
     }
 }
 
 static void
-gimp_dashboard_reset_variables (GimpDashboard *dashboard)
+ligma_dashboard_reset_variables (LigmaDashboard *dashboard)
 {
-  GimpDashboardPrivate *priv = dashboard->priv;
+  LigmaDashboardPrivate *priv = dashboard->priv;
   Variable              variable;
 
   for (variable = FIRST_VARIABLE; variable < N_VARIABLES; variable++)
@@ -3172,11 +3172,11 @@ gimp_dashboard_reset_variables (GimpDashboard *dashboard)
 }
 
 static gpointer
-gimp_dashboard_variable_get_data (GimpDashboard *dashboard,
+ligma_dashboard_variable_get_data (LigmaDashboard *dashboard,
                                   Variable       variable,
                                   gsize          size)
 {
-  GimpDashboardPrivate *priv          = dashboard->priv;
+  LigmaDashboardPrivate *priv          = dashboard->priv;
   VariableData         *variable_data = &priv->variables[variable];
 
   if (variable_data->data_size != size)
@@ -3196,10 +3196,10 @@ gimp_dashboard_variable_get_data (GimpDashboard *dashboard,
 }
 
 static gboolean
-gimp_dashboard_variable_to_boolean (GimpDashboard *dashboard,
+ligma_dashboard_variable_to_boolean (LigmaDashboard *dashboard,
                                     Variable       variable)
 {
-  GimpDashboardPrivate *priv          = dashboard->priv;
+  LigmaDashboardPrivate *priv          = dashboard->priv;
   const VariableInfo   *variable_info = &variables[variable];
   const VariableData   *variable_data = &priv->variables[variable];
 
@@ -3239,10 +3239,10 @@ gimp_dashboard_variable_to_boolean (GimpDashboard *dashboard,
 }
 
 static gdouble
-gimp_dashboard_variable_to_double (GimpDashboard *dashboard,
+ligma_dashboard_variable_to_double (LigmaDashboard *dashboard,
                                    Variable       variable)
 {
-  GimpDashboardPrivate *priv          = dashboard->priv;
+  LigmaDashboardPrivate *priv          = dashboard->priv;
   const VariableInfo   *variable_info = &variables[variable];
   const VariableData   *variable_data = &priv->variables[variable];
 
@@ -3290,12 +3290,12 @@ gimp_dashboard_variable_to_double (GimpDashboard *dashboard,
 }
 
 static gchar *
-gimp_dashboard_field_to_string (GimpDashboard *dashboard,
+ligma_dashboard_field_to_string (LigmaDashboard *dashboard,
                                 Group          group,
                                 gint           field,
                                 gboolean       full)
 {
-  GimpDashboardPrivate *priv          = dashboard->priv;
+  LigmaDashboardPrivate *priv          = dashboard->priv;
   const GroupInfo      *group_info    = &groups[group];
   const GroupData      *group_data    = &priv->groups[group];
   const FieldInfo      *field_info    = &group_info->fields[field];
@@ -3411,7 +3411,7 @@ gimp_dashboard_field_to_string (GimpDashboard *dashboard,
           gdouble  value;
           gchar   *tmp;
 
-          value = gimp_dashboard_variable_to_double (dashboard,
+          value = ligma_dashboard_variable_to_double (dashboard,
                                                      field_info->variable);
 
           if (full)
@@ -3445,12 +3445,12 @@ gimp_dashboard_field_to_string (GimpDashboard *dashboard,
           gchar   *rate_of_change_str;
           gchar   *tmp;
 
-          value = gimp_dashboard_variable_to_double (dashboard,
+          value = ligma_dashboard_variable_to_double (dashboard,
                                                      field_info->meter_variable);
 
-          value_str = gimp_dashboard_format_value (variable_info->type, value);
+          value_str = ligma_dashboard_format_value (variable_info->type, value);
 
-          rate_of_change_str = gimp_dashboard_format_rate_of_change (value_str);
+          rate_of_change_str = ligma_dashboard_format_rate_of_change (value_str);
 
           g_free (value_str);
 
@@ -3473,11 +3473,11 @@ gimp_dashboard_field_to_string (GimpDashboard *dashboard,
 }
 
 static gboolean
-gimp_dashboard_log_printf (GimpDashboard *dashboard,
+ligma_dashboard_log_printf (LigmaDashboard *dashboard,
                            const gchar   *format,
                            ...)
 {
-  GimpDashboardPrivate *priv = dashboard->priv;
+  LigmaDashboardPrivate *priv = dashboard->priv;
   va_list               args;
   gboolean              result;
 
@@ -3497,10 +3497,10 @@ gimp_dashboard_log_printf (GimpDashboard *dashboard,
 }
 
 static gboolean
-gimp_dashboard_log_print_escaped (GimpDashboard *dashboard,
+ligma_dashboard_log_print_escaped (LigmaDashboard *dashboard,
                                   const gchar   *string)
 {
-  GimpDashboardPrivate *priv = dashboard->priv;
+  LigmaDashboardPrivate *priv = dashboard->priv;
   gchar                 buffer[1024];
   const gchar          *s;
   gint                  i;
@@ -3567,20 +3567,20 @@ gimp_dashboard_log_print_escaped (GimpDashboard *dashboard,
 }
 
 static gint64
-gimp_dashboard_log_time (GimpDashboard *dashboard)
+ligma_dashboard_log_time (LigmaDashboard *dashboard)
 {
-  GimpDashboardPrivate *priv = dashboard->priv;
+  LigmaDashboardPrivate *priv = dashboard->priv;
 
   return g_get_monotonic_time () - priv->log_start_time;
 }
 
 static void
-gimp_dashboard_log_sample (GimpDashboard *dashboard,
+ligma_dashboard_log_sample (LigmaDashboard *dashboard,
                            gboolean       variables_changed,
                            gboolean       include_current_thread)
 {
-  GimpDashboardPrivate *priv      = dashboard->priv;
-  GimpBacktrace        *backtrace = NULL;
+  LigmaDashboardPrivate *priv      = dashboard->priv;
+  LigmaBacktrace        *backtrace = NULL;
   GArray               *addresses = NULL;
   gboolean              empty     = TRUE;
   Variable              variable;
@@ -3590,7 +3590,7 @@ gimp_dashboard_log_sample (GimpDashboard *dashboard,
       {                                           \
         if (empty)                                \
           {                                       \
-            gimp_dashboard_log_printf (dashboard, \
+            ligma_dashboard_log_printf (dashboard, \
                                        ">\n");    \
                                                   \
             empty = FALSE;                        \
@@ -3598,17 +3598,17 @@ gimp_dashboard_log_sample (GimpDashboard *dashboard,
       }                                           \
     G_STMT_END
 
-  gimp_dashboard_log_printf (dashboard,
+  ligma_dashboard_log_printf (dashboard,
                              "\n"
                              "<sample id=\"%d\" t=\"%lld\"",
                              priv->log_n_samples,
-                             (long long) gimp_dashboard_log_time (dashboard));
+                             (long long) ligma_dashboard_log_time (dashboard));
 
   if (priv->log_n_samples == 0 || variables_changed)
     {
       NONEMPTY ();
 
-      gimp_dashboard_log_printf (dashboard,
+      ligma_dashboard_log_printf (dashboard,
                                  "<vars>\n");
 
       for (variable = FIRST_VARIABLE; variable < N_VARIABLES; variable++)
@@ -3632,7 +3632,7 @@ gimp_dashboard_log_sample (GimpDashboard *dashboard,
           if (variable_data->available)
             {
               #define LOG_VAR(format, ...)                          \
-                gimp_dashboard_log_printf (dashboard,               \
+                ligma_dashboard_log_printf (dashboard,               \
                                            "<%s>" format "</%s>\n", \
                                            variable_info->name,     \
                                            __VA_ARGS__,             \
@@ -3703,18 +3703,18 @@ gimp_dashboard_log_sample (GimpDashboard *dashboard,
             }
           else
             {
-              gimp_dashboard_log_printf (dashboard,
+              ligma_dashboard_log_printf (dashboard,
                                          "<%s />\n",
                                          variable_info->name);
             }
         }
 
-      gimp_dashboard_log_printf (dashboard,
+      ligma_dashboard_log_printf (dashboard,
                                  "</vars>\n");
     }
 
   if (priv->log_params.backtrace)
-    backtrace = gimp_backtrace_new (include_current_thread);
+    backtrace = ligma_backtrace_new (include_current_thread);
 
   if (backtrace)
     {
@@ -3729,7 +3729,7 @@ gimp_dashboard_log_sample (GimpDashboard *dashboard,
               {                                              \
                 NONEMPTY ();                                 \
                                                              \
-                gimp_dashboard_log_printf (dashboard,        \
+                ligma_dashboard_log_printf (dashboard,        \
                                            "<backtrace>\n"); \
                                                              \
                 backtrace_empty = FALSE;                     \
@@ -3739,16 +3739,16 @@ gimp_dashboard_log_sample (GimpDashboard *dashboard,
 
       if (priv->log_backtrace)
         {
-          n_threads = gimp_backtrace_get_n_threads (priv->log_backtrace);
+          n_threads = ligma_backtrace_get_n_threads (priv->log_backtrace);
 
           for (thread = 0; thread < n_threads; thread++)
             {
               guintptr thread_id;
 
-              thread_id = gimp_backtrace_get_thread_id (priv->log_backtrace,
+              thread_id = ligma_backtrace_get_thread_id (priv->log_backtrace,
                                                         thread);
 
-              if (gimp_backtrace_find_thread_by_id (backtrace,
+              if (ligma_backtrace_find_thread_by_id (backtrace,
                                                     thread_id, thread) < 0)
                 {
                   const gchar *thread_name;
@@ -3756,29 +3756,29 @@ gimp_dashboard_log_sample (GimpDashboard *dashboard,
                   BACKTRACE_NONEMPTY ();
 
                   thread_name =
-                    gimp_backtrace_get_thread_name (priv->log_backtrace,
+                    ligma_backtrace_get_thread_name (priv->log_backtrace,
                                                     thread);
 
-                  gimp_dashboard_log_printf (dashboard,
+                  ligma_dashboard_log_printf (dashboard,
                                              "<thread id=\"%llu\"",
                                              (unsigned long long) thread_id);
 
                   if (thread_name)
                     {
-                      gimp_dashboard_log_printf (dashboard,
+                      ligma_dashboard_log_printf (dashboard,
                                                  " name=\"");
-                      gimp_dashboard_log_print_escaped (dashboard, thread_name);
-                      gimp_dashboard_log_printf (dashboard,
+                      ligma_dashboard_log_print_escaped (dashboard, thread_name);
+                      ligma_dashboard_log_printf (dashboard,
                                                  "\"");
                     }
 
-                  gimp_dashboard_log_printf (dashboard,
+                  ligma_dashboard_log_printf (dashboard,
                                              " />\n");
                 }
             }
         }
 
-      n_threads = gimp_backtrace_get_n_threads (backtrace);
+      n_threads = ligma_backtrace_get_n_threads (backtrace);
 
       for (thread = 0; thread < n_threads; thread++)
         {
@@ -3792,15 +3792,15 @@ gimp_dashboard_log_sample (GimpDashboard *dashboard,
           gint         n_tail        = 0;
           gint         frame;
 
-          thread_id   = gimp_backtrace_get_thread_id     (backtrace, thread);
-          thread_name = gimp_backtrace_get_thread_name   (backtrace, thread);
+          thread_id   = ligma_backtrace_get_thread_id     (backtrace, thread);
+          thread_name = ligma_backtrace_get_thread_name   (backtrace, thread);
 
-          running     = gimp_backtrace_is_thread_running (backtrace, thread);
-          n_frames    = gimp_backtrace_get_n_frames      (backtrace, thread);
+          running     = ligma_backtrace_is_thread_running (backtrace, thread);
+          n_frames    = ligma_backtrace_get_n_frames      (backtrace, thread);
 
           if (priv->log_backtrace)
             {
-              gint other_thread = gimp_backtrace_find_thread_by_id (
+              gint other_thread = ligma_backtrace_find_thread_by_id (
                 priv->log_backtrace, thread_id, thread);
 
               if (other_thread >= 0)
@@ -3808,18 +3808,18 @@ gimp_dashboard_log_sample (GimpDashboard *dashboard,
                   gint n;
                   gint i;
 
-                  last_running  = gimp_backtrace_is_thread_running (
+                  last_running  = ligma_backtrace_is_thread_running (
                     priv->log_backtrace, other_thread);
-                  last_n_frames = gimp_backtrace_get_n_frames (
+                  last_n_frames = ligma_backtrace_get_n_frames (
                     priv->log_backtrace, other_thread);
 
                   n = MIN (n_frames, last_n_frames);
 
                   for (i = 0; i < n; i++)
                     {
-                      if (gimp_backtrace_get_frame_address (backtrace,
+                      if (ligma_backtrace_get_frame_address (backtrace,
                                                             thread, i) !=
-                          gimp_backtrace_get_frame_address (priv->log_backtrace,
+                          ligma_backtrace_get_frame_address (priv->log_backtrace,
                                                             other_thread, i))
                         {
                           break;
@@ -3831,9 +3831,9 @@ gimp_dashboard_log_sample (GimpDashboard *dashboard,
 
                   for (i = 0; i < n; i++)
                     {
-                      if (gimp_backtrace_get_frame_address (backtrace,
+                      if (ligma_backtrace_get_frame_address (backtrace,
                                                             thread, -i - 1) !=
-                          gimp_backtrace_get_frame_address (priv->log_backtrace,
+                          ligma_backtrace_get_frame_address (priv->log_backtrace,
                                                             other_thread, -i - 1))
                         {
                           break;
@@ -3853,50 +3853,50 @@ gimp_dashboard_log_sample (GimpDashboard *dashboard,
 
           BACKTRACE_NONEMPTY ();
 
-          gimp_dashboard_log_printf (dashboard,
+          ligma_dashboard_log_printf (dashboard,
                                      "<thread id=\"%llu\"",
                                      (unsigned long long) thread_id);
 
           if (thread_name)
             {
-              gimp_dashboard_log_printf (dashboard,
+              ligma_dashboard_log_printf (dashboard,
                                          " name=\"");
-              gimp_dashboard_log_print_escaped (dashboard, thread_name);
-              gimp_dashboard_log_printf (dashboard,
+              ligma_dashboard_log_print_escaped (dashboard, thread_name);
+              ligma_dashboard_log_printf (dashboard,
                                          "\"");
             }
 
-          gimp_dashboard_log_printf (dashboard,
+          ligma_dashboard_log_printf (dashboard,
                                      " running=\"%d\"",
                                      running);
 
           if (n_head > 0)
             {
-              gimp_dashboard_log_printf (dashboard,
+              ligma_dashboard_log_printf (dashboard,
                                          " head=\"%d\"",
                                          n_head);
             }
 
           if (n_tail > 0)
             {
-              gimp_dashboard_log_printf (dashboard,
+              ligma_dashboard_log_printf (dashboard,
                                          " tail=\"%d\"",
                                          n_tail);
             }
 
           if (n_frames == 0 || n_head + n_tail < n_frames)
             {
-              gimp_dashboard_log_printf (dashboard,
+              ligma_dashboard_log_printf (dashboard,
                                           ">\n");
 
               for (frame = n_head; frame < n_frames - n_tail; frame++)
                 {
                   guintptr address;
 
-                  address = gimp_backtrace_get_frame_address (backtrace,
+                  address = ligma_backtrace_get_frame_address (backtrace,
                                                               thread, frame);
 
-                  gimp_dashboard_log_printf (dashboard,
+                  ligma_dashboard_log_printf (dashboard,
                                              "<frame address=\"0x%llx\" />\n",
                                              (unsigned long long) address);
 
@@ -3914,19 +3914,19 @@ gimp_dashboard_log_sample (GimpDashboard *dashboard,
                     }
                 }
 
-              gimp_dashboard_log_printf (dashboard,
+              ligma_dashboard_log_printf (dashboard,
                                          "</thread>\n");
             }
           else
             {
-              gimp_dashboard_log_printf (dashboard,
+              ligma_dashboard_log_printf (dashboard,
                                          " />\n");
             }
         }
 
       if (! backtrace_empty)
         {
-          gimp_dashboard_log_printf (dashboard,
+          ligma_dashboard_log_printf (dashboard,
                                      "</backtrace>\n");
         }
 
@@ -3936,27 +3936,27 @@ gimp_dashboard_log_sample (GimpDashboard *dashboard,
     {
       NONEMPTY ();
 
-      gimp_dashboard_log_printf (dashboard,
+      ligma_dashboard_log_printf (dashboard,
                                  "<backtrace />\n");
     }
 
-  gimp_backtrace_free (priv->log_backtrace);
+  ligma_backtrace_free (priv->log_backtrace);
   priv->log_backtrace = backtrace;
 
   if (empty)
     {
-      gimp_dashboard_log_printf (dashboard,
+      ligma_dashboard_log_printf (dashboard,
                                  " />\n");
     }
   else
     {
-      gimp_dashboard_log_printf (dashboard,
+      ligma_dashboard_log_printf (dashboard,
                                  "</sample>\n");
     }
 
   if (addresses)
     {
-      gimp_dashboard_log_write_address_map (dashboard,
+      ligma_dashboard_log_write_address_map (dashboard,
                                             (guintptr *) addresses->data,
                                             addresses->len,
                                             NULL);
@@ -3973,56 +3973,56 @@ gimp_dashboard_log_sample (GimpDashboard *dashboard,
 }
 
 static void
-gimp_dashboard_log_add_marker_unlocked (GimpDashboard *dashboard,
+ligma_dashboard_log_add_marker_unlocked (LigmaDashboard *dashboard,
                                         const gchar   *description)
 {
-  GimpDashboardPrivate *priv = dashboard->priv;
+  LigmaDashboardPrivate *priv = dashboard->priv;
 
   priv->log_n_markers++;
 
-  gimp_dashboard_log_printf (dashboard,
+  ligma_dashboard_log_printf (dashboard,
                              "\n"
                              "<marker id=\"%d\" t=\"%lld\"",
                              priv->log_n_markers,
-                             (long long) gimp_dashboard_log_time (dashboard));
+                             (long long) ligma_dashboard_log_time (dashboard));
 
   if (description && description[0])
     {
-      gimp_dashboard_log_printf (dashboard,
+      ligma_dashboard_log_printf (dashboard,
                                  ">\n");
-      gimp_dashboard_log_print_escaped (dashboard, description);
-      gimp_dashboard_log_printf (dashboard,
+      ligma_dashboard_log_print_escaped (dashboard, description);
+      ligma_dashboard_log_printf (dashboard,
                                  "\n"
                                  "</marker>\n");
     }
   else
     {
-      gimp_dashboard_log_printf (dashboard,
+      ligma_dashboard_log_printf (dashboard,
                                  " />\n");
     }
 
-  gimp_dashboard_log_update_n_markers (dashboard);
+  ligma_dashboard_log_update_n_markers (dashboard);
 }
 
 static void
-gimp_dashboard_log_update_highlight (GimpDashboard *dashboard)
+ligma_dashboard_log_update_highlight (LigmaDashboard *dashboard)
 {
-  GimpDashboardPrivate *priv = dashboard->priv;
+  LigmaDashboardPrivate *priv = dashboard->priv;
   GtkReliefStyle        default_relief;
 
   gtk_widget_style_get (GTK_WIDGET (dashboard),
                         "button-relief", &default_relief,
                         NULL);
 
-  gimp_button_set_suggested (priv->log_record_button,
-                             gimp_dashboard_log_is_recording (dashboard),
+  ligma_button_set_suggested (priv->log_record_button,
+                             ligma_dashboard_log_is_recording (dashboard),
                              default_relief);
 }
 
 static void
-gimp_dashboard_log_update_n_markers (GimpDashboard *dashboard)
+ligma_dashboard_log_update_n_markers (LigmaDashboard *dashboard)
 {
-  GimpDashboardPrivate *priv = dashboard->priv;
+  LigmaDashboardPrivate *priv = dashboard->priv;
   gchar                 buffer[32];
 
   g_snprintf (buffer, sizeof (buffer), "%d", priv->log_n_markers + 1);
@@ -4031,7 +4031,7 @@ gimp_dashboard_log_update_n_markers (GimpDashboard *dashboard)
 }
 
 static gint
-gimp_dashboard_log_compare_addresses (gconstpointer a1,
+ligma_dashboard_log_compare_addresses (gconstpointer a1,
                                       gconstpointer a2)
 {
   guintptr address1 = *(const guintptr *) a1;
@@ -4046,12 +4046,12 @@ gimp_dashboard_log_compare_addresses (gconstpointer a1,
 }
 
 static void
-gimp_dashboard_log_write_address_map (GimpDashboard *dashboard,
+ligma_dashboard_log_write_address_map (LigmaDashboard *dashboard,
                                       guintptr      *addresses,
                                       gint           n_addresses,
-                                      GimpAsync     *async)
+                                      LigmaAsync     *async)
 {
-  GimpBacktraceAddressInfo infos[2];
+  LigmaBacktraceAddressInfo infos[2];
   gint                     i;
   gint                     n;
 
@@ -4059,9 +4059,9 @@ gimp_dashboard_log_write_address_map (GimpDashboard *dashboard,
     return;
 
   qsort (addresses, n_addresses, sizeof (guintptr),
-         gimp_dashboard_log_compare_addresses);
+         ligma_dashboard_log_compare_addresses);
 
-  gimp_dashboard_log_printf (dashboard,
+  ligma_dashboard_log_printf (dashboard,
                              "\n"
                              "<address-map>\n");
 
@@ -4069,13 +4069,13 @@ gimp_dashboard_log_write_address_map (GimpDashboard *dashboard,
 
   for (i = 0; i < n_addresses; i++)
     {
-      GimpBacktraceAddressInfo       *info      = &infos[n       % 2];
-      const GimpBacktraceAddressInfo *prev_info = &infos[(n + 1) % 2];
+      LigmaBacktraceAddressInfo       *info      = &infos[n       % 2];
+      const LigmaBacktraceAddressInfo *prev_info = &infos[(n + 1) % 2];
 
-      if (async && gimp_async_is_canceled (async))
+      if (async && ligma_async_is_canceled (async))
         break;
 
-      if (gimp_backtrace_get_address_info (addresses[i], info))
+      if (ligma_backtrace_get_address_info (addresses[i], info))
         {
           gboolean empty = TRUE;
 
@@ -4084,7 +4084,7 @@ gimp_dashboard_log_write_address_map (GimpDashboard *dashboard,
               {                                           \
                 if (empty)                                \
                   {                                       \
-                    gimp_dashboard_log_printf (dashboard, \
+                    ligma_dashboard_log_printf (dashboard, \
                                                ">\n");    \
                                                           \
                     empty = FALSE;                        \
@@ -4092,7 +4092,7 @@ gimp_dashboard_log_write_address_map (GimpDashboard *dashboard,
               }                                           \
             G_STMT_END
 
-          gimp_dashboard_log_printf (dashboard,
+          ligma_dashboard_log_printf (dashboard,
                                      "\n"
                                      "<address value=\"0x%llx\"",
                                      (unsigned long long) addresses[i]);
@@ -4103,16 +4103,16 @@ gimp_dashboard_log_write_address_map (GimpDashboard *dashboard,
 
               if (info->object_name[0])
                 {
-                  gimp_dashboard_log_printf (dashboard,
+                  ligma_dashboard_log_printf (dashboard,
                                              "<object>");
-                  gimp_dashboard_log_print_escaped (dashboard,
+                  ligma_dashboard_log_print_escaped (dashboard,
                                                     info->object_name);
-                  gimp_dashboard_log_printf (dashboard,
+                  ligma_dashboard_log_printf (dashboard,
                                              "</object>\n");
                 }
               else
                 {
-                  gimp_dashboard_log_printf (dashboard,
+                  ligma_dashboard_log_printf (dashboard,
                                              "<object />\n");
                 }
             }
@@ -4123,16 +4123,16 @@ gimp_dashboard_log_write_address_map (GimpDashboard *dashboard,
 
               if (info->symbol_name[0])
                 {
-                  gimp_dashboard_log_printf (dashboard,
+                  ligma_dashboard_log_printf (dashboard,
                                              "<symbol>");
-                  gimp_dashboard_log_print_escaped (dashboard,
+                  ligma_dashboard_log_print_escaped (dashboard,
                                                     info->symbol_name);
-                  gimp_dashboard_log_printf (dashboard,
+                  ligma_dashboard_log_printf (dashboard,
                                              "</symbol>\n");
                 }
               else
                 {
-                  gimp_dashboard_log_printf (dashboard,
+                  ligma_dashboard_log_printf (dashboard,
                                              "<symbol />\n");
                 }
             }
@@ -4143,14 +4143,14 @@ gimp_dashboard_log_write_address_map (GimpDashboard *dashboard,
 
               if (info->symbol_address)
                 {
-                  gimp_dashboard_log_printf (dashboard,
+                  ligma_dashboard_log_printf (dashboard,
                                              "<base>0x%llx</base>\n",
                                              (unsigned long long)
                                                info->symbol_address);
                 }
               else
                 {
-                  gimp_dashboard_log_printf (dashboard,
+                  ligma_dashboard_log_printf (dashboard,
                                              "<base />\n");
                 }
             }
@@ -4161,16 +4161,16 @@ gimp_dashboard_log_write_address_map (GimpDashboard *dashboard,
 
               if (info->source_file[0])
                 {
-                  gimp_dashboard_log_printf (dashboard,
+                  ligma_dashboard_log_printf (dashboard,
                                              "<source>");
-                  gimp_dashboard_log_print_escaped (dashboard,
+                  ligma_dashboard_log_print_escaped (dashboard,
                                                     info->source_file);
-                  gimp_dashboard_log_printf (dashboard,
+                  ligma_dashboard_log_printf (dashboard,
                                              "</source>\n");
                 }
               else
                 {
-                  gimp_dashboard_log_printf (dashboard,
+                  ligma_dashboard_log_printf (dashboard,
                                              "<source />\n");
                 }
             }
@@ -4181,25 +4181,25 @@ gimp_dashboard_log_write_address_map (GimpDashboard *dashboard,
 
               if (info->source_line)
                 {
-                  gimp_dashboard_log_printf (dashboard,
+                  ligma_dashboard_log_printf (dashboard,
                                              "<line>%d</line>\n",
                                              info->source_line);
                 }
               else
                 {
-                  gimp_dashboard_log_printf (dashboard,
+                  ligma_dashboard_log_printf (dashboard,
                                              "<line />\n");
                 }
             }
 
           if (empty)
             {
-              gimp_dashboard_log_printf (dashboard,
+              ligma_dashboard_log_printf (dashboard,
                                          " />\n");
             }
           else
             {
-              gimp_dashboard_log_printf (dashboard,
+              ligma_dashboard_log_printf (dashboard,
                                          "</address>\n");
             }
 
@@ -4209,16 +4209,16 @@ gimp_dashboard_log_write_address_map (GimpDashboard *dashboard,
         }
     }
 
-  gimp_dashboard_log_printf (dashboard,
+  ligma_dashboard_log_printf (dashboard,
                              "\n"
                              "</address-map>\n");
 }
 
 static void
-gimp_dashboard_log_write_global_address_map (GimpAsync     *async,
-                                             GimpDashboard *dashboard)
+ligma_dashboard_log_write_global_address_map (LigmaAsync     *async,
+                                             LigmaDashboard *dashboard)
 {
-  GimpDashboardPrivate *priv = dashboard->priv;
+  LigmaDashboardPrivate *priv = dashboard->priv;
   gint                  n_addresses;
 
   n_addresses = g_hash_table_size (priv->log_addresses);
@@ -4238,23 +4238,23 @@ gimp_dashboard_log_write_global_address_map (GimpAsync     *async,
           addresses[i] = (guintptr) iter->data;
         }
 
-      gimp_dashboard_log_write_address_map (dashboard,
+      ligma_dashboard_log_write_address_map (dashboard,
                                             addresses, n_addresses,
                                             async);
 
       g_free (addresses);
     }
 
-  gimp_async_finish (async, NULL);
+  ligma_async_finish (async, NULL);
 }
 
 static void
-gimp_dashboard_log_log_func (const gchar    *log_domain,
+ligma_dashboard_log_log_func (const gchar    *log_domain,
                              GLogLevelFlags  log_levels,
                              const gchar    *message,
-                             GimpDashboard  *dashboard)
+                             LigmaDashboard  *dashboard)
 {
-  GimpDashboardPrivate *priv      = dashboard->priv;
+  LigmaDashboardPrivate *priv      = dashboard->priv;
   const gchar          *log_level = NULL;
   gchar                *description;
 
@@ -4273,9 +4273,9 @@ gimp_dashboard_log_log_func (const gchar    *log_domain,
 
   description = g_strdup_printf ("[%s] %s: %s", log_domain, log_level, message);
 
-  gimp_dashboard_log_add_marker_unlocked (dashboard, description);
+  ligma_dashboard_log_add_marker_unlocked (dashboard, description);
 
-  gimp_dashboard_log_sample (dashboard, FALSE, TRUE);
+  ligma_dashboard_log_sample (dashboard, FALSE, TRUE);
 
   g_free (description);
 
@@ -4283,7 +4283,7 @@ gimp_dashboard_log_log_func (const gchar    *log_domain,
 }
 
 static gboolean
-gimp_dashboard_field_use_meter_underlay (Group group,
+ligma_dashboard_field_use_meter_underlay (Group group,
                                          gint  field)
 {
   const GroupInfo    *group_info = &groups[group];
@@ -4301,7 +4301,7 @@ gimp_dashboard_field_use_meter_underlay (Group group,
 }
 
 static gchar *
-gimp_dashboard_format_rate_of_change (const gchar *value)
+ligma_dashboard_format_rate_of_change (const gchar *value)
 {
   /* Translators:  This string reports the rate of change of a measured value.
    * The first "%s" is replaced by a certain quantity, usually followed by a
@@ -4313,7 +4313,7 @@ gimp_dashboard_format_rate_of_change (const gchar *value)
 }
 
 static gchar *
-gimp_dashboard_format_value (VariableType type,
+ligma_dashboard_format_value (VariableType type,
                              gdouble      value)
 {
   switch (type)
@@ -4383,7 +4383,7 @@ gimp_dashboard_format_value (VariableType type,
 
         g_snprintf (buf, sizeof (buf), "%g", value);
 
-        return gimp_dashboard_format_rate_of_change (buf);
+        return ligma_dashboard_format_rate_of_change (buf);
       }
     }
 
@@ -4391,7 +4391,7 @@ gimp_dashboard_format_value (VariableType type,
 }
 
 static void
-gimp_dashboard_label_set_text (GtkLabel    *label,
+ligma_dashboard_label_set_text (GtkLabel    *label,
                                const gchar *text)
 {
   /* the strcmp() reduces the overhead of gtk_label_set_text() when the
@@ -4406,31 +4406,31 @@ gimp_dashboard_label_set_text (GtkLabel    *label,
 
 
 GtkWidget *
-gimp_dashboard_new (Gimp            *gimp,
-                    GimpMenuFactory *menu_factory)
+ligma_dashboard_new (Ligma            *ligma,
+                    LigmaMenuFactory *menu_factory)
 {
-  GimpDashboard *dashboard;
+  LigmaDashboard *dashboard;
 
-  dashboard = g_object_new (GIMP_TYPE_DASHBOARD,
+  dashboard = g_object_new (LIGMA_TYPE_DASHBOARD,
                             "menu-factory",    menu_factory,
                             "menu-identifier", "<Dashboard>",
                             "ui-path",         "/dashboard-popup",
                             NULL);
 
-  dashboard->priv->gimp = gimp;
+  dashboard->priv->ligma = ligma;
 
   return GTK_WIDGET (dashboard);
 }
 
 gboolean
-gimp_dashboard_log_start_recording (GimpDashboard                 *dashboard,
+ligma_dashboard_log_start_recording (LigmaDashboard                 *dashboard,
                                     GFile                         *file,
-                                    const GimpDashboardLogParams  *params,
+                                    const LigmaDashboardLogParams  *params,
                                     GError                       **error)
 {
-  GimpDashboardPrivate  *priv;
-  GimpUIManager         *ui_manager;
-  GimpActionGroup       *action_group;
+  LigmaDashboardPrivate  *priv;
+  LigmaUIManager         *ui_manager;
+  LigmaActionGroup       *action_group;
   gchar                 *version;
   gchar                **envp;
   gchar                **env;
@@ -4440,41 +4440,41 @@ gimp_dashboard_log_start_recording (GimpDashboard                 *dashboard,
   Variable               variable;
   guint                  i;
 
-  g_return_val_if_fail (GIMP_IS_DASHBOARD (dashboard), FALSE);
+  g_return_val_if_fail (LIGMA_IS_DASHBOARD (dashboard), FALSE);
   g_return_val_if_fail (G_IS_FILE (file), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   priv = dashboard->priv;
 
-  g_return_val_if_fail (! gimp_dashboard_log_is_recording (dashboard), FALSE);
+  g_return_val_if_fail (! ligma_dashboard_log_is_recording (dashboard), FALSE);
 
   if (! params)
-    params = gimp_dashboard_log_get_default_params (dashboard);
+    params = ligma_dashboard_log_get_default_params (dashboard);
 
   priv->log_params = *params;
 
-  if (g_getenv ("GIMP_PERFORMANCE_LOG_SAMPLE_FREQUENCY"))
+  if (g_getenv ("LIGMA_PERFORMANCE_LOG_SAMPLE_FREQUENCY"))
     {
       priv->log_params.sample_frequency =
-        atoi (g_getenv ("GIMP_PERFORMANCE_LOG_SAMPLE_FREQUENCY"));
+        atoi (g_getenv ("LIGMA_PERFORMANCE_LOG_SAMPLE_FREQUENCY"));
     }
 
-  if (g_getenv ("GIMP_PERFORMANCE_LOG_BACKTRACE"))
+  if (g_getenv ("LIGMA_PERFORMANCE_LOG_BACKTRACE"))
     {
       priv->log_params.backtrace =
-        atoi (g_getenv ("GIMP_PERFORMANCE_LOG_BACKTRACE")) ? 1 : 0;
+        atoi (g_getenv ("LIGMA_PERFORMANCE_LOG_BACKTRACE")) ? 1 : 0;
     }
 
-  if (g_getenv ("GIMP_PERFORMANCE_LOG_MESSAGES"))
+  if (g_getenv ("LIGMA_PERFORMANCE_LOG_MESSAGES"))
     {
       priv->log_params.messages =
-        atoi (g_getenv ("GIMP_PERFORMANCE_LOG_MESSAGES")) ? 1 : 0;
+        atoi (g_getenv ("LIGMA_PERFORMANCE_LOG_MESSAGES")) ? 1 : 0;
     }
 
-  if (g_getenv ("GIMP_PERFORMANCE_LOG_PROGRESSIVE"))
+  if (g_getenv ("LIGMA_PERFORMANCE_LOG_PROGRESSIVE"))
     {
       priv->log_params.progressive =
-        atoi (g_getenv ("GIMP_PERFORMANCE_LOG_PROGRESSIVE")) ? 1 : 0;
+        atoi (g_getenv ("LIGMA_PERFORMANCE_LOG_PROGRESSIVE")) ? 1 : 0;
     }
 
   priv->log_params.sample_frequency = CLAMP (priv->log_params.sample_frequency,
@@ -4511,16 +4511,16 @@ gimp_dashboard_log_start_recording (GimpDashboard                 *dashboard,
   priv->log_addresses  = g_hash_table_new (NULL, NULL);
 
   if (priv->log_params.backtrace)
-    has_backtrace = gimp_backtrace_start ();
+    has_backtrace = ligma_backtrace_start ();
   else
     has_backtrace = FALSE;
 
-  gimp_dashboard_log_printf (dashboard,
+  ligma_dashboard_log_printf (dashboard,
                              "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
-                             "<gimp-performance-log version=\"%d\">\n",
+                             "<ligma-performance-log version=\"%d\">\n",
                              LOG_VERSION);
 
-  gimp_dashboard_log_printf (dashboard,
+  ligma_dashboard_log_printf (dashboard,
                              "\n"
                              "<params>\n"
                              "<sample-frequency>%d</sample-frequency>\n"
@@ -4533,22 +4533,22 @@ gimp_dashboard_log_start_recording (GimpDashboard                 *dashboard,
                              priv->log_params.messages,
                              priv->log_params.progressive);
 
-  gimp_dashboard_log_printf (dashboard,
+  ligma_dashboard_log_printf (dashboard,
                              "\n"
                              "<info>\n");
 
-  version = gimp_version (TRUE, FALSE);
+  version = ligma_version (TRUE, FALSE);
 
-  gimp_dashboard_log_printf (dashboard,
+  ligma_dashboard_log_printf (dashboard,
                              "\n"
-                             "<gimp-version>\n");
-  gimp_dashboard_log_print_escaped (dashboard, version);
-  gimp_dashboard_log_printf (dashboard,
-                             "</gimp-version>\n");
+                             "<ligma-version>\n");
+  ligma_dashboard_log_print_escaped (dashboard, version);
+  ligma_dashboard_log_printf (dashboard,
+                             "</ligma-version>\n");
 
   g_free (version);
 
-  gimp_dashboard_log_printf (dashboard,
+  ligma_dashboard_log_printf (dashboard,
                              "\n"
                              "<env>\n");
 
@@ -4558,7 +4558,7 @@ gimp_dashboard_log_start_recording (GimpDashboard                 *dashboard,
     {
       if (g_str_has_prefix (*env, "BABL_") ||
           g_str_has_prefix (*env, "GEGL_") ||
-          g_str_has_prefix (*env, "GIMP_"))
+          g_str_has_prefix (*env, "LIGMA_"))
         {
           gchar       *delim = strchr (*env, '=');
           const gchar *s;
@@ -4575,11 +4575,11 @@ gimp_dashboard_log_start_recording (GimpDashboard                 *dashboard,
 
           *delim = '\0';
 
-          gimp_dashboard_log_printf (dashboard,
+          ligma_dashboard_log_printf (dashboard,
                                      "<%s>",
                                      *env);
-          gimp_dashboard_log_print_escaped (dashboard, delim + 1);
-          gimp_dashboard_log_printf (dashboard,
+          ligma_dashboard_log_print_escaped (dashboard, delim + 1);
+          ligma_dashboard_log_printf (dashboard,
                                      "</%s>\n",
                                      *env);
         }
@@ -4587,10 +4587,10 @@ gimp_dashboard_log_start_recording (GimpDashboard                 *dashboard,
 
   g_strfreev (envp);
 
-  gimp_dashboard_log_printf (dashboard,
+  ligma_dashboard_log_printf (dashboard,
                              "</env>\n");
 
-  gimp_dashboard_log_printf (dashboard,
+  ligma_dashboard_log_printf (dashboard,
                              "\n"
                              "<gegl-config>\n");
 
@@ -4610,12 +4610,12 @@ gimp_dashboard_log_start_recording (GimpDashboard                 *dashboard,
 
       if (g_value_transform (&value, &str_value))
         {
-          gimp_dashboard_log_printf (dashboard,
+          ligma_dashboard_log_printf (dashboard,
                                      "<%s>",
                                      pspec->name);
-          gimp_dashboard_log_print_escaped (dashboard,
+          ligma_dashboard_log_print_escaped (dashboard,
                                             g_value_get_string (&str_value));
-          gimp_dashboard_log_printf (dashboard,
+          ligma_dashboard_log_printf (dashboard,
                                      "</%s>\n",
                                      pspec->name);
         }
@@ -4626,14 +4626,14 @@ gimp_dashboard_log_start_recording (GimpDashboard                 *dashboard,
 
   g_free (pspecs);
 
-  gimp_dashboard_log_printf (dashboard,
+  ligma_dashboard_log_printf (dashboard,
                              "</gegl-config>\n");
 
-  gimp_dashboard_log_printf (dashboard,
+  ligma_dashboard_log_printf (dashboard,
                              "\n"
                              "</info>\n");
 
-  gimp_dashboard_log_printf (dashboard,
+  ligma_dashboard_log_printf (dashboard,
                              "\n"
                              "<var-defs>\n");
 
@@ -4657,21 +4657,21 @@ gimp_dashboard_log_start_recording (GimpDashboard                 *dashboard,
         case VARIABLE_TYPE_RATE_OF_CHANGE: type = "rate-of-change"; break;
         }
 
-      gimp_dashboard_log_printf (dashboard,
+      ligma_dashboard_log_printf (dashboard,
                                  "<var name=\"%s\" type=\"%s\" desc=\"",
                                  variable_info->name,
                                  type);
-      gimp_dashboard_log_print_escaped (dashboard,
+      ligma_dashboard_log_print_escaped (dashboard,
                                         /* intentionally untranslated */
                                         variable_info->description);
-      gimp_dashboard_log_printf (dashboard,
+      ligma_dashboard_log_printf (dashboard,
                                  "\" />\n");
     }
 
-  gimp_dashboard_log_printf (dashboard,
+  ligma_dashboard_log_printf (dashboard,
                              "</var-defs>\n");
 
-  gimp_dashboard_log_printf (dashboard,
+  ligma_dashboard_log_printf (dashboard,
                              "\n"
                              "<samples>\n");
 
@@ -4679,7 +4679,7 @@ gimp_dashboard_log_start_recording (GimpDashboard                 *dashboard,
     {
       GCancellable *cancellable = g_cancellable_new ();
 
-      gimp_backtrace_stop ();
+      ligma_backtrace_stop ();
 
       /* Cancel the overwrite initiated by g_file_replace(). */
       g_cancellable_cancel (cancellable);
@@ -4696,14 +4696,14 @@ gimp_dashboard_log_start_recording (GimpDashboard                 *dashboard,
       return FALSE;
     }
 
-  gimp_dashboard_reset_unlocked (dashboard);
+  ligma_dashboard_reset_unlocked (dashboard);
 
   if (priv->log_params.messages)
     {
-      priv->log_log_handler = gimp_log_set_handler (
+      priv->log_log_handler = ligma_log_set_handler (
         TRUE,
         G_LOG_LEVEL_MASK | G_LOG_FLAG_FATAL | G_LOG_FLAG_RECURSION,
-        (GLogFunc) gimp_dashboard_log_log_func,
+        (GLogFunc) ligma_dashboard_log_log_func,
         dashboard);
     }
 
@@ -4712,45 +4712,45 @@ gimp_dashboard_log_start_recording (GimpDashboard                 *dashboard,
 
   g_mutex_unlock (&priv->mutex);
 
-  gimp_dashboard_log_update_n_markers (dashboard);
+  ligma_dashboard_log_update_n_markers (dashboard);
 
-  ui_manager   = gimp_editor_get_ui_manager (GIMP_EDITOR (dashboard));
-  action_group = gimp_ui_manager_get_action_group (ui_manager, "dashboard");
+  ui_manager   = ligma_editor_get_ui_manager (LIGMA_EDITOR (dashboard));
+  action_group = ligma_ui_manager_get_action_group (ui_manager, "dashboard");
 
-  gimp_action_group_update (action_group, dashboard);
+  ligma_action_group_update (action_group, dashboard);
 
-  gimp_dashboard_log_update_highlight (dashboard);
+  ligma_dashboard_log_update_highlight (dashboard);
 
   return TRUE;
 }
 
 gboolean
-gimp_dashboard_log_stop_recording (GimpDashboard  *dashboard,
+ligma_dashboard_log_stop_recording (LigmaDashboard  *dashboard,
                                    GError        **error)
 {
-  GimpDashboardPrivate *priv;
-  GimpUIManager        *ui_manager;
-  GimpActionGroup      *action_group;
+  LigmaDashboardPrivate *priv;
+  LigmaUIManager        *ui_manager;
+  LigmaActionGroup      *action_group;
   gboolean              result = TRUE;
 
-  g_return_val_if_fail (GIMP_IS_DASHBOARD (dashboard), FALSE);
+  g_return_val_if_fail (LIGMA_IS_DASHBOARD (dashboard), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   priv = dashboard->priv;
 
-  if (! gimp_dashboard_log_is_recording (dashboard))
+  if (! ligma_dashboard_log_is_recording (dashboard))
     return TRUE;
 
   g_mutex_lock (&priv->mutex);
 
   if (priv->log_log_handler)
     {
-      gimp_log_remove_handler (priv->log_log_handler);
+      ligma_log_remove_handler (priv->log_log_handler);
 
       priv->log_log_handler = 0;
     }
 
-  gimp_dashboard_log_printf (dashboard,
+  ligma_dashboard_log_printf (dashboard,
                              "\n"
                              "</samples>\n");
 
@@ -4758,24 +4758,24 @@ gimp_dashboard_log_stop_recording (GimpDashboard  *dashboard,
   if (! priv->log_params.progressive &&
       g_hash_table_size (priv->log_addresses) > 0)
     {
-      GimpAsync *async;
+      LigmaAsync *async;
 
-      async = gimp_parallel_run_async_independent (
-        (GimpRunAsyncFunc) gimp_dashboard_log_write_global_address_map,
+      async = ligma_parallel_run_async_independent (
+        (LigmaRunAsyncFunc) ligma_dashboard_log_write_global_address_map,
         dashboard);
 
-      gimp_wait (priv->gimp, GIMP_WAITABLE (async),
+      ligma_wait (priv->ligma, LIGMA_WAITABLE (async),
                  _("Resolving symbol information..."));
 
       g_object_unref (async);
     }
 
-  gimp_dashboard_log_printf (dashboard,
+  ligma_dashboard_log_printf (dashboard,
                              "\n"
-                             "</gimp-performance-log>\n");
+                             "</ligma-performance-log>\n");
 
   if (priv->log_params.backtrace)
-    gimp_backtrace_stop ();
+    ligma_backtrace_stop ();
 
   if (! priv->log_error)
     {
@@ -4801,37 +4801,37 @@ gimp_dashboard_log_stop_recording (GimpDashboard  *dashboard,
       result = FALSE;
     }
 
-  g_clear_pointer (&priv->log_backtrace, gimp_backtrace_free);
+  g_clear_pointer (&priv->log_backtrace, ligma_backtrace_free);
   g_clear_pointer (&priv->log_addresses, g_hash_table_unref);
 
   g_mutex_unlock (&priv->mutex);
 
-  ui_manager   = gimp_editor_get_ui_manager (GIMP_EDITOR (dashboard));
-  action_group = gimp_ui_manager_get_action_group (ui_manager, "dashboard");
+  ui_manager   = ligma_editor_get_ui_manager (LIGMA_EDITOR (dashboard));
+  action_group = ligma_ui_manager_get_action_group (ui_manager, "dashboard");
 
-  gimp_action_group_update (action_group, dashboard);
+  ligma_action_group_update (action_group, dashboard);
 
-  gimp_dashboard_log_update_highlight (dashboard);
+  ligma_dashboard_log_update_highlight (dashboard);
 
   return result;
 }
 
 gboolean
-gimp_dashboard_log_is_recording (GimpDashboard *dashboard)
+ligma_dashboard_log_is_recording (LigmaDashboard *dashboard)
 {
-  GimpDashboardPrivate *priv;
+  LigmaDashboardPrivate *priv;
 
-  g_return_val_if_fail (GIMP_IS_DASHBOARD (dashboard), FALSE);
+  g_return_val_if_fail (LIGMA_IS_DASHBOARD (dashboard), FALSE);
 
   priv = dashboard->priv;
 
   return priv->log_output != NULL;
 }
 
-const GimpDashboardLogParams *
-gimp_dashboard_log_get_default_params (GimpDashboard *dashboard)
+const LigmaDashboardLogParams *
+ligma_dashboard_log_get_default_params (LigmaDashboard *dashboard)
 {
-  static const GimpDashboardLogParams default_params =
+  static const LigmaDashboardLogParams default_params =
   {
     .sample_frequency = LOG_DEFAULT_SAMPLE_FREQUENCY,
     .backtrace        = LOG_DEFAULT_BACKTRACE,
@@ -4839,41 +4839,41 @@ gimp_dashboard_log_get_default_params (GimpDashboard *dashboard)
     .progressive      = LOG_DEFAULT_PROGRESSIVE
   };
 
-  g_return_val_if_fail (GIMP_IS_DASHBOARD (dashboard), NULL);
+  g_return_val_if_fail (LIGMA_IS_DASHBOARD (dashboard), NULL);
 
   return &default_params;
 }
 
 void
-gimp_dashboard_log_add_marker (GimpDashboard *dashboard,
+ligma_dashboard_log_add_marker (LigmaDashboard *dashboard,
                                const gchar   *description)
 {
-  GimpDashboardPrivate *priv;
+  LigmaDashboardPrivate *priv;
 
-  g_return_if_fail (GIMP_IS_DASHBOARD (dashboard));
-  g_return_if_fail (gimp_dashboard_log_is_recording (dashboard));
+  g_return_if_fail (LIGMA_IS_DASHBOARD (dashboard));
+  g_return_if_fail (ligma_dashboard_log_is_recording (dashboard));
 
   priv = dashboard->priv;
 
   g_mutex_lock (&priv->mutex);
 
-  gimp_dashboard_log_add_marker_unlocked (dashboard, description);
+  ligma_dashboard_log_add_marker_unlocked (dashboard, description);
 
   g_mutex_unlock (&priv->mutex);
 }
 
 void
-gimp_dashboard_reset (GimpDashboard *dashboard)
+ligma_dashboard_reset (LigmaDashboard *dashboard)
 {
-  GimpDashboardPrivate *priv;
+  LigmaDashboardPrivate *priv;
 
-  g_return_if_fail (GIMP_IS_DASHBOARD (dashboard));
+  g_return_if_fail (LIGMA_IS_DASHBOARD (dashboard));
 
   priv = dashboard->priv;
 
   g_mutex_lock (&priv->mutex);
 
-  gimp_dashboard_reset_unlocked (dashboard);
+  ligma_dashboard_reset_unlocked (dashboard);
 
   priv->update_now = TRUE;
   g_cond_signal (&priv->cond);
@@ -4882,12 +4882,12 @@ gimp_dashboard_reset (GimpDashboard *dashboard)
 }
 
 void
-gimp_dashboard_set_update_interval (GimpDashboard              *dashboard,
-                                    GimpDashboardUpdateInteval  update_interval)
+ligma_dashboard_set_update_interval (LigmaDashboard              *dashboard,
+                                    LigmaDashboardUpdateInteval  update_interval)
 {
-  GimpDashboardPrivate *priv;
+  LigmaDashboardPrivate *priv;
 
-  g_return_if_fail (GIMP_IS_DASHBOARD (dashboard));
+  g_return_if_fail (LIGMA_IS_DASHBOARD (dashboard));
 
   priv = dashboard->priv;
 
@@ -4905,7 +4905,7 @@ gimp_dashboard_set_update_interval (GimpDashboard              *dashboard,
 
           if (group_data->meter)
             {
-              gimp_meter_set_history_resolution (group_data->meter,
+              ligma_meter_set_history_resolution (group_data->meter,
                                                  update_interval / 1000.0);
             }
         }
@@ -4917,21 +4917,21 @@ gimp_dashboard_set_update_interval (GimpDashboard              *dashboard,
     }
 }
 
-GimpDashboardUpdateInteval
-gimp_dashboard_get_update_interval (GimpDashboard *dashboard)
+LigmaDashboardUpdateInteval
+ligma_dashboard_get_update_interval (LigmaDashboard *dashboard)
 {
-  g_return_val_if_fail (GIMP_IS_DASHBOARD (dashboard), DEFAULT_UPDATE_INTERVAL);
+  g_return_val_if_fail (LIGMA_IS_DASHBOARD (dashboard), DEFAULT_UPDATE_INTERVAL);
 
   return dashboard->priv->update_interval;
 }
 
 void
-gimp_dashboard_set_history_duration (GimpDashboard                *dashboard,
-                                     GimpDashboardHistoryDuration  history_duration)
+ligma_dashboard_set_history_duration (LigmaDashboard                *dashboard,
+                                     LigmaDashboardHistoryDuration  history_duration)
 {
-  GimpDashboardPrivate *priv;
+  LigmaDashboardPrivate *priv;
 
-  g_return_if_fail (GIMP_IS_DASHBOARD (dashboard));
+  g_return_if_fail (LIGMA_IS_DASHBOARD (dashboard));
 
   priv = dashboard->priv;
 
@@ -4949,7 +4949,7 @@ gimp_dashboard_set_history_duration (GimpDashboard                *dashboard,
 
           if (group_data->meter)
             {
-              gimp_meter_set_history_duration (group_data->meter,
+              ligma_meter_set_history_duration (group_data->meter,
                                                history_duration / 1000.0);
             }
         }
@@ -4961,21 +4961,21 @@ gimp_dashboard_set_history_duration (GimpDashboard                *dashboard,
     }
 }
 
-GimpDashboardHistoryDuration
-gimp_dashboard_get_history_duration (GimpDashboard *dashboard)
+LigmaDashboardHistoryDuration
+ligma_dashboard_get_history_duration (LigmaDashboard *dashboard)
 {
-  g_return_val_if_fail (GIMP_IS_DASHBOARD (dashboard), DEFAULT_HISTORY_DURATION);
+  g_return_val_if_fail (LIGMA_IS_DASHBOARD (dashboard), DEFAULT_HISTORY_DURATION);
 
   return dashboard->priv->history_duration;
 }
 
 void
-gimp_dashboard_set_low_swap_space_warning (GimpDashboard *dashboard,
+ligma_dashboard_set_low_swap_space_warning (LigmaDashboard *dashboard,
                                            gboolean       low_swap_space_warning)
 {
-  GimpDashboardPrivate *priv;
+  LigmaDashboardPrivate *priv;
 
-  g_return_if_fail (GIMP_IS_DASHBOARD (dashboard));
+  g_return_if_fail (LIGMA_IS_DASHBOARD (dashboard));
 
   priv = dashboard->priv;
 
@@ -4990,24 +4990,24 @@ gimp_dashboard_set_low_swap_space_warning (GimpDashboard *dashboard,
 }
 
 gboolean
-gimp_dashboard_get_low_swap_space_warning (GimpDashboard *dashboard)
+ligma_dashboard_get_low_swap_space_warning (LigmaDashboard *dashboard)
 {
-  g_return_val_if_fail (GIMP_IS_DASHBOARD (dashboard), DEFAULT_LOW_SWAP_SPACE_WARNING);
+  g_return_val_if_fail (LIGMA_IS_DASHBOARD (dashboard), DEFAULT_LOW_SWAP_SPACE_WARNING);
 
   return dashboard->priv->low_swap_space_warning;
 }
 
 void
-gimp_dashboard_menu_setup (GimpUIManager *manager,
+ligma_dashboard_menu_setup (LigmaUIManager *manager,
                            const gchar   *ui_path)
 {
   guint merge_id;
   Group group;
 
-  g_return_if_fail (GIMP_IS_UI_MANAGER (manager));
+  g_return_if_fail (LIGMA_IS_UI_MANAGER (manager));
   g_return_if_fail (ui_path != NULL);
 
-  merge_id = gimp_ui_manager_new_merge_id (manager);
+  merge_id = ligma_ui_manager_new_merge_id (manager);
 
   for (group = FIRST_GROUP; group < N_GROUPS; group++)
     {
@@ -5018,7 +5018,7 @@ gimp_dashboard_menu_setup (GimpUIManager *manager,
       action_name = g_strdup_printf ("dashboard-group-%s", group_info->name);
       action_path = g_strdup_printf ("%s/Groups/Groups", ui_path);
 
-      gimp_ui_manager_add_ui (manager, merge_id,
+      ligma_ui_manager_add_ui (manager, merge_id,
                               action_path, action_name, action_name,
                               GTK_UI_MANAGER_MENUITEM,
                               FALSE);

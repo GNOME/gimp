@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * fill-dialog.c
- * Copyright (C) 2016  Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2016  Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,20 +23,20 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmaconfig/ligmaconfig.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "dialogs-types.h"
 
-#include "core/gimpdrawable.h"
-#include "core/gimpfilloptions.h"
+#include "core/ligmadrawable.h"
+#include "core/ligmafilloptions.h"
 
-#include "widgets/gimpfilleditor.h"
-#include "widgets/gimpviewabledialog.h"
+#include "widgets/ligmafilleditor.h"
+#include "widgets/ligmaviewabledialog.h"
 
 #include "fill-dialog.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 #define RESPONSE_RESET 1
@@ -46,11 +46,11 @@ typedef struct _FillDialog FillDialog;
 
 struct _FillDialog
 {
-  GimpItem         *item;
+  LigmaItem         *item;
   GList            *drawables;
-  GimpContext      *context;
-  GimpFillOptions  *options;
-  GimpFillCallback  callback;
+  LigmaContext      *context;
+  LigmaFillOptions  *options;
+  LigmaFillCallback  callback;
   gpointer          user_data;
 };
 
@@ -66,15 +66,15 @@ static void  fill_dialog_response (GtkWidget  *dialog,
 /*  public function  */
 
 GtkWidget *
-fill_dialog_new (GimpItem         *item,
+fill_dialog_new (LigmaItem         *item,
                  GList            *drawables,
-                 GimpContext      *context,
+                 LigmaContext      *context,
                  const gchar      *title,
                  const gchar      *icon_name,
                  const gchar      *help_id,
                  GtkWidget        *parent,
-                 GimpFillOptions  *options,
-                 GimpFillCallback  callback,
+                 LigmaFillOptions  *options,
+                 LigmaFillCallback  callback,
                  gpointer          user_data)
 {
   FillDialog *private;
@@ -82,10 +82,10 @@ fill_dialog_new (GimpItem         *item,
   GtkWidget  *main_vbox;
   GtkWidget  *fill_editor;
 
-  g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
+  g_return_val_if_fail (LIGMA_IS_ITEM (item), NULL);
   g_return_val_if_fail (drawables, NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
-  g_return_val_if_fail (GIMP_IS_FILL_OPTIONS (options), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_FILL_OPTIONS (options), NULL);
   g_return_val_if_fail (icon_name != NULL, NULL);
   g_return_val_if_fail (help_id != NULL, NULL);
   g_return_val_if_fail (parent == NULL || GTK_IS_WIDGET (parent), NULL);
@@ -96,19 +96,19 @@ fill_dialog_new (GimpItem         *item,
   private->item      = item;
   private->drawables = g_list_copy (drawables);
   private->context   = context;
-  private->options   = gimp_fill_options_new (context->gimp, context, TRUE);
+  private->options   = ligma_fill_options_new (context->ligma, context, TRUE);
   private->callback  = callback;
   private->user_data = user_data;
 
-  gimp_config_sync (G_OBJECT (options),
+  ligma_config_sync (G_OBJECT (options),
                     G_OBJECT (private->options), 0);
 
-  dialog = gimp_viewable_dialog_new (g_list_prepend (NULL, item), context,
-                                     title, "gimp-fill-options",
+  dialog = ligma_viewable_dialog_new (g_list_prepend (NULL, item), context,
+                                     title, "ligma-fill-options",
                                      icon_name,
                                      _("Choose Fill Style"),
                                      parent,
-                                     gimp_standard_help_func,
+                                     ligma_standard_help_func,
                                      help_id,
 
                                      _("_Reset"),  RESPONSE_RESET,
@@ -117,7 +117,7 @@ fill_dialog_new (GimpItem         *item,
 
                                      NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            RESPONSE_RESET,
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
@@ -138,7 +138,7 @@ fill_dialog_new (GimpItem         *item,
                       main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
-  fill_editor = gimp_fill_editor_new (private->options, FALSE);
+  fill_editor = ligma_fill_editor_new (private->options, FALSE);
   gtk_box_pack_start (GTK_BOX (main_vbox), fill_editor, FALSE, FALSE, 0);
   gtk_widget_show (fill_editor);
 
@@ -165,7 +165,7 @@ fill_dialog_response (GtkWidget  *dialog,
   switch (response_id)
     {
     case RESPONSE_RESET:
-      gimp_config_reset (GIMP_CONFIG (private->options));
+      ligma_config_reset (LIGMA_CONFIG (private->options));
       break;
 
     case GTK_RESPONSE_OK:

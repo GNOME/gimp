@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpviewrendererimage.h
- * Copyright (C) 2003 Michael Natterer <mitch@gimp.org>
+ * ligmaviewrendererimage.h
+ * Copyright (C) 2003 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,35 +18,35 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_VIEW_RENDERER_IMAGE_H__
-#define __GIMP_VIEW_RENDERER_IMAGE_H__
+#ifndef __LIGMA_VIEW_RENDERER_IMAGE_H__
+#define __LIGMA_VIEW_RENDERER_IMAGE_H__
 
-#include "gimpviewrenderer.h"
+#include "ligmaviewrenderer.h"
 
-#define GIMP_TYPE_VIEW_RENDERER_IMAGE            (gimp_view_renderer_image_get_type ())
-#define GIMP_VIEW_RENDERER_IMAGE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_VIEW_RENDERER_IMAGE, GimpViewRendererImage))
-#define GIMP_VIEW_RENDERER_IMAGE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_VIEW_RENDERER_IMAGE, GimpViewRendererImageClass))
-#define GIMP_IS_VIEW_RENDERER_IMAGE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE (obj, GIMP_TYPE_VIEW_RENDERER_IMAGE))
-#define GIMP_IS_VIEW_RENDERER_IMAGE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_VIEW_RENDERER_IMAGE))
-#define GIMP_VIEW_RENDERER_IMAGE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_VIEW_RENDERER_IMAGE, GimpViewRendererImageClass))
+#define LIGMA_TYPE_VIEW_RENDERER_IMAGE            (ligma_view_renderer_image_get_type ())
+#define LIGMA_VIEW_RENDERER_IMAGE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_VIEW_RENDERER_IMAGE, LigmaViewRendererImage))
+#define LIGMA_VIEW_RENDERER_IMAGE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_VIEW_RENDERER_IMAGE, LigmaViewRendererImageClass))
+#define LIGMA_IS_VIEW_RENDERER_IMAGE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE (obj, LIGMA_TYPE_VIEW_RENDERER_IMAGE))
+#define LIGMA_IS_VIEW_RENDERER_IMAGE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_VIEW_RENDERER_IMAGE))
+#define LIGMA_VIEW_RENDERER_IMAGE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_VIEW_RENDERER_IMAGE, LigmaViewRendererImageClass))
 
 
-typedef struct _GimpViewRendererImageClass  GimpViewRendererImageClass;
+typedef struct _LigmaViewRendererImageClass  LigmaViewRendererImageClass;
 
-struct _GimpViewRendererImage
+struct _LigmaViewRendererImage
 {
-  GimpViewRenderer parent_instance;
+  LigmaViewRenderer parent_instance;
 
-  GimpChannelType     channel;
+  LigmaChannelType     channel;
 };
 
-struct _GimpViewRendererImageClass
+struct _LigmaViewRendererImageClass
 {
-  GimpViewRendererClass  parent_class;
+  LigmaViewRendererClass  parent_class;
 };
 
 
-GType   gimp_view_renderer_image_get_type (void) G_GNUC_CONST;
+GType   ligma_view_renderer_image_get_type (void) G_GNUC_CONST;
 
 
-#endif /* __GIMP_VIEW_RENDERER_IMAGE_H__ */
+#endif /* __LIGMA_VIEW_RENDERER_IMAGE_H__ */

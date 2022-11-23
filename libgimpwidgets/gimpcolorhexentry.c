@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpcolorhexentry.c
- * Copyright (C) 2004  Sven Neumann <sven@gimp.org>
+ * ligmacolorhexentry.c
+ * Copyright (C) 2004  Sven Neumann <sven@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -27,20 +27,20 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
-#include "libgimpcolor/gimpcolor.h"
+#include "libligmacolor/ligmacolor.h"
 
-#include "gimpwidgetstypes.h"
+#include "ligmawidgetstypes.h"
 
-#include "gimpcellrenderercolor.h"
-#include "gimpcolorhexentry.h"
-#include "gimphelpui.h"
+#include "ligmacellrenderercolor.h"
+#include "ligmacolorhexentry.h"
+#include "ligmahelpui.h"
 
-#include "libgimp/libgimp-intl.h"
+#include "libligma/libligma-intl.h"
 
 
 /**
- * SECTION: gimpcolorhexentry
- * @title: GimpColorHexEntry
+ * SECTION: ligmacolorhexentry
+ * @title: LigmaColorHexEntry
  * @short_description: Widget for entering a color's hex triplet.
  *
  * Widget for entering a color's hex triplet.
@@ -61,38 +61,38 @@ enum
 };
 
 
-struct _GimpColorHexEntryPrivate
+struct _LigmaColorHexEntryPrivate
 {
-  GimpRGB  color;
+  LigmaRGB  color;
 };
 
-#define GET_PRIVATE(obj) (((GimpColorHexEntry *) (obj))->priv)
+#define GET_PRIVATE(obj) (((LigmaColorHexEntry *) (obj))->priv)
 
 
-static void      gimp_color_hex_entry_constructed (GObject            *object);
+static void      ligma_color_hex_entry_constructed (GObject            *object);
 
-static gboolean  gimp_color_hex_entry_events      (GtkWidget          *widget,
+static gboolean  ligma_color_hex_entry_events      (GtkWidget          *widget,
                                                    GdkEvent           *event);
 
-static gboolean  gimp_color_hex_entry_events      (GtkWidget          *widget,
+static gboolean  ligma_color_hex_entry_events      (GtkWidget          *widget,
                                                    GdkEvent           *event);
 
-static gboolean  gimp_color_hex_entry_matched     (GtkEntryCompletion *completion,
+static gboolean  ligma_color_hex_entry_matched     (GtkEntryCompletion *completion,
                                                    GtkTreeModel       *model,
                                                    GtkTreeIter        *iter,
-                                                   GimpColorHexEntry  *entry);
+                                                   LigmaColorHexEntry  *entry);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpColorHexEntry, gimp_color_hex_entry,
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaColorHexEntry, ligma_color_hex_entry,
                             GTK_TYPE_ENTRY)
 
-#define parent_class gimp_color_hex_entry_parent_class
+#define parent_class ligma_color_hex_entry_parent_class
 
 static guint entry_signals[LAST_SIGNAL] = { 0 };
 
 
 static void
-gimp_color_hex_entry_class_init (GimpColorHexEntryClass *klass)
+ligma_color_hex_entry_class_init (LigmaColorHexEntryClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
@@ -100,28 +100,28 @@ gimp_color_hex_entry_class_init (GimpColorHexEntryClass *klass)
     g_signal_new ("color-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpColorHexEntryClass, color_changed),
+                  G_STRUCT_OFFSET (LigmaColorHexEntryClass, color_changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
-  object_class->constructed = gimp_color_hex_entry_constructed;
+  object_class->constructed = ligma_color_hex_entry_constructed;
 
   klass->color_changed      = NULL;
 }
 
 static void
-gimp_color_hex_entry_init (GimpColorHexEntry *entry)
+ligma_color_hex_entry_init (LigmaColorHexEntry *entry)
 {
-  GimpColorHexEntryPrivate *private;
+  LigmaColorHexEntryPrivate *private;
   GtkEntryCompletion       *completion;
   GtkCellRenderer          *cell;
   GtkListStore             *store;
-  GimpRGB                  *colors;
+  LigmaRGB                  *colors;
   const gchar             **names;
   gint                      num_colors;
   gint                      i;
 
-  entry->priv = gimp_color_hex_entry_get_instance_private (entry);
+  entry->priv = ligma_color_hex_entry_get_instance_private (entry);
 
   private = GET_PRIVATE (entry);
 
@@ -130,16 +130,16 @@ gimp_color_hex_entry_init (GimpColorHexEntry *entry)
    */
   gtk_entry_set_width_chars (GTK_ENTRY (entry), 8);
 
-  gimp_help_set_help_data (GTK_WIDGET (entry),
+  ligma_help_set_help_data (GTK_WIDGET (entry),
                            _("Hexadecimal color notation as used in HTML and "
                              "CSS.  This entry also accepts CSS color names."),
                            NULL);
 
-  gimp_rgba_set (&private->color, 0.0, 0.0, 0.0, 1.0);
+  ligma_rgba_set (&private->color, 0.0, 0.0, 0.0, 1.0);
 
-  store = gtk_list_store_new (NUM_COLUMNS, G_TYPE_STRING, GIMP_TYPE_RGB);
+  store = gtk_list_store_new (NUM_COLUMNS, G_TYPE_STRING, LIGMA_TYPE_RGB);
 
-  gimp_rgb_list_names (&names, &colors, &num_colors);
+  ligma_rgb_list_names (&names, &colors, &num_colors);
 
   for (i = 0; i < num_colors; i++)
     {
@@ -160,7 +160,7 @@ gimp_color_hex_entry_init (GimpColorHexEntry *entry)
                              NULL);
   g_object_unref (store);
 
-  cell = gimp_cell_renderer_color_new ();
+  cell = ligma_cell_renderer_color_new ();
   gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (completion), cell, FALSE);
   gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (completion), cell,
                                   "color", COLUMN_COLOR,
@@ -172,19 +172,19 @@ gimp_color_hex_entry_init (GimpColorHexEntry *entry)
   g_object_unref (completion);
 
   g_signal_connect (entry, "focus-out-event",
-                    G_CALLBACK (gimp_color_hex_entry_events),
+                    G_CALLBACK (ligma_color_hex_entry_events),
                     NULL);
   g_signal_connect (entry, "key-press-event",
-                    G_CALLBACK (gimp_color_hex_entry_events),
+                    G_CALLBACK (ligma_color_hex_entry_events),
                     NULL);
 
   g_signal_connect (completion, "match-selected",
-                    G_CALLBACK (gimp_color_hex_entry_matched),
+                    G_CALLBACK (ligma_color_hex_entry_matched),
                     entry);
 }
 
 static void
-gimp_color_hex_entry_constructed (GObject *object)
+ligma_color_hex_entry_constructed (GObject *object)
 {
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
@@ -192,49 +192,49 @@ gimp_color_hex_entry_constructed (GObject *object)
 }
 
 /**
- * gimp_color_hex_entry_new:
+ * ligma_color_hex_entry_new:
  *
- * Returns: a new #GimpColorHexEntry widget
+ * Returns: a new #LigmaColorHexEntry widget
  *
  * Since: 2.2
  **/
 GtkWidget *
-gimp_color_hex_entry_new (void)
+ligma_color_hex_entry_new (void)
 {
-  return g_object_new (GIMP_TYPE_COLOR_HEX_ENTRY, NULL);
+  return g_object_new (LIGMA_TYPE_COLOR_HEX_ENTRY, NULL);
 }
 
 /**
- * gimp_color_hex_entry_set_color:
- * @entry: a #GimpColorHexEntry widget
- * @color: pointer to a #GimpRGB
+ * ligma_color_hex_entry_set_color:
+ * @entry: a #LigmaColorHexEntry widget
+ * @color: pointer to a #LigmaRGB
  *
- * Sets the color displayed by a #GimpColorHexEntry. If the new color
+ * Sets the color displayed by a #LigmaColorHexEntry. If the new color
  * is different to the previously set color, the "color-changed"
  * signal is emitted.
  *
  * Since: 2.2
  **/
 void
-gimp_color_hex_entry_set_color (GimpColorHexEntry *entry,
-                                const GimpRGB     *color)
+ligma_color_hex_entry_set_color (LigmaColorHexEntry *entry,
+                                const LigmaRGB     *color)
 {
-  GimpColorHexEntryPrivate *private;
+  LigmaColorHexEntryPrivate *private;
 
-  g_return_if_fail (GIMP_IS_COLOR_HEX_ENTRY (entry));
+  g_return_if_fail (LIGMA_IS_COLOR_HEX_ENTRY (entry));
   g_return_if_fail (color != NULL);
 
   private = GET_PRIVATE (entry);
 
-  if (gimp_rgb_distance (&private->color, color) > 0.0)
+  if (ligma_rgb_distance (&private->color, color) > 0.0)
     {
       gchar   buffer[8];
       guchar  r, g, b;
 
-      gimp_rgb_set (&private->color, color->r, color->g, color->b);
-      gimp_rgb_clamp (&private->color);
+      ligma_rgb_set (&private->color, color->r, color->g, color->b);
+      ligma_rgb_clamp (&private->color);
 
-      gimp_rgb_get_uchar (&private->color, &r, &g, &b);
+      ligma_rgb_get_uchar (&private->color, &r, &g, &b);
       g_snprintf (buffer, sizeof (buffer), "%.2x%.2x%.2x", r, g, b);
 
       gtk_entry_set_text (GTK_ENTRY (entry), buffer);
@@ -247,21 +247,21 @@ gimp_color_hex_entry_set_color (GimpColorHexEntry *entry,
 }
 
 /**
- * gimp_color_hex_entry_get_color:
- * @entry: a #GimpColorHexEntry widget
- * @color: (out caller-allocates): pointer to a #GimpRGB
+ * ligma_color_hex_entry_get_color:
+ * @entry: a #LigmaColorHexEntry widget
+ * @color: (out caller-allocates): pointer to a #LigmaRGB
  *
- * Retrieves the color value displayed by a #GimpColorHexEntry.
+ * Retrieves the color value displayed by a #LigmaColorHexEntry.
  *
  * Since: 2.2
  **/
 void
-gimp_color_hex_entry_get_color (GimpColorHexEntry *entry,
-                                GimpRGB           *color)
+ligma_color_hex_entry_get_color (LigmaColorHexEntry *entry,
+                                LigmaRGB           *color)
 {
-  GimpColorHexEntryPrivate *private;
+  LigmaColorHexEntryPrivate *private;
 
-  g_return_if_fail (GIMP_IS_COLOR_HEX_ENTRY (entry));
+  g_return_if_fail (LIGMA_IS_COLOR_HEX_ENTRY (entry));
   g_return_if_fail (color != NULL);
 
   private = GET_PRIVATE (entry);
@@ -270,11 +270,11 @@ gimp_color_hex_entry_get_color (GimpColorHexEntry *entry,
 }
 
 static gboolean
-gimp_color_hex_entry_events (GtkWidget *widget,
+ligma_color_hex_entry_events (GtkWidget *widget,
                              GdkEvent  *event)
 {
-  GimpColorHexEntry        *entry   = GIMP_COLOR_HEX_ENTRY (widget);
-  GimpColorHexEntryPrivate *private = GET_PRIVATE (entry);
+  LigmaColorHexEntry        *entry   = LIGMA_COLOR_HEX_ENTRY (widget);
+  LigmaColorHexEntryPrivate *private = GET_PRIVATE (entry);
 
   switch (event->type)
     {
@@ -297,19 +297,19 @@ gimp_color_hex_entry_events (GtkWidget *widget,
 
         text = gtk_entry_get_text (GTK_ENTRY (widget));
 
-        gimp_rgb_get_uchar (&private->color, &r, &g, &b);
+        ligma_rgb_get_uchar (&private->color, &r, &g, &b);
         g_snprintf (buffer, sizeof (buffer), "%.2x%.2x%.2x", r, g, b);
 
         if (g_ascii_strcasecmp (buffer, text) != 0)
           {
-            GimpRGB  color;
+            LigmaRGB  color;
             gsize    len = strlen (text);
 
             if (len > 0 &&
-                (gimp_rgb_parse_hex (&color, text, len) ||
-                 gimp_rgb_parse_name (&color, text, -1)))
+                (ligma_rgb_parse_hex (&color, text, len) ||
+                 ligma_rgb_parse_name (&color, text, -1)))
               {
-                gimp_color_hex_entry_set_color (entry, &color);
+                ligma_color_hex_entry_set_color (entry, &color);
               }
             else
               {
@@ -328,20 +328,20 @@ gimp_color_hex_entry_events (GtkWidget *widget,
 }
 
 static gboolean
-gimp_color_hex_entry_matched (GtkEntryCompletion *completion,
+ligma_color_hex_entry_matched (GtkEntryCompletion *completion,
                               GtkTreeModel       *model,
                               GtkTreeIter        *iter,
-                              GimpColorHexEntry  *entry)
+                              LigmaColorHexEntry  *entry)
 {
   gchar   *name;
-  GimpRGB  color;
+  LigmaRGB  color;
 
   gtk_tree_model_get (model, iter,
                       COLUMN_NAME, &name,
                       -1);
 
-  if (gimp_rgb_parse_name (&color, name, -1))
-    gimp_color_hex_entry_set_color (entry, &color);
+  if (ligma_rgb_parse_name (&color, name, -1))
+    ligma_color_hex_entry_set_color (entry, &color);
 
   g_free (name);
 

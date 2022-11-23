@@ -1,10 +1,10 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GIMP Help Browser
- * Copyright (C) 1999-2008 Sven Neumann <sven@gimp.org>
- *                         Michael Natterer <mitch@gimp.org>
- *                         Róman Joost <romanofski@gimp.org>
+ * LIGMA Help Browser
+ * Copyright (C) 1999-2008 Sven Neumann <sven@ligma.org>
+ *                         Michael Natterer <mitch@ligma.org>
+ *                         Róman Joost <romanofski@ligma.org>
  *                         Niels De Graef <nielsdg@redhat.com>
  *
  * dialog.c
@@ -34,19 +34,19 @@
 
 #include <webkit2/webkit2.h>
 
-#include "libgimp/gimp.h"
-#include "libgimp/gimpui.h"
+#include "libligma/ligma.h"
+#include "libligma/ligmaui.h"
 
-#include "plug-ins/help/gimphelp.h"
+#include "plug-ins/help/ligmahelp.h"
 
 #include "dialog.h"
 #include "uri.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
-#define GIMP_HELP_BROWSER_DIALOG_DATA      "gimp-help-browser-dialog"
-#define GIMP_HELP_BROWSER_INDEX_MAX_DEPTH  4
+#define LIGMA_HELP_BROWSER_DIALOG_DATA      "ligma-help-browser-dialog"
+#define LIGMA_HELP_BROWSER_INDEX_MAX_DEPTH  4
 
 
 typedef struct
@@ -58,7 +58,7 @@ typedef struct
   double   zoom;
 } DialogData;
 
-struct _GimpHelpBrowserDialog
+struct _LigmaHelpBrowserDialog
 {
   GtkApplicationWindow  parent_instance;
 
@@ -78,10 +78,10 @@ struct _GimpHelpBrowserDialog
   GMenuModel           *copy_popup_menu_model;
 };
 
-G_DEFINE_TYPE (GimpHelpBrowserDialog, gimp_help_browser_dialog, GTK_TYPE_APPLICATION_WINDOW)
+G_DEFINE_TYPE (LigmaHelpBrowserDialog, ligma_help_browser_dialog, GTK_TYPE_APPLICATION_WINDOW)
 
 
-static void        gimp_help_browser_dialog_finalize (GObject                  *object);
+static void        ligma_help_browser_dialog_finalize (GObject                  *object);
 
 /* Actions. */
 
@@ -143,7 +143,7 @@ static void        webview_realize                   (GtkWidget                *
                                                       gpointer                  user_data);
 static void        webview_unrealize                 (GtkWidget                *widget,
                                                       gpointer                  user_data);
-static void        do_popup_menu                     (GimpHelpBrowserDialog    *self,
+static void        do_popup_menu                     (LigmaHelpBrowserDialog    *self,
                                                       GtkWidget                *webview,
                                                       GdkEvent                 *event);
 static gboolean    webview_popup_menu                (GtkWidget                *webview,
@@ -157,7 +157,7 @@ static gboolean    webview_key_press                 (GtkWidget                *
 static void        webview_title_changed             (WebKitWebView            *webview,
                                                       GParamSpec               *pspec,
                                                       gpointer                  user_data);
-static void        select_index                      (GimpHelpBrowserDialog    *self,
+static void        select_index                      (LigmaHelpBrowserDialog    *self,
                                                       const char               *uri);
 static gboolean    webview_decide_policy             (WebKitWebView            *webview,
                                                       WebKitPolicyDecision     *decision,
@@ -187,32 +187,32 @@ static void        dialog_unmap                      (GtkWidget                *
 
 /* Utilities. */
 
-static void        search                            (GimpHelpBrowserDialog    *self,
+static void        search                            (LigmaHelpBrowserDialog    *self,
                                                       const char               *text);
 
 static GtkWidget * build_menu                        (const GList              *items,
                                                       gboolean                  back);
 
-static void        update_actions                    (GimpHelpBrowserDialog    *self);
+static void        update_actions                    (LigmaHelpBrowserDialog    *self);
 
 static void        add_tool_button                   (GtkWidget                *toolbar,
                                                       const char               *action,
                                                       const char               *icon,
                                                       const char               *label,
                                                       const char               *tooltip);
-static GtkWidget * build_searchbar                   (GimpHelpBrowserDialog    *self);
+static GtkWidget * build_searchbar                   (LigmaHelpBrowserDialog    *self);
 
 static void        browser_dialog_make_index_foreach (const gchar              *help_id,
-                                                      GimpHelpItem             *item,
-                                                      GimpHelpLocale           *locale);
+                                                      LigmaHelpItem             *item,
+                                                      LigmaHelpLocale           *locale);
 static gint        help_item_compare                 (gconstpointer             a,
                                                       gconstpointer             b);
-static void        add_child                         (GimpHelpBrowserDialog    *self,
+static void        add_child                         (LigmaHelpBrowserDialog    *self,
                                                       GtkTreeStore             *store,
-                                                      GimpHelpDomain           *domain,
-                                                      GimpHelpLocale           *locale,
+                                                      LigmaHelpDomain           *domain,
+                                                      LigmaHelpLocale           *locale,
                                                       GtkTreeIter              *parent,
-                                                      GimpHelpItem             *item,
+                                                      LigmaHelpItem             *item,
                                                       int                       depth);
 
 
@@ -239,15 +239,15 @@ static const GActionEntry ACTIONS[] =
 
 
 static void
-gimp_help_browser_dialog_class_init (GimpHelpBrowserDialogClass *klass)
+ligma_help_browser_dialog_class_init (LigmaHelpBrowserDialogClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->finalize = gimp_help_browser_dialog_finalize;
+  object_class->finalize = ligma_help_browser_dialog_finalize;
 }
 
 static void
-gimp_help_browser_dialog_init (GimpHelpBrowserDialog *self)
+ligma_help_browser_dialog_init (LigmaHelpBrowserDialog *self)
 {
   GtkWindow   *window = GTK_WINDOW (self);
   GtkWidget   *vbox;
@@ -258,8 +258,8 @@ gimp_help_browser_dialog_init (GimpHelpBrowserDialog *self)
   WebKitSettings *settings;
 
   /*  the dialog window  */
-  gtk_window_set_title (GTK_WINDOW (window), _("GIMP Help Browser"));
-  gtk_window_set_icon_name (GTK_WINDOW (window), GIMP_ICON_HELP_USER_MANUAL);
+  gtk_window_set_title (GTK_WINDOW (window), _("LIGMA Help Browser"));
+  gtk_window_set_icon_name (GTK_WINDOW (window), LIGMA_ICON_HELP_USER_MANUAL);
 
   g_action_map_add_action_entries (G_ACTION_MAP (self),
                                    ACTIONS, G_N_ELEMENTS (ACTIONS),
@@ -272,23 +272,23 @@ gimp_help_browser_dialog_init (GimpHelpBrowserDialog *self)
   /* Toolbar */
   toolbar = gtk_toolbar_new ();
 
-  add_tool_button (toolbar, "win.reload", GIMP_ICON_VIEW_REFRESH, _("_Reload"), _("Reload current page"));
-  add_tool_button (toolbar, "win.stop", GIMP_ICON_PROCESS_STOP, _("_Stop"), _("Stop loading this page"));
-  add_tool_button (toolbar, "win.home", GIMP_ICON_GO_HOME, NULL, _("Go to the index page"));
+  add_tool_button (toolbar, "win.reload", LIGMA_ICON_VIEW_REFRESH, _("_Reload"), _("Reload current page"));
+  add_tool_button (toolbar, "win.stop", LIGMA_ICON_PROCESS_STOP, _("_Stop"), _("Stop loading this page"));
+  add_tool_button (toolbar, "win.home", LIGMA_ICON_GO_HOME, NULL, _("Go to the index page"));
   item = gtk_separator_tool_item_new ();
   gtk_toolbar_insert (GTK_TOOLBAR (toolbar), item, -1);
   gtk_separator_tool_item_set_draw (GTK_SEPARATOR_TOOL_ITEM (item), FALSE);
   gtk_tool_item_set_expand (item, TRUE);
   gtk_widget_show (GTK_WIDGET (item));
-  add_tool_button (toolbar, "win.load-uri('https://docs.gimp.org')", GIMP_ICON_HELP_USER_MANUAL, "docs.gimp.org", _("Visit the GIMP documentation website"));
+  add_tool_button (toolbar, "win.load-uri('https://docs.ligma.org')", LIGMA_ICON_HELP_USER_MANUAL, "docs.ligma.org", _("Visit the LIGMA documentation website"));
 
-  item = gtk_menu_tool_button_new (gtk_image_new_from_icon_name (GIMP_ICON_GO_NEXT, GTK_ICON_SIZE_BUTTON), NULL);
+  item = gtk_menu_tool_button_new (gtk_image_new_from_icon_name (LIGMA_ICON_GO_NEXT, GTK_ICON_SIZE_BUTTON), NULL);
   gtk_toolbar_insert (GTK_TOOLBAR (toolbar), item, 0);
   gtk_widget_show (GTK_WIDGET (item));
   gtk_actionable_set_action_name (GTK_ACTIONABLE (item), "win.forward");
   self->button_next = GTK_WIDGET (item);
 
-  item = gtk_menu_tool_button_new (gtk_image_new_from_icon_name (GIMP_ICON_GO_PREVIOUS, GTK_ICON_SIZE_BUTTON), NULL);
+  item = gtk_menu_tool_button_new (gtk_image_new_from_icon_name (LIGMA_ICON_GO_PREVIOUS, GTK_ICON_SIZE_BUTTON), NULL);
   gtk_toolbar_insert (GTK_TOOLBAR (toolbar), item, 0);
   gtk_widget_show (GTK_WIDGET (item));
   gtk_actionable_set_action_name (GTK_ACTIONABLE (item), "win.back");
@@ -459,30 +459,30 @@ gimp_help_browser_dialog_init (GimpHelpBrowserDialog *self)
 }
 
 static void
-gimp_help_browser_dialog_finalize (GObject *object)
+ligma_help_browser_dialog_finalize (GObject *object)
 {
-  GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (object);
+  LigmaHelpBrowserDialog *self = LIGMA_HELP_BROWSER_DIALOG (object);
 
   g_clear_pointer (&self->uri_hash_table, g_hash_table_unref);
   g_clear_object (&self->popup_menu_model);
   g_clear_object (&self->copy_popup_menu_model);
 
-  G_OBJECT_CLASS (gimp_help_browser_dialog_parent_class)->finalize (object);
+  G_OBJECT_CLASS (ligma_help_browser_dialog_parent_class)->finalize (object);
 }
 
 /* Public functions. */
 
-GimpHelpBrowserDialog *
-gimp_help_browser_dialog_new (const gchar *plug_in_binary, GApplication *app)
+LigmaHelpBrowserDialog *
+ligma_help_browser_dialog_new (const gchar *plug_in_binary, GApplication *app)
 {
-  GimpHelpBrowserDialog *window;
+  LigmaHelpBrowserDialog *window;
   DialogData             data = { 720, 560, 240, TRUE, 1.0 };
 
-  gimp_ui_init (plug_in_binary);
+  ligma_ui_init (plug_in_binary);
 
-  gimp_get_data (GIMP_HELP_BROWSER_DIALOG_DATA, &data);
+  ligma_get_data (LIGMA_HELP_BROWSER_DIALOG_DATA, &data);
 
-  window = g_object_new (GIMP_TYPE_HELP_BROWSER_DIALOG,
+  window = g_object_new (LIGMA_TYPE_HELP_BROWSER_DIALOG,
                          "application", app,
                          "role", plug_in_binary,
                          "default-width", data.width,
@@ -497,7 +497,7 @@ gimp_help_browser_dialog_new (const gchar *plug_in_binary, GApplication *app)
 }
 
 void
-gimp_help_browser_dialog_load (GimpHelpBrowserDialog *self,
+ligma_help_browser_dialog_load (LigmaHelpBrowserDialog *self,
                                const char            *uri)
 {
   g_return_if_fail (uri && *uri);
@@ -510,9 +510,9 @@ gimp_help_browser_dialog_load (GimpHelpBrowserDialog *self,
 }
 
 void
-gimp_help_browser_dialog_make_index (GimpHelpBrowserDialog *self,
-                                     GimpHelpDomain        *domain,
-                                     GimpHelpLocale        *locale)
+ligma_help_browser_dialog_make_index (LigmaHelpBrowserDialog *self,
+                                     LigmaHelpDomain        *domain,
+                                     LigmaHelpLocale        *locale)
 {
   GtkTreeStore *store;
   GList        *list;
@@ -544,7 +544,7 @@ gimp_help_browser_dialog_make_index (GimpHelpBrowserDialog *self,
 
   for (list = locale->toplevel_items; list; list = g_list_next (list))
     {
-      GimpHelpItem *item = list->data;
+      LigmaHelpItem *item = list->data;
 
       add_child (self, store, domain, locale, NULL, item, 0);
     }
@@ -560,7 +560,7 @@ back_action (GSimpleAction *action,
              GVariant      *parameter,
              gpointer       user_data)
 {
-  GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
+  LigmaHelpBrowserDialog *self = LIGMA_HELP_BROWSER_DIALOG (user_data);
 
   webkit_web_view_go_back (WEBKIT_WEB_VIEW (self->webview));
 }
@@ -570,7 +570,7 @@ step_action (GSimpleAction *action,
              GVariant      *parameter,
              gpointer       user_data)
 {
-  GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
+  LigmaHelpBrowserDialog *self = LIGMA_HELP_BROWSER_DIALOG (user_data);
   gint steps;
   WebKitBackForwardList *back_fw_list;
   WebKitBackForwardListItem *back_fw_list_item;
@@ -592,7 +592,7 @@ forward_action (GSimpleAction *action,
                 GVariant      *parameter,
                 gpointer       user_data)
 {
-  GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
+  LigmaHelpBrowserDialog *self = LIGMA_HELP_BROWSER_DIALOG (user_data);
 
   webkit_web_view_go_forward (WEBKIT_WEB_VIEW (self->webview));
 }
@@ -602,7 +602,7 @@ reload_action (GSimpleAction *action,
                GVariant      *parameter,
                gpointer       user_data)
 {
-  GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
+  LigmaHelpBrowserDialog *self = LIGMA_HELP_BROWSER_DIALOG (user_data);
 
   webkit_web_view_reload (WEBKIT_WEB_VIEW (self->webview));
 }
@@ -612,7 +612,7 @@ stop_action (GSimpleAction *action,
              GVariant      *parameter,
              gpointer       user_data)
 {
-  GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
+  LigmaHelpBrowserDialog *self = LIGMA_HELP_BROWSER_DIALOG (user_data);
 
   webkit_web_view_stop_loading (WEBKIT_WEB_VIEW (self->webview));
 }
@@ -622,10 +622,10 @@ home_action (GSimpleAction *action,
              GVariant      *parameter,
              gpointer       user_data)
 {
-  GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
+  LigmaHelpBrowserDialog *self = LIGMA_HELP_BROWSER_DIALOG (user_data);
   GtkTreeModel          *model;
-  GimpHelpDomain        *domain;
-  GimpHelpLocale        *locale;
+  LigmaHelpDomain        *domain;
+  LigmaHelpLocale        *locale;
 
   model  = gtk_tree_view_get_model (GTK_TREE_VIEW (self->tree_view));
   domain = g_object_get_data (G_OBJECT (model), "domain");
@@ -634,10 +634,10 @@ home_action (GSimpleAction *action,
     {
       gchar *uri = g_strconcat (domain->help_uri,  "/",
                                 locale->locale_id, "/",
-                                gimp_help_locale_map (locale,
-                                                      GIMP_HELP_DEFAULT_ID),
+                                ligma_help_locale_map (locale,
+                                                      LIGMA_HELP_DEFAULT_ID),
                                 NULL);
-      gimp_help_browser_dialog_load (self, uri);
+      ligma_help_browser_dialog_load (self, uri);
       g_free (uri);
     }
 }
@@ -647,7 +647,7 @@ find_action (GSimpleAction *action,
              GVariant      *parameter,
              gpointer       user_data)
 {
-  GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
+  LigmaHelpBrowserDialog *self = LIGMA_HELP_BROWSER_DIALOG (user_data);
 
   gtk_widget_show (self->searchbar);
   gtk_widget_grab_focus (self->search_entry);
@@ -658,7 +658,7 @@ find_again_action (GSimpleAction *action,
                    GVariant      *parameter,
                    gpointer       user_data)
 {
-  GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
+  LigmaHelpBrowserDialog *self = LIGMA_HELP_BROWSER_DIALOG (user_data);
 
   gtk_widget_show (self->searchbar);
   gtk_widget_grab_focus (self->search_entry);
@@ -671,7 +671,7 @@ search_next_action (GSimpleAction *action,
                     GVariant      *parameter,
                     gpointer       user_data)
 {
-  GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
+  LigmaHelpBrowserDialog *self = LIGMA_HELP_BROWSER_DIALOG (user_data);
   WebKitFindController *find_controller;
 
   find_controller =
@@ -684,7 +684,7 @@ search_previous_action (GSimpleAction *action,
                         GVariant      *parameter,
                         gpointer       user_data)
 {
-  GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
+  LigmaHelpBrowserDialog *self = LIGMA_HELP_BROWSER_DIALOG (user_data);
   WebKitFindController *find_controller;
 
   find_controller =
@@ -697,7 +697,7 @@ copy_location_action (GSimpleAction *action,
                       GVariant      *parameter,
                       gpointer       user_data)
 {
-  GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
+  LigmaHelpBrowserDialog *self = LIGMA_HELP_BROWSER_DIALOG (user_data);
   const char *uri;
 
   uri = webkit_web_view_get_uri (WEBKIT_WEB_VIEW (self->webview));
@@ -716,7 +716,7 @@ copy_selection_action (GSimpleAction *action,
                        GVariant      *parameter,
                        gpointer       user_data)
 {
-  GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
+  LigmaHelpBrowserDialog *self = LIGMA_HELP_BROWSER_DIALOG (user_data);
   WebKitEditorState *editor_state;
 
   editor_state = webkit_web_view_get_editor_state (WEBKIT_WEB_VIEW (self->webview));
@@ -732,7 +732,7 @@ show_index_change_state (GSimpleAction *action,
                          GVariant      *new_state,
                          gpointer       user_data)
 {
-  GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
+  LigmaHelpBrowserDialog *self = LIGMA_HELP_BROWSER_DIALOG (user_data);
   gboolean show_index;
 
   show_index = g_variant_get_boolean (new_state);
@@ -746,7 +746,7 @@ zoom_in_action (GSimpleAction *action,
                 GVariant      *parameter,
                 gpointer       user_data)
 {
-  GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
+  LigmaHelpBrowserDialog *self = LIGMA_HELP_BROWSER_DIALOG (user_data);
   double zoom_level;
 
   zoom_level = webkit_web_view_get_zoom_level (WEBKIT_WEB_VIEW (self->webview));
@@ -759,7 +759,7 @@ zoom_out_action (GSimpleAction *action,
                  GVariant      *parameter,
                  gpointer       user_data)
 {
-  GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
+  LigmaHelpBrowserDialog *self = LIGMA_HELP_BROWSER_DIALOG (user_data);
   double zoom_level;
 
   zoom_level = webkit_web_view_get_zoom_level (WEBKIT_WEB_VIEW (self->webview));
@@ -772,11 +772,11 @@ load_uri_action (GSimpleAction *action,
                  GVariant      *parameter,
                  gpointer       user_data)
 {
-  GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
+  LigmaHelpBrowserDialog *self = LIGMA_HELP_BROWSER_DIALOG (user_data);
   const char *uri;
 
   uri = g_variant_get_string (parameter, NULL);
-  gimp_help_browser_dialog_load (self, uri);
+  ligma_help_browser_dialog_load (self, uri);
 }
 
 static void
@@ -784,7 +784,7 @@ close_action (GSimpleAction *action,
               GVariant      *parameter,
               gpointer       user_data)
 {
-  GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
+  LigmaHelpBrowserDialog *self = LIGMA_HELP_BROWSER_DIALOG (user_data);
 
   gtk_widget_destroy (GTK_WIDGET (self));
 }
@@ -793,7 +793,7 @@ static void
 webview_realize (GtkWidget *webview,
                  gpointer   user_data)
 {
-  GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
+  LigmaHelpBrowserDialog *self = LIGMA_HELP_BROWSER_DIALOG (user_data);
 
   g_return_if_fail (self->busy_cursor == NULL);
 
@@ -805,13 +805,13 @@ static void
 webview_unrealize (GtkWidget *widget,
                    gpointer   user_data)
 {
-  GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
+  LigmaHelpBrowserDialog *self = LIGMA_HELP_BROWSER_DIALOG (user_data);
 
   g_clear_object (&self->busy_cursor);
 }
 
 static void
-do_popup_menu (GimpHelpBrowserDialog *self,
+do_popup_menu (LigmaHelpBrowserDialog *self,
                GtkWidget             *webview,
                GdkEvent              *event)
 {
@@ -837,7 +837,7 @@ static gboolean
 webview_popup_menu (GtkWidget *webview,
                     gpointer   user_data)
 {
-  GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
+  LigmaHelpBrowserDialog *self = LIGMA_HELP_BROWSER_DIALOG (user_data);
 
   do_popup_menu (self, webview, NULL);
   return TRUE;
@@ -848,7 +848,7 @@ webview_button_press (GtkWidget      *webview,
                       GdkEventButton *event,
                       gpointer        user_data)
 {
-  GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
+  LigmaHelpBrowserDialog *self = LIGMA_HELP_BROWSER_DIALOG (user_data);
 
   if (gdk_event_triggers_context_menu ((GdkEvent *) event))
     {
@@ -864,7 +864,7 @@ webview_key_press (GtkWidget   *widget,
                    GdkEventKey *event,
                    gpointer     user_data)
 {
-  GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
+  LigmaHelpBrowserDialog *self = LIGMA_HELP_BROWSER_DIALOG (user_data);
 
   if (event->keyval == GDK_KEY_slash)
     {
@@ -882,14 +882,14 @@ webview_title_changed (WebKitWebView *webview,
                        GParamSpec    *pspec,
                        gpointer       user_data)
 {
-  GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
+  LigmaHelpBrowserDialog *self = LIGMA_HELP_BROWSER_DIALOG (user_data);
   const char            *title;
   char                  *full_title;
 
   title = webkit_web_view_get_title (webview);
   full_title = g_strdup_printf ("%s - %s",
                                 title ? title : _("Untitled"),
-                                _("GIMP Help Browser"));
+                                _("LIGMA Help Browser"));
 
   gtk_window_set_title (GTK_WINDOW (self), full_title);
   g_free (full_title);
@@ -898,7 +898,7 @@ webview_title_changed (WebKitWebView *webview,
 }
 
 static void
-select_index (GimpHelpBrowserDialog *self,
+select_index (LigmaHelpBrowserDialog *self,
               const char            *uri)
 {
   GtkTreeSelection *selection;
@@ -962,7 +962,7 @@ webview_load_changed (WebKitWebView   *webview,
                       WebKitLoadEvent  event,
                       gpointer         user_data)
 {
-  GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
+  LigmaHelpBrowserDialog *self = LIGMA_HELP_BROWSER_DIALOG (user_data);
   GAction               *action;
 
   action = g_action_map_lookup_action (G_ACTION_MAP (self), "back");
@@ -990,12 +990,12 @@ row_activated (GtkTreeView       *tree_view,
                GtkTreeViewColumn *column,
                gpointer           user_data)
 {
-  GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
+  LigmaHelpBrowserDialog *self = LIGMA_HELP_BROWSER_DIALOG (user_data);
   GtkTreeModel          *model;
   GtkTreeIter            iter;
-  GimpHelpDomain        *domain;
-  GimpHelpLocale        *locale;
-  GimpHelpItem          *item;
+  LigmaHelpDomain        *domain;
+  LigmaHelpLocale        *locale;
+  LigmaHelpItem          *item;
   char                  *uri;
 
   model = gtk_tree_view_get_model (tree_view);
@@ -1013,7 +1013,7 @@ row_activated (GtkTreeView       *tree_view,
                      item->ref,
                      NULL);
 
-  gimp_help_browser_dialog_load (self, uri);
+  ligma_help_browser_dialog_load (self, uri);
 
   g_free (uri);
 }
@@ -1022,7 +1022,7 @@ static void
 search_close_clicked (GtkWidget *button,
                       gpointer   user_data)
 {
-  GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
+  LigmaHelpBrowserDialog *self = LIGMA_HELP_BROWSER_DIALOG (user_data);
   WebKitFindController *find_controller =
     webkit_web_view_get_find_controller (WEBKIT_WEB_VIEW (self->webview));
 
@@ -1035,7 +1035,7 @@ static void
 search_entry_changed (GtkWidget *search_entry,
                       gpointer   user_data)
 {
-  GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
+  LigmaHelpBrowserDialog *self = LIGMA_HELP_BROWSER_DIALOG (user_data);
 
   search (self, gtk_entry_get_text (GTK_ENTRY (search_entry)));
 }
@@ -1045,7 +1045,7 @@ search_entry_key_press (GtkWidget   *search_entry,
                         GdkEventKey *event,
                         gpointer     user_data)
 {
-  GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
+  LigmaHelpBrowserDialog *self = LIGMA_HELP_BROWSER_DIALOG (user_data);
   WebKitFindController *find_controller;
 
   find_controller = webkit_web_view_get_find_controller (WEBKIT_WEB_VIEW (self->webview));
@@ -1070,7 +1070,7 @@ static void
 dialog_unmap (GtkWidget *window,
               gpointer   user_data)
 {
-  GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
+  LigmaHelpBrowserDialog *self = LIGMA_HELP_BROWSER_DIALOG (user_data);
   DialogData data;
 
   gtk_window_get_size (GTK_WINDOW (window), &data.width, &data.height);
@@ -1081,11 +1081,11 @@ dialog_unmap (GtkWidget *window,
   data.zoom = (self->webview ?
                webkit_web_view_get_zoom_level (WEBKIT_WEB_VIEW (self->webview)) : 1.0);
 
-  gimp_set_data (GIMP_HELP_BROWSER_DIALOG_DATA, &data, sizeof (data));
+  ligma_set_data (LIGMA_HELP_BROWSER_DIALOG_DATA, &data, sizeof (data));
 }
 
 static void
-search (GimpHelpBrowserDialog *self,
+search (LigmaHelpBrowserDialog *self,
         const char            *text)
 {
   WebKitFindController *find_controller;
@@ -1145,7 +1145,7 @@ build_menu (const GList *items,
 }
 
 static void
-update_actions (GimpHelpBrowserDialog *self)
+update_actions (LigmaHelpBrowserDialog *self)
 {
   GActionMap            *action_map = G_ACTION_MAP (self);
   GAction               *action;
@@ -1224,7 +1224,7 @@ add_tool_button (GtkWidget  *toolbar,
 }
 
 static GtkWidget *
-build_searchbar (GimpHelpBrowserDialog *self)
+build_searchbar (LigmaHelpBrowserDialog *self)
 {
   GtkWidget *button;
   GtkWidget *hbox;
@@ -1251,7 +1251,7 @@ build_searchbar (GimpHelpBrowserDialog *self)
   button = gtk_button_new_with_mnemonic (C_("search", "_Previous"));
   gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
   gtk_button_set_image (GTK_BUTTON (button),
-                        gtk_image_new_from_icon_name (GIMP_ICON_GO_PREVIOUS,
+                        gtk_image_new_from_icon_name (LIGMA_ICON_GO_PREVIOUS,
                                                       GTK_ICON_SIZE_BUTTON));
   gtk_actionable_set_action_name (GTK_ACTIONABLE (button), "win.search-previous");
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
@@ -1260,7 +1260,7 @@ build_searchbar (GimpHelpBrowserDialog *self)
   button = gtk_button_new_with_mnemonic (C_("search", "_Next"));
   gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
   gtk_button_set_image (GTK_BUTTON (button),
-                        gtk_image_new_from_icon_name (GIMP_ICON_GO_NEXT,
+                        gtk_image_new_from_icon_name (LIGMA_ICON_GO_NEXT,
                                                       GTK_ICON_SIZE_BUTTON));
   gtk_actionable_set_action_name (GTK_ACTIONABLE (button), "win.search-next");
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
@@ -1280,8 +1280,8 @@ build_searchbar (GimpHelpBrowserDialog *self)
 
 static void
 browser_dialog_make_index_foreach (const gchar    *help_id,
-                                   GimpHelpItem   *item,
-                                   GimpHelpLocale *locale)
+                                   LigmaHelpItem   *item,
+                                   LigmaHelpLocale *locale)
 {
   gchar *sort_key = item->title;
 
@@ -1306,7 +1306,7 @@ browser_dialog_make_index_foreach (const gchar    *help_id,
 
   if (sort_key)
     {
-      int    max_tokens = GIMP_HELP_BROWSER_INDEX_MAX_DEPTH;
+      int    max_tokens = LIGMA_HELP_BROWSER_INDEX_MAX_DEPTH;
       char **indices = g_strsplit (sort_key, ".", max_tokens + 1);
       int    i;
 
@@ -1342,7 +1342,7 @@ browser_dialog_make_index_foreach (const gchar    *help_id,
 
   if (item->parent && strlen (item->parent))
     {
-      GimpHelpItem *parent;
+      LigmaHelpItem *parent;
 
       parent = g_hash_table_lookup (locale->help_id_mapping, item->parent);
 
@@ -1361,8 +1361,8 @@ static gint
 help_item_compare (gconstpointer a,
                    gconstpointer b)
 {
-  const GimpHelpItem *item_a = a;
-  const GimpHelpItem *item_b = b;
+  const LigmaHelpItem *item_a = a;
+  const LigmaHelpItem *item_b = b;
 
   if (item_a->index > item_b->index)
     return 1;
@@ -1373,12 +1373,12 @@ help_item_compare (gconstpointer a,
 }
 
 static void
-add_child (GimpHelpBrowserDialog *self,
+add_child (LigmaHelpBrowserDialog *self,
            GtkTreeStore   *store,
-           GimpHelpDomain *domain,
-           GimpHelpLocale *locale,
+           LigmaHelpDomain *domain,
+           LigmaHelpLocale *locale,
            GtkTreeIter    *parent,
-           GimpHelpItem   *item,
+           LigmaHelpItem   *item,
            int             depth)
 {
   GtkTreeIter iter;
@@ -1400,14 +1400,14 @@ add_child (GimpHelpBrowserDialog *self,
                        uri,
                        gtk_tree_iter_copy (&iter));
 
-  if (depth + 1 == GIMP_HELP_BROWSER_INDEX_MAX_DEPTH)
+  if (depth + 1 == LIGMA_HELP_BROWSER_INDEX_MAX_DEPTH)
     return;
 
   item->children = g_list_sort (item->children, help_item_compare);
 
   for (GList *list = item->children; list; list = g_list_next (list))
     {
-      GimpHelpItem *item = list->data;
+      LigmaHelpItem *item = list->data;
 
       add_child (self, store, domain, locale, &iter, item, depth + 1);
     }

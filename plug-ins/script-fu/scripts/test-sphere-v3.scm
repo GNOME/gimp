@@ -1,16 +1,16 @@
-#!/usr/bin/env gimp-script-fu-interpreter-3.0
+#!/usr/bin/env ligma-script-fu-interpreter-3.0
 
 ; v3 >>> Has shebang, is interpreter
 
 ; This is a a test script to test Script-Fu parameter API.
 
-; For GIMP 3: uses GimpImageProcedure, GimpProcedureDialog, GimpConfig
+; For LIGMA 3: uses LigmaImageProcedure, LigmaProcedureDialog, LigmaConfig
 
-; See also test-sphere.scm, for GIMP 2, from which this is derived
+; See also test-sphere.scm, for LIGMA 2, from which this is derived
 ; Diffs marked with ; v3 >>>
 
 
-; v3 >>> signature of GimpImageProcedure
+; v3 >>> signature of LigmaImageProcedure
 ; drawables is a vector
 (define (script-fu-test-sphere-v3
                                image
@@ -40,8 +40,8 @@
   (let* (
         (width (* radius 3.75))
         (height (* radius 2.5))
-        (img (car (gimp-image-new width height RGB)))
-        (drawable (car (gimp-layer-new img width height RGB-IMAGE
+        (img (car (ligma-image-new width height RGB)))
+        (drawable (car (ligma-layer-new img width height RGB-IMAGE
                                        "Sphere Layer" 100 LAYER-MODE-NORMAL)))
         (radians (/ (* light *pi*) 180))
         (cx (/ width 2))
@@ -51,7 +51,7 @@
         (light-end-x (+ cx (* radius (cos (+ *pi* radians)))))
         (light-end-y (- cy (* radius (sin (+ *pi* radians)))))
         (offset (* radius 0.1))
-        (text-extents (gimp-text-get-extents-fontname multi-text
+        (text-extents (ligma-text-get-extents-fontname multi-text
                                                       size PIXELS
                                                       font))
         (x-position (- cx (/ (car text-extents) 2)))
@@ -60,15 +60,15 @@
         (shadow-x 0)
         )
 
-    (gimp-context-push)
-    (gimp-context-set-defaults)
+    (ligma-context-push)
+    (ligma-context-set-defaults)
 
-    (gimp-image-undo-disable img)
-    (gimp-image-insert-layer img drawable 0 0)
-    (gimp-context-set-foreground sphere-color)
-    (gimp-context-set-background bg-color)
-    (gimp-drawable-edit-fill drawable FILL-BACKGROUND)
-    (gimp-context-set-background '(20 20 20))
+    (ligma-image-undo-disable img)
+    (ligma-image-insert-layer img drawable 0 0)
+    (ligma-context-set-foreground sphere-color)
+    (ligma-context-set-background bg-color)
+    (ligma-drawable-edit-fill drawable FILL-BACKGROUND)
+    (ligma-context-set-background '(20 20 20))
 
     (if (and
          (or (and (>= light 45) (<= light 75))
@@ -82,51 +82,51 @@
               (begin (set! shadow-x (+ cx shadow-w))
                      (set! shadow-w (- shadow-w))))
 
-          (gimp-context-set-feather TRUE)
-          (gimp-context-set-feather-radius 7.5 7.5)
-          (gimp-image-select-ellipse img CHANNEL-OP-REPLACE shadow-x shadow-y shadow-w shadow-h)
-          (gimp-context-set-pattern pattern)
-          (gimp-drawable-edit-fill drawable FILL-PATTERN)))
+          (ligma-context-set-feather TRUE)
+          (ligma-context-set-feather-radius 7.5 7.5)
+          (ligma-image-select-ellipse img CHANNEL-OP-REPLACE shadow-x shadow-y shadow-w shadow-h)
+          (ligma-context-set-pattern pattern)
+          (ligma-drawable-edit-fill drawable FILL-PATTERN)))
 
-    (gimp-context-set-feather FALSE)
-    (gimp-image-select-ellipse img CHANNEL-OP-REPLACE (- cx radius) (- cy radius)
+    (ligma-context-set-feather FALSE)
+    (ligma-image-select-ellipse img CHANNEL-OP-REPLACE (- cx radius) (- cy radius)
                                (* 2 radius) (* 2 radius))
 
-    (gimp-context-set-gradient-fg-bg-rgb)
-    (gimp-drawable-edit-gradient-fill drawable
+    (ligma-context-set-gradient-fg-bg-rgb)
+    (ligma-drawable-edit-gradient-fill drawable
 				      GRADIENT-RADIAL offset
 				      FALSE 0 0
 				      TRUE
 				      light-x light-y
 				      light-end-x light-end-y)
 
-    (gimp-selection-none img)
+    (ligma-selection-none img)
 
-    (gimp-image-select-ellipse img CHANNEL-OP-REPLACE 10 10 50 50)
+    (ligma-image-select-ellipse img CHANNEL-OP-REPLACE 10 10 50 50)
 
-    (gimp-context-set-gradient gradient)
-    (gimp-context-set-gradient-reverse gradient-reverse)
-    (gimp-drawable-edit-gradient-fill drawable
+    (ligma-context-set-gradient gradient)
+    (ligma-context-set-gradient-reverse gradient-reverse)
+    (ligma-drawable-edit-gradient-fill drawable
 				      GRADIENT-LINEAR offset
 				      FALSE 0 0
 				      TRUE
 				      10 10
 				      30 60)
 
-    (gimp-selection-none img)
+    (ligma-selection-none img)
 
-    (gimp-context-set-foreground '(0 0 0))
-    (gimp-floating-sel-anchor (car (gimp-text-fontname img drawable
+    (ligma-context-set-foreground '(0 0 0))
+    (ligma-floating-sel-anchor (car (ligma-text-fontname img drawable
                                                        x-position y-position
                                                        multi-text
                                                        0 TRUE
                                                        size PIXELS
                                                        font)))
 
-    (gimp-image-undo-enable img)
-    (gimp-display-new img)
+    (ligma-image-undo-enable img)
+    (ligma-display-new img)
 
-    (gimp-context-pop)
+    (ligma-context-pop)
   )
 )
 
@@ -136,7 +136,7 @@
 
 (script-fu-register-filter "script-fu-test-sphere-v3"
   "Sphere v3..."
-  "Test script-fu-register-filter and GimpProcedureDialog: needs 2 selected layers."
+  "Test script-fu-register-filter and LigmaProcedureDialog: needs 2 selected layers."
   "Spencer Kimball, Sven Neumann"
   "Spencer Kimball"
   "1996, 1998"
@@ -157,7 +157,7 @@
   SF-ADJUSTMENT "Font size (pixels)" '(50 1 1000 1 10 0 1)
   SF-PALETTE    "Palette"            "Default"
   SF-FILENAME   "Environment map"
-                (string-append gimp-data-directory
+                (string-append ligma-data-directory
                                "/scripts/images/beavis.jpg")
   SF-OPTION     "Orientation"        '("Horizontal"
                                        "Vertical")

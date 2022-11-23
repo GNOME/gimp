@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimptoolrotategrid.h
- * Copyright (C) 2017 Michael Natterer <mitch@gimp.org>
+ * ligmatoolrotategrid.h
+ * Copyright (C) 2017 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,41 +18,41 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TOOL_ROTATE_GRID_H__
-#define __GIMP_TOOL_ROTATE_GRID_H__
+#ifndef __LIGMA_TOOL_ROTATE_GRID_H__
+#define __LIGMA_TOOL_ROTATE_GRID_H__
 
 
-#include "gimptooltransformgrid.h"
+#include "ligmatooltransformgrid.h"
 
 
-#define GIMP_TYPE_TOOL_ROTATE_GRID            (gimp_tool_rotate_grid_get_type ())
-#define GIMP_TOOL_ROTATE_GRID(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TOOL_ROTATE_GRID, GimpToolRotateGrid))
-#define GIMP_TOOL_ROTATE_GRID_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TOOL_ROTATE_GRID, GimpToolRotateGridClass))
-#define GIMP_IS_TOOL_ROTATE_GRID(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_TOOL_ROTATE_GRID))
-#define GIMP_IS_TOOL_ROTATE_GRID_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_TOOL_ROTATE_GRID))
-#define GIMP_TOOL_ROTATE_GRID_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_TOOL_ROTATE_GRID, GimpToolRotateGridClass))
+#define LIGMA_TYPE_TOOL_ROTATE_GRID            (ligma_tool_rotate_grid_get_type ())
+#define LIGMA_TOOL_ROTATE_GRID(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_TOOL_ROTATE_GRID, LigmaToolRotateGrid))
+#define LIGMA_TOOL_ROTATE_GRID_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_TOOL_ROTATE_GRID, LigmaToolRotateGridClass))
+#define LIGMA_IS_TOOL_ROTATE_GRID(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_TOOL_ROTATE_GRID))
+#define LIGMA_IS_TOOL_ROTATE_GRID_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_TOOL_ROTATE_GRID))
+#define LIGMA_TOOL_ROTATE_GRID_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_TOOL_ROTATE_GRID, LigmaToolRotateGridClass))
 
 
-typedef struct _GimpToolRotateGrid        GimpToolRotateGrid;
-typedef struct _GimpToolRotateGridPrivate GimpToolRotateGridPrivate;
-typedef struct _GimpToolRotateGridClass   GimpToolRotateGridClass;
+typedef struct _LigmaToolRotateGrid        LigmaToolRotateGrid;
+typedef struct _LigmaToolRotateGridPrivate LigmaToolRotateGridPrivate;
+typedef struct _LigmaToolRotateGridClass   LigmaToolRotateGridClass;
 
-struct _GimpToolRotateGrid
+struct _LigmaToolRotateGrid
 {
-  GimpToolTransformGrid      parent_instance;
+  LigmaToolTransformGrid      parent_instance;
 
-  GimpToolRotateGridPrivate *private;
+  LigmaToolRotateGridPrivate *private;
 };
 
-struct _GimpToolRotateGridClass
+struct _LigmaToolRotateGridClass
 {
-  GimpToolTransformGridClass  parent_class;
+  LigmaToolTransformGridClass  parent_class;
 };
 
 
-GType            gimp_tool_rotate_grid_get_type (void) G_GNUC_CONST;
+GType            ligma_tool_rotate_grid_get_type (void) G_GNUC_CONST;
 
-GimpToolWidget * gimp_tool_rotate_grid_new      (GimpDisplayShell  *shell,
+LigmaToolWidget * ligma_tool_rotate_grid_new      (LigmaDisplayShell  *shell,
                                                  gdouble            x1,
                                                  gdouble            y1,
                                                  gdouble            x2,
@@ -62,4 +62,4 @@ GimpToolWidget * gimp_tool_rotate_grid_new      (GimpDisplayShell  *shell,
                                                  gdouble            angle);
 
 
-#endif /* __GIMP_TOOL_ROTATE_GRID_H__ */
+#endif /* __LIGMA_TOOL_ROTATE_GRID_H__ */

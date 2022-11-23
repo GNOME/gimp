@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,40 +15,40 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_VECTORS_UNDO_H__
-#define __GIMP_VECTORS_UNDO_H__
+#ifndef __LIGMA_VECTORS_UNDO_H__
+#define __LIGMA_VECTORS_UNDO_H__
 
 
-#include "core/gimpitemundo.h"
+#include "core/ligmaitemundo.h"
 
 
-#define GIMP_TYPE_VECTORS_UNDO            (gimp_vectors_undo_get_type ())
-#define GIMP_VECTORS_UNDO(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_VECTORS_UNDO, GimpVectorsUndo))
-#define GIMP_VECTORS_UNDO_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_VECTORS_UNDO, GimpVectorsUndoClass))
-#define GIMP_IS_VECTORS_UNDO(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_VECTORS_UNDO))
-#define GIMP_IS_VECTORS_UNDO_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_VECTORS_UNDO))
-#define GIMP_VECTORS_UNDO_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_VECTORS_UNDO, GimpVectorsUndoClass))
+#define LIGMA_TYPE_VECTORS_UNDO            (ligma_vectors_undo_get_type ())
+#define LIGMA_VECTORS_UNDO(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_VECTORS_UNDO, LigmaVectorsUndo))
+#define LIGMA_VECTORS_UNDO_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_VECTORS_UNDO, LigmaVectorsUndoClass))
+#define LIGMA_IS_VECTORS_UNDO(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_VECTORS_UNDO))
+#define LIGMA_IS_VECTORS_UNDO_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_VECTORS_UNDO))
+#define LIGMA_VECTORS_UNDO_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_VECTORS_UNDO, LigmaVectorsUndoClass))
 
 
-typedef struct _GimpVectorsUndo      GimpVectorsUndo;
-typedef struct _GimpVectorsUndoClass GimpVectorsUndoClass;
+typedef struct _LigmaVectorsUndo      LigmaVectorsUndo;
+typedef struct _LigmaVectorsUndoClass LigmaVectorsUndoClass;
 
-struct _GimpVectorsUndo
+struct _LigmaVectorsUndo
 {
-  GimpItemUndo  parent_instance;
+  LigmaItemUndo  parent_instance;
 
-  GimpVectors  *prev_parent;
+  LigmaVectors  *prev_parent;
   gint          prev_position;   /*  former position in list    */
   GList        *prev_vectors;    /*  previous selected vectors  */
 };
 
-struct _GimpVectorsUndoClass
+struct _LigmaVectorsUndoClass
 {
-  GimpItemUndoClass  parent_class;
+  LigmaItemUndoClass  parent_class;
 };
 
 
-GType   gimp_vectors_undo_get_type (void) G_GNUC_CONST;
+GType   ligma_vectors_undo_get_type (void) G_GNUC_CONST;
 
 
-#endif /* __GIMP_VECTORS_UNDO_H__ */
+#endif /* __LIGMA_VECTORS_UNDO_H__ */

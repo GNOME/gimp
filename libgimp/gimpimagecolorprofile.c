@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimpimagecolorprofile.c
+ * ligmaimagecolorprofile.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,11 +20,11 @@
 
 #include "config.h"
 
-#include "gimp.h"
+#include "ligma.h"
 
 
 /**
- * gimp_image_get_color_profile:
+ * ligma_image_get_color_profile:
  * @image: The image.
  *
  * Returns the image's color profile
@@ -37,19 +37,19 @@
  *
  * Since: 2.10
  **/
-GimpColorProfile *
-gimp_image_get_color_profile (GimpImage *image)
+LigmaColorProfile *
+ligma_image_get_color_profile (LigmaImage *image)
 {
   guint8 *data;
   gint    length;
 
-  data = _gimp_image_get_color_profile (image, &length);
+  data = _ligma_image_get_color_profile (image, &length);
 
   if (data)
     {
-      GimpColorProfile *profile;
+      LigmaColorProfile *profile;
 
-      profile = gimp_color_profile_new_from_icc_profile (data, length, NULL);
+      profile = ligma_color_profile_new_from_icc_profile (data, length, NULL);
       g_free (data);
 
       return profile;
@@ -59,9 +59,9 @@ gimp_image_get_color_profile (GimpImage *image)
 }
 
 /**
- * gimp_image_set_color_profile:
+ * ligma_image_set_color_profile:
  * @image:   The image.
- * @profile: A #GimpColorProfile, or %NULL.
+ * @profile: A #LigmaColorProfile, or %NULL.
  *
  * Sets the image's color profile
  *
@@ -72,28 +72,28 @@ gimp_image_get_color_profile (GimpImage *image)
  * Since: 2.10
  **/
 gboolean
-gimp_image_set_color_profile (GimpImage        *image,
-                              GimpColorProfile *profile)
+ligma_image_set_color_profile (LigmaImage        *image,
+                              LigmaColorProfile *profile)
 {
   const guint8 *data   = NULL;
   gint          length = 0;
 
-  g_return_val_if_fail (profile == NULL || GIMP_IS_COLOR_PROFILE (profile),
+  g_return_val_if_fail (profile == NULL || LIGMA_IS_COLOR_PROFILE (profile),
                         FALSE);
 
   if (profile)
     {
       gsize l;
 
-      data = gimp_color_profile_get_icc_profile (profile, &l);
+      data = ligma_color_profile_get_icc_profile (profile, &l);
       length = l;
     }
 
-  return _gimp_image_set_color_profile (image, length, data);
+  return _ligma_image_set_color_profile (image, length, data);
 }
 
 /**
- * gimp_image_get_simulation_profile:
+ * ligma_image_get_simulation_profile:
  * @image: The image.
  *
  * Returns the image's simulation color profile
@@ -106,19 +106,19 @@ gimp_image_set_color_profile (GimpImage        *image,
  *
  * Since: 3.0
  **/
-GimpColorProfile *
-gimp_image_get_simulation_profile (GimpImage *image)
+LigmaColorProfile *
+ligma_image_get_simulation_profile (LigmaImage *image)
 {
   guint8 *data;
   gint    length;
 
-  data = _gimp_image_get_simulation_profile (image, &length);
+  data = _ligma_image_get_simulation_profile (image, &length);
 
   if (data)
     {
-      GimpColorProfile *profile;
+      LigmaColorProfile *profile;
 
-      profile = gimp_color_profile_new_from_icc_profile (data, length, NULL);
+      profile = ligma_color_profile_new_from_icc_profile (data, length, NULL);
       g_free (data);
 
       return profile;
@@ -128,9 +128,9 @@ gimp_image_get_simulation_profile (GimpImage *image)
 }
 
 /**
- * gimp_image_set_simulation_profile:
+ * ligma_image_set_simulation_profile:
  * @image:   The image.
- * @profile: A #GimpColorProfile, or %NULL.
+ * @profile: A #LigmaColorProfile, or %NULL.
  *
  * Sets the image's simulation color profile
  *
@@ -141,35 +141,35 @@ gimp_image_get_simulation_profile (GimpImage *image)
  * Since: 3.0
  **/
 gboolean
-gimp_image_set_simulation_profile (GimpImage        *image,
-                                   GimpColorProfile *profile)
+ligma_image_set_simulation_profile (LigmaImage        *image,
+                                   LigmaColorProfile *profile)
 {
   const guint8 *data   = NULL;
   gint          length = 0;
 
-  g_return_val_if_fail (profile == NULL || GIMP_IS_COLOR_PROFILE (profile),
+  g_return_val_if_fail (profile == NULL || LIGMA_IS_COLOR_PROFILE (profile),
                         FALSE);
 
   if (profile)
     {
       gsize l;
 
-      data = gimp_color_profile_get_icc_profile (profile, &l);
+      data = ligma_color_profile_get_icc_profile (profile, &l);
       length = l;
     }
 
-  return _gimp_image_set_simulation_profile (image, length, data);
+  return _ligma_image_set_simulation_profile (image, length, data);
 }
 
 /**
- * gimp_image_get_effective_color_profile:
+ * ligma_image_get_effective_color_profile:
  * @image: The image.
  *
  * Returns the color profile that is used for the image.
  *
  * This procedure returns the color profile that is actually used for
  * this image, which is the profile returned by
- * gimp_image_get_color_profile() if the image has a profile assigned,
+ * ligma_image_get_color_profile() if the image has a profile assigned,
  * or the default RGB profile from preferences if no profile is
  * assigned to the image. If there is no default RGB profile configured
  * in preferences either, a generated default RGB profile is returned.
@@ -179,19 +179,19 @@ gimp_image_set_simulation_profile (GimpImage        *image,
  *
  * Since: 2.10
  **/
-GimpColorProfile *
-gimp_image_get_effective_color_profile (GimpImage *image)
+LigmaColorProfile *
+ligma_image_get_effective_color_profile (LigmaImage *image)
 {
   guint8 *data;
   gint    length;
 
-  data = _gimp_image_get_effective_color_profile (image, &length);
+  data = _ligma_image_get_effective_color_profile (image, &length);
 
   if (data)
     {
-      GimpColorProfile *profile;
+      LigmaColorProfile *profile;
 
-      profile = gimp_color_profile_new_from_icc_profile (data, length, NULL);
+      profile = ligma_color_profile_new_from_icc_profile (data, length, NULL);
       g_free (data);
 
       return profile;
@@ -201,7 +201,7 @@ gimp_image_get_effective_color_profile (GimpImage *image)
 }
 
 /**
- * gimp_image_convert_color_profile:
+ * ligma_image_convert_color_profile:
  * @image:   The image.
  * @profile: The color profile to convert to.
  * @intent:  Rendering intent.
@@ -218,25 +218,25 @@ gimp_image_get_effective_color_profile (GimpImage *image)
  * Since: 2.10
  **/
 gboolean
-gimp_image_convert_color_profile (GimpImage                 *image,
-                                  GimpColorProfile          *profile,
-                                  GimpColorRenderingIntent   intent,
+ligma_image_convert_color_profile (LigmaImage                 *image,
+                                  LigmaColorProfile          *profile,
+                                  LigmaColorRenderingIntent   intent,
                                   gboolean                   bpc)
 {
   const guint8 *data   = NULL;
   gint          length = 0;
 
-  g_return_val_if_fail (profile == NULL || GIMP_IS_COLOR_PROFILE (profile),
+  g_return_val_if_fail (profile == NULL || LIGMA_IS_COLOR_PROFILE (profile),
                         FALSE);
 
   if (profile)
     {
       gsize l;
 
-      data = gimp_color_profile_get_icc_profile (profile, &l);
+      data = ligma_color_profile_get_icc_profile (profile, &l);
       length = l;
     }
 
-  return _gimp_image_convert_color_profile (image, length, data,
+  return _ligma_image_convert_color_profile (image, length, data,
                                             intent, bpc);
 }

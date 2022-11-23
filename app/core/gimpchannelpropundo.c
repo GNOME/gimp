@@ -1,4 +1,4 @@
-/* Gimp - The GNU Image Manipulation Program
+/* Ligma - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,59 +20,59 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "core-types.h"
 
-#include "gimpimage.h"
-#include "gimpchannel.h"
-#include "gimpchannelpropundo.h"
+#include "ligmaimage.h"
+#include "ligmachannel.h"
+#include "ligmachannelpropundo.h"
 
 
-static void   gimp_channel_prop_undo_constructed (GObject             *object);
+static void   ligma_channel_prop_undo_constructed (GObject             *object);
 
-static void   gimp_channel_prop_undo_pop         (GimpUndo            *undo,
-                                                  GimpUndoMode         undo_mode,
-                                                  GimpUndoAccumulator *accum);
+static void   ligma_channel_prop_undo_pop         (LigmaUndo            *undo,
+                                                  LigmaUndoMode         undo_mode,
+                                                  LigmaUndoAccumulator *accum);
 
 
-G_DEFINE_TYPE (GimpChannelPropUndo, gimp_channel_prop_undo, GIMP_TYPE_ITEM_UNDO)
+G_DEFINE_TYPE (LigmaChannelPropUndo, ligma_channel_prop_undo, LIGMA_TYPE_ITEM_UNDO)
 
-#define parent_class gimp_channel_prop_undo_parent_class
+#define parent_class ligma_channel_prop_undo_parent_class
 
 
 static void
-gimp_channel_prop_undo_class_init (GimpChannelPropUndoClass *klass)
+ligma_channel_prop_undo_class_init (LigmaChannelPropUndoClass *klass)
 {
   GObjectClass  *object_class = G_OBJECT_CLASS (klass);
-  GimpUndoClass *undo_class   = GIMP_UNDO_CLASS (klass);
+  LigmaUndoClass *undo_class   = LIGMA_UNDO_CLASS (klass);
 
-  object_class->constructed = gimp_channel_prop_undo_constructed;
+  object_class->constructed = ligma_channel_prop_undo_constructed;
 
-  undo_class->pop           = gimp_channel_prop_undo_pop;
+  undo_class->pop           = ligma_channel_prop_undo_pop;
 }
 
 static void
-gimp_channel_prop_undo_init (GimpChannelPropUndo *undo)
+ligma_channel_prop_undo_init (LigmaChannelPropUndo *undo)
 {
 }
 
 static void
-gimp_channel_prop_undo_constructed (GObject *object)
+ligma_channel_prop_undo_constructed (GObject *object)
 {
-  GimpChannelPropUndo *channel_prop_undo = GIMP_CHANNEL_PROP_UNDO (object);
-  GimpChannel         *channel;
+  LigmaChannelPropUndo *channel_prop_undo = LIGMA_CHANNEL_PROP_UNDO (object);
+  LigmaChannel         *channel;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_assert (GIMP_IS_CHANNEL (GIMP_ITEM_UNDO (object)->item));
+  ligma_assert (LIGMA_IS_CHANNEL (LIGMA_ITEM_UNDO (object)->item));
 
-  channel = GIMP_CHANNEL (GIMP_ITEM_UNDO (object)->item);
+  channel = LIGMA_CHANNEL (LIGMA_ITEM_UNDO (object)->item);
 
-  switch (GIMP_UNDO (object)->undo_type)
+  switch (LIGMA_UNDO (object)->undo_type)
     {
-    case GIMP_UNDO_CHANNEL_COLOR:
-      gimp_channel_get_color (channel, &channel_prop_undo->color);
+    case LIGMA_UNDO_CHANNEL_COLOR:
+      ligma_channel_get_color (channel, &channel_prop_undo->color);
       break;
 
     default:
@@ -81,23 +81,23 @@ gimp_channel_prop_undo_constructed (GObject *object)
 }
 
 static void
-gimp_channel_prop_undo_pop (GimpUndo            *undo,
-                            GimpUndoMode         undo_mode,
-                            GimpUndoAccumulator *accum)
+ligma_channel_prop_undo_pop (LigmaUndo            *undo,
+                            LigmaUndoMode         undo_mode,
+                            LigmaUndoAccumulator *accum)
 {
-  GimpChannelPropUndo *channel_prop_undo = GIMP_CHANNEL_PROP_UNDO (undo);
-  GimpChannel         *channel           = GIMP_CHANNEL (GIMP_ITEM_UNDO (undo)->item);
+  LigmaChannelPropUndo *channel_prop_undo = LIGMA_CHANNEL_PROP_UNDO (undo);
+  LigmaChannel         *channel           = LIGMA_CHANNEL (LIGMA_ITEM_UNDO (undo)->item);
 
-  GIMP_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);
+  LIGMA_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);
 
   switch (undo->undo_type)
     {
-    case GIMP_UNDO_CHANNEL_COLOR:
+    case LIGMA_UNDO_CHANNEL_COLOR:
       {
-        GimpRGB color;
+        LigmaRGB color;
 
-        gimp_channel_get_color (channel, &color);
-        gimp_channel_set_color (channel, &channel_prop_undo->color, FALSE);
+        ligma_channel_get_color (channel, &color);
+        ligma_channel_set_color (channel, &channel_prop_undo->color, FALSE);
         channel_prop_undo->color = color;
       }
       break;

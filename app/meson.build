@@ -23,8 +23,8 @@ subdir('xcf')
 
 # For app/config
 app_debug_files = files(
-  'gimp-debug.c',
-  'gimp-log.c',
+  'ligma-debug.c',
+  'ligma-log.c',
 )
 
 # Top-level library
@@ -32,25 +32,25 @@ app_debug_files = files(
 libapp_sources = [
   'app.c',
   'errors.c',
-  'gimpcoreapp.c',
-  'gimpconsoleapp.c',
-  'gimp-debug.c',
-  'gimp-log.c',
-  'gimp-update.c',
-  'gimp-version.c',
+  'ligmacoreapp.c',
+  'ligmaconsoleapp.c',
+  'ligma-debug.c',
+  'ligma-log.c',
+  'ligma-update.c',
+  'ligma-version.c',
   'language.c',
   'sanity.c',
   'signals.c',
   'tests.c',
   'unique.c',
   gitversion_h,
-  gimpdbusservice_gen,
+  ligmadbusservice_gen,
 ]
 
 libapp = static_library('app',
   libapp_sources,
   include_directories: [ rootInclude, rootAppInclude, configInclude, ],
-  c_args: [ '-DG_LOG_DOMAIN="Gimp"', '-DGIMP_APP_GLUE_COMPILATION', ],
+  c_args: [ '-DG_LOG_DOMAIN="Ligma"', '-DLIGMA_APP_GLUE_COMPILATION', ],
   dependencies: [
     gdk_pixbuf, gegl, gexiv2, gtk3,
   ],
@@ -58,7 +58,7 @@ libapp = static_library('app',
 
 
 if platform_windows
-  # for GimpDashboard and GimpBacktrace
+  # for LigmaDashboard and LigmaBacktrace
   psapi_cflags = [ '-DPSAPI_VERSION=1' ]
   link_args = [ '-lpsapi' ]
 
@@ -121,12 +121,12 @@ subdir('tests')
 
 app_links = [
   libappconfig,
-  libgimpbase,
-  libgimpcolor,
-  libgimpconfig,
-  libgimpmath,
-  libgimpmodule,
-  libgimpthumb,
+  libligmabase,
+  libligmacolor,
+  libligmaconfig,
+  libligmamath,
+  libligmamodule,
+  libligmathumb,
 ]
 
 app_gui_links = [
@@ -138,20 +138,20 @@ app_gui_links = [
   libapppropgui,
   libapptools,
   libappwidgets,
-  libgimpwidgets,
+  libligmawidgets,
 ]
 
 # Executables
 
 if platform_windows
-  console_rc_name = 'gimp-console-'+ gimp_app_version
-  gimp_app_console_rc = configure_file(
-    input : gimp_plugins_rc.full_path(),
+  console_rc_name = 'ligma-console-'+ ligma_app_version
+  ligma_app_console_rc = configure_file(
+    input : ligma_plugins_rc.full_path(),
     output: console_rc_name + '.rc',
     copy: true,
   )
   console_rc_file = windows.compile_resources(
-    gimp_app_console_rc,
+    ligma_app_console_rc,
     args: [
       '--define', 'ORIGINALFILENAME_STR="@0@"'.format(console_rc_name+'.exe'),
       '--define', 'INTERNALNAME_STR="@0@"'    .format(console_rc_name),
@@ -162,14 +162,14 @@ if platform_windows
     ],
   )
 
-  gui_rc_name = 'gimp-'+ gimp_app_version
-  gimp_app_gui_rc = configure_file(
-    input : gimp_plugins_rc.full_path(),
+  gui_rc_name = 'ligma-'+ ligma_app_version
+  ligma_app_gui_rc = configure_file(
+    input : ligma_plugins_rc.full_path(),
     output: gui_rc_name + '.rc',
     copy: true,
   )
   gui_rc_file = windows.compile_resources(
-    gimp_app_rc,
+    ligma_app_rc,
     args: [
       '--define', 'ORIGINALFILENAME_STR="@0@"'.format(gui_rc_name+'.exe'),
       '--define', 'INTERNALNAME_STR="@0@"'    .format(gui_rc_name),
@@ -185,14 +185,14 @@ else
 endif
 
 if enable_console_bin
-  gimpconsole_exe = executable('gimp-console' + exec_ver,
+  ligmaconsole_exe = executable('ligma-console' + exec_ver,
     'main.c',
     libapp_sources,
     console_rc_file,
     c_args: [
-      '-DG_LOG_DOMAIN="Gimp"',
-      '-DGIMP_APP_GLUE_COMPILATION',
-      '-DGIMP_CONSOLE_COMPILATION',
+      '-DG_LOG_DOMAIN="Ligma"',
+      '-DLIGMA_APP_GLUE_COMPILATION',
+      '-DLIGMA_CONSOLE_COMPILATION',
       psapi_cflags,
     ],
     dependencies: libapp_dep,
@@ -203,13 +203,13 @@ if enable_console_bin
   )
 endif
 
-gimpmain_exe = executable('gimp' + exec_ver,
+ligmamain_exe = executable('ligma' + exec_ver,
   'main.c',
   libapp_sources,
   gui_rc_file,
   c_args: [
-    '-DG_LOG_DOMAIN="Gimp"',
-    '-DGIMP_APP_GLUE_COMPILATION',
+    '-DG_LOG_DOMAIN="Ligma"',
+    '-DLIGMA_APP_GLUE_COMPILATION',
     psapi_cflags,
   ],
   dependencies: libapp_dep,
@@ -221,13 +221,13 @@ gimpmain_exe = executable('gimp' + exec_ver,
 )
 
 if enable_default_bin and meson.version().version_compare('>=0.61.0')
-  install_symlink(fs.name(gimpmain_exe.full_path()).replace(exec_ver, ''),
-    pointing_to: fs.name(gimpmain_exe.full_path()),
+  install_symlink(fs.name(ligmamain_exe.full_path()).replace(exec_ver, ''),
+    pointing_to: fs.name(ligmamain_exe.full_path()),
     install_dir: get_option('bindir')
   )
   if enable_console_bin
-    install_symlink(fs.name(gimpconsole_exe.full_path()).replace(exec_ver, ''),
-      pointing_to: fs.name(gimpconsole_exe.full_path()),
+    install_symlink(fs.name(ligmaconsole_exe.full_path()).replace(exec_ver, ''),
+      pointing_to: fs.name(ligmaconsole_exe.full_path()),
       install_dir: get_option('bindir')
     )
   endif

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,38 +15,38 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_LAYER_MASK_UNDO_H__
-#define __GIMP_LAYER_MASK_UNDO_H__
+#ifndef __LIGMA_LAYER_MASK_UNDO_H__
+#define __LIGMA_LAYER_MASK_UNDO_H__
 
 
-#include "gimpitemundo.h"
+#include "ligmaitemundo.h"
 
 
-#define GIMP_TYPE_LAYER_MASK_UNDO            (gimp_layer_mask_undo_get_type ())
-#define GIMP_LAYER_MASK_UNDO(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_LAYER_MASK_UNDO, GimpLayerMaskUndo))
-#define GIMP_LAYER_MASK_UNDO_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_LAYER_MASK_UNDO, GimpLayerMaskUndoClass))
-#define GIMP_IS_LAYER_MASK_UNDO(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_LAYER_MASK_UNDO))
-#define GIMP_IS_LAYER_MASK_UNDO_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_LAYER_MASK_UNDO))
-#define GIMP_LAYER_MASK_UNDO_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_LAYER_MASK_UNDO, GimpLayerMaskUndoClass))
+#define LIGMA_TYPE_LAYER_MASK_UNDO            (ligma_layer_mask_undo_get_type ())
+#define LIGMA_LAYER_MASK_UNDO(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_LAYER_MASK_UNDO, LigmaLayerMaskUndo))
+#define LIGMA_LAYER_MASK_UNDO_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_LAYER_MASK_UNDO, LigmaLayerMaskUndoClass))
+#define LIGMA_IS_LAYER_MASK_UNDO(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_LAYER_MASK_UNDO))
+#define LIGMA_IS_LAYER_MASK_UNDO_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_LAYER_MASK_UNDO))
+#define LIGMA_LAYER_MASK_UNDO_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_LAYER_MASK_UNDO, LigmaLayerMaskUndoClass))
 
 
-typedef struct _GimpLayerMaskUndo      GimpLayerMaskUndo;
-typedef struct _GimpLayerMaskUndoClass GimpLayerMaskUndoClass;
+typedef struct _LigmaLayerMaskUndo      LigmaLayerMaskUndo;
+typedef struct _LigmaLayerMaskUndoClass LigmaLayerMaskUndoClass;
 
-struct _GimpLayerMaskUndo
+struct _LigmaLayerMaskUndo
 {
-  GimpItemUndo   parent_instance;
+  LigmaItemUndo   parent_instance;
 
-  GimpLayerMask *layer_mask;
+  LigmaLayerMask *layer_mask;
 };
 
-struct _GimpLayerMaskUndoClass
+struct _LigmaLayerMaskUndoClass
 {
-  GimpItemUndoClass  parent_class;
+  LigmaItemUndoClass  parent_class;
 };
 
 
-GType   gimp_layer_mask_undo_get_type (void) G_GNUC_CONST;
+GType   ligma_layer_mask_undo_get_type (void) G_GNUC_CONST;
 
 
-#endif /* __GIMP_LAYER_MASK_UNDO_H__ */
+#endif /* __LIGMA_LAYER_MASK_UNDO_H__ */

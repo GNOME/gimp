@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * File utitility functions for GimpConfig.
- * Copyright (C) 2001-2003  Sven Neumann <sven@gimp.org>
+ * File utitility functions for LigmaConfig.
+ * Copyright (C) 2001-2003  Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,20 +18,20 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CONFIG_FILE_H__
-#define __GIMP_CONFIG_FILE_H__
+#ifndef __LIGMA_CONFIG_FILE_H__
+#define __LIGMA_CONFIG_FILE_H__
 
 
-gboolean   gimp_config_file_copy             (const gchar        *source,
+gboolean   ligma_config_file_copy             (const gchar        *source,
                                               const gchar        *dest,
                                               const gchar        *old_options_regexp,
                                               GRegexEvalCallback  update_callback,
                                               gpointer            user_data,
                                               GError            **error);
 
-gboolean   gimp_config_file_backup_on_error  (GFile              *file,
+gboolean   ligma_config_file_backup_on_error  (GFile              *file,
                                               const gchar        *name,
                                               GError            **error);
 
 
-#endif  /* __GIMP_CONFIG_FILE_H__ */
+#endif  /* __LIGMA_CONFIG_FILE_H__ */

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,115 +20,115 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpmath/gimpmath.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "tools-types.h"
 
-#include "config/gimpguiconfig.h"
+#include "config/ligmaguiconfig.h"
 
-#include "core/gimpimage.h"
+#include "core/ligmaimage.h"
 
-#include "widgets/gimphelp-ids.h"
-#include "widgets/gimpwidgets-utils.h"
+#include "widgets/ligmahelp-ids.h"
+#include "widgets/ligmawidgets-utils.h"
 
-#include "display/gimpcanvasrectangle.h"
-#include "display/gimpdisplay.h"
-#include "display/gimpdisplayshell.h"
-#include "display/gimpdisplayshell-scale.h"
+#include "display/ligmacanvasrectangle.h"
+#include "display/ligmadisplay.h"
+#include "display/ligmadisplayshell.h"
+#include "display/ligmadisplayshell-scale.h"
 
-#include "gimpmagnifyoptions.h"
-#include "gimpmagnifytool.h"
-#include "gimptoolcontrol.h"
+#include "ligmamagnifyoptions.h"
+#include "ligmamagnifytool.h"
+#include "ligmatoolcontrol.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-static void   gimp_magnify_tool_button_press   (GimpTool              *tool,
-                                                const GimpCoords      *coords,
+static void   ligma_magnify_tool_button_press   (LigmaTool              *tool,
+                                                const LigmaCoords      *coords,
                                                 guint32                time,
                                                 GdkModifierType        state,
-                                                GimpButtonPressType    press_type,
-                                                GimpDisplay           *display);
-static void   gimp_magnify_tool_button_release (GimpTool              *tool,
-                                                const GimpCoords      *coords,
+                                                LigmaButtonPressType    press_type,
+                                                LigmaDisplay           *display);
+static void   ligma_magnify_tool_button_release (LigmaTool              *tool,
+                                                const LigmaCoords      *coords,
                                                 guint32                time,
                                                 GdkModifierType        state,
-                                                GimpButtonReleaseType  release_type,
-                                                GimpDisplay           *display);
-static void   gimp_magnify_tool_motion         (GimpTool              *tool,
-                                                const GimpCoords      *coords,
+                                                LigmaButtonReleaseType  release_type,
+                                                LigmaDisplay           *display);
+static void   ligma_magnify_tool_motion         (LigmaTool              *tool,
+                                                const LigmaCoords      *coords,
                                                 guint32                time,
                                                 GdkModifierType        state,
-                                                GimpDisplay           *display);
-static void   gimp_magnify_tool_modifier_key   (GimpTool              *tool,
+                                                LigmaDisplay           *display);
+static void   ligma_magnify_tool_modifier_key   (LigmaTool              *tool,
                                                 GdkModifierType        key,
                                                 gboolean               press,
                                                 GdkModifierType        state,
-                                                GimpDisplay           *display);
-static void   gimp_magnify_tool_cursor_update  (GimpTool              *tool,
-                                                const GimpCoords      *coords,
+                                                LigmaDisplay           *display);
+static void   ligma_magnify_tool_cursor_update  (LigmaTool              *tool,
+                                                const LigmaCoords      *coords,
                                                 GdkModifierType        state,
-                                                GimpDisplay           *display);
+                                                LigmaDisplay           *display);
 
-static void   gimp_magnify_tool_draw           (GimpDrawTool          *draw_tool);
+static void   ligma_magnify_tool_draw           (LigmaDrawTool          *draw_tool);
 
-static void   gimp_magnify_tool_update_items   (GimpMagnifyTool       *magnify);
+static void   ligma_magnify_tool_update_items   (LigmaMagnifyTool       *magnify);
 
 
-G_DEFINE_TYPE (GimpMagnifyTool, gimp_magnify_tool, GIMP_TYPE_DRAW_TOOL)
+G_DEFINE_TYPE (LigmaMagnifyTool, ligma_magnify_tool, LIGMA_TYPE_DRAW_TOOL)
 
-#define parent_class gimp_magnify_tool_parent_class
+#define parent_class ligma_magnify_tool_parent_class
 
 
 void
-gimp_magnify_tool_register (GimpToolRegisterCallback  callback,
+ligma_magnify_tool_register (LigmaToolRegisterCallback  callback,
                             gpointer                  data)
 {
-  (* callback) (GIMP_TYPE_MAGNIFY_TOOL,
-                GIMP_TYPE_MAGNIFY_OPTIONS,
-                gimp_magnify_options_gui,
+  (* callback) (LIGMA_TYPE_MAGNIFY_TOOL,
+                LIGMA_TYPE_MAGNIFY_OPTIONS,
+                ligma_magnify_options_gui,
                 0,
-                "gimp-zoom-tool",
+                "ligma-zoom-tool",
                 _("Zoom"),
                 _("Zoom Tool: Adjust the zoom level"),
                 N_("_Zoom"), "Z",
-                NULL, GIMP_HELP_TOOL_ZOOM,
-                GIMP_ICON_TOOL_ZOOM,
+                NULL, LIGMA_HELP_TOOL_ZOOM,
+                LIGMA_ICON_TOOL_ZOOM,
                 data);
 }
 
 static void
-gimp_magnify_tool_class_init (GimpMagnifyToolClass *klass)
+ligma_magnify_tool_class_init (LigmaMagnifyToolClass *klass)
 {
-  GimpToolClass     *tool_class      = GIMP_TOOL_CLASS (klass);
-  GimpDrawToolClass *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
+  LigmaToolClass     *tool_class      = LIGMA_TOOL_CLASS (klass);
+  LigmaDrawToolClass *draw_tool_class = LIGMA_DRAW_TOOL_CLASS (klass);
 
-  tool_class->button_press   = gimp_magnify_tool_button_press;
-  tool_class->button_release = gimp_magnify_tool_button_release;
-  tool_class->motion         = gimp_magnify_tool_motion;
-  tool_class->modifier_key   = gimp_magnify_tool_modifier_key;
-  tool_class->cursor_update  = gimp_magnify_tool_cursor_update;
+  tool_class->button_press   = ligma_magnify_tool_button_press;
+  tool_class->button_release = ligma_magnify_tool_button_release;
+  tool_class->motion         = ligma_magnify_tool_motion;
+  tool_class->modifier_key   = ligma_magnify_tool_modifier_key;
+  tool_class->cursor_update  = ligma_magnify_tool_cursor_update;
 
-  draw_tool_class->draw      = gimp_magnify_tool_draw;
+  draw_tool_class->draw      = ligma_magnify_tool_draw;
 }
 
 static void
-gimp_magnify_tool_init (GimpMagnifyTool *magnify_tool)
+ligma_magnify_tool_init (LigmaMagnifyTool *magnify_tool)
 {
-  GimpTool *tool = GIMP_TOOL (magnify_tool);
+  LigmaTool *tool = LIGMA_TOOL (magnify_tool);
 
-  gimp_tool_control_set_scroll_lock            (tool->control, TRUE);
-  gimp_tool_control_set_handle_empty_image     (tool->control, TRUE);
-  gimp_tool_control_set_wants_click            (tool->control, TRUE);
-  gimp_tool_control_set_snap_to                (tool->control, FALSE);
+  ligma_tool_control_set_scroll_lock            (tool->control, TRUE);
+  ligma_tool_control_set_handle_empty_image     (tool->control, TRUE);
+  ligma_tool_control_set_wants_click            (tool->control, TRUE);
+  ligma_tool_control_set_snap_to                (tool->control, FALSE);
 
-  gimp_tool_control_set_tool_cursor            (tool->control,
-                                                GIMP_TOOL_CURSOR_ZOOM);
-  gimp_tool_control_set_cursor_modifier        (tool->control,
-                                                GIMP_CURSOR_MODIFIER_PLUS);
-  gimp_tool_control_set_toggle_cursor_modifier (tool->control,
-                                                GIMP_CURSOR_MODIFIER_MINUS);
+  ligma_tool_control_set_tool_cursor            (tool->control,
+                                                LIGMA_TOOL_CURSOR_ZOOM);
+  ligma_tool_control_set_cursor_modifier        (tool->control,
+                                                LIGMA_CURSOR_MODIFIER_PLUS);
+  ligma_tool_control_set_toggle_cursor_modifier (tool->control,
+                                                LIGMA_CURSOR_MODIFIER_MINUS);
 
   magnify_tool->x = 0;
   magnify_tool->y = 0;
@@ -137,53 +137,53 @@ gimp_magnify_tool_init (GimpMagnifyTool *magnify_tool)
 }
 
 static void
-gimp_magnify_tool_button_press (GimpTool            *tool,
-                                const GimpCoords    *coords,
+ligma_magnify_tool_button_press (LigmaTool            *tool,
+                                const LigmaCoords    *coords,
                                 guint32              time,
                                 GdkModifierType      state,
-                                GimpButtonPressType  press_type,
-                                GimpDisplay         *display)
+                                LigmaButtonPressType  press_type,
+                                LigmaDisplay         *display)
 {
-  GimpMagnifyTool *magnify = GIMP_MAGNIFY_TOOL (tool);
+  LigmaMagnifyTool *magnify = LIGMA_MAGNIFY_TOOL (tool);
 
   magnify->x = coords->x;
   magnify->y = coords->y;
   magnify->w = 0;
   magnify->h = 0;
 
-  gimp_tool_control_activate (tool->control);
+  ligma_tool_control_activate (tool->control);
   tool->display = display;
 
-  gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), display);
+  ligma_draw_tool_start (LIGMA_DRAW_TOOL (tool), display);
 }
 
 static void
-gimp_magnify_tool_button_release (GimpTool              *tool,
-                                  const GimpCoords      *coords,
+ligma_magnify_tool_button_release (LigmaTool              *tool,
+                                  const LigmaCoords      *coords,
                                   guint32                time,
                                   GdkModifierType        state,
-                                  GimpButtonReleaseType  release_type,
-                                  GimpDisplay           *display)
+                                  LigmaButtonReleaseType  release_type,
+                                  LigmaDisplay           *display)
 {
-  GimpMagnifyTool    *magnify = GIMP_MAGNIFY_TOOL (tool);
-  GimpMagnifyOptions *options = GIMP_MAGNIFY_TOOL_GET_OPTIONS (tool);
-  GimpDisplayShell   *shell   = gimp_display_get_shell (tool->display);
+  LigmaMagnifyTool    *magnify = LIGMA_MAGNIFY_TOOL (tool);
+  LigmaMagnifyOptions *options = LIGMA_MAGNIFY_TOOL_GET_OPTIONS (tool);
+  LigmaDisplayShell   *shell   = ligma_display_get_shell (tool->display);
 
-  gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
+  ligma_draw_tool_stop (LIGMA_DRAW_TOOL (tool));
 
-  gimp_tool_control_halt (tool->control);
+  ligma_tool_control_halt (tool->control);
 
   switch (release_type)
     {
-    case GIMP_BUTTON_RELEASE_CLICK:
-    case GIMP_BUTTON_RELEASE_NO_MOTION:
-      gimp_display_shell_scale (shell,
+    case LIGMA_BUTTON_RELEASE_CLICK:
+    case LIGMA_BUTTON_RELEASE_NO_MOTION:
+      ligma_display_shell_scale (shell,
                                 options->zoom_type,
                                 0.0,
-                                GIMP_ZOOM_FOCUS_POINTER);
+                                LIGMA_ZOOM_FOCUS_POINTER);
       break;
 
-    case GIMP_BUTTON_RELEASE_NORMAL:
+    case LIGMA_BUTTON_RELEASE_NORMAL:
       {
         gdouble  x, y;
         gdouble  width, height;
@@ -196,9 +196,9 @@ gimp_magnify_tool_button_release (GimpTool              *tool,
 
         /* Resize windows only in multi-window mode */
         resize_window = (options->auto_resize &&
-                         ! GIMP_GUI_CONFIG (display->config)->single_window_mode);
+                         ! LIGMA_GUI_CONFIG (display->config)->single_window_mode);
 
-        gimp_display_shell_scale_to_rectangle (shell,
+        ligma_display_shell_scale_to_rectangle (shell,
                                                options->zoom_type,
                                                x, y, width, height,
                                                resize_window);
@@ -211,39 +211,39 @@ gimp_magnify_tool_button_release (GimpTool              *tool,
 }
 
 static void
-gimp_magnify_tool_motion (GimpTool         *tool,
-                          const GimpCoords *coords,
+ligma_magnify_tool_motion (LigmaTool         *tool,
+                          const LigmaCoords *coords,
                           guint32           time,
                           GdkModifierType   state,
-                          GimpDisplay      *display)
+                          LigmaDisplay      *display)
 {
-  GimpMagnifyTool *magnify = GIMP_MAGNIFY_TOOL (tool);
+  LigmaMagnifyTool *magnify = LIGMA_MAGNIFY_TOOL (tool);
 
   magnify->w = coords->x - magnify->x;
   magnify->h = coords->y - magnify->y;
 
-  gimp_magnify_tool_update_items (magnify);
+  ligma_magnify_tool_update_items (magnify);
 }
 
 static void
-gimp_magnify_tool_modifier_key (GimpTool        *tool,
+ligma_magnify_tool_modifier_key (LigmaTool        *tool,
                                 GdkModifierType  key,
                                 gboolean         press,
                                 GdkModifierType  state,
-                                GimpDisplay     *display)
+                                LigmaDisplay     *display)
 {
-  GimpMagnifyOptions *options = GIMP_MAGNIFY_TOOL_GET_OPTIONS (tool);
+  LigmaMagnifyOptions *options = LIGMA_MAGNIFY_TOOL_GET_OPTIONS (tool);
 
-  if (key == gimp_get_toggle_behavior_mask ())
+  if (key == ligma_get_toggle_behavior_mask ())
     {
       switch (options->zoom_type)
         {
-        case GIMP_ZOOM_IN:
-          g_object_set (options, "zoom-type", GIMP_ZOOM_OUT, NULL);
+        case LIGMA_ZOOM_IN:
+          g_object_set (options, "zoom-type", LIGMA_ZOOM_OUT, NULL);
           break;
 
-        case GIMP_ZOOM_OUT:
-          g_object_set (options, "zoom-type", GIMP_ZOOM_IN, NULL);
+        case LIGMA_ZOOM_OUT:
+          g_object_set (options, "zoom-type", LIGMA_ZOOM_IN, NULL);
           break;
 
         default:
@@ -253,26 +253,26 @@ gimp_magnify_tool_modifier_key (GimpTool        *tool,
 }
 
 static void
-gimp_magnify_tool_cursor_update (GimpTool         *tool,
-                                 const GimpCoords *coords,
+ligma_magnify_tool_cursor_update (LigmaTool         *tool,
+                                 const LigmaCoords *coords,
                                  GdkModifierType   state,
-                                 GimpDisplay      *display)
+                                 LigmaDisplay      *display)
 {
-  GimpMagnifyOptions *options = GIMP_MAGNIFY_TOOL_GET_OPTIONS (tool);
+  LigmaMagnifyOptions *options = LIGMA_MAGNIFY_TOOL_GET_OPTIONS (tool);
 
-  gimp_tool_control_set_toggled (tool->control,
-                                 options->zoom_type == GIMP_ZOOM_OUT);
+  ligma_tool_control_set_toggled (tool->control,
+                                 options->zoom_type == LIGMA_ZOOM_OUT);
 
-  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
+  LIGMA_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
 }
 
 static void
-gimp_magnify_tool_draw (GimpDrawTool *draw_tool)
+ligma_magnify_tool_draw (LigmaDrawTool *draw_tool)
 {
-  GimpMagnifyTool *magnify = GIMP_MAGNIFY_TOOL (draw_tool);
+  LigmaMagnifyTool *magnify = LIGMA_MAGNIFY_TOOL (draw_tool);
 
   magnify->rectangle =
-    gimp_draw_tool_add_rectangle (draw_tool, FALSE,
+    ligma_draw_tool_add_rectangle (draw_tool, FALSE,
                                   magnify->x,
                                   magnify->y,
                                   magnify->w,
@@ -280,11 +280,11 @@ gimp_magnify_tool_draw (GimpDrawTool *draw_tool)
 }
 
 static void
-gimp_magnify_tool_update_items (GimpMagnifyTool *magnify)
+ligma_magnify_tool_update_items (LigmaMagnifyTool *magnify)
 {
-  if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (magnify)))
+  if (ligma_draw_tool_is_active (LIGMA_DRAW_TOOL (magnify)))
     {
-      gimp_canvas_rectangle_set (magnify->rectangle,
+      ligma_canvas_rectangle_set (magnify->rectangle,
                                  magnify->x,
                                  magnify->y,
                                  magnify->w,

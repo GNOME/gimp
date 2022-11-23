@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpbrowser.c
- * Copyright (C) 2005 Michael Natterer <mitch@gimp.org>
+ * ligmabrowser.c
+ * Copyright (C) 2005 Michael Natterer <mitch@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -26,17 +26,17 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "gimpwidgetstypes.h"
+#include "ligmawidgetstypes.h"
 
-#include "gimpwidgets.h"
-#include "gimpwidgetsmarshal.h"
+#include "ligmawidgets.h"
+#include "ligmawidgetsmarshal.h"
 
-#include "libgimp/libgimp-intl.h"
+#include "libligma/libligma-intl.h"
 
 
 /**
- * SECTION: gimpbrowser
- * @title: GimpBrowser
+ * SECTION: ligmabrowser
+ * @title: LigmaBrowser
  * @short_description: A base class for a documentation browser.
  *
  * A base class for a documentation browser.
@@ -50,7 +50,7 @@ enum
 };
 
 
-struct _GimpBrowserPrivate
+struct _LigmaBrowserPrivate
 {
   GtkWidget *left_vbox;
 
@@ -66,31 +66,31 @@ struct _GimpBrowserPrivate
   GtkWidget *right_widget;
 };
 
-#define GET_PRIVATE(obj) (((GimpBrowser *) (obj))->priv)
+#define GET_PRIVATE(obj) (((LigmaBrowser *) (obj))->priv)
 
 
-static void      gimp_browser_dispose          (GObject               *object);
+static void      ligma_browser_dispose          (GObject               *object);
 
-static void      gimp_browser_combo_changed    (GtkComboBox           *combo,
-                                                GimpBrowser           *browser);
-static void      gimp_browser_entry_changed    (GtkEntry              *entry,
-                                                GimpBrowser           *browser);
-static void      gimp_browser_entry_icon_press (GtkEntry              *entry,
+static void      ligma_browser_combo_changed    (GtkComboBox           *combo,
+                                                LigmaBrowser           *browser);
+static void      ligma_browser_entry_changed    (GtkEntry              *entry,
+                                                LigmaBrowser           *browser);
+static void      ligma_browser_entry_icon_press (GtkEntry              *entry,
                                                 GtkEntryIconPosition   icon_pos,
                                                 GdkEvent              *event,
-                                                GimpBrowser           *browser);
-static gboolean  gimp_browser_search_timeout   (gpointer               data);
+                                                LigmaBrowser           *browser);
+static gboolean  ligma_browser_search_timeout   (gpointer               data);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpBrowser, gimp_browser, GTK_TYPE_PANED)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaBrowser, ligma_browser, GTK_TYPE_PANED)
 
-#define parent_class gimp_browser_parent_class
+#define parent_class ligma_browser_parent_class
 
 static guint browser_signals[LAST_SIGNAL] = { 0 };
 
 
 static void
-gimp_browser_class_init (GimpBrowserClass *klass)
+ligma_browser_class_init (LigmaBrowserClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
@@ -98,28 +98,28 @@ gimp_browser_class_init (GimpBrowserClass *klass)
     g_signal_new ("search",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (GimpBrowserClass, search),
+                  G_STRUCT_OFFSET (LigmaBrowserClass, search),
                   NULL, NULL,
-                  _gimp_widgets_marshal_VOID__STRING_INT,
+                  _ligma_widgets_marshal_VOID__STRING_INT,
                   G_TYPE_NONE, 2,
                   G_TYPE_STRING,
                   G_TYPE_INT);
 
-  object_class->dispose = gimp_browser_dispose;
+  object_class->dispose = ligma_browser_dispose;
 
   klass->search         = NULL;
 }
 
 static void
-gimp_browser_init (GimpBrowser *browser)
+ligma_browser_init (LigmaBrowser *browser)
 {
-  GimpBrowserPrivate *priv;
+  LigmaBrowserPrivate *priv;
   GtkWidget          *hbox;
   GtkWidget          *label;
   GtkWidget          *scrolled_window;
   GtkWidget          *viewport;
 
-  browser->priv = gimp_browser_get_instance_private (browser);
+  browser->priv = ligma_browser_get_instance_private (browser);
 
   priv = GET_PRIVATE (browser);
 
@@ -149,7 +149,7 @@ gimp_browser_init (GimpBrowser *browser)
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), priv->search_entry);
 
   g_signal_connect (priv->search_entry, "changed",
-                    G_CALLBACK (gimp_browser_entry_changed),
+                    G_CALLBACK (ligma_browser_entry_changed),
                     browser);
 
   gtk_entry_set_icon_from_icon_name (GTK_ENTRY (priv->search_entry),
@@ -160,14 +160,14 @@ gimp_browser_init (GimpBrowser *browser)
                                 GTK_ENTRY_ICON_SECONDARY, FALSE);
 
   g_signal_connect (priv->search_entry, "icon-press",
-                    G_CALLBACK (gimp_browser_entry_icon_press),
+                    G_CALLBACK (ligma_browser_entry_icon_press),
                     browser);
 
   /* count label */
 
   priv->count_label = gtk_label_new (_("No matches"));
   gtk_label_set_xalign (GTK_LABEL (priv->count_label), 0.0);
-  gimp_label_set_attributes (GTK_LABEL (priv->count_label),
+  ligma_label_set_attributes (GTK_LABEL (priv->count_label),
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);
   gtk_box_pack_end (GTK_BOX (priv->left_vbox), priv->count_label,
@@ -196,9 +196,9 @@ gimp_browser_init (GimpBrowser *browser)
 }
 
 static void
-gimp_browser_dispose (GObject *object)
+ligma_browser_dispose (GObject *object)
 {
-  GimpBrowserPrivate *priv = GET_PRIVATE (object);
+  LigmaBrowserPrivate *priv = GET_PRIVATE (object);
 
   if (priv->search_timeout_id)
     {
@@ -214,23 +214,23 @@ gimp_browser_dispose (GObject *object)
 
 
 /**
- * gimp_browser_new:
+ * ligma_browser_new:
  *
- * Create a new #GimpBrowser widget.
+ * Create a new #LigmaBrowser widget.
  *
- * Returns: a newly created #GimpBrowser.
+ * Returns: a newly created #LigmaBrowser.
  *
  * Since: 2.4
  **/
 GtkWidget *
-gimp_browser_new (void)
+ligma_browser_new (void)
 {
-  return g_object_new (GIMP_TYPE_BROWSER, NULL);
+  return g_object_new (LIGMA_TYPE_BROWSER, NULL);
 }
 
 /**
- * gimp_browser_add_search_types: (skip)
- * @browser:          a #GimpBrowser widget
+ * ligma_browser_add_search_types: (skip)
+ * @browser:          a #LigmaBrowser widget
  * @first_type_label: the label of the first search type
  * @first_type_id:    an integer that identifies the first search type
  * @...:              a %NULL-terminated list of more labels and ids.
@@ -240,14 +240,14 @@ gimp_browser_new (void)
  * Since: 2.4
  **/
 void
-gimp_browser_add_search_types (GimpBrowser *browser,
+ligma_browser_add_search_types (LigmaBrowser *browser,
                                const gchar *first_type_label,
                                gint         first_type_id,
                                ...)
 {
-  GimpBrowserPrivate *priv;
+  LigmaBrowserPrivate *priv;
 
-  g_return_if_fail (GIMP_IS_BROWSER (browser));
+  g_return_if_fail (LIGMA_IS_BROWSER (browser));
   g_return_if_fail (first_type_label != NULL);
 
   priv = GET_PRIVATE (browser);
@@ -258,7 +258,7 @@ gimp_browser_add_search_types (GimpBrowser *browser,
       va_list    args;
 
       va_start (args, first_type_id);
-      combo = gimp_int_combo_box_new_valist (first_type_label,
+      combo = ligma_int_combo_box_new_valist (first_type_label,
                                              first_type_id,
                                              args);
       va_end (args);
@@ -272,37 +272,37 @@ gimp_browser_add_search_types (GimpBrowser *browser,
                         combo, FALSE, FALSE, 0);
       gtk_widget_show (combo);
 
-      gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
+      ligma_int_combo_box_connect (LIGMA_INT_COMBO_BOX (combo),
                                   priv->search_type,
-                                  G_CALLBACK (gimp_int_combo_box_get_active),
+                                  G_CALLBACK (ligma_int_combo_box_get_active),
                                   &priv->search_type, NULL);
 
       g_signal_connect (combo, "changed",
-                        G_CALLBACK (gimp_browser_combo_changed),
+                        G_CALLBACK (ligma_browser_combo_changed),
                         browser);
     }
   else
     {
-      gimp_int_combo_box_append (GIMP_INT_COMBO_BOX (priv->search_type_combo),
+      ligma_int_combo_box_append (LIGMA_INT_COMBO_BOX (priv->search_type_combo),
                                  first_type_label, first_type_id,
                                  NULL);
     }
 }
 
 /**
- * gimp_browser_get_left_vbox:
- * @browser: a #GimpBrowser widget
+ * ligma_browser_get_left_vbox:
+ * @browser: a #LigmaBrowser widget
  *
  * Returns: (transfer none) (type GtkBox): The left vbox.
  *
  * Since: 3.0
  **/
 GtkWidget *
-gimp_browser_get_left_vbox (GimpBrowser *browser)
+ligma_browser_get_left_vbox (LigmaBrowser *browser)
 {
-  GimpBrowserPrivate *priv;
+  LigmaBrowserPrivate *priv;
 
-  g_return_val_if_fail (GIMP_IS_BROWSER (browser), NULL);
+  g_return_val_if_fail (LIGMA_IS_BROWSER (browser), NULL);
 
   priv = GET_PRIVATE (browser);
 
@@ -310,19 +310,19 @@ gimp_browser_get_left_vbox (GimpBrowser *browser)
 }
 
 /**
- * gimp_browser_get_right_vbox:
- * @browser: a #GimpBrowser widget
+ * ligma_browser_get_right_vbox:
+ * @browser: a #LigmaBrowser widget
  *
  * Returns: (transfer none) (type GtkBox): The right vbox.
  *
  * Since: 3.0
  **/
 GtkWidget *
-gimp_browser_get_right_vbox (GimpBrowser *browser)
+ligma_browser_get_right_vbox (LigmaBrowser *browser)
 {
-  GimpBrowserPrivate *priv;
+  LigmaBrowserPrivate *priv;
 
-  g_return_val_if_fail (GIMP_IS_BROWSER (browser), NULL);
+  g_return_val_if_fail (LIGMA_IS_BROWSER (browser), NULL);
 
   priv = GET_PRIVATE (browser);
 
@@ -330,8 +330,8 @@ gimp_browser_get_right_vbox (GimpBrowser *browser)
 }
 
 /**
- * gimp_browser_set_search_summary:
- * @browser: a #GimpBrowser widget
+ * ligma_browser_set_search_summary:
+ * @browser: a #LigmaBrowser widget
  * @summary: a string describing the search result
  *
  * Sets the search summary text.
@@ -339,12 +339,12 @@ gimp_browser_get_right_vbox (GimpBrowser *browser)
  * Since: 3.0
  **/
 void
-gimp_browser_set_search_summary (GimpBrowser *browser,
+ligma_browser_set_search_summary (LigmaBrowser *browser,
                                  const gchar *summary)
 {
-  GimpBrowserPrivate *priv;
+  LigmaBrowserPrivate *priv;
 
-  g_return_if_fail (GIMP_IS_BROWSER (browser));
+  g_return_if_fail (LIGMA_IS_BROWSER (browser));
   g_return_if_fail (summary != NULL);
 
   priv = GET_PRIVATE (browser);
@@ -353,8 +353,8 @@ gimp_browser_set_search_summary (GimpBrowser *browser,
 }
 
 /**
- * gimp_browser_set_widget:
- * @browser: a #GimpBrowser widget
+ * ligma_browser_set_widget:
+ * @browser: a #LigmaBrowser widget
  * @widget:  a #GtkWidget
  *
  * Sets the widget to appear on the right side of the @browser.
@@ -362,12 +362,12 @@ gimp_browser_set_search_summary (GimpBrowser *browser,
  * Since: 2.4
  **/
 void
-gimp_browser_set_widget (GimpBrowser *browser,
+ligma_browser_set_widget (LigmaBrowser *browser,
                          GtkWidget   *widget)
 {
-  GimpBrowserPrivate *priv;
+  LigmaBrowserPrivate *priv;
 
-  g_return_if_fail (GIMP_IS_BROWSER (browser));
+  g_return_if_fail (LIGMA_IS_BROWSER (browser));
   g_return_if_fail (widget == NULL || GTK_IS_WIDGET (widget));
 
   priv = GET_PRIVATE (browser);
@@ -390,23 +390,23 @@ gimp_browser_set_widget (GimpBrowser *browser,
 }
 
 /**
- * gimp_browser_show_message:
- * @browser: a #GimpBrowser widget
+ * ligma_browser_show_message:
+ * @browser: a #LigmaBrowser widget
  * @message: text message
  *
  * Displays @message in the right side of the @browser. Unless the right
  * side already contains a #GtkLabel, the widget previously added with
- * gimp_browser_set_widget() is removed and replaced by a #GtkLabel.
+ * ligma_browser_set_widget() is removed and replaced by a #GtkLabel.
  *
  * Since: 2.4
  **/
 void
-gimp_browser_show_message (GimpBrowser *browser,
+ligma_browser_show_message (LigmaBrowser *browser,
                            const gchar *message)
 {
-  GimpBrowserPrivate *priv;
+  LigmaBrowserPrivate *priv;
 
-  g_return_if_fail (GIMP_IS_BROWSER (browser));
+  g_return_if_fail (LIGMA_IS_BROWSER (browser));
   g_return_if_fail (message != NULL);
 
   priv = GET_PRIVATE (browser);
@@ -419,10 +419,10 @@ gimp_browser_show_message (GimpBrowser *browser,
     {
       GtkWidget *label = gtk_label_new (message);
 
-      gimp_label_set_attributes (GTK_LABEL (label),
+      ligma_label_set_attributes (GTK_LABEL (label),
                                  PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                                  -1);
-      gimp_browser_set_widget (browser, label);
+      ligma_browser_set_widget (browser, label);
     }
 
   while (gtk_events_pending ())
@@ -433,29 +433,29 @@ gimp_browser_show_message (GimpBrowser *browser,
 /*  private functions  */
 
 static void
-gimp_browser_queue_search (GimpBrowser *browser)
+ligma_browser_queue_search (LigmaBrowser *browser)
 {
-  GimpBrowserPrivate *priv = GET_PRIVATE (browser);
+  LigmaBrowserPrivate *priv = GET_PRIVATE (browser);
 
   if (priv->search_timeout_id)
     g_source_remove (priv->search_timeout_id);
 
   priv->search_timeout_id =
-    g_timeout_add (100, gimp_browser_search_timeout, browser);
+    g_timeout_add (100, ligma_browser_search_timeout, browser);
 }
 
 static void
-gimp_browser_combo_changed (GtkComboBox *combo,
-                            GimpBrowser *browser)
+ligma_browser_combo_changed (GtkComboBox *combo,
+                            LigmaBrowser *browser)
 {
-  gimp_browser_queue_search (browser);
+  ligma_browser_queue_search (browser);
 }
 
 static void
-gimp_browser_entry_changed (GtkEntry    *entry,
-                            GimpBrowser *browser)
+ligma_browser_entry_changed (GtkEntry    *entry,
+                            LigmaBrowser *browser)
 {
-  gimp_browser_queue_search (browser);
+  ligma_browser_queue_search (browser);
 
   gtk_entry_set_icon_sensitive (entry,
                                 GTK_ENTRY_ICON_SECONDARY,
@@ -463,10 +463,10 @@ gimp_browser_entry_changed (GtkEntry    *entry,
 }
 
 static void
-gimp_browser_entry_icon_press (GtkEntry              *entry,
+ligma_browser_entry_icon_press (GtkEntry              *entry,
                                GtkEntryIconPosition   icon_pos,
                                GdkEvent              *event,
-                               GimpBrowser           *browser)
+                               LigmaBrowser           *browser)
 {
   GdkEventButton *bevent = (GdkEventButton *) event;
 
@@ -477,9 +477,9 @@ gimp_browser_entry_icon_press (GtkEntry              *entry,
 }
 
 static gboolean
-gimp_browser_search_timeout (gpointer data)
+ligma_browser_search_timeout (gpointer data)
 {
-  GimpBrowserPrivate *priv = GET_PRIVATE (data);
+  LigmaBrowserPrivate *priv = GET_PRIVATE (data);
   const gchar        *search_string;
 
   search_string = gtk_entry_get_text (GTK_ENTRY (priv->search_entry));

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,25 +15,25 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_GEGL_MASK_COMBINE_H__
-#define __GIMP_GEGL_MASK_COMBINE_H__
+#ifndef __LIGMA_GEGL_MASK_COMBINE_H__
+#define __LIGMA_GEGL_MASK_COMBINE_H__
 
 
-gboolean   gimp_gegl_mask_combine_rect         (GeglBuffer     *mask,
-                                                GimpChannelOps  op,
+gboolean   ligma_gegl_mask_combine_rect         (GeglBuffer     *mask,
+                                                LigmaChannelOps  op,
                                                 gint            x,
                                                 gint            y,
                                                 gint            w,
                                                 gint            h);
-gboolean   gimp_gegl_mask_combine_ellipse      (GeglBuffer     *mask,
-                                                GimpChannelOps  op,
+gboolean   ligma_gegl_mask_combine_ellipse      (GeglBuffer     *mask,
+                                                LigmaChannelOps  op,
                                                 gint            x,
                                                 gint            y,
                                                 gint            w,
                                                 gint            h,
                                                 gboolean        antialias);
-gboolean   gimp_gegl_mask_combine_ellipse_rect (GeglBuffer     *mask,
-                                                GimpChannelOps  op,
+gboolean   ligma_gegl_mask_combine_ellipse_rect (GeglBuffer     *mask,
+                                                LigmaChannelOps  op,
                                                 gint            x,
                                                 gint            y,
                                                 gint            w,
@@ -41,11 +41,11 @@ gboolean   gimp_gegl_mask_combine_ellipse_rect (GeglBuffer     *mask,
                                                 gdouble         rx,
                                                 gdouble         ry,
                                                 gboolean        antialias);
-gboolean   gimp_gegl_mask_combine_buffer       (GeglBuffer     *mask,
+gboolean   ligma_gegl_mask_combine_buffer       (GeglBuffer     *mask,
                                                 GeglBuffer     *add_on,
-                                                GimpChannelOps  op,
+                                                LigmaChannelOps  op,
                                                 gint            off_x,
                                                 gint            off_y);
 
 
-#endif /* __GIMP_GEGL_MASK_COMBINE_H__ */
+#endif /* __LIGMA_GEGL_MASK_COMBINE_H__ */

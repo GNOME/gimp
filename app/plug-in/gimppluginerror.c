@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,18 +19,18 @@
 
 #include <glib-object.h>
 
-#include "gimppluginerror.h"
+#include "ligmapluginerror.h"
 
 
 /**
- * gimp_plug_in_error_quark:
+ * ligma_plug_in_error_quark:
  *
- * This function is never called directly. Use GIMP_PLUG_IN_ERROR() instead.
+ * This function is never called directly. Use LIGMA_PLUG_IN_ERROR() instead.
  *
- * Returns: the #GQuark that defines the GimpPlugIn error domain.
+ * Returns: the #GQuark that defines the LigmaPlugIn error domain.
  **/
 GQuark
-gimp_plug_in_error_quark (void)
+ligma_plug_in_error_quark (void)
 {
-  return g_quark_from_static_string ("gimp-plug-in-error-quark");
+  return g_quark_from_static_string ("ligma-plug-in-error-quark");
 }

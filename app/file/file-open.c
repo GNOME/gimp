@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995, 1996, 1997 Spencer Kimball and Peter Mattis
  * Copyright (C) 1997 Josh MacDonald
  *
@@ -23,81 +23,81 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "core/core-types.h"
 
-#include "gegl/gimp-babl.h"
+#include "gegl/ligma-babl.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontext.h"
-#include "core/gimpdocumentlist.h"
-#include "core/gimpimage.h"
-#include "core/gimpimage-merge.h"
-#include "core/gimpimage-undo.h"
-#include "core/gimpimagefile.h"
-#include "core/gimplayer.h"
-#include "core/gimpparamspecs.h"
-#include "core/gimpprogress.h"
+#include "core/ligma.h"
+#include "core/ligmacontext.h"
+#include "core/ligmadocumentlist.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaimage-merge.h"
+#include "core/ligmaimage-undo.h"
+#include "core/ligmaimagefile.h"
+#include "core/ligmalayer.h"
+#include "core/ligmaparamspecs.h"
+#include "core/ligmaprogress.h"
 
-#include "pdb/gimppdb.h"
+#include "pdb/ligmapdb.h"
 
-#include "plug-in/gimppluginmanager-file.h"
-#include "plug-in/gimppluginprocedure.h"
+#include "plug-in/ligmapluginmanager-file.h"
+#include "plug-in/ligmapluginprocedure.h"
 
 #include "file-import.h"
 #include "file-open.h"
 #include "file-remote.h"
-#include "gimp-file.h"
+#include "ligma-file.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-static void     file_open_sanitize_image       (GimpImage           *image,
+static void     file_open_sanitize_image       (LigmaImage           *image,
                                                 gboolean             as_new);
-static void     file_open_convert_items        (GimpImage           *dest_image,
+static void     file_open_convert_items        (LigmaImage           *dest_image,
                                                 const gchar         *basename,
                                                 GList               *items);
-static GList *  file_open_get_layers           (GimpImage           *image,
+static GList *  file_open_get_layers           (LigmaImage           *image,
                                                 gboolean             merge_visible,
                                                 gint                *n_visible);
-static gboolean file_open_file_proc_is_import  (GimpPlugInProcedure *file_proc);
+static gboolean file_open_file_proc_is_import  (LigmaPlugInProcedure *file_proc);
 
 
 /*  public functions  */
 
-GimpImage *
-file_open_image (Gimp                *gimp,
-                 GimpContext         *context,
-                 GimpProgress        *progress,
+LigmaImage *
+file_open_image (Ligma                *ligma,
+                 LigmaContext         *context,
+                 LigmaProgress        *progress,
                  GFile               *file,
                  gboolean             as_new,
-                 GimpPlugInProcedure *file_proc,
-                 GimpRunMode          run_mode,
-                 GimpPDBStatusType   *status,
+                 LigmaPlugInProcedure *file_proc,
+                 LigmaRunMode          run_mode,
+                 LigmaPDBStatusType   *status,
                  const gchar        **mime_type,
                  GError             **error)
 {
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   GFile          *orig_file;
-  GimpImage      *image       = NULL;
+  LigmaImage      *image       = NULL;
   GFile          *local_file  = NULL;
   gboolean        mounted     = TRUE;
   GError         *my_error    = NULL;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
-  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (progress == NULL || LIGMA_IS_PROGRESS (progress), NULL);
   g_return_val_if_fail (G_IS_FILE (file), NULL);
   g_return_val_if_fail (status != NULL, NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  *status = GIMP_PDB_EXECUTION_ERROR;
+  *status = LIGMA_PDB_EXECUTION_ERROR;
 
   orig_file = file;
 
   if (! g_file_is_native (file) &&
-      ! file_remote_mount_file (gimp, file, progress, &my_error))
+      ! file_remote_mount_file (ligma, file, progress, &my_error))
     {
       if (my_error)
         {
@@ -110,7 +110,7 @@ file_open_image (Gimp                *gimp,
         }
       else
         {
-          *status = GIMP_PDB_CANCEL;
+          *status = LIGMA_PDB_CANCEL;
 
           return NULL;
         }
@@ -151,8 +151,8 @@ file_open_image (Gimp                *gimp,
     }
 
   if (! file_proc)
-    file_proc = gimp_plug_in_manager_file_procedure_find (gimp->plug_in_manager,
-                                                          GIMP_FILE_PROCEDURE_GROUP_OPEN,
+    file_proc = ligma_plug_in_manager_file_procedure_find (ligma->plug_in_manager,
+                                                          LIGMA_FILE_PROCEDURE_GROUP_OPEN,
                                                           file, error);
 
   if (! file_proc || ! file_proc->handles_remote || ! mounted)
@@ -163,7 +163,7 @@ file_open_image (Gimp                *gimp,
         {
           g_clear_error (error);
 
-          local_file = file_remote_download_image (gimp, file, progress,
+          local_file = file_remote_download_image (ligma, file, progress,
                                                    &my_error);
 
           if (! local_file)
@@ -171,7 +171,7 @@ file_open_image (Gimp                *gimp,
               if (my_error)
                 g_propagate_error (error, my_error);
               else
-                *status = GIMP_PDB_CANCEL;
+                *status = LIGMA_PDB_CANCEL;
 
               return NULL;
             }
@@ -180,8 +180,8 @@ file_open_image (Gimp                *gimp,
            *  file
            */
           if (! file_proc)
-            file_proc = gimp_plug_in_manager_file_procedure_find (gimp->plug_in_manager,
-                                                                  GIMP_FILE_PROCEDURE_GROUP_OPEN,
+            file_proc = ligma_plug_in_manager_file_procedure_find (ligma->plug_in_manager,
+                                                                  LIGMA_FILE_PROCEDURE_GROUP_OPEN,
                                                                   local_file, error);
 
           file = local_file;
@@ -205,39 +205,39 @@ file_open_image (Gimp                *gimp,
     g_object_add_weak_pointer (G_OBJECT (progress), (gpointer) &progress);
 
   return_vals =
-    gimp_pdb_execute_procedure_by_name (gimp->pdb,
+    ligma_pdb_execute_procedure_by_name (ligma->pdb,
                                         context, progress, error,
-                                        gimp_object_get_name (file_proc),
-                                        GIMP_TYPE_RUN_MODE, run_mode,
+                                        ligma_object_get_name (file_proc),
+                                        LIGMA_TYPE_RUN_MODE, run_mode,
                                         G_TYPE_FILE,        file,
                                         G_TYPE_NONE);
 
   if (progress)
     g_object_remove_weak_pointer (G_OBJECT (progress), (gpointer) &progress);
 
-  *status = g_value_get_enum (gimp_value_array_index (return_vals, 0));
+  *status = g_value_get_enum (ligma_value_array_index (return_vals, 0));
 
-  if (*status == GIMP_PDB_SUCCESS && ! file_proc->generic_file_proc)
-    image = g_value_get_object (gimp_value_array_index (return_vals, 1));
+  if (*status == LIGMA_PDB_SUCCESS && ! file_proc->generic_file_proc)
+    image = g_value_get_object (ligma_value_array_index (return_vals, 1));
 
   if (local_file)
     {
       if (image)
-        gimp_image_set_file (image, orig_file);
+        ligma_image_set_file (image, orig_file);
 
       g_file_delete (local_file, NULL, NULL);
       g_object_unref (local_file);
     }
 
-  if (*status == GIMP_PDB_SUCCESS)
+  if (*status == LIGMA_PDB_SUCCESS)
     {
       if (image)
         {
           /* Only set the load procedure if it hasn't already been set. */
-          if (! gimp_image_get_load_proc (image))
-            gimp_image_set_load_proc (image, file_proc);
+          if (! ligma_image_get_load_proc (image))
+            ligma_image_set_load_proc (image, file_proc);
 
-          file_proc = gimp_image_get_load_proc (image);
+          file_proc = ligma_image_get_load_proc (image);
 
           if (mime_type)
             *mime_type = g_slist_nth_data (file_proc->mime_types_list, 0);
@@ -248,29 +248,29 @@ file_open_image (Gimp                *gimp,
             g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                          _("%s plug-in returned SUCCESS but did not "
                            "return an image"),
-                         gimp_procedure_get_label (GIMP_PROCEDURE (file_proc)));
+                         ligma_procedure_get_label (LIGMA_PROCEDURE (file_proc)));
 
-          *status = GIMP_PDB_EXECUTION_ERROR;
+          *status = LIGMA_PDB_EXECUTION_ERROR;
         }
     }
-  else if (*status != GIMP_PDB_CANCEL)
+  else if (*status != LIGMA_PDB_CANCEL)
     {
       if (error && ! *error)
         g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                      _("%s plug-in could not open image"),
-                     gimp_procedure_get_label (GIMP_PROCEDURE (file_proc)));
+                     ligma_procedure_get_label (LIGMA_PROCEDURE (file_proc)));
     }
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   if (image)
     {
-      gimp_image_undo_disable (image);
+      ligma_image_undo_disable (image);
 
       if (file_open_file_proc_is_import (file_proc))
         {
           file_import_image (image, context, orig_file,
-                             run_mode == GIMP_RUN_INTERACTIVE,
+                             run_mode == LIGMA_RUN_INTERACTIVE,
                              progress);
         }
 
@@ -283,7 +283,7 @@ file_open_image (Gimp                *gimp,
 
 /**
  * file_open_thumbnail:
- * @gimp:
+ * @ligma:
  * @context:
  * @progress:
  * @file:         an image file
@@ -300,10 +300,10 @@ file_open_image (Gimp                *gimp,
  *
  * Returns: the thumbnail image
  */
-GimpImage *
-file_open_thumbnail (Gimp           *gimp,
-                     GimpContext    *context,
-                     GimpProgress   *progress,
+LigmaImage *
+file_open_thumbnail (Ligma           *ligma,
+                     LigmaContext    *context,
+                     LigmaProgress   *progress,
                      GFile          *file,
                      gint            size,
                      const gchar   **mime_type,
@@ -313,12 +313,12 @@ file_open_thumbnail (Gimp           *gimp,
                      gint           *num_layers,
                      GError        **error)
 {
-  GimpPlugInProcedure *file_proc;
-  GimpProcedure       *procedure;
+  LigmaPlugInProcedure *file_proc;
+  LigmaProcedure       *procedure;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
-  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (progress == NULL || LIGMA_IS_PROGRESS (progress), NULL);
   g_return_val_if_fail (G_IS_FILE (file), NULL);
   g_return_val_if_fail (mime_type != NULL, NULL);
   g_return_val_if_fail (image_width != NULL, NULL);
@@ -332,92 +332,92 @@ file_open_thumbnail (Gimp           *gimp,
   *format       = NULL;
   *num_layers   = -1;
 
-  file_proc = gimp_plug_in_manager_file_procedure_find (gimp->plug_in_manager,
-                                                        GIMP_FILE_PROCEDURE_GROUP_OPEN,
+  file_proc = ligma_plug_in_manager_file_procedure_find (ligma->plug_in_manager,
+                                                        LIGMA_FILE_PROCEDURE_GROUP_OPEN,
                                                         file, NULL);
 
   if (! file_proc || ! file_proc->thumb_loader)
     return NULL;
 
-  procedure = gimp_pdb_lookup_procedure (gimp->pdb, file_proc->thumb_loader);
+  procedure = ligma_pdb_lookup_procedure (ligma->pdb, file_proc->thumb_loader);
 
   if (procedure && procedure->num_args >= 2 && procedure->num_values >= 1)
     {
-      GimpPDBStatusType  status;
-      GimpValueArray    *return_vals;
-      GimpImage         *image = NULL;
+      LigmaPDBStatusType  status;
+      LigmaValueArray    *return_vals;
+      LigmaImage         *image = NULL;
       gchar             *uri   = NULL;
 
       uri = g_file_get_uri (file);
 
       return_vals =
-        gimp_pdb_execute_procedure_by_name (gimp->pdb,
+        ligma_pdb_execute_procedure_by_name (ligma->pdb,
                                             context, progress, error,
-                                            gimp_object_get_name (procedure),
+                                            ligma_object_get_name (procedure),
                                             G_TYPE_FILE, file,
                                             G_TYPE_INT,  size,
                                             G_TYPE_NONE);
 
       g_free (uri);
 
-      status = g_value_get_enum (gimp_value_array_index (return_vals, 0));
+      status = g_value_get_enum (ligma_value_array_index (return_vals, 0));
 
-      if (status == GIMP_PDB_SUCCESS &&
-          GIMP_VALUE_HOLDS_IMAGE (gimp_value_array_index (return_vals, 1)))
+      if (status == LIGMA_PDB_SUCCESS &&
+          LIGMA_VALUE_HOLDS_IMAGE (ligma_value_array_index (return_vals, 1)))
         {
-          image = g_value_get_object (gimp_value_array_index (return_vals, 1));
+          image = g_value_get_object (ligma_value_array_index (return_vals, 1));
 
-          if (gimp_value_array_length (return_vals) >= 3 &&
-              G_VALUE_HOLDS_INT (gimp_value_array_index (return_vals, 2)) &&
-              G_VALUE_HOLDS_INT (gimp_value_array_index (return_vals, 3)))
+          if (ligma_value_array_length (return_vals) >= 3 &&
+              G_VALUE_HOLDS_INT (ligma_value_array_index (return_vals, 2)) &&
+              G_VALUE_HOLDS_INT (ligma_value_array_index (return_vals, 3)))
             {
               *image_width =
-                MAX (0, g_value_get_int (gimp_value_array_index (return_vals, 2)));
+                MAX (0, g_value_get_int (ligma_value_array_index (return_vals, 2)));
 
               *image_height =
-                MAX (0, g_value_get_int (gimp_value_array_index (return_vals, 3)));
+                MAX (0, g_value_get_int (ligma_value_array_index (return_vals, 3)));
 
-              if (gimp_value_array_length (return_vals) >= 5 &&
-                  G_VALUE_HOLDS_INT (gimp_value_array_index (return_vals, 4)))
+              if (ligma_value_array_length (return_vals) >= 5 &&
+                  G_VALUE_HOLDS_INT (ligma_value_array_index (return_vals, 4)))
                 {
-                  gint value = g_value_get_int (gimp_value_array_index (return_vals, 4));
+                  gint value = g_value_get_int (ligma_value_array_index (return_vals, 4));
 
                   switch (value)
                     {
-                    case GIMP_RGB_IMAGE:
-                      *format = gimp_babl_format (GIMP_RGB,
-                                                  GIMP_PRECISION_U8_NON_LINEAR,
+                    case LIGMA_RGB_IMAGE:
+                      *format = ligma_babl_format (LIGMA_RGB,
+                                                  LIGMA_PRECISION_U8_NON_LINEAR,
                                                   FALSE, NULL);
                       break;
 
-                    case GIMP_RGBA_IMAGE:
-                      *format = gimp_babl_format (GIMP_RGB,
-                                                  GIMP_PRECISION_U8_NON_LINEAR,
+                    case LIGMA_RGBA_IMAGE:
+                      *format = ligma_babl_format (LIGMA_RGB,
+                                                  LIGMA_PRECISION_U8_NON_LINEAR,
                                                   TRUE, NULL);
                       break;
 
-                    case GIMP_GRAY_IMAGE:
-                      *format = gimp_babl_format (GIMP_GRAY,
-                                                  GIMP_PRECISION_U8_NON_LINEAR,
+                    case LIGMA_GRAY_IMAGE:
+                      *format = ligma_babl_format (LIGMA_GRAY,
+                                                  LIGMA_PRECISION_U8_NON_LINEAR,
                                                   FALSE, NULL);
                       break;
 
-                    case GIMP_GRAYA_IMAGE:
-                      *format = gimp_babl_format (GIMP_GRAY,
-                                                  GIMP_PRECISION_U8_NON_LINEAR,
+                    case LIGMA_GRAYA_IMAGE:
+                      *format = ligma_babl_format (LIGMA_GRAY,
+                                                  LIGMA_PRECISION_U8_NON_LINEAR,
                                                   TRUE, NULL);
                       break;
 
-                    case GIMP_INDEXED_IMAGE:
-                    case GIMP_INDEXEDA_IMAGE:
+                    case LIGMA_INDEXED_IMAGE:
+                    case LIGMA_INDEXEDA_IMAGE:
                       {
                         const Babl *rgb;
                         const Babl *rgba;
 
-                        babl_new_palette ("-gimp-indexed-format-dummy",
+                        babl_new_palette ("-ligma-indexed-format-dummy",
                                           &rgb, &rgba);
 
-                        if (value == GIMP_INDEXED_IMAGE)
+                        if (value == LIGMA_INDEXED_IMAGE)
                           *format = rgb;
                         else
                           *format = rgba;
@@ -429,11 +429,11 @@ file_open_thumbnail (Gimp           *gimp,
                     }
                 }
 
-              if (gimp_value_array_length (return_vals) >= 6 &&
-                  G_VALUE_HOLDS_INT (gimp_value_array_index (return_vals, 5)))
+              if (ligma_value_array_length (return_vals) >= 6 &&
+                  G_VALUE_HOLDS_INT (ligma_value_array_index (return_vals, 5)))
                 {
                   *num_layers =
-                    MAX (0, g_value_get_int (gimp_value_array_index (return_vals, 5)));
+                    MAX (0, g_value_get_int (ligma_value_array_index (return_vals, 5)));
                 }
             }
 
@@ -443,15 +443,15 @@ file_open_thumbnail (Gimp           *gimp,
 
               *mime_type = g_slist_nth_data (file_proc->mime_types_list, 0);
 
-#ifdef GIMP_UNSTABLE
+#ifdef LIGMA_UNSTABLE
               g_printerr ("opened thumbnail at %d x %d\n",
-                          gimp_image_get_width  (image),
-                          gimp_image_get_height (image));
+                          ligma_image_get_width  (image),
+                          ligma_image_get_height (image));
 #endif
             }
         }
 
-      gimp_value_array_unref (return_vals);
+      ligma_value_array_unref (return_vals);
 
       return image;
     }
@@ -459,48 +459,48 @@ file_open_thumbnail (Gimp           *gimp,
   return NULL;
 }
 
-GimpImage *
-file_open_with_display (Gimp               *gimp,
-                        GimpContext        *context,
-                        GimpProgress       *progress,
+LigmaImage *
+file_open_with_display (Ligma               *ligma,
+                        LigmaContext        *context,
+                        LigmaProgress       *progress,
                         GFile              *file,
                         gboolean            as_new,
                         GObject            *monitor,
-                        GimpPDBStatusType  *status,
+                        LigmaPDBStatusType  *status,
                         GError            **error)
 {
-  return file_open_with_proc_and_display (gimp, context, progress,
+  return file_open_with_proc_and_display (ligma, context, progress,
                                           file, as_new, NULL,
                                           monitor,
                                           status, error);
 }
 
-GimpImage *
-file_open_with_proc_and_display (Gimp                *gimp,
-                                 GimpContext         *context,
-                                 GimpProgress        *progress,
+LigmaImage *
+file_open_with_proc_and_display (Ligma                *ligma,
+                                 LigmaContext         *context,
+                                 LigmaProgress        *progress,
                                  GFile               *file,
                                  gboolean             as_new,
-                                 GimpPlugInProcedure *file_proc,
+                                 LigmaPlugInProcedure *file_proc,
                                  GObject             *monitor,
-                                 GimpPDBStatusType   *status,
+                                 LigmaPDBStatusType   *status,
                                  GError             **error)
 {
-  GimpImage   *image;
+  LigmaImage   *image;
   const gchar *mime_type = NULL;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
-  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (progress == NULL || LIGMA_IS_PROGRESS (progress), NULL);
   g_return_val_if_fail (G_IS_FILE (file), NULL);
   g_return_val_if_fail (monitor == NULL || G_IS_OBJECT (monitor), NULL);
   g_return_val_if_fail (status != NULL, NULL);
 
-  image = file_open_image (gimp, context, progress,
+  image = file_open_image (ligma, context, progress,
                            file,
                            as_new,
                            file_proc,
-                           GIMP_RUN_INTERACTIVE,
+                           LIGMA_RUN_INTERACTIVE,
                            status,
                            &mime_type,
                            error);
@@ -516,24 +516,24 @@ file_open_with_proc_and_display (Gimp                *gimp,
        * API.
        */
       if (! file_proc)
-        file_proc = gimp_image_get_load_proc (image);
+        file_proc = ligma_image_get_load_proc (image);
 
       if (file_open_file_proc_is_import (file_proc) &&
-          gimp_image_get_n_layers (image) == 1)
+          ligma_image_get_n_layers (image) == 1)
         {
-          GimpObject *layer = gimp_image_get_layer_iter (image)->data;
+          LigmaObject *layer = ligma_image_get_layer_iter (image)->data;
           gchar      *basename;
 
-          basename = g_path_get_basename (gimp_file_get_utf8_name (file));
+          basename = g_path_get_basename (ligma_file_get_utf8_name (file));
 
-          gimp_item_rename (GIMP_ITEM (layer), basename, NULL);
-          gimp_image_undo_free (image);
-          gimp_image_clean_all (image);
+          ligma_item_rename (LIGMA_ITEM (layer), basename, NULL);
+          ligma_image_undo_free (image);
+          ligma_image_clean_all (image);
 
           g_free (basename);
         }
 
-      if (gimp_create_display (image->gimp, image, GIMP_UNIT_PIXEL, 1.0,
+      if (ligma_create_display (image->ligma, image, LIGMA_UNIT_PIXEL, 1.0,
                                monitor))
         {
           /*  the display owns the image now  */
@@ -542,61 +542,61 @@ file_open_with_proc_and_display (Gimp                *gimp,
 
       if (! as_new)
         {
-          GimpDocumentList *documents = GIMP_DOCUMENT_LIST (gimp->documents);
-          GimpImagefile    *imagefile;
+          LigmaDocumentList *documents = LIGMA_DOCUMENT_LIST (ligma->documents);
+          LigmaImagefile    *imagefile;
           GFile            *any_file;
 
-          imagefile = gimp_document_list_add_file (documents, file, mime_type);
+          imagefile = ligma_document_list_add_file (documents, file, mime_type);
 
           /*  can only create a thumbnail if the passed file and the
            *  resulting image's file match. Use any_file() here so we
            *  create thumbnails for both XCF and imported images.
            */
-          any_file = gimp_image_get_any_file (image);
+          any_file = ligma_image_get_any_file (image);
 
           if (any_file && g_file_equal (file, any_file))
             {
               /*  no need to save a thumbnail if there's a good one already  */
-              if (! gimp_imagefile_check_thumbnail (imagefile))
+              if (! ligma_imagefile_check_thumbnail (imagefile))
                 {
-                  gimp_imagefile_save_thumbnail (imagefile, mime_type, image,
+                  ligma_imagefile_save_thumbnail (imagefile, mime_type, image,
                                                  NULL);
                 }
             }
         }
 
       /*  announce that we opened this image  */
-      gimp_image_opened (image->gimp, file);
+      ligma_image_opened (image->ligma, file);
     }
 
   return image;
 }
 
 GList *
-file_open_layers (Gimp                *gimp,
-                  GimpContext         *context,
-                  GimpProgress        *progress,
-                  GimpImage           *dest_image,
+file_open_layers (Ligma                *ligma,
+                  LigmaContext         *context,
+                  LigmaProgress        *progress,
+                  LigmaImage           *dest_image,
                   gboolean             merge_visible,
                   GFile               *file,
-                  GimpRunMode          run_mode,
-                  GimpPlugInProcedure *file_proc,
-                  GimpPDBStatusType   *status,
+                  LigmaRunMode          run_mode,
+                  LigmaPlugInProcedure *file_proc,
+                  LigmaPDBStatusType   *status,
                   GError             **error)
 {
-  GimpImage   *new_image;
+  LigmaImage   *new_image;
   GList       *layers    = NULL;
   const gchar *mime_type = NULL;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
-  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
-  g_return_val_if_fail (GIMP_IS_IMAGE (dest_image), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (progress == NULL || LIGMA_IS_PROGRESS (progress), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (dest_image), NULL);
   g_return_val_if_fail (G_IS_FILE (file), NULL);
   g_return_val_if_fail (status != NULL, NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  new_image = file_open_image (gimp, context, progress,
+  new_image = file_open_image (ligma, context, progress,
                                file, FALSE,
                                file_proc,
                                run_mode,
@@ -606,7 +606,7 @@ file_open_layers (Gimp                *gimp,
     {
       gint n_visible = 0;
 
-      gimp_image_undo_disable (new_image);
+      ligma_image_undo_disable (new_image);
 
       layers = file_open_get_layers (new_image, merge_visible, &n_visible);
 
@@ -614,8 +614,8 @@ file_open_layers (Gimp                *gimp,
         {
           g_list_free (layers);
 
-          layers = gimp_image_merge_visible_layers (new_image, context,
-                                                    GIMP_CLIP_TO_IMAGE,
+          layers = ligma_image_merge_visible_layers (new_image, context,
+                                                    LIGMA_CLIP_TO_IMAGE,
                                                     FALSE, FALSE,
                                                     NULL);
           layers = g_list_copy (layers);
@@ -625,18 +625,18 @@ file_open_layers (Gimp                *gimp,
         {
           gchar *basename;
 
-          basename = g_path_get_basename (gimp_file_get_utf8_name (file));
+          basename = g_path_get_basename (ligma_file_get_utf8_name (file));
           file_open_convert_items (dest_image, basename, layers);
           g_free (basename);
 
-          gimp_document_list_add_file (GIMP_DOCUMENT_LIST (gimp->documents),
+          ligma_document_list_add_file (LIGMA_DOCUMENT_LIST (ligma->documents),
                                        file, mime_type);
         }
       else
         {
           g_set_error_literal (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                                _("Image doesn't contain any layers"));
-          *status = GIMP_PDB_EXECUTION_ERROR;
+          *status = LIGMA_PDB_EXECUTION_ERROR;
         }
 
       g_object_unref (new_image);
@@ -650,34 +650,34 @@ file_open_layers (Gimp                *gimp,
  *  or from the D-Bus service.
  */
 gboolean
-file_open_from_command_line (Gimp     *gimp,
+file_open_from_command_line (Ligma     *ligma,
                              GFile    *file,
                              gboolean  as_new,
                              GObject  *monitor)
 
 {
-  GimpImage         *image;
-  GimpDisplay       *display;
-  GimpPDBStatusType  status;
+  LigmaImage         *image;
+  LigmaDisplay       *display;
+  LigmaPDBStatusType  status;
   gboolean           success = FALSE;
   GError            *error   = NULL;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), FALSE);
   g_return_val_if_fail (G_IS_FILE (file), FALSE);
   g_return_val_if_fail (monitor == NULL || G_IS_OBJECT (monitor), FALSE);
 
-  display = gimp_get_empty_display (gimp);
+  display = ligma_get_empty_display (ligma);
 
   /* show the progress in the last opened display, see bug #704896 */
   if (! display)
-    display = gimp_context_get_display (gimp_get_user_context (gimp));
+    display = ligma_context_get_display (ligma_get_user_context (ligma));
 
   if (display)
     g_object_add_weak_pointer (G_OBJECT (display), (gpointer) &display);
 
-  image = file_open_with_display (gimp,
-                                  gimp_get_user_context (gimp),
-                                  GIMP_PROGRESS (display),
+  image = file_open_with_display (ligma,
+                                  ligma_get_user_context (ligma),
+                                  LIGMA_PROGRESS (display),
                                   file, as_new,
                                   monitor,
                                   &status, &error);
@@ -686,15 +686,15 @@ file_open_from_command_line (Gimp     *gimp,
     {
       success = TRUE;
 
-      g_object_set_data_full (G_OBJECT (gimp), GIMP_FILE_OPEN_LAST_FILE_KEY,
+      g_object_set_data_full (G_OBJECT (ligma), LIGMA_FILE_OPEN_LAST_FILE_KEY,
                               g_object_ref (file),
                               (GDestroyNotify) g_object_unref);
     }
-  else if (status != GIMP_PDB_SUCCESS && status != GIMP_PDB_CANCEL && display)
+  else if (status != LIGMA_PDB_SUCCESS && status != LIGMA_PDB_CANCEL && display)
     {
-      gimp_message (gimp, G_OBJECT (display), GIMP_MESSAGE_ERROR,
+      ligma_message (ligma, G_OBJECT (display), LIGMA_MESSAGE_ERROR,
                     _("Opening '%s' failed: %s"),
-                    gimp_file_get_utf8_name (file), error->message);
+                    ligma_file_get_utf8_name (file), error->message);
       g_clear_error (&error);
     }
 
@@ -708,38 +708,38 @@ file_open_from_command_line (Gimp     *gimp,
 /*  private functions  */
 
 static void
-file_open_sanitize_image (GimpImage *image,
+file_open_sanitize_image (LigmaImage *image,
                           gboolean   as_new)
 {
   if (as_new)
-    gimp_image_set_file (image, NULL);
+    ligma_image_set_file (image, NULL);
 
   /* clear all undo steps */
-  gimp_image_undo_free (image);
+  ligma_image_undo_free (image);
 
   /* make sure that undo is enabled */
-  while (! gimp_image_undo_is_enabled (image))
-    gimp_image_undo_thaw (image);
+  while (! ligma_image_undo_is_enabled (image))
+    ligma_image_undo_thaw (image);
 
   /* Set the image to clean. Note that export dirtiness is not set to
    * clean here; we can only consider export clean after the first
    * export
    */
-  gimp_image_clean_all (image);
+  ligma_image_clean_all (image);
 
   /* Make sure the projection is completely constructed from valid
    * layers, this is needed in case something triggers projection or
    * image preview creation before all layers are loaded, see bug #767663.
    */
-  gimp_image_invalidate_all (image);
+  ligma_image_invalidate_all (image);
 
   /* Make sure all image states are up-to-date */
-  gimp_image_flush (image);
+  ligma_image_flush (image);
 }
 
 /* Converts items from one image to another */
 static void
-file_open_convert_items (GimpImage   *dest_image,
+file_open_convert_items (LigmaImage   *dest_image,
                          const gchar *basename,
                          GList       *items)
 {
@@ -747,19 +747,19 @@ file_open_convert_items (GimpImage   *dest_image,
 
   for (list = items; list; list = g_list_next (list))
     {
-      GimpItem *src = list->data;
-      GimpItem *item;
+      LigmaItem *src = list->data;
+      LigmaItem *item;
 
-      item = gimp_item_convert (src, dest_image, G_TYPE_FROM_INSTANCE (src));
+      item = ligma_item_convert (src, dest_image, G_TYPE_FROM_INSTANCE (src));
 
       if (g_list_length (items) == 1)
         {
-          gimp_object_set_name (GIMP_OBJECT (item), basename);
+          ligma_object_set_name (LIGMA_OBJECT (item), basename);
         }
       else
         {
-          gimp_object_set_name (GIMP_OBJECT (item),
-                                gimp_object_get_name (src));
+          ligma_object_set_name (LIGMA_OBJECT (item),
+                                ligma_object_get_name (src));
         }
 
       list->data = item;
@@ -767,23 +767,23 @@ file_open_convert_items (GimpImage   *dest_image,
 }
 
 static GList *
-file_open_get_layers (GimpImage *image,
+file_open_get_layers (LigmaImage *image,
                       gboolean   merge_visible,
                       gint      *n_visible)
 {
   GList *iter   = NULL;
   GList *layers = NULL;
 
-  for (iter = gimp_image_get_layer_iter (image);
+  for (iter = ligma_image_get_layer_iter (image);
        iter;
        iter = g_list_next (iter))
     {
-      GimpItem *item = iter->data;
+      LigmaItem *item = iter->data;
 
       if (! merge_visible)
         layers = g_list_prepend (layers, item);
 
-      if (gimp_item_get_visible (item))
+      if (ligma_item_get_visible (item))
         {
           if (n_visible)
             (*n_visible)++;
@@ -797,7 +797,7 @@ file_open_get_layers (GimpImage *image,
 }
 
 static gboolean
-file_open_file_proc_is_import (GimpPlugInProcedure *file_proc)
+file_open_file_proc_is_import (LigmaPlugInProcedure *file_proc)
 {
   return !(file_proc &&
            file_proc->mime_types &&

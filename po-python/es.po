@@ -1,7 +1,7 @@
-# translation of gimp-python.master.po to Español
-# Spanish translation for gimp-python.
+# translation of ligma-python.master.po to Español
+# Spanish translation for ligma-python.
 # Copyright © 1998-2000,2003, 2006, 2007, 2008, 2009, 2011 Free Software Foundation, Inc.
-# This file is distributed under the same license as the gimp package.
+# This file is distributed under the same license as the ligma package.
 #
 # Pablo G. del Campo <pablodc@bigfoot.com>, 2003, 2004.
 # Francisco Javier F. Serrador <serrador@cvs.gnome.org>, 2004, 2005, 2006.
@@ -15,8 +15,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-python.master\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma-python.master\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2022-06-30 13:03+0000\n"
 "PO-Revision-Date: 2022-07-01 13:29+0200\n"
 "Last-Translator: Rodrigo Lledó Milanca <rodhos92@gmail.com>\n"
@@ -492,8 +492,8 @@ msgid "Python _Console"
 msgstr "_Consola de Python"
 
 #: plug-ins/python/python-console/python-console.py:358
-msgid "Interactive GIMP Python interpreter"
-msgstr "Intérprete interactivo de Python en GIMP"
+msgid "Interactive LIGMA Python interpreter"
+msgstr "Intérprete interactivo de Python en LIGMA"
 
 #: plug-ins/python/python-console/python-console.py:359
 msgid "Type in commands and see results"
@@ -852,8 +852,8 @@ msgstr ""
 "guardar a una ruta"
 
 #: plug-ins/python/spyro-plus.py:1749
-msgid "Spyrogimp"
-msgstr "Espirogimp"
+msgid "Spyroligma"
+msgstr "Espiroligma"
 
 #: plug-ins/python/spyro-plus.py:1758 plug-ins/python/spyro-plus.py:2295
 msgid "Draw spyrographs using current tool settings and selection."
@@ -958,8 +958,8 @@ msgstr ""
 "actual."
 
 #: plug-ins/python/spyro-plus.py:2299
-msgid "Spyrogimp..."
-msgstr "Espirogimp…"
+msgid "Spyroligma..."
+msgstr "Espiroligma…"
 
 #~ msgid "Fog _color"
 #~ msgstr "_Color de la niebla"

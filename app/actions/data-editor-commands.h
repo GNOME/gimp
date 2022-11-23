@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,7 +19,7 @@
 #define __DATA_EDITOR_COMMANDS_H__
 
 
-void   data_editor_edit_active_cmd_callback (GimpAction *action,
+void   data_editor_edit_active_cmd_callback (LigmaAction *action,
                                              GVariant   *value,
                                              gpointer    data);
 

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,16 +15,16 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_ARRANGE_H__
-#define __GIMP_IMAGE_ARRANGE_H__
+#ifndef __LIGMA_IMAGE_ARRANGE_H__
+#define __LIGMA_IMAGE_ARRANGE_H__
 
 
-void gimp_image_arrange_objects (GimpImage         *image,
+void ligma_image_arrange_objects (LigmaImage         *image,
                                  GList             *list,
                                  gdouble            align_x,
                                  gdouble            align_y,
                                  GObject           *reference,
-                                 GimpAlignmentType  reference_alignment,
+                                 LigmaAlignmentType  reference_alignment,
                                  gboolean           align_contents);
 
-#endif  /*  __GIMP_IMAGE_ARRANGE_H__  */
+#endif  /*  __LIGMA_IMAGE_ARRANGE_H__  */

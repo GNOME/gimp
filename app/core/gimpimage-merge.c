@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,57 +21,57 @@
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpmath/gimpmath.h"
-#include "libgimpbase/gimpbase.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmabase/ligmabase.h"
 
 #include "core-types.h"
 
-#include "gegl/gimp-babl-compat.h"
-#include "gegl/gimp-gegl-apply-operation.h"
-#include "gegl/gimp-gegl-nodes.h"
-#include "gegl/gimp-gegl-utils.h"
+#include "gegl/ligma-babl-compat.h"
+#include "gegl/ligma-gegl-apply-operation.h"
+#include "gegl/ligma-gegl-nodes.h"
+#include "gegl/ligma-gegl-utils.h"
 
-#include "vectors/gimpvectors.h"
+#include "vectors/ligmavectors.h"
 
-#include "gimp.h"
-#include "gimpcontext.h"
-#include "gimperror.h"
-#include "gimpgrouplayer.h"
-#include "gimpimage.h"
-#include "gimpimage-merge.h"
-#include "gimpimage-undo.h"
-#include "gimpitemstack.h"
-#include "gimplayer-floating-selection.h"
-#include "gimplayer-new.h"
-#include "gimplayermask.h"
-#include "gimpparasitelist.h"
-#include "gimppickable.h"
-#include "gimpprogress.h"
-#include "gimpprojectable.h"
-#include "gimpundostack.h"
+#include "ligma.h"
+#include "ligmacontext.h"
+#include "ligmaerror.h"
+#include "ligmagrouplayer.h"
+#include "ligmaimage.h"
+#include "ligmaimage-merge.h"
+#include "ligmaimage-undo.h"
+#include "ligmaitemstack.h"
+#include "ligmalayer-floating-selection.h"
+#include "ligmalayer-new.h"
+#include "ligmalayermask.h"
+#include "ligmaparasitelist.h"
+#include "ligmapickable.h"
+#include "ligmaprogress.h"
+#include "ligmaprojectable.h"
+#include "ligmaundostack.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-static GimpLayer * gimp_image_merge_layers (GimpImage     *image,
-                                            GimpContainer *container,
+static LigmaLayer * ligma_image_merge_layers (LigmaImage     *image,
+                                            LigmaContainer *container,
                                             GSList        *merge_list,
-                                            GimpContext   *context,
-                                            GimpMergeType  merge_type,
+                                            LigmaContext   *context,
+                                            LigmaMergeType  merge_type,
                                             const gchar   *undo_desc,
-                                            GimpProgress  *progress);
+                                            LigmaProgress  *progress);
 
 
 /*  public functions  */
 
 GList *
-gimp_image_merge_visible_layers (GimpImage     *image,
-                                 GimpContext   *context,
-                                 GimpMergeType  merge_type,
+ligma_image_merge_visible_layers (LigmaImage     *image,
+                                 LigmaContext   *context,
+                                 LigmaMergeType  merge_type,
                                  gboolean       merge_active_group,
                                  gboolean       discard_invisible,
-                                 GimpProgress  *progress)
+                                 LigmaProgress  *progress)
 {
   const gchar *undo_desc  = C_("undo-type", "Merge Visible Layers");
   GList       *containers = NULL;
@@ -79,31 +79,31 @@ gimp_image_merge_visible_layers (GimpImage     *image,
   GList       *iter;
   GList       *iter2;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
-  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (progress == NULL || LIGMA_IS_PROGRESS (progress), NULL);
 
   if (merge_active_group)
     {
-      GList *selected_layers = gimp_image_get_selected_layers (image);
+      GList *selected_layers = ligma_image_get_selected_layers (image);
 
       /*  if the active layer is the floating selection, get the
        *  underlying drawable, but only if it is a layer
        */
-      if (g_list_length (selected_layers) == 1 && gimp_layer_is_floating_sel (selected_layers->data))
+      if (g_list_length (selected_layers) == 1 && ligma_layer_is_floating_sel (selected_layers->data))
         {
-          GimpDrawable *fs_drawable;
+          LigmaDrawable *fs_drawable;
 
-          fs_drawable = gimp_layer_get_floating_sel_drawable (selected_layers->data);
+          fs_drawable = ligma_layer_get_floating_sel_drawable (selected_layers->data);
 
-          if (GIMP_IS_LAYER (fs_drawable))
+          if (LIGMA_IS_LAYER (fs_drawable))
             containers = g_list_prepend (containers,
-                                         gimp_item_get_container (GIMP_ITEM (fs_drawable)));
+                                         ligma_item_get_container (LIGMA_ITEM (fs_drawable)));
         }
       else
         {
           for (iter = selected_layers; iter; iter = iter->next)
-            if (! gimp_item_get_parent (iter->data))
+            if (! ligma_item_get_parent (iter->data))
               break;
 
           /* No need to list selected groups if any selected layer is
@@ -119,41 +119,41 @@ gimp_image_merge_visible_layers (GimpImage     *image,
                        * other selected layers are its parents.
                        */
                       if (iter->data != iter2->data &&
-                          gimp_viewable_is_ancestor (iter2->data, iter->data))
+                          ligma_viewable_is_ancestor (iter2->data, iter->data))
                         break;
                     }
                   if (iter2 == NULL &&
-                      ! g_list_find (containers, gimp_item_get_container (GIMP_ITEM (iter->data))))
+                      ! g_list_find (containers, ligma_item_get_container (LIGMA_ITEM (iter->data))))
                     containers = g_list_prepend (containers,
-                                                 gimp_item_get_container (GIMP_ITEM (iter->data)));
+                                                 ligma_item_get_container (LIGMA_ITEM (iter->data)));
                 }
             }
         }
     }
   if (! containers)
-    containers = g_list_prepend (NULL, gimp_image_get_layers (image));
+    containers = g_list_prepend (NULL, ligma_image_get_layers (image));
 
-  gimp_set_busy (image->gimp);
-  gimp_image_undo_group_start (image,
-                               GIMP_UNDO_GROUP_IMAGE_LAYERS_MERGE,
+  ligma_set_busy (image->ligma);
+  ligma_image_undo_group_start (image,
+                               LIGMA_UNDO_GROUP_IMAGE_LAYERS_MERGE,
                                undo_desc);
 
   for (iter = containers; iter; iter = iter->next)
     {
-      GimpContainer *container      = iter->data;
+      LigmaContainer *container      = iter->data;
       GSList        *merge_list     = NULL;
       GSList        *invisible_list = NULL;
 
-      for (iter2 = gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (container));
+      for (iter2 = ligma_item_stack_get_item_iter (LIGMA_ITEM_STACK (container));
            iter2;
            iter2 = g_list_next (iter2))
         {
-          GimpLayer *layer = iter2->data;
+          LigmaLayer *layer = iter2->data;
 
-          if (gimp_layer_is_floating_sel (layer))
+          if (ligma_layer_is_floating_sel (layer))
             continue;
 
-          if (gimp_item_get_visible (GIMP_ITEM (layer)))
+          if (ligma_item_get_visible (LIGMA_ITEM (layer)))
             {
               merge_list = g_slist_append (merge_list, layer);
             }
@@ -165,12 +165,12 @@ gimp_image_merge_visible_layers (GimpImage     *image,
 
       if (merge_list)
         {
-          GimpLayer   *layer;
+          LigmaLayer   *layer;
           /* if there's a floating selection, anchor it */
-          if (gimp_image_get_floating_selection (image))
-            floating_sel_anchor (gimp_image_get_floating_selection (image));
+          if (ligma_image_get_floating_selection (image))
+            floating_sel_anchor (ligma_image_get_floating_selection (image));
 
-          layer = gimp_image_merge_layers (image,
+          layer = ligma_image_merge_layers (image,
                                            container,
                                            merge_list, context, merge_type,
                                            undo_desc, progress);
@@ -181,7 +181,7 @@ gimp_image_merge_visible_layers (GimpImage     *image,
               GSList *list;
 
               for (list = invisible_list; list; list = g_slist_next (list))
-                gimp_image_remove_layer (image, list->data, TRUE, NULL);
+                ligma_image_remove_layer (image, list->data, TRUE, NULL);
 
               g_slist_free (invisible_list);
             }
@@ -190,41 +190,41 @@ gimp_image_merge_visible_layers (GimpImage     *image,
         }
     }
 
-  gimp_image_set_selected_layers (image, new_layers);
-  gimp_image_undo_group_end (image);
-  gimp_unset_busy (image->gimp);
+  ligma_image_set_selected_layers (image, new_layers);
+  ligma_image_undo_group_end (image);
+  ligma_unset_busy (image->ligma);
 
   g_list_free (new_layers);
   g_list_free (containers);
 
-  return gimp_image_get_selected_layers (image);
+  return ligma_image_get_selected_layers (image);
 }
 
-GimpLayer *
-gimp_image_flatten (GimpImage     *image,
-                    GimpContext   *context,
-                    GimpProgress  *progress,
+LigmaLayer *
+ligma_image_flatten (LigmaImage     *image,
+                    LigmaContext   *context,
+                    LigmaProgress  *progress,
                     GError       **error)
 {
   GList     *list;
   GSList    *merge_list = NULL;
-  GimpLayer *layer;
+  LigmaLayer *layer;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
-  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (progress == NULL || LIGMA_IS_PROGRESS (progress), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  for (list = gimp_image_get_layer_iter (image);
+  for (list = ligma_image_get_layer_iter (image);
        list;
        list = g_list_next (list))
     {
       layer = list->data;
 
-      if (gimp_layer_is_floating_sel (layer))
+      if (ligma_layer_is_floating_sel (layer))
         continue;
 
-      if (gimp_item_get_visible (GIMP_ITEM (layer)))
+      if (ligma_item_get_visible (LIGMA_ITEM (layer)))
         merge_list = g_slist_append (merge_list, layer);
     }
 
@@ -232,55 +232,55 @@ gimp_image_flatten (GimpImage     *image,
     {
       const gchar *undo_desc = C_("undo-type", "Flatten Image");
 
-      gimp_set_busy (image->gimp);
+      ligma_set_busy (image->ligma);
 
-      gimp_image_undo_group_start (image,
-                                   GIMP_UNDO_GROUP_IMAGE_LAYERS_MERGE,
+      ligma_image_undo_group_start (image,
+                                   LIGMA_UNDO_GROUP_IMAGE_LAYERS_MERGE,
                                    undo_desc);
 
       /* if there's a floating selection, anchor it */
-      if (gimp_image_get_floating_selection (image))
-        floating_sel_anchor (gimp_image_get_floating_selection (image));
+      if (ligma_image_get_floating_selection (image))
+        floating_sel_anchor (ligma_image_get_floating_selection (image));
 
-      layer = gimp_image_merge_layers (image,
-                                       gimp_image_get_layers (image),
+      layer = ligma_image_merge_layers (image,
+                                       ligma_image_get_layers (image),
                                        merge_list, context,
-                                       GIMP_FLATTEN_IMAGE,
+                                       LIGMA_FLATTEN_IMAGE,
                                        undo_desc, progress);
       g_slist_free (merge_list);
 
-      gimp_image_alpha_changed (image);
+      ligma_image_alpha_changed (image);
 
-      gimp_image_undo_group_end (image);
+      ligma_image_undo_group_end (image);
 
-      gimp_unset_busy (image->gimp);
+      ligma_unset_busy (image->ligma);
 
       return layer;
     }
 
-  g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+  g_set_error_literal (error, LIGMA_ERROR, LIGMA_FAILED,
                        _("Cannot flatten an image without any visible layer."));
   return NULL;
 }
 
 GList *
-gimp_image_merge_down (GimpImage      *image,
+ligma_image_merge_down (LigmaImage      *image,
                        GList          *layers,
-                       GimpContext    *context,
-                       GimpMergeType   merge_type,
-                       GimpProgress   *progress,
+                       LigmaContext    *context,
+                       LigmaMergeType   merge_type,
+                       LigmaProgress   *progress,
                        GError        **error)
 {
   GList       *merged_layers = NULL;
   GList       *merge_lists   = NULL;
   GSList      *merge_list    = NULL;
-  GimpLayer   *layer;
+  LigmaLayer   *layer;
   GList       *list;
   const gchar *undo_desc;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
-  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (progress == NULL || LIGMA_IS_PROGRESS (progress), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   layers = g_list_copy (layers);
@@ -288,28 +288,28 @@ gimp_image_merge_down (GimpImage      *image,
     {
       GList *list2;
 
-      g_return_val_if_fail (GIMP_IS_LAYER (list->data), NULL);
-      g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (list->data)), NULL);
+      g_return_val_if_fail (LIGMA_IS_LAYER (list->data), NULL);
+      g_return_val_if_fail (ligma_item_is_attached (LIGMA_ITEM (list->data)), NULL);
 
-      if (gimp_layer_is_floating_sel (list->data))
+      if (ligma_layer_is_floating_sel (list->data))
         {
-          g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+          g_set_error_literal (error, LIGMA_ERROR, LIGMA_FAILED,
                                _("Cannot merge down a floating selection."));
           g_list_free (layers);
           g_list_free_full (merge_lists, (GDestroyNotify) g_slist_free);
           return NULL;
         }
 
-      if (! gimp_item_get_visible (GIMP_ITEM (list->data)))
+      if (! ligma_item_get_visible (LIGMA_ITEM (list->data)))
         {
-          g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+          g_set_error_literal (error, LIGMA_ERROR, LIGMA_FAILED,
                                _("Cannot merge down an invisible layer."));
           g_list_free (layers);
           g_list_free_full (merge_lists, (GDestroyNotify) g_slist_free);
           return NULL;
         }
 
-      for (list2 = gimp_item_get_container_iter (GIMP_ITEM (list->data));
+      for (list2 = ligma_item_get_container_iter (LIGMA_ITEM (list->data));
            list2;
            list2 = g_list_next (list2))
         {
@@ -324,20 +324,20 @@ gimp_image_merge_down (GimpImage      *image,
         {
           layer = list2->data;
 
-          if (gimp_item_get_visible (GIMP_ITEM (layer)))
+          if (ligma_item_get_visible (LIGMA_ITEM (layer)))
             {
-              if (gimp_viewable_get_children (GIMP_VIEWABLE (layer)))
+              if (ligma_viewable_get_children (LIGMA_VIEWABLE (layer)))
                 {
-                  g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+                  g_set_error_literal (error, LIGMA_ERROR, LIGMA_FAILED,
                                        _("Cannot merge down to a layer group."));
                   g_list_free (layers);
                   g_list_free_full (merge_lists, (GDestroyNotify) g_slist_free);
                   return NULL;
                 }
 
-              if (gimp_item_is_content_locked (GIMP_ITEM (layer), NULL))
+              if (ligma_item_is_content_locked (LIGMA_ITEM (layer), NULL))
                 {
-                  g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+                  g_set_error_literal (error, LIGMA_ERROR, LIGMA_FAILED,
                                        _("The layer to merge down to is locked."));
                   g_list_free (layers);
                   g_list_free_full (merge_lists, (GDestroyNotify) g_slist_free);
@@ -352,7 +352,7 @@ gimp_image_merge_down (GimpImage      *image,
 
       if (! layer)
         {
-          g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+          g_set_error_literal (error, LIGMA_ERROR, LIGMA_FAILED,
                                _("There is no visible layer to merge down to."));
           g_list_free (layers);
           g_list_free_full (merge_lists, (GDestroyNotify) g_slist_free);
@@ -380,17 +380,17 @@ gimp_image_merge_down (GimpImage      *image,
 
   undo_desc = C_("undo-type", "Merge Down");
 
-  gimp_set_busy (image->gimp);
+  ligma_set_busy (image->ligma);
 
-  gimp_image_undo_group_start (image,
-                               GIMP_UNDO_GROUP_IMAGE_LAYERS_MERGE,
+  ligma_image_undo_group_start (image,
+                               LIGMA_UNDO_GROUP_IMAGE_LAYERS_MERGE,
                                undo_desc);
 
   for (list = merge_lists; list; list = list->next)
     {
       merge_list = list->data;
-      layer = gimp_image_merge_layers (image,
-                                       gimp_item_get_container (merge_list->data),
+      layer = ligma_image_merge_layers (image,
+                                       ligma_item_get_container (merge_list->data),
                                        merge_list, context, merge_type,
                                        undo_desc, progress);
       merged_layers = g_list_prepend (merged_layers, layer);
@@ -398,64 +398,64 @@ gimp_image_merge_down (GimpImage      *image,
 
   g_list_free_full (merge_lists, (GDestroyNotify) g_slist_free);
 
-  gimp_image_undo_group_end (image);
+  ligma_image_undo_group_end (image);
 
-  gimp_unset_busy (image->gimp);
+  ligma_unset_busy (image->ligma);
 
   return merged_layers;
 }
 
-GimpLayer *
-gimp_image_merge_group_layer (GimpImage      *image,
-                              GimpGroupLayer *group)
+LigmaLayer *
+ligma_image_merge_group_layer (LigmaImage      *image,
+                              LigmaGroupLayer *group)
 {
-  GimpLayer *parent;
-  GimpLayer *layer;
+  LigmaLayer *parent;
+  LigmaLayer *layer;
   gint       index;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (GIMP_IS_GROUP_LAYER (group), NULL);
-  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (group)), NULL);
-  g_return_val_if_fail (gimp_item_get_image (GIMP_ITEM (group)) == image, NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_GROUP_LAYER (group), NULL);
+  g_return_val_if_fail (ligma_item_is_attached (LIGMA_ITEM (group)), NULL);
+  g_return_val_if_fail (ligma_item_get_image (LIGMA_ITEM (group)) == image, NULL);
 
-  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_LAYERS_MERGE,
+  ligma_image_undo_group_start (image, LIGMA_UNDO_GROUP_IMAGE_LAYERS_MERGE,
                                C_("undo-type", "Merge Layer Group"));
 
-  parent = gimp_layer_get_parent (GIMP_LAYER (group));
-  index  = gimp_item_get_index (GIMP_ITEM (group));
+  parent = ligma_layer_get_parent (LIGMA_LAYER (group));
+  index  = ligma_item_get_index (LIGMA_ITEM (group));
 
   /* if this is a pass-through group, change its mode to NORMAL *before*
    * duplicating it, since PASS_THROUGH mode is invalid for regular layers.
    * see bug #793714.
    */
-  if (gimp_layer_get_mode (GIMP_LAYER (group)) == GIMP_LAYER_MODE_PASS_THROUGH)
+  if (ligma_layer_get_mode (LIGMA_LAYER (group)) == LIGMA_LAYER_MODE_PASS_THROUGH)
     {
-      GimpLayerColorSpace    blend_space;
-      GimpLayerColorSpace    composite_space;
-      GimpLayerCompositeMode composite_mode;
+      LigmaLayerColorSpace    blend_space;
+      LigmaLayerColorSpace    composite_space;
+      LigmaLayerCompositeMode composite_mode;
 
       /* keep the group's current blend space, composite space, and composite
        * mode.
        */
-      blend_space     = gimp_layer_get_blend_space     (GIMP_LAYER (group));
-      composite_space = gimp_layer_get_composite_space (GIMP_LAYER (group));
-      composite_mode  = gimp_layer_get_composite_mode  (GIMP_LAYER (group));
+      blend_space     = ligma_layer_get_blend_space     (LIGMA_LAYER (group));
+      composite_space = ligma_layer_get_composite_space (LIGMA_LAYER (group));
+      composite_mode  = ligma_layer_get_composite_mode  (LIGMA_LAYER (group));
 
-      gimp_layer_set_mode            (GIMP_LAYER (group), GIMP_LAYER_MODE_NORMAL, TRUE);
-      gimp_layer_set_blend_space     (GIMP_LAYER (group), blend_space,            TRUE);
-      gimp_layer_set_composite_space (GIMP_LAYER (group), composite_space,        TRUE);
-      gimp_layer_set_composite_mode  (GIMP_LAYER (group), composite_mode,         TRUE);
+      ligma_layer_set_mode            (LIGMA_LAYER (group), LIGMA_LAYER_MODE_NORMAL, TRUE);
+      ligma_layer_set_blend_space     (LIGMA_LAYER (group), blend_space,            TRUE);
+      ligma_layer_set_composite_space (LIGMA_LAYER (group), composite_space,        TRUE);
+      ligma_layer_set_composite_mode  (LIGMA_LAYER (group), composite_mode,         TRUE);
     }
 
-  layer = GIMP_LAYER (gimp_item_duplicate (GIMP_ITEM (group),
-                                           GIMP_TYPE_LAYER));
+  layer = LIGMA_LAYER (ligma_item_duplicate (LIGMA_ITEM (group),
+                                           LIGMA_TYPE_LAYER));
 
-  gimp_object_set_name (GIMP_OBJECT (layer), gimp_object_get_name (group));
+  ligma_object_set_name (LIGMA_OBJECT (layer), ligma_object_get_name (group));
 
-  gimp_image_remove_layer (image, GIMP_LAYER (group), TRUE, NULL);
-  gimp_image_add_layer (image, layer, parent, index, TRUE);
+  ligma_image_remove_layer (image, LIGMA_LAYER (group), TRUE, NULL);
+  ligma_image_add_layer (image, layer, parent, index, TRUE);
 
-  gimp_image_undo_group_end (image);
+  ligma_image_undo_group_end (image);
 
   return layer;
 }
@@ -463,24 +463,24 @@ gimp_image_merge_group_layer (GimpImage      *image,
 
 /* merging vectors */
 
-GimpVectors *
-gimp_image_merge_visible_vectors (GimpImage  *image,
+LigmaVectors *
+ligma_image_merge_visible_vectors (LigmaImage  *image,
                                   GError    **error)
 {
   GList       *list;
   GList       *merge_list = NULL;
-  GimpVectors *vectors;
+  LigmaVectors *vectors;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  for (list = gimp_image_get_vectors_iter (image);
+  for (list = ligma_image_get_vectors_iter (image);
        list;
        list = g_list_next (list))
     {
       vectors = list->data;
 
-      if (gimp_item_get_visible (GIMP_ITEM (vectors)))
+      if (ligma_item_get_visible (LIGMA_ITEM (vectors)))
         merge_list = g_list_prepend (merge_list, vectors);
     }
 
@@ -488,23 +488,23 @@ gimp_image_merge_visible_vectors (GimpImage  *image,
 
   if (merge_list && merge_list->next)
     {
-      GimpVectors *target_vectors;
+      LigmaVectors *target_vectors;
       gchar       *name;
       gint         pos;
 
-      gimp_set_busy (image->gimp);
+      ligma_set_busy (image->ligma);
 
-      gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_VECTORS_MERGE,
+      ligma_image_undo_group_start (image, LIGMA_UNDO_GROUP_IMAGE_VECTORS_MERGE,
                                    C_("undo-type", "Merge Visible Paths"));
 
-      vectors = GIMP_VECTORS (merge_list->data);
+      vectors = LIGMA_VECTORS (merge_list->data);
 
-      name = g_strdup (gimp_object_get_name (vectors));
-      pos = gimp_item_get_index (GIMP_ITEM (vectors));
+      name = g_strdup (ligma_object_get_name (vectors));
+      pos = ligma_item_get_index (LIGMA_ITEM (vectors));
 
-      target_vectors = GIMP_VECTORS (gimp_item_duplicate (GIMP_ITEM (vectors),
-                                                          GIMP_TYPE_VECTORS));
-      gimp_image_remove_vectors (image, vectors, TRUE, NULL);
+      target_vectors = LIGMA_VECTORS (ligma_item_duplicate (LIGMA_ITEM (vectors),
+                                                          LIGMA_TYPE_VECTORS));
+      ligma_image_remove_vectors (image, vectors, TRUE, NULL);
 
       for (list = g_list_next (merge_list);
            list;
@@ -512,25 +512,25 @@ gimp_image_merge_visible_vectors (GimpImage  *image,
         {
           vectors = list->data;
 
-          gimp_vectors_add_strokes (vectors, target_vectors);
-          gimp_image_remove_vectors (image, vectors, TRUE, NULL);
+          ligma_vectors_add_strokes (vectors, target_vectors);
+          ligma_image_remove_vectors (image, vectors, TRUE, NULL);
         }
 
-      gimp_object_take_name (GIMP_OBJECT (target_vectors), name);
+      ligma_object_take_name (LIGMA_OBJECT (target_vectors), name);
 
       g_list_free (merge_list);
 
       /* FIXME tree */
-      gimp_image_add_vectors (image, target_vectors, NULL, pos, TRUE);
-      gimp_unset_busy (image->gimp);
+      ligma_image_add_vectors (image, target_vectors, NULL, pos, TRUE);
+      ligma_unset_busy (image->ligma);
 
-      gimp_image_undo_group_end (image);
+      ligma_image_undo_group_end (image);
 
       return target_vectors;
     }
   else
     {
-      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+      g_set_error_literal (error, LIGMA_ERROR, LIGMA_FAILED,
                            _("Not enough visible paths for a merge. "
                              "There must be at least two."));
       return NULL;
@@ -540,23 +540,23 @@ gimp_image_merge_visible_vectors (GimpImage  *image,
 
 /*  private functions  */
 
-static GimpLayer *
-gimp_image_merge_layers (GimpImage     *image,
-                         GimpContainer *container,
+static LigmaLayer *
+ligma_image_merge_layers (LigmaImage     *image,
+                         LigmaContainer *container,
                          GSList        *merge_list,
-                         GimpContext   *context,
-                         GimpMergeType  merge_type,
+                         LigmaContext   *context,
+                         LigmaMergeType  merge_type,
                          const gchar   *undo_desc,
-                         GimpProgress  *progress)
+                         LigmaProgress  *progress)
 {
-  GimpLayer        *parent;
+  LigmaLayer        *parent;
   gint              x1, y1;
   gint              x2, y2;
   GSList           *layers;
-  GimpLayer        *layer;
-  GimpLayer        *top_layer;
-  GimpLayer        *bottom_layer;
-  GimpLayer        *merge_layer;
+  LigmaLayer        *layer;
+  LigmaLayer        *top_layer;
+  LigmaLayer        *bottom_layer;
+  LigmaLayer        *merge_layer;
   gint              position;
   GeglNode         *node;
   GeglNode         *source_node;
@@ -564,19 +564,19 @@ gimp_image_merge_layers (GimpImage     *image,
   GeglNode         *offset_node;
   GeglNode         *last_node;
   GeglNode         *last_node_source;
-  GimpParasiteList *parasites;
+  LigmaParasiteList *parasites;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
-  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (progress == NULL || LIGMA_IS_PROGRESS (progress), NULL);
 
   top_layer = merge_list->data;
-  parent    = gimp_layer_get_parent (top_layer);
+  parent    = ligma_layer_get_parent (top_layer);
 
   /*  Make sure the image's graph is constructed, so that top-level layers have
    *  a parent node.
    */
-  (void) gimp_projectable_get_graph (GIMP_PROJECTABLE (image));
+  (void) ligma_projectable_get_graph (LIGMA_PROJECTABLE (image));
 
   /*  Make sure the parent's graph is constructed, so that the top layer has a
    *  parent node, even if it is the child of a group layer (in particular, of
@@ -584,10 +584,10 @@ gimp_image_merge_layers (GimpImage     *image,
    *  result of the above call.  see issue #2095.)
    */
   if (parent)
-    (void) gimp_filter_get_node (GIMP_FILTER (parent));
+    (void) ligma_filter_get_node (LIGMA_FILTER (parent));
 
   /*  Build our graph inside the top-layer's parent node  */
-  source_node = gimp_filter_get_node (GIMP_FILTER (top_layer));
+  source_node = ligma_filter_get_node (LIGMA_FILTER (top_layer));
   node = gegl_node_get_parent (source_node);
 
   g_return_val_if_fail (node, NULL);
@@ -601,18 +601,18 @@ gimp_image_merge_layers (GimpImage     *image,
 
       layer = layers->data;
 
-      gimp_item_get_offset (GIMP_ITEM (layer), &off_x, &off_y);
+      ligma_item_get_offset (LIGMA_ITEM (layer), &off_x, &off_y);
 
       switch (merge_type)
         {
-        case GIMP_EXPAND_AS_NECESSARY:
-        case GIMP_CLIP_TO_IMAGE:
+        case LIGMA_EXPAND_AS_NECESSARY:
+        case LIGMA_CLIP_TO_IMAGE:
           if (layers == merge_list)
             {
               x1 = off_x;
               y1 = off_y;
-              x2 = off_x + gimp_item_get_width  (GIMP_ITEM (layer));
-              y2 = off_y + gimp_item_get_height (GIMP_ITEM (layer));
+              x2 = off_x + ligma_item_get_width  (LIGMA_ITEM (layer));
+              y2 = off_y + ligma_item_get_height (LIGMA_ITEM (layer));
             }
           else
             {
@@ -620,38 +620,38 @@ gimp_image_merge_layers (GimpImage     *image,
                 x1 = off_x;
               if (off_y < y1)
                 y1 = off_y;
-              if ((off_x + gimp_item_get_width (GIMP_ITEM (layer))) > x2)
-                x2 = (off_x + gimp_item_get_width (GIMP_ITEM (layer)));
-              if ((off_y + gimp_item_get_height (GIMP_ITEM (layer))) > y2)
-                y2 = (off_y + gimp_item_get_height (GIMP_ITEM (layer)));
+              if ((off_x + ligma_item_get_width (LIGMA_ITEM (layer))) > x2)
+                x2 = (off_x + ligma_item_get_width (LIGMA_ITEM (layer)));
+              if ((off_y + ligma_item_get_height (LIGMA_ITEM (layer))) > y2)
+                y2 = (off_y + ligma_item_get_height (LIGMA_ITEM (layer)));
             }
 
-          if (merge_type == GIMP_CLIP_TO_IMAGE)
+          if (merge_type == LIGMA_CLIP_TO_IMAGE)
             {
-              x1 = CLAMP (x1, 0, gimp_image_get_width  (image));
-              y1 = CLAMP (y1, 0, gimp_image_get_height (image));
-              x2 = CLAMP (x2, 0, gimp_image_get_width  (image));
-              y2 = CLAMP (y2, 0, gimp_image_get_height (image));
+              x1 = CLAMP (x1, 0, ligma_image_get_width  (image));
+              y1 = CLAMP (y1, 0, ligma_image_get_height (image));
+              x2 = CLAMP (x2, 0, ligma_image_get_width  (image));
+              y2 = CLAMP (y2, 0, ligma_image_get_height (image));
             }
           break;
 
-        case GIMP_CLIP_TO_BOTTOM_LAYER:
+        case LIGMA_CLIP_TO_BOTTOM_LAYER:
           if (layers->next == NULL)
             {
               x1 = off_x;
               y1 = off_y;
-              x2 = off_x + gimp_item_get_width  (GIMP_ITEM (layer));
-              y2 = off_y + gimp_item_get_height (GIMP_ITEM (layer));
+              x2 = off_x + ligma_item_get_width  (LIGMA_ITEM (layer));
+              y2 = off_y + ligma_item_get_height (LIGMA_ITEM (layer));
             }
           break;
 
-        case GIMP_FLATTEN_IMAGE:
+        case LIGMA_FLATTEN_IMAGE:
           if (layers->next == NULL)
             {
               x1 = 0;
               y1 = 0;
-              x2 = gimp_image_get_width  (image);
-              y2 = gimp_image_get_height (image);
+              x2 = ligma_image_get_width  (image);
+              y2 = ligma_image_get_height (image);
             }
           break;
         }
@@ -664,17 +664,17 @@ gimp_image_merge_layers (GimpImage     *image,
 
   flatten_node = NULL;
 
-  if (merge_type == GIMP_FLATTEN_IMAGE ||
-      (gimp_drawable_is_indexed (GIMP_DRAWABLE (layer)) &&
-       ! gimp_drawable_has_alpha (GIMP_DRAWABLE (layer))))
+  if (merge_type == LIGMA_FLATTEN_IMAGE ||
+      (ligma_drawable_is_indexed (LIGMA_DRAWABLE (layer)) &&
+       ! ligma_drawable_has_alpha (LIGMA_DRAWABLE (layer))))
     {
-      GimpRGB bg;
+      LigmaRGB bg;
 
-      merge_layer = gimp_layer_new (image, (x2 - x1), (y2 - y1),
-                                    gimp_image_get_layer_format (image, FALSE),
-                                    gimp_object_get_name (bottom_layer),
-                                    GIMP_OPACITY_OPAQUE,
-                                    gimp_image_get_default_new_layer_mode (image));
+      merge_layer = ligma_layer_new (image, (x2 - x1), (y2 - y1),
+                                    ligma_image_get_layer_format (image, FALSE),
+                                    ligma_object_get_name (bottom_layer),
+                                    LIGMA_OPACITY_OPAQUE,
+                                    ligma_image_get_default_new_layer_mode (image));
 
       if (! merge_layer)
         {
@@ -684,14 +684,14 @@ gimp_image_merge_layers (GimpImage     *image,
         }
 
       /*  get the background for compositing  */
-      gimp_context_get_background (context, &bg);
-      gimp_pickable_srgb_to_image_color (GIMP_PICKABLE (layer),
+      ligma_context_get_background (context, &bg);
+      ligma_pickable_srgb_to_image_color (LIGMA_PICKABLE (layer),
                                          &bg, &bg);
 
-      flatten_node = gimp_gegl_create_flatten_node
+      flatten_node = ligma_gegl_create_flatten_node
         (&bg,
-         gimp_drawable_get_space (GIMP_DRAWABLE (layer)),
-         gimp_layer_get_real_composite_space (bottom_layer));
+         ligma_drawable_get_space (LIGMA_DRAWABLE (layer)),
+         ligma_layer_get_real_composite_space (bottom_layer));
     }
   else
     {
@@ -701,11 +701,11 @@ gimp_image_merge_layers (GimpImage     *image,
        */
 
       merge_layer =
-        gimp_layer_new (image, (x2 - x1), (y2 - y1),
-                        gimp_drawable_get_format_with_alpha (GIMP_DRAWABLE (bottom_layer)),
-                        gimp_object_get_name (bottom_layer),
-                        GIMP_OPACITY_OPAQUE,
-                        gimp_image_get_default_new_layer_mode (image));
+        ligma_layer_new (image, (x2 - x1), (y2 - y1),
+                        ligma_drawable_get_format_with_alpha (LIGMA_DRAWABLE (bottom_layer)),
+                        ligma_object_get_name (bottom_layer),
+                        LIGMA_OPACITY_OPAQUE,
+                        ligma_image_get_default_new_layer_mode (image));
 
       if (! merge_layer)
         {
@@ -715,7 +715,7 @@ gimp_image_merge_layers (GimpImage     *image,
         }
     }
 
-  if (merge_type == GIMP_FLATTEN_IMAGE)
+  if (merge_type == LIGMA_FLATTEN_IMAGE)
     {
       position = 0;
     }
@@ -725,11 +725,11 @@ gimp_image_merge_layers (GimpImage     *image,
        *  in order to add the final, merged layer to the layer list correctly
        */
       position =
-        gimp_container_get_n_children (container) -
-        gimp_container_get_child_index (container, GIMP_OBJECT (bottom_layer));
+        ligma_container_get_n_children (container) -
+        ligma_container_get_child_index (container, LIGMA_OBJECT (bottom_layer));
     }
 
-  gimp_item_set_offset (GIMP_ITEM (merge_layer), x1, y1);
+  ligma_item_set_offset (LIGMA_ITEM (merge_layer), x1, y1);
 
   offset_node = gegl_node_new_child (node,
                                      "operation", "gegl:translate",
@@ -750,15 +750,15 @@ gimp_image_merge_layers (GimpImage     *image,
     }
 
   /*  Disconnect the bottom-layer node's input  */
-  last_node        = gimp_filter_get_node (GIMP_FILTER (bottom_layer));
+  last_node        = ligma_filter_get_node (LIGMA_FILTER (bottom_layer));
   last_node_source = gegl_node_get_producer (last_node, "input", NULL);
 
   gegl_node_disconnect (last_node, "input");
 
   /*  Render the graph into the merge layer  */
-  gimp_gegl_apply_operation (NULL, progress, undo_desc, offset_node,
-                             gimp_drawable_get_buffer (
-                               GIMP_DRAWABLE (merge_layer)),
+  ligma_gegl_apply_operation (NULL, progress, undo_desc, offset_node,
+                             ligma_drawable_get_buffer (
+                               LIGMA_DRAWABLE (merge_layer)),
                              NULL, FALSE);
 
   /*  Reconnect the bottom-layer node's input  */
@@ -772,46 +772,46 @@ gimp_image_merge_layers (GimpImage     *image,
     gegl_node_remove_child (node, flatten_node);
 
   /* Copy the tattoo and parasites of the bottom layer to the new layer */
-  gimp_item_set_tattoo (GIMP_ITEM (merge_layer),
-                        gimp_item_get_tattoo (GIMP_ITEM (bottom_layer)));
+  ligma_item_set_tattoo (LIGMA_ITEM (merge_layer),
+                        ligma_item_get_tattoo (LIGMA_ITEM (bottom_layer)));
 
-  parasites = gimp_item_get_parasites (GIMP_ITEM (bottom_layer));
-  parasites = gimp_parasite_list_copy (parasites);
-  gimp_item_set_parasites (GIMP_ITEM (merge_layer), parasites);
+  parasites = ligma_item_get_parasites (LIGMA_ITEM (bottom_layer));
+  parasites = ligma_parasite_list_copy (parasites);
+  ligma_item_set_parasites (LIGMA_ITEM (merge_layer), parasites);
   g_object_unref (parasites);
 
   /*  Remove the merged layers from the image  */
   for (layers = merge_list; layers; layers = g_slist_next (layers))
-    gimp_image_remove_layer (image, layers->data, TRUE, NULL);
+    ligma_image_remove_layer (image, layers->data, TRUE, NULL);
 
-  gimp_item_set_visible (GIMP_ITEM (merge_layer), TRUE, FALSE);
+  ligma_item_set_visible (LIGMA_ITEM (merge_layer), TRUE, FALSE);
 
   /*  if the type is flatten, remove all the remaining layers  */
-  if (merge_type == GIMP_FLATTEN_IMAGE)
+  if (merge_type == LIGMA_FLATTEN_IMAGE)
     {
-      GList *list = gimp_image_get_layer_iter (image);
+      GList *list = ligma_image_get_layer_iter (image);
 
       while (list)
         {
           layer = list->data;
 
           list = g_list_next (list);
-          gimp_image_remove_layer (image, layer, TRUE, NULL);
+          ligma_image_remove_layer (image, layer, TRUE, NULL);
         }
 
-      gimp_image_add_layer (image, merge_layer, parent,
+      ligma_image_add_layer (image, merge_layer, parent,
                             position, TRUE);
     }
   else
     {
       /*  Add the layer to the image  */
-      gimp_image_add_layer (image, merge_layer, parent,
-                            gimp_container_get_n_children (container) -
+      ligma_image_add_layer (image, merge_layer, parent,
+                            ligma_container_get_n_children (container) -
                             position + 1,
                             TRUE);
     }
 
-  gimp_drawable_update (GIMP_DRAWABLE (merge_layer), 0, 0, -1, -1);
+  ligma_drawable_update (LIGMA_DRAWABLE (merge_layer), 0, 0, -1, -1);
 
   return merge_layer;
 }

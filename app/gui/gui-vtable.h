@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,12 +19,12 @@
 #define __GUI_VTABLE_H__
 
 
-void         gui_vtable_init         (Gimp *gimp);
+void         gui_vtable_init         (Ligma *ligma);
 
 /*  this function lives in gui.c but must only be used from gui-vtable.c;
  *  also, gui.h can't contain any Gdk types.
  */
-GdkMonitor * gui_get_initial_monitor (Gimp *gimp);
+GdkMonitor * gui_get_initial_monitor (Ligma *ligma);
 
 
 #endif /* __GUI_VTABLE_H__ */

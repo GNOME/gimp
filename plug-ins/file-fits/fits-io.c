@@ -62,7 +62,7 @@
 /* FITS reading/writing library                                               */
 /* Copyright (C) 1997 Peter Kirchgessner                                      */
 /* (email: peter@kirchgessner.net, WWW: http://www.kirchgessner.net)          */
-/* The library was developed for a FITS-plug-in to GIMP, the GNU Image        */
+/* The library was developed for a FITS-plug-in to LIGMA, the GNU Image        */
 /* Manipulation Program. But it is completely independent to that (beside use */
 /* of glib). If someone finds it useful for other purposes, try to keep it    */
 /* independent from your application.                                         */

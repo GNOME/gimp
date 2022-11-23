@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
  * Config file serialization and deserialization interface
- * Copyright (C) 2001-2002  Sven Neumann <sven@gimp.org>
+ * Copyright (C) 2001-2002  Sven Neumann <sven@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,29 +23,29 @@
 
 #include <glib.h>
 
-#include "gimpconfig-error.h"
+#include "ligmaconfig-error.h"
 
 
 /**
- * SECTION: gimpconfig-error
- * @title: GimpConfig-error
- * @short_description: Error utils for libgimpconfig.
+ * SECTION: ligmaconfig-error
+ * @title: LigmaConfig-error
+ * @short_description: Error utils for libligmaconfig.
  *
- * Error utils for libgimpconfig.
+ * Error utils for libligmaconfig.
  **/
 
 
 /**
- * gimp_config_error_quark:
+ * ligma_config_error_quark:
  *
- * This function is never called directly. Use GIMP_CONFIG_ERROR() instead.
+ * This function is never called directly. Use LIGMA_CONFIG_ERROR() instead.
  *
- * Returns: the #GQuark that defines the GimpConfig error domain.
+ * Returns: the #GQuark that defines the LigmaConfig error domain.
  *
  * Since: 2.4
  **/
 GQuark
-gimp_config_error_quark (void)
+ligma_config_error_quark (void)
 {
-  return g_quark_from_static_string ("gimp-config-error-quark");
+  return g_quark_from_static_string ("ligma-config-error-quark");
 }

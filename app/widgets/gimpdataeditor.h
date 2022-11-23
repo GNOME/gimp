@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpdataeditor.h
- * Copyright (C) 2002-2004 Michael Natterer <mitch@gimp.org>
+ * ligmadataeditor.h
+ * Copyright (C) 2002-2004 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,32 +18,32 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DATA_EDITOR_H__
-#define __GIMP_DATA_EDITOR_H__
+#ifndef __LIGMA_DATA_EDITOR_H__
+#define __LIGMA_DATA_EDITOR_H__
 
 
-#include "gimpeditor.h"
+#include "ligmaeditor.h"
 
 
-#define GIMP_TYPE_DATA_EDITOR            (gimp_data_editor_get_type ())
-#define GIMP_DATA_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DATA_EDITOR, GimpDataEditor))
-#define GIMP_DATA_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DATA_EDITOR, GimpDataEditorClass))
-#define GIMP_IS_DATA_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DATA_EDITOR))
-#define GIMP_IS_DATA_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DATA_EDITOR))
-#define GIMP_DATA_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DATA_EDITOR, GimpDataEditorClass))
+#define LIGMA_TYPE_DATA_EDITOR            (ligma_data_editor_get_type ())
+#define LIGMA_DATA_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_DATA_EDITOR, LigmaDataEditor))
+#define LIGMA_DATA_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_DATA_EDITOR, LigmaDataEditorClass))
+#define LIGMA_IS_DATA_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_DATA_EDITOR))
+#define LIGMA_IS_DATA_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_DATA_EDITOR))
+#define LIGMA_DATA_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_DATA_EDITOR, LigmaDataEditorClass))
 
 
-typedef struct _GimpDataEditorClass GimpDataEditorClass;
+typedef struct _LigmaDataEditorClass LigmaDataEditorClass;
 
-struct _GimpDataEditor
+struct _LigmaDataEditor
 {
-  GimpEditor       parent_instance;
+  LigmaEditor       parent_instance;
 
-  GimpDataFactory *data_factory;
-  GimpContext     *context;
+  LigmaDataFactory *data_factory;
+  LigmaContext     *context;
   gboolean         edit_active;
 
-  GimpData        *data;
+  LigmaData        *data;
   gboolean         data_editable;
 
   GtkWidget       *name_entry;
@@ -51,27 +51,27 @@ struct _GimpDataEditor
   GtkWidget       *view; /* filled by subclasses */
 };
 
-struct _GimpDataEditorClass
+struct _LigmaDataEditorClass
 {
-  GimpEditorClass  parent_class;
+  LigmaEditorClass  parent_class;
 
   /*  virtual functions  */
-  void (* set_data) (GimpDataEditor *editor,
-                     GimpData       *data);
+  void (* set_data) (LigmaDataEditor *editor,
+                     LigmaData       *data);
 
   const gchar *title;
 };
 
 
-GType       gimp_data_editor_get_type        (void) G_GNUC_CONST;
+GType       ligma_data_editor_get_type        (void) G_GNUC_CONST;
 
-void        gimp_data_editor_set_data        (GimpDataEditor *editor,
-                                              GimpData       *data);
-GimpData  * gimp_data_editor_get_data        (GimpDataEditor *editor);
+void        ligma_data_editor_set_data        (LigmaDataEditor *editor,
+                                              LigmaData       *data);
+LigmaData  * ligma_data_editor_get_data        (LigmaDataEditor *editor);
 
-void        gimp_data_editor_set_edit_active (GimpDataEditor *editor,
+void        ligma_data_editor_set_edit_active (LigmaDataEditor *editor,
                                               gboolean        edit_active);
-gboolean    gimp_data_editor_get_edit_active (GimpDataEditor *editor);
+gboolean    ligma_data_editor_get_edit_active (LigmaDataEditor *editor);
 
 
-#endif  /*  __GIMP_DATA_EDITOR_H__  */
+#endif  /*  __LIGMA_DATA_EDITOR_H__  */

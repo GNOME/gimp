@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,33 +22,33 @@
 
 #include "display-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontainer.h"
-#include "core/gimpcontext.h"
-#include "core/gimpimage.h"
-#include "core/gimplist.h"
+#include "core/ligma.h"
+#include "core/ligmacontainer.h"
+#include "core/ligmacontext.h"
+#include "core/ligmaimage.h"
+#include "core/ligmalist.h"
 
-#include "gimpdisplay.h"
-#include "gimpdisplay-foreach.h"
-#include "gimpdisplayshell.h"
-#include "gimpdisplayshell-cursor.h"
+#include "ligmadisplay.h"
+#include "ligmadisplay-foreach.h"
+#include "ligmadisplayshell.h"
+#include "ligmadisplayshell-cursor.h"
 
 
 gboolean
-gimp_displays_dirty (Gimp *gimp)
+ligma_displays_dirty (Ligma *ligma)
 {
   GList *list;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), FALSE);
 
-  for (list = gimp_get_display_iter (gimp);
+  for (list = ligma_get_display_iter (ligma);
        list;
        list = g_list_next (list))
     {
-      GimpDisplay *display = list->data;
-      GimpImage   *image   = gimp_display_get_image (display);
+      LigmaDisplay *display = list->data;
+      LigmaImage   *image   = ligma_display_get_image (display);
 
-      if (image && gimp_image_is_dirty (image))
+      if (image && ligma_image_is_dirty (image))
         return TRUE;
     }
 
@@ -56,85 +56,85 @@ gimp_displays_dirty (Gimp *gimp)
 }
 
 static void
-gimp_displays_image_dirty_callback (GimpImage     *image,
-                                    GimpDirtyMask  dirty_mask,
-                                    GimpContainer *container)
+ligma_displays_image_dirty_callback (LigmaImage     *image,
+                                    LigmaDirtyMask  dirty_mask,
+                                    LigmaContainer *container)
 {
-  if (gimp_image_is_dirty (image)              &&
-      gimp_image_get_display_count (image) > 0 &&
-      ! gimp_container_have (container, GIMP_OBJECT (image)))
-    gimp_container_add (container, GIMP_OBJECT (image));
+  if (ligma_image_is_dirty (image)              &&
+      ligma_image_get_display_count (image) > 0 &&
+      ! ligma_container_have (container, LIGMA_OBJECT (image)))
+    ligma_container_add (container, LIGMA_OBJECT (image));
 }
 
 static void
-gimp_displays_dirty_images_disconnect (GimpContainer *dirty_container,
-                                       GimpContainer *global_container)
+ligma_displays_dirty_images_disconnect (LigmaContainer *dirty_container,
+                                       LigmaContainer *global_container)
 {
   GQuark handler;
 
   handler = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (dirty_container),
                                                 "clean-handler"));
-  gimp_container_remove_handler (global_container, handler);
+  ligma_container_remove_handler (global_container, handler);
 
   handler = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (dirty_container),
                                                 "dirty-handler"));
-  gimp_container_remove_handler (global_container, handler);
+  ligma_container_remove_handler (global_container, handler);
 }
 
 static void
-gimp_displays_image_clean_callback (GimpImage     *image,
-                                    GimpDirtyMask  dirty_mask,
-                                    GimpContainer *container)
+ligma_displays_image_clean_callback (LigmaImage     *image,
+                                    LigmaDirtyMask  dirty_mask,
+                                    LigmaContainer *container)
 {
-  if (! gimp_image_is_dirty (image))
-    gimp_container_remove (container, GIMP_OBJECT (image));
+  if (! ligma_image_is_dirty (image))
+    ligma_container_remove (container, LIGMA_OBJECT (image));
 }
 
-GimpContainer *
-gimp_displays_get_dirty_images (Gimp *gimp)
+LigmaContainer *
+ligma_displays_get_dirty_images (Ligma *ligma)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
 
-  if (gimp_displays_dirty (gimp))
+  if (ligma_displays_dirty (ligma))
     {
-      GimpContainer *container = gimp_list_new_weak (GIMP_TYPE_IMAGE, FALSE);
+      LigmaContainer *container = ligma_list_new_weak (LIGMA_TYPE_IMAGE, FALSE);
       GList         *list;
       GQuark         handler;
 
       handler =
-        gimp_container_add_handler (gimp->images, "clean",
-                                    G_CALLBACK (gimp_displays_image_dirty_callback),
+        ligma_container_add_handler (ligma->images, "clean",
+                                    G_CALLBACK (ligma_displays_image_dirty_callback),
                                     container);
       g_object_set_data (G_OBJECT (container), "clean-handler",
                          GINT_TO_POINTER (handler));
 
       handler =
-        gimp_container_add_handler (gimp->images, "dirty",
-                                    G_CALLBACK (gimp_displays_image_dirty_callback),
+        ligma_container_add_handler (ligma->images, "dirty",
+                                    G_CALLBACK (ligma_displays_image_dirty_callback),
                                     container);
       g_object_set_data (G_OBJECT (container), "dirty-handler",
                          GINT_TO_POINTER (handler));
 
       g_signal_connect_object (container, "disconnect",
-                               G_CALLBACK (gimp_displays_dirty_images_disconnect),
-                               G_OBJECT (gimp->images), 0);
+                               G_CALLBACK (ligma_displays_dirty_images_disconnect),
+                               G_OBJECT (ligma->images), 0);
 
-      gimp_container_add_handler (container, "clean",
-                                  G_CALLBACK (gimp_displays_image_clean_callback),
+      ligma_container_add_handler (container, "clean",
+                                  G_CALLBACK (ligma_displays_image_clean_callback),
                                   container);
-      gimp_container_add_handler (container, "dirty",
-                                  G_CALLBACK (gimp_displays_image_clean_callback),
+      ligma_container_add_handler (container, "dirty",
+                                  G_CALLBACK (ligma_displays_image_clean_callback),
                                   container);
 
-      for (list = gimp_get_image_iter (gimp);
+      for (list = ligma_get_image_iter (ligma);
            list;
            list = g_list_next (list))
         {
-          GimpImage *image = list->data;
+          LigmaImage *image = list->data;
 
-          if (gimp_image_is_dirty (image) &&
-              gimp_image_get_display_count (image) > 0)
-            gimp_container_add (container, GIMP_OBJECT (image));
+          if (ligma_image_is_dirty (image) &&
+              ligma_image_get_display_count (image) > 0)
+            ligma_container_add (container, LIGMA_OBJECT (image));
         }
 
       return container;
@@ -144,72 +144,72 @@ gimp_displays_get_dirty_images (Gimp *gimp)
 }
 
 /**
- * gimp_displays_delete:
- * @gimp:
+ * ligma_displays_delete:
+ * @ligma:
  *
- * Calls gimp_display_delete() an all displays in the display list.
+ * Calls ligma_display_delete() an all displays in the display list.
  * This closes all displays, including the first one which is usually
  * kept open.
  */
 void
-gimp_displays_delete (Gimp *gimp)
+ligma_displays_delete (Ligma *ligma)
 {
-  /*  this removes the GimpDisplay from the list, so do a while loop
+  /*  this removes the LigmaDisplay from the list, so do a while loop
    *  "around" the first element to get them all
    */
-  while (! gimp_container_is_empty (gimp->displays))
+  while (! ligma_container_is_empty (ligma->displays))
     {
-      GimpDisplay *display = gimp_get_display_iter (gimp)->data;
+      LigmaDisplay *display = ligma_get_display_iter (ligma)->data;
 
-      gimp_display_delete (display);
+      ligma_display_delete (display);
     }
 }
 
 /**
- * gimp_displays_close:
- * @gimp:
+ * ligma_displays_close:
+ * @ligma:
  *
- * Calls gimp_display_close() an all displays in the display list. The
+ * Calls ligma_display_close() an all displays in the display list. The
  * first display will remain open without an image.
  */
 void
-gimp_displays_close (Gimp *gimp)
+ligma_displays_close (Ligma *ligma)
 {
   GList *list;
   GList *iter;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
 
-  list = g_list_copy (gimp_get_display_iter (gimp));
+  list = g_list_copy (ligma_get_display_iter (ligma));
 
   for (iter = list; iter; iter = g_list_next (iter))
     {
-      GimpDisplay *display = iter->data;
+      LigmaDisplay *display = iter->data;
 
-      gimp_display_close (display);
+      ligma_display_close (display);
     }
 
   g_list_free (list);
 }
 
 void
-gimp_displays_reconnect (Gimp      *gimp,
-                         GimpImage *old,
-                         GimpImage *new)
+ligma_displays_reconnect (Ligma      *ligma,
+                         LigmaImage *old,
+                         LigmaImage *new)
 {
   GList *contexts = NULL;
   GList *list;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (GIMP_IS_IMAGE (old));
-  g_return_if_fail (GIMP_IS_IMAGE (new));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
+  g_return_if_fail (LIGMA_IS_IMAGE (old));
+  g_return_if_fail (LIGMA_IS_IMAGE (new));
 
   /*  check which contexts refer to old_image  */
-  for (list = gimp->context_list; list; list = g_list_next (list))
+  for (list = ligma->context_list; list; list = g_list_next (list))
     {
-      GimpContext *context = list->data;
+      LigmaContext *context = list->data;
 
-      if (gimp_context_get_image (context) == old)
+      if (ligma_context_get_image (context) == old)
         contexts = g_list_prepend (contexts, list->data);
     }
 
@@ -221,34 +221,34 @@ gimp_displays_reconnect (Gimp      *gimp,
    *  inadvertently call actions as if the user had selected a menu
    *  item.
    */
-  g_list_foreach (contexts, (GFunc) gimp_context_set_image, new);
+  g_list_foreach (contexts, (GFunc) ligma_context_set_image, new);
   g_list_free (contexts);
 
-  for (list = gimp_get_display_iter (gimp);
+  for (list = ligma_get_display_iter (ligma);
        list;
        list = g_list_next (list))
     {
-      GimpDisplay *display = list->data;
+      LigmaDisplay *display = list->data;
 
-      if (gimp_display_get_image (display) == old)
-        gimp_display_set_image (display, new);
+      if (ligma_display_get_image (display) == old)
+        ligma_display_set_image (display, new);
     }
 }
 
 gint
-gimp_displays_get_num_visible (Gimp *gimp)
+ligma_displays_get_num_visible (Ligma *ligma)
 {
   GList *list;
   gint   visible = 0;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), 0);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), 0);
 
-  for (list = gimp_get_display_iter (gimp);
+  for (list = ligma_get_display_iter (ligma);
        list;
        list = g_list_next (list))
     {
-      GimpDisplay      *display = list->data;
-      GimpDisplayShell *shell   = gimp_display_get_shell (display);
+      LigmaDisplay      *display = list->data;
+      LigmaDisplayShell *shell   = ligma_display_get_shell (display);
 
       if (gtk_widget_is_drawable (GTK_WIDGET (shell)))
         {
@@ -272,37 +272,37 @@ gimp_displays_get_num_visible (Gimp *gimp)
 }
 
 void
-gimp_displays_set_busy (Gimp *gimp)
+ligma_displays_set_busy (Ligma *ligma)
 {
   GList *list;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
 
-  for (list = gimp_get_display_iter (gimp);
+  for (list = ligma_get_display_iter (ligma);
        list;
        list = g_list_next (list))
     {
-      GimpDisplayShell *shell =
-        gimp_display_get_shell (GIMP_DISPLAY (list->data));
+      LigmaDisplayShell *shell =
+        ligma_display_get_shell (LIGMA_DISPLAY (list->data));
 
-      gimp_display_shell_set_override_cursor (shell, (GimpCursorType) GDK_WATCH);
+      ligma_display_shell_set_override_cursor (shell, (LigmaCursorType) GDK_WATCH);
     }
 }
 
 void
-gimp_displays_unset_busy (Gimp *gimp)
+ligma_displays_unset_busy (Ligma *ligma)
 {
   GList *list;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
 
-  for (list = gimp_get_display_iter (gimp);
+  for (list = ligma_get_display_iter (ligma);
        list;
        list = g_list_next (list))
     {
-      GimpDisplayShell *shell =
-        gimp_display_get_shell (GIMP_DISPLAY (list->data));
+      LigmaDisplayShell *shell =
+        ligma_display_get_shell (LIGMA_DISPLAY (list->data));
 
-      gimp_display_shell_unset_override_cursor (shell);
+      ligma_display_shell_unset_override_cursor (shell);
     }
 }

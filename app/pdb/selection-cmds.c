@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-2003 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,51 +25,51 @@
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpmath/gimpmath.h"
+#include "libligmamath/ligmamath.h"
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "pdb-types.h"
 
-#include "core/gimpchannel.h"
-#include "core/gimpimage.h"
-#include "core/gimplayer.h"
-#include "core/gimpparamspecs.h"
-#include "core/gimppickable.h"
-#include "core/gimpselection.h"
+#include "core/ligmachannel.h"
+#include "core/ligmaimage.h"
+#include "core/ligmalayer.h"
+#include "core/ligmaparamspecs.h"
+#include "core/ligmapickable.h"
+#include "core/ligmaselection.h"
 
-#include "gimppdb.h"
-#include "gimppdb-utils.h"
-#include "gimpprocedure.h"
+#include "ligmapdb.h"
+#include "ligmapdb-utils.h"
+#include "ligmaprocedure.h"
 #include "internal-procs.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-static GimpValueArray *
-selection_bounds_invoker (GimpProcedure         *procedure,
-                          Gimp                  *gimp,
-                          GimpContext           *context,
-                          GimpProgress          *progress,
-                          const GimpValueArray  *args,
+static LigmaValueArray *
+selection_bounds_invoker (LigmaProcedure         *procedure,
+                          Ligma                  *ligma,
+                          LigmaContext           *context,
+                          LigmaProgress          *progress,
+                          const LigmaValueArray  *args,
                           GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpImage *image;
+  LigmaValueArray *return_vals;
+  LigmaImage *image;
   gboolean non_empty = FALSE;
   gint x1 = 0;
   gint y1 = 0;
   gint x2 = 0;
   gint y2 = 0;
 
-  image = g_value_get_object (gimp_value_array_index (args, 0));
+  image = g_value_get_object (ligma_value_array_index (args, 0));
 
   if (success)
     {
       gint x, y, w, h;
 
-      non_empty = gimp_item_bounds (GIMP_ITEM (gimp_image_get_mask (image)),
+      non_empty = ligma_item_bounds (LIGMA_ITEM (ligma_image_get_mask (image)),
                                     &x, &y, &w, &h);
 
       x1 = x;
@@ -78,139 +78,139 @@ selection_bounds_invoker (GimpProcedure         *procedure,
       y2 = y + h;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
     {
-      g_value_set_boolean (gimp_value_array_index (return_vals, 1), non_empty);
-      g_value_set_int (gimp_value_array_index (return_vals, 2), x1);
-      g_value_set_int (gimp_value_array_index (return_vals, 3), y1);
-      g_value_set_int (gimp_value_array_index (return_vals, 4), x2);
-      g_value_set_int (gimp_value_array_index (return_vals, 5), y2);
+      g_value_set_boolean (ligma_value_array_index (return_vals, 1), non_empty);
+      g_value_set_int (ligma_value_array_index (return_vals, 2), x1);
+      g_value_set_int (ligma_value_array_index (return_vals, 3), y1);
+      g_value_set_int (ligma_value_array_index (return_vals, 4), x2);
+      g_value_set_int (ligma_value_array_index (return_vals, 5), y2);
     }
 
   return return_vals;
 }
 
-static GimpValueArray *
-selection_value_invoker (GimpProcedure         *procedure,
-                         Gimp                  *gimp,
-                         GimpContext           *context,
-                         GimpProgress          *progress,
-                         const GimpValueArray  *args,
+static LigmaValueArray *
+selection_value_invoker (LigmaProcedure         *procedure,
+                         Ligma                  *ligma,
+                         LigmaContext           *context,
+                         LigmaProgress          *progress,
+                         const LigmaValueArray  *args,
                          GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpImage *image;
+  LigmaValueArray *return_vals;
+  LigmaImage *image;
   gint x;
   gint y;
   gint value = 0;
 
-  image = g_value_get_object (gimp_value_array_index (args, 0));
-  x = g_value_get_int (gimp_value_array_index (args, 1));
-  y = g_value_get_int (gimp_value_array_index (args, 2));
+  image = g_value_get_object (ligma_value_array_index (args, 0));
+  x = g_value_get_int (ligma_value_array_index (args, 1));
+  y = g_value_get_int (ligma_value_array_index (args, 2));
 
   if (success)
     {
       gdouble val;
 
-      val= gimp_pickable_get_opacity_at (GIMP_PICKABLE (gimp_image_get_mask (image)),
+      val= ligma_pickable_get_opacity_at (LIGMA_PICKABLE (ligma_image_get_mask (image)),
                                          x, y);
 
       value = ROUND (CLAMP (val, 0.0, 1.0) * 255.0);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_int (gimp_value_array_index (return_vals, 1), value);
+    g_value_set_int (ligma_value_array_index (return_vals, 1), value);
 
   return return_vals;
 }
 
-static GimpValueArray *
-selection_is_empty_invoker (GimpProcedure         *procedure,
-                            Gimp                  *gimp,
-                            GimpContext           *context,
-                            GimpProgress          *progress,
-                            const GimpValueArray  *args,
+static LigmaValueArray *
+selection_is_empty_invoker (LigmaProcedure         *procedure,
+                            Ligma                  *ligma,
+                            LigmaContext           *context,
+                            LigmaProgress          *progress,
+                            const LigmaValueArray  *args,
                             GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpImage *image;
+  LigmaValueArray *return_vals;
+  LigmaImage *image;
   gboolean is_empty = FALSE;
 
-  image = g_value_get_object (gimp_value_array_index (args, 0));
+  image = g_value_get_object (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      is_empty = gimp_channel_is_empty (gimp_image_get_mask (image));
+      is_empty = ligma_channel_is_empty (ligma_image_get_mask (image));
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_boolean (gimp_value_array_index (return_vals, 1), is_empty);
+    g_value_set_boolean (ligma_value_array_index (return_vals, 1), is_empty);
 
   return return_vals;
 }
 
-static GimpValueArray *
-selection_translate_invoker (GimpProcedure         *procedure,
-                             Gimp                  *gimp,
-                             GimpContext           *context,
-                             GimpProgress          *progress,
-                             const GimpValueArray  *args,
+static LigmaValueArray *
+selection_translate_invoker (LigmaProcedure         *procedure,
+                             Ligma                  *ligma,
+                             LigmaContext           *context,
+                             LigmaProgress          *progress,
+                             const LigmaValueArray  *args,
                              GError               **error)
 {
   gboolean success = TRUE;
-  GimpImage *image;
+  LigmaImage *image;
   gint offx;
   gint offy;
 
-  image = g_value_get_object (gimp_value_array_index (args, 0));
-  offx = g_value_get_int (gimp_value_array_index (args, 1));
-  offy = g_value_get_int (gimp_value_array_index (args, 2));
+  image = g_value_get_object (ligma_value_array_index (args, 0));
+  offx = g_value_get_int (ligma_value_array_index (args, 1));
+  offy = g_value_get_int (ligma_value_array_index (args, 2));
 
   if (success)
     {
-      gimp_item_translate (GIMP_ITEM (gimp_image_get_mask (image)),
+      ligma_item_translate (LIGMA_ITEM (ligma_image_get_mask (image)),
                            offx, offy, TRUE);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-selection_float_invoker (GimpProcedure         *procedure,
-                         Gimp                  *gimp,
-                         GimpContext           *context,
-                         GimpProgress          *progress,
-                         const GimpValueArray  *args,
+static LigmaValueArray *
+selection_float_invoker (LigmaProcedure         *procedure,
+                         Ligma                  *ligma,
+                         LigmaContext           *context,
+                         LigmaProgress          *progress,
+                         const LigmaValueArray  *args,
                          GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gint num_drawables;
-  const GimpItem **drawables;
+  const LigmaItem **drawables;
   gint offx;
   gint offy;
-  GimpLayer *layer = NULL;
+  LigmaLayer *layer = NULL;
 
-  num_drawables = g_value_get_int (gimp_value_array_index (args, 0));
-  drawables = (const GimpItem **) gimp_value_get_object_array (gimp_value_array_index (args, 1));
-  offx = g_value_get_int (gimp_value_array_index (args, 2));
-  offy = g_value_get_int (gimp_value_array_index (args, 3));
+  num_drawables = g_value_get_int (ligma_value_array_index (args, 0));
+  drawables = (const LigmaItem **) ligma_value_get_object_array (ligma_value_array_index (args, 1));
+  offx = g_value_get_int (ligma_value_array_index (args, 2));
+  offy = g_value_get_int (ligma_value_array_index (args, 3));
 
   if (success)
     {
-      GimpImage *image = NULL;
+      LigmaImage *image = NULL;
       gint       i;
 
       if (num_drawables < 1)
@@ -221,17 +221,17 @@ selection_float_invoker (GimpProcedure         *procedure,
         {
           for (i = 0; i < num_drawables; i++)
             {
-              if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawables[i]), NULL,
-                                               GIMP_PDB_ITEM_CONTENT, error) ||
-                  gimp_pdb_item_is_group (GIMP_ITEM (drawables[i]), error)   ||
-                  (image && image != gimp_item_get_image (GIMP_ITEM (drawables[i]))))
+              if (! ligma_pdb_item_is_attached (LIGMA_ITEM (drawables[i]), NULL,
+                                               LIGMA_PDB_ITEM_CONTENT, error) ||
+                  ligma_pdb_item_is_group (LIGMA_ITEM (drawables[i]), error)   ||
+                  (image && image != ligma_item_get_image (LIGMA_ITEM (drawables[i]))))
                 {
                   success = FALSE;
                   break;
                 }
               else
                 {
-                  image = gimp_item_get_image (GIMP_ITEM (drawables[i]));
+                  image = ligma_item_get_image (LIGMA_ITEM (drawables[i]));
                 }
             }
         }
@@ -243,7 +243,7 @@ selection_float_invoker (GimpProcedure         *procedure,
           for (i = 0; i < num_drawables; i++)
             drawable_list = g_list_prepend (drawable_list, (gpointer) drawables[i]);
 
-          layer = gimp_selection_float (GIMP_SELECTION (gimp_image_get_mask (image)),
+          layer = ligma_selection_float (LIGMA_SELECTION (ligma_image_get_mask (image)),
                                         drawable_list, context, TRUE, offx, offy,
                                         error);
           g_list_free (drawable_list);
@@ -252,737 +252,737 @@ selection_float_invoker (GimpProcedure         *procedure,
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_object (gimp_value_array_index (return_vals, 1), layer);
+    g_value_set_object (ligma_value_array_index (return_vals, 1), layer);
 
   return return_vals;
 }
 
-static GimpValueArray *
-selection_invert_invoker (GimpProcedure         *procedure,
-                          Gimp                  *gimp,
-                          GimpContext           *context,
-                          GimpProgress          *progress,
-                          const GimpValueArray  *args,
+static LigmaValueArray *
+selection_invert_invoker (LigmaProcedure         *procedure,
+                          Ligma                  *ligma,
+                          LigmaContext           *context,
+                          LigmaProgress          *progress,
+                          const LigmaValueArray  *args,
                           GError               **error)
 {
   gboolean success = TRUE;
-  GimpImage *image;
+  LigmaImage *image;
 
-  image = g_value_get_object (gimp_value_array_index (args, 0));
+  image = g_value_get_object (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      gimp_channel_invert (gimp_image_get_mask (image), TRUE);
+      ligma_channel_invert (ligma_image_get_mask (image), TRUE);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-selection_sharpen_invoker (GimpProcedure         *procedure,
-                           Gimp                  *gimp,
-                           GimpContext           *context,
-                           GimpProgress          *progress,
-                           const GimpValueArray  *args,
+static LigmaValueArray *
+selection_sharpen_invoker (LigmaProcedure         *procedure,
+                           Ligma                  *ligma,
+                           LigmaContext           *context,
+                           LigmaProgress          *progress,
+                           const LigmaValueArray  *args,
                            GError               **error)
 {
   gboolean success = TRUE;
-  GimpImage *image;
+  LigmaImage *image;
 
-  image = g_value_get_object (gimp_value_array_index (args, 0));
+  image = g_value_get_object (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      gimp_channel_sharpen (gimp_image_get_mask (image), TRUE);
+      ligma_channel_sharpen (ligma_image_get_mask (image), TRUE);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-selection_all_invoker (GimpProcedure         *procedure,
-                       Gimp                  *gimp,
-                       GimpContext           *context,
-                       GimpProgress          *progress,
-                       const GimpValueArray  *args,
+static LigmaValueArray *
+selection_all_invoker (LigmaProcedure         *procedure,
+                       Ligma                  *ligma,
+                       LigmaContext           *context,
+                       LigmaProgress          *progress,
+                       const LigmaValueArray  *args,
                        GError               **error)
 {
   gboolean success = TRUE;
-  GimpImage *image;
+  LigmaImage *image;
 
-  image = g_value_get_object (gimp_value_array_index (args, 0));
+  image = g_value_get_object (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      gimp_channel_all (gimp_image_get_mask (image), TRUE);
+      ligma_channel_all (ligma_image_get_mask (image), TRUE);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-selection_none_invoker (GimpProcedure         *procedure,
-                        Gimp                  *gimp,
-                        GimpContext           *context,
-                        GimpProgress          *progress,
-                        const GimpValueArray  *args,
+static LigmaValueArray *
+selection_none_invoker (LigmaProcedure         *procedure,
+                        Ligma                  *ligma,
+                        LigmaContext           *context,
+                        LigmaProgress          *progress,
+                        const LigmaValueArray  *args,
                         GError               **error)
 {
   gboolean success = TRUE;
-  GimpImage *image;
+  LigmaImage *image;
 
-  image = g_value_get_object (gimp_value_array_index (args, 0));
+  image = g_value_get_object (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      gimp_channel_clear (gimp_image_get_mask (image), NULL, TRUE);
+      ligma_channel_clear (ligma_image_get_mask (image), NULL, TRUE);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-selection_feather_invoker (GimpProcedure         *procedure,
-                           Gimp                  *gimp,
-                           GimpContext           *context,
-                           GimpProgress          *progress,
-                           const GimpValueArray  *args,
+static LigmaValueArray *
+selection_feather_invoker (LigmaProcedure         *procedure,
+                           Ligma                  *ligma,
+                           LigmaContext           *context,
+                           LigmaProgress          *progress,
+                           const LigmaValueArray  *args,
                            GError               **error)
 {
   gboolean success = TRUE;
-  GimpImage *image;
+  LigmaImage *image;
   gdouble radius;
 
-  image = g_value_get_object (gimp_value_array_index (args, 0));
-  radius = g_value_get_double (gimp_value_array_index (args, 1));
+  image = g_value_get_object (ligma_value_array_index (args, 0));
+  radius = g_value_get_double (ligma_value_array_index (args, 1));
 
   if (success)
     {
       /* FIXME: "edge-lock" hardcoded to  TRUE */
-      gimp_channel_feather (gimp_image_get_mask (image),
+      ligma_channel_feather (ligma_image_get_mask (image),
                             radius, radius, TRUE, TRUE);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-selection_border_invoker (GimpProcedure         *procedure,
-                          Gimp                  *gimp,
-                          GimpContext           *context,
-                          GimpProgress          *progress,
-                          const GimpValueArray  *args,
+static LigmaValueArray *
+selection_border_invoker (LigmaProcedure         *procedure,
+                          Ligma                  *ligma,
+                          LigmaContext           *context,
+                          LigmaProgress          *progress,
+                          const LigmaValueArray  *args,
                           GError               **error)
 {
   gboolean success = TRUE;
-  GimpImage *image;
+  LigmaImage *image;
   gint radius;
 
-  image = g_value_get_object (gimp_value_array_index (args, 0));
-  radius = g_value_get_int (gimp_value_array_index (args, 1));
+  image = g_value_get_object (ligma_value_array_index (args, 0));
+  radius = g_value_get_int (ligma_value_array_index (args, 1));
 
   if (success)
     {
       /* FIXME: "style" and "edge-lock" hardcoded to SMOOTH and TRUE, respectively. */
-      gimp_channel_border (gimp_image_get_mask (image),
+      ligma_channel_border (ligma_image_get_mask (image),
                            radius, radius,
-                           GIMP_CHANNEL_BORDER_STYLE_SMOOTH,
+                           LIGMA_CHANNEL_BORDER_STYLE_SMOOTH,
                            TRUE, TRUE);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-selection_grow_invoker (GimpProcedure         *procedure,
-                        Gimp                  *gimp,
-                        GimpContext           *context,
-                        GimpProgress          *progress,
-                        const GimpValueArray  *args,
+static LigmaValueArray *
+selection_grow_invoker (LigmaProcedure         *procedure,
+                        Ligma                  *ligma,
+                        LigmaContext           *context,
+                        LigmaProgress          *progress,
+                        const LigmaValueArray  *args,
                         GError               **error)
 {
   gboolean success = TRUE;
-  GimpImage *image;
+  LigmaImage *image;
   gint steps;
 
-  image = g_value_get_object (gimp_value_array_index (args, 0));
-  steps = g_value_get_int (gimp_value_array_index (args, 1));
+  image = g_value_get_object (ligma_value_array_index (args, 0));
+  steps = g_value_get_int (ligma_value_array_index (args, 1));
 
   if (success)
     {
-      gimp_channel_grow (gimp_image_get_mask (image),
+      ligma_channel_grow (ligma_image_get_mask (image),
                          steps, steps, TRUE);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-selection_shrink_invoker (GimpProcedure         *procedure,
-                          Gimp                  *gimp,
-                          GimpContext           *context,
-                          GimpProgress          *progress,
-                          const GimpValueArray  *args,
+static LigmaValueArray *
+selection_shrink_invoker (LigmaProcedure         *procedure,
+                          Ligma                  *ligma,
+                          LigmaContext           *context,
+                          LigmaProgress          *progress,
+                          const LigmaValueArray  *args,
                           GError               **error)
 {
   gboolean success = TRUE;
-  GimpImage *image;
+  LigmaImage *image;
   gint steps;
 
-  image = g_value_get_object (gimp_value_array_index (args, 0));
-  steps = g_value_get_int (gimp_value_array_index (args, 1));
+  image = g_value_get_object (ligma_value_array_index (args, 0));
+  steps = g_value_get_int (ligma_value_array_index (args, 1));
 
   if (success)
     {
-      gimp_channel_shrink (gimp_image_get_mask (image),
+      ligma_channel_shrink (ligma_image_get_mask (image),
                            steps, steps, FALSE, TRUE);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-selection_flood_invoker (GimpProcedure         *procedure,
-                         Gimp                  *gimp,
-                         GimpContext           *context,
-                         GimpProgress          *progress,
-                         const GimpValueArray  *args,
+static LigmaValueArray *
+selection_flood_invoker (LigmaProcedure         *procedure,
+                         Ligma                  *ligma,
+                         LigmaContext           *context,
+                         LigmaProgress          *progress,
+                         const LigmaValueArray  *args,
                          GError               **error)
 {
   gboolean success = TRUE;
-  GimpImage *image;
+  LigmaImage *image;
 
-  image = g_value_get_object (gimp_value_array_index (args, 0));
+  image = g_value_get_object (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      gimp_channel_flood (gimp_image_get_mask (image), TRUE);
+      ligma_channel_flood (ligma_image_get_mask (image), TRUE);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-selection_save_invoker (GimpProcedure         *procedure,
-                        Gimp                  *gimp,
-                        GimpContext           *context,
-                        GimpProgress          *progress,
-                        const GimpValueArray  *args,
+static LigmaValueArray *
+selection_save_invoker (LigmaProcedure         *procedure,
+                        Ligma                  *ligma,
+                        LigmaContext           *context,
+                        LigmaProgress          *progress,
+                        const LigmaValueArray  *args,
                         GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpImage *image;
-  GimpChannel *channel = NULL;
+  LigmaValueArray *return_vals;
+  LigmaImage *image;
+  LigmaChannel *channel = NULL;
 
-  image = g_value_get_object (gimp_value_array_index (args, 0));
+  image = g_value_get_object (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      channel = GIMP_CHANNEL (gimp_item_duplicate (GIMP_ITEM (gimp_image_get_mask (image)),
-                                                   GIMP_TYPE_CHANNEL));
+      channel = LIGMA_CHANNEL (ligma_item_duplicate (LIGMA_ITEM (ligma_image_get_mask (image)),
+                                                   LIGMA_TYPE_CHANNEL));
 
       if (channel)
         {
           /*  saved selections are not visible by default  */
-          gimp_item_set_visible (GIMP_ITEM (channel), FALSE, FALSE);
+          ligma_item_set_visible (LIGMA_ITEM (channel), FALSE, FALSE);
 
-          gimp_image_add_channel (image, channel,
-                                  GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
+          ligma_image_add_channel (image, channel,
+                                  LIGMA_IMAGE_ACTIVE_PARENT, -1, TRUE);
         }
       else
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_object (gimp_value_array_index (return_vals, 1), channel);
+    g_value_set_object (ligma_value_array_index (return_vals, 1), channel);
 
   return return_vals;
 }
 
 void
-register_selection_procs (GimpPDB *pdb)
+register_selection_procs (LigmaPDB *pdb)
 {
-  GimpProcedure *procedure;
+  LigmaProcedure *procedure;
 
   /*
-   * gimp-selection-bounds
+   * ligma-selection-bounds
    */
-  procedure = gimp_procedure_new (selection_bounds_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-selection-bounds");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (selection_bounds_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-selection-bounds");
+  ligma_procedure_set_static_help (procedure,
                                   "Find the bounding box of the current selection.",
                                   "This procedure returns whether there is a selection for the specified image. If there is one, the upper left and lower right corners of the bounding box are returned. These coordinates are relative to the image. Please note that the pixel specified by the lower right coordinate of the bounding box is not part of the selection. The selection ends at the upper left corner of this pixel. This means the width of the selection can be calculated as (x2 - x1), its height as (y2 - y1).",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "The image",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("non-empty",
                                                          "non empty",
                                                          "TRUE if there is a selection",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_int ("x1",
                                                      "x1",
                                                      "x coordinate of upper left corner of selection bounds",
                                                      G_MININT32, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_int ("y1",
                                                      "y1",
                                                      "y coordinate of upper left corner of selection bounds",
                                                      G_MININT32, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_int ("x2",
                                                      "x2",
                                                      "x coordinate of lower right corner of selection bounds",
                                                      G_MININT32, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_int ("y2",
                                                      "y2",
                                                      "y coordinate of lower right corner of selection bounds",
                                                      G_MININT32, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-selection-value
+   * ligma-selection-value
    */
-  procedure = gimp_procedure_new (selection_value_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-selection-value");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (selection_value_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-selection-value");
+  ligma_procedure_set_static_help (procedure,
                                   "Find the value of the selection at the specified coordinates.",
                                   "This procedure returns the value of the selection at the specified coordinates. If the coordinates lie out of bounds, 0 is returned.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "The image",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("x",
                                                  "x",
                                                  "x coordinate of value",
                                                  G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("y",
                                                  "y",
                                                  "y coordinate of value",
                                                  G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_int ("value",
                                                      "value",
                                                      "Value of the selection",
                                                      0, 255, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-selection-is-empty
+   * ligma-selection-is-empty
    */
-  procedure = gimp_procedure_new (selection_is_empty_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-selection-is-empty");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (selection_is_empty_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-selection-is-empty");
+  ligma_procedure_set_static_help (procedure,
                                   "Determine whether the selection is empty.",
                                   "This procedure returns TRUE if the selection for the specified image is empty.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "The image",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("is-empty",
                                                          "is empty",
                                                          "Is the selection empty?",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-selection-translate
+   * ligma-selection-translate
    */
-  procedure = gimp_procedure_new (selection_translate_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-selection-translate");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (selection_translate_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-selection-translate");
+  ligma_procedure_set_static_help (procedure,
                                   "Translate the selection by the specified offsets.",
                                   "This procedure actually translates the selection for the specified image by the specified offsets. Regions that are translated from beyond the bounds of the image are set to empty. Valid regions of the selection which are translated beyond the bounds of the image because of this call are lost.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "The image",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("offx",
                                                  "offx",
                                                  "x offset for translation",
                                                  G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("offy",
                                                  "offy",
                                                  "y offset for translation",
                                                  G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-selection-float
+   * ligma-selection-float
    */
-  procedure = gimp_procedure_new (selection_float_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-selection-float");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (selection_float_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-selection-float");
+  ligma_procedure_set_static_help (procedure,
                                   "Float the selection from the specified drawable with initial offsets as specified.",
                                   "This procedure determines the region of the specified drawable that lies beneath the current selection. The region is then cut from the drawable and the resulting data is made into a new layer which is instantiated as a floating selection. The offsets allow initial positioning of the new floating selection.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("num-drawables",
                                                  "num drawables",
                                                  "The number of drawables",
                                                  1, G_MAXINT32, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_object_array ("drawables",
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_object_array ("drawables",
                                                              "drawables",
                                                              "The drawables from which to float selection",
-                                                             GIMP_TYPE_ITEM,
-                                                             GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
-  gimp_procedure_add_argument (procedure,
+                                                             LIGMA_TYPE_ITEM,
+                                                             LIGMA_PARAM_READWRITE | LIGMA_PARAM_NO_VALIDATE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("offx",
                                                  "offx",
                                                  "x offset for translation",
                                                  G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("offy",
                                                  "offy",
                                                  "y offset for translation",
                                                  G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_layer ("layer",
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_layer ("layer",
                                                           "layer",
                                                           "The floated layer",
                                                           FALSE,
-                                                          GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                          LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-selection-invert
+   * ligma-selection-invert
    */
-  procedure = gimp_procedure_new (selection_invert_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-selection-invert");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (selection_invert_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-selection-invert");
+  ligma_procedure_set_static_help (procedure,
                                   "Invert the selection mask.",
                                   "This procedure inverts the selection mask. For every pixel in the selection channel, its new value is calculated as (255 - old-value).",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "The image",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-selection-sharpen
+   * ligma-selection-sharpen
    */
-  procedure = gimp_procedure_new (selection_sharpen_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-selection-sharpen");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (selection_sharpen_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-selection-sharpen");
+  ligma_procedure_set_static_help (procedure,
                                   "Sharpen the selection mask.",
                                   "This procedure sharpens the selection mask. For every pixel in the selection channel, if the value is > 127, the new pixel is assigned a value of 255. This removes any \"anti-aliasing\" that might exist in the selection mask's boundary.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "The image",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-selection-all
+   * ligma-selection-all
    */
-  procedure = gimp_procedure_new (selection_all_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-selection-all");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (selection_all_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-selection-all");
+  ligma_procedure_set_static_help (procedure,
                                   "Select all of the image.",
                                   "This procedure sets the selection mask to completely encompass the image. Every pixel in the selection channel is set to 255.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "The image",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-selection-none
+   * ligma-selection-none
    */
-  procedure = gimp_procedure_new (selection_none_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-selection-none");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (selection_none_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-selection-none");
+  ligma_procedure_set_static_help (procedure,
                                   "Deselect the entire image.",
                                   "This procedure deselects the entire image. Every pixel in the selection channel is set to 0.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "The image",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-selection-feather
+   * ligma-selection-feather
    */
-  procedure = gimp_procedure_new (selection_feather_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-selection-feather");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (selection_feather_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-selection-feather");
+  ligma_procedure_set_static_help (procedure,
                                   "Feather the image's selection",
                                   "This procedure feathers the selection. Feathering is implemented using a gaussian blur.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "The image",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("radius",
                                                     "radius",
                                                     "Radius of feather (in pixels)",
                                                     0, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-selection-border
+   * ligma-selection-border
    */
-  procedure = gimp_procedure_new (selection_border_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-selection-border");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (selection_border_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-selection-border");
+  ligma_procedure_set_static_help (procedure,
                                   "Border the image's selection",
                                   "This procedure borders the selection. Bordering creates a new selection which is defined along the boundary of the previous selection at every point within the specified radius.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "The image",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("radius",
                                                  "radius",
                                                  "Radius of border (in pixels)",
                                                  0, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-selection-grow
+   * ligma-selection-grow
    */
-  procedure = gimp_procedure_new (selection_grow_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-selection-grow");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (selection_grow_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-selection-grow");
+  ligma_procedure_set_static_help (procedure,
                                   "Grow the image's selection",
                                   "This procedure grows the selection. Growing involves expanding the boundary in all directions by the specified pixel amount.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "The image",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("steps",
                                                  "steps",
                                                  "Steps of grow (in pixels)",
                                                  0, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-selection-shrink
+   * ligma-selection-shrink
    */
-  procedure = gimp_procedure_new (selection_shrink_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-selection-shrink");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (selection_shrink_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-selection-shrink");
+  ligma_procedure_set_static_help (procedure,
                                   "Shrink the image's selection",
                                   "This procedure shrinks the selection. Shrinking involves trimming the existing selection boundary on all sides by the specified number of pixels.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "The image",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("steps",
                                                  "steps",
                                                  "Steps of shrink (in pixels)",
                                                  0, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-selection-flood
+   * ligma-selection-flood
    */
-  procedure = gimp_procedure_new (selection_flood_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-selection-flood");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (selection_flood_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-selection-flood");
+  ligma_procedure_set_static_help (procedure,
                                   "Remove holes from the image's selection",
                                   "This procedure removes holes from the selection, that can come from selecting a patchy area with the Fuzzy Select Tool. In technical terms this procedure floods the selection. See the Algorithms page in the developer wiki for details.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Ell",
                                          "Ell",
                                          "2016");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "The image",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-selection-save
+   * ligma-selection-save
    */
-  procedure = gimp_procedure_new (selection_save_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-selection-save");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (selection_save_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-selection-save");
+  ligma_procedure_set_static_help (procedure,
                                   "Copy the selection mask to a new channel.",
                                   "This procedure copies the selection mask and stores the content in a new channel. The new channel is automatically inserted into the image's list of channels.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "The image",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_channel ("channel",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_channel ("channel",
                                                             "channel",
                                                             "The new channel",
                                                             FALSE,
-                                                            GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                            LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

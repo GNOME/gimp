@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimplabelcolor.h
+ * ligmalabelcolor.h
  * Copyright (C) 2022 Jehan
  *
  * This library is free software: you can redistribute it and/or
@@ -19,40 +19,40 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
-#error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
+#if !defined (__LIGMA_WIDGETS_H_INSIDE__) && !defined (LIGMA_WIDGETS_COMPILATION)
+#error "Only <libligmawidgets/ligmawidgets.h> can be included directly."
 #endif
 
-#ifndef __GIMP_LABEL_COLOR_H__
-#define __GIMP_LABEL_COLOR_H__
+#ifndef __LIGMA_LABEL_COLOR_H__
+#define __LIGMA_LABEL_COLOR_H__
 
-#include <libgimpwidgets/gimplabeled.h>
+#include <libligmawidgets/ligmalabeled.h>
 
 G_BEGIN_DECLS
 
-#define GIMP_TYPE_LABEL_COLOR (gimp_label_color_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GimpLabelColor, gimp_label_color, GIMP, LABEL_COLOR, GimpLabeled)
+#define LIGMA_TYPE_LABEL_COLOR (ligma_label_color_get_type ())
+G_DECLARE_DERIVABLE_TYPE (LigmaLabelColor, ligma_label_color, LIGMA, LABEL_COLOR, LigmaLabeled)
 
-struct _GimpLabelColorClass
+struct _LigmaLabelColorClass
 {
-  GimpLabeledClass   parent_class;
+  LigmaLabeledClass   parent_class;
 
   /*  Signals */
-  void (* value_changed)   (GimpLabelColor *color);
+  void (* value_changed)   (LigmaLabelColor *color);
 
   /* Padding for future expansion */
-  void (* _gimp_reserved1) (void);
-  void (* _gimp_reserved2) (void);
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
-  void (* _gimp_reserved5) (void);
-  void (* _gimp_reserved6) (void);
-  void (* _gimp_reserved7) (void);
-  void (* _gimp_reserved8) (void);
+  void (* _ligma_reserved1) (void);
+  void (* _ligma_reserved2) (void);
+  void (* _ligma_reserved3) (void);
+  void (* _ligma_reserved4) (void);
+  void (* _ligma_reserved5) (void);
+  void (* _ligma_reserved6) (void);
+  void (* _ligma_reserved7) (void);
+  void (* _ligma_reserved8) (void);
 };
 
-GtkWidget * gimp_label_color_new              (const gchar       *label,
-                                               const GimpRGB     *color,
+GtkWidget * ligma_label_color_new              (const gchar       *label,
+                                               const LigmaRGB     *color,
                                                gboolean           editable);
 
 /* TODO: it would be interesting for such a widget to have an API to
@@ -60,17 +60,17 @@ GtkWidget * gimp_label_color_new              (const gchar       *label,
  * imagine wanting to pretty-list several colors with specific layouts.
  */
 
-void        gimp_label_color_set_value        (GimpLabelColor     *color,
-                                               const GimpRGB      *value);
-void        gimp_label_color_get_value        (GimpLabelColor     *color,
-                                               GimpRGB            *value);
+void        ligma_label_color_set_value        (LigmaLabelColor     *color,
+                                               const LigmaRGB      *value);
+void        ligma_label_color_get_value        (LigmaLabelColor     *color,
+                                               LigmaRGB            *value);
 
-void        gimp_label_color_set_editable     (GimpLabelColor     *color,
+void        ligma_label_color_set_editable     (LigmaLabelColor     *color,
                                                gboolean            editable);
-gboolean    gimp_label_color_is_editable      (GimpLabelColor     *color);
+gboolean    ligma_label_color_is_editable      (LigmaLabelColor     *color);
 
-GtkWidget * gimp_label_color_get_color_widget (GimpLabelColor     *color);
+GtkWidget * ligma_label_color_get_color_widget (LigmaLabelColor     *color);
 
 G_END_DECLS
 
-#endif /* __GIMP_LABEL_COLOR_H__ */
+#endif /* __LIGMA_LABEL_COLOR_H__ */

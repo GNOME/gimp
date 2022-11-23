@@ -1,17 +1,17 @@
-# French translation of gimp-python.
+# French translation of ligma-python.
 # Copyright (C) 2000-2022 Free Software Foundation, Inc.
-# This file is distributed under the same license as the gimp package.
+# This file is distributed under the same license as the ligma package.
 #
 # Raymond Ostertag <r.ostertag@caramail.com>, 2007.
 # Jonathan Ernst <jonathan@ernstfamily.ch>, 2007.
-# Laurent Monin <gimp@norz.org>, 2007.
+# Laurent Monin <ligma@norz.org>, 2007.
 # Julien Hardelin <jhardlin@orange.fr>, 2009-2011, 2016, 2019, 2020.
 # Claude Paroz <claude@2xlibre.net>, 2022.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-python\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma-python\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2022-04-02 12:00+0000\n"
 "PO-Revision-Date: 2022-04-03 22:24+0200\n"
 "Last-Translator: Claude Paroz <claude@2xlibre.net>\n"
@@ -427,8 +427,8 @@ msgid "Python _Console"
 msgstr "_Console Python"
 
 #: ../plug-ins/python/python-console/python-console.py:357
-msgid "Interactive GIMP Python interpreter"
-msgstr "Interpréteur interactif GIMP Python"
+msgid "Interactive LIGMA Python interpreter"
+msgstr "Interpréteur interactif LIGMA Python"
 
 #: ../plug-ins/python/spyro-plus.py:50
 msgid "Spyro Layer"
@@ -781,8 +781,8 @@ msgstr ""
 "dernier calque actif, ou enregistrer vers un chemin"
 
 #: ../plug-ins/python/spyro-plus.py:1750
-msgid "Spyrogimp"
-msgstr "Spyrogimp"
+msgid "Spyroligma"
+msgstr "Spyroligma"
 
 #: ../plug-ins/python/spyro-plus.py:1759 ../plug-ins/python/spyro-plus.py:2297
 msgid "Draw spyrographs using current tool settings and selection."
@@ -811,5 +811,5 @@ msgid "Please wait : Rendering Pattern"
 msgstr "Patience : motif en cours de rendu"
 
 #: ../plug-ins/python/spyro-plus.py:2301
-msgid "Spyrogimp..."
-msgstr "Spyrogimp…"
+msgid "Spyroligma..."
+msgstr "Spyroligma…"

@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * This is a plug-in for GIMP.
+ * This is a plug-in for LIGMA.
  *
  * Generates images containing vector type drawings.
  *
@@ -24,15 +24,15 @@
 
 #include "config.h"
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
 #include "gfig.h"
 #include "gfig-dobject.h"
 #include "gfig-poly.h"
 #include "gfig-circle.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 static gint        calc_radius     (GdkPoint *center,
                                     GdkPoint *edge);
@@ -119,21 +119,21 @@ d_paint_circle (GfigObject *obj)
 
   if (gfig_context_get_current_style ()->fill_type != FILL_NONE)
     {
-      gimp_context_push ();
-      gimp_context_set_antialias (selopt.antia);
-      gimp_context_set_feather (selopt.feather);
-      gimp_context_set_feather_radius (selopt.feather_radius, selopt.feather_radius);
-      gimp_image_select_ellipse (gfig_context->image,
+      ligma_context_push ();
+      ligma_context_set_antialias (selopt.antia);
+      ligma_context_set_feather (selopt.feather);
+      ligma_context_set_feather_radius (selopt.feather_radius, selopt.feather_radius);
+      ligma_image_select_ellipse (gfig_context->image,
                                  selopt.type,
                                  dpnts[0], dpnts[1],
                                  dpnts[2], dpnts[3]);
-      gimp_context_pop ();
+      ligma_context_pop ();
 
       paint_layer_fill (center_pnt->pnt.x - radius,
                         center_pnt->pnt.y - radius,
                         center_pnt->pnt.x + radius,
                         center_pnt->pnt.y + radius);
-      gimp_selection_none (gfig_context->image);
+      ligma_selection_none (gfig_context->image);
     }
 
   /* Drawing a circle may be harder than stroking a circular selection,

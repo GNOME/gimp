@@ -1,11 +1,11 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * color-profile-dialog.h
- * Copyright (C) 2015 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2015 Michael Natterer <mitch@ligma.org>
  *
  * Partly based on the lcms plug-in
- * Copyright (C) 2006, 2007  Sven Neumann <sven@gimp.org>
+ * Copyright (C) 2006, 2007  Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,40 +26,40 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "dialogs-types.h"
 
-#include "config/gimpcoreconfig.h"
+#include "config/ligmacoreconfig.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontext.h"
-#include "core/gimpimage.h"
+#include "core/ligma.h"
+#include "core/ligmacontext.h"
+#include "core/ligmaimage.h"
 
-#include "widgets/gimphelp-ids.h"
-#include "widgets/gimpviewabledialog.h"
-#include "widgets/gimpwidgets-constructors.h"
-#include "widgets/gimpwidgets-utils.h"
+#include "widgets/ligmahelp-ids.h"
+#include "widgets/ligmaviewabledialog.h"
+#include "widgets/ligmawidgets-constructors.h"
+#include "widgets/ligmawidgets-utils.h"
 
 #include "color-profile-dialog.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 typedef struct
 {
   ColorProfileDialogType    dialog_type;
-  GimpImage                *image;
-  GimpColorProfile         *current_profile;
-  GimpColorProfile         *default_profile;
-  GimpColorRenderingIntent  intent;
+  LigmaImage                *image;
+  LigmaColorProfile         *current_profile;
+  LigmaColorProfile         *default_profile;
+  LigmaColorRenderingIntent  intent;
   gboolean                  bpc;
-  GimpColorProfileCallback  callback;
+  LigmaColorProfileCallback  callback;
   gpointer                  user_data;
 
-  GimpColorConfig          *config;
+  LigmaColorConfig          *config;
   GtkWidget                *dialog;
   GtkWidget                *main_vbox;
   GtkWidget                *combo;
@@ -81,14 +81,14 @@ static void        color_profile_dest_changed    (GtkWidget     *combo,
 
 GtkWidget *
 color_profile_dialog_new (ColorProfileDialogType    dialog_type,
-                          GimpImage                *image,
-                          GimpContext              *context,
+                          LigmaImage                *image,
+                          LigmaContext              *context,
                           GtkWidget                *parent,
-                          GimpColorProfile         *current_profile,
-                          GimpColorProfile         *default_profile,
-                          GimpColorRenderingIntent  intent,
+                          LigmaColorProfile         *current_profile,
+                          LigmaColorProfile         *default_profile,
+                          LigmaColorRenderingIntent  intent,
                           gboolean                  bpc,
-                          GimpColorProfileCallback  callback,
+                          LigmaColorProfileCallback  callback,
                           gpointer                  user_data)
 {
   ProfileDialog *private;
@@ -99,13 +99,13 @@ color_profile_dialog_new (ColorProfileDialogType    dialog_type,
   GtkWidget     *label;
   const gchar   *dest_label;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (GTK_IS_WIDGET (parent), NULL);
   g_return_val_if_fail (current_profile == NULL ||
-                        GIMP_IS_COLOR_PROFILE (current_profile), NULL);
+                        LIGMA_IS_COLOR_PROFILE (current_profile), NULL);
   g_return_val_if_fail (default_profile == NULL ||
-                        GIMP_IS_COLOR_PROFILE (default_profile), NULL);
+                        LIGMA_IS_COLOR_PROFILE (default_profile), NULL);
   g_return_val_if_fail (callback != NULL, NULL);
 
   private = g_slice_new0 (ProfileDialog);
@@ -118,20 +118,20 @@ color_profile_dialog_new (ColorProfileDialogType    dialog_type,
   private->bpc             = bpc;
   private->callback        = callback;
   private->user_data       = user_data;
-  private->config          = image->gimp->config->color_management;
+  private->config          = image->ligma->config->color_management;
 
   switch (dialog_type)
     {
     case COLOR_PROFILE_DIALOG_ASSIGN_PROFILE:
       dialog =
-        gimp_viewable_dialog_new (g_list_prepend (NULL, image), context,
+        ligma_viewable_dialog_new (g_list_prepend (NULL, image), context,
                                   _("Assign ICC Color Profile"),
-                                  "gimp-image-color-profile-assign",
+                                  "ligma-image-color-profile-assign",
                                   NULL,
                                   _("Assign a color profile to the image"),
                                   parent,
-                                  gimp_standard_help_func,
-                                  GIMP_HELP_IMAGE_COLOR_PROFILE_ASSIGN,
+                                  ligma_standard_help_func,
+                                  LIGMA_HELP_IMAGE_COLOR_PROFILE_ASSIGN,
 
                                   _("_Cancel"), GTK_RESPONSE_CANCEL,
                                   _("_Assign"), GTK_RESPONSE_OK,
@@ -142,14 +142,14 @@ color_profile_dialog_new (ColorProfileDialogType    dialog_type,
 
     case COLOR_PROFILE_DIALOG_CONVERT_TO_PROFILE:
       dialog =
-        gimp_viewable_dialog_new (g_list_prepend (NULL, image), context,
+        ligma_viewable_dialog_new (g_list_prepend (NULL, image), context,
                                   _("Convert to ICC Color Profile"),
-                                  "gimp-image-color-profile-convert",
+                                  "ligma-image-color-profile-convert",
                                   NULL,
                                   _("Convert the image to a color profile"),
                                   parent,
-                                  gimp_standard_help_func,
-                                  GIMP_HELP_IMAGE_COLOR_PROFILE_CONVERT,
+                                  ligma_standard_help_func,
+                                  LIGMA_HELP_IMAGE_COLOR_PROFILE_CONVERT,
 
                                   _("_Cancel"),  GTK_RESPONSE_CANCEL,
                                   _("C_onvert"), GTK_RESPONSE_OK,
@@ -160,14 +160,14 @@ color_profile_dialog_new (ColorProfileDialogType    dialog_type,
 
     case COLOR_PROFILE_DIALOG_CONVERT_TO_RGB:
       dialog =
-        gimp_viewable_dialog_new (g_list_prepend (NULL, image), context,
+        ligma_viewable_dialog_new (g_list_prepend (NULL, image), context,
                                   _("RGB Conversion"),
-                                  "gimp-image-convert-rgb",
-                                  GIMP_ICON_CONVERT_RGB,
+                                  "ligma-image-convert-rgb",
+                                  LIGMA_ICON_CONVERT_RGB,
                                   _("Convert Image to RGB"),
                                   parent,
-                                  gimp_standard_help_func,
-                                  GIMP_HELP_IMAGE_CONVERT_RGB,
+                                  ligma_standard_help_func,
+                                  LIGMA_HELP_IMAGE_CONVERT_RGB,
 
                                   _("_Cancel"),  GTK_RESPONSE_CANCEL,
                                   _("C_onvert"), GTK_RESPONSE_OK,
@@ -178,14 +178,14 @@ color_profile_dialog_new (ColorProfileDialogType    dialog_type,
 
     case COLOR_PROFILE_DIALOG_CONVERT_TO_GRAY:
       dialog =
-        gimp_viewable_dialog_new (g_list_prepend (NULL, image), context,
+        ligma_viewable_dialog_new (g_list_prepend (NULL, image), context,
                                   _("Grayscale Conversion"),
-                                  "gimp-image-convert-gray",
-                                  GIMP_ICON_CONVERT_GRAYSCALE,
+                                  "ligma-image-convert-gray",
+                                  LIGMA_ICON_CONVERT_GRAYSCALE,
                                   _("Convert Image to Grayscale"),
                                   parent,
-                                  gimp_standard_help_func,
-                                  GIMP_HELP_IMAGE_CONVERT_GRAYSCALE,
+                                  ligma_standard_help_func,
+                                  LIGMA_HELP_IMAGE_CONVERT_GRAYSCALE,
 
                                   _("_Cancel"),  GTK_RESPONSE_CANCEL,
                                   _("C_onvert"), GTK_RESPONSE_OK,
@@ -196,14 +196,14 @@ color_profile_dialog_new (ColorProfileDialogType    dialog_type,
 
     case COLOR_PROFILE_DIALOG_SELECT_SOFTPROOF_PROFILE:
       dialog =
-        gimp_viewable_dialog_new (g_list_prepend (NULL, image), context,
+        ligma_viewable_dialog_new (g_list_prepend (NULL, image), context,
                                   _("Soft-Proof Profile"),
-                                  "gimp-select-softproof-profile",
-                                  GIMP_ICON_DOCUMENT_PRINT,
+                                  "ligma-select-softproof-profile",
+                                  LIGMA_ICON_DOCUMENT_PRINT,
                                   _("Select Soft-Proof Profile"),
                                   parent,
-                                  gimp_standard_help_func,
-                                  GIMP_HELP_VIEW_COLOR_MANAGEMENT,
+                                  ligma_standard_help_func,
+                                  LIGMA_HELP_VIEW_COLOR_MANAGEMENT,
 
                                   _("_Cancel"), GTK_RESPONSE_CANCEL,
                                   _("_Select"), GTK_RESPONSE_OK,
@@ -218,7 +218,7 @@ color_profile_dialog_new (ColorProfileDialogType    dialog_type,
 
   private->dialog = dialog;
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
@@ -238,15 +238,15 @@ color_profile_dialog_new (ColorProfileDialogType    dialog_type,
                       private->main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (private->main_vbox);
 
-  frame = gimp_frame_new (_("Current Color Profile"));
+  frame = ligma_frame_new (_("Current Color Profile"));
   gtk_box_pack_start (GTK_BOX (private->main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  label = gimp_color_profile_label_new (private->current_profile);
+  label = ligma_color_profile_label_new (private->current_profile);
   gtk_container_add (GTK_CONTAINER (frame), label);
   gtk_widget_show (label);
 
-  frame = gimp_frame_new (dest_label);
+  frame = ligma_frame_new (dest_label);
   gtk_box_pack_start (GTK_BOX (private->main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -262,7 +262,7 @@ color_profile_dialog_new (ColorProfileDialogType    dialog_type,
   gtk_box_pack_start (GTK_BOX (vbox), expander, FALSE, FALSE, 0);
   gtk_widget_show (expander);
 
-  private->dest_view = gimp_color_profile_view_new ();
+  private->dest_view = ligma_color_profile_view_new ();
   gtk_container_add (GTK_CONTAINER (expander), private->dest_view);
   gtk_widget_show (private->dest_view);
 
@@ -291,13 +291,13 @@ color_profile_dialog_new (ColorProfileDialogType    dialog_type,
       gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
       gtk_widget_show (label);
 
-      combo = gimp_enum_combo_box_new (GIMP_TYPE_COLOR_RENDERING_INTENT);
+      combo = ligma_enum_combo_box_new (LIGMA_TYPE_COLOR_RENDERING_INTENT);
       gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
       gtk_widget_show (combo);
 
-      gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
+      ligma_int_combo_box_connect (LIGMA_INT_COMBO_BOX (combo),
                                   private->intent,
-                                  G_CALLBACK (gimp_int_combo_box_get_active),
+                                  G_CALLBACK (ligma_int_combo_box_get_active),
                                   &private->intent, NULL);
 
       gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
@@ -309,7 +309,7 @@ color_profile_dialog_new (ColorProfileDialogType    dialog_type,
       gtk_widget_show (toggle);
 
       g_signal_connect (toggle, "toggled",
-                        G_CALLBACK (gimp_toggle_button_update),
+                        G_CALLBACK (ligma_toggle_button_update),
                         &private->bpc);
     }
 
@@ -333,69 +333,69 @@ color_profile_combo_box_new (ProfileDialog *private)
   GtkWidget    *chooser;
   GFile        *history;
 
-  history = gimp_directory_file ("profilerc", NULL);
-  store = gimp_color_profile_store_new (history);
+  history = ligma_directory_file ("profilerc", NULL);
+  store = ligma_color_profile_store_new (history);
   g_object_unref (history);
 
   if (private->default_profile)
     {
-      GimpImageBaseType  base_type;
-      GimpPrecision      precision;
+      LigmaImageBaseType  base_type;
+      LigmaPrecision      precision;
       GError            *error = NULL;
 
       switch (private->dialog_type)
         {
         case COLOR_PROFILE_DIALOG_ASSIGN_PROFILE:
         case COLOR_PROFILE_DIALOG_CONVERT_TO_PROFILE:
-          base_type = gimp_image_get_base_type (private->image);
+          base_type = ligma_image_get_base_type (private->image);
           break;
 
         case COLOR_PROFILE_DIALOG_CONVERT_TO_RGB:
-          base_type = GIMP_RGB;
+          base_type = LIGMA_RGB;
           break;
 
         case COLOR_PROFILE_DIALOG_CONVERT_TO_GRAY:
-          base_type = GIMP_GRAY;
+          base_type = LIGMA_GRAY;
           break;
 
         default:
           g_return_val_if_reached (NULL);
         }
 
-      precision = gimp_image_get_precision (private->image);
+      precision = ligma_image_get_precision (private->image);
 
-      if (! gimp_color_profile_store_add_defaults (GIMP_COLOR_PROFILE_STORE (store),
+      if (! ligma_color_profile_store_add_defaults (LIGMA_COLOR_PROFILE_STORE (store),
                                                    private->config,
                                                    base_type,
                                                    precision,
                                                    &error))
         {
-          gimp_message (private->image->gimp, G_OBJECT (private->dialog),
-                        GIMP_MESSAGE_ERROR,
+          ligma_message (private->image->ligma, G_OBJECT (private->dialog),
+                        LIGMA_MESSAGE_ERROR,
                         "%s", error->message);
           g_clear_error (&error);
         }
     }
   else
     {
-      gimp_color_profile_store_add_file (GIMP_COLOR_PROFILE_STORE (store),
+      ligma_color_profile_store_add_file (LIGMA_COLOR_PROFILE_STORE (store),
                                          NULL, NULL);
     }
 
   chooser =
-    gimp_color_profile_chooser_dialog_new (_("Select Destination Profile"),
+    ligma_color_profile_chooser_dialog_new (_("Select Destination Profile"),
                                            NULL,
                                            GTK_FILE_CHOOSER_ACTION_OPEN);
 
-  gimp_color_profile_chooser_dialog_connect_path (chooser,
-                                                  G_OBJECT (private->image->gimp->config),
+  ligma_color_profile_chooser_dialog_connect_path (chooser,
+                                                  G_OBJECT (private->image->ligma->config),
                                                   "color-profile-path");
 
-  combo = gimp_color_profile_combo_box_new_with_model (chooser,
+  combo = ligma_color_profile_combo_box_new_with_model (chooser,
                                                        GTK_TREE_MODEL (store));
   g_object_unref (store);
 
-  gimp_color_profile_combo_box_set_active_file (GIMP_COLOR_PROFILE_COMBO_BOX (combo),
+  ligma_color_profile_combo_box_set_active_file (LIGMA_COLOR_PROFILE_COMBO_BOX (combo),
                                                 NULL, NULL);
 
   return combo;
@@ -408,22 +408,22 @@ color_profile_dialog_response (GtkWidget     *dialog,
 {
   if (response_id == GTK_RESPONSE_OK)
     {
-      GimpColorProfile *profile = NULL;
+      LigmaColorProfile *profile = NULL;
       GFile            *file;
 
-      file = gimp_color_profile_combo_box_get_active_file (GIMP_COLOR_PROFILE_COMBO_BOX (private->combo));
+      file = ligma_color_profile_combo_box_get_active_file (LIGMA_COLOR_PROFILE_COMBO_BOX (private->combo));
 
       if (file)
         {
           GError *error = NULL;
 
-          profile = gimp_color_profile_new_from_file (file, &error);
+          profile = ligma_color_profile_new_from_file (file, &error);
           g_object_unref (file);
 
           if (! profile)
             {
-              gimp_message (private->image->gimp, G_OBJECT (dialog),
-                            GIMP_MESSAGE_ERROR,
+              ligma_message (private->image->ligma, G_OBJECT (dialog),
+                            LIGMA_MESSAGE_ERROR,
                             "%s", error->message);
               g_clear_error (&error);
 
@@ -456,21 +456,21 @@ static void
 color_profile_dest_changed (GtkWidget     *combo,
                             ProfileDialog *private)
 {
-  GimpColorProfile *dest_profile = NULL;
+  LigmaColorProfile *dest_profile = NULL;
   GFile            *file;
 
-  file = gimp_color_profile_combo_box_get_active_file (GIMP_COLOR_PROFILE_COMBO_BOX (combo));
+  file = ligma_color_profile_combo_box_get_active_file (LIGMA_COLOR_PROFILE_COMBO_BOX (combo));
 
   if (file)
     {
       GError *error = NULL;
 
-      dest_profile = gimp_color_profile_new_from_file (file, &error);
+      dest_profile = ligma_color_profile_new_from_file (file, &error);
       g_object_unref (file);
 
       if (! dest_profile)
         {
-          gimp_color_profile_view_set_error (GIMP_COLOR_PROFILE_VIEW (private->dest_view),
+          ligma_color_profile_view_set_error (LIGMA_COLOR_PROFILE_VIEW (private->dest_view),
                                              error->message);
           g_clear_error (&error);
         }
@@ -481,13 +481,13 @@ color_profile_dest_changed (GtkWidget     *combo,
     }
   else
     {
-      gimp_color_profile_view_set_error (GIMP_COLOR_PROFILE_VIEW (private->dest_view),
+      ligma_color_profile_view_set_error (LIGMA_COLOR_PROFILE_VIEW (private->dest_view),
                                          C_("profile", "None"));
     }
 
   if (dest_profile)
     {
-      gimp_color_profile_view_set_profile (GIMP_COLOR_PROFILE_VIEW (private->dest_view),
+      ligma_color_profile_view_set_profile (LIGMA_COLOR_PROFILE_VIEW (private->dest_view),
                                            dest_profile);
       g_object_unref (dest_profile);
     }

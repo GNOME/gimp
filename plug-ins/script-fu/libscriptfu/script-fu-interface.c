@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,8 +19,8 @@
 
 #include <string.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
 #ifdef GDK_WINDOWING_QUARTZ
 #import <Cocoa/Cocoa.h>
@@ -103,7 +103,7 @@ static void   script_fu_brush_callback      (gpointer       data,
                                              const gchar   *name,
                                              gdouble        opacity,
                                              gint           spacing,
-                                             GimpLayerMode  paint_mode,
+                                             LigmaLayerMode  paint_mode,
                                              gint           width,
                                              gint           height,
                                              const guchar  *mask_data,
@@ -120,7 +120,7 @@ static SFInterface       *sf_interface = NULL;  /*  there can only be at most
                                                  *  one interactive interface
                                                  */
 
-static GimpPDBStatusType  sf_status    = GIMP_PDB_SUCCESS;
+static LigmaPDBStatusType  sf_status    = LIGMA_PDB_SUCCESS;
 
 
 /*
@@ -144,7 +144,7 @@ script_fu_interface_report_cc (const gchar *command)
     {
       sf_interface->command_count++;
 
-      if (! g_str_has_prefix (command, "gimp-progress-"))
+      if (! g_str_has_prefix (command, "ligma-progress-"))
         {
           gchar *new_command;
 
@@ -162,7 +162,7 @@ script_fu_interface_report_cc (const gchar *command)
       g_free (sf_interface->last_command);
       sf_interface->last_command = g_strdup (command);
 
-      if (! g_str_has_prefix (command, "gimp-progress-"))
+      if (! g_str_has_prefix (command, "ligma-progress-"))
         {
           gtk_label_set_text (GTK_LABEL (sf_interface->progress_label),
                               command);
@@ -177,7 +177,7 @@ script_fu_interface_report_cc (const gchar *command)
     gtk_main_iteration ();
 }
 
-GimpPDBStatusType
+LigmaPDBStatusType
 script_fu_interface (SFScript  *script,
                      gint       start_arg)
 {
@@ -206,19 +206,19 @@ script_fu_interface (SFScript  *script,
       g_message (message, sf_interface->title);
       g_free (message);
 
-      return GIMP_PDB_CANCEL;
+      return LIGMA_PDB_CANCEL;
     }
 
   g_return_val_if_fail (script != NULL, FALSE);
 
   if (!gtk_initted)
     {
-      gimp_ui_init ("script-fu");
+      ligma_ui_init ("script-fu");
 
       gtk_initted = TRUE;
     }
 
-  sf_status = GIMP_PDB_SUCCESS;
+  sf_status = LIGMA_PDB_SUCCESS;
 
   sf_interface = g_slice_new0 (SFInterface);
 
@@ -228,9 +228,9 @@ script_fu_interface (SFScript  *script,
   title = g_strdup_printf (_("Script-Fu: %s"), sf_interface->title);
 
   sf_interface->dialog = dialog =
-    gimp_dialog_new (title, "gimp-script-fu",
+    ligma_dialog_new (title, "ligma-script-fu",
                      NULL, 0,
-                     gimp_standard_help_func, script->name,
+                     ligma_standard_help_func, script->name,
 
                      _("_Reset"),  RESPONSE_RESET,
                      _("_Cancel"), GTK_RESPONSE_CANCEL,
@@ -239,13 +239,13 @@ script_fu_interface (SFScript  *script,
                      NULL);
   g_free (title);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            RESPONSE_RESET,
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  gimp_window_set_transient (GTK_WINDOW (dialog));
+  ligma_window_set_transient (GTK_WINDOW (dialog));
 
   g_signal_connect (dialog, "response",
                     G_CALLBACK (script_fu_response),
@@ -300,27 +300,27 @@ script_fu_interface (SFScript  *script,
           switch (arg->type)
             {
             case SF_IMAGE:
-              widget = gimp_image_combo_box_new (NULL, NULL, NULL);
+              widget = ligma_image_combo_box_new (NULL, NULL, NULL);
               ID_ptr = &arg->value.sfa_image;
               break;
 
             case SF_DRAWABLE:
-              widget = gimp_drawable_combo_box_new (NULL, NULL, NULL);
+              widget = ligma_drawable_combo_box_new (NULL, NULL, NULL);
               ID_ptr = &arg->value.sfa_drawable;
               break;
 
             case SF_LAYER:
-              widget = gimp_layer_combo_box_new (NULL, NULL, NULL);
+              widget = ligma_layer_combo_box_new (NULL, NULL, NULL);
               ID_ptr = &arg->value.sfa_layer;
               break;
 
             case SF_CHANNEL:
-              widget = gimp_channel_combo_box_new (NULL, NULL, NULL);
+              widget = ligma_channel_combo_box_new (NULL, NULL, NULL);
               ID_ptr = &arg->value.sfa_channel;
               break;
 
             case SF_VECTORS:
-              widget = gimp_vectors_combo_box_new (NULL, NULL, NULL);
+              widget = ligma_vectors_combo_box_new (NULL, NULL, NULL);
               ID_ptr = &arg->value.sfa_vectors;
               break;
 
@@ -328,31 +328,31 @@ script_fu_interface (SFScript  *script,
               break;
             }
 
-          gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (widget), *ID_ptr,
-                                      G_CALLBACK (gimp_int_combo_box_get_active),
+          ligma_int_combo_box_connect (LIGMA_INT_COMBO_BOX (widget), *ID_ptr,
+                                      G_CALLBACK (ligma_int_combo_box_get_active),
                                       ID_ptr, NULL);
           break;
 
         case SF_COLOR:
           {
-            GimpColorConfig *config;
+            LigmaColorConfig *config;
 
             left_align = TRUE;
-            widget = gimp_color_button_new (_("Script-Fu Color Selection"),
+            widget = ligma_color_button_new (_("Script-Fu Color Selection"),
                                             COLOR_SAMPLE_WIDTH,
                                             COLOR_SAMPLE_HEIGHT,
                                             &arg->value.sfa_color,
-                                            GIMP_COLOR_AREA_FLAT);
+                                            LIGMA_COLOR_AREA_FLAT);
 
-            gimp_color_button_set_update (GIMP_COLOR_BUTTON (widget), TRUE);
+            ligma_color_button_set_update (LIGMA_COLOR_BUTTON (widget), TRUE);
 
-            config = gimp_get_color_configuration ();
-            gimp_color_button_set_color_config (GIMP_COLOR_BUTTON (widget),
+            config = ligma_get_color_configuration ();
+            ligma_color_button_set_color_config (LIGMA_COLOR_BUTTON (widget),
                                                 config);
             g_object_unref (config);
 
             g_signal_connect (widget, "color-changed",
-                              G_CALLBACK (gimp_color_button_get_color),
+                              G_CALLBACK (ligma_color_button_get_color),
                               &arg->value.sfa_color);
           }
           break;
@@ -365,7 +365,7 @@ script_fu_interface (SFScript  *script,
                                         arg->value.sfa_toggle);
 
           g_signal_connect (widget, "toggled",
-                            G_CALLBACK (gimp_toggle_button_update),
+                            G_CALLBACK (ligma_toggle_button_update),
                             &arg->value.sfa_toggle);
           break;
 
@@ -414,15 +414,15 @@ script_fu_interface (SFScript  *script,
                 {
                   GtkWidget *spinbutton;
 
-                  widget = gimp_scale_entry_new ("",
+                  widget = ligma_scale_entry_new ("",
                                                  arg->value.sfa_adjustment.value,
                                                  arg->default_value.sfa_adjustment.lower,
                                                  arg->default_value.sfa_adjustment.upper,
                                                  arg->default_value.sfa_adjustment.digits);
-                  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (widget),
+                  ligma_label_spin_set_increments (LIGMA_LABEL_SPIN (widget),
                                                   arg->default_value.sfa_adjustment.step,
                                                   arg->default_value.sfa_adjustment.page);
-                  spinbutton = gimp_label_spin_get_spin_button (GIMP_LABEL_SPIN (widget));
+                  spinbutton = ligma_label_spin_get_spin_button (LIGMA_LABEL_SPIN (widget));
                   adj_widget = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (spinbutton));
 
                   gtk_entry_set_activates_default (GTK_ENTRY (spinbutton), TRUE);
@@ -443,7 +443,7 @@ script_fu_interface (SFScript  *script,
                                       arg->default_value.sfa_adjustment.step,
                                       arg->default_value.sfa_adjustment.page,
                                       0);
-                widget = gimp_spin_button_new (adj_widget,
+                widget = ligma_spin_button_new (adj_widget,
                                                arg->default_value.sfa_adjustment.step,
                                                arg->default_value.sfa_adjustment.digits);
                 gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (widget), TRUE);
@@ -457,7 +457,7 @@ script_fu_interface (SFScript  *script,
 
             g_signal_connect (adj_widget,
                               "value-changed",
-                              G_CALLBACK (gimp_double_adjustment_update),
+                              G_CALLBACK (ligma_double_adjustment_update),
                               &arg->value.sfa_adjustment.value);
           } /* end case SF_ADJUSTMENT */
           break;
@@ -481,7 +481,7 @@ script_fu_interface (SFScript  *script,
           break;
 
         case SF_FONT:
-          widget = gimp_font_select_button_new (_("Script-Fu Font Selection"),
+          widget = ligma_font_select_button_new (_("Script-Fu Font Selection"),
                                                 arg->value.sfa_font);
           g_signal_connect_swapped (widget, "font-set",
                                     G_CALLBACK (script_fu_font_callback),
@@ -489,7 +489,7 @@ script_fu_interface (SFScript  *script,
           break;
 
         case SF_PALETTE:
-          widget = gimp_palette_select_button_new (_("Script-Fu Palette Selection"),
+          widget = ligma_palette_select_button_new (_("Script-Fu Palette Selection"),
                                                    arg->value.sfa_palette);
           g_signal_connect_swapped (widget, "palette-set",
                                     G_CALLBACK (script_fu_palette_callback),
@@ -498,7 +498,7 @@ script_fu_interface (SFScript  *script,
 
         case SF_PATTERN:
           left_align = TRUE;
-          widget = gimp_pattern_select_button_new (_("Script-Fu Pattern Selection"),
+          widget = ligma_pattern_select_button_new (_("Script-Fu Pattern Selection"),
                                                    arg->value.sfa_pattern);
           g_signal_connect_swapped (widget, "pattern-set",
                                     G_CALLBACK (script_fu_pattern_callback),
@@ -507,7 +507,7 @@ script_fu_interface (SFScript  *script,
 
         case SF_GRADIENT:
           left_align = TRUE;
-          widget = gimp_gradient_select_button_new (_("Script-Fu Gradient Selection"),
+          widget = ligma_gradient_select_button_new (_("Script-Fu Gradient Selection"),
                                                     arg->value.sfa_gradient);
           g_signal_connect_swapped (widget, "gradient-set",
                                     G_CALLBACK (script_fu_gradient_callback),
@@ -516,7 +516,7 @@ script_fu_interface (SFScript  *script,
 
         case SF_BRUSH:
           left_align = TRUE;
-          widget = gimp_brush_select_button_new (_("Script-Fu Brush Selection"),
+          widget = ligma_brush_select_button_new (_("Script-Fu Brush Selection"),
                                                  arg->value.sfa_brush.name,
                                                  arg->value.sfa_brush.opacity,
                                                  arg->value.sfa_brush.spacing,
@@ -545,13 +545,13 @@ script_fu_interface (SFScript  *script,
           break;
 
         case SF_ENUM:
-          widget = gimp_enum_combo_box_new (g_type_from_name (arg->default_value.sfa_enum.type_name));
+          widget = ligma_enum_combo_box_new (g_type_from_name (arg->default_value.sfa_enum.type_name));
 
-          gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (widget),
+          ligma_int_combo_box_set_active (LIGMA_INT_COMBO_BOX (widget),
                                          arg->value.sfa_enum.history);
 
           g_signal_connect (widget, "changed",
-                            G_CALLBACK (gimp_int_combo_box_get_active),
+                            G_CALLBACK (ligma_int_combo_box_get_active),
                             &arg->value.sfa_enum.history);
           break;
 
@@ -563,7 +563,7 @@ script_fu_interface (SFScript  *script,
         {
           if (label_text)
             {
-              gimp_grid_attach_aligned (GTK_GRID (sf_interface->grid),
+              ligma_grid_attach_aligned (GTK_GRID (sf_interface->grid),
                                         0, row,
                                         label_text, 0.0, label_yalign,
                                         widget, 2);
@@ -590,7 +590,7 @@ script_fu_interface (SFScript  *script,
   gtk_box_pack_end (GTK_BOX (vbox), vbox2, FALSE, FALSE, 0);
   gtk_widget_show (vbox2);
 
-  sf_interface->progress_bar = gimp_progress_bar_new ();
+  sf_interface->progress_bar = ligma_progress_bar_new ();
   gtk_box_pack_start (GTK_BOX (vbox2), sf_interface->progress_bar,
                       FALSE, FALSE, 0);
   gtk_widget_show (sf_interface->progress_bar);
@@ -599,7 +599,7 @@ script_fu_interface (SFScript  *script,
   gtk_label_set_xalign (GTK_LABEL (sf_interface->progress_label), 0.0);
   gtk_label_set_ellipsize (GTK_LABEL (sf_interface->progress_label),
                            PANGO_ELLIPSIZE_MIDDLE);
-  gimp_label_set_attributes (GTK_LABEL (sf_interface->progress_label),
+  ligma_label_set_attributes (GTK_LABEL (sf_interface->progress_label),
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);
   gtk_box_pack_start (GTK_BOX (vbox2), sf_interface->progress_label,
@@ -640,8 +640,8 @@ script_fu_interface_quit (SFScript *script)
       case SF_PATTERN:
       case SF_GRADIENT:
       case SF_BRUSH:
-        gimp_select_button_close_popup
-          (GIMP_SELECT_BUTTON (sf_interface->widgets[i]));
+        ligma_select_button_close_popup
+          (LIGMA_SELECT_BUTTON (sf_interface->widgets[i]));
         break;
 
       default:
@@ -655,7 +655,7 @@ script_fu_interface_quit (SFScript *script)
   sf_interface = NULL;
 
   /*  We do not call gtk_main_quit() earlier to reduce the possibility
-   *  that script_fu_script_proc() is called from gimp_extension_process()
+   *  that script_fu_script_proc() is called from ligma_extension_process()
    *  while we are not finished with the current script. This sucks!
    */
 
@@ -737,7 +737,7 @@ script_fu_brush_callback (gpointer       data,
                           const gchar   *name,
                           gdouble        opacity,
                           gint           spacing,
-                          GimpLayerMode  paint_mode,
+                          LigmaLayerMode  paint_mode,
                           gint           width,
                           gint           height,
                           const guchar  *mask_data,
@@ -800,7 +800,7 @@ script_fu_response (GtkWidget *widget,
 
       script_fu_flush_events ();
       /*
-       * The script could have created a new GimpImageWindow, so
+       * The script could have created a new LigmaImageWindow, so
        * unset the transient-for property not to focus the
        * ImageWindow from which the script was started
        */
@@ -810,7 +810,7 @@ script_fu_response (GtkWidget *widget,
       break;
 
     default:
-      sf_status = GIMP_PDB_CANCEL;
+      sf_status = LIGMA_PDB_CANCEL;
 
       script_fu_flush_events ();
       gtk_widget_destroy (sf_interface->dialog);
@@ -890,8 +890,8 @@ script_fu_ok (SFScript *script)
   output = g_string_new (NULL);
   ts_register_output_func (ts_gstring_output_func, output);
 
-  gimp_plug_in_set_pdb_error_handler (gimp_get_plug_in (),
-                                      GIMP_PDB_ERROR_HANDLER_PLUGIN);
+  ligma_plug_in_set_pdb_error_handler (ligma_get_plug_in (),
+                                      LIGMA_PDB_ERROR_HANDLER_PLUGIN);
 
   if (ts_interpret_string (command))
     {
@@ -902,8 +902,8 @@ script_fu_ok (SFScript *script)
       g_free (message);
     }
 
-  gimp_plug_in_set_pdb_error_handler (gimp_get_plug_in (),
-                                      GIMP_PDB_ERROR_HANDLER_INTERNAL);
+  ligma_plug_in_set_pdb_error_handler (ligma_get_plug_in (),
+                                      LIGMA_PDB_ERROR_HANDLER_INTERNAL);
 
   g_string_free (output, TRUE);
 
@@ -933,7 +933,7 @@ script_fu_reset (SFScript *script)
           break;
 
         case SF_COLOR:
-          gimp_color_button_set_color (GIMP_COLOR_BUTTON (widget),
+          ligma_color_button_set_color (LIGMA_COLOR_BUTTON (widget),
                                        &value->sfa_color);
           break;
 
@@ -963,23 +963,23 @@ script_fu_reset (SFScript *script)
           {
             /* Reset the widget's underlying GtkAdjustment.
              * The widget knows its own GtkAdjustment.
-             * The widget is a GimpScaleEntry or a GimpSpinButton.
+             * The widget is a LigmaScaleEntry or a LigmaSpinButton.
              */
             GtkAdjustment *adj_widget = NULL;
 
             switch (script->args[i].default_value.sfa_adjustment.type)
               {
-              case SF_SLIDER:  /* GimpScaleEntry */
+              case SF_SLIDER:  /* LigmaScaleEntry */
                 {
                   /* Widget knows its range which knows its adjustment. */
-                  /* Unfortunately, gimp_scale_entry_get_range returns GtkWidget*, we must downcast.*/
-                  GtkRange *range = GTK_RANGE (gimp_scale_entry_get_range (GIMP_SCALE_ENTRY (widget)));
+                  /* Unfortunately, ligma_scale_entry_get_range returns GtkWidget*, we must downcast.*/
+                  GtkRange *range = GTK_RANGE (ligma_scale_entry_get_range (LIGMA_SCALE_ENTRY (widget)));
 
                   adj_widget = gtk_range_get_adjustment (range);
                 }
                 break;
 
-              case SF_SPINNER:  /* GimpSpinButton */
+              case SF_SPINNER:  /* LigmaSpinButton */
                 adj_widget = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (widget));
                 break;
               }
@@ -996,27 +996,27 @@ script_fu_reset (SFScript *script)
           break;
 
         case SF_FONT:
-          gimp_font_select_button_set_font (GIMP_FONT_SELECT_BUTTON (widget),
+          ligma_font_select_button_set_font (LIGMA_FONT_SELECT_BUTTON (widget),
                                             value->sfa_font);
           break;
 
         case SF_PALETTE:
-          gimp_palette_select_button_set_palette (GIMP_PALETTE_SELECT_BUTTON (widget),
+          ligma_palette_select_button_set_palette (LIGMA_PALETTE_SELECT_BUTTON (widget),
                                                   value->sfa_palette);
           break;
 
         case SF_PATTERN:
-          gimp_pattern_select_button_set_pattern (GIMP_PATTERN_SELECT_BUTTON (widget),
+          ligma_pattern_select_button_set_pattern (LIGMA_PATTERN_SELECT_BUTTON (widget),
                                                   value->sfa_pattern);
           break;
 
         case SF_GRADIENT:
-          gimp_gradient_select_button_set_gradient (GIMP_GRADIENT_SELECT_BUTTON (widget),
+          ligma_gradient_select_button_set_gradient (LIGMA_GRADIENT_SELECT_BUTTON (widget),
                                                     value->sfa_gradient);
           break;
 
         case SF_BRUSH:
-          gimp_brush_select_button_set_brush (GIMP_BRUSH_SELECT_BUTTON (widget),
+          ligma_brush_select_button_set_brush (LIGMA_BRUSH_SELECT_BUTTON (widget),
                                               value->sfa_brush.name,
                                               value->sfa_brush.opacity,
                                               value->sfa_brush.spacing,
@@ -1029,7 +1029,7 @@ script_fu_reset (SFScript *script)
           break;
 
         case SF_ENUM:
-          gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (widget),
+          ligma_int_combo_box_set_active (LIGMA_INT_COMBO_BOX (widget),
                                          value->sfa_enum.history);
           break;
         }
@@ -1041,13 +1041,13 @@ script_fu_reset (SFScript *script)
  * Functions for window front/back management.
  * These might only be necessary for MacOS.
  *
- * One problem is that the GIMP and the scriptfu extension process are separate "apps".
+ * One problem is that the LIGMA and the scriptfu extension process are separate "apps".
  * Closing a main scriptfu dialog does not terminate the scriptfu extension process,
  * and MacOS does not then activate some other app.
- * On other platforms, the select dialogs are transient to the GIMP app's progress bar,
+ * On other platforms, the select dialogs are transient to the LIGMA app's progress bar,
  * but that doesn't seem to work on MacOS.
  *
- * Also some of the GIMP "select" widgets (for brush, pattern, gradient, font, palette)
+ * Also some of the LIGMA "select" widgets (for brush, pattern, gradient, font, palette)
  * for plugins are independent and tool like:
  * their popup dialog window is not a child of the button which pops it up.
  * The button "owns" the popup but GDK is not aware of that relation,
@@ -1057,9 +1057,9 @@ script_fu_reset (SFScript *script)
  * from the scriptfu extension to the select dialog on closing
  *
  * This might change in the future.
- * 1) in GIMP 3, scriptfu and python plugins should use a common API for a control dialog,
+ * 1) in LIGMA 3, scriptfu and python plugins should use a common API for a control dialog,
  * (script-fu-interface.c is obsoleted?)
- * 2) the code for select dialogs is significantly changed in GIMP 3
+ * 2) the code for select dialogs is significantly changed in LIGMA 3
  * 3) Gtk3 might solve this (now using Gtk2.)
  */
 
@@ -1091,8 +1091,8 @@ script_fu_flush_events (void)
 
 
 /* On MacOS, without calls to this,
- * when user closes GIMP "select" dialogs (child of main dialog)
- * the main scriptfu dialog can be obscured by GIMP main window.
+ * when user closes LIGMA "select" dialogs (child of main dialog)
+ * the main scriptfu dialog can be obscured by LIGMA main window.
  * The main scriptfu dialog must be visible so user can choose the OK button,
  * and it contains a progress bar.
  *

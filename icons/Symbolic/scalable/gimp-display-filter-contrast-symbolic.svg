@@ -15,7 +15,7 @@
    width="16"
    version="1.1"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="gimp-display-filter-contrast.svg">
+   sodipodi:docname="ligma-display-filter-contrast.svg">
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -50,7 +50,7 @@
             <dc:title>Barbara Muraus, Jakub Steiner, Klaus Staedtler</dc:title>
           </cc:Agent>
         </dc:contributor>
-        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for GIMP</dc:description>
+        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for LIGMA</dc:description>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -166,7 +166,7 @@
      style="display:inline"
      id="stock">
     <g
-       id="gimp-display-filter-contrast"
+       id="ligma-display-filter-contrast"
        transform="translate(140.95614,-950.39862)">
       <rect
          style="opacity:0.1;fill:url(#linearGradient7575);fill-opacity:1;stroke:none;stroke-width:1.52272832;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"

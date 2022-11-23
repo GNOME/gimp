@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpitem-exclusive.h
- * Copyright (C) 2011 Michael Natterer <mitch@gimp.org>
+ * ligmaitem-exclusive.h
+ * Copyright (C) 2011 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,32 +18,32 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_ITEM_EXCLUSIVE_H__
-#define __GIMP_ITEM_EXCLUSIVE_H__
+#ifndef __LIGMA_ITEM_EXCLUSIVE_H__
+#define __LIGMA_ITEM_EXCLUSIVE_H__
 
-typedef gboolean        (* GimpItemIsEnabledFunc)    (GimpItem  *item);
-typedef gboolean        (* GimpItemCanSetFunc)       (GimpItem  *item);
-typedef void            (* GimpItemSetFunc)          (GimpItem  *item,
+typedef gboolean        (* LigmaItemIsEnabledFunc)    (LigmaItem  *item);
+typedef gboolean        (* LigmaItemCanSetFunc)       (LigmaItem  *item);
+typedef void            (* LigmaItemSetFunc)          (LigmaItem  *item,
                                                       gboolean   enabled,
                                                       gboolean   push_undo);
-typedef gboolean        (* GimpItemIsPropLocked)     (GimpItem  *item);
-typedef GimpUndo      * (*GimpItemUndoPush)          (GimpImage     *image,
+typedef gboolean        (* LigmaItemIsPropLocked)     (LigmaItem  *item);
+typedef LigmaUndo      * (*LigmaItemUndoPush)          (LigmaImage     *image,
                                                       const gchar   *undo_desc,
-                                                      GimpItem      *item);
+                                                      LigmaItem      *item);
 
-void   gimp_item_toggle_exclusive_visible (GimpItem             *item,
+void   ligma_item_toggle_exclusive_visible (LigmaItem             *item,
                                            gboolean              only_selected,
-                                           GimpContext          *context);
-void   gimp_item_toggle_exclusive         (GimpItem             *item,
-                                           GimpItemIsEnabledFunc is_enabled,
-                                           GimpItemSetFunc       set_prop,
-                                           GimpItemCanSetFunc    can_set,
-                                           GimpItemIsPropLocked  is_prop_locked,
-                                           GimpItemUndoPush      undo_push,
+                                           LigmaContext          *context);
+void   ligma_item_toggle_exclusive         (LigmaItem             *item,
+                                           LigmaItemIsEnabledFunc is_enabled,
+                                           LigmaItemSetFunc       set_prop,
+                                           LigmaItemCanSetFunc    can_set,
+                                           LigmaItemIsPropLocked  is_prop_locked,
+                                           LigmaItemUndoPush      undo_push,
                                            const gchar          *undo_desc,
-                                           GimpUndoType          group_undo_type,
+                                           LigmaUndoType          group_undo_type,
                                            gboolean              only_selected,
-                                           GimpContext          *context);
+                                           LigmaContext          *context);
 
 
-#endif /* __GIMP_ITEM_EXCLUSIVE_H__ */
+#endif /* __LIGMA_ITEM_EXCLUSIVE_H__ */

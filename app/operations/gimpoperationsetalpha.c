@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationsetalpha.c
- * Copyright (C) 2012 Michael Natterer <mitch@gimp.org>
+ * ligmaoperationsetalpha.c
+ * Copyright (C) 2012 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@
 
 #include "operations-types.h"
 
-#include "gimpoperationsetalpha.h"
+#include "ligmaoperationsetalpha.h"
 
 
 enum
@@ -34,17 +34,17 @@ enum
 };
 
 
-static void       gimp_operation_set_alpha_get_property (GObject             *object,
+static void       ligma_operation_set_alpha_get_property (GObject             *object,
                                                          guint                property_id,
                                                          GValue              *value,
                                                          GParamSpec          *pspec);
-static void       gimp_operation_set_alpha_set_property (GObject             *object,
+static void       ligma_operation_set_alpha_set_property (GObject             *object,
                                                          guint                property_id,
                                                          const GValue        *value,
                                                          GParamSpec          *pspec);
 
-static void       gimp_operation_set_alpha_prepare      (GeglOperation       *operation);
-static gboolean   gimp_operation_set_alpha_process      (GeglOperation       *operation,
+static void       ligma_operation_set_alpha_prepare      (GeglOperation       *operation);
+static gboolean   ligma_operation_set_alpha_process      (GeglOperation       *operation,
                                                          void                *in_buf,
                                                          void                *aux_buf,
                                                          void                *out_buf,
@@ -53,31 +53,31 @@ static gboolean   gimp_operation_set_alpha_process      (GeglOperation       *op
                                                          gint                 level);
 
 
-G_DEFINE_TYPE (GimpOperationSetAlpha, gimp_operation_set_alpha,
+G_DEFINE_TYPE (LigmaOperationSetAlpha, ligma_operation_set_alpha,
                GEGL_TYPE_OPERATION_POINT_COMPOSER)
 
-#define parent_class gimp_operation_set_alpha_parent_class
+#define parent_class ligma_operation_set_alpha_parent_class
 
 
 static void
-gimp_operation_set_alpha_class_init (GimpOperationSetAlphaClass *klass)
+ligma_operation_set_alpha_class_init (LigmaOperationSetAlphaClass *klass)
 {
   GObjectClass                    *object_class    = G_OBJECT_CLASS (klass);
   GeglOperationClass              *operation_class = GEGL_OPERATION_CLASS (klass);
   GeglOperationPointComposerClass *point_class     = GEGL_OPERATION_POINT_COMPOSER_CLASS (klass);
 
-  object_class->set_property = gimp_operation_set_alpha_set_property;
-  object_class->get_property = gimp_operation_set_alpha_get_property;
+  object_class->set_property = ligma_operation_set_alpha_set_property;
+  object_class->get_property = ligma_operation_set_alpha_get_property;
 
   gegl_operation_class_set_keys (operation_class,
-                                 "name",        "gimp:set-alpha",
+                                 "name",        "ligma:set-alpha",
                                  "categories",  "color",
                                  "description", "Set a buffer's alpha channel to a value",
                                  NULL);
 
-  operation_class->prepare = gimp_operation_set_alpha_prepare;
+  operation_class->prepare = ligma_operation_set_alpha_prepare;
 
-  point_class->process     = gimp_operation_set_alpha_process;
+  point_class->process     = ligma_operation_set_alpha_process;
 
   g_object_class_install_property (object_class, PROP_VALUE,
                                    g_param_spec_double ("value",
@@ -89,17 +89,17 @@ gimp_operation_set_alpha_class_init (GimpOperationSetAlphaClass *klass)
 }
 
 static void
-gimp_operation_set_alpha_init (GimpOperationSetAlpha *self)
+ligma_operation_set_alpha_init (LigmaOperationSetAlpha *self)
 {
 }
 
 static void
-gimp_operation_set_alpha_get_property (GObject    *object,
+ligma_operation_set_alpha_get_property (GObject    *object,
                                        guint       property_id,
                                        GValue     *value,
                                        GParamSpec *pspec)
 {
-  GimpOperationSetAlpha *self = GIMP_OPERATION_SET_ALPHA (object);
+  LigmaOperationSetAlpha *self = LIGMA_OPERATION_SET_ALPHA (object);
 
   switch (property_id)
     {
@@ -114,12 +114,12 @@ gimp_operation_set_alpha_get_property (GObject    *object,
 }
 
 static void
-gimp_operation_set_alpha_set_property (GObject      *object,
+ligma_operation_set_alpha_set_property (GObject      *object,
                                        guint         property_id,
                                        const GValue *value,
                                        GParamSpec   *pspec)
 {
-  GimpOperationSetAlpha *self = GIMP_OPERATION_SET_ALPHA (object);
+  LigmaOperationSetAlpha *self = LIGMA_OPERATION_SET_ALPHA (object);
 
   switch (property_id)
     {
@@ -134,7 +134,7 @@ gimp_operation_set_alpha_set_property (GObject      *object,
 }
 
 static void
-gimp_operation_set_alpha_prepare (GeglOperation *operation)
+ligma_operation_set_alpha_prepare (GeglOperation *operation)
 {
   const Babl *space = gegl_operation_get_source_space (operation, "input");
   gegl_operation_set_format (operation, "input",  babl_format_with_space ("RGBA float", space));
@@ -143,7 +143,7 @@ gimp_operation_set_alpha_prepare (GeglOperation *operation)
 }
 
 static gboolean
-gimp_operation_set_alpha_process (GeglOperation       *operation,
+ligma_operation_set_alpha_process (GeglOperation       *operation,
                                   void                *in_buf,
                                   void                *aux_buf,
                                   void                *out_buf,
@@ -151,7 +151,7 @@ gimp_operation_set_alpha_process (GeglOperation       *operation,
                                   const GeglRectangle *roi,
                                   gint                 level)
 {
-  GimpOperationSetAlpha *self = GIMP_OPERATION_SET_ALPHA (operation);
+  LigmaOperationSetAlpha *self = LIGMA_OPERATION_SET_ALPHA (operation);
   gfloat                *src  = in_buf;
   gfloat                *aux  = aux_buf;
   gfloat                *dest = out_buf;

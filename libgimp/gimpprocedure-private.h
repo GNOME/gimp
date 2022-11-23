@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpprocedure-private.h
- * Copyright (C) 2019 Michael Natterer <mitch@gimp.org>
+ * ligmaprocedure-private.h
+ * Copyright (C) 2019 Michael Natterer <mitch@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -19,26 +19,26 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_H_INSIDE__) && !defined (GIMP_COMPILATION)
-#error "Only <libgimp/gimp.h> can be included directly."
+#if !defined (__LIGMA_H_INSIDE__) && !defined (LIGMA_COMPILATION)
+#error "Only <libligma/ligma.h> can be included directly."
 #endif
 
-#ifndef __GIMP_PROCEDURE_PRIVATE_H__
-#define __GIMP_PROCEDURE_PRIVATE_H__
+#ifndef __LIGMA_PROCEDURE_PRIVATE_H__
+#define __LIGMA_PROCEDURE_PRIVATE_H__
 
 G_BEGIN_DECLS
 
 
-GimpDisplay * _gimp_procedure_get_display     (GimpProcedure *procedure,
+LigmaDisplay * _ligma_procedure_get_display     (LigmaProcedure *procedure,
                                                gint32         display_id);
-GimpImage   * _gimp_procedure_get_image       (GimpProcedure *procedure,
+LigmaImage   * _ligma_procedure_get_image       (LigmaProcedure *procedure,
                                                gint32         image_id);
-GimpItem    * _gimp_procedure_get_item        (GimpProcedure *procedure,
+LigmaItem    * _ligma_procedure_get_item        (LigmaProcedure *procedure,
                                                gint32         item_id);
 
-void          _gimp_procedure_destroy_proxies (GimpProcedure *procedure);
+void          _ligma_procedure_destroy_proxies (LigmaProcedure *procedure);
 
 
 G_END_DECLS
 
-#endif  /*  __GIMP_PROCEDURE_H__  */
+#endif  /*  __LIGMA_PROCEDURE_H__  */

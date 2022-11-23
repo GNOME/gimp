@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,27 +15,27 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_BRIGHTNESS_CONTRAST_TOOL_H__
-#define __GIMP_BRIGHTNESS_CONTRAST_TOOL_H__
+#ifndef __LIGMA_BRIGHTNESS_CONTRAST_TOOL_H__
+#define __LIGMA_BRIGHTNESS_CONTRAST_TOOL_H__
 
 
-#include "gimpfiltertool.h"
+#include "ligmafiltertool.h"
 
 
-#define GIMP_TYPE_BRIGHTNESS_CONTRAST_TOOL            (gimp_brightness_contrast_tool_get_type ())
-#define GIMP_BRIGHTNESS_CONTRAST_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_BRIGHTNESS_CONTRAST_TOOL, GimpBrightnessContrastTool))
-#define GIMP_BRIGHTNESS_CONTRAST_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_BRIGHTNESS_CONTRAST_TOOL, GimpBrightnessContrastToolClass))
-#define GIMP_IS_BRIGHTNESS_CONTRAST_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_BRIGHTNESS_CONTRAST_TOOL))
-#define GIMP_IS_BRIGHTNESS_CONTRAST_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_BRIGHTNESS_CONTRAST_TOOL))
-#define GIMP_BRIGHTNESS_CONTRAST_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_BRIGHTNESS_CONTRAST_TOOL, GimpBrightnessContrastToolClass))
+#define LIGMA_TYPE_BRIGHTNESS_CONTRAST_TOOL            (ligma_brightness_contrast_tool_get_type ())
+#define LIGMA_BRIGHTNESS_CONTRAST_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_BRIGHTNESS_CONTRAST_TOOL, LigmaBrightnessContrastTool))
+#define LIGMA_BRIGHTNESS_CONTRAST_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_BRIGHTNESS_CONTRAST_TOOL, LigmaBrightnessContrastToolClass))
+#define LIGMA_IS_BRIGHTNESS_CONTRAST_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_BRIGHTNESS_CONTRAST_TOOL))
+#define LIGMA_IS_BRIGHTNESS_CONTRAST_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_BRIGHTNESS_CONTRAST_TOOL))
+#define LIGMA_BRIGHTNESS_CONTRAST_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_BRIGHTNESS_CONTRAST_TOOL, LigmaBrightnessContrastToolClass))
 
 
-typedef struct _GimpBrightnessContrastTool      GimpBrightnessContrastTool;
-typedef struct _GimpBrightnessContrastToolClass GimpBrightnessContrastToolClass;
+typedef struct _LigmaBrightnessContrastTool      LigmaBrightnessContrastTool;
+typedef struct _LigmaBrightnessContrastToolClass LigmaBrightnessContrastToolClass;
 
-struct _GimpBrightnessContrastTool
+struct _LigmaBrightnessContrastTool
 {
-  GimpFilterTool  parent_instance;
+  LigmaFilterTool  parent_instance;
 
   gboolean        dragging;
   gdouble         x, y;
@@ -46,16 +46,16 @@ struct _GimpBrightnessContrastTool
   GtkWidget      *contrast_scale;
 };
 
-struct _GimpBrightnessContrastToolClass
+struct _LigmaBrightnessContrastToolClass
 {
-  GimpFilterToolClass  parent_class;
+  LigmaFilterToolClass  parent_class;
 };
 
 
-void    gimp_brightness_contrast_tool_register (GimpToolRegisterCallback  callback,
+void    ligma_brightness_contrast_tool_register (LigmaToolRegisterCallback  callback,
                                                 gpointer                  data);
 
-GType   gimp_brightness_contrast_tool_get_type (void) G_GNUC_CONST;
+GType   ligma_brightness_contrast_tool_get_type (void) G_GNUC_CONST;
 
 
-#endif  /*  __GIMP_BRIGHTNESS_CONTRAST_TOOL_H__  */
+#endif  /*  __LIGMA_BRIGHTNESS_CONTRAST_TOOL_H__  */

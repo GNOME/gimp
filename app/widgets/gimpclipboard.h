@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,36 +15,36 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CLIPBOARD_H__
-#define __GIMP_CLIPBOARD_H__
+#ifndef __LIGMA_CLIPBOARD_H__
+#define __LIGMA_CLIPBOARD_H__
 
 
-void         gimp_clipboard_init       (Gimp        *gimp);
-void         gimp_clipboard_exit       (Gimp        *gimp);
+void         ligma_clipboard_init       (Ligma        *ligma);
+void         ligma_clipboard_exit       (Ligma        *ligma);
 
-gboolean     gimp_clipboard_has_image  (Gimp        *gimp);
-gboolean     gimp_clipboard_has_buffer (Gimp        *gimp);
-gboolean     gimp_clipboard_has_svg    (Gimp        *gimp);
-gboolean     gimp_clipboard_has_curve  (Gimp        *gimp);
+gboolean     ligma_clipboard_has_image  (Ligma        *ligma);
+gboolean     ligma_clipboard_has_buffer (Ligma        *ligma);
+gboolean     ligma_clipboard_has_svg    (Ligma        *ligma);
+gboolean     ligma_clipboard_has_curve  (Ligma        *ligma);
 
-GimpObject * gimp_clipboard_get_object (Gimp        *gimp);
+LigmaObject * ligma_clipboard_get_object (Ligma        *ligma);
 
-GimpImage  * gimp_clipboard_get_image  (Gimp        *gimp);
-GimpBuffer * gimp_clipboard_get_buffer (Gimp        *gimp);
-gchar      * gimp_clipboard_get_svg    (Gimp        *gimp,
+LigmaImage  * ligma_clipboard_get_image  (Ligma        *ligma);
+LigmaBuffer * ligma_clipboard_get_buffer (Ligma        *ligma);
+gchar      * ligma_clipboard_get_svg    (Ligma        *ligma,
                                         gsize       *svg_length);
-GimpCurve  * gimp_clipboard_get_curve  (Gimp        *gimp);
+LigmaCurve  * ligma_clipboard_get_curve  (Ligma        *ligma);
 
-void         gimp_clipboard_set_image  (Gimp        *gimp,
-                                        GimpImage   *image);
-void         gimp_clipboard_set_buffer (Gimp        *gimp,
-                                        GimpBuffer  *buffer);
-void         gimp_clipboard_set_svg    (Gimp        *gimp,
+void         ligma_clipboard_set_image  (Ligma        *ligma,
+                                        LigmaImage   *image);
+void         ligma_clipboard_set_buffer (Ligma        *ligma,
+                                        LigmaBuffer  *buffer);
+void         ligma_clipboard_set_svg    (Ligma        *ligma,
                                         const gchar *svg);
-void         gimp_clipboard_set_text   (Gimp        *gimp,
+void         ligma_clipboard_set_text   (Ligma        *ligma,
                                         const gchar *text);
-void         gimp_clipboard_set_curve  (Gimp        *gimp,
-                                        GimpCurve   *curve);
+void         ligma_clipboard_set_curve  (Ligma        *ligma,
+                                        LigmaCurve   *curve);
 
 
-#endif /* __GIMP_CLIPBOARD_H__ */
+#endif /* __LIGMA_CLIPBOARD_H__ */

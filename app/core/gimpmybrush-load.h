@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpmybrush-load.h
+ * ligmamybrush-load.h
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,17 +17,17 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_MYBRUSH_LOAD_H__
-#define __GIMP_MYBRUSH_LOAD_H__
+#ifndef __LIGMA_MYBRUSH_LOAD_H__
+#define __LIGMA_MYBRUSH_LOAD_H__
 
 
-#define GIMP_MYBRUSH_FILE_EXTENSION ".myb"
+#define LIGMA_MYBRUSH_FILE_EXTENSION ".myb"
 
 
-GList * gimp_mybrush_load (GimpContext   *context,
+GList * ligma_mybrush_load (LigmaContext   *context,
                            GFile         *file,
                            GInputStream  *input,
                            GError       **error);
 
 
-#endif /* __GIMP_MYBRUSH_LOAD_H__ */
+#endif /* __LIGMA_MYBRUSH_LOAD_H__ */

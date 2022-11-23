@@ -12,6 +12,6 @@ foreach brushes_type : brushes_types
   subdir(brushes_type)
   install_data(
     brushes,
-    install_dir: gimpdatadir / 'brushes' / brushes_type,
+    install_dir: ligmadatadir / 'brushes' / brushes_type,
   )
 endforeach

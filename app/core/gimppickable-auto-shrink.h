@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,19 +15,19 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PICKABLE_AUTO_SHRINK_H__
-#define __GIMP_PICKABLE_AUTO_SHRINK_H__
+#ifndef __LIGMA_PICKABLE_AUTO_SHRINK_H__
+#define __LIGMA_PICKABLE_AUTO_SHRINK_H__
 
 
 typedef enum
 {
-  GIMP_AUTO_SHRINK_SHRINK,
-  GIMP_AUTO_SHRINK_EMPTY,
-  GIMP_AUTO_SHRINK_UNSHRINKABLE
-} GimpAutoShrink;
+  LIGMA_AUTO_SHRINK_SHRINK,
+  LIGMA_AUTO_SHRINK_EMPTY,
+  LIGMA_AUTO_SHRINK_UNSHRINKABLE
+} LigmaAutoShrink;
 
 
-GimpAutoShrink   gimp_pickable_auto_shrink (GimpPickable *pickable,
+LigmaAutoShrink   ligma_pickable_auto_shrink (LigmaPickable *pickable,
                                             gint         x,
                                             gint         y,
                                             gint         width,
@@ -38,4 +38,4 @@ GimpAutoShrink   gimp_pickable_auto_shrink (GimpPickable *pickable,
                                             gint        *shrunk_height);
 
 
-#endif  /* __GIMP_PICKABLE_AUTO_SHRINK_H__ */
+#endif  /* __LIGMA_PICKABLE_AUTO_SHRINK_H__ */

@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * This is a plug-in for GIMP.
+ * This is a plug-in for LIGMA.
  *
  * Copyright (C) 1999 Andy Thomas  alt@picnic.demon.co.uk
  *
@@ -27,15 +27,15 @@
 
 #include <gtk/gtk.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 #define PLUG_IN_PROC    "plug-in-plug-in-details"
 #define PLUG_IN_BINARY  "plugin-browser"
-#define PLUG_IN_ROLE    "gimp-plugin-browser"
+#define PLUG_IN_ROLE    "ligma-plugin-browser"
 #define DBL_LIST_WIDTH  250
 #define DBL_WIDTH       (DBL_LIST_WIDTH + 400)
 #define DBL_HEIGHT      250
@@ -88,12 +88,12 @@ typedef struct _BrowserClass BrowserClass;
 
 struct _Browser
 {
-  GimpPlugIn parent_instance;
+  LigmaPlugIn parent_instance;
 };
 
 struct _BrowserClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -105,12 +105,12 @@ struct _BrowserClass
 
 GType                   browser_get_type         (void) G_GNUC_CONST;
 
-static GList          * browser_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * browser_create_procedure (GimpPlugIn           *plug_in,
+static GList          * browser_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * browser_create_procedure (LigmaPlugIn           *plug_in,
                                                   const gchar          *name);
 
-static GimpValueArray * browser_run              (GimpProcedure        *procedure,
-                                                  const GimpValueArray *args,
+static LigmaValueArray * browser_run              (LigmaProcedure        *procedure,
+                                                  const LigmaValueArray *args,
                                                   gpointer              run_data);
 
 static GtkWidget * browser_dialog_new             (void);
@@ -127,16 +127,16 @@ static gboolean    find_existing_mpath            (GtkTreeModel     *model,
                                                    GtkTreeIter      *return_iter);
 
 
-G_DEFINE_TYPE (Browser, browser, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Browser, browser, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (BROWSER_TYPE)
+LIGMA_MAIN (BROWSER_TYPE)
 DEFINE_STD_SET_I18N
 
 
 static void
 browser_class_init (BrowserClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = browser_query_procedures;
   plug_in_class->create_procedure = browser_create_procedure;
@@ -149,28 +149,28 @@ browser_init (Browser *browser)
 }
 
 static GList *
-browser_query_procedures (GimpPlugIn *plug_in)
+browser_query_procedures (LigmaPlugIn *plug_in)
 {
   return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
 }
 
-static GimpProcedure *
-browser_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+browser_create_procedure (LigmaPlugIn  *plug_in,
                           const gchar *procedure_name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (procedure_name, PLUG_IN_PROC))
     {
-      procedure = gimp_procedure_new (plug_in, procedure_name,
-                                      GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_procedure_new (plug_in, procedure_name,
+                                      LIGMA_PDB_PROC_TYPE_PLUGIN,
                                       browser_run, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure, _("_Plug-In Browser"));
-      gimp_procedure_set_icon_name (procedure, GIMP_ICON_PLUGIN);
-      gimp_procedure_add_menu_path (procedure, "<Image>/Help/Programming");
+      ligma_procedure_set_menu_label (procedure, _("_Plug-In Browser"));
+      ligma_procedure_set_icon_name (procedure, LIGMA_ICON_PLUGIN);
+      ligma_procedure_add_menu_path (procedure, "<Image>/Help/Programming");
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         _("Display information about plug-ins"),
                                         "Allows one to browse the plug-in "
                                         "menus system. You can search for "
@@ -181,31 +181,31 @@ browser_create_procedure (GimpPlugIn  *plug_in,
                                         "new plug-ins have installed "
                                         "themselves in the menus.",
                                         PLUG_IN_PROC);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Andy Thomas",
                                       "Andy Thomas",
                                       "1999");
 
-      GIMP_PROC_ARG_ENUM (procedure, "run-mode",
+      LIGMA_PROC_ARG_ENUM (procedure, "run-mode",
                           "Run mode",
                           "The run mode",
-                          GIMP_TYPE_RUN_MODE,
-                          GIMP_RUN_INTERACTIVE,
+                          LIGMA_TYPE_RUN_MODE,
+                          LIGMA_RUN_INTERACTIVE,
                           G_PARAM_READWRITE);
     }
 
   return procedure;
 }
 
-static GimpValueArray *
-browser_run (GimpProcedure        *procedure,
-             const GimpValueArray *args,
+static LigmaValueArray *
+browser_run (LigmaProcedure        *procedure,
+             const LigmaValueArray *args,
              gpointer              run_data)
 {
   browser_dialog_new ();
   gtk_main ();
 
-  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
+  return ligma_procedure_new_return_values (procedure, LIGMA_PDB_SUCCESS, NULL);
 }
 
 static gboolean
@@ -356,29 +356,29 @@ insert_into_tree_view (PluginBrowser *browser,
 }
 
 static void
-browser_search (GimpBrowser   *gimp_browser,
+browser_search (LigmaBrowser   *ligma_browser,
                 const gchar   *search_text,
                 gint           search_type,
                 PluginBrowser *browser)
 {
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   const gchar   **procedure_strs;
   gint            num_plugins = 0;
   gchar          *str;
   GtkListStore   *list_store;
   GtkTreeStore   *tree_store;
 
-  gimp_browser_show_message (GIMP_BROWSER (browser->browser),
+  ligma_browser_show_message (LIGMA_BROWSER (browser->browser),
                              _("Searching by name"));
 
-  return_vals = gimp_pdb_run_procedure (gimp_get_pdb (),
-                                        "gimp-plug-ins-query",
+  return_vals = ligma_pdb_run_procedure (ligma_get_pdb (),
+                                        "ligma-plug-ins-query",
                                         G_TYPE_STRING, search_text,
                                         G_TYPE_NONE);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
     {
-      procedure_strs = GIMP_VALUES_GET_STRV (return_vals, 1);
+      procedure_strs = LIGMA_VALUES_GET_STRV (return_vals, 1);
       num_plugins = g_strv_length ((gchar **) procedure_strs);
     }
 
@@ -403,7 +403,7 @@ browser_search (GimpBrowser   *gimp_browser,
         }
     }
 
-  gimp_browser_set_search_summary (gimp_browser, str);
+  ligma_browser_set_search_summary (ligma_browser, str);
   g_free (str);
 
   list_store = GTK_LIST_STORE (gtk_tree_view_get_model (browser->list_view));
@@ -421,13 +421,13 @@ browser_search (GimpBrowser   *gimp_browser,
       const gint        *time_ints;
       gint               i;
 
-      accel_strs     = GIMP_VALUES_GET_STRV (return_vals, 2);
-      prog_strs      = GIMP_VALUES_GET_STRV (return_vals, 3);
-      time_ints      = GIMP_VALUES_GET_INT32_ARRAY  (return_vals, 5);
+      accel_strs     = LIGMA_VALUES_GET_STRV (return_vals, 2);
+      prog_strs      = LIGMA_VALUES_GET_STRV (return_vals, 3);
+      time_ints      = LIGMA_VALUES_GET_INT32_ARRAY  (return_vals, 5);
 
       for (i = 0; i < num_plugins; i++)
         {
-          GimpProcedure *procedure;
+          LigmaProcedure *procedure;
           const gchar   *types;
           PInfo         *pinfo;
           gchar         *menu_label;
@@ -439,12 +439,12 @@ browser_search (GimpBrowser   *gimp_browser,
           time_t         tx;
           gint           ret;
 
-          procedure = gimp_pdb_lookup_procedure (gimp_get_pdb (),
+          procedure = ligma_pdb_lookup_procedure (ligma_get_pdb (),
                                                  procedure_strs[i]);
 
-          types      = gimp_procedure_get_image_types (procedure);
-          menu_label = g_strdup (gimp_procedure_get_menu_label (procedure));
-          menu_paths = gimp_procedure_get_menu_paths (procedure);
+          types      = ligma_procedure_get_image_types (procedure);
+          menu_label = g_strdup (ligma_procedure_get_menu_label (procedure));
+          menu_paths = ligma_procedure_get_menu_paths (procedure);
 
           menu_path = menu_paths->data;
 
@@ -453,7 +453,7 @@ browser_search (GimpBrowser   *gimp_browser,
           if (tmp && tmp == (menu_label + strlen (menu_label) - 3))
             *tmp = '\0';
 
-          tmp = gimp_strip_uline (menu_label);
+          tmp = ligma_strip_uline (menu_label);
           g_free (menu_label);
           menu_label = tmp;
 
@@ -526,11 +526,11 @@ browser_search (GimpBrowser   *gimp_browser,
     }
   else
     {
-      gimp_browser_show_message (GIMP_BROWSER (browser->browser),
+      ligma_browser_show_message (LIGMA_BROWSER (browser->browser),
                                  _("No matches"));
     }
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 }
 
 static GtkWidget *
@@ -549,13 +549,13 @@ browser_dialog_new (void)
   GtkTreeSelection  *selection;
   GtkTreeIter        iter;
 
-  gimp_ui_init (PLUG_IN_BINARY);
+  ligma_ui_init (PLUG_IN_BINARY);
 
   browser = g_new0 (PluginBrowser, 1);
 
-  browser->dialog = gimp_dialog_new (_("Plug-in Browser"), PLUG_IN_ROLE,
+  browser->dialog = ligma_dialog_new (_("Plug-in Browser"), PLUG_IN_ROLE,
                                      NULL, 0,
-                                     gimp_standard_help_func, PLUG_IN_PROC,
+                                     ligma_standard_help_func, PLUG_IN_PROC,
 
                                      _("_Close"), GTK_RESPONSE_CLOSE,
 
@@ -565,7 +565,7 @@ browser_dialog_new (void)
                     G_CALLBACK (browser_dialog_response),
                     browser);
 
-  browser->browser = gimp_browser_new ();
+  browser->browser = ligma_browser_new ();
   gtk_container_set_border_width (GTK_CONTAINER (browser->browser), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (browser->dialog))),
                       browser->browser, TRUE, TRUE, 0);
@@ -578,7 +578,7 @@ browser_dialog_new (void)
   /* left = notebook */
 
   notebook = gtk_notebook_new ();
-  gtk_box_pack_start (GTK_BOX (gimp_browser_get_left_vbox (GIMP_BROWSER (browser->browser))),
+  gtk_box_pack_start (GTK_BOX (ligma_browser_get_left_vbox (LIGMA_BROWSER (browser->browser))),
                       notebook, TRUE, TRUE, 0);
 
   /* list : list in a scrolled_win */
@@ -716,13 +716,13 @@ browser_dialog_new (void)
   gtk_widget_show (scrolled_window);
   gtk_widget_show (notebook);
 
-  parent = gtk_widget_get_parent (gimp_browser_get_right_vbox (GIMP_BROWSER (browser->browser)));
+  parent = gtk_widget_get_parent (ligma_browser_get_right_vbox (LIGMA_BROWSER (browser->browser)));
   parent = gtk_widget_get_parent (parent);
 
   gtk_widget_set_size_request (parent, DBL_WIDTH - DBL_LIST_WIDTH, -1);
 
   /* now build the list */
-  browser_search (GIMP_BROWSER (browser->browser), "", 0, browser);
+  browser_search (LIGMA_BROWSER (browser->browser), "", 0, browser);
 
   gtk_widget_show (browser->dialog);
 
@@ -794,8 +794,8 @@ browser_list_selection_changed (GtkTreeSelection *selection,
 
   g_free (mpath);
 
-  gimp_browser_set_widget (GIMP_BROWSER (browser->browser),
-                           gimp_proc_view_new (pinfo->procedure));
+  ligma_browser_set_widget (LIGMA_BROWSER (browser->browser),
+                           ligma_proc_view_new (pinfo->procedure));
 }
 
 static void
@@ -871,6 +871,6 @@ browser_tree_selection_changed (GtkTreeSelection *selection,
       g_warning ("Failed to find node in list");
     }
 
-  gimp_browser_set_widget (GIMP_BROWSER (browser->browser),
-                           gimp_proc_view_new (pinfo->procedure));
+  ligma_browser_set_widget (LIGMA_BROWSER (browser->browser),
+                           ligma_proc_view_new (pinfo->procedure));
 }

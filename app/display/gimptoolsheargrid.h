@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimptoolsheargrid.h
- * Copyright (C) 2017 Michael Natterer <mitch@gimp.org>
+ * ligmatoolsheargrid.h
+ * Copyright (C) 2017 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,48 +18,48 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TOOL_SHEAR_GRID_H__
-#define __GIMP_TOOL_SHEAR_GRID_H__
+#ifndef __LIGMA_TOOL_SHEAR_GRID_H__
+#define __LIGMA_TOOL_SHEAR_GRID_H__
 
 
-#include "gimptooltransformgrid.h"
+#include "ligmatooltransformgrid.h"
 
 
-#define GIMP_TYPE_TOOL_SHEAR_GRID            (gimp_tool_shear_grid_get_type ())
-#define GIMP_TOOL_SHEAR_GRID(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TOOL_SHEAR_GRID, GimpToolShearGrid))
-#define GIMP_TOOL_SHEAR_GRID_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TOOL_SHEAR_GRID, GimpToolShearGridClass))
-#define GIMP_IS_TOOL_SHEAR_GRID(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_TOOL_SHEAR_GRID))
-#define GIMP_IS_TOOL_SHEAR_GRID_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_TOOL_SHEAR_GRID))
-#define GIMP_TOOL_SHEAR_GRID_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_TOOL_SHEAR_GRID, GimpToolShearGridClass))
+#define LIGMA_TYPE_TOOL_SHEAR_GRID            (ligma_tool_shear_grid_get_type ())
+#define LIGMA_TOOL_SHEAR_GRID(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_TOOL_SHEAR_GRID, LigmaToolShearGrid))
+#define LIGMA_TOOL_SHEAR_GRID_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_TOOL_SHEAR_GRID, LigmaToolShearGridClass))
+#define LIGMA_IS_TOOL_SHEAR_GRID(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_TOOL_SHEAR_GRID))
+#define LIGMA_IS_TOOL_SHEAR_GRID_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_TOOL_SHEAR_GRID))
+#define LIGMA_TOOL_SHEAR_GRID_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_TOOL_SHEAR_GRID, LigmaToolShearGridClass))
 
 
-typedef struct _GimpToolShearGrid        GimpToolShearGrid;
-typedef struct _GimpToolShearGridPrivate GimpToolShearGridPrivate;
-typedef struct _GimpToolShearGridClass   GimpToolShearGridClass;
+typedef struct _LigmaToolShearGrid        LigmaToolShearGrid;
+typedef struct _LigmaToolShearGridPrivate LigmaToolShearGridPrivate;
+typedef struct _LigmaToolShearGridClass   LigmaToolShearGridClass;
 
-struct _GimpToolShearGrid
+struct _LigmaToolShearGrid
 {
-  GimpToolTransformGrid     parent_instance;
+  LigmaToolTransformGrid     parent_instance;
 
-  GimpToolShearGridPrivate *private;
+  LigmaToolShearGridPrivate *private;
 };
 
-struct _GimpToolShearGridClass
+struct _LigmaToolShearGridClass
 {
-  GimpToolTransformGridClass  parent_class;
+  LigmaToolTransformGridClass  parent_class;
 };
 
 
-GType            gimp_tool_shear_grid_get_type (void) G_GNUC_CONST;
+GType            ligma_tool_shear_grid_get_type (void) G_GNUC_CONST;
 
-GimpToolWidget * gimp_tool_shear_grid_new      (GimpDisplayShell    *shell,
+LigmaToolWidget * ligma_tool_shear_grid_new      (LigmaDisplayShell    *shell,
                                                 gdouble              x1,
                                                 gdouble              y1,
                                                 gdouble              x2,
                                                 gdouble              y2,
-                                                GimpOrientationType  orientation,
+                                                LigmaOrientationType  orientation,
                                                 gdouble              shear_x,
                                                 gdouble              shear_y);
 
 
-#endif /* __GIMP_TOOL_SHEAR_GRID_H__ */
+#endif /* __LIGMA_TOOL_SHEAR_GRID_H__ */

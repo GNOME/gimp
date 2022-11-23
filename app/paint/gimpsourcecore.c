@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,27 +20,27 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
 
 #include "paint-types.h"
 
-#include "gegl/gimp-gegl-utils.h"
+#include "gegl/ligma-gegl-utils.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontainer.h"
-#include "core/gimpdrawable.h"
-#include "core/gimpdynamics.h"
-#include "core/gimperror.h"
-#include "core/gimpimage.h"
-#include "core/gimpimage-new.h"
-#include "core/gimppickable.h"
-#include "core/gimpsymmetry.h"
+#include "core/ligma.h"
+#include "core/ligmacontainer.h"
+#include "core/ligmadrawable.h"
+#include "core/ligmadynamics.h"
+#include "core/ligmaerror.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaimage-new.h"
+#include "core/ligmapickable.h"
+#include "core/ligmasymmetry.h"
 
-#include "gimpsourcecore.h"
-#include "gimpsourceoptions.h"
+#include "ligmasourcecore.h"
+#include "ligmasourceoptions.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -49,34 +49,34 @@ enum
 };
 
 
-static gboolean gimp_source_core_start           (GimpPaintCore     *paint_core,
+static gboolean ligma_source_core_start           (LigmaPaintCore     *paint_core,
                                                   GList             *drawables,
-                                                  GimpPaintOptions  *paint_options,
-                                                  const GimpCoords  *coords,
+                                                  LigmaPaintOptions  *paint_options,
+                                                  const LigmaCoords  *coords,
                                                   GError           **error);
-static void     gimp_source_core_paint           (GimpPaintCore     *paint_core,
+static void     ligma_source_core_paint           (LigmaPaintCore     *paint_core,
                                                   GList             *drawables,
-                                                  GimpPaintOptions  *paint_options,
-                                                  GimpSymmetry      *sym,
-                                                  GimpPaintState     paint_state,
+                                                  LigmaPaintOptions  *paint_options,
+                                                  LigmaSymmetry      *sym,
+                                                  LigmaPaintState     paint_state,
                                                   guint32            time);
 
 #if 0
-static void     gimp_source_core_motion          (GimpSourceCore    *source_core,
-                                                  GimpDrawable      *drawable,
-                                                  GimpPaintOptions  *paint_options,
+static void     ligma_source_core_motion          (LigmaSourceCore    *source_core,
+                                                  LigmaDrawable      *drawable,
+                                                  LigmaPaintOptions  *paint_options,
                                                   gboolean           self_drawable,
-                                                  GimpSymmetry      *sym);
+                                                  LigmaSymmetry      *sym);
 #endif
 
-static gboolean gimp_source_core_real_use_source (GimpSourceCore    *source_core,
-                                                  GimpSourceOptions *options);
+static gboolean ligma_source_core_real_use_source (LigmaSourceCore    *source_core,
+                                                  LigmaSourceOptions *options);
 static GeglBuffer *
-                gimp_source_core_real_get_source (GimpSourceCore    *source_core,
-                                                  GimpDrawable      *drawable,
-                                                  GimpPaintOptions  *paint_options,
+                ligma_source_core_real_get_source (LigmaSourceCore    *source_core,
+                                                  LigmaDrawable      *drawable,
+                                                  LigmaPaintOptions  *paint_options,
                                                   gboolean           self_drawable,
-                                                  GimpPickable      *src_pickable,
+                                                  LigmaPickable      *src_pickable,
                                                   gint               src_offset_x,
                                                   gint               src_offset_y,
                                                   GeglBuffer        *paint_buffer,
@@ -89,29 +89,29 @@ static GeglBuffer *
                                                   GeglRectangle     *src_rect);
 
 
-G_DEFINE_TYPE (GimpSourceCore, gimp_source_core, GIMP_TYPE_BRUSH_CORE)
+G_DEFINE_TYPE (LigmaSourceCore, ligma_source_core, LIGMA_TYPE_BRUSH_CORE)
 
-#define parent_class gimp_source_core_parent_class
+#define parent_class ligma_source_core_parent_class
 
 
 static void
-gimp_source_core_class_init (GimpSourceCoreClass *klass)
+ligma_source_core_class_init (LigmaSourceCoreClass *klass)
 {
-  GimpPaintCoreClass *paint_core_class = GIMP_PAINT_CORE_CLASS (klass);
-  GimpBrushCoreClass *brush_core_class = GIMP_BRUSH_CORE_CLASS (klass);
+  LigmaPaintCoreClass *paint_core_class = LIGMA_PAINT_CORE_CLASS (klass);
+  LigmaBrushCoreClass *brush_core_class = LIGMA_BRUSH_CORE_CLASS (klass);
 
-  paint_core_class->start                  = gimp_source_core_start;
-  paint_core_class->paint                  = gimp_source_core_paint;
+  paint_core_class->start                  = ligma_source_core_start;
+  paint_core_class->paint                  = ligma_source_core_paint;
 
   brush_core_class->handles_changing_brush = TRUE;
 
-  klass->use_source                        = gimp_source_core_real_use_source;
-  klass->get_source                        = gimp_source_core_real_get_source;
+  klass->use_source                        = ligma_source_core_real_use_source;
+  klass->get_source                        = ligma_source_core_real_get_source;
   klass->motion                            = NULL;
 }
 
 static void
-gimp_source_core_init (GimpSourceCore *source_core)
+ligma_source_core_init (LigmaSourceCore *source_core)
 {
   source_core->set_source    = FALSE;
 
@@ -124,16 +124,16 @@ gimp_source_core_init (GimpSourceCore *source_core)
 }
 
 static gboolean
-gimp_source_core_start (GimpPaintCore     *paint_core,
+ligma_source_core_start (LigmaPaintCore     *paint_core,
                         GList             *drawables,
-                        GimpPaintOptions  *paint_options,
-                        const GimpCoords  *coords,
+                        LigmaPaintOptions  *paint_options,
+                        const LigmaCoords  *coords,
                         GError           **error)
 {
-  GimpSourceCore    *source_core = GIMP_SOURCE_CORE (paint_core);
-  GimpSourceOptions *options     = GIMP_SOURCE_OPTIONS (paint_options);
+  LigmaSourceCore    *source_core = LIGMA_SOURCE_CORE (paint_core);
+  LigmaSourceOptions *options     = LIGMA_SOURCE_OPTIONS (paint_options);
 
-  if (! GIMP_PAINT_CORE_CLASS (parent_class)->start (paint_core, drawables,
+  if (! LIGMA_PAINT_CORE_CLASS (parent_class)->start (paint_core, drawables,
                                                      paint_options, coords,
                                                      error))
     {
@@ -143,26 +143,26 @@ gimp_source_core_start (GimpPaintCore     *paint_core,
   paint_core->use_saved_proj = FALSE;
 
   if (! source_core->set_source &&
-      gimp_source_core_use_source (source_core, options))
+      ligma_source_core_use_source (source_core, options))
     {
       if (! options->src_drawables)
         {
-          g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+          g_set_error_literal (error, LIGMA_ERROR, LIGMA_FAILED,
                                _("Set a source image first."));
           return FALSE;
         }
-      else if (options->align_mode == GIMP_SOURCE_ALIGN_REGISTERED &&
+      else if (options->align_mode == LIGMA_SOURCE_ALIGN_REGISTERED &&
                g_list_length (drawables) > 1)
         {
-          g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+          g_set_error_literal (error, LIGMA_ERROR, LIGMA_FAILED,
                                _("\"Registered\" alignment cannot paint on multiple drawables."));
           return FALSE;
         }
 
       if (options->sample_merged         &&
           g_list_length (drawables) == 1 &&
-          gimp_item_get_image (GIMP_ITEM (options->src_drawables->data)) ==
-          gimp_item_get_image (GIMP_ITEM (drawables->data)))
+          ligma_item_get_image (LIGMA_ITEM (options->src_drawables->data)) ==
+          ligma_item_get_image (LIGMA_ITEM (drawables->data)))
         {
           paint_core->use_saved_proj = TRUE;
         }
@@ -172,23 +172,23 @@ gimp_source_core_start (GimpPaintCore     *paint_core,
 }
 
 static void
-gimp_source_core_paint (GimpPaintCore    *paint_core,
+ligma_source_core_paint (LigmaPaintCore    *paint_core,
                         GList            *drawables,
-                        GimpPaintOptions *paint_options,
-                        GimpSymmetry     *sym,
-                        GimpPaintState    paint_state,
+                        LigmaPaintOptions *paint_options,
+                        LigmaSymmetry     *sym,
+                        LigmaPaintState    paint_state,
                         guint32           time)
 {
-  GimpSourceCore    *source_core = GIMP_SOURCE_CORE (paint_core);
-  GimpSourceOptions *options     = GIMP_SOURCE_OPTIONS (paint_options);
-  const GimpCoords  *coords;
+  LigmaSourceCore    *source_core = LIGMA_SOURCE_CORE (paint_core);
+  LigmaSourceOptions *options     = LIGMA_SOURCE_OPTIONS (paint_options);
+  const LigmaCoords  *coords;
 
   /* The source is based on the original stroke */
-  coords = gimp_symmetry_get_origin (sym);
+  coords = ligma_symmetry_get_origin (sym);
 
   switch (paint_state)
     {
-    case GIMP_PAINT_STATE_INIT:
+    case LIGMA_PAINT_STATE_INIT:
       if (source_core->set_source)
         {
           g_object_set (options,
@@ -201,7 +201,7 @@ gimp_source_core_paint (GimpPaintCore    *paint_core,
 
           source_core->first_stroke = TRUE;
         }
-      else if (options->align_mode == GIMP_SOURCE_ALIGN_NO)
+      else if (options->align_mode == LIGMA_SOURCE_ALIGN_NO)
         {
           g_object_get (options,
                         "src-x", &source_core->orig_src_x,
@@ -212,7 +212,7 @@ gimp_source_core_paint (GimpPaintCore    *paint_core,
         }
       break;
 
-    case GIMP_PAINT_STATE_MOTION:
+    case LIGMA_PAINT_STATE_MOTION:
       if (source_core->set_source)
         {
           /*  If the control key is down, move the src target and return */
@@ -243,12 +243,12 @@ gimp_source_core_paint (GimpPaintCore    *paint_core,
                         "src-y", &src_y,
                         NULL);
 
-          if (options->align_mode == GIMP_SOURCE_ALIGN_REGISTERED)
+          if (options->align_mode == LIGMA_SOURCE_ALIGN_REGISTERED)
             {
               source_core->offset_x = 0;
               source_core->offset_y = 0;
             }
-          else if (options->align_mode == GIMP_SOURCE_ALIGN_FIXED)
+          else if (options->align_mode == LIGMA_SOURCE_ALIGN_FIXED)
             {
               source_core->offset_x = src_x - dest_x;
               source_core->offset_y = src_y - dest_y;
@@ -268,15 +268,15 @@ gimp_source_core_paint (GimpPaintCore    *paint_core,
 
 
           for (GList *iter = drawables; iter; iter = iter->next)
-            gimp_source_core_motion (source_core, iter->data,
+            ligma_source_core_motion (source_core, iter->data,
                                      paint_options,
                                      (g_list_length (drawables) > 1),
                                      sym);
         }
       break;
 
-    case GIMP_PAINT_STATE_FINISH:
-      if (options->align_mode == GIMP_SOURCE_ALIGN_NO &&
+    case LIGMA_PAINT_STATE_FINISH:
+      if (options->align_mode == LIGMA_SOURCE_ALIGN_NO &&
           ! source_core->first_stroke)
         {
           g_object_set (options,
@@ -293,19 +293,19 @@ gimp_source_core_paint (GimpPaintCore    *paint_core,
 }
 
 void
-gimp_source_core_motion (GimpSourceCore   *source_core,
-                         GimpDrawable     *drawable,
-                         GimpPaintOptions *paint_options,
+ligma_source_core_motion (LigmaSourceCore   *source_core,
+                         LigmaDrawable     *drawable,
+                         LigmaPaintOptions *paint_options,
                          gboolean          self_drawable,
-                         GimpSymmetry     *sym)
+                         LigmaSymmetry     *sym)
 
 {
-  GimpPaintCore     *paint_core   = GIMP_PAINT_CORE (source_core);
-  GimpBrushCore     *brush_core   = GIMP_BRUSH_CORE (source_core);
-  GimpSourceOptions *options      = GIMP_SOURCE_OPTIONS (paint_options);
-  GimpDynamics      *dynamics     = GIMP_BRUSH_CORE (paint_core)->dynamics;
-  GimpImage         *image        = gimp_item_get_image (GIMP_ITEM (drawable));
-  GimpPickable      *src_pickable = NULL;
+  LigmaPaintCore     *paint_core   = LIGMA_PAINT_CORE (source_core);
+  LigmaBrushCore     *brush_core   = LIGMA_BRUSH_CORE (source_core);
+  LigmaSourceOptions *options      = LIGMA_SOURCE_OPTIONS (paint_options);
+  LigmaDynamics      *dynamics     = LIGMA_BRUSH_CORE (paint_core)->dynamics;
+  LigmaImage         *image        = ligma_item_get_image (LIGMA_ITEM (drawable));
+  LigmaPickable      *src_pickable = NULL;
   GeglBuffer        *src_buffer   = NULL;
   GeglRectangle      src_rect;
   gint               base_src_offset_x;
@@ -321,10 +321,10 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
   gint               paint_area_height;
   gdouble            fade_point;
   gdouble            opacity;
-  GimpLayerMode      paint_mode;
+  LigmaLayerMode      paint_mode;
   GeglNode          *op;
-  GimpCoords         origin;
-  GimpCoords         coords;
+  LigmaCoords         origin;
+  LigmaCoords         coords;
   gint               src_off_x = 0;
   gint               src_off_y = 0;
   gint               src_x, src_y;
@@ -332,44 +332,44 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
   gint               n_strokes;
   gint               i;
 
-  fade_point = gimp_paint_options_get_fade (paint_options, image,
+  fade_point = ligma_paint_options_get_fade (paint_options, image,
                                             paint_core->pixel_dist);
 
-  origin = *(gimp_symmetry_get_origin (sym));
+  origin = *(ligma_symmetry_get_origin (sym));
 
   /* Some settings are based on the original stroke. */
-  opacity = gimp_dynamics_get_linear_value (dynamics,
-                                            GIMP_DYNAMICS_OUTPUT_OPACITY,
+  opacity = ligma_dynamics_get_linear_value (dynamics,
+                                            LIGMA_DYNAMICS_OUTPUT_OPACITY,
                                             &origin,
                                             paint_options,
                                             fade_point);
   if (opacity == 0.0)
     return;
 
-  gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
+  ligma_item_get_offset (LIGMA_ITEM (drawable), &off_x, &off_y);
 
   base_src_offset_x = source_core->offset_x;
   base_src_offset_y = source_core->offset_y;
 
-  if (gimp_source_core_use_source (source_core, options))
+  if (ligma_source_core_use_source (source_core, options))
     {
       if (self_drawable)
         {
-          src_pickable = GIMP_PICKABLE (drawable);
+          src_pickable = LIGMA_PICKABLE (drawable);
         }
       else if (options->sample_merged)
         {
-          GimpImage *src_image;
+          LigmaImage *src_image;
 
-          src_image = gimp_pickable_get_image (options->src_drawables->data);
+          src_image = ligma_pickable_get_image (options->src_drawables->data);
 
-          if (! gimp_paint_core_get_show_all (paint_core))
+          if (! ligma_paint_core_get_show_all (paint_core))
             {
-              src_pickable = GIMP_PICKABLE (src_image);
+              src_pickable = LIGMA_PICKABLE (src_image);
             }
           else
             {
-              src_pickable = GIMP_PICKABLE (gimp_image_get_projection (src_image));
+              src_pickable = LIGMA_PICKABLE (ligma_image_get_projection (src_image));
             }
         }
       else
@@ -377,8 +377,8 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
           src_pickable = options->src_pickable;
         }
 
-      if (GIMP_IS_ITEM (src_pickable))
-        gimp_item_get_offset (GIMP_ITEM (src_pickable),
+      if (LIGMA_IS_ITEM (src_pickable))
+        ligma_item_get_offset (LIGMA_ITEM (src_pickable),
                               &src_off_x, &src_off_y);
     }
 
@@ -387,23 +387,23 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
                 "src-y", &src_y,
                 NULL);
 
-  gimp_brush_core_eval_transform_dynamics (brush_core,
+  ligma_brush_core_eval_transform_dynamics (brush_core,
                                            image,
                                            paint_options,
                                            &origin);
 
-  paint_mode = gimp_context_get_paint_mode (GIMP_CONTEXT (paint_options));
+  paint_mode = ligma_context_get_paint_mode (LIGMA_CONTEXT (paint_options));
 
-  n_strokes  = gimp_symmetry_get_size (sym);
+  n_strokes  = ligma_symmetry_get_size (sym);
   for (i = 0; i < n_strokes; i++)
     {
-      coords    = *(gimp_symmetry_get_coords (sym, i));
+      coords    = *(ligma_symmetry_get_coords (sym, i));
       coords.x -= off_x;
       coords.y -= off_y;
 
-      gimp_brush_core_eval_transform_symmetry (brush_core, sym, i);
+      ligma_brush_core_eval_transform_symmetry (brush_core, sym, i);
 
-      paint_buffer = gimp_paint_core_get_paint_buffer (paint_core, drawable,
+      paint_buffer = ligma_paint_core_get_paint_buffer (paint_core, drawable,
                                                        paint_options,
                                                        paint_mode,
                                                        &coords,
@@ -420,13 +420,13 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
 
       src_offset_x = base_src_offset_x;
       src_offset_y = base_src_offset_y;
-      if (gimp_source_core_use_source (source_core, options))
+      if (ligma_source_core_use_source (source_core, options))
         {
           /* When using a source, use the same for every stroke. */
           src_offset_x += floor (origin.x) - floor (coords.x) - src_off_x;
           src_offset_y += floor (origin.y) - floor (coords.y) - src_off_y;
           src_buffer =
-            GIMP_SOURCE_CORE_GET_CLASS (source_core)->get_source (source_core,
+            LIGMA_SOURCE_CORE_GET_CLASS (source_core)->get_source (source_core,
                                                                   drawable,
                                                                   paint_options,
                                                                   self_drawable,
@@ -449,7 +449,7 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
       /*  Set the paint buffer to transparent  */
       gegl_buffer_clear (paint_buffer, NULL);
 
-      op = gimp_symmetry_get_operation (sym, i);
+      op = ligma_symmetry_get_operation (sym, i);
 
       if (op)
         {
@@ -495,7 +495,7 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
           op = node;
         }
 
-      GIMP_SOURCE_CORE_GET_CLASS (source_core)->motion (source_core,
+      LIGMA_SOURCE_CORE_GET_CLASS (source_core)->motion (source_core,
                                                         drawable,
                                                         paint_options,
                                                         &coords,
@@ -521,26 +521,26 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
 }
 
 gboolean
-gimp_source_core_use_source (GimpSourceCore    *source_core,
-                             GimpSourceOptions *options)
+ligma_source_core_use_source (LigmaSourceCore    *source_core,
+                             LigmaSourceOptions *options)
 {
-  return GIMP_SOURCE_CORE_GET_CLASS (source_core)->use_source (source_core,
+  return LIGMA_SOURCE_CORE_GET_CLASS (source_core)->use_source (source_core,
                                                                options);
 }
 
 static gboolean
-gimp_source_core_real_use_source (GimpSourceCore    *source_core,
-                                  GimpSourceOptions *options)
+ligma_source_core_real_use_source (LigmaSourceCore    *source_core,
+                                  LigmaSourceOptions *options)
 {
   return TRUE;
 }
 
 static GeglBuffer *
-gimp_source_core_real_get_source (GimpSourceCore   *source_core,
-                                  GimpDrawable     *drawable,
-                                  GimpPaintOptions *paint_options,
+ligma_source_core_real_get_source (LigmaSourceCore   *source_core,
+                                  LigmaDrawable     *drawable,
+                                  LigmaPaintOptions *paint_options,
                                   gboolean          self_drawable,
-                                  GimpPickable     *src_pickable,
+                                  LigmaPickable     *src_pickable,
                                   gint              src_offset_x,
                                   gint              src_offset_y,
                                   GeglBuffer       *paint_buffer,
@@ -552,10 +552,10 @@ gimp_source_core_real_get_source (GimpSourceCore   *source_core,
                                   gint             *paint_area_height,
                                   GeglRectangle    *src_rect)
 {
-  GimpSourceOptions *options    = GIMP_SOURCE_OPTIONS (paint_options);
-  GimpImage         *image      = gimp_item_get_image (GIMP_ITEM (drawable));
-  GimpImage         *src_image  = gimp_pickable_get_image (src_pickable);
-  GeglBuffer        *src_buffer = gimp_pickable_get_buffer (src_pickable);
+  LigmaSourceOptions *options    = LIGMA_SOURCE_OPTIONS (paint_options);
+  LigmaImage         *image      = ligma_item_get_image (LIGMA_ITEM (drawable));
+  LigmaImage         *src_image  = ligma_pickable_get_image (src_pickable);
+  GeglBuffer        *src_buffer = ligma_pickable_get_buffer (src_pickable);
   GeglBuffer        *dest_buffer;
   gboolean           sample_merged;
   gint               x, y;
@@ -566,7 +566,7 @@ gimp_source_core_real_get_source (GimpSourceCore   *source_core,
    */
   sample_merged = options->sample_merged && (! self_drawable);
 
-  if (! gimp_rectangle_intersect (paint_buffer_x + src_offset_x,
+  if (! ligma_rectangle_intersect (paint_buffer_x + src_offset_x,
                                   paint_buffer_y + src_offset_y,
                                   gegl_buffer_get_width  (paint_buffer),
                                   gegl_buffer_get_height (paint_buffer),
@@ -596,9 +596,9 @@ gimp_source_core_real_get_source (GimpSourceCore   *source_core,
     {
       /*  get the original image  */
       if (sample_merged)
-        dest_buffer = gimp_paint_core_get_orig_proj (GIMP_PAINT_CORE (source_core));
+        dest_buffer = ligma_paint_core_get_orig_proj (LIGMA_PAINT_CORE (source_core));
       else
-        dest_buffer = gimp_paint_core_get_orig_image (GIMP_PAINT_CORE (source_core),
+        dest_buffer = ligma_paint_core_get_orig_image (LIGMA_PAINT_CORE (source_core),
                                                       drawable);
     }
 

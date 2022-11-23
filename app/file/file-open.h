@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * file-open.h
@@ -21,20 +21,20 @@
 #define __FILE_OPEN_H__
 
 
-GimpImage * file_open_image                 (Gimp                *gimp,
-                                             GimpContext         *context,
-                                             GimpProgress        *progress,
+LigmaImage * file_open_image                 (Ligma                *ligma,
+                                             LigmaContext         *context,
+                                             LigmaProgress        *progress,
                                              GFile               *file,
                                              gboolean             as_new,
-                                             GimpPlugInProcedure *file_proc,
-                                             GimpRunMode          run_mode,
-                                             GimpPDBStatusType   *status,
+                                             LigmaPlugInProcedure *file_proc,
+                                             LigmaRunMode          run_mode,
+                                             LigmaPDBStatusType   *status,
                                              const gchar        **mime_type,
                                              GError             **error);
 
-GimpImage * file_open_thumbnail             (Gimp                *gimp,
-                                             GimpContext         *context,
-                                             GimpProgress        *progress,
+LigmaImage * file_open_thumbnail             (Ligma                *ligma,
+                                             LigmaContext         *context,
+                                             LigmaProgress        *progress,
                                              GFile               *file,
                                              gint                 size,
                                              const gchar        **mime_type,
@@ -43,37 +43,37 @@ GimpImage * file_open_thumbnail             (Gimp                *gimp,
                                              const Babl         **format,
                                              gint                *num_layers,
                                              GError             **error);
-GimpImage * file_open_with_display          (Gimp                *gimp,
-                                             GimpContext         *context,
-                                             GimpProgress        *progress,
+LigmaImage * file_open_with_display          (Ligma                *ligma,
+                                             LigmaContext         *context,
+                                             LigmaProgress        *progress,
                                              GFile               *file,
                                              gboolean             as_new,
                                              GObject             *monitor,
-                                             GimpPDBStatusType   *status,
+                                             LigmaPDBStatusType   *status,
                                              GError             **error);
 
-GimpImage * file_open_with_proc_and_display (Gimp                *gimp,
-                                             GimpContext         *context,
-                                             GimpProgress        *progress,
+LigmaImage * file_open_with_proc_and_display (Ligma                *ligma,
+                                             LigmaContext         *context,
+                                             LigmaProgress        *progress,
                                              GFile               *file,
                                              gboolean             as_new,
-                                             GimpPlugInProcedure *file_proc,
+                                             LigmaPlugInProcedure *file_proc,
                                              GObject             *monitor,
-                                             GimpPDBStatusType   *status,
+                                             LigmaPDBStatusType   *status,
                                              GError             **error);
 
-GList     * file_open_layers                (Gimp                *gimp,
-                                             GimpContext         *context,
-                                             GimpProgress        *progress,
-                                             GimpImage           *dest_image,
+GList     * file_open_layers                (Ligma                *ligma,
+                                             LigmaContext         *context,
+                                             LigmaProgress        *progress,
+                                             LigmaImage           *dest_image,
                                              gboolean             merge_visible,
                                              GFile               *file,
-                                             GimpRunMode          run_mode,
-                                             GimpPlugInProcedure *file_proc,
-                                             GimpPDBStatusType   *status,
+                                             LigmaRunMode          run_mode,
+                                             LigmaPlugInProcedure *file_proc,
+                                             LigmaPDBStatusType   *status,
                                              GError             **error);
 
-gboolean    file_open_from_command_line     (Gimp                *gimp,
+gboolean    file_open_from_command_line     (Ligma                *ligma,
                                              GFile               *file,
                                              gboolean             as_new,
                                              GObject             *monitor);

@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcolorbalanceconfig.c
- * Copyright (C) 2007 Michael Natterer <mitch@gimp.org>
+ * ligmacolorbalanceconfig.c
+ * Copyright (C) 2007 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,15 +24,15 @@
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpmath/gimpmath.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "operations-types.h"
 
-#include "gimpcolorbalanceconfig.h"
+#include "ligmacolorbalanceconfig.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -46,77 +46,77 @@ enum
 };
 
 
-static void     gimp_color_balance_config_iface_init   (GimpConfigInterface *iface);
+static void     ligma_color_balance_config_iface_init   (LigmaConfigInterface *iface);
 
-static void     gimp_color_balance_config_get_property (GObject          *object,
+static void     ligma_color_balance_config_get_property (GObject          *object,
                                                         guint             property_id,
                                                         GValue           *value,
                                                         GParamSpec       *pspec);
-static void     gimp_color_balance_config_set_property (GObject          *object,
+static void     ligma_color_balance_config_set_property (GObject          *object,
                                                         guint             property_id,
                                                         const GValue     *value,
                                                         GParamSpec       *pspec);
 
-static gboolean gimp_color_balance_config_serialize    (GimpConfig       *config,
-                                                        GimpConfigWriter *writer,
+static gboolean ligma_color_balance_config_serialize    (LigmaConfig       *config,
+                                                        LigmaConfigWriter *writer,
                                                         gpointer          data);
-static gboolean gimp_color_balance_config_deserialize  (GimpConfig       *config,
+static gboolean ligma_color_balance_config_deserialize  (LigmaConfig       *config,
                                                         GScanner         *scanner,
                                                         gint              nest_level,
                                                         gpointer          data);
-static gboolean gimp_color_balance_config_equal        (GimpConfig       *a,
-                                                        GimpConfig       *b);
-static void     gimp_color_balance_config_reset        (GimpConfig       *config);
-static gboolean gimp_color_balance_config_copy         (GimpConfig       *src,
-                                                        GimpConfig       *dest,
+static gboolean ligma_color_balance_config_equal        (LigmaConfig       *a,
+                                                        LigmaConfig       *b);
+static void     ligma_color_balance_config_reset        (LigmaConfig       *config);
+static gboolean ligma_color_balance_config_copy         (LigmaConfig       *src,
+                                                        LigmaConfig       *dest,
                                                         GParamFlags       flags);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpColorBalanceConfig, gimp_color_balance_config,
-                         GIMP_TYPE_OPERATION_SETTINGS,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
-                                                gimp_color_balance_config_iface_init))
+G_DEFINE_TYPE_WITH_CODE (LigmaColorBalanceConfig, ligma_color_balance_config,
+                         LIGMA_TYPE_OPERATION_SETTINGS,
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_CONFIG,
+                                                ligma_color_balance_config_iface_init))
 
-#define parent_class gimp_color_balance_config_parent_class
+#define parent_class ligma_color_balance_config_parent_class
 
 
 static void
-gimp_color_balance_config_class_init (GimpColorBalanceConfigClass *klass)
+ligma_color_balance_config_class_init (LigmaColorBalanceConfigClass *klass)
 {
   GObjectClass      *object_class   = G_OBJECT_CLASS (klass);
-  GimpViewableClass *viewable_class = GIMP_VIEWABLE_CLASS (klass);
+  LigmaViewableClass *viewable_class = LIGMA_VIEWABLE_CLASS (klass);
 
-  object_class->set_property        = gimp_color_balance_config_set_property;
-  object_class->get_property        = gimp_color_balance_config_get_property;
+  object_class->set_property        = ligma_color_balance_config_set_property;
+  object_class->get_property        = ligma_color_balance_config_get_property;
 
-  viewable_class->default_icon_name = "gimp-tool-color-balance";
+  viewable_class->default_icon_name = "ligma-tool-color-balance";
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_RANGE,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_RANGE,
                          "range",
                          _("Range"),
                          _("The affected range"),
-                         GIMP_TYPE_TRANSFER_MODE,
-                         GIMP_TRANSFER_MIDTONES, 0);
+                         LIGMA_TYPE_TRANSFER_MODE,
+                         LIGMA_TRANSFER_MIDTONES, 0);
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_CYAN_RED,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_CYAN_RED,
                            "cyan-red",
                            _("Cyan-Red"),
                            _("Cyan-Red"),
                            -1.0, 1.0, 0.0, 0);
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_MAGENTA_GREEN,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_MAGENTA_GREEN,
                            "magenta-green",
                            _("Magenta-Green"),
                            _("Magenta-Green"),
                            -1.0, 1.0, 0.0, 0);
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_YELLOW_BLUE,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_YELLOW_BLUE,
                            "yellow-blue",
                            _("Yellow-Blue"),
                            _("Yellow-Blue"),
                            -1.0, 1.0, 0.0, 0);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_PRESERVE_LUMINOSITY,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_PRESERVE_LUMINOSITY,
                             "preserve-luminosity",
                             _("Preserve Luminosity"),
                             _("Preserve Luminosity"),
@@ -124,28 +124,28 @@ gimp_color_balance_config_class_init (GimpColorBalanceConfigClass *klass)
 }
 
 static void
-gimp_color_balance_config_iface_init (GimpConfigInterface *iface)
+ligma_color_balance_config_iface_init (LigmaConfigInterface *iface)
 {
-  iface->serialize   = gimp_color_balance_config_serialize;
-  iface->deserialize = gimp_color_balance_config_deserialize;
-  iface->equal       = gimp_color_balance_config_equal;
-  iface->reset       = gimp_color_balance_config_reset;
-  iface->copy        = gimp_color_balance_config_copy;
+  iface->serialize   = ligma_color_balance_config_serialize;
+  iface->deserialize = ligma_color_balance_config_deserialize;
+  iface->equal       = ligma_color_balance_config_equal;
+  iface->reset       = ligma_color_balance_config_reset;
+  iface->copy        = ligma_color_balance_config_copy;
 }
 
 static void
-gimp_color_balance_config_init (GimpColorBalanceConfig *self)
+ligma_color_balance_config_init (LigmaColorBalanceConfig *self)
 {
-  gimp_config_reset (GIMP_CONFIG (self));
+  ligma_config_reset (LIGMA_CONFIG (self));
 }
 
 static void
-gimp_color_balance_config_get_property (GObject    *object,
+ligma_color_balance_config_get_property (GObject    *object,
                                         guint       property_id,
                                         GValue     *value,
                                         GParamSpec *pspec)
 {
-  GimpColorBalanceConfig *self = GIMP_COLOR_BALANCE_CONFIG (object);
+  LigmaColorBalanceConfig *self = LIGMA_COLOR_BALANCE_CONFIG (object);
 
   switch (property_id)
     {
@@ -176,12 +176,12 @@ gimp_color_balance_config_get_property (GObject    *object,
 }
 
 static void
-gimp_color_balance_config_set_property (GObject      *object,
+ligma_color_balance_config_set_property (GObject      *object,
                                         guint         property_id,
                                         const GValue *value,
                                         GParamSpec   *pspec)
 {
-  GimpColorBalanceConfig *self = GIMP_COLOR_BALANCE_CONFIG (object);
+  LigmaColorBalanceConfig *self = LIGMA_COLOR_BALANCE_CONFIG (object);
 
   switch (property_id)
     {
@@ -215,36 +215,36 @@ gimp_color_balance_config_set_property (GObject      *object,
 }
 
 static gboolean
-gimp_color_balance_config_serialize (GimpConfig       *config,
-                                     GimpConfigWriter *writer,
+ligma_color_balance_config_serialize (LigmaConfig       *config,
+                                     LigmaConfigWriter *writer,
                                      gpointer          data)
 {
-  GimpColorBalanceConfig *bc_config = GIMP_COLOR_BALANCE_CONFIG (config);
-  GimpTransferMode        range;
-  GimpTransferMode        old_range;
+  LigmaColorBalanceConfig *bc_config = LIGMA_COLOR_BALANCE_CONFIG (config);
+  LigmaTransferMode        range;
+  LigmaTransferMode        old_range;
   gboolean                success = TRUE;
 
-  if (! gimp_operation_settings_config_serialize_base (config, writer, data))
+  if (! ligma_operation_settings_config_serialize_base (config, writer, data))
     return FALSE;
 
   old_range = bc_config->range;
 
-  for (range = GIMP_TRANSFER_SHADOWS;
-       range <= GIMP_TRANSFER_HIGHLIGHTS;
+  for (range = LIGMA_TRANSFER_SHADOWS;
+       range <= LIGMA_TRANSFER_HIGHLIGHTS;
        range++)
     {
       bc_config->range = range;
 
-      success = (gimp_config_serialize_property_by_name (config,
+      success = (ligma_config_serialize_property_by_name (config,
                                                          "range",
                                                          writer) &&
-                 gimp_config_serialize_property_by_name (config,
+                 ligma_config_serialize_property_by_name (config,
                                                          "cyan-red",
                                                          writer) &&
-                 gimp_config_serialize_property_by_name (config,
+                 ligma_config_serialize_property_by_name (config,
                                                          "magenta-green",
                                                          writer) &&
-                 gimp_config_serialize_property_by_name (config,
+                 ligma_config_serialize_property_by_name (config,
                                                          "yellow-blue",
                                                          writer));
 
@@ -253,7 +253,7 @@ gimp_color_balance_config_serialize (GimpConfig       *config,
     }
 
   if (success)
-    success = gimp_config_serialize_property_by_name (config,
+    success = ligma_config_serialize_property_by_name (config,
                                                       "preserve-luminosity",
                                                       writer);
 
@@ -263,18 +263,18 @@ gimp_color_balance_config_serialize (GimpConfig       *config,
 }
 
 static gboolean
-gimp_color_balance_config_deserialize (GimpConfig *config,
+ligma_color_balance_config_deserialize (LigmaConfig *config,
                                        GScanner   *scanner,
                                        gint        nest_level,
                                        gpointer    data)
 {
-  GimpColorBalanceConfig *cb_config = GIMP_COLOR_BALANCE_CONFIG (config);
-  GimpTransferMode        old_range;
+  LigmaColorBalanceConfig *cb_config = LIGMA_COLOR_BALANCE_CONFIG (config);
+  LigmaTransferMode        old_range;
   gboolean                success = TRUE;
 
   old_range = cb_config->range;
 
-  success = gimp_config_deserialize_properties (config, scanner, nest_level);
+  success = ligma_config_deserialize_properties (config, scanner, nest_level);
 
   g_object_set (config, "range", old_range, NULL);
 
@@ -282,18 +282,18 @@ gimp_color_balance_config_deserialize (GimpConfig *config,
 }
 
 static gboolean
-gimp_color_balance_config_equal (GimpConfig *a,
-                                 GimpConfig *b)
+ligma_color_balance_config_equal (LigmaConfig *a,
+                                 LigmaConfig *b)
 {
-  GimpColorBalanceConfig *config_a = GIMP_COLOR_BALANCE_CONFIG (a);
-  GimpColorBalanceConfig *config_b = GIMP_COLOR_BALANCE_CONFIG (b);
-  GimpTransferMode        range;
+  LigmaColorBalanceConfig *config_a = LIGMA_COLOR_BALANCE_CONFIG (a);
+  LigmaColorBalanceConfig *config_b = LIGMA_COLOR_BALANCE_CONFIG (b);
+  LigmaTransferMode        range;
 
-  if (! gimp_operation_settings_config_equal_base (a, b))
+  if (! ligma_operation_settings_config_equal_base (a, b))
     return FALSE;
 
-  for (range = GIMP_TRANSFER_SHADOWS;
-       range <= GIMP_TRANSFER_HIGHLIGHTS;
+  for (range = LIGMA_TRANSFER_SHADOWS;
+       range <= LIGMA_TRANSFER_HIGHLIGHTS;
        range++)
     {
       if (config_a->cyan_red[range]      != config_b->cyan_red[range]      ||
@@ -311,39 +311,39 @@ gimp_color_balance_config_equal (GimpConfig *a,
 }
 
 static void
-gimp_color_balance_config_reset (GimpConfig *config)
+ligma_color_balance_config_reset (LigmaConfig *config)
 {
-  GimpColorBalanceConfig *cb_config = GIMP_COLOR_BALANCE_CONFIG (config);
-  GimpTransferMode        range;
+  LigmaColorBalanceConfig *cb_config = LIGMA_COLOR_BALANCE_CONFIG (config);
+  LigmaTransferMode        range;
 
-  gimp_operation_settings_config_reset_base (config);
+  ligma_operation_settings_config_reset_base (config);
 
-  for (range = GIMP_TRANSFER_SHADOWS;
-       range <= GIMP_TRANSFER_HIGHLIGHTS;
+  for (range = LIGMA_TRANSFER_SHADOWS;
+       range <= LIGMA_TRANSFER_HIGHLIGHTS;
        range++)
     {
       cb_config->range = range;
-      gimp_color_balance_config_reset_range (cb_config);
+      ligma_color_balance_config_reset_range (cb_config);
     }
 
-  gimp_config_reset_property (G_OBJECT (config), "range");
-  gimp_config_reset_property (G_OBJECT (config), "preserve-luminosity");
+  ligma_config_reset_property (G_OBJECT (config), "range");
+  ligma_config_reset_property (G_OBJECT (config), "preserve-luminosity");
 }
 
 static gboolean
-gimp_color_balance_config_copy (GimpConfig  *src,
-                                GimpConfig  *dest,
+ligma_color_balance_config_copy (LigmaConfig  *src,
+                                LigmaConfig  *dest,
                                 GParamFlags  flags)
 {
-  GimpColorBalanceConfig *src_config  = GIMP_COLOR_BALANCE_CONFIG (src);
-  GimpColorBalanceConfig *dest_config = GIMP_COLOR_BALANCE_CONFIG (dest);
-  GimpTransferMode        range;
+  LigmaColorBalanceConfig *src_config  = LIGMA_COLOR_BALANCE_CONFIG (src);
+  LigmaColorBalanceConfig *dest_config = LIGMA_COLOR_BALANCE_CONFIG (dest);
+  LigmaTransferMode        range;
 
-  if (! gimp_operation_settings_config_copy_base (src, dest, flags))
+  if (! ligma_operation_settings_config_copy_base (src, dest, flags))
     return FALSE;
 
-  for (range = GIMP_TRANSFER_SHADOWS;
-       range <= GIMP_TRANSFER_HIGHLIGHTS;
+  for (range = LIGMA_TRANSFER_SHADOWS;
+       range <= LIGMA_TRANSFER_HIGHLIGHTS;
        range++)
     {
       dest_config->cyan_red[range]      = src_config->cyan_red[range];
@@ -368,15 +368,15 @@ gimp_color_balance_config_copy (GimpConfig  *src,
 /*  public functions  */
 
 void
-gimp_color_balance_config_reset_range (GimpColorBalanceConfig *config)
+ligma_color_balance_config_reset_range (LigmaColorBalanceConfig *config)
 {
-  g_return_if_fail (GIMP_IS_COLOR_BALANCE_CONFIG (config));
+  g_return_if_fail (LIGMA_IS_COLOR_BALANCE_CONFIG (config));
 
   g_object_freeze_notify (G_OBJECT (config));
 
-  gimp_config_reset_property (G_OBJECT (config), "cyan-red");
-  gimp_config_reset_property (G_OBJECT (config), "magenta-green");
-  gimp_config_reset_property (G_OBJECT (config), "yellow-blue");
+  ligma_config_reset_property (G_OBJECT (config), "cyan-red");
+  ligma_config_reset_property (G_OBJECT (config), "magenta-green");
+  ligma_config_reset_property (G_OBJECT (config), "yellow-blue");
 
   g_object_thaw_notify (G_OBJECT (config));
 }

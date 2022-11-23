@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpbrushfactoryview.h
- * Copyright (C) 2001 Michael Natterer <mitch@gimp.org>
+ * ligmabrushfactoryview.h
+ * Copyright (C) 2001 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,25 +18,25 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_BRUSH_FACTORY_VIEW_H__
-#define __GIMP_BRUSH_FACTORY_VIEW_H__
+#ifndef __LIGMA_BRUSH_FACTORY_VIEW_H__
+#define __LIGMA_BRUSH_FACTORY_VIEW_H__
 
-#include "gimpdatafactoryview.h"
-
-
-#define GIMP_TYPE_BRUSH_FACTORY_VIEW            (gimp_brush_factory_view_get_type ())
-#define GIMP_BRUSH_FACTORY_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_BRUSH_FACTORY_VIEW, GimpBrushFactoryView))
-#define GIMP_BRUSH_FACTORY_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_BRUSH_FACTORY_VIEW, GimpBrushFactoryViewClass))
-#define GIMP_IS_BRUSH_FACTORY_VIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_BRUSH_FACTORY_VIEW))
-#define GIMP_IS_BRUSH_FACTORY_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_BRUSH_FACTORY_VIEW))
-#define GIMP_BRUSH_FACTORY_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_BRUSH_FACTORY_VIEW, GimpBrushFactoryViewClass))
+#include "ligmadatafactoryview.h"
 
 
-typedef struct _GimpBrushFactoryViewClass  GimpBrushFactoryViewClass;
+#define LIGMA_TYPE_BRUSH_FACTORY_VIEW            (ligma_brush_factory_view_get_type ())
+#define LIGMA_BRUSH_FACTORY_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_BRUSH_FACTORY_VIEW, LigmaBrushFactoryView))
+#define LIGMA_BRUSH_FACTORY_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_BRUSH_FACTORY_VIEW, LigmaBrushFactoryViewClass))
+#define LIGMA_IS_BRUSH_FACTORY_VIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_BRUSH_FACTORY_VIEW))
+#define LIGMA_IS_BRUSH_FACTORY_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_BRUSH_FACTORY_VIEW))
+#define LIGMA_BRUSH_FACTORY_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_BRUSH_FACTORY_VIEW, LigmaBrushFactoryViewClass))
 
-struct _GimpBrushFactoryView
+
+typedef struct _LigmaBrushFactoryViewClass  LigmaBrushFactoryViewClass;
+
+struct _LigmaBrushFactoryView
 {
-  GimpDataFactoryView  parent_instance;
+  LigmaDataFactoryView  parent_instance;
 
   GtkWidget           *spacing_scale;
   GtkAdjustment       *spacing_adjustment;
@@ -45,25 +45,25 @@ struct _GimpBrushFactoryView
   GQuark               spacing_changed_handler_id;
 };
 
-struct _GimpBrushFactoryViewClass
+struct _LigmaBrushFactoryViewClass
 {
-  GimpDataFactoryViewClass  parent_class;
+  LigmaDataFactoryViewClass  parent_class;
 
   /* Signals */
 
-  void (* spacing_changed) (GimpBrushFactoryView *view);
+  void (* spacing_changed) (LigmaBrushFactoryView *view);
 };
 
 
-GType       gimp_brush_factory_view_get_type (void) G_GNUC_CONST;
+GType       ligma_brush_factory_view_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_brush_factory_view_new      (GimpViewType     view_type,
-                                              GimpDataFactory *factory,
-                                              GimpContext     *context,
+GtkWidget * ligma_brush_factory_view_new      (LigmaViewType     view_type,
+                                              LigmaDataFactory *factory,
+                                              LigmaContext     *context,
                                               gboolean         change_brush_spacing,
                                               gint             view_size,
                                               gint             view_border_width,
-                                              GimpMenuFactory *menu_factory);
+                                              LigmaMenuFactory *menu_factory);
 
 
-#endif  /*  __GIMP_BRUSH_FACTORY_VIEW_H__  */
+#endif  /*  __LIGMA_BRUSH_FACTORY_VIEW_H__  */

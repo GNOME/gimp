@@ -7,5 +7,5 @@ install_data([
     'GFlare_102',
     'Hidden_Planet',
   ],
-  install_dir: gimpdatadir / 'gflare',
+  install_dir: ligmadatadir / 'gflare',
 )

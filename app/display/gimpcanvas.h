@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,14 +15,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CANVAS_H__
-#define __GIMP_CANVAS_H__
+#ifndef __LIGMA_CANVAS_H__
+#define __LIGMA_CANVAS_H__
 
 
-#include "widgets/gimpoverlaybox.h"
+#include "widgets/ligmaoverlaybox.h"
 
 
-#define GIMP_CANVAS_EVENT_MASK (GDK_EXPOSURE_MASK            | \
+#define LIGMA_CANVAS_EVENT_MASK (GDK_EXPOSURE_MASK            | \
                                 GDK_POINTER_MOTION_MASK      | \
                                 GDK_BUTTON_PRESS_MASK        | \
                                 GDK_BUTTON_RELEASE_MASK      | \
@@ -38,44 +38,44 @@
                                 GDK_PROXIMITY_OUT_MASK)
 
 
-#define GIMP_TYPE_CANVAS            (gimp_canvas_get_type ())
-#define GIMP_CANVAS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CANVAS, GimpCanvas))
-#define GIMP_CANVAS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CANVAS, GimpCanvasClass))
-#define GIMP_IS_CANVAS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CANVAS))
-#define GIMP_IS_CANVAS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CANVAS))
-#define GIMP_CANVAS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CANVAS, GimpCanvasClass))
+#define LIGMA_TYPE_CANVAS            (ligma_canvas_get_type ())
+#define LIGMA_CANVAS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_CANVAS, LigmaCanvas))
+#define LIGMA_CANVAS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_CANVAS, LigmaCanvasClass))
+#define LIGMA_IS_CANVAS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_CANVAS))
+#define LIGMA_IS_CANVAS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_CANVAS))
+#define LIGMA_CANVAS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_CANVAS, LigmaCanvasClass))
 
 
-typedef struct _GimpCanvasClass GimpCanvasClass;
+typedef struct _LigmaCanvasClass LigmaCanvasClass;
 
-struct _GimpCanvas
+struct _LigmaCanvas
 {
-  GimpOverlayBox         parent_instance;
+  LigmaOverlayBox         parent_instance;
 
-  GimpDisplayConfig     *config;
+  LigmaDisplayConfig     *config;
   PangoLayout           *layout;
 
-  GimpCanvasPaddingMode  padding_mode;
-  GimpRGB                padding_color;
+  LigmaCanvasPaddingMode  padding_mode;
+  LigmaRGB                padding_color;
 };
 
-struct _GimpCanvasClass
+struct _LigmaCanvasClass
 {
-  GimpOverlayBoxClass  parent_class;
+  LigmaOverlayBoxClass  parent_class;
 };
 
 
-GType         gimp_canvas_get_type     (void) G_GNUC_CONST;
+GType         ligma_canvas_get_type     (void) G_GNUC_CONST;
 
-GtkWidget   * gimp_canvas_new          (GimpDisplayConfig     *config);
+GtkWidget   * ligma_canvas_new          (LigmaDisplayConfig     *config);
 
-PangoLayout * gimp_canvas_get_layout   (GimpCanvas            *canvas,
+PangoLayout * ligma_canvas_get_layout   (LigmaCanvas            *canvas,
                                         const gchar           *format,
                                         ...) G_GNUC_PRINTF (2, 3);
 
-void          gimp_canvas_set_padding  (GimpCanvas            *canvas,
-                                        GimpCanvasPaddingMode  padding_mode,
-                                        const GimpRGB         *padding_color);
+void          ligma_canvas_set_padding  (LigmaCanvas            *canvas,
+                                        LigmaCanvasPaddingMode  padding_mode,
+                                        const LigmaRGB         *padding_color);
 
 
-#endif /*  __GIMP_CANVAS_H__  */
+#endif /*  __LIGMA_CANVAS_H__  */

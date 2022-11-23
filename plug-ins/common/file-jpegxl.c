@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * file-jpegxl - JPEG XL file format plug-in for the GIMP
+ * file-jpegxl - JPEG XL file format plug-in for the LIGMA
  * Copyright (C) 2021  Daniel Novomesky
  *
  * This program is free software: you can redistribute it and/or modify
@@ -27,10 +27,10 @@
 #include <jxl/encode.h>
 #include <jxl/thread_parallel_runner.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 #define LOAD_PROC       "file-jpegxl-load"
 #define SAVE_PROC       "file-jpegxl-save"
@@ -41,12 +41,12 @@ typedef struct _JpegXLClass JpegXLClass;
 
 struct _JpegXL
 {
-  GimpPlugIn      parent_instance;
+  LigmaPlugIn      parent_instance;
 };
 
 struct _JpegXLClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -55,34 +55,34 @@ struct _JpegXLClass
 
 GType                   jpegxl_get_type (void) G_GNUC_CONST;
 
-static GList           *jpegxl_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure   *jpegxl_create_procedure (GimpPlugIn           *plug_in,
+static GList           *jpegxl_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure   *jpegxl_create_procedure (LigmaPlugIn           *plug_in,
                                                  const gchar          *name);
 
-static GimpValueArray *jpegxl_load (GimpProcedure        *procedure,
-                                    GimpRunMode           run_mode,
+static LigmaValueArray *jpegxl_load (LigmaProcedure        *procedure,
+                                    LigmaRunMode           run_mode,
                                     GFile                *file,
-                                    const GimpValueArray *args,
+                                    const LigmaValueArray *args,
                                     gpointer              run_data);
-static GimpValueArray *jpegxl_save (GimpProcedure        *procedure,
-                                    GimpRunMode           run_mode,
-                                    GimpImage            *image,
+static LigmaValueArray *jpegxl_save (LigmaProcedure        *procedure,
+                                    LigmaRunMode           run_mode,
+                                    LigmaImage            *image,
                                     gint                  n_drawables,
-                                    GimpDrawable        **drawables,
+                                    LigmaDrawable        **drawables,
                                     GFile                *file,
-                                    const GimpValueArray *args,
+                                    const LigmaValueArray *args,
                                     gpointer              run_data);
 
 
-G_DEFINE_TYPE (JpegXL, jpegxl, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (JpegXL, jpegxl, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (JPEGXL_TYPE)
+LIGMA_MAIN (JPEGXL_TYPE)
 DEFINE_STD_SET_I18N
 
 static void
 jpegxl_class_init (JpegXLClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = jpegxl_query_procedures;
   plug_in_class->create_procedure = jpegxl_create_procedure;
@@ -95,7 +95,7 @@ jpegxl_init (JpegXL *jpeg_xl)
 }
 
 static GList *
-jpegxl_query_procedures (GimpPlugIn *plug_in)
+jpegxl_query_procedures (LigmaPlugIn *plug_in)
 {
   GList *list = NULL;
 
@@ -105,113 +105,113 @@ jpegxl_query_procedures (GimpPlugIn *plug_in)
   return list;
 }
 
-static GimpProcedure *
-jpegxl_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+jpegxl_create_procedure (LigmaPlugIn  *plug_in,
                          const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, LOAD_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_load_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            jpegxl_load, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure, _("JPEG XL image"));
+      ligma_procedure_set_menu_label (procedure, _("JPEG XL image"));
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         _("Loads files in the JPEG XL file format"),
                                         _("Loads files in the JPEG XL file format"),
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Daniel Novomesky",
                                       "(C) 2021 Daniel Novomesky",
                                       "2021");
 
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                           "image/jxl");
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "jxl");
-      gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_magics (LIGMA_FILE_PROCEDURE (procedure),
                                       "0,string,\xFF\x0A,0,string,\\000\\000\\000\x0CJXL\\040\\015\\012\x87\\012");
 
     }
   else if (! strcmp (name, SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_save_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            jpegxl_save, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "RGB*, GRAY*");
+      ligma_procedure_set_image_types (procedure, "RGB*, GRAY*");
 
-      gimp_procedure_set_menu_label (procedure, _("JPEG XL image"));
+      ligma_procedure_set_menu_label (procedure, _("JPEG XL image"));
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         _("Saves files in the JPEG XL file format"),
                                         _("Saves files in the JPEG XL file format"),
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Daniel Novomesky",
                                       "(C) 2021 Daniel Novomesky",
                                       "2021");
 
-      gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_format_name (LIGMA_FILE_PROCEDURE (procedure),
                                            "JPEG XL");
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                           "image/jxl");
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "jxl");
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "lossless",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "lossless",
                              _("L_ossless"),
                              _("Use lossless compression"),
                              FALSE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "compression",
+      LIGMA_PROC_ARG_DOUBLE (procedure, "compression",
                             _("Co_mpression/maxError"),
                             _("Max. butteraugli distance, lower = higher quality. Range: 0 .. 15. 1.0 = visually lossless."),
                             0.1, 15, 1,
                             G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "save-bit-depth",
+      LIGMA_PROC_ARG_INT (procedure, "save-bit-depth",
                          _("_Bit depth"),
                          _("Bit depth of exported image"),
                          8, 16, 8,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "speed",
+      LIGMA_PROC_ARG_INT (procedure, "speed",
                          _("Effort/S_peed"),
                          _("Encoder effort setting"),
                          1, 9,
                          7,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "uses-original-profile",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "uses-original-profile",
                              _("Save ori_ginal profile"),
                              _("Store ICC profile to exported JXL file"),
                              FALSE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "save-exif",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "save-exif",
                              _("Save Exi_f"),
                              _("Toggle saving Exif data"),
-                             gimp_export_exif (),
+                             ligma_export_exif (),
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "save-xmp",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "save-xmp",
                              _("Save _XMP"),
                              _("Toggle saving XMP data"),
-                             gimp_export_xmp (),
+                             ligma_export_xmp (),
                              G_PARAM_READWRITE);
     }
 
   return procedure;
 }
 
-static GimpImage *
+static LigmaImage *
 load_image (GFile        *file,
-            GimpRunMode   runmode,
+            LigmaRunMode   runmode,
             GError      **error)
 {
   FILE             *inputFile = g_fopen (g_file_peek_path (file), "rb");
@@ -227,17 +227,17 @@ load_image (GFile        *file,
   JxlPixelFormat    pixel_format;
   JxlColorEncoding  color_encoding;
   size_t            icc_size = 0;
-  GimpColorProfile *profile = NULL;
+  LigmaColorProfile *profile = NULL;
   gboolean          loadlinear = FALSE;
   size_t            channel_depth;
   size_t            result_size;
   gpointer          picture_buffer;
 
-  GimpImage        *image;
-  GimpLayer        *layer;
+  LigmaImage        *image;
+  LigmaLayer        *layer;
   GeglBuffer       *buffer;
-  GimpPrecision     precision_linear;
-  GimpPrecision     precision_non_linear;
+  LigmaPrecision     precision_linear;
+  LigmaPrecision     precision_non_linear;
 
   if (!inputFile)
     {
@@ -292,7 +292,7 @@ load_image (GFile        *file,
       return NULL;
     }
 
-  runner = JxlThreadParallelRunnerCreate (NULL, gimp_get_num_processors ());
+  runner = JxlThreadParallelRunnerCreate (NULL, ligma_get_num_processors ());
   if (JxlDecoderSetParallelRunner (decoder, JxlThreadParallelRunner, runner) != JXL_DEC_SUCCESS)
     {
       g_set_error (error, G_FILE_ERROR, 0,
@@ -399,22 +399,22 @@ load_image (GFile        *file,
     {
       pixel_format.data_type = JXL_TYPE_FLOAT;
       channel_depth = 4;
-      precision_linear = GIMP_PRECISION_FLOAT_LINEAR;
-      precision_non_linear = GIMP_PRECISION_FLOAT_NON_LINEAR;
+      precision_linear = LIGMA_PRECISION_FLOAT_LINEAR;
+      precision_non_linear = LIGMA_PRECISION_FLOAT_NON_LINEAR;
     }
   else if (basicinfo.bits_per_sample <= 8)
     {
       pixel_format.data_type = JXL_TYPE_UINT8;
       channel_depth = 1;
-      precision_linear = GIMP_PRECISION_U8_LINEAR;
-      precision_non_linear = GIMP_PRECISION_U8_NON_LINEAR;
+      precision_linear = LIGMA_PRECISION_U8_LINEAR;
+      precision_non_linear = LIGMA_PRECISION_U8_NON_LINEAR;
     }
   else
     {
       pixel_format.data_type = JXL_TYPE_UINT16;
       channel_depth = 2;
-      precision_linear = GIMP_PRECISION_U16_LINEAR;
-      precision_non_linear = GIMP_PRECISION_U16_NON_LINEAR;
+      precision_linear = LIGMA_PRECISION_U16_LINEAR;
+      precision_non_linear = LIGMA_PRECISION_U16_NON_LINEAR;
     }
 
   if (basicinfo.num_color_channels == 1) /* grayscale */
@@ -457,10 +457,10 @@ load_image (GFile        *file,
               switch (color_encoding.color_space)
                 {
                 case JXL_COLOR_SPACE_RGB:
-                  profile = gimp_color_profile_new_rgb_srgb_linear ();
+                  profile = ligma_color_profile_new_rgb_srgb_linear ();
                   break;
                 case JXL_COLOR_SPACE_GRAY:
-                  profile = gimp_color_profile_new_d65_gray_linear ();
+                  profile = ligma_color_profile_new_d65_gray_linear ();
                   break;
                 default:
                   break;
@@ -470,10 +470,10 @@ load_image (GFile        *file,
               switch (color_encoding.color_space)
                 {
                 case JXL_COLOR_SPACE_RGB:
-                  profile = gimp_color_profile_new_rgb_srgb ();
+                  profile = ligma_color_profile_new_rgb_srgb ();
                   break;
                 case JXL_COLOR_SPACE_GRAY:
-                  profile = gimp_color_profile_new_d65_gray_srgb_trc ();
+                  profile = ligma_color_profile_new_d65_gray_srgb_trc ();
                   break;
                 default:
                   break;
@@ -500,10 +500,10 @@ load_image (GFile        *file,
                                                   raw_icc_profile, icc_size)
                   == JXL_DEC_SUCCESS)
                 {
-                  profile = gimp_color_profile_new_from_icc_profile (raw_icc_profile, icc_size, error);
+                  profile = ligma_color_profile_new_from_icc_profile (raw_icc_profile, icc_size, error);
                   if (profile)
                     {
-                      loadlinear = gimp_color_profile_is_linear (profile);
+                      loadlinear = ligma_color_profile_is_linear (profile);
                     }
                   else
                     {
@@ -591,45 +591,45 @@ load_image (GFile        *file,
 
   if (basicinfo.num_color_channels == 1) /* grayscale */
     {
-      image = gimp_image_new_with_precision (basicinfo.xsize, basicinfo.ysize, GIMP_GRAY,
+      image = ligma_image_new_with_precision (basicinfo.xsize, basicinfo.ysize, LIGMA_GRAY,
                                              loadlinear ? precision_linear : precision_non_linear);
 
       if (profile)
         {
-          if (gimp_color_profile_is_gray (profile))
+          if (ligma_color_profile_is_gray (profile))
             {
-              gimp_image_set_color_profile (image, profile);
+              ligma_image_set_color_profile (image, profile);
             }
         }
 
-      layer = gimp_layer_new (image, "Background",
+      layer = ligma_layer_new (image, "Background",
                               basicinfo.xsize, basicinfo.ysize,
-                              (basicinfo.alpha_bits > 0) ? GIMP_GRAYA_IMAGE : GIMP_GRAY_IMAGE, 100,
-                              gimp_image_get_default_new_layer_mode (image));
+                              (basicinfo.alpha_bits > 0) ? LIGMA_GRAYA_IMAGE : LIGMA_GRAY_IMAGE, 100,
+                              ligma_image_get_default_new_layer_mode (image));
     }
   else /* RGB */
     {
-      image = gimp_image_new_with_precision (basicinfo.xsize, basicinfo.ysize, GIMP_RGB,
+      image = ligma_image_new_with_precision (basicinfo.xsize, basicinfo.ysize, LIGMA_RGB,
                                              loadlinear ? precision_linear : precision_non_linear);
 
       if (profile)
         {
-          if (gimp_color_profile_is_rgb (profile))
+          if (ligma_color_profile_is_rgb (profile))
             {
-              gimp_image_set_color_profile (image, profile);
+              ligma_image_set_color_profile (image, profile);
             }
         }
 
-      layer = gimp_layer_new (image, "Background",
+      layer = ligma_layer_new (image, "Background",
                               basicinfo.xsize, basicinfo.ysize,
-                              (basicinfo.alpha_bits > 0) ? GIMP_RGBA_IMAGE : GIMP_RGB_IMAGE, 100,
-                              gimp_image_get_default_new_layer_mode (image));
+                              (basicinfo.alpha_bits > 0) ? LIGMA_RGBA_IMAGE : LIGMA_RGB_IMAGE, 100,
+                              ligma_image_get_default_new_layer_mode (image));
 
     }
 
-  gimp_image_insert_layer (image, layer, NULL, 0);
+  ligma_image_insert_layer (image, layer, NULL, 0);
 
-  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
+  buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (layer));
 
   gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0, basicinfo.xsize, basicinfo.ysize), 0,
                    NULL, picture_buffer, GEGL_AUTO_ROWSTRIDE);
@@ -773,7 +773,7 @@ load_image (GFile        *file,
 
               if (success_exif || success_xmp)
                 {
-                  GimpMetadata *metadata = gimp_metadata_new ();
+                  LigmaMetadata *metadata = ligma_metadata_new ();
 
                   if (success_exif && exif_box)
                     {
@@ -814,7 +814,7 @@ load_image (GFile        *file,
 
                   if (success_xmp && xml_box)
                     {
-                      if (! gimp_metadata_set_from_xmp (metadata, xml_box->data, xml_box->len, error))
+                      if (! ligma_metadata_set_from_xmp (metadata, xml_box->data, xml_box->len, error))
                         {
                           g_printerr ("%s: Failed to set XMP metadata: %s\n", G_STRFUNC, (*error)->message);
                           g_clear_error (error);
@@ -827,8 +827,8 @@ load_image (GFile        *file,
                                                                 basicinfo.xsize, NULL);
                   gexiv2_metadata_try_set_metadata_pixel_height (GEXIV2_METADATA (metadata),
                                                                  basicinfo.ysize, NULL);
-                  gimp_image_metadata_load_finish (image, "image/jxl", metadata,
-                                                   GIMP_METADATA_LOAD_COMMENT | GIMP_METADATA_LOAD_RESOLUTION);
+                  ligma_image_metadata_load_finish (image, "image/jxl", metadata,
+                                                   LIGMA_METADATA_LOAD_COMMENT | LIGMA_METADATA_LOAD_RESOLUTION);
                 }
 
               if (exif_box)
@@ -850,24 +850,24 @@ load_image (GFile        *file,
   return image;
 }
 
-static GimpValueArray *
-jpegxl_load (GimpProcedure        *procedure,
-             GimpRunMode           run_mode,
+static LigmaValueArray *
+jpegxl_load (LigmaProcedure        *procedure,
+             LigmaRunMode           run_mode,
              GFile                *file,
-             const GimpValueArray *args,
+             const LigmaValueArray *args,
              gpointer              run_data)
 {
-  GimpValueArray *return_vals;
-  GimpImage      *image;
+  LigmaValueArray *return_vals;
+  LigmaImage      *image;
   GError         *error             = NULL;
 
   gegl_init (NULL, NULL);
 
   switch (run_mode)
     {
-    case GIMP_RUN_INTERACTIVE:
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_ui_init (PLUG_IN_BINARY);
+    case LIGMA_RUN_INTERACTIVE:
+    case LIGMA_RUN_WITH_LAST_VALS:
+      ligma_ui_init (PLUG_IN_BINARY);
       break;
 
     default:
@@ -878,25 +878,25 @@ jpegxl_load (GimpProcedure        *procedure,
 
   if (! image)
     {
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_EXECUTION_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_EXECUTION_ERROR,
                                                error);
     }
-  return_vals = gimp_procedure_new_return_values (procedure,
-                                                  GIMP_PDB_SUCCESS,
+  return_vals = ligma_procedure_new_return_values (procedure,
+                                                  LIGMA_PDB_SUCCESS,
                                                   NULL);
 
-  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
+  LIGMA_VALUES_SET_IMAGE (return_vals, 1, image);
 
   return return_vals;
 }
 
 static gboolean
 save_image (GFile               *file,
-            GimpProcedureConfig *config,
-            GimpImage           *image,
-            GimpDrawable        *drawable,
-            GimpMetadata        *metadata,
+            LigmaProcedureConfig *config,
+            LigmaImage           *image,
+            LigmaDrawable        *drawable,
+            LigmaMetadata        *metadata,
             GError             **error)
 {
   JxlEncoder              *encoder;
@@ -912,13 +912,13 @@ save_image (GFile               *file,
 
   FILE                    *outfile;
   GeglBuffer              *buffer;
-  GimpImageType            drawable_type;
+  LigmaImageType            drawable_type;
 
   gint                     drawable_width;
   gint                     drawable_height;
   gpointer                 picture_buffer;
 
-  GimpColorProfile        *profile = NULL;
+  LigmaColorProfile        *profile = NULL;
   const Babl              *file_format = NULL;
   const Babl              *space = NULL;
   gboolean                 out_linear = FALSE;
@@ -935,8 +935,8 @@ save_image (GFile               *file,
   gboolean                 save_exif = FALSE;
   gboolean                 save_xmp = FALSE;
 
-  gimp_progress_init_printf (_("Exporting '%s'"),
-                             gimp_file_get_utf8_name (file));
+  ligma_progress_init_printf (_("Exporting '%s'"),
+                             ligma_file_get_utf8_name (file));
 
   g_object_get (config,
                 "lossless",              &lossless,
@@ -965,9 +965,9 @@ save_image (GFile               *file,
         }
     }
 
-  drawable_type   = gimp_drawable_type (drawable);
-  drawable_width  = gimp_drawable_get_width (drawable);
-  drawable_height = gimp_drawable_get_height (drawable);
+  drawable_type   = ligma_drawable_type (drawable);
+  drawable_width  = ligma_drawable_get_width (drawable);
+  drawable_height = ligma_drawable_get_height (drawable);
 
   JxlEncoderInitBasicInfo(&output_info);
 
@@ -975,11 +975,11 @@ save_image (GFile               *file,
     {
       output_info.uses_original_profile = JXL_TRUE;
 
-      profile = gimp_image_get_effective_color_profile (image);
-      out_linear = gimp_color_profile_is_linear (profile);
+      profile = ligma_image_get_effective_color_profile (image);
+      out_linear = ligma_color_profile_is_linear (profile);
 
-      space = gimp_color_profile_get_space (profile,
-                                            GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+      space = ligma_color_profile_get_space (profile,
+                                            LIGMA_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
                                             error);
 
       if (error && *error)
@@ -1019,7 +1019,7 @@ save_image (GFile               *file,
 
   switch (drawable_type)
     {
-    case GIMP_GRAYA_IMAGE:
+    case LIGMA_GRAYA_IMAGE:
       if (uses_original_profile && out_linear)
         {
           file_format = babl_format ( (bit_depth > 8) ? "YA u16" : "YA u8");
@@ -1038,7 +1038,7 @@ save_image (GFile               *file,
 
       uses_original_profile = FALSE;
       break;
-    case GIMP_GRAY_IMAGE:
+    case LIGMA_GRAY_IMAGE:
       if (uses_original_profile && out_linear)
         {
           file_format = babl_format ( (bit_depth > 8) ? "Y u16" : "Y u8");
@@ -1055,7 +1055,7 @@ save_image (GFile               *file,
 
       uses_original_profile = FALSE;
       break;
-    case GIMP_RGBA_IMAGE:
+    case LIGMA_RGBA_IMAGE:
       if (bit_depth > 8)
         {
           file_format = babl_format_with_space (out_linear ? "RGBA u16" : "R'G'B'A u16", space);
@@ -1072,7 +1072,7 @@ save_image (GFile               *file,
       output_info.alpha_exponent_bits = 0;
       output_info.num_extra_channels = 1;
       break;
-    case GIMP_RGB_IMAGE:
+    case LIGMA_RGB_IMAGE:
       if (bit_depth > 8)
         {
           file_format = babl_format_with_space (out_linear ? "RGB u16" : "R'G'B' u16", space);
@@ -1106,9 +1106,9 @@ save_image (GFile               *file,
     }
   picture_buffer = g_malloc (buffer_size);
 
-  gimp_progress_update (0.3);
+  ligma_progress_update (0.3);
 
-  buffer = gimp_drawable_get_buffer (drawable);
+  buffer = ligma_drawable_get_buffer (drawable);
   gegl_buffer_get (buffer, GEGL_RECTANGLE (0, 0,
                    drawable_width, drawable_height), 1.0,
                    file_format, picture_buffer,
@@ -1116,7 +1116,7 @@ save_image (GFile               *file,
 
   g_object_unref (buffer);
 
-  gimp_progress_update (0.4);
+  ligma_progress_update (0.4);
 
   encoder = JxlEncoderCreate (NULL);
   if (!encoder)
@@ -1147,7 +1147,7 @@ save_image (GFile               *file,
         }
     }
 
-  runner = JxlThreadParallelRunnerCreate (NULL, gimp_get_num_processors ());
+  runner = JxlThreadParallelRunnerCreate (NULL, ligma_get_num_processors ());
   if (JxlEncoderSetParallelRunner (encoder, JxlThreadParallelRunner, runner) != JXL_ENC_SUCCESS)
     {
       g_set_error (error, G_FILE_ERROR, 0,
@@ -1182,7 +1182,7 @@ save_image (GFile               *file,
       const uint8_t *icc_data = NULL;
       size_t         icc_length = 0;
 
-      icc_data = gimp_color_profile_get_icc_profile (profile, &icc_length);
+      icc_data = ligma_color_profile_get_icc_profile (profile, &icc_length);
       status = JxlEncoderSetICCProfile (encoder, icc_data, icc_length);
       g_object_unref (profile);
       profile = NULL;
@@ -1236,7 +1236,7 @@ save_image (GFile               *file,
       g_printerr ("JxlEncoderFrameSettingsSetOption failed to set effort %d", speed);
     }
 
-  gimp_progress_update (0.5);
+  ligma_progress_update (0.5);
 
   status = JxlEncoderAddImageFrame (encoder_options, &pixel_format, picture_buffer, buffer_size);
   if (status != JXL_ENC_SUCCESS)
@@ -1249,24 +1249,24 @@ save_image (GFile               *file,
       return FALSE;
     }
 
-  gimp_progress_update (0.65);
+  ligma_progress_update (0.65);
 
   if (metadata && (save_exif || save_xmp))
     {
-      GimpMetadata         *filtered_metadata;
-      GimpMetadataSaveFlags metadata_flags = 0;
+      LigmaMetadata         *filtered_metadata;
+      LigmaMetadataSaveFlags metadata_flags = 0;
 
       if (save_exif)
         {
-          metadata_flags |= GIMP_METADATA_SAVE_EXIF;
+          metadata_flags |= LIGMA_METADATA_SAVE_EXIF;
         }
 
       if (save_xmp)
         {
-          metadata_flags |= GIMP_METADATA_SAVE_XMP;
+          metadata_flags |= LIGMA_METADATA_SAVE_XMP;
         }
 
-      filtered_metadata = gimp_image_metadata_save_filter (image, "image/jxl", metadata, metadata_flags, NULL, error);
+      filtered_metadata = ligma_image_metadata_save_filter (image, "image/jxl", metadata, metadata_flags, NULL, error);
       if (! filtered_metadata)
         {
           if (error && *error)
@@ -1349,7 +1349,7 @@ save_image (GFile               *file,
 
   JxlEncoderCloseInput (encoder);
 
-  gimp_progress_update (0.7);
+  ligma_progress_update (0.7);
 
   compressed = g_byte_array_sized_new (4096);
   g_byte_array_set_size (compressed, 4096);
@@ -1383,7 +1383,7 @@ save_image (GFile               *file,
 
   g_byte_array_set_size (compressed, next_out - compressed->data);
 
-  gimp_progress_update (0.8);
+  ligma_progress_update (0.8);
 
   if (compressed->len > 0)
     {
@@ -1400,7 +1400,7 @@ save_image (GFile               *file,
       fwrite (compressed->data, 1, compressed->len, outfile);
       fclose (outfile);
 
-      gimp_progress_update (1.0);
+      ligma_progress_update (1.0);
 
       g_byte_array_free (compressed, TRUE);
       return TRUE;
@@ -1413,8 +1413,8 @@ save_image (GFile               *file,
 }
 
 static gboolean
-save_dialog (GimpImage     *image,
-             GimpProcedure *procedure,
+save_dialog (LigmaImage     *image,
+             LigmaProcedure *procedure,
              GObject       *config)
 {
   GtkWidget    *dialog;
@@ -1423,23 +1423,23 @@ save_dialog (GimpImage     *image,
   GtkWidget    *orig_profile_check;
   gboolean      run;
 
-  dialog = gimp_save_procedure_dialog_new (GIMP_SAVE_PROCEDURE (procedure),
-                                           GIMP_PROCEDURE_CONFIG (config),
+  dialog = ligma_save_procedure_dialog_new (LIGMA_SAVE_PROCEDURE (procedure),
+                                           LIGMA_PROCEDURE_CONFIG (config),
                                            image);
 
-  gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
+  ligma_procedure_dialog_get_widget (LIGMA_PROCEDURE_DIALOG (dialog),
                                     "lossless", GTK_TYPE_CHECK_BUTTON);
 
-  compression_scale = gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
+  compression_scale = ligma_procedure_dialog_get_widget (LIGMA_PROCEDURE_DIALOG (dialog),
                                                         "compression",
-                                                        GIMP_TYPE_SCALE_ENTRY);
+                                                        LIGMA_TYPE_SCALE_ENTRY);
 
   g_object_bind_property (config,            "lossless",
                           compression_scale, "sensitive",
                           G_BINDING_SYNC_CREATE |
                           G_BINDING_INVERT_BOOLEAN);
 
-  store = gimp_int_store_new (_("lightning (fastest)"), 1,
+  store = ligma_int_store_new (_("lightning (fastest)"), 1,
                               _("thunder"),             2,
                               _("falcon (faster)"),     3,
                               _("cheetah"),             4,
@@ -1450,17 +1450,17 @@ save_dialog (GimpImage     *image,
                               _("tortoise (slower)"),   9,
                               NULL);
 
-  gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
-                                       "speed", GIMP_INT_STORE (store));
+  ligma_procedure_dialog_get_int_combo (LIGMA_PROCEDURE_DIALOG (dialog),
+                                       "speed", LIGMA_INT_STORE (store));
 
-  store = gimp_int_store_new (_("8 bit/channel"),   8,
+  store = ligma_int_store_new (_("8 bit/channel"),   8,
                               _("16 bit/channel"), 16,
                               NULL);
 
-  gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
-                                       "save-bit-depth", GIMP_INT_STORE (store));
+  ligma_procedure_dialog_get_int_combo (LIGMA_PROCEDURE_DIALOG (dialog),
+                                       "save-bit-depth", LIGMA_INT_STORE (store));
 
-  orig_profile_check = gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
+  orig_profile_check = ligma_procedure_dialog_get_widget (LIGMA_PROCEDURE_DIALOG (dialog),
                                                          "uses-original-profile",
                                                          GTK_TYPE_CHECK_BUTTON);
 
@@ -1469,14 +1469,14 @@ save_dialog (GimpImage     *image,
                           G_BINDING_SYNC_CREATE |
                           G_BINDING_INVERT_BOOLEAN);
 
-  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+  ligma_procedure_dialog_fill (LIGMA_PROCEDURE_DIALOG (dialog),
                               "lossless", "compression",
                               "speed", "save-bit-depth",
                               "uses-original-profile",
                               "save-exif", "save-xmp",
                               NULL);
 
-  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
+  run = ligma_procedure_dialog_run (LIGMA_PROCEDURE_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
 
@@ -1484,41 +1484,41 @@ save_dialog (GimpImage     *image,
 }
 
 
-static GimpValueArray *
-jpegxl_save (GimpProcedure        *procedure,
-             GimpRunMode           run_mode,
-             GimpImage            *image,
+static LigmaValueArray *
+jpegxl_save (LigmaProcedure        *procedure,
+             LigmaRunMode           run_mode,
+             LigmaImage            *image,
              gint                  n_drawables,
-             GimpDrawable        **drawables,
+             LigmaDrawable        **drawables,
              GFile                *file,
-             const GimpValueArray *args,
+             const LigmaValueArray *args,
              gpointer              run_data)
 {
-  GimpPDBStatusType      status = GIMP_PDB_SUCCESS;
-  GimpProcedureConfig   *config;
-  GimpExportReturn       export = GIMP_EXPORT_CANCEL;
+  LigmaPDBStatusType      status = LIGMA_PDB_SUCCESS;
+  LigmaProcedureConfig   *config;
+  LigmaExportReturn       export = LIGMA_EXPORT_CANCEL;
   GError                *error  = NULL;
 
   gegl_init (NULL, NULL);
 
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, image, run_mode, args);
+  config = ligma_procedure_create_config (procedure);
+  ligma_procedure_config_begin_run (config, image, run_mode, args);
 
   switch (run_mode)
     {
-    case GIMP_RUN_INTERACTIVE:
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_ui_init (PLUG_IN_BINARY);
+    case LIGMA_RUN_INTERACTIVE:
+    case LIGMA_RUN_WITH_LAST_VALS:
+      ligma_ui_init (PLUG_IN_BINARY);
 
-      export = gimp_export_image (&image, &n_drawables, &drawables, "JPEG XL",
-                                  GIMP_EXPORT_CAN_HANDLE_RGB |
-                                  GIMP_EXPORT_CAN_HANDLE_GRAY |
-                                  GIMP_EXPORT_CAN_HANDLE_ALPHA);
+      export = ligma_export_image (&image, &n_drawables, &drawables, "JPEG XL",
+                                  LIGMA_EXPORT_CAN_HANDLE_RGB |
+                                  LIGMA_EXPORT_CAN_HANDLE_GRAY |
+                                  LIGMA_EXPORT_CAN_HANDLE_ALPHA);
 
-      if (export == GIMP_EXPORT_CANCEL)
+      if (export == LIGMA_EXPORT_CANCEL)
         {
-          return gimp_procedure_new_return_values (procedure,
-                 GIMP_PDB_CANCEL,
+          return ligma_procedure_new_return_values (procedure,
+                 LIGMA_PDB_CANCEL,
                  NULL);
         }
       break;
@@ -1532,28 +1532,28 @@ jpegxl_save (GimpProcedure        *procedure,
       g_set_error (&error, G_FILE_ERROR, 0,
                    "No drawables to export");
 
-      return gimp_procedure_new_return_values (procedure,
-             GIMP_PDB_CALLING_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+             LIGMA_PDB_CALLING_ERROR,
              error);
     }
 
-  if (run_mode == GIMP_RUN_INTERACTIVE)
+  if (run_mode == LIGMA_RUN_INTERACTIVE)
     {
       if (! save_dialog (image, procedure, G_OBJECT (config)))
         {
-          status = GIMP_PDB_CANCEL;
+          status = LIGMA_PDB_CANCEL;
         }
     }
 
-  if (status == GIMP_PDB_SUCCESS)
+  if (status == LIGMA_PDB_SUCCESS)
     {
-      GimpMetadataSaveFlags metadata_flags;
+      LigmaMetadataSaveFlags metadata_flags;
 
-      GimpMetadata *metadata = gimp_image_metadata_save_prepare (image, "image/jxl", &metadata_flags);
+      LigmaMetadata *metadata = ligma_image_metadata_save_prepare (image, "image/jxl", &metadata_flags);
 
       if (! save_image (file, config, image, drawables[0], metadata, &error))
         {
-          status = GIMP_PDB_EXECUTION_ERROR;
+          status = LIGMA_PDB_EXECUTION_ERROR;
         }
 
       if (metadata)
@@ -1563,14 +1563,14 @@ jpegxl_save (GimpProcedure        *procedure,
     }
 
 
-  gimp_procedure_config_end_run (config, status);
+  ligma_procedure_config_end_run (config, status);
   g_object_unref (config);
 
-  if (export == GIMP_EXPORT_EXPORT)
+  if (export == LIGMA_EXPORT_EXPORT)
     {
       g_free (drawables);
-      gimp_image_delete (image);
+      ligma_image_delete (image);
     }
 
-  return gimp_procedure_new_return_values (procedure, status, error);
+  return ligma_procedure_new_return_values (procedure, status, error);
 }

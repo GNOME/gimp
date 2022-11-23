@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpImageCommentEditor
- * Copyright (C) 2007  Sven Neumann <sven@gimp.org>
+ * LigmaImageCommentEditor
+ * Copyright (C) 2007  Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,40 +18,40 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_COMMENT_EDITOR_H__
-#define __GIMP_IMAGE_COMMENT_EDITOR_H__
+#ifndef __LIGMA_IMAGE_COMMENT_EDITOR_H__
+#define __LIGMA_IMAGE_COMMENT_EDITOR_H__
 
 
-#include "gimpimageparasiteview.h"
+#include "ligmaimageparasiteview.h"
 
 
-#define GIMP_TYPE_IMAGE_COMMENT_EDITOR            (gimp_image_comment_editor_get_type ())
-#define GIMP_IMAGE_COMMENT_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_IMAGE_COMMENT_EDITOR, GimpImageCommentEditor))
-#define GIMP_IMAGE_COMMENT_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_IMAGE_COMMENT_EDITOR, GimpImageCommentEditorClass))
-#define GIMP_IS_IMAGE_COMMENT_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_IMAGE_COMMENT_EDITOR))
-#define GIMP_IS_IMAGE_COMMENT_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_IMAGE_COMMENT_EDITOR))
-#define GIMP_IMAGE_COMMENT_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_IMAGE_COMMENT_EDITOR, GimpImageCommentEditorClass))
+#define LIGMA_TYPE_IMAGE_COMMENT_EDITOR            (ligma_image_comment_editor_get_type ())
+#define LIGMA_IMAGE_COMMENT_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_IMAGE_COMMENT_EDITOR, LigmaImageCommentEditor))
+#define LIGMA_IMAGE_COMMENT_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_IMAGE_COMMENT_EDITOR, LigmaImageCommentEditorClass))
+#define LIGMA_IS_IMAGE_COMMENT_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_IMAGE_COMMENT_EDITOR))
+#define LIGMA_IS_IMAGE_COMMENT_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_IMAGE_COMMENT_EDITOR))
+#define LIGMA_IMAGE_COMMENT_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_IMAGE_COMMENT_EDITOR, LigmaImageCommentEditorClass))
 
 
-typedef struct _GimpImageCommentEditorClass GimpImageCommentEditorClass;
+typedef struct _LigmaImageCommentEditorClass LigmaImageCommentEditorClass;
 
-struct _GimpImageCommentEditor
+struct _LigmaImageCommentEditor
 {
-  GimpImageParasiteView  parent_instance;
+  LigmaImageParasiteView  parent_instance;
 
   GtkTextBuffer         *buffer;
   gboolean               recoursing;
 };
 
-struct _GimpImageCommentEditorClass
+struct _LigmaImageCommentEditorClass
 {
-  GimpImageParasiteViewClass  parent_class;
+  LigmaImageParasiteViewClass  parent_class;
 };
 
 
-GType       gimp_image_comment_editor_get_type (void) G_GNUC_CONST;
+GType       ligma_image_comment_editor_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_image_comment_editor_new      (GimpImage *image);
+GtkWidget * ligma_image_comment_editor_new      (LigmaImage *image);
 
 
-#endif /*  __GIMP_IMAGE_COMMENT_EDITOR_H__  */
+#endif /*  __LIGMA_IMAGE_COMMENT_EDITOR_H__  */

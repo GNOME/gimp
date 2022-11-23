@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,33 +22,33 @@
 #include "core/core-types.h"
 
 
-typedef struct _GimpPDB                GimpPDB;
-typedef struct _GimpProcedure          GimpProcedure;
-typedef struct _GimpPlugInProcedure    GimpPlugInProcedure;
-typedef struct _GimpTemporaryProcedure GimpTemporaryProcedure;
+typedef struct _LigmaPDB                LigmaPDB;
+typedef struct _LigmaProcedure          LigmaProcedure;
+typedef struct _LigmaPlugInProcedure    LigmaPlugInProcedure;
+typedef struct _LigmaTemporaryProcedure LigmaTemporaryProcedure;
 
 
 typedef enum
 {
-  GIMP_PDB_COMPAT_OFF,
-  GIMP_PDB_COMPAT_ON,
-  GIMP_PDB_COMPAT_WARN
-} GimpPDBCompatMode;
+  LIGMA_PDB_COMPAT_OFF,
+  LIGMA_PDB_COMPAT_ON,
+  LIGMA_PDB_COMPAT_WARN
+} LigmaPDBCompatMode;
 
 
 typedef enum
 {
-  GIMP_PDB_ITEM_CONTENT  = 1 << 0,
-  GIMP_PDB_ITEM_POSITION = 1 << 1
-} GimpPDBItemModify;
+  LIGMA_PDB_ITEM_CONTENT  = 1 << 0,
+  LIGMA_PDB_ITEM_POSITION = 1 << 1
+} LigmaPDBItemModify;
 
 
 typedef enum
 {
-  GIMP_PDB_DATA_ACCESS_READ   = 0,
-  GIMP_PDB_DATA_ACCESS_WRITE  = 1 << 0,
-  GIMP_PDB_DATA_ACCESS_RENAME = 1 << 1
-} GimpPDBDataAccess;
+  LIGMA_PDB_DATA_ACCESS_READ   = 0,
+  LIGMA_PDB_DATA_ACCESS_WRITE  = 1 << 0,
+  LIGMA_PDB_DATA_ACCESS_RENAME = 1 << 1
+} LigmaPDBDataAccess;
 
 
 #endif /* __PDB_TYPES_H__ */

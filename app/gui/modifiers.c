@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * modifiers.c
@@ -23,27 +23,27 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "gui-types.h"
 
-#include "config/gimpconfig-file.h"
-#include "config/gimpguiconfig.h"
+#include "config/ligmaconfig-file.h"
+#include "config/ligmaguiconfig.h"
 
-#include "core/gimp.h"
-#include "core/gimperror.h"
+#include "core/ligma.h"
+#include "core/ligmaerror.h"
 
-#include "display/gimpmodifiersmanager.h"
+#include "display/ligmamodifiersmanager.h"
 
-#include "widgets/gimpwidgets-utils.h"
+#include "widgets/ligmawidgets-utils.h"
 
 #include "dialogs/dialogs.h"
 
 #include "modifiers.h"
-#include "gimp-log.h"
+#include "ligma-log.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -57,7 +57,7 @@ enum
 };
 
 
-static GFile * modifiers_file (Gimp *gimp);
+static GFile * modifiers_file (Ligma *ligma);
 
 
 /*  private variables  */
@@ -68,42 +68,42 @@ static gboolean   modifiersrc_deleted = FALSE;
 /*  public functions  */
 
 void
-modifiers_init (Gimp *gimp)
+modifiers_init (Ligma *ligma)
 {
-  GimpDisplayConfig    *display_config;
+  LigmaDisplayConfig    *display_config;
   GFile                *file;
-  GimpModifiersManager *manager = NULL;
+  LigmaModifiersManager *manager = NULL;
   GError               *error   = NULL;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
 
-  display_config = GIMP_DISPLAY_CONFIG (gimp->config);
+  display_config = LIGMA_DISPLAY_CONFIG (ligma->config);
   if (display_config->modifiers_manager != NULL)
     return;
 
-  manager = gimp_modifiers_manager_new ();
+  manager = ligma_modifiers_manager_new ();
   g_object_set (display_config, "modifiers-manager", manager, NULL);
   g_object_unref (manager);
 
-  file = modifiers_file (gimp);
+  file = modifiers_file (ligma);
 
-  if (gimp->be_verbose)
-    g_print ("Parsing '%s'\n", gimp_file_get_utf8_name (file));
+  if (ligma->be_verbose)
+    g_print ("Parsing '%s'\n", ligma_file_get_utf8_name (file));
 
-  gimp_config_deserialize_file (GIMP_CONFIG (manager), file, NULL, &error);
+  ligma_config_deserialize_file (LIGMA_CONFIG (manager), file, NULL, &error);
 
   if (error)
     {
       /* File not existing is considered a normal event, not an error.
-       * It can happen for instance the first time you run GIMP. When
-       * this happens, we ignore the error. The GimpModifiersManager
+       * It can happen for instance the first time you run LIGMA. When
+       * this happens, we ignore the error. The LigmaModifiersManager
        * object will simply use default modifiers.
        */
-      if (error->domain != GIMP_CONFIG_ERROR ||
-          error->code != GIMP_CONFIG_ERROR_OPEN_ENOENT)
+      if (error->domain != LIGMA_CONFIG_ERROR ||
+          error->code != LIGMA_CONFIG_ERROR_OPEN_ENOENT)
         {
-          gimp_message_literal (gimp, NULL, GIMP_MESSAGE_ERROR, error->message);
-          gimp_config_file_backup_on_error (file, "modifiersrc", NULL);
+          ligma_message_literal (ligma, NULL, LIGMA_MESSAGE_ERROR, error->message);
+          ligma_config_file_backup_on_error (file, "modifiersrc", NULL);
         }
 
       g_clear_error (&error);
@@ -113,54 +113,54 @@ modifiers_init (Gimp *gimp)
 }
 
 void
-modifiers_exit (Gimp *gimp)
+modifiers_exit (Ligma *ligma)
 {
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
 }
 
 void
-modifiers_restore (Gimp *gimp)
+modifiers_restore (Ligma *ligma)
 {
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
 }
 
 void
-modifiers_save (Gimp     *gimp,
+modifiers_save (Ligma     *ligma,
                 gboolean  always_save)
 {
-  GimpDisplayConfig    *display_config;
+  LigmaDisplayConfig    *display_config;
   GFile                *file;
-  GimpModifiersManager *manager = NULL;
+  LigmaModifiersManager *manager = NULL;
   GError               *error   = NULL;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
 
   if (modifiersrc_deleted && ! always_save)
     return;
 
-  display_config = GIMP_DISPLAY_CONFIG (gimp->config);
-  g_return_if_fail (GIMP_IS_DISPLAY_CONFIG (display_config));
+  display_config = LIGMA_DISPLAY_CONFIG (ligma->config);
+  g_return_if_fail (LIGMA_IS_DISPLAY_CONFIG (display_config));
 
-  manager = GIMP_MODIFIERS_MANAGER (display_config->modifiers_manager);
+  manager = LIGMA_MODIFIERS_MANAGER (display_config->modifiers_manager);
   g_return_if_fail (manager != NULL);
-  g_return_if_fail (GIMP_IS_MODIFIERS_MANAGER (manager));
-  file = modifiers_file (gimp);
+  g_return_if_fail (LIGMA_IS_MODIFIERS_MANAGER (manager));
+  file = modifiers_file (ligma);
 
-  if (gimp->be_verbose)
-    g_print ("Writing '%s'\n", gimp_file_get_utf8_name (file));
+  if (ligma->be_verbose)
+    g_print ("Writing '%s'\n", ligma_file_get_utf8_name (file));
 
-  gimp_config_serialize_to_file (GIMP_CONFIG (manager), file,
-                                 "GIMP modifiersrc\n\n"
+  ligma_config_serialize_to_file (LIGMA_CONFIG (manager), file,
+                                 "LIGMA modifiersrc\n\n"
                                  "This file stores modifiers configuration. "
                                  "You are not supposed to edit it manually, "
                                  "but of course you can do. The modifiersrc "
                                  "will be entirely rewritten every time you "
-                                 "quit GIMP. If this file isn't found, "
+                                 "quit LIGMA. If this file isn't found, "
                                  "defaults are used.",
                                  NULL, NULL, &error);
   if (error != NULL)
     {
-      gimp_message_literal (gimp, NULL, GIMP_MESSAGE_ERROR, error->message);
+      ligma_message_literal (ligma, NULL, LIGMA_MESSAGE_ERROR, error->message);
       g_clear_error (&error);
     }
 
@@ -170,26 +170,26 @@ modifiers_save (Gimp     *gimp,
 }
 
 gboolean
-modifiers_clear (Gimp    *gimp,
+modifiers_clear (Ligma    *ligma,
                  GError **error)
 {
   GFile    *file;
   GError   *my_error = NULL;
   gboolean  success  = TRUE;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  file = modifiers_file (gimp);
+  file = modifiers_file (ligma);
 
   if (! g_file_delete (file, NULL, &my_error) &&
       my_error->code != G_IO_ERROR_NOT_FOUND)
     {
       success = FALSE;
 
-      g_set_error (error, GIMP_ERROR, GIMP_FAILED,
+      g_set_error (error, LIGMA_ERROR, LIGMA_FAILED,
                    _("Deleting \"%s\" failed: %s"),
-                   gimp_file_get_utf8_name (file), my_error->message);
+                   ligma_file_get_utf8_name (file), my_error->message);
     }
   else
     {
@@ -203,16 +203,16 @@ modifiers_clear (Gimp    *gimp,
 }
 
 static GFile *
-modifiers_file (Gimp *gimp)
+modifiers_file (Ligma *ligma)
 {
   const gchar *basename;
   GFile       *file;
 
-  basename = g_getenv ("GIMP_TESTING_MODIFIERSRC_NAME");
+  basename = g_getenv ("LIGMA_TESTING_MODIFIERSRC_NAME");
   if (! basename)
     basename = "modifiersrc";
 
-  file = gimp_directory_file (basename, NULL);
+  file = ligma_directory_file (basename, NULL);
 
   return file;
 }

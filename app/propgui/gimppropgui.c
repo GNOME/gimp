@@ -1,9 +1,9 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * gimppropgui.c
- * Copyright (C) 2002-2017  Michael Natterer <mitch@gimp.org>
- *                          Sven Neumann <sven@gimp.org>
+ * ligmapropgui.c
+ * Copyright (C) 2002-2017  Michael Natterer <mitch@ligma.org>
+ *                          Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,71 +27,71 @@
 #include <gegl-paramspecs.h>
 #include <gtk/gtk.h>
 
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmaconfig/ligmaconfig.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "propgui-types.h"
 
-#include "gegl/gimp-gegl-utils.h"
+#include "gegl/ligma-gegl-utils.h"
 
-#include "operations/gimp-operation-config.h"
+#include "operations/ligma-operation-config.h"
 
-#include "core/gimpcontext.h"
+#include "core/ligmacontext.h"
 
-#include "widgets/gimpcolorpanel.h"
-#include "widgets/gimpmessagebox.h"
-#include "widgets/gimppropwidgets.h"
+#include "widgets/ligmacolorpanel.h"
+#include "widgets/ligmamessagebox.h"
+#include "widgets/ligmapropwidgets.h"
 
-#include "gimppropgui.h"
-#include "gimppropgui-channel-mixer.h"
-#include "gimppropgui-color-balance.h"
-#include "gimppropgui-color-rotate.h"
-#include "gimppropgui-color-to-alpha.h"
-#include "gimppropgui-convolution-matrix.h"
-#include "gimppropgui-diffraction-patterns.h"
-#include "gimppropgui-eval.h"
-#include "gimppropgui-focus-blur.h"
-#include "gimppropgui-generic.h"
-#include "gimppropgui-hue-saturation.h"
-#include "gimppropgui-motion-blur-circular.h"
-#include "gimppropgui-motion-blur-linear.h"
-#include "gimppropgui-motion-blur-zoom.h"
-#include "gimppropgui-newsprint.h"
-#include "gimppropgui-panorama-projection.h"
-#include "gimppropgui-recursive-transform.h"
-#include "gimppropgui-shadows-highlights.h"
-#include "gimppropgui-spiral.h"
-#include "gimppropgui-supernova.h"
-#include "gimppropgui-utils.h"
-#include "gimppropgui-vignette.h"
+#include "ligmapropgui.h"
+#include "ligmapropgui-channel-mixer.h"
+#include "ligmapropgui-color-balance.h"
+#include "ligmapropgui-color-rotate.h"
+#include "ligmapropgui-color-to-alpha.h"
+#include "ligmapropgui-convolution-matrix.h"
+#include "ligmapropgui-diffraction-patterns.h"
+#include "ligmapropgui-eval.h"
+#include "ligmapropgui-focus-blur.h"
+#include "ligmapropgui-generic.h"
+#include "ligmapropgui-hue-saturation.h"
+#include "ligmapropgui-motion-blur-circular.h"
+#include "ligmapropgui-motion-blur-linear.h"
+#include "ligmapropgui-motion-blur-zoom.h"
+#include "ligmapropgui-newsprint.h"
+#include "ligmapropgui-panorama-projection.h"
+#include "ligmapropgui-recursive-transform.h"
+#include "ligmapropgui-shadows-highlights.h"
+#include "ligmapropgui-spiral.h"
+#include "ligmapropgui-supernova.h"
+#include "ligmapropgui-utils.h"
+#include "ligmapropgui-vignette.h"
 
-#include "gimp-intl.h"
-
-
-#define HAS_KEY(p,k,v) gimp_gegl_param_spec_has_key (p, k, v)
+#include "ligma-intl.h"
 
 
-static gboolean      gimp_prop_string_to_boolean       (GBinding       *binding,
+#define HAS_KEY(p,k,v) ligma_gegl_param_spec_has_key (p, k, v)
+
+
+static gboolean      ligma_prop_string_to_boolean       (GBinding       *binding,
                                                         const GValue   *from_value,
                                                         GValue         *to_value,
                                                         gpointer        user_data);
-static void          gimp_prop_config_notify           (GObject        *config,
+static void          ligma_prop_config_notify           (GObject        *config,
                                                         GParamSpec     *pspec,
                                                         GtkWidget      *widget);
-static void          gimp_prop_widget_show             (GtkWidget      *widget,
+static void          ligma_prop_widget_show             (GtkWidget      *widget,
                                                         GObject        *config);
-static void          gimp_prop_free_label_ref          (GWeakRef       *label_ref);
+static void          ligma_prop_free_label_ref          (GWeakRef       *label_ref);
 
 /*  public functions  */
 
 GtkWidget *
-gimp_prop_widget_new (GObject                  *config,
+ligma_prop_widget_new (GObject                  *config,
                       const gchar              *property_name,
                       GeglRectangle            *area,
-                      GimpContext              *context,
-                      GimpCreatePickerFunc      create_picker_func,
-                      GimpCreateControllerFunc  create_controller_func,
+                      LigmaContext              *context,
+                      LigmaCreatePickerFunc      create_picker_func,
+                      LigmaCreateControllerFunc  create_controller_func,
                       gpointer                  creator,
                       const gchar             **label)
 {
@@ -102,7 +102,7 @@ gimp_prop_widget_new (GObject                  *config,
   pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (config),
                                         property_name);
 
-  return gimp_prop_widget_new_from_pspec (config, pspec, area, context,
+  return ligma_prop_widget_new_from_pspec (config, pspec, area, context,
                                           create_picker_func,
                                           create_controller_func,
                                           creator,
@@ -110,12 +110,12 @@ gimp_prop_widget_new (GObject                  *config,
 }
 
 GtkWidget *
-gimp_prop_widget_new_from_pspec (GObject                  *config,
+ligma_prop_widget_new_from_pspec (GObject                  *config,
                                  GParamSpec               *pspec,
                                  GeglRectangle            *area,
-                                 GimpContext              *context,
-                                 GimpCreatePickerFunc      create_picker_func,
-                                 GimpCreateControllerFunc  create_controller_func,
+                                 LigmaContext              *context,
+                                 LigmaCreatePickerFunc      create_picker_func,
+                                 LigmaCreateControllerFunc  create_controller_func,
                                  gpointer                  creator,
                                  const gchar             **label)
 {
@@ -123,14 +123,14 @@ gimp_prop_widget_new_from_pspec (GObject                  *config,
 
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
   g_return_val_if_fail (pspec != NULL, NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (label != NULL, NULL);
 
   *label = NULL;
 
   if (GEGL_IS_PARAM_SPEC_SEED (pspec))
     {
-      widget = gimp_prop_random_seed_new (config, pspec->name);
+      widget = ligma_prop_random_seed_new (config, pspec->name);
 
       *label = g_param_spec_get_nick (pspec);
     }
@@ -170,7 +170,7 @@ gimp_prop_widget_new_from_pspec (GObject                  *config,
           gdouble value;
 
           /* Get the min and max for the given property. */
-          _gimp_prop_widgets_get_numeric_values (config, pspec,
+          _ligma_prop_widgets_get_numeric_values (config, pspec,
                                                  &value, &lower, &upper,
                                                  G_STRFUNC);
 
@@ -199,7 +199,7 @@ gimp_prop_widget_new_from_pspec (GObject                  *config,
             }
         }
 
-      widget = gimp_prop_spin_scale_new (config, pspec->name,
+      widget = ligma_prop_spin_scale_new (config, pspec->name,
                                          step, page, digits);
 
       if (HAS_KEY (pspec, "unit", "degree") &&
@@ -215,15 +215,15 @@ gimp_prop_widget_new_from_pspec (GObject                  *config,
           gtk_box_pack_start (GTK_BOX (hbox), widget, TRUE, TRUE, 0);
           gtk_widget_show (widget);
 
-          dial = gimp_prop_angle_dial_new (config, pspec->name);
+          dial = ligma_prop_angle_dial_new (config, pspec->name);
           g_object_set (dial,
                         "clockwise-angles", HAS_KEY (pspec, "direction", "cw"),
                         NULL);
           gtk_box_pack_start (GTK_BOX (hbox), dial, FALSE, FALSE, 0);
           gtk_widget_show (dial);
 
-          gimp_help_set_help_data (hbox, g_param_spec_get_blurb (pspec), NULL);
-          gimp_prop_gui_bind_label (hbox, widget);
+          ligma_help_set_help_data (hbox, g_param_spec_get_blurb (pspec), NULL);
+          ligma_prop_gui_bind_label (hbox, widget);
 
           widget = hbox;
         }
@@ -237,18 +237,18 @@ gimp_prop_widget_new_from_pspec (GObject                  *config,
           gtk_box_pack_start (GTK_BOX (hbox), widget, TRUE, TRUE, 0);
           gtk_widget_show (widget);
 
-          button = gimp_prop_kelvin_presets_new (config, pspec->name);
+          button = ligma_prop_kelvin_presets_new (config, pspec->name);
           gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
           gtk_widget_show (button);
 
-          gimp_help_set_help_data (hbox, g_param_spec_get_blurb (pspec), NULL);
-          gimp_prop_gui_bind_label (hbox, widget);
+          ligma_help_set_help_data (hbox, g_param_spec_get_blurb (pspec), NULL);
+          ligma_prop_gui_bind_label (hbox, widget);
 
           widget = hbox;
         }
       else
         {
-          gimp_prop_gui_bind_label (widget, widget);
+          ligma_prop_gui_bind_label (widget, widget);
 
           if (area &&
               (HAS_KEY (pspec, "unit", "pixel-coordinate") ||
@@ -287,7 +287,7 @@ gimp_prop_widget_new_from_pspec (GObject                  *config,
                   max = MIN (upper, MAX (area->width, area->height));
                 }
 
-              gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (widget),
+              ligma_spin_scale_set_scale_limits (LIGMA_SPIN_SCALE (widget),
                                                 min, max);
             }
         }
@@ -296,10 +296,10 @@ gimp_prop_widget_new_from_pspec (GObject                  *config,
     {
       *label = g_param_spec_get_nick (pspec);
 
-      if (GIMP_IS_PARAM_SPEC_CONFIG_PATH (pspec))
+      if (LIGMA_IS_PARAM_SPEC_CONFIG_PATH (pspec))
         {
           widget =
-            gimp_prop_file_chooser_button_new (config, pspec->name,
+            ligma_prop_file_chooser_button_new (config, pspec->name,
                                                g_param_spec_get_nick (pspec),
                                                GTK_FILE_CHOOSER_ACTION_OPEN);
         }
@@ -308,7 +308,7 @@ gimp_prop_widget_new_from_pspec (GObject                  *config,
           GtkTextBuffer *buffer;
           GtkWidget     *view;
 
-          buffer = gimp_prop_text_buffer_new (config, pspec->name, -1);
+          buffer = ligma_prop_text_buffer_new (config, pspec->name, -1);
           view = gtk_text_view_new_with_buffer (buffer);
           g_object_unref (buffer);
 
@@ -323,12 +323,12 @@ gimp_prop_widget_new_from_pspec (GObject                  *config,
         {
           GtkWidget *l;
 
-          widget = gimp_message_box_new (GIMP_ICON_WILBER_EEK);
-          gimp_message_box_set_primary_text (GIMP_MESSAGE_BOX (widget), "%s",
+          widget = ligma_message_box_new (LIGMA_ICON_WILBER_EEK);
+          ligma_message_box_set_primary_text (LIGMA_MESSAGE_BOX (widget), "%s",
                                              *label);
-          gimp_message_box_set_text (GIMP_MESSAGE_BOX (widget), "%s", "");
+          ligma_message_box_set_text (LIGMA_MESSAGE_BOX (widget), "%s", "");
 
-          l = GIMP_MESSAGE_BOX (widget)->label[1];
+          l = LIGMA_MESSAGE_BOX (widget)->label[1];
 
           g_object_bind_property (config, pspec->name,
                                   l,  "label",
@@ -336,59 +336,59 @@ gimp_prop_widget_new_from_pspec (GObject                  *config,
           g_object_bind_property_full (config, pspec->name,
                                        widget, "visible",
                                        G_BINDING_SYNC_CREATE,
-                                       gimp_prop_string_to_boolean,
+                                       ligma_prop_string_to_boolean,
                                        NULL,
                                        NULL, NULL);
           *label = NULL;
         }
       else
         {
-          widget = gimp_prop_entry_new (config, pspec->name, -1);
+          widget = ligma_prop_entry_new (config, pspec->name, -1);
         }
 
     }
   else if (G_IS_PARAM_SPEC_BOOLEAN (pspec))
     {
-      widget = gimp_prop_check_button_new (config, pspec->name,
+      widget = ligma_prop_check_button_new (config, pspec->name,
                                            g_param_spec_get_nick (pspec));
 
-      gimp_prop_gui_bind_label (widget, widget);
+      ligma_prop_gui_bind_label (widget, widget);
     }
   else if (G_IS_PARAM_SPEC_ENUM (pspec))
     {
-      widget = gimp_prop_enum_combo_box_new (config, pspec->name, 0, 0);
-      gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (widget),
+      widget = ligma_prop_enum_combo_box_new (config, pspec->name, 0, 0);
+      ligma_int_combo_box_set_label (LIGMA_INT_COMBO_BOX (widget),
                                     g_param_spec_get_nick (pspec));
 
-      gimp_prop_gui_bind_label (widget, widget);
+      ligma_prop_gui_bind_label (widget, widget);
     }
-  else if (GIMP_IS_PARAM_SPEC_RGB (pspec))
+  else if (LIGMA_IS_PARAM_SPEC_RGB (pspec))
     {
       gboolean   has_alpha;
       GtkWidget *button;
 
-      has_alpha = gimp_param_spec_rgb_has_alpha (pspec);
+      has_alpha = ligma_param_spec_rgb_has_alpha (pspec);
 
       widget = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
 
-      button = gimp_prop_color_button_new (config, pspec->name,
+      button = ligma_prop_color_button_new (config, pspec->name,
                                            g_param_spec_get_nick (pspec),
                                            128, 24,
                                            has_alpha ?
-                                             GIMP_COLOR_AREA_SMALL_CHECKS :
-                                             GIMP_COLOR_AREA_FLAT);
-      gimp_color_button_set_update (GIMP_COLOR_BUTTON (button), TRUE);
-      gimp_color_panel_set_context (GIMP_COLOR_PANEL (button), context);
+                                             LIGMA_COLOR_AREA_SMALL_CHECKS :
+                                             LIGMA_COLOR_AREA_FLAT);
+      ligma_color_button_set_update (LIGMA_COLOR_BUTTON (button), TRUE);
+      ligma_color_panel_set_context (LIGMA_COLOR_PANEL (button), context);
       gtk_box_pack_start (GTK_BOX (widget), button, TRUE, TRUE, 0);
       gtk_widget_show (button);
 
-      gimp_prop_gui_bind_tooltip (button, widget);
+      ligma_prop_gui_bind_tooltip (button, widget);
 
       if (create_picker_func)
         {
           button = create_picker_func (creator,
                                        pspec->name,
-                                       GIMP_ICON_COLOR_PICKER_GRAY,
+                                       LIGMA_ICON_COLOR_PICKER_GRAY,
                                        _("Pick color from the image"),
                                        /* pick_abyss = */ FALSE,
                                        NULL, NULL);
@@ -412,10 +412,10 @@ gimp_prop_widget_new_from_pspec (GObject                  *config,
       gegl_param_spec_get_property_key (pspec, "label")     ||
       gegl_param_spec_get_property_key (pspec, "description"))
     {
-      g_object_set_data (G_OBJECT (widget), "gimp-prop-pspec", pspec);
+      g_object_set_data (G_OBJECT (widget), "ligma-prop-pspec", pspec);
 
       g_signal_connect_object (config, "notify",
-                               G_CALLBACK (gimp_prop_config_notify),
+                               G_CALLBACK (ligma_prop_config_notify),
                                widget, 0);
 
       if (gegl_param_spec_get_property_key (pspec, "visible"))
@@ -426,12 +426,12 @@ gimp_prop_widget_new_from_pspec (GObject                  *config,
            * necessary.
            */
           g_signal_connect (widget, "show",
-                            G_CALLBACK (gimp_prop_widget_show),
+                            G_CALLBACK (ligma_prop_widget_show),
                             config);
         }
 
       /* update all the properties now */
-      gimp_prop_config_notify (config, NULL, widget);
+      ligma_prop_config_notify (config, NULL, widget);
     }
 
   gtk_widget_show (widget);
@@ -440,71 +440,71 @@ gimp_prop_widget_new_from_pspec (GObject                  *config,
 }
 
 
-typedef GtkWidget * (* GimpPropGuiNewFunc) (GObject                  *config,
+typedef GtkWidget * (* LigmaPropGuiNewFunc) (GObject                  *config,
                                             GParamSpec              **param_specs,
                                             guint                     n_param_specs,
                                             GeglRectangle            *area,
-                                            GimpContext              *context,
-                                            GimpCreatePickerFunc      create_picker_func,
-                                            GimpCreateControllerFunc  create_controller_func,
+                                            LigmaContext              *context,
+                                            LigmaCreatePickerFunc      create_picker_func,
+                                            LigmaCreateControllerFunc  create_controller_func,
                                             gpointer                  creator);
 
 static const struct
 {
   const gchar        *config_type;
-  GimpPropGuiNewFunc  gui_new_func;
+  LigmaPropGuiNewFunc  gui_new_func;
 }
 gui_new_funcs[] =
 {
-  { "GimpColorBalanceConfig",
-    _gimp_prop_gui_new_color_balance },
-  { "GimpHueSaturationConfig",
-    _gimp_prop_gui_new_hue_saturation },
-  { "GimpGegl-gegl-color-rotate-config",
-    _gimp_prop_gui_new_color_rotate },
-  { "GimpGegl-gegl-color-to-alpha-config",
-    _gimp_prop_gui_new_color_to_alpha },
-  { "GimpGegl-gegl-convolution-matrix-config",
-    _gimp_prop_gui_new_convolution_matrix },
-  { "GimpGegl-gegl-channel-mixer-config",
-    _gimp_prop_gui_new_channel_mixer },
-  { "GimpGegl-gegl-diffraction-patterns-config",
-    _gimp_prop_gui_new_diffraction_patterns },
-  { "GimpGegl-gegl-focus-blur-config",
-    _gimp_prop_gui_new_focus_blur },
-  { "GimpGegl-gegl-motion-blur-circular-config",
-    _gimp_prop_gui_new_motion_blur_circular },
-  { "GimpGegl-gegl-motion-blur-linear-config",
-    _gimp_prop_gui_new_motion_blur_linear },
-  { "GimpGegl-gegl-motion-blur-zoom-config",
-    _gimp_prop_gui_new_motion_blur_zoom },
-  { "GimpGegl-gegl-newsprint-config",
-    _gimp_prop_gui_new_newsprint },
-  { "GimpGegl-gegl-panorama-projection-config",
-    _gimp_prop_gui_new_panorama_projection },
-  { "GimpGegl-gegl-recursive-transform-config",
-    _gimp_prop_gui_new_recursive_transform },
-  { "GimpGegl-gegl-shadows-highlights-config",
-    _gimp_prop_gui_new_shadows_highlights },
-  { "GimpGegl-gegl-spiral-config",
-    _gimp_prop_gui_new_spiral },
-  { "GimpGegl-gegl-supernova-config",
-    _gimp_prop_gui_new_supernova },
-  { "GimpGegl-gegl-vignette-config",
-    _gimp_prop_gui_new_vignette },
+  { "LigmaColorBalanceConfig",
+    _ligma_prop_gui_new_color_balance },
+  { "LigmaHueSaturationConfig",
+    _ligma_prop_gui_new_hue_saturation },
+  { "LigmaGegl-gegl-color-rotate-config",
+    _ligma_prop_gui_new_color_rotate },
+  { "LigmaGegl-gegl-color-to-alpha-config",
+    _ligma_prop_gui_new_color_to_alpha },
+  { "LigmaGegl-gegl-convolution-matrix-config",
+    _ligma_prop_gui_new_convolution_matrix },
+  { "LigmaGegl-gegl-channel-mixer-config",
+    _ligma_prop_gui_new_channel_mixer },
+  { "LigmaGegl-gegl-diffraction-patterns-config",
+    _ligma_prop_gui_new_diffraction_patterns },
+  { "LigmaGegl-gegl-focus-blur-config",
+    _ligma_prop_gui_new_focus_blur },
+  { "LigmaGegl-gegl-motion-blur-circular-config",
+    _ligma_prop_gui_new_motion_blur_circular },
+  { "LigmaGegl-gegl-motion-blur-linear-config",
+    _ligma_prop_gui_new_motion_blur_linear },
+  { "LigmaGegl-gegl-motion-blur-zoom-config",
+    _ligma_prop_gui_new_motion_blur_zoom },
+  { "LigmaGegl-gegl-newsprint-config",
+    _ligma_prop_gui_new_newsprint },
+  { "LigmaGegl-gegl-panorama-projection-config",
+    _ligma_prop_gui_new_panorama_projection },
+  { "LigmaGegl-gegl-recursive-transform-config",
+    _ligma_prop_gui_new_recursive_transform },
+  { "LigmaGegl-gegl-shadows-highlights-config",
+    _ligma_prop_gui_new_shadows_highlights },
+  { "LigmaGegl-gegl-spiral-config",
+    _ligma_prop_gui_new_spiral },
+  { "LigmaGegl-gegl-supernova-config",
+    _ligma_prop_gui_new_supernova },
+  { "LigmaGegl-gegl-vignette-config",
+    _ligma_prop_gui_new_vignette },
   { NULL,
-    _gimp_prop_gui_new_generic }
+    _ligma_prop_gui_new_generic }
 };
 
 
 GtkWidget *
-gimp_prop_gui_new (GObject                  *config,
+ligma_prop_gui_new (GObject                  *config,
                    GType                     owner_type,
                    GParamFlags               flags,
                    GeglRectangle            *area,
-                   GimpContext              *context,
-                   GimpCreatePickerFunc      create_picker_func,
-                   GimpCreateControllerFunc  create_controller_func,
+                   LigmaContext              *context,
+                   LigmaCreatePickerFunc      create_picker_func,
+                   LigmaCreateControllerFunc  create_controller_func,
                    gpointer                  creator)
 {
   GtkWidget    *gui = NULL;
@@ -512,9 +512,9 @@ gimp_prop_gui_new (GObject                  *config,
   guint         n_param_specs;
 
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
 
-  param_specs = gimp_operation_config_list_properties (config,
+  param_specs = ligma_operation_config_list_properties (config,
                                                        owner_type, flags,
                                                        &n_param_specs);
 
@@ -548,7 +548,7 @@ gimp_prop_gui_new (GObject                  *config,
   else
     {
       gui = gtk_label_new (_("This operation has no editable properties"));
-      gimp_label_set_attributes (GTK_LABEL (gui),
+      ligma_label_set_attributes (GTK_LABEL (gui),
                                  PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                                  -1);
       g_object_set (gui,
@@ -563,7 +563,7 @@ gimp_prop_gui_new (GObject                  *config,
 }
 
 void
-gimp_prop_gui_bind_container (GtkWidget *source,
+ligma_prop_gui_bind_container (GtkWidget *source,
                               GtkWidget *target)
 {
   g_object_bind_property (source, "sensitive",
@@ -575,7 +575,7 @@ gimp_prop_gui_bind_container (GtkWidget *source,
 }
 
 void
-gimp_prop_gui_bind_label (GtkWidget *source,
+ligma_prop_gui_bind_label (GtkWidget *source,
                           GtkWidget *target)
 {
   GWeakRef    *label_ref;
@@ -587,17 +587,17 @@ gimp_prop_gui_bind_label (GtkWidget *source,
    * a reference to "target", and update its label manually.
    */
   g_return_if_fail (g_object_get_data (G_OBJECT (source),
-                                       "gimp-prop-label-ref") == NULL);
+                                       "ligma-prop-label-ref") == NULL);
 
   label_ref = g_slice_new (GWeakRef);
 
   g_weak_ref_init (label_ref, target);
 
   g_object_set_data_full (G_OBJECT (source),
-                          "gimp-prop-label-ref", label_ref,
-                          (GDestroyNotify) gimp_prop_free_label_ref);
+                          "ligma-prop-label-ref", label_ref,
+                          (GDestroyNotify) ligma_prop_free_label_ref);
 
-  label = g_object_get_data (G_OBJECT (source), "gimp-prop-label");
+  label = g_object_get_data (G_OBJECT (source), "ligma-prop-label");
 
   if (label)
     g_object_set (target, "label", label, NULL);
@@ -606,11 +606,11 @@ gimp_prop_gui_bind_label (GtkWidget *source,
    * need to bind the rest of the properties.
    */
   if (source != target)
-    gimp_prop_gui_bind_tooltip (source, target);
+    ligma_prop_gui_bind_tooltip (source, target);
 }
 
 void
-gimp_prop_gui_bind_tooltip (GtkWidget *source,
+ligma_prop_gui_bind_tooltip (GtkWidget *source,
                             GtkWidget *target)
 {
   g_object_bind_property (source, "tooltip-text",
@@ -622,7 +622,7 @@ gimp_prop_gui_bind_tooltip (GtkWidget *source,
 /*  private functions  */
 
 static gboolean
-gimp_prop_string_to_boolean (GBinding     *binding,
+ligma_prop_string_to_boolean (GBinding     *binding,
                              const GValue *from_value,
                              GValue       *to_value,
                              gpointer      user_data)
@@ -635,7 +635,7 @@ gimp_prop_string_to_boolean (GBinding     *binding,
 }
 
 static void
-gimp_prop_config_notify (GObject    *config,
+ligma_prop_config_notify (GObject    *config,
                          GParamSpec *pspec,
                          GtkWidget  *widget)
 {
@@ -647,37 +647,37 @@ gimp_prop_config_notify (GObject    *config,
   gchar      *label;
   gchar      *description;
 
-  widget_pspec = g_object_get_data (G_OBJECT (widget), "gimp-prop-pspec");
-  label_ref    = g_object_get_data (G_OBJECT (widget), "gimp-prop-label-ref");
+  widget_pspec = g_object_get_data (G_OBJECT (widget), "ligma-prop-pspec");
+  label_ref    = g_object_get_data (G_OBJECT (widget), "ligma-prop-label-ref");
 
   if (label_ref)
     label_widget = g_weak_ref_get (label_ref);
   else
     label_widget = NULL;
 
-  sensitive   = gimp_prop_eval_boolean (config, widget_pspec, "sensitive", TRUE);
-  visible     = gimp_prop_eval_boolean (config, widget_pspec, "visible", TRUE);
-  label       = gimp_prop_eval_string (config, widget_pspec, "label",
+  sensitive   = ligma_prop_eval_boolean (config, widget_pspec, "sensitive", TRUE);
+  visible     = ligma_prop_eval_boolean (config, widget_pspec, "visible", TRUE);
+  label       = ligma_prop_eval_string (config, widget_pspec, "label",
                                        g_param_spec_get_nick (widget_pspec));
-  description = gimp_prop_eval_string (config, widget_pspec, "description",
+  description = ligma_prop_eval_string (config, widget_pspec, "description",
                                        g_param_spec_get_blurb (widget_pspec));
 
   /* we store the label in (and pass ownership over it to) the widget's
-   * "gimp-prop-label" key, so that we can use it to initialize the label
-   * widget's label in gimp_prop_gui_bind_label() upon binding.
+   * "ligma-prop-label" key, so that we can use it to initialize the label
+   * widget's label in ligma_prop_gui_bind_label() upon binding.
    */
-  g_object_set_data_full (G_OBJECT (widget), "gimp-prop-label", label, g_free);
+  g_object_set_data_full (G_OBJECT (widget), "ligma-prop-label", label, g_free);
 
   g_signal_handlers_block_by_func (widget,
-                                   gimp_prop_widget_show, config);
+                                   ligma_prop_widget_show, config);
 
   gtk_widget_set_sensitive (widget, sensitive);
   gtk_widget_set_visible (widget, visible);
   if (label_widget) g_object_set (label_widget, "label", label, NULL);
-  gimp_help_set_help_data (widget, description, NULL);
+  ligma_help_set_help_data (widget, description, NULL);
 
   g_signal_handlers_unblock_by_func (widget,
-                                     gimp_prop_widget_show, config);
+                                     ligma_prop_widget_show, config);
 
   g_free (description);
 
@@ -686,21 +686,21 @@ gimp_prop_config_notify (GObject    *config,
 }
 
 static void
-gimp_prop_widget_show (GtkWidget *widget,
+ligma_prop_widget_show (GtkWidget *widget,
                        GObject   *config)
 {
   GParamSpec *widget_pspec;
   gboolean    visible;
 
-  widget_pspec = g_object_get_data (G_OBJECT (widget), "gimp-prop-pspec");
+  widget_pspec = g_object_get_data (G_OBJECT (widget), "ligma-prop-pspec");
 
-  visible = gimp_prop_eval_boolean (config, widget_pspec, "visible", TRUE);
+  visible = ligma_prop_eval_boolean (config, widget_pspec, "visible", TRUE);
 
   gtk_widget_set_visible (widget, visible);
 }
 
 static void
-gimp_prop_free_label_ref (GWeakRef *label_ref)
+ligma_prop_free_label_ref (GWeakRef *label_ref)
 {
   g_weak_ref_clear (label_ref);
 

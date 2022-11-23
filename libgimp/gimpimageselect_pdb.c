@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimpimageselect_pdb.c
+ * ligmaimageselect_pdb.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,12 +24,12 @@
 
 #include "stamp-pdbgen.h"
 
-#include "gimp.h"
+#include "ligma.h"
 
 
 /**
- * SECTION: gimpimageselect
- * @title: gimpimageselect
+ * SECTION: ligmaimageselect
+ * @title: ligmaimageselect
  * @short_description: Modify the image's selection.
  *
  * Functions to modify the image's selection.
@@ -37,7 +37,7 @@
 
 
 /**
- * gimp_image_select_color:
+ * ligma_image_select_color:
  * @image: The affected image.
  * @operation: The selection operation.
  * @drawable: The affected drawable.
@@ -55,11 +55,11 @@
  * specified must also have minimum alpha.
  *
  * This procedure is affected by the following context setters:
- * gimp_context_set_antialias(), gimp_context_set_feather(),
- * gimp_context_set_feather_radius(), gimp_context_set_sample_merged(),
- * gimp_context_set_sample_criterion(),
- * gimp_context_set_sample_threshold(),
- * gimp_context_set_sample_transparent().
+ * ligma_context_set_antialias(), ligma_context_set_feather(),
+ * ligma_context_set_feather_radius(), ligma_context_set_sample_merged(),
+ * ligma_context_set_sample_criterion(),
+ * ligma_context_set_sample_threshold(),
+ * ligma_context_set_sample_transparent().
  *
  * In the case of a merged sampling, the supplied drawable is ignored.
  *
@@ -68,36 +68,36 @@
  * Since: 2.8
  **/
 gboolean
-gimp_image_select_color (GimpImage      *image,
-                         GimpChannelOps  operation,
-                         GimpDrawable   *drawable,
-                         const GimpRGB  *color)
+ligma_image_select_color (LigmaImage      *image,
+                         LigmaChannelOps  operation,
+                         LigmaDrawable   *drawable,
+                         const LigmaRGB  *color)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
-                                          GIMP_TYPE_CHANNEL_OPS, operation,
-                                          GIMP_TYPE_DRAWABLE, drawable,
-                                          GIMP_TYPE_RGB, color,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
+                                          LIGMA_TYPE_CHANNEL_OPS, operation,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
+                                          LIGMA_TYPE_RGB, color,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-select-color",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-select-color",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_select_contiguous_color:
+ * ligma_image_select_contiguous_color:
  * @image: The affected image.
  * @operation: The selection operation.
  * @drawable: The affected drawable.
@@ -121,12 +121,12 @@ gimp_image_select_color (GimpImage      *image,
  * boundary.
  *
  * This procedure is affected by the following context setters:
- * gimp_context_set_antialias(), gimp_context_set_feather(),
- * gimp_context_set_feather_radius(), gimp_context_set_sample_merged(),
- * gimp_context_set_sample_criterion(),
- * gimp_context_set_sample_threshold(),
- * gimp_context_set_sample_transparent(),
- * gimp_context_set_diagonal_neighbors().
+ * ligma_context_set_antialias(), ligma_context_set_feather(),
+ * ligma_context_set_feather_radius(), ligma_context_set_sample_merged(),
+ * ligma_context_set_sample_criterion(),
+ * ligma_context_set_sample_threshold(),
+ * ligma_context_set_sample_transparent(),
+ * ligma_context_set_diagonal_neighbors().
  *
  * In the case of a merged sampling, the supplied drawable is ignored.
  * If the sample is merged, the specified coordinates are relative to
@@ -138,38 +138,38 @@ gimp_image_select_color (GimpImage      *image,
  * Since: 2.8
  **/
 gboolean
-gimp_image_select_contiguous_color (GimpImage      *image,
-                                    GimpChannelOps  operation,
-                                    GimpDrawable   *drawable,
+ligma_image_select_contiguous_color (LigmaImage      *image,
+                                    LigmaChannelOps  operation,
+                                    LigmaDrawable   *drawable,
                                     gdouble         x,
                                     gdouble         y)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
-                                          GIMP_TYPE_CHANNEL_OPS, operation,
-                                          GIMP_TYPE_DRAWABLE, drawable,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
+                                          LIGMA_TYPE_CHANNEL_OPS, operation,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
                                           G_TYPE_DOUBLE, x,
                                           G_TYPE_DOUBLE, y,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-select-contiguous-color",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-select-contiguous-color",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_select_rectangle:
+ * ligma_image_select_rectangle:
  * @image: The image.
  * @operation: The selection operation.
  * @x: x coordinate of upper-left corner of rectangle.
@@ -184,47 +184,47 @@ gimp_image_select_contiguous_color (GimpImage      *image,
  * replace the contents of the previous selection mask.
  *
  * This procedure is affected by the following context setters:
- * gimp_context_set_feather(), gimp_context_set_feather_radius().
+ * ligma_context_set_feather(), ligma_context_set_feather_radius().
  *
  * Returns: TRUE on success.
  *
  * Since: 2.8
  **/
 gboolean
-gimp_image_select_rectangle (GimpImage      *image,
-                             GimpChannelOps  operation,
+ligma_image_select_rectangle (LigmaImage      *image,
+                             LigmaChannelOps  operation,
                              gdouble         x,
                              gdouble         y,
                              gdouble         width,
                              gdouble         height)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
-                                          GIMP_TYPE_CHANNEL_OPS, operation,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
+                                          LIGMA_TYPE_CHANNEL_OPS, operation,
                                           G_TYPE_DOUBLE, x,
                                           G_TYPE_DOUBLE, y,
                                           G_TYPE_DOUBLE, width,
                                           G_TYPE_DOUBLE, height,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-select-rectangle",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-select-rectangle",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_select_round_rectangle:
+ * ligma_image_select_round_rectangle:
  * @image: The image.
  * @operation: The selection operation.
  * @x: x coordinate of upper-left corner of rectangle.
@@ -243,16 +243,16 @@ gimp_image_select_rectangle (GimpImage      *image,
  * mask.
  *
  * This procedure is affected by the following context setters:
- * gimp_context_set_antialias(), gimp_context_set_feather(),
- * gimp_context_set_feather_radius().
+ * ligma_context_set_antialias(), ligma_context_set_feather(),
+ * ligma_context_set_feather_radius().
  *
  * Returns: TRUE on success.
  *
  * Since: 2.8
  **/
 gboolean
-gimp_image_select_round_rectangle (GimpImage      *image,
-                                   GimpChannelOps  operation,
+ligma_image_select_round_rectangle (LigmaImage      *image,
+                                   LigmaChannelOps  operation,
                                    gdouble         x,
                                    gdouble         y,
                                    gdouble         width,
@@ -260,13 +260,13 @@ gimp_image_select_round_rectangle (GimpImage      *image,
                                    gdouble         corner_radius_x,
                                    gdouble         corner_radius_y)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
-                                          GIMP_TYPE_CHANNEL_OPS, operation,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
+                                          LIGMA_TYPE_CHANNEL_OPS, operation,
                                           G_TYPE_DOUBLE, x,
                                           G_TYPE_DOUBLE, y,
                                           G_TYPE_DOUBLE, width,
@@ -275,20 +275,20 @@ gimp_image_select_round_rectangle (GimpImage      *image,
                                           G_TYPE_DOUBLE, corner_radius_y,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-select-round-rectangle",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-select-round-rectangle",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_select_ellipse:
+ * ligma_image_select_ellipse:
  * @image: The image.
  * @operation: The selection operation.
  * @x: x coordinate of upper-left corner of ellipse bounding box.
@@ -303,48 +303,48 @@ gimp_image_select_round_rectangle (GimpImage      *image,
  * replace the contents of the previous selection mask.
  *
  * This procedure is affected by the following context setters:
- * gimp_context_set_antialias(), gimp_context_set_feather(),
- * gimp_context_set_feather_radius().
+ * ligma_context_set_antialias(), ligma_context_set_feather(),
+ * ligma_context_set_feather_radius().
  *
  * Returns: TRUE on success.
  *
  * Since: 2.8
  **/
 gboolean
-gimp_image_select_ellipse (GimpImage      *image,
-                           GimpChannelOps  operation,
+ligma_image_select_ellipse (LigmaImage      *image,
+                           LigmaChannelOps  operation,
                            gdouble         x,
                            gdouble         y,
                            gdouble         width,
                            gdouble         height)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
-                                          GIMP_TYPE_CHANNEL_OPS, operation,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
+                                          LIGMA_TYPE_CHANNEL_OPS, operation,
                                           G_TYPE_DOUBLE, x,
                                           G_TYPE_DOUBLE, y,
                                           G_TYPE_DOUBLE, width,
                                           G_TYPE_DOUBLE, height,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-select-ellipse",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-select-ellipse",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_select_polygon:
+ * ligma_image_select_polygon:
  * @image: The image.
  * @operation: The selection operation.
  * @num_segs: Number of points (count 1 coordinate as two points).
@@ -362,45 +362,45 @@ gimp_image_select_ellipse (GimpImage      *image,
  * starting point, a connecting segment is automatically added.
  *
  * This procedure is affected by the following context setters:
- * gimp_context_set_antialias(), gimp_context_set_feather(),
- * gimp_context_set_feather_radius().
+ * ligma_context_set_antialias(), ligma_context_set_feather(),
+ * ligma_context_set_feather_radius().
  *
  * Returns: TRUE on success.
  *
  * Since: 2.8
  **/
 gboolean
-gimp_image_select_polygon (GimpImage      *image,
-                           GimpChannelOps  operation,
+ligma_image_select_polygon (LigmaImage      *image,
+                           LigmaChannelOps  operation,
                            gint            num_segs,
                            const gdouble  *segs)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
-                                          GIMP_TYPE_CHANNEL_OPS, operation,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
+                                          LIGMA_TYPE_CHANNEL_OPS, operation,
                                           G_TYPE_INT, num_segs,
-                                          GIMP_TYPE_FLOAT_ARRAY, NULL,
+                                          LIGMA_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_NONE);
-  gimp_value_set_float_array (gimp_value_array_index (args, 3), segs, num_segs);
+  ligma_value_set_float_array (ligma_value_array_index (args, 3), segs, num_segs);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-select-polygon",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-select-polygon",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_select_item:
+ * ligma_image_select_item:
  * @image: The image.
  * @operation: The desired operation with current selection.
  * @item: The item to render to the selection.
@@ -413,36 +413,36 @@ gimp_image_select_polygon (GimpImage      *image,
  * channel, for vectors the vector's shape.
  *
  * This procedure is affected by the following context setters:
- * gimp_context_set_antialias(), gimp_context_set_feather(),
- * gimp_context_set_feather_radius().
+ * ligma_context_set_antialias(), ligma_context_set_feather(),
+ * ligma_context_set_feather_radius().
  *
  * Returns: TRUE on success.
  *
  * Since: 2.8
  **/
 gboolean
-gimp_image_select_item (GimpImage      *image,
-                        GimpChannelOps  operation,
-                        GimpItem       *item)
+ligma_image_select_item (LigmaImage      *image,
+                        LigmaChannelOps  operation,
+                        LigmaItem       *item)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
-                                          GIMP_TYPE_CHANNEL_OPS, operation,
-                                          GIMP_TYPE_ITEM, item,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
+                                          LIGMA_TYPE_CHANNEL_OPS, operation,
+                                          LIGMA_TYPE_ITEM, item,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-select-item",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-select-item",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }

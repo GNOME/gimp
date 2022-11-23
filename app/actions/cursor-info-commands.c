@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,7 +22,7 @@
 
 #include "actions-types.h"
 
-#include "display/gimpcursorview.h"
+#include "display/ligmacursorview.h"
 
 #include "cursor-info-commands.h"
 
@@ -30,12 +30,12 @@
 /*  public functions  */
 
 void
-cursor_info_sample_merged_cmd_callback (GimpAction *action,
+cursor_info_sample_merged_cmd_callback (LigmaAction *action,
                                         GVariant   *value,
                                         gpointer    data)
 {
-  GimpCursorView *view   = GIMP_CURSOR_VIEW (data);
+  LigmaCursorView *view   = LIGMA_CURSOR_VIEW (data);
   gboolean        active = g_variant_get_boolean (value);
 
-  gimp_cursor_view_set_sample_merged (view, active);
+  ligma_cursor_view_set_sample_merged (view, active);
 }

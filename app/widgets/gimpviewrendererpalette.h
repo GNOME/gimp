@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpviewrendererpalette.h
- * Copyright (C) 2005 Michael Natterer <mitch@gimp.org>
+ * ligmaviewrendererpalette.h
+ * Copyright (C) 2005 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,24 +18,24 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_VIEW_RENDERER_PALETTE_H__
-#define __GIMP_VIEW_RENDERER_PALETTE_H__
+#ifndef __LIGMA_VIEW_RENDERER_PALETTE_H__
+#define __LIGMA_VIEW_RENDERER_PALETTE_H__
 
-#include "gimpviewrenderer.h"
+#include "ligmaviewrenderer.h"
 
-#define GIMP_TYPE_VIEW_RENDERER_PALETTE            (gimp_view_renderer_palette_get_type ())
-#define GIMP_VIEW_RENDERER_PALETTE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_VIEW_RENDERER_PALETTE, GimpViewRendererPalette))
-#define GIMP_VIEW_RENDERER_PALETTE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_VIEW_RENDERER_PALETTE, GimpViewRendererPaletteClass))
-#define GIMP_IS_VIEW_RENDERER_PALETTE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE (obj, GIMP_TYPE_VIEW_RENDERER_PALETTE))
-#define GIMP_IS_VIEW_RENDERER_PALETTE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_VIEW_RENDERER_PALETTE))
-#define GIMP_VIEW_RENDERER_PALETTE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_VIEW_RENDERER_PALETTE, GimpViewRendererPaletteClass))
+#define LIGMA_TYPE_VIEW_RENDERER_PALETTE            (ligma_view_renderer_palette_get_type ())
+#define LIGMA_VIEW_RENDERER_PALETTE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_VIEW_RENDERER_PALETTE, LigmaViewRendererPalette))
+#define LIGMA_VIEW_RENDERER_PALETTE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_VIEW_RENDERER_PALETTE, LigmaViewRendererPaletteClass))
+#define LIGMA_IS_VIEW_RENDERER_PALETTE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE (obj, LIGMA_TYPE_VIEW_RENDERER_PALETTE))
+#define LIGMA_IS_VIEW_RENDERER_PALETTE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_VIEW_RENDERER_PALETTE))
+#define LIGMA_VIEW_RENDERER_PALETTE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_VIEW_RENDERER_PALETTE, LigmaViewRendererPaletteClass))
 
 
-typedef struct _GimpViewRendererPaletteClass  GimpViewRendererPaletteClass;
+typedef struct _LigmaViewRendererPaletteClass  LigmaViewRendererPaletteClass;
 
-struct _GimpViewRendererPalette
+struct _LigmaViewRendererPalette
 {
-  GimpViewRenderer  parent_instance;
+  LigmaViewRenderer  parent_instance;
 
   gint              cell_size;
   gboolean          draw_grid;
@@ -46,18 +46,18 @@ struct _GimpViewRendererPalette
   gint              rows;
 };
 
-struct _GimpViewRendererPaletteClass
+struct _LigmaViewRendererPaletteClass
 {
-  GimpViewRendererClass  parent_class;
+  LigmaViewRendererClass  parent_class;
 };
 
 
-GType   gimp_view_renderer_palette_get_type    (void) G_GNUC_CONST;
+GType   ligma_view_renderer_palette_get_type    (void) G_GNUC_CONST;
 
-void    gimp_view_renderer_palette_set_cell_size (GimpViewRendererPalette *renderer,
+void    ligma_view_renderer_palette_set_cell_size (LigmaViewRendererPalette *renderer,
                                                   gint                     cell_size);
-void    gimp_view_renderer_palette_set_draw_grid (GimpViewRendererPalette *renderer,
+void    ligma_view_renderer_palette_set_draw_grid (LigmaViewRendererPalette *renderer,
                                                   gboolean                 draw_grid);
 
 
-#endif /* __GIMP_VIEW_RENDERER_PALETTE_H__ */
+#endif /* __LIGMA_VIEW_RENDERER_PALETTE_H__ */

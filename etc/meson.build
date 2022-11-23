@@ -6,16 +6,16 @@ install_data(
   [
     'controllerrc',
     configure_file(
-      input : 'gimprc.in',
-      output: 'gimprc',
+      input : 'ligmarc.in',
+      output: 'ligmarc',
       configuration: etcconf,
     ),
-    'gimp.css',
+    'ligma.css',
     'menurc',
     'sessionrc',
     'templaterc',
     'toolrc',
     'unitrc',
   ],
-  install_dir: gimpsysconfdir,
+  install_dir: ligmasysconfdir,
 )

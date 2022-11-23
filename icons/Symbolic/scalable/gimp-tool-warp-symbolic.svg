@@ -15,7 +15,7 @@
    width="16"
    version="1.1"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="gimp-tool-warp.svg">
+   sodipodi:docname="ligma-tool-warp.svg">
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -50,7 +50,7 @@
             <dc:title>Barbara Muraus, Jakub Steiner, Klaus Staedtler</dc:title>
           </cc:Agent>
         </dc:contributor>
-        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for GIMP</dc:description>
+        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for LIGMA</dc:description>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -122,7 +122,7 @@
      id="tools">
     <g
        transform="translate(390.43516,259.83904)"
-       id="gimp-tool-warp">
+       id="ligma-tool-warp">
       <path
          id="path19600"
          d="m -370.61649,79.199771 c -0.83064,-0.034 -1.59636,0.091 -2.07827,0.3896 -4.15779,2.5395 -1.79368,8.7383 -7.90043,7.5876 l -0.0501,6.8266 15.94988,0 0.0501,-6.8266 c -4.15803,0.9194 -5.90442,0 -6.72026,-1.8001 -0.72332,-1.5961 -0.14651,-3.0144 0.82165,-3.1854 1.91376,-0.3395 1.71484,0.9194 2.85161,1.2351 1.08061,0.2996 1.40962,-0.7053 0.65247,-2.2764 -0.63561,-1.3181 -2.1922,-1.8877 -3.57665,-1.9504 z"

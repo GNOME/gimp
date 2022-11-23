@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpsymmetry.c
- * Copyright (C) 2015 Jehan <jehan@gimp.org>
+ * ligmasymmetry.c
+ * Copyright (C) 2015 Jehan <jehan@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,21 +25,21 @@
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
+#include "libligmamath/ligmamath.h"
 
 #include "core-types.h"
 
-#include "gegl/gimp-gegl-nodes.h"
+#include "gegl/ligma-gegl-nodes.h"
 
-#include "gimpdrawable.h"
-#include "gimpimage.h"
-#include "gimpimage-symmetry.h"
-#include "gimpitem.h"
-#include "gimpsymmetry.h"
+#include "ligmadrawable.h"
+#include "ligmaimage.h"
+#include "ligmaimage-symmetry.h"
+#include "ligmaitem.h"
+#include "ligmasymmetry.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -61,43 +61,43 @@ enum
 
 /* Local function prototypes */
 
-static void       gimp_symmetry_finalize            (GObject      *object);
-static void       gimp_symmetry_set_property        (GObject      *object,
+static void       ligma_symmetry_finalize            (GObject      *object);
+static void       ligma_symmetry_set_property        (GObject      *object,
                                                      guint         property_id,
                                                      const GValue *value,
                                                      GParamSpec   *pspec);
-static void       gimp_symmetry_get_property        (GObject      *object,
+static void       ligma_symmetry_get_property        (GObject      *object,
                                                      guint         property_id,
                                                      GValue       *value,
                                                      GParamSpec   *pspec);
 
-static void       gimp_symmetry_real_update_strokes (GimpSymmetry *sym,
-                                                     GimpDrawable *drawable,
-                                                     GimpCoords   *origin);
-static void       gimp_symmetry_real_get_transform  (GimpSymmetry *sym,
+static void       ligma_symmetry_real_update_strokes (LigmaSymmetry *sym,
+                                                     LigmaDrawable *drawable,
+                                                     LigmaCoords   *origin);
+static void       ligma_symmetry_real_get_transform  (LigmaSymmetry *sym,
                                                      gint          stroke,
                                                      gdouble      *angle,
                                                      gboolean     *reflect);
-static gboolean   gimp_symmetry_real_update_version (GimpSymmetry *sym);
+static gboolean   ligma_symmetry_real_update_version (LigmaSymmetry *sym);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpSymmetry, gimp_symmetry, GIMP_TYPE_OBJECT,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG, NULL))
+G_DEFINE_TYPE_WITH_CODE (LigmaSymmetry, ligma_symmetry, LIGMA_TYPE_OBJECT,
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_CONFIG, NULL))
 
-#define parent_class gimp_symmetry_parent_class
+#define parent_class ligma_symmetry_parent_class
 
-static guint gimp_symmetry_signals[LAST_SIGNAL] = { 0 };
+static guint ligma_symmetry_signals[LAST_SIGNAL] = { 0 };
 
 
 static void
-gimp_symmetry_class_init (GimpSymmetryClass *klass)
+ligma_symmetry_class_init (LigmaSymmetryClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   /* This signal should likely be emitted at the end of
    * update_strokes() if stroke coordinates were changed.
    */
-  gimp_symmetry_signals[STROKES_UPDATED] =
+  ligma_symmetry_signals[STROKES_UPDATED] =
     g_signal_new ("strokes-updated",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
@@ -105,13 +105,13 @@ gimp_symmetry_class_init (GimpSymmetryClass *klass)
                   NULL, NULL,
                   NULL,
                   G_TYPE_NONE,
-                  1, GIMP_TYPE_IMAGE);
+                  1, LIGMA_TYPE_IMAGE);
 
   /* This signal should be emitted when you request a change in the
    * settings UI. For instance adding some settings (therefore having
    * a dynamic UI), or changing scale min/max extremes, etc.
    */
-  gimp_symmetry_signals[GUI_PARAM_CHANGED] =
+  ligma_symmetry_signals[GUI_PARAM_CHANGED] =
     g_signal_new ("gui-param-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
@@ -119,70 +119,70 @@ gimp_symmetry_class_init (GimpSymmetryClass *klass)
                   NULL, NULL,
                   NULL,
                   G_TYPE_NONE,
-                  1, GIMP_TYPE_IMAGE);
+                  1, LIGMA_TYPE_IMAGE);
 
-  gimp_symmetry_signals[ACTIVE_CHANGED] =
+  ligma_symmetry_signals[ACTIVE_CHANGED] =
     g_signal_new ("active-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpSymmetryClass, active_changed),
+                  G_STRUCT_OFFSET (LigmaSymmetryClass, active_changed),
                   NULL, NULL,
                   NULL,
                   G_TYPE_NONE, 0);
 
-  object_class->finalize     = gimp_symmetry_finalize;
-  object_class->set_property = gimp_symmetry_set_property;
-  object_class->get_property = gimp_symmetry_get_property;
+  object_class->finalize     = ligma_symmetry_finalize;
+  object_class->set_property = ligma_symmetry_set_property;
+  object_class->get_property = ligma_symmetry_get_property;
 
   klass->label               = _("None");
-  klass->update_strokes      = gimp_symmetry_real_update_strokes;
-  klass->get_transform       = gimp_symmetry_real_get_transform;
+  klass->update_strokes      = ligma_symmetry_real_update_strokes;
+  klass->get_transform       = ligma_symmetry_real_get_transform;
   klass->active_changed      = NULL;
-  klass->update_version      = gimp_symmetry_real_update_version;
+  klass->update_version      = ligma_symmetry_real_update_version;
 
   g_object_class_install_property (object_class, PROP_IMAGE,
                                    g_param_spec_object ("image",
                                                         NULL, NULL,
-                                                        GIMP_TYPE_IMAGE,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_TYPE_IMAGE,
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_ACTIVE,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_ACTIVE,
                             "active",
                             _("Active"),
                             _("Activate symmetry painting"),
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_INT (object_class, PROP_VERSION,
+  LIGMA_CONFIG_PROP_INT (object_class, PROP_VERSION,
                         "version",
                         "Symmetry version",
                         "Version of the symmetry object",
                         -1, G_MAXINT, 0,
-                        GIMP_PARAM_STATIC_STRINGS);
+                        LIGMA_PARAM_STATIC_STRINGS);
 }
 
 static void
-gimp_symmetry_init (GimpSymmetry *sym)
+ligma_symmetry_init (LigmaSymmetry *sym)
 {
 }
 
 static void
-gimp_symmetry_finalize (GObject *object)
+ligma_symmetry_finalize (GObject *object)
 {
-  GimpSymmetry *sym = GIMP_SYMMETRY (object);
+  LigmaSymmetry *sym = LIGMA_SYMMETRY (object);
 
-  gimp_symmetry_clear_origin (sym);
+  ligma_symmetry_clear_origin (sym);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
-gimp_symmetry_set_property (GObject      *object,
+ligma_symmetry_set_property (GObject      *object,
                             guint         property_id,
                             const GValue *value,
                             GParamSpec   *pspec)
 {
-  GimpSymmetry *sym = GIMP_SYMMETRY (object);
+  LigmaSymmetry *sym = LIGMA_SYMMETRY (object);
 
   switch (property_id)
     {
@@ -191,7 +191,7 @@ gimp_symmetry_set_property (GObject      *object,
       break;
     case PROP_ACTIVE:
       sym->active = g_value_get_boolean (value);
-      g_signal_emit (sym, gimp_symmetry_signals[ACTIVE_CHANGED], 0,
+      g_signal_emit (sym, ligma_symmetry_signals[ACTIVE_CHANGED], 0,
                      sym->active);
       break;
     case PROP_VERSION:
@@ -204,12 +204,12 @@ gimp_symmetry_set_property (GObject      *object,
 }
 
 static void
-gimp_symmetry_get_property (GObject    *object,
+ligma_symmetry_get_property (GObject    *object,
                             guint       property_id,
                             GValue     *value,
                             GParamSpec *pspec)
 {
-  GimpSymmetry *sym = GIMP_SYMMETRY (object);
+  LigmaSymmetry *sym = LIGMA_SYMMETRY (object);
 
   switch (property_id)
     {
@@ -229,17 +229,17 @@ gimp_symmetry_get_property (GObject    *object,
 }
 
 static void
-gimp_symmetry_real_update_strokes (GimpSymmetry *sym,
-                                   GimpDrawable *drawable,
-                                   GimpCoords   *origin)
+ligma_symmetry_real_update_strokes (LigmaSymmetry *sym,
+                                   LigmaDrawable *drawable,
+                                   LigmaCoords   *origin)
 {
   /* The basic symmetry just uses the origin as is. */
   sym->strokes = g_list_prepend (sym->strokes,
-                                 g_memdup2 (origin, sizeof (GimpCoords)));
+                                 g_memdup2 (origin, sizeof (LigmaCoords)));
 }
 
 static void
-gimp_symmetry_real_get_transform (GimpSymmetry *sym,
+ligma_symmetry_real_get_transform (LigmaSymmetry *sym,
                                   gint          stroke,
                                   gdouble      *angle,
                                   gboolean     *reflect)
@@ -249,7 +249,7 @@ gimp_symmetry_real_get_transform (GimpSymmetry *sym,
 }
 
 static gboolean
-gimp_symmetry_real_update_version (GimpSymmetry *symmetry)
+ligma_symmetry_real_update_version (LigmaSymmetry *symmetry)
 {
   /* Currently all symmetries are at version 0. So all this check has to
    * do is verify that we are at version 0.
@@ -270,8 +270,8 @@ gimp_symmetry_real_update_version (GimpSymmetry *symmetry)
 /***** Public Functions *****/
 
 /**
- * gimp_symmetry_set_stateful:
- * @sym:      the #GimpSymmetry
+ * ligma_symmetry_set_stateful:
+ * @sym:      the #LigmaSymmetry
  * @stateful: whether the symmetry should be stateful or stateless.
  *
  * By default, symmetry is made stateless, which means in particular
@@ -290,28 +290,28 @@ gimp_symmetry_real_update_version (GimpSymmetry *symmetry)
  * won't be for the ink tool if one draws too far out of canvas).
  **/
 void
-gimp_symmetry_set_stateful (GimpSymmetry *symmetry,
+ligma_symmetry_set_stateful (LigmaSymmetry *symmetry,
                             gboolean      stateful)
 {
   symmetry->stateful = stateful;
 }
 
 /**
- * gimp_symmetry_set_origin:
- * @sym:      the #GimpSymmetry
- * @drawable: the #GimpDrawable where painting will happen
+ * ligma_symmetry_set_origin:
+ * @sym:      the #LigmaSymmetry
+ * @drawable: the #LigmaDrawable where painting will happen
  * @origin:   new base coordinates.
  *
  * Set the symmetry to new origin coordinates and drawable.
  **/
 void
-gimp_symmetry_set_origin (GimpSymmetry *sym,
-                          GimpDrawable *drawable,
-                          GimpCoords   *origin)
+ligma_symmetry_set_origin (LigmaSymmetry *sym,
+                          LigmaDrawable *drawable,
+                          LigmaCoords   *origin)
 {
-  g_return_if_fail (GIMP_IS_SYMMETRY (sym));
-  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-  g_return_if_fail (gimp_item_get_image (GIMP_ITEM (drawable)) == sym->image);
+  g_return_if_fail (LIGMA_IS_SYMMETRY (sym));
+  g_return_if_fail (LIGMA_IS_DRAWABLE (drawable));
+  g_return_if_fail (ligma_item_get_image (LIGMA_ITEM (drawable)) == sym->image);
 
   if (drawable != sym->drawable)
     {
@@ -323,25 +323,25 @@ gimp_symmetry_set_origin (GimpSymmetry *sym,
   if (origin != sym->origin)
     {
       g_free (sym->origin);
-      sym->origin = g_memdup2 (origin, sizeof (GimpCoords));
+      sym->origin = g_memdup2 (origin, sizeof (LigmaCoords));
     }
 
   g_list_free_full (sym->strokes, g_free);
   sym->strokes = NULL;
 
-  GIMP_SYMMETRY_GET_CLASS (sym)->update_strokes (sym, drawable, origin);
+  LIGMA_SYMMETRY_GET_CLASS (sym)->update_strokes (sym, drawable, origin);
 }
 
 /**
- * gimp_symmetry_clear_origin:
- * @sym: the #GimpSymmetry
+ * ligma_symmetry_clear_origin:
+ * @sym: the #LigmaSymmetry
  *
  * Clear the symmetry's origin coordinates and drawable.
  **/
 void
-gimp_symmetry_clear_origin (GimpSymmetry *sym)
+ligma_symmetry_clear_origin (LigmaSymmetry *sym)
 {
-  g_return_if_fail (GIMP_IS_SYMMETRY (sym));
+  g_return_if_fail (LIGMA_IS_SYMMETRY (sym));
 
   g_clear_object (&sym->drawable);
 
@@ -352,54 +352,54 @@ gimp_symmetry_clear_origin (GimpSymmetry *sym)
 }
 
 /**
- * gimp_symmetry_get_origin:
- * @sym: the #GimpSymmetry
+ * ligma_symmetry_get_origin:
+ * @sym: the #LigmaSymmetry
  *
  * Returns: the origin stroke coordinates.
- * The returned value is owned by the #GimpSymmetry and must not be freed.
+ * The returned value is owned by the #LigmaSymmetry and must not be freed.
  **/
-GimpCoords *
-gimp_symmetry_get_origin (GimpSymmetry *sym)
+LigmaCoords *
+ligma_symmetry_get_origin (LigmaSymmetry *sym)
 {
-  g_return_val_if_fail (GIMP_IS_SYMMETRY (sym), NULL);
+  g_return_val_if_fail (LIGMA_IS_SYMMETRY (sym), NULL);
 
   return sym->origin;
 }
 
 /**
- * gimp_symmetry_get_size:
- * @sym: the #GimpSymmetry
+ * ligma_symmetry_get_size:
+ * @sym: the #LigmaSymmetry
  *
  * Returns: the total number of strokes.
  **/
 gint
-gimp_symmetry_get_size (GimpSymmetry *sym)
+ligma_symmetry_get_size (LigmaSymmetry *sym)
 {
-  g_return_val_if_fail (GIMP_IS_SYMMETRY (sym), 0);
+  g_return_val_if_fail (LIGMA_IS_SYMMETRY (sym), 0);
 
   return g_list_length (sym->strokes);
 }
 
 /**
- * gimp_symmetry_get_coords:
- * @sym:    the #GimpSymmetry
+ * ligma_symmetry_get_coords:
+ * @sym:    the #LigmaSymmetry
  * @stroke: the stroke number
  *
  * Returns: the coordinates of the stroke number @stroke.
- * The returned value is owned by the #GimpSymmetry and must not be freed.
+ * The returned value is owned by the #LigmaSymmetry and must not be freed.
  **/
-GimpCoords *
-gimp_symmetry_get_coords (GimpSymmetry *sym,
+LigmaCoords *
+ligma_symmetry_get_coords (LigmaSymmetry *sym,
                           gint          stroke)
 {
-  g_return_val_if_fail (GIMP_IS_SYMMETRY (sym), NULL);
+  g_return_val_if_fail (LIGMA_IS_SYMMETRY (sym), NULL);
 
   return g_list_nth_data (sym->strokes, stroke);
 }
 
 /**
- * gimp_symmetry_get_transform:
- * @sym:     the #GimpSymmetry
+ * ligma_symmetry_get_transform:
+ * @sym:     the #LigmaSymmetry
  * @stroke:  the stroke number
  * @angle: (out): output pointer to the transformation rotation angle,
  *           in degrees (ccw)
@@ -410,27 +410,27 @@ gimp_symmetry_get_coords (GimpSymmetry *sym,
  * followed by horizontal reflection, around the stroke coordinates.
  **/
 void
-gimp_symmetry_get_transform (GimpSymmetry *sym,
+ligma_symmetry_get_transform (LigmaSymmetry *sym,
                              gint          stroke,
                              gdouble      *angle,
                              gboolean     *reflect)
 {
-  g_return_if_fail (GIMP_IS_SYMMETRY (sym));
+  g_return_if_fail (LIGMA_IS_SYMMETRY (sym));
   g_return_if_fail (angle != NULL);
   g_return_if_fail (reflect != NULL);
 
   *angle   = 0.0;
   *reflect = FALSE;
 
-  GIMP_SYMMETRY_GET_CLASS (sym)->get_transform (sym,
+  LIGMA_SYMMETRY_GET_CLASS (sym)->get_transform (sym,
                                                 stroke,
                                                 angle,
                                                 reflect);
 }
 
 /**
- * gimp_symmetry_get_matrix:
- * @sym:     the #GimpSymmetry
+ * ligma_symmetry_get_matrix:
+ * @sym:     the #LigmaSymmetry
  * @stroke:  the stroke number
  * @matrix:  output pointer to the transformation matrix
  *
@@ -438,27 +438,27 @@ gimp_symmetry_get_transform (GimpSymmetry *sym,
  * number @stroke.
  **/
 void
-gimp_symmetry_get_matrix (GimpSymmetry *sym,
+ligma_symmetry_get_matrix (LigmaSymmetry *sym,
                           gint          stroke,
-                          GimpMatrix3  *matrix)
+                          LigmaMatrix3  *matrix)
 {
   gdouble  angle;
   gboolean reflect;
 
-  g_return_if_fail (GIMP_IS_SYMMETRY (sym));
+  g_return_if_fail (LIGMA_IS_SYMMETRY (sym));
   g_return_if_fail (matrix != NULL);
 
-  gimp_symmetry_get_transform (sym, stroke, &angle, &reflect);
+  ligma_symmetry_get_transform (sym, stroke, &angle, &reflect);
 
-  gimp_matrix3_identity (matrix);
-  gimp_matrix3_rotate (matrix, -gimp_deg_to_rad (angle));
+  ligma_matrix3_identity (matrix);
+  ligma_matrix3_rotate (matrix, -ligma_deg_to_rad (angle));
   if (reflect)
-    gimp_matrix3_scale (matrix, -1.0, 1.0);
+    ligma_matrix3_scale (matrix, -1.0, 1.0);
 }
 
 /**
- * gimp_symmetry_get_operation:
- * @sym:          the #GimpSymmetry
+ * ligma_symmetry_get_operation:
+ * @sym:          the #LigmaSymmetry
  * @stroke:       the stroke number
  *
  * Returns: the transformation operation to apply to the paint content for
@@ -467,46 +467,46 @@ gimp_symmetry_get_matrix (GimpSymmetry *sym,
  * The returned #GeglNode should be freed by the caller.
  **/
 GeglNode *
-gimp_symmetry_get_operation (GimpSymmetry *sym,
+ligma_symmetry_get_operation (LigmaSymmetry *sym,
                              gint          stroke)
 {
-  GimpMatrix3 matrix;
+  LigmaMatrix3 matrix;
 
-  g_return_val_if_fail (GIMP_IS_SYMMETRY (sym), NULL);
+  g_return_val_if_fail (LIGMA_IS_SYMMETRY (sym), NULL);
 
-  gimp_symmetry_get_matrix (sym, stroke, &matrix);
+  ligma_symmetry_get_matrix (sym, stroke, &matrix);
 
-  if (gimp_matrix3_is_identity (&matrix))
+  if (ligma_matrix3_is_identity (&matrix))
     return NULL;
 
-  return gimp_gegl_create_transform_node (&matrix);
+  return ligma_gegl_create_transform_node (&matrix);
 }
 
 /*
- * gimp_symmetry_parasite_name:
- * @type: the #GimpSymmetry's #GType
+ * ligma_symmetry_parasite_name:
+ * @type: the #LigmaSymmetry's #GType
  *
  * Returns: a newly allocated string.
  */
 gchar *
-gimp_symmetry_parasite_name (GType type)
+ligma_symmetry_parasite_name (GType type)
 {
-  return g_strconcat ("gimp-image-symmetry:", g_type_name (type), NULL);
+  return g_strconcat ("ligma-image-symmetry:", g_type_name (type), NULL);
 }
 
-GimpParasite *
-gimp_symmetry_to_parasite (const GimpSymmetry *sym)
+LigmaParasite *
+ligma_symmetry_to_parasite (const LigmaSymmetry *sym)
 {
-  GimpParasite *parasite;
+  LigmaParasite *parasite;
   gchar        *parasite_name;
 
-  g_return_val_if_fail (GIMP_IS_SYMMETRY (sym), NULL);
+  g_return_val_if_fail (LIGMA_IS_SYMMETRY (sym), NULL);
 
-  parasite_name = gimp_symmetry_parasite_name (G_TYPE_FROM_INSTANCE (sym));
+  parasite_name = ligma_symmetry_parasite_name (G_TYPE_FROM_INSTANCE (sym));
 
-  parasite = gimp_config_serialize_to_parasite ((GimpConfig *) sym,
+  parasite = ligma_config_serialize_to_parasite ((LigmaConfig *) sym,
                                                 parasite_name,
-                                                GIMP_PARASITE_PERSISTENT,
+                                                LIGMA_PARASITE_PERSISTENT,
                                                 NULL);
 
   g_free (parasite_name);
@@ -514,25 +514,25 @@ gimp_symmetry_to_parasite (const GimpSymmetry *sym)
   return parasite;
 }
 
-GimpSymmetry *
-gimp_symmetry_from_parasite (const GimpParasite *parasite,
-                             GimpImage          *image,
+LigmaSymmetry *
+ligma_symmetry_from_parasite (const LigmaParasite *parasite,
+                             LigmaImage          *image,
                              GType               type)
 {
-  GimpSymmetry *symmetry;
+  LigmaSymmetry *symmetry;
   gchar        *parasite_name;
   gchar        *parasite_contents;
   guint32       parasite_size;
   GError       *error = NULL;
 
-  parasite_name = gimp_symmetry_parasite_name (type);
+  parasite_name = ligma_symmetry_parasite_name (type);
 
   g_return_val_if_fail (parasite != NULL, NULL);
-  g_return_val_if_fail (strcmp (gimp_parasite_get_name (parasite),
+  g_return_val_if_fail (strcmp (ligma_parasite_get_name (parasite),
                                 parasite_name) == 0,
                         NULL);
 
-  parasite_contents = (gchar *) gimp_parasite_get_data (parasite, &parasite_size);
+  parasite_contents = (gchar *) ligma_parasite_get_data (parasite, &parasite_size);
   if (! parasite_contents)
     {
       g_warning ("Empty symmetry parasite \"%s\"", parasite_name);
@@ -540,13 +540,13 @@ gimp_symmetry_from_parasite (const GimpParasite *parasite,
       return NULL;
     }
 
-  symmetry = gimp_image_symmetry_new (image, type);
+  symmetry = ligma_image_symmetry_new (image, type);
 
   g_object_set (symmetry,
                 "version", -1,
                 NULL);
 
-  if (! gimp_config_deserialize_parasite (GIMP_CONFIG (symmetry),
+  if (! ligma_config_deserialize_parasite (LIGMA_CONFIG (symmetry),
                                           parasite,
                                           NULL,
                                           &error))
@@ -577,8 +577,8 @@ gimp_symmetry_from_parasite (const GimpParasite *parasite,
           g_object_unref (symmetry);
           symmetry = NULL;
         }
-      else if (GIMP_SYMMETRY_GET_CLASS (symmetry)->update_version (symmetry) &&
-               ! GIMP_SYMMETRY_GET_CLASS (symmetry)->update_version (symmetry))
+      else if (LIGMA_SYMMETRY_GET_CLASS (symmetry)->update_version (symmetry) &&
+               ! LIGMA_SYMMETRY_GET_CLASS (symmetry)->update_version (symmetry))
         {
           g_object_unref (symmetry);
           symmetry = NULL;

@@ -12,5 +12,5 @@ papers = [
 
 install_data(
   papers,
-  install_dir: gimpdatadir / 'gimpressionist' / 'Paper',
+  install_dir: ligmadatadir / 'ligmaressionist' / 'Paper',
 )

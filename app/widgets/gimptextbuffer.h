@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpTextBuffer
- * Copyright (C) 2010  Michael Natterer <mitch@gimp.org>
+ * LigmaTextBuffer
+ * Copyright (C) 2010  Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,20 +18,20 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TEXT_BUFFER_H__
-#define __GIMP_TEXT_BUFFER_H__
+#ifndef __LIGMA_TEXT_BUFFER_H__
+#define __LIGMA_TEXT_BUFFER_H__
 
 
-#define GIMP_TYPE_TEXT_BUFFER            (gimp_text_buffer_get_type ())
-#define GIMP_TEXT_BUFFER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TEXT_BUFFER, GimpTextBuffer))
-#define GIMP_IS_TEXT_BUFFER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_TEXT_BUFFER))
-#define GIMP_TEXT_BUFFER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TEXT_BUFFER, GimpTextBufferClass))
-#define GIMP_IS_TEXT_BUFFER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_TEXT_BUFFER))
+#define LIGMA_TYPE_TEXT_BUFFER            (ligma_text_buffer_get_type ())
+#define LIGMA_TEXT_BUFFER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_TEXT_BUFFER, LigmaTextBuffer))
+#define LIGMA_IS_TEXT_BUFFER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_TEXT_BUFFER))
+#define LIGMA_TEXT_BUFFER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_TEXT_BUFFER, LigmaTextBufferClass))
+#define LIGMA_IS_TEXT_BUFFER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_TEXT_BUFFER))
 
 
-typedef struct _GimpTextBufferClass  GimpTextBufferClass;
+typedef struct _LigmaTextBufferClass  LigmaTextBufferClass;
 
-struct _GimpTextBuffer
+struct _LigmaTextBuffer
 {
   GtkTextBuffer  parent_instance;
 
@@ -57,131 +57,131 @@ struct _GimpTextBuffer
   GdkAtom        markup_atom;
 };
 
-struct _GimpTextBufferClass
+struct _LigmaTextBufferClass
 {
   GtkTextBufferClass  parent_class;
 
-  void (* color_applied) (GimpTextBuffer *buffer,
-                          const GimpRGB  *color);
+  void (* color_applied) (LigmaTextBuffer *buffer,
+                          const LigmaRGB  *color);
 };
 
 
-GType            gimp_text_buffer_get_type          (void) G_GNUC_CONST;
+GType            ligma_text_buffer_get_type          (void) G_GNUC_CONST;
 
-GimpTextBuffer * gimp_text_buffer_new               (void);
+LigmaTextBuffer * ligma_text_buffer_new               (void);
 
-void             gimp_text_buffer_set_text          (GimpTextBuffer    *buffer,
+void             ligma_text_buffer_set_text          (LigmaTextBuffer    *buffer,
                                                      const gchar       *text);
-gchar          * gimp_text_buffer_get_text          (GimpTextBuffer    *buffer);
+gchar          * ligma_text_buffer_get_text          (LigmaTextBuffer    *buffer);
 
-void             gimp_text_buffer_set_markup        (GimpTextBuffer    *buffer,
+void             ligma_text_buffer_set_markup        (LigmaTextBuffer    *buffer,
                                                      const gchar       *markup);
-gchar          * gimp_text_buffer_get_markup        (GimpTextBuffer    *buffer);
+gchar          * ligma_text_buffer_get_markup        (LigmaTextBuffer    *buffer);
 
-gboolean         gimp_text_buffer_has_markup        (GimpTextBuffer    *buffer);
+gboolean         ligma_text_buffer_has_markup        (LigmaTextBuffer    *buffer);
 
-GtkTextTag     * gimp_text_buffer_get_iter_size     (GimpTextBuffer    *buffer,
+GtkTextTag     * ligma_text_buffer_get_iter_size     (LigmaTextBuffer    *buffer,
                                                      const GtkTextIter *iter,
                                                      gint              *size);
-GtkTextTag     * gimp_text_buffer_get_size_tag      (GimpTextBuffer    *buffer,
+GtkTextTag     * ligma_text_buffer_get_size_tag      (LigmaTextBuffer    *buffer,
                                                      gint               size);
-void             gimp_text_buffer_set_size          (GimpTextBuffer    *buffer,
+void             ligma_text_buffer_set_size          (LigmaTextBuffer    *buffer,
                                                      const GtkTextIter *start,
                                                      const GtkTextIter *end,
                                                      gint               size);
-void             gimp_text_buffer_change_size       (GimpTextBuffer    *buffer,
+void             ligma_text_buffer_change_size       (LigmaTextBuffer    *buffer,
                                                      const GtkTextIter *start,
                                                      const GtkTextIter *end,
                                                      gint               amount);
 
-GtkTextTag     * gimp_text_buffer_get_iter_baseline (GimpTextBuffer    *buffer,
+GtkTextTag     * ligma_text_buffer_get_iter_baseline (LigmaTextBuffer    *buffer,
                                                      const GtkTextIter *iter,
                                                      gint              *baseline);
-void             gimp_text_buffer_set_baseline      (GimpTextBuffer    *buffer,
+void             ligma_text_buffer_set_baseline      (LigmaTextBuffer    *buffer,
                                                      const GtkTextIter *start,
                                                      const GtkTextIter *end,
                                                      gint               count);
-void             gimp_text_buffer_change_baseline   (GimpTextBuffer    *buffer,
+void             ligma_text_buffer_change_baseline   (LigmaTextBuffer    *buffer,
                                                      const GtkTextIter *start,
                                                      const GtkTextIter *end,
                                                      gint               count);
 
-GtkTextTag     * gimp_text_buffer_get_iter_kerning  (GimpTextBuffer    *buffer,
+GtkTextTag     * ligma_text_buffer_get_iter_kerning  (LigmaTextBuffer    *buffer,
                                                      const GtkTextIter *iter,
                                                      gint              *kerning);
-void             gimp_text_buffer_set_kerning       (GimpTextBuffer    *buffer,
+void             ligma_text_buffer_set_kerning       (LigmaTextBuffer    *buffer,
                                                      const GtkTextIter *start,
                                                      const GtkTextIter *end,
                                                      gint               count);
-void             gimp_text_buffer_change_kerning    (GimpTextBuffer    *buffer,
+void             ligma_text_buffer_change_kerning    (LigmaTextBuffer    *buffer,
                                                      const GtkTextIter *start,
                                                      const GtkTextIter *end,
                                                      gint               count);
 
-GtkTextTag     * gimp_text_buffer_get_iter_font     (GimpTextBuffer    *buffer,
+GtkTextTag     * ligma_text_buffer_get_iter_font     (LigmaTextBuffer    *buffer,
                                                      const GtkTextIter *iter,
                                                      gchar            **font);
-GtkTextTag     * gimp_text_buffer_get_font_tag      (GimpTextBuffer    *buffer,
+GtkTextTag     * ligma_text_buffer_get_font_tag      (LigmaTextBuffer    *buffer,
                                                      const gchar       *font);
-void             gimp_text_buffer_set_font          (GimpTextBuffer    *buffer,
+void             ligma_text_buffer_set_font          (LigmaTextBuffer    *buffer,
                                                      const GtkTextIter *start,
                                                      const GtkTextIter *end,
                                                      const gchar       *font);
 
-GtkTextTag     * gimp_text_buffer_get_iter_color    (GimpTextBuffer    *buffer,
+GtkTextTag     * ligma_text_buffer_get_iter_color    (LigmaTextBuffer    *buffer,
                                                      const GtkTextIter *iter,
-                                                     GimpRGB           *color);
-GtkTextTag     * gimp_text_buffer_get_color_tag     (GimpTextBuffer    *buffer,
-                                                     const GimpRGB     *color);
-void             gimp_text_buffer_set_color         (GimpTextBuffer    *buffer,
+                                                     LigmaRGB           *color);
+GtkTextTag     * ligma_text_buffer_get_color_tag     (LigmaTextBuffer    *buffer,
+                                                     const LigmaRGB     *color);
+void             ligma_text_buffer_set_color         (LigmaTextBuffer    *buffer,
                                                      const GtkTextIter *start,
                                                      const GtkTextIter *end,
-                                                     const GimpRGB     *color);
+                                                     const LigmaRGB     *color);
 
-GtkTextTag * gimp_text_buffer_get_preedit_color_tag    (GimpTextBuffer    *buffer,
-                                                        const GimpRGB     *color);
-void         gimp_text_buffer_set_preedit_color        (GimpTextBuffer    *buffer,
+GtkTextTag * ligma_text_buffer_get_preedit_color_tag    (LigmaTextBuffer    *buffer,
+                                                        const LigmaRGB     *color);
+void         ligma_text_buffer_set_preedit_color        (LigmaTextBuffer    *buffer,
                                                         const GtkTextIter *start,
                                                         const GtkTextIter *end,
-                                                        const GimpRGB     *color);
-GtkTextTag * gimp_text_buffer_get_preedit_bg_color_tag (GimpTextBuffer    *buffer,
-                                                        const GimpRGB     *color);
-void         gimp_text_buffer_set_preedit_bg_color     (GimpTextBuffer    *buffer,
+                                                        const LigmaRGB     *color);
+GtkTextTag * ligma_text_buffer_get_preedit_bg_color_tag (LigmaTextBuffer    *buffer,
+                                                        const LigmaRGB     *color);
+void         ligma_text_buffer_set_preedit_bg_color     (LigmaTextBuffer    *buffer,
                                                         const GtkTextIter *start,
                                                         const GtkTextIter *end,
-                                                        const GimpRGB     *color);
+                                                        const LigmaRGB     *color);
 
-const gchar    * gimp_text_buffer_tag_to_name       (GimpTextBuffer    *buffer,
+const gchar    * ligma_text_buffer_tag_to_name       (LigmaTextBuffer    *buffer,
                                                      GtkTextTag        *tag,
                                                      const gchar      **attribute,
                                                      gchar            **value);
-GtkTextTag     * gimp_text_buffer_name_to_tag       (GimpTextBuffer    *buffer,
+GtkTextTag     * ligma_text_buffer_name_to_tag       (LigmaTextBuffer    *buffer,
                                                      const gchar       *name,
                                                      const gchar       *attribute,
                                                      const gchar       *value);
 
-void             gimp_text_buffer_set_insert_tags   (GimpTextBuffer    *buffer,
+void             ligma_text_buffer_set_insert_tags   (LigmaTextBuffer    *buffer,
                                                      GList             *insert_tags,
                                                      GList             *remove_tags);
-void             gimp_text_buffer_clear_insert_tags (GimpTextBuffer    *buffer);
-void             gimp_text_buffer_insert            (GimpTextBuffer    *buffer,
+void             ligma_text_buffer_clear_insert_tags (LigmaTextBuffer    *buffer);
+void             ligma_text_buffer_insert            (LigmaTextBuffer    *buffer,
                                                      const gchar       *text);
 
-gint             gimp_text_buffer_get_iter_index    (GimpTextBuffer    *buffer,
+gint             ligma_text_buffer_get_iter_index    (LigmaTextBuffer    *buffer,
                                                      GtkTextIter       *iter,
                                                      gboolean           layout_index);
-void             gimp_text_buffer_get_iter_at_index (GimpTextBuffer    *buffer,
+void             ligma_text_buffer_get_iter_at_index (LigmaTextBuffer    *buffer,
                                                      GtkTextIter       *iter,
                                                      gint               index,
                                                      gboolean           layout_index);
 
-gboolean         gimp_text_buffer_load              (GimpTextBuffer    *buffer,
+gboolean         ligma_text_buffer_load              (LigmaTextBuffer    *buffer,
                                                      GFile             *file,
                                                      GError           **error);
-gboolean         gimp_text_buffer_save              (GimpTextBuffer    *buffer,
+gboolean         ligma_text_buffer_save              (LigmaTextBuffer    *buffer,
                                                      GFile             *file,
                                                      gboolean           selection_only,
                                                      GError           **error);
 
 
-#endif /* __GIMP_TEXT_BUFFER_H__ */
+#endif /* __LIGMA_TEXT_BUFFER_H__ */

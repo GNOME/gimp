@@ -1,8 +1,8 @@
-# translation of gimp-libgimp.HEAD.po to
-# Macedonian translation of gimp-libgimp
+# translation of ligma-libligma.HEAD.po to
+# Macedonian translation of ligma-libligma
 # Courtesy of mkde team (http://mkde.sourceforge.net/) -- 2004.
 #
-# This file is distributed under the same license as the gimp-libgimp package.
+# This file is distributed under the same license as the ligma-libligma package.
 #
 # Maintainer: Владимир Стефанов <vladoboss@mt.net.mk>
 #
@@ -15,8 +15,8 @@
 # Marko Doda <marko@lugola.net>, 2008.
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-libgimp.HEAD\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma-libligma.HEAD\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2008-09-05 07:32+0000\n"
 "PO-Revision-Date: 2008-10-06 22:52+1000\n"
 "Last-Translator: Marko Doda <marko@lugola.net>\n"
@@ -29,107 +29,107 @@ msgstr ""
 "X-Generator: Lokalize 0.2\n"
 
 #. procedure executed successfully
-#: ../libgimp/gimp.c:1044
+#: ../libligma/ligma.c:1044
 msgid "success"
 msgstr "успех"
 
 #. procedure execution failed
-#: ../libgimp/gimp.c:1048
+#: ../libligma/ligma.c:1048
 msgid "execution error"
 msgstr "грешка при извршување"
 
 #. procedure called incorrectly
-#: ../libgimp/gimp.c:1052
+#: ../libligma/ligma.c:1052
 msgid "calling error"
 msgstr "грешка при повикување"
 
 #. procedure execution cancelled
-#: ../libgimp/gimp.c:1056
+#: ../libligma/ligma.c:1056
 msgid "cancelled"
 msgstr "откажано"
 
-#: ../libgimp/gimpbrushselectbutton.c:170
+#: ../libligma/ligmabrushselectbutton.c:170
 msgid "Brush Selection"
 msgstr "Избор на _четки"
 
-#: ../libgimp/gimpbrushselectbutton.c:913
-#: ../libgimp/gimppatternselectbutton.c:714
+#: ../libligma/ligmabrushselectbutton.c:913
+#: ../libligma/ligmapatternselectbutton.c:714
 msgid "_Browse..."
 msgstr "_Пребарај..."
 
-#: ../libgimp/gimpexport.c:217 ../libgimp/gimpexport.c:253
+#: ../libligma/ligmaexport.c:217 ../libligma/ligmaexport.c:253
 #, c-format
 msgid "%s plug-in can't handle layers"
 msgstr "%s додатокот неможе да ги сработи слоевите"
 
-#: ../libgimp/gimpexport.c:218 ../libgimp/gimpexport.c:227
-#: ../libgimp/gimpexport.c:236 ../libgimp/gimpexport.c:254
+#: ../libligma/ligmaexport.c:218 ../libligma/ligmaexport.c:227
+#: ../libligma/ligmaexport.c:236 ../libligma/ligmaexport.c:254
 msgid "Merge Visible Layers"
 msgstr "Спој ги видливите слоеви"
 
-#: ../libgimp/gimpexport.c:226
+#: ../libligma/ligmaexport.c:226
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
 msgstr ""
 "%s додатокот неможе да го сработи израмнувањето, големината и провидноста на "
 "слоевите"
 
-#: ../libgimp/gimpexport.c:235 ../libgimp/gimpexport.c:244
+#: ../libligma/ligmaexport.c:235 ../libligma/ligmaexport.c:244
 #, c-format
 msgid "%s plug-in can only handle layers as animation frames"
 msgstr ""
 "%s додатокот може да ги сработи слоевите само како слајдови од анимација"
 
-#: ../libgimp/gimpexport.c:236 ../libgimp/gimpexport.c:245
+#: ../libligma/ligmaexport.c:236 ../libligma/ligmaexport.c:245
 msgid "Save as Animation"
 msgstr "Зачувај како анимација"
 
-#: ../libgimp/gimpexport.c:245 ../libgimp/gimpexport.c:254
-#: ../libgimp/gimpexport.c:263
+#: ../libligma/ligmaexport.c:245 ../libligma/ligmaexport.c:254
+#: ../libligma/ligmaexport.c:263
 msgid "Flatten Image"
 msgstr "Израмнета слика"
 
-#: ../libgimp/gimpexport.c:262
+#: ../libligma/ligmaexport.c:262
 #, c-format
 msgid "%s plug-in can't handle transparency"
 msgstr "%s додатокот неможе да работи со провидноста"
 
-#: ../libgimp/gimpexport.c:271
+#: ../libligma/ligmaexport.c:271
 #, c-format
 msgid "%s plug-in can't handle layer masks"
 msgstr "%s додатокот не може да работи со маски на слоевите"
 
-#: ../libgimp/gimpexport.c:272
+#: ../libligma/ligmaexport.c:272
 msgid "Apply Layer Masks"
 msgstr "Примени маска на нивото"
 
-#: ../libgimp/gimpexport.c:280
+#: ../libligma/ligmaexport.c:280
 #, c-format
 msgid "%s plug-in can only handle RGB images"
 msgstr "%s додатокот може да работи само со RGB слики"
 
-#: ../libgimp/gimpexport.c:281 ../libgimp/gimpexport.c:319
-#: ../libgimp/gimpexport.c:328
+#: ../libligma/ligmaexport.c:281 ../libligma/ligmaexport.c:319
+#: ../libligma/ligmaexport.c:328
 msgid "Convert to RGB"
 msgstr "Префрли во RGB"
 
-#: ../libgimp/gimpexport.c:289
+#: ../libligma/ligmaexport.c:289
 #, c-format
 msgid "%s plug-in can only handle grayscale images"
 msgstr "%s додатокот може да работи само со сиво нијансирани слики"
 
-#: ../libgimp/gimpexport.c:290 ../libgimp/gimpexport.c:319
-#: ../libgimp/gimpexport.c:340
+#: ../libligma/ligmaexport.c:290 ../libligma/ligmaexport.c:319
+#: ../libligma/ligmaexport.c:340
 msgid "Convert to Grayscale"
 msgstr "Префрли во сиво нијансирано"
 
-#: ../libgimp/gimpexport.c:298
+#: ../libligma/ligmaexport.c:298
 #, c-format
 msgid "%s plug-in can only handle indexed images"
 msgstr "%s додатокот може да ракува само со индексирани слики"
 
-#: ../libgimp/gimpexport.c:299 ../libgimp/gimpexport.c:328
-#: ../libgimp/gimpexport.c:338
+#: ../libligma/ligmaexport.c:299 ../libligma/ligmaexport.c:328
+#: ../libligma/ligmaexport.c:338
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -137,12 +137,12 @@ msgstr ""
 "Префрлете во индексирани со користење на стандардните подесувања\n"
 "(Сторете го тоа рачно за да го наштимате резултатот)"
 
-#: ../libgimp/gimpexport.c:308
+#: ../libligma/ligmaexport.c:308
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
 msgstr "%s додатокот може да работи со индексирани слики (во две бои)"
 
-#: ../libgimp/gimpexport.c:309
+#: ../libligma/ligmaexport.c:309
 msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
@@ -150,53 +150,53 @@ msgstr ""
 "Претвори ги во индексирани со користење на стандардните bitmap подесувања\n"
 "(Направете го тоа рачно за да го наштимате резултатот)"
 
-#: ../libgimp/gimpexport.c:318
+#: ../libligma/ligmaexport.c:318
 #, c-format
 msgid "%s plug-in can only handle RGB or grayscale images"
 msgstr "%s додатокот може да работи со RGB или сиво нијансирани слики"
 
-#: ../libgimp/gimpexport.c:327
+#: ../libligma/ligmaexport.c:327
 #, c-format
 msgid "%s plug-in  can only handle RGB or indexed images"
 msgstr "%s додатокот може да работи само со RGB или индексирани слики"
 
-#: ../libgimp/gimpexport.c:337
+#: ../libligma/ligmaexport.c:337
 #, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
 msgstr ""
 "%s додатокот може да работи само со сиво нијансирани или индексирани слики"
 
-#: ../libgimp/gimpexport.c:348
+#: ../libligma/ligmaexport.c:348
 #, c-format
 msgid "%s plug-in needs an alpha channel"
 msgstr "%s додатокот зависи од вредноста на невидливоста (alpha)"
 
-#: ../libgimp/gimpexport.c:349
+#: ../libligma/ligmaexport.c:349
 msgid "Add Alpha Channel"
 msgstr "Додај алфа канал"
 
-#: ../libgimp/gimpexport.c:383
+#: ../libligma/ligmaexport.c:383
 msgid "Confirm Save"
 msgstr "Потврди зачувување"
 
-#: ../libgimp/gimpexport.c:389
+#: ../libligma/ligmaexport.c:389
 msgid "Confirm"
 msgstr "Потврди"
 
-#: ../libgimp/gimpexport.c:464
+#: ../libligma/ligmaexport.c:464
 msgid "Export File"
 msgstr "Извези датотека"
 
-#: ../libgimp/gimpexport.c:468
+#: ../libligma/ligmaexport.c:468
 msgid "_Ignore"
 msgstr "_Игнорирај"
 
-#: ../libgimp/gimpexport.c:470
+#: ../libligma/ligmaexport.c:470
 msgid "_Export"
 msgstr "_Извези"
 
 #. the headline
-#: ../libgimp/gimpexport.c:499
+#: ../libligma/ligmaexport.c:499
 #, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
@@ -206,11 +206,11 @@ msgstr ""
 "причини:"
 
 #. the footline
-#: ../libgimp/gimpexport.c:573
+#: ../libligma/ligmaexport.c:573
 msgid "The export conversion won't modify your original image."
 msgstr "Извозното претворање нема да ја измени вашата оригинална слика."
 
-#: ../libgimp/gimpexport.c:673
+#: ../libligma/ligmaexport.c:673
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -219,7 +219,7 @@ msgstr ""
 "Вие ќе ја зачувате маската на нивото како %s.\n"
 "Ова нема да ги зачува видливите слоеви."
 
-#: ../libgimp/gimpexport.c:679
+#: ../libligma/ligmaexport.c:679
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -228,91 +228,91 @@ msgstr ""
 "Ви сте во тек да го зачувате каналот (зачуваната селекција) како %s.\n"
 "Ова нема да ги зачува видливите слоеви."
 
-#: ../libgimp/gimpfontselectbutton.c:130
+#: ../libligma/ligmafontselectbutton.c:130
 msgid "Font Selection"
 msgstr "Избор на фонт"
 
-#: ../libgimp/gimpfontselectbutton.c:145
+#: ../libligma/ligmafontselectbutton.c:145
 msgid "Sans"
 msgstr "Санс"
 
-#: ../libgimp/gimpgradientselectbutton.c:148
+#: ../libligma/ligmagradientselectbutton.c:148
 msgid "Gradient Selection"
 msgstr "Избор на нијансирање"
 
-#: ../libgimp/gimpmenu.c:450 ../libgimpwidgets/gimpintstore.c:239
+#: ../libligma/ligmamenu.c:450 ../libligmawidgets/ligmaintstore.c:239
 msgid "(Empty)"
 msgstr "(Празно)"
 
-#: ../libgimp/gimppaletteselectbutton.c:130
+#: ../libligma/ligmapaletteselectbutton.c:130
 msgid "Palette Selection"
 msgstr "Избор на палета"
 
-#: ../libgimp/gimppatternselectbutton.c:156
+#: ../libligma/ligmapatternselectbutton.c:156
 msgid "Pattern Selection"
 msgstr "Избор на парче-повторувања"
 
-#: ../libgimp/gimpprocbrowserdialog.c:140
+#: ../libligma/ligmaprocbrowserdialog.c:140
 msgid "by name"
 msgstr "по име"
 
-#: ../libgimp/gimpprocbrowserdialog.c:141
+#: ../libligma/ligmaprocbrowserdialog.c:141
 msgid "by description"
 msgstr "по опис"
 
-#: ../libgimp/gimpprocbrowserdialog.c:142
+#: ../libligma/ligmaprocbrowserdialog.c:142
 msgid "by help"
 msgstr "по помош"
 
-#: ../libgimp/gimpprocbrowserdialog.c:143
+#: ../libligma/ligmaprocbrowserdialog.c:143
 msgid "by author"
 msgstr "по автор"
 
-#: ../libgimp/gimpprocbrowserdialog.c:144
+#: ../libligma/ligmaprocbrowserdialog.c:144
 msgid "by copyright"
 msgstr "по авторски права"
 
-#: ../libgimp/gimpprocbrowserdialog.c:145
+#: ../libligma/ligmaprocbrowserdialog.c:145
 msgid "by date"
 msgstr "по датум"
 
-#: ../libgimp/gimpprocbrowserdialog.c:146
+#: ../libligma/ligmaprocbrowserdialog.c:146
 msgid "by type"
 msgstr "по тип"
 
-#: ../libgimp/gimpprocbrowserdialog.c:377
+#: ../libligma/ligmaprocbrowserdialog.c:377
 msgid "Searching"
 msgstr "Барам"
 
-#: ../libgimp/gimpprocbrowserdialog.c:388
+#: ../libligma/ligmaprocbrowserdialog.c:388
 msgid "Searching by name"
 msgstr "Пребарувам по име"
 
-#: ../libgimp/gimpprocbrowserdialog.c:409
+#: ../libligma/ligmaprocbrowserdialog.c:409
 msgid "Searching by description"
 msgstr "Пребарувам по опис"
 
-#: ../libgimp/gimpprocbrowserdialog.c:416
+#: ../libligma/ligmaprocbrowserdialog.c:416
 msgid "Searching by help"
 msgstr "Пребарувам според помош"
 
-#: ../libgimp/gimpprocbrowserdialog.c:423
+#: ../libligma/ligmaprocbrowserdialog.c:423
 msgid "Searching by author"
 msgstr "Пребарувам по автор"
 
-#: ../libgimp/gimpprocbrowserdialog.c:430
+#: ../libligma/ligmaprocbrowserdialog.c:430
 msgid "Searching by copyright"
 msgstr "Пребарувам по авторски права"
 
-#: ../libgimp/gimpprocbrowserdialog.c:437
+#: ../libligma/ligmaprocbrowserdialog.c:437
 msgid "Searching by date"
 msgstr "Пребарувам по датум"
 
-#: ../libgimp/gimpprocbrowserdialog.c:444
+#: ../libligma/ligmaprocbrowserdialog.c:444
 msgid "Searching by type"
 msgstr "Пребарувам по тип"
 
-#: ../libgimp/gimpprocbrowserdialog.c:454
+#: ../libligma/ligmaprocbrowserdialog.c:454
 #, c-format
 msgid "%d procedure"
 msgid_plural "%d procedures"
@@ -320,11 +320,11 @@ msgstr[0] "%d Процедура"
 msgstr[1] "%d Процедури"
 msgstr[2] "%d Процедури"
 
-#: ../libgimp/gimpprocbrowserdialog.c:463
+#: ../libligma/ligmaprocbrowserdialog.c:463
 msgid "No matches for your query"
 msgstr "Нема совпаѓања за вашето барање"
 
-#: ../libgimp/gimpprocbrowserdialog.c:467
+#: ../libligma/ligmaprocbrowserdialog.c:467
 #, c-format
 msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
@@ -333,477 +333,477 @@ msgstr[1] "%d процедури се совпаднаа со вашето ба�
 msgstr[2] "%d процедури се совпаднаа со вашето барање"
 
 #. count label
-#: ../libgimp/gimpprocbrowserdialog.c:516 ../libgimpwidgets/gimpbrowser.c:114
+#: ../libligma/ligmaprocbrowserdialog.c:516 ../libligmawidgets/ligmabrowser.c:114
 msgid "No matches"
 msgstr "Нема совпаѓања"
 
-#: ../libgimp/gimpprocview.c:143
+#: ../libligma/ligmaprocview.c:143
 msgid "Parameters"
 msgstr "Параметри"
 
-#: ../libgimp/gimpprocview.c:156
+#: ../libligma/ligmaprocview.c:156
 msgid "Return Values"
 msgstr "Повратни вредности"
 
-#: ../libgimp/gimpprocview.c:169
+#: ../libligma/ligmaprocview.c:169
 msgid "Additional Information"
 msgstr "Дополнителна информација"
 
-#: ../libgimp/gimpprocview.c:209
+#: ../libligma/ligmaprocview.c:209
 msgid "Author:"
 msgstr "Автор:"
 
-#: ../libgimp/gimpprocview.c:221
+#: ../libligma/ligmaprocview.c:221
 msgid "Date:"
 msgstr "Дата:"
 
-#: ../libgimp/gimpprocview.c:233
+#: ../libligma/ligmaprocview.c:233
 msgid "Copyright:"
 msgstr "Авторски права:"
 
-#: ../libgimp/gimpunitcache.c:57
+#: ../libligma/ligmaunitcache.c:57
 msgid "percent"
 msgstr "процент"
 
-#: ../libgimpbase/gimpbaseenums.c:28
+#: ../libligmabase/ligmabaseenums.c:28
 msgid "_White (full opacity)"
 msgstr "_Бела (потполна непровидност)"
 
-#: ../libgimpbase/gimpbaseenums.c:29
+#: ../libligmabase/ligmabaseenums.c:29
 msgid "_Black (full transparency)"
 msgstr "_Црна (потполно провидна)"
 
-#: ../libgimpbase/gimpbaseenums.c:30
+#: ../libligmabase/ligmabaseenums.c:30
 msgid "Layer's _alpha channel"
 msgstr "_Алфа канал на слојот"
 
-#: ../libgimpbase/gimpbaseenums.c:31
+#: ../libligmabase/ligmabaseenums.c:31
 msgid "_Transfer layer's alpha channel"
 msgstr "_Пренеси го алфа каналот на слојот"
 
-#: ../libgimpbase/gimpbaseenums.c:32
+#: ../libligmabase/ligmabaseenums.c:32
 msgid "_Selection"
 msgstr "_Селекција"
 
-#: ../libgimpbase/gimpbaseenums.c:33
+#: ../libligmabase/ligmabaseenums.c:33
 msgid "_Grayscale copy of layer"
 msgstr "_Копија на слојот во сиви тонови"
 
-#: ../libgimpbase/gimpbaseenums.c:34
+#: ../libligmabase/ligmabaseenums.c:34
 msgid "C_hannel"
 msgstr "_Канал:"
 
-#: ../libgimpbase/gimpbaseenums.c:64
+#: ../libligmabase/ligmabaseenums.c:64
 msgid "FG to BG (RGB)"
 msgstr "Боја на четка во боја на позадина (RGB)"
 
-#: ../libgimpbase/gimpbaseenums.c:65
+#: ../libligmabase/ligmabaseenums.c:65
 msgid "FG to BG (HSV)"
 msgstr "Боја на четка во боја на позадина (HSV)"
 
-#: ../libgimpbase/gimpbaseenums.c:66
+#: ../libligmabase/ligmabaseenums.c:66
 msgid "FG to transparent"
 msgstr "Боја на четката во провидна"
 
-#: ../libgimpbase/gimpbaseenums.c:67
+#: ../libligmabase/ligmabaseenums.c:67
 msgid "Custom gradient"
 msgstr "Сопствен прелив"
 
-#: ../libgimpbase/gimpbaseenums.c:96
+#: ../libligmabase/ligmabaseenums.c:96
 msgid "FG color fill"
 msgstr "Пополнување со тековната боја"
 
-#: ../libgimpbase/gimpbaseenums.c:97
+#: ../libligmabase/ligmabaseenums.c:97
 msgid "BG color fill"
 msgstr "Пополнување со бојата на позадината"
 
-#: ../libgimpbase/gimpbaseenums.c:98
+#: ../libligmabase/ligmabaseenums.c:98
 msgid "Pattern fill"
 msgstr "Пополнување од шаблон"
 
-#: ../libgimpbase/gimpbaseenums.c:128
+#: ../libligmabase/ligmabaseenums.c:128
 msgid "Add to the current selection"
 msgstr "Додај во тековната селекција"
 
-#: ../libgimpbase/gimpbaseenums.c:129
+#: ../libligmabase/ligmabaseenums.c:129
 msgid "Subtract from the current selection"
 msgstr "Исфрли од тековната селекција"
 
-#: ../libgimpbase/gimpbaseenums.c:130
+#: ../libligmabase/ligmabaseenums.c:130
 msgid "Replace the current selection"
 msgstr "Замени ја тековната селекција"
 
-#: ../libgimpbase/gimpbaseenums.c:131
+#: ../libligmabase/ligmabaseenums.c:131
 msgid "Intersect with the current selection"
 msgstr "Пресек со тековната селекција"
 
-#: ../libgimpbase/gimpbaseenums.c:163 ../libgimpwidgets/gimpwidgetsenums.c:126
+#: ../libligmabase/ligmabaseenums.c:163 ../libligmawidgets/ligmawidgetsenums.c:126
 msgid "Red"
 msgstr "Црвена"
 
-#: ../libgimpbase/gimpbaseenums.c:164 ../libgimpwidgets/gimpwidgetsenums.c:127
+#: ../libligmabase/ligmabaseenums.c:164 ../libligmawidgets/ligmawidgetsenums.c:127
 msgid "Green"
 msgstr "Зелена"
 
-#: ../libgimpbase/gimpbaseenums.c:165 ../libgimpwidgets/gimpwidgetsenums.c:128
+#: ../libligmabase/ligmabaseenums.c:165 ../libligmawidgets/ligmawidgetsenums.c:128
 msgid "Blue"
 msgstr "Сина"
 
-#: ../libgimpbase/gimpbaseenums.c:166
+#: ../libligmabase/ligmabaseenums.c:166
 msgid "Gray"
 msgstr "Сива"
 
-#: ../libgimpbase/gimpbaseenums.c:167 ../libgimpbase/gimpbaseenums.c:532
+#: ../libligmabase/ligmabaseenums.c:167 ../libligmabase/ligmabaseenums.c:532
 msgid "Indexed"
 msgstr "Индексирано"
 
-#: ../libgimpbase/gimpbaseenums.c:168 ../libgimpwidgets/gimpwidgetsenums.c:129
+#: ../libligmabase/ligmabaseenums.c:168 ../libligmawidgets/ligmawidgetsenums.c:129
 msgid "Alpha"
 msgstr "Алфа"
 
-#: ../libgimpbase/gimpbaseenums.c:197
+#: ../libligmabase/ligmabaseenums.c:197
 msgid "Small"
 msgstr "Мал"
 
-#: ../libgimpbase/gimpbaseenums.c:198
+#: ../libligmabase/ligmabaseenums.c:198
 msgid "Medium"
 msgstr "Среден"
 
-#: ../libgimpbase/gimpbaseenums.c:199
+#: ../libligmabase/ligmabaseenums.c:199
 msgid "Large"
 msgstr "Голем"
 
-#: ../libgimpbase/gimpbaseenums.c:231
+#: ../libligmabase/ligmabaseenums.c:231
 msgid "Light checks"
 msgstr "Проверка на светло"
 
-#: ../libgimpbase/gimpbaseenums.c:232
+#: ../libligmabase/ligmabaseenums.c:232
 msgid "Mid-tone checks"
 msgstr "Проверка на средни тонови"
 
-#: ../libgimpbase/gimpbaseenums.c:233
+#: ../libligmabase/ligmabaseenums.c:233
 msgid "Dark checks"
 msgstr "Проверка на темни тонови"
 
-#: ../libgimpbase/gimpbaseenums.c:234
+#: ../libligmabase/ligmabaseenums.c:234
 msgid "White only"
 msgstr "Само бело"
 
-#: ../libgimpbase/gimpbaseenums.c:235
+#: ../libligmabase/ligmabaseenums.c:235
 msgid "Gray only"
 msgstr "Само сиво"
 
-#: ../libgimpbase/gimpbaseenums.c:236
+#: ../libligmabase/ligmabaseenums.c:236
 msgid "Black only"
 msgstr "Само црно"
 
-#: ../libgimpbase/gimpbaseenums.c:264
+#: ../libligmabase/ligmabaseenums.c:264
 msgid "Image"
 msgstr "Слика"
 
-#: ../libgimpbase/gimpbaseenums.c:265
+#: ../libligmabase/ligmabaseenums.c:265
 msgid "Pattern"
 msgstr "Парче-повторувања"
 
-#: ../libgimpbase/gimpbaseenums.c:294
+#: ../libligmabase/ligmabaseenums.c:294
 msgid "Lightness"
 msgstr "Осветленост"
 
-#: ../libgimpbase/gimpbaseenums.c:295
+#: ../libligmabase/ligmabaseenums.c:295
 msgid "Luminosity"
 msgstr "Јачина на светло"
 
-#: ../libgimpbase/gimpbaseenums.c:296
+#: ../libligmabase/ligmabaseenums.c:296
 msgid "Average"
 msgstr "Просечно"
 
-#: ../libgimpbase/gimpbaseenums.c:324
+#: ../libligmabase/ligmabaseenums.c:324
 msgid "Dodge"
 msgstr "Симни"
 
-#: ../libgimpbase/gimpbaseenums.c:325
+#: ../libligmabase/ligmabaseenums.c:325
 msgid "Burn"
 msgstr "Спали"
 
-#: ../libgimpbase/gimpbaseenums.c:389
+#: ../libligmabase/ligmabaseenums.c:389
 msgid "gradient|Linear"
 msgstr "Линеарно"
 
-#: ../libgimpbase/gimpbaseenums.c:390
+#: ../libligmabase/ligmabaseenums.c:390
 msgid "Bi-linear"
 msgstr "Билинеарно"
 
-#: ../libgimpbase/gimpbaseenums.c:391
+#: ../libligmabase/ligmabaseenums.c:391
 msgid "Radial"
 msgstr "Радијално"
 
-#: ../libgimpbase/gimpbaseenums.c:392 ../libgimpwidgets/gimpwidgetsenums.c:24
+#: ../libligmabase/ligmabaseenums.c:392 ../libligmawidgets/ligmawidgetsenums.c:24
 msgid "Square"
 msgstr "Квадрат"
 
-#: ../libgimpbase/gimpbaseenums.c:393
+#: ../libligmabase/ligmabaseenums.c:393
 msgid "Conical (sym)"
 msgstr "Конусна (симетрична)"
 
-#: ../libgimpbase/gimpbaseenums.c:394
+#: ../libligmabase/ligmabaseenums.c:394
 msgid "Conical (asym)"
 msgstr "Конусна (асиметрична)"
 
-#: ../libgimpbase/gimpbaseenums.c:395
+#: ../libligmabase/ligmabaseenums.c:395
 msgid "Shaped (angular)"
 msgstr "Обликувана (аголно)"
 
-#: ../libgimpbase/gimpbaseenums.c:396
+#: ../libligmabase/ligmabaseenums.c:396
 msgid "Shaped (spherical)"
 msgstr "Обликувана (сферично)"
 
-#: ../libgimpbase/gimpbaseenums.c:397
+#: ../libligmabase/ligmabaseenums.c:397
 msgid "Shaped (dimpled)"
 msgstr "Обликувана (со помош на дупчиња)"
 
-#: ../libgimpbase/gimpbaseenums.c:398
+#: ../libligmabase/ligmabaseenums.c:398
 msgid "Spiral (cw)"
 msgstr "Спирала (во насока на стрелките на часовникот)"
 
-#: ../libgimpbase/gimpbaseenums.c:399
+#: ../libligmabase/ligmabaseenums.c:399
 msgid "Spiral (ccw)"
 msgstr "Спирала (обратно од стрелките на часовникот)"
 
-#: ../libgimpbase/gimpbaseenums.c:430
+#: ../libligmabase/ligmabaseenums.c:430
 msgid "Intersections (dots)"
 msgstr "Пресеци (точки)"
 
-#: ../libgimpbase/gimpbaseenums.c:431
+#: ../libligmabase/ligmabaseenums.c:431
 msgid "Intersections (crosshairs)"
 msgstr "Пресеци (крстови)"
 
-#: ../libgimpbase/gimpbaseenums.c:432
+#: ../libligmabase/ligmabaseenums.c:432
 msgid "Dashed"
 msgstr "Со црти"
 
-#: ../libgimpbase/gimpbaseenums.c:433
+#: ../libligmabase/ligmabaseenums.c:433
 msgid "Double dashed"
 msgstr "Со дупли црти"
 
-#: ../libgimpbase/gimpbaseenums.c:434
+#: ../libligmabase/ligmabaseenums.c:434
 msgid "Solid"
 msgstr "Цврсто"
 
-#: ../libgimpbase/gimpbaseenums.c:463
+#: ../libligmabase/ligmabaseenums.c:463
 msgid "Stock ID"
 msgstr "Испорачана Ид."
 
-#: ../libgimpbase/gimpbaseenums.c:464
+#: ../libligmabase/ligmabaseenums.c:464
 msgid "Inline pixbuf"
 msgstr "Вградена слика"
 
-#: ../libgimpbase/gimpbaseenums.c:465
+#: ../libligmabase/ligmabaseenums.c:465
 msgid "Image file"
 msgstr "Големина на слика"
 
-#: ../libgimpbase/gimpbaseenums.c:494
+#: ../libligmabase/ligmabaseenums.c:494
 msgid "RGB color"
 msgstr "RGB боја"
 
-#: ../libgimpbase/gimpbaseenums.c:495 ../libgimpbase/gimpbaseenums.c:530
+#: ../libligmabase/ligmabaseenums.c:495 ../libligmabase/ligmabaseenums.c:530
 msgid "Grayscale"
 msgstr "Сиво нијансирано"
 
-#: ../libgimpbase/gimpbaseenums.c:496
+#: ../libligmabase/ligmabaseenums.c:496
 msgid "Indexed color"
 msgstr "Индексирана боја"
 
-#: ../libgimpbase/gimpbaseenums.c:528
+#: ../libligmabase/ligmabaseenums.c:528
 msgid "RGB"
 msgstr "RGB"
 
-#: ../libgimpbase/gimpbaseenums.c:529
+#: ../libligmabase/ligmabaseenums.c:529
 msgid "RGB-alpha"
 msgstr "RGB-алфа"
 
-#: ../libgimpbase/gimpbaseenums.c:531
+#: ../libligmabase/ligmabaseenums.c:531
 msgid "Grayscale-alpha"
 msgstr "Сиво нијансирано-алфа"
 
-#: ../libgimpbase/gimpbaseenums.c:533
+#: ../libligmabase/ligmabaseenums.c:533
 msgid "Indexed-alpha"
 msgstr "Индексирано-алфа"
 
-#: ../libgimpbase/gimpbaseenums.c:563
+#: ../libligmabase/ligmabaseenums.c:563
 msgid "interpolation|None"
 msgstr "Ништо"
 
-#: ../libgimpbase/gimpbaseenums.c:564
+#: ../libligmabase/ligmabaseenums.c:564
 msgid "interpolation|Linear"
 msgstr "Линеарно"
 
-#: ../libgimpbase/gimpbaseenums.c:565
+#: ../libligmabase/ligmabaseenums.c:565
 msgid "Cubic"
 msgstr "Кубен"
 
-#: ../libgimpbase/gimpbaseenums.c:566
+#: ../libligmabase/ligmabaseenums.c:566
 msgid "Sinc (Lanczos3)"
 msgstr "Рамни (Lanczos3)"
 
-#: ../libgimpbase/gimpbaseenums.c:594
+#: ../libligmabase/ligmabaseenums.c:594
 msgid "Constant"
 msgstr "Константно"
 
-#: ../libgimpbase/gimpbaseenums.c:595
+#: ../libligmabase/ligmabaseenums.c:595
 msgid "Incremental"
 msgstr "Инкрементално"
 
-#: ../libgimpbase/gimpbaseenums.c:624 ../modules/display-filter-lcms.c:191
+#: ../libligmabase/ligmabaseenums.c:624 ../modules/display-filter-lcms.c:191
 msgid "None"
 msgstr "Ништо"
 
-#: ../libgimpbase/gimpbaseenums.c:625
+#: ../libligmabase/ligmabaseenums.c:625
 msgid "Sawtooth wave"
 msgstr "Тестераст бран"
 
-#: ../libgimpbase/gimpbaseenums.c:626
+#: ../libligmabase/ligmabaseenums.c:626
 msgid "Triangular wave"
 msgstr "Триаголен бран"
 
-#: ../libgimpbase/gimpbaseenums.c:655
+#: ../libligmabase/ligmabaseenums.c:655
 msgid "Run interactively"
 msgstr "Изврши интерактивно"
 
-#: ../libgimpbase/gimpbaseenums.c:656
+#: ../libligmabase/ligmabaseenums.c:656
 msgid "Run non-interactively"
 msgstr "Изврши неинтерактивно"
 
-#: ../libgimpbase/gimpbaseenums.c:657
+#: ../libligmabase/ligmabaseenums.c:657
 msgid "Run with last used values"
 msgstr "Изврши со последно користените вредности"
 
-#: ../libgimpbase/gimpbaseenums.c:685
+#: ../libligmabase/ligmabaseenums.c:685
 msgid "Pixels"
 msgstr "Точки"
 
-#: ../libgimpbase/gimpbaseenums.c:686
+#: ../libligmabase/ligmabaseenums.c:686
 msgid "Points"
 msgstr "Точки"
 
-#: ../libgimpbase/gimpbaseenums.c:715
+#: ../libligmabase/ligmabaseenums.c:715
 msgid "Shadows"
 msgstr "Сенки"
 
-#: ../libgimpbase/gimpbaseenums.c:716
+#: ../libligmabase/ligmabaseenums.c:716
 msgid "Midtones"
 msgstr "Средни тонови"
 
-#: ../libgimpbase/gimpbaseenums.c:717
+#: ../libligmabase/ligmabaseenums.c:717
 msgid "Highlights"
 msgstr "Нагласено"
 
-#: ../libgimpbase/gimpbaseenums.c:745
+#: ../libligmabase/ligmabaseenums.c:745
 msgid "Normal (Forward)"
 msgstr "Нормализирај (Напред)"
 
-#: ../libgimpbase/gimpbaseenums.c:746
+#: ../libligmabase/ligmabaseenums.c:746
 msgid "Corrective (Backward)"
 msgstr "Исправи (Назад)"
 
-#: ../libgimpbase/gimpbaseenums.c:776
+#: ../libligmabase/ligmabaseenums.c:776
 msgid "Adjust"
 msgstr "Помести"
 
-#: ../libgimpbase/gimpbaseenums.c:777
+#: ../libligmabase/ligmabaseenums.c:777
 msgid "Clip"
 msgstr "Држач"
 
-#: ../libgimpbase/gimpbaseenums.c:778
+#: ../libligmabase/ligmabaseenums.c:778
 msgid "Crop to result"
 msgstr "Исечи до резултатот"
 
-#: ../libgimpbase/gimpbaseenums.c:779
+#: ../libligmabase/ligmabaseenums.c:779
 msgid "Crop with aspect"
 msgstr "Исечи од око"
 
-#: ../libgimpbase/gimpbaseenums.c:909
-msgid "Internal GIMP procedure"
-msgstr "Внатрешна GIMP процедура"
+#: ../libligmabase/ligmabaseenums.c:909
+msgid "Internal LIGMA procedure"
+msgstr "Внатрешна LIGMA процедура"
 
-#: ../libgimpbase/gimpbaseenums.c:910
-msgid "GIMP Plug-In"
-msgstr "GIMP додаток"
+#: ../libligmabase/ligmabaseenums.c:910
+msgid "LIGMA Plug-In"
+msgstr "LIGMA додаток"
 
-#: ../libgimpbase/gimpbaseenums.c:911
-msgid "GIMP Extension"
-msgstr "GIMP проширување"
+#: ../libligmabase/ligmabaseenums.c:911
+msgid "LIGMA Extension"
+msgstr "LIGMA проширување"
 
-#: ../libgimpbase/gimpbaseenums.c:912
+#: ../libligmabase/ligmabaseenums.c:912
 msgid "Temporary Procedure"
 msgstr "Привремена процедура"
 
-#: ../libgimpbase/gimpbaseenums.c:1074
+#: ../libligmabase/ligmabaseenums.c:1074
 msgid "From left to right"
 msgstr "Од лево кон десно"
 
-#: ../libgimpbase/gimpbaseenums.c:1075
+#: ../libligmabase/ligmabaseenums.c:1075
 msgid "From right to left"
 msgstr "Од десно кон лево"
 
-#: ../libgimpbase/gimpbaseenums.c:1105
+#: ../libligmabase/ligmabaseenums.c:1105
 msgid "Left justified"
 msgstr "Лево е оправдано"
 
-#: ../libgimpbase/gimpbaseenums.c:1106
+#: ../libligmabase/ligmabaseenums.c:1106
 msgid "Right justified"
 msgstr "Десно е оправдано"
 
-#: ../libgimpbase/gimpbaseenums.c:1107
+#: ../libligmabase/ligmabaseenums.c:1107
 msgid "Centered"
 msgstr "_Центрирано"
 
-#: ../libgimpbase/gimpbaseenums.c:1108
+#: ../libligmabase/ligmabaseenums.c:1108
 msgid "Filled"
 msgstr "Пополнето"
 
-#: ../libgimpbase/gimputils.c:170 ../libgimpbase/gimputils.c:175
+#: ../libligmabase/ligmautils.c:170 ../libligmabase/ligmautils.c:175
 #: ../modules/display-filter-lcms.c:183
 #: ../modules/color-selector-cmyk-lcms.c:407
 #: ../modules/color-selector-cmyk-lcms.c:413
 msgid "(invalid UTF-8 string)"
 msgstr "(неисправна UTF-8 нишка)"
 
-#: ../libgimpconfig/gimpcolorconfig.c:42
+#: ../libligmaconfig/ligmacolorconfig.c:42
 msgid "Mode of operation for color management."
 msgstr "Режим на операцијата за управување со бои."
 
-#: ../libgimpconfig/gimpcolorconfig.c:44
+#: ../libligmaconfig/ligmacolorconfig.c:44
 msgid "The color profile of your (primary) monitor."
 msgstr "Профил на бои на вашиот (примарен) монитор."
 
-#: ../libgimpconfig/gimpcolorconfig.c:46
+#: ../libligmaconfig/ligmacolorconfig.c:46
 msgid ""
-"When enabled, GIMP will try to use the display color profile from the "
+"When enabled, LIGMA will try to use the display color profile from the "
 "windowing system.  The configured monitor profile is then only used as a "
 "fallback."
 msgstr ""
-"Кога е овозможено, GIMP ќе проба да го користи профилот за приказ на бои од "
+"Кога е овозможено, LIGMA ќе проба да го користи профилот за приказ на бои од "
 "системот за прозорци. Конфигурираниот профил на боја од мониторот тогаш се "
 "користи како резерва."
 
-#: ../libgimpconfig/gimpcolorconfig.c:50
+#: ../libligmaconfig/ligmacolorconfig.c:50
 msgid "The default RGB working space color profile."
 msgstr "Основен RGB профил на бои за работна површина."
 
-#: ../libgimpconfig/gimpcolorconfig.c:52
+#: ../libligmaconfig/ligmacolorconfig.c:52
 msgid "The CMYK color profile used to convert between RGB and CMYK."
 msgstr "CMYK профил на бои користен за префрлање помеѓу RGB и CMYK."
 
-#: ../libgimpconfig/gimpcolorconfig.c:54
+#: ../libligmaconfig/ligmacolorconfig.c:54
 msgid "The color profile used for simulating a printed version (softproof)."
 msgstr ""
 "Профил на бои користен за симулирање на печатената верзија (softproof)."
 
-#: ../libgimpconfig/gimpcolorconfig.c:56
+#: ../libligmaconfig/ligmacolorconfig.c:56
 msgid "Sets how colors are mapped for your display."
 msgstr "Подесува како се боите мапирани за вашиот приказ."
 
-#: ../libgimpconfig/gimpcolorconfig.c:58
+#: ../libligmaconfig/ligmacolorconfig.c:58
 msgid ""
 "Sets how colors are converted from RGB working space to the print simulation "
 "device."
@@ -811,7 +811,7 @@ msgstr ""
 "Подесува како боите се претворени од RGB работна површина до уредот за "
 "симулирање печат."
 
-#: ../libgimpconfig/gimpcolorconfig.c:61
+#: ../libligmaconfig/ligmacolorconfig.c:61
 msgid ""
 "When enabled, the print simulation will mark colors which can not be "
 "represented in the target color space."
@@ -819,98 +819,98 @@ msgstr ""
 "Кога е вклучена, симулацијата за печатење ќе ги означи боите кои не можат да "
 "се прикажат во одбраното поле на бои."
 
-#: ../libgimpconfig/gimpcolorconfig.c:64
+#: ../libligmaconfig/ligmacolorconfig.c:64
 msgid "The color to use for marking colors which are out of gamut."
 msgstr ""
 "Бојата која ќе се користи за обележување на бои кои се надвор од опсег."
 
-#: ../libgimpconfig/gimpcolorconfig-enums.c:24
+#: ../libligmaconfig/ligmacolorconfig-enums.c:24
 msgid "No color management"
 msgstr "Без управување со бои"
 
-#: ../libgimpconfig/gimpcolorconfig-enums.c:25
+#: ../libligmaconfig/ligmacolorconfig-enums.c:25
 msgid "Color managed display"
 msgstr "Приказ на управувањето на бои"
 
-#: ../libgimpconfig/gimpcolorconfig-enums.c:26
+#: ../libligmaconfig/ligmacolorconfig-enums.c:26
 msgid "Print simulation"
 msgstr "Симулација на печатење"
 
-#: ../libgimpconfig/gimpcolorconfig-enums.c:56
+#: ../libligmaconfig/ligmacolorconfig-enums.c:56
 msgid "Perceptual"
 msgstr "Чулно"
 
 # лоше
-#: ../libgimpconfig/gimpcolorconfig-enums.c:57
+#: ../libligmaconfig/ligmacolorconfig-enums.c:57
 msgid "Relative colorimetric"
 msgstr "Релативно колориметриски"
 
-#: ../libgimpconfig/gimpcolorconfig-enums.c:58
+#: ../libligmaconfig/ligmacolorconfig-enums.c:58
 msgid "intent|Saturation"
 msgstr "Заситеност"
 
 # гадно
-#: ../libgimpconfig/gimpcolorconfig-enums.c:59
+#: ../libligmaconfig/ligmacolorconfig-enums.c:59
 msgid "Absolute colorimetric"
 msgstr "Апсолутно колориметриски"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:97
+#: ../libligmaconfig/ligmaconfig-deserialize.c:97
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "вредноста за изразот %s не е исправен UTF-8 збор"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpconfig-deserialize.c:436
+#: ../libligmaconfig/ligmaconfig-deserialize.c:436
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr ""
 "очекуваниот одговор од типот „да“ или „не“ за логичкиот израз  %s, добиен ' %"
 "s'"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:510
+#: ../libligmaconfig/ligmaconfig-deserialize.c:510
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "неисправна вредност „%s“ за  %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:525
+#: ../libligmaconfig/ligmaconfig-deserialize.c:525
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "неисправна вредност „%ld“ за изразот %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:594
+#: ../libligmaconfig/ligmaconfig-deserialize.c:594
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "при обработка на изразот „%s“: %s"
 
-#: ../libgimpconfig/gimpconfig-iface.c:474
-#: ../libgimpconfig/gimpconfig-iface.c:487 ../libgimpconfig/gimpscanner.c:498
-#: ../libgimpconfig/gimpscanner.c:579
-#: ../libgimpwidgets/gimpcolorprofilestore.c:656
+#: ../libligmaconfig/ligmaconfig-iface.c:474
+#: ../libligmaconfig/ligmaconfig-iface.c:487 ../libligmaconfig/ligmascanner.c:498
+#: ../libligmaconfig/ligmascanner.c:579
+#: ../libligmawidgets/ligmacolorprofilestore.c:656
 msgid "fatal parse error"
 msgstr "фатална грешка при раздвојувањето"
 
-#: ../libgimpconfig/gimpconfig-path.c:377
+#: ../libligmaconfig/ligmaconfig-path.c:377
 #, c-format
 msgid "Cannot expand ${%s}"
 msgstr "Не можам да го раширам ${%s}"
 
-#: ../libgimpconfig/gimpconfigwriter.c:78
-#: ../libgimpconfig/gimpconfigwriter.c:693
+#: ../libligmaconfig/ligmaconfigwriter.c:78
+#: ../libligmaconfig/ligmaconfigwriter.c:693
 #, c-format
 msgid "Error writing to '%s': %s"
 msgstr "Грешка при запишувањето во „%s“: %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:136
+#: ../libligmaconfig/ligmaconfigwriter.c:136
 #, c-format
 msgid "Could not create temporary file for '%s': %s"
 msgstr "Не успеав да направам привремена датотека за „%s“: %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:149
+#: ../libligmaconfig/ligmaconfigwriter.c:149
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Неможев да го отворам „%s“ за пишување: %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:674
+#: ../libligmaconfig/ligmaconfigwriter.c:674
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
@@ -919,7 +919,7 @@ msgstr ""
 "Грешка при запишувањето во привремената датотека за „%s“: %s\n"
 "Оригиналната датотека не е дирана."
 
-#: ../libgimpconfig/gimpconfigwriter.c:682
+#: ../libligmaconfig/ligmaconfigwriter.c:682
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
@@ -928,45 +928,45 @@ msgstr ""
 "Грешка при запишувањето во привремената датотека за „%s“: %s\n"
 "Датотека не е  направена."
 
-#: ../libgimpconfig/gimpconfigwriter.c:711
+#: ../libligmaconfig/ligmaconfigwriter.c:711
 #, c-format
 msgid "Could not create '%s': %s"
 msgstr "Не можев да направам „%s“: %s"
 
-#: ../libgimpconfig/gimpscanner.c:255
+#: ../libligmaconfig/ligmascanner.c:255
 #, c-format
 msgid "invalid UTF-8 string"
 msgstr "Неправилен UTF-8 збор"
 
-#: ../libgimpconfig/gimpscanner.c:606
+#: ../libligmaconfig/ligmascanner.c:606
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "Грешка при обработката на „%s“ во %d. редот: %s"
 
-#: ../libgimpmodule/gimpmodule.c:153 ../libgimpmodule/gimpmodule.c:171
-#: ../libgimpmodule/gimpmodule.c:280 ../libgimpmodule/gimpmodule.c:307
-#: ../libgimpmodule/gimpmodule.c:418
+#: ../libligmamodule/ligmamodule.c:153 ../libligmamodule/ligmamodule.c:171
+#: ../libligmamodule/ligmamodule.c:280 ../libligmamodule/ligmamodule.c:307
+#: ../libligmamodule/ligmamodule.c:418
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr "Грешка при вчитувањето на модулот '%s': %s"
 
-#: ../libgimpmodule/gimpmodule.c:375
+#: ../libligmamodule/ligmamodule.c:375
 msgid "Module error"
 msgstr "Грешка на модулот"
 
-#: ../libgimpmodule/gimpmodule.c:376
+#: ../libligmamodule/ligmamodule.c:376
 msgid "Loaded"
 msgstr "Вчитан"
 
-#: ../libgimpmodule/gimpmodule.c:377
+#: ../libligmamodule/ligmamodule.c:377
 msgid "Load failed"
 msgstr "Неуспешно вчитување"
 
-#: ../libgimpmodule/gimpmodule.c:378
+#: ../libligmamodule/ligmamodule.c:378
 msgid "Not loaded"
 msgstr "Не е вчитано"
 
-#: ../libgimpthumb/gimpthumb-utils.c:123
+#: ../libligmathumb/ligmathumb-utils.c:123
 #, c-format
 msgid ""
 "Cannot determine a valid home directory.\n"
@@ -976,63 +976,63 @@ msgstr ""
 "Малите сликички наместо тоа ќе бидат зачувани папката за привремени датотеки "
 "(%s)."
 
-#: ../libgimpthumb/gimpthumb-utils.c:247 ../libgimpthumb/gimpthumb-utils.c:315
+#: ../libligmathumb/ligmathumb-utils.c:247 ../libligmathumb/ligmathumb-utils.c:315
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Неуспешно креирање на директориумот со сликички '%s'."
 
-#: ../libgimpthumb/gimpthumbnail.c:498
+#: ../libligmathumb/ligmathumbnail.c:498
 #, c-format
 msgid "Thumbnail contains no Thumb::URI tag"
 msgstr "Сликичката не содржи Thumb::URl запис"
 
-#: ../libgimpthumb/gimpthumbnail.c:898
+#: ../libligmathumb/ligmathumbnail.c:898
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
 msgstr "Не можев да создадам смален приказ за %s: %s"
 
-#: ../libgimpwidgets/gimpbrowser.c:98
+#: ../libligmawidgets/ligmabrowser.c:98
 msgid "_Search:"
 msgstr "_Барај:"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:118
+#: ../libligmawidgets/ligmacolorbutton.c:118
 msgid "_Foreground Color"
 msgstr "Боја на ис_цртување"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:122
+#: ../libligmawidgets/ligmacolorbutton.c:122
 msgid "_Background Color"
 msgstr "Боја на _позадината"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:126
+#: ../libligmawidgets/ligmacolorbutton.c:126
 msgid "Blac_k"
 msgstr "_Црна"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:130
+#: ../libligmawidgets/ligmacolorbutton.c:130
 msgid "_White"
 msgstr "Б_ела"
 
-#: ../libgimpwidgets/gimpcolorprofilestore.c:144
+#: ../libligmawidgets/ligmacolorprofilestore.c:144
 msgid "Select color profile from disk..."
 msgstr "Избери профил на боја од диск..."
 
-#: ../libgimpwidgets/gimpcolorprofilestore.c:280
+#: ../libligmawidgets/ligmacolorprofilestore.c:280
 msgctxt "profile"
 msgid "None"
 msgstr "Ниедно"
 
-#: ../libgimpwidgets/gimpcolorscales.c:98
+#: ../libligmawidgets/ligmacolorscales.c:98
 msgid "Scales"
 msgstr "Размери"
 
-#: ../libgimpwidgets/gimpcolorselection.c:210
+#: ../libligmawidgets/ligmacolorselection.c:210
 msgid "Current:"
 msgstr "Тековно:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:232
+#: ../libligmawidgets/ligmacolorselection.c:232
 msgid "Old:"
 msgstr "Старо:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:286
+#: ../libligmawidgets/ligmacolorselection.c:286
 msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
@@ -1040,76 +1040,76 @@ msgstr ""
 "Хексадецимално обележување на боја како што се користи во HTML и CSS.  Овој "
 "запис исто така прифаќа и CSS имиња на бои."
 
-#: ../libgimpwidgets/gimpcolorselection.c:292
+#: ../libligmawidgets/ligmacolorselection.c:292
 msgid "HTML _notation:"
 msgstr "HTML _обележување:"
 
-#: ../libgimpwidgets/gimphelpui.c:420
+#: ../libligmawidgets/ligmahelpui.c:420
 msgid "Press F1 for more help"
 msgstr "Притиснете F1 за повеќе помош"
 
-#: ../libgimpwidgets/gimpfileentry.c:174
+#: ../libligmawidgets/ligmafileentry.c:174
 msgid "Open a file selector to browse your folders"
 msgstr "Отворете го избирачот на датотеки за да ги прелистате вашите папки"
 
-#: ../libgimpwidgets/gimpfileentry.c:175
+#: ../libligmawidgets/ligmafileentry.c:175
 msgid "Open a file selector to browse your files"
 msgstr "Отворете го избирачот на датотеки за да ги прелистате вашите датотеки"
 
-#: ../libgimpwidgets/gimpfileentry.c:335
+#: ../libligmawidgets/ligmafileentry.c:335
 msgid "Select Folder"
 msgstr "Одберете директориум"
 
-#: ../libgimpwidgets/gimpfileentry.c:337
+#: ../libligmawidgets/ligmafileentry.c:337
 msgid "Select File"
 msgstr "Изберете датотека"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:204
+#: ../libligmawidgets/ligmamemsizeentry.c:204
 msgid "Kilobytes"
 msgstr "Килобајти"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:205
+#: ../libligmawidgets/ligmamemsizeentry.c:205
 msgid "Megabytes"
 msgstr "Мегабајти"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:206
+#: ../libligmawidgets/ligmamemsizeentry.c:206
 msgid "Gigabytes"
 msgstr "Гигабајти"
 
 #. Count label
-#: ../libgimpwidgets/gimppageselector.c:269
-#: ../libgimpwidgets/gimppageselector.c:1166
+#: ../libligmawidgets/ligmapageselector.c:269
+#: ../libligmawidgets/ligmapageselector.c:1166
 msgid "Nothing selected"
 msgstr "Ништо не е изберено"
 
-#: ../libgimpwidgets/gimppageselector.c:287
+#: ../libligmawidgets/ligmapageselector.c:287
 msgid "Select _All"
 msgstr "Изберете _се"
 
-#: ../libgimpwidgets/gimppageselector.c:307
+#: ../libligmawidgets/ligmapageselector.c:307
 msgid "Select _range:"
 msgstr "_Опсег на изборот:"
 
-#: ../libgimpwidgets/gimppageselector.c:319
+#: ../libligmawidgets/ligmapageselector.c:319
 msgid "Open _pages as"
 msgstr "Отвори _страници како"
 
-#: ../libgimpwidgets/gimppageselector.c:420
+#: ../libligmawidgets/ligmapageselector.c:420
 msgid "Page 000"
 msgstr "Страна 000"
 
-#: ../libgimpwidgets/gimppageselector.c:508
-#: ../libgimpwidgets/gimppageselector.c:744
+#: ../libligmawidgets/ligmapageselector.c:508
+#: ../libligmawidgets/ligmapageselector.c:744
 #, c-format
 msgid "Page %d"
 msgstr "Страна %d"
 
-#: ../libgimpwidgets/gimppageselector.c:1171
+#: ../libligmawidgets/ligmapageselector.c:1171
 msgid "One page selected"
 msgstr "Изберена е една страница"
 
-#: ../libgimpwidgets/gimppageselector.c:1178
-#: ../libgimpwidgets/gimppageselector.c:1182
+#: ../libligmawidgets/ligmapageselector.c:1178
+#: ../libligmawidgets/ligmapageselector.c:1182
 #, c-format
 msgid "%d page selected"
 msgid_plural "All %d pages selected"
@@ -1117,15 +1117,15 @@ msgstr[0] "Изберена е %d страница"
 msgstr[1] "Изберени се %d страници"
 msgstr[2] "Изберени се %d страници"
 
-#: ../libgimpwidgets/gimppatheditor.c:214
+#: ../libligmawidgets/ligmapatheditor.c:214
 msgid "Writable"
 msgstr "Записливо"
 
-#: ../libgimpwidgets/gimppatheditor.c:223
+#: ../libligmawidgets/ligmapatheditor.c:223
 msgid "Folder"
 msgstr "Папка"
 
-#: ../libgimpwidgets/gimppickbutton.c:107
+#: ../libligmawidgets/ligmapickbutton.c:107
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
@@ -1133,20 +1133,20 @@ msgstr ""
 "Кликнете на капалката, потоа кликнете на боја било каде на вашиот екран за "
 "да ја одберете таа боја."
 
-#: ../libgimpwidgets/gimppreviewarea.c:94
+#: ../libligmawidgets/ligmapreviewarea.c:94
 msgid "Check Size"
 msgstr "Провери големина"
 
-#: ../libgimpwidgets/gimppreviewarea.c:101
+#: ../libligmawidgets/ligmapreviewarea.c:101
 msgid "Check Style"
 msgstr "Провери стил"
 
 #. toggle button to (de)activate the instant preview
-#: ../libgimpwidgets/gimppreview.c:277
+#: ../libligmawidgets/ligmapreview.c:277
 msgid "_Preview"
 msgstr "Пре_глед"
 
-#: ../libgimpwidgets/gimppropwidgets.c:1860
+#: ../libligmawidgets/ligmapropwidgets.c:1860
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
@@ -1154,95 +1154,95 @@ msgstr[0] "Ова поле за внесување на текст е огран
 msgstr[1] "Ова поле за внесување на текст е ограничено на %d карактери."
 msgstr[2] "Ова поле за внесување на текст е ограничено на %d карактери."
 
-#: ../libgimpwidgets/gimpstock.c:112
+#: ../libligmawidgets/ligmastock.c:112
 msgid "Anchor"
 msgstr "Врска"
 
-#: ../libgimpwidgets/gimpstock.c:113
+#: ../libligmawidgets/ligmastock.c:113
 msgid "C_enter"
 msgstr "_Центар"
 
-#: ../libgimpwidgets/gimpstock.c:114
+#: ../libligmawidgets/ligmastock.c:114
 msgid "_Duplicate"
 msgstr "_Дупликат"
 
-#: ../libgimpwidgets/gimpstock.c:115
+#: ../libligmawidgets/ligmastock.c:115
 msgid "_Edit"
 msgstr "_Уреди"
 
-#: ../libgimpwidgets/gimpstock.c:116
+#: ../libligmawidgets/ligmastock.c:116
 msgid "Linked"
 msgstr "Поврзано"
 
-#: ../libgimpwidgets/gimpstock.c:117
+#: ../libligmawidgets/ligmastock.c:117
 msgid "Paste as New"
 msgstr "Вметни како нова слика"
 
-#: ../libgimpwidgets/gimpstock.c:118
+#: ../libligmawidgets/ligmastock.c:118
 msgid "Paste Into"
 msgstr "Вметни во"
 
-#: ../libgimpwidgets/gimpstock.c:119
+#: ../libligmawidgets/ligmastock.c:119
 msgid "_Reset"
 msgstr "_Повторно постави"
 
-#: ../libgimpwidgets/gimpstock.c:120
+#: ../libligmawidgets/ligmastock.c:120
 msgid "Visible"
 msgstr "Видливо"
 
-#: ../libgimpwidgets/gimpstock.c:156 ../libgimpwidgets/gimpstock.c:160
+#: ../libligmawidgets/ligmastock.c:156 ../libligmawidgets/ligmastock.c:160
 msgid "_Stroke"
 msgstr "_Исцртај"
 
-#: ../libgimpwidgets/gimpstock.c:172
+#: ../libligmawidgets/ligmastock.c:172
 msgid "L_etter Spacing"
 msgstr "Размак помеѓу _буквите"
 
-#: ../libgimpwidgets/gimpstock.c:173
+#: ../libligmawidgets/ligmastock.c:173
 msgid "L_ine Spacing"
 msgstr "Размак на _редовите"
 
-#: ../libgimpwidgets/gimpstock.c:189
+#: ../libligmawidgets/ligmastock.c:189
 msgid "_Resize"
 msgstr "_Смени големина"
 
-#: ../libgimpwidgets/gimpstock.c:190 ../libgimpwidgets/gimpstock.c:320
+#: ../libligmawidgets/ligmastock.c:190 ../libligmawidgets/ligmastock.c:320
 msgid "_Scale"
 msgstr "_Смени пропорционално"
 
-#: ../libgimpwidgets/gimpstock.c:296
+#: ../libligmawidgets/ligmastock.c:296
 msgid "Cr_op"
 msgstr "Исе_чи"
 
-#: ../libgimpwidgets/gimpstock.c:315
+#: ../libligmawidgets/ligmastock.c:315
 msgid "_Transform"
 msgstr "_Трансформирај"
 
-#: ../libgimpwidgets/gimpstock.c:319
+#: ../libligmawidgets/ligmastock.c:319
 msgid "_Rotate"
 msgstr "_Ротирај"
 
-#: ../libgimpwidgets/gimpstock.c:321
+#: ../libligmawidgets/ligmastock.c:321
 msgid "_Shear"
 msgstr "_Дели"
 
-#: ../libgimpwidgets/gimpunitmenu.c:266
+#: ../libligmawidgets/ligmaunitmenu.c:266
 msgid "More..."
 msgstr "Уште..."
 
-#: ../libgimpwidgets/gimpunitmenu.c:581
+#: ../libligmawidgets/ligmaunitmenu.c:581
 msgid "Unit Selection"
 msgstr "Избор на единица"
 
-#: ../libgimpwidgets/gimpunitmenu.c:629
+#: ../libligmawidgets/ligmaunitmenu.c:629
 msgid "Unit"
 msgstr "Единица"
 
-#: ../libgimpwidgets/gimpunitmenu.c:633
+#: ../libligmawidgets/ligmaunitmenu.c:633
 msgid "Factor"
 msgstr "Фактор"
 
-#: ../libgimpwidgets/gimpwidgets.c:511
+#: ../libligmawidgets/ligmawidgets.c:511
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -1250,79 +1250,79 @@ msgstr ""
 "Употребете ја оваа вредност за семе за случајно генериран број - ова Ви "
 "овозможува да ја повторувате зададената \"случајна\" операција"
 
-#: ../libgimpwidgets/gimpwidgets.c:515
+#: ../libligmawidgets/ligmawidgets.c:515
 msgid "_New Seed"
 msgstr "_Ново семе"
 
-#: ../libgimpwidgets/gimpwidgets.c:528
+#: ../libligmawidgets/ligmawidgets.c:528
 msgid "Seed random number generator with a generated random number"
 msgstr "Семе на случајно генерираниот број со генерираниот случаен број"
 
-#: ../libgimpwidgets/gimpwidgets.c:532
+#: ../libligmawidgets/ligmawidgets.c:532
 msgid "_Randomize"
 msgstr "_Случајно"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:25
+#: ../libligmawidgets/ligmawidgetsenums.c:25
 msgid "Portrait"
 msgstr "Портрет"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:26
+#: ../libligmawidgets/ligmawidgetsenums.c:26
 msgid "Landscape"
 msgstr "Пејсаж"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:123
+#: ../libligmawidgets/ligmawidgetsenums.c:123
 msgid "_H"
 msgstr "_H"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:123
+#: ../libligmawidgets/ligmawidgetsenums.c:123
 msgid "Hue"
 msgstr "Нијанса"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:124
+#: ../libligmawidgets/ligmawidgetsenums.c:124
 msgid "_S"
 msgstr "_S"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:124
+#: ../libligmawidgets/ligmawidgetsenums.c:124
 msgid "Saturation"
 msgstr "Заситеност"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:125
+#: ../libligmawidgets/ligmawidgetsenums.c:125
 msgid "_V"
 msgstr "_V"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:125
+#: ../libligmawidgets/ligmawidgetsenums.c:125
 msgid "Value"
 msgstr "Вредност"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:126
+#: ../libligmawidgets/ligmawidgetsenums.c:126
 msgid "_R"
 msgstr "_R"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:127
+#: ../libligmawidgets/ligmawidgetsenums.c:127
 msgid "_G"
 msgstr "_G"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:128
+#: ../libligmawidgets/ligmawidgetsenums.c:128
 msgid "_B"
 msgstr "_B"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:129
+#: ../libligmawidgets/ligmawidgetsenums.c:129
 msgid "_A"
 msgstr "_A"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:157
+#: ../libligmawidgets/ligmawidgetsenums.c:157
 msgid "Layers"
 msgstr "Слоеви"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:158
+#: ../libligmawidgets/ligmawidgetsenums.c:158
 msgid "Images"
 msgstr "Слики"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:217
+#: ../libligmawidgets/ligmawidgetsenums.c:217
 msgid "Zoom in"
 msgstr "Зголеми"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:218
+#: ../libligmawidgets/ligmawidgetsenums.c:218
 msgid "Zoom out"
 msgstr "Намали"
 
@@ -1868,11 +1868,11 @@ msgid "MIDI Events"
 msgstr "MIDI настани"
 
 #: ../modules/controller-midi.c:426
-msgid "GIMP"
+msgid "LIGMA"
 msgstr "Гимп"
 
 #: ../modules/controller-midi.c:428
-msgid "GIMP MIDI Input Controller"
+msgid "LIGMA MIDI Input Controller"
 msgstr "Гимп MIDI контролер на настани"
 
 # bug: plural-forms

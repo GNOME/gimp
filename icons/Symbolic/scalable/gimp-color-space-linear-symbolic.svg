@@ -15,8 +15,8 @@
    version="1.1"
    id="SVGRoot"
    inkscape:version="0.92.2 (5c3e80d, 2017-08-06)"
-   sodipodi:docname="gimp-color-space-linear.svg"
-   inkscape:export-filename="/home/alex/soft/graphics/gimp/gimp-2018-01-05/icons/Symbolic/16/gimp-color-space-linear.png"
+   sodipodi:docname="ligma-color-space-linear.svg"
+   inkscape:export-filename="/home/alex/soft/graphics/ligma/ligma-2018-01-05/icons/Symbolic/16/ligma-color-space-linear.png"
    inkscape:export-xdpi="96"
    inkscape:export-ydpi="96">
   <sodipodi:namedview
@@ -64,7 +64,7 @@
      inkscape:groupmode="layer"
      inkscape:label="Layer 1">
     <g
-       id="gimp-color-space-linear">
+       id="ligma-color-space-linear">
       <path
          id="rect814"
          d="m 1,-19.500017 v 14 h 14 v -14 z m 1,1 h 12 v 12 H 2 Z"

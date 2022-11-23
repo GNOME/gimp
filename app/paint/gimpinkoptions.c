@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,19 +20,19 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "paint-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpdrawable.h"
-#include "core/gimppaintinfo.h"
+#include "core/ligma.h"
+#include "core/ligmadrawable.h"
+#include "core/ligmapaintinfo.h"
 
-#include "gimpinkoptions.h"
-#include "gimpink-blob.h"
+#include "ligmainkoptions.h"
+#include "ligmaink-blob.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -49,92 +49,92 @@ enum
 };
 
 
-static void   gimp_ink_options_set_property (GObject      *object,
+static void   ligma_ink_options_set_property (GObject      *object,
                                              guint         property_id,
                                              const GValue *value,
                                              GParamSpec   *pspec);
-static void   gimp_ink_options_get_property (GObject      *object,
+static void   ligma_ink_options_get_property (GObject      *object,
                                              guint         property_id,
                                              GValue       *value,
                                              GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE (GimpInkOptions, gimp_ink_options, GIMP_TYPE_PAINT_OPTIONS)
+G_DEFINE_TYPE (LigmaInkOptions, ligma_ink_options, LIGMA_TYPE_PAINT_OPTIONS)
 
 
 static void
-gimp_ink_options_class_init (GimpInkOptionsClass *klass)
+ligma_ink_options_class_init (LigmaInkOptionsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->set_property = gimp_ink_options_set_property;
-  object_class->get_property = gimp_ink_options_get_property;
+  object_class->set_property = ligma_ink_options_set_property;
+  object_class->get_property = ligma_ink_options_get_property;
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_SIZE,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_SIZE,
                            "size",
                            _("Size"),
                            _("Ink Blob Size"),
                            0.0, 200.0, 16.0,
-                           GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_TILT_ANGLE,
+                           LIGMA_PARAM_STATIC_STRINGS);
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_TILT_ANGLE,
                            "tilt-angle",
                            _("Angle"),
                            NULL,
                            -90.0, 90.0, 0.0,
-                           GIMP_PARAM_STATIC_STRINGS);
+                           LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_SIZE_SENSITIVITY,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_SIZE_SENSITIVITY,
                            "size-sensitivity",
                            _("Size"),
                            NULL,
                            0.0, 1.0, 1.0,
-                           GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_VEL_SENSITIVITY,
+                           LIGMA_PARAM_STATIC_STRINGS);
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_VEL_SENSITIVITY,
                            "vel-sensitivity",
                            _("Speed"),
                            NULL,
                            0.0, 1.0, 0.8,
-                           GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_TILT_SENSITIVITY,
+                           LIGMA_PARAM_STATIC_STRINGS);
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_TILT_SENSITIVITY,
                            "tilt-sensitivity",
                            _("Tilt"),
                            NULL,
                            0.0, 1.0, 0.4,
-                           GIMP_PARAM_STATIC_STRINGS);
+                           LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_BLOB_TYPE,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_BLOB_TYPE,
                          "blob-type",
                          _("Shape"),
                          NULL,
-                         GIMP_TYPE_INK_BLOB_TYPE,
-                         GIMP_INK_BLOB_TYPE_CIRCLE,
-                         GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_BLOB_ASPECT,
+                         LIGMA_TYPE_INK_BLOB_TYPE,
+                         LIGMA_INK_BLOB_TYPE_CIRCLE,
+                         LIGMA_PARAM_STATIC_STRINGS);
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_BLOB_ASPECT,
                            "blob-aspect",
                            _("Aspect ratio"),
                            _("Ink Blob Aspect Ratio"),
                            1.0, 10.0, 1.0,
-                           GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_BLOB_ANGLE,
+                           LIGMA_PARAM_STATIC_STRINGS);
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_BLOB_ANGLE,
                            "blob-angle",
                            _("Angle"),
                            _("Ink Blob Angle"),
                            -G_PI, G_PI, 0.0,
-                           GIMP_PARAM_STATIC_STRINGS);
+                           LIGMA_PARAM_STATIC_STRINGS);
 }
 
 static void
-gimp_ink_options_init (GimpInkOptions *options)
+ligma_ink_options_init (LigmaInkOptions *options)
 {
 }
 
 static void
-gimp_ink_options_set_property (GObject      *object,
+ligma_ink_options_set_property (GObject      *object,
                                guint         property_id,
                                const GValue *value,
                                GParamSpec   *pspec)
 {
-  GimpInkOptions *options = GIMP_INK_OPTIONS (object);
+  LigmaInkOptions *options = LIGMA_INK_OPTIONS (object);
 
   switch (property_id)
     {
@@ -169,12 +169,12 @@ gimp_ink_options_set_property (GObject      *object,
 }
 
 static void
-gimp_ink_options_get_property (GObject    *object,
+ligma_ink_options_get_property (GObject    *object,
                                guint       property_id,
                                GValue     *value,
                                GParamSpec *pspec)
 {
-  GimpInkOptions *options = GIMP_INK_OPTIONS (object);
+  LigmaInkOptions *options = LIGMA_INK_OPTIONS (object);
 
   switch (property_id)
     {

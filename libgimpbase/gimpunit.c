@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpunit.c
- * Copyright (C) 2003 Michael Natterer <mitch@gimp.org>
+ * ligmaunit.c
+ * Copyright (C) 2003 Michael Natterer <mitch@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -26,18 +26,18 @@
 
 #include <glib-object.h>
 
-#include "gimpbasetypes.h"
+#include "ligmabasetypes.h"
 
-#include "gimpbase-private.h"
-#include "gimpunit.h"
+#include "ligmabase-private.h"
+#include "ligmaunit.h"
 
 
 /**
- * SECTION: gimpunit
- * @title: gimpunit
+ * SECTION: ligmaunit
+ * @title: ligmaunit
  * @short_description: Provides a collection of predefined units and
  *                     functions for creating user-defined units.
- * @see_also: #GimpUnitMenu, #GimpSizeEntry.
+ * @see_also: #LigmaUnitMenu, #LigmaSizeEntry.
  *
  * Provides a collection of predefined units and functions for
  * creating user-defined units.
@@ -50,7 +50,7 @@ static void   string_to_unit (const GValue *src_value,
                               GValue       *dest_value);
 
 GType
-gimp_unit_get_type (void)
+ligma_unit_get_type (void)
 {
   static GType unit_type = 0;
 
@@ -58,7 +58,7 @@ gimp_unit_get_type (void)
     {
       const GTypeInfo type_info = { 0, };
 
-      unit_type = g_type_register_static (G_TYPE_INT, "GimpUnit",
+      unit_type = g_type_register_static (G_TYPE_INT, "LigmaUnit",
                                           &type_info, 0);
 
       g_value_register_transform_func (unit_type, G_TYPE_STRING,
@@ -74,9 +74,9 @@ static void
 unit_to_string (const GValue *src_value,
                 GValue       *dest_value)
 {
-  GimpUnit unit = (GimpUnit) g_value_get_int (src_value);
+  LigmaUnit unit = (LigmaUnit) g_value_get_int (src_value);
 
-  g_value_set_string (dest_value, gimp_unit_get_identifier (unit));
+  g_value_set_string (dest_value, ligma_unit_get_identifier (unit));
 }
 
 static void
@@ -92,16 +92,16 @@ string_to_unit (const GValue *src_value,
   if (!str || !*str)
     goto error;
 
-  num_units = gimp_unit_get_number_of_units ();
+  num_units = ligma_unit_get_number_of_units ();
 
-  for (i = GIMP_UNIT_PIXEL; i < num_units; i++)
-    if (strcmp (str, gimp_unit_get_identifier (i)) == 0)
+  for (i = LIGMA_UNIT_PIXEL; i < num_units; i++)
+    if (strcmp (str, ligma_unit_get_identifier (i)) == 0)
       break;
 
   if (i == num_units)
     {
-      if (strcmp (str, gimp_unit_get_identifier (GIMP_UNIT_PERCENT)) == 0)
-        i = GIMP_UNIT_PERCENT;
+      if (strcmp (str, ligma_unit_get_identifier (LIGMA_UNIT_PERCENT)) == 0)
+        i = LIGMA_UNIT_PERCENT;
       else
         goto error;
     }
@@ -110,64 +110,64 @@ string_to_unit (const GValue *src_value,
   return;
 
  error:
-  g_warning ("Can't convert string '%s' to GimpUnit.", str);
+  g_warning ("Can't convert string '%s' to LigmaUnit.", str);
 }
 
 
 /**
- * gimp_unit_get_number_of_units:
+ * ligma_unit_get_number_of_units:
  *
- * Returns the number of units which are known to the #GimpUnit system.
+ * Returns the number of units which are known to the #LigmaUnit system.
  *
  * Returns: The number of defined units.
  **/
 gint
-gimp_unit_get_number_of_units (void)
+ligma_unit_get_number_of_units (void)
 {
-  g_return_val_if_fail (_gimp_unit_vtable.unit_get_number_of_units != NULL,
-                        GIMP_UNIT_END);
+  g_return_val_if_fail (_ligma_unit_vtable.unit_get_number_of_units != NULL,
+                        LIGMA_UNIT_END);
 
-  return _gimp_unit_vtable.unit_get_number_of_units ();
+  return _ligma_unit_vtable.unit_get_number_of_units ();
 }
 
 /**
- * gimp_unit_get_number_of_built_in_units:
+ * ligma_unit_get_number_of_built_in_units:
  *
- * Returns the number of #GimpUnit's which are hardcoded in the unit system
+ * Returns the number of #LigmaUnit's which are hardcoded in the unit system
  * (UNIT_INCH, UNIT_MM, UNIT_POINT, UNIT_PICA and the two "pseudo unit"
  *  UNIT_PIXEL).
  *
  * Returns: The number of built-in units.
  **/
 gint
-gimp_unit_get_number_of_built_in_units (void)
+ligma_unit_get_number_of_built_in_units (void)
 {
-  g_return_val_if_fail (_gimp_unit_vtable.unit_get_number_of_built_in_units
-                        != NULL, GIMP_UNIT_END);
+  g_return_val_if_fail (_ligma_unit_vtable.unit_get_number_of_built_in_units
+                        != NULL, LIGMA_UNIT_END);
 
-  return _gimp_unit_vtable.unit_get_number_of_built_in_units ();
+  return _ligma_unit_vtable.unit_get_number_of_built_in_units ();
 }
 
 /**
- * gimp_unit_new:
+ * ligma_unit_new:
  * @identifier: The unit's identifier string.
  * @factor: The unit's factor (how many units are in one inch).
- * @digits: The unit's suggested number of digits (see gimp_unit_get_digits()).
+ * @digits: The unit's suggested number of digits (see ligma_unit_get_digits()).
  * @symbol: The symbol of the unit (e.g. "''" for inch).
  * @abbreviation: The abbreviation of the unit.
  * @singular: The singular form of the unit.
  * @plural: The plural form of the unit.
  *
- * Returns the integer ID of the new #GimpUnit.
+ * Returns the integer ID of the new #LigmaUnit.
  *
  * Note that a new unit is always created with its deletion flag
  * set to %TRUE. You will have to set it to %FALSE with
- * gimp_unit_set_deletion_flag() to make the unit definition persistent.
+ * ligma_unit_set_deletion_flag() to make the unit definition persistent.
  *
  * Returns: The ID of the new unit.
  **/
-GimpUnit
-gimp_unit_new (gchar   *identifier,
+LigmaUnit
+ligma_unit_new (gchar   *identifier,
                gdouble  factor,
                gint     digits,
                gchar   *symbol,
@@ -175,72 +175,72 @@ gimp_unit_new (gchar   *identifier,
                gchar   *singular,
                gchar   *plural)
 {
-  g_return_val_if_fail (_gimp_unit_vtable.unit_new != NULL, GIMP_UNIT_INCH);
+  g_return_val_if_fail (_ligma_unit_vtable.unit_new != NULL, LIGMA_UNIT_INCH);
 
-  return _gimp_unit_vtable.unit_new (identifier, factor, digits,
+  return _ligma_unit_vtable.unit_new (identifier, factor, digits,
                                      symbol, abbreviation, singular, plural);
 }
 
 /**
- * gimp_unit_get_deletion_flag:
+ * ligma_unit_get_deletion_flag:
  * @unit: The unit you want to know the @deletion_flag of.
  *
  * Returns: The unit's @deletion_flag.
  **/
 gboolean
-gimp_unit_get_deletion_flag (GimpUnit unit)
+ligma_unit_get_deletion_flag (LigmaUnit unit)
 {
-  g_return_val_if_fail (_gimp_unit_vtable.unit_get_deletion_flag != NULL, FALSE);
+  g_return_val_if_fail (_ligma_unit_vtable.unit_get_deletion_flag != NULL, FALSE);
 
-  return _gimp_unit_vtable.unit_get_deletion_flag (unit);
+  return _ligma_unit_vtable.unit_get_deletion_flag (unit);
 }
 
 /**
- * gimp_unit_set_deletion_flag:
+ * ligma_unit_set_deletion_flag:
  * @unit: The unit you want to set the @deletion_flag for.
  * @deletion_flag: The new deletion_flag.
  *
- * Sets a #GimpUnit's @deletion_flag. If the @deletion_flag of a unit is
- * %TRUE when GIMP exits, this unit will not be saved in the users's
+ * Sets a #LigmaUnit's @deletion_flag. If the @deletion_flag of a unit is
+ * %TRUE when LIGMA exits, this unit will not be saved in the users's
  * "unitrc" file.
  *
  * Trying to change the @deletion_flag of a built-in unit will be silently
  * ignored.
  **/
 void
-gimp_unit_set_deletion_flag (GimpUnit unit,
+ligma_unit_set_deletion_flag (LigmaUnit unit,
                              gboolean deletion_flag)
 {
-  g_return_if_fail (_gimp_unit_vtable.unit_set_deletion_flag != NULL);
+  g_return_if_fail (_ligma_unit_vtable.unit_set_deletion_flag != NULL);
 
-  _gimp_unit_vtable.unit_set_deletion_flag (unit, deletion_flag);
+  _ligma_unit_vtable.unit_set_deletion_flag (unit, deletion_flag);
 }
 
 /**
- * gimp_unit_get_factor:
+ * ligma_unit_get_factor:
  * @unit: The unit you want to know the factor of.
  *
- * A #GimpUnit's @factor is defined to be:
+ * A #LigmaUnit's @factor is defined to be:
  *
  * distance_in_units == (@factor * distance_in_inches)
  *
- * Returns 0 for @unit == GIMP_UNIT_PIXEL.
+ * Returns 0 for @unit == LIGMA_UNIT_PIXEL.
  *
  * Returns: The unit's factor.
  **/
 gdouble
-gimp_unit_get_factor (GimpUnit unit)
+ligma_unit_get_factor (LigmaUnit unit)
 {
-  g_return_val_if_fail (_gimp_unit_vtable.unit_get_factor != NULL, 1.0);
+  g_return_val_if_fail (_ligma_unit_vtable.unit_get_factor != NULL, 1.0);
 
-  if (unit == GIMP_UNIT_PIXEL)
+  if (unit == LIGMA_UNIT_PIXEL)
     return 0.0;
 
-  return _gimp_unit_vtable.unit_get_factor (unit);
+  return _ligma_unit_vtable.unit_get_factor (unit);
 }
 
 /**
- * gimp_unit_get_digits:
+ * ligma_unit_get_digits:
  * @unit: The unit you want to know the digits.
  *
  * Returns the number of digits set for @unit.
@@ -250,22 +250,22 @@ gimp_unit_get_factor (GimpUnit unit)
  * Note: the value is as-set by defaults or by the user and does not
  * necessary provide enough precision on high-resolution images.
  * When the information is needed for a specific image, the use of
- * gimp_unit_get_scaled_digits() may be more appropriate.
+ * ligma_unit_get_scaled_digits() may be more appropriate.
  *
- * Returns 0 for @unit == GIMP_UNIT_PIXEL.
+ * Returns 0 for @unit == LIGMA_UNIT_PIXEL.
  *
  * Returns: The suggested number of digits.
  **/
 gint
-gimp_unit_get_digits (GimpUnit unit)
+ligma_unit_get_digits (LigmaUnit unit)
 {
-  g_return_val_if_fail (_gimp_unit_vtable.unit_get_digits != NULL, 2);
+  g_return_val_if_fail (_ligma_unit_vtable.unit_get_digits != NULL, 2);
 
-  return _gimp_unit_vtable.unit_get_digits (unit);
+  return _ligma_unit_vtable.unit_get_digits (unit);
 }
 
 /**
- * gimp_unit_get_scaled_digits:
+ * ligma_unit_get_scaled_digits:
  * @unit: The unit you want to know the digits.
  * @resolution: the resolution in PPI.
  *
@@ -281,21 +281,21 @@ gimp_unit_get_digits (GimpUnit unit)
  * Returns: The suggested number of digits.
  **/
 gint
-gimp_unit_get_scaled_digits (GimpUnit unit,
+ligma_unit_get_scaled_digits (LigmaUnit unit,
                              gdouble  resolution)
 {
   gint digits;
 
-  g_return_val_if_fail (_gimp_unit_vtable.unit_get_digits != NULL, 2);
+  g_return_val_if_fail (_ligma_unit_vtable.unit_get_digits != NULL, 2);
 
   digits = ceil (log10 (1.0 /
-                        gimp_pixels_to_units (1.0, unit, resolution)));
+                        ligma_pixels_to_units (1.0, unit, resolution)));
 
-  return MAX (digits, gimp_unit_get_digits (unit));
+  return MAX (digits, ligma_unit_get_digits (unit));
 }
 
 /**
- * gimp_unit_get_identifier:
+ * ligma_unit_get_identifier:
  * @unit: The unit you want to know the identifier of.
  *
  * This is an untranslated string and must not be changed or freed.
@@ -303,15 +303,15 @@ gimp_unit_get_scaled_digits (GimpUnit unit,
  * Returns: The unit's identifier.
  **/
 const gchar *
-gimp_unit_get_identifier (GimpUnit unit)
+ligma_unit_get_identifier (LigmaUnit unit)
 {
-  g_return_val_if_fail (_gimp_unit_vtable.unit_get_identifier != NULL, NULL);
+  g_return_val_if_fail (_ligma_unit_vtable.unit_get_identifier != NULL, NULL);
 
-  return _gimp_unit_vtable.unit_get_identifier (unit);
+  return _ligma_unit_vtable.unit_get_identifier (unit);
 }
 
 /**
- * gimp_unit_get_symbol:
+ * ligma_unit_get_symbol:
  * @unit: The unit you want to know the symbol of.
  *
  * This is e.g. "''" for UNIT_INCH.
@@ -321,15 +321,15 @@ gimp_unit_get_identifier (GimpUnit unit)
  * Returns: The unit's symbol.
  **/
 const gchar *
-gimp_unit_get_symbol (GimpUnit unit)
+ligma_unit_get_symbol (LigmaUnit unit)
 {
-  g_return_val_if_fail (_gimp_unit_vtable.unit_get_symbol != NULL, NULL);
+  g_return_val_if_fail (_ligma_unit_vtable.unit_get_symbol != NULL, NULL);
 
-  return _gimp_unit_vtable.unit_get_symbol (unit);
+  return _ligma_unit_vtable.unit_get_symbol (unit);
 }
 
 /**
- * gimp_unit_get_abbreviation:
+ * ligma_unit_get_abbreviation:
  * @unit: The unit you want to know the abbreviation of.
  *
  * For built-in units, this function returns the translated abbreviation
@@ -340,15 +340,15 @@ gimp_unit_get_symbol (GimpUnit unit)
  * Returns: The unit's abbreviation.
  **/
 const gchar *
-gimp_unit_get_abbreviation (GimpUnit unit)
+ligma_unit_get_abbreviation (LigmaUnit unit)
 {
-  g_return_val_if_fail (_gimp_unit_vtable.unit_get_abbreviation != NULL, NULL);
+  g_return_val_if_fail (_ligma_unit_vtable.unit_get_abbreviation != NULL, NULL);
 
-  return _gimp_unit_vtable.unit_get_abbreviation (unit);
+  return _ligma_unit_vtable.unit_get_abbreviation (unit);
 }
 
 /**
- * gimp_unit_get_singular:
+ * ligma_unit_get_singular:
  * @unit: The unit you want to know the singular form of.
  *
  * For built-in units, this function returns the translated singular form
@@ -359,15 +359,15 @@ gimp_unit_get_abbreviation (GimpUnit unit)
  * Returns: The unit's singular form.
  **/
 const gchar *
-gimp_unit_get_singular (GimpUnit unit)
+ligma_unit_get_singular (LigmaUnit unit)
 {
-  g_return_val_if_fail (_gimp_unit_vtable.unit_get_singular != NULL, NULL);
+  g_return_val_if_fail (_ligma_unit_vtable.unit_get_singular != NULL, NULL);
 
-  return _gimp_unit_vtable.unit_get_singular (unit);
+  return _ligma_unit_vtable.unit_get_singular (unit);
 }
 
 /**
- * gimp_unit_get_plural:
+ * ligma_unit_get_plural:
  * @unit: The unit you want to know the plural form of.
  *
  * For built-in units, this function returns the translated plural form
@@ -378,11 +378,11 @@ gimp_unit_get_singular (GimpUnit unit)
  * Returns: The unit's plural form.
  **/
 const gchar *
-gimp_unit_get_plural (GimpUnit unit)
+ligma_unit_get_plural (LigmaUnit unit)
 {
-  g_return_val_if_fail (_gimp_unit_vtable.unit_get_plural != NULL, NULL);
+  g_return_val_if_fail (_ligma_unit_vtable.unit_get_plural != NULL, NULL);
 
-  return _gimp_unit_vtable.unit_get_plural (unit);
+  return _ligma_unit_vtable.unit_get_plural (unit);
 }
 
 static gint print (gchar       *buf,
@@ -413,7 +413,7 @@ print (gchar       *buf,
 }
 
 /**
- * gimp_unit_format_string:
+ * ligma_unit_format_string:
  * @format: A printf-like format string which is used to create the unit
  *          string.
  * @unit:   A unit.
@@ -429,7 +429,7 @@ print (gchar       *buf,
  *        </row>
  *       <row>
  *         <entry>% y</entry>
- *         <entry>Symbol (e.g. "''" for GIMP_UNIT_INCH)</entry>
+ *         <entry>Symbol (e.g. "''" for LIGMA_UNIT_INCH)</entry>
  *       </row>
  *       <row>
  *         <entry>% a</entry>
@@ -457,16 +457,16 @@ print (gchar       *buf,
  * Since: 2.8
  **/
 gchar *
-gimp_unit_format_string (const gchar *format,
-                         GimpUnit     unit)
+ligma_unit_format_string (const gchar *format,
+                         LigmaUnit     unit)
 {
   gchar buffer[1024];
   gint  i = 0;
 
   g_return_val_if_fail (format != NULL, NULL);
-  g_return_val_if_fail (unit == GIMP_UNIT_PERCENT ||
-                        (unit >= GIMP_UNIT_PIXEL &&
-                         unit < gimp_unit_get_number_of_units ()), NULL);
+  g_return_val_if_fail (unit == LIGMA_UNIT_PERCENT ||
+                        (unit >= LIGMA_UNIT_PIXEL &&
+                         unit < ligma_unit_get_number_of_units ()), NULL);
 
   while (i < (sizeof (buffer) - 1) && *format)
     {
@@ -487,27 +487,27 @@ gimp_unit_format_string (const gchar *format,
 
             case 'f': /* factor (how many units make up an inch) */
               i += print (buffer, sizeof (buffer), i, "%f",
-                          gimp_unit_get_factor (unit));
+                          ligma_unit_get_factor (unit));
               break;
 
             case 'y': /* symbol ("''" for inch) */
               i += print (buffer, sizeof (buffer), i, "%s",
-                          gimp_unit_get_symbol (unit));
+                          ligma_unit_get_symbol (unit));
               break;
 
             case 'a': /* abbreviation */
               i += print (buffer, sizeof (buffer), i, "%s",
-                          gimp_unit_get_abbreviation (unit));
+                          ligma_unit_get_abbreviation (unit));
               break;
 
             case 's': /* singular */
               i += print (buffer, sizeof (buffer), i, "%s",
-                          gimp_unit_get_singular (unit));
+                          ligma_unit_get_singular (unit));
               break;
 
             case 'p': /* plural */
               i += print (buffer, sizeof (buffer), i, "%s",
-                          gimp_unit_get_plural (unit));
+                          ligma_unit_get_plural (unit));
               break;
 
             default:
@@ -531,15 +531,15 @@ gimp_unit_format_string (const gchar *format,
 }
 
 /*
- * GIMP_TYPE_PARAM_UNIT
+ * LIGMA_TYPE_PARAM_UNIT
  */
 
-static void      gimp_param_unit_class_init     (GParamSpecClass *class);
-static gboolean  gimp_param_unit_value_validate (GParamSpec      *pspec,
+static void      ligma_param_unit_class_init     (GParamSpecClass *class);
+static gboolean  ligma_param_unit_value_validate (GParamSpec      *pspec,
                                                  GValue          *value);
 
 /**
- * gimp_param_unit_get_type:
+ * ligma_param_unit_get_type:
  *
  * Reveals the object type
  *
@@ -548,7 +548,7 @@ static gboolean  gimp_param_unit_value_validate (GParamSpec      *pspec,
  * Since: 2.4
  **/
 GType
-gimp_param_unit_get_type (void)
+ligma_param_unit_get_type (void)
 {
   static GType spec_type = 0;
 
@@ -558,14 +558,14 @@ gimp_param_unit_get_type (void)
       {
         sizeof (GParamSpecClass),
         NULL, NULL,
-        (GClassInitFunc) gimp_param_unit_class_init,
+        (GClassInitFunc) ligma_param_unit_class_init,
         NULL, NULL,
-        sizeof (GimpParamSpecUnit),
+        sizeof (LigmaParamSpecUnit),
         0, NULL, NULL
       };
 
       spec_type = g_type_register_static (G_TYPE_PARAM_INT,
-                                          "GimpParamUnit",
+                                          "LigmaParamUnit",
                                           &type_info, 0);
     }
 
@@ -573,32 +573,32 @@ gimp_param_unit_get_type (void)
 }
 
 static void
-gimp_param_unit_class_init (GParamSpecClass *class)
+ligma_param_unit_class_init (GParamSpecClass *class)
 {
-  class->value_type     = GIMP_TYPE_UNIT;
-  class->value_validate = gimp_param_unit_value_validate;
+  class->value_type     = LIGMA_TYPE_UNIT;
+  class->value_validate = ligma_param_unit_value_validate;
 }
 
 static gboolean
-gimp_param_unit_value_validate (GParamSpec *pspec,
+ligma_param_unit_value_validate (GParamSpec *pspec,
                                 GValue     *value)
 {
   GParamSpecInt     *ispec = G_PARAM_SPEC_INT (pspec);
-  GimpParamSpecUnit *uspec = GIMP_PARAM_SPEC_UNIT (pspec);
+  LigmaParamSpecUnit *uspec = LIGMA_PARAM_SPEC_UNIT (pspec);
   gint               oval  = value->data[0].v_int;
 
-  if (!(uspec->allow_percent && value->data[0].v_int == GIMP_UNIT_PERCENT))
+  if (!(uspec->allow_percent && value->data[0].v_int == LIGMA_UNIT_PERCENT))
     {
       value->data[0].v_int = CLAMP (value->data[0].v_int,
                                     ispec->minimum,
-                                    gimp_unit_get_number_of_units () - 1);
+                                    ligma_unit_get_number_of_units () - 1);
     }
 
   return value->data[0].v_int != oval;
 }
 
 /**
- * gimp_param_spec_unit:
+ * ligma_param_spec_unit:
  * @name:          Canonical name of the param
  * @nick:          Nickname of the param
  * @blurb:         Brief description of param.
@@ -615,25 +615,25 @@ gimp_param_unit_value_validate (GParamSpec *pspec,
  * Since: 2.4
  **/
 GParamSpec *
-gimp_param_spec_unit (const gchar *name,
+ligma_param_spec_unit (const gchar *name,
                       const gchar *nick,
                       const gchar *blurb,
                       gboolean     allow_pixels,
                       gboolean     allow_percent,
-                      GimpUnit     default_value,
+                      LigmaUnit     default_value,
                       GParamFlags  flags)
 {
-  GimpParamSpecUnit *pspec;
+  LigmaParamSpecUnit *pspec;
   GParamSpecInt     *ispec;
 
-  pspec = g_param_spec_internal (GIMP_TYPE_PARAM_UNIT,
+  pspec = g_param_spec_internal (LIGMA_TYPE_PARAM_UNIT,
                                  name, nick, blurb, flags);
 
   ispec = G_PARAM_SPEC_INT (pspec);
 
   ispec->default_value = default_value;
-  ispec->minimum       = allow_pixels ? GIMP_UNIT_PIXEL : GIMP_UNIT_INCH;
-  ispec->maximum       = GIMP_UNIT_PERCENT - 1;
+  ispec->minimum       = allow_pixels ? LIGMA_UNIT_PIXEL : LIGMA_UNIT_INCH;
+  ispec->maximum       = LIGMA_UNIT_PERCENT - 1;
 
   pspec->allow_percent = allow_percent;
 
@@ -641,7 +641,7 @@ gimp_param_spec_unit (const gchar *name,
 }
 
 /**
- * gimp_pixels_to_units:
+ * ligma_pixels_to_units:
  * @pixels:     value in pixels
  * @unit:       unit to convert to
  * @resolution: resolution in DPI
@@ -653,18 +653,18 @@ gimp_param_spec_unit (const gchar *name,
  * Since: 2.8
  **/
 gdouble
-gimp_pixels_to_units (gdouble  pixels,
-                      GimpUnit unit,
+ligma_pixels_to_units (gdouble  pixels,
+                      LigmaUnit unit,
                       gdouble  resolution)
 {
-  if (unit == GIMP_UNIT_PIXEL)
+  if (unit == LIGMA_UNIT_PIXEL)
     return pixels;
 
-  return pixels * gimp_unit_get_factor (unit) / resolution;
+  return pixels * ligma_unit_get_factor (unit) / resolution;
 }
 
 /**
- * gimp_units_to_pixels:
+ * ligma_units_to_pixels:
  * @value:      value in units
  * @unit:       unit of @value
  * @resolution: resloution in DPI
@@ -676,18 +676,18 @@ gimp_pixels_to_units (gdouble  pixels,
  * Since: 2.8
  **/
 gdouble
-gimp_units_to_pixels (gdouble  value,
-                      GimpUnit unit,
+ligma_units_to_pixels (gdouble  value,
+                      LigmaUnit unit,
                       gdouble  resolution)
 {
-  if (unit == GIMP_UNIT_PIXEL)
+  if (unit == LIGMA_UNIT_PIXEL)
     return value;
 
-  return value * resolution / gimp_unit_get_factor (unit);
+  return value * resolution / ligma_unit_get_factor (unit);
 }
 
 /**
- * gimp_units_to_points:
+ * ligma_units_to_points:
  * @value:      value in units
  * @unit:       unit of @value
  * @resolution: resloution in DPI
@@ -699,43 +699,43 @@ gimp_units_to_pixels (gdouble  value,
  * Since: 2.8
  **/
 gdouble
-gimp_units_to_points (gdouble  value,
-                      GimpUnit unit,
+ligma_units_to_points (gdouble  value,
+                      LigmaUnit unit,
                       gdouble  resolution)
 {
-  if (unit == GIMP_UNIT_POINT)
+  if (unit == LIGMA_UNIT_POINT)
     return value;
 
-  if (unit == GIMP_UNIT_PIXEL)
-    return (value * gimp_unit_get_factor (GIMP_UNIT_POINT) / resolution);
+  if (unit == LIGMA_UNIT_PIXEL)
+    return (value * ligma_unit_get_factor (LIGMA_UNIT_POINT) / resolution);
 
   return (value *
-          gimp_unit_get_factor (GIMP_UNIT_POINT) / gimp_unit_get_factor (unit));
+          ligma_unit_get_factor (LIGMA_UNIT_POINT) / ligma_unit_get_factor (unit));
 }
 
 /**
- * gimp_unit_is_metric:
+ * ligma_unit_is_metric:
  * @unit: The unit
  *
  * Checks if the given @unit is metric. A simplistic test is used
  * that looks at the unit's factor and checks if it is 2.54 multiplied
  * by some common powers of 10. Currently it checks for mm, cm, dm, m.
  *
- * See also: gimp_unit_get_factor()
+ * See also: ligma_unit_get_factor()
  *
  * Returns: %TRUE if the @unit is metric.
  *
  * Since: 2.10
  **/
 gboolean
-gimp_unit_is_metric (GimpUnit unit)
+ligma_unit_is_metric (LigmaUnit unit)
 {
   gdouble factor;
 
-  if (unit == GIMP_UNIT_MM)
+  if (unit == LIGMA_UNIT_MM)
     return TRUE;
 
-  factor = gimp_unit_get_factor (unit);
+  factor = ligma_unit_get_factor (unit);
 
   if (factor == 0.0)
     return FALSE;

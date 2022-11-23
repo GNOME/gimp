@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * GIMP Plug-in for Windows Icon files.
+ * LIGMA Plug-in for Windows Icon files.
  * Copyright (C) 2002 Christian Kreibich <christian@whoop.org>.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,8 +25,8 @@
 
 #include <glib/gstdio.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
 #include <png.h>
 
@@ -37,7 +37,7 @@
 #include "ico-save.h"
 #include "ico-dialog.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 static gint     ico_write_int8         (FILE   *fp,
@@ -64,15 +64,15 @@ static void     ico_set_byte_in_data   (guint8 *data,
                                         gint    byte_num,
                                         gint    byte_val);
 
-static gint     ico_get_layer_num_colors  (GimpLayer    *layer,
+static gint     ico_get_layer_num_colors  (LigmaLayer    *layer,
                                            gboolean     *uses_alpha_levels);
-static void     ico_image_get_reduced_buf (GimpDrawable *layer,
+static void     ico_image_get_reduced_buf (LigmaDrawable *layer,
                                            gint          bpp,
                                            gint         *num_colors,
                                            guchar      **cmap_out,
                                            guchar      **buf_out);
 
-static gboolean ico_save_init             (GimpImage    *image,
+static gboolean ico_save_init             (LigmaImage    *image,
                                            gint32        run_mode,
                                            IcoSaveInfo  *info,
                                            gint          n_hot_spot_x,
@@ -80,10 +80,10 @@ static gboolean ico_save_init             (GimpImage    *image,
                                            gint          n_hot_spot_y,
                                            gint32       *hot_spot_y,
                                            GError      **error);
-static GimpPDBStatusType
+static LigmaPDBStatusType
                 shared_save_image         (GFile         *file,
                                            FILE          *fp_ani,
-                                           GimpImage     *image,
+                                           LigmaImage     *image,
                                            gint32         run_mode,
                                            gint          *n_hot_spot_x,
                                            gint32       **hot_spot_x,
@@ -178,7 +178,7 @@ ico_write_int8 (FILE     *fp,
 
 
 static gboolean
-ico_save_init (GimpImage   *image,
+ico_save_init (LigmaImage   *image,
                gint32       run_mode,
                IcoSaveInfo *info,
                gint         n_hot_spot_x,
@@ -192,7 +192,7 @@ ico_save_init (GimpImage   *image,
   gint       i;
   gboolean   uses_alpha_values = FALSE;
 
-  info->layers         = gimp_image_list_layers (image);
+  info->layers         = ligma_image_list_layers (image);
   info->num_icons      = g_list_length (info->layers);
   info->depths         = g_new (gint, info->num_icons);
   info->default_depths = g_new (gint, info->num_icons);
@@ -200,7 +200,7 @@ ico_save_init (GimpImage   *image,
   info->hot_spot_x     = g_new0 (gint, info->num_icons);
   info->hot_spot_y     = g_new0 (gint, info->num_icons);
 
-  if (run_mode == GIMP_RUN_NONINTERACTIVE &&
+  if (run_mode == LIGMA_RUN_NONINTERACTIVE &&
       (n_hot_spot_x != info->num_icons ||
        n_hot_spot_y != info->num_icons))
     {
@@ -284,8 +284,8 @@ ico_save_init (GimpImage   *image,
         }
 
       /* vista icons */
-      if (gimp_drawable_get_width  (iter->data) > 255 ||
-          gimp_drawable_get_height (iter->data) > 255)
+      if (ligma_drawable_get_width  (iter->data) > 255 ||
+          ligma_drawable_get_height (iter->data) > 255)
         {
           info->compress[i] = TRUE;
         }
@@ -305,7 +305,7 @@ ico_save_init (GimpImage   *image,
 
 
 static gboolean
-ico_save_dialog (GimpImage     *image,
+ico_save_dialog (LigmaImage     *image,
                  IcoSaveInfo   *info,
                  AniFileHeader *ani_header,
                  AniSaveInfo   *ani_info)
@@ -315,7 +315,7 @@ ico_save_dialog (GimpImage     *image,
   gint           i;
   gint           response;
 
-  gimp_ui_init (PLUG_IN_BINARY);
+  ligma_ui_init (PLUG_IN_BINARY);
 
   dialog = ico_dialog_new (info, ani_header, ani_info);
   for (iter = info->layers, i = 0;
@@ -324,10 +324,10 @@ ico_save_dialog (GimpImage     *image,
     {
       if (info->is_cursor)
         {
-          GimpParasite *parasite = NULL;
+          LigmaParasite *parasite = NULL;
 
           /* Loading hot spots for cursors if applicable */
-          parasite = gimp_item_get_parasite (GIMP_ITEM (iter->data), "cur-hot-spot");
+          parasite = ligma_item_get_parasite (LIGMA_ITEM (iter->data), "cur-hot-spot");
 
           if (parasite)
             {
@@ -335,7 +335,7 @@ ico_save_dialog (GimpImage     *image,
               guint32  parasite_size;
               gint x, y;
 
-              parasite_data = (gchar *) gimp_parasite_get_data (parasite, &parasite_size);
+              parasite_data = (gchar *) ligma_parasite_get_data (parasite, &parasite_size);
               parasite_data = g_strndup (parasite_data, parasite_size);
 
               if (sscanf (parasite_data, "%i %i", &x, &y) == 2)
@@ -344,12 +344,12 @@ ico_save_dialog (GimpImage     *image,
                   info->hot_spot_y[i] = y;
                 }
 
-              gimp_parasite_free (parasite);
+              ligma_parasite_free (parasite);
               g_free (parasite_data);
             }
         }
 
-      /* if (gimp_layer_get_visible(layers[i])) */
+      /* if (ligma_layer_get_visible(layers[i])) */
       ico_dialog_add_icon (dialog, iter->data, i);
     }
 
@@ -361,7 +361,7 @@ ico_save_dialog (GimpImage     *image,
 
   gtk_widget_show (dialog);
 
-  response = gimp_dialog_run (GIMP_DIALOG (dialog));
+  response = ligma_dialog_run (LIGMA_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
 
@@ -534,7 +534,7 @@ ico_get_palette_index (GHashTable *hash,
 }
 
 static gint
-ico_get_layer_num_colors (GimpLayer *layer,
+ico_get_layer_num_colors (LigmaLayer *layer,
                           gboolean  *uses_alpha_levels)
 {
   gint        w, h;
@@ -546,7 +546,7 @@ ico_get_layer_num_colors (GimpLayer *layer,
   guint32    *colors;
   guint32    *c;
   GHashTable *hash;
-  GeglBuffer *buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
+  GeglBuffer *buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (layer));
   const Babl *format;
 
   w = gegl_buffer_get_width  (buffer);
@@ -554,29 +554,29 @@ ico_get_layer_num_colors (GimpLayer *layer,
 
   num_pixels = w * h;
 
-  switch (gimp_drawable_type (GIMP_DRAWABLE (layer)))
+  switch (ligma_drawable_type (LIGMA_DRAWABLE (layer)))
     {
-    case GIMP_RGB_IMAGE:
+    case LIGMA_RGB_IMAGE:
       format = babl_format ("R'G'B' u8");
       break;
 
-    case GIMP_RGBA_IMAGE:
+    case LIGMA_RGBA_IMAGE:
       format = babl_format ("R'G'B'A u8");
       break;
 
-    case GIMP_GRAY_IMAGE:
+    case LIGMA_GRAY_IMAGE:
       format = babl_format ("Y' u8");
       break;
 
-    case GIMP_GRAYA_IMAGE:
+    case LIGMA_GRAYA_IMAGE:
       format = babl_format ("Y'A u8");
       break;
 
-    case GIMP_INDEXED_IMAGE:
-    case GIMP_INDEXEDA_IMAGE:
+    case LIGMA_INDEXED_IMAGE:
+    case LIGMA_INDEXEDA_IMAGE:
       format = gegl_buffer_get_format (buffer);
       /* It is possible to count the colors of indexed image more easily
-       * with gimp_image_get_colormap(), but counting only the colors
+       * with ligma_image_get_colormap(), but counting only the colors
        * actually used will allow more efficient bpp if possible. */
       break;
 
@@ -676,43 +676,43 @@ ico_cmap_contains_black (const guchar *cmap,
 }
 
 static void
-ico_image_get_reduced_buf (GimpDrawable *layer,
+ico_image_get_reduced_buf (LigmaDrawable *layer,
                            gint          bpp,
                            gint         *num_colors,
                            guchar      **cmap_out,
                            guchar      **buf_out)
 {
-  GimpImage  *tmp_image;
-  GimpLayer  *tmp_layer;
+  LigmaImage  *tmp_image;
+  LigmaLayer  *tmp_layer;
   gint        w, h;
   guchar     *buf;
   guchar     *cmap   = NULL;
-  GeglBuffer *buffer = gimp_drawable_get_buffer (layer);
+  GeglBuffer *buffer = ligma_drawable_get_buffer (layer);
   const Babl *format;
 
   w = gegl_buffer_get_width  (buffer);
   h = gegl_buffer_get_height (buffer);
 
-  switch (gimp_drawable_type (layer))
+  switch (ligma_drawable_type (layer))
     {
-    case GIMP_RGB_IMAGE:
+    case LIGMA_RGB_IMAGE:
       format = babl_format ("R'G'B' u8");
       break;
 
-    case GIMP_RGBA_IMAGE:
+    case LIGMA_RGBA_IMAGE:
       format = babl_format ("R'G'B'A u8");
       break;
 
-    case GIMP_GRAY_IMAGE:
+    case LIGMA_GRAY_IMAGE:
       format = babl_format ("Y' u8");
       break;
 
-    case GIMP_GRAYA_IMAGE:
+    case LIGMA_GRAYA_IMAGE:
       format = babl_format ("Y'A u8");
       break;
 
-    case GIMP_INDEXED_IMAGE:
-    case GIMP_INDEXEDA_IMAGE:
+    case LIGMA_INDEXED_IMAGE:
+    case LIGMA_INDEXEDA_IMAGE:
       format = gegl_buffer_get_format (buffer);
       break;
 
@@ -726,29 +726,29 @@ ico_image_get_reduced_buf (GimpDrawable *layer,
 
   if (bpp <= 8 || bpp == 24 || babl_format_get_bytes_per_pixel (format) != 4)
     {
-      GimpImage  *image = gimp_item_get_image (GIMP_ITEM (layer));
+      LigmaImage  *image = ligma_item_get_image (LIGMA_ITEM (layer));
       GeglBuffer *tmp;
 
-      tmp_image = gimp_image_new (w, h, gimp_image_get_base_type (image));
-      gimp_image_undo_disable (tmp_image);
+      tmp_image = ligma_image_new (w, h, ligma_image_get_base_type (image));
+      ligma_image_undo_disable (tmp_image);
 
-      if (gimp_drawable_is_indexed (layer))
+      if (ligma_drawable_is_indexed (layer))
         {
           guchar *cmap;
           gint    num_colors;
 
-          cmap = gimp_image_get_colormap (image, &num_colors);
-          gimp_image_set_colormap (tmp_image, cmap, num_colors);
+          cmap = ligma_image_get_colormap (image, &num_colors);
+          ligma_image_set_colormap (tmp_image, cmap, num_colors);
           g_free (cmap);
         }
 
-      tmp_layer = gimp_layer_new (tmp_image, "tmp", w, h,
-                                  gimp_drawable_type (layer),
+      tmp_layer = ligma_layer_new (tmp_image, "tmp", w, h,
+                                  ligma_drawable_type (layer),
                                   100,
-                                  gimp_image_get_default_new_layer_mode (tmp_image));
-      gimp_image_insert_layer (tmp_image, tmp_layer, NULL, 0);
+                                  ligma_image_get_default_new_layer_mode (tmp_image));
+      ligma_image_insert_layer (tmp_image, tmp_layer, NULL, 0);
 
-      tmp = gimp_drawable_get_buffer (GIMP_DRAWABLE (tmp_layer));
+      tmp = ligma_drawable_get_buffer (LIGMA_DRAWABLE (tmp_layer));
 
       gegl_buffer_get (buffer, GEGL_RECTANGLE (0, 0, w, h), 1.0,
                        format, buf,
@@ -758,17 +758,17 @@ ico_image_get_reduced_buf (GimpDrawable *layer,
 
       g_object_unref (tmp);
 
-      if (! gimp_drawable_is_rgb (GIMP_DRAWABLE (tmp_layer)))
-        gimp_image_convert_rgb (tmp_image);
+      if (! ligma_drawable_is_rgb (LIGMA_DRAWABLE (tmp_layer)))
+        ligma_image_convert_rgb (tmp_image);
 
       if (bpp <= 8)
         {
-          gimp_image_convert_indexed (tmp_image,
-                                      GIMP_CONVERT_DITHER_FS,
-                                      GIMP_CONVERT_PALETTE_GENERATE,
+          ligma_image_convert_indexed (tmp_image,
+                                      LIGMA_CONVERT_DITHER_FS,
+                                      LIGMA_CONVERT_PALETTE_GENERATE,
                                       1 << bpp, TRUE, FALSE, "dummy");
 
-          cmap = gimp_image_get_colormap (tmp_image, num_colors);
+          cmap = ligma_image_get_colormap (tmp_image, num_colors);
 
           if (*num_colors == (1 << bpp) &&
               ! ico_cmap_contains_black (cmap, *num_colors))
@@ -777,60 +777,60 @@ ico_image_get_reduced_buf (GimpDrawable *layer,
                * We need to eliminate one more color to make room for black.
                */
 
-              if (gimp_drawable_is_indexed (layer))
+              if (ligma_drawable_is_indexed (layer))
                 {
                   g_free (cmap);
-                  cmap = gimp_image_get_colormap (image, num_colors);
-                  gimp_image_set_colormap (tmp_image, cmap, *num_colors);
+                  cmap = ligma_image_get_colormap (image, num_colors);
+                  ligma_image_set_colormap (tmp_image, cmap, *num_colors);
                 }
-              else if (gimp_drawable_is_gray (layer))
+              else if (ligma_drawable_is_gray (layer))
                 {
-                  gimp_image_convert_grayscale (tmp_image);
+                  ligma_image_convert_grayscale (tmp_image);
                 }
               else
                 {
-                  gimp_image_convert_rgb (tmp_image);
+                  ligma_image_convert_rgb (tmp_image);
                 }
 
-              tmp = gimp_drawable_get_buffer (GIMP_DRAWABLE (tmp_layer));
+              tmp = ligma_drawable_get_buffer (LIGMA_DRAWABLE (tmp_layer));
 
               gegl_buffer_set (tmp, GEGL_RECTANGLE (0, 0, w, h), 0,
                                format, buf, GEGL_AUTO_ROWSTRIDE);
 
               g_object_unref (tmp);
 
-              if (! gimp_drawable_is_rgb (layer))
-                gimp_image_convert_rgb (tmp_image);
+              if (! ligma_drawable_is_rgb (layer))
+                ligma_image_convert_rgb (tmp_image);
 
-              gimp_image_convert_indexed (tmp_image,
-                                          GIMP_CONVERT_DITHER_FS,
-                                          GIMP_CONVERT_PALETTE_GENERATE,
+              ligma_image_convert_indexed (tmp_image,
+                                          LIGMA_CONVERT_DITHER_FS,
+                                          LIGMA_CONVERT_PALETTE_GENERATE,
                                           (1<<bpp) - 1, TRUE, FALSE, "dummy");
               g_free (cmap);
-              cmap = gimp_image_get_colormap (tmp_image, num_colors);
+              cmap = ligma_image_get_colormap (tmp_image, num_colors);
             }
 
-          gimp_image_convert_rgb (tmp_image);
+          ligma_image_convert_rgb (tmp_image);
         }
       else if (bpp == 24)
         {
-          GimpValueArray *return_vals;
+          LigmaValueArray *return_vals;
 
           return_vals =
-            gimp_pdb_run_procedure (gimp_get_pdb (),
+            ligma_pdb_run_procedure (ligma_get_pdb (),
                                     "plug-in-threshold-alpha",
-                                    GIMP_TYPE_RUN_MODE, GIMP_RUN_NONINTERACTIVE,
-                                    GIMP_TYPE_IMAGE,    tmp_image,
-                                    GIMP_TYPE_DRAWABLE, tmp_layer,
+                                    LIGMA_TYPE_RUN_MODE, LIGMA_RUN_NONINTERACTIVE,
+                                    LIGMA_TYPE_IMAGE,    tmp_image,
+                                    LIGMA_TYPE_DRAWABLE, tmp_layer,
                                     G_TYPE_INT,         ICO_ALPHA_THRESHOLD,
                                     G_TYPE_NONE);
 
-          gimp_value_array_unref (return_vals);
+          ligma_value_array_unref (return_vals);
         }
 
-      gimp_layer_add_alpha (tmp_layer);
+      ligma_layer_add_alpha (tmp_layer);
 
-      tmp = gimp_drawable_get_buffer (GIMP_DRAWABLE (tmp_layer));
+      tmp = ligma_drawable_get_buffer (LIGMA_DRAWABLE (tmp_layer));
 
       gegl_buffer_get (tmp, GEGL_RECTANGLE (0, 0, w, h), 1.0,
                        NULL, buf,
@@ -838,7 +838,7 @@ ico_image_get_reduced_buf (GimpDrawable *layer,
 
       g_object_unref (tmp);
 
-      gimp_image_delete (tmp_image);
+      ligma_image_delete (tmp_image);
     }
   else
     {
@@ -855,7 +855,7 @@ ico_image_get_reduced_buf (GimpDrawable *layer,
 
 static gboolean
 ico_write_png (FILE         *fp,
-               GimpDrawable *layer,
+               LigmaDrawable *layer,
                gint32        depth)
 {
   png_structp png_ptr;
@@ -871,8 +871,8 @@ ico_write_png (FILE         *fp,
   palette = NULL;
   buf = NULL;
 
-  width = gimp_drawable_get_width (layer);
-  height = gimp_drawable_get_height (layer);
+  width = ligma_drawable_get_width (layer);
+  height = ligma_drawable_get_height (layer);
 
   png_ptr = png_create_write_struct (PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
   if ( !png_ptr )
@@ -930,7 +930,7 @@ ico_write_png (FILE         *fp,
 
 static gboolean
 ico_write_icon (FILE         *fp,
-                GimpDrawable *layer,
+                LigmaDrawable *layer,
                 gint32        depth)
 {
   IcoFileDataHeader  header;
@@ -951,8 +951,8 @@ ico_write_icon (FILE         *fp,
   D(("Creating data structures for icon %i ------------------------\n",
      num_icon));
 
-  width = gimp_drawable_get_width (layer);
-  height = gimp_drawable_get_height (layer);
+  width = ligma_drawable_get_width (layer);
+  height = ligma_drawable_get_height (layer);
 
   header.header_size     = 40;
   header.width          = width;
@@ -1166,16 +1166,16 @@ ico_save_info_free (IcoSaveInfo  *info)
   memset (info, 0, sizeof (IcoSaveInfo));
 }
 
-GimpPDBStatusType
+LigmaPDBStatusType
 ico_save_image (GFile      *file,
-                GimpImage  *image,
+                LigmaImage  *image,
                 gint32      run_mode,
                 GError    **error)
 {
   IcoSaveInfo info;
 
   D(("*** Exporting Microsoft icon file %s\n",
-     gimp_file_get_utf8_name (file)));
+     ligma_file_get_utf8_name (file)));
 
   info.is_cursor = FALSE;
 
@@ -1184,9 +1184,9 @@ ico_save_image (GFile      *file,
                             0, 0, error, &info);
 }
 
-GimpPDBStatusType
+LigmaPDBStatusType
 cur_save_image (GFile      *file,
-                GimpImage  *image,
+                LigmaImage  *image,
                 gint32      run_mode,
                 gint       *n_hot_spot_x,
                 gint32    **hot_spot_x,
@@ -1197,7 +1197,7 @@ cur_save_image (GFile      *file,
   IcoSaveInfo info;
 
   D(("*** Exporting Microsoft cursor file %s\n",
-     gimp_file_get_utf8_name (file)));
+     ligma_file_get_utf8_name (file)));
 
   info.is_cursor = TRUE;
 
@@ -1208,9 +1208,9 @@ cur_save_image (GFile      *file,
 }
 
 /* Ported from James Huang's ani.c code, under the GPL v3 license */
-GimpPDBStatusType
+LigmaPDBStatusType
 ani_save_image (GFile         *file,
-                GimpImage     *image,
+                LigmaImage     *image,
                 gint32         run_mode,
                 gint          *n_hot_spot_x,
                 gint32       **hot_spot_x,
@@ -1223,7 +1223,7 @@ ani_save_image (GFile         *file,
   FILE         *fp;
   gint32        i;
   gchar        *str;
-  GimpParasite *parasite = NULL;
+  LigmaParasite *parasite = NULL;
   gchar         id[5];
   guint32       size;
   guint8        padding       = 0;
@@ -1237,7 +1237,7 @@ ani_save_image (GFile         *file,
                         *n_hot_spot_y, *hot_spot_y,
                         error))
     {
-      return GIMP_PDB_EXECUTION_ERROR;
+      return LIGMA_PDB_EXECUTION_ERROR;
     }
 
   /* Save individual frames as .cur so we can retain
@@ -1264,14 +1264,14 @@ ani_save_image (GFile         *file,
   header->flags = 1;
 
   /* Load metadata from parasite */
-  parasite = gimp_image_get_parasite (image, "ani-header");
+  parasite = ligma_image_get_parasite (image, "ani-header");
   if (parasite)
     {
       gchar   *parasite_data;
       guint32  parasite_size;
       gint     jif_rate;
 
-      parasite_data = (gchar *) gimp_parasite_get_data (parasite, &parasite_size);
+      parasite_data = (gchar *) ligma_parasite_get_data (parasite, &parasite_size);
       parasite_data = g_strndup (parasite_data, parasite_size);
 
       if (sscanf (parasite_data, "%i", &jif_rate) == 1)
@@ -1279,39 +1279,39 @@ ani_save_image (GFile         *file,
           header->jif_rate = jif_rate;
         }
 
-      gimp_parasite_free (parasite);
+      ligma_parasite_free (parasite);
       g_free (parasite_data);
     }
 
-  parasite = gimp_image_get_parasite (image, "ani-info-inam");
+  parasite = ligma_image_get_parasite (image, "ani-info-inam");
   if (parasite)
     {
       guint32  parasite_size;
       gchar   *inam = NULL;
 
-      inam = (gchar *) gimp_parasite_get_data (parasite, &parasite_size);
+      inam = (gchar *) ligma_parasite_get_data (parasite, &parasite_size);
       ani_info->inam = g_strndup (inam, parasite_size);
 
-      gimp_parasite_free (parasite);
+      ligma_parasite_free (parasite);
     }
 
-  parasite = gimp_image_get_parasite (image, "ani-info-iart");
+  parasite = ligma_image_get_parasite (image, "ani-info-iart");
   if (parasite)
     {
       guint32  parasite_size;
       gchar   *iart = NULL;
 
-      iart = (gchar *) gimp_parasite_get_data (parasite, &parasite_size);
+      iart = (gchar *) ligma_parasite_get_data (parasite, &parasite_size);
       ani_info->iart = g_strndup (iart, parasite_size);
 
-      gimp_parasite_free (parasite);
+      ligma_parasite_free (parasite);
     }
 
-  if (run_mode == GIMP_RUN_INTERACTIVE)
+  if (run_mode == LIGMA_RUN_INTERACTIVE)
     {
       if (! ico_save_dialog (image, &info,
                              header, ani_info))
-        return GIMP_PDB_CANCEL;
+        return LIGMA_PDB_CANCEL;
 
       for (i = 1; i < info.num_icons; i++)
         {
@@ -1321,8 +1321,8 @@ ani_save_image (GFile         *file,
         }
     }
 
-  gimp_progress_init_printf (_("Exporting '%s'"),
-                             gimp_file_get_utf8_name (file));
+  ligma_progress_init_printf (_("Exporting '%s'"),
+                             ligma_file_get_utf8_name (file));
 
   fp = g_fopen (g_file_peek_path (file), "wb");
 
@@ -1330,8 +1330,8 @@ ani_save_image (GFile         *file,
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for writing: %s"),
-                   gimp_file_get_utf8_name (file), g_strerror (errno));
-      return GIMP_PDB_EXECUTION_ERROR;
+                   ligma_file_get_utf8_name (file), g_strerror (errno));
+      return LIGMA_PDB_EXECUTION_ERROR;
     }
 
   /* Writing the .ani header data */
@@ -1407,7 +1407,7 @@ ani_save_image (GFile         *file,
   strcpy (id, "icon");
   for (i = 0; i < info.num_icons; i++ )
     {
-      GimpPDBStatusType status;
+      LigmaPDBStatusType status;
       fwrite (id, 4, 1, fp);
       ofs_size_icon = ftell (fp);
       fwrite (&size, sizeof (size), 1, fp);
@@ -1417,13 +1417,13 @@ ani_save_image (GFile         *file,
                                   n_hot_spot_y, hot_spot_y,
                                   offset, i, error, &info);
 
-      if (status != GIMP_PDB_SUCCESS)
+      if (status != LIGMA_PDB_SUCCESS)
         {
           ico_save_info_free (&info);
           g_free (ani_info->inam);
           g_free (ani_info->iart);
           fclose (fp);
-          return GIMP_PDB_EXECUTION_ERROR;
+          return LIGMA_PDB_EXECUTION_ERROR;
         }
       fseek (fp, 0L, SEEK_END);
       size = ftell (fp) - offset;
@@ -1431,7 +1431,7 @@ ani_save_image (GFile         *file,
       fwrite (&size, sizeof (size), 1, fp);
       fseek (fp, 0L, SEEK_END);
 
-      gimp_progress_update ((gdouble) i / (gdouble) info.num_icons);
+      ligma_progress_update ((gdouble) i / (gdouble) info.num_icons);
     }
   ico_save_info_free (&info);
 
@@ -1449,43 +1449,43 @@ ani_save_image (GFile         *file,
 
   /* Update metadata if needed */
   str = g_strdup_printf ("%d", header->jif_rate);
-  parasite = gimp_parasite_new ("ani-header",
-                                GIMP_PARASITE_PERSISTENT,
+  parasite = ligma_parasite_new ("ani-header",
+                                LIGMA_PARASITE_PERSISTENT,
                                 strlen (str) + 1, (gpointer) str);
   g_free (str);
-  gimp_image_attach_parasite (image, parasite);
-  gimp_parasite_free (parasite);
+  ligma_image_attach_parasite (image, parasite);
+  ligma_parasite_free (parasite);
 
   if (ani_info->inam && strlen (ani_info->inam) > 0)
     {
       str = g_strdup_printf ("%s", ani_info->inam);
-      parasite = gimp_parasite_new ("ani-info-inam",
-                                    GIMP_PARASITE_PERSISTENT,
+      parasite = ligma_parasite_new ("ani-info-inam",
+                                    LIGMA_PARASITE_PERSISTENT,
                                     strlen (ani_info->inam) + 1, (gpointer) str);
       g_free (str);
-      gimp_image_attach_parasite (image, parasite);
-      gimp_parasite_free (parasite);
+      ligma_image_attach_parasite (image, parasite);
+      ligma_parasite_free (parasite);
     }
   if (ani_info->iart && strlen (ani_info->iart) > 0)
     {
       str = g_strdup_printf ("%s", ani_info->iart);
-      parasite = gimp_parasite_new ("ani-info-iart",
-                                    GIMP_PARASITE_PERSISTENT,
+      parasite = ligma_parasite_new ("ani-info-iart",
+                                    LIGMA_PARASITE_PERSISTENT,
                                     strlen (ani_info->iart) + 1, (gpointer) str);
       g_free (str);
-      gimp_image_attach_parasite (image, parasite);
-      gimp_parasite_free (parasite);
+      ligma_image_attach_parasite (image, parasite);
+      ligma_parasite_free (parasite);
     }
 
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 
-  return GIMP_PDB_SUCCESS;
+  return LIGMA_PDB_SUCCESS;
 }
 
-GimpPDBStatusType
+LigmaPDBStatusType
 shared_save_image (GFile        *file,
                    FILE         *fp_ani,
-                   GimpImage    *image,
+                   LigmaImage    *image,
                    gint32        run_mode,
                    gint         *n_hot_spot_x,
                    gint32      **hot_spot_x,
@@ -1505,7 +1505,7 @@ shared_save_image (GFile        *file,
   gboolean       saved;
   gint           i;
   gint           num_icons;
-  GimpParasite  *parasite = NULL;
+  LigmaParasite  *parasite = NULL;
   gchar         *str;
 
   if (! fp_ani &&
@@ -1516,22 +1516,22 @@ shared_save_image (GFile        *file,
                        hot_spot_y   ? *hot_spot_y   : NULL,
                        error))
     {
-      return GIMP_PDB_EXECUTION_ERROR;
+      return LIGMA_PDB_EXECUTION_ERROR;
     }
 
-  if (run_mode == GIMP_RUN_INTERACTIVE && ! fp_ani)
+  if (run_mode == LIGMA_RUN_INTERACTIVE && ! fp_ani)
     {
       /* Allow user to override default values */
       if ( !ico_save_dialog (image, info,
                              NULL, NULL))
-        return GIMP_PDB_CANCEL;
+        return LIGMA_PDB_CANCEL;
     }
 
   num_icons = (fp_ani) ? 1 : info->num_icons;
 
   if (! fp_ani)
-    gimp_progress_init_printf (_("Exporting '%s'"),
-                               gimp_file_get_utf8_name (file));
+    ligma_progress_init_printf (_("Exporting '%s'"),
+                               ligma_file_get_utf8_name (file));
 
   /* If saving an .ani file, we append the next icon frame. */
   if (! fp_ani)
@@ -1547,8 +1547,8 @@ shared_save_image (GFile        *file,
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for writing: %s"),
-                   gimp_file_get_utf8_name (file), g_strerror (errno));
-      return GIMP_PDB_EXECUTION_ERROR;
+                   ligma_file_get_utf8_name (file), g_strerror (errno));
+      return LIGMA_PDB_EXECUTION_ERROR;
     }
 
   header.reserved = 0;
@@ -1562,7 +1562,7 @@ shared_save_image (GFile        *file,
     {
       ico_save_info_free (info);
       fclose (fp);
-      return GIMP_PDB_EXECUTION_ERROR;
+      return LIGMA_PDB_EXECUTION_ERROR;
     }
 
   entries = g_new0 (IcoFileEntry, num_icons);
@@ -1571,7 +1571,7 @@ shared_save_image (GFile        *file,
       ico_save_info_free (info);
       g_free (entries);
       fclose (fp);
-      return GIMP_PDB_EXECUTION_ERROR;
+      return LIGMA_PDB_EXECUTION_ERROR;
     }
 
   for (iter = info->layers, i = 0;
@@ -1579,14 +1579,14 @@ shared_save_image (GFile        *file,
        iter = g_list_next (iter), i++)
     {
       if (! fp_ani)
-        gimp_progress_update ((gdouble)i / (gdouble)info->num_icons);
+        ligma_progress_update ((gdouble)i / (gdouble)info->num_icons);
 
       /* If saving .ani file, jump to the correct frame */
       if (fp_ani)
         iter = g_list_nth (info->layers, icon_index);
 
-      width = gimp_drawable_get_width (iter->data);
-      height = gimp_drawable_get_height (iter->data);
+      width = ligma_drawable_get_width (iter->data);
+      height = ligma_drawable_get_height (iter->data);
       if (width <= 255 && height <= 255)
         {
           entries[i].width = width;
@@ -1623,7 +1623,7 @@ shared_save_image (GFile        *file,
         {
           ico_save_info_free (info);
           fclose (fp);
-          return GIMP_PDB_EXECUTION_ERROR;
+          return LIGMA_PDB_EXECUTION_ERROR;
         }
 
       entries[i].size = ftell (fp) - file_offset - entries[i].offset;
@@ -1645,11 +1645,11 @@ shared_save_image (GFile        *file,
     {
       ico_save_info_free (info);
       fclose (fp);
-      return GIMP_PDB_EXECUTION_ERROR;
+      return LIGMA_PDB_EXECUTION_ERROR;
     }
 
   if (! fp_ani)
-    gimp_progress_update (1.0);
+    ligma_progress_update (1.0);
 
   /* Updating parasite hot spots if needed */
   if (info->is_cursor)
@@ -1659,12 +1659,12 @@ shared_save_image (GFile        *file,
            iter = g_list_next (iter), i++)
         {
           str = g_strdup_printf ("%d %d", info->hot_spot_x[i], info->hot_spot_y[i]);
-          parasite = gimp_parasite_new ("cur-hot-spot",
-                                        GIMP_PARASITE_PERSISTENT,
+          parasite = ligma_parasite_new ("cur-hot-spot",
+                                        LIGMA_PARASITE_PERSISTENT,
                                         strlen (str) + 1, (gpointer) str);
           g_free (str);
-          gimp_item_attach_parasite (GIMP_ITEM (iter->data), parasite);
-          gimp_parasite_free (parasite);
+          ligma_item_attach_parasite (LIGMA_ITEM (iter->data), parasite);
+          ligma_parasite_free (parasite);
         }
     }
 
@@ -1696,5 +1696,5 @@ shared_save_image (GFile        *file,
     }
   g_free (entries);
 
-  return GIMP_PDB_SUCCESS;
+  return LIGMA_PDB_SUCCESS;
 }

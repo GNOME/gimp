@@ -1,9 +1,9 @@
-# GIMP tool preset file
+# LIGMA tool preset file
 
-(icon-name "gimp-tool-paintbrush")
+(icon-name "ligma-tool-paintbrush")
 (name "Pencil Soft")
-(tool-options "GimpPaintOptions"
-    (tool "gimp-paintbrush-tool")
+(tool-options "LigmaPaintOptions"
+    (tool "ligma-paintbrush-tool")
     (foreground (color-rgb 0.007812 0.007812 0.007812))
     (opacity 0.500000)
     (brush "Charcoal 02")
@@ -23,4 +23,4 @@
 (use-palette no)
 (use-font no)
 
-# end of GIMP tool preset file
+# end of LIGMA tool preset file

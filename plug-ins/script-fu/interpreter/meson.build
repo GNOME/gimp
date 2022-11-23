@@ -1,7 +1,7 @@
 
 scriptfuInclude = include_directories('..')
 
-executable_name = 'gimp-script-fu-interpreter-' + gimp_api_version
+executable_name = 'ligma-script-fu-interpreter-' + ligma_api_version
 
 plugin_sources = [
   'script-fu-interpreter.c',
@@ -23,12 +23,12 @@ if platform_windows
 endif
 
 # !!! Installs as a usual binary say to /usr/bin, unlike extension-script-fu
-# GIMP queries scripts with shebangs, which invokes gimp-script-fu-interpreter-3.0.
+# LIGMA queries scripts with shebangs, which invokes ligma-script-fu-interpreter-3.0.
 
 script_fu_interpreter = executable(executable_name,
   plugin_sources,
   dependencies: [
-    libgimpui_dep,
+    libligmaui_dep,
     math,
   ],
   c_args: [

@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimpimagesamplepoints_pdb.c
+ * ligmaimagesamplepoints_pdb.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,12 +24,12 @@
 
 #include "stamp-pdbgen.h"
 
-#include "gimp.h"
+#include "ligma.h"
 
 
 /**
- * SECTION: gimpimagesamplepoints
- * @title: gimpimagesamplepoints
+ * SECTION: ligmaimagesamplepoints
+ * @title: ligmaimagesamplepoints
  * @short_description: Functions for manipulating an image's sample points.
  *
  * Functions for manipulating an image's sample points.
@@ -37,7 +37,7 @@
 
 
 /**
- * gimp_image_add_sample_point:
+ * ligma_image_add_sample_point:
  * @image: The image.
  * @position_x: The guide'sample points x-offset from left of image.
  * @position_y: The guide'sample points y-offset from top of image.
@@ -53,35 +53,35 @@
  * Since: 2.10
  **/
 guint
-gimp_image_add_sample_point (GimpImage *image,
+ligma_image_add_sample_point (LigmaImage *image,
                              gint       position_x,
                              gint       position_y)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   guint sample_point = 0;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_INT, position_x,
                                           G_TYPE_INT, position_y,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-add-sample-point",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-add-sample-point",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    sample_point = GIMP_VALUES_GET_UINT (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    sample_point = LIGMA_VALUES_GET_UINT (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return sample_point;
 }
 
 /**
- * gimp_image_delete_sample_point:
+ * ligma_image_delete_sample_point:
  * @image: The image.
  * @sample_point: The ID of the sample point to be removed.
  *
@@ -95,32 +95,32 @@ gimp_image_add_sample_point (GimpImage *image,
  * Since: 2.10
  **/
 gboolean
-gimp_image_delete_sample_point (GimpImage *image,
+ligma_image_delete_sample_point (LigmaImage *image,
                                 guint      sample_point)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_UINT, sample_point,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-delete-sample-point",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-delete-sample-point",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_find_next_sample_point:
+ * ligma_image_find_next_sample_point:
  * @image: The image.
  * @sample_point: The ID of the current sample point (0 if first invocation).
  *
@@ -138,33 +138,33 @@ gimp_image_delete_sample_point (GimpImage *image,
  * Since: 2.10
  **/
 guint
-gimp_image_find_next_sample_point (GimpImage *image,
+ligma_image_find_next_sample_point (LigmaImage *image,
                                    guint      sample_point)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   guint next_sample_point = 0;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_UINT, sample_point,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-find-next-sample-point",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-find-next-sample-point",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    next_sample_point = GIMP_VALUES_GET_UINT (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    next_sample_point = LIGMA_VALUES_GET_UINT (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return next_sample_point;
 }
 
 /**
- * gimp_image_get_sample_point_position:
+ * ligma_image_get_sample_point_position:
  * @image: The image.
  * @sample_point: The guide.
  * @position_y: (out): The sample points's position relative to top of image.
@@ -180,31 +180,31 @@ gimp_image_find_next_sample_point (GimpImage *image,
  * Since: 2.10
  **/
 gint
-gimp_image_get_sample_point_position (GimpImage *image,
+ligma_image_get_sample_point_position (LigmaImage *image,
                                       guint      sample_point,
                                       gint      *position_y)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gint position_x = G_MININT;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_UINT, sample_point,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-get-sample-point-position",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-get-sample-point-position",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
     {
-      position_x = GIMP_VALUES_GET_INT (return_vals, 1);
-      *position_y = GIMP_VALUES_GET_INT (return_vals, 2);
+      position_x = LIGMA_VALUES_GET_INT (return_vals, 1);
+      *position_y = LIGMA_VALUES_GET_INT (return_vals, 2);
     }
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return position_x;
 }

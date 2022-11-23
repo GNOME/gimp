@@ -1,6 +1,6 @@
-## Makefile.am for gimp/data/patterns/Plant
+## Makefile.am for ligma/data/patterns/Plant
 
-patternsplantdatadir = $(gimpdatadir)/patterns/Plant
+patternsplantdatadir = $(ligmadatadir)/patterns/Plant
 
 patternsplantdata_DATA = \
 	leaves.pat

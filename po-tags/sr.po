@@ -1,12 +1,12 @@
-# Serbian translation for gimp.
+# Serbian translation for ligma.
 # Courtesy of Prevod.org team (http://prevod.org/) -- 2010.
-# This file is distributed under the same license as the gimp package.
+# This file is distributed under the same license as the ligma package.
 # Милош Поповић <gpopac@gmail.com>, 2010.
 # Милош Поповић <gpopac@gmail.com>, 2010.
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp 2.7\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma 2.7\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2010-01-24 08:02+0000\n"
 "PO-Revision-Date: 2010-01-24 15:24+0000\n"
 "Last-Translator: Милош Поповић <gpopac@gmail.com>\n"
@@ -18,10 +18,10 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=n==1? 3 : n%10==1 && n%100!=11 ? 0 : n%"
 "10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
-#: ../data/tags/gimp-tags-default.xml.in.h:1
+#: ../data/tags/ligma-tags-default.xml.in.h:1
 msgid "fuzzy"
 msgstr "нејасно"
 
-#: ../data/tags/gimp-tags-default.xml.in.h:2
+#: ../data/tags/ligma-tags-default.xml.in.h:2
 msgid "round"
 msgstr "заобљено"

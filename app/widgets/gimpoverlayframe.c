@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoverlayframe.c
- * Copyright (C) 2010  Michael Natterer <mitch@gimp.org>
+ * ligmaoverlayframe.c
+ * Copyright (C) 2010  Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,37 +22,37 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimpmath/gimpmath.h"
+#include "libligmamath/ligmamath.h"
 
 #include "widgets-types.h"
 
-#include "core/gimp-cairo.h"
+#include "core/ligma-cairo.h"
 
-#include "gimpoverlayframe.h"
-#include "gimpwidgets-utils.h"
+#include "ligmaoverlayframe.h"
+#include "ligmawidgets-utils.h"
 
 
-static gboolean   gimp_overlay_frame_draw (GtkWidget *widget,
+static gboolean   ligma_overlay_frame_draw (GtkWidget *widget,
                                            cairo_t   *cr);
 
 
-G_DEFINE_TYPE (GimpOverlayFrame, gimp_overlay_frame, GTK_TYPE_BIN)
+G_DEFINE_TYPE (LigmaOverlayFrame, ligma_overlay_frame, GTK_TYPE_BIN)
 
-#define parent_class gimp_overlay_frame_parent_class
+#define parent_class ligma_overlay_frame_parent_class
 
 
 static void
-gimp_overlay_frame_class_init (GimpOverlayFrameClass *klass)
+ligma_overlay_frame_class_init (LigmaOverlayFrameClass *klass)
 {
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  widget_class->draw = gimp_overlay_frame_draw;
+  widget_class->draw = ligma_overlay_frame_draw;
 
   gtk_widget_class_set_css_name (widget_class, "popover");
 }
 
 static void
-gimp_overlay_frame_init (GimpOverlayFrame *frame)
+ligma_overlay_frame_init (LigmaOverlayFrame *frame)
 {
   gtk_widget_set_app_paintable (GTK_WIDGET (frame), TRUE);
 
@@ -61,7 +61,7 @@ gimp_overlay_frame_init (GimpOverlayFrame *frame)
 }
 
 static gboolean
-gimp_overlay_frame_draw (GtkWidget *widget,
+ligma_overlay_frame_draw (GtkWidget *widget,
                          cairo_t   *cr)
 {
   GtkStyleContext *style = gtk_widget_get_style_context (widget);
@@ -86,7 +86,7 @@ gimp_overlay_frame_draw (GtkWidget *widget,
 
   if (rgba)
     {
-      gimp_cairo_rounded_rectangle (cr,
+      ligma_cairo_rounded_rectangle (cr,
                                     0.0,              0.0,
                                     allocation.width, allocation.height,
                                     border_radius);
@@ -112,7 +112,7 @@ gimp_overlay_frame_draw (GtkWidget *widget,
 }
 
 GtkWidget *
-gimp_overlay_frame_new (void)
+ligma_overlay_frame_new (void)
 {
-  return g_object_new (GIMP_TYPE_OVERLAY_FRAME, NULL);
+  return g_object_new (LIGMA_TYPE_OVERLAY_FRAME, NULL);
 }

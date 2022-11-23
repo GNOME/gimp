@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,18 +20,18 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "tools-types.h"
 
-#include "widgets/gimpwidgets-utils.h"
+#include "widgets/ligmawidgets-utils.h"
 
-#include "gimpmoveoptions.h"
-#include "gimptooloptions-gui.h"
+#include "ligmamoveoptions.h"
+#include "ligmatooloptions-gui.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -42,53 +42,53 @@ enum
 };
 
 
-static void   gimp_move_options_set_property (GObject      *object,
+static void   ligma_move_options_set_property (GObject      *object,
                                               guint         property_id,
                                               const GValue *value,
                                               GParamSpec   *pspec);
-static void   gimp_move_options_get_property (GObject      *object,
+static void   ligma_move_options_get_property (GObject      *object,
                                               guint         property_id,
                                               GValue       *value,
                                               GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE (GimpMoveOptions, gimp_move_options, GIMP_TYPE_TOOL_OPTIONS)
+G_DEFINE_TYPE (LigmaMoveOptions, ligma_move_options, LIGMA_TYPE_TOOL_OPTIONS)
 
 
 static void
-gimp_move_options_class_init (GimpMoveOptionsClass *klass)
+ligma_move_options_class_init (LigmaMoveOptionsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->set_property = gimp_move_options_set_property;
-  object_class->get_property = gimp_move_options_get_property;
+  object_class->set_property = ligma_move_options_set_property;
+  object_class->get_property = ligma_move_options_get_property;
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_MOVE_TYPE,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_MOVE_TYPE,
                          "move-type",
                          NULL, NULL,
-                         GIMP_TYPE_TRANSFORM_TYPE,
-                         GIMP_TRANSFORM_TYPE_LAYER,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_TYPE_TRANSFORM_TYPE,
+                         LIGMA_TRANSFORM_TYPE_LAYER,
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_MOVE_CURRENT,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_MOVE_CURRENT,
                             "move-current",
                             NULL, NULL,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 }
 
 static void
-gimp_move_options_init (GimpMoveOptions *options)
+ligma_move_options_init (LigmaMoveOptions *options)
 {
 }
 
 static void
-gimp_move_options_set_property (GObject      *object,
+ligma_move_options_set_property (GObject      *object,
                                 guint         property_id,
                                 const GValue *value,
                                 GParamSpec   *pspec)
 {
-  GimpMoveOptions *options = GIMP_MOVE_OPTIONS (object);
+  LigmaMoveOptions *options = LIGMA_MOVE_OPTIONS (object);
 
   switch (property_id)
     {
@@ -105,12 +105,12 @@ gimp_move_options_set_property (GObject      *object,
 }
 
 static void
-gimp_move_options_get_property (GObject    *object,
+ligma_move_options_get_property (GObject    *object,
                                 guint       property_id,
                                 GValue     *value,
                                 GParamSpec *pspec)
 {
-  GimpMoveOptions *options = GIMP_MOVE_OPTIONS (object);
+  LigmaMoveOptions *options = LIGMA_MOVE_OPTIONS (object);
 
   switch (property_id)
     {
@@ -127,11 +127,11 @@ gimp_move_options_get_property (GObject    *object,
 }
 
 static void
-gimp_move_options_notify_type (GimpMoveOptions *move_options,
+ligma_move_options_notify_type (LigmaMoveOptions *move_options,
                                GParamSpec      *pspec,
                                GtkWidget       *frame)
 {
-  if (move_options->move_type == GIMP_TRANSFORM_TYPE_SELECTION)
+  if (move_options->move_type == LIGMA_TRANSFORM_TYPE_SELECTION)
     {
       gtk_widget_hide (gtk_bin_get_child (GTK_BIN (frame)));
       gtk_frame_set_label (GTK_FRAME (frame), _("Move selection"));
@@ -145,23 +145,23 @@ gimp_move_options_notify_type (GimpMoveOptions *move_options,
       gchar       *title;
 
       title = g_strdup_printf (_("Tool Toggle  (%s)"),
-                               gimp_get_mod_string (gimp_get_extend_selection_mask ()));
+                               ligma_get_mod_string (ligma_get_extend_selection_mask ()));
       gtk_frame_set_label (GTK_FRAME (frame), title);
       g_free (title);
 
       switch (move_options->move_type)
         {
-        case GIMP_TRANSFORM_TYPE_LAYER:
+        case LIGMA_TRANSFORM_TYPE_LAYER:
           false_label = _("Pick a layer or guide");
           true_label  = _("Move the selected layers");
           break;
 
-        case GIMP_TRANSFORM_TYPE_PATH:
+        case LIGMA_TRANSFORM_TYPE_PATH:
           false_label = _("Pick a path");
           true_label  = _("Move the active path");
           break;
 
-        default: /* GIMP_TRANSFORM_TYPE_SELECTION */
+        default: /* LIGMA_TRANSFORM_TYPE_SELECTION */
           g_return_if_reached ();
         }
 
@@ -178,11 +178,11 @@ gimp_move_options_notify_type (GimpMoveOptions *move_options,
 }
 
 GtkWidget *
-gimp_move_options_gui (GimpToolOptions *tool_options)
+ligma_move_options_gui (LigmaToolOptions *tool_options)
 {
   GObject         *config  = G_OBJECT (tool_options);
-  GimpMoveOptions *options = GIMP_MOVE_OPTIONS (tool_options);
-  GtkWidget       *vbox    = gimp_tool_options_gui (tool_options);
+  LigmaMoveOptions *options = LIGMA_MOVE_OPTIONS (tool_options);
+  GtkWidget       *vbox    = ligma_tool_options_gui (tool_options);
   GtkWidget       *hbox;
   GtkWidget       *box;
   GtkWidget       *label;
@@ -199,24 +199,24 @@ gimp_move_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  box = gimp_prop_enum_icon_box_new (config, "move-type", "gimp",
-                                     GIMP_TRANSFORM_TYPE_LAYER,
-                                     GIMP_TRANSFORM_TYPE_PATH);
+  box = ligma_prop_enum_icon_box_new (config, "move-type", "ligma",
+                                     LIGMA_TRANSFORM_TYPE_LAYER,
+                                     LIGMA_TRANSFORM_TYPE_PATH);
   gtk_box_pack_start (GTK_BOX (hbox), box, FALSE, FALSE, 0);
   gtk_widget_show (box);
 
   /*  tool toggle  */
   title =
     g_strdup_printf (_("Tool Toggle  (%s)"),
-                     gimp_get_mod_string (gimp_get_extend_selection_mask ()));
+                     ligma_get_mod_string (ligma_get_extend_selection_mask ()));
 
-  frame = gimp_prop_boolean_radio_frame_new (config, "move-current",
+  frame = ligma_prop_boolean_radio_frame_new (config, "move-current",
                                              title, "true", "false");
 
-  gimp_move_options_notify_type (GIMP_MOVE_OPTIONS (config), NULL, frame);
+  ligma_move_options_notify_type (LIGMA_MOVE_OPTIONS (config), NULL, frame);
 
   g_signal_connect_object (config, "notify::move-type",
-                           G_CALLBACK (gimp_move_options_notify_type),
+                           G_CALLBACK (ligma_move_options_notify_type),
                            frame, 0);
 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);

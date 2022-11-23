@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpapp.c
+ * ligmaapp.c
  * Copyright (C) 2021 Niels De Graef <nielsdegraef@gmail.com>
  *
  * This library is distributed in the hope that it will be useful,
@@ -18,24 +18,24 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "core/core-types.h"
 
-#include "core/gimp.h"
+#include "core/ligma.h"
 
-#include "gimpcoreapp.h"
+#include "ligmacoreapp.h"
 
-#include "gimpapp.h"
+#include "ligmaapp.h"
 
 
 enum
 {
   PROP_0,
-  PROP_NO_SPLASH = GIMP_CORE_APP_PROP_LAST + 1,
+  PROP_NO_SPLASH = LIGMA_CORE_APP_PROP_LAST + 1,
 };
 
-struct _GimpApp
+struct _LigmaApp
 {
   GtkApplication parent_instance;
 
@@ -43,46 +43,46 @@ struct _GimpApp
 };
 
 
-static void gimp_app_get_property (GObject      *object,
+static void ligma_app_get_property (GObject      *object,
                                    guint         property_id,
                                    GValue       *value,
                                    GParamSpec   *pspec);
-static void gimp_app_set_property (GObject      *object,
+static void ligma_app_set_property (GObject      *object,
                                    guint         property_id,
                                    const GValue *value,
                                    GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpApp, gimp_app, GTK_TYPE_APPLICATION,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CORE_APP,
+G_DEFINE_TYPE_WITH_CODE (LigmaApp, ligma_app, GTK_TYPE_APPLICATION,
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_CORE_APP,
                                                 NULL))
 
 
 static void
-gimp_app_class_init (GimpAppClass *klass)
+ligma_app_class_init (LigmaAppClass *klass)
 {
   GObjectClass *gobj_class = G_OBJECT_CLASS (klass);
 
-  gobj_class->finalize     = gimp_core_app_finalize;
-  gobj_class->get_property = gimp_app_get_property;
-  gobj_class->set_property = gimp_app_set_property;
+  gobj_class->finalize     = ligma_core_app_finalize;
+  gobj_class->get_property = ligma_app_get_property;
+  gobj_class->set_property = ligma_app_set_property;
 
-  gimp_core_app_install_properties (gobj_class);
+  ligma_core_app_install_properties (gobj_class);
 
   g_object_class_install_property (gobj_class, PROP_NO_SPLASH,
                                    g_param_spec_boolean ("no-splash", NULL, NULL,
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE |
+                                                         LIGMA_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
-gimp_app_init (GimpApp *self)
+ligma_app_init (LigmaApp *self)
 {
 }
 
 static void
-gimp_app_get_property (GObject    *object,
+ligma_app_get_property (GObject    *object,
                        guint       property_id,
                        GValue     *value,
                        GParamSpec *pspec)
@@ -90,17 +90,17 @@ gimp_app_get_property (GObject    *object,
   switch (property_id)
     {
     case PROP_NO_SPLASH:
-      g_value_set_boolean (value, GIMP_APP (object)->no_splash);
+      g_value_set_boolean (value, LIGMA_APP (object)->no_splash);
       break;
 
     default:
-      gimp_core_app_get_property (object, property_id, value, pspec);
+      ligma_core_app_get_property (object, property_id, value, pspec);
       break;
     }
 }
 
 static void
-gimp_app_set_property (GObject      *object,
+ligma_app_set_property (GObject      *object,
                        guint         property_id,
                        const GValue *value,
                        GParamSpec   *pspec)
@@ -108,11 +108,11 @@ gimp_app_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_NO_SPLASH:
-      GIMP_APP (object)->no_splash = g_value_get_boolean (value);
+      LIGMA_APP (object)->no_splash = g_value_get_boolean (value);
       break;
 
     default:
-      gimp_core_app_set_property (object, property_id, value, pspec);
+      ligma_core_app_set_property (object, property_id, value, pspec);
       break;
     }
 }
@@ -120,7 +120,7 @@ gimp_app_set_property (GObject      *object,
 /*  public functions  */
 
 GApplication *
-gimp_app_new (Gimp        *gimp,
+ligma_app_new (Ligma        *ligma,
               gboolean     no_splash,
               gboolean     quit,
               gboolean     as_new,
@@ -128,10 +128,10 @@ gimp_app_new (Gimp        *gimp,
               const char  *batch_interpreter,
               const char **batch_commands)
 {
-  GimpApp *app;
+  LigmaApp *app;
 
-  app = g_object_new (GIMP_TYPE_APP,
-                      "gimp",              gimp,
+  app = g_object_new (LIGMA_TYPE_APP,
+                      "ligma",              ligma,
                       "filenames",         filenames,
                       "as-new",            as_new,
 
@@ -146,8 +146,8 @@ gimp_app_new (Gimp        *gimp,
 }
 
 gboolean
-gimp_app_get_no_splash (GimpApp *self)
+ligma_app_get_no_splash (LigmaApp *self)
 {
-  g_return_val_if_fail (GIMP_IS_APP (self), FALSE);
-  return GIMP_APP (self)->no_splash;
+  g_return_val_if_fail (LIGMA_IS_APP (self), FALSE);
+  return LIGMA_APP (self)->no_splash;
 }

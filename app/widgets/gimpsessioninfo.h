@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpsessioninfo.h
- * Copyright (C) 2001-2008 Michael Natterer <mitch@gimp.org>
+ * ligmasessioninfo.h
+ * Copyright (C) 2001-2008 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,80 +18,80 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SESSION_INFO_H__
-#define __GIMP_SESSION_INFO_H__
+#ifndef __LIGMA_SESSION_INFO_H__
+#define __LIGMA_SESSION_INFO_H__
 
 
-#include "core/gimpobject.h"
+#include "core/ligmaobject.h"
 
 
-#define GIMP_TYPE_SESSION_INFO            (gimp_session_info_get_type ())
-#define GIMP_SESSION_INFO(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_SESSION_INFO, GimpSessionInfo))
-#define GIMP_SESSION_INFO_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_SESSION_INFO, GimpSessionInfoClass))
-#define GIMP_IS_SESSION_INFO(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_SESSION_INFO))
-#define GIMP_IS_SESSION_INFO_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_SESSION_INFO))
-#define GIMP_SESSION_INFO_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_SESSION_INFO, GimpSessionInfoClass))
+#define LIGMA_TYPE_SESSION_INFO            (ligma_session_info_get_type ())
+#define LIGMA_SESSION_INFO(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_SESSION_INFO, LigmaSessionInfo))
+#define LIGMA_SESSION_INFO_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_SESSION_INFO, LigmaSessionInfoClass))
+#define LIGMA_IS_SESSION_INFO(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_SESSION_INFO))
+#define LIGMA_IS_SESSION_INFO_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_SESSION_INFO))
+#define LIGMA_SESSION_INFO_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_SESSION_INFO, LigmaSessionInfoClass))
 
 
-typedef struct _GimpSessionInfoPrivate  GimpSessionInfoPrivate;
-typedef struct _GimpSessionInfoClass    GimpSessionInfoClass;
+typedef struct _LigmaSessionInfoPrivate  LigmaSessionInfoPrivate;
+typedef struct _LigmaSessionInfoClass    LigmaSessionInfoClass;
 
 /**
- * GimpSessionInfo:
+ * LigmaSessionInfo:
  *
  * Contains session info for one toplevel window in the interface such
  * as a dock, the empty-image-window, or the open/save dialog.
  */
-struct _GimpSessionInfo
+struct _LigmaSessionInfo
 {
-  GimpObject  parent_instance;
+  LigmaObject  parent_instance;
 
-  GimpSessionInfoPrivate *p;
+  LigmaSessionInfoPrivate *p;
 };
 
-struct _GimpSessionInfoClass
+struct _LigmaSessionInfoClass
 {
-  GimpObjectClass  parent_class;
+  LigmaObjectClass  parent_class;
 };
 
 
-GType             gimp_session_info_get_type                (void) G_GNUC_CONST;
+GType             ligma_session_info_get_type                (void) G_GNUC_CONST;
 
-GimpSessionInfo * gimp_session_info_new                     (void);
+LigmaSessionInfo * ligma_session_info_new                     (void);
 
-void              gimp_session_info_restore                 (GimpSessionInfo        *info,
-                                                             GimpDialogFactory      *factory,
+void              ligma_session_info_restore                 (LigmaSessionInfo        *info,
+                                                             LigmaDialogFactory      *factory,
                                                              GdkMonitor             *monitor);
-void              gimp_session_info_apply_geometry          (GimpSessionInfo        *info,
+void              ligma_session_info_apply_geometry          (LigmaSessionInfo        *info,
                                                              GdkMonitor             *current_monitor,
                                                              gboolean                apply_stored_monitor);
-void              gimp_session_info_read_geometry           (GimpSessionInfo        *info,
+void              ligma_session_info_read_geometry           (LigmaSessionInfo        *info,
                                                              GdkEventConfigure      *cevent);
-void              gimp_session_info_get_info                (GimpSessionInfo        *info);
-void              gimp_session_info_get_info_with_widget    (GimpSessionInfo        *info,
+void              ligma_session_info_get_info                (LigmaSessionInfo        *info);
+void              ligma_session_info_get_info_with_widget    (LigmaSessionInfo        *info,
                                                              GtkWidget              *widget);
-void              gimp_session_info_clear_info              (GimpSessionInfo        *info);
-gboolean          gimp_session_info_is_singleton            (GimpSessionInfo        *info);
-gboolean          gimp_session_info_is_session_managed      (GimpSessionInfo        *info);
-gboolean          gimp_session_info_get_remember_size       (GimpSessionInfo        *info);
-gboolean          gimp_session_info_get_remember_if_open    (GimpSessionInfo        *info);
-GtkWidget       * gimp_session_info_get_widget              (GimpSessionInfo        *info);
-void              gimp_session_info_set_widget              (GimpSessionInfo        *info,
+void              ligma_session_info_clear_info              (LigmaSessionInfo        *info);
+gboolean          ligma_session_info_is_singleton            (LigmaSessionInfo        *info);
+gboolean          ligma_session_info_is_session_managed      (LigmaSessionInfo        *info);
+gboolean          ligma_session_info_get_remember_size       (LigmaSessionInfo        *info);
+gboolean          ligma_session_info_get_remember_if_open    (LigmaSessionInfo        *info);
+GtkWidget       * ligma_session_info_get_widget              (LigmaSessionInfo        *info);
+void              ligma_session_info_set_widget              (LigmaSessionInfo        *info,
                                                              GtkWidget              *widget);
-GimpDialogFactoryEntry *
-                  gimp_session_info_get_factory_entry       (GimpSessionInfo        *info);
-void              gimp_session_info_set_factory_entry       (GimpSessionInfo        *info,
-                                                             GimpDialogFactoryEntry *entry);
-gboolean          gimp_session_info_get_open                (GimpSessionInfo        *info);
-void              gimp_session_info_append_book             (GimpSessionInfo        *info,
-                                                             GimpSessionInfoBook    *book);
-gint              gimp_session_info_get_x                   (GimpSessionInfo        *info);
-gint              gimp_session_info_get_y                   (GimpSessionInfo        *info);
-gint              gimp_session_info_get_width               (GimpSessionInfo        *info);
-gint              gimp_session_info_get_height              (GimpSessionInfo        *info);
+LigmaDialogFactoryEntry *
+                  ligma_session_info_get_factory_entry       (LigmaSessionInfo        *info);
+void              ligma_session_info_set_factory_entry       (LigmaSessionInfo        *info,
+                                                             LigmaDialogFactoryEntry *entry);
+gboolean          ligma_session_info_get_open                (LigmaSessionInfo        *info);
+void              ligma_session_info_append_book             (LigmaSessionInfo        *info,
+                                                             LigmaSessionInfoBook    *book);
+gint              ligma_session_info_get_x                   (LigmaSessionInfo        *info);
+gint              ligma_session_info_get_y                   (LigmaSessionInfo        *info);
+gint              ligma_session_info_get_width               (LigmaSessionInfo        *info);
+gint              ligma_session_info_get_height              (LigmaSessionInfo        *info);
 
-void              gimp_session_info_set_position_accuracy   (gint                    accuracy);
-gint              gimp_session_info_apply_position_accuracy (gint                    position);
+void              ligma_session_info_set_position_accuracy   (gint                    accuracy);
+gint              ligma_session_info_apply_position_accuracy (gint                    position);
 
 
-#endif  /* __GIMP_SESSION_INFO_H__ */
+#endif  /* __LIGMA_SESSION_INFO_H__ */

@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpprojectable.c
- * Copyright (C) 2008  Michael Natterer <mitch@gimp.org>
+ * ligmaprojectable.c
+ * Copyright (C) 2008  Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,9 +25,9 @@
 
 #include "core-types.h"
 
-#include "gimpmarshal.h"
-#include "gimpprojectable.h"
-#include "gimpviewable.h"
+#include "ligmamarshal.h"
+#include "ligmaprojectable.h"
+#include "ligmaviewable.h"
 
 
 enum
@@ -40,7 +40,7 @@ enum
 };
 
 
-G_DEFINE_INTERFACE (GimpProjectable, gimp_projectable, GIMP_TYPE_VIEWABLE)
+G_DEFINE_INTERFACE (LigmaProjectable, ligma_projectable, LIGMA_TYPE_VIEWABLE)
 
 
 static guint projectable_signals[LAST_SIGNAL] = { 0 };
@@ -50,15 +50,15 @@ static guint projectable_signals[LAST_SIGNAL] = { 0 };
 
 
 static void
-gimp_projectable_default_init (GimpProjectableInterface *iface)
+ligma_projectable_default_init (LigmaProjectableInterface *iface)
 {
   projectable_signals[INVALIDATE] =
     g_signal_new ("invalidate",
                   G_TYPE_FROM_CLASS (iface),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpProjectableInterface, invalidate),
+                  G_STRUCT_OFFSET (LigmaProjectableInterface, invalidate),
                   NULL, NULL,
-                  gimp_marshal_VOID__INT_INT_INT_INT,
+                  ligma_marshal_VOID__INT_INT_INT_INT,
                   G_TYPE_NONE, 4,
                   G_TYPE_INT,
                   G_TYPE_INT,
@@ -69,7 +69,7 @@ gimp_projectable_default_init (GimpProjectableInterface *iface)
     g_signal_new ("flush",
                   G_TYPE_FROM_CLASS (iface),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpProjectableInterface, flush),
+                  G_STRUCT_OFFSET (LigmaProjectableInterface, flush),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   G_TYPE_BOOLEAN);
@@ -78,7 +78,7 @@ gimp_projectable_default_init (GimpProjectableInterface *iface)
     g_signal_new ("structure-changed",
                   G_TYPE_FROM_CLASS (iface),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpProjectableInterface, structure_changed),
+                  G_STRUCT_OFFSET (LigmaProjectableInterface, structure_changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
@@ -86,9 +86,9 @@ gimp_projectable_default_init (GimpProjectableInterface *iface)
     g_signal_new ("bounds-changed",
                   G_TYPE_FROM_CLASS (iface),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpProjectableInterface, bounds_changed),
+                  G_STRUCT_OFFSET (LigmaProjectableInterface, bounds_changed),
                   NULL, NULL,
-                  gimp_marshal_VOID__INT_INT,
+                  ligma_marshal_VOID__INT_INT,
                   G_TYPE_NONE, 2,
                   G_TYPE_INT,
                   G_TYPE_INT);
@@ -98,55 +98,55 @@ gimp_projectable_default_init (GimpProjectableInterface *iface)
 /*  public functions  */
 
 void
-gimp_projectable_invalidate (GimpProjectable *projectable,
+ligma_projectable_invalidate (LigmaProjectable *projectable,
                              gint             x,
                              gint             y,
                              gint             width,
                              gint             height)
 {
-  g_return_if_fail (GIMP_IS_PROJECTABLE (projectable));
+  g_return_if_fail (LIGMA_IS_PROJECTABLE (projectable));
 
   g_signal_emit (projectable, projectable_signals[INVALIDATE], 0,
                  x, y, width, height);
 }
 
 void
-gimp_projectable_flush (GimpProjectable *projectable,
+ligma_projectable_flush (LigmaProjectable *projectable,
                         gboolean         preview_invalidated)
 {
-  g_return_if_fail (GIMP_IS_PROJECTABLE (projectable));
+  g_return_if_fail (LIGMA_IS_PROJECTABLE (projectable));
 
   g_signal_emit (projectable, projectable_signals[FLUSH], 0,
                  preview_invalidated);
 }
 
 void
-gimp_projectable_structure_changed (GimpProjectable *projectable)
+ligma_projectable_structure_changed (LigmaProjectable *projectable)
 {
-  g_return_if_fail (GIMP_IS_PROJECTABLE (projectable));
+  g_return_if_fail (LIGMA_IS_PROJECTABLE (projectable));
 
   g_signal_emit (projectable, projectable_signals[STRUCTURE_CHANGED], 0);
 }
 
 void
-gimp_projectable_bounds_changed (GimpProjectable *projectable,
+ligma_projectable_bounds_changed (LigmaProjectable *projectable,
                                  gint             old_x,
                                  gint             old_y)
 {
-  g_return_if_fail (GIMP_IS_PROJECTABLE (projectable));
+  g_return_if_fail (LIGMA_IS_PROJECTABLE (projectable));
 
   g_signal_emit (projectable, projectable_signals[BOUNDS_CHANGED], 0,
                  old_x, old_y);
 }
 
-GimpImage *
-gimp_projectable_get_image (GimpProjectable *projectable)
+LigmaImage *
+ligma_projectable_get_image (LigmaProjectable *projectable)
 {
-  GimpProjectableInterface *iface;
+  LigmaProjectableInterface *iface;
 
-  g_return_val_if_fail (GIMP_IS_PROJECTABLE (projectable), NULL);
+  g_return_val_if_fail (LIGMA_IS_PROJECTABLE (projectable), NULL);
 
-  iface = GIMP_PROJECTABLE_GET_IFACE (projectable);
+  iface = LIGMA_PROJECTABLE_GET_IFACE (projectable);
 
   if (iface->get_image)
     return iface->get_image (projectable);
@@ -155,13 +155,13 @@ gimp_projectable_get_image (GimpProjectable *projectable)
 }
 
 const Babl *
-gimp_projectable_get_format (GimpProjectable *projectable)
+ligma_projectable_get_format (LigmaProjectable *projectable)
 {
-  GimpProjectableInterface *iface;
+  LigmaProjectableInterface *iface;
 
-  g_return_val_if_fail (GIMP_IS_PROJECTABLE (projectable), NULL);
+  g_return_val_if_fail (LIGMA_IS_PROJECTABLE (projectable), NULL);
 
-  iface = GIMP_PROJECTABLE_GET_IFACE (projectable);
+  iface = LIGMA_PROJECTABLE_GET_IFACE (projectable);
 
   if (iface->get_format)
     return iface->get_format (projectable);
@@ -170,17 +170,17 @@ gimp_projectable_get_format (GimpProjectable *projectable)
 }
 
 void
-gimp_projectable_get_offset (GimpProjectable *projectable,
+ligma_projectable_get_offset (LigmaProjectable *projectable,
                              gint            *x,
                              gint            *y)
 {
-  GimpProjectableInterface *iface;
+  LigmaProjectableInterface *iface;
 
-  g_return_if_fail (GIMP_IS_PROJECTABLE (projectable));
+  g_return_if_fail (LIGMA_IS_PROJECTABLE (projectable));
   g_return_if_fail (x != NULL);
   g_return_if_fail (y != NULL);
 
-  iface = GIMP_PROJECTABLE_GET_IFACE (projectable);
+  iface = LIGMA_PROJECTABLE_GET_IFACE (projectable);
 
   *x = 0;
   *y = 0;
@@ -190,14 +190,14 @@ gimp_projectable_get_offset (GimpProjectable *projectable,
 }
 
 GeglRectangle
-gimp_projectable_get_bounding_box (GimpProjectable *projectable)
+ligma_projectable_get_bounding_box (LigmaProjectable *projectable)
 {
-  GimpProjectableInterface *iface;
+  LigmaProjectableInterface *iface;
   GeglRectangle             result = {};
 
-  g_return_val_if_fail (GIMP_IS_PROJECTABLE (projectable), result);
+  g_return_val_if_fail (LIGMA_IS_PROJECTABLE (projectable), result);
 
-  iface = GIMP_PROJECTABLE_GET_IFACE (projectable);
+  iface = LIGMA_PROJECTABLE_GET_IFACE (projectable);
 
   if (iface->get_bounding_box)
     result = iface->get_bounding_box (projectable);
@@ -206,13 +206,13 @@ gimp_projectable_get_bounding_box (GimpProjectable *projectable)
 }
 
 GeglNode *
-gimp_projectable_get_graph (GimpProjectable *projectable)
+ligma_projectable_get_graph (LigmaProjectable *projectable)
 {
-  GimpProjectableInterface *iface;
+  LigmaProjectableInterface *iface;
 
-  g_return_val_if_fail (GIMP_IS_PROJECTABLE (projectable), NULL);
+  g_return_val_if_fail (LIGMA_IS_PROJECTABLE (projectable), NULL);
 
-  iface = GIMP_PROJECTABLE_GET_IFACE (projectable);
+  iface = LIGMA_PROJECTABLE_GET_IFACE (projectable);
 
   if (iface->get_graph)
     return iface->get_graph (projectable);
@@ -221,39 +221,39 @@ gimp_projectable_get_graph (GimpProjectable *projectable)
 }
 
 void
-gimp_projectable_begin_render (GimpProjectable *projectable)
+ligma_projectable_begin_render (LigmaProjectable *projectable)
 {
-  GimpProjectableInterface *iface;
+  LigmaProjectableInterface *iface;
 
-  g_return_if_fail (GIMP_IS_PROJECTABLE (projectable));
+  g_return_if_fail (LIGMA_IS_PROJECTABLE (projectable));
 
-  iface = GIMP_PROJECTABLE_GET_IFACE (projectable);
+  iface = LIGMA_PROJECTABLE_GET_IFACE (projectable);
 
   if (iface->begin_render)
     iface->begin_render (projectable);
 }
 
 void
-gimp_projectable_end_render (GimpProjectable *projectable)
+ligma_projectable_end_render (LigmaProjectable *projectable)
 {
-  GimpProjectableInterface *iface;
+  LigmaProjectableInterface *iface;
 
-  g_return_if_fail (GIMP_IS_PROJECTABLE (projectable));
+  g_return_if_fail (LIGMA_IS_PROJECTABLE (projectable));
 
-  iface = GIMP_PROJECTABLE_GET_IFACE (projectable);
+  iface = LIGMA_PROJECTABLE_GET_IFACE (projectable);
 
   if (iface->end_render)
     iface->end_render (projectable);
 }
 
 void
-gimp_projectable_invalidate_preview (GimpProjectable *projectable)
+ligma_projectable_invalidate_preview (LigmaProjectable *projectable)
 {
-  GimpProjectableInterface *iface;
+  LigmaProjectableInterface *iface;
 
-  g_return_if_fail (GIMP_IS_PROJECTABLE (projectable));
+  g_return_if_fail (LIGMA_IS_PROJECTABLE (projectable));
 
-  iface = GIMP_PROJECTABLE_GET_IFACE (projectable);
+  iface = LIGMA_PROJECTABLE_GET_IFACE (projectable);
 
   if (iface->invalidate_preview)
     iface->invalidate_preview (projectable);

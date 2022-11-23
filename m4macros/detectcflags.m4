@@ -1,7 +1,7 @@
-dnl GIMP_DETECT_CFLAGS(RESULT, FLAGSET)
+dnl LIGMA_DETECT_CFLAGS(RESULT, FLAGSET)
 dnl Detect if the compiler supports a set of flags
 
-AC_DEFUN([GIMP_DETECT_CFLAGS],
+AC_DEFUN([LIGMA_DETECT_CFLAGS],
 [
   $1=
   for flag in $2; do

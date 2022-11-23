@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,109 +20,109 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpmath/gimpmath.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "display-types.h"
 
-#include "core/gimp-cairo.h"
-#include "core/gimp-utils.h"
-#include "core/gimpimage.h"
+#include "core/ligma-cairo.h"
+#include "core/ligma-utils.h"
+#include "core/ligmaimage.h"
 
-#include "gimpcanvas.h"
-#include "gimpcanvas-style.h"
-#include "gimpdisplay.h"
-#include "gimpdisplayshell.h"
-#include "gimpdisplayshell-draw.h"
-#include "gimpdisplayshell-render.h"
+#include "ligmacanvas.h"
+#include "ligmacanvas-style.h"
+#include "ligmadisplay.h"
+#include "ligmadisplayshell.h"
+#include "ligmadisplayshell-draw.h"
+#include "ligmadisplayshell-render.h"
 
-#include "widgets/gimprender.h"
+#include "widgets/ligmarender.h"
 
 
 /*  public functions  */
 
 void
-gimp_display_shell_draw_selection_out (GimpDisplayShell *shell,
+ligma_display_shell_draw_selection_out (LigmaDisplayShell *shell,
                                        cairo_t          *cr,
-                                       GimpSegment      *segs,
+                                       LigmaSegment      *segs,
                                        gint              n_segs)
 {
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (cr != NULL);
   g_return_if_fail (segs != NULL && n_segs > 0);
 
-  gimp_canvas_set_selection_out_style (shell->canvas, cr,
+  ligma_canvas_set_selection_out_style (shell->canvas, cr,
                                        shell->offset_x, shell->offset_y);
 
-  gimp_cairo_segments (cr, segs, n_segs);
+  ligma_cairo_segments (cr, segs, n_segs);
   cairo_stroke (cr);
 }
 
 void
-gimp_display_shell_draw_selection_in (GimpDisplayShell   *shell,
+ligma_display_shell_draw_selection_in (LigmaDisplayShell   *shell,
                                       cairo_t            *cr,
                                       cairo_pattern_t    *mask,
                                       gint                index)
 {
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (cr != NULL);
   g_return_if_fail (mask != NULL);
 
-  gimp_canvas_set_selection_in_style (shell->canvas, cr, index,
+  ligma_canvas_set_selection_in_style (shell->canvas, cr, index,
                                       shell->offset_x, shell->offset_y);
 
   cairo_mask (cr, mask);
 }
 
 void
-gimp_display_shell_draw_background (GimpDisplayShell *shell,
+ligma_display_shell_draw_background (LigmaDisplayShell *shell,
                                     cairo_t          *cr)
 {
-  GimpCanvas *canvas;
+  LigmaCanvas *canvas;
 
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (cr != NULL);
 
-  canvas = GIMP_CANVAS (shell->canvas);
+  canvas = LIGMA_CANVAS (shell->canvas);
 
-  if (canvas->padding_mode != GIMP_CANVAS_PADDING_MODE_DEFAULT)
+  if (canvas->padding_mode != LIGMA_CANVAS_PADDING_MODE_DEFAULT)
     {
-      gimp_cairo_set_source_rgb (cr, &canvas->padding_color);
+      ligma_cairo_set_source_rgb (cr, &canvas->padding_color);
       cairo_paint (cr);
     }
 }
 
 void
-gimp_display_shell_draw_checkerboard (GimpDisplayShell *shell,
+ligma_display_shell_draw_checkerboard (LigmaDisplayShell *shell,
                                       cairo_t          *cr)
 {
-  GimpImage *image;
+  LigmaImage *image;
 
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (cr != NULL);
 
-  image = gimp_display_get_image (shell->display);
+  image = ligma_display_get_image (shell->display);
 
   if (G_UNLIKELY (! shell->checkerboard))
     {
-      GimpCheckSize  check_size;
+      LigmaCheckSize  check_size;
 
       g_object_get (shell->display->config,
                     "transparency-size", &check_size,
                     NULL);
 
       shell->checkerboard =
-        gimp_cairo_checkerboard_create (cr,
+        ligma_cairo_checkerboard_create (cr,
                                         1 << (check_size + 2),
-                                        gimp_render_check_color1 (),
-                                        gimp_render_check_color2 ());
+                                        ligma_render_check_color1 (),
+                                        ligma_render_check_color2 ());
     }
 
   cairo_translate (cr, - shell->offset_x, - shell->offset_y);
 
-  if (gimp_image_get_component_visible (image, GIMP_CHANNEL_ALPHA))
+  if (ligma_image_get_component_visible (image, LIGMA_CHANNEL_ALPHA))
     cairo_set_source (cr, shell->checkerboard);
   else
     cairo_set_source_rgb (cr, 0.0, 0.0, 0.0);
@@ -131,7 +131,7 @@ gimp_display_shell_draw_checkerboard (GimpDisplayShell *shell,
 }
 
 void
-gimp_display_shell_draw_image (GimpDisplayShell *shell,
+ligma_display_shell_draw_image (LigmaDisplayShell *shell,
                                cairo_t          *cr,
                                gint              x,
                                gint              y,
@@ -145,8 +145,8 @@ gimp_display_shell_draw_image (GimpDisplayShell *shell,
   gint    n_cols;
   gint    r, c;
 
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-  g_return_if_fail (gimp_display_get_image (shell->display));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (ligma_display_get_image (shell->display));
   g_return_if_fail (cr != NULL);
 
   /*  display the image in RENDER_BUF_WIDTH x RENDER_BUF_HEIGHT
@@ -198,15 +198,15 @@ gimp_display_shell_draw_image (GimpDisplayShell *shell,
           cairo_rectangle (cr, x1, y1, x2 - x1, y2 - y1);
           cairo_clip (cr);
 
-          if (! gimp_display_shell_render_is_valid (shell,
+          if (! ligma_display_shell_render_is_valid (shell,
                                                     x1, y1, x2 - x1, y2 - y1))
             {
               /* render image to the render cache */
-              gimp_display_shell_render (shell, cr,
+              ligma_display_shell_render (shell, cr,
                                          x1, y1, x2 - x1, y2 - y1,
                                          scale);
 
-              gimp_display_shell_render_validate_area (shell,
+              ligma_display_shell_render_validate_area (shell,
                                                        x1, y1, x2 - x1, y2 - y1);
             }
 
@@ -223,14 +223,14 @@ gimp_display_shell_draw_image (GimpDisplayShell *shell,
 
           cairo_restore (cr);
 
-          /* if the GIMP_BRICK_WALL environment variable is defined,
+          /* if the LIGMA_BRICK_WALL environment variable is defined,
            * show chunk bounds
            */
           {
             static gint brick_wall = -1;
 
             if (brick_wall < 0)
-              brick_wall = (g_getenv ("GIMP_BRICK_WALL") != NULL);
+              brick_wall = (g_getenv ("LIGMA_BRICK_WALL") != NULL);
 
             if (brick_wall)
               {

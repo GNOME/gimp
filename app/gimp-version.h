@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,17 +15,17 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __APP_GIMP_VERSION_H__
-#define __APP_GIMP_VERSION_H__
+#ifndef __APP_LIGMA_VERSION_H__
+#define __APP_LIGMA_VERSION_H__
 
 
-void       gimp_version_show         (gboolean be_verbose);
-gchar    * gimp_version              (gboolean be_verbose,
+void       ligma_version_show         (gboolean be_verbose);
+gchar    * ligma_version              (gboolean be_verbose,
                                       gboolean localized);
 
-gint       gimp_version_get_revision (void);
+gint       ligma_version_get_revision (void);
 
-gboolean   gimp_version_check_update (void);
+gboolean   ligma_version_check_update (void);
 
 
-#endif /* __APP_GIMP_VERSION_H__ */
+#endif /* __APP_LIGMA_VERSION_H__ */

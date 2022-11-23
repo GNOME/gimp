@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,16 +22,16 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
 
 #include "tools-types.h"
 
-#include "gegl/gimp-gegl-loops.h"
+#include "gegl/ligma-gegl-loops.h"
 
-#include "core/gimppickable.h"
+#include "core/ligmapickable.h"
 
-#include "gimptilehandleriscissors.h"
+#include "ligmatilehandleriscissors.h"
 
 
 enum
@@ -41,59 +41,59 @@ enum
 };
 
 
-static void   gimp_tile_handler_iscissors_finalize     (GObject         *object);
-static void   gimp_tile_handler_iscissors_set_property (GObject         *object,
+static void   ligma_tile_handler_iscissors_finalize     (GObject         *object);
+static void   ligma_tile_handler_iscissors_set_property (GObject         *object,
                                                         guint            property_id,
                                                         const GValue    *value,
                                                         GParamSpec      *pspec);
-static void   gimp_tile_handler_iscissors_get_property (GObject         *object,
+static void   ligma_tile_handler_iscissors_get_property (GObject         *object,
                                                         guint            property_id,
                                                         GValue          *value,
                                                         GParamSpec      *pspec);
 
-static void   gimp_tile_handler_iscissors_validate     (GimpTileHandlerValidate *validate,
+static void   ligma_tile_handler_iscissors_validate     (LigmaTileHandlerValidate *validate,
                                                         const GeglRectangle     *rect,
                                                         const Babl              *format,
                                                         gpointer                 dest_buf,
                                                         gint                     dest_stride);
 
 
-G_DEFINE_TYPE (GimpTileHandlerIscissors, gimp_tile_handler_iscissors,
-               GIMP_TYPE_TILE_HANDLER_VALIDATE)
+G_DEFINE_TYPE (LigmaTileHandlerIscissors, ligma_tile_handler_iscissors,
+               LIGMA_TYPE_TILE_HANDLER_VALIDATE)
 
-#define parent_class gimp_tile_handler_iscissors_parent_class
+#define parent_class ligma_tile_handler_iscissors_parent_class
 
 
 static void
-gimp_tile_handler_iscissors_class_init (GimpTileHandlerIscissorsClass *klass)
+ligma_tile_handler_iscissors_class_init (LigmaTileHandlerIscissorsClass *klass)
 {
   GObjectClass                 *object_class = G_OBJECT_CLASS (klass);
-  GimpTileHandlerValidateClass *validate_class;
+  LigmaTileHandlerValidateClass *validate_class;
 
-  validate_class = GIMP_TILE_HANDLER_VALIDATE_CLASS (klass);
+  validate_class = LIGMA_TILE_HANDLER_VALIDATE_CLASS (klass);
 
-  object_class->finalize     = gimp_tile_handler_iscissors_finalize;
-  object_class->set_property = gimp_tile_handler_iscissors_set_property;
-  object_class->get_property = gimp_tile_handler_iscissors_get_property;
+  object_class->finalize     = ligma_tile_handler_iscissors_finalize;
+  object_class->set_property = ligma_tile_handler_iscissors_set_property;
+  object_class->get_property = ligma_tile_handler_iscissors_get_property;
 
-  validate_class->validate   = gimp_tile_handler_iscissors_validate;
+  validate_class->validate   = ligma_tile_handler_iscissors_validate;
 
   g_object_class_install_property (object_class, PROP_PICKABLE,
                                    g_param_spec_object ("pickable", NULL, NULL,
-                                                        GIMP_TYPE_PICKABLE,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_TYPE_PICKABLE,
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
-gimp_tile_handler_iscissors_init (GimpTileHandlerIscissors *iscissors)
+ligma_tile_handler_iscissors_init (LigmaTileHandlerIscissors *iscissors)
 {
 }
 
 static void
-gimp_tile_handler_iscissors_finalize (GObject *object)
+ligma_tile_handler_iscissors_finalize (GObject *object)
 {
-  GimpTileHandlerIscissors *iscissors = GIMP_TILE_HANDLER_ISCISSORS (object);
+  LigmaTileHandlerIscissors *iscissors = LIGMA_TILE_HANDLER_ISCISSORS (object);
 
   if (iscissors->pickable)
     {
@@ -105,12 +105,12 @@ gimp_tile_handler_iscissors_finalize (GObject *object)
 }
 
 static void
-gimp_tile_handler_iscissors_set_property (GObject      *object,
+ligma_tile_handler_iscissors_set_property (GObject      *object,
                                           guint         property_id,
                                           const GValue *value,
                                           GParamSpec   *pspec)
 {
-  GimpTileHandlerIscissors *iscissors = GIMP_TILE_HANDLER_ISCISSORS (object);
+  LigmaTileHandlerIscissors *iscissors = LIGMA_TILE_HANDLER_ISCISSORS (object);
 
   switch (property_id)
     {
@@ -125,12 +125,12 @@ gimp_tile_handler_iscissors_set_property (GObject      *object,
 }
 
 static void
-gimp_tile_handler_iscissors_get_property (GObject    *object,
+ligma_tile_handler_iscissors_get_property (GObject    *object,
                                           guint       property_id,
                                           GValue     *value,
                                           GParamSpec *pspec)
 {
-  GimpTileHandlerIscissors *iscissors = GIMP_TILE_HANDLER_ISCISSORS (object);
+  LigmaTileHandlerIscissors *iscissors = LIGMA_TILE_HANDLER_ISCISSORS (object);
 
   switch (property_id)
     {
@@ -170,13 +170,13 @@ static const gfloat blur_32[9] =
 #define  COST_WIDTH     2      /* number of bytes for each pixel in cost map */
 
 static void
-gimp_tile_handler_iscissors_validate (GimpTileHandlerValidate *validate,
+ligma_tile_handler_iscissors_validate (LigmaTileHandlerValidate *validate,
                                       const GeglRectangle     *rect,
                                       const Babl              *format,
                                       gpointer                 dest_buf,
                                       gint                     dest_stride)
 {
-  GimpTileHandlerIscissors *iscissors = GIMP_TILE_HANDLER_ISCISSORS (validate);
+  LigmaTileHandlerIscissors *iscissors = LIGMA_TILE_HANDLER_ISCISSORS (validate);
   GeglBuffer               *src;
   GeglBuffer               *temp0;
   GeglBuffer               *temp1;
@@ -197,9 +197,9 @@ gimp_tile_handler_iscissors_validate (GimpTileHandlerValidate *validate,
               rect->height);
 #endif
 
-  gimp_pickable_flush (iscissors->pickable);
+  ligma_pickable_flush (iscissors->pickable);
 
-  src = gimp_pickable_get_buffer (iscissors->pickable);
+  src = ligma_pickable_get_buffer (iscissors->pickable);
 
   temp0 = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
                                            rect->width,
@@ -219,21 +219,21 @@ gimp_tile_handler_iscissors_validate (GimpTileHandlerValidate *validate,
   /* XXX tile edges? */
 
   /*  Blur the source to get rid of noise  */
-  gimp_gegl_convolve (src,   rect,
+  ligma_gegl_convolve (src,   rect,
                       temp0, GEGL_RECTANGLE (0, 0, rect->width, rect->height),
-                      blur_32, 3, 32, GIMP_NORMAL_CONVOL, FALSE);
+                      blur_32, 3, 32, LIGMA_NORMAL_CONVOL, FALSE);
 
   /*  Use this blurred region as the new source  */
 
   /*  Get the horizontal derivative  */
-  gimp_gegl_convolve (temp0, GEGL_RECTANGLE (0, 0, rect->width, rect->height),
+  ligma_gegl_convolve (temp0, GEGL_RECTANGLE (0, 0, rect->width, rect->height),
                       temp1, GEGL_RECTANGLE (0, 0, rect->width, rect->height),
-                      horz_deriv, 3, 1, GIMP_NEGATIVE_CONVOL, FALSE);
+                      horz_deriv, 3, 1, LIGMA_NEGATIVE_CONVOL, FALSE);
 
   /*  Get the vertical derivative  */
-  gimp_gegl_convolve (temp0, GEGL_RECTANGLE (0, 0, rect->width, rect->height),
+  ligma_gegl_convolve (temp0, GEGL_RECTANGLE (0, 0, rect->width, rect->height),
                       temp2, GEGL_RECTANGLE (0, 0, rect->width, rect->height),
-                      vert_deriv, 3, 1, GIMP_NEGATIVE_CONVOL, FALSE);
+                      vert_deriv, 3, 1, LIGMA_NEGATIVE_CONVOL, FALSE);
 
   maxgrad_conv1 =
     (guchar *) gegl_buffer_linear_open (temp1,
@@ -321,11 +321,11 @@ gimp_tile_handler_iscissors_validate (GimpTileHandlerValidate *validate,
 }
 
 GeglTileHandler *
-gimp_tile_handler_iscissors_new (GimpPickable *pickable)
+ligma_tile_handler_iscissors_new (LigmaPickable *pickable)
 {
-  g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), NULL);
+  g_return_val_if_fail (LIGMA_IS_PICKABLE (pickable), NULL);
 
-  return g_object_new (GIMP_TYPE_TILE_HANDLER_ISCISSORS,
+  return g_object_new (LIGMA_TYPE_TILE_HANDLER_ISCISSORS,
                        "whole-tile", TRUE,
                        "pickable",   pickable,
                        NULL);

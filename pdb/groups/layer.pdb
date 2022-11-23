@@ -1,4 +1,4 @@
-# GIMP - The GNU Image Manipulation Program
+# LIGMA - The GNU Image Manipulation Program
 # Copyright (C) 1995 Spencer Kimball and Peter Mattis
 
 # This program is free software: you can redistribute it and/or modify
@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+# "Perlized" from C source by Manish Singh <yosh@ligma.org>
 
 sub layer_new {
     $blurb = 'Create a new layer.';
@@ -23,7 +23,7 @@ sub layer_new {
 This procedure creates a new layer with the specified width, height,
 and type.  Name, opacity, and mode are also supplied parameters. The
 new layer still needs to be added to the image, as this is not
-automatic. Add the new layer with the gimp_image_insert_layer()
+automatic. Add the new layer with the ligma_image_insert_layer()
 command. Other attributes such as layer mask modes, and offsets should
 be set with explicit procedure calls.
 HELP
@@ -35,18 +35,18 @@ HELP
     @inargs = (
 	{ name => 'image', type => 'image',
 	  desc => 'The image to which to add the layer' },
-	{ name => 'width', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
+	{ name => 'width', type => '1 <= int32 <= LIGMA_MAX_IMAGE_SIZE',
 	  desc => 'The layer width' },
-	{ name => 'height', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
+	{ name => 'height', type => '1 <= int32 <= LIGMA_MAX_IMAGE_SIZE',
 	  desc => 'The layer height' },
-	{ name => 'type', type => 'enum GimpImageType',
+	{ name => 'type', type => 'enum LigmaImageType',
 	  desc => 'The layer type' },
 	{ name => 'name', type => 'string',
 	  desc => 'The layer name', null_ok => 1 },
 	{ name => 'opacity', type => '0 <= float <= 100',
 	  desc => 'The layer opacity' },
-	{ name => 'mode', type => 'enum GimpLayerMode',
-          default => 'GIMP_LAYER_MODE_NORMAL',
+	{ name => 'mode', type => 'enum LigmaLayerMode',
+          default => 'LIGMA_LAYER_MODE_NORMAL',
 	  desc => 'The layer combination mode' }
     );
 
@@ -58,63 +58,63 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpImageBaseType  base_type = GIMP_RGB;
+  LigmaImageBaseType  base_type = LIGMA_RGB;
   gboolean           has_alpha = FALSE;
   const Babl        *format;
 
-  if (mode == GIMP_LAYER_MODE_OVERLAY_LEGACY)
-    mode = GIMP_LAYER_MODE_SOFTLIGHT_LEGACY;
+  if (mode == LIGMA_LAYER_MODE_OVERLAY_LEGACY)
+    mode = LIGMA_LAYER_MODE_SOFTLIGHT_LEGACY;
 
   switch (type)
     {
-    case GIMP_RGB_IMAGE:
-      base_type = GIMP_RGB;
+    case LIGMA_RGB_IMAGE:
+      base_type = LIGMA_RGB;
       has_alpha = FALSE;
       break;
 
-    case GIMP_RGBA_IMAGE:
-      base_type = GIMP_RGB;
+    case LIGMA_RGBA_IMAGE:
+      base_type = LIGMA_RGB;
       has_alpha = TRUE;
       break;
 
-    case GIMP_GRAY_IMAGE:
-      base_type = GIMP_GRAY;
+    case LIGMA_GRAY_IMAGE:
+      base_type = LIGMA_GRAY;
       has_alpha = FALSE;
       break;
 
-    case GIMP_GRAYA_IMAGE:
-      base_type = GIMP_GRAY;
+    case LIGMA_GRAYA_IMAGE:
+      base_type = LIGMA_GRAY;
       has_alpha = TRUE;
       break;
 
-    case GIMP_INDEXED_IMAGE:
-      base_type = GIMP_INDEXED;
+    case LIGMA_INDEXED_IMAGE:
+      base_type = LIGMA_INDEXED;
       has_alpha = FALSE;
       break;
 
-    case GIMP_INDEXEDA_IMAGE:
-      base_type = GIMP_INDEXED;
+    case LIGMA_INDEXEDA_IMAGE:
+      base_type = LIGMA_INDEXED;
       has_alpha = TRUE;
       break;
     }
 
-  if (base_type == GIMP_GRAY)
+  if (base_type == LIGMA_GRAY)
     {
-      /* do not use gimp_image_get_layer_format() because it might
+      /* do not use ligma_image_get_layer_format() because it might
        * be the floating selection of a channel or mask, we will
        * fix the format in image-add-layer and floating-sel-attach
        */
-      format = gimp_image_get_format (image, base_type,
-                                      gimp_image_get_precision (image),
+      format = ligma_image_get_format (image, base_type,
+                                      ligma_image_get_precision (image),
                                       has_alpha,
                                       NULL /* will fix later */);
     }
   else
     {
-      format = gimp_image_get_layer_format (image, has_alpha);
+      format = ligma_image_get_layer_format (image, has_alpha);
     }
 
-  layer = gimp_layer_new (image, width, height,
+  layer = ligma_layer_new (image, width, height,
                           format, name, opacity / 100.0, mode);
 
   if (! layer)
@@ -131,7 +131,7 @@ sub layer_new_from_visible {
 This procedure creates a new layer from what is visible in the given
 image.  The new layer still needs to be added to the destination
 image, as this is not automatic. Add the new layer with the
-gimp_image_insert_layer() command.  Other attributes such as layer
+ligma_image_insert_layer() command.  Other attributes such as layer
 mask modes, and offsets should be set with explicit procedure calls.
 HELP
 
@@ -154,20 +154,20 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPickable     *pickable = GIMP_PICKABLE (image);
-  GimpColorProfile *profile;
+  LigmaPickable     *pickable = LIGMA_PICKABLE (image);
+  LigmaColorProfile *profile;
 
-  gimp_pickable_flush (pickable);
+  ligma_pickable_flush (pickable);
 
-  profile = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (image));
+  profile = ligma_color_managed_get_color_profile (LIGMA_COLOR_MANAGED (image));
 
-  layer = gimp_layer_new_from_gegl_buffer (gimp_pickable_get_buffer (pickable),
+  layer = ligma_layer_new_from_gegl_buffer (ligma_pickable_get_buffer (pickable),
                                            dest_image,
-                                           gimp_image_get_layer_format (dest_image,
+                                           ligma_image_get_layer_format (dest_image,
                                                                         TRUE),
                                            name,
-                                           GIMP_OPACITY_OPAQUE,
-                                           gimp_image_get_default_new_layer_mode (dest_image),
+                                           LIGMA_OPACITY_OPAQUE,
+                                           ligma_image_get_default_new_layer_mode (dest_image),
                                            profile);
 }
 CODE
@@ -181,7 +181,7 @@ sub layer_new_from_drawable {
 This procedure creates a new layer as a copy of the specified
 drawable.  The new layer still needs to be added to the image, as this
 is not automatic.  Add the new layer with the
-gimp_image_insert_layer() command. Other attributes such as layer mask
+ligma_image_insert_layer() command. Other attributes such as layer mask
 modes, and offsets should be set with explicit procedure calls.
 HELP
 
@@ -203,17 +203,17 @@ HELP
 	code => <<'CODE'
 {
   GType     new_type;
-  GimpItem *new_item;
+  LigmaItem *new_item;
 
-  if (GIMP_IS_LAYER (drawable))
+  if (LIGMA_IS_LAYER (drawable))
     new_type = G_TYPE_FROM_INSTANCE (drawable);
   else
-    new_type = GIMP_TYPE_LAYER;
+    new_type = LIGMA_TYPE_LAYER;
 
-  new_item = gimp_item_convert (GIMP_ITEM (drawable), dest_image, new_type);
+  new_item = ligma_item_convert (LIGMA_ITEM (drawable), dest_image, new_type);
 
   if (new_item)
-    layer_copy = GIMP_LAYER (new_item);
+    layer_copy = LIGMA_LAYER (new_item);
   else
     success = FALSE;
 }
@@ -228,10 +228,10 @@ sub layer_group_new {
 This procedure creates a new layer group. Attributes such as layer mode
 and opacity should be set with explicit procedure calls. Add the new
 layer group (which is a kind of layer) with the
-gimp_image_insert_layer() command.
+ligma_image_insert_layer() command.
 
-Other procedures useful with layer groups: gimp_image_reorder_item(),
-gimp_item_get_parent(), gimp_item_get_children(), gimp_item_is_group().
+Other procedures useful with layer groups: ligma_image_reorder_item(),
+ligma_item_get_parent(), ligma_item_get_children(), ligma_item_is_group().
 HELP
 
     &barak_pdb_misc('2010', '2.8');
@@ -248,7 +248,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  layer_group = gimp_group_layer_new (image);
+  layer_group = ligma_group_layer_new (image);
 
   if (! layer_group)
     success = FALSE;
@@ -287,12 +287,12 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  layer_copy = GIMP_LAYER (gimp_item_duplicate (GIMP_ITEM (layer),
+  layer_copy = LIGMA_LAYER (ligma_item_duplicate (LIGMA_ITEM (layer),
                                                 G_TYPE_FROM_INSTANCE (layer)));
   if (layer_copy)
     {
       if (add_alpha)
-        gimp_layer_add_alpha (layer_copy);
+        ligma_layer_add_alpha (layer_copy);
     }
   else
     {
@@ -327,10 +327,10 @@ the layer fully visible, but which may be more useful than a white mask);
 
 
 The layer mask still needs to be added to the layer. This can be done
-with a call to gimp_layer_add_mask().
+with a call to ligma_layer_add_mask().
 
 
-gimp_layer_create_mask() will fail if there are no active channels on
+ligma_layer_create_mask() will fail if there are no active channels on
 the image, when called with 'ADD-CHANNEL-MASK'. It will return a black
 mask when called with 'ADD-ALPHA-MASK' or 'ADD-ALPHA-TRANSFER-MASK' on
 a layer with no alpha channels, or with 'ADD-SELECTION-MASK' when there
@@ -342,7 +342,7 @@ HELP
     @inargs = (
 	{ name => 'layer', type => 'layer',
 	  desc => 'The layer to which to add the mask' },
- 	{ name => 'mask_type', type => 'enum GimpAddMaskType',
+ 	{ name => 'mask_type', type => 'enum LigmaAddMaskType',
 	  desc => 'The type of mask' }
     );
 
@@ -354,13 +354,13 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpChannel *channel = NULL;
+  LigmaChannel *channel = NULL;
 
-  if (mask_type == GIMP_ADD_MASK_CHANNEL)
+  if (mask_type == LIGMA_ADD_MASK_CHANNEL)
     {
       GList *channels;
 
-      channels = gimp_image_get_selected_channels (gimp_item_get_image (GIMP_ITEM (layer)));
+      channels = ligma_image_get_selected_channels (ligma_item_get_image (LIGMA_ITEM (layer)));
 
       if (! channels)
         success = FALSE;
@@ -370,7 +370,7 @@ HELP
 
   if (success)
     {
-      mask = gimp_layer_create_mask (layer, mask_type, channel);
+      mask = ligma_layer_create_mask (layer, mask_type, channel);
 
       if (! mask)
         success = FALSE;
@@ -387,7 +387,7 @@ sub layer_add_mask {
 This procedure adds a layer mask to the specified layer. Layer masks serve as
 an additional alpha channel for a layer. This procedure will fail if a number
 of prerequisites aren't met. The layer cannot already have a layer mask. The
-specified mask must exist and have the same dimensions as the layer. The layer must have been created for use with the specified image and the mask must have been created with the procedure 'gimp-layer-create-mask'.
+specified mask must exist and have the same dimensions as the layer. The layer must have been created for use with the specified image and the mask must have been created with the procedure 'ligma-layer-create-mask'.
 HELP
 
     &std_pdb_misc;
@@ -402,10 +402,10 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_floating (GIMP_ITEM (mask),
-                                 gimp_item_get_image (GIMP_ITEM (layer)),
+  if (ligma_pdb_item_is_floating (LIGMA_ITEM (mask),
+                                 ligma_item_get_image (LIGMA_ITEM (layer)),
                                  error))
-    success = (gimp_layer_add_mask (layer, mask, TRUE, error) == mask);
+    success = (ligma_layer_add_mask (layer, mask, TRUE, error) == mask);
   else
     success = FALSE;
 }
@@ -426,23 +426,23 @@ HELP
     @inargs = (
 	{ name => 'layer', type => 'layer',
 	  desc => 'The layer from which to remove mask' },
-	{ name => 'mode', type => 'enum GimpMaskApplyMode',
+	{ name => 'mode', type => 'enum LigmaMaskApplyMode',
 	  desc => 'Removal mode' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPDBItemModify modify = 0;
+  LigmaPDBItemModify modify = 0;
 
-  if (mode == GIMP_MASK_APPLY)
-    modify |= GIMP_PDB_ITEM_CONTENT;
+  if (mode == LIGMA_MASK_APPLY)
+    modify |= LIGMA_PDB_ITEM_CONTENT;
 
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), NULL, modify, error) &&
-      gimp_layer_get_mask (layer) &&
-      (mode == GIMP_MASK_DISCARD ||
-       gimp_pdb_item_is_not_group (GIMP_ITEM (layer), error)))
-    gimp_layer_apply_mask (layer, mode, TRUE);
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (layer), NULL, modify, error) &&
+      ligma_layer_get_mask (layer) &&
+      (mode == LIGMA_MASK_DISCARD ||
+       ligma_pdb_item_is_not_group (LIGMA_ITEM (layer), error)))
+    ligma_layer_apply_mask (layer, mode, TRUE);
   else
     success = FALSE;
 }
@@ -459,7 +459,7 @@ equal to the supplied parameters. The 'local-origin' parameter
 specifies whether to scale from the center of the layer, or from the
 image origin. This operation only works if the layer has been added to
 an image. The interpolation method used can be set with
-gimp_context_set_interpolation().
+ligma_context_set_interpolation().
 HELP
 
     &std_pdb_misc;
@@ -467,9 +467,9 @@ HELP
     @inargs = (
 	{ name => 'layer', type => 'layer',
 	  desc => 'The layer' },
-	{ name => 'new_width', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
+	{ name => 'new_width', type => '1 <= int32 <= LIGMA_MAX_IMAGE_SIZE',
 	  desc => 'New layer width' },
-	{ name => 'new_height', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
+	{ name => 'new_height', type => '1 <= int32 <= LIGMA_MAX_IMAGE_SIZE',
 	  desc => 'New layer height' },
 	{ name => 'local_origin', type => 'boolean',
 	  desc => 'Use a local origin (as opposed to the image origin)' }
@@ -478,21 +478,21 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), NULL,
-                                 GIMP_PDB_ITEM_CONTENT | GIMP_PDB_ITEM_POSITION,
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (layer), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT | LIGMA_PDB_ITEM_POSITION,
                                  error))
     {
-      GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
+      LigmaPDBContext *pdb_context = LIGMA_PDB_CONTEXT (context);
 
       if (progress)
-        gimp_progress_start (progress, FALSE, _("Scaling"));
+        ligma_progress_start (progress, FALSE, _("Scaling"));
 
-      gimp_item_scale_by_origin (GIMP_ITEM (layer), new_width, new_height,
+      ligma_item_scale_by_origin (LIGMA_ITEM (layer), new_width, new_height,
                                  pdb_context->interpolation, progress,
                                  local_origin);
 
       if (progress)
-        gimp_progress_end (progress);
+        ligma_progress_end (progress);
     }
   else
     {
@@ -518,9 +518,9 @@ HELP
     @inargs = (
 	{ name => 'layer', type => 'layer',
 	  desc => 'The layer' },
-	{ name => 'new_width', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
+	{ name => 'new_width', type => '1 <= int32 <= LIGMA_MAX_IMAGE_SIZE',
 	  desc => 'New layer width' },
-	{ name => 'new_height', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
+	{ name => 'new_height', type => '1 <= int32 <= LIGMA_MAX_IMAGE_SIZE',
 	  desc => 'New layer height' },
 	{ name => 'offx', type => 'int32',
 	  desc => 'x offset between upper left corner of old and
@@ -533,10 +533,10 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), NULL,
-                                 GIMP_PDB_ITEM_CONTENT | GIMP_PDB_ITEM_POSITION,
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (layer), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT | LIGMA_PDB_ITEM_POSITION,
                                  error))
-    gimp_item_resize (GIMP_ITEM (layer), context, GIMP_FILL_TRANSPARENT,
+    ligma_item_resize (LIGMA_ITEM (layer), context, LIGMA_FILL_TRANSPARENT,
                       new_width, new_height, offx, offy);
   else
     success = FALSE;
@@ -563,10 +563,10 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), NULL,
-                                 GIMP_PDB_ITEM_CONTENT | GIMP_PDB_ITEM_POSITION,
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (layer), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT | LIGMA_PDB_ITEM_POSITION,
                                  error))
-    gimp_layer_resize_to_image (layer, context, GIMP_FILL_TRANSPARENT);
+    ligma_layer_resize_to_image (layer, context, LIGMA_FILL_TRANSPARENT);
   else
     success = FALSE;
 }
@@ -597,11 +597,11 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_modifiable (GIMP_ITEM (layer),
-                                   GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (layer), error))
+  if (ligma_pdb_item_is_modifiable (LIGMA_ITEM (layer),
+                                   LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (layer), error))
     {
-      gimp_layer_add_alpha (layer);
+      ligma_layer_add_alpha (layer);
     }
   else
    success = FALSE;
@@ -632,11 +632,11 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_modifiable (GIMP_ITEM (layer),
-                                   GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (layer), error))
+  if (ligma_pdb_item_is_modifiable (LIGMA_ITEM (layer),
+                                   LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (layer), error))
     {
-      gimp_layer_remove_alpha (layer, context);
+      ligma_layer_remove_alpha (layer, context);
     }
   else
    success = FALSE;
@@ -668,17 +668,17 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_modifiable (GIMP_ITEM (layer),
-                                   GIMP_PDB_ITEM_POSITION, error))
+  if (ligma_pdb_item_is_modifiable (LIGMA_ITEM (layer),
+                                   LIGMA_PDB_ITEM_POSITION, error))
     {
       gint offset_x;
       gint offset_y;
 
-      gimp_item_get_offset (GIMP_ITEM (layer), &offset_x, &offset_y);
+      ligma_item_get_offset (LIGMA_ITEM (layer), &offset_x, &offset_y);
       offx -= offset_x;
       offy -= offset_y;
 
-      gimp_item_translate (GIMP_ITEM (layer), offx, offy, TRUE);
+      ligma_item_translate (LIGMA_ITEM (layer), offx, offy, TRUE);
     }
   else
     success = FALSE;
@@ -710,7 +710,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  mask = gimp_layer_get_mask (layer);
+  mask = ligma_layer_get_mask (layer);
 }
 CODE
     );
@@ -741,7 +741,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  layer = gimp_layer_mask_get_layer (mask);
+  layer = ligma_layer_mask_get_layer (mask);
 }
 CODE
     );
@@ -771,7 +771,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  is_floating_sel = gimp_layer_is_floating_sel (layer);
+  is_floating_sel = ligma_layer_is_floating_sel (layer);
 }
 CODE
     );
@@ -799,7 +799,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  lock_alpha = gimp_layer_get_lock_alpha (layer);
+  lock_alpha = ligma_layer_get_lock_alpha (layer);
 }
 CODE
     );
@@ -824,8 +824,8 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_layer_can_lock_alpha (layer))
-    gimp_layer_set_lock_alpha (layer, lock_alpha, TRUE);
+  if (ligma_layer_can_lock_alpha (layer))
+    ligma_layer_set_lock_alpha (layer, lock_alpha, TRUE);
   else
     success = FALSE;
 }
@@ -858,7 +858,7 @@ HELP
 	code => <<'CODE'
 {
   if (layer->mask)
-    apply_mask = gimp_layer_get_apply_mask (layer);
+    apply_mask = ligma_layer_get_apply_mask (layer);
   else
     apply_mask = FALSE;
 }
@@ -889,7 +889,7 @@ HELP
 	code => <<'CODE'
 {
   if (layer->mask)
-    gimp_layer_set_apply_mask (layer, apply_mask, TRUE);
+    ligma_layer_set_apply_mask (layer, apply_mask, TRUE);
   else
     success = FALSE;
 }
@@ -923,7 +923,7 @@ HELP
 	code => <<'CODE'
 {
   if (layer->mask)
-    show_mask = gimp_layer_get_show_mask (layer);
+    show_mask = ligma_layer_get_show_mask (layer);
   else
     show_mask = FALSE;
 }
@@ -954,7 +954,7 @@ HELP
 	code => <<'CODE'
 {
   if (layer->mask)
-    gimp_layer_set_show_mask (layer, show_mask, TRUE);
+    ligma_layer_set_show_mask (layer, show_mask, TRUE);
   else
     success = FALSE;
 }
@@ -987,7 +987,7 @@ HELP
 	code => <<'CODE'
 {
   if (layer->mask)
-    edit_mask = gimp_layer_get_edit_mask (layer);
+    edit_mask = ligma_layer_get_edit_mask (layer);
   else
     edit_mask = FALSE;
 }
@@ -1018,7 +1018,7 @@ HELP
 	code => <<'CODE'
 {
   if (layer->mask)
-    gimp_layer_set_edit_mask (layer, edit_mask);
+    ligma_layer_set_edit_mask (layer, edit_mask);
   else
     success = FALSE;
 }
@@ -1045,7 +1045,7 @@ sub layer_get_opacity {
     %invoke = (
 	code => <<'CODE'
 {
-  opacity = gimp_layer_get_opacity (layer) * 100.0;
+  opacity = ligma_layer_get_opacity (layer) * 100.0;
 }
 CODE
     );
@@ -1067,7 +1067,7 @@ sub layer_set_opacity {
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_layer_set_opacity (layer, opacity / 100.0, TRUE);
+  ligma_layer_set_opacity (layer, opacity / 100.0, TRUE);
 }
 CODE
     );
@@ -1085,15 +1085,15 @@ sub layer_get_mode {
     );
 
     @outargs = (
-	{ name => 'mode', type => 'enum GimpLayerMode',
-          default => 'GIMP_LAYER_MODE_NORMAL',
+	{ name => 'mode', type => 'enum LigmaLayerMode',
+          default => 'LIGMA_LAYER_MODE_NORMAL',
 	  desc => 'The layer combination mode' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  mode = gimp_layer_get_mode (layer);
+  mode = ligma_layer_get_mode (layer);
 }
 CODE
     );
@@ -1108,30 +1108,30 @@ sub layer_set_mode {
     @inargs = (
 	{ name => 'layer', type => 'layer',
 	  desc => 'The layer' },
-	{ name => 'mode', type => 'enum GimpLayerMode',
-          default => 'GIMP_LAYER_MODE_NORMAL',
+	{ name => 'mode', type => 'enum LigmaLayerMode',
+          default => 'LIGMA_LAYER_MODE_NORMAL',
 	  desc => 'The new layer combination mode' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  if (mode == GIMP_LAYER_MODE_OVERLAY_LEGACY)
-    mode = GIMP_LAYER_MODE_SOFTLIGHT_LEGACY;
+  if (mode == LIGMA_LAYER_MODE_OVERLAY_LEGACY)
+    mode = LIGMA_LAYER_MODE_SOFTLIGHT_LEGACY;
 
-  if (gimp_viewable_get_children (GIMP_VIEWABLE (layer)) == NULL)
+  if (ligma_viewable_get_children (LIGMA_VIEWABLE (layer)) == NULL)
     {
-      if (! (gimp_layer_mode_get_context (mode) & GIMP_LAYER_MODE_CONTEXT_LAYER))
+      if (! (ligma_layer_mode_get_context (mode) & LIGMA_LAYER_MODE_CONTEXT_LAYER))
         success = FALSE;
     }
   else
     {
-      if (! (gimp_layer_mode_get_context (mode) & GIMP_LAYER_MODE_CONTEXT_GROUP))
+      if (! (ligma_layer_mode_get_context (mode) & LIGMA_LAYER_MODE_CONTEXT_GROUP))
         success = FALSE;
     }
 
   if (success)
-    gimp_layer_set_mode (layer, mode, TRUE);
+    ligma_layer_set_mode (layer, mode, TRUE);
 }
 CODE
     );
@@ -1149,14 +1149,14 @@ sub layer_get_blend_space {
     );
 
     @outargs = (
-	{ name => 'blend_space', type => 'enum GimpLayerColorSpace',
+	{ name => 'blend_space', type => 'enum LigmaLayerColorSpace',
 	  desc => 'The layer blend space' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  blend_space = gimp_layer_get_blend_space (layer);
+  blend_space = ligma_layer_get_blend_space (layer);
 }
 CODE
     );
@@ -1171,14 +1171,14 @@ sub layer_set_blend_space {
     @inargs = (
 	{ name => 'layer', type => 'layer',
 	  desc => 'The layer' },
-	{ name => 'blend_space', type => 'enum GimpLayerColorSpace',
+	{ name => 'blend_space', type => 'enum LigmaLayerColorSpace',
 	  desc => 'The new layer blend space' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_layer_set_blend_space (layer, blend_space, TRUE);
+  ligma_layer_set_blend_space (layer, blend_space, TRUE);
 }
 CODE
     );
@@ -1196,14 +1196,14 @@ sub layer_get_composite_space {
     );
 
     @outargs = (
-	{ name => 'composite_space', type => 'enum GimpLayerColorSpace',
+	{ name => 'composite_space', type => 'enum LigmaLayerColorSpace',
 	  desc => 'The layer composite space' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  composite_space = gimp_layer_get_composite_space (layer);
+  composite_space = ligma_layer_get_composite_space (layer);
 }
 CODE
     );
@@ -1218,14 +1218,14 @@ sub layer_set_composite_space {
     @inargs = (
 	{ name => 'layer', type => 'layer',
 	  desc => 'The layer' },
-	{ name => 'composite_space', type => 'enum GimpLayerColorSpace',
+	{ name => 'composite_space', type => 'enum LigmaLayerColorSpace',
 	  desc => 'The new layer composite space' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_layer_set_composite_space (layer, composite_space, TRUE);
+  ligma_layer_set_composite_space (layer, composite_space, TRUE);
 }
 CODE
     );
@@ -1243,14 +1243,14 @@ sub layer_get_composite_mode {
     );
 
     @outargs = (
-	{ name => 'composite_mode', type => 'enum GimpLayerCompositeMode',
+	{ name => 'composite_mode', type => 'enum LigmaLayerCompositeMode',
 	  desc => 'The layer composite mode' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  composite_mode = gimp_layer_get_composite_mode (layer);
+  composite_mode = ligma_layer_get_composite_mode (layer);
 }
 CODE
     );
@@ -1265,33 +1265,33 @@ sub layer_set_composite_mode {
     @inargs = (
 	{ name => 'layer', type => 'layer',
 	  desc => 'The layer' },
-	{ name => 'composite_mode', type => 'enum GimpLayerCompositeMode',
+	{ name => 'composite_mode', type => 'enum LigmaLayerCompositeMode',
 	  desc => 'The new layer composite mode' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_layer_set_composite_mode (layer, composite_mode, TRUE);
+  ligma_layer_set_composite_mode (layer, composite_mode, TRUE);
 }
 CODE
     );
 }
 
 @headers = qw(<cairo.h>
-              "libgimpbase/gimpbase.h"
-              "libgimpcolor/gimpcolor.h"
-              "core/gimp.h"
-              "core/gimpimage-color-profile.h"
-              "core/gimpimage-undo.h"
-              "core/gimpgrouplayer.h"
-              "core/gimplayer-new.h"
-              "core/gimppickable.h"
-              "core/gimpprogress.h"
-              "operations/layer-modes/gimp-layer-modes.h"
-              "gimppdbcontext.h"
-              "gimppdb-utils.h"
-              "gimp-intl.h");
+              "libligmabase/ligmabase.h"
+              "libligmacolor/ligmacolor.h"
+              "core/ligma.h"
+              "core/ligmaimage-color-profile.h"
+              "core/ligmaimage-undo.h"
+              "core/ligmagrouplayer.h"
+              "core/ligmalayer-new.h"
+              "core/ligmapickable.h"
+              "core/ligmaprogress.h"
+              "operations/layer-modes/ligma-layer-modes.h"
+              "ligmapdbcontext.h"
+              "ligmapdb-utils.h"
+              "ligma-intl.h");
 
 @procs = qw(layer_new
             layer_new_from_visible
@@ -1321,7 +1321,7 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Layer';
-$doc_title = 'gimplayer';
+$doc_title = 'ligmalayer';
 $doc_short_desc = 'Operations on a single layer.';
 $doc_long_desc = 'Operations on a single layer.';
 

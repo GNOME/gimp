@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1999 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,29 +15,29 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TOOL_PRESET_H__
-#define __GIMP_TOOL_PRESET_H__
+#ifndef __LIGMA_TOOL_PRESET_H__
+#define __LIGMA_TOOL_PRESET_H__
 
 
-#include "gimpdata.h"
+#include "ligmadata.h"
 
 
-#define GIMP_TYPE_TOOL_PRESET            (gimp_tool_preset_get_type ())
-#define GIMP_TOOL_PRESET(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TOOL_PRESET, GimpToolPreset))
-#define GIMP_TOOL_PRESET_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TOOL_PRESET, GimpToolPresetClass))
-#define GIMP_IS_TOOL_PRESET(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_TOOL_PRESET))
-#define GIMP_IS_TOOL_PRESET_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_TOOL_PRESET))
-#define GIMP_TOOL_PRESET_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_TOOL_PRESET, GimpToolPresetClass))
+#define LIGMA_TYPE_TOOL_PRESET            (ligma_tool_preset_get_type ())
+#define LIGMA_TOOL_PRESET(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_TOOL_PRESET, LigmaToolPreset))
+#define LIGMA_TOOL_PRESET_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_TOOL_PRESET, LigmaToolPresetClass))
+#define LIGMA_IS_TOOL_PRESET(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_TOOL_PRESET))
+#define LIGMA_IS_TOOL_PRESET_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_TOOL_PRESET))
+#define LIGMA_TOOL_PRESET_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_TOOL_PRESET, LigmaToolPresetClass))
 
 
-typedef struct _GimpToolPresetClass GimpToolPresetClass;
+typedef struct _LigmaToolPresetClass LigmaToolPresetClass;
 
-struct _GimpToolPreset
+struct _LigmaToolPreset
 {
-  GimpData         parent_instance;
+  LigmaData         parent_instance;
 
-  Gimp            *gimp;
-  GimpToolOptions *tool_options;
+  Ligma            *ligma;
+  LigmaToolOptions *tool_options;
 
   gboolean         use_fg_bg;
   gboolean         use_opacity_paint_mode;
@@ -50,18 +50,18 @@ struct _GimpToolPreset
   gboolean         use_font;
 };
 
-struct _GimpToolPresetClass
+struct _LigmaToolPresetClass
 {
-  GimpDataClass  parent_class;
+  LigmaDataClass  parent_class;
 };
 
 
-GType                 gimp_tool_preset_get_type      (void) G_GNUC_CONST;
+GType                 ligma_tool_preset_get_type      (void) G_GNUC_CONST;
 
-GimpData            * gimp_tool_preset_new           (GimpContext    *context,
+LigmaData            * ligma_tool_preset_new           (LigmaContext    *context,
                                                       const gchar    *unused);
 
-GimpContextPropMask   gimp_tool_preset_get_prop_mask (GimpToolPreset *preset);
+LigmaContextPropMask   ligma_tool_preset_get_prop_mask (LigmaToolPreset *preset);
 
 
-#endif  /*  __GIMP_TOOL_PRESET_H__  */
+#endif  /*  __LIGMA_TOOL_PRESET_H__  */

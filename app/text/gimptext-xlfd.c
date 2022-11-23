@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpText
- * Copyright (C) 2002-2004  Sven Neumann <sven@gimp.org>
+ * LigmaText
+ * Copyright (C) 2002-2004  Sven Neumann <sven@ligma.org>
  *
  * Some of this code was copied from Pango (pangox-fontmap.c)
  * and was originally written by Owen Taylor <otaylor@redhat.com>.
@@ -28,12 +28,12 @@
 
 #include <gio/gio.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "text-types.h"
 
-#include "gimptext.h"
-#include "gimptext-xlfd.h"
+#include "ligmatext.h"
+#include "ligmatext-xlfd.h"
 
 
 #define XLFD_MAX_FIELD_LEN 64
@@ -58,14 +58,14 @@ enum
   XLFD_NUM_FIELDS
 };
 
-static gchar * gimp_text_get_xlfd_field (const gchar *fontname,
+static gchar * ligma_text_get_xlfd_field (const gchar *fontname,
                                          gint         field_num,
                                          gchar       *buffer);
 static gchar * launder_font_name        (gchar       *name);
 
 
 /**
- * gimp_text_font_name_from_xlfd:
+ * ligma_text_font_name_from_xlfd:
  * @xlfd: X Logical Font Description
  *
  * Attempts to extract a meaningful font name from the "family",
@@ -75,24 +75,24 @@ static gchar * launder_font_name        (gchar       *name);
  * Returns: a newly allocated string.
  **/
 gchar *
-gimp_text_font_name_from_xlfd (const gchar *xlfd)
+ligma_text_font_name_from_xlfd (const gchar *xlfd)
 {
   gchar *fields[4];
   gchar  buffers[4][XLFD_MAX_FIELD_LEN];
   gint   i = 0;
 
   /*  family  */
-  fields[i] = gimp_text_get_xlfd_field (xlfd, XLFD_FAMILY, buffers[i]);
+  fields[i] = ligma_text_get_xlfd_field (xlfd, XLFD_FAMILY, buffers[i]);
   if (fields[i])
     i++;
 
   /*  weight  */
-  fields[i] = gimp_text_get_xlfd_field (xlfd, XLFD_WEIGHT, buffers[i]);
+  fields[i] = ligma_text_get_xlfd_field (xlfd, XLFD_WEIGHT, buffers[i]);
   if (fields[i] && strcmp (fields[i], "medium"))
     i++;
 
   /*  slant  */
-  fields[i] = gimp_text_get_xlfd_field (xlfd, XLFD_SLANT, buffers[i]);
+  fields[i] = ligma_text_get_xlfd_field (xlfd, XLFD_SLANT, buffers[i]);
   if (fields[i])
     {
       switch (*fields[i])
@@ -111,7 +111,7 @@ gimp_text_font_name_from_xlfd (const gchar *xlfd)
     }
 
   /*  stretch  */
-  fields[i] = gimp_text_get_xlfd_field (xlfd, XLFD_SET_WIDTH, buffers[i]);
+  fields[i] = ligma_text_get_xlfd_field (xlfd, XLFD_SET_WIDTH, buffers[i]);
   if (fields[i] && strcmp (fields[i], "normal"))
     i++;
 
@@ -125,7 +125,7 @@ gimp_text_font_name_from_xlfd (const gchar *xlfd)
 }
 
 /**
- * gimp_text_font_size_from_xlfd:
+ * ligma_text_font_size_from_xlfd:
  * @xlfd: X Logical Font Description
  * @size: return location for the font size
  * @size_unit: return location for the font size unit
@@ -136,9 +136,9 @@ gimp_text_font_name_from_xlfd (const gchar *xlfd)
  * Returns: %TRUE on success, %FALSE otherwise.
  **/
 gboolean
-gimp_text_font_size_from_xlfd (const gchar *xlfd,
+ligma_text_font_size_from_xlfd (const gchar *xlfd,
                                gdouble     *size,
-                               GimpUnit    *size_unit)
+                               LigmaUnit    *size_unit)
 {
   gchar  buffer[XLFD_MAX_FIELD_LEN];
   gchar *field;
@@ -146,19 +146,19 @@ gimp_text_font_size_from_xlfd (const gchar *xlfd,
   if (!xlfd)
     return FALSE;
 
-  field = gimp_text_get_xlfd_field (xlfd, XLFD_PIXELS, buffer);
+  field = ligma_text_get_xlfd_field (xlfd, XLFD_PIXELS, buffer);
   if (field)
     {
       *size      = atoi (field);
-      *size_unit = GIMP_UNIT_PIXEL;
+      *size_unit = LIGMA_UNIT_PIXEL;
       return TRUE;
     }
 
-  field = gimp_text_get_xlfd_field (xlfd, XLFD_POINTS, buffer);
+  field = ligma_text_get_xlfd_field (xlfd, XLFD_POINTS, buffer);
   if (field)
     {
       *size      = atoi (field) / 10.0;
-      *size_unit = GIMP_UNIT_POINT;
+      *size_unit = LIGMA_UNIT_POINT;
       return TRUE;
     }
 
@@ -166,33 +166,33 @@ gimp_text_font_size_from_xlfd (const gchar *xlfd,
 }
 
 /**
- * gimp_text_set_font_from_xlfd:
- * @text: a #GimpText object
+ * ligma_text_set_font_from_xlfd:
+ * @text: a #LigmaText object
  * @xlfd: X Logical Font Description
  *
  * Attempts to extract font name and font size from @xlfd and sets
- * them on the #GimpText object.
+ * them on the #LigmaText object.
  **/
 void
-gimp_text_set_font_from_xlfd (GimpText    *text,
+ligma_text_set_font_from_xlfd (LigmaText    *text,
                               const gchar *xlfd)
 {
   gchar    *font;
   gdouble   size;
-  GimpUnit  size_unit;
+  LigmaUnit  size_unit;
 
-  g_return_if_fail (GIMP_IS_TEXT (text));
+  g_return_if_fail (LIGMA_IS_TEXT (text));
 
   if (!xlfd)
     return;
 
-  font = gimp_text_font_name_from_xlfd (xlfd);
+  font = ligma_text_font_name_from_xlfd (xlfd);
 
-#if GIMP_TEXT_DEBUG
+#if LIGMA_TEXT_DEBUG
   g_printerr ("XLFD: %s  font: %s\n", xlfd, font ? font : "(null)");
 #endif
 
-  if (gimp_text_font_size_from_xlfd (xlfd, &size, &size_unit))
+  if (ligma_text_font_size_from_xlfd (xlfd, &size, &size_unit))
     {
       g_object_set (text,
                     "font-size",          size,
@@ -211,7 +211,7 @@ gimp_text_set_font_from_xlfd (GimpText    *text,
 }
 
 /**
- * gimp_text_get_xlfd_field:
+ * ligma_text_get_xlfd_field:
  * @fontname: an XLFD fontname
  * @field_num: field index
  * @buffer: buffer of at least XLFD_MAX_FIELD_LEN chars
@@ -227,7 +227,7 @@ gimp_text_set_font_from_xlfd (GimpText    *text,
  * just an asterisk.
  **/
 static gchar *
-gimp_text_get_xlfd_field (const gchar *fontname,
+ligma_text_get_xlfd_field (const gchar *fontname,
                           gint         field_num,
                           gchar       *buffer)
 {

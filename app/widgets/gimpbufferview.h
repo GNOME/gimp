@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpbufferview.h
- * Copyright (C) 2001 Michael Natterer <mitch@gimp.org>
+ * ligmabufferview.h
+ * Copyright (C) 2001 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,26 +18,26 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_BUFFER_VIEW_H__
-#define __GIMP_BUFFER_VIEW_H__
+#ifndef __LIGMA_BUFFER_VIEW_H__
+#define __LIGMA_BUFFER_VIEW_H__
 
 
-#include "gimpcontainereditor.h"
+#include "ligmacontainereditor.h"
 
 
-#define GIMP_TYPE_BUFFER_VIEW            (gimp_buffer_view_get_type ())
-#define GIMP_BUFFER_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_BUFFER_VIEW, GimpBufferView))
-#define GIMP_BUFFER_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_BUFFER_VIEW, GimpBufferViewClass))
-#define GIMP_IS_BUFFER_VIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_BUFFER_VIEW))
-#define GIMP_IS_BUFFER_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_BUFFER_VIEW))
-#define GIMP_BUFFER_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_BUFFER_VIEW, GimpBufferViewClass))
+#define LIGMA_TYPE_BUFFER_VIEW            (ligma_buffer_view_get_type ())
+#define LIGMA_BUFFER_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_BUFFER_VIEW, LigmaBufferView))
+#define LIGMA_BUFFER_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_BUFFER_VIEW, LigmaBufferViewClass))
+#define LIGMA_IS_BUFFER_VIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_BUFFER_VIEW))
+#define LIGMA_IS_BUFFER_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_BUFFER_VIEW))
+#define LIGMA_BUFFER_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_BUFFER_VIEW, LigmaBufferViewClass))
 
 
-typedef struct _GimpBufferViewClass  GimpBufferViewClass;
+typedef struct _LigmaBufferViewClass  LigmaBufferViewClass;
 
-struct _GimpBufferView
+struct _LigmaBufferView
 {
-  GimpContainerEditor  parent_instance;
+  LigmaContainerEditor  parent_instance;
 
   GtkWidget           *clipboard_view;
   GtkWidget           *clipboard_label;
@@ -49,20 +49,20 @@ struct _GimpBufferView
   GtkWidget           *delete_button;
 };
 
-struct _GimpBufferViewClass
+struct _LigmaBufferViewClass
 {
-  GimpContainerEditorClass  parent_class;
+  LigmaContainerEditorClass  parent_class;
 };
 
 
-GType       gimp_buffer_view_get_type (void) G_GNUC_CONST;
+GType       ligma_buffer_view_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_buffer_view_new      (GimpViewType     view_type,
-                                       GimpContainer   *container,
-                                       GimpContext     *context,
+GtkWidget * ligma_buffer_view_new      (LigmaViewType     view_type,
+                                       LigmaContainer   *container,
+                                       LigmaContext     *context,
                                        gint             view_size,
                                        gint             view_border_width,
-                                       GimpMenuFactory *menu_factory);
+                                       LigmaMenuFactory *menu_factory);
 
 
-#endif  /*  __GIMP_BUFFER_VIEW_H__  */
+#endif  /*  __LIGMA_BUFFER_VIEW_H__  */

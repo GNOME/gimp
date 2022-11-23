@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpfileprocview.c
- * Copyright (C) 2004  Sven Neumann <sven@gimp.org>
+ * ligmafileprocview.c
+ * Copyright (C) 2004  Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,13 +27,13 @@
 
 #include "widgets-types.h"
 
-#include "core/gimp.h"
+#include "core/ligma.h"
 
-#include "plug-in/gimppluginprocedure.h"
+#include "plug-in/ligmapluginprocedure.h"
 
-#include "gimpfileprocview.h"
+#include "ligmafileprocview.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 /*  an arbitrary limit to keep the file dialog from becoming too wide  */
 #define MAX_EXTENSIONS  4
@@ -55,50 +55,50 @@ enum
 };
 
 
-static void            gimp_file_proc_view_finalize               (GObject             *object);
+static void            ligma_file_proc_view_finalize               (GObject             *object);
 
-static void            gimp_file_proc_view_selection_changed      (GtkTreeSelection    *selection,
-                                                                   GimpFileProcView    *view);
+static void            ligma_file_proc_view_selection_changed      (GtkTreeSelection    *selection,
+                                                                   LigmaFileProcView    *view);
 
-static GtkFileFilter * gimp_file_proc_view_process_procedure      (GimpPlugInProcedure *file_proc,
+static GtkFileFilter * ligma_file_proc_view_process_procedure      (LigmaPlugInProcedure *file_proc,
                                                                    GtkFileFilter       *all);
-static gchar         * gimp_file_proc_view_pattern_from_extension (const gchar         *extension);
+static gchar         * ligma_file_proc_view_pattern_from_extension (const gchar         *extension);
 
 
-G_DEFINE_TYPE (GimpFileProcView, gimp_file_proc_view, GTK_TYPE_TREE_VIEW)
+G_DEFINE_TYPE (LigmaFileProcView, ligma_file_proc_view, GTK_TYPE_TREE_VIEW)
 
-#define parent_class gimp_file_proc_view_parent_class
+#define parent_class ligma_file_proc_view_parent_class
 
 static guint view_signals[LAST_SIGNAL] = { 0 };
 
 
 static void
-gimp_file_proc_view_class_init (GimpFileProcViewClass *klass)
+ligma_file_proc_view_class_init (LigmaFileProcViewClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->finalize = gimp_file_proc_view_finalize;
+  object_class->finalize = ligma_file_proc_view_finalize;
 
   klass->changed         = NULL;
 
   view_signals[CHANGED] = g_signal_new ("changed",
                                         G_TYPE_FROM_CLASS (klass),
                                         G_SIGNAL_RUN_LAST,
-                                        G_STRUCT_OFFSET (GimpFileProcViewClass,
+                                        G_STRUCT_OFFSET (LigmaFileProcViewClass,
                                                          changed),
                                         NULL, NULL, NULL,
                                         G_TYPE_NONE, 0);
 }
 
 static void
-gimp_file_proc_view_init (GimpFileProcView *view)
+ligma_file_proc_view_init (LigmaFileProcView *view)
 {
 }
 
 static void
-gimp_file_proc_view_finalize (GObject *object)
+ligma_file_proc_view_finalize (GObject *object)
 {
-  GimpFileProcView *view = GIMP_FILE_PROC_VIEW (object);
+  LigmaFileProcView *view = LIGMA_FILE_PROC_VIEW (object);
 
   if (view->meta_extensions)
     {
@@ -110,7 +110,7 @@ gimp_file_proc_view_finalize (GObject *object)
 }
 
 GtkWidget *
-gimp_file_proc_view_new (Gimp        *gimp,
+ligma_file_proc_view_new (Ligma        *ligma,
                          GSList      *procedures,
                          const gchar *automatic,
                          const gchar *automatic_help_id)
@@ -123,16 +123,16 @@ gimp_file_proc_view_new (Gimp        *gimp,
   GSList            *list;
   GtkTreeIter        iter;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
 
   store = gtk_list_store_new (N_COLUMNS,
-                              GIMP_TYPE_PLUG_IN_PROCEDURE, /*  COLUMN_PROC       */
+                              LIGMA_TYPE_PLUG_IN_PROCEDURE, /*  COLUMN_PROC       */
                               G_TYPE_STRING,               /*  COLUMN_LABEL      */
                               G_TYPE_STRING,               /*  COLUMN_EXTENSIONS */
                               G_TYPE_STRING,               /*  COLUMN_HELP_ID    */
                               GTK_TYPE_FILE_FILTER);       /*  COLUMN_FILTER     */
 
-  view = g_object_new (GIMP_TYPE_FILE_PROC_VIEW,
+  view = g_object_new (LIGMA_TYPE_FILE_PROC_VIEW,
                        "model",      store,
                        "rules-hint", TRUE,
                        NULL);
@@ -143,19 +143,19 @@ gimp_file_proc_view_new (Gimp        *gimp,
 
   for (list = procedures; list; list = g_slist_next (list))
     {
-      GimpPlugInProcedure *proc = list->data;
+      LigmaPlugInProcedure *proc = list->data;
 
       if (! proc->prefixes_list) /*  skip URL loaders  */
         {
-          const gchar *label   = gimp_procedure_get_label (GIMP_PROCEDURE (proc));
-          const gchar *help_id = gimp_procedure_get_help_id (GIMP_PROCEDURE (proc));
+          const gchar *label   = ligma_procedure_get_label (LIGMA_PROCEDURE (proc));
+          const gchar *help_id = ligma_procedure_get_help_id (LIGMA_PROCEDURE (proc));
           GSList      *list2;
 
           if (label)
             {
               GtkFileFilter *filter;
 
-              filter = gimp_file_proc_view_process_procedure (proc, all_filter);
+              filter = ligma_file_proc_view_process_procedure (proc, all_filter);
               gtk_list_store_append (store, &iter);
               gtk_list_store_set (store, &iter,
                                   COLUMN_PROC,       proc,
@@ -171,7 +171,7 @@ gimp_file_proc_view_new (Gimp        *gimp,
                list2;
                list2 = g_slist_next (list2))
             {
-              GimpFileProcView *proc_view = GIMP_FILE_PROC_VIEW (view);
+              LigmaFileProcView *proc_view = LIGMA_FILE_PROC_VIEW (view);
               const gchar      *ext       = list2->data;
               const gchar      *dot       = strchr (ext, '.');
 
@@ -218,24 +218,24 @@ gimp_file_proc_view_new (Gimp        *gimp,
   gtk_tree_view_append_column (view, column);
 
   g_signal_connect (gtk_tree_view_get_selection (view), "changed",
-                    G_CALLBACK (gimp_file_proc_view_selection_changed),
+                    G_CALLBACK (ligma_file_proc_view_selection_changed),
                     view);
 
   return GTK_WIDGET (view);
 }
 
-GimpPlugInProcedure *
-gimp_file_proc_view_get_proc (GimpFileProcView  *view,
+LigmaPlugInProcedure *
+ligma_file_proc_view_get_proc (LigmaFileProcView  *view,
                               gchar            **label,
                               GtkFileFilter    **filter)
 {
   GtkTreeModel        *model;
   GtkTreeSelection    *selection;
-  GimpPlugInProcedure *proc;
+  LigmaPlugInProcedure *proc;
   GtkTreeIter          iter;
   gboolean             has_selection;
 
-  g_return_val_if_fail (GIMP_IS_FILE_PROC_VIEW (view), NULL);
+  g_return_val_if_fail (LIGMA_IS_FILE_PROC_VIEW (view), NULL);
 
   if (label)  *label  = NULL;
   if (filter) *filter = NULL;
@@ -287,14 +287,14 @@ gimp_file_proc_view_get_proc (GimpFileProcView  *view,
 }
 
 gboolean
-gimp_file_proc_view_set_proc (GimpFileProcView    *view,
-                              GimpPlugInProcedure *proc)
+ligma_file_proc_view_set_proc (LigmaFileProcView    *view,
+                              LigmaPlugInProcedure *proc)
 {
   GtkTreeModel *model;
   GtkTreeIter   iter;
   gboolean      iter_valid;
 
-  g_return_val_if_fail (GIMP_IS_FILE_PROC_VIEW (view), FALSE);
+  g_return_val_if_fail (LIGMA_IS_FILE_PROC_VIEW (view), FALSE);
 
   model = gtk_tree_view_get_model (GTK_TREE_VIEW (view));
 
@@ -302,7 +302,7 @@ gimp_file_proc_view_set_proc (GimpFileProcView    *view,
        iter_valid;
        iter_valid = gtk_tree_model_iter_next (model, &iter))
     {
-      GimpPlugInProcedure *this;
+      LigmaPlugInProcedure *this;
 
       gtk_tree_model_get (model, &iter,
                           COLUMN_PROC, &this,
@@ -328,13 +328,13 @@ gimp_file_proc_view_set_proc (GimpFileProcView    *view,
 }
 
 gchar *
-gimp_file_proc_view_get_help_id (GimpFileProcView *view)
+ligma_file_proc_view_get_help_id (LigmaFileProcView *view)
 {
   GtkTreeModel     *model;
   GtkTreeSelection *selection;
   GtkTreeIter       iter;
 
-  g_return_val_if_fail (GIMP_IS_FILE_PROC_VIEW (view), NULL);
+  g_return_val_if_fail (LIGMA_IS_FILE_PROC_VIEW (view), NULL);
 
   selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
 
@@ -353,14 +353,14 @@ gimp_file_proc_view_get_help_id (GimpFileProcView *view)
 }
 
 static void
-gimp_file_proc_view_selection_changed (GtkTreeSelection *selection,
-                                       GimpFileProcView *view)
+ligma_file_proc_view_selection_changed (GtkTreeSelection *selection,
+                                       LigmaFileProcView *view)
 {
   g_signal_emit (view, view_signals[CHANGED], 0);
 }
 
 /**
- * gimp_file_proc_view_process_procedure:
+ * ligma_file_proc_view_process_procedure:
  * @file_proc:
  * @all:
  *
@@ -370,7 +370,7 @@ gimp_file_proc_view_selection_changed (GtkTreeSelection *selection,
  * when used.
  **/
 static GtkFileFilter *
-gimp_file_proc_view_process_procedure (GimpPlugInProcedure *file_proc,
+ligma_file_proc_view_process_procedure (LigmaPlugInProcedure *file_proc,
                                        GtkFileFilter       *all)
 {
   GtkFileFilter *filter;
@@ -382,7 +382,7 @@ gimp_file_proc_view_process_procedure (GimpPlugInProcedure *file_proc,
     return NULL;
 
   filter = gtk_file_filter_new ();
-  str    = g_string_new (gimp_procedure_get_label (GIMP_PROCEDURE (file_proc)));
+  str    = g_string_new (ligma_procedure_get_label (LIGMA_PROCEDURE (file_proc)));
 
   /* Take ownership directly so we don't have to mess with a floating
    * ref
@@ -404,7 +404,7 @@ gimp_file_proc_view_process_procedure (GimpPlugInProcedure *file_proc,
       const gchar *extension = list->data;
       gchar       *pattern;
 
-      pattern = gimp_file_proc_view_pattern_from_extension (extension);
+      pattern = ligma_file_proc_view_pattern_from_extension (extension);
       gtk_file_filter_add_pattern (filter, pattern);
       gtk_file_filter_add_pattern (all, pattern);
       g_free (pattern);
@@ -441,7 +441,7 @@ gimp_file_proc_view_process_procedure (GimpPlugInProcedure *file_proc,
 }
 
 static gchar *
-gimp_file_proc_view_pattern_from_extension (const gchar *extension)
+ligma_file_proc_view_pattern_from_extension (const gchar *extension)
 {
   gchar *pattern;
   gchar *p;

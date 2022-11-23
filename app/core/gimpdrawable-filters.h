@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpdrawable-filters.h
+ * ligmadrawable-filters.h
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,25 +17,25 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DRAWABLE_FILTERS_H__
-#define __GIMP_DRAWABLE_FILTERS_H__
+#ifndef __LIGMA_DRAWABLE_FILTERS_H__
+#define __LIGMA_DRAWABLE_FILTERS_H__
 
 
-GimpContainer * gimp_drawable_get_filters   (GimpDrawable *drawable);
+LigmaContainer * ligma_drawable_get_filters   (LigmaDrawable *drawable);
 
-gboolean        gimp_drawable_has_filters   (GimpDrawable *drawable);
+gboolean        ligma_drawable_has_filters   (LigmaDrawable *drawable);
 
-void            gimp_drawable_add_filter    (GimpDrawable *drawable,
-                                             GimpFilter   *filter);
-void            gimp_drawable_remove_filter (GimpDrawable *drawable,
-                                             GimpFilter   *filter);
+void            ligma_drawable_add_filter    (LigmaDrawable *drawable,
+                                             LigmaFilter   *filter);
+void            ligma_drawable_remove_filter (LigmaDrawable *drawable,
+                                             LigmaFilter   *filter);
 
-gboolean        gimp_drawable_has_filter    (GimpDrawable *drawable,
-                                             GimpFilter   *filter);
+gboolean        ligma_drawable_has_filter    (LigmaDrawable *drawable,
+                                             LigmaFilter   *filter);
 
-gboolean        gimp_drawable_merge_filter  (GimpDrawable *drawable,
-                                             GimpFilter   *filter,
-                                             GimpProgress *progress,
+gboolean        ligma_drawable_merge_filter  (LigmaDrawable *drawable,
+                                             LigmaFilter   *filter,
+                                             LigmaProgress *progress,
                                              const gchar  *undo_desc,
                                              const Babl   *format,
                                              gboolean      clip,
@@ -43,4 +43,4 @@ gboolean        gimp_drawable_merge_filter  (GimpDrawable *drawable,
                                              gboolean      update);
 
 
-#endif /* __GIMP_DRAWABLE_FILTERS_H__ */
+#endif /* __LIGMA_DRAWABLE_FILTERS_H__ */

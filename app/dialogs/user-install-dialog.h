@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,7 +19,7 @@
 #define __USER_INSTALL_DIALOG_H__
 
 
-gboolean  user_install_dialog_run (GimpUserInstall *install);
+gboolean  user_install_dialog_run (LigmaUserInstall *install);
 
 
 #endif /* __USER_INSTALL_DIALOG_H__ */

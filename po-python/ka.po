@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2022-07-28 07:43+0000\n"
 "PO-Revision-Date: 2022-07-28 09:47+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
@@ -472,7 +472,7 @@ msgid "Python _Console"
 msgstr ""
 
 #: plug-ins/python/python-console/python-console.py:358
-msgid "Interactive GIMP Python interpreter"
+msgid "Interactive LIGMA Python interpreter"
 msgstr ""
 
 #: plug-ins/python/python-console/python-console.py:359
@@ -787,7 +787,7 @@ msgid ""
 msgstr ""
 
 #: plug-ins/python/spyro-plus.py:1749
-msgid "Spyrogimp"
+msgid "Spyroligma"
 msgstr ""
 
 #: plug-ins/python/spyro-plus.py:1758 plug-ins/python/spyro-plus.py:2295
@@ -878,5 +878,5 @@ msgid ""
 msgstr ""
 
 #: plug-ins/python/spyro-plus.py:2299
-msgid "Spyrogimp..."
+msgid "Spyroligma..."
 msgstr ""

@@ -1,4 +1,4 @@
-/* parasitelist.c: Copyright 1998 Jay Cox <jaycox@gimp.org>
+/* parasitelist.c: Copyright 1998 Jay Cox <jaycox@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,13 +21,13 @@
 #include <gio/gio.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "core-types.h"
 
-#include "gimp-memsize.h"
-#include "gimpparasitelist.h"
+#include "ligma-memsize.h"
+#include "ligmaparasitelist.h"
 
 
 enum
@@ -38,55 +38,55 @@ enum
 };
 
 
-static void     gimp_parasite_list_finalize          (GObject     *object);
-static gint64   gimp_parasite_list_get_memsize       (GimpObject  *object,
+static void     ligma_parasite_list_finalize          (GObject     *object);
+static gint64   ligma_parasite_list_get_memsize       (LigmaObject  *object,
                                                       gint64      *gui_size);
 
-static void     gimp_parasite_list_config_iface_init (gpointer     iface,
+static void     ligma_parasite_list_config_iface_init (gpointer     iface,
                                                       gpointer     iface_data);
-static gboolean gimp_parasite_list_serialize    (GimpConfig       *list,
-                                                 GimpConfigWriter *writer,
+static gboolean ligma_parasite_list_serialize    (LigmaConfig       *list,
+                                                 LigmaConfigWriter *writer,
                                                  gpointer          data);
-static gboolean gimp_parasite_list_deserialize  (GimpConfig       *list,
+static gboolean ligma_parasite_list_deserialize  (LigmaConfig       *list,
                                                  GScanner         *scanner,
                                                  gint              nest_level,
                                                  gpointer          data);
 
 static void     parasite_serialize           (const gchar      *key,
-                                              GimpParasite     *parasite,
-                                              GimpConfigWriter *writer);
+                                              LigmaParasite     *parasite,
+                                              LigmaConfigWriter *writer);
 static void     parasite_copy                (const gchar      *key,
-                                              GimpParasite     *parasite,
-                                              GimpParasiteList *list);
+                                              LigmaParasite     *parasite,
+                                              LigmaParasiteList *list);
 static gboolean parasite_free                (const gchar      *key,
-                                              GimpParasite     *parasite,
+                                              LigmaParasite     *parasite,
                                               gpointer          unused);
 static void     parasite_count_if_persistent (const gchar      *key,
-                                              GimpParasite     *parasite,
+                                              LigmaParasite     *parasite,
                                               gint             *count);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpParasiteList, gimp_parasite_list, GIMP_TYPE_OBJECT,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
-                                                gimp_parasite_list_config_iface_init))
+G_DEFINE_TYPE_WITH_CODE (LigmaParasiteList, ligma_parasite_list, LIGMA_TYPE_OBJECT,
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_CONFIG,
+                                                ligma_parasite_list_config_iface_init))
 
-#define parent_class gimp_parasite_list_parent_class
+#define parent_class ligma_parasite_list_parent_class
 
 static guint        parasite_list_signals[LAST_SIGNAL] = { 0 };
 static const gchar  parasite_symbol[]                  = "parasite";
 
 
 static void
-gimp_parasite_list_class_init (GimpParasiteListClass *klass)
+ligma_parasite_list_class_init (LigmaParasiteListClass *klass)
 {
   GObjectClass    *object_class      = G_OBJECT_CLASS (klass);
-  GimpObjectClass *gimp_object_class = GIMP_OBJECT_CLASS (klass);
+  LigmaObjectClass *ligma_object_class = LIGMA_OBJECT_CLASS (klass);
 
   parasite_list_signals[ADD] =
     g_signal_new ("add",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpParasiteListClass, add),
+                  G_STRUCT_OFFSET (LigmaParasiteListClass, add),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   G_TYPE_POINTER);
@@ -95,39 +95,39 @@ gimp_parasite_list_class_init (GimpParasiteListClass *klass)
     g_signal_new ("remove",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpParasiteListClass, remove),
+                  G_STRUCT_OFFSET (LigmaParasiteListClass, remove),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   G_TYPE_POINTER);
 
-  object_class->finalize         = gimp_parasite_list_finalize;
+  object_class->finalize         = ligma_parasite_list_finalize;
 
-  gimp_object_class->get_memsize = gimp_parasite_list_get_memsize;
+  ligma_object_class->get_memsize = ligma_parasite_list_get_memsize;
 
   klass->add                     = NULL;
   klass->remove                  = NULL;
 }
 
 static void
-gimp_parasite_list_config_iface_init (gpointer  iface,
+ligma_parasite_list_config_iface_init (gpointer  iface,
                                       gpointer  iface_data)
 {
-  GimpConfigInterface *config_iface = (GimpConfigInterface *) iface;
+  LigmaConfigInterface *config_iface = (LigmaConfigInterface *) iface;
 
-  config_iface->serialize   = gimp_parasite_list_serialize;
-  config_iface->deserialize = gimp_parasite_list_deserialize;
+  config_iface->serialize   = ligma_parasite_list_serialize;
+  config_iface->deserialize = ligma_parasite_list_deserialize;
 }
 
 static void
-gimp_parasite_list_init (GimpParasiteList *list)
+ligma_parasite_list_init (LigmaParasiteList *list)
 {
   list->table = NULL;
 }
 
 static void
-gimp_parasite_list_finalize (GObject *object)
+ligma_parasite_list_finalize (GObject *object)
 {
-  GimpParasiteList *list = GIMP_PARASITE_LIST (object);
+  LigmaParasiteList *list = LIGMA_PARASITE_LIST (object);
 
   if (list->table)
     {
@@ -140,28 +140,28 @@ gimp_parasite_list_finalize (GObject *object)
 }
 
 static gint64
-gimp_parasite_list_get_memsize (GimpObject *object,
+ligma_parasite_list_get_memsize (LigmaObject *object,
                                 gint64     *gui_size)
 {
-  GimpParasiteList *list    = GIMP_PARASITE_LIST (object);
+  LigmaParasiteList *list    = LIGMA_PARASITE_LIST (object);
   gint64            memsize = 0;
 
-  memsize += gimp_g_hash_table_get_memsize_foreach (list->table,
-                                                    (GimpMemsizeFunc)
-                                                    gimp_parasite_get_memsize,
+  memsize += ligma_g_hash_table_get_memsize_foreach (list->table,
+                                                    (LigmaMemsizeFunc)
+                                                    ligma_parasite_get_memsize,
                                                     gui_size);
 
-  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
+  return memsize + LIGMA_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
 }
 
 static gboolean
-gimp_parasite_list_serialize (GimpConfig       *list,
-                              GimpConfigWriter *writer,
+ligma_parasite_list_serialize (LigmaConfig       *list,
+                              LigmaConfigWriter *writer,
                               gpointer          data)
 {
-  if (GIMP_PARASITE_LIST (list)->table)
-    g_hash_table_foreach (GIMP_PARASITE_LIST (list)->table,
+  if (LIGMA_PARASITE_LIST (list)->table)
+    g_hash_table_foreach (LIGMA_PARASITE_LIST (list)->table,
                           (GHFunc) parasite_serialize,
                           writer);
 
@@ -169,7 +169,7 @@ gimp_parasite_list_serialize (GimpConfig       *list,
 }
 
 static gboolean
-gimp_parasite_list_deserialize (GimpConfig *list,
+ligma_parasite_list_deserialize (LigmaConfig *list,
                                 GScanner   *scanner,
                                 gint        nest_level,
                                 gpointer    data)
@@ -198,14 +198,14 @@ gimp_parasite_list_deserialize (GimpConfig *list,
               gint          parasite_flags     = 0;
               guint8       *parasite_data      = NULL;
               gint          parasite_data_size = 0;
-              GimpParasite *parasite;
+              LigmaParasite *parasite;
 
               token = G_TOKEN_STRING;
 
               if (g_scanner_peek_next_token (scanner) != token)
                 break;
 
-              if (! gimp_scanner_parse_string (scanner, &parasite_name))
+              if (! ligma_scanner_parse_string (scanner, &parasite_name))
                 break;
 
               token = G_TOKEN_INT;
@@ -213,7 +213,7 @@ gimp_parasite_list_deserialize (GimpConfig *list,
               if (g_scanner_peek_next_token (scanner) != token)
                 goto cleanup;
 
-              if (! gimp_scanner_parse_int (scanner, &parasite_flags))
+              if (! ligma_scanner_parse_int (scanner, &parasite_flags))
                 goto cleanup;
 
               token = G_TOKEN_INT;
@@ -227,7 +227,7 @@ gimp_parasite_list_deserialize (GimpConfig *list,
                   if (g_scanner_peek_next_token (scanner) != G_TOKEN_STRING)
                     goto cleanup;
 
-                  if (! gimp_scanner_parse_string (scanner, &str))
+                  if (! ligma_scanner_parse_string (scanner, &str))
                     goto cleanup;
 
                   parasite_data_size = strlen (str);
@@ -237,7 +237,7 @@ gimp_parasite_list_deserialize (GimpConfig *list,
                 {
                   /*  new format -- properly encoded binary data  */
 
-                  if (! gimp_scanner_parse_int (scanner, &parasite_data_size))
+                  if (! ligma_scanner_parse_int (scanner, &parasite_data_size))
                     goto cleanup;
 
                   token = G_TOKEN_STRING;
@@ -245,18 +245,18 @@ gimp_parasite_list_deserialize (GimpConfig *list,
                   if (g_scanner_peek_next_token (scanner) != token)
                     goto cleanup;
 
-                  if (! gimp_scanner_parse_data (scanner, parasite_data_size,
+                  if (! ligma_scanner_parse_data (scanner, parasite_data_size,
                                                  &parasite_data))
                     goto cleanup;
                 }
 
-              parasite = gimp_parasite_new (parasite_name,
+              parasite = ligma_parasite_new (parasite_name,
                                             parasite_flags,
                                             parasite_data_size,
                                             parasite_data);
-              gimp_parasite_list_add (GIMP_PARASITE_LIST (list),
+              ligma_parasite_list_add (LIGMA_PARASITE_LIST (list),
                                       parasite);  /* adds a copy */
-              gimp_parasite_free (parasite);
+              ligma_parasite_free (parasite);
 
               token = G_TOKEN_RIGHT_PAREN;
 
@@ -275,27 +275,27 @@ gimp_parasite_list_deserialize (GimpConfig *list,
         }
     }
 
-  return gimp_config_deserialize_return (scanner, token, nest_level);
+  return ligma_config_deserialize_return (scanner, token, nest_level);
 }
 
-GimpParasiteList *
-gimp_parasite_list_new (void)
+LigmaParasiteList *
+ligma_parasite_list_new (void)
 {
-  GimpParasiteList *list;
+  LigmaParasiteList *list;
 
-  list = g_object_new (GIMP_TYPE_PARASITE_LIST, NULL);
+  list = g_object_new (LIGMA_TYPE_PARASITE_LIST, NULL);
 
   return list;
 }
 
-GimpParasiteList *
-gimp_parasite_list_copy (GimpParasiteList *list)
+LigmaParasiteList *
+ligma_parasite_list_copy (LigmaParasiteList *list)
 {
-  GimpParasiteList *newlist;
+  LigmaParasiteList *newlist;
 
-  g_return_val_if_fail (GIMP_IS_PARASITE_LIST (list), NULL);
+  g_return_val_if_fail (LIGMA_IS_PARASITE_LIST (list), NULL);
 
-  newlist = gimp_parasite_list_new ();
+  newlist = ligma_parasite_list_new ();
 
   if (list->table)
     g_hash_table_foreach (list->table, (GHFunc) parasite_copy, newlist);
@@ -304,36 +304,36 @@ gimp_parasite_list_copy (GimpParasiteList *list)
 }
 
 void
-gimp_parasite_list_add (GimpParasiteList   *list,
-                        const GimpParasite *parasite)
+ligma_parasite_list_add (LigmaParasiteList   *list,
+                        const LigmaParasite *parasite)
 {
-  GimpParasite *copy;
+  LigmaParasite *copy;
 
-  g_return_if_fail (GIMP_IS_PARASITE_LIST (list));
+  g_return_if_fail (LIGMA_IS_PARASITE_LIST (list));
   g_return_if_fail (parasite != NULL);
   g_return_if_fail (parasite->name != NULL);
 
   if (list->table == NULL)
     list->table = g_hash_table_new (g_str_hash, g_str_equal);
 
-  gimp_parasite_list_remove (list, parasite->name);
-  copy = gimp_parasite_copy (parasite);
+  ligma_parasite_list_remove (list, parasite->name);
+  copy = ligma_parasite_copy (parasite);
   g_hash_table_insert (list->table, copy->name, copy);
 
   g_signal_emit (list, parasite_list_signals[ADD], 0, copy);
 }
 
 void
-gimp_parasite_list_remove (GimpParasiteList *list,
+ligma_parasite_list_remove (LigmaParasiteList *list,
                            const gchar      *name)
 {
-  g_return_if_fail (GIMP_IS_PARASITE_LIST (list));
+  g_return_if_fail (LIGMA_IS_PARASITE_LIST (list));
 
   if (list->table)
     {
-      GimpParasite *parasite;
+      LigmaParasite *parasite;
 
-      parasite = (GimpParasite *) gimp_parasite_list_find (list, name);
+      parasite = (LigmaParasite *) ligma_parasite_list_find (list, name);
 
       if (parasite)
         {
@@ -341,15 +341,15 @@ gimp_parasite_list_remove (GimpParasiteList *list,
 
           g_signal_emit (list, parasite_list_signals[REMOVE], 0, parasite);
 
-          gimp_parasite_free (parasite);
+          ligma_parasite_free (parasite);
         }
     }
 }
 
 gint
-gimp_parasite_list_length (GimpParasiteList *list)
+ligma_parasite_list_length (LigmaParasiteList *list)
 {
-  g_return_val_if_fail (GIMP_IS_PARASITE_LIST (list), 0);
+  g_return_val_if_fail (LIGMA_IS_PARASITE_LIST (list), 0);
 
   if (! list->table)
     return 0;
@@ -358,27 +358,27 @@ gimp_parasite_list_length (GimpParasiteList *list)
 }
 
 gint
-gimp_parasite_list_persistent_length (GimpParasiteList *list)
+ligma_parasite_list_persistent_length (LigmaParasiteList *list)
 {
   gint len = 0;
 
-  g_return_val_if_fail (GIMP_IS_PARASITE_LIST (list), 0);
+  g_return_val_if_fail (LIGMA_IS_PARASITE_LIST (list), 0);
 
   if (! list->table)
     return 0;
 
-  gimp_parasite_list_foreach (list,
+  ligma_parasite_list_foreach (list,
                               (GHFunc) parasite_count_if_persistent, &len);
 
   return len;
 }
 
 void
-gimp_parasite_list_foreach (GimpParasiteList *list,
+ligma_parasite_list_foreach (LigmaParasiteList *list,
                             GHFunc            function,
                             gpointer          user_data)
 {
-  g_return_if_fail (GIMP_IS_PARASITE_LIST (list));
+  g_return_if_fail (LIGMA_IS_PARASITE_LIST (list));
 
   if (! list->table)
     return;
@@ -386,14 +386,14 @@ gimp_parasite_list_foreach (GimpParasiteList *list,
   g_hash_table_foreach (list->table, function, user_data);
 }
 
-const GimpParasite *
-gimp_parasite_list_find (GimpParasiteList *list,
+const LigmaParasite *
+ligma_parasite_list_find (LigmaParasiteList *list,
                          const gchar      *name)
 {
-  g_return_val_if_fail (GIMP_IS_PARASITE_LIST (list), NULL);
+  g_return_val_if_fail (LIGMA_IS_PARASITE_LIST (list), NULL);
 
   if (list->table)
-    return (GimpParasite *) g_hash_table_lookup (list->table, name);
+    return (LigmaParasite *) g_hash_table_lookup (list->table, name);
 
   return NULL;
 }
@@ -401,52 +401,52 @@ gimp_parasite_list_find (GimpParasiteList *list,
 
 static void
 parasite_serialize (const gchar      *key,
-                    GimpParasite     *parasite,
-                    GimpConfigWriter *writer)
+                    LigmaParasite     *parasite,
+                    LigmaConfigWriter *writer)
 {
   const guint8 *parasite_contents;
   guint32       parasite_size;
 
-  if (! gimp_parasite_is_persistent (parasite))
+  if (! ligma_parasite_is_persistent (parasite))
     return;
 
-  gimp_config_writer_open (writer, parasite_symbol);
+  ligma_config_writer_open (writer, parasite_symbol);
 
-  parasite_contents = gimp_parasite_get_data (parasite, &parasite_size);
-  gimp_config_writer_printf (writer, "\"%s\" %lu %lu",
-                             gimp_parasite_get_name (parasite),
-                             gimp_parasite_get_flags (parasite),
+  parasite_contents = ligma_parasite_get_data (parasite, &parasite_size);
+  ligma_config_writer_printf (writer, "\"%s\" %lu %lu",
+                             ligma_parasite_get_name (parasite),
+                             ligma_parasite_get_flags (parasite),
                              (long unsigned int) parasite_size);
 
-  gimp_config_writer_data (writer, parasite_size, parasite_contents);
+  ligma_config_writer_data (writer, parasite_size, parasite_contents);
 
-  gimp_config_writer_close (writer);
-  gimp_config_writer_linefeed (writer);
+  ligma_config_writer_close (writer);
+  ligma_config_writer_linefeed (writer);
 }
 
 static void
 parasite_copy (const gchar      *key,
-               GimpParasite     *parasite,
-               GimpParasiteList *list)
+               LigmaParasite     *parasite,
+               LigmaParasiteList *list)
 {
-  gimp_parasite_list_add (list, parasite);
+  ligma_parasite_list_add (list, parasite);
 }
 
 static gboolean
 parasite_free (const gchar  *key,
-               GimpParasite *parasite,
+               LigmaParasite *parasite,
                gpointer     unused)
 {
-  gimp_parasite_free (parasite);
+  ligma_parasite_free (parasite);
 
   return TRUE;
 }
 
 static void
 parasite_count_if_persistent (const gchar  *key,
-                              GimpParasite *parasite,
+                              LigmaParasite *parasite,
                               gint         *count)
 {
-  if (gimp_parasite_is_persistent (parasite))
+  if (ligma_parasite_is_persistent (parasite))
     *count = *count + 1;
 }

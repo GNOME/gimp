@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,23 +15,23 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DISPLAY_SHELL_SELECTION_H__
-#define __GIMP_DISPLAY_SHELL_SELECTION_H__
+#ifndef __LIGMA_DISPLAY_SHELL_SELECTION_H__
+#define __LIGMA_DISPLAY_SHELL_SELECTION_H__
 
 
-void   gimp_display_shell_selection_init     (GimpDisplayShell     *shell);
-void   gimp_display_shell_selection_free     (GimpDisplayShell     *shell);
+void   ligma_display_shell_selection_init     (LigmaDisplayShell     *shell);
+void   ligma_display_shell_selection_free     (LigmaDisplayShell     *shell);
 
-void   gimp_display_shell_selection_undraw   (GimpDisplayShell     *shell);
-void   gimp_display_shell_selection_restart  (GimpDisplayShell     *shell);
+void   ligma_display_shell_selection_undraw   (LigmaDisplayShell     *shell);
+void   ligma_display_shell_selection_restart  (LigmaDisplayShell     *shell);
 
-void   gimp_display_shell_selection_pause    (GimpDisplayShell     *shell);
-void   gimp_display_shell_selection_resume   (GimpDisplayShell     *shell);
+void   ligma_display_shell_selection_pause    (LigmaDisplayShell     *shell);
+void   ligma_display_shell_selection_resume   (LigmaDisplayShell     *shell);
 
-void   gimp_display_shell_selection_set_show (GimpDisplayShell     *shell,
+void   ligma_display_shell_selection_set_show (LigmaDisplayShell     *shell,
                                               gboolean              show);
 
-void   gimp_display_shell_selection_draw     (GimpDisplayShell     *shell,
+void   ligma_display_shell_selection_draw     (LigmaDisplayShell     *shell,
                                               cairo_t              *cr);
 
-#endif  /*  __GIMP_DISPLAY_SHELL_SELECTION_H__  */
+#endif  /*  __LIGMA_DISPLAY_SHELL_SELECTION_H__  */

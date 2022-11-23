@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,14 +19,14 @@
 
 #include <string.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
 #include "print.h"
 #include "print-page-layout.h"
 #include "print-preview.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 typedef struct
@@ -34,9 +34,9 @@ typedef struct
   PrintData       *data;
   gint             image_width;
   gint             image_height;
-  GimpSizeEntry   *size_entry;
-  GimpSizeEntry   *resolution_entry;
-  GimpChainButton *chain;
+  LigmaSizeEntry   *size_entry;
+  LigmaSizeEntry   *resolution_entry;
+  LigmaChainButton *chain;
   GtkWidget       *center_combo;
   GtkWidget       *area_label;
   GtkWidget       *preview;
@@ -114,8 +114,8 @@ print_page_layout_gui (PrintData   *data,
   memset (&info, 0, sizeof (PrintSizeInfo));
 
   info.data         = data;
-  info.image_width  = gimp_drawable_get_width (data->drawable);
-  info.image_height = gimp_drawable_get_height (data->drawable);
+  info.image_width  = ligma_drawable_get_width (data->drawable);
+  info.image_height = ligma_drawable_get_height (data->drawable);
 
   setup = gtk_print_operation_get_default_page_setup (data->operation);
   if (! setup)
@@ -177,7 +177,7 @@ print_page_layout_gui (PrintData   *data,
   gtk_widget_show (button);
 
   /* preview */
-  frame = gimp_frame_new (_("Preview"));
+  frame = ligma_frame_new (_("Preview"));
   gtk_box_pack_start (GTK_BOX (main_hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
@@ -200,7 +200,7 @@ print_page_layout_gui (PrintData   *data,
                            G_CALLBACK (update_custom_widget),
                            main_hbox, 0);
 
-  gimp_help_connect (main_hbox, gimp_standard_help_func, help, NULL, NULL);
+  ligma_help_connect (main_hbox, ligma_standard_help_func, help, NULL, NULL);
 
   return main_hbox;
 }
@@ -246,11 +246,11 @@ print_size_frame (PrintData    *data,
   gdouble        image_height;
 
   image_width  = (info.image_width *
-                  gimp_unit_get_factor (data->unit) / data->xres);
+                  ligma_unit_get_factor (data->unit) / data->xres);
   image_height = (info.image_height *
-                  gimp_unit_get_factor (data->unit) / data->yres);
+                  ligma_unit_get_factor (data->unit) / data->yres);
 
-  frame = gimp_frame_new (_("Size"));
+  frame = ligma_frame_new (_("Size"));
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
@@ -262,40 +262,40 @@ print_size_frame (PrintData    *data,
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  entry = gimp_size_entry_new (1, data->unit, "%p",
+  entry = ligma_size_entry_new (1, data->unit, "%p",
                                FALSE, FALSE, FALSE, SB_WIDTH,
-                               GIMP_SIZE_ENTRY_UPDATE_SIZE);
+                               LIGMA_SIZE_ENTRY_UPDATE_SIZE);
   gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
   gtk_widget_show (entry);
 
-  info.size_entry = GIMP_SIZE_ENTRY (entry);
+  info.size_entry = LIGMA_SIZE_ENTRY (entry);
 
   gtk_grid_set_row_spacing (GTK_GRID (entry), 2);
 
   adj = gtk_adjustment_new (1, 1, 1, 1, 10, 0);
-  height = gimp_spin_button_new (adj, 1, 2);
+  height = ligma_spin_button_new (adj, 1, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (height), TRUE);
-  gimp_size_entry_add_field (GIMP_SIZE_ENTRY (entry),
+  ligma_size_entry_add_field (LIGMA_SIZE_ENTRY (entry),
                              GTK_SPIN_BUTTON (height), NULL);
   gtk_grid_attach (GTK_GRID (entry), height, 1, 0, 1, 1);
   gtk_widget_show (height);
 
   gtk_size_group_add_widget (entry_group, height);
 
-  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (entry),
+  ligma_size_entry_attach_label (LIGMA_SIZE_ENTRY (entry),
                                 _("_Width:"), 0, 0, 0.0);
-  label = gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (entry),
+  label = ligma_size_entry_attach_label (LIGMA_SIZE_ENTRY (entry),
                                         _("_Height:"), 1, 0, 0.0);
 
   gtk_size_group_add_widget (label_group, label);
 
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (entry), 0,
+  ligma_size_entry_set_resolution (LIGMA_SIZE_ENTRY (entry), 0,
                                   data->xres, FALSE);
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (entry), 1,
+  ligma_size_entry_set_resolution (LIGMA_SIZE_ENTRY (entry), 1,
                                   data->yres, FALSE);
 
-  gimp_size_entry_set_value (GIMP_SIZE_ENTRY (entry), 0, image_width);
-  gimp_size_entry_set_value (GIMP_SIZE_ENTRY (entry), 1, image_height);
+  ligma_size_entry_set_value (LIGMA_SIZE_ENTRY (entry), 0, image_width);
+  ligma_size_entry_set_value (LIGMA_SIZE_ENTRY (entry), 1, image_height);
 
   /*  the resolution entry  */
 
@@ -303,32 +303,32 @@ print_size_frame (PrintData    *data,
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  entry = gimp_size_entry_new (1, data->image_unit,
+  entry = ligma_size_entry_new (1, data->image_unit,
                                _("pixels/%a"),
                                FALSE, FALSE, FALSE, SB_WIDTH,
-                               GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);
+                               LIGMA_SIZE_ENTRY_UPDATE_RESOLUTION);
   gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
   gtk_widget_show (entry);
 
-  info.resolution_entry = GIMP_SIZE_ENTRY (entry);
+  info.resolution_entry = LIGMA_SIZE_ENTRY (entry);
 
   gtk_grid_set_row_spacing (GTK_GRID (entry), 2);
 
   adj = gtk_adjustment_new (1, 1, 1, 1, 10, 0);
-  height = gimp_spin_button_new (adj, 1, 2);
+  height = ligma_spin_button_new (adj, 1, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (height), TRUE);
-  gimp_size_entry_add_field (GIMP_SIZE_ENTRY (entry),
+  ligma_size_entry_add_field (LIGMA_SIZE_ENTRY (entry),
                              GTK_SPIN_BUTTON (height), NULL);
   gtk_grid_attach (GTK_GRID (entry), height, 1, 0, 1, 1);
   gtk_widget_show (height);
 
   gtk_size_group_add_widget (entry_group, height);
 
-  label = gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (entry),
+  label = ligma_size_entry_attach_label (LIGMA_SIZE_ENTRY (entry),
                                         _("_X resolution:"), 0, 0, 0.0);
   gtk_size_group_add_widget (label_group, label);
 
-  label = gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (entry),
+  label = ligma_size_entry_attach_label (LIGMA_SIZE_ENTRY (entry),
                                         _("_Y resolution:"), 1, 0, 0.0);
   gtk_size_group_add_widget (label_group, label);
 
@@ -339,23 +339,23 @@ print_size_frame (PrintData    *data,
   gtk_widget_show (button);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
 
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (entry), 0,
-                                         GIMP_MIN_RESOLUTION,
-                                         GIMP_MAX_RESOLUTION);
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (entry), 1,
-                                         GIMP_MIN_RESOLUTION,
-                                         GIMP_MAX_RESOLUTION);
+  ligma_size_entry_set_refval_boundaries (LIGMA_SIZE_ENTRY (entry), 0,
+                                         LIGMA_MIN_RESOLUTION,
+                                         LIGMA_MAX_RESOLUTION);
+  ligma_size_entry_set_refval_boundaries (LIGMA_SIZE_ENTRY (entry), 1,
+                                         LIGMA_MIN_RESOLUTION,
+                                         LIGMA_MAX_RESOLUTION);
 
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (entry), 0, data->xres);
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (entry), 1, data->yres);
+  ligma_size_entry_set_refval (LIGMA_SIZE_ENTRY (entry), 0, data->xres);
+  ligma_size_entry_set_refval (LIGMA_SIZE_ENTRY (entry), 1, data->yres);
 
-  chain = gimp_chain_button_new (GIMP_CHAIN_RIGHT);
-  if (ABS (data->xres - data->yres) < GIMP_MIN_RESOLUTION)
-    gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (chain), TRUE);
+  chain = ligma_chain_button_new (LIGMA_CHAIN_RIGHT);
+  if (ABS (data->xres - data->yres) < LIGMA_MIN_RESOLUTION)
+    ligma_chain_button_set_active (LIGMA_CHAIN_BUTTON (chain), TRUE);
   gtk_grid_attach (GTK_GRID (entry), chain, 2, 0, 1, 2);
   gtk_widget_show (chain);
 
-  info.chain = GIMP_CHAIN_BUTTON (chain);
+  info.chain = LIGMA_CHAIN_BUTTON (chain);
 
   g_signal_connect (info.resolution_entry, "value-changed",
                     G_CALLBACK (print_size_info_resolution_changed),
@@ -381,7 +381,7 @@ print_offset_frame (PrintData    *data,
   GtkWidget *label;
   GtkWidget *combo;
 
-  frame = gimp_frame_new (_("Position"));
+  frame = ligma_frame_new (_("Position"));
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
@@ -399,10 +399,10 @@ print_offset_frame (PrintData    *data,
 
   /* left */
   info.left_adj = gtk_adjustment_new (1, 1, 1, 1, 10, 0);
-  spinner = gimp_spin_button_new (info.left_adj, 1, 2);
+  spinner = ligma_spin_button_new (info.left_adj, 1, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinner), TRUE);
 
-  gimp_size_entry_add_field (GIMP_SIZE_ENTRY (entry),
+  ligma_size_entry_add_field (LIGMA_SIZE_ENTRY (entry),
                              GTK_SPIN_BUTTON (spinner), NULL);
   gtk_grid_attach (GTK_GRID (grid), spinner, 1, 0, 1, 1);
   gtk_widget_show (spinner);
@@ -416,14 +416,14 @@ print_offset_frame (PrintData    *data,
 
   /* right */
   info.right_adj = gtk_adjustment_new (1, 1, 1, 1, 10, 0);
-  spinner = gimp_spin_button_new (info.right_adj, 1, 2);
+  spinner = ligma_spin_button_new (info.right_adj, 1, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinner), TRUE);
 
   g_signal_connect (info.right_adj, "value-changed",
                     G_CALLBACK (print_size_info_offset_max_changed),
                     GINT_TO_POINTER (LEFT));
 
-  gimp_size_entry_add_field (GIMP_SIZE_ENTRY (entry),
+  ligma_size_entry_add_field (LIGMA_SIZE_ENTRY (entry),
                              GTK_SPIN_BUTTON (spinner), NULL);
   gtk_grid_attach (GTK_GRID (grid), spinner, 3, 0, 1, 1);
   gtk_widget_show (spinner);
@@ -436,10 +436,10 @@ print_offset_frame (PrintData    *data,
 
   /* top */
   info.top_adj = gtk_adjustment_new (1, 1, 1, 1, 10, 0);
-  spinner = gimp_spin_button_new (info.top_adj, 1, 2);
+  spinner = ligma_spin_button_new (info.top_adj, 1, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinner), TRUE);
 
-  gimp_size_entry_add_field (GIMP_SIZE_ENTRY (entry),
+  ligma_size_entry_add_field (LIGMA_SIZE_ENTRY (entry),
                              GTK_SPIN_BUTTON (spinner), NULL);
   gtk_grid_attach (GTK_GRID (grid), spinner, 1, 1, 1, 1);
   gtk_widget_show (spinner);
@@ -453,14 +453,14 @@ print_offset_frame (PrintData    *data,
 
   /* bottom */
   info.bottom_adj = gtk_adjustment_new (1, 1, 1, 1, 10, 0);
-  spinner = gimp_spin_button_new (info.bottom_adj, 1, 2);
+  spinner = ligma_spin_button_new (info.bottom_adj, 1, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinner), TRUE);
 
   g_signal_connect (info.bottom_adj, "value-changed",
                     G_CALLBACK (print_size_info_offset_max_changed),
                     GINT_TO_POINTER (TOP));
 
-  gimp_size_entry_add_field (GIMP_SIZE_ENTRY (entry),
+  ligma_size_entry_add_field (LIGMA_SIZE_ENTRY (entry),
                              GTK_SPIN_BUTTON (spinner), NULL);
   gtk_grid_attach (GTK_GRID (grid), spinner, 3, 1, 1, 1);
   gtk_widget_show (spinner);
@@ -471,10 +471,10 @@ print_offset_frame (PrintData    *data,
   gtk_grid_attach (GTK_GRID (grid), label, 2, 1, 1, 1);
   gtk_widget_show (label);
 
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (entry), LEFT,   72.0, FALSE);
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (entry), RIGHT,  72.0, FALSE);
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (entry), TOP,    72.0, FALSE);
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (entry), BOTTOM, 72.0, FALSE);
+  ligma_size_entry_set_resolution (LIGMA_SIZE_ENTRY (entry), LEFT,   72.0, FALSE);
+  ligma_size_entry_set_resolution (LIGMA_SIZE_ENTRY (entry), RIGHT,  72.0, FALSE);
+  ligma_size_entry_set_resolution (LIGMA_SIZE_ENTRY (entry), TOP,    72.0, FALSE);
+  ligma_size_entry_set_resolution (LIGMA_SIZE_ENTRY (entry), BOTTOM, 72.0, FALSE);
 
   print_size_info_update_offsets ();
 
@@ -493,7 +493,7 @@ print_offset_frame (PrintData    *data,
   gtk_widget_show (label);
 
   /*  if and how to center the image on the page  */
-  combo = gimp_int_combo_box_new (C_("center-mode", "None"), CENTER_NONE,
+  combo = ligma_int_combo_box_new (C_("center-mode", "None"), CENTER_NONE,
                                   _("Horizontally"),         CENTER_HORIZONTALLY,
                                   _("Vertically"),           CENTER_VERTICALLY,
                                   _("Both"),                 CENTER_BOTH,
@@ -503,7 +503,7 @@ print_offset_frame (PrintData    *data,
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
 
-  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
+  ligma_int_combo_box_connect (LIGMA_INT_COMBO_BOX (combo),
                               data->center,
                               G_CALLBACK (print_size_info_center_changed),
                               NULL, NULL);
@@ -550,7 +550,7 @@ print_size_info_get_page_dimensions (PrintSizeInfo *info,
 }
 
 static void
-gimp_size_info_get_max_offsets (gdouble *offset_x_max,
+ligma_size_info_get_max_offsets (gdouble *offset_x_max,
                                 gdouble *offset_y_max)
 {
   gdouble width;
@@ -598,20 +598,20 @@ print_size_info_update_offsets (void)
   gdouble    offset_x_max;
   gdouble    offset_y_max;
 
-  gimp_size_info_get_max_offsets (&offset_x_max, &offset_y_max);
+  ligma_size_info_get_max_offsets (&offset_x_max, &offset_y_max);
 
   g_signal_handlers_block_by_func (info.size_entry,
                                    print_size_info_size_changed, NULL);
 
   print_size_info_center_none_block ();
 
-  gimp_size_entry_set_refval_boundaries (info.size_entry, LEFT,
+  ligma_size_entry_set_refval_boundaries (info.size_entry, LEFT,
                                          0, offset_x_max);
-  gimp_size_entry_set_refval_boundaries (info.size_entry, RIGHT,
+  ligma_size_entry_set_refval_boundaries (info.size_entry, RIGHT,
                                          0, offset_x_max);
-  gimp_size_entry_set_refval_boundaries (info.size_entry, TOP,
+  ligma_size_entry_set_refval_boundaries (info.size_entry, TOP,
                                          0, offset_y_max);
-  gimp_size_entry_set_refval_boundaries (info.size_entry, BOTTOM,
+  ligma_size_entry_set_refval_boundaries (info.size_entry, BOTTOM,
                                          0, offset_y_max);
 
   switch (data->center)
@@ -633,13 +633,13 @@ print_size_info_update_offsets (void)
       break;
     }
 
-  gimp_size_entry_set_refval (info.size_entry, LEFT,
+  ligma_size_entry_set_refval (info.size_entry, LEFT,
                               data->offset_x);
-  gimp_size_entry_set_refval (info.size_entry, RIGHT,
+  ligma_size_entry_set_refval (info.size_entry, RIGHT,
                               offset_x_max - data->offset_x);
-  gimp_size_entry_set_refval (info.size_entry, TOP,
+  ligma_size_entry_set_refval (info.size_entry, TOP,
                               info.data->offset_y);
-  gimp_size_entry_set_refval (info.size_entry, BOTTOM,
+  ligma_size_entry_set_refval (info.size_entry, BOTTOM,
                               offset_y_max - data->offset_y);
 
   print_size_info_center_none_unblock ();
@@ -653,7 +653,7 @@ print_size_info_center_changed (GtkWidget *combo)
 {
   gint value;
 
-  if (gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (combo), &value))
+  if (ligma_int_combo_box_get_active (LIGMA_INT_COMBO_BOX (combo), &value))
     {
       info.data->center = value;
 
@@ -670,7 +670,7 @@ static void
 print_size_info_center_none (void)
 {
   /* return early if we are called from a unit change */
-  if (gimp_size_entry_get_unit (info.size_entry) != info.data->unit)
+  if (ligma_size_entry_get_unit (info.size_entry) != info.data->unit)
     return;
 
   info.data->center = CENTER_NONE;
@@ -682,7 +682,7 @@ print_size_info_center_none (void)
 
       info.data->center = CENTER_NONE;
 
-      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (info.center_combo),
+      ligma_int_combo_box_set_active (LIGMA_INT_COMBO_BOX (info.center_combo),
                                      info.data->center);
 
       g_signal_handlers_unblock_by_func (info.center_combo,
@@ -712,18 +712,18 @@ print_size_info_size_changed (GtkWidget *widget)
   gdouble yres;
   gdouble scale;
 
-  scale = gimp_unit_get_factor (gimp_size_entry_get_unit (info.size_entry));
+  scale = ligma_unit_get_factor (ligma_size_entry_get_unit (info.size_entry));
 
-  width  = gimp_size_entry_get_value (info.size_entry, WIDTH);
-  height = gimp_size_entry_get_value (info.size_entry, HEIGHT);
+  width  = ligma_size_entry_get_value (info.size_entry, WIDTH);
+  height = ligma_size_entry_get_value (info.size_entry, HEIGHT);
 
   xres = scale * info.image_width  / MAX (0.0001, width);
   yres = scale * info.image_height / MAX (0.0001, height);
 
   print_size_info_set_resolution (&info, xres, yres);
 
-  info.data->offset_x = gimp_size_entry_get_refval (info.size_entry, LEFT);
-  info.data->offset_y = gimp_size_entry_get_refval (info.size_entry, TOP);
+  info.data->offset_x = ligma_size_entry_get_refval (info.size_entry, LEFT);
+  info.data->offset_y = ligma_size_entry_get_refval (info.size_entry, TOP);
 
   print_preview_set_image_offsets (PRINT_PREVIEW (info.preview),
                                    info.data->offset_x,
@@ -737,13 +737,13 @@ print_size_info_offset_max_changed (GtkAdjustment *adj,
   guint index = GPOINTER_TO_INT (data);
 
   /* return early if we are called from a unit change */
-  if (gimp_size_entry_get_unit (info.size_entry) != info.data->unit)
+  if (ligma_size_entry_get_unit (info.size_entry) != info.data->unit)
     return;
 
   g_signal_handlers_block_by_func (info.size_entry,
                                    print_size_info_size_changed, NULL);
 
-  gimp_size_entry_set_value (info.size_entry, index,
+  ligma_size_entry_set_value (info.size_entry, index,
                              gtk_adjustment_get_upper (adj) -
                              gtk_adjustment_get_value (adj));
 
@@ -754,9 +754,9 @@ print_size_info_offset_max_changed (GtkAdjustment *adj,
 static void
 print_size_info_resolution_changed (GtkWidget *widget)
 {
-  GimpSizeEntry *entry = info.resolution_entry;
-  gdouble        xres  = gimp_size_entry_get_refval (entry, 0);
-  gdouble        yres  = gimp_size_entry_get_refval (entry, 1);
+  LigmaSizeEntry *entry = info.resolution_entry;
+  gdouble        xres  = ligma_size_entry_get_refval (entry, 0);
+  gdouble        yres  = ligma_size_entry_get_refval (entry, 1);
 
   print_size_info_set_resolution (&info, xres, yres);
 }
@@ -776,7 +776,7 @@ print_size_info_use_full_page_toggled (GtkWidget *widget)
 static void
 print_size_info_unit_changed (GtkWidget *widget)
 {
-  info.data->unit = gimp_size_entry_get_unit (GIMP_SIZE_ENTRY (widget));
+  info.data->unit = ligma_size_entry_get_unit (LIGMA_SIZE_ENTRY (widget));
 
   print_size_info_set_page_setup (&info);
 }
@@ -792,7 +792,7 @@ print_size_info_set_resolution (PrintSizeInfo *info,
   gdouble    offset_x_max;
   gdouble    offset_y_max;
 
-  if (info->chain && gimp_chain_button_get_active (info->chain))
+  if (info->chain && ligma_chain_button_get_active (info->chain))
     {
       if (xres != data->xres)
         yres = xres;
@@ -807,8 +807,8 @@ print_size_info_set_resolution (PrintSizeInfo *info,
                                    print_size_info_resolution_changed,
                                    NULL);
 
-  gimp_size_entry_set_refval (info->resolution_entry, 0, xres);
-  gimp_size_entry_set_refval (info->resolution_entry, 1, yres);
+  ligma_size_entry_set_refval (info->resolution_entry, 0, xres);
+  ligma_size_entry_set_refval (info->resolution_entry, 1, yres);
 
   g_signal_handlers_unblock_by_func (info->resolution_entry,
                                      print_size_info_resolution_changed,
@@ -818,21 +818,21 @@ print_size_info_set_resolution (PrintSizeInfo *info,
                                    print_size_info_size_changed,
                                    NULL);
 
-  gimp_size_entry_set_value (info->size_entry, WIDTH,
+  ligma_size_entry_set_value (info->size_entry, WIDTH,
                              info->image_width *
-                             gimp_unit_get_factor (data->unit) / xres);
-  gimp_size_entry_set_value (info->size_entry, HEIGHT,
+                             ligma_unit_get_factor (data->unit) / xres);
+  ligma_size_entry_set_value (info->size_entry, HEIGHT,
                              info->image_height *
-                             gimp_unit_get_factor (data->unit) / yres);
+                             ligma_unit_get_factor (data->unit) / yres);
 
   g_signal_handlers_unblock_by_func (info->size_entry,
                                      print_size_info_size_changed,
                                      NULL);
 
-  gimp_size_info_get_max_offsets (&offset_x_max, &offset_y_max);
+  ligma_size_info_get_max_offsets (&offset_x_max, &offset_y_max);
 
-  offset_x = gimp_size_entry_get_refval (info->size_entry, LEFT);
-  offset_y = gimp_size_entry_get_refval (info->size_entry, TOP);
+  offset_x = ligma_size_entry_get_refval (info->size_entry, LEFT);
+  offset_y = ligma_size_entry_get_refval (info->size_entry, TOP);
 
   offset_x = CLAMP (offset_x, 0, offset_x_max);
   offset_y = CLAMP (offset_y, 0, offset_y_max);
@@ -863,8 +863,8 @@ print_size_info_set_page_setup (PrintSizeInfo *info)
                                        &page_width, &page_height,
                                        GTK_UNIT_INCH);
 
-  page_width  *= gimp_unit_get_factor (data->unit);
-  page_height *= gimp_unit_get_factor (data->unit);
+  page_width  *= ligma_unit_get_factor (data->unit);
+  page_height *= ligma_unit_get_factor (data->unit);
 
   if (info->area_label)
     {
@@ -872,9 +872,9 @@ print_size_info_set_page_setup (PrintSizeInfo *info)
       gchar *text;
 
       format = g_strdup_printf ("%%.%df x %%.%df %s",
-                                gimp_unit_get_digits (data->unit),
-                                gimp_unit_get_digits (data->unit),
-                                gimp_unit_get_plural (data->unit));
+                                ligma_unit_get_digits (data->unit),
+                                ligma_unit_get_digits (data->unit),
+                                ligma_unit_get_plural (data->unit));
       text = g_strdup_printf (format, page_width, page_height);
       g_free (format);
 
@@ -885,7 +885,7 @@ print_size_info_set_page_setup (PrintSizeInfo *info)
   x = page_width;
   y = page_height;
 
-  if (info->chain && gimp_chain_button_get_active (info->chain))
+  if (info->chain && ligma_chain_button_get_active (info->chain))
     {
       gdouble ratio_x = page_width  / (gdouble) info->image_width;
       gdouble ratio_y = page_height / (gdouble) info->image_height;
@@ -896,9 +896,9 @@ print_size_info_set_page_setup (PrintSizeInfo *info)
         x = (gdouble) info->image_width  * ratio_y;
     }
 
-  gimp_size_entry_set_value_boundaries (info->size_entry, WIDTH,
+  ligma_size_entry_set_value_boundaries (info->size_entry, WIDTH,
                                         page_width  / 100.0, x);
-  gimp_size_entry_set_value_boundaries (info->size_entry, HEIGHT,
+  ligma_size_entry_set_value_boundaries (info->size_entry, HEIGHT,
                                         page_height / 100.0, y);
 
   print_size_info_get_page_dimensions (info,
@@ -908,7 +908,7 @@ print_size_info_set_page_setup (PrintSizeInfo *info)
   x = (gdouble) info->image_width  / page_width  * 72.0;
   y = (gdouble) info->image_height / page_height * 72.0;
 
-  if (info->chain && gimp_chain_button_get_active (info->chain))
+  if (info->chain && ligma_chain_button_get_active (info->chain))
     {
       gdouble max = MAX (x, y);
 
@@ -917,10 +917,10 @@ print_size_info_set_page_setup (PrintSizeInfo *info)
 
   data->min_xres = x;
   data->min_yres = y;
-  gimp_size_entry_set_refval_boundaries (info->resolution_entry, 0,
-                                         x, GIMP_MAX_RESOLUTION);
-  gimp_size_entry_set_refval_boundaries (info->resolution_entry, 1,
-                                         y, GIMP_MAX_RESOLUTION);
+  ligma_size_entry_set_refval_boundaries (info->resolution_entry, 0,
+                                         x, LIGMA_MAX_RESOLUTION);
+  ligma_size_entry_set_refval_boundaries (info->resolution_entry, 1,
+                                         y, LIGMA_MAX_RESOLUTION);
 }
 
 static void
@@ -937,9 +937,9 @@ print_resolution_load_defaults (PrintSizeInfo *info)
   gdouble xres;
   gdouble yres;
 
-  gimp_image_get_resolution (info->data->image, &xres, &yres);
+  ligma_image_get_resolution (info->data->image, &xres, &yres);
 
-  gimp_size_entry_set_refval (info->resolution_entry, 0, xres);
-  gimp_size_entry_set_refval (info->resolution_entry, 1, yres);
+  ligma_size_entry_set_refval (info->resolution_entry, 0, xres);
+  ligma_size_entry_set_refval (info->resolution_entry, 1, yres);
   print_size_info_resolution_changed (GTK_WIDGET (info->resolution_entry));
 }

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,28 +15,28 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_BRUSH_HEADER_H__
-#define __GIMP_BRUSH_HEADER_H__
+#ifndef __LIGMA_BRUSH_HEADER_H__
+#define __LIGMA_BRUSH_HEADER_H__
 
 
-#define GIMP_BRUSH_MAGIC    (('G' << 24) + ('I' << 16) + \
+#define LIGMA_BRUSH_MAGIC    (('G' << 24) + ('I' << 16) + \
                              ('M' << 8)  + ('P' << 0))
-#define GIMP_BRUSH_MAX_SIZE 10000 /* Max size in either dimension in px */
-#define GIMP_BRUSH_MAX_NAME 256   /* Max length of the brush's name     */
+#define LIGMA_BRUSH_MAX_SIZE 10000 /* Max size in either dimension in px */
+#define LIGMA_BRUSH_MAX_NAME 256   /* Max length of the brush's name     */
 
 
 /*  All field entries are MSB  */
 
-typedef struct _GimpBrushHeader GimpBrushHeader;
+typedef struct _LigmaBrushHeader LigmaBrushHeader;
 
-struct _GimpBrushHeader
+struct _LigmaBrushHeader
 {
-  guint32   header_size;  /*  = sizeof (GimpBrushHeader) + brush name  */
+  guint32   header_size;  /*  = sizeof (LigmaBrushHeader) + brush name  */
   guint32   version;      /*  brush file version #  */
   guint32   width;        /*  width of brush  */
   guint32   height;       /*  height of brush  */
   guint32   bytes;        /*  depth of brush in bytes  */
-  guint32   magic_number; /*  GIMP brush magic number  */
+  guint32   magic_number; /*  LIGMA brush magic number  */
   guint32   spacing;      /*  brush spacing  */
 };
 
@@ -46,4 +46,4 @@ struct _GimpBrushHeader
  */
 
 
-#endif /* __GIMP_BRUSH_HEADER_H__ */
+#endif /* __LIGMA_BRUSH_HEADER_H__ */

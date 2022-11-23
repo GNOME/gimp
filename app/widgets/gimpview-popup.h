@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpview-popup.h
- * Copyright (C) 2003-2006 Michael Natterer <mitch@gimp.org>
+ * ligmaview-popup.h
+ * Copyright (C) 2003-2006 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,17 +18,17 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_VIEW_POPUP_H__
-#define __GIMP_VIEW_POPUP_H__
+#ifndef __LIGMA_VIEW_POPUP_H__
+#define __LIGMA_VIEW_POPUP_H__
 
 
-gboolean   gimp_view_popup_show (GtkWidget      *widget,
+gboolean   ligma_view_popup_show (GtkWidget      *widget,
                                  GdkEventButton *bevent,
-                                 GimpContext    *context,
-                                 GimpViewable   *viewable,
+                                 LigmaContext    *context,
+                                 LigmaViewable   *viewable,
                                  gint            view_width,
                                  gint            view_height,
                                  gboolean        dot_for_dot);
 
 
-#endif /* __GIMP_VIEW_POPUP_H__ */
+#endif /* __LIGMA_VIEW_POPUP_H__ */

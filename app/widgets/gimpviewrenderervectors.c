@@ -1,9 +1,9 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpviewrenderervectors.c
- * Copyright (C) 2003 Michael Natterer <mitch@gimp.org>
- *                    Simon Budig <simon@gimp.org>
+ * ligmaviewrenderervectors.c
+ * Copyright (C) 2003 Michael Natterer <mitch@ligma.org>
+ *                    Simon Budig <simon@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,55 +24,55 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpmath/gimpmath.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "core/gimpimage.h"
-#include "core/gimpitem.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaitem.h"
 
-#include "vectors/gimpstroke.h"
-#include "vectors/gimpvectors.h"
+#include "vectors/ligmastroke.h"
+#include "vectors/ligmavectors.h"
 
-#include "gimpviewrenderervectors.h"
+#include "ligmaviewrenderervectors.h"
 
 
-static void   gimp_view_renderer_vectors_draw (GimpViewRenderer *renderer,
+static void   ligma_view_renderer_vectors_draw (LigmaViewRenderer *renderer,
                                                GtkWidget        *widget,
                                                cairo_t          *cr,
                                                gint              available_width,
                                                gint              available_height);
 
 
-G_DEFINE_TYPE (GimpViewRendererVectors, gimp_view_renderer_vectors,
-               GIMP_TYPE_VIEW_RENDERER)
+G_DEFINE_TYPE (LigmaViewRendererVectors, ligma_view_renderer_vectors,
+               LIGMA_TYPE_VIEW_RENDERER)
 
-#define parent_class gimp_view_renderer_vectors_parent_class
+#define parent_class ligma_view_renderer_vectors_parent_class
 
 
 static void
-gimp_view_renderer_vectors_class_init (GimpViewRendererVectorsClass *klass)
+ligma_view_renderer_vectors_class_init (LigmaViewRendererVectorsClass *klass)
 {
-  GimpViewRendererClass *renderer_class = GIMP_VIEW_RENDERER_CLASS (klass);
+  LigmaViewRendererClass *renderer_class = LIGMA_VIEW_RENDERER_CLASS (klass);
 
-  renderer_class->draw = gimp_view_renderer_vectors_draw;
+  renderer_class->draw = ligma_view_renderer_vectors_draw;
 }
 
 static void
-gimp_view_renderer_vectors_init (GimpViewRendererVectors *renderer)
+ligma_view_renderer_vectors_init (LigmaViewRendererVectors *renderer)
 {
 }
 
 static void
-gimp_view_renderer_vectors_draw (GimpViewRenderer *renderer,
+ligma_view_renderer_vectors_draw (LigmaViewRenderer *renderer,
                                  GtkWidget        *widget,
                                  cairo_t          *cr,
                                  gint              available_width,
                                  gint              available_height)
 {
-  GimpVectors          *vectors = GIMP_VECTORS (renderer->viewable);
-  const GimpBezierDesc *desc;
+  LigmaVectors          *vectors = LIGMA_VECTORS (renderer->viewable);
+  const LigmaBezierDesc *desc;
 
   cairo_set_source_rgb (cr, 1.0, 1.0, 1.0);
 
@@ -83,7 +83,7 @@ gimp_view_renderer_vectors_draw (GimpViewRenderer *renderer,
   cairo_clip_preserve (cr);
   cairo_fill (cr);
 
-  desc = gimp_vectors_get_bezier (vectors);
+  desc = ligma_vectors_get_bezier (vectors);
 
   if (desc)
     {
@@ -91,9 +91,9 @@ gimp_view_renderer_vectors_draw (GimpViewRenderer *renderer,
       gdouble yscale;
 
       xscale = ((gdouble) renderer->width /
-                (gdouble) gimp_item_get_width  (GIMP_ITEM (vectors)));
+                (gdouble) ligma_item_get_width  (LIGMA_ITEM (vectors)));
       yscale = ((gdouble) renderer->height /
-                (gdouble) gimp_item_get_height (GIMP_ITEM (vectors)));
+                (gdouble) ligma_item_get_height (LIGMA_ITEM (vectors)));
 
       cairo_scale (cr, xscale, yscale);
 

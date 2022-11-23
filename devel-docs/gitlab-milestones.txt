@@ -1,16 +1,16 @@
 gitlab-milestones.txt
 -----------------------
 
-This document describes how the GIMP project uses milestones in the
+This document describes how the LIGMA project uses milestones in the
 GNOME gitlab issue tracker found at:
-https://gitlab.gnome.org/GNOME/gimp
+https://gitlab.gnome.org/GNOME/ligma
 
 
 Stable milestones
 -----------------
 
 We will create one milestone per micro-point release, as well as one per
-minor-point release. For instance, if GIMP 2.10 is the stable release
+minor-point release. For instance, if LIGMA 2.10 is the stable release
 branch, we will have a `2.10.32` milestone as well as a `2.10`
 milestone.
 
@@ -27,7 +27,7 @@ go through all opened reports in `2.10.32` and move them to `2.10.34`
 (unless someone expects to fix some at the last minute). When closing a
 milestone, it must not contain any opened report.
 
-The `2.10.32` milestone will be closed when GIMP 2.10.32 was released.
+The `2.10.32` milestone will be closed when LIGMA 2.10.32 was released.
 The `2.10` milestone will be closed only when no point releases are
 expected in the 2.10 branch anymore.
 
@@ -59,7 +59,7 @@ Future milestone
 ----------------
 
 The bugs/enhancement requests on the `Future` milestone are things that
-the GIMP project eventually wants to include in a future version, but in
+the LIGMA project eventually wants to include in a future version, but in
 what version is not yet decided.
 
 Note that "decision" is a fluid notion. Indeed it mostly means that

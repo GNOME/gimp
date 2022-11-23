@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * Utitility functions for GimpConfig.
- * Copyright (C) 2001-2003  Sven Neumann <sven@gimp.org>
+ * Utitility functions for LigmaConfig.
+ * Copyright (C) 2001-2003  Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,16 +22,16 @@
 
 #include <gio/gio.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "config-types.h"
 
-#include "gimpconfig-utils.h"
+#include "ligmaconfig-utils.h"
 
 
 static void
-gimp_config_connect_notify (GObject    *src,
+ligma_config_connect_notify (GObject    *src,
                             GParamSpec *param_spec,
                             GObject    *dest)
 {
@@ -54,10 +54,10 @@ gimp_config_connect_notify (GObject    *src,
           g_object_get_property (src,  param_spec->name, &value);
 
           g_signal_handlers_block_by_func (dest,
-                                           gimp_config_connect_notify, src);
+                                           ligma_config_connect_notify, src);
           g_object_set_property (dest, param_spec->name, &value);
           g_signal_handlers_unblock_by_func (dest,
-                                             gimp_config_connect_notify, src);
+                                             ligma_config_connect_notify, src);
 
           g_value_unset (&value);
         }
@@ -65,7 +65,7 @@ gimp_config_connect_notify (GObject    *src,
 }
 
 /**
- * gimp_config_connect:
+ * ligma_config_connect:
  * @a: a #GObject
  * @b: another #GObject
  * @property_name: the name of a property to connect or %NULL for all
@@ -79,7 +79,7 @@ gimp_config_connect_notify (GObject    *src,
  * are of the same value_type are propagated.
  **/
 void
-gimp_config_connect (GObject     *a,
+ligma_config_connect (GObject     *a,
                      GObject     *b,
                      const gchar *property_name)
 {
@@ -94,10 +94,10 @@ gimp_config_connect (GObject     *a,
     signal_name = "notify";
 
   g_signal_connect_object (a, signal_name,
-                           G_CALLBACK (gimp_config_connect_notify),
+                           G_CALLBACK (ligma_config_connect_notify),
                            b, 0);
   g_signal_connect_object (b, signal_name,
-                           G_CALLBACK (gimp_config_connect_notify),
+                           G_CALLBACK (ligma_config_connect_notify),
                            a, 0);
 
   if (property_name)
@@ -105,7 +105,7 @@ gimp_config_connect (GObject     *a,
 }
 
 static void
-gimp_config_connect_full_notify (GObject    *src,
+ligma_config_connect_full_notify (GObject    *src,
                                  GParamSpec *param_spec,
                                  GObject    *dest)
 {
@@ -135,10 +135,10 @@ gimp_config_connect_full_notify (GObject    *src,
           g_object_get_property (src,  param_spec->name, &value);
 
           g_signal_handlers_block_by_func (dest,
-                                           gimp_config_connect_full_notify, src);
+                                           ligma_config_connect_full_notify, src);
           g_object_set_property (dest, dest_prop_name, &value);
           g_signal_handlers_unblock_by_func (dest,
-                                             gimp_config_connect_full_notify, src);
+                                             ligma_config_connect_full_notify, src);
 
           g_value_unset (&value);
         }
@@ -146,7 +146,7 @@ gimp_config_connect_full_notify (GObject    *src,
 }
 
 /**
- * gimp_config_connect_full:
+ * ligma_config_connect_full:
  * @a: a #GObject
  * @b: another #GObject
  * @property_name_a: the name of a property of @a to connect
@@ -161,7 +161,7 @@ gimp_config_connect_full_notify (GObject    *src,
  * are of the same value_type are propagated.
  **/
 void
-gimp_config_connect_full (GObject     *a,
+ligma_config_connect_full (GObject     *a,
                           GObject     *b,
                           const gchar *property_name_a,
                           const gchar *property_name_b)
@@ -178,7 +178,7 @@ gimp_config_connect_full (GObject     *a,
   attach_key  = g_strdup_printf ("%p-%s", b, property_name_a);
 
   g_signal_connect_object (a, signal_name,
-                           G_CALLBACK (gimp_config_connect_full_notify),
+                           G_CALLBACK (ligma_config_connect_full_notify),
                            b, 0);
   g_object_set_data_full (a, attach_key, g_strdup (property_name_b),
                           (GDestroyNotify) g_free);
@@ -190,7 +190,7 @@ gimp_config_connect_full (GObject     *a,
   attach_key  = g_strdup_printf ("%p-%s", a, property_name_b);
 
   g_signal_connect_object (b, signal_name,
-                           G_CALLBACK (gimp_config_connect_full_notify),
+                           G_CALLBACK (ligma_config_connect_full_notify),
                            a, 0);
   g_object_set_data_full (b, attach_key, g_strdup (property_name_a),
                           (GDestroyNotify) g_free);
@@ -200,24 +200,24 @@ gimp_config_connect_full (GObject     *a,
 }
 
 /**
- * gimp_config_disconnect:
+ * ligma_config_disconnect:
  * @a: a #GObject
  * @b: another #GObject
  *
  * Removes a connection between @dest and @src that was previously set
- * up using gimp_config_connect().
+ * up using ligma_config_connect().
  **/
 void
-gimp_config_disconnect (GObject *a,
+ligma_config_disconnect (GObject *a,
                         GObject *b)
 {
   g_return_if_fail (G_IS_OBJECT (a) && G_IS_OBJECT (b));
 
   g_signal_handlers_disconnect_by_func (b,
-                                        G_CALLBACK (gimp_config_connect_notify),
+                                        G_CALLBACK (ligma_config_connect_notify),
                                         a);
   g_signal_handlers_disconnect_by_func (a,
-                                        G_CALLBACK (gimp_config_connect_notify),
+                                        G_CALLBACK (ligma_config_connect_notify),
                                         b);
 }
 

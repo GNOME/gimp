@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpimageproxy.h
+ * ligmaimageproxy.h
  * Copyright (C) 2019 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,48 +18,48 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_PROXY_H__
-#define __GIMP_IMAGE_PROXY_H__
+#ifndef __LIGMA_IMAGE_PROXY_H__
+#define __LIGMA_IMAGE_PROXY_H__
 
 
-#include "gimpviewable.h"
+#include "ligmaviewable.h"
 
 
-#define GIMP_TYPE_IMAGE_PROXY            (gimp_image_proxy_get_type ())
-#define GIMP_IMAGE_PROXY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_IMAGE_PROXY, GimpImageProxy))
-#define GIMP_IMAGE_PROXY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_IMAGE_PROXY, GimpImageProxyClass))
-#define GIMP_IS_IMAGE_PROXY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_IMAGE_PROXY))
-#define GIMP_IS_IMAGE_PROXY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_IMAGE_PROXY))
-#define GIMP_IMAGE_PROXY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_IMAGE_PROXY, GimpImageProxyClass))
+#define LIGMA_TYPE_IMAGE_PROXY            (ligma_image_proxy_get_type ())
+#define LIGMA_IMAGE_PROXY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_IMAGE_PROXY, LigmaImageProxy))
+#define LIGMA_IMAGE_PROXY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_IMAGE_PROXY, LigmaImageProxyClass))
+#define LIGMA_IS_IMAGE_PROXY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_IMAGE_PROXY))
+#define LIGMA_IS_IMAGE_PROXY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_IMAGE_PROXY))
+#define LIGMA_IMAGE_PROXY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_IMAGE_PROXY, LigmaImageProxyClass))
 
 
-typedef struct _GimpImageProxyPrivate GimpImageProxyPrivate;
-typedef struct _GimpImageProxyClass   GimpImageProxyClass;
+typedef struct _LigmaImageProxyPrivate LigmaImageProxyPrivate;
+typedef struct _LigmaImageProxyClass   LigmaImageProxyClass;
 
-struct _GimpImageProxy
+struct _LigmaImageProxy
 {
-  GimpViewable           parent_instance;
+  LigmaViewable           parent_instance;
 
-  GimpImageProxyPrivate *priv;
+  LigmaImageProxyPrivate *priv;
 };
 
-struct _GimpImageProxyClass
+struct _LigmaImageProxyClass
 {
-  GimpViewableClass  parent_class;
+  LigmaViewableClass  parent_class;
 };
 
 
-GType            gimp_image_proxy_get_type         (void) G_GNUC_CONST;
+GType            ligma_image_proxy_get_type         (void) G_GNUC_CONST;
 
-GimpImageProxy * gimp_image_proxy_new              (GimpImage      *image);
+LigmaImageProxy * ligma_image_proxy_new              (LigmaImage      *image);
 
-GimpImage      * gimp_image_proxy_get_image        (GimpImageProxy *image_proxy);
+LigmaImage      * ligma_image_proxy_get_image        (LigmaImageProxy *image_proxy);
               
-void             gimp_image_proxy_set_show_all     (GimpImageProxy *image_proxy,
+void             ligma_image_proxy_set_show_all     (LigmaImageProxy *image_proxy,
                                                     gboolean        show_all);
-gboolean         gimp_image_proxy_get_show_all     (GimpImageProxy *image_proxy);
+gboolean         ligma_image_proxy_get_show_all     (LigmaImageProxy *image_proxy);
               
-GeglRectangle    gimp_image_proxy_get_bounding_box (GimpImageProxy *image_proxy);
+GeglRectangle    ligma_image_proxy_get_bounding_box (LigmaImageProxy *image_proxy);
 
 
-#endif /* __GIMP_IMAGE_PROXY_H__ */
+#endif /* __LIGMA_IMAGE_PROXY_H__ */

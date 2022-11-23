@@ -2,7 +2,7 @@
 # Build executable plugins that define several PDB procs.
 # An executable is not versioned since installed private in /plug-ins
 
-# Not define include_directories; no higher gimp source references scriptfu
+# Not define include_directories; no higher ligma source references scriptfu
 
 # Not using c_args: -DSTANDALONE=0','-DUSE_INTERFACE=1','-DUSE_STRLWR=0',
 # since those are compile time switches for tinyscheme, not present in this dir
@@ -48,7 +48,7 @@ endif
 executable(executable_name,
   plugin_sources,
   dependencies: [
-    libgimpui_dep,
+    libligmaui_dep,
     math,
   ],
   c_args: [
@@ -59,5 +59,5 @@ executable(executable_name,
   ],
   link_with : libscriptfu,
   install: true,
-  install_dir: gimpplugindir / 'plug-ins' / executable_name,
+  install_dir: ligmaplugindir / 'plug-ins' / executable_name,
 )

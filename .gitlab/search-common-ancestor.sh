@@ -12,7 +12,7 @@ ancestor_horizon=28  # days (4 weeks)
 # If the branch was forked from origin/main before this horizon, it should
 # probably be rebased.
 if ! git ls-remote --exit-code upstream >/dev/null 2>&1 ; then
-    git remote add upstream https://gitlab.gnome.org/GNOME/gimp.git
+    git remote add upstream https://gitlab.gnome.org/GNOME/ligma.git
 fi
 git fetch --shallow-since="$(date --date="${ancestor_horizon} days ago" +%Y-%m-%d)" upstream &> ./fetch_upstream.log
 

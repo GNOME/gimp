@@ -6,13 +6,13 @@ xobjective_cxx = "-xobjective-c++"
 xnone = "-xnone"
 endif
 
-libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
-libgimpconfig = $(top_builddir)/libgimpconfig/libgimpconfig-$(GIMP_API_VERSION).la
-libgimpcolor = $(top_builddir)/libgimpcolor/libgimpcolor-$(GIMP_API_VERSION).la
-libgimpmath = $(top_builddir)/libgimpmath/libgimpmath-$(GIMP_API_VERSION).la
-libgimpmodule = $(top_builddir)/libgimpmodule/libgimpmodule-$(GIMP_API_VERSION).la
-libgimpwidgets = $(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSION).la
-libgimpthumb = $(top_builddir)/libgimpthumb/libgimpthumb-$(GIMP_API_VERSION).la
+libligmabase = $(top_builddir)/libligmabase/libligmabase-$(LIGMA_API_VERSION).la
+libligmaconfig = $(top_builddir)/libligmaconfig/libligmaconfig-$(LIGMA_API_VERSION).la
+libligmacolor = $(top_builddir)/libligmacolor/libligmacolor-$(LIGMA_API_VERSION).la
+libligmamath = $(top_builddir)/libligmamath/libligmamath-$(LIGMA_API_VERSION).la
+libligmamodule = $(top_builddir)/libligmamodule/libligmamodule-$(LIGMA_API_VERSION).la
+libligmawidgets = $(top_builddir)/libligmawidgets/libligmawidgets-$(LIGMA_API_VERSION).la
+libligmathumb = $(top_builddir)/libligmathumb/libligmathumb-$(LIGMA_API_VERSION).la
 
 # Sort this by architectural dependencies, lowest level at the top,
 # so that when e.g. changing a header-file the subdirs are built in
@@ -41,14 +41,14 @@ SUBDIRS = \
 	.		\
 	tests
 
-# Put the GIMP core in a lib so we can conveniently link against that
+# Put the LIGMA core in a lib so we can conveniently link against that
 # in test cases
 noinst_LIBRARIES = libapp.a
 
-if ENABLE_GIMP_CONSOLE
-bin_PROGRAMS = gimp-@GIMP_APP_VERSION@ gimp-console-@GIMP_APP_VERSION@
+if ENABLE_LIGMA_CONSOLE
+bin_PROGRAMS = ligma-@LIGMA_APP_VERSION@ ligma-console-@LIGMA_APP_VERSION@
 else
-bin_PROGRAMS = gimp-@GIMP_APP_VERSION@
+bin_PROGRAMS = ligma-@LIGMA_APP_VERSION@
 endif
 
 libapp_sources = \
@@ -57,10 +57,10 @@ libapp_sources = \
 	app.h			\
 	errors.c		\
 	errors.h		\
-	gimpcoreapp.c		\
-	gimpcoreapp.h		\
-	gimpconsoleapp.c	\
-	gimpconsoleapp.h	\
+	ligmacoreapp.c		\
+	ligmacoreapp.h		\
+	ligmaconsoleapp.c	\
+	ligmaconsoleapp.h	\
 	language.c		\
 	language.h		\
 	sanity.c		\
@@ -71,20 +71,20 @@ libapp_sources = \
 	tests.h			\
 	unique.c		\
 	unique.h		\
-	gimp-debug.c		\
-	gimp-debug.h		\
-	gimp-intl.h		\
-	gimp-log.c		\
-	gimp-log.h		\
-	gimp-priorities.h	\
-	gimp-update.c		\
-	gimp-update.h		\
-	gimp-version.c		\
-	gimp-version.h
+	ligma-debug.c		\
+	ligma-debug.h		\
+	ligma-intl.h		\
+	ligma-log.c		\
+	ligma-log.h		\
+	ligma-priorities.h	\
+	ligma-update.c		\
+	ligma-update.h		\
+	ligma-version.c		\
+	ligma-version.h
 
 libapp_a_SOURCES = $(libapp_sources)
 
-gimp_@GIMP_APP_VERSION@_SOURCES = $(libapp_sources) main.c
+ligma_@LIGMA_APP_VERSION@_SOURCES = $(libapp_sources) main.c
 
 
 if PLATFORM_LINUX
@@ -98,11 +98,11 @@ endif
 if OS_WIN32
 win32_ldflags = -mwindows -Wl,--tsaware $(WIN32_LARGE_ADDRESS_AWARE)
 
-# for GimpDashboard and GimpBacktrace
+# for LigmaDashboard and LigmaBacktrace
 psapi_cflags = -DPSAPI_VERSION=1
 libpsapi = -lpsapi
 
-# for GimpBacktrace
+# for LigmaBacktrace
 libdbghelp = -ldbghelp
 
 # for I_RpcExceptionFilter()
@@ -121,18 +121,18 @@ munix = -Wl,-rpath '-Wl,$$ORIGIN/../lib'
 endif
 
 if HAVE_WINDRES
-include $(top_srcdir)/build/windows/gimprc.rule
-GIMPRC = gimp-$(GIMP_APP_VERSION).rc.o
-GIMPCONSOLERC = gimp-console-$(GIMP_APP_VERSION).rc.o
+include $(top_srcdir)/build/windows/ligmarc.rule
+LIGMARC = ligma-$(LIGMA_APP_VERSION).rc.o
+LIGMACONSOLERC = ligma-console-$(LIGMA_APP_VERSION).rc.o
 endif
 
 AM_CPPFLAGS = \
-	-DGIMPDIR=\""$(gimpdir)"\"			\
+	-DLIGMADIR=\""$(ligmadir)"\"			\
 	-DLIBEXECDIR=\""$(libexecdir)"\"		\
-	-DGIMP_USER_VERSION=\"$(GIMP_USER_VERSION)\"	\
-	-DGIMP_TOOL_VERSION=\"$(GIMP_TOOL_VERSION)\"	\
-	-DG_LOG_DOMAIN=\"Gimp\"				\
-	-DGIMP_APP_GLUE_COMPILATION			\
+	-DLIGMA_USER_VERSION=\"$(LIGMA_USER_VERSION)\"	\
+	-DLIGMA_TOOL_VERSION=\"$(LIGMA_TOOL_VERSION)\"	\
+	-DG_LOG_DOMAIN=\"Ligma\"				\
+	-DLIGMA_APP_GLUE_COMPILATION			\
 	-DCC_VERSION=\""$(CC_VERSION)"\"		\
 	-I$(top_srcdir)					\
 	$(GTK_CFLAGS)					\
@@ -148,20 +148,20 @@ AM_CPPFLAGS = \
 # We need this due to circular dependencies
 AM_LDFLAGS = \
 	$(munix)						\
-	-Wl,-u,$(SYMPREFIX)gimp_vectors_undo_get_type		\
-	-Wl,-u,$(SYMPREFIX)gimp_vectors_mod_undo_get_type	\
-	-Wl,-u,$(SYMPREFIX)gimp_config_param_spec_duplicate		\
-	-Wl,-u,$(SYMPREFIX)gimp_operations_init			\
+	-Wl,-u,$(SYMPREFIX)ligma_vectors_undo_get_type		\
+	-Wl,-u,$(SYMPREFIX)ligma_vectors_mod_undo_get_type	\
+	-Wl,-u,$(SYMPREFIX)ligma_config_param_spec_duplicate		\
+	-Wl,-u,$(SYMPREFIX)ligma_operations_init			\
 	-Wl,-u,$(SYMPREFIX)xcf_init				\
 	-Wl,-u,$(SYMPREFIX)internal_procs_init			\
-	-Wl,-u,$(SYMPREFIX)gimp_pdb_compat_procs_register	\
-	-Wl,-u,$(SYMPREFIX)gimp_plug_in_manager_restore		\
-	-Wl,-u,$(SYMPREFIX)gimp_layer_mode_is_legacy		\
-	-Wl,-u,$(SYMPREFIX)gimp_parallel_init			\
-	-Wl,-u,$(SYMPREFIX)gimp_async_set_new			\
-	-Wl,-u,$(SYMPREFIX)gimp_uncancelable_waitable_new
+	-Wl,-u,$(SYMPREFIX)ligma_pdb_compat_procs_register	\
+	-Wl,-u,$(SYMPREFIX)ligma_plug_in_manager_restore		\
+	-Wl,-u,$(SYMPREFIX)ligma_layer_mode_is_legacy		\
+	-Wl,-u,$(SYMPREFIX)ligma_parallel_init			\
+	-Wl,-u,$(SYMPREFIX)ligma_async_set_new			\
+	-Wl,-u,$(SYMPREFIX)ligma_uncancelable_waitable_new
 
-gimpconsoleldadd = \
+ligmaconsoleldadd = \
 	xcf/libappxcf.a						\
 	pdb/libappinternal-procs.a				\
 	pdb/libapppdb.a						\
@@ -177,12 +177,12 @@ gimpconsoleldadd = \
 	operations/layer-modes-legacy/libapplayermodeslegacy.a	\
 	gegl/libappgegl.a					\
 	config/libappconfig.a					\
-	$(libgimpconfig)					\
-	$(libgimpmath)						\
-	$(libgimpthumb)						\
-	$(libgimpcolor)						\
-	$(libgimpmodule)					\
-	$(libgimpbase)						\
+	$(libligmaconfig)					\
+	$(libligmamath)						\
+	$(libligmathumb)						\
+	$(libligmacolor)						\
+	$(libligmamodule)					\
+	$(libligmabase)						\
 	$(APPSTREAM_GLIB_LIBS)					\
 	$(GDK_PIXBUF_LIBS)					\
 	$(FREETYPE_LIBS)					\
@@ -210,16 +210,16 @@ gimpconsoleldadd = \
 	$(libdbghelp)						\
 	$(librpcrt4)
 
-gimp_@GIMP_APP_VERSION@_LDFLAGS = \
+ligma_@LIGMA_APP_VERSION@_LDFLAGS = \
 	$(AM_LDFLAGS)						\
 	$(win32_ldflags)					\
 	$(framework_cocoa)					\
-	-Wl,-u,$(SYMPREFIX)gimp_lebl_dialog			\
-	-Wl,-u,$(SYMPREFIX)gimp_core_pixbufs_get_resource	\
-	-Wl,-u,$(SYMPREFIX)gimp_tool_cursors_get_resource
+	-Wl,-u,$(SYMPREFIX)ligma_lebl_dialog			\
+	-Wl,-u,$(SYMPREFIX)ligma_core_pixbufs_get_resource	\
+	-Wl,-u,$(SYMPREFIX)ligma_tool_cursors_get_resource
 
 
-gimp_@GIMP_APP_VERSION@_LDADD = \
+ligma_@LIGMA_APP_VERSION@_LDADD = \
 	gui/libappgui.a			\
 	menus/libappmenus.a		\
 	actions/libappactions.a		\
@@ -228,25 +228,25 @@ gimp_@GIMP_APP_VERSION@_LDADD = \
 	display/libappdisplay.a		\
 	propgui/libapppropgui.a		\
 	widgets/libappwidgets.a		\
-	$(libgimpwidgets)		\
+	$(libligmawidgets)		\
 	$(GTK_LIBS)			\
 	$(GTK_MAC_INTEGRATION_LIBS)	\
-	$(gimpconsoleldadd)		\
+	$(ligmaconsoleldadd)		\
 	$(exchndl)			\
-	$(GIMPRC)
+	$(LIGMARC)
 
 
-if ENABLE_GIMP_CONSOLE
+if ENABLE_LIGMA_CONSOLE
 
-gimp_console_@GIMP_APP_VERSION@_SOURCES = $(libapp_sources) main.c
+ligma_console_@LIGMA_APP_VERSION@_SOURCES = $(libapp_sources) main.c
 
-gimp_console_@GIMP_APP_VERSION@_CPPFLAGS = \
+ligma_console_@LIGMA_APP_VERSION@_CPPFLAGS = \
 	$(AM_CPPFLAGS)			\
-	-DGIMP_CONSOLE_COMPILATION
+	-DLIGMA_CONSOLE_COMPILATION
 
-gimp_console_@GIMP_APP_VERSION@_LDADD = \
-	$(gimpconsoleldadd) \
-	$(GIMPCONSOLERC)
+ligma_console_@LIGMA_APP_VERSION@_LDADD = \
+	$(ligmaconsoleldadd) \
+	$(LIGMACONSOLERC)
 
 endif
 
@@ -254,46 +254,46 @@ endif
 install-exec-hook:
 if DEFAULT_BINARY
 	cd $(DESTDIR)$(bindir) \
-	&& rm -f gimp$(EXEEXT) \
-	&& $(LN_S) gimp-$(GIMP_APP_VERSION)$(EXEEXT) gimp$(EXEEXT)
-if ENABLE_GIMP_CONSOLE
+	&& rm -f ligma$(EXEEXT) \
+	&& $(LN_S) ligma-$(LIGMA_APP_VERSION)$(EXEEXT) ligma$(EXEEXT)
+if ENABLE_LIGMA_CONSOLE
 	cd $(DESTDIR)$(bindir) \
-	&& rm -f gimp-console$(EXEEXT) \
-	&& $(LN_S) gimp-console-$(GIMP_APP_VERSION)$(EXEEXT) gimp-console$(EXEEXT)
+	&& rm -f ligma-console$(EXEEXT) \
+	&& $(LN_S) ligma-console-$(LIGMA_APP_VERSION)$(EXEEXT) ligma-console$(EXEEXT)
 endif
 endif
 
 uninstall-local:
 if DEFAULT_BINARY
-	rm -f $(DESTDIR)$(bindir)/gimp$(EXEEXT)
-if ENABLE_GIMP_CONSOLE
-	rm -f $(DESTDIR)$(bindir)/gimp-console$(EXEEXT)
+	rm -f $(DESTDIR)$(bindir)/ligma$(EXEEXT)
+if ENABLE_LIGMA_CONSOLE
+	rm -f $(DESTDIR)$(bindir)/ligma-console$(EXEEXT)
 endif
 endif
 
 
-# require gimp-console when making dist
+# require ligma-console when making dist
 #
-if ENABLE_GIMP_CONSOLE
-dist-check-gimp-console:
+if ENABLE_LIGMA_CONSOLE
+dist-check-ligma-console:
 else
-dist-check-gimp-console:
-	@echo "*** gimp-console must be enabled in order to make dist"
+dist-check-ligma-console:
+	@echo "*** ligma-console must be enabled in order to make dist"
 	@false
 endif
 
 
-# hook to assure that the system gimprc and the gimprc manpage are
+# hook to assure that the system ligmarc and the ligmarc manpage are
 # uptodate when a release is made
 #
-dist-dump-gimprc: gimp-console-$(GIMP_APP_VERSION)$(EXEEXT)
-	./$< --dump-gimprc-system > gimprc.tmp	\
-		&& (cmp -s gimprc.tmp $(top_srcdir)/etc/gimprc.in ||	\
-		    cp gimprc.tmp $(top_srcdir)/etc/gimprc.in)		\
-		&& rm gimprc.tmp
-	./$< --dump-gimprc-manpage > gimprc.tmp	\
-		&& (cmp -s gimprc.tmp $(top_srcdir)/docs/gimprc.5.in ||\
-		    cp gimprc.tmp $(top_srcdir)/docs/gimprc.5.in)	\
-		&& rm gimprc.tmp
+dist-dump-ligmarc: ligma-console-$(LIGMA_APP_VERSION)$(EXEEXT)
+	./$< --dump-ligmarc-system > ligmarc.tmp	\
+		&& (cmp -s ligmarc.tmp $(top_srcdir)/etc/ligmarc.in ||	\
+		    cp ligmarc.tmp $(top_srcdir)/etc/ligmarc.in)		\
+		&& rm ligmarc.tmp
+	./$< --dump-ligmarc-manpage > ligmarc.tmp	\
+		&& (cmp -s ligmarc.tmp $(top_srcdir)/docs/ligmarc.5.in ||\
+		    cp ligmarc.tmp $(top_srcdir)/docs/ligmarc.5.in)	\
+		&& rm ligmarc.tmp
 
-dist-hook: dist-check-gimp-console dist-dump-gimprc
+dist-hook: dist-check-ligma-console dist-dump-ligmarc

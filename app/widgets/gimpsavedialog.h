@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpsavedialog.h
+ * ligmasavedialog.h
  * Copyright (C) 2015 Jehan <jehan@girinstud.io>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,52 +18,52 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SAVE_DIALOG_H__
-#define __GIMP_SAVE_DIALOG_H__
+#ifndef __LIGMA_SAVE_DIALOG_H__
+#define __LIGMA_SAVE_DIALOG_H__
 
-#include "gimpfiledialog.h"
+#include "ligmafiledialog.h"
 
 G_BEGIN_DECLS
 
-#define GIMP_TYPE_SAVE_DIALOG            (gimp_save_dialog_get_type ())
-#define GIMP_SAVE_DIALOG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_SAVE_DIALOG, GimpSaveDialog))
-#define GIMP_SAVE_DIALOG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_SAVE_DIALOG, GimpSaveDialogClass))
-#define GIMP_IS_SAVE_DIALOG(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_SAVE_DIALOG))
-#define GIMP_IS_SAVE_DIALOG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_SAVE_DIALOG))
-#define GIMP_SAVE_DIALOG_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_SAVE_DIALOG, GimpSaveDialogClass))
+#define LIGMA_TYPE_SAVE_DIALOG            (ligma_save_dialog_get_type ())
+#define LIGMA_SAVE_DIALOG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_SAVE_DIALOG, LigmaSaveDialog))
+#define LIGMA_SAVE_DIALOG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_SAVE_DIALOG, LigmaSaveDialogClass))
+#define LIGMA_IS_SAVE_DIALOG(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_SAVE_DIALOG))
+#define LIGMA_IS_SAVE_DIALOG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_SAVE_DIALOG))
+#define LIGMA_SAVE_DIALOG_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_SAVE_DIALOG, LigmaSaveDialogClass))
 
 
-typedef struct _GimpSaveDialogClass GimpSaveDialogClass;
+typedef struct _LigmaSaveDialogClass LigmaSaveDialogClass;
 
-struct _GimpSaveDialog
+struct _LigmaSaveDialog
 {
-  GimpFileDialog       parent_instance;
+  LigmaFileDialog       parent_instance;
 
   gboolean             save_a_copy;
   gboolean             close_after_saving;
-  GimpObject          *display_to_close;
+  LigmaObject          *display_to_close;
 
   GtkWidget           *compression_frame;
   GtkWidget           *compat_info;
   gboolean             compression;
 };
 
-struct _GimpSaveDialogClass
+struct _LigmaSaveDialogClass
 {
-  GimpFileDialogClass  parent_class;
+  LigmaFileDialogClass  parent_class;
 };
 
 
-GType       gimp_save_dialog_get_type  (void) G_GNUC_CONST;
+GType       ligma_save_dialog_get_type  (void) G_GNUC_CONST;
 
-GtkWidget * gimp_save_dialog_new       (Gimp           *gimp);
+GtkWidget * ligma_save_dialog_new       (Ligma           *ligma);
 
-void        gimp_save_dialog_set_image (GimpSaveDialog *dialog,
-                                        GimpImage      *image,
+void        ligma_save_dialog_set_image (LigmaSaveDialog *dialog,
+                                        LigmaImage      *image,
                                         gboolean        save_a_copy,
                                         gboolean        close_after_saving,
-                                        GimpObject     *display);
+                                        LigmaObject     *display);
 
 G_END_DECLS
 
-#endif /* __GIMP_SAVE_DIALOG_H__ */
+#endif /* __LIGMA_SAVE_DIALOG_H__ */

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,52 +15,52 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PALETTE_LOAD_H__
-#define __GIMP_PALETTE_LOAD_H__
+#ifndef __LIGMA_PALETTE_LOAD_H__
+#define __LIGMA_PALETTE_LOAD_H__
 
 
-#define GIMP_PALETTE_FILE_EXTENSION ".gpl"
+#define LIGMA_PALETTE_FILE_EXTENSION ".gpl"
 
 
 typedef enum
 {
-  GIMP_PALETTE_FILE_FORMAT_UNKNOWN,
-  GIMP_PALETTE_FILE_FORMAT_GPL,      /* GIMP palette                        */
-  GIMP_PALETTE_FILE_FORMAT_RIFF_PAL, /* RIFF palette                        */
-  GIMP_PALETTE_FILE_FORMAT_ACT,      /* Photoshop binary color palette      */
-  GIMP_PALETTE_FILE_FORMAT_PSP_PAL,  /* JASC's Paint Shop Pro color palette */
-  GIMP_PALETTE_FILE_FORMAT_ACO,      /* Photoshop ACO color file            */
-  GIMP_PALETTE_FILE_FORMAT_CSS       /* Cascaded Stylesheet file (CSS)      */
-} GimpPaletteFileFormat;
+  LIGMA_PALETTE_FILE_FORMAT_UNKNOWN,
+  LIGMA_PALETTE_FILE_FORMAT_GPL,      /* LIGMA palette                        */
+  LIGMA_PALETTE_FILE_FORMAT_RIFF_PAL, /* RIFF palette                        */
+  LIGMA_PALETTE_FILE_FORMAT_ACT,      /* Photoshop binary color palette      */
+  LIGMA_PALETTE_FILE_FORMAT_PSP_PAL,  /* JASC's Paint Shop Pro color palette */
+  LIGMA_PALETTE_FILE_FORMAT_ACO,      /* Photoshop ACO color file            */
+  LIGMA_PALETTE_FILE_FORMAT_CSS       /* Cascaded Stylesheet file (CSS)      */
+} LigmaPaletteFileFormat;
 
 
-GList               * gimp_palette_load               (GimpContext   *context,
+GList               * ligma_palette_load               (LigmaContext   *context,
                                                        GFile         *file,
                                                        GInputStream  *input,
                                                        GError       **error);
-GList               * gimp_palette_load_act           (GimpContext   *context,
+GList               * ligma_palette_load_act           (LigmaContext   *context,
                                                        GFile         *file,
                                                        GInputStream  *input,
                                                        GError       **error);
-GList               * gimp_palette_load_riff          (GimpContext   *context,
+GList               * ligma_palette_load_riff          (LigmaContext   *context,
                                                        GFile         *file,
                                                        GInputStream  *input,
                                                        GError       **error);
-GList               * gimp_palette_load_psp           (GimpContext   *context,
+GList               * ligma_palette_load_psp           (LigmaContext   *context,
                                                        GFile         *file,
                                                        GInputStream  *input,
                                                        GError       **error);
-GList               * gimp_palette_load_aco           (GimpContext   *context,
+GList               * ligma_palette_load_aco           (LigmaContext   *context,
                                                        GFile         *file,
                                                        GInputStream  *input,
                                                        GError       **error);
-GList               * gimp_palette_load_css           (GimpContext   *context,
+GList               * ligma_palette_load_css           (LigmaContext   *context,
                                                        GFile         *file,
                                                        GInputStream  *input,
                                                        GError       **error);
 
-GimpPaletteFileFormat gimp_palette_load_detect_format (GFile         *file,
+LigmaPaletteFileFormat ligma_palette_load_detect_format (GFile         *file,
                                                        GInputStream  *input);
 
 
-#endif /* __GIMP_PALETTE_H__ */
+#endif /* __LIGMA_PALETTE_H__ */

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,33 +15,33 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DISPLAY_SHELL_CURSOR_H__
-#define __GIMP_DISPLAY_SHELL_CURSOR_H__
+#ifndef __LIGMA_DISPLAY_SHELL_CURSOR_H__
+#define __LIGMA_DISPLAY_SHELL_CURSOR_H__
 
 
 /*  functions dealing with the normal windowing system cursor  */
 
-void   gimp_display_shell_set_cursor             (GimpDisplayShell    *shell,
-                                                  GimpCursorType       cursor_type,
-                                                  GimpToolCursorType   tool_cursor,
-                                                  GimpCursorModifier   modifier);
-void   gimp_display_shell_unset_cursor           (GimpDisplayShell    *shell);
-void   gimp_display_shell_set_override_cursor    (GimpDisplayShell    *shell,
-                                                  GimpCursorType       cursor_type);
-void   gimp_display_shell_unset_override_cursor  (GimpDisplayShell    *shell);
+void   ligma_display_shell_set_cursor             (LigmaDisplayShell    *shell,
+                                                  LigmaCursorType       cursor_type,
+                                                  LigmaToolCursorType   tool_cursor,
+                                                  LigmaCursorModifier   modifier);
+void   ligma_display_shell_unset_cursor           (LigmaDisplayShell    *shell);
+void   ligma_display_shell_set_override_cursor    (LigmaDisplayShell    *shell,
+                                                  LigmaCursorType       cursor_type);
+void   ligma_display_shell_unset_override_cursor  (LigmaDisplayShell    *shell);
 
 
 /*  functions dealing with the software cursor that is drawn to the
- *  canvas by GIMP
+ *  canvas by LIGMA
  */
 
-void   gimp_display_shell_update_software_cursor (GimpDisplayShell    *shell,
-                                                  GimpCursorPrecision  precision,
+void   ligma_display_shell_update_software_cursor (LigmaDisplayShell    *shell,
+                                                  LigmaCursorPrecision  precision,
                                                   gint                 display_x,
                                                   gint                 display_y,
                                                   gdouble              image_x,
                                                   gdouble              image_y);
-void   gimp_display_shell_clear_software_cursor  (GimpDisplayShell    *shell);
+void   ligma_display_shell_clear_software_cursor  (LigmaDisplayShell    *shell);
 
 
-#endif /* __GIMP_DISPLAY_SHELL_CURSOR_H__ */
+#endif /* __LIGMA_DISPLAY_SHELL_CURSOR_H__ */

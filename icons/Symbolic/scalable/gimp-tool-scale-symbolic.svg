@@ -15,7 +15,7 @@
    width="16.000002"
    version="1.1"
    inkscape:version="0.91+devel r"
-   sodipodi:docname="gimp-tool-scale.svg">
+   sodipodi:docname="ligma-tool-scale.svg">
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -50,7 +50,7 @@
             <dc:title>Barbara Muraus, Jakub Steiner, Klaus Staedtler</dc:title>
           </cc:Agent>
         </dc:contributor>
-        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for GIMP</dc:description>
+        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for LIGMA</dc:description>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -140,7 +140,7 @@
      id="tools">
     <g
        transform="translate(-111.98002,8.18505)"
-       id="gimp-tool-scale"
+       id="ligma-tool-scale"
        style="display:inline">
       <rect
          style="fill:url(#linearGradient7273);fill-opacity:1;stroke:none"

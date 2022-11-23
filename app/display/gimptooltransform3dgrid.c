@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimptool3dtransformgrid.c
+ * ligmatool3dtransformgrid.c
  * Copyright (C) 2019 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,21 +23,21 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
 
 #include "display-types.h"
 
-#include "widgets/gimpwidgets-utils.h"
+#include "widgets/ligmawidgets-utils.h"
 
-#include "core/gimp-transform-3d-utils.h"
-#include "core/gimp-utils.h"
+#include "core/ligma-transform-3d-utils.h"
+#include "core/ligma-utils.h"
 
-#include "gimpdisplayshell.h"
-#include "gimpdisplayshell-transform.h"
-#include "gimptooltransform3dgrid.h"
+#include "ligmadisplayshell.h"
+#include "ligmadisplayshell-transform.h"
+#include "ligmatooltransform3dgrid.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 #define CONSTRAINT_MIN_DIST   8.0
@@ -74,9 +74,9 @@ typedef enum
   AXIS_Y
 } Axis;
 
-struct _GimpToolTransform3DGridPrivate
+struct _LigmaToolTransform3DGridPrivate
 {
-  GimpTransform3DMode mode;
+  LigmaTransform3DMode mode;
   gboolean            unified;
 
   gboolean            constrain_axis;
@@ -100,14 +100,14 @@ struct _GimpToolTransform3DGridPrivate
   gdouble             pivot_y;
   gdouble             pivot_z;
 
-  GimpTransformHandle handle;
+  LigmaTransformHandle handle;
 
   gdouble             orig_x;
   gdouble             orig_y;
   gdouble             orig_offset_x;
   gdouble             orig_offset_y;
   gdouble             orig_offset_z;
-  GimpMatrix3         orig_transform;
+  LigmaMatrix3         orig_transform;
 
   gdouble             last_x;
   gdouble             last_y;
@@ -118,43 +118,43 @@ struct _GimpToolTransform3DGridPrivate
 
 /*  local function prototypes  */
 
-static void       gimp_tool_transform_3d_grid_constructed            (GObject                 *object);
-static void       gimp_tool_transform_3d_grid_set_property           (GObject                 *object,
+static void       ligma_tool_transform_3d_grid_constructed            (GObject                 *object);
+static void       ligma_tool_transform_3d_grid_set_property           (GObject                 *object,
                                                                       guint                    property_id,
                                                                       const GValue            *value,
                                                                       GParamSpec              *pspec);
-static void       gimp_tool_transform_3d_grid_get_property           (GObject                 *object,
+static void       ligma_tool_transform_3d_grid_get_property           (GObject                 *object,
                                                                       guint                    property_id,
                                                                       GValue                  *value,
                                                                       GParamSpec              *pspec);
 
-static gint       gimp_tool_transform_3d_grid_button_press           (GimpToolWidget          *widget,
-                                                                      const GimpCoords        *coords,
+static gint       ligma_tool_transform_3d_grid_button_press           (LigmaToolWidget          *widget,
+                                                                      const LigmaCoords        *coords,
                                                                       guint32                  time,
                                                                       GdkModifierType          state,
-                                                                      GimpButtonPressType      press_type);
-static void       gimp_tool_transform_3d_grid_motion                 (GimpToolWidget          *widget,
-                                                                      const GimpCoords        *coords,
+                                                                      LigmaButtonPressType      press_type);
+static void       ligma_tool_transform_3d_grid_motion                 (LigmaToolWidget          *widget,
+                                                                      const LigmaCoords        *coords,
                                                                       guint32                  time,
                                                                       GdkModifierType          state);
-static void       gimp_tool_transform_3d_grid_hover                  (GimpToolWidget          *widget,
-                                                                      const GimpCoords        *coords,
+static void       ligma_tool_transform_3d_grid_hover                  (LigmaToolWidget          *widget,
+                                                                      const LigmaCoords        *coords,
                                                                       GdkModifierType          state,
                                                                       gboolean                 proximity);
-static void       gimp_tool_transform_3d_grid_hover_modifier         (GimpToolWidget          *widget,
+static void       ligma_tool_transform_3d_grid_hover_modifier         (LigmaToolWidget          *widget,
                                                                       GdkModifierType          key,
                                                                       gboolean                 press,
                                                                       GdkModifierType          state);
-static gboolean   gimp_tool_transform_3d_grid_get_cursor              (GimpToolWidget          *widget,
-                                                                      const GimpCoords        *coords,
+static gboolean   ligma_tool_transform_3d_grid_get_cursor              (LigmaToolWidget          *widget,
+                                                                      const LigmaCoords        *coords,
                                                                       GdkModifierType          state,
-                                                                      GimpCursorType          *cursor,
-                                                                      GimpToolCursorType      *tool_cursor,
-                                                                      GimpCursorModifier      *modifier);
+                                                                      LigmaCursorType          *cursor,
+                                                                      LigmaToolCursorType      *tool_cursor,
+                                                                      LigmaCursorModifier      *modifier);
 
-static void       gimp_tool_transform_3d_grid_update_mode            (GimpToolTransform3DGrid *grid);
-static void       gimp_tool_transform_3d_grid_reset_motion           (GimpToolTransform3DGrid *grid);
-static gboolean   gimp_tool_transform_3d_grid_constrain              (GimpToolTransform3DGrid *grid,
+static void       ligma_tool_transform_3d_grid_update_mode            (LigmaToolTransform3DGrid *grid);
+static void       ligma_tool_transform_3d_grid_reset_motion           (LigmaToolTransform3DGrid *grid);
+static gboolean   ligma_tool_transform_3d_grid_constrain              (LigmaToolTransform3DGrid *grid,
                                                                       gdouble                  x,
                                                                       gdouble                  y,
                                                                       gdouble                  ox,
@@ -162,73 +162,73 @@ static gboolean   gimp_tool_transform_3d_grid_constrain              (GimpToolTr
                                                                       gdouble                 *tx,
                                                                       gdouble                 *ty);
 
-static gboolean   gimp_tool_transform_3d_grid_motion_vanishing_point (GimpToolTransform3DGrid *grid,
+static gboolean   ligma_tool_transform_3d_grid_motion_vanishing_point (LigmaToolTransform3DGrid *grid,
                                                                       gdouble                  x,
                                                                       gdouble                  y);
-static gboolean   gimp_tool_transform_3d_grid_motion_move            (GimpToolTransform3DGrid *grid,
+static gboolean   ligma_tool_transform_3d_grid_motion_move            (LigmaToolTransform3DGrid *grid,
                                                                       gdouble                  x,
                                                                       gdouble                  y);
-static gboolean   gimp_tool_transform_3d_grid_motion_rotate          (GimpToolTransform3DGrid *grid,
+static gboolean   ligma_tool_transform_3d_grid_motion_rotate          (LigmaToolTransform3DGrid *grid,
                                                                       gdouble                  x,
                                                                       gdouble                  y);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpToolTransform3DGrid, gimp_tool_transform_3d_grid,
-                            GIMP_TYPE_TOOL_TRANSFORM_GRID)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaToolTransform3DGrid, ligma_tool_transform_3d_grid,
+                            LIGMA_TYPE_TOOL_TRANSFORM_GRID)
 
-#define parent_class gimp_tool_transform_3d_grid_parent_class
+#define parent_class ligma_tool_transform_3d_grid_parent_class
 
 
 static void
-gimp_tool_transform_3d_grid_class_init (GimpToolTransform3DGridClass *klass)
+ligma_tool_transform_3d_grid_class_init (LigmaToolTransform3DGridClass *klass)
 {
   GObjectClass        *object_class = G_OBJECT_CLASS (klass);
-  GimpToolWidgetClass *widget_class = GIMP_TOOL_WIDGET_CLASS (klass);
+  LigmaToolWidgetClass *widget_class = LIGMA_TOOL_WIDGET_CLASS (klass);
 
-  object_class->constructed     = gimp_tool_transform_3d_grid_constructed;
-  object_class->set_property    = gimp_tool_transform_3d_grid_set_property;
-  object_class->get_property    = gimp_tool_transform_3d_grid_get_property;
+  object_class->constructed     = ligma_tool_transform_3d_grid_constructed;
+  object_class->set_property    = ligma_tool_transform_3d_grid_set_property;
+  object_class->get_property    = ligma_tool_transform_3d_grid_get_property;
 
-  widget_class->button_press    = gimp_tool_transform_3d_grid_button_press;
-  widget_class->motion          = gimp_tool_transform_3d_grid_motion;
-  widget_class->hover           = gimp_tool_transform_3d_grid_hover;
-  widget_class->hover_modifier  = gimp_tool_transform_3d_grid_hover_modifier;
-  widget_class->get_cursor      = gimp_tool_transform_3d_grid_get_cursor;
+  widget_class->button_press    = ligma_tool_transform_3d_grid_button_press;
+  widget_class->motion          = ligma_tool_transform_3d_grid_motion;
+  widget_class->hover           = ligma_tool_transform_3d_grid_hover;
+  widget_class->hover_modifier  = ligma_tool_transform_3d_grid_hover_modifier;
+  widget_class->get_cursor      = ligma_tool_transform_3d_grid_get_cursor;
 
   g_object_class_install_property (object_class, PROP_MODE,
                                    g_param_spec_enum ("mode",
                                                       NULL, NULL,
-                                                      GIMP_TYPE_TRANSFORM_3D_MODE,
-                                                      GIMP_TRANSFORM_3D_MODE_CAMERA,
-                                                      GIMP_PARAM_READWRITE |
+                                                      LIGMA_TYPE_TRANSFORM_3D_MODE,
+                                                      LIGMA_TRANSFORM_3D_MODE_CAMERA,
+                                                      LIGMA_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_UNIFIED,
                                    g_param_spec_boolean ("unified",
                                                          NULL, NULL,
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE |
+                                                         LIGMA_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_CONSTRAIN_AXIS,
                                    g_param_spec_boolean ("constrain-axis",
                                                          NULL, NULL,
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE |
+                                                         LIGMA_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_Z_AXIS,
                                    g_param_spec_boolean ("z-axis",
                                                          NULL, NULL,
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE |
+                                                         LIGMA_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_LOCAL_FRAME,
                                    g_param_spec_boolean ("local-frame",
                                                          NULL, NULL,
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE |
+                                                         LIGMA_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_CAMERA_X,
@@ -237,7 +237,7 @@ gimp_tool_transform_3d_grid_class_init (GimpToolTransform3DGridClass *klass)
                                                         -G_MAXDOUBLE,
                                                         G_MAXDOUBLE,
                                                         0.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_CAMERA_Y,
@@ -246,7 +246,7 @@ gimp_tool_transform_3d_grid_class_init (GimpToolTransform3DGridClass *klass)
                                                         -G_MAXDOUBLE,
                                                         G_MAXDOUBLE,
                                                         0.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_CAMERA_Z,
@@ -255,7 +255,7 @@ gimp_tool_transform_3d_grid_class_init (GimpToolTransform3DGridClass *klass)
                                                         -(1.0 / 0.0),
                                                         1.0 / 0.0,
                                                         0.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_OFFSET_X,
@@ -264,7 +264,7 @@ gimp_tool_transform_3d_grid_class_init (GimpToolTransform3DGridClass *klass)
                                                         -G_MAXDOUBLE,
                                                         G_MAXDOUBLE,
                                                         0.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_OFFSET_Y,
@@ -273,7 +273,7 @@ gimp_tool_transform_3d_grid_class_init (GimpToolTransform3DGridClass *klass)
                                                         -G_MAXDOUBLE,
                                                         G_MAXDOUBLE,
                                                         0.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_OFFSET_Z,
@@ -282,14 +282,14 @@ gimp_tool_transform_3d_grid_class_init (GimpToolTransform3DGridClass *klass)
                                                         -G_MAXDOUBLE,
                                                         G_MAXDOUBLE,
                                                         0.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_ROTATION_ORDER,
                                    g_param_spec_int ("rotation-order",
                                                      NULL, NULL,
                                                      0, 6, 0,
-                                                     GIMP_PARAM_READWRITE |
+                                                     LIGMA_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_ANGLE_X,
@@ -298,7 +298,7 @@ gimp_tool_transform_3d_grid_class_init (GimpToolTransform3DGridClass *klass)
                                                         -G_MAXDOUBLE,
                                                         G_MAXDOUBLE,
                                                         0.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_ANGLE_Y,
@@ -307,7 +307,7 @@ gimp_tool_transform_3d_grid_class_init (GimpToolTransform3DGridClass *klass)
                                                         -G_MAXDOUBLE,
                                                         G_MAXDOUBLE,
                                                         0.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_ANGLE_Z,
@@ -316,7 +316,7 @@ gimp_tool_transform_3d_grid_class_init (GimpToolTransform3DGridClass *klass)
                                                         -G_MAXDOUBLE,
                                                         G_MAXDOUBLE,
                                                         0.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_PIVOT_3D_X,
@@ -325,7 +325,7 @@ gimp_tool_transform_3d_grid_class_init (GimpToolTransform3DGridClass *klass)
                                                         -G_MAXDOUBLE,
                                                         G_MAXDOUBLE,
                                                         0.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_PIVOT_3D_Y,
@@ -334,7 +334,7 @@ gimp_tool_transform_3d_grid_class_init (GimpToolTransform3DGridClass *klass)
                                                         -G_MAXDOUBLE,
                                                         G_MAXDOUBLE,
                                                         0.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_PIVOT_3D_Z,
@@ -343,18 +343,18 @@ gimp_tool_transform_3d_grid_class_init (GimpToolTransform3DGridClass *klass)
                                                         -G_MAXDOUBLE,
                                                         G_MAXDOUBLE,
                                                         0.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 }
 
 static void
-gimp_tool_transform_3d_grid_init (GimpToolTransform3DGrid *grid)
+ligma_tool_transform_3d_grid_init (LigmaToolTransform3DGrid *grid)
 {
-  grid->priv = gimp_tool_transform_3d_grid_get_instance_private (grid);
+  grid->priv = ligma_tool_transform_3d_grid_get_instance_private (grid);
 }
 
 static void
-gimp_tool_transform_3d_grid_constructed (GObject *object)
+ligma_tool_transform_3d_grid_constructed (GObject *object)
 {
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
@@ -365,37 +365,37 @@ gimp_tool_transform_3d_grid_constructed (GObject *object)
 }
 
 static void
-gimp_tool_transform_3d_grid_set_property (GObject      *object,
+ligma_tool_transform_3d_grid_set_property (GObject      *object,
                                           guint         property_id,
                                           const GValue *value,
                                           GParamSpec   *pspec)
 {
-  GimpToolTransform3DGrid        *grid = GIMP_TOOL_TRANSFORM_3D_GRID (object);
-  GimpToolTransform3DGridPrivate *priv = grid->priv;
+  LigmaToolTransform3DGrid        *grid = LIGMA_TOOL_TRANSFORM_3D_GRID (object);
+  LigmaToolTransform3DGridPrivate *priv = grid->priv;
 
   switch (property_id)
     {
     case PROP_MODE:
       priv->mode = g_value_get_enum (value);
-      gimp_tool_transform_3d_grid_update_mode (grid);
+      ligma_tool_transform_3d_grid_update_mode (grid);
       break;
 
     case PROP_UNIFIED:
       priv->unified = g_value_get_boolean (value);
-      gimp_tool_transform_3d_grid_update_mode (grid);
+      ligma_tool_transform_3d_grid_update_mode (grid);
       break;
 
     case PROP_CONSTRAIN_AXIS:
       priv->constrain_axis = g_value_get_boolean (value);
-      gimp_tool_transform_3d_grid_reset_motion (grid);
+      ligma_tool_transform_3d_grid_reset_motion (grid);
       break;
     case PROP_Z_AXIS:
       priv->z_axis = g_value_get_boolean (value);
-      gimp_tool_transform_3d_grid_reset_motion (grid);
+      ligma_tool_transform_3d_grid_reset_motion (grid);
       break;
     case PROP_LOCAL_FRAME:
       priv->local_frame = g_value_get_boolean (value);
-      gimp_tool_transform_3d_grid_reset_motion (grid);
+      ligma_tool_transform_3d_grid_reset_motion (grid);
       break;
 
     case PROP_CAMERA_X:
@@ -454,13 +454,13 @@ gimp_tool_transform_3d_grid_set_property (GObject      *object,
 }
 
 static void
-gimp_tool_transform_3d_grid_get_property (GObject    *object,
+ligma_tool_transform_3d_grid_get_property (GObject    *object,
                                           guint       property_id,
                                           GValue     *value,
                                           GParamSpec *pspec)
 {
-  GimpToolTransform3DGrid        *grid = GIMP_TOOL_TRANSFORM_3D_GRID (object);
-  GimpToolTransform3DGridPrivate *priv = grid->priv;
+  LigmaToolTransform3DGrid        *grid = LIGMA_TOOL_TRANSFORM_3D_GRID (object);
+  LigmaToolTransform3DGridPrivate *priv = grid->priv;
 
   switch (property_id)
     {
@@ -531,16 +531,16 @@ gimp_tool_transform_3d_grid_get_property (GObject    *object,
 }
 
 static gint
-gimp_tool_transform_3d_grid_button_press (GimpToolWidget      *widget,
-                                          const GimpCoords    *coords,
+ligma_tool_transform_3d_grid_button_press (LigmaToolWidget      *widget,
+                                          const LigmaCoords    *coords,
                                           guint32              time,
                                           GdkModifierType      state,
-                                          GimpButtonPressType  press_type)
+                                          LigmaButtonPressType  press_type)
 {
-  GimpToolTransform3DGrid        *grid = GIMP_TOOL_TRANSFORM_3D_GRID (widget);
-  GimpToolTransform3DGridPrivate *priv = grid->priv;
+  LigmaToolTransform3DGrid        *grid = LIGMA_TOOL_TRANSFORM_3D_GRID (widget);
+  LigmaToolTransform3DGridPrivate *priv = grid->priv;
 
-  priv->handle = GIMP_TOOL_WIDGET_CLASS (parent_class)->button_press (
+  priv->handle = LIGMA_TOOL_WIDGET_CLASS (parent_class)->button_press (
     widget, coords, time, state, press_type);
 
   priv->orig_x           = coords->x;
@@ -551,36 +551,36 @@ gimp_tool_transform_3d_grid_button_press (GimpToolWidget      *widget,
   priv->last_x           = coords->x;
   priv->last_y           = coords->y;
 
-  gimp_tool_transform_3d_grid_reset_motion (grid);
+  ligma_tool_transform_3d_grid_reset_motion (grid);
 
   return priv->handle;
 }
 
 void
-gimp_tool_transform_3d_grid_motion (GimpToolWidget   *widget,
-                                    const GimpCoords *coords,
+ligma_tool_transform_3d_grid_motion (LigmaToolWidget   *widget,
+                                    const LigmaCoords *coords,
                                     guint32           time,
                                     GdkModifierType   state)
 {
-  GimpToolTransform3DGrid        *grid = GIMP_TOOL_TRANSFORM_3D_GRID (widget);
-  GimpToolTransform3DGridPrivate *priv = grid->priv;
-  GimpMatrix3                     transform;
+  LigmaToolTransform3DGrid        *grid = LIGMA_TOOL_TRANSFORM_3D_GRID (widget);
+  LigmaToolTransform3DGridPrivate *priv = grid->priv;
+  LigmaMatrix3                     transform;
   gboolean                        update = TRUE;
 
   switch (priv->handle)
     {
-    case GIMP_TRANSFORM_HANDLE_PIVOT:
-      update = gimp_tool_transform_3d_grid_motion_vanishing_point (
+    case LIGMA_TRANSFORM_HANDLE_PIVOT:
+      update = ligma_tool_transform_3d_grid_motion_vanishing_point (
         grid, coords->x, coords->y);
       break;
 
-    case GIMP_TRANSFORM_HANDLE_CENTER:
-      update = gimp_tool_transform_3d_grid_motion_move (
+    case LIGMA_TRANSFORM_HANDLE_CENTER:
+      update = ligma_tool_transform_3d_grid_motion_move (
         grid, coords->x, coords->y);
       break;
 
-    case GIMP_TRANSFORM_HANDLE_ROTATION:
-      update = gimp_tool_transform_3d_grid_motion_rotate (
+    case LIGMA_TRANSFORM_HANDLE_ROTATION:
+      update = ligma_tool_transform_3d_grid_motion_rotate (
         grid, coords->x, coords->y);
     break;
 
@@ -590,7 +590,7 @@ gimp_tool_transform_3d_grid_motion (GimpToolWidget   *widget,
 
   if (update)
     {
-      gimp_transform_3d_matrix (&transform,
+      ligma_transform_3d_matrix (&transform,
 
                                 priv->camera_x,
                                 priv->camera_y,
@@ -616,47 +616,47 @@ gimp_tool_transform_3d_grid_motion (GimpToolWidget   *widget,
 }
 
 static void
-gimp_tool_transform_3d_grid_hover (GimpToolWidget   *widget,
-                                   const GimpCoords *coords,
+ligma_tool_transform_3d_grid_hover (LigmaToolWidget   *widget,
+                                   const LigmaCoords *coords,
                                    GdkModifierType   state,
                                    gboolean          proximity)
 {
-  GIMP_TOOL_WIDGET_CLASS (parent_class)->hover (widget,
+  LIGMA_TOOL_WIDGET_CLASS (parent_class)->hover (widget,
                                                 coords, state, proximity);
 
   if (proximity &&
-      gimp_tool_transform_grid_get_handle (GIMP_TOOL_TRANSFORM_GRID (widget)) ==
-      GIMP_TRANSFORM_HANDLE_PIVOT)
+      ligma_tool_transform_grid_get_handle (LIGMA_TOOL_TRANSFORM_GRID (widget)) ==
+      LIGMA_TRANSFORM_HANDLE_PIVOT)
     {
-      gimp_tool_widget_set_status (widget,
+      ligma_tool_widget_set_status (widget,
                                    _("Click-Drag to move the vanishing point"));
     }
 }
 
 static void
-gimp_tool_transform_3d_grid_hover_modifier (GimpToolWidget  *widget,
+ligma_tool_transform_3d_grid_hover_modifier (LigmaToolWidget  *widget,
                                             GdkModifierType  key,
                                             gboolean         press,
                                             GdkModifierType  state)
 {
-  GimpToolTransform3DGrid        *grid = GIMP_TOOL_TRANSFORM_3D_GRID (widget);
-  GimpToolTransform3DGridPrivate *priv = grid->priv;
+  LigmaToolTransform3DGrid        *grid = LIGMA_TOOL_TRANSFORM_3D_GRID (widget);
+  LigmaToolTransform3DGridPrivate *priv = grid->priv;
 
-  GIMP_TOOL_WIDGET_CLASS (parent_class)->hover_modifier (widget,
+  LIGMA_TOOL_WIDGET_CLASS (parent_class)->hover_modifier (widget,
                                                          key, press, state);
 
-  priv->local_frame = (state & gimp_get_extend_selection_mask ()) != 0;
+  priv->local_frame = (state & ligma_get_extend_selection_mask ()) != 0;
 }
 
 static gboolean
-gimp_tool_transform_3d_grid_get_cursor (GimpToolWidget     *widget,
-                                        const GimpCoords   *coords,
+ligma_tool_transform_3d_grid_get_cursor (LigmaToolWidget     *widget,
+                                        const LigmaCoords   *coords,
                                         GdkModifierType     state,
-                                        GimpCursorType     *cursor,
-                                        GimpToolCursorType *tool_cursor,
-                                        GimpCursorModifier *modifier)
+                                        LigmaCursorType     *cursor,
+                                        LigmaToolCursorType *tool_cursor,
+                                        LigmaCursorModifier *modifier)
 {
-  if (! GIMP_TOOL_WIDGET_CLASS (parent_class)->get_cursor (widget,
+  if (! LIGMA_TOOL_WIDGET_CLASS (parent_class)->get_cursor (widget,
                                                            coords,
                                                            state,
                                                            cursor,
@@ -666,25 +666,25 @@ gimp_tool_transform_3d_grid_get_cursor (GimpToolWidget     *widget,
       return FALSE;
     }
 
-  if (gimp_tool_transform_grid_get_handle (GIMP_TOOL_TRANSFORM_GRID (widget)) ==
-      GIMP_TRANSFORM_HANDLE_PIVOT)
+  if (ligma_tool_transform_grid_get_handle (LIGMA_TOOL_TRANSFORM_GRID (widget)) ==
+      LIGMA_TRANSFORM_HANDLE_PIVOT)
     {
-      *tool_cursor = GIMP_TOOL_CURSOR_TRANSFORM_3D_CAMERA;
+      *tool_cursor = LIGMA_TOOL_CURSOR_TRANSFORM_3D_CAMERA;
     }
 
   return TRUE;
 }
 
 static void
-gimp_tool_transform_3d_grid_update_mode (GimpToolTransform3DGrid *grid)
+ligma_tool_transform_3d_grid_update_mode (LigmaToolTransform3DGrid *grid)
 {
-  GimpToolTransform3DGridPrivate *priv = grid->priv;
+  LigmaToolTransform3DGridPrivate *priv = grid->priv;
 
   if (priv->unified)
     {
       g_object_set (grid,
-                    "inside-function",  GIMP_TRANSFORM_FUNCTION_MOVE,
-                    "outside-function", GIMP_TRANSFORM_FUNCTION_ROTATE,
+                    "inside-function",  LIGMA_TRANSFORM_FUNCTION_MOVE,
+                    "outside-function", LIGMA_TRANSFORM_FUNCTION_ROTATE,
                     "use-pivot-handle", TRUE,
                     NULL);
     }
@@ -692,26 +692,26 @@ gimp_tool_transform_3d_grid_update_mode (GimpToolTransform3DGrid *grid)
     {
       switch (priv->mode)
         {
-        case GIMP_TRANSFORM_3D_MODE_CAMERA:
+        case LIGMA_TRANSFORM_3D_MODE_CAMERA:
           g_object_set (grid,
-                        "inside-function",  GIMP_TRANSFORM_FUNCTION_NONE,
-                        "outside-function", GIMP_TRANSFORM_FUNCTION_NONE,
+                        "inside-function",  LIGMA_TRANSFORM_FUNCTION_NONE,
+                        "outside-function", LIGMA_TRANSFORM_FUNCTION_NONE,
                         "use-pivot-handle", TRUE,
                         NULL);
           break;
 
-        case GIMP_TRANSFORM_3D_MODE_MOVE:
+        case LIGMA_TRANSFORM_3D_MODE_MOVE:
           g_object_set (grid,
-                        "inside-function",  GIMP_TRANSFORM_FUNCTION_MOVE,
-                        "outside-function", GIMP_TRANSFORM_FUNCTION_MOVE,
+                        "inside-function",  LIGMA_TRANSFORM_FUNCTION_MOVE,
+                        "outside-function", LIGMA_TRANSFORM_FUNCTION_MOVE,
                         "use-pivot-handle", FALSE,
                         NULL);
           break;
 
-        case GIMP_TRANSFORM_3D_MODE_ROTATE:
+        case LIGMA_TRANSFORM_3D_MODE_ROTATE:
           g_object_set (grid,
-                        "inside-function",  GIMP_TRANSFORM_FUNCTION_ROTATE,
-                        "outside-function", GIMP_TRANSFORM_FUNCTION_ROTATE,
+                        "inside-function",  LIGMA_TRANSFORM_FUNCTION_ROTATE,
+                        "outside-function", LIGMA_TRANSFORM_FUNCTION_ROTATE,
                         "use-pivot-handle", FALSE,
                         NULL);
           break;
@@ -720,10 +720,10 @@ gimp_tool_transform_3d_grid_update_mode (GimpToolTransform3DGrid *grid)
 }
 
 static void
-gimp_tool_transform_3d_grid_reset_motion (GimpToolTransform3DGrid *grid)
+ligma_tool_transform_3d_grid_reset_motion (LigmaToolTransform3DGrid *grid)
 {
-  GimpToolTransform3DGridPrivate *priv = grid->priv;
-  GimpMatrix3                    *transform;
+  LigmaToolTransform3DGridPrivate *priv = grid->priv;
+  LigmaMatrix3                    *transform;
 
   priv->constrained_axis = AXIS_NONE;
 
@@ -737,7 +737,7 @@ gimp_tool_transform_3d_grid_reset_motion (GimpToolTransform3DGrid *grid)
 }
 
 static gboolean
-gimp_tool_transform_3d_grid_constrain (GimpToolTransform3DGrid *grid,
+ligma_tool_transform_3d_grid_constrain (LigmaToolTransform3DGrid *grid,
                                        gdouble                  x,
                                        gdouble                  y,
                                        gdouble                  ox,
@@ -745,23 +745,23 @@ gimp_tool_transform_3d_grid_constrain (GimpToolTransform3DGrid *grid,
                                        gdouble                 *tx,
                                        gdouble                 *ty)
 {
-  GimpToolTransform3DGridPrivate *priv = grid->priv;
+  LigmaToolTransform3DGridPrivate *priv = grid->priv;
 
   if (! priv->constrain_axis)
     return TRUE;
 
   if (priv->constrained_axis == AXIS_NONE)
     {
-      GimpDisplayShell *shell;
+      LigmaDisplayShell *shell;
       gdouble           x1, y1;
       gdouble           x2, y2;
 
-      shell = gimp_tool_widget_get_shell (GIMP_TOOL_WIDGET (grid));
+      shell = ligma_tool_widget_get_shell (LIGMA_TOOL_WIDGET (grid));
 
-      gimp_display_shell_transform_xy_f (shell,
+      ligma_display_shell_transform_xy_f (shell,
                                          priv->last_x, priv->last_y,
                                          &x1,          &y1);
-      gimp_display_shell_transform_xy_f (shell,
+      ligma_display_shell_transform_xy_f (shell,
                                          x,            y,
                                          &x2,          &y2);
 
@@ -783,16 +783,16 @@ gimp_tool_transform_3d_grid_constrain (GimpToolTransform3DGrid *grid,
 }
 
 static gboolean
-gimp_tool_transform_3d_grid_motion_vanishing_point (GimpToolTransform3DGrid *grid,
+ligma_tool_transform_3d_grid_motion_vanishing_point (LigmaToolTransform3DGrid *grid,
                                                     gdouble                  x,
                                                     gdouble                  y)
 {
-  GimpToolTransform3DGridPrivate *priv = grid->priv;
-  GimpCoords                      c    = {};
+  LigmaToolTransform3DGridPrivate *priv = grid->priv;
+  LigmaCoords                      c    = {};
   gdouble                         pivot_x;
   gdouble                         pivot_y;
 
-  if (! gimp_tool_transform_3d_grid_constrain (grid,
+  if (! ligma_tool_transform_3d_grid_constrain (grid,
                                                x,            y,
                                                priv->last_x, priv->last_y,
                                                &x,           &y))
@@ -803,7 +803,7 @@ gimp_tool_transform_3d_grid_motion_vanishing_point (GimpToolTransform3DGrid *gri
   c.x = x;
   c.y = y;
 
-  GIMP_TOOL_WIDGET_CLASS (parent_class)->motion (GIMP_TOOL_WIDGET (grid),
+  LIGMA_TOOL_WIDGET_CLASS (parent_class)->motion (LIGMA_TOOL_WIDGET (grid),
                                                  &c, 0, 0);
 
   g_object_get (grid,
@@ -823,12 +823,12 @@ gimp_tool_transform_3d_grid_motion_vanishing_point (GimpToolTransform3DGrid *gri
 }
 
 static gboolean
-gimp_tool_transform_3d_grid_motion_move (GimpToolTransform3DGrid *grid,
+ligma_tool_transform_3d_grid_motion_move (LigmaToolTransform3DGrid *grid,
                                          gdouble                  x,
                                          gdouble                  y)
 {
-  GimpToolTransform3DGridPrivate *priv = grid->priv;
-  GimpMatrix4                     matrix;
+  LigmaToolTransform3DGridPrivate *priv = grid->priv;
+  LigmaMatrix4                     matrix;
 
   if (! priv->z_axis)
     {
@@ -837,28 +837,28 @@ gimp_tool_transform_3d_grid_motion_move (GimpToolTransform3DGrid *grid,
 
       if (! priv->local_frame)
         {
-          gimp_matrix4_identity (&matrix);
+          ligma_matrix4_identity (&matrix);
         }
       else
         {
-          GimpMatrix3 transform_inv = priv->orig_transform;;
+          LigmaMatrix3 transform_inv = priv->orig_transform;;
 
-          gimp_matrix3_invert (&transform_inv);
+          ligma_matrix3_invert (&transform_inv);
 
-          gimp_transform_3d_matrix3_to_matrix4 (&transform_inv, &matrix, 2);
+          ligma_transform_3d_matrix3_to_matrix4 (&transform_inv, &matrix, 2);
         }
 
-      w1 = gimp_matrix4_transform_point (&matrix,
+      w1 = ligma_matrix4_transform_point (&matrix,
                                          priv->last_x, priv->last_y, 0.0,
                                          &x1,          &y1,          &z1);
-      w2 = gimp_matrix4_transform_point (&matrix,
+      w2 = ligma_matrix4_transform_point (&matrix,
                                          x,            y,            0.0,
                                          &x2,          &y2,          &z2);
 
       if (w1 <= 0.0)
         return FALSE;
 
-      if (! gimp_tool_transform_3d_grid_constrain (grid,
+      if (! ligma_tool_transform_3d_grid_constrain (grid,
                                                    x,   y,
                                                    x1,  y1,
                                                    &x2, &y2))
@@ -868,19 +868,19 @@ gimp_tool_transform_3d_grid_motion_move (GimpToolTransform3DGrid *grid,
 
       if (priv->local_frame)
         {
-          gimp_matrix4_identity (&matrix);
+          ligma_matrix4_identity (&matrix);
 
-          gimp_transform_3d_matrix4_rotate_euler (&matrix,
+          ligma_transform_3d_matrix4_rotate_euler (&matrix,
                                                   priv->rotation_order,
                                                   priv->angle_x,
                                                   priv->angle_y,
                                                   priv->angle_z,
                                                   0.0, 0.0, 0.0);
 
-          gimp_matrix4_transform_point (&matrix,
+          ligma_matrix4_transform_point (&matrix,
                                         x1,  y1,  z1,
                                         &x1, &y1, &z1);
-          gimp_matrix4_transform_point (&matrix,
+          ligma_matrix4_transform_point (&matrix,
                                         x2,  y2,  z2,
                                         &x2, &y2, &z2);
         }
@@ -910,7 +910,7 @@ gimp_tool_transform_3d_grid_motion_move (GimpToolTransform3DGrid *grid,
     }
   else
     {
-      GimpVector3 axis;
+      LigmaVector3 axis;
       gdouble     amount;
 
       if (! priv->local_frame)
@@ -921,9 +921,9 @@ gimp_tool_transform_3d_grid_motion_move (GimpToolTransform3DGrid *grid,
         }
       else
         {
-          gimp_matrix4_identity (&matrix);
+          ligma_matrix4_identity (&matrix);
 
-          gimp_transform_3d_matrix4_rotate_euler (&matrix,
+          ligma_transform_3d_matrix4_rotate_euler (&matrix,
                                                   priv->rotation_order,
                                                   priv->angle_x,
                                                   priv->angle_y,
@@ -935,7 +935,7 @@ gimp_tool_transform_3d_grid_motion_move (GimpToolTransform3DGrid *grid,
           axis.z = matrix.coeff[2][2];
 
           if (axis.x < 0.0)
-            gimp_vector3_neg (&axis);
+            ligma_vector3_neg (&axis);
         }
 
       amount = x - priv->last_x;
@@ -954,35 +954,35 @@ gimp_tool_transform_3d_grid_motion_move (GimpToolTransform3DGrid *grid,
 }
 
 static gboolean
-gimp_tool_transform_3d_grid_motion_rotate (GimpToolTransform3DGrid *grid,
+ligma_tool_transform_3d_grid_motion_rotate (LigmaToolTransform3DGrid *grid,
                                            gdouble                  x,
                                            gdouble                  y)
 {
-  GimpToolTransform3DGridPrivate *priv = grid->priv;
-  GimpDisplayShell               *shell;
-  GimpMatrix4                     matrix;
-  GimpMatrix2                     basis_inv;
-  GimpVector3                     omega;
+  LigmaToolTransform3DGridPrivate *priv = grid->priv;
+  LigmaDisplayShell               *shell;
+  LigmaMatrix4                     matrix;
+  LigmaMatrix2                     basis_inv;
+  LigmaVector3                     omega;
   gdouble                         z_sign;
   gboolean                        local_frame;
 
-  shell = gimp_tool_widget_get_shell (GIMP_TOOL_WIDGET (grid));
+  shell = ligma_tool_widget_get_shell (LIGMA_TOOL_WIDGET (grid));
 
   local_frame = priv->local_frame && (priv->constrain_axis || priv->z_axis);
 
   if (! local_frame)
     {
-      gimp_matrix2_identity (&basis_inv);
+      ligma_matrix2_identity (&basis_inv);
       z_sign = 1.0;
     }
   else
     {
       {
-        GimpVector3 o, n, c;
+        LigmaVector3 o, n, c;
 
-        gimp_matrix4_identity (&matrix);
+        ligma_matrix4_identity (&matrix);
 
-        gimp_transform_3d_matrix4_rotate_euler (&matrix,
+        ligma_transform_3d_matrix4_rotate_euler (&matrix,
                                                 priv->rotation_order,
                                                 priv->angle_x,
                                                 priv->angle_y,
@@ -991,15 +991,15 @@ gimp_tool_transform_3d_grid_motion_rotate (GimpToolTransform3DGrid *grid,
                                                 priv->pivot_y,
                                                 priv->pivot_z);
 
-        gimp_transform_3d_matrix4_translate (&matrix,
+        ligma_transform_3d_matrix4_translate (&matrix,
                                              priv->offset_x,
                                              priv->offset_y,
                                              priv->offset_z);
 
-        gimp_matrix4_transform_point (&matrix,
+        ligma_matrix4_transform_point (&matrix,
                                       0.0,  0.0,  0.0,
                                       &o.x, &o.y, &o.z);
-        gimp_matrix4_transform_point (&matrix,
+        ligma_matrix4_transform_point (&matrix,
                                       0.0,  0.0,  1.0,
                                       &n.x, &n.y, &n.z);
 
@@ -1007,53 +1007,53 @@ gimp_tool_transform_3d_grid_motion_rotate (GimpToolTransform3DGrid *grid,
         c.y = priv->camera_y;
         c.z = priv->camera_z;
 
-        gimp_vector3_sub (&n, &n, &o);
-        gimp_vector3_sub (&c, &c, &o);
+        ligma_vector3_sub (&n, &n, &o);
+        ligma_vector3_sub (&c, &c, &o);
 
-        z_sign = gimp_vector3_inner_product (&c, &n) <= 0.0 ? +1.0 : -1.0;
+        z_sign = ligma_vector3_inner_product (&c, &n) <= 0.0 ? +1.0 : -1.0;
       }
 
       {
-        GimpVector2 o, u, v;
+        LigmaVector2 o, u, v;
 
-        gimp_matrix3_transform_point (&priv->orig_transform,
+        ligma_matrix3_transform_point (&priv->orig_transform,
                                       priv->pivot_x, priv->pivot_y,
                                       &o.x, &o.y);
-        gimp_matrix3_transform_point (&priv->orig_transform,
+        ligma_matrix3_transform_point (&priv->orig_transform,
                                       priv->pivot_x + 1.0, priv->pivot_y,
                                       &u.x, &u.y);
-        gimp_matrix3_transform_point (&priv->orig_transform,
+        ligma_matrix3_transform_point (&priv->orig_transform,
                                       priv->pivot_x, priv->pivot_y + 1.0,
                                       &v.x, &v.y);
 
-        gimp_vector2_sub (&u, &u, &o);
-        gimp_vector2_sub (&v, &v, &o);
+        ligma_vector2_sub (&u, &u, &o);
+        ligma_vector2_sub (&v, &v, &o);
 
-        gimp_vector2_normalize (&u);
-        gimp_vector2_normalize (&v);
+        ligma_vector2_normalize (&u);
+        ligma_vector2_normalize (&v);
 
         basis_inv.coeff[0][0] = u.x;
         basis_inv.coeff[1][0] = u.y;
         basis_inv.coeff[0][1] = v.x;
         basis_inv.coeff[1][1] = v.y;
 
-        gimp_matrix2_invert (&basis_inv);
+        ligma_matrix2_invert (&basis_inv);
       }
     }
 
   if (! priv->z_axis)
     {
-      GimpVector2 scale;
+      LigmaVector2 scale;
       gdouble     norm;
 
-      gimp_matrix2_transform_point (&basis_inv,
+      ligma_matrix2_transform_point (&basis_inv,
                                     -(y - priv->last_y),
                                     x - priv->last_x,
                                     &omega.x, &omega.y);
 
       omega.z = 0.0;
 
-      if (! gimp_tool_transform_3d_grid_constrain (grid,
+      if (! ligma_tool_transform_3d_grid_constrain (grid,
                                                    x,        y,
                                                    0.0,      0.0,
                                                    &omega.x, &omega.y))
@@ -1061,49 +1061,49 @@ gimp_tool_transform_3d_grid_motion_rotate (GimpToolTransform3DGrid *grid,
           return FALSE;
         }
 
-      norm = gimp_vector3_length (&omega);
+      norm = ligma_vector3_length (&omega);
 
       if (norm > 0.0)
         {
           scale.x = shell->scale_x * omega.y / norm;
           scale.y = shell->scale_y * omega.x / norm;
 
-          gimp_vector3_mul (&omega, gimp_vector2_length (&scale));
-          gimp_vector3_mul (&omega, 2.0 * G_PI / PIXELS_PER_REVOLUTION);
+          ligma_vector3_mul (&omega, ligma_vector2_length (&scale));
+          ligma_vector3_mul (&omega, 2.0 * G_PI / PIXELS_PER_REVOLUTION);
         }
     }
   else
     {
-      GimpVector2 o;
-      GimpVector2 v1 = {priv->last_x,  priv->last_y};
-      GimpVector2 v2 = {x,             y};
+      LigmaVector2 o;
+      LigmaVector2 v1 = {priv->last_x,  priv->last_y};
+      LigmaVector2 v2 = {x,             y};
 
       g_warn_if_fail (priv->pivot_z == 0.0);
 
-      gimp_matrix3_transform_point (&priv->orig_transform,
+      ligma_matrix3_transform_point (&priv->orig_transform,
                                     priv->pivot_x, priv->pivot_y,
                                     &o.x,          &o.y);
 
-      gimp_vector2_sub (&v1, &v1, &o);
-      gimp_vector2_sub (&v2, &v2, &o);
+      ligma_vector2_sub (&v1, &v1, &o);
+      ligma_vector2_sub (&v2, &v2, &o);
 
-      gimp_vector2_normalize (&v1);
-      gimp_vector2_normalize (&v2);
+      ligma_vector2_normalize (&v1);
+      ligma_vector2_normalize (&v2);
 
       omega.x = 0.0;
       omega.y = 0.0;
-      omega.z = atan2 (gimp_vector2_cross_product (&v1, &v2).y,
-                       gimp_vector2_inner_product (&v1, &v2));
+      omega.z = atan2 (ligma_vector2_cross_product (&v1, &v2).y,
+                       ligma_vector2_inner_product (&v1, &v2));
 
       omega.z *= z_sign;
     }
 
-  gimp_matrix4_identity (&matrix);
+  ligma_matrix4_identity (&matrix);
 
   if (local_frame)
-    gimp_transform_3d_matrix4_rotate (&matrix, &omega);
+    ligma_transform_3d_matrix4_rotate (&matrix, &omega);
 
-  gimp_transform_3d_matrix4_rotate_euler (&matrix,
+  ligma_transform_3d_matrix4_rotate_euler (&matrix,
                                           priv->rotation_order,
                                           priv->angle_x,
                                           priv->angle_y,
@@ -1111,9 +1111,9 @@ gimp_tool_transform_3d_grid_motion_rotate (GimpToolTransform3DGrid *grid,
                                           0.0, 0.0, 0.0);
 
   if (! local_frame)
-    gimp_transform_3d_matrix4_rotate (&matrix, &omega);
+    ligma_transform_3d_matrix4_rotate (&matrix, &omega);
 
-  gimp_transform_3d_matrix4_rotate_euler_decompose (&matrix,
+  ligma_transform_3d_matrix4_rotate_euler_decompose (&matrix,
                                                     priv->rotation_order,
                                                     &priv->angle_x,
                                                     &priv->angle_y,
@@ -1134,8 +1134,8 @@ gimp_tool_transform_3d_grid_motion_rotate (GimpToolTransform3DGrid *grid,
 
 /*  public functions  */
 
-GimpToolWidget *
-gimp_tool_transform_3d_grid_new (GimpDisplayShell *shell,
+LigmaToolWidget *
+ligma_tool_transform_3d_grid_new (LigmaDisplayShell *shell,
                                  gdouble           x1,
                                  gdouble           y1,
                                  gdouble           x2,
@@ -1144,9 +1144,9 @@ gimp_tool_transform_3d_grid_new (GimpDisplayShell *shell,
                                  gdouble           camera_y,
                                  gdouble           camera_z)
 {
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
+  g_return_val_if_fail (LIGMA_IS_DISPLAY_SHELL (shell), NULL);
 
-  return g_object_new (GIMP_TYPE_TOOL_TRANSFORM_3D_GRID,
+  return g_object_new (LIGMA_TYPE_TOOL_TRANSFORM_3D_GRID,
                        "shell",      shell,
                        "x1",         x1,
                        "y1",         y1,

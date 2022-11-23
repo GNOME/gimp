@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpitemtreeview.h
- * Copyright (C) 2001-2003 Michael Natterer <mitch@gimp.org>
+ * ligmaitemtreeview.h
+ * Copyright (C) 2001-2003 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,78 +18,78 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_ITEM_TREE_VIEW_H__
-#define __GIMP_ITEM_TREE_VIEW_H__
+#ifndef __LIGMA_ITEM_TREE_VIEW_H__
+#define __LIGMA_ITEM_TREE_VIEW_H__
 
 
-#include "gimpcontainertreeview.h"
+#include "ligmacontainertreeview.h"
 
 
-typedef GimpContainer * (* GimpGetContainerFunc) (GimpImage *image);
-typedef GimpItem      * (* GimpGetItemFunc)      (GimpImage *image);
-typedef void            (* GimpSetItemFunc)      (GimpImage *image,
-                                                  GimpItem  *item);
-typedef GList         * (* GimpGetItemsFunc)     (GimpImage *image);
-typedef void            (* GimpSetItemsFunc)     (GimpImage *image,
+typedef LigmaContainer * (* LigmaGetContainerFunc) (LigmaImage *image);
+typedef LigmaItem      * (* LigmaGetItemFunc)      (LigmaImage *image);
+typedef void            (* LigmaSetItemFunc)      (LigmaImage *image,
+                                                  LigmaItem  *item);
+typedef GList         * (* LigmaGetItemsFunc)     (LigmaImage *image);
+typedef void            (* LigmaSetItemsFunc)     (LigmaImage *image,
                                                   GList     *items);
-typedef void            (* GimpAddItemFunc)      (GimpImage *image,
-                                                  GimpItem  *item,
-                                                  GimpItem  *parent,
+typedef void            (* LigmaAddItemFunc)      (LigmaImage *image,
+                                                  LigmaItem  *item,
+                                                  LigmaItem  *parent,
                                                   gint       index,
                                                   gboolean   push_undo);
-typedef void            (* GimpRemoveItemFunc)   (GimpImage *image,
-                                                  GimpItem  *item,
+typedef void            (* LigmaRemoveItemFunc)   (LigmaImage *image,
+                                                  LigmaItem  *item,
                                                   gboolean   push_undo,
-                                                  GimpItem  *new_active);
-typedef GimpItem      * (* GimpNewItemFunc)      (GimpImage *image);
+                                                  LigmaItem  *new_active);
+typedef LigmaItem      * (* LigmaNewItemFunc)      (LigmaImage *image);
 
 
-typedef gboolean        (* GimpIsLockedFunc)     (GimpItem  *item);
-typedef gboolean        (* GimpCanLockFunc)      (GimpItem  *item);
-typedef void            (* GimpSetLockFunc)      (GimpItem  *item,
+typedef gboolean        (* LigmaIsLockedFunc)     (LigmaItem  *item);
+typedef gboolean        (* LigmaCanLockFunc)      (LigmaItem  *item);
+typedef void            (* LigmaSetLockFunc)      (LigmaItem  *item,
                                                   gboolean   lock,
                                                   gboolean   push_undo);
-typedef GimpUndo      * (*GimpUndoLockPush)      (GimpImage     *image,
+typedef LigmaUndo      * (*LigmaUndoLockPush)      (LigmaImage     *image,
                                                   const gchar   *undo_desc,
-                                                  GimpItem      *item);
+                                                  LigmaItem      *item);
 
 
-#define GIMP_TYPE_ITEM_TREE_VIEW            (gimp_item_tree_view_get_type ())
-#define GIMP_ITEM_TREE_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_ITEM_TREE_VIEW, GimpItemTreeView))
-#define GIMP_ITEM_TREE_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_ITEM_TREE_VIEW, GimpItemTreeViewClass))
-#define GIMP_IS_ITEM_TREE_VIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_ITEM_TREE_VIEW))
-#define GIMP_IS_ITEM_TREE_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_ITEM_TREE_VIEW))
-#define GIMP_ITEM_TREE_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_ITEM_TREE_VIEW, GimpItemTreeViewClass))
+#define LIGMA_TYPE_ITEM_TREE_VIEW            (ligma_item_tree_view_get_type ())
+#define LIGMA_ITEM_TREE_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_ITEM_TREE_VIEW, LigmaItemTreeView))
+#define LIGMA_ITEM_TREE_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_ITEM_TREE_VIEW, LigmaItemTreeViewClass))
+#define LIGMA_IS_ITEM_TREE_VIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_ITEM_TREE_VIEW))
+#define LIGMA_IS_ITEM_TREE_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_ITEM_TREE_VIEW))
+#define LIGMA_ITEM_TREE_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_ITEM_TREE_VIEW, LigmaItemTreeViewClass))
 
 
-typedef struct _GimpItemTreeViewClass   GimpItemTreeViewClass;
-typedef struct _GimpItemTreeViewPrivate GimpItemTreeViewPrivate;
+typedef struct _LigmaItemTreeViewClass   LigmaItemTreeViewClass;
+typedef struct _LigmaItemTreeViewPrivate LigmaItemTreeViewPrivate;
 
-struct _GimpItemTreeView
+struct _LigmaItemTreeView
 {
-  GimpContainerTreeView    parent_instance;
+  LigmaContainerTreeView    parent_instance;
 
-  GimpItemTreeViewPrivate *priv;
+  LigmaItemTreeViewPrivate *priv;
 };
 
-struct _GimpItemTreeViewClass
+struct _LigmaItemTreeViewClass
 {
-  GimpContainerTreeViewClass  parent_class;
+  LigmaContainerTreeViewClass  parent_class;
 
   /*  signals  */
-  void (* set_image) (GimpItemTreeView *view,
-                      GimpImage        *image);
+  void (* set_image) (LigmaItemTreeView *view,
+                      LigmaImage        *image);
 
   GType                 item_type;
   const gchar          *signal_name;
 
   /*  virtual functions for manipulating the image's item tree  */
-  GimpGetContainerFunc  get_container;
-  GimpGetItemsFunc      get_selected_items;
-  GimpSetItemsFunc      set_selected_items;
-  GimpAddItemFunc       add_item;
-  GimpRemoveItemFunc    remove_item;
-  GimpNewItemFunc       new_item;
+  LigmaGetContainerFunc  get_container;
+  LigmaGetItemsFunc      get_selected_items;
+  LigmaSetItemsFunc      set_selected_items;
+  LigmaAddItemFunc       add_item;
+  LigmaRemoveItemFunc    remove_item;
+  LigmaNewItemFunc       new_item;
 
   /*  action names  */
   const gchar          *action_group;
@@ -120,48 +120,48 @@ struct _GimpItemTreeViewClass
 };
 
 
-GType       gimp_item_tree_view_get_type          (void) G_GNUC_CONST;
+GType       ligma_item_tree_view_get_type          (void) G_GNUC_CONST;
 
-GtkWidget * gimp_item_tree_view_new               (GType             view_type,
+GtkWidget * ligma_item_tree_view_new               (GType             view_type,
                                                    gint              view_size,
                                                    gint              view_border_width,
                                                    gboolean          multiple_selection,
-                                                   GimpImage        *image,
-                                                   GimpMenuFactory  *menu_facotry,
+                                                   LigmaImage        *image,
+                                                   LigmaMenuFactory  *menu_facotry,
                                                    const gchar      *menu_identifier,
                                                    const gchar      *ui_identifier);
 
-void        gimp_item_tree_view_set_image         (GimpItemTreeView *view,
-                                                   GimpImage        *image);
-GimpImage * gimp_item_tree_view_get_image         (GimpItemTreeView *view);
+void        ligma_item_tree_view_set_image         (LigmaItemTreeView *view,
+                                                   LigmaImage        *image);
+LigmaImage * ligma_item_tree_view_get_image         (LigmaItemTreeView *view);
 
-void        gimp_item_tree_view_add_options       (GimpItemTreeView *view,
+void        ligma_item_tree_view_add_options       (LigmaItemTreeView *view,
                                                    const gchar      *label,
                                                    GtkWidget        *options);
-void        gimp_item_tree_view_add_lock          (GimpItemTreeView *view,
+void        ligma_item_tree_view_add_lock          (LigmaItemTreeView *view,
                                                    const gchar      *icon_name,
-                                                   GimpIsLockedFunc  is_locked,
-                                                   GimpCanLockFunc   can_lock,
-                                                   GimpSetLockFunc   lock,
-                                                   GimpUndoLockPush  undo_push,
+                                                   LigmaIsLockedFunc  is_locked,
+                                                   LigmaCanLockFunc   can_lock,
+                                                   LigmaSetLockFunc   lock,
+                                                   LigmaUndoLockPush  undo_push,
                                                    const gchar      *signal_name,
-                                                   GimpUndoType      undo_type,
-                                                   GimpUndoType      group_undo_type,
+                                                   LigmaUndoType      undo_type,
+                                                   LigmaUndoType      group_undo_type,
                                                    const gchar      *undo_lock_label,
                                                    const gchar      *undo_unlock_label,
                                                    const gchar      *undo_exclusive_desc,
                                                    const gchar      *tooltip,
                                                    const gchar      *help_id);
-void        gimp_item_tree_view_blink_lock        (GimpItemTreeView *view,
-                                                   GimpItem         *item);
+void        ligma_item_tree_view_blink_lock        (LigmaItemTreeView *view,
+                                                   LigmaItem         *item);
 
-GtkWidget * gimp_item_tree_view_get_new_button    (GimpItemTreeView *view);
-GtkWidget * gimp_item_tree_view_get_delete_button (GimpItemTreeView *view);
+GtkWidget * ligma_item_tree_view_get_new_button    (LigmaItemTreeView *view);
+GtkWidget * ligma_item_tree_view_get_delete_button (LigmaItemTreeView *view);
 
-gint        gimp_item_tree_view_get_drop_index    (GimpItemTreeView *view,
-                                                   GimpViewable     *dest_viewable,
+gint        ligma_item_tree_view_get_drop_index    (LigmaItemTreeView *view,
+                                                   LigmaViewable     *dest_viewable,
                                                    GtkTreeViewDropPosition drop_pos,
-                                                   GimpViewable    **parent);
+                                                   LigmaViewable    **parent);
 
 
-#endif  /*  __GIMP_ITEM_TREE_VIEW_H__  */
+#endif  /*  __LIGMA_ITEM_TREE_VIEW_H__  */

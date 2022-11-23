@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcanvasarc.h
- * Copyright (C) 2010 Michael Natterer <mitch@gimp.org>
+ * ligmacanvasarc.h
+ * Copyright (C) 2010 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,38 +18,38 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CANVAS_ARC_H__
-#define __GIMP_CANVAS_ARC_H__
+#ifndef __LIGMA_CANVAS_ARC_H__
+#define __LIGMA_CANVAS_ARC_H__
 
 
-#include "gimpcanvasitem.h"
+#include "ligmacanvasitem.h"
 
 
-#define GIMP_TYPE_CANVAS_ARC            (gimp_canvas_arc_get_type ())
-#define GIMP_CANVAS_ARC(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CANVAS_ARC, GimpCanvasArc))
-#define GIMP_CANVAS_ARC_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CANVAS_ARC, GimpCanvasArcClass))
-#define GIMP_IS_CANVAS_ARC(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CANVAS_ARC))
-#define GIMP_IS_CANVAS_ARC_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CANVAS_ARC))
-#define GIMP_CANVAS_ARC_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CANVAS_ARC, GimpCanvasArcClass))
+#define LIGMA_TYPE_CANVAS_ARC            (ligma_canvas_arc_get_type ())
+#define LIGMA_CANVAS_ARC(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_CANVAS_ARC, LigmaCanvasArc))
+#define LIGMA_CANVAS_ARC_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_CANVAS_ARC, LigmaCanvasArcClass))
+#define LIGMA_IS_CANVAS_ARC(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_CANVAS_ARC))
+#define LIGMA_IS_CANVAS_ARC_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_CANVAS_ARC))
+#define LIGMA_CANVAS_ARC_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_CANVAS_ARC, LigmaCanvasArcClass))
 
 
-typedef struct _GimpCanvasArc      GimpCanvasArc;
-typedef struct _GimpCanvasArcClass GimpCanvasArcClass;
+typedef struct _LigmaCanvasArc      LigmaCanvasArc;
+typedef struct _LigmaCanvasArcClass LigmaCanvasArcClass;
 
-struct _GimpCanvasArc
+struct _LigmaCanvasArc
 {
-  GimpCanvasItem  parent_instance;
+  LigmaCanvasItem  parent_instance;
 };
 
-struct _GimpCanvasArcClass
+struct _LigmaCanvasArcClass
 {
-  GimpCanvasItemClass  parent_class;
+  LigmaCanvasItemClass  parent_class;
 };
 
 
-GType            gimp_canvas_arc_get_type (void) G_GNUC_CONST;
+GType            ligma_canvas_arc_get_type (void) G_GNUC_CONST;
 
-GimpCanvasItem * gimp_canvas_arc_new      (GimpDisplayShell *shell,
+LigmaCanvasItem * ligma_canvas_arc_new      (LigmaDisplayShell *shell,
                                            gdouble          center_x,
                                            gdouble          center_y,
                                            gdouble          radius_x,
@@ -58,7 +58,7 @@ GimpCanvasItem * gimp_canvas_arc_new      (GimpDisplayShell *shell,
                                            gdouble          slice_angle,
                                            gboolean         filled);
 
-void             gimp_canvas_arc_set      (GimpCanvasItem  *arc,
+void             ligma_canvas_arc_set      (LigmaCanvasItem  *arc,
                                            gdouble          center_x,
                                            gdouble          center_y,
                                            gdouble          radius_x,
@@ -66,4 +66,4 @@ void             gimp_canvas_arc_set      (GimpCanvasItem  *arc,
                                            gdouble          start_angle,
                                            gdouble          slice_angle);
 
-#endif /* __GIMP_CANVAS_ARC_H__ */
+#endif /* __LIGMA_CANVAS_ARC_H__ */

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * metadata.c
@@ -25,16 +25,16 @@
 #include <gtk/gtk.h>
 #include <gexiv2/gexiv2.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 #include "metadata-tags.h"
 
 #define PLUG_IN_PROC   "plug-in-metadata-viewer"
 #define PLUG_IN_BINARY "metadata-viewer"
-#define PLUG_IN_ROLE   "gimp-metadata"
+#define PLUG_IN_ROLE   "ligma-metadata"
 
 #define EXIF_PREFIX "Exif."
 #define IPTC_PREFIX "Iptc."
@@ -76,12 +76,12 @@ typedef struct _MetadataClass MetadataClass;
 
 struct _Metadata
 {
-  GimpPlugIn parent_instance;
+  LigmaPlugIn parent_instance;
 };
 
 struct _MetadataClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -90,16 +90,16 @@ struct _MetadataClass
 
 GType                   metadata_get_type         (void) G_GNUC_CONST;
 
-static GList          * metadata_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * metadata_create_procedure (GimpPlugIn           *plug_in,
+static GList          * metadata_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * metadata_create_procedure (LigmaPlugIn           *plug_in,
                                                    const gchar          *name);
 
-static GimpValueArray * metadata_run              (GimpProcedure        *procedure,
-                                                   const GimpValueArray *args,
+static LigmaValueArray * metadata_run              (LigmaProcedure        *procedure,
+                                                   const LigmaValueArray *args,
                                                    gpointer              run_data);
 
-static gboolean  metadata_viewer_dialog           (GimpImage            *image,
-                                                   GimpMetadata         *g_metadata,
+static gboolean  metadata_viewer_dialog           (LigmaImage            *image,
+                                                   LigmaMetadata         *g_metadata,
                                                    GError              **error);
 static void      metadata_dialog_set_metadata     (GExiv2Metadata       *metadata,
                                                    GtkBuilder           *builder);
@@ -133,16 +133,16 @@ static gchar   * metadata_format_string_value     (const gchar          *value,
 static inline gboolean metadata_tag_is_string     (const gchar          *tag);
 
 
-G_DEFINE_TYPE (Metadata, metadata, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Metadata, metadata, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (METADATA_TYPE)
+LIGMA_MAIN (METADATA_TYPE)
 DEFINE_STD_SET_I18N
 
 
 static void
 metadata_class_init (MetadataClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = metadata_query_procedures;
   plug_in_class->create_procedure = metadata_create_procedure;
@@ -155,50 +155,50 @@ metadata_init (Metadata *metadata)
 }
 
 static GList *
-metadata_query_procedures (GimpPlugIn *plug_in)
+metadata_query_procedures (LigmaPlugIn *plug_in)
 {
   return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
 }
 
-static GimpProcedure *
-metadata_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+metadata_create_procedure (LigmaPlugIn  *plug_in,
                            const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_procedure_new (plug_in, name,
-                                      GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_procedure_new (plug_in, name,
+                                      LIGMA_PDB_PROC_TYPE_PLUGIN,
                                       metadata_run, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "*");
+      ligma_procedure_set_image_types (procedure, "*");
 
-      gimp_procedure_set_menu_label (procedure, _("_View Metadata"));
-      gimp_procedure_add_menu_path (procedure, "<Image>/Image/Metadata");
+      ligma_procedure_set_menu_label (procedure, _("_View Metadata"));
+      ligma_procedure_add_menu_path (procedure, "<Image>/Image/Metadata");
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         _("View metadata (Exif, IPTC, XMP)"),
                                         "View metadata information attached "
                                         "to the current image. This can "
                                         "include Exif, IPTC and/or XMP "
                                         "information.",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Hartmut Kuhse, Michael Natterer, "
                                       "Ben Touchette",
                                       "Hartmut Kuhse, Michael Natterer, "
                                       "Ben Touchette",
                                       "2013, 2017");
 
-      GIMP_PROC_ARG_ENUM (procedure, "run-mode",
+      LIGMA_PROC_ARG_ENUM (procedure, "run-mode",
                           "Run mode",
                           "The run mode",
-                          GIMP_TYPE_RUN_MODE,
-                          GIMP_RUN_INTERACTIVE,
+                          LIGMA_TYPE_RUN_MODE,
+                          LIGMA_RUN_INTERACTIVE,
                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_IMAGE (procedure, "image",
+      LIGMA_PROC_ARG_IMAGE (procedure, "image",
                            "Image",
                            "The input image",
                            FALSE,
@@ -208,20 +208,20 @@ metadata_create_procedure (GimpPlugIn  *plug_in,
   return procedure;
 }
 
-static GimpValueArray *
-metadata_run (GimpProcedure        *procedure,
-              const GimpValueArray *args,
+static LigmaValueArray *
+metadata_run (LigmaProcedure        *procedure,
+              const LigmaValueArray *args,
               gpointer              run_data)
 {
-  GimpImage    *image;
-  GimpMetadata *metadata;
+  LigmaImage    *image;
+  LigmaMetadata *metadata;
   GError       *error  = NULL;
 
-  gimp_ui_init (PLUG_IN_BINARY);
+  ligma_ui_init (PLUG_IN_BINARY);
 
-  image = GIMP_VALUES_GET_IMAGE (args, 1);
+  image = LIGMA_VALUES_GET_IMAGE (args, 1);
 
-  metadata = gimp_image_get_metadata (image);
+  metadata = ligma_image_get_metadata (image);
 
   /* Always show metadata dialog so we can add appropriate iptc data
    * as needed. Sometimes license data needs to be added after the
@@ -230,19 +230,19 @@ metadata_run (GimpProcedure        *procedure,
    */
   if (! metadata)
     {
-      metadata = gimp_metadata_new ();
-      gimp_image_set_metadata (image, metadata);
+      metadata = ligma_metadata_new ();
+      ligma_image_set_metadata (image, metadata);
     }
 
   if (metadata_viewer_dialog (image, metadata, &error))
-    return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
+    return ligma_procedure_new_return_values (procedure, LIGMA_PDB_SUCCESS, NULL);
   else
-    return gimp_procedure_new_return_values (procedure, GIMP_PDB_EXECUTION_ERROR, error);
+    return ligma_procedure_new_return_values (procedure, LIGMA_PDB_EXECUTION_ERROR, error);
 }
 
 static gboolean
-metadata_viewer_dialog (GimpImage     *image,
-                        GimpMetadata  *g_metadata,
+metadata_viewer_dialog (LigmaImage     *image,
+                        LigmaMetadata  *g_metadata,
                         GError       **error)
 {
   GtkBuilder     *builder;
@@ -259,7 +259,7 @@ metadata_viewer_dialog (GimpImage     *image,
 
   builder = gtk_builder_new ();
 
-  ui_file = g_build_filename (gimp_data_directory (),
+  ui_file = g_build_filename (ligma_data_directory (),
                               "ui", "plug-ins", "plug-in-metadata-viewer.ui", NULL);
 
   if (! gtk_builder_add_from_file (builder, ui_file, &local_error))
@@ -276,14 +276,14 @@ metadata_viewer_dialog (GimpImage     *image,
 
   g_free (ui_file);
 
-  name = gimp_image_get_name (image);
+  name = ligma_image_get_name (image);
   title = g_strdup_printf (_("Metadata Viewer: %s"), name);
   g_free (name);
 
-  dialog = gimp_dialog_new (title,
-                            "gimp-metadata-viewer-dialog",
+  dialog = ligma_dialog_new (title,
+                            "ligma-metadata-viewer-dialog",
                             NULL, 0,
-                            gimp_standard_help_func, PLUG_IN_PROC,
+                            ligma_standard_help_func, PLUG_IN_PROC,
                             _("_Close"), GTK_RESPONSE_CLOSE,
                             NULL);
 
@@ -291,7 +291,7 @@ metadata_viewer_dialog (GimpImage     *image,
 
   g_free (title);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_CLOSE,
                                            -1);
 

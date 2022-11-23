@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * file-jp2.c -- JPEG 2000 file format plug-in
@@ -80,10 +80,10 @@
 #define _O_BINARY 0
 #endif
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 #include <openjpeg.h>
 
@@ -91,7 +91,7 @@
 #define LOAD_JP2_PROC      "file-jp2-load"
 #define LOAD_J2K_PROC      "file-j2k-load"
 #define PLUG_IN_BINARY     "file-jp2-load"
-#define PLUG_IN_ROLE       "gimp-file-jp2-load"
+#define PLUG_IN_ROLE       "ligma-file-jp2-load"
 
 
 typedef struct _Jp2      Jp2;
@@ -99,12 +99,12 @@ typedef struct _Jp2Class Jp2Class;
 
 struct _Jp2
 {
-  GimpPlugIn      parent_instance;
+  LigmaPlugIn      parent_instance;
 };
 
 struct _Jp2Class
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -113,17 +113,17 @@ struct _Jp2Class
 
 GType                   jp2_get_type         (void) G_GNUC_CONST;
 
-static GList          * jp2_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * jp2_create_procedure (GimpPlugIn           *plug_in,
+static GList          * jp2_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * jp2_create_procedure (LigmaPlugIn           *plug_in,
                                               const gchar          *name);
 
-static GimpValueArray * jp2_load             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
+static LigmaValueArray * jp2_load             (LigmaProcedure        *procedure,
+                                              LigmaRunMode           run_mode,
                                               GFile                *file,
-                                              const GimpValueArray *args,
+                                              const LigmaValueArray *args,
                                               gpointer              run_data);
 
-static GimpImage      * load_image           (GFile                *file,
+static LigmaImage      * load_image           (GFile                *file,
                                               OPJ_CODEC_FORMAT      format,
                                               OPJ_COLOR_SPACE       color_space,
                                               gboolean              interactive,
@@ -136,16 +136,16 @@ static OPJ_COLOR_SPACE  open_dialog          (GFile               *file,
                                               GError             **error);
 
 
-G_DEFINE_TYPE (Jp2, jp2, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Jp2, jp2, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (JP2_TYPE)
+LIGMA_MAIN (JP2_TYPE)
 DEFINE_STD_SET_I18N
 
 
 static void
 jp2_class_init (Jp2Class *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = jp2_query_procedures;
   plug_in_class->create_procedure = jp2_create_procedure;
@@ -158,7 +158,7 @@ jp2_init (Jp2 *jp2)
 }
 
 static GList *
-jp2_query_procedures (GimpPlugIn *plug_in)
+jp2_query_procedures (LigmaPlugIn *plug_in)
 {
   GList *list = NULL;
 
@@ -168,32 +168,32 @@ jp2_query_procedures (GimpPlugIn *plug_in)
   return list;
 }
 
-static GimpProcedure *
-jp2_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+jp2_create_procedure (LigmaPlugIn  *plug_in,
                       const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, LOAD_JP2_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_load_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            jp2_load, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure, _("JPEG 2000 image"));
+      ligma_procedure_set_menu_label (procedure, _("JPEG 2000 image"));
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Loads JPEG 2000 images.",
                                         "The JPEG 2000 image loader.",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Mukund Sivaraman",
                                       "Mukund Sivaraman",
                                       "2009");
 
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                           "image/jp2");
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "jp2");
 
       /* XXX: more complete magic number would be:
@@ -203,18 +203,18 @@ jp2_create_procedure (GimpPlugIn  *plug_in,
        * seem. The below smaller version seems ok and not interfering
        * with other formats.
        */
-      gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_magics (LIGMA_FILE_PROCEDURE (procedure),
                                       "3,string,\x0CjP");
     }
   else if (! strcmp (name, LOAD_J2K_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_load_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            jp2_load, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure, _("JPEG 2000 codestream"));
+      ligma_procedure_set_menu_label (procedure, _("JPEG 2000 codestream"));
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Loads JPEG 2000 codestream.",
                                         "Loads JPEG 2000 codestream. "
                                         "If the color space is set to "
@@ -225,17 +225,17 @@ jp2_create_procedure (GimpPlugIn  *plug_in,
                                         "expected to know the color space of "
                                         "your data.",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Jehan",
                                       "Jehan",
                                       "2009");
 
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                           "image/x-jp2-codestream");
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "j2k,j2c,jpc");
 
-      GIMP_PROC_ARG_INT (procedure, "colorspace",
+      LIGMA_PROC_ARG_INT (procedure, "colorspace",
                          "Color space",
                          "Color space { UNKNOWN (0), GRAYSCALE (1), RGB (2), "
                          "CMYK (3), YCbCr (4), xvYCC (5) }",
@@ -246,18 +246,18 @@ jp2_create_procedure (GimpPlugIn  *plug_in,
   return procedure;
 }
 
-static GimpValueArray *
-jp2_load (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
+static LigmaValueArray *
+jp2_load (LigmaProcedure        *procedure,
+          LigmaRunMode           run_mode,
           GFile                *file,
-          const GimpValueArray *args,
+          const LigmaValueArray *args,
           gpointer              run_data)
 {
-  GimpValueArray  *return_vals;
-  GimpImage       *image;
+  LigmaValueArray  *return_vals;
+  LigmaImage       *image;
   OPJ_COLOR_SPACE  color_space    = OPJ_CLRSPC_UNKNOWN;
   gboolean         interactive;
-  GimpMetadata    *metadata;
+  LigmaMetadata    *metadata;
   gboolean         profile_loaded = FALSE;
   GError          *error          = NULL;
 
@@ -265,20 +265,20 @@ jp2_load (GimpProcedure        *procedure,
 
   switch (run_mode)
     {
-    case GIMP_RUN_INTERACTIVE:
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_ui_init (PLUG_IN_BINARY);
+    case LIGMA_RUN_INTERACTIVE:
+    case LIGMA_RUN_WITH_LAST_VALS:
+      ligma_ui_init (PLUG_IN_BINARY);
       interactive = TRUE;
       break;
 
     default:
-      if (! strcmp (gimp_procedure_get_name (procedure), LOAD_J2K_PROC))
+      if (! strcmp (ligma_procedure_get_name (procedure), LOAD_J2K_PROC))
         {
           /* Order is not the same as OpenJPEG enum on purpose,
            * since it's better to not rely on a given order or
            * on enum values.
            */
-          switch (GIMP_VALUES_GET_INT (args, 0))
+          switch (LIGMA_VALUES_GET_INT (args, 0))
             {
             case 1:
               color_space = OPJ_CLRSPC_GRAY;
@@ -303,7 +303,7 @@ jp2_load (GimpProcedure        *procedure,
       break;
     }
 
-  if (! strcmp (gimp_procedure_get_name (procedure), LOAD_JP2_PROC))
+  if (! strcmp (ligma_procedure_get_name (procedure), LOAD_JP2_PROC))
     {
       image = load_image (file, OPJ_CODEC_JP2,
                           color_space, interactive, &profile_loaded,
@@ -317,33 +317,33 @@ jp2_load (GimpProcedure        *procedure,
     }
 
   if (! image)
-    return gimp_procedure_new_return_values (procedure,
+    return ligma_procedure_new_return_values (procedure,
                                              error ?
-                                             GIMP_PDB_EXECUTION_ERROR :
-                                             GIMP_PDB_CANCEL,
+                                             LIGMA_PDB_EXECUTION_ERROR :
+                                             LIGMA_PDB_CANCEL,
                                              error);
 
-  metadata = gimp_image_metadata_load_prepare (image, "image/jp2",
+  metadata = ligma_image_metadata_load_prepare (image, "image/jp2",
                                                file, NULL);
 
   if (metadata)
     {
-      GimpMetadataLoadFlags flags = GIMP_METADATA_LOAD_ALL;
+      LigmaMetadataLoadFlags flags = LIGMA_METADATA_LOAD_ALL;
 
       if (profile_loaded)
-        flags &= ~GIMP_METADATA_LOAD_COLORSPACE;
+        flags &= ~LIGMA_METADATA_LOAD_COLORSPACE;
 
-      gimp_image_metadata_load_finish (image, "image/jp2",
+      ligma_image_metadata_load_finish (image, "image/jp2",
                                        metadata, flags);
 
       g_object_unref (metadata);
     }
 
-  return_vals = gimp_procedure_new_return_values (procedure,
-                                                  GIMP_PDB_SUCCESS,
+  return_vals = ligma_procedure_new_return_values (procedure,
+                                                  LIGMA_PDB_SUCCESS,
                                                   NULL);
 
-  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
+  LIGMA_VALUES_SET_IMAGE (return_vals, 1, image);
 
   return return_vals;
 }
@@ -912,7 +912,7 @@ color_esycc_to_rgb (opj_image_t *image)
 
 /*
  * get_valid_precision() converts given precision to standard precision
- * of gimp i.e. 8, 16, 32
+ * of ligma i.e. 8, 16, 32
  * e.g 12-bit to 16-bit , 24-bit to 32-bit
 */
 static gint
@@ -926,7 +926,7 @@ get_valid_precision (gint precision_actual)
     return 32;
 }
 
-static GimpPrecision
+static LigmaPrecision
 get_image_precision (gint     precision,
                      gboolean linear)
 {
@@ -934,16 +934,16 @@ get_image_precision (gint     precision,
     {
       case 32:
         if (linear)
-          return GIMP_PRECISION_U32_LINEAR;
-        return GIMP_PRECISION_U32_NON_LINEAR;
+          return LIGMA_PRECISION_U32_LINEAR;
+        return LIGMA_PRECISION_U32_NON_LINEAR;
       case 16:
         if (linear)
-          return GIMP_PRECISION_U16_LINEAR;
-        return GIMP_PRECISION_U16_NON_LINEAR;
+          return LIGMA_PRECISION_U16_LINEAR;
+        return LIGMA_PRECISION_U16_NON_LINEAR;
       default:
          if (linear)
-          return GIMP_PRECISION_U8_LINEAR;
-        return GIMP_PRECISION_U8_NON_LINEAR;
+          return LIGMA_PRECISION_U8_LINEAR;
+        return LIGMA_PRECISION_U8_NON_LINEAR;
     }
 }
 
@@ -967,18 +967,18 @@ open_dialog (GFile            *file,
     /* Unexpected, but let's be a bit flexible and ask. */
     title = "JPEG 2000 image with no color space";
 
-  gimp_ui_init (PLUG_IN_BINARY);
+  ligma_ui_init (PLUG_IN_BINARY);
 
-  dialog = gimp_dialog_new (title, PLUG_IN_ROLE,
+  dialog = ligma_dialog_new (title, PLUG_IN_ROLE,
                             NULL, 0,
-                            gimp_standard_help_func,
+                            ligma_standard_help_func,
                             (format == OPJ_CODEC_J2K) ?  LOAD_J2K_PROC : LOAD_JP2_PROC,
                             _("_Cancel"), GTK_RESPONSE_CANCEL,
                             _("_Open"),   GTK_RESPONSE_OK,
 
                             NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
@@ -998,7 +998,7 @@ open_dialog (GFile            *file,
   if (num_components == 3)
     {
       /* Can be RGB, YUV and YCC. */
-      combo = gimp_int_combo_box_new (_("sRGB"),  OPJ_CLRSPC_SRGB,
+      combo = ligma_int_combo_box_new (_("sRGB"),  OPJ_CLRSPC_SRGB,
                                       _("YCbCr"), OPJ_CLRSPC_SYCC,
                                       _("xvYCC"), OPJ_CLRSPC_EYCC,
                                       NULL);
@@ -1006,7 +1006,7 @@ open_dialog (GFile            *file,
   else if (num_components == 4)
     {
       /* Can be RGB, YUV and YCC with alpha or CMYK. */
-      combo = gimp_int_combo_box_new (_("sRGB"),  OPJ_CLRSPC_SRGB,
+      combo = ligma_int_combo_box_new (_("sRGB"),  OPJ_CLRSPC_SRGB,
                                       _("YCbCr"), OPJ_CLRSPC_SYCC,
                                       _("xvYCC"), OPJ_CLRSPC_EYCC,
                                       _("CMYK"),  OPJ_CLRSPC_CMYK,
@@ -1017,27 +1017,27 @@ open_dialog (GFile            *file,
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Unsupported JPEG 2000%s '%s' with %d components."),
                    (format == OPJ_CODEC_J2K) ? " codestream" : "",
-                   gimp_file_get_utf8_name (file), num_components);
+                   ligma_file_get_utf8_name (file), num_components);
       color_space = OPJ_CLRSPC_UNKNOWN;
     }
 
   if (combo)
     {
-      gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+      ligma_grid_attach_aligned (GTK_GRID (grid), 0, 0,
                                 _("Color space:"), 0.0, 0.5,
                                 combo, 2);
       gtk_widget_show (combo);
 
       g_signal_connect (combo, "changed",
-                        G_CALLBACK (gimp_int_combo_box_get_active),
+                        G_CALLBACK (ligma_int_combo_box_get_active),
                         &color_space);
 
       /* By default, RGB is active. */
-      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), OPJ_CLRSPC_SRGB);
+      ligma_int_combo_box_set_active (LIGMA_INT_COMBO_BOX (combo), OPJ_CLRSPC_SRGB);
 
       gtk_widget_show (dialog);
 
-      if (gimp_dialog_run (GIMP_DIALOG (dialog)) != GTK_RESPONSE_OK)
+      if (ligma_dialog_run (LIGMA_DIALOG (dialog)) != GTK_RESPONSE_OK)
         {
           /* Do not set an error here. The import was simply canceled.
            * No error occurred. */
@@ -1050,7 +1050,7 @@ open_dialog (GFile            *file,
   return color_space;
 }
 
-static GimpImage *
+static LigmaImage *
 load_image (GFile             *file,
             OPJ_CODEC_FORMAT   format,
             OPJ_COLOR_SPACE    color_space,
@@ -1062,11 +1062,11 @@ load_image (GFile             *file,
   opj_codec_t       *codec      = NULL;
   opj_dparameters_t  parameters;
   opj_image_t       *image      = NULL;
-  GimpColorProfile  *profile    = NULL;
-  GimpImage         *gimp_image = NULL;
-  GimpLayer         *layer;
-  GimpImageType      image_type;
-  GimpImageBaseType  base_type;
+  LigmaColorProfile  *profile    = NULL;
+  LigmaImage         *ligma_image = NULL;
+  LigmaLayer         *layer;
+  LigmaImageType      image_type;
+  LigmaImageBaseType  base_type;
   gint               width;
   gint               height;
   gint               num_components;
@@ -1075,15 +1075,15 @@ load_image (GFile             *file,
   guchar            *pixels;
   const Babl        *file_format;
   gint               bpp;
-  GimpPrecision      image_precision;
+  LigmaPrecision      image_precision;
   gint               precision_actual, precision_scaled;
   gint               temp;
   gboolean           linear = FALSE;
   unsigned char     *c      = NULL;
   gint               n_threads;
 
-  gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_file_get_utf8_name (file));
+  ligma_progress_init_printf (_("Opening '%s'"),
+                             ligma_file_get_utf8_name (file));
 
   stream = opj_stream_create_default_file_stream (g_file_peek_path (file), OPJ_TRUE);
 
@@ -1091,7 +1091,7 @@ load_image (GFile             *file,
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Could not open '%s' for reading"),
-                   gimp_file_get_utf8_name (file));
+                   ligma_file_get_utf8_name (file));
       goto out;
     }
 
@@ -1100,15 +1100,15 @@ load_image (GFile             *file,
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Failed to initialize decoder for '%s', out of memory?"),
-                   gimp_file_get_utf8_name (file));
+                   ligma_file_get_utf8_name (file));
       goto out;
     }
 
-  n_threads = gimp_get_num_processors ();
+  n_threads = ligma_get_num_processors ();
   if (n_threads >= 2 && ! opj_codec_set_threads (codec, n_threads))
     {
       g_warning ("Couldn't set number of threads on decoder for '%s'.",
-                 gimp_file_get_utf8_name (file));
+                 ligma_file_get_utf8_name (file));
     }
 
   opj_set_default_decoder_parameters (&parameters);
@@ -1116,7 +1116,7 @@ load_image (GFile             *file,
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Couldn't set parameters on decoder for '%s'."),
-                   gimp_file_get_utf8_name (file));
+                   ligma_file_get_utf8_name (file));
       goto out;
     }
 
@@ -1124,7 +1124,7 @@ load_image (GFile             *file,
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Couldn't read JP2 header from '%s'."),
-                   gimp_file_get_utf8_name (file));
+                   ligma_file_get_utf8_name (file));
       goto out;
     }
 
@@ -1132,7 +1132,7 @@ load_image (GFile             *file,
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Couldn't decode JP2 image in '%s'."),
-                   gimp_file_get_utf8_name (file));
+                   ligma_file_get_utf8_name (file));
       goto out;
     }
 
@@ -1140,7 +1140,7 @@ load_image (GFile             *file,
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Couldn't decompress JP2 image in '%s'."),
-                   gimp_file_get_utf8_name (file));
+                   ligma_file_get_utf8_name (file));
       goto out;
     }
 
@@ -1148,7 +1148,7 @@ load_image (GFile             *file,
     {
       if (image->icc_profile_len)
         {
-          profile = gimp_color_profile_new_from_icc_profile (image->icc_profile_buf,
+          profile = ligma_color_profile_new_from_icc_profile (image->icc_profile_buf,
                                                              image->icc_profile_len,
                                                              error);
           if (! profile)
@@ -1159,11 +1159,11 @@ load_image (GFile             *file,
           if (image->color_space == OPJ_CLRSPC_UNSPECIFIED ||
               image->color_space == OPJ_CLRSPC_UNKNOWN)
             {
-              if (gimp_color_profile_is_rgb (profile))
+              if (ligma_color_profile_is_rgb (profile))
                 image->color_space = OPJ_CLRSPC_SRGB;
-              else if (gimp_color_profile_is_gray (profile))
+              else if (ligma_color_profile_is_gray (profile))
                 image->color_space = OPJ_CLRSPC_GRAY;
-              else if (gimp_color_profile_is_cmyk (profile))
+              else if (ligma_color_profile_is_cmyk (profile))
                 image->color_space = OPJ_CLRSPC_CMYK;
             }
         }
@@ -1171,7 +1171,7 @@ load_image (GFile             *file,
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("Couldn't decode CIELAB JP2 image in '%s'."),
-                       gimp_file_get_utf8_name (file));
+                       ligma_file_get_utf8_name (file));
           goto out;
         }
 
@@ -1228,7 +1228,7 @@ load_image (GFile             *file,
            */
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("Unknown color space in JP2 codestream '%s'."),
-                       gimp_file_get_utf8_name (file));
+                       ligma_file_get_utf8_name (file));
           goto out;
         }
     }
@@ -1239,7 +1239,7 @@ load_image (GFile             *file,
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("Couldn't convert YCbCr JP2 image '%s' to RGB."),
-                       gimp_file_get_utf8_name (file));
+                       ligma_file_get_utf8_name (file));
           goto out;
         }
     }
@@ -1249,7 +1249,7 @@ load_image (GFile             *file,
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("Couldn't convert CMYK JP2 image in '%s' to RGB."),
-                       gimp_file_get_utf8_name (file));
+                       ligma_file_get_utf8_name (file));
           goto out;
         }
     }
@@ -1259,7 +1259,7 @@ load_image (GFile             *file,
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("Couldn't convert xvYCC JP2 image in '%s' to RGB."),
-                       gimp_file_get_utf8_name (file));
+                       ligma_file_get_utf8_name (file));
           goto out;
         }
     }
@@ -1267,26 +1267,26 @@ load_image (GFile             *file,
   /* At this point, the image should be converted to Gray or RGB. */
   if (image->color_space == OPJ_CLRSPC_GRAY)
     {
-      base_type  = GIMP_GRAY;
-      image_type = GIMP_GRAY_IMAGE;
+      base_type  = LIGMA_GRAY;
+      image_type = LIGMA_GRAY_IMAGE;
 
       if (num_components == 2)
-        image_type = GIMP_GRAYA_IMAGE;
+        image_type = LIGMA_GRAYA_IMAGE;
     }
   else if (image->color_space == OPJ_CLRSPC_SRGB)
     {
-      base_type  = GIMP_RGB;
-      image_type = GIMP_RGB_IMAGE;
+      base_type  = LIGMA_RGB;
+      image_type = LIGMA_RGB_IMAGE;
 
       if (num_components == 4)
-        image_type = GIMP_RGBA_IMAGE;
+        image_type = LIGMA_RGBA_IMAGE;
     }
   else
     {
       /* If not gray or RGB, this is an image we cannot handle. */
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Unsupported color space in JP2 image '%s'."),
-                   gimp_file_get_utf8_name (file));
+                   ligma_file_get_utf8_name (file));
       goto out;
     }
 
@@ -1294,33 +1294,33 @@ load_image (GFile             *file,
   height = image->comps[0].h;
 
   if (profile)
-    linear = gimp_color_profile_is_linear (profile);
+    linear = ligma_color_profile_is_linear (profile);
 
   precision_actual = image->comps[0].prec;
 
   precision_scaled = get_valid_precision (precision_actual);
   image_precision = get_image_precision (precision_scaled, linear);
 
-  gimp_image = gimp_image_new_with_precision (width, height,
+  ligma_image = ligma_image_new_with_precision (width, height,
                                               base_type, image_precision);
 
-  gimp_image_set_file (gimp_image, file);
+  ligma_image_set_file (ligma_image, file);
 
   if (profile)
-    gimp_image_set_color_profile (gimp_image, profile);
+    ligma_image_set_color_profile (ligma_image, profile);
 
-  layer = gimp_layer_new (gimp_image,
+  layer = ligma_layer_new (ligma_image,
                           _("Background"),
                           width, height,
                           image_type,
                           100,
-                          gimp_image_get_default_new_layer_mode (gimp_image));
-  gimp_image_insert_layer (gimp_image, layer, NULL, 0);
+                          ligma_image_get_default_new_layer_mode (ligma_image));
+  ligma_image_insert_layer (ligma_image, layer, NULL, 0);
 
-  file_format = gimp_drawable_get_format (GIMP_DRAWABLE (layer));
+  file_format = ligma_drawable_get_format (LIGMA_DRAWABLE (layer));
   bpp = babl_format_get_bytes_per_pixel (file_format);
 
-  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
+  buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (layer));
   pixels = g_new0 (guchar, width * bpp);
 
   for (i = 0; i < height; i++)
@@ -1351,7 +1351,7 @@ load_image (GFile             *file,
   g_free (pixels);
 
   g_object_unref (buffer);
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 
  out:
   if (profile)
@@ -1363,5 +1363,5 @@ load_image (GFile             *file,
   if (stream)
     opj_stream_destroy (stream);
 
-  return gimp_image;
+  return ligma_image;
 }

@@ -1,8 +1,8 @@
-# Danish translation for GIMP Plug-Ins.
+# Danish translation for LIGMA Plug-Ins.
 # Copyright (C) 1999, 2000, 01, 02, 03, 04, 2016, 2018 Free Software Foundation, Inc.
 #
 # Yderligere oplysninger og konventioner kan findes på
-# http://wiki.dansk-gruppen.dk/index.php/GIMP
+# http://wiki.dansk-gruppen.dk/index.php/LIGMA
 #
 # Kenneth Christiansen <kenneth@gnome.dk>, 1999-2000.
 # Birger Langkjer <birger.langkjer@image.dk>, 2000.
@@ -17,8 +17,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP plug-ins\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: LIGMA plug-ins\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2022-01-27 10:19+0000\n"
 "PO-Revision-Date: 2022-04-27 18:59+0200\n"
 "Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
@@ -58,7 +58,7 @@ msgstr "Øv med en ged i programmeringssproget C"
 #: ../plug-ins/common/warp.c:374 ../plug-ins/common/wavelet-decompose.c:189
 #: ../plug-ins/file-dds/dds.c:511 ../plug-ins/flame/flame.c:240
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:398 ../plug-ins/gfig/gfig.c:212
-#: ../plug-ins/gimpressionist/gimp.c:177
+#: ../plug-ins/ligmaressionist/ligma.c:177
 #: ../plug-ins/gradient-flare/gradient-flare.c:934
 #: ../plug-ins/ifs-compose/ifs-compose.c:416 ../plug-ins/imagemap/imap_main.c:199
 #: ../plug-ins/lighting/lighting-main.c:403
@@ -107,11 +107,11 @@ msgstr "Øv med en ged (C)"
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:874
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1268
 #: ../plug-ins/gfig/gfig-dialog.c:296 ../plug-ins/gfig/gfig-dialog.c:646
-#: ../plug-ins/gfig/gfig-dialog.c:695 ../plug-ins/gimpressionist/brush.c:270
-#: ../plug-ins/gimpressionist/gimpressionist.c:142
-#: ../plug-ins/gimpressionist/orientmap.c:528
-#: ../plug-ins/gimpressionist/presets.c:642
-#: ../plug-ins/gimpressionist/sizemap.c:401
+#: ../plug-ins/gfig/gfig-dialog.c:695 ../plug-ins/ligmaressionist/brush.c:270
+#: ../plug-ins/ligmaressionist/ligmaressionist.c:142
+#: ../plug-ins/ligmaressionist/orientmap.c:528
+#: ../plug-ins/ligmaressionist/presets.c:642
+#: ../plug-ins/ligmaressionist/sizemap.c:401
 #: ../plug-ins/gradient-flare/gradient-flare.c:2516
 #: ../plug-ins/gradient-flare/gradient-flare.c:3366
 #: ../plug-ins/gradient-flare/gradient-flare.c:3478
@@ -199,10 +199,10 @@ msgstr "Øv med en ged (Python 3)"
 #: ../plug-ins/flame/flame.c:1033
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:567
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1269
-#: ../plug-ins/gimpressionist/gimpressionist.c:143
-#: ../plug-ins/gimpressionist/orientmap.c:529
-#: ../plug-ins/gimpressionist/presets.c:643
-#: ../plug-ins/gimpressionist/sizemap.c:402
+#: ../plug-ins/ligmaressionist/ligmaressionist.c:143
+#: ../plug-ins/ligmaressionist/orientmap.c:529
+#: ../plug-ins/ligmaressionist/presets.c:643
+#: ../plug-ins/ligmaressionist/sizemap.c:402
 #: ../plug-ins/gradient-flare/gradient-flare.c:2517
 #: ../plug-ins/gradient-flare/gradient-flare.c:3479
 #: ../plug-ins/ifs-compose/ifs-compose.c:810
@@ -217,15 +217,15 @@ msgstr "_OK"
 msgid "Exercise a goat (Vala)"
 msgstr "Øv med en ged (Vala)"
 
-#: ../extensions/goat-exercises/org.gimp.extension.goat-exercises.metainfo.xml.in.in.h:1
+#: ../extensions/goat-exercises/org.ligma.extension.goat-exercises.metainfo.xml.in.in.h:1
 msgid "Goat Exercises"
 msgstr "Gedeøvelser"
 
-#: ../extensions/goat-exercises/org.gimp.extension.goat-exercises.metainfo.xml.in.in.h:2
+#: ../extensions/goat-exercises/org.ligma.extension.goat-exercises.metainfo.xml.in.in.h:2
 msgid "Official Demo Plug-ins"
 msgstr "Officielle udvidelsesmoduler til demonstration"
 
-#: ../extensions/goat-exercises/org.gimp.extension.goat-exercises.metainfo.xml.in.in.h:3
+#: ../extensions/goat-exercises/org.ligma.extension.goat-exercises.metainfo.xml.in.in.h:3
 msgid ""
 "This extension provides a set of basic examples to demonstrate how to create "
 "your own plug-ins. Each plug-in does the same thing, except it is developed in "
@@ -437,7 +437,7 @@ msgstr "_Lodret"
 #: ../plug-ins/file-psd/psd-load.c:2509 ../plug-ins/file-sgi/sgi.c:474
 #: ../plug-ins/file-tiff/file-tiff-load.c:1358
 #: ../plug-ins/file-webp/file-webp-load.c:166 ../plug-ins/gfig/gfig-dialog.c:1325
-#: ../plug-ins/gimpressionist/general.c:139
+#: ../plug-ins/ligmaressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:245
 #: ../plug-ins/screenshot/screenshot-win32.c:315 ../plug-ins/twain/twain.c:660
 msgid "Background"
@@ -510,7 +510,7 @@ msgstr "Skab et skakbrætmønster"
 msgid "Checkerboard"
 msgstr "Skakbræt"
 
-#: ../plug-ins/common/checkerboard.c:555 ../plug-ins/gimpressionist/sizemap.c:508
+#: ../plug-ins/common/checkerboard.c:555 ../plug-ins/ligmaressionist/sizemap.c:508
 msgid "_Size:"
 msgstr "_Størrelse:"
 
@@ -716,8 +716,8 @@ msgid "Randoms from seed (shared)"
 msgstr "Tilfældige tal fra basistallet (delt)"
 
 #: ../plug-ins/common/cml-explorer.c:301 ../plug-ins/common/cml-explorer.c:309
-#: ../plug-ins/common/decompose.c:201 ../plug-ins/gimpressionist/orientation.c:172
-#: ../plug-ins/gimpressionist/size.c:179
+#: ../plug-ins/common/decompose.c:201 ../plug-ins/ligmaressionist/orientation.c:172
+#: ../plug-ins/ligmaressionist/size.c:179
 msgid "Hue"
 msgstr "Farvetone"
 
@@ -727,8 +727,8 @@ msgid "Saturation"
 msgstr "Mætning"
 
 #: ../plug-ins/common/cml-explorer.c:303 ../plug-ins/common/cml-explorer.c:311
-#: ../plug-ins/common/decompose.c:203 ../plug-ins/gimpressionist/orientation.c:148
-#: ../plug-ins/gimpressionist/size.c:155
+#: ../plug-ins/common/decompose.c:203 ../plug-ins/ligmaressionist/orientation.c:148
+#: ../plug-ins/ligmaressionist/size.c:155
 msgid "Value"
 msgstr "Valør"
 
@@ -747,7 +747,7 @@ msgid "Create abstract Coupled-Map Lattice patterns"
 msgstr "Opret abstrakte coupled-map lattice-mønstre (CML)"
 
 # evoluting er ikke et ord
-# I kildekoden er det gimp_progress_init, så måske er det en meddelelse, mens der beregnes
+# I kildekoden er det ligma_progress_init, så måske er det en meddelelse, mens der beregnes
 #: ../plug-ins/common/cml-explorer.c:877
 msgid "CML Explorer: evoluting"
 msgstr "CML-værktøj: Beregner"
@@ -798,7 +798,7 @@ msgstr "_Åbn"
 #: ../plug-ins/flame/flame.c:1111
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:823
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1677
-#: ../plug-ins/gfig/gfig-dialog.c:696 ../plug-ins/gimpressionist/brush.c:271
+#: ../plug-ins/gfig/gfig-dialog.c:696 ../plug-ins/ligmaressionist/brush.c:271
 #: ../plug-ins/ifs-compose/ifs-compose.c:807
 #: ../plug-ins/ifs-compose/ifs-compose.c:2563 ../plug-ins/imagemap/imap_file.c:125
 #: ../plug-ins/lighting/lighting-ui.c:601 ../plug-ins/lighting/lighting-ui.c:1164
@@ -993,7 +993,7 @@ msgstr "Gem parametre til CML-værktøjet"
 #: ../plug-ins/common/file-sunras.c:635 ../plug-ins/common/file-tga.c:1231
 #: ../plug-ins/common/file-xmc.c:1386 ../plug-ins/common/sphere-designer.c:2199
 #: ../plug-ins/file-bmp/bmp-save.c:340 ../plug-ins/file-fits/fits.c:513
-#: ../plug-ins/file-fli/fli-gimp.c:777 ../plug-ins/file-ico/ico-save.c:1252
+#: ../plug-ins/file-fli/fli-ligma.c:777 ../plug-ins/file-ico/ico-save.c:1252
 #: ../plug-ins/file-jpeg/jpeg-save.c:318 ../plug-ins/file-psd/psd-save.c:1815
 #: ../plug-ins/file-tiff/file-tiff-save.c:1025
 #: ../plug-ins/file-tiff/file-tiff-save.c:1101 ../plug-ins/flame/flame.c:508
@@ -1027,8 +1027,8 @@ msgstr "Indlæs parametre til CML-værktøjet"
 #: ../plug-ins/common/file-xmc.c:900 ../plug-ins/common/file-xwd.c:481
 #: ../plug-ins/common/sphere-designer.c:2088 ../plug-ins/file-bmp/bmp-load.c:226
 #: ../plug-ins/file-dds/ddsread.c:155 ../plug-ins/file-faxg3/faxg3.c:255
-#: ../plug-ins/file-fits/fits.c:381 ../plug-ins/file-fli/fli-gimp.c:457
-#: ../plug-ins/file-fli/fli-gimp.c:504 ../plug-ins/file-ico/ico-load.c:677
+#: ../plug-ins/file-fits/fits.c:381 ../plug-ins/file-fli/fli-ligma.c:457
+#: ../plug-ins/file-fli/fli-ligma.c:504 ../plug-ins/file-ico/ico-load.c:677
 #: ../plug-ins/file-ico/ico-load.c:774 ../plug-ins/file-jpeg/jpeg-load.c:96
 #: ../plug-ins/file-jpeg/jpeg-load.c:550 ../plug-ins/file-psd/psd-load.c:158
 #: ../plug-ins/file-psd/psd-load.c:163 ../plug-ins/file-psd/psd-save.c:1820
@@ -1036,8 +1036,8 @@ msgstr "Indlæs parametre til CML-værktøjet"
 #: ../plug-ins/file-psd/psd-thumb-load.c:87 ../plug-ins/flame/flame.c:477
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1862
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1037
-#: ../plug-ins/gfig/gfig.c:476 ../plug-ins/help/gimphelplocale.c:222
-#: ../plug-ins/help/gimphelplocale.c:238 ../plug-ins/lighting/lighting-ui.c:1377
+#: ../plug-ins/gfig/gfig.c:476 ../plug-ins/help/ligmahelplocale.c:222
+#: ../plug-ins/help/ligmahelplocale.c:238 ../plug-ins/lighting/lighting-ui.c:1377
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "Kunne ikke åbne “%s” til læsning: %s"
@@ -1115,7 +1115,7 @@ msgstr "Arrangér farvekort"
 #: ../plug-ins/common/sample-colorize.c:1412
 #: ../plug-ins/common/sphere-designer.c:2629 ../plug-ins/common/tile-small.c:524
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:814
-#: ../plug-ins/gimpressionist/preview.c:182
+#: ../plug-ins/ligmaressionist/preview.c:182
 #: ../plug-ins/ifs-compose/ifs-compose.c:808
 #: ../plug-ins/selection-to-path/selection-to-path.c:411
 msgid "_Reset"
@@ -1463,8 +1463,8 @@ msgstr "Kurvebøjning"
 
 #. Preview area, top of column
 #. preview
-#: ../plug-ins/common/curve-bend.c:1253 ../plug-ins/gimpressionist/orientmap.c:589
-#: ../plug-ins/gimpressionist/sizemap.c:458
+#: ../plug-ins/common/curve-bend.c:1253 ../plug-ins/ligmaressionist/orientmap.c:589
+#: ../plug-ins/ligmaressionist/sizemap.c:458
 #: ../plug-ins/print/print-page-layout.c:180
 msgid "Preview"
 msgstr "Forhåndsvisning"
@@ -1950,7 +1950,7 @@ msgstr "EOF eller fejl ved læsning af billedheader"
 #: ../plug-ins/common/file-xbm.c:739 ../plug-ins/common/file-xmc.c:649
 #: ../plug-ins/common/file-xpm.c:382 ../plug-ins/common/file-xwd.c:473
 #: ../plug-ins/file-bmp/bmp-load.c:218 ../plug-ins/file-exr/file-exr.c:187
-#: ../plug-ins/file-faxg3/faxg3.c:239 ../plug-ins/file-fli/fli-gimp.c:496
+#: ../plug-ins/file-faxg3/faxg3.c:239 ../plug-ins/file-fli/fli-ligma.c:496
 #: ../plug-ins/file-ico/ico-load.c:669 ../plug-ins/file-jpeg/jpeg-load.c:87
 #: ../plug-ins/file-psd/psd-load.c:171 ../plug-ins/file-raw/file-darktable.c:415
 #: ../plug-ins/file-raw/file-rawtherapee.c:343 ../plug-ins/file-sgi/sgi.c:331
@@ -2032,7 +2032,7 @@ msgstr "“%s”: EOF eller fejl ved læsning af paletdata"
 #: ../plug-ins/common/file-tga.c:1223 ../plug-ins/common/file-xbm.c:1049
 #: ../plug-ins/common/file-xpm.c:701 ../plug-ins/common/file-xwd.c:675
 #: ../plug-ins/file-bmp/bmp-save.c:332 ../plug-ins/file-fits/fits.c:504
-#: ../plug-ins/file-fli/fli-gimp.c:744 ../plug-ins/file-ico/ico-save.c:1244
+#: ../plug-ins/file-fli/fli-ligma.c:744 ../plug-ins/file-ico/ico-save.c:1244
 #: ../plug-ins/file-jpeg/jpeg-save.c:273 ../plug-ins/file-psd/psd-save.c:1777
 #: ../plug-ins/file-sgi/sgi.c:645 ../plug-ins/file-tiff/file-tiff-save.c:1015
 #, c-format
@@ -2117,7 +2117,7 @@ msgstr "Komprimerer “%s”"
 msgid "No sensible file extension, attempting to load with file magic."
 msgstr "Ingen fornuftig filendelse, prøver at indlæse vha. filmagi."
 
-# (GIP) Kan evt. også link til skrivebordet, har ikke kunnet finde sætningen i GIMP
+# (GIP) Kan evt. også link til skrivebordet, har ikke kunnet finde sætningen i LIGMA
 #: ../plug-ins/common/file-desktop-link.c:110
 msgid "Desktop Link"
 msgstr "Skrivebordsgenvej"
@@ -2147,13 +2147,13 @@ msgstr "“%s” er ikke en DICOM-fil."
 
 #: ../plug-ins/common/file-dicom.c:576
 #, c-format
-msgid "Transfer syntax %s is not supported by GIMP."
-msgstr "Overførselssyntaksen %s understøttes ikke af GIMP."
+msgid "Transfer syntax %s is not supported by LIGMA."
+msgstr "Overførselssyntaksen %s understøttes ikke af LIGMA."
 
 #: ../plug-ins/common/file-dicom.c:631
 #, c-format
-msgid "%s is not supported by GIMP in combination with samples per pixel: %d"
-msgstr "%s understøttes ikke af GIMP i kombination med punkter pr. pixel: %d"
+msgid "%s is not supported by LIGMA in combination with samples per pixel: %d"
+msgstr "%s understøttes ikke af LIGMA i kombination med punkter pr. pixel: %d"
 
 #: ../plug-ins/common/file-dicom.c:1524
 msgid "Cannot save images with alpha channel."
@@ -2166,8 +2166,8 @@ msgid "Cannot operate on unknown image types."
 msgstr "Kan ikke arbejde med ukendte billedtyper."
 
 #: ../plug-ins/common/file-gbr.c:122
-msgid "GIMP brush"
-msgstr "GIMP-pensel"
+msgid "LIGMA brush"
+msgstr "LIGMA-pensel"
 
 #: ../plug-ins/common/file-gbr.c:228
 #, c-format
@@ -2381,8 +2381,8 @@ msgstr ""
 "Billedet, du prøver at eksportere, har kun et lag."
 
 #: ../plug-ins/common/file-gih.c:176
-msgid "GIMP brush (animated)"
-msgstr "GIMP-pensel (animeret)"
+msgid "LIGMA brush (animated)"
+msgstr "LIGMA-pensel (animeret)"
 
 # med småt da der står Eksportér billede som foran
 #: ../plug-ins/common/file-gih.c:636
@@ -3011,7 +3011,7 @@ msgid "Replace"
 msgstr "Erstat"
 
 # https://helpx.adobe.com/dk/photoshop/using/creating-frame-animations.html
-# Photoshop har rammekassering, men frame oversættes med stillbillede i gimp
+# Photoshop har rammekassering, men frame oversættes med stillbillede i ligma
 #: ../plug-ins/common/file-mng.c:1667
 msgid "Default _frame disposal:"
 msgstr "_Standardbilledkassering:"
@@ -3049,8 +3049,8 @@ msgstr ""
 "end et lag. Billedet, du eksporterer, har kun et lag."
 
 #: ../plug-ins/common/file-pat.c:109
-msgid "GIMP pattern"
-msgstr "GIMP-mønster"
+msgid "LIGMA pattern"
+msgstr "LIGMA-mønster"
 
 #: ../plug-ins/common/file-pat.c:270
 msgid "Export Image as Pattern"
@@ -3511,16 +3511,16 @@ msgid "Invalid X resolution."
 msgstr "Ugyldig x-opløsning."
 
 #: ../plug-ins/common/file-pnm.c:706
-msgid "Image width is larger than GIMP can handle."
-msgstr "Billedbredden er større end GIMP kan håndtere."
+msgid "Image width is larger than LIGMA can handle."
+msgstr "Billedbredden er større end LIGMA kan håndtere."
 
 #: ../plug-ins/common/file-pnm.c:713
 msgid "Invalid Y resolution."
 msgstr "Ugyldig y-opløsning."
 
 #: ../plug-ins/common/file-pnm.c:715
-msgid "Image height is larger than GIMP can handle."
-msgstr "Billedhøjden er større end GIMP kan håndtere."
+msgid "Image height is larger than LIGMA can handle."
+msgstr "Billedhøjden er større end LIGMA kan håndtere."
 
 #: ../plug-ins/common/file-pnm.c:727
 msgid "Bogus scale factor."
@@ -3627,7 +3627,7 @@ msgid "Gray"
 msgstr "Grå"
 
 #: ../plug-ins/common/file-ps.c:3681 ../plug-ins/common/file-xpm.c:507
-#: ../plug-ins/gimpressionist/color.c:65 ../plug-ins/gimpressionist/general.c:169
+#: ../plug-ins/ligmaressionist/color.c:65 ../plug-ins/ligmaressionist/general.c:169
 #: ../plug-ins/imagemap/imap_menu.c:227
 msgid "Color"
 msgstr "Farve"
@@ -4152,10 +4152,10 @@ msgstr ""
 #, c-format
 msgid ""
 "'%s':\n"
-"Image width is larger than GIMP can handle"
+"Image width is larger than LIGMA can handle"
 msgstr ""
 "'%s':\n"
-"Billedbredden er større end GIMP kan håndtere"
+"Billedbredden er større end LIGMA kan håndtere"
 
 #: ../plug-ins/common/file-sunras.c:537 ../plug-ins/common/file-xbm.c:851
 #: ../plug-ins/common/file-xwd.c:566
@@ -4172,10 +4172,10 @@ msgstr ""
 #, c-format
 msgid ""
 "'%s':\n"
-"Image height is larger than GIMP can handle"
+"Image height is larger than LIGMA can handle"
 msgstr ""
 "'%s':\n"
-"Billedhøjden er større end GIMP kan håndtere"
+"Billedhøjden er større end LIGMA kan håndtere"
 
 #: ../plug-ins/common/file-sunras.c:581
 msgid "This image depth is not supported"
@@ -4285,9 +4285,9 @@ msgstr "Importér _kurver"
 
 #: ../plug-ins/common/file-svg.c:883
 msgid ""
-"Import path elements of the SVG so they can be used with the GIMP path tool"
+"Import path elements of the SVG so they can be used with the LIGMA path tool"
 msgstr ""
-"Importér kurveelementer fra SVG-billedet, så de kan bruges med GIMPs "
+"Importér kurveelementer fra SVG-billedet, så de kan bruges med LIGMAs "
 "kurveværktøj"
 
 #: ../plug-ins/common/file-svg.c:891
@@ -5324,9 +5324,9 @@ msgstr "_Hent farveprøver"
 
 #: ../plug-ins/common/sample-colorize.c:1415 ../plug-ins/common/tile-small.c:628
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1224
-#: ../plug-ins/gimpressionist/orientmap.c:527
-#: ../plug-ins/gimpressionist/presets.c:1060
-#: ../plug-ins/gimpressionist/sizemap.c:400
+#: ../plug-ins/ligmaressionist/orientmap.c:527
+#: ../plug-ins/ligmaressionist/presets.c:1060
+#: ../plug-ins/ligmaressionist/sizemap.c:400
 #: ../plug-ins/imagemap/imap_default_dialog.c:103
 msgid "_Apply"
 msgstr "An_vend"
@@ -5568,7 +5568,7 @@ msgid "Use the background color"
 msgstr "Brug baggrundsfarven"
 
 #: ../plug-ins/common/sphere-designer.c:335
-#: ../plug-ins/gimpressionist/general.c:165
+#: ../plug-ins/ligmaressionist/general.c:165
 msgid "Solid"
 msgstr "Ensfarvet"
 
@@ -5656,7 +5656,7 @@ msgstr "D_uplikér"
 #: ../plug-ins/common/sphere-designer.c:2749
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:874
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1235
-#: ../plug-ins/gimpressionist/presets.c:1067
+#: ../plug-ins/ligmaressionist/presets.c:1067
 #: ../plug-ins/gradient-flare/gradient-flare.c:3083
 #: ../plug-ins/gradient-flare/gradient-flare.c:3366
 #: ../plug-ins/ifs-compose/ifs-compose.c:1077 ../plug-ins/imagemap/imap_menu.c:172
@@ -5693,7 +5693,7 @@ msgstr "Farvevælger"
 
 #. Scale
 #: ../plug-ins/common/sphere-designer.c:2831
-#: ../plug-ins/gimpressionist/paper.c:191
+#: ../plug-ins/ligmaressionist/paper.c:191
 #: ../plug-ins/ifs-compose/ifs-compose.c:586
 msgid "Scale:"
 msgstr "Skalering:"
@@ -5751,7 +5751,7 @@ msgstr "y-placering:"
 msgid "Position Z:"
 msgstr "z-placering:"
 
-# Fra kildekoden: gimp_progress_init (_("Rendering sphere"));
+# Fra kildekoden: ligma_progress_init (_("Rendering sphere"));
 # Dvs. det er en proces
 #: ../plug-ins/common/sphere-designer.c:3072
 msgid "Rendering sphere"
@@ -5846,10 +5846,10 @@ msgstr "Gemt"
 
 #: ../plug-ins/common/unit-editor.c:111
 msgid ""
-"A unit definition will only be saved before GIMP exits if this column is "
+"A unit definition will only be saved before LIGMA exits if this column is "
 "checked."
 msgstr ""
-"Der vil kun blive gemt en enhedsdefinition før GIMP afslutter, hvis denne "
+"Der vil kun blive gemt en enhedsdefinition før LIGMA afslutter, hvis denne "
 "kolonne er valgt."
 
 #: ../plug-ins/common/unit-editor.c:113
@@ -5857,9 +5857,9 @@ msgid "ID"
 msgstr "Id"
 
 #: ../plug-ins/common/unit-editor.c:113
-msgid "This string will be used to identify a unit in GIMP's configuration files."
+msgid "This string will be used to identify a unit in LIGMA's configuration files."
 msgstr ""
-"Teksten bliver brugt til at identificere en enhed i GIMPs konfigurationsfiler."
+"Teksten bliver brugt til at identificere en enhed i LIGMAs konfigurationsfiler."
 
 #: ../plug-ins/common/unit-editor.c:115
 msgid "Factor"
@@ -5932,8 +5932,8 @@ msgid "U_nits"
 msgstr "_Enheder"
 
 #: ../plug-ins/common/unit-editor.c:187
-msgid "Create or alter units used in GIMP"
-msgstr "Skab eller ret enheder brugt i GIMP"
+msgid "Create or alter units used in LIGMA"
+msgstr "Skab eller ret enheder brugt i LIGMA"
 
 #: ../plug-ins/common/unit-editor.c:237
 msgid "Add a New Unit"
@@ -5983,7 +5983,7 @@ msgstr "Måleenheder"
 #. Put buttons in
 #: ../plug-ins/common/unit-editor.c:446
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1213
-#: ../plug-ins/gimpressionist/presets.c:1073
+#: ../plug-ins/ligmaressionist/presets.c:1073
 msgid "_Refresh"
 msgstr "_Opdatér"
 
@@ -6007,7 +6007,7 @@ msgstr "_Lysstyrke"
 msgid "Effect Operator"
 msgstr "Effektoperator"
 
-# Omvendt Gradient: https://docs.gimp.org/en/plug-in-lic.html
+# Omvendt Gradient: https://docs.ligma.org/en/plug-in-lic.html
 #: ../plug-ins/common/van-gogh-lic.c:747
 msgid "_Derivative"
 msgstr "Omven_dt"
@@ -6115,7 +6115,7 @@ msgstr "Forgrundsfarve"
 msgid "Advanced Options"
 msgstr "Avancerede muligheder"
 
-# Ifølge manualen (https://docs.gimp.org/en/plug-in-warp.html) er det effekten
+# Ifølge manualen (https://docs.ligma.org/en/plug-in-warp.html) er det effekten
 #: ../plug-ins/common/warp.c:666
 msgid "Dither size:"
 msgstr "Pixelspredning:"
@@ -6431,12 +6431,12 @@ msgstr "_Skriv information om farverum"
 #: ../plug-ins/file-bmp/bmp-save.c:1016
 msgid ""
 "Some applications can not read BMP images that include color space information. "
-"GIMP writes color space information by default. Disabling this option will "
-"cause GIMP to not write color space information to the file."
+"LIGMA writes color space information by default. Disabling this option will "
+"cause LIGMA to not write color space information to the file."
 msgstr ""
 "Nogle programmer kan ikke læse BMP-billeder, som inkluderer information om "
-"farverum. GIMP skriver information om farverum som standard. Deaktivering af "
-"indstillingen vil gøre, at GIMP ikke skriver information om farverum til filen."
+"farverum. LIGMA skriver information om farverum som standard. Deaktivering af "
+"indstillingen vil gøre, at LIGMA ikke skriver information om farverum til filen."
 
 #. RGB Encoding Pptions
 #: ../plug-ins/file-bmp/bmp-save.c:1025
@@ -6577,7 +6577,7 @@ msgstr "Mipmapindstillinger"
 msgid "F_ilter:"
 msgstr "_Filter:"
 
-# "Paint mode" virker malplaceret, da man ikke kan male. Det handler om gengivelsen af skæret: https://docs.gimp.org/en/plug-in-gflare.html
+# "Paint mode" virker malplaceret, da man ikke kan male. Det handler om gengivelsen af skæret: https://docs.ligma.org/en/plug-in-gflare.html
 #: ../plug-ins/file-dds/ddswrite.c:2105
 msgid "_Wrap mode:"
 msgstr "Ombr_ydningstilstand:"
@@ -6704,34 +6704,34 @@ msgctxt "composing"
 msgid "_None"
 msgstr "_Ingen"
 
-#: ../plug-ins/file-fli/fli-gimp.c:179 ../plug-ins/file-fli/fli-gimp.c:216
+#: ../plug-ins/file-fli/fli-ligma.c:179 ../plug-ins/file-fli/fli-ligma.c:216
 msgid "AutoDesk FLIC animation"
 msgstr "AutoDesk FLIC-animation"
 
-#: ../plug-ins/file-fli/fli-gimp.c:579
+#: ../plug-ins/file-fli/fli-ligma.c:579
 #, c-format
 msgid "Frame (%i)"
 msgstr "Billede (%i)"
 
-#: ../plug-ins/file-fli/fli-gimp.c:740
+#: ../plug-ins/file-fli/fli-ligma.c:740
 msgid "Sorry, I can export only INDEXED and GRAY images."
 msgstr "Jeg kan kun eksportere indekserede eller gråtonebilleder."
 
-#: ../plug-ins/file-fli/fli-gimp.c:901
+#: ../plug-ins/file-fli/fli-ligma.c:901
 msgid "Open FLIC Animation"
 msgstr "Åbn FLIC-animation"
 
-#: ../plug-ins/file-fli/fli-gimp.c:919
+#: ../plug-ins/file-fli/fli-ligma.c:919
 msgctxt "frame-range"
 msgid "_From:"
 msgstr "_Fra:"
 
-#: ../plug-ins/file-fli/fli-gimp.c:925
+#: ../plug-ins/file-fli/fli-ligma.c:925
 msgctxt "frame-range"
 msgid "_To:"
 msgstr "_Til:"
 
-#: ../plug-ins/file-fli/fli-gimp.c:955
+#: ../plug-ins/file-fli/fli-ligma.c:955
 msgid "Export Image as FLI Animation"
 msgstr "Eksportér billede som FLI-animation"
 
@@ -7026,8 +7026,8 @@ msgid "Failed to decompress data"
 msgstr "Kunne ikke udpakke data"
 
 #: ../plug-ins/file-psd/psd-save.c:470
-msgid "Error: Can't convert GIMP base imagetype to PSD mode"
-msgstr "Fejl: Kan ikke konvertere GIMP-baseret billedtype til PSD-tilstand"
+msgid "Error: Can't convert LIGMA base imagetype to PSD mode"
+msgstr "Fejl: Kan ikke konvertere LIGMA-baseret billedtype til PSD-tilstand"
 
 #: ../plug-ins/file-psd/psd-save.c:1770
 #, c-format
@@ -7170,7 +7170,7 @@ msgstr "Raw Arriflex ARI"
 msgid ""
 "There is no RAW loader installed to open '%s' files.\n"
 "\n"
-"GIMP currently supports these RAW loaders:\n"
+"LIGMA currently supports these RAW loaders:\n"
 "- darktable (http://www.darktable.org/), at least 1.7\n"
 "- RawTherapee (http://rawtherapee.com/), at least 5.2\n"
 "\n"
@@ -7178,7 +7178,7 @@ msgid ""
 msgstr ""
 "Der er ikke installeret en RAW-indlæser til at åbne “%s”-filer.\n"
 "\n"
-"For nærværende understøtter GIMP disse RAW-indlæsere:\n"
+"For nærværende understøtter LIGMA disse RAW-indlæsere:\n"
 "– darktable (http://www.darktable.org/), mindst 1.7\n"
 "– RawTherapee (http://rawtherapee.com/), mindst 5.2\n"
 "\n"
@@ -7706,8 +7706,8 @@ msgstr "_Tilfældig"
 msgid "Same"
 msgstr "Samme"
 
-#: ../plug-ins/flame/flame.c:808 ../plug-ins/gimpressionist/orientation.c:156
-#: ../plug-ins/gimpressionist/size.c:163
+#: ../plug-ins/flame/flame.c:808 ../plug-ins/ligmaressionist/orientation.c:156
+#: ../plug-ins/ligmaressionist/size.c:163
 msgid "Random"
 msgstr "Tilfældig"
 
@@ -7840,8 +7840,8 @@ msgstr "Gem flamme"
 msgid "Flame"
 msgstr "Flamme"
 
-#: ../plug-ins/flame/flame.c:1095 ../plug-ins/gimpressionist/orientation.c:190
-#: ../plug-ins/gimpressionist/size.c:199
+#: ../plug-ins/flame/flame.c:1095 ../plug-ins/ligmaressionist/orientation.c:190
+#: ../plug-ins/ligmaressionist/size.c:199
 #: ../plug-ins/gradient-flare/gradient-flare.c:3081
 #: ../plug-ins/imagemap/imap_menu.c:160
 msgid "_Edit"
@@ -7898,16 +7898,16 @@ msgid "_Y:"
 msgstr "_y:"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:546
-#: ../plug-ins/gfig/gfig-dialog.c:280 ../plug-ins/gimpressionist/utils.c:139
+#: ../plug-ins/gfig/gfig-dialog.c:280 ../plug-ins/ligmaressionist/utils.c:139
 #: ../plug-ins/gradient-flare/gradient-flare.c:997
 #, c-format
 msgid ""
-"No %s in gimprc:\n"
+"No %s in ligmarc:\n"
 "You need to add an entry like\n"
 "(%s \"%s\")\n"
 "to your %s file."
 msgstr ""
-"Ingen %s i gimprc:\n"
+"Ingen %s i ligmarc:\n"
 "Du skal tilføje en linje som\n"
 "(%s “%s”)\n"
 "til din %s-fil."
@@ -8516,7 +8516,7 @@ msgstr "Udjævning"
 msgid "Max undo:"
 msgstr "Maks. fortryd:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1324 ../plug-ins/gimpressionist/general.c:184
+#: ../plug-ins/gfig/gfig-dialog.c:1324 ../plug-ins/ligmaressionist/general.c:184
 msgid "Transparent"
 msgstr "Gennemsigtig"
 
@@ -8617,7 +8617,7 @@ msgid "Left"
 msgstr "Venstre"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1746
-#: ../plug-ins/gimpressionist/orientation.c:140
+#: ../plug-ins/ligmaressionist/orientation.c:140
 msgid "Orientation:"
 msgstr "Orientering:"
 
@@ -8676,294 +8676,294 @@ msgstr ""
 "Der opstod en fejl, da den midlertidige fil “%s” skulle åbnes til "
 "parasitindlæsning: %s"
 
-#: ../plug-ins/gimpressionist/brush.c:261
+#: ../plug-ins/ligmaressionist/brush.c:261
 msgid "Can only save drawables!"
 msgstr "Kan kun gemme tegneobjekter!"
 
-#: ../plug-ins/gimpressionist/brush.c:266
+#: ../plug-ins/ligmaressionist/brush.c:266
 msgid "Save Brush"
 msgstr "Gem pensel"
 
-#: ../plug-ins/gimpressionist/brush.c:522
+#: ../plug-ins/ligmaressionist/brush.c:522
 msgid "_Brush"
 msgstr "_Pensel"
 
-#: ../plug-ins/gimpressionist/brush.c:559
+#: ../plug-ins/ligmaressionist/brush.c:559
 msgid "Gamma:"
 msgstr "Gamma:"
 
-#: ../plug-ins/gimpressionist/brush.c:577
+#: ../plug-ins/ligmaressionist/brush.c:577
 msgid "Changes the gamma (brightness) of the selected brush"
 msgstr "Ændrer gammaværdien (lysstyrken) for den valgte pensel"
 
-#: ../plug-ins/gimpressionist/brush.c:585
+#: ../plug-ins/ligmaressionist/brush.c:585
 #: ../plug-ins/metadata/metadata-editor.c:621
 msgid "Select:"
 msgstr "Markering:"
 
-#: ../plug-ins/gimpressionist/brush.c:601
+#: ../plug-ins/ligmaressionist/brush.c:601
 msgid "Save _as"
 msgstr "Gem _som"
 
-#: ../plug-ins/gimpressionist/brush.c:613
+#: ../plug-ins/ligmaressionist/brush.c:613
 msgid "Aspect ratio:"
 msgstr "Højde-breddeforhold:"
 
-#: ../plug-ins/gimpressionist/brush.c:615
+#: ../plug-ins/ligmaressionist/brush.c:615
 msgid "Specifies the aspect ratio of the brush"
 msgstr "Angiver højde-breddeforholdet for penslen"
 
-#: ../plug-ins/gimpressionist/brush.c:626 ../plug-ins/gimpressionist/paper.c:202
+#: ../plug-ins/ligmaressionist/brush.c:626 ../plug-ins/ligmaressionist/paper.c:202
 msgid "Relief:"
 msgstr "Relief:"
 
-#: ../plug-ins/gimpressionist/brush.c:628 ../plug-ins/gimpressionist/paper.c:204
+#: ../plug-ins/ligmaressionist/brush.c:628 ../plug-ins/ligmaressionist/paper.c:204
 msgid "Specifies the amount of embossing to apply to the image (in percent)"
 msgstr "Angiver mængden af reliefeffekter, som skal påføres billedet (i procent)"
 
-#: ../plug-ins/gimpressionist/color.c:59
+#: ../plug-ins/ligmaressionist/color.c:59
 msgid "Co_lor"
 msgstr "Fa_rve"
 
-#: ../plug-ins/gimpressionist/color.c:69
+#: ../plug-ins/ligmaressionist/color.c:69
 msgid "A_verage under brush"
 msgstr "_Gennemsnit under pensel"
 
-#: ../plug-ins/gimpressionist/color.c:71
+#: ../plug-ins/ligmaressionist/color.c:71
 msgid "C_enter of brush"
 msgstr "_Midten af pensel"
 
-#: ../plug-ins/gimpressionist/color.c:78
+#: ../plug-ins/ligmaressionist/color.c:78
 msgid "Color is computed from the average of all pixels under the brush"
 msgstr "Farve bliver beregnet som gennemsnittet af alle punkter under penslen"
 
-#: ../plug-ins/gimpressionist/color.c:82
+#: ../plug-ins/ligmaressionist/color.c:82
 msgid "Samples the color from the pixel in the center of the brush"
 msgstr "Vælger farven fra punktet i penslens centrum"
 
-#: ../plug-ins/gimpressionist/color.c:87
+#: ../plug-ins/ligmaressionist/color.c:87
 msgid "Color _noise:"
 msgstr "Farve_støj:"
 
-#: ../plug-ins/gimpressionist/color.c:89
+#: ../plug-ins/ligmaressionist/color.c:89
 msgid "Adds random noise to the color"
 msgstr "Tilføjer tilfældig støj til farven"
 
-#: ../plug-ins/gimpressionist/general.c:133
+#: ../plug-ins/ligmaressionist/general.c:133
 #: ../plug-ins/gradient-flare/gradient-flare.c:3676
 msgid "_General"
 msgstr "_Generelt"
 
-#: ../plug-ins/gimpressionist/general.c:149
+#: ../plug-ins/ligmaressionist/general.c:149
 msgid "Keep original"
 msgstr "Behold oprindelig"
 
-#: ../plug-ins/gimpressionist/general.c:150
+#: ../plug-ins/ligmaressionist/general.c:150
 msgid "Preserve the original image as a background"
 msgstr "Behold det oprindelige billede som baggrund"
 
-#: ../plug-ins/gimpressionist/general.c:155
+#: ../plug-ins/ligmaressionist/general.c:155
 msgid "From paper"
 msgstr "Fra papir"
 
-#: ../plug-ins/gimpressionist/general.c:156
+#: ../plug-ins/ligmaressionist/general.c:156
 msgid "Copy the texture of the selected paper as a background"
 msgstr "Kopiér strukturen fra det valgte papir som baggrund"
 
-#: ../plug-ins/gimpressionist/general.c:166
+#: ../plug-ins/ligmaressionist/general.c:166
 msgid "Solid colored background"
 msgstr "Ensfarvet baggrund"
 
-#: ../plug-ins/gimpressionist/general.c:185
+#: ../plug-ins/ligmaressionist/general.c:185
 msgid "Use a transparent background; Only the strokes painted will be visible"
 msgstr "Brug en gennemsigtig baggrund; kun de malede strøg vil være synlige"
 
-#: ../plug-ins/gimpressionist/general.c:202
+#: ../plug-ins/ligmaressionist/general.c:202
 msgid "Paint edges"
 msgstr "Tegn kanter"
 
-#: ../plug-ins/gimpressionist/general.c:207
+#: ../plug-ins/ligmaressionist/general.c:207
 msgid "Selects if to place strokes all the way out to the edges of the image"
 msgstr "Angiver om penselstrøgene skal males helt ud til billedkanterne"
 
-#: ../plug-ins/gimpressionist/general.c:212
+#: ../plug-ins/ligmaressionist/general.c:212
 msgid "Tileable"
 msgstr "Kan lægges som fliser"
 
-#: ../plug-ins/gimpressionist/general.c:216
+#: ../plug-ins/ligmaressionist/general.c:216
 msgid "Selects if the resulting image should be seamlessly tileable"
 msgstr ""
 "Angiver om det endelige billede skal kunne lægges som fliser uden en synlig "
 "overgang"
 
-#: ../plug-ins/gimpressionist/general.c:221
+#: ../plug-ins/ligmaressionist/general.c:221
 msgid "Drop shadow"
 msgstr "Skyggeeffekt"
 
-#: ../plug-ins/gimpressionist/general.c:226
+#: ../plug-ins/ligmaressionist/general.c:226
 msgid "Adds a shadow effect to each brush stroke"
 msgstr "Tilføjer en skyggeeffekt til hvert penselsstrøg"
 
-#: ../plug-ins/gimpressionist/general.c:238
+#: ../plug-ins/ligmaressionist/general.c:238
 msgid "Edge darken:"
 msgstr "Formørk kant:"
 
-#: ../plug-ins/gimpressionist/general.c:240
+#: ../plug-ins/ligmaressionist/general.c:240
 msgid "How much to \"darken\" the edges of each brush stroke"
 msgstr "Hvor meget kanterne skal formørkes for hvert penselstrøg"
 
-#: ../plug-ins/gimpressionist/general.c:246
+#: ../plug-ins/ligmaressionist/general.c:246
 msgid "Shadow darken:"
 msgstr "Skyggeformørkelse:"
 
-#: ../plug-ins/gimpressionist/general.c:249
+#: ../plug-ins/ligmaressionist/general.c:249
 msgid "How much to \"darken\" the drop shadow"
 msgstr "Hvor meget skyggen skal formørkes"
 
-#: ../plug-ins/gimpressionist/general.c:255
+#: ../plug-ins/ligmaressionist/general.c:255
 msgid "Shadow depth:"
 msgstr "Skyggedybde:"
 
-#: ../plug-ins/gimpressionist/general.c:257
+#: ../plug-ins/ligmaressionist/general.c:257
 msgid ""
 "The depth of the drop shadow, i.e. how far apart from the object it should be"
 msgstr "Skyggens dybde, dvs. hvor langt fra objektet den skal være"
 
-#: ../plug-ins/gimpressionist/general.c:263
+#: ../plug-ins/ligmaressionist/general.c:263
 msgid "Shadow blur:"
 msgstr "Sløring af skygge:"
 
-#: ../plug-ins/gimpressionist/general.c:265
+#: ../plug-ins/ligmaressionist/general.c:265
 msgid "How much to blur the drop shadow"
 msgstr "Hvor meget skyggen skal sløres"
 
-#: ../plug-ins/gimpressionist/general.c:271
+#: ../plug-ins/ligmaressionist/general.c:271
 msgid "Deviation threshold:"
 msgstr "Afvigelsestærskel:"
 
-#: ../plug-ins/gimpressionist/general.c:273
+#: ../plug-ins/ligmaressionist/general.c:273
 msgid "A bailout-value for adaptive selections"
 msgstr "Termineringsværdien for adaptive udvælgelser"
 
-#: ../plug-ins/gimpressionist/gimp.c:119
-msgid "_GIMPressionist..."
+#: ../plug-ins/ligmaressionist/ligma.c:119
+msgid "_LIGMAressionist..."
 msgstr "G_IMPressionisme …"
 
-#: ../plug-ins/gimpressionist/gimp.c:123
+#: ../plug-ins/ligmaressionist/ligma.c:123
 msgid "Performs various artistic operations"
 msgstr "Udfører diverse kunstneriske handlinger"
 
-#: ../plug-ins/gimpressionist/gimp.c:448
+#: ../plug-ins/ligmaressionist/ligma.c:448
 msgid "Painting"
 msgstr "Maler"
 
-#: ../plug-ins/gimpressionist/gimpressionist.c:138
-msgid "GIMPressionist"
-msgstr "GIMPressionist"
+#: ../plug-ins/ligmaressionist/ligmaressionist.c:138
+msgid "LIGMAressionist"
+msgstr "LIGMAressionist"
 
-#: ../plug-ins/gimpressionist/orientation.c:87
+#: ../plug-ins/ligmaressionist/orientation.c:87
 msgid "Or_ientation"
 msgstr "O_rientering"
 
-#: ../plug-ins/gimpressionist/orientation.c:100
+#: ../plug-ins/ligmaressionist/orientation.c:100
 msgid "Directions:"
 msgstr "Retninger:"
 
-#: ../plug-ins/gimpressionist/orientation.c:102
+#: ../plug-ins/ligmaressionist/orientation.c:102
 msgid "The number of directions (i.e. brushes) to use"
 msgstr "Antal af brugte retninger (dvs. pensler)"
 
-#: ../plug-ins/gimpressionist/orientation.c:111
+#: ../plug-ins/ligmaressionist/orientation.c:111
 msgid "Start angle:"
 msgstr "Startvinkel:"
 
-#: ../plug-ins/gimpressionist/orientation.c:113
+#: ../plug-ins/ligmaressionist/orientation.c:113
 msgid "The starting angle of the first brush to create"
 msgstr "Startvinkel på den første pensel der skal laves"
 
-#: ../plug-ins/gimpressionist/orientation.c:122
+#: ../plug-ins/ligmaressionist/orientation.c:122
 msgid "Angle span:"
 msgstr "Vinkelstørrelse:"
 
-#: ../plug-ins/gimpressionist/orientation.c:124
+#: ../plug-ins/ligmaressionist/orientation.c:124
 msgid "The angle span of the first brush to create"
 msgstr "Vinkelstørrelsen på den første pensel der skal laves"
 
-#: ../plug-ins/gimpressionist/orientation.c:149
+#: ../plug-ins/ligmaressionist/orientation.c:149
 msgid ""
 "Let the value (brightness) of the region determine the direction of the stroke"
 msgstr "Valøren (lysstyrken) i området bestemmer penselstrøgenes retning"
 
-#: ../plug-ins/gimpressionist/orientation.c:152
-#: ../plug-ins/gimpressionist/size.c:159
+#: ../plug-ins/ligmaressionist/orientation.c:152
+#: ../plug-ins/ligmaressionist/size.c:159
 msgid "Radius"
 msgstr "Radius"
 
-#: ../plug-ins/gimpressionist/orientation.c:153
+#: ../plug-ins/ligmaressionist/orientation.c:153
 msgid ""
 "The distance from the center of the image determines the direction of the stroke"
 msgstr "Afstanden fra billedets midtpunkt bestemmer penselstrøgenes retning"
 
-#: ../plug-ins/gimpressionist/orientation.c:157
+#: ../plug-ins/ligmaressionist/orientation.c:157
 msgid "Selects a random direction of each stroke"
 msgstr "Vælger en tilfældig retning for hvert penselstrøg"
 
-#: ../plug-ins/gimpressionist/orientation.c:160
-#: ../plug-ins/gimpressionist/size.c:167
+#: ../plug-ins/ligmaressionist/orientation.c:160
+#: ../plug-ins/ligmaressionist/size.c:167
 msgid "Radial"
 msgstr "Radial"
 
-#: ../plug-ins/gimpressionist/orientation.c:161
+#: ../plug-ins/ligmaressionist/orientation.c:161
 msgid "Let the direction from the center determine the direction of the stroke"
 msgstr "Retningen fra billedets midtpunkt bestemmer hvert penselstrøgs retning"
 
-#: ../plug-ins/gimpressionist/orientation.c:168
-#: ../plug-ins/gimpressionist/size.c:175
+#: ../plug-ins/ligmaressionist/orientation.c:168
+#: ../plug-ins/ligmaressionist/size.c:175
 msgid "Flowing"
 msgstr "Flydende"
 
-#: ../plug-ins/gimpressionist/orientation.c:169
-#: ../plug-ins/gimpressionist/size.c:176
+#: ../plug-ins/ligmaressionist/orientation.c:169
+#: ../plug-ins/ligmaressionist/size.c:176
 msgid "The strokes follow a \"flowing\" pattern"
 msgstr "Strøgene følger et flydende mønster"
 
-#: ../plug-ins/gimpressionist/orientation.c:173
+#: ../plug-ins/ligmaressionist/orientation.c:173
 msgid "The hue of the region determines the direction of the stroke"
 msgstr "Farvetonen i området bestemmer penselstrøgenes retning"
 
-#: ../plug-ins/gimpressionist/orientation.c:176
-#: ../plug-ins/gimpressionist/size.c:183
+#: ../plug-ins/ligmaressionist/orientation.c:176
+#: ../plug-ins/ligmaressionist/size.c:183
 msgid "Adaptive"
 msgstr "Tilpassende"
 
-#: ../plug-ins/gimpressionist/orientation.c:177
+#: ../plug-ins/ligmaressionist/orientation.c:177
 msgid "The direction that matches the original image the closest is selected"
 msgstr ""
 "Retningen, der bedst passer til det oprindelige billede, bestemmer hvert "
 "penselstrøgs retning"
 
-#: ../plug-ins/gimpressionist/orientation.c:184
-#: ../plug-ins/gimpressionist/size.c:192
+#: ../plug-ins/ligmaressionist/orientation.c:184
+#: ../plug-ins/ligmaressionist/size.c:192
 msgid "Manual"
 msgstr "Manuel"
 
-#: ../plug-ins/gimpressionist/orientation.c:185
+#: ../plug-ins/ligmaressionist/orientation.c:185
 msgid "Manually specify the stroke orientation"
 msgstr "Angiv manuelt retningen på hvert penselstrøg"
 
-#: ../plug-ins/gimpressionist/orientation.c:196
+#: ../plug-ins/ligmaressionist/orientation.c:196
 msgid "Opens up the Orientation Map Editor"
 msgstr "Åbner orienteringskortredigeringen"
 
-#: ../plug-ins/gimpressionist/orientmap.c:523
+#: ../plug-ins/ligmaressionist/orientmap.c:523
 msgid "Orientation Map Editor"
 msgstr "Orienteringskortredigering"
 
-#: ../plug-ins/gimpressionist/orientmap.c:552
+#: ../plug-ins/ligmaressionist/orientmap.c:552
 msgid "Vectors"
 msgstr "Vektorer"
 
-#: ../plug-ins/gimpressionist/orientmap.c:563
+#: ../plug-ins/ligmaressionist/orientmap.c:563
 msgid ""
 "The vector-field. Left-click to move selected vector, Right-click to point it "
 "towards mouse, Middle-click to add a new vector."
@@ -8971,303 +8971,303 @@ msgstr ""
 "Vektorfeltet. Venstreklik for at flytte den valgte vektor, højreklik for at få "
 "vektoren til at pege mod musen, midterklik for at tilføje en ny vektor."
 
-#: ../plug-ins/gimpressionist/orientmap.c:587
-#: ../plug-ins/gimpressionist/sizemap.c:456
+#: ../plug-ins/ligmaressionist/orientmap.c:587
+#: ../plug-ins/ligmaressionist/sizemap.c:456
 msgid "Adjust the preview's brightness"
 msgstr "Justér lysstyrken for forhåndsvisningen"
 
-#: ../plug-ins/gimpressionist/orientmap.c:609
+#: ../plug-ins/ligmaressionist/orientmap.c:609
 msgid "Select previous vector"
 msgstr "Vælg forrige vektor"
 
-#: ../plug-ins/gimpressionist/orientmap.c:615
+#: ../plug-ins/ligmaressionist/orientmap.c:615
 msgid "Select next vector"
 msgstr "Vælg næste vektor"
 
-#: ../plug-ins/gimpressionist/orientmap.c:617
-#: ../plug-ins/gimpressionist/sizemap.c:488
+#: ../plug-ins/ligmaressionist/orientmap.c:617
+#: ../plug-ins/ligmaressionist/sizemap.c:488
 msgid "A_dd"
 msgstr "_Tilføj"
 
-#: ../plug-ins/gimpressionist/orientmap.c:621
+#: ../plug-ins/ligmaressionist/orientmap.c:621
 msgid "Add new vector"
 msgstr "Tilføj ny vektor"
 
-#: ../plug-ins/gimpressionist/orientmap.c:623
-#: ../plug-ins/gimpressionist/sizemap.c:495
+#: ../plug-ins/ligmaressionist/orientmap.c:623
+#: ../plug-ins/ligmaressionist/sizemap.c:495
 msgid "_Kill"
 msgstr "_Slet"
 
-#: ../plug-ins/gimpressionist/orientmap.c:627
+#: ../plug-ins/ligmaressionist/orientmap.c:627
 msgid "Delete selected vector"
 msgstr "Slet den valgte vektor"
 
-#: ../plug-ins/gimpressionist/orientmap.c:638
+#: ../plug-ins/ligmaressionist/orientmap.c:638
 msgid "Type"
 msgstr "Type"
 
-#: ../plug-ins/gimpressionist/orientmap.c:642
+#: ../plug-ins/ligmaressionist/orientmap.c:642
 msgid "_Normal"
 msgstr "_Normal"
 
-#: ../plug-ins/gimpressionist/orientmap.c:643
+#: ../plug-ins/ligmaressionist/orientmap.c:643
 msgid "Vorte_x"
 msgstr "_Malstrøm"
 
-#: ../plug-ins/gimpressionist/orientmap.c:644
+#: ../plug-ins/ligmaressionist/orientmap.c:644
 msgid "Vortex_2"
 msgstr "Malstrøm _2"
 
-#: ../plug-ins/gimpressionist/orientmap.c:645
+#: ../plug-ins/ligmaressionist/orientmap.c:645
 msgid "Vortex_3"
 msgstr "Malstrøm _3"
 
-#: ../plug-ins/gimpressionist/orientmap.c:651
-#: ../plug-ins/gimpressionist/sizemap.c:539
+#: ../plug-ins/ligmaressionist/orientmap.c:651
+#: ../plug-ins/ligmaressionist/sizemap.c:539
 msgid "_Voronoi"
 msgstr "_Voronoi"
 
-#: ../plug-ins/gimpressionist/orientmap.c:659
+#: ../plug-ins/ligmaressionist/orientmap.c:659
 msgid ""
 "Voronoi-mode makes only the vector closest to the given point have any influence"
 msgstr ""
 "Voronoi-tilstand bevirker at kun vektoren nærmest et givent punkt har nogen "
 "indflydelse"
 
-#: ../plug-ins/gimpressionist/orientmap.c:668
+#: ../plug-ins/ligmaressionist/orientmap.c:668
 msgid "A_ngle:"
 msgstr "_Vinkel:"
 
-#: ../plug-ins/gimpressionist/orientmap.c:670
+#: ../plug-ins/ligmaressionist/orientmap.c:670
 msgid "Change the angle of the selected vector"
 msgstr "Ændr vinklen på den valgte vektor"
 
-#: ../plug-ins/gimpressionist/orientmap.c:678
+#: ../plug-ins/ligmaressionist/orientmap.c:678
 msgid "Ang_le offset:"
 msgstr "Vinkel_forskydning:"
 
-#: ../plug-ins/gimpressionist/orientmap.c:680
+#: ../plug-ins/ligmaressionist/orientmap.c:680
 msgid "Offset all vectors with a given angle"
 msgstr "Læg denne vinkel til alle vektorer"
 
-#: ../plug-ins/gimpressionist/orientmap.c:688
+#: ../plug-ins/ligmaressionist/orientmap.c:688
 msgid "_Strength:"
 msgstr "_Styrke:"
 
-#: ../plug-ins/gimpressionist/orientmap.c:691
+#: ../plug-ins/ligmaressionist/orientmap.c:691
 msgid "Change the strength of the selected vector"
 msgstr "Ændr styrken på den valgte vektor"
 
-#: ../plug-ins/gimpressionist/orientmap.c:699
+#: ../plug-ins/ligmaressionist/orientmap.c:699
 msgid "S_trength exp.:"
 msgstr "Styrke_eksponent:"
 
-#: ../plug-ins/gimpressionist/orientmap.c:702
-#: ../plug-ins/gimpressionist/sizemap.c:532
+#: ../plug-ins/ligmaressionist/orientmap.c:702
+#: ../plug-ins/ligmaressionist/sizemap.c:532
 msgid "Change the exponent of the strength"
 msgstr "Ændr eksponenten på styrken"
 
-#: ../plug-ins/gimpressionist/paper.c:136
+#: ../plug-ins/ligmaressionist/paper.c:136
 msgid "P_aper"
 msgstr "_Papir"
 
-#: ../plug-ins/gimpressionist/paper.c:165
+#: ../plug-ins/ligmaressionist/paper.c:165
 msgid "_Invert"
 msgstr "_Invertér"
 
-#: ../plug-ins/gimpressionist/paper.c:171
+#: ../plug-ins/ligmaressionist/paper.c:171
 msgid "Inverts the Papers texture"
 msgstr "Inverterer papirstrukturen"
 
 # ?
-#: ../plug-ins/gimpressionist/paper.c:175
+#: ../plug-ins/ligmaressionist/paper.c:175
 msgid "O_verlay"
 msgstr "_Overlap"
 
-#: ../plug-ins/gimpressionist/paper.c:180
+#: ../plug-ins/ligmaressionist/paper.c:180
 msgid "Applies the paper as it is (without embossing it)"
 msgstr "Bruger papir som det er (uden først at “udstanse” det)"
 
-#: ../plug-ins/gimpressionist/paper.c:193
+#: ../plug-ins/ligmaressionist/paper.c:193
 msgid "Specifies the scale of the texture (in percent of original file)"
 msgstr "Angiver skalering af strukturen (i procent af den oprindelige fil)"
 
-#: ../plug-ins/gimpressionist/placement.c:66
+#: ../plug-ins/ligmaressionist/placement.c:66
 msgid "Pl_acement"
 msgstr "_Placering"
 
-#: ../plug-ins/gimpressionist/placement.c:72
+#: ../plug-ins/ligmaressionist/placement.c:72
 msgid "Placement"
 msgstr "Placering"
 
-#: ../plug-ins/gimpressionist/placement.c:76
+#: ../plug-ins/ligmaressionist/placement.c:76
 msgid "Randomly"
 msgstr "Tilfældig"
 
-#: ../plug-ins/gimpressionist/placement.c:80
+#: ../plug-ins/ligmaressionist/placement.c:80
 msgid "Evenly distributed"
 msgstr "Jævnt fordelt"
 
-#: ../plug-ins/gimpressionist/placement.c:88
+#: ../plug-ins/ligmaressionist/placement.c:88
 msgid "Place strokes randomly around the image"
 msgstr "Placér penselstrøg tilfældigt rundt omkring i billedet"
 
-#: ../plug-ins/gimpressionist/placement.c:92
+#: ../plug-ins/ligmaressionist/placement.c:92
 msgid "The strokes are evenly distributed across the image"
 msgstr "Penselstrøg bliver ligeligt fordelt i billedet"
 
-#: ../plug-ins/gimpressionist/placement.c:101
+#: ../plug-ins/ligmaressionist/placement.c:101
 msgid "Centered"
 msgstr "Centreret"
 
-#: ../plug-ins/gimpressionist/placement.c:107
+#: ../plug-ins/ligmaressionist/placement.c:107
 msgid "Focus the brush strokes around the center of the image"
 msgstr "Fokusér penselstrøgene omkring billedets midtpunkt"
 
-#: ../plug-ins/gimpressionist/placement.c:113
+#: ../plug-ins/ligmaressionist/placement.c:113
 msgid "Stroke _density:"
 msgstr "Strøg_tæthed:"
 
-#: ../plug-ins/gimpressionist/placement.c:115
+#: ../plug-ins/ligmaressionist/placement.c:115
 msgid "The relative density of the brush strokes"
 msgstr "Den relative tæthed af penselstrøgene"
 
 #.
-#. * gimp_filename_to_utf8 () and g_strerror () return temporary strings
+#. * ligma_filename_to_utf8 () and g_strerror () return temporary strings
 #. * that need not and should not be freed. So this call is OK.
 #. *
-#: ../plug-ins/gimpressionist/ppmtool.c:648
+#: ../plug-ins/ligmaressionist/ppmtool.c:648
 #, c-format
 msgid "Failed to save PPM file '%s': %s"
 msgstr "Kunne ikke gemme PPM-filen “%s”: %s"
 
-#: ../plug-ins/gimpressionist/presets.c:638
+#: ../plug-ins/ligmaressionist/presets.c:638
 msgid "Save Current"
 msgstr "Gem aktuel"
 
-#: ../plug-ins/gimpressionist/presets.c:665
+#: ../plug-ins/ligmaressionist/presets.c:665
 msgid "Description:"
 msgstr "Beskrivelse:"
 
-#: ../plug-ins/gimpressionist/presets.c:893
-msgid "Gimpressionist Defaults"
-msgstr "Standarder for GIMPressionist"
+#: ../plug-ins/ligmaressionist/presets.c:893
+msgid "Ligmaressionist Defaults"
+msgstr "Standarder for LIGMAressionist"
 
 # det drejer sig om forvalgte, gemte indstillinger
-#: ../plug-ins/gimpressionist/presets.c:1014
+#: ../plug-ins/ligmaressionist/presets.c:1014
 msgid "_Presets"
 msgstr "_Forudindstillinger"
 
 # slipper for en/et-problem
-#: ../plug-ins/gimpressionist/presets.c:1029
+#: ../plug-ins/ligmaressionist/presets.c:1029
 msgid "Save Current..."
 msgstr "Gem nuværende …"
 
-#: ../plug-ins/gimpressionist/presets.c:1037
+#: ../plug-ins/ligmaressionist/presets.c:1037
 msgid "Save the current settings to the specified file"
 msgstr "Gem de nuværende indstillinger i den angivne fil"
 
-#: ../plug-ins/gimpressionist/presets.c:1065
+#: ../plug-ins/ligmaressionist/presets.c:1065
 msgid "Reads the selected Preset into memory"
 msgstr "Indlæser den markerede forudindstilling i hukommelsen"
 
-#: ../plug-ins/gimpressionist/presets.c:1071
+#: ../plug-ins/ligmaressionist/presets.c:1071
 msgid "Deletes the selected Preset"
 msgstr "Sletter den markerede forudindstilling"
 
-#: ../plug-ins/gimpressionist/presets.c:1077
+#: ../plug-ins/ligmaressionist/presets.c:1077
 msgid "Reread the folder of Presets"
 msgstr "Genindlæs mappen med forudindstillinger"
 
-#: ../plug-ins/gimpressionist/preview.c:174
-#: ../plug-ins/gimpressionist/repaint.c:1197
+#: ../plug-ins/ligmaressionist/preview.c:174
+#: ../plug-ins/ligmaressionist/repaint.c:1197
 #: ../plug-ins/imagemap/imap_polygon.c:511 ../plug-ins/lighting/lighting-ui.c:1093
 msgid "_Update"
 msgstr "O_pdatér"
 
 # der står miniature oven over det
-#: ../plug-ins/gimpressionist/preview.c:180
+#: ../plug-ins/ligmaressionist/preview.c:180
 msgid "Refresh the Preview window"
 msgstr "Genopfrisk forhåndsvisningsvinduet"
 
-#: ../plug-ins/gimpressionist/preview.c:188
+#: ../plug-ins/ligmaressionist/preview.c:188
 msgid "Revert to the original image"
 msgstr "Vend tilbage til det oprindelige billede"
 
-#: ../plug-ins/gimpressionist/size.c:94
+#: ../plug-ins/ligmaressionist/size.c:94
 msgid "_Size"
 msgstr "_Størrelse"
 
-#: ../plug-ins/gimpressionist/size.c:107
+#: ../plug-ins/ligmaressionist/size.c:107
 msgid "Size variants:"
 msgstr "Størrelsesvarianter:"
 
-#: ../plug-ins/gimpressionist/size.c:109
+#: ../plug-ins/ligmaressionist/size.c:109
 msgid "The number of sizes of brushes to use"
 msgstr "Antallet af penselstørrelser der skal bruges"
 
-#: ../plug-ins/gimpressionist/size.c:118
+#: ../plug-ins/ligmaressionist/size.c:118
 msgid "Minimum size:"
 msgstr "Min. størrelse:"
 
-#: ../plug-ins/gimpressionist/size.c:120
+#: ../plug-ins/ligmaressionist/size.c:120
 msgid "The smallest brush to create"
 msgstr "Den mindste pensel der skal oprettes"
 
-#: ../plug-ins/gimpressionist/size.c:129
+#: ../plug-ins/ligmaressionist/size.c:129
 msgid "Maximum size:"
 msgstr "Maks. størrelse:"
 
-#: ../plug-ins/gimpressionist/size.c:131
+#: ../plug-ins/ligmaressionist/size.c:131
 msgid "The largest brush to create"
 msgstr "Den største pensel der skal oprettes"
 
-#: ../plug-ins/gimpressionist/size.c:147
+#: ../plug-ins/ligmaressionist/size.c:147
 msgid "Size depends on:"
 msgstr "Størrelse afhænger af:"
 
-#: ../plug-ins/gimpressionist/size.c:156
+#: ../plug-ins/ligmaressionist/size.c:156
 msgid "Let the value (brightness) of the region determine the size of the stroke"
 msgstr "Valøren (lysstyrken) af området bestemmer størrelsen på strøget"
 
-#: ../plug-ins/gimpressionist/size.c:160
+#: ../plug-ins/ligmaressionist/size.c:160
 msgid ""
 "The distance from the center of the image determines the size of the stroke"
 msgstr "Afstanden fra billedets midtpunkt bestemmer størrelsen på strøget"
 
-#: ../plug-ins/gimpressionist/size.c:164
+#: ../plug-ins/ligmaressionist/size.c:164
 msgid "Selects a random size for each stroke"
 msgstr "Vælger en tilfældig størrelse for hvert penselstrøg"
 
-#: ../plug-ins/gimpressionist/size.c:168
+#: ../plug-ins/ligmaressionist/size.c:168
 msgid "Let the direction from the center determine the size of the stroke"
 msgstr "Retningen fra midtpunktet bestemmer størrelsen på strøget"
 
-#: ../plug-ins/gimpressionist/size.c:180
+#: ../plug-ins/ligmaressionist/size.c:180
 msgid "The hue of the region determines the size of the stroke"
 msgstr "Farvetonen af området bestemmer størrelsen på strøget"
 
-#: ../plug-ins/gimpressionist/size.c:184
+#: ../plug-ins/ligmaressionist/size.c:184
 msgid "The brush-size that matches the original image the closest is selected"
 msgstr "Penselstørrelsen, som kommer nærmest det oprindelige billede, vælges"
 
-#: ../plug-ins/gimpressionist/size.c:193
+#: ../plug-ins/ligmaressionist/size.c:193
 msgid "Manually specify the stroke size"
 msgstr "Angiv penselstørrelse manuelt"
 
-#: ../plug-ins/gimpressionist/size.c:204
+#: ../plug-ins/ligmaressionist/size.c:204
 msgid "Opens up the Size Map Editor"
 msgstr "Åbner størrelseskortredigering"
 
-#: ../plug-ins/gimpressionist/sizemap.c:396
+#: ../plug-ins/ligmaressionist/sizemap.c:396
 msgid "Size Map Editor"
 msgstr "Størrelseskortredigering"
 
-#: ../plug-ins/gimpressionist/sizemap.c:425
+#: ../plug-ins/ligmaressionist/sizemap.c:425
 msgid "Smvectors"
 msgstr "Størrelseskortvektorer"
 
-#: ../plug-ins/gimpressionist/sizemap.c:435
+#: ../plug-ins/ligmaressionist/sizemap.c:435
 msgid ""
 "The smvector-field. Left-click to move selected smvector, Right-click to point "
 "it towards mouse, Middle-click to add a new smvector."
@@ -9276,39 +9276,39 @@ msgstr ""
 "højreklik for at få vektoren til at pege mod musen, midterklik for at tilføje "
 "en ny vektor."
 
-#: ../plug-ins/gimpressionist/sizemap.c:479
+#: ../plug-ins/ligmaressionist/sizemap.c:479
 msgid "Select previous smvector"
 msgstr "Vælg forrige størrelseskortvektor"
 
-#: ../plug-ins/gimpressionist/sizemap.c:486
+#: ../plug-ins/ligmaressionist/sizemap.c:486
 msgid "Select next smvector"
 msgstr "Vælg næste størrelseskortvektor"
 
-#: ../plug-ins/gimpressionist/sizemap.c:493
+#: ../plug-ins/ligmaressionist/sizemap.c:493
 msgid "Add new smvector"
 msgstr "Tilføj ny størrelseskortvektor"
 
-#: ../plug-ins/gimpressionist/sizemap.c:500
+#: ../plug-ins/ligmaressionist/sizemap.c:500
 msgid "Delete selected smvector"
 msgstr "Slet valgte størrelseskortvektor"
 
-#: ../plug-ins/gimpressionist/sizemap.c:510
+#: ../plug-ins/ligmaressionist/sizemap.c:510
 msgid "Change the angle of the selected smvector"
 msgstr "Ændr vinklen på den valgte størrelseskortvektor"
 
-#: ../plug-ins/gimpressionist/sizemap.c:518
+#: ../plug-ins/ligmaressionist/sizemap.c:518
 msgid "S_trength:"
 msgstr "_Styrke:"
 
-#: ../plug-ins/gimpressionist/sizemap.c:521
+#: ../plug-ins/ligmaressionist/sizemap.c:521
 msgid "Change the strength of the selected smvector"
 msgstr "Ændr styrken på den valgte størrelseskortvektor"
 
-#: ../plug-ins/gimpressionist/sizemap.c:529
+#: ../plug-ins/ligmaressionist/sizemap.c:529
 msgid "St_rength exp.:"
 msgstr "Styrke_eksponent:"
 
-#: ../plug-ins/gimpressionist/sizemap.c:546
+#: ../plug-ins/ligmaressionist/sizemap.c:546
 msgid ""
 "Voronoi-mode makes only the smvector closest to the given point have any "
 "influence"
@@ -9937,7 +9937,7 @@ msgstr "Indstillinger for skæret"
 msgid "Opacity:"
 msgstr "Uigennemsigtighed:"
 
-# "Paint mode" virker malplaceret, da man ikke kan male. Det handler om gengivelsen af skæret: https://docs.gimp.org/en/plug-in-gflare.html
+# "Paint mode" virker malplaceret, da man ikke kan male. Det handler om gengivelsen af skæret: https://docs.ligma.org/en/plug-in-gflare.html
 #: ../plug-ins/gradient-flare/gradient-flare.c:3621
 #: ../plug-ins/gradient-flare/gradient-flare.c:3647
 #: ../plug-ins/gradient-flare/gradient-flare.c:3673
@@ -10048,8 +10048,8 @@ msgstr "_Sekundær linseoverstråling"
 
 #. the dialog window
 #: ../plug-ins/help-browser/dialog.c:261 ../plug-ins/help-browser/dialog.c:892
-msgid "GIMP Help Browser"
-msgstr "GIMP-hjælpefremviser"
+msgid "LIGMA Help Browser"
+msgstr "LIGMA-hjælpefremviser"
 
 #: ../plug-ins/help-browser/dialog.c:275
 msgid "_Reload"
@@ -10072,8 +10072,8 @@ msgid "Go to the index page"
 msgstr "Gå til indekssiden"
 
 #: ../plug-ins/help-browser/dialog.c:283
-msgid "Visit the GIMP documentation website"
-msgstr "Besøg GIMPs websted med dokumentation"
+msgid "Visit the LIGMA documentation website"
+msgstr "Besøg LIGMAs websted med dokumentation"
 
 #: ../plug-ins/help-browser/dialog.c:1235
 msgid "Find:"
@@ -10094,14 +10094,14 @@ msgctxt "search"
 msgid "_Close"
 msgstr "_Luk"
 
-#: ../plug-ins/help/gimphelpdomain.c:180
+#: ../plug-ins/help/ligmahelpdomain.c:180
 #, c-format
 msgid "The help pages for '%s' are not available."
 msgstr "Hjælpesiderne til “%s” er ikke tilgængelige."
 
-#: ../plug-ins/help/gimphelpdomain.c:186
-msgid "The GIMP user manual is not available."
-msgstr "GIMPs brugermanual er ikke tilgængelig."
+#: ../plug-ins/help/ligmahelpdomain.c:186
+msgid "The LIGMA user manual is not available."
+msgstr "LIGMAs brugermanual er ikke tilgængelig."
 
 #. TRANSLATORS: do not end the URL with a dot,
 #. * it would be in the link. Because of
@@ -10109,29 +10109,29 @@ msgstr "GIMPs brugermanual er ikke tilgængelig."
 #. * ends with a space, a newline or is end of text.
 #. * Cf. bug 762282.
 #.
-#: ../plug-ins/help/gimphelpdomain.c:193
+#: ../plug-ins/help/ligmahelpdomain.c:193
 msgid ""
 "Please install the additional help package or use the online user manual at: "
-"https://docs.gimp.org/"
+"https://docs.ligma.org/"
 msgstr ""
 "Installér den ekstra hjælpepakke eller se brugermanualen online på https://docs."
-"gimp.org/"
+"ligma.org/"
 
-#: ../plug-ins/help/gimphelpdomain.c:202
+#: ../plug-ins/help/ligmahelpdomain.c:202
 msgid "Perhaps you are missing GIO backends and need to install GVFS?"
 msgstr "Måske mangler du GIO-backends og skal installere GVFS?"
 
-#: ../plug-ins/help/gimphelpdomain.c:221
+#: ../plug-ins/help/ligmahelpdomain.c:221
 #, c-format
 msgid "Help ID '%s' unknown"
 msgstr "Hjælpe-id “%s” ukendt"
 
-#: ../plug-ins/help/gimphelplocale.c:208
+#: ../plug-ins/help/ligmahelplocale.c:208
 #, c-format
 msgid "Loading index from '%s'"
 msgstr "Indlæser indeks fra “%s”"
 
-#: ../plug-ins/help/gimphelplocale.c:266
+#: ../plug-ins/help/ligmahelplocale.c:266
 #, c-format
 msgid ""
 "Parse error in '%s':\n"
@@ -10356,7 +10356,7 @@ msgid "Clear"
 msgstr "Ryd"
 
 #: ../plug-ins/imagemap/imap_cmd_create.c:57
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:150
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:150
 msgid "Create"
 msgstr "Opret"
 
@@ -10380,41 +10380,41 @@ msgid "Edit Object"
 msgstr "Redigér objekt"
 
 #. Create the areas
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:116
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:146
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:253
-msgid "Use Gimp Guides"
-msgstr "Benyt Gimp-hjælpelinjer"
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:116
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:146
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:253
+msgid "Use Ligma Guides"
+msgstr "Benyt Ligma-hjælpelinjer"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:159
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:159
 msgid "Al_ternate"
 msgstr "Sk_iftevis"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:164
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:164
 msgid "A_ll"
 msgstr "_Alle"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:168
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:168
 msgid "Add Additional Guides"
 msgstr "Tilføj ekstra rektangler"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:176
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:176
 msgid "L_eft border"
 msgstr "_Venstre kant"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:180
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:180
 msgid "_Right border"
 msgstr "_Højre kant"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:184
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:184
 msgid "_Upper border"
 msgstr "_Øvre kant"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:188
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:188
 msgid "Lo_wer border"
 msgstr "_Nedre kant"
 
-#: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:196
+#: ../plug-ins/imagemap/imap_cmd_ligma_guides.c:196
 msgid "_Base URL:"
 msgstr "_Base-URL:"
 
@@ -10858,8 +10858,8 @@ msgid "Grid Settings..."
 msgstr "Gitterindstillinger …"
 
 #: ../plug-ins/imagemap/imap_menu.c:208
-msgid "Use GIMP Guides..."
-msgstr "Anvend GIMP-hjælpelinjer …"
+msgid "Use LIGMA Guides..."
+msgstr "Anvend LIGMA-hjælpelinjer …"
 
 #: ../plug-ins/imagemap/imap_menu.c:210
 msgid "Create Guides..."
@@ -12355,7 +12355,7 @@ msgid "Filter Iteration Count:"
 msgstr "Antal gentagelser for filtrering:"
 
 # Manualen har "wild" i stedet for "hell"
-# https://docs.gimp.org/en/gimp-selection-dialog.html
+# https://docs.ligma.org/en/ligma-selection-dialog.html
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:207
 msgid ""
 "Number of times to smooth original data points.  Increasing this number "

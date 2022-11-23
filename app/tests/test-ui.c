@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 2009 Martin Nordholts <martinn@src.gnome.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,79 +22,79 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "dialogs/dialogs-types.h"
 
-#include "display/gimpdisplay.h"
-#include "display/gimpdisplayshell.h"
-#include "display/gimpdisplayshell-scale.h"
-#include "display/gimpdisplayshell-transform.h"
-#include "display/gimpimagewindow.h"
+#include "display/ligmadisplay.h"
+#include "display/ligmadisplayshell.h"
+#include "display/ligmadisplayshell-scale.h"
+#include "display/ligmadisplayshell-transform.h"
+#include "display/ligmaimagewindow.h"
 
-#include "widgets/gimpdialogfactory.h"
-#include "widgets/gimpdock.h"
-#include "widgets/gimpdockable.h"
-#include "widgets/gimpdockbook.h"
-#include "widgets/gimpdockcontainer.h"
-#include "widgets/gimpdocked.h"
-#include "widgets/gimpdockwindow.h"
-#include "widgets/gimphelp-ids.h"
-#include "widgets/gimpsessioninfo.h"
-#include "widgets/gimpsessioninfo-aux.h"
-#include "widgets/gimpsessionmanaged.h"
-#include "widgets/gimptoolbox.h"
-#include "widgets/gimptooloptionseditor.h"
-#include "widgets/gimpuimanager.h"
-#include "widgets/gimpwidgets-utils.h"
+#include "widgets/ligmadialogfactory.h"
+#include "widgets/ligmadock.h"
+#include "widgets/ligmadockable.h"
+#include "widgets/ligmadockbook.h"
+#include "widgets/ligmadockcontainer.h"
+#include "widgets/ligmadocked.h"
+#include "widgets/ligmadockwindow.h"
+#include "widgets/ligmahelp-ids.h"
+#include "widgets/ligmasessioninfo.h"
+#include "widgets/ligmasessioninfo-aux.h"
+#include "widgets/ligmasessionmanaged.h"
+#include "widgets/ligmatoolbox.h"
+#include "widgets/ligmatooloptionseditor.h"
+#include "widgets/ligmauimanager.h"
+#include "widgets/ligmawidgets-utils.h"
 
-#include "core/gimp.h"
-#include "core/gimpchannel.h"
-#include "core/gimpcontext.h"
-#include "core/gimpimage.h"
-#include "core/gimplayer.h"
-#include "core/gimplayer-new.h"
-#include "core/gimptoolinfo.h"
-#include "core/gimptooloptions.h"
+#include "core/ligma.h"
+#include "core/ligmachannel.h"
+#include "core/ligmacontext.h"
+#include "core/ligmaimage.h"
+#include "core/ligmalayer.h"
+#include "core/ligmalayer-new.h"
+#include "core/ligmatoolinfo.h"
+#include "core/ligmatooloptions.h"
 
 #include "tests.h"
 
-#include "gimp-app-test-utils.h"
+#include "ligma-app-test-utils.h"
 
 
-#define GIMP_UI_WINDOW_POSITION_EPSILON 30
-#define GIMP_UI_POSITION_EPSILON        1
-#define GIMP_UI_ZOOM_EPSILON            0.01
+#define LIGMA_UI_WINDOW_POSITION_EPSILON 30
+#define LIGMA_UI_POSITION_EPSILON        1
+#define LIGMA_UI_ZOOM_EPSILON            0.01
 
 #define ADD_TEST(function) \
-  g_test_add_data_func ("/gimp-ui/" #function, gimp, function);
+  g_test_add_data_func ("/ligma-ui/" #function, ligma, function);
 
 
 /* Put this in the code below when you want the test to pause so you
  * can do measurements of widgets on the screen for example
  */
-#define GIMP_PAUSE (g_usleep (20 * 1000 * 1000))
+#define LIGMA_PAUSE (g_usleep (20 * 1000 * 1000))
 
 
-typedef gboolean (*GimpUiTestFunc) (GObject *object);
+typedef gboolean (*LigmaUiTestFunc) (GObject *object);
 
 
-static void            gimp_ui_synthesize_delete_event          (GtkWidget         *widget);
-static gboolean        gimp_ui_synthesize_click                 (GtkWidget         *widget,
+static void            ligma_ui_synthesize_delete_event          (GtkWidget         *widget);
+static gboolean        ligma_ui_synthesize_click                 (GtkWidget         *widget,
                                                                  gint               x,
                                                                  gint               y,
                                                                  gint               button,
                                                                  GdkModifierType    modifiers);
-static GtkWidget     * gimp_ui_find_window                      (GimpDialogFactory *dialog_factory,
-                                                                 GimpUiTestFunc     predicate);
-static gboolean        gimp_ui_not_toolbox_window               (GObject           *object);
-static gboolean        gimp_ui_multicolumn_not_toolbox_window   (GObject           *object);
-static gboolean        gimp_ui_is_gimp_layer_list               (GObject           *object);
-static int             gimp_ui_aux_data_eqiuvalent              (gconstpointer      _a,
+static GtkWidget     * ligma_ui_find_window                      (LigmaDialogFactory *dialog_factory,
+                                                                 LigmaUiTestFunc     predicate);
+static gboolean        ligma_ui_not_toolbox_window               (GObject           *object);
+static gboolean        ligma_ui_multicolumn_not_toolbox_window   (GObject           *object);
+static gboolean        ligma_ui_is_ligma_layer_list               (GObject           *object);
+static int             ligma_ui_aux_data_eqiuvalent              (gconstpointer      _a,
                                                                  gconstpointer      _b);
-static void            gimp_ui_switch_window_mode               (Gimp              *gimp);
+static void            ligma_ui_switch_window_mode               (Ligma              *ligma);
 
 
 /**
@@ -107,72 +107,72 @@ static void            gimp_ui_switch_window_mode               (Gimp           
 static void
 tool_options_editor_updates (gconstpointer data)
 {
-  Gimp                  *gimp         = GIMP (data);
-  GimpDisplay           *display      = GIMP_DISPLAY (gimp_get_empty_display (gimp));
-  GimpDisplayShell      *shell        = gimp_display_get_shell (display);
+  Ligma                  *ligma         = LIGMA (data);
+  LigmaDisplay           *display      = LIGMA_DISPLAY (ligma_get_empty_display (ligma));
+  LigmaDisplayShell      *shell        = ligma_display_get_shell (display);
   GtkWidget             *toplevel     = gtk_widget_get_toplevel (GTK_WIDGET (shell));
-  GimpImageWindow       *image_window = GIMP_IMAGE_WINDOW (toplevel);
-  GimpUIManager         *ui_manager   = gimp_image_window_get_ui_manager (image_window);
-  GtkWidget             *dockable     = gimp_dialog_factory_dialog_new (gimp_dialog_factory_get_singleton (),
-                                                                        gimp_widget_get_monitor (toplevel),
+  LigmaImageWindow       *image_window = LIGMA_IMAGE_WINDOW (toplevel);
+  LigmaUIManager         *ui_manager   = ligma_image_window_get_ui_manager (image_window);
+  GtkWidget             *dockable     = ligma_dialog_factory_dialog_new (ligma_dialog_factory_get_singleton (),
+                                                                        ligma_widget_get_monitor (toplevel),
                                                                         NULL /*ui_manager*/,
                                                                         toplevel,
-                                                                        "gimp-tool-options",
+                                                                        "ligma-tool-options",
                                                                         -1 /*view_size*/,
                                                                         FALSE /*present*/);
-  GimpToolOptionsEditor *editor       = GIMP_TOOL_OPTIONS_EDITOR (gtk_bin_get_child (GTK_BIN (dockable)));
+  LigmaToolOptionsEditor *editor       = LIGMA_TOOL_OPTIONS_EDITOR (gtk_bin_get_child (GTK_BIN (dockable)));
 
   /* First select the rect select tool */
-  gimp_ui_manager_activate_action (ui_manager,
+  ligma_ui_manager_activate_action (ui_manager,
                                    "tools",
                                    "tools-rect-select");
-  g_assert_cmpstr (GIMP_HELP_TOOL_RECT_SELECT,
+  g_assert_cmpstr (LIGMA_HELP_TOOL_RECT_SELECT,
                    ==,
-                   gimp_tool_options_editor_get_tool_options (editor)->
+                   ligma_tool_options_editor_get_tool_options (editor)->
                    tool_info->help_id);
 
   /* Change tool and make sure the change is taken into account by the
    * tool options editor
    */
-  gimp_ui_manager_activate_action (ui_manager,
+  ligma_ui_manager_activate_action (ui_manager,
                                    "tools",
                                    "tools-ellipse-select");
-  g_assert_cmpstr (GIMP_HELP_TOOL_ELLIPSE_SELECT,
+  g_assert_cmpstr (LIGMA_HELP_TOOL_ELLIPSE_SELECT,
                    ==,
-                   gimp_tool_options_editor_get_tool_options (editor)->
+                   ligma_tool_options_editor_get_tool_options (editor)->
                    tool_info->help_id);
 }
 
 static void
 create_new_image_via_dialog (gconstpointer data)
 {
-  Gimp      *gimp = GIMP (data);
-  GimpImage *image;
-  GimpLayer *layer;
+  Ligma      *ligma = LIGMA (data);
+  LigmaImage *image;
+  LigmaLayer *layer;
 
-  image = gimp_test_utils_create_image_from_dialog (gimp);
+  image = ligma_test_utils_create_image_from_dialog (ligma);
 
   /* Add a layer to the image to make it more useful in later tests */
-  layer = gimp_layer_new (image,
-                          gimp_image_get_width (image),
-                          gimp_image_get_height (image),
-                          gimp_image_get_layer_format (image, TRUE),
+  layer = ligma_layer_new (image,
+                          ligma_image_get_width (image),
+                          ligma_image_get_height (image),
+                          ligma_image_get_layer_format (image, TRUE),
                           "Layer for testing",
-                          GIMP_OPACITY_OPAQUE,
-                          GIMP_LAYER_MODE_NORMAL);
+                          LIGMA_OPACITY_OPAQUE,
+                          LIGMA_LAYER_MODE_NORMAL);
 
-  gimp_image_add_layer (image, layer,
-                        GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
-  gimp_test_run_mainloop_until_idle ();
+  ligma_image_add_layer (image, layer,
+                        LIGMA_IMAGE_ACTIVE_PARENT, -1, TRUE);
+  ligma_test_run_mainloop_until_idle ();
 }
 
 static void
 keyboard_zoom_focus (gconstpointer data)
 {
-  Gimp              *gimp    = GIMP (data);
-  GimpDisplay       *display = GIMP_DISPLAY (gimp_get_display_iter (gimp)->data);
-  GimpDisplayShell  *shell   = gimp_display_get_shell (display);
-  GimpImageWindow   *window  = gimp_display_shell_get_window (shell);
+  Ligma              *ligma    = LIGMA (data);
+  LigmaDisplay       *display = LIGMA_DISPLAY (ligma_get_display_iter (ligma)->data);
+  LigmaDisplayShell  *shell   = ligma_display_get_shell (display);
+  LigmaImageWindow   *window  = ligma_display_shell_get_window (shell);
   gint               image_x;
   gint               image_y;
   gint               shell_x_before_zoom;
@@ -191,27 +191,27 @@ keyboard_zoom_focus (gconstpointer data)
   /* Setup zoom focus on the bottom right part of the image. We avoid
    * 0,0 because that's essentially a particularly easy special case.
    */
-  gimp_display_shell_transform_xy (shell,
+  ligma_display_shell_transform_xy (shell,
                                    image_x,
                                    image_y,
                                    &shell_x_before_zoom,
                                    &shell_y_before_zoom);
-  gimp_display_shell_push_zoom_focus_pointer_pos (shell,
+  ligma_display_shell_push_zoom_focus_pointer_pos (shell,
                                                   shell_x_before_zoom,
                                                   shell_y_before_zoom);
-  factor_before_zoom = gimp_zoom_model_get_factor (shell->zoom);
+  factor_before_zoom = ligma_zoom_model_get_factor (shell->zoom);
 
   /* Do the zoom */
-  gimp_test_utils_synthesize_key_event (GTK_WIDGET (window), GDK_KEY_plus);
-  gimp_test_run_mainloop_until_idle ();
+  ligma_test_utils_synthesize_key_event (GTK_WIDGET (window), GDK_KEY_plus);
+  ligma_test_run_mainloop_until_idle ();
 
   /* Make sure the zoom focus point remained fixed */
-  gimp_display_shell_transform_xy (shell,
+  ligma_display_shell_transform_xy (shell,
                                    image_x,
                                    image_y,
                                    &shell_x_after_zoom,
                                    &shell_y_after_zoom);
-  factor_after_zoom = gimp_zoom_model_get_factor (shell->zoom);
+  factor_after_zoom = ligma_zoom_model_get_factor (shell->zoom);
 
   /* First of all make sure a zoom happened at all. If this assert
    * fails, it means that the zoom didn't happen. Possible causes:
@@ -224,7 +224,7 @@ keyboard_zoom_focus (gconstpointer data)
    */
   g_assert_cmpfloat (fabs (factor_before_zoom - factor_after_zoom),
                      >=,
-                     GIMP_UI_ZOOM_EPSILON);
+                     LIGMA_UI_ZOOM_EPSILON);
 
 #ifdef __GNUC__
 #warning disabled zoom test, it fails randomly, no clue how to fix it
@@ -232,10 +232,10 @@ keyboard_zoom_focus (gconstpointer data)
 #if 0
   g_assert_cmpint (ABS (shell_x_after_zoom - shell_x_before_zoom),
                    <=,
-                   GIMP_UI_POSITION_EPSILON);
+                   LIGMA_UI_POSITION_EPSILON);
   g_assert_cmpint (ABS (shell_y_after_zoom - shell_y_before_zoom),
                    <=,
-                   GIMP_UI_POSITION_EPSILON);
+                   LIGMA_UI_POSITION_EPSILON);
 #endif
 }
 
@@ -254,9 +254,9 @@ alt_click_is_layer_to_selection (gconstpointer data)
 #warning FIXME: please fix alt_click_is_layer_to_selection test
 #endif
 #if 0
-  Gimp        *gimp      = GIMP (data);
-  GimpImage   *image     = GIMP_IMAGE (gimp_get_image_iter (gimp)->data);
-  GimpChannel *selection = gimp_image_get_mask (image);
+  Ligma        *ligma      = LIGMA (data);
+  LigmaImage   *image     = LIGMA_IMAGE (ligma_get_image_iter (ligma)->data);
+  LigmaChannel *selection = ligma_image_get_mask (image);
   GList       *selected_layers;
   GList       *iter;
   GtkWidget   *dockable;
@@ -267,7 +267,7 @@ alt_click_is_layer_to_selection (gconstpointer data)
 
   /* Hardcode assumptions of where the layers are in the
    * GtkTreeView. Doesn't feel worth adding proper API for this. One
-   * can just use GIMP_PAUSE and re-measure new coordinates if we
+   * can just use LIGMA_PAUSE and re-measure new coordinates if we
    * start to layout layers in the GtkTreeView differently
    */
   assumed_layer_x            = 96;
@@ -277,7 +277,7 @@ alt_click_is_layer_to_selection (gconstpointer data)
   /* Store the active layer, it shall not change during the execution
    * of this test
    */
-  selected_layers = gimp_image_get_selected_layers (image);
+  selected_layers = ligma_image_get_selected_layers (image);
   selected_layers = g_list_copy (selected_layers);
 
   /* Find the layer tree view to click in. Note that there is a
@@ -285,48 +285,48 @@ alt_click_is_layer_to_selection (gconstpointer data)
    * will return e.g. a GtkTreeView from another page if that page is
    * "on top" of the reference label.
    */
-  dockable = gimp_ui_find_window (gimp_dialog_factory_get_singleton (),
-                                  gimp_ui_is_gimp_layer_list);
+  dockable = ligma_ui_find_window (ligma_dialog_factory_get_singleton (),
+                                  ligma_ui_is_ligma_layer_list);
   gtk_tree_view = gtk_test_find_widget (dockable,
                                         "Lock:",
                                         GTK_TYPE_TREE_VIEW);
 
   /* First make sure there is no selection */
-  g_assert (gimp_channel_is_empty (selection));
+  g_assert (ligma_channel_is_empty (selection));
 
   /* Now simulate alt-click on the background layer */
-  g_assert (gimp_ui_synthesize_click (gtk_tree_view,
+  g_assert (ligma_ui_synthesize_click (gtk_tree_view,
                                       assumed_layer_x,
                                       assumed_background_layer_y,
                                       1 /*button*/,
                                       GDK_MOD1_MASK));
-  gimp_test_run_mainloop_until_idle ();
+  ligma_test_run_mainloop_until_idle ();
 
   /* Make sure we got a selection and that the active layer didn't
    * change
    */
-  g_assert (! gimp_channel_is_empty (selection));
-  g_assert (g_list_length (gimp_image_get_selected_layers (image)) ==
+  g_assert (! ligma_channel_is_empty (selection));
+  g_assert (g_list_length (ligma_image_get_selected_layers (image)) ==
             g_list_length (selected_layers));
   for (iter = selected_layers; iter; iter = iter->next)
-    g_assert (g_list_find (gimp_image_get_selected_layers (image), iter->data));
+    g_assert (g_list_find (ligma_image_get_selected_layers (image), iter->data));
 
   /* Now simulate alt-click on the empty layer */
-  g_assert (gimp_ui_synthesize_click (gtk_tree_view,
+  g_assert (ligma_ui_synthesize_click (gtk_tree_view,
                                       assumed_layer_x,
                                       assumed_empty_layer_y,
                                       1 /*button*/,
                                       GDK_MOD1_MASK));
-  gimp_test_run_mainloop_until_idle ();
+  ligma_test_run_mainloop_until_idle ();
 
   /* Make sure that emptied the selection and that the active layer
    * still didn't change
    */
-  g_assert (gimp_channel_is_empty (selection));
-  g_assert (g_list_length (gimp_image_get_selected_layers (image)) ==
+  g_assert (ligma_channel_is_empty (selection));
+  g_assert (g_list_length (ligma_image_get_selected_layers (image)) ==
             g_list_length (selected_layers));
   for (iter = selected_layers; iter; iter = iter->next)
-    g_assert (g_list_find (gimp_image_get_selected_layers (image), iter->data));
+    g_assert (g_list_find (ligma_image_get_selected_layers (image), iter->data));
 
   g_list_free (selected_layers);
 #endif
@@ -335,7 +335,7 @@ alt_click_is_layer_to_selection (gconstpointer data)
 static void
 restore_recently_closed_multi_column_dock (gconstpointer data)
 {
-  Gimp      *gimp                          = GIMP (data);
+  Ligma      *ligma                          = LIGMA (data);
   GtkWidget *dock_window                   = NULL;
   gint       n_session_infos_before_close  = -1;
   gint       n_session_infos_after_close   = -1;
@@ -343,20 +343,20 @@ restore_recently_closed_multi_column_dock (gconstpointer data)
   GList     *session_infos                 = NULL;
 
   /* Find a non-toolbox dock window */
-  dock_window = gimp_ui_find_window (gimp_dialog_factory_get_singleton (),
-                                     gimp_ui_multicolumn_not_toolbox_window);
+  dock_window = ligma_ui_find_window (ligma_dialog_factory_get_singleton (),
+                                     ligma_ui_multicolumn_not_toolbox_window);
   g_assert (dock_window != NULL);
 
   /* Count number of docks */
-  session_infos = gimp_dialog_factory_get_session_infos (gimp_dialog_factory_get_singleton ());
+  session_infos = ligma_dialog_factory_get_session_infos (ligma_dialog_factory_get_singleton ());
   n_session_infos_before_close = g_list_length (session_infos);
 
   /* Close one of the dock windows */
-  gimp_ui_synthesize_delete_event (GTK_WIDGET (dock_window));
-  gimp_test_run_mainloop_until_idle ();
+  ligma_ui_synthesize_delete_event (GTK_WIDGET (dock_window));
+  ligma_test_run_mainloop_until_idle ();
 
   /* Make sure the number of session infos went down */
-  session_infos = gimp_dialog_factory_get_session_infos (gimp_dialog_factory_get_singleton ());
+  session_infos = ligma_dialog_factory_get_session_infos (ligma_dialog_factory_get_singleton ());
   n_session_infos_after_close = g_list_length (session_infos);
   g_assert_cmpint (n_session_infos_before_close,
                    >,
@@ -369,12 +369,12 @@ restore_recently_closed_multi_column_dock (gconstpointer data)
   /* Restore the (only available) closed dock and make sure the session
    * infos in the global dock factory are increased again
    */
-  gimp_ui_manager_activate_action (gimp_test_utils_get_ui_manager (gimp),
+  ligma_ui_manager_activate_action (ligma_test_utils_get_ui_manager (ligma),
                                    "windows",
                                    /* FIXME: This is severely hardcoded */
                                    "windows-recent-0003");
-  gimp_test_run_mainloop_until_idle ();
-  session_infos = gimp_dialog_factory_get_session_infos (gimp_dialog_factory_get_singleton ());
+  ligma_test_run_mainloop_until_idle ();
+  session_infos = ligma_dialog_factory_get_session_infos (ligma_dialog_factory_get_singleton ());
   n_session_infos_after_restore = g_list_length (session_infos);
   g_assert_cmpint (n_session_infos_after_close,
                    <,
@@ -393,7 +393,7 @@ restore_recently_closed_multi_column_dock (gconstpointer data)
 static void
 tab_toggle_dont_change_dock_window_position (gconstpointer data)
 {
-  Gimp      *gimp          = GIMP (data);
+  Ligma      *ligma          = LIGMA (data);
   GtkWidget *dock_window   = NULL;
   gint       x_before_hide = -1;
   gint       y_before_hide = -1;
@@ -405,13 +405,13 @@ tab_toggle_dont_change_dock_window_position (gconstpointer data)
   gint       h_after_show  = -1;
 
   /* Find a non-toolbox dock window */
-  dock_window = gimp_ui_find_window (gimp_dialog_factory_get_singleton (),
-                                     gimp_ui_not_toolbox_window);
+  dock_window = ligma_ui_find_window (ligma_dialog_factory_get_singleton (),
+                                     ligma_ui_not_toolbox_window);
   g_assert (dock_window != NULL);
   g_assert (gtk_widget_get_visible (dock_window));
 
   /* Get the position and size */
-  gimp_test_run_mainloop_until_idle ();
+  ligma_test_run_mainloop_until_idle ();
   gtk_window_get_position (GTK_WINDOW (dock_window),
                            &x_before_hide,
                            &y_before_hide);
@@ -420,17 +420,17 @@ tab_toggle_dont_change_dock_window_position (gconstpointer data)
                        &h_before_hide);
 
   /* Hide all dock windows */
-  gimp_ui_manager_activate_action (gimp_test_utils_get_ui_manager (gimp),
+  ligma_ui_manager_activate_action (ligma_test_utils_get_ui_manager (ligma),
                                    "windows",
                                    "windows-hide-docks");
-  gimp_test_run_mainloop_until_idle ();
+  ligma_test_run_mainloop_until_idle ();
   g_assert (! gtk_widget_get_visible (dock_window));
 
   /* Show them again */
-  gimp_ui_manager_activate_action (gimp_test_utils_get_ui_manager (gimp),
+  ligma_ui_manager_activate_action (ligma_test_utils_get_ui_manager (ligma),
                                    "windows",
                                    "windows-hide-docks");
-  gimp_test_run_mainloop_until_idle ();
+  ligma_test_run_mainloop_until_idle ();
   g_assert (gtk_widget_get_visible (dock_window));
 
   /* Get the position and size again and make sure it's the same as
@@ -442,29 +442,29 @@ tab_toggle_dont_change_dock_window_position (gconstpointer data)
   gtk_window_get_size (GTK_WINDOW (dock_window),
                        &w_after_show,
                        &h_after_show);
-  g_assert_cmpint ((int)abs (x_before_hide - x_after_show), <=, GIMP_UI_WINDOW_POSITION_EPSILON);
-  g_assert_cmpint ((int)abs (y_before_hide - y_after_show), <=, GIMP_UI_WINDOW_POSITION_EPSILON);
-  g_assert_cmpint ((int)abs (w_before_hide - w_after_show), <=, GIMP_UI_WINDOW_POSITION_EPSILON);
-  g_assert_cmpint ((int)abs (h_before_hide - h_after_show), <=, GIMP_UI_WINDOW_POSITION_EPSILON);
+  g_assert_cmpint ((int)abs (x_before_hide - x_after_show), <=, LIGMA_UI_WINDOW_POSITION_EPSILON);
+  g_assert_cmpint ((int)abs (y_before_hide - y_after_show), <=, LIGMA_UI_WINDOW_POSITION_EPSILON);
+  g_assert_cmpint ((int)abs (w_before_hide - w_after_show), <=, LIGMA_UI_WINDOW_POSITION_EPSILON);
+  g_assert_cmpint ((int)abs (h_before_hide - h_after_show), <=, LIGMA_UI_WINDOW_POSITION_EPSILON);
 }
 
 static void
 switch_to_single_window_mode (gconstpointer data)
 {
-  Gimp *gimp = GIMP (data);
+  Ligma *ligma = LIGMA (data);
 
   /* Switch to single-window mode. We consider this test as passed if
    * we don't get any GLib warnings/errors
    */
-  gimp_ui_switch_window_mode (gimp);
+  ligma_ui_switch_window_mode (ligma);
 }
 
 static void
-gimp_ui_toggle_docks_in_single_window_mode (Gimp *gimp)
+ligma_ui_toggle_docks_in_single_window_mode (Ligma *ligma)
 {
-  GimpDisplay      *display       = GIMP_DISPLAY (gimp_get_display_iter (gimp)->data);
-  GimpDisplayShell *shell         = gimp_display_get_shell (display);
-  GtkWidget        *toplevel      = GTK_WIDGET (gimp_display_shell_get_window (shell));
+  LigmaDisplay      *display       = LIGMA_DISPLAY (ligma_get_display_iter (ligma)->data);
+  LigmaDisplayShell *shell         = ligma_display_get_shell (display);
+  GtkWidget        *toplevel      = GTK_WIDGET (ligma_display_shell_get_window (shell));
   gint              x_temp        = -1;
   gint              y_temp        = -1;
   gint              x_before_hide = -1;
@@ -475,8 +475,8 @@ gimp_ui_toggle_docks_in_single_window_mode (Gimp *gimp)
   g_assert (toplevel);
 
   /* Get toplevel coordinate of image origin */
-  gimp_test_run_mainloop_until_idle ();
-  gimp_display_shell_transform_xy (shell,
+  ligma_test_run_mainloop_until_idle ();
+  ligma_display_shell_transform_xy (shell,
                                    0.0, 0.0,
                                    &x_temp, &y_temp);
   gtk_widget_translate_coordinates (GTK_WIDGET (shell),
@@ -485,14 +485,14 @@ gimp_ui_toggle_docks_in_single_window_mode (Gimp *gimp)
                                     &x_before_hide, &y_before_hide);
 
   /* Hide all dock windows */
-  gimp_ui_manager_activate_action (gimp_test_utils_get_ui_manager (gimp),
+  ligma_ui_manager_activate_action (ligma_test_utils_get_ui_manager (ligma),
                                    "windows",
                                    "windows-hide-docks");
-  gimp_test_run_mainloop_until_idle ();
+  ligma_test_run_mainloop_until_idle ();
 
   /* Get toplevel coordinate of image origin */
-  gimp_test_run_mainloop_until_idle ();
-  gimp_display_shell_transform_xy (shell,
+  ligma_test_run_mainloop_until_idle ();
+  ligma_display_shell_transform_xy (shell,
                                    0.0, 0.0,
                                    &x_temp, &y_temp);
   gtk_widget_translate_coordinates (GTK_WIDGET (shell),
@@ -500,88 +500,88 @@ gimp_ui_toggle_docks_in_single_window_mode (Gimp *gimp)
                                     x_temp, y_temp,
                                     &x_after_hide, &y_after_hide);
 
-  g_assert_cmpint ((int)abs (x_after_hide - x_before_hide), <=, GIMP_UI_POSITION_EPSILON);
-  g_assert_cmpint ((int)abs (y_after_hide - y_before_hide), <=, GIMP_UI_POSITION_EPSILON);
+  g_assert_cmpint ((int)abs (x_after_hide - x_before_hide), <=, LIGMA_UI_POSITION_EPSILON);
+  g_assert_cmpint ((int)abs (y_after_hide - y_before_hide), <=, LIGMA_UI_POSITION_EPSILON);
 }
 
 static void
 hide_docks_in_single_window_mode (gconstpointer data)
 {
-  Gimp *gimp = GIMP (data);
-  gimp_ui_toggle_docks_in_single_window_mode (gimp);
+  Ligma *ligma = LIGMA (data);
+  ligma_ui_toggle_docks_in_single_window_mode (ligma);
 }
 
 static void
 show_docks_in_single_window_mode (gconstpointer data)
 {
-  Gimp *gimp = GIMP (data);
-  gimp_ui_toggle_docks_in_single_window_mode (gimp);
+  Ligma *ligma = LIGMA (data);
+  ligma_ui_toggle_docks_in_single_window_mode (ligma);
 }
 
 static void
 maximize_state_in_aux_data (gconstpointer data)
 {
-  Gimp               *gimp    = GIMP (data);
-  GimpDisplay        *display = GIMP_DISPLAY (gimp_get_display_iter (gimp)->data);
-  GimpDisplayShell   *shell   = gimp_display_get_shell (display);
-  GimpImageWindow    *window  = gimp_display_shell_get_window (shell);
+  Ligma               *ligma    = LIGMA (data);
+  LigmaDisplay        *display = LIGMA_DISPLAY (ligma_get_display_iter (ligma)->data);
+  LigmaDisplayShell   *shell   = ligma_display_get_shell (display);
+  LigmaImageWindow    *window  = ligma_display_shell_get_window (shell);
   gint                i;
 
   for (i = 0; i < 2; i++)
     {
       GList              *aux_info = NULL;
-      GimpSessionInfoAux *target_info;
+      LigmaSessionInfoAux *target_info;
       gboolean            target_max_state;
 
       if (i == 0)
         {
-          target_info = gimp_session_info_aux_new ("maximized" , "yes");
+          target_info = ligma_session_info_aux_new ("maximized" , "yes");
           target_max_state = TRUE;
         }
       else
         {
-          target_info = gimp_session_info_aux_new ("maximized", "no");
+          target_info = ligma_session_info_aux_new ("maximized", "no");
           target_max_state = FALSE;
         }
 
       /* Set the aux info to out target data */
       aux_info = g_list_append (aux_info, target_info);
-      gimp_session_managed_set_aux_info (GIMP_SESSION_MANAGED (window), aux_info);
+      ligma_session_managed_set_aux_info (LIGMA_SESSION_MANAGED (window), aux_info);
       g_list_free (aux_info);
 
       /* Give the WM a chance to maximize/unmaximize us */
-      gimp_test_run_mainloop_until_idle ();
+      ligma_test_run_mainloop_until_idle ();
       g_usleep (500 * 1000);
-      gimp_test_run_mainloop_until_idle ();
+      ligma_test_run_mainloop_until_idle ();
 
       /* Make sure the maximize/unmaximize happened */
-      g_assert (gimp_image_window_is_maximized (window) == target_max_state);
+      g_assert (ligma_image_window_is_maximized (window) == target_max_state);
 
       /* Make sure we can read out the window state again */
-      aux_info = gimp_session_managed_get_aux_info (GIMP_SESSION_MANAGED (window));
-      g_assert (g_list_find_custom (aux_info, target_info, gimp_ui_aux_data_eqiuvalent));
+      aux_info = ligma_session_managed_get_aux_info (LIGMA_SESSION_MANAGED (window));
+      g_assert (g_list_find_custom (aux_info, target_info, ligma_ui_aux_data_eqiuvalent));
       g_list_free_full (aux_info,
-                        (GDestroyNotify) gimp_session_info_aux_free);
+                        (GDestroyNotify) ligma_session_info_aux_free);
 
-      gimp_session_info_aux_free (target_info);
+      ligma_session_info_aux_free (target_info);
     }
 }
 
 static void
 switch_back_to_multi_window_mode (gconstpointer data)
 {
-  Gimp *gimp = GIMP (data);
+  Ligma *ligma = LIGMA (data);
 
   /* Switch back to multi-window mode. We consider this test as passed
    * if we don't get any GLib warnings/errors
    */
-  gimp_ui_switch_window_mode (gimp);
+  ligma_ui_switch_window_mode (ligma);
 }
 
 static void
 close_image (gconstpointer data)
 {
-  Gimp *gimp       = GIMP (data);
+  Ligma *ligma       = LIGMA (data);
   int   undo_count = 4;
 
   /* Undo all changes so we don't need to find the 'Do you want to
@@ -589,20 +589,20 @@ close_image (gconstpointer data)
    */
   while (undo_count--)
     {
-      gimp_ui_manager_activate_action (gimp_test_utils_get_ui_manager (gimp),
+      ligma_ui_manager_activate_action (ligma_test_utils_get_ui_manager (ligma),
                                        "edit",
                                        "edit-undo");
-      gimp_test_run_mainloop_until_idle ();
+      ligma_test_run_mainloop_until_idle ();
     }
 
   /* Close the image */
-  gimp_ui_manager_activate_action (gimp_test_utils_get_ui_manager (gimp),
+  ligma_ui_manager_activate_action (ligma_test_utils_get_ui_manager (ligma),
                                    "view",
                                    "view-close");
-  gimp_test_run_mainloop_until_idle ();
+  ligma_test_run_mainloop_until_idle ();
 
   /* Did it really disappear? */
-  g_assert_cmpint (g_list_length (gimp_get_image_iter (gimp)), ==, 0);
+  g_assert_cmpint (g_list_length (ligma_get_image_iter (ligma)), ==, 0);
 }
 
 /**
@@ -619,9 +619,9 @@ repeatedly_switch_window_mode (gconstpointer data)
 #warning FIXME: plesase fix repeatedly_switch_window_mode test
 #endif
 #if 0
-  Gimp             *gimp     = GIMP (data);
-  GimpDisplay      *display  = GIMP_DISPLAY (gimp_get_empty_display (gimp));
-  GimpDisplayShell *shell    = gimp_display_get_shell (display);
+  Ligma             *ligma     = LIGMA (data);
+  LigmaDisplay      *display  = LIGMA_DISPLAY (ligma_get_empty_display (ligma));
+  LigmaDisplayShell *shell    = ligma_display_get_shell (display);
   GtkWidget        *toplevel = gtk_widget_get_toplevel (GTK_WIDGET (shell));
 
   gint expected_initial_height;
@@ -634,7 +634,7 @@ repeatedly_switch_window_mode (gconstpointer data)
   gint second_height;
 
   /* We need this for some reason */
-  gimp_test_run_mainloop_until_idle ();
+  ligma_test_run_mainloop_until_idle ();
 
   /* Remember the multi-window mode size */
   gtk_window_get_size (GTK_WINDOW (toplevel),
@@ -642,7 +642,7 @@ repeatedly_switch_window_mode (gconstpointer data)
                        &expected_initial_height);
 
   /* Switch to single-window mode */
-  gimp_ui_switch_window_mode (gimp);
+  ligma_ui_switch_window_mode (ligma);
 
   /* Remember the single-window mode size */
   gtk_window_get_size (GTK_WINDOW (toplevel),
@@ -654,7 +654,7 @@ repeatedly_switch_window_mode (gconstpointer data)
   g_assert_cmpint (expected_initial_height, !=, expected_second_height);
 
   /* Switch back to multi-window mode */
-  gimp_ui_switch_window_mode (gimp);
+  ligma_ui_switch_window_mode (ligma);
 
   /* Make sure the size is the same as before */
   gtk_window_get_size (GTK_WINDOW (toplevel), &initial_width, &initial_height);
@@ -662,7 +662,7 @@ repeatedly_switch_window_mode (gconstpointer data)
   g_assert_cmpint (expected_initial_height, ==, initial_height);
 
   /* Switch to single-window mode again... */
-  gimp_ui_switch_window_mode (gimp);
+  ligma_ui_switch_window_mode (ligma);
 
   /* Make sure the size is the same as before */
   gtk_window_get_size (GTK_WINDOW (toplevel), &second_width, &second_height);
@@ -672,7 +672,7 @@ repeatedly_switch_window_mode (gconstpointer data)
   /* Finally switch back to multi-window mode since that was the mode
    * when we started
    */
-  gimp_ui_switch_window_mode (gimp);
+  ligma_ui_switch_window_mode (ligma);
 #endif
 }
 
@@ -688,22 +688,22 @@ window_roles (gconstpointer data)
   GdkMonitor     *monitor        = NULL;
   GtkWidget      *dock           = NULL;
   GtkWidget      *toolbox        = NULL;
-  GimpDockWindow *dock_window    = NULL;
-  GimpDockWindow *toolbox_window = NULL;
+  LigmaDockWindow *dock_window    = NULL;
+  LigmaDockWindow *toolbox_window = NULL;
 
   monitor        = gdk_display_get_primary_monitor (gdk_display_get_default ());
-  dock           = gimp_dock_with_window_new (gimp_dialog_factory_get_singleton (),
+  dock           = ligma_dock_with_window_new (ligma_dialog_factory_get_singleton (),
                                               monitor,
                                               FALSE /*toolbox*/);
-  toolbox        = gimp_dock_with_window_new (gimp_dialog_factory_get_singleton (),
+  toolbox        = ligma_dock_with_window_new (ligma_dialog_factory_get_singleton (),
                                               monitor,
                                               TRUE /*toolbox*/);
-  dock_window    = gimp_dock_window_from_dock (GIMP_DOCK (dock));
-  toolbox_window = gimp_dock_window_from_dock (GIMP_DOCK (toolbox));
+  dock_window    = ligma_dock_window_from_dock (LIGMA_DOCK (dock));
+  toolbox_window = ligma_dock_window_from_dock (LIGMA_DOCK (toolbox));
 
-  g_assert_cmpint (g_str_has_prefix (gtk_window_get_role (GTK_WINDOW (dock_window)), "gimp-dock-"), ==,
+  g_assert_cmpint (g_str_has_prefix (gtk_window_get_role (GTK_WINDOW (dock_window)), "ligma-dock-"), ==,
                    TRUE);
-  g_assert_cmpint (g_str_has_prefix (gtk_window_get_role (GTK_WINDOW (toolbox_window)), "gimp-toolbox-"), ==,
+  g_assert_cmpint (g_str_has_prefix (gtk_window_get_role (GTK_WINDOW (toolbox_window)), "ligma-toolbox-"), ==,
                    TRUE);
 
   /* When we get here we have a ref count of one, but the signals we
@@ -717,23 +717,23 @@ window_roles (gconstpointer data)
 static void
 paintbrush_is_standard_tool (gconstpointer data)
 {
-  Gimp         *gimp         = GIMP (data);
-  GimpContext  *user_context = gimp_get_user_context (gimp);
-  GimpToolInfo *tool_info    = gimp_context_get_tool (user_context);
+  Ligma         *ligma         = LIGMA (data);
+  LigmaContext  *user_context = ligma_get_user_context (ligma);
+  LigmaToolInfo *tool_info    = ligma_context_get_tool (user_context);
 
   g_assert_cmpstr (tool_info->help_id,
                    ==,
-                   "gimp-tool-paintbrush");
+                   "ligma-tool-paintbrush");
 }
 
 /**
- * gimp_ui_synthesize_delete_event:
+ * ligma_ui_synthesize_delete_event:
  * @widget:
  *
  * Synthesize a delete event to @widget.
  **/
 static void
-gimp_ui_synthesize_delete_event (GtkWidget *widget)
+ligma_ui_synthesize_delete_event (GtkWidget *widget)
 {
   GdkWindow *window = NULL;
   GdkEvent *event = NULL;
@@ -749,7 +749,7 @@ gimp_ui_synthesize_delete_event (GtkWidget *widget)
 }
 
 static gboolean
-gimp_ui_synthesize_click (GtkWidget       *widget,
+ligma_ui_synthesize_click (GtkWidget       *widget,
                           gint             x,
                           gint             y,
                           gint             button, /*1..3*/
@@ -768,19 +768,19 @@ gimp_ui_synthesize_click (GtkWidget       *widget,
 }
 
 static GtkWidget *
-gimp_ui_find_window (GimpDialogFactory *dialog_factory,
-                     GimpUiTestFunc     predicate)
+ligma_ui_find_window (LigmaDialogFactory *dialog_factory,
+                     LigmaUiTestFunc     predicate)
 {
   GList     *iter        = NULL;
   GtkWidget *dock_window = NULL;
 
   g_return_val_if_fail (predicate != NULL, NULL);
 
-  for (iter = gimp_dialog_factory_get_session_infos (dialog_factory);
+  for (iter = ligma_dialog_factory_get_session_infos (dialog_factory);
        iter;
        iter = g_list_next (iter))
     {
-      GtkWidget *widget = gimp_session_info_get_widget (iter->data);
+      GtkWidget *widget = ligma_session_info_get_widget (iter->data);
 
       if (predicate (G_OBJECT (widget)))
         {
@@ -793,28 +793,28 @@ gimp_ui_find_window (GimpDialogFactory *dialog_factory,
 }
 
 static gboolean
-gimp_ui_not_toolbox_window (GObject *object)
+ligma_ui_not_toolbox_window (GObject *object)
 {
-  return (GIMP_IS_DOCK_WINDOW (object) &&
-          ! gimp_dock_window_has_toolbox (GIMP_DOCK_WINDOW (object)));
+  return (LIGMA_IS_DOCK_WINDOW (object) &&
+          ! ligma_dock_window_has_toolbox (LIGMA_DOCK_WINDOW (object)));
 }
 
 static gboolean
-gimp_ui_multicolumn_not_toolbox_window (GObject *object)
+ligma_ui_multicolumn_not_toolbox_window (GObject *object)
 {
   gboolean           not_toolbox_window;
-  GimpDockWindow    *dock_window;
-  GimpDockContainer *dock_container;
+  LigmaDockWindow    *dock_window;
+  LigmaDockContainer *dock_container;
   GList             *docks;
 
-  if (! GIMP_IS_DOCK_WINDOW (object))
+  if (! LIGMA_IS_DOCK_WINDOW (object))
     return FALSE;
 
-  dock_window    = GIMP_DOCK_WINDOW (object);
-  dock_container = GIMP_DOCK_CONTAINER (object);
-  docks          = gimp_dock_container_get_docks (dock_container);
+  dock_window    = LIGMA_DOCK_WINDOW (object);
+  dock_container = LIGMA_DOCK_CONTAINER (object);
+  docks          = ligma_dock_container_get_docks (dock_container);
 
-  not_toolbox_window = (! gimp_dock_window_has_toolbox (dock_window) &&
+  not_toolbox_window = (! ligma_dock_window_has_toolbox (dock_window) &&
                         g_list_length (docks) > 1);
 
   g_list_free (docks);
@@ -823,54 +823,54 @@ gimp_ui_multicolumn_not_toolbox_window (GObject *object)
 }
 
 static gboolean
-gimp_ui_is_gimp_layer_list (GObject *object)
+ligma_ui_is_ligma_layer_list (GObject *object)
 {
-  GimpDialogFactoryEntry *entry = NULL;
+  LigmaDialogFactoryEntry *entry = NULL;
 
   if (! GTK_IS_WIDGET (object))
     return FALSE;
 
-  gimp_dialog_factory_from_widget (GTK_WIDGET (object), &entry);
+  ligma_dialog_factory_from_widget (GTK_WIDGET (object), &entry);
 
-  return strcmp (entry->identifier, "gimp-layer-list") == 0;
+  return strcmp (entry->identifier, "ligma-layer-list") == 0;
 }
 
 static int
-gimp_ui_aux_data_eqiuvalent (gconstpointer _a, gconstpointer _b)
+ligma_ui_aux_data_eqiuvalent (gconstpointer _a, gconstpointer _b)
 {
-  GimpSessionInfoAux *a = (GimpSessionInfoAux*) _a;
-  GimpSessionInfoAux *b = (GimpSessionInfoAux*) _b;
+  LigmaSessionInfoAux *a = (LigmaSessionInfoAux*) _a;
+  LigmaSessionInfoAux *b = (LigmaSessionInfoAux*) _b;
   return (strcmp (a->name, b->name) || strcmp (a->value, b->value));
 }
 
 static void
-gimp_ui_switch_window_mode (Gimp *gimp)
+ligma_ui_switch_window_mode (Ligma *ligma)
 {
-  gimp_ui_manager_activate_action (gimp_test_utils_get_ui_manager (gimp),
+  ligma_ui_manager_activate_action (ligma_test_utils_get_ui_manager (ligma),
                                    "windows",
                                    "windows-use-single-window-mode");
-  gimp_test_run_mainloop_until_idle ();
+  ligma_test_run_mainloop_until_idle ();
 
   /* Add a small sleep to let things stabilize */
   g_usleep (500 * 1000);
-  gimp_test_run_mainloop_until_idle ();
+  ligma_test_run_mainloop_until_idle ();
 }
 
 int main(int argc, char **argv)
 {
-  Gimp *gimp   = NULL;
+  Ligma *ligma   = NULL;
   gint  result = -1;
 
-  gimp_test_bail_if_no_display ();
+  ligma_test_bail_if_no_display ();
   gtk_test_init (&argc, &argv, NULL);
 
-  gimp_test_utils_set_gimp3_directory ("GIMP_TESTING_ABS_TOP_SRCDIR",
-                                       "app/tests/gimpdir");
-  gimp_test_utils_setup_menus_path ();
+  ligma_test_utils_set_ligma3_directory ("LIGMA_TESTING_ABS_TOP_SRCDIR",
+                                       "app/tests/ligmadir");
+  ligma_test_utils_setup_menus_path ();
 
-  /* Start up GIMP */
-  gimp = gimp_init_for_gui_testing (TRUE /*show_gui*/);
-  gimp_test_run_mainloop_until_idle ();
+  /* Start up LIGMA */
+  ligma = ligma_init_for_gui_testing (TRUE /*show_gui*/);
+  ligma_test_run_mainloop_until_idle ();
 
   /* Add tests. Note that the order matters. For example,
    * 'paintbrush_is_standard_tool' can't be after
@@ -902,11 +902,11 @@ int main(int argc, char **argv)
   result = g_test_run ();
 
   /* Don't write files to the source dir */
-  gimp_test_utils_set_gimp3_directory ("GIMP_TESTING_ABS_TOP_BUILDDIR",
-                                       "app/tests/gimpdir-output");
+  ligma_test_utils_set_ligma3_directory ("LIGMA_TESTING_ABS_TOP_BUILDDIR",
+                                       "app/tests/ligmadir-output");
 
   /* Exit properly so we don't break script-fu plug-in wire */
-  gimp_exit (gimp, TRUE);
+  ligma_exit (ligma, TRUE);
 
   return result;
 }

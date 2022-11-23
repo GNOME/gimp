@@ -1,11 +1,11 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * Thumbnail handling according to the Thumbnail Managing Standard.
  * https://specifications.freedesktop.org/thumbnail-spec/
  *
- * Copyright (C) 2001-2003  Sven Neumann <sven@gimp.org>
- *                          Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2001-2003  Sven Neumann <sven@ligma.org>
+ *                          Michael Natterer <mitch@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -26,27 +26,27 @@
 
 #include <glib.h>
 
-#include "gimpthumb-error.h"
+#include "ligmathumb-error.h"
 
 
 /**
- * SECTION: gimpthumb-error
- * @title: GimpThumb-error
- * @short_description: Error codes used by libgimpthumb
+ * SECTION: ligmathumb-error
+ * @title: LigmaThumb-error
+ * @short_description: Error codes used by libligmathumb
  *
- * Error codes used by libgimpthumb
+ * Error codes used by libligmathumb
  **/
 
 
 /**
- * gimp_thumb_error_quark:
+ * ligma_thumb_error_quark:
  *
- * This function is never called directly. Use GIMP_THUMB_ERROR() instead.
+ * This function is never called directly. Use LIGMA_THUMB_ERROR() instead.
  *
- * Returns: the #GQuark that defines the GimpThumb error domain.
+ * Returns: the #GQuark that defines the LigmaThumb error domain.
  **/
 GQuark
-gimp_thumb_error_quark (void)
+ligma_thumb_error_quark (void)
 {
-  return g_quark_from_static_string ("gimp-thumb-error-quark");
+  return g_quark_from_static_string ("ligma-thumb-error-quark");
 }

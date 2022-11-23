@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpplugin-context.h
+ * ligmaplugin-context.h
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,12 +17,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PLUG_IN_CONTEXT_H__
-#define __GIMP_PLUG_IN_CONTEXT_H__
+#ifndef __LIGMA_PLUG_IN_CONTEXT_H__
+#define __LIGMA_PLUG_IN_CONTEXT_H__
 
 
-gboolean  gimp_plug_in_context_push (GimpPlugIn *plug_in);
-gboolean  gimp_plug_in_context_pop  (GimpPlugIn *plug_in);
+gboolean  ligma_plug_in_context_push (LigmaPlugIn *plug_in);
+gboolean  ligma_plug_in_context_pop  (LigmaPlugIn *plug_in);
 
 
-#endif /* __GIMP_PLUG_IN_CONTEXT_H__ */
+#endif /* __LIGMA_PLUG_IN_CONTEXT_H__ */

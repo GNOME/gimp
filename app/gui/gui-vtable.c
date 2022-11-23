@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -42,58 +42,58 @@
 #include <unistd.h>
 #endif
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "gui-types.h"
 
-#include "config/gimpguiconfig.h"
+#include "config/ligmaguiconfig.h"
 
-#include "core/gimp.h"
-#include "core/gimp-parallel.h"
-#include "core/gimp-spawn.h"
-#include "core/gimp-utils.h"
-#include "core/gimpasync.h"
-#include "core/gimpbrush.h"
-#include "core/gimpcancelable.h"
-#include "core/gimpcontainer.h"
-#include "core/gimpcontext.h"
-#include "core/gimpgradient.h"
-#include "core/gimpimage.h"
-#include "core/gimpimagefile.h"
-#include "core/gimplist.h"
-#include "core/gimppalette.h"
-#include "core/gimppattern.h"
-#include "core/gimpprogress.h"
-#include "core/gimpwaitable.h"
+#include "core/ligma.h"
+#include "core/ligma-parallel.h"
+#include "core/ligma-spawn.h"
+#include "core/ligma-utils.h"
+#include "core/ligmaasync.h"
+#include "core/ligmabrush.h"
+#include "core/ligmacancelable.h"
+#include "core/ligmacontainer.h"
+#include "core/ligmacontext.h"
+#include "core/ligmagradient.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaimagefile.h"
+#include "core/ligmalist.h"
+#include "core/ligmapalette.h"
+#include "core/ligmapattern.h"
+#include "core/ligmaprogress.h"
+#include "core/ligmawaitable.h"
 
-#include "text/gimpfont.h"
+#include "text/ligmafont.h"
 
-#include "pdb/gimppdb.h"
-#include "pdb/gimpprocedure.h"
+#include "pdb/ligmapdb.h"
+#include "pdb/ligmaprocedure.h"
 
-#include "plug-in/gimppluginmanager-file.h"
+#include "plug-in/ligmapluginmanager-file.h"
 
-#include "widgets/gimpactiongroup.h"
-#include "widgets/gimpbrushselect.h"
-#include "widgets/gimpdialogfactory.h"
-#include "widgets/gimpdocked.h"
-#include "widgets/gimpfontselect.h"
-#include "widgets/gimpgradientselect.h"
-#include "widgets/gimphelp.h"
-#include "widgets/gimphelp-ids.h"
-#include "widgets/gimpmenufactory.h"
-#include "widgets/gimppaletteselect.h"
-#include "widgets/gimppatternselect.h"
-#include "widgets/gimpprogressdialog.h"
-#include "widgets/gimpuimanager.h"
-#include "widgets/gimpwidgets-utils.h"
+#include "widgets/ligmaactiongroup.h"
+#include "widgets/ligmabrushselect.h"
+#include "widgets/ligmadialogfactory.h"
+#include "widgets/ligmadocked.h"
+#include "widgets/ligmafontselect.h"
+#include "widgets/ligmagradientselect.h"
+#include "widgets/ligmahelp.h"
+#include "widgets/ligmahelp-ids.h"
+#include "widgets/ligmamenufactory.h"
+#include "widgets/ligmapaletteselect.h"
+#include "widgets/ligmapatternselect.h"
+#include "widgets/ligmaprogressdialog.h"
+#include "widgets/ligmauimanager.h"
+#include "widgets/ligmawidgets-utils.h"
 
-#include "display/gimpdisplay.h"
-#include "display/gimpdisplay-foreach.h"
-#include "display/gimpdisplayshell.h"
-#include "display/gimpsinglewindowstrategy.h"
-#include "display/gimpmultiwindowstrategy.h"
+#include "display/ligmadisplay.h"
+#include "display/ligmadisplay-foreach.h"
+#include "display/ligmadisplayshell.h"
+#include "display/ligmasinglewindowstrategy.h"
+#include "display/ligmamultiwindowstrategy.h"
 
 #include "actions/plug-in-actions.h"
 
@@ -111,123 +111,123 @@
 
 /*  local function prototypes  */
 
-static void           gui_ungrab                 (Gimp                *gimp);
+static void           gui_ungrab                 (Ligma                *ligma);
 
-static void           gui_set_busy               (Gimp                *gimp);
-static void           gui_unset_busy             (Gimp                *gimp);
+static void           gui_set_busy               (Ligma                *ligma);
+static void           gui_unset_busy             (Ligma                *ligma);
 
-static void           gui_help                   (Gimp                *gimp,
-                                                  GimpProgress        *progress,
+static void           gui_help                   (Ligma                *ligma,
+                                                  LigmaProgress        *progress,
                                                   const gchar         *help_domain,
                                                   const gchar         *help_id);
-static const gchar  * gui_get_program_class      (Gimp                *gimp);
-static gchar        * gui_get_display_name       (Gimp                *gimp,
+static const gchar  * gui_get_program_class      (Ligma                *ligma);
+static gchar        * gui_get_display_name       (Ligma                *ligma,
                                                   gint                 display_id,
                                                   GObject            **monitor,
                                                   gint                *monitor_number);
-static guint32        gui_get_user_time          (Gimp                *gimp);
-static GFile        * gui_get_theme_dir          (Gimp                *gimp);
-static GFile        * gui_get_icon_theme_dir     (Gimp                *gimp);
-static GimpObject   * gui_get_window_strategy    (Gimp                *gimp);
-static GimpDisplay  * gui_get_empty_display      (Gimp                *gimp);
-static guint32        gui_display_get_window_id  (GimpDisplay         *display);
-static GimpDisplay  * gui_display_create         (Gimp                *gimp,
-                                                  GimpImage           *image,
-                                                  GimpUnit             unit,
+static guint32        gui_get_user_time          (Ligma                *ligma);
+static GFile        * gui_get_theme_dir          (Ligma                *ligma);
+static GFile        * gui_get_icon_theme_dir     (Ligma                *ligma);
+static LigmaObject   * gui_get_window_strategy    (Ligma                *ligma);
+static LigmaDisplay  * gui_get_empty_display      (Ligma                *ligma);
+static guint32        gui_display_get_window_id  (LigmaDisplay         *display);
+static LigmaDisplay  * gui_display_create         (Ligma                *ligma,
+                                                  LigmaImage           *image,
+                                                  LigmaUnit             unit,
                                                   gdouble              scale,
                                                   GObject             *monitor);
-static void           gui_display_delete         (GimpDisplay         *display);
-static void           gui_displays_reconnect     (Gimp                *gimp,
-                                                  GimpImage           *old_image,
-                                                  GimpImage           *new_image);
-static gboolean       gui_wait                   (Gimp                *gimp,
-                                                  GimpWaitable        *waitable,
+static void           gui_display_delete         (LigmaDisplay         *display);
+static void           gui_displays_reconnect     (Ligma                *ligma,
+                                                  LigmaImage           *old_image,
+                                                  LigmaImage           *new_image);
+static gboolean       gui_wait                   (Ligma                *ligma,
+                                                  LigmaWaitable        *waitable,
                                                   const gchar         *message);
-static GimpProgress * gui_new_progress           (Gimp                *gimp,
-                                                  GimpDisplay         *display);
-static void           gui_free_progress          (Gimp                *gimp,
-                                                  GimpProgress        *progress);
-static gboolean       gui_pdb_dialog_new         (Gimp                *gimp,
-                                                  GimpContext         *context,
-                                                  GimpProgress        *progress,
-                                                  GimpContainer       *container,
+static LigmaProgress * gui_new_progress           (Ligma                *ligma,
+                                                  LigmaDisplay         *display);
+static void           gui_free_progress          (Ligma                *ligma,
+                                                  LigmaProgress        *progress);
+static gboolean       gui_pdb_dialog_new         (Ligma                *ligma,
+                                                  LigmaContext         *context,
+                                                  LigmaProgress        *progress,
+                                                  LigmaContainer       *container,
                                                   const gchar         *title,
                                                   const gchar         *callback_name,
                                                   const gchar         *object_name,
                                                   va_list              args);
-static gboolean       gui_pdb_dialog_set         (Gimp                *gimp,
-                                                  GimpContainer       *container,
+static gboolean       gui_pdb_dialog_set         (Ligma                *ligma,
+                                                  LigmaContainer       *container,
                                                   const gchar         *callback_name,
                                                   const gchar         *object_name,
                                                   va_list              args);
-static gboolean       gui_pdb_dialog_close       (Gimp                *gimp,
-                                                  GimpContainer       *container,
+static gboolean       gui_pdb_dialog_close       (Ligma                *ligma,
+                                                  LigmaContainer       *container,
                                                   const gchar         *callback_name);
-static gboolean       gui_recent_list_add_file   (Gimp                *gimp,
+static gboolean       gui_recent_list_add_file   (Ligma                *ligma,
                                                   GFile               *file,
                                                   const gchar         *mime_type);
-static void           gui_recent_list_load       (Gimp                *gimp);
+static void           gui_recent_list_load       (Ligma                *ligma);
 
 static GMountOperation
-                    * gui_get_mount_operation    (Gimp                *gimp,
-                                                  GimpProgress        *progress);
+                    * gui_get_mount_operation    (Ligma                *ligma,
+                                                  LigmaProgress        *progress);
 
-static GimpColorProfilePolicy
-                      gui_query_profile_policy   (Gimp                *gimp,
-                                                  GimpImage           *image,
-                                                  GimpContext         *context,
-                                                  GimpColorProfile   **dest_profile,
-                                                  GimpColorRenderingIntent *intent,
+static LigmaColorProfilePolicy
+                      gui_query_profile_policy   (Ligma                *ligma,
+                                                  LigmaImage           *image,
+                                                  LigmaContext         *context,
+                                                  LigmaColorProfile   **dest_profile,
+                                                  LigmaColorRenderingIntent *intent,
                                                   gboolean            *bpc,
                                                   gboolean            *dont_ask);
-static GimpMetadataRotationPolicy
-                      gui_query_rotation_policy  (Gimp                *gimp,
-                                                  GimpImage           *image,
-                                                  GimpContext         *context,
+static LigmaMetadataRotationPolicy
+                      gui_query_rotation_policy  (Ligma                *ligma,
+                                                  LigmaImage           *image,
+                                                  LigmaContext         *context,
                                                   gboolean            *dont_ask);
 
 
 /*  public functions  */
 
 void
-gui_vtable_init (Gimp *gimp)
+gui_vtable_init (Ligma *ligma)
 {
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
 
-  gimp->gui.ungrab                 = gui_ungrab;
-  gimp->gui.set_busy               = gui_set_busy;
-  gimp->gui.unset_busy             = gui_unset_busy;
-  gimp->gui.show_message           = gui_message;
-  gimp->gui.help                   = gui_help;
-  gimp->gui.get_program_class      = gui_get_program_class;
-  gimp->gui.get_display_name       = gui_get_display_name;
-  gimp->gui.get_user_time          = gui_get_user_time;
-  gimp->gui.get_theme_dir          = gui_get_theme_dir;
-  gimp->gui.get_icon_theme_dir     = gui_get_icon_theme_dir;
-  gimp->gui.get_window_strategy    = gui_get_window_strategy;
-  gimp->gui.get_empty_display      = gui_get_empty_display;
-  gimp->gui.display_get_window_id  = gui_display_get_window_id;
-  gimp->gui.display_create         = gui_display_create;
-  gimp->gui.display_delete         = gui_display_delete;
-  gimp->gui.displays_reconnect     = gui_displays_reconnect;
-  gimp->gui.wait                   = gui_wait;
-  gimp->gui.progress_new           = gui_new_progress;
-  gimp->gui.progress_free          = gui_free_progress;
-  gimp->gui.pdb_dialog_new         = gui_pdb_dialog_new;
-  gimp->gui.pdb_dialog_set         = gui_pdb_dialog_set;
-  gimp->gui.pdb_dialog_close       = gui_pdb_dialog_close;
-  gimp->gui.recent_list_add_file   = gui_recent_list_add_file;
-  gimp->gui.recent_list_load       = gui_recent_list_load;
-  gimp->gui.get_mount_operation    = gui_get_mount_operation;
-  gimp->gui.query_profile_policy   = gui_query_profile_policy;
-  gimp->gui.query_rotation_policy  = gui_query_rotation_policy;
+  ligma->gui.ungrab                 = gui_ungrab;
+  ligma->gui.set_busy               = gui_set_busy;
+  ligma->gui.unset_busy             = gui_unset_busy;
+  ligma->gui.show_message           = gui_message;
+  ligma->gui.help                   = gui_help;
+  ligma->gui.get_program_class      = gui_get_program_class;
+  ligma->gui.get_display_name       = gui_get_display_name;
+  ligma->gui.get_user_time          = gui_get_user_time;
+  ligma->gui.get_theme_dir          = gui_get_theme_dir;
+  ligma->gui.get_icon_theme_dir     = gui_get_icon_theme_dir;
+  ligma->gui.get_window_strategy    = gui_get_window_strategy;
+  ligma->gui.get_empty_display      = gui_get_empty_display;
+  ligma->gui.display_get_window_id  = gui_display_get_window_id;
+  ligma->gui.display_create         = gui_display_create;
+  ligma->gui.display_delete         = gui_display_delete;
+  ligma->gui.displays_reconnect     = gui_displays_reconnect;
+  ligma->gui.wait                   = gui_wait;
+  ligma->gui.progress_new           = gui_new_progress;
+  ligma->gui.progress_free          = gui_free_progress;
+  ligma->gui.pdb_dialog_new         = gui_pdb_dialog_new;
+  ligma->gui.pdb_dialog_set         = gui_pdb_dialog_set;
+  ligma->gui.pdb_dialog_close       = gui_pdb_dialog_close;
+  ligma->gui.recent_list_add_file   = gui_recent_list_add_file;
+  ligma->gui.recent_list_load       = gui_recent_list_load;
+  ligma->gui.get_mount_operation    = gui_get_mount_operation;
+  ligma->gui.query_profile_policy   = gui_query_profile_policy;
+  ligma->gui.query_rotation_policy  = gui_query_rotation_policy;
 }
 
 
 /*  private functions  */
 
 static void
-gui_ungrab (Gimp *gimp)
+gui_ungrab (Ligma *ligma)
 {
   GdkDisplay *display = gdk_display_get_default ();
 
@@ -236,34 +236,34 @@ gui_ungrab (Gimp *gimp)
 }
 
 static void
-gui_set_busy (Gimp *gimp)
+gui_set_busy (Ligma *ligma)
 {
-  gimp_displays_set_busy (gimp);
-  gimp_dialog_factory_set_busy (gimp_dialog_factory_get_singleton ());
+  ligma_displays_set_busy (ligma);
+  ligma_dialog_factory_set_busy (ligma_dialog_factory_get_singleton ());
 
   gdk_display_flush (gdk_display_get_default ());
 }
 
 static void
-gui_unset_busy (Gimp *gimp)
+gui_unset_busy (Ligma *ligma)
 {
-  gimp_displays_unset_busy (gimp);
-  gimp_dialog_factory_unset_busy (gimp_dialog_factory_get_singleton ());
+  ligma_displays_unset_busy (ligma);
+  ligma_dialog_factory_unset_busy (ligma_dialog_factory_get_singleton ());
 
   gdk_display_flush (gdk_display_get_default ());
 }
 
 static void
-gui_help (Gimp         *gimp,
-          GimpProgress *progress,
+gui_help (Ligma         *ligma,
+          LigmaProgress *progress,
           const gchar  *help_domain,
           const gchar  *help_id)
 {
-  gimp_help_show (gimp, progress, help_domain, help_id);
+  ligma_help_show (ligma, progress, help_domain, help_id);
 }
 
 static const gchar *
-gui_get_program_class (Gimp *gimp)
+gui_get_program_class (Ligma *ligma)
 {
   return gdk_get_program_class ();
 }
@@ -283,31 +283,31 @@ get_monitor_number (GdkMonitor *monitor)
 }
 
 static gchar *
-gui_get_display_name (Gimp     *gimp,
+gui_get_display_name (Ligma     *ligma,
                       gint      display_id,
                       GObject **monitor,
                       gint     *monitor_number)
 {
-  GimpDisplay *display = NULL;
+  LigmaDisplay *display = NULL;
   GdkDisplay  *gdk_display;
 
   if (display_id > 0)
-    display = gimp_display_get_by_id (gimp, display_id);
+    display = ligma_display_get_by_id (ligma, display_id);
 
   if (display)
     {
-      GimpDisplayShell *shell = gimp_display_get_shell (display);
+      LigmaDisplayShell *shell = ligma_display_get_shell (display);
 
       gdk_display = gtk_widget_get_display (GTK_WIDGET (shell));
 
-      *monitor = G_OBJECT (gimp_widget_get_monitor (GTK_WIDGET (shell)));
+      *monitor = G_OBJECT (ligma_widget_get_monitor (GTK_WIDGET (shell)));
     }
   else
     {
-      *monitor = G_OBJECT (gui_get_initial_monitor (gimp));
+      *monitor = G_OBJECT (gui_get_initial_monitor (ligma));
 
       if (! *monitor)
-        *monitor = G_OBJECT (gimp_get_monitor_at_pointer ());
+        *monitor = G_OBJECT (ligma_get_monitor_at_pointer ());
 
       gdk_display = gdk_monitor_get_display (GDK_MONITOR (*monitor));
     }
@@ -318,7 +318,7 @@ gui_get_display_name (Gimp     *gimp,
 }
 
 static guint32
-gui_get_user_time (Gimp *gimp)
+gui_get_user_time (Ligma *ligma)
 {
 #ifdef GDK_WINDOWING_X11
   if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
@@ -329,36 +329,36 @@ gui_get_user_time (Gimp *gimp)
 }
 
 static GFile *
-gui_get_theme_dir (Gimp *gimp)
+gui_get_theme_dir (Ligma *ligma)
 {
-  return themes_get_theme_dir (gimp, GIMP_GUI_CONFIG (gimp->config)->theme);
+  return themes_get_theme_dir (ligma, LIGMA_GUI_CONFIG (ligma->config)->theme);
 }
 
 static GFile *
-gui_get_icon_theme_dir (Gimp *gimp)
+gui_get_icon_theme_dir (Ligma *ligma)
 {
-  return icon_themes_get_theme_dir (gimp, GIMP_GUI_CONFIG (gimp->config)->icon_theme);
+  return icon_themes_get_theme_dir (ligma, LIGMA_GUI_CONFIG (ligma->config)->icon_theme);
 }
 
-static GimpObject *
-gui_get_window_strategy (Gimp *gimp)
+static LigmaObject *
+gui_get_window_strategy (Ligma *ligma)
 {
-  if (GIMP_GUI_CONFIG (gimp->config)->single_window_mode)
-    return gimp_single_window_strategy_get_singleton ();
+  if (LIGMA_GUI_CONFIG (ligma->config)->single_window_mode)
+    return ligma_single_window_strategy_get_singleton ();
   else
-    return gimp_multi_window_strategy_get_singleton ();
+    return ligma_multi_window_strategy_get_singleton ();
 }
 
-static GimpDisplay *
-gui_get_empty_display (Gimp *gimp)
+static LigmaDisplay *
+gui_get_empty_display (Ligma *ligma)
 {
-  GimpDisplay *display = NULL;
+  LigmaDisplay *display = NULL;
 
-  if (gimp_container_get_n_children (gimp->displays) == 1)
+  if (ligma_container_get_n_children (ligma->displays) == 1)
     {
-      display = (GimpDisplay *) gimp_container_get_first_child (gimp->displays);
+      display = (LigmaDisplay *) ligma_container_get_first_child (ligma->displays);
 
-      if (gimp_display_get_image (display))
+      if (ligma_display_get_image (display))
         {
           /* The display was not empty */
           display = NULL;
@@ -369,80 +369,80 @@ gui_get_empty_display (Gimp *gimp)
 }
 
 static guint32
-gui_display_get_window_id (GimpDisplay *display)
+gui_display_get_window_id (LigmaDisplay *display)
 {
-  GimpDisplay      *disp  = GIMP_DISPLAY (display);
-  GimpDisplayShell *shell = gimp_display_get_shell (disp);
+  LigmaDisplay      *disp  = LIGMA_DISPLAY (display);
+  LigmaDisplayShell *shell = ligma_display_get_shell (disp);
 
   if (shell)
     {
       GtkWidget *toplevel = gtk_widget_get_toplevel (GTK_WIDGET (shell));
 
       if (GTK_IS_WINDOW (toplevel))
-        return gimp_window_get_native_id (GTK_WINDOW (toplevel));
+        return ligma_window_get_native_id (GTK_WINDOW (toplevel));
     }
 
   return 0;
 }
 
-static GimpDisplay *
-gui_display_create (Gimp      *gimp,
-                    GimpImage *image,
-                    GimpUnit   unit,
+static LigmaDisplay *
+gui_display_create (Ligma      *ligma,
+                    LigmaImage *image,
+                    LigmaUnit   unit,
                     gdouble    scale,
                     GObject   *monitor)
 {
-  GimpContext *context = gimp_get_user_context (gimp);
-  GimpDisplay *display = GIMP_DISPLAY (gui_get_empty_display (gimp));
+  LigmaContext *context = ligma_get_user_context (ligma);
+  LigmaDisplay *display = LIGMA_DISPLAY (gui_get_empty_display (ligma));
 
   if (! monitor)
-    monitor = G_OBJECT (gimp_get_monitor_at_pointer ());
+    monitor = G_OBJECT (ligma_get_monitor_at_pointer ());
 
   if (display)
     {
-      gimp_display_fill (display, image, unit, scale);
+      ligma_display_fill (display, image, unit, scale);
     }
   else
     {
-      GList *image_managers = gimp_ui_managers_from_name ("<Image>");
+      GList *image_managers = ligma_ui_managers_from_name ("<Image>");
 
       g_return_val_if_fail (image_managers != NULL, NULL);
 
-      display = gimp_display_new (gimp, image, unit, scale,
+      display = ligma_display_new (ligma, image, unit, scale,
                                   image_managers->data,
-                                  gimp_dialog_factory_get_singleton (),
+                                  ligma_dialog_factory_get_singleton (),
                                   GDK_MONITOR (monitor));
    }
 
-  if (gimp_context_get_display (context) == display)
+  if (ligma_context_get_display (context) == display)
     {
-      gimp_context_set_image (context, image);
-      gimp_context_display_changed (context);
+      ligma_context_set_image (context, image);
+      ligma_context_display_changed (context);
     }
   else
     {
-      gimp_context_set_display (context, display);
+      ligma_context_set_display (context, display);
     }
 
   return display;
 }
 
 static void
-gui_display_delete (GimpDisplay *display)
+gui_display_delete (LigmaDisplay *display)
 {
-  gimp_display_close (display);
+  ligma_display_close (display);
 }
 
 static void
-gui_displays_reconnect (Gimp      *gimp,
-                        GimpImage *old_image,
-                        GimpImage *new_image)
+gui_displays_reconnect (Ligma      *ligma,
+                        LigmaImage *old_image,
+                        LigmaImage *new_image)
 {
-  gimp_displays_reconnect (gimp, old_image, new_image);
+  ligma_displays_reconnect (ligma, old_image, new_image);
 }
 
 static void
-gui_wait_input_async (GimpAsync  *async,
+gui_wait_input_async (LigmaAsync  *async,
                       const gint  input_pipe[2])
 {
   guint8 buffer[1];
@@ -450,22 +450,22 @@ gui_wait_input_async (GimpAsync  *async,
   while (read (input_pipe[0], buffer, sizeof (buffer)) == -1 &&
          errno == EINTR);
 
-  gimp_async_finish (async, NULL);
+  ligma_async_finish (async, NULL);
 }
 
 static gboolean
-gui_wait (Gimp         *gimp,
-          GimpWaitable *waitable,
+gui_wait (Ligma         *ligma,
+          LigmaWaitable *waitable,
           const gchar  *message)
 {
-  GimpProcedure  *procedure;
-  GimpValueArray *args;
-  GimpAsync      *input_async = NULL;
+  LigmaProcedure  *procedure;
+  LigmaValueArray *args;
+  LigmaAsync      *input_async = NULL;
   GError         *error       = NULL;
   gint            input_pipe[2];
   gint            output_pipe[2];
 
-  procedure = gimp_pdb_lookup_procedure (gimp->pdb, "plug-in-busy-dialog");
+  procedure = ligma_pdb_lookup_procedure (ligma->pdb, "plug-in-busy-dialog");
 
   if (! procedure)
     return FALSE;
@@ -481,28 +481,28 @@ gui_wait (Gimp         *gimp,
       return FALSE;
     }
 
-  gimp_spawn_set_cloexec (input_pipe[0]);
-  gimp_spawn_set_cloexec (output_pipe[1]);
+  ligma_spawn_set_cloexec (input_pipe[0]);
+  ligma_spawn_set_cloexec (output_pipe[1]);
 
-  args = gimp_procedure_get_arguments (procedure);
-  gimp_value_array_truncate (args, 5);
+  args = ligma_procedure_get_arguments (procedure);
+  ligma_value_array_truncate (args, 5);
 
-  g_value_set_enum   (gimp_value_array_index (args, 0),
-                      GIMP_RUN_INTERACTIVE);
-  g_value_set_int    (gimp_value_array_index (args, 1),
+  g_value_set_enum   (ligma_value_array_index (args, 0),
+                      LIGMA_RUN_INTERACTIVE);
+  g_value_set_int    (ligma_value_array_index (args, 1),
                       output_pipe[0]);
-  g_value_set_int    (gimp_value_array_index (args, 2),
+  g_value_set_int    (ligma_value_array_index (args, 2),
                       input_pipe[1]);
-  g_value_set_string (gimp_value_array_index (args, 3),
+  g_value_set_string (ligma_value_array_index (args, 3),
                       message);
-  g_value_set_int    (gimp_value_array_index (args, 4),
-                      GIMP_IS_CANCELABLE (waitable));
+  g_value_set_int    (ligma_value_array_index (args, 4),
+                      LIGMA_IS_CANCELABLE (waitable));
 
-  gimp_procedure_execute_async (procedure, gimp,
-                                gimp_get_user_context (gimp),
+  ligma_procedure_execute_async (procedure, ligma,
+                                ligma_get_user_context (ligma),
                                 NULL, args, NULL, &error);
 
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
   close (input_pipe[1]);
   close (output_pipe[0]);
@@ -517,33 +517,33 @@ gui_wait (Gimp         *gimp,
       return FALSE;
     }
 
-  if (GIMP_IS_CANCELABLE (waitable))
+  if (LIGMA_IS_CANCELABLE (waitable))
     {
       /* listens for a cancellation request */
-      input_async = gimp_parallel_run_async_independent (
-        (GimpRunAsyncFunc) gui_wait_input_async,
+      input_async = ligma_parallel_run_async_independent (
+        (LigmaRunAsyncFunc) gui_wait_input_async,
         input_pipe);
 
-      while (! gimp_waitable_wait_for (waitable, 0.1 * G_TIME_SPAN_SECOND))
+      while (! ligma_waitable_wait_for (waitable, 0.1 * G_TIME_SPAN_SECOND))
         {
           /* check for a cancellation request */
-          if (gimp_waitable_try_wait (GIMP_WAITABLE (input_async)))
+          if (ligma_waitable_try_wait (LIGMA_WAITABLE (input_async)))
             {
-              gimp_cancelable_cancel (GIMP_CANCELABLE (waitable));
+              ligma_cancelable_cancel (LIGMA_CANCELABLE (waitable));
 
               break;
             }
         }
     }
 
-  gimp_waitable_wait (waitable);
+  ligma_waitable_wait (waitable);
 
   /* signal completion to the plug-in */
   close (output_pipe[1]);
 
   if (input_async)
     {
-      gimp_waitable_wait (GIMP_WAITABLE (input_async));
+      ligma_waitable_wait (LIGMA_WAITABLE (input_async));
 
       g_object_unref (input_async);
     }
@@ -553,25 +553,25 @@ gui_wait (Gimp         *gimp,
   return TRUE;
 }
 
-static GimpProgress *
-gui_new_progress (Gimp        *gimp,
-                  GimpDisplay *display)
+static LigmaProgress *
+gui_new_progress (Ligma        *ligma,
+                  LigmaDisplay *display)
 {
-  g_return_val_if_fail (display == NULL || GIMP_IS_DISPLAY (display), NULL);
+  g_return_val_if_fail (display == NULL || LIGMA_IS_DISPLAY (display), NULL);
 
   if (display)
-    return GIMP_PROGRESS (display);
+    return LIGMA_PROGRESS (display);
 
-  return GIMP_PROGRESS (gimp_progress_dialog_new ());
+  return LIGMA_PROGRESS (ligma_progress_dialog_new ());
 }
 
 static void
-gui_free_progress (Gimp          *gimp,
-                   GimpProgress  *progress)
+gui_free_progress (Ligma          *ligma,
+                   LigmaProgress  *progress)
 {
-  g_return_if_fail (GIMP_IS_PROGRESS (progress));
+  g_return_if_fail (LIGMA_IS_PROGRESS (progress));
 
-  if (GIMP_IS_PROGRESS_DIALOG (progress))
+  if (LIGMA_IS_PROGRESS_DIALOG (progress))
     gtk_widget_destroy (GTK_WIDGET (progress));
 }
 
@@ -584,10 +584,10 @@ gui_pdb_dialog_present (GtkWindow *window)
 }
 
 static gboolean
-gui_pdb_dialog_new (Gimp          *gimp,
-                    GimpContext   *context,
-                    GimpProgress  *progress,
-                    GimpContainer *container,
+gui_pdb_dialog_new (Ligma          *ligma,
+                    LigmaContext   *context,
+                    LigmaProgress  *progress,
+                    LigmaContainer *container,
                     const gchar   *title,
                     const gchar   *callback_name,
                     const gchar   *object_name,
@@ -597,47 +597,47 @@ gui_pdb_dialog_new (Gimp          *gimp,
   const gchar *dialog_role = NULL;
   const gchar *help_id     = NULL;
 
-  if (gimp_container_get_children_type (container) == GIMP_TYPE_BRUSH)
+  if (ligma_container_get_children_type (container) == LIGMA_TYPE_BRUSH)
     {
-      dialog_type = GIMP_TYPE_BRUSH_SELECT;
-      dialog_role = "gimp-brush-selection";
-      help_id     = GIMP_HELP_BRUSH_DIALOG;
+      dialog_type = LIGMA_TYPE_BRUSH_SELECT;
+      dialog_role = "ligma-brush-selection";
+      help_id     = LIGMA_HELP_BRUSH_DIALOG;
     }
-  else if (gimp_container_get_children_type (container) == GIMP_TYPE_FONT)
+  else if (ligma_container_get_children_type (container) == LIGMA_TYPE_FONT)
     {
-      dialog_type = GIMP_TYPE_FONT_SELECT;
-      dialog_role = "gimp-font-selection";
-      help_id     = GIMP_HELP_FONT_DIALOG;
+      dialog_type = LIGMA_TYPE_FONT_SELECT;
+      dialog_role = "ligma-font-selection";
+      help_id     = LIGMA_HELP_FONT_DIALOG;
     }
-  else if (gimp_container_get_children_type (container) == GIMP_TYPE_GRADIENT)
+  else if (ligma_container_get_children_type (container) == LIGMA_TYPE_GRADIENT)
     {
-      dialog_type = GIMP_TYPE_GRADIENT_SELECT;
-      dialog_role = "gimp-gradient-selection";
-      help_id     = GIMP_HELP_GRADIENT_DIALOG;
+      dialog_type = LIGMA_TYPE_GRADIENT_SELECT;
+      dialog_role = "ligma-gradient-selection";
+      help_id     = LIGMA_HELP_GRADIENT_DIALOG;
     }
-  else if (gimp_container_get_children_type (container) == GIMP_TYPE_PALETTE)
+  else if (ligma_container_get_children_type (container) == LIGMA_TYPE_PALETTE)
     {
-      dialog_type = GIMP_TYPE_PALETTE_SELECT;
-      dialog_role = "gimp-palette-selection";
-      help_id     = GIMP_HELP_PALETTE_DIALOG;
+      dialog_type = LIGMA_TYPE_PALETTE_SELECT;
+      dialog_role = "ligma-palette-selection";
+      help_id     = LIGMA_HELP_PALETTE_DIALOG;
     }
-  else if (gimp_container_get_children_type (container) == GIMP_TYPE_PATTERN)
+  else if (ligma_container_get_children_type (container) == LIGMA_TYPE_PATTERN)
     {
-      dialog_type = GIMP_TYPE_PATTERN_SELECT;
-      dialog_role = "gimp-pattern-selection";
-      help_id     = GIMP_HELP_PATTERN_DIALOG;
+      dialog_type = LIGMA_TYPE_PATTERN_SELECT;
+      dialog_role = "ligma-pattern-selection";
+      help_id     = LIGMA_HELP_PATTERN_DIALOG;
     }
 
   if (dialog_type != G_TYPE_NONE)
     {
-      GimpObject *object = NULL;
+      LigmaObject *object = NULL;
 
       if (object_name && strlen (object_name))
-        object = gimp_container_get_child_by_name (container, object_name);
+        object = ligma_container_get_child_by_name (container, object_name);
 
       if (! object)
-        object = gimp_context_get_by_type (context,
-                                           gimp_container_get_children_type (container));
+        object = ligma_context_get_by_type (context,
+                                           ligma_container_get_children_type (container));
 
       if (object)
         {
@@ -647,21 +647,21 @@ gui_pdb_dialog_new (Gimp          *gimp,
           GtkWidget  *dialog;
           GtkWidget  *view;
 
-          names = gimp_properties_append (dialog_type,
+          names = ligma_properties_append (dialog_type,
                                           &n_properties, names, &values,
                                           "title",          title,
                                           "role",           dialog_role,
-                                          "help-func",      gimp_standard_help_func,
+                                          "help-func",      ligma_standard_help_func,
                                           "help-id",        help_id,
-                                          "pdb",            gimp->pdb,
+                                          "pdb",            ligma->pdb,
                                           "context",        context,
-                                          "select-type",    gimp_container_get_children_type (container),
+                                          "select-type",    ligma_container_get_children_type (container),
                                           "initial-object", object,
                                           "callback-name",  callback_name,
                                           "menu-factory",   global_menu_factory,
                                           NULL);
 
-          names = gimp_properties_append_valist (dialog_type,
+          names = ligma_properties_append_valist (dialog_type,
                                                  &n_properties, names, &values,
                                                  args);
 
@@ -671,18 +671,18 @@ gui_pdb_dialog_new (Gimp          *gimp,
                                           (const gchar **) names,
                                           (const GValue *) values);
 
-          gimp_properties_free (n_properties, names, values);
+          ligma_properties_free (n_properties, names, values);
 
-          view = GIMP_PDB_DIALOG (dialog)->view;
+          view = LIGMA_PDB_DIALOG (dialog)->view;
           if (view)
-            gimp_docked_set_show_button_bar (GIMP_DOCKED (view), FALSE);
+            ligma_docked_set_show_button_bar (LIGMA_DOCKED (view), FALSE);
 
           if (progress)
             {
-              guint32 window_id = gimp_progress_get_window_id (progress);
+              guint32 window_id = ligma_progress_get_window_id (progress);
 
               if (window_id)
-                gimp_window_set_transient_for (GTK_WINDOW (dialog), window_id);
+                ligma_window_set_transient_for (GTK_WINDOW (dialog), window_id);
             }
 
           gtk_widget_show (dialog);
@@ -708,42 +708,42 @@ gui_pdb_dialog_new (Gimp          *gimp,
 }
 
 static gboolean
-gui_pdb_dialog_set (Gimp          *gimp,
-                    GimpContainer *container,
+gui_pdb_dialog_set (Ligma          *ligma,
+                    LigmaContainer *container,
                     const gchar   *callback_name,
                     const gchar   *object_name,
                     va_list        args)
 {
-  GimpPdbDialogClass *klass = NULL;
+  LigmaPdbDialogClass *klass = NULL;
 
-  if (gimp_container_get_children_type (container) == GIMP_TYPE_BRUSH)
-    klass = g_type_class_peek (GIMP_TYPE_BRUSH_SELECT);
-  else if (gimp_container_get_children_type (container) == GIMP_TYPE_FONT)
-    klass = g_type_class_peek (GIMP_TYPE_FONT_SELECT);
-  else if (gimp_container_get_children_type (container) == GIMP_TYPE_GRADIENT)
-    klass = g_type_class_peek (GIMP_TYPE_GRADIENT_SELECT);
-  else if (gimp_container_get_children_type (container) == GIMP_TYPE_PALETTE)
-    klass = g_type_class_peek (GIMP_TYPE_PALETTE_SELECT);
-  else if (gimp_container_get_children_type (container) == GIMP_TYPE_PATTERN)
-    klass = g_type_class_peek (GIMP_TYPE_PATTERN_SELECT);
+  if (ligma_container_get_children_type (container) == LIGMA_TYPE_BRUSH)
+    klass = g_type_class_peek (LIGMA_TYPE_BRUSH_SELECT);
+  else if (ligma_container_get_children_type (container) == LIGMA_TYPE_FONT)
+    klass = g_type_class_peek (LIGMA_TYPE_FONT_SELECT);
+  else if (ligma_container_get_children_type (container) == LIGMA_TYPE_GRADIENT)
+    klass = g_type_class_peek (LIGMA_TYPE_GRADIENT_SELECT);
+  else if (ligma_container_get_children_type (container) == LIGMA_TYPE_PALETTE)
+    klass = g_type_class_peek (LIGMA_TYPE_PALETTE_SELECT);
+  else if (ligma_container_get_children_type (container) == LIGMA_TYPE_PATTERN)
+    klass = g_type_class_peek (LIGMA_TYPE_PATTERN_SELECT);
 
   if (klass)
     {
-      GimpPdbDialog *dialog;
+      LigmaPdbDialog *dialog;
 
-      dialog = gimp_pdb_dialog_get_by_callback (klass, callback_name);
+      dialog = ligma_pdb_dialog_get_by_callback (klass, callback_name);
 
-      if (dialog && dialog->select_type == gimp_container_get_children_type (container))
+      if (dialog && dialog->select_type == ligma_container_get_children_type (container))
         {
-          GimpObject *object;
+          LigmaObject *object;
 
-          object = gimp_container_get_child_by_name (container, object_name);
+          object = ligma_container_get_child_by_name (container, object_name);
 
           if (object)
             {
               const gchar *prop_name = va_arg (args, const gchar *);
 
-              gimp_context_set_by_type (dialog->context, dialog->select_type,
+              ligma_context_set_by_type (dialog->context, dialog->select_type,
                                         object);
 
               if (prop_name)
@@ -760,30 +760,30 @@ gui_pdb_dialog_set (Gimp          *gimp,
 }
 
 static gboolean
-gui_pdb_dialog_close (Gimp          *gimp,
-                      GimpContainer *container,
+gui_pdb_dialog_close (Ligma          *ligma,
+                      LigmaContainer *container,
                       const gchar   *callback_name)
 {
-  GimpPdbDialogClass *klass = NULL;
+  LigmaPdbDialogClass *klass = NULL;
 
-  if (gimp_container_get_children_type (container) == GIMP_TYPE_BRUSH)
-    klass = g_type_class_peek (GIMP_TYPE_BRUSH_SELECT);
-  else if (gimp_container_get_children_type (container) == GIMP_TYPE_FONT)
-    klass = g_type_class_peek (GIMP_TYPE_FONT_SELECT);
-  else if (gimp_container_get_children_type (container) == GIMP_TYPE_GRADIENT)
-    klass = g_type_class_peek (GIMP_TYPE_GRADIENT_SELECT);
-  else if (gimp_container_get_children_type (container) == GIMP_TYPE_PALETTE)
-    klass = g_type_class_peek (GIMP_TYPE_PALETTE_SELECT);
-  else if (gimp_container_get_children_type (container) == GIMP_TYPE_PATTERN)
-    klass = g_type_class_peek (GIMP_TYPE_PATTERN_SELECT);
+  if (ligma_container_get_children_type (container) == LIGMA_TYPE_BRUSH)
+    klass = g_type_class_peek (LIGMA_TYPE_BRUSH_SELECT);
+  else if (ligma_container_get_children_type (container) == LIGMA_TYPE_FONT)
+    klass = g_type_class_peek (LIGMA_TYPE_FONT_SELECT);
+  else if (ligma_container_get_children_type (container) == LIGMA_TYPE_GRADIENT)
+    klass = g_type_class_peek (LIGMA_TYPE_GRADIENT_SELECT);
+  else if (ligma_container_get_children_type (container) == LIGMA_TYPE_PALETTE)
+    klass = g_type_class_peek (LIGMA_TYPE_PALETTE_SELECT);
+  else if (ligma_container_get_children_type (container) == LIGMA_TYPE_PATTERN)
+    klass = g_type_class_peek (LIGMA_TYPE_PATTERN_SELECT);
 
   if (klass)
     {
-      GimpPdbDialog *dialog;
+      LigmaPdbDialog *dialog;
 
-      dialog = gimp_pdb_dialog_get_by_callback (klass, callback_name);
+      dialog = ligma_pdb_dialog_get_by_callback (klass, callback_name);
 
-      if (dialog && dialog->select_type == gimp_container_get_children_type (container))
+      if (dialog && dialog->select_type == ligma_container_get_children_type (container))
         {
           gtk_widget_destroy (GTK_WIDGET (dialog));
           return TRUE;
@@ -794,7 +794,7 @@ gui_pdb_dialog_close (Gimp          *gimp,
 }
 
 static gboolean
-gui_recent_list_add_file (Gimp        *gimp,
+gui_recent_list_add_file (Ligma        *ligma,
                           GFile       *file,
                           const gchar *mime_type)
 {
@@ -803,7 +803,7 @@ gui_recent_list_add_file (Gimp        *gimp,
   gchar         *uri;
   gboolean       success;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), FALSE);
   g_return_val_if_fail (G_IS_FILE (file), FALSE);
 
   /* use last part of the URI */
@@ -814,7 +814,7 @@ gui_recent_list_add_file (Gimp        *gimp,
   recent.mime_type    = (mime_type ?
                          (gchar *) mime_type : "application/octet-stream");
   recent.app_name     = "GNU Image Manipulation Program";
-  recent.app_exec     = GIMP_COMMAND " %u";
+  recent.app_exec     = LIGMA_COMMAND " %u";
   recent.groups       = (gchar **) groups;
   recent.is_private   = FALSE;
 
@@ -837,15 +837,15 @@ gui_recent_list_compare (gconstpointer a,
 }
 
 static void
-gui_recent_list_load (Gimp *gimp)
+gui_recent_list_load (Ligma *ligma)
 {
   GList *items;
   GList *list;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
 
-  gimp_container_freeze (gimp->documents);
-  gimp_container_clear (gimp->documents);
+  ligma_container_freeze (ligma->documents);
+  ligma_container_clear (ligma->documents);
 
   items = gtk_recent_manager_get_items (gtk_recent_manager_get_default ());
 
@@ -861,20 +861,20 @@ gui_recent_list_load (Gimp *gimp)
           const gchar *mime_type = gtk_recent_info_get_mime_type (info);
 
           if (mime_type &&
-              gimp_plug_in_manager_file_procedure_find_by_mime_type (gimp->plug_in_manager,
-                                                                     GIMP_FILE_PROCEDURE_GROUP_OPEN,
+              ligma_plug_in_manager_file_procedure_find_by_mime_type (ligma->plug_in_manager,
+                                                                     LIGMA_FILE_PROCEDURE_GROUP_OPEN,
                                                                      mime_type))
             {
-              GimpImagefile *imagefile;
+              LigmaImagefile *imagefile;
               GFile         *file;
 
               file = g_file_new_for_uri (gtk_recent_info_get_uri (info));
-              imagefile = gimp_imagefile_new (gimp, file);
+              imagefile = ligma_imagefile_new (ligma, file);
               g_object_unref (file);
 
-              gimp_imagefile_set_mime_type (imagefile, mime_type);
+              ligma_imagefile_set_mime_type (imagefile, mime_type);
 
-              gimp_container_add (gimp->documents, GIMP_OBJECT (imagefile));
+              ligma_container_add (ligma->documents, LIGMA_OBJECT (imagefile));
               g_object_unref (imagefile);
             }
         }
@@ -884,12 +884,12 @@ gui_recent_list_load (Gimp *gimp)
 
   g_list_free (items);
 
-  gimp_container_thaw (gimp->documents);
+  ligma_container_thaw (ligma->documents);
 }
 
 static GMountOperation *
-gui_get_mount_operation (Gimp         *gimp,
-                         GimpProgress *progress)
+gui_get_mount_operation (Ligma         *ligma,
+                         LigmaProgress *progress)
 {
   GtkWidget *toplevel = NULL;
 
@@ -899,12 +899,12 @@ gui_get_mount_operation (Gimp         *gimp,
   return gtk_mount_operation_new (GTK_WINDOW (toplevel));
 }
 
-static GimpColorProfilePolicy
-gui_query_profile_policy (Gimp                      *gimp,
-                          GimpImage                 *image,
-                          GimpContext               *context,
-                          GimpColorProfile         **dest_profile,
-                          GimpColorRenderingIntent  *intent,
+static LigmaColorProfilePolicy
+gui_query_profile_policy (Ligma                      *ligma,
+                          LigmaImage                 *image,
+                          LigmaContext               *context,
+                          LigmaColorProfile         **dest_profile,
+                          LigmaColorRenderingIntent  *intent,
                           gboolean                  *bpc,
                           gboolean                  *dont_ask)
 {
@@ -914,10 +914,10 @@ gui_query_profile_policy (Gimp                      *gimp,
                                           dont_ask);
 }
 
-static GimpMetadataRotationPolicy
-gui_query_rotation_policy (Gimp        *gimp,
-                           GimpImage   *image,
-                           GimpContext *context,
+static LigmaMetadataRotationPolicy
+gui_query_rotation_policy (Ligma        *ligma,
+                           LigmaImage   *image,
+                           LigmaContext *context,
                            gboolean    *dont_ask)
 {
   return metadata_rotation_import_dialog_run (image, context,

@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimpimage_pdb.c
+ * ligmaimage_pdb.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,12 +24,12 @@
 
 #include "stamp-pdbgen.h"
 
-#include "gimp.h"
+#include "ligma.h"
 
 
 /**
- * SECTION: gimpimage
- * @title: gimpimage
+ * SECTION: ligmaimage
+ * @title: ligmaimage
  * @short_description: Operations on complete images.
  *
  * Operations on complete images: creation, resizing/rescaling, and
@@ -38,7 +38,7 @@
 
 
 /**
- * gimp_image_id_is_valid:
+ * ligma_image_id_is_valid:
  * @image_id: The image ID to check.
  *
  * Returns TRUE if the image ID is valid.
@@ -51,71 +51,71 @@
  * Since: 3.0
  **/
 gboolean
-gimp_image_id_is_valid (gint image_id)
+ligma_image_id_is_valid (gint image_id)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean valid = FALSE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_INT, image_id,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-id-is-valid",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-id-is-valid",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    valid = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    valid = LIGMA_VALUES_GET_BOOLEAN (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return valid;
 }
 
 /**
- * gimp_get_images: (skip)
+ * ligma_get_images: (skip)
  * @num_images: (out): The number of images currently open.
  *
  * Returns the list of images currently open.
  *
- * This procedure returns the list of images currently open in GIMP.
+ * This procedure returns the list of images currently open in LIGMA.
  *
- * Returns: (array length=num_images) (element-type GimpImage) (transfer container):
+ * Returns: (array length=num_images) (element-type LigmaImage) (transfer container):
  *          The list of images currently open.
  *          The returned value must be freed with g_free().
  **/
-GimpImage **
-gimp_get_images (gint *num_images)
+LigmaImage **
+ligma_get_images (gint *num_images)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpImage **images = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaImage **images = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-get-images",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-get-images",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
   *num_images = 0;
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
     {
-      *num_images = GIMP_VALUES_GET_INT (return_vals, 1);
-      { GimpObjectArray *a = g_value_get_boxed (gimp_value_array_index (return_vals, 2)); if (a) images = g_memdup2 (a->data, a->length * sizeof (gpointer)); };
+      *num_images = LIGMA_VALUES_GET_INT (return_vals, 1);
+      { LigmaObjectArray *a = g_value_get_boxed (ligma_value_array_index (return_vals, 2)); if (a) images = g_memdup2 (a->data, a->length * sizeof (gpointer)); };
     }
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return images;
 }
 
 /**
- * gimp_image_new:
+ * ligma_image_new:
  * @width: The width of the image.
  * @height: The height of the image.
  * @type: The type of image.
@@ -124,47 +124,47 @@ gimp_get_images (gint *num_images)
  *
  * Creates a new image, undisplayed, with the specified extents and
  * type. A layer should be created and added before this image is
- * displayed, or subsequent calls to gimp_display_new() with this image
+ * displayed, or subsequent calls to ligma_display_new() with this image
  * as an argument will fail. Layers can be created using the
- * gimp_layer_new() commands. They can be added to an image using the
- * gimp_image_insert_layer() command.
+ * ligma_layer_new() commands. They can be added to an image using the
+ * ligma_image_insert_layer() command.
  *
  * If your image's type if INDEXED, a colormap must also be added with
- * gimp_image_set_colormap(). An indexed image without a colormap will
+ * ligma_image_set_colormap(). An indexed image without a colormap will
  * output unexpected colors.
  *
  * Returns: (transfer none): The newly created image.
  **/
-GimpImage *
-gimp_image_new (gint              width,
+LigmaImage *
+ligma_image_new (gint              width,
                 gint              height,
-                GimpImageBaseType type)
+                LigmaImageBaseType type)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpImage *image = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaImage *image = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_INT, width,
                                           G_TYPE_INT, height,
-                                          GIMP_TYPE_IMAGE_BASE_TYPE, type,
+                                          LIGMA_TYPE_IMAGE_BASE_TYPE, type,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-new",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-new",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    image = GIMP_VALUES_GET_IMAGE (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    image = LIGMA_VALUES_GET_IMAGE (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return image;
 }
 
 /**
- * gimp_image_new_with_precision:
+ * ligma_image_new_with_precision:
  * @width: The width of the image.
  * @height: The height of the image.
  * @type: The type of image.
@@ -175,45 +175,45 @@ gimp_image_new (gint              width,
  *
  * Creates a new image, undisplayed with the specified extents, type
  * and precision. Indexed images can only be created at
- * GIMP_PRECISION_U8_NON_LINEAR precision. See gimp_image_new() for
+ * LIGMA_PRECISION_U8_NON_LINEAR precision. See ligma_image_new() for
  * further details.
  *
  * Returns: (transfer none): The newly created image.
  *
  * Since: 2.10
  **/
-GimpImage *
-gimp_image_new_with_precision (gint              width,
+LigmaImage *
+ligma_image_new_with_precision (gint              width,
                                gint              height,
-                               GimpImageBaseType type,
-                               GimpPrecision     precision)
+                               LigmaImageBaseType type,
+                               LigmaPrecision     precision)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpImage *image = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaImage *image = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_INT, width,
                                           G_TYPE_INT, height,
-                                          GIMP_TYPE_IMAGE_BASE_TYPE, type,
-                                          GIMP_TYPE_PRECISION, precision,
+                                          LIGMA_TYPE_IMAGE_BASE_TYPE, type,
+                                          LIGMA_TYPE_PRECISION, precision,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-new-with-precision",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-new-with-precision",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    image = GIMP_VALUES_GET_IMAGE (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    image = LIGMA_VALUES_GET_IMAGE (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return image;
 }
 
 /**
- * gimp_image_duplicate:
+ * ligma_image_duplicate:
  * @image: The image.
  *
  * Duplicate the specified image
@@ -223,32 +223,32 @@ gimp_image_new_with_precision (gint              width,
  *
  * Returns: (transfer none): The new, duplicated image.
  **/
-GimpImage *
-gimp_image_duplicate (GimpImage *image)
+LigmaImage *
+ligma_image_duplicate (LigmaImage *image)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpImage *new_image = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaImage *new_image = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-duplicate",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-duplicate",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    new_image = GIMP_VALUES_GET_IMAGE (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    new_image = LIGMA_VALUES_GET_IMAGE (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return new_image;
 }
 
 /**
- * gimp_image_delete:
+ * ligma_image_delete:
  * @image: The image.
  *
  * Delete the specified image.
@@ -263,30 +263,30 @@ gimp_image_duplicate (GimpImage *image)
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_image_delete (GimpImage *image)
+ligma_image_delete (LigmaImage *image)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-delete",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-delete",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_get_base_type:
+ * ligma_image_get_base_type:
  * @image: The image.
  *
  * Get the base type of the image.
@@ -296,32 +296,32 @@ gimp_image_delete (GimpImage *image)
  *
  * Returns: The image's base type.
  **/
-GimpImageBaseType
-gimp_image_get_base_type (GimpImage *image)
+LigmaImageBaseType
+ligma_image_get_base_type (LigmaImage *image)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpImageBaseType base_type = 0;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaImageBaseType base_type = 0;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-get-base-type",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-get-base-type",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    base_type = GIMP_VALUES_GET_ENUM (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    base_type = LIGMA_VALUES_GET_ENUM (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return base_type;
 }
 
 /**
- * gimp_image_get_precision:
+ * ligma_image_get_precision:
  * @image: The image.
  *
  * Get the precision of the image.
@@ -332,32 +332,32 @@ gimp_image_get_base_type (GimpImage *image)
  *
  * Since: 2.10
  **/
-GimpPrecision
-gimp_image_get_precision (GimpImage *image)
+LigmaPrecision
+ligma_image_get_precision (LigmaImage *image)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpPrecision precision = 0;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaPrecision precision = 0;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-get-precision",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-get-precision",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    precision = GIMP_VALUES_GET_ENUM (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    precision = LIGMA_VALUES_GET_ENUM (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return precision;
 }
 
 /**
- * gimp_image_get_default_new_layer_mode:
+ * ligma_image_get_default_new_layer_mode:
  * @image: The image.
  *
  * Get the default mode for newly created layers of this image.
@@ -368,32 +368,32 @@ gimp_image_get_precision (GimpImage *image)
  *
  * Since: 2.10
  **/
-GimpLayerMode
-gimp_image_get_default_new_layer_mode (GimpImage *image)
+LigmaLayerMode
+ligma_image_get_default_new_layer_mode (LigmaImage *image)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpLayerMode mode = 0;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaLayerMode mode = 0;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-get-default-new-layer-mode",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-get-default-new-layer-mode",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    mode = GIMP_VALUES_GET_ENUM (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    mode = LIGMA_VALUES_GET_ENUM (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return mode;
 }
 
 /**
- * gimp_image_get_width:
+ * ligma_image_get_width:
  * @image: The image.
  *
  * Return the width of the image
@@ -404,31 +404,31 @@ gimp_image_get_default_new_layer_mode (GimpImage *image)
  * Returns: The image's width.
  **/
 gint
-gimp_image_get_width (GimpImage *image)
+ligma_image_get_width (LigmaImage *image)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gint width = 0;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-get-width",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-get-width",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    width = GIMP_VALUES_GET_INT (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    width = LIGMA_VALUES_GET_INT (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return width;
 }
 
 /**
- * gimp_image_get_height:
+ * ligma_image_get_height:
  * @image: The image.
  *
  * Return the height of the image
@@ -439,31 +439,31 @@ gimp_image_get_width (GimpImage *image)
  * Returns: The image's height.
  **/
 gint
-gimp_image_get_height (GimpImage *image)
+ligma_image_get_height (LigmaImage *image)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gint height = 0;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-get-height",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-get-height",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    height = GIMP_VALUES_GET_INT (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    height = LIGMA_VALUES_GET_INT (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return height;
 }
 
 /**
- * gimp_image_get_layers: (skip)
+ * ligma_image_get_layers: (skip)
  * @image: The image.
  * @num_layers: (out): The number of root layers contained in the image.
  *
@@ -474,46 +474,46 @@ gimp_image_get_height (GimpImage *image)
  * Note that this is not the full list of layers, but only the root
  * layers, i.e. layers with no parents themselves. If you need all
  * layers, it is up to you to verify that any of these layers is a
- * group layer with gimp_item_is_group() and to obtain its children
- * with gimp_item_get_children() (possibly recursively checking if
+ * group layer with ligma_item_is_group() and to obtain its children
+ * with ligma_item_get_children() (possibly recursively checking if
  * these have children too).
  *
- * Returns: (array length=num_layers) (element-type GimpLayer) (transfer container):
+ * Returns: (array length=num_layers) (element-type LigmaLayer) (transfer container):
  *          The list of layers contained in the image.
  *          The returned value must be freed with g_free().
  **/
-GimpLayer **
-gimp_image_get_layers (GimpImage *image,
+LigmaLayer **
+ligma_image_get_layers (LigmaImage *image,
                        gint      *num_layers)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpLayer **layers = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaLayer **layers = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-get-layers",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-get-layers",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
   *num_layers = 0;
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
     {
-      *num_layers = GIMP_VALUES_GET_INT (return_vals, 1);
-      { GimpObjectArray *a = g_value_get_boxed (gimp_value_array_index (return_vals, 2)); if (a) layers = g_memdup2 (a->data, a->length * sizeof (gpointer)); };
+      *num_layers = LIGMA_VALUES_GET_INT (return_vals, 1);
+      { LigmaObjectArray *a = g_value_get_boxed (ligma_value_array_index (return_vals, 2)); if (a) layers = g_memdup2 (a->data, a->length * sizeof (gpointer)); };
     }
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return layers;
 }
 
 /**
- * gimp_image_get_channels: (skip)
+ * ligma_image_get_channels: (skip)
  * @image: The image.
  * @num_channels: (out): The number of channels contained in the image.
  *
@@ -525,42 +525,42 @@ gimp_image_get_layers (GimpImage *image,
  * \"channels\" are custom channels and do not include the image's
  * color components.
  *
- * Returns: (array length=num_channels) (element-type GimpChannel) (transfer container):
+ * Returns: (array length=num_channels) (element-type LigmaChannel) (transfer container):
  *          The list of channels contained in the image.
  *          The returned value must be freed with g_free().
  **/
-GimpChannel **
-gimp_image_get_channels (GimpImage *image,
+LigmaChannel **
+ligma_image_get_channels (LigmaImage *image,
                          gint      *num_channels)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpChannel **channels = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaChannel **channels = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-get-channels",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-get-channels",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
   *num_channels = 0;
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
     {
-      *num_channels = GIMP_VALUES_GET_INT (return_vals, 1);
-      { GimpObjectArray *a = g_value_get_boxed (gimp_value_array_index (return_vals, 2)); if (a) channels = g_memdup2 (a->data, a->length * sizeof (gpointer)); };
+      *num_channels = LIGMA_VALUES_GET_INT (return_vals, 1);
+      { LigmaObjectArray *a = g_value_get_boxed (ligma_value_array_index (return_vals, 2)); if (a) channels = g_memdup2 (a->data, a->length * sizeof (gpointer)); };
     }
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return channels;
 }
 
 /**
- * gimp_image_get_vectors: (skip)
+ * ligma_image_get_vectors: (skip)
  * @image: The image.
  * @num_vectors: (out): The number of vectors contained in the image.
  *
@@ -569,44 +569,44 @@ gimp_image_get_channels (GimpImage *image,
  * This procedure returns the list of vectors contained in the
  * specified image.
  *
- * Returns: (array length=num_vectors) (element-type GimpVectors) (transfer container):
+ * Returns: (array length=num_vectors) (element-type LigmaVectors) (transfer container):
  *          The list of vectors contained in the image.
  *          The returned value must be freed with g_free().
  *
  * Since: 2.4
  **/
-GimpVectors **
-gimp_image_get_vectors (GimpImage *image,
+LigmaVectors **
+ligma_image_get_vectors (LigmaImage *image,
                         gint      *num_vectors)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpVectors **vectors = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaVectors **vectors = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-get-vectors",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-get-vectors",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
   *num_vectors = 0;
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
     {
-      *num_vectors = GIMP_VALUES_GET_INT (return_vals, 1);
-      { GimpObjectArray *a = g_value_get_boxed (gimp_value_array_index (return_vals, 2)); if (a) vectors = g_memdup2 (a->data, a->length * sizeof (gpointer)); };
+      *num_vectors = LIGMA_VALUES_GET_INT (return_vals, 1);
+      { LigmaObjectArray *a = g_value_get_boxed (ligma_value_array_index (return_vals, 2)); if (a) vectors = g_memdup2 (a->data, a->length * sizeof (gpointer)); };
     }
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return vectors;
 }
 
 /**
- * gimp_image_unset_active_channel:
+ * ligma_image_unset_active_channel:
  * @image: The image.
  *
  * Unsets the active channel in the specified image.
@@ -619,30 +619,30 @@ gimp_image_get_vectors (GimpImage *image,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_image_unset_active_channel (GimpImage *image)
+ligma_image_unset_active_channel (LigmaImage *image)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-unset-active-channel",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-unset-active-channel",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_get_floating_sel:
+ * ligma_image_get_floating_sel:
  * @image: The image.
  *
  * Return the floating selection of the image.
@@ -652,32 +652,32 @@ gimp_image_unset_active_channel (GimpImage *image)
  *
  * Returns: (transfer none): The image's floating selection.
  **/
-GimpLayer *
-gimp_image_get_floating_sel (GimpImage *image)
+LigmaLayer *
+ligma_image_get_floating_sel (LigmaImage *image)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpLayer *floating_sel = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaLayer *floating_sel = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-get-floating-sel",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-get-floating-sel",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    floating_sel = GIMP_VALUES_GET_LAYER (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    floating_sel = LIGMA_VALUES_GET_LAYER (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return floating_sel;
 }
 
 /**
- * gimp_image_floating_sel_attached_to:
+ * ligma_image_floating_sel_attached_to:
  * @image: The image.
  *
  * Return the drawable the floating selection is attached to.
@@ -689,35 +689,35 @@ gimp_image_get_floating_sel (GimpImage *image)
  * Returns: (transfer none):
  *          The drawable the floating selection is attached to.
  **/
-GimpDrawable *
-gimp_image_floating_sel_attached_to (GimpImage *image)
+LigmaDrawable *
+ligma_image_floating_sel_attached_to (LigmaImage *image)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpDrawable *drawable = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaDrawable *drawable = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-floating-sel-attached-to",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-floating-sel-attached-to",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    drawable = GIMP_VALUES_GET_DRAWABLE (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    drawable = LIGMA_VALUES_GET_DRAWABLE (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return drawable;
 }
 
 /**
- * gimp_image_pick_color:
+ * ligma_image_pick_color:
  * @image: The image.
  * @num_drawables: The number of drawables.
- * @drawables: (array length=num_drawables) (element-type GimpItem): The drawables to pick from.
+ * @drawables: (array length=num_drawables) (element-type LigmaItem): The drawables to pick from.
  * @x: x coordinate of upper-left corner of rectangle.
  * @y: y coordinate of upper-left corner of rectangle.
  * @sample_merged: Use the composite image, not the drawables.
@@ -746,49 +746,49 @@ gimp_image_floating_sel_attached_to (GimpImage *image)
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_image_pick_color (GimpImage       *image,
+ligma_image_pick_color (LigmaImage       *image,
                        gint             num_drawables,
-                       const GimpItem **drawables,
+                       const LigmaItem **drawables,
                        gdouble          x,
                        gdouble          y,
                        gboolean         sample_merged,
                        gboolean         sample_average,
                        gdouble          average_radius,
-                       GimpRGB         *color)
+                       LigmaRGB         *color)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_INT, num_drawables,
-                                          GIMP_TYPE_OBJECT_ARRAY, NULL,
+                                          LIGMA_TYPE_OBJECT_ARRAY, NULL,
                                           G_TYPE_DOUBLE, x,
                                           G_TYPE_DOUBLE, y,
                                           G_TYPE_BOOLEAN, sample_merged,
                                           G_TYPE_BOOLEAN, sample_average,
                                           G_TYPE_DOUBLE, average_radius,
                                           G_TYPE_NONE);
-  gimp_value_set_object_array (gimp_value_array_index (args, 2), GIMP_TYPE_ITEM, (GObject **) drawables, num_drawables);
+  ligma_value_set_object_array (ligma_value_array_index (args, 2), LIGMA_TYPE_ITEM, (GObject **) drawables, num_drawables);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-pick-color",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-pick-color",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
   if (success)
-    GIMP_VALUES_GET_RGB (return_vals, 1, &*color);
+    LIGMA_VALUES_GET_RGB (return_vals, 1, &*color);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_pick_correlate_layer:
+ * ligma_image_pick_correlate_layer:
  * @image: The image.
  * @x: The x coordinate for the pick.
  * @y: The y coordinate for the pick.
@@ -803,36 +803,36 @@ gimp_image_pick_color (GimpImage       *image,
  *
  * Returns: (transfer none): The layer found at the specified coordinates.
  **/
-GimpLayer *
-gimp_image_pick_correlate_layer (GimpImage *image,
+LigmaLayer *
+ligma_image_pick_correlate_layer (LigmaImage *image,
                                  gint       x,
                                  gint       y)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpLayer *layer = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaLayer *layer = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_INT, x,
                                           G_TYPE_INT, y,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-pick-correlate-layer",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-pick-correlate-layer",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    layer = GIMP_VALUES_GET_LAYER (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    layer = LIGMA_VALUES_GET_LAYER (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return layer;
 }
 
 /**
- * gimp_image_insert_layer:
+ * ligma_image_insert_layer:
  * @image: The image.
  * @layer: The layer.
  * @parent: (nullable): The parent layer.
@@ -842,7 +842,7 @@ gimp_image_pick_correlate_layer (GimpImage *image,
  *
  * This procedure adds the specified layer to the image at the given
  * position. If the specified parent is a valid layer group (See
- * gimp_item_is_group() and gimp_layer_group_new()) then the layer is
+ * ligma_item_is_group() and ligma_layer_group_new()) then the layer is
  * added inside the group. If the parent is 0, the layer is added
  * inside the main stack, outside of any group. The position argument
  * specifies the location of the layer inside the stack (or the group,
@@ -855,36 +855,36 @@ gimp_image_pick_correlate_layer (GimpImage *image,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_image_insert_layer (GimpImage *image,
-                         GimpLayer *layer,
-                         GimpLayer *parent,
+ligma_image_insert_layer (LigmaImage *image,
+                         LigmaLayer *layer,
+                         LigmaLayer *parent,
                          gint       position)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
-                                          GIMP_TYPE_LAYER, layer,
-                                          GIMP_TYPE_LAYER, parent,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
+                                          LIGMA_TYPE_LAYER, layer,
+                                          LIGMA_TYPE_LAYER, parent,
                                           G_TYPE_INT, position,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-insert-layer",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-insert-layer",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_remove_layer:
+ * ligma_image_remove_layer:
  * @image: The image.
  * @layer: The layer.
  *
@@ -899,32 +899,32 @@ gimp_image_insert_layer (GimpImage *image,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_image_remove_layer (GimpImage *image,
-                         GimpLayer *layer)
+ligma_image_remove_layer (LigmaImage *image,
+                         LigmaLayer *layer)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
-                                          GIMP_TYPE_LAYER, layer,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
+                                          LIGMA_TYPE_LAYER, layer,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-remove-layer",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-remove-layer",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_freeze_layers:
+ * ligma_image_freeze_layers:
  * @image: The image.
  *
  * Freeze the image's layer list.
@@ -934,38 +934,38 @@ gimp_image_remove_layer (GimpImage *image,
  * layers. This can significantly improve performance while applying
  * changes affecting the layer list.
  *
- * Each call to gimp_image_freeze_layers() should be matched by a
- * corresponding call to gimp_image_thaw_layers(), undoing its effects.
+ * Each call to ligma_image_freeze_layers() should be matched by a
+ * corresponding call to ligma_image_thaw_layers(), undoing its effects.
  *
  * Returns: TRUE on success.
  *
  * Since: 2.10.2
  **/
 gboolean
-gimp_image_freeze_layers (GimpImage *image)
+ligma_image_freeze_layers (LigmaImage *image)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-freeze-layers",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-freeze-layers",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_thaw_layers:
+ * ligma_image_thaw_layers:
  * @image: The image.
  *
  * Thaw the image's layer list.
@@ -974,37 +974,37 @@ gimp_image_freeze_layers (GimpImage *image)
  * updates to the Layers dialog.
  *
  * This procedure should match a corresponding call to
- * gimp_image_freeze_layers().
+ * ligma_image_freeze_layers().
  *
  * Returns: TRUE on success.
  *
  * Since: 2.10.2
  **/
 gboolean
-gimp_image_thaw_layers (GimpImage *image)
+ligma_image_thaw_layers (LigmaImage *image)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-thaw-layers",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-thaw-layers",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_insert_channel:
+ * ligma_image_insert_channel:
  * @image: The image.
  * @channel: The channel.
  * @parent: (nullable): The parent channel.
@@ -1022,36 +1022,36 @@ gimp_image_thaw_layers (GimpImage *image)
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_image_insert_channel (GimpImage   *image,
-                           GimpChannel *channel,
-                           GimpChannel *parent,
+ligma_image_insert_channel (LigmaImage   *image,
+                           LigmaChannel *channel,
+                           LigmaChannel *parent,
                            gint         position)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
-                                          GIMP_TYPE_CHANNEL, channel,
-                                          GIMP_TYPE_CHANNEL, parent,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
+                                          LIGMA_TYPE_CHANNEL, channel,
+                                          LIGMA_TYPE_CHANNEL, parent,
                                           G_TYPE_INT, position,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-insert-channel",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-insert-channel",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_remove_channel:
+ * ligma_image_remove_channel:
  * @image: The image.
  * @channel: The channel.
  *
@@ -1063,32 +1063,32 @@ gimp_image_insert_channel (GimpImage   *image,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_image_remove_channel (GimpImage   *image,
-                           GimpChannel *channel)
+ligma_image_remove_channel (LigmaImage   *image,
+                           LigmaChannel *channel)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
-                                          GIMP_TYPE_CHANNEL, channel,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
+                                          LIGMA_TYPE_CHANNEL, channel,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-remove-channel",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-remove-channel",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_freeze_channels:
+ * ligma_image_freeze_channels:
  * @image: The image.
  *
  * Freeze the image's channel list.
@@ -1098,8 +1098,8 @@ gimp_image_remove_channel (GimpImage   *image,
  * image's channels. This can significantly improve performance while
  * applying changes affecting the channel list.
  *
- * Each call to gimp_image_freeze_channels() should be matched by a
- * corresponding call to gimp_image_thaw_channels(), undoing its
+ * Each call to ligma_image_freeze_channels() should be matched by a
+ * corresponding call to ligma_image_thaw_channels(), undoing its
  * effects.
  *
  * Returns: TRUE on success.
@@ -1107,30 +1107,30 @@ gimp_image_remove_channel (GimpImage   *image,
  * Since: 2.10.2
  **/
 gboolean
-gimp_image_freeze_channels (GimpImage *image)
+ligma_image_freeze_channels (LigmaImage *image)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-freeze-channels",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-freeze-channels",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_thaw_channels:
+ * ligma_image_thaw_channels:
  * @image: The image.
  *
  * Thaw the image's channel list.
@@ -1139,37 +1139,37 @@ gimp_image_freeze_channels (GimpImage *image)
  * updates to the Channels dialog.
  *
  * This procedure should match a corresponding call to
- * gimp_image_freeze_channels().
+ * ligma_image_freeze_channels().
  *
  * Returns: TRUE on success.
  *
  * Since: 2.10.2
  **/
 gboolean
-gimp_image_thaw_channels (GimpImage *image)
+ligma_image_thaw_channels (LigmaImage *image)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-thaw-channels",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-thaw-channels",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_insert_vectors:
+ * ligma_image_insert_vectors:
  * @image: The image.
  * @vectors: The vectors.
  * @parent: (nullable): The parent vectors.
@@ -1187,36 +1187,36 @@ gimp_image_thaw_channels (GimpImage *image)
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_image_insert_vectors (GimpImage   *image,
-                           GimpVectors *vectors,
-                           GimpVectors *parent,
+ligma_image_insert_vectors (LigmaImage   *image,
+                           LigmaVectors *vectors,
+                           LigmaVectors *parent,
                            gint         position)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
-                                          GIMP_TYPE_VECTORS, vectors,
-                                          GIMP_TYPE_VECTORS, parent,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
+                                          LIGMA_TYPE_VECTORS, vectors,
+                                          LIGMA_TYPE_VECTORS, parent,
                                           G_TYPE_INT, position,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-insert-vectors",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-insert-vectors",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_remove_vectors:
+ * ligma_image_remove_vectors:
  * @image: The image.
  * @vectors: The vectors object.
  *
@@ -1230,32 +1230,32 @@ gimp_image_insert_vectors (GimpImage   *image,
  * Since: 2.4
  **/
 gboolean
-gimp_image_remove_vectors (GimpImage   *image,
-                           GimpVectors *vectors)
+ligma_image_remove_vectors (LigmaImage   *image,
+                           LigmaVectors *vectors)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
-                                          GIMP_TYPE_VECTORS, vectors,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
+                                          LIGMA_TYPE_VECTORS, vectors,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-remove-vectors",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-remove-vectors",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_freeze_vectors:
+ * ligma_image_freeze_vectors:
  * @image: The image.
  *
  * Freeze the image's vectors list.
@@ -1265,8 +1265,8 @@ gimp_image_remove_vectors (GimpImage   *image,
  * image's vectors. This can significantly improve performance while
  * applying changes affecting the vectors list.
  *
- * Each call to gimp_image_freeze_vectors() should be matched by a
- * corresponding call to gimp_image_thaw_vectors(), undoing its
+ * Each call to ligma_image_freeze_vectors() should be matched by a
+ * corresponding call to ligma_image_thaw_vectors(), undoing its
  * effects.
  *
  * Returns: TRUE on success.
@@ -1274,30 +1274,30 @@ gimp_image_remove_vectors (GimpImage   *image,
  * Since: 2.10.2
  **/
 gboolean
-gimp_image_freeze_vectors (GimpImage *image)
+ligma_image_freeze_vectors (LigmaImage *image)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-freeze-vectors",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-freeze-vectors",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_thaw_vectors:
+ * ligma_image_thaw_vectors:
  * @image: The image.
  *
  * Thaw the image's vectors list.
@@ -1306,37 +1306,37 @@ gimp_image_freeze_vectors (GimpImage *image)
  * updates to the Paths dialog.
  *
  * This procedure should match a corresponding call to
- * gimp_image_freeze_vectors().
+ * ligma_image_freeze_vectors().
  *
  * Returns: TRUE on success.
  *
  * Since: 2.10.2
  **/
 gboolean
-gimp_image_thaw_vectors (GimpImage *image)
+ligma_image_thaw_vectors (LigmaImage *image)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-thaw-vectors",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-thaw-vectors",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_get_item_position:
+ * ligma_image_get_item_position:
  * @image: The image.
  * @item: The item.
  *
@@ -1352,33 +1352,33 @@ gimp_image_thaw_vectors (GimpImage *image)
  * Since: 2.8
  **/
 gint
-gimp_image_get_item_position (GimpImage *image,
-                              GimpItem  *item)
+ligma_image_get_item_position (LigmaImage *image,
+                              LigmaItem  *item)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gint position = 0;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
-                                          GIMP_TYPE_ITEM, item,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
+                                          LIGMA_TYPE_ITEM, item,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-get-item-position",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-get-item-position",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    position = GIMP_VALUES_GET_INT (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    position = LIGMA_VALUES_GET_INT (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return position;
 }
 
 /**
- * gimp_image_raise_item:
+ * ligma_image_raise_item:
  * @image: The image.
  * @item: The item to raise.
  *
@@ -1392,32 +1392,32 @@ gimp_image_get_item_position (GimpImage *image,
  * Since: 2.8
  **/
 gboolean
-gimp_image_raise_item (GimpImage *image,
-                       GimpItem  *item)
+ligma_image_raise_item (LigmaImage *image,
+                       LigmaItem  *item)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
-                                          GIMP_TYPE_ITEM, item,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
+                                          LIGMA_TYPE_ITEM, item,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-raise-item",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-raise-item",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_lower_item:
+ * ligma_image_lower_item:
  * @image: The image.
  * @item: The item to lower.
  *
@@ -1431,32 +1431,32 @@ gimp_image_raise_item (GimpImage *image,
  * Since: 2.8
  **/
 gboolean
-gimp_image_lower_item (GimpImage *image,
-                       GimpItem  *item)
+ligma_image_lower_item (LigmaImage *image,
+                       LigmaItem  *item)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
-                                          GIMP_TYPE_ITEM, item,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
+                                          LIGMA_TYPE_ITEM, item,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-lower-item",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-lower-item",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_raise_item_to_top:
+ * ligma_image_raise_item_to_top:
  * @image: The image.
  * @item: The item to raise to top.
  *
@@ -1470,32 +1470,32 @@ gimp_image_lower_item (GimpImage *image,
  * Since: 2.8
  **/
 gboolean
-gimp_image_raise_item_to_top (GimpImage *image,
-                              GimpItem  *item)
+ligma_image_raise_item_to_top (LigmaImage *image,
+                              LigmaItem  *item)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
-                                          GIMP_TYPE_ITEM, item,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
+                                          LIGMA_TYPE_ITEM, item,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-raise-item-to-top",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-raise-item-to-top",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_lower_item_to_bottom:
+ * ligma_image_lower_item_to_bottom:
  * @image: The image.
  * @item: The item to lower to bottom.
  *
@@ -1510,32 +1510,32 @@ gimp_image_raise_item_to_top (GimpImage *image,
  * Since: 2.8
  **/
 gboolean
-gimp_image_lower_item_to_bottom (GimpImage *image,
-                                 GimpItem  *item)
+ligma_image_lower_item_to_bottom (LigmaImage *image,
+                                 LigmaItem  *item)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
-                                          GIMP_TYPE_ITEM, item,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
+                                          LIGMA_TYPE_ITEM, item,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-lower-item-to-bottom",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-lower-item-to-bottom",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_reorder_item:
+ * ligma_image_reorder_item:
  * @image: The image.
  * @item: The item to reorder.
  * @parent: (nullable): The new parent item.
@@ -1550,36 +1550,36 @@ gimp_image_lower_item_to_bottom (GimpImage *image,
  * Since: 2.8
  **/
 gboolean
-gimp_image_reorder_item (GimpImage *image,
-                         GimpItem  *item,
-                         GimpItem  *parent,
+ligma_image_reorder_item (LigmaImage *image,
+                         LigmaItem  *item,
+                         LigmaItem  *parent,
                          gint       position)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
-                                          GIMP_TYPE_ITEM, item,
-                                          GIMP_TYPE_ITEM, parent,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
+                                          LIGMA_TYPE_ITEM, item,
+                                          LIGMA_TYPE_ITEM, parent,
                                           G_TYPE_INT, position,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-reorder-item",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-reorder-item",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_flatten:
+ * ligma_image_flatten:
  * @image: The image.
  *
  * Flatten all visible layers into a single layer. Discard all
@@ -1591,32 +1591,32 @@ gimp_image_reorder_item (GimpImage *image,
  *
  * Returns: (transfer none): The resulting layer.
  **/
-GimpLayer *
-gimp_image_flatten (GimpImage *image)
+LigmaLayer *
+ligma_image_flatten (LigmaImage *image)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpLayer *layer = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaLayer *layer = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-flatten",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-flatten",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    layer = GIMP_VALUES_GET_LAYER (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    layer = LIGMA_VALUES_GET_LAYER (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return layer;
 }
 
 /**
- * gimp_image_merge_visible_layers:
+ * ligma_image_merge_visible_layers:
  * @image: The image.
  * @merge_type: The type of merge.
  *
@@ -1631,34 +1631,34 @@ gimp_image_flatten (GimpImage *image)
  *
  * Returns: (transfer none): The resulting layer.
  **/
-GimpLayer *
-gimp_image_merge_visible_layers (GimpImage     *image,
-                                 GimpMergeType  merge_type)
+LigmaLayer *
+ligma_image_merge_visible_layers (LigmaImage     *image,
+                                 LigmaMergeType  merge_type)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpLayer *layer = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaLayer *layer = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
-                                          GIMP_TYPE_MERGE_TYPE, merge_type,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
+                                          LIGMA_TYPE_MERGE_TYPE, merge_type,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-merge-visible-layers",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-merge-visible-layers",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    layer = GIMP_VALUES_GET_LAYER (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    layer = LIGMA_VALUES_GET_LAYER (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return layer;
 }
 
 /**
- * gimp_image_merge_down:
+ * ligma_image_merge_down:
  * @image: The image.
  * @merge_layer: The layer to merge down from.
  * @merge_type: The type of merge.
@@ -1675,36 +1675,36 @@ gimp_image_merge_visible_layers (GimpImage     *image,
  *
  * Returns: (transfer none): The resulting layer.
  **/
-GimpLayer *
-gimp_image_merge_down (GimpImage     *image,
-                       GimpLayer     *merge_layer,
-                       GimpMergeType  merge_type)
+LigmaLayer *
+ligma_image_merge_down (LigmaImage     *image,
+                       LigmaLayer     *merge_layer,
+                       LigmaMergeType  merge_type)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpLayer *layer = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaLayer *layer = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
-                                          GIMP_TYPE_LAYER, merge_layer,
-                                          GIMP_TYPE_MERGE_TYPE, merge_type,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
+                                          LIGMA_TYPE_LAYER, merge_layer,
+                                          LIGMA_TYPE_MERGE_TYPE, merge_type,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-merge-down",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-merge-down",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    layer = GIMP_VALUES_GET_LAYER (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    layer = LIGMA_VALUES_GET_LAYER (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return layer;
 }
 
 /**
- * gimp_image_merge_layer_group:
+ * ligma_image_merge_layer_group:
  * @image: The image.
  * @layer_group: The layer group to merge.
  *
@@ -1717,34 +1717,34 @@ gimp_image_merge_down (GimpImage     *image,
  *
  * Since: 2.10.14
  **/
-GimpLayer *
-gimp_image_merge_layer_group (GimpImage *image,
-                              GimpLayer *layer_group)
+LigmaLayer *
+ligma_image_merge_layer_group (LigmaImage *image,
+                              LigmaLayer *layer_group)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpLayer *layer = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaLayer *layer = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
-                                          GIMP_TYPE_LAYER, layer_group,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
+                                          LIGMA_TYPE_LAYER, layer_group,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-merge-layer-group",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-merge-layer-group",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    layer = GIMP_VALUES_GET_LAYER (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    layer = LIGMA_VALUES_GET_LAYER (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return layer;
 }
 
 /**
- * _gimp_image_get_colormap:
+ * _ligma_image_get_colormap:
  * @image: The image.
  * @num_bytes: (out): Number of bytes in the colormap array.
  *
@@ -1761,37 +1761,37 @@ gimp_image_merge_layer_group (GimpImage *image,
  *          The returned value must be freed with g_free().
  **/
 guint8 *
-_gimp_image_get_colormap (GimpImage *image,
+_ligma_image_get_colormap (LigmaImage *image,
                           gint      *num_bytes)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   guint8 *colormap = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-get-colormap",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-get-colormap",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
   *num_bytes = 0;
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
     {
-      *num_bytes = GIMP_VALUES_GET_INT (return_vals, 1);
-      colormap = GIMP_VALUES_DUP_UINT8_ARRAY (return_vals, 2);
+      *num_bytes = LIGMA_VALUES_GET_INT (return_vals, 1);
+      colormap = LIGMA_VALUES_DUP_UINT8_ARRAY (return_vals, 2);
     }
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return colormap;
 }
 
 /**
- * _gimp_image_set_colormap:
+ * _ligma_image_set_colormap:
  * @image: The image.
  * @num_bytes: Number of bytes in the colormap array.
  * @colormap: (array length=num_bytes) (element-type guint8): The new colormap values.
@@ -1807,35 +1807,35 @@ _gimp_image_get_colormap (GimpImage *image,
  * Returns: TRUE on success.
  **/
 gboolean
-_gimp_image_set_colormap (GimpImage    *image,
+_ligma_image_set_colormap (LigmaImage    *image,
                           gint          num_bytes,
                           const guint8 *colormap)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_INT, num_bytes,
-                                          GIMP_TYPE_UINT8_ARRAY, NULL,
+                                          LIGMA_TYPE_UINT8_ARRAY, NULL,
                                           G_TYPE_NONE);
-  gimp_value_set_uint8_array (gimp_value_array_index (args, 2), colormap, num_bytes);
+  ligma_value_set_uint8_array (ligma_value_array_index (args, 2), colormap, num_bytes);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-set-colormap",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-set-colormap",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * _gimp_image_get_metadata:
+ * _ligma_image_get_metadata:
  * @image: The image.
  *
  * Returns the image's metadata.
@@ -1846,31 +1846,31 @@ _gimp_image_set_colormap (GimpImage    *image,
  *          The returned value must be freed with g_free().
  **/
 gchar *
-_gimp_image_get_metadata (GimpImage *image)
+_ligma_image_get_metadata (LigmaImage *image)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gchar *metadata_string = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-get-metadata",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-get-metadata",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    metadata_string = GIMP_VALUES_DUP_STRING (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    metadata_string = LIGMA_VALUES_DUP_STRING (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return metadata_string;
 }
 
 /**
- * _gimp_image_set_metadata:
+ * _ligma_image_set_metadata:
  * @image: The image.
  * @metadata_string: The exif/ptc/xmp metadata as a string.
  *
@@ -1881,32 +1881,32 @@ _gimp_image_get_metadata (GimpImage *image)
  * Returns: TRUE on success.
  **/
 gboolean
-_gimp_image_set_metadata (GimpImage   *image,
+_ligma_image_set_metadata (LigmaImage   *image,
                           const gchar *metadata_string)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_STRING, metadata_string,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-set-metadata",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-set-metadata",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_clean_all:
+ * ligma_image_clean_all:
  * @image: The image.
  *
  * Set the image dirty count to 0.
@@ -1921,67 +1921,67 @@ _gimp_image_set_metadata (GimpImage   *image,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_image_clean_all (GimpImage *image)
+ligma_image_clean_all (LigmaImage *image)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-clean-all",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-clean-all",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_is_dirty:
+ * ligma_image_is_dirty:
  * @image: The image.
  *
  * Checks if the image has unsaved changes.
  *
  * This procedure checks the specified image's dirty count to see if it
  * needs to be saved. Note that saving the image does not automatically
- * set the dirty count to 0, you need to call gimp_image_clean_all()
+ * set the dirty count to 0, you need to call ligma_image_clean_all()
  * after calling a save procedure to make the image clean.
  *
  * Returns: TRUE if the image has unsaved changes.
  **/
 gboolean
-gimp_image_is_dirty (GimpImage *image)
+ligma_image_is_dirty (LigmaImage *image)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean dirty = FALSE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-is-dirty",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-is-dirty",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    dirty = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    dirty = LIGMA_VALUES_GET_BOOLEAN (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return dirty;
 }
 
 /**
- * _gimp_image_thumbnail:
+ * _ligma_image_thumbnail:
  * @image: The image.
  * @width: The requested thumbnail width.
  * @height: The requested thumbnail height.
@@ -2001,7 +2001,7 @@ gimp_image_is_dirty (GimpImage *image)
  * Returns: TRUE on success.
  **/
 gboolean
-_gimp_image_thumbnail (GimpImage  *image,
+_ligma_image_thumbnail (LigmaImage  *image,
                        gint        width,
                        gint        height,
                        gint       *actual_width,
@@ -2010,20 +2010,20 @@ _gimp_image_thumbnail (GimpImage  *image,
                        gint       *thumbnail_data_count,
                        guint8    **thumbnail_data)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_INT, width,
                                           G_TYPE_INT, height,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-thumbnail",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-thumbnail",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
   *actual_width = 0;
   *actual_height = 0;
@@ -2031,24 +2031,24 @@ _gimp_image_thumbnail (GimpImage  *image,
   *thumbnail_data_count = 0;
   *thumbnail_data = NULL;
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
   if (success)
     {
-      *actual_width = GIMP_VALUES_GET_INT (return_vals, 1);
-      *actual_height = GIMP_VALUES_GET_INT (return_vals, 2);
-      *bpp = GIMP_VALUES_GET_INT (return_vals, 3);
-      *thumbnail_data_count = GIMP_VALUES_GET_INT (return_vals, 4);
-      *thumbnail_data = GIMP_VALUES_DUP_UINT8_ARRAY (return_vals, 5);
+      *actual_width = LIGMA_VALUES_GET_INT (return_vals, 1);
+      *actual_height = LIGMA_VALUES_GET_INT (return_vals, 2);
+      *bpp = LIGMA_VALUES_GET_INT (return_vals, 3);
+      *thumbnail_data_count = LIGMA_VALUES_GET_INT (return_vals, 4);
+      *thumbnail_data = LIGMA_VALUES_DUP_UINT8_ARRAY (return_vals, 5);
     }
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_get_selected_layers: (skip)
+ * ligma_image_get_selected_layers: (skip)
  * @image: The image.
  * @num_layers: (out): The number of selected layers in the image.
  *
@@ -2057,47 +2057,47 @@ _gimp_image_thumbnail (GimpImage  *image,
  * This procedure returns the list of selected layers in the specified
  * image.
  *
- * Returns: (array length=num_layers) (element-type GimpLayer) (transfer container):
+ * Returns: (array length=num_layers) (element-type LigmaLayer) (transfer container):
  *          The list of selected layers in the image.
  *          The returned value must be freed with g_free().
  *
  * Since: 3.0.0
  **/
-GimpLayer **
-gimp_image_get_selected_layers (GimpImage *image,
+LigmaLayer **
+ligma_image_get_selected_layers (LigmaImage *image,
                                 gint      *num_layers)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpLayer **layers = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaLayer **layers = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-get-selected-layers",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-get-selected-layers",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
   *num_layers = 0;
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
     {
-      *num_layers = GIMP_VALUES_GET_INT (return_vals, 1);
-      { GimpObjectArray *a = g_value_get_boxed (gimp_value_array_index (return_vals, 2)); if (a) layers = g_memdup2 (a->data, a->length * sizeof (gpointer)); };
+      *num_layers = LIGMA_VALUES_GET_INT (return_vals, 1);
+      { LigmaObjectArray *a = g_value_get_boxed (ligma_value_array_index (return_vals, 2)); if (a) layers = g_memdup2 (a->data, a->length * sizeof (gpointer)); };
     }
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return layers;
 }
 
 /**
- * gimp_image_set_selected_layers:
+ * ligma_image_set_selected_layers:
  * @image: The image.
  * @num_layers: The number of layers to select.
- * @layers: (array length=num_layers) (element-type GimpLayer): The list of layers to select.
+ * @layers: (array length=num_layers) (element-type LigmaLayer): The list of layers to select.
  *
  * Sets the specified image's selected layers.
  *
@@ -2111,35 +2111,35 @@ gimp_image_get_selected_layers (GimpImage *image,
  * Since: 3.0.0
  **/
 gboolean
-gimp_image_set_selected_layers (GimpImage        *image,
+ligma_image_set_selected_layers (LigmaImage        *image,
                                 gint              num_layers,
-                                const GimpLayer **layers)
+                                const LigmaLayer **layers)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_INT, num_layers,
-                                          GIMP_TYPE_OBJECT_ARRAY, NULL,
+                                          LIGMA_TYPE_OBJECT_ARRAY, NULL,
                                           G_TYPE_NONE);
-  gimp_value_set_object_array (gimp_value_array_index (args, 2), GIMP_TYPE_LAYER, (GObject **) layers, num_layers);
+  ligma_value_set_object_array (ligma_value_array_index (args, 2), LIGMA_TYPE_LAYER, (GObject **) layers, num_layers);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-set-selected-layers",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-set-selected-layers",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_get_selected_channels: (skip)
+ * ligma_image_get_selected_channels: (skip)
  * @image: The image.
  * @num_channels: (out): The number of selected channels in the image.
  *
@@ -2148,47 +2148,47 @@ gimp_image_set_selected_layers (GimpImage        *image,
  * This procedure returns the list of selected channels in the
  * specified image.
  *
- * Returns: (array length=num_channels) (element-type GimpChannel) (transfer container):
+ * Returns: (array length=num_channels) (element-type LigmaChannel) (transfer container):
  *          The list of selected channels in the image.
  *          The returned value must be freed with g_free().
  *
  * Since: 3.0.0
  **/
-GimpChannel **
-gimp_image_get_selected_channels (GimpImage *image,
+LigmaChannel **
+ligma_image_get_selected_channels (LigmaImage *image,
                                   gint      *num_channels)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpChannel **channels = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaChannel **channels = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-get-selected-channels",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-get-selected-channels",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
   *num_channels = 0;
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
     {
-      *num_channels = GIMP_VALUES_GET_INT (return_vals, 1);
-      { GimpObjectArray *a = g_value_get_boxed (gimp_value_array_index (return_vals, 2)); if (a) channels = g_memdup2 (a->data, a->length * sizeof (gpointer)); };
+      *num_channels = LIGMA_VALUES_GET_INT (return_vals, 1);
+      { LigmaObjectArray *a = g_value_get_boxed (ligma_value_array_index (return_vals, 2)); if (a) channels = g_memdup2 (a->data, a->length * sizeof (gpointer)); };
     }
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return channels;
 }
 
 /**
- * gimp_image_set_selected_channels:
+ * ligma_image_set_selected_channels:
  * @image: The image.
  * @num_channels: The number of channels to select.
- * @channels: (array length=num_channels) (element-type GimpChannel): The list of channels to select.
+ * @channels: (array length=num_channels) (element-type LigmaChannel): The list of channels to select.
  *
  * Sets the specified image's selected channels.
  *
@@ -2202,35 +2202,35 @@ gimp_image_get_selected_channels (GimpImage *image,
  * Since: 3.0.0
  **/
 gboolean
-gimp_image_set_selected_channels (GimpImage          *image,
+ligma_image_set_selected_channels (LigmaImage          *image,
                                   gint                num_channels,
-                                  const GimpChannel **channels)
+                                  const LigmaChannel **channels)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_INT, num_channels,
-                                          GIMP_TYPE_OBJECT_ARRAY, NULL,
+                                          LIGMA_TYPE_OBJECT_ARRAY, NULL,
                                           G_TYPE_NONE);
-  gimp_value_set_object_array (gimp_value_array_index (args, 2), GIMP_TYPE_CHANNEL, (GObject **) channels, num_channels);
+  ligma_value_set_object_array (ligma_value_array_index (args, 2), LIGMA_TYPE_CHANNEL, (GObject **) channels, num_channels);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-set-selected-channels",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-set-selected-channels",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_get_selected_vectors: (skip)
+ * ligma_image_get_selected_vectors: (skip)
  * @image: The image.
  * @num_vectors: (out): The number of selected vectors in the image.
  *
@@ -2239,47 +2239,47 @@ gimp_image_set_selected_channels (GimpImage          *image,
  * This procedure returns the list of selected vectors in the specified
  * image.
  *
- * Returns: (array length=num_vectors) (element-type GimpVectors) (transfer container):
+ * Returns: (array length=num_vectors) (element-type LigmaVectors) (transfer container):
  *          The list of selected vectors in the image.
  *          The returned value must be freed with g_free().
  *
  * Since: 3.0.0
  **/
-GimpVectors **
-gimp_image_get_selected_vectors (GimpImage *image,
+LigmaVectors **
+ligma_image_get_selected_vectors (LigmaImage *image,
                                  gint      *num_vectors)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpVectors **vectors = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaVectors **vectors = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-get-selected-vectors",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-get-selected-vectors",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
   *num_vectors = 0;
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
     {
-      *num_vectors = GIMP_VALUES_GET_INT (return_vals, 1);
-      { GimpObjectArray *a = g_value_get_boxed (gimp_value_array_index (return_vals, 2)); if (a) vectors = g_memdup2 (a->data, a->length * sizeof (gpointer)); };
+      *num_vectors = LIGMA_VALUES_GET_INT (return_vals, 1);
+      { LigmaObjectArray *a = g_value_get_boxed (ligma_value_array_index (return_vals, 2)); if (a) vectors = g_memdup2 (a->data, a->length * sizeof (gpointer)); };
     }
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return vectors;
 }
 
 /**
- * gimp_image_set_selected_vectors:
+ * ligma_image_set_selected_vectors:
  * @image: The image.
  * @num_vectors: The number of vectors to select.
- * @vectors: (array length=num_vectors) (element-type GimpVectors): The list of vectors to select.
+ * @vectors: (array length=num_vectors) (element-type LigmaVectors): The list of vectors to select.
  *
  * Sets the specified image's selected vectors.
  *
@@ -2290,35 +2290,35 @@ gimp_image_get_selected_vectors (GimpImage *image,
  * Since: 3.0.0
  **/
 gboolean
-gimp_image_set_selected_vectors (GimpImage          *image,
+ligma_image_set_selected_vectors (LigmaImage          *image,
                                  gint                num_vectors,
-                                 const GimpVectors **vectors)
+                                 const LigmaVectors **vectors)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_INT, num_vectors,
-                                          GIMP_TYPE_OBJECT_ARRAY, NULL,
+                                          LIGMA_TYPE_OBJECT_ARRAY, NULL,
                                           G_TYPE_NONE);
-  gimp_value_set_object_array (gimp_value_array_index (args, 2), GIMP_TYPE_VECTORS, (GObject **) vectors, num_vectors);
+  ligma_value_set_object_array (ligma_value_array_index (args, 2), LIGMA_TYPE_VECTORS, (GObject **) vectors, num_vectors);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-set-selected-vectors",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-set-selected-vectors",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_get_selected_drawables:
+ * ligma_image_get_selected_drawables:
  * @image: The image.
  * @num_drawables: (out): The number of selected drawables in the image.
  *
@@ -2332,44 +2332,44 @@ gimp_image_set_selected_vectors (GimpImage          *image,
  * has a layer mask and the layer mask is in edit mode, then the layer
  * mask is the active drawable.
  *
- * Returns: (array length=num_drawables) (element-type GimpItem) (transfer container):
+ * Returns: (array length=num_drawables) (element-type LigmaItem) (transfer container):
  *          The list of selected drawables in the image.
  *          The returned value must be freed with g_free().
  *
  * Since: 3.0.0
  **/
-GimpItem **
-gimp_image_get_selected_drawables (GimpImage *image,
+LigmaItem **
+ligma_image_get_selected_drawables (LigmaImage *image,
                                    gint      *num_drawables)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpItem **drawables = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaItem **drawables = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-get-selected-drawables",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-get-selected-drawables",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
   *num_drawables = 0;
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
     {
-      *num_drawables = GIMP_VALUES_GET_INT (return_vals, 1);
-      { GimpObjectArray *a = g_value_get_boxed (gimp_value_array_index (return_vals, 2)); if (a) drawables = g_memdup2 (a->data, a->length * sizeof (gpointer)); };
+      *num_drawables = LIGMA_VALUES_GET_INT (return_vals, 1);
+      { LigmaObjectArray *a = g_value_get_boxed (ligma_value_array_index (return_vals, 2)); if (a) drawables = g_memdup2 (a->data, a->length * sizeof (gpointer)); };
     }
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return drawables;
 }
 
 /**
- * gimp_image_get_selection:
+ * ligma_image_get_selection:
  * @image: The image.
  *
  * Returns the specified image's selection.
@@ -2379,32 +2379,32 @@ gimp_image_get_selected_drawables (GimpImage *image,
  *
  * Returns: (transfer none): The selection channel.
  **/
-GimpSelection *
-gimp_image_get_selection (GimpImage *image)
+LigmaSelection *
+ligma_image_get_selection (LigmaImage *image)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpSelection *selection = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaSelection *selection = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-get-selection",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-get-selection",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    selection = GIMP_VALUES_GET_SELECTION (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    selection = LIGMA_VALUES_GET_SELECTION (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return selection;
 }
 
 /**
- * gimp_image_get_component_active:
+ * ligma_image_get_component_active:
  * @image: The image.
  * @component: The image component.
  *
@@ -2418,33 +2418,33 @@ gimp_image_get_selection (GimpImage *image)
  * Returns: Component is active.
  **/
 gboolean
-gimp_image_get_component_active (GimpImage       *image,
-                                 GimpChannelType  component)
+ligma_image_get_component_active (LigmaImage       *image,
+                                 LigmaChannelType  component)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean active = FALSE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
-                                          GIMP_TYPE_CHANNEL_TYPE, component,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
+                                          LIGMA_TYPE_CHANNEL_TYPE, component,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-get-component-active",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-get-component-active",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    active = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    active = LIGMA_VALUES_GET_BOOLEAN (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return active;
 }
 
 /**
- * gimp_image_set_component_active:
+ * ligma_image_set_component_active:
  * @image: The image.
  * @component: The image component.
  * @active: Component is active.
@@ -2459,34 +2459,34 @@ gimp_image_get_component_active (GimpImage       *image,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_image_set_component_active (GimpImage       *image,
-                                 GimpChannelType  component,
+ligma_image_set_component_active (LigmaImage       *image,
+                                 LigmaChannelType  component,
                                  gboolean         active)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
-                                          GIMP_TYPE_CHANNEL_TYPE, component,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
+                                          LIGMA_TYPE_CHANNEL_TYPE, component,
                                           G_TYPE_BOOLEAN, active,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-set-component-active",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-set-component-active",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_get_component_visible:
+ * ligma_image_get_component_visible:
  * @image: The image.
  * @component: The image component.
  *
@@ -2501,33 +2501,33 @@ gimp_image_set_component_active (GimpImage       *image,
  * Returns: Component is visible.
  **/
 gboolean
-gimp_image_get_component_visible (GimpImage       *image,
-                                  GimpChannelType  component)
+ligma_image_get_component_visible (LigmaImage       *image,
+                                  LigmaChannelType  component)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean visible = FALSE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
-                                          GIMP_TYPE_CHANNEL_TYPE, component,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
+                                          LIGMA_TYPE_CHANNEL_TYPE, component,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-get-component-visible",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-get-component-visible",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    visible = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    visible = LIGMA_VALUES_GET_BOOLEAN (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return visible;
 }
 
 /**
- * gimp_image_set_component_visible:
+ * ligma_image_set_component_visible:
  * @image: The image.
  * @component: The image component.
  * @visible: Component is visible.
@@ -2542,34 +2542,34 @@ gimp_image_get_component_visible (GimpImage       *image,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_image_set_component_visible (GimpImage       *image,
-                                  GimpChannelType  component,
+ligma_image_set_component_visible (LigmaImage       *image,
+                                  LigmaChannelType  component,
                                   gboolean         visible)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
-                                          GIMP_TYPE_CHANNEL_TYPE, component,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
+                                          LIGMA_TYPE_CHANNEL_TYPE, component,
                                           G_TYPE_BOOLEAN, visible,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-set-component-visible",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-set-component-visible",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_get_file:
+ * ligma_image_get_file:
  * @image: The image.
  *
  * Returns the file for the specified image.
@@ -2577,41 +2577,41 @@ gimp_image_set_component_visible (GimpImage       *image,
  * This procedure returns the file associated with the specified image.
  * The image has a file only if it was loaded or imported from a file
  * or has since been saved or exported. Otherwise, this function
- * returns %NULL. See also gimp-image-get-imported-file to get the
- * current file if it was imported from a non-GIMP file format and not
- * yet saved, or gimp-image-get-exported-file if the image has been
- * exported to a non-GIMP file format.
+ * returns %NULL. See also ligma-image-get-imported-file to get the
+ * current file if it was imported from a non-LIGMA file format and not
+ * yet saved, or ligma-image-get-exported-file if the image has been
+ * exported to a non-LIGMA file format.
  *
  * Returns: (transfer full): The file.
  *
  * Since: 2.8
  **/
 GFile *
-gimp_image_get_file (GimpImage *image)
+ligma_image_get_file (LigmaImage *image)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   GFile *file = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-get-file",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-get-file",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    file = GIMP_VALUES_DUP_FILE (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    file = LIGMA_VALUES_DUP_FILE (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return file;
 }
 
 /**
- * gimp_image_set_file:
+ * ligma_image_set_file:
  * @image: The image.
  * @file: The new image file.
  *
@@ -2622,32 +2622,32 @@ gimp_image_get_file (GimpImage *image)
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_image_set_file (GimpImage *image,
+ligma_image_set_file (LigmaImage *image,
                      GFile     *file)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_FILE, file,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-set-file",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-set-file",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_get_xcf_file:
+ * ligma_image_get_xcf_file:
  * @image: The image.
  *
  * Returns the XCF file for the specified image.
@@ -2660,38 +2660,38 @@ gimp_image_set_file (GimpImage *image,
  * Since: 2.8
  **/
 GFile *
-gimp_image_get_xcf_file (GimpImage *image)
+ligma_image_get_xcf_file (LigmaImage *image)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   GFile *file = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-get-xcf-file",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-get-xcf-file",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    file = GIMP_VALUES_DUP_FILE (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    file = LIGMA_VALUES_DUP_FILE (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return file;
 }
 
 /**
- * gimp_image_get_imported_file:
+ * ligma_image_get_imported_file:
  * @image: The image.
  *
  * Returns the imported file for the specified image.
  *
  * This procedure returns the file associated with the specified image
- * if the image was imported from a non-native Gimp format. If the
- * image was not imported, or has since been saved in the native Gimp
+ * if the image was imported from a non-native Ligma format. If the
+ * image was not imported, or has since been saved in the native Ligma
  * format, this procedure returns %NULL.
  *
  * Returns: (transfer full): The imported file.
@@ -2699,37 +2699,37 @@ gimp_image_get_xcf_file (GimpImage *image)
  * Since: 2.8
  **/
 GFile *
-gimp_image_get_imported_file (GimpImage *image)
+ligma_image_get_imported_file (LigmaImage *image)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   GFile *file = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-get-imported-file",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-get-imported-file",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    file = GIMP_VALUES_DUP_FILE (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    file = LIGMA_VALUES_DUP_FILE (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return file;
 }
 
 /**
- * gimp_image_get_exported_file:
+ * ligma_image_get_exported_file:
  * @image: The image.
  *
  * Returns the exported file for the specified image.
  *
  * This procedure returns the file associated with the specified image
- * if the image was exported a non-native GIMP format. If the image was
+ * if the image was exported a non-native LIGMA format. If the image was
  * not exported, this procedure returns %NULL.
  *
  * Returns: (transfer full): The exported file.
@@ -2737,31 +2737,31 @@ gimp_image_get_imported_file (GimpImage *image)
  * Since: 2.8
  **/
 GFile *
-gimp_image_get_exported_file (GimpImage *image)
+ligma_image_get_exported_file (LigmaImage *image)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   GFile *file = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-get-exported-file",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-get-exported-file",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    file = GIMP_VALUES_DUP_FILE (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    file = LIGMA_VALUES_DUP_FILE (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return file;
 }
 
 /**
- * gimp_image_get_name:
+ * ligma_image_get_name:
  * @image: The image.
  *
  * Returns the specified image's name.
@@ -2778,31 +2778,31 @@ gimp_image_get_exported_file (GimpImage *image)
  *          The returned value must be freed with g_free().
  **/
 gchar *
-gimp_image_get_name (GimpImage *image)
+ligma_image_get_name (LigmaImage *image)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gchar *name = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-get-name",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-get-name",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    name = GIMP_VALUES_DUP_STRING (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    name = LIGMA_VALUES_DUP_STRING (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return name;
 }
 
 /**
- * gimp_image_get_resolution:
+ * ligma_image_get_resolution:
  * @image: The image.
  * @xresolution: (out): The resolution in the x-axis, in dots per inch.
  * @yresolution: (out): The resolution in the y-axis, in dots per inch.
@@ -2815,41 +2815,41 @@ gimp_image_get_name (GimpImage *image)
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_image_get_resolution (GimpImage *image,
+ligma_image_get_resolution (LigmaImage *image,
                            gdouble   *xresolution,
                            gdouble   *yresolution)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-get-resolution",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-get-resolution",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
   *xresolution = 0.0;
   *yresolution = 0.0;
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
   if (success)
     {
-      *xresolution = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
-      *yresolution = GIMP_VALUES_GET_DOUBLE (return_vals, 2);
+      *xresolution = LIGMA_VALUES_GET_DOUBLE (return_vals, 1);
+      *yresolution = LIGMA_VALUES_GET_DOUBLE (return_vals, 2);
     }
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_set_resolution:
+ * ligma_image_set_resolution:
  * @image: The image.
  * @xresolution: The new image resolution in the x-axis, in dots per inch.
  * @yresolution: The new image resolution in the y-axis, in dots per inch.
@@ -2863,71 +2863,71 @@ gimp_image_get_resolution (GimpImage *image,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_image_set_resolution (GimpImage *image,
+ligma_image_set_resolution (LigmaImage *image,
                            gdouble    xresolution,
                            gdouble    yresolution)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_DOUBLE, xresolution,
                                           G_TYPE_DOUBLE, yresolution,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-set-resolution",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-set-resolution",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_get_unit:
+ * ligma_image_get_unit:
  * @image: The image.
  *
  * Returns the specified image's unit.
  *
  * This procedure returns the specified image's unit. This value is
  * independent of any of the layers in this image. See the
- * gimp_unit_*() procedure definitions for the valid range of unit IDs
+ * ligma_unit_*() procedure definitions for the valid range of unit IDs
  * and a description of the unit system.
  *
  * Returns: (transfer none): The unit.
  **/
-GimpUnit
-gimp_image_get_unit (GimpImage *image)
+LigmaUnit
+ligma_image_get_unit (LigmaImage *image)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpUnit unit = GIMP_UNIT_PIXEL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaUnit unit = LIGMA_UNIT_PIXEL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-get-unit",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-get-unit",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    unit = GIMP_VALUES_GET_INT (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    unit = LIGMA_VALUES_GET_INT (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return unit;
 }
 
 /**
- * gimp_image_set_unit:
+ * ligma_image_set_unit:
  * @image: The image.
  * @unit: The new image unit.
  *
@@ -2935,39 +2935,39 @@ gimp_image_get_unit (GimpImage *image)
  *
  * This procedure sets the specified image's unit. No scaling or
  * resizing is performed. This value is independent of any of the
- * layers in this image. See the gimp_unit_*() procedure definitions
+ * layers in this image. See the ligma_unit_*() procedure definitions
  * for the valid range of unit IDs and a description of the unit
  * system.
  *
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_image_set_unit (GimpImage *image,
-                     GimpUnit   unit)
+ligma_image_set_unit (LigmaImage *image,
+                     LigmaUnit   unit)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
-                                          GIMP_TYPE_UNIT, unit,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
+                                          LIGMA_TYPE_UNIT, unit,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-set-unit",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-set-unit",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_get_tattoo_state:
+ * ligma_image_get_tattoo_state:
  * @image: The image.
  *
  * Returns the tattoo state associated with the image.
@@ -2979,31 +2979,31 @@ gimp_image_set_unit (GimpImage *image,
  * Returns: The tattoo state.
  **/
 guint
-gimp_image_get_tattoo_state (GimpImage *image)
+ligma_image_get_tattoo_state (LigmaImage *image)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   guint tattoo_state = 0;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-get-tattoo-state",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-get-tattoo-state",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    tattoo_state = GIMP_VALUES_GET_UINT (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    tattoo_state = LIGMA_VALUES_GET_UINT (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return tattoo_state;
 }
 
 /**
- * gimp_image_set_tattoo_state:
+ * ligma_image_set_tattoo_state:
  * @image: The image.
  * @tattoo_state: The new image tattoo state.
  *
@@ -3025,32 +3025,32 @@ gimp_image_get_tattoo_state (GimpImage *image)
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_image_set_tattoo_state (GimpImage *image,
+ligma_image_set_tattoo_state (LigmaImage *image,
                              guint      tattoo_state)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_UINT, tattoo_state,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-set-tattoo-state",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-set-tattoo-state",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_get_layer_by_tattoo:
+ * ligma_image_get_layer_by_tattoo:
  * @image: The image.
  * @tattoo: The tattoo of the layer to find.
  *
@@ -3061,34 +3061,34 @@ gimp_image_set_tattoo_state (GimpImage *image,
  *
  * Returns: (transfer none): The layer with the specified tattoo.
  **/
-GimpLayer *
-gimp_image_get_layer_by_tattoo (GimpImage *image,
+LigmaLayer *
+ligma_image_get_layer_by_tattoo (LigmaImage *image,
                                 guint      tattoo)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpLayer *layer = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaLayer *layer = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_UINT, tattoo,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-get-layer-by-tattoo",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-get-layer-by-tattoo",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    layer = GIMP_VALUES_GET_LAYER (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    layer = LIGMA_VALUES_GET_LAYER (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return layer;
 }
 
 /**
- * gimp_image_get_channel_by_tattoo:
+ * ligma_image_get_channel_by_tattoo:
  * @image: The image.
  * @tattoo: The tattoo of the channel to find.
  *
@@ -3099,34 +3099,34 @@ gimp_image_get_layer_by_tattoo (GimpImage *image,
  *
  * Returns: (transfer none): The channel with the specified tattoo.
  **/
-GimpChannel *
-gimp_image_get_channel_by_tattoo (GimpImage *image,
+LigmaChannel *
+ligma_image_get_channel_by_tattoo (LigmaImage *image,
                                   guint      tattoo)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpChannel *channel = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaChannel *channel = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_UINT, tattoo,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-get-channel-by-tattoo",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-get-channel-by-tattoo",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    channel = GIMP_VALUES_GET_CHANNEL (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    channel = LIGMA_VALUES_GET_CHANNEL (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return channel;
 }
 
 /**
- * gimp_image_get_vectors_by_tattoo:
+ * ligma_image_get_vectors_by_tattoo:
  * @image: The image.
  * @tattoo: The tattoo of the vectors to find.
  *
@@ -3139,34 +3139,34 @@ gimp_image_get_channel_by_tattoo (GimpImage *image,
  *
  * Since: 2.6
  **/
-GimpVectors *
-gimp_image_get_vectors_by_tattoo (GimpImage *image,
+LigmaVectors *
+ligma_image_get_vectors_by_tattoo (LigmaImage *image,
                                   guint      tattoo)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpVectors *vectors = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaVectors *vectors = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_UINT, tattoo,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-get-vectors-by-tattoo",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-get-vectors-by-tattoo",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    vectors = GIMP_VALUES_GET_VECTORS (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    vectors = LIGMA_VALUES_GET_VECTORS (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return vectors;
 }
 
 /**
- * gimp_image_get_layer_by_name:
+ * ligma_image_get_layer_by_name:
  * @image: The image.
  * @name: The name of the layer to find.
  *
@@ -3179,34 +3179,34 @@ gimp_image_get_vectors_by_tattoo (GimpImage *image,
  *
  * Since: 2.8
  **/
-GimpLayer *
-gimp_image_get_layer_by_name (GimpImage   *image,
+LigmaLayer *
+ligma_image_get_layer_by_name (LigmaImage   *image,
                               const gchar *name)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpLayer *layer = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaLayer *layer = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_STRING, name,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-get-layer-by-name",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-get-layer-by-name",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    layer = GIMP_VALUES_GET_LAYER (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    layer = LIGMA_VALUES_GET_LAYER (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return layer;
 }
 
 /**
- * gimp_image_get_channel_by_name:
+ * ligma_image_get_channel_by_name:
  * @image: The image.
  * @name: The name of the channel to find.
  *
@@ -3219,34 +3219,34 @@ gimp_image_get_layer_by_name (GimpImage   *image,
  *
  * Since: 2.8
  **/
-GimpChannel *
-gimp_image_get_channel_by_name (GimpImage   *image,
+LigmaChannel *
+ligma_image_get_channel_by_name (LigmaImage   *image,
                                 const gchar *name)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpChannel *channel = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaChannel *channel = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_STRING, name,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-get-channel-by-name",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-get-channel-by-name",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    channel = GIMP_VALUES_GET_CHANNEL (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    channel = LIGMA_VALUES_GET_CHANNEL (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return channel;
 }
 
 /**
- * gimp_image_get_vectors_by_name:
+ * ligma_image_get_vectors_by_name:
  * @image: The image.
  * @name: The name of the vectors to find.
  *
@@ -3259,34 +3259,34 @@ gimp_image_get_channel_by_name (GimpImage   *image,
  *
  * Since: 2.8
  **/
-GimpVectors *
-gimp_image_get_vectors_by_name (GimpImage   *image,
+LigmaVectors *
+ligma_image_get_vectors_by_name (LigmaImage   *image,
                                 const gchar *name)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpVectors *vectors = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaVectors *vectors = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_STRING, name,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-get-vectors-by-name",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-get-vectors-by-name",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    vectors = GIMP_VALUES_GET_VECTORS (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    vectors = LIGMA_VALUES_GET_VECTORS (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return vectors;
 }
 
 /**
- * gimp_image_attach_parasite:
+ * ligma_image_attach_parasite:
  * @image: The image.
  * @parasite: The parasite to attach to an image.
  *
@@ -3300,32 +3300,32 @@ gimp_image_get_vectors_by_name (GimpImage   *image,
  * Since: 2.8
  **/
 gboolean
-gimp_image_attach_parasite (GimpImage          *image,
-                            const GimpParasite *parasite)
+ligma_image_attach_parasite (LigmaImage          *image,
+                            const LigmaParasite *parasite)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
-                                          GIMP_TYPE_PARASITE, parasite,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
+                                          LIGMA_TYPE_PARASITE, parasite,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-attach-parasite",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-attach-parasite",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_detach_parasite:
+ * ligma_image_detach_parasite:
  * @image: The image.
  * @name: The name of the parasite to detach from an image.
  *
@@ -3339,32 +3339,32 @@ gimp_image_attach_parasite (GimpImage          *image,
  * Since: 2.8
  **/
 gboolean
-gimp_image_detach_parasite (GimpImage   *image,
+ligma_image_detach_parasite (LigmaImage   *image,
                             const gchar *name)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_STRING, name,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-detach-parasite",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-detach-parasite",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_get_parasite:
+ * ligma_image_get_parasite:
  * @image: The image.
  * @name: The name of the parasite to find.
  *
@@ -3377,41 +3377,41 @@ gimp_image_detach_parasite (GimpImage   *image,
  *
  * Since: 2.8
  **/
-GimpParasite *
-gimp_image_get_parasite (GimpImage   *image,
+LigmaParasite *
+ligma_image_get_parasite (LigmaImage   *image,
                          const gchar *name)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpParasite *parasite = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaParasite *parasite = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_STRING, name,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-get-parasite",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-get-parasite",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    parasite = GIMP_VALUES_DUP_PARASITE (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    parasite = LIGMA_VALUES_DUP_PARASITE (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return parasite;
 }
 
 /**
- * gimp_image_get_parasite_list:
+ * ligma_image_get_parasite_list:
  * @image: The image.
  *
  * List all parasites.
  *
  * Returns a list of the names of all currently attached parasites.
- * These names can later be used to get the actual #GimpParasite with
- * gimp_image_get_parasite() when needed.
+ * These names can later be used to get the actual #LigmaParasite with
+ * ligma_image_get_parasite() when needed.
  *
  * Returns: (array zero-terminated=1) (transfer full):
  *          The names of currently attached parasites.
@@ -3420,38 +3420,38 @@ gimp_image_get_parasite (GimpImage   *image,
  * Since: 2.8
  **/
 gchar **
-gimp_image_get_parasite_list (GimpImage *image)
+ligma_image_get_parasite_list (LigmaImage *image)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gchar **parasites = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-get-parasite-list",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-get-parasite-list",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    parasites = GIMP_VALUES_DUP_STRV (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    parasites = LIGMA_VALUES_DUP_STRV (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return parasites;
 }
 
 /**
- * gimp_image_policy_rotate:
+ * ligma_image_policy_rotate:
  * @image: The image.
  * @interactive: Querying the user through a dialog is a possibility.
  *
  * Execute the \"Orientation\" metadata policy.
  *
  * Process the image according to the rotation policy as set in
- * Preferences. If GIMP is running as a GUI and interactive is TRUE, a
+ * Preferences. If LIGMA is running as a GUI and interactive is TRUE, a
  * dialog may be presented to the user depending on the set policy.
  * Otherwise, if the policy does not mandate the action to perform, the
  * image will be rotated following the Orientation metadata.
@@ -3469,32 +3469,32 @@ gimp_image_get_parasite_list (GimpImage *image)
  * Since: 3.0
  **/
 gboolean
-gimp_image_policy_rotate (GimpImage *image,
+ligma_image_policy_rotate (LigmaImage *image,
                           gboolean   interactive)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_BOOLEAN, interactive,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-policy-rotate",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-policy-rotate",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_policy_color_profile:
+ * ligma_image_policy_color_profile:
  * @image: The image.
  * @interactive: Querying the user through a dialog is a possibility.
  *
@@ -3502,7 +3502,7 @@ gimp_image_policy_rotate (GimpImage *image,
  *
  * Process the image according to the color profile policy as set in
  * Preferences.
- * If GIMP is running as a GUI and interactive is TRUE, a dialog may be
+ * If LIGMA is running as a GUI and interactive is TRUE, a dialog may be
  * presented to the user depending on the policy. Otherwise, if the
  * policy does not mandate the conversion to perform, the conversion to
  * the preferred RGB or grayscale profile will happen, defaulting to
@@ -3510,7 +3510,7 @@ gimp_image_policy_rotate (GimpImage *image,
  * `Preferences`.
  * This function should be used only if you want to follow user
  * settings. If you intend to convert to a specific profile, call
- * preferably gimp_image_convert_color_profile(). And if you wish to
+ * preferably ligma_image_convert_color_profile(). And if you wish to
  * leave whatever profile an image has, do not call any of these
  * functions.
  * Finally it is unnecessary to call this function in a format load
@@ -3523,26 +3523,26 @@ gimp_image_policy_rotate (GimpImage *image,
  * Since: 3.0
  **/
 gboolean
-gimp_image_policy_color_profile (GimpImage *image,
+ligma_image_policy_color_profile (LigmaImage *image,
                                  gboolean   interactive)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_BOOLEAN, interactive,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-policy-color-profile",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-policy-color-profile",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }

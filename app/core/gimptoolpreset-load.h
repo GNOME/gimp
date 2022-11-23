@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,17 +15,17 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TOOL_PRESET_LOAD_H__
-#define __GIMP_TOOL_PRESET_LOAD_H__
+#ifndef __LIGMA_TOOL_PRESET_LOAD_H__
+#define __LIGMA_TOOL_PRESET_LOAD_H__
 
 
-#define GIMP_TOOL_PRESET_FILE_EXTENSION ".gtp"
+#define LIGMA_TOOL_PRESET_FILE_EXTENSION ".gtp"
 
 
-GList * gimp_tool_preset_load (GimpContext   *context,
+GList * ligma_tool_preset_load (LigmaContext   *context,
                                GFile         *file,
                                GInputStream  *input,
                                GError       **error);
 
 
-#endif /* __GIMP_TOOL_PRESET_LOAD_H__ */
+#endif /* __LIGMA_TOOL_PRESET_LOAD_H__ */

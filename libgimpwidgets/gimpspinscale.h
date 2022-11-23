@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpspinscale.h
- * Copyright (C) 2010  Michael Natterer <mitch@gimp.org>
+ * ligmaspinscale.h
+ * Copyright (C) 2010  Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,67 +18,67 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
-#error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
+#if !defined (__LIGMA_WIDGETS_H_INSIDE__) && !defined (LIGMA_WIDGETS_COMPILATION)
+#error "Only <libligmawidgets/ligmawidgets.h> can be included directly."
 #endif
 
-#ifndef __GIMP_SPIN_SCALE_H__
-#define __GIMP_SPIN_SCALE_H__
+#ifndef __LIGMA_SPIN_SCALE_H__
+#define __LIGMA_SPIN_SCALE_H__
 
-#include <libgimpwidgets/gimpspinbutton.h>
+#include <libligmawidgets/ligmaspinbutton.h>
 
 G_BEGIN_DECLS
 
 
-#define GIMP_TYPE_SPIN_SCALE            (gimp_spin_scale_get_type ())
-#define GIMP_SPIN_SCALE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_SPIN_SCALE, GimpSpinScale))
-#define GIMP_SPIN_SCALE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_SPIN_SCALE, GimpSpinScaleClass))
-#define GIMP_IS_SPIN_SCALE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_SPIN_SCALE))
-#define GIMP_IS_SPIN_SCALE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_SPIN_SCALE))
-#define GIMP_SPIN_SCALE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_SPIN_SCALE, GimpSpinScaleClass))
+#define LIGMA_TYPE_SPIN_SCALE            (ligma_spin_scale_get_type ())
+#define LIGMA_SPIN_SCALE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_SPIN_SCALE, LigmaSpinScale))
+#define LIGMA_SPIN_SCALE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_SPIN_SCALE, LigmaSpinScaleClass))
+#define LIGMA_IS_SPIN_SCALE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_SPIN_SCALE))
+#define LIGMA_IS_SPIN_SCALE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_SPIN_SCALE))
+#define LIGMA_SPIN_SCALE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_SPIN_SCALE, LigmaSpinScaleClass))
 
 
-typedef struct _GimpSpinScale      GimpSpinScale;
-typedef struct _GimpSpinScaleClass GimpSpinScaleClass;
+typedef struct _LigmaSpinScale      LigmaSpinScale;
+typedef struct _LigmaSpinScaleClass LigmaSpinScaleClass;
 
-struct _GimpSpinScale
+struct _LigmaSpinScale
 {
-  GimpSpinButton  parent_instance;
+  LigmaSpinButton  parent_instance;
 };
 
-struct _GimpSpinScaleClass
+struct _LigmaSpinScaleClass
 {
-  GimpSpinButtonClass  parent_class;
+  LigmaSpinButtonClass  parent_class;
 };
 
 
-GType         gimp_spin_scale_get_type           (void) G_GNUC_CONST;
+GType         ligma_spin_scale_get_type           (void) G_GNUC_CONST;
 
-GtkWidget   * gimp_spin_scale_new                (GtkAdjustment *adjustment,
+GtkWidget   * ligma_spin_scale_new                (GtkAdjustment *adjustment,
                                                   const gchar   *label,
                                                   gint           digits);
 
-void          gimp_spin_scale_set_label          (GimpSpinScale *scale,
+void          ligma_spin_scale_set_label          (LigmaSpinScale *scale,
                                                   const gchar   *label);
-const gchar * gimp_spin_scale_get_label          (GimpSpinScale *scale);
+const gchar * ligma_spin_scale_get_label          (LigmaSpinScale *scale);
 
-void          gimp_spin_scale_set_scale_limits   (GimpSpinScale *scale,
+void          ligma_spin_scale_set_scale_limits   (LigmaSpinScale *scale,
                                                   gdouble        lower,
                                                   gdouble        upper);
-void          gimp_spin_scale_unset_scale_limits (GimpSpinScale *scale);
-gboolean      gimp_spin_scale_get_scale_limits   (GimpSpinScale *scale,
+void          ligma_spin_scale_unset_scale_limits (LigmaSpinScale *scale);
+gboolean      ligma_spin_scale_get_scale_limits   (LigmaSpinScale *scale,
                                                   gdouble       *lower,
                                                   gdouble       *upper);
 
-void          gimp_spin_scale_set_gamma          (GimpSpinScale *scale,
+void          ligma_spin_scale_set_gamma          (LigmaSpinScale *scale,
                                                   gdouble        gamma);
-gdouble       gimp_spin_scale_get_gamma          (GimpSpinScale *scale);
+gdouble       ligma_spin_scale_get_gamma          (LigmaSpinScale *scale);
 
-void          gimp_spin_scale_set_constrain_drag (GimpSpinScale *scale,
+void          ligma_spin_scale_set_constrain_drag (LigmaSpinScale *scale,
                                                   gboolean       constrain);
-gboolean      gimp_spin_scale_get_constrain_drag (GimpSpinScale *scale);
+gboolean      ligma_spin_scale_get_constrain_drag (LigmaSpinScale *scale);
 
 
 G_END_DECLS
 
-#endif  /*  __GIMP_SPIN_SCALE_H__  */
+#endif  /*  __LIGMA_SPIN_SCALE_H__  */

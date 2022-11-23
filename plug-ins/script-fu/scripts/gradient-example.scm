@@ -1,4 +1,4 @@
-; GIMP - The GNU Image Manipulation Program
+; LIGMA - The GNU Image Manipulation Program
 ; Copyright (C) 1995 Spencer Kimball and Peter Mattis
 ;
 ; Gradient example script --- create an example image of a custom gradient
@@ -22,8 +22,8 @@
                                     height
                                     gradient-reverse)
   (let* (
-        (img (car (gimp-image-new width height RGB)))
-        (drawable (car (gimp-layer-new img width height RGB
+        (img (car (ligma-image-new width height RGB)))
+        (drawable (car (ligma-layer-new img width height RGB
                                        "Gradient example" 100 LAYER-MODE-NORMAL)))
 
         ; Calculate colors for checkerboard... just like in the gradient editor
@@ -32,36 +32,36 @@
         (bg-color (* 255 (/ 1 3)))
         )
 
-    (gimp-image-undo-disable img)
-    (gimp-image-insert-layer img drawable 0 0)
+    (ligma-image-undo-disable img)
+    (ligma-image-insert-layer img drawable 0 0)
 
     ; Render background checkerboard
 
-    (gimp-context-push)
+    (ligma-context-push)
 
-    (gimp-context-set-foreground (list fg-color fg-color fg-color))
-    (gimp-context-set-background (list bg-color bg-color bg-color))
+    (ligma-context-set-foreground (list fg-color fg-color fg-color))
+    (ligma-context-set-background (list bg-color bg-color bg-color))
     (plug-in-checkerboard RUN-NONINTERACTIVE img 1 (vector drawable) 0 8)
 
-    (gimp-context-pop)
+    (ligma-context-pop)
 
     ; Render gradient
 
-    (gimp-context-push)
+    (ligma-context-push)
 
-    (gimp-context-set-gradient-reverse gradient-reverse)
-    (gimp-drawable-edit-gradient-fill drawable
+    (ligma-context-set-gradient-reverse gradient-reverse)
+    (ligma-drawable-edit-gradient-fill drawable
 				      GRADIENT-LINEAR 0
 				      FALSE 0 0
 				      TRUE
 				      0 0 (- width 1) 0)
 
-    (gimp-context-pop)
+    (ligma-context-pop)
 
     ; Terminate
 
-    (gimp-image-undo-enable img)
-    (gimp-display-new img)
+    (ligma-image-undo-enable img)
+    (ligma-display-new img)
   )
 )
 

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,64 +15,64 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_BRUSH_H__
-#define __GIMP_BRUSH_H__
+#ifndef __LIGMA_BRUSH_H__
+#define __LIGMA_BRUSH_H__
 
 
-#include "gimpdata.h"
+#include "ligmadata.h"
 
 
-#define GIMP_TYPE_BRUSH            (gimp_brush_get_type ())
-#define GIMP_BRUSH(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_BRUSH, GimpBrush))
-#define GIMP_BRUSH_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_BRUSH, GimpBrushClass))
-#define GIMP_IS_BRUSH(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_BRUSH))
-#define GIMP_IS_BRUSH_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_BRUSH))
-#define GIMP_BRUSH_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_BRUSH, GimpBrushClass))
+#define LIGMA_TYPE_BRUSH            (ligma_brush_get_type ())
+#define LIGMA_BRUSH(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_BRUSH, LigmaBrush))
+#define LIGMA_BRUSH_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_BRUSH, LigmaBrushClass))
+#define LIGMA_IS_BRUSH(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_BRUSH))
+#define LIGMA_IS_BRUSH_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_BRUSH))
+#define LIGMA_BRUSH_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_BRUSH, LigmaBrushClass))
 
 
-typedef struct _GimpBrushPrivate GimpBrushPrivate;
-typedef struct _GimpBrushClass   GimpBrushClass;
+typedef struct _LigmaBrushPrivate LigmaBrushPrivate;
+typedef struct _LigmaBrushClass   LigmaBrushClass;
 
-struct _GimpBrush
+struct _LigmaBrush
 {
-  GimpData          parent_instance;
+  LigmaData          parent_instance;
 
-  GimpBrushPrivate *priv;
+  LigmaBrushPrivate *priv;
 };
 
-struct _GimpBrushClass
+struct _LigmaBrushClass
 {
-  GimpDataClass  parent_class;
+  LigmaDataClass  parent_class;
 
   /*  virtual functions  */
-  void             (* begin_use)          (GimpBrush        *brush);
-  void             (* end_use)            (GimpBrush        *brush);
-  GimpBrush      * (* select_brush)       (GimpBrush        *brush,
-                                           const GimpCoords *last_coords,
-                                           const GimpCoords *current_coords);
-  gboolean         (* want_null_motion)   (GimpBrush        *brush,
-                                           const GimpCoords *last_coords,
-                                           const GimpCoords *current_coords);
-  void             (* transform_size)     (GimpBrush        *brush,
+  void             (* begin_use)          (LigmaBrush        *brush);
+  void             (* end_use)            (LigmaBrush        *brush);
+  LigmaBrush      * (* select_brush)       (LigmaBrush        *brush,
+                                           const LigmaCoords *last_coords,
+                                           const LigmaCoords *current_coords);
+  gboolean         (* want_null_motion)   (LigmaBrush        *brush,
+                                           const LigmaCoords *last_coords,
+                                           const LigmaCoords *current_coords);
+  void             (* transform_size)     (LigmaBrush        *brush,
                                            gdouble           scale,
                                            gdouble           aspect_ratio,
                                            gdouble           angle,
                                            gboolean          reflect,
                                            gint             *width,
                                            gint             *height);
-  GimpTempBuf    * (* transform_mask)     (GimpBrush        *brush,
+  LigmaTempBuf    * (* transform_mask)     (LigmaBrush        *brush,
                                            gdouble           scale,
                                            gdouble           aspect_ratio,
                                            gdouble           angle,
                                            gboolean          reflect,
                                            gdouble           hardness);
-  GimpTempBuf    * (* transform_pixmap)   (GimpBrush        *brush,
+  LigmaTempBuf    * (* transform_pixmap)   (LigmaBrush        *brush,
                                            gdouble           scale,
                                            gdouble           aspect_ratio,
                                            gdouble           angle,
                                            gboolean          reflect,
                                            gdouble           hardness);
-  GimpBezierDesc * (* transform_boundary) (GimpBrush        *brush,
+  LigmaBezierDesc * (* transform_boundary) (LigmaBrush        *brush,
                                            gdouble           scale,
                                            gdouble           aspect_ratio,
                                            gdouble           angle,
@@ -82,49 +82,49 @@ struct _GimpBrushClass
                                            gint             *height);
 
   /*  signals  */
-  void             (* spacing_changed)    (GimpBrush        *brush);
+  void             (* spacing_changed)    (LigmaBrush        *brush);
 };
 
 
-GType                  gimp_brush_get_type           (void) G_GNUC_CONST;
+GType                  ligma_brush_get_type           (void) G_GNUC_CONST;
 
-GimpData             * gimp_brush_new                (GimpContext      *context,
+LigmaData             * ligma_brush_new                (LigmaContext      *context,
                                                       const gchar      *name);
-GimpData             * gimp_brush_get_standard       (GimpContext      *context);
+LigmaData             * ligma_brush_get_standard       (LigmaContext      *context);
 
-void                   gimp_brush_begin_use          (GimpBrush        *brush);
-void                   gimp_brush_end_use            (GimpBrush        *brush);
+void                   ligma_brush_begin_use          (LigmaBrush        *brush);
+void                   ligma_brush_end_use            (LigmaBrush        *brush);
 
-GimpBrush            * gimp_brush_select_brush       (GimpBrush        *brush,
-                                                      const GimpCoords *last_coords,
-                                                      const GimpCoords *current_coords);
-gboolean               gimp_brush_want_null_motion   (GimpBrush        *brush,
-                                                      const GimpCoords *last_coords,
-                                                      const GimpCoords *current_coords);
+LigmaBrush            * ligma_brush_select_brush       (LigmaBrush        *brush,
+                                                      const LigmaCoords *last_coords,
+                                                      const LigmaCoords *current_coords);
+gboolean               ligma_brush_want_null_motion   (LigmaBrush        *brush,
+                                                      const LigmaCoords *last_coords,
+                                                      const LigmaCoords *current_coords);
 
 /* Gets width and height of a transformed mask of the brush, for
  * provided parameters.
  */
-void                   gimp_brush_transform_size     (GimpBrush        *brush,
+void                   ligma_brush_transform_size     (LigmaBrush        *brush,
                                                       gdouble           scale,
                                                       gdouble           aspect_ratio,
                                                       gdouble           angle,
                                                       gboolean          reflect,
                                                       gint             *width,
                                                       gint             *height);
-const GimpTempBuf    * gimp_brush_transform_mask     (GimpBrush        *brush,
+const LigmaTempBuf    * ligma_brush_transform_mask     (LigmaBrush        *brush,
                                                       gdouble           scale,
                                                       gdouble           aspect_ratio,
                                                       gdouble           angle,
                                                       gboolean          reflect,
                                                       gdouble           hardness);
-const GimpTempBuf    * gimp_brush_transform_pixmap   (GimpBrush        *brush,
+const LigmaTempBuf    * ligma_brush_transform_pixmap   (LigmaBrush        *brush,
                                                       gdouble           scale,
                                                       gdouble           aspect_ratio,
                                                       gdouble           angle,
                                                       gboolean          reflect,
                                                       gdouble           hardness);
-const GimpBezierDesc * gimp_brush_transform_boundary (GimpBrush        *brush,
+const LigmaBezierDesc * ligma_brush_transform_boundary (LigmaBrush        *brush,
                                                       gdouble           scale,
                                                       gdouble           aspect_ratio,
                                                       gdouble           angle,
@@ -133,20 +133,20 @@ const GimpBezierDesc * gimp_brush_transform_boundary (GimpBrush        *brush,
                                                       gint             *width,
                                                       gint             *height);
 
-GimpTempBuf          * gimp_brush_get_mask           (GimpBrush        *brush);
-GimpTempBuf          * gimp_brush_get_pixmap         (GimpBrush        *brush);
+LigmaTempBuf          * ligma_brush_get_mask           (LigmaBrush        *brush);
+LigmaTempBuf          * ligma_brush_get_pixmap         (LigmaBrush        *brush);
 
-gint                   gimp_brush_get_width          (GimpBrush        *brush);
-gint                   gimp_brush_get_height         (GimpBrush        *brush);
+gint                   ligma_brush_get_width          (LigmaBrush        *brush);
+gint                   ligma_brush_get_height         (LigmaBrush        *brush);
 
-gint                   gimp_brush_get_spacing        (GimpBrush        *brush);
-void                   gimp_brush_set_spacing        (GimpBrush        *brush,
+gint                   ligma_brush_get_spacing        (LigmaBrush        *brush);
+void                   ligma_brush_set_spacing        (LigmaBrush        *brush,
                                                       gint              spacing);
 
-GimpVector2            gimp_brush_get_x_axis         (GimpBrush        *brush);
-GimpVector2            gimp_brush_get_y_axis         (GimpBrush        *brush);
+LigmaVector2            ligma_brush_get_x_axis         (LigmaBrush        *brush);
+LigmaVector2            ligma_brush_get_y_axis         (LigmaBrush        *brush);
 
-void                   gimp_brush_flush_blur_caches  (GimpBrush        *brush);
-gdouble                gimp_brush_get_blur_hardness  (GimpBrush        *brush);
+void                   ligma_brush_flush_blur_caches  (LigmaBrush        *brush);
+gdouble                ligma_brush_get_blur_hardness  (LigmaBrush        *brush);
 
-#endif /* __GIMP_BRUSH_H__ */
+#endif /* __LIGMA_BRUSH_H__ */

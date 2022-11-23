@@ -1,4 +1,4 @@
-# GIMP - The GNU Image Manipulation Program
+# LIGMA - The GNU Image Manipulation Program
 # Copyright (C) 1995, 1996, 1997 Spencer Kimball and Peter Mattis
 # Copyright (C) 1997 Josh MacDonald
 
@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+# "Perlized" from C source by Manish Singh <yosh@ligma.org>
 
 sub file_load {
     $blurb = 'Loads an image file by invoking the right load handler.';
@@ -30,7 +30,7 @@ HELP
 
     @inargs = (
         { name => 'run_mode',
-          type => 'enum GimpRunMode (no GIMP_RUN_WITH_LAST_VALS)',
+          type => 'enum LigmaRunMode (no LIGMA_RUN_WITH_LAST_VALS)',
           desc => 'The run mode' },
         { name => 'file', type => 'file',
           desc => 'The file to load' }
@@ -45,57 +45,57 @@ HELP
         no_marshalling => 1,
         code => <<'CODE'
 {
-  GimpValueArray      *new_args;
-  GimpValueArray      *return_vals;
-  GimpPlugInProcedure *file_proc;
-  GimpProcedure       *proc;
+  LigmaValueArray      *new_args;
+  LigmaValueArray      *return_vals;
+  LigmaPlugInProcedure *file_proc;
+  LigmaProcedure       *proc;
   GFile               *file;
   gint                 i;
 
-  file = g_value_get_object (gimp_value_array_index (args, 1));
+  file = g_value_get_object (ligma_value_array_index (args, 1));
 
   if (! file)
-    return gimp_procedure_get_return_values (procedure, FALSE,
+    return ligma_procedure_get_return_values (procedure, FALSE,
                                              error ? *error : NULL);
 
-  file_proc = gimp_plug_in_manager_file_procedure_find (gimp->plug_in_manager,
-                                                        GIMP_FILE_PROCEDURE_GROUP_OPEN,
+  file_proc = ligma_plug_in_manager_file_procedure_find (ligma->plug_in_manager,
+                                                        LIGMA_FILE_PROCEDURE_GROUP_OPEN,
                                                         file, error);
 
   if (! file_proc)
-    return gimp_procedure_get_return_values (procedure, FALSE,
+    return ligma_procedure_get_return_values (procedure, FALSE,
                                              error ? *error : NULL);
 
-  proc = GIMP_PROCEDURE (file_proc);
+  proc = LIGMA_PROCEDURE (file_proc);
 
-  new_args = gimp_procedure_get_arguments (proc);
+  new_args = ligma_procedure_get_arguments (proc);
 
-  g_value_transform (gimp_value_array_index (args, 0),
-		     gimp_value_array_index (new_args, 0));
-  g_value_transform (gimp_value_array_index (args, 1),
-		     gimp_value_array_index (new_args, 1));
+  g_value_transform (ligma_value_array_index (args, 0),
+		     ligma_value_array_index (new_args, 0));
+  g_value_transform (ligma_value_array_index (args, 1),
+		     ligma_value_array_index (new_args, 1));
 
   for (i = 2; i < proc->num_args; i++)
     if (G_IS_PARAM_SPEC_STRING (proc->args[i]))
-      g_value_set_static_string (gimp_value_array_index (new_args, i), "");
+      g_value_set_static_string (ligma_value_array_index (new_args, i), "");
 
   return_vals =
-    gimp_pdb_execute_procedure_by_name_args (gimp->pdb,
+    ligma_pdb_execute_procedure_by_name_args (ligma->pdb,
                                              context, progress, error,
-                                             gimp_object_get_name (proc),
+                                             ligma_object_get_name (proc),
                                              new_args);
 
-  gimp_value_array_unref (new_args);
+  ligma_value_array_unref (new_args);
 
-  if (g_value_get_enum (gimp_value_array_index (return_vals, 0)) ==
-      GIMP_PDB_SUCCESS)
+  if (g_value_get_enum (ligma_value_array_index (return_vals, 0)) ==
+      LIGMA_PDB_SUCCESS)
     {
-      if (gimp_value_array_length (return_vals) > 1 &&
-          GIMP_VALUE_HOLDS_IMAGE (gimp_value_array_index (return_vals, 1)))
+      if (ligma_value_array_length (return_vals) > 1 &&
+          LIGMA_VALUE_HOLDS_IMAGE (ligma_value_array_index (return_vals, 1)))
         {
-          GimpImage *image =
-            g_value_get_object (gimp_value_array_index (return_vals, 1));
-          gimp_image_set_load_proc (image, file_proc);
+          LigmaImage *image =
+            g_value_get_object (ligma_value_array_index (return_vals, 1));
+          ligma_image_set_load_proc (image, file_proc);
         }
     }
 
@@ -111,14 +111,14 @@ sub file_load_layer {
     $help = <<'HELP';
 This procedure behaves like the file-load procedure but opens the specified
 image as a layer for an existing image. The returned layer needs to be
-added to the existing image with gimp_image_insert_layer().
+added to the existing image with ligma_image_insert_layer().
 HELP
 
     &neo_pdb_misc('2005', '2.4');
 
     @inargs = (
         { name => 'run_mode',
-          type => 'enum GimpRunMode (no GIMP_RUN_WITH_LAST_VALS)',
+          type => 'enum LigmaRunMode (no LIGMA_RUN_WITH_LAST_VALS)',
           desc => 'The run mode' },
         { name => 'image', type => 'image',
           desc => 'Destination image' },
@@ -135,9 +135,9 @@ HELP
         code => <<'CODE'
 {
   GList             *layers;
-  GimpPDBStatusType  status;
+  LigmaPDBStatusType  status;
 
-  layers = file_open_layers (gimp, context, progress,
+  layers = file_open_layers (ligma, context, progress,
                              image, FALSE,
                              file, run_mode, NULL, &status, error);
 
@@ -159,14 +159,14 @@ sub file_load_layers {
     $help = <<'HELP';
 This procedure behaves like the file-load procedure but opens the specified
 image as layers for an existing image. The returned layers needs to be
-added to the existing image with gimp_image_insert_layer().
+added to the existing image with ligma_image_insert_layer().
 HELP
 
     &mitch_pdb_misc('2006', '2.4');
 
     @inargs = (
         { name => 'run_mode',
-          type => 'enum GimpRunMode (no GIMP_RUN_WITH_LAST_VALS)',
+          type => 'enum LigmaRunMode (no LIGMA_RUN_WITH_LAST_VALS)',
           desc => 'The run mode' },
         { name => 'image', type => 'image',
           desc => 'Destination image' },
@@ -185,9 +185,9 @@ HELP
         code => <<'CODE'
 {
   GList             *layer_list;
-  GimpPDBStatusType  status;
+  LigmaPDBStatusType  status;
 
-  layer_list = file_open_layers (gimp, context, progress,
+  layer_list = file_open_layers (ligma, context, progress,
                                  image, FALSE,
                                  file, run_mode, NULL, &status, error);
 
@@ -198,7 +198,7 @@ HELP
 
       num_layers = g_list_length (layer_list);
 
-      layers = g_new (GimpLayer *, num_layers);
+      layers = g_new (LigmaLayer *, num_layers);
 
       for (i = 0, list = layer_list;
            i < num_layers;
@@ -227,7 +227,7 @@ HELP
     &josh_pdb_misc('1997');
 
     @inargs = (
-        { name => 'run_mode', type => 'enum GimpRunMode',
+        { name => 'run_mode', type => 'enum LigmaRunMode',
           desc => 'The run mode' },
         { name => 'image', type => 'image',
           desc => 'Input image' },
@@ -246,54 +246,54 @@ HELP
         no_marshalling => 1,
         code => <<'CODE'
 {
-  GimpValueArray      *new_args;
-  GimpValueArray      *return_vals;
-  GimpPlugInProcedure *file_proc;
+  LigmaValueArray      *new_args;
+  LigmaValueArray      *return_vals;
+  LigmaPlugInProcedure *file_proc;
   GFile               *file;
-  GimpProcedure       *proc;
+  LigmaProcedure       *proc;
   gint                 i;
 
-  file = g_value_get_object (gimp_value_array_index (args, 4));
+  file = g_value_get_object (ligma_value_array_index (args, 4));
 
-  file_proc = gimp_plug_in_manager_file_procedure_find (gimp->plug_in_manager,
-                                                        GIMP_FILE_PROCEDURE_GROUP_SAVE,
+  file_proc = ligma_plug_in_manager_file_procedure_find (ligma->plug_in_manager,
+                                                        LIGMA_FILE_PROCEDURE_GROUP_SAVE,
                                                         file, NULL);
 
   if (! file_proc)
-    file_proc = gimp_plug_in_manager_file_procedure_find (gimp->plug_in_manager,
-                                                          GIMP_FILE_PROCEDURE_GROUP_EXPORT,
+    file_proc = ligma_plug_in_manager_file_procedure_find (ligma->plug_in_manager,
+                                                          LIGMA_FILE_PROCEDURE_GROUP_EXPORT,
                                                           file, error);
 
   if (! file_proc)
-    return gimp_procedure_get_return_values (procedure, FALSE,
+    return ligma_procedure_get_return_values (procedure, FALSE,
                                              error ? *error : NULL);
 
-  proc = GIMP_PROCEDURE (file_proc);
+  proc = LIGMA_PROCEDURE (file_proc);
 
-  new_args = gimp_procedure_get_arguments (proc);
+  new_args = ligma_procedure_get_arguments (proc);
 
-  g_value_transform (gimp_value_array_index (args, 0),
-                     gimp_value_array_index (new_args, 0));
-  g_value_transform (gimp_value_array_index (args, 1),
-                     gimp_value_array_index (new_args, 1));
-  g_value_transform (gimp_value_array_index (args, 2),
-                     gimp_value_array_index (new_args, 2));
-  g_value_transform (gimp_value_array_index (args, 3),
-                     gimp_value_array_index (new_args, 3));
-  g_value_transform (gimp_value_array_index (args, 4),
-                     gimp_value_array_index (new_args, 4));
+  g_value_transform (ligma_value_array_index (args, 0),
+                     ligma_value_array_index (new_args, 0));
+  g_value_transform (ligma_value_array_index (args, 1),
+                     ligma_value_array_index (new_args, 1));
+  g_value_transform (ligma_value_array_index (args, 2),
+                     ligma_value_array_index (new_args, 2));
+  g_value_transform (ligma_value_array_index (args, 3),
+                     ligma_value_array_index (new_args, 3));
+  g_value_transform (ligma_value_array_index (args, 4),
+                     ligma_value_array_index (new_args, 4));
 
   for (i = 5; i < proc->num_args; i++)
     if (G_IS_PARAM_SPEC_STRING (proc->args[i]))
-      g_value_set_static_string (gimp_value_array_index (new_args, i), "");
+      g_value_set_static_string (ligma_value_array_index (new_args, i), "");
 
   return_vals =
-    gimp_pdb_execute_procedure_by_name_args (gimp->pdb,
+    ligma_pdb_execute_procedure_by_name_args (ligma->pdb,
                                              context, progress, error,
-                                             gimp_object_get_name (proc),
+                                             ligma_object_get_name (proc),
                                              new_args);
 
-  gimp_value_array_unref (new_args);
+  ligma_value_array_unref (new_args);
 
   return return_vals;
 }
@@ -309,7 +309,7 @@ This procedure tries to load a thumbnail that belongs to the given file.
 The returned data is an array of colordepth 3 (RGB), regardless of the
 image type. Width and height of the thumbnail are also returned. Don't
 use this function if you need a thumbnail of an already opened image,
-use gimp_image_thumbnail() instead.
+use ligma_image_thumbnail() instead.
 HELP
 
     $author = $copyright = 'Adam D. Moss, Sven Neumann';
@@ -384,8 +384,8 @@ CODE
 }
 
 
-@headers = qw("core/gimp.h"
-              "plug-in/gimppluginmanager-file.h"
+@headers = qw("core/ligma.h"
+              "plug-in/ligmapluginmanager-file.h"
               "file/file-open.h"
               "file/file-save.h"
               "file/file-utils.h");
@@ -400,7 +400,7 @@ CODE
 %exports = (app => [@procs], lib => [@procs[0..3,5]]);
 
 $desc = 'File Operations';
-$doc_title = 'gimpfile';
+$doc_title = 'ligmafile';
 $doc_short_desc = 'Image file operations (load, save, etc.)';
 $doc_long_desc = 'Image file operations (load, save, etc.)';
 

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,18 +20,18 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "actions-types.h"
 
-#include "config/gimpdialogconfig.h"
+#include "config/ligmadialogconfig.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontext.h"
-#include "core/gimpimage.h"
-#include "core/gimpimage-undo.h"
-#include "core/gimpitem.h"
-#include "core/gimpitemundo.h"
+#include "core/ligma.h"
+#include "core/ligmacontext.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaimage-undo.h"
+#include "core/ligmaitem.h"
+#include "core/ligmaitemundo.h"
 
 #include "dialogs/dialogs.h"
 #include "dialogs/fill-dialog.h"
@@ -40,126 +40,126 @@
 #include "actions.h"
 #include "items-commands.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /*  local function prototypes  */
 
 static void   items_fill_callback   (GtkWidget         *dialog,
-                                     GimpItem          *item,
+                                     LigmaItem          *item,
                                      GList             *drawables,
-                                     GimpContext       *context,
-                                     GimpFillOptions   *options,
+                                     LigmaContext       *context,
+                                     LigmaFillOptions   *options,
                                      gpointer           user_data);
 static void   items_stroke_callback (GtkWidget         *dialog,
-                                     GimpItem          *item,
+                                     LigmaItem          *item,
                                      GList             *drawables,
-                                     GimpContext       *context,
-                                     GimpStrokeOptions *options,
+                                     LigmaContext       *context,
+                                     LigmaStrokeOptions *options,
                                      gpointer           user_data);
 
 
 /*  public functions  */
 
 void
-items_visible_cmd_callback (GimpAction *action,
+items_visible_cmd_callback (LigmaAction *action,
                             GVariant   *value,
-                            GimpImage  *image,
-                            GimpItem   *item)
+                            LigmaImage  *image,
+                            LigmaItem   *item)
 {
   gboolean visible = g_variant_get_boolean (value);
 
-  if (visible != gimp_item_get_visible (item))
+  if (visible != ligma_item_get_visible (item))
     {
-      GimpUndo *undo;
+      LigmaUndo *undo;
       gboolean  push_undo = TRUE;
 
-      undo = gimp_image_undo_can_compress (image, GIMP_TYPE_ITEM_UNDO,
-                                           GIMP_UNDO_ITEM_VISIBILITY);
+      undo = ligma_image_undo_can_compress (image, LIGMA_TYPE_ITEM_UNDO,
+                                           LIGMA_UNDO_ITEM_VISIBILITY);
 
-      if (undo && GIMP_ITEM_UNDO (undo)->item == item)
+      if (undo && LIGMA_ITEM_UNDO (undo)->item == item)
         push_undo = FALSE;
 
-      gimp_item_set_visible (item, visible, push_undo);
-      gimp_image_flush (image);
+      ligma_item_set_visible (item, visible, push_undo);
+      ligma_image_flush (image);
     }
 }
 
 void
-items_lock_content_cmd_callback (GimpAction *action,
+items_lock_content_cmd_callback (LigmaAction *action,
                                  GVariant   *value,
-                                 GimpImage  *image,
-                                 GimpItem   *item)
+                                 LigmaImage  *image,
+                                 LigmaItem   *item)
 {
   gboolean locked = g_variant_get_boolean (value);
 
-  if (locked != gimp_item_get_lock_content (item))
+  if (locked != ligma_item_get_lock_content (item))
     {
-      GimpUndo *undo;
+      LigmaUndo *undo;
       gboolean  push_undo = TRUE;
 
-      undo = gimp_image_undo_can_compress (image, GIMP_TYPE_ITEM_UNDO,
-                                           GIMP_UNDO_ITEM_LOCK_CONTENT);
+      undo = ligma_image_undo_can_compress (image, LIGMA_TYPE_ITEM_UNDO,
+                                           LIGMA_UNDO_ITEM_LOCK_CONTENT);
 
-      if (undo && GIMP_ITEM_UNDO (undo)->item == item)
+      if (undo && LIGMA_ITEM_UNDO (undo)->item == item)
         push_undo = FALSE;
 
-      gimp_item_set_lock_content (item, locked, push_undo);
-      gimp_image_flush (image);
+      ligma_item_set_lock_content (item, locked, push_undo);
+      ligma_image_flush (image);
     }
 }
 
 void
-items_lock_position_cmd_callback (GimpAction *action,
+items_lock_position_cmd_callback (LigmaAction *action,
                                   GVariant   *value,
-                                  GimpImage  *image,
-                                  GimpItem   *item)
+                                  LigmaImage  *image,
+                                  LigmaItem   *item)
 {
   gboolean locked = g_variant_get_boolean (value);
 
-  if (locked != gimp_item_get_lock_position (item))
+  if (locked != ligma_item_get_lock_position (item))
     {
-      GimpUndo *undo;
+      LigmaUndo *undo;
       gboolean  push_undo = TRUE;
 
-      undo = gimp_image_undo_can_compress (image, GIMP_TYPE_ITEM_UNDO,
-                                           GIMP_UNDO_ITEM_LOCK_POSITION);
+      undo = ligma_image_undo_can_compress (image, LIGMA_TYPE_ITEM_UNDO,
+                                           LIGMA_UNDO_ITEM_LOCK_POSITION);
 
-      if (undo && GIMP_ITEM_UNDO (undo)->item == item)
+      if (undo && LIGMA_ITEM_UNDO (undo)->item == item)
         push_undo = FALSE;
 
 
-      gimp_item_set_lock_position (item, locked, push_undo);
-      gimp_image_flush (image);
+      ligma_item_set_lock_position (item, locked, push_undo);
+      ligma_image_flush (image);
     }
 }
 
 void
-items_color_tag_cmd_callback (GimpAction   *action,
-                              GimpImage    *image,
-                              GimpItem     *item,
-                              GimpColorTag  color_tag)
+items_color_tag_cmd_callback (LigmaAction   *action,
+                              LigmaImage    *image,
+                              LigmaItem     *item,
+                              LigmaColorTag  color_tag)
 {
-  if (color_tag != gimp_item_get_color_tag (item))
+  if (color_tag != ligma_item_get_color_tag (item))
     {
-      GimpUndo *undo;
+      LigmaUndo *undo;
       gboolean  push_undo = TRUE;
 
-      undo = gimp_image_undo_can_compress (image, GIMP_TYPE_ITEM_UNDO,
-                                           GIMP_UNDO_ITEM_COLOR_TAG);
+      undo = ligma_image_undo_can_compress (image, LIGMA_TYPE_ITEM_UNDO,
+                                           LIGMA_UNDO_ITEM_COLOR_TAG);
 
-      if (undo && GIMP_ITEM_UNDO (undo)->item == item)
+      if (undo && LIGMA_ITEM_UNDO (undo)->item == item)
         push_undo = FALSE;
 
-      gimp_item_set_color_tag (item, color_tag, push_undo);
-      gimp_image_flush (image);
+      ligma_item_set_color_tag (item, color_tag, push_undo);
+      ligma_image_flush (image);
     }
 }
 
 void
-items_fill_cmd_callback (GimpAction  *action,
-                         GimpImage   *image,
-                         GimpItem    *item,
+items_fill_cmd_callback (LigmaAction  *action,
+                         LigmaImage   *image,
+                         LigmaItem    *item,
                          const gchar *dialog_key,
                          const gchar *dialog_title,
                          const gchar *dialog_icon_name,
@@ -171,12 +171,12 @@ items_fill_cmd_callback (GimpAction  *action,
   GtkWidget    *widget;
   return_if_no_widget (widget, data);
 
-  drawables = gimp_image_get_selected_drawables (image);
+  drawables = ligma_image_get_selected_drawables (image);
 
   if (! drawables)
     {
-      gimp_message_literal (image->gimp,
-                            G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+      ligma_message_literal (image->ligma,
+                            G_OBJECT (widget), LIGMA_MESSAGE_WARNING,
                             _("There are no selected layers or channels to fill."));
       return;
     }
@@ -185,7 +185,7 @@ items_fill_cmd_callback (GimpAction  *action,
 
   if (! dialog)
     {
-      GimpDialogConfig *config = GIMP_DIALOG_CONFIG (image->gimp->config);
+      LigmaDialogConfig *config = LIGMA_DIALOG_CONFIG (image->ligma->config);
 
       dialog = fill_dialog_new (item,
                                 drawables,
@@ -206,47 +206,47 @@ items_fill_cmd_callback (GimpAction  *action,
 }
 
 void
-items_fill_last_vals_cmd_callback (GimpAction *action,
-                                   GimpImage  *image,
-                                   GimpItem   *item,
+items_fill_last_vals_cmd_callback (LigmaAction *action,
+                                   LigmaImage  *image,
+                                   LigmaItem   *item,
                                    gpointer    data)
 {
   GList            *drawables;
-  GimpDialogConfig *config;
+  LigmaDialogConfig *config;
   GtkWidget        *widget;
   GError           *error = NULL;
   return_if_no_widget (widget, data);
 
-  drawables = gimp_image_get_selected_drawables (image);
+  drawables = ligma_image_get_selected_drawables (image);
 
   if (! drawables)
     {
-      gimp_message_literal (image->gimp,
-                            G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+      ligma_message_literal (image->ligma,
+                            G_OBJECT (widget), LIGMA_MESSAGE_WARNING,
                             _("There are no selected layers or channels to fill."));
       return;
     }
 
-  config = GIMP_DIALOG_CONFIG (image->gimp->config);
+  config = LIGMA_DIALOG_CONFIG (image->ligma->config);
 
-  if (! gimp_item_fill (item, drawables,
+  if (! ligma_item_fill (item, drawables,
                         config->fill_options, TRUE, NULL, &error))
     {
-      gimp_message_literal (image->gimp, G_OBJECT (widget),
-                            GIMP_MESSAGE_WARNING, error->message);
+      ligma_message_literal (image->ligma, G_OBJECT (widget),
+                            LIGMA_MESSAGE_WARNING, error->message);
       g_clear_error (&error);
     }
   else
     {
-      gimp_image_flush (image);
+      ligma_image_flush (image);
     }
   g_list_free (drawables);
 }
 
 void
-items_stroke_cmd_callback (GimpAction  *action,
-                           GimpImage   *image,
-                           GimpItem    *item,
+items_stroke_cmd_callback (LigmaAction  *action,
+                           LigmaImage   *image,
+                           LigmaItem    *item,
                            const gchar *dialog_key,
                            const gchar *dialog_title,
                            const gchar *dialog_icon_name,
@@ -258,12 +258,12 @@ items_stroke_cmd_callback (GimpAction  *action,
   GtkWidget    *widget;
   return_if_no_widget (widget, data);
 
-  drawables = gimp_image_get_selected_drawables (image);
+  drawables = ligma_image_get_selected_drawables (image);
 
   if (! drawables)
     {
-      gimp_message_literal (image->gimp,
-                            G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+      ligma_message_literal (image->ligma,
+                            G_OBJECT (widget), LIGMA_MESSAGE_WARNING,
                             _("There are no selected layers or channels to stroke to."));
       return;
     }
@@ -272,7 +272,7 @@ items_stroke_cmd_callback (GimpAction  *action,
 
   if (! dialog)
     {
-      GimpDialogConfig *config = GIMP_DIALOG_CONFIG (image->gimp->config);
+      LigmaDialogConfig *config = LIGMA_DIALOG_CONFIG (image->ligma->config);
 
       dialog = stroke_dialog_new (item,
                                   drawables,
@@ -293,41 +293,41 @@ items_stroke_cmd_callback (GimpAction  *action,
 }
 
 void
-items_stroke_last_vals_cmd_callback (GimpAction *action,
-                                     GimpImage  *image,
-                                     GimpItem   *item,
+items_stroke_last_vals_cmd_callback (LigmaAction *action,
+                                     LigmaImage  *image,
+                                     LigmaItem   *item,
                                      gpointer    data)
 {
   GList            *drawables;
-  GimpDialogConfig *config;
+  LigmaDialogConfig *config;
   GtkWidget        *widget;
   GError           *error = NULL;
   return_if_no_widget (widget, data);
 
-  drawables = gimp_image_get_selected_drawables (image);
+  drawables = ligma_image_get_selected_drawables (image);
 
   if (! drawables)
     {
-      gimp_message_literal (image->gimp,
-                            G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+      ligma_message_literal (image->ligma,
+                            G_OBJECT (widget), LIGMA_MESSAGE_WARNING,
                             _("There are no selected layers or channels to stroke to."));
       return;
     }
 
-  config = GIMP_DIALOG_CONFIG (image->gimp->config);
+  config = LIGMA_DIALOG_CONFIG (image->ligma->config);
 
-  if (! gimp_item_stroke (item, drawables,
+  if (! ligma_item_stroke (item, drawables,
                           action_data_get_context (data),
                           config->stroke_options, NULL,
                           TRUE, NULL, &error))
     {
-      gimp_message_literal (image->gimp, G_OBJECT (widget),
-                            GIMP_MESSAGE_WARNING, error->message);
+      ligma_message_literal (image->ligma, G_OBJECT (widget),
+                            LIGMA_MESSAGE_WARNING, error->message);
       g_clear_error (&error);
     }
   else
     {
-      gimp_image_flush (image);
+      ligma_image_flush (image);
     }
 
   g_list_free (drawables);
@@ -338,63 +338,63 @@ items_stroke_last_vals_cmd_callback (GimpAction *action,
 
 static void
 items_fill_callback (GtkWidget       *dialog,
-                     GimpItem        *item,
+                     LigmaItem        *item,
                      GList           *drawables,
-                     GimpContext     *context,
-                     GimpFillOptions *options,
+                     LigmaContext     *context,
+                     LigmaFillOptions *options,
                      gpointer         user_data)
 {
-  GimpDialogConfig *config = GIMP_DIALOG_CONFIG (context->gimp->config);
-  GimpImage        *image  = gimp_item_get_image (item);
+  LigmaDialogConfig *config = LIGMA_DIALOG_CONFIG (context->ligma->config);
+  LigmaImage        *image  = ligma_item_get_image (item);
   GError           *error  = NULL;
 
-  gimp_config_sync (G_OBJECT (options),
+  ligma_config_sync (G_OBJECT (options),
                     G_OBJECT (config->fill_options), 0);
 
-  if (! gimp_item_fill (item, drawables, options, TRUE, NULL, &error))
+  if (! ligma_item_fill (item, drawables, options, TRUE, NULL, &error))
     {
-      gimp_message_literal (context->gimp,
+      ligma_message_literal (context->ligma,
                             G_OBJECT (dialog),
-                            GIMP_MESSAGE_WARNING,
+                            LIGMA_MESSAGE_WARNING,
                             error ? error->message : "NULL");
 
       g_clear_error (&error);
       return;
     }
 
-  gimp_image_flush (image);
+  ligma_image_flush (image);
 
   gtk_widget_destroy (dialog);
 }
 
 static void
 items_stroke_callback (GtkWidget         *dialog,
-                       GimpItem          *item,
+                       LigmaItem          *item,
                        GList             *drawables,
-                       GimpContext       *context,
-                       GimpStrokeOptions *options,
+                       LigmaContext       *context,
+                       LigmaStrokeOptions *options,
                        gpointer           data)
 {
-  GimpDialogConfig *config = GIMP_DIALOG_CONFIG (context->gimp->config);
-  GimpImage        *image  = gimp_item_get_image (item);
+  LigmaDialogConfig *config = LIGMA_DIALOG_CONFIG (context->ligma->config);
+  LigmaImage        *image  = ligma_item_get_image (item);
   GError           *error  = NULL;
 
-  gimp_config_sync (G_OBJECT (options),
+  ligma_config_sync (G_OBJECT (options),
                     G_OBJECT (config->stroke_options), 0);
 
-  if (! gimp_item_stroke (item, drawables, context, options, NULL,
+  if (! ligma_item_stroke (item, drawables, context, options, NULL,
                           TRUE, NULL, &error))
     {
-      gimp_message_literal (context->gimp,
+      ligma_message_literal (context->ligma,
                             G_OBJECT (dialog),
-                            GIMP_MESSAGE_WARNING,
+                            LIGMA_MESSAGE_WARNING,
                             error ? error->message : "NULL");
 
       g_clear_error (&error);
       return;
     }
 
-  gimp_image_flush (image);
+  ligma_image_flush (image);
 
   gtk_widget_destroy (dialog);
 }

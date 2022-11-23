@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,15 +19,15 @@
 #define __SESSION_H__
 
 
-void       session_init    (Gimp       *gimp);
-void       session_exit    (Gimp       *gimp);
+void       session_init    (Ligma       *ligma);
+void       session_exit    (Ligma       *ligma);
 
-void       session_restore (Gimp       *gimp,
+void       session_restore (Ligma       *ligma,
                             GdkMonitor *monitor);
-void       session_save    (Gimp       *gimp,
+void       session_save    (Ligma       *ligma,
                             gboolean    always_save);
 
-gboolean   session_clear   (Gimp       *gimp,
+gboolean   session_clear   (Ligma       *ligma,
                             GError    **error);
 
 

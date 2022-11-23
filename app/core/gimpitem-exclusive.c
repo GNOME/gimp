@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpitem-exclusive.c
- * Copyright (C) 2011 Michael Natterer <mitch@gimp.org>
+ * ligmaitem-exclusive.c
+ * Copyright (C) 2011 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,25 +25,25 @@
 
 #include "core-types.h"
 
-#include "gimpcontext.h"
-#include "gimpdrawable.h"
-#include "gimpimage.h"
-#include "gimpimage-undo.h"
-#include "gimpimage-undo-push.h"
-#include "gimpitem.h"
-#include "gimpitem-exclusive.h"
-#include "gimpitemstack.h"
-#include "gimpitemtree.h"
-#include "gimpundostack.h"
+#include "ligmacontext.h"
+#include "ligmadrawable.h"
+#include "ligmaimage.h"
+#include "ligmaimage-undo.h"
+#include "ligmaimage-undo-push.h"
+#include "ligmaitem.h"
+#include "ligmaitem-exclusive.h"
+#include "ligmaitemstack.h"
+#include "ligmaitemtree.h"
+#include "ligmaundostack.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-static GList * gimp_item_exclusive_get_ancestry (GimpItem              *item);
-static void    gimp_item_exclusive_get_lists    (GimpItem              *item,
-                                                 GimpItemIsEnabledFunc  is_enabled,
-                                                 GimpItemCanSetFunc     can_set,
-                                                 GimpItemIsPropLocked   is_prop_locked,
+static GList * ligma_item_exclusive_get_ancestry (LigmaItem              *item);
+static void    ligma_item_exclusive_get_lists    (LigmaItem              *item,
+                                                 LigmaItemIsEnabledFunc  is_enabled,
+                                                 LigmaItemCanSetFunc     can_set,
+                                                 LigmaItemIsPropLocked   is_prop_locked,
                                                  gboolean               only_selected,
                                                  GList                **on,
                                                  GList                **off);
@@ -52,54 +52,54 @@ static void    gimp_item_exclusive_get_lists    (GimpItem              *item,
 /*  public functions  */
 
 void
-gimp_item_toggle_exclusive_visible (GimpItem    *item,
+ligma_item_toggle_exclusive_visible (LigmaItem    *item,
                                     gboolean     only_selected,
-                                    GimpContext *context)
+                                    LigmaContext *context)
 {
-  gimp_item_toggle_exclusive (item,
-                              (GimpItemIsEnabledFunc) gimp_item_is_visible,
-                              (GimpItemSetFunc)       gimp_item_set_visible,
+  ligma_item_toggle_exclusive (item,
+                              (LigmaItemIsEnabledFunc) ligma_item_is_visible,
+                              (LigmaItemSetFunc)       ligma_item_set_visible,
                               NULL,
-                              (GimpItemIsPropLocked)  gimp_item_get_lock_visibility,
-                              (GimpItemUndoPush)      gimp_image_undo_push_item_visibility,
+                              (LigmaItemIsPropLocked)  ligma_item_get_lock_visibility,
+                              (LigmaItemUndoPush)      ligma_image_undo_push_item_visibility,
                               _("Set Item Exclusive Visibility"),
-                              GIMP_UNDO_GROUP_ITEM_VISIBILITY,
+                              LIGMA_UNDO_GROUP_ITEM_VISIBILITY,
                               only_selected, context);
 }
 
 void
-gimp_item_toggle_exclusive (GimpItem               *item,
-                            GimpItemIsEnabledFunc   is_enabled,
-                            GimpItemSetFunc         set_prop,
-                            GimpItemCanSetFunc      can_set,
-                            GimpItemIsPropLocked    is_prop_locked,
-                            GimpItemUndoPush        undo_push,
+ligma_item_toggle_exclusive (LigmaItem               *item,
+                            LigmaItemIsEnabledFunc   is_enabled,
+                            LigmaItemSetFunc         set_prop,
+                            LigmaItemCanSetFunc      can_set,
+                            LigmaItemIsPropLocked    is_prop_locked,
+                            LigmaItemUndoPush        undo_push,
                             const gchar            *undo_desc,
-                            GimpUndoType            group_undo_type,
+                            LigmaUndoType            group_undo_type,
                             gboolean                only_selected,
-                            GimpContext            *context)
+                            LigmaContext            *context)
 {
   GList *ancestry;
   GList *on;
   GList *off;
   GList *list;
 
-  g_return_if_fail (GIMP_IS_ITEM (item));
-  g_return_if_fail (gimp_item_is_attached (item));
+  g_return_if_fail (LIGMA_IS_ITEM (item));
+  g_return_if_fail (ligma_item_is_attached (item));
   g_return_if_fail (undo_desc != NULL);
-  g_return_if_fail (context == NULL || GIMP_IS_CONTEXT (context));
+  g_return_if_fail (context == NULL || LIGMA_IS_CONTEXT (context));
 
-  ancestry = gimp_item_exclusive_get_ancestry (item);
-  gimp_item_exclusive_get_lists (item, is_enabled, can_set, is_prop_locked,
+  ancestry = ligma_item_exclusive_get_ancestry (item);
+  ligma_item_exclusive_get_lists (item, is_enabled, can_set, is_prop_locked,
                                  only_selected, &on, &off);
 
   if (on || off || (! is_enabled (item) && (can_set == NULL || can_set (item))))
     {
-      GimpImage *image = gimp_item_get_image (item);
-      GimpUndo  *undo;
+      LigmaImage *image = ligma_item_get_image (item);
+      LigmaUndo  *undo;
       gboolean   push_undo = TRUE;
 
-      undo = gimp_image_undo_can_compress (image, GIMP_TYPE_UNDO_STACK,
+      undo = ligma_image_undo_can_compress (image, LIGMA_TYPE_UNDO_STACK,
                                            group_undo_type);
 
       /* Use the undo description as the undo object key, as we should
@@ -112,11 +112,11 @@ gimp_item_toggle_exclusive (GimpItem               *item,
 
       if (push_undo)
         {
-          if (gimp_image_undo_group_start (image,
+          if (ligma_image_undo_group_start (image,
                                            group_undo_type,
                                            undo_desc))
             {
-              undo = gimp_image_undo_can_compress (image, GIMP_TYPE_UNDO_STACK,
+              undo = ligma_image_undo_can_compress (image, LIGMA_TYPE_UNDO_STACK,
                                                    group_undo_type);
 
               if (undo)
@@ -132,11 +132,11 @@ gimp_item_toggle_exclusive (GimpItem               *item,
           for (list = off; list; list = g_list_next (list))
             undo_push (image, NULL, list->data);
 
-          gimp_image_undo_group_end (image);
+          ligma_image_undo_group_end (image);
         }
       else if (context)
         {
-          gimp_undo_refresh_preview (undo, context);
+          ligma_undo_refresh_preview (undo, context);
         }
 
       for (list = ancestry; list; list = g_list_next (list))
@@ -164,14 +164,14 @@ gimp_item_toggle_exclusive (GimpItem               *item,
 /*  private functions  */
 
 static GList *
-gimp_item_exclusive_get_ancestry (GimpItem *item)
+ligma_item_exclusive_get_ancestry (LigmaItem *item)
 {
-  GimpViewable *parent;
+  LigmaViewable *parent;
   GList        *ancestry = NULL;
 
-  for (parent = GIMP_VIEWABLE (item);
+  for (parent = LIGMA_VIEWABLE (item);
        parent;
-       parent = gimp_viewable_get_parent (parent))
+       parent = ligma_viewable_get_parent (parent))
     {
       ancestry = g_list_prepend (ancestry, parent);
     }
@@ -180,32 +180,32 @@ gimp_item_exclusive_get_ancestry (GimpItem *item)
 }
 
 static void
-gimp_item_exclusive_get_lists (GimpItem              *item,
-                               GimpItemIsEnabledFunc  is_enabled,
-                               GimpItemCanSetFunc     can_set,
-                               GimpItemIsPropLocked   is_prop_locked,
+ligma_item_exclusive_get_lists (LigmaItem              *item,
+                               LigmaItemIsEnabledFunc  is_enabled,
+                               LigmaItemCanSetFunc     can_set,
+                               LigmaItemIsPropLocked   is_prop_locked,
                                gboolean               only_selected,
                                GList                 **on,
                                GList                 **off)
 {
-  GimpImage    *image = NULL;
-  GimpItemTree *tree;
+  LigmaImage    *image = NULL;
+  LigmaItemTree *tree;
   GList        *items;
   GList        *list;
 
   *on  = NULL;
   *off = NULL;
 
-  tree = gimp_item_get_tree (item);
+  tree = ligma_item_get_tree (item);
 
-  items = gimp_item_stack_get_item_list (GIMP_ITEM_STACK (tree->container));
+  items = ligma_item_stack_get_item_list (LIGMA_ITEM_STACK (tree->container));
 
   if (only_selected)
-    image = gimp_item_get_image (item);
+    image = ligma_item_get_image (item);
 
   for (list = items; list; list = g_list_next (list))
     {
-      GimpItem *other = list->data;
+      LigmaItem *other = list->data;
 
       if (other != item                                                                &&
           /* Don't include item with visibility locks. */
@@ -213,13 +213,13 @@ gimp_item_exclusive_get_lists (GimpItem              *item,
           /* Don't include item which can be changed. */
           (can_set == NULL || can_set (other))                                         &&
           /* Do we care only about selected drawables? */
-          (! only_selected  || gimp_image_is_selected_drawable (image,
-                                                                GIMP_DRAWABLE (other))) &&
+          (! only_selected  || ligma_image_is_selected_drawable (image,
+                                                                LIGMA_DRAWABLE (other))) &&
           /* We are only interested in same level items unless
            * @only_selected is TRUE. */
           (only_selected ||
-           gimp_viewable_get_parent (GIMP_VIEWABLE (other)) ==
-           gimp_viewable_get_parent (GIMP_VIEWABLE (item))))
+           ligma_viewable_get_parent (LIGMA_VIEWABLE (other)) ==
+           ligma_viewable_get_parent (LIGMA_VIEWABLE (item))))
         {
           if (is_enabled (other))
             *on = g_list_prepend (*on, other);

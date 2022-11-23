@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpextensiondetails.h
- * Copyright (C) 2018 Jehan <jehan@gimp.org>
+ * ligmaextensiondetails.h
+ * Copyright (C) 2018 Jehan <jehan@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,40 +18,40 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_EXTENSION_DETAILS_H__
-#define __GIMP_EXTENSION_DETAILS_H__
+#ifndef __LIGMA_EXTENSION_DETAILS_H__
+#define __LIGMA_EXTENSION_DETAILS_H__
 
 
-#define GIMP_TYPE_EXTENSION_DETAILS            (gimp_extension_details_get_type ())
-#define GIMP_EXTENSION_DETAILS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_EXTENSION_DETAILS, GimpExtensionDetails))
-#define GIMP_EXTENSION_DETAILS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_EXTENSION_DETAILS, GimpExtensionDetailsClass))
-#define GIMP_IS_EXTENSION_DETAILS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_EXTENSION_DETAILS))
-#define GIMP_IS_EXTENSION_DETAILS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_EXTENSION_DETAILS))
-#define GIMP_EXTENSION_DETAILS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_EXTENSION_DETAILS, GimpExtensionDetailsClass))
+#define LIGMA_TYPE_EXTENSION_DETAILS            (ligma_extension_details_get_type ())
+#define LIGMA_EXTENSION_DETAILS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_EXTENSION_DETAILS, LigmaExtensionDetails))
+#define LIGMA_EXTENSION_DETAILS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_EXTENSION_DETAILS, LigmaExtensionDetailsClass))
+#define LIGMA_IS_EXTENSION_DETAILS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_EXTENSION_DETAILS))
+#define LIGMA_IS_EXTENSION_DETAILS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_EXTENSION_DETAILS))
+#define LIGMA_EXTENSION_DETAILS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_EXTENSION_DETAILS, LigmaExtensionDetailsClass))
 
 
-typedef struct _GimpExtensionDetailsClass    GimpExtensionDetailsClass;
-typedef struct _GimpExtensionDetailsPrivate  GimpExtensionDetailsPrivate;
+typedef struct _LigmaExtensionDetailsClass    LigmaExtensionDetailsClass;
+typedef struct _LigmaExtensionDetailsPrivate  LigmaExtensionDetailsPrivate;
 
-struct _GimpExtensionDetails
+struct _LigmaExtensionDetails
 {
   GtkFrame                     parent_instance;
 
-  GimpExtensionDetailsPrivate *p;
+  LigmaExtensionDetailsPrivate *p;
 };
 
-struct _GimpExtensionDetailsClass
+struct _LigmaExtensionDetailsClass
 {
   GtkFrameClass                parent_class;
 };
 
 
-GType        gimp_extension_details_get_type     (void) G_GNUC_CONST;
+GType        ligma_extension_details_get_type     (void) G_GNUC_CONST;
 
-GtkWidget  * gimp_extension_details_new          (void);
+GtkWidget  * ligma_extension_details_new          (void);
 
-void         gimp_extension_details_set          (GimpExtensionDetails *details,
-                                                  GimpExtension        *extension);
+void         ligma_extension_details_set          (LigmaExtensionDetails *details,
+                                                  LigmaExtension        *extension);
 
-#endif /* __GIMP_EXTENSION_DETAILS_H__ */
+#endif /* __LIGMA_EXTENSION_DETAILS_H__ */
 

@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpdockable.c
- * Copyright (C) 2001-2003 Michael Natterer <mitch@gimp.org>
+ * ligmadockable.c
+ * Copyright (C) 2001-2003 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,28 +25,28 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "core/gimpcontext.h"
+#include "core/ligmacontext.h"
 
-#include "gimpdialogfactory.h"
-#include "gimpdnd.h"
-#include "gimpdock.h"
-#include "gimpdockable.h"
-#include "gimpdockbook.h"
-#include "gimpdocked.h"
-#include "gimpdockwindow.h"
-#include "gimphelp-ids.h"
-#include "gimppanedbox.h"
-#include "gimpsessioninfo-aux.h"
-#include "gimpsessionmanaged.h"
-#include "gimpuimanager.h"
-#include "gimpwidgets-utils.h"
+#include "ligmadialogfactory.h"
+#include "ligmadnd.h"
+#include "ligmadock.h"
+#include "ligmadockable.h"
+#include "ligmadockbook.h"
+#include "ligmadocked.h"
+#include "ligmadockwindow.h"
+#include "ligmahelp-ids.h"
+#include "ligmapanedbox.h"
+#include "ligmasessioninfo-aux.h"
+#include "ligmasessionmanaged.h"
+#include "ligmauimanager.h"
+#include "ligmawidgets-utils.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -56,76 +56,76 @@ enum
 };
 
 
-struct _GimpDockablePrivate
+struct _LigmaDockablePrivate
 {
   gchar        *name;
   gchar        *blurb;
   gchar        *icon_name;
   gchar        *help_id;
-  GimpTabStyle  tab_style;
+  LigmaTabStyle  tab_style;
   gboolean      locked;
 
-  GimpDockbook *dockbook;
+  LigmaDockbook *dockbook;
 
-  GimpContext  *context;
+  LigmaContext  *context;
 };
 
 
-static void       gimp_dockable_session_managed_iface_init (GimpSessionManagedInterface *iface);
+static void       ligma_dockable_session_managed_iface_init (LigmaSessionManagedInterface *iface);
 
-static void       gimp_dockable_dispose       (GObject            *object);
-static void       gimp_dockable_set_property  (GObject            *object,
+static void       ligma_dockable_dispose       (GObject            *object);
+static void       ligma_dockable_set_property  (GObject            *object,
                                                guint               property_id,
                                                const GValue       *value,
                                                GParamSpec         *pspec);
-static void       gimp_dockable_get_property  (GObject            *object,
+static void       ligma_dockable_get_property  (GObject            *object,
                                                guint               property_id,
                                                GValue             *value,
                                                GParamSpec         *pspec);
 
-static void       gimp_dockable_style_updated (GtkWidget          *widget);
+static void       ligma_dockable_style_updated (GtkWidget          *widget);
 
-static void       gimp_dockable_add           (GtkContainer       *container,
+static void       ligma_dockable_add           (GtkContainer       *container,
                                                GtkWidget          *widget);
-static GType      gimp_dockable_child_type    (GtkContainer       *container);
+static GType      ligma_dockable_child_type    (GtkContainer       *container);
 
-static GList    * gimp_dockable_get_aux_info  (GimpSessionManaged *managed);
-static void       gimp_dockable_set_aux_info  (GimpSessionManaged *managed,
+static GList    * ligma_dockable_get_aux_info  (LigmaSessionManaged *managed);
+static void       ligma_dockable_set_aux_info  (LigmaSessionManaged *managed,
                                                GList              *aux_info);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpDockable, gimp_dockable, GTK_TYPE_BIN,
-                         G_ADD_PRIVATE (GimpDockable)
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_SESSION_MANAGED,
-                                                gimp_dockable_session_managed_iface_init))
+G_DEFINE_TYPE_WITH_CODE (LigmaDockable, ligma_dockable, GTK_TYPE_BIN,
+                         G_ADD_PRIVATE (LigmaDockable)
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_SESSION_MANAGED,
+                                                ligma_dockable_session_managed_iface_init))
 
-#define parent_class gimp_dockable_parent_class
+#define parent_class ligma_dockable_parent_class
 
-static const GtkTargetEntry dialog_target_table[] = { GIMP_TARGET_NOTEBOOK_TAB };
+static const GtkTargetEntry dialog_target_table[] = { LIGMA_TARGET_NOTEBOOK_TAB };
 
 
 static void
-gimp_dockable_class_init (GimpDockableClass *klass)
+ligma_dockable_class_init (LigmaDockableClass *klass)
 {
   GObjectClass      *object_class    = G_OBJECT_CLASS (klass);
   GtkWidgetClass    *widget_class    = GTK_WIDGET_CLASS (klass);
   GtkContainerClass *container_class = GTK_CONTAINER_CLASS (klass);
 
-  object_class->dispose       = gimp_dockable_dispose;
-  object_class->set_property  = gimp_dockable_set_property;
-  object_class->get_property  = gimp_dockable_get_property;
+  object_class->dispose       = ligma_dockable_dispose;
+  object_class->set_property  = ligma_dockable_set_property;
+  object_class->get_property  = ligma_dockable_get_property;
 
-  widget_class->style_updated = gimp_dockable_style_updated;
+  widget_class->style_updated = ligma_dockable_style_updated;
 
-  container_class->add        = gimp_dockable_add;
-  container_class->child_type = gimp_dockable_child_type;
+  container_class->add        = ligma_dockable_add;
+  container_class->child_type = ligma_dockable_child_type;
 
   gtk_container_class_handle_border_width (container_class);
 
   g_object_class_install_property (object_class, PROP_LOCKED,
                                    g_param_spec_boolean ("locked", NULL, NULL,
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                                                         LIGMA_PARAM_READWRITE));
 
   gtk_widget_class_install_style_property (widget_class,
                                            g_param_spec_int ("content-border",
@@ -133,15 +133,15 @@ gimp_dockable_class_init (GimpDockableClass *klass)
                                                              0,
                                                              G_MAXINT,
                                                              0,
-                                                             GIMP_PARAM_READABLE));
+                                                             LIGMA_PARAM_READABLE));
 }
 
 static void
-gimp_dockable_init (GimpDockable *dockable)
+ligma_dockable_init (LigmaDockable *dockable)
 {
-  dockable->p = gimp_dockable_get_instance_private (dockable);
+  dockable->p = ligma_dockable_get_instance_private (dockable);
 
-  dockable->p->tab_style = GIMP_TAB_STYLE_PREVIEW;
+  dockable->p->tab_style = LIGMA_TAB_STYLE_PREVIEW;
 
   gtk_drag_dest_set (GTK_WIDGET (dockable),
                      0,
@@ -150,19 +150,19 @@ gimp_dockable_init (GimpDockable *dockable)
 }
 
 static void
-gimp_dockable_session_managed_iface_init (GimpSessionManagedInterface *iface)
+ligma_dockable_session_managed_iface_init (LigmaSessionManagedInterface *iface)
 {
-  iface->get_aux_info = gimp_dockable_get_aux_info;
-  iface->set_aux_info = gimp_dockable_set_aux_info;
+  iface->get_aux_info = ligma_dockable_get_aux_info;
+  iface->set_aux_info = ligma_dockable_set_aux_info;
 }
 
 static void
-gimp_dockable_dispose (GObject *object)
+ligma_dockable_dispose (GObject *object)
 {
-  GimpDockable *dockable = GIMP_DOCKABLE (object);
+  LigmaDockable *dockable = LIGMA_DOCKABLE (object);
 
   if (dockable->p->context)
-    gimp_dockable_set_context (dockable, NULL);
+    ligma_dockable_set_context (dockable, NULL);
 
   g_clear_pointer (&dockable->p->blurb,     g_free);
   g_clear_pointer (&dockable->p->name,      g_free);
@@ -173,17 +173,17 @@ gimp_dockable_dispose (GObject *object)
 }
 
 static void
-gimp_dockable_set_property (GObject      *object,
+ligma_dockable_set_property (GObject      *object,
                             guint         property_id,
                             const GValue *value,
                             GParamSpec   *pspec)
 {
-  GimpDockable *dockable = GIMP_DOCKABLE (object);
+  LigmaDockable *dockable = LIGMA_DOCKABLE (object);
 
   switch (property_id)
     {
     case PROP_LOCKED:
-      gimp_dockable_set_locked (dockable, g_value_get_boolean (value));
+      ligma_dockable_set_locked (dockable, g_value_get_boolean (value));
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -192,12 +192,12 @@ gimp_dockable_set_property (GObject      *object,
 }
 
 static void
-gimp_dockable_get_property (GObject    *object,
+ligma_dockable_get_property (GObject    *object,
                             guint       property_id,
                             GValue     *value,
                             GParamSpec *pspec)
 {
-  GimpDockable *dockable = GIMP_DOCKABLE (object);
+  LigmaDockable *dockable = LIGMA_DOCKABLE (object);
 
   switch (property_id)
     {
@@ -211,7 +211,7 @@ gimp_dockable_get_property (GObject    *object,
 }
 
 static void
-gimp_dockable_style_updated (GtkWidget *widget)
+ligma_dockable_style_updated (GtkWidget *widget)
 {
   gint content_border;
 
@@ -226,33 +226,33 @@ gimp_dockable_style_updated (GtkWidget *widget)
 
 
 static void
-gimp_dockable_add (GtkContainer *container,
+ligma_dockable_add (GtkContainer *container,
                    GtkWidget    *widget)
 {
-  GimpDockable *dockable;
+  LigmaDockable *dockable;
 
   g_return_if_fail (gtk_bin_get_child (GTK_BIN (container)) == NULL);
 
   GTK_CONTAINER_CLASS (parent_class)->add (container, widget);
 
   /*  not all tab styles are supported by all children  */
-  dockable = GIMP_DOCKABLE (container);
-  gimp_dockable_set_tab_style (dockable, dockable->p->tab_style);
+  dockable = LIGMA_DOCKABLE (container);
+  ligma_dockable_set_tab_style (dockable, dockable->p->tab_style);
 }
 
 static GType
-gimp_dockable_child_type (GtkContainer *container)
+ligma_dockable_child_type (GtkContainer *container)
 {
   if (gtk_bin_get_child (GTK_BIN (container)))
     return G_TYPE_NONE;
 
-  return GIMP_TYPE_DOCKED;
+  return LIGMA_TYPE_DOCKED;
 }
 
 static GtkWidget *
-gimp_dockable_new_tab_widget_internal (GimpDockable *dockable,
-                                       GimpContext  *context,
-                                       GimpTabStyle  tab_style,
+ligma_dockable_new_tab_widget_internal (LigmaDockable *dockable,
+                                       LigmaContext  *context,
+                                       LigmaTabStyle  tab_style,
                                        GtkIconSize   size,
                                        gboolean      dnd)
 {
@@ -262,15 +262,15 @@ gimp_dockable_new_tab_widget_internal (GimpDockable *dockable,
 
   switch (tab_style)
     {
-    case GIMP_TAB_STYLE_NAME:
-    case GIMP_TAB_STYLE_ICON_NAME:
-    case GIMP_TAB_STYLE_PREVIEW_NAME:
+    case LIGMA_TAB_STYLE_NAME:
+    case LIGMA_TAB_STYLE_ICON_NAME:
+    case LIGMA_TAB_STYLE_PREVIEW_NAME:
       label = gtk_label_new (dockable->p->name);
       break;
 
-    case GIMP_TAB_STYLE_BLURB:
-    case GIMP_TAB_STYLE_ICON_BLURB:
-    case GIMP_TAB_STYLE_PREVIEW_BLURB:
+    case LIGMA_TAB_STYLE_BLURB:
+    case LIGMA_TAB_STYLE_ICON_BLURB:
+    case LIGMA_TAB_STYLE_PREVIEW_BLURB:
       label = gtk_label_new (dockable->p->blurb);
       break;
 
@@ -280,24 +280,24 @@ gimp_dockable_new_tab_widget_internal (GimpDockable *dockable,
 
   switch (tab_style)
     {
-    case GIMP_TAB_STYLE_ICON:
-    case GIMP_TAB_STYLE_ICON_NAME:
-    case GIMP_TAB_STYLE_ICON_BLURB:
-      icon = gimp_dockable_get_icon (dockable, size);
+    case LIGMA_TAB_STYLE_ICON:
+    case LIGMA_TAB_STYLE_ICON_NAME:
+    case LIGMA_TAB_STYLE_ICON_BLURB:
+      icon = ligma_dockable_get_icon (dockable, size);
       break;
 
-    case GIMP_TAB_STYLE_PREVIEW:
-    case GIMP_TAB_STYLE_PREVIEW_NAME:
-    case GIMP_TAB_STYLE_PREVIEW_BLURB:
+    case LIGMA_TAB_STYLE_PREVIEW:
+    case LIGMA_TAB_STYLE_PREVIEW_NAME:
+    case LIGMA_TAB_STYLE_PREVIEW_BLURB:
       {
         GtkWidget *child = gtk_bin_get_child (GTK_BIN (dockable));
 
         if (child)
-          icon = gimp_docked_get_preview (GIMP_DOCKED (child),
+          icon = ligma_docked_get_preview (LIGMA_DOCKED (child),
                                           context, size);
 
         if (! icon)
-          icon = gimp_dockable_get_icon (dockable, size);
+          icon = ligma_dockable_get_icon (dockable, size);
       }
       break;
 
@@ -306,26 +306,26 @@ gimp_dockable_new_tab_widget_internal (GimpDockable *dockable,
     }
 
   if (label && dnd)
-    gimp_label_set_attributes (GTK_LABEL (label),
+    ligma_label_set_attributes (GTK_LABEL (label),
                                PANGO_ATTR_WEIGHT, PANGO_WEIGHT_SEMIBOLD,
                                -1);
 
   switch (tab_style)
     {
-    case GIMP_TAB_STYLE_ICON:
-    case GIMP_TAB_STYLE_PREVIEW:
+    case LIGMA_TAB_STYLE_ICON:
+    case LIGMA_TAB_STYLE_PREVIEW:
       tab_widget = icon;
       break;
 
-    case GIMP_TAB_STYLE_NAME:
-    case GIMP_TAB_STYLE_BLURB:
+    case LIGMA_TAB_STYLE_NAME:
+    case LIGMA_TAB_STYLE_BLURB:
       tab_widget = label;
       break;
 
-    case GIMP_TAB_STYLE_ICON_NAME:
-    case GIMP_TAB_STYLE_ICON_BLURB:
-    case GIMP_TAB_STYLE_PREVIEW_NAME:
-    case GIMP_TAB_STYLE_PREVIEW_BLURB:
+    case LIGMA_TAB_STYLE_ICON_NAME:
+    case LIGMA_TAB_STYLE_ICON_BLURB:
+    case LIGMA_TAB_STYLE_PREVIEW_NAME:
+    case LIGMA_TAB_STYLE_PREVIEW_BLURB:
       tab_widget = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, dnd ? 6 : 2);
 
       gtk_box_pack_start (GTK_BOX (tab_widget), icon, FALSE, FALSE, 0);
@@ -342,18 +342,18 @@ gimp_dockable_new_tab_widget_internal (GimpDockable *dockable,
 /*  public functions  */
 
 GtkWidget *
-gimp_dockable_new (const gchar *name,
+ligma_dockable_new (const gchar *name,
                    const gchar *blurb,
                    const gchar *icon_name,
                    const gchar *help_id)
 {
-  GimpDockable *dockable;
+  LigmaDockable *dockable;
 
   g_return_val_if_fail (name != NULL, NULL);
   g_return_val_if_fail (icon_name != NULL, NULL);
   g_return_val_if_fail (help_id != NULL, NULL);
 
-  dockable = g_object_new (GIMP_TYPE_DOCKABLE, NULL);
+  dockable = g_object_new (LIGMA_TYPE_DOCKABLE, NULL);
 
   dockable->p->name      = g_strdup (name);
   dockable->p->icon_name = g_strdup (icon_name);
@@ -364,59 +364,59 @@ gimp_dockable_new (const gchar *name,
   else
     dockable->p->blurb  = g_strdup (dockable->p->name);
 
-  gimp_help_set_help_data (GTK_WIDGET (dockable), NULL, help_id);
+  ligma_help_set_help_data (GTK_WIDGET (dockable), NULL, help_id);
 
   return GTK_WIDGET (dockable);
 }
 
 void
-gimp_dockable_set_dockbook (GimpDockable *dockable,
-                            GimpDockbook *dockbook)
+ligma_dockable_set_dockbook (LigmaDockable *dockable,
+                            LigmaDockbook *dockbook)
 {
-  g_return_if_fail (GIMP_IS_DOCKABLE (dockable));
+  g_return_if_fail (LIGMA_IS_DOCKABLE (dockable));
   g_return_if_fail (dockbook == NULL ||
-                    GIMP_IS_DOCKBOOK (dockbook));
+                    LIGMA_IS_DOCKBOOK (dockbook));
 
   dockable->p->dockbook = dockbook;
 }
 
-GimpDockbook *
-gimp_dockable_get_dockbook (GimpDockable *dockable)
+LigmaDockbook *
+ligma_dockable_get_dockbook (LigmaDockable *dockable)
 {
-  g_return_val_if_fail (GIMP_IS_DOCKABLE (dockable), NULL);
+  g_return_val_if_fail (LIGMA_IS_DOCKABLE (dockable), NULL);
 
   return dockable->p->dockbook;
 }
 
 void
-gimp_dockable_set_tab_style (GimpDockable *dockable,
-                             GimpTabStyle  tab_style)
+ligma_dockable_set_tab_style (LigmaDockable *dockable,
+                             LigmaTabStyle  tab_style)
 {
   GtkWidget *child;
 
-  g_return_if_fail (GIMP_IS_DOCKABLE (dockable));
+  g_return_if_fail (LIGMA_IS_DOCKABLE (dockable));
 
   child = gtk_bin_get_child (GTK_BIN (dockable));
 
-  if (child && ! GIMP_DOCKED_GET_IFACE (child)->get_preview)
-    tab_style = gimp_preview_tab_style_to_icon (tab_style);
+  if (child && ! LIGMA_DOCKED_GET_IFACE (child)->get_preview)
+    tab_style = ligma_preview_tab_style_to_icon (tab_style);
 
   dockable->p->tab_style = tab_style;
 }
 
-GimpTabStyle
-gimp_dockable_get_tab_style (GimpDockable *dockable)
+LigmaTabStyle
+ligma_dockable_get_tab_style (LigmaDockable *dockable)
 {
-  g_return_val_if_fail (GIMP_IS_DOCKABLE (dockable), -1);
+  g_return_val_if_fail (LIGMA_IS_DOCKABLE (dockable), -1);
 
   return dockable->p->tab_style;
 }
 
 void
-gimp_dockable_set_locked (GimpDockable *dockable,
+ligma_dockable_set_locked (LigmaDockable *dockable,
                           gboolean      lock)
 {
-  g_return_if_fail (GIMP_IS_DOCKABLE (dockable));
+  g_return_if_fail (LIGMA_IS_DOCKABLE (dockable));
 
   if (dockable->p->locked != lock)
     {
@@ -427,135 +427,135 @@ gimp_dockable_set_locked (GimpDockable *dockable,
 }
 
 gboolean
-gimp_dockable_get_locked (GimpDockable *dockable)
+ligma_dockable_get_locked (LigmaDockable *dockable)
 {
-  g_return_val_if_fail (GIMP_IS_DOCKABLE (dockable), FALSE);
+  g_return_val_if_fail (LIGMA_IS_DOCKABLE (dockable), FALSE);
 
   return dockable->p->locked;
 }
 
 const gchar *
-gimp_dockable_get_name (GimpDockable *dockable)
+ligma_dockable_get_name (LigmaDockable *dockable)
 {
-  g_return_val_if_fail (GIMP_IS_DOCKABLE (dockable), NULL);
+  g_return_val_if_fail (LIGMA_IS_DOCKABLE (dockable), NULL);
 
   return dockable->p->name;
 }
 
 const gchar *
-gimp_dockable_get_blurb (GimpDockable *dockable)
+ligma_dockable_get_blurb (LigmaDockable *dockable)
 {
-  g_return_val_if_fail (GIMP_IS_DOCKABLE (dockable), NULL);
+  g_return_val_if_fail (LIGMA_IS_DOCKABLE (dockable), NULL);
 
   return dockable->p->blurb;
 }
 
 const gchar *
-gimp_dockable_get_help_id (GimpDockable *dockable)
+ligma_dockable_get_help_id (LigmaDockable *dockable)
 {
-  g_return_val_if_fail (GIMP_IS_DOCKABLE (dockable), NULL);
+  g_return_val_if_fail (LIGMA_IS_DOCKABLE (dockable), NULL);
 
   return dockable->p->help_id;
 }
 
 const gchar *
-gimp_dockable_get_icon_name (GimpDockable *dockable)
+ligma_dockable_get_icon_name (LigmaDockable *dockable)
 {
-  g_return_val_if_fail (GIMP_IS_DOCKABLE (dockable), NULL);
+  g_return_val_if_fail (LIGMA_IS_DOCKABLE (dockable), NULL);
 
   return dockable->p->icon_name;
 }
 
 GtkWidget *
-gimp_dockable_get_icon (GimpDockable *dockable,
+ligma_dockable_get_icon (LigmaDockable *dockable,
                         GtkIconSize   size)
 {
-  g_return_val_if_fail (GIMP_IS_DOCKABLE (dockable), NULL);
+  g_return_val_if_fail (LIGMA_IS_DOCKABLE (dockable), NULL);
 
   return gtk_image_new_from_icon_name (dockable->p->icon_name, size);
 }
 
 GtkWidget *
-gimp_dockable_create_tab_widget (GimpDockable *dockable,
-                                 GimpContext  *context,
-                                 GimpTabStyle  tab_style,
+ligma_dockable_create_tab_widget (LigmaDockable *dockable,
+                                 LigmaContext  *context,
+                                 LigmaTabStyle  tab_style,
                                  GtkIconSize   size)
 {
-  g_return_val_if_fail (GIMP_IS_DOCKABLE (dockable), NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_DOCKABLE (dockable), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
 
-  return gimp_dockable_new_tab_widget_internal (dockable, context,
+  return ligma_dockable_new_tab_widget_internal (dockable, context,
                                                 tab_style, size, FALSE);
 }
 
 void
-gimp_dockable_set_context (GimpDockable *dockable,
-                           GimpContext  *context)
+ligma_dockable_set_context (LigmaDockable *dockable,
+                           LigmaContext  *context)
 {
-  g_return_if_fail (GIMP_IS_DOCKABLE (dockable));
-  g_return_if_fail (context == NULL || GIMP_IS_CONTEXT (context));
+  g_return_if_fail (LIGMA_IS_DOCKABLE (dockable));
+  g_return_if_fail (context == NULL || LIGMA_IS_CONTEXT (context));
 
   if (context != dockable->p->context)
     {
       GtkWidget *child = gtk_bin_get_child (GTK_BIN (dockable));
 
       if (child)
-        gimp_docked_set_context (GIMP_DOCKED (child), context);
+        ligma_docked_set_context (LIGMA_DOCKED (child), context);
 
       dockable->p->context = context;
     }
 }
 
-GimpUIManager *
-gimp_dockable_get_menu (GimpDockable  *dockable,
+LigmaUIManager *
+ligma_dockable_get_menu (LigmaDockable  *dockable,
                         const gchar  **ui_path,
                         gpointer      *popup_data)
 {
   GtkWidget *child;
 
-  g_return_val_if_fail (GIMP_IS_DOCKABLE (dockable), NULL);
+  g_return_val_if_fail (LIGMA_IS_DOCKABLE (dockable), NULL);
   g_return_val_if_fail (ui_path != NULL, NULL);
   g_return_val_if_fail (popup_data != NULL, NULL);
 
   child = gtk_bin_get_child (GTK_BIN (dockable));
 
   if (child)
-    return gimp_docked_get_menu (GIMP_DOCKED (child), ui_path, popup_data);
+    return ligma_docked_get_menu (LIGMA_DOCKED (child), ui_path, popup_data);
 
   return NULL;
 }
 
 void
-gimp_dockable_detach (GimpDockable *dockable)
+ligma_dockable_detach (LigmaDockable *dockable)
 {
-  GimpDialogFactory *dialog_factory;
-  GimpMenuFactory   *menu_factory;
-  GimpDockWindow    *src_dock_window;
-  GimpDock          *src_dock;
+  LigmaDialogFactory *dialog_factory;
+  LigmaMenuFactory   *menu_factory;
+  LigmaDockWindow    *src_dock_window;
+  LigmaDock          *src_dock;
   GtkWidget         *dock;
-  GimpDockWindow    *dock_window;
+  LigmaDockWindow    *dock_window;
   GtkWidget         *dockbook;
 
-  g_return_if_fail (GIMP_IS_DOCKABLE (dockable));
-  g_return_if_fail (GIMP_IS_DOCKBOOK (dockable->p->dockbook));
+  g_return_if_fail (LIGMA_IS_DOCKABLE (dockable));
+  g_return_if_fail (LIGMA_IS_DOCKBOOK (dockable->p->dockbook));
 
-  src_dock        = gimp_dockbook_get_dock (dockable->p->dockbook);
-  src_dock_window = gimp_dock_window_from_dock (src_dock);
+  src_dock        = ligma_dockbook_get_dock (dockable->p->dockbook);
+  src_dock_window = ligma_dock_window_from_dock (src_dock);
 
-  dialog_factory = gimp_dock_get_dialog_factory (src_dock);
-  menu_factory   = gimp_dialog_factory_get_menu_factory (dialog_factory);
+  dialog_factory = ligma_dock_get_dialog_factory (src_dock);
+  menu_factory   = ligma_dialog_factory_get_menu_factory (dialog_factory);
 
-  dock = gimp_dock_with_window_new (dialog_factory,
-                                    gimp_widget_get_monitor (GTK_WIDGET (dockable)),
+  dock = ligma_dock_with_window_new (dialog_factory,
+                                    ligma_widget_get_monitor (GTK_WIDGET (dockable)),
                                     FALSE /*toolbox*/);
-  dock_window = gimp_dock_window_from_dock (GIMP_DOCK (dock));
+  dock_window = ligma_dock_window_from_dock (LIGMA_DOCK (dock));
   gtk_window_set_position (GTK_WINDOW (dock_window), GTK_WIN_POS_MOUSE);
   if (src_dock_window)
-    gimp_dock_window_setup (dock_window, src_dock_window);
+    ligma_dock_window_setup (dock_window, src_dock_window);
 
-  dockbook = gimp_dockbook_new (menu_factory);
+  dockbook = ligma_dockbook_new (menu_factory);
 
-  gimp_dock_add_book (GIMP_DOCK (dock), GIMP_DOCKBOOK (dockbook), 0);
+  ligma_dock_add_book (LIGMA_DOCK (dock), LIGMA_DOCKBOOK (dockbook), 0);
 
   g_object_ref (dockable);
   gtk_container_remove (GTK_CONTAINER (dockable->p->dockbook),
@@ -573,36 +573,36 @@ gimp_dockable_detach (GimpDockable *dockable)
 /*  private functions  */
 
 static GList *
-gimp_dockable_get_aux_info (GimpSessionManaged *session_managed)
+ligma_dockable_get_aux_info (LigmaSessionManaged *session_managed)
 {
-  GimpDockable *dockable;
+  LigmaDockable *dockable;
   GtkWidget    *child;
 
-  g_return_val_if_fail (GIMP_IS_DOCKABLE (session_managed), NULL);
+  g_return_val_if_fail (LIGMA_IS_DOCKABLE (session_managed), NULL);
 
-  dockable = GIMP_DOCKABLE (session_managed);
+  dockable = LIGMA_DOCKABLE (session_managed);
 
   child = gtk_bin_get_child (GTK_BIN (dockable));
 
   if (child)
-    return gimp_docked_get_aux_info (GIMP_DOCKED (child));
+    return ligma_docked_get_aux_info (LIGMA_DOCKED (child));
 
   return NULL;
 }
 
 static void
-gimp_dockable_set_aux_info (GimpSessionManaged *session_managed,
+ligma_dockable_set_aux_info (LigmaSessionManaged *session_managed,
                             GList              *aux_info)
 {
-  GimpDockable *dockable;
+  LigmaDockable *dockable;
   GtkWidget    *child;
 
-  g_return_if_fail (GIMP_IS_DOCKABLE (session_managed));
+  g_return_if_fail (LIGMA_IS_DOCKABLE (session_managed));
 
-  dockable = GIMP_DOCKABLE (session_managed);
+  dockable = LIGMA_DOCKABLE (session_managed);
 
   child = gtk_bin_get_child (GTK_BIN (dockable));
 
   if (child)
-    gimp_docked_set_aux_info (GIMP_DOCKED (child), aux_info);
+    ligma_docked_set_aux_info (LIGMA_DOCKED (child), aux_info);
 }

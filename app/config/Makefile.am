@@ -1,11 +1,11 @@
 ## Process this file with automake to produce Makefile.in
 
-libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
-libgimpconfig = $(top_builddir)/libgimpconfig/libgimpconfig-$(GIMP_API_VERSION).la
-libgimpcolor = $(top_builddir)/libgimpcolor/libgimpcolor-$(GIMP_API_VERSION).la
-libgimpmath = $(top_builddir)/libgimpmath/libgimpmath-$(GIMP_API_VERSION).la
-libgimpmodule = $(top_builddir)/libgimpmodule/libgimpmodule-$(GIMP_API_VERSION).la
-libgimpthumb = $(top_builddir)/libgimpthumb/libgimpthumb-$(GIMP_API_VERSION).la
+libligmabase = $(top_builddir)/libligmabase/libligmabase-$(LIGMA_API_VERSION).la
+libligmaconfig = $(top_builddir)/libligmaconfig/libligmaconfig-$(LIGMA_API_VERSION).la
+libligmacolor = $(top_builddir)/libligmacolor/libligmacolor-$(LIGMA_API_VERSION).la
+libligmamath = $(top_builddir)/libligmamath/libligmamath-$(LIGMA_API_VERSION).la
+libligmamodule = $(top_builddir)/libligmamodule/libligmamodule-$(LIGMA_API_VERSION).la
+libligmathumb = $(top_builddir)/libligmathumb/libligmathumb-$(LIGMA_API_VERSION).la
 
 if OS_WIN32
 else
@@ -13,8 +13,8 @@ libm = -lm
 endif
 
 AM_CPPFLAGS = \
-	-DG_LOG_DOMAIN=\"Gimp-Config\"				\
-	-DGIMP_APP_VERSION_STRING=\"$(GIMP_APP_VERSION)\"	\
+	-DG_LOG_DOMAIN=\"Ligma-Config\"				\
+	-DLIGMA_APP_VERSION_STRING=\"$(LIGMA_APP_VERSION)\"	\
 	-I$(top_builddir)					\
 	-I$(top_srcdir)						\
 	-I$(top_builddir)/app					\
@@ -32,39 +32,39 @@ noinst_LIBRARIES = libappconfig.a
 libappconfig_a_sources = \
 	config-enums.h			\
 	config-types.h			\
-	gimpconfig-dump.c		\
-	gimpconfig-dump.h		\
-	gimpconfig-file.c		\
-	gimpconfig-file.h		\
-	gimpconfig-utils.c		\
-	gimpconfig-utils.h		\
-	gimpcoreconfig.c		\
-	gimpcoreconfig.h		\
-	gimpdialogconfig.c		\
-	gimpdialogconfig.h		\
-	gimpdisplayconfig.c		\
-	gimpdisplayconfig.h		\
-	gimpdisplayoptions.c		\
-	gimpdisplayoptions.h		\
-	gimpearlyrc.c			\
-	gimpearlyrc.h			\
-	gimpgeglconfig.c		\
-	gimpgeglconfig.h		\
-	gimpguiconfig.c			\
-	gimpguiconfig.h			\
-	gimppluginconfig.c		\
-	gimppluginconfig.h		\
-	gimprc.c			\
-	gimprc.h			\
-	gimprc-blurbs.h			\
-	gimprc-deserialize.c		\
-	gimprc-deserialize.h		\
-	gimprc-serialize.c		\
-	gimprc-serialize.h		\
-	gimprc-unknown.c		\
-	gimprc-unknown.h		\
-	gimpxmlparser.c			\
-	gimpxmlparser.h
+	ligmaconfig-dump.c		\
+	ligmaconfig-dump.h		\
+	ligmaconfig-file.c		\
+	ligmaconfig-file.h		\
+	ligmaconfig-utils.c		\
+	ligmaconfig-utils.h		\
+	ligmacoreconfig.c		\
+	ligmacoreconfig.h		\
+	ligmadialogconfig.c		\
+	ligmadialogconfig.h		\
+	ligmadisplayconfig.c		\
+	ligmadisplayconfig.h		\
+	ligmadisplayoptions.c		\
+	ligmadisplayoptions.h		\
+	ligmaearlyrc.c			\
+	ligmaearlyrc.h			\
+	ligmageglconfig.c		\
+	ligmageglconfig.h		\
+	ligmaguiconfig.c			\
+	ligmaguiconfig.h			\
+	ligmapluginconfig.c		\
+	ligmapluginconfig.h		\
+	ligmarc.c			\
+	ligmarc.h			\
+	ligmarc-blurbs.h			\
+	ligmarc-deserialize.c		\
+	ligmarc-deserialize.h		\
+	ligmarc-serialize.c		\
+	ligmarc-serialize.h		\
+	ligmarc-unknown.c		\
+	ligmarc-unknown.h		\
+	ligmaxmlparser.c			\
+	ligmaxmlparser.h
 
 libappconfig_a_built_sources = \
 	config-enums.c
@@ -76,25 +76,25 @@ libappconfig_a_SOURCES = \
 EXTRA_PROGRAMS = test-config
 
 #
-# unit tests for the GimpConfig system
+# unit tests for the LigmaConfig system
 #
 
 TESTS = test-config
 
-test_config_DEPENDENCIES = $(gimpconfig_libs)
+test_config_DEPENDENCIES = $(ligmaconfig_libs)
 
 # We need this due to circular dependencies
 test_config_LDFLAGS = \
-	-Wl,-u,$(SYMPREFIX)gimp_vectors_undo_get_type		\
-	-Wl,-u,$(SYMPREFIX)gimp_vectors_mod_undo_get_type	\
-	-Wl,-u,$(SYMPREFIX)gimp_config_param_spec_duplicate		\
+	-Wl,-u,$(SYMPREFIX)ligma_vectors_undo_get_type		\
+	-Wl,-u,$(SYMPREFIX)ligma_vectors_mod_undo_get_type	\
+	-Wl,-u,$(SYMPREFIX)ligma_config_param_spec_duplicate		\
 	-Wl,-u,$(SYMPREFIX)xcf_init				\
 	-Wl,-u,$(SYMPREFIX)internal_procs_init			\
-	-Wl,-u,$(SYMPREFIX)gimp_pdb_compat_procs_register	\
-	-Wl,-u,$(SYMPREFIX)gimp_plug_in_manager_restore		\
-	-Wl,-u,$(SYMPREFIX)gimp_layer_mode_is_legacy		\
-	-Wl,-u,$(SYMPREFIX)gimp_async_set_new			\
-	-Wl,-u,$(SYMPREFIX)gimp_uncancelable_waitable_new
+	-Wl,-u,$(SYMPREFIX)ligma_pdb_compat_procs_register	\
+	-Wl,-u,$(SYMPREFIX)ligma_plug_in_manager_restore		\
+	-Wl,-u,$(SYMPREFIX)ligma_layer_mode_is_legacy		\
+	-Wl,-u,$(SYMPREFIX)ligma_async_set_new			\
+	-Wl,-u,$(SYMPREFIX)ligma_uncancelable_waitable_new
 
 test_config_LDADD = \
 	../xcf/libappxcf.a						\
@@ -112,14 +112,14 @@ test_config_LDADD = \
 	../operations/layer-modes/libapplayermodes.a			\
 	../operations/layer-modes-legacy/libapplayermodeslegacy.a	\
 	libappconfig.a							\
-	../gimp-debug.o							\
-	../gimp-log.o							\
-	$(libgimpmodule)						\
-	$(libgimpcolor)							\
-	$(libgimpthumb)							\
-	$(libgimpmath)							\
-	$(libgimpconfig)						\
-	$(libgimpbase)							\
+	../ligma-debug.o							\
+	../ligma-log.o							\
+	$(libligmamodule)						\
+	$(libligmacolor)							\
+	$(libligmathumb)							\
+	$(libligmamath)							\
+	$(libligmaconfig)						\
+	$(libligmabase)							\
 	$(APPSTREAM_GLIB_LIBS)						\
 	$(PANGOCAIRO_LIBS)						\
 	$(HARFBUZZ_LIBS)						\
@@ -142,16 +142,16 @@ CLEANFILES = $(EXTRA_PROGRAMS) foorc
 gen_sources = stamp-config-enums.h xgen-cec
 CLEANFILES += $(gen_sources)
 
-xgen-cec: $(srcdir)/config-enums.h $(GIMP_MKENUMS) Makefile.am
-	$(AM_V_GEN) $(GIMP_MKENUMS) \
-		--fhead "#include \"stamp-config-enums.h\"\n#include \"config.h\"\n#include <gio/gio.h>\n#include \"libgimpbase/gimpbase.h\"\n#include \"config-enums.h\"\n#include \"gimp-intl.h\"" \
+xgen-cec: $(srcdir)/config-enums.h $(LIGMA_MKENUMS) Makefile.am
+	$(AM_V_GEN) $(LIGMA_MKENUMS) \
+		--fhead "#include \"stamp-config-enums.h\"\n#include \"config.h\"\n#include <gio/gio.h>\n#include \"libligmabase/ligmabase.h\"\n#include \"config-enums.h\"\n#include \"ligma-intl.h\"" \
 		--fprod "\n/* enumerations from \"@basename@\" */" \
 		--vhead "GType\n@enum_name@_get_type (void)\n{\n  static const G@Type@Value values[] =\n  {" \
 		--vprod "    { @VALUENAME@, \"@VALUENAME@\", \"@valuenick@\" }," \
 		--vtail "    { 0, NULL, NULL }\n  };\n" \
-		--dhead "  static const Gimp@Type@Desc descs[] =\n  {" \
+		--dhead "  static const Ligma@Type@Desc descs[] =\n  {" \
 		--dprod "    { @VALUENAME@, @valuedesc@, @valuehelp@ },@if ('@valueabbrev@' ne 'NULL')@\n    /* Translators: this is an abbreviated version of @valueudesc@.\n       Keep it short. */\n    { @VALUENAME@, @valueabbrev@, NULL },@endif@" \
-		--dtail "    { 0, NULL, NULL }\n  };\n\n  static GType type = 0;\n\n  if (G_UNLIKELY (! type))\n    {\n      type = g_@type@_register_static (\"@EnumName@\", values);\n      gimp_type_set_translation_context (type, \"@enumnick@\");\n      gimp_@type@_set_value_descriptions (type, descs);\n    }\n\n  return type;\n}\n" \
+		--dtail "    { 0, NULL, NULL }\n  };\n\n  static GType type = 0;\n\n  if (G_UNLIKELY (! type))\n    {\n      type = g_@type@_register_static (\"@EnumName@\", values);\n      ligma_type_set_translation_context (type, \"@enumnick@\");\n      ligma_@type@_set_value_descriptions (type, descs);\n    }\n\n  return type;\n}\n" \
 		$< > $@
 
 stamp-config-enums.h: xgen-cec

@@ -1,4 +1,4 @@
-/* tiff exporting for GIMP
+/* tiff exporting for LIGMA
  *  -Peter Mattis
  *
  * The TIFF loading code has been completely revamped by Nick Lamb
@@ -50,21 +50,21 @@
 #include <tiffio.h>
 #include <gexiv2/gexiv2.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
 #include "file-tiff.h"
 #include "file-tiff-io.h"
 #include "file-tiff-save.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
-#define PLUG_IN_ROLE "gimp-file-tiff-save"
+#define PLUG_IN_ROLE "ligma-file-tiff-save"
 
 
 static gboolean  save_paths             (TIFF          *tif,
-                                         GimpImage     *image,
+                                         LigmaImage     *image,
                                          gdouble        width,
                                          gdouble        height,
                                          gint           offset_x,
@@ -101,7 +101,7 @@ double_to_psd_fixed (gdouble  value,
 
 static gboolean
 save_paths (TIFF      *tif,
-            GimpImage *image,
+            LigmaImage *image,
             gdouble    width,
             gdouble    height,
             gint       offset_x,
@@ -114,7 +114,7 @@ save_paths (TIFF      *tif,
   gint num_strokes, *strokes, s;
   GString *ps_tag;
 
-  vectors = gimp_image_list_vectors (image);
+  vectors = ligma_image_list_vectors (image);
 
   if (! vectors)
     return FALSE;
@@ -142,7 +142,7 @@ save_paths (TIFF      *tif,
        * - use iso8859-1 if possible
        * - otherwise use UTF-8, prepended with \xef\xbb\xbf (Byte-Order-Mark)
        */
-      name = gimp_item_get_name (iter->data);
+      name = ligma_item_get_name (iter->data);
       tmpname = g_convert (name, -1, "iso8859-1", "utf-8", NULL, &len, &err);
 
       if (tmpname && err == NULL)
@@ -179,20 +179,20 @@ save_paths (TIFF      *tif,
       pointrecord[1] = 6;  /* fill rule record */
       g_string_append_len (data, pointrecord, 26);
 
-      strokes = gimp_vectors_get_strokes (iter->data, &num_strokes);
+      strokes = ligma_vectors_get_strokes (iter->data, &num_strokes);
 
       for (s = 0; s < num_strokes; s++)
         {
-          GimpVectorsStrokeType type;
+          LigmaVectorsStrokeType type;
           gdouble  *points;
           gint      num_points;
           gboolean  closed;
           gint      p = 0;
 
-          type = gimp_vectors_stroke_get_points (iter->data, strokes[s],
+          type = ligma_vectors_stroke_get_points (iter->data, strokes[s],
                                                  &num_points, &points, &closed);
 
-          if (type != GIMP_VECTORS_STROKE_TYPE_BEZIER ||
+          if (type != LIGMA_VECTORS_STROKE_TYPE_BEZIER ||
               num_points > 65535 ||
               num_points % 6)
             {
@@ -266,11 +266,11 @@ static gboolean
 save_layer (TIFF        *tif,
             GObject     *config,
             const Babl  *space,
-            GimpImage   *image,
-            GimpLayer   *layer,
+            LigmaImage   *image,
+            LigmaLayer   *layer,
             gint32       page,
             gint32       num_pages,
-            GimpImage   *orig_image, /* the export function might
+            LigmaImage   *orig_image, /* the export function might
                                       * have created a duplicate  */
             gint         origin_x,
             gint         origin_y,
@@ -300,7 +300,7 @@ save_layer (TIFF        *tif,
   guchar           *cmap;
   gint              num_colors;
   gint              success;
-  GimpImageType     drawable_type;
+  LigmaImageType     drawable_type;
   GeglBuffer       *buffer = NULL;
   gint              tile_height;
   gint              y, yend;
@@ -325,7 +325,7 @@ save_layer (TIFF        *tif,
 
   g_object_get (config,
                 "compression",             &config_compression,
-                "gimp-comment",            &config_comment,
+                "ligma-comment",            &config_comment,
                 "save-comment",            &config_save_comment,
                 "save-transparent-pixels", &config_save_transp_pixels,
                 "save-geotiff",            &config_save_geotiff_tags,
@@ -333,9 +333,9 @@ save_layer (TIFF        *tif,
                 "cmyk",                    &config_cmyk,
                 NULL);
 
-  compression = gimp_compression_to_tiff_compression (config_compression);
+  compression = ligma_compression_to_tiff_compression (config_compression);
 
-  layer_name = gimp_item_get_name (GIMP_ITEM (layer));
+  layer_name = ligma_item_get_name (LIGMA_ITEM (layer));
 
   /* Disabled because this isn't in older releases of libtiff, and it
    * wasn't helping much anyway
@@ -346,23 +346,23 @@ save_layer (TIFF        *tif,
 #endif
 
   predictor = 0;
-  tile_height = gimp_tile_height ();
+  tile_height = ligma_tile_height ();
   rowsperstrip = tile_height;
 
-  drawable_type = gimp_drawable_type (GIMP_DRAWABLE (layer));
-  buffer        = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
+  drawable_type = ligma_drawable_type (LIGMA_DRAWABLE (layer));
+  buffer        = ligma_drawable_get_buffer (LIGMA_DRAWABLE (layer));
 
   format = gegl_buffer_get_format (buffer);
   type   = babl_format_get_type (format, 0);
 
-  switch (gimp_image_get_precision (image))
+  switch (ligma_image_get_precision (image))
     {
-    case GIMP_PRECISION_U8_LINEAR:
-    case GIMP_PRECISION_U8_NON_LINEAR:
-    case GIMP_PRECISION_U8_PERCEPTUAL:
+    case LIGMA_PRECISION_U8_LINEAR:
+    case LIGMA_PRECISION_U8_NON_LINEAR:
+    case LIGMA_PRECISION_U8_PERCEPTUAL:
       /* Promote to 16-bit if storage and export TRC don't match. */
-      if ((gimp_image_get_precision (image) == GIMP_PRECISION_U8_LINEAR && out_linear) ||
-          (gimp_image_get_precision (image) != GIMP_PRECISION_U8_LINEAR && ! out_linear))
+      if ((ligma_image_get_precision (image) == LIGMA_PRECISION_U8_LINEAR && out_linear) ||
+          (ligma_image_get_precision (image) != LIGMA_PRECISION_U8_LINEAR && ! out_linear))
         {
           bitspersample = 8;
           sampleformat  = SAMPLEFORMAT_UINT;
@@ -375,38 +375,38 @@ save_layer (TIFF        *tif,
         }
       break;
 
-    case GIMP_PRECISION_U16_LINEAR:
-    case GIMP_PRECISION_U16_NON_LINEAR:
-    case GIMP_PRECISION_U16_PERCEPTUAL:
+    case LIGMA_PRECISION_U16_LINEAR:
+    case LIGMA_PRECISION_U16_NON_LINEAR:
+    case LIGMA_PRECISION_U16_PERCEPTUAL:
       bitspersample = 16;
       sampleformat  = SAMPLEFORMAT_UINT;
       break;
 
-    case GIMP_PRECISION_U32_LINEAR:
-    case GIMP_PRECISION_U32_NON_LINEAR:
-    case GIMP_PRECISION_U32_PERCEPTUAL:
+    case LIGMA_PRECISION_U32_LINEAR:
+    case LIGMA_PRECISION_U32_NON_LINEAR:
+    case LIGMA_PRECISION_U32_PERCEPTUAL:
       bitspersample = 32;
       sampleformat  = SAMPLEFORMAT_UINT;
       break;
 
-    case GIMP_PRECISION_HALF_LINEAR:
-    case GIMP_PRECISION_HALF_NON_LINEAR:
-    case GIMP_PRECISION_HALF_PERCEPTUAL:
+    case LIGMA_PRECISION_HALF_LINEAR:
+    case LIGMA_PRECISION_HALF_NON_LINEAR:
+    case LIGMA_PRECISION_HALF_PERCEPTUAL:
       bitspersample = 16;
       sampleformat  = SAMPLEFORMAT_IEEEFP;
       break;
 
     default:
-    case GIMP_PRECISION_FLOAT_LINEAR:
-    case GIMP_PRECISION_FLOAT_NON_LINEAR:
-    case GIMP_PRECISION_FLOAT_PERCEPTUAL:
+    case LIGMA_PRECISION_FLOAT_LINEAR:
+    case LIGMA_PRECISION_FLOAT_NON_LINEAR:
+    case LIGMA_PRECISION_FLOAT_PERCEPTUAL:
       bitspersample = 32;
       sampleformat  = SAMPLEFORMAT_IEEEFP;
       break;
 
-    case GIMP_PRECISION_DOUBLE_LINEAR:
-    case GIMP_PRECISION_DOUBLE_NON_LINEAR:
-    case GIMP_PRECISION_DOUBLE_PERCEPTUAL:
+    case LIGMA_PRECISION_DOUBLE_LINEAR:
+    case LIGMA_PRECISION_DOUBLE_NON_LINEAR:
+    case LIGMA_PRECISION_DOUBLE_PERCEPTUAL:
       bitspersample = 64;
       sampleformat  = SAMPLEFORMAT_IEEEFP;
       break;
@@ -419,7 +419,7 @@ save_layer (TIFF        *tif,
 
   switch (drawable_type)
     {
-    case GIMP_RGB_IMAGE:
+    case LIGMA_RGB_IMAGE:
       predictor       = 2;
       samplesperpixel = 3;
       photometric     = PHOTOMETRIC_RGB;
@@ -444,7 +444,7 @@ save_layer (TIFF        *tif,
         }
       break;
 
-    case GIMP_GRAY_IMAGE:
+    case LIGMA_GRAY_IMAGE:
       samplesperpixel = 1;
       photometric     = PHOTOMETRIC_MINISBLACK;
       alpha           = FALSE;
@@ -464,7 +464,7 @@ save_layer (TIFF        *tif,
         }
       break;
 
-    case GIMP_RGBA_IMAGE:
+    case LIGMA_RGBA_IMAGE:
       predictor       = 2;
       samplesperpixel = 4;
       photometric     = PHOTOMETRIC_RGB;
@@ -517,7 +517,7 @@ save_layer (TIFF        *tif,
         }
       break;
 
-    case GIMP_GRAYA_IMAGE:
+    case LIGMA_GRAYA_IMAGE:
       samplesperpixel = 2;
       photometric     = PHOTOMETRIC_MINISBLACK;
       alpha           = TRUE;
@@ -561,9 +561,9 @@ save_layer (TIFF        *tif,
         }
       break;
 
-    case GIMP_INDEXED_IMAGE:
-    case GIMP_INDEXEDA_IMAGE:
-      cmap = gimp_image_get_colormap (image, &num_colors);
+    case LIGMA_INDEXED_IMAGE:
+    case LIGMA_INDEXEDA_IMAGE:
+      cmap = ligma_image_get_colormap (image, &num_colors);
 
       if (num_colors == 2 || num_colors == 1)
         {
@@ -596,10 +596,10 @@ save_layer (TIFF        *tif,
             }
         }
 
-      samplesperpixel = (drawable_type == GIMP_INDEXEDA_IMAGE) ? 2 : 1;
+      samplesperpixel = (drawable_type == LIGMA_INDEXEDA_IMAGE) ? 2 : 1;
       bytesperrow     = cols;
-      alpha           = (drawable_type == GIMP_INDEXEDA_IMAGE);
-      format          = gimp_drawable_get_format (GIMP_DRAWABLE (layer));
+      alpha           = (drawable_type == LIGMA_INDEXEDA_IMAGE);
+      format          = ligma_drawable_get_format (LIGMA_DRAWABLE (layer));
 
       g_free (cmap);
       break;
@@ -656,7 +656,7 @@ save_layer (TIFF        *tif,
 
   if (compression == COMPRESSION_JPEG)
     {
-      if (gimp_image_get_base_type (image) == GIMP_INDEXED)
+      if (ligma_image_get_base_type (image) == LIGMA_INDEXED)
         {
           g_set_error_literal (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                                _("Indexed pictures cannot be compressed "
@@ -670,24 +670,24 @@ save_layer (TIFF        *tif,
     {
       const guint8     *icc_data     = NULL;
       gsize             icc_length;
-      GimpColorProfile *profile;
-      GimpColorProfile *cmyk_profile = NULL;
+      LigmaColorProfile *profile;
+      LigmaColorProfile *cmyk_profile = NULL;
 
-      profile = gimp_image_get_effective_color_profile (orig_image);
+      profile = ligma_image_get_effective_color_profile (orig_image);
       if (config_cmyk)
-        cmyk_profile = gimp_image_get_simulation_profile (image);
+        cmyk_profile = ligma_image_get_simulation_profile (image);
 
       /* If a non-CMYK profile was assigned as the simulation profile,
        * set it back to NULL and save the RGB profile instead
        */
-      if (cmyk_profile && ! gimp_color_profile_is_cmyk (cmyk_profile))
+      if (cmyk_profile && ! ligma_color_profile_is_cmyk (cmyk_profile))
         g_clear_object (&cmyk_profile);
 
       /* Write the RGB or CMYK color profile to the TIFF file */
       if (profile && ! config_cmyk)
-        icc_data = gimp_color_profile_get_icc_profile (profile, &icc_length);
+        icc_data = ligma_color_profile_get_icc_profile (profile, &icc_length);
       else if (cmyk_profile)
-        icc_data = gimp_color_profile_get_icc_profile (cmyk_profile, &icc_length);
+        icc_data = ligma_color_profile_get_icc_profile (cmyk_profile, &icc_length);
 
       if (icc_data)
         TIFFSetField (tif, TIFFTAG_ICCPROFILE, icc_length, icc_data);
@@ -760,7 +760,7 @@ save_layer (TIFF        *tif,
            * given color could be set to different alpha on different
            * pixels, hence it cannot be premultiplied).
            */
-          drawable_type == GIMP_INDEXEDA_IMAGE)
+          drawable_type == LIGMA_INDEXEDA_IMAGE)
         extra_samples [0] = EXTRASAMPLE_UNASSALPHA;
       else
         extra_samples [0] = EXTRASAMPLE_ASSOCALPHA;
@@ -775,9 +775,9 @@ save_layer (TIFF        *tif,
   TIFFSetField (tif, TIFFTAG_PLANARCONFIG, PLANARCONFIG_CONTIG);
 
   /* resolution fields */
-  gimp_image_get_resolution (orig_image, &xresolution, &yresolution);
+  ligma_image_get_resolution (orig_image, &xresolution, &yresolution);
 
-  if (gimp_unit_is_metric (gimp_image_get_unit (orig_image)))
+  if (ligma_unit_is_metric (ligma_image_get_unit (orig_image)))
     {
       save_unit = RESUNIT_CENTIMETER;
       xresolution /= 2.54;
@@ -791,7 +791,7 @@ save_layer (TIFF        *tif,
       TIFFSetField (tif, TIFFTAG_RESOLUTIONUNIT, save_unit);
     }
 
-  gimp_drawable_get_offsets (GIMP_DRAWABLE (layer), &offset_x, &offset_y);
+  ligma_drawable_get_offsets (LIGMA_DRAWABLE (layer), &offset_x, &offset_y);
 
   offset_x -= origin_x;
   offset_y -= origin_y;
@@ -803,7 +803,7 @@ save_layer (TIFF        *tif,
     }
 
   if (! is_bw && ! config_cmyk &&
-      (drawable_type == GIMP_INDEXED_IMAGE || drawable_type == GIMP_INDEXEDA_IMAGE))
+      (drawable_type == LIGMA_INDEXED_IMAGE || drawable_type == LIGMA_INDEXEDA_IMAGE))
     TIFFSetField (tif, TIFFTAG_COLORMAP, red, grn, blu);
 
   /* save path data. we need layer information for that,
@@ -832,8 +832,8 @@ save_layer (TIFF        *tif,
 
           switch (drawable_type)
             {
-            case GIMP_INDEXED_IMAGE:
-            case GIMP_INDEXEDA_IMAGE:
+            case LIGMA_INDEXED_IMAGE:
+            case LIGMA_INDEXEDA_IMAGE:
               if (is_bw)
                 {
                   byte2bit (t, bytesperrow, data, invert);
@@ -845,10 +845,10 @@ save_layer (TIFF        *tif,
                 }
               break;
 
-            case GIMP_GRAY_IMAGE:
-            case GIMP_GRAYA_IMAGE:
-            case GIMP_RGB_IMAGE:
-            case GIMP_RGBA_IMAGE:
+            case LIGMA_GRAY_IMAGE:
+            case LIGMA_GRAYA_IMAGE:
+            case LIGMA_RGB_IMAGE:
+            case LIGMA_RGBA_IMAGE:
               success = (TIFFWriteScanline (tif, t, row, 0) >= 0);
               break;
 
@@ -866,88 +866,88 @@ save_layer (TIFF        *tif,
         }
 
       if ((row % 32) == 0)
-        gimp_progress_update (progress_base + progress_fraction
+        ligma_progress_update (progress_base + progress_fraction
                               * (gdouble) row / (gdouble) rows);
     }
 
   /* Save GeoTIFF tags to file, if available */
   if (config_save_geotiff_tags)
     {
-      GimpParasite *parasite = NULL;
+      LigmaParasite *parasite = NULL;
       gchar        *parasite_data;
       guint32       parasite_size;
 
-      parasite = gimp_image_get_parasite (image,"Gimp_GeoTIFF_ModelPixelScale");
+      parasite = ligma_image_get_parasite (image,"Ligma_GeoTIFF_ModelPixelScale");
       if (parasite)
         {
-          parasite_data = (gchar *) gimp_parasite_get_data (parasite, &parasite_size);
+          parasite_data = (gchar *) ligma_parasite_get_data (parasite, &parasite_size);
           TIFFSetField (tif,
                         GEOTIFF_MODELPIXELSCALE,
                         (parasite_size / TIFFDataWidth (TIFF_DOUBLE)),
                         parasite_data);
-          gimp_parasite_free (parasite);
+          ligma_parasite_free (parasite);
         }
 
-      parasite = gimp_image_get_parasite (image,"Gimp_GeoTIFF_ModelTiePoint");
+      parasite = ligma_image_get_parasite (image,"Ligma_GeoTIFF_ModelTiePoint");
       if (parasite)
         {
-          parasite_data = (gchar *) gimp_parasite_get_data (parasite, &parasite_size);
+          parasite_data = (gchar *) ligma_parasite_get_data (parasite, &parasite_size);
           TIFFSetField (tif,
                         GEOTIFF_MODELTIEPOINT,
                         (parasite_size / TIFFDataWidth (TIFF_DOUBLE)),
                         parasite_data);
-          gimp_parasite_free (parasite);
+          ligma_parasite_free (parasite);
         }
 
-      parasite = gimp_image_get_parasite (image,"Gimp_GeoTIFF_ModelTransformation");
+      parasite = ligma_image_get_parasite (image,"Ligma_GeoTIFF_ModelTransformation");
       if (parasite)
         {
-          parasite_data = (gchar *) gimp_parasite_get_data (parasite, &parasite_size);
+          parasite_data = (gchar *) ligma_parasite_get_data (parasite, &parasite_size);
           TIFFSetField (tif,
                         GEOTIFF_MODELTRANSFORMATION,
                         (parasite_size / TIFFDataWidth (TIFF_DOUBLE)),
                         parasite_data);
-          gimp_parasite_free (parasite);
+          ligma_parasite_free (parasite);
         }
 
-      parasite = gimp_image_get_parasite (image,"Gimp_GeoTIFF_KeyDirectory");
+      parasite = ligma_image_get_parasite (image,"Ligma_GeoTIFF_KeyDirectory");
       if (parasite)
         {
-          parasite_data = (gchar *) gimp_parasite_get_data (parasite, &parasite_size);
+          parasite_data = (gchar *) ligma_parasite_get_data (parasite, &parasite_size);
           TIFFSetField (tif,
                         GEOTIFF_KEYDIRECTORY,
                         (parasite_size / TIFFDataWidth (TIFF_SHORT)),
                         parasite_data);
-          gimp_parasite_free (parasite);
+          ligma_parasite_free (parasite);
         }
 
-      parasite = gimp_image_get_parasite (image,"Gimp_GeoTIFF_DoubleParams");
+      parasite = ligma_image_get_parasite (image,"Ligma_GeoTIFF_DoubleParams");
       if (parasite)
         {
-          parasite_data = (gchar *) gimp_parasite_get_data (parasite, &parasite_size);
+          parasite_data = (gchar *) ligma_parasite_get_data (parasite, &parasite_size);
           TIFFSetField (tif,
                         GEOTIFF_DOUBLEPARAMS,
                         (parasite_size / TIFFDataWidth (TIFF_DOUBLE)),
                         parasite_data);
-          gimp_parasite_free (parasite);
+          ligma_parasite_free (parasite);
         }
 
-      parasite = gimp_image_get_parasite (image,"Gimp_GeoTIFF_Asciiparams");
+      parasite = ligma_image_get_parasite (image,"Ligma_GeoTIFF_Asciiparams");
       if (parasite)
         {
-          parasite_data = (gchar *) gimp_parasite_get_data (parasite, &parasite_size);
+          parasite_data = (gchar *) ligma_parasite_get_data (parasite, &parasite_size);
           parasite_data = g_strndup (parasite_data, parasite_size);
           TIFFSetField (tif,
                         GEOTIFF_ASCIIPARAMS,
                         parasite_data);
-          gimp_parasite_free (parasite);
+          ligma_parasite_free (parasite);
           g_free (parasite_data);
         }
     }
 
   TIFFWriteDirectory (tif);
 
-  gimp_progress_update (progress_base + progress_fraction);
+  ligma_progress_update (progress_base + progress_fraction);
 
   status = TRUE;
 
@@ -964,13 +964,13 @@ out:
 
 /* FIXME Most of the stuff in save_metadata except the
  * thumbnail saving should probably be moved to
- * gimpmetadata.c and gimpmetadata-save.c.
+ * ligmametadata.c and ligmametadata-save.c.
  */
 static void
 save_metadata (GFile        *file,
                GObject      *config,
-               GimpImage    *image,
-               GimpMetadata *metadata,
+               LigmaImage    *image,
+               LigmaMetadata *metadata,
                gint          saved_bpp,
                gboolean      cmyk)
 {
@@ -1027,21 +1027,21 @@ save_metadata (GFile        *file,
         gexiv2_metadata_clear_tag (GEXIV2_METADATA (metadata), *tag);
     }
 
-  gimp_metadata_set_bits_per_sample (metadata, saved_bpp);
+  ligma_metadata_set_bits_per_sample (metadata, saved_bpp);
   if (cmyk)
-    gimp_metadata_set_colorspace (metadata, GIMP_METADATA_COLORSPACE_UNCALIBRATED);
+    ligma_metadata_set_colorspace (metadata, LIGMA_METADATA_COLORSPACE_UNCALIBRATED);
 
-  gimp_procedure_config_save_metadata (GIMP_PROCEDURE_CONFIG (config),
+  ligma_procedure_config_save_metadata (LIGMA_PROCEDURE_CONFIG (config),
                                        image, file);
 }
 
 gboolean
 save_image (GFile         *file,
-            GimpImage     *image,
-            GimpImage     *orig_image, /* the export function might
+            LigmaImage     *image,
+            LigmaImage     *orig_image, /* the export function might
                                         * have created a duplicate */
             GObject       *config,
-            GimpMetadata  *metadata,
+            LigmaMetadata  *metadata,
             GError       **error)
 {
   TIFF             *tif                 = NULL;
@@ -1067,12 +1067,12 @@ save_image (GFile         *file,
                 "cmyk",               &config_cmyk,
                 NULL);
 
-  layers = gimp_image_list_layers (image);
+  layers = ligma_image_list_layers (image);
   layers = g_list_reverse (layers);
   num_layers = g_list_length (layers);
 
-  gimp_progress_init_printf (_("Exporting '%s'"),
-                             gimp_file_get_utf8_name (file));
+  ligma_progress_init_printf (_("Exporting '%s'"),
+                             ligma_file_get_utf8_name (file));
 
   /* Open file and write some global data */
   tif = tiff_open (file, (bigtiff ? "w8" : "w"), error);
@@ -1082,38 +1082,38 @@ save_image (GFile         *file,
       if (! error)
         g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                      _("Could not open '%s' for writing: %s"),
-                     gimp_file_get_utf8_name (file), g_strerror (errno));
+                     ligma_file_get_utf8_name (file), g_strerror (errno));
       goto out;
     }
 
   if (config_save_profile)
     {
-      GimpColorProfile *profile;
+      LigmaColorProfile *profile;
       GError           *error = NULL;
 
       if (config_cmyk)
         {
-          profile = gimp_image_get_simulation_profile (image);
+          profile = ligma_image_get_simulation_profile (image);
 
-          if (profile && ! gimp_color_profile_is_cmyk (profile))
+          if (profile && ! ligma_color_profile_is_cmyk (profile))
             g_clear_object (&profile);
         }
       else
         {
-          profile = gimp_image_get_effective_color_profile (orig_image);
+          profile = ligma_image_get_effective_color_profile (orig_image);
         }
 
       /* Curve of the exported data depends on the saved profile, i.e.
        * any explicitly-set profile in priority, or the default one for
        * the storage format as fallback.
        */
-      out_linear = (gimp_color_profile_is_linear (profile));
+      out_linear = (ligma_color_profile_is_linear (profile));
 
       if (profile)
-        space = gimp_color_profile_get_space (profile,
+        space = ligma_color_profile_get_space (profile,
                                               config_cmyk ?
-                                              gimp_image_get_simulation_intent (image) :
-                                              GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                              ligma_image_get_simulation_intent (image) :
+                                              LIGMA_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
                                               &error);
 
       if (error)
@@ -1130,10 +1130,10 @@ save_image (GFile         *file,
   /* calculate the top-left coordinates */
   for (iter = layers; iter; iter = g_list_next (iter))
     {
-      GimpDrawable *drawable = iter->data;
+      LigmaDrawable *drawable = iter->data;
       gint          offset_x, offset_y;
 
-      gimp_drawable_get_offsets (drawable, &offset_x, &offset_y);
+      ligma_drawable_get_offsets (drawable, &offset_x, &offset_y);
 
       origin_x = MIN (origin_x, offset_x);
       origin_y = MIN (origin_y, offset_y);
@@ -1171,7 +1171,7 @@ save_image (GFile         *file,
             g_set_error (error, G_FILE_ERROR,
                           g_file_error_from_errno (errno),
                           _("Could not open '%s' for writing: %s"),
-                          gimp_file_get_utf8_name (file),
+                          ligma_file_get_utf8_name (file),
                           g_strerror (errno));
           goto out;
         }
@@ -1200,7 +1200,7 @@ save_image (GFile         *file,
               goto out;
             }
 
-          gimp_progress_update ((gdouble) (current_layer + 1) / num_layers);
+          ligma_progress_update ((gdouble) (current_layer + 1) / num_layers);
         }
     }
 
@@ -1214,7 +1214,7 @@ out:
       TIFFClose (tif);
     }
 
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 
   g_list_free (layers);
 
@@ -1230,12 +1230,12 @@ combo_sensitivity_func (gint     value,
 
   model = gtk_combo_box_get_model (GTK_COMBO_BOX (data));
 
-  if (gimp_int_store_lookup_by_value (model, value, &iter))
+  if (ligma_int_store_lookup_by_value (model, value, &iter))
     {
       gpointer insensitive;
 
       gtk_tree_model_get (model, &iter,
-                          GIMP_INT_STORE_USER_DATA, &insensitive,
+                          LIGMA_INT_STORE_USER_DATA, &insensitive,
                           -1);
 
       return ! GPOINTER_TO_INT (insensitive);
@@ -1254,18 +1254,18 @@ combo_set_item_sensitive (GtkWidget *widget,
 
   model = gtk_combo_box_get_model (GTK_COMBO_BOX (widget));
 
-  if (gimp_int_store_lookup_by_value (model, value, &iter))
+  if (ligma_int_store_lookup_by_value (model, value, &iter))
     {
       gtk_list_store_set (GTK_LIST_STORE (model), &iter,
-                          GIMP_INT_STORE_USER_DATA,
+                          LIGMA_INT_STORE_USER_DATA,
                           ! GINT_TO_POINTER (sensitive),
                           -1);
     }
 }
 
 gboolean
-save_dialog (GimpImage     *image,
-             GimpProcedure *procedure,
+save_dialog (LigmaImage     *image,
+             LigmaProcedure *procedure,
              GObject       *config,
              gboolean       has_alpha,
              gboolean       is_monochrome,
@@ -1278,17 +1278,17 @@ save_dialog (GimpImage     *image,
   GtkWidget        *combo;
   GtkWidget        *profile_label;
   gchar           **parasites;
-  GimpCompression   compression;
+  LigmaCompression   compression;
   gboolean          run;
   gboolean          has_geotiff  = FALSE;
   gint              i;
-  GimpColorProfile *cmyk_profile = NULL;
+  LigmaColorProfile *cmyk_profile = NULL;
 
 
-  parasites = gimp_image_get_parasite_list (image);
+  parasites = ligma_image_get_parasite_list (image);
   for (i = 0; i < g_strv_length (parasites); i++)
     {
-      if (g_str_has_prefix (parasites[i], "Gimp_GeoTIFF_"))
+      if (g_str_has_prefix (parasites[i], "Ligma_GeoTIFF_"))
         {
           has_geotiff = TRUE;
           break;
@@ -1296,8 +1296,8 @@ save_dialog (GimpImage     *image,
     }
   g_strfreev (parasites);
 
-  dialog = gimp_save_procedure_dialog_new (GIMP_SAVE_PROCEDURE (procedure),
-                                           GIMP_PROCEDURE_CONFIG (config),
+  dialog = ligma_save_procedure_dialog_new (LIGMA_SAVE_PROCEDURE (procedure),
+                                           LIGMA_PROCEDURE_CONFIG (config),
                                            image);
 
   if (classic_tiff_failed)
@@ -1310,7 +1310,7 @@ save_dialog (GimpImage     *image,
                               _("Warning: maximum TIFF file size exceeded. "
                                 "Retry as BigTIFF or with a different compression algorithm, "
                                 "or cancel."));
-      label = gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
+      label = ligma_procedure_dialog_get_label (LIGMA_PROCEDURE_DIALOG (dialog),
                                                "big-tif-warning", text);
       g_free (text);
       gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
@@ -1319,67 +1319,67 @@ save_dialog (GimpImage     *image,
     }
 
   store =
-    gimp_int_store_new (_("None"),              GIMP_COMPRESSION_NONE,
-                        _("LZW"),               GIMP_COMPRESSION_LZW,
-                        _("Pack Bits"),         GIMP_COMPRESSION_PACKBITS,
-                        _("Deflate"),           GIMP_COMPRESSION_ADOBE_DEFLATE,
-                        _("JPEG"),              GIMP_COMPRESSION_JPEG,
-                        _("CCITT Group 3 fax"), GIMP_COMPRESSION_CCITTFAX3,
-                        _("CCITT Group 4 fax"), GIMP_COMPRESSION_CCITTFAX4,
+    ligma_int_store_new (_("None"),              LIGMA_COMPRESSION_NONE,
+                        _("LZW"),               LIGMA_COMPRESSION_LZW,
+                        _("Pack Bits"),         LIGMA_COMPRESSION_PACKBITS,
+                        _("Deflate"),           LIGMA_COMPRESSION_ADOBE_DEFLATE,
+                        _("JPEG"),              LIGMA_COMPRESSION_JPEG,
+                        _("CCITT Group 3 fax"), LIGMA_COMPRESSION_CCITTFAX3,
+                        _("CCITT Group 4 fax"), LIGMA_COMPRESSION_CCITTFAX4,
                         NULL);
-  combo = gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
-                                               "compression", GIMP_INT_STORE (store));
-  combo = gimp_label_int_widget_get_widget (GIMP_LABEL_INT_WIDGET (combo));
-  gimp_int_combo_box_set_sensitivity (GIMP_INT_COMBO_BOX (combo),
+  combo = ligma_procedure_dialog_get_int_combo (LIGMA_PROCEDURE_DIALOG (dialog),
+                                               "compression", LIGMA_INT_STORE (store));
+  combo = ligma_label_int_widget_get_widget (LIGMA_LABEL_INT_WIDGET (combo));
+  ligma_int_combo_box_set_sensitivity (LIGMA_INT_COMBO_BOX (combo),
                                       combo_sensitivity_func,
                                       combo, NULL);
-  combo_set_item_sensitive (combo, GIMP_COMPRESSION_CCITTFAX3, is_monochrome);
-  combo_set_item_sensitive (combo, GIMP_COMPRESSION_CCITTFAX4, is_monochrome);
-  combo_set_item_sensitive (combo, GIMP_COMPRESSION_JPEG,      ! is_indexed);
+  combo_set_item_sensitive (combo, LIGMA_COMPRESSION_CCITTFAX3, is_monochrome);
+  combo_set_item_sensitive (combo, LIGMA_COMPRESSION_CCITTFAX4, is_monochrome);
+  combo_set_item_sensitive (combo, LIGMA_COMPRESSION_JPEG,      ! is_indexed);
 
-  gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
+  ligma_procedure_dialog_fill_frame (LIGMA_PROCEDURE_DIALOG (dialog),
                                     "layers-frame", "save-layers", FALSE,
                                     "crop-layers");
   /* TODO: if single-layer TIFF, set the toggle insensitive and show it
    * as unchecked though I don't actually change the config value to
    * keep storing previously chosen value.
    * This used to be so before. We probably need to add some logics in
-   * the GimpProcedureDialog generation for such case.
+   * the LigmaProcedureDialog generation for such case.
    */
-  gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
+  ligma_procedure_dialog_set_sensitive (LIGMA_PROCEDURE_DIALOG (dialog),
                                        "layers-frame", is_multi_layer,
                                        NULL, NULL, FALSE);
   /* TODO: same for "save-transparent-pixels", we probably want to show
    * it unchecked even though it doesn't matter for processing.
    */
-  gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
+  ligma_procedure_dialog_set_sensitive (LIGMA_PROCEDURE_DIALOG (dialog),
                                        "save-transparent-pixels",
                                        has_alpha && ! is_indexed,
                                        NULL, NULL, FALSE);
 
   /* Profile label. */
-  profile_label = gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
+  profile_label = ligma_procedure_dialog_get_label (LIGMA_PROCEDURE_DIALOG (dialog),
                                                    "profile-label", _("No soft-proofing profile"));
   gtk_label_set_xalign (GTK_LABEL (profile_label), 0.0);
   gtk_label_set_ellipsize (GTK_LABEL (profile_label), PANGO_ELLIPSIZE_END);
-  gimp_label_set_attributes (GTK_LABEL (profile_label),
+  ligma_label_set_attributes (GTK_LABEL (profile_label),
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);
-  gimp_help_set_help_data (profile_label,
+  ligma_help_set_help_data (profile_label,
                            _("Name of the color profile used for CMYK export."), NULL);
-  gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
+  ligma_procedure_dialog_fill_frame (LIGMA_PROCEDURE_DIALOG (dialog),
                                     "cmyk-frame", "cmyk", FALSE,
                                     "profile-label");
 
-  cmyk_profile = gimp_image_get_simulation_profile (image);
+  cmyk_profile = ligma_image_get_simulation_profile (image);
   if (cmyk_profile)
     {
       gchar *label_text;
 
-      if (gimp_color_profile_is_cmyk (cmyk_profile))
+      if (ligma_color_profile_is_cmyk (cmyk_profile))
         {
           label_text = g_strdup_printf (_("Profile: %s"),
-                                        gimp_color_profile_get_label (cmyk_profile));
+                                        ligma_color_profile_get_label (cmyk_profile));
         }
       else
         {
@@ -1388,7 +1388,7 @@ save_dialog (GimpImage     *image,
         }
 
       gtk_label_set_text (GTK_LABEL (profile_label), label_text);
-      gimp_label_set_attributes (GTK_LABEL (profile_label),
+      ligma_label_set_attributes (GTK_LABEL (profile_label),
                                  PANGO_ATTR_STYLE, PANGO_STYLE_NORMAL,
                                  -1);
       g_free (label_text);
@@ -1396,13 +1396,13 @@ save_dialog (GimpImage     *image,
       g_object_unref (cmyk_profile);
     }
 
-  gimp_save_procedure_dialog_add_metadata (GIMP_SAVE_PROCEDURE_DIALOG (dialog), "save-geotiff");
-  gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
+  ligma_save_procedure_dialog_add_metadata (LIGMA_SAVE_PROCEDURE_DIALOG (dialog), "save-geotiff");
+  ligma_procedure_dialog_set_sensitive (LIGMA_PROCEDURE_DIALOG (dialog),
                                        "save-geotiff",
                                        has_geotiff, NULL, NULL, FALSE);
 
   if (classic_tiff_failed)
-    gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+    ligma_procedure_dialog_fill (LIGMA_PROCEDURE_DIALOG (dialog),
                                 "big-tif-warning",
                                 "compression",
                                 "bigtiff",
@@ -1411,7 +1411,7 @@ save_dialog (GimpImage     *image,
                                 "cmyk-frame",
                                 NULL);
   else
-    gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+    ligma_procedure_dialog_fill (LIGMA_PROCEDURE_DIALOG (dialog),
                                 "compression",
                                 "bigtiff",
                                 "layers-frame",
@@ -1425,16 +1425,16 @@ save_dialog (GimpImage     *image,
 
   if (! is_monochrome)
     {
-      if (compression == GIMP_COMPRESSION_CCITTFAX3 ||
-          compression == GIMP_COMPRESSION_CCITTFAX4)
+      if (compression == LIGMA_COMPRESSION_CCITTFAX3 ||
+          compression == LIGMA_COMPRESSION_CCITTFAX4)
         {
-          compression = GIMP_COMPRESSION_NONE;
+          compression = LIGMA_COMPRESSION_NONE;
         }
     }
 
-  if (is_indexed && compression == GIMP_COMPRESSION_JPEG)
+  if (is_indexed && compression == LIGMA_COMPRESSION_JPEG)
     {
-      compression = GIMP_COMPRESSION_NONE;
+      compression = LIGMA_COMPRESSION_NONE;
     }
 
   g_object_set (config,
@@ -1443,7 +1443,7 @@ save_dialog (GimpImage     *image,
 
   gtk_widget_show (dialog);
 
-  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
+  run = ligma_procedure_dialog_run (LIGMA_PROCEDURE_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
 

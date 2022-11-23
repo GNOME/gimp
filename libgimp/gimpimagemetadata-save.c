@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2000 Peter Mattis and Spencer Kimball
  *
- * gimpimagemetadata-save.c
+ * ligmaimagemetadata-save.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -25,10 +25,10 @@
 
 #include <gexiv2/gexiv2.h>
 
-#include "gimp.h"
-#include "gimpimagemetadata.h"
+#include "ligma.h"
+#include "ligmaimagemetadata.h"
 
-#include "libgimp-intl.h"
+#include "libligma-intl.h"
 
 
 typedef struct
@@ -41,14 +41,14 @@ typedef struct
 /*  public functions  */
 
 /**
- * gimp_image_metadata_save_prepare:
+ * ligma_image_metadata_save_prepare:
  * @image:           The original image
  * @mime_type:       The saved file's mime-type
  * @suggested_flags: Suggested default values for the @flags passed to
- *                   gimp_image_metadata_save_finish()
+ *                   ligma_image_metadata_save_finish()
  *
  * Gets the image metadata for saving it using
- * gimp_image_metadata_save_finish().
+ * ligma_image_metadata_save_finish().
  *
  * The @suggested_flags are determined from what kind of metadata
  * (Exif, XMP, ...) is actually present in the image and the preferences
@@ -59,33 +59,33 @@ typedef struct
  * override the preferences without a good reason since it is a data
  * leak.
  *
- * The suggested value for %GIMP_METADATA_SAVE_THUMBNAIL is determined by
+ * The suggested value for %LIGMA_METADATA_SAVE_THUMBNAIL is determined by
  * whether there was a thumbnail in the previously imported image.
  *
  * Returns: (transfer full): The image's metadata, prepared for saving.
  *
  * Since: 2.10
  */
-GimpMetadata *
-gimp_image_metadata_save_prepare (GimpImage             *image,
+LigmaMetadata *
+ligma_image_metadata_save_prepare (LigmaImage             *image,
                                   const gchar           *mime_type,
-                                  GimpMetadataSaveFlags *suggested_flags)
+                                  LigmaMetadataSaveFlags *suggested_flags)
 {
-  GimpMetadata *metadata;
+  LigmaMetadata *metadata;
   GError       *error = NULL;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
   g_return_val_if_fail (mime_type != NULL, NULL);
   g_return_val_if_fail (suggested_flags != NULL, NULL);
 
-  *suggested_flags = GIMP_METADATA_SAVE_ALL;
+  *suggested_flags = LIGMA_METADATA_SAVE_ALL;
 
-  metadata = gimp_image_get_metadata (image);
+  metadata = ligma_image_get_metadata (image);
 
   if (metadata)
     {
       GDateTime      *datetime;
-      GimpParasite   *comment_parasite;
+      LigmaParasite   *comment_parasite;
       gchar          *comment = NULL;
       gint            image_width;
       gint            image_height;
@@ -95,27 +95,27 @@ gimp_image_metadata_save_prepare (GimpImage             *image,
       gchar          *datetime_buf = NULL;
       GExiv2Metadata *g2metadata = GEXIV2_METADATA (metadata);
 
-      image_width  = gimp_image_get_width  (image);
-      image_height = gimp_image_get_height (image);
+      image_width  = ligma_image_get_width  (image);
+      image_height = ligma_image_get_height (image);
 
       datetime = g_date_time_new_now_local ();
 
-      comment_parasite = gimp_image_get_parasite (image, "gimp-comment");
+      comment_parasite = ligma_image_get_parasite (image, "ligma-comment");
       if (comment_parasite)
         {
           guint32  parasite_size;
 
-          comment = (gchar *) gimp_parasite_get_data (comment_parasite, &parasite_size);
+          comment = (gchar *) ligma_parasite_get_data (comment_parasite, &parasite_size);
           comment = g_strndup (comment, parasite_size);
 
-          gimp_parasite_free (comment_parasite);
+          ligma_parasite_free (comment_parasite);
         }
 
       /* Exif */
 
-      if (! gimp_export_exif () ||
+      if (! ligma_export_exif () ||
           ! gexiv2_metadata_has_exif (g2metadata))
-        *suggested_flags &= ~GIMP_METADATA_SAVE_EXIF;
+        *suggested_flags &= ~LIGMA_METADATA_SAVE_EXIF;
 
       if (comment)
         {
@@ -168,18 +168,18 @@ gimp_image_metadata_save_prepare (GimpImage             *image,
           g_clear_error (&error);
         }
 
-      gimp_metadata_set_pixel_size (metadata,
+      ligma_metadata_set_pixel_size (metadata,
                                     image_width, image_height);
 
-      gimp_image_get_resolution (image, &xres, &yres);
-      gimp_metadata_set_resolution (metadata, xres, yres,
-                                    gimp_image_get_unit (image));
+      ligma_image_get_resolution (image, &xres, &yres);
+      ligma_metadata_set_resolution (metadata, xres, yres,
+                                    ligma_image_get_unit (image));
 
       /* XMP */
 
-      if (! gimp_export_xmp () ||
+      if (! ligma_export_xmp () ||
           ! gexiv2_metadata_has_xmp (g2metadata))
-        *suggested_flags &= ~GIMP_METADATA_SAVE_XMP;
+        *suggested_flags &= ~LIGMA_METADATA_SAVE_XMP;
 
       gexiv2_metadata_try_set_tag_string (g2metadata,
                                           "Xmp.dc.Format",
@@ -252,9 +252,9 @@ gimp_image_metadata_save_prepare (GimpImage             *image,
 
       /* IPTC */
 
-      if (! gimp_export_iptc () ||
+      if (! ligma_export_iptc () ||
           ! gexiv2_metadata_has_iptc (g2metadata))
-        *suggested_flags &= ~GIMP_METADATA_SAVE_IPTC;
+        *suggested_flags &= ~LIGMA_METADATA_SAVE_IPTC;
 
       g_free (datetime_buf);
       g_date_time_unref (datetime);
@@ -262,7 +262,7 @@ gimp_image_metadata_save_prepare (GimpImage             *image,
 
       /* EXIF Thumbnail */
 
-      if (gimp_export_thumbnail () && gexiv2_metadata_has_exif (g2metadata))
+      if (ligma_export_thumbnail () && gexiv2_metadata_has_exif (g2metadata))
         {
           gchar *value;
 
@@ -272,7 +272,7 @@ gimp_image_metadata_save_prepare (GimpImage             *image,
                                                       NULL);
           if (! value)
             {
-              *suggested_flags &= ~GIMP_METADATA_SAVE_THUMBNAIL;
+              *suggested_flags &= ~LIGMA_METADATA_SAVE_THUMBNAIL;
             }
           else
             {
@@ -281,41 +281,41 @@ gimp_image_metadata_save_prepare (GimpImage             *image,
         }
       else
         {
-          *suggested_flags &= ~GIMP_METADATA_SAVE_THUMBNAIL;
+          *suggested_flags &= ~LIGMA_METADATA_SAVE_THUMBNAIL;
         }
     }
   else
     {
       /* At least initialize the returned flags with preferences defaults */
 
-      if (! gimp_export_exif ())
-        *suggested_flags &= ~GIMP_METADATA_SAVE_EXIF;
+      if (! ligma_export_exif ())
+        *suggested_flags &= ~LIGMA_METADATA_SAVE_EXIF;
 
-      if (! gimp_export_xmp ())
-        *suggested_flags &= ~GIMP_METADATA_SAVE_XMP;
+      if (! ligma_export_xmp ())
+        *suggested_flags &= ~LIGMA_METADATA_SAVE_XMP;
 
-      if (! gimp_export_iptc ())
-        *suggested_flags &= ~GIMP_METADATA_SAVE_IPTC;
+      if (! ligma_export_iptc ())
+        *suggested_flags &= ~LIGMA_METADATA_SAVE_IPTC;
 
-      if (! gimp_export_thumbnail ())
-        *suggested_flags &= ~GIMP_METADATA_SAVE_THUMBNAIL;
+      if (! ligma_export_thumbnail ())
+        *suggested_flags &= ~LIGMA_METADATA_SAVE_THUMBNAIL;
     }
 
   /* Color profile */
 
-  if (! gimp_export_color_profile ())
-    *suggested_flags &= ~GIMP_METADATA_SAVE_COLOR_PROFILE;
+  if (! ligma_export_color_profile ())
+    *suggested_flags &= ~LIGMA_METADATA_SAVE_COLOR_PROFILE;
 
   /* Comment */
 
-  if (! gimp_export_comment ())
-    *suggested_flags &= ~GIMP_METADATA_SAVE_COMMENT;
+  if (! ligma_export_comment ())
+    *suggested_flags &= ~LIGMA_METADATA_SAVE_COMMENT;
 
   return metadata;
 }
 
 static const gchar *
-gimp_fix_xmp_tag (const gchar *tag)
+ligma_fix_xmp_tag (const gchar *tag)
 {
   gchar *substring;
 
@@ -352,7 +352,7 @@ gimp_fix_xmp_tag (const gchar *tag)
 }
 
 static void
-gimp_image_metadata_copy_tag (GExiv2Metadata *src,
+ligma_image_metadata_copy_tag (GExiv2Metadata *src,
                               GExiv2Metadata *dest,
                               const gchar    *tag)
 {
@@ -365,7 +365,7 @@ gimp_image_metadata_copy_tag (GExiv2Metadata *src,
 
       /* Xmp always seems to return multiple values */
       if (g_str_has_prefix (tag, "Xmp."))
-        temp_tag = (gchar *) gimp_fix_xmp_tag (g_strdup (tag));
+        temp_tag = (gchar *) ligma_fix_xmp_tag (g_strdup (tag));
       else
         temp_tag = g_strdup (tag);
 
@@ -409,7 +409,7 @@ gimp_image_metadata_copy_tag (GExiv2Metadata *src,
 }
 
 static gint
-gimp_natural_sort_compare (gconstpointer left,
+ligma_natural_sort_compare (gconstpointer left,
                            gconstpointer right)
 {
   gint   compare;
@@ -424,7 +424,7 @@ gimp_natural_sort_compare (gconstpointer left,
 }
 
 static GList*
-gimp_image_metadata_convert_tags_to_list (gchar **xmp_tags)
+ligma_image_metadata_convert_tags_to_list (gchar **xmp_tags)
 {
   GList *list = NULL;
   gint   i;
@@ -438,7 +438,7 @@ gimp_image_metadata_convert_tags_to_list (gchar **xmp_tags)
 }
 
 static GExiv2StructureType
-gimp_image_metadata_get_xmp_struct_type (const gchar *tag)
+ligma_image_metadata_get_xmp_struct_type (const gchar *tag)
 {
   GError *error = NULL;
 
@@ -460,7 +460,7 @@ gimp_image_metadata_get_xmp_struct_type (const gchar *tag)
 }
 
 static void
-gimp_image_metadata_set_xmp_structs (GList          *xmp_list,
+ligma_image_metadata_set_xmp_structs (GList          *xmp_list,
                                      GExiv2Metadata *metadata)
 {
   GList *list;
@@ -491,7 +491,7 @@ gimp_image_metadata_set_xmp_structs (GList          *xmp_list,
               g_free (prev_one);
               prev_one = g_strdup (tag_split[0]);
 
-              type = gimp_image_metadata_get_xmp_struct_type (gimp_fix_xmp_tag (tag_split[0]));
+              type = ligma_image_metadata_get_xmp_struct_type (ligma_fix_xmp_tag (tag_split[0]));
               gexiv2_metadata_try_set_xmp_tag_struct (GEXIV2_METADATA (metadata),
                                                       prev_one, type, &error);
               if (error)
@@ -508,9 +508,9 @@ gimp_image_metadata_set_xmp_structs (GList          *xmp_list,
 
               g_free (prev_two);
               prev_two = g_strdup (tag_split[1]);
-              second_struct = g_strdup_printf ("%s[1]%s", prev_one, gimp_fix_xmp_tag(prev_two));
+              second_struct = g_strdup_printf ("%s[1]%s", prev_one, ligma_fix_xmp_tag(prev_two));
 
-              type = gimp_image_metadata_get_xmp_struct_type (gimp_fix_xmp_tag (tag_split[1]));
+              type = ligma_image_metadata_get_xmp_struct_type (ligma_fix_xmp_tag (tag_split[1]));
               gexiv2_metadata_try_set_xmp_tag_struct (GEXIV2_METADATA (metadata),
                                                       second_struct, type, &error);
               if (error)
@@ -530,7 +530,7 @@ gimp_image_metadata_set_xmp_structs (GList          *xmp_list,
 }
 
 /**
- * gimp_image_metadata_save_filter:
+ * ligma_image_metadata_save_filter:
  * @image:     The actually saved image
  * @mime_type: The saved file's mime-type
  * @metadata:  The metadata to export
@@ -539,14 +539,14 @@ gimp_image_metadata_set_xmp_structs (GList          *xmp_list,
  * @error:     Return location for error message
  *
  * Filters the @metadata retrieved from the image with
- * gimp_image_metadata_save_prepare(),
+ * ligma_image_metadata_save_prepare(),
  * taking into account the passed @flags.
  *
  * Note that the @image passed to this function might be different
- * from the image passed to gimp_image_metadata_save_prepare(), due
+ * from the image passed to ligma_image_metadata_save_prepare(), due
  * to whatever file export conversion happened in the meantime
  *
- * This is an alternative to gimp_image_metadata_save_finish when you
+ * This is an alternative to ligma_image_metadata_save_finish when you
  * want to save metadata yourself and you need only filtering processing.
  *
  * Returns: (transfer full): Filtered metadata or NULL in case of failure.
@@ -555,15 +555,15 @@ gimp_image_metadata_set_xmp_structs (GList          *xmp_list,
  *
  * Since: 3.0
  */
-GimpMetadata *
-gimp_image_metadata_save_filter (GimpImage            *image,
+LigmaMetadata *
+ligma_image_metadata_save_filter (LigmaImage            *image,
                                  const gchar          *mime_type,
-                                 GimpMetadata         *metadata,
-                                 GimpMetadataSaveFlags flags,
+                                 LigmaMetadata         *metadata,
+                                 LigmaMetadataSaveFlags flags,
                                  GFile                *file,
                                  GError              **error)
 {
-  GimpMetadata   *new_metadata;
+  LigmaMetadata   *new_metadata;
   GExiv2Metadata *new_g2metadata;
   /* Error for cases where we have full control, such as metadata tags
    * and contents. So we don't propagate these in @error (for things out
@@ -576,25 +576,25 @@ gimp_image_metadata_save_filter (GimpImage            *image,
   gboolean        support_iptc;
   gint            i;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
   g_return_val_if_fail (mime_type != NULL, NULL);
   g_return_val_if_fail (GEXIV2_IS_METADATA (metadata), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  if (! (flags & (GIMP_METADATA_SAVE_EXIF |
-                  GIMP_METADATA_SAVE_XMP  |
-                  GIMP_METADATA_SAVE_IPTC |
-                  GIMP_METADATA_SAVE_THUMBNAIL)))
+  if (! (flags & (LIGMA_METADATA_SAVE_EXIF |
+                  LIGMA_METADATA_SAVE_XMP  |
+                  LIGMA_METADATA_SAVE_IPTC |
+                  LIGMA_METADATA_SAVE_THUMBNAIL)))
     return NULL;
 
   if (file)
     {
       /* read metadata from saved file */
-      new_metadata = gimp_metadata_load_from_file (file, error);
+      new_metadata = ligma_metadata_load_from_file (file, error);
     }
   else
     {
-      new_metadata = gimp_metadata_new ();
+      new_metadata = ligma_metadata_new ();
     }
 
   if (! new_metadata)
@@ -605,16 +605,16 @@ gimp_image_metadata_save_filter (GimpImage            *image,
   support_xmp  = gexiv2_metadata_get_supports_xmp  (new_g2metadata);
   support_iptc = gexiv2_metadata_get_supports_iptc (new_g2metadata);
 
-  if ((flags & GIMP_METADATA_SAVE_EXIF) && support_exif)
+  if ((flags & LIGMA_METADATA_SAVE_EXIF) && support_exif)
     {
       gchar **exif_data = gexiv2_metadata_get_exif_tags (GEXIV2_METADATA (metadata));
 
       for (i = 0; exif_data[i] != NULL; i++)
         {
           if (! gexiv2_metadata_has_tag (new_g2metadata, exif_data[i]) &&
-              gimp_metadata_is_tag_supported (exif_data[i], mime_type))
+              ligma_metadata_is_tag_supported (exif_data[i], mime_type))
             {
-              gimp_image_metadata_copy_tag (GEXIV2_METADATA (metadata),
+              ligma_image_metadata_copy_tag (GEXIV2_METADATA (metadata),
                                             new_g2metadata,
                                             exif_data[i]);
             }
@@ -623,7 +623,7 @@ gimp_image_metadata_save_filter (GimpImage            *image,
       g_strfreev (exif_data);
     }
 
-  if ((flags & GIMP_METADATA_SAVE_XMP) && support_xmp)
+  if ((flags & LIGMA_METADATA_SAVE_XMP) && support_xmp)
     {
       gchar         **xmp_data;
       struct timeval  timer_usec;
@@ -637,21 +637,21 @@ gimp_image_metadata_save_filter (GimpImage            *image,
                         (gint64) timer_usec.tv_usec;
       g_snprintf (ts, sizeof (ts), "%" G_GINT64_FORMAT, timestamp_usec);
 
-      gimp_metadata_add_xmp_history (metadata, "");
+      ligma_metadata_add_xmp_history (metadata, "");
 
       gexiv2_metadata_try_set_tag_string (GEXIV2_METADATA (metadata),
-                                          "Xmp.GIMP.TimeStamp",
+                                          "Xmp.LIGMA.TimeStamp",
                                           ts, &code_error);
       if (code_error)
         {
           g_warning ("%s: failed to set metadata '%s': %s\n",
-                     G_STRFUNC, "Xmp.GIMP.TimeStamp", code_error->message);
+                     G_STRFUNC, "Xmp.LIGMA.TimeStamp", code_error->message);
           g_clear_error (&code_error);
         }
 
       gexiv2_metadata_try_set_tag_string (GEXIV2_METADATA (metadata),
                                           "Xmp.xmp.CreatorTool",
-                                          N_("GIMP"), &code_error);
+                                          N_("LIGMA"), &code_error);
       if (code_error)
         {
           g_warning ("%s: failed to set metadata '%s': %s\n",
@@ -660,27 +660,27 @@ gimp_image_metadata_save_filter (GimpImage            *image,
         }
 
       gexiv2_metadata_try_set_tag_string (GEXIV2_METADATA (metadata),
-                                          "Xmp.GIMP.Version",
-                                          GIMP_VERSION, &code_error);
+                                          "Xmp.LIGMA.Version",
+                                          LIGMA_VERSION, &code_error);
       if (code_error)
         {
           g_warning ("%s: failed to set metadata '%s': %s\n",
-                     G_STRFUNC, "Xmp.GIMP.Version", code_error->message);
+                     G_STRFUNC, "Xmp.LIGMA.Version", code_error->message);
           g_clear_error (&code_error);
         }
 
       gexiv2_metadata_try_set_tag_string (GEXIV2_METADATA (metadata),
-                                          "Xmp.GIMP.API",
-                                          GIMP_API_VERSION, &code_error);
+                                          "Xmp.LIGMA.API",
+                                          LIGMA_API_VERSION, &code_error);
       if (code_error)
         {
           g_warning ("%s: failed to set metadata '%s': %s\n",
-                     G_STRFUNC, "Xmp.GIMP.API", code_error->message);
+                     G_STRFUNC, "Xmp.LIGMA.API", code_error->message);
           g_clear_error (&code_error);
         }
 
       gexiv2_metadata_try_set_tag_string (GEXIV2_METADATA (metadata),
-                                          "Xmp.GIMP.Platform",
+                                          "Xmp.LIGMA.Platform",
 #if defined(_WIN32) || defined(__CYGWIN__) || defined(__MINGW32__)
                                           "Windows",
 #elif defined(__linux__)
@@ -696,22 +696,22 @@ gimp_image_metadata_save_filter (GimpImage            *image,
       if (code_error)
         {
           g_warning ("%s: failed to set metadata '%s': %s\n",
-                     G_STRFUNC, "Xmp.GIMP.Platform", code_error->message);
+                     G_STRFUNC, "Xmp.LIGMA.Platform", code_error->message);
           g_clear_error (&code_error);
         }
 
       xmp_data = gexiv2_metadata_get_xmp_tags (GEXIV2_METADATA (metadata));
 
-      xmp_list = gimp_image_metadata_convert_tags_to_list (xmp_data);
-      xmp_list = g_list_sort (xmp_list, (GCompareFunc) gimp_natural_sort_compare);
-      gimp_image_metadata_set_xmp_structs (xmp_list, new_g2metadata);
+      xmp_list = ligma_image_metadata_convert_tags_to_list (xmp_data);
+      xmp_list = g_list_sort (xmp_list, (GCompareFunc) ligma_natural_sort_compare);
+      ligma_image_metadata_set_xmp_structs (xmp_list, new_g2metadata);
 
       for (list = xmp_list; list != NULL; list = list->next)
         {
           if (! gexiv2_metadata_has_tag (new_g2metadata, (gchar *) list->data) &&
-              gimp_metadata_is_tag_supported ((gchar *) list->data, mime_type))
+              ligma_metadata_is_tag_supported ((gchar *) list->data, mime_type))
             {
-              gimp_image_metadata_copy_tag (GEXIV2_METADATA (metadata),
+              ligma_image_metadata_copy_tag (GEXIV2_METADATA (metadata),
                                             new_g2metadata,
                                             (gchar *) list->data);
             }
@@ -723,16 +723,16 @@ gimp_image_metadata_save_filter (GimpImage            *image,
       g_strfreev (xmp_data);
     }
 
-  if ((flags & GIMP_METADATA_SAVE_IPTC) && support_iptc)
+  if ((flags & LIGMA_METADATA_SAVE_IPTC) && support_iptc)
     {
       gchar **iptc_data = gexiv2_metadata_get_iptc_tags (GEXIV2_METADATA (metadata));
 
       for (i = 0; iptc_data[i] != NULL; i++)
         {
           if (! gexiv2_metadata_has_tag (new_g2metadata, iptc_data[i]) &&
-              gimp_metadata_is_tag_supported (iptc_data[i], mime_type))
+              ligma_metadata_is_tag_supported (iptc_data[i], mime_type))
             {
-              gimp_image_metadata_copy_tag (GEXIV2_METADATA (metadata),
+              ligma_image_metadata_copy_tag (GEXIV2_METADATA (metadata),
                                             new_g2metadata,
                                             iptc_data[i]);
             }
@@ -741,7 +741,7 @@ gimp_image_metadata_save_filter (GimpImage            *image,
       g_strfreev (iptc_data);
     }
 
-  if (flags & GIMP_METADATA_SAVE_THUMBNAIL && support_exif)
+  if (flags & LIGMA_METADATA_SAVE_THUMBNAIL && support_exif)
     {
       GdkPixbuf *thumb_pixbuf;
       gchar     *thumb_buffer;
@@ -753,8 +753,8 @@ gimp_image_metadata_save_filter (GimpImage            *image,
 
 #define EXIF_THUMBNAIL_SIZE 256
 
-      image_width  = gimp_image_get_width  (image);
-      image_height = gimp_image_get_height (image);
+      image_width  = ligma_image_get_width  (image);
+      image_height = ligma_image_get_height (image);
 
       if (image_width > image_height)
         {
@@ -767,8 +767,8 @@ gimp_image_metadata_save_filter (GimpImage            *image,
           thumbw = EXIF_THUMBNAIL_SIZE * image_width / image_height;
         }
 
-      thumb_pixbuf = gimp_image_get_thumbnail (image, thumbw, thumbh,
-                                               GIMP_PIXBUF_KEEP_ALPHA);
+      thumb_pixbuf = ligma_image_get_thumbnail (image, thumbw, thumbh,
+                                               LIGMA_PIXBUF_KEEP_ALPHA);
 
       if (gdk_pixbuf_save_to_buffer (thumb_pixbuf, &thumb_buffer, &count,
                                      "jpeg", NULL,
@@ -861,7 +861,7 @@ gimp_image_metadata_save_filter (GimpImage            *image,
         }
     }
 
-  if (flags & GIMP_METADATA_SAVE_COLOR_PROFILE)
+  if (flags & LIGMA_METADATA_SAVE_COLOR_PROFILE)
     {
       /* nothing to do, but if we ever need to modify metadata based
        * on the exported color profile, this is probably the place to
@@ -869,7 +869,7 @@ gimp_image_metadata_save_filter (GimpImage            *image,
        */
     }
 
-  if (flags & GIMP_METADATA_SAVE_COMMENT)
+  if (flags & LIGMA_METADATA_SAVE_COMMENT)
     {
       /* nothing to do, blah blah */
     }
@@ -878,7 +878,7 @@ gimp_image_metadata_save_filter (GimpImage            *image,
 }
 
 /**
- * gimp_image_metadata_save_finish:
+ * ligma_image_metadata_save_finish:
  * @image:     The actually saved image
  * @mime_type: The saved file's mime-type
  * @metadata:  The metadata to write to @file
@@ -887,11 +887,11 @@ gimp_image_metadata_save_filter (GimpImage            *image,
  * @error:     Return location for error message
  *
  * Saves the @metadata retrieved from the image with
- * gimp_image_metadata_save_prepare() to @file, taking into account
+ * ligma_image_metadata_save_prepare() to @file, taking into account
  * the passed @flags.
  *
  * Note that the @image passed to this function might be different
- * from the image passed to gimp_image_metadata_save_prepare(), due
+ * from the image passed to ligma_image_metadata_save_prepare(), due
  * to whatever file export conversion happened in the meantime
  *
  * Returns: Whether the save was successful.
@@ -899,36 +899,36 @@ gimp_image_metadata_save_filter (GimpImage            *image,
  * Since: 2.10
  */
 gboolean
-gimp_image_metadata_save_finish (GimpImage            *image,
+ligma_image_metadata_save_finish (LigmaImage            *image,
                                  const gchar          *mime_type,
-                                 GimpMetadata         *metadata,
-                                 GimpMetadataSaveFlags flags,
+                                 LigmaMetadata         *metadata,
+                                 LigmaMetadataSaveFlags flags,
                                  GFile                *file,
                                  GError              **error)
 {
-  GimpMetadata *new_metadata;
+  LigmaMetadata *new_metadata;
   gboolean      success = FALSE;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (mime_type != NULL, FALSE);
   g_return_val_if_fail (GEXIV2_IS_METADATA (metadata), FALSE);
   g_return_val_if_fail (G_IS_FILE (file), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  if (! (flags & (GIMP_METADATA_SAVE_EXIF |
-                  GIMP_METADATA_SAVE_XMP  |
-                  GIMP_METADATA_SAVE_IPTC |
-                  GIMP_METADATA_SAVE_THUMBNAIL)))
+  if (! (flags & (LIGMA_METADATA_SAVE_EXIF |
+                  LIGMA_METADATA_SAVE_XMP  |
+                  LIGMA_METADATA_SAVE_IPTC |
+                  LIGMA_METADATA_SAVE_THUMBNAIL)))
     return TRUE;
 
-  new_metadata = gimp_image_metadata_save_filter (image, mime_type, metadata,
+  new_metadata = ligma_image_metadata_save_filter (image, mime_type, metadata,
                                                   flags, file, error);
   if (! new_metadata)
     {
       return FALSE;
     }
 
-  success = gimp_metadata_save_to_file (new_metadata, file, error);
+  success = ligma_metadata_save_to_file (new_metadata, file, error);
 
   g_object_unref (new_metadata);
 

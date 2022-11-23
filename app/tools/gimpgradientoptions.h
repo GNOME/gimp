@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,30 +15,30 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef  __GIMP_GRADIENT_OPTIONS_H__
-#define  __GIMP_GRADIENT_OPTIONS_H__
+#ifndef  __LIGMA_GRADIENT_OPTIONS_H__
+#define  __LIGMA_GRADIENT_OPTIONS_H__
 
 
-#include "paint/gimppaintoptions.h"
+#include "paint/ligmapaintoptions.h"
 
 
-#define GIMP_TYPE_GRADIENT_OPTIONS            (gimp_gradient_options_get_type ())
-#define GIMP_GRADIENT_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_GRADIENT_OPTIONS, GimpGradientOptions))
-#define GIMP_GRADIENT_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_GRADIENT_OPTIONS, GimpGradientOptionsClass))
-#define GIMP_IS_GRADIENT_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_GRADIENT_OPTIONS))
-#define GIMP_IS_GRADIENT_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_GRADIENT_OPTIONS))
-#define GIMP_GRADIENT_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_GRADIENT_OPTIONS, GimpGradientOptionsClass))
+#define LIGMA_TYPE_GRADIENT_OPTIONS            (ligma_gradient_options_get_type ())
+#define LIGMA_GRADIENT_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_GRADIENT_OPTIONS, LigmaGradientOptions))
+#define LIGMA_GRADIENT_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_GRADIENT_OPTIONS, LigmaGradientOptionsClass))
+#define LIGMA_IS_GRADIENT_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_GRADIENT_OPTIONS))
+#define LIGMA_IS_GRADIENT_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_GRADIENT_OPTIONS))
+#define LIGMA_GRADIENT_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_GRADIENT_OPTIONS, LigmaGradientOptionsClass))
 
 
-typedef struct _GimpGradientOptions   GimpGradientOptions;
-typedef struct _GimpPaintOptionsClass GimpGradientOptionsClass;
+typedef struct _LigmaGradientOptions   LigmaGradientOptions;
+typedef struct _LigmaPaintOptionsClass LigmaGradientOptionsClass;
 
-struct _GimpGradientOptions
+struct _LigmaGradientOptions
 {
-  GimpPaintOptions   paint_options;
+  LigmaPaintOptions   paint_options;
 
   gdouble            offset;
-  GimpGradientType   gradient_type;
+  LigmaGradientType   gradient_type;
   GeglDistanceMetric distance_metric;
 
   gboolean           supersample;
@@ -57,9 +57,9 @@ struct _GimpGradientOptions
 };
 
 
-GType       gimp_gradient_options_get_type (void) G_GNUC_CONST;
+GType       ligma_gradient_options_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_gradient_options_gui      (GimpToolOptions *tool_options);
+GtkWidget * ligma_gradient_options_gui      (LigmaToolOptions *tool_options);
 
 
-#endif  /*  __GIMP_GRADIENT_OPTIONS_H__  */
+#endif  /*  __LIGMA_GRADIENT_OPTIONS_H__  */

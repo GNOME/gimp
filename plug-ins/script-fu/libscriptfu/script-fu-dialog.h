@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * script-fu-dialog.h
@@ -21,11 +21,11 @@
  #ifndef __SCRIPT_FU_DIALOG_H__
  #define __SCRIPT_FU_DIALOG_H__
 
-GimpValueArray *script_fu_dialog_run (GimpProcedure        *procedure,
+LigmaValueArray *script_fu_dialog_run (LigmaProcedure        *procedure,
                                       SFScript             *script,
-                                      GimpImage            *image,
+                                      LigmaImage            *image,
                                       guint                 n_drawables,
-                                      GimpDrawable        **drawables,
-                                      const GimpValueArray *args);
+                                      LigmaDrawable        **drawables,
+                                      const LigmaValueArray *args);
 
 #endif /* __SCRIPT_FU_DIALOG_H__ */

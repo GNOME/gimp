@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-2002 Spencer Kimball, Peter Mattis, and others
  *
- * gimppluginmanager-restore.c
+ * ligmapluginmanager-restore.c
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,120 +24,120 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "plug-in-types.h"
 
-#include "config/gimpcoreconfig.h"
+#include "config/ligmacoreconfig.h"
 
-#include "core/gimp.h"
-#include "core/gimp-utils.h"
+#include "core/ligma.h"
+#include "core/ligma-utils.h"
 
-#include "pdb/gimppdb.h"
-#include "pdb/gimppdbcontext.h"
+#include "pdb/ligmapdb.h"
+#include "pdb/ligmapdbcontext.h"
 
-#include "gimpinterpreterdb.h"
-#include "gimpplugindef.h"
-#include "gimppluginmanager.h"
-#define __YES_I_NEED_GIMP_PLUG_IN_MANAGER_CALL__
-#include "gimppluginmanager-call.h"
-#include "gimppluginmanager-file.h"
-#include "gimppluginmanager-help-domain.h"
-#include "gimppluginmanager-restore.h"
-#include "gimppluginprocedure.h"
+#include "ligmainterpreterdb.h"
+#include "ligmaplugindef.h"
+#include "ligmapluginmanager.h"
+#define __YES_I_NEED_LIGMA_PLUG_IN_MANAGER_CALL__
+#include "ligmapluginmanager-call.h"
+#include "ligmapluginmanager-file.h"
+#include "ligmapluginmanager-help-domain.h"
+#include "ligmapluginmanager-restore.h"
+#include "ligmapluginprocedure.h"
 #include "plug-in-rc.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-static void    gimp_plug_in_manager_search            (GimpPlugInManager    *manager,
-                                                       GimpInitStatusFunc    status_callback);
-static void    gimp_plug_in_manager_search_directory  (GimpPlugInManager    *manager,
+static void    ligma_plug_in_manager_search            (LigmaPlugInManager    *manager,
+                                                       LigmaInitStatusFunc    status_callback);
+static void    ligma_plug_in_manager_search_directory  (LigmaPlugInManager    *manager,
                                                        GFile                *directory);
-static GFile * gimp_plug_in_manager_get_pluginrc      (GimpPlugInManager    *manager);
-static void    gimp_plug_in_manager_read_pluginrc     (GimpPlugInManager    *manager,
+static GFile * ligma_plug_in_manager_get_pluginrc      (LigmaPlugInManager    *manager);
+static void    ligma_plug_in_manager_read_pluginrc     (LigmaPlugInManager    *manager,
                                                        GFile                *file,
-                                                       GimpInitStatusFunc    status_callback);
-static void    gimp_plug_in_manager_query_new         (GimpPlugInManager    *manager,
-                                                       GimpContext          *context,
-                                                       GimpInitStatusFunc    status_callback);
-static void    gimp_plug_in_manager_init_plug_ins     (GimpPlugInManager    *manager,
-                                                       GimpContext          *context,
-                                                       GimpInitStatusFunc    status_callback);
-static void    gimp_plug_in_manager_run_extensions    (GimpPlugInManager    *manager,
-                                                       GimpContext          *context,
-                                                       GimpInitStatusFunc    status_callback);
-static void    gimp_plug_in_manager_add_from_file     (GimpPlugInManager    *manager,
+                                                       LigmaInitStatusFunc    status_callback);
+static void    ligma_plug_in_manager_query_new         (LigmaPlugInManager    *manager,
+                                                       LigmaContext          *context,
+                                                       LigmaInitStatusFunc    status_callback);
+static void    ligma_plug_in_manager_init_plug_ins     (LigmaPlugInManager    *manager,
+                                                       LigmaContext          *context,
+                                                       LigmaInitStatusFunc    status_callback);
+static void    ligma_plug_in_manager_run_extensions    (LigmaPlugInManager    *manager,
+                                                       LigmaContext          *context,
+                                                       LigmaInitStatusFunc    status_callback);
+static void    ligma_plug_in_manager_add_from_file     (LigmaPlugInManager    *manager,
                                                        GFile                *file,
                                                        guint64               mtime);
-static void    gimp_plug_in_manager_add_from_rc       (GimpPlugInManager    *manager,
-                                                       GimpPlugInDef        *plug_in_def);
-static void    gimp_plug_in_manager_add_to_db         (GimpPlugInManager    *manager,
-                                                       GimpContext          *context,
-                                                       GimpPlugInProcedure  *proc);
-static void    gimp_plug_in_manager_sort_file_procs   (GimpPlugInManager    *manager);
-static gint    gimp_plug_in_manager_file_proc_compare (gconstpointer         a,
+static void    ligma_plug_in_manager_add_from_rc       (LigmaPlugInManager    *manager,
+                                                       LigmaPlugInDef        *plug_in_def);
+static void    ligma_plug_in_manager_add_to_db         (LigmaPlugInManager    *manager,
+                                                       LigmaContext          *context,
+                                                       LigmaPlugInProcedure  *proc);
+static void    ligma_plug_in_manager_sort_file_procs   (LigmaPlugInManager    *manager);
+static gint    ligma_plug_in_manager_file_proc_compare (gconstpointer         a,
                                                        gconstpointer         b,
                                                        gpointer              data);
 
 
 
 void
-gimp_plug_in_manager_restore (GimpPlugInManager  *manager,
-                              GimpContext        *context,
-                              GimpInitStatusFunc  status_callback)
+ligma_plug_in_manager_restore (LigmaPlugInManager  *manager,
+                              LigmaContext        *context,
+                              LigmaInitStatusFunc  status_callback)
 {
-  Gimp   *gimp;
+  Ligma   *ligma;
   GFile  *pluginrc;
   GSList *list;
   GError *error = NULL;
 
-  g_return_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager));
-  g_return_if_fail (GIMP_IS_CONTEXT (context));
+  g_return_if_fail (LIGMA_IS_PLUG_IN_MANAGER (manager));
+  g_return_if_fail (LIGMA_IS_CONTEXT (context));
   g_return_if_fail (status_callback != NULL);
 
-  gimp = manager->gimp;
+  ligma = manager->ligma;
 
-  /* need a GimpPDBContext for calling gimp_plug_in_manager_run_foo() */
-  context = gimp_pdb_context_new (gimp, context, TRUE);
+  /* need a LigmaPDBContext for calling ligma_plug_in_manager_run_foo() */
+  context = ligma_pdb_context_new (ligma, context, TRUE);
 
   /* search for binaries in the plug-in directory path */
-  gimp_plug_in_manager_search (manager, status_callback);
+  ligma_plug_in_manager_search (manager, status_callback);
 
   /* read the pluginrc file for cached data */
-  pluginrc = gimp_plug_in_manager_get_pluginrc (manager);
+  pluginrc = ligma_plug_in_manager_get_pluginrc (manager);
 
-  gimp_plug_in_manager_read_pluginrc (manager, pluginrc, status_callback);
+  ligma_plug_in_manager_read_pluginrc (manager, pluginrc, status_callback);
 
   /* query any plug-ins that changed since we last wrote out pluginrc */
-  gimp_plug_in_manager_query_new (manager, context, status_callback);
+  ligma_plug_in_manager_query_new (manager, context, status_callback);
 
   /* initialize the plug-ins */
-  gimp_plug_in_manager_init_plug_ins (manager, context, status_callback);
+  ligma_plug_in_manager_init_plug_ins (manager, context, status_callback);
 
   /* add the procedures to manager->plug_in_procedures */
   for (list = manager->plug_in_defs; list; list = list->next)
     {
-      GimpPlugInDef *plug_in_def = list->data;
+      LigmaPlugInDef *plug_in_def = list->data;
       GSList        *list2;
 
       for (list2 = plug_in_def->procedures; list2; list2 = list2->next)
         {
-          gimp_plug_in_manager_add_procedure (manager, list2->data);
+          ligma_plug_in_manager_add_procedure (manager, list2->data);
         }
     }
 
   /* write the pluginrc file if necessary */
   if (manager->write_pluginrc)
     {
-      if (gimp->be_verbose)
-        g_print ("Writing '%s'\n", gimp_file_get_utf8_name (pluginrc));
+      if (ligma->be_verbose)
+        g_print ("Writing '%s'\n", ligma_file_get_utf8_name (pluginrc));
 
       if (! plug_in_rc_write (manager->plug_in_defs, pluginrc, &error))
         {
-          gimp_message_literal (gimp,
-                                NULL, GIMP_MESSAGE_ERROR, error->message);
+          ligma_message_literal (ligma,
+                                NULL, LIGMA_MESSAGE_ERROR, error->message);
           g_clear_error (&error);
         }
 
@@ -149,10 +149,10 @@ gimp_plug_in_manager_restore (GimpPlugInManager  *manager,
   /* create help domain lists */
   for (list = manager->plug_in_defs; list; list = list->next)
     {
-      GimpPlugInDef *plug_in_def = list->data;
+      LigmaPlugInDef *plug_in_def = list->data;
 
       if (plug_in_def->help_domain_name)
-        gimp_plug_in_manager_add_help_domain (manager,
+        ligma_plug_in_manager_add_help_domain (manager,
                                               plug_in_def->file,
                                               plug_in_def->help_domain_name,
                                               plug_in_def->help_domain_uri);
@@ -165,13 +165,13 @@ gimp_plug_in_manager_restore (GimpPlugInManager  *manager,
   /* add the plug-in procs to the procedure database */
   for (list = manager->plug_in_procedures; list; list = list->next)
     {
-      gimp_plug_in_manager_add_to_db (manager, context, list->data);
+      ligma_plug_in_manager_add_to_db (manager, context, list->data);
     }
 
   /* sort the load, save and export procedures, make the raw handler list */
-  gimp_plug_in_manager_sort_file_procs (manager);
+  ligma_plug_in_manager_sort_file_procs (manager);
 
-  gimp_plug_in_manager_run_extensions (manager, context, status_callback);
+  ligma_plug_in_manager_run_extensions (manager, context, status_callback);
 
   g_object_unref (context);
 }
@@ -179,8 +179,8 @@ gimp_plug_in_manager_restore (GimpPlugInManager  *manager,
 
 /* search for binaries in the plug-in directory path */
 static void
-gimp_plug_in_manager_search (GimpPlugInManager  *manager,
-                             GimpInitStatusFunc  status_callback)
+ligma_plug_in_manager_search (LigmaPlugInManager  *manager,
+                             LigmaInitStatusFunc  status_callback)
 {
   const gchar *path_str;
   GList       *path;
@@ -194,7 +194,7 @@ gimp_plug_in_manager_search (GimpPlugInManager  *manager,
     {
       gchar *exts;
 
-      exts = gimp_interpreter_db_get_extensions (manager->interpreter_db);
+      exts = ligma_interpreter_db_get_extensions (manager->interpreter_db);
 
       if (exts)
         {
@@ -211,12 +211,12 @@ gimp_plug_in_manager_search (GimpPlugInManager  *manager,
 #endif /* G_OS_WIN32 */
 
   status_callback (_("Loading extension plug-ins"), "", 0.0);
-  g_object_get (manager->gimp->extension_manager,
+  g_object_get (manager->ligma->extension_manager,
                 "plug-in-paths", &path,
                 NULL);
   for (list = path; list; list = g_list_next (list))
     {
-      if (gimp_file_is_executable (list->data))
+      if (ligma_file_is_executable (list->data))
         {
           guint64 mtime;
           GFileInfo *info;
@@ -225,7 +225,7 @@ gimp_plug_in_manager_search (GimpPlugInManager  *manager,
                                     G_FILE_QUERY_INFO_NONE, NULL, NULL);
           mtime = g_file_info_get_attribute_uint64 (info,
                                                     G_FILE_ATTRIBUTE_TIME_MODIFIED);
-          gimp_plug_in_manager_add_from_file (manager, list->data, mtime);
+          ligma_plug_in_manager_add_from_file (manager, list->data, mtime);
           g_object_unref (info);
         }
     }
@@ -235,22 +235,22 @@ gimp_plug_in_manager_search (GimpPlugInManager  *manager,
   /* Give automatic tests a chance to use plug-ins from the build
    * dir
    */
-  path_str = g_getenv ("GIMP_TESTING_PLUGINDIRS");
+  path_str = g_getenv ("LIGMA_TESTING_PLUGINDIRS");
   if (! path_str)
-    path_str = manager->gimp->config->plug_in_path;
+    path_str = manager->ligma->config->plug_in_path;
 
-  path = gimp_config_path_expand_to_files (path_str, NULL);
+  path = ligma_config_path_expand_to_files (path_str, NULL);
 
   for (list = path; list; list = g_list_next (list))
     {
-      gimp_plug_in_manager_search_directory (manager, list->data);
+      ligma_plug_in_manager_search_directory (manager, list->data);
     }
 
   g_list_free_full (path, (GDestroyNotify) g_object_unref);
 }
 
 static void
-gimp_plug_in_manager_search_directory (GimpPlugInManager *manager,
+ligma_plug_in_manager_search_directory (LigmaPlugInManager *manager,
                                        GFile             *directory)
 {
   GFileEnumerator *enumerator;
@@ -319,14 +319,14 @@ gimp_plug_in_manager_search_directory (GimpPlugInManager *manager,
                         *ext = '\0';
 
                       if (g_strcmp0 (file_name, g_file_info_get_name (info)) == 0 &&
-                          gimp_file_is_executable (child2))
+                          ligma_file_is_executable (child2))
                         {
                           guint64 mtime;
 
                           mtime = g_file_info_get_attribute_uint64 (info2,
                                                                     G_FILE_ATTRIBUTE_TIME_MODIFIED);
 
-                          gimp_plug_in_manager_add_from_file (manager, child2, mtime);
+                          ligma_plug_in_manager_add_from_file (manager, child2, mtime);
 
                           g_free (file_name);
                           g_object_unref (child2);
@@ -342,16 +342,16 @@ gimp_plug_in_manager_search_directory (GimpPlugInManager *manager,
                   g_object_unref (enumerator2);
                 }
             }
-          else if (gimp_file_is_executable (child))
+          else if (ligma_file_is_executable (child))
             {
-              if (g_getenv ("GIMP_TESTING_PLUGINDIRS"))
+              if (g_getenv ("LIGMA_TESTING_PLUGINDIRS"))
                 {
                   guint64 mtime;
 
                   mtime = g_file_info_get_attribute_uint64 (info,
                                                             G_FILE_ATTRIBUTE_TIME_MODIFIED);
 
-                  gimp_plug_in_manager_add_from_file (manager, child, mtime);
+                  ligma_plug_in_manager_add_from_file (manager, child, mtime);
                 }
               else
                 {
@@ -375,26 +375,26 @@ gimp_plug_in_manager_search_directory (GimpPlugInManager *manager,
 }
 
 static GFile *
-gimp_plug_in_manager_get_pluginrc (GimpPlugInManager *manager)
+ligma_plug_in_manager_get_pluginrc (LigmaPlugInManager *manager)
 {
-  Gimp  *gimp = manager->gimp;
+  Ligma  *ligma = manager->ligma;
   GFile *pluginrc;
 
-  if (gimp->config->plug_in_rc_path)
+  if (ligma->config->plug_in_rc_path)
     {
-      gchar *path = gimp_config_path_expand (gimp->config->plug_in_rc_path,
+      gchar *path = ligma_config_path_expand (ligma->config->plug_in_rc_path,
                                              TRUE, NULL);
 
       if (g_path_is_absolute (path))
         pluginrc = g_file_new_for_path (path);
       else
-        pluginrc = gimp_directory_file (path, NULL);
+        pluginrc = ligma_directory_file (path, NULL);
 
       g_free (path);
     }
   else
     {
-      pluginrc = gimp_directory_file ("pluginrc", NULL);
+      pluginrc = ligma_directory_file ("pluginrc", NULL);
     }
 
   return pluginrc;
@@ -402,34 +402,34 @@ gimp_plug_in_manager_get_pluginrc (GimpPlugInManager *manager)
 
 /* read the pluginrc file for cached data */
 static void
-gimp_plug_in_manager_read_pluginrc (GimpPlugInManager  *manager,
+ligma_plug_in_manager_read_pluginrc (LigmaPlugInManager  *manager,
                                     GFile              *pluginrc,
-                                    GimpInitStatusFunc  status_callback)
+                                    LigmaInitStatusFunc  status_callback)
 {
   GSList *rc_defs;
   GError *error = NULL;
 
   status_callback (_("Resource configuration"),
-                   gimp_file_get_utf8_name (pluginrc), 0.0);
+                   ligma_file_get_utf8_name (pluginrc), 0.0);
 
-  if (manager->gimp->be_verbose)
-    g_print ("Parsing '%s'\n", gimp_file_get_utf8_name (pluginrc));
+  if (manager->ligma->be_verbose)
+    g_print ("Parsing '%s'\n", ligma_file_get_utf8_name (pluginrc));
 
-  rc_defs = plug_in_rc_parse (manager->gimp, pluginrc, &error);
+  rc_defs = plug_in_rc_parse (manager->ligma, pluginrc, &error);
 
   if (rc_defs)
     {
       GSList *list;
 
       for (list = rc_defs; list; list = g_slist_next (list))
-        gimp_plug_in_manager_add_from_rc (manager, list->data); /* consumes list->data */
+        ligma_plug_in_manager_add_from_rc (manager, list->data); /* consumes list->data */
 
       g_slist_free (rc_defs);
     }
   else if (error)
     {
-      if (error->code != GIMP_CONFIG_ERROR_OPEN_ENOENT)
-        gimp_message_literal (manager->gimp, NULL, GIMP_MESSAGE_ERROR,
+      if (error->code != LIGMA_CONFIG_ERROR_OPEN_ENOENT)
+        ligma_message_literal (manager->ligma, NULL, LIGMA_MESSAGE_ERROR,
                               error->message);
 
       g_clear_error (&error);
@@ -438,9 +438,9 @@ gimp_plug_in_manager_read_pluginrc (GimpPlugInManager  *manager,
 
 /* query any plug-ins that changed since we last wrote out pluginrc */
 static void
-gimp_plug_in_manager_query_new (GimpPlugInManager  *manager,
-                                GimpContext        *context,
-                                GimpInitStatusFunc  status_callback)
+ligma_plug_in_manager_query_new (LigmaPlugInManager  *manager,
+                                LigmaContext        *context,
+                                LigmaInitStatusFunc  status_callback)
 {
   GSList *list;
   gint    n_plugins;
@@ -449,10 +449,10 @@ gimp_plug_in_manager_query_new (GimpPlugInManager  *manager,
 
   for (list = manager->plug_in_defs, n_plugins = 0; list; list = list->next)
     {
-      GimpPlugInDef *plug_in_def = list->data;
+      LigmaPlugInDef *plug_in_def = list->data;
 
-      if (manager->gimp->query_all)
-        gimp_plug_in_def_set_needs_query (plug_in_def, TRUE);
+      if (manager->ligma->query_all)
+        ligma_plug_in_def_set_needs_query (plug_in_def, TRUE);
 
       if (plug_in_def->needs_query)
         n_plugins++;
@@ -466,23 +466,23 @@ gimp_plug_in_manager_query_new (GimpPlugInManager  *manager,
 
       for (list = manager->plug_in_defs, nth = 0; list; list = list->next)
         {
-          GimpPlugInDef *plug_in_def = list->data;
+          LigmaPlugInDef *plug_in_def = list->data;
 
           if (plug_in_def->needs_query)
             {
               gchar *basename;
 
               basename =
-                g_path_get_basename (gimp_file_get_utf8_name (plug_in_def->file));
+                g_path_get_basename (ligma_file_get_utf8_name (plug_in_def->file));
               status_callback (NULL, basename,
                                (gdouble) nth++ / (gdouble) n_plugins);
               g_free (basename);
 
-              if (manager->gimp->be_verbose)
+              if (manager->ligma->be_verbose)
                 g_print ("Querying plug-in: '%s'\n",
-                         gimp_file_get_utf8_name (plug_in_def->file));
+                         ligma_file_get_utf8_name (plug_in_def->file));
 
-              gimp_plug_in_manager_call_query (manager, context, plug_in_def);
+              ligma_plug_in_manager_call_query (manager, context, plug_in_def);
             }
         }
     }
@@ -492,9 +492,9 @@ gimp_plug_in_manager_query_new (GimpPlugInManager  *manager,
 
 /* initialize the plug-ins */
 static void
-gimp_plug_in_manager_init_plug_ins (GimpPlugInManager  *manager,
-                                    GimpContext        *context,
-                                    GimpInitStatusFunc  status_callback)
+ligma_plug_in_manager_init_plug_ins (LigmaPlugInManager  *manager,
+                                    LigmaContext        *context,
+                                    LigmaInitStatusFunc  status_callback)
 {
   GSList *list;
   gint    n_plugins;
@@ -503,7 +503,7 @@ gimp_plug_in_manager_init_plug_ins (GimpPlugInManager  *manager,
 
   for (list = manager->plug_in_defs, n_plugins = 0; list; list = list->next)
     {
-      GimpPlugInDef *plug_in_def = list->data;
+      LigmaPlugInDef *plug_in_def = list->data;
 
       if (plug_in_def->has_init)
         n_plugins++;
@@ -515,23 +515,23 @@ gimp_plug_in_manager_init_plug_ins (GimpPlugInManager  *manager,
 
       for (list = manager->plug_in_defs, nth = 0; list; list = list->next)
         {
-          GimpPlugInDef *plug_in_def = list->data;
+          LigmaPlugInDef *plug_in_def = list->data;
 
           if (plug_in_def->has_init)
             {
               gchar *basename;
 
               basename =
-                g_path_get_basename (gimp_file_get_utf8_name (plug_in_def->file));
+                g_path_get_basename (ligma_file_get_utf8_name (plug_in_def->file));
               status_callback (NULL, basename,
                                (gdouble) nth++ / (gdouble) n_plugins);
               g_free (basename);
 
-              if (manager->gimp->be_verbose)
+              if (manager->ligma->be_verbose)
                 g_print ("Initializing plug-in: '%s'\n",
-                         gimp_file_get_utf8_name (plug_in_def->file));
+                         ligma_file_get_utf8_name (plug_in_def->file));
 
-              gimp_plug_in_manager_call_init (manager, context, plug_in_def);
+              ligma_plug_in_manager_call_init (manager, context, plug_in_def);
             }
         }
     }
@@ -541,11 +541,11 @@ gimp_plug_in_manager_init_plug_ins (GimpPlugInManager  *manager,
 
 /* run automatically started extensions */
 static void
-gimp_plug_in_manager_run_extensions (GimpPlugInManager  *manager,
-                                     GimpContext        *context,
-                                     GimpInitStatusFunc  status_callback)
+ligma_plug_in_manager_run_extensions (LigmaPlugInManager  *manager,
+                                     LigmaContext        *context,
+                                     LigmaInitStatusFunc  status_callback)
 {
-  Gimp   *gimp = manager->gimp;
+  Ligma   *ligma = manager->ligma;
   GSList *list;
   GList  *extensions = NULL;
   gint    n_extensions;
@@ -553,11 +553,11 @@ gimp_plug_in_manager_run_extensions (GimpPlugInManager  *manager,
   /* build list of automatically started extensions */
   for (list = manager->plug_in_procedures; list; list = list->next)
     {
-      GimpPlugInProcedure *proc = list->data;
+      LigmaPlugInProcedure *proc = list->data;
 
       if (proc->file                                                       &&
-          GIMP_PROCEDURE (proc)->proc_type == GIMP_PDB_PROC_TYPE_EXTENSION &&
-          GIMP_PROCEDURE (proc)->num_args  == 0)
+          LIGMA_PROCEDURE (proc)->proc_type == LIGMA_PDB_PROC_TYPE_EXTENSION &&
+          LIGMA_PROCEDURE (proc)->num_args  == 0)
         {
           extensions = g_list_prepend (extensions, proc);
         }
@@ -576,27 +576,27 @@ gimp_plug_in_manager_run_extensions (GimpPlugInManager  *manager,
 
       for (list = extensions, nth = 0; list; list = g_list_next (list), nth++)
         {
-          GimpPlugInProcedure *proc = list->data;
-          GimpValueArray      *args;
+          LigmaPlugInProcedure *proc = list->data;
+          LigmaValueArray      *args;
           GError              *error = NULL;
 
-          if (gimp->be_verbose)
-            g_print ("Starting extension: '%s'\n", gimp_object_get_name (proc));
+          if (ligma->be_verbose)
+            g_print ("Starting extension: '%s'\n", ligma_object_get_name (proc));
 
-          status_callback (NULL, gimp_object_get_name (proc),
+          status_callback (NULL, ligma_object_get_name (proc),
                            (gdouble) nth / (gdouble) n_extensions);
 
-          args = gimp_value_array_new (0);
+          args = ligma_value_array_new (0);
 
-          gimp_procedure_execute_async (GIMP_PROCEDURE (proc),
-                                        gimp, context, NULL,
+          ligma_procedure_execute_async (LIGMA_PROCEDURE (proc),
+                                        ligma, context, NULL,
                                         args, NULL, &error);
 
-          gimp_value_array_unref (args);
+          ligma_value_array_unref (args);
 
           if (error)
             {
-              gimp_message_literal (gimp, NULL, GIMP_MESSAGE_ERROR,
+              ligma_message_literal (ligma, NULL, LIGMA_MESSAGE_ERROR,
                                     error->message);
               g_clear_error (&error);
             }
@@ -609,24 +609,24 @@ gimp_plug_in_manager_run_extensions (GimpPlugInManager  *manager,
 }
 
 /**
- * gimp_plug_in_manager_ignore_plugin_basename:
+ * ligma_plug_in_manager_ignore_plugin_basename:
  * @basename: Basename to test with
  *
  * Checks the environment variable
- * GIMP_TESTING_PLUGINDIRS_BASENAME_IGNORES for file basenames.
+ * LIGMA_TESTING_PLUGINDIRS_BASENAME_IGNORES for file basenames.
  *
- * Returns: %TRUE if @basename was in GIMP_TESTING_PLUGINDIRS_BASENAME_IGNORES
+ * Returns: %TRUE if @basename was in LIGMA_TESTING_PLUGINDIRS_BASENAME_IGNORES
  **/
 static gboolean
-gimp_plug_in_manager_ignore_plugin_basename (const gchar *plugin_basename)
+ligma_plug_in_manager_ignore_plugin_basename (const gchar *plugin_basename)
 {
   const gchar *ignore_basenames_string;
   GList       *ignore_basenames;
   GList       *iter;
   gboolean     ignore = FALSE;
 
-  ignore_basenames_string = g_getenv ("GIMP_TESTING_PLUGINDIRS_BASENAME_IGNORES");
-  ignore_basenames        = gimp_path_parse (ignore_basenames_string,
+  ignore_basenames_string = g_getenv ("LIGMA_TESTING_PLUGINDIRS_BASENAME_IGNORES");
+  ignore_basenames        = ligma_path_parse (ignore_basenames_string,
                                              256 /*max_paths*/,
                                              FALSE /*check*/,
                                              NULL /*check_failed*/);
@@ -642,17 +642,17 @@ gimp_plug_in_manager_ignore_plugin_basename (const gchar *plugin_basename)
         }
     }
 
-  gimp_path_free (ignore_basenames);
+  ligma_path_free (ignore_basenames);
 
   return ignore;
 }
 
 static void
-gimp_plug_in_manager_add_from_file (GimpPlugInManager *manager,
+ligma_plug_in_manager_add_from_file (LigmaPlugInManager *manager,
                                     GFile             *file,
                                     guint64            mtime)
 {
-  GimpPlugInDef *plug_in_def;
+  LigmaPlugInDef *plug_in_def;
   GSList        *list;
   gchar         *filename;
   gchar         *basename;
@@ -664,9 +664,9 @@ gimp_plug_in_manager_add_from_file (GimpPlugInManager *manager,
   /* When we scan build dirs for plug-ins, there will be some
    * executable files that are not plug-ins that we want to ignore,
    * for example plug-ins/common/mkgen.pl if
-   * GIMP_TESTING_PLUGINDIRS=plug-ins/common
+   * LIGMA_TESTING_PLUGINDIRS=plug-ins/common
    */
-  if (gimp_plug_in_manager_ignore_plugin_basename (basename))
+  if (ligma_plug_in_manager_ignore_plugin_basename (basename))
     {
       g_free (basename);
       return;
@@ -686,7 +686,7 @@ gimp_plug_in_manager_add_from_file (GimpPlugInManager *manager,
       if (g_ascii_strcasecmp (basename, plug_in_name) == 0)
         {
           g_printerr ("Skipping duplicate plug-in: '%s'\n",
-                      gimp_file_get_utf8_name (file));
+                      ligma_file_get_utf8_name (file));
 
           g_free (plug_in_name);
           g_free (basename);
@@ -699,23 +699,23 @@ gimp_plug_in_manager_add_from_file (GimpPlugInManager *manager,
 
   g_free (basename);
 
-  plug_in_def = gimp_plug_in_def_new (file);
+  plug_in_def = ligma_plug_in_def_new (file);
 
-  gimp_plug_in_def_set_mtime (plug_in_def, mtime);
-  gimp_plug_in_def_set_needs_query (plug_in_def, TRUE);
+  ligma_plug_in_def_set_mtime (plug_in_def, mtime);
+  ligma_plug_in_def_set_needs_query (plug_in_def, TRUE);
 
   manager->plug_in_defs = g_slist_prepend (manager->plug_in_defs, plug_in_def);
 }
 
 static void
-gimp_plug_in_manager_add_from_rc (GimpPlugInManager *manager,
-                                  GimpPlugInDef     *plug_in_def)
+ligma_plug_in_manager_add_from_rc (LigmaPlugInManager *manager,
+                                  LigmaPlugInDef     *plug_in_def)
 {
   GSList *list;
   gchar  *path1;
   gchar  *basename1;
 
-  g_return_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager));
+  g_return_if_fail (LIGMA_IS_PLUG_IN_MANAGER (manager));
   g_return_if_fail (plug_in_def != NULL);
   g_return_if_fail (plug_in_def->file != NULL);
 
@@ -736,7 +736,7 @@ gimp_plug_in_manager_add_from_rc (GimpPlugInManager *manager,
    */
   for (list = manager->plug_in_defs; list; list = list->next)
     {
-      GimpPlugInDef *ondisk_plug_in_def = list->data;
+      LigmaPlugInDef *ondisk_plug_in_def = list->data;
       gchar         *path2;
       gchar         *basename2;
 
@@ -777,10 +777,10 @@ gimp_plug_in_manager_add_from_rc (GimpPlugInManager *manager,
 
   manager->write_pluginrc = TRUE;
 
-  if (manager->gimp->be_verbose)
+  if (manager->ligma->be_verbose)
     {
       g_printerr ("pluginrc lists '%s', but it wasn't found\n",
-                  gimp_file_get_utf8_name (plug_in_def->file));
+                  ligma_file_get_utf8_name (plug_in_def->file));
     }
 
   g_object_unref (plug_in_def);
@@ -788,58 +788,58 @@ gimp_plug_in_manager_add_from_rc (GimpPlugInManager *manager,
 
 
 static void
-gimp_plug_in_manager_add_to_db (GimpPlugInManager   *manager,
-                                GimpContext         *context,
-                                GimpPlugInProcedure *proc)
+ligma_plug_in_manager_add_to_db (LigmaPlugInManager   *manager,
+                                LigmaContext         *context,
+                                LigmaPlugInProcedure *proc)
 {
-  gimp_pdb_register_procedure (manager->gimp->pdb, GIMP_PROCEDURE (proc));
+  ligma_pdb_register_procedure (manager->ligma->pdb, LIGMA_PROCEDURE (proc));
 
   if (proc->file_proc)
     {
       if (proc->image_types)
         {
-          gimp_plug_in_procedure_set_file_proc (proc,
+          ligma_plug_in_procedure_set_file_proc (proc,
                                                 proc->extensions,
                                                 proc->prefixes,
                                                 NULL);
 
-          gimp_plug_in_manager_add_save_procedure (manager, proc);
+          ligma_plug_in_manager_add_save_procedure (manager, proc);
         }
       else
         {
-          gimp_plug_in_procedure_set_file_proc (proc,
+          ligma_plug_in_procedure_set_file_proc (proc,
                                                 proc->extensions,
                                                 proc->prefixes,
                                                 proc->magics);
 
-          gimp_plug_in_manager_add_load_procedure (manager, proc);
+          ligma_plug_in_manager_add_load_procedure (manager, proc);
         }
     }
   else if (proc->batch_interpreter)
     {
-      gimp_plug_in_manager_add_batch_procedure (manager, proc);
+      ligma_plug_in_manager_add_batch_procedure (manager, proc);
     }
 }
 
 static void
-gimp_plug_in_manager_sort_file_procs (GimpPlugInManager *manager)
+ligma_plug_in_manager_sort_file_procs (LigmaPlugInManager *manager)
 {
-  GimpCoreConfig *config         = manager->gimp->config;
+  LigmaCoreConfig *config         = manager->ligma->config;
   GFile          *config_plug_in = NULL;
   GFile          *raw_plug_in    = NULL;
   GSList         *list;
 
   manager->load_procs =
     g_slist_sort_with_data (manager->load_procs,
-                            gimp_plug_in_manager_file_proc_compare,
+                            ligma_plug_in_manager_file_proc_compare,
                             GINT_TO_POINTER (FALSE));
   manager->save_procs =
     g_slist_sort_with_data (manager->save_procs,
-                            gimp_plug_in_manager_file_proc_compare,
+                            ligma_plug_in_manager_file_proc_compare,
                             GINT_TO_POINTER (FALSE));
   manager->export_procs =
     g_slist_sort_with_data (manager->export_procs,
-                            gimp_plug_in_manager_file_proc_compare,
+                            ligma_plug_in_manager_file_proc_compare,
                             GINT_TO_POINTER (FALSE));
 
   g_clear_pointer (&manager->display_load_procs,   g_slist_free);
@@ -852,15 +852,15 @@ gimp_plug_in_manager_sort_file_procs (GimpPlugInManager *manager)
 
   manager->display_load_procs =
     g_slist_sort_with_data (manager->display_load_procs,
-                            gimp_plug_in_manager_file_proc_compare,
+                            ligma_plug_in_manager_file_proc_compare,
                             GINT_TO_POINTER (TRUE));
   manager->display_save_procs =
     g_slist_sort_with_data (manager->display_save_procs,
-                            gimp_plug_in_manager_file_proc_compare,
+                            ligma_plug_in_manager_file_proc_compare,
                             GINT_TO_POINTER (TRUE));
   manager->display_export_procs =
     g_slist_sort_with_data (manager->display_export_procs,
-                            gimp_plug_in_manager_file_proc_compare,
+                            ligma_plug_in_manager_file_proc_compare,
                             GINT_TO_POINTER (TRUE));
 
   g_clear_pointer (&manager->raw_load_procs,         g_slist_free);
@@ -871,7 +871,7 @@ gimp_plug_in_manager_sort_file_procs (GimpPlugInManager *manager)
       /* remember the configured raw loader, unless it's the placeholder */
       if (! strstr (config->import_raw_plug_in, "file-raw-placeholder"))
         config_plug_in =
-          gimp_file_new_for_config_path (config->import_raw_plug_in,
+          ligma_file_new_for_config_path (config->import_raw_plug_in,
                                          NULL);
     }
 
@@ -880,7 +880,7 @@ gimp_plug_in_manager_sort_file_procs (GimpPlugInManager *manager)
    */
   for (list = manager->load_procs; list; list = g_slist_next (list))
     {
-      GimpPlugInProcedure *file_proc = list->data;
+      LigmaPlugInProcedure *file_proc = list->data;
 
       if (file_proc->handles_raw)
         {
@@ -889,7 +889,7 @@ gimp_plug_in_manager_sort_file_procs (GimpPlugInManager *manager)
           manager->raw_load_procs = g_slist_prepend (manager->raw_load_procs,
                                                      file_proc);
 
-          file = gimp_plug_in_procedure_get_file (file_proc);
+          file = ligma_plug_in_procedure_get_file (file_proc);
 
           if (! raw_plug_in  &&
               config_plug_in &&
@@ -904,7 +904,7 @@ gimp_plug_in_manager_sort_file_procs (GimpPlugInManager *manager)
   manager->display_raw_load_procs = g_slist_copy (manager->raw_load_procs);
   manager->display_raw_load_procs =
     g_slist_sort_with_data (manager->display_raw_load_procs,
-                            gimp_plug_in_manager_file_proc_compare,
+                            ligma_plug_in_manager_file_proc_compare,
                             GINT_TO_POINTER (TRUE));
 
   if (config_plug_in)
@@ -920,11 +920,11 @@ gimp_plug_in_manager_sort_file_procs (GimpPlugInManager *manager)
 
       for (list = manager->raw_load_procs; list; list = g_slist_next (list))
         {
-          GimpPlugInProcedure *file_proc = list->data;
+          LigmaPlugInProcedure *file_proc = list->data;
 
-          raw_plug_in = gimp_plug_in_procedure_get_file (file_proc);
+          raw_plug_in = ligma_plug_in_procedure_get_file (file_proc);
 
-          path = gimp_file_get_config_path (raw_plug_in, NULL);
+          path = ligma_file_get_config_path (raw_plug_in, NULL);
 
           if (! strstr (path, "file-raw-placeholder"))
             break;
@@ -938,9 +938,9 @@ gimp_plug_in_manager_sort_file_procs (GimpPlugInManager *manager)
       if (! raw_plug_in)
         {
           raw_plug_in =
-            gimp_plug_in_procedure_get_file (manager->raw_load_procs->data);
+            ligma_plug_in_procedure_get_file (manager->raw_load_procs->data);
 
-          path = gimp_file_get_config_path (raw_plug_in, NULL);
+          path = ligma_file_get_config_path (raw_plug_in, NULL);
         }
 
       g_object_set (config,
@@ -953,7 +953,7 @@ gimp_plug_in_manager_sort_file_procs (GimpPlugInManager *manager)
   list = manager->load_procs;
   while (list)
     {
-      GimpPlugInProcedure *file_proc = list->data;
+      LigmaPlugInProcedure *file_proc = list->data;
 
       list = g_slist_next (list);
 
@@ -961,7 +961,7 @@ gimp_plug_in_manager_sort_file_procs (GimpPlugInManager *manager)
        * the list of load_procs
        */
       if (file_proc->handles_raw &&
-          ! g_file_equal (gimp_plug_in_procedure_get_file (file_proc),
+          ! g_file_equal (ligma_plug_in_procedure_get_file (file_proc),
                           raw_plug_in))
         {
           manager->load_procs =
@@ -978,27 +978,27 @@ gimp_plug_in_manager_sort_file_procs (GimpPlugInManager *manager)
 }
 
 static gint
-gimp_plug_in_manager_file_proc_compare (gconstpointer a,
+ligma_plug_in_manager_file_proc_compare (gconstpointer a,
                                         gconstpointer b,
                                         gpointer      data)
 {
-  GimpPlugInProcedure *proc_a  = GIMP_PLUG_IN_PROCEDURE (a);
-  GimpPlugInProcedure *proc_b  = GIMP_PLUG_IN_PROCEDURE (b);
+  LigmaPlugInProcedure *proc_a  = LIGMA_PLUG_IN_PROCEDURE (a);
+  LigmaPlugInProcedure *proc_b  = LIGMA_PLUG_IN_PROCEDURE (b);
   gboolean             display = GPOINTER_TO_INT (data);
   const gchar         *label_a;
   const gchar         *label_b;
 
-  if (g_str_has_prefix (gimp_file_get_utf8_name (proc_a->file),
-                                                 "gimp-xcf"))
+  if (g_str_has_prefix (ligma_file_get_utf8_name (proc_a->file),
+                                                 "ligma-xcf"))
     {
-      if (! g_str_has_prefix (gimp_file_get_utf8_name (proc_b->file),
-                              "gimp-xcf"))
+      if (! g_str_has_prefix (ligma_file_get_utf8_name (proc_b->file),
+                              "ligma-xcf"))
         {
           return -1;
         }
     }
-  else if (g_str_has_prefix (gimp_file_get_utf8_name (proc_b->file),
-                             "gimp-xcf"))
+  else if (g_str_has_prefix (ligma_file_get_utf8_name (proc_b->file),
+                             "ligma-xcf"))
     {
       return 1;
     }
@@ -1006,8 +1006,8 @@ gimp_plug_in_manager_file_proc_compare (gconstpointer a,
   if (! display && proc_a->priority != proc_b->priority)
     return proc_a->priority - proc_b->priority;
 
-  label_a = gimp_procedure_get_label (GIMP_PROCEDURE (proc_a));
-  label_b = gimp_procedure_get_label (GIMP_PROCEDURE (proc_b));
+  label_a = ligma_procedure_get_label (LIGMA_PROCEDURE (proc_a));
+  label_b = ligma_procedure_get_label (LIGMA_PROCEDURE (proc_b));
 
   if (label_a)
     {
@@ -1028,5 +1028,5 @@ gimp_plug_in_manager_file_proc_compare (gconstpointer a,
       return 1;
     }
 
-  return strcmp (gimp_object_get_name (proc_a), gimp_object_get_name (proc_b));
+  return strcmp (ligma_object_get_name (proc_a), ligma_object_get_name (proc_b));
 }

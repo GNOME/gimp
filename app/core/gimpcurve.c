@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,18 +23,18 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "core-types.h"
 
-#include "gimpcurve.h"
-#include "gimpcurve-load.h"
-#include "gimpcurve-save.h"
-#include "gimpparamspecs.h"
+#include "ligmacurve.h"
+#include "ligmacurve-load.h"
+#include "ligmacurve-save.h"
+#include "ligmaparamspecs.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 #define EPSILON 1e-6
@@ -56,107 +56,107 @@ static GParamSpec *obj_props[N_PROPS] = { NULL, };
 
 /*  local function prototypes  */
 
-static void          gimp_curve_config_iface_init (GimpConfigInterface *iface);
+static void          ligma_curve_config_iface_init (LigmaConfigInterface *iface);
 
-static void          gimp_curve_finalize          (GObject          *object);
-static void          gimp_curve_set_property      (GObject          *object,
+static void          ligma_curve_finalize          (GObject          *object);
+static void          ligma_curve_set_property      (GObject          *object,
                                                    guint             property_id,
                                                    const GValue     *value,
                                                    GParamSpec       *pspec);
-static void          gimp_curve_get_property      (GObject          *object,
+static void          ligma_curve_get_property      (GObject          *object,
                                                    guint             property_id,
                                                    GValue           *value,
                                                    GParamSpec       *pspec);
 
-static gint64        gimp_curve_get_memsize       (GimpObject       *object,
+static gint64        ligma_curve_get_memsize       (LigmaObject       *object,
                                                    gint64           *gui_size);
 
-static void          gimp_curve_get_preview_size  (GimpViewable     *viewable,
+static void          ligma_curve_get_preview_size  (LigmaViewable     *viewable,
                                                    gint              size,
                                                    gboolean          popup,
                                                    gboolean          dot_for_dot,
                                                    gint             *width,
                                                    gint             *height);
-static gboolean      gimp_curve_get_popup_size    (GimpViewable     *viewable,
+static gboolean      ligma_curve_get_popup_size    (LigmaViewable     *viewable,
                                                    gint              width,
                                                    gint              height,
                                                    gboolean          dot_for_dot,
                                                    gint             *popup_width,
                                                    gint             *popup_height);
-static GimpTempBuf * gimp_curve_get_new_preview   (GimpViewable     *viewable,
-                                                   GimpContext      *context,
+static LigmaTempBuf * ligma_curve_get_new_preview   (LigmaViewable     *viewable,
+                                                   LigmaContext      *context,
                                                    gint              width,
                                                    gint              height);
-static gchar       * gimp_curve_get_description   (GimpViewable     *viewable,
+static gchar       * ligma_curve_get_description   (LigmaViewable     *viewable,
                                                    gchar           **tooltip);
 
-static void          gimp_curve_dirty             (GimpData         *data);
-static const gchar * gimp_curve_get_extension     (GimpData         *data);
-static void          gimp_curve_data_copy         (GimpData         *data,
-                                                   GimpData         *src_data);
+static void          ligma_curve_dirty             (LigmaData         *data);
+static const gchar * ligma_curve_get_extension     (LigmaData         *data);
+static void          ligma_curve_data_copy         (LigmaData         *data,
+                                                   LigmaData         *src_data);
 
-static gboolean      gimp_curve_serialize         (GimpConfig       *config,
-                                                   GimpConfigWriter *writer,
+static gboolean      ligma_curve_serialize         (LigmaConfig       *config,
+                                                   LigmaConfigWriter *writer,
                                                    gpointer          data);
-static gboolean      gimp_curve_deserialize       (GimpConfig       *config,
+static gboolean      ligma_curve_deserialize       (LigmaConfig       *config,
                                                    GScanner         *scanner,
                                                    gint              nest_level,
                                                    gpointer          data);
-static gboolean      gimp_curve_equal             (GimpConfig       *a,
-                                                   GimpConfig       *b);
-static void          _gimp_curve_reset            (GimpConfig       *config);
-static gboolean      gimp_curve_config_copy       (GimpConfig       *src,
-                                                   GimpConfig       *dest,
+static gboolean      ligma_curve_equal             (LigmaConfig       *a,
+                                                   LigmaConfig       *b);
+static void          _ligma_curve_reset            (LigmaConfig       *config);
+static gboolean      ligma_curve_config_copy       (LigmaConfig       *src,
+                                                   LigmaConfig       *dest,
                                                    GParamFlags       flags);
 
-static void          gimp_curve_calculate         (GimpCurve        *curve);
-static void          gimp_curve_plot              (GimpCurve        *curve,
+static void          ligma_curve_calculate         (LigmaCurve        *curve);
+static void          ligma_curve_plot              (LigmaCurve        *curve,
                                                    gint              p1,
                                                    gint              p2,
                                                    gint              p3,
                                                    gint              p4);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpCurve, gimp_curve, GIMP_TYPE_DATA,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
-                                                gimp_curve_config_iface_init))
+G_DEFINE_TYPE_WITH_CODE (LigmaCurve, ligma_curve, LIGMA_TYPE_DATA,
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_CONFIG,
+                                                ligma_curve_config_iface_init))
 
-#define parent_class gimp_curve_parent_class
+#define parent_class ligma_curve_parent_class
 
 
 static void
-gimp_curve_class_init (GimpCurveClass *klass)
+ligma_curve_class_init (LigmaCurveClass *klass)
 {
   GObjectClass      *object_class      = G_OBJECT_CLASS (klass);
-  GimpObjectClass   *gimp_object_class = GIMP_OBJECT_CLASS (klass);
-  GimpViewableClass *viewable_class    = GIMP_VIEWABLE_CLASS (klass);
-  GimpDataClass     *data_class        = GIMP_DATA_CLASS (klass);
+  LigmaObjectClass   *ligma_object_class = LIGMA_OBJECT_CLASS (klass);
+  LigmaViewableClass *viewable_class    = LIGMA_VIEWABLE_CLASS (klass);
+  LigmaDataClass     *data_class        = LIGMA_DATA_CLASS (klass);
   GParamSpec        *array_spec;
 
-  object_class->finalize            = gimp_curve_finalize;
-  object_class->set_property        = gimp_curve_set_property;
-  object_class->get_property        = gimp_curve_get_property;
+  object_class->finalize            = ligma_curve_finalize;
+  object_class->set_property        = ligma_curve_set_property;
+  object_class->get_property        = ligma_curve_get_property;
 
-  gimp_object_class->get_memsize    = gimp_curve_get_memsize;
+  ligma_object_class->get_memsize    = ligma_curve_get_memsize;
 
   viewable_class->default_icon_name = "FIXME icon name";
-  viewable_class->get_preview_size  = gimp_curve_get_preview_size;
-  viewable_class->get_popup_size    = gimp_curve_get_popup_size;
-  viewable_class->get_new_preview   = gimp_curve_get_new_preview;
-  viewable_class->get_description   = gimp_curve_get_description;
+  viewable_class->get_preview_size  = ligma_curve_get_preview_size;
+  viewable_class->get_popup_size    = ligma_curve_get_popup_size;
+  viewable_class->get_new_preview   = ligma_curve_get_new_preview;
+  viewable_class->get_description   = ligma_curve_get_description;
 
-  data_class->dirty                 = gimp_curve_dirty;
-  data_class->save                  = gimp_curve_save;
-  data_class->get_extension         = gimp_curve_get_extension;
-  data_class->copy                  = gimp_curve_data_copy;
+  data_class->dirty                 = ligma_curve_dirty;
+  data_class->save                  = ligma_curve_save;
+  data_class->get_extension         = ligma_curve_get_extension;
+  data_class->copy                  = ligma_curve_data_copy;
 
   obj_props[PROP_CURVE_TYPE] =
       g_param_spec_enum ("curve-type",
                          "Curve Type",
                          "The curve type",
-                         GIMP_TYPE_CURVE_TYPE,
-                         GIMP_CURVE_SMOOTH,
-                         GIMP_CONFIG_PARAM_FLAGS);
+                         LIGMA_TYPE_CURVE_TYPE,
+                         LIGMA_CURVE_SMOOTH,
+                         LIGMA_CONFIG_PARAM_FLAGS);
 
   obj_props[PROP_N_POINTS] =
       g_param_spec_int ("n-points",
@@ -164,56 +164,56 @@ gimp_curve_class_init (GimpCurveClass *klass)
                         "The number of points",
                         0, G_MAXINT, 0,
                         /* for backward compatibility */
-                        GIMP_CONFIG_PARAM_IGNORE | GIMP_CONFIG_PARAM_FLAGS);
+                        LIGMA_CONFIG_PARAM_IGNORE | LIGMA_CONFIG_PARAM_FLAGS);
 
   array_spec = g_param_spec_double ("point", NULL, NULL,
-                                    -1.0, 1.0, 0.0, GIMP_PARAM_READWRITE);
+                                    -1.0, 1.0, 0.0, LIGMA_PARAM_READWRITE);
   obj_props[PROP_POINTS] =
-      gimp_param_spec_value_array ("points",
+      ligma_param_spec_value_array ("points",
                                    NULL, NULL,
                                    array_spec,
-                                   GIMP_CONFIG_PARAM_FLAGS);
+                                   LIGMA_CONFIG_PARAM_FLAGS);
 
   array_spec = g_param_spec_enum ("point-type", NULL, NULL,
-                                  GIMP_TYPE_CURVE_POINT_TYPE,
-                                  GIMP_CURVE_POINT_SMOOTH,
-                                  GIMP_PARAM_READWRITE);
+                                  LIGMA_TYPE_CURVE_POINT_TYPE,
+                                  LIGMA_CURVE_POINT_SMOOTH,
+                                  LIGMA_PARAM_READWRITE);
   obj_props[PROP_POINT_TYPES] =
-      gimp_param_spec_value_array ("point-types",
+      ligma_param_spec_value_array ("point-types",
                                    NULL, NULL,
                                    array_spec,
-                                   GIMP_CONFIG_PARAM_FLAGS);
+                                   LIGMA_CONFIG_PARAM_FLAGS);
 
   obj_props[PROP_N_SAMPLES] =
       g_param_spec_int ("n-samples",
                         "Number of Samples",
                         "The number of samples",
                         256, 256, 256,
-                        GIMP_CONFIG_PARAM_FLAGS);
+                        LIGMA_CONFIG_PARAM_FLAGS);
 
   array_spec = g_param_spec_double ("sample", NULL, NULL,
-                                    0.0, 1.0, 0.0, GIMP_PARAM_READWRITE);
+                                    0.0, 1.0, 0.0, LIGMA_PARAM_READWRITE);
   obj_props[PROP_SAMPLES] =
-      gimp_param_spec_value_array ("samples",
+      ligma_param_spec_value_array ("samples",
                                    NULL, NULL,
                                    array_spec,
-                                   GIMP_CONFIG_PARAM_FLAGS);
+                                   LIGMA_CONFIG_PARAM_FLAGS);
 
   g_object_class_install_properties (object_class, N_PROPS, obj_props);
 }
 
 static void
-gimp_curve_config_iface_init (GimpConfigInterface *iface)
+ligma_curve_config_iface_init (LigmaConfigInterface *iface)
 {
-  iface->serialize   = gimp_curve_serialize;
-  iface->deserialize = gimp_curve_deserialize;
-  iface->equal       = gimp_curve_equal;
-  iface->reset       = _gimp_curve_reset;
-  iface->copy        = gimp_curve_config_copy;
+  iface->serialize   = ligma_curve_serialize;
+  iface->deserialize = ligma_curve_deserialize;
+  iface->equal       = ligma_curve_equal;
+  iface->reset       = _ligma_curve_reset;
+  iface->copy        = ligma_curve_config_copy;
 }
 
 static void
-gimp_curve_init (GimpCurve *curve)
+ligma_curve_init (LigmaCurve *curve)
 {
   curve->n_points  = 0;
   curve->points    = NULL;
@@ -223,9 +223,9 @@ gimp_curve_init (GimpCurve *curve)
 }
 
 static void
-gimp_curve_finalize (GObject *object)
+ligma_curve_finalize (GObject *object)
 {
-  GimpCurve *curve = GIMP_CURVE (object);
+  LigmaCurve *curve = LIGMA_CURVE (object);
 
   g_clear_pointer (&curve->points,  g_free);
   curve->n_points = 0;
@@ -237,17 +237,17 @@ gimp_curve_finalize (GObject *object)
 }
 
 static void
-gimp_curve_set_property (GObject      *object,
+ligma_curve_set_property (GObject      *object,
                          guint         property_id,
                          const GValue *value,
                          GParamSpec   *pspec)
 {
-  GimpCurve *curve = GIMP_CURVE (object);
+  LigmaCurve *curve = LIGMA_CURVE (object);
 
   switch (property_id)
     {
     case PROP_CURVE_TYPE:
-      gimp_curve_set_curve_type (curve, g_value_get_enum (value));
+      ligma_curve_set_curve_type (curve, g_value_get_enum (value));
       break;
 
     case PROP_N_POINTS:
@@ -256,28 +256,28 @@ gimp_curve_set_property (GObject      *object,
 
     case PROP_POINTS:
       {
-        GimpValueArray *array = g_value_get_boxed (value);
-        GimpCurvePoint *points;
+        LigmaValueArray *array = g_value_get_boxed (value);
+        LigmaCurvePoint *points;
         gint            length;
         gint            n_points;
         gint            i;
 
         if (! array)
           {
-            gimp_curve_clear_points (curve);
+            ligma_curve_clear_points (curve);
 
             break;
           }
 
-        length = gimp_value_array_length (array) / 2;
+        length = ligma_value_array_length (array) / 2;
 
         n_points = 0;
-        points   = g_new0 (GimpCurvePoint, length);
+        points   = g_new0 (LigmaCurvePoint, length);
 
         for (i = 0; i < length; i++)
           {
-            GValue *x = gimp_value_array_index (array, i * 2);
-            GValue *y = gimp_value_array_index (array, i * 2 + 1);
+            GValue *x = ligma_value_array_index (array, i * 2);
+            GValue *y = ligma_value_array_index (array, i * 2 + 1);
 
             /* for backward compatibility */
             if (g_value_get_double (x) < 0.0)
@@ -295,7 +295,7 @@ gimp_curve_set_property (GObject      *object,
             if (n_points < curve->n_points)
               points[n_points].type = curve->points[n_points].type;
             else
-              points[n_points].type = GIMP_CURVE_POINT_SMOOTH;
+              points[n_points].type = LIGMA_CURVE_POINT_SMOOTH;
 
             n_points++;
           }
@@ -312,8 +312,8 @@ gimp_curve_set_property (GObject      *object,
 
     case PROP_POINT_TYPES:
       {
-        GimpValueArray *array = g_value_get_boxed (value);
-        GimpCurvePoint *points;
+        LigmaValueArray *array = g_value_get_boxed (value);
+        LigmaCurvePoint *points;
         gint            length;
         gdouble         x     = 0.0;
         gdouble         y     = 0.0;
@@ -321,18 +321,18 @@ gimp_curve_set_property (GObject      *object,
 
         if (! array)
           {
-            gimp_curve_clear_points (curve);
+            ligma_curve_clear_points (curve);
 
             break;
           }
 
-        length = gimp_value_array_length (array);
+        length = ligma_value_array_length (array);
 
-        points = g_new0 (GimpCurvePoint, length);
+        points = g_new0 (LigmaCurvePoint, length);
 
         for (i = 0; i < length; i++)
           {
-            GValue *type = gimp_value_array_index (array, i);
+            GValue *type = ligma_value_array_index (array, i);
 
             points[i].type = g_value_get_enum (type);
 
@@ -357,23 +357,23 @@ gimp_curve_set_property (GObject      *object,
       break;
 
     case PROP_N_SAMPLES:
-      gimp_curve_set_n_samples (curve, g_value_get_int (value));
+      ligma_curve_set_n_samples (curve, g_value_get_int (value));
       break;
 
     case PROP_SAMPLES:
       {
-        GimpValueArray *array = g_value_get_boxed (value);
+        LigmaValueArray *array = g_value_get_boxed (value);
         gint            length;
         gint            i;
 
         if (! array)
           break;
 
-        length = gimp_value_array_length (array);
+        length = ligma_value_array_length (array);
 
         for (i = 0; i < curve->n_samples && i < length; i++)
           {
-            GValue *v = gimp_value_array_index (array, i);
+            GValue *v = ligma_value_array_index (array, i);
 
             curve->samples[i] = CLAMP (g_value_get_double (v), 0.0, 1.0);
           }
@@ -387,12 +387,12 @@ gimp_curve_set_property (GObject      *object,
 }
 
 static void
-gimp_curve_get_property (GObject    *object,
+ligma_curve_get_property (GObject    *object,
                          guint       property_id,
                          GValue     *value,
                          GParamSpec *pspec)
 {
-  GimpCurve *curve = GIMP_CURVE (object);
+  LigmaCurve *curve = LIGMA_CURVE (object);
 
   switch (property_id)
     {
@@ -406,7 +406,7 @@ gimp_curve_get_property (GObject    *object,
 
     case PROP_POINTS:
       {
-        GimpValueArray *array = gimp_value_array_new (curve->n_points * 2);
+        LigmaValueArray *array = ligma_value_array_new (curve->n_points * 2);
         GValue          v     = G_VALUE_INIT;
         gint            i;
 
@@ -415,10 +415,10 @@ gimp_curve_get_property (GObject    *object,
         for (i = 0; i < curve->n_points; i++)
           {
             g_value_set_double (&v, curve->points[i].x);
-            gimp_value_array_append (array, &v);
+            ligma_value_array_append (array, &v);
 
             g_value_set_double (&v, curve->points[i].y);
-            gimp_value_array_append (array, &v);
+            ligma_value_array_append (array, &v);
           }
 
         g_value_unset (&v);
@@ -429,16 +429,16 @@ gimp_curve_get_property (GObject    *object,
 
     case PROP_POINT_TYPES:
       {
-        GimpValueArray *array = gimp_value_array_new (curve->n_points);
+        LigmaValueArray *array = ligma_value_array_new (curve->n_points);
         GValue          v     = G_VALUE_INIT;
         gint            i;
 
-        g_value_init (&v, GIMP_TYPE_CURVE_POINT_TYPE);
+        g_value_init (&v, LIGMA_TYPE_CURVE_POINT_TYPE);
 
         for (i = 0; i < curve->n_points; i++)
           {
             g_value_set_enum (&v, curve->points[i].type);
-            gimp_value_array_append (array, &v);
+            ligma_value_array_append (array, &v);
           }
 
         g_value_unset (&v);
@@ -453,7 +453,7 @@ gimp_curve_get_property (GObject    *object,
 
     case PROP_SAMPLES:
       {
-        GimpValueArray *array = gimp_value_array_new (curve->n_samples);
+        LigmaValueArray *array = ligma_value_array_new (curve->n_samples);
         GValue          v     = G_VALUE_INIT;
         gint            i;
 
@@ -462,7 +462,7 @@ gimp_curve_get_property (GObject    *object,
         for (i = 0; i < curve->n_samples; i++)
           {
             g_value_set_double (&v, curve->samples[i]);
-            gimp_value_array_append (array, &v);
+            ligma_value_array_append (array, &v);
           }
 
         g_value_unset (&v);
@@ -478,21 +478,21 @@ gimp_curve_get_property (GObject    *object,
 }
 
 static gint64
-gimp_curve_get_memsize (GimpObject *object,
+ligma_curve_get_memsize (LigmaObject *object,
                         gint64     *gui_size)
 {
-  GimpCurve *curve   = GIMP_CURVE (object);
+  LigmaCurve *curve   = LIGMA_CURVE (object);
   gint64     memsize = 0;
 
-  memsize += curve->n_points  * sizeof (GimpCurvePoint);
+  memsize += curve->n_points  * sizeof (LigmaCurvePoint);
   memsize += curve->n_samples * sizeof (gdouble);
 
-  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
+  return memsize + LIGMA_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
 }
 
 static void
-gimp_curve_get_preview_size (GimpViewable *viewable,
+ligma_curve_get_preview_size (LigmaViewable *viewable,
                              gint          size,
                              gboolean      popup,
                              gboolean      dot_for_dot,
@@ -504,7 +504,7 @@ gimp_curve_get_preview_size (GimpViewable *viewable,
 }
 
 static gboolean
-gimp_curve_get_popup_size (GimpViewable *viewable,
+ligma_curve_get_popup_size (LigmaViewable *viewable,
                            gint          width,
                            gint          height,
                            gboolean      dot_for_dot,
@@ -517,9 +517,9 @@ gimp_curve_get_popup_size (GimpViewable *viewable,
   return TRUE;
 }
 
-static GimpTempBuf *
-gimp_curve_get_new_preview (GimpViewable *viewable,
-                            GimpContext  *context,
+static LigmaTempBuf *
+ligma_curve_get_new_preview (LigmaViewable *viewable,
+                            LigmaContext  *context,
                             gint          width,
                             gint          height)
 {
@@ -527,80 +527,80 @@ gimp_curve_get_new_preview (GimpViewable *viewable,
 }
 
 static gchar *
-gimp_curve_get_description (GimpViewable  *viewable,
+ligma_curve_get_description (LigmaViewable  *viewable,
                             gchar        **tooltip)
 {
-  GimpCurve *curve = GIMP_CURVE (viewable);
+  LigmaCurve *curve = LIGMA_CURVE (viewable);
 
-  return g_strdup_printf ("%s", gimp_object_get_name (curve));
+  return g_strdup_printf ("%s", ligma_object_get_name (curve));
 }
 
 static void
-gimp_curve_dirty (GimpData *data)
+ligma_curve_dirty (LigmaData *data)
 {
-  GimpCurve *curve = GIMP_CURVE (data);
+  LigmaCurve *curve = LIGMA_CURVE (data);
 
   curve->identity = FALSE;
 
-  gimp_curve_calculate (curve);
+  ligma_curve_calculate (curve);
 
-  GIMP_DATA_CLASS (parent_class)->dirty (data);
+  LIGMA_DATA_CLASS (parent_class)->dirty (data);
 }
 
 static const gchar *
-gimp_curve_get_extension (GimpData *data)
+ligma_curve_get_extension (LigmaData *data)
 {
-  return GIMP_CURVE_FILE_EXTENSION;
+  return LIGMA_CURVE_FILE_EXTENSION;
 }
 
 static void
-gimp_curve_data_copy (GimpData *data,
-                      GimpData *src_data)
+ligma_curve_data_copy (LigmaData *data,
+                      LigmaData *src_data)
 {
-  gimp_data_freeze (data);
+  ligma_data_freeze (data);
 
-  gimp_config_copy (GIMP_CONFIG (src_data),
-                    GIMP_CONFIG (data), 0);
+  ligma_config_copy (LIGMA_CONFIG (src_data),
+                    LIGMA_CONFIG (data), 0);
 
-  gimp_data_thaw (data);
+  ligma_data_thaw (data);
 }
 
 static gboolean
-gimp_curve_serialize (GimpConfig       *config,
-                      GimpConfigWriter *writer,
+ligma_curve_serialize (LigmaConfig       *config,
+                      LigmaConfigWriter *writer,
                       gpointer          data)
 {
-  return gimp_config_serialize_properties (config, writer);
+  return ligma_config_serialize_properties (config, writer);
 }
 
 static gboolean
-gimp_curve_deserialize (GimpConfig *config,
+ligma_curve_deserialize (LigmaConfig *config,
                         GScanner   *scanner,
                         gint        nest_level,
                         gpointer    data)
 {
   gboolean success;
 
-  success = gimp_config_deserialize_properties (config, scanner, nest_level);
+  success = ligma_config_deserialize_properties (config, scanner, nest_level);
 
-  GIMP_CURVE (config)->identity = FALSE;
+  LIGMA_CURVE (config)->identity = FALSE;
 
   return success;
 }
 
 static gboolean
-gimp_curve_equal (GimpConfig *a,
-                  GimpConfig *b)
+ligma_curve_equal (LigmaConfig *a,
+                  LigmaConfig *b)
 {
-  GimpCurve *a_curve = GIMP_CURVE (a);
-  GimpCurve *b_curve = GIMP_CURVE (b);
+  LigmaCurve *a_curve = LIGMA_CURVE (a);
+  LigmaCurve *b_curve = LIGMA_CURVE (b);
 
   if (a_curve->curve_type != b_curve->curve_type)
     return FALSE;
 
   if (a_curve->n_points != b_curve->n_points ||
       memcmp (a_curve->points, b_curve->points,
-              sizeof (GimpCurvePoint) * a_curve->n_points))
+              sizeof (LigmaCurvePoint) * a_curve->n_points))
     {
       return FALSE;
     }
@@ -616,29 +616,29 @@ gimp_curve_equal (GimpConfig *a,
 }
 
 static void
-_gimp_curve_reset (GimpConfig *config)
+_ligma_curve_reset (LigmaConfig *config)
 {
-  gimp_curve_reset (GIMP_CURVE (config), TRUE);
+  ligma_curve_reset (LIGMA_CURVE (config), TRUE);
 }
 
 static gboolean
-gimp_curve_config_copy (GimpConfig  *src,
-                        GimpConfig  *dest,
+ligma_curve_config_copy (LigmaConfig  *src,
+                        LigmaConfig  *dest,
                         GParamFlags  flags)
 {
-  GimpCurve *src_curve  = GIMP_CURVE (src);
-  GimpCurve *dest_curve = GIMP_CURVE (dest);
+  LigmaCurve *src_curve  = LIGMA_CURVE (src);
+  LigmaCurve *dest_curve = LIGMA_CURVE (dest);
 
   /* make sure the curve type is copied *before* the points, so that we don't
    * overwrite the copied points when changing the type
    */
   dest_curve->curve_type = src_curve->curve_type;
 
-  gimp_config_sync (G_OBJECT (src), G_OBJECT (dest), flags);
+  ligma_config_sync (G_OBJECT (src), G_OBJECT (dest), flags);
 
   dest_curve->identity = src_curve->identity;
 
-  gimp_data_dirty (GIMP_DATA (dest));
+  ligma_data_dirty (LIGMA_DATA (dest));
 
   return TRUE;
 }
@@ -646,29 +646,29 @@ gimp_curve_config_copy (GimpConfig  *src,
 
 /*  public functions  */
 
-GimpData *
-gimp_curve_new (const gchar *name)
+LigmaData *
+ligma_curve_new (const gchar *name)
 {
   g_return_val_if_fail (name != NULL, NULL);
   g_return_val_if_fail (*name != '\0', NULL);
 
-  return g_object_new (GIMP_TYPE_CURVE,
+  return g_object_new (LIGMA_TYPE_CURVE,
                        "name", name,
                        NULL);
 }
 
-GimpData *
-gimp_curve_get_standard (void)
+LigmaData *
+ligma_curve_get_standard (void)
 {
-  static GimpData *standard_curve = NULL;
+  static LigmaData *standard_curve = NULL;
 
   if (! standard_curve)
     {
-      standard_curve = gimp_curve_new ("Standard");
+      standard_curve = ligma_curve_new ("Standard");
 
-      gimp_data_clean (standard_curve);
-      gimp_data_make_internal (standard_curve,
-                               "gimp-curve-standard");
+      ligma_data_clean (standard_curve);
+      ligma_data_make_internal (standard_curve,
+                               "ligma-curve-standard");
 
       g_object_ref (standard_curve);
     }
@@ -677,12 +677,12 @@ gimp_curve_get_standard (void)
 }
 
 void
-gimp_curve_reset (GimpCurve *curve,
+ligma_curve_reset (LigmaCurve *curve,
                   gboolean   reset_type)
 {
   gint i;
 
-  g_return_if_fail (GIMP_IS_CURVE (curve));
+  g_return_if_fail (LIGMA_IS_CURVE (curve));
 
   g_object_freeze_notify (G_OBJECT (curve));
 
@@ -694,15 +694,15 @@ gimp_curve_reset (GimpCurve *curve,
   g_free (curve->points);
 
   curve->n_points = 2;
-  curve->points   = g_new0 (GimpCurvePoint, 2);
+  curve->points   = g_new0 (LigmaCurvePoint, 2);
 
   curve->points[0].x    = 0.0;
   curve->points[0].y    = 0.0;
-  curve->points[0].type = GIMP_CURVE_POINT_SMOOTH;
+  curve->points[0].type = LIGMA_CURVE_POINT_SMOOTH;
 
   curve->points[1].x    = 1.0;
   curve->points[1].y    = 1.0;
-  curve->points[1].type = GIMP_CURVE_POINT_SMOOTH;
+  curve->points[1].type = LIGMA_CURVE_POINT_SMOOTH;
 
   g_object_notify_by_pspec (G_OBJECT (curve), obj_props[PROP_N_POINTS]);
   g_object_notify_by_pspec (G_OBJECT (curve), obj_props[PROP_POINTS]);
@@ -710,7 +710,7 @@ gimp_curve_reset (GimpCurve *curve,
 
   if (reset_type)
     {
-      curve->curve_type = GIMP_CURVE_SMOOTH;
+      curve->curve_type = LIGMA_CURVE_SMOOTH;
       g_object_notify_by_pspec (G_OBJECT (curve), obj_props[PROP_CURVE_TYPE]);
     }
 
@@ -718,24 +718,24 @@ gimp_curve_reset (GimpCurve *curve,
 
   g_object_thaw_notify (G_OBJECT (curve));
 
-  gimp_data_dirty (GIMP_DATA (curve));
+  ligma_data_dirty (LIGMA_DATA (curve));
 }
 
 void
-gimp_curve_set_curve_type (GimpCurve     *curve,
-                           GimpCurveType  curve_type)
+ligma_curve_set_curve_type (LigmaCurve     *curve,
+                           LigmaCurveType  curve_type)
 {
-  g_return_if_fail (GIMP_IS_CURVE (curve));
+  g_return_if_fail (LIGMA_IS_CURVE (curve));
 
   if (curve->curve_type != curve_type)
     {
-      gimp_data_freeze (GIMP_DATA (curve));
+      ligma_data_freeze (LIGMA_DATA (curve));
 
       g_object_freeze_notify (G_OBJECT (curve));
 
       curve->curve_type = curve_type;
 
-      if (curve_type == GIMP_CURVE_SMOOTH)
+      if (curve_type == LIGMA_CURVE_SMOOTH)
         {
           gint i;
 
@@ -745,7 +745,7 @@ gimp_curve_set_curve_type (GimpCurve     *curve,
            *  points
            */
           curve->n_points = 9;
-          curve->points   = g_new0 (GimpCurvePoint, 9);
+          curve->points   = g_new0 (LigmaCurvePoint, 9);
 
           for (i = 0; i < curve->n_points; i++)
             {
@@ -754,7 +754,7 @@ gimp_curve_set_curve_type (GimpCurve     *curve,
               curve->points[i].x    = (gdouble) sample /
                                       (gdouble) (curve->n_samples - 1);
               curve->points[i].y    = curve->samples[sample];
-              curve->points[i].type = GIMP_CURVE_POINT_SMOOTH;
+              curve->points[i].type = LIGMA_CURVE_POINT_SMOOTH;
             }
 
           g_object_notify_by_pspec (G_OBJECT (curve), obj_props[PROP_N_POINTS]);
@@ -763,38 +763,38 @@ gimp_curve_set_curve_type (GimpCurve     *curve,
         }
       else
         {
-          gimp_curve_clear_points (curve);
+          ligma_curve_clear_points (curve);
         }
 
       g_object_notify_by_pspec (G_OBJECT (curve), obj_props[PROP_CURVE_TYPE]);
 
       g_object_thaw_notify (G_OBJECT (curve));
 
-      gimp_data_thaw (GIMP_DATA (curve));
+      ligma_data_thaw (LIGMA_DATA (curve));
     }
 }
 
-GimpCurveType
-gimp_curve_get_curve_type (GimpCurve *curve)
+LigmaCurveType
+ligma_curve_get_curve_type (LigmaCurve *curve)
 {
-  g_return_val_if_fail (GIMP_IS_CURVE (curve), GIMP_CURVE_SMOOTH);
+  g_return_val_if_fail (LIGMA_IS_CURVE (curve), LIGMA_CURVE_SMOOTH);
 
   return curve->curve_type;
 }
 
 gint
-gimp_curve_get_n_points (GimpCurve *curve)
+ligma_curve_get_n_points (LigmaCurve *curve)
 {
-  g_return_val_if_fail (GIMP_IS_CURVE (curve), 0);
+  g_return_val_if_fail (LIGMA_IS_CURVE (curve), 0);
 
   return curve->n_points;
 }
 
 void
-gimp_curve_set_n_samples (GimpCurve *curve,
+ligma_curve_set_n_samples (LigmaCurve *curve,
                           gint       n_samples)
 {
-  g_return_if_fail (GIMP_IS_CURVE (curve));
+  g_return_if_fail (LIGMA_IS_CURVE (curve));
   g_return_if_fail (n_samples >= 256);
   g_return_if_fail (n_samples <= 4096);
 
@@ -814,7 +814,7 @@ gimp_curve_set_n_samples (GimpCurve *curve,
 
       g_object_notify_by_pspec (G_OBJECT (curve), obj_props[PROP_SAMPLES]);
 
-      if (curve->curve_type == GIMP_CURVE_FREE)
+      if (curve->curve_type == LIGMA_CURVE_FREE)
         curve->identity = TRUE;
 
       g_object_thaw_notify (G_OBJECT (curve));
@@ -822,22 +822,22 @@ gimp_curve_set_n_samples (GimpCurve *curve,
 }
 
 gint
-gimp_curve_get_n_samples (GimpCurve *curve)
+ligma_curve_get_n_samples (LigmaCurve *curve)
 {
-  g_return_val_if_fail (GIMP_IS_CURVE (curve), 0);
+  g_return_val_if_fail (LIGMA_IS_CURVE (curve), 0);
 
   return curve->n_samples;
 }
 
 gint
-gimp_curve_get_point_at (GimpCurve *curve,
+ligma_curve_get_point_at (LigmaCurve *curve,
                          gdouble    x)
 {
   gint    closest_point = -1;
   gdouble distance      = EPSILON;
   gint    i;
 
-  g_return_val_if_fail (GIMP_IS_CURVE (curve), -1);
+  g_return_val_if_fail (LIGMA_IS_CURVE (curve), -1);
 
   for (i = 0; i < curve->n_points; i++)
     {
@@ -856,7 +856,7 @@ gimp_curve_get_point_at (GimpCurve *curve,
 }
 
 gint
-gimp_curve_get_closest_point (GimpCurve *curve,
+ligma_curve_get_closest_point (LigmaCurve *curve,
                               gdouble    x,
                               gdouble    y,
                               gdouble    max_distance)
@@ -865,7 +865,7 @@ gimp_curve_get_closest_point (GimpCurve *curve,
   gdouble distance2     = G_MAXDOUBLE;
   gint    i;
 
-  g_return_val_if_fail (GIMP_IS_CURVE (curve), -1);
+  g_return_val_if_fail (LIGMA_IS_CURVE (curve), -1);
 
   if (max_distance >= 0.0)
     distance2 = SQR (max_distance);
@@ -888,16 +888,16 @@ gimp_curve_get_closest_point (GimpCurve *curve,
 }
 
 gint
-gimp_curve_add_point (GimpCurve *curve,
+ligma_curve_add_point (LigmaCurve *curve,
                       gdouble    x,
                       gdouble    y)
 {
-  GimpCurvePoint *points;
+  LigmaCurvePoint *points;
   gint            point;
 
-  g_return_val_if_fail (GIMP_IS_CURVE (curve), -1);
+  g_return_val_if_fail (LIGMA_IS_CURVE (curve), -1);
 
-  if (curve->curve_type == GIMP_CURVE_FREE)
+  if (curve->curve_type == LIGMA_CURVE_FREE)
     return -1;
 
   x = CLAMP (x, 0.0, 1.0);
@@ -909,16 +909,16 @@ gimp_curve_add_point (GimpCurve *curve,
         break;
     }
 
-  points = g_new0 (GimpCurvePoint, curve->n_points + 1);
+  points = g_new0 (LigmaCurvePoint, curve->n_points + 1);
 
   memcpy (points,         curve->points,
-          point * sizeof (GimpCurvePoint));
+          point * sizeof (LigmaCurvePoint));
   memcpy (points + point + 1, curve->points + point,
-          (curve->n_points - point) * sizeof (GimpCurvePoint));
+          (curve->n_points - point) * sizeof (LigmaCurvePoint));
 
   points[point].x    = x;
   points[point].y    = y;
-  points[point].type = GIMP_CURVE_POINT_SMOOTH;
+  points[point].type = LIGMA_CURVE_POINT_SMOOTH;
 
   g_free (curve->points);
 
@@ -929,26 +929,26 @@ gimp_curve_add_point (GimpCurve *curve,
   g_object_notify_by_pspec (G_OBJECT (curve), obj_props[PROP_POINTS]);
   g_object_notify_by_pspec (G_OBJECT (curve), obj_props[PROP_POINT_TYPES]);
 
-  gimp_data_dirty (GIMP_DATA (curve));
+  ligma_data_dirty (LIGMA_DATA (curve));
 
   return point;
 }
 
 void
-gimp_curve_delete_point (GimpCurve *curve,
+ligma_curve_delete_point (LigmaCurve *curve,
                          gint       point)
 {
-  GimpCurvePoint *points;
+  LigmaCurvePoint *points;
 
-  g_return_if_fail (GIMP_IS_CURVE (curve));
+  g_return_if_fail (LIGMA_IS_CURVE (curve));
   g_return_if_fail (point >= 0 && point < curve->n_points);
 
-  points = g_new0 (GimpCurvePoint, curve->n_points - 1);
+  points = g_new0 (LigmaCurvePoint, curve->n_points - 1);
 
   memcpy (points,         curve->points,
-          point * sizeof (GimpCurvePoint));
+          point * sizeof (LigmaCurvePoint));
   memcpy (points + point, curve->points + point + 1,
-          (curve->n_points - point - 1) * sizeof (GimpCurvePoint));
+          (curve->n_points - point - 1) * sizeof (LigmaCurvePoint));
 
   g_free (curve->points);
 
@@ -959,16 +959,16 @@ gimp_curve_delete_point (GimpCurve *curve,
   g_object_notify_by_pspec (G_OBJECT (curve), obj_props[PROP_POINTS]);
   g_object_notify_by_pspec (G_OBJECT (curve), obj_props[PROP_POINT_TYPES]);
 
-  gimp_data_dirty (GIMP_DATA (curve));
+  ligma_data_dirty (LIGMA_DATA (curve));
 }
 
 void
-gimp_curve_set_point (GimpCurve *curve,
+ligma_curve_set_point (LigmaCurve *curve,
                       gint       point,
                       gdouble    x,
                       gdouble    y)
 {
-  g_return_if_fail (GIMP_IS_CURVE (curve));
+  g_return_if_fail (LIGMA_IS_CURVE (curve));
   g_return_if_fail (point >= 0 && point < curve->n_points);
 
   curve->points[point].x = CLAMP (x, 0.0, 1.0);
@@ -982,31 +982,31 @@ gimp_curve_set_point (GimpCurve *curve,
 
   g_object_notify_by_pspec (G_OBJECT (curve), obj_props[PROP_POINTS]);
 
-  gimp_data_dirty (GIMP_DATA (curve));
+  ligma_data_dirty (LIGMA_DATA (curve));
 }
 
 void
-gimp_curve_move_point (GimpCurve *curve,
+ligma_curve_move_point (LigmaCurve *curve,
                        gint       point,
                        gdouble    y)
 {
-  g_return_if_fail (GIMP_IS_CURVE (curve));
+  g_return_if_fail (LIGMA_IS_CURVE (curve));
   g_return_if_fail (point >= 0 && point < curve->n_points);
 
   curve->points[point].y = CLAMP (y, 0.0, 1.0);
 
   g_object_notify_by_pspec (G_OBJECT (curve), obj_props[PROP_POINTS]);
 
-  gimp_data_dirty (GIMP_DATA (curve));
+  ligma_data_dirty (LIGMA_DATA (curve));
 }
 
 void
-gimp_curve_get_point (GimpCurve *curve,
+ligma_curve_get_point (LigmaCurve *curve,
                       gint       point,
                       gdouble   *x,
                       gdouble   *y)
 {
-  g_return_if_fail (GIMP_IS_CURVE (curve));
+  g_return_if_fail (LIGMA_IS_CURVE (curve));
   g_return_if_fail (point >= 0 && point < curve->n_points);
 
   if (x) *x = curve->points[point].x;
@@ -1014,34 +1014,34 @@ gimp_curve_get_point (GimpCurve *curve,
 }
 
 void
-gimp_curve_set_point_type (GimpCurve          *curve,
+ligma_curve_set_point_type (LigmaCurve          *curve,
                            gint                point,
-                           GimpCurvePointType  type)
+                           LigmaCurvePointType  type)
 {
-  g_return_if_fail (GIMP_IS_CURVE (curve));
+  g_return_if_fail (LIGMA_IS_CURVE (curve));
   g_return_if_fail (point >= 0 && point < curve->n_points);
 
   curve->points[point].type = type;
 
   g_object_notify_by_pspec (G_OBJECT (curve), obj_props[PROP_POINT_TYPES]);
 
-  gimp_data_dirty (GIMP_DATA (curve));
+  ligma_data_dirty (LIGMA_DATA (curve));
 }
 
-GimpCurvePointType
-gimp_curve_get_point_type (GimpCurve *curve,
+LigmaCurvePointType
+ligma_curve_get_point_type (LigmaCurve *curve,
                            gint       point)
 {
-  g_return_val_if_fail (GIMP_IS_CURVE (curve), GIMP_CURVE_POINT_SMOOTH);
-  g_return_val_if_fail (point >= 0 && point < curve->n_points, GIMP_CURVE_POINT_SMOOTH);
+  g_return_val_if_fail (LIGMA_IS_CURVE (curve), LIGMA_CURVE_POINT_SMOOTH);
+  g_return_val_if_fail (point >= 0 && point < curve->n_points, LIGMA_CURVE_POINT_SMOOTH);
 
   return curve->points[point].type;
 }
 
 void
-gimp_curve_clear_points (GimpCurve *curve)
+ligma_curve_clear_points (LigmaCurve *curve)
 {
-  g_return_if_fail (GIMP_IS_CURVE (curve));
+  g_return_if_fail (LIGMA_IS_CURVE (curve));
 
   if (curve->points)
     {
@@ -1052,32 +1052,32 @@ gimp_curve_clear_points (GimpCurve *curve)
       g_object_notify_by_pspec (G_OBJECT (curve), obj_props[PROP_POINTS]);
       g_object_notify_by_pspec (G_OBJECT (curve), obj_props[PROP_POINT_TYPES]);
 
-      gimp_data_dirty (GIMP_DATA (curve));
+      ligma_data_dirty (LIGMA_DATA (curve));
     }
 }
 
 void
-gimp_curve_set_curve (GimpCurve *curve,
+ligma_curve_set_curve (LigmaCurve *curve,
                       gdouble    x,
                       gdouble    y)
 {
-  g_return_if_fail (GIMP_IS_CURVE (curve));
+  g_return_if_fail (LIGMA_IS_CURVE (curve));
   g_return_if_fail (x >= 0 && x <= 1.0);
   g_return_if_fail (y >= 0 && y <= 1.0);
 
-  if (curve->curve_type == GIMP_CURVE_SMOOTH)
+  if (curve->curve_type == LIGMA_CURVE_SMOOTH)
     return;
 
   curve->samples[ROUND (x * (gdouble) (curve->n_samples - 1))] = y;
 
   g_object_notify_by_pspec (G_OBJECT (curve), obj_props[PROP_SAMPLES]);
 
-  gimp_data_dirty (GIMP_DATA (curve));
+  ligma_data_dirty (LIGMA_DATA (curve));
 }
 
 /**
- * gimp_curve_is_identity:
- * @curve: a #GimpCurve object
+ * ligma_curve_is_identity:
+ * @curve: a #LigmaCurve object
  *
  * If this function returns %TRUE, then the curve maps each value to
  * itself. If it returns %FALSE, then this assumption can not be made.
@@ -1085,21 +1085,21 @@ gimp_curve_set_curve (GimpCurve *curve,
  * Returns: %TRUE if the curve is an identity mapping, %FALSE otherwise.
  **/
 gboolean
-gimp_curve_is_identity (GimpCurve *curve)
+ligma_curve_is_identity (LigmaCurve *curve)
 {
-  g_return_val_if_fail (GIMP_IS_CURVE (curve), FALSE);
+  g_return_val_if_fail (LIGMA_IS_CURVE (curve), FALSE);
 
   return curve->identity;
 }
 
 void
-gimp_curve_get_uchar (GimpCurve *curve,
+ligma_curve_get_uchar (LigmaCurve *curve,
                       gint       n_samples,
                       guchar    *samples)
 {
   gint i;
 
-  g_return_if_fail (GIMP_IS_CURVE (curve));
+  g_return_if_fail (LIGMA_IS_CURVE (curve));
   /* FIXME: support n_samples != curve->n_samples */
   g_return_if_fail (n_samples == curve->n_samples);
   g_return_if_fail (samples != NULL);
@@ -1112,21 +1112,21 @@ gimp_curve_get_uchar (GimpCurve *curve,
 /*  private functions  */
 
 static void
-gimp_curve_calculate (GimpCurve *curve)
+ligma_curve_calculate (LigmaCurve *curve)
 {
   gint i;
   gint p1, p2, p3, p4;
 
-  if (gimp_data_is_frozen (GIMP_DATA (curve)))
+  if (ligma_data_is_frozen (LIGMA_DATA (curve)))
     return;
 
   switch (curve->curve_type)
     {
-    case GIMP_CURVE_SMOOTH:
+    case LIGMA_CURVE_SMOOTH:
       /*  Initialize boundary curve points */
       if (curve->n_points > 0)
         {
-          GimpCurvePoint point;
+          LigmaCurvePoint point;
           gint           boundary;
 
           point    = curve->points[0];
@@ -1149,13 +1149,13 @@ gimp_curve_calculate (GimpCurve *curve)
           p3 = i + 1;
           p4 = MIN (i + 2, curve->n_points - 1);
 
-          if (curve->points[p2].type == GIMP_CURVE_POINT_CORNER)
+          if (curve->points[p2].type == LIGMA_CURVE_POINT_CORNER)
             p1 = p2;
 
-          if (curve->points[p3].type == GIMP_CURVE_POINT_CORNER)
+          if (curve->points[p3].type == LIGMA_CURVE_POINT_CORNER)
             p4 = p3;
 
-          gimp_curve_plot (curve, p1, p2, p3, p4);
+          ligma_curve_plot (curve, p1, p2, p3, p4);
         }
 
       /* ensure that the control points are used exactly */
@@ -1170,7 +1170,7 @@ gimp_curve_calculate (GimpCurve *curve)
       g_object_notify_by_pspec (G_OBJECT (curve), obj_props[PROP_SAMPLES]);
       break;
 
-    case GIMP_CURVE_FREE:
+    case LIGMA_CURVE_FREE:
       break;
     }
 }
@@ -1185,7 +1185,7 @@ gimp_curve_calculate (GimpCurve *curve)
  * neighbor curve control points.
  */
 static void
-gimp_curve_plot (GimpCurve *curve,
+ligma_curve_plot (LigmaCurve *curve,
                  gint       p1,
                  gint       p2,
                  gint       p3,

@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcolorbalanceconfig.h
- * Copyright (C) 2007 Michael Natterer <mitch@gimp.org>
+ * ligmacolorbalanceconfig.h
+ * Copyright (C) 2007 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,28 +18,28 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_COLOR_BALANCE_CONFIG_H__
-#define __GIMP_COLOR_BALANCE_CONFIG_H__
+#ifndef __LIGMA_COLOR_BALANCE_CONFIG_H__
+#define __LIGMA_COLOR_BALANCE_CONFIG_H__
 
 
-#include "gimpoperationsettings.h"
+#include "ligmaoperationsettings.h"
 
 
-#define GIMP_TYPE_COLOR_BALANCE_CONFIG            (gimp_color_balance_config_get_type ())
-#define GIMP_COLOR_BALANCE_CONFIG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_COLOR_BALANCE_CONFIG, GimpColorBalanceConfig))
-#define GIMP_COLOR_BALANCE_CONFIG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  GIMP_TYPE_COLOR_BALANCE_CONFIG, GimpColorBalanceConfigClass))
-#define GIMP_IS_COLOR_BALANCE_CONFIG(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_COLOR_BALANCE_CONFIG))
-#define GIMP_IS_COLOR_BALANCE_CONFIG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  GIMP_TYPE_COLOR_BALANCE_CONFIG))
-#define GIMP_COLOR_BALANCE_CONFIG_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_COLOR_BALANCE_CONFIG, GimpColorBalanceConfigClass))
+#define LIGMA_TYPE_COLOR_BALANCE_CONFIG            (ligma_color_balance_config_get_type ())
+#define LIGMA_COLOR_BALANCE_CONFIG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_COLOR_BALANCE_CONFIG, LigmaColorBalanceConfig))
+#define LIGMA_COLOR_BALANCE_CONFIG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  LIGMA_TYPE_COLOR_BALANCE_CONFIG, LigmaColorBalanceConfigClass))
+#define LIGMA_IS_COLOR_BALANCE_CONFIG(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_COLOR_BALANCE_CONFIG))
+#define LIGMA_IS_COLOR_BALANCE_CONFIG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  LIGMA_TYPE_COLOR_BALANCE_CONFIG))
+#define LIGMA_COLOR_BALANCE_CONFIG_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  LIGMA_TYPE_COLOR_BALANCE_CONFIG, LigmaColorBalanceConfigClass))
 
 
-typedef struct _GimpColorBalanceConfigClass GimpColorBalanceConfigClass;
+typedef struct _LigmaColorBalanceConfigClass LigmaColorBalanceConfigClass;
 
-struct _GimpColorBalanceConfig
+struct _LigmaColorBalanceConfig
 {
-  GimpOperationSettings  parent_instance;
+  LigmaOperationSettings  parent_instance;
 
-  GimpTransferMode       range;
+  LigmaTransferMode       range;
 
   gdouble                cyan_red[3];
   gdouble                magenta_green[3];
@@ -48,15 +48,15 @@ struct _GimpColorBalanceConfig
   gboolean               preserve_luminosity;
 };
 
-struct _GimpColorBalanceConfigClass
+struct _LigmaColorBalanceConfigClass
 {
-  GimpOperationSettingsClass  parent_class;
+  LigmaOperationSettingsClass  parent_class;
 };
 
 
-GType   gimp_color_balance_config_get_type    (void) G_GNUC_CONST;
+GType   ligma_color_balance_config_get_type    (void) G_GNUC_CONST;
 
-void    gimp_color_balance_config_reset_range (GimpColorBalanceConfig *config);
+void    ligma_color_balance_config_reset_range (LigmaColorBalanceConfig *config);
 
 
-#endif /* __GIMP_COLOR_BALANCE_CONFIG_H__ */
+#endif /* __LIGMA_COLOR_BALANCE_CONFIG_H__ */

@@ -1,6 +1,6 @@
-<!-- Simple DTD for GIMP tips -->
+<!-- Simple DTD for LIGMA tips -->
 
-<!ELEMENT gimp-tips (tip+)>
+<!ELEMENT ligma-tips (tip+)>
 
 <!ELEMENT tip (thetip+)>
 <!ATTLIST tip level (start|beginner|intermediate|advanced) #REQUIRED>

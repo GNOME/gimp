@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,31 +15,31 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_LEVELS_TOOL_H__
-#define __GIMP_LEVELS_TOOL_H__
+#ifndef __LIGMA_LEVELS_TOOL_H__
+#define __LIGMA_LEVELS_TOOL_H__
 
 
-#include "gimpfiltertool.h"
+#include "ligmafiltertool.h"
 
 
-#define GIMP_TYPE_LEVELS_TOOL            (gimp_levels_tool_get_type ())
-#define GIMP_LEVELS_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_LEVELS_TOOL, GimpLevelsTool))
-#define GIMP_LEVELS_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_LEVELS_TOOL, GimpLevelsToolClass))
-#define GIMP_IS_LEVELS_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_LEVELS_TOOL))
-#define GIMP_IS_LEVELS_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_LEVELS_TOOL))
-#define GIMP_LEVELS_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_LEVELS_TOOL, GimpLevelsToolClass))
+#define LIGMA_TYPE_LEVELS_TOOL            (ligma_levels_tool_get_type ())
+#define LIGMA_LEVELS_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_LEVELS_TOOL, LigmaLevelsTool))
+#define LIGMA_LEVELS_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_LEVELS_TOOL, LigmaLevelsToolClass))
+#define LIGMA_IS_LEVELS_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_LEVELS_TOOL))
+#define LIGMA_IS_LEVELS_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_LEVELS_TOOL))
+#define LIGMA_LEVELS_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_LEVELS_TOOL, LigmaLevelsToolClass))
 
 
-typedef struct _GimpLevelsTool      GimpLevelsTool;
-typedef struct _GimpLevelsToolClass GimpLevelsToolClass;
+typedef struct _LigmaLevelsTool      LigmaLevelsTool;
+typedef struct _LigmaLevelsToolClass LigmaLevelsToolClass;
 
-struct _GimpLevelsTool
+struct _LigmaLevelsTool
 {
-  GimpFilterTool  parent_instance;
+  LigmaFilterTool  parent_instance;
 
   /* dialog */
-  GimpHistogram  *histogram;
-  GimpAsync      *histogram_async;
+  LigmaHistogram  *histogram;
+  LigmaAsync      *histogram_async;
 
   GtkWidget      *channel_menu;
 
@@ -61,16 +61,16 @@ struct _GimpLevelsTool
   gboolean        export_old_format;
 };
 
-struct _GimpLevelsToolClass
+struct _LigmaLevelsToolClass
 {
-  GimpFilterToolClass  parent_class;
+  LigmaFilterToolClass  parent_class;
 };
 
 
-void    gimp_levels_tool_register (GimpToolRegisterCallback  callback,
+void    ligma_levels_tool_register (LigmaToolRegisterCallback  callback,
                                    gpointer                  data);
 
-GType   gimp_levels_tool_get_type (void) G_GNUC_CONST;
+GType   ligma_levels_tool_get_type (void) G_GNUC_CONST;
 
 
-#endif  /*  __GIMP_LEVELS_TOOL_H__  */
+#endif  /*  __LIGMA_LEVELS_TOOL_H__  */

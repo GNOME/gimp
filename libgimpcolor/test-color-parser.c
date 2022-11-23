@@ -1,4 +1,4 @@
-/* unit tests for the color parsing routines in gimprgb-parse.c
+/* unit tests for the color parsing routines in ligmargb-parse.c
  */
 
 #include "config.h"
@@ -12,7 +12,7 @@
 #include <glib-object.h>
 #include <cairo.h>
 
-#include "gimpcolor.h"
+#include "ligmacolor.h"
 
 
 #define DBL(c) ((gdouble)(c) / 255.0)
@@ -62,7 +62,7 @@ static const ColorSample samples[] =
 static gint
 check_failure (const ColorSample *sample,
                gboolean           success,
-               GimpRGB           *rgb)
+               LigmaRGB           *rgb)
 {
   if (success && sample->fail)
     {
@@ -89,17 +89,17 @@ main (void)
   gint failures = 0;
   gint i;
 
-  g_print ("\nTesting the GIMP color parser ...\n");
+  g_print ("\nTesting the LIGMA color parser ...\n");
 
   for (i = 0; i < G_N_ELEMENTS (samples); i++)
     {
-      GimpRGB   rgb = { 0.0, 0.0, 0.0, 0.0 };
+      LigmaRGB   rgb = { 0.0, 0.0, 0.0, 0.0 };
       gboolean  success;
 
       if (samples[i].alpha)
-        success = gimp_rgba_parse_css (&rgb, samples[i].str, -1);
+        success = ligma_rgba_parse_css (&rgb, samples[i].str, -1);
       else
-        success = gimp_rgb_parse_css (&rgb, samples[i].str, -1);
+        success = ligma_rgb_parse_css (&rgb, samples[i].str, -1);
 
       failures += check_failure (samples + i, success, &rgb);
     }

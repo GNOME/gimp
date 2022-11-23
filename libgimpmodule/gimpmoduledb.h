@@ -1,4 +1,4 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * This library is free software: you can redistribute it and/or
@@ -16,76 +16,76 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_MODULE_H_INSIDE__) && !defined (GIMP_MODULE_COMPILATION)
-#error "Only <libgimpmodule/gimpmodule.h> can be included directly."
+#if !defined (__LIGMA_MODULE_H_INSIDE__) && !defined (LIGMA_MODULE_COMPILATION)
+#error "Only <libligmamodule/ligmamodule.h> can be included directly."
 #endif
 
-#ifndef __GIMP_MODULE_DB_H__
-#define __GIMP_MODULE_DB_H__
+#ifndef __LIGMA_MODULE_DB_H__
+#define __LIGMA_MODULE_DB_H__
 
 G_BEGIN_DECLS
 
 
-#define GIMP_TYPE_MODULE_DB            (gimp_module_db_get_type ())
-#define GIMP_MODULE_DB(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_MODULE_DB, GimpModuleDB))
-#define GIMP_MODULE_DB_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_MODULE_DB, GimpModuleDBClass))
-#define GIMP_IS_MODULE_DB(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_MODULE_DB))
-#define GIMP_IS_MODULE_DB_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_MODULE_DB))
-#define GIMP_MODULE_DB_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_MODULE_DB, GimpModuleDBClass))
+#define LIGMA_TYPE_MODULE_DB            (ligma_module_db_get_type ())
+#define LIGMA_MODULE_DB(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_MODULE_DB, LigmaModuleDB))
+#define LIGMA_MODULE_DB_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_MODULE_DB, LigmaModuleDBClass))
+#define LIGMA_IS_MODULE_DB(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_MODULE_DB))
+#define LIGMA_IS_MODULE_DB_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_MODULE_DB))
+#define LIGMA_MODULE_DB_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_MODULE_DB, LigmaModuleDBClass))
 
 
-typedef struct _GimpModuleDBPrivate GimpModuleDBPrivate;
-typedef struct _GimpModuleDBClass   GimpModuleDBClass;
+typedef struct _LigmaModuleDBPrivate LigmaModuleDBPrivate;
+typedef struct _LigmaModuleDBClass   LigmaModuleDBClass;
 
-struct _GimpModuleDB
+struct _LigmaModuleDB
 {
   GObject              parent_instance;
 
-  GimpModuleDBPrivate *priv;
+  LigmaModuleDBPrivate *priv;
 };
 
-struct _GimpModuleDBClass
+struct _LigmaModuleDBClass
 {
   GObjectClass  parent_class;
 
-  void (* add)             (GimpModuleDB *db,
-                            GimpModule   *module);
-  void (* remove)          (GimpModuleDB *db,
-                            GimpModule   *module);
-  void (* module_modified) (GimpModuleDB *db,
-                            GimpModule   *module);
+  void (* add)             (LigmaModuleDB *db,
+                            LigmaModule   *module);
+  void (* remove)          (LigmaModuleDB *db,
+                            LigmaModule   *module);
+  void (* module_modified) (LigmaModuleDB *db,
+                            LigmaModule   *module);
 
   /* Padding for future expansion */
-  void (* _gimp_reserved1) (void);
-  void (* _gimp_reserved2) (void);
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
-  void (* _gimp_reserved5) (void);
-  void (* _gimp_reserved6) (void);
-  void (* _gimp_reserved7) (void);
-  void (* _gimp_reserved8) (void);
+  void (* _ligma_reserved1) (void);
+  void (* _ligma_reserved2) (void);
+  void (* _ligma_reserved3) (void);
+  void (* _ligma_reserved4) (void);
+  void (* _ligma_reserved5) (void);
+  void (* _ligma_reserved6) (void);
+  void (* _ligma_reserved7) (void);
+  void (* _ligma_reserved8) (void);
 };
 
 
-GType          gimp_module_db_get_type         (void) G_GNUC_CONST;
-GimpModuleDB * gimp_module_db_new              (gboolean      verbose);
+GType          ligma_module_db_get_type         (void) G_GNUC_CONST;
+LigmaModuleDB * ligma_module_db_new              (gboolean      verbose);
 
-GList        * gimp_module_db_get_modules      (GimpModuleDB *db);
+GList        * ligma_module_db_get_modules      (LigmaModuleDB *db);
 
-void           gimp_module_db_set_verbose      (GimpModuleDB *db,
+void           ligma_module_db_set_verbose      (LigmaModuleDB *db,
                                                 gboolean      verbose);
-gboolean       gimp_module_db_get_verbose      (GimpModuleDB *db);
+gboolean       ligma_module_db_get_verbose      (LigmaModuleDB *db);
 
-void           gimp_module_db_set_load_inhibit (GimpModuleDB *db,
+void           ligma_module_db_set_load_inhibit (LigmaModuleDB *db,
                                                 const gchar  *load_inhibit);
-const gchar  * gimp_module_db_get_load_inhibit (GimpModuleDB *db);
+const gchar  * ligma_module_db_get_load_inhibit (LigmaModuleDB *db);
 
-void           gimp_module_db_load             (GimpModuleDB *db,
+void           ligma_module_db_load             (LigmaModuleDB *db,
                                                 const gchar  *module_path);
-void           gimp_module_db_refresh          (GimpModuleDB *db,
+void           ligma_module_db_refresh          (LigmaModuleDB *db,
                                                 const gchar  *module_path);
 
 
 G_END_DECLS
 
-#endif  /* __GIMP_MODULE_DB_H__ */
+#endif  /* __LIGMA_MODULE_DB_H__ */

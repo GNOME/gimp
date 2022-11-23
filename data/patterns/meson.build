@@ -15,6 +15,6 @@ foreach patterns_type : patterns_types
   subdir(patterns_type)
   install_data(
     patterns,
-    install_dir: gimpdatadir / 'patterns' / patterns_type,
+    install_dir: ligmadatadir / 'patterns' / patterns_type,
   )
 endforeach

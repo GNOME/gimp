@@ -3,6 +3,6 @@
   <its:withinTextRule withinText="yes" selector="//thetip//b |
                                                  //thetip//big |
                                                  //thetip//tt"/>
-  <its:translateRule selector="/gimp-tips" translate="no"/>
+  <its:translateRule selector="/ligma-tips" translate="no"/>
   <its:translateRule selector="//thetip" translate="yes"/>
 </its:rules>

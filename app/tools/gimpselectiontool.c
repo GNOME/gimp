@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,92 +20,92 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "tools-types.h"
 
-#include "core/gimpchannel.h"
-#include "core/gimperror.h"
-#include "core/gimpimage.h"
-#include "core/gimpimage-pick-item.h"
-#include "core/gimpimage-undo.h"
-#include "core/gimppickable.h"
-#include "core/gimpundostack.h"
+#include "core/ligmachannel.h"
+#include "core/ligmaerror.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaimage-pick-item.h"
+#include "core/ligmaimage-undo.h"
+#include "core/ligmapickable.h"
+#include "core/ligmaundostack.h"
 
-#include "display/gimpdisplay.h"
-#include "display/gimpdisplayshell-appearance.h"
+#include "display/ligmadisplay.h"
+#include "display/ligmadisplayshell-appearance.h"
 
-#include "widgets/gimpwidgets-utils.h"
+#include "widgets/ligmawidgets-utils.h"
 
-#include "gimpeditselectiontool.h"
-#include "gimpselectiontool.h"
-#include "gimpselectionoptions.h"
-#include "gimptoolcontrol.h"
-#include "gimptools-utils.h"
+#include "ligmaeditselectiontool.h"
+#include "ligmaselectiontool.h"
+#include "ligmaselectionoptions.h"
+#include "ligmatoolcontrol.h"
+#include "ligmatools-utils.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-static void       gimp_selection_tool_control             (GimpTool           *tool,
-                                                           GimpToolAction      action,
-                                                           GimpDisplay        *display);
-static void       gimp_selection_tool_modifier_key        (GimpTool           *tool,
+static void       ligma_selection_tool_control             (LigmaTool           *tool,
+                                                           LigmaToolAction      action,
+                                                           LigmaDisplay        *display);
+static void       ligma_selection_tool_modifier_key        (LigmaTool           *tool,
                                                            GdkModifierType     key,
                                                            gboolean            press,
                                                            GdkModifierType     state,
-                                                           GimpDisplay        *display);
-static void       gimp_selection_tool_oper_update         (GimpTool           *tool,
-                                                           const GimpCoords   *coords,
+                                                           LigmaDisplay        *display);
+static void       ligma_selection_tool_oper_update         (LigmaTool           *tool,
+                                                           const LigmaCoords   *coords,
                                                            GdkModifierType     state,
                                                            gboolean            proximity,
-                                                           GimpDisplay        *display);
-static void       gimp_selection_tool_cursor_update       (GimpTool           *tool,
-                                                           const GimpCoords   *coords,
+                                                           LigmaDisplay        *display);
+static void       ligma_selection_tool_cursor_update       (LigmaTool           *tool,
+                                                           const LigmaCoords   *coords,
                                                            GdkModifierType     state,
-                                                           GimpDisplay        *display);
+                                                           LigmaDisplay        *display);
 
-static gboolean   gimp_selection_tool_real_have_selection (GimpSelectionTool  *sel_tool,
-                                                           GimpDisplay        *display);
+static gboolean   ligma_selection_tool_real_have_selection (LigmaSelectionTool  *sel_tool,
+                                                           LigmaDisplay        *display);
 
-static void       gimp_selection_tool_commit              (GimpSelectionTool  *sel_tool);
-static void       gimp_selection_tool_halt                (GimpSelectionTool  *sel_tool,
-                                                           GimpDisplay        *display);
+static void       ligma_selection_tool_commit              (LigmaSelectionTool  *sel_tool);
+static void       ligma_selection_tool_halt                (LigmaSelectionTool  *sel_tool,
+                                                           LigmaDisplay        *display);
 
-static gboolean   gimp_selection_tool_check               (GimpSelectionTool  *sel_tool,
-                                                           GimpDisplay        *display,
+static gboolean   ligma_selection_tool_check               (LigmaSelectionTool  *sel_tool,
+                                                           LigmaDisplay        *display,
                                                            GError            **error);
 
-static gboolean   gimp_selection_tool_have_selection      (GimpSelectionTool  *sel_tool,
-                                                           GimpDisplay        *display);
+static gboolean   ligma_selection_tool_have_selection      (LigmaSelectionTool  *sel_tool,
+                                                           LigmaDisplay        *display);
 
-static void       gimp_selection_tool_set_undo_ptr        (GimpUndo          **undo_ptr,
-                                                           GimpUndo           *undo);
+static void       ligma_selection_tool_set_undo_ptr        (LigmaUndo          **undo_ptr,
+                                                           LigmaUndo           *undo);
 
 
-G_DEFINE_TYPE (GimpSelectionTool, gimp_selection_tool, GIMP_TYPE_DRAW_TOOL)
+G_DEFINE_TYPE (LigmaSelectionTool, ligma_selection_tool, LIGMA_TYPE_DRAW_TOOL)
 
-#define parent_class gimp_selection_tool_parent_class
+#define parent_class ligma_selection_tool_parent_class
 
 
 static void
-gimp_selection_tool_class_init (GimpSelectionToolClass *klass)
+ligma_selection_tool_class_init (LigmaSelectionToolClass *klass)
 {
-  GimpToolClass *tool_class = GIMP_TOOL_CLASS (klass);
+  LigmaToolClass *tool_class = LIGMA_TOOL_CLASS (klass);
 
-  tool_class->control       = gimp_selection_tool_control;
-  tool_class->modifier_key  = gimp_selection_tool_modifier_key;
-  tool_class->key_press     = gimp_edit_selection_tool_key_press;
-  tool_class->oper_update   = gimp_selection_tool_oper_update;
-  tool_class->cursor_update = gimp_selection_tool_cursor_update;
+  tool_class->control       = ligma_selection_tool_control;
+  tool_class->modifier_key  = ligma_selection_tool_modifier_key;
+  tool_class->key_press     = ligma_edit_selection_tool_key_press;
+  tool_class->oper_update   = ligma_selection_tool_oper_update;
+  tool_class->cursor_update = ligma_selection_tool_cursor_update;
 
-  klass->have_selection     = gimp_selection_tool_real_have_selection;
+  klass->have_selection     = ligma_selection_tool_real_have_selection;
 }
 
 static void
-gimp_selection_tool_init (GimpSelectionTool *selection_tool)
+ligma_selection_tool_init (LigmaSelectionTool *selection_tool)
 {
   selection_tool->function             = SELECTION_SELECT;
-  selection_tool->saved_operation      = GIMP_CHANNEL_OP_REPLACE;
+  selection_tool->saved_operation      = LIGMA_CHANNEL_OP_REPLACE;
 
   selection_tool->saved_show_selection = FALSE;
   selection_tool->undo                 = NULL;
@@ -116,50 +116,50 @@ gimp_selection_tool_init (GimpSelectionTool *selection_tool)
 }
 
 static void
-gimp_selection_tool_control (GimpTool       *tool,
-                             GimpToolAction  action,
-                             GimpDisplay    *display)
+ligma_selection_tool_control (LigmaTool       *tool,
+                             LigmaToolAction  action,
+                             LigmaDisplay    *display)
 {
-  GimpSelectionTool *selection_tool = GIMP_SELECTION_TOOL (tool);
+  LigmaSelectionTool *selection_tool = LIGMA_SELECTION_TOOL (tool);
 
   switch (action)
     {
-    case GIMP_TOOL_ACTION_PAUSE:
-    case GIMP_TOOL_ACTION_RESUME:
+    case LIGMA_TOOL_ACTION_PAUSE:
+    case LIGMA_TOOL_ACTION_RESUME:
       break;
 
-    case GIMP_TOOL_ACTION_HALT:
-      gimp_selection_tool_halt (selection_tool, display);
+    case LIGMA_TOOL_ACTION_HALT:
+      ligma_selection_tool_halt (selection_tool, display);
       break;
 
-    case GIMP_TOOL_ACTION_COMMIT:
-      gimp_selection_tool_commit (selection_tool);
+    case LIGMA_TOOL_ACTION_COMMIT:
+      ligma_selection_tool_commit (selection_tool);
       break;
     }
 
-  GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);
+  LIGMA_TOOL_CLASS (parent_class)->control (tool, action, display);
 }
 
 static void
-gimp_selection_tool_modifier_key (GimpTool        *tool,
+ligma_selection_tool_modifier_key (LigmaTool        *tool,
                                   GdkModifierType  key,
                                   gboolean         press,
                                   GdkModifierType  state,
-                                  GimpDisplay     *display)
+                                  LigmaDisplay     *display)
 {
-  GimpSelectionTool    *selection_tool = GIMP_SELECTION_TOOL (tool);
-  GimpSelectionOptions *options        = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
+  LigmaSelectionTool    *selection_tool = LIGMA_SELECTION_TOOL (tool);
+  LigmaSelectionOptions *options        = LIGMA_SELECTION_TOOL_GET_OPTIONS (tool);
   GdkModifierType       extend_mask;
   GdkModifierType       modify_mask;
 
-  extend_mask = gimp_get_extend_selection_mask ();
-  modify_mask = gimp_get_modify_selection_mask ();
+  extend_mask = ligma_get_extend_selection_mask ();
+  modify_mask = ligma_get_modify_selection_mask ();
 
   if (key == extend_mask ||
       key == modify_mask ||
       key == GDK_MOD1_MASK)
     {
-      GimpChannelOps button_op = options->operation;
+      LigmaChannelOps button_op = options->operation;
 
       state &= extend_mask |
                modify_mask |
@@ -168,7 +168,7 @@ gimp_selection_tool_modifier_key (GimpTool        *tool,
       if (press)
         {
           if (key == state ||
-              /* GimpPolygonSelectTool may mask-out part of the state, which
+              /* LigmaPolygonSelectTool may mask-out part of the state, which
                * can cause the wrong mode to be restored on release if we don't
                * init saved_operation here.
                *
@@ -205,7 +205,7 @@ gimp_selection_tool_modifier_key (GimpTool        *tool,
            *  if there is actually a modifier pressed, so we don't
            *  override the "last modifier released" assignment above
            */
-          button_op = gimp_modifiers_to_channel_op (state);
+          button_op = ligma_modifiers_to_channel_op (state);
         }
 
       if (button_op != options->operation)
@@ -216,33 +216,33 @@ gimp_selection_tool_modifier_key (GimpTool        *tool,
 }
 
 static void
-gimp_selection_tool_oper_update (GimpTool         *tool,
-                                 const GimpCoords *coords,
+ligma_selection_tool_oper_update (LigmaTool         *tool,
+                                 const LigmaCoords *coords,
                                  GdkModifierType   state,
                                  gboolean          proximity,
-                                 GimpDisplay      *display)
+                                 LigmaDisplay      *display)
 {
-  GimpSelectionTool    *selection_tool = GIMP_SELECTION_TOOL (tool);
-  GimpSelectionOptions *options        = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
-  GimpImage            *image;
+  LigmaSelectionTool    *selection_tool = LIGMA_SELECTION_TOOL (tool);
+  LigmaSelectionOptions *options        = LIGMA_SELECTION_TOOL_GET_OPTIONS (tool);
+  LigmaImage            *image;
   GList                *drawables;
-  GimpLayer            *layer;
-  GimpLayer            *floating_sel;
+  LigmaLayer            *layer;
+  LigmaLayer            *floating_sel;
   GdkModifierType       extend_mask;
   GdkModifierType       modify_mask;
   gboolean              have_selection;
   gboolean              move_layer        = FALSE;
   gboolean              move_floating_sel = FALSE;
 
-  image        = gimp_display_get_image (display);
-  drawables    = gimp_image_get_selected_drawables (image);
-  layer        = gimp_image_pick_layer (image, coords->x, coords->y, NULL);
-  floating_sel = gimp_image_get_floating_selection (image);
+  image        = ligma_display_get_image (display);
+  drawables    = ligma_image_get_selected_drawables (image);
+  layer        = ligma_image_pick_layer (image, coords->x, coords->y, NULL);
+  floating_sel = ligma_image_get_floating_selection (image);
 
-  extend_mask = gimp_get_extend_selection_mask ();
-  modify_mask = gimp_get_modify_selection_mask ();
+  extend_mask = ligma_get_extend_selection_mask ();
+  modify_mask = ligma_get_modify_selection_mask ();
 
-  have_selection = gimp_selection_tool_have_selection (selection_tool, display);
+  have_selection = ligma_selection_tool_have_selection (selection_tool, display);
 
   if (drawables)
     {
@@ -257,7 +257,7 @@ gimp_selection_tool_oper_update (GimpTool         *tool,
 
           for (iter = drawables; iter; iter = iter->next)
             {
-              if (gimp_item_mask_intersect (GIMP_ITEM (iter->data),
+              if (ligma_item_mask_intersect (LIGMA_ITEM (iter->data),
                                             NULL, NULL, NULL, NULL))
                 {
                   move_layer = TRUE;
@@ -307,7 +307,7 @@ gimp_selection_tool_oper_update (GimpTool         *tool,
       selection_tool->function = SELECTION_ANCHOR;
     }
 
-  gimp_tool_pop_status (tool, display);
+  ligma_tool_pop_status (tool, display);
 
   if (proximity)
     {
@@ -323,10 +323,10 @@ gimp_selection_tool_oper_update (GimpTool         *tool,
         case SELECTION_SELECT:
           switch (options->operation)
             {
-            case GIMP_CHANNEL_OP_REPLACE:
+            case LIGMA_CHANNEL_OP_REPLACE:
               if (have_selection)
                 {
-                  status = gimp_suggest_modifiers (_("Click-Drag to replace the "
+                  status = ligma_suggest_modifiers (_("Click-Drag to replace the "
                                                      "current selection"),
                                                    modifiers & ~state,
                                                    NULL, NULL, NULL);
@@ -338,8 +338,8 @@ gimp_selection_tool_oper_update (GimpTool         *tool,
                 }
               break;
 
-            case GIMP_CHANNEL_OP_ADD:
-              status = gimp_suggest_modifiers (_("Click-Drag to add to the "
+            case LIGMA_CHANNEL_OP_ADD:
+              status = ligma_suggest_modifiers (_("Click-Drag to add to the "
                                                  "current selection"),
                                                modifiers
                                                & ~(state | extend_mask),
@@ -347,8 +347,8 @@ gimp_selection_tool_oper_update (GimpTool         *tool,
               free_status = TRUE;
               break;
 
-            case GIMP_CHANNEL_OP_SUBTRACT:
-              status = gimp_suggest_modifiers (_("Click-Drag to subtract from the "
+            case LIGMA_CHANNEL_OP_SUBTRACT:
+              status = ligma_suggest_modifiers (_("Click-Drag to subtract from the "
                                                  "current selection"),
                                                modifiers
                                                & ~(state | modify_mask),
@@ -356,8 +356,8 @@ gimp_selection_tool_oper_update (GimpTool         *tool,
               free_status = TRUE;
               break;
 
-            case GIMP_CHANNEL_OP_INTERSECT:
-              status = gimp_suggest_modifiers (_("Click-Drag to intersect with "
+            case LIGMA_CHANNEL_OP_INTERSECT:
+              status = ligma_suggest_modifiers (_("Click-Drag to intersect with "
                                                  "the current selection"),
                                                modifiers & ~state,
                                                NULL, NULL, NULL);
@@ -367,7 +367,7 @@ gimp_selection_tool_oper_update (GimpTool         *tool,
           break;
 
         case SELECTION_MOVE_MASK:
-          status = gimp_suggest_modifiers (_("Click-Drag to move the "
+          status = ligma_suggest_modifiers (_("Click-Drag to move the "
                                              "selection mask"),
                                            modifiers & ~state,
                                            NULL, NULL, NULL);
@@ -391,7 +391,7 @@ gimp_selection_tool_oper_update (GimpTool         *tool,
         }
 
       if (status)
-        gimp_tool_push_status (tool, display, "%s", status);
+        ligma_tool_push_status (tool, display, "%s", status);
 
       if (free_status)
         g_free ((gchar *) status);
@@ -399,99 +399,99 @@ gimp_selection_tool_oper_update (GimpTool         *tool,
 }
 
 static void
-gimp_selection_tool_cursor_update (GimpTool         *tool,
-                                   const GimpCoords *coords,
+ligma_selection_tool_cursor_update (LigmaTool         *tool,
+                                   const LigmaCoords *coords,
                                    GdkModifierType   state,
-                                   GimpDisplay      *display)
+                                   LigmaDisplay      *display)
 {
-  GimpSelectionTool    *selection_tool = GIMP_SELECTION_TOOL (tool);
-  GimpSelectionOptions *options;
-  GimpToolCursorType    tool_cursor;
-  GimpCursorModifier    modifier;
+  LigmaSelectionTool    *selection_tool = LIGMA_SELECTION_TOOL (tool);
+  LigmaSelectionOptions *options;
+  LigmaToolCursorType    tool_cursor;
+  LigmaCursorModifier    modifier;
 
-  options = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
+  options = LIGMA_SELECTION_TOOL_GET_OPTIONS (tool);
 
-  tool_cursor = gimp_tool_control_get_tool_cursor (tool->control);
-  modifier    = GIMP_CURSOR_MODIFIER_NONE;
+  tool_cursor = ligma_tool_control_get_tool_cursor (tool->control);
+  modifier    = LIGMA_CURSOR_MODIFIER_NONE;
 
   switch (selection_tool->function)
     {
     case SELECTION_SELECT:
       switch (options->operation)
         {
-        case GIMP_CHANNEL_OP_REPLACE:
+        case LIGMA_CHANNEL_OP_REPLACE:
           break;
-        case GIMP_CHANNEL_OP_ADD:
-          modifier = GIMP_CURSOR_MODIFIER_PLUS;
+        case LIGMA_CHANNEL_OP_ADD:
+          modifier = LIGMA_CURSOR_MODIFIER_PLUS;
           break;
-        case GIMP_CHANNEL_OP_SUBTRACT:
-          modifier = GIMP_CURSOR_MODIFIER_MINUS;
+        case LIGMA_CHANNEL_OP_SUBTRACT:
+          modifier = LIGMA_CURSOR_MODIFIER_MINUS;
           break;
-        case GIMP_CHANNEL_OP_INTERSECT:
-          modifier = GIMP_CURSOR_MODIFIER_INTERSECT;
+        case LIGMA_CHANNEL_OP_INTERSECT:
+          modifier = LIGMA_CURSOR_MODIFIER_INTERSECT;
           break;
         }
       break;
 
     case SELECTION_MOVE_MASK:
-      modifier = GIMP_CURSOR_MODIFIER_MOVE;
+      modifier = LIGMA_CURSOR_MODIFIER_MOVE;
       break;
 
     case SELECTION_MOVE:
     case SELECTION_MOVE_COPY:
-      tool_cursor = GIMP_TOOL_CURSOR_MOVE;
+      tool_cursor = LIGMA_TOOL_CURSOR_MOVE;
       break;
 
     case SELECTION_ANCHOR:
-      modifier = GIMP_CURSOR_MODIFIER_ANCHOR;
+      modifier = LIGMA_CURSOR_MODIFIER_ANCHOR;
       break;
     }
 
   /*  our subclass might have set a BAD modifier, in which case we leave it
    *  there, since it's more important than what we have to say.
    */
-  if (gimp_tool_control_get_cursor_modifier (tool->control) ==
-      GIMP_CURSOR_MODIFIER_BAD                              ||
-      ! gimp_selection_tool_check (selection_tool, display, NULL))
+  if (ligma_tool_control_get_cursor_modifier (tool->control) ==
+      LIGMA_CURSOR_MODIFIER_BAD                              ||
+      ! ligma_selection_tool_check (selection_tool, display, NULL))
     {
-      modifier = GIMP_CURSOR_MODIFIER_BAD;
+      modifier = LIGMA_CURSOR_MODIFIER_BAD;
     }
 
-  gimp_tool_set_cursor (tool, display,
-                        gimp_tool_control_get_cursor (tool->control),
+  ligma_tool_set_cursor (tool, display,
+                        ligma_tool_control_get_cursor (tool->control),
                         tool_cursor,
                         modifier);
 }
 
 static gboolean
-gimp_selection_tool_real_have_selection (GimpSelectionTool *sel_tool,
-                                         GimpDisplay       *display)
+ligma_selection_tool_real_have_selection (LigmaSelectionTool *sel_tool,
+                                         LigmaDisplay       *display)
 {
-  GimpImage   *image     = gimp_display_get_image (display);
-  GimpChannel *selection = gimp_image_get_mask (image);
+  LigmaImage   *image     = ligma_display_get_image (display);
+  LigmaChannel *selection = ligma_image_get_mask (image);
 
-  return ! gimp_channel_is_empty (selection);
+  return ! ligma_channel_is_empty (selection);
 }
 
 static void
-gimp_selection_tool_commit (GimpSelectionTool *sel_tool)
+ligma_selection_tool_commit (LigmaSelectionTool *sel_tool)
 {
-  /* make sure gimp_selection_tool_halt() doesn't undo the change, if any */
-  gimp_selection_tool_set_undo_ptr (&sel_tool->undo, NULL);
+  /* make sure ligma_selection_tool_halt() doesn't undo the change, if any */
+  ligma_selection_tool_set_undo_ptr (&sel_tool->undo, NULL);
 }
 
 static void
-gimp_selection_tool_halt (GimpSelectionTool *sel_tool,
-                          GimpDisplay       *display)
+ligma_selection_tool_halt (LigmaSelectionTool *sel_tool,
+                          LigmaDisplay       *display)
 {
   g_warn_if_fail (sel_tool->change_count == 0);
 
   if (display)
     {
-      GimpTool      *tool       = GIMP_TOOL (sel_tool);
-      GimpImage     *image      = gimp_display_get_image (display);
-      GimpUndoStack *undo_stack = gimp_image_get_undo_stack (image);
-      GimpUndo      *undo       = gimp_undo_stack_peek (undo_stack);
+      LigmaTool      *tool       = LIGMA_TOOL (sel_tool);
+      LigmaImage     *image      = ligma_display_get_image (display);
+      LigmaUndoStack *undo_stack = ligma_image_get_undo_stack (image);
+      LigmaUndo      *undo       = ligma_undo_stack_peek (undo_stack);
 
       /* if we have an existing selection in the current display, then
        * we have already "executed", and need to undo at this point,
@@ -500,53 +500,53 @@ gimp_selection_tool_halt (GimpSelectionTool *sel_tool,
       if (undo && sel_tool->undo == undo)
         {
           /* prevent this change from halting the tool */
-          gimp_tool_control_push_preserve (tool->control, TRUE);
+          ligma_tool_control_push_preserve (tool->control, TRUE);
 
-          gimp_image_undo (image);
-          gimp_image_flush (image);
+          ligma_image_undo (image);
+          ligma_image_flush (image);
 
-          gimp_tool_control_pop_preserve (tool->control);
+          ligma_tool_control_pop_preserve (tool->control);
         }
 
       /* reset the automatic undo/redo mechanism */
-      gimp_selection_tool_set_undo_ptr (&sel_tool->undo, NULL);
-      gimp_selection_tool_set_undo_ptr (&sel_tool->redo, NULL);
+      ligma_selection_tool_set_undo_ptr (&sel_tool->undo, NULL);
+      ligma_selection_tool_set_undo_ptr (&sel_tool->redo, NULL);
     }
 }
 
 static gboolean
-gimp_selection_tool_check (GimpSelectionTool  *sel_tool,
-                           GimpDisplay        *display,
+ligma_selection_tool_check (LigmaSelectionTool  *sel_tool,
+                           LigmaDisplay        *display,
                            GError            **error)
 {
-  GimpSelectionOptions *options   = GIMP_SELECTION_TOOL_GET_OPTIONS (sel_tool);
-  GimpImage            *image     = gimp_display_get_image (display);
+  LigmaSelectionOptions *options   = LIGMA_SELECTION_TOOL_GET_OPTIONS (sel_tool);
+  LigmaImage            *image     = ligma_display_get_image (display);
 
   switch (sel_tool->function)
     {
     case SELECTION_SELECT:
       switch (options->operation)
         {
-        case GIMP_CHANNEL_OP_ADD:
-        case GIMP_CHANNEL_OP_REPLACE:
+        case LIGMA_CHANNEL_OP_ADD:
+        case LIGMA_CHANNEL_OP_REPLACE:
           break;
 
-        case GIMP_CHANNEL_OP_SUBTRACT:
-          if (! gimp_item_bounds (GIMP_ITEM (gimp_image_get_mask (image)),
+        case LIGMA_CHANNEL_OP_SUBTRACT:
+          if (! ligma_item_bounds (LIGMA_ITEM (ligma_image_get_mask (image)),
                                   NULL, NULL, NULL, NULL))
             {
-              g_set_error (error, GIMP_ERROR, GIMP_FAILED,
+              g_set_error (error, LIGMA_ERROR, LIGMA_FAILED,
                            _("Cannot subtract from an empty selection."));
 
               return FALSE;
             }
           break;
 
-        case GIMP_CHANNEL_OP_INTERSECT:
-          if (! gimp_item_bounds (GIMP_ITEM (gimp_image_get_mask (image)),
+        case LIGMA_CHANNEL_OP_INTERSECT:
+          if (! ligma_item_bounds (LIGMA_ITEM (ligma_image_get_mask (image)),
                                   NULL, NULL, NULL, NULL))
             {
-              g_set_error (error, GIMP_ERROR, GIMP_FAILED,
+              g_set_error (error, LIGMA_ERROR, LIGMA_FAILED,
                            _("Cannot intersect with an empty selection."));
 
               return FALSE;
@@ -558,27 +558,27 @@ gimp_selection_tool_check (GimpSelectionTool  *sel_tool,
     case SELECTION_MOVE:
     case SELECTION_MOVE_COPY:
         {
-          GList    *drawables   = gimp_image_get_selected_drawables (image);
-          GimpItem *locked_item = NULL;
+          GList    *drawables   = ligma_image_get_selected_drawables (image);
+          LigmaItem *locked_item = NULL;
           GList    *iter;
 
           for (iter = drawables; iter; iter = iter->next)
             {
-              if (gimp_viewable_get_children (iter->data))
+              if (ligma_viewable_get_children (iter->data))
                 {
-                  g_set_error (error, GIMP_ERROR, GIMP_FAILED,
+                  g_set_error (error, LIGMA_ERROR, LIGMA_FAILED,
                                _("Cannot modify the pixels of layer groups."));
 
                   g_list_free (drawables);
                   return FALSE;
                 }
-              else if (gimp_item_is_content_locked (iter->data, &locked_item))
+              else if (ligma_item_is_content_locked (iter->data, &locked_item))
                 {
-                  g_set_error (error, GIMP_ERROR, GIMP_FAILED,
+                  g_set_error (error, LIGMA_ERROR, LIGMA_FAILED,
                                _("A selected item's pixels are locked."));
 
                   if (error)
-                    gimp_tools_blink_lock_box (display->gimp, locked_item);
+                    ligma_tools_blink_lock_box (display->ligma, locked_item);
 
                   g_list_free (drawables);
                   return FALSE;
@@ -597,16 +597,16 @@ gimp_selection_tool_check (GimpSelectionTool  *sel_tool,
 }
 
 static gboolean
-gimp_selection_tool_have_selection (GimpSelectionTool *sel_tool,
-                                    GimpDisplay       *display)
+ligma_selection_tool_have_selection (LigmaSelectionTool *sel_tool,
+                                    LigmaDisplay       *display)
 {
-  return GIMP_SELECTION_TOOL_GET_CLASS (sel_tool)->have_selection (sel_tool,
+  return LIGMA_SELECTION_TOOL_GET_CLASS (sel_tool)->have_selection (sel_tool,
                                                                    display);
 }
 
 static void
-gimp_selection_tool_set_undo_ptr (GimpUndo **undo_ptr,
-                                  GimpUndo  *undo)
+ligma_selection_tool_set_undo_ptr (LigmaUndo **undo_ptr,
+                                  LigmaUndo  *undo)
 {
   if (*undo_ptr)
     {
@@ -627,30 +627,30 @@ gimp_selection_tool_set_undo_ptr (GimpUndo **undo_ptr,
 /*  public functions  */
 
 gboolean
-gimp_selection_tool_start_edit (GimpSelectionTool *sel_tool,
-                                GimpDisplay       *display,
-                                const GimpCoords  *coords)
+ligma_selection_tool_start_edit (LigmaSelectionTool *sel_tool,
+                                LigmaDisplay       *display,
+                                const LigmaCoords  *coords)
 {
-  GimpTool             *tool;
-  GimpSelectionOptions *options;
+  LigmaTool             *tool;
+  LigmaSelectionOptions *options;
   GError               *error = NULL;
 
-  g_return_val_if_fail (GIMP_IS_SELECTION_TOOL (sel_tool), FALSE);
-  g_return_val_if_fail (GIMP_IS_DISPLAY (display), FALSE);
+  g_return_val_if_fail (LIGMA_IS_SELECTION_TOOL (sel_tool), FALSE);
+  g_return_val_if_fail (LIGMA_IS_DISPLAY (display), FALSE);
   g_return_val_if_fail (coords != NULL, FALSE);
 
-  tool    = GIMP_TOOL (sel_tool);
-  options = GIMP_SELECTION_TOOL_GET_OPTIONS (sel_tool);
+  tool    = LIGMA_TOOL (sel_tool);
+  options = LIGMA_SELECTION_TOOL_GET_OPTIONS (sel_tool);
 
-  g_return_val_if_fail (gimp_tool_control_is_active (tool->control) == FALSE,
+  g_return_val_if_fail (ligma_tool_control_is_active (tool->control) == FALSE,
                         FALSE);
 
-  if (! gimp_selection_tool_check (sel_tool, display, &error))
+  if (! ligma_selection_tool_check (sel_tool, display, &error))
     {
-      gimp_tool_message_literal (tool, display, error->message);
+      ligma_tool_message_literal (tool, display, error->message);
 
-      gimp_tools_show_tool_options (display->gimp);
-      gimp_widget_blink (options->mode_box);
+      ligma_tools_show_tool_options (display->ligma);
+      ligma_widget_blink (options->mode_box);
 
       g_clear_error (&error);
 
@@ -660,23 +660,23 @@ gimp_selection_tool_start_edit (GimpSelectionTool *sel_tool,
   switch (sel_tool->function)
     {
     case SELECTION_MOVE_MASK:
-      gimp_edit_selection_tool_start (tool, display, coords,
-                                      GIMP_TRANSLATE_MODE_MASK, FALSE);
+      ligma_edit_selection_tool_start (tool, display, coords,
+                                      LIGMA_TRANSLATE_MODE_MASK, FALSE);
       return TRUE;
 
     case SELECTION_MOVE:
     case SELECTION_MOVE_COPY:
       {
-        GimpTranslateMode edit_mode;
+        LigmaTranslateMode edit_mode;
 
-        gimp_tool_control (tool, GIMP_TOOL_ACTION_COMMIT, display);
+        ligma_tool_control (tool, LIGMA_TOOL_ACTION_COMMIT, display);
 
         if (sel_tool->function == SELECTION_MOVE)
-          edit_mode = GIMP_TRANSLATE_MODE_MASK_TO_LAYER;
+          edit_mode = LIGMA_TRANSLATE_MODE_MASK_TO_LAYER;
         else
-          edit_mode = GIMP_TRANSLATE_MODE_MASK_COPY_TO_LAYER;
+          edit_mode = LIGMA_TRANSLATE_MODE_MASK_COPY_TO_LAYER;
 
-        gimp_edit_selection_tool_start (tool, display, coords,
+        ligma_edit_selection_tool_start (tool, display, coords,
                                         edit_mode, FALSE);
 
         return TRUE;
@@ -690,12 +690,12 @@ gimp_selection_tool_start_edit (GimpSelectionTool *sel_tool,
 }
 
 static gboolean
-gimp_selection_tool_idle (GimpSelectionTool *sel_tool)
+ligma_selection_tool_idle (LigmaSelectionTool *sel_tool)
 {
-  GimpTool         *tool  = GIMP_TOOL (sel_tool);
-  GimpDisplayShell *shell = gimp_display_get_shell (tool->display);
+  LigmaTool         *tool  = LIGMA_TOOL (sel_tool);
+  LigmaDisplayShell *shell = ligma_display_get_shell (tool->display);
 
-  gimp_display_shell_set_show_selection (shell, FALSE);
+  ligma_display_shell_set_show_selection (shell, FALSE);
 
   sel_tool->idle_id = 0;
 
@@ -703,63 +703,63 @@ gimp_selection_tool_idle (GimpSelectionTool *sel_tool)
 }
 
 void
-gimp_selection_tool_start_change (GimpSelectionTool *sel_tool,
+ligma_selection_tool_start_change (LigmaSelectionTool *sel_tool,
                                   gboolean           create,
-                                  GimpChannelOps     operation)
+                                  LigmaChannelOps     operation)
 {
-  GimpTool         *tool;
-  GimpDisplayShell *shell;
-  GimpImage        *image;
-  GimpUndoStack    *undo_stack;
+  LigmaTool         *tool;
+  LigmaDisplayShell *shell;
+  LigmaImage        *image;
+  LigmaUndoStack    *undo_stack;
 
-  g_return_if_fail (GIMP_IS_SELECTION_TOOL (sel_tool));
+  g_return_if_fail (LIGMA_IS_SELECTION_TOOL (sel_tool));
 
-  tool = GIMP_TOOL (sel_tool);
+  tool = LIGMA_TOOL (sel_tool);
 
   g_return_if_fail (tool->display != NULL);
 
   if (sel_tool->change_count++ > 0)
     return;
 
-  shell      = gimp_display_get_shell (tool->display);
-  image      = gimp_display_get_image (tool->display);
-  undo_stack = gimp_image_get_undo_stack (image);
+  shell      = ligma_display_get_shell (tool->display);
+  image      = ligma_display_get_image (tool->display);
+  undo_stack = ligma_image_get_undo_stack (image);
 
   sel_tool->saved_show_selection =
-    gimp_display_shell_get_show_selection (shell);
+    ligma_display_shell_get_show_selection (shell);
 
   if (create)
     {
-      gimp_selection_tool_set_undo_ptr (&sel_tool->undo, NULL);
+      ligma_selection_tool_set_undo_ptr (&sel_tool->undo, NULL);
     }
   else
     {
-      GimpUndoStack *redo_stack = gimp_image_get_redo_stack (image);
-      GimpUndo      *undo;
+      LigmaUndoStack *redo_stack = ligma_image_get_redo_stack (image);
+      LigmaUndo      *undo;
 
-      undo = gimp_undo_stack_peek (undo_stack);
+      undo = ligma_undo_stack_peek (undo_stack);
 
       if (undo && undo == sel_tool->undo)
         {
           /* prevent this change from halting the tool */
-          gimp_tool_control_push_preserve (tool->control, TRUE);
+          ligma_tool_control_push_preserve (tool->control, TRUE);
 
-          gimp_image_undo (image);
+          ligma_image_undo (image);
 
-          gimp_tool_control_pop_preserve (tool->control);
+          ligma_tool_control_pop_preserve (tool->control);
 
-          gimp_selection_tool_set_undo_ptr (&sel_tool->undo, NULL);
+          ligma_selection_tool_set_undo_ptr (&sel_tool->undo, NULL);
 
           /* we will need to redo if the user cancels or executes */
-          gimp_selection_tool_set_undo_ptr (
+          ligma_selection_tool_set_undo_ptr (
             &sel_tool->redo,
-            gimp_undo_stack_peek (redo_stack));
+            ligma_undo_stack_peek (redo_stack));
         }
 
       /* if the operation is "Replace", turn off the marching ants,
        * because they are confusing ...
        */
-      if (operation == GIMP_CHANNEL_OP_REPLACE)
+      if (operation == LIGMA_CHANNEL_OP_REPLACE)
         {
           /* ... however, do this in an idle function, to avoid unnecessarily
            * restarting the selection if we don't visit the main loop between
@@ -767,76 +767,76 @@ gimp_selection_tool_start_change (GimpSelectionTool *sel_tool,
            */
           sel_tool->idle_id = g_idle_add_full (
             G_PRIORITY_HIGH_IDLE,
-            (GSourceFunc) gimp_selection_tool_idle,
+            (GSourceFunc) ligma_selection_tool_idle,
             sel_tool, NULL);
         }
     }
 
-  gimp_selection_tool_set_undo_ptr (
+  ligma_selection_tool_set_undo_ptr (
     &sel_tool->undo,
-    gimp_undo_stack_peek (undo_stack));
+    ligma_undo_stack_peek (undo_stack));
 }
 
 void
-gimp_selection_tool_end_change (GimpSelectionTool *sel_tool,
+ligma_selection_tool_end_change (LigmaSelectionTool *sel_tool,
                                 gboolean           cancel)
 {
-  GimpTool         *tool;
-  GimpDisplayShell *shell;
-  GimpImage        *image;
-  GimpUndoStack    *undo_stack;
+  LigmaTool         *tool;
+  LigmaDisplayShell *shell;
+  LigmaImage        *image;
+  LigmaUndoStack    *undo_stack;
 
-  g_return_if_fail (GIMP_IS_SELECTION_TOOL (sel_tool));
+  g_return_if_fail (LIGMA_IS_SELECTION_TOOL (sel_tool));
   g_return_if_fail (sel_tool->change_count > 0);
 
-  tool = GIMP_TOOL (sel_tool);
+  tool = LIGMA_TOOL (sel_tool);
 
   g_return_if_fail (tool->display != NULL);
 
   if (--sel_tool->change_count > 0)
     return;
 
-  shell      = gimp_display_get_shell (tool->display);
-  image      = gimp_display_get_image (tool->display);
-  undo_stack = gimp_image_get_undo_stack (image);
+  shell      = ligma_display_get_shell (tool->display);
+  image      = ligma_display_get_image (tool->display);
+  undo_stack = ligma_image_get_undo_stack (image);
 
   if (cancel)
     {
-      GimpUndoStack *redo_stack = gimp_image_get_redo_stack (image);
-      GimpUndo      *redo       = gimp_undo_stack_peek (redo_stack);
+      LigmaUndoStack *redo_stack = ligma_image_get_redo_stack (image);
+      LigmaUndo      *redo       = ligma_undo_stack_peek (redo_stack);
 
       if (redo && redo == sel_tool->redo)
         {
           /* prevent this from halting the tool */
-          gimp_tool_control_push_preserve (tool->control, TRUE);
+          ligma_tool_control_push_preserve (tool->control, TRUE);
 
-          gimp_image_redo (image);
+          ligma_image_redo (image);
 
-          gimp_tool_control_pop_preserve (tool->control);
+          ligma_tool_control_pop_preserve (tool->control);
 
-          gimp_selection_tool_set_undo_ptr (
+          ligma_selection_tool_set_undo_ptr (
             &sel_tool->undo,
-            gimp_undo_stack_peek (undo_stack));
+            ligma_undo_stack_peek (undo_stack));
         }
       else
         {
-          gimp_selection_tool_set_undo_ptr (&sel_tool->undo, NULL);
+          ligma_selection_tool_set_undo_ptr (&sel_tool->undo, NULL);
         }
     }
   else
     {
-      GimpUndo *undo = gimp_undo_stack_peek (undo_stack);
+      LigmaUndo *undo = ligma_undo_stack_peek (undo_stack);
 
       /* save the undo that we got when executing, but only if
        * we actually selected something
        */
       if (undo && undo != sel_tool->undo)
-        gimp_selection_tool_set_undo_ptr (&sel_tool->undo, undo);
+        ligma_selection_tool_set_undo_ptr (&sel_tool->undo, undo);
       else
-        gimp_selection_tool_set_undo_ptr (&sel_tool->undo, NULL);
+        ligma_selection_tool_set_undo_ptr (&sel_tool->undo, NULL);
     }
 
-  gimp_selection_tool_set_undo_ptr (&sel_tool->redo, NULL);
+  ligma_selection_tool_set_undo_ptr (&sel_tool->redo, NULL);
 
   if (sel_tool->idle_id)
     {
@@ -845,9 +845,9 @@ gimp_selection_tool_end_change (GimpSelectionTool *sel_tool,
     }
   else
     {
-      gimp_display_shell_set_show_selection (shell,
+      ligma_display_shell_set_show_selection (shell,
                                              sel_tool->saved_show_selection);
     }
 
-  gimp_image_flush (image);
+  ligma_image_flush (image);
 }

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,14 +20,14 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "dialogs-types.h"
 
-#include "widgets/gimpcolorpanel.h"
-#include "widgets/gimppropwidgets.h"
-#include "widgets/gimpwidgets-constructors.h"
+#include "widgets/ligmacolorpanel.h"
+#include "widgets/ligmapropwidgets.h"
+#include "widgets/ligmawidgets-constructors.h"
 
 #include "preferences-dialog-utils.h"
 
@@ -40,7 +40,7 @@ prefs_frame_new (const gchar  *label,
   GtkWidget *frame;
   GtkWidget *vbox;
 
-  frame = gimp_frame_new (label);
+  frame = ligma_frame_new (label);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
@@ -91,7 +91,7 @@ prefs_hint_box_new (const gchar  *icon_name,
   gtk_widget_show (image);
 
   label = gtk_label_new (text);
-  gimp_label_set_attributes (GTK_LABEL (label),
+  ligma_label_set_attributes (GTK_LABEL (label),
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);
   gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
@@ -112,7 +112,7 @@ prefs_button_add (const gchar *icon_name,
 {
   GtkWidget *button;
 
-  button = gimp_icon_button_new (icon_name, label);
+  button = ligma_icon_button_new (icon_name, label);
   gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
@@ -127,7 +127,7 @@ prefs_check_button_add (GObject     *config,
 {
   GtkWidget *button;
 
-  button = gimp_prop_check_button_new (config, property_name, label);
+  button = ligma_prop_check_button_new (config, property_name, label);
 
   if (button)
     gtk_box_pack_start (vbox, button, FALSE, FALSE, 0);
@@ -145,7 +145,7 @@ prefs_switch_add (GObject      *config,
   GtkWidget *box;
   GtkWidget *plabel;
 
-  box = gimp_prop_switch_new (config, property_name, label, &plabel, NULL);
+  box = ligma_prop_switch_new (config, property_name, label, &plabel, NULL);
 
   if (!box)
     return NULL;
@@ -170,7 +170,7 @@ prefs_check_button_add_with_icon (GObject      *config,
   GtkWidget *hbox;
   GtkWidget *image;
 
-  button = gimp_prop_check_button_new (config, property_name, label);
+  button = ligma_prop_check_button_new (config, property_name, label);
   if (! button)
     return NULL;
 
@@ -204,7 +204,7 @@ prefs_widget_add_aligned (GtkWidget    *widget,
                           gboolean      left_align,
                           GtkSizeGroup *group)
 {
-  GtkWidget *label = gimp_grid_attach_aligned (grid, 0, grid_top,
+  GtkWidget *label = ligma_grid_attach_aligned (grid, 0, grid_top,
                                                text, 0.0, 0.5,
                                                widget, 1);
   if (group)
@@ -224,7 +224,7 @@ prefs_color_button_add (GObject      *config,
                         GtkGrid      *grid,
                         gint          grid_top,
                         GtkSizeGroup *group,
-                        GimpContext  *context)
+                        LigmaContext  *context)
 {
   GtkWidget  *button;
   GParamSpec *pspec;
@@ -233,20 +233,20 @@ prefs_color_button_add (GObject      *config,
   pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (config),
                                         property_name);
 
-  has_alpha = gimp_param_spec_rgb_has_alpha (pspec);
+  has_alpha = ligma_param_spec_rgb_has_alpha (pspec);
 
-  button = gimp_prop_color_button_new (config, property_name,
+  button = ligma_prop_color_button_new (config, property_name,
                                        title,
                                        PREFS_COLOR_BUTTON_WIDTH,
                                        PREFS_COLOR_BUTTON_HEIGHT,
                                        has_alpha ?
-                                       GIMP_COLOR_AREA_SMALL_CHECKS :
-                                       GIMP_COLOR_AREA_FLAT);
+                                       LIGMA_COLOR_AREA_SMALL_CHECKS :
+                                       LIGMA_COLOR_AREA_FLAT);
 
   if (button)
     {
       if (context)
-        gimp_color_panel_set_context (GIMP_COLOR_PANEL (button), context);
+        ligma_color_panel_set_context (LIGMA_COLOR_PANEL (button), context);
 
       prefs_widget_add_aligned (button, label, grid, grid_top, TRUE, group);
     }
@@ -262,7 +262,7 @@ prefs_entry_add (GObject      *config,
                  gint          grid_top,
                  GtkSizeGroup *group)
 {
-  GtkWidget *entry = gimp_prop_entry_new (config, property_name, -1);
+  GtkWidget *entry = ligma_prop_entry_new (config, property_name, -1);
 
   if (entry)
     prefs_widget_add_aligned (entry, label, grid, grid_top, FALSE, group);
@@ -281,7 +281,7 @@ prefs_spin_button_add (GObject      *config,
                        gint          grid_top,
                        GtkSizeGroup *group)
 {
-  GtkWidget *button = gimp_prop_spin_button_new (config, property_name,
+  GtkWidget *button = ligma_prop_spin_button_new (config, property_name,
                                                  step_increment,
                                                  page_increment,
                                                  digits);
@@ -300,7 +300,7 @@ prefs_memsize_entry_add (GObject      *config,
                          gint          grid_top,
                          GtkSizeGroup *group)
 {
-  GtkWidget *entry = gimp_prop_memsize_entry_new (config, property_name);
+  GtkWidget *entry = ligma_prop_memsize_entry_new (config, property_name);
 
   if (entry)
     prefs_widget_add_aligned (entry, label, grid, grid_top, TRUE, group);
@@ -319,7 +319,7 @@ prefs_file_chooser_button_add (GObject      *config,
 {
   GtkWidget *button;
 
-  button = gimp_prop_file_chooser_button_new (config, property_name,
+  button = ligma_prop_file_chooser_button_new (config, property_name,
                                               dialog_title,
                                               GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER);
 
@@ -339,7 +339,7 @@ prefs_enum_combo_box_add (GObject      *config,
                           gint          grid_top,
                           GtkSizeGroup *group)
 {
-  GtkWidget *combo = gimp_prop_enum_combo_box_new (config, property_name,
+  GtkWidget *combo = ligma_prop_enum_combo_box_new (config, property_name,
                                                    minimum, maximum);
 
   if (combo)
@@ -358,7 +358,7 @@ prefs_boolean_combo_box_add (GObject      *config,
                              gint          grid_top,
                              GtkSizeGroup *group)
 {
-  GtkWidget *combo = gimp_prop_boolean_combo_box_new (config, property_name,
+  GtkWidget *combo = ligma_prop_boolean_combo_box_new (config, property_name,
                                                       true_text, false_text);
 
   if (combo)
@@ -373,7 +373,7 @@ prefs_language_combo_box_add (GObject      *config,
                               const gchar  *property_name,
                               GtkBox       *vbox)
 {
-  GtkWidget *combo = gimp_prop_language_combo_box_new (config, property_name);
+  GtkWidget *combo = ligma_prop_language_combo_box_new (config, property_name);
 
   if (combo)
     gtk_box_pack_start (vbox, combo, FALSE, FALSE, 0);
@@ -394,7 +394,7 @@ prefs_profile_combo_box_add (GObject      *config,
                              GObject      *profile_path_config,
                              const gchar  *profile_path_property_name)
 {
-  GtkWidget *combo = gimp_prop_profile_combo_box_new (config,
+  GtkWidget *combo = ligma_prop_profile_combo_box_new (config,
                                                       property_name,
                                                       profile_store,
                                                       dialog_title,
@@ -415,7 +415,7 @@ prefs_compression_combo_box_add (GObject      *config,
                                  gint          grid_top,
                                  GtkSizeGroup *group)
 {
-  GtkWidget *combo = gimp_prop_compression_combo_box_new (config,
+  GtkWidget *combo = ligma_prop_compression_combo_box_new (config,
                                                           property_name);
 
   if (combo)

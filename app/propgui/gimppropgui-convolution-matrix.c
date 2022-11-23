@@ -1,9 +1,9 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * gimppropgui-convolution-matrix.c
- * Copyright (C) 2002-2014  Michael Natterer <mitch@gimp.org>
- *                          Sven Neumann <sven@gimp.org>
+ * ligmapropgui-convolution-matrix.c
+ * Copyright (C) 2002-2014  Michael Natterer <mitch@ligma.org>
+ *                          Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,17 +24,17 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "propgui-types.h"
 
-#include "core/gimpcontext.h"
+#include "core/ligmacontext.h"
 
-#include "gimppropgui.h"
-#include "gimppropgui-convolution-matrix.h"
-#include "gimppropgui-generic.h"
+#include "ligmapropgui.h"
+#include "ligmapropgui-convolution-matrix.h"
+#include "ligmapropgui-generic.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 static const gchar *
@@ -131,13 +131,13 @@ convolution_matrix_rotate_flip (GtkWidget *button,
 }
 
 GtkWidget *
-_gimp_prop_gui_new_convolution_matrix (GObject                  *config,
+_ligma_prop_gui_new_convolution_matrix (GObject                  *config,
                                        GParamSpec              **param_specs,
                                        guint                     n_param_specs,
                                        GeglRectangle            *area,
-                                       GimpContext              *context,
-                                       GimpCreatePickerFunc      create_picker_func,
-                                       GimpCreateControllerFunc  create_controller_func,
+                                       LigmaContext              *context,
+                                       LigmaCreatePickerFunc      create_picker_func,
+                                       LigmaCreateControllerFunc  create_controller_func,
                                        gpointer                  creator)
 {
   GtkWidget   *main_vbox;
@@ -152,7 +152,7 @@ _gimp_prop_gui_new_convolution_matrix (GObject                  *config,
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
   g_return_val_if_fail (param_specs != NULL, NULL);
   g_return_val_if_fail (n_param_specs > 0, NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
 
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 8);
 
@@ -174,7 +174,7 @@ _gimp_prop_gui_new_convolution_matrix (GObject                  *config,
         {
           GtkWidget *spin;
 
-          spin = gimp_prop_spin_button_new (config,
+          spin = ligma_prop_spin_button_new (config,
                                             convolution_matrix_prop_name (x, y),
                                             1.0, 10.0, 2);
           gtk_entry_set_width_chars (GTK_ENTRY (spin), 8);
@@ -196,25 +196,25 @@ _gimp_prop_gui_new_convolution_matrix (GObject                  *config,
     const ButtonInfo buttons[] = {
       {
         .tooltip   = _("Rotate matrix 90° counter-clockwise"),
-        .icon_name = GIMP_ICON_OBJECT_ROTATE_270,
+        .icon_name = LIGMA_ICON_OBJECT_ROTATE_270,
         .rotate    = 1,
         .flip      = 0
       },
       {
         .tooltip   = _("Rotate matrix 90° clockwise"),
-        .icon_name = GIMP_ICON_OBJECT_ROTATE_90,
+        .icon_name = LIGMA_ICON_OBJECT_ROTATE_90,
         .rotate    = 3,
         .flip      = 0
       },
       {
         .tooltip   = _("Flip matrix horizontally"),
-        .icon_name = GIMP_ICON_OBJECT_FLIP_HORIZONTAL,
+        .icon_name = LIGMA_ICON_OBJECT_FLIP_HORIZONTAL,
         .rotate    = 0,
         .flip      = 1
       },
       {
         .tooltip   = _("Flip matrix vertically"),
-        .icon_name = GIMP_ICON_OBJECT_FLIP_VERTICAL,
+        .icon_name = LIGMA_ICON_OBJECT_FLIP_VERTICAL,
         .rotate    = 2,
         .flip      = 1
       }};
@@ -265,11 +265,11 @@ _gimp_prop_gui_new_convolution_matrix (GObject                  *config,
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  scale = gimp_prop_widget_new (config, "divisor",
+  scale = ligma_prop_widget_new (config, "divisor",
                                 area, context, NULL, NULL, NULL, &label);
   gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
 
-  scale = gimp_prop_widget_new (config, "offset",
+  scale = ligma_prop_widget_new (config, "offset",
                                 area, context, NULL, NULL, NULL, &label);
   gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
 
@@ -280,7 +280,7 @@ _gimp_prop_gui_new_convolution_matrix (GObject                  *config,
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  vbox2 = _gimp_prop_gui_new_generic (config,
+  vbox2 = _ligma_prop_gui_new_generic (config,
                                       param_specs + 27, 4,
                                       area, context,
                                       create_picker_func,
@@ -288,7 +288,7 @@ _gimp_prop_gui_new_convolution_matrix (GObject                  *config,
                                       creator);
   gtk_box_pack_start (GTK_BOX (hbox), vbox2, TRUE, TRUE, 0);
 
-  vbox2 = _gimp_prop_gui_new_generic (config,
+  vbox2 = _ligma_prop_gui_new_generic (config,
                                       param_specs + 31,
                                       n_param_specs - 31,
                                       area, context,

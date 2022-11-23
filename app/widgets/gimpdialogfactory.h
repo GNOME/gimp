@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpdialogfactory.h
- * Copyright (C) 2001 Michael Natterer <mitch@gimp.org>
+ * ligmadialogfactory.h
+ * Copyright (C) 2001 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,21 +18,21 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DIALOG_FACTORY_H__
-#define __GIMP_DIALOG_FACTORY_H__
+#ifndef __LIGMA_DIALOG_FACTORY_H__
+#define __LIGMA_DIALOG_FACTORY_H__
 
 
-#include "core/gimpobject.h"
+#include "core/ligmaobject.h"
 
-#define GIMP_DIALOG_VISIBILITY_KEY "gimp-dialog-visibility"
+#define LIGMA_DIALOG_VISIBILITY_KEY "ligma-dialog-visibility"
 
 typedef enum
 {
-  GIMP_DIALOG_VISIBILITY_UNKNOWN = 0,
-  GIMP_DIALOG_VISIBILITY_INVISIBLE,
-  GIMP_DIALOG_VISIBILITY_VISIBLE,
-  GIMP_DIALOG_VISIBILITY_HIDDEN
-} GimpDialogVisibilityState;
+  LIGMA_DIALOG_VISIBILITY_UNKNOWN = 0,
+  LIGMA_DIALOG_VISIBILITY_INVISIBLE,
+  LIGMA_DIALOG_VISIBILITY_VISIBLE,
+  LIGMA_DIALOG_VISIBILITY_HIDDEN
+} LigmaDialogVisibilityState;
 
 
 /* In order to support constructors of various types, these functions
@@ -40,13 +40,13 @@ typedef enum
  * widget constructor. If this set becomes too big we can consider
  * passing a struct or use varargs.
  */
-typedef GtkWidget * (* GimpDialogNewFunc)     (GimpDialogFactory      *factory,
-                                               GimpContext            *context,
-                                               GimpUIManager          *ui_manager,
+typedef GtkWidget * (* LigmaDialogNewFunc)     (LigmaDialogFactory      *factory,
+                                               LigmaContext            *context,
+                                               LigmaUIManager          *ui_manager,
                                                gint                    view_size);
 
 
-struct _GimpDialogFactoryEntry
+struct _LigmaDialogFactoryEntry
 {
   gchar                *identifier;
   gchar                *name;
@@ -54,8 +54,8 @@ struct _GimpDialogFactoryEntry
   gchar                *icon_name;
   gchar                *help_id;
 
-  GimpDialogNewFunc     new_func;
-  GimpDialogRestoreFunc restore_func;
+  LigmaDialogNewFunc     new_func;
+  LigmaDialogRestoreFunc restore_func;
   gint                  view_size;
 
   gboolean              singleton;
@@ -66,7 +66,7 @@ struct _GimpDialogFactoryEntry
   /* If TRUE the visibility of the dialog is toggleable */
   gboolean              hideable;
 
-  /* If TRUE the entry is for a GimpImageWindow, FALSE otherwise */
+  /* If TRUE the entry is for a LigmaImageWindow, FALSE otherwise */
   gboolean              image_window;
 
   /* If TRUE the entry is for a dockable, FALSE otherwise */
@@ -74,55 +74,55 @@ struct _GimpDialogFactoryEntry
 };
 
 
-#define GIMP_TYPE_DIALOG_FACTORY            (gimp_dialog_factory_get_type ())
-#define GIMP_DIALOG_FACTORY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DIALOG_FACTORY, GimpDialogFactory))
-#define GIMP_DIALOG_FACTORY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DIALOG_FACTORY, GimpDialogFactoryClass))
-#define GIMP_IS_DIALOG_FACTORY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DIALOG_FACTORY))
-#define GIMP_IS_DIALOG_FACTORY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DIALOG_FACTORY))
-#define GIMP_DIALOG_FACTORY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DIALOG_FACTORY, GimpDialogFactoryClass))
+#define LIGMA_TYPE_DIALOG_FACTORY            (ligma_dialog_factory_get_type ())
+#define LIGMA_DIALOG_FACTORY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_DIALOG_FACTORY, LigmaDialogFactory))
+#define LIGMA_DIALOG_FACTORY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_DIALOG_FACTORY, LigmaDialogFactoryClass))
+#define LIGMA_IS_DIALOG_FACTORY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_DIALOG_FACTORY))
+#define LIGMA_IS_DIALOG_FACTORY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_DIALOG_FACTORY))
+#define LIGMA_DIALOG_FACTORY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_DIALOG_FACTORY, LigmaDialogFactoryClass))
 
 
-typedef struct _GimpDialogFactoryPrivate  GimpDialogFactoryPrivate;
-typedef struct _GimpDialogFactoryClass    GimpDialogFactoryClass;
+typedef struct _LigmaDialogFactoryPrivate  LigmaDialogFactoryPrivate;
+typedef struct _LigmaDialogFactoryClass    LigmaDialogFactoryClass;
 
 /**
- * GimpDialogFactory:
+ * LigmaDialogFactory:
  *
  * A factory with the main purpose of creating toplevel windows and
  * position them according to the session information kept within the
  * factory. Over time it has accumulated more functionality than this.
  */
-struct _GimpDialogFactory
+struct _LigmaDialogFactory
 {
-  GimpObject                parent_instance;
+  LigmaObject                parent_instance;
 
-  GimpDialogFactoryPrivate *p;
+  LigmaDialogFactoryPrivate *p;
 };
 
-struct _GimpDialogFactoryClass
+struct _LigmaDialogFactoryClass
 {
-  GimpObjectClass  parent_class;
+  LigmaObjectClass  parent_class;
 
-  void (* dock_window_added)   (GimpDialogFactory *factory,
-                                GimpDockWindow    *dock_window);
-  void (* dock_window_removed) (GimpDialogFactory *factory,
-                                GimpDockWindow    *dock_window);
+  void (* dock_window_added)   (LigmaDialogFactory *factory,
+                                LigmaDockWindow    *dock_window);
+  void (* dock_window_removed) (LigmaDialogFactory *factory,
+                                LigmaDockWindow    *dock_window);
 };
 
 
-GType               gimp_dialog_factory_get_type             (void) G_GNUC_CONST;
-GimpDialogFactory * gimp_dialog_factory_new                  (const gchar             *name,
-                                                              GimpContext             *context,
-                                                              GimpMenuFactory         *menu_factory);
+GType               ligma_dialog_factory_get_type             (void) G_GNUC_CONST;
+LigmaDialogFactory * ligma_dialog_factory_new                  (const gchar             *name,
+                                                              LigmaContext             *context,
+                                                              LigmaMenuFactory         *menu_factory);
 
-void                gimp_dialog_factory_register_entry       (GimpDialogFactory       *factory,
+void                ligma_dialog_factory_register_entry       (LigmaDialogFactory       *factory,
                                                               const gchar             *identifier,
                                                               const gchar             *name,
                                                               const gchar             *blurb,
                                                               const gchar             *icon_name,
                                                               const gchar             *help_id,
-                                                              GimpDialogNewFunc        new_func,
-                                                              GimpDialogRestoreFunc    restore_func,
+                                                              LigmaDialogNewFunc        new_func,
+                                                              LigmaDialogRestoreFunc    restore_func,
                                                               gint                     view_size,
                                                               gboolean                 singleton,
                                                               gboolean                 session_managed,
@@ -132,81 +132,81 @@ void                gimp_dialog_factory_register_entry       (GimpDialogFactory 
                                                               gboolean                 image_window,
                                                               gboolean                 dockable);
 
-GimpDialogFactoryEntry *
-                    gimp_dialog_factory_find_entry           (GimpDialogFactory       *factory,
+LigmaDialogFactoryEntry *
+                    ligma_dialog_factory_find_entry           (LigmaDialogFactory       *factory,
                                                               const gchar             *identifier);
-GimpSessionInfo *   gimp_dialog_factory_find_session_info    (GimpDialogFactory       *factory,
+LigmaSessionInfo *   ligma_dialog_factory_find_session_info    (LigmaDialogFactory       *factory,
                                                               const gchar             *identifier);
-GtkWidget *         gimp_dialog_factory_find_widget          (GimpDialogFactory       *factory,
+GtkWidget *         ligma_dialog_factory_find_widget          (LigmaDialogFactory       *factory,
                                                               const gchar             *identifiers);
 
-GtkWidget *         gimp_dialog_factory_dialog_new           (GimpDialogFactory       *factory,
+GtkWidget *         ligma_dialog_factory_dialog_new           (LigmaDialogFactory       *factory,
                                                               GdkMonitor              *monitor,
-                                                              GimpUIManager           *ui_manager,
+                                                              LigmaUIManager           *ui_manager,
                                                               GtkWidget               *parent,
                                                               const gchar             *identifier,
                                                               gint                     view_size,
                                                               gboolean                 present);
 
-GimpContext *       gimp_dialog_factory_get_context          (GimpDialogFactory       *factory);
-GimpMenuFactory *   gimp_dialog_factory_get_menu_factory     (GimpDialogFactory       *factory);
-GList *             gimp_dialog_factory_get_open_dialogs     (GimpDialogFactory       *factory);
+LigmaContext *       ligma_dialog_factory_get_context          (LigmaDialogFactory       *factory);
+LigmaMenuFactory *   ligma_dialog_factory_get_menu_factory     (LigmaDialogFactory       *factory);
+GList *             ligma_dialog_factory_get_open_dialogs     (LigmaDialogFactory       *factory);
 
-GList *             gimp_dialog_factory_get_session_infos    (GimpDialogFactory       *factory);
-void                gimp_dialog_factory_add_session_info     (GimpDialogFactory       *factory,
-                                                              GimpSessionInfo         *info);
+GList *             ligma_dialog_factory_get_session_infos    (LigmaDialogFactory       *factory);
+void                ligma_dialog_factory_add_session_info     (LigmaDialogFactory       *factory,
+                                                              LigmaSessionInfo         *info);
 
-GtkWidget *         gimp_dialog_factory_dialog_raise         (GimpDialogFactory       *factory,
+GtkWidget *         ligma_dialog_factory_dialog_raise         (LigmaDialogFactory       *factory,
                                                               GdkMonitor              *monitor,
                                                               GtkWidget               *parent,
                                                               const gchar             *identifiers,
                                                               gint                     view_size);
 
-GtkWidget *         gimp_dialog_factory_dockable_new         (GimpDialogFactory       *factory,
-                                                              GimpDock                *dock,
+GtkWidget *         ligma_dialog_factory_dockable_new         (LigmaDialogFactory       *factory,
+                                                              LigmaDock                *dock,
                                                               const gchar             *identifier,
                                                               gint                     view_size);
 
-void                gimp_dialog_factory_add_dialog           (GimpDialogFactory       *factory,
+void                ligma_dialog_factory_add_dialog           (LigmaDialogFactory       *factory,
                                                               GtkWidget               *dialog,
                                                               GdkMonitor              *monitor);
-void                gimp_dialog_factory_add_foreign          (GimpDialogFactory       *factory,
+void                ligma_dialog_factory_add_foreign          (LigmaDialogFactory       *factory,
                                                               const gchar             *identifier,
                                                               GtkWidget               *dialog,
                                                               GdkMonitor              *monitor);
-void                gimp_dialog_factory_position_dialog      (GimpDialogFactory       *factory,
+void                ligma_dialog_factory_position_dialog      (LigmaDialogFactory       *factory,
                                                               const gchar             *identifier,
                                                               GtkWidget               *dialog,
                                                               GdkMonitor              *monitor);
-void                gimp_dialog_factory_remove_dialog        (GimpDialogFactory       *factory,
+void                ligma_dialog_factory_remove_dialog        (LigmaDialogFactory       *factory,
                                                               GtkWidget               *dialog);
 
-void                gimp_dialog_factory_hide_dialog          (GtkWidget               *dialog);
+void                ligma_dialog_factory_hide_dialog          (GtkWidget               *dialog);
 
-void                gimp_dialog_factory_save                 (GimpDialogFactory       *factory,
-                                                              GimpConfigWriter        *writer);
-void                gimp_dialog_factory_restore              (GimpDialogFactory       *factory,
+void                ligma_dialog_factory_save                 (LigmaDialogFactory       *factory,
+                                                              LigmaConfigWriter        *writer);
+void                ligma_dialog_factory_restore              (LigmaDialogFactory       *factory,
                                                               GdkMonitor              *monitor);
 
-void                gimp_dialog_factory_set_state            (GimpDialogFactory       *factory,
-                                                              GimpDialogsState         state);
-GimpDialogsState    gimp_dialog_factory_get_state            (GimpDialogFactory       *factory);
+void                ligma_dialog_factory_set_state            (LigmaDialogFactory       *factory,
+                                                              LigmaDialogsState         state);
+LigmaDialogsState    ligma_dialog_factory_get_state            (LigmaDialogFactory       *factory);
 
-void                gimp_dialog_factory_show_with_display    (GimpDialogFactory       *factory);
-void                gimp_dialog_factory_hide_with_display    (GimpDialogFactory       *factory);
+void                ligma_dialog_factory_show_with_display    (LigmaDialogFactory       *factory);
+void                ligma_dialog_factory_hide_with_display    (LigmaDialogFactory       *factory);
 
-void                gimp_dialog_factory_set_busy             (GimpDialogFactory       *factory);
-void                gimp_dialog_factory_unset_busy           (GimpDialogFactory       *factory);
+void                ligma_dialog_factory_set_busy             (LigmaDialogFactory       *factory);
+void                ligma_dialog_factory_unset_busy           (LigmaDialogFactory       *factory);
 
-GimpDialogFactory * gimp_dialog_factory_from_widget          (GtkWidget               *dialog,
-                                                              GimpDialogFactoryEntry **entry);
+LigmaDialogFactory * ligma_dialog_factory_from_widget          (GtkWidget               *dialog,
+                                                              LigmaDialogFactoryEntry **entry);
 
-void                gimp_dialog_factory_set_has_min_size     (GtkWindow               *window,
+void                ligma_dialog_factory_set_has_min_size     (GtkWindow               *window,
                                                               gboolean                 has_min_size);
-gboolean            gimp_dialog_factory_get_has_min_size     (GtkWindow               *window);
+gboolean            ligma_dialog_factory_get_has_min_size     (GtkWindow               *window);
 
-GimpDialogFactory * gimp_dialog_factory_get_singleton        (void);
-void                gimp_dialog_factory_set_singleton        (GimpDialogFactory       *factory);
+LigmaDialogFactory * ligma_dialog_factory_get_singleton        (void);
+void                ligma_dialog_factory_set_singleton        (LigmaDialogFactory       *factory);
 
 
-#endif  /*  __GIMP_DIALOG_FACTORY_H__  */
+#endif  /*  __LIGMA_DIALOG_FACTORY_H__  */

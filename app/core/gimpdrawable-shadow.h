@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpdrawable-shadow.h
+ * ligmadrawable-shadow.h
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,16 +17,16 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DRAWABLE_SHADOW_H__
-#define __GIMP_DRAWABLE_SHADOW_H__
+#ifndef __LIGMA_DRAWABLE_SHADOW_H__
+#define __LIGMA_DRAWABLE_SHADOW_H__
 
 
-GeglBuffer * gimp_drawable_get_shadow_buffer   (GimpDrawable *drawable);
-void         gimp_drawable_free_shadow_buffer  (GimpDrawable *drawable);
+GeglBuffer * ligma_drawable_get_shadow_buffer   (LigmaDrawable *drawable);
+void         ligma_drawable_free_shadow_buffer  (LigmaDrawable *drawable);
 
-void         gimp_drawable_merge_shadow_buffer (GimpDrawable *drawable,
+void         ligma_drawable_merge_shadow_buffer (LigmaDrawable *drawable,
                                                 gboolean      push_undo,
                                                 const gchar  *undo_desc);
 
 
-#endif /* __GIMP_DRAWABLE_SHADOW_H__ */
+#endif /* __LIGMA_DRAWABLE_SHADOW_H__ */

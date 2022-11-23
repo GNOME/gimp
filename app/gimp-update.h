@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimp-update.h
+ * ligma-update.h
  * Copyright (C) 2019 Jehan
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,15 +18,15 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __APP_GIMP_UPDATE_H__
-#define __APP_GIMP_UPDATE_H__
+#ifndef __APP_LIGMA_UPDATE_H__
+#define __APP_LIGMA_UPDATE_H__
 
 
-gboolean gimp_update_auto_check (GimpCoreConfig *config,
-                                 Gimp           *gimp);
+gboolean ligma_update_auto_check (LigmaCoreConfig *config,
+                                 Ligma           *ligma);
 
-void     gimp_update_check      (GimpCoreConfig *config);
-void     gimp_update_refresh    (GimpCoreConfig *config);
+void     ligma_update_check      (LigmaCoreConfig *config);
+void     ligma_update_refresh    (LigmaCoreConfig *config);
 
 
-#endif /* __APP_GIMP_UPDATE_H__ */
+#endif /* __APP_LIGMA_UPDATE_H__ */

@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimphuesaturationconfig.c
- * Copyright (C) 2007 Michael Natterer <mitch@gimp.org>
+ * ligmahuesaturationconfig.c
+ * Copyright (C) 2007 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,13 +24,13 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "operations-types.h"
 
-#include "gimphuesaturationconfig.h"
+#include "ligmahuesaturationconfig.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -44,77 +44,77 @@ enum
 };
 
 
-static void     gimp_hue_saturation_config_iface_init   (GimpConfigInterface *iface);
+static void     ligma_hue_saturation_config_iface_init   (LigmaConfigInterface *iface);
 
-static void     gimp_hue_saturation_config_get_property (GObject          *object,
+static void     ligma_hue_saturation_config_get_property (GObject          *object,
                                                          guint             property_id,
                                                          GValue           *value,
                                                          GParamSpec       *pspec);
-static void     gimp_hue_saturation_config_set_property (GObject          *object,
+static void     ligma_hue_saturation_config_set_property (GObject          *object,
                                                          guint             property_id,
                                                          const GValue     *value,
                                                          GParamSpec       *pspec);
 
-static gboolean gimp_hue_saturation_config_serialize    (GimpConfig       *config,
-                                                         GimpConfigWriter *writer,
+static gboolean ligma_hue_saturation_config_serialize    (LigmaConfig       *config,
+                                                         LigmaConfigWriter *writer,
                                                          gpointer          data);
-static gboolean gimp_hue_saturation_config_deserialize  (GimpConfig       *config,
+static gboolean ligma_hue_saturation_config_deserialize  (LigmaConfig       *config,
                                                          GScanner         *scanner,
                                                          gint              nest_level,
                                                          gpointer          data);
-static gboolean gimp_hue_saturation_config_equal        (GimpConfig       *a,
-                                                         GimpConfig       *b);
-static void     gimp_hue_saturation_config_reset        (GimpConfig       *config);
-static gboolean gimp_hue_saturation_config_copy         (GimpConfig       *src,
-                                                         GimpConfig       *dest,
+static gboolean ligma_hue_saturation_config_equal        (LigmaConfig       *a,
+                                                         LigmaConfig       *b);
+static void     ligma_hue_saturation_config_reset        (LigmaConfig       *config);
+static gboolean ligma_hue_saturation_config_copy         (LigmaConfig       *src,
+                                                         LigmaConfig       *dest,
                                                          GParamFlags       flags);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpHueSaturationConfig, gimp_hue_saturation_config,
-                         GIMP_TYPE_OPERATION_SETTINGS,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
-                                                gimp_hue_saturation_config_iface_init))
+G_DEFINE_TYPE_WITH_CODE (LigmaHueSaturationConfig, ligma_hue_saturation_config,
+                         LIGMA_TYPE_OPERATION_SETTINGS,
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_CONFIG,
+                                                ligma_hue_saturation_config_iface_init))
 
-#define parent_class gimp_hue_saturation_config_parent_class
+#define parent_class ligma_hue_saturation_config_parent_class
 
 
 static void
-gimp_hue_saturation_config_class_init (GimpHueSaturationConfigClass *klass)
+ligma_hue_saturation_config_class_init (LigmaHueSaturationConfigClass *klass)
 {
   GObjectClass      *object_class   = G_OBJECT_CLASS (klass);
-  GimpViewableClass *viewable_class = GIMP_VIEWABLE_CLASS (klass);
+  LigmaViewableClass *viewable_class = LIGMA_VIEWABLE_CLASS (klass);
 
-  object_class->set_property        = gimp_hue_saturation_config_set_property;
-  object_class->get_property        = gimp_hue_saturation_config_get_property;
+  object_class->set_property        = ligma_hue_saturation_config_set_property;
+  object_class->get_property        = ligma_hue_saturation_config_get_property;
 
-  viewable_class->default_icon_name = "gimp-tool-hue-saturation";
+  viewable_class->default_icon_name = "ligma-tool-hue-saturation";
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_RANGE,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_RANGE,
                          "range",
                          _("Range"),
                          _("The affected range"),
-                         GIMP_TYPE_HUE_RANGE,
-                         GIMP_HUE_RANGE_ALL, 0);
+                         LIGMA_TYPE_HUE_RANGE,
+                         LIGMA_HUE_RANGE_ALL, 0);
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_HUE,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_HUE,
                            "hue",
                            _("Hue"),
                            _("Hue"),
                            -1.0, 1.0, 0.0, 0);
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_SATURATION,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_SATURATION,
                            "saturation",
                            _("Saturation"),
                            _("Saturation"),
                            -1.0, 1.0, 0.0, 0);
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_LIGHTNESS,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_LIGHTNESS,
                            "lightness",
                            _("Lightness"),
                            _("Lightness"),
                            -1.0, 1.0, 0.0, 0);
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_OVERLAP,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_OVERLAP,
                            "overlap",
                            _("Overlap"),
                            _("Overlap"),
@@ -122,28 +122,28 @@ gimp_hue_saturation_config_class_init (GimpHueSaturationConfigClass *klass)
 }
 
 static void
-gimp_hue_saturation_config_iface_init (GimpConfigInterface *iface)
+ligma_hue_saturation_config_iface_init (LigmaConfigInterface *iface)
 {
-  iface->serialize   = gimp_hue_saturation_config_serialize;
-  iface->deserialize = gimp_hue_saturation_config_deserialize;
-  iface->equal       = gimp_hue_saturation_config_equal;
-  iface->reset       = gimp_hue_saturation_config_reset;
-  iface->copy        = gimp_hue_saturation_config_copy;
+  iface->serialize   = ligma_hue_saturation_config_serialize;
+  iface->deserialize = ligma_hue_saturation_config_deserialize;
+  iface->equal       = ligma_hue_saturation_config_equal;
+  iface->reset       = ligma_hue_saturation_config_reset;
+  iface->copy        = ligma_hue_saturation_config_copy;
 }
 
 static void
-gimp_hue_saturation_config_init (GimpHueSaturationConfig *self)
+ligma_hue_saturation_config_init (LigmaHueSaturationConfig *self)
 {
-  gimp_config_reset (GIMP_CONFIG (self));
+  ligma_config_reset (LIGMA_CONFIG (self));
 }
 
 static void
-gimp_hue_saturation_config_get_property (GObject    *object,
+ligma_hue_saturation_config_get_property (GObject    *object,
                                          guint       property_id,
                                          GValue     *value,
                                          GParamSpec *pspec)
 {
-  GimpHueSaturationConfig *self = GIMP_HUE_SATURATION_CONFIG (object);
+  LigmaHueSaturationConfig *self = LIGMA_HUE_SATURATION_CONFIG (object);
 
   switch (property_id)
     {
@@ -174,12 +174,12 @@ gimp_hue_saturation_config_get_property (GObject    *object,
 }
 
 static void
-gimp_hue_saturation_config_set_property (GObject      *object,
+ligma_hue_saturation_config_set_property (GObject      *object,
                                          guint         property_id,
                                          const GValue *value,
                                          GParamSpec   *pspec)
 {
-  GimpHueSaturationConfig *self = GIMP_HUE_SATURATION_CONFIG (object);
+  LigmaHueSaturationConfig *self = LIGMA_HUE_SATURATION_CONFIG (object);
 
   switch (property_id)
     {
@@ -213,31 +213,31 @@ gimp_hue_saturation_config_set_property (GObject      *object,
 }
 
 static gboolean
-gimp_hue_saturation_config_serialize (GimpConfig       *config,
-                                      GimpConfigWriter *writer,
+ligma_hue_saturation_config_serialize (LigmaConfig       *config,
+                                      LigmaConfigWriter *writer,
                                       gpointer          data)
 {
-  GimpHueSaturationConfig *hs_config = GIMP_HUE_SATURATION_CONFIG (config);
-  GimpHueRange             range;
-  GimpHueRange             old_range;
+  LigmaHueSaturationConfig *hs_config = LIGMA_HUE_SATURATION_CONFIG (config);
+  LigmaHueRange             range;
+  LigmaHueRange             old_range;
   gboolean                 success = TRUE;
 
-  if (! gimp_operation_settings_config_serialize_base (config, writer, data))
+  if (! ligma_operation_settings_config_serialize_base (config, writer, data))
     return FALSE;
 
   old_range = hs_config->range;
 
-  for (range = GIMP_HUE_RANGE_ALL; range <= GIMP_HUE_RANGE_MAGENTA; range++)
+  for (range = LIGMA_HUE_RANGE_ALL; range <= LIGMA_HUE_RANGE_MAGENTA; range++)
     {
       hs_config->range = range;
 
-      success = (gimp_config_serialize_property_by_name (config, "range",
+      success = (ligma_config_serialize_property_by_name (config, "range",
                                                          writer) &&
-                 gimp_config_serialize_property_by_name (config, "hue",
+                 ligma_config_serialize_property_by_name (config, "hue",
                                                          writer) &&
-                 gimp_config_serialize_property_by_name (config, "saturation",
+                 ligma_config_serialize_property_by_name (config, "saturation",
                                                          writer) &&
-                 gimp_config_serialize_property_by_name (config, "lightness",
+                 ligma_config_serialize_property_by_name (config, "lightness",
                                                          writer));
 
       if (! success)
@@ -245,7 +245,7 @@ gimp_hue_saturation_config_serialize (GimpConfig       *config,
     }
 
   if (success)
-    success = gimp_config_serialize_property_by_name (config, "overlap",
+    success = ligma_config_serialize_property_by_name (config, "overlap",
                                                       writer);
 
   hs_config->range = old_range;
@@ -254,18 +254,18 @@ gimp_hue_saturation_config_serialize (GimpConfig       *config,
 }
 
 static gboolean
-gimp_hue_saturation_config_deserialize (GimpConfig *config,
+ligma_hue_saturation_config_deserialize (LigmaConfig *config,
                                         GScanner   *scanner,
                                         gint        nest_level,
                                         gpointer    data)
 {
-  GimpHueSaturationConfig *hs_config = GIMP_HUE_SATURATION_CONFIG (config);
-  GimpHueRange             old_range;
+  LigmaHueSaturationConfig *hs_config = LIGMA_HUE_SATURATION_CONFIG (config);
+  LigmaHueRange             old_range;
   gboolean                 success = TRUE;
 
   old_range = hs_config->range;
 
-  success = gimp_config_deserialize_properties (config, scanner, nest_level);
+  success = ligma_config_deserialize_properties (config, scanner, nest_level);
 
   g_object_set (config, "range", old_range, NULL);
 
@@ -273,17 +273,17 @@ gimp_hue_saturation_config_deserialize (GimpConfig *config,
 }
 
 static gboolean
-gimp_hue_saturation_config_equal (GimpConfig *a,
-                                  GimpConfig *b)
+ligma_hue_saturation_config_equal (LigmaConfig *a,
+                                  LigmaConfig *b)
 {
-  GimpHueSaturationConfig *config_a = GIMP_HUE_SATURATION_CONFIG (a);
-  GimpHueSaturationConfig *config_b = GIMP_HUE_SATURATION_CONFIG (b);
-  GimpHueRange             range;
+  LigmaHueSaturationConfig *config_a = LIGMA_HUE_SATURATION_CONFIG (a);
+  LigmaHueSaturationConfig *config_b = LIGMA_HUE_SATURATION_CONFIG (b);
+  LigmaHueRange             range;
 
-  if (! gimp_operation_settings_config_equal_base (a, b))
+  if (! ligma_operation_settings_config_equal_base (a, b))
     return FALSE;
 
-  for (range = GIMP_HUE_RANGE_ALL; range <= GIMP_HUE_RANGE_MAGENTA; range++)
+  for (range = LIGMA_HUE_RANGE_ALL; range <= LIGMA_HUE_RANGE_MAGENTA; range++)
     {
       if (config_a->hue[range]        != config_b->hue[range]        ||
           config_a->saturation[range] != config_b->saturation[range] ||
@@ -300,36 +300,36 @@ gimp_hue_saturation_config_equal (GimpConfig *a,
 }
 
 static void
-gimp_hue_saturation_config_reset (GimpConfig *config)
+ligma_hue_saturation_config_reset (LigmaConfig *config)
 {
-  GimpHueSaturationConfig *hs_config = GIMP_HUE_SATURATION_CONFIG (config);
-  GimpHueRange             range;
+  LigmaHueSaturationConfig *hs_config = LIGMA_HUE_SATURATION_CONFIG (config);
+  LigmaHueRange             range;
 
-  gimp_operation_settings_config_reset_base (config);
+  ligma_operation_settings_config_reset_base (config);
 
-  for (range = GIMP_HUE_RANGE_ALL; range <= GIMP_HUE_RANGE_MAGENTA; range++)
+  for (range = LIGMA_HUE_RANGE_ALL; range <= LIGMA_HUE_RANGE_MAGENTA; range++)
     {
       hs_config->range = range;
-      gimp_hue_saturation_config_reset_range (hs_config);
+      ligma_hue_saturation_config_reset_range (hs_config);
     }
 
-  gimp_config_reset_property (G_OBJECT (config), "range");
-  gimp_config_reset_property (G_OBJECT (config), "overlap");
+  ligma_config_reset_property (G_OBJECT (config), "range");
+  ligma_config_reset_property (G_OBJECT (config), "overlap");
 }
 
 static gboolean
-gimp_hue_saturation_config_copy (GimpConfig   *src,
-                                 GimpConfig   *dest,
+ligma_hue_saturation_config_copy (LigmaConfig   *src,
+                                 LigmaConfig   *dest,
                                  GParamFlags   flags)
 {
-  GimpHueSaturationConfig *src_config  = GIMP_HUE_SATURATION_CONFIG (src);
-  GimpHueSaturationConfig *dest_config = GIMP_HUE_SATURATION_CONFIG (dest);
-  GimpHueRange             range;
+  LigmaHueSaturationConfig *src_config  = LIGMA_HUE_SATURATION_CONFIG (src);
+  LigmaHueSaturationConfig *dest_config = LIGMA_HUE_SATURATION_CONFIG (dest);
+  LigmaHueRange             range;
 
-  if (! gimp_operation_settings_config_copy_base (src, dest, flags))
+  if (! ligma_operation_settings_config_copy_base (src, dest, flags))
     return FALSE;
 
-  for (range = GIMP_HUE_RANGE_ALL; range <= GIMP_HUE_RANGE_MAGENTA; range++)
+  for (range = LIGMA_HUE_RANGE_ALL; range <= LIGMA_HUE_RANGE_MAGENTA; range++)
     {
       dest_config->hue[range]        = src_config->hue[range];
       dest_config->saturation[range] = src_config->saturation[range];
@@ -353,15 +353,15 @@ gimp_hue_saturation_config_copy (GimpConfig   *src,
 /*  public functions  */
 
 void
-gimp_hue_saturation_config_reset_range (GimpHueSaturationConfig *config)
+ligma_hue_saturation_config_reset_range (LigmaHueSaturationConfig *config)
 {
-  g_return_if_fail (GIMP_IS_HUE_SATURATION_CONFIG (config));
+  g_return_if_fail (LIGMA_IS_HUE_SATURATION_CONFIG (config));
 
   g_object_freeze_notify (G_OBJECT (config));
 
-  gimp_config_reset_property (G_OBJECT (config), "hue");
-  gimp_config_reset_property (G_OBJECT (config), "saturation");
-  gimp_config_reset_property (G_OBJECT (config), "lightness");
+  ligma_config_reset_property (G_OBJECT (config), "hue");
+  ligma_config_reset_property (G_OBJECT (config), "saturation");
+  ligma_config_reset_property (G_OBJECT (config), "lightness");
 
   g_object_thaw_notify (G_OBJECT (config));
 }

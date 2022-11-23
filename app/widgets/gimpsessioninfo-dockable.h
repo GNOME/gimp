@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpsessioninfo-dockable.h
- * Copyright (C) 2001-2007 Michael Natterer <mitch@gimp.org>
+ * ligmasessioninfo-dockable.h
+ * Copyright (C) 2001-2007 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,42 +18,42 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SESSION_INFO_DOCKABLE_H__
-#define __GIMP_SESSION_INFO_DOCKABLE_H__
+#ifndef __LIGMA_SESSION_INFO_DOCKABLE_H__
+#define __LIGMA_SESSION_INFO_DOCKABLE_H__
 
 
 /**
- * GimpSessionInfoDockable:
+ * LigmaSessionInfoDockable:
  *
  * Contains information about a dockable in the interface.
  */
-struct _GimpSessionInfoDockable
+struct _LigmaSessionInfoDockable
 {
   gchar        *identifier;
   gboolean      locked;
-  GimpTabStyle  tab_style;
+  LigmaTabStyle  tab_style;
   gint          view_size;
 
-  /*  dialog specific list of GimpSessionInfoAux  */
+  /*  dialog specific list of LigmaSessionInfoAux  */
   GList        *aux_info;
 };
 
 
-GimpSessionInfoDockable *
-               gimp_session_info_dockable_new         (void);
-void           gimp_session_info_dockable_free        (GimpSessionInfoDockable  *info);
+LigmaSessionInfoDockable *
+               ligma_session_info_dockable_new         (void);
+void           ligma_session_info_dockable_free        (LigmaSessionInfoDockable  *info);
 
-void           gimp_session_info_dockable_serialize   (GimpConfigWriter         *writer,
-                                                       GimpSessionInfoDockable  *dockable);
-GTokenType     gimp_session_info_dockable_deserialize (GScanner                 *scanner,
+void           ligma_session_info_dockable_serialize   (LigmaConfigWriter         *writer,
+                                                       LigmaSessionInfoDockable  *dockable);
+GTokenType     ligma_session_info_dockable_deserialize (GScanner                 *scanner,
                                                        gint                      scope,
-                                                       GimpSessionInfoDockable **dockable);
+                                                       LigmaSessionInfoDockable **dockable);
 
-GimpSessionInfoDockable *
-               gimp_session_info_dockable_from_widget (GimpDockable             *dockable);
+LigmaSessionInfoDockable *
+               ligma_session_info_dockable_from_widget (LigmaDockable             *dockable);
 
-GimpDockable * gimp_session_info_dockable_restore     (GimpSessionInfoDockable  *info,
-                                                       GimpDock                 *dock);
+LigmaDockable * ligma_session_info_dockable_restore     (LigmaSessionInfoDockable  *info,
+                                                       LigmaDock                 *dock);
 
 
-#endif  /* __GIMP_SESSION_INFO_DOCKABLE_H__ */
+#endif  /* __LIGMA_SESSION_INFO_DOCKABLE_H__ */

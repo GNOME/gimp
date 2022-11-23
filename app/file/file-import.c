@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * file-import.c
@@ -24,18 +24,18 @@
 
 #include "core/core-types.h"
 
-#include "config/gimpcoreconfig.h"
+#include "config/ligmacoreconfig.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontext.h"
-#include "core/gimpimage.h"
-#include "core/gimpimage-color-profile.h"
-#include "core/gimpimage-convert-precision.h"
-#include "core/gimpimage-rotate.h"
-#include "core/gimplayer.h"
-#include "core/gimpprogress.h"
+#include "core/ligma.h"
+#include "core/ligmacontext.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaimage-color-profile.h"
+#include "core/ligmaimage-convert-precision.h"
+#include "core/ligmaimage-rotate.h"
+#include "core/ligmalayer.h"
+#include "core/ligmaprogress.h"
 
-#include "text/gimptextlayer.h"
+#include "text/ligmatextlayer.h"
 
 #include "file-import.h"
 
@@ -43,56 +43,56 @@
 /*  public functions  */
 
 void
-file_import_image (GimpImage    *image,
-                   GimpContext  *context,
+file_import_image (LigmaImage    *image,
+                   LigmaContext  *context,
                    GFile        *file,
                    gboolean      interactive,
-                   GimpProgress *progress)
+                   LigmaProgress *progress)
 {
-  GimpCoreConfig *config;
+  LigmaCoreConfig *config;
 
-  g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (GIMP_IS_CONTEXT (context));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_CONTEXT (context));
   g_return_if_fail (G_IS_FILE (file));
-  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
+  g_return_if_fail (progress == NULL || LIGMA_IS_PROGRESS (progress));
 
-  config = image->gimp->config;
+  config = image->ligma->config;
 
-  if (interactive && gimp_image_get_base_type (image) != GIMP_INDEXED)
+  if (interactive && ligma_image_get_base_type (image) != LIGMA_INDEXED)
     {
       if (config->import_promote_float)
         {
-          GimpPrecision old_precision = gimp_image_get_precision (image);
+          LigmaPrecision old_precision = ligma_image_get_precision (image);
 
-          if (old_precision != GIMP_PRECISION_FLOAT_LINEAR)
+          if (old_precision != LIGMA_PRECISION_FLOAT_LINEAR)
             {
-              gimp_image_convert_precision (image,
-                                            GIMP_PRECISION_FLOAT_LINEAR,
+              ligma_image_convert_precision (image,
+                                            LIGMA_PRECISION_FLOAT_LINEAR,
                                             GEGL_DITHER_NONE,
                                             GEGL_DITHER_NONE,
                                             GEGL_DITHER_NONE,
                                             progress);
 
               if (config->import_promote_dither &&
-                  old_precision == GIMP_PRECISION_U8_NON_LINEAR)
+                  old_precision == LIGMA_PRECISION_U8_NON_LINEAR)
                 {
-                  gimp_image_convert_dither_u8 (image, progress);
+                  ligma_image_convert_dither_u8 (image, progress);
                 }
             }
         }
 
       if (config->import_add_alpha)
         {
-          GList *layers = gimp_image_get_layer_list (image);
+          GList *layers = ligma_image_get_layer_list (image);
           GList *list;
 
           for (list = layers; list; list = g_list_next (list))
             {
-              if (! gimp_viewable_get_children (list->data) &&
-                  ! gimp_item_is_text_layer (list->data)    &&
-                  ! gimp_drawable_has_alpha (list->data))
+              if (! ligma_viewable_get_children (list->data) &&
+                  ! ligma_item_is_text_layer (list->data)    &&
+                  ! ligma_drawable_has_alpha (list->data))
                 {
-                  gimp_layer_add_alpha (list->data);
+                  ligma_layer_add_alpha (list->data);
                 }
             }
 
@@ -100,12 +100,12 @@ file_import_image (GimpImage    *image,
         }
     }
 
-  gimp_image_import_color_profile (image, context, progress, interactive);
-  gimp_image_import_rotation_metadata (image, context, progress, interactive);
+  ligma_image_import_color_profile (image, context, progress, interactive);
+  ligma_image_import_rotation_metadata (image, context, progress, interactive);
 
   /* Remember the import source */
-  gimp_image_set_imported_file (image, file);
+  ligma_image_set_imported_file (image, file);
 
   /* We shall treat this file as an Untitled file */
-  gimp_image_set_file (image, NULL);
+  ligma_image_set_file (image, NULL);
 }

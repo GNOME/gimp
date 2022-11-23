@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * gimpcancelable.h
+ * ligmacancelable.h
  * Copyright (C) 2018 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,24 +18,24 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CANCELABLE_H__
-#define __GIMP_CANCELABLE_H__
+#ifndef __LIGMA_CANCELABLE_H__
+#define __LIGMA_CANCELABLE_H__
 
 
-#define GIMP_TYPE_CANCELABLE (gimp_cancelable_get_type ())
-G_DECLARE_INTERFACE (GimpCancelable, gimp_cancelable, GIMP, CANCELABLE, GObject)
+#define LIGMA_TYPE_CANCELABLE (ligma_cancelable_get_type ())
+G_DECLARE_INTERFACE (LigmaCancelable, ligma_cancelable, LIGMA, CANCELABLE, GObject)
 
 
-struct _GimpCancelableInterface
+struct _LigmaCancelableInterface
 {
   GTypeInterface base_iface;
 
   /*  signals  */
-  void   (* cancel) (GimpCancelable *cancelable);
+  void   (* cancel) (LigmaCancelable *cancelable);
 };
 
 
-void    gimp_cancelable_cancel   (GimpCancelable *cancelable);
+void    ligma_cancelable_cancel   (LigmaCancelable *cancelable);
 
 
-#endif  /* __GIMP_CANCELABLE_H__ */
+#endif  /* __LIGMA_CANCELABLE_H__ */

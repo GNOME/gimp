@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * metadata-editor.c
@@ -30,10 +30,10 @@
 #include <glib.h>
 #include <glib/gstdio.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 #include "metadata-tags.h"
 #include "metadata-xml.h"
@@ -42,9 +42,9 @@
 
 #define PLUG_IN_PROC            "plug-in-metadata-editor"
 #define PLUG_IN_BINARY          "metadata-editor"
-#define PLUG_IN_ROLE            "gimp-metadata"
+#define PLUG_IN_ROLE            "ligma-metadata"
 
-#define DEFAULT_TEMPLATE_FILE   "gimp_metadata_template.xml"
+#define DEFAULT_TEMPLATE_FILE   "ligma_metadata_template.xml"
 
 
 typedef struct _Metadata      Metadata;
@@ -52,12 +52,12 @@ typedef struct _MetadataClass MetadataClass;
 
 struct _Metadata
 {
-  GimpPlugIn parent_instance;
+  LigmaPlugIn parent_instance;
 };
 
 struct _MetadataClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -66,16 +66,16 @@ struct _MetadataClass
 
 GType                   metadata_get_type         (void) G_GNUC_CONST;
 
-static GList          * metadata_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * metadata_create_procedure (GimpPlugIn           *plug_in,
+static GList          * metadata_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * metadata_create_procedure (LigmaPlugIn           *plug_in,
                                                    const gchar          *name);
 
-static GimpValueArray * metadata_run              (GimpProcedure        *procedure,
-                                                   const GimpValueArray *args,
+static LigmaValueArray * metadata_run              (LigmaProcedure        *procedure,
+                                                   const LigmaValueArray *args,
                                                    gpointer              run_data);
 
-static gboolean metadata_editor_dialog           (GimpImage           *image,
-                                                  GimpMetadata        *metadata,
+static gboolean metadata_editor_dialog           (LigmaImage           *image,
+                                                  LigmaMetadata        *metadata,
                                                   GError             **error);
 
 static void metadata_dialog_editor_set_metadata  (GExiv2Metadata      *metadata,
@@ -83,7 +83,7 @@ static void metadata_dialog_editor_set_metadata  (GExiv2Metadata      *metadata,
 
 void metadata_editor_write_callback              (GtkWidget           *dialog,
                                                   GtkBuilder          *builder,
-                                                  GimpImage           *image);
+                                                  LigmaImage           *image);
 
 static void impex_combo_callback                (GtkComboBoxText      *combo,
                                                  gpointer              data);
@@ -100,19 +100,19 @@ static void     add_to_store                    (gchar                *value,
                                                  GtkListStore         *liststore,
                                                  gint                  store_column);
 
-static void     set_tag_string                  (GimpMetadata         *metadata,
+static void     set_tag_string                  (LigmaMetadata         *metadata,
                                                  const gchar          *name,
                                                  const gchar          *value);
 
 static gchar *  get_phonetype                   (gchar                *cur_value);
 
 static void     write_metadata_tag              (GtkBuilder           *builder,
-                                                 GimpMetadata         *metadata,
+                                                 LigmaMetadata         *metadata,
                                                  gchar                *tag,
                                                  gint                  data_column);
 
 static void     write_metadata_tag_multiple     (GtkBuilder           *builder,
-                                                 GimpMetadata         *metadata,
+                                                 LigmaMetadata         *metadata,
                                                  GExiv2StructureType   type,
                                                  const gchar          *header_tag,
                                                  gint                  n_columns,
@@ -407,15 +407,15 @@ cell_edited_callback_combo                      (GtkCellRendererCombo *cell,
                                                  int                   index);
 
 
-G_DEFINE_TYPE (Metadata, metadata, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Metadata, metadata, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (METADATA_TYPE)
+LIGMA_MAIN (METADATA_TYPE)
 DEFINE_STD_SET_I18N
 
 
 static int last_gpsaltsys_sel;
 
-gboolean gimpmetadata;
+gboolean ligmametadata;
 gboolean force_write;
 
 static const gchar *lang_default = "lang=\"x-default\"";
@@ -430,7 +430,7 @@ metadata_editor meta_args;
 static void
 metadata_class_init (MetadataClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = metadata_query_procedures;
   plug_in_class->create_procedure = metadata_create_procedure;
@@ -443,29 +443,29 @@ metadata_init (Metadata *metadata)
 }
 
 static GList *
-metadata_query_procedures (GimpPlugIn *plug_in)
+metadata_query_procedures (LigmaPlugIn *plug_in)
 {
   return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
 }
 
-static GimpProcedure *
-metadata_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+metadata_create_procedure (LigmaPlugIn  *plug_in,
                            const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_procedure_new (plug_in, name,
-                                      GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_procedure_new (plug_in, name,
+                                      LIGMA_PDB_PROC_TYPE_PLUGIN,
                                       metadata_run, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "*");
+      ligma_procedure_set_image_types (procedure, "*");
 
-      gimp_procedure_set_menu_label (procedure, _("_Edit Metadata"));
-      gimp_procedure_add_menu_path (procedure, "<Image>/Image/Metadata");
+      ligma_procedure_set_menu_label (procedure, _("_Edit Metadata"));
+      ligma_procedure_add_menu_path (procedure, "<Image>/Image/Metadata");
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         _("Edit metadata (IPTC, EXIF, XMP)"),
                                         "Edit metadata information attached "
                                         "to the current image. Some or all "
@@ -473,19 +473,19 @@ metadata_create_procedure (GimpPlugIn  *plug_in,
                                         "the file, depending on the output "
                                         "file format.",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Ben Touchette",
                                       "Ben Touchette",
                                       "2017");
 
-      GIMP_PROC_ARG_ENUM (procedure, "run-mode",
+      LIGMA_PROC_ARG_ENUM (procedure, "run-mode",
                           "Run mode",
                           "The run mode",
-                          GIMP_TYPE_RUN_MODE,
-                          GIMP_RUN_INTERACTIVE,
+                          LIGMA_TYPE_RUN_MODE,
+                          LIGMA_RUN_INTERACTIVE,
                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_IMAGE (procedure, "image",
+      LIGMA_PROC_ARG_IMAGE (procedure, "image",
                            "Image",
                            "The input image",
                            FALSE,
@@ -495,20 +495,20 @@ metadata_create_procedure (GimpPlugIn  *plug_in,
   return procedure;
 }
 
-static GimpValueArray *
-metadata_run (GimpProcedure        *procedure,
-              const GimpValueArray *args,
+static LigmaValueArray *
+metadata_run (LigmaProcedure        *procedure,
+              const LigmaValueArray *args,
               gpointer              run_data)
 {
-  GimpImage    *image;
-  GimpMetadata *metadata;
+  LigmaImage    *image;
+  LigmaMetadata *metadata;
   GError       *error  = NULL;
 
-  gimp_ui_init (PLUG_IN_BINARY);
+  ligma_ui_init (PLUG_IN_BINARY);
 
-  image = GIMP_VALUES_GET_IMAGE (args, 1);
+  image = LIGMA_VALUES_GET_IMAGE (args, 1);
 
-  metadata = gimp_image_get_metadata (image);
+  metadata = ligma_image_get_metadata (image);
 
   /* Always show metadata dialog so we can add appropriate iptc data
    * as needed. Sometimes license data needs to be added after the
@@ -517,14 +517,14 @@ metadata_run (GimpProcedure        *procedure,
    */
   if (! metadata)
     {
-      metadata = gimp_metadata_new ();
-      gimp_image_set_metadata (image, metadata);
+      metadata = ligma_metadata_new ();
+      ligma_image_set_metadata (image, metadata);
     }
 
   if (metadata_editor_dialog (image, metadata, &error))
-    return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
+    return ligma_procedure_new_return_values (procedure, LIGMA_PDB_SUCCESS, NULL);
   else
-    return gimp_procedure_new_return_values (procedure, GIMP_PDB_EXECUTION_ERROR, error);
+    return ligma_procedure_new_return_values (procedure, LIGMA_PDB_EXECUTION_ERROR, error);
 }
 
 
@@ -543,8 +543,8 @@ builder_get_widget (GtkBuilder  *builder,
 }
 
 static gboolean
-metadata_editor_dialog (GimpImage     *image,
-                        GimpMetadata  *g_metadata,
+metadata_editor_dialog (LigmaImage     *image,
+                        LigmaMetadata  *g_metadata,
                         GError       **error)
 {
   GtkBuilder     *builder;
@@ -569,7 +569,7 @@ metadata_editor_dialog (GimpImage     *image,
   meta_args.filename = g_strconcat (g_get_home_dir (), "/", DEFAULT_TEMPLATE_FILE,
                                     NULL);
 
-  ui_file = g_build_filename (gimp_data_directory (),
+  ui_file = g_build_filename (ligma_data_directory (),
                               "ui", "plug-ins", "plug-in-metadata-editor.ui", NULL);
 
   if (! gtk_builder_add_from_file (builder, ui_file, &local_error))
@@ -586,15 +586,15 @@ metadata_editor_dialog (GimpImage     *image,
 
   g_free (ui_file);
 
-  name = gimp_image_get_name (image);
+  name = ligma_image_get_name (image);
   title = g_strdup_printf (_("Metadata Editor: %s"), name);
   if (name)
     g_free (name);
 
-  dialog = gimp_dialog_new (title,
-                            "gimp-metadata-editor-dialog",
+  dialog = ligma_dialog_new (title,
+                            "ligma-metadata-editor-dialog",
                             NULL, 0,
-                            gimp_standard_help_func, PLUG_IN_PROC,
+                            ligma_standard_help_func, PLUG_IN_PROC,
                             _("_Cancel"),         GTK_RESPONSE_CANCEL,
                             _("_Write Metadata"), GTK_RESPONSE_OK,
                             NULL);
@@ -602,12 +602,12 @@ metadata_editor_dialog (GimpImage     *image,
   meta_args.dialog = dialog;
 
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                             GTK_RESPONSE_OK,
                                             GTK_RESPONSE_CANCEL,
                                             -1);
 
-  gimp_window_set_transient (GTK_WINDOW (dialog));
+  ligma_window_set_transient (GTK_WINDOW (dialog));
 
   if (title)
     g_free (title);
@@ -633,7 +633,7 @@ metadata_editor_dialog (GimpImage     *image,
 
   metadata_dialog_editor_set_metadata (metadata, builder);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+  run = (ligma_dialog_run (LIGMA_DIALOG (dialog)) == GTK_RESPONSE_OK);
   if (run)
     {
       metadata_editor_write_callback (dialog, builder, image);
@@ -919,7 +919,7 @@ on_date_button_clicked (GtkButton *widget,
 
   builder = gtk_builder_new ();
 
-  ui_file = g_build_filename (gimp_data_directory (),
+  ui_file = g_build_filename (ligma_data_directory (),
                               "ui", "plug-ins",
                               "plug-in-metadata-editor-calendar.ui", NULL);
 
@@ -963,12 +963,12 @@ on_date_button_clicked (GtkButton *widget,
 
   gtk_dialog_set_default_response (GTK_DIALOG (calendar_dialog),
                                    GTK_RESPONSE_OK);
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (calendar_dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (calendar_dialog),
                                             GTK_RESPONSE_OK,
                                             GTK_RESPONSE_CANCEL,
                                             -1);
 
-  gimp_window_set_transient (GTK_WINDOW (calendar_dialog));
+  ligma_window_set_transient (GTK_WINDOW (calendar_dialog));
 
   calendar_content_area = gtk_dialog_get_content_area (GTK_DIALOG (
                             calendar_dialog));
@@ -2083,8 +2083,8 @@ metadata_dialog_editor_set_metadata (GExiv2Metadata *metadata,
 
       index = default_metadata_tags[i].other_tag_index;
 
-      if (default_metadata_tags[i].xmp_type == GIMP_XMP_BAG ||
-          default_metadata_tags[i].xmp_type == GIMP_XMP_SEQ)
+      if (default_metadata_tags[i].xmp_type == LIGMA_XMP_BAG ||
+          default_metadata_tags[i].xmp_type == LIGMA_XMP_SEQ)
         {
           gchar **values;
 
@@ -3791,7 +3791,7 @@ set_tag_failed (const gchar *tag)
 }
 
 static void
-set_tag_string (GimpMetadata *metadata,
+set_tag_string (LigmaMetadata *metadata,
                 const gchar  *name,
                 const gchar  *value)
 {
@@ -3834,7 +3834,7 @@ get_phonetype (gchar *cur_value)
 }
 
 static void
-write_metadata_tag (GtkBuilder *builder, GimpMetadata *metadata, gchar * tag, gint data_column)
+write_metadata_tag (GtkBuilder *builder, LigmaMetadata *metadata, gchar * tag, gint data_column)
 {
   GtkWidget     *list_widget;
   GtkTreeModel  *treemodel;
@@ -3882,7 +3882,7 @@ write_metadata_tag (GtkBuilder *builder, GimpMetadata *metadata, gchar * tag, gi
 }
 
 static void
-write_metadata_tag_multiple (GtkBuilder *builder, GimpMetadata *metadata,
+write_metadata_tag_multiple (GtkBuilder *builder, LigmaMetadata *metadata,
                              GExiv2StructureType type, const gchar * header_tag,
                              gint n_columns, const gchar **column_tags,
                              const gint special_handling[])
@@ -3963,7 +3963,7 @@ write_metadata_tag_multiple (GtkBuilder *builder, GimpMetadata *metadata,
 }
 
 static void
-set_gps_longitude_latitude (GimpMetadata *metadata,
+set_gps_longitude_latitude (LigmaMetadata *metadata,
                             const gchar  *tag,
                             const gchar  *value)
 {
@@ -4044,15 +4044,15 @@ set_gps_longitude_latitude (GimpMetadata *metadata,
 void
 metadata_editor_write_callback (GtkWidget  *dialog,
                                 GtkBuilder *builder,
-                                GimpImage  *image)
+                                LigmaImage  *image)
 {
-  GimpMetadata  *g_metadata;
+  LigmaMetadata  *g_metadata;
   gint           max_elements;
   gint           i = 0;
 
-  g_metadata = gimp_image_get_metadata (image);
+  g_metadata = ligma_image_get_metadata (image);
 
-  gimp_metadata_add_xmp_history (g_metadata, "metadata");
+  ligma_metadata_add_xmp_history (g_metadata, "metadata");
 
   write_metadata_tag (builder, g_metadata,
                       "Xmp.iptcExt.OrganisationInImageName",
@@ -4217,8 +4217,8 @@ metadata_editor_write_callback (GtkWidget  *dialog,
               gint         index;
               const gchar *text_value = gtk_entry_get_text (entry);
 
-              if (default_metadata_tags[i].xmp_type == GIMP_XMP_TEXT ||
-                  default_metadata_tags[i].xmp_type == GIMP_XMP_NONE)
+              if (default_metadata_tags[i].xmp_type == LIGMA_XMP_TEXT ||
+                  default_metadata_tags[i].xmp_type == LIGMA_XMP_NONE)
                 {
                   gexiv2_metadata_clear_tag (GEXIV2_METADATA (g_metadata),
                                              default_metadata_tags[i].tag);
@@ -4282,8 +4282,8 @@ metadata_editor_write_callback (GtkWidget  *dialog,
 
           if (text && *text)
             {
-              if (default_metadata_tags[i].xmp_type == GIMP_XMP_TEXT ||
-                  default_metadata_tags[i].xmp_type == GIMP_XMP_NONE)
+              if (default_metadata_tags[i].xmp_type == LIGMA_XMP_TEXT ||
+                  default_metadata_tags[i].xmp_type == LIGMA_XMP_NONE)
                 {
                   gexiv2_metadata_set_xmp_tag_struct (GEXIV2_METADATA (g_metadata),
                                                       default_metadata_tags[i].tag,
@@ -4614,7 +4614,7 @@ metadata_editor_write_callback (GtkWidget  *dialog,
         }
     }
 
-  gimp_image_set_metadata (image, g_metadata);
+  ligma_image_set_metadata (image, g_metadata);
 }
 
 /* ============================================================================

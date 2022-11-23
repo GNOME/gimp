@@ -1,12 +1,12 @@
-# Lithuanian translation of GIMP script-fu.
+# Lithuanian translation of LIGMA script-fu.
 # Copyright (C) 2004-2008 Free Software Foundation, Inc.
 # Žygimantas Beručka <zygis@gnome.org>, 2004-2008.
 # Aurimas Černius <aurisc4@gmail.com>, 2021.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP HEAD\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: LIGMA HEAD\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2020-10-31 01:25+0000\n"
 "PO-Revision-Date: 2021-01-03 18:09+0200\n"
 "Last-Translator: Aurimas Černius <aurisc4@gmail.com>\n"
@@ -37,8 +37,8 @@ msgid "Server for remote Script-Fu operation"
 msgstr "Serveris nuotoliniam Script-Fu valdymui"
 
 #: ../plug-ins/script-fu/script-fu.c:394
-msgid "_GIMP Online"
-msgstr "_GIMP internete"
+msgid "_LIGMA Online"
+msgstr "_LIGMA internete"
 
 #: ../plug-ins/script-fu/script-fu.c:395
 msgid "_User Manual"
@@ -77,8 +77,8 @@ msgid "_Beveled Pattern"
 msgstr "_Nuožulnaus krašto raštas"
 
 #: ../plug-ins/script-fu/script-fu.c:416
-msgid "_Classic.Gimp.Org"
-msgstr "_Classic.Gimp.Org"
+msgid "_Classic.Ligma.Org"
+msgstr "_Classic.Ligma.Org"
 
 #: ../plug-ins/script-fu/script-fu.c:419
 msgid "Alpha to _Logo"
@@ -826,91 +826,91 @@ msgstr "Šešėlio stiprumas (%s)"
 msgid "Flatten image"
 msgstr "Suploti paveikslėlį"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:59
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:59
 msgid "Using _Paths"
 msgstr "_Kontūrų naudojimas"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:60
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:73
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:86
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:99
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:112
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:125
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:138
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:151
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:60
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:73
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:86
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:99
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:112
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:125
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:138
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:151
 msgid "Bookmark to the user manual"
 msgstr "Naudotojo žinyno žymelė"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:72
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:72
 msgid "_Preparing your Images for the Web"
 msgstr "_Paveikslėlių paruošimas žiniatinkliui"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:85
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:85
 msgid "_Working with Digital Camera Photos"
 msgstr "_Darbas su skaitmeninių fotoaparatų nuotraukomis"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:98
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:98
 msgid "Create, Open and Save _Files"
 msgstr "Kaip kurti, atverti ir išsaugoti _failus"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:111
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:111
 msgid "_Basic Concepts"
 msgstr "_Pagrindiniai principai"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:124
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:124
 msgid "How to Use _Dialogs"
 msgstr "Kaip naudoti _dialogus"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:137
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:137
 msgid "Drawing _Simple Objects"
 msgstr "Paprastų _objektų piešimas"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:150
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:150
 msgid "Create and Use _Selections"
 msgstr "Kaip kurti ir naudoti _pažymėjimus"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:190
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:190
 msgid "_Main Web Site"
 msgstr "_Pagrindinė žiniatinklio svetainė"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:191
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:204
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:256
-msgid "Bookmark to the GIMP web site"
-msgstr "GIMP žiniatinklio svetainės žymelė"
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:191
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:204
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:256
+msgid "Bookmark to the LIGMA web site"
+msgstr "LIGMA žiniatinklio svetainės žymelė"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:203
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:203
 msgid "_Developer Web Site"
 msgstr "Žiniatinklio s_vetainė kūrėjams"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:216
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:216
 msgid "_Roadmap"
 msgstr "_Planas"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:217
-#| msgid "Bookmark to the GIMP web site"
-msgid "Bookmark to the roadmap of GIMP"
-msgstr "GIMP plano žymelė"
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:217
+#| msgid "Bookmark to the LIGMA web site"
+msgid "Bookmark to the roadmap of LIGMA"
+msgstr "LIGMA plano žymelė"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:229
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:229
 msgid "_Wiki"
 msgstr "_Wiki"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:230
-#| msgid "Bookmark to the GIMP web site"
-msgid "Bookmark to the wiki of GIMP"
-msgstr "GIMP wiki žymelė"
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:230
+#| msgid "Bookmark to the LIGMA web site"
+msgid "Bookmark to the wiki of LIGMA"
+msgstr "LIGMA wiki žymelė"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:242
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:242
 msgid "_Bug Reports and Feature Requests"
 msgstr "Pranešimai apie _klaidas bei savybių prašymai"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:243
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:243
 #| msgid "Bookmark to the user manual"
-msgid "Bookmark to the bug tracker of GIMP"
-msgstr "GIMP klaidų registro žymelė"
+msgid "Bookmark to the bug tracker of LIGMA"
+msgstr "LIGMA klaidų registro žymelė"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:255
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:255
 msgid "_User Manual Web Site"
 msgstr "_Naudotojo žinyno žiniatinklio svetainė"
 
@@ -1635,8 +1635,8 @@ msgstr "Metamo šešėlio Y poslinkis"
 #~ msgid "Rendering Spyro"
 #~ msgstr "Atvaizduojamas Spyro"
 
-#~ msgid "_Spyrogimp..."
-#~ msgstr "_Spyrogimp..."
+#~ msgid "_Spyroligma..."
+#~ msgstr "_Spyroligma..."
 
 #~ msgid ""
 #~ "Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"

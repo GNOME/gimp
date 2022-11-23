@@ -15,10 +15,10 @@
 #   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import gi
-gi.require_version('Gimp', '3.0')
-from gi.repository import Gimp
-gi.require_version('GimpUi', '3.0')
-from gi.repository import GimpUi
+gi.require_version('Ligma', '3.0')
+from gi.repository import Ligma
+gi.require_version('LigmaUi', '3.0')
+from gi.repository import LigmaUi
 from gi.repository import GObject
 from gi.repository import GLib
 from gi.repository import Gio
@@ -33,14 +33,14 @@ def foggify(procedure, run_mode, image, n_drawables, drawables, args, data):
     config = procedure.create_config()
     config.begin_run(image, run_mode, args)
 
-    if run_mode == Gimp.RunMode.INTERACTIVE:
-        GimpUi.init('python-fu-foggify')
-        dialog = GimpUi.ProcedureDialog(procedure=procedure, config=config)
+    if run_mode == Ligma.RunMode.INTERACTIVE:
+        LigmaUi.init('python-fu-foggify')
+        dialog = LigmaUi.ProcedureDialog(procedure=procedure, config=config)
         dialog.fill(None)
         if not dialog.run():
             dialog.destroy()
-            config.end_run(Gimp.PDBStatusType.CANCEL)
-            return procedure.new_return_values(Gimp.PDBStatusType.CANCEL, GLib.Error())
+            config.end_run(Ligma.PDBStatusType.CANCEL)
+            return procedure.new_return_values(Ligma.PDBStatusType.CANCEL, GLib.Error())
         else:
             dialog.destroy()
 
@@ -49,55 +49,55 @@ def foggify(procedure, run_mode, image, n_drawables, drawables, args, data):
     turbulence = config.get_property('turbulence')
     opacity    = config.get_property('opacity')
 
-    Gimp.context_push()
+    Ligma.context_push()
     image.undo_group_start()
 
-    if image.get_base_type() is Gimp.ImageBaseType.RGB:
-        type = Gimp.ImageType.RGBA_IMAGE
+    if image.get_base_type() is Ligma.ImageBaseType.RGB:
+        type = Ligma.ImageType.RGBA_IMAGE
     else:
-        type = Gimp.ImageType.GRAYA_IMAGE
+        type = Ligma.ImageType.GRAYA_IMAGE
     for drawable in drawables:
-        fog = Gimp.Layer.new(image, name,
+        fog = Ligma.Layer.new(image, name,
                              drawable.get_width(), drawable.get_height(),
                              type, opacity,
-                             Gimp.LayerMode.NORMAL)
-        fog.fill(Gimp.FillType.TRANSPARENT)
+                             Ligma.LayerMode.NORMAL)
+        fog.fill(Ligma.FillType.TRANSPARENT)
         image.insert_layer(fog, drawable.get_parent(),
                            image.get_item_position(drawable))
 
-        Gimp.context_set_background(color)
-        fog.edit_fill(Gimp.FillType.BACKGROUND)
+        Ligma.context_set_background(color)
+        fog.edit_fill(Ligma.FillType.BACKGROUND)
 
         # create a layer mask for the new layer
         mask = fog.create_mask(0)
         fog.add_mask(mask)
 
         # add some clouds to the layer
-        Gimp.get_pdb().run_procedure('plug-in-plasma', [
-            GObject.Value(Gimp.RunMode, Gimp.RunMode.NONINTERACTIVE),
-            GObject.Value(Gimp.Image, image),
-            GObject.Value(Gimp.Drawable, mask),
+        Ligma.get_pdb().run_procedure('plug-in-plasma', [
+            GObject.Value(Ligma.RunMode, Ligma.RunMode.NONINTERACTIVE),
+            GObject.Value(Ligma.Image, image),
+            GObject.Value(Ligma.Drawable, mask),
             GObject.Value(GObject.TYPE_INT, int(time.time())),
             GObject.Value(GObject.TYPE_DOUBLE, turbulence),
         ])
 
         # apply the clouds to the layer
-        fog.remove_mask(Gimp.MaskApplyMode.APPLY)
+        fog.remove_mask(Ligma.MaskApplyMode.APPLY)
         fog.set_visible(True)
 
-    Gimp.displays_flush()
+    Ligma.displays_flush()
 
     image.undo_group_end()
-    Gimp.context_pop()
+    Ligma.context_pop()
 
-    config.end_run(Gimp.PDBStatusType.SUCCESS)
+    config.end_run(Ligma.PDBStatusType.SUCCESS)
 
-    return procedure.new_return_values(Gimp.PDBStatusType.SUCCESS, GLib.Error())
+    return procedure.new_return_values(Ligma.PDBStatusType.SUCCESS, GLib.Error())
 
-_color = Gimp.RGB()
+_color = Ligma.RGB()
 _color.set(240.0, 0, 0)
 
-class Foggify (Gimp.PlugIn):
+class Foggify (Ligma.PlugIn):
     ## Parameters ##
     __gproperties__ = {
         "name": (str,
@@ -120,24 +120,24 @@ class Foggify (Gimp.PlugIn):
     # supposed to allow setting a default, except it doesn't seem to
     # work. I still leave it this way for now until we figure this out
     # as it should be the better syntax.
-    color = GObject.Property(type =Gimp.RGB, default=_color,
+    color = GObject.Property(type =Ligma.RGB, default=_color,
                              nick =_("_Fog color"),
                              blurb=_("Fog color"))
 
-    ## GimpPlugIn virtual methods ##
+    ## LigmaPlugIn virtual methods ##
     def do_set_i18n(self, procname):
-        return True, 'gimp30-python', None
+        return True, 'ligma30-python', None
 
     def do_query_procedures(self):
         return [ 'python-fu-foggify' ]
 
     def do_create_procedure(self, name):
-        procedure = Gimp.ImageProcedure.new(self, name,
-                                            Gimp.PDBProcType.PLUGIN,
+        procedure = Ligma.ImageProcedure.new(self, name,
+                                            Ligma.PDBProcType.PLUGIN,
                                             foggify, None)
         procedure.set_image_types("RGB*, GRAY*");
-        procedure.set_sensitivity_mask (Gimp.ProcedureSensitivityMask.DRAWABLE |
-                                        Gimp.ProcedureSensitivityMask.DRAWABLES)
+        procedure.set_sensitivity_mask (Ligma.ProcedureSensitivityMask.DRAWABLE |
+                                        Ligma.ProcedureSensitivityMask.DRAWABLES)
         procedure.set_documentation (_("Add a layer of fog"),
                                      _("Adds a layer of fog to the image."),
                                      name)
@@ -153,4 +153,4 @@ class Foggify (Gimp.PlugIn):
         procedure.add_argument_from_property(self, "opacity")
         return procedure
 
-Gimp.main(Foggify.__gtype__, sys.argv)
+Ligma.main(Foggify.__gtype__, sys.argv)

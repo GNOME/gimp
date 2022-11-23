@@ -19,14 +19,14 @@
 
 #include "config.h"
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 #define PLUG_IN_PROC   "plug-in-wavelet-decompose"
-#define PLUG_IN_ROLE   "gimp-wavelet-decompose"
+#define PLUG_IN_ROLE   "ligma-wavelet-decompose"
 #define PLUG_IN_BINARY "wavelet-decompose"
 
 
@@ -43,12 +43,12 @@ typedef struct _WaveletClass WaveletClass;
 
 struct _Wavelet
 {
-  GimpPlugIn parent_instance;
+  LigmaPlugIn parent_instance;
 };
 
 struct _WaveletClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -57,29 +57,29 @@ struct _WaveletClass
 
 GType                   wavelet_get_type         (void) G_GNUC_CONST;
 
-static GList          * wavelet_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * wavelet_create_procedure (GimpPlugIn           *plug_in,
+static GList          * wavelet_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * wavelet_create_procedure (LigmaPlugIn           *plug_in,
                                                    const gchar          *name);
 
-static GimpValueArray * wavelet_run              (GimpProcedure        *procedure,
-                                                  GimpRunMode           run_mode,
-                                                  GimpImage            *image,
+static LigmaValueArray * wavelet_run              (LigmaProcedure        *procedure,
+                                                  LigmaRunMode           run_mode,
+                                                  LigmaImage            *image,
                                                   gint                  n_drawables,
-                                                  GimpDrawable        **drawables,
-                                                  const GimpValueArray *args,
+                                                  LigmaDrawable        **drawables,
+                                                  const LigmaValueArray *args,
                                                   gpointer              run_data);
 
-static void             wavelet_blur             (GimpDrawable         *drawable,
+static void             wavelet_blur             (LigmaDrawable         *drawable,
                                                   gint                  radius);
 
 static gboolean         wavelet_decompose_dialog (void);
-static void       wavelet_scale_entry_update_int (GimpLabelSpin        *entry,
+static void       wavelet_scale_entry_update_int (LigmaLabelSpin        *entry,
                                                   gint                 *value);
 
 
-G_DEFINE_TYPE (Wavelet, wavelet, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Wavelet, wavelet, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (WAVELET_TYPE)
+LIGMA_MAIN (WAVELET_TYPE)
 DEFINE_STD_SET_I18N
 
 
@@ -94,7 +94,7 @@ static WaveletDecomposeParams wavelet_params =
 static void
 wavelet_class_init (WaveletClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = wavelet_query_procedures;
   plug_in_class->create_procedure = wavelet_create_procedure;
@@ -107,53 +107,53 @@ wavelet_init (Wavelet *wavelet)
 }
 
 static GList *
-wavelet_query_procedures (GimpPlugIn *plug_in)
+wavelet_query_procedures (LigmaPlugIn *plug_in)
 {
   return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
 }
 
-static GimpProcedure *
-wavelet_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+wavelet_create_procedure (LigmaPlugIn  *plug_in,
                            const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_image_procedure_new (plug_in, name,
+                                            LIGMA_PDB_PROC_TYPE_PLUGIN,
                                             wavelet_run, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "RGB*, GRAY*");
-      gimp_procedure_set_sensitivity_mask (procedure,
-                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
+      ligma_procedure_set_image_types (procedure, "RGB*, GRAY*");
+      ligma_procedure_set_sensitivity_mask (procedure,
+                                           LIGMA_PROCEDURE_SENSITIVE_DRAWABLE);
 
-      gimp_procedure_set_menu_label (procedure, _("_Wavelet-decompose..."));
-      gimp_procedure_add_menu_path (procedure, "<Image>/Filters/Enhance");
+      ligma_procedure_set_menu_label (procedure, _("_Wavelet-decompose..."));
+      ligma_procedure_add_menu_path (procedure, "<Image>/Filters/Enhance");
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         _("Wavelet decompose"),
                                         "Compute and render wavelet scales",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Miroslav Talasek <miroslav.talasek@seznam.cz>",
                                       "Miroslav Talasek <miroslav.talasek@seznam.cz>",
                                       "19january 2017");
 
-      GIMP_PROC_ARG_INT (procedure, "scales",
+      LIGMA_PROC_ARG_INT (procedure, "scales",
                          "Scales",
                          "Number of scales",
                          1, 7, 5,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "create-group",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "create-group",
                              "Create group",
                              "Create a layer group to store the "
                              "decomposition",
                              TRUE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "create-masks",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "create-masks",
                              "Create masks",
                              "Add a layer mask to each scales layer",
                              FALSE,
@@ -163,21 +163,21 @@ wavelet_create_procedure (GimpPlugIn  *plug_in,
   return procedure;
 }
 
-static GimpValueArray *
-wavelet_run (GimpProcedure        *procedure,
-              GimpRunMode           run_mode,
-              GimpImage            *image,
+static LigmaValueArray *
+wavelet_run (LigmaProcedure        *procedure,
+              LigmaRunMode           run_mode,
+              LigmaImage            *image,
               gint                  n_drawables,
-              GimpDrawable        **drawables,
-              const GimpValueArray *args,
+              LigmaDrawable        **drawables,
+              const LigmaValueArray *args,
               gpointer              run_data)
 {
-  GimpLayer    **scale_layers;
-  GimpLayer     *new_scale;
-  GimpLayer     *parent             = NULL;
-  GimpDrawable  *drawable;
-  GimpLayerMode  grain_extract_mode = GIMP_LAYER_MODE_GRAIN_EXTRACT;
-  GimpLayerMode  grain_merge_mode   = GIMP_LAYER_MODE_GRAIN_MERGE;
+  LigmaLayer    **scale_layers;
+  LigmaLayer     *new_scale;
+  LigmaLayer     *parent             = NULL;
+  LigmaDrawable  *drawable;
+  LigmaLayerMode  grain_extract_mode = LIGMA_LAYER_MODE_GRAIN_EXTRACT;
+  LigmaLayerMode  grain_merge_mode   = LIGMA_LAYER_MODE_GRAIN_MERGE;
   gint           id;
 
   gegl_init (NULL, NULL);
@@ -186,12 +186,12 @@ wavelet_run (GimpProcedure        *procedure,
     {
       GError *error = NULL;
 
-      g_set_error (&error, GIMP_PLUG_IN_ERROR, 0,
+      g_set_error (&error, LIGMA_PLUG_IN_ERROR, 0,
                    _("Procedure '%s' only works with one drawable."),
-                   gimp_procedure_get_name (procedure));
+                   ligma_procedure_get_name (procedure));
 
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_CALLING_ERROR,
                                                error);
     }
   else
@@ -201,52 +201,52 @@ wavelet_run (GimpProcedure        *procedure,
 
   switch (run_mode)
     {
-    case GIMP_RUN_INTERACTIVE:
-      gimp_get_data (PLUG_IN_PROC, &wavelet_params);
+    case LIGMA_RUN_INTERACTIVE:
+      ligma_get_data (PLUG_IN_PROC, &wavelet_params);
 
       if (! wavelet_decompose_dialog ())
-        return gimp_procedure_new_return_values (procedure,
-                                                 GIMP_PDB_CANCEL,
+        return ligma_procedure_new_return_values (procedure,
+                                                 LIGMA_PDB_CANCEL,
                                                  NULL);
       break;
 
-    case GIMP_RUN_NONINTERACTIVE:
-      wavelet_params.scales       = GIMP_VALUES_GET_INT     (args, 0);
-      wavelet_params.create_group = GIMP_VALUES_GET_BOOLEAN (args, 1);
-      wavelet_params.create_masks = GIMP_VALUES_GET_BOOLEAN (args, 2);
+    case LIGMA_RUN_NONINTERACTIVE:
+      wavelet_params.scales       = LIGMA_VALUES_GET_INT     (args, 0);
+      wavelet_params.create_group = LIGMA_VALUES_GET_BOOLEAN (args, 1);
+      wavelet_params.create_masks = LIGMA_VALUES_GET_BOOLEAN (args, 2);
       break;
 
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_get_data (PLUG_IN_PROC, &wavelet_params);
+    case LIGMA_RUN_WITH_LAST_VALS:
+      ligma_get_data (PLUG_IN_PROC, &wavelet_params);
       break;
 
     default:
       break;
     }
 
-  gimp_progress_init (_("Wavelet-Decompose"));
+  ligma_progress_init (_("Wavelet-Decompose"));
 
-  gimp_image_undo_group_start (image);
+  ligma_image_undo_group_start (image);
 
-  gimp_image_freeze_layers (image);
+  ligma_image_freeze_layers (image);
 
   if (wavelet_params.create_group)
     {
-      parent = gimp_layer_group_new (image);
+      parent = ligma_layer_group_new (image);
 
-      gimp_item_set_name (GIMP_ITEM (parent), _("Decomposition"));
-      gimp_item_set_visible (GIMP_ITEM (parent), FALSE);
-      gimp_image_insert_layer (image, parent,
-                               GIMP_LAYER (gimp_item_get_parent (GIMP_ITEM (drawable))),
-                               gimp_image_get_item_position (image,
-                                                             GIMP_ITEM (drawable)));
+      ligma_item_set_name (LIGMA_ITEM (parent), _("Decomposition"));
+      ligma_item_set_visible (LIGMA_ITEM (parent), FALSE);
+      ligma_image_insert_layer (image, parent,
+                               LIGMA_LAYER (ligma_item_get_parent (LIGMA_ITEM (drawable))),
+                               ligma_image_get_item_position (image,
+                                                             LIGMA_ITEM (drawable)));
     }
 
-  scale_layers = g_new (GimpLayer *, wavelet_params.scales);
-  new_scale = gimp_layer_copy (GIMP_LAYER (drawable));
-  gimp_image_insert_layer (image, new_scale, parent,
-                           gimp_image_get_item_position (image,
-                                                         GIMP_ITEM (drawable)));
+  scale_layers = g_new (LigmaLayer *, wavelet_params.scales);
+  new_scale = ligma_layer_copy (LIGMA_LAYER (drawable));
+  ligma_image_insert_layer (image, new_scale, parent,
+                           ligma_image_get_item_position (image,
+                                                         LIGMA_ITEM (drawable)));
 
   /* the exact result of the grain-extract and grain-merge modes
    * depends on the choice of (gamma-corrected) midpoint intensity
@@ -262,121 +262,121 @@ wavelet_run (GimpProcedure        *procedure,
    * this avoids imperfect reconstruction of the image when using
    * integer precision.  see bug #786844.
    */
-  switch (gimp_image_get_precision (image))
+  switch (ligma_image_get_precision (image))
     {
-    case GIMP_PRECISION_U8_LINEAR:
-    case GIMP_PRECISION_U8_NON_LINEAR:
-    case GIMP_PRECISION_U8_PERCEPTUAL:
-    case GIMP_PRECISION_U16_LINEAR:
-    case GIMP_PRECISION_U16_NON_LINEAR:
-    case GIMP_PRECISION_U16_PERCEPTUAL:
-    case GIMP_PRECISION_U32_LINEAR:
-    case GIMP_PRECISION_U32_NON_LINEAR:
-    case GIMP_PRECISION_U32_PERCEPTUAL:
-      grain_extract_mode = GIMP_LAYER_MODE_GRAIN_EXTRACT_LEGACY;
-      grain_merge_mode   = GIMP_LAYER_MODE_GRAIN_MERGE_LEGACY;
+    case LIGMA_PRECISION_U8_LINEAR:
+    case LIGMA_PRECISION_U8_NON_LINEAR:
+    case LIGMA_PRECISION_U8_PERCEPTUAL:
+    case LIGMA_PRECISION_U16_LINEAR:
+    case LIGMA_PRECISION_U16_NON_LINEAR:
+    case LIGMA_PRECISION_U16_PERCEPTUAL:
+    case LIGMA_PRECISION_U32_LINEAR:
+    case LIGMA_PRECISION_U32_NON_LINEAR:
+    case LIGMA_PRECISION_U32_PERCEPTUAL:
+      grain_extract_mode = LIGMA_LAYER_MODE_GRAIN_EXTRACT_LEGACY;
+      grain_merge_mode   = LIGMA_LAYER_MODE_GRAIN_MERGE_LEGACY;
       break;
 
-    case GIMP_PRECISION_HALF_LINEAR:
-    case GIMP_PRECISION_HALF_NON_LINEAR:
-    case GIMP_PRECISION_HALF_PERCEPTUAL:
-    case GIMP_PRECISION_FLOAT_LINEAR:
-    case GIMP_PRECISION_FLOAT_NON_LINEAR:
-    case GIMP_PRECISION_FLOAT_PERCEPTUAL:
-    case GIMP_PRECISION_DOUBLE_LINEAR:
-    case GIMP_PRECISION_DOUBLE_NON_LINEAR:
-    case GIMP_PRECISION_DOUBLE_PERCEPTUAL:
-      grain_extract_mode = GIMP_LAYER_MODE_GRAIN_EXTRACT;
-      grain_merge_mode   = GIMP_LAYER_MODE_GRAIN_MERGE;
+    case LIGMA_PRECISION_HALF_LINEAR:
+    case LIGMA_PRECISION_HALF_NON_LINEAR:
+    case LIGMA_PRECISION_HALF_PERCEPTUAL:
+    case LIGMA_PRECISION_FLOAT_LINEAR:
+    case LIGMA_PRECISION_FLOAT_NON_LINEAR:
+    case LIGMA_PRECISION_FLOAT_PERCEPTUAL:
+    case LIGMA_PRECISION_DOUBLE_LINEAR:
+    case LIGMA_PRECISION_DOUBLE_NON_LINEAR:
+    case LIGMA_PRECISION_DOUBLE_PERCEPTUAL:
+      grain_extract_mode = LIGMA_LAYER_MODE_GRAIN_EXTRACT;
+      grain_merge_mode   = LIGMA_LAYER_MODE_GRAIN_MERGE;
       break;
     }
 
   for (id = 0 ; id < wavelet_params.scales; id++)
     {
-      GimpLayer *blur;
-      GimpLayer *tmp;
+      LigmaLayer *blur;
+      LigmaLayer *tmp;
       gchar      scale_name[20];
 
-      gimp_progress_update ((gdouble) id / (gdouble) wavelet_params.scales);
+      ligma_progress_update ((gdouble) id / (gdouble) wavelet_params.scales);
 
       scale_layers[id] = new_scale;
 
       g_snprintf (scale_name, sizeof (scale_name), _("Scale %d"), id + 1);
-      gimp_item_set_name (GIMP_ITEM (new_scale), scale_name);
+      ligma_item_set_name (LIGMA_ITEM (new_scale), scale_name);
 
-      tmp = gimp_layer_copy (new_scale);
-      gimp_image_insert_layer (image, tmp, parent,
-                               gimp_image_get_item_position (image,
-                                                             GIMP_ITEM (new_scale)));
-      wavelet_blur (GIMP_DRAWABLE (tmp), pow (2.0, id));
+      tmp = ligma_layer_copy (new_scale);
+      ligma_image_insert_layer (image, tmp, parent,
+                               ligma_image_get_item_position (image,
+                                                             LIGMA_ITEM (new_scale)));
+      wavelet_blur (LIGMA_DRAWABLE (tmp), pow (2.0, id));
 
-      blur = gimp_layer_copy (tmp);
-      gimp_image_insert_layer (image, blur, parent,
-                               gimp_image_get_item_position (image,
-                                                             GIMP_ITEM (tmp)));
+      blur = ligma_layer_copy (tmp);
+      ligma_image_insert_layer (image, blur, parent,
+                               ligma_image_get_item_position (image,
+                                                             LIGMA_ITEM (tmp)));
 
-      gimp_layer_set_mode (tmp, grain_extract_mode);
-      new_scale = gimp_image_merge_down (image, tmp,
-                                         GIMP_EXPAND_AS_NECESSARY);
+      ligma_layer_set_mode (tmp, grain_extract_mode);
+      new_scale = ligma_image_merge_down (image, tmp,
+                                         LIGMA_EXPAND_AS_NECESSARY);
       scale_layers[id] = new_scale;
 
-      gimp_item_set_visible (GIMP_ITEM (new_scale), FALSE);
+      ligma_item_set_visible (LIGMA_ITEM (new_scale), FALSE);
 
       new_scale = blur;
     }
 
-  gimp_item_set_name (GIMP_ITEM (new_scale), _("Residual"));
+  ligma_item_set_name (LIGMA_ITEM (new_scale), _("Residual"));
 
   for (id = 0; id < wavelet_params.scales; id++)
     {
-      gimp_image_reorder_item (image, GIMP_ITEM (scale_layers[id]),
-                               GIMP_ITEM (parent),
-                               gimp_image_get_item_position (image,
-                                                             GIMP_ITEM (new_scale)));
-      gimp_layer_set_mode (scale_layers[id], grain_merge_mode);
+      ligma_image_reorder_item (image, LIGMA_ITEM (scale_layers[id]),
+                               LIGMA_ITEM (parent),
+                               ligma_image_get_item_position (image,
+                                                             LIGMA_ITEM (new_scale)));
+      ligma_layer_set_mode (scale_layers[id], grain_merge_mode);
 
       if (wavelet_params.create_masks)
         {
-          GimpLayerMask *mask = gimp_layer_create_mask (scale_layers[id],
-                                                        GIMP_ADD_MASK_WHITE);
-          gimp_layer_add_mask (scale_layers[id], mask);
+          LigmaLayerMask *mask = ligma_layer_create_mask (scale_layers[id],
+                                                        LIGMA_ADD_MASK_WHITE);
+          ligma_layer_add_mask (scale_layers[id], mask);
         }
 
-      gimp_item_set_visible (GIMP_ITEM (scale_layers[id]), TRUE);
+      ligma_item_set_visible (LIGMA_ITEM (scale_layers[id]), TRUE);
     }
 
   if (wavelet_params.create_group)
-    gimp_item_set_visible (GIMP_ITEM (parent), TRUE);
+    ligma_item_set_visible (LIGMA_ITEM (parent), TRUE);
 
   g_free (scale_layers);
 
-  gimp_image_thaw_layers (image);
+  ligma_image_thaw_layers (image);
 
-  gimp_image_undo_group_end (image);
+  ligma_image_undo_group_end (image);
 
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 
-  gimp_displays_flush ();
+  ligma_displays_flush ();
 
-  if (run_mode == GIMP_RUN_INTERACTIVE)
-    gimp_set_data (PLUG_IN_PROC,
+  if (run_mode == LIGMA_RUN_INTERACTIVE)
+    ligma_set_data (PLUG_IN_PROC,
                    &wavelet_params, sizeof (WaveletDecomposeParams));
 
   gegl_exit ();
 
-  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
+  return ligma_procedure_new_return_values (procedure, LIGMA_PDB_SUCCESS, NULL);
 }
 
 static void
-wavelet_blur (GimpDrawable *drawable,
+wavelet_blur (LigmaDrawable *drawable,
               gint          radius)
 {
   gint x, y, width, height;
 
-  if (gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
+  if (ligma_drawable_mask_intersect (drawable, &x, &y, &width, &height))
     {
-      GeglBuffer *buffer = gimp_drawable_get_buffer (drawable);
-      GeglBuffer *shadow = gimp_drawable_get_shadow_buffer (drawable);
+      GeglBuffer *buffer = ligma_drawable_get_buffer (drawable);
+      GeglBuffer *shadow = ligma_drawable_get_shadow_buffer (drawable);
 
       gegl_render_op (buffer, shadow,
                       "gegl:wavelet-blur",
@@ -384,8 +384,8 @@ wavelet_blur (GimpDrawable *drawable,
                       NULL);
 
       gegl_buffer_flush (shadow);
-      gimp_drawable_merge_shadow (drawable, FALSE);
-      gimp_drawable_update (drawable, x, y, width, height);
+      ligma_drawable_merge_shadow (drawable, FALSE);
+      ligma_drawable_update (drawable, x, y, width, height);
       g_object_unref (buffer);
       g_object_unref (shadow);
     }
@@ -400,23 +400,23 @@ wavelet_decompose_dialog (void)
   GtkWidget *scale;
   gboolean   run;
 
-  gimp_ui_init (PLUG_IN_BINARY);
+  ligma_ui_init (PLUG_IN_BINARY);
 
-  dialog = gimp_dialog_new (_("Wavelet decompose"), PLUG_IN_ROLE,
+  dialog = ligma_dialog_new (_("Wavelet decompose"), PLUG_IN_ROLE,
                             NULL, 0,
-                            gimp_standard_help_func, PLUG_IN_PROC,
+                            ligma_standard_help_func, PLUG_IN_PROC,
 
                             _("_Cancel"), GTK_RESPONSE_CANCEL,
                             _("_OK"),     GTK_RESPONSE_OK,
 
                             NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  gimp_window_set_transient (GTK_WINDOW (dialog));
+  ligma_window_set_transient (GTK_WINDOW (dialog));
 
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
@@ -426,7 +426,7 @@ wavelet_decompose_dialog (void)
 
   /* scales */
 
-  scale = gimp_scale_entry_new (_("Scales:"), wavelet_params.scales, 1.0, 7.0, 0);
+  scale = ligma_scale_entry_new (_("Scales:"), wavelet_params.scales, 1.0, 7.0, 0);
   gtk_box_pack_start (GTK_BOX (main_vbox), scale, FALSE, FALSE, 6);
   gtk_widget_show (scale);
 
@@ -443,7 +443,7 @@ wavelet_decompose_dialog (void)
   gtk_widget_show (button);
 
   g_signal_connect (button, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
+                    G_CALLBACK (ligma_toggle_button_update),
                     &wavelet_params.create_group);
 
   /* create layer masks */
@@ -455,12 +455,12 @@ wavelet_decompose_dialog (void)
   gtk_widget_show (button);
 
   g_signal_connect (button, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
+                    G_CALLBACK (ligma_toggle_button_update),
                     &wavelet_params.create_masks);
 
   gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+  run = (ligma_dialog_run (LIGMA_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
   gtk_widget_destroy (dialog);
 
@@ -468,8 +468,8 @@ wavelet_decompose_dialog (void)
 }
 
 static void
-wavelet_scale_entry_update_int (GimpLabelSpin *entry,
+wavelet_scale_entry_update_int (LigmaLabelSpin *entry,
                                 gint          *value)
 {
-  *value = (int) gimp_label_spin_get_value (entry);
+  *value = (int) ligma_label_spin_get_value (entry);
 }

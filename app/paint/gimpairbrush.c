@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,18 +22,18 @@
 
 #include "paint-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpbrush.h"
-#include "core/gimpdrawable.h"
-#include "core/gimpdynamics.h"
-#include "core/gimpgradient.h"
-#include "core/gimpimage.h"
-#include "core/gimpsymmetry.h"
+#include "core/ligma.h"
+#include "core/ligmabrush.h"
+#include "core/ligmadrawable.h"
+#include "core/ligmadynamics.h"
+#include "core/ligmagradient.h"
+#include "core/ligmaimage.h"
+#include "core/ligmasymmetry.h"
 
-#include "gimpairbrush.h"
-#include "gimpairbrushoptions.h"
+#include "ligmaairbrush.h"
+#include "ligmaairbrushoptions.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 #define STAMP_MAX_FPS 60
@@ -46,69 +46,69 @@ enum
 };
 
 
-static void       gimp_airbrush_finalize (GObject          *object);
+static void       ligma_airbrush_finalize (GObject          *object);
 
-static void       gimp_airbrush_paint    (GimpPaintCore    *paint_core,
+static void       ligma_airbrush_paint    (LigmaPaintCore    *paint_core,
                                           GList            *drawables,
-                                          GimpPaintOptions *paint_options,
-                                          GimpSymmetry     *sym,
-                                          GimpPaintState    paint_state,
+                                          LigmaPaintOptions *paint_options,
+                                          LigmaSymmetry     *sym,
+                                          LigmaPaintState    paint_state,
                                           guint32           time);
-static void       gimp_airbrush_motion   (GimpPaintCore    *paint_core,
-                                          GimpDrawable     *drawable,
-                                          GimpPaintOptions *paint_options,
-                                          GimpSymmetry     *sym);
+static void       ligma_airbrush_motion   (LigmaPaintCore    *paint_core,
+                                          LigmaDrawable     *drawable,
+                                          LigmaPaintOptions *paint_options,
+                                          LigmaSymmetry     *sym);
 
-static gboolean   gimp_airbrush_timeout  (gpointer          data);
+static gboolean   ligma_airbrush_timeout  (gpointer          data);
 
 
-G_DEFINE_TYPE (GimpAirbrush, gimp_airbrush, GIMP_TYPE_PAINTBRUSH)
+G_DEFINE_TYPE (LigmaAirbrush, ligma_airbrush, LIGMA_TYPE_PAINTBRUSH)
 
-#define parent_class gimp_airbrush_parent_class
+#define parent_class ligma_airbrush_parent_class
 
 static guint airbrush_signals[LAST_SIGNAL] = { 0 };
 
 
 void
-gimp_airbrush_register (Gimp                      *gimp,
-                        GimpPaintRegisterCallback  callback)
+ligma_airbrush_register (Ligma                      *ligma,
+                        LigmaPaintRegisterCallback  callback)
 {
-  (* callback) (gimp,
-                GIMP_TYPE_AIRBRUSH,
-                GIMP_TYPE_AIRBRUSH_OPTIONS,
-                "gimp-airbrush",
+  (* callback) (ligma,
+                LIGMA_TYPE_AIRBRUSH,
+                LIGMA_TYPE_AIRBRUSH_OPTIONS,
+                "ligma-airbrush",
                 _("Airbrush"),
-                "gimp-tool-airbrush");
+                "ligma-tool-airbrush");
 }
 
 static void
-gimp_airbrush_class_init (GimpAirbrushClass *klass)
+ligma_airbrush_class_init (LigmaAirbrushClass *klass)
 {
   GObjectClass       *object_class     = G_OBJECT_CLASS (klass);
-  GimpPaintCoreClass *paint_core_class = GIMP_PAINT_CORE_CLASS (klass);
+  LigmaPaintCoreClass *paint_core_class = LIGMA_PAINT_CORE_CLASS (klass);
 
-  object_class->finalize  = gimp_airbrush_finalize;
+  object_class->finalize  = ligma_airbrush_finalize;
 
-  paint_core_class->paint = gimp_airbrush_paint;
+  paint_core_class->paint = ligma_airbrush_paint;
 
   airbrush_signals[STAMP] =
     g_signal_new ("stamp",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpAirbrushClass, stamp),
+                  G_STRUCT_OFFSET (LigmaAirbrushClass, stamp),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 }
 
 static void
-gimp_airbrush_init (GimpAirbrush *airbrush)
+ligma_airbrush_init (LigmaAirbrush *airbrush)
 {
 }
 
 static void
-gimp_airbrush_finalize (GObject *object)
+ligma_airbrush_finalize (GObject *object)
 {
-  GimpAirbrush *airbrush = GIMP_AIRBRUSH (object);
+  LigmaAirbrush *airbrush = LIGMA_AIRBRUSH (object);
 
   if (airbrush->timeout_id)
     {
@@ -122,16 +122,16 @@ gimp_airbrush_finalize (GObject *object)
 }
 
 static void
-gimp_airbrush_paint (GimpPaintCore    *paint_core,
+ligma_airbrush_paint (LigmaPaintCore    *paint_core,
                      GList            *drawables,
-                     GimpPaintOptions *paint_options,
-                     GimpSymmetry     *sym,
-                     GimpPaintState    paint_state,
+                     LigmaPaintOptions *paint_options,
+                     LigmaSymmetry     *sym,
+                     LigmaPaintState    paint_state,
                      guint32           time)
 {
-  GimpAirbrush        *airbrush = GIMP_AIRBRUSH (paint_core);
-  GimpAirbrushOptions *options  = GIMP_AIRBRUSH_OPTIONS (paint_options);
-  GimpDynamics        *dynamics = GIMP_BRUSH_CORE (paint_core)->dynamics;
+  LigmaAirbrush        *airbrush = LIGMA_AIRBRUSH (paint_core);
+  LigmaAirbrushOptions *options  = LIGMA_AIRBRUSH_OPTIONS (paint_options);
+  LigmaDynamics        *dynamics = LIGMA_BRUSH_CORE (paint_core)->dynamics;
 
   g_return_if_fail (g_list_length (drawables) == 1);
 
@@ -143,25 +143,25 @@ gimp_airbrush_paint (GimpPaintCore    *paint_core,
 
   switch (paint_state)
     {
-    case GIMP_PAINT_STATE_INIT:
-      GIMP_PAINT_CORE_CLASS (parent_class)->paint (paint_core, drawables,
+    case LIGMA_PAINT_STATE_INIT:
+      LIGMA_PAINT_CORE_CLASS (parent_class)->paint (paint_core, drawables,
                                                    paint_options,
                                                    sym,
                                                    paint_state, time);
       break;
 
-    case GIMP_PAINT_STATE_MOTION:
-      gimp_airbrush_motion (paint_core, drawables->data, paint_options, sym);
+    case LIGMA_PAINT_STATE_MOTION:
+      ligma_airbrush_motion (paint_core, drawables->data, paint_options, sym);
 
       if ((options->rate != 0.0) && ! options->motion_only)
         {
-          GimpImage  *image = gimp_item_get_image (GIMP_ITEM (drawables->data));
+          LigmaImage  *image = ligma_item_get_image (LIGMA_ITEM (drawables->data));
           gdouble     fade_point;
           gdouble     dynamic_rate;
           gint        timeout;
-          GimpCoords *coords;
+          LigmaCoords *coords;
 
-          fade_point = gimp_paint_options_get_fade (paint_options, image,
+          fade_point = ligma_paint_options_get_fade (paint_options, image,
                                                     paint_core->pixel_dist);
 
           airbrush->drawable      = drawables->data;
@@ -172,12 +172,12 @@ gimp_airbrush_paint (GimpPaintCore    *paint_core,
           airbrush->sym = g_object_ref (sym);
 
           /* Base our timeout on the original stroke. */
-          coords = gimp_symmetry_get_origin (sym);
+          coords = ligma_symmetry_get_origin (sym);
 
           airbrush->coords = *coords;
 
-          dynamic_rate = gimp_dynamics_get_linear_value (dynamics,
-                                                         GIMP_DYNAMICS_OUTPUT_RATE,
+          dynamic_rate = ligma_dynamics_get_linear_value (dynamics,
+                                                         LIGMA_DYNAMICS_OUTPUT_RATE,
                                                          coords,
                                                          paint_options,
                                                          fade_point);
@@ -187,13 +187,13 @@ gimp_airbrush_paint (GimpPaintCore    *paint_core,
 
           airbrush->timeout_id = g_timeout_add_full (G_PRIORITY_HIGH,
                                                      timeout,
-                                                     gimp_airbrush_timeout,
+                                                     ligma_airbrush_timeout,
                                                      airbrush, NULL);
         }
       break;
 
-    case GIMP_PAINT_STATE_FINISH:
-      GIMP_PAINT_CORE_CLASS (parent_class)->paint (paint_core, drawables,
+    case LIGMA_PAINT_STATE_FINISH:
+      LIGMA_PAINT_CORE_CLASS (parent_class)->paint (paint_core, drawables,
                                                    paint_options,
                                                    sym,
                                                    paint_state, time);
@@ -204,39 +204,39 @@ gimp_airbrush_paint (GimpPaintCore    *paint_core,
 }
 
 static void
-gimp_airbrush_motion (GimpPaintCore    *paint_core,
-                      GimpDrawable     *drawable,
-                      GimpPaintOptions *paint_options,
-                      GimpSymmetry     *sym)
+ligma_airbrush_motion (LigmaPaintCore    *paint_core,
+                      LigmaDrawable     *drawable,
+                      LigmaPaintOptions *paint_options,
+                      LigmaSymmetry     *sym)
 
 {
-  GimpAirbrushOptions *options  = GIMP_AIRBRUSH_OPTIONS (paint_options);
-  GimpDynamics        *dynamics = GIMP_BRUSH_CORE (paint_core)->dynamics;
-  GimpImage           *image    = gimp_item_get_image (GIMP_ITEM (drawable));
+  LigmaAirbrushOptions *options  = LIGMA_AIRBRUSH_OPTIONS (paint_options);
+  LigmaDynamics        *dynamics = LIGMA_BRUSH_CORE (paint_core)->dynamics;
+  LigmaImage           *image    = ligma_item_get_image (LIGMA_ITEM (drawable));
   gdouble              opacity;
   gdouble              fade_point;
-  GimpCoords          *coords;
+  LigmaCoords          *coords;
 
-  fade_point = gimp_paint_options_get_fade (paint_options, image,
+  fade_point = ligma_paint_options_get_fade (paint_options, image,
                                             paint_core->pixel_dist);
 
-  coords = gimp_symmetry_get_origin (sym);
+  coords = ligma_symmetry_get_origin (sym);
 
   opacity = (options->flow / 100.0 *
-             gimp_dynamics_get_linear_value (dynamics,
-                                             GIMP_DYNAMICS_OUTPUT_FLOW,
+             ligma_dynamics_get_linear_value (dynamics,
+                                             LIGMA_DYNAMICS_OUTPUT_FLOW,
                                              coords,
                                              paint_options,
                                              fade_point));
 
-  _gimp_paintbrush_motion (paint_core, drawable, paint_options,
+  _ligma_paintbrush_motion (paint_core, drawable, paint_options,
                            sym, opacity);
 }
 
 static gboolean
-gimp_airbrush_timeout (gpointer data)
+ligma_airbrush_timeout (gpointer data)
 {
-  GimpAirbrush *airbrush = GIMP_AIRBRUSH (data);
+  LigmaAirbrush *airbrush = LIGMA_AIRBRUSH (data);
 
   airbrush->timeout_id = 0;
 
@@ -250,22 +250,22 @@ gimp_airbrush_timeout (gpointer data)
 
 
 void
-gimp_airbrush_stamp (GimpAirbrush *airbrush)
+ligma_airbrush_stamp (LigmaAirbrush *airbrush)
 {
   GList *drawables;
 
-  g_return_if_fail (GIMP_IS_AIRBRUSH (airbrush));
+  g_return_if_fail (LIGMA_IS_AIRBRUSH (airbrush));
 
-  gimp_symmetry_set_origin (airbrush->sym,
+  ligma_symmetry_set_origin (airbrush->sym,
                             airbrush->drawable, &airbrush->coords);
 
   drawables = g_list_prepend (NULL, airbrush->drawable),
-  gimp_airbrush_paint (GIMP_PAINT_CORE (airbrush),
+  ligma_airbrush_paint (LIGMA_PAINT_CORE (airbrush),
                        drawables,
                        airbrush->paint_options,
                        airbrush->sym,
-                       GIMP_PAINT_STATE_MOTION, 0);
+                       LIGMA_PAINT_STATE_MOTION, 0);
   g_list_free (drawables);
 
-  gimp_symmetry_clear_origin (airbrush->sym);
+  ligma_symmetry_clear_origin (airbrush->sym);
 }

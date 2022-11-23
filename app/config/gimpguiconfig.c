@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpGuiConfig class
- * Copyright (C) 2001  Sven Neumann <sven@gimp.org>
+ * LigmaGuiConfig class
+ * Copyright (C) 2001  Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,25 +22,25 @@
 
 #include <gio/gio.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "config-types.h"
 
-#include "gimprc-blurbs.h"
-#include "gimpguiconfig.h"
+#include "ligmarc-blurbs.h"
+#include "ligmaguiconfig.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 #ifdef HAVE_WEBKIT
-#define DEFAULT_HELP_BROWSER   GIMP_HELP_BROWSER_GIMP
+#define DEFAULT_HELP_BROWSER   LIGMA_HELP_BROWSER_LIGMA
 #else
-#define DEFAULT_HELP_BROWSER   GIMP_HELP_BROWSER_WEB_BROWSER
+#define DEFAULT_HELP_BROWSER   LIGMA_HELP_BROWSER_WEB_BROWSER
 #endif
 
 #define DEFAULT_USER_MANUAL_ONLINE_URI \
-  "https://docs.gimp.org/" GIMP_APP_VERSION_STRING
+  "https://docs.ligma.org/" LIGMA_APP_VERSION_STRING
 
 
 enum
@@ -109,337 +109,337 @@ enum
 };
 
 
-static void   gimp_gui_config_finalize     (GObject      *object);
-static void   gimp_gui_config_set_property (GObject      *object,
+static void   ligma_gui_config_finalize     (GObject      *object);
+static void   ligma_gui_config_set_property (GObject      *object,
                                             guint         property_id,
                                             const GValue *value,
                                             GParamSpec   *pspec);
-static void   gimp_gui_config_get_property (GObject      *object,
+static void   ligma_gui_config_get_property (GObject      *object,
                                             guint         property_id,
                                             GValue       *value,
                                             GParamSpec   *pspec);
 
-G_DEFINE_TYPE (GimpGuiConfig, gimp_gui_config, GIMP_TYPE_DISPLAY_CONFIG)
+G_DEFINE_TYPE (LigmaGuiConfig, ligma_gui_config, LIGMA_TYPE_DISPLAY_CONFIG)
 
-#define parent_class gimp_gui_config_parent_class
+#define parent_class ligma_gui_config_parent_class
 
 static void
-gimp_gui_config_class_init (GimpGuiConfigClass *klass)
+ligma_gui_config_class_init (LigmaGuiConfigClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
   gchar        *path;
 
-  object_class->finalize     = gimp_gui_config_finalize;
-  object_class->set_property = gimp_gui_config_set_property;
-  object_class->get_property = gimp_gui_config_get_property;
+  object_class->finalize     = ligma_gui_config_finalize;
+  object_class->set_property = ligma_gui_config_set_property;
+  object_class->get_property = ligma_gui_config_get_property;
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_EDIT_NON_VISIBLE,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_EDIT_NON_VISIBLE,
                             "edit-non-visible",
                             "Non-visible layers can be edited",
                             EDIT_NON_VISIBLE_BLURB,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_MOVE_TOOL_CHANGES_ACTIVE,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_MOVE_TOOL_CHANGES_ACTIVE,
                             "move-tool-changes-active",
                             "Move tool changes active layer",
                             MOVE_TOOL_CHANGES_ACTIVE_BLURB,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_INT (object_class, PROP_FILTER_TOOL_MAX_RECENT,
+  LIGMA_CONFIG_PROP_INT (object_class, PROP_FILTER_TOOL_MAX_RECENT,
                         "filter-tool-max-recent",
                         "Max recent settings to keep in filters",
                         FILTER_TOOL_MAX_RECENT_BLURB,
                         0, 255, 10,
-                        GIMP_PARAM_STATIC_STRINGS);
+                        LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_FILTER_TOOL_USE_LAST_SETTINGS,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_FILTER_TOOL_USE_LAST_SETTINGS,
                             "filter-tool-use-last-settings",
                             "Use last used settings in filters",
                             FILTER_TOOL_USE_LAST_SETTINGS_BLURB,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_FILTER_TOOL_SHOW_COLOR_OPTIONS,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_FILTER_TOOL_SHOW_COLOR_OPTIONS,
                             "filter-tool-show-color-options",
                             "Show advanced color options in filters",
                             FILTER_TOOL_SHOW_COLOR_OPTIONS_BLURB,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_TRUST_DIRTY_FLAG,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_TRUST_DIRTY_FLAG,
                             "trust-dirty-flag",
                             "Trust dirty flag",
                             TRUST_DIRTY_FLAG_BLURB,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SAVE_DEVICE_STATUS,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SAVE_DEVICE_STATUS,
                             "save-device-status",
                             "Save device status",
                             SAVE_DEVICE_STATUS_BLURB,
                             TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_DEVICES_SHARE_TOOL,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_DEVICES_SHARE_TOOL,
                             "devices-share-tool",
                             "Devices share tool",
                             DEVICES_SHARE_TOOL_BLURB,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SAVE_SESSION_INFO,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SAVE_SESSION_INFO,
                             "save-session-info",
                             "Save session",
                             SAVE_SESSION_INFO_BLURB,
                             TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_RESTORE_SESSION,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_RESTORE_SESSION,
                             "restore-session",
                             "Restore session",
                             RESTORE_SESSION_BLURB,
                             TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_RESTORE_MONITOR,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_RESTORE_MONITOR,
                             "restore-monitor",
                             "Restore monitor",
                             RESTORE_MONITOR_BLURB,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SAVE_TOOL_OPTIONS,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SAVE_TOOL_OPTIONS,
                             "save-tool-options",
                             "Save tool options",
                             SAVE_TOOL_OPTIONS_BLURB,
                             TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_CAN_CHANGE_ACCELS,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_CAN_CHANGE_ACCELS,
                             "can-change-accels",
                             "Can change accelerators",
                             CAN_CHANGE_ACCELS_BLURB,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SAVE_ACCELS,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SAVE_ACCELS,
                             "save-accels",
                             "Save accelerators",
                             SAVE_ACCELS_BLURB,
                             TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_RESTORE_ACCELS,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_RESTORE_ACCELS,
                             "restore-accels",
                             "Restore acclerator",
                             RESTORE_ACCELS_BLURB,
                             TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_INT (object_class, PROP_LAST_OPENED_SIZE,
+  LIGMA_CONFIG_PROP_INT (object_class, PROP_LAST_OPENED_SIZE,
                         "last-opened-size",
                         "Size of recently used menu",
                         LAST_OPENED_SIZE_BLURB,
                         0, 1024, 10,
-                        GIMP_PARAM_STATIC_STRINGS |
-                        GIMP_CONFIG_PARAM_RESTART);
+                        LIGMA_PARAM_STATIC_STRINGS |
+                        LIGMA_CONFIG_PARAM_RESTART);
 
-  GIMP_CONFIG_PROP_MEMSIZE (object_class, PROP_MAX_NEW_IMAGE_SIZE,
+  LIGMA_CONFIG_PROP_MEMSIZE (object_class, PROP_MAX_NEW_IMAGE_SIZE,
                             "max-new-image-size",
                             "Maximum new image size",
                             MAX_NEW_IMAGE_SIZE_BLURB,
-                            0, GIMP_MAX_MEMSIZE, 1 << 27, /* 128MB */
-                            GIMP_PARAM_STATIC_STRINGS);
+                            0, LIGMA_MAX_MEMSIZE, 1 << 27, /* 128MB */
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_TOOLBOX_COLOR_AREA,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_TOOLBOX_COLOR_AREA,
                             "toolbox-color-area",
                             "Show toolbox color area",
                             TOOLBOX_COLOR_AREA_BLURB,
                             TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_TOOLBOX_FOO_AREA,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_TOOLBOX_FOO_AREA,
                             "toolbox-foo-area",
                             "Show toolbox foo area",
                             TOOLBOX_FOO_AREA_BLURB,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_TOOLBOX_IMAGE_AREA,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_TOOLBOX_IMAGE_AREA,
                             "toolbox-image-area",
                             "Show toolbox image area",
                             TOOLBOX_IMAGE_AREA_BLURB,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_TOOLBOX_WILBER,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_TOOLBOX_WILBER,
                             "toolbox-wilber",
                             "Show toolbox wilber",
                             TOOLBOX_WILBER_BLURB,
                             TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_TOOLBOX_GROUPS,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_TOOLBOX_GROUPS,
                             "toolbox-groups",
                             "Use toolbox groups",
                             TOOLBOX_GROUPS_BLURB,
                             TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  path = gimp_config_build_data_path ("themes");
-  GIMP_CONFIG_PROP_PATH (object_class, PROP_THEME_PATH,
+  path = ligma_config_build_data_path ("themes");
+  LIGMA_CONFIG_PROP_PATH (object_class, PROP_THEME_PATH,
                          "theme-path",
                          "Theme path",
                          THEME_PATH_BLURB,
-                         GIMP_CONFIG_PATH_DIR_LIST, path,
-                         GIMP_PARAM_STATIC_STRINGS |
-                         GIMP_CONFIG_PARAM_RESTART);
+                         LIGMA_CONFIG_PATH_DIR_LIST, path,
+                         LIGMA_PARAM_STATIC_STRINGS |
+                         LIGMA_CONFIG_PARAM_RESTART);
   g_free (path);
 
-  GIMP_CONFIG_PROP_STRING  (object_class, PROP_THEME,
+  LIGMA_CONFIG_PROP_STRING  (object_class, PROP_THEME,
                             "theme",
                             "Theme",
                             THEME_BLURB,
-                            GIMP_CONFIG_DEFAULT_THEME,
-                            GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_PREFER_DARK_THEME,
+                            LIGMA_CONFIG_DEFAULT_THEME,
+                            LIGMA_PARAM_STATIC_STRINGS);
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_PREFER_DARK_THEME,
                             "prefer-dark-theme",
                             "Prefer Dark Theme",
                             THEME_BLURB,
                             TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_OVERRIDE_THEME_ICON_SIZE,
+                            LIGMA_PARAM_STATIC_STRINGS);
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_OVERRIDE_THEME_ICON_SIZE,
                             "override-theme-icon-size",
                             "Override theme-set icon sizes",
                             OVERRIDE_THEME_ICON_SIZE_BLURB,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_PROP_ENUM    (object_class, PROP_CUSTOM_ICON_SIZE,
+                            LIGMA_PARAM_STATIC_STRINGS);
+  LIGMA_CONFIG_PROP_ENUM    (object_class, PROP_CUSTOM_ICON_SIZE,
                             "custom-icon-size",
                             "Custom icon size",
                             ICON_SIZE_BLURB,
-                            GIMP_TYPE_ICON_SIZE,
-                            GIMP_ICON_SIZE_MEDIUM,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_TYPE_ICON_SIZE,
+                            LIGMA_ICON_SIZE_MEDIUM,
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  path = gimp_config_build_data_path ("icons");
-  GIMP_CONFIG_PROP_PATH (object_class, PROP_ICON_THEME_PATH,
+  path = ligma_config_build_data_path ("icons");
+  LIGMA_CONFIG_PROP_PATH (object_class, PROP_ICON_THEME_PATH,
                          "icon-theme-path",
                          "Icon theme path",
                          ICON_THEME_PATH_BLURB,
-                         GIMP_CONFIG_PATH_DIR_LIST, path,
-                         GIMP_PARAM_STATIC_STRINGS |
-                         GIMP_CONFIG_PARAM_RESTART);
+                         LIGMA_CONFIG_PATH_DIR_LIST, path,
+                         LIGMA_PARAM_STATIC_STRINGS |
+                         LIGMA_CONFIG_PARAM_RESTART);
   g_free (path);
 
-  GIMP_CONFIG_PROP_STRING (object_class, PROP_ICON_THEME,
+  LIGMA_CONFIG_PROP_STRING (object_class, PROP_ICON_THEME,
                            "icon-theme",
                            "Icon theme",
                            ICON_THEME_BLURB,
-                           GIMP_CONFIG_DEFAULT_ICON_THEME,
-                           GIMP_PARAM_STATIC_STRINGS);
+                           LIGMA_CONFIG_DEFAULT_ICON_THEME,
+                           LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_PREFER_SYMBOLIC_ICONS,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_PREFER_SYMBOLIC_ICONS,
                             "prefer-symbolic-icons",
                             "Prefer symbolic icons",
                             PREFER_SYMBOLIC_ICONS_BLURB,
                             TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_USE_HELP,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_USE_HELP,
                             "use-help",
                             "Use help",
                             USE_HELP_BLURB,
                             TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_HELP_BUTTON,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_HELP_BUTTON,
                             "show-help-button",
                             "Show help button",
                             SHOW_HELP_BUTTON_BLURB,
                             TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_STRING (object_class, PROP_HELP_LOCALES,
+  LIGMA_CONFIG_PROP_STRING (object_class, PROP_HELP_LOCALES,
                            "help-locales",
                            "Help locales",
                            HELP_LOCALES_BLURB,
                            "",
-                           GIMP_PARAM_STATIC_STRINGS);
+                           LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_HELP_BROWSER,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_HELP_BROWSER,
                          "help-browser",
                          "Help browser",
                          HELP_BROWSER_BLURB,
-                         GIMP_TYPE_HELP_BROWSER_TYPE,
+                         LIGMA_TYPE_HELP_BROWSER_TYPE,
                          DEFAULT_HELP_BROWSER,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_USER_MANUAL_ONLINE,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_USER_MANUAL_ONLINE,
                             "user-manual-online",
                             "User manual online",
                             USER_MANUAL_ONLINE_BLURB,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_STRING (object_class, PROP_USER_MANUAL_ONLINE_URI,
+  LIGMA_CONFIG_PROP_STRING (object_class, PROP_USER_MANUAL_ONLINE_URI,
                            "user-manual-online-uri",
                            "User manual online URI",
                            USER_MANUAL_ONLINE_URI_BLURB,
                            DEFAULT_USER_MANUAL_ONLINE_URI,
-                           GIMP_PARAM_STATIC_STRINGS);
+                           LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_INT (object_class, PROP_ACTION_HISTORY_SIZE,
+  LIGMA_CONFIG_PROP_INT (object_class, PROP_ACTION_HISTORY_SIZE,
                         "action-history-size",
                         "Action history size",
                         ACTION_HISTORY_SIZE_BLURB,
                         0, 1000, 100,
-                        GIMP_PARAM_STATIC_STRINGS);
+                        LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_DOCK_WINDOW_HINT,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_DOCK_WINDOW_HINT,
                          "dock-window-hint",
                          "Dock window hint",
                          DOCK_WINDOW_HINT_BLURB,
-                         GIMP_TYPE_WINDOW_HINT,
-                         GIMP_WINDOW_HINT_UTILITY,
-                         GIMP_PARAM_STATIC_STRINGS |
-                         GIMP_CONFIG_PARAM_RESTART);
+                         LIGMA_TYPE_WINDOW_HINT,
+                         LIGMA_WINDOW_HINT_UTILITY,
+                         LIGMA_PARAM_STATIC_STRINGS |
+                         LIGMA_CONFIG_PARAM_RESTART);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_CURSOR_HANDEDNESS,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_CURSOR_HANDEDNESS,
                          "cursor-handedness",
                          "Cursor handedness",
                          CURSOR_HANDEDNESS_BLURB,
-                         GIMP_TYPE_HANDEDNESS,
-                         GIMP_HANDEDNESS_RIGHT,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_TYPE_HANDEDNESS,
+                         LIGMA_HANDEDNESS_RIGHT,
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_PLAYGROUND_NPD_TOOL,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_PLAYGROUND_NPD_TOOL,
                             "playground-npd-tool",
                             "Playground N-Point Deformation tool",
                             PLAYGROUND_NPD_TOOL_BLURB,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS |
-                            GIMP_CONFIG_PARAM_RESTART);
+                            LIGMA_PARAM_STATIC_STRINGS |
+                            LIGMA_CONFIG_PARAM_RESTART);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class,
                             PROP_PLAYGROUND_SEAMLESS_CLONE_TOOL,
                             "playground-seamless-clone-tool",
                             "Playground Seamless Clone tool",
                             PLAYGROUND_SEAMLESS_CLONE_TOOL_BLURB,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS |
-                            GIMP_CONFIG_PARAM_RESTART);
+                            LIGMA_PARAM_STATIC_STRINGS |
+                            LIGMA_CONFIG_PARAM_RESTART);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class,
                             PROP_PLAYGROUND_PAINT_SELECT_TOOL,
                             "playground-paint-select-tool",
                             "Playground Paint Select tool",
                             PLAYGROUND_PAINT_SELECT_TOOL_BLURB,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS |
-                            GIMP_CONFIG_PARAM_RESTART);
+                            LIGMA_PARAM_STATIC_STRINGS |
+                            LIGMA_CONFIG_PARAM_RESTART);
 
   g_object_class_install_property (object_class, PROP_HIDE_DOCKS,
                                    g_param_spec_boolean ("hide-docks",
@@ -448,7 +448,7 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                                                          FALSE,
                                                          G_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT |
-                                                         GIMP_PARAM_STATIC_STRINGS));
+                                                         LIGMA_PARAM_STATIC_STRINGS));
 
   g_object_class_install_property (object_class, PROP_SINGLE_WINDOW_MODE,
                                    g_param_spec_boolean ("single-window-mode",
@@ -457,7 +457,7 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                                                          TRUE,
                                                          G_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT |
-                                                         GIMP_PARAM_STATIC_STRINGS));
+                                                         LIGMA_PARAM_STATIC_STRINGS));
 
   g_object_class_install_property (object_class, PROP_SHOW_TABS,
                                    g_param_spec_boolean ("show-tabs",
@@ -466,15 +466,15 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                                                          TRUE,
                                                          G_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT |
-                                                         GIMP_PARAM_STATIC_STRINGS));
+                                                         LIGMA_PARAM_STATIC_STRINGS));
 
   g_object_class_install_property (object_class, PROP_TABS_POSITION,
                                    g_param_spec_enum ("tabs-position", NULL, NULL,
-                                                      GIMP_TYPE_POSITION,
-                                                      GIMP_POSITION_TOP,
+                                                      LIGMA_TYPE_POSITION,
+                                                      LIGMA_POSITION_TOP,
                                                       G_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT |
-                                                      GIMP_PARAM_STATIC_STRINGS));
+                                                      LIGMA_PARAM_STATIC_STRINGS));
 
   g_object_class_install_property (object_class, PROP_LAST_TIP_SHOWN,
                                    g_param_spec_int ("last-tip-shown",
@@ -482,85 +482,85 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                                                      0, G_MAXINT, 0,
                                                      G_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT |
-                                                     GIMP_PARAM_STATIC_STRINGS));
+                                                     LIGMA_PARAM_STATIC_STRINGS));
 
   /*  only for backward compatibility:  */
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_CURSOR_FORMAT,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_CURSOR_FORMAT,
                          "cursor-format",
                          NULL, NULL,
-                         GIMP_TYPE_CURSOR_FORMAT,
-                         GIMP_CURSOR_FORMAT_PIXBUF,
-                         GIMP_PARAM_STATIC_STRINGS |
-                         GIMP_CONFIG_PARAM_IGNORE);
+                         LIGMA_TYPE_CURSOR_FORMAT,
+                         LIGMA_CURSOR_FORMAT_PIXBUF,
+                         LIGMA_PARAM_STATIC_STRINGS |
+                         LIGMA_CONFIG_PARAM_IGNORE);
 
-  GIMP_CONFIG_PROP_INT (object_class, PROP_IMAGE_MAP_TOOL_MAX_RECENT,
+  LIGMA_CONFIG_PROP_INT (object_class, PROP_IMAGE_MAP_TOOL_MAX_RECENT,
                         "image-map-tool-max-recent",
                         NULL, NULL,
                         0, 255, 10,
-                        GIMP_PARAM_STATIC_STRINGS |
-                        GIMP_CONFIG_PARAM_IGNORE);
+                        LIGMA_PARAM_STATIC_STRINGS |
+                        LIGMA_CONFIG_PARAM_IGNORE);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_INFO_WINDOW_PER_DISPLAY,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_INFO_WINDOW_PER_DISPLAY,
                             "info-window-per-display",
                             NULL, NULL,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS |
-                            GIMP_CONFIG_PARAM_IGNORE);
+                            LIGMA_PARAM_STATIC_STRINGS |
+                            LIGMA_CONFIG_PARAM_IGNORE);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_MENU_MNEMONICS,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_MENU_MNEMONICS,
                             "menu-mnemonics",
                             NULL, NULL,
                             TRUE,
-                            GIMP_PARAM_STATIC_STRINGS |
-                            GIMP_CONFIG_PARAM_IGNORE);
+                            LIGMA_PARAM_STATIC_STRINGS |
+                            LIGMA_CONFIG_PARAM_IGNORE);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_TOOL_TIPS,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_TOOL_TIPS,
                             "show-tool-tips",
                             NULL, NULL,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS |
-                            GIMP_CONFIG_PARAM_IGNORE);
+                            LIGMA_PARAM_STATIC_STRINGS |
+                            LIGMA_CONFIG_PARAM_IGNORE);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_TIPS,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_TIPS,
                             "show-tips",
                             NULL, NULL,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS |
-                            GIMP_CONFIG_PARAM_IGNORE);
+                            LIGMA_PARAM_STATIC_STRINGS |
+                            LIGMA_CONFIG_PARAM_IGNORE);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_TOOLBOX_WINDOW_HINT,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_TOOLBOX_WINDOW_HINT,
                          "toolbox-window-hint",
                          NULL, NULL,
-                         GIMP_TYPE_WINDOW_HINT,
-                         GIMP_WINDOW_HINT_UTILITY,
-                         GIMP_PARAM_STATIC_STRINGS |
-                         GIMP_CONFIG_PARAM_IGNORE);
+                         LIGMA_TYPE_WINDOW_HINT,
+                         LIGMA_WINDOW_HINT_UTILITY,
+                         LIGMA_PARAM_STATIC_STRINGS |
+                         LIGMA_CONFIG_PARAM_IGNORE);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_TRANSIENT_DOCKS,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_TRANSIENT_DOCKS,
                             "transient-docks",
                             NULL, NULL,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS |
-                            GIMP_CONFIG_PARAM_IGNORE);
+                            LIGMA_PARAM_STATIC_STRINGS |
+                            LIGMA_CONFIG_PARAM_IGNORE);
 
-  GIMP_CONFIG_PROP_PATH (object_class, PROP_WEB_BROWSER,
+  LIGMA_CONFIG_PROP_PATH (object_class, PROP_WEB_BROWSER,
                          "web-browser",
                          NULL, NULL,
-                         GIMP_CONFIG_PATH_FILE,
+                         LIGMA_CONFIG_PATH_FILE,
                          "not used any longer",
-                         GIMP_PARAM_STATIC_STRINGS |
-                         GIMP_CONFIG_PARAM_IGNORE);
+                         LIGMA_PARAM_STATIC_STRINGS |
+                         LIGMA_CONFIG_PARAM_IGNORE);
 }
 
 static void
-gimp_gui_config_init (GimpGuiConfig *config)
+ligma_gui_config_init (LigmaGuiConfig *config)
 {
 }
 
 static void
-gimp_gui_config_finalize (GObject *object)
+ligma_gui_config_finalize (GObject *object)
 {
-  GimpGuiConfig *gui_config = GIMP_GUI_CONFIG (object);
+  LigmaGuiConfig *gui_config = LIGMA_GUI_CONFIG (object);
 
   g_free (gui_config->theme_path);
   g_free (gui_config->theme);
@@ -573,12 +573,12 @@ gimp_gui_config_finalize (GObject *object)
 }
 
 static void
-gimp_gui_config_set_property (GObject      *object,
+ligma_gui_config_set_property (GObject      *object,
                               guint         property_id,
                               const GValue *value,
                               GParamSpec   *pspec)
 {
-  GimpGuiConfig *gui_config = GIMP_GUI_CONFIG (object);
+  LigmaGuiConfig *gui_config = LIGMA_GUI_CONFIG (object);
 
   switch (property_id)
     {
@@ -751,12 +751,12 @@ gimp_gui_config_set_property (GObject      *object,
 }
 
 static void
-gimp_gui_config_get_property (GObject    *object,
+ligma_gui_config_get_property (GObject    *object,
                               guint       property_id,
                               GValue     *value,
                               GParamSpec *pspec)
 {
-  GimpGuiConfig *gui_config = GIMP_GUI_CONFIG (object);
+  LigmaGuiConfig *gui_config = LIGMA_GUI_CONFIG (object);
 
   switch (property_id)
     {

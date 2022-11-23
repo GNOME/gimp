@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,17 +24,17 @@
 #include "plug-in/plug-in-enums.h"
 
 
-#define GIMP_PLUG_IN_TILE_WIDTH  128
-#define GIMP_PLUG_IN_TILE_HEIGHT 128
+#define LIGMA_PLUG_IN_TILE_WIDTH  128
+#define LIGMA_PLUG_IN_TILE_HEIGHT 128
 
 
-typedef struct _GimpPlugIn           GimpPlugIn;
-typedef struct _GimpPlugInDebug      GimpPlugInDebug;
-typedef struct _GimpPlugInDef        GimpPlugInDef;
-typedef struct _GimpPlugInManager    GimpPlugInManager;
-typedef struct _GimpPlugInMenuBranch GimpPlugInMenuBranch;
-typedef struct _GimpPlugInProcFrame  GimpPlugInProcFrame;
-typedef struct _GimpPlugInShm        GimpPlugInShm;
+typedef struct _LigmaPlugIn           LigmaPlugIn;
+typedef struct _LigmaPlugInDebug      LigmaPlugInDebug;
+typedef struct _LigmaPlugInDef        LigmaPlugInDef;
+typedef struct _LigmaPlugInManager    LigmaPlugInManager;
+typedef struct _LigmaPlugInMenuBranch LigmaPlugInMenuBranch;
+typedef struct _LigmaPlugInProcFrame  LigmaPlugInProcFrame;
+typedef struct _LigmaPlugInShm        LigmaPlugInShm;
 
 
 #endif /* __PLUG_IN_TYPES_H__ */

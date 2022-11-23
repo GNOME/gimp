@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,20 +25,20 @@
 #include <gdk/gdkwayland.h>
 #endif
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "gui-types.h"
 
-#include "core/gimp.h"
+#include "core/ligma.h"
 
-#include "widgets/gimpwidgets-utils.h"
+#include "widgets/ligmawidgets-utils.h"
 
 #include "splash.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 #define MEASURE_UPPER "1235678901234567890"
@@ -67,28 +67,28 @@ typedef struct
   /* debug timer */
   GTimer         *timer;
   gdouble         last_time;
-} GimpSplash;
+} LigmaSplash;
 
-static GimpSplash *splash = NULL;
+static LigmaSplash *splash = NULL;
 
 
-static void        splash_position_layouts     (GimpSplash     *splash,
+static void        splash_position_layouts     (LigmaSplash     *splash,
                                                 const gchar    *text1,
                                                 const gchar    *text2,
                                                 GdkRectangle   *area);
 static gboolean    splash_area_draw            (GtkWidget      *widget,
                                                 cairo_t        *cr,
-                                                GimpSplash     *splash);
+                                                LigmaSplash     *splash);
 static void        splash_rectangle_union      (GdkRectangle   *dest,
                                                 PangoRectangle *pango_rect,
                                                 gint            offset_x,
                                                 gint            offset_y);
-static void        splash_average_text_area    (GimpSplash     *splash,
+static void        splash_average_text_area    (LigmaSplash     *splash,
                                                 GdkPixbuf      *pixbuf,
                                                 GdkRGBA        *rgba);
 
 static GdkPixbufAnimation *
-                   splash_image_load           (Gimp           *gimp,
+                   splash_image_load           (Ligma           *ligma,
                                                 gint            max_width,
                                                 gint            max_height,
                                                 gboolean        be_verbose);
@@ -109,10 +109,10 @@ static void        splash_timer_elapsed        (void);
 /*  public functions  */
 
 void
-splash_create (Gimp         *gimp,
+splash_create (Ligma         *ligma,
                gboolean      be_verbose,
                GdkMonitor   *monitor,
-               GimpApp      *app)
+               LigmaApp      *app)
 {
   GtkWidget          *frame;
   GtkWidget          *vbox;
@@ -124,7 +124,7 @@ splash_create (Gimp         *gimp,
 
   g_return_if_fail (splash == NULL);
   g_return_if_fail (GDK_IS_MONITOR (monitor));
-  g_return_if_fail (GIMP_IS_APP (app) || app == NULL);
+  g_return_if_fail (LIGMA_IS_APP (app) || app == NULL);
 
   gdk_monitor_get_workarea (monitor, &workarea);
 
@@ -156,19 +156,19 @@ splash_create (Gimp         *gimp,
       max_width  = workarea.width  / 2;
       max_height = workarea.height / 2;
     }
-  pixbuf = splash_image_load (gimp, max_width, max_height, be_verbose);
+  pixbuf = splash_image_load (ligma, max_width, max_height, be_verbose);
 
   if (! pixbuf)
     return;
 
-  splash = g_slice_new0 (GimpSplash);
+  splash = g_slice_new0 (LigmaSplash);
 
   splash->window =
     g_object_new (GTK_TYPE_APPLICATION_WINDOW,
                   "type",            GTK_WINDOW_TOPLEVEL,
                   "type-hint",       GDK_WINDOW_TYPE_HINT_SPLASHSCREEN,
-                  "title",           _("GIMP Startup"),
-                  "role",            "gimp-startup",
+                  "title",           _("LIGMA Startup"),
+                  "role",            "ligma-startup",
                   "window-position", GTK_WIN_POS_CENTER,
                   "resizable",       FALSE,
                   "application",     GTK_APPLICATION (app),
@@ -210,26 +210,26 @@ splash_create (Gimp         *gimp,
   pango_layout_get_pixel_extents (splash->upper, &ink, NULL);
 
   if (splash->width > 4 * ink.width)
-    gimp_pango_layout_set_scale (splash->upper, PANGO_SCALE_X_LARGE);
+    ligma_pango_layout_set_scale (splash->upper, PANGO_SCALE_X_LARGE);
   else if (splash->width > 3 * ink.width)
-    gimp_pango_layout_set_scale (splash->upper, PANGO_SCALE_LARGE);
+    ligma_pango_layout_set_scale (splash->upper, PANGO_SCALE_LARGE);
   else if (splash->width > 2 * ink.width)
-    gimp_pango_layout_set_scale (splash->upper, PANGO_SCALE_MEDIUM);
+    ligma_pango_layout_set_scale (splash->upper, PANGO_SCALE_MEDIUM);
   else
-    gimp_pango_layout_set_scale (splash->upper, PANGO_SCALE_MEDIUM);
+    ligma_pango_layout_set_scale (splash->upper, PANGO_SCALE_MEDIUM);
 
   splash->lower = gtk_widget_create_pango_layout (splash->area,
                                                   MEASURE_LOWER);
   pango_layout_get_pixel_extents (splash->lower, &ink, NULL);
 
   if (splash->width > 4 * ink.width)
-    gimp_pango_layout_set_scale (splash->lower, PANGO_SCALE_LARGE);
+    ligma_pango_layout_set_scale (splash->lower, PANGO_SCALE_LARGE);
   else if (splash->width > 3 * ink.width)
-    gimp_pango_layout_set_scale (splash->lower, PANGO_SCALE_MEDIUM);
+    ligma_pango_layout_set_scale (splash->lower, PANGO_SCALE_MEDIUM);
   else if (splash->width > 2 * ink.width)
-    gimp_pango_layout_set_scale (splash->lower, PANGO_SCALE_SMALL);
+    ligma_pango_layout_set_scale (splash->lower, PANGO_SCALE_SMALL);
   else
-    gimp_pango_layout_set_scale (splash->lower, PANGO_SCALE_X_SMALL);
+    ligma_pango_layout_set_scale (splash->lower, PANGO_SCALE_X_SMALL);
 
   /*  this sets the initial layout positions  */
   splash_position_layouts (splash, "", "", NULL);
@@ -272,7 +272,7 @@ splash_destroy (void)
   if (splash->timer)
     g_timer_destroy (splash->timer);
 
-  g_slice_free (GimpSplash, splash);
+  g_slice_free (LigmaSplash, splash);
   splash = NULL;
 }
 
@@ -338,7 +338,7 @@ splash_update (const gchar *text1,
 static gboolean
 splash_area_draw (GtkWidget  *widget,
                   cairo_t    *cr,
-                  GimpSplash *splash)
+                  LigmaSplash *splash)
 {
   gdk_cairo_set_source_rgba (cr, &splash->color);
 
@@ -353,7 +353,7 @@ splash_area_draw (GtkWidget  *widget,
 
 /* area returns the union of the previous and new ink rectangles */
 static void
-splash_position_layouts (GimpSplash   *splash,
+splash_position_layouts (LigmaSplash   *splash,
                          const gchar  *text1,
                          const gchar  *text2,
                          GdkRectangle *area)
@@ -452,7 +452,7 @@ splash_rectangle_union (GdkRectangle   *dest,
  * the average luminance of the text area of the splash image.
  */
 static void
-splash_average_text_area (GimpSplash *splash,
+splash_average_text_area (LigmaSplash *splash,
                           GdkPixbuf  *pixbuf,
                           GdkRGBA    *color)
 {
@@ -500,7 +500,7 @@ splash_average_text_area (GimpSplash *splash,
           pixels += rowstride;
         }
 
-      luminance = GIMP_RGB_LUMINANCE (sum[0] / count,
+      luminance = LIGMA_RGB_LUMINANCE (sum[0] / count,
                                       sum[1] / count,
                                       sum[2] / count);
 
@@ -514,7 +514,7 @@ splash_average_text_area (GimpSplash *splash,
 }
 
 static GdkPixbufAnimation *
-splash_image_load (Gimp     *gimp,
+splash_image_load (Ligma     *ligma,
                    gint      max_width,
                    gint      max_height,
                    gboolean  be_verbose)
@@ -524,7 +524,7 @@ splash_image_load (Gimp     *gimp,
   GList              *list;
 
   /* Random image in splash extensions. */
-  g_object_get (gimp->extension_manager,
+  g_object_get (ligma->extension_manager,
                 "splash-paths", &list,
                 NULL);
   animation = splash_image_pick_from_dirs (list,
@@ -533,8 +533,8 @@ splash_image_load (Gimp     *gimp,
   if (animation)
     return animation;
 
-  /* File "gimp-splash.png" in personal configuration directory. */
-  file = gimp_directory_file ("gimp-splash.png", NULL);
+  /* File "ligma-splash.png" in personal configuration directory. */
+  file = ligma_directory_file ("ligma-splash.png", NULL);
   animation = splash_image_load_from_file (file,
                                            max_width, max_height,
                                            be_verbose);
@@ -543,7 +543,7 @@ splash_image_load (Gimp     *gimp,
     return animation;
 
   /* Random image under splashes/ directory in personal config dir. */
-  file = gimp_directory_file ("splashes", NULL);
+  file = ligma_directory_file ("splashes", NULL);
   list = NULL;
   list = g_list_prepend (list, file);
   animation = splash_image_pick_from_dirs (list,
@@ -554,7 +554,7 @@ splash_image_load (Gimp     *gimp,
     return animation;
 
   /* Release splash image. */
-  file = gimp_data_directory_file ("images", "gimp-splash.png", NULL);
+  file = ligma_data_directory_file ("images", "ligma-splash.png", NULL);
   animation = splash_image_load_from_file (file,
                                            max_width, max_height,
                                            be_verbose);
@@ -563,7 +563,7 @@ splash_image_load (Gimp     *gimp,
     return animation;
 
   /* Random release image in installed splashes/ directory. */
-  file = gimp_data_directory_file ("splashes", NULL);
+  file = ligma_data_directory_file ("splashes", NULL);
   list = NULL;
   list = g_list_prepend (list, file);
   animation = splash_image_pick_from_dirs (list,

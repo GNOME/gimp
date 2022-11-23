@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimppatternselect.h
- * Copyright (C) 2004 Michael Natterer <mitch@gimp.org>
+ * ligmapatternselect.h
+ * Copyright (C) 2004 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,38 +18,38 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PATTERN_SELECT_H__
-#define __GIMP_PATTERN_SELECT_H__
+#ifndef __LIGMA_PATTERN_SELECT_H__
+#define __LIGMA_PATTERN_SELECT_H__
 
-#include "gimppdbdialog.h"
+#include "ligmapdbdialog.h"
 
 G_BEGIN_DECLS
 
 
-#define GIMP_TYPE_PATTERN_SELECT            (gimp_pattern_select_get_type ())
-#define GIMP_PATTERN_SELECT(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PATTERN_SELECT, GimpPatternSelect))
-#define GIMP_PATTERN_SELECT_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PATTERN_SELECT, GimpPatternSelectClass))
-#define GIMP_IS_PATTERN_SELECT(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PATTERN_SELECT))
-#define GIMP_IS_PATTERN_SELECT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PATTERN_SELECT))
-#define GIMP_PATTERN_SELECT_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PATTERN_SELECT, GimpPatternSelectClass))
+#define LIGMA_TYPE_PATTERN_SELECT            (ligma_pattern_select_get_type ())
+#define LIGMA_PATTERN_SELECT(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_PATTERN_SELECT, LigmaPatternSelect))
+#define LIGMA_PATTERN_SELECT_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_PATTERN_SELECT, LigmaPatternSelectClass))
+#define LIGMA_IS_PATTERN_SELECT(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_PATTERN_SELECT))
+#define LIGMA_IS_PATTERN_SELECT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_PATTERN_SELECT))
+#define LIGMA_PATTERN_SELECT_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_PATTERN_SELECT, LigmaPatternSelectClass))
 
 
-typedef struct _GimpPatternSelectClass  GimpPatternSelectClass;
+typedef struct _LigmaPatternSelectClass  LigmaPatternSelectClass;
 
-struct _GimpPatternSelect
+struct _LigmaPatternSelect
 {
-  GimpPdbDialog  parent_instance;
+  LigmaPdbDialog  parent_instance;
 };
 
-struct _GimpPatternSelectClass
+struct _LigmaPatternSelectClass
 {
-  GimpPdbDialogClass  parent_class;
+  LigmaPdbDialogClass  parent_class;
 };
 
 
-GType  gimp_pattern_select_get_type (void) G_GNUC_CONST;
+GType  ligma_pattern_select_get_type (void) G_GNUC_CONST;
 
 
 G_END_DECLS
 
-#endif /* __GIMP_PATTERN_SELECT_H__ */
+#endif /* __LIGMA_PATTERN_SELECT_H__ */

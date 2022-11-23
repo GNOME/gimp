@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,45 +15,45 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DISPLAY_SHELL_SCROLL_H__
-#define __GIMP_DISPLAY_SHELL_SCROLL_H__
+#ifndef __LIGMA_DISPLAY_SHELL_SCROLL_H__
+#define __LIGMA_DISPLAY_SHELL_SCROLL_H__
 
 
-void   gimp_display_shell_scroll                     (GimpDisplayShell *shell,
+void   ligma_display_shell_scroll                     (LigmaDisplayShell *shell,
                                                       gint              x_offset,
                                                       gint              y_offset);
-void   gimp_display_shell_scroll_set_offset          (GimpDisplayShell *shell,
+void   ligma_display_shell_scroll_set_offset          (LigmaDisplayShell *shell,
                                                       gint              offset_x,
                                                       gint              offset_y);
 
-void   gimp_display_shell_scroll_clamp_and_update    (GimpDisplayShell *shell);
+void   ligma_display_shell_scroll_clamp_and_update    (LigmaDisplayShell *shell);
 
-void   gimp_display_shell_scroll_unoverscrollify     (GimpDisplayShell *shell,
+void   ligma_display_shell_scroll_unoverscrollify     (LigmaDisplayShell *shell,
                                                       gint              in_offset_x,
                                                       gint              in_offset_y,
                                                       gint             *out_offset_x,
                                                       gint             *out_offset_y);
 
-void   gimp_display_shell_scroll_center_image_xy     (GimpDisplayShell *shell,
+void   ligma_display_shell_scroll_center_image_xy     (LigmaDisplayShell *shell,
                                                       gdouble           image_x,
                                                       gdouble           image_y);
-void   gimp_display_shell_scroll_center_image        (GimpDisplayShell *shell,
+void   ligma_display_shell_scroll_center_image        (LigmaDisplayShell *shell,
                                                       gboolean          horizontally,
                                                       gboolean          vertically);
-void   gimp_display_shell_scroll_center_content      (GimpDisplayShell *shell,
+void   ligma_display_shell_scroll_center_content      (LigmaDisplayShell *shell,
                                                       gboolean          horizontally,
                                                       gboolean          vertically);
 
-void   gimp_display_shell_scroll_get_scaled_viewport (GimpDisplayShell *shell,
+void   ligma_display_shell_scroll_get_scaled_viewport (LigmaDisplayShell *shell,
                                                       gint             *x,
                                                       gint             *y,
                                                       gint             *w,
                                                       gint             *h);
-void   gimp_display_shell_scroll_get_viewport        (GimpDisplayShell *shell,
+void   ligma_display_shell_scroll_get_viewport        (LigmaDisplayShell *shell,
                                                       gdouble          *x,
                                                       gdouble          *y,
                                                       gdouble          *w,
                                                       gdouble          *h);
 
 
-#endif  /*  __GIMP_DISPLAY_SHELL_SCROLL_H__  */
+#endif  /*  __LIGMA_DISPLAY_SHELL_SCROLL_H__  */

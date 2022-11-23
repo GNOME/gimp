@@ -2,7 +2,7 @@
  * smooth palette - derive smooth palette from image
  * Copyright (C) 1997  Scott Draves <spot@cs.cmu.edu>
  *
- * GIMP - The GNU Image Manipulation Program
+ * LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,15 +23,15 @@
 
 #include <string.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 #define PLUG_IN_PROC   "plug-in-smooth-palette"
 #define PLUG_IN_BINARY "smooth-palette"
-#define PLUG_IN_ROLE   "gimp-smooth-palette"
+#define PLUG_IN_ROLE   "ligma-smooth-palette"
 
 
 typedef struct _Palette      Palette;
@@ -39,12 +39,12 @@ typedef struct _PaletteClass PaletteClass;
 
 struct _Palette
 {
-  GimpPlugIn parent_instance;
+  LigmaPlugIn parent_instance;
 };
 
 struct _PaletteClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -53,27 +53,27 @@ struct _PaletteClass
 
 GType                   palette_get_type         (void) G_GNUC_CONST;
 
-static GList          * palette_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * palette_create_procedure (GimpPlugIn           *plug_in,
+static GList          * palette_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * palette_create_procedure (LigmaPlugIn           *plug_in,
                                                   const gchar          *name);
 
-static GimpValueArray * palette_run              (GimpProcedure        *procedure,
-                                                  GimpRunMode           run_mode,
-                                                  GimpImage            *image,
+static LigmaValueArray * palette_run              (LigmaProcedure        *procedure,
+                                                  LigmaRunMode           run_mode,
+                                                  LigmaImage            *image,
                                                   gint                  n_drawables,
-                                                  GimpDrawable        **drawables,
-                                                  const GimpValueArray *args,
+                                                  LigmaDrawable        **drawables,
+                                                  const LigmaValueArray *args,
                                                   gpointer              run_data);
 
-static gboolean         dialog                   (GimpDrawable         *drawable);
+static gboolean         dialog                   (LigmaDrawable         *drawable);
 
-static GimpImage      * smooth_palette           (GimpDrawable         *drawable,
-                                                  GimpLayer           **layer);
+static LigmaImage      * smooth_palette           (LigmaDrawable         *drawable,
+                                                  LigmaLayer           **layer);
 
 
-G_DEFINE_TYPE (Palette, palette, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Palette, palette, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (PALETTE_TYPE)
+LIGMA_MAIN (PALETTE_TYPE)
 DEFINE_STD_SET_I18N
 
 
@@ -97,7 +97,7 @@ static struct
 static void
 palette_class_init (PaletteClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = palette_query_procedures;
   plug_in_class->create_procedure = palette_create_procedure;
@@ -110,71 +110,71 @@ palette_init (Palette *palette)
 }
 
 static GList *
-palette_query_procedures (GimpPlugIn *plug_in)
+palette_query_procedures (LigmaPlugIn *plug_in)
 {
   return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
 }
 
-static GimpProcedure *
-palette_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+palette_create_procedure (LigmaPlugIn  *plug_in,
                           const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_image_procedure_new (plug_in, name,
+                                            LIGMA_PDB_PROC_TYPE_PLUGIN,
                                             palette_run, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "RGB*");
-      gimp_procedure_set_sensitivity_mask (procedure,
-                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
+      ligma_procedure_set_image_types (procedure, "RGB*");
+      ligma_procedure_set_sensitivity_mask (procedure,
+                                           LIGMA_PROCEDURE_SENSITIVE_DRAWABLE);
 
-      gimp_procedure_set_menu_label (procedure, _("Smoo_th Palette..."));
-      gimp_procedure_add_menu_path (procedure, "<Image>/Colors/Info");
+      ligma_procedure_set_menu_label (procedure, _("Smoo_th Palette..."));
+      ligma_procedure_add_menu_path (procedure, "<Image>/Colors/Info");
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         _("Derive a smooth color palette "
                                           "from the image"),
                                         "help!",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Scott Draves",
                                       "Scott Draves",
                                       "1997");
 
-      GIMP_PROC_ARG_INT (procedure, "width",
+      LIGMA_PROC_ARG_INT (procedure, "width",
                          "Widtg",
                          "Widtg",
-                         2, GIMP_MAX_IMAGE_SIZE, 256,
+                         2, LIGMA_MAX_IMAGE_SIZE, 256,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "height",
+      LIGMA_PROC_ARG_INT (procedure, "height",
                          "Height",
                          "Height",
-                         2, GIMP_MAX_IMAGE_SIZE, 64,
+                         2, LIGMA_MAX_IMAGE_SIZE, 64,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "n-tries",
+      LIGMA_PROC_ARG_INT (procedure, "n-tries",
                          "N tries",
                          "Search septh",
                          1, 1024, 50,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "show-image",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "show-image",
                              "Show image",
                              "Show image",
                              TRUE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_VAL_IMAGE (procedure, "new-image",
+      LIGMA_PROC_VAL_IMAGE (procedure, "new-image",
                            "New image",
                            "Output image",
                            FALSE,
                            G_PARAM_READWRITE);
 
-      GIMP_PROC_VAL_LAYER (procedure, "new-layer",
+      LIGMA_PROC_VAL_LAYER (procedure, "new-layer",
                            "New layer",
                            "Output layer",
                            FALSE,
@@ -184,19 +184,19 @@ palette_create_procedure (GimpPlugIn  *plug_in,
   return procedure;
 }
 
-static GimpValueArray *
-palette_run (GimpProcedure        *procedure,
-             GimpRunMode           run_mode,
-             GimpImage            *image,
+static LigmaValueArray *
+palette_run (LigmaProcedure        *procedure,
+             LigmaRunMode           run_mode,
+             LigmaImage            *image,
              gint                  n_drawables,
-             GimpDrawable        **drawables,
-             const GimpValueArray *args,
+             LigmaDrawable        **drawables,
+             const LigmaValueArray *args,
              gpointer              run_data)
 {
-  GimpValueArray *return_vals;
-  GimpImage      *new_image;
-  GimpLayer      *new_layer;
-  GimpDrawable   *drawable;
+  LigmaValueArray *return_vals;
+  LigmaImage      *new_image;
+  LigmaLayer      *new_layer;
+  LigmaDrawable   *drawable;
 
   gegl_init (NULL, NULL);
 
@@ -204,12 +204,12 @@ palette_run (GimpProcedure        *procedure,
     {
       GError *error = NULL;
 
-      g_set_error (&error, GIMP_PLUG_IN_ERROR, 0,
+      g_set_error (&error, LIGMA_PLUG_IN_ERROR, 0,
                    _("Procedure '%s' only works with one drawable."),
                    PLUG_IN_PROC);
 
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_CALLING_ERROR,
                                                error);
     }
   else
@@ -219,54 +219,54 @@ palette_run (GimpProcedure        *procedure,
 
   switch (run_mode)
     {
-    case GIMP_RUN_INTERACTIVE:
-      gimp_get_data (PLUG_IN_PROC, &config);
+    case LIGMA_RUN_INTERACTIVE:
+      ligma_get_data (PLUG_IN_PROC, &config);
 
       if (! dialog (drawable))
         {
-          return gimp_procedure_new_return_values (procedure,
-                                                   GIMP_PDB_CANCEL,
+          return ligma_procedure_new_return_values (procedure,
+                                                   LIGMA_PDB_CANCEL,
                                                    NULL);
         }
       break;
 
-    case GIMP_RUN_NONINTERACTIVE:
-      config.width      = GIMP_VALUES_GET_INT     (args, 0);
-      config.height     = GIMP_VALUES_GET_INT     (args, 1);
-      config.ntries     = GIMP_VALUES_GET_INT     (args, 2);
-      config.show_image = GIMP_VALUES_GET_BOOLEAN (args, 3);
+    case LIGMA_RUN_NONINTERACTIVE:
+      config.width      = LIGMA_VALUES_GET_INT     (args, 0);
+      config.height     = LIGMA_VALUES_GET_INT     (args, 1);
+      config.ntries     = LIGMA_VALUES_GET_INT     (args, 2);
+      config.show_image = LIGMA_VALUES_GET_BOOLEAN (args, 3);
       break;
 
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_get_data (PLUG_IN_PROC, &config);
+    case LIGMA_RUN_WITH_LAST_VALS:
+      ligma_get_data (PLUG_IN_PROC, &config);
       break;
     }
 
-  if (gimp_drawable_is_rgb (drawable))
+  if (ligma_drawable_is_rgb (drawable))
     {
-      gimp_progress_init (_("Deriving smooth palette"));
+      ligma_progress_init (_("Deriving smooth palette"));
 
       new_image = smooth_palette (drawable, &new_layer);
 
-      if (run_mode == GIMP_RUN_INTERACTIVE)
-        gimp_set_data (PLUG_IN_PROC, &config, sizeof (config));
+      if (run_mode == LIGMA_RUN_INTERACTIVE)
+        ligma_set_data (PLUG_IN_PROC, &config, sizeof (config));
 
       if (config.show_image)
-        gimp_display_new (new_image);
+        ligma_display_new (new_image);
     }
   else
     {
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_EXECUTION_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_EXECUTION_ERROR,
                                                NULL);
     }
 
-  return_vals = gimp_procedure_new_return_values (procedure,
-                                                  GIMP_PDB_SUCCESS,
+  return_vals = ligma_procedure_new_return_values (procedure,
+                                                  LIGMA_PDB_SUCCESS,
                                                   NULL);
 
-  GIMP_VALUES_SET_IMAGE (return_vals, 1, new_image);
-  GIMP_VALUES_SET_LAYER (return_vals, 2, new_layer);
+  LIGMA_VALUES_SET_IMAGE (return_vals, 1, new_image);
+  LIGMA_VALUES_SET_LAYER (return_vals, 2, new_layer);
 
   return return_vals;
 }
@@ -306,11 +306,11 @@ pix_swap (gfloat *pal,
     }
 }
 
-static GimpImage *
-smooth_palette (GimpDrawable  *drawable,
-                GimpLayer    **layer)
+static LigmaImage *
+smooth_palette (LigmaDrawable  *drawable,
+                LigmaLayer    **layer)
 {
-  GimpImage    *new_image;
+  LigmaImage    *new_image;
   gint          psize, i, j;
   guint         bpp;
   gint          sel_x1, sel_y1;
@@ -322,22 +322,22 @@ smooth_palette (GimpDrawable  *drawable,
 
   const Babl *format = babl_format ("RGB float");
 
-  new_image = gimp_image_new_with_precision (config.width,
+  new_image = ligma_image_new_with_precision (config.width,
                                              config.height,
-                                             GIMP_RGB,
-                                             GIMP_PRECISION_FLOAT_LINEAR);
+                                             LIGMA_RGB,
+                                             LIGMA_PRECISION_FLOAT_LINEAR);
 
-  gimp_image_undo_disable (new_image);
+  ligma_image_undo_disable (new_image);
 
-  *layer = gimp_layer_new (new_image, _("Background"),
+  *layer = ligma_layer_new (new_image, _("Background"),
                            config.width, config.height,
-                           gimp_drawable_type (drawable),
+                           ligma_drawable_type (drawable),
                            100,
-                           gimp_image_get_default_new_layer_mode (new_image));
+                           ligma_image_get_default_new_layer_mode (new_image));
 
-  gimp_image_insert_layer (new_image, *layer, NULL, 0);
+  ligma_image_insert_layer (new_image, *layer, NULL, 0);
 
-  if (! gimp_drawable_mask_intersect (drawable,
+  if (! ligma_drawable_mask_intersect (drawable,
                                       &sel_x1, &sel_y1, &width, &height))
     return new_image;
 
@@ -345,7 +345,7 @@ smooth_palette (GimpDrawable  *drawable,
 
   psize = config.width;
 
-  buffer = gimp_drawable_get_buffer (drawable);
+  buffer = ligma_drawable_get_buffer (drawable);
 
   sampler = gegl_buffer_sampler_new (buffer, format, GEGL_SAMPLER_NEAREST);
 
@@ -384,7 +384,7 @@ smooth_palette (GimpDrawable  *drawable,
           gdouble len;
 
           if (!(try%5))
-            gimp_progress_update (try / (double) config.ntries);
+            ligma_progress_update (try / (double) config.ntries);
           memcpy (pal, original, bpp * psize);
 
           /* scramble */
@@ -442,7 +442,7 @@ smooth_palette (GimpDrawable  *drawable,
             }
         }
 
-      gimp_progress_update (1.0);
+      ligma_progress_update (1.0);
       memcpy (pal, pal_best, bpp * psize);
       g_free (pal_best);
       g_free (original);
@@ -469,7 +469,7 @@ smooth_palette (GimpDrawable  *drawable,
 
   /* store smooth palette */
 
-  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (*layer));
+  buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (*layer));
 
   for (j = 0; j < config.height; j++)
     {
@@ -479,9 +479,9 @@ smooth_palette (GimpDrawable  *drawable,
 
   gegl_buffer_flush (buffer);
 
-  gimp_drawable_update (GIMP_DRAWABLE (*layer), 0, 0,
+  ligma_drawable_update (LIGMA_DRAWABLE (*layer), 0, 0,
                         config.width, config.height);
-  gimp_image_undo_enable (new_image);
+  ligma_image_undo_enable (new_image);
 
   g_object_unref (buffer);
   g_free (pal);
@@ -491,77 +491,77 @@ smooth_palette (GimpDrawable  *drawable,
 }
 
 static gboolean
-dialog (GimpDrawable *drawable)
+dialog (LigmaDrawable *drawable)
 {
   GtkWidget     *dlg;
   GtkWidget     *spinbutton;
   GtkAdjustment *adj;
   GtkWidget     *sizeentry;
-  GimpImage     *image;
-  GimpUnit       unit;
+  LigmaImage     *image;
+  LigmaUnit       unit;
   gdouble        xres, yres;
   gboolean       run;
 
-  gimp_ui_init (PLUG_IN_BINARY);
+  ligma_ui_init (PLUG_IN_BINARY);
 
-  dlg = gimp_dialog_new (_("Smooth Palette"), PLUG_IN_ROLE,
+  dlg = ligma_dialog_new (_("Smooth Palette"), PLUG_IN_ROLE,
                          NULL, 0,
-                         gimp_standard_help_func, PLUG_IN_PROC,
+                         ligma_standard_help_func, PLUG_IN_PROC,
 
                          _("_Cancel"), GTK_RESPONSE_CANCEL,
                          _("_OK"),     GTK_RESPONSE_OK,
 
                          NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  gimp_window_set_transient (GTK_WINDOW (dlg));
+  ligma_window_set_transient (GTK_WINDOW (dlg));
 
-  image = gimp_item_get_image (GIMP_ITEM (drawable));
-  unit = gimp_image_get_unit (image);
-  gimp_image_get_resolution (image, &xres, &yres);
+  image = ligma_item_get_image (LIGMA_ITEM (drawable));
+  unit = ligma_image_get_unit (image);
+  ligma_image_get_resolution (image, &xres, &yres);
 
-  sizeentry = gimp_coordinates_new (unit, "%a", TRUE, FALSE, 6,
-                                    GIMP_SIZE_ENTRY_UPDATE_SIZE,
+  sizeentry = ligma_coordinates_new (unit, "%a", TRUE, FALSE, 6,
+                                    LIGMA_SIZE_ENTRY_UPDATE_SIZE,
                                     FALSE, FALSE,
 
                                     _("_Width:"),
                                     config.width, xres,
-                                    2, GIMP_MAX_IMAGE_SIZE,
-                                    2, GIMP_MAX_IMAGE_SIZE,
+                                    2, LIGMA_MAX_IMAGE_SIZE,
+                                    2, LIGMA_MAX_IMAGE_SIZE,
 
                                     _("_Height:"),
                                     config.height, yres,
-                                    1, GIMP_MAX_IMAGE_SIZE,
-                                    1, GIMP_MAX_IMAGE_SIZE);
+                                    1, LIGMA_MAX_IMAGE_SIZE,
+                                    1, LIGMA_MAX_IMAGE_SIZE);
   gtk_container_set_border_width (GTK_CONTAINER (sizeentry), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dlg))),
                       sizeentry, FALSE, FALSE, 0);
   gtk_widget_show (sizeentry);
 
   adj = gtk_adjustment_new (config.ntries, 1, 1024, 1, 10, 0);
-  spinbutton = gimp_spin_button_new (adj, 1, 0);
+  spinbutton = ligma_spin_button_new (adj, 1, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
 
-  gimp_grid_attach_aligned (GTK_GRID (sizeentry), 0, 2,
+  ligma_grid_attach_aligned (GTK_GRID (sizeentry), 0, 2,
                             _("_Search depth:"), 0.0, 0.5,
                             spinbutton, 1);
   g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
+                    G_CALLBACK (ligma_int_adjustment_update),
                     &config.ntries);
 
   gtk_widget_show (dlg);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
+  run = (ligma_dialog_run (LIGMA_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
   if (run)
     {
-      config.width  = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (sizeentry),
+      config.width  = ligma_size_entry_get_refval (LIGMA_SIZE_ENTRY (sizeentry),
                                                   0);
-      config.height = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (sizeentry),
+      config.height = ligma_size_entry_get_refval (LIGMA_SIZE_ENTRY (sizeentry),
                                                   1);
     }
 

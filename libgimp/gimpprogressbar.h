@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpprogressbar.h
- * Copyright (C) 2004 Michael Natterer <mitch@gimp.org>
+ * ligmaprogressbar.h
+ * Copyright (C) 2004 Michael Natterer <mitch@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -19,27 +19,27 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_UI_H_INSIDE__) && !defined (GIMP_COMPILATION)
-#error "Only <libgimp/gimpui.h> can be included directly."
+#if !defined (__LIGMA_UI_H_INSIDE__) && !defined (LIGMA_COMPILATION)
+#error "Only <libligma/ligmaui.h> can be included directly."
 #endif
 
-#ifndef __GIMP_PROGRESS_BAR_H__
-#define __GIMP_PROGRESS_BAR_H__
+#ifndef __LIGMA_PROGRESS_BAR_H__
+#define __LIGMA_PROGRESS_BAR_H__
 
 G_BEGIN_DECLS
 
 
-#define GIMP_TYPE_PROGRESS_BAR            (gimp_progress_bar_get_type ())
-#define GIMP_PROGRESS_BAR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PROGRESS_BAR, GimpProgressBar))
-#define GIMP_PROGRESS_BAR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PROGRESS_BAR, GimpProgressBarClass))
-#define GIMP_IS_PROGRESS_BAR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PROGRESS_BAR))
-#define GIMP_IS_PROGRESS_BAR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PROGRESS_BAR))
-#define GIMP_PROGRESS_BAR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PROGRESS_BAR, GimpProgressBarClass))
+#define LIGMA_TYPE_PROGRESS_BAR            (ligma_progress_bar_get_type ())
+#define LIGMA_PROGRESS_BAR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_PROGRESS_BAR, LigmaProgressBar))
+#define LIGMA_PROGRESS_BAR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_PROGRESS_BAR, LigmaProgressBarClass))
+#define LIGMA_IS_PROGRESS_BAR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_PROGRESS_BAR))
+#define LIGMA_IS_PROGRESS_BAR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_PROGRESS_BAR))
+#define LIGMA_PROGRESS_BAR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_PROGRESS_BAR, LigmaProgressBarClass))
 
 
-typedef struct _GimpProgressBarClass  GimpProgressBarClass;
+typedef struct _LigmaProgressBarClass  LigmaProgressBarClass;
 
-struct _GimpProgressBar
+struct _LigmaProgressBar
 {
   GtkProgressBar  parent_instance;
 
@@ -47,23 +47,23 @@ struct _GimpProgressBar
   gboolean        cancelable;
 };
 
-struct _GimpProgressBarClass
+struct _LigmaProgressBarClass
 {
   GtkProgressBarClass  parent_class;
 
   /* Padding for future expansion */
-  void (* _gimp_reserved1) (void);
-  void (* _gimp_reserved2) (void);
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
+  void (* _ligma_reserved1) (void);
+  void (* _ligma_reserved2) (void);
+  void (* _ligma_reserved3) (void);
+  void (* _ligma_reserved4) (void);
 };
 
 
-GType       gimp_progress_bar_get_type (void) G_GNUC_CONST;
+GType       ligma_progress_bar_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_progress_bar_new      (void);
+GtkWidget * ligma_progress_bar_new      (void);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_PROGRESS_BAR_H__ */
+#endif /* __LIGMA_PROGRESS_BAR_H__ */

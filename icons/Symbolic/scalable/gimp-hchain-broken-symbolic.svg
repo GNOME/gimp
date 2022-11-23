@@ -15,7 +15,7 @@
    width="24.000046"
    version="1.1"
    inkscape:version="0.92.2 2405546, 2018-03-11"
-   sodipodi:docname="gimp-hchain-broken-symbolic.svg">
+   sodipodi:docname="ligma-hchain-broken-symbolic.svg">
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -54,7 +54,7 @@
             <dc:title>Barbara Muraus, Jakub Steiner, Klaus Staedtler</dc:title>
           </cc:Agent>
         </dc:contributor>
-        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for GIMP</dc:description>
+        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for LIGMA</dc:description>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -167,12 +167,12 @@
   </defs>
   <g
      style="display:inline"
-     id="gimp-hchain-broken"
+     id="ligma-hchain-broken"
      transform="matrix(0,-1,1.0008752,0,-1029.2622,23.999983)"
-     inkscape:export-filename="/home/jehan/dev/src/gimp/icons/Symbolic/24/gimp-hchain-broken.png"
+     inkscape:export-filename="/home/jehan/dev/src/ligma/icons/Symbolic/24/ligma-hchain-broken.png"
      inkscape:export-xdpi="96"
      inkscape:export-ydpi="96"
-     inkscape:label="#gimp-hchain-broken-24">
+     inkscape:label="#ligma-hchain-broken-24">
     <rect
        transform="rotate(-90)"
        y="-1.7382812e-05"

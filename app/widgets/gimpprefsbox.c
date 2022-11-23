@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpprefsbox.c
- * Copyright (C) 2013-2016 Michael Natterer <mitch@gimp.org>
+ * ligmaprefsbox.c
+ * Copyright (C) 2013-2016 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,14 +23,14 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "gimpprefsbox.h"
-#include "gimpwidgets-constructors.h"
+#include "ligmaprefsbox.h"
+#include "ligmawidgets-constructors.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -45,7 +45,7 @@ enum
 };
 
 
-struct _GimpPrefsBoxPrivate
+struct _LigmaPrefsBoxPrivate
 {
   GtkTreeStore *store;
   GtkWidget    *tree_view;
@@ -60,32 +60,32 @@ struct _GimpPrefsBoxPrivate
   gchar        *page_help_id;
 };
 
-#define GET_PRIVATE(obj) (((GimpPrefsBox *) (obj))->priv)
+#define GET_PRIVATE(obj) (((LigmaPrefsBox *) (obj))->priv)
 
 
-static void   gimp_prefs_box_finalize             (GObject          *object);
+static void   ligma_prefs_box_finalize             (GObject          *object);
 
-static void   gimp_prefs_box_tree_select_callback (GtkTreeSelection *sel,
-                                                   GimpPrefsBox     *box);
+static void   ligma_prefs_box_tree_select_callback (GtkTreeSelection *sel,
+                                                   LigmaPrefsBox     *box);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpPrefsBox, gimp_prefs_box, GTK_TYPE_BOX)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaPrefsBox, ligma_prefs_box, GTK_TYPE_BOX)
 
-#define parent_class gimp_prefs_box_parent_class
+#define parent_class ligma_prefs_box_parent_class
 
 
 static void
-gimp_prefs_box_class_init (GimpPrefsBoxClass *klass)
+ligma_prefs_box_class_init (LigmaPrefsBoxClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->finalize = gimp_prefs_box_finalize;
+  object_class->finalize = ligma_prefs_box_finalize;
 }
 
 static void
-gimp_prefs_box_init (GimpPrefsBox *box)
+ligma_prefs_box_init (LigmaPrefsBox *box)
 {
-  GimpPrefsBoxPrivate *private;
+  LigmaPrefsBoxPrivate *private;
   GtkTreeViewColumn   *column;
   GtkCellRenderer     *cell;
   GtkTreeSelection    *sel;
@@ -94,7 +94,7 @@ gimp_prefs_box_init (GimpPrefsBox *box)
   GtkWidget           *ebox;
   GtkWidget           *vbox;
 
-  box->priv = gimp_prefs_box_get_instance_private (box);
+  box->priv = ligma_prefs_box_get_instance_private (box);
 
   private = box->priv;
 
@@ -172,7 +172,7 @@ gimp_prefs_box_init (GimpPrefsBox *box)
   private->label = gtk_label_new (NULL);
   gtk_widget_set_state_flags (private->label, GTK_STATE_FLAG_SELECTED, TRUE);
   gtk_label_set_xalign (GTK_LABEL (private->label), 0.0);
-  gimp_label_set_attributes (GTK_LABEL (private->label),
+  ligma_label_set_attributes (GTK_LABEL (private->label),
                              PANGO_ATTR_SCALE,  PANGO_SCALE_LARGE,
                              PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
                              -1);
@@ -193,14 +193,14 @@ gimp_prefs_box_init (GimpPrefsBox *box)
 
   sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (private->tree_view));
   g_signal_connect (sel, "changed",
-                    G_CALLBACK (gimp_prefs_box_tree_select_callback),
+                    G_CALLBACK (ligma_prefs_box_tree_select_callback),
                     box);
 }
 
 static void
-gimp_prefs_box_finalize (GObject *object)
+ligma_prefs_box_finalize (GObject *object)
 {
-  GimpPrefsBoxPrivate *private = GET_PRIVATE (object);
+  LigmaPrefsBoxPrivate *private = GET_PRIVATE (object);
 
   g_clear_pointer (&private->page_icon_name, g_free);
   g_clear_pointer (&private->page_help_id,   g_free);
@@ -209,10 +209,10 @@ gimp_prefs_box_finalize (GObject *object)
 }
 
 static void
-gimp_prefs_box_tree_select_callback (GtkTreeSelection *sel,
-                                     GimpPrefsBox     *box)
+ligma_prefs_box_tree_select_callback (GtkTreeSelection *sel,
+                                     LigmaPrefsBox     *box)
 {
-  GimpPrefsBoxPrivate *private = GET_PRIVATE (box);
+  LigmaPrefsBoxPrivate *private = GET_PRIVATE (box);
   GtkTreeModel        *model;
   GtkTreeIter          iter;
   gchar               *page_title;
@@ -248,13 +248,13 @@ gimp_prefs_box_tree_select_callback (GtkTreeSelection *sel,
 /*  public functions  */
 
 GtkWidget *
-gimp_prefs_box_new (void)
+ligma_prefs_box_new (void)
 {
-  return g_object_new (GIMP_TYPE_PREFS_BOX, NULL);
+  return g_object_new (LIGMA_TYPE_PREFS_BOX, NULL);
 }
 
 GtkWidget *
-gimp_prefs_box_add_page (GimpPrefsBox      *box,
+ligma_prefs_box_add_page (LigmaPrefsBox      *box,
                          const gchar       *icon_name,
                          const gchar       *page_title,
                          const gchar       *tree_label,
@@ -262,13 +262,13 @@ gimp_prefs_box_add_page (GimpPrefsBox      *box,
                          GtkTreeIter       *parent,
                          GtkTreeIter       *iter)
 {
-  GimpPrefsBoxPrivate *private;
+  LigmaPrefsBoxPrivate *private;
   GtkWidget           *page_vbox;
   GtkWidget           *scrolled_win;
   GtkWidget           *viewport;
   GtkWidget           *vbox;
 
-  g_return_val_if_fail (GIMP_IS_PREFS_BOX (box), NULL);
+  g_return_val_if_fail (LIGMA_IS_PREFS_BOX (box), NULL);
 
   private = GET_PRIVATE (box);
 
@@ -285,7 +285,7 @@ gimp_prefs_box_add_page (GimpPrefsBox      *box,
   gtk_box_pack_start (GTK_BOX (page_vbox), scrolled_win, TRUE, TRUE, 0);
   gtk_widget_show (scrolled_win);
 
-  gimp_help_set_help_data (scrolled_win, NULL, help_id);
+  ligma_help_set_help_data (scrolled_win, NULL, help_id);
 
   viewport = gtk_viewport_new (NULL, NULL);
   gtk_viewport_set_shadow_type (GTK_VIEWPORT (viewport), GTK_SHADOW_NONE);
@@ -311,14 +311,14 @@ gimp_prefs_box_add_page (GimpPrefsBox      *box,
 }
 
 const gchar *
-gimp_prefs_box_get_current_icon_name (GimpPrefsBox *box)
+ligma_prefs_box_get_current_icon_name (LigmaPrefsBox *box)
 {
-  GimpPrefsBoxPrivate *private = GET_PRIVATE (box);
+  LigmaPrefsBoxPrivate *private = GET_PRIVATE (box);
   GtkTreeSelection    *sel;
   GtkTreeModel        *model;
   GtkTreeIter          iter;
 
-  g_return_val_if_fail (GIMP_IS_PREFS_BOX (box), NULL);
+  g_return_val_if_fail (LIGMA_IS_PREFS_BOX (box), NULL);
 
   sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (private->tree_view));
 
@@ -337,14 +337,14 @@ gimp_prefs_box_get_current_icon_name (GimpPrefsBox *box)
 }
 
 const gchar *
-gimp_prefs_box_get_current_help_id (GimpPrefsBox *box)
+ligma_prefs_box_get_current_help_id (LigmaPrefsBox *box)
 {
-  GimpPrefsBoxPrivate *private = GET_PRIVATE (box);
+  LigmaPrefsBoxPrivate *private = GET_PRIVATE (box);
   GtkTreeSelection    *sel;
   GtkTreeModel        *model;
   GtkTreeIter          iter;
 
-  g_return_val_if_fail (GIMP_IS_PREFS_BOX (box), NULL);
+  g_return_val_if_fail (LIGMA_IS_PREFS_BOX (box), NULL);
 
   sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (private->tree_view));
 
@@ -363,15 +363,15 @@ gimp_prefs_box_get_current_help_id (GimpPrefsBox *box)
 }
 
 void
-gimp_prefs_box_set_page_scrollable (GimpPrefsBox *box,
+ligma_prefs_box_set_page_scrollable (LigmaPrefsBox *box,
                                     GtkWidget    *page,
                                     gboolean      scrollable)
 {
-  GimpPrefsBoxPrivate *private;
+  LigmaPrefsBoxPrivate *private;
   GtkWidget           *scrolled_win;
   GtkWidget           *page_vbox;
 
-  g_return_if_fail (GIMP_IS_PREFS_BOX (box));
+  g_return_if_fail (LIGMA_IS_PREFS_BOX (box));
   g_return_if_fail (GTK_IS_BOX (page));
   g_return_if_fail (gtk_widget_is_ancestor (page, GTK_WIDGET (box)));
 
@@ -389,17 +389,17 @@ gimp_prefs_box_set_page_scrollable (GimpPrefsBox *box,
 }
 
 GtkWidget *
-gimp_prefs_box_set_page_resettable (GimpPrefsBox *box,
+ligma_prefs_box_set_page_resettable (LigmaPrefsBox *box,
                                     GtkWidget    *page,
                                     const gchar  *label)
 {
-  GimpPrefsBoxPrivate *private;
+  LigmaPrefsBoxPrivate *private;
   GtkWidget           *scrolled_win;
   GtkWidget           *page_vbox;
   GtkWidget           *hbox;
   GtkWidget           *button;
 
-  g_return_val_if_fail (GIMP_IS_PREFS_BOX (box), NULL);
+  g_return_val_if_fail (LIGMA_IS_PREFS_BOX (box), NULL);
   g_return_val_if_fail (GTK_IS_BOX (page), NULL);
   g_return_val_if_fail (gtk_widget_is_ancestor (page, GTK_WIDGET (box)), NULL);
 
@@ -416,7 +416,7 @@ gimp_prefs_box_set_page_resettable (GimpPrefsBox *box,
   gtk_box_reorder_child (GTK_BOX (page_vbox), hbox, 0);
   gtk_widget_show (hbox);
 
-  button = gimp_icon_button_new (GIMP_ICON_RESET, label);
+  button = ligma_icon_button_new (LIGMA_ICON_RESET, label);
   gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
@@ -424,9 +424,9 @@ gimp_prefs_box_set_page_resettable (GimpPrefsBox *box,
 }
 
 GtkWidget *
-gimp_prefs_box_get_tree_view (GimpPrefsBox *box)
+ligma_prefs_box_get_tree_view (LigmaPrefsBox *box)
 {
-  g_return_val_if_fail (GIMP_IS_PREFS_BOX (box), NULL);
+  g_return_val_if_fail (LIGMA_IS_PREFS_BOX (box), NULL);
 
   return GET_PRIVATE (box)->tree_view;
 }

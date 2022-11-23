@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,25 +15,25 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DRAWABLE_COMBINE_H__
-#define __GIMP_DRAWABLE_COMBINE_H__
+#ifndef __LIGMA_DRAWABLE_COMBINE_H__
+#define __LIGMA_DRAWABLE_COMBINE_H__
 
 
-/*  virtual functions of GimpDrawable, don't call directly  */
+/*  virtual functions of LigmaDrawable, don't call directly  */
 
-void   gimp_drawable_real_apply_buffer (GimpDrawable           *drawable,
+void   ligma_drawable_real_apply_buffer (LigmaDrawable           *drawable,
                                         GeglBuffer             *buffer,
                                         const GeglRectangle    *buffer_region,
                                         gboolean                push_undo,
                                         const gchar            *undo_desc,
                                         gdouble                 opacity,
-                                        GimpLayerMode           mode,
-                                        GimpLayerColorSpace     blend_space,
-                                        GimpLayerColorSpace     composite_space,
-                                        GimpLayerCompositeMode  composite_mode,
+                                        LigmaLayerMode           mode,
+                                        LigmaLayerColorSpace     blend_space,
+                                        LigmaLayerColorSpace     composite_space,
+                                        LigmaLayerCompositeMode  composite_mode,
                                         GeglBuffer             *base_buffer,
                                         gint                    base_x,
                                         gint                    base_y);
 
 
-#endif /* __GIMP_DRAWABLE_COMBINE_H__ */
+#endif /* __LIGMA_DRAWABLE_COMBINE_H__ */

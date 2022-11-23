@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,29 +20,29 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "core-types.h"
 
-#include "gimpdynamics.h"
-#include "gimpdynamics-load.h"
+#include "ligmadynamics.h"
+#include "ligmadynamics-load.h"
 
 
 GList *
-gimp_dynamics_load (GimpContext   *context,
+ligma_dynamics_load (LigmaContext   *context,
                     GFile         *file,
                     GInputStream  *input,
                     GError       **error)
 {
-  GimpDynamics *dynamics;
+  LigmaDynamics *dynamics;
 
   g_return_val_if_fail (G_IS_FILE (file), NULL);
   g_return_val_if_fail (G_IS_INPUT_STREAM (input), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  dynamics = g_object_new (GIMP_TYPE_DYNAMICS, NULL);
+  dynamics = g_object_new (LIGMA_TYPE_DYNAMICS, NULL);
 
-  if (gimp_config_deserialize_stream (GIMP_CONFIG (dynamics),
+  if (ligma_config_deserialize_stream (LIGMA_CONFIG (dynamics),
                                       input,
                                       NULL, error))
     {

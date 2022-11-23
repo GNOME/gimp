@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,76 +15,76 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_LOG_H__
-#define __GIMP_LOG_H__
+#ifndef __LIGMA_LOG_H__
+#define __LIGMA_LOG_H__
 
 
-typedef guint *GimpLogHandler;
+typedef guint *LigmaLogHandler;
 
 
 typedef enum
 {
-  GIMP_LOG_TOOL_EVENTS        = 1 << 0,
-  GIMP_LOG_TOOL_FOCUS         = 1 << 1,
-  GIMP_LOG_DND                = 1 << 2,
-  GIMP_LOG_HELP               = 1 << 3,
-  GIMP_LOG_DIALOG_FACTORY     = 1 << 4,
-  GIMP_LOG_MENUS              = 1 << 5,
-  GIMP_LOG_SAVE_DIALOG        = 1 << 6,
-  GIMP_LOG_IMAGE_SCALE        = 1 << 7,
-  GIMP_LOG_SHADOW_TILES       = 1 << 8,
-  GIMP_LOG_SCALE              = 1 << 9,
-  GIMP_LOG_WM                 = 1 << 10,
-  GIMP_LOG_FLOATING_SELECTION = 1 << 11,
-  GIMP_LOG_SHM                = 1 << 12,
-  GIMP_LOG_TEXT_EDITING       = 1 << 13,
-  GIMP_LOG_KEY_EVENTS         = 1 << 14,
-  GIMP_LOG_AUTO_TAB_STYLE     = 1 << 15,
-  GIMP_LOG_INSTANCES          = 1 << 16,
-  GIMP_LOG_RECTANGLE_TOOL     = 1 << 17,
-  GIMP_LOG_BRUSH_CACHE        = 1 << 18,
-  GIMP_LOG_PROJECTION         = 1 << 19,
-  GIMP_LOG_XCF                = 1 << 20,
-  GIMP_LOG_MAGIC_MATCH        = 1 << 21
-} GimpLogFlags;
+  LIGMA_LOG_TOOL_EVENTS        = 1 << 0,
+  LIGMA_LOG_TOOL_FOCUS         = 1 << 1,
+  LIGMA_LOG_DND                = 1 << 2,
+  LIGMA_LOG_HELP               = 1 << 3,
+  LIGMA_LOG_DIALOG_FACTORY     = 1 << 4,
+  LIGMA_LOG_MENUS              = 1 << 5,
+  LIGMA_LOG_SAVE_DIALOG        = 1 << 6,
+  LIGMA_LOG_IMAGE_SCALE        = 1 << 7,
+  LIGMA_LOG_SHADOW_TILES       = 1 << 8,
+  LIGMA_LOG_SCALE              = 1 << 9,
+  LIGMA_LOG_WM                 = 1 << 10,
+  LIGMA_LOG_FLOATING_SELECTION = 1 << 11,
+  LIGMA_LOG_SHM                = 1 << 12,
+  LIGMA_LOG_TEXT_EDITING       = 1 << 13,
+  LIGMA_LOG_KEY_EVENTS         = 1 << 14,
+  LIGMA_LOG_AUTO_TAB_STYLE     = 1 << 15,
+  LIGMA_LOG_INSTANCES          = 1 << 16,
+  LIGMA_LOG_RECTANGLE_TOOL     = 1 << 17,
+  LIGMA_LOG_BRUSH_CACHE        = 1 << 18,
+  LIGMA_LOG_PROJECTION         = 1 << 19,
+  LIGMA_LOG_XCF                = 1 << 20,
+  LIGMA_LOG_MAGIC_MATCH        = 1 << 21
+} LigmaLogFlags;
 
 
-extern GimpLogFlags gimp_log_flags;
+extern LigmaLogFlags ligma_log_flags;
 
 
-void             gimp_log_init           (void);
-void             gimp_log                (GimpLogFlags    flags,
+void             ligma_log_init           (void);
+void             ligma_log                (LigmaLogFlags    flags,
                                           const gchar    *function,
                                           gint            line,
                                           const gchar    *format,
                                           ...) G_GNUC_PRINTF (4, 5);
-void             gimp_logv               (GimpLogFlags    flags,
+void             ligma_logv               (LigmaLogFlags    flags,
                                           const gchar    *function,
                                           gint            line,
                                           const gchar    *format,
                                           va_list         args) G_GNUC_PRINTF (4, 0);
 
-GimpLogHandler   gimp_log_set_handler    (gboolean        global,
+LigmaLogHandler   ligma_log_set_handler    (gboolean        global,
                                           GLogLevelFlags  log_levels,
                                           GLogFunc        log_func,
                                           gpointer        user_data);
-void             gimp_log_remove_handler (GimpLogHandler  handler);
+void             ligma_log_remove_handler (LigmaLogHandler  handler);
 
 
 #ifdef G_HAVE_ISO_VARARGS
 
-#define GIMP_LOG(type, ...) \
+#define LIGMA_LOG(type, ...) \
         G_STMT_START { \
-        if (gimp_log_flags & GIMP_LOG_##type) \
-          gimp_log (GIMP_LOG_##type, G_STRFUNC, __LINE__, __VA_ARGS__);       \
+        if (ligma_log_flags & LIGMA_LOG_##type) \
+          ligma_log (LIGMA_LOG_##type, G_STRFUNC, __LINE__, __VA_ARGS__);       \
         } G_STMT_END
 
 #elif defined(G_HAVE_GNUC_VARARGS)
 
-#define GIMP_LOG(type, format...) \
+#define LIGMA_LOG(type, format...) \
         G_STMT_START { \
-        if (gimp_log_flags & GIMP_LOG_##type) \
-          gimp_log (GIMP_LOG_##type, G_STRFUNC, __LINE__, format);  \
+        if (ligma_log_flags & LIGMA_LOG_##type) \
+          ligma_log (LIGMA_LOG_##type, G_STRFUNC, __LINE__, format);  \
         } G_STMT_END
 
 #else /* no varargs macros */
@@ -92,47 +92,47 @@ void             gimp_log_remove_handler (GimpLogHandler  handler);
 /* need to expand all the short forms
  * to make them known constants at compile time
  */
-#define TOOL_EVENTS        GIMP_LOG_TOOL_EVENTS
-#define TOOL_FOCUS         GIMP_LOG_TOOL_FOCUS
-#define DND                GIMP_LOG_DND
-#define HELP               GIMP_LOG_HELP
-#define DIALOG_FACTORY     GIMP_LOG_DIALOG_FACTORY
-#define MENUS              GIMP_LOG_MENUS
-#define SAVE_DIALOG        GIMP_LOG_SAVE_DIALOG
-#define IMAGE_SCALE        GIMP_LOG_IMAGE_SCALE
-#define SHADOW_TILES       GIMP_LOG_SHADOW_TILES
-#define SCALE              GIMP_LOG_SCALE
-#define WM                 GIMP_LOG_WM
-#define FLOATING_SELECTION GIMP_LOG_FLOATING_SELECTION
-#define SHM                GIMP_LOG_SHM
-#define TEXT_EDITING       GIMP_LOG_TEXT_EDITING
-#define KEY_EVENTS         GIMP_LOG_KEY_EVENTS
-#define AUTO_TAB_STYLE     GIMP_LOG_AUTO_TAB_STYLE
-#define INSTANCES          GIMP_LOG_INSTANCES
-#define RECTANGLE_TOOL     GIMP_LOG_RECTANGLE_TOOL
-#define BRUSH_CACHE        GIMP_LOG_BRUSH_CACHE
-#define PROJECTION         GIMP_LOG_PROJECTION
-#define XCF                GIMP_LOG_XCF
+#define TOOL_EVENTS        LIGMA_LOG_TOOL_EVENTS
+#define TOOL_FOCUS         LIGMA_LOG_TOOL_FOCUS
+#define DND                LIGMA_LOG_DND
+#define HELP               LIGMA_LOG_HELP
+#define DIALOG_FACTORY     LIGMA_LOG_DIALOG_FACTORY
+#define MENUS              LIGMA_LOG_MENUS
+#define SAVE_DIALOG        LIGMA_LOG_SAVE_DIALOG
+#define IMAGE_SCALE        LIGMA_LOG_IMAGE_SCALE
+#define SHADOW_TILES       LIGMA_LOG_SHADOW_TILES
+#define SCALE              LIGMA_LOG_SCALE
+#define WM                 LIGMA_LOG_WM
+#define FLOATING_SELECTION LIGMA_LOG_FLOATING_SELECTION
+#define SHM                LIGMA_LOG_SHM
+#define TEXT_EDITING       LIGMA_LOG_TEXT_EDITING
+#define KEY_EVENTS         LIGMA_LOG_KEY_EVENTS
+#define AUTO_TAB_STYLE     LIGMA_LOG_AUTO_TAB_STYLE
+#define INSTANCES          LIGMA_LOG_INSTANCES
+#define RECTANGLE_TOOL     LIGMA_LOG_RECTANGLE_TOOL
+#define BRUSH_CACHE        LIGMA_LOG_BRUSH_CACHE
+#define PROJECTION         LIGMA_LOG_PROJECTION
+#define XCF                LIGMA_LOG_XCF
 
 #if 0 /* last resort */
-#  define GIMP_LOG /* nothing => no varargs, no log */
+#  define LIGMA_LOG /* nothing => no varargs, no log */
 #endif
 
 static void
-GIMP_LOG (GimpLogFlags flags,
+LIGMA_LOG (LigmaLogFlags flags,
           const gchar *format,
           ...)
 {
   va_list args;
   va_start (args, format);
-  if (gimp_log_flags & flags)
-    gimp_logv (type, "", 0, format, args);
+  if (ligma_log_flags & flags)
+    ligma_logv (type, "", 0, format, args);
   va_end (args);
 }
 
 #endif  /* !__GNUC__ */
 
-#define geimnum(vienna)  gimp_l##vienna##l_dialog()
-#define fnord(kosmoso)   void gimp_##kosmoso##bl_dialog(void);
+#define geimnum(vienna)  ligma_l##vienna##l_dialog()
+#define fnord(kosmoso)   void ligma_##kosmoso##bl_dialog(void);
 
-#endif /* __GIMP_LOG_H__ */
+#endif /* __LIGMA_LOG_H__ */

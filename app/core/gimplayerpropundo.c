@@ -1,4 +1,4 @@
-/* Gimp - The GNU Image Manipulation Program
+/* Ligma - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,70 +20,70 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "core-types.h"
 
-#include "gimpimage.h"
-#include "gimplayer.h"
-#include "gimplayerpropundo.h"
+#include "ligmaimage.h"
+#include "ligmalayer.h"
+#include "ligmalayerpropundo.h"
 
 
-static void   gimp_layer_prop_undo_constructed (GObject             *object);
+static void   ligma_layer_prop_undo_constructed (GObject             *object);
 
-static void   gimp_layer_prop_undo_pop         (GimpUndo            *undo,
-                                                GimpUndoMode         undo_mode,
-                                                GimpUndoAccumulator *accum);
+static void   ligma_layer_prop_undo_pop         (LigmaUndo            *undo,
+                                                LigmaUndoMode         undo_mode,
+                                                LigmaUndoAccumulator *accum);
 
 
-G_DEFINE_TYPE (GimpLayerPropUndo, gimp_layer_prop_undo, GIMP_TYPE_ITEM_UNDO)
+G_DEFINE_TYPE (LigmaLayerPropUndo, ligma_layer_prop_undo, LIGMA_TYPE_ITEM_UNDO)
 
-#define parent_class gimp_layer_prop_undo_parent_class
+#define parent_class ligma_layer_prop_undo_parent_class
 
 
 static void
-gimp_layer_prop_undo_class_init (GimpLayerPropUndoClass *klass)
+ligma_layer_prop_undo_class_init (LigmaLayerPropUndoClass *klass)
 {
   GObjectClass  *object_class = G_OBJECT_CLASS (klass);
-  GimpUndoClass *undo_class   = GIMP_UNDO_CLASS (klass);
+  LigmaUndoClass *undo_class   = LIGMA_UNDO_CLASS (klass);
 
-  object_class->constructed = gimp_layer_prop_undo_constructed;
+  object_class->constructed = ligma_layer_prop_undo_constructed;
 
-  undo_class->pop           = gimp_layer_prop_undo_pop;
+  undo_class->pop           = ligma_layer_prop_undo_pop;
 }
 
 static void
-gimp_layer_prop_undo_init (GimpLayerPropUndo *undo)
+ligma_layer_prop_undo_init (LigmaLayerPropUndo *undo)
 {
 }
 
 static void
-gimp_layer_prop_undo_constructed (GObject *object)
+ligma_layer_prop_undo_constructed (GObject *object)
 {
-  GimpLayerPropUndo *layer_prop_undo = GIMP_LAYER_PROP_UNDO (object);
-  GimpLayer         *layer;
+  LigmaLayerPropUndo *layer_prop_undo = LIGMA_LAYER_PROP_UNDO (object);
+  LigmaLayer         *layer;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_assert (GIMP_IS_LAYER (GIMP_ITEM_UNDO (object)->item));
+  ligma_assert (LIGMA_IS_LAYER (LIGMA_ITEM_UNDO (object)->item));
 
-  layer = GIMP_LAYER (GIMP_ITEM_UNDO (object)->item);
+  layer = LIGMA_LAYER (LIGMA_ITEM_UNDO (object)->item);
 
-  switch (GIMP_UNDO (object)->undo_type)
+  switch (LIGMA_UNDO (object)->undo_type)
     {
-    case GIMP_UNDO_LAYER_MODE:
-      layer_prop_undo->mode            = gimp_layer_get_mode (layer);
-      layer_prop_undo->blend_space     = gimp_layer_get_blend_space (layer);
-      layer_prop_undo->composite_space = gimp_layer_get_composite_space (layer);
-      layer_prop_undo->composite_mode  = gimp_layer_get_composite_mode (layer);
+    case LIGMA_UNDO_LAYER_MODE:
+      layer_prop_undo->mode            = ligma_layer_get_mode (layer);
+      layer_prop_undo->blend_space     = ligma_layer_get_blend_space (layer);
+      layer_prop_undo->composite_space = ligma_layer_get_composite_space (layer);
+      layer_prop_undo->composite_mode  = ligma_layer_get_composite_mode (layer);
       break;
 
-    case GIMP_UNDO_LAYER_OPACITY:
-      layer_prop_undo->opacity = gimp_layer_get_opacity (layer);
+    case LIGMA_UNDO_LAYER_OPACITY:
+      layer_prop_undo->opacity = ligma_layer_get_opacity (layer);
       break;
 
-    case GIMP_UNDO_LAYER_LOCK_ALPHA:
-      layer_prop_undo->lock_alpha = gimp_layer_get_lock_alpha (layer);
+    case LIGMA_UNDO_LAYER_LOCK_ALPHA:
+      layer_prop_undo->lock_alpha = ligma_layer_get_lock_alpha (layer);
       break;
 
     default:
@@ -92,36 +92,36 @@ gimp_layer_prop_undo_constructed (GObject *object)
 }
 
 static void
-gimp_layer_prop_undo_pop (GimpUndo            *undo,
-                          GimpUndoMode         undo_mode,
-                          GimpUndoAccumulator *accum)
+ligma_layer_prop_undo_pop (LigmaUndo            *undo,
+                          LigmaUndoMode         undo_mode,
+                          LigmaUndoAccumulator *accum)
 {
-  GimpLayerPropUndo *layer_prop_undo = GIMP_LAYER_PROP_UNDO (undo);
-  GimpLayer         *layer           = GIMP_LAYER (GIMP_ITEM_UNDO (undo)->item);
+  LigmaLayerPropUndo *layer_prop_undo = LIGMA_LAYER_PROP_UNDO (undo);
+  LigmaLayer         *layer           = LIGMA_LAYER (LIGMA_ITEM_UNDO (undo)->item);
 
-  GIMP_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);
+  LIGMA_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);
 
   switch (undo->undo_type)
     {
-    case GIMP_UNDO_LAYER_MODE:
+    case LIGMA_UNDO_LAYER_MODE:
       {
-        GimpLayerMode          mode;
-        GimpLayerColorSpace    blend_space;
-        GimpLayerColorSpace    composite_space;
-        GimpLayerCompositeMode composite_mode;
+        LigmaLayerMode          mode;
+        LigmaLayerColorSpace    blend_space;
+        LigmaLayerColorSpace    composite_space;
+        LigmaLayerCompositeMode composite_mode;
 
-        mode            = gimp_layer_get_mode (layer);
-        blend_space     = gimp_layer_get_blend_space (layer);
-        composite_space = gimp_layer_get_composite_space (layer);
-        composite_mode  = gimp_layer_get_composite_mode (layer);
+        mode            = ligma_layer_get_mode (layer);
+        blend_space     = ligma_layer_get_blend_space (layer);
+        composite_space = ligma_layer_get_composite_space (layer);
+        composite_mode  = ligma_layer_get_composite_mode (layer);
 
-        gimp_layer_set_mode            (layer, layer_prop_undo->mode,
+        ligma_layer_set_mode            (layer, layer_prop_undo->mode,
                                         FALSE);
-        gimp_layer_set_blend_space     (layer, layer_prop_undo->blend_space,
+        ligma_layer_set_blend_space     (layer, layer_prop_undo->blend_space,
                                         FALSE);
-        gimp_layer_set_composite_space (layer, layer_prop_undo->composite_space,
+        ligma_layer_set_composite_space (layer, layer_prop_undo->composite_space,
                                         FALSE);
-        gimp_layer_set_composite_mode  (layer, layer_prop_undo->composite_mode,
+        ligma_layer_set_composite_mode  (layer, layer_prop_undo->composite_mode,
                                         FALSE);
 
         layer_prop_undo->mode            = mode;
@@ -131,22 +131,22 @@ gimp_layer_prop_undo_pop (GimpUndo            *undo,
       }
       break;
 
-    case GIMP_UNDO_LAYER_OPACITY:
+    case LIGMA_UNDO_LAYER_OPACITY:
       {
         gdouble opacity;
 
-        opacity = gimp_layer_get_opacity (layer);
-        gimp_layer_set_opacity (layer, layer_prop_undo->opacity, FALSE);
+        opacity = ligma_layer_get_opacity (layer);
+        ligma_layer_set_opacity (layer, layer_prop_undo->opacity, FALSE);
         layer_prop_undo->opacity = opacity;
       }
       break;
 
-    case GIMP_UNDO_LAYER_LOCK_ALPHA:
+    case LIGMA_UNDO_LAYER_LOCK_ALPHA:
       {
         gboolean lock_alpha;
 
-        lock_alpha = gimp_layer_get_lock_alpha (layer);
-        gimp_layer_set_lock_alpha (layer, layer_prop_undo->lock_alpha, FALSE);
+        lock_alpha = ligma_layer_get_lock_alpha (layer);
+        ligma_layer_set_lock_alpha (layer, layer_prop_undo->lock_alpha, FALSE);
         layer_prop_undo->lock_alpha = lock_alpha;
       }
       break;

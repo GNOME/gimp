@@ -1,7 +1,7 @@
-/* The GIMP -- an image manipulation program
+/* The LIGMA -- an image manipulation program
  * Copyright (C) 1995-1999 Spencer Kimball and Peter Mattis
  *
- * gimpfilloptions.c
+ * ligmafilloptions.c
  * Copyright (C) 2003 Simon Budig
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,23 +24,23 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "core-types.h"
 
-#include "operations/layer-modes/gimp-layer-modes.h"
+#include "operations/layer-modes/ligma-layer-modes.h"
 
-#include "gimp.h"
-#include "gimp-palettes.h"
-#include "gimpdrawable.h"
-#include "gimpdrawable-fill.h"
-#include "gimperror.h"
-#include "gimpfilloptions.h"
-#include "gimppattern.h"
+#include "ligma.h"
+#include "ligma-palettes.h"
+#include "ligmadrawable.h"
+#include "ligmadrawable-fill.h"
+#include "ligmaerror.h"
+#include "ligmafilloptions.h"
+#include "ligmapattern.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -55,120 +55,120 @@ enum
 };
 
 
-typedef struct _GimpFillOptionsPrivate GimpFillOptionsPrivate;
+typedef struct _LigmaFillOptionsPrivate LigmaFillOptionsPrivate;
 
-struct _GimpFillOptionsPrivate
+struct _LigmaFillOptionsPrivate
 {
-  GimpFillStyle style;
+  LigmaFillStyle style;
   gboolean      antialias;
   gboolean      feather;
   gdouble       feather_radius;
 
-  GimpViewType  pattern_view_type;
-  GimpViewSize  pattern_view_size;
+  LigmaViewType  pattern_view_type;
+  LigmaViewSize  pattern_view_size;
 
   const gchar  *undo_desc;
 };
 
 #define GET_PRIVATE(options) \
-        ((GimpFillOptionsPrivate *) gimp_fill_options_get_instance_private ((GimpFillOptions *) (options)))
+        ((LigmaFillOptionsPrivate *) ligma_fill_options_get_instance_private ((LigmaFillOptions *) (options)))
 
 
-static void     gimp_fill_options_config_init  (GimpConfigInterface *iface);
+static void     ligma_fill_options_config_init  (LigmaConfigInterface *iface);
 
-static void     gimp_fill_options_set_property (GObject             *object,
+static void     ligma_fill_options_set_property (GObject             *object,
                                                 guint                property_id,
                                                 const GValue        *value,
                                                 GParamSpec          *pspec);
-static void     gimp_fill_options_get_property (GObject             *object,
+static void     ligma_fill_options_get_property (GObject             *object,
                                                 guint                property_id,
                                                 GValue              *value,
                                                 GParamSpec          *pspec);
 
-static gboolean gimp_fill_options_serialize    (GimpConfig          *config,
-                                                GimpConfigWriter    *writer,
+static gboolean ligma_fill_options_serialize    (LigmaConfig          *config,
+                                                LigmaConfigWriter    *writer,
                                                 gpointer             data);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpFillOptions, gimp_fill_options, GIMP_TYPE_CONTEXT,
-                         G_ADD_PRIVATE (GimpFillOptions)
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
-                                                gimp_fill_options_config_init))
+G_DEFINE_TYPE_WITH_CODE (LigmaFillOptions, ligma_fill_options, LIGMA_TYPE_CONTEXT,
+                         G_ADD_PRIVATE (LigmaFillOptions)
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_CONFIG,
+                                                ligma_fill_options_config_init))
 
 
 static void
-gimp_fill_options_class_init (GimpFillOptionsClass *klass)
+ligma_fill_options_class_init (LigmaFillOptionsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->set_property = gimp_fill_options_set_property;
-  object_class->get_property = gimp_fill_options_get_property;
+  object_class->set_property = ligma_fill_options_set_property;
+  object_class->get_property = ligma_fill_options_get_property;
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_STYLE,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_STYLE,
                          "style",
                          _("Style"),
                          NULL,
-                         GIMP_TYPE_FILL_STYLE,
-                         GIMP_FILL_STYLE_SOLID,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_TYPE_FILL_STYLE,
+                         LIGMA_FILL_STYLE_SOLID,
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_ANTIALIAS,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_ANTIALIAS,
                             "antialias",
                             _("Antialiasing"),
                             NULL,
                             TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_FEATHER,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_FEATHER,
                             "feather",
                             _("Feather edges"),
                             _("Enable feathering of fill edges"),
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_FEATHER_RADIUS,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_FEATHER_RADIUS,
                            "feather-radius",
                            _("Radius"),
                            _("Radius of feathering"),
                            0.0, 100.0, 10.0,
-                           GIMP_PARAM_STATIC_STRINGS);
+                           LIGMA_PARAM_STATIC_STRINGS);
 
   g_object_class_install_property (object_class, PROP_PATTERN_VIEW_TYPE,
                                    g_param_spec_enum ("pattern-view-type",
                                                       NULL, NULL,
-                                                      GIMP_TYPE_VIEW_TYPE,
-                                                      GIMP_VIEW_TYPE_GRID,
+                                                      LIGMA_TYPE_VIEW_TYPE,
+                                                      LIGMA_VIEW_TYPE_GRID,
                                                       G_PARAM_CONSTRUCT |
-                                                      GIMP_PARAM_READWRITE));
+                                                      LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_PATTERN_VIEW_SIZE,
                                    g_param_spec_int ("pattern-view-size",
                                                      NULL, NULL,
-                                                     GIMP_VIEW_SIZE_TINY,
-                                                     GIMP_VIEWABLE_MAX_BUTTON_SIZE,
-                                                     GIMP_VIEW_SIZE_SMALL,
+                                                     LIGMA_VIEW_SIZE_TINY,
+                                                     LIGMA_VIEWABLE_MAX_BUTTON_SIZE,
+                                                     LIGMA_VIEW_SIZE_SMALL,
                                                      G_PARAM_CONSTRUCT |
-                                                     GIMP_PARAM_READWRITE));
+                                                     LIGMA_PARAM_READWRITE));
 }
 
 static void
-gimp_fill_options_config_init (GimpConfigInterface *iface)
+ligma_fill_options_config_init (LigmaConfigInterface *iface)
 {
-  iface->serialize = gimp_fill_options_serialize;
+  iface->serialize = ligma_fill_options_serialize;
 }
 
 static void
-gimp_fill_options_init (GimpFillOptions *options)
+ligma_fill_options_init (LigmaFillOptions *options)
 {
 }
 
 static void
-gimp_fill_options_set_property (GObject      *object,
+ligma_fill_options_set_property (GObject      *object,
                                 guint         property_id,
                                 const GValue *value,
                                 GParamSpec   *pspec)
 {
-  GimpFillOptionsPrivate *private = GET_PRIVATE (object);
+  LigmaFillOptionsPrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
@@ -200,12 +200,12 @@ gimp_fill_options_set_property (GObject      *object,
 }
 
 static void
-gimp_fill_options_get_property (GObject    *object,
+ligma_fill_options_get_property (GObject    *object,
                                 guint       property_id,
                                 GValue     *value,
                                 GParamSpec *pspec)
 {
-  GimpFillOptionsPrivate *private = GET_PRIVATE (object);
+  LigmaFillOptionsPrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
@@ -236,83 +236,83 @@ gimp_fill_options_get_property (GObject    *object,
 }
 
 static gboolean
-gimp_fill_options_serialize (GimpConfig       *config,
-                             GimpConfigWriter *writer,
+ligma_fill_options_serialize (LigmaConfig       *config,
+                             LigmaConfigWriter *writer,
                              gpointer          data)
 {
-  return gimp_config_serialize_properties (config, writer);
+  return ligma_config_serialize_properties (config, writer);
 }
 
 
 /*  public functions  */
 
-GimpFillOptions *
-gimp_fill_options_new (Gimp        *gimp,
-                       GimpContext *context,
+LigmaFillOptions *
+ligma_fill_options_new (Ligma        *ligma,
+                       LigmaContext *context,
                        gboolean     use_context_color)
 {
-  GimpFillOptions *options;
+  LigmaFillOptions *options;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
+  g_return_val_if_fail (context == NULL || LIGMA_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (use_context_color == FALSE || context != NULL, NULL);
 
-  options = g_object_new (GIMP_TYPE_FILL_OPTIONS,
-                          "gimp", gimp,
+  options = g_object_new (LIGMA_TYPE_FILL_OPTIONS,
+                          "ligma", ligma,
                           NULL);
 
   if (use_context_color)
     {
-      gimp_context_define_properties (GIMP_CONTEXT (options),
-                                      GIMP_CONTEXT_PROP_MASK_FOREGROUND |
-                                      GIMP_CONTEXT_PROP_MASK_PATTERN,
+      ligma_context_define_properties (LIGMA_CONTEXT (options),
+                                      LIGMA_CONTEXT_PROP_MASK_FOREGROUND |
+                                      LIGMA_CONTEXT_PROP_MASK_PATTERN,
                                       FALSE);
 
-      gimp_context_set_parent (GIMP_CONTEXT (options), context);
+      ligma_context_set_parent (LIGMA_CONTEXT (options), context);
     }
 
   return options;
 }
 
-GimpFillStyle
-gimp_fill_options_get_style (GimpFillOptions *options)
+LigmaFillStyle
+ligma_fill_options_get_style (LigmaFillOptions *options)
 {
-  g_return_val_if_fail (GIMP_IS_FILL_OPTIONS (options), GIMP_FILL_STYLE_SOLID);
+  g_return_val_if_fail (LIGMA_IS_FILL_OPTIONS (options), LIGMA_FILL_STYLE_SOLID);
 
   return GET_PRIVATE (options)->style;
 }
 
 void
-gimp_fill_options_set_style (GimpFillOptions *options,
-                             GimpFillStyle    style)
+ligma_fill_options_set_style (LigmaFillOptions *options,
+                             LigmaFillStyle    style)
 {
-  g_return_if_fail (GIMP_IS_FILL_OPTIONS (options));
+  g_return_if_fail (LIGMA_IS_FILL_OPTIONS (options));
 
   g_object_set (options, "style", style, NULL);
 }
 
 gboolean
-gimp_fill_options_get_antialias (GimpFillOptions *options)
+ligma_fill_options_get_antialias (LigmaFillOptions *options)
 {
-  g_return_val_if_fail (GIMP_IS_FILL_OPTIONS (options), FALSE);
+  g_return_val_if_fail (LIGMA_IS_FILL_OPTIONS (options), FALSE);
 
   return GET_PRIVATE (options)->antialias;
 }
 
 void
-gimp_fill_options_set_antialias (GimpFillOptions *options,
+ligma_fill_options_set_antialias (LigmaFillOptions *options,
                                  gboolean         antialias)
 {
-  g_return_if_fail (GIMP_IS_FILL_OPTIONS (options));
+  g_return_if_fail (LIGMA_IS_FILL_OPTIONS (options));
 
   g_object_set (options, "antialias", antialias, NULL);
 }
 
 gboolean
-gimp_fill_options_get_feather (GimpFillOptions *options,
+ligma_fill_options_get_feather (LigmaFillOptions *options,
                                gdouble         *radius)
 {
-  g_return_val_if_fail (GIMP_IS_FILL_OPTIONS (options), FALSE);
+  g_return_val_if_fail (LIGMA_IS_FILL_OPTIONS (options), FALSE);
 
   if (radius)
     *radius = GET_PRIVATE (options)->feather_radius;
@@ -321,28 +321,28 @@ gimp_fill_options_get_feather (GimpFillOptions *options,
 }
 
 void
-gimp_fill_options_set_feather (GimpFillOptions *options,
+ligma_fill_options_set_feather (LigmaFillOptions *options,
                                gboolean         feather,
                                gdouble          radius)
 {
-  g_return_if_fail (GIMP_IS_FILL_OPTIONS (options));
+  g_return_if_fail (LIGMA_IS_FILL_OPTIONS (options));
 
   g_object_set (options, "feather", feather, NULL);
   g_object_set (options, "feather-radius", radius, NULL);
 }
 
 gboolean
-gimp_fill_options_set_by_fill_type (GimpFillOptions  *options,
-                                    GimpContext      *context,
-                                    GimpFillType      fill_type,
+ligma_fill_options_set_by_fill_type (LigmaFillOptions  *options,
+                                    LigmaContext      *context,
+                                    LigmaFillType      fill_type,
                                     GError          **error)
 {
-  GimpFillOptionsPrivate *private;
-  GimpRGB                 color;
+  LigmaFillOptionsPrivate *private;
+  LigmaRGB                 color;
   const gchar            *undo_desc;
 
-  g_return_val_if_fail (GIMP_IS_FILL_OPTIONS (options), FALSE);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
+  g_return_val_if_fail (LIGMA_IS_FILL_OPTIONS (options), FALSE);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   private = GET_PRIVATE (options);
@@ -351,41 +351,41 @@ gimp_fill_options_set_by_fill_type (GimpFillOptions  *options,
 
   switch (fill_type)
     {
-    case GIMP_FILL_FOREGROUND:
-      gimp_context_get_foreground (context, &color);
+    case LIGMA_FILL_FOREGROUND:
+      ligma_context_get_foreground (context, &color);
       undo_desc = C_("undo-type", "Fill with Foreground Color");
       break;
 
-    case GIMP_FILL_BACKGROUND:
-      gimp_context_get_background (context, &color);
+    case LIGMA_FILL_BACKGROUND:
+      ligma_context_get_background (context, &color);
       undo_desc = C_("undo-type", "Fill with Background Color");
       break;
 
-    case GIMP_FILL_WHITE:
-      gimp_rgba_set (&color, 1.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE);
+    case LIGMA_FILL_WHITE:
+      ligma_rgba_set (&color, 1.0, 1.0, 1.0, LIGMA_OPACITY_OPAQUE);
       undo_desc = C_("undo-type", "Fill with White");
       break;
 
-    case GIMP_FILL_TRANSPARENT:
-      gimp_context_get_background (context, &color);
-      gimp_context_set_paint_mode (GIMP_CONTEXT (options),
-                                   GIMP_LAYER_MODE_ERASE);
+    case LIGMA_FILL_TRANSPARENT:
+      ligma_context_get_background (context, &color);
+      ligma_context_set_paint_mode (LIGMA_CONTEXT (options),
+                                   LIGMA_LAYER_MODE_ERASE);
       undo_desc = C_("undo-type", "Fill with Transparency");
       break;
 
-    case GIMP_FILL_PATTERN:
+    case LIGMA_FILL_PATTERN:
       {
-        GimpPattern *pattern = gimp_context_get_pattern (context);
+        LigmaPattern *pattern = ligma_context_get_pattern (context);
 
         if (! pattern)
           {
-            g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+            g_set_error_literal (error, LIGMA_ERROR, LIGMA_FAILED,
                                  _("No patterns available for this operation."));
             return FALSE;
           }
 
-        gimp_fill_options_set_style (options, GIMP_FILL_STYLE_PATTERN);
-        gimp_context_set_pattern (GIMP_CONTEXT (options), pattern);
+        ligma_fill_options_set_style (options, LIGMA_FILL_STYLE_PATTERN);
+        ligma_context_set_pattern (LIGMA_CONTEXT (options), pattern);
         private->undo_desc = C_("undo-type", "Fill with Pattern");
 
         return TRUE;
@@ -397,51 +397,51 @@ gimp_fill_options_set_by_fill_type (GimpFillOptions  *options,
       return FALSE;
     }
 
-  gimp_fill_options_set_style (options, GIMP_FILL_STYLE_SOLID);
-  gimp_context_set_foreground (GIMP_CONTEXT (options), &color);
+  ligma_fill_options_set_style (options, LIGMA_FILL_STYLE_SOLID);
+  ligma_context_set_foreground (LIGMA_CONTEXT (options), &color);
   private->undo_desc = undo_desc;
 
   return TRUE;
 }
 
 gboolean
-gimp_fill_options_set_by_fill_mode (GimpFillOptions     *options,
-                                    GimpContext         *context,
-                                    GimpBucketFillMode   fill_mode,
+ligma_fill_options_set_by_fill_mode (LigmaFillOptions     *options,
+                                    LigmaContext         *context,
+                                    LigmaBucketFillMode   fill_mode,
                                     GError             **error)
 {
-  GimpFillType fill_type;
+  LigmaFillType fill_type;
 
-  g_return_val_if_fail (GIMP_IS_FILL_OPTIONS (options), FALSE);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
+  g_return_val_if_fail (LIGMA_IS_FILL_OPTIONS (options), FALSE);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   switch (fill_mode)
     {
     default:
-    case GIMP_BUCKET_FILL_FG:
-      fill_type = GIMP_FILL_FOREGROUND;
+    case LIGMA_BUCKET_FILL_FG:
+      fill_type = LIGMA_FILL_FOREGROUND;
       break;
 
-    case GIMP_BUCKET_FILL_BG:
-      fill_type = GIMP_FILL_BACKGROUND;
+    case LIGMA_BUCKET_FILL_BG:
+      fill_type = LIGMA_FILL_BACKGROUND;
       break;
 
-    case GIMP_BUCKET_FILL_PATTERN:
-      fill_type = GIMP_FILL_PATTERN;
+    case LIGMA_BUCKET_FILL_PATTERN:
+      fill_type = LIGMA_FILL_PATTERN;
       break;
     }
 
-  return gimp_fill_options_set_by_fill_type (options, context,
+  return ligma_fill_options_set_by_fill_type (options, context,
                                              fill_type, error);
 }
 
 const gchar *
-gimp_fill_options_get_undo_desc (GimpFillOptions *options)
+ligma_fill_options_get_undo_desc (LigmaFillOptions *options)
 {
-  GimpFillOptionsPrivate *private;
+  LigmaFillOptionsPrivate *private;
 
-  g_return_val_if_fail (GIMP_IS_FILL_OPTIONS (options), NULL);
+  g_return_val_if_fail (LIGMA_IS_FILL_OPTIONS (options), NULL);
 
   private = GET_PRIVATE (options);
 
@@ -450,10 +450,10 @@ gimp_fill_options_get_undo_desc (GimpFillOptions *options)
 
   switch (private->style)
     {
-    case GIMP_FILL_STYLE_SOLID:
+    case LIGMA_FILL_STYLE_SOLID:
       return C_("undo-type", "Fill with Solid Color");
 
-    case GIMP_FILL_STYLE_PATTERN:
+    case LIGMA_FILL_STYLE_PATTERN:
       return C_("undo-type", "Fill with Pattern");
     }
 
@@ -461,85 +461,85 @@ gimp_fill_options_get_undo_desc (GimpFillOptions *options)
 }
 
 const Babl *
-gimp_fill_options_get_format (GimpFillOptions *options,
-                              GimpDrawable    *drawable)
+ligma_fill_options_get_format (LigmaFillOptions *options,
+                              LigmaDrawable    *drawable)
 {
-  GimpContext *context;
+  LigmaContext *context;
 
-  g_return_val_if_fail (GIMP_IS_FILL_OPTIONS (options), NULL);
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (LIGMA_IS_FILL_OPTIONS (options), NULL);
+  g_return_val_if_fail (LIGMA_IS_DRAWABLE (drawable), NULL);
 
-  context = GIMP_CONTEXT (options);
+  context = LIGMA_CONTEXT (options);
 
-  return gimp_layer_mode_get_format (gimp_context_get_paint_mode (context),
-                                     GIMP_LAYER_COLOR_SPACE_AUTO,
-                                     GIMP_LAYER_COLOR_SPACE_AUTO,
-                                     gimp_layer_mode_get_paint_composite_mode (
-                                       gimp_context_get_paint_mode (context)),
-                                     gimp_drawable_get_format (drawable));
+  return ligma_layer_mode_get_format (ligma_context_get_paint_mode (context),
+                                     LIGMA_LAYER_COLOR_SPACE_AUTO,
+                                     LIGMA_LAYER_COLOR_SPACE_AUTO,
+                                     ligma_layer_mode_get_paint_composite_mode (
+                                       ligma_context_get_paint_mode (context)),
+                                     ligma_drawable_get_format (drawable));
 }
 
 GeglBuffer *
-gimp_fill_options_create_buffer (GimpFillOptions     *options,
-                                 GimpDrawable        *drawable,
+ligma_fill_options_create_buffer (LigmaFillOptions     *options,
+                                 LigmaDrawable        *drawable,
                                  const GeglRectangle *rect,
                                  gint                 pattern_offset_x,
                                  gint                 pattern_offset_y)
 {
   GeglBuffer *buffer;
 
-  g_return_val_if_fail (GIMP_IS_FILL_OPTIONS (options), NULL);
-  g_return_val_if_fail (gimp_fill_options_get_style (options) !=
-                        GIMP_FILL_STYLE_PATTERN ||
-                        gimp_context_get_pattern (GIMP_CONTEXT (options)) != NULL,
+  g_return_val_if_fail (LIGMA_IS_FILL_OPTIONS (options), NULL);
+  g_return_val_if_fail (ligma_fill_options_get_style (options) !=
+                        LIGMA_FILL_STYLE_PATTERN ||
+                        ligma_context_get_pattern (LIGMA_CONTEXT (options)) != NULL,
                         NULL);
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (LIGMA_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (rect != NULL, NULL);
 
   buffer = gegl_buffer_new (rect,
-                            gimp_fill_options_get_format (options, drawable));
+                            ligma_fill_options_get_format (options, drawable));
 
-  gimp_fill_options_fill_buffer (options, drawable, buffer,
+  ligma_fill_options_fill_buffer (options, drawable, buffer,
                                  pattern_offset_x, pattern_offset_y);
 
   return buffer;
 }
 
 void
-gimp_fill_options_fill_buffer (GimpFillOptions *options,
-                               GimpDrawable    *drawable,
+ligma_fill_options_fill_buffer (LigmaFillOptions *options,
+                               LigmaDrawable    *drawable,
                                GeglBuffer      *buffer,
                                gint             pattern_offset_x,
                                gint             pattern_offset_y)
 {
-  g_return_if_fail (GIMP_IS_FILL_OPTIONS (options));
-  g_return_if_fail (gimp_fill_options_get_style (options) !=
-                    GIMP_FILL_STYLE_PATTERN ||
-                    gimp_context_get_pattern (GIMP_CONTEXT (options)) != NULL);
-  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (LIGMA_IS_FILL_OPTIONS (options));
+  g_return_if_fail (ligma_fill_options_get_style (options) !=
+                    LIGMA_FILL_STYLE_PATTERN ||
+                    ligma_context_get_pattern (LIGMA_CONTEXT (options)) != NULL);
+  g_return_if_fail (LIGMA_IS_DRAWABLE (drawable));
   g_return_if_fail (GEGL_IS_BUFFER (buffer));
 
-  switch (gimp_fill_options_get_style (options))
+  switch (ligma_fill_options_get_style (options))
     {
-    case GIMP_FILL_STYLE_SOLID:
+    case LIGMA_FILL_STYLE_SOLID:
       {
-        GimpRGB color;
+        LigmaRGB color;
 
-        gimp_context_get_foreground (GIMP_CONTEXT (options), &color);
-        gimp_palettes_add_color_history (GIMP_CONTEXT (options)->gimp, &color);
+        ligma_context_get_foreground (LIGMA_CONTEXT (options), &color);
+        ligma_palettes_add_color_history (LIGMA_CONTEXT (options)->ligma, &color);
 
-        gimp_drawable_fill_buffer (drawable, buffer,
+        ligma_drawable_fill_buffer (drawable, buffer,
                                    &color, NULL, 0, 0);
       }
       break;
 
-    case GIMP_FILL_STYLE_PATTERN:
+    case LIGMA_FILL_STYLE_PATTERN:
       {
-        GimpPattern *pattern;
+        LigmaPattern *pattern;
 
-        pattern = gimp_context_get_pattern (GIMP_CONTEXT (options));
+        pattern = ligma_context_get_pattern (LIGMA_CONTEXT (options));
 
-        gimp_drawable_fill_buffer (drawable, buffer,
+        ligma_drawable_fill_buffer (drawable, buffer,
                                    NULL, pattern,
                                    pattern_offset_x,
                                    pattern_offset_y);

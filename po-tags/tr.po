@@ -1,12 +1,12 @@
-# Copyright (C) 2011 gimp'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the gimp package.
+# Copyright (C) 2011 ligma'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the ligma package.
 #
 # Sezgin Ege <sezginege.mail@gmail.com>, 2011.
 # Muhammet Kara <muhammet.k@gmail.com>, 2011.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2011-03-19 21:30+0000\n"
 "PO-Revision-Date: 2011-12-26 13:28+0200\n"
 "Last-Translator: Muhammet Kara <muhammet.k@gmail.com>\n"
@@ -18,11 +18,11 @@ msgstr ""
 "X-Generator: Lokalize 1.1\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: ../data/tags/gimp-tags-default.xml.in.h:1
+#: ../data/tags/ligma-tags-default.xml.in.h:1
 msgid "fuzzy"
 msgstr "bulanık"
 
-#: ../data/tags/gimp-tags-default.xml.in.h:2
+#: ../data/tags/ligma-tags-default.xml.in.h:2
 msgid "round"
 msgstr "yuvarlak"
 

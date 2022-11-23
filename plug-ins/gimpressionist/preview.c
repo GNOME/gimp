@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,15 +21,15 @@
 
 #include <gtk/gtk.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "gimpressionist.h"
+#include "ligmaressionist.h"
 #include "ppmtool.h"
 #include "infile.h"
 #include "preview.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 static GtkWidget *preview       = NULL;
@@ -125,9 +125,9 @@ updatepreview (GtkWidget *wg, gpointer d)
   if (img_has_alpha)
     drawalpha (&preview_ppm, &alpha_ppm);
 
-  gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
+  ligma_preview_area_draw (LIGMA_PREVIEW_AREA (preview),
                           0, 0, PREVIEWSIZE, PREVIEWSIZE,
-                          GIMP_RGB_IMAGE,
+                          LIGMA_RGB_IMAGE,
                           preview_ppm.col,
                           PREVIEWSIZE * 3);
 
@@ -157,7 +157,7 @@ create_preview (void)
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 5);
   gtk_widget_show (frame);
 
-  preview = gimp_preview_area_new ();
+  preview = ligma_preview_area_new ();
   gtk_widget_set_size_request (preview, PREVIEWSIZE, PREVIEWSIZE);
 
   gtk_container_add (GTK_CONTAINER (frame), preview);
@@ -176,7 +176,7 @@ create_preview (void)
                     G_CALLBACK (updatepreview), (gpointer) 1);
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
-  gimp_help_set_help_data (button,
+  ligma_help_set_help_data (button,
                            _("Refresh the Preview window"), NULL);
 
   button = gtk_button_new_with_mnemonic (_("_Reset"));
@@ -184,7 +184,7 @@ create_preview (void)
                     G_CALLBACK (updatepreview), (gpointer) 2);
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
-  gimp_help_set_help_data (button,
+  ligma_help_set_help_data (button,
                            _("Revert to the original image"), NULL);
 
   return vbox;

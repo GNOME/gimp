@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,20 +21,20 @@
 
 #include "core-types.h"
 
-#include "gimpbrushpipe.h"
-#include "gimpbrushpipe-save.h"
+#include "ligmabrushpipe.h"
+#include "ligmabrushpipe-save.h"
 
 
 gboolean
-gimp_brush_pipe_save (GimpData       *data,
+ligma_brush_pipe_save (LigmaData       *data,
                       GOutputStream  *output,
                       GError        **error)
 {
-  GimpBrushPipe *pipe = GIMP_BRUSH_PIPE (data);
+  LigmaBrushPipe *pipe = LIGMA_BRUSH_PIPE (data);
   const gchar   *name;
   gint           i;
 
-  name = gimp_object_get_name (pipe);
+  name = ligma_object_get_name (pipe);
 
   if (! g_output_stream_printf (output, NULL, NULL, error,
                                 "%s\n%d %s\n",
@@ -45,10 +45,10 @@ gimp_brush_pipe_save (GimpData       *data,
 
   for (i = 0; i < pipe->n_brushes; i++)
     {
-      GimpBrush *brush = pipe->brushes[i];
+      LigmaBrush *brush = pipe->brushes[i];
 
       if (brush &&
-          ! GIMP_DATA_GET_CLASS (brush)->save (GIMP_DATA (brush),
+          ! LIGMA_DATA_GET_CLASS (brush)->save (LIGMA_DATA (brush),
                                                output, error))
         {
           return FALSE;

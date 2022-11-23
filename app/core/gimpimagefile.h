@@ -1,13 +1,13 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpimagefile.h
+ * ligmaimagefile.h
  *
  * Thumbnail handling according to the Thumbnail Managing Standard.
  * https://specifications.freedesktop.org/thumbnail-spec/
  *
- * Copyright (C) 2001-2002  Sven Neumann <sven@gimp.org>
- *                          Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2001-2002  Sven Neumann <sven@ligma.org>
+ *                          Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,68 +23,68 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGEFILE_H__
-#define __GIMP_IMAGEFILE_H__
+#ifndef __LIGMA_IMAGEFILE_H__
+#define __LIGMA_IMAGEFILE_H__
 
 
-#include "gimpviewable.h"
+#include "ligmaviewable.h"
 
 
-#define GIMP_TYPE_IMAGEFILE            (gimp_imagefile_get_type ())
-#define GIMP_IMAGEFILE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_IMAGEFILE, GimpImagefile))
-#define GIMP_IMAGEFILE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_IMAGEFILE, GimpImagefileClass))
-#define GIMP_IS_IMAGEFILE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_IMAGEFILE))
-#define GIMP_IS_IMAGEFILE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_IMAGEFILE))
-#define GIMP_IMAGEFILE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_IMAGEFILE, GimpImagefileClass))
+#define LIGMA_TYPE_IMAGEFILE            (ligma_imagefile_get_type ())
+#define LIGMA_IMAGEFILE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_IMAGEFILE, LigmaImagefile))
+#define LIGMA_IMAGEFILE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_IMAGEFILE, LigmaImagefileClass))
+#define LIGMA_IS_IMAGEFILE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_IMAGEFILE))
+#define LIGMA_IS_IMAGEFILE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_IMAGEFILE))
+#define LIGMA_IMAGEFILE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_IMAGEFILE, LigmaImagefileClass))
 
 
-typedef struct _GimpImagefileClass GimpImagefileClass;
+typedef struct _LigmaImagefileClass LigmaImagefileClass;
 
-struct _GimpImagefile
+struct _LigmaImagefile
 {
-  GimpViewable  parent_instance;
+  LigmaViewable  parent_instance;
 };
 
-struct _GimpImagefileClass
+struct _LigmaImagefileClass
 {
-  GimpViewableClass   parent_class;
+  LigmaViewableClass   parent_class;
 
-  void (* info_changed) (GimpImagefile *imagefile);
+  void (* info_changed) (LigmaImagefile *imagefile);
 };
 
 
-GType           gimp_imagefile_get_type              (void) G_GNUC_CONST;
+GType           ligma_imagefile_get_type              (void) G_GNUC_CONST;
 
-GimpImagefile * gimp_imagefile_new                   (Gimp           *gimp,
+LigmaImagefile * ligma_imagefile_new                   (Ligma           *ligma,
                                                       GFile          *file);
 
-GFile         * gimp_imagefile_get_file              (GimpImagefile  *imagefile);
-void            gimp_imagefile_set_file              (GimpImagefile  *imagefile,
+GFile         * ligma_imagefile_get_file              (LigmaImagefile  *imagefile);
+void            ligma_imagefile_set_file              (LigmaImagefile  *imagefile,
                                                       GFile          *file);
 
-GimpThumbnail * gimp_imagefile_get_thumbnail         (GimpImagefile  *imagefile);
-GIcon         * gimp_imagefile_get_gicon             (GimpImagefile  *imagefile);
+LigmaThumbnail * ligma_imagefile_get_thumbnail         (LigmaImagefile  *imagefile);
+GIcon         * ligma_imagefile_get_gicon             (LigmaImagefile  *imagefile);
 
-void            gimp_imagefile_set_mime_type         (GimpImagefile  *imagefile,
+void            ligma_imagefile_set_mime_type         (LigmaImagefile  *imagefile,
                                                       const gchar    *mime_type);
-void            gimp_imagefile_update                (GimpImagefile  *imagefile);
-gboolean        gimp_imagefile_create_thumbnail      (GimpImagefile  *imagefile,
-                                                      GimpContext    *context,
-                                                      GimpProgress   *progress,
+void            ligma_imagefile_update                (LigmaImagefile  *imagefile);
+gboolean        ligma_imagefile_create_thumbnail      (LigmaImagefile  *imagefile,
+                                                      LigmaContext    *context,
+                                                      LigmaProgress   *progress,
                                                       gint            size,
                                                       gboolean        replace,
                                                       GError        **error);
-void            gimp_imagefile_create_thumbnail_weak (GimpImagefile  *imagefile,
-                                                      GimpContext    *context,
-                                                      GimpProgress   *progress,
+void            ligma_imagefile_create_thumbnail_weak (LigmaImagefile  *imagefile,
+                                                      LigmaContext    *context,
+                                                      LigmaProgress   *progress,
                                                       gint            size,
                                                       gboolean        replace);
-gboolean        gimp_imagefile_check_thumbnail       (GimpImagefile  *imagefile);
-gboolean        gimp_imagefile_save_thumbnail        (GimpImagefile  *imagefile,
+gboolean        ligma_imagefile_check_thumbnail       (LigmaImagefile  *imagefile);
+gboolean        ligma_imagefile_save_thumbnail        (LigmaImagefile  *imagefile,
                                                       const gchar    *mime_type,
-                                                      GimpImage      *image,
+                                                      LigmaImage      *image,
                                                       GError        **error);
-const gchar   * gimp_imagefile_get_desc_string       (GimpImagefile  *imagefile);
+const gchar   * ligma_imagefile_get_desc_string       (LigmaImagefile  *imagefile);
 
 
-#endif /* __GIMP_IMAGEFILE_H__ */
+#endif /* __LIGMA_IMAGEFILE_H__ */

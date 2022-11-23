@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpfiltertool-widgets.c
+ * ligmafiltertool-widgets.c
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,32 +24,32 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpmath/gimpmath.h"
+#include "libligmamath/ligmamath.h"
 
 #include "tools-types.h"
 
-#include "core/gimpcontainer.h"
-#include "core/gimpitem.h"
+#include "core/ligmacontainer.h"
+#include "core/ligmaitem.h"
 
-#include "display/gimpdisplay.h"
-#include "display/gimptoolfocus.h"
-#include "display/gimptoolgyroscope.h"
-#include "display/gimptoolline.h"
-#include "display/gimptooltransformgrid.h"
-#include "display/gimptoolwidgetgroup.h"
+#include "display/ligmadisplay.h"
+#include "display/ligmatoolfocus.h"
+#include "display/ligmatoolgyroscope.h"
+#include "display/ligmatoolline.h"
+#include "display/ligmatooltransformgrid.h"
+#include "display/ligmatoolwidgetgroup.h"
 
-#include "gimpfilteroptions.h"
-#include "gimpfiltertool.h"
-#include "gimpfiltertool-widgets.h"
+#include "ligmafilteroptions.h"
+#include "ligmafiltertool.h"
+#include "ligmafiltertool-widgets.h"
 
 
 typedef struct _Controller Controller;
 
 struct _Controller
 {
-  GimpFilterTool     *filter_tool;
-  GimpControllerType  controller_type;
-  GimpToolWidget     *widget;
+  LigmaFilterTool     *filter_tool;
+  LigmaControllerType  controller_type;
+  LigmaToolWidget     *widget;
   GCallback           creator_callback;
   gpointer            creator_data;
 };
@@ -57,55 +57,55 @@ struct _Controller
 
 /*  local function prototypes  */
 
-static Controller * gimp_filter_tool_controller_new          (void);
-static void         gimp_filter_tool_controller_free         (Controller                 *controller);
+static Controller * ligma_filter_tool_controller_new          (void);
+static void         ligma_filter_tool_controller_free         (Controller                 *controller);
 
-static void         gimp_filter_tool_set_line                (Controller                 *controller,
+static void         ligma_filter_tool_set_line                (Controller                 *controller,
                                                               GeglRectangle              *area,
                                                               gdouble                     x1,
                                                               gdouble                     y1,
                                                               gdouble                     x2,
                                                               gdouble                     y2);
-static void         gimp_filter_tool_line_changed            (GimpToolWidget             *widget,
+static void         ligma_filter_tool_line_changed            (LigmaToolWidget             *widget,
                                                               Controller                 *controller);
 
-static void         gimp_filter_tool_set_slider_line         (Controller                 *controller,
+static void         ligma_filter_tool_set_slider_line         (Controller                 *controller,
                                                               GeglRectangle              *area,
                                                               gdouble                     x1,
                                                               gdouble                     y1,
                                                               gdouble                     x2,
                                                               gdouble                     y2,
-                                                              const GimpControllerSlider *sliders,
+                                                              const LigmaControllerSlider *sliders,
                                                               gint                        n_sliders);
-static void         gimp_filter_tool_slider_line_changed     (GimpToolWidget             *widget,
+static void         ligma_filter_tool_slider_line_changed     (LigmaToolWidget             *widget,
                                                               Controller                 *controller);
 
-static void         gimp_filter_tool_set_transform_grid      (Controller                 *controller,
+static void         ligma_filter_tool_set_transform_grid      (Controller                 *controller,
                                                               GeglRectangle              *area,
-                                                              const GimpMatrix3          *transform);
-static void         gimp_filter_tool_transform_grid_changed  (GimpToolWidget             *widget,
+                                                              const LigmaMatrix3          *transform);
+static void         ligma_filter_tool_transform_grid_changed  (LigmaToolWidget             *widget,
                                                               Controller                 *controller);
 
-static void         gimp_filter_tool_set_transform_grids     (Controller                 *controller,
+static void         ligma_filter_tool_set_transform_grids     (Controller                 *controller,
                                                               GeglRectangle              *area,
-                                                              const GimpMatrix3          *transforms,
+                                                              const LigmaMatrix3          *transforms,
                                                               gint                        n_transforms);
-static void         gimp_filter_tool_transform_grids_changed (GimpToolWidget             *widget,
+static void         ligma_filter_tool_transform_grids_changed (LigmaToolWidget             *widget,
                                                               Controller                 *controller);
 
-static void         gimp_filter_tool_set_gyroscope           (Controller                 *controller,
+static void         ligma_filter_tool_set_gyroscope           (Controller                 *controller,
                                                               GeglRectangle              *area,
                                                               gdouble                     yaw,
                                                               gdouble                     pitch,
                                                               gdouble                     roll,
                                                               gdouble                     zoom,
                                                               gboolean                    invert);
-static void         gimp_filter_tool_gyroscope_changed       (GimpToolWidget             *widget,
+static void         ligma_filter_tool_gyroscope_changed       (LigmaToolWidget             *widget,
                                                               Controller                 *controller);
 
-static void         gimp_filter_tool_set_focus               (Controller                 *controller,
+static void         ligma_filter_tool_set_focus               (Controller                 *controller,
                                                               GeglRectangle              *area,
-                                                              GimpLimitType               type,
+                                                              LigmaLimitType               type,
                                                               gdouble                     x,
                                                               gdouble                     y,
                                                               gdouble                     radius,
@@ -113,35 +113,35 @@ static void         gimp_filter_tool_set_focus               (Controller        
                                                               gdouble                     angle,
                                                               gdouble                     inner_limit,
                                                               gdouble                     midpoint);
-static void         gimp_filter_tool_focus_changed           (GimpToolWidget             *widget,
+static void         ligma_filter_tool_focus_changed           (LigmaToolWidget             *widget,
                                                               Controller                 *controller);
 
 
 /*  public functions  */
 
-GimpToolWidget *
-gimp_filter_tool_create_widget (GimpFilterTool     *filter_tool,
-                                GimpControllerType  controller_type,
+LigmaToolWidget *
+ligma_filter_tool_create_widget (LigmaFilterTool     *filter_tool,
+                                LigmaControllerType  controller_type,
                                 const gchar        *status_title,
                                 GCallback           callback,
                                 gpointer            callback_data,
                                 GCallback          *set_func,
                                 gpointer           *set_func_data)
 {
-  GimpTool         *tool;
-  GimpDisplayShell *shell;
+  LigmaTool         *tool;
+  LigmaDisplayShell *shell;
   Controller       *controller;
 
-  g_return_val_if_fail (GIMP_IS_FILTER_TOOL (filter_tool), NULL);
+  g_return_val_if_fail (LIGMA_IS_FILTER_TOOL (filter_tool), NULL);
   g_return_val_if_fail (filter_tool->config != NULL, NULL);
 
-  tool = GIMP_TOOL (filter_tool);
+  tool = LIGMA_TOOL (filter_tool);
 
   g_return_val_if_fail (tool->display != NULL, NULL);
 
-  shell = gimp_display_get_shell (tool->display);
+  shell = ligma_display_get_shell (tool->display);
 
-  controller = gimp_filter_tool_controller_new ();
+  controller = ligma_filter_tool_controller_new ();
 
   controller->filter_tool      = filter_tool;
   controller->controller_type  = controller_type;
@@ -150,61 +150,61 @@ gimp_filter_tool_create_widget (GimpFilterTool     *filter_tool,
 
   switch (controller_type)
     {
-    case GIMP_CONTROLLER_TYPE_LINE:
-      controller->widget = gimp_tool_line_new (shell, 100, 100, 500, 500);
+    case LIGMA_CONTROLLER_TYPE_LINE:
+      controller->widget = ligma_tool_line_new (shell, 100, 100, 500, 500);
 
       g_object_set (controller->widget,
                     "status-title", status_title,
                     NULL);
 
       g_signal_connect (controller->widget, "changed",
-                        G_CALLBACK (gimp_filter_tool_line_changed),
+                        G_CALLBACK (ligma_filter_tool_line_changed),
                         controller);
 
-      *set_func      = (GCallback) gimp_filter_tool_set_line;
+      *set_func      = (GCallback) ligma_filter_tool_set_line;
       *set_func_data = controller;
       break;
 
-    case GIMP_CONTROLLER_TYPE_SLIDER_LINE:
-      controller->widget = gimp_tool_line_new (shell, 100, 100, 500, 500);
+    case LIGMA_CONTROLLER_TYPE_SLIDER_LINE:
+      controller->widget = ligma_tool_line_new (shell, 100, 100, 500, 500);
 
       g_object_set (controller->widget,
                     "status-title", status_title,
                     NULL);
 
       g_signal_connect (controller->widget, "changed",
-                        G_CALLBACK (gimp_filter_tool_slider_line_changed),
+                        G_CALLBACK (ligma_filter_tool_slider_line_changed),
                         controller);
 
-      *set_func      = (GCallback) gimp_filter_tool_set_slider_line;
+      *set_func      = (GCallback) ligma_filter_tool_set_slider_line;
       *set_func_data = controller;
       break;
 
-    case GIMP_CONTROLLER_TYPE_TRANSFORM_GRID:
+    case LIGMA_CONTROLLER_TYPE_TRANSFORM_GRID:
       {
-        GimpMatrix3   transform;
+        LigmaMatrix3   transform;
         gint          off_x, off_y;
         GeglRectangle area;
         gdouble       x1, y1;
         gdouble       x2, y2;
 
-        gimp_matrix3_identity (&transform);
+        ligma_matrix3_identity (&transform);
 
-        gimp_filter_tool_get_drawable_area (filter_tool, &off_x, &off_y, &area);
+        ligma_filter_tool_get_drawable_area (filter_tool, &off_x, &off_y, &area);
 
         x1 = off_x + area.x;
         y1 = off_y + area.y;
         x2 = x1 + area.width;
         y2 = y1 + area.height;
 
-        controller->widget = gimp_tool_transform_grid_new (shell, &transform,
+        controller->widget = ligma_tool_transform_grid_new (shell, &transform,
                                                            x1, y1, x2, y2);
 
         g_object_set (controller->widget,
                       "pivot-x",                 (x1 + x2) / 2.0,
                       "pivot-y",                 (y1 + y2) / 2.0,
-                      "inside-function",         GIMP_TRANSFORM_FUNCTION_MOVE,
-                      "outside-function",        GIMP_TRANSFORM_FUNCTION_ROTATE,
+                      "inside-function",         LIGMA_TRANSFORM_FUNCTION_MOVE,
+                      "outside-function",        LIGMA_TRANSFORM_FUNCTION_ROTATE,
                       "use-corner-handles",      TRUE,
                       "use-perspective-handles", TRUE,
                       "use-side-handles",        TRUE,
@@ -213,38 +213,38 @@ gimp_filter_tool_create_widget (GimpFilterTool     *filter_tool,
                       NULL);
 
         g_signal_connect (controller->widget, "changed",
-                          G_CALLBACK (gimp_filter_tool_transform_grid_changed),
+                          G_CALLBACK (ligma_filter_tool_transform_grid_changed),
                           controller);
 
-        *set_func      = (GCallback) gimp_filter_tool_set_transform_grid;
+        *set_func      = (GCallback) ligma_filter_tool_set_transform_grid;
         *set_func_data = controller;
       }
       break;
 
-    case GIMP_CONTROLLER_TYPE_TRANSFORM_GRIDS:
+    case LIGMA_CONTROLLER_TYPE_TRANSFORM_GRIDS:
       {
-        controller->widget = gimp_tool_widget_group_new (shell);
+        controller->widget = ligma_tool_widget_group_new (shell);
 
-        gimp_tool_widget_group_set_auto_raise (
-          GIMP_TOOL_WIDGET_GROUP (controller->widget), TRUE);
+        ligma_tool_widget_group_set_auto_raise (
+          LIGMA_TOOL_WIDGET_GROUP (controller->widget), TRUE);
 
         g_signal_connect (controller->widget, "changed",
-                          G_CALLBACK (gimp_filter_tool_transform_grids_changed),
+                          G_CALLBACK (ligma_filter_tool_transform_grids_changed),
                           controller);
 
-        *set_func      = (GCallback) gimp_filter_tool_set_transform_grids;
+        *set_func      = (GCallback) ligma_filter_tool_set_transform_grids;
         *set_func_data = controller;
       }
       break;
 
-    case GIMP_CONTROLLER_TYPE_GYROSCOPE:
+    case LIGMA_CONTROLLER_TYPE_GYROSCOPE:
       {
         GeglRectangle area;
         gint          off_x, off_y;
 
-        gimp_filter_tool_get_drawable_area (filter_tool, &off_x, &off_y, &area);
+        ligma_filter_tool_get_drawable_area (filter_tool, &off_x, &off_y, &area);
 
-        controller->widget = gimp_tool_gyroscope_new (shell);
+        controller->widget = ligma_tool_gyroscope_new (shell);
 
         g_object_set (controller->widget,
                       "speed",   1.0 / MAX (area.width, area.height),
@@ -253,22 +253,22 @@ gimp_filter_tool_create_widget (GimpFilterTool     *filter_tool,
                       NULL);
 
         g_signal_connect (controller->widget, "changed",
-                          G_CALLBACK (gimp_filter_tool_gyroscope_changed),
+                          G_CALLBACK (ligma_filter_tool_gyroscope_changed),
                           controller);
 
-        *set_func      = (GCallback) gimp_filter_tool_set_gyroscope;
+        *set_func      = (GCallback) ligma_filter_tool_set_gyroscope;
         *set_func_data = controller;
       }
       break;
 
-    case GIMP_CONTROLLER_TYPE_FOCUS:
-      controller->widget = gimp_tool_focus_new (shell);
+    case LIGMA_CONTROLLER_TYPE_FOCUS:
+      controller->widget = ligma_tool_focus_new (shell);
 
       g_signal_connect (controller->widget, "changed",
-                        G_CALLBACK (gimp_filter_tool_focus_changed),
+                        G_CALLBACK (ligma_filter_tool_focus_changed),
                         controller);
 
-      *set_func      = (GCallback) gimp_filter_tool_set_focus;
+      *set_func      = (GCallback) ligma_filter_tool_set_focus;
       *set_func_data = controller;
       break;
     }
@@ -277,17 +277,17 @@ gimp_filter_tool_create_widget (GimpFilterTool     *filter_tool,
                             (gpointer) &controller->widget);
 
   g_object_set_data_full (filter_tool->config,
-                          "gimp-filter-tool-controller", controller,
-                          (GDestroyNotify) gimp_filter_tool_controller_free);
+                          "ligma-filter-tool-controller", controller,
+                          (GDestroyNotify) ligma_filter_tool_controller_free);
 
   return controller->widget;
 }
 
 static void
-gimp_filter_tool_reset_transform_grid (GimpToolWidget *widget,
-                                       GimpFilterTool *filter_tool)
+ligma_filter_tool_reset_transform_grid (LigmaToolWidget *widget,
+                                       LigmaFilterTool *filter_tool)
 {
-  GimpMatrix3   *transform;
+  LigmaMatrix3   *transform;
   gint           off_x, off_y;
   GeglRectangle  area;
   gdouble        x1, y1;
@@ -298,14 +298,14 @@ gimp_filter_tool_reset_transform_grid (GimpToolWidget *widget,
                 "transform", &transform,
                 NULL);
 
-  gimp_filter_tool_get_drawable_area (filter_tool, &off_x, &off_y, &area);
+  ligma_filter_tool_get_drawable_area (filter_tool, &off_x, &off_y, &area);
 
   x1 = off_x + area.x;
   y1 = off_y + area.y;
   x2 = x1 + area.width;
   y2 = y1 + area.height;
 
-  gimp_matrix3_transform_point (transform,
+  ligma_matrix3_transform_point (transform,
                                 (x1 + x2) / 2.0, (y1 + y2) / 2.0,
                                 &pivot_x, &pivot_y);
 
@@ -318,50 +318,50 @@ gimp_filter_tool_reset_transform_grid (GimpToolWidget *widget,
 }
 
 void
-gimp_filter_tool_reset_widget (GimpFilterTool *filter_tool,
-                               GimpToolWidget *widget)
+ligma_filter_tool_reset_widget (LigmaFilterTool *filter_tool,
+                               LigmaToolWidget *widget)
 {
   Controller *controller;
 
-  g_return_if_fail (GIMP_IS_FILTER_TOOL (filter_tool));
-  g_return_if_fail (GIMP_IS_TOOL_WIDGET (widget));
+  g_return_if_fail (LIGMA_IS_FILTER_TOOL (filter_tool));
+  g_return_if_fail (LIGMA_IS_TOOL_WIDGET (widget));
   g_return_if_fail (filter_tool->config != NULL);
 
   controller = g_object_get_data (filter_tool->config,
-                                  "gimp-filter-tool-controller");
+                                  "ligma-filter-tool-controller");
 
   g_return_if_fail (controller != NULL);
 
   switch (controller->controller_type)
     {
-    case GIMP_CONTROLLER_TYPE_TRANSFORM_GRID:
+    case LIGMA_CONTROLLER_TYPE_TRANSFORM_GRID:
       {
         g_signal_handlers_block_by_func (controller->widget,
-                                         gimp_filter_tool_transform_grid_changed,
+                                         ligma_filter_tool_transform_grid_changed,
                                          controller);
 
-        gimp_filter_tool_reset_transform_grid (controller->widget, filter_tool);
+        ligma_filter_tool_reset_transform_grid (controller->widget, filter_tool);
 
         g_signal_handlers_unblock_by_func (controller->widget,
-                                           gimp_filter_tool_transform_grid_changed,
+                                           ligma_filter_tool_transform_grid_changed,
                                            controller);
       }
       break;
 
-    case GIMP_CONTROLLER_TYPE_TRANSFORM_GRIDS:
+    case LIGMA_CONTROLLER_TYPE_TRANSFORM_GRIDS:
       {
         g_signal_handlers_block_by_func (controller->widget,
-                                         gimp_filter_tool_transform_grids_changed,
+                                         ligma_filter_tool_transform_grids_changed,
                                          controller);
 
-        gimp_container_foreach (
-          gimp_tool_widget_group_get_children (
-            GIMP_TOOL_WIDGET_GROUP (controller->widget)),
-          (GFunc) gimp_filter_tool_reset_transform_grid,
+        ligma_container_foreach (
+          ligma_tool_widget_group_get_children (
+            LIGMA_TOOL_WIDGET_GROUP (controller->widget)),
+          (GFunc) ligma_filter_tool_reset_transform_grid,
           filter_tool);
 
         g_signal_handlers_unblock_by_func (controller->widget,
-                                           gimp_filter_tool_transform_grids_changed,
+                                           ligma_filter_tool_transform_grids_changed,
                                            controller);
       }
       break;
@@ -375,13 +375,13 @@ gimp_filter_tool_reset_widget (GimpFilterTool *filter_tool,
 /*  private functions  */
 
 static Controller *
-gimp_filter_tool_controller_new (void)
+ligma_filter_tool_controller_new (void)
 {
   return g_slice_new0 (Controller);
 }
 
 static void
-gimp_filter_tool_controller_free (Controller *controller)
+ligma_filter_tool_controller_free (Controller *controller)
 {
   if (controller->widget)
     {
@@ -395,27 +395,27 @@ gimp_filter_tool_controller_free (Controller *controller)
 }
 
 static void
-gimp_filter_tool_set_line (Controller    *controller,
+ligma_filter_tool_set_line (Controller    *controller,
                            GeglRectangle *area,
                            gdouble        x1,
                            gdouble        y1,
                            gdouble        x2,
                            gdouble        y2)
 {
-  GimpTool     *tool;
-  GimpDrawable *drawable;
+  LigmaTool     *tool;
+  LigmaDrawable *drawable;
 
   if (! controller->widget)
     return;
 
-  tool     = GIMP_TOOL (controller->filter_tool);
+  tool     = LIGMA_TOOL (controller->filter_tool);
   drawable = tool->drawables->data;
 
   if (drawable)
     {
       gint off_x, off_y;
 
-      gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
+      ligma_item_get_offset (LIGMA_ITEM (drawable), &off_x, &off_y);
 
       x1 += off_x + area->x;
       y1 += off_y + area->y;
@@ -424,7 +424,7 @@ gimp_filter_tool_set_line (Controller    *controller,
     }
 
   g_signal_handlers_block_by_func (controller->widget,
-                                   gimp_filter_tool_line_changed,
+                                   ligma_filter_tool_line_changed,
                                    controller);
 
   g_object_set (controller->widget,
@@ -435,21 +435,21 @@ gimp_filter_tool_set_line (Controller    *controller,
                 NULL);
 
   g_signal_handlers_unblock_by_func (controller->widget,
-                                     gimp_filter_tool_line_changed,
+                                     ligma_filter_tool_line_changed,
                                      controller);
 }
 
 static void
-gimp_filter_tool_line_changed (GimpToolWidget *widget,
+ligma_filter_tool_line_changed (LigmaToolWidget *widget,
                                Controller     *controller)
 {
-  GimpFilterTool             *filter_tool = controller->filter_tool;
-  GimpControllerLineCallback  line_callback;
+  LigmaFilterTool             *filter_tool = controller->filter_tool;
+  LigmaControllerLineCallback  line_callback;
   gdouble                     x1, y1, x2, y2;
   gint                        off_x, off_y;
   GeglRectangle               area;
 
-  line_callback = (GimpControllerLineCallback) controller->creator_callback;
+  line_callback = (LigmaControllerLineCallback) controller->creator_callback;
 
   g_object_get (widget,
                 "x1", &x1,
@@ -458,7 +458,7 @@ gimp_filter_tool_line_changed (GimpToolWidget *widget,
                 "y2", &y2,
                 NULL);
 
-  gimp_filter_tool_get_drawable_area (filter_tool, &off_x, &off_y, &area);
+  ligma_filter_tool_get_drawable_area (filter_tool, &off_x, &off_y, &area);
 
   x1 -= off_x + area.x;
   y1 -= off_y + area.y;
@@ -470,29 +470,29 @@ gimp_filter_tool_line_changed (GimpToolWidget *widget,
 }
 
 static void
-gimp_filter_tool_set_slider_line (Controller                 *controller,
+ligma_filter_tool_set_slider_line (Controller                 *controller,
                                   GeglRectangle              *area,
                                   gdouble                     x1,
                                   gdouble                     y1,
                                   gdouble                     x2,
                                   gdouble                     y2,
-                                  const GimpControllerSlider *sliders,
+                                  const LigmaControllerSlider *sliders,
                                   gint                        n_sliders)
 {
-  GimpTool     *tool;
-  GimpDrawable *drawable;
+  LigmaTool     *tool;
+  LigmaDrawable *drawable;
 
   if (! controller->widget)
     return;
 
-  tool     = GIMP_TOOL (controller->filter_tool);
+  tool     = LIGMA_TOOL (controller->filter_tool);
   drawable = tool->drawables->data;
 
   if (drawable)
     {
       gint off_x, off_y;
 
-      gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
+      ligma_item_get_offset (LIGMA_ITEM (drawable), &off_x, &off_y);
 
       x1 += off_x + area->x;
       y1 += off_y + area->y;
@@ -501,7 +501,7 @@ gimp_filter_tool_set_slider_line (Controller                 *controller,
     }
 
   g_signal_handlers_block_by_func (controller->widget,
-                                   gimp_filter_tool_slider_line_changed,
+                                   ligma_filter_tool_slider_line_changed,
                                    controller);
 
   g_object_set (controller->widget,
@@ -511,28 +511,28 @@ gimp_filter_tool_set_slider_line (Controller                 *controller,
                 "y2", y2,
                 NULL);
 
-  gimp_tool_line_set_sliders (GIMP_TOOL_LINE (controller->widget),
+  ligma_tool_line_set_sliders (LIGMA_TOOL_LINE (controller->widget),
                               sliders, n_sliders);
 
   g_signal_handlers_unblock_by_func (controller->widget,
-                                     gimp_filter_tool_slider_line_changed,
+                                     ligma_filter_tool_slider_line_changed,
                                      controller);
 }
 
 static void
-gimp_filter_tool_slider_line_changed (GimpToolWidget *widget,
+ligma_filter_tool_slider_line_changed (LigmaToolWidget *widget,
                                       Controller     *controller)
 {
-  GimpFilterTool                   *filter_tool = controller->filter_tool;
-  GimpControllerSliderLineCallback  slider_line_callback;
+  LigmaFilterTool                   *filter_tool = controller->filter_tool;
+  LigmaControllerSliderLineCallback  slider_line_callback;
   gdouble                           x1, y1, x2, y2;
-  const GimpControllerSlider       *sliders;
+  const LigmaControllerSlider       *sliders;
   gint                              n_sliders;
   gint                              off_x, off_y;
   GeglRectangle                     area;
 
   slider_line_callback =
-    (GimpControllerSliderLineCallback) controller->creator_callback;
+    (LigmaControllerSliderLineCallback) controller->creator_callback;
 
   g_object_get (widget,
                 "x1", &x1,
@@ -541,10 +541,10 @@ gimp_filter_tool_slider_line_changed (GimpToolWidget *widget,
                 "y2", &y2,
                 NULL);
 
-  sliders = gimp_tool_line_get_sliders (GIMP_TOOL_LINE (controller->widget),
+  sliders = ligma_tool_line_get_sliders (LIGMA_TOOL_LINE (controller->widget),
                                         &n_sliders);
 
-  gimp_filter_tool_get_drawable_area (filter_tool, &off_x, &off_y, &area);
+  ligma_filter_tool_get_drawable_area (filter_tool, &off_x, &off_y, &area);
 
   x1 -= off_x + area.x;
   y1 -= off_y + area.y;
@@ -556,29 +556,29 @@ gimp_filter_tool_slider_line_changed (GimpToolWidget *widget,
 }
 
 static void
-gimp_filter_tool_set_transform_grid (Controller        *controller,
+ligma_filter_tool_set_transform_grid (Controller        *controller,
                                      GeglRectangle     *area,
-                                     const GimpMatrix3 *transform)
+                                     const LigmaMatrix3 *transform)
 {
-  GimpTool     *tool;
-  GimpDrawable *drawable;
+  LigmaTool     *tool;
+  LigmaDrawable *drawable;
   gdouble       x1 = area->x;
   gdouble       y1 = area->y;
   gdouble       x2 = area->x + area->width;
   gdouble       y2 = area->y + area->height;
-  GimpMatrix3   matrix;
+  LigmaMatrix3   matrix;
 
   if (! controller->widget)
     return;
 
-  tool     = GIMP_TOOL (controller->filter_tool);
+  tool     = LIGMA_TOOL (controller->filter_tool);
   drawable = tool->drawables->data;
 
   if (drawable)
     {
       gint off_x, off_y;
 
-      gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
+      ligma_item_get_offset (LIGMA_ITEM (drawable), &off_x, &off_y);
 
       x1 += off_x;
       y1 += off_y;
@@ -586,13 +586,13 @@ gimp_filter_tool_set_transform_grid (Controller        *controller,
       y2 += off_y;
     }
 
-  gimp_matrix3_identity (&matrix);
-  gimp_matrix3_translate (&matrix, -x1, -y1);
-  gimp_matrix3_mult (transform, &matrix);
-  gimp_matrix3_translate (&matrix, +x1, +y1);
+  ligma_matrix3_identity (&matrix);
+  ligma_matrix3_translate (&matrix, -x1, -y1);
+  ligma_matrix3_mult (transform, &matrix);
+  ligma_matrix3_translate (&matrix, +x1, +y1);
 
   g_signal_handlers_block_by_func (controller->widget,
-                                   gimp_filter_tool_transform_grid_changed,
+                                   ligma_filter_tool_transform_grid_changed,
                                    controller);
 
   g_object_set (controller->widget,
@@ -604,34 +604,34 @@ gimp_filter_tool_set_transform_grid (Controller        *controller,
                 NULL);
 
   g_signal_handlers_unblock_by_func (controller->widget,
-                                     gimp_filter_tool_transform_grid_changed,
+                                     ligma_filter_tool_transform_grid_changed,
                                      controller);
 }
 
 static void
-gimp_filter_tool_transform_grid_changed (GimpToolWidget *widget,
+ligma_filter_tool_transform_grid_changed (LigmaToolWidget *widget,
                                          Controller     *controller)
 {
-  GimpFilterTool                      *filter_tool = controller->filter_tool;
-  GimpControllerTransformGridCallback  transform_grid_callback;
+  LigmaFilterTool                      *filter_tool = controller->filter_tool;
+  LigmaControllerTransformGridCallback  transform_grid_callback;
   gint                                 off_x, off_y;
   GeglRectangle                        area;
-  GimpMatrix3                         *transform;
-  GimpMatrix3                          matrix;
+  LigmaMatrix3                         *transform;
+  LigmaMatrix3                          matrix;
 
   transform_grid_callback =
-    (GimpControllerTransformGridCallback) controller->creator_callback;
+    (LigmaControllerTransformGridCallback) controller->creator_callback;
 
   g_object_get (widget,
                 "transform", &transform,
                 NULL);
 
-  gimp_filter_tool_get_drawable_area (filter_tool, &off_x, &off_y, &area);
+  ligma_filter_tool_get_drawable_area (filter_tool, &off_x, &off_y, &area);
 
-  gimp_matrix3_identity (&matrix);
-  gimp_matrix3_translate (&matrix, +(off_x + area.x), +(off_y + area.y));
-  gimp_matrix3_mult (transform, &matrix);
-  gimp_matrix3_translate (&matrix, -(off_x + area.x), -(off_y + area.y));
+  ligma_matrix3_identity (&matrix);
+  ligma_matrix3_translate (&matrix, +(off_x + area.x), +(off_y + area.y));
+  ligma_matrix3_mult (transform, &matrix);
+  ligma_matrix3_translate (&matrix, -(off_x + area.x), -(off_y + area.y));
 
   transform_grid_callback (controller->creator_data,
                            &area, &matrix);
@@ -640,39 +640,39 @@ gimp_filter_tool_transform_grid_changed (GimpToolWidget *widget,
 }
 
 static void
-gimp_filter_tool_set_transform_grids (Controller        *controller,
+ligma_filter_tool_set_transform_grids (Controller        *controller,
                                       GeglRectangle     *area,
-                                      const GimpMatrix3 *transforms,
+                                      const LigmaMatrix3 *transforms,
                                       gint               n_transforms)
 {
-  GimpTool         *tool;
-  GimpDisplayShell *shell;
-  GimpDrawable     *drawable;
-  GimpContainer    *grids;
-  GimpToolWidget   *grid = NULL;
+  LigmaTool         *tool;
+  LigmaDisplayShell *shell;
+  LigmaDrawable     *drawable;
+  LigmaContainer    *grids;
+  LigmaToolWidget   *grid = NULL;
   gdouble           x1   = area->x;
   gdouble           y1   = area->y;
   gdouble           x2   = area->x + area->width;
   gdouble           y2   = area->y + area->height;
-  GimpMatrix3       matrix;
+  LigmaMatrix3       matrix;
   gint              i;
 
   if (! controller->widget)
     return;
 
-  tool     = GIMP_TOOL (controller->filter_tool);
-  shell    = gimp_display_get_shell (tool->display);
+  tool     = LIGMA_TOOL (controller->filter_tool);
+  shell    = ligma_display_get_shell (tool->display);
   drawable = tool->drawables->data;
 
   g_signal_handlers_block_by_func (controller->widget,
-                                   gimp_filter_tool_transform_grids_changed,
+                                   ligma_filter_tool_transform_grids_changed,
                                    controller);
 
   if (drawable)
     {
       gint off_x, off_y;
 
-      gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
+      ligma_item_get_offset (LIGMA_ITEM (drawable), &off_x, &off_y);
 
       x1 += off_x;
       y1 += off_y;
@@ -680,24 +680,24 @@ gimp_filter_tool_set_transform_grids (Controller        *controller,
       y2 += off_y;
     }
 
-  grids = gimp_tool_widget_group_get_children (
-    GIMP_TOOL_WIDGET_GROUP (controller->widget));
+  grids = ligma_tool_widget_group_get_children (
+    LIGMA_TOOL_WIDGET_GROUP (controller->widget));
 
-  if (n_transforms > gimp_container_get_n_children (grids))
+  if (n_transforms > ligma_container_get_n_children (grids))
     {
-      gimp_matrix3_identity (&matrix);
+      ligma_matrix3_identity (&matrix);
 
-      for (i = gimp_container_get_n_children (grids); i < n_transforms; i++)
+      for (i = ligma_container_get_n_children (grids); i < n_transforms; i++)
         {
           gdouble pivot_x;
           gdouble pivot_y;
 
-          grid = gimp_tool_transform_grid_new (shell, &matrix, x1, y1, x2, y2);
+          grid = ligma_tool_transform_grid_new (shell, &matrix, x1, y1, x2, y2);
 
           if (i > 0 && ! memcmp (&transforms[i], &transforms[i - 1],
-                                 sizeof (GimpMatrix3)))
+                                 sizeof (LigmaMatrix3)))
             {
-              g_object_get (gimp_container_get_last_child (grids),
+              g_object_get (ligma_container_get_last_child (grids),
                             "pivot-x", &pivot_x,
                             "pivot-y", &pivot_y,
                             NULL);
@@ -707,7 +707,7 @@ gimp_filter_tool_set_transform_grids (Controller        *controller,
               pivot_x = (x1 + x2) / 2.0;
               pivot_y = (y1 + y2) / 2.0;
 
-              gimp_matrix3_transform_point (&transforms[i],
+              ligma_matrix3_transform_point (&transforms[i],
                                             pivot_x, pivot_y,
                                             &pivot_x, &pivot_y);
             }
@@ -715,8 +715,8 @@ gimp_filter_tool_set_transform_grids (Controller        *controller,
           g_object_set (grid,
                         "pivot-x",                 pivot_x,
                         "pivot-y",                 pivot_y,
-                        "inside-function",         GIMP_TRANSFORM_FUNCTION_MOVE,
-                        "outside-function",        GIMP_TRANSFORM_FUNCTION_ROTATE,
+                        "inside-function",         LIGMA_TRANSFORM_FUNCTION_MOVE,
+                        "outside-function",        LIGMA_TRANSFORM_FUNCTION_ROTATE,
                         "use-corner-handles",      TRUE,
                         "use-perspective-handles", TRUE,
                         "use-side-handles",        TRUE,
@@ -724,27 +724,27 @@ gimp_filter_tool_set_transform_grids (Controller        *controller,
                         "use-pivot-handle",        TRUE,
                         NULL);
 
-          gimp_container_add (grids, GIMP_OBJECT (grid));
+          ligma_container_add (grids, LIGMA_OBJECT (grid));
 
           g_object_unref (grid);
         }
 
-      gimp_tool_widget_set_focus (grid, TRUE);
+      ligma_tool_widget_set_focus (grid, TRUE);
     }
   else
     {
-      while (gimp_container_get_n_children (grids) > n_transforms)
-        gimp_container_remove (grids, gimp_container_get_last_child (grids));
+      while (ligma_container_get_n_children (grids) > n_transforms)
+        ligma_container_remove (grids, ligma_container_get_last_child (grids));
     }
 
   for (i = 0; i < n_transforms; i++)
     {
-      gimp_matrix3_identity (&matrix);
-      gimp_matrix3_translate (&matrix, -x1, -y1);
-      gimp_matrix3_mult (&transforms[i], &matrix);
-      gimp_matrix3_translate (&matrix, +x1, +y1);
+      ligma_matrix3_identity (&matrix);
+      ligma_matrix3_translate (&matrix, -x1, -y1);
+      ligma_matrix3_mult (&transforms[i], &matrix);
+      ligma_matrix3_translate (&matrix, +x1, +y1);
 
-      g_object_set (gimp_container_get_child_by_index (grids, i),
+      g_object_set (ligma_container_get_child_by_index (grids, i),
                     "transform", &matrix,
                     "x1",        x1,
                     "y1",        y1,
@@ -754,47 +754,47 @@ gimp_filter_tool_set_transform_grids (Controller        *controller,
     }
 
   g_signal_handlers_unblock_by_func (controller->widget,
-                                     gimp_filter_tool_transform_grids_changed,
+                                     ligma_filter_tool_transform_grids_changed,
                                      controller);
 }
 
 static void
-gimp_filter_tool_transform_grids_changed (GimpToolWidget *widget,
+ligma_filter_tool_transform_grids_changed (LigmaToolWidget *widget,
                                           Controller     *controller)
 {
-  GimpFilterTool                       *filter_tool = controller->filter_tool;
-  GimpControllerTransformGridsCallback  transform_grids_callback;
-  GimpContainer                        *grids;
+  LigmaFilterTool                       *filter_tool = controller->filter_tool;
+  LigmaControllerTransformGridsCallback  transform_grids_callback;
+  LigmaContainer                        *grids;
   gint                                  off_x, off_y;
   GeglRectangle                         area;
-  GimpMatrix3                          *transforms;
+  LigmaMatrix3                          *transforms;
   gint                                  n_transforms;
   gint                                  i;
 
   transform_grids_callback =
-    (GimpControllerTransformGridsCallback) controller->creator_callback;
+    (LigmaControllerTransformGridsCallback) controller->creator_callback;
 
-  grids = gimp_tool_widget_group_get_children (
-    GIMP_TOOL_WIDGET_GROUP (controller->widget));
+  grids = ligma_tool_widget_group_get_children (
+    LIGMA_TOOL_WIDGET_GROUP (controller->widget));
 
-  gimp_filter_tool_get_drawable_area (filter_tool, &off_x, &off_y, &area);
+  ligma_filter_tool_get_drawable_area (filter_tool, &off_x, &off_y, &area);
 
-  n_transforms = gimp_container_get_n_children (grids);
-  transforms   = g_new (GimpMatrix3, n_transforms);
+  n_transforms = ligma_container_get_n_children (grids);
+  transforms   = g_new (LigmaMatrix3, n_transforms);
 
   for (i = 0; i < n_transforms; i++)
     {
-      GimpMatrix3 *transform;
+      LigmaMatrix3 *transform;
 
-      g_object_get (gimp_container_get_child_by_index (grids, i),
+      g_object_get (ligma_container_get_child_by_index (grids, i),
                     "transform", &transform,
                     NULL);
 
-      gimp_matrix3_identity (&transforms[i]);
-      gimp_matrix3_translate (&transforms[i],
+      ligma_matrix3_identity (&transforms[i]);
+      ligma_matrix3_translate (&transforms[i],
                               +(off_x + area.x), +(off_y + area.y));
-      gimp_matrix3_mult (transform, &transforms[i]);
-      gimp_matrix3_translate (&transforms[i],
+      ligma_matrix3_mult (transform, &transforms[i]);
+      ligma_matrix3_translate (&transforms[i],
                               -(off_x + area.x), -(off_y + area.y));
 
       g_free (transform);
@@ -807,7 +807,7 @@ gimp_filter_tool_transform_grids_changed (GimpToolWidget *widget,
 }
 
 static void
-gimp_filter_tool_set_gyroscope (Controller    *controller,
+ligma_filter_tool_set_gyroscope (Controller    *controller,
                                 GeglRectangle *area,
                                 gdouble        yaw,
                                 gdouble        pitch,
@@ -819,7 +819,7 @@ gimp_filter_tool_set_gyroscope (Controller    *controller,
     return;
 
   g_signal_handlers_block_by_func (controller->widget,
-                                   gimp_filter_tool_gyroscope_changed,
+                                   ligma_filter_tool_gyroscope_changed,
                                    controller);
 
   g_object_set (controller->widget,
@@ -831,16 +831,16 @@ gimp_filter_tool_set_gyroscope (Controller    *controller,
                 NULL);
 
   g_signal_handlers_unblock_by_func (controller->widget,
-                                     gimp_filter_tool_gyroscope_changed,
+                                     ligma_filter_tool_gyroscope_changed,
                                      controller);
 }
 
 static void
-gimp_filter_tool_gyroscope_changed (GimpToolWidget *widget,
+ligma_filter_tool_gyroscope_changed (LigmaToolWidget *widget,
                                     Controller     *controller)
 {
-  GimpFilterTool                  *filter_tool = controller->filter_tool;
-  GimpControllerGyroscopeCallback  gyroscope_callback;
+  LigmaFilterTool                  *filter_tool = controller->filter_tool;
+  LigmaControllerGyroscopeCallback  gyroscope_callback;
   gint                             off_x, off_y;
   GeglRectangle                    area;
   gdouble                          yaw;
@@ -850,9 +850,9 @@ gimp_filter_tool_gyroscope_changed (GimpToolWidget *widget,
   gboolean                         invert;
 
   gyroscope_callback =
-    (GimpControllerGyroscopeCallback) controller->creator_callback;
+    (LigmaControllerGyroscopeCallback) controller->creator_callback;
 
-  gimp_filter_tool_get_drawable_area (filter_tool, &off_x, &off_y, &area);
+  ligma_filter_tool_get_drawable_area (filter_tool, &off_x, &off_y, &area);
 
   g_object_get (widget,
                 "yaw",    &yaw,
@@ -867,9 +867,9 @@ gimp_filter_tool_gyroscope_changed (GimpToolWidget *widget,
 }
 
 static void
-gimp_filter_tool_set_focus (Controller    *controller,
+ligma_filter_tool_set_focus (Controller    *controller,
                             GeglRectangle *area,
-                            GimpLimitType  type,
+                            LigmaLimitType  type,
                             gdouble        x,
                             gdouble        y,
                             gdouble        radius,
@@ -878,27 +878,27 @@ gimp_filter_tool_set_focus (Controller    *controller,
                             gdouble        inner_limit,
                             gdouble        midpoint)
 {
-  GimpTool     *tool;
-  GimpDrawable *drawable;
+  LigmaTool     *tool;
+  LigmaDrawable *drawable;
 
   if (! controller->widget)
     return;
 
-  tool     = GIMP_TOOL (controller->filter_tool);
+  tool     = LIGMA_TOOL (controller->filter_tool);
   drawable = tool->drawables->data;
 
   if (drawable)
     {
       gint off_x, off_y;
 
-      gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
+      ligma_item_get_offset (LIGMA_ITEM (drawable), &off_x, &off_y);
 
       x += off_x + area->x;
       y += off_y + area->y;
     }
 
   g_signal_handlers_block_by_func (controller->widget,
-                                   gimp_filter_tool_focus_changed,
+                                   ligma_filter_tool_focus_changed,
                                    controller);
 
   g_object_set (controller->widget,
@@ -913,17 +913,17 @@ gimp_filter_tool_set_focus (Controller    *controller,
                 NULL);
 
   g_signal_handlers_unblock_by_func (controller->widget,
-                                     gimp_filter_tool_focus_changed,
+                                     ligma_filter_tool_focus_changed,
                                      controller);
 }
 
 static void
-gimp_filter_tool_focus_changed (GimpToolWidget *widget,
+ligma_filter_tool_focus_changed (LigmaToolWidget *widget,
                                 Controller     *controller)
 {
-  GimpFilterTool              *filter_tool = controller->filter_tool;
-  GimpControllerFocusCallback  focus_callback;
-  GimpLimitType                type;
+  LigmaFilterTool              *filter_tool = controller->filter_tool;
+  LigmaControllerFocusCallback  focus_callback;
+  LigmaLimitType                type;
   gdouble                      x,  y;
   gdouble                      radius;
   gdouble                      aspect_ratio;
@@ -933,7 +933,7 @@ gimp_filter_tool_focus_changed (GimpToolWidget *widget,
   gint                         off_x, off_y;
   GeglRectangle                area;
 
-  focus_callback = (GimpControllerFocusCallback) controller->creator_callback;
+  focus_callback = (LigmaControllerFocusCallback) controller->creator_callback;
 
   g_object_get (widget,
                 "type",         &type,
@@ -946,7 +946,7 @@ gimp_filter_tool_focus_changed (GimpToolWidget *widget,
                 "midpoint",     &midpoint,
                 NULL);
 
-  gimp_filter_tool_get_drawable_area (filter_tool, &off_x, &off_y, &area);
+  ligma_filter_tool_get_drawable_area (filter_tool, &off_x, &off_y, &area);
 
   x -= off_x + area.x;
   y -= off_y + area.y;

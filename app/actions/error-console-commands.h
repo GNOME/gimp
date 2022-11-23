@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,23 +19,23 @@
 #define __ERROR_CONSOLE_COMMANDS_H__
 
 
-void   error_console_clear_cmd_callback             (GimpAction *action,
+void   error_console_clear_cmd_callback             (LigmaAction *action,
                                                      GVariant   *value,
                                                      gpointer    data);
-void   error_console_select_all_cmd_callback        (GimpAction *action,
+void   error_console_select_all_cmd_callback        (LigmaAction *action,
                                                      GVariant   *value,
                                                      gpointer    data);
-void   error_console_save_cmd_callback              (GimpAction *action,
+void   error_console_save_cmd_callback              (LigmaAction *action,
                                                      GVariant   *value,
                                                      gpointer    data);
 
-void   error_console_highlight_error_cmd_callback   (GimpAction *action,
+void   error_console_highlight_error_cmd_callback   (LigmaAction *action,
                                                      GVariant   *value,
                                                      gpointer    data);
-void   error_console_highlight_warning_cmd_callback (GimpAction *action,
+void   error_console_highlight_warning_cmd_callback (LigmaAction *action,
                                                      GVariant   *value,
                                                      gpointer    data);
-void   error_console_highlight_info_cmd_callback    (GimpAction *action,
+void   error_console_highlight_info_cmd_callback    (LigmaAction *action,
                                                      GVariant   *value,
                                                      gpointer    data);
 

@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpcontroller.c
- * Copyright (C) 2004 Michael Natterer <mitch@gimp.org>
+ * ligmacontroller.c
+ * Copyright (C) 2004 Michael Natterer <mitch@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,23 +24,23 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmaconfig/ligmaconfig.h"
 
-#include "gimpwidgetstypes.h"
+#include "ligmawidgetstypes.h"
 
-#include "gimpwidgetsmarshal.h"
+#include "ligmawidgetsmarshal.h"
 
-#define GIMP_ENABLE_CONTROLLER_UNDER_CONSTRUCTION
-#include "gimpcontroller.h"
-#include "gimpicons.h"
+#define LIGMA_ENABLE_CONTROLLER_UNDER_CONSTRUCTION
+#include "ligmacontroller.h"
+#include "ligmaicons.h"
 
 
 /**
- * SECTION: gimpcontroller
- * @title: GimpController
- * @short_description: Pluggable GIMP input controller modules.
+ * SECTION: ligmacontroller
+ * @title: LigmaController
+ * @short_description: Pluggable LIGMA input controller modules.
  *
  * An abstract interface for implementing arbitrary input controllers.
  **/
@@ -60,38 +60,38 @@ enum
 };
 
 
-static void   gimp_controller_finalize     (GObject      *object);
-static void   gimp_controller_set_property (GObject      *object,
+static void   ligma_controller_finalize     (GObject      *object);
+static void   ligma_controller_set_property (GObject      *object,
                                             guint         property_id,
                                             const GValue *value,
                                             GParamSpec   *pspec);
-static void   gimp_controller_get_property (GObject      *object,
+static void   ligma_controller_get_property (GObject      *object,
                                             guint         property_id,
                                             GValue       *value,
                                             GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpController, gimp_controller, G_TYPE_OBJECT,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG, NULL))
+G_DEFINE_TYPE_WITH_CODE (LigmaController, ligma_controller, G_TYPE_OBJECT,
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_CONFIG, NULL))
 
-#define parent_class gimp_controller_parent_class
+#define parent_class ligma_controller_parent_class
 
 static guint controller_signals[LAST_SIGNAL] = { 0 };
 
 
 static void
-gimp_controller_class_init (GimpControllerClass *klass)
+ligma_controller_class_init (LigmaControllerClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->finalize     = gimp_controller_finalize;
-  object_class->set_property = gimp_controller_set_property;
-  object_class->get_property = gimp_controller_get_property;
+  object_class->finalize     = ligma_controller_finalize;
+  object_class->set_property = ligma_controller_set_property;
+  object_class->get_property = ligma_controller_get_property;
 
   klass->name                = "Unnamed";
   klass->help_domain         = NULL;
   klass->help_id             = NULL;
-  klass->icon_name           = GIMP_ICON_CONTROLLER;
+  klass->icon_name           = LIGMA_ICON_CONTROLLER;
 
   klass->get_n_events        = NULL;
   klass->get_event_name      = NULL;
@@ -102,7 +102,7 @@ gimp_controller_class_init (GimpControllerClass *klass)
                                                         "Name",
                                                         "The controller's name",
                                                         "Unnamed Controller",
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_STATE,
@@ -110,29 +110,29 @@ gimp_controller_class_init (GimpControllerClass *klass)
                                                         "State",
                                                         "The controller's state, as human-readable string",
                                                         "Unknown",
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   controller_signals[EVENT] =
     g_signal_new ("event",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (GimpControllerClass, event),
+                  G_STRUCT_OFFSET (LigmaControllerClass, event),
                   g_signal_accumulator_true_handled, NULL,
-                  _gimp_widgets_marshal_BOOLEAN__POINTER,
+                  _ligma_widgets_marshal_BOOLEAN__POINTER,
                   G_TYPE_BOOLEAN, 1,
                   G_TYPE_POINTER);
 }
 
 static void
-gimp_controller_init (GimpController *controller)
+ligma_controller_init (LigmaController *controller)
 {
 }
 
 static void
-gimp_controller_finalize (GObject *object)
+ligma_controller_finalize (GObject *object)
 {
-  GimpController *controller = GIMP_CONTROLLER (object);
+  LigmaController *controller = LIGMA_CONTROLLER (object);
 
   g_clear_pointer (&controller->name,  g_free);
   g_clear_pointer (&controller->state, g_free);
@@ -141,12 +141,12 @@ gimp_controller_finalize (GObject *object)
 }
 
 static void
-gimp_controller_set_property (GObject      *object,
+ligma_controller_set_property (GObject      *object,
                               guint         property_id,
                               const GValue *value,
                               GParamSpec   *pspec)
 {
-  GimpController *controller = GIMP_CONTROLLER (object);
+  LigmaController *controller = LIGMA_CONTROLLER (object);
 
   switch (property_id)
     {
@@ -167,12 +167,12 @@ gimp_controller_set_property (GObject      *object,
 }
 
 static void
-gimp_controller_get_property (GObject    *object,
+ligma_controller_get_property (GObject    *object,
                               guint       property_id,
                               GValue     *value,
                               GParamSpec *pspec)
 {
-  GimpController *controller = GIMP_CONTROLLER (object);
+  LigmaController *controller = LIGMA_CONTROLLER (object);
 
   switch (property_id)
     {
@@ -188,12 +188,12 @@ gimp_controller_get_property (GObject    *object,
     }
 }
 
-GimpController *
-gimp_controller_new (GType controller_type)
+LigmaController *
+ligma_controller_new (GType controller_type)
 {
-  GimpController *controller;
+  LigmaController *controller;
 
-  g_return_val_if_fail (g_type_is_a (controller_type, GIMP_TYPE_CONTROLLER),
+  g_return_val_if_fail (g_type_is_a (controller_type, LIGMA_TYPE_CONTROLLER),
                         NULL);
 
   controller = g_object_new (controller_type, NULL);
@@ -202,26 +202,26 @@ gimp_controller_new (GType controller_type)
 }
 
 gint
-gimp_controller_get_n_events (GimpController *controller)
+ligma_controller_get_n_events (LigmaController *controller)
 {
-  g_return_val_if_fail (GIMP_IS_CONTROLLER (controller), 0);
+  g_return_val_if_fail (LIGMA_IS_CONTROLLER (controller), 0);
 
-  if (GIMP_CONTROLLER_GET_CLASS (controller)->get_n_events)
-    return GIMP_CONTROLLER_GET_CLASS (controller)->get_n_events (controller);
+  if (LIGMA_CONTROLLER_GET_CLASS (controller)->get_n_events)
+    return LIGMA_CONTROLLER_GET_CLASS (controller)->get_n_events (controller);
 
   return 0;
 }
 
 const gchar *
-gimp_controller_get_event_name (GimpController *controller,
+ligma_controller_get_event_name (LigmaController *controller,
                                 gint            event_id)
 {
   const gchar *name = NULL;
 
-  g_return_val_if_fail (GIMP_IS_CONTROLLER (controller), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTROLLER (controller), NULL);
 
-  if (GIMP_CONTROLLER_GET_CLASS (controller)->get_event_name)
-    name = GIMP_CONTROLLER_GET_CLASS (controller)->get_event_name (controller,
+  if (LIGMA_CONTROLLER_GET_CLASS (controller)->get_event_name)
+    name = LIGMA_CONTROLLER_GET_CLASS (controller)->get_event_name (controller,
                                                                    event_id);
 
   if (! name)
@@ -231,15 +231,15 @@ gimp_controller_get_event_name (GimpController *controller,
 }
 
 const gchar *
-gimp_controller_get_event_blurb (GimpController *controller,
+ligma_controller_get_event_blurb (LigmaController *controller,
                                  gint            event_id)
 {
   const gchar *blurb = NULL;
 
-  g_return_val_if_fail (GIMP_IS_CONTROLLER (controller), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTROLLER (controller), NULL);
 
-  if (GIMP_CONTROLLER_GET_CLASS (controller)->get_event_blurb)
-    blurb =  GIMP_CONTROLLER_GET_CLASS (controller)->get_event_blurb (controller,
+  if (LIGMA_CONTROLLER_GET_CLASS (controller)->get_event_blurb)
+    blurb =  LIGMA_CONTROLLER_GET_CLASS (controller)->get_event_blurb (controller,
                                                                       event_id);
 
   if (! blurb)
@@ -249,12 +249,12 @@ gimp_controller_get_event_blurb (GimpController *controller,
 }
 
 gboolean
-gimp_controller_event (GimpController            *controller,
-                       const GimpControllerEvent *event)
+ligma_controller_event (LigmaController            *controller,
+                       const LigmaControllerEvent *event)
 {
   gboolean retval = FALSE;
 
-  g_return_val_if_fail (GIMP_IS_CONTROLLER (controller), FALSE);
+  g_return_val_if_fail (LIGMA_IS_CONTROLLER (controller), FALSE);
   g_return_val_if_fail (event != NULL, FALSE);
 
   g_signal_emit (controller, controller_signals[EVENT], 0,

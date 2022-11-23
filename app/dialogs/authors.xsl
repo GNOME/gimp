@@ -18,7 +18,7 @@
     </xsl:apply-templates>
   </xsl:template>
 
-  <xsl:template match="/dc:gimp-authors">
+  <xsl:template match="/dc:ligma-authors">
 <xsl:text>
 /* NOTE: This file is auto-generated from authors.xml, do not edit it. */
 

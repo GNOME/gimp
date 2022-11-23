@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,10 +22,10 @@
 
 #include "menus-types.h"
 
-#include "core/gimp.h"
-#include "core/gimp-filter-history.h"
+#include "core/ligma.h"
+#include "core/ligma-filter-history.h"
 
-#include "widgets/gimpuimanager.h"
+#include "widgets/ligmauimanager.h"
 
 #include "filters-menu.h"
 
@@ -33,18 +33,18 @@
 /*  public functions  */
 
 void
-filters_menu_setup (GimpUIManager *manager,
+filters_menu_setup (LigmaUIManager *manager,
                     const gchar   *ui_path)
 {
   guint merge_id;
   gint  i;
 
-  g_return_if_fail (GIMP_IS_UI_MANAGER (manager));
+  g_return_if_fail (LIGMA_IS_UI_MANAGER (manager));
   g_return_if_fail (ui_path != NULL);
 
-  merge_id = gimp_ui_manager_new_merge_id (manager);
+  merge_id = ligma_ui_manager_new_merge_id (manager);
 
-  for (i = 0; i < gimp_filter_history_size (manager->gimp); i++)
+  for (i = 0; i < ligma_filter_history_size (manager->ligma); i++)
     {
       gchar *action_name;
       gchar *action_path;
@@ -53,7 +53,7 @@ filters_menu_setup (GimpUIManager *manager,
       action_path = g_strdup_printf ("%s/Filters/Recently Used/Filters",
                                      ui_path);
 
-      gimp_ui_manager_add_ui (manager, merge_id,
+      ligma_ui_manager_add_ui (manager, merge_id,
                               action_path, action_name, action_name,
                               GTK_UI_MANAGER_MENUITEM,
                               FALSE);

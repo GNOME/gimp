@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  * Copyright (C) 1999 Adrian Likins and Tor Lillqvist
  *
@@ -16,19 +16,19 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_BRUSH_PIPE_H__
-#define __GIMP_BRUSH_PIPE_H__
+#ifndef __LIGMA_BRUSH_PIPE_H__
+#define __LIGMA_BRUSH_PIPE_H__
 
 
-#include "gimpbrush.h"
+#include "ligmabrush.h"
 
 
-#define GIMP_TYPE_BRUSH_PIPE            (gimp_brush_pipe_get_type ())
-#define GIMP_BRUSH_PIPE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_BRUSH_PIPE, GimpBrushPipe))
-#define GIMP_BRUSH_PIPE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_BRUSH_PIPE, GimpBrushPipeClass))
-#define GIMP_IS_BRUSH_PIPE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_BRUSH_PIPE))
-#define GIMP_IS_BRUSH_PIPE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_BRUSH_PIPE))
-#define GIMP_BRUSH_PIPE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_BRUSH_PIPE, GimpBrushPipeClass))
+#define LIGMA_TYPE_BRUSH_PIPE            (ligma_brush_pipe_get_type ())
+#define LIGMA_BRUSH_PIPE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_BRUSH_PIPE, LigmaBrushPipe))
+#define LIGMA_BRUSH_PIPE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_BRUSH_PIPE, LigmaBrushPipeClass))
+#define LIGMA_IS_BRUSH_PIPE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_BRUSH_PIPE))
+#define LIGMA_IS_BRUSH_PIPE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_BRUSH_PIPE))
+#define LIGMA_BRUSH_PIPE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_BRUSH_PIPE, LigmaBrushPipeClass))
 
 
 typedef enum
@@ -44,11 +44,11 @@ typedef enum
 } PipeSelectModes;
 
 
-typedef struct _GimpBrushPipeClass GimpBrushPipeClass;
+typedef struct _LigmaBrushPipeClass LigmaBrushPipeClass;
 
-struct _GimpBrushPipe
+struct _LigmaBrushPipe
 {
-  GimpBrush         parent_instance;
+  LigmaBrush         parent_instance;
 
   gint              dimension;
   gint             *rank;       /* Size in each dimension */
@@ -59,22 +59,22 @@ struct _GimpBrushPipe
 
   gint              n_brushes;  /* Might be less than the product of the
                                  * ranks in some odd special case */
-  GimpBrush       **brushes;
-  GimpBrush        *current;    /* Currently selected brush */
+  LigmaBrush       **brushes;
+  LigmaBrush        *current;    /* Currently selected brush */
 
   gchar            *params;     /* For pipe <-> image conversion */
 };
 
-struct _GimpBrushPipeClass
+struct _LigmaBrushPipeClass
 {
-  GimpBrushClass  parent_class;
+  LigmaBrushClass  parent_class;
 };
 
 
-GType      gimp_brush_pipe_get_type   (void) G_GNUC_CONST;
+GType      ligma_brush_pipe_get_type   (void) G_GNUC_CONST;
 
-gboolean   gimp_brush_pipe_set_params (GimpBrushPipe *pipe,
+gboolean   ligma_brush_pipe_set_params (LigmaBrushPipe *pipe,
                                        const gchar   *paramstring);
 
 
-#endif  /* __GIMP_BRUSH_PIPE_H__ */
+#endif  /* __LIGMA_BRUSH_PIPE_H__ */

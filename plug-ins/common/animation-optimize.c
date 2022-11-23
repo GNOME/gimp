@@ -2,10 +2,10 @@
  * Animation Optimizer plug-in version 1.1.2
  *
  * (c) Adam D. Moss, 1997-2003
- *     adam@gimp.org
+ *     adam@ligma.org
  *     adam@foxbox.org
  *
- * GIMP - The GNU Image Manipulation Program
+ * LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -31,9 +31,9 @@
 
 #include <string.h>
 
-#include <libgimp/gimp.h>
+#include <libligma/ligma.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 #define OPTIMIZE_PROC        "plug-in-animationoptimize"
@@ -65,12 +65,12 @@ typedef struct _OptimizeClass OptimizeClass;
 
 struct _Optimize
 {
-  GimpPlugIn parent_instance;
+  LigmaPlugIn parent_instance;
 };
 
 struct _OptimizeClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -79,20 +79,20 @@ struct _OptimizeClass
 
 GType                   optimize_get_type         (void) G_GNUC_CONST;
 
-static GList          * optimize_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * optimize_create_procedure (GimpPlugIn           *plug_in,
+static GList          * optimize_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * optimize_create_procedure (LigmaPlugIn           *plug_in,
                                                    const gchar          *name);
 
-static GimpValueArray * optimize_run              (GimpProcedure        *procedure,
-                                                   GimpRunMode           run_mode,
-                                                   GimpImage            *image,
+static LigmaValueArray * optimize_run              (LigmaProcedure        *procedure,
+                                                   LigmaRunMode           run_mode,
+                                                   LigmaImage            *image,
                                                    gint                  n_drawables,
-                                                   GimpDrawable        **drawables,
-                                                   const GimpValueArray *args,
+                                                   LigmaDrawable        **drawables,
+                                                   const LigmaValueArray *args,
                                                    gpointer              run_data);
 
-static  GimpImage     * do_optimizations          (GimpRunMode  run_mode,
-                                                   GimpImage   *image,
+static  LigmaImage     * do_optimizations          (LigmaRunMode  run_mode,
+                                                   LigmaImage   *image,
                                                    gboolean     diff_only);
 
 /* tag util functions*/
@@ -112,16 +112,16 @@ static  gboolean        is_ms_tag                 (const gchar *str,
                                                    gint        *taglength);
 
 
-G_DEFINE_TYPE (Optimize, optimize, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Optimize, optimize, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (OPTIMIZE_TYPE)
+LIGMA_MAIN (OPTIMIZE_TYPE)
 DEFINE_STD_SET_I18N
 
 
 /* Global widgets'n'stuff */
 static  guint             width, height;
 static  gint32            total_frames;
-static  GimpLayer       **layers;
+static  LigmaLayer       **layers;
 static  guchar            pixelstep;
 static  guchar           *palette;
 static  gint              ncolors;
@@ -131,7 +131,7 @@ static  operatingMode     opmode;
 static void
 optimize_class_init (OptimizeClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = optimize_query_procedures;
   plug_in_class->create_procedure = optimize_create_procedure;
@@ -144,7 +144,7 @@ optimize_init (Optimize *optimize)
 }
 
 static GList *
-optimize_query_procedures (GimpPlugIn *plug_in)
+optimize_query_procedures (LigmaPlugIn *plug_in)
 {
   GList *list = NULL;
 
@@ -159,30 +159,30 @@ optimize_query_procedures (GimpPlugIn *plug_in)
   return list;
 }
 
-static GimpProcedure *
-optimize_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+optimize_create_procedure (LigmaPlugIn  *plug_in,
                            const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, OPTIMIZE_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_image_procedure_new (plug_in, name,
+                                            LIGMA_PDB_PROC_TYPE_PLUGIN,
                                             optimize_run, NULL, NULL);
 
-      gimp_procedure_set_sensitivity_mask (procedure,
-                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE  |
-                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLES |
-                                           GIMP_PROCEDURE_SENSITIVE_NO_DRAWABLES);
+      ligma_procedure_set_sensitivity_mask (procedure,
+                                           LIGMA_PROCEDURE_SENSITIVE_DRAWABLE  |
+                                           LIGMA_PROCEDURE_SENSITIVE_DRAWABLES |
+                                           LIGMA_PROCEDURE_SENSITIVE_NO_DRAWABLES);
 
-      gimp_procedure_set_menu_label (procedure, _("Optimize (for _GIF)"));
+      ligma_procedure_set_menu_label (procedure, _("Optimize (for _GIF)"));
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         _("Modify image to reduce size when "
                                           "saved as GIF animation"),
                                         "This procedure applies various "
-                                        "optimizations to a GIMP layer-based "
+                                        "optimizations to a LIGMA layer-based "
                                         "animation in an attempt to reduce the "
                                         "final file size.  If a frame of the"
                                         "animation can use the 'combine' "
@@ -195,22 +195,22 @@ optimize_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, OPTIMIZE_DIFF_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_image_procedure_new (plug_in, name,
+                                            LIGMA_PDB_PROC_TYPE_PLUGIN,
                                             optimize_run, NULL, NULL);
 
-      gimp_procedure_set_sensitivity_mask (procedure,
-                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE  |
-                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLES |
-                                           GIMP_PROCEDURE_SENSITIVE_NO_DRAWABLES);
+      ligma_procedure_set_sensitivity_mask (procedure,
+                                           LIGMA_PROCEDURE_SENSITIVE_DRAWABLE  |
+                                           LIGMA_PROCEDURE_SENSITIVE_DRAWABLES |
+                                           LIGMA_PROCEDURE_SENSITIVE_NO_DRAWABLES);
 
-      gimp_procedure_set_menu_label (procedure, _("_Optimize (Difference)"));
+      ligma_procedure_set_menu_label (procedure, _("_Optimize (Difference)"));
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         _("Reduce file size where "
                                           "combining layers is possible"),
                                         "This procedure applies various "
-                                        "optimizations to a GIMP layer-based "
+                                        "optimizations to a LIGMA layer-based "
                                         "animation in an attempt to reduce "
                                         "the final file size.  If a frame of "
                                         "the animation can use the 'combine' "
@@ -220,21 +220,21 @@ optimize_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, UNOPTIMIZE_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_image_procedure_new (plug_in, name,
+                                            LIGMA_PDB_PROC_TYPE_PLUGIN,
                                             optimize_run, NULL, NULL);
 
-      gimp_procedure_set_sensitivity_mask (procedure,
-                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE  |
-                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLES |
-                                           GIMP_PROCEDURE_SENSITIVE_NO_DRAWABLES);
+      ligma_procedure_set_sensitivity_mask (procedure,
+                                           LIGMA_PROCEDURE_SENSITIVE_DRAWABLE  |
+                                           LIGMA_PROCEDURE_SENSITIVE_DRAWABLES |
+                                           LIGMA_PROCEDURE_SENSITIVE_NO_DRAWABLES);
 
-      gimp_procedure_set_menu_label (procedure, _("_Unoptimize"));
+      ligma_procedure_set_menu_label (procedure, _("_Unoptimize"));
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         _("Remove optimization to make "
                                           "editing easier"),
-                                        "This procedure 'simplifies' a GIMP "
+                                        "This procedure 'simplifies' a LIGMA "
                                         "layer-based animation that has been "
                                         "optimized for animation. This makes "
                                         "editing the animation much easier.",
@@ -242,20 +242,20 @@ optimize_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, REMOVE_BACKDROP_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_image_procedure_new (plug_in, name,
+                                            LIGMA_PDB_PROC_TYPE_PLUGIN,
                                             optimize_run, NULL, NULL);
 
-      gimp_procedure_set_sensitivity_mask (procedure,
-                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE  |
-                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLES |
-                                           GIMP_PROCEDURE_SENSITIVE_NO_DRAWABLES);
+      ligma_procedure_set_sensitivity_mask (procedure,
+                                           LIGMA_PROCEDURE_SENSITIVE_DRAWABLE  |
+                                           LIGMA_PROCEDURE_SENSITIVE_DRAWABLES |
+                                           LIGMA_PROCEDURE_SENSITIVE_NO_DRAWABLES);
 
-      gimp_procedure_set_menu_label (procedure, _("_Remove Backdrop"));
+      ligma_procedure_set_menu_label (procedure, _("_Remove Backdrop"));
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "This procedure attempts to remove "
-                                        "the backdrop from a GIMP layer-based "
+                                        "the backdrop from a LIGMA layer-based "
                                         "animation, leaving the foreground "
                                         "animation over transparency.",
                                         NULL,
@@ -263,20 +263,20 @@ optimize_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, FIND_BACKDROP_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_image_procedure_new (plug_in, name,
+                                            LIGMA_PDB_PROC_TYPE_PLUGIN,
                                             optimize_run, NULL, NULL);
 
-      gimp_procedure_set_sensitivity_mask (procedure,
-                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE  |
-                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLES |
-                                           GIMP_PROCEDURE_SENSITIVE_NO_DRAWABLES);
+      ligma_procedure_set_sensitivity_mask (procedure,
+                                           LIGMA_PROCEDURE_SENSITIVE_DRAWABLE  |
+                                           LIGMA_PROCEDURE_SENSITIVE_DRAWABLES |
+                                           LIGMA_PROCEDURE_SENSITIVE_NO_DRAWABLES);
 
-      gimp_procedure_set_menu_label (procedure, _("_Find Backdrop"));
+      ligma_procedure_set_menu_label (procedure, _("_Find Backdrop"));
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "This procedure attempts to remove "
-                                        "the foreground from a GIMP "
+                                        "the foreground from a LIGMA "
                                         "layer-based animation, leaving"
                                         " a one-layered image containing only "
                                         "the constant backdrop image.",
@@ -286,16 +286,16 @@ optimize_create_procedure (GimpPlugIn  *plug_in,
 
   if (procedure)
     {
-      gimp_procedure_set_image_types (procedure, "*");
+      ligma_procedure_set_image_types (procedure, "*");
 
-      gimp_procedure_add_menu_path (procedure, "<Image>/Filters/Animation");
+      ligma_procedure_add_menu_path (procedure, "<Image>/Filters/Animation");
 
-      gimp_procedure_set_attribution (procedure,
-                                      "Adam D. Moss <adam@gimp.org>",
-                                      "Adam D. Moss <adam@gimp.org>",
+      ligma_procedure_set_attribution (procedure,
+                                      "Adam D. Moss <adam@ligma.org>",
+                                      "Adam D. Moss <adam@ligma.org>",
                                       "1997-2003");
 
-      GIMP_PROC_VAL_IMAGE (procedure, "result",
+      LIGMA_PROC_VAL_IMAGE (procedure, "result",
                            "Result",
                            "Resultimg image",
                            FALSE,
@@ -305,17 +305,17 @@ optimize_create_procedure (GimpPlugIn  *plug_in,
   return procedure;
 }
 
-static GimpValueArray *
-optimize_run (GimpProcedure        *procedure,
-              GimpRunMode           run_mode,
-              GimpImage            *image,
+static LigmaValueArray *
+optimize_run (LigmaProcedure        *procedure,
+              LigmaRunMode           run_mode,
+              LigmaImage            *image,
               gint                  n_drawables,
-              GimpDrawable        **drawables,
-              const GimpValueArray *args,
+              LigmaDrawable        **drawables,
+              const LigmaValueArray *args,
               gpointer              run_data)
 {
-  GimpValueArray *return_vals;
-  const gchar    *name      = gimp_procedure_get_name (procedure);
+  LigmaValueArray *return_vals;
+  const gchar    *name      = ligma_procedure_get_name (procedure);
   gboolean        diff_only = FALSE;
 
   gegl_init (NULL, NULL);
@@ -344,14 +344,14 @@ optimize_run (GimpProcedure        *procedure,
 
   image = do_optimizations (run_mode, image, diff_only);
 
-  if (run_mode != GIMP_RUN_NONINTERACTIVE)
-    gimp_displays_flush();
+  if (run_mode != LIGMA_RUN_NONINTERACTIVE)
+    ligma_displays_flush();
 
-  return_vals = gimp_procedure_new_return_values (procedure,
-                                                  GIMP_PDB_SUCCESS,
+  return_vals = ligma_procedure_new_return_values (procedure,
+                                                  LIGMA_PDB_SUCCESS,
                                                   NULL);
 
-  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
+  LIGMA_VALUES_SET_IMAGE (return_vals, 1, image);
 
   return return_vals;
 }
@@ -372,24 +372,24 @@ total_alpha (guchar  *imdata,
 }
 
 static const Babl *
-get_format (GimpDrawable *drawable)
+get_format (LigmaDrawable *drawable)
 {
-  if (gimp_drawable_is_rgb (drawable))
+  if (ligma_drawable_is_rgb (drawable))
     {
-      if (gimp_drawable_has_alpha (drawable))
+      if (ligma_drawable_has_alpha (drawable))
         return babl_format ("R'G'B'A u8");
       else
         return babl_format ("R'G'B' u8");
     }
-  else if (gimp_drawable_is_gray (drawable))
+  else if (ligma_drawable_is_gray (drawable))
     {
-      if (gimp_drawable_has_alpha (drawable))
+      if (ligma_drawable_has_alpha (drawable))
         return babl_format ("Y'A u8");
       else
         return babl_format ("Y' u8");
     }
 
-  return gimp_drawable_get_format (drawable);
+  return ligma_drawable_get_format (drawable);
 }
 
 static void
@@ -398,7 +398,7 @@ compose_row (gint          frame_num,
              gint          row_num,
              guchar       *dest,
              gint          dest_width,
-             GimpDrawable *drawable,
+             LigmaDrawable *drawable,
              gboolean      cleanup)
 {
   static guchar *line_buf = NULL;
@@ -425,10 +425,10 @@ compose_row (gint          frame_num,
       total_alpha (dest, dest_width, pixelstep);
     }
 
-  gimp_drawable_get_offsets (drawable, &rawx, &rawy);
+  ligma_drawable_get_offsets (drawable, &rawx, &rawy);
 
-  rawwidth  = gimp_drawable_get_width (drawable);
-  rawheight = gimp_drawable_get_height (drawable);
+  rawwidth  = ligma_drawable_get_width (drawable);
+  rawheight = ligma_drawable_get_height (drawable);
 
   /* this frame has nothing to give us for this row; return */
   if (row_num >= rawheight + rawy ||
@@ -437,7 +437,7 @@ compose_row (gint          frame_num,
 
   format = get_format (drawable);
 
-  has_alpha = gimp_drawable_has_alpha (drawable);
+  has_alpha = ligma_drawable_has_alpha (drawable);
   rawbpp    = babl_format_get_bytes_per_pixel (format);
 
   if (line_buf)
@@ -449,7 +449,7 @@ compose_row (gint          frame_num,
 
   /* Initialise and fetch the raw new frame row */
 
-  src_buffer = gimp_drawable_get_buffer (drawable);
+  src_buffer = ligma_drawable_get_buffer (drawable);
 
   gegl_buffer_get (src_buffer, GEGL_RECTANGLE (0, row_num - rawy,
                                                rawwidth, 1), 1.0,
@@ -484,20 +484,20 @@ compose_row (gint          frame_num,
 }
 
 
-static GimpImage *
-do_optimizations (GimpRunMode  run_mode,
-                  GimpImage   *image,
+static LigmaImage *
+do_optimizations (LigmaRunMode  run_mode,
+                  LigmaImage   *image,
                   gboolean     diff_only)
 {
-  GimpImage         *new_image;
-  GimpImageBaseType  imagetype;
-  GimpImageType      drawabletype_alpha;
+  LigmaImage         *new_image;
+  LigmaImageBaseType  imagetype;
+  LigmaImageType      drawabletype_alpha;
   static guchar     *rawframe = NULL;
   guchar            *srcptr;
   guchar            *destptr;
   gint               row, this_frame_num;
   guint32            frame_sizebytes;
-  GimpLayer         *new_layer;
+  LigmaLayer         *new_layer;
   DisposeType        dispose;
   guchar            *this_frame = NULL;
   guchar            *last_frame = NULL;
@@ -506,7 +506,7 @@ do_optimizations (GimpRunMode  run_mode,
 
   gint               this_delay;
   gint               cumulated_delay = 0;
-  GimpLayer         *last_true_frame = NULL;
+  LigmaLayer         *last_true_frame = NULL;
   gint               buflen;
 
   gchar             *oldlayer_name;
@@ -520,28 +520,28 @@ do_optimizations (GimpRunMode  run_mode,
   switch (opmode)
     {
     case OPUNOPTIMIZE:
-      gimp_progress_init (_("Unoptimizing animation"));
+      ligma_progress_init (_("Unoptimizing animation"));
       break;
     case OPFOREGROUND:
-      gimp_progress_init (_("Removing animation background"));
+      ligma_progress_init (_("Removing animation background"));
       break;
     case OPBACKGROUND:
-      gimp_progress_init (_("Finding animation background"));
+      ligma_progress_init (_("Finding animation background"));
       break;
     case OPOPTIMIZE:
     default:
-      gimp_progress_init (_("Optimizing animation"));
+      ligma_progress_init (_("Optimizing animation"));
       break;
     }
 
-  width     = gimp_image_get_width (image);
-  height    = gimp_image_get_height (image);
-  layers    = gimp_image_get_layers (image, &total_frames);
-  imagetype = gimp_image_get_base_type (image);
-  pixelstep = (imagetype == GIMP_RGB) ? 4 : 2;
+  width     = ligma_image_get_width (image);
+  height    = ligma_image_get_height (image);
+  layers    = ligma_image_get_layers (image, &total_frames);
+  imagetype = ligma_image_get_base_type (image);
+  pixelstep = (imagetype == LIGMA_RGB) ? 4 : 2;
 
-  drawabletype_alpha = (imagetype == GIMP_RGB) ? GIMP_RGBA_IMAGE :
-    ((imagetype == GIMP_INDEXED) ? GIMP_INDEXEDA_IMAGE : GIMP_GRAYA_IMAGE);
+  drawabletype_alpha = (imagetype == LIGMA_RGB) ? LIGMA_RGBA_IMAGE :
+    ((imagetype == LIGMA_INDEXED) ? LIGMA_INDEXEDA_IMAGE : LIGMA_GRAYA_IMAGE);
 
   frame_sizebytes = width * height * pixelstep;
 
@@ -556,13 +556,13 @@ do_optimizations (GimpRunMode  run_mode,
   total_alpha (this_frame, width*height, pixelstep);
   total_alpha (last_frame, width*height, pixelstep);
 
-  new_image = gimp_image_new (width, height, imagetype);
-  gimp_image_undo_disable (new_image);
+  new_image = ligma_image_new (width, height, imagetype);
+  ligma_image_undo_disable (new_image);
 
-  if (imagetype == GIMP_INDEXED)
+  if (imagetype == LIGMA_INDEXED)
     {
-      palette = gimp_image_get_colormap (image, &ncolors);
-      gimp_image_set_colormap (new_image, palette, ncolors);
+      palette = ligma_image_get_colormap (image, &ncolors);
+      ligma_image_set_colormap (new_image, palette, ncolors);
     }
 
 #if 1
@@ -605,8 +605,8 @@ do_optimizations (GimpRunMode  run_mode,
 
           for (this_frame_num=0; this_frame_num<total_frames; this_frame_num++)
             {
-              GimpDrawable *drawable =
-                GIMP_DRAWABLE (layers[total_frames-(this_frame_num+1)]);
+              LigmaDrawable *drawable =
+                LIGMA_DRAWABLE (layers[total_frames-(this_frame_num+1)]);
 
               dispose = get_frame_disposal (this_frame_num);
 
@@ -732,18 +732,18 @@ do_optimizations (GimpRunMode  run_mode,
       GeglBuffer *buffer;
       const Babl *format;
 
-      new_layer = gimp_layer_new (new_image,
+      new_layer = ligma_layer_new (new_image,
                                   "Backgroundx",
                                   width, height,
                                   drawabletype_alpha,
                                   100.0,
-                                  gimp_image_get_default_new_layer_mode (new_image));
+                                  ligma_image_get_default_new_layer_mode (new_image));
 
-      gimp_image_insert_layer (new_image, new_layer, NULL, 0);
+      ligma_image_insert_layer (new_image, new_layer, NULL, 0);
 
-      buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (new_layer));
+      buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (new_layer));
 
-      format = get_format (GIMP_DRAWABLE (new_layer));
+      format = get_format (LIGMA_DRAWABLE (new_layer));
 
       gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0, width, height), 0,
                        format, back_frame,
@@ -759,14 +759,14 @@ do_optimizations (GimpRunMode  run_mode,
            * BUILD THIS FRAME into our 'this_frame' buffer.
            */
 
-          GimpDrawable *drawable =
-            GIMP_DRAWABLE (layers[total_frames-(this_frame_num+1)]);
+          LigmaDrawable *drawable =
+            LIGMA_DRAWABLE (layers[total_frames-(this_frame_num+1)]);
 
           /* Image has been closed/etc since we got the layer list? */
-          /* FIXME - How do we tell if a gimp_drawable_get() fails? */
-          if (gimp_drawable_get_width (drawable) == 0)
+          /* FIXME - How do we tell if a ligma_drawable_get() fails? */
+          if (ligma_drawable_get_width (drawable) == 0)
             {
-              gimp_quit ();
+              ligma_quit ();
             }
 
           this_delay = get_frame_duration (this_frame_num);
@@ -1093,7 +1093,7 @@ do_optimizations (GimpRunMode  run_mode,
            */
 
           oldlayer_name =
-            gimp_item_get_name (GIMP_ITEM (layers[total_frames-(this_frame_num+1)]));
+            ligma_item_get_name (LIGMA_ITEM (layers[total_frames-(this_frame_num+1)]));
 
           buflen = strlen(oldlayer_name) + 40;
 
@@ -1121,7 +1121,7 @@ do_optimizations (GimpRunMode  run_mode,
 
               g_free (newlayer_name);
 
-              oldlayer_name = gimp_item_get_name (GIMP_ITEM (last_true_frame));
+              oldlayer_name = ligma_item_get_name (LIGMA_ITEM (last_true_frame));
 
               buflen = strlen (oldlayer_name) + 40;
 
@@ -1139,7 +1139,7 @@ do_optimizations (GimpRunMode  run_mode,
                           (this_frame_num ==  0) ? "" :
                           can_combine ? "(combine)" : "(replace)");
 
-              gimp_item_set_name (GIMP_ITEM (last_true_frame), newlayer_name);
+              ligma_item_set_name (LIGMA_ITEM (last_true_frame), newlayer_name);
 
               g_free (newlayer_name);
             }
@@ -1151,20 +1151,20 @@ do_optimizations (GimpRunMode  run_mode,
               cumulated_delay = this_delay;
 
               last_true_frame =
-                new_layer = gimp_layer_new (new_image,
+                new_layer = ligma_layer_new (new_image,
                                             newlayer_name,
                                             bbox_right-bbox_left,
                                             bbox_bottom-bbox_top,
                                             drawabletype_alpha,
                                             100.0,
-                                            gimp_image_get_default_new_layer_mode (new_image));
+                                            ligma_image_get_default_new_layer_mode (new_image));
               g_free (newlayer_name);
 
-              gimp_image_insert_layer (new_image, new_layer, NULL, 0);
+              ligma_image_insert_layer (new_image, new_layer, NULL, 0);
 
-              buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (new_layer));
+              buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (new_layer));
 
-              format = get_format (GIMP_DRAWABLE (new_layer));
+              format = get_format (LIGMA_DRAWABLE (new_layer));
 
               gegl_buffer_set (buffer,
                                GEGL_RECTANGLE (0, 0,
@@ -1174,20 +1174,20 @@ do_optimizations (GimpRunMode  run_mode,
                                GEGL_AUTO_ROWSTRIDE);
 
               g_object_unref (buffer);
-              gimp_item_transform_translate (GIMP_ITEM (new_layer), bbox_left, bbox_top);
+              ligma_item_transform_translate (LIGMA_ITEM (new_layer), bbox_left, bbox_top);
             }
 
-          gimp_progress_update (((gdouble) this_frame_num + 1.0) /
+          ligma_progress_update (((gdouble) this_frame_num + 1.0) /
                                 ((gdouble) total_frames));
         }
 
-      gimp_progress_update (1.0);
+      ligma_progress_update (1.0);
     }
 
-  gimp_image_undo_enable (new_image);
+  ligma_image_undo_enable (new_image);
 
-  if (run_mode != GIMP_RUN_NONINTERACTIVE)
-    gimp_display_new (new_image);
+  if (run_mode != LIGMA_RUN_NONINTERACTIVE)
+    ligma_display_new (new_image);
 
   g_free (rawframe);
   rawframe = NULL;
@@ -1215,7 +1215,7 @@ get_frame_disposal (guint whichframe)
   gchar       *layer_name;
   DisposeType  disposal;
 
-  layer_name = gimp_item_get_name (GIMP_ITEM (layers[total_frames-(whichframe+1)]));
+  layer_name = ligma_item_get_name (LIGMA_ITEM (layers[total_frames-(whichframe+1)]));
   disposal = parse_disposal_tag (layer_name);
   g_free (layer_name);
 
@@ -1228,7 +1228,7 @@ get_frame_duration (guint whichframe)
   gchar* layer_name;
   gint   duration = 0;
 
-  layer_name = gimp_item_get_name (GIMP_ITEM (layers[total_frames-(whichframe+1)]));
+  layer_name = ligma_item_get_name (LIGMA_ITEM (layers[total_frames-(whichframe+1)]));
   if (layer_name)
     {
       duration = parse_ms_tag (layer_name);

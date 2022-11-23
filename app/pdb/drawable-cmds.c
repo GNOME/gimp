@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-2003 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,606 +25,606 @@
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "pdb-types.h"
 
-#include "config/gimpcoreconfig.h"
-#include "core/gimp.h"
-#include "core/gimpchannel-select.h"
-#include "core/gimpdrawable-fill.h"
-#include "core/gimpdrawable-foreground-extract.h"
-#include "core/gimpdrawable-offset.h"
-#include "core/gimpdrawable-preview.h"
-#include "core/gimpdrawable-shadow.h"
-#include "core/gimpdrawable.h"
-#include "core/gimpimage.h"
-#include "core/gimpparamspecs.h"
-#include "core/gimptempbuf.h"
-#include "gegl/gimp-babl-compat.h"
-#include "gegl/gimp-babl.h"
-#include "plug-in/gimpplugin-cleanup.h"
-#include "plug-in/gimpplugin.h"
-#include "plug-in/gimppluginmanager.h"
+#include "config/ligmacoreconfig.h"
+#include "core/ligma.h"
+#include "core/ligmachannel-select.h"
+#include "core/ligmadrawable-fill.h"
+#include "core/ligmadrawable-foreground-extract.h"
+#include "core/ligmadrawable-offset.h"
+#include "core/ligmadrawable-preview.h"
+#include "core/ligmadrawable-shadow.h"
+#include "core/ligmadrawable.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaparamspecs.h"
+#include "core/ligmatempbuf.h"
+#include "gegl/ligma-babl-compat.h"
+#include "gegl/ligma-babl.h"
+#include "plug-in/ligmaplugin-cleanup.h"
+#include "plug-in/ligmaplugin.h"
+#include "plug-in/ligmapluginmanager.h"
 
-#include "gimppdb.h"
-#include "gimppdb-utils.h"
-#include "gimppdbcontext.h"
-#include "gimpprocedure.h"
+#include "ligmapdb.h"
+#include "ligmapdb-utils.h"
+#include "ligmapdbcontext.h"
+#include "ligmaprocedure.h"
 #include "internal-procs.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-static GimpValueArray *
-drawable_get_format_invoker (GimpProcedure         *procedure,
-                             Gimp                  *gimp,
-                             GimpContext           *context,
-                             GimpProgress          *progress,
-                             const GimpValueArray  *args,
+static LigmaValueArray *
+drawable_get_format_invoker (LigmaProcedure         *procedure,
+                             Ligma                  *ligma,
+                             LigmaContext           *context,
+                             LigmaProgress          *progress,
+                             const LigmaValueArray  *args,
                              GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpDrawable *drawable;
+  LigmaValueArray *return_vals;
+  LigmaDrawable *drawable;
   gchar *format = NULL;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 0));
+  drawable = g_value_get_object (ligma_value_array_index (args, 0));
 
   if (success)
     {
       /* this only transfers the encoding, losing the space, see the
-       * code in libgimp/gimpdrawable.c which reconstructs the actual
+       * code in libligma/ligmadrawable.c which reconstructs the actual
        * format in the plug-in process
        */
-      format = g_strdup (babl_format_get_encoding (gimp_drawable_get_format (drawable)));
+      format = g_strdup (babl_format_get_encoding (ligma_drawable_get_format (drawable)));
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_take_string (gimp_value_array_index (return_vals, 1), format);
+    g_value_take_string (ligma_value_array_index (return_vals, 1), format);
 
   return return_vals;
 }
 
-static GimpValueArray *
-drawable_get_thumbnail_format_invoker (GimpProcedure         *procedure,
-                                       Gimp                  *gimp,
-                                       GimpContext           *context,
-                                       GimpProgress          *progress,
-                                       const GimpValueArray  *args,
+static LigmaValueArray *
+drawable_get_thumbnail_format_invoker (LigmaProcedure         *procedure,
+                                       Ligma                  *ligma,
+                                       LigmaContext           *context,
+                                       LigmaProgress          *progress,
+                                       const LigmaValueArray  *args,
                                        GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpDrawable *drawable;
+  LigmaValueArray *return_vals;
+  LigmaDrawable *drawable;
   gchar *format = NULL;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 0));
+  drawable = g_value_get_object (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      format = g_strdup (babl_format_get_encoding (gimp_drawable_get_preview_format (drawable)));
+      format = g_strdup (babl_format_get_encoding (ligma_drawable_get_preview_format (drawable)));
 
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_take_string (gimp_value_array_index (return_vals, 1), format);
+    g_value_take_string (ligma_value_array_index (return_vals, 1), format);
 
   return return_vals;
 }
 
-static GimpValueArray *
-drawable_type_invoker (GimpProcedure         *procedure,
-                       Gimp                  *gimp,
-                       GimpContext           *context,
-                       GimpProgress          *progress,
-                       const GimpValueArray  *args,
+static LigmaValueArray *
+drawable_type_invoker (LigmaProcedure         *procedure,
+                       Ligma                  *ligma,
+                       LigmaContext           *context,
+                       LigmaProgress          *progress,
+                       const LigmaValueArray  *args,
                        GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpDrawable *drawable;
+  LigmaValueArray *return_vals;
+  LigmaDrawable *drawable;
   gint type = 0;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 0));
+  drawable = g_value_get_object (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      type = gimp_babl_format_get_image_type (gimp_drawable_get_format (drawable));
+      type = ligma_babl_format_get_image_type (ligma_drawable_get_format (drawable));
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_enum (gimp_value_array_index (return_vals, 1), type);
+    g_value_set_enum (ligma_value_array_index (return_vals, 1), type);
 
   return return_vals;
 }
 
-static GimpValueArray *
-drawable_type_with_alpha_invoker (GimpProcedure         *procedure,
-                                  Gimp                  *gimp,
-                                  GimpContext           *context,
-                                  GimpProgress          *progress,
-                                  const GimpValueArray  *args,
+static LigmaValueArray *
+drawable_type_with_alpha_invoker (LigmaProcedure         *procedure,
+                                  Ligma                  *ligma,
+                                  LigmaContext           *context,
+                                  LigmaProgress          *progress,
+                                  const LigmaValueArray  *args,
                                   GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpDrawable *drawable;
+  LigmaValueArray *return_vals;
+  LigmaDrawable *drawable;
   gint type_with_alpha = 0;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 0));
+  drawable = g_value_get_object (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      const Babl *format = gimp_drawable_get_format_with_alpha (drawable);
+      const Babl *format = ligma_drawable_get_format_with_alpha (drawable);
 
-      type_with_alpha = gimp_babl_format_get_image_type (format);
+      type_with_alpha = ligma_babl_format_get_image_type (format);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_enum (gimp_value_array_index (return_vals, 1), type_with_alpha);
+    g_value_set_enum (ligma_value_array_index (return_vals, 1), type_with_alpha);
 
   return return_vals;
 }
 
-static GimpValueArray *
-drawable_has_alpha_invoker (GimpProcedure         *procedure,
-                            Gimp                  *gimp,
-                            GimpContext           *context,
-                            GimpProgress          *progress,
-                            const GimpValueArray  *args,
+static LigmaValueArray *
+drawable_has_alpha_invoker (LigmaProcedure         *procedure,
+                            Ligma                  *ligma,
+                            LigmaContext           *context,
+                            LigmaProgress          *progress,
+                            const LigmaValueArray  *args,
                             GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpDrawable *drawable;
+  LigmaValueArray *return_vals;
+  LigmaDrawable *drawable;
   gboolean has_alpha = FALSE;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 0));
+  drawable = g_value_get_object (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      has_alpha = gimp_drawable_has_alpha (drawable);
+      has_alpha = ligma_drawable_has_alpha (drawable);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_boolean (gimp_value_array_index (return_vals, 1), has_alpha);
+    g_value_set_boolean (ligma_value_array_index (return_vals, 1), has_alpha);
 
   return return_vals;
 }
 
-static GimpValueArray *
-drawable_is_rgb_invoker (GimpProcedure         *procedure,
-                         Gimp                  *gimp,
-                         GimpContext           *context,
-                         GimpProgress          *progress,
-                         const GimpValueArray  *args,
+static LigmaValueArray *
+drawable_is_rgb_invoker (LigmaProcedure         *procedure,
+                         Ligma                  *ligma,
+                         LigmaContext           *context,
+                         LigmaProgress          *progress,
+                         const LigmaValueArray  *args,
                          GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpDrawable *drawable;
+  LigmaValueArray *return_vals;
+  LigmaDrawable *drawable;
   gboolean is_rgb = FALSE;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 0));
+  drawable = g_value_get_object (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      is_rgb = gimp_drawable_is_rgb (drawable);
+      is_rgb = ligma_drawable_is_rgb (drawable);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_boolean (gimp_value_array_index (return_vals, 1), is_rgb);
+    g_value_set_boolean (ligma_value_array_index (return_vals, 1), is_rgb);
 
   return return_vals;
 }
 
-static GimpValueArray *
-drawable_is_gray_invoker (GimpProcedure         *procedure,
-                          Gimp                  *gimp,
-                          GimpContext           *context,
-                          GimpProgress          *progress,
-                          const GimpValueArray  *args,
+static LigmaValueArray *
+drawable_is_gray_invoker (LigmaProcedure         *procedure,
+                          Ligma                  *ligma,
+                          LigmaContext           *context,
+                          LigmaProgress          *progress,
+                          const LigmaValueArray  *args,
                           GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpDrawable *drawable;
+  LigmaValueArray *return_vals;
+  LigmaDrawable *drawable;
   gboolean is_gray = FALSE;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 0));
+  drawable = g_value_get_object (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      is_gray = gimp_drawable_is_gray (drawable);
+      is_gray = ligma_drawable_is_gray (drawable);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_boolean (gimp_value_array_index (return_vals, 1), is_gray);
+    g_value_set_boolean (ligma_value_array_index (return_vals, 1), is_gray);
 
   return return_vals;
 }
 
-static GimpValueArray *
-drawable_is_indexed_invoker (GimpProcedure         *procedure,
-                             Gimp                  *gimp,
-                             GimpContext           *context,
-                             GimpProgress          *progress,
-                             const GimpValueArray  *args,
+static LigmaValueArray *
+drawable_is_indexed_invoker (LigmaProcedure         *procedure,
+                             Ligma                  *ligma,
+                             LigmaContext           *context,
+                             LigmaProgress          *progress,
+                             const LigmaValueArray  *args,
                              GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpDrawable *drawable;
+  LigmaValueArray *return_vals;
+  LigmaDrawable *drawable;
   gboolean is_indexed = FALSE;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 0));
+  drawable = g_value_get_object (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      is_indexed = gimp_drawable_is_indexed (drawable);
+      is_indexed = ligma_drawable_is_indexed (drawable);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_boolean (gimp_value_array_index (return_vals, 1), is_indexed);
+    g_value_set_boolean (ligma_value_array_index (return_vals, 1), is_indexed);
 
   return return_vals;
 }
 
-static GimpValueArray *
-drawable_get_bpp_invoker (GimpProcedure         *procedure,
-                          Gimp                  *gimp,
-                          GimpContext           *context,
-                          GimpProgress          *progress,
-                          const GimpValueArray  *args,
+static LigmaValueArray *
+drawable_get_bpp_invoker (LigmaProcedure         *procedure,
+                          Ligma                  *ligma,
+                          LigmaContext           *context,
+                          LigmaProgress          *progress,
+                          const LigmaValueArray  *args,
                           GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpDrawable *drawable;
+  LigmaValueArray *return_vals;
+  LigmaDrawable *drawable;
   gint bpp = 0;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 0));
+  drawable = g_value_get_object (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      const Babl *format = gimp_drawable_get_format (drawable);
+      const Babl *format = ligma_drawable_get_format (drawable);
 
       bpp = babl_format_get_bytes_per_pixel (format);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_int (gimp_value_array_index (return_vals, 1), bpp);
+    g_value_set_int (ligma_value_array_index (return_vals, 1), bpp);
 
   return return_vals;
 }
 
-static GimpValueArray *
-drawable_get_width_invoker (GimpProcedure         *procedure,
-                            Gimp                  *gimp,
-                            GimpContext           *context,
-                            GimpProgress          *progress,
-                            const GimpValueArray  *args,
+static LigmaValueArray *
+drawable_get_width_invoker (LigmaProcedure         *procedure,
+                            Ligma                  *ligma,
+                            LigmaContext           *context,
+                            LigmaProgress          *progress,
+                            const LigmaValueArray  *args,
                             GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpDrawable *drawable;
+  LigmaValueArray *return_vals;
+  LigmaDrawable *drawable;
   gint width = 0;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 0));
+  drawable = g_value_get_object (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      width = gimp_item_get_width (GIMP_ITEM (drawable));
+      width = ligma_item_get_width (LIGMA_ITEM (drawable));
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_int (gimp_value_array_index (return_vals, 1), width);
+    g_value_set_int (ligma_value_array_index (return_vals, 1), width);
 
   return return_vals;
 }
 
-static GimpValueArray *
-drawable_get_height_invoker (GimpProcedure         *procedure,
-                             Gimp                  *gimp,
-                             GimpContext           *context,
-                             GimpProgress          *progress,
-                             const GimpValueArray  *args,
+static LigmaValueArray *
+drawable_get_height_invoker (LigmaProcedure         *procedure,
+                             Ligma                  *ligma,
+                             LigmaContext           *context,
+                             LigmaProgress          *progress,
+                             const LigmaValueArray  *args,
                              GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpDrawable *drawable;
+  LigmaValueArray *return_vals;
+  LigmaDrawable *drawable;
   gint height = 0;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 0));
+  drawable = g_value_get_object (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      height = gimp_item_get_height (GIMP_ITEM (drawable));
+      height = ligma_item_get_height (LIGMA_ITEM (drawable));
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_int (gimp_value_array_index (return_vals, 1), height);
+    g_value_set_int (ligma_value_array_index (return_vals, 1), height);
 
   return return_vals;
 }
 
-static GimpValueArray *
-drawable_get_offsets_invoker (GimpProcedure         *procedure,
-                              Gimp                  *gimp,
-                              GimpContext           *context,
-                              GimpProgress          *progress,
-                              const GimpValueArray  *args,
+static LigmaValueArray *
+drawable_get_offsets_invoker (LigmaProcedure         *procedure,
+                              Ligma                  *ligma,
+                              LigmaContext           *context,
+                              LigmaProgress          *progress,
+                              const LigmaValueArray  *args,
                               GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpDrawable *drawable;
+  LigmaValueArray *return_vals;
+  LigmaDrawable *drawable;
   gint offset_x = 0;
   gint offset_y = 0;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 0));
+  drawable = g_value_get_object (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      gimp_item_get_offset (GIMP_ITEM (drawable), &offset_x, &offset_y);
+      ligma_item_get_offset (LIGMA_ITEM (drawable), &offset_x, &offset_y);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
     {
-      g_value_set_int (gimp_value_array_index (return_vals, 1), offset_x);
-      g_value_set_int (gimp_value_array_index (return_vals, 2), offset_y);
+      g_value_set_int (ligma_value_array_index (return_vals, 1), offset_x);
+      g_value_set_int (ligma_value_array_index (return_vals, 2), offset_y);
     }
 
   return return_vals;
 }
 
-static GimpValueArray *
-drawable_mask_bounds_invoker (GimpProcedure         *procedure,
-                              Gimp                  *gimp,
-                              GimpContext           *context,
-                              GimpProgress          *progress,
-                              const GimpValueArray  *args,
+static LigmaValueArray *
+drawable_mask_bounds_invoker (LigmaProcedure         *procedure,
+                              Ligma                  *ligma,
+                              LigmaContext           *context,
+                              LigmaProgress          *progress,
+                              const LigmaValueArray  *args,
                               GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpDrawable *drawable;
+  LigmaValueArray *return_vals;
+  LigmaDrawable *drawable;
   gboolean non_empty = FALSE;
   gint x1 = 0;
   gint y1 = 0;
   gint x2 = 0;
   gint y2 = 0;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 0));
+  drawable = g_value_get_object (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, 0, error))
-        non_empty = gimp_item_mask_bounds (GIMP_ITEM (drawable), &x1, &y1, &x2, &y2);
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL, 0, error))
+        non_empty = ligma_item_mask_bounds (LIGMA_ITEM (drawable), &x1, &y1, &x2, &y2);
       else
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
     {
-      g_value_set_boolean (gimp_value_array_index (return_vals, 1), non_empty);
-      g_value_set_int (gimp_value_array_index (return_vals, 2), x1);
-      g_value_set_int (gimp_value_array_index (return_vals, 3), y1);
-      g_value_set_int (gimp_value_array_index (return_vals, 4), x2);
-      g_value_set_int (gimp_value_array_index (return_vals, 5), y2);
+      g_value_set_boolean (ligma_value_array_index (return_vals, 1), non_empty);
+      g_value_set_int (ligma_value_array_index (return_vals, 2), x1);
+      g_value_set_int (ligma_value_array_index (return_vals, 3), y1);
+      g_value_set_int (ligma_value_array_index (return_vals, 4), x2);
+      g_value_set_int (ligma_value_array_index (return_vals, 5), y2);
     }
 
   return return_vals;
 }
 
-static GimpValueArray *
-drawable_mask_intersect_invoker (GimpProcedure         *procedure,
-                                 Gimp                  *gimp,
-                                 GimpContext           *context,
-                                 GimpProgress          *progress,
-                                 const GimpValueArray  *args,
+static LigmaValueArray *
+drawable_mask_intersect_invoker (LigmaProcedure         *procedure,
+                                 Ligma                  *ligma,
+                                 LigmaContext           *context,
+                                 LigmaProgress          *progress,
+                                 const LigmaValueArray  *args,
                                  GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpDrawable *drawable;
+  LigmaValueArray *return_vals;
+  LigmaDrawable *drawable;
   gboolean non_empty = FALSE;
   gint x = 0;
   gint y = 0;
   gint width = 0;
   gint height = 0;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 0));
+  drawable = g_value_get_object (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, 0, error))
-        non_empty = gimp_item_mask_intersect (GIMP_ITEM (drawable),
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL, 0, error))
+        non_empty = ligma_item_mask_intersect (LIGMA_ITEM (drawable),
                                               &x, &y, &width, &height);
       else
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
     {
-      g_value_set_boolean (gimp_value_array_index (return_vals, 1), non_empty);
-      g_value_set_int (gimp_value_array_index (return_vals, 2), x);
-      g_value_set_int (gimp_value_array_index (return_vals, 3), y);
-      g_value_set_int (gimp_value_array_index (return_vals, 4), width);
-      g_value_set_int (gimp_value_array_index (return_vals, 5), height);
+      g_value_set_boolean (ligma_value_array_index (return_vals, 1), non_empty);
+      g_value_set_int (ligma_value_array_index (return_vals, 2), x);
+      g_value_set_int (ligma_value_array_index (return_vals, 3), y);
+      g_value_set_int (ligma_value_array_index (return_vals, 4), width);
+      g_value_set_int (ligma_value_array_index (return_vals, 5), height);
     }
 
   return return_vals;
 }
 
-static GimpValueArray *
-drawable_merge_shadow_invoker (GimpProcedure         *procedure,
-                               Gimp                  *gimp,
-                               GimpContext           *context,
-                               GimpProgress          *progress,
-                               const GimpValueArray  *args,
+static LigmaValueArray *
+drawable_merge_shadow_invoker (LigmaProcedure         *procedure,
+                               Ligma                  *ligma,
+                               LigmaContext           *context,
+                               LigmaProgress          *progress,
+                               const LigmaValueArray  *args,
                                GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gboolean undo;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 0));
-  undo = g_value_get_boolean (gimp_value_array_index (args, 1));
+  drawable = g_value_get_object (ligma_value_array_index (args, 0));
+  undo = g_value_get_boolean (ligma_value_array_index (args, 1));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
           const gchar *undo_desc = _("Plug-in");
 
-          if (gimp->plug_in_manager->current_plug_in)
-            undo_desc = gimp_plug_in_get_undo_desc (gimp->plug_in_manager->current_plug_in);
+          if (ligma->plug_in_manager->current_plug_in)
+            undo_desc = ligma_plug_in_get_undo_desc (ligma->plug_in_manager->current_plug_in);
 
-          gimp_drawable_merge_shadow_buffer (drawable, undo, undo_desc);
+          ligma_drawable_merge_shadow_buffer (drawable, undo, undo_desc);
         }
       else
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-drawable_free_shadow_invoker (GimpProcedure         *procedure,
-                              Gimp                  *gimp,
-                              GimpContext           *context,
-                              GimpProgress          *progress,
-                              const GimpValueArray  *args,
+static LigmaValueArray *
+drawable_free_shadow_invoker (LigmaProcedure         *procedure,
+                              Ligma                  *ligma,
+                              LigmaContext           *context,
+                              LigmaProgress          *progress,
+                              const LigmaValueArray  *args,
                               GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 0));
+  drawable = g_value_get_object (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      if (gimp->plug_in_manager->current_plug_in)
-        gimp_plug_in_cleanup_remove_shadow (gimp->plug_in_manager->current_plug_in,
+      if (ligma->plug_in_manager->current_plug_in)
+        ligma_plug_in_cleanup_remove_shadow (ligma->plug_in_manager->current_plug_in,
                                             drawable);
 
-      gimp_drawable_free_shadow_buffer (drawable);
+      ligma_drawable_free_shadow_buffer (drawable);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-drawable_update_invoker (GimpProcedure         *procedure,
-                         Gimp                  *gimp,
-                         GimpContext           *context,
-                         GimpProgress          *progress,
-                         const GimpValueArray  *args,
+static LigmaValueArray *
+drawable_update_invoker (LigmaProcedure         *procedure,
+                         Ligma                  *ligma,
+                         LigmaContext           *context,
+                         LigmaProgress          *progress,
+                         const LigmaValueArray  *args,
                          GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gint x;
   gint y;
   gint width;
   gint height;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 0));
-  x = g_value_get_int (gimp_value_array_index (args, 1));
-  y = g_value_get_int (gimp_value_array_index (args, 2));
-  width = g_value_get_int (gimp_value_array_index (args, 3));
-  height = g_value_get_int (gimp_value_array_index (args, 4));
+  drawable = g_value_get_object (ligma_value_array_index (args, 0));
+  x = g_value_get_int (ligma_value_array_index (args, 1));
+  y = g_value_get_int (ligma_value_array_index (args, 2));
+  width = g_value_get_int (ligma_value_array_index (args, 3));
+  height = g_value_get_int (ligma_value_array_index (args, 4));
 
   if (success)
     {
-      gimp_drawable_update (drawable, x, y, width, height);
+      ligma_drawable_update (drawable, x, y, width, height);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-drawable_get_pixel_invoker (GimpProcedure         *procedure,
-                            Gimp                  *gimp,
-                            GimpContext           *context,
-                            GimpProgress          *progress,
-                            const GimpValueArray  *args,
+static LigmaValueArray *
+drawable_get_pixel_invoker (LigmaProcedure         *procedure,
+                            Ligma                  *ligma,
+                            LigmaContext           *context,
+                            LigmaProgress          *progress,
+                            const LigmaValueArray  *args,
                             GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpDrawable *drawable;
+  LigmaValueArray *return_vals;
+  LigmaDrawable *drawable;
   gint x_coord;
   gint y_coord;
   gint num_channels = 0;
   guint8 *pixel = NULL;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 0));
-  x_coord = g_value_get_int (gimp_value_array_index (args, 1));
-  y_coord = g_value_get_int (gimp_value_array_index (args, 2));
+  drawable = g_value_get_object (ligma_value_array_index (args, 0));
+  x_coord = g_value_get_int (ligma_value_array_index (args, 1));
+  y_coord = g_value_get_int (ligma_value_array_index (args, 2));
 
   if (success)
     {
-      const Babl *format = gimp_drawable_get_format (drawable);
+      const Babl *format = ligma_drawable_get_format (drawable);
 
-      if (x_coord < gimp_item_get_width  (GIMP_ITEM (drawable)) &&
-          y_coord < gimp_item_get_height (GIMP_ITEM (drawable)))
+      if (x_coord < ligma_item_get_width  (LIGMA_ITEM (drawable)) &&
+          y_coord < ligma_item_get_height (LIGMA_ITEM (drawable)))
         {
           num_channels = babl_format_get_bytes_per_pixel (format);
           pixel = g_new0 (guint8, num_channels);
 
-          gegl_buffer_sample (gimp_drawable_get_buffer (drawable),
+          gegl_buffer_sample (ligma_drawable_get_buffer (drawable),
                               x_coord, y_coord, NULL, pixel, format,
                               GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
         }
@@ -632,51 +632,51 @@ drawable_get_pixel_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
     {
-      g_value_set_int (gimp_value_array_index (return_vals, 1), num_channels);
-      gimp_value_take_uint8_array (gimp_value_array_index (return_vals, 2), pixel, num_channels);
+      g_value_set_int (ligma_value_array_index (return_vals, 1), num_channels);
+      ligma_value_take_uint8_array (ligma_value_array_index (return_vals, 2), pixel, num_channels);
     }
 
   return return_vals;
 }
 
-static GimpValueArray *
-drawable_set_pixel_invoker (GimpProcedure         *procedure,
-                            Gimp                  *gimp,
-                            GimpContext           *context,
-                            GimpProgress          *progress,
-                            const GimpValueArray  *args,
+static LigmaValueArray *
+drawable_set_pixel_invoker (LigmaProcedure         *procedure,
+                            Ligma                  *ligma,
+                            LigmaContext           *context,
+                            LigmaProgress          *progress,
+                            const LigmaValueArray  *args,
                             GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gint x_coord;
   gint y_coord;
   gint num_channels;
   const guint8 *pixel;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 0));
-  x_coord = g_value_get_int (gimp_value_array_index (args, 1));
-  y_coord = g_value_get_int (gimp_value_array_index (args, 2));
-  num_channels = g_value_get_int (gimp_value_array_index (args, 3));
-  pixel = gimp_value_get_uint8_array (gimp_value_array_index (args, 4));
+  drawable = g_value_get_object (ligma_value_array_index (args, 0));
+  x_coord = g_value_get_int (ligma_value_array_index (args, 1));
+  y_coord = g_value_get_int (ligma_value_array_index (args, 2));
+  num_channels = g_value_get_int (ligma_value_array_index (args, 3));
+  pixel = ligma_value_get_uint8_array (ligma_value_array_index (args, 4));
 
   if (success)
     {
-      const Babl *format = gimp_drawable_get_format (drawable);
+      const Babl *format = ligma_drawable_get_format (drawable);
 
-      if (gimp_pdb_item_is_modifiable (GIMP_ITEM (drawable),
-                                       GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
-          x_coord < gimp_item_get_width  (GIMP_ITEM (drawable)) &&
-          y_coord < gimp_item_get_height (GIMP_ITEM (drawable)) &&
+      if (ligma_pdb_item_is_modifiable (LIGMA_ITEM (drawable),
+                                       LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error) &&
+          x_coord < ligma_item_get_width  (LIGMA_ITEM (drawable)) &&
+          y_coord < ligma_item_get_height (LIGMA_ITEM (drawable)) &&
           num_channels == babl_format_get_bytes_per_pixel (format))
         {
-          gegl_buffer_set (gimp_drawable_get_buffer (drawable),
+          gegl_buffer_set (ligma_drawable_get_buffer (drawable),
                            GEGL_RECTANGLE (x_coord, y_coord, 1, 1),
                            0, format, pixel, GEGL_AUTO_ROWSTRIDE);
         }
@@ -684,88 +684,88 @@ drawable_set_pixel_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-drawable_fill_invoker (GimpProcedure         *procedure,
-                       Gimp                  *gimp,
-                       GimpContext           *context,
-                       GimpProgress          *progress,
-                       const GimpValueArray  *args,
+static LigmaValueArray *
+drawable_fill_invoker (LigmaProcedure         *procedure,
+                       Ligma                  *ligma,
+                       LigmaContext           *context,
+                       LigmaProgress          *progress,
+                       const LigmaValueArray  *args,
                        GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gint fill_type;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 0));
-  fill_type = g_value_get_enum (gimp_value_array_index (args, 1));
+  drawable = g_value_get_object (ligma_value_array_index (args, 0));
+  fill_type = g_value_get_enum (ligma_value_array_index (args, 1));
 
   if (success)
     {
-      if (gimp_pdb_item_is_modifiable (GIMP_ITEM (drawable),
-                                       GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_modifiable (LIGMA_ITEM (drawable),
+                                       LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
-          gimp_drawable_fill (drawable, context, (GimpFillType) fill_type);
+          ligma_drawable_fill (drawable, context, (LigmaFillType) fill_type);
         }
       else
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-drawable_offset_invoker (GimpProcedure         *procedure,
-                         Gimp                  *gimp,
-                         GimpContext           *context,
-                         GimpProgress          *progress,
-                         const GimpValueArray  *args,
+static LigmaValueArray *
+drawable_offset_invoker (LigmaProcedure         *procedure,
+                         Ligma                  *ligma,
+                         LigmaContext           *context,
+                         LigmaProgress          *progress,
+                         const LigmaValueArray  *args,
                          GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gboolean wrap_around;
   gint fill_type;
   gint offset_x;
   gint offset_y;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 0));
-  wrap_around = g_value_get_boolean (gimp_value_array_index (args, 1));
-  fill_type = g_value_get_enum (gimp_value_array_index (args, 2));
-  offset_x = g_value_get_int (gimp_value_array_index (args, 3));
-  offset_y = g_value_get_int (gimp_value_array_index (args, 4));
+  drawable = g_value_get_object (ligma_value_array_index (args, 0));
+  wrap_around = g_value_get_boolean (ligma_value_array_index (args, 1));
+  fill_type = g_value_get_enum (ligma_value_array_index (args, 2));
+  offset_x = g_value_get_int (ligma_value_array_index (args, 3));
+  offset_y = g_value_get_int (ligma_value_array_index (args, 4));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
-        gimp_drawable_offset (drawable, context, wrap_around, fill_type,
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
+        ligma_drawable_offset (drawable, context, wrap_around, fill_type,
                               offset_x, offset_y);
       else
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-drawable_thumbnail_invoker (GimpProcedure         *procedure,
-                            Gimp                  *gimp,
-                            GimpContext           *context,
-                            GimpProgress          *progress,
-                            const GimpValueArray  *args,
+static LigmaValueArray *
+drawable_thumbnail_invoker (LigmaProcedure         *procedure,
+                            Ligma                  *ligma,
+                            LigmaContext           *context,
+                            LigmaProgress          *progress,
+                            const LigmaValueArray  *args,
                             GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpDrawable *drawable;
+  LigmaValueArray *return_vals;
+  LigmaDrawable *drawable;
   gint width;
   gint height;
   gint actual_width = 0;
@@ -774,76 +774,76 @@ drawable_thumbnail_invoker (GimpProcedure         *procedure,
   gint thumbnail_data_count = 0;
   guint8 *thumbnail_data = NULL;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 0));
-  width = g_value_get_int (gimp_value_array_index (args, 1));
-  height = g_value_get_int (gimp_value_array_index (args, 2));
+  drawable = g_value_get_object (ligma_value_array_index (args, 0));
+  width = g_value_get_int (ligma_value_array_index (args, 1));
+  height = g_value_get_int (ligma_value_array_index (args, 2));
 
   if (success)
     {
-      GimpImage   *image = gimp_item_get_image (GIMP_ITEM (drawable));
-      GimpTempBuf *buf;
+      LigmaImage   *image = ligma_item_get_image (LIGMA_ITEM (drawable));
+      LigmaTempBuf *buf;
       gint         dwidth, dheight;
 
-      gimp_assert (GIMP_VIEWABLE_MAX_PREVIEW_SIZE >= 1024);
+      ligma_assert (LIGMA_VIEWABLE_MAX_PREVIEW_SIZE >= 1024);
 
       /* Adjust the width/height ratio */
-      dwidth  = gimp_item_get_width  (GIMP_ITEM (drawable));
-      dheight = gimp_item_get_height (GIMP_ITEM (drawable));
+      dwidth  = ligma_item_get_width  (LIGMA_ITEM (drawable));
+      dheight = ligma_item_get_height (LIGMA_ITEM (drawable));
 
       if (dwidth > dheight)
         height = MAX (1, (width * dheight) / dwidth);
       else
         width  = MAX (1, (height * dwidth) / dheight);
 
-      if (image->gimp->config->layer_previews)
-        buf = gimp_viewable_get_new_preview (GIMP_VIEWABLE (drawable), context,
+      if (image->ligma->config->layer_previews)
+        buf = ligma_viewable_get_new_preview (LIGMA_VIEWABLE (drawable), context,
                                              width, height);
       else
-        buf = gimp_viewable_get_dummy_preview (GIMP_VIEWABLE (drawable),
+        buf = ligma_viewable_get_dummy_preview (LIGMA_VIEWABLE (drawable),
                                                width, height,
-                                               gimp_drawable_get_preview_format (drawable));
+                                               ligma_drawable_get_preview_format (drawable));
 
       if (buf)
         {
-          actual_width         = gimp_temp_buf_get_width  (buf);
-          actual_height        = gimp_temp_buf_get_height (buf);
-          bpp                  = babl_format_get_bytes_per_pixel (gimp_temp_buf_get_format (buf));
-          thumbnail_data_count = gimp_temp_buf_get_data_size (buf);
-          thumbnail_data       = g_memdup2 (gimp_temp_buf_get_data (buf),
+          actual_width         = ligma_temp_buf_get_width  (buf);
+          actual_height        = ligma_temp_buf_get_height (buf);
+          bpp                  = babl_format_get_bytes_per_pixel (ligma_temp_buf_get_format (buf));
+          thumbnail_data_count = ligma_temp_buf_get_data_size (buf);
+          thumbnail_data       = g_memdup2 (ligma_temp_buf_get_data (buf),
                                             thumbnail_data_count);
 
-          gimp_temp_buf_unref (buf);
+          ligma_temp_buf_unref (buf);
         }
       else
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
     {
-      g_value_set_int (gimp_value_array_index (return_vals, 1), actual_width);
-      g_value_set_int (gimp_value_array_index (return_vals, 2), actual_height);
-      g_value_set_int (gimp_value_array_index (return_vals, 3), bpp);
-      g_value_set_int (gimp_value_array_index (return_vals, 4), thumbnail_data_count);
-      gimp_value_take_uint8_array (gimp_value_array_index (return_vals, 5), thumbnail_data, thumbnail_data_count);
+      g_value_set_int (ligma_value_array_index (return_vals, 1), actual_width);
+      g_value_set_int (ligma_value_array_index (return_vals, 2), actual_height);
+      g_value_set_int (ligma_value_array_index (return_vals, 3), bpp);
+      g_value_set_int (ligma_value_array_index (return_vals, 4), thumbnail_data_count);
+      ligma_value_take_uint8_array (ligma_value_array_index (return_vals, 5), thumbnail_data, thumbnail_data_count);
     }
 
   return return_vals;
 }
 
-static GimpValueArray *
-drawable_sub_thumbnail_invoker (GimpProcedure         *procedure,
-                                Gimp                  *gimp,
-                                GimpContext           *context,
-                                GimpProgress          *progress,
-                                const GimpValueArray  *args,
+static LigmaValueArray *
+drawable_sub_thumbnail_invoker (LigmaProcedure         *procedure,
+                                Ligma                  *ligma,
+                                LigmaContext           *context,
+                                LigmaProgress          *progress,
+                                const LigmaValueArray  *args,
                                 GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpDrawable *drawable;
+  LigmaValueArray *return_vals;
+  LigmaDrawable *drawable;
   gint src_x;
   gint src_y;
   gint src_width;
@@ -856,42 +856,42 @@ drawable_sub_thumbnail_invoker (GimpProcedure         *procedure,
   gint thumbnail_data_count = 0;
   guint8 *thumbnail_data = NULL;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 0));
-  src_x = g_value_get_int (gimp_value_array_index (args, 1));
-  src_y = g_value_get_int (gimp_value_array_index (args, 2));
-  src_width = g_value_get_int (gimp_value_array_index (args, 3));
-  src_height = g_value_get_int (gimp_value_array_index (args, 4));
-  dest_width = g_value_get_int (gimp_value_array_index (args, 5));
-  dest_height = g_value_get_int (gimp_value_array_index (args, 6));
+  drawable = g_value_get_object (ligma_value_array_index (args, 0));
+  src_x = g_value_get_int (ligma_value_array_index (args, 1));
+  src_y = g_value_get_int (ligma_value_array_index (args, 2));
+  src_width = g_value_get_int (ligma_value_array_index (args, 3));
+  src_height = g_value_get_int (ligma_value_array_index (args, 4));
+  dest_width = g_value_get_int (ligma_value_array_index (args, 5));
+  dest_height = g_value_get_int (ligma_value_array_index (args, 6));
 
   if (success)
     {
-      if ((src_x + src_width)  <= gimp_item_get_width  (GIMP_ITEM (drawable)) &&
-          (src_y + src_height) <= gimp_item_get_height (GIMP_ITEM (drawable)))
+      if ((src_x + src_width)  <= ligma_item_get_width  (LIGMA_ITEM (drawable)) &&
+          (src_y + src_height) <= ligma_item_get_height (LIGMA_ITEM (drawable)))
         {
-          GimpImage   *image = gimp_item_get_image (GIMP_ITEM (drawable));
-          GimpTempBuf *buf;
+          LigmaImage   *image = ligma_item_get_image (LIGMA_ITEM (drawable));
+          LigmaTempBuf *buf;
 
-          if (image->gimp->config->layer_previews)
-            buf = gimp_drawable_get_sub_preview (drawable,
+          if (image->ligma->config->layer_previews)
+            buf = ligma_drawable_get_sub_preview (drawable,
                                                  src_x, src_y,
                                                  src_width, src_height,
                                                  dest_width, dest_height);
           else
-            buf = gimp_viewable_get_dummy_preview (GIMP_VIEWABLE (drawable),
+            buf = ligma_viewable_get_dummy_preview (LIGMA_VIEWABLE (drawable),
                                                    dest_width, dest_height,
-                                                   gimp_drawable_get_preview_format (drawable));
+                                                   ligma_drawable_get_preview_format (drawable));
 
           if (buf)
             {
-              width                = gimp_temp_buf_get_width  (buf);
-              height               = gimp_temp_buf_get_height (buf);
-              bpp                  = babl_format_get_bytes_per_pixel (gimp_temp_buf_get_format (buf));
-              thumbnail_data_count = gimp_temp_buf_get_data_size (buf);
-              thumbnail_data       = g_memdup2 (gimp_temp_buf_get_data (buf),
+              width                = ligma_temp_buf_get_width  (buf);
+              height               = ligma_temp_buf_get_height (buf);
+              bpp                  = babl_format_get_bytes_per_pixel (ligma_temp_buf_get_format (buf));
+              thumbnail_data_count = ligma_temp_buf_get_data_size (buf);
+              thumbnail_data       = g_memdup2 (ligma_temp_buf_get_data (buf),
                                                 thumbnail_data_count);
 
-              gimp_temp_buf_unref (buf);
+              ligma_temp_buf_unref (buf);
             }
           else
             success = FALSE;
@@ -900,61 +900,61 @@ drawable_sub_thumbnail_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
     {
-      g_value_set_int (gimp_value_array_index (return_vals, 1), width);
-      g_value_set_int (gimp_value_array_index (return_vals, 2), height);
-      g_value_set_int (gimp_value_array_index (return_vals, 3), bpp);
-      g_value_set_int (gimp_value_array_index (return_vals, 4), thumbnail_data_count);
-      gimp_value_take_uint8_array (gimp_value_array_index (return_vals, 5), thumbnail_data, thumbnail_data_count);
+      g_value_set_int (ligma_value_array_index (return_vals, 1), width);
+      g_value_set_int (ligma_value_array_index (return_vals, 2), height);
+      g_value_set_int (ligma_value_array_index (return_vals, 3), bpp);
+      g_value_set_int (ligma_value_array_index (return_vals, 4), thumbnail_data_count);
+      ligma_value_take_uint8_array (ligma_value_array_index (return_vals, 5), thumbnail_data, thumbnail_data_count);
     }
 
   return return_vals;
 }
 
-static GimpValueArray *
-drawable_foreground_extract_invoker (GimpProcedure         *procedure,
-                                     Gimp                  *gimp,
-                                     GimpContext           *context,
-                                     GimpProgress          *progress,
-                                     const GimpValueArray  *args,
+static LigmaValueArray *
+drawable_foreground_extract_invoker (LigmaProcedure         *procedure,
+                                     Ligma                  *ligma,
+                                     LigmaContext           *context,
+                                     LigmaProgress          *progress,
+                                     const LigmaValueArray  *args,
                                      GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gint mode;
-  GimpDrawable *mask;
+  LigmaDrawable *mask;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 0));
-  mode = g_value_get_enum (gimp_value_array_index (args, 1));
-  mask = g_value_get_object (gimp_value_array_index (args, 2));
+  drawable = g_value_get_object (ligma_value_array_index (args, 0));
+  mode = g_value_get_enum (ligma_value_array_index (args, 1));
+  mask = g_value_get_object (ligma_value_array_index (args, 2));
 
   if (success)
     {
-      if (mode == GIMP_FOREGROUND_EXTRACT_MATTING &&
-          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, 0, error))
+      if (mode == LIGMA_FOREGROUND_EXTRACT_MATTING &&
+          ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL, 0, error))
         {
-          GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
-          GimpImage      *image       = gimp_item_get_image (GIMP_ITEM (drawable));
+          LigmaPDBContext *pdb_context = LIGMA_PDB_CONTEXT (context);
+          LigmaImage      *image       = ligma_item_get_image (LIGMA_ITEM (drawable));
           GeglBuffer     *buffer;
 
-          buffer = gimp_drawable_foreground_extract (drawable,
-                                                     GIMP_MATTING_ENGINE_GLOBAL,
+          buffer = ligma_drawable_foreground_extract (drawable,
+                                                     LIGMA_MATTING_ENGINE_GLOBAL,
                                                      2,
                                                      2,
                                                      2,
-                                                     gimp_drawable_get_buffer (mask),
+                                                     ligma_drawable_get_buffer (mask),
                                                      progress);
 
-          gimp_channel_select_buffer (gimp_image_get_mask (image),
+          ligma_channel_select_buffer (ligma_image_get_mask (image),
                                       C_("command", "Foreground Select"),
                                       buffer,
                                       0, /* x offset */
                                       0, /* y offset */
-                                      GIMP_CHANNEL_OP_REPLACE,
+                                      LIGMA_CHANNEL_OP_REPLACE,
                                       pdb_context->feather,
                                       pdb_context->feather_radius_x,
                                       pdb_context->feather_radius_y);
@@ -965,944 +965,944 @@ drawable_foreground_extract_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
 void
-register_drawable_procs (GimpPDB *pdb)
+register_drawable_procs (LigmaPDB *pdb)
 {
-  GimpProcedure *procedure;
+  LigmaProcedure *procedure;
 
   /*
-   * gimp-drawable-get-format
+   * ligma-drawable-get-format
    */
-  procedure = gimp_procedure_new (drawable_get_format_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-drawable-get-format");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (drawable_get_format_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-drawable-get-format");
+  ligma_procedure_set_static_help (procedure,
                                   "Returns the drawable's Babl format",
                                   "This procedure returns the drawable's Babl format.\n"
-                                  "Note that the actual PDB procedure only transfers the format's encoding. In order to get to the real format, the libbgimp C wrapper must be used.",
+                                  "Note that the actual PDB procedure only transfers the format's encoding. In order to get to the real format, the libbligma C wrapper must be used.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2012");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "The drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_string ("format",
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_string ("format",
                                                            "format",
                                                            "The drawable's Babl format",
                                                            FALSE, FALSE, FALSE,
                                                            NULL,
-                                                           GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                           LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-drawable-get-thumbnail-format
+   * ligma-drawable-get-thumbnail-format
    */
-  procedure = gimp_procedure_new (drawable_get_thumbnail_format_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-drawable-get-thumbnail-format");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (drawable_get_thumbnail_format_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-drawable-get-thumbnail-format");
+  ligma_procedure_set_static_help (procedure,
                                   "Returns the drawable's thumbnail Babl format",
                                   "This procedure returns the drawable's thumbnail Babl format.\n"
-                                  "Thumbnails are always 8-bit images, see 'gimp-drawable-thumbnail' and 'gimp-drawable-sub-thmbnail'.",
+                                  "Thumbnails are always 8-bit images, see 'ligma-drawable-thumbnail' and 'ligma-drawable-sub-thmbnail'.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2019");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "The drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_string ("format",
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_string ("format",
                                                            "format",
                                                            "The drawable's thumbnail Babl format",
                                                            FALSE, FALSE, FALSE,
                                                            NULL,
-                                                           GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                           LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-drawable-type
+   * ligma-drawable-type
    */
-  procedure = gimp_procedure_new (drawable_type_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-drawable-type");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (drawable_type_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-drawable-type");
+  ligma_procedure_set_static_help (procedure,
                                   "Returns the drawable's type.",
                                   "This procedure returns the drawable's type.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "The drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("type",
                                                       "type",
                                                       "The drawable's type",
-                                                      GIMP_TYPE_IMAGE_TYPE,
-                                                      GIMP_RGB_IMAGE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                      LIGMA_TYPE_IMAGE_TYPE,
+                                                      LIGMA_RGB_IMAGE,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-drawable-type-with-alpha
+   * ligma-drawable-type-with-alpha
    */
-  procedure = gimp_procedure_new (drawable_type_with_alpha_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-drawable-type-with-alpha");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (drawable_type_with_alpha_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-drawable-type-with-alpha");
+  ligma_procedure_set_static_help (procedure,
                                   "Returns the drawable's type with alpha.",
                                   "This procedure returns the drawable's type as if had an alpha channel. If the type is currently Gray, for instance, the returned type would be GrayA. If the drawable already has an alpha channel, the drawable's type is simply returned.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "The drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_enum ("type-with-alpha",
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_enum ("type-with-alpha",
                                                          "type with alpha",
                                                          "The drawable's type with alpha",
-                                                         GIMP_TYPE_IMAGE_TYPE,
-                                                         GIMP_RGB_IMAGE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_param_spec_enum_exclude_value (GIMP_PARAM_SPEC_ENUM (procedure->values[0]),
-                                      GIMP_RGB_IMAGE);
-  gimp_param_spec_enum_exclude_value (GIMP_PARAM_SPEC_ENUM (procedure->values[0]),
-                                      GIMP_GRAY_IMAGE);
-  gimp_param_spec_enum_exclude_value (GIMP_PARAM_SPEC_ENUM (procedure->values[0]),
-                                      GIMP_INDEXED_IMAGE);
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                         LIGMA_TYPE_IMAGE_TYPE,
+                                                         LIGMA_RGB_IMAGE,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_param_spec_enum_exclude_value (LIGMA_PARAM_SPEC_ENUM (procedure->values[0]),
+                                      LIGMA_RGB_IMAGE);
+  ligma_param_spec_enum_exclude_value (LIGMA_PARAM_SPEC_ENUM (procedure->values[0]),
+                                      LIGMA_GRAY_IMAGE);
+  ligma_param_spec_enum_exclude_value (LIGMA_PARAM_SPEC_ENUM (procedure->values[0]),
+                                      LIGMA_INDEXED_IMAGE);
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-drawable-has-alpha
+   * ligma-drawable-has-alpha
    */
-  procedure = gimp_procedure_new (drawable_has_alpha_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-drawable-has-alpha");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (drawable_has_alpha_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-drawable-has-alpha");
+  ligma_procedure_set_static_help (procedure,
                                   "Returns TRUE if the drawable has an alpha channel.",
                                   "This procedure returns whether the specified drawable has an alpha channel. This can only be true for layers, and the associated type will be one of: { RGBA , GRAYA, INDEXEDA }.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "The drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("has-alpha",
                                                          "has alpha",
                                                          "Does the drawable have an alpha channel?",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-drawable-is-rgb
+   * ligma-drawable-is-rgb
    */
-  procedure = gimp_procedure_new (drawable_is_rgb_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-drawable-is-rgb");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (drawable_is_rgb_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-drawable-is-rgb");
+  ligma_procedure_set_static_help (procedure,
                                   "Returns whether the drawable is an RGB type.",
                                   "This procedure returns TRUE if the specified drawable is of type { RGB, RGBA }.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "The drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("is-rgb",
                                                          "is rgb",
                                                          "TRUE if the drawable is an RGB type",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-drawable-is-gray
+   * ligma-drawable-is-gray
    */
-  procedure = gimp_procedure_new (drawable_is_gray_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-drawable-is-gray");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (drawable_is_gray_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-drawable-is-gray");
+  ligma_procedure_set_static_help (procedure,
                                   "Returns whether the drawable is a grayscale type.",
                                   "This procedure returns TRUE if the specified drawable is of type { Gray, GrayA }.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "The drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("is-gray",
                                                          "is gray",
                                                          "TRUE if the drawable is a grayscale type",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-drawable-is-indexed
+   * ligma-drawable-is-indexed
    */
-  procedure = gimp_procedure_new (drawable_is_indexed_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-drawable-is-indexed");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (drawable_is_indexed_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-drawable-is-indexed");
+  ligma_procedure_set_static_help (procedure,
                                   "Returns whether the drawable is an indexed type.",
                                   "This procedure returns TRUE if the specified drawable is of type { Indexed, IndexedA }.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "The drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("is-indexed",
                                                          "is indexed",
                                                          "TRUE if the drawable is an indexed type",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-drawable-get-bpp
+   * ligma-drawable-get-bpp
    */
-  procedure = gimp_procedure_new (drawable_get_bpp_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-drawable-get-bpp");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (drawable_get_bpp_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-drawable-get-bpp");
+  ligma_procedure_set_static_help (procedure,
                                   "Returns the bytes per pixel.",
                                   "This procedure returns the number of bytes per pixel.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "The drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_int ("bpp",
                                                      "bpp",
                                                      "Bytes per pixel",
                                                      G_MININT32, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-drawable-get-width
+   * ligma-drawable-get-width
    */
-  procedure = gimp_procedure_new (drawable_get_width_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-drawable-get-width");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (drawable_get_width_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-drawable-get-width");
+  ligma_procedure_set_static_help (procedure,
                                   "Returns the width of the drawable.",
                                   "This procedure returns the specified drawable's width in pixels.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "The drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_int ("width",
                                                      "width",
                                                      "Width of drawable",
                                                      G_MININT32, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-drawable-get-height
+   * ligma-drawable-get-height
    */
-  procedure = gimp_procedure_new (drawable_get_height_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-drawable-get-height");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (drawable_get_height_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-drawable-get-height");
+  ligma_procedure_set_static_help (procedure,
                                   "Returns the height of the drawable.",
                                   "This procedure returns the specified drawable's height in pixels.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "The drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_int ("height",
                                                      "height",
                                                      "Height of drawable",
                                                      G_MININT32, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-drawable-get-offsets
+   * ligma-drawable-get-offsets
    */
-  procedure = gimp_procedure_new (drawable_get_offsets_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-drawable-get-offsets");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (drawable_get_offsets_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-drawable-get-offsets");
+  ligma_procedure_set_static_help (procedure,
                                   "Returns the offsets for the drawable.",
                                   "This procedure returns the specified drawable's offsets. This only makes sense if the drawable is a layer since channels are anchored. The offsets of a channel will be returned as 0.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "The drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_int ("offset-x",
                                                      "offset x",
                                                      "x offset of drawable",
                                                      G_MININT32, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_int ("offset-y",
                                                      "offset y",
                                                      "y offset of drawable",
                                                      G_MININT32, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-drawable-mask-bounds
+   * ligma-drawable-mask-bounds
    */
-  procedure = gimp_procedure_new (drawable_mask_bounds_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-drawable-mask-bounds");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (drawable_mask_bounds_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-drawable-mask-bounds");
+  ligma_procedure_set_static_help (procedure,
                                   "Find the bounding box of the current selection in relation to the specified drawable.",
                                   "This procedure returns whether there is a selection. If there is one, the upper left and lower right-hand corners of its bounding box are returned. These coordinates are specified relative to the drawable's origin, and bounded by the drawable's extents. Please note that the pixel specified by the lower right-hand coordinate of the bounding box is not part of the selection. The selection ends at the upper left corner of this pixel. This means the width of the selection can be calculated as (x2 - x1), its height as (y2 - y1).\n"
-                                  "Note that the returned boolean does NOT correspond with the returned region being empty or not, it always returns whether the selection is non_empty. See 'gimp-drawable-mask-intersect' for a boolean return value which is more useful in most cases.",
+                                  "Note that the returned boolean does NOT correspond with the returned region being empty or not, it always returns whether the selection is non_empty. See 'ligma-drawable-mask-intersect' for a boolean return value which is more useful in most cases.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "The drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("non-empty",
                                                          "non empty",
                                                          "TRUE if there is a selection",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_int ("x1",
                                                      "x1",
                                                      "x coordinate of the upper left corner of selection bounds",
                                                      G_MININT32, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_int ("y1",
                                                      "y1",
                                                      "y coordinate of the upper left corner of selection bounds",
                                                      G_MININT32, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_int ("x2",
                                                      "x2",
                                                      "x coordinate of the lower right corner of selection bounds",
                                                      G_MININT32, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_int ("y2",
                                                      "y2",
                                                      "y coordinate of the lower right corner of selection bounds",
                                                      G_MININT32, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-drawable-mask-intersect
+   * ligma-drawable-mask-intersect
    */
-  procedure = gimp_procedure_new (drawable_mask_intersect_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-drawable-mask-intersect");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (drawable_mask_intersect_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-drawable-mask-intersect");
+  ligma_procedure_set_static_help (procedure,
                                   "Find the bounding box of the current selection in relation to the specified drawable.",
-                                  "This procedure returns whether there is an intersection between the drawable and the selection. Unlike 'gimp-drawable-mask-bounds', the intersection's bounds are returned as x, y, width, height.\n"
+                                  "This procedure returns whether there is an intersection between the drawable and the selection. Unlike 'ligma-drawable-mask-bounds', the intersection's bounds are returned as x, y, width, height.\n"
                                   "If there is no selection this function returns TRUE and the returned bounds are the extents of the whole drawable.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2004");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "The drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("non-empty",
                                                          "non empty",
                                                          "TRUE if the returned area is not empty",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_int ("x",
                                                      "x",
                                                      "x coordinate of the upper left corner of the intersection",
                                                      G_MININT32, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_int ("y",
                                                      "y",
                                                      "y coordinate of the upper left corner of the intersection",
                                                      G_MININT32, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_int ("width",
                                                      "width",
                                                      "width of the intersection",
                                                      G_MININT32, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_int ("height",
                                                      "height",
                                                      "height of the intersection",
                                                      G_MININT32, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-drawable-merge-shadow
+   * ligma-drawable-merge-shadow
    */
-  procedure = gimp_procedure_new (drawable_merge_shadow_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-drawable-merge-shadow");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (drawable_merge_shadow_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-drawable-merge-shadow");
+  ligma_procedure_set_static_help (procedure,
                                   "Merge the shadow buffer with the specified drawable.",
                                   "This procedure combines the contents of the drawable's shadow buffer (for temporary processing) with the specified drawable. The 'undo' parameter specifies whether to add an undo step for the operation. Requesting no undo is useful for such applications as 'auto-apply'.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "The drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("undo",
                                                      "undo",
                                                      "Push merge to undo stack?",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-drawable-free-shadow
+   * ligma-drawable-free-shadow
    */
-  procedure = gimp_procedure_new (drawable_free_shadow_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-drawable-free-shadow");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (drawable_free_shadow_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-drawable-free-shadow");
+  ligma_procedure_set_static_help (procedure,
                                   "Free the specified drawable's shadow data (if it exists).",
                                   "This procedure is intended as a memory saving device. If any shadow memory has been allocated, it will be freed automatically when the drawable is removed from the image, or when the plug-in procedure which allocated it returns.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2008");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "The drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-drawable-update
+   * ligma-drawable-update
    */
-  procedure = gimp_procedure_new (drawable_update_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-drawable-update");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (drawable_update_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-drawable-update");
+  ligma_procedure_set_static_help (procedure,
                                   "Update the specified region of the drawable.",
                                   "This procedure updates the specified region of the drawable. The (x, y) coordinate pair is relative to the drawable's origin, not to the image origin. Therefore, the entire drawable can be updated using (0, 0, width, height).",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "The drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("x",
                                                  "x",
                                                  "x coordinate of upper left corner of update region",
                                                  G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("y",
                                                  "y",
                                                  "y coordinate of upper left corner of update region",
                                                  G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("width",
                                                  "width",
                                                  "Width of update region",
                                                  G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("height",
                                                  "height",
                                                  "Height of update region",
                                                  G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-drawable-get-pixel
+   * ligma-drawable-get-pixel
    */
-  procedure = gimp_procedure_new (drawable_get_pixel_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-drawable-get-pixel");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (drawable_get_pixel_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-drawable-get-pixel");
+  ligma_procedure_set_static_help (procedure,
                                   "Gets the value of the pixel at the specified coordinates.",
                                   "This procedure gets the pixel value at the specified coordinates. The 'num_channels' argument must always be equal to the bytes-per-pixel value for the specified drawable.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1997");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "The drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("x-coord",
                                                  "x coord",
                                                  "The x coordinate",
                                                  0, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("y-coord",
                                                  "y coord",
                                                  "The y coordinate",
                                                  0, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_int ("num-channels",
                                                      "num channels",
                                                      "The number of channels for the pixel",
                                                      0, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_uint8_array ("pixel",
+                                                     LIGMA_PARAM_READWRITE | LIGMA_PARAM_NO_VALIDATE));
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_uint8_array ("pixel",
                                                                 "pixel",
                                                                 "The pixel value",
-                                                                GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                                LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-drawable-set-pixel
+   * ligma-drawable-set-pixel
    */
-  procedure = gimp_procedure_new (drawable_set_pixel_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-drawable-set-pixel");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (drawable_set_pixel_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-drawable-set-pixel");
+  ligma_procedure_set_static_help (procedure,
                                   "Sets the value of the pixel at the specified coordinates.",
                                   "This procedure sets the pixel value at the specified coordinates. The 'num_channels' argument must always be equal to the bytes-per-pixel value for the specified drawable. Note that this function is not undoable, you should use it only on drawables you just created yourself.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1997");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "The drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("x-coord",
                                                  "x coord",
                                                  "The x coordinate",
                                                  0, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("y-coord",
                                                  "y coord",
                                                  "The y coordinate",
                                                  0, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("num-channels",
                                                  "num channels",
                                                  "The number of channels for the pixel",
                                                  0, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_uint8_array ("pixel",
+                                                 LIGMA_PARAM_READWRITE | LIGMA_PARAM_NO_VALIDATE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_uint8_array ("pixel",
                                                             "pixel",
                                                             "The pixel value",
-                                                            GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                            LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-drawable-fill
+   * ligma-drawable-fill
    */
-  procedure = gimp_procedure_new (drawable_fill_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-drawable-fill");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (drawable_fill_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-drawable-fill");
+  ligma_procedure_set_static_help (procedure,
                                   "Fill the drawable with the specified fill mode.",
                                   "This procedure fills the drawable. If the fill mode is foreground the current foreground color is used. If the fill mode is background, the current background color is used. If the fill type is white, then white is used. Transparent fill only affects layers with an alpha channel, in which case the alpha channel is set to transparent. If the drawable has no alpha channel, it is filled to white. No fill leaves the drawable's contents undefined.\n"
-                                  "This procedure is unlike 'gimp-drawable-edit-fill' or the bucket fill tool because it fills regardless of a selection. Its main purpose is to fill a newly created drawable before adding it to the image. This operation cannot be undone.",
+                                  "This procedure is unlike 'ligma-drawable-edit-fill' or the bucket fill tool because it fills regardless of a selection. Its main purpose is to fill a newly created drawable before adding it to the image. This operation cannot be undone.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "The drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("fill-type",
                                                   "fill type",
                                                   "The type of fill",
-                                                  GIMP_TYPE_FILL_TYPE,
-                                                  GIMP_FILL_FOREGROUND,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                  LIGMA_TYPE_FILL_TYPE,
+                                                  LIGMA_FILL_FOREGROUND,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-drawable-offset
+   * ligma-drawable-offset
    */
-  procedure = gimp_procedure_new (drawable_offset_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-drawable-offset");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (drawable_offset_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-drawable-offset");
+  ligma_procedure_set_static_help (procedure,
                                   "Offset the drawable by the specified amounts in the X and Y directions",
                                   "This procedure offsets the specified drawable by the amounts specified by 'offset_x' and 'offset_y'. If 'wrap_around' is set to TRUE, then portions of the drawable which are offset out of bounds are wrapped around. Alternatively, the undefined regions of the drawable can be filled with transparency or the background color, as specified by the 'fill-type' parameter.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1997");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "The drawable to offset",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("wrap-around",
                                                      "wrap around",
                                                      "wrap image around or fill vacated regions",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("fill-type",
                                                   "fill type",
                                                   "fill vacated regions of drawable with background or transparent",
-                                                  GIMP_TYPE_OFFSET_TYPE,
-                                                  GIMP_OFFSET_BACKGROUND,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                  LIGMA_TYPE_OFFSET_TYPE,
+                                                  LIGMA_OFFSET_BACKGROUND,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("offset-x",
                                                  "offset x",
                                                  "offset by this amount in X direction",
                                                  G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("offset-y",
                                                  "offset y",
                                                  "offset by this amount in Y direction",
                                                  G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-drawable-thumbnail
+   * ligma-drawable-thumbnail
    */
-  procedure = gimp_procedure_new (drawable_thumbnail_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-drawable-thumbnail");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (drawable_thumbnail_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-drawable-thumbnail");
+  ligma_procedure_set_static_help (procedure,
                                   "Get a thumbnail of a drawable.",
                                   "This function gets data from which a thumbnail of a drawable preview can be created. Maximum x or y dimension is 1024 pixels. The pixels are returned in RGB[A] or GRAY[A] format. The bpp return value gives the number of bytes in the image.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Andy Thomas",
                                          "Andy Thomas",
                                          "1999");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "The drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("width",
                                                  "width",
                                                  "The requested thumbnail width",
                                                  1, 1024, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("height",
                                                  "height",
                                                  "The requested thumbnail height",
                                                  1, 1024, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_int ("actual-width",
                                                      "actual width",
                                                      "The previews width",
                                                      G_MININT32, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_int ("actual-height",
                                                      "actual height",
                                                      "The previews height",
                                                      G_MININT32, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_int ("bpp",
                                                      "bpp",
                                                      "The previews bpp",
                                                      G_MININT32, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_int ("thumbnail-data-count",
                                                      "thumbnail data count",
                                                      "The number of bytes in thumbnail data",
                                                      0, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_uint8_array ("thumbnail-data",
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_uint8_array ("thumbnail-data",
                                                                 "thumbnail data",
                                                                 "The thumbnail data",
-                                                                GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                                LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-drawable-sub-thumbnail
+   * ligma-drawable-sub-thumbnail
    */
-  procedure = gimp_procedure_new (drawable_sub_thumbnail_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-drawable-sub-thumbnail");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (drawable_sub_thumbnail_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-drawable-sub-thumbnail");
+  ligma_procedure_set_static_help (procedure,
                                   "Get a thumbnail of a sub-area of a drawable drawable.",
                                   "This function gets data from which a thumbnail of a drawable preview can be created. Maximum x or y dimension is 1024 pixels. The pixels are returned in RGB[A] or GRAY[A] format. The bpp return value gives the number of bytes in the image.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2004");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "The drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("src-x",
                                                  "src x",
                                                  "The x coordinate of the area",
                                                  0, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("src-y",
                                                  "src y",
                                                  "The y coordinate of the area",
                                                  0, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("src-width",
                                                  "src width",
                                                  "The width of the area",
                                                  1, G_MAXINT32, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("src-height",
                                                  "src height",
                                                  "The height of the area",
                                                  1, G_MAXINT32, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("dest-width",
                                                  "dest width",
                                                  "The thumbnail width",
                                                  1, 1024, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("dest-height",
                                                  "dest height",
                                                  "The thumbnail height",
                                                  1, 1024, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_int ("width",
                                                      "width",
                                                      "The previews width",
                                                      G_MININT32, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_int ("height",
                                                      "height",
                                                      "The previews height",
                                                      G_MININT32, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_int ("bpp",
                                                      "bpp",
                                                      "The previews bpp",
                                                      G_MININT32, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_int ("thumbnail-data-count",
                                                      "thumbnail data count",
                                                      "The number of bytes in thumbnail data",
                                                      0, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_uint8_array ("thumbnail-data",
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_uint8_array ("thumbnail-data",
                                                                 "thumbnail data",
                                                                 "The thumbnail data",
-                                                                GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                                LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-drawable-foreground-extract
+   * ligma-drawable-foreground-extract
    */
-  procedure = gimp_procedure_new (drawable_foreground_extract_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-drawable-foreground-extract");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (drawable_foreground_extract_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-drawable-foreground-extract");
+  ligma_procedure_set_static_help (procedure,
                                   "Extract the foreground of a drawable using a given trimap.",
                                   "Image Segmentation by Uniform Color Clustering, see https://www.inf.fu-berlin.de/inst/pubs/tr-b-05-07.pdf",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Gerald Friedland <fland@inf.fu-berlin.de>, Kristian Jantz <jantz@inf.fu-berlin.de>, Sven Neumann <sven@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Gerald Friedland <fland@inf.fu-berlin.de>, Kristian Jantz <jantz@inf.fu-berlin.de>, Sven Neumann <sven@ligma.org>",
                                          "Gerald Friedland",
                                          "2005");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "The drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("mode",
                                                   "mode",
                                                   "The algorithm to use",
-                                                  GIMP_TYPE_FOREGROUND_EXTRACT_MODE,
-                                                  GIMP_FOREGROUND_EXTRACT_MATTING,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("mask",
+                                                  LIGMA_TYPE_FOREGROUND_EXTRACT_MODE,
+                                                  LIGMA_FOREGROUND_EXTRACT_MATTING,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("mask",
                                                          "mask",
                                                          "Tri-Map",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpzoompreview.c
- * Copyright (C) 2005  David Odin <dindinx@gimp.org>
+ * ligmazoompreview.c
+ * Copyright (C) 2005  David Odin <dindinx@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,19 +24,19 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
-#include "gimpuitypes.h"
+#include "ligmauitypes.h"
 
-#include "gimp.h"
+#include "ligma.h"
 
-#include "gimpdrawablepreview.h"
-#include "gimpzoompreview.h"
+#include "ligmadrawablepreview.h"
+#include "ligmazoompreview.h"
 
 
 /**
- * SECTION: gimpzoompreview
- * @title: GimpZoomPreview
+ * SECTION: ligmazoompreview
+ * @title: LigmaZoomPreview
  * @short_description: A drawable preview with zooming capabilities.
  *
  * A drawable preview with zooming capabilities.
@@ -56,104 +56,104 @@ typedef struct
 } PreviewSettings;
 
 
-struct _GimpZoomPreviewPrivate
+struct _LigmaZoomPreviewPrivate
 {
-  GimpDrawable  *drawable;
-  GimpZoomModel *model;
+  LigmaDrawable  *drawable;
+  LigmaZoomModel *model;
   GdkRectangle   extents;
 };
 
-#define GET_PRIVATE(obj) (((GimpZoomPreview *) (obj))->priv)
+#define GET_PRIVATE(obj) (((LigmaZoomPreview *) (obj))->priv)
 
 
-static void     gimp_zoom_preview_constructed     (GObject         *object);
-static void     gimp_zoom_preview_finalize        (GObject         *object);
-static void     gimp_zoom_preview_dispose         (GObject         *object);
-static void     gimp_zoom_preview_get_property    (GObject         *object,
+static void     ligma_zoom_preview_constructed     (GObject         *object);
+static void     ligma_zoom_preview_finalize        (GObject         *object);
+static void     ligma_zoom_preview_dispose         (GObject         *object);
+static void     ligma_zoom_preview_get_property    (GObject         *object,
                                                    guint            property_id,
                                                    GValue          *value,
                                                    GParamSpec      *pspec);
-static void     gimp_zoom_preview_set_property    (GObject         *object,
+static void     ligma_zoom_preview_set_property    (GObject         *object,
                                                    guint            property_id,
                                                    const GValue    *value,
                                                    GParamSpec      *pspec);
 
-static void     gimp_zoom_preview_set_adjustments (GimpZoomPreview *preview,
+static void     ligma_zoom_preview_set_adjustments (LigmaZoomPreview *preview,
                                                    gdouble          old_factor,
                                                    gdouble          new_factor);
-static void     gimp_zoom_preview_size_allocate   (GtkWidget       *widget,
+static void     ligma_zoom_preview_size_allocate   (GtkWidget       *widget,
                                                    GtkAllocation   *allocation,
-                                                   GimpZoomPreview *preview);
-static void     gimp_zoom_preview_style_updated   (GtkWidget       *widget);
-static gboolean gimp_zoom_preview_scroll_event    (GtkWidget       *widget,
+                                                   LigmaZoomPreview *preview);
+static void     ligma_zoom_preview_style_updated   (GtkWidget       *widget);
+static gboolean ligma_zoom_preview_scroll_event    (GtkWidget       *widget,
                                                    GdkEventScroll  *event,
-                                                   GimpZoomPreview *preview);
-static void     gimp_zoom_preview_draw            (GimpPreview     *preview);
-static void     gimp_zoom_preview_draw_buffer     (GimpPreview     *preview,
+                                                   LigmaZoomPreview *preview);
+static void     ligma_zoom_preview_draw            (LigmaPreview     *preview);
+static void     ligma_zoom_preview_draw_buffer     (LigmaPreview     *preview,
                                                    const guchar    *buffer,
                                                    gint             rowstride);
-static void     gimp_zoom_preview_draw_thumb      (GimpPreview     *preview,
-                                                   GimpPreviewArea *area,
+static void     ligma_zoom_preview_draw_thumb      (LigmaPreview     *preview,
+                                                   LigmaPreviewArea *area,
                                                    gint             width,
                                                    gint             height);
-static void     gimp_zoom_preview_set_cursor      (GimpPreview     *preview);
-static void     gimp_zoom_preview_transform       (GimpPreview     *preview,
+static void     ligma_zoom_preview_set_cursor      (LigmaPreview     *preview);
+static void     ligma_zoom_preview_transform       (LigmaPreview     *preview,
                                                    gint             src_x,
                                                    gint             src_y,
                                                    gint            *dest_x,
                                                    gint            *dest_y);
-static void     gimp_zoom_preview_untransform     (GimpPreview     *preview,
+static void     ligma_zoom_preview_untransform     (LigmaPreview     *preview,
                                                    gint             src_x,
                                                    gint             src_y,
                                                    gint            *dest_x,
                                                    gint            *dest_y);
 
-static void     gimp_zoom_preview_set_drawable    (GimpZoomPreview *preview,
-                                                   GimpDrawable    *drawable);
-static void     gimp_zoom_preview_set_model       (GimpZoomPreview *preview,
-                                                   GimpZoomModel   *model);
+static void     ligma_zoom_preview_set_drawable    (LigmaZoomPreview *preview,
+                                                   LigmaDrawable    *drawable);
+static void     ligma_zoom_preview_set_model       (LigmaZoomPreview *preview,
+                                                   LigmaZoomModel   *model);
 
-static void     gimp_zoom_preview_get_source_area (GimpPreview     *preview,
+static void     ligma_zoom_preview_get_source_area (LigmaPreview     *preview,
                                                    gint            *x,
                                                    gint            *y,
                                                    gint            *w,
                                                    gint            *h);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpZoomPreview, gimp_zoom_preview,
-                            GIMP_TYPE_SCROLLED_PREVIEW)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaZoomPreview, ligma_zoom_preview,
+                            LIGMA_TYPE_SCROLLED_PREVIEW)
 
-#define parent_class gimp_zoom_preview_parent_class
+#define parent_class ligma_zoom_preview_parent_class
 
-static gint gimp_zoom_preview_counter = 0;
+static gint ligma_zoom_preview_counter = 0;
 
 
 static void
-gimp_zoom_preview_class_init (GimpZoomPreviewClass *klass)
+ligma_zoom_preview_class_init (LigmaZoomPreviewClass *klass)
 {
   GObjectClass     *object_class  = G_OBJECT_CLASS (klass);
   GtkWidgetClass   *widget_class  = GTK_WIDGET_CLASS (klass);
-  GimpPreviewClass *preview_class = GIMP_PREVIEW_CLASS (klass);
+  LigmaPreviewClass *preview_class = LIGMA_PREVIEW_CLASS (klass);
 
-  object_class->constructed   = gimp_zoom_preview_constructed;
-  object_class->finalize      = gimp_zoom_preview_finalize;
-  object_class->dispose       = gimp_zoom_preview_dispose;
-  object_class->get_property  = gimp_zoom_preview_get_property;
-  object_class->set_property  = gimp_zoom_preview_set_property;
+  object_class->constructed   = ligma_zoom_preview_constructed;
+  object_class->finalize      = ligma_zoom_preview_finalize;
+  object_class->dispose       = ligma_zoom_preview_dispose;
+  object_class->get_property  = ligma_zoom_preview_get_property;
+  object_class->set_property  = ligma_zoom_preview_set_property;
 
-  widget_class->style_updated = gimp_zoom_preview_style_updated;
+  widget_class->style_updated = ligma_zoom_preview_style_updated;
 
-  preview_class->draw         = gimp_zoom_preview_draw;
-  preview_class->draw_buffer  = gimp_zoom_preview_draw_buffer;
-  preview_class->draw_thumb   = gimp_zoom_preview_draw_thumb;
-  preview_class->set_cursor   = gimp_zoom_preview_set_cursor;
-  preview_class->transform    = gimp_zoom_preview_transform;
-  preview_class->untransform  = gimp_zoom_preview_untransform;
+  preview_class->draw         = ligma_zoom_preview_draw;
+  preview_class->draw_buffer  = ligma_zoom_preview_draw_buffer;
+  preview_class->draw_thumb   = ligma_zoom_preview_draw_thumb;
+  preview_class->set_cursor   = ligma_zoom_preview_set_cursor;
+  preview_class->transform    = ligma_zoom_preview_transform;
+  preview_class->untransform  = ligma_zoom_preview_untransform;
 
   /**
-   * GimpZoomPreview:drawable-id:
+   * LigmaZoomPreview:drawable-id:
    *
-   * The drawable the #GimpZoomPreview is attached to.
+   * The drawable the #LigmaZoomPreview is attached to.
    *
    * Since: 2.10
    */
@@ -161,55 +161,55 @@ gimp_zoom_preview_class_init (GimpZoomPreviewClass *klass)
                                    g_param_spec_object ("drawable",
                                                         "Drawable",
                                                         "The drawable this preview is attached to",
-                                                        GIMP_TYPE_DRAWABLE,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_TYPE_DRAWABLE,
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   /**
-   * GimpZoomPreview:model:
+   * LigmaZoomPreview:model:
    *
-   * The #GimpZoomModel used by this #GimpZoomPreview.
+   * The #LigmaZoomModel used by this #LigmaZoomPreview.
    *
    * Since: 2.4
    */
   g_object_class_install_property (object_class, PROP_MODEL,
                                    g_param_spec_object ("model",
                                                         "Model",
-                                                        "The zoom preview's GimpZoomModel",
-                                                        GIMP_TYPE_ZOOM_MODEL,
-                                                        GIMP_PARAM_READWRITE |
+                                                        "The zoom preview's LigmaZoomModel",
+                                                        LIGMA_TYPE_ZOOM_MODEL,
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
-gimp_zoom_preview_init (GimpZoomPreview *preview)
+ligma_zoom_preview_init (LigmaZoomPreview *preview)
 {
-  GtkWidget *area = gimp_preview_get_area (GIMP_PREVIEW (preview));
+  GtkWidget *area = ligma_preview_get_area (LIGMA_PREVIEW (preview));
 
-  preview->priv = gimp_zoom_preview_get_instance_private (preview);
+  preview->priv = ligma_zoom_preview_get_instance_private (preview);
 
   g_signal_connect (area, "size-allocate",
-                    G_CALLBACK (gimp_zoom_preview_size_allocate),
+                    G_CALLBACK (ligma_zoom_preview_size_allocate),
                     preview);
   g_signal_connect (area, "scroll-event",
-                    G_CALLBACK (gimp_zoom_preview_scroll_event),
+                    G_CALLBACK (ligma_zoom_preview_scroll_event),
                     preview);
 
   g_object_set (area,
-                "check-size", gimp_check_size (),
-                "check-type", gimp_check_type (),
-                "check-custom-color1", gimp_check_custom_color1 (),
-                "check-custom-color2", gimp_check_custom_color2 (),
+                "check-size", ligma_check_size (),
+                "check-type", ligma_check_type (),
+                "check-custom-color1", ligma_check_custom_color1 (),
+                "check-custom-color2", ligma_check_custom_color2 (),
                 NULL);
 
-  gimp_scrolled_preview_set_policy (GIMP_SCROLLED_PREVIEW (preview),
+  ligma_scrolled_preview_set_policy (LIGMA_SCROLLED_PREVIEW (preview),
                                     GTK_POLICY_ALWAYS, GTK_POLICY_ALWAYS);
 }
 
 static void
-gimp_zoom_preview_constructed (GObject *object)
+ligma_zoom_preview_constructed (GObject *object)
 {
-  GimpZoomPreviewPrivate *priv = GET_PRIVATE (object);
+  LigmaZoomPreviewPrivate *priv = GET_PRIVATE (object);
   gchar                  *data_name;
   PreviewSettings         settings;
 
@@ -217,33 +217,33 @@ gimp_zoom_preview_constructed (GObject *object)
 
   data_name = g_strdup_printf ("%s-zoom-preview-%d",
                                g_get_prgname (),
-                               gimp_zoom_preview_counter++);
+                               ligma_zoom_preview_counter++);
 
-  if (gimp_get_data (data_name, &settings))
+  if (ligma_get_data (data_name, &settings))
     {
-      gimp_preview_set_update (GIMP_PREVIEW (object), settings.update);
+      ligma_preview_set_update (LIGMA_PREVIEW (object), settings.update);
     }
 
-  g_object_set_data_full (object, "gimp-zoom-preview-data-name",
+  g_object_set_data_full (object, "ligma-zoom-preview-data-name",
                           data_name, (GDestroyNotify) g_free);
 
   if (! priv->model)
     {
-      GimpZoomModel *model = gimp_zoom_model_new ();
+      LigmaZoomModel *model = ligma_zoom_model_new ();
 
-      gimp_zoom_model_set_range (model, 1.0, 256.0);
-      gimp_zoom_preview_set_model (GIMP_ZOOM_PREVIEW (object), model);
+      ligma_zoom_model_set_range (model, 1.0, 256.0);
+      ligma_zoom_preview_set_model (LIGMA_ZOOM_PREVIEW (object), model);
 
       g_object_unref (model);
     }
 
-  gimp_zoom_preview_set_adjustments (GIMP_ZOOM_PREVIEW (object), 1.0, 1.0);
+  ligma_zoom_preview_set_adjustments (LIGMA_ZOOM_PREVIEW (object), 1.0, 1.0);
 }
 
 static void
-gimp_zoom_preview_finalize (GObject *object)
+ligma_zoom_preview_finalize (GObject *object)
 {
-  GimpZoomPreviewPrivate *priv = GET_PRIVATE (object);
+  LigmaZoomPreviewPrivate *priv = GET_PRIVATE (object);
 
   g_clear_object (&priv->model);
   g_clear_object (&priv->drawable);
@@ -252,40 +252,40 @@ gimp_zoom_preview_finalize (GObject *object)
 }
 
 static void
-gimp_zoom_preview_dispose (GObject *object)
+ligma_zoom_preview_dispose (GObject *object)
 {
   const gchar *data_name = g_object_get_data (G_OBJECT (object),
-                                               "gimp-zoom-preview-data-name");
+                                               "ligma-zoom-preview-data-name");
 
   if (data_name)
     {
-      GimpPreview     *preview = GIMP_PREVIEW (object);
+      LigmaPreview     *preview = LIGMA_PREVIEW (object);
       PreviewSettings  settings;
 
-      settings.update = gimp_preview_get_update (preview);
+      settings.update = ligma_preview_get_update (preview);
 
-      gimp_set_data (data_name, &settings, sizeof (PreviewSettings));
+      ligma_set_data (data_name, &settings, sizeof (PreviewSettings));
     }
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
-gimp_zoom_preview_get_property (GObject    *object,
+ligma_zoom_preview_get_property (GObject    *object,
                                 guint       property_id,
                                 GValue     *value,
                                 GParamSpec *pspec)
 {
-  GimpZoomPreview *preview = GIMP_ZOOM_PREVIEW (object);
+  LigmaZoomPreview *preview = LIGMA_ZOOM_PREVIEW (object);
 
   switch (property_id)
     {
     case PROP_DRAWABLE:
-      g_value_set_object (value, gimp_zoom_preview_get_drawable (preview));
+      g_value_set_object (value, ligma_zoom_preview_get_drawable (preview));
       break;
 
     case PROP_MODEL:
-      g_value_set_object (value, gimp_zoom_preview_get_model (preview));
+      g_value_set_object (value, ligma_zoom_preview_get_model (preview));
       break;
 
     default:
@@ -295,21 +295,21 @@ gimp_zoom_preview_get_property (GObject    *object,
 }
 
 static void
-gimp_zoom_preview_set_property (GObject      *object,
+ligma_zoom_preview_set_property (GObject      *object,
                                 guint         property_id,
                                 const GValue *value,
                                 GParamSpec   *pspec)
 {
-  GimpZoomPreview *preview = GIMP_ZOOM_PREVIEW (object);
+  LigmaZoomPreview *preview = LIGMA_ZOOM_PREVIEW (object);
 
   switch (property_id)
     {
     case PROP_DRAWABLE:
-      gimp_zoom_preview_set_drawable (preview, g_value_dup_object (value));
+      ligma_zoom_preview_set_drawable (preview, g_value_dup_object (value));
       break;
 
     case PROP_MODEL:
-      gimp_zoom_preview_set_model (preview, g_value_get_object (value));
+      ligma_zoom_preview_set_model (preview, g_value_get_object (value));
       break;
 
     default:
@@ -319,24 +319,24 @@ gimp_zoom_preview_set_property (GObject      *object,
 }
 
 static void
-gimp_zoom_preview_set_adjustments (GimpZoomPreview *preview,
+ligma_zoom_preview_set_adjustments (LigmaZoomPreview *preview,
                                    gdouble          old_factor,
                                    gdouble          new_factor)
 {
-  GimpScrolledPreview *scrolled_preview = GIMP_SCROLLED_PREVIEW (preview);
+  LigmaScrolledPreview *scrolled_preview = LIGMA_SCROLLED_PREVIEW (preview);
   GtkAdjustment       *hadj;
   GtkAdjustment       *vadj;
   gint                 width;
   gint                 height;
   gdouble              ratio;
 
-  gimp_scrolled_preview_freeze (scrolled_preview);
+  ligma_scrolled_preview_freeze (scrolled_preview);
 
-  gimp_preview_get_size (GIMP_PREVIEW (preview), &width, &height);
+  ligma_preview_get_size (LIGMA_PREVIEW (preview), &width, &height);
 
   ratio = new_factor / old_factor;
 
-  gimp_scrolled_preview_get_adjustments (scrolled_preview, &hadj, &vadj);
+  ligma_scrolled_preview_get_adjustments (scrolled_preview, &hadj, &vadj);
 
   gtk_adjustment_configure (hadj,
                             (gtk_adjustment_get_value (vadj) + width / 2.0) * ratio
@@ -356,40 +356,40 @@ gimp_zoom_preview_set_adjustments (GimpZoomPreview *preview,
                             MAX (height / 2.0, new_factor),
                             height);
 
-  gimp_scrolled_preview_thaw (scrolled_preview);
+  ligma_scrolled_preview_thaw (scrolled_preview);
 }
 
 static void
-gimp_zoom_preview_size_allocate (GtkWidget       *widget,
+ligma_zoom_preview_size_allocate (GtkWidget       *widget,
                                  GtkAllocation   *allocation,
-                                 GimpZoomPreview *preview)
+                                 LigmaZoomPreview *preview)
 {
   gdouble zoom;
 
 #if 0
-  gint width  = GIMP_PREVIEW (preview)->xmax - GIMP_PREVIEW (preview)->xmin;
-  gint height = GIMP_PREVIEW (preview)->ymax - GIMP_PREVIEW (preview)->ymin;
+  gint width  = LIGMA_PREVIEW (preview)->xmax - LIGMA_PREVIEW (preview)->xmin;
+  gint height = LIGMA_PREVIEW (preview)->ymax - LIGMA_PREVIEW (preview)->ymin;
 
-  GIMP_PREVIEW (preview)->width  = MIN (width,  allocation->width);
-  GIMP_PREVIEW (preview)->height = MIN (height, allocation->height);
+  LIGMA_PREVIEW (preview)->width  = MIN (width,  allocation->width);
+  LIGMA_PREVIEW (preview)->height = MIN (height, allocation->height);
 #endif
 
-  zoom = gimp_zoom_model_get_factor (preview->priv->model);
+  zoom = ligma_zoom_model_get_factor (preview->priv->model);
 
-  gimp_zoom_preview_set_adjustments (preview, zoom, zoom);
+  ligma_zoom_preview_set_adjustments (preview, zoom, zoom);
 }
 
 static void
-gimp_zoom_preview_style_updated (GtkWidget *widget)
+ligma_zoom_preview_style_updated (GtkWidget *widget)
 {
-  GimpPreview *preview = GIMP_PREVIEW (widget);
-  GtkWidget   *area    = gimp_preview_get_area (preview);
+  LigmaPreview *preview = LIGMA_PREVIEW (widget);
+  GtkWidget   *area    = ligma_preview_get_area (preview);
 
   GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
 
   if (area)
     {
-      GimpZoomPreviewPrivate *priv = GET_PRIVATE (preview);
+      LigmaZoomPreviewPrivate *priv = GET_PRIVATE (preview);
       gint                    size;
       gint                    width;
       gint                    height;
@@ -400,7 +400,7 @@ gimp_zoom_preview_style_updated (GtkWidget *widget)
 
       gtk_widget_style_get (widget, "size", &size, NULL);
 
-      if (_gimp_drawable_preview_get_bounds (priv->drawable,
+      if (_ligma_drawable_preview_get_bounds (priv->drawable,
                                              &x1, &y1, &x2, &y2))
         {
           width  = x2 - x1;
@@ -408,8 +408,8 @@ gimp_zoom_preview_style_updated (GtkWidget *widget)
         }
       else
         {
-          width  = gimp_drawable_get_width  (priv->drawable);
-          height = gimp_drawable_get_height (priv->drawable);
+          width  = ligma_drawable_get_width  (priv->drawable);
+          height = ligma_drawable_get_height (priv->drawable);
         }
 
       if (width > height)
@@ -423,51 +423,51 @@ gimp_zoom_preview_style_updated (GtkWidget *widget)
           preview_width  = (width * preview_height) / height;
         }
 
-      gimp_preview_set_size (preview, preview_width, preview_height);
+      ligma_preview_set_size (preview, preview_width, preview_height);
     }
 }
 
 static gboolean
-gimp_zoom_preview_scroll_event (GtkWidget       *widget,
+ligma_zoom_preview_scroll_event (GtkWidget       *widget,
                                 GdkEventScroll  *event,
-                                GimpZoomPreview *preview)
+                                LigmaZoomPreview *preview)
 {
   if (event->state & GDK_CONTROL_MASK)
     {
-      GimpZoomPreviewPrivate *priv = GET_PRIVATE (preview);
+      LigmaZoomPreviewPrivate *priv = GET_PRIVATE (preview);
       gdouble                 delta;
 
-      gimp_scrolled_preview_freeze (GIMP_SCROLLED_PREVIEW (preview));
+      ligma_scrolled_preview_freeze (LIGMA_SCROLLED_PREVIEW (preview));
 
       switch (event->direction)
         {
         case GDK_SCROLL_UP:
-          gimp_zoom_model_zoom (priv->model, GIMP_ZOOM_IN, 0.0);
+          ligma_zoom_model_zoom (priv->model, LIGMA_ZOOM_IN, 0.0);
           break;
 
         case GDK_SCROLL_DOWN:
-          gimp_zoom_model_zoom (priv->model, GIMP_ZOOM_OUT, 0.0);
+          ligma_zoom_model_zoom (priv->model, LIGMA_ZOOM_OUT, 0.0);
           break;
 
         case GDK_SCROLL_SMOOTH:
           gdk_event_get_scroll_deltas ((GdkEvent *) event, NULL, &delta);
-          gimp_zoom_model_zoom (priv->model, GIMP_ZOOM_SMOOTH, delta);
+          ligma_zoom_model_zoom (priv->model, LIGMA_ZOOM_SMOOTH, delta);
           break;
 
         default:
           break;
         }
 
-      gimp_scrolled_preview_thaw (GIMP_SCROLLED_PREVIEW (preview));
+      ligma_scrolled_preview_thaw (LIGMA_SCROLLED_PREVIEW (preview));
     }
 
   return FALSE;
 }
 
 static void
-gimp_zoom_preview_draw (GimpPreview *preview)
+ligma_zoom_preview_draw (LigmaPreview *preview)
 {
-  GimpZoomPreviewPrivate *priv = GIMP_ZOOM_PREVIEW (preview)->priv;
+  LigmaZoomPreviewPrivate *priv = LIGMA_ZOOM_PREVIEW (preview)->priv;
   guchar                 *data;
   gint                    width;
   gint                    height;
@@ -479,41 +479,41 @@ gimp_zoom_preview_draw (GimpPreview *preview)
   if (priv->drawable == NULL)
     return;
 
-  data = gimp_zoom_preview_get_source (GIMP_ZOOM_PREVIEW (preview),
+  data = ligma_zoom_preview_get_source (LIGMA_ZOOM_PREVIEW (preview),
                                        &width, &height, &bpp);
 
   if (data)
     {
-      GtkWidget *area = gimp_preview_get_area (preview);
+      GtkWidget *area = ligma_preview_get_area (preview);
 
-      gimp_preview_area_draw (GIMP_PREVIEW_AREA (area),
+      ligma_preview_area_draw (LIGMA_PREVIEW_AREA (area),
                               0, 0, width, height,
-                              gimp_drawable_type (priv->drawable),
+                              ligma_drawable_type (priv->drawable),
                               data, width * bpp);
       g_free (data);
     }
 }
 
 static void
-gimp_zoom_preview_draw_buffer (GimpPreview  *preview,
+ligma_zoom_preview_draw_buffer (LigmaPreview  *preview,
                                const guchar *buffer,
                                gint          rowstride)
 {
-  GimpZoomPreviewPrivate *priv = GIMP_ZOOM_PREVIEW (preview)->priv;
-  GtkWidget              *area = gimp_preview_get_area (preview);
-  GimpImage              *image;
+  LigmaZoomPreviewPrivate *priv = LIGMA_ZOOM_PREVIEW (preview)->priv;
+  GtkWidget              *area = ligma_preview_get_area (preview);
+  LigmaImage              *image;
   gint                    width;
   gint                    height;
 
-  gimp_preview_get_size (preview, &width, &height);
-  image = gimp_item_get_image (GIMP_ITEM (priv->drawable));
+  ligma_preview_get_size (preview, &width, &height);
+  image = ligma_item_get_image (LIGMA_ITEM (priv->drawable));
 
-  if (gimp_selection_is_empty (image))
+  if (ligma_selection_is_empty (image))
     {
-      gimp_preview_area_draw (GIMP_PREVIEW_AREA (area),
+      ligma_preview_area_draw (LIGMA_PREVIEW_AREA (area),
                               0, 0,
                               width, height,
-                              gimp_drawable_type (priv->drawable),
+                              ligma_drawable_type (priv->drawable),
                               buffer,
                               rowstride);
     }
@@ -521,7 +521,7 @@ gimp_zoom_preview_draw_buffer (GimpPreview  *preview,
     {
       guchar        *sel;
       guchar        *src;
-      GimpSelection *selection;
+      LigmaSelection *selection;
       gint           w, h;
       gint           bpp;
       gint           src_x;
@@ -531,29 +531,29 @@ gimp_zoom_preview_draw_buffer (GimpPreview  *preview,
       gint           offsx = 0;
       gint           offsy = 0;
 
-      selection = gimp_image_get_selection (image);
+      selection = ligma_image_get_selection (image);
 
       w = width;
       h = height;
 
-      gimp_zoom_preview_get_source_area (preview,
+      ligma_zoom_preview_get_source_area (preview,
                                          &src_x, &src_y,
                                          &src_width, &src_height);
 
-      src = gimp_drawable_get_sub_thumbnail_data (priv->drawable,
+      src = ligma_drawable_get_sub_thumbnail_data (priv->drawable,
                                                   src_x, src_y,
                                                   src_width, src_height,
                                                   &w, &h, &bpp);
-      gimp_drawable_get_offsets (priv->drawable, &offsx, &offsy);
-      sel = gimp_drawable_get_sub_thumbnail_data (GIMP_DRAWABLE (selection),
+      ligma_drawable_get_offsets (priv->drawable, &offsx, &offsy);
+      sel = ligma_drawable_get_sub_thumbnail_data (LIGMA_DRAWABLE (selection),
                                                   src_x + offsx, src_y + offsy,
                                                   src_width, src_height,
                                                   &width, &height, &bpp);
 
-      gimp_preview_area_mask (GIMP_PREVIEW_AREA (area),
+      ligma_preview_area_mask (LIGMA_PREVIEW_AREA (area),
                               0, 0, width, height,
-                              gimp_drawable_type (priv->drawable),
-                              src, width * gimp_drawable_get_bpp (priv->drawable),
+                              ligma_drawable_type (priv->drawable),
+                              src, width * ligma_drawable_get_bpp (priv->drawable),
                               buffer, rowstride,
                               sel, width);
 
@@ -563,27 +563,27 @@ gimp_zoom_preview_draw_buffer (GimpPreview  *preview,
 }
 
 static void
-gimp_zoom_preview_draw_thumb (GimpPreview     *preview,
-                              GimpPreviewArea *area,
+ligma_zoom_preview_draw_thumb (LigmaPreview     *preview,
+                              LigmaPreviewArea *area,
                               gint             width,
                               gint             height)
 {
-  GimpZoomPreviewPrivate *priv = GIMP_ZOOM_PREVIEW (preview)->priv;
+  LigmaZoomPreviewPrivate *priv = LIGMA_ZOOM_PREVIEW (preview)->priv;
 
   if (priv->drawable != NULL)
-    _gimp_drawable_preview_area_draw_thumb (area, priv->drawable,
+    _ligma_drawable_preview_area_draw_thumb (area, priv->drawable,
                                             width, height);
 }
 
 static void
-gimp_zoom_preview_set_cursor (GimpPreview *preview)
+ligma_zoom_preview_set_cursor (LigmaPreview *preview)
 {
-  GtkWidget *area = gimp_preview_get_area (preview);
+  GtkWidget *area = ligma_preview_get_area (preview);
 
   if (! gtk_widget_get_realized (area))
     return;
 
-  if (gimp_zoom_preview_get_factor (GIMP_ZOOM_PREVIEW (preview)) > 1.0)
+  if (ligma_zoom_preview_get_factor (LIGMA_ZOOM_PREVIEW (preview)) > 1.0)
     {
       GdkDisplay *display = gtk_widget_get_display (GTK_WIDGET (preview));
       GdkCursor  *cursor;
@@ -596,28 +596,28 @@ gimp_zoom_preview_set_cursor (GimpPreview *preview)
   else
     {
       gdk_window_set_cursor (gtk_widget_get_window (area),
-                             gimp_preview_get_default_cursor (preview));
+                             ligma_preview_get_default_cursor (preview));
     }
 }
 
 static void
-gimp_zoom_preview_transform (GimpPreview *preview,
+ligma_zoom_preview_transform (LigmaPreview *preview,
                              gint         src_x,
                              gint         src_y,
                              gint        *dest_x,
                              gint        *dest_y)
 {
-  GimpZoomPreviewPrivate *priv = GIMP_ZOOM_PREVIEW (preview)->priv;
+  LigmaZoomPreviewPrivate *priv = LIGMA_ZOOM_PREVIEW (preview)->priv;
   gint                    width;
   gint                    height;
   gint                    xoff;
   gint                    yoff;
   gdouble                 zoom;
 
-  gimp_preview_get_size (preview, &width, &height);
-  gimp_preview_get_offsets (preview, &xoff, &yoff);
+  ligma_preview_get_size (preview, &width, &height);
+  ligma_preview_get_offsets (preview, &xoff, &yoff);
 
-  zoom = gimp_zoom_preview_get_factor (GIMP_ZOOM_PREVIEW (preview));
+  zoom = ligma_zoom_preview_get_factor (LIGMA_ZOOM_PREVIEW (preview));
 
   *dest_x = ((gdouble) (src_x - priv->extents.x) *
              width / priv->extents.width * zoom) - xoff;
@@ -627,23 +627,23 @@ gimp_zoom_preview_transform (GimpPreview *preview,
 }
 
 static void
-gimp_zoom_preview_untransform (GimpPreview *preview,
+ligma_zoom_preview_untransform (LigmaPreview *preview,
                                gint         src_x,
                                gint         src_y,
                                gint        *dest_x,
                                gint        *dest_y)
 {
-  GimpZoomPreviewPrivate *priv = GIMP_ZOOM_PREVIEW (preview)->priv;
+  LigmaZoomPreviewPrivate *priv = LIGMA_ZOOM_PREVIEW (preview)->priv;
   gint                    width;
   gint                    height;
   gint                    xoff;
   gint                    yoff;
   gdouble                 zoom;
 
-  gimp_preview_get_size (preview, &width, &height);
-  gimp_preview_get_offsets (preview, &xoff, &yoff);
+  ligma_preview_get_size (preview, &width, &height);
+  ligma_preview_get_offsets (preview, &xoff, &yoff);
 
-  zoom = gimp_zoom_preview_get_factor (GIMP_ZOOM_PREVIEW (preview));
+  zoom = ligma_zoom_preview_get_factor (LIGMA_ZOOM_PREVIEW (preview));
 
   *dest_x = (priv->extents.x +
              ((gdouble) (src_x + xoff) *
@@ -655,10 +655,10 @@ gimp_zoom_preview_untransform (GimpPreview *preview,
 }
 
 static void
-gimp_zoom_preview_set_drawable (GimpZoomPreview *preview,
-                                GimpDrawable    *drawable)
+ligma_zoom_preview_set_drawable (LigmaZoomPreview *preview,
+                                LigmaDrawable    *drawable)
 {
-  GimpZoomPreviewPrivate *priv = preview->priv;
+  LigmaZoomPreviewPrivate *priv = preview->priv;
   gint                    x, y;
   gint                    width, height;
   gint                    max_width, max_height;
@@ -667,15 +667,15 @@ gimp_zoom_preview_set_drawable (GimpZoomPreview *preview,
 
   priv->drawable = drawable;
 
-  if (gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
+  if (ligma_drawable_mask_intersect (drawable, &x, &y, &width, &height))
     {
       priv->extents.x = x;
       priv->extents.y = y;
     }
   else
     {
-      width  = gimp_drawable_get_width  (drawable);
-      height = gimp_drawable_get_height (drawable);
+      width  = ligma_drawable_get_width  (drawable);
+      height = ligma_drawable_get_height (drawable);
 
       priv->extents.x = 0;
       priv->extents.y = 0;
@@ -695,19 +695,19 @@ gimp_zoom_preview_set_drawable (GimpZoomPreview *preview,
       max_width  = (width * max_height) / height;
     }
 
-  gimp_preview_set_bounds (GIMP_PREVIEW (preview),
+  ligma_preview_set_bounds (LIGMA_PREVIEW (preview),
                            0, 0, max_width, max_height);
 
-  g_object_set (gimp_preview_get_frame (GIMP_PREVIEW (preview)),
+  g_object_set (ligma_preview_get_frame (LIGMA_PREVIEW (preview)),
                 "ratio", (gdouble) width / (gdouble) height,
                 NULL);
 }
 
 static void
-gimp_zoom_preview_set_model (GimpZoomPreview *preview,
-                             GimpZoomModel   *model)
+ligma_zoom_preview_set_model (LigmaZoomPreview *preview,
+                             LigmaZoomModel   *model)
 {
-  GimpZoomPreviewPrivate *priv = GET_PRIVATE (preview);
+  LigmaZoomPreviewPrivate *priv = GET_PRIVATE (preview);
   GtkWidget              *button_bar;
   GtkWidget              *button;
   GtkWidget              *box;
@@ -720,10 +720,10 @@ gimp_zoom_preview_set_model (GimpZoomPreview *preview,
   priv->model = g_object_ref (model);
 
   g_signal_connect_swapped (priv->model, "zoomed",
-                            G_CALLBACK (gimp_zoom_preview_set_adjustments),
+                            G_CALLBACK (ligma_zoom_preview_set_adjustments),
                             preview);
 
-  box = gimp_preview_get_controls (GIMP_PREVIEW (preview));
+  box = ligma_preview_get_controls (LIGMA_PREVIEW (preview));
   g_return_if_fail (GTK_IS_BOX (box));
 
   button_bar = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
@@ -731,29 +731,29 @@ gimp_zoom_preview_set_model (GimpZoomPreview *preview,
   gtk_widget_show (button_bar);
 
   /* zoom out */
-  button = gimp_zoom_button_new (priv->model,
-                                 GIMP_ZOOM_OUT, GTK_ICON_SIZE_SMALL_TOOLBAR);
+  button = ligma_zoom_button_new (priv->model,
+                                 LIGMA_ZOOM_OUT, GTK_ICON_SIZE_SMALL_TOOLBAR);
   gtk_box_pack_start (GTK_BOX (button_bar), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   /* zoom in */
-  button = gimp_zoom_button_new (priv->model,
-                                 GIMP_ZOOM_IN, GTK_ICON_SIZE_SMALL_TOOLBAR);
+  button = ligma_zoom_button_new (priv->model,
+                                 LIGMA_ZOOM_IN, GTK_ICON_SIZE_SMALL_TOOLBAR);
   gtk_box_pack_start (GTK_BOX (button_bar), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 }
 
 static void
-gimp_zoom_preview_get_source_area (GimpPreview *preview,
+ligma_zoom_preview_get_source_area (LigmaPreview *preview,
                                    gint        *x,
                                    gint        *y,
                                    gint        *w,
                                    gint        *h)
 {
-  GimpZoomPreviewPrivate *priv = GET_PRIVATE (preview);
-  gdouble                 zoom = gimp_zoom_model_get_factor (priv->model);
+  LigmaZoomPreviewPrivate *priv = GET_PRIVATE (preview);
+  gdouble                 zoom = ligma_zoom_model_get_factor (priv->model);
 
-  gimp_zoom_preview_untransform (preview, 0, 0, x, y);
+  ligma_zoom_preview_untransform (preview, 0, 0, x, y);
 
   *w = priv->extents.width / zoom;
   *h = priv->extents.height / zoom;
@@ -761,98 +761,98 @@ gimp_zoom_preview_get_source_area (GimpPreview *preview,
 
 
 /**
- * gimp_zoom_preview_new_from_drawable:
+ * ligma_zoom_preview_new_from_drawable:
  * @drawable: (transfer none): a drawable
  *
- * Creates a new #GimpZoomPreview widget for @drawable.
+ * Creates a new #LigmaZoomPreview widget for @drawable.
  *
  * Since: 3.0
  *
- * Returns: a new #GimpZoomPreview.
+ * Returns: a new #LigmaZoomPreview.
  **/
 GtkWidget *
-gimp_zoom_preview_new_from_drawable (GimpDrawable *drawable)
+ligma_zoom_preview_new_from_drawable (LigmaDrawable *drawable)
 {
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
-  g_return_val_if_fail (gimp_item_is_valid (GIMP_ITEM (drawable)), NULL);
+  g_return_val_if_fail (LIGMA_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (ligma_item_is_valid (LIGMA_ITEM (drawable)), NULL);
 
-  return g_object_new (GIMP_TYPE_ZOOM_PREVIEW,
+  return g_object_new (LIGMA_TYPE_ZOOM_PREVIEW,
                        "drawable", drawable,
                        NULL);
 }
 
 /**
- * gimp_zoom_preview_new_with_model_from_drawable:
- * @drawable: a #GimpDrawable
- * @model:    a #GimpZoomModel
+ * ligma_zoom_preview_new_with_model_from_drawable:
+ * @drawable: a #LigmaDrawable
+ * @model:    a #LigmaZoomModel
  *
- * Creates a new #GimpZoomPreview widget for @drawable using the
+ * Creates a new #LigmaZoomPreview widget for @drawable using the
  * given @model.
  *
- * This variant of gimp_zoom_preview_new_from_drawable() allows you
+ * This variant of ligma_zoom_preview_new_from_drawable() allows you
  * to create a preview using an existing zoom model. This may be
  * useful if for example you want to have two zoom previews that keep
  * their zoom factor in sync.
  *
  * Since: 2.10
  *
- * Returns: a new #GimpZoomPreview.
+ * Returns: a new #LigmaZoomPreview.
  **/
 GtkWidget *
-gimp_zoom_preview_new_with_model_from_drawable (GimpDrawable  *drawable,
-                                                GimpZoomModel *model)
+ligma_zoom_preview_new_with_model_from_drawable (LigmaDrawable  *drawable,
+                                                LigmaZoomModel *model)
 {
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
-  g_return_val_if_fail (gimp_item_is_valid (GIMP_ITEM (drawable)), NULL);
-  g_return_val_if_fail (GIMP_IS_ZOOM_MODEL (model), NULL);
+  g_return_val_if_fail (LIGMA_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (ligma_item_is_valid (LIGMA_ITEM (drawable)), NULL);
+  g_return_val_if_fail (LIGMA_IS_ZOOM_MODEL (model), NULL);
 
-  return g_object_new (GIMP_TYPE_ZOOM_PREVIEW,
+  return g_object_new (LIGMA_TYPE_ZOOM_PREVIEW,
                        "drawable", drawable,
                        "model",    model,
                        NULL);
 }
 
 /**
- * gimp_zoom_preview_get_drawable:
- * @preview: a #GimpZoomPreview widget
+ * ligma_zoom_preview_get_drawable:
+ * @preview: a #LigmaZoomPreview widget
  *
- * Returns the drawable the #GimpZoomPreview is attached to.
+ * Returns the drawable the #LigmaZoomPreview is attached to.
  *
  * Returns: (transfer none): the drawable that was passed to
- *          gimp_zoom_preview_new_from_drawable().
+ *          ligma_zoom_preview_new_from_drawable().
  *
  * Since: 3.0
  **/
-GimpDrawable *
-gimp_zoom_preview_get_drawable (GimpZoomPreview *preview)
+LigmaDrawable *
+ligma_zoom_preview_get_drawable (LigmaZoomPreview *preview)
 {
-  g_return_val_if_fail (GIMP_IS_ZOOM_PREVIEW (preview), NULL);
+  g_return_val_if_fail (LIGMA_IS_ZOOM_PREVIEW (preview), NULL);
 
   return GET_PRIVATE (preview)->drawable;
 }
 
 /**
- * gimp_zoom_preview_get_model:
- * @preview: a #GimpZoomPreview widget
+ * ligma_zoom_preview_get_model:
+ * @preview: a #LigmaZoomPreview widget
  *
- * Returns the #GimpZoomModel the preview is using.
+ * Returns the #LigmaZoomModel the preview is using.
  *
- * Returns: (transfer none): a pointer to the #GimpZoomModel owned
+ * Returns: (transfer none): a pointer to the #LigmaZoomModel owned
  *          by the @preview
  *
  * Since: 2.4
  **/
-GimpZoomModel *
-gimp_zoom_preview_get_model (GimpZoomPreview *preview)
+LigmaZoomModel *
+ligma_zoom_preview_get_model (LigmaZoomPreview *preview)
 {
-  g_return_val_if_fail (GIMP_IS_ZOOM_PREVIEW (preview), NULL);
+  g_return_val_if_fail (LIGMA_IS_ZOOM_PREVIEW (preview), NULL);
 
   return GET_PRIVATE (preview)->model;
 }
 
 /**
- * gimp_zoom_preview_get_factor:
- * @preview: a #GimpZoomPreview widget
+ * ligma_zoom_preview_get_factor:
+ * @preview: a #LigmaZoomPreview widget
  *
  * Returns the zoom factor the preview is currently using.
  *
@@ -861,20 +861,20 @@ gimp_zoom_preview_get_model (GimpZoomPreview *preview)
  * Since: 2.4
  **/
 gdouble
-gimp_zoom_preview_get_factor (GimpZoomPreview *preview)
+ligma_zoom_preview_get_factor (LigmaZoomPreview *preview)
 {
-  GimpZoomPreviewPrivate *priv;
+  LigmaZoomPreviewPrivate *priv;
 
-  g_return_val_if_fail (GIMP_IS_ZOOM_PREVIEW (preview), 1.0);
+  g_return_val_if_fail (LIGMA_IS_ZOOM_PREVIEW (preview), 1.0);
 
   priv = GET_PRIVATE (preview);
 
-  return priv->model ? gimp_zoom_model_get_factor (priv->model) : 1.0;
+  return priv->model ? ligma_zoom_model_get_factor (priv->model) : 1.0;
 }
 
 /**
- * gimp_zoom_preview_get_source:
- * @preview: a #GimpZoomPreview widget
+ * ligma_zoom_preview_get_source:
+ * @preview: a #LigmaZoomPreview widget
  * @width: (out): a pointer to an int where the current width of the zoom widget
  *         will be put.
  * @height: (out): a pointer to an int where the current width of the zoom widget
@@ -882,9 +882,9 @@ gimp_zoom_preview_get_factor (GimpZoomPreview *preview)
  * @bpp: (out): return location for the number of bytes per pixel
  *
  * Returns the scaled image data of the part of the drawable the
- * #GimpZoomPreview is currently showing, as a newly allocated array of guchar.
+ * #LigmaZoomPreview is currently showing, as a newly allocated array of guchar.
  * This function also allow to get the current width, height and bpp of the
- * #GimpZoomPreview.
+ * #LigmaZoomPreview.
  *
  * Returns: (transfer full) (array): newly allocated data that should be
  *          released using g_free() when it is not any longer needed
@@ -892,33 +892,33 @@ gimp_zoom_preview_get_factor (GimpZoomPreview *preview)
  * Since: 2.4
  */
 guchar *
-gimp_zoom_preview_get_source (GimpZoomPreview *preview,
+ligma_zoom_preview_get_source (LigmaZoomPreview *preview,
                               gint            *width,
                               gint            *height,
                               gint            *bpp)
 {
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
 
-  g_return_val_if_fail (GIMP_IS_ZOOM_PREVIEW (preview), NULL);
+  g_return_val_if_fail (LIGMA_IS_ZOOM_PREVIEW (preview), NULL);
   g_return_val_if_fail (width != NULL && height != NULL && bpp != NULL, NULL);
 
-  drawable = gimp_zoom_preview_get_drawable (preview);
+  drawable = ligma_zoom_preview_get_drawable (preview);
 
   if (drawable)
     {
-      GimpPreview *gimp_preview = GIMP_PREVIEW (preview);
+      LigmaPreview *ligma_preview = LIGMA_PREVIEW (preview);
       gint         src_x;
       gint         src_y;
       gint         src_width;
       gint         src_height;
 
-      gimp_preview_get_size (gimp_preview, width, height);
+      ligma_preview_get_size (ligma_preview, width, height);
 
-      gimp_zoom_preview_get_source_area (gimp_preview,
+      ligma_zoom_preview_get_source_area (ligma_preview,
                                          &src_x, &src_y,
                                          &src_width, &src_height);
 
-      return gimp_drawable_get_sub_thumbnail_data (drawable,
+      return ligma_drawable_get_sub_thumbnail_data (drawable,
                                                    src_x, src_y,
                                                    src_width, src_height,
                                                    width, height, bpp);

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,19 +15,19 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef  __GIMP_MYBRUSH_SURFACE_H__
-#define  __GIMP_MYBRUSH_SURFACE_H__
+#ifndef  __LIGMA_MYBRUSH_SURFACE_H__
+#define  __LIGMA_MYBRUSH_SURFACE_H__
 
 
-typedef struct _GimpMybrushSurface GimpMybrushSurface;
+typedef struct _LigmaMybrushSurface LigmaMybrushSurface;
 
-GimpMybrushSurface *
-gimp_mypaint_surface_new (GeglBuffer         *buffer,
-                          GimpComponentMask   component_mask,
+LigmaMybrushSurface *
+ligma_mypaint_surface_new (GeglBuffer         *buffer,
+                          LigmaComponentMask   component_mask,
                           GeglBuffer         *paint_mask,
                           gint                paint_mask_x,
                           gint                paint_mask_y,
-                          GimpMybrushOptions *options);
+                          LigmaMybrushOptions *options);
 
 
-#endif  /*  __GIMP_MYBRUSH_SURFACE_H__  */
+#endif  /*  __LIGMA_MYBRUSH_SURFACE_H__  */

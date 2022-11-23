@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimpdrawableedit_pdb.c
+ * ligmadrawableedit_pdb.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,12 +24,12 @@
 
 #include "stamp-pdbgen.h"
 
-#include "gimp.h"
+#include "ligma.h"
 
 
 /**
- * SECTION: gimpdrawableedit
- * @title: gimpdrawableedit
+ * SECTION: ligmadrawableedit
+ * @title: ligmadrawableedit
  * @short_description: Drawable edit functions (clear, fill, gradient, stroke etc.)
  *
  * Drawable edit functions (clear, fill, gradient, stroke etc.)
@@ -37,7 +37,7 @@
 
 
 /**
- * gimp_drawable_edit_clear:
+ * ligma_drawable_edit_clear:
  * @drawable: The drawable to clear from.
  *
  * Clear selected area of drawable.
@@ -49,35 +49,35 @@
  * a selection if there is a selection active.
  *
  * This procedure is affected by the following context setters:
- * gimp_context_set_background().
+ * ligma_context_set_background().
  *
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_drawable_edit_clear (GimpDrawable *drawable)
+ligma_drawable_edit_clear (LigmaDrawable *drawable)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-drawable-edit-clear",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-drawable-edit-clear",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_drawable_edit_fill:
+ * ligma_drawable_edit_fill:
  * @drawable: The drawable to fill to.
  * @fill_type: The type of fill.
  *
@@ -86,42 +86,42 @@ gimp_drawable_edit_clear (GimpDrawable *drawable)
  * This procedure fills the specified drawable according to fill mode.
  * This procedure only affects regions within a selection if there is a
  * selection active. If you want to fill the whole drawable, regardless
- * of the selection, use gimp_drawable_fill().
+ * of the selection, use ligma_drawable_fill().
  *
  * This procedure is affected by the following context setters:
- * gimp_context_set_opacity(), gimp_context_set_paint_mode(),
- * gimp_context_set_foreground(), gimp_context_set_background(),
- * gimp_context_set_pattern().
+ * ligma_context_set_opacity(), ligma_context_set_paint_mode(),
+ * ligma_context_set_foreground(), ligma_context_set_background(),
+ * ligma_context_set_pattern().
  *
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_drawable_edit_fill (GimpDrawable *drawable,
-                         GimpFillType  fill_type)
+ligma_drawable_edit_fill (LigmaDrawable *drawable,
+                         LigmaFillType  fill_type)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
-                                          GIMP_TYPE_FILL_TYPE, fill_type,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
+                                          LIGMA_TYPE_FILL_TYPE, fill_type,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-drawable-edit-fill",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-drawable-edit-fill",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_drawable_edit_bucket_fill:
+ * ligma_drawable_edit_bucket_fill:
  * @drawable: The affected drawable.
  * @fill_type: The type of fill.
  * @x: The x coordinate of this bucket fill's application.
@@ -136,48 +136,48 @@ gimp_drawable_edit_fill (GimpDrawable *drawable,
  * drawable's origin.
  *
  * This procedure is affected by the following context setters:
- * gimp_context_set_opacity(), gimp_context_set_paint_mode(),
- * gimp_context_set_foreground(), gimp_context_set_background(),
- * gimp_context_set_pattern(), gimp_context_set_sample_threshold(),
- * gimp_context_set_sample_merged(),
- * gimp_context_set_sample_criterion(),
- * gimp_context_set_diagonal_neighbors(), gimp_context_set_antialias().
+ * ligma_context_set_opacity(), ligma_context_set_paint_mode(),
+ * ligma_context_set_foreground(), ligma_context_set_background(),
+ * ligma_context_set_pattern(), ligma_context_set_sample_threshold(),
+ * ligma_context_set_sample_merged(),
+ * ligma_context_set_sample_criterion(),
+ * ligma_context_set_diagonal_neighbors(), ligma_context_set_antialias().
  *
  * Returns: TRUE on success.
  *
  * Since: 2.10
  **/
 gboolean
-gimp_drawable_edit_bucket_fill (GimpDrawable *drawable,
-                                GimpFillType  fill_type,
+ligma_drawable_edit_bucket_fill (LigmaDrawable *drawable,
+                                LigmaFillType  fill_type,
                                 gdouble       x,
                                 gdouble       y)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
-                                          GIMP_TYPE_FILL_TYPE, fill_type,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
+                                          LIGMA_TYPE_FILL_TYPE, fill_type,
                                           G_TYPE_DOUBLE, x,
                                           G_TYPE_DOUBLE, y,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-drawable-edit-bucket-fill",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-drawable-edit-bucket-fill",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_drawable_edit_gradient_fill:
+ * ligma_drawable_edit_gradient_fill:
  * @drawable: The affected drawable.
  * @gradient_type: The type of gradient.
  * @offset: Offset relates to the starting and ending coordinates specified for the blend. This parameter is mode dependent.
@@ -197,21 +197,21 @@ gimp_drawable_edit_bucket_fill (GimpDrawable *drawable,
  * specified variety of gradient using the starting and ending
  * coordinates as defined for each gradient type. For shapeburst
  * gradient types, the context's distance metric is also relevant and
- * can be updated with gimp_context_set_distance_metric().
+ * can be updated with ligma_context_set_distance_metric().
  *
  * This procedure is affected by the following context setters:
- * gimp_context_set_opacity(), gimp_context_set_paint_mode(),
- * gimp_context_set_foreground(), gimp_context_set_background(),
- * gimp_context_set_gradient() and all gradient property settings,
- * gimp_context_set_distance_metric().
+ * ligma_context_set_opacity(), ligma_context_set_paint_mode(),
+ * ligma_context_set_foreground(), ligma_context_set_background(),
+ * ligma_context_set_gradient() and all gradient property settings,
+ * ligma_context_set_distance_metric().
  *
  * Returns: TRUE on success.
  *
  * Since: 2.10
  **/
 gboolean
-gimp_drawable_edit_gradient_fill (GimpDrawable     *drawable,
-                                  GimpGradientType  gradient_type,
+ligma_drawable_edit_gradient_fill (LigmaDrawable     *drawable,
+                                  LigmaGradientType  gradient_type,
                                   gdouble           offset,
                                   gboolean          supersample,
                                   gint              supersample_max_depth,
@@ -222,13 +222,13 @@ gimp_drawable_edit_gradient_fill (GimpDrawable     *drawable,
                                   gdouble           x2,
                                   gdouble           y2)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
-                                          GIMP_TYPE_GRADIENT_TYPE, gradient_type,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
+                                          LIGMA_TYPE_GRADIENT_TYPE, gradient_type,
                                           G_TYPE_DOUBLE, offset,
                                           G_TYPE_BOOLEAN, supersample,
                                           G_TYPE_INT, supersample_max_depth,
@@ -240,20 +240,20 @@ gimp_drawable_edit_gradient_fill (GimpDrawable     *drawable,
                                           G_TYPE_DOUBLE, y2,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-drawable-edit-gradient-fill",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-drawable-edit-gradient-fill",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_drawable_edit_stroke_selection:
+ * ligma_drawable_edit_stroke_selection:
  * @drawable: The drawable to stroke to.
  *
  * Stroke the current selection
@@ -264,40 +264,40 @@ gimp_drawable_edit_gradient_fill (GimpDrawable     *drawable,
  * the specified drawable regardless of the active selection.
  *
  * This procedure is affected by the following context setters:
- * gimp_context_set_opacity(), gimp_context_set_paint_mode(),
- * gimp_context_set_paint_method(), gimp_context_set_stroke_method(),
- * gimp_context_set_foreground(), gimp_context_set_brush() and all
- * brush property settings, gimp_context_set_gradient() and all
- * gradient property settings, gimp_context_set_line_width() and all
- * line property settings, gimp_context_set_antialias().
+ * ligma_context_set_opacity(), ligma_context_set_paint_mode(),
+ * ligma_context_set_paint_method(), ligma_context_set_stroke_method(),
+ * ligma_context_set_foreground(), ligma_context_set_brush() and all
+ * brush property settings, ligma_context_set_gradient() and all
+ * gradient property settings, ligma_context_set_line_width() and all
+ * line property settings, ligma_context_set_antialias().
  *
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_drawable_edit_stroke_selection (GimpDrawable *drawable)
+ligma_drawable_edit_stroke_selection (LigmaDrawable *drawable)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-drawable-edit-stroke-selection",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-drawable-edit-stroke-selection",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_drawable_edit_stroke_item:
+ * ligma_drawable_edit_stroke_item:
  * @drawable: The drawable to stroke to.
  * @item: The item to stroke.
  *
@@ -309,38 +309,38 @@ gimp_drawable_edit_stroke_selection (GimpDrawable *drawable)
  * configurable properties.
  *
  * This procedure is affected by the following context setters:
- * gimp_context_set_opacity(), gimp_context_set_paint_mode(),
- * gimp_context_set_paint_method(), gimp_context_set_stroke_method(),
- * gimp_context_set_foreground(), gimp_context_set_brush() and all
- * brush property settings, gimp_context_set_gradient() and all
- * gradient property settings, gimp_context_set_line_width() and all
- * line property settings, gimp_context_set_antialias().
+ * ligma_context_set_opacity(), ligma_context_set_paint_mode(),
+ * ligma_context_set_paint_method(), ligma_context_set_stroke_method(),
+ * ligma_context_set_foreground(), ligma_context_set_brush() and all
+ * brush property settings, ligma_context_set_gradient() and all
+ * gradient property settings, ligma_context_set_line_width() and all
+ * line property settings, ligma_context_set_antialias().
  *
  * Returns: TRUE on success.
  *
  * Since: 2.10
  **/
 gboolean
-gimp_drawable_edit_stroke_item (GimpDrawable *drawable,
-                                GimpItem     *item)
+ligma_drawable_edit_stroke_item (LigmaDrawable *drawable,
+                                LigmaItem     *item)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
-                                          GIMP_TYPE_ITEM, item,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
+                                          LIGMA_TYPE_ITEM, item,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-drawable-edit-stroke-item",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-drawable-edit-stroke-item",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }

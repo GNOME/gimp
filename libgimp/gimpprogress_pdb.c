@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimpprogress_pdb.c
+ * ligmaprogress_pdb.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,12 +24,12 @@
 
 #include "stamp-pdbgen.h"
 
-#include "gimp.h"
+#include "ligma.h"
 
 
 /**
- * SECTION: gimpprogress
- * @title: gimpprogress
+ * SECTION: ligmaprogress
+ * @title: ligmaprogress
  * @short_description: Functions for embedding the progress bar into a plug-in's GUI.
  *
  * Functions for embedding the progress bar into a plug-in's GUI.
@@ -37,9 +37,9 @@
 
 
 /**
- * _gimp_progress_init:
+ * _ligma_progress_init:
  * @message: Message to use in the progress dialog.
- * @gdisplay: (nullable): GimpDisplay to update progressbar in, or %NULL for a separate window.
+ * @gdisplay: (nullable): LigmaDisplay to update progressbar in, or %NULL for a separate window.
  *
  * Initializes the progress bar for the current plug-in.
  *
@@ -49,32 +49,32 @@
  * Returns: TRUE on success.
  **/
 gboolean
-_gimp_progress_init (const gchar *message,
-                     GimpDisplay *gdisplay)
+_ligma_progress_init (const gchar *message,
+                     LigmaDisplay *gdisplay)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, message,
-                                          GIMP_TYPE_DISPLAY, gdisplay,
+                                          LIGMA_TYPE_DISPLAY, gdisplay,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-progress-init",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-progress-init",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * _gimp_progress_update:
+ * _ligma_progress_update:
  * @percentage: Percentage of progress completed which must be between 0.0 and 1.0.
  *
  * Updates the progress bar for the current plug-in.
@@ -85,36 +85,36 @@ _gimp_progress_init (const gchar *message,
  * Returns: TRUE on success.
  **/
 gboolean
-_gimp_progress_update (gdouble percentage)
+_ligma_progress_update (gdouble percentage)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_DOUBLE, percentage,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-progress-update",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-progress-update",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_progress_pulse:
+ * ligma_progress_pulse:
  *
  * Pulses the progress bar for the current plug-in.
  *
  * Updates the progress bar for the current plug-in. It is only valid
  * to call this procedure from a plug-in. Use this function instead of
- * gimp_progress_update() if you cannot tell how much progress has been
+ * ligma_progress_update() if you cannot tell how much progress has been
  * made. This usually causes the the progress bar to enter \"activity
  * mode\", where a block bounces back and forth.
  *
@@ -123,35 +123,35 @@ _gimp_progress_update (gdouble percentage)
  * Since: 2.4
  **/
 gboolean
-gimp_progress_pulse (void)
+ligma_progress_pulse (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-progress-pulse",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-progress-pulse",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_progress_set_text:
+ * ligma_progress_set_text:
  * @message: Message to use in the progress dialog.
  *
  * Changes the text in the progress bar for the current plug-in.
  *
  * This function changes the text in the progress bar for the current
- * plug-in. Unlike gimp_progress_init() it does not change the
+ * plug-in. Unlike ligma_progress_init() it does not change the
  * displayed value.
  *
  * Returns: TRUE on success.
@@ -159,30 +159,30 @@ gimp_progress_pulse (void)
  * Since: 2.4
  **/
 gboolean
-gimp_progress_set_text (const gchar *message)
+ligma_progress_set_text (const gchar *message)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, message,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-progress-set-text",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-progress-set-text",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_progress_end:
+ * ligma_progress_end:
  *
  * Ends the progress bar for the current plug-in.
  *
@@ -195,29 +195,29 @@ gimp_progress_set_text (const gchar *message)
  * Since: 2.4
  **/
 gboolean
-gimp_progress_end (void)
+ligma_progress_end (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-progress-end",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-progress-end",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_progress_get_window_handle:
+ * ligma_progress_get_window_handle:
  *
  * Returns the native window ID of the toplevel window this plug-in's
  * progress is displayed in.
@@ -230,30 +230,30 @@ gimp_progress_end (void)
  * Since: 2.2
  **/
 gint
-gimp_progress_get_window_handle (void)
+ligma_progress_get_window_handle (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gint window = 0;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-progress-get-window-handle",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-progress-get-window-handle",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    window = GIMP_VALUES_GET_INT (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    window = LIGMA_VALUES_GET_INT (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return window;
 }
 
 /**
- * _gimp_progress_install:
+ * _ligma_progress_install:
  * @progress_callback: The callback PDB proc to call.
  *
  * Installs a progress callback for the current plug-in.
@@ -268,66 +268,66 @@ gimp_progress_get_window_handle (void)
  * Since: 2.2
  **/
 gboolean
-_gimp_progress_install (const gchar *progress_callback)
+_ligma_progress_install (const gchar *progress_callback)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, progress_callback,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-progress-install",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-progress-install",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * _gimp_progress_uninstall:
+ * _ligma_progress_uninstall:
  * @progress_callback: The name of the callback registered for this progress.
  *
  * Uninstalls the progress callback for the current plug-in.
  *
  * This function uninstalls any progress callback installed with
- * gimp_progress_install() before.
+ * ligma_progress_install() before.
  *
  * Returns: TRUE on success.
  *
  * Since: 2.2
  **/
 gboolean
-_gimp_progress_uninstall (const gchar *progress_callback)
+_ligma_progress_uninstall (const gchar *progress_callback)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, progress_callback,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-progress-uninstall",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-progress-uninstall",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_progress_cancel:
+ * ligma_progress_cancel:
  * @progress_callback: The name of the callback registered for this progress.
  *
  * Cancels a running progress.
@@ -339,24 +339,24 @@ _gimp_progress_uninstall (const gchar *progress_callback)
  * Since: 2.2
  **/
 gboolean
-gimp_progress_cancel (const gchar *progress_callback)
+ligma_progress_cancel (const gchar *progress_callback)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, progress_callback,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-progress-cancel",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-progress-cancel",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }

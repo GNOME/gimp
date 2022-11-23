@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,26 +15,26 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SELECTION_EDITOR_H__
-#define __GIMP_SELECTION_EDITOR_H__
+#ifndef __LIGMA_SELECTION_EDITOR_H__
+#define __LIGMA_SELECTION_EDITOR_H__
 
 
-#include "gimpimageeditor.h"
+#include "ligmaimageeditor.h"
 
 
-#define GIMP_TYPE_SELECTION_EDITOR            (gimp_selection_editor_get_type ())
-#define GIMP_SELECTION_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_SELECTION_EDITOR, GimpSelectionEditor))
-#define GIMP_SELECTION_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_SELECTION_EDITOR, GimpSelectionEditorClass))
-#define GIMP_IS_SELECTION_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_SELECTION_EDITOR))
-#define GIMP_IS_SELECTION_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_SELECTION_EDITOR))
-#define GIMP_SELECTION_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_SELECTION_EDITOR, GimpSelectionEditorClass))
+#define LIGMA_TYPE_SELECTION_EDITOR            (ligma_selection_editor_get_type ())
+#define LIGMA_SELECTION_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_SELECTION_EDITOR, LigmaSelectionEditor))
+#define LIGMA_SELECTION_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_SELECTION_EDITOR, LigmaSelectionEditorClass))
+#define LIGMA_IS_SELECTION_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_SELECTION_EDITOR))
+#define LIGMA_IS_SELECTION_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_SELECTION_EDITOR))
+#define LIGMA_SELECTION_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_SELECTION_EDITOR, LigmaSelectionEditorClass))
 
 
-typedef struct _GimpSelectionEditorClass GimpSelectionEditorClass;
+typedef struct _LigmaSelectionEditorClass LigmaSelectionEditorClass;
 
-struct _GimpSelectionEditor
+struct _LigmaSelectionEditor
 {
-  GimpImageEditor  parent_instance;
+  LigmaImageEditor  parent_instance;
 
   GtkWidget       *view;
 
@@ -46,15 +46,15 @@ struct _GimpSelectionEditor
   GtkWidget       *stroke_button;
 };
 
-struct _GimpSelectionEditorClass
+struct _LigmaSelectionEditorClass
 {
-  GimpImageEditorClass  parent_class;
+  LigmaImageEditorClass  parent_class;
 };
 
 
-GType       gimp_selection_editor_get_type (void) G_GNUC_CONST;
+GType       ligma_selection_editor_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_selection_editor_new      (GimpMenuFactory *menu_factory);
+GtkWidget * ligma_selection_editor_new      (LigmaMenuFactory *menu_factory);
 
 
-#endif /* __GIMP_SELECTION_EDITOR_H__ */
+#endif /* __LIGMA_SELECTION_EDITOR_H__ */

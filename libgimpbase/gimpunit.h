@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpunit.h
- * Copyright (C) 1999-2003 Michael Natterer <mitch@gimp.org>
+ * ligmaunit.h
+ * Copyright (C) 1999-2003 Michael Natterer <mitch@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -19,62 +19,62 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_BASE_H_INSIDE__) && !defined (GIMP_BASE_COMPILATION)
-#error "Only <libgimpbase/gimpbase.h> can be included directly."
+#if !defined (__LIGMA_BASE_H_INSIDE__) && !defined (LIGMA_BASE_COMPILATION)
+#error "Only <libligmabase/ligmabase.h> can be included directly."
 #endif
 
-#ifndef __GIMP_UNIT_H__
-#define __GIMP_UNIT_H__
+#ifndef __LIGMA_UNIT_H__
+#define __LIGMA_UNIT_H__
 
 G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
 /**
- * GIMP_TYPE_UNIT:
+ * LIGMA_TYPE_UNIT:
  *
- * #GIMP_TYPE_UNIT is a #GType derived from #G_TYPE_INT.
+ * #LIGMA_TYPE_UNIT is a #GType derived from #G_TYPE_INT.
  **/
 
-#define GIMP_TYPE_UNIT               (gimp_unit_get_type ())
-#define GIMP_VALUE_HOLDS_UNIT(value) (G_TYPE_CHECK_VALUE_TYPE ((value), GIMP_TYPE_UNIT))
+#define LIGMA_TYPE_UNIT               (ligma_unit_get_type ())
+#define LIGMA_VALUE_HOLDS_UNIT(value) (G_TYPE_CHECK_VALUE_TYPE ((value), LIGMA_TYPE_UNIT))
 
-GType        gimp_unit_get_type      (void) G_GNUC_CONST;
+GType        ligma_unit_get_type      (void) G_GNUC_CONST;
 
 
 /*
- * GIMP_TYPE_PARAM_UNIT
+ * LIGMA_TYPE_PARAM_UNIT
  */
 
-#define GIMP_TYPE_PARAM_UNIT           (gimp_param_unit_get_type ())
-#define GIMP_PARAM_SPEC_UNIT(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_UNIT, GimpParamSpecUnit))
-#define GIMP_IS_PARAM_SPEC_UNIT(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_UNIT))
+#define LIGMA_TYPE_PARAM_UNIT           (ligma_param_unit_get_type ())
+#define LIGMA_PARAM_SPEC_UNIT(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), LIGMA_TYPE_PARAM_UNIT, LigmaParamSpecUnit))
+#define LIGMA_IS_PARAM_SPEC_UNIT(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), LIGMA_TYPE_PARAM_UNIT))
 
-typedef struct _GimpParamSpecUnit GimpParamSpecUnit;
+typedef struct _LigmaParamSpecUnit LigmaParamSpecUnit;
 
-struct _GimpParamSpecUnit
+struct _LigmaParamSpecUnit
 {
   GParamSpecInt parent_instance;
 
   gboolean      allow_percent;
 };
 
-GType        gimp_param_unit_get_type     (void) G_GNUC_CONST;
+GType        ligma_param_unit_get_type     (void) G_GNUC_CONST;
 
-GParamSpec * gimp_param_spec_unit         (const gchar  *name,
+GParamSpec * ligma_param_spec_unit         (const gchar  *name,
                                            const gchar  *nick,
                                            const gchar  *blurb,
                                            gboolean      allow_pixels,
                                            gboolean      allow_percent,
-                                           GimpUnit      default_value,
+                                           LigmaUnit      default_value,
                                            GParamFlags   flags);
 
 
 
-gint          gimp_unit_get_number_of_units          (void);
-gint          gimp_unit_get_number_of_built_in_units (void) G_GNUC_CONST;
+gint          ligma_unit_get_number_of_units          (void);
+gint          ligma_unit_get_number_of_built_in_units (void) G_GNUC_CONST;
 
-GimpUnit      gimp_unit_new                 (gchar       *identifier,
+LigmaUnit      ligma_unit_new                 (gchar       *identifier,
                                              gdouble      factor,
                                              gint         digits,
                                              gchar       *symbol,
@@ -82,39 +82,39 @@ GimpUnit      gimp_unit_new                 (gchar       *identifier,
                                              gchar       *singular,
                                              gchar       *plural);
 
-gboolean      gimp_unit_get_deletion_flag   (GimpUnit     unit);
-void          gimp_unit_set_deletion_flag   (GimpUnit     unit,
+gboolean      ligma_unit_get_deletion_flag   (LigmaUnit     unit);
+void          ligma_unit_set_deletion_flag   (LigmaUnit     unit,
                                              gboolean     deletion_flag);
 
-gdouble       gimp_unit_get_factor          (GimpUnit     unit);
+gdouble       ligma_unit_get_factor          (LigmaUnit     unit);
 
-gint          gimp_unit_get_digits          (GimpUnit     unit);
-gint          gimp_unit_get_scaled_digits   (GimpUnit     unit,
+gint          ligma_unit_get_digits          (LigmaUnit     unit);
+gint          ligma_unit_get_scaled_digits   (LigmaUnit     unit,
                                              gdouble      resolution);
 
-const gchar * gimp_unit_get_identifier      (GimpUnit     unit);
+const gchar * ligma_unit_get_identifier      (LigmaUnit     unit);
 
-const gchar * gimp_unit_get_symbol          (GimpUnit     unit);
-const gchar * gimp_unit_get_abbreviation    (GimpUnit     unit);
-const gchar * gimp_unit_get_singular        (GimpUnit     unit);
-const gchar * gimp_unit_get_plural          (GimpUnit     unit);
+const gchar * ligma_unit_get_symbol          (LigmaUnit     unit);
+const gchar * ligma_unit_get_abbreviation    (LigmaUnit     unit);
+const gchar * ligma_unit_get_singular        (LigmaUnit     unit);
+const gchar * ligma_unit_get_plural          (LigmaUnit     unit);
 
-gchar       * gimp_unit_format_string       (const gchar *format,
-                                             GimpUnit     unit);
+gchar       * ligma_unit_format_string       (const gchar *format,
+                                             LigmaUnit     unit);
 
-gdouble       gimp_pixels_to_units          (gdouble      pixels,
-                                             GimpUnit     unit,
+gdouble       ligma_pixels_to_units          (gdouble      pixels,
+                                             LigmaUnit     unit,
                                              gdouble      resolution);
-gdouble       gimp_units_to_pixels          (gdouble      value,
-                                             GimpUnit     unit,
+gdouble       ligma_units_to_pixels          (gdouble      value,
+                                             LigmaUnit     unit,
                                              gdouble      resolution);
-gdouble       gimp_units_to_points          (gdouble      value,
-                                             GimpUnit     unit,
+gdouble       ligma_units_to_points          (gdouble      value,
+                                             LigmaUnit     unit,
                                              gdouble      resolution);
 
-gboolean      gimp_unit_is_metric           (GimpUnit     unit);
+gboolean      ligma_unit_is_metric           (LigmaUnit     unit);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_UNIT_H__ */
+#endif /* __LIGMA_UNIT_H__ */

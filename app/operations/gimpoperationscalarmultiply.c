@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationscalarmultiply.c
- * Copyright (C) 2014 Michael Natterer <mitch@gimp.org>
+ * ligmaoperationscalarmultiply.c
+ * Copyright (C) 2014 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@
 
 #include "operations-types.h"
 
-#include "gimpoperationscalarmultiply.h"
+#include "ligmaoperationscalarmultiply.h"
 
 
 enum
@@ -35,17 +35,17 @@ enum
 };
 
 
-static void       gimp_operation_scalar_multiply_get_property (GObject             *object,
+static void       ligma_operation_scalar_multiply_get_property (GObject             *object,
                                                                guint                property_id,
                                                                GValue              *value,
                                                                GParamSpec          *pspec);
-static void       gimp_operation_scalar_multiply_set_property (GObject             *object,
+static void       ligma_operation_scalar_multiply_set_property (GObject             *object,
                                                                guint                property_id,
                                                                const GValue        *value,
                                                                GParamSpec          *pspec);
 
-static void       gimp_operation_scalar_multiply_prepare      (GeglOperation       *operation);
-static gboolean   gimp_operation_scalar_multiply_process      (GeglOperation       *operation,
+static void       ligma_operation_scalar_multiply_prepare      (GeglOperation       *operation);
+static gboolean   ligma_operation_scalar_multiply_process      (GeglOperation       *operation,
                                                                void                *in_buf,
                                                                void                *out_buf,
                                                                glong                samples,
@@ -53,31 +53,31 @@ static gboolean   gimp_operation_scalar_multiply_process      (GeglOperation    
                                                                gint                 level);
 
 
-G_DEFINE_TYPE (GimpOperationScalarMultiply, gimp_operation_scalar_multiply,
+G_DEFINE_TYPE (LigmaOperationScalarMultiply, ligma_operation_scalar_multiply,
                GEGL_TYPE_OPERATION_POINT_FILTER)
 
-#define parent_class gimp_operation_scalar_multiply_parent_class
+#define parent_class ligma_operation_scalar_multiply_parent_class
 
 
 static void
-gimp_operation_scalar_multiply_class_init (GimpOperationScalarMultiplyClass *klass)
+ligma_operation_scalar_multiply_class_init (LigmaOperationScalarMultiplyClass *klass)
 {
   GObjectClass                  *object_class    = G_OBJECT_CLASS (klass);
   GeglOperationClass            *operation_class = GEGL_OPERATION_CLASS (klass);
   GeglOperationPointFilterClass *point_class     = GEGL_OPERATION_POINT_FILTER_CLASS (klass);
 
-  object_class->set_property = gimp_operation_scalar_multiply_set_property;
-  object_class->get_property = gimp_operation_scalar_multiply_get_property;
+  object_class->set_property = ligma_operation_scalar_multiply_set_property;
+  object_class->get_property = ligma_operation_scalar_multiply_get_property;
 
   gegl_operation_class_set_keys (operation_class,
-                                 "name",        "gimp:scalar-multiply",
-                                 "categories",  "gimp",
+                                 "name",        "ligma:scalar-multiply",
+                                 "categories",  "ligma",
                                  "description", "Multiply all floats in a buffer by a factor",
                                  NULL);
 
-  operation_class->prepare = gimp_operation_scalar_multiply_prepare;
+  operation_class->prepare = ligma_operation_scalar_multiply_prepare;
 
-  point_class->process     = gimp_operation_scalar_multiply_process;
+  point_class->process     = ligma_operation_scalar_multiply_process;
 
   g_object_class_install_property (object_class, PROP_N_COMPONENTS,
                                    g_param_spec_int ("n-components",
@@ -98,17 +98,17 @@ gimp_operation_scalar_multiply_class_init (GimpOperationScalarMultiplyClass *kla
 }
 
 static void
-gimp_operation_scalar_multiply_init (GimpOperationScalarMultiply *self)
+ligma_operation_scalar_multiply_init (LigmaOperationScalarMultiply *self)
 {
 }
 
 static void
-gimp_operation_scalar_multiply_get_property (GObject    *object,
+ligma_operation_scalar_multiply_get_property (GObject    *object,
                                              guint       property_id,
                                              GValue     *value,
                                              GParamSpec *pspec)
 {
-  GimpOperationScalarMultiply *self = GIMP_OPERATION_SCALAR_MULTIPLY (object);
+  LigmaOperationScalarMultiply *self = LIGMA_OPERATION_SCALAR_MULTIPLY (object);
 
   switch (property_id)
     {
@@ -127,12 +127,12 @@ gimp_operation_scalar_multiply_get_property (GObject    *object,
 }
 
 static void
-gimp_operation_scalar_multiply_set_property (GObject      *object,
+ligma_operation_scalar_multiply_set_property (GObject      *object,
                                              guint         property_id,
                                              const GValue *value,
                                              GParamSpec   *pspec)
 {
-  GimpOperationScalarMultiply *self = GIMP_OPERATION_SCALAR_MULTIPLY (object);
+  LigmaOperationScalarMultiply *self = LIGMA_OPERATION_SCALAR_MULTIPLY (object);
 
   switch (property_id)
     {
@@ -151,9 +151,9 @@ gimp_operation_scalar_multiply_set_property (GObject      *object,
 }
 
 static void
-gimp_operation_scalar_multiply_prepare (GeglOperation *operation)
+ligma_operation_scalar_multiply_prepare (GeglOperation *operation)
 {
-  GimpOperationScalarMultiply *self = GIMP_OPERATION_SCALAR_MULTIPLY (operation);
+  LigmaOperationScalarMultiply *self = LIGMA_OPERATION_SCALAR_MULTIPLY (operation);
   const Babl                  *format;
 
   format = babl_format_n (babl_type ("float"), self->n_components);
@@ -163,14 +163,14 @@ gimp_operation_scalar_multiply_prepare (GeglOperation *operation)
 }
 
 static gboolean
-gimp_operation_scalar_multiply_process (GeglOperation       *operation,
+ligma_operation_scalar_multiply_process (GeglOperation       *operation,
                                         void                *in_buf,
                                         void                *out_buf,
                                         glong                samples,
                                         const GeglRectangle *roi,
                                         gint                 level)
 {
-  GimpOperationScalarMultiply *self = GIMP_OPERATION_SCALAR_MULTIPLY (operation);
+  LigmaOperationScalarMultiply *self = LIGMA_OPERATION_SCALAR_MULTIPLY (operation);
   gfloat                      *src  = in_buf;
   gfloat                      *dest = out_buf;
   glong                        n_samples;

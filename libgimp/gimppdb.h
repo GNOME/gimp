@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimppdb.h
- * Copyright (C) 2019 Michael Natterer <mitch@gimp.org>
+ * ligmapdb.h
+ * Copyright (C) 2019 Michael Natterer <mitch@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -19,84 +19,84 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_H_INSIDE__) && !defined (GIMP_COMPILATION)
-#error "Only <libgimp/gimp.h> can be included directly."
+#if !defined (__LIGMA_H_INSIDE__) && !defined (LIGMA_COMPILATION)
+#error "Only <libligma/ligma.h> can be included directly."
 #endif
 
-#ifndef __GIMP_PDB_H__
-#define __GIMP_PDB_H__
+#ifndef __LIGMA_PDB_H__
+#define __LIGMA_PDB_H__
 
 G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
 
-#define GIMP_TYPE_PDB            (gimp_pdb_get_type ())
-#define GIMP_PDB(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PDB, GimpPDB))
-#define GIMP_PDB_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PDB, GimpPDBClass))
-#define GIMP_IS_PDB(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PDB))
-#define GIMP_IS_PDB_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PDB))
-#define GIMP_PDB_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PDB, GimpPDBClass))
+#define LIGMA_TYPE_PDB            (ligma_pdb_get_type ())
+#define LIGMA_PDB(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_PDB, LigmaPDB))
+#define LIGMA_PDB_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_PDB, LigmaPDBClass))
+#define LIGMA_IS_PDB(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_PDB))
+#define LIGMA_IS_PDB_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_PDB))
+#define LIGMA_PDB_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_PDB, LigmaPDBClass))
 
 
-typedef struct _GimpPDBClass   GimpPDBClass;
-typedef struct _GimpPDBPrivate GimpPDBPrivate;
+typedef struct _LigmaPDBClass   LigmaPDBClass;
+typedef struct _LigmaPDBPrivate LigmaPDBPrivate;
 
-struct _GimpPDB
+struct _LigmaPDB
 {
   GObject         parent_instance;
 
-  GimpPDBPrivate *priv;
+  LigmaPDBPrivate *priv;
 };
 
-struct _GimpPDBClass
+struct _LigmaPDBClass
 {
   GObjectClass parent_class;
 
   /* Padding for future expansion */
-  void (*_gimp_reserved1) (void);
-  void (*_gimp_reserved2) (void);
-  void (*_gimp_reserved3) (void);
-  void (*_gimp_reserved4) (void);
-  void (*_gimp_reserved5) (void);
-  void (*_gimp_reserved6) (void);
-  void (*_gimp_reserved7) (void);
-  void (*_gimp_reserved8) (void);
+  void (*_ligma_reserved1) (void);
+  void (*_ligma_reserved2) (void);
+  void (*_ligma_reserved3) (void);
+  void (*_ligma_reserved4) (void);
+  void (*_ligma_reserved5) (void);
+  void (*_ligma_reserved6) (void);
+  void (*_ligma_reserved7) (void);
+  void (*_ligma_reserved8) (void);
 };
 
 
-GType            gimp_pdb_get_type             (void) G_GNUC_CONST;
+GType            ligma_pdb_get_type             (void) G_GNUC_CONST;
 
-gboolean         gimp_pdb_procedure_exists     (GimpPDB              *pdb,
+gboolean         ligma_pdb_procedure_exists     (LigmaPDB              *pdb,
                                                 const gchar          *procedure_name);
 
-GimpProcedure  * gimp_pdb_lookup_procedure     (GimpPDB              *pdb,
+LigmaProcedure  * ligma_pdb_lookup_procedure     (LigmaPDB              *pdb,
                                                 const gchar          *procedure_name);
 
-GimpValueArray * gimp_pdb_run_procedure        (GimpPDB              *pdb,
+LigmaValueArray * ligma_pdb_run_procedure        (LigmaPDB              *pdb,
                                                 const gchar          *procedure_name,
                                                 GType                 first_type,
                                                 ...);
-GimpValueArray * gimp_pdb_run_procedure_valist (GimpPDB              *pdb,
+LigmaValueArray * ligma_pdb_run_procedure_valist (LigmaPDB              *pdb,
                                                 const gchar          *procedure_name,
                                                 GType                 first_type,
                                                 va_list               args);
-GimpValueArray * gimp_pdb_run_procedure_argv   (GimpPDB              *pdb,
+LigmaValueArray * ligma_pdb_run_procedure_argv   (LigmaPDB              *pdb,
                                                 const gchar          *procedure_name,
                                                 const GValue         *arguments,
                                                 gint                  n_arguments);
-GimpValueArray * gimp_pdb_run_procedure_array  (GimpPDB              *pdb,
+LigmaValueArray * ligma_pdb_run_procedure_array  (LigmaPDB              *pdb,
                                                 const gchar          *procedure_name,
-                                                const GimpValueArray *arguments);
-GimpValueArray * gimp_pdb_run_procedure_config (GimpPDB              *pdb,
+                                                const LigmaValueArray *arguments);
+LigmaValueArray * ligma_pdb_run_procedure_config (LigmaPDB              *pdb,
                                                 const gchar          *procedure_name,
-                                                GimpProcedureConfig  *config);
+                                                LigmaProcedureConfig  *config);
 
-gchar          * gimp_pdb_temp_procedure_name  (GimpPDB              *pdb);
+gchar          * ligma_pdb_temp_procedure_name  (LigmaPDB              *pdb);
 
-gboolean         gimp_pdb_dump_to_file         (GimpPDB              *pdb,
+gboolean         ligma_pdb_dump_to_file         (LigmaPDB              *pdb,
                                                 GFile                *file);
-gchar         ** gimp_pdb_query_procedures     (GimpPDB              *pdb,
+gchar         ** ligma_pdb_query_procedures     (LigmaPDB              *pdb,
                                                 const gchar          *name,
                                                 const gchar          *blurb,
                                                 const gchar          *help,
@@ -106,20 +106,20 @@ gchar         ** gimp_pdb_query_procedures     (GimpPDB              *pdb,
                                                 const gchar          *date,
                                                 const gchar          *proc_type);
 
-const gchar       * gimp_pdb_get_last_error    (GimpPDB              *pdb);
-GimpPDBStatusType   gimp_pdb_get_last_status   (GimpPDB              *pdb);
+const gchar       * ligma_pdb_get_last_error    (LigmaPDB              *pdb);
+LigmaPDBStatusType   ligma_pdb_get_last_status   (LigmaPDB              *pdb);
 
 
 /*  Cruft API  */
 
-gboolean   gimp_pdb_get_data      (const gchar      *identifier,
+gboolean   ligma_pdb_get_data      (const gchar      *identifier,
                                    gpointer          data);
-gint       gimp_pdb_get_data_size (const gchar      *identifier);
-gboolean   gimp_pdb_set_data      (const gchar      *identifier,
+gint       ligma_pdb_get_data_size (const gchar      *identifier);
+gboolean   ligma_pdb_set_data      (const gchar      *identifier,
                                    gconstpointer     data,
                                    guint32           bytes);
 
 
 G_END_DECLS
 
-#endif  /*  __GIMP_PDB_H__  */
+#endif  /*  __LIGMA_PDB_H__  */

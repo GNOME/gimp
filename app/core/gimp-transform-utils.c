@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-2001 Spencer Kimball, Peter Mattis, and others
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,20 +21,20 @@
 
 #include <glib-object.h>
 
-#include "libgimpmath/gimpmath.h"
+#include "libligmamath/ligmamath.h"
 
 #include "core-types.h"
 
-#include "gimp-transform-utils.h"
-#include "gimpcoords.h"
-#include "gimpcoords-interpolate.h"
+#include "ligma-transform-utils.h"
+#include "ligmacoords.h"
+#include "ligmacoords-interpolate.h"
 
 
 #define EPSILON 1e-6
 
 
 void
-gimp_transform_get_rotate_center (gint      x,
+ligma_transform_get_rotate_center (gint      x,
                                   gint      y,
                                   gint      width,
                                   gint      height,
@@ -53,11 +53,11 @@ gimp_transform_get_rotate_center (gint      x,
 }
 
 void
-gimp_transform_get_flip_axis (gint                 x,
+ligma_transform_get_flip_axis (gint                 x,
                               gint                 y,
                               gint                 width,
                               gint                 height,
-                              GimpOrientationType  flip_type,
+                              LigmaOrientationType  flip_type,
                               gboolean             auto_center,
                               gdouble             *axis)
 {
@@ -67,11 +67,11 @@ gimp_transform_get_flip_axis (gint                 x,
     {
       switch (flip_type)
         {
-        case GIMP_ORIENTATION_HORIZONTAL:
+        case LIGMA_ORIENTATION_HORIZONTAL:
           *axis = ((gdouble) x + (gdouble) width / 2.0);
           break;
 
-        case GIMP_ORIENTATION_VERTICAL:
+        case LIGMA_ORIENTATION_VERTICAL:
           *axis = ((gdouble) y + (gdouble) height / 2.0);
           break;
 
@@ -83,33 +83,33 @@ gimp_transform_get_flip_axis (gint                 x,
 }
 
 void
-gimp_transform_matrix_flip (GimpMatrix3         *matrix,
-                            GimpOrientationType  flip_type,
+ligma_transform_matrix_flip (LigmaMatrix3         *matrix,
+                            LigmaOrientationType  flip_type,
                             gdouble              axis)
 {
   g_return_if_fail (matrix != NULL);
 
   switch (flip_type)
     {
-    case GIMP_ORIENTATION_HORIZONTAL:
-      gimp_matrix3_translate (matrix, - axis, 0.0);
-      gimp_matrix3_scale (matrix, -1.0, 1.0);
-      gimp_matrix3_translate (matrix, axis, 0.0);
+    case LIGMA_ORIENTATION_HORIZONTAL:
+      ligma_matrix3_translate (matrix, - axis, 0.0);
+      ligma_matrix3_scale (matrix, -1.0, 1.0);
+      ligma_matrix3_translate (matrix, axis, 0.0);
       break;
 
-    case GIMP_ORIENTATION_VERTICAL:
-      gimp_matrix3_translate (matrix, 0.0, - axis);
-      gimp_matrix3_scale (matrix, 1.0, -1.0);
-      gimp_matrix3_translate (matrix, 0.0, axis);
+    case LIGMA_ORIENTATION_VERTICAL:
+      ligma_matrix3_translate (matrix, 0.0, - axis);
+      ligma_matrix3_scale (matrix, 1.0, -1.0);
+      ligma_matrix3_translate (matrix, 0.0, axis);
       break;
 
-    case GIMP_ORIENTATION_UNKNOWN:
+    case LIGMA_ORIENTATION_UNKNOWN:
       break;
     }
 }
 
 void
-gimp_transform_matrix_flip_free (GimpMatrix3 *matrix,
+ligma_transform_matrix_flip_free (LigmaMatrix3 *matrix,
                                  gdouble      x1,
                                  gdouble      y1,
                                  gdouble      x2,
@@ -121,17 +121,17 @@ gimp_transform_matrix_flip_free (GimpMatrix3 *matrix,
 
   angle = atan2  (y2 - y1, x2 - x1);
 
-  gimp_matrix3_identity  (matrix);
-  gimp_matrix3_translate (matrix, -x1, -y1);
-  gimp_matrix3_rotate    (matrix, -angle);
-  gimp_matrix3_scale     (matrix, 1.0, -1.0);
-  gimp_matrix3_rotate    (matrix, angle);
-  gimp_matrix3_translate (matrix, x1, y1);
+  ligma_matrix3_identity  (matrix);
+  ligma_matrix3_translate (matrix, -x1, -y1);
+  ligma_matrix3_rotate    (matrix, -angle);
+  ligma_matrix3_scale     (matrix, 1.0, -1.0);
+  ligma_matrix3_rotate    (matrix, angle);
+  ligma_matrix3_translate (matrix, x1, y1);
 }
 
 void
-gimp_transform_matrix_rotate (GimpMatrix3         *matrix,
-                              GimpRotationType     rotate_type,
+ligma_transform_matrix_rotate (LigmaMatrix3         *matrix,
+                              LigmaRotationType     rotate_type,
                               gdouble              center_x,
                               gdouble              center_y)
 {
@@ -139,22 +139,22 @@ gimp_transform_matrix_rotate (GimpMatrix3         *matrix,
 
   switch (rotate_type)
     {
-    case GIMP_ROTATE_90:
+    case LIGMA_ROTATE_90:
       angle = G_PI_2;
       break;
-    case GIMP_ROTATE_180:
+    case LIGMA_ROTATE_180:
       angle = G_PI;
       break;
-    case GIMP_ROTATE_270:
+    case LIGMA_ROTATE_270:
       angle = - G_PI_2;
       break;
     }
 
-  gimp_transform_matrix_rotate_center (matrix, center_x, center_y, angle);
+  ligma_transform_matrix_rotate_center (matrix, center_x, center_y, angle);
 }
 
 void
-gimp_transform_matrix_rotate_rect (GimpMatrix3 *matrix,
+ligma_transform_matrix_rotate_rect (LigmaMatrix3 *matrix,
                                    gint         x,
                                    gint         y,
                                    gint         width,
@@ -169,26 +169,26 @@ gimp_transform_matrix_rotate_rect (GimpMatrix3 *matrix,
   center_x = (gdouble) x + (gdouble) width  / 2.0;
   center_y = (gdouble) y + (gdouble) height / 2.0;
 
-  gimp_matrix3_translate (matrix, -center_x, -center_y);
-  gimp_matrix3_rotate    (matrix, angle);
-  gimp_matrix3_translate (matrix, +center_x, +center_y);
+  ligma_matrix3_translate (matrix, -center_x, -center_y);
+  ligma_matrix3_rotate    (matrix, angle);
+  ligma_matrix3_translate (matrix, +center_x, +center_y);
 }
 
 void
-gimp_transform_matrix_rotate_center (GimpMatrix3 *matrix,
+ligma_transform_matrix_rotate_center (LigmaMatrix3 *matrix,
                                      gdouble      center_x,
                                      gdouble      center_y,
                                      gdouble      angle)
 {
   g_return_if_fail (matrix != NULL);
 
-  gimp_matrix3_translate (matrix, -center_x, -center_y);
-  gimp_matrix3_rotate    (matrix, angle);
-  gimp_matrix3_translate (matrix, +center_x, +center_y);
+  ligma_matrix3_translate (matrix, -center_x, -center_y);
+  ligma_matrix3_rotate    (matrix, angle);
+  ligma_matrix3_translate (matrix, +center_x, +center_y);
 }
 
 void
-gimp_transform_matrix_scale (GimpMatrix3 *matrix,
+ligma_transform_matrix_scale (LigmaMatrix3 *matrix,
                              gint         x,
                              gint         y,
                              gint         width,
@@ -209,19 +209,19 @@ gimp_transform_matrix_scale (GimpMatrix3 *matrix,
   if (height > 0)
     scale_y = t_height / (gdouble) height;
 
-  gimp_matrix3_identity  (matrix);
-  gimp_matrix3_translate (matrix, -x, -y);
-  gimp_matrix3_scale     (matrix, scale_x, scale_y);
-  gimp_matrix3_translate (matrix, t_x, t_y);
+  ligma_matrix3_identity  (matrix);
+  ligma_matrix3_translate (matrix, -x, -y);
+  ligma_matrix3_scale     (matrix, scale_x, scale_y);
+  ligma_matrix3_translate (matrix, t_x, t_y);
 }
 
 void
-gimp_transform_matrix_shear (GimpMatrix3         *matrix,
+ligma_transform_matrix_shear (LigmaMatrix3         *matrix,
                              gint                 x,
                              gint                 y,
                              gint                 width,
                              gint                 height,
-                             GimpOrientationType  orientation,
+                             LigmaOrientationType  orientation,
                              gdouble              amount)
 {
   gdouble center_x;
@@ -238,19 +238,19 @@ gimp_transform_matrix_shear (GimpMatrix3         *matrix,
   center_x = (gdouble) x + (gdouble) width  / 2.0;
   center_y = (gdouble) y + (gdouble) height / 2.0;
 
-  gimp_matrix3_identity  (matrix);
-  gimp_matrix3_translate (matrix, -center_x, -center_y);
+  ligma_matrix3_identity  (matrix);
+  ligma_matrix3_translate (matrix, -center_x, -center_y);
 
-  if (orientation == GIMP_ORIENTATION_HORIZONTAL)
-    gimp_matrix3_xshear (matrix, amount / height);
+  if (orientation == LIGMA_ORIENTATION_HORIZONTAL)
+    ligma_matrix3_xshear (matrix, amount / height);
   else
-    gimp_matrix3_yshear (matrix, amount / width);
+    ligma_matrix3_yshear (matrix, amount / width);
 
-  gimp_matrix3_translate (matrix, +center_x, +center_y);
+  ligma_matrix3_translate (matrix, +center_x, +center_y);
 }
 
 void
-gimp_transform_matrix_perspective (GimpMatrix3 *matrix,
+ligma_transform_matrix_perspective (LigmaMatrix3 *matrix,
                                    gint         x,
                                    gint         y,
                                    gint         width,
@@ -264,7 +264,7 @@ gimp_transform_matrix_perspective (GimpMatrix3 *matrix,
                                    gdouble      t_x4,
                                    gdouble      t_y4)
 {
-  GimpMatrix3 trafo;
+  LigmaMatrix3 trafo;
   gdouble     scalex;
   gdouble     scaley;
 
@@ -278,8 +278,8 @@ gimp_transform_matrix_perspective (GimpMatrix3 *matrix,
   if (height > 0)
     scaley = 1.0 / (gdouble) height;
 
-  gimp_matrix3_translate (matrix, -x, -y);
-  gimp_matrix3_scale     (matrix, scalex, scaley);
+  ligma_matrix3_translate (matrix, -x, -y);
+  ligma_matrix3_scale     (matrix, scalex, scaley);
 
   /* Determine the perspective transform that maps from
    * the unit cube to the transformed coordinates
@@ -332,7 +332,7 @@ gimp_transform_matrix_perspective (GimpMatrix3 *matrix,
     trafo.coeff[2][2] = 1.0;
   }
 
-  gimp_matrix3_mult (&trafo, matrix);
+  ligma_matrix3_mult (&trafo, matrix);
 }
 
 /* modified gaussian algorithm
@@ -435,11 +435,11 @@ mod_gauss (gdouble matrix[],
  * returns TRUE if successful.
  */
 gboolean
-gimp_transform_matrix_generic (GimpMatrix3       *matrix,
-                               const GimpVector2  input_points[4],
-                               const GimpVector2  output_points[4])
+ligma_transform_matrix_generic (LigmaMatrix3       *matrix,
+                               const LigmaVector2  input_points[4],
+                               const LigmaVector2  output_points[4])
 {
-  GimpMatrix3 trafo;
+  LigmaMatrix3 trafo;
   gdouble     coeff[8 * 9];
   gboolean    negative = -1;
   gint        i;
@@ -529,13 +529,13 @@ gimp_transform_matrix_generic (GimpMatrix3       *matrix,
     }
 
   /* append the transformation to 'matrix' */
-  gimp_matrix3_mult (&trafo, matrix);
+  ligma_matrix3_mult (&trafo, matrix);
 
   return result;
 }
 
 gboolean
-gimp_transform_polygon_is_convex (gdouble x1,
+ligma_transform_polygon_is_convex (gdouble x1,
                                   gdouble y1,
                                   gdouble x2,
                                   gdouble y2,
@@ -578,14 +578,14 @@ gimp_transform_polygon_is_convex (gdouble x1,
  * line segment.
  */
 void
-gimp_transform_polygon (const GimpMatrix3 *matrix,
-                        const GimpVector2 *vertices,
+ligma_transform_polygon (const LigmaMatrix3 *matrix,
+                        const LigmaVector2 *vertices,
                         gint               n_vertices,
                         gboolean           closed,
-                        GimpVector2       *t_vertices,
+                        LigmaVector2       *t_vertices,
                         gint              *n_t_vertices)
 {
-  GimpVector3 curr;
+  LigmaVector3 curr;
   gboolean    curr_visible;
   gint        i;
 
@@ -610,19 +610,19 @@ gimp_transform_polygon (const GimpMatrix3 *matrix,
            matrix->coeff[2][1] * vertices[0].y +
            matrix->coeff[2][2];
 
-  curr_visible = (curr.z >= GIMP_TRANSFORM_NEAR_Z);
+  curr_visible = (curr.z >= LIGMA_TRANSFORM_NEAR_Z);
 
   for (i = 0; i < n_vertices; i++)
     {
       if (curr_visible)
         {
-          t_vertices[(*n_t_vertices)++] = (GimpVector2) { curr.x / curr.z,
+          t_vertices[(*n_t_vertices)++] = (LigmaVector2) { curr.x / curr.z,
                                                           curr.y / curr.z };
         }
 
       if (i < n_vertices - 1 || closed)
         {
-          GimpVector3 next;
+          LigmaVector3 next;
           gboolean    next_visible;
           gint        j = (i + 1) % n_vertices;
 
@@ -636,15 +636,15 @@ gimp_transform_polygon (const GimpMatrix3 *matrix,
                    matrix->coeff[2][1] * vertices[j].y +
                    matrix->coeff[2][2];
 
-          next_visible = (next.z >= GIMP_TRANSFORM_NEAR_Z);
+          next_visible = (next.z >= LIGMA_TRANSFORM_NEAR_Z);
 
           if (next_visible != curr_visible)
             {
-              gdouble ratio = (curr.z - GIMP_TRANSFORM_NEAR_Z) / (curr.z - next.z);
+              gdouble ratio = (curr.z - LIGMA_TRANSFORM_NEAR_Z) / (curr.z - next.z);
 
               t_vertices[(*n_t_vertices)++] =
-                (GimpVector2) { (curr.x + (next.x - curr.x) * ratio) / GIMP_TRANSFORM_NEAR_Z,
-                                (curr.y + (next.y - curr.y) * ratio) / GIMP_TRANSFORM_NEAR_Z };
+                (LigmaVector2) { (curr.x + (next.x - curr.x) * ratio) / LIGMA_TRANSFORM_NEAR_Z,
+                                (curr.y + (next.y - curr.y) * ratio) / LIGMA_TRANSFORM_NEAR_Z };
             }
 
           curr         = next;
@@ -653,18 +653,18 @@ gimp_transform_polygon (const GimpMatrix3 *matrix,
     }
 }
 
-/* same as gimp_transform_polygon(), but using GimpCoords as the vertex type,
- * instead of GimpVector2.
+/* same as ligma_transform_polygon(), but using LigmaCoords as the vertex type,
+ * instead of LigmaVector2.
  */
 void
-gimp_transform_polygon_coords (const GimpMatrix3 *matrix,
-                               const GimpCoords  *vertices,
+ligma_transform_polygon_coords (const LigmaMatrix3 *matrix,
+                               const LigmaCoords  *vertices,
                                gint               n_vertices,
                                gboolean           closed,
-                               GimpCoords        *t_vertices,
+                               LigmaCoords        *t_vertices,
                                gint              *n_t_vertices)
 {
-  GimpVector3 curr;
+  LigmaVector3 curr;
   gboolean    curr_visible;
   gint        i;
 
@@ -689,7 +689,7 @@ gimp_transform_polygon_coords (const GimpMatrix3 *matrix,
            matrix->coeff[2][1] * vertices[0].y +
            matrix->coeff[2][2];
 
-  curr_visible = (curr.z >= GIMP_TRANSFORM_NEAR_Z);
+  curr_visible = (curr.z >= LIGMA_TRANSFORM_NEAR_Z);
 
   for (i = 0; i < n_vertices; i++)
     {
@@ -704,7 +704,7 @@ gimp_transform_polygon_coords (const GimpMatrix3 *matrix,
 
       if (i < n_vertices - 1 || closed)
         {
-          GimpVector3 next;
+          LigmaVector3 next;
           gboolean    next_visible;
           gint        j = (i + 1) % n_vertices;
 
@@ -718,20 +718,20 @@ gimp_transform_polygon_coords (const GimpMatrix3 *matrix,
                    matrix->coeff[2][1] * vertices[j].y +
                    matrix->coeff[2][2];
 
-          next_visible = (next.z >= GIMP_TRANSFORM_NEAR_Z);
+          next_visible = (next.z >= LIGMA_TRANSFORM_NEAR_Z);
 
           if (next_visible != curr_visible)
             {
-              gdouble ratio = (curr.z - GIMP_TRANSFORM_NEAR_Z) / (curr.z - next.z);
+              gdouble ratio = (curr.z - LIGMA_TRANSFORM_NEAR_Z) / (curr.z - next.z);
 
-              gimp_coords_mix (1.0 - ratio, &vertices[i],
+              ligma_coords_mix (1.0 - ratio, &vertices[i],
                                      ratio, &vertices[j],
                                             &t_vertices[*n_t_vertices]);
 
               t_vertices[*n_t_vertices].x = (curr.x + (next.x - curr.x) * ratio) /
-                                             GIMP_TRANSFORM_NEAR_Z;
+                                             LIGMA_TRANSFORM_NEAR_Z;
               t_vertices[*n_t_vertices].y = (curr.y + (next.y - curr.y) * ratio) /
-                                             GIMP_TRANSFORM_NEAR_Z;
+                                             LIGMA_TRANSFORM_NEAR_Z;
 
               (*n_t_vertices)++;
             }
@@ -949,11 +949,11 @@ polynomial_odd_roots (const gdouble *poly,
  * 'c_bezier' may not alias 'bezier'.
  */
 static void
-clip_bezier (const GimpCoords  bezier[4],
+clip_bezier (const LigmaCoords  bezier[4],
              gdouble           a,
              gdouble           b,
              gdouble           c,
-             GimpCoords        c_bezier[2][4],
+             LigmaCoords        c_bezier[2][4],
              gint             *n_c_bezier,
              gboolean         *start_in,
              gboolean         *end_in)
@@ -988,7 +988,7 @@ clip_bezier (const GimpCoords  bezier[4],
     {
       /* all points are in -- the entire segment is in */
 
-      memcpy (c_bezier[0], bezier, sizeof (GimpCoords[4]));
+      memcpy (c_bezier[0], bezier, sizeof (LigmaCoords[4]));
 
       *n_c_bezier = 1;
       *start_in   = TRUE;
@@ -1019,17 +1019,17 @@ clip_bezier (const GimpCoords  bezier[4],
       gdouble t0 = roots[i];
       gdouble t1 = roots[i + 1];
 
-      gimp_coords_interpolate_bezier_at (bezier, t0,
+      ligma_coords_interpolate_bezier_at (bezier, t0,
                                          &c_bezier[*n_c_bezier][0],
                                          &c_bezier[*n_c_bezier][1]);
-      gimp_coords_interpolate_bezier_at (bezier, t1,
+      ligma_coords_interpolate_bezier_at (bezier, t1,
                                          &c_bezier[*n_c_bezier][3],
                                          &c_bezier[*n_c_bezier][2]);
 
-      gimp_coords_mix (1.0,             &c_bezier[*n_c_bezier][0],
+      ligma_coords_mix (1.0,             &c_bezier[*n_c_bezier][0],
                        (t1 - t0) / 3.0, &c_bezier[*n_c_bezier][1],
                        &c_bezier[*n_c_bezier][1]);
-      gimp_coords_mix (1.0,             &c_bezier[*n_c_bezier][3],
+      ligma_coords_mix (1.0,             &c_bezier[*n_c_bezier][3],
                        (t0 - t1) / 3.0, &c_bezier[*n_c_bezier][2],
                        &c_bezier[*n_c_bezier][2]);
 
@@ -1047,53 +1047,53 @@ clip_bezier (const GimpCoords  bezier[4],
  * 'bezier' shall be fully clipped to the near plane.
  */
 static void
-transform_bezier_coords (const GimpMatrix3 *matrix,
-                         const GimpCoords   bezier[4],
+transform_bezier_coords (const LigmaMatrix3 *matrix,
+                         const LigmaCoords   bezier[4],
                          GQueue            *t_beziers,
                          gint               depth)
 {
-  GimpCoords *t_bezier;
+  LigmaCoords *t_bezier;
   gint        n;
 
   /* check if we need to split the segment */
   if (depth > 0)
     {
-      GimpVector2 v[4];
-      GimpVector2 c[2];
-      GimpVector2 b;
+      LigmaVector2 v[4];
+      LigmaVector2 c[2];
+      LigmaVector2 b;
       gint        i;
 
       for (i = 0; i < 4; i++)
-        v[i] = (GimpVector2) { bezier[i].x, bezier[i].y };
+        v[i] = (LigmaVector2) { bezier[i].x, bezier[i].y };
 
-      gimp_vector2_sub (&c[0], &v[1], &v[0]);
-      gimp_vector2_sub (&c[1], &v[2], &v[3]);
+      ligma_vector2_sub (&c[0], &v[1], &v[0]);
+      ligma_vector2_sub (&c[1], &v[2], &v[3]);
 
-      gimp_vector2_sub (&b, &v[3], &v[0]);
-      gimp_vector2_mul (&b, 1.0 / gimp_vector2_inner_product (&b, &b));
+      ligma_vector2_sub (&b, &v[3], &v[0]);
+      ligma_vector2_mul (&b, 1.0 / ligma_vector2_inner_product (&b, &b));
 
       for (i = 0; i < 2; i++)
         {
           /* split the segment if one of the control points is too far from the
            * line connecting the anchors
            */
-          if (fabs (gimp_vector2_cross_product (&c[i], &b).x) > 0.5)
+          if (fabs (ligma_vector2_cross_product (&c[i], &b).x) > 0.5)
             {
-              GimpCoords mid_position;
-              GimpCoords mid_velocity;
-              GimpCoords sub[4];
+              LigmaCoords mid_position;
+              LigmaCoords mid_velocity;
+              LigmaCoords sub[4];
 
-              gimp_coords_interpolate_bezier_at (bezier, 0.5,
+              ligma_coords_interpolate_bezier_at (bezier, 0.5,
                                                  &mid_position, &mid_velocity);
 
               /* first half */
               sub[0] = bezier[0];
               sub[3] = mid_position;
 
-              gimp_coords_mix (0.5,        &sub[0],
+              ligma_coords_mix (0.5,        &sub[0],
                                0.5,        &bezier[1],
                                            &sub[1]);
-              gimp_coords_mix (1.0,        &sub[3],
+              ligma_coords_mix (1.0,        &sub[3],
                                -1.0 / 6.0, &mid_velocity,
                                            &sub[2]);
 
@@ -1103,10 +1103,10 @@ transform_bezier_coords (const GimpMatrix3 *matrix,
               sub[0] = mid_position;
               sub[3] = bezier[3];
 
-              gimp_coords_mix (1.0,        &sub[0],
+              ligma_coords_mix (1.0,        &sub[0],
                                +1.0 / 6.0, &mid_velocity,
                                            &sub[1]);
-              gimp_coords_mix (0.5,        &sub[3],
+              ligma_coords_mix (0.5,        &sub[3],
                                0.5,        &bezier[2],
                                            &sub[2]);
 
@@ -1121,7 +1121,7 @@ transform_bezier_coords (const GimpMatrix3 *matrix,
    * that, for non-affine transforms, this is only an approximation of the real
    * transformed curve, but due to subdivision it should be good enough.
    */
-  t_bezier = g_new (GimpCoords, 4);
+  t_bezier = g_new (LigmaCoords, 4);
 
   /* note that while the segments themselves are clipped to the near plane,
    * their control points may still get transformed behind the camera.  we
@@ -1129,9 +1129,9 @@ transform_bezier_coords (const GimpMatrix3 *matrix,
    * too meaningful, but avoids erroneously transforming them behind the
    * camera.
    */
-  gimp_transform_polygon_coords (matrix, bezier, 2, FALSE,
+  ligma_transform_polygon_coords (matrix, bezier, 2, FALSE,
                                  t_bezier, &n);
-  gimp_transform_polygon_coords (matrix, bezier + 2, 2, FALSE,
+  ligma_transform_polygon_coords (matrix, bezier + 2, 2, FALSE,
                                  t_bezier + 2, &n);
 
   g_queue_push_tail (t_beziers, t_bezier);
@@ -1142,7 +1142,7 @@ transform_bezier_coords (const GimpMatrix3 *matrix,
  * as necessary.
  *
  * returns the transformed set of bezier-segment sequences in 't_beziers', as
- * GQueues of GimpCoords[4] bezier-segments, and the number of sequences in
+ * GQueues of LigmaCoords[4] bezier-segments, and the number of sequences in
  * 'n_t_beziers'.  the minimal possible number of transformed sequences is 0,
  * which happens when the entire segment is clipped.  the maximal possible
  * number of transformed sequences is 2.  each sequence has at least one
@@ -1153,14 +1153,14 @@ transform_bezier_coords (const GimpMatrix3 *matrix,
  * a final segment of 'bezier', sets '*end_in' to TRUE, otherwise to FALSE.
  */
 void
-gimp_transform_bezier_coords (const GimpMatrix3 *matrix,
-                              const GimpCoords   bezier[4],
+ligma_transform_bezier_coords (const LigmaMatrix3 *matrix,
+                              const LigmaCoords   bezier[4],
                               GQueue            *t_beziers[2],
                               gint              *n_t_beziers,
                               gboolean          *start_in,
                               gboolean          *end_in)
 {
-  GimpCoords c_bezier[2][4];
+  LigmaCoords c_bezier[2][4];
   gint       i;
 
   g_return_if_fail (matrix != NULL);
@@ -1171,21 +1171,21 @@ gimp_transform_bezier_coords (const GimpMatrix3 *matrix,
   g_return_if_fail (end_in != NULL);
 
   /* if the matrix is affine, transform the easy way */
-  if (gimp_matrix3_is_affine (matrix))
+  if (ligma_matrix3_is_affine (matrix))
     {
-      GimpCoords *t_bezier;
+      LigmaCoords *t_bezier;
 
       t_beziers[0] = g_queue_new ();
       *n_t_beziers = 1;
 
-      t_bezier = g_new (GimpCoords, 1);
+      t_bezier = g_new (LigmaCoords, 1);
       g_queue_push_tail (t_beziers[0], t_bezier);
 
       for (i = 0; i < 4; i++)
         {
           t_bezier[i] = bezier[i];
 
-          gimp_matrix3_transform_point (matrix,
+          ligma_matrix3_transform_point (matrix,
                                         bezier[i].x,    bezier[i].y,
                                         &t_bezier[i].x, &t_bezier[i].y);
         }
@@ -1197,7 +1197,7 @@ gimp_transform_bezier_coords (const GimpMatrix3 *matrix,
   clip_bezier (bezier,
                matrix->coeff[2][0],
                matrix->coeff[2][1],
-               matrix->coeff[2][2] - GIMP_TRANSFORM_NEAR_Z,
+               matrix->coeff[2][2] - LIGMA_TRANSFORM_NEAR_Z,
                c_bezier, n_t_beziers,
                start_in, end_in);
 

@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpVectors Import
- * Copyright (C) 2003  Sven Neumann <sven@gimp.org>
+ * LigmaVectors Import
+ * Copyright (C) 2003  Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,27 +18,27 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_VECTORS_IMPORT_H__
-#define __GIMP_VECTORS_IMPORT_H__
+#ifndef __LIGMA_VECTORS_IMPORT_H__
+#define __LIGMA_VECTORS_IMPORT_H__
 
 
-gboolean  gimp_vectors_import_file   (GimpImage    *image,
+gboolean  ligma_vectors_import_file   (LigmaImage    *image,
                                       GFile        *file,
                                       gboolean      merge,
                                       gboolean      scale,
-                                      GimpVectors  *parent,
+                                      LigmaVectors  *parent,
                                       gint          position,
                                       GList       **ret_vectors,
                                       GError      **error);
-gboolean  gimp_vectors_import_buffer (GimpImage    *image,
+gboolean  ligma_vectors_import_buffer (LigmaImage    *image,
                                       const gchar  *buffer,
                                       gsize         len,
                                       gboolean      merge,
                                       gboolean      scale,
-                                      GimpVectors  *parent,
+                                      LigmaVectors  *parent,
                                       gint          position,
                                       GList       **ret_vectors,
                                       GError      **error);
 
 
-#endif /* __GIMP_VECTORS_IMPORT_H__ */
+#endif /* __LIGMA_VECTORS_IMPORT_H__ */

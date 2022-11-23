@@ -1,4 +1,4 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * This library is free software: you can redistribute it and/or
@@ -16,31 +16,31 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_BASE_H__
-#define __GIMP_BASE_H__
+#ifndef __LIGMA_BASE_H__
+#define __LIGMA_BASE_H__
 
-#define __GIMP_BASE_H_INSIDE__
+#define __LIGMA_BASE_H_INSIDE__
 
-#include <libgimpbase/gimpbasetypes.h>
+#include <libligmabase/ligmabasetypes.h>
 
-#include <libgimpbase/gimpchecks.h>
-#include <libgimpbase/gimpcpuaccel.h>
-#include <libgimpbase/gimpenv.h>
-#include <libgimpbase/gimplimits.h>
-#include <libgimpbase/gimpmemsize.h>
-#include <libgimpbase/gimpmetadata.h>
-#include <libgimpbase/gimpparamspecs.h>
-#include <libgimpbase/gimpparasite.h>
-#include <libgimpbase/gimprectangle.h>
-#include <libgimpbase/gimpunit.h>
-#include <libgimpbase/gimputils.h>
-#include <libgimpbase/gimpversion.h>
-#include <libgimpbase/gimpvaluearray.h>
+#include <libligmabase/ligmachecks.h>
+#include <libligmabase/ligmacpuaccel.h>
+#include <libligmabase/ligmaenv.h>
+#include <libligmabase/ligmalimits.h>
+#include <libligmabase/ligmamemsize.h>
+#include <libligmabase/ligmametadata.h>
+#include <libligmabase/ligmaparamspecs.h>
+#include <libligmabase/ligmaparasite.h>
+#include <libligmabase/ligmarectangle.h>
+#include <libligmabase/ligmaunit.h>
+#include <libligmabase/ligmautils.h>
+#include <libligmabase/ligmaversion.h>
+#include <libligmabase/ligmavaluearray.h>
 
 #ifndef G_OS_WIN32
-#include <libgimpbase/gimpsignal.h>
+#include <libligmabase/ligmasignal.h>
 #endif
 
-#undef __GIMP_BASE_H_INSIDE__
+#undef __LIGMA_BASE_H_INSIDE__
 
-#endif  /* __GIMP_BASE_H__ */
+#endif  /* __LIGMA_BASE_H__ */

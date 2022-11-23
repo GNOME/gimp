@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,54 +15,54 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SAMPLE_POINT_H__
-#define __GIMP_SAMPLE_POINT_H__
+#ifndef __LIGMA_SAMPLE_POINT_H__
+#define __LIGMA_SAMPLE_POINT_H__
 
 
-#include "gimpauxitem.h"
+#include "ligmaauxitem.h"
 
 
-#define GIMP_SAMPLE_POINT_POSITION_UNDEFINED G_MININT
+#define LIGMA_SAMPLE_POINT_POSITION_UNDEFINED G_MININT
 
 
-#define GIMP_TYPE_SAMPLE_POINT            (gimp_sample_point_get_type ())
-#define GIMP_SAMPLE_POINT(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_SAMPLE_POINT, GimpSamplePoint))
-#define GIMP_SAMPLE_POINT_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_SAMPLE_POINT, GimpSamplePointClass))
-#define GIMP_IS_SAMPLE_POINT(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_SAMPLE_POINT))
-#define GIMP_IS_SAMPLE_POINT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_SAMPLE_POINT))
-#define GIMP_SAMPLE_POINT_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_SAMPLE_POINT, GimpSamplePointClass))
+#define LIGMA_TYPE_SAMPLE_POINT            (ligma_sample_point_get_type ())
+#define LIGMA_SAMPLE_POINT(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_SAMPLE_POINT, LigmaSamplePoint))
+#define LIGMA_SAMPLE_POINT_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_SAMPLE_POINT, LigmaSamplePointClass))
+#define LIGMA_IS_SAMPLE_POINT(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_SAMPLE_POINT))
+#define LIGMA_IS_SAMPLE_POINT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_SAMPLE_POINT))
+#define LIGMA_SAMPLE_POINT_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_SAMPLE_POINT, LigmaSamplePointClass))
 
 
-typedef struct _GimpSamplePointPrivate GimpSamplePointPrivate;
-typedef struct _GimpSamplePointClass   GimpSamplePointClass;
+typedef struct _LigmaSamplePointPrivate LigmaSamplePointPrivate;
+typedef struct _LigmaSamplePointClass   LigmaSamplePointClass;
 
-struct _GimpSamplePoint
+struct _LigmaSamplePoint
 {
-  GimpAuxItem             parent_instance;
+  LigmaAuxItem             parent_instance;
 
-  GimpSamplePointPrivate *priv;
+  LigmaSamplePointPrivate *priv;
 };
 
-struct _GimpSamplePointClass
+struct _LigmaSamplePointClass
 {
-  GimpAuxItemClass  parent_class;
+  LigmaAuxItemClass  parent_class;
 };
 
 
-GType             gimp_sample_point_get_type      (void) G_GNUC_CONST;
+GType             ligma_sample_point_get_type      (void) G_GNUC_CONST;
 
-GimpSamplePoint * gimp_sample_point_new           (guint32            sample_point_ID);
+LigmaSamplePoint * ligma_sample_point_new           (guint32            sample_point_ID);
 
-void              gimp_sample_point_get_position  (GimpSamplePoint   *sample_point,
+void              ligma_sample_point_get_position  (LigmaSamplePoint   *sample_point,
                                                    gint              *position_x,
                                                    gint              *position_y);
-void              gimp_sample_point_set_position  (GimpSamplePoint   *sample_point,
+void              ligma_sample_point_set_position  (LigmaSamplePoint   *sample_point,
                                                    gint               position_x,
                                                    gint               position_y);
 
-GimpColorPickMode gimp_sample_point_get_pick_mode (GimpSamplePoint   *sample_point);
-void              gimp_sample_point_set_pick_mode (GimpSamplePoint   *sample_point,
-                                                   GimpColorPickMode  pick_mode);
+LigmaColorPickMode ligma_sample_point_get_pick_mode (LigmaSamplePoint   *sample_point);
+void              ligma_sample_point_set_pick_mode (LigmaSamplePoint   *sample_point,
+                                                   LigmaColorPickMode  pick_mode);
 
 
-#endif /* __GIMP_SAMPLE_POINT_H__ */
+#endif /* __LIGMA_SAMPLE_POINT_H__ */

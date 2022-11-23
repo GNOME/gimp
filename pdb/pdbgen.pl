@@ -1,7 +1,7 @@
 #!/usr/bin/perl -w
 
-# GIMP - The GNU Image Manipulation Program
-# Copyright (C) 1998-2003 Manish Singh <yosh@gimp.org>
+# LIGMA - The GNU Image Manipulation Program
+# Copyright (C) 1998-2003 Manish Singh <yosh@ligma.org>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -123,7 +123,7 @@ CODE
 # Slurp in the PDB defs
 foreach $file (@groups) {
     print "Processing $srcdir/groups/$file.pdb...\n";
-    eval "package Gimp::CodeGen::Safe::$file; $evalcode;";
+    eval "package Ligma::CodeGen::Safe::$file; $evalcode;";
     die $@ if $@;
 }
 
@@ -230,7 +230,7 @@ while (@ARGV) {
 
     if (exists $gen{$type}) {
 	require "$type.pl";
-	&{"Gimp::CodeGen::${type}::generate"}($gen{$type});
+	&{"Ligma::CodeGen::${type}::generate"}($gen{$type});
 	print "done.\n";
 	$didstuff = 1;
     }

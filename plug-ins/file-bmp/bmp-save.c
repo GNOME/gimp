@@ -8,7 +8,7 @@
 /* Alexander.Schulz@stud.uni-karlsruhe.de                        */
 
 /*
- * GIMP - The GNU Image Manipulation Program
+ * LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -33,13 +33,13 @@
 
 #include <glib/gstdio.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
 #include "bmp.h"
 #include "bmp-save.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 typedef enum
@@ -66,7 +66,7 @@ static  void      write_image     (FILE          *f,
                                    gint           mask_info_size,
                                    gint           color_space_size);
 
-static  gboolean  save_dialog     (GimpProcedure *procedure,
+static  gboolean  save_dialog     (LigmaProcedure *procedure,
                                    GObject       *config,
                                    gint           channels,
                                    gint           bpp);
@@ -107,7 +107,7 @@ warning_dialog (const gchar *primary,
   gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
                                             "%s", secondary);
 
-  gimp_window_set_transient (GTK_WINDOW (dialog));
+  ligma_window_set_transient (GTK_WINDOW (dialog));
 
   ok = (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
@@ -116,12 +116,12 @@ warning_dialog (const gchar *primary,
   return ok;
 }
 
-GimpPDBStatusType
+LigmaPDBStatusType
 save_image (GFile         *file,
-            GimpImage     *image,
-            GimpDrawable  *drawable,
-            GimpRunMode    run_mode,
-            GimpProcedure *procedure,
+            LigmaImage     *image,
+            LigmaDrawable  *drawable,
+            LigmaRunMode    run_mode,
+            LigmaProcedure *procedure,
             GObject       *config,
             GError       **error)
 {
@@ -138,7 +138,7 @@ save_image (GFile         *file,
   guchar         *pixels;
   GeglBuffer     *buffer;
   const Babl     *format;
-  GimpImageType   drawable_type;
+  LigmaImageType   drawable_type;
   gint            drawable_width;
   gint            drawable_height;
   gint            i;
@@ -149,22 +149,22 @@ save_image (GFile         *file,
   gboolean        write_color_space;
   RGBMode         rgb_format;
 
-  buffer = gimp_drawable_get_buffer (drawable);
+  buffer = ligma_drawable_get_buffer (drawable);
 
-  drawable_type   = gimp_drawable_type   (drawable);
-  drawable_width  = gimp_drawable_get_width  (drawable);
-  drawable_height = gimp_drawable_get_height (drawable);
+  drawable_type   = ligma_drawable_type   (drawable);
+  drawable_width  = ligma_drawable_get_width  (drawable);
+  drawable_height = ligma_drawable_get_height (drawable);
 
   switch (drawable_type)
     {
-    case GIMP_RGBA_IMAGE:
+    case LIGMA_RGBA_IMAGE:
       format       = babl_format ("R'G'B'A u8");
       colors       = 0;
       BitsPerPixel = 32;
       MapSize      = 0;
       channels     = 4;
 
-      if (run_mode == GIMP_RUN_INTERACTIVE)
+      if (run_mode == LIGMA_RUN_INTERACTIVE)
         g_object_set (config,
                       "rgb-format", RGBA_8888,
                       "use-rle",    FALSE,
@@ -175,14 +175,14 @@ save_image (GFile         *file,
                       NULL);
       break;
 
-    case GIMP_RGB_IMAGE:
+    case LIGMA_RGB_IMAGE:
       format       = babl_format ("R'G'B' u8");
       colors       = 0;
       BitsPerPixel = 24;
       MapSize      = 0;
       channels     = 3;
 
-      if (run_mode == GIMP_RUN_INTERACTIVE)
+      if (run_mode == LIGMA_RUN_INTERACTIVE)
         g_object_set (config,
                       "rgb-format", RGB_888,
                       "use-rle",    FALSE,
@@ -193,21 +193,21 @@ save_image (GFile         *file,
                       NULL);
       break;
 
-    case GIMP_GRAYA_IMAGE:
-      if (run_mode == GIMP_RUN_INTERACTIVE &&
+    case LIGMA_GRAYA_IMAGE:
+      if (run_mode == LIGMA_RUN_INTERACTIVE &&
           ! warning_dialog (_("Cannot export indexed image with "
                               "transparency in BMP file format."),
                             _("Alpha channel will be ignored.")))
-        return GIMP_PDB_CANCEL;
+        return LIGMA_PDB_CANCEL;
 
      /* fallthrough */
 
-    case GIMP_GRAY_IMAGE:
+    case LIGMA_GRAY_IMAGE:
       colors       = 256;
       BitsPerPixel = 8;
       MapSize      = 1024;
 
-      if (drawable_type == GIMP_GRAYA_IMAGE)
+      if (drawable_type == LIGMA_GRAYA_IMAGE)
         {
           format   = babl_format ("Y'A u8");
           channels = 2;
@@ -226,21 +226,21 @@ save_image (GFile         *file,
         }
       break;
 
-    case GIMP_INDEXEDA_IMAGE:
-      if (run_mode == GIMP_RUN_INTERACTIVE &&
+    case LIGMA_INDEXEDA_IMAGE:
+      if (run_mode == LIGMA_RUN_INTERACTIVE &&
           ! warning_dialog (_("Cannot export indexed image with "
                               "transparency in BMP file format."),
                             _("Alpha channel will be ignored.")))
-        return GIMP_PDB_CANCEL;
+        return LIGMA_PDB_CANCEL;
 
      /* fallthrough */
 
-    case GIMP_INDEXED_IMAGE:
-      format   = gimp_drawable_get_format (drawable);
-      cmap     = gimp_image_get_colormap (image, &colors);
+    case LIGMA_INDEXED_IMAGE:
+      format   = ligma_drawable_get_format (drawable);
+      cmap     = ligma_image_get_colormap (image, &colors);
       MapSize  = 4 * colors;
 
-      if (drawable_type == GIMP_INDEXEDA_IMAGE)
+      if (drawable_type == LIGMA_INDEXEDA_IMAGE)
         channels = 2;
       else
         channels = 1;
@@ -271,21 +271,21 @@ save_image (GFile         *file,
 
   mask_info_size = 0;
 
-  if (run_mode == GIMP_RUN_INTERACTIVE &&
+  if (run_mode == LIGMA_RUN_INTERACTIVE &&
       (BitsPerPixel == 8 ||
        BitsPerPixel == 4 ||
        BitsPerPixel == 1))
     {
       if (! save_dialog (procedure, config, 1, BitsPerPixel))
-        return GIMP_PDB_CANCEL;
+        return LIGMA_PDB_CANCEL;
     }
   else if (BitsPerPixel == 24 ||
            BitsPerPixel == 32)
     {
-      if (run_mode == GIMP_RUN_INTERACTIVE)
+      if (run_mode == LIGMA_RUN_INTERACTIVE)
         {
           if (! save_dialog (procedure, config, channels, BitsPerPixel))
-            return GIMP_PDB_CANCEL;
+            return LIGMA_PDB_CANCEL;
         }
 
       g_object_get (config,
@@ -319,7 +319,7 @@ save_image (GFile         *file,
           mask_info_size = 16;
           break;
         default:
-          g_return_val_if_reached (GIMP_PDB_EXECUTION_ERROR);
+          g_return_val_if_reached (LIGMA_PDB_EXECUTION_ERROR);
         }
     }
 
@@ -329,8 +329,8 @@ save_image (GFile         *file,
                 "rgb-format",        &rgb_format,
                 NULL);
 
-  gimp_progress_init_printf (_("Exporting '%s'"),
-                             gimp_file_get_utf8_name (file));
+  ligma_progress_init_printf (_("Exporting '%s'"),
+                             ligma_file_get_utf8_name (file));
 
   outfile = g_fopen (g_file_peek_path (file), "wb");
 
@@ -338,8 +338,8 @@ save_image (GFile         *file,
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for writing: %s"),
-                   gimp_file_get_utf8_name (file), g_strerror (errno));
-      return GIMP_PDB_EXECUTION_ERROR;
+                   ligma_file_get_utf8_name (file), g_strerror (errno));
+      return LIGMA_PDB_EXECUTION_ERROR;
     }
 
   /* fetch the image */
@@ -421,10 +421,10 @@ save_image (GFile         *file,
     gdouble xresolution;
     gdouble yresolution;
 
-    gimp_image_get_resolution (image, &xresolution, &yresolution);
+    ligma_image_get_resolution (image, &xresolution, &yresolution);
 
-    if (xresolution > GIMP_MIN_RESOLUTION &&
-        yresolution > GIMP_MIN_RESOLUTION)
+    if (xresolution > LIGMA_MIN_RESOLUTION &&
+        yresolution > LIGMA_MIN_RESOLUTION)
       {
         /*
          * xresolution and yresolution are in dots per inch.
@@ -587,7 +587,7 @@ save_image (GFile         *file,
   fclose (outfile);
   g_free (pixels);
 
-  return GIMP_PDB_SUCCESS;
+  return LIGMA_PDB_SUCCESS;
 }
 
 static inline void
@@ -729,7 +729,7 @@ write_image (FILE     *f,
 
           cur_progress++;
           if ((cur_progress % 5) == 0)
-            gimp_progress_update ((gdouble) cur_progress /
+            ligma_progress_update ((gdouble) cur_progress /
                                   (gdouble) max_progress);
 
           xpos = 0;
@@ -767,7 +767,7 @@ write_image (FILE     *f,
 
               cur_progress++;
               if ((cur_progress % 5) == 0)
-                gimp_progress_update ((gdouble) cur_progress /
+                ligma_progress_update ((gdouble) cur_progress /
                                         (gdouble) max_progress);
             }
         }
@@ -899,7 +899,7 @@ write_image (FILE     *f,
 
               cur_progress++;
               if ((cur_progress % 5) == 0)
-                gimp_progress_update ((gdouble) cur_progress /
+                ligma_progress_update ((gdouble) cur_progress /
                                       (gdouble) max_progress);
             }
 
@@ -920,7 +920,7 @@ write_image (FILE     *f,
         }
     }
 
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 }
 
 static gboolean
@@ -972,7 +972,7 @@ config_notify (GObject          *config,
 }
 
 static gboolean
-save_dialog (GimpProcedure *procedure,
+save_dialog (LigmaProcedure *procedure,
              GObject       *config,
              gint           channels,
              gint           bpp)
@@ -985,20 +985,20 @@ save_dialog (GimpProcedure *procedure,
   GtkWidget    *combo;
   gboolean      run;
 
-  dialog = gimp_procedure_dialog_new (procedure,
-                                      GIMP_PROCEDURE_CONFIG (config),
+  dialog = ligma_procedure_dialog_new (procedure,
+                                      LIGMA_PROCEDURE_CONFIG (config),
                                       _("Export Image as BMP"));
 
   gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (dialog)),
+  gtk_box_pack_start (GTK_BOX (ligma_export_dialog_get_content_area (dialog)),
                       vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
   /* Run-Length Encoded */
-  toggle = gimp_prop_check_button_new (config, "use-rle",
+  toggle = ligma_prop_check_button_new (config, "use-rle",
                                        _("_Run-Length Encoded"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
 
@@ -1006,41 +1006,41 @@ save_dialog (GimpProcedure *procedure,
     gtk_widget_set_sensitive (toggle, FALSE);
 
   /* Compatibility Options */
-  frame = gimp_frame_new (_("Compatibility"));
+  frame = ligma_frame_new (_("Compatibility"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  toggle = gimp_prop_check_button_new (config, "write-color-space",
+  toggle = ligma_prop_check_button_new (config, "write-color-space",
                                        _("_Write color space information"));
-  gimp_help_set_help_data (toggle,
+  ligma_help_set_help_data (toggle,
                            _("Some applications can not read BMP images that "
-                             "include color space information. GIMP writes "
+                             "include color space information. LIGMA writes "
                              "color space information by default. Disabling "
-                             "this option will cause GIMP to not write color "
+                             "this option will cause LIGMA to not write color "
                              "space information to the file."),
                            NULL);
   gtk_container_add (GTK_CONTAINER (frame), toggle);
 
   /* RGB Encoding Pptions */
-  frame = gimp_frame_new (_("RGB Encoding"));
+  frame = ligma_frame_new (_("RGB Encoding"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   if (channels < 3)
     gtk_widget_set_sensitive (frame, FALSE);
 
-  store = gimp_int_store_new (_("16 bit (R5 G6 B5)"),    RGB_565,
+  store = ligma_int_store_new (_("16 bit (R5 G6 B5)"),    RGB_565,
                               _("16 bit (A1 R5 G5 B5)"), RGBA_5551,
                               _("16 bit (X1 R5 G5 B5)"), RGB_555,
                               _("24 bit (R8 G8 B8)"),    RGB_888,
                               _("32 bit (A8 R8 G8 B8)"), RGBA_8888,
                               _("32 bit (X8 R8 G8 B8)"), RGBX_8888,
                               NULL);
-  combo = gimp_prop_int_combo_box_new (config, "rgb-format",
-                                       GIMP_INT_STORE (store));
+  combo = ligma_prop_int_combo_box_new (config, "rgb-format",
+                                       LIGMA_INT_STORE (store));
   gtk_container_add (GTK_CONTAINER (frame), combo);
 
-  gimp_int_combo_box_set_sensitivity (GIMP_INT_COMBO_BOX (combo),
+  ligma_int_combo_box_set_sensitivity (LIGMA_INT_COMBO_BOX (combo),
                                       format_sensitive_callback,
                                       GINT_TO_POINTER (channels), NULL);
 
@@ -1050,7 +1050,7 @@ save_dialog (GimpProcedure *procedure,
                     G_CALLBACK (config_notify),
                     GINT_TO_POINTER (channels));
 
-  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
+  run = ligma_procedure_dialog_run (LIGMA_PROCEDURE_DIALOG (dialog));
 
   g_signal_handlers_disconnect_by_func (config,
                                         config_notify,

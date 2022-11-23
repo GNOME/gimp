@@ -1,6 +1,6 @@
-# translation of gimp-tips.HEAD.pa.po to Punjabi
-# Copyright (C) 2004 THE gimp-tips.HEAD'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the gimp-tips.HEAD package.
+# translation of ligma-tips.HEAD.pa.po to Punjabi
+# Copyright (C) 2004 THE ligma-tips.HEAD'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the ligma-tips.HEAD package.
 #
 #
 # Amanpreet Singh Alam <amanlinux@netscape.net>, 2004.
@@ -8,8 +8,8 @@
 # Amanpreet Singh Alam <aalam@users.sf.net>, 2008.
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-tips.HEAD.pa\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma-tips.HEAD.pa\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2008-09-05 07:31+0000\n"
 "PO-Revision-Date: 2008-10-07 06:31+0000\n"
 "Last-Translator: Amanpreet Singh Alam <aalam@users.sf.net>\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "\n"
 
-#: ../data/tips/gimp-tips.xml.in.h:1
+#: ../data/tips/ligma-tips.xml.in.h:1
 msgid ""
 "<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background "
 "color instead of the foreground color. Similarly, <tt>Ctrl</tt>-clicking "
@@ -30,20 +30,20 @@ msgid ""
 "color."
 msgstr ""
 
-#: ../data/tips/gimp-tips.xml.in.h:2
+#: ../data/tips/ligma-tips.xml.in.h:2
 msgid ""
 "<tt>Ctrl</tt>-clicking on the layer mask's preview in the Layers dialog "
 "toggles the effect of the layer mask. <tt>Alt</tt>-clicking on the layer "
 "mask's preview in the Layers dialog toggles viewing the mask directly."
 msgstr ""
 
-#: ../data/tips/gimp-tips.xml.in.h:3
+#: ../data/tips/ligma-tips.xml.in.h:3
 msgid ""
 "<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
 "degree angles."
 msgstr "ਘੁੰਮਾਉਣ ਵਾਲਾ ਟੂਲ <tt>Ctrl</tt>-ਖਿੱਚ ਨਾਲ 15 ਡਿਗਰੀ ਦੇ ਕੋਣ ਉੱਤੇ ਘੁੰਮਾਵੇਗਾ।"
 
-#: ../data/tips/gimp-tips.xml.in.h:4
+#: ../data/tips/ligma-tips.xml.in.h:4
 msgid ""
 "<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers "
 "but that one. <tt>Shift</tt>-click again to show all layers."
@@ -51,7 +51,7 @@ msgstr ""
 "ਸਭ ਲੇਅਰਾਂ ਢਕਣ ਵਾਸਤੇ, ਪਰ ਉਸ ਇਕ ਵਾਸਤੇ ਪਰਤ ਡਾਈਲਾਗ ਵਿਚ ਅੱਖ ਚਿੱਤਰ ਉੱਤੇ <tt>Shift</tt> -"
 "ਕਲਿਕ ਕਰੋ ਸਭ ਲੇਅਰਾਂ ਦਿਖਾਉਣ ਲਈ ਮੁੜ <tt>Shift</tt>-ਕਲਿੱਕ ਕਰੋ।"
 
-#: ../data/tips/gimp-tips.xml.in.h:5
+#: ../data/tips/ligma-tips.xml.in.h:5
 msgid ""
 "A floating selection must be anchored to a new layer or to the last active "
 "layer before doing other operations on the image. Click on the &quot;New "
@@ -62,14 +62,14 @@ msgstr ""
 "anchored ਹੋਣੀ ਚਾਹੀਦੀ ਹੈ। ਪਰਤ ਡਾਈਲਾਗ ਵਿਚ &quot;ਨਵੀਂ ਪਰਤ&quot; ਜਾਂ &quot;ਲੇਅਰ ਬਟਨ "
 "ਐਂਕਰ&quot; ਕਲਿੱਕ ਕਰੋ ਜਾਂ ਅਜਿਹਾ ਸੂਚੀ ਵਰਤ ਕੇ ਕਰ ਸਕਦੇ ਹੋ।"
 
-#: ../data/tips/gimp-tips.xml.in.h:6
+#: ../data/tips/ligma-tips.xml.in.h:6
 #, fuzzy
 msgid ""
 "After you enabled &quot;Dynamic Keyboard Shortcuts&quot; in the Preferences "
 "dialog, you can reassign shortcut keys. Do so by bringing up the menu, "
 "selecting a menu item, and pressing the desired key combination. If &quot;"
 "Save Keyboard Shortcuts&quot; is enabled, the key bindings are saved when "
-"you exit GIMP. You should probably disable &quot;Dynamic Keyboard "
+"you exit LIGMA. You should probably disable &quot;Dynamic Keyboard "
 "Shortcuts&quot; afterwards, to prevent accidentally assigning/reassigning "
 "shortcuts."
 msgstr ""
@@ -78,7 +78,7 @@ msgstr ""
 "ਦਬਾਓ।ਜੇ &quot;Save Keyboard Shortcuts&quot; ਯੋਗ ਹੈ ਤਾਂ ਜੈਮਪ ਤੋਂ ਬਾਹਰ ਆਉਣ ਤੇ ਸਵਿੱਚਾਂ ਦਾ "
 "ਸਹਿਯੋਗ ਸੰਭਾਲਿਆ ਜਾਵੇਗਾ।"
 
-#: ../data/tips/gimp-tips.xml.in.h:7
+#: ../data/tips/ligma-tips.xml.in.h:7
 msgid ""
 "Click and drag on a ruler to place a guide on an image. All dragged "
 "selections will snap to the guides. You can remove guides by dragging them "
@@ -87,9 +87,9 @@ msgstr ""
 "ਚਿੱਤਰ ਉੱਤੇ ਸਹਾਇਕ ਸਥਾਪਿਤ ਕਰਨ ਲਈ ਪੈਮਾਨੇ ਨੂੰ ਕਲਿੱਕ ਕਰੋ ਤੇ ਖਿੱਚੋ।ਸਾਰੀਆਂ ਖਿਚੀਆਂ ਚੋਣਾਂ ਸਹਾਇਕ ਵਿੱਚ "
 "ਸ਼ਾਮਿਲ ਹੋ ਜਾਣਗੀਆਂ।ਤੁਸੀਂ Move ਟੂਲ ਨਾਲ ਚਿੱਤਰ ਵਿਚੋਂ ਬਾਹਰ ਖਿੱਚ ਕੇ ਸਹਾਇਕ ਨੂੰ ਹਟਾ ਸਕਦੇ ਹੋ।"
 
-#: ../data/tips/gimp-tips.xml.in.h:8
+#: ../data/tips/ligma-tips.xml.in.h:8
 msgid ""
-"GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>."
+"LIGMA supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>."
 "bz2</tt>, if you have bzip2 installed) to the filename and your image will "
 "be saved compressed. Of course loading compressed images works too."
 msgstr ""
@@ -97,16 +97,16 @@ msgstr ""
 "tt>, ਜੇ bzip2 ਚਾਹੁੰਦੇ ਹੋ) ਦਿਓ ਅਤੇ ਤੁਹਾਡਾ ਚਿੱਤਰ ਕੰਪਰੈੱਸ ਕਰਕੇ ਸੰਭਾਲਿਆ ਜਾਵੇਗਾ। ਬੇਸ਼ੱਕ ਕੰਪਰੈੱਸ ਕੀਤੇ "
 "ਚਿੱਤਰ ਲੋਡ ਵੀ ਕੀਤੇ ਜਾ ਸਕਦੇ ਹਨ।"
 
-#: ../data/tips/gimp-tips.xml.in.h:9
+#: ../data/tips/ligma-tips.xml.in.h:9
 msgid ""
-"GIMP uses layers to let you organize your image. Think of them as a stack of "
+"LIGMA uses layers to let you organize your image. Think of them as a stack of "
 "slides or filters, such that looking through them you see a composite of "
 "their contents."
 msgstr ""
 "ਤੁਹਾਡਾ ਚਿੱਤਰ ਤਿਆਰ ਕਰਨ ਵਾਸਤੇ ਜੈਮਪ ਲੇਅਰਾਂ ਵਰਤਦਾ ਹੈ।ਉਹਨਾਂ ਨੂੰ ਸਲਾਈਡਾਂ ਅਤੇ ਫਿਲਟਰਾਂ ਦਾ ਢੇਰ "
 "ਸੋਚਣਾ ,ਇਸ ਤਰਾਂ ਕਿ ਦੇਖਣ ਉਪਰੰਤ ਉਹ ਆਪਣੇ ਅੰਸ਼ਾਂ ਦਾ ਸਮੂਹ ਲਗਦੇ ਹਨ।"
 
-#: ../data/tips/gimp-tips.xml.in.h:10
+#: ../data/tips/ligma-tips.xml.in.h:10
 msgid ""
 "If a layer's name in the Layers dialog is displayed in <b>bold</b>, this "
 "layer doesn't have an alpha-channel. You can add an alpha-channel using "
@@ -115,7 +115,7 @@ msgstr ""
 "ਜੇ ਲੇਅਰ ਡਾਈਲਾਗ ਲੇਅਰ ਦਾ ਨਾਂ <b>ਗੂੜੇ</b> ਅੱਖਰਾਂ ਵਿੱਚ ਹੋਇਆ ਤਾਂ ਇਸ ਪਰਤ ਐਲਫਾ-ਚੈਨਲ ਵਿੱਚ ਨਹੀਂ "
 "ਹੋਵੇਗੀ। ਤੁਸੀਂ ਇਸ ਵਿੱਚ ਲੇਅਰ→ਟਰਾਂਸਪਰੇਸੀ→ਐਲਫ਼ਾ ਚੈਨਲ ਸ਼ਾਮਲ ਨਾਲ ਸ਼ਾਮਲ ਕਰ ਸਕਦੇ ਹੋ।"
 
-#: ../data/tips/gimp-tips.xml.in.h:11
+#: ../data/tips/ligma-tips.xml.in.h:11
 msgid ""
 "If some of your scanned photos do not look colorful enough, you can easily "
 "improve their tonal range with the &quot;Auto&quot; button in the Levels "
@@ -127,7 +127,7 @@ msgstr ""
 "ਸਕਦੇ ਹੋ। ਜੇ ਉਥੇ ਕੋਈ ਰੰਗ ਬਣਦਾ ਹੈ,ਤੁਸੀਂ ਉਸਨੂੰ ਕਰਵ ਟੂਲ (ਰੰਗ→ਕਰਵ) ਨਾਲ "
 "ਠੀਕ ਕਰ ਸਕਦੇ ਹੋ।"
 
-#: ../data/tips/gimp-tips.xml.in.h:12
+#: ../data/tips/ligma-tips.xml.in.h:12
 msgid ""
 "If you stroke a path (Edit→Stroke Path), the paint tools can be used with "
 "their current settings. You can use the Paintbrush in gradient mode or even "
@@ -136,7 +136,7 @@ msgstr ""
 "ਜੇ ਤੁਸੀ ਮਾਰਗ ਸਟਰੋਕ (ਸੋਧ→ਚੋਣ ਸਟਰੋਕ) ਕਰਦੇ ਹੋ ਤਾਂ ਰੰਗਤ ਟੂਲ ਮੌਜੂਦ ਸਥਿਤੀਆਂ ਅਨੁਸਾਰ ਵਰਤੇ ਜਾ ਸਕਦੇ "
 "ਹਨ।ਤੁਸੀਂ ਰਬੜ, Smudge ਟੂਲ ਅਤੇ gradient ਰੂਪ ਵਿਚ ਪੇਂਟ ਬੁਰਸ਼ ਵੀ ਵਰਤ ਸਕਦੇ ਹੋ।"
 
-#: ../data/tips/gimp-tips.xml.in.h:13
+#: ../data/tips/ligma-tips.xml.in.h:13
 msgid ""
 "If your screen is too cluttered, you can press <tt>Tab</tt> in an image "
 "window to toggle the visibility of the toolbox and other dialogs."
@@ -144,7 +144,7 @@ msgstr ""
 "ਜੇ ਤੁਹਾਡੀ ਸਕਰੀਨ ਬਹੁਤੀ ਬੇਤਰਤੀਬੀ ਹੈ ਤਾਂ ਚਿੱਤਰ ਡਾਈਲਾਗ ਵਿਚ ਟੂਲ-ਬਾਕਸ ਅਤੇ ਹੋਰ ਡਾਈਲਾਗ ਢੱਕਣ ਜਾਂ "
 "ਦਿਖਾਉਣ ਵਾਸਤੇ ਤੁਸੀਂ ਇੱਕ ਚਿੱਤਰ ਵਿੰਡੋ ਵਿੱਚ ਜਿਆਦਾ ਵਾਰ <tt>Tab</tt> ਦਬਾ ਸਕਦੇ ਹੋ।"
 
-#: ../data/tips/gimp-tips.xml.in.h:14
+#: ../data/tips/ligma-tips.xml.in.h:14
 msgid ""
 "Most plug-ins work on the current layer of the current image. In some cases, "
 "you will have to merge all layers (Image→Flatten Image) if you want the plug-"
@@ -154,7 +154,7 @@ msgstr ""
 "ਸਭ ਲੇਅਰਾਂ (ਚਿੱਤਰ→ਚਿੱਤਰ ਸਮਤਲ) ਨੂੰ ਸ਼ਾਮਿਲ ਕਰਨਾ ਪਵੇਗਾ, ਜੇ ਤੁਸੀਂ ਪਲੱਗਇਨ ਨੂੰ ਪੂਰੇ ਚਿੱਤਰ ਤੇ ਕੰਮ  "
 "ਕਰਵਾਉਣਾ ਚਾਹੁੰਦੇ ਹੋ।"
 
-#: ../data/tips/gimp-tips.xml.in.h:15
+#: ../data/tips/ligma-tips.xml.in.h:15
 msgid ""
 "Not all effects can be applied to all kinds of images. This is indicated by "
 "a grayed-out menu-entry. You may need to change the image mode to RGB "
@@ -165,7 +165,7 @@ msgstr ""
 "ਪਤਾ ਚਲਦਾ ਹੈ। ਤੁਸੀਂ ਚਿੱਤਰ ਰੂਪ ਨੂੰ RGB ਬਦਲ ਸਕਦੇ ਹੋ (ਚਿੱਤਰ→ਮੋਡ→RGB), ਇਕ ਅਲ਼ਫਾ ਚੈਨਲ"
 "(ਲੇਅਰਾਂ→ਟਰਾਂਸਪਰੇਸੀ→ਅਲਫ਼ਾ ਚੈਨਲ ਸ਼ਾਮਲ) ਸ਼ਾਮਲ ਕਰੋ ਜਾਂ ਸਮਤਲ (ਚਿੱਤਰ→ਚਿੱਤਰ ਸਮਤਲ) ਕਰੋ।"
 
-#: ../data/tips/gimp-tips.xml.in.h:16
+#: ../data/tips/ligma-tips.xml.in.h:16
 msgid ""
 "Pressing and holding the <tt>Shift</tt> key before making a selection allows "
 "you to add to the current selection instead of replacing it. Using <tt>Ctrl</"
@@ -175,9 +175,9 @@ msgstr ""
 "ਜਮਾਂ ਕਰਨ ਦੀ ਇਜਾਜਤ ਦਿੰਦਾ ਹੈ। ਚੋਣ ਕਰਨ ਤੋਂ ਪਹਿਲਾਂ <tt>Ctrl</tt> ਵਰਤਣ ਨਾਲ ਮੌਜੂਦ ਚੋਂ ਇਕ "
 "ਘਟਾਉਂਦਾ ਹੈ।"
 
-#: ../data/tips/gimp-tips.xml.in.h:17
+#: ../data/tips/ligma-tips.xml.in.h:17
 msgid ""
-"When you save an image to work on it again later, try using XCF, GIMP's "
+"When you save an image to work on it again later, try using XCF, LIGMA's "
 "native file format (use the file extension <tt>.xcf</tt>). This preserves "
 "the layers and every aspect of your work-in-progress. Once a project is "
 "completed, you can save it as JPEG, PNG, GIF, ..."
@@ -187,7 +187,7 @@ msgstr ""
 "ਬਰਕਰਾਰ ਰੱਖਦੀ ਹੈ। ਜਦ ਇਕ ਵਾਰ ਪ੍ਰੋਜੈਕਟ ਪੂਰਾ ਹੋ ਜਾਵੇ, ਤੁਸੀਂ ਇਸ ਨੂੰ JPEG, PNG, GIF,... ਦੀ ਤਰਾਂ "
 "ਸੰਭਾਲ ਸਕਦੇ ਹੋ।"
 
-#: ../data/tips/gimp-tips.xml.in.h:18
+#: ../data/tips/ligma-tips.xml.in.h:18
 msgid ""
 "You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes "
 "the window move, your window manager uses the <tt>Alt</tt> key already. Most "
@@ -199,7 +199,7 @@ msgstr ""
 " <tt>Alt</tt> ਸਵਿੱਚ ਨੂੰ ਅਣਡਿੱਠਾ ਕਰਨ ਜਾਂ <tt>Super</tt> ਸਵਿੱਚ (ਜਾਂ \"ਵਿੰਡੋ ਲੋਗੋ\") ਨੂੰ ਵਰਤਣ ਲਈ "
 "ਸੰਰਚਿਤ ਕੀਤਾ ਜਾ ਸਕਦਾ ਹੈ"
 
-#: ../data/tips/gimp-tips.xml.in.h:19
+#: ../data/tips/ligma-tips.xml.in.h:19
 msgid ""
 "You can create and edit complex selections using the Path tool. The Paths "
 "dialog allows you to work on multiple paths and to convert them to "
@@ -208,7 +208,7 @@ msgstr ""
 "ਤੁਸੀਂ ਪਾਥ ਟੂਲ ਵਰਤ ਕੇ ਔਖੀਆਂ ਚੁਣੌਤੀਆਂ ਬਣਾ ਅਤੇ ਬਦਲ ਸਕਦੇ ਹੋ। ਪਾਥ ਡਾਈਲਾਗ ਤੁਹਾਨੂੰ ਬਹੁਤੇ ਪਾਥ ਉੱਤੇ ਕੰਮ "
 "ਕਰਨ ਅਤੇ ਇਹਨਾਂ ਨੂੰ ਚੁਣੌਤੀਆਂ ਵਿੱਚ ਬਦਲਣ ਦੀ ਇਜ਼ਾਜਤ ਦਿੰਦੀ ਹੈ।"
 
-#: ../data/tips/gimp-tips.xml.in.h:20
+#: ../data/tips/ligma-tips.xml.in.h:20
 msgid ""
 "You can drag a layer from the Layers dialog and drop it onto the toolbox. "
 "This will create a new image containing only that layer."
@@ -216,16 +216,16 @@ msgstr ""
 "ਤੁਸੀਂ ਲੇਅਰ ਡਾਈਲਾਗ ਵਿਚੋਂ ਇਕ ਲੇਅਰ ਖਿੱਚ ਕੇ ਟੂਲ ਡਬੇ ਵਿਚ ਛੱਡ ਸਕਦੇ ਹੋ। ਇਸ ਨਾਲ ਸਿਰਫ ਉਸ ਲੇਅਰ ਵਾਲਾ "
 "ਇਕ ਨਵਾਂ ਚਿੱਤਰ ਬਣੇਗਾ।"
 
-#: ../data/tips/gimp-tips.xml.in.h:21
+#: ../data/tips/ligma-tips.xml.in.h:21
 msgid ""
-"You can drag and drop many things in GIMP. For example, dragging a color "
+"You can drag and drop many things in LIGMA. For example, dragging a color "
 "from the toolbox or from a color palette and dropping it into an image will "
 "fill the current selection with that color."
 msgstr ""
 "ਤੁਸੀਂ ਜੈਮਪ ਵਿਚ ਇਕ ਤੋਂ ਜਿਆਦਾ ਚੀਜਾਂ ਖਿੱਚ ਅਤੇ ਛੱਡ ਸਕਦੇ ਹੋ। ਉਦਾਹਰਣ ਵਾਸਤੇ, ਟੂਲ ਡੱਬੇ ਜਾਂ ਪੈਲਅਟ ਵਿਚੋਂ "
 "ਰੰਗ ਖਿੱਚਣਾ ਅਤੇ ਚਿੱਤਰ ਉੱਤੇ ਛੱਡਣ ਨਾਲ ਮੌਜੂਦ ਚਿੱਤਰ ਰੰਗੀਨ ਹੋ ਜਾਵੇਗਾ ਜਾਂ ਉਸ ਰੰਗ ਦੀ ਚੋਣ ਨਾਲ।"
 
-#: ../data/tips/gimp-tips.xml.in.h:22
+#: ../data/tips/ligma-tips.xml.in.h:22
 msgid ""
 "You can draw simple squares or circles using Edit→Stroke Selection. It "
 "strokes the edge of your current selection. More complex shapes can be drawn "
@@ -235,15 +235,15 @@ msgstr ""
 "ਸਟਰੋਕ ਕਰਦੀ ਹੈ। ਪਾਥ ਟੂਲ ਜਾਂ ਫਿਲਟਰ→ਰੈਂਡਰ→Gfig ਵਰਤ ਕੇ ਜਿਆਦਾ ਔਖੀਆਂ ਸ਼ਕਲਾਂ ਵੀ ਉਲੀਕੀਆਂ ਜਾ "
 "ਸਕਦੀਆਂ ਹਨ।"
 
-#: ../data/tips/gimp-tips.xml.in.h:23
+#: ../data/tips/ligma-tips.xml.in.h:23
 msgid ""
-"You can get context-sensitive help for most of GIMP's features by pressing "
+"You can get context-sensitive help for most of LIGMA's features by pressing "
 "the F1 key at any time. This also works inside the menus."
 msgstr ""
-"ਕਦੀ ਵੀ ਸਵਿੱਚ F1 ਦਬਾ ਕੇ ਤੁਸੀਂ GIMP ਦੀਆਂ ਜਿਆਦਾਤਰ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ ਵਾਸਤੇ ਮੱਦਦ ਸੰਖੇਪ ਪ੍ਰਾਪਤ ਕਰ ਸਕਦੇ "
+"ਕਦੀ ਵੀ ਸਵਿੱਚ F1 ਦਬਾ ਕੇ ਤੁਸੀਂ LIGMA ਦੀਆਂ ਜਿਆਦਾਤਰ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ ਵਾਸਤੇ ਮੱਦਦ ਸੰਖੇਪ ਪ੍ਰਾਪਤ ਕਰ ਸਕਦੇ "
 "ਹੋ। ਇਹ ਮੇਨੂ ਵਿੱਚ ਵੀ ਕੰਮ ਕਰਦਾ ਹੈ।"
 
-#: ../data/tips/gimp-tips.xml.in.h:24
+#: ../data/tips/ligma-tips.xml.in.h:24
 msgid ""
 "You can perform many layer operations by right-clicking on the text label of "
 "a layer in the Layers dialog."
@@ -251,7 +251,7 @@ msgstr ""
 "ਪਰਤ ਡਾਈਲਾਗ ਵਿਚ ਪਰਤ ਦੇ ਲੇਬਲ ਮੂਲ ਉੱਤੇ ਰਾਈਟ ਕਲਿੱਕ ਕਰਕੇ ਤੁਸੀਂ ਜਿਆਦਾ ਲੇਅਰ ਓਪਰੇਸ਼ਨ ਲਾਗੂ ਕਰ ਸਕਦੇ "
 "ਹੋ।"
 
-#: ../data/tips/gimp-tips.xml.in.h:25
+#: ../data/tips/ligma-tips.xml.in.h:25
 msgid ""
 "You can save a selection to a channel (Select→Save to Channel) and then "
 "modify this channel with any paint tools. Using the buttons in the Channels "
@@ -262,7 +262,7 @@ msgstr ""
 "ਚੈਨਲ ਬਦਲੋ। ਚੈਨਲ ਡਾਈਲਾਗ ਦੇ ਬਟਨ ਵਰਤ ਕੇ ਤੁਸੀਂ ਨਵੇਂ ਚੈਨਲ ਦੀ ਦਿੱਖ ਬਦਲ ਸਕਦੇ ਹੋ ਜਾਂ ਇਸ ਨੂੰ ਚੋਣ ਵਿਚ "
 "ਬਦਲ ਸਕਦੇ ਹੋ।"
 
-#: ../data/tips/gimp-tips.xml.in.h:26
+#: ../data/tips/ligma-tips.xml.in.h:26
 msgid ""
 "You can use <tt>Ctrl</tt>-<tt>Tab</tt> to cycle through all layers in an "
 "image (if your window manager doesn't trap those keys...)."
@@ -270,7 +270,7 @@ msgstr ""
 "ਚਿੱਤਰ ਦੀਆਂ ਲੇਅਰ ਦਾ ਚੱਕਰ ਲਾਉਣ ਵਾਸਤੇ ਤੁਸੀਂ  <tt>Ctrl</tt>-<tt>Tab</tt> ਵਰਤ ਸਕਦੇ ਹੋ। (ਜੇ "
 "ਤੁਹਾਡਾ ਵਿੰਡੋ ਮੈਨੇਜਰ ਇਹਨਾਂ ਸਵਿੱਚਾਂ ਨੂੰ ਇਸਤੇਮਾਲ ਨਾ ਕਰੇ...)"
 
-#: ../data/tips/gimp-tips.xml.in.h:27
+#: ../data/tips/ligma-tips.xml.in.h:27
 msgid ""
 "You can use the middle mouse button to pan around the image (or optionally "
 "hold <tt>Spacebar</tt> while you move the mouse)."
@@ -278,7 +278,7 @@ msgstr ""
 "ਤੁਸੀਂ ਮਿਡਲ ਮਾਊਂਸ ਬਟਨ ਨੂੰ ਚਿੱਤਰ ਦੁਆਲੇ ਪੈਨ ਲਈ ਵਰਤ ਸਕਦੇ ਹੋ (ਜਾਂ ਚੋਣਵੇ ਰੂਪ ਵਿੱਚ ਆਪਣੇ ਮਾਊਂਸ ਨੂੰ "
 "ਹਿਲਾਉਣ ਦੌਰਾਨ <tt>ਸਪੇਸਬਾਰ (spacebar)</tt> ਨੂੰ ਫੜ ਕੇ ਰੱਖੋ)।"
 
-#: ../data/tips/gimp-tips.xml.in.h:28
+#: ../data/tips/ligma-tips.xml.in.h:28
 msgid ""
 "You can use the paint tools to change the selection. Click on the &quot;"
 "Quick Mask&quot; button at the bottom left of an image window. Change your "
@@ -293,7 +293,7 @@ msgstr ""
 #~ msgstr "<big> ਜੈਮਪ (ਗਨੂ ਇਮੇਜ਼ ਮੈਨੂਪੂਲੇਸ਼ਨ ਪਰੋਗਰਾਮ) ਵਲੋਂ ਜੀ ਆਇਆਂ ਨੂੰ!</big>"
 
 #~ msgid ""
-#~ "GIMP allows you to undo most changes to the image, so feel free to "
+#~ "LIGMA allows you to undo most changes to the image, so feel free to "
 #~ "experiment."
 #~ msgstr ""
 #~ "ਜੈਮਪ ਤੁਹਾਨੂੰ ਚਿੱਤਰ ਵਿੱਚ ਲੱਗਭਗ ਸਭ ਤਬਦੀਲੀਆਂ ਵਾਪਿਸ ਕਰਨ ਲਈ ਸਹਾਇਕ ਹੈ, ਇਸ ਕਰਕੇ ਤਜਰਬੇ ਕਰਨੇ "

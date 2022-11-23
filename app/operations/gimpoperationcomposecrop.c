@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationcomposecrop.c
- * Copyright (C) 2012 Michael Natterer <mitch@gimp.org>
+ * ligmaoperationcomposecrop.c
+ * Copyright (C) 2012 Michael Natterer <mitch@ligma.org>
  * Copyright (C) 2016 Massimo Valentini <mvalentini@src.gnome.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,7 +25,7 @@
 
 #include "operations-types.h"
 
-#include "gimpoperationcomposecrop.h"
+#include "ligmaoperationcomposecrop.h"
 
 
 enum
@@ -38,26 +38,26 @@ enum
 };
 
 
-static void            gimp_operation_compose_crop_get_property            (GObject              *object,
+static void            ligma_operation_compose_crop_get_property            (GObject              *object,
                                                                             guint                 property_id,
                                                                             GValue               *value,
                                                                             GParamSpec           *pspec);
-static void            gimp_operation_compose_crop_set_property            (GObject              *object,
+static void            ligma_operation_compose_crop_set_property            (GObject              *object,
                                                                             guint                 property_id,
                                                                             const GValue         *value,
                                                                             GParamSpec           *pspec);
 
-static void            gimp_operation_compose_crop_prepare                 (GeglOperation        *operation);
-static GeglRectangle   gimp_operation_compose_crop_get_required_for_output (GeglOperation        *operation,
+static void            ligma_operation_compose_crop_prepare                 (GeglOperation        *operation);
+static GeglRectangle   ligma_operation_compose_crop_get_required_for_output (GeglOperation        *operation,
                                                                             const gchar          *input_pad,
                                                                             const GeglRectangle  *output_roi);
-static gboolean        gimp_operation_compose_crop_parent_process          (GeglOperation        *operation,
+static gboolean        ligma_operation_compose_crop_parent_process          (GeglOperation        *operation,
                                                                             GeglOperationContext *context,
                                                                             const gchar          *output_pad,
                                                                             const GeglRectangle  *roi,
                                                                             gint                  level);
 
-static gboolean        gimp_operation_compose_crop_process                 (GeglOperation        *operation,
+static gboolean        ligma_operation_compose_crop_process                 (GeglOperation        *operation,
                                                                             void                 *in_buf,
                                                                             void                 *aux_buf,
                                                                             void                 *out_buf,
@@ -66,34 +66,34 @@ static gboolean        gimp_operation_compose_crop_process                 (Gegl
                                                                             gint                  level);
 
 
-G_DEFINE_TYPE (GimpOperationComposeCrop, gimp_operation_compose_crop,
+G_DEFINE_TYPE (LigmaOperationComposeCrop, ligma_operation_compose_crop,
                GEGL_TYPE_OPERATION_POINT_COMPOSER)
 
-#define parent_class gimp_operation_compose_crop_parent_class
+#define parent_class ligma_operation_compose_crop_parent_class
 
 
 static void
-gimp_operation_compose_crop_class_init (GimpOperationComposeCropClass *klass)
+ligma_operation_compose_crop_class_init (LigmaOperationComposeCropClass *klass)
 {
   GObjectClass                    *object_class    = G_OBJECT_CLASS (klass);
   GeglOperationClass              *operation_class = GEGL_OPERATION_CLASS (klass);
   GeglOperationPointComposerClass *point_class     = GEGL_OPERATION_POINT_COMPOSER_CLASS (klass);
 
-  object_class->set_property = gimp_operation_compose_crop_set_property;
-  object_class->get_property = gimp_operation_compose_crop_get_property;
+  object_class->set_property = ligma_operation_compose_crop_set_property;
+  object_class->get_property = ligma_operation_compose_crop_get_property;
 
   gegl_operation_class_set_keys (operation_class,
-                                 "name",        "gimp:compose-crop",
-                                 "categories",  "gimp",
+                                 "name",        "ligma:compose-crop",
+                                 "categories",  "ligma",
                                  "description", "Selectively pick components from src or aux",
                                  NULL);
 
-  operation_class->prepare                   = gimp_operation_compose_crop_prepare;
-  operation_class->get_invalidated_by_change = gimp_operation_compose_crop_get_required_for_output;
-  operation_class->get_required_for_output   = gimp_operation_compose_crop_get_required_for_output;
-  operation_class->process                   = gimp_operation_compose_crop_parent_process;
+  operation_class->prepare                   = ligma_operation_compose_crop_prepare;
+  operation_class->get_invalidated_by_change = ligma_operation_compose_crop_get_required_for_output;
+  operation_class->get_required_for_output   = ligma_operation_compose_crop_get_required_for_output;
+  operation_class->process                   = ligma_operation_compose_crop_parent_process;
 
-  point_class->process                       = gimp_operation_compose_crop_process;
+  point_class->process                       = ligma_operation_compose_crop_process;
 
   g_object_class_install_property (object_class, PROP_X,
                                    g_param_spec_int ("x",
@@ -126,17 +126,17 @@ gimp_operation_compose_crop_class_init (GimpOperationComposeCropClass *klass)
 }
 
 static void
-gimp_operation_compose_crop_init (GimpOperationComposeCrop *self)
+ligma_operation_compose_crop_init (LigmaOperationComposeCrop *self)
 {
 }
 
 static void
-gimp_operation_compose_crop_get_property (GObject    *object,
+ligma_operation_compose_crop_get_property (GObject    *object,
                                           guint       property_id,
                                           GValue     *value,
                                           GParamSpec *pspec)
 {
-  GimpOperationComposeCrop *self = GIMP_OPERATION_COMPOSE_CROP (object);
+  LigmaOperationComposeCrop *self = LIGMA_OPERATION_COMPOSE_CROP (object);
 
   switch (property_id)
     {
@@ -160,12 +160,12 @@ gimp_operation_compose_crop_get_property (GObject    *object,
 }
 
 static void
-gimp_operation_compose_crop_set_property (GObject      *object,
+ligma_operation_compose_crop_set_property (GObject      *object,
                                           guint         property_id,
                                           const GValue *value,
                                           GParamSpec   *pspec)
 {
-  GimpOperationComposeCrop *self = GIMP_OPERATION_COMPOSE_CROP (object);
+  LigmaOperationComposeCrop *self = LIGMA_OPERATION_COMPOSE_CROP (object);
 
   switch (property_id)
     {
@@ -189,7 +189,7 @@ gimp_operation_compose_crop_set_property (GObject      *object,
 }
 
 static void
-gimp_operation_compose_crop_prepare (GeglOperation *operation)
+ligma_operation_compose_crop_prepare (GeglOperation *operation)
 {
   const Babl *input_format  = gegl_operation_get_source_format (operation, "input");
   const Babl *aux_format    = gegl_operation_get_source_format (operation, "aux");
@@ -222,11 +222,11 @@ gimp_operation_compose_crop_prepare (GeglOperation *operation)
 }
 
 static GeglRectangle
-gimp_operation_compose_crop_get_required_for_output (GeglOperation       *operation,
+ligma_operation_compose_crop_get_required_for_output (GeglOperation       *operation,
                                                      const gchar         *input_pad,
                                                      const GeglRectangle *output_roi)
 {
-  GimpOperationComposeCrop *self = GIMP_OPERATION_COMPOSE_CROP (operation);
+  LigmaOperationComposeCrop *self = LIGMA_OPERATION_COMPOSE_CROP (operation);
   GeglRectangle             result;
 
   if (! strcmp (input_pad, "input"))
@@ -240,13 +240,13 @@ gimp_operation_compose_crop_get_required_for_output (GeglOperation       *operat
 }
 
 static gboolean
-gimp_operation_compose_crop_parent_process (GeglOperation        *operation,
+ligma_operation_compose_crop_parent_process (GeglOperation        *operation,
                                             GeglOperationContext *context,
                                             const gchar          *output_pad,
                                             const GeglRectangle  *roi,
                                             gint                  level)
 {
-  GimpOperationComposeCrop *self = GIMP_OPERATION_COMPOSE_CROP (operation);
+  LigmaOperationComposeCrop *self = LIGMA_OPERATION_COMPOSE_CROP (operation);
 
   if (gegl_rectangle_contains (&self->rect, roi))
     {
@@ -272,7 +272,7 @@ gimp_operation_compose_crop_parent_process (GeglOperation        *operation,
 }
 
 static gboolean
-gimp_operation_compose_crop_process (GeglOperation       *operation,
+ligma_operation_compose_crop_process (GeglOperation       *operation,
                                      void                *in_buf,
                                      void                *aux_buf,
                                      void                *out_buf,
@@ -280,7 +280,7 @@ gimp_operation_compose_crop_process (GeglOperation       *operation,
                                      const GeglRectangle *roi,
                                      gint                 level)
 {
-  GimpOperationComposeCrop *self   = GIMP_OPERATION_COMPOSE_CROP (operation);
+  LigmaOperationComposeCrop *self   = LIGMA_OPERATION_COMPOSE_CROP (operation);
   const Babl               *format = gegl_operation_get_format (operation, "output");
   gint                      bpp    = babl_format_get_bytes_per_pixel (format);
   const guchar             *in     = in_buf;

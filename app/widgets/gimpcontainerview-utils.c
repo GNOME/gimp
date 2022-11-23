@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,35 +22,35 @@
 
 #include "widgets-types.h"
 
-#include "core/gimpcontainer.h"
-#include "core/gimpcontext.h"
+#include "core/ligmacontainer.h"
+#include "core/ligmacontext.h"
 
-#include "gimpcontainereditor.h"
-#include "gimpcontainerview.h"
-#include "gimpcontainerview-utils.h"
-#include "gimpdockable.h"
+#include "ligmacontainereditor.h"
+#include "ligmacontainerview.h"
+#include "ligmacontainerview-utils.h"
+#include "ligmadockable.h"
 
 
 /*  public functions  */
 
-GimpContainerView *
-gimp_container_view_get_by_dockable (GimpDockable *dockable)
+LigmaContainerView *
+ligma_container_view_get_by_dockable (LigmaDockable *dockable)
 {
   GtkWidget *child;
 
-  g_return_val_if_fail (GIMP_IS_DOCKABLE (dockable), NULL);
+  g_return_val_if_fail (LIGMA_IS_DOCKABLE (dockable), NULL);
 
   child = gtk_bin_get_child (GTK_BIN (dockable));
 
   if (child)
     {
-      if (GIMP_IS_CONTAINER_EDITOR (child))
+      if (LIGMA_IS_CONTAINER_EDITOR (child))
         {
-          return GIMP_CONTAINER_EDITOR (child)->view;
+          return LIGMA_CONTAINER_EDITOR (child)->view;
         }
-      else if (GIMP_IS_CONTAINER_VIEW (child))
+      else if (LIGMA_IS_CONTAINER_VIEW (child))
         {
-          return GIMP_CONTAINER_VIEW (child);
+          return LIGMA_CONTAINER_VIEW (child);
         }
     }
 
@@ -58,35 +58,35 @@ gimp_container_view_get_by_dockable (GimpDockable *dockable)
 }
 
 void
-gimp_container_view_remove_active (GimpContainerView *view)
+ligma_container_view_remove_active (LigmaContainerView *view)
 {
-  GimpContext   *context;
-  GimpContainer *container;
+  LigmaContext   *context;
+  LigmaContainer *container;
 
-  g_return_if_fail (GIMP_IS_CONTAINER_VIEW (view));
+  g_return_if_fail (LIGMA_IS_CONTAINER_VIEW (view));
 
-  context   = gimp_container_view_get_context (view);
-  container = gimp_container_view_get_container (view);
+  context   = ligma_container_view_get_context (view);
+  container = ligma_container_view_get_container (view);
 
   if (context && container)
     {
       GType       children_type;
-      GimpObject *active;
+      LigmaObject *active;
 
-      children_type = gimp_container_get_children_type (container);
+      children_type = ligma_container_get_children_type (container);
 
-      active = gimp_context_get_by_type (context, children_type);
+      active = ligma_context_get_by_type (context, children_type);
 
       if (active)
         {
-          GimpObject *new;
+          LigmaObject *new;
 
-          new = gimp_container_get_neighbor_of (container, active);
+          new = ligma_container_get_neighbor_of (container, active);
 
           if (new)
-            gimp_context_set_by_type (context, children_type, new);
+            ligma_context_set_by_type (context, children_type, new);
 
-          gimp_container_remove (container, active);
+          ligma_container_remove (container, active);
         }
     }
 }

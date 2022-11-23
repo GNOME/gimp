@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,31 +21,31 @@
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "core-types.h"
 
-#include "gegl/gimp-gegl-utils.h"
+#include "gegl/ligma-gegl-utils.h"
 
-#include "gimpchannel.h"
-#include "gimpdrawable.h"
-#include "gimpdrawable-foreground-extract.h"
-#include "gimpimage.h"
-#include "gimpprogress.h"
+#include "ligmachannel.h"
+#include "ligmadrawable.h"
+#include "ligmadrawable-foreground-extract.h"
+#include "ligmaimage.h"
+#include "ligmaprogress.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /*  public functions  */
 
 GeglBuffer *
-gimp_drawable_foreground_extract (GimpDrawable      *drawable,
-                                  GimpMattingEngine  engine,
+ligma_drawable_foreground_extract (LigmaDrawable      *drawable,
+                                  LigmaMattingEngine  engine,
                                   gint               global_iterations,
                                   gint               levin_levels,
                                   gint               levin_active_levels,
                                   GeglBuffer        *trimap,
-                                  GimpProgress      *progress)
+                                  LigmaProgress      *progress)
 {
   GeglBuffer    *drawable_buffer;
   GeglNode      *gegl;
@@ -58,14 +58,14 @@ gimp_drawable_foreground_extract (GimpDrawable      *drawable,
   gdouble        value;
   gint           off_x, off_y;
 
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (LIGMA_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (GEGL_IS_BUFFER (trimap), NULL);
-  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
+  g_return_val_if_fail (progress == NULL || LIGMA_IS_PROGRESS (progress), NULL);
 
-  progress = gimp_progress_start (progress, FALSE,
+  progress = ligma_progress_start (progress, FALSE,
                                   _("Computing alpha of unknown pixels"));
 
-  drawable_buffer = gimp_drawable_get_buffer (drawable);
+  drawable_buffer = ligma_drawable_get_buffer (drawable);
 
   gegl = gegl_node_new ();
 
@@ -83,7 +83,7 @@ gimp_drawable_foreground_extract (GimpDrawable      *drawable,
                                      "format",    NULL,
                                      NULL);
 
-  if (engine == GIMP_MATTING_ENGINE_GLOBAL)
+  if (engine == LIGMA_MATTING_ENGINE_GLOBAL)
     {
       matting_node = gegl_node_new_child (gegl,
                                           "operation",  "gegl:matting-global",
@@ -99,7 +99,7 @@ gimp_drawable_foreground_extract (GimpDrawable      *drawable,
                                           NULL);
     }
 
-  gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
+  ligma_item_get_offset (LIGMA_ITEM (drawable), &off_x, &off_y);
 
   if (off_x || off_y)
     {
@@ -136,11 +136,11 @@ gimp_drawable_foreground_extract (GimpDrawable      *drawable,
   while (gegl_processor_work (processor, &value))
     {
       if (progress)
-        gimp_progress_set_value (progress, value);
+        ligma_progress_set_value (progress, value);
     }
 
   if (progress)
-    gimp_progress_end (progress);
+    ligma_progress_end (progress);
 
   g_object_unref (processor);
 

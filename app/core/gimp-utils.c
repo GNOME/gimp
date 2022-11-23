@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -43,21 +43,21 @@
 #include <gobject/gvaluecollector.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
-#include "libgimpcolor/gimpcolor.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmacolor/ligmacolor.h"
 
 #include "core-types.h"
 
-#include "config/gimpxmlparser.h"
+#include "config/ligmaxmlparser.h"
 
-#include "gimp.h"
-#include "gimp-utils.h"
-#include "gimpasync.h"
-#include "gimpcontext.h"
-#include "gimperror.h"
+#include "ligma.h"
+#include "ligma-utils.h"
+#include "ligmaasync.h"
+#include "ligmacontext.h"
+#include "ligmaerror.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 #define MAX_FUNC 100
@@ -81,7 +81,7 @@ typedef struct
 } ParseState;
 
 
-static gchar      * gimp_appstream_parse           (const gchar          *as_text,
+static gchar      * ligma_appstream_parse           (const gchar          *as_text,
                                                     gchar               **introduction,
                                                     GList               **release_items);
 static void         appstream_text_start_element   (GMarkupParseContext  *context,
@@ -99,17 +99,17 @@ static void         appstream_text_characters      (GMarkupParseContext  *contex
                                                     gsize                 text_len,
                                                     gpointer              user_data,
                                                     GError              **error);
-static const gchar* gimp_extension_get_tag_lang    (const gchar         **attribute_names,
+static const gchar* ligma_extension_get_tag_lang    (const gchar         **attribute_names,
                                                     const gchar         **attribute_values);
 
 gint
-gimp_get_pid (void)
+ligma_get_pid (void)
 {
   return (gint) getpid ();
 }
 
 guint64
-gimp_get_physical_memory_size (void)
+ligma_get_physical_memory_size (void)
 {
 #ifdef G_OS_UNIX
 #if defined(HAVE_UNISTD_H) && defined(_SC_PHYS_PAGES) && defined (_SC_PAGE_SIZE)
@@ -142,7 +142,7 @@ gimp_get_physical_memory_size (void)
  *  basically copied from gtk_get_default_language()
  */
 gchar *
-gimp_get_default_language (const gchar *category)
+ligma_get_default_language (const gchar *category)
 {
   gchar *lang;
   gchar *p;
@@ -178,7 +178,7 @@ gimp_get_default_language (const gchar *category)
   else if (strcmp (category, "LC_MESSAGES") == 0)
     cat = LC_MESSAGES;
   else
-    g_warning ("unsupported category used with gimp_get_default_language()");
+    g_warning ("unsupported category used with ligma_get_default_language()");
 
   lang = g_strdup (setlocale (cat, NULL));
 
@@ -194,8 +194,8 @@ gimp_get_default_language (const gchar *category)
   return lang;
 }
 
-GimpUnit
-gimp_get_default_unit (void)
+LigmaUnit
+ligma_get_default_unit (void)
 {
 #if defined (HAVE__NL_MEASUREMENT_MEASUREMENT)
   const gchar *measurement = nl_langinfo (_NL_MEASUREMENT_MEASUREMENT);
@@ -203,10 +203,10 @@ gimp_get_default_unit (void)
   switch (*((guchar *) measurement))
     {
     case 1: /* metric   */
-      return GIMP_UNIT_MM;
+      return LIGMA_UNIT_MM;
 
     case 2: /* imperial */
-      return GIMP_UNIT_INCH;
+      return LIGMA_UNIT_INCH;
     }
 
 #elif defined (G_OS_WIN32)
@@ -223,19 +223,19 @@ gimp_get_default_unit (void)
     switch ((guint) measurement)
       {
       case 0: /* metric */
-        return GIMP_UNIT_MM;
+        return LIGMA_UNIT_MM;
 
       case 1: /* imperial */
-        return GIMP_UNIT_INCH;
+        return LIGMA_UNIT_INCH;
       }
     }
 #endif
 
-  return GIMP_UNIT_MM;
+  return LIGMA_UNIT_MM;
 }
 
 gchar **
-gimp_properties_append (GType    object_type,
+ligma_properties_append (GType    object_type,
                         gint    *n_properties,
                         gchar  **names,
                         GValue **values,
@@ -249,7 +249,7 @@ gimp_properties_append (GType    object_type,
   g_return_val_if_fail (values != NULL || *n_properties == 0, NULL);
 
   va_start (args, values);
-  names = gimp_properties_append_valist (object_type, n_properties,
+  names = ligma_properties_append_valist (object_type, n_properties,
                                          names, values, args);
   va_end (args);
 
@@ -257,7 +257,7 @@ gimp_properties_append (GType    object_type,
 }
 
 gchar **
-gimp_properties_append_valist (GType     object_type,
+ligma_properties_append_valist (GType     object_type,
                                gint      *n_properties,
                                gchar   **names,
                                GValue  **values,
@@ -321,7 +321,7 @@ gimp_properties_append_valist (GType     object_type,
 }
 
 void
-gimp_properties_free (gint     n_properties,
+ligma_properties_free (gint     n_properties,
                       gchar  **names,
                       GValue  *values)
 {
@@ -459,7 +459,7 @@ unescape_gstring (GString *string)
         }
     }
 
-  gimp_assert (to - string->str <= string->len);
+  ligma_assert (to - string->str <= string->len);
   if (to - string->str != string->len)
     g_string_truncate (string, to - string->str);
 
@@ -467,7 +467,7 @@ unescape_gstring (GString *string)
 }
 
 gchar *
-gimp_markup_extract_text (const gchar *markup)
+ligma_markup_extract_text (const gchar *markup)
 {
   GString     *string;
   const gchar *p;
@@ -500,22 +500,22 @@ gimp_markup_extract_text (const gchar *markup)
 }
 
 /**
- * gimp_enum_get_value_name:
+ * ligma_enum_get_value_name:
  * @enum_type: Enum type
  * @value:     Enum value
  *
  * Returns the value name for a given value of a given enum
- * type. Useful to have inline in GIMP_LOG() messages for example.
+ * type. Useful to have inline in LIGMA_LOG() messages for example.
  *
  * Returns: The value name.
  **/
 const gchar *
-gimp_enum_get_value_name (GType enum_type,
+ligma_enum_get_value_name (GType enum_type,
                           gint  value)
 {
   const gchar *value_name = NULL;
 
-  gimp_enum_get_value (enum_type,
+  ligma_enum_get_value (enum_type,
                        value,
                        &value_name,
                        NULL /*value_nick*/,
@@ -526,14 +526,14 @@ gimp_enum_get_value_name (GType enum_type,
 }
 
 gboolean
-gimp_get_fill_params (GimpContext   *context,
-                      GimpFillType   fill_type,
-                      GimpRGB       *color,
-                      GimpPattern  **pattern,
+ligma_get_fill_params (LigmaContext   *context,
+                      LigmaFillType   fill_type,
+                      LigmaRGB       *color,
+                      LigmaPattern  **pattern,
                       GError       **error)
 
 {
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), FALSE);
   g_return_val_if_fail (color != NULL, FALSE);
   g_return_val_if_fail (pattern != NULL, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
@@ -542,32 +542,32 @@ gimp_get_fill_params (GimpContext   *context,
 
   switch (fill_type)
     {
-    case GIMP_FILL_FOREGROUND:
-      gimp_context_get_foreground (context, color);
+    case LIGMA_FILL_FOREGROUND:
+      ligma_context_get_foreground (context, color);
       break;
 
-    case GIMP_FILL_BACKGROUND:
-      gimp_context_get_background (context, color);
+    case LIGMA_FILL_BACKGROUND:
+      ligma_context_get_background (context, color);
       break;
 
-    case GIMP_FILL_WHITE:
-      gimp_rgba_set (color, 1.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE);
+    case LIGMA_FILL_WHITE:
+      ligma_rgba_set (color, 1.0, 1.0, 1.0, LIGMA_OPACITY_OPAQUE);
       break;
 
-    case GIMP_FILL_TRANSPARENT:
-      gimp_rgba_set (color, 0.0, 0.0, 0.0, GIMP_OPACITY_TRANSPARENT);
+    case LIGMA_FILL_TRANSPARENT:
+      ligma_rgba_set (color, 0.0, 0.0, 0.0, LIGMA_OPACITY_TRANSPARENT);
       break;
 
-    case GIMP_FILL_PATTERN:
-      *pattern = gimp_context_get_pattern (context);
+    case LIGMA_FILL_PATTERN:
+      *pattern = ligma_context_get_pattern (context);
 
       if (! *pattern)
         {
-          g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+          g_set_error_literal (error, LIGMA_ERROR, LIGMA_FAILED,
                                _("No patterns available for this operation."));
 
           /*  fall back to BG fill  */
-          gimp_context_get_background (context, color);
+          ligma_context_get_background (context, color);
 
           return FALSE;
         }
@@ -582,7 +582,7 @@ gimp_get_fill_params (GimpContext   *context,
 }
 
 /**
- * gimp_constrain_line:
+ * ligma_constrain_line:
  * @start_x:
  * @start_y:
  * @end_x:
@@ -598,7 +598,7 @@ gimp_get_fill_params (GimpContext   *context,
  * 12 on 15 degree steps. etc.
  **/
 void
-gimp_constrain_line (gdouble  start_x,
+ligma_constrain_line (gdouble  start_x,
                      gdouble  start_y,
                      gdouble *end_x,
                      gdouble *end_y,
@@ -607,8 +607,8 @@ gimp_constrain_line (gdouble  start_x,
                      gdouble  xres,
                      gdouble  yres)
 {
-  GimpVector2 diff;
-  GimpVector2 dir;
+  LigmaVector2 diff;
+  LigmaVector2 dir;
   gdouble     angle;
 
   offset_angle *= G_PI / 180.0;
@@ -622,14 +622,14 @@ gimp_constrain_line (gdouble  start_x,
   dir.x = cos (angle);
   dir.y = sin (angle);
 
-  gimp_vector2_mul (&dir, gimp_vector2_inner_product (&dir, &diff));
+  ligma_vector2_mul (&dir, ligma_vector2_inner_product (&dir, &diff));
 
   *end_x = start_x + dir.x * xres;
   *end_y = start_y + dir.y * yres;
 }
 
 gint
-gimp_file_compare (GFile *file1,
+ligma_file_compare (GFile *file1,
                    GFile *file2)
 {
   if (g_file_equal (file1, file2))
@@ -690,7 +690,7 @@ is_script (const gchar *filename)
 }
 
 gboolean
-gimp_file_is_executable (GFile *file)
+ligma_file_is_executable (GFile *file)
 {
   GFileInfo *info;
   gboolean   executable = FALSE;
@@ -724,7 +724,7 @@ gimp_file_is_executable (GFile *file)
 }
 
 /**
- * gimp_file_get_extension:
+ * ligma_file_get_extension:
  * @file: A #GFile
  *
  * Returns @file's extension (including the .), or NULL if there is no
@@ -734,7 +734,7 @@ gimp_file_is_executable (GFile *file)
  * Returns: The @file's extension. Free with g_free() when no longer needed.
  **/
 gchar *
-gimp_file_get_extension (GFile *file)
+ligma_file_get_extension (GFile *file)
 {
   gchar *uri;
   gint   uri_len;
@@ -766,7 +766,7 @@ gimp_file_get_extension (GFile *file)
 }
 
 GFile *
-gimp_file_with_new_extension (GFile *file,
+ligma_file_with_new_extension (GFile *file,
                               GFile *ext_file)
 {
   gchar *uri;
@@ -781,7 +781,7 @@ gimp_file_with_new_extension (GFile *file,
   g_return_val_if_fail (ext_file == NULL || G_IS_FILE (ext_file), NULL);
 
   uri      = g_file_get_uri (file);
-  file_ext = gimp_file_get_extension (file);
+  file_ext = ligma_file_get_extension (file);
 
   if (file_ext)
     {
@@ -790,7 +790,7 @@ gimp_file_with_new_extension (GFile *file,
     }
 
   if (ext_file)
-    ext_file_ext = gimp_file_get_extension (ext_file);
+    ext_file_ext = ligma_file_get_extension (ext_file);
 
   uri_without_ext = g_strndup (uri, strlen (uri) - file_ext_len);
 
@@ -808,7 +808,7 @@ gimp_file_with_new_extension (GFile *file,
 }
 
 /**
- * gimp_file_delete_recursive:
+ * ligma_file_delete_recursive:
  * @file: #GFile to delete from file system.
  * @error:
  *
@@ -823,7 +823,7 @@ gimp_file_with_new_extension (GFile *file,
  * children, %FALSE otherwise with @error filled.
  */
 gboolean
-gimp_file_delete_recursive (GFile   *file,
+ligma_file_delete_recursive (GFile   *file,
                             GError **error)
 {
   gboolean success = TRUE;
@@ -852,7 +852,7 @@ gimp_file_delete_recursive (GFile   *file,
                   child = g_file_enumerator_get_child (enumerator, info);
                   g_object_unref (info);
 
-                  if (! gimp_file_delete_recursive (child, error))
+                  if (! ligma_file_delete_recursive (child, error))
                     success = FALSE;
 
                   g_object_unref (child);
@@ -873,7 +873,7 @@ gimp_file_delete_recursive (GFile   *file,
 }
 
 gchar *
-gimp_data_input_stream_read_line_always (GDataInputStream  *stream,
+ligma_data_input_stream_read_line_always (GDataInputStream  *stream,
                                          gsize             *length,
                                          GCancellable      *cancellable,
                                          GError           **error)
@@ -902,7 +902,7 @@ gimp_data_input_stream_read_line_always (GDataInputStream  *stream,
 }
 
 gboolean
-gimp_ascii_strtoi (const gchar  *nptr,
+ligma_ascii_strtoi (const gchar  *nptr,
                    gchar       **endptr,
                    gint          base,
                    gint         *result)
@@ -932,7 +932,7 @@ gimp_ascii_strtoi (const gchar  *nptr,
 }
 
 gboolean
-gimp_ascii_strtod (const gchar  *nptr,
+ligma_ascii_strtod (const gchar  *nptr,
                    gchar       **endptr,
                    gdouble      *result)
 {
@@ -959,24 +959,24 @@ gimp_ascii_strtod (const gchar  *nptr,
 }
 
 gchar *
-gimp_appstream_to_pango_markup (const gchar *as_text)
+ligma_appstream_to_pango_markup (const gchar *as_text)
 {
-  return gimp_appstream_parse (as_text, NULL, NULL);
+  return ligma_appstream_parse (as_text, NULL, NULL);
 }
 
 void
-gimp_appstream_to_pango_markups (const gchar  *as_text,
+ligma_appstream_to_pango_markups (const gchar  *as_text,
                                  gchar       **introduction,
                                  GList       **release_items)
 {
   gchar * markup;
 
-  markup = gimp_appstream_parse (as_text, introduction, release_items);
+  markup = ligma_appstream_parse (as_text, introduction, release_items);
   g_free (markup);
 }
 
 gint
-gimp_g_list_compare (GList *list1,
+ligma_g_list_compare (GList *list1,
                      GList *list2)
 {
   while (list1 && list2)
@@ -998,30 +998,30 @@ gimp_g_list_compare (GList *list1,
   return 0;
 }
 
-GimpTRCType
-gimp_suggest_trc_for_component_type (GimpComponentType component_type,
-                                     GimpTRCType       old_trc)
+LigmaTRCType
+ligma_suggest_trc_for_component_type (LigmaComponentType component_type,
+                                     LigmaTRCType       old_trc)
 {
-  GimpTRCType new_trc = old_trc;
+  LigmaTRCType new_trc = old_trc;
 
   switch (component_type)
     {
-    case GIMP_COMPONENT_TYPE_U8:
+    case LIGMA_COMPONENT_TYPE_U8:
       /* default to non-linear when converting 8 bit */
-      new_trc = GIMP_TRC_NON_LINEAR;
+      new_trc = LIGMA_TRC_NON_LINEAR;
       break;
 
-    case GIMP_COMPONENT_TYPE_U16:
-    case GIMP_COMPONENT_TYPE_U32:
+    case LIGMA_COMPONENT_TYPE_U16:
+    case LIGMA_COMPONENT_TYPE_U32:
     default:
       /* leave TRC alone by default when converting to 16/32 bit int */
       break;
 
-    case GIMP_COMPONENT_TYPE_HALF:
-    case GIMP_COMPONENT_TYPE_FLOAT:
-    case GIMP_COMPONENT_TYPE_DOUBLE:
+    case LIGMA_COMPONENT_TYPE_HALF:
+    case LIGMA_COMPONENT_TYPE_FLOAT:
+    case LIGMA_COMPONENT_TYPE_DOUBLE:
       /* default to linear when converting to floating point */
-      new_trc = GIMP_TRC_LINEAR;
+      new_trc = LIGMA_TRC_LINEAR;
       break;
     }
 
@@ -1032,20 +1032,20 @@ typedef struct
 {
   gint              ref_count;
 
-  GimpAsync        *async;
+  LigmaAsync        *async;
   gint              idle_id;
 
-  GimpRunAsyncFunc  func;
+  LigmaRunAsyncFunc  func;
   gpointer          user_data;
   GDestroyNotify    user_data_destroy_func;
-} GimpIdleRunAsyncData;
+} LigmaIdleRunAsyncData;
 
-static GimpIdleRunAsyncData *
-gimp_idle_run_async_data_new (void)
+static LigmaIdleRunAsyncData *
+ligma_idle_run_async_data_new (void)
 {
-  GimpIdleRunAsyncData *data;
+  LigmaIdleRunAsyncData *data;
 
-  data = g_slice_new0 (GimpIdleRunAsyncData);
+  data = g_slice_new0 (LigmaIdleRunAsyncData);
 
   data->ref_count = 1;
 
@@ -1053,13 +1053,13 @@ gimp_idle_run_async_data_new (void)
 }
 
 static void
-gimp_idle_run_async_data_inc_ref (GimpIdleRunAsyncData *data)
+ligma_idle_run_async_data_inc_ref (LigmaIdleRunAsyncData *data)
 {
   data->ref_count++;
 }
 
 static void
-gimp_idle_run_async_data_dec_ref (GimpIdleRunAsyncData *data)
+ligma_idle_run_async_data_dec_ref (LigmaIdleRunAsyncData *data)
 {
   data->ref_count--;
 
@@ -1067,23 +1067,23 @@ gimp_idle_run_async_data_dec_ref (GimpIdleRunAsyncData *data)
     {
       g_signal_handlers_disconnect_by_data (data->async, data);
 
-      if (! gimp_async_is_stopped (data->async))
-        gimp_async_abort (data->async);
+      if (! ligma_async_is_stopped (data->async))
+        ligma_async_abort (data->async);
 
       g_object_unref (data->async);
 
       if (data->user_data && data->user_data_destroy_func)
         data->user_data_destroy_func (data->user_data);
 
-      g_slice_free (GimpIdleRunAsyncData, data);
+      g_slice_free (LigmaIdleRunAsyncData, data);
     }
 }
 
 static void
-gimp_idle_run_async_cancel (GimpAsync            *async,
-                            GimpIdleRunAsyncData *data)
+ligma_idle_run_async_cancel (LigmaAsync            *async,
+                            LigmaIdleRunAsyncData *data)
 {
-  gimp_idle_run_async_data_inc_ref (data);
+  ligma_idle_run_async_data_inc_ref (data);
 
   if (data->idle_id)
     {
@@ -1092,14 +1092,14 @@ gimp_idle_run_async_cancel (GimpAsync            *async,
       data->idle_id = 0;
     }
 
-  gimp_idle_run_async_data_dec_ref (data);
+  ligma_idle_run_async_data_dec_ref (data);
 }
 
 static void
-gimp_idle_run_async_waiting (GimpAsync            *async,
-                             GimpIdleRunAsyncData *data)
+ligma_idle_run_async_waiting (LigmaAsync            *async,
+                             LigmaIdleRunAsyncData *data)
 {
-  gimp_idle_run_async_data_inc_ref (data);
+  ligma_idle_run_async_data_inc_ref (data);
 
   if (data->idle_id)
     {
@@ -1109,88 +1109,88 @@ gimp_idle_run_async_waiting (GimpAsync            *async,
     }
 
   g_signal_handlers_block_by_func (data->async,
-                                   gimp_idle_run_async_cancel,
+                                   ligma_idle_run_async_cancel,
                                    data);
 
-  while (! gimp_async_is_stopped (data->async))
+  while (! ligma_async_is_stopped (data->async))
     data->func (data->async, data->user_data);
 
   g_signal_handlers_unblock_by_func (data->async,
-                                     gimp_idle_run_async_cancel,
+                                     ligma_idle_run_async_cancel,
                                      data);
 
   data->user_data = NULL;
 
-  gimp_idle_run_async_data_dec_ref (data);
+  ligma_idle_run_async_data_dec_ref (data);
 }
 
 static gboolean
-gimp_idle_run_async_idle (GimpIdleRunAsyncData *data)
+ligma_idle_run_async_idle (LigmaIdleRunAsyncData *data)
 {
-  gimp_idle_run_async_data_inc_ref (data);
+  ligma_idle_run_async_data_inc_ref (data);
 
   g_signal_handlers_block_by_func (data->async,
-                                   gimp_idle_run_async_cancel,
+                                   ligma_idle_run_async_cancel,
                                    data);
 
   data->func (data->async, data->user_data);
 
   g_signal_handlers_unblock_by_func (data->async,
-                                     gimp_idle_run_async_cancel,
+                                     ligma_idle_run_async_cancel,
                                      data);
 
-  if (gimp_async_is_stopped (data->async))
+  if (ligma_async_is_stopped (data->async))
     {
       data->user_data = NULL;
 
-      gimp_idle_run_async_data_dec_ref (data);
+      ligma_idle_run_async_data_dec_ref (data);
 
       return G_SOURCE_REMOVE;
     }
 
-  gimp_idle_run_async_data_dec_ref (data);
+  ligma_idle_run_async_data_dec_ref (data);
 
   return G_SOURCE_CONTINUE;
 }
 
-GimpAsync *
-gimp_idle_run_async (GimpRunAsyncFunc func,
+LigmaAsync *
+ligma_idle_run_async (LigmaRunAsyncFunc func,
                      gpointer         user_data)
 {
-  return gimp_idle_run_async_full (G_PRIORITY_DEFAULT_IDLE, func,
+  return ligma_idle_run_async_full (G_PRIORITY_DEFAULT_IDLE, func,
                                    user_data, NULL);
 }
 
-GimpAsync *
-gimp_idle_run_async_full (gint             priority,
-                          GimpRunAsyncFunc func,
+LigmaAsync *
+ligma_idle_run_async_full (gint             priority,
+                          LigmaRunAsyncFunc func,
                           gpointer         user_data,
                           GDestroyNotify   user_data_destroy_func)
 {
-  GimpIdleRunAsyncData *data;
+  LigmaIdleRunAsyncData *data;
 
   g_return_val_if_fail (func != NULL, NULL);
 
-  data = gimp_idle_run_async_data_new ();
+  data = ligma_idle_run_async_data_new ();
 
   data->func                   = func;
   data->user_data              = user_data;
   data->user_data_destroy_func = user_data_destroy_func;
 
-  data->async = gimp_async_new ();
+  data->async = ligma_async_new ();
 
   g_signal_connect (data->async, "cancel",
-                    G_CALLBACK (gimp_idle_run_async_cancel),
+                    G_CALLBACK (ligma_idle_run_async_cancel),
                     data);
   g_signal_connect (data->async, "waiting",
-                    G_CALLBACK (gimp_idle_run_async_waiting),
+                    G_CALLBACK (ligma_idle_run_async_waiting),
                     data);
 
   data->idle_id = g_idle_add_full (
     priority,
-    (GSourceFunc) gimp_idle_run_async_idle,
+    (GSourceFunc) ligma_idle_run_async_idle,
     data,
-    (GDestroyNotify) gimp_idle_run_async_data_dec_ref);
+    (GDestroyNotify) ligma_idle_run_async_data_dec_ref);
 
   return g_object_ref (data->async);
 }
@@ -1198,7 +1198,7 @@ gimp_idle_run_async_full (gint             priority,
 #ifdef G_OS_WIN32
 
 gboolean
-gimp_win32_have_wintab (void)
+ligma_win32_have_wintab (void)
 {
   gunichar2 wchars_buffer[MAX_PATH + 1];
   UINT      wchars_count = 0;
@@ -1225,7 +1225,7 @@ gimp_win32_have_wintab (void)
 }
 
 gboolean
-gimp_win32_have_windows_ink (void)
+ligma_win32_have_windows_ink (void)
 {
   /* Check for Windows 8 or later */
   return g_win32_check_windows_version (6, 2, 0, G_WIN32_OS_ANY);
@@ -1236,21 +1236,21 @@ gimp_win32_have_windows_ink (void)
 
 /*  debug stuff  */
 
-#include "gegl/gimp-babl.h"
-#include "gimpimage.h"
-#include "gimplayer.h"
-#include "gimplayer-new.h"
+#include "gegl/ligma-babl.h"
+#include "ligmaimage.h"
+#include "ligmalayer.h"
+#include "ligmalayer-new.h"
 
-GimpImage *
-gimp_create_image_from_buffer (Gimp        *gimp,
+LigmaImage *
+ligma_create_image_from_buffer (Ligma        *ligma,
                                GeglBuffer  *buffer,
                                const gchar *image_name)
 {
-  GimpImage  *image;
-  GimpLayer  *layer;
+  LigmaImage  *image;
+  LigmaLayer  *layer;
   const Babl *format;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
   g_return_val_if_fail (GEGL_IS_BUFFER (buffer), NULL);
 
   if (! image_name)
@@ -1258,21 +1258,21 @@ gimp_create_image_from_buffer (Gimp        *gimp,
 
   format = gegl_buffer_get_format (buffer);
 
-  image = gimp_create_image (gimp,
+  image = ligma_create_image (ligma,
                              gegl_buffer_get_width  (buffer),
                              gegl_buffer_get_height (buffer),
-                             gimp_babl_format_get_base_type (format),
-                             gimp_babl_format_get_precision (format),
+                             ligma_babl_format_get_base_type (format),
+                             ligma_babl_format_get_precision (format),
                              FALSE);
 
-  layer = gimp_layer_new_from_gegl_buffer (buffer, image, format,
+  layer = ligma_layer_new_from_gegl_buffer (buffer, image, format,
                                            image_name,
-                                           GIMP_OPACITY_OPAQUE,
-                                           GIMP_LAYER_MODE_NORMAL,
+                                           LIGMA_OPACITY_OPAQUE,
+                                           LIGMA_LAYER_MODE_NORMAL,
                                            NULL /* same image */);
-  gimp_image_add_layer (image, layer, NULL, -1, FALSE);
+  ligma_image_add_layer (image, layer, NULL, -1, FALSE);
 
-  gimp_create_display (gimp, image, GIMP_UNIT_PIXEL, 1.0, NULL);
+  ligma_create_display (ligma, image, LIGMA_UNIT_PIXEL, 1.0, NULL);
 
   /* unref the image unconditionally, even when no display was created */
   g_object_add_weak_pointer (G_OBJECT (image), (gpointer) &image);
@@ -1282,54 +1282,54 @@ gimp_create_image_from_buffer (Gimp        *gimp,
 }
 
 gint
-gimp_view_size_get_larger (gint view_size)
+ligma_view_size_get_larger (gint view_size)
 {
-  if (view_size < GIMP_VIEW_SIZE_TINY)
-    return GIMP_VIEW_SIZE_TINY;
-  if (view_size < GIMP_VIEW_SIZE_EXTRA_SMALL)
-    return GIMP_VIEW_SIZE_EXTRA_SMALL;
-  if (view_size < GIMP_VIEW_SIZE_SMALL)
-    return GIMP_VIEW_SIZE_SMALL;
-  if (view_size < GIMP_VIEW_SIZE_MEDIUM)
-    return GIMP_VIEW_SIZE_MEDIUM;
-  if (view_size < GIMP_VIEW_SIZE_LARGE)
-    return GIMP_VIEW_SIZE_LARGE;
-  if (view_size < GIMP_VIEW_SIZE_EXTRA_LARGE)
-    return GIMP_VIEW_SIZE_EXTRA_LARGE;
-  if (view_size < GIMP_VIEW_SIZE_HUGE)
-    return GIMP_VIEW_SIZE_HUGE;
-  if (view_size < GIMP_VIEW_SIZE_ENORMOUS)
-    return GIMP_VIEW_SIZE_ENORMOUS;
-  return GIMP_VIEW_SIZE_GIGANTIC;
+  if (view_size < LIGMA_VIEW_SIZE_TINY)
+    return LIGMA_VIEW_SIZE_TINY;
+  if (view_size < LIGMA_VIEW_SIZE_EXTRA_SMALL)
+    return LIGMA_VIEW_SIZE_EXTRA_SMALL;
+  if (view_size < LIGMA_VIEW_SIZE_SMALL)
+    return LIGMA_VIEW_SIZE_SMALL;
+  if (view_size < LIGMA_VIEW_SIZE_MEDIUM)
+    return LIGMA_VIEW_SIZE_MEDIUM;
+  if (view_size < LIGMA_VIEW_SIZE_LARGE)
+    return LIGMA_VIEW_SIZE_LARGE;
+  if (view_size < LIGMA_VIEW_SIZE_EXTRA_LARGE)
+    return LIGMA_VIEW_SIZE_EXTRA_LARGE;
+  if (view_size < LIGMA_VIEW_SIZE_HUGE)
+    return LIGMA_VIEW_SIZE_HUGE;
+  if (view_size < LIGMA_VIEW_SIZE_ENORMOUS)
+    return LIGMA_VIEW_SIZE_ENORMOUS;
+  return LIGMA_VIEW_SIZE_GIGANTIC;
 }
 
 gint
-gimp_view_size_get_smaller (gint view_size)
+ligma_view_size_get_smaller (gint view_size)
 {
-  if (view_size > GIMP_VIEW_SIZE_GIGANTIC)
-    return GIMP_VIEW_SIZE_GIGANTIC;
-  if (view_size > GIMP_VIEW_SIZE_ENORMOUS)
-    return GIMP_VIEW_SIZE_ENORMOUS;
-  if (view_size > GIMP_VIEW_SIZE_HUGE)
-    return GIMP_VIEW_SIZE_HUGE;
-  if (view_size > GIMP_VIEW_SIZE_EXTRA_LARGE)
-    return GIMP_VIEW_SIZE_EXTRA_LARGE;
-  if (view_size > GIMP_VIEW_SIZE_LARGE)
-    return GIMP_VIEW_SIZE_LARGE;
-  if (view_size > GIMP_VIEW_SIZE_MEDIUM)
-    return GIMP_VIEW_SIZE_MEDIUM;
-  if (view_size > GIMP_VIEW_SIZE_SMALL)
-    return GIMP_VIEW_SIZE_SMALL;
-  if (view_size > GIMP_VIEW_SIZE_EXTRA_SMALL)
-    return GIMP_VIEW_SIZE_EXTRA_SMALL;
-  return GIMP_VIEW_SIZE_TINY;
+  if (view_size > LIGMA_VIEW_SIZE_GIGANTIC)
+    return LIGMA_VIEW_SIZE_GIGANTIC;
+  if (view_size > LIGMA_VIEW_SIZE_ENORMOUS)
+    return LIGMA_VIEW_SIZE_ENORMOUS;
+  if (view_size > LIGMA_VIEW_SIZE_HUGE)
+    return LIGMA_VIEW_SIZE_HUGE;
+  if (view_size > LIGMA_VIEW_SIZE_EXTRA_LARGE)
+    return LIGMA_VIEW_SIZE_EXTRA_LARGE;
+  if (view_size > LIGMA_VIEW_SIZE_LARGE)
+    return LIGMA_VIEW_SIZE_LARGE;
+  if (view_size > LIGMA_VIEW_SIZE_MEDIUM)
+    return LIGMA_VIEW_SIZE_MEDIUM;
+  if (view_size > LIGMA_VIEW_SIZE_SMALL)
+    return LIGMA_VIEW_SIZE_SMALL;
+  if (view_size > LIGMA_VIEW_SIZE_EXTRA_SMALL)
+    return LIGMA_VIEW_SIZE_EXTRA_SMALL;
+  return LIGMA_VIEW_SIZE_TINY;
 }
 
 /* Private functions */
 
 
 static gchar *
-gimp_appstream_parse (const gchar  *as_text,
+ligma_appstream_parse (const gchar  *as_text,
                       gchar       **introduction,
                       GList       **release_items)
 {
@@ -1342,7 +1342,7 @@ gimp_appstream_parse (const gchar  *as_text,
       NULL  /*  error       */
     };
 
-  GimpXmlParser *xml_parser;
+  LigmaXmlParser *xml_parser;
   gchar         *markup = NULL;
   GError        *error  = NULL;
   ParseState     state;
@@ -1358,9 +1358,9 @@ gimp_appstream_parse (const gchar  *as_text,
   state.introduction    = introduction;
   state.release_items   = release_items;
 
-  xml_parser  = gimp_xml_parser_new (&appstream_text_parser, &state);
+  xml_parser  = ligma_xml_parser_new (&appstream_text_parser, &state);
   if (as_text &&
-      ! gimp_xml_parser_parse_buffer (xml_parser, as_text, -1, &error))
+      ! ligma_xml_parser_parse_buffer (xml_parser, as_text, -1, &error))
     {
       g_printerr ("%s: %s\n", G_STRFUNC, error->message);
       g_error_free (error);
@@ -1377,7 +1377,7 @@ gimp_appstream_parse (const gchar  *as_text,
     *release_items = g_list_reverse (*release_items);
 
   markup = g_string_free (state.text, FALSE);
-  gimp_xml_parser_free (xml_parser);
+  ligma_xml_parser_free (xml_parser);
 
   return markup;
 }
@@ -1399,7 +1399,7 @@ appstream_text_start_element (GMarkupParseContext  *context,
   if (state->foreign_level >= 0)
     return;
 
-  tag_lang = gimp_extension_get_tag_lang (attribute_names, attribute_values);
+  tag_lang = ligma_extension_get_tag_lang (attribute_names, attribute_values);
   if ((state->lang == NULL && tag_lang == NULL) ||
       g_strcmp0 (tag_lang, state->lang) == 0)
     {
@@ -1435,7 +1435,7 @@ appstream_text_start_element (GMarkupParseContext  *context,
       (g_strcmp0 (element_name, "ul") == 0 ||
        g_strcmp0 (element_name, "ol") == 0))
     {
-      g_set_error (error, GIMP_ERROR, GIMP_FAILED,
+      g_set_error (error, LIGMA_ERROR, LIGMA_FAILED,
                    _("This parser does not support imbricated lists."));
     }
   else if (g_strcmp0 (element_name, "ul") == 0)
@@ -1458,12 +1458,12 @@ appstream_text_start_element (GMarkupParseContext  *context,
       else if (state->unnumbered_list)
         g_string_append (output, "\n<span weight='ultrabold' >\xe2\x80\xa2</span> ");
       else
-        g_set_error (error, GIMP_ERROR, GIMP_FAILED,
+        g_set_error (error, LIGMA_ERROR, LIGMA_FAILED,
                      _("<li> must be inside <ol> or <ul> tags."));
     }
   else if (g_strcmp0 (element_name, "p") != 0)
     {
-      g_set_error (error, GIMP_ERROR, GIMP_FAILED,
+      g_set_error (error, LIGMA_ERROR, LIGMA_FAILED,
                    _("Unknown tag <%s>."), element_name);
     }
 }
@@ -1545,7 +1545,7 @@ appstream_text_characters (GMarkupParseContext  *context,
 }
 
 static const gchar *
-gimp_extension_get_tag_lang (const gchar **attribute_names,
+ligma_extension_get_tag_lang (const gchar **attribute_names,
                              const gchar **attribute_values)
 {
   while (*attribute_names)

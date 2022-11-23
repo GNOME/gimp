@@ -1,9 +1,9 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimptoggleaction.c
- * Copyright (C) 2004 Michael Natterer <mitch@gimp.org>
- * Copyright (C) 2008 Sven Neumann <sven@gimp.org>
+ * ligmatoggleaction.c
+ * Copyright (C) 2004 Michael Natterer <mitch@ligma.org>
+ * Copyright (C) 2008 Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,59 +24,59 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "gimpaction.h"
-#include "gimptoggleaction.h"
+#include "ligmaaction.h"
+#include "ligmatoggleaction.h"
 
 
-static void   gimp_toggle_action_connect_proxy (GtkAction       *action,
+static void   ligma_toggle_action_connect_proxy (GtkAction       *action,
                                                 GtkWidget       *proxy);
 
-static void   gimp_toggle_action_toggled       (GtkToggleAction *action);
+static void   ligma_toggle_action_toggled       (GtkToggleAction *action);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpToggleAction, gimp_toggle_action,
+G_DEFINE_TYPE_WITH_CODE (LigmaToggleAction, ligma_toggle_action,
                          GTK_TYPE_TOGGLE_ACTION,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_ACTION, NULL))
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_ACTION, NULL))
 
-#define parent_class gimp_toggle_action_parent_class
+#define parent_class ligma_toggle_action_parent_class
 
 
 static void
-gimp_toggle_action_class_init (GimpToggleActionClass *klass)
+ligma_toggle_action_class_init (LigmaToggleActionClass *klass)
 {
   GtkActionClass       *action_class = GTK_ACTION_CLASS (klass);
   GtkToggleActionClass *toggle_class = GTK_TOGGLE_ACTION_CLASS (klass);
 
-  action_class->connect_proxy = gimp_toggle_action_connect_proxy;
+  action_class->connect_proxy = ligma_toggle_action_connect_proxy;
 
-  toggle_class->toggled       = gimp_toggle_action_toggled;
+  toggle_class->toggled       = ligma_toggle_action_toggled;
 }
 
 static void
-gimp_toggle_action_init (GimpToggleAction *action)
+ligma_toggle_action_init (LigmaToggleAction *action)
 {
-  gimp_action_init (GIMP_ACTION (action));
+  ligma_action_init (LIGMA_ACTION (action));
 }
 
 static void
-gimp_toggle_action_connect_proxy (GtkAction *action,
+ligma_toggle_action_connect_proxy (GtkAction *action,
                                   GtkWidget *proxy)
 {
   GTK_ACTION_CLASS (parent_class)->connect_proxy (action, proxy);
 
-  gimp_action_set_proxy (GIMP_ACTION (action), proxy);
+  ligma_action_set_proxy (LIGMA_ACTION (action), proxy);
 }
 
 static void
-gimp_toggle_action_toggled (GtkToggleAction *action)
+ligma_toggle_action_toggled (GtkToggleAction *action)
 {
-  gboolean value = gimp_toggle_action_get_active (GIMP_TOGGLE_ACTION (action));
+  gboolean value = ligma_toggle_action_get_active (LIGMA_TOGGLE_ACTION (action));
 
-  gimp_action_emit_change_state (GIMP_ACTION (action),
+  ligma_action_emit_change_state (LIGMA_ACTION (action),
                                  g_variant_new_boolean (value));
 }
 
@@ -84,7 +84,7 @@ gimp_toggle_action_toggled (GtkToggleAction *action)
 /*  public functions  */
 
 GtkToggleAction *
-gimp_toggle_action_new (const gchar *name,
+ligma_toggle_action_new (const gchar *name,
                         const gchar *label,
                         const gchar *tooltip,
                         const gchar *icon_name,
@@ -92,27 +92,27 @@ gimp_toggle_action_new (const gchar *name,
 {
   GtkToggleAction *action;
 
-  action = g_object_new (GIMP_TYPE_TOGGLE_ACTION,
+  action = g_object_new (LIGMA_TYPE_TOGGLE_ACTION,
                          "name",      name,
                          "label",     label,
                          "tooltip",   tooltip,
                          "icon-name", icon_name,
                          NULL);
 
-  gimp_action_set_help_id (GIMP_ACTION (action), help_id);
+  ligma_action_set_help_id (LIGMA_ACTION (action), help_id);
 
   return action;
 }
 
 void
-gimp_toggle_action_set_active (GimpToggleAction *action,
+ligma_toggle_action_set_active (LigmaToggleAction *action,
                                gboolean          active)
 {
   return gtk_toggle_action_set_active ((GtkToggleAction *) action, active);
 }
 
 gboolean
-gimp_toggle_action_get_active (GimpToggleAction *action)
+ligma_toggle_action_get_active (LigmaToggleAction *action)
 {
   return gtk_toggle_action_get_active ((GtkToggleAction *) action);
 }

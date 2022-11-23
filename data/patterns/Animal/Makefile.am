@@ -1,6 +1,6 @@
-## Makefile.am for gimp/data/patterns/Animal
+## Makefile.am for ligma/data/patterns/Animal
 
-patternsanimaldatadir = $(gimpdatadir)/patterns/Animal
+patternsanimaldatadir = $(ligmadatadir)/patterns/Animal
 
 patternsanimaldata_DATA = \
 	leather.pat		\

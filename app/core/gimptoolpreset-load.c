@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,47 +20,47 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "core-types.h"
 
-#include "gimpcontext.h"
-#include "gimptoolpreset.h"
-#include "gimptoolpreset-load.h"
+#include "ligmacontext.h"
+#include "ligmatoolpreset.h"
+#include "ligmatoolpreset-load.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 GList *
-gimp_tool_preset_load (GimpContext   *context,
+ligma_tool_preset_load (LigmaContext   *context,
                        GFile         *file,
                        GInputStream  *input,
                        GError       **error)
 {
-  GimpToolPreset *tool_preset;
+  LigmaToolPreset *tool_preset;
 
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (G_IS_FILE (file), NULL);
   g_return_val_if_fail (G_IS_INPUT_STREAM (input), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  tool_preset = g_object_new (GIMP_TYPE_TOOL_PRESET,
-                              "gimp", context->gimp,
+  tool_preset = g_object_new (LIGMA_TYPE_TOOL_PRESET,
+                              "ligma", context->ligma,
                               NULL);
 
-  if (gimp_config_deserialize_stream (GIMP_CONFIG (tool_preset),
+  if (ligma_config_deserialize_stream (LIGMA_CONFIG (tool_preset),
                                       input,
                                       NULL, error))
     {
-      if (GIMP_IS_CONTEXT (tool_preset->tool_options))
+      if (LIGMA_IS_CONTEXT (tool_preset->tool_options))
         {
           return g_list_prepend (NULL, tool_preset);
         }
       else
         {
           g_set_error_literal (error,
-                               GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_PARSE,
+                               LIGMA_CONFIG_ERROR, LIGMA_CONFIG_ERROR_PARSE,
                                _("Tool preset file is corrupt."));
         }
     }

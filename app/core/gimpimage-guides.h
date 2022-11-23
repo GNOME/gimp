@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,40 +15,40 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_GUIDES_H__
-#define __GIMP_IMAGE_GUIDES_H__
+#ifndef __LIGMA_IMAGE_GUIDES_H__
+#define __LIGMA_IMAGE_GUIDES_H__
 
 
 /*  public guide adding API
  */
-GimpGuide * gimp_image_add_hguide     (GimpImage *image,
+LigmaGuide * ligma_image_add_hguide     (LigmaImage *image,
                                        gint       position,
                                        gboolean   push_undo);
-GimpGuide * gimp_image_add_vguide     (GimpImage *image,
+LigmaGuide * ligma_image_add_vguide     (LigmaImage *image,
                                        gint       position,
                                        gboolean   push_undo);
 
 /*  internal guide adding API, does not check the guide's position and
  *  is publicly declared only to be used from undo
  */
-void        gimp_image_add_guide      (GimpImage *image,
-                                       GimpGuide *guide,
+void        ligma_image_add_guide      (LigmaImage *image,
+                                       LigmaGuide *guide,
                                        gint       position);
 
-void        gimp_image_remove_guide   (GimpImage *image,
-                                       GimpGuide *guide,
+void        ligma_image_remove_guide   (LigmaImage *image,
+                                       LigmaGuide *guide,
                                        gboolean   push_undo);
-void        gimp_image_move_guide     (GimpImage *image,
-                                       GimpGuide *guide,
+void        ligma_image_move_guide     (LigmaImage *image,
+                                       LigmaGuide *guide,
                                        gint       position,
                                        gboolean   push_undo);
 
-GList     * gimp_image_get_guides     (GimpImage *image);
-GimpGuide * gimp_image_get_guide      (GimpImage *image,
+GList     * ligma_image_get_guides     (LigmaImage *image);
+LigmaGuide * ligma_image_get_guide      (LigmaImage *image,
                                        guint32    id);
-GimpGuide * gimp_image_get_next_guide (GimpImage *image,
+LigmaGuide * ligma_image_get_next_guide (LigmaImage *image,
                                        guint32    id,
                                        gboolean  *guide_found);
 
 
-#endif /* __GIMP_IMAGE_GUIDES_H__ */
+#endif /* __LIGMA_IMAGE_GUIDES_H__ */

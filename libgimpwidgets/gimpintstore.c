@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpintstore.c
- * Copyright (C) 2004-2007  Sven Neumann <sven@gimp.org>
+ * ligmaintstore.c
+ * Copyright (C) 2004-2007  Sven Neumann <sven@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -25,18 +25,18 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
-#include "gimpwidgetstypes.h"
+#include "ligmawidgetstypes.h"
 
-#include "gimpintstore.h"
+#include "ligmaintstore.h"
 
-#include "libgimp/libgimp-intl.h"
+#include "libligma/libligma-intl.h"
 
 
 /**
- * SECTION: gimpintstore
- * @title: GimpIntStore
+ * SECTION: ligmaintstore
+ * @title: LigmaIntStore
  * @short_description: A model for integer based name-value pairs
  *                     (e.g. enums)
  *
@@ -51,63 +51,63 @@ enum
 };
 
 
-struct _GimpIntStorePrivate
+struct _LigmaIntStorePrivate
 {
   GtkTreeIter *empty_iter;
   GType        user_data_type;
 };
 
-#define GET_PRIVATE(obj) (((GimpIntStore *) (obj))->priv)
+#define GET_PRIVATE(obj) (((LigmaIntStore *) (obj))->priv)
 
 
-static void  gimp_int_store_tree_model_init (GtkTreeModelIface *iface);
+static void  ligma_int_store_tree_model_init (GtkTreeModelIface *iface);
 
-static void  gimp_int_store_constructed     (GObject           *object);
-static void  gimp_int_store_finalize        (GObject           *object);
-static void  gimp_int_store_set_property    (GObject           *object,
+static void  ligma_int_store_constructed     (GObject           *object);
+static void  ligma_int_store_finalize        (GObject           *object);
+static void  ligma_int_store_set_property    (GObject           *object,
                                              guint              property_id,
                                              const GValue      *value,
                                              GParamSpec        *pspec);
-static void  gimp_int_store_get_property    (GObject           *object,
+static void  ligma_int_store_get_property    (GObject           *object,
                                              guint              property_id,
                                              GValue            *value,
                                              GParamSpec        *pspec);
 
-static void  gimp_int_store_row_inserted    (GtkTreeModel      *model,
+static void  ligma_int_store_row_inserted    (GtkTreeModel      *model,
                                              GtkTreePath       *path,
                                              GtkTreeIter       *iter);
-static void  gimp_int_store_row_deleted     (GtkTreeModel      *model,
+static void  ligma_int_store_row_deleted     (GtkTreeModel      *model,
                                              GtkTreePath       *path);
-static void  gimp_int_store_add_empty       (GimpIntStore      *store);
+static void  ligma_int_store_add_empty       (LigmaIntStore      *store);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpIntStore, gimp_int_store, GTK_TYPE_LIST_STORE,
-                         G_ADD_PRIVATE (GimpIntStore)
+G_DEFINE_TYPE_WITH_CODE (LigmaIntStore, ligma_int_store, GTK_TYPE_LIST_STORE,
+                         G_ADD_PRIVATE (LigmaIntStore)
                          G_IMPLEMENT_INTERFACE (GTK_TYPE_TREE_MODEL,
-                                                gimp_int_store_tree_model_init))
+                                                ligma_int_store_tree_model_init))
 
-#define parent_class gimp_int_store_parent_class
+#define parent_class ligma_int_store_parent_class
 
 static GtkTreeModelIface *parent_iface = NULL;
 
 
 static void
-gimp_int_store_class_init (GimpIntStoreClass *klass)
+ligma_int_store_class_init (LigmaIntStoreClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->constructed  = gimp_int_store_constructed;
-  object_class->finalize     = gimp_int_store_finalize;
-  object_class->set_property = gimp_int_store_set_property;
-  object_class->get_property = gimp_int_store_get_property;
+  object_class->constructed  = ligma_int_store_constructed;
+  object_class->finalize     = ligma_int_store_finalize;
+  object_class->set_property = ligma_int_store_set_property;
+  object_class->get_property = ligma_int_store_get_property;
 
   /**
-   * GimpIntStore:user-data-type:
+   * LigmaIntStore:user-data-type:
    *
-   * Sets the #GType for the GIMP_INT_STORE_USER_DATA column.
+   * Sets the #GType for the LIGMA_INT_STORE_USER_DATA column.
    *
    * You need to set this property when constructing the store if you want
-   * to use the GIMP_INT_STORE_USER_DATA column and want to have the store
+   * to use the LIGMA_INT_STORE_USER_DATA column and want to have the store
    * handle ref-counting of your user data.
    *
    * Since: 2.4
@@ -119,51 +119,51 @@ gimp_int_store_class_init (GimpIntStoreClass *klass)
                                                        "The GType of the user_data column",
                                                        G_TYPE_NONE,
                                                        G_PARAM_CONSTRUCT_ONLY |
-                                                       GIMP_PARAM_READWRITE));
+                                                       LIGMA_PARAM_READWRITE));
 }
 
 static void
-gimp_int_store_tree_model_init (GtkTreeModelIface *iface)
+ligma_int_store_tree_model_init (GtkTreeModelIface *iface)
 {
   parent_iface = g_type_interface_peek_parent (iface);
 
-  iface->row_inserted = gimp_int_store_row_inserted;
-  iface->row_deleted  = gimp_int_store_row_deleted;
+  iface->row_inserted = ligma_int_store_row_inserted;
+  iface->row_deleted  = ligma_int_store_row_deleted;
 }
 
 static void
-gimp_int_store_init (GimpIntStore *store)
+ligma_int_store_init (LigmaIntStore *store)
 {
-  store->priv = gimp_int_store_get_instance_private (store);
+  store->priv = ligma_int_store_get_instance_private (store);
 }
 
 static void
-gimp_int_store_constructed (GObject *object)
+ligma_int_store_constructed (GObject *object)
 {
-  GimpIntStore        *store = GIMP_INT_STORE (object);
-  GimpIntStorePrivate *priv  = GET_PRIVATE (store);
-  GType                types[GIMP_INT_STORE_NUM_COLUMNS];
+  LigmaIntStore        *store = LIGMA_INT_STORE (object);
+  LigmaIntStorePrivate *priv  = GET_PRIVATE (store);
+  GType                types[LIGMA_INT_STORE_NUM_COLUMNS];
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  types[GIMP_INT_STORE_VALUE]     = G_TYPE_INT;
-  types[GIMP_INT_STORE_LABEL]     = G_TYPE_STRING;
-  types[GIMP_INT_STORE_ABBREV]    = G_TYPE_STRING;
-  types[GIMP_INT_STORE_ICON_NAME] = G_TYPE_STRING;
-  types[GIMP_INT_STORE_PIXBUF]    = GDK_TYPE_PIXBUF;
-  types[GIMP_INT_STORE_USER_DATA] = (priv->user_data_type != G_TYPE_NONE ?
+  types[LIGMA_INT_STORE_VALUE]     = G_TYPE_INT;
+  types[LIGMA_INT_STORE_LABEL]     = G_TYPE_STRING;
+  types[LIGMA_INT_STORE_ABBREV]    = G_TYPE_STRING;
+  types[LIGMA_INT_STORE_ICON_NAME] = G_TYPE_STRING;
+  types[LIGMA_INT_STORE_PIXBUF]    = GDK_TYPE_PIXBUF;
+  types[LIGMA_INT_STORE_USER_DATA] = (priv->user_data_type != G_TYPE_NONE ?
                                      priv->user_data_type : G_TYPE_POINTER);
 
   gtk_list_store_set_column_types (GTK_LIST_STORE (store),
-                                   GIMP_INT_STORE_NUM_COLUMNS, types);
+                                   LIGMA_INT_STORE_NUM_COLUMNS, types);
 
-  gimp_int_store_add_empty (store);
+  ligma_int_store_add_empty (store);
 }
 
 static void
-gimp_int_store_finalize (GObject *object)
+ligma_int_store_finalize (GObject *object)
 {
-  GimpIntStorePrivate *priv = GET_PRIVATE (object);
+  LigmaIntStorePrivate *priv = GET_PRIVATE (object);
 
   g_clear_pointer (&priv->empty_iter, gtk_tree_iter_free);
 
@@ -171,12 +171,12 @@ gimp_int_store_finalize (GObject *object)
 }
 
 static void
-gimp_int_store_set_property (GObject      *object,
+ligma_int_store_set_property (GObject      *object,
                              guint         property_id,
                              const GValue *value,
                              GParamSpec   *pspec)
 {
-  GimpIntStorePrivate *priv = GET_PRIVATE (object);
+  LigmaIntStorePrivate *priv = GET_PRIVATE (object);
 
   switch (property_id)
     {
@@ -191,12 +191,12 @@ gimp_int_store_set_property (GObject      *object,
 }
 
 static void
-gimp_int_store_get_property (GObject    *object,
+ligma_int_store_get_property (GObject    *object,
                              guint       property_id,
                              GValue     *value,
                              GParamSpec *pspec)
 {
-  GimpIntStorePrivate *priv = GET_PRIVATE (object);
+  LigmaIntStorePrivate *priv = GET_PRIVATE (object);
 
   switch (property_id)
     {
@@ -211,12 +211,12 @@ gimp_int_store_get_property (GObject    *object,
 }
 
 static void
-gimp_int_store_row_inserted (GtkTreeModel *model,
+ligma_int_store_row_inserted (GtkTreeModel *model,
                              GtkTreePath  *path,
                              GtkTreeIter  *iter)
 {
-  GimpIntStore        *store = GIMP_INT_STORE (model);
-  GimpIntStorePrivate *priv  = GET_PRIVATE (store);
+  LigmaIntStore        *store = LIGMA_INT_STORE (model);
+  LigmaIntStorePrivate *priv  = GET_PRIVATE (store);
 
   if (parent_iface->row_inserted)
     parent_iface->row_inserted (model, path, iter);
@@ -231,7 +231,7 @@ gimp_int_store_row_inserted (GtkTreeModel *model,
 }
 
 static void
-gimp_int_store_row_deleted (GtkTreeModel *model,
+ligma_int_store_row_deleted (GtkTreeModel *model,
                             GtkTreePath  *path)
 {
   if (parent_iface->row_deleted)
@@ -239,44 +239,44 @@ gimp_int_store_row_deleted (GtkTreeModel *model,
 }
 
 static void
-gimp_int_store_add_empty (GimpIntStore *store)
+ligma_int_store_add_empty (LigmaIntStore *store)
 {
-  GimpIntStorePrivate *priv = GET_PRIVATE (store);
+  LigmaIntStorePrivate *priv = GET_PRIVATE (store);
   GtkTreeIter          iter = { 0, };
 
   g_return_if_fail (priv->empty_iter == NULL);
 
   gtk_list_store_prepend (GTK_LIST_STORE (store), &iter);
   gtk_list_store_set (GTK_LIST_STORE (store), &iter,
-                      GIMP_INT_STORE_VALUE, -1,
+                      LIGMA_INT_STORE_VALUE, -1,
                       /* This string appears in an empty menu as in
                        * "nothing selected and nothing to select"
                        */
-                      GIMP_INT_STORE_LABEL, (_("(Empty)")),
+                      LIGMA_INT_STORE_LABEL, (_("(Empty)")),
                       -1);
 
   priv->empty_iter = gtk_tree_iter_copy (&iter);
 }
 
 /**
- * gimp_int_store_new: (skip)
+ * ligma_int_store_new: (skip)
  * @first_label: the label of the first item
  * @first_value: the value of the first item
  * @...:         a %NULL terminated list of more label, value pairs
  *
  * Creates a #GtkListStore with a number of useful columns.
- * #GimpIntStore is especially useful if the items you want to store
+ * #LigmaIntStore is especially useful if the items you want to store
  * are identified using an integer value.
  *
- * If you need to construct an empty #GimpIntStore, it's best to use
- * g_object_new (GIMP_TYPE_INT_STORE, NULL).
+ * If you need to construct an empty #LigmaIntStore, it's best to use
+ * g_object_new (LIGMA_TYPE_INT_STORE, NULL).
  *
- * Returns: a new #GimpIntStore.
+ * Returns: a new #LigmaIntStore.
  *
  * Since: 2.2
  **/
 GtkListStore *
-gimp_int_store_new (const gchar *first_label,
+ligma_int_store_new (const gchar *first_label,
                     gint         first_value,
                     ...)
 {
@@ -285,7 +285,7 @@ gimp_int_store_new (const gchar *first_label,
 
   va_start (args, first_value);
 
-  store = gimp_int_store_new_valist (first_label, first_value, args);
+  store = ligma_int_store_new_valist (first_label, first_value, args);
 
   va_end (args);
 
@@ -293,20 +293,20 @@ gimp_int_store_new (const gchar *first_label,
 }
 
 /**
- * gimp_int_store_new_valist:
+ * ligma_int_store_new_valist:
  * @first_label: the label of the first item
  * @first_value: the value of the first item
  * @values:      a va_list with more values
  *
- * A variant of gimp_int_store_new() that takes a va_list of
+ * A variant of ligma_int_store_new() that takes a va_list of
  * label/value pairs.
  *
- * Returns: a new #GimpIntStore.
+ * Returns: a new #LigmaIntStore.
  *
  * Since: 3.0
  **/
 GtkListStore *
-gimp_int_store_new_valist (const gchar *first_label,
+ligma_int_store_new_valist (const gchar *first_label,
                            gint         first_value,
                            va_list      values)
 {
@@ -314,7 +314,7 @@ gimp_int_store_new_valist (const gchar *first_label,
   const gchar  *label;
   gint          value;
 
-  store = g_object_new (GIMP_TYPE_INT_STORE, NULL);
+  store = g_object_new (LIGMA_TYPE_INT_STORE, NULL);
 
   for (label = first_label, value = first_value;
        label;
@@ -324,8 +324,8 @@ gimp_int_store_new_valist (const gchar *first_label,
 
       gtk_list_store_append (store, &iter);
       gtk_list_store_set (store, &iter,
-                          GIMP_INT_STORE_VALUE, value,
-                          GIMP_INT_STORE_LABEL, label,
+                          LIGMA_INT_STORE_VALUE, value,
+                          LIGMA_INT_STORE_LABEL, label,
                           -1);
     }
 
@@ -333,8 +333,8 @@ gimp_int_store_new_valist (const gchar *first_label,
 }
 
 /**
- * gimp_int_store_lookup_by_value:
- * @model: a #GimpIntStore
+ * ligma_int_store_lookup_by_value:
+ * @model: a #LigmaIntStore
  * @value: an integer value to lookup in the @model
  * @iter: (out):  return location for the iter of the given @value
  *
@@ -346,7 +346,7 @@ gimp_int_store_new_valist (const gchar *first_label,
  * Since: 2.2
  **/
 gboolean
-gimp_int_store_lookup_by_value (GtkTreeModel *model,
+ligma_int_store_lookup_by_value (GtkTreeModel *model,
                                 gint          value,
                                 GtkTreeIter  *iter)
 {
@@ -362,7 +362,7 @@ gimp_int_store_lookup_by_value (GtkTreeModel *model,
       gint  this;
 
       gtk_tree_model_get (model, iter,
-                          GIMP_INT_STORE_VALUE, &this,
+                          LIGMA_INT_STORE_VALUE, &this,
                           -1);
       if (this == value)
         break;
@@ -372,8 +372,8 @@ gimp_int_store_lookup_by_value (GtkTreeModel *model,
 }
 
 /**
- * gimp_int_store_lookup_by_user_data:
- * @model: a #GimpIntStore
+ * ligma_int_store_lookup_by_user_data:
+ * @model: a #LigmaIntStore
  * @user_data: a gpointer "user-data" to lookup in the @model
  * @iter: (out): return location for the iter of the given @user_data
  *
@@ -385,7 +385,7 @@ gimp_int_store_lookup_by_value (GtkTreeModel *model,
  * Since: 2.10
  **/
 gboolean
-gimp_int_store_lookup_by_user_data (GtkTreeModel *model,
+ligma_int_store_lookup_by_user_data (GtkTreeModel *model,
                                     gpointer      user_data,
                                     GtkTreeIter  *iter)
 {
@@ -401,7 +401,7 @@ gimp_int_store_lookup_by_user_data (GtkTreeModel *model,
       gpointer this;
 
       gtk_tree_model_get (model, iter,
-                          GIMP_INT_STORE_USER_DATA, &this,
+                          LIGMA_INT_STORE_USER_DATA, &this,
                           -1);
       if (this == user_data)
         break;

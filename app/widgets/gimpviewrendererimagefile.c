@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpviewrendererimagefile.c
- * Copyright (C) 2004 Michael Natterer <mitch@gimp.org>
+ * ligmaviewrendererimagefile.c
+ * Copyright (C) 2004 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,47 +25,47 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpthumb/gimpthumb.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmathumb/ligmathumb.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "core/gimpimagefile.h"
+#include "core/ligmaimagefile.h"
 
-#include "gimpviewrendererimagefile.h"
-#include "gimpviewrenderer-frame.h"
-#include "gimpwidgets-utils.h"
+#include "ligmaviewrendererimagefile.h"
+#include "ligmaviewrenderer-frame.h"
+#include "ligmawidgets-utils.h"
 
 
-static void        gimp_view_renderer_imagefile_render   (GimpViewRenderer *renderer,
+static void        ligma_view_renderer_imagefile_render   (LigmaViewRenderer *renderer,
                                                           GtkWidget        *widget);
 
-static GdkPixbuf * gimp_view_renderer_imagefile_get_icon (GimpImagefile    *imagefile,
+static GdkPixbuf * ligma_view_renderer_imagefile_get_icon (LigmaImagefile    *imagefile,
                                                           GtkWidget        *widget,
                                                           gint              size);
 
 
-G_DEFINE_TYPE (GimpViewRendererImagefile, gimp_view_renderer_imagefile,
-               GIMP_TYPE_VIEW_RENDERER)
+G_DEFINE_TYPE (LigmaViewRendererImagefile, ligma_view_renderer_imagefile,
+               LIGMA_TYPE_VIEW_RENDERER)
 
-#define parent_class gimp_view_renderer_imagefile_parent_class
+#define parent_class ligma_view_renderer_imagefile_parent_class
 
 
 static void
-gimp_view_renderer_imagefile_class_init (GimpViewRendererImagefileClass *klass)
+ligma_view_renderer_imagefile_class_init (LigmaViewRendererImagefileClass *klass)
 {
-  GimpViewRendererClass *renderer_class = GIMP_VIEW_RENDERER_CLASS (klass);
+  LigmaViewRendererClass *renderer_class = LIGMA_VIEW_RENDERER_CLASS (klass);
 
-  renderer_class->render = gimp_view_renderer_imagefile_render;
+  renderer_class->render = ligma_view_renderer_imagefile_render;
 }
 
 static void
-gimp_view_renderer_imagefile_init (GimpViewRendererImagefile *renderer)
+ligma_view_renderer_imagefile_init (LigmaViewRendererImagefile *renderer)
 {
 }
 
 static void
-gimp_view_renderer_imagefile_render (GimpViewRenderer *renderer,
+ligma_view_renderer_imagefile_render (LigmaViewRenderer *renderer,
                                      GtkWidget        *widget)
 {
   GdkPixbuf *pixbuf;
@@ -73,28 +73,28 @@ gimp_view_renderer_imagefile_render (GimpViewRenderer *renderer,
   gint       width        = renderer->width  * scale_factor;
   gint       height       = renderer->height * scale_factor;
 
-  pixbuf = gimp_view_renderer_get_frame_pixbuf (renderer, widget,
+  pixbuf = ligma_view_renderer_get_frame_pixbuf (renderer, widget,
                                                 width, height);
 
   if (! pixbuf)
     {
-      GimpImagefile *imagefile = GIMP_IMAGEFILE (renderer->viewable);
+      LigmaImagefile *imagefile = LIGMA_IMAGEFILE (renderer->viewable);
 
-      pixbuf = gimp_view_renderer_imagefile_get_icon (imagefile,
+      pixbuf = ligma_view_renderer_imagefile_get_icon (imagefile,
                                                       widget,
                                                       MAX (width, height));
     }
 
   if (pixbuf)
     {
-      gimp_view_renderer_render_pixbuf (renderer, widget, pixbuf);
+      ligma_view_renderer_render_pixbuf (renderer, widget, pixbuf);
       g_object_unref (pixbuf);
     }
   else
     {
-      const gchar *icon_name = gimp_viewable_get_icon_name (renderer->viewable);
+      const gchar *icon_name = ligma_viewable_get_icon_name (renderer->viewable);
 
-      gimp_view_renderer_render_icon (renderer, widget, icon_name);
+      ligma_view_renderer_render_icon (renderer, widget, icon_name);
     }
 }
 
@@ -151,21 +151,21 @@ get_icon_for_mime_type (const gchar *mime_type,
 }
 
 static GdkPixbuf *
-gimp_view_renderer_imagefile_get_icon (GimpImagefile *imagefile,
+ligma_view_renderer_imagefile_get_icon (LigmaImagefile *imagefile,
                                        GtkWidget     *widget,
                                        gint           size)
 {
   GdkScreen     *screen     = gtk_widget_get_screen (widget);
   GtkIconTheme  *icon_theme = gtk_icon_theme_get_for_screen (screen);
-  GimpThumbnail *thumbnail  = gimp_imagefile_get_thumbnail (imagefile);
+  LigmaThumbnail *thumbnail  = ligma_imagefile_get_thumbnail (imagefile);
   GdkPixbuf     *pixbuf     = NULL;
 
-  if (! gimp_object_get_name (imagefile))
+  if (! ligma_object_get_name (imagefile))
     return NULL;
 
   if (! pixbuf)
     {
-      GIcon *icon = gimp_imagefile_get_gicon (imagefile);
+      GIcon *icon = ligma_imagefile_get_gicon (imagefile);
 
       if (icon)
         {
@@ -188,7 +188,7 @@ gimp_view_renderer_imagefile_get_icon (GimpImagefile *imagefile,
         {
           pixbuf = get_icon_for_mime_type (thumbnail->image_mimetype, size);
         }
-      else if (thumbnail->image_state == GIMP_THUMB_STATE_FOLDER)
+      else if (thumbnail->image_state == LIGMA_THUMB_STATE_FOLDER)
         {
           pixbuf = get_icon_for_mime_type ("inode/directory", size);
         }
@@ -198,7 +198,7 @@ gimp_view_renderer_imagefile_get_icon (GimpImagefile *imagefile,
     {
       const gchar *icon_name = "text-x-generic";
 
-      if (thumbnail->image_state == GIMP_THUMB_STATE_FOLDER)
+      if (thumbnail->image_state == LIGMA_THUMB_STATE_FOLDER)
         icon_name = "folder";
 
       pixbuf = gtk_icon_theme_load_icon (icon_theme,

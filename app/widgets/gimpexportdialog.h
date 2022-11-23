@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpexportdialog.h
+ * ligmaexportdialog.h
  * Copyright (C) 2015 Jehan <jehan@girinstud.io>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,44 +18,44 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_EXPORT_DIALOG_H__
-#define __GIMP_EXPORT_DIALOG_H__
+#ifndef __LIGMA_EXPORT_DIALOG_H__
+#define __LIGMA_EXPORT_DIALOG_H__
 
-#include "gimpfiledialog.h"
+#include "ligmafiledialog.h"
 
 G_BEGIN_DECLS
 
-#define GIMP_TYPE_EXPORT_DIALOG            (gimp_export_dialog_get_type ())
-#define GIMP_EXPORT_DIALOG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_EXPORT_DIALOG, GimpExportDialog))
-#define GIMP_EXPORT_DIALOG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_EXPORT_DIALOG, GimpExportDialogClass))
-#define GIMP_IS_EXPORT_DIALOG(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_EXPORT_DIALOG))
-#define GIMP_IS_EXPORT_DIALOG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_EXPORT_DIALOG))
-#define GIMP_EXPORT_DIALOG_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_EXPORT_DIALOG, GimpExportDialogClass))
+#define LIGMA_TYPE_EXPORT_DIALOG            (ligma_export_dialog_get_type ())
+#define LIGMA_EXPORT_DIALOG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_EXPORT_DIALOG, LigmaExportDialog))
+#define LIGMA_EXPORT_DIALOG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_EXPORT_DIALOG, LigmaExportDialogClass))
+#define LIGMA_IS_EXPORT_DIALOG(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_EXPORT_DIALOG))
+#define LIGMA_IS_EXPORT_DIALOG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_EXPORT_DIALOG))
+#define LIGMA_EXPORT_DIALOG_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_EXPORT_DIALOG, LigmaExportDialogClass))
 
 
-typedef struct _GimpExportDialogClass GimpExportDialogClass;
+typedef struct _LigmaExportDialogClass LigmaExportDialogClass;
 
-struct _GimpExportDialog
+struct _LigmaExportDialog
 {
-  GimpFileDialog       parent_instance;
+  LigmaFileDialog       parent_instance;
 
-  GimpObject          *display;
+  LigmaObject          *display;
 };
 
-struct _GimpExportDialogClass
+struct _LigmaExportDialogClass
 {
-  GimpFileDialogClass  parent_class;
+  LigmaFileDialogClass  parent_class;
 };
 
 
-GType       gimp_export_dialog_get_type  (void) G_GNUC_CONST;
+GType       ligma_export_dialog_get_type  (void) G_GNUC_CONST;
 
-GtkWidget * gimp_export_dialog_new       (Gimp             *gimp);
+GtkWidget * ligma_export_dialog_new       (Ligma             *ligma);
 
-void        gimp_export_dialog_set_image (GimpExportDialog *dialog,
-                                          GimpImage        *image,
-                                          GimpObject       *display);
+void        ligma_export_dialog_set_image (LigmaExportDialog *dialog,
+                                          LigmaImage        *image,
+                                          LigmaObject       *display);
 
 G_END_DECLS
 
-#endif /* __GIMP_EXPORT_DIALOG_H__ */
+#endif /* __LIGMA_EXPORT_DIALOG_H__ */

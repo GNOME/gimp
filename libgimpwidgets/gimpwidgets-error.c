@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpwidgets-error.c
+ * ligmawidgets-error.c
  * Copyright (C) 2008 Martin Nordholts <martinn@svn.gnome.org>
  *
  * This library is free software: you can redistribute it and/or
@@ -23,18 +23,18 @@
 
 #include <glib.h>
 
-#include "gimpwidgets-error.h"
+#include "ligmawidgets-error.h"
 
 
 /**
- * gimp_widgets_error_quark:
+ * ligma_widgets_error_quark:
  *
- * This function is never called directly. Use GIMP_WIDGETS_ERROR() instead.
+ * This function is never called directly. Use LIGMA_WIDGETS_ERROR() instead.
  *
- * Returns: the #GQuark that defines the GIMP widgets error domain.
+ * Returns: the #GQuark that defines the LIGMA widgets error domain.
  **/
 GQuark
-gimp_widgets_error_quark (void)
+ligma_widgets_error_quark (void)
 {
-  return g_quark_from_static_string ("gimp-widgets-error-quark");
+  return g_quark_from_static_string ("ligma-widgets-error-quark");
 }

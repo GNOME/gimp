@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,7 +19,7 @@
 #define __SAMPLE_POINTS_COMMANDS_H__
 
 
-void   sample_points_sample_merged_cmd_callback (GimpAction *action,
+void   sample_points_sample_merged_cmd_callback (LigmaAction *action,
                                                  GVariant   *value,
                                                  gpointer    data);
 

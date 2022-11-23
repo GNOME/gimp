@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimplabelentry.c
+ * ligmalabelentry.c
  * Copyright (C) 2022 Jehan
  *
  * This library is free software: you can redistribute it and/or
@@ -24,19 +24,19 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpmath/gimpmath.h"
-#include "libgimpbase/gimpbase.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmabase/ligmabase.h"
 
-#include "gimpwidgets.h"
+#include "ligmawidgets.h"
 
 
 /**
- * SECTION: gimplabelentry
- * @title: GimpLabelEntry
+ * SECTION: ligmalabelentry
+ * @title: LigmaLabelEntry
  * @short_description: Widget containing an entry and a label.
  *
- * This widget is a subclass of #GimpLabeled with a #GtkEntry.
+ * This widget is a subclass of #LigmaLabeled with a #GtkEntry.
  **/
 
 enum
@@ -51,55 +51,55 @@ enum
   PROP_VALUE,
 };
 
-typedef struct _GimpLabelEntryPrivate
+typedef struct _LigmaLabelEntryPrivate
 {
   GtkWidget *entry;
-} GimpLabelEntryPrivate;
+} LigmaLabelEntryPrivate;
 
-static void        gimp_label_entry_constructed       (GObject       *object);
-static void        gimp_label_entry_set_property      (GObject       *object,
+static void        ligma_label_entry_constructed       (GObject       *object);
+static void        ligma_label_entry_set_property      (GObject       *object,
                                                        guint          property_id,
                                                        const GValue  *value,
                                                        GParamSpec    *pspec);
-static void        gimp_label_entry_get_property      (GObject       *object,
+static void        ligma_label_entry_get_property      (GObject       *object,
                                                        guint          property_id,
                                                        GValue        *value,
                                                        GParamSpec    *pspec);
 
-static GtkWidget * gimp_label_entry_populate          (GimpLabeled   *entry,
+static GtkWidget * ligma_label_entry_populate          (LigmaLabeled   *entry,
                                                        gint          *x,
                                                        gint          *y,
                                                        gint          *width,
                                                        gint          *height);
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpLabelEntry, gimp_label_entry, GIMP_TYPE_LABELED)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaLabelEntry, ligma_label_entry, LIGMA_TYPE_LABELED)
 
-#define parent_class gimp_label_entry_parent_class
+#define parent_class ligma_label_entry_parent_class
 
-static guint gimp_label_entry_signals[LAST_SIGNAL] = { 0 };
+static guint ligma_label_entry_signals[LAST_SIGNAL] = { 0 };
 
 static void
-gimp_label_entry_class_init (GimpLabelEntryClass *klass)
+ligma_label_entry_class_init (LigmaLabelEntryClass *klass)
 {
   GObjectClass     *object_class  = G_OBJECT_CLASS (klass);
-  GimpLabeledClass *labeled_class = GIMP_LABELED_CLASS (klass);
+  LigmaLabeledClass *labeled_class = LIGMA_LABELED_CLASS (klass);
 
-  gimp_label_entry_signals[VALUE_CHANGED] =
+  ligma_label_entry_signals[VALUE_CHANGED] =
     g_signal_new ("value-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpLabelEntryClass, value_changed),
+                  G_STRUCT_OFFSET (LigmaLabelEntryClass, value_changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
-  object_class->constructed  = gimp_label_entry_constructed;
-  object_class->set_property = gimp_label_entry_set_property;
-  object_class->get_property = gimp_label_entry_get_property;
+  object_class->constructed  = ligma_label_entry_constructed;
+  object_class->set_property = ligma_label_entry_set_property;
+  object_class->get_property = ligma_label_entry_get_property;
 
-  labeled_class->populate    = gimp_label_entry_populate;
+  labeled_class->populate    = ligma_label_entry_populate;
 
   /**
-   * GimpLabelEntry:value:
+   * LigmaLabelEntry:value:
    *
    * The currently set value.
    *
@@ -110,22 +110,22 @@ gimp_label_entry_class_init (GimpLabelEntryClass *klass)
                                                         "Entry text",
                                                         "The text in the entry",
                                                         NULL,
-                                                        GIMP_PARAM_READWRITE));
+                                                        LIGMA_PARAM_READWRITE));
 }
 
 static void
-gimp_label_entry_init (GimpLabelEntry *entry)
+ligma_label_entry_init (LigmaLabelEntry *entry)
 {
-  GimpLabelEntryPrivate *priv = gimp_label_entry_get_instance_private (entry);
+  LigmaLabelEntryPrivate *priv = ligma_label_entry_get_instance_private (entry);
 
   priv->entry = gtk_entry_new ();
 }
 
 static void
-gimp_label_entry_constructed (GObject *object)
+ligma_label_entry_constructed (GObject *object)
 {
-  GimpLabelEntry        *entry  = GIMP_LABEL_ENTRY (object);
-  GimpLabelEntryPrivate *priv   = gimp_label_entry_get_instance_private (entry);
+  LigmaLabelEntry        *entry  = LIGMA_LABEL_ENTRY (object);
+  LigmaLabelEntryPrivate *priv   = ligma_label_entry_get_instance_private (entry);
   GtkEntryBuffer        *buffer = gtk_entry_get_buffer (GTK_ENTRY (priv->entry));
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
@@ -140,13 +140,13 @@ gimp_label_entry_constructed (GObject *object)
 }
 
 static void
-gimp_label_entry_set_property (GObject      *object,
+ligma_label_entry_set_property (GObject      *object,
                               guint         property_id,
                               const GValue *value,
                               GParamSpec   *pspec)
 {
-  GimpLabelEntry        *entry = GIMP_LABEL_ENTRY (object);
-  GimpLabelEntryPrivate *priv  = gimp_label_entry_get_instance_private (entry);
+  LigmaLabelEntry        *entry = LIGMA_LABEL_ENTRY (object);
+  LigmaLabelEntryPrivate *priv  = ligma_label_entry_get_instance_private (entry);
 
   switch (property_id)
     {
@@ -161,7 +161,7 @@ gimp_label_entry_set_property (GObject      *object,
                          g_value_get_string (value)) != 0)
             gtk_entry_buffer_set_text (buffer, g_value_get_string (value), -1);
 
-          g_signal_emit (object, gimp_label_entry_signals[VALUE_CHANGED], 0);
+          g_signal_emit (object, ligma_label_entry_signals[VALUE_CHANGED], 0);
         }
       break;
 
@@ -172,13 +172,13 @@ gimp_label_entry_set_property (GObject      *object,
 }
 
 static void
-gimp_label_entry_get_property (GObject    *object,
+ligma_label_entry_get_property (GObject    *object,
                                guint       property_id,
                                GValue     *value,
                                GParamSpec *pspec)
 {
-  GimpLabelEntry        *entry = GIMP_LABEL_ENTRY (object);
-  GimpLabelEntryPrivate *priv  = gimp_label_entry_get_instance_private (entry);
+  LigmaLabelEntry        *entry = LIGMA_LABEL_ENTRY (object);
+  LigmaLabelEntryPrivate *priv  = ligma_label_entry_get_instance_private (entry);
 
   switch (property_id)
     {
@@ -197,14 +197,14 @@ gimp_label_entry_get_property (GObject    *object,
 }
 
 static GtkWidget *
-gimp_label_entry_populate (GimpLabeled *labeled,
+ligma_label_entry_populate (LigmaLabeled *labeled,
                            gint        *x,
                            gint        *y,
                            gint        *width,
                            gint        *height)
 {
-  GimpLabelEntry        *entry = GIMP_LABEL_ENTRY (labeled);
-  GimpLabelEntryPrivate *priv = gimp_label_entry_get_instance_private (entry);
+  LigmaLabelEntry        *entry = LIGMA_LABEL_ENTRY (labeled);
+  LigmaLabelEntryPrivate *priv = ligma_label_entry_get_instance_private (entry);
 
   gtk_grid_attach (GTK_GRID (entry), priv->entry, 1, 0, 1, 1);
   /* Make sure the label and entry won't be glued next to each other's. */
@@ -220,18 +220,18 @@ gimp_label_entry_populate (GimpLabeled *labeled,
 
 
 /**
- * gimp_label_entry_new:
+ * ligma_label_entry_new:
  * @label:  The text for the #GtkLabel.
  *
  *
- * Returns: (transfer full): The new #GimpLabelEntry widget.
+ * Returns: (transfer full): The new #LigmaLabelEntry widget.
  **/
 GtkWidget *
-gimp_label_entry_new (const gchar *label)
+ligma_label_entry_new (const gchar *label)
 {
   GtkWidget *labeled;
 
-  labeled = g_object_new (GIMP_TYPE_LABEL_ENTRY,
+  labeled = g_object_new (LIGMA_TYPE_LABEL_ENTRY,
                           "label",  label,
                           NULL);
 
@@ -239,17 +239,17 @@ gimp_label_entry_new (const gchar *label)
 }
 
 /**
- * gimp_label_entry_set_value:
+ * ligma_label_entry_set_value:
  * @entry: The #GtkLabelEntry.
  * @value: A new value.
  *
  * This function sets the value in the #GtkEntry inside @entry.
  **/
 void
-gimp_label_entry_set_value (GimpLabelEntry *entry,
+ligma_label_entry_set_value (LigmaLabelEntry *entry,
                             const gchar    *value)
 {
-  g_return_if_fail (GIMP_IS_LABEL_ENTRY (entry));
+  g_return_if_fail (LIGMA_IS_LABEL_ENTRY (entry));
 
   g_object_set (entry,
                 "value", value,
@@ -257,7 +257,7 @@ gimp_label_entry_set_value (GimpLabelEntry *entry,
 }
 
 /**
- * gimp_label_entry_get_value:
+ * ligma_label_entry_get_value:
  * @entry: The #GtkLabelEntry.
  *
  * This function returns the value shown by @entry.
@@ -265,12 +265,12 @@ gimp_label_entry_set_value (GimpLabelEntry *entry,
  * Returns: (transfer none): The value currently set.
  **/
 const gchar *
-gimp_label_entry_get_value (GimpLabelEntry *entry)
+ligma_label_entry_get_value (LigmaLabelEntry *entry)
 {
-  GimpLabelEntryPrivate *priv = gimp_label_entry_get_instance_private (entry);
+  LigmaLabelEntryPrivate *priv = ligma_label_entry_get_instance_private (entry);
   GtkEntryBuffer        *buffer;
 
-  g_return_val_if_fail (GIMP_IS_LABEL_ENTRY (entry), NULL);
+  g_return_val_if_fail (LIGMA_IS_LABEL_ENTRY (entry), NULL);
 
   buffer = gtk_entry_get_buffer (GTK_ENTRY (priv->entry));
 
@@ -278,19 +278,19 @@ gimp_label_entry_get_value (GimpLabelEntry *entry)
 }
 
 /**
- * gimp_label_entry_get_entry:
- * @entry: The #GimpLabelEntry
+ * ligma_label_entry_get_entry:
+ * @entry: The #LigmaLabelEntry
  *
  * This function returns the #GtkEntry packed in @entry.
  *
  * Returns: (transfer none): The #GtkEntry contained in @entry.
  **/
 GtkWidget *
-gimp_label_entry_get_entry (GimpLabelEntry *entry)
+ligma_label_entry_get_entry (LigmaLabelEntry *entry)
 {
-  GimpLabelEntryPrivate *priv = gimp_label_entry_get_instance_private (entry);
+  LigmaLabelEntryPrivate *priv = ligma_label_entry_get_instance_private (entry);
 
-  g_return_val_if_fail (GIMP_IS_LABEL_ENTRY (entry), NULL);
+  g_return_val_if_fail (LIGMA_IS_LABEL_ENTRY (entry), NULL);
 
   return priv->entry;
 }

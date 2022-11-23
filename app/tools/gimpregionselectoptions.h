@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1999 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,40 +15,40 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_REGION_SELECT_OPTIONS_H__
-#define __GIMP_REGION_SELECT_OPTIONS_H__
+#ifndef __LIGMA_REGION_SELECT_OPTIONS_H__
+#define __LIGMA_REGION_SELECT_OPTIONS_H__
 
 
-#include "gimpselectionoptions.h"
+#include "ligmaselectionoptions.h"
 
 
-#define GIMP_TYPE_REGION_SELECT_OPTIONS            (gimp_region_select_options_get_type ())
-#define GIMP_REGION_SELECT_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_REGION_SELECT_OPTIONS, GimpRegionSelectOptions))
-#define GIMP_REGION_SELECT_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_REGION_SELECT_OPTIONS, GimpRegionSelectOptionsClass))
-#define GIMP_IS_REGION_SELECT_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_REGION_SELECT_OPTIONS))
-#define GIMP_IS_REGION_SELECT_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_REGION_SELECT_OPTIONS))
-#define GIMP_REGION_SELECT_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_REGION_SELECT_OPTIONS, GimpRegionSelectOptionsClass))
+#define LIGMA_TYPE_REGION_SELECT_OPTIONS            (ligma_region_select_options_get_type ())
+#define LIGMA_REGION_SELECT_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_REGION_SELECT_OPTIONS, LigmaRegionSelectOptions))
+#define LIGMA_REGION_SELECT_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_REGION_SELECT_OPTIONS, LigmaRegionSelectOptionsClass))
+#define LIGMA_IS_REGION_SELECT_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_REGION_SELECT_OPTIONS))
+#define LIGMA_IS_REGION_SELECT_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_REGION_SELECT_OPTIONS))
+#define LIGMA_REGION_SELECT_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_REGION_SELECT_OPTIONS, LigmaRegionSelectOptionsClass))
 
 
-typedef struct _GimpRegionSelectOptions GimpRegionSelectOptions;
-typedef struct _GimpToolOptionsClass    GimpRegionSelectOptionsClass;
+typedef struct _LigmaRegionSelectOptions LigmaRegionSelectOptions;
+typedef struct _LigmaToolOptionsClass    LigmaRegionSelectOptionsClass;
 
-struct _GimpRegionSelectOptions
+struct _LigmaRegionSelectOptions
 {
-  GimpSelectionOptions  parent_instance;
+  LigmaSelectionOptions  parent_instance;
 
   gboolean              select_transparent;
   gboolean              sample_merged;
   gboolean              diagonal_neighbors;
   gdouble               threshold;
-  GimpSelectCriterion   select_criterion;
+  LigmaSelectCriterion   select_criterion;
   gboolean              draw_mask;
 };
 
 
-GType       gimp_region_select_options_get_type (void) G_GNUC_CONST;
+GType       ligma_region_select_options_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_region_select_options_gui      (GimpToolOptions *tool_options);
+GtkWidget * ligma_region_select_options_gui      (LigmaToolOptions *tool_options);
 
 
-#endif  /*  __GIMP_REGION_SELECT_OPTIONS_H__  */
+#endif  /*  __LIGMA_REGION_SELECT_OPTIONS_H__  */

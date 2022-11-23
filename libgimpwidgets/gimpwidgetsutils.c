@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpwidgets.c
- * Copyright (C) 2000 Michael Natterer <mitch@gimp.org>
+ * ligmawidgets.c
+ * Copyright (C) 2000 Michael Natterer <mitch@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -41,20 +41,20 @@
 #include <CoreServices/CoreServices.h>
 #endif
 
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmaconfig/ligmaconfig.h"
 
-#include "gimpwidgetstypes.h"
+#include "ligmawidgetstypes.h"
 
-#include "gimpsizeentry.h"
-#include "gimpwidgetsutils.h"
+#include "ligmasizeentry.h"
+#include "ligmawidgetsutils.h"
 
-#include "libgimp/libgimp-intl.h"
+#include "libligma/libligma-intl.h"
 
 
 /**
- * SECTION: gimpwidgetsutils
- * @title: GimpWidgetsUtils
+ * SECTION: ligmawidgetsutils
+ * @title: LigmaWidgetsUtils
  * @short_description: A collection of helper functions.
  *
  * A collection of helper functions.
@@ -77,12 +77,12 @@ find_mnemonic_widget (GtkWidget *widget,
       return widget;
     }
 
-  if (GIMP_IS_SIZE_ENTRY (widget))
+  if (LIGMA_IS_SIZE_ENTRY (widget))
     {
-      GimpSizeEntry *entry    = GIMP_SIZE_ENTRY (widget);
-      gint           n_fields = gimp_size_entry_get_n_fields (entry);
+      LigmaSizeEntry *entry    = LIGMA_SIZE_ENTRY (widget);
+      gint           n_fields = ligma_size_entry_get_n_fields (entry);
 
-      return gimp_size_entry_get_help_widget (entry, n_fields - 1);
+      return ligma_size_entry_get_help_widget (entry, n_fields - 1);
     }
   else if (GTK_IS_CONTAINER (widget))
     {
@@ -109,7 +109,7 @@ find_mnemonic_widget (GtkWidget *widget,
 }
 
 /**
- * gimp_event_triggers_context_menu:
+ * ligma_event_triggers_context_menu:
  * @event:      The #GdkEvent to verify.
  * @on_release: Whether a menu is triggered on a button release event
  *              instead of a press event.
@@ -125,7 +125,7 @@ find_mnemonic_widget (GtkWidget *widget,
  * Since: 3.0
  **/
 gboolean
-gimp_event_triggers_context_menu (const GdkEvent *event,
+ligma_event_triggers_context_menu (const GdkEvent *event,
                                   gboolean        on_release)
 {
   GdkEvent *copy_event;
@@ -157,7 +157,7 @@ gimp_event_triggers_context_menu (const GdkEvent *event,
 }
 
 /**
- * gimp_grid_attach_aligned:
+ * ligma_grid_attach_aligned:
  * @grid:       The #GtkGrid the widgets will be attached to.
  * @left:       The column to start with.
  * @top:        The row to attach the widgets.
@@ -174,7 +174,7 @@ gimp_event_triggers_context_menu (const GdkEvent *event,
  * Returns: (transfer none): The created #GtkLabel.
  **/
 GtkWidget *
-gimp_grid_attach_aligned (GtkGrid     *grid,
+ligma_grid_attach_aligned (GtkGrid     *grid,
                           gint         left,
                           gint         top,
                           const gchar *label_text,
@@ -210,7 +210,7 @@ gimp_grid_attach_aligned (GtkGrid     *grid,
 }
 
 /**
- * gimp_label_set_attributes: (skip)
+ * ligma_label_set_attributes: (skip)
  * @label: a #GtkLabel
  * @...:   a list of PangoAttrType and value pairs terminated by -1.
  *
@@ -228,7 +228,7 @@ gimp_grid_attach_aligned (GtkGrid     *grid,
  * Since: 2.2
  **/
 void
-gimp_label_set_attributes (GtkLabel *label,
+ligma_label_set_attributes (GtkLabel *label,
                            ...)
 {
   PangoAttribute *attr  = NULL;
@@ -343,13 +343,13 @@ gimp_label_set_attributes (GtkLabel *label,
 }
 
 /**
- * gimp_widget_get_monitor:
+ * ligma_widget_get_monitor:
  * @widget: a #GtkWidget.
  *
  * Returns: (transfer none): the #GdkMonitor where @widget is current displayed on.
  */
 GdkMonitor *
-gimp_widget_get_monitor (GtkWidget *widget)
+ligma_widget_get_monitor (GtkWidget *widget)
 {
   GdkWindow     *window;
   GtkAllocation  allocation;
@@ -360,7 +360,7 @@ gimp_widget_get_monitor (GtkWidget *widget)
   window = gtk_widget_get_window (widget);
 
   if (! window)
-    return gimp_get_monitor_at_pointer ();
+    return ligma_get_monitor_at_pointer ();
 
   gdk_window_get_origin (window, &x, &y);
   gtk_widget_get_allocation (widget, &allocation);
@@ -378,12 +378,12 @@ gimp_widget_get_monitor (GtkWidget *widget)
 }
 
 /**
- * gimp_get_monitor_at_pointer:
+ * ligma_get_monitor_at_pointer:
  *
  * Returns: (transfer none): the #GdkMonitor where the pointer is.
  */
 GdkMonitor *
-gimp_get_monitor_at_pointer (void)
+ligma_get_monitor_at_pointer (void)
 {
   GdkDisplay *display;
   GdkSeat    *seat;
@@ -414,7 +414,7 @@ track_monitor_configure_event (GtkWidget        *toplevel,
                                GdkEvent         *event,
                                TrackMonitorData *track_data)
 {
-  GdkMonitor *monitor = gimp_widget_get_monitor (toplevel);
+  GdkMonitor *monitor = ligma_widget_get_monitor (toplevel);
 
   if (monitor != track_data->monitor)
     {
@@ -452,7 +452,7 @@ track_monitor_hierarchy_changed (GtkWidget        *widget,
       g_object_watch_closure (G_OBJECT (widget), closure);
       g_signal_connect_closure (toplevel, "configure-event", closure, FALSE);
 
-      monitor = gimp_widget_get_monitor (toplevel);
+      monitor = ligma_widget_get_monitor (toplevel);
 
       if (monitor != track_data->monitor)
         {
@@ -464,7 +464,7 @@ track_monitor_hierarchy_changed (GtkWidget        *widget,
 }
 
 /**
- * gimp_widget_track_monitor:
+ * ligma_widget_track_monitor:
  * @widget:                   a #GtkWidget
  * @monitor_changed_callback: the callback when @widget's monitor changes
  * @user_data:                data passed to @monitor_changed_callback
@@ -488,7 +488,7 @@ track_monitor_hierarchy_changed (GtkWidget        *widget,
  * Since: 2.10
  **/
 void
-gimp_widget_track_monitor (GtkWidget      *widget,
+ligma_widget_track_monitor (GtkWidget      *widget,
                            GCallback       monitor_changed_callback,
                            gpointer        user_data,
                            GDestroyNotify  user_data_destroy)
@@ -537,21 +537,21 @@ monitor_number (GdkMonitor *monitor)
 }
 
 /**
- * gimp_monitor_get_color_profile:
+ * ligma_monitor_get_color_profile:
  * @monitor: a #GdkMonitor
  *
- * This function returns the #GimpColorProfile of @monitor
+ * This function returns the #LigmaColorProfile of @monitor
  * or %NULL if there is no profile configured.
  *
  * Since: 3.0
  *
- * Returns: (nullable) (transfer full): the monitor's #GimpColorProfile,
+ * Returns: (nullable) (transfer full): the monitor's #LigmaColorProfile,
  *          or %NULL.
  **/
-GimpColorProfile *
-gimp_monitor_get_color_profile (GdkMonitor *monitor)
+LigmaColorProfile *
+ligma_monitor_get_color_profile (GdkMonitor *monitor)
 {
-  GimpColorProfile *profile = NULL;
+  LigmaColorProfile *profile = NULL;
 
   g_return_val_if_fail (GDK_IS_MONITOR (monitor), NULL);
 
@@ -582,7 +582,7 @@ gimp_monitor_get_color_profile (GdkMonitor *monitor)
                           0, 64 * 1024 * 1024, FALSE,
                           &type, &format, &nitems, &data) && nitems > 0)
       {
-        profile = gimp_color_profile_new_from_icc_profile (data, nitems,
+        profile = ligma_color_profile_new_from_icc_profile (data, nitems,
                                                            NULL);
         g_free (data);
       }
@@ -612,7 +612,7 @@ gimp_monitor_get_color_profile (GdkMonitor *monitor)
             CFDataGetBytes (data, CFRangeMake (0, CFDataGetLength (data)),
                             buffer);
 
-            profile = gimp_color_profile_new_from_icc_profile (buffer,
+            profile = ligma_color_profile_new_from_icc_profile (buffer,
                                                                CFDataGetLength (data),
                                                                NULL);
 
@@ -701,7 +701,7 @@ gimp_monitor_get_color_profile (GdkMonitor *monitor)
             fullpath = g_build_filename (dir, filename, NULL);
             file = g_file_new_for_path (fullpath);
 
-            profile = gimp_color_profile_new_from_file (file, NULL);
+            profile = ligma_color_profile_new_from_file (file, NULL);
             g_object_unref (file);
 
             g_free (fullpath);
@@ -717,19 +717,19 @@ gimp_monitor_get_color_profile (GdkMonitor *monitor)
 }
 
 /**
- * gimp_widget_get_color_profile:
+ * ligma_widget_get_color_profile:
  * @widget: a #GtkWidget
  *
- * This function returns the #GimpColorProfile of the monitor @widget is
+ * This function returns the #LigmaColorProfile of the monitor @widget is
  * currently displayed on, or %NULL if there is no profile configured.
  *
  * Since: 3.0
  *
- * Returns: (nullable) (transfer full): @widget's monitor's #GimpColorProfile,
+ * Returns: (nullable) (transfer full): @widget's monitor's #LigmaColorProfile,
  *          or %NULL.
  **/
-GimpColorProfile *
-gimp_widget_get_color_profile (GtkWidget *widget)
+LigmaColorProfile *
+ligma_widget_get_color_profile (GtkWidget *widget)
 {
   GdkMonitor *monitor;
 
@@ -737,31 +737,31 @@ gimp_widget_get_color_profile (GtkWidget *widget)
 
   if (widget)
     {
-      monitor = gimp_widget_get_monitor (widget);
+      monitor = ligma_widget_get_monitor (widget);
     }
   else
     {
       monitor = gdk_display_get_monitor (gdk_display_get_default (), 0);
     }
 
-  return gimp_monitor_get_color_profile (monitor);
+  return ligma_monitor_get_color_profile (monitor);
 }
 
-static GimpColorProfile *
+static LigmaColorProfile *
 get_display_profile (GtkWidget       *widget,
-                     GimpColorConfig *config)
+                     LigmaColorConfig *config)
 {
-  GimpColorProfile *profile = NULL;
+  LigmaColorProfile *profile = NULL;
 
-  if (gimp_color_config_get_display_profile_from_gdk (config))
+  if (ligma_color_config_get_display_profile_from_gdk (config))
     /* get the toplevel's profile so all a window's colors look the same */
-    profile = gimp_widget_get_color_profile (gtk_widget_get_toplevel (widget));
+    profile = ligma_widget_get_color_profile (gtk_widget_get_toplevel (widget));
 
   if (! profile)
-    profile = gimp_color_config_get_display_color_profile (config, NULL);
+    profile = ligma_color_config_get_display_color_profile (config, NULL);
 
   if (! profile)
-    profile = gimp_color_profile_new_rgb_srgb ();
+    profile = ligma_color_profile_new_rgb_srgb ();
 
   return profile;
 }
@@ -770,15 +770,15 @@ typedef struct _TransformCache TransformCache;
 
 struct _TransformCache
 {
-  GimpColorTransform *transform;
+  LigmaColorTransform *transform;
 
-  GimpColorConfig         *config;
-  GimpColorProfile        *src_profile;
+  LigmaColorConfig         *config;
+  LigmaColorProfile        *src_profile;
   const Babl              *src_format;
-  GimpColorProfile        *dest_profile;
+  LigmaColorProfile        *dest_profile;
   const Babl              *dest_format;
-  GimpColorProfile        *proof_profile;
-  GimpColorRenderingIntent proof_intent;
+  LigmaColorProfile        *proof_profile;
+  LigmaColorRenderingIntent proof_intent;
   gboolean                 proof_bpc;
 
   gulong              notify_id;
@@ -788,22 +788,22 @@ static GList    *transform_caches = NULL;
 static gboolean  debug_cache      = FALSE;
 
 static gboolean
-profiles_equal (GimpColorProfile *profile1,
-                GimpColorProfile *profile2)
+profiles_equal (LigmaColorProfile *profile1,
+                LigmaColorProfile *profile2)
 {
   return ((profile1 == NULL && profile2 == NULL) ||
           (profile1 != NULL && profile2 != NULL &&
-           gimp_color_profile_is_equal (profile1, profile2)));
+           ligma_color_profile_is_equal (profile1, profile2)));
 }
 
 static TransformCache *
-transform_cache_get (GimpColorConfig         *config,
-                     GimpColorProfile        *src_profile,
+transform_cache_get (LigmaColorConfig         *config,
+                     LigmaColorProfile        *src_profile,
                      const Babl              *src_format,
-                     GimpColorProfile        *dest_profile,
+                     LigmaColorProfile        *dest_profile,
                      const Babl              *dest_format,
-                     GimpColorProfile        *proof_profile,
-                     GimpColorRenderingIntent proof_intent,
+                     LigmaColorProfile        *proof_profile,
+                     LigmaColorRenderingIntent proof_intent,
                      gboolean                 proof_bpc)
 {
   GList *list;
@@ -856,39 +856,39 @@ transform_cache_config_notify (GObject          *config,
 }
 
 /**
- * gimp_widget_get_color_transform:
+ * ligma_widget_get_color_transform:
  * @widget:      a #GtkWidget
- * @config:      a #GimpColorConfig
- * @src_profile: a #GimpColorProfile
+ * @config:      a #LigmaColorConfig
+ * @src_profile: a #LigmaColorProfile
  * @src_format:  Babl format for the transform's source pixels
  * @dest_format: Babl format for the transforms's destination pixels
  *
- * This function returns the #GimpColorTransform that transforms pixels
+ * This function returns the #LigmaColorTransform that transforms pixels
  * from @src_profile to the profile of the #GdkMonitor the @widget is
  * displayed on.
  *
- * Returns: (nullable) (transfer full): the #GimpColorTransform.
+ * Returns: (nullable) (transfer full): the #LigmaColorTransform.
  *
  * Since: 2.10
  **/
-GimpColorTransform *
-gimp_widget_get_color_transform (GtkWidget               *widget,
-                                 GimpColorConfig         *config,
-                                 GimpColorProfile        *src_profile,
+LigmaColorTransform *
+ligma_widget_get_color_transform (GtkWidget               *widget,
+                                 LigmaColorConfig         *config,
+                                 LigmaColorProfile        *src_profile,
                                  const Babl              *src_format,
                                  const Babl              *dest_format,
-                                 GimpColorProfile        *softproof_profile,
-                                 GimpColorRenderingIntent proof_intent,
+                                 LigmaColorProfile        *softproof_profile,
+                                 LigmaColorRenderingIntent proof_intent,
                                  gboolean                 proof_bpc)
 {
   static gboolean     initialized   = FALSE;
-  GimpColorProfile   *proof_profile = NULL;
-  GimpColorProfile   *dest_profile  = NULL;
+  LigmaColorProfile   *proof_profile = NULL;
+  LigmaColorProfile   *dest_profile  = NULL;
   TransformCache     *cache;
 
   g_return_val_if_fail (widget == NULL || GTK_IS_WIDGET (widget), NULL);
-  g_return_val_if_fail (GIMP_IS_COLOR_CONFIG (config), NULL);
-  g_return_val_if_fail (GIMP_IS_COLOR_PROFILE (src_profile), NULL);
+  g_return_val_if_fail (LIGMA_IS_COLOR_CONFIG (config), NULL);
+  g_return_val_if_fail (LIGMA_IS_COLOR_PROFILE (src_profile), NULL);
   g_return_val_if_fail (src_format != NULL, NULL);
   g_return_val_if_fail (dest_format != NULL, NULL);
 
@@ -896,23 +896,23 @@ gimp_widget_get_color_transform (GtkWidget               *widget,
     {
       initialized = TRUE;
 
-      debug_cache = g_getenv ("GIMP_DEBUG_TRANSFORM_CACHE") != NULL;
+      debug_cache = g_getenv ("LIGMA_DEBUG_TRANSFORM_CACHE") != NULL;
     }
 
-  switch (gimp_color_config_get_mode (config))
+  switch (ligma_color_config_get_mode (config))
     {
-    case GIMP_COLOR_MANAGEMENT_OFF:
+    case LIGMA_COLOR_MANAGEMENT_OFF:
       return NULL;
 
-    case GIMP_COLOR_MANAGEMENT_SOFTPROOF:
+    case LIGMA_COLOR_MANAGEMENT_SOFTPROOF:
       if (! softproof_profile)
-        proof_profile = gimp_color_config_get_simulation_color_profile (config,
+        proof_profile = ligma_color_config_get_simulation_color_profile (config,
                                                                         NULL);
       else
         proof_profile = g_object_ref (softproof_profile);
       /*  fallthru  */
 
-    case GIMP_COLOR_MANAGEMENT_DISPLAY:
+    case LIGMA_COLOR_MANAGEMENT_DISPLAY:
       dest_profile = get_display_profile (widget, config);
       break;
     }
@@ -940,7 +940,7 @@ gimp_widget_get_color_transform (GtkWidget               *widget,
     }
 
   if (! proof_profile &&
-      gimp_color_profile_is_equal (src_profile, dest_profile))
+      ligma_color_profile_is_equal (src_profile, dest_profile))
     {
       g_object_unref (dest_profile);
 
@@ -970,24 +970,24 @@ gimp_widget_get_color_transform (GtkWidget               *widget,
 
   if (cache->proof_profile)
     {
-      GimpColorTransformFlags flags = 0;
+      LigmaColorTransformFlags flags = 0;
 
       if (proof_bpc)
-        flags |= GIMP_COLOR_TRANSFORM_FLAGS_BLACK_POINT_COMPENSATION;
+        flags |= LIGMA_COLOR_TRANSFORM_FLAGS_BLACK_POINT_COMPENSATION;
 
-      if (! gimp_color_config_get_simulation_optimize (config))
-        flags |= GIMP_COLOR_TRANSFORM_FLAGS_NOOPTIMIZE;
+      if (! ligma_color_config_get_simulation_optimize (config))
+        flags |= LIGMA_COLOR_TRANSFORM_FLAGS_NOOPTIMIZE;
 
-      if (gimp_color_config_get_simulation_gamut_check (config))
+      if (ligma_color_config_get_simulation_gamut_check (config))
         {
-          GimpRGB         color;
+          LigmaRGB         color;
           cmsUInt16Number alarmCodes[cmsMAXCHANNELS] = { 0, };
           guchar          r, g, b;
 
-          flags |= GIMP_COLOR_TRANSFORM_FLAGS_GAMUT_CHECK;
+          flags |= LIGMA_COLOR_TRANSFORM_FLAGS_GAMUT_CHECK;
 
-          gimp_color_config_get_out_of_gamut_color (config, &color);
-          gimp_rgb_get_uchar (&color, &r, &g, &b);
+          ligma_color_config_get_out_of_gamut_color (config, &color);
+          ligma_rgb_get_uchar (&color, &r, &g, &b);
 
           alarmCodes[0] = (cmsUInt16Number) r * 256;
           alarmCodes[1] = (cmsUInt16Number) g * 256;
@@ -997,31 +997,31 @@ gimp_widget_get_color_transform (GtkWidget               *widget,
         }
 
       cache->transform =
-        gimp_color_transform_new_proofing (cache->src_profile,
+        ligma_color_transform_new_proofing (cache->src_profile,
                                            cache->src_format,
                                            cache->dest_profile,
                                            cache->dest_format,
                                            cache->proof_profile,
                                            cache->proof_intent,
-                                           gimp_color_config_get_display_intent (config),
+                                           ligma_color_config_get_display_intent (config),
                                            flags);
     }
   else
     {
-      GimpColorTransformFlags flags = 0;
+      LigmaColorTransformFlags flags = 0;
 
-      if (gimp_color_config_get_display_bpc (config))
-        flags |= GIMP_COLOR_TRANSFORM_FLAGS_BLACK_POINT_COMPENSATION;
+      if (ligma_color_config_get_display_bpc (config))
+        flags |= LIGMA_COLOR_TRANSFORM_FLAGS_BLACK_POINT_COMPENSATION;
 
-      if (! gimp_color_config_get_display_optimize (config))
-        flags |= GIMP_COLOR_TRANSFORM_FLAGS_NOOPTIMIZE;
+      if (! ligma_color_config_get_display_optimize (config))
+        flags |= LIGMA_COLOR_TRANSFORM_FLAGS_NOOPTIMIZE;
 
       cache->transform =
-        gimp_color_transform_new (cache->src_profile,
+        ligma_color_transform_new (cache->src_profile,
                                   cache->src_format,
                                   cache->dest_profile,
                                   cache->dest_format,
-                                  gimp_color_config_get_display_intent (config),
+                                  ligma_color_config_get_display_intent (config),
                                   flags);
     }
 

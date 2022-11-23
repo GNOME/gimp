@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,217 +22,217 @@
 
 #include "core-types.h"
 
-#include "gegl/gimp-babl.h"
+#include "gegl/ligma-babl.h"
 
-#include "gimperror.h"
-#include "gimpimage.h"
-#include "gimplayer.h"
-#include "gimplayermask.h"
+#include "ligmaerror.h"
+#include "ligmaimage.h"
+#include "ligmalayer.h"
+#include "ligmalayermask.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-static void            gimp_layer_mask_preview_freeze       (GimpViewable      *viewable);
-static void            gimp_layer_mask_preview_thaw         (GimpViewable      *viewable);
+static void            ligma_layer_mask_preview_freeze       (LigmaViewable      *viewable);
+static void            ligma_layer_mask_preview_thaw         (LigmaViewable      *viewable);
 
-static gboolean        gimp_layer_mask_is_attached          (GimpItem          *item);
-static gboolean        gimp_layer_mask_is_content_locked    (GimpItem          *item,
-                                                             GimpItem         **locked_item);
-static gboolean        gimp_layer_mask_is_position_locked   (GimpItem          *item,
-                                                             GimpItem         **locked_item,
+static gboolean        ligma_layer_mask_is_attached          (LigmaItem          *item);
+static gboolean        ligma_layer_mask_is_content_locked    (LigmaItem          *item,
+                                                             LigmaItem         **locked_item);
+static gboolean        ligma_layer_mask_is_position_locked   (LigmaItem          *item,
+                                                             LigmaItem         **locked_item,
                                                              gboolean           check_children);
-static GimpItemTree  * gimp_layer_mask_get_tree             (GimpItem          *item);
-static GimpItem      * gimp_layer_mask_duplicate            (GimpItem          *item,
+static LigmaItemTree  * ligma_layer_mask_get_tree             (LigmaItem          *item);
+static LigmaItem      * ligma_layer_mask_duplicate            (LigmaItem          *item,
                                                              GType              new_type);
-static gboolean        gimp_layer_mask_rename               (GimpItem          *item,
+static gboolean        ligma_layer_mask_rename               (LigmaItem          *item,
                                                              const gchar       *new_name,
                                                              const gchar       *undo_desc,
                                                              GError           **error);
 
-static void            gimp_layer_mask_bounding_box_changed (GimpDrawable      *drawable);
-static void            gimp_layer_mask_convert_type         (GimpDrawable      *drawable,
-                                                             GimpImage         *dest_image,
+static void            ligma_layer_mask_bounding_box_changed (LigmaDrawable      *drawable);
+static void            ligma_layer_mask_convert_type         (LigmaDrawable      *drawable,
+                                                             LigmaImage         *dest_image,
                                                              const Babl        *new_format,
-                                                             GimpColorProfile  *src_profile,
-                                                             GimpColorProfile  *dest_profile,
+                                                             LigmaColorProfile  *src_profile,
+                                                             LigmaColorProfile  *dest_profile,
                                                              GeglDitherMethod   layer_dither_type,
                                                              GeglDitherMethod   mask_dither_type,
                                                              gboolean           push_undo,
-                                                             GimpProgress      *progress);
+                                                             LigmaProgress      *progress);
 
 
-G_DEFINE_TYPE (GimpLayerMask, gimp_layer_mask, GIMP_TYPE_CHANNEL)
+G_DEFINE_TYPE (LigmaLayerMask, ligma_layer_mask, LIGMA_TYPE_CHANNEL)
 
-#define parent_class gimp_layer_mask_parent_class
+#define parent_class ligma_layer_mask_parent_class
 
 
 static void
-gimp_layer_mask_class_init (GimpLayerMaskClass *klass)
+ligma_layer_mask_class_init (LigmaLayerMaskClass *klass)
 {
-  GimpViewableClass *viewable_class = GIMP_VIEWABLE_CLASS (klass);
-  GimpItemClass     *item_class     = GIMP_ITEM_CLASS (klass);
-  GimpDrawableClass *drawable_class = GIMP_DRAWABLE_CLASS (klass);
+  LigmaViewableClass *viewable_class = LIGMA_VIEWABLE_CLASS (klass);
+  LigmaItemClass     *item_class     = LIGMA_ITEM_CLASS (klass);
+  LigmaDrawableClass *drawable_class = LIGMA_DRAWABLE_CLASS (klass);
 
-  viewable_class->default_icon_name = "gimp-layer-mask";
+  viewable_class->default_icon_name = "ligma-layer-mask";
 
-  viewable_class->preview_freeze       = gimp_layer_mask_preview_freeze;
-  viewable_class->preview_thaw         = gimp_layer_mask_preview_thaw;
+  viewable_class->preview_freeze       = ligma_layer_mask_preview_freeze;
+  viewable_class->preview_thaw         = ligma_layer_mask_preview_thaw;
 
-  item_class->is_attached              = gimp_layer_mask_is_attached;
-  item_class->is_content_locked        = gimp_layer_mask_is_content_locked;
-  item_class->is_position_locked       = gimp_layer_mask_is_position_locked;
-  item_class->get_tree                 = gimp_layer_mask_get_tree;
-  item_class->duplicate                = gimp_layer_mask_duplicate;
-  item_class->rename                   = gimp_layer_mask_rename;
+  item_class->is_attached              = ligma_layer_mask_is_attached;
+  item_class->is_content_locked        = ligma_layer_mask_is_content_locked;
+  item_class->is_position_locked       = ligma_layer_mask_is_position_locked;
+  item_class->get_tree                 = ligma_layer_mask_get_tree;
+  item_class->duplicate                = ligma_layer_mask_duplicate;
+  item_class->rename                   = ligma_layer_mask_rename;
   item_class->translate_desc           = C_("undo-type", "Move Layer Mask");
   item_class->to_selection_desc        = C_("undo-type", "Layer Mask to Selection");
 
-  drawable_class->bounding_box_changed = gimp_layer_mask_bounding_box_changed;
-  drawable_class->convert_type         = gimp_layer_mask_convert_type;
+  drawable_class->bounding_box_changed = ligma_layer_mask_bounding_box_changed;
+  drawable_class->convert_type         = ligma_layer_mask_convert_type;
 }
 
 static void
-gimp_layer_mask_init (GimpLayerMask *layer_mask)
+ligma_layer_mask_init (LigmaLayerMask *layer_mask)
 {
   layer_mask->layer = NULL;
 }
 
 static void
-gimp_layer_mask_preview_freeze (GimpViewable *viewable)
+ligma_layer_mask_preview_freeze (LigmaViewable *viewable)
 {
-  GimpLayerMask *mask  = GIMP_LAYER_MASK (viewable);
-  GimpLayer     *layer = gimp_layer_mask_get_layer (mask);
+  LigmaLayerMask *mask  = LIGMA_LAYER_MASK (viewable);
+  LigmaLayer     *layer = ligma_layer_mask_get_layer (mask);
 
   if (layer)
     {
-      GimpViewable *parent = gimp_viewable_get_parent (GIMP_VIEWABLE (layer));
+      LigmaViewable *parent = ligma_viewable_get_parent (LIGMA_VIEWABLE (layer));
 
-      if (! parent && gimp_item_is_attached (GIMP_ITEM (layer)))
-        parent = GIMP_VIEWABLE (gimp_item_get_image (GIMP_ITEM (layer)));
+      if (! parent && ligma_item_is_attached (LIGMA_ITEM (layer)))
+        parent = LIGMA_VIEWABLE (ligma_item_get_image (LIGMA_ITEM (layer)));
 
       if (parent)
-        gimp_viewable_preview_freeze (parent);
+        ligma_viewable_preview_freeze (parent);
     }
 }
 
 static void
-gimp_layer_mask_preview_thaw (GimpViewable *viewable)
+ligma_layer_mask_preview_thaw (LigmaViewable *viewable)
 {
-  GimpLayerMask *mask  = GIMP_LAYER_MASK (viewable);
-  GimpLayer     *layer = gimp_layer_mask_get_layer (mask);
+  LigmaLayerMask *mask  = LIGMA_LAYER_MASK (viewable);
+  LigmaLayer     *layer = ligma_layer_mask_get_layer (mask);
 
   if (layer)
     {
-      GimpViewable *parent = gimp_viewable_get_parent (GIMP_VIEWABLE (layer));
+      LigmaViewable *parent = ligma_viewable_get_parent (LIGMA_VIEWABLE (layer));
 
-      if (! parent && gimp_item_is_attached (GIMP_ITEM (layer)))
-        parent = GIMP_VIEWABLE (gimp_item_get_image (GIMP_ITEM (layer)));
+      if (! parent && ligma_item_is_attached (LIGMA_ITEM (layer)))
+        parent = LIGMA_VIEWABLE (ligma_item_get_image (LIGMA_ITEM (layer)));
 
       if (parent)
-        gimp_viewable_preview_thaw (parent);
+        ligma_viewable_preview_thaw (parent);
     }
 }
 
 static gboolean
-gimp_layer_mask_is_content_locked (GimpItem  *item,
-                                   GimpItem **locked_item)
+ligma_layer_mask_is_content_locked (LigmaItem  *item,
+                                   LigmaItem **locked_item)
 {
-  GimpLayerMask *mask  = GIMP_LAYER_MASK (item);
-  GimpLayer     *layer = gimp_layer_mask_get_layer (mask);
+  LigmaLayerMask *mask  = LIGMA_LAYER_MASK (item);
+  LigmaLayer     *layer = ligma_layer_mask_get_layer (mask);
 
   if (layer)
-    return gimp_item_is_content_locked (GIMP_ITEM (layer), locked_item);
+    return ligma_item_is_content_locked (LIGMA_ITEM (layer), locked_item);
 
   return FALSE;
 }
 
 static gboolean
-gimp_layer_mask_is_position_locked (GimpItem  *item,
-                                    GimpItem **locked_item,
+ligma_layer_mask_is_position_locked (LigmaItem  *item,
+                                    LigmaItem **locked_item,
                                     gboolean   check_children)
 {
-  GimpLayerMask *mask  = GIMP_LAYER_MASK (item);
-  GimpLayer     *layer = gimp_layer_mask_get_layer (mask);
+  LigmaLayerMask *mask  = LIGMA_LAYER_MASK (item);
+  LigmaLayer     *layer = ligma_layer_mask_get_layer (mask);
 
   if (layer)
-    return gimp_item_is_position_locked (GIMP_ITEM (layer), locked_item);
+    return ligma_item_is_position_locked (LIGMA_ITEM (layer), locked_item);
 
   return FALSE;
 }
 
 static gboolean
-gimp_layer_mask_is_attached (GimpItem *item)
+ligma_layer_mask_is_attached (LigmaItem *item)
 {
-  GimpLayerMask *mask  = GIMP_LAYER_MASK (item);
-  GimpLayer     *layer = gimp_layer_mask_get_layer (mask);
+  LigmaLayerMask *mask  = LIGMA_LAYER_MASK (item);
+  LigmaLayer     *layer = ligma_layer_mask_get_layer (mask);
 
-  return (GIMP_IS_IMAGE (gimp_item_get_image (item)) &&
-          GIMP_IS_LAYER (layer)                      &&
-          gimp_layer_get_mask (layer) == mask        &&
-          gimp_item_is_attached (GIMP_ITEM (layer)));
+  return (LIGMA_IS_IMAGE (ligma_item_get_image (item)) &&
+          LIGMA_IS_LAYER (layer)                      &&
+          ligma_layer_get_mask (layer) == mask        &&
+          ligma_item_is_attached (LIGMA_ITEM (layer)));
 }
 
-static GimpItemTree *
-gimp_layer_mask_get_tree (GimpItem *item)
+static LigmaItemTree *
+ligma_layer_mask_get_tree (LigmaItem *item)
 {
   return NULL;
 }
 
-static GimpItem *
-gimp_layer_mask_duplicate (GimpItem *item,
+static LigmaItem *
+ligma_layer_mask_duplicate (LigmaItem *item,
                            GType     new_type)
 {
-  GimpItem *new_item;
+  LigmaItem *new_item;
 
-  g_return_val_if_fail (g_type_is_a (new_type, GIMP_TYPE_DRAWABLE), NULL);
+  g_return_val_if_fail (g_type_is_a (new_type, LIGMA_TYPE_DRAWABLE), NULL);
 
-  new_item = GIMP_ITEM_CLASS (parent_class)->duplicate (item, new_type);
+  new_item = LIGMA_ITEM_CLASS (parent_class)->duplicate (item, new_type);
 
   return new_item;
 }
 
 static gboolean
-gimp_layer_mask_rename (GimpItem     *item,
+ligma_layer_mask_rename (LigmaItem     *item,
                         const gchar  *new_name,
                         const gchar  *undo_desc,
                         GError      **error)
 {
   /* reject renaming, layer masks are always named "<layer name> mask"  */
 
-  g_set_error (error, GIMP_ERROR, GIMP_FAILED,
+  g_set_error (error, LIGMA_ERROR, LIGMA_FAILED,
                _("Cannot rename layer masks."));
 
   return FALSE;
 }
 
 static void
-gimp_layer_mask_bounding_box_changed (GimpDrawable *drawable)
+ligma_layer_mask_bounding_box_changed (LigmaDrawable *drawable)
 {
-  GimpLayerMask *mask  = GIMP_LAYER_MASK (drawable);
-  GimpLayer     *layer = gimp_layer_mask_get_layer (mask);
+  LigmaLayerMask *mask  = LIGMA_LAYER_MASK (drawable);
+  LigmaLayer     *layer = ligma_layer_mask_get_layer (mask);
 
-  if (GIMP_DRAWABLE_CLASS (parent_class)->bounding_box_changed)
-    GIMP_DRAWABLE_CLASS (parent_class)->bounding_box_changed (drawable);
+  if (LIGMA_DRAWABLE_CLASS (parent_class)->bounding_box_changed)
+    LIGMA_DRAWABLE_CLASS (parent_class)->bounding_box_changed (drawable);
 
   if (layer)
-    gimp_drawable_update_bounding_box (GIMP_DRAWABLE (layer));
+    ligma_drawable_update_bounding_box (LIGMA_DRAWABLE (layer));
 }
 
 static void
-gimp_layer_mask_convert_type (GimpDrawable      *drawable,
-                              GimpImage         *dest_image,
+ligma_layer_mask_convert_type (LigmaDrawable      *drawable,
+                              LigmaImage         *dest_image,
                               const Babl        *new_format,
-                              GimpColorProfile  *src_profile,
-                              GimpColorProfile  *dest_profile,
+                              LigmaColorProfile  *src_profile,
+                              LigmaColorProfile  *dest_profile,
                               GeglDitherMethod   layer_dither_type,
                               GeglDitherMethod   mask_dither_type,
                               gboolean           push_undo,
-                              GimpProgress      *progress)
+                              LigmaProgress      *progress)
 {
   new_format =
-    gimp_babl_mask_format (gimp_babl_format_get_precision (new_format));
+    ligma_babl_mask_format (ligma_babl_format_get_precision (new_format));
 
-  GIMP_DRAWABLE_CLASS (parent_class)->convert_type (drawable, dest_image,
+  LIGMA_DRAWABLE_CLASS (parent_class)->convert_type (drawable, dest_image,
                                                     new_format,
                                                     src_profile,
                                                     dest_profile,
@@ -242,43 +242,43 @@ gimp_layer_mask_convert_type (GimpDrawable      *drawable,
                                                     progress);
 }
 
-GimpLayerMask *
-gimp_layer_mask_new (GimpImage     *image,
+LigmaLayerMask *
+ligma_layer_mask_new (LigmaImage     *image,
                      gint           width,
                      gint           height,
                      const gchar   *name,
-                     const GimpRGB *color)
+                     const LigmaRGB *color)
 {
-  GimpLayerMask *layer_mask;
+  LigmaLayerMask *layer_mask;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
   g_return_val_if_fail (width > 0, NULL);
   g_return_val_if_fail (height > 0, NULL);
   g_return_val_if_fail (color != NULL, NULL);
 
   layer_mask =
-    GIMP_LAYER_MASK (gimp_drawable_new (GIMP_TYPE_LAYER_MASK,
+    LIGMA_LAYER_MASK (ligma_drawable_new (LIGMA_TYPE_LAYER_MASK,
                                         image, name,
                                         0, 0, width, height,
-                                        gimp_image_get_mask_format (image)));
+                                        ligma_image_get_mask_format (image)));
 
   /*  set the layer_mask color and opacity  */
-  gimp_channel_set_color (GIMP_CHANNEL (layer_mask), color, FALSE);
-  gimp_channel_set_show_masked (GIMP_CHANNEL (layer_mask), TRUE);
+  ligma_channel_set_color (LIGMA_CHANNEL (layer_mask), color, FALSE);
+  ligma_channel_set_show_masked (LIGMA_CHANNEL (layer_mask), TRUE);
 
   /*  selection mask variables  */
-  GIMP_CHANNEL (layer_mask)->x2 = width;
-  GIMP_CHANNEL (layer_mask)->y2 = height;
+  LIGMA_CHANNEL (layer_mask)->x2 = width;
+  LIGMA_CHANNEL (layer_mask)->y2 = height;
 
   return layer_mask;
 }
 
 void
-gimp_layer_mask_set_layer (GimpLayerMask *layer_mask,
-                           GimpLayer     *layer)
+ligma_layer_mask_set_layer (LigmaLayerMask *layer_mask,
+                           LigmaLayer     *layer)
 {
-  g_return_if_fail (GIMP_IS_LAYER_MASK (layer_mask));
-  g_return_if_fail (layer == NULL || GIMP_IS_LAYER (layer));
+  g_return_if_fail (LIGMA_IS_LAYER_MASK (layer_mask));
+  g_return_if_fail (layer == NULL || LIGMA_IS_LAYER (layer));
 
   layer_mask->layer = layer;
 
@@ -288,19 +288,19 @@ gimp_layer_mask_set_layer (GimpLayerMask *layer_mask,
       gint   offset_x;
       gint   offset_y;
 
-      gimp_item_get_offset (GIMP_ITEM (layer), &offset_x, &offset_y);
-      gimp_item_set_offset (GIMP_ITEM (layer_mask), offset_x, offset_y);
+      ligma_item_get_offset (LIGMA_ITEM (layer), &offset_x, &offset_y);
+      ligma_item_set_offset (LIGMA_ITEM (layer_mask), offset_x, offset_y);
 
-      mask_name = g_strdup_printf (_("%s mask"), gimp_object_get_name (layer));
+      mask_name = g_strdup_printf (_("%s mask"), ligma_object_get_name (layer));
 
-      gimp_object_take_name (GIMP_OBJECT (layer_mask), mask_name);
+      ligma_object_take_name (LIGMA_OBJECT (layer_mask), mask_name);
     }
 }
 
-GimpLayer *
-gimp_layer_mask_get_layer (GimpLayerMask *layer_mask)
+LigmaLayer *
+ligma_layer_mask_get_layer (LigmaLayerMask *layer_mask)
 {
-  g_return_val_if_fail (GIMP_IS_LAYER_MASK (layer_mask), NULL);
+  g_return_val_if_fail (LIGMA_IS_LAYER_MASK (layer_mask), NULL);
 
   return layer_mask->layer;
 }

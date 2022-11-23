@@ -1,4 +1,4 @@
-/* Lighting Effects - A plug-in for GIMP
+/* Lighting Effects - A plug-in for LIGMA
  *
  * Dialog creation and updaters, callbacks and event-handlers
  *
@@ -23,8 +23,8 @@
 
 #include <glib/gstdio.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
 #include "lighting-ui.h"
 #include "lighting-main.h"
@@ -33,7 +33,7 @@
 #include "lighting-apply.h"
 #include "lighting-preview.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 extern LightingValues mapvals;
@@ -62,14 +62,14 @@ static void create_main_notebook      (GtkWidget       *container);
 static void toggle_update             (GtkWidget       *widget,
                                        gpointer         data);
 
-static void     distance_update       (GimpLabelSpin   *scale,
+static void     distance_update       (LigmaLabelSpin   *scale,
                                        gpointer         data);
 
-static gboolean  bumpmap_constrain    (GimpImage       *image,
-                                       GimpItem        *item,
+static gboolean  bumpmap_constrain    (LigmaImage       *image,
+                                       LigmaItem        *item,
                                        gpointer         data);
-static gboolean  envmap_constrain     (GimpImage       *image,
-                                       GimpItem        *item,
+static gboolean  envmap_constrain     (LigmaImage       *image,
+                                       LigmaItem        *item,
                                        gpointer         data);
 static void     envmap_combo_callback (GtkWidget       *widget,
                                        gpointer         data);
@@ -83,7 +83,7 @@ static void     load_lighting_preset  (GtkWidget       *widget,
 static void     load_preset_response  (GtkFileChooser  *chooser,
                                        gint             response_id,
                                        gpointer         data);
-static void     lightselect_callback  (GimpIntComboBox *combo,
+static void     lightselect_callback  (LigmaIntComboBox *combo,
                                        gpointer         data);
 static void     apply_settings        (GtkWidget       *widget,
                                        gpointer         data);
@@ -108,7 +108,7 @@ static void
 toggle_update (GtkWidget *widget,
                gpointer   data)
 {
-  gimp_toggle_button_update (widget, data);
+  ligma_toggle_button_update (widget, data);
 
   preview_compute ();
   gtk_widget_queue_draw (previewarea);
@@ -116,10 +116,10 @@ toggle_update (GtkWidget *widget,
 
 
 static void
-distance_update (GimpLabelSpin *scale,
+distance_update (LigmaLabelSpin *scale,
                  gpointer       data)
 {
-  mapvals.viewpoint.z = gimp_label_spin_get_value (scale);
+  mapvals.viewpoint.z = ligma_label_spin_get_value (scale);
 
   preview_compute ();
   gtk_widget_queue_draw (previewarea);
@@ -140,12 +140,12 @@ apply_settings (GtkWidget *widget,
 
   if (mapvals.update_enabled)
     {
-      valid = gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (light_type_combo),
+      valid = ligma_int_combo_box_get_active (LIGMA_INT_COMBO_BOX (light_type_combo),
                                              &type);
       if (valid)
         mapvals.lightsource[k].type = type;
 
-      gimp_color_button_get_color (GIMP_COLOR_BUTTON (colorbutton),
+      ligma_color_button_get_color (LIGMA_COLOR_BUTTON (colorbutton),
                                    &mapvals.lightsource[k].color);
 
       mapvals.lightsource[k].position.x
@@ -206,7 +206,7 @@ static void
 mapmenu2_callback (GtkWidget *widget,
                    gpointer   data)
 {
-  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), (gint *) data);
+  ligma_int_combo_box_get_active (LIGMA_INT_COMBO_BOX (widget), (gint *) data);
 
   preview_compute ();
   gtk_widget_queue_draw (previewarea);
@@ -250,44 +250,44 @@ zoomin_callback (GtkWidget *widget)
 */
 /**********************************************/
 /* Main window "Apply" button callback.       */
-/* Render to GIMP image, close down and exit. */
+/* Render to LIGMA image, close down and exit. */
 /**********************************************/
 
 static gint
-bumpmap_constrain (GimpImage *image,
-                   GimpItem  *item,
+bumpmap_constrain (LigmaImage *image,
+                   LigmaItem  *item,
                    gpointer   data)
 {
-  GimpDrawable *dr = gimp_drawable_get_by_id (mapvals.drawable_id);
+  LigmaDrawable *dr = ligma_drawable_get_by_id (mapvals.drawable_id);
 
-  return  ((gimp_drawable_get_width (GIMP_DRAWABLE (item)) ==
-            gimp_drawable_get_width (dr)) &&
-           (gimp_drawable_get_height (GIMP_DRAWABLE (item)) ==
-            gimp_drawable_get_height (dr)));
+  return  ((ligma_drawable_get_width (LIGMA_DRAWABLE (item)) ==
+            ligma_drawable_get_width (dr)) &&
+           (ligma_drawable_get_height (LIGMA_DRAWABLE (item)) ==
+            ligma_drawable_get_height (dr)));
 }
 
 static gint
-envmap_constrain (GimpImage *image,
-                  GimpItem  *item,
+envmap_constrain (LigmaImage *image,
+                  LigmaItem  *item,
                   gpointer   data)
 {
-  return (! gimp_drawable_is_gray   (GIMP_DRAWABLE (item)) &&
-          ! gimp_drawable_has_alpha (GIMP_DRAWABLE (item)));
+  return (! ligma_drawable_is_gray   (LIGMA_DRAWABLE (item)) &&
+          ! ligma_drawable_has_alpha (LIGMA_DRAWABLE (item)));
 }
 
 static void
 envmap_combo_callback (GtkWidget *widget,
                        gpointer   data)
 {
-  GimpDrawable *env;
+  LigmaDrawable *env;
 
-  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget),
+  ligma_int_combo_box_get_active (LIGMA_INT_COMBO_BOX (widget),
                                  &mapvals.envmap_id);
 
-  env = gimp_drawable_get_by_id (mapvals.envmap_id);
+  env = ligma_drawable_get_by_id (mapvals.envmap_id);
 
-  env_width  = gimp_drawable_get_width  (env);
-  env_height = gimp_drawable_get_height (env);
+  env_width  = ligma_drawable_get_width  (env);
+  env_height = ligma_drawable_get_height (env);
 }
 
 /***********************/
@@ -308,7 +308,7 @@ create_options_page (void)
 
   /* General options */
 
-  frame = gimp_frame_new (_("General Options"));
+  frame = ligma_frame_new (_("General Options"));
   gtk_box_pack_start (GTK_BOX (page), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -325,7 +325,7 @@ create_options_page (void)
                     &mapvals.transparent_background);
   gtk_widget_show (toggle);
 
-  gimp_help_set_help_data (toggle,
+  ligma_help_set_help_data (toggle,
                            _("Make destination image transparent where bump "
                              "height is zero"),NULL);
 
@@ -334,11 +334,11 @@ create_options_page (void)
                                 mapvals.create_new_image);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
+                    G_CALLBACK (ligma_toggle_button_update),
                     &mapvals.create_new_image);
   gtk_widget_show (toggle);
 
-  gimp_help_set_help_data (toggle,
+  ligma_help_set_help_data (toggle,
                            _("Create a new image when applying filter"), NULL);
 
   toggle = gtk_check_button_new_with_mnemonic (_("High _quality preview"));
@@ -350,11 +350,11 @@ create_options_page (void)
                     &mapvals.previewquality);
   gtk_widget_show (toggle);
 
-  gimp_help_set_help_data (toggle,
+  ligma_help_set_help_data (toggle,
                            _("Enable/disable high quality preview"), NULL);
 
-  scale = gimp_scale_entry_new (_("Distance:"), mapvals.viewpoint.z, 0.0, 2.0, 3);
-  gimp_help_set_help_data (scale,
+  scale = ligma_scale_entry_new (_("Distance:"), mapvals.viewpoint.z, 0.0, 2.0, 3);
+  ligma_help_set_help_data (scale,
                            "Distance of observer from surface",
                            "plug-in-lighting");
   g_signal_connect (scale, "value-changed",
@@ -386,7 +386,7 @@ create_light_page (void)
   page = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (page), 12);
 
-  frame = gimp_frame_new (_("Light Settings"));
+  frame = ligma_frame_new (_("Light Settings"));
   gtk_box_pack_start (GTK_BOX (page), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -396,7 +396,7 @@ create_light_page (void)
   gtk_container_add (GTK_CONTAINER (frame), grid);
   gtk_widget_show (grid);
 
-  lightselect_combo =  gimp_int_combo_box_new (_("Light 1"),        0,
+  lightselect_combo =  ligma_int_combo_box_new (_("Light 1"),        0,
                                                _("Light 2"),        1,
                                                _("Light 3"),        2,
                                                _("Light 4"),        3,
@@ -404,7 +404,7 @@ create_light_page (void)
                                                _("Light 6"),        5,
                                                NULL);
   gtk_widget_set_margin_end (lightselect_combo, 12);
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (lightselect_combo), k);
+  ligma_int_combo_box_set_active (LIGMA_INT_COMBO_BOX (lightselect_combo), k);
   gtk_grid_attach (GTK_GRID (grid), lightselect_combo, 0, 0, 2, 1);
   g_signal_connect (lightselect_combo, "changed",
                     G_CALLBACK (lightselect_callback), NULL);
@@ -422,13 +422,13 @@ create_light_page (void)
   gtk_widget_show (label);
 
   light_type_combo =
-    gimp_int_combo_box_new (C_("light-source", "None"), NO_LIGHT,
+    ligma_int_combo_box_new (C_("light-source", "None"), NO_LIGHT,
                             _("Directional"),           DIRECTIONAL_LIGHT,
                             _("Point"),                 POINT_LIGHT,
                             /* _("Spot"),               SPOT_LIGHT, */
                             NULL);
   gtk_widget_set_margin_end (light_type_combo, 12);
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (light_type_combo),
+  ligma_int_combo_box_set_active (LIGMA_INT_COMBO_BOX (light_type_combo),
                                  mapvals.lightsource[k].type);
   gtk_grid_attach (GTK_GRID (grid), light_type_combo, 1, 1, 1, 1);
   gtk_widget_show (light_type_combo);
@@ -437,16 +437,16 @@ create_light_page (void)
                     G_CALLBACK (apply_settings),
                     NULL);
 
-  gimp_help_set_help_data (light_type_combo,
+  ligma_help_set_help_data (light_type_combo,
                            _("Type of light source to apply"), NULL);
 
-  colorbutton = gimp_color_button_new (_("Select lightsource color"),
+  colorbutton = ligma_color_button_new (_("Select lightsource color"),
                                           64, 16,
                                           &mapvals.lightsource[k].color,
-                                          GIMP_COLOR_AREA_FLAT);
+                                          LIGMA_COLOR_AREA_FLAT);
   gtk_widget_set_halign (colorbutton, GTK_ALIGN_START);
   gtk_widget_set_margin_end (colorbutton, 12);
-  gimp_color_button_set_update (GIMP_COLOR_BUTTON (colorbutton), TRUE);
+  ligma_color_button_set_update (LIGMA_COLOR_BUTTON (colorbutton), TRUE);
   gtk_widget_show (colorbutton);
   gtk_grid_attach (GTK_GRID (grid), colorbutton, 1, 2, 1, 1);
 
@@ -454,7 +454,7 @@ create_light_page (void)
                     G_CALLBACK (apply_settings),
                     NULL);
 
-  gimp_help_set_help_data (colorbutton,
+  ligma_help_set_help_data (colorbutton,
                            _("Set light source color"), NULL);
 
 
@@ -464,7 +464,7 @@ create_light_page (void)
                                     0.01, 0.1, 0.0, 0.0, 2);
   gtk_widget_set_halign (spin_intensity, GTK_ALIGN_START);
   gtk_widget_set_margin_end (spin_intensity, 12);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 3,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 3,
                             _("_Intensity:"), 0.0, 0.5,
                             spin_intensity, 1);
 
@@ -472,7 +472,7 @@ create_light_page (void)
                     G_CALLBACK (apply_settings),
                     NULL);
 
-  gimp_help_set_help_data (spin_intensity,
+  ligma_help_set_help_data (spin_intensity,
                            _("Light intensity"), NULL);
 
 
@@ -487,7 +487,7 @@ create_light_page (void)
                                 0.1, 1.0, 0.0, 0.0, 2);
   gtk_widget_set_halign (spin_pos_x, GTK_ALIGN_START);
   gtk_widget_set_margin_end (spin_pos_x, 12);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 2, 1,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 2, 1,
                             _("_X:"), 0.0, 0.5,
                             spin_pos_x, 1);
 
@@ -495,7 +495,7 @@ create_light_page (void)
                     G_CALLBACK (apply_settings),
                     NULL);
 
-  gimp_help_set_help_data (spin_pos_x,
+  ligma_help_set_help_data (spin_pos_x,
                            _("Light source X position in XYZ space"), NULL);
 
   spin_pos_y = spin_button_new (&adj,
@@ -504,7 +504,7 @@ create_light_page (void)
                                 0.1, 1.0, 0.0, 0.0, 2);
   gtk_widget_set_halign (spin_pos_y, GTK_ALIGN_START);
   gtk_widget_set_margin_end (spin_pos_y, 12);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 2, 2,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 2, 2,
                             _("_Y:"), 0.0, 0.5,
                             spin_pos_y, 1);
 
@@ -512,7 +512,7 @@ create_light_page (void)
                     G_CALLBACK (apply_settings),
                     NULL);
 
-  gimp_help_set_help_data (spin_pos_y,
+  ligma_help_set_help_data (spin_pos_y,
                            _("Light source Y position in XYZ space"), NULL);
 
   spin_pos_z = spin_button_new (&adj,
@@ -521,7 +521,7 @@ create_light_page (void)
                                 0.1, 1.0, 0.0, 0.0, 2);
   gtk_widget_set_halign (spin_pos_z, GTK_ALIGN_START);
   gtk_widget_set_margin_end (spin_pos_z, 12);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 2, 3,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 2, 3,
                             _("_Z:"), 0.0, 0.5,
                             spin_pos_z, 1);
 
@@ -529,7 +529,7 @@ create_light_page (void)
                     G_CALLBACK (apply_settings),
                     NULL);
 
-  gimp_help_set_help_data (spin_pos_z,
+  ligma_help_set_help_data (spin_pos_z,
                            _("Light source Z position in XYZ space"), NULL);
 
 
@@ -542,7 +542,7 @@ create_light_page (void)
                                 mapvals.lightsource[k].direction.x,
                                 -100.0, 100.0, 0.1, 1.0, 0.0, 0.0, 2);
   gtk_widget_set_halign (spin_dir_x, GTK_ALIGN_START);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 4, 1,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 4, 1,
                             _("X:"), 0.0, 0.5,
                             spin_dir_x, 1);
 
@@ -550,14 +550,14 @@ create_light_page (void)
                     G_CALLBACK (apply_settings),
                     NULL);
 
-  gimp_help_set_help_data (spin_dir_x,
+  ligma_help_set_help_data (spin_dir_x,
                            _("Light source X direction in XYZ space"), NULL);
 
   spin_dir_y = spin_button_new (&adj,
                                 mapvals.lightsource[k].direction.y,
                                 -100.0, 100.0, 0.1, 1.0, 0.0, 0.0, 2);
   gtk_widget_set_halign (spin_dir_y, GTK_ALIGN_START);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 4, 2,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 4, 2,
                             _("Y:"), 0.0, 0.5,
                             spin_dir_y, 1);
 
@@ -565,14 +565,14 @@ create_light_page (void)
                     G_CALLBACK (apply_settings),
                     NULL);
 
-  gimp_help_set_help_data (spin_dir_y,
+  ligma_help_set_help_data (spin_dir_y,
                            _("Light source Y direction in XYZ space"), NULL);
 
   spin_dir_z = spin_button_new (&adj,
                                 mapvals.lightsource[k].direction.z,
                                 -100.0, 100.0, 0.1, 1.0, 0.0, 0.0, 2);
   gtk_widget_set_halign (spin_dir_z, GTK_ALIGN_START);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 4, 3,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 4, 3,
                             _("Z:"), 0.0, 0.5,
                             spin_dir_z, 1);
 
@@ -580,7 +580,7 @@ create_light_page (void)
                     G_CALLBACK (apply_settings),
                     NULL);
 
-  gimp_help_set_help_data (spin_dir_z,
+  ligma_help_set_help_data (spin_dir_z,
                            _("Light source Z direction in XYZ space"),
                            NULL);
 
@@ -638,7 +638,7 @@ create_material_page (void)
   page = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (page), 12);
 
-  frame = gimp_frame_new (_("Material Properties"));
+  frame = ligma_frame_new (_("Material Properties"));
   gtk_box_pack_start (GTK_BOX (page), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -656,7 +656,7 @@ create_material_page (void)
 
   image = gtk_image_new_from_icon_name (LIGHTING_INTENSITY_AMBIENT_LOW,
                                         GTK_ICON_SIZE_BUTTON);
-  label = gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+  label = ligma_grid_attach_aligned (GTK_GRID (grid), 0, 0,
                                     _("_Glowing:"), 0.0, 0.5,
                                     image, 1);
   gtk_size_group_add_widget (group, label);
@@ -667,14 +667,14 @@ create_material_page (void)
   gtk_widget_show (spinbutton);
 
   g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
+                    G_CALLBACK (ligma_double_adjustment_update),
                     &mapvals.material.ambient_int);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (interactive_preview_callback),
                     NULL);
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
-  gimp_help_set_help_data (spinbutton,
+  ligma_help_set_help_data (spinbutton,
                            _("Amount of original color to show where no "
                              "direct light falls"), NULL);
 
@@ -687,7 +687,7 @@ create_material_page (void)
 
   image = gtk_image_new_from_icon_name (LIGHTING_INTENSITY_DIFFUSE_LOW,
                                         GTK_ICON_SIZE_BUTTON);
-  label = gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+  label = ligma_grid_attach_aligned (GTK_GRID (grid), 0, 1,
                                     _("_Bright:"), 0.0, 0.5,
                                     image, 1);
   gtk_size_group_add_widget (group, label);
@@ -698,14 +698,14 @@ create_material_page (void)
   gtk_widget_show (spinbutton);
 
   g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
+                    G_CALLBACK (ligma_double_adjustment_update),
                     &mapvals.material.diffuse_int);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (interactive_preview_callback),
                     NULL);
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
-  gimp_help_set_help_data (spinbutton,
+  ligma_help_set_help_data (spinbutton,
                            _("Intensity of original color when lit by a light "
                              "source"), NULL);
 
@@ -718,7 +718,7 @@ create_material_page (void)
 
   image = gtk_image_new_from_icon_name (LIGHTING_REFLECTIVITY_SPECULAR_LOW,
                                         GTK_ICON_SIZE_BUTTON);
-  label = gimp_grid_attach_aligned (GTK_GRID (grid), 0, 2,
+  label = ligma_grid_attach_aligned (GTK_GRID (grid), 0, 2,
                                     _("_Shiny:"), 0.0, 0.5,
                                     image, 1);
   gtk_size_group_add_widget (group, label);
@@ -729,14 +729,14 @@ create_material_page (void)
   gtk_widget_show (spinbutton);
 
   g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
+                    G_CALLBACK (ligma_double_adjustment_update),
                     &mapvals.material.specular_ref);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (interactive_preview_callback),
                     NULL);
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
-  gimp_help_set_help_data (spinbutton,
+  ligma_help_set_help_data (spinbutton,
                            _("Controls how intense the highlights will be"),
                            NULL);
 
@@ -748,7 +748,7 @@ create_material_page (void)
   /* Highlight */
   image = gtk_image_new_from_icon_name (LIGHTING_REFLECTIVITY_HIGHLIGHT_LOW,
                                         GTK_ICON_SIZE_BUTTON);
-  label = gimp_grid_attach_aligned (GTK_GRID (grid), 0, 3,
+  label = ligma_grid_attach_aligned (GTK_GRID (grid), 0, 3,
                                     _("_Polished:"), 0.0, 0.5,
                                     image, 1);
   gtk_size_group_add_widget (group, label);
@@ -759,14 +759,14 @@ create_material_page (void)
   gtk_widget_show (spinbutton);
 
   g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
+                    G_CALLBACK (ligma_double_adjustment_update),
                     &mapvals.material.highlight);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (interactive_preview_callback),
                     NULL);
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
-  gimp_help_set_help_data (spinbutton,
+  ligma_help_set_help_data (spinbutton,
                            _("Higher values makes the highlights more focused"),
                            NULL);
 
@@ -781,7 +781,7 @@ create_material_page (void)
   gtk_widget_show (button);
 
   g_signal_connect (button, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
+                    G_CALLBACK (ligma_toggle_button_update),
                     &mapvals.material.metallic);
   g_signal_connect (button, "toggled",
                     G_CALLBACK (interactive_preview_callback),
@@ -808,7 +808,7 @@ create_bump_page (void)
   page = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (page), 12);
 
-  frame = gimp_frame_new (NULL);
+  frame = ligma_frame_new (NULL);
   gtk_box_pack_start (GTK_BOX (page), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -819,13 +819,13 @@ create_bump_page (void)
   gtk_widget_show (toggle);
 
   g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
+                    G_CALLBACK (ligma_toggle_button_update),
                     &mapvals.bump_mapped);
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (interactive_preview_callback),
                     NULL);
 
-  gimp_help_set_help_data (toggle,
+  ligma_help_set_help_data (toggle,
                            _("Enable/disable bump-mapping (image depth)"),
                            NULL);
 
@@ -839,48 +839,48 @@ create_bump_page (void)
                           grid,  "sensitive",
                           G_BINDING_SYNC_CREATE);
 
-  combo = gimp_drawable_combo_box_new (bumpmap_constrain, NULL, NULL);
-  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), mapvals.bumpmap_id,
-                              G_CALLBACK (gimp_int_combo_box_get_active),
+  combo = ligma_drawable_combo_box_new (bumpmap_constrain, NULL, NULL);
+  ligma_int_combo_box_connect (LIGMA_INT_COMBO_BOX (combo), mapvals.bumpmap_id,
+                              G_CALLBACK (ligma_int_combo_box_get_active),
                               &mapvals.bumpmap_id, NULL);
 
   g_signal_connect (combo, "changed",
                     G_CALLBACK (mapmenu2_callback),
                     &mapvals.bumpmap_id);
 
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 0,
                             _("Bumpm_ap image:"), 0.0, 0.5,
                             combo, 1);
 
-  combo = gimp_int_combo_box_new (_("Linear"),      LINEAR_MAP,
+  combo = ligma_int_combo_box_new (_("Linear"),      LINEAR_MAP,
                                   _("Logarithmic"), LOGARITHMIC_MAP,
                                   _("Sinusoidal"),  SINUSOIDAL_MAP,
                                   _("Spherical"),   SPHERICAL_MAP,
                                   NULL);
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
+  ligma_int_combo_box_set_active (LIGMA_INT_COMBO_BOX (combo),
                                  mapvals.bumpmaptype);
 
   g_signal_connect (combo, "changed",
                     G_CALLBACK (mapmenu2_callback),
                     &mapvals.bumpmaptype);
 
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 1,
                             _("Cu_rve:"), 0.0, 0.5, combo, 1);
 
   spinbutton = spin_button_new (&adj, mapvals.bumpmax,
                                 0, G_MAXFLOAT, 0.01, 0.1, 0.0, 0.0, 2);
   gtk_widget_set_halign (spinbutton, GTK_ALIGN_START);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 2,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 2,
                             _("Ma_ximum height:"), 0.0, 0.5,
                             spinbutton, 1);
   g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
+                    G_CALLBACK (ligma_double_adjustment_update),
                     &mapvals.bumpmax);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (interactive_preview_callback),
                     NULL);
 
-  gimp_help_set_help_data (spinbutton,
+  ligma_help_set_help_data (spinbutton,
                            _("Maximum height for bumps"),
                            NULL);
 
@@ -901,7 +901,7 @@ create_environment_page (void)
   page = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (page), 12);
 
-  frame = gimp_frame_new (NULL);
+  frame = ligma_frame_new (NULL);
   gtk_box_pack_start (GTK_BOX (page), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -912,13 +912,13 @@ create_environment_page (void)
   gtk_widget_show (toggle);
 
   g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
+                    G_CALLBACK (ligma_toggle_button_update),
                     &mapvals.env_mapped);
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (interactive_preview_callback),
                     NULL);
 
-  gimp_help_set_help_data (toggle,
+  ligma_help_set_help_data (toggle,
                            _("Enable/disable environment-mapping (reflection)"),
                            NULL);
 
@@ -932,15 +932,15 @@ create_environment_page (void)
                           grid,   "sensitive",
                           G_BINDING_SYNC_CREATE);
 
-  combo = gimp_drawable_combo_box_new (envmap_constrain, NULL, NULL);
-  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), mapvals.envmap_id,
+  combo = ligma_drawable_combo_box_new (envmap_constrain, NULL, NULL);
+  ligma_int_combo_box_connect (LIGMA_INT_COMBO_BOX (combo), mapvals.envmap_id,
                               G_CALLBACK (envmap_combo_callback),
                               NULL, NULL);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 0,
                             _("En_vironment image:"), 0.0, 0.5,
                             combo, 1);
 
-  gimp_help_set_help_data (combo, _("Environment image to use"), NULL);
+  ligma_help_set_help_data (combo, _("Environment image to use"), NULL);
 
   gtk_widget_show (page);
 
@@ -1005,7 +1005,7 @@ create_main_notebook (GtkWidget *container)
 /********************************/
 
 gboolean
-main_dialog (GimpDrawable *drawable)
+main_dialog (LigmaDrawable *drawable)
 {
   GtkWidget *main_hbox;
   GtkWidget *vbox;
@@ -1020,9 +1020,9 @@ main_dialog (GimpDrawable *drawable)
   GtkWidget *image;
   */
 
-  gimp_ui_init (PLUG_IN_BINARY);
+  ligma_ui_init (PLUG_IN_BINARY);
 
-  path = gimp_gimprc_query ("lighting-effects-path");
+  path = ligma_ligmarc_query ("lighting-effects-path");
   if (path)
     {
       lighting_effects_path = g_filename_from_utf8 (path, -1, NULL, NULL, NULL);
@@ -1031,21 +1031,21 @@ main_dialog (GimpDrawable *drawable)
 
   lighting_icons_init ();
 
-  appwin = gimp_dialog_new (_("Lighting Effects"), PLUG_IN_ROLE,
+  appwin = ligma_dialog_new (_("Lighting Effects"), PLUG_IN_ROLE,
                             NULL, 0,
-                            gimp_standard_help_func, PLUG_IN_PROC,
+                            ligma_standard_help_func, PLUG_IN_PROC,
 
                             _("_Cancel"), GTK_RESPONSE_CANCEL,
                             _("_OK"),     GTK_RESPONSE_OK,
 
                             NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (appwin),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (appwin),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  gimp_window_set_transient (GTK_WINDOW (appwin));
+  ligma_window_set_transient (GTK_WINDOW (appwin));
 
   main_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 12);
@@ -1097,14 +1097,14 @@ main_dialog (GimpDrawable *drawable)
                     NULL);
   gtk_widget_show (button);
 
-  gimp_help_set_help_data (button, _("Recompute preview image"), NULL);
+  ligma_help_set_help_data (button, _("Recompute preview image"), NULL);
 
   toggle = gtk_check_button_new_with_mnemonic (_("I_nteractive"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                 mapvals.interactive_preview);
   gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
   g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
+                    G_CALLBACK (ligma_toggle_button_update),
                     &mapvals.interactive_preview);
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (interactive_preview_callback),
@@ -1112,7 +1112,7 @@ main_dialog (GimpDrawable *drawable)
 
   gtk_widget_show (toggle);
 
-  gimp_help_set_help_data (toggle,
+  ligma_help_set_help_data (toggle,
                            _("Enable/disable real time preview of changes"),
                            NULL);
 
@@ -1132,7 +1132,7 @@ main_dialog (GimpDrawable *drawable)
   if (image_setup (drawable, TRUE))
     preview_compute ();
 
-  if (gimp_dialog_run (GIMP_DIALOG (appwin)) == GTK_RESPONSE_OK)
+  if (ligma_dialog_run (LIGMA_DIALOG (appwin)) == GTK_RESPONSE_OK)
     run = TRUE;
 
   if (preview_rgb_data != NULL)
@@ -1166,7 +1166,7 @@ save_lighting_preset (GtkWidget *widget,
                                      NULL);
 
       gtk_dialog_set_default_response (GTK_DIALOG (window), GTK_RESPONSE_OK);
-      gimp_dialog_set_alternative_button_order (GTK_DIALOG (window),
+      ligma_dialog_set_alternative_button_order (GTK_DIALOG (window),
                                                GTK_RESPONSE_OK,
                                                GTK_RESPONSE_CANCEL,
                                                -1);
@@ -1187,12 +1187,12 @@ save_lighting_preset (GtkWidget *widget,
       GList *list;
       gchar *dir;
 
-      list = gimp_path_parse (lighting_effects_path, 256, FALSE, NULL);
-      dir = gimp_path_get_user_writable_dir (list);
-      gimp_path_free (list);
+      list = ligma_path_parse (lighting_effects_path, 256, FALSE, NULL);
+      dir = ligma_path_get_user_writable_dir (list);
+      ligma_path_free (list);
 
       if (! dir)
-        dir = g_strdup (gimp_directory ());
+        dir = g_strdup (ligma_directory ());
 
       gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (window), dir);
 
@@ -1310,7 +1310,7 @@ load_lighting_preset (GtkWidget *widget,
                                      NULL);
 
       gtk_dialog_set_default_response (GTK_DIALOG (window), GTK_RESPONSE_OK);
-      gimp_dialog_set_alternative_button_order (GTK_DIALOG (window),
+      ligma_dialog_set_alternative_button_order (GTK_DIALOG (window),
                                                GTK_RESPONSE_OK,
                                                GTK_RESPONSE_CANCEL,
                                                -1);
@@ -1328,12 +1328,12 @@ load_lighting_preset (GtkWidget *widget,
       GList *list;
       gchar *dir;
 
-      list = gimp_path_parse (lighting_effects_path, 256, FALSE, NULL);
-      dir = gimp_path_get_user_writable_dir (list);
-      gimp_path_free (list);
+      list = ligma_path_parse (lighting_effects_path, 256, FALSE, NULL);
+      dir = ligma_path_get_user_writable_dir (list);
+      ligma_path_free (list);
 
       if (! dir)
-        dir = g_strdup (gimp_directory ());
+        dir = g_strdup (ligma_directory ());
 
       gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (window), dir);
 
@@ -1448,7 +1448,7 @@ load_preset_response (GtkFileChooser *chooser,
 
       g_free (filename);
 
-      lightselect_callback (GIMP_INT_COMBO_BOX (lightselect_combo), NULL);
+      lightselect_callback (LIGMA_INT_COMBO_BOX (lightselect_combo), NULL);
    }
 
   gtk_widget_destroy (GTK_WIDGET (chooser));
@@ -1457,22 +1457,22 @@ load_preset_response (GtkFileChooser *chooser,
 
 
 static void
-lightselect_callback (GimpIntComboBox *combo,
+lightselect_callback (LigmaIntComboBox *combo,
                       gpointer         data)
 {
   gint valid;
   gint j, k;
 
-  valid = gimp_int_combo_box_get_active (combo, &k);
+  valid = ligma_int_combo_box_get_active (combo, &k);
 
  if (valid)
     {
       mapvals.update_enabled = FALSE;  /* prevent apply_settings() */
 
       mapvals.light_selected = k;
-      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (light_type_combo),
+      ligma_int_combo_box_set_active (LIGMA_INT_COMBO_BOX (light_type_combo),
                                      mapvals.lightsource[k].type);
-      gimp_color_button_set_color (GIMP_COLOR_BUTTON (colorbutton),
+      ligma_color_button_set_color (LIGMA_COLOR_BUTTON (colorbutton),
                                    &mapvals.lightsource[k].color);
       gtk_spin_button_set_value (GTK_SPIN_BUTTON(spin_pos_x),
                                  mapvals.lightsource[k].position.x);
@@ -1548,7 +1548,7 @@ spin_button_new (GtkAdjustment **adjustment,  /* return value */
   *adjustment = gtk_adjustment_new (value, lower, upper,
                                     step_increment, page_increment, 0);
 
-  spinbutton = gimp_spin_button_new (*adjustment,
+  spinbutton = ligma_spin_button_new (*adjustment,
                                      climb_rate, digits);
 
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);

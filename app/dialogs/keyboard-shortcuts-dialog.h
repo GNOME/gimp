@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,7 +19,7 @@
 #define __KEYBOARD_SHORTCUTS_DIALOG_H__
 
 
-GtkWidget * keyboard_shortcuts_dialog_new (Gimp *gimp);
+GtkWidget * keyboard_shortcuts_dialog_new (Ligma *ligma);
 
 
 #endif /* __KEYBOARD_SHORTCUTS_DIALOG_H__ */

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,13 +23,13 @@
 
 #include <glib/gstdio.h>
 
-#include <libgimp/gimp.h>
-#include <libgimpmath/gimpmath.h>
+#include <libligma/ligma.h>
+#include <libligmamath/ligmamath.h>
 
 #include "ppmtool.h"
-#include "gimpressionist.h"
+#include "ligmaressionist.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 static int
 readline (FILE *f, char *buffer, int len)
@@ -225,7 +225,7 @@ struct _BrushHeader
   unsigned int   width;       /*  width of brush  */
   unsigned int   height;      /*  height of brush  */
   unsigned int   bytes;       /*  depth of brush in bytes--always 1 */
-  unsigned int   magic_number;/*  GIMP brush magic number  */
+  unsigned int   magic_number;/*  LIGMA brush magic number  */
   unsigned int   spacing;     /*  brush spacing  */
 };
 
@@ -255,7 +255,7 @@ fopen_from_search_path (const gchar * fn, const char * mode)
 }
 
 static void
-load_gimp_brush (const gchar *fn, ppm_t *p)
+load_ligma_brush (const gchar *fn, ppm_t *p)
 {
   FILE                *f;
   struct _BrushHeader  hdr;
@@ -267,8 +267,8 @@ load_gimp_brush (const gchar *fn, ppm_t *p)
 
   if (!f)
     {
-      g_printerr ("load_gimp_brush: Unable to open file \"%s\"!\n",
-                  gimp_filename_to_utf8 (fn));
+      g_printerr ("load_ligma_brush: Unable to open file \"%s\"!\n",
+                  ligma_filename_to_utf8 (fn));
       ppm_new (p, 10,10);
       return;
     }
@@ -304,7 +304,7 @@ ppm_load (const char *fn, ppm_t *p)
 
   if (!strcmp (&fn[strlen (fn)-4], ".gbr"))
     {
-      load_gimp_brush(fn, p);
+      load_ligma_brush(fn, p);
       return;
     }
 
@@ -315,7 +315,7 @@ ppm_load (const char *fn, ppm_t *p)
   if (!f)
     {
       g_printerr ("ppm_load: Unable to open file \"%s\"!\n",
-                  gimp_filename_to_utf8 (fn));
+                  ligma_filename_to_utf8 (fn));
       ppm_new (p, 10,10);
       return;
     }
@@ -327,7 +327,7 @@ ppm_load (const char *fn, ppm_t *p)
         {
           fclose (f);
           g_printerr ("ppm_load: File \"%s\" not PPM/PGM? (line=\"%s\")%c\n",
-                      gimp_filename_to_utf8 (fn), line, 7);
+                      ligma_filename_to_utf8 (fn), line, 7);
           ppm_new (p, 10,10);
           return;
     }
@@ -341,7 +341,7 @@ ppm_load (const char *fn, ppm_t *p)
   {
     fclose (f);
     g_printerr ("ppm_load: File \"%s\" not valid PPM/PGM? (line=\"%s\")%c\n",
-                gimp_filename_to_utf8 (fn), line, 7);
+                ligma_filename_to_utf8 (fn), line, 7);
     ppm_new (p, 10,10);
     return;
   }
@@ -642,11 +642,11 @@ ppm_save (ppm_t *p, const char *fn)
   if (!f)
     {
       /*
-       * gimp_filename_to_utf8 () and g_strerror () return temporary strings
+       * ligma_filename_to_utf8 () and g_strerror () return temporary strings
        * that need not and should not be freed. So this call is OK.
        * */
       g_message (_("Failed to save PPM file '%s': %s"),
-                  gimp_filename_to_utf8 (fn), g_strerror (errno));
+                  ligma_filename_to_utf8 (fn), g_strerror (errno));
       return;
     }
 

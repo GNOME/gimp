@@ -10,5 +10,5 @@ install_data([
     'star2',
     'stars',
   ],
-  install_dir: gimpdatadir / 'gfig',
+  install_dir: ligmadatadir / 'gfig',
 )

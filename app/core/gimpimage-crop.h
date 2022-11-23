@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,13 +15,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_CROP_H__
-#define __GIMP_IMAGE_CROP_H__
+#ifndef __LIGMA_IMAGE_CROP_H__
+#define __LIGMA_IMAGE_CROP_H__
 
 
-void   gimp_image_crop (GimpImage    *image,
-                        GimpContext  *context,
-                        GimpFillType  fill_type,
+void   ligma_image_crop (LigmaImage    *image,
+                        LigmaContext  *context,
+                        LigmaFillType  fill_type,
                         gint          x,
                         gint          y,
                         gint          width,
@@ -29,4 +29,4 @@ void   gimp_image_crop (GimpImage    *image,
                         gboolean      crop_layers);
 
 
-#endif  /* __GIMP_IMAGE_CROP_H__ */
+#endif  /* __LIGMA_IMAGE_CROP_H__ */

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,8 +19,8 @@
 #define __SAMPLE_POINTS_ACIONS_H__
 
 
-void   sample_points_actions_setup  (GimpActionGroup *group);
-void   sample_points_actions_update (GimpActionGroup *group,
+void   sample_points_actions_setup  (LigmaActionGroup *group);
+void   sample_points_actions_update (LigmaActionGroup *group,
                                      gpointer         data);
 
 

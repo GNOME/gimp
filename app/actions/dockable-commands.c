@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,45 +22,45 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "actions-types.h"
 
-#include "widgets/gimpcontainerview.h"
-#include "widgets/gimpcontainerview-utils.h"
-#include "widgets/gimpdialogfactory.h"
-#include "widgets/gimpdock.h"
-#include "widgets/gimpdockable.h"
-#include "widgets/gimpdockbook.h"
-#include "widgets/gimpdocked.h"
-#include "widgets/gimpsessioninfo.h"
+#include "widgets/ligmacontainerview.h"
+#include "widgets/ligmacontainerview-utils.h"
+#include "widgets/ligmadialogfactory.h"
+#include "widgets/ligmadock.h"
+#include "widgets/ligmadockable.h"
+#include "widgets/ligmadockbook.h"
+#include "widgets/ligmadocked.h"
+#include "widgets/ligmasessioninfo.h"
 
 #include "dockable-commands.h"
 
 
-static GimpDockable * dockable_get_current (GimpDockbook *dockbook);
+static LigmaDockable * dockable_get_current (LigmaDockbook *dockbook);
 
 
 /*  public functions  */
 
 void
-dockable_add_tab_cmd_callback (GimpAction *action,
+dockable_add_tab_cmd_callback (LigmaAction *action,
                                GVariant   *value,
                                gpointer    data)
 {
-  GimpDockbook *dockbook = GIMP_DOCKBOOK (data);
+  LigmaDockbook *dockbook = LIGMA_DOCKBOOK (data);
 
-  gimp_dockbook_add_from_dialog_factory (dockbook,
+  ligma_dockbook_add_from_dialog_factory (dockbook,
                                          g_variant_get_string (value, NULL));
 }
 
 void
-dockable_close_tab_cmd_callback (GimpAction *action,
+dockable_close_tab_cmd_callback (LigmaAction *action,
                                  GVariant   *value,
                                  gpointer    data)
 {
-  GimpDockbook *dockbook = GIMP_DOCKBOOK (data);
-  GimpDockable *dockable = dockable_get_current (dockbook);
+  LigmaDockbook *dockbook = LIGMA_DOCKBOOK (data);
+  LigmaDockable *dockable = dockable_get_current (dockbook);
 
   if (dockable)
     gtk_container_remove (GTK_CONTAINER (dockbook),
@@ -68,55 +68,55 @@ dockable_close_tab_cmd_callback (GimpAction *action,
 }
 
 void
-dockable_detach_tab_cmd_callback (GimpAction *action,
+dockable_detach_tab_cmd_callback (LigmaAction *action,
                                   GVariant   *value,
                                   gpointer    data)
 {
-  GimpDockbook *dockbook = GIMP_DOCKBOOK (data);
-  GimpDockable *dockable = dockable_get_current (dockbook);
+  LigmaDockbook *dockbook = LIGMA_DOCKBOOK (data);
+  LigmaDockable *dockable = dockable_get_current (dockbook);
 
   if (dockable)
-    gimp_dockable_detach (dockable);
+    ligma_dockable_detach (dockable);
 }
 
 void
-dockable_lock_tab_cmd_callback (GimpAction *action,
+dockable_lock_tab_cmd_callback (LigmaAction *action,
                                 GVariant   *value,
                                 gpointer    data)
 {
-  GimpDockbook *dockbook = GIMP_DOCKBOOK (data);
-  GimpDockable *dockable = dockable_get_current (dockbook);
+  LigmaDockbook *dockbook = LIGMA_DOCKBOOK (data);
+  LigmaDockable *dockable = dockable_get_current (dockbook);
 
   if (dockable)
     {
       gboolean lock = g_variant_get_boolean (value);
 
-      gimp_dockable_set_locked (dockable, lock);
+      ligma_dockable_set_locked (dockable, lock);
     }
 }
 
 void
-dockable_toggle_view_cmd_callback (GimpAction *action,
+dockable_toggle_view_cmd_callback (LigmaAction *action,
                                    GVariant   *value,
                                    gpointer    data)
 {
-  GimpDockbook *dockbook = GIMP_DOCKBOOK (data);
-  GimpDockable *dockable;
-  GimpViewType  view_type;
+  LigmaDockbook *dockbook = LIGMA_DOCKBOOK (data);
+  LigmaDockable *dockable;
+  LigmaViewType  view_type;
   gint          page_num;
 
-  view_type = (GimpViewType) g_variant_get_int32 (value);
+  view_type = (LigmaViewType) g_variant_get_int32 (value);
 
   page_num = gtk_notebook_get_current_page (GTK_NOTEBOOK (dockbook));
 
-  dockable = (GimpDockable *)
+  dockable = (LigmaDockable *)
     gtk_notebook_get_nth_page (GTK_NOTEBOOK (dockbook), page_num);
 
   if (dockable)
     {
-      GimpDialogFactoryEntry *entry;
+      LigmaDialogFactoryEntry *entry;
 
-      gimp_dialog_factory_from_widget (GTK_WIDGET (dockable), &entry);
+      ligma_dialog_factory_from_widget (GTK_WIDGET (dockable), &entry);
 
       if (entry)
         {
@@ -127,7 +127,7 @@ dockable_toggle_view_cmd_callback (GimpAction *action,
 
           substring = strstr (identifier, "grid");
 
-          if (substring && view_type == GIMP_VIEW_TYPE_GRID)
+          if (substring && view_type == LIGMA_VIEW_TYPE_GRID)
             {
               g_free (identifier);
               return;
@@ -137,7 +137,7 @@ dockable_toggle_view_cmd_callback (GimpAction *action,
             {
               substring = strstr (identifier, "list");
 
-              if (substring && view_type == GIMP_VIEW_TYPE_LIST)
+              if (substring && view_type == LIGMA_VIEW_TYPE_LIST)
                 {
                   g_free (identifier);
                   return;
@@ -146,47 +146,47 @@ dockable_toggle_view_cmd_callback (GimpAction *action,
 
           if (substring)
             {
-              GimpContainerView *old_view;
+              LigmaContainerView *old_view;
               GtkWidget         *new_dockable;
-              GimpDock          *dock;
+              LigmaDock          *dock;
               gint               view_size = -1;
 
-              if (view_type == GIMP_VIEW_TYPE_LIST)
+              if (view_type == LIGMA_VIEW_TYPE_LIST)
                 memcpy (substring, "list", 4);
-              else if (view_type == GIMP_VIEW_TYPE_GRID)
+              else if (view_type == LIGMA_VIEW_TYPE_GRID)
                 memcpy (substring, "grid", 4);
 
-              old_view = gimp_container_view_get_by_dockable (dockable);
+              old_view = ligma_container_view_get_by_dockable (dockable);
 
               if (old_view)
-                view_size = gimp_container_view_get_view_size (old_view, NULL);
+                view_size = ligma_container_view_get_view_size (old_view, NULL);
 
-              dock         = gimp_dockbook_get_dock (dockbook);
-              new_dockable = gimp_dialog_factory_dockable_new (gimp_dock_get_dialog_factory (dock),
+              dock         = ligma_dockbook_get_dock (dockbook);
+              new_dockable = ligma_dialog_factory_dockable_new (ligma_dock_get_dialog_factory (dock),
                                                                dock,
                                                                identifier,
                                                                view_size);
 
               if (new_dockable)
                 {
-                  GimpDocked *old;
-                  GimpDocked *new;
+                  LigmaDocked *old;
+                  LigmaDocked *new;
                   gboolean    show;
 
-                  gimp_dockable_set_locked (GIMP_DOCKABLE (new_dockable),
-                                            gimp_dockable_get_locked (dockable));
+                  ligma_dockable_set_locked (LIGMA_DOCKABLE (new_dockable),
+                                            ligma_dockable_get_locked (dockable));
 
-                  old = GIMP_DOCKED (gtk_bin_get_child (GTK_BIN (dockable)));
-                  new = GIMP_DOCKED (gtk_bin_get_child (GTK_BIN (new_dockable)));
+                  old = LIGMA_DOCKED (gtk_bin_get_child (GTK_BIN (dockable)));
+                  new = LIGMA_DOCKED (gtk_bin_get_child (GTK_BIN (new_dockable)));
 
-                  show = gimp_docked_get_show_button_bar (old);
-                  gimp_docked_set_show_button_bar (new, show);
+                  show = ligma_docked_get_show_button_bar (old);
+                  ligma_docked_set_show_button_bar (new, show);
 
-                  /*  Maybe gimp_dialog_factory_dockable_new() returned
+                  /*  Maybe ligma_dialog_factory_dockable_new() returned
                    *  an already existing singleton dockable, so check
                    *  if it already is attached to a dockbook.
                    */
-                  if (! gimp_dockable_get_dockbook (GIMP_DOCKABLE (new_dockable)))
+                  if (! ligma_dockable_get_dockbook (LIGMA_DOCKABLE (new_dockable)))
                     {
                       gtk_notebook_insert_page (GTK_NOTEBOOK (dockbook),
                                                 new_dockable, NULL,
@@ -208,51 +208,51 @@ dockable_toggle_view_cmd_callback (GimpAction *action,
 }
 
 void
-dockable_view_size_cmd_callback (GimpAction *action,
+dockable_view_size_cmd_callback (LigmaAction *action,
                                  GVariant   *value,
                                  gpointer    data)
 {
-  GimpDockbook *dockbook = GIMP_DOCKBOOK (data);
-  GimpDockable *dockable = dockable_get_current (dockbook);
+  LigmaDockbook *dockbook = LIGMA_DOCKBOOK (data);
+  LigmaDockable *dockable = dockable_get_current (dockbook);
   gint          view_size;
 
   view_size = g_variant_get_int32 (value);
 
   if (dockable)
     {
-      GimpContainerView *view = gimp_container_view_get_by_dockable (dockable);
+      LigmaContainerView *view = ligma_container_view_get_by_dockable (dockable);
 
       if (view)
         {
           gint old_size;
           gint border_width;
 
-          old_size = gimp_container_view_get_view_size (view, &border_width);
+          old_size = ligma_container_view_get_view_size (view, &border_width);
 
           if (old_size != view_size)
-            gimp_container_view_set_view_size (view, view_size, border_width);
+            ligma_container_view_set_view_size (view, view_size, border_width);
         }
     }
 }
 
 void
-dockable_tab_style_cmd_callback (GimpAction *action,
+dockable_tab_style_cmd_callback (LigmaAction *action,
                                  GVariant   *value,
                                  gpointer    data)
 {
-  GimpDockbook *dockbook = GIMP_DOCKBOOK (data);
-  GimpDockable *dockable = dockable_get_current (dockbook);
-  GimpTabStyle  tab_style;
+  LigmaDockbook *dockbook = LIGMA_DOCKBOOK (data);
+  LigmaDockable *dockable = dockable_get_current (dockbook);
+  LigmaTabStyle  tab_style;
 
-  tab_style = (GimpTabStyle) g_variant_get_int32 (value);
+  tab_style = (LigmaTabStyle) g_variant_get_int32 (value);
 
-  if (dockable && gimp_dockable_get_tab_style (dockable) != tab_style)
+  if (dockable && ligma_dockable_get_tab_style (dockable) != tab_style)
     {
       GtkWidget *tab_widget;
 
-      gimp_dockable_set_tab_style (dockable, tab_style);
+      ligma_dockable_set_tab_style (dockable, tab_style);
 
-      tab_widget = gimp_dockbook_create_tab_widget (dockbook, dockable);
+      tab_widget = ligma_dockbook_create_tab_widget (dockbook, dockable);
 
       gtk_notebook_set_tab_label (GTK_NOTEBOOK (dockbook),
                                   GTK_WIDGET (dockable),
@@ -261,33 +261,33 @@ dockable_tab_style_cmd_callback (GimpAction *action,
 }
 
 void
-dockable_show_button_bar_cmd_callback (GimpAction *action,
+dockable_show_button_bar_cmd_callback (LigmaAction *action,
                                        GVariant   *value,
                                        gpointer    data)
 {
-  GimpDockbook *dockbook = GIMP_DOCKBOOK (data);
-  GimpDockable *dockable = dockable_get_current (dockbook);
+  LigmaDockbook *dockbook = LIGMA_DOCKBOOK (data);
+  LigmaDockable *dockable = dockable_get_current (dockbook);
 
   if (dockable)
     {
-      GimpDocked *docked;
+      LigmaDocked *docked;
       gboolean    show;
 
-      docked = GIMP_DOCKED (gtk_bin_get_child (GTK_BIN (dockable)));
+      docked = LIGMA_DOCKED (gtk_bin_get_child (GTK_BIN (dockable)));
       show   = g_variant_get_boolean (value);
 
-      gimp_docked_set_show_button_bar (docked, show);
+      ligma_docked_set_show_button_bar (docked, show);
     }
 }
 
 
 /*  private functions  */
 
-static GimpDockable *
-dockable_get_current (GimpDockbook *dockbook)
+static LigmaDockable *
+dockable_get_current (LigmaDockbook *dockbook)
 {
   gint page_num = gtk_notebook_get_current_page (GTK_NOTEBOOK (dockbook));
 
-  return (GimpDockable *) gtk_notebook_get_nth_page (GTK_NOTEBOOK (dockbook),
+  return (LigmaDockable *) gtk_notebook_get_nth_page (GTK_NOTEBOOK (dockbook),
                                                      page_num);
 }

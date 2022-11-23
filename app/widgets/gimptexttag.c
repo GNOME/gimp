@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpTextTag
- * Copyright (C) 2010  Michael Natterer <mitch@gimp.org>
+ * LigmaTextTag
+ * Copyright (C) 2010  Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,76 +23,76 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpcolor/gimpcolor.h"
+#include "libligmacolor/ligmacolor.h"
 
 #include "widgets-types.h"
 
-#include "gimptexttag.h"
+#include "ligmatexttag.h"
 
 
 gint
-gimp_text_tag_get_size (GtkTextTag *tag)
+ligma_text_tag_get_size (GtkTextTag *tag)
 {
   gint size;
 
   g_return_val_if_fail (GTK_IS_TEXT_TAG (tag), 0);
 
   g_object_get (tag,
-                GIMP_TEXT_PROP_NAME_SIZE, &size,
+                LIGMA_TEXT_PROP_NAME_SIZE, &size,
                 NULL);
 
   return size;
 }
 
 gint
-gimp_text_tag_get_baseline (GtkTextTag *tag)
+ligma_text_tag_get_baseline (GtkTextTag *tag)
 {
   gint baseline;
 
   g_object_get (tag,
-                GIMP_TEXT_PROP_NAME_BASELINE, &baseline,
+                LIGMA_TEXT_PROP_NAME_BASELINE, &baseline,
                 NULL);
 
   return baseline;
 }
 
 gint
-gimp_text_tag_get_kerning (GtkTextTag *tag)
+ligma_text_tag_get_kerning (GtkTextTag *tag)
 {
   gint kerning;
 
   g_object_get (tag,
-                GIMP_TEXT_PROP_NAME_KERNING, &kerning,
+                LIGMA_TEXT_PROP_NAME_KERNING, &kerning,
                 NULL);
 
   return kerning;
 }
 
 gchar *
-gimp_text_tag_get_font (GtkTextTag *tag)
+ligma_text_tag_get_font (GtkTextTag *tag)
 {
   gchar *font;
 
   g_object_get (tag,
-                GIMP_TEXT_PROP_NAME_FONT, &font,
+                LIGMA_TEXT_PROP_NAME_FONT, &font,
                 NULL);
 
   return font;
 }
 
 gboolean
-gimp_text_tag_get_fg_color (GtkTextTag *tag,
-                            GimpRGB    *color)
+ligma_text_tag_get_fg_color (GtkTextTag *tag,
+                            LigmaRGB    *color)
 {
   GdkRGBA  *rgba;
   gboolean  set;
 
   g_object_get (tag,
                 "foreground-set",             &set,
-                GIMP_TEXT_PROP_NAME_FG_COLOR, &rgba,
+                LIGMA_TEXT_PROP_NAME_FG_COLOR, &rgba,
                 NULL);
 
-  gimp_rgb_set (color, rgba->red, rgba->green, rgba->blue);
+  ligma_rgb_set (color, rgba->red, rgba->green, rgba->blue);
 
   gdk_rgba_free (rgba);
 
@@ -100,18 +100,18 @@ gimp_text_tag_get_fg_color (GtkTextTag *tag,
 }
 
 gboolean
-gimp_text_tag_get_bg_color (GtkTextTag *tag,
-                            GimpRGB    *color)
+ligma_text_tag_get_bg_color (GtkTextTag *tag,
+                            LigmaRGB    *color)
 {
   GdkRGBA  *rgba;
   gboolean  set;
 
   g_object_get (tag,
                 "background-set",             &set,
-                GIMP_TEXT_PROP_NAME_BG_COLOR, &rgba,
+                LIGMA_TEXT_PROP_NAME_BG_COLOR, &rgba,
                 NULL);
 
-  gimp_rgb_set (color, rgba->red, rgba->green, rgba->blue);
+  ligma_rgb_set (color, rgba->red, rgba->green, rgba->blue);
 
   gdk_rgba_free (rgba);
 

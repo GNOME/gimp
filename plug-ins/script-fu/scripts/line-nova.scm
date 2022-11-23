@@ -1,6 +1,6 @@
-;;; line-nova.scm for gimp-1.1 -*-scheme-*-
-;;; Time-stamp: <1998/11/25 13:26:44 narazaki@gimp.org>
-;;; Author Shuji Narazaki <narazaki@gimp.org>
+;;; line-nova.scm for ligma-1.1 -*-scheme-*-
+;;; Time-stamp: <1998/11/25 13:26:44 narazaki@ligma.org>
+;;; Author Shuji Narazaki <narazaki@ligma.org>
 ;;; Version 0.7
 
 (define (script-fu-line-nova img drw num-of-lines corn-deg offset variation)
@@ -16,18 +16,18 @@
         (2pi (* 2 *pi*))
         (rad/deg (/ 2pi 360))
         (variation/2 (/ variation 2))
-        (drw-width (car (gimp-drawable-get-width drw)))
-        (drw-height (car (gimp-drawable-get-height drw)))
-        (drw-offsets (gimp-drawable-get-offsets drw))
+        (drw-width (car (ligma-drawable-get-width drw)))
+        (drw-height (car (ligma-drawable-get-height drw)))
+        (drw-offsets (ligma-drawable-get-offsets drw))
         (old-selection FALSE)
         (radius (max drw-height drw-width))
         (index 0)
         (dir-deg/line (/ 360 num-of-lines))
-        (fg-color (car (gimp-context-get-foreground)))
+        (fg-color (car (ligma-context-get-foreground)))
         )
-    (gimp-context-push)
-    (gimp-context-set-defaults)
-    (gimp-context-set-foreground fg-color)
+    (ligma-context-push)
+    (ligma-context-set-defaults)
+    (ligma-context-set-foreground fg-color)
 
     (define (draw-vector beg-x beg-y direction)
 
@@ -65,20 +65,20 @@
                     (+ beg-y (* off (sin dir0)))
         )
         (set-marginal-point beg-x beg-y direction)
-        (gimp-image-select-polygon img CHANNEL-OP-ADD 6 *points*)
+        (ligma-image-select-polygon img CHANNEL-OP-ADD 6 *points*)
       )
     )
 
-    (gimp-image-undo-group-start img)
+    (ligma-image-undo-group-start img)
 
     (set! old-selection
-      (if (eq? (car (gimp-selection-is-empty img)) TRUE)
+      (if (eq? (car (ligma-selection-is-empty img)) TRUE)
          #f
-         (car (gimp-selection-save img))
+         (car (ligma-selection-save img))
       )
     )
 
-    (gimp-selection-none img)
+    (ligma-selection-none img)
     (srand (realtime))
     (while (< index num-of-lines)
       (draw-vector (+ (nth 0 drw-offsets) (/ drw-width 2))
@@ -87,25 +87,25 @@
       )
       (set! index (+ index 1))
     )
-    (gimp-drawable-edit-fill drw FILL-FOREGROUND)
+    (ligma-drawable-edit-fill drw FILL-FOREGROUND)
 
     (if old-selection
       (begin
-        (gimp-image-select-item img CHANNEL-OP-REPLACE old-selection)
-        (gimp-image-remove-channel img old-selection)
+        (ligma-image-select-item img CHANNEL-OP-REPLACE old-selection)
+        (ligma-image-remove-channel img old-selection)
       )
     )
 
-    (gimp-image-undo-group-end img)
-    (gimp-displays-flush)
-    (gimp-context-pop)
+    (ligma-image-undo-group-end img)
+    (ligma-displays-flush)
+    (ligma-context-pop)
   )
 )
 
 (script-fu-register "script-fu-line-nova"
   _"Line _Nova..."
   _"Fill a layer with rays emanating outward from its center using the foreground color"
-  "Shuji Narazaki <narazaki@gimp.org>"
+  "Shuji Narazaki <narazaki@ligma.org>"
   "Shuji Narazaki"
   "1997,1998"
   "*"

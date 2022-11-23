@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpbrush-mipmap.c
+ * ligmabrush-mipmap.c
  * Copyright (C) 2020 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,17 +25,17 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpmath/gimpmath.h"
+#include "libligmamath/ligmamath.h"
 
 extern "C"
 {
 
 #include "core-types.h"
 
-#include "gimpbrush.h"
-#include "gimpbrush-mipmap.h"
-#include "gimpbrush-private.h"
-#include "gimptempbuf.h"
+#include "ligmabrush.h"
+#include "ligmabrush-mipmap.h"
+#include "ligmabrush-private.h"
+#include "ligmatempbuf.h"
 
 } /* extern "C" */
 
@@ -43,31 +43,31 @@ extern "C"
 #define PIXELS_PER_THREAD \
   (/* each thread costs as much as */ 64.0 * 64.0 /* pixels */)
 
-#define GIMP_BRUSH_MIPMAP(brush, mipmaps, x, y) \
+#define LIGMA_BRUSH_MIPMAP(brush, mipmaps, x, y) \
   ((*(mipmaps))[(y) * (brush)->priv->n_horz_mipmaps + (x)])
 
 
 /*  local function prototypes  */
 
-static void                gimp_brush_mipmap_clear          (GimpBrush           *brush,
-                                                             GimpTempBuf       ***mipmaps);
+static void                ligma_brush_mipmap_clear          (LigmaBrush           *brush,
+                                                             LigmaTempBuf       ***mipmaps);
 
-static const GimpTempBuf * gimp_brush_mipmap_get            (GimpBrush           *brush,
-                                                             const GimpTempBuf   *source,
-                                                             GimpTempBuf       ***mipmaps,
+static const LigmaTempBuf * ligma_brush_mipmap_get            (LigmaBrush           *brush,
+                                                             const LigmaTempBuf   *source,
+                                                             LigmaTempBuf       ***mipmaps,
                                                              gdouble             *scale_x,
                                                              gdouble             *scale_y);
 
-static GimpTempBuf       * gimp_brush_mipmap_downscale      (const GimpTempBuf   *source);
-static GimpTempBuf       * gimp_brush_mipmap_downscale_horz (const GimpTempBuf   *source);
-static GimpTempBuf       * gimp_brush_mipmap_downscale_vert (const GimpTempBuf   *source);
+static LigmaTempBuf       * ligma_brush_mipmap_downscale      (const LigmaTempBuf   *source);
+static LigmaTempBuf       * ligma_brush_mipmap_downscale_horz (const LigmaTempBuf   *source);
+static LigmaTempBuf       * ligma_brush_mipmap_downscale_vert (const LigmaTempBuf   *source);
 
 
 /*  private functions  */
 
 static void
-gimp_brush_mipmap_clear (GimpBrush     *brush,
-                         GimpTempBuf ***mipmaps)
+ligma_brush_mipmap_clear (LigmaBrush     *brush,
+                         LigmaTempBuf ***mipmaps)
 {
   if (*mipmaps)
     {
@@ -77,17 +77,17 @@ gimp_brush_mipmap_clear (GimpBrush     *brush,
            i < brush->priv->n_horz_mipmaps * brush->priv->n_vert_mipmaps;
            i++)
         {
-          g_clear_pointer (&(*mipmaps)[i], gimp_temp_buf_unref);
+          g_clear_pointer (&(*mipmaps)[i], ligma_temp_buf_unref);
         }
 
       g_clear_pointer (mipmaps, g_free);
     }
 }
 
-static const GimpTempBuf *
-gimp_brush_mipmap_get (GimpBrush           *brush,
-                       const GimpTempBuf   *source,
-                       GimpTempBuf       ***mipmaps,
+static const LigmaTempBuf *
+ligma_brush_mipmap_get (LigmaBrush           *brush,
+                       const LigmaTempBuf   *source,
+                       LigmaTempBuf       ***mipmaps,
                        gdouble             *scale_x,
                        gdouble             *scale_y)
 {
@@ -100,16 +100,16 @@ gimp_brush_mipmap_get (GimpBrush           *brush,
 
   if (! *mipmaps)
     {
-      gint width  = gimp_temp_buf_get_width  (source);
-      gint height = gimp_temp_buf_get_height (source);
+      gint width  = ligma_temp_buf_get_width  (source);
+      gint height = ligma_temp_buf_get_height (source);
 
       brush->priv->n_horz_mipmaps = floor (log (width)  / M_LN2) + 1;
       brush->priv->n_vert_mipmaps = floor (log (height) / M_LN2) + 1;
 
-      *mipmaps = g_new0 (GimpTempBuf *, brush->priv->n_horz_mipmaps *
+      *mipmaps = g_new0 (LigmaTempBuf *, brush->priv->n_horz_mipmaps *
                                         brush->priv->n_vert_mipmaps);
 
-      GIMP_BRUSH_MIPMAP (brush, mipmaps, 0, 0) = gimp_temp_buf_ref (source);
+      LIGMA_BRUSH_MIPMAP (brush, mipmaps, 0, 0) = ligma_temp_buf_ref (source);
     }
 
   x = floor (SAFE_CLAMP (log (1.0 / MAX (*scale_x, 0.0)) / M_LN2,
@@ -120,8 +120,8 @@ gimp_brush_mipmap_get (GimpBrush           *brush,
   *scale_x *= pow (2.0, x);
   *scale_y *= pow (2.0, y);
 
-  if (GIMP_BRUSH_MIPMAP (brush, mipmaps, x, y))
-    return GIMP_BRUSH_MIPMAP (brush, mipmaps, x, y);
+  if (LIGMA_BRUSH_MIPMAP (brush, mipmaps, x, y))
+    return LIGMA_BRUSH_MIPMAP (brush, mipmaps, x, y);
 
   g_return_val_if_fail (x >= 0 || y >= 0, NULL);
 
@@ -138,30 +138,30 @@ gimp_brush_mipmap_get (GimpBrush           *brush,
 
       while (u <= x && v >= 0)
         {
-          if (GIMP_BRUSH_MIPMAP (brush, mipmaps, u, v))
+          if (LIGMA_BRUSH_MIPMAP (brush, mipmaps, u, v))
             {
               for (; x - u > y - v; u++)
                 {
-                  GIMP_BRUSH_MIPMAP (brush, mipmaps, u + 1, v) =
-                    gimp_brush_mipmap_downscale_horz (
-                      GIMP_BRUSH_MIPMAP (brush, mipmaps, u, v));
+                  LIGMA_BRUSH_MIPMAP (brush, mipmaps, u + 1, v) =
+                    ligma_brush_mipmap_downscale_horz (
+                      LIGMA_BRUSH_MIPMAP (brush, mipmaps, u, v));
                 }
 
               for (; y - v > x - u; v++)
                 {
-                  GIMP_BRUSH_MIPMAP (brush, mipmaps, u, v + 1) =
-                    gimp_brush_mipmap_downscale_vert (
-                      GIMP_BRUSH_MIPMAP (brush, mipmaps, u, v));
+                  LIGMA_BRUSH_MIPMAP (brush, mipmaps, u, v + 1) =
+                    ligma_brush_mipmap_downscale_vert (
+                      LIGMA_BRUSH_MIPMAP (brush, mipmaps, u, v));
                 }
 
               for (; u < x; u++, v++)
                 {
-                  GIMP_BRUSH_MIPMAP (brush, mipmaps, u + 1, v + 1) =
-                    gimp_brush_mipmap_downscale (
-                      GIMP_BRUSH_MIPMAP (brush, mipmaps, u, v));
+                  LIGMA_BRUSH_MIPMAP (brush, mipmaps, u + 1, v + 1) =
+                    ligma_brush_mipmap_downscale (
+                      LIGMA_BRUSH_MIPMAP (brush, mipmaps, u, v));
                 }
 
-              return GIMP_BRUSH_MIPMAP (brush, mipmaps, u, v);
+              return LIGMA_BRUSH_MIPMAP (brush, mipmaps, u, v);
             }
 
           u++;
@@ -219,27 +219,27 @@ template <class T,
           gint  N>
 struct MipmapAlgorithms
 {
-  static GimpTempBuf *
-  downscale (const GimpTempBuf *source)
+  static LigmaTempBuf *
+  downscale (const LigmaTempBuf *source)
   {
-    GimpTempBuf *destination;
-    gint         width  = gimp_temp_buf_get_width  (source);
-    gint         height = gimp_temp_buf_get_height (source);
+    LigmaTempBuf *destination;
+    gint         width  = ligma_temp_buf_get_width  (source);
+    gint         height = ligma_temp_buf_get_height (source);
 
     width  /= 2;
     height /= 2;
 
-    destination = gimp_temp_buf_new (width, height,
-                                     gimp_temp_buf_get_format (source));
+    destination = ligma_temp_buf_new (width, height,
+                                     ligma_temp_buf_get_format (source));
 
     gegl_parallel_distribute_area (
       GEGL_RECTANGLE (0, 0, width, height), PIXELS_PER_THREAD,
       [=] (const GeglRectangle *area)
       {
-        const T *src0        = (const T *) gimp_temp_buf_get_data (source);
-        T       *dest0       = (T       *) gimp_temp_buf_get_data (destination);
-        gint     src_stride  = N * gimp_temp_buf_get_width (source);
-        gint     dest_stride = N * gimp_temp_buf_get_width (destination);
+        const T *src0        = (const T *) ligma_temp_buf_get_data (source);
+        T       *dest0       = (T       *) ligma_temp_buf_get_data (destination);
+        gint     src_stride  = N * ligma_temp_buf_get_width (source);
+        gint     dest_stride = N * ligma_temp_buf_get_width (destination);
         gint     y;
 
         src0  += 2 * (area->y * src_stride  + N * area->x);
@@ -275,27 +275,27 @@ struct MipmapAlgorithms
     return destination;
   }
 
-  static GimpTempBuf *
-  downscale_horz (const GimpTempBuf *source)
+  static LigmaTempBuf *
+  downscale_horz (const LigmaTempBuf *source)
   {
-    GimpTempBuf *destination;
-    gint         width  = gimp_temp_buf_get_width  (source);
-    gint         height = gimp_temp_buf_get_height (source);
+    LigmaTempBuf *destination;
+    gint         width  = ligma_temp_buf_get_width  (source);
+    gint         height = ligma_temp_buf_get_height (source);
 
     width /= 2;
 
-    destination = gimp_temp_buf_new (width, height,
-                                     gimp_temp_buf_get_format (source));
+    destination = ligma_temp_buf_new (width, height,
+                                     ligma_temp_buf_get_format (source));
 
     gegl_parallel_distribute_range (
       height, PIXELS_PER_THREAD / width,
       [=] (gint offset,
            gint size)
       {
-        const T *src0        = (const T *) gimp_temp_buf_get_data (source);
-        T       *dest0       = (T       *) gimp_temp_buf_get_data (destination);
-        gint     src_stride  = N * gimp_temp_buf_get_width (source);
-        gint     dest_stride = N * gimp_temp_buf_get_width (destination);
+        const T *src0        = (const T *) ligma_temp_buf_get_data (source);
+        T       *dest0       = (T       *) ligma_temp_buf_get_data (destination);
+        gint     src_stride  = N * ligma_temp_buf_get_width (source);
+        gint     dest_stride = N * ligma_temp_buf_get_width (destination);
         gint     y;
 
         src0  += offset * src_stride;
@@ -326,27 +326,27 @@ struct MipmapAlgorithms
     return destination;
   }
 
-  static GimpTempBuf *
-  downscale_vert (const GimpTempBuf *source)
+  static LigmaTempBuf *
+  downscale_vert (const LigmaTempBuf *source)
   {
-    GimpTempBuf *destination;
-    gint         width  = gimp_temp_buf_get_width  (source);
-    gint         height = gimp_temp_buf_get_height (source);
+    LigmaTempBuf *destination;
+    gint         width  = ligma_temp_buf_get_width  (source);
+    gint         height = ligma_temp_buf_get_height (source);
 
     height /= 2;
 
-    destination = gimp_temp_buf_new (width, height,
-                                     gimp_temp_buf_get_format (source));
+    destination = ligma_temp_buf_new (width, height,
+                                     ligma_temp_buf_get_format (source));
 
     gegl_parallel_distribute_range (
       width, PIXELS_PER_THREAD / height,
       [=] (gint offset,
            gint size)
       {
-        const T *src0        = (const T *) gimp_temp_buf_get_data (source);
-        T       *dest0       = (T       *) gimp_temp_buf_get_data (destination);
-        gint     src_stride  = N * gimp_temp_buf_get_width (source);
-        gint     dest_stride = N * gimp_temp_buf_get_width (destination);
+        const T *src0        = (const T *) ligma_temp_buf_get_data (source);
+        T       *dest0       = (T       *) ligma_temp_buf_get_data (destination);
+        gint     src_stride  = N * ligma_temp_buf_get_width (source);
+        gint     dest_stride = N * ligma_temp_buf_get_width (destination);
         gint     x;
 
         src0  += offset * N;
@@ -379,11 +379,11 @@ struct MipmapAlgorithms
 };
 
 template <class Func>
-static GimpTempBuf *
-gimp_brush_mipmap_dispatch (const GimpTempBuf *source,
+static LigmaTempBuf *
+ligma_brush_mipmap_dispatch (const LigmaTempBuf *source,
                             Func               func)
 {
-  const Babl *format = gimp_temp_buf_get_format (source);
+  const Babl *format = ligma_temp_buf_get_format (source);
   const Babl *type;
   gint        n_components;
 
@@ -416,10 +416,10 @@ gimp_brush_mipmap_dispatch (const GimpTempBuf *source,
   g_return_val_if_reached (NULL);
 }
 
-static GimpTempBuf *
-gimp_brush_mipmap_downscale (const GimpTempBuf *source)
+static LigmaTempBuf *
+ligma_brush_mipmap_downscale (const LigmaTempBuf *source)
 {
-  return gimp_brush_mipmap_dispatch (
+  return ligma_brush_mipmap_dispatch (
     source,
     [&] (auto algorithms)
     {
@@ -427,10 +427,10 @@ gimp_brush_mipmap_downscale (const GimpTempBuf *source)
     });
 }
 
-static GimpTempBuf *
-gimp_brush_mipmap_downscale_horz (const GimpTempBuf *source)
+static LigmaTempBuf *
+ligma_brush_mipmap_downscale_horz (const LigmaTempBuf *source)
 {
-  return gimp_brush_mipmap_dispatch (
+  return ligma_brush_mipmap_dispatch (
     source,
     [&] (auto algorithms)
     {
@@ -438,10 +438,10 @@ gimp_brush_mipmap_downscale_horz (const GimpTempBuf *source)
     });
 }
 
-static GimpTempBuf *
-gimp_brush_mipmap_downscale_vert (const GimpTempBuf *source)
+static LigmaTempBuf *
+ligma_brush_mipmap_downscale_vert (const LigmaTempBuf *source)
 {
-  return gimp_brush_mipmap_dispatch (
+  return ligma_brush_mipmap_dispatch (
     source,
     [&] (auto algorithms)
     {
@@ -453,36 +453,36 @@ gimp_brush_mipmap_downscale_vert (const GimpTempBuf *source)
 /*  public functions  */
 
 void
-gimp_brush_mipmap_clear (GimpBrush *brush)
+ligma_brush_mipmap_clear (LigmaBrush *brush)
 {
-  gimp_brush_mipmap_clear (brush, &brush->priv->mask_mipmaps);
-  gimp_brush_mipmap_clear (brush, &brush->priv->pixmap_mipmaps);
+  ligma_brush_mipmap_clear (brush, &brush->priv->mask_mipmaps);
+  ligma_brush_mipmap_clear (brush, &brush->priv->pixmap_mipmaps);
 }
 
-const GimpTempBuf *
-gimp_brush_mipmap_get_mask (GimpBrush *brush,
+const LigmaTempBuf *
+ligma_brush_mipmap_get_mask (LigmaBrush *brush,
                             gdouble   *scale_x,
                             gdouble   *scale_y)
 {
-  return gimp_brush_mipmap_get (brush,
+  return ligma_brush_mipmap_get (brush,
                                 brush->priv->mask,
                                 &brush->priv->mask_mipmaps,
                                 scale_x, scale_y);
 }
 
-const GimpTempBuf *
-gimp_brush_mipmap_get_pixmap (GimpBrush *brush,
+const LigmaTempBuf *
+ligma_brush_mipmap_get_pixmap (LigmaBrush *brush,
                               gdouble   *scale_x,
                               gdouble   *scale_y)
 {
-  return gimp_brush_mipmap_get (brush,
+  return ligma_brush_mipmap_get (brush,
                                 brush->priv->pixmap,
                                 &brush->priv->pixmap_mipmaps,
                                 scale_x, scale_y);
 }
 
 gsize
-gimp_brush_mipmap_get_memsize (GimpBrush *brush)
+ligma_brush_mipmap_get_memsize (LigmaBrush *brush)
 {
   gsize memsize = 0;
 
@@ -494,7 +494,7 @@ gimp_brush_mipmap_get_memsize (GimpBrush *brush)
            i < brush->priv->n_horz_mipmaps * brush->priv->n_vert_mipmaps;
            i++)
         {
-          memsize += gimp_temp_buf_get_memsize (brush->priv->mask_mipmaps[i]);
+          memsize += ligma_temp_buf_get_memsize (brush->priv->mask_mipmaps[i]);
         }
     }
 
@@ -506,7 +506,7 @@ gimp_brush_mipmap_get_memsize (GimpBrush *brush)
            i < brush->priv->n_horz_mipmaps * brush->priv->n_vert_mipmaps;
            i++)
         {
-          memsize += gimp_temp_buf_get_memsize (brush->priv->pixmap_mipmaps[i]);
+          memsize += ligma_temp_buf_get_memsize (brush->priv->pixmap_mipmaps[i]);
         }
     }
 

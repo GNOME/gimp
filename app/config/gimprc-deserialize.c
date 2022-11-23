@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpRc deserialization routines
- * Copyright (C) 2001-2002  Sven Neumann <sven@gimp.org>
+ * LigmaRc deserialization routines
+ * Copyright (C) 2001-2002  Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,24 +24,24 @@
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpmath/gimpmath.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "config-types.h"
 
-#include "gimprc-deserialize.h"
-#include "gimprc-unknown.h"
+#include "ligmarc-deserialize.h"
+#include "ligmarc-unknown.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-static GTokenType gimp_rc_deserialize_unknown (GimpConfig *config,
+static GTokenType ligma_rc_deserialize_unknown (LigmaConfig *config,
                                                GScanner   *scanner);
 
 
 gboolean
-gimp_rc_deserialize (GimpConfig *config,
+ligma_rc_deserialize (LigmaConfig *config,
                      GScanner   *scanner,
                      gint        nest_level,
                      gpointer    data)
@@ -55,7 +55,7 @@ gimp_rc_deserialize (GimpConfig *config,
   GTokenType     token;
   GTokenType     next;
 
-  g_return_val_if_fail (GIMP_IS_CONFIG (config), FALSE);
+  g_return_val_if_fail (LIGMA_IS_CONFIG (config), FALSE);
 
   klass = G_OBJECT_GET_CLASS (config);
 
@@ -70,7 +70,7 @@ gimp_rc_deserialize (GimpConfig *config,
     {
       GParamSpec *prop_spec = property_specs[i];
 
-      if (prop_spec->flags & GIMP_CONFIG_PARAM_SERIALIZE)
+      if (prop_spec->flags & LIGMA_CONFIG_PARAM_SERIALIZE)
         {
           g_scanner_scope_add_symbol (scanner, scope_id,
                                       prop_spec->name, prop_spec);
@@ -102,11 +102,11 @@ gimp_rc_deserialize (GimpConfig *config,
           break;
 
         case G_TOKEN_IDENTIFIER:
-          token = gimp_rc_deserialize_unknown (config, scanner);
+          token = ligma_rc_deserialize_unknown (config, scanner);
           break;
 
         case G_TOKEN_SYMBOL:
-          token = gimp_config_deserialize_property (config,
+          token = ligma_config_deserialize_property (config,
                                                     scanner, nest_level);
           break;
 
@@ -137,11 +137,11 @@ gimp_rc_deserialize (GimpConfig *config,
       return FALSE;
     }
 
-  return gimp_config_deserialize_return (scanner, token, nest_level);
+  return ligma_config_deserialize_return (scanner, token, nest_level);
 }
 
 static GTokenType
-gimp_rc_deserialize_unknown (GimpConfig *config,
+ligma_rc_deserialize_unknown (LigmaConfig *config,
                              GScanner   *scanner)
 {
   gchar *key;
@@ -167,7 +167,7 @@ gimp_rc_deserialize_unknown (GimpConfig *config,
       return G_TOKEN_NONE;
     }
 
-  gimp_rc_add_unknown_token (config, key, scanner->value.v_string);
+  ligma_rc_add_unknown_token (config, key, scanner->value.v_string);
   g_free (key);
 
   return G_TOKEN_RIGHT_PAREN;

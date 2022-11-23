@@ -15,7 +15,7 @@
    id="svg2"
    viewBox="0 0 16 16"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="gimp-toilet-paper.svg">
+   sodipodi:docname="ligma-toilet-paper.svg">
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -43,13 +43,13 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title>Gimp Color Icon Theme</dc:title>
+        <dc:title>Ligma Color Icon Theme</dc:title>
         <dc:contributor>
           <cc:Agent>
             <dc:title>many unknown and unnamed, Andrew Chadwick, Alexandre Prokoudine, Aryeom Han, Benoit Touchette, Jakub Steiner, Jehan, Johannes Matschke, Kevin Payne, Klaus Staedtler, Marek Dvoroznak, Michael Natterer</dc:title>
           </cc:Agent>
         </dc:contributor>
-        <dc:description>Enhanced, extended tango-art-libre for GIMP</dc:description>
+        <dc:description>Enhanced, extended tango-art-libre for LIGMA</dc:description>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -111,15 +111,15 @@
      transform="translate(-194.56663,-49.86487)"
      id="stock">
     <g
-       id="gimp-toilet-paper"
+       id="ligma-toilet-paper"
        transform="translate(194.56663,-986.49733)"
        style="display:inline">
       <g
-         id="gimp-new-toilet-paper"
+         id="ligma-new-toilet-paper"
          transform="translate(0,1.7382813e-5)">
         <g
            transform="matrix(0.04091636,0,0,0.04091636,0.17280194,1015.6658)"
-           id="gimp-new-toilet-paper-1">
+           id="ligma-new-toilet-paper-1">
           <path
              transform="matrix(0.88230041,0.47068671,-0.32499327,0.94571633,0,0)"
              style="fill:#dcdcdc;fill-opacity:1;stroke:none;stroke-width:1.13499999;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"

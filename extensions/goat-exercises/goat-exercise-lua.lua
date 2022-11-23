@@ -1,6 +1,6 @@
 #!/usr/bin/env luajit
 
--- GIMP - The GNU Image Manipulation Program
+-- LIGMA - The GNU Image Manipulation Program
 -- Copyright (C) 1995 Spencer Kimball and Peter Mattis
 --
 -- goat-exercise-lua.lua
@@ -25,8 +25,8 @@ local GLib    = lgi.GLib
 local GObject = lgi.GObject
 local Gio     = lgi.Gio
 local Gegl    = lgi.Gegl
-local Gimp    = lgi.Gimp
-local GimpUi  = lgi.GimpUi
+local Ligma    = lgi.Ligma
+local LigmaUi  = lgi.LigmaUi
 local Gtk     = lgi.Gtk
 local Gdk     = lgi.Gdk
 
@@ -43,11 +43,11 @@ end
 
 function run(procedure, run_mode, image, drawables, args, run_data)
   -- procedure:new_return_values() crashes LGI so we construct the
-  -- GimpValueArray manually.
-  local retval = Gimp.ValueArray(1)
+  -- LigmaValueArray manually.
+  local retval = Ligma.ValueArray(1)
 
   if table.getn(drawables) ~= 1 then
-    local calling_err = GObject.Value(Gimp.PDBStatusType, Gimp.PDBStatusType.CALLING_ERROR)
+    local calling_err = GObject.Value(Ligma.PDBStatusType, Ligma.PDBStatusType.CALLING_ERROR)
     local msg         = "Procedure '%s' only works with one drawable."
 
     msg = string.format(msg, procedure:get_name())
@@ -60,10 +60,10 @@ function run(procedure, run_mode, image, drawables, args, run_data)
   local drawable = drawables[1]
 
   -- Not sure why run_mode has become a string instead of testing
-  -- against Gimp.RunMode.INTERACTIVE.
+  -- against Ligma.RunMode.INTERACTIVE.
   if run_mode == "INTERACTIVE" then
-    GimpUi.init("goat-exercise-lua");
-    local dialog = GimpUi.Dialog {
+    LigmaUi.init("goat-exercise-lua");
+    local dialog = LigmaUi.Dialog {
       title          = N_("Exercise a goat (Lua)"),
       role           = "goat-exercise-Lua",
       use_header_bar = 1
@@ -110,7 +110,7 @@ function run(procedure, run_mode, image, drawables, args, run_data)
 
     while (true) do
       local response = dialog:run()
-      local url = 'https://gitlab.gnome.org/GNOME/gimp/blob/master/extensions/goat-exercises/goat-exercise-lua.lua'
+      local url = 'https://gitlab.gnome.org/GNOME/ligma/blob/master/extensions/goat-exercises/goat-exercise-lua.lua'
 
       if response == Gtk.ResponseType.OK then
         dialog:destroy()
@@ -119,7 +119,7 @@ function run(procedure, run_mode, image, drawables, args, run_data)
         Gio.app_info_launch_default_for_uri(url, nil);
       else -- CANCEL, CLOSE, DELETE_EVENT
         dialog:destroy()
-        local cancel = GObject.Value(Gimp.PDBStatusType, Gimp.PDBStatusType.CANCEL)
+        local cancel = GObject.Value(Ligma.PDBStatusType, Ligma.PDBStatusType.CANCEL)
         retval:append(cancel)
         return retval
       end
@@ -147,30 +147,30 @@ function run(procedure, run_mode, image, drawables, args, run_data)
 
     drawable:merge_shadow(true)
     drawable:update(x, y, width, height)
-    Gimp.displays_flush()
+    Ligma.displays_flush()
   end
 
-  local success = GObject.Value(Gimp.PDBStatusType, Gimp.PDBStatusType.SUCCESS)
+  local success = GObject.Value(Ligma.PDBStatusType, Ligma.PDBStatusType.SUCCESS)
   retval:append(success)
   return retval
 end
 
-Goat:class('Exercise', Gimp.PlugIn)
+Goat:class('Exercise', Ligma.PlugIn)
 
 function Goat.Exercise:do_query_procedures()
   return { 'plug-in-goat-exercise-lua' }
 end
 
 function Goat.Exercise:do_create_procedure(name)
-  local procedure = Gimp.ImageProcedure.new(self, name,
-                                            Gimp.PDBProcType.PLUGIN,
+  local procedure = Ligma.ImageProcedure.new(self, name,
+                                            Ligma.PDBProcType.PLUGIN,
                                             run, nil)
 
   procedure:set_image_types("*");
-  procedure:set_sensitivity_mask(Gimp.ProcedureSensitivityMask.DRAWABLE);
+  procedure:set_sensitivity_mask(Ligma.ProcedureSensitivityMask.DRAWABLE);
 
   procedure:set_menu_label("Exercise a Lua goat");
-  procedure:set_icon_name(GimpUi.ICON_GEGL);
+  procedure:set_icon_name(LigmaUi.ICON_GEGL);
   procedure:add_menu_path('<Image>/Filters/Development/Goat exercises/');
 
   procedure:set_documentation("Exercise a goat in the Lua language",
@@ -183,10 +183,10 @@ end
 
 -- 'arg' is a Lua table. When automatically converted to an array, the
 -- value 0 is deleted (because Lua arrays start at 1!), which breaks
--- Gimp.main() call. So let's create our own array starting at 1.
+-- Ligma.main() call. So let's create our own array starting at 1.
 argv = {}
 for k, v in pairs(arg) do
   argv[k+1] = v
 end
 
-Gimp.main(GObject.Type.name(Goat.Exercise), argv)
+Ligma.main(GObject.Type.name(Goat.Exercise), argv)

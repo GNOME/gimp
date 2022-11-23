@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,56 +22,56 @@
 #include <gtk/gtk.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "menus-types.h"
 
-#include "config/gimpcoreconfig.h"
+#include "config/ligmacoreconfig.h"
 
-#include "core/gimp.h"
+#include "core/ligma.h"
 
-#include "plug-in/gimppluginmanager.h"
-#include "plug-in/gimppluginprocedure.h"
+#include "plug-in/ligmapluginmanager.h"
+#include "plug-in/ligmapluginprocedure.h"
 
-#include "widgets/gimpuimanager.h"
+#include "widgets/ligmauimanager.h"
 
 #include "plug-in-menus.h"
 
-#include "gimp-log.h"
-#include "gimp-intl.h"
+#include "ligma-log.h"
+#include "ligma-intl.h"
 
 
 typedef struct _PlugInMenuEntry PlugInMenuEntry;
 
 struct _PlugInMenuEntry
 {
-  GimpPlugInProcedure *proc;
+  LigmaPlugInProcedure *proc;
   const gchar         *menu_path;
 };
 
 
 /*  local function prototypes  */
 
-static void    plug_in_menus_register_procedure   (GimpPDB             *pdb,
-                                                   GimpProcedure       *procedure,
-                                                   GimpUIManager       *manager);
-static void    plug_in_menus_unregister_procedure (GimpPDB             *pdb,
-                                                   GimpProcedure       *procedure,
-                                                   GimpUIManager       *manager);
-static void    plug_in_menus_menu_path_added      (GimpPlugInProcedure *plug_in_proc,
+static void    plug_in_menus_register_procedure   (LigmaPDB             *pdb,
+                                                   LigmaProcedure       *procedure,
+                                                   LigmaUIManager       *manager);
+static void    plug_in_menus_unregister_procedure (LigmaPDB             *pdb,
+                                                   LigmaProcedure       *procedure,
+                                                   LigmaUIManager       *manager);
+static void    plug_in_menus_menu_path_added      (LigmaPlugInProcedure *plug_in_proc,
                                                    const gchar         *menu_path,
-                                                   GimpUIManager       *manager);
-static void    plug_in_menus_add_proc             (GimpUIManager       *manager,
+                                                   LigmaUIManager       *manager);
+static void    plug_in_menus_add_proc             (LigmaUIManager       *manager,
                                                    const gchar         *ui_path,
-                                                   GimpPlugInProcedure *proc,
+                                                   LigmaPlugInProcedure *proc,
                                                    const gchar         *menu_path);
 static void    plug_in_menus_tree_insert          (GTree               *entries,
                                                    const gchar     *    path,
                                                    PlugInMenuEntry     *entry);
 static gboolean   plug_in_menus_tree_traverse     (gpointer             key,
                                                    PlugInMenuEntry     *entry,
-                                                   GimpUIManager       *manager);
-static gchar * plug_in_menus_build_path           (GimpUIManager       *manager,
+                                                   LigmaUIManager       *manager);
+static gchar * plug_in_menus_build_path           (LigmaUIManager       *manager,
                                                    const gchar         *ui_path,
                                                    guint                merge_id,
                                                    const gchar         *menu_path,
@@ -82,23 +82,23 @@ static void    plug_in_menu_entry_free            (PlugInMenuEntry     *entry);
 /*  public functions  */
 
 void
-plug_in_menus_setup (GimpUIManager *manager,
+plug_in_menus_setup (LigmaUIManager *manager,
                      const gchar   *ui_path)
 {
-  GimpPlugInManager *plug_in_manager;
+  LigmaPlugInManager *plug_in_manager;
   GTree             *menu_entries;
   GSList            *list;
   guint              merge_id;
   gint               i;
 
-  g_return_if_fail (GIMP_IS_UI_MANAGER (manager));
+  g_return_if_fail (LIGMA_IS_UI_MANAGER (manager));
   g_return_if_fail (ui_path != NULL);
 
-  plug_in_manager = manager->gimp->plug_in_manager;
+  plug_in_manager = manager->ligma->plug_in_manager;
 
-  merge_id = gimp_ui_manager_new_merge_id (manager);
+  merge_id = ligma_ui_manager_new_merge_id (manager);
 
-  for (i = 0; i < manager->gimp->config->filter_history_size; i++)
+  for (i = 0; i < manager->ligma->config->filter_history_size; i++)
     {
       gchar *action_name;
       gchar *action_path;
@@ -107,7 +107,7 @@ plug_in_menus_setup (GimpUIManager *manager,
       action_path = g_strdup_printf ("%s/Filters/Recently Used/Plug-ins",
                                      ui_path);
 
-      gimp_ui_manager_add_ui (manager, merge_id,
+      ligma_ui_manager_add_ui (manager, merge_id,
                               action_path, action_name, action_name,
                               GTK_UI_MANAGER_MENUITEM,
                               FALSE);
@@ -124,7 +124,7 @@ plug_in_menus_setup (GimpUIManager *manager,
        list;
        list = g_slist_next (list))
     {
-      GimpPlugInProcedure *plug_in_proc = list->data;
+      LigmaPlugInProcedure *plug_in_proc = list->data;
 
       if (! plug_in_proc->file)
         continue;
@@ -169,10 +169,10 @@ plug_in_menus_setup (GimpUIManager *manager,
 
   g_tree_destroy (menu_entries);
 
-  g_signal_connect_object (manager->gimp->pdb, "register-procedure",
+  g_signal_connect_object (manager->ligma->pdb, "register-procedure",
                            G_CALLBACK (plug_in_menus_register_procedure),
                            manager, 0);
-  g_signal_connect_object (manager->gimp->pdb, "unregister-procedure",
+  g_signal_connect_object (manager->ligma->pdb, "unregister-procedure",
                            G_CALLBACK (plug_in_menus_unregister_procedure),
                            manager, 0);
 }
@@ -181,13 +181,13 @@ plug_in_menus_setup (GimpUIManager *manager,
 /*  private functions  */
 
 static void
-plug_in_menus_register_procedure (GimpPDB       *pdb,
-                                  GimpProcedure *procedure,
-                                  GimpUIManager *manager)
+plug_in_menus_register_procedure (LigmaPDB       *pdb,
+                                  LigmaProcedure *procedure,
+                                  LigmaUIManager *manager)
 {
-  if (GIMP_IS_PLUG_IN_PROCEDURE (procedure))
+  if (LIGMA_IS_PLUG_IN_PROCEDURE (procedure))
     {
-      GimpPlugInProcedure *plug_in_proc = GIMP_PLUG_IN_PROCEDURE (procedure);
+      LigmaPlugInProcedure *plug_in_proc = LIGMA_PLUG_IN_PROCEDURE (procedure);
 
       g_signal_connect_object (plug_in_proc, "menu-path-added",
                                G_CALLBACK (plug_in_menus_menu_path_added),
@@ -199,8 +199,8 @@ plug_in_menus_register_procedure (GimpPDB       *pdb,
           GList *list;
 
 
-          GIMP_LOG (MENUS, "register procedure: %s",
-                    gimp_object_get_name (procedure));
+          LIGMA_LOG (MENUS, "register procedure: %s",
+                    ligma_object_get_name (procedure));
 
           for (list = plug_in_proc->menu_paths; list; list = g_list_next (list))
             plug_in_menus_menu_path_added (plug_in_proc, list->data, manager);
@@ -209,13 +209,13 @@ plug_in_menus_register_procedure (GimpPDB       *pdb,
 }
 
 static void
-plug_in_menus_unregister_procedure (GimpPDB       *pdb,
-                                    GimpProcedure *procedure,
-                                    GimpUIManager *manager)
+plug_in_menus_unregister_procedure (LigmaPDB       *pdb,
+                                    LigmaProcedure *procedure,
+                                    LigmaUIManager *manager)
 {
-  if (GIMP_IS_PLUG_IN_PROCEDURE (procedure))
+  if (LIGMA_IS_PLUG_IN_PROCEDURE (procedure))
     {
-      GimpPlugInProcedure *plug_in_proc = GIMP_PLUG_IN_PROCEDURE (procedure);
+      LigmaPlugInProcedure *plug_in_proc = LIGMA_PLUG_IN_PROCEDURE (procedure);
 
       g_signal_handlers_disconnect_by_func (plug_in_proc,
                                             plug_in_menus_menu_path_added,
@@ -226,8 +226,8 @@ plug_in_menus_unregister_procedure (GimpPDB       *pdb,
         {
           GList *list;
 
-          GIMP_LOG (MENUS, "unregister procedure: %s",
-                   gimp_object_get_name (procedure));
+          LIGMA_LOG (MENUS, "unregister procedure: %s",
+                   ligma_object_get_name (procedure));
 
           for (list = plug_in_proc->menu_paths; list; list = g_list_next (list))
             {
@@ -237,13 +237,13 @@ plug_in_menus_unregister_procedure (GimpPDB       *pdb,
                   guint  merge_id;
 
                   merge_key = g_strdup_printf ("%s-merge-id",
-                                               gimp_object_get_name (plug_in_proc));
+                                               ligma_object_get_name (plug_in_proc));
                   merge_id = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (manager),
                                                                   merge_key));
                   g_free (merge_key);
 
                   if (merge_id)
-                    gimp_ui_manager_remove_ui (manager, merge_id);
+                    ligma_ui_manager_remove_ui (manager, merge_id);
 
                   break;
                 }
@@ -253,12 +253,12 @@ plug_in_menus_unregister_procedure (GimpPDB       *pdb,
 }
 
 static void
-plug_in_menus_menu_path_added (GimpPlugInProcedure *plug_in_proc,
+plug_in_menus_menu_path_added (LigmaPlugInProcedure *plug_in_proc,
                                const gchar         *menu_path,
-                               GimpUIManager       *manager)
+                               LigmaUIManager       *manager)
 {
-  GIMP_LOG (MENUS, "menu path added: %s (%s)",
-           gimp_object_get_name (plug_in_proc), menu_path);
+  LIGMA_LOG (MENUS, "menu path added: %s (%s)",
+           ligma_object_get_name (plug_in_proc), menu_path);
 
   if (g_str_has_prefix (menu_path, manager->name))
     {
@@ -338,9 +338,9 @@ plug_in_menus_menu_path_added (GimpPlugInProcedure *plug_in_proc,
 }
 
 static void
-plug_in_menus_add_proc (GimpUIManager       *manager,
+plug_in_menus_add_proc (LigmaUIManager       *manager,
                         const gchar         *ui_path,
-                        GimpPlugInProcedure *proc,
+                        LigmaPlugInProcedure *proc,
                         const gchar         *menu_path)
 {
   gchar *merge_key;
@@ -349,21 +349,21 @@ plug_in_menus_add_proc (GimpUIManager       *manager,
   guint  merge_id;
   guint  menu_merge_id;
 
-  g_return_if_fail (GIMP_IS_UI_MANAGER (manager));
+  g_return_if_fail (LIGMA_IS_UI_MANAGER (manager));
   g_return_if_fail (ui_path != NULL);
-  g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc));
+  g_return_if_fail (LIGMA_IS_PLUG_IN_PROCEDURE (proc));
 
   if (! proc->menu_label)
     return;
 
-  merge_key = g_strdup_printf ("%s-merge-id", gimp_object_get_name (proc));
+  merge_key = g_strdup_printf ("%s-merge-id", ligma_object_get_name (proc));
 
   merge_id = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (manager),
                                                   merge_key));
 
   if (! merge_id)
     {
-      merge_id = gimp_ui_manager_new_merge_id (manager);
+      merge_id = ligma_ui_manager_new_merge_id (manager);
       g_object_set_data (G_OBJECT (manager), merge_key,
                          GUINT_TO_POINTER (merge_id));
     }
@@ -375,12 +375,12 @@ plug_in_menus_add_proc (GimpUIManager       *manager,
 
   if (! menu_merge_id)
     {
-      menu_merge_id = gimp_ui_manager_new_merge_id (manager);
+      menu_merge_id = ligma_ui_manager_new_merge_id (manager);
       g_object_set_data (G_OBJECT (manager), "plug-in-menu-merge-id",
                          GUINT_TO_POINTER (menu_merge_id));
     }
 
-  stripped_path = gimp_strip_uline (menu_path);
+  stripped_path = ligma_strip_uline (menu_path);
   action_path = plug_in_menus_build_path (manager, ui_path, menu_merge_id,
                                           stripped_path, FALSE);
   g_free (stripped_path);
@@ -388,13 +388,13 @@ plug_in_menus_add_proc (GimpUIManager       *manager,
   if (! action_path)
     return;
 
-  GIMP_LOG (MENUS, "adding menu item for '%s' (@ %s)",
-            gimp_object_get_name (proc), action_path);
+  LIGMA_LOG (MENUS, "adding menu item for '%s' (@ %s)",
+            ligma_object_get_name (proc), action_path);
 
-  gimp_ui_manager_add_ui (manager, merge_id,
+  ligma_ui_manager_add_ui (manager, merge_id,
                           action_path,
-                          gimp_object_get_name (proc),
-                          gimp_object_get_name (proc),
+                          ligma_object_get_name (proc),
+                          ligma_object_get_name (proc),
                           GTK_UI_MANAGER_MENUITEM,
                           FALSE);
 
@@ -406,13 +406,13 @@ plug_in_menus_tree_insert (GTree           *entries,
                            const gchar     *path,
                            PlugInMenuEntry *entry)
 {
-  gchar *strip = gimp_strip_uline (path);
+  gchar *strip = ligma_strip_uline (path);
   gchar *key;
 
   /* Append the procedure name to the menu path in order to get a unique
    * key even if two procedures are installed to the same menu entry.
    */
-  key = g_strconcat (strip, gimp_object_get_name (entry->proc), NULL);
+  key = g_strconcat (strip, ligma_object_get_name (entry->proc), NULL);
 
   g_tree_insert (entries, g_utf8_collate_key (key, -1), entry);
 
@@ -423,7 +423,7 @@ plug_in_menus_tree_insert (GTree           *entries,
 static gboolean
 plug_in_menus_tree_traverse (gpointer         key,
                              PlugInMenuEntry *entry,
-                             GimpUIManager   *manager)
+                             LigmaUIManager   *manager)
 {
   const gchar *ui_path = g_object_get_data (G_OBJECT (manager), "ui-path");
 
@@ -433,7 +433,7 @@ plug_in_menus_tree_traverse (gpointer         key,
 }
 
 static gchar *
-plug_in_menus_build_path (GimpUIManager *manager,
+plug_in_menus_build_path (LigmaUIManager *manager,
                           const gchar   *ui_path,
                           guint          merge_id,
                           const gchar   *menu_path,
@@ -449,7 +449,7 @@ plug_in_menus_build_path (GimpUIManager *manager,
 
   action_path = g_strdup_printf ("%s%s", ui_path, strchr (menu_path, '/'));
 
-  if (! gimp_ui_manager_get_widget (manager, action_path))
+  if (! ligma_ui_manager_get_widget (manager, action_path))
     {
       gchar *parent_menu_path   = g_strdup (menu_path);
       gchar *parent_action_path = NULL;
@@ -472,22 +472,22 @@ plug_in_menus_build_path (GimpUIManager *manager,
           action_path = g_strdup_printf ("%s/%s",
                                          parent_action_path, menu_item_name);
 
-          if (! gimp_ui_manager_get_widget (manager, action_path))
+          if (! ligma_ui_manager_get_widget (manager, action_path))
             {
-              GIMP_LOG (MENUS, "adding menu '%s' at path '%s' for action '%s'",
+              LIGMA_LOG (MENUS, "adding menu '%s' at path '%s' for action '%s'",
                         menu_item_name, action_path, menu_path);
 
-              gimp_ui_manager_add_ui (manager, merge_id,
+              ligma_ui_manager_add_ui (manager, merge_id,
                                       parent_action_path, menu_item_name,
                                       menu_path,
                                       GTK_UI_MANAGER_MENU,
                                       FALSE);
 
-              gimp_ui_manager_add_ui (manager, merge_id,
+              ligma_ui_manager_add_ui (manager, merge_id,
                                       action_path, "Menus", NULL,
                                       GTK_UI_MANAGER_PLACEHOLDER,
                                       FALSE);
-              gimp_ui_manager_add_ui (manager, merge_id,
+              ligma_ui_manager_add_ui (manager, merge_id,
                                       action_path, "Separator", NULL,
                                       GTK_UI_MANAGER_SEPARATOR,
                                       FALSE);
@@ -510,7 +510,7 @@ plug_in_menus_build_path (GimpUIManager *manager,
     {
       gchar *placeholder_path = g_strdup_printf ("%s/%s", action_path, "Menus");
 
-      if (gimp_ui_manager_get_widget (manager, placeholder_path))
+      if (ligma_ui_manager_get_widget (manager, placeholder_path))
         {
           g_free (action_path);
 

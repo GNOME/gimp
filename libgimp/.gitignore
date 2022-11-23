@@ -7,10 +7,10 @@
 /.libs
 /.deps
 /*.la
-/gimpenums.c
-/gimpuimarshal.h
-/gimpuimarshal.c
-/Gimp-3.0.*
-/GimpUi-3.0.*
-/gimp-3.*
-/gimp-ui-3.*
+/ligmaenums.c
+/ligmauimarshal.h
+/ligmauimarshal.c
+/Ligma-3.0.*
+/LigmaUi-3.0.*
+/ligma-3.*
+/ligma-ui-3.*

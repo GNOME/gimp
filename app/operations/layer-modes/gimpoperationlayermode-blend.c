@@ -1,9 +1,9 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationlayermode-blend.c
- * Copyright (C) 2017 Michael Natterer <mitch@gimp.org>
- *               2017 Øyvind Kolås <pippin@gimp.org>
+ * ligmaoperationlayermode-blend.c
+ * Copyright (C) 2017 Michael Natterer <mitch@ligma.org>
+ *               2017 Øyvind Kolås <pippin@ligma.org>
  *               2017 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -26,13 +26,13 @@
 #include <cairo.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
 
 #include "../operations-types.h"
 
-#include "gimpoperationlayermode-blend.h"
+#include "ligmaoperationlayermode-blend.h"
 
 
 #define EPSILON      1e-6f
@@ -80,7 +80,7 @@ safe_div (gfloat a,
 
 
 void /* aka linear_dodge */
-gimp_operation_layer_mode_blend_addition (GeglOperation *operation,
+ligma_operation_layer_mode_blend_addition (GeglOperation *operation,
                                           const gfloat  *in,
                                           const gfloat  *layer,
                                           gfloat        *comp,
@@ -105,7 +105,7 @@ gimp_operation_layer_mode_blend_addition (GeglOperation *operation,
 }
 
 void
-gimp_operation_layer_mode_blend_burn (GeglOperation *operation,
+ligma_operation_layer_mode_blend_burn (GeglOperation *operation,
                                       const gfloat  *in,
                                       const gfloat  *layer,
                                       gfloat        *comp,
@@ -130,7 +130,7 @@ gimp_operation_layer_mode_blend_burn (GeglOperation *operation,
 }
 
 void
-gimp_operation_layer_mode_blend_darken_only (GeglOperation *operation,
+ligma_operation_layer_mode_blend_darken_only (GeglOperation *operation,
                                              const gfloat  *in,
                                              const gfloat  *layer,
                                              gfloat        *comp,
@@ -155,7 +155,7 @@ gimp_operation_layer_mode_blend_darken_only (GeglOperation *operation,
 }
 
 void
-gimp_operation_layer_mode_blend_difference (GeglOperation *operation,
+ligma_operation_layer_mode_blend_difference (GeglOperation *operation,
                                             const gfloat  *in,
                                             const gfloat  *layer,
                                             gfloat        *comp,
@@ -180,7 +180,7 @@ gimp_operation_layer_mode_blend_difference (GeglOperation *operation,
 }
 
 void
-gimp_operation_layer_mode_blend_divide (GeglOperation *operation,
+ligma_operation_layer_mode_blend_divide (GeglOperation *operation,
                                         const gfloat  *in,
                                         const gfloat  *layer,
                                         gfloat        *comp,
@@ -205,7 +205,7 @@ gimp_operation_layer_mode_blend_divide (GeglOperation *operation,
 }
 
 void
-gimp_operation_layer_mode_blend_dodge (GeglOperation *operation,
+ligma_operation_layer_mode_blend_dodge (GeglOperation *operation,
                                        const gfloat  *in,
                                        const gfloat  *layer,
                                        gfloat        *comp,
@@ -230,7 +230,7 @@ gimp_operation_layer_mode_blend_dodge (GeglOperation *operation,
 }
 
 void
-gimp_operation_layer_mode_blend_exclusion (GeglOperation *operation,
+ligma_operation_layer_mode_blend_exclusion (GeglOperation *operation,
                                            const gfloat  *in,
                                            const gfloat  *layer,
                                            gfloat        *comp,
@@ -255,7 +255,7 @@ gimp_operation_layer_mode_blend_exclusion (GeglOperation *operation,
 }
 
 void
-gimp_operation_layer_mode_blend_grain_extract (GeglOperation *operation,
+ligma_operation_layer_mode_blend_grain_extract (GeglOperation *operation,
                                                const gfloat  *in,
                                                const gfloat  *layer,
                                                gfloat        *comp,
@@ -280,7 +280,7 @@ gimp_operation_layer_mode_blend_grain_extract (GeglOperation *operation,
 }
 
 void
-gimp_operation_layer_mode_blend_grain_merge (GeglOperation *operation,
+ligma_operation_layer_mode_blend_grain_merge (GeglOperation *operation,
                                              const gfloat  *in,
                                              const gfloat  *layer,
                                              gfloat        *comp,
@@ -305,7 +305,7 @@ gimp_operation_layer_mode_blend_grain_merge (GeglOperation *operation,
 }
 
 void
-gimp_operation_layer_mode_blend_hard_mix (GeglOperation *operation,
+ligma_operation_layer_mode_blend_hard_mix (GeglOperation *operation,
                                           const gfloat  *in,
                                           const gfloat  *layer,
                                           gfloat        *comp,
@@ -330,7 +330,7 @@ gimp_operation_layer_mode_blend_hard_mix (GeglOperation *operation,
 }
 
 void
-gimp_operation_layer_mode_blend_hardlight (GeglOperation *operation,
+ligma_operation_layer_mode_blend_hardlight (GeglOperation *operation,
                                            const gfloat  *in,
                                            const gfloat  *layer,
                                            gfloat        *comp,
@@ -369,7 +369,7 @@ gimp_operation_layer_mode_blend_hardlight (GeglOperation *operation,
 }
 
 void
-gimp_operation_layer_mode_blend_hsl_color (GeglOperation *operation,
+ligma_operation_layer_mode_blend_hsl_color (GeglOperation *operation,
                                            const gfloat  *in,
                                            const gfloat  *layer,
                                            gfloat        *comp,
@@ -434,7 +434,7 @@ gimp_operation_layer_mode_blend_hsl_color (GeglOperation *operation,
 }
 
 void
-gimp_operation_layer_mode_blend_hsv_hue (GeglOperation *operation,
+ligma_operation_layer_mode_blend_hsv_hue (GeglOperation *operation,
                                          const gfloat  *in,
                                          const gfloat  *layer,
                                          gfloat        *comp,
@@ -490,7 +490,7 @@ gimp_operation_layer_mode_blend_hsv_hue (GeglOperation *operation,
 }
 
 void
-gimp_operation_layer_mode_blend_hsv_saturation (GeglOperation *operation,
+ligma_operation_layer_mode_blend_hsv_saturation (GeglOperation *operation,
                                                 const gfloat  *in,
                                                 const gfloat  *layer,
                                                 gfloat        *comp,
@@ -545,7 +545,7 @@ gimp_operation_layer_mode_blend_hsv_saturation (GeglOperation *operation,
 }
 
 void
-gimp_operation_layer_mode_blend_hsv_value (GeglOperation *operation,
+ligma_operation_layer_mode_blend_hsv_value (GeglOperation *operation,
                                            const gfloat  *in,
                                            const gfloat  *layer,
                                            gfloat        *comp,
@@ -589,7 +589,7 @@ gimp_operation_layer_mode_blend_hsv_value (GeglOperation *operation,
 }
 
 void
-gimp_operation_layer_mode_blend_lch_chroma (GeglOperation *operation,
+ligma_operation_layer_mode_blend_lch_chroma (GeglOperation *operation,
                                             const gfloat  *in,
                                             const gfloat  *layer,
                                             gfloat        *comp,
@@ -632,7 +632,7 @@ gimp_operation_layer_mode_blend_lch_chroma (GeglOperation *operation,
 }
 
 void
-gimp_operation_layer_mode_blend_lch_color (GeglOperation *operation,
+ligma_operation_layer_mode_blend_lch_color (GeglOperation *operation,
                                            const gfloat  *in,
                                            const gfloat  *layer,
                                            gfloat        *comp,
@@ -656,7 +656,7 @@ gimp_operation_layer_mode_blend_lch_color (GeglOperation *operation,
 }
 
 void
-gimp_operation_layer_mode_blend_lch_hue (GeglOperation *operation,
+ligma_operation_layer_mode_blend_lch_hue (GeglOperation *operation,
                                          const gfloat  *in,
                                          const gfloat  *layer,
                                          gfloat        *comp,
@@ -699,7 +699,7 @@ gimp_operation_layer_mode_blend_lch_hue (GeglOperation *operation,
 }
 
 void
-gimp_operation_layer_mode_blend_lch_lightness (GeglOperation *operation,
+ligma_operation_layer_mode_blend_lch_lightness (GeglOperation *operation,
                                                const gfloat  *in,
                                                const gfloat  *layer,
                                                gfloat        *comp,
@@ -723,7 +723,7 @@ gimp_operation_layer_mode_blend_lch_lightness (GeglOperation *operation,
 }
 
 void
-gimp_operation_layer_mode_blend_lighten_only (GeglOperation *operation,
+ligma_operation_layer_mode_blend_lighten_only (GeglOperation *operation,
                                               const gfloat  *in,
                                               const gfloat  *layer,
                                               gfloat        *comp,
@@ -748,7 +748,7 @@ gimp_operation_layer_mode_blend_lighten_only (GeglOperation *operation,
 }
 
 void
-gimp_operation_layer_mode_blend_linear_burn (GeglOperation *operation,
+ligma_operation_layer_mode_blend_linear_burn (GeglOperation *operation,
                                              const gfloat  *in,
                                              const gfloat  *layer,
                                              gfloat        *comp,
@@ -775,7 +775,7 @@ gimp_operation_layer_mode_blend_linear_burn (GeglOperation *operation,
 /* added according to:
     http://www.deepskycolors.com/archivo/2010/04/21/formulas-for-Photoshop-blending-modes.html */
 void
-gimp_operation_layer_mode_blend_linear_light (GeglOperation *operation,
+ligma_operation_layer_mode_blend_linear_light (GeglOperation *operation,
                                               const gfloat  *in,
                                               const gfloat  *layer,
                                               gfloat        *comp,
@@ -809,7 +809,7 @@ gimp_operation_layer_mode_blend_linear_light (GeglOperation *operation,
 }
 
 void
-gimp_operation_layer_mode_blend_luma_darken_only (GeglOperation *operation,
+ligma_operation_layer_mode_blend_luma_darken_only (GeglOperation *operation,
                                                   const gfloat  *in,
                                                   const gfloat  *layer,
                                                   gfloat        *comp,
@@ -857,7 +857,7 @@ gimp_operation_layer_mode_blend_luma_darken_only (GeglOperation *operation,
 }
 
 void
-gimp_operation_layer_mode_blend_luma_lighten_only (GeglOperation *operation,
+ligma_operation_layer_mode_blend_luma_lighten_only (GeglOperation *operation,
                                                    const gfloat  *in,
                                                    const gfloat  *layer,
                                                    gfloat        *comp,
@@ -905,7 +905,7 @@ gimp_operation_layer_mode_blend_luma_lighten_only (GeglOperation *operation,
 }
 
 void
-gimp_operation_layer_mode_blend_luminance (GeglOperation *operation,
+ligma_operation_layer_mode_blend_luminance (GeglOperation *operation,
                                            const gfloat  *in,
                                            const gfloat  *layer,
                                            gfloat        *comp,
@@ -952,7 +952,7 @@ gimp_operation_layer_mode_blend_luminance (GeglOperation *operation,
 }
 
 void
-gimp_operation_layer_mode_blend_multiply (GeglOperation *operation,
+ligma_operation_layer_mode_blend_multiply (GeglOperation *operation,
                                           const gfloat  *in,
                                           const gfloat  *layer,
                                           gfloat        *comp,
@@ -977,7 +977,7 @@ gimp_operation_layer_mode_blend_multiply (GeglOperation *operation,
 }
 
 void
-gimp_operation_layer_mode_blend_overlay (GeglOperation *operation,
+ligma_operation_layer_mode_blend_overlay (GeglOperation *operation,
                                          const gfloat  *in,
                                          const gfloat  *layer,
                                          gfloat        *comp,
@@ -1012,7 +1012,7 @@ gimp_operation_layer_mode_blend_overlay (GeglOperation *operation,
 /* added according to:
     http://www.deepskycolors.com/archivo/2010/04/21/formulas-for-Photoshop-blending-modes.html */
 void
-gimp_operation_layer_mode_blend_pin_light (GeglOperation *operation,
+ligma_operation_layer_mode_blend_pin_light (GeglOperation *operation,
                                            const gfloat  *in,
                                            const gfloat  *layer,
                                            gfloat        *comp,
@@ -1046,7 +1046,7 @@ gimp_operation_layer_mode_blend_pin_light (GeglOperation *operation,
 }
 
 void
-gimp_operation_layer_mode_blend_screen (GeglOperation *operation,
+ligma_operation_layer_mode_blend_screen (GeglOperation *operation,
                                         const gfloat  *in,
                                         const gfloat  *layer,
                                         gfloat        *comp,
@@ -1071,7 +1071,7 @@ gimp_operation_layer_mode_blend_screen (GeglOperation *operation,
 }
 
 void
-gimp_operation_layer_mode_blend_softlight (GeglOperation *operation,
+ligma_operation_layer_mode_blend_softlight (GeglOperation *operation,
                                            const gfloat  *in,
                                            const gfloat  *layer,
                                            gfloat        *comp,
@@ -1101,7 +1101,7 @@ gimp_operation_layer_mode_blend_softlight (GeglOperation *operation,
 }
 
 void
-gimp_operation_layer_mode_blend_subtract (GeglOperation *operation,
+ligma_operation_layer_mode_blend_subtract (GeglOperation *operation,
                                           const gfloat  *in,
                                           const gfloat  *layer,
                                           gfloat        *comp,
@@ -1128,7 +1128,7 @@ gimp_operation_layer_mode_blend_subtract (GeglOperation *operation,
 /* added according to:
     http://www.simplefilter.de/en/basics/mixmods.html */
 void
-gimp_operation_layer_mode_blend_vivid_light (GeglOperation *operation,
+ligma_operation_layer_mode_blend_vivid_light (GeglOperation *operation,
                                              const gfloat  *in,
                                              const gfloat  *layer,
                                              gfloat        *comp,
@@ -1177,7 +1177,7 @@ gimp_operation_layer_mode_blend_vivid_light (GeglOperation *operation,
 
 
 void
-gimp_operation_layer_mode_blend_color_erase (GeglOperation *operation,
+ligma_operation_layer_mode_blend_color_erase (GeglOperation *operation,
                                              const gfloat  *in,
                                              const gfloat  *layer,
                                              gfloat        *comp,

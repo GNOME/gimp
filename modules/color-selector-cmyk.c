@@ -1,5 +1,5 @@
-/* GIMP CMYK ColorSelector using littleCMS
- * Copyright (C) 2006  Sven Neumann <sven@gimp.org>
+/* LIGMA CMYK ColorSelector using littleCMS
+ * Copyright (C) 2006  Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,12 +20,12 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpmodule/gimpmodule.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmaconfig/ligmaconfig.h"
+#include "libligmamodule/ligmamodule.h"
+#include "libligmawidgets/ligmawidgets.h"
 
-#include "libgimp/libgimp-intl.h"
+#include "libligma/libligma-intl.h"
 
 
 /* definitions and variables */
@@ -42,14 +42,14 @@ typedef struct _ColorselCmykClass ColorselCmykClass;
 
 struct _ColorselCmyk
 {
-  GimpColorSelector   parent_instance;
+  LigmaColorSelector   parent_instance;
 
-  GimpColorConfig          *config;
-  GimpColorProfile         *simulation_profile;
-  GimpColorRenderingIntent  simulation_intent;
+  LigmaColorConfig          *config;
+  LigmaColorProfile         *simulation_profile;
+  LigmaColorRenderingIntent  simulation_intent;
   gboolean                  simulation_bpc;
 
-  GimpCMYK            cmyk;
+  LigmaCMYK            cmyk;
   GtkWidget          *scales[4];
   GtkWidget          *name_label;
 
@@ -58,7 +58,7 @@ struct _ColorselCmyk
 
 struct _ColorselCmykClass
 {
-  GimpColorSelectorClass  parent_class;
+  LigmaColorSelectorClass  parent_class;
 };
 
 
@@ -66,26 +66,26 @@ static GType  colorsel_cmyk_get_type       (void);
 
 static void   colorsel_cmyk_dispose        (GObject           *object);
 
-static void   colorsel_cmyk_set_color      (GimpColorSelector *selector,
-                                            const GimpRGB     *rgb,
-                                            const GimpHSV     *hsv);
-static void   colorsel_cmyk_set_config     (GimpColorSelector *selector,
-                                            GimpColorConfig   *config);
-static void   colorsel_cmyk_set_simulation (GimpColorSelector *selector,
-                                            GimpColorProfile  *profile,
-                                            GimpColorRenderingIntent intent,
+static void   colorsel_cmyk_set_color      (LigmaColorSelector *selector,
+                                            const LigmaRGB     *rgb,
+                                            const LigmaHSV     *hsv);
+static void   colorsel_cmyk_set_config     (LigmaColorSelector *selector,
+                                            LigmaColorConfig   *config);
+static void   colorsel_cmyk_set_simulation (LigmaColorSelector *selector,
+                                            LigmaColorProfile  *profile,
+                                            LigmaColorRenderingIntent intent,
                                             gboolean           bpc);
 
-static void   colorsel_cmyk_scale_update   (GimpLabelSpin     *scale,
+static void   colorsel_cmyk_scale_update   (LigmaLabelSpin     *scale,
                                             ColorselCmyk      *module);
 static void   colorsel_cmyk_config_changed (ColorselCmyk      *module);
 
 
-static const GimpModuleInfo colorsel_cmyk_info =
+static const LigmaModuleInfo colorsel_cmyk_info =
 {
-  GIMP_MODULE_ABI_VERSION,
+  LIGMA_MODULE_ABI_VERSION,
   N_("CMYK color selector (using color profile)"),
-  "Sven Neumann <sven@gimp.org>",
+  "Sven Neumann <sven@ligma.org>",
   "v0.1",
   "(c) 2006, released under the GPL",
   "September 2006"
@@ -93,17 +93,17 @@ static const GimpModuleInfo colorsel_cmyk_info =
 
 
 G_DEFINE_DYNAMIC_TYPE (ColorselCmyk, colorsel_cmyk,
-                       GIMP_TYPE_COLOR_SELECTOR)
+                       LIGMA_TYPE_COLOR_SELECTOR)
 
 
-G_MODULE_EXPORT const GimpModuleInfo *
-gimp_module_query (GTypeModule *module)
+G_MODULE_EXPORT const LigmaModuleInfo *
+ligma_module_query (GTypeModule *module)
 {
   return &colorsel_cmyk_info;
 }
 
 G_MODULE_EXPORT gboolean
-gimp_module_register (GTypeModule *module)
+ligma_module_register (GTypeModule *module)
 {
   colorsel_cmyk_register_type (module);
 
@@ -114,13 +114,13 @@ static void
 colorsel_cmyk_class_init (ColorselCmykClass *klass)
 {
   GObjectClass           *object_class   = G_OBJECT_CLASS (klass);
-  GimpColorSelectorClass *selector_class = GIMP_COLOR_SELECTOR_CLASS (klass);
+  LigmaColorSelectorClass *selector_class = LIGMA_COLOR_SELECTOR_CLASS (klass);
 
   object_class->dispose                  = colorsel_cmyk_dispose;
 
   selector_class->name                   = _("CMYK");
-  selector_class->help_id                = "gimp-colorselector-cmyk";
-  selector_class->icon_name              = GIMP_ICON_COLOR_SELECTOR_CMYK;
+  selector_class->help_id                = "ligma-colorselector-cmyk";
+  selector_class->icon_name              = LIGMA_ICON_COLOR_SELECTOR_CMYK;
   selector_class->set_color              = colorsel_cmyk_set_color;
   selector_class->set_config             = colorsel_cmyk_set_config;
   selector_class->set_simulation         = colorsel_cmyk_set_simulation;
@@ -172,9 +172,9 @@ colorsel_cmyk_init (ColorselCmyk *module)
 
   for (i = 0; i < 4; i++)
     {
-      module->scales[i] = gimp_scale_entry_new (gettext (cmyk_labels[i]),
+      module->scales[i] = ligma_scale_entry_new (gettext (cmyk_labels[i]),
                                                 0.0, 0.0, 100.0, 0);
-      gimp_help_set_help_data (module->scales[i], gettext (cmyk_tips[i]), NULL);
+      ligma_help_set_help_data (module->scales[i], gettext (cmyk_tips[i]), NULL);
 
       g_signal_connect (module->scales[i], "value-changed",
                         G_CALLBACK (colorsel_cmyk_scale_update),
@@ -187,7 +187,7 @@ colorsel_cmyk_init (ColorselCmyk *module)
   module->name_label = gtk_label_new (NULL);
   gtk_label_set_xalign (GTK_LABEL (module->name_label), 0.0);
   gtk_label_set_ellipsize (GTK_LABEL (module->name_label), PANGO_ELLIPSIZE_END);
-  gimp_label_set_attributes (GTK_LABEL (module->name_label),
+  ligma_label_set_attributes (GTK_LABEL (module->name_label),
                              PANGO_ATTR_SCALE, PANGO_SCALE_SMALL,
                              -1);
   gtk_box_pack_start (GTK_BOX (module), module->name_label, FALSE, FALSE, 0);
@@ -201,19 +201,19 @@ colorsel_cmyk_dispose (GObject *object)
 
   module->in_destruction = TRUE;
 
-  colorsel_cmyk_set_config (GIMP_COLOR_SELECTOR (object), NULL);
+  colorsel_cmyk_set_config (LIGMA_COLOR_SELECTOR (object), NULL);
   g_clear_object (&module->simulation_profile);
 
   G_OBJECT_CLASS (colorsel_cmyk_parent_class)->dispose (object);
 }
 
 static void
-colorsel_cmyk_set_color (GimpColorSelector *selector,
-                         const GimpRGB     *rgb,
-                         const GimpHSV     *hsv)
+colorsel_cmyk_set_color (LigmaColorSelector *selector,
+                         const LigmaRGB     *rgb,
+                         const LigmaHSV     *hsv)
 {
-  GimpColorProfile        *cmyk_profile = NULL;
-  GimpColorRenderingIntent intent       = GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC;
+  LigmaColorProfile        *cmyk_profile = NULL;
+  LigmaColorRenderingIntent intent       = LIGMA_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC;
   const Babl              *fish         = NULL;
   const Babl              *space        = NULL;
   ColorselCmyk            *module       = COLORSEL_CMYK (selector);
@@ -224,15 +224,15 @@ colorsel_cmyk_set_color (GimpColorSelector *selector,
   if (module->simulation_profile)
     cmyk_profile = module->simulation_profile;
 
-  if (! cmyk_profile && GIMP_IS_COLOR_CONFIG (module->config))
-    cmyk_profile = gimp_color_config_get_cmyk_color_profile (GIMP_COLOR_CONFIG (module->config),
+  if (! cmyk_profile && LIGMA_IS_COLOR_CONFIG (module->config))
+    cmyk_profile = ligma_color_config_get_cmyk_color_profile (LIGMA_COLOR_CONFIG (module->config),
                                                              NULL);
 
-  if (cmyk_profile && gimp_color_profile_is_cmyk (cmyk_profile))
+  if (cmyk_profile && ligma_color_profile_is_cmyk (cmyk_profile))
     {
       intent = module->simulation_intent;
 
-      space = gimp_color_profile_get_space (cmyk_profile, intent,
+      space = ligma_color_profile_get_space (cmyk_profile, intent,
                                             NULL);
     }
 
@@ -248,7 +248,7 @@ colorsel_cmyk_set_color (GimpColorSelector *selector,
                                        module);
 
       values[i] *= 100.0;
-      gimp_label_spin_set_value (GIMP_LABEL_SPIN (module->scales[i]), values[i]);
+      ligma_label_spin_set_value (LIGMA_LABEL_SPIN (module->scales[i]), values[i]);
 
       g_signal_handlers_unblock_by_func (module->scales[i],
                                          colorsel_cmyk_scale_update,
@@ -260,8 +260,8 @@ colorsel_cmyk_set_color (GimpColorSelector *selector,
 }
 
 static void
-colorsel_cmyk_set_config (GimpColorSelector *selector,
-                          GimpColorConfig   *config)
+colorsel_cmyk_set_config (LigmaColorSelector *selector,
+                          LigmaColorConfig   *config)
 {
   ColorselCmyk *module = COLORSEL_CMYK (selector);
 
@@ -284,35 +284,35 @@ colorsel_cmyk_set_config (GimpColorSelector *selector,
 }
 
 static void
-colorsel_cmyk_set_simulation (GimpColorSelector *selector,
-                              GimpColorProfile  *profile,
-                              GimpColorRenderingIntent intent,
+colorsel_cmyk_set_simulation (LigmaColorSelector *selector,
+                              LigmaColorProfile  *profile,
+                              LigmaColorRenderingIntent intent,
                               gboolean           bpc)
 {
   ColorselCmyk     *module = COLORSEL_CMYK (selector);
-  GimpColorProfile *cmyk_profile = NULL;
+  LigmaColorProfile *cmyk_profile = NULL;
   gchar            *text;
 
   gtk_label_set_text (GTK_LABEL (module->name_label), _("Profile: (none)"));
-  gimp_help_set_help_data (module->name_label, NULL, NULL);
+  ligma_help_set_help_data (module->name_label, NULL, NULL);
 
   g_set_object (&module->simulation_profile, profile);
 
   cmyk_profile = module->simulation_profile;
 
-  if (! cmyk_profile && GIMP_IS_COLOR_CONFIG (module->config))
-    cmyk_profile = gimp_color_config_get_cmyk_color_profile (GIMP_COLOR_CONFIG (module->config),
+  if (! cmyk_profile && LIGMA_IS_COLOR_CONFIG (module->config))
+    cmyk_profile = ligma_color_config_get_cmyk_color_profile (LIGMA_COLOR_CONFIG (module->config),
                                                              NULL);
 
-  if (cmyk_profile && gimp_color_profile_is_cmyk (cmyk_profile))
+  if (cmyk_profile && ligma_color_profile_is_cmyk (cmyk_profile))
     {
       text = g_strdup_printf (_("Profile: %s"),
-                              gimp_color_profile_get_label (cmyk_profile));
+                              ligma_color_profile_get_label (cmyk_profile));
       gtk_label_set_text (GTK_LABEL (module->name_label), text);
       g_free (text);
 
-      gimp_help_set_help_data (module->name_label,
-                              gimp_color_profile_get_summary (cmyk_profile),
+      ligma_help_set_help_data (module->name_label,
+                              ligma_color_profile_get_summary (cmyk_profile),
                               NULL);
     }
 
@@ -324,12 +324,12 @@ colorsel_cmyk_set_simulation (GimpColorSelector *selector,
 }
 
 static void
-colorsel_cmyk_scale_update (GimpLabelSpin *scale,
+colorsel_cmyk_scale_update (LigmaLabelSpin *scale,
                             ColorselCmyk  *module)
 {
-  GimpColorProfile        *cmyk_profile = NULL;
-  GimpColorSelector       *selector     = GIMP_COLOR_SELECTOR (module);
-  GimpColorRenderingIntent intent       = GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC;
+  LigmaColorProfile        *cmyk_profile = NULL;
+  LigmaColorSelector       *selector     = LIGMA_COLOR_SELECTOR (module);
+  LigmaColorRenderingIntent intent       = LIGMA_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC;
   const Babl              *fish         = NULL;
   const Babl              *space        = NULL;
   gfloat                   cmyk_values[4];
@@ -337,19 +337,19 @@ colorsel_cmyk_scale_update (GimpLabelSpin *scale,
   gint                     i;
 
   for (i = 0; i < 4; i++)
-    cmyk_values[i] = gimp_label_spin_get_value (GIMP_LABEL_SPIN (module->scales[i])) / 100.0;
+    cmyk_values[i] = ligma_label_spin_get_value (LIGMA_LABEL_SPIN (module->scales[i])) / 100.0;
 
   if (module->simulation_profile)
     cmyk_profile = module->simulation_profile;
 
-  if (! cmyk_profile && GIMP_IS_COLOR_CONFIG (module->config))
-    cmyk_profile = gimp_color_config_get_cmyk_color_profile (GIMP_COLOR_CONFIG (module->config),
+  if (! cmyk_profile && LIGMA_IS_COLOR_CONFIG (module->config))
+    cmyk_profile = ligma_color_config_get_cmyk_color_profile (LIGMA_COLOR_CONFIG (module->config),
                                                              NULL);
   if (cmyk_profile)
     {
       intent = module->simulation_intent;
 
-      space = gimp_color_profile_get_space (cmyk_profile, intent,
+      space = ligma_color_profile_get_space (cmyk_profile, intent,
                                             NULL);
     }
 
@@ -362,9 +362,9 @@ colorsel_cmyk_scale_update (GimpLabelSpin *scale,
   selector->rgb.g = rgb_values[1];
   selector->rgb.b = rgb_values[2];
 
-  gimp_rgb_to_hsv (&selector->rgb, &selector->hsv);
+  ligma_rgb_to_hsv (&selector->rgb, &selector->hsv);
 
-  gimp_color_selector_emit_color_changed (selector);
+  ligma_color_selector_emit_color_changed (selector);
 
   if (cmyk_profile && ! module->simulation_profile)
     g_object_unref (cmyk_profile);
@@ -373,14 +373,14 @@ colorsel_cmyk_scale_update (GimpLabelSpin *scale,
 static void
 colorsel_cmyk_config_changed (ColorselCmyk *module)
 {
-  GimpColorSelector       *selector     = GIMP_COLOR_SELECTOR (module);
-  GimpColorConfig         *config       = module->config;
-  GimpColorProfile        *rgb_profile  = NULL;
-  GimpColorProfile        *cmyk_profile = NULL;
+  LigmaColorSelector       *selector     = LIGMA_COLOR_SELECTOR (module);
+  LigmaColorConfig         *config       = module->config;
+  LigmaColorProfile        *rgb_profile  = NULL;
+  LigmaColorProfile        *cmyk_profile = NULL;
   gchar                   *text;
 
   gtk_label_set_text (GTK_LABEL (module->name_label), _("Profile: (none)"));
-  gimp_help_set_help_data (module->name_label, NULL, NULL);
+  ligma_help_set_help_data (module->name_label, NULL, NULL);
 
   if (! config)
     goto out;
@@ -388,22 +388,22 @@ colorsel_cmyk_config_changed (ColorselCmyk *module)
   if (module->simulation_profile)
     cmyk_profile = module->simulation_profile;
 
-  if (! cmyk_profile && GIMP_IS_COLOR_CONFIG (module->config))
-    cmyk_profile = gimp_color_config_get_cmyk_color_profile (GIMP_COLOR_CONFIG (module->config),
+  if (! cmyk_profile && LIGMA_IS_COLOR_CONFIG (module->config))
+    cmyk_profile = ligma_color_config_get_cmyk_color_profile (LIGMA_COLOR_CONFIG (module->config),
                                                              NULL);
 
   if (! cmyk_profile)
     goto out;
 
-  rgb_profile = gimp_color_profile_new_rgb_srgb ();
+  rgb_profile = ligma_color_profile_new_rgb_srgb ();
 
   text = g_strdup_printf (_("Profile: %s"),
-                          gimp_color_profile_get_label (cmyk_profile));
+                          ligma_color_profile_get_label (cmyk_profile));
   gtk_label_set_text (GTK_LABEL (module->name_label), text);
   g_free (text);
 
-  gimp_help_set_help_data (module->name_label,
-                           gimp_color_profile_get_summary (cmyk_profile),
+  ligma_help_set_help_data (module->name_label,
+                           ligma_color_profile_get_summary (cmyk_profile),
                            NULL);
 
  out:

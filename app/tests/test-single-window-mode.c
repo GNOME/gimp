@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * test-single-window-mode.c
@@ -25,53 +25,53 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "dialogs/dialogs-types.h"
 
-#include "display/gimpdisplay.h"
-#include "display/gimpdisplayshell.h"
-#include "display/gimpdisplayshell-scale.h"
-#include "display/gimpdisplayshell-transform.h"
-#include "display/gimpimagewindow.h"
+#include "display/ligmadisplay.h"
+#include "display/ligmadisplayshell.h"
+#include "display/ligmadisplayshell-scale.h"
+#include "display/ligmadisplayshell-transform.h"
+#include "display/ligmaimagewindow.h"
 
-#include "widgets/gimpdialogfactory.h"
-#include "widgets/gimpdock.h"
-#include "widgets/gimpdockable.h"
-#include "widgets/gimpdockbook.h"
-#include "widgets/gimpdockcontainer.h"
-#include "widgets/gimpdocked.h"
-#include "widgets/gimpdockwindow.h"
-#include "widgets/gimphelp-ids.h"
-#include "widgets/gimpsessioninfo.h"
-#include "widgets/gimptoolbox.h"
-#include "widgets/gimptooloptionseditor.h"
-#include "widgets/gimpuimanager.h"
-#include "widgets/gimpwidgets-utils.h"
+#include "widgets/ligmadialogfactory.h"
+#include "widgets/ligmadock.h"
+#include "widgets/ligmadockable.h"
+#include "widgets/ligmadockbook.h"
+#include "widgets/ligmadockcontainer.h"
+#include "widgets/ligmadocked.h"
+#include "widgets/ligmadockwindow.h"
+#include "widgets/ligmahelp-ids.h"
+#include "widgets/ligmasessioninfo.h"
+#include "widgets/ligmatoolbox.h"
+#include "widgets/ligmatooloptionseditor.h"
+#include "widgets/ligmauimanager.h"
+#include "widgets/ligmawidgets-utils.h"
 
-#include "core/gimp.h"
-#include "core/gimpchannel.h"
-#include "core/gimpcontext.h"
-#include "core/gimpimage.h"
-#include "core/gimplayer.h"
-#include "core/gimptoolinfo.h"
-#include "core/gimptooloptions.h"
+#include "core/ligma.h"
+#include "core/ligmachannel.h"
+#include "core/ligmacontext.h"
+#include "core/ligmaimage.h"
+#include "core/ligmalayer.h"
+#include "core/ligmatoolinfo.h"
+#include "core/ligmatooloptions.h"
 
 #include "tests.h"
 
-#include "gimp-app-test-utils.h"
+#include "ligma-app-test-utils.h"
 
 
 #define ADD_TEST(function) \
-  g_test_add_data_func ("/gimp-single-window-mode/" #function, gimp, function);
+  g_test_add_data_func ("/ligma-single-window-mode/" #function, ligma, function);
 
 
 /* Put this in the code below when you want the test to pause so you
  * can do measurements of widgets on the screen for example
  */
-#define GIMP_PAUSE (g_usleep (20 * 1000 * 1000))
+#define LIGMA_PAUSE (g_usleep (20 * 1000 * 1000))
 
 
 /**
@@ -84,8 +84,8 @@
 static void
 new_dockable_not_in_new_window (gconstpointer data)
 {
-  Gimp              *gimp             = GIMP (data);
-  GimpDialogFactory *factory          = gimp_dialog_factory_get_singleton ();
+  Ligma              *ligma             = LIGMA (data);
+  LigmaDialogFactory *factory          = ligma_dialog_factory_get_singleton ();
   gint               dialogs_before   = 0;
   gint               toplevels_before = 0;
   gint               dialogs_after    = 0;
@@ -93,10 +93,10 @@ new_dockable_not_in_new_window (gconstpointer data)
   GList             *dialogs;
   GList             *iter;
 
-  gimp_test_run_mainloop_until_idle ();
+  ligma_test_run_mainloop_until_idle ();
 
   /* Count dialogs before we create the dockable */
-  dialogs        = gimp_dialog_factory_get_open_dialogs (factory);
+  dialogs        = ligma_dialog_factory_get_open_dialogs (factory);
   dialogs_before = g_list_length (dialogs);
   for (iter = dialogs; iter; iter = g_list_next (iter))
     {
@@ -105,13 +105,13 @@ new_dockable_not_in_new_window (gconstpointer data)
     }
 
   /* Create a dockable */
-  gimp_ui_manager_activate_action (gimp_test_utils_get_ui_manager (gimp),
+  ligma_ui_manager_activate_action (ligma_test_utils_get_ui_manager (ligma),
                                    "dialogs",
                                    "dialogs-undo-history");
-  gimp_test_run_mainloop_until_idle ();
+  ligma_test_run_mainloop_until_idle ();
 
   /* Count dialogs after we created the dockable */
-  dialogs       = gimp_dialog_factory_get_open_dialogs (factory);
+  dialogs       = ligma_dialog_factory_get_open_dialogs (factory);
   dialogs_after = g_list_length (dialogs);
   for (iter = dialogs; iter; iter = g_list_next (iter))
     {
@@ -127,20 +127,20 @@ new_dockable_not_in_new_window (gconstpointer data)
 
 int main(int argc, char **argv)
 {
-  Gimp  *gimp   = NULL;
+  Ligma  *ligma   = NULL;
   gint   result = -1;
 
-  gimp_test_bail_if_no_display ();
+  ligma_test_bail_if_no_display ();
   gtk_test_init (&argc, &argv, NULL);
 
-  gimp_test_utils_set_gimp3_directory ("GIMP_TESTING_ABS_TOP_SRCDIR",
-                                       "app/tests/gimpdir");
-  gimp_test_utils_setup_menus_path ();
+  ligma_test_utils_set_ligma3_directory ("LIGMA_TESTING_ABS_TOP_SRCDIR",
+                                       "app/tests/ligmadir");
+  ligma_test_utils_setup_menus_path ();
 
-  /* Launch GIMP in single-window mode */
-  g_setenv ("GIMP_TESTING_SESSIONRC_NAME", "sessionrc-2-8-single-window", TRUE /*overwrite*/);
-  gimp = gimp_init_for_gui_testing (TRUE /*show_gui*/);
-  gimp_test_run_mainloop_until_idle ();
+  /* Launch LIGMA in single-window mode */
+  g_setenv ("LIGMA_TESTING_SESSIONRC_NAME", "sessionrc-2-8-single-window", TRUE /*overwrite*/);
+  ligma = ligma_init_for_gui_testing (TRUE /*show_gui*/);
+  ligma_test_run_mainloop_until_idle ();
 
   ADD_TEST (new_dockable_not_in_new_window);
 
@@ -148,11 +148,11 @@ int main(int argc, char **argv)
   result = g_test_run ();
 
   /* Don't write files to the source dir */
-  gimp_test_utils_set_gimp3_directory ("GIMP_TESTING_ABS_TOP_BUILDDIR",
-                                       "app/tests/gimpdir-output");
+  ligma_test_utils_set_ligma3_directory ("LIGMA_TESTING_ABS_TOP_BUILDDIR",
+                                       "app/tests/ligmadir-output");
 
   /* Exit properly so we don't break script-fu plug-in wire */
-  gimp_exit (gimp, TRUE);
+  ligma_exit (ligma, TRUE);
 
   return result;
 }

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,29 +15,29 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TRANSFORM_3D_OPTIONS_H__
-#define __GIMP_TRANSFORM_3D_OPTIONS_H__
+#ifndef __LIGMA_TRANSFORM_3D_OPTIONS_H__
+#define __LIGMA_TRANSFORM_3D_OPTIONS_H__
 
 
-#include "gimptransformgridoptions.h"
+#include "ligmatransformgridoptions.h"
 
 
-#define GIMP_TYPE_TRANSFORM_3D_OPTIONS            (gimp_transform_3d_options_get_type ())
-#define GIMP_TRANSFORM_3D_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TRANSFORM_3D_OPTIONS, GimpTransform3DOptions))
-#define GIMP_TRANSFORM_3D_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TRANSFORM_3D_OPTIONS, GimpTransform3DOptionsClass))
-#define GIMP_IS_TRANSFORM_3D_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_TRANSFORM_3D_OPTIONS))
-#define GIMP_IS_TRANSFORM_3D_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_TRANSFORM_3D_OPTIONS))
-#define GIMP_TRANSFORM_3D_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_TRANSFORM_3D_OPTIONS, GimpTransform3DOptionsClass))
+#define LIGMA_TYPE_TRANSFORM_3D_OPTIONS            (ligma_transform_3d_options_get_type ())
+#define LIGMA_TRANSFORM_3D_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_TRANSFORM_3D_OPTIONS, LigmaTransform3DOptions))
+#define LIGMA_TRANSFORM_3D_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_TRANSFORM_3D_OPTIONS, LigmaTransform3DOptionsClass))
+#define LIGMA_IS_TRANSFORM_3D_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_TRANSFORM_3D_OPTIONS))
+#define LIGMA_IS_TRANSFORM_3D_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_TRANSFORM_3D_OPTIONS))
+#define LIGMA_TRANSFORM_3D_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_TRANSFORM_3D_OPTIONS, LigmaTransform3DOptionsClass))
 
 
-typedef struct _GimpTransform3DOptions      GimpTransform3DOptions;
-typedef struct _GimpTransform3DOptionsClass GimpTransform3DOptionsClass;
+typedef struct _LigmaTransform3DOptions      LigmaTransform3DOptions;
+typedef struct _LigmaTransform3DOptionsClass LigmaTransform3DOptionsClass;
 
-struct _GimpTransform3DOptions
+struct _LigmaTransform3DOptions
 {
-  GimpTransformGridOptions  parent_instance;
+  LigmaTransformGridOptions  parent_instance;
 
-  GimpTransform3DMode       mode;
+  LigmaTransform3DMode       mode;
   gboolean                  unified;
 
   gboolean                  constrain_axis;
@@ -45,15 +45,15 @@ struct _GimpTransform3DOptions
   gboolean                  local_frame;
 };
 
-struct _GimpTransform3DOptionsClass
+struct _LigmaTransform3DOptionsClass
 {
-  GimpTransformGridOptionsClass  parent_class;
+  LigmaTransformGridOptionsClass  parent_class;
 };
 
 
-GType       gimp_transform_3d_options_get_type (void) G_GNUC_CONST;
+GType       ligma_transform_3d_options_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_transform_3d_options_gui      (GimpToolOptions *tool_options);
+GtkWidget * ligma_transform_3d_options_gui      (LigmaToolOptions *tool_options);
 
 
-#endif /* __GIMP_TRANSFORM_3D_OPTIONS_H__ */
+#endif /* __LIGMA_TRANSFORM_3D_OPTIONS_H__ */

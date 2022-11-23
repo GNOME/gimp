@@ -1,13 +1,13 @@
-/* A light theme for GIMP 3.0 */
+/* A light theme for LIGMA 3.0 */
 
 /* Hint for debugging themes:
  * first enable the GTK inspector with
    gsettings set org.gtk.Settings.Debug enable-inspector-keybinding true
- * then (after restarting GIMP) call it up with ctrl+shift+i
- * or from GIMP's UI: File > Debug > Start GtkInspector
+ * then (after restarting LIGMA) call it up with ctrl+shift+i
+ * or from LIGMA's UI: File > Debug > Start GtkInspector
  */
 
-@import url("../System/gimp.css");
+@import url("../System/ligma.css");
 
 * {
   /* Default text color; needed for e.g. the Prefs dialog title area,
@@ -57,14 +57,14 @@
  * Foreground color here is the text color, not the Wilber color.
  * background-color and background here are ignored.
  */
-GimpDisplayShell, GimpDock, .dialog-action-box, .dialog-vbox {
+LigmaDisplayShell, LigmaDock, .dialog-action-box, .dialog-vbox {
   color: @dimmed-fg-color;
 }
 
 /* Foreground color for the big Wilber in the empty image window.
  * Again, background-color and background here are ignored.
  */
-#gimp-canvas {
+#ligma-canvas {
   color: @dimmed-fg-color;
 }
 
@@ -88,22 +88,22 @@ combobox box, combobox box.linked, combobox button {
   border-color: @stronger-border-color;
 }
 
-/* Get rid of the outline around all tabs in the gimpcolordialog */
-GimpColorNotebook .frame {
+/* Get rid of the outline around all tabs in the ligmacolordialog */
+LigmaColorNotebook .frame {
   border-color: @bg-color;
 }
 
 /* Color history buttons in the color chooser.
- * The selector GimpColorHistory button gets the color buttons
- * but not the + button; GimpColorSelection gets both.
+ * The selector LigmaColorHistory button gets the color buttons
+ * but not the + button; LigmaColorSelection gets both.
  */
-GimpColorSelection button {
+LigmaColorSelection button {
   background: @widget-bg-color;
   border: 1px solid @stronger-border-color;
   color: @fg-color;
 }
 
-GimpColorSelection button:hover {
+LigmaColorSelection button:hover {
   background: @hover-color;
 }
 
@@ -130,7 +130,7 @@ notebook header tabs tab:hover {
   background-color: @hover-color;
 }
 
-/* The background of many dialogs, e.g. Preferences and gimpcolordialog */
+/* The background of many dialogs, e.g. Preferences and ligmacolordialog */
 .vertical {
   color: @fg-color;
   background-color: @bg-color;
@@ -149,8 +149,8 @@ notebook header tabs tab:hover {
 }
 
 /* Text buttons, e.g. the main buttons at the bottoms of dialogs,
- * 0..100 and 0..255 at the top of gimpcolordialog,
- * where they're inside a GimpColorSelection
+ * 0..100 and 0..255 at the top of ligmacolordialog,
+ * where they're inside a LigmaColorSelection
  */
 .text-button {
   color: @fg-color;
@@ -181,13 +181,13 @@ toolbutton button.flat:hover {
 }
 
 /* Color the toolbox Wilber icon */
-GimpDock frame:first-child:not(label) {
+LigmaDock frame:first-child:not(label) {
   color: @dimmed-fg-color;
 }
 /* Fix an issue with a few labels in the toolbox
  * having their colors overwritten with Wilber's
  */
-GimpDock frame:first-child label {
+LigmaDock frame:first-child label {
   color: @fg-color;
 }
 
@@ -219,7 +219,7 @@ notebook header {
   background-color: @bg-color;
 }
 
-GimpRuler {
+LigmaRuler {
   background-color: @ruler-color;
 }
 
@@ -281,8 +281,8 @@ button:checked {
  *   spinbutton button.down, spinbutton button.up can be styled separately,
  *   as can spinbutton entry.
  *
- * GimpSpinScale also has button.up, button.down and entry under it,
- *   plus GimpSpinScale entry progress.
+ * LigmaSpinScale also has button.up, button.down and entry under it,
+ *   plus LigmaSpinScale entry progress.
  *
  * Mostly the inherited values seem pretty good for both of these,
  * so they're not overridden.
@@ -293,7 +293,7 @@ spinbutton, entry {
   border-color: @strong-border-color;
 }
 
-GimpSpinScale entry progress {
+LigmaSpinScale entry progress {
   background-color: @extreme-selected-color;
   border-width:     0px;
   border-radius:    3px;

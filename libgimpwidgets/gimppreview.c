@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimppreview.c
+ * ligmapreview.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,23 +23,23 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
 
-#include "gimpwidgets.h"
+#include "ligmawidgets.h"
 
-#include "gimppreview.h"
+#include "ligmapreview.h"
 
-#include "libgimp/libgimp-intl.h"
+#include "libligma/libligma-intl.h"
 
 
 /**
- * SECTION: gimppreview
- * @title: GimpPreview
- * @short_description: A widget providing a #GimpPreviewArea plus
+ * SECTION: ligmapreview
+ * @title: LigmaPreview
+ * @short_description: A widget providing a #LigmaPreviewArea plus
  *                     framework to update the preview.
  *
- * A widget providing a #GimpPreviewArea plus framework to update the
+ * A widget providing a #LigmaPreviewArea plus framework to update the
  * preview.
  **/
 
@@ -61,7 +61,7 @@ enum
 };
 
 
-struct _GimpPreviewPrivate
+struct _LigmaPreviewPrivate
 {
   GtkWidget *area;
   GtkWidget *grid;
@@ -79,63 +79,63 @@ struct _GimpPreviewPrivate
   guint      timeout_id;
 };
 
-#define GET_PRIVATE(obj) (((GimpPreview *) (obj))->priv)
+#define GET_PRIVATE(obj) (((LigmaPreview *) (obj))->priv)
 
 
-static void      gimp_preview_dispose             (GObject          *object);
-static void      gimp_preview_get_property        (GObject          *object,
+static void      ligma_preview_dispose             (GObject          *object);
+static void      ligma_preview_get_property        (GObject          *object,
                                                    guint             property_id,
                                                    GValue           *value,
                                                    GParamSpec       *pspec);
-static void      gimp_preview_set_property        (GObject          *object,
+static void      ligma_preview_set_property        (GObject          *object,
                                                    guint             property_id,
                                                    const GValue     *value,
                                                    GParamSpec       *pspec);
 
-static void      gimp_preview_direction_changed   (GtkWidget        *widget,
+static void      ligma_preview_direction_changed   (GtkWidget        *widget,
                                                    GtkTextDirection  prev_dir);
-static gboolean  gimp_preview_popup_menu          (GtkWidget        *widget);
+static gboolean  ligma_preview_popup_menu          (GtkWidget        *widget);
 
-static void      gimp_preview_area_realize        (GtkWidget        *widget,
-                                                   GimpPreview      *preview);
-static void      gimp_preview_area_unrealize      (GtkWidget        *widget,
-                                                   GimpPreview      *preview);
-static void      gimp_preview_area_size_allocate  (GtkWidget        *widget,
+static void      ligma_preview_area_realize        (GtkWidget        *widget,
+                                                   LigmaPreview      *preview);
+static void      ligma_preview_area_unrealize      (GtkWidget        *widget,
+                                                   LigmaPreview      *preview);
+static void      ligma_preview_area_size_allocate  (GtkWidget        *widget,
                                                    GtkAllocation    *allocation,
-                                                   GimpPreview      *preview);
-static void      gimp_preview_area_set_cursor     (GimpPreview      *preview);
-static gboolean  gimp_preview_area_event          (GtkWidget        *area,
+                                                   LigmaPreview      *preview);
+static void      ligma_preview_area_set_cursor     (LigmaPreview      *preview);
+static gboolean  ligma_preview_area_event          (GtkWidget        *area,
                                                    GdkEvent         *event,
-                                                   GimpPreview      *preview);
+                                                   LigmaPreview      *preview);
 
-static void      gimp_preview_toggle_callback     (GtkWidget        *toggle,
-                                                   GimpPreview      *preview);
+static void      ligma_preview_toggle_callback     (GtkWidget        *toggle,
+                                                   LigmaPreview      *preview);
 
-static void      gimp_preview_notify_checks       (GimpPreview      *preview);
+static void      ligma_preview_notify_checks       (LigmaPreview      *preview);
 
-static gboolean  gimp_preview_invalidate_now      (GimpPreview      *preview);
-static void      gimp_preview_real_set_cursor     (GimpPreview      *preview);
-static void      gimp_preview_real_transform      (GimpPreview      *preview,
+static gboolean  ligma_preview_invalidate_now      (LigmaPreview      *preview);
+static void      ligma_preview_real_set_cursor     (LigmaPreview      *preview);
+static void      ligma_preview_real_transform      (LigmaPreview      *preview,
                                                    gint              src_x,
                                                    gint              src_y,
                                                    gint             *dest_x,
                                                    gint             *dest_y);
-static void      gimp_preview_real_untransform    (GimpPreview      *preview,
+static void      ligma_preview_real_untransform    (LigmaPreview      *preview,
                                                    gint              src_x,
                                                    gint              src_y,
                                                    gint             *dest_x,
                                                    gint             *dest_y);
 
 
-G_DEFINE_ABSTRACT_TYPE_WITH_PRIVATE (GimpPreview, gimp_preview, GTK_TYPE_BOX)
+G_DEFINE_ABSTRACT_TYPE_WITH_PRIVATE (LigmaPreview, ligma_preview, GTK_TYPE_BOX)
 
-#define parent_class gimp_preview_parent_class
+#define parent_class ligma_preview_parent_class
 
 static guint preview_signals[LAST_SIGNAL] = { 0 };
 
 
 static void
-gimp_preview_class_init (GimpPreviewClass *klass)
+ligma_preview_class_init (LigmaPreviewClass *klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
@@ -146,23 +146,23 @@ gimp_preview_class_init (GimpPreviewClass *klass)
     g_signal_new ("invalidated",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpPreviewClass, invalidated),
+                  G_STRUCT_OFFSET (LigmaPreviewClass, invalidated),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
-  object_class->dispose           = gimp_preview_dispose;
-  object_class->get_property      = gimp_preview_get_property;
-  object_class->set_property      = gimp_preview_set_property;
+  object_class->dispose           = ligma_preview_dispose;
+  object_class->get_property      = ligma_preview_get_property;
+  object_class->set_property      = ligma_preview_set_property;
 
-  widget_class->direction_changed = gimp_preview_direction_changed;
-  widget_class->popup_menu        = gimp_preview_popup_menu;
+  widget_class->direction_changed = ligma_preview_direction_changed;
+  widget_class->popup_menu        = ligma_preview_popup_menu;
 
   klass->draw                     = NULL;
   klass->draw_thumb               = NULL;
   klass->draw_buffer              = NULL;
-  klass->set_cursor               = gimp_preview_real_set_cursor;
-  klass->transform                = gimp_preview_real_transform;
-  klass->untransform              = gimp_preview_real_untransform;
+  klass->set_cursor               = ligma_preview_real_set_cursor;
+  klass->transform                = ligma_preview_real_transform;
+  klass->untransform              = ligma_preview_real_untransform;
 
   g_object_class_install_property (object_class,
                                    PROP_UPDATE,
@@ -170,7 +170,7 @@ gimp_preview_class_init (GimpPreviewClass *klass)
                                                          "Update",
                                                          "Whether the preview should update automatically",
                                                          TRUE,
-                                                         GIMP_PARAM_READWRITE |
+                                                         LIGMA_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
 
   gtk_widget_class_install_style_property (widget_class,
@@ -179,17 +179,17 @@ gimp_preview_class_init (GimpPreviewClass *klass)
                                                              "The preview's size",
                                                              1, 1024,
                                                              DEFAULT_SIZE,
-                                                             GIMP_PARAM_READABLE));
+                                                             LIGMA_PARAM_READABLE));
 }
 
 static void
-gimp_preview_init (GimpPreview *preview)
+ligma_preview_init (LigmaPreview *preview)
 {
-  GimpPreviewPrivate *priv;
+  LigmaPreviewPrivate *priv;
   GtkWidget          *frame;
   gdouble             xalign = 0.0;
 
-  preview->priv = gimp_preview_get_instance_private (preview);
+  preview->priv = ligma_preview_get_instance_private (preview);
 
   priv = preview->priv;
 
@@ -231,21 +231,21 @@ gimp_preview_init (GimpPreview *preview)
   gtk_grid_attach (GTK_GRID (priv->grid), frame, 0, 0, 1, 1);
   gtk_widget_show (frame);
 
-  priv->area = gimp_preview_area_new ();
+  priv->area = ligma_preview_area_new ();
   gtk_container_add (GTK_CONTAINER (frame), priv->area);
   gtk_widget_show (priv->area);
 
   g_signal_connect_swapped (priv->area, "notify::check-size",
-                            G_CALLBACK (gimp_preview_notify_checks),
+                            G_CALLBACK (ligma_preview_notify_checks),
                             preview);
   g_signal_connect_swapped (priv->area, "notify::check-type",
-                            G_CALLBACK (gimp_preview_notify_checks),
+                            G_CALLBACK (ligma_preview_notify_checks),
                             preview);
   g_signal_connect_swapped (priv->area, "notify::check-custom-color1",
-                            G_CALLBACK (gimp_preview_notify_checks),
+                            G_CALLBACK (ligma_preview_notify_checks),
                             preview);
   g_signal_connect_swapped (priv->area, "notify::check-custom-color2",
-                            G_CALLBACK (gimp_preview_notify_checks),
+                            G_CALLBACK (ligma_preview_notify_checks),
                             preview);
 
   gtk_widget_add_events (priv->area,
@@ -257,26 +257,26 @@ gimp_preview_init (GimpPreview *preview)
                          GDK_BUTTON_MOTION_MASK);
 
   g_signal_connect (priv->area, "event",
-                    G_CALLBACK (gimp_preview_area_event),
+                    G_CALLBACK (ligma_preview_area_event),
                     preview);
 
   g_signal_connect (priv->area, "realize",
-                    G_CALLBACK (gimp_preview_area_realize),
+                    G_CALLBACK (ligma_preview_area_realize),
                     preview);
   g_signal_connect (priv->area, "unrealize",
-                    G_CALLBACK (gimp_preview_area_unrealize),
+                    G_CALLBACK (ligma_preview_area_unrealize),
                     preview);
 
   g_signal_connect_data (priv->area, "realize",
-                         G_CALLBACK (gimp_preview_area_set_cursor),
+                         G_CALLBACK (ligma_preview_area_set_cursor),
                          preview, NULL, G_CONNECT_AFTER | G_CONNECT_SWAPPED);
 
   g_signal_connect (priv->area, "size-allocate",
-                    G_CALLBACK (gimp_preview_area_size_allocate),
+                    G_CALLBACK (ligma_preview_area_size_allocate),
                     preview);
 
   g_signal_connect_data (priv->area, "size-allocate",
-                         G_CALLBACK (gimp_preview_area_set_cursor),
+                         G_CALLBACK (ligma_preview_area_set_cursor),
                          preview, NULL, G_CONNECT_AFTER | G_CONNECT_SWAPPED);
 
   priv->controls = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
@@ -292,14 +292,14 @@ gimp_preview_init (GimpPreview *preview)
   gtk_widget_show (priv->toggle);
 
   g_signal_connect (priv->toggle, "toggled",
-                    G_CALLBACK (gimp_preview_toggle_callback),
+                    G_CALLBACK (ligma_preview_toggle_callback),
                     preview);
 }
 
 static void
-gimp_preview_dispose (GObject *object)
+ligma_preview_dispose (GObject *object)
 {
-  GimpPreviewPrivate *priv = GET_PRIVATE (object);
+  LigmaPreviewPrivate *priv = GET_PRIVATE (object);
 
   if (priv->timeout_id)
     {
@@ -311,12 +311,12 @@ gimp_preview_dispose (GObject *object)
 }
 
 static void
-gimp_preview_get_property (GObject    *object,
+ligma_preview_get_property (GObject    *object,
                            guint       property_id,
                            GValue     *value,
                            GParamSpec *pspec)
 {
-  GimpPreviewPrivate *priv = GET_PRIVATE (object);
+  LigmaPreviewPrivate *priv = GET_PRIVATE (object);
 
   switch (property_id)
     {
@@ -331,12 +331,12 @@ gimp_preview_get_property (GObject    *object,
 }
 
 static void
-gimp_preview_set_property (GObject      *object,
+ligma_preview_set_property (GObject      *object,
                            guint         property_id,
                            const GValue *value,
                            GParamSpec   *pspec)
 {
-  GimpPreviewPrivate *priv = GET_PRIVATE (object);
+  LigmaPreviewPrivate *priv = GET_PRIVATE (object);
 
   switch (property_id)
     {
@@ -352,10 +352,10 @@ gimp_preview_set_property (GObject      *object,
 }
 
 static void
-gimp_preview_direction_changed (GtkWidget        *widget,
+ligma_preview_direction_changed (GtkWidget        *widget,
                                 GtkTextDirection  prev_dir)
 {
-  GimpPreviewPrivate *priv = GET_PRIVATE (widget);
+  LigmaPreviewPrivate *priv = GET_PRIVATE (widget);
   gdouble             xalign  = 0.0;
 
   if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL)
@@ -366,20 +366,20 @@ gimp_preview_direction_changed (GtkWidget        *widget,
 }
 
 static gboolean
-gimp_preview_popup_menu (GtkWidget *widget)
+ligma_preview_popup_menu (GtkWidget *widget)
 {
-  GimpPreviewPrivate *priv = GET_PRIVATE (widget);
+  LigmaPreviewPrivate *priv = GET_PRIVATE (widget);
 
-  gimp_preview_area_menu_popup (GIMP_PREVIEW_AREA (priv->area), NULL);
+  ligma_preview_area_menu_popup (LIGMA_PREVIEW_AREA (priv->area), NULL);
 
   return TRUE;
 }
 
 static void
-gimp_preview_area_realize (GtkWidget   *widget,
-                           GimpPreview *preview)
+ligma_preview_area_realize (GtkWidget   *widget,
+                           LigmaPreview *preview)
 {
-  GimpPreviewPrivate *priv    = GET_PRIVATE (preview);
+  LigmaPreviewPrivate *priv    = GET_PRIVATE (preview);
   GdkDisplay         *display = gtk_widget_get_display (widget);
 
   g_return_if_fail (priv->cursor_busy == NULL);
@@ -389,40 +389,40 @@ gimp_preview_area_realize (GtkWidget   *widget,
 }
 
 static void
-gimp_preview_area_unrealize (GtkWidget   *widget,
-                             GimpPreview *preview)
+ligma_preview_area_unrealize (GtkWidget   *widget,
+                             LigmaPreview *preview)
 {
-  GimpPreviewPrivate *priv = GET_PRIVATE (preview);
+  LigmaPreviewPrivate *priv = GET_PRIVATE (preview);
 
   g_clear_object (&priv->cursor_busy);
 }
 
 static void
-gimp_preview_area_size_allocate (GtkWidget     *widget,
+ligma_preview_area_size_allocate (GtkWidget     *widget,
                                  GtkAllocation *allocation,
-                                 GimpPreview   *preview)
+                                 LigmaPreview   *preview)
 {
-  GimpPreviewPrivate *priv   = GET_PRIVATE (preview);
+  LigmaPreviewPrivate *priv   = GET_PRIVATE (preview);
   gint                width  = priv->xmax - priv->xmin;
   gint                height = priv->ymax - priv->ymin;
 
   priv->width  = MIN (width,  allocation->width);
   priv->height = MIN (height, allocation->height);
 
-  gimp_preview_draw (preview);
-  gimp_preview_invalidate (preview);
+  ligma_preview_draw (preview);
+  ligma_preview_invalidate (preview);
 }
 
 static void
-gimp_preview_area_set_cursor (GimpPreview *preview)
+ligma_preview_area_set_cursor (LigmaPreview *preview)
 {
-  GIMP_PREVIEW_GET_CLASS (preview)->set_cursor (preview);
+  LIGMA_PREVIEW_GET_CLASS (preview)->set_cursor (preview);
 }
 
 static gboolean
-gimp_preview_area_event (GtkWidget   *area,
+ligma_preview_area_event (GtkWidget   *area,
                          GdkEvent    *event,
-                         GimpPreview *preview)
+                         LigmaPreview *preview)
 {
   GdkEventButton *button_event = (GdkEventButton *) event;
 
@@ -432,7 +432,7 @@ gimp_preview_area_event (GtkWidget   *area,
       switch (button_event->button)
         {
         case 3:
-          gimp_preview_area_menu_popup (GIMP_PREVIEW_AREA (area), button_event);
+          ligma_preview_area_menu_popup (LIGMA_PREVIEW_AREA (area), button_event);
           return TRUE;
         }
       break;
@@ -445,10 +445,10 @@ gimp_preview_area_event (GtkWidget   *area,
 }
 
 static void
-gimp_preview_toggle_callback (GtkWidget   *toggle,
-                              GimpPreview *preview)
+ligma_preview_toggle_callback (GtkWidget   *toggle,
+                              LigmaPreview *preview)
 {
-  GimpPreviewPrivate *priv = GET_PRIVATE (preview);
+  LigmaPreviewPrivate *priv = GET_PRIVATE (preview);
 
   if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (toggle)))
     {
@@ -459,7 +459,7 @@ gimp_preview_toggle_callback (GtkWidget   *toggle,
       if (priv->timeout_id)
         g_source_remove (priv->timeout_id);
 
-      gimp_preview_invalidate_now (preview);
+      ligma_preview_invalidate_now (preview);
     }
   else
     {
@@ -467,25 +467,25 @@ gimp_preview_toggle_callback (GtkWidget   *toggle,
 
       g_object_notify (G_OBJECT (preview), "update");
 
-      gimp_preview_draw (preview);
+      ligma_preview_draw (preview);
     }
 }
 
 static void
-gimp_preview_notify_checks (GimpPreview *preview)
+ligma_preview_notify_checks (LigmaPreview *preview)
 {
-  gimp_preview_draw (preview);
-  gimp_preview_invalidate (preview);
+  ligma_preview_draw (preview);
+  ligma_preview_invalidate (preview);
 }
 
 static gboolean
-gimp_preview_invalidate_now (GimpPreview *preview)
+ligma_preview_invalidate_now (LigmaPreview *preview)
 {
-  GimpPreviewPrivate *priv     = GET_PRIVATE (preview);
+  LigmaPreviewPrivate *priv     = GET_PRIVATE (preview);
   GtkWidget          *toplevel = gtk_widget_get_toplevel (GTK_WIDGET (preview));
-  GimpPreviewClass   *class    = GIMP_PREVIEW_GET_CLASS (preview);
+  LigmaPreviewClass   *class    = LIGMA_PREVIEW_GET_CLASS (preview);
 
-  gimp_preview_draw (preview);
+  ligma_preview_draw (preview);
 
   priv->timeout_id = 0;
 
@@ -512,9 +512,9 @@ gimp_preview_invalidate_now (GimpPreview *preview)
 }
 
 static void
-gimp_preview_real_set_cursor (GimpPreview *preview)
+ligma_preview_real_set_cursor (LigmaPreview *preview)
 {
-  GimpPreviewPrivate *priv = GET_PRIVATE (preview);
+  LigmaPreviewPrivate *priv = GET_PRIVATE (preview);
 
   if (gtk_widget_get_realized (priv->area))
     gdk_window_set_cursor (gtk_widget_get_window (priv->area),
@@ -522,46 +522,46 @@ gimp_preview_real_set_cursor (GimpPreview *preview)
 }
 
 static void
-gimp_preview_real_transform (GimpPreview *preview,
+ligma_preview_real_transform (LigmaPreview *preview,
                              gint         src_x,
                              gint         src_y,
                              gint        *dest_x,
                              gint        *dest_y)
 {
-  GimpPreviewPrivate *priv = GET_PRIVATE (preview);
+  LigmaPreviewPrivate *priv = GET_PRIVATE (preview);
 
   *dest_x = src_x - priv->xoff - priv->xmin;
   *dest_y = src_y - priv->yoff - priv->ymin;
 }
 
 static void
-gimp_preview_real_untransform (GimpPreview *preview,
+ligma_preview_real_untransform (LigmaPreview *preview,
                                gint         src_x,
                                gint         src_y,
                                gint        *dest_x,
                                gint        *dest_y)
 {
-  GimpPreviewPrivate *priv = GET_PRIVATE (preview);
+  LigmaPreviewPrivate *priv = GET_PRIVATE (preview);
 
   *dest_x = src_x + priv->xoff + priv->xmin;
   *dest_y = src_y + priv->yoff + priv->ymin;
 }
 
 /**
- * gimp_preview_set_update:
- * @preview: a #GimpPreview widget
+ * ligma_preview_set_update:
+ * @preview: a #LigmaPreview widget
  * @update: %TRUE if the preview should invalidate itself when being
- *          scrolled or when gimp_preview_invalidate() is being called
+ *          scrolled or when ligma_preview_invalidate() is being called
  *
  * Sets the state of the "Preview" check button.
  *
  * Since: 2.2
  **/
 void
-gimp_preview_set_update (GimpPreview *preview,
+ligma_preview_set_update (LigmaPreview *preview,
                          gboolean     update)
 {
-  g_return_if_fail (GIMP_IS_PREVIEW (preview));
+  g_return_if_fail (LIGMA_IS_PREVIEW (preview));
 
   g_object_set (preview,
                 "update", update,
@@ -569,24 +569,24 @@ gimp_preview_set_update (GimpPreview *preview,
 }
 
 /**
- * gimp_preview_get_update:
- * @preview: a #GimpPreview widget
+ * ligma_preview_get_update:
+ * @preview: a #LigmaPreview widget
  *
  * Returns: the state of the "Preview" check button.
  *
  * Since: 2.2
  **/
 gboolean
-gimp_preview_get_update (GimpPreview *preview)
+ligma_preview_get_update (LigmaPreview *preview)
 {
-  g_return_val_if_fail (GIMP_IS_PREVIEW (preview), FALSE);
+  g_return_val_if_fail (LIGMA_IS_PREVIEW (preview), FALSE);
 
   return GET_PRIVATE (preview)->update_preview;
 }
 
 /**
- * gimp_preview_set_bounds:
- * @preview: a #GimpPreview widget
+ * ligma_preview_set_bounds:
+ * @preview: a #LigmaPreview widget
  * @xmin:    the minimum X value
  * @ymin:    the minimum Y value
  * @xmax:    the maximum X value
@@ -594,20 +594,20 @@ gimp_preview_get_update (GimpPreview *preview)
  *
  * Sets the lower and upper limits for the previewed area. The
  * difference between the upper and lower value is used to set the
- * maximum size of the #GimpPreviewArea used in the @preview.
+ * maximum size of the #LigmaPreviewArea used in the @preview.
  *
  * Since: 2.2
  **/
 void
-gimp_preview_set_bounds (GimpPreview *preview,
+ligma_preview_set_bounds (LigmaPreview *preview,
                          gint         xmin,
                          gint         ymin,
                          gint         xmax,
                          gint         ymax)
 {
-  GimpPreviewPrivate *priv;
+  LigmaPreviewPrivate *priv;
 
-  g_return_if_fail (GIMP_IS_PREVIEW (preview));
+  g_return_if_fail (LIGMA_IS_PREVIEW (preview));
   g_return_if_fail (xmax > xmin);
   g_return_if_fail (ymax > ymin);
 
@@ -618,29 +618,29 @@ gimp_preview_set_bounds (GimpPreview *preview,
   priv->xmax = xmax;
   priv->ymax = ymax;
 
-  gimp_preview_area_set_max_size (GIMP_PREVIEW_AREA (priv->area),
+  ligma_preview_area_set_max_size (LIGMA_PREVIEW_AREA (priv->area),
                                   xmax - xmin,
                                   ymax - ymin);
 }
 
 /**
- * gimp_preview_get_bounds:
- * @preview: A #GimpPreview:
+ * ligma_preview_get_bounds:
+ * @preview: A #LigmaPreview:
  * @xmin: (out) (optional): Lower bound for x
  * @ymin: (out) (optional): Lower bound for y
  * @xmax: (out) (optional): Higher bound for x
  * @ymax: (out) (optional): Higher bound for y
  */
 void
-gimp_preview_get_bounds (GimpPreview *preview,
+ligma_preview_get_bounds (LigmaPreview *preview,
                          gint        *xmin,
                          gint        *ymin,
                          gint        *xmax,
                          gint        *ymax)
 {
-  GimpPreviewPrivate *priv;
+  LigmaPreviewPrivate *priv;
 
-  g_return_if_fail (GIMP_IS_PREVIEW (preview));
+  g_return_if_fail (LIGMA_IS_PREVIEW (preview));
 
   priv = GET_PRIVATE (preview);
 
@@ -651,13 +651,13 @@ gimp_preview_get_bounds (GimpPreview *preview,
 }
 
 void
-gimp_preview_set_size (GimpPreview *preview,
+ligma_preview_set_size (LigmaPreview *preview,
                        gint         width,
                        gint         height)
 {
-  GimpPreviewPrivate *priv;
+  LigmaPreviewPrivate *priv;
 
-  g_return_if_fail (GIMP_IS_PREVIEW (preview));
+  g_return_if_fail (LIGMA_IS_PREVIEW (preview));
 
   priv = GET_PRIVATE (preview);
 
@@ -668,21 +668,21 @@ gimp_preview_set_size (GimpPreview *preview,
 }
 
 /**
- * gimp_preview_get_size:
- * @preview: a #GimpPreview widget
+ * ligma_preview_get_size:
+ * @preview: a #LigmaPreview widget
  * @width: (out) (optional): return location for the preview area width
  * @height: (out) (optional): return location for the preview area height
  *
  * Since: 2.2
  **/
 void
-gimp_preview_get_size (GimpPreview *preview,
+ligma_preview_get_size (LigmaPreview *preview,
                        gint        *width,
                        gint        *height)
 {
-  GimpPreviewPrivate *priv;
+  LigmaPreviewPrivate *priv;
 
-  g_return_if_fail (GIMP_IS_PREVIEW (preview));
+  g_return_if_fail (LIGMA_IS_PREVIEW (preview));
 
   priv = GET_PRIVATE (preview);
 
@@ -691,13 +691,13 @@ gimp_preview_get_size (GimpPreview *preview,
 }
 
 void
-gimp_preview_set_offsets (GimpPreview *preview,
+ligma_preview_set_offsets (LigmaPreview *preview,
                           gint         xoff,
                           gint         yoff)
 {
-  GimpPreviewPrivate *priv;
+  LigmaPreviewPrivate *priv;
 
-  g_return_if_fail (GIMP_IS_PREVIEW (preview));
+  g_return_if_fail (LIGMA_IS_PREVIEW (preview));
 
   priv = GET_PRIVATE (preview);
 
@@ -706,19 +706,19 @@ gimp_preview_set_offsets (GimpPreview *preview,
 }
 
 /**
- * gimp_preview_get_offsets:
- * @preview: A #GimpPreview:
+ * ligma_preview_get_offsets:
+ * @preview: A #LigmaPreview:
  * @xoff: (out) (optional): X offset
  * @yoff: (out) (optional): Y offset
  */
 void
-gimp_preview_get_offsets (GimpPreview *preview,
+ligma_preview_get_offsets (LigmaPreview *preview,
                           gint        *xoff,
                           gint        *yoff)
 {
-  GimpPreviewPrivate *priv;
+  LigmaPreviewPrivate *priv;
 
-  g_return_if_fail (GIMP_IS_PREVIEW (preview));
+  g_return_if_fail (LIGMA_IS_PREVIEW (preview));
 
   priv = GET_PRIVATE (preview);
 
@@ -727,21 +727,21 @@ gimp_preview_get_offsets (GimpPreview *preview,
 }
 
 /**
- * gimp_preview_get_position:
- * @preview: a #GimpPreview widget
+ * ligma_preview_get_position:
+ * @preview: a #LigmaPreview widget
  * @x: (out) (optional): return location for the horizontal offset
  * @y: (out) (optional): return location for the vertical offset
  *
  * Since: 2.2
  **/
 void
-gimp_preview_get_position (GimpPreview *preview,
+ligma_preview_get_position (LigmaPreview *preview,
                            gint        *x,
                            gint        *y)
 {
-  GimpPreviewPrivate *priv;
+  LigmaPreviewPrivate *priv;
 
-  g_return_if_fail (GIMP_IS_PREVIEW (preview));
+  g_return_if_fail (LIGMA_IS_PREVIEW (preview));
 
   priv = GET_PRIVATE (preview);
 
@@ -750,8 +750,8 @@ gimp_preview_get_position (GimpPreview *preview,
 }
 
 /**
- * gimp_preview_transform:
- * @preview: a #GimpPreview widget
+ * ligma_preview_transform:
+ * @preview: a #LigmaPreview widget
  * @src_x:   horizontal position on the previewed image
  * @src_y:   vertical position on the previewed image
  * @dest_x: (out): returns the transformed horizontal position
@@ -762,22 +762,22 @@ gimp_preview_get_position (GimpPreview *preview,
  * Since: 2.4
  **/
 void
-gimp_preview_transform (GimpPreview *preview,
+ligma_preview_transform (LigmaPreview *preview,
                         gint         src_x,
                         gint         src_y,
                         gint        *dest_x,
                         gint        *dest_y)
 {
-  g_return_if_fail (GIMP_IS_PREVIEW (preview));
+  g_return_if_fail (LIGMA_IS_PREVIEW (preview));
   g_return_if_fail (dest_x != NULL && dest_y != NULL);
 
-  GIMP_PREVIEW_GET_CLASS (preview)->transform (preview,
+  LIGMA_PREVIEW_GET_CLASS (preview)->transform (preview,
                                                src_x, src_y, dest_x, dest_y);
 }
 
 /**
- * gimp_preview_untransform:
- * @preview: a #GimpPreview widget
+ * ligma_preview_untransform:
+ * @preview: a #LigmaPreview widget
  * @src_x:   horizontal position relative to the preview area's origin
  * @src_y:   vertical position relative to  preview area's origin
  * @dest_x: (out): returns the untransformed horizontal position
@@ -788,22 +788,22 @@ gimp_preview_transform (GimpPreview *preview,
  * Since: 2.4
  **/
 void
-gimp_preview_untransform (GimpPreview *preview,
+ligma_preview_untransform (LigmaPreview *preview,
                           gint         src_x,
                           gint         src_y,
                           gint        *dest_x,
                           gint        *dest_y)
 {
-  g_return_if_fail (GIMP_IS_PREVIEW (preview));
+  g_return_if_fail (LIGMA_IS_PREVIEW (preview));
   g_return_if_fail (dest_x != NULL && dest_y != NULL);
 
-  GIMP_PREVIEW_GET_CLASS (preview)->untransform (preview,
+  LIGMA_PREVIEW_GET_CLASS (preview)->untransform (preview,
                                                  src_x, src_y, dest_x, dest_y);
 }
 
 /**
- * gimp_preview_get_frame:
- * @preview: a #GimpPreview widget
+ * ligma_preview_get_frame:
+ * @preview: a #LigmaPreview widget
  *
  * Returns: (transfer none) (type GtkAspectFrame): a pointer to the
  * #GtkAspectFrame used in the @preview.
@@ -811,16 +811,16 @@ gimp_preview_untransform (GimpPreview *preview,
  * Since: 3.0
  **/
 GtkWidget *
-gimp_preview_get_frame (GimpPreview  *preview)
+ligma_preview_get_frame (LigmaPreview  *preview)
 {
-  g_return_val_if_fail (GIMP_IS_PREVIEW (preview), NULL);
+  g_return_val_if_fail (LIGMA_IS_PREVIEW (preview), NULL);
 
   return GET_PRIVATE (preview)->frame;
 }
 
 /**
- * gimp_preview_get_grid:
- * @preview: a #GimpPreview widget
+ * ligma_preview_get_grid:
+ * @preview: a #LigmaPreview widget
  *
  * Returns: (transfer none) (type GtkGrid): a pointer to
  * the #GtkGrid used in the @preview.
@@ -828,86 +828,86 @@ gimp_preview_get_frame (GimpPreview  *preview)
  * Since: 3.0
  **/
 GtkWidget *
-gimp_preview_get_grid (GimpPreview  *preview)
+ligma_preview_get_grid (LigmaPreview  *preview)
 {
-  g_return_val_if_fail (GIMP_IS_PREVIEW (preview), NULL);
+  g_return_val_if_fail (LIGMA_IS_PREVIEW (preview), NULL);
 
   return GET_PRIVATE (preview)->grid;
 }
 
 /**
- * gimp_preview_get_area:
- * @preview: a #GimpPreview widget
+ * ligma_preview_get_area:
+ * @preview: a #LigmaPreview widget
  *
- * In most cases, you shouldn't need to access the #GimpPreviewArea
+ * In most cases, you shouldn't need to access the #LigmaPreviewArea
  * that is being used in the @preview. Sometimes however, you need to.
  * For example if you want to receive mouse events from the area. In
- * such cases, use gimp_preview_get_area().
+ * such cases, use ligma_preview_get_area().
  *
- * Returns: (transfer none) (type GimpPreviewArea): a pointer to the
- * #GimpPreviewArea used in the @preview.
+ * Returns: (transfer none) (type LigmaPreviewArea): a pointer to the
+ * #LigmaPreviewArea used in the @preview.
  *
  * Since: 2.4
  **/
 GtkWidget *
-gimp_preview_get_area (GimpPreview  *preview)
+ligma_preview_get_area (LigmaPreview  *preview)
 {
-  g_return_val_if_fail (GIMP_IS_PREVIEW (preview), NULL);
+  g_return_val_if_fail (LIGMA_IS_PREVIEW (preview), NULL);
 
   return GET_PRIVATE (preview)->area;
 }
 
 /**
- * gimp_preview_draw:
- * @preview: a #GimpPreview widget
+ * ligma_preview_draw:
+ * @preview: a #LigmaPreview widget
  *
- * Calls the GimpPreview::draw method. GimpPreview itself doesn't
+ * Calls the LigmaPreview::draw method. LigmaPreview itself doesn't
  * implement a default draw method so the behaviour is determined by
  * the derived class implementing this method.
  *
- * #GimpDrawablePreview implements gimp_preview_draw() by drawing the
+ * #LigmaDrawablePreview implements ligma_preview_draw() by drawing the
  * original, unmodified drawable to the @preview.
  *
  * Since: 2.2
  **/
 void
-gimp_preview_draw (GimpPreview *preview)
+ligma_preview_draw (LigmaPreview *preview)
 {
-  GimpPreviewClass *class = GIMP_PREVIEW_GET_CLASS (preview);
+  LigmaPreviewClass *class = LIGMA_PREVIEW_GET_CLASS (preview);
 
   if (class->draw)
     class->draw (preview);
 }
 
 /**
- * gimp_preview_draw_buffer:
- * @preview:   a #GimpPreview widget
+ * ligma_preview_draw_buffer:
+ * @preview:   a #LigmaPreview widget
  * @buffer: (array): a pixel buffer the size of the preview
  * @rowstride: the @buffer's rowstride
  *
- * Calls the GimpPreview::draw_buffer method. GimpPreview itself
+ * Calls the LigmaPreview::draw_buffer method. LigmaPreview itself
  * doesn't implement this method so the behaviour is determined by the
  * derived class implementing this method.
  *
  * Since: 2.2
  **/
 void
-gimp_preview_draw_buffer (GimpPreview  *preview,
+ligma_preview_draw_buffer (LigmaPreview  *preview,
                           const guchar *buffer,
                           gint          rowstride)
 {
-  GimpPreviewClass *class = GIMP_PREVIEW_GET_CLASS (preview);
+  LigmaPreviewClass *class = LIGMA_PREVIEW_GET_CLASS (preview);
 
   if (class->draw_buffer)
     class->draw_buffer (preview, buffer, rowstride);
 }
 
 /**
- * gimp_preview_invalidate:
- * @preview: a #GimpPreview widget
+ * ligma_preview_invalidate:
+ * @preview: a #LigmaPreview widget
  *
  * This function starts or renews a short low-priority timeout. When
- * the timeout expires, the GimpPreview::invalidated signal is emitted
+ * the timeout expires, the LigmaPreview::invalidated signal is emitted
  * which will usually cause the @preview to be updated.
  *
  * This function does nothing unless the "Preview" button is checked.
@@ -919,11 +919,11 @@ gimp_preview_draw_buffer (GimpPreview  *preview,
  * Since: 2.2
  **/
 void
-gimp_preview_invalidate (GimpPreview *preview)
+ligma_preview_invalidate (LigmaPreview *preview)
 {
-  GimpPreviewPrivate *priv;
+  LigmaPreviewPrivate *priv;
 
-  g_return_if_fail (GIMP_IS_PREVIEW (preview));
+  g_return_if_fail (LIGMA_IS_PREVIEW (preview));
 
   priv = GET_PRIVATE (preview);
 
@@ -934,14 +934,14 @@ gimp_preview_invalidate (GimpPreview *preview)
 
       priv->timeout_id =
         g_timeout_add_full (G_PRIORITY_DEFAULT_IDLE, PREVIEW_TIMEOUT,
-                            (GSourceFunc) gimp_preview_invalidate_now,
+                            (GSourceFunc) ligma_preview_invalidate_now,
                             preview, NULL);
     }
 }
 
 /**
- * gimp_preview_set_default_cursor:
- * @preview: a #GimpPreview widget
+ * ligma_preview_set_default_cursor:
+ * @preview: a #LigmaPreview widget
  * @cursor:  a #GdkCursor or %NULL
  *
  * Sets the default mouse cursor for the preview.  Note that this will
@@ -951,12 +951,12 @@ gimp_preview_invalidate (GimpPreview *preview)
  * Since: 2.2
  **/
 void
-gimp_preview_set_default_cursor (GimpPreview *preview,
+ligma_preview_set_default_cursor (LigmaPreview *preview,
                                  GdkCursor   *cursor)
 {
-  GimpPreviewPrivate *priv;
+  LigmaPreviewPrivate *priv;
 
-  g_return_if_fail (GIMP_IS_PREVIEW (preview));
+  g_return_if_fail (LIGMA_IS_PREVIEW (preview));
 
   priv = GET_PRIVATE (preview);
 
@@ -964,26 +964,26 @@ gimp_preview_set_default_cursor (GimpPreview *preview,
 }
 
 /**
- * gimp_preview_get_default_cursor:
- * @preview: a #GimpPreview widget
+ * ligma_preview_get_default_cursor:
+ * @preview: a #LigmaPreview widget
  *
- * See gimp_preview_set_default_cursor():
+ * See ligma_preview_set_default_cursor():
  *
  * Returns: (transfer none): The @preview's default #GdkCursor.
  *
  * Since: 3.0
  **/
 GdkCursor *
-gimp_preview_get_default_cursor (GimpPreview *preview)
+ligma_preview_get_default_cursor (LigmaPreview *preview)
 {
-  g_return_val_if_fail (GIMP_IS_PREVIEW (preview), NULL);
+  g_return_val_if_fail (LIGMA_IS_PREVIEW (preview), NULL);
 
   return GET_PRIVATE (preview)->default_cursor;
 }
 
 /**
- * gimp_preview_get_controls:
- * @preview: a #GimpPreview widget
+ * ligma_preview_get_controls:
+ * @preview: a #LigmaPreview widget
  *
  * Gives access to the horizontal #GtkBox at the bottom of the preview
  * that contains the update toggle. Derived widgets can use this function
@@ -995,9 +995,9 @@ gimp_preview_get_default_cursor (GimpPreview *preview)
  * Since: 2.4
  **/
 GtkWidget *
-gimp_preview_get_controls (GimpPreview *preview)
+ligma_preview_get_controls (LigmaPreview *preview)
 {
-  g_return_val_if_fail (GIMP_IS_PREVIEW (preview), NULL);
+  g_return_val_if_fail (LIGMA_IS_PREVIEW (preview), NULL);
 
   return GET_PRIVATE (preview)->controls;
 }

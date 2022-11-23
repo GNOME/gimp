@@ -1,4 +1,4 @@
-# GIMP - The GNU Image Manipulation Program
+# LIGMA - The GNU Image Manipulation Program
 # Copyright (C) 1995 Spencer Kimball and Peter Mattis
 
 # This program is free software: you can redistribute it and/or modify
@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+# "Perlized" from C source by Manish Singh <yosh@ligma.org>
 
 sub buffers_get_list {
     $blurb = 'Retrieve a complete listing of the available buffers.';
@@ -38,7 +38,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  buffer_list = gimp_container_get_filtered_name_array (gimp->named_buffers,
+  buffer_list = ligma_container_get_filtered_name_array (ligma->named_buffers,
                                                         filter);
 }
 CODE
@@ -66,12 +66,12 @@ sub buffer_rename {
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBuffer *buffer = gimp_pdb_get_buffer (gimp, buffer_name, error);
+  LigmaBuffer *buffer = ligma_pdb_get_buffer (ligma, buffer_name, error);
 
   if (buffer)
     {
-      gimp_object_set_name (GIMP_OBJECT (buffer), new_name);
-      real_name = g_strdup (gimp_object_get_name (buffer));
+      ligma_object_set_name (LIGMA_OBJECT (buffer), new_name);
+      real_name = g_strdup (ligma_object_get_name (buffer));
     }
   else
     success = FALSE;
@@ -96,10 +96,10 @@ sub buffer_delete {
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBuffer *buffer = gimp_pdb_get_buffer (gimp, buffer_name, error);
+  LigmaBuffer *buffer = ligma_pdb_get_buffer (ligma, buffer_name, error);
 
   if (buffer)
-    success = gimp_container_remove (gimp->named_buffers, GIMP_OBJECT (buffer));
+    success = ligma_container_remove (ligma->named_buffers, LIGMA_OBJECT (buffer));
   else
     success = FALSE;
 }
@@ -126,10 +126,10 @@ sub buffer_get_width {
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBuffer *buffer = gimp_pdb_get_buffer (gimp, buffer_name, error);
+  LigmaBuffer *buffer = ligma_pdb_get_buffer (ligma, buffer_name, error);
 
   if (buffer)
-    width = gimp_buffer_get_width (buffer);
+    width = ligma_buffer_get_width (buffer);
   else
     success = FALSE;
 }
@@ -156,10 +156,10 @@ sub buffer_get_height {
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBuffer *buffer = gimp_pdb_get_buffer (gimp, buffer_name, error);
+  LigmaBuffer *buffer = ligma_pdb_get_buffer (ligma, buffer_name, error);
 
   if (buffer)
-    height = gimp_buffer_get_height (buffer);
+    height = ligma_buffer_get_height (buffer);
   else
     success = FALSE;
 }
@@ -186,11 +186,11 @@ sub buffer_get_bytes {
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBuffer *buffer = gimp_pdb_get_buffer (gimp, buffer_name, error);
+  LigmaBuffer *buffer = ligma_pdb_get_buffer (ligma, buffer_name, error);
 
   if (buffer)
     {
-      const Babl *format = gimp_buffer_get_format (buffer);
+      const Babl *format = ligma_buffer_get_format (buffer);
 
       bytes = babl_format_get_bytes_per_pixel (format);
     }
@@ -213,17 +213,17 @@ sub buffer_get_image_type {
     );
 
     @outargs = (
-	{ name => 'image_type', type => 'enum GimpImageBaseType',
+	{ name => 'image_type', type => 'enum LigmaImageBaseType',
           desc => "The buffer image type" }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBuffer *buffer = gimp_pdb_get_buffer (gimp, buffer_name, error);
+  LigmaBuffer *buffer = ligma_pdb_get_buffer (ligma, buffer_name, error);
 
   if (buffer)
-    image_type = gimp_babl_format_get_image_type (gimp_buffer_get_format (buffer));
+    image_type = ligma_babl_format_get_image_type (ligma_buffer_get_format (buffer));
   else
     success = FALSE;
 }
@@ -233,12 +233,12 @@ CODE
 
 
 @headers = qw(<string.h>
-              "gegl/gimp-babl-compat.h"
-              "core/gimp.h"
-              "core/gimpbuffer.h"
-              "core/gimpcontainer.h"
-              "core/gimpcontainer-filter.h"
-	      "gimppdb-utils.h");
+              "gegl/ligma-babl-compat.h"
+              "core/ligma.h"
+              "core/ligmabuffer.h"
+              "core/ligmacontainer.h"
+              "core/ligmacontainer-filter.h"
+	      "ligmapdb-utils.h");
 
 @procs = qw(buffers_get_list
             buffer_rename
@@ -251,7 +251,7 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Buffer procedures';
-$doc_title = 'gimpbuffer';
+$doc_title = 'ligmabuffer';
 $doc_short_desc = 'Functions for manipulating cut buffers.';
 $doc_long_desc = 'Functions related to named cut buffers.';
 

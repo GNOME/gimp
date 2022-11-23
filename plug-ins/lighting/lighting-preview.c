@@ -6,8 +6,8 @@
 
 #include <gtk/gtk.h>
 
-#include <libgimp/gimp.h>
-#include <libgimpmath/gimpmath.h>
+#include <libligma/ligma.h>
+#include <libligmamath/ligmamath.h>
 
 #include "lighting-main.h"
 #include "lighting-ui.h"
@@ -46,9 +46,9 @@ compute_preview (gint startx, gint starty, gint w, gint h)
   guchar r, g, b;
   gdouble imagex, imagey;
   gint32 index = 0;
-  GimpRGB color;
-  GimpRGB lightcheck, darkcheck;
-  GimpVector3 pos;
+  LigmaRGB color;
+  LigmaRGB lightcheck, darkcheck;
+  LigmaVector3 pos;
   get_ray_func ray_func;
 
   if (xpostab_size != w)
@@ -88,15 +88,15 @@ compute_preview (gint startx, gint starty, gint w, gint h)
 
   precompute_init (width, height);
 
-  gimp_rgba_set (&lightcheck,
-                 GIMP_CHECK_LIGHT, GIMP_CHECK_LIGHT, GIMP_CHECK_LIGHT,
+  ligma_rgba_set (&lightcheck,
+                 LIGMA_CHECK_LIGHT, LIGMA_CHECK_LIGHT, LIGMA_CHECK_LIGHT,
                  1.0);
-  gimp_rgba_set (&darkcheck, GIMP_CHECK_DARK, GIMP_CHECK_DARK,
-                 GIMP_CHECK_DARK, 1.0);
+  ligma_rgba_set (&darkcheck, LIGMA_CHECK_DARK, LIGMA_CHECK_DARK,
+                 LIGMA_CHECK_DARK, 1.0);
 
   if (mapvals.bump_mapped == TRUE && mapvals.bumpmap_id != -1)
     {
-      bumpmap_setup (gimp_drawable_get_by_id (mapvals.bumpmap_id));
+      bumpmap_setup (ligma_drawable_get_by_id (mapvals.bumpmap_id));
     }
 
   imagey = 0;
@@ -108,7 +108,7 @@ compute_preview (gint startx, gint starty, gint w, gint h)
 
   if (mapvals.env_mapped == TRUE && mapvals.envmap_id != -1)
     {
-      envmap_setup (gimp_drawable_get_by_id (mapvals.envmap_id));
+      envmap_setup (ligma_drawable_get_by_id (mapvals.envmap_id));
 
       if (mapvals.previewquality)
         ray_func = get_ray_color_ref;
@@ -151,23 +151,23 @@ compute_preview (gint startx, gint starty, gint w, gint h)
                       if (color.a == 0.0)
                         color = lightcheck;
                       else
-                        gimp_rgb_composite (&color,
+                        ligma_rgb_composite (&color,
                                             &lightcheck,
-                                            GIMP_RGB_COMPOSITE_BEHIND);
+                                            LIGMA_RGB_COMPOSITE_BEHIND);
                     }
                   else
                     {
                       if (color.a == 0.0)
                         color = darkcheck;
                       else
-                        gimp_rgb_composite (&color,
+                        ligma_rgb_composite (&color,
                                             &darkcheck,
-                                            GIMP_RGB_COMPOSITE_BEHIND);
+                                            LIGMA_RGB_COMPOSITE_BEHIND);
                     }
                 }
 
-              gimp_rgb_get_uchar (&color, &r, &g, &b);
-              GIMP_CAIRO_RGB24_SET_PIXEL((preview_rgb_data + index), r, g, b);
+              ligma_rgb_get_uchar (&color, &r, &g, &b);
+              LIGMA_CAIRO_RGB24_SET_PIXEL((preview_rgb_data + index), r, g, b);
               index += 4;
               imagex++;
             }
@@ -250,8 +250,8 @@ draw_handles (cairo_t *cr)
 {
   gdouble     dxpos, dypos;
   gint        startx, starty, pw, ph;
-  GimpVector3 viewpoint;
-  GimpVector3 light_position;
+  LigmaVector3 viewpoint;
+  LigmaVector3 light_position;
   gint        k      = mapvals.light_selected;
 
   gfloat length;
@@ -270,7 +270,7 @@ draw_handles (cairo_t *cr)
       viewpoint = mapvals.viewpoint;
       viewpoint.z = -viewpoint.z;
       light_position = mapvals.lightsource[k].position;
-      gimp_vector_3d_to_2d (startx, starty, pw, ph, &dxpos, &dypos,
+      ligma_vector_3d_to_2d (startx, starty, pw, ph, &dxpos, &dypos,
                             &viewpoint, &light_position);
       handle_xpos = (gint) (dxpos + 0.5);
       handle_ypos = (gint) (dypos + 0.5);
@@ -279,7 +279,7 @@ draw_handles (cairo_t *cr)
       light_position.x = light_position.y = 0.5;
       light_position.z = 0;
       viewpoint.z = -viewpoint.z;
-      gimp_vector_3d_to_2d (startx, starty, pw, ph, &dxpos, &dypos,
+      ligma_vector_3d_to_2d (startx, starty, pw, ph, &dxpos, &dypos,
                             &viewpoint, &light_position);
       length = PREVIEW_HEIGHT / 4;
       delta_x = mapvals.lightsource[k].direction.x * length;
@@ -333,7 +333,7 @@ void
 update_light (gint xpos, gint ypos)
 {
   gint startx, starty, pw, ph;
-  GimpVector3  vp;
+  LigmaVector3  vp;
   gint         k = mapvals.light_selected;
 
   compute_preview_rectangle (&startx, &starty, &pw, &ph);
@@ -347,14 +347,14 @@ update_light (gint xpos, gint ypos)
       break;
     case        POINT_LIGHT:
     case        SPOT_LIGHT:
-      gimp_vector_2d_to_3d (startx,
+      ligma_vector_2d_to_3d (startx,
                             starty,
                             pw,
                             ph,
                             xpos, ypos, &vp, &mapvals.lightsource[k].position);
       break;
     case DIRECTIONAL_LIGHT:
-      gimp_vector_2d_to_3d (startx,
+      ligma_vector_2d_to_3d (startx,
                             starty,
                             pw,
                             ph,

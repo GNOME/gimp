@@ -3,12 +3,12 @@
                           A Colorspace Odyssey
 
 
-GIMP 1.3 used to be the development branch of The GIMP. Here's where
-the development took place on the road to GIMP version 2.0. This file
+LIGMA 1.3 used to be the development branch of The LIGMA. Here's where
+the development took place on the road to LIGMA version 2.0. This file
 lists the changes for each release in this development cycle.
 
 
-Bugs fixed in GIMP 2.0.0
+Bugs fixed in LIGMA 2.0.0
 ========================
 - 137766: compress text undo steps (Sven)
 - 137876: set a default height for dock windows (Sven, Simon)
@@ -19,20 +19,20 @@ Bugs fixed in GIMP 2.0.0
 - 136868: fixed alien glow arrow script (Simon)
 
 
-Bugs fixed in GIMP 2.0rc1
+Bugs fixed in LIGMA 2.0rc1
 =========================
 - 136124: count animation frames starting with 1 (Simon)
 - 122519: allow to share paint options between tools (Mitch)
 - 136227: allow to toggle the histogram scale from the tool dialogs (Sven)
 - 136303: fixed translation of preview widget (Sven)
 - 136321: fixed bug in Plasma plug-in (Sven)
-- 136371: fixed a crash caused by gimp_query_boolean_box (Sven)
+- 136371: fixed a crash caused by ligma_query_boolean_box (Sven)
 - 119905: configurable undo preview size (Sven)
 - 136524: fixed Shadow Bevel script (Yosh)
 - 136535: enable i18n in SVG plug-in (Yuheng Xie, Sven)
 - 136081: allow to use the webbrowser to access help (Brix, Sven)
 - 128588: resurrected Save button in input devices dialog (Simon)
-- 136489: added boolean return values to gimp_edit_[cut|copy] (Mitch)
+- 136489: added boolean return values to ligma_edit_[cut|copy] (Mitch)
 - 136706: added missing i18n in IfsCompose plug-in (Sven)
 - 136713: added missing i18n in ImageMap plug-in (Sven)
 - 131965: cancel tools instead of resetting when image becomes dirty (Mitch)
@@ -40,11 +40,11 @@ Bugs fixed in GIMP 2.0rc1
           is becoming dirty (Mitch)
 - 136343: fixed wrong function prototypes (Mitch)
 - 136636: workaround a GDK problem on win32 (Mitch)
-- 136747: fixed problem in gimp-print configure check (Yosh)
+- 136747: fixed problem in ligma-print configure check (Yosh)
 - 136850: fixed crash when toggling tool preview (Sven)
 - 136937: allow translation of tool-option menus (Sven)
 - 136645: fixed crash when dropping pattern on a text layer (Sven)
-- 136907: fixed off-by-one error in gimp_pixel_fetcher_get_pixel() (Simon)
+- 136907: fixed off-by-one error in ligma_pixel_fetcher_get_pixel() (Simon)
 - 73610:  improvements to Script-Fu error reporting (Kevin Cozen)
 - 136702: made supersampling in transform tools optional (Raphael, Mitch)
 - 118356: keep the font size fixed when changing the unit (Sven)
@@ -61,7 +61,7 @@ Bugs fixed in GIMP 2.0rc1
 - 137151: make accelerators work in gtk+-2.4 if there's no menubar (Mitch)
 - 136623, 136645: properly handle modifications to text layers (Sven)
 - 130985, 120021: implemented text undo (Sven)
-- 137612: improve tooltips for GimpScaleEntry (Sven)
+- 137612: improve tooltips for LigmaScaleEntry (Sven)
 - 137737: show all user interface elements in the Jigsaw plug-in (Sven)
 - 137753: added a shortcut for the Path tool (Simon)
 - 137754: added a menu entry and shortcut for "Path to Selection" (Simon)
@@ -73,7 +73,7 @@ Other contributions:
   Jakub Steiner, Eric Pierce
 
 
-Bugs fixed in GIMP 2.0pre4
+Bugs fixed in LIGMA 2.0pre4
 ==========================
 - 128825: Improved misleading debug output and hide it in the stable branch
           (Raphael)
@@ -94,7 +94,7 @@ Bugs fixed in GIMP 2.0pre4
 - 130636: Fixed undo handling in Add Bevel script (Simon)
 - 133067: Connect the text tool font with the global font selector (Sven)
 - 133958: Made color values in color picker selectable (Mariano Suárez-Alvarez)
-- 125283: Have configure warn when gimp-print is older than 4.2.6 (Sven)
+- 125283: Have configure warn when ligma-print is older than 4.2.6 (Sven)
 - 112012: Use default preview if none can be generated (Mitch)
 - 124969: Improve text tool logic (Sven)
 - 121033: Ensure that non-indexed images cannot have a colormap (Mitch)
@@ -114,8 +114,8 @@ Bugs fixed in GIMP 2.0pre4
 - 125303: Remove per-channel gray point picker from levels dialog (Dave 
           Neary)
 - 134752: Improve clipboard buffer detection between different images in 
-          the same GIMP instance (Mitch)
-- 122049: Validate numerical input in pygimp plug-ins, and fix the Sphere 
+          the same LIGMA instance (Mitch)
+- 122049: Validate numerical input in pyligma plug-ins, and fix the Sphere 
           plug-in (Dave Neary, Florian Traverse)
 - 130568: Mostly fix Van Gogh (LIC) plug-in (Simon)
 - 70673:  Let Curves and Levels widgets scale with the dialog (Sven)
@@ -131,11 +131,11 @@ Other contributions:
   Jakub Steiner, Simon Budig
 
 
-Bugs fixed in GIMP 2.0pre3
+Bugs fixed in LIGMA 2.0pre3
 ==========================
 - 127451: Anchor floating selection when creating a text layer (Mitch)
 - 50649:  Allow to call script-fu scripts from plug-ins (Mitch)
-- 132617: Improved gimp-remote behaviour (Sven)
+- 132617: Improved ligma-remote behaviour (Sven)
 - 132036: Fixed issues with libart scan conversion (Simon)
 - 132041: Made info window not grab the focus (Mitch)
 - 132077: Redraw layer boundary when using transform tools (Mitch)
@@ -144,7 +144,7 @@ Bugs fixed in GIMP 2.0pre3
 - 132145: Use default values when stroking from the PDB (Mitch)
 - 132162: Anchoring a floating selection on a channel (Mitch)
 - 132271: Mosaic filter on selections (Simon)
-- 132322: gimp-levels on grayscale images (Mitch)
+- 132322: ligma-levels on grayscale images (Mitch)
 - 132329: Info window doesn't show initial values (Shlomi Fish)
 - 118084: Info window not updated in automatic mode (Shlomi Fish)
 - 132495: Positioning of glyphs that extend the logical rectangle (Sven)
@@ -152,7 +152,7 @@ Bugs fixed in GIMP 2.0pre3
 - 132508: Problems with path tool in Edit mode (Simon)
 - 132504: Fixed unsharp mask script (Mitch)
 - 132595: Don't draw the selection if it's hidden (Sven)
-- 132027: Crash in gimpressionist (Sven)
+- 132027: Crash in ligmaressionist (Sven)
 - 132596: Use default values for color DND (Mitch)
 - 132493: Tuned Comic Logo script (Pedro Gimeno)
 - 132649: Allow to fill the whole selection using bucket-fill (Mitch)
@@ -162,14 +162,14 @@ Bugs fixed in GIMP 2.0pre3
 - 131964: Zoom ratio problem (Simon)
 - 132969: Set help-id for tool on tool options dock (Mitch)
 - 132999: Make assembler code PIC safe (Yosh)
-- 119878: Use the same keyboard shortcuts in all GIMP windows
+- 119878: Use the same keyboard shortcuts in all LIGMA windows
           (except the toolbox window) (Mitch)
 - 131975 & 
 - 132297: Disable some warnings while loading TIFFs (Raphael)
 - 129529: Add a "randomize" toggle to random number widget (Dave Neary)
 - 133099: Duplicate PDB entries problem (Mitch)
 - 133122: Disallow renaming of layer masks and some floating selections (Mitch)
-- 130118: Allow non-UTF8 characters in the GIMP home directory (Mitch)
+- 130118: Allow non-UTF8 characters in the LIGMA home directory (Mitch)
 - 122026: Workaround a bug in gdk_draw_segments() (David Odin)
 - 133280: Remove deleted scripts from the menu (Mitch)
 - 133270: Replace deprecated enum values in scripts (Kevin Cozens)
@@ -181,7 +181,7 @@ Other contributions:
   Sven Neumann, Kevin Cozens
 
 
-Bugs fixed in GIMP 2.0pre2
+Bugs fixed in LIGMA 2.0pre2
 ==========================
 - 130828: Compile error with gcc 2.95 (Adrian Bunk)
 - 35335:  Curve tool doesn't conserve black (Simon)
@@ -200,13 +200,13 @@ Bugs fixed in GIMP 2.0pre2
 - 115793: Make thumbnail preview of indexed images match display (Pedro Gimeno)
 - 130471: Handle RGBA images correctly in the CEL plug-in (Dov Grobgeld)
 - 131109: Remove EMX specific code (Sven)
-- 130118: Handle GIMP2_DIRECTORY with non-UTF-8 characters correctly (Tor 
+- 130118: Handle LIGMA2_DIRECTORY with non-UTF-8 characters correctly (Tor 
           Lillqvist, Sven)
 - 82465:  Make preview match image when image is greyscale (Sven)
 - 92586:  Force SF_IMAGE value to reflect the selected image (Sven)
 - 116765: Fix selection artifacts while moving selections (Pedro Gimeno, Mitch)
 - 131215: Only call bind_textdomain_codeset when available (Reinhard Geissler)
-- 125141: Resolve API issues with GimpPixelFetcher and GimpRegionIterator 
+- 125141: Resolve API issues with LigmaPixelFetcher and LigmaRegionIterator 
           (David Odin, Maurits Rijk)
 - 109078: Fix histogram for graylevel images (Pedro Gimeno, Mitch)
 - 131146: Fix drag & drop of patterns to layer masks (Dave Neary, Mitch) 
@@ -233,7 +233,7 @@ Other contributions:
   Tor Lillqvist, Henrik Brix Andersen
 
 
-Overview of Changes in GIMP 2.0pre1
+Overview of Changes in LIGMA 2.0pre1
 ===================================
 - Persistent user preferences for PNG save [Yosh]
 - Replaced old "About" dialog [Simon]
@@ -246,7 +246,7 @@ Overview of Changes in GIMP 2.0pre1
 - Support for multipage TIFFs [Andrey Kiselev]
 - Added a channel mixer plug-in [Martin Guldahl, Yosh]
 - PDB cleanup and compatibility mode [Mitch]
-- Cleaned up libgimp API [David Odin]
+- Cleaned up libligma API [David Odin]
 - Lots of bug fixes
 
 Other contributors:
@@ -255,27 +255,27 @@ Other contributors:
   Fish, Jakub Steiner, Raphaël Quinet, David Gowers, Michael Schumacher
 
 
-Overview of Changes in GIMP 1.3.23
+Overview of Changes in LIGMA 1.3.23
 ==================================
 - Color proof display filter using ICC profiles written by Banlu Kemiyatorn
-- New gimprc options to work around window management problems [Sven, Brix]
-- Fixes for using GIMP on Xinerama setups [Sven]
-- Numerous libgimp* API cleanups [Mitch, Sven]
+- New ligmarc options to work around window management problems [Sven, Brix]
+- Fixes for using LIGMA on Xinerama setups [Sven]
+- Numerous libligma* API cleanups [Mitch, Sven]
 - Theme switching in the preferences dialog [Mitch]
 - Added a small theme [Mitch]
 - Cleanup and unification of message strings [Mitch]
-- 64bit clean libgimp API [Yosh]
+- 64bit clean libligma API [Yosh]
 - New plug-in color selector using color-selector modules [Mitch]
-- GimpCanvas drawing abstraction [Sven]
+- LigmaCanvas drawing abstraction [Sven]
 - Added DICOM file plug-in by Dov Grobgeld
 - Imported new WMF plug-in from libwmf2 [Sven, Mitch]
 - A session name can be given on the command-line [Sven]
 - Allow to move image windows and docks between screens [Mitch, Sven] 
 - Fixed multi-head issues [Mitch]
 - Allow to merge visible paths [Simon]
-- Redone GimpDialog API [Mitch]
-- Load GIMP brush format version 3 [Sven]
-- Allow to use GIMP without any fonts [Sven]
+- Redone LigmaDialog API [Mitch]
+- Load LIGMA brush format version 3 [Sven]
+- Allow to use LIGMA without any fonts [Sven]
 - Improved animoptimize plug-in [Raphaël]
 - Lots of bug fixes
 
@@ -286,17 +286,17 @@ Other contributors:
   Hans Breuer, Jakub Steiner
 
 
-Overview of Changes in GIMP 1.3.22
+Overview of Changes in LIGMA 1.3.22
 ==================================
-- Made GIMP compile and work with gtk+-2.3 [Yosh]
+- Made LIGMA compile and work with gtk+-2.3 [Yosh]
 - Replaced histogram tool with a histogram dialog [Sven] 
 - Multi-head safety [Sven, Yosh]
 - Changes for future compatibility of text layers [Sven]
 - Histogram scale configurable for all tools and defaults to linear [Sven]
 - Better default settings
 - Completed configurability of normal and fullscreen view [Sven, Bolsh]
-- GimpConfig cleanups and improvements [Mitch, Sven]
-- Allow to configure the default grid in your gimprc [Brix]
+- LigmaConfig cleanups and improvements [Mitch, Sven]
+- Allow to configure the default grid in your ligmarc [Brix]
 - Improved session handling; store more settings like the position of
   dock panes and the selected page in the dockbook [Mitch]
 - Auto-scrolling for DND in list views [Mitch]
@@ -312,7 +312,7 @@ Other contributors:
   Jakub Steiner, David Odin, Ed Halley, Wolfgang Hofer, Vesa Halttunen
 
 
-Overview of Changes in GIMP 1.3.21
+Overview of Changes in LIGMA 1.3.21
 ==================================
 - Allow to save tool options as named presets [Mitch].
 - Stroke paths using libart [Simon, Bolsh, Mitch, Sven, Ville]
@@ -320,18 +320,18 @@ Overview of Changes in GIMP 1.3.21
 - Fixes for right-to-left rendering [Sven, Mitch]
 - Rewritten webbroswer plug-in [Brix]
 - Much improved path tool [Simon, Mitch]
-- Export GIMP paths to SVG [Sven, Simon]
-- Import SVG paths as GIMP paths [Sven, Simon]
+- Export LIGMA paths to SVG [Sven, Simon]
+- Import SVG paths as LIGMA paths [Sven, Simon]
 - Added SVG file plug-in from librsvg and improved it [Sven]
 - Store new vectors in XCF [Simon, Mitch]
 - Allow to toggle visibility of paths in path list [Mitch]
 - Move tool now also moves paths [Mitch]
-- Some progress towards gimp-console, a gtk-less GIMP for batch mode [Mitch]
+- Some progress towards ligma-console, a gtk-less LIGMA for batch mode [Mitch]
 - Improved Decompose/Compose plug-ins [Alexey Dyachenko, Sven]
 - More SIMD compositing code [Helvetix]
 - Right mouse buttons now also cancels paint operations [Mitch]
 - More internal code cleanup and documentation [Mitch, Sven]
-- Documented libgimpmath [DindinX]
+- Documented libligmamath [DindinX]
 - Lots of bug fixes
 
 Other contributors:
@@ -340,7 +340,7 @@ Other contributors:
   Tor Lillqvist, Ville Pätsi, Morten Eriksen, Pedro Gimeno
 
 
-Overview of Changes in GIMP 1.3.20
+Overview of Changes in LIGMA 1.3.20
 ==================================
 - Improved documentation of the app directory [Mitch, Sven]
 - Image update optimizations [Mitch]
@@ -348,7 +348,7 @@ Overview of Changes in GIMP 1.3.20
 - PDB API to access fonts [Sven]
 - Portability fixes for x86-64 [Yosh]
 - Enabled SSE and SSE2 compositing code [Helvetix]
-- GimpSelection class added [Mitch]
+- LigmaSelection class added [Mitch]
 - Pullout parameter added to RGB->CMYK conversions [Sven] 
 - Basic framework for future help system in place [Mitch]
 - Screenshot plug-in rewritten [Brix]
@@ -365,9 +365,9 @@ Other contributors:
   Dave Neary, Wolfgang Hofer
 
 
-Overview of Changes in GIMP 1.3.19
+Overview of Changes in LIGMA 1.3.19
 ==================================
-- Migration towards new gimp-help system [Mitch]
+- Migration towards new ligma-help system [Mitch]
 - Deletion of anchor points on a path [Simon]
 - Path stroke moving [Simon]
 - Path stroke splitting by deleting an edge (Ctrl-click while in 
@@ -389,7 +389,7 @@ Other contributors:
   Seth Burgess, Wolfgang Hofer, Ville Pätsi, Sven Neumann
 
 
-Overview of Changes in GIMP 1.3.18
+Overview of Changes in LIGMA 1.3.18
 ==================================
 - Made a bunch of improvements to the path tool [Simon]
 - Added lots of mnemonnics for plug-ins [Brix]
@@ -406,19 +406,19 @@ Overview of Changes in GIMP 1.3.18
 - Colourcube analysis plug-in added [Yosh]
 - Lots of code clean-up in displayshell [Mitch]
 - Camp organisation [Sven, Mitch]
-- Added a working gimp.spec for building RPMs [drc]
+- Added a working ligma.spec for building RPMs [drc]
 - Lots of bug fixes
 
 Other contributors:
   Maurits Rijk, Raphaël Quinet, Adam Moss
 
 
-Overview of Changes in GIMP 1.3.17
+Overview of Changes in LIGMA 1.3.17
 ==================================
 - Made the text tool optionally create a path [Sven, Mitch]
 - Added the ability to reverse gradients to the blend tool [Mitch]
 - Added dithering to the blend tool [Alastair M. Robinson]
-- Changed all(?) GIMP-1.4 references to GIMP-2.0 [Sven]
+- Changed all(?) LIGMA-1.4 references to LIGMA-2.0 [Sven]
 - Allow to transform paths using the transform tools [Mitch]
 - Added a simple CMYK color selector [Sven]
 - Added naive RGB <-> CMYK conversion routines [Sven]
@@ -431,7 +431,7 @@ Overview of Changes in GIMP 1.3.17
 - Redone assembly checks and run-time checks for CPU features [Sven]
 - Added lots of mnemonics to the menus [Jimmac]
 - Support for comments in PNG files [Sven]
-- Constified the libgimp API and adapted all plug-ins [Yosh, Sven]
+- Constified the libligma API and adapted all plug-ins [Yosh, Sven]
 - Cleaned up the brush/font/gradient/pattern selector API [Mitch]
 - Support for patterns with alpha channel [Bolsh]
 - Lots of bug fixes
@@ -441,18 +441,18 @@ Other contributors:
   Maurits Rijk
 
 
-Overview of Changes in GIMP 1.3.16
+Overview of Changes in LIGMA 1.3.16
 ==================================
 - Vector tool improvements [Simon]
 - Import GDynText layers [Sven]
 - Save and load text layers to/from XCF files [Sven]
 - Added the ability to show a grid over the canvas [Brix]
 - Keep EXIF data in JPEG files using libexif [Bolsh]
-- Changed a couple of gimprc defaults [Bolsh]
+- Changed a couple of ligmarc defaults [Bolsh]
 - Updated PS keybindings (ps-menurc) [Eric Pierce]
 - Clarified the semantics of EXTENSION and PLUGIN [Mitch]
 - Updates to the Win32 build system [Hans]
-- Improved brush/pattern/font/gradient selectors in libgimp [Sven]
+- Improved brush/pattern/font/gradient selectors in libligma [Sven]
 - Improved handling of transparency in GIF files [Adam]
 - Cleaned up and improved the message dialogs and error console [Mitch]
 - Added a sample sessionrc [Sven]
@@ -462,11 +462,11 @@ Other contributors:
   Yohei Honda, Elad Shahar, Dave Neary, Jakub Steiner
 
 
-Overview of Changes in GIMP 1.3.15
+Overview of Changes in LIGMA 1.3.15
 ==================================
 
 - Removed color correction tools from toolbox again [Sven]
-- Factored out color-picking code into a GimpColorTool class [Sven]
+- Factored out color-picking code into a LigmaColorTool class [Sven]
 - Updates to the Win32 build system [Tor Lillqvist, Hans Breuer]
 - Removed the need for special casing for some platforms [Yosh, Sven]
 - Added item rotation (90, 180, 270 degrees) [Sven, Mitch]
@@ -483,7 +483,7 @@ Other contributors:
   Adam D. Moss, Jakub Steiner
 
 
-Overview of Changes in GIMP 1.3.14
+Overview of Changes in LIGMA 1.3.14
 ==================================
 
 - Better resampling for the transform tools [OEyvind Kolaas]
@@ -494,7 +494,7 @@ Overview of Changes in GIMP 1.3.14
 - Keyboard navigation for grid views [Sven]
 - List and grid views for fonts [Mitch, Sven]
 - Some text tool improvements [Sven]
-- Moved gimp-gap into it's own CVS module [Yosh, Sven]
+- Moved ligma-gap into it's own CVS module [Yosh, Sven]
 - More icons in even more sizes [Jimmac, Mitch, Sven]
 - I18n header cleanup [Sven]
 - Lots of bug fixes
@@ -503,18 +503,18 @@ Other contributors:
   Pedro Gimeno, Owen, Raphaël Quinet
 
 
-Overview of Changes in GIMP 1.3.13
+Overview of Changes in LIGMA 1.3.13
 ==================================
 
 - New tree-view based popup to select brushes, gradients and such [Mitch]
 - Added color pickers to levels tool for easier color correction [Sven]
 - Allow to create channels from an image's color component [Sven, Mitch]
 - Added a full-screen mode for the image window [Sven, Mitch]
-- Added a simple config file writer to GimpConfig [Sven]
-- Moved gimp-perl into it's own CVS module [Yosh]
+- Added a simple config file writer to LigmaConfig [Sven]
+- Moved ligma-perl into it's own CVS module [Yosh]
 - Migrated all core dialogs from GtkList to GtkTreeView [Mitch]
-- Refactored the GimpDisplayShell update/draw code [Mitch, Sven]
-- Rewrote the Undo History as a GimpDockable [Mitch]
+- Refactored the LigmaDisplayShell update/draw code [Mitch, Sven]
+- Rewrote the Undo History as a LigmaDockable [Mitch]
 - Lots of bug fixes
 
 Other contributors:
@@ -523,7 +523,7 @@ Other contributors:
   Jakub Steiner, Simon Budig
 
 
-Overview of Changes in GIMP 1.3.12
+Overview of Changes in LIGMA 1.3.12
 ==================================
 
 - Improved and cleaned up undo system [Mitch]
@@ -535,7 +535,7 @@ Overview of Changes in GIMP 1.3.12
 - Cleaned up and improved the code that handles the plug-ins [Mitch]
 - Finished colorblindness display filter using the algorithm contributed
   by Alex Wade and Robert Dougherty. 
-- Updated the gimprc man-page, or actually, wrote a tool that does it [Sven]
+- Updated the ligmarc man-page, or actually, wrote a tool that does it [Sven]
 - Improved the code that handles all the menus [Mitch]
 - Added new PSD save plug-in [Bolsh]
 - Added back SphereDesigner plug-in [Sven]
@@ -553,7 +553,7 @@ Other contributors:
   Cameron Gregory, Larry Ewing
 
 
-Overview of Changes in GIMP 1.3.11
+Overview of Changes in LIGMA 1.3.11
 ==================================
 
 - Allow to stroke bezier curves with the vectors tool [Simon]
@@ -564,13 +564,13 @@ Overview of Changes in GIMP 1.3.11
 - Updated the Win32 build system [Tor Lillqvist, Hans Breuer]
 - Factored common code out of a number of plug-ins [Maurits]
 - Use g_rand* functions wherever random numbers are needed [Bolsh] 
-- GimpPressionist plug-in cleaned up [Maurits]
-- Finally landed the new gimprc code based on GimpConfig [Sven, Mitch]
+- LigmaPressionist plug-in cleaned up [Maurits]
+- Finally landed the new ligmarc code based on LigmaConfig [Sven, Mitch]
 - Added widgets for views on object properties [Mitch]
-- Reimplemented the preferences dialog using GimpConfig [Mitch]
+- Reimplemented the preferences dialog using LigmaConfig [Mitch]
 - Transform tool cleanup [Mitch]
 - Modify the environment of plug-ins according to files installed with the
-  plug-ins. Allows to install Python modules into the GIMP tree. [Yosh]
+  plug-ins. Allows to install Python modules into the LIGMA tree. [Yosh]
 - Start plug-ins using g_spawn_async() [Yosh]
 - Lots of bug fixes.
 
@@ -579,7 +579,7 @@ Other contributors:
   Nathan Summers, Jeroen Lamain
 
 
-Overview of Changes in GIMP 1.3.10
+Overview of Changes in LIGMA 1.3.10
 ==================================
 
 - Text tool can load text files now [Sven]
@@ -589,12 +589,12 @@ Overview of Changes in GIMP 1.3.10
 - Ported module loading to GTypeModule [Mitch]
 - Resurrected the water color selector [Mitch]
 - Reworked module browser [Mitch]
-- Moved generic datafile loading to LibGimpBase [Mitch]
-- Added GimpColorScale widget [Mitch, Sven]
-- Added GimpPickButton widget [Mitch]
+- Moved generic datafile loading to LibLigmaBase [Mitch]
+- Added LigmaColorScale widget [Mitch, Sven]
+- Added LigmaPickButton widget [Mitch]
 - Added a color selector dock [Mitch]
 - Added new layer modes (Softlight, Grain Extract, Grain Merge) [UnNamed]
-- Included Gimp-Python with the tarball (try --enable-python)
+- Included Ligma-Python with the tarball (try --enable-python)
 - Lots of bug fixes
 
 Other contributors:
@@ -602,15 +602,15 @@ Other contributors:
   Toby Smith, Raphaël Quinet, Dave Neary, Jim Meyer
 
 
-Overview of Changes in GIMP 1.3.9
+Overview of Changes in LIGMA 1.3.9
 =================================
 
 - Some minor improvements to the text tool [Sven]
 - Started to cleanup DND code [Mitch]
-- Added GimpViewableDialog [Mitch]
+- Added LigmaViewableDialog [Mitch]
 - Improved UI of color adjustment tools [Mitch]
 - Added new icons [Jimmac, Mitch]
-- Added GimpSelectionEditor, a view on the current selection [Mitch]
+- Added LigmaSelectionEditor, a view on the current selection [Mitch]
 - Improved imagemap plug-in [Maurits]
 - GUI cleanups [Mitch, Sven, Maurits]
 - Build fixes [Hans, Yosh, Sven]
@@ -620,7 +620,7 @@ Other contributors:
   James Henstridge, Dave Neary, Simon Budig
 
 
-Overview of Changes in GIMP 1.3.8
+Overview of Changes in LIGMA 1.3.8
 =================================
 
 - Lots of plug-ins cleaned up and improved [Maurits]
@@ -635,14 +635,14 @@ Other contributors:
   Dave Neary, Zbigniew Chyla, Simon Budig
 
 
-Overview of Changes in GIMP 1.3.7
+Overview of Changes in LIGMA 1.3.7
 =================================
 
 - Build fixes
 - Bug fixes
 
 
-Overview of Changes in GIMP 1.3.6
+Overview of Changes in LIGMA 1.3.6
 =================================
 
 - Support tile cache > 4GB on machines with 64bit long integers [Sven]
@@ -651,10 +651,10 @@ Overview of Changes in GIMP 1.3.6
 - Temporary switch to the Move tool when Space is pressed [Mitch]
 - More cleanup of display code [Mitch]
 - Added mnemonics to lots of plug-ins and fixed some bugs [Maurits Rijk]
-- Added new PDB function gimp_image_get_name and corrected behaviour of
-  gimp_image_get_filename [Yosh, Sven]
+- Added new PDB function ligma_image_get_name and corrected behaviour of
+  ligma_image_get_filename [Yosh, Sven]
 - Navigation dialog redone as a dockable [Mitch]
-- Updated print plug-in to new version and depend on libgimpprint [Sven]
+- Updated print plug-in to new version and depend on libligmaprint [Sven]
 - Generalized and improved the new config framework; use it for parasites,
   documents and devices  [Mitch, Sven]
 - Started to port the help browser to GtkHtml2 [Sven]
@@ -673,12 +673,12 @@ Other contributors:
   Jakub Steiner, Simon Budig
 
 
-Overview of Changes in GIMP 1.3.5
+Overview of Changes in LIGMA 1.3.5
 =================================
 
 - Improved tool options and made them dockable [Mitch]
 - Cleanup of brush, gradient, pattern and palette PDB functions [Mitch]
-- Autogenerate libgimp/gimp_pdb.h [Yosh]
+- Autogenerate libligma/ligma_pdb.h [Yosh]
 - Converted the toolbox to a dock [Mitch]
 - Resurrected display filter modules [Mitch]
 - Plug-in code cleanup (colorify) [Maurits Rijk]
@@ -696,7 +696,7 @@ Other Contributors:
   Rebecca Walter, Tuomas Kuosmanen, Marcel Telka
 
 
-Overview of Changes in GIMP 1.3.4
+Overview of Changes in LIGMA 1.3.4
 =================================
 
 - Improved image status bar and image title [Mitch]
@@ -718,7 +718,7 @@ Overview of Changes in GIMP 1.3.4
 - Undo cleanups [Mitch]
 - Changed tips file format to XML [Sven]
 - Added desktop file for GNOME-2 [Sven]
-- Added GimpItem class to generalize core code even further [Mitch]
+- Added LigmaItem class to generalize core code even further [Mitch]
 - Improved preferences dialog [Mitch, Sven, Jimmac]
 - New tool icons [Jimmac]
 - Editor widgets for brushes, gradients and palettes [Mitch]
@@ -730,7 +730,7 @@ Other Contributors:
   Manish Singh, Rebecca Walter, Guillermo S. Romero
 
 
-Overview of Changes in GIMP 1.3.3
+Overview of Changes in LIGMA 1.3.3
 =================================
 
 - Most of the code is free of deprecated GTK+ calls now [Mitch, Yosh, Sven]
@@ -739,8 +739,8 @@ Overview of Changes in GIMP 1.3.3
 - Framework for pluggable tools [Nathan]
 - More tool system cleanups [Mitch]
 - Improved image status bar [Mitch]
-- GimpObjects now know their memory footprint [Mitch]
-- GimpUnit cleanup [Sven]
+- LigmaObjects now know their memory footprint [Mitch]
+- LigmaUnit cleanup [Sven]
 - Message proofreading [Bex]
 - configure.in should work with autoconf-2.5 [Raja R Harinath]
 - Bugfixes
@@ -750,7 +750,7 @@ Other Contributors:
   Simon Budig
 
 
-Overview of Changes in GIMP 1.3.2
+Overview of Changes in LIGMA 1.3.2
 =================================
 
 - Cleanup of display and tools [Mitch]
@@ -770,7 +770,7 @@ Other Contributors:
   Ville Pätsi.
 
 
-Overview of Changes in GIMP 1.3.1
+Overview of Changes in LIGMA 1.3.1
 =================================
 
 - Follow GTK+-2.0 and Pango API changes [Yosh, Mitch, Sven]
@@ -788,7 +788,7 @@ Other Contributors:
   Guillermo S. Romero, David Neary
 
 
-Overview of Changes in GIMP 1.3.0
+Overview of Changes in LIGMA 1.3.0
 =================================
 
 - Ported almost everything to the GTK+-2.0 API. Check the file INSTALL
@@ -801,7 +801,7 @@ Overview of Changes in GIMP 1.3.0
 - Started to rewrite the text tool (completely broken at the moment)
 - Lots of changes in the tool system. All paint tool PDB wrappers are
   broken at the moment.
-- Split up libgimp and libgimpui in a bunch of smaller utility
+- Split up libligma and libligmaui in a bunch of smaller utility
   libraries for plug-ins and the core.
-- Removed GIMP 1.0 compatibility wrappers.
+- Removed LIGMA 1.0 compatibility wrappers.
 - Lots of stuff not mentioned here. See the file ChangeLog for more info.

@@ -1,12 +1,12 @@
-# Hungarian translation for gimp-windows-installer.
-# Copyright (C) 2017, 2018, 2021, 2022 the gimp authors.
-# This file is distributed under the same license as the gimp package.
+# Hungarian translation for ligma-windows-installer.
+# Copyright (C) 2017, 2018, 2021, 2022 the ligma authors.
+# This file is distributed under the same license as the ligma package.
 #
 # Balázs Úr <ur.balazs at fsf dot hu>, 2017, 2018, 2021, 2022.
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-windows-installer\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma-windows-installer\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2022-08-28 13:29+0000\n"
 "PO-Revision-Date: 2022-09-02 01:14+0200\n"
 "Last-Translator: Balázs Úr <ur.balazs at fsf dot hu>\n"
@@ -23,13 +23,13 @@ msgid "License Agreement"
 msgstr "Licencmegállapodás"
 
 #: build/windows/installer/lang/setup.isl.xml.in:10
-msgid "Setup built by Jernej Simonèiè, jernej-gimp@ena.si"
-msgstr "A beállítást összeállította: Jernej Simoncic, jernej-gimp@ena.si"
+msgid "Setup built by Jernej Simonèiè, jernej-ligma@ena.si"
+msgstr "A beállítást összeállította: Jernej Simoncic, jernej-ligma@ena.si"
 
 #: build/windows/installer/lang/setup.isl.xml.in:13
 #: build/windows/installer/lang/setup.isl.xml.in:16
-msgid "This version of GIMP requires Windows 7, or a newer version of Windows."
-msgstr "A GIMP ezen verziója Windows 7-et, vagy újabb Windows verziót igényel."
+msgid "This version of LIGMA requires Windows 7, or a newer version of Windows."
+msgstr "A LIGMA ezen verziója Windows 7-et, vagy újabb Windows verziót igényel."
 
 #: build/windows/installer/lang/setup.isl.xml.in:23
 msgid "Development version"
@@ -37,21 +37,21 @@ msgstr "Fejlesztői verzió"
 
 #: build/windows/installer/lang/setup.isl.xml.in:28
 msgid ""
-"This is a development version of GIMP where some features may not be "
-"finished, or it may be unstable.%nThis version of GIMP is not intended for "
+"This is a development version of LIGMA where some features may not be "
+"finished, or it may be unstable.%nThis version of LIGMA is not intended for "
 "day-to-day work as it may be unstable, and you could lose your work.%nIf you "
 "encounter any problems, first verify that they haven't already been fixed in "
-"GIT before you contact the developers or report it in GIMP gitlab:%n_https://"
-"gitlab.gnome.org/GNOME/gimp/issues%n%nDo you wish to continue with "
+"GIT before you contact the developers or report it in LIGMA gitlab:%n_https://"
+"gitlab.gnome.org/GNOME/ligma/issues%n%nDo you wish to continue with "
 "installation anyway?"
 msgstr ""
-"Ez a GIMP fejlesztői verziója, amelyben néhány funkció még nem készült el, "
-"vagy instabil lehet.%nA GIMP ezen verziója nem ajánlott a mindennapi "
+"Ez a LIGMA fejlesztői verziója, amelyben néhány funkció még nem készült el, "
+"vagy instabil lehet.%nA LIGMA ezen verziója nem ajánlott a mindennapi "
 "munkavégzéshez, mivel instabil lehet, és a munkája elvesztését okozhatja."
 "%nHa bármilyen problémával találkozik, akkor először ellenőrizze, hogy nem "
 "javították-e még ki a GIT-en, mielőtt kapcsolatba lépne a fejlesztőkkel, "
-"vagy a GIMP bugzilla oldalán jelentené:%n_https://gitlab.gnome.org/GNOME/"
-"gimp/issues%n%nMindenképp folytatni szeretné a telepítést?"
+"vagy a LIGMA bugzilla oldalán jelentené:%n_https://gitlab.gnome.org/GNOME/"
+"ligma/issues%n%nMindenképp folytatni szeretné a telepítést?"
 
 #: build/windows/installer/lang/setup.isl.xml.in:31
 #: build/windows/installer/lang/setup.isl.xml.in:54
@@ -64,8 +64,8 @@ msgstr "Kilépés"
 
 #: build/windows/installer/lang/setup.isl.xml.in:44
 msgid ""
-"This version of GIMP requires a processor that supports SSE instructions."
-msgstr "A GIMP ezen verziója az SSE utasításokat támogató processzort igényel."
+"This version of LIGMA requires a processor that supports SSE instructions."
+msgstr "A LIGMA ezen verziója az SSE utasításokat támogató processzort igényel."
 
 #: build/windows/installer/lang/setup.isl.xml.in:48
 msgid "Display settings problem"
@@ -74,12 +74,12 @@ msgstr "Probléma a kijelzőbeállításokkal"
 #: build/windows/installer/lang/setup.isl.xml.in:51
 msgid ""
 "Setup has detected that your Windows is not running in 32 bits-per-pixel "
-"display mode. This has been known to cause stability problems with GIMP, so "
+"display mode. This has been known to cause stability problems with LIGMA, so "
 "it's recommended to change the display colour depth to 32BPP before "
 "continuing."
 msgstr ""
 "A telepítő azt észlelte, hogy a Windows nem 32 bites színmélységű módban "
-"fut. Ez a GIMP-nek stabilitási problémákat okoz, így javasoljuk, hogy a "
+"fut. Ez a LIGMA-nek stabilitási problémákat okoz, így javasoljuk, hogy a "
 "folytatás előtt állítsa a színmélységet 32 bitesre."
 
 #: build/windows/installer/lang/setup.isl.xml.in:57
@@ -88,11 +88,11 @@ msgstr "&Kilépés"
 
 #: build/windows/installer/lang/setup.isl.xml.in:61
 msgid ""
-"GIMP is now ready to be installed. Click the Install now button to install "
+"LIGMA is now ready to be installed. Click the Install now button to install "
 "using the default settings, or click the Customize button if you'd like to "
 "have more control over what gets installed."
 msgstr ""
-"A GIMP immár kész a telepítésre. Kattintson a Telepítés gombra az "
+"A LIGMA immár kész a telepítésre. Kattintson a Telepítés gombra az "
 "alapértelmezett beállításokkal való telepítéshez, vagy a Személyre szabás "
 "gombra, ha módosítani szeretné a telepítendő összetevők listáját."
 
@@ -121,21 +121,21 @@ msgid "Description"
 msgstr "Leírás"
 
 #: build/windows/installer/lang/setup.isl.xml.in:89
-msgid "GIMP"
-msgstr "GIMP"
+msgid "LIGMA"
+msgstr "LIGMA"
 
 #: build/windows/installer/lang/setup.isl.xml.in:93
-msgid "GIMP and all default plug-ins"
-msgstr "A GIMP és minden alap bővítménye"
+msgid "LIGMA and all default plug-ins"
+msgstr "A LIGMA és minden alap bővítménye"
 
 #: build/windows/installer/lang/setup.isl.xml.in:97
 msgid "Run-time libraries"
 msgstr "Futásidejű programkönyvtárak"
 
 #: build/windows/installer/lang/setup.isl.xml.in:101
-msgid "Run-time libraries used by GIMP, including GTK Run-time Environment"
+msgid "Run-time libraries used by LIGMA, including GTK Run-time Environment"
 msgstr ""
-"A GIMP által használt futásidejű programkönyvtárak, beleértve a GTK"
+"A LIGMA által használt futásidejű programkönyvtárak, beleértve a GTK"
 " futtatókörnyezetet is"
 
 #: build/windows/installer/lang/setup.isl.xml.in:105
@@ -143,16 +143,16 @@ msgid "Debug symbols"
 msgstr "Hibakeresési szimbólumok"
 
 #: build/windows/installer/lang/setup.isl.xml.in:109
-msgid "Include information to help with debugging GIMP"
-msgstr "Olyan információk hozzáadása, amelyek segítenek a GIMP hibakeresésében"
+msgid "Include information to help with debugging LIGMA"
+msgstr "Olyan információk hozzáadása, amelyek segítenek a LIGMA hibakeresésében"
 
 #: build/windows/installer/lang/setup.isl.xml.in:113
 msgid "MS-Windows engine for GTK"
 msgstr "MS-Windows motor a GTK-hoz"
 
 #: build/windows/installer/lang/setup.isl.xml.in:117
-msgid "Native Windows look for GIMP"
-msgstr "Natív Windows megjelenés a GIMP-hez"
+msgid "Native Windows look for LIGMA"
+msgstr "Natív Windows megjelenés a LIGMA-hez"
 
 #: build/windows/installer/lang/setup.isl.xml.in:121
 msgid "Support for old plug-ins"
@@ -172,16 +172,16 @@ msgid "Python scripting"
 msgstr "Python parancsfájlok"
 
 #: build/windows/installer/lang/setup.isl.xml.in:141
-msgid "Allows you to use GIMP plugins written in Python scripting language."
-msgstr "Lehetővé teszi Python nyelven írt GIMP bővítmények használatát."
+msgid "Allows you to use LIGMA plugins written in Python scripting language."
+msgstr "Lehetővé teszi Python nyelven írt LIGMA bővítmények használatát."
 
 #: build/windows/installer/lang/setup.isl.xml.in:145
 msgid "Lua scripting"
 msgstr "Lua parancsfájlok"
 
 #: build/windows/installer/lang/setup.isl.xml.in:149
-msgid "Allows you to use GIMP plugins written in Lua scripting language."
-msgstr "Lehetővé teszi a Lua nyelven írt GIMP bővítmények használatát."
+msgid "Allows you to use LIGMA plugins written in Lua scripting language."
+msgstr "Lehetővé teszi a Lua nyelven írt LIGMA bővítmények használatát."
 
 #: build/windows/installer/lang/setup.isl.xml.in:153
 msgid "MyPaint brushes"
@@ -196,8 +196,8 @@ msgid "PostScript support"
 msgstr "PostScript támogatás"
 
 #: build/windows/installer/lang/setup.isl.xml.in:165
-msgid "Allow GIMP to load PostScript files"
-msgstr "A GIMP betöltheti a PostScript fájlokat"
+msgid "Allow LIGMA to load PostScript files"
+msgstr "A LIGMA betöltheti a PostScript fájlokat"
 
 #: build/windows/installer/lang/setup.isl.xml.in:169
 msgid "Support for 32-bit plug-ins"
@@ -224,17 +224,17 @@ msgid "Create a &Quick Launch icon"
 msgstr "&Gyorsindító ikon létrehozása"
 
 #: build/windows/installer/lang/setup.isl.xml.in:190
-msgid "Remove previous GIMP version"
-msgstr "Korábbi GIMP verzió eltávolítása"
+msgid "Remove previous LIGMA version"
+msgstr "Korábbi LIGMA verzió eltávolítása"
 
 #: build/windows/installer/lang/setup.isl.xml.in:195
 msgid ""
-"There was a problem updating GIMP's environment in %1. If you get any errors "
-"loading the plug-ins, try uninstalling and re-installing GIMP."
+"There was a problem updating LIGMA's environment in %1. If you get any errors "
+"loading the plug-ins, try uninstalling and re-installing LIGMA."
 msgstr ""
-"Hiba történt a GIMP környezetének frissítésekor ebben: %1. Ha hibaüzeneteket "
+"Hiba történt a LIGMA környezetének frissítésekor ebben: %1. Ha hibaüzeneteket "
 "kap a bővítmények betöltésekor, akkor próbálja meg eltávolítani és "
-"újratelepíteni a GIMP-et."
+"újratelepíteni a LIGMA-et."
 
 #: build/windows/installer/lang/setup.isl.xml.in:199
 msgid "Error extracting temporary data."
@@ -253,12 +253,12 @@ msgid "There was an error updating %1."
 msgstr "Hiba történt a következő frissítésekor: %1."
 
 #: build/windows/installer/lang/setup.isl.xml.in:215
-msgid "There was an error updating GIMP's configuration file %1."
-msgstr "Hiba történt a GIMP beállítófájljának frissítésekor: %1."
+msgid "There was an error updating LIGMA's configuration file %1."
+msgstr "Hiba történt a LIGMA beállítófájljának frissítésekor: %1."
 
 #: build/windows/installer/lang/setup.isl.xml.in:220
-msgid "Edit with GIMP"
-msgstr "Szerkesztés a GIMP-pel"
+msgid "Edit with LIGMA"
+msgstr "Szerkesztés a LIGMA-pel"
 
 #: build/windows/installer/lang/setup.isl.xml.in:225
 msgid "Select file associations"
@@ -269,15 +269,15 @@ msgid "Extensions:"
 msgstr "Kiterjesztések:"
 
 #: build/windows/installer/lang/setup.isl.xml.in:233
-msgid "Select the file types you wish to associate with GIMP"
-msgstr "Válassza ki a GIMP-hez társítandó fájltípusokat"
+msgid "Select the file types you wish to associate with LIGMA"
+msgstr "Válassza ki a LIGMA-hez társítandó fájltípusokat"
 
 #: build/windows/installer/lang/setup.isl.xml.in:237
 msgid ""
-"This will make selected files open in GIMP when you double-click them in "
+"This will make selected files open in LIGMA when you double-click them in "
 "Explorer."
 msgstr ""
-"Ennek hatására a kijelölt típusú fájlok a GIMP-ben nyílnak meg, amikor "
+"Ennek hatására a kijelölt típusú fájlok a LIGMA-ben nyílnak meg, amikor "
 "duplán kattint rájuk az Intézőben."
 
 #: build/windows/installer/lang/setup.isl.xml.in:241
@@ -293,47 +293,47 @@ msgid "Select &Unused"
 msgstr "Tö&bbi kijelölése"
 
 #: build/windows/installer/lang/setup.isl.xml.in:254
-msgid "File types to associate with GIMP:"
-msgstr "A GIMP-hez társítandó fájltípusok:"
+msgid "File types to associate with LIGMA:"
+msgstr "A LIGMA-hez társítandó fájltípusok:"
 
 #: build/windows/installer/lang/setup.isl.xml.in:258
-msgid "Removing previous version of GIMP:"
-msgstr "A GIMP korábbi verziójának eltávolítása:"
+msgid "Removing previous version of LIGMA:"
+msgstr "A LIGMA korábbi verziójának eltávolítása:"
 
 #: build/windows/installer/lang/setup.isl.xml.in:262
 msgid ""
-"GIMP %1 cannot be installed over your currently installed GIMP version, and "
+"LIGMA %1 cannot be installed over your currently installed LIGMA version, and "
 "the automatic uninstall of old version has failed.%n%nPlease remove the "
-"previous version of GIMP yourself before installing this version in %2, or "
+"previous version of LIGMA yourself before installing this version in %2, or "
 "choose a Custom install, and select a different installation folder.%n%nThe "
 "Setup will now exit."
 msgstr ""
-"A GIMP %1 nem telepíthető a jelenlegi GIMP verzió fölé, és a régi verzió "
-"automatikus eltávolítása meghiúsult.%n%nTávolítsa el a GIMP korábbi "
+"A LIGMA %1 nem telepíthető a jelenlegi LIGMA verzió fölé, és a régi verzió "
+"automatikus eltávolítása meghiúsult.%n%nTávolítsa el a LIGMA korábbi "
 "verzióját, mielőtt ezt a verziót ide telepíti: %2, vagy válassza az Egyéni "
 "telepítést és válasszon másik telepítési mappát.%n%nA telepítő most kilép."
 
 #: build/windows/installer/lang/setup.isl.xml.in:266
 msgid ""
-"GIMP %1 cannot be installed over your currently installed GIMP version, and "
+"LIGMA %1 cannot be installed over your currently installed LIGMA version, and "
 "Setup couldn't determine how to remove the old version automatically.%n"
-"%nPlease remove the previous version of GIMP and any add-ons yourself before "
+"%nPlease remove the previous version of LIGMA and any add-ons yourself before "
 "installing this version in %2, or choose a Custom install, and select a "
 "different installation folder.%n%nThe Setup will now exit."
 msgstr ""
-"A GIMP %1 nem telepíthető a jelenlegi GIMP verzió fölé, és a telepítő nem "
+"A LIGMA %1 nem telepíthető a jelenlegi LIGMA verzió fölé, és a telepítő nem "
 "tudta megállapítani, hogyan távolítható el a régi verzió automatikusan.%n"
-"%nTávolítsa el a GIMP korábbi verzióját és a bővítményeket, mielőtt ezt a "
+"%nTávolítsa el a LIGMA korábbi verzióját és a bővítményeket, mielőtt ezt a "
 "verziót ide telepíti: %2, vagy válassza az Egyéni telepítést és válasszon "
 "másik telepítési mappát.%n%nA telepítő most kilép."
 
 #: build/windows/installer/lang/setup.isl.xml.in:270
 msgid ""
-"Previous GIMP version was removed successfully, but Windows has to be "
+"Previous LIGMA version was removed successfully, but Windows has to be "
 "restarted before the Setup can continue.%n%nAfter restarting your computer, "
 "Setup will continue next time an administrator logs in."
 msgstr ""
-"A GIMP korábbi verziója sikeresen eltávolítva, de a Windowst újra kell "
+"A LIGMA korábbi verziója sikeresen eltávolítva, de a Windowst újra kell "
 "indítani, mielőtt a telepítés folytatódhatna.%n%nA számítógép újraindítása "
 "és egy adminisztrátor bejelentkezése után a telepítő futása folytatódik."
 
@@ -346,8 +346,8 @@ msgid "Cleaning up old files..."
 msgstr "Régi fájlok eltakarítása…"
 
 #: build/windows/installer/lang/setup.isl.xml.in:284
-msgid "Remember: GIMP is Free Software.%n%nPlease visit"
-msgstr "Ne feledje: A GIMP szabad szoftver.%n%nFrissítésekért keresse fel a"
+msgid "Remember: LIGMA is Free Software.%n%nPlease visit"
+msgstr "Ne feledje: A LIGMA szabad szoftver.%n%nFrissítésekért keresse fel a"
 
 #: build/windows/installer/lang/setup.isl.xml.in:288
 msgid "for free updates."
@@ -358,24 +358,24 @@ msgid "Setting up file associations..."
 msgstr "Fájltársítások beállítása…"
 
 #: build/windows/installer/lang/setup.isl.xml.in:295
-msgid "Setting up environment for GIMP Python extension..."
-msgstr "Környezet beállítása a GIMP Python kiterjesztéséhez…"
+msgid "Setting up environment for LIGMA Python extension..."
+msgstr "Környezet beállítása a LIGMA Python kiterjesztéséhez…"
 
 #: build/windows/installer/lang/setup.isl.xml.in:298
 msgid "Setting up MyPaint brushes..."
 msgstr "MyPaint ecsetek beállítása…"
 
 #: build/windows/installer/lang/setup.isl.xml.in:301
-msgid "Setting up GIMP environment..."
-msgstr "A GIMP környezetének beállítása…"
+msgid "Setting up LIGMA environment..."
+msgstr "A LIGMA környezetének beállítása…"
 
 #: build/windows/installer/lang/setup.isl.xml.in:304
-msgid "Setting up GIMP configuration for 32-bit plug-in support..."
-msgstr "A GIMP beállítása a 32-bites bővítmények támogatásához…"
+msgid "Setting up LIGMA configuration for 32-bit plug-in support..."
+msgstr "A LIGMA beállítása a 32-bites bővítmények támogatásához…"
 
 #: build/windows/installer/lang/setup.isl.xml.in:309
-msgid "Launch GIMP"
-msgstr "A GIMP indítása"
+msgid "Launch LIGMA"
+msgstr "A LIGMA indítása"
 
 #: build/windows/installer/lang/setup.isl.xml.in:314
 msgid "Removing add-on"
@@ -387,6 +387,6 @@ msgstr "Belső hiba (%1)."
 
 #: build/windows/installer/lang/setup.isl.xml.in:323
 msgid ""
-"GIMP does not appear to be installed in the selected directory. Continue "
+"LIGMA does not appear to be installed in the selected directory. Continue "
 "anyway?"
-msgstr "A GIMP nem található a kijelölt könyvtárban. Mindenképp folytatja?"
+msgstr "A LIGMA nem található a kijelölt könyvtárban. Mindenképp folytatja?"

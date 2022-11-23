@@ -15,7 +15,7 @@
    width="15.999811"
    version="1.1"
    inkscape:version="0.92.2 2405546, 2018-03-11"
-   sodipodi:docname="gimp-tool-path-symbolic.svg">
+   sodipodi:docname="ligma-tool-path-symbolic.svg">
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -54,7 +54,7 @@
             <dc:title>Barbara Muraus, Jakub Steiner, Klaus Staedtler</dc:title>
           </cc:Agent>
         </dc:contributor>
-        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for GIMP</dc:description>
+        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for LIGMA</dc:description>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -215,7 +215,7 @@
   <g
      style="display:inline"
      transform="matrix(1,0,0,0.99994581,-1.8917037e-4,-1035.8865)"
-     id="gimp-tool-path">
+     id="ligma-tool-path">
     <path
        inkscape:connector-curvature="0"
        style="opacity:0.66000001;fill:url(#linearGradient7016-6);fill-opacity:1;fill-rule:evenodd;stroke-width:1.16968262"

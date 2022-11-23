@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,7 +22,7 @@
 
 #include <string.h>
 
-#include "libgimp/gimp.h"
+#include "libligma/ligma.h"
 
 
 #define PLUG_IN_PROC "file-glob"
@@ -33,12 +33,12 @@ typedef struct _GlobClass GlobClass;
 
 struct _Glob
 {
-  GimpPlugIn parent_instance;
+  LigmaPlugIn parent_instance;
 };
 
 struct _GlobClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -47,12 +47,12 @@ struct _GlobClass
 
 GType                   glob_get_type         (void) G_GNUC_CONST;
 
-static GList          * glob_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * glob_create_procedure (GimpPlugIn           *plug_in,
+static GList          * glob_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * glob_create_procedure (LigmaPlugIn           *plug_in,
                                                const gchar          *name);
 
-static GimpValueArray * glob_run              (GimpProcedure        *procedure,
-                                               const GimpValueArray *args,
+static LigmaValueArray * glob_run              (LigmaProcedure        *procedure,
+                                               const LigmaValueArray *args,
                                                gpointer              run_data);
 
 static gboolean         glob_match            (const gchar          *pattern,
@@ -62,15 +62,15 @@ static gboolean         glob_fnmatch          (const gchar          *pattern,
                                                const gchar          *string);
 
 
-G_DEFINE_TYPE (Glob, glob, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Glob, glob, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (GLOB_TYPE)
+LIGMA_MAIN (GLOB_TYPE)
 
 
 static void
 glob_class_init (GlobClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = glob_query_procedures;
   plug_in_class->create_procedure = glob_create_procedure;
@@ -83,24 +83,24 @@ glob_init (Glob *glob)
 }
 
 static GList *
-glob_query_procedures (GimpPlugIn *plug_in)
+glob_query_procedures (LigmaPlugIn *plug_in)
 {
   return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
 }
 
-static GimpProcedure *
-glob_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+glob_create_procedure (LigmaPlugIn  *plug_in,
                        const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_procedure_new (plug_in, name,
-                                      GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_procedure_new (plug_in, name,
+                                      LIGMA_PDB_PROC_TYPE_PLUGIN,
                                       glob_run, NULL, NULL);
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Returns a list of matching filenames",
                                         "This can be useful in scripts and "
                                         "other plug-ins (e.g., "
@@ -111,59 +111,59 @@ glob_create_procedure (GimpPlugIn  *plug_in,
                                         "simple patterns like "
                                         "\"/home/foo/bar/*.jpg\".",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Sven Neumann",
                                       "Sven Neumann",
                                       "2004");
 
-      GIMP_PROC_ARG_STRING (procedure, "pattern",
+      LIGMA_PROC_ARG_STRING (procedure, "pattern",
                             "Pattern",
                             "The glob pattern (in UTF-8 encoding)",
                             NULL,
                             G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "filename-encoding",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "filename-encoding",
                              "Filename encoding",
                              "FALSE to return UTF-8 strings, TRUE to return "
                              "strings in filename encoding",
                              FALSE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_VAL_STRV (procedure, "files",
+      LIGMA_PROC_VAL_STRV (procedure, "files",
                           "Files",
                           "The list of matching filenames",
                           G_PARAM_READWRITE |
-                          GIMP_PARAM_NO_VALIDATE);
+                          LIGMA_PARAM_NO_VALIDATE);
     }
 
   return procedure;
 }
 
-static GimpValueArray *
-glob_run (GimpProcedure        *procedure,
-          const GimpValueArray *args,
+static LigmaValueArray *
+glob_run (LigmaProcedure        *procedure,
+          const LigmaValueArray *args,
           gpointer              run_data)
 {
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   const gchar    *pattern;
   gboolean        filename_encoding;
   gchar         **matches;
 
-  pattern           = GIMP_VALUES_GET_STRING  (args, 0);
-  filename_encoding = GIMP_VALUES_GET_BOOLEAN (args, 1);
+  pattern           = LIGMA_VALUES_GET_STRING  (args, 0);
+  filename_encoding = LIGMA_VALUES_GET_BOOLEAN (args, 1);
 
   if (! glob_match (pattern, filename_encoding, &matches))
     {
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_EXECUTION_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_EXECUTION_ERROR,
                                                NULL);
     }
 
-  return_vals = gimp_procedure_new_return_values (procedure,
-                                                  GIMP_PDB_SUCCESS,
+  return_vals = ligma_procedure_new_return_values (procedure,
+                                                  LIGMA_PDB_SUCCESS,
                                                   NULL);
 
-  GIMP_VALUES_TAKE_STRV (return_vals, 1, matches);
+  LIGMA_VALUES_TAKE_STRV (return_vals, 1, matches);
 
   return return_vals;
 }

@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpfileentry.c
- * Copyright (C) 1999-2004 Michael Natterer <mitch@gimp.org>
+ * ligmafileentry.c
+ * Copyright (C) 1999-2004 Michael Natterer <mitch@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -25,37 +25,37 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
-#include "gimpwidgetstypes.h"
+#include "ligmawidgetstypes.h"
 
-#include "gimpdialog.h"
+#include "ligmadialog.h"
 
-#undef GIMP_DISABLE_DEPRECATED
-#include "gimpfileentry.h"
+#undef LIGMA_DISABLE_DEPRECATED
+#include "ligmafileentry.h"
 
-#include "gimphelpui.h"
-#include "gimpicons.h"
+#include "ligmahelpui.h"
+#include "ligmaicons.h"
 
-#include "libgimp/libgimp-intl.h"
+#include "libligma/libligma-intl.h"
 
 
 /**
- * SECTION: gimpfileentry
- * @title: GimpFileEntry
+ * SECTION: ligmafileentry
+ * @title: LigmaFileEntry
  * @short_description: Widget for entering a filename.
- * @see_also: #GimpPathEditor
+ * @see_also: #LigmaPathEditor
  *
  * This widget is used to enter filenames or directories.
  *
  * There is a #GtkEntry for entering the filename manually and a "..."
  * button which will pop up a #GtkFileChooserDialog.
  *
- * You can restrict the #GimpFileEntry to directories. In this
+ * You can restrict the #LigmaFileEntry to directories. In this
  * case the filename listbox of the #GtkFileChooser dialog will be
  * set to directory mode.
  *
- * If you specify @check_valid as %TRUE in gimp_file_entry_new() the
+ * If you specify @check_valid as %TRUE in ligma_file_entry_new() the
  * entered filename will be checked for validity and a pixmap will be
  * shown which indicates if the file exists or not.
  *
@@ -70,7 +70,7 @@ enum
   LAST_SIGNAL
 };
 
-struct _GimpFileEntryPrivate
+struct _LigmaFileEntryPrivate
 {
   GtkWidget *file_exists;
   GtkWidget *entry;
@@ -84,59 +84,59 @@ struct _GimpFileEntryPrivate
 };
 
 
-static void   gimp_file_entry_dispose              (GObject       *object);
+static void   ligma_file_entry_dispose              (GObject       *object);
 
-static void   gimp_file_entry_entry_changed        (GtkWidget     *widget,
+static void   ligma_file_entry_entry_changed        (GtkWidget     *widget,
                                                     GtkWidget     *button);
-static void   gimp_file_entry_entry_activate       (GtkWidget     *widget,
-                                                    GimpFileEntry *entry);
-static gint   gimp_file_entry_entry_focus_out      (GtkWidget     *widget,
+static void   ligma_file_entry_entry_activate       (GtkWidget     *widget,
+                                                    LigmaFileEntry *entry);
+static gint   ligma_file_entry_entry_focus_out      (GtkWidget     *widget,
                                                     GdkEvent      *event,
-                                                    GimpFileEntry *entry);
-static void   gimp_file_entry_file_manager_clicked (GtkWidget     *widget,
-                                                    GimpFileEntry *entry);
-static void   gimp_file_entry_browse_clicked       (GtkWidget     *widget,
-                                                    GimpFileEntry *entry);
-static void   gimp_file_entry_check_filename       (GimpFileEntry *entry);
+                                                    LigmaFileEntry *entry);
+static void   ligma_file_entry_file_manager_clicked (GtkWidget     *widget,
+                                                    LigmaFileEntry *entry);
+static void   ligma_file_entry_browse_clicked       (GtkWidget     *widget,
+                                                    LigmaFileEntry *entry);
+static void   ligma_file_entry_check_filename       (LigmaFileEntry *entry);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpFileEntry, gimp_file_entry, GTK_TYPE_BOX)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaFileEntry, ligma_file_entry, GTK_TYPE_BOX)
 
-#define parent_class gimp_file_entry_parent_class
+#define parent_class ligma_file_entry_parent_class
 
-static guint gimp_file_entry_signals[LAST_SIGNAL] = { 0 };
+static guint ligma_file_entry_signals[LAST_SIGNAL] = { 0 };
 
 
 static void
-gimp_file_entry_class_init (GimpFileEntryClass *klass)
+ligma_file_entry_class_init (LigmaFileEntryClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   /**
-   * GimpFileEntry::filename-changed:
+   * LigmaFileEntry::filename-changed:
    *
    * This signal is emitted whenever the user changes the filename.
    **/
-  gimp_file_entry_signals[FILENAME_CHANGED] =
+  ligma_file_entry_signals[FILENAME_CHANGED] =
     g_signal_new ("filename-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpFileEntryClass, filename_changed),
+                  G_STRUCT_OFFSET (LigmaFileEntryClass, filename_changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
-  object_class->dispose   = gimp_file_entry_dispose;
+  object_class->dispose   = ligma_file_entry_dispose;
 
   klass->filename_changed = NULL;
 }
 
 static void
-gimp_file_entry_init (GimpFileEntry *entry)
+ligma_file_entry_init (LigmaFileEntry *entry)
 {
   GtkWidget *image;
   GtkWidget *button;
 
-  entry->priv              = gimp_file_entry_get_instance_private (entry);
+  entry->priv              = ligma_file_entry_get_instance_private (entry);
   entry->priv->title       = NULL;
   entry->priv->file_dialog = NULL;
   entry->priv->check_valid = FALSE;
@@ -154,16 +154,16 @@ gimp_file_entry_init (GimpFileEntry *entry)
 
   gtk_widget_set_sensitive (button, FALSE);
 
-  image = gtk_image_new_from_icon_name (GIMP_ICON_FILE_MANAGER,
+  image = gtk_image_new_from_icon_name (LIGMA_ICON_FILE_MANAGER,
                                         GTK_ICON_SIZE_BUTTON);
   gtk_container_add (GTK_CONTAINER (button), image);
   gtk_widget_show (image);
 
   g_signal_connect (button, "clicked",
-                    G_CALLBACK (gimp_file_entry_file_manager_clicked),
+                    G_CALLBACK (ligma_file_entry_file_manager_clicked),
                     entry);
 
-  gimp_help_set_help_data (button,
+  ligma_help_set_help_data (button,
                            _("Show file location in the file manager"),
                            NULL);
 
@@ -171,13 +171,13 @@ gimp_file_entry_init (GimpFileEntry *entry)
   gtk_box_pack_end (GTK_BOX (entry), entry->priv->browse_button, FALSE, FALSE, 0);
   gtk_widget_show (entry->priv->browse_button);
 
-  image = gtk_image_new_from_icon_name (GIMP_ICON_DOCUMENT_OPEN,
+  image = gtk_image_new_from_icon_name (LIGMA_ICON_DOCUMENT_OPEN,
                                         GTK_ICON_SIZE_BUTTON);
   gtk_container_add (GTK_CONTAINER (entry->priv->browse_button), image);
   gtk_widget_show (image);
 
   g_signal_connect (entry->priv->browse_button, "clicked",
-                    G_CALLBACK (gimp_file_entry_browse_clicked),
+                    G_CALLBACK (ligma_file_entry_browse_clicked),
                     entry);
 
   entry->priv->entry = gtk_entry_new ();
@@ -185,20 +185,20 @@ gimp_file_entry_init (GimpFileEntry *entry)
   gtk_widget_show (entry->priv->entry);
 
   g_signal_connect (entry->priv->entry, "changed",
-                    G_CALLBACK (gimp_file_entry_entry_changed),
+                    G_CALLBACK (ligma_file_entry_entry_changed),
                     button);
   g_signal_connect (entry->priv->entry, "activate",
-                    G_CALLBACK (gimp_file_entry_entry_activate),
+                    G_CALLBACK (ligma_file_entry_entry_activate),
                     entry);
   g_signal_connect (entry->priv->entry, "focus-out-event",
-                    G_CALLBACK (gimp_file_entry_entry_focus_out),
+                    G_CALLBACK (ligma_file_entry_entry_focus_out),
                     entry);
 }
 
 static void
-gimp_file_entry_dispose (GObject *object)
+ligma_file_entry_dispose (GObject *object)
 {
-  GimpFileEntry *entry = GIMP_FILE_ENTRY (object);
+  LigmaFileEntry *entry = LIGMA_FILE_ENTRY (object);
 
   g_clear_pointer (&entry->priv->file_dialog, gtk_widget_destroy);
 
@@ -208,8 +208,8 @@ gimp_file_entry_dispose (GObject *object)
 }
 
 /**
- * gimp_file_entry_new:
- * @title:       The title of the #GimpFileEntry dialog.
+ * ligma_file_entry_new:
+ * @title:       The title of the #LigmaFileEntry dialog.
  * @filename:    The initial filename.
  * @dir_only:    %TRUE if the file entry should accept directories only.
  * @check_valid: %TRUE if the widget should check if the entered file
@@ -217,23 +217,23 @@ gimp_file_entry_dispose (GObject *object)
  *
  * You should use #GtkFileChooserButton instead.
  *
- * Returns: A pointer to the new #GimpFileEntry widget.
+ * Returns: A pointer to the new #LigmaFileEntry widget.
  **/
 GtkWidget *
-gimp_file_entry_new (const gchar *title,
+ligma_file_entry_new (const gchar *title,
                      const gchar *filename,
                      gboolean     dir_only,
                      gboolean     check_valid)
 {
-  GimpFileEntry *entry;
+  LigmaFileEntry *entry;
 
-  entry = g_object_new (GIMP_TYPE_FILE_ENTRY, NULL);
+  entry = g_object_new (LIGMA_TYPE_FILE_ENTRY, NULL);
 
   entry->priv->title       = g_strdup (title);
   entry->priv->dir_only    = dir_only;
   entry->priv->check_valid = check_valid;
 
-  gimp_help_set_help_data (entry->priv->browse_button,
+  ligma_help_set_help_data (entry->priv->browse_button,
                            entry->priv->dir_only ?
                            _("Open a file selector to browse your folders") :
                            _("Open a file selector to browse your files"),
@@ -246,20 +246,20 @@ gimp_file_entry_new (const gchar *title,
       gtk_box_pack_start (GTK_BOX (entry), entry->priv->file_exists, FALSE, FALSE, 0);
       gtk_widget_show (entry->priv->file_exists);
 
-      gimp_help_set_help_data (entry->priv->file_exists,
+      ligma_help_set_help_data (entry->priv->file_exists,
                                entry->priv->dir_only ?
                                _("Indicates whether or not the folder exists") :
                                _("Indicates whether or not the file exists"),
                                NULL);
     }
 
-  gimp_file_entry_set_filename (entry, filename);
+  ligma_file_entry_set_filename (entry, filename);
 
   return GTK_WIDGET (entry);
 }
 
 /**
- * gimp_file_entry_get_filename:
+ * ligma_file_entry_get_filename:
  * @entry: The file entry you want to know the filename from.
  *
  * Note that you have to g_free() the returned string.
@@ -267,12 +267,12 @@ gimp_file_entry_new (const gchar *title,
  * Returns: The file or directory the user has entered.
  **/
 gchar *
-gimp_file_entry_get_filename (GimpFileEntry *entry)
+ligma_file_entry_get_filename (LigmaFileEntry *entry)
 {
   gchar *utf8;
   gchar *filename;
 
-  g_return_val_if_fail (GIMP_IS_FILE_ENTRY (entry), NULL);
+  g_return_val_if_fail (LIGMA_IS_FILE_ENTRY (entry), NULL);
 
   utf8 = gtk_editable_get_chars (GTK_EDITABLE (entry->priv->entry), 0, -1);
 
@@ -284,21 +284,21 @@ gimp_file_entry_get_filename (GimpFileEntry *entry)
 }
 
 /**
- * gimp_file_entry_set_filename:
+ * ligma_file_entry_set_filename:
  * @entry:    The file entry you want to set the filename for.
  * @filename: The new filename.
  *
- * If you specified @check_valid as %TRUE in gimp_file_entry_new()
- * the #GimpFileEntry will immediately check the validity of the file
+ * If you specified @check_valid as %TRUE in ligma_file_entry_new()
+ * the #LigmaFileEntry will immediately check the validity of the file
  * name.
  **/
 void
-gimp_file_entry_set_filename (GimpFileEntry *entry,
+ligma_file_entry_set_filename (LigmaFileEntry *entry,
                               const gchar   *filename)
 {
   gchar *utf8;
 
-  g_return_if_fail (GIMP_IS_FILE_ENTRY (entry));
+  g_return_if_fail (LIGMA_IS_FILE_ENTRY (entry));
 
   if (filename)
     utf8 = g_filename_to_utf8 (filename, -1, NULL, NULL, NULL);
@@ -310,19 +310,19 @@ gimp_file_entry_set_filename (GimpFileEntry *entry,
 
   /*  update everything
    */
-  gimp_file_entry_entry_activate (entry->priv->entry, entry);
+  ligma_file_entry_entry_activate (entry->priv->entry, entry);
 }
 
 /**
- * gimp_file_entry_get_entry:
- * @entry: The #GimpFileEntry.
+ * ligma_file_entry_get_entry:
+ * @entry: The #LigmaFileEntry.
  *
  * Returns: (transfer none): the #GtkEntry internally used by the
  *          widget. The object belongs to @entry and should not be
  *          freed.
  **/
 GtkWidget *
-gimp_file_entry_get_entry (GimpFileEntry *entry)
+ligma_file_entry_get_entry (LigmaFileEntry *entry)
 {
   return entry->priv->entry;
 }
@@ -330,7 +330,7 @@ gimp_file_entry_get_entry (GimpFileEntry *entry)
 /* Private Functions */
 
 static void
-gimp_file_entry_entry_changed (GtkWidget *widget,
+ligma_file_entry_entry_changed (GtkWidget *widget,
                                GtkWidget *button)
 {
   const gchar *text = gtk_entry_get_text (GTK_ENTRY (widget));
@@ -342,8 +342,8 @@ gimp_file_entry_entry_changed (GtkWidget *widget,
 }
 
 static void
-gimp_file_entry_entry_activate (GtkWidget     *widget,
-                                GimpFileEntry *entry)
+ligma_file_entry_entry_activate (GtkWidget     *widget,
+                                LigmaFileEntry *entry)
 {
   gchar *utf8;
   gchar *filename;
@@ -362,11 +362,11 @@ gimp_file_entry_entry_activate (GtkWidget     *widget,
   filename = g_filename_from_utf8 (utf8, -1, NULL, NULL, NULL);
 
   g_signal_handlers_block_by_func (entry->priv->entry,
-                                   gimp_file_entry_entry_activate,
+                                   ligma_file_entry_entry_activate,
                                    entry);
   gtk_entry_set_text (GTK_ENTRY (entry->priv->entry), utf8);
   g_signal_handlers_unblock_by_func (entry->priv->entry,
-                                     gimp_file_entry_entry_activate,
+                                     ligma_file_entry_entry_activate,
                                      entry);
 
   if (entry->priv->file_dialog)
@@ -376,35 +376,35 @@ gimp_file_entry_entry_activate (GtkWidget     *widget,
   g_free (filename);
   g_free (utf8);
 
-  gimp_file_entry_check_filename (entry);
+  ligma_file_entry_check_filename (entry);
 
   gtk_editable_set_position (GTK_EDITABLE (entry->priv->entry), -1);
 
-  g_signal_emit (entry, gimp_file_entry_signals[FILENAME_CHANGED], 0);
+  g_signal_emit (entry, ligma_file_entry_signals[FILENAME_CHANGED], 0);
 }
 
 static gboolean
-gimp_file_entry_entry_focus_out (GtkWidget     *widget,
+ligma_file_entry_entry_focus_out (GtkWidget     *widget,
                                  GdkEvent      *event,
-                                 GimpFileEntry *entry)
+                                 LigmaFileEntry *entry)
 {
-  gimp_file_entry_entry_activate (widget, entry);
+  ligma_file_entry_entry_activate (widget, entry);
 
   return FALSE;
 }
 
-/*  local callback of gimp_file_entry_browse_clicked()  */
+/*  local callback of ligma_file_entry_browse_clicked()  */
 static void
-gimp_file_entry_chooser_response (GtkWidget     *dialog,
+ligma_file_entry_chooser_response (GtkWidget     *dialog,
                                   gint           response_id,
-                                  GimpFileEntry *entry)
+                                  LigmaFileEntry *entry)
 {
   if (response_id == GTK_RESPONSE_OK)
     {
       gchar *filename;
 
       filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
-      gimp_file_entry_set_filename (entry, filename);
+      ligma_file_entry_set_filename (entry, filename);
       g_free (filename);
     }
 
@@ -412,8 +412,8 @@ gimp_file_entry_chooser_response (GtkWidget     *dialog,
 }
 
 static void
-gimp_file_entry_file_manager_clicked (GtkWidget     *widget,
-                                      GimpFileEntry *entry)
+ligma_file_entry_file_manager_clicked (GtkWidget     *widget,
+                                      LigmaFileEntry *entry)
 {
   gchar  *utf8;
   GFile  *file;
@@ -423,7 +423,7 @@ gimp_file_entry_file_manager_clicked (GtkWidget     *widget,
   file = g_file_parse_name (utf8);
   g_free (utf8);
 
-  if (! gimp_file_show_in_file_manager (file, &error))
+  if (! ligma_file_show_in_file_manager (file, &error))
     {
       g_message (_("Can't show file in file manager: %s"),
                  error->message);
@@ -434,8 +434,8 @@ gimp_file_entry_file_manager_clicked (GtkWidget     *widget,
 }
 
 static void
-gimp_file_entry_browse_clicked (GtkWidget     *widget,
-                                GimpFileEntry *entry)
+ligma_file_entry_browse_clicked (GtkWidget     *widget,
+                                LigmaFileEntry *entry)
 {
   GtkFileChooser *chooser;
   gchar          *utf8;
@@ -468,7 +468,7 @@ gimp_file_entry_browse_clicked (GtkWidget     *widget,
 
                                      NULL);
 
-        gimp_dialog_set_alternative_button_order (GTK_DIALOG (entry->priv->file_dialog),
+        ligma_dialog_set_alternative_button_order (GTK_DIALOG (entry->priv->file_dialog),
                                                 GTK_RESPONSE_OK,
                                                 GTK_RESPONSE_CANCEL,
                                                 -1);
@@ -477,10 +477,10 @@ gimp_file_entry_browse_clicked (GtkWidget     *widget,
 
       gtk_window_set_position (GTK_WINDOW (chooser), GTK_WIN_POS_MOUSE);
       gtk_window_set_role (GTK_WINDOW (chooser),
-                           "gimp-file-entry-file-dialog");
+                           "ligma-file-entry-file-dialog");
 
       g_signal_connect (chooser, "response",
-                        G_CALLBACK (gimp_file_entry_chooser_response),
+                        G_CALLBACK (ligma_file_entry_chooser_response),
                         entry);
       g_signal_connect (chooser, "delete-event",
                         G_CALLBACK (gtk_true),
@@ -504,7 +504,7 @@ gimp_file_entry_browse_clicked (GtkWidget     *widget,
 }
 
 static void
-gimp_file_entry_check_filename (GimpFileEntry *entry)
+ligma_file_entry_check_filename (LigmaFileEntry *entry)
 {
   gchar    *utf8;
   gchar    *filename;

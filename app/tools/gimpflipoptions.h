@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,38 +15,38 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_FLIP_OPTIONS_H__
-#define __GIMP_FLIP_OPTIONS_H__
+#ifndef __LIGMA_FLIP_OPTIONS_H__
+#define __LIGMA_FLIP_OPTIONS_H__
 
 
-#include "gimptransformoptions.h"
+#include "ligmatransformoptions.h"
 
 
-#define GIMP_TYPE_FLIP_OPTIONS            (gimp_flip_options_get_type ())
-#define GIMP_FLIP_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_FLIP_OPTIONS, GimpFlipOptions))
-#define GIMP_FLIP_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_FLIP_OPTIONS, GimpFlipOptionsClass))
-#define GIMP_IS_FLIP_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_FLIP_OPTIONS))
-#define GIMP_IS_FLIP_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_FLIP_OPTIONS))
-#define GIMP_FLIP_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_FLIP_OPTIONS, GimpFlipOptionsClass))
+#define LIGMA_TYPE_FLIP_OPTIONS            (ligma_flip_options_get_type ())
+#define LIGMA_FLIP_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_FLIP_OPTIONS, LigmaFlipOptions))
+#define LIGMA_FLIP_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_FLIP_OPTIONS, LigmaFlipOptionsClass))
+#define LIGMA_IS_FLIP_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_FLIP_OPTIONS))
+#define LIGMA_IS_FLIP_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_FLIP_OPTIONS))
+#define LIGMA_FLIP_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_FLIP_OPTIONS, LigmaFlipOptionsClass))
 
 
-typedef struct _GimpFlipOptions      GimpFlipOptions;
-typedef struct _GimpToolOptionsClass GimpFlipOptionsClass;
+typedef struct _LigmaFlipOptions      LigmaFlipOptions;
+typedef struct _LigmaToolOptionsClass LigmaFlipOptionsClass;
 
-struct _GimpFlipOptions
+struct _LigmaFlipOptions
 {
-  GimpTransformOptions  parent_instance;
+  LigmaTransformOptions  parent_instance;
 
-  GimpOrientationType   flip_type;
+  LigmaOrientationType   flip_type;
 
   /*  options gui  */
   GtkWidget            *direction_frame;
 };
 
 
-GType       gimp_flip_options_get_type (void) G_GNUC_CONST;
+GType       ligma_flip_options_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_flip_options_gui      (GimpToolOptions *tool_options);
+GtkWidget * ligma_flip_options_gui      (LigmaToolOptions *tool_options);
 
 
-#endif /* __GIMP_FLIP_OPTIONS_H__ */
+#endif /* __LIGMA_FLIP_OPTIONS_H__ */

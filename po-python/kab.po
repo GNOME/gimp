@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2020-08-27 16:42+0000\n"
 "PO-Revision-Date: 2020-08-29 17:37+0100\n"
 "Language: kab\n"
@@ -251,7 +251,7 @@ msgid "Python _Console"
 msgstr "Tadiwent n Python"
 
 #: ../plug-ins/python/python-console/python-console.py:281
-msgid "Interactive GIMP Python interpreter"
+msgid "Interactive LIGMA Python interpreter"
 msgstr ""
 
 #: ../plug-ins/python/spyro-plus.py:62
@@ -567,7 +567,7 @@ msgstr ""
 "turmidt, neɣ ad teskelseḍ abrid"
 
 #: ../plug-ins/python/spyro-plus.py:1742
-msgid "Spyrogimp"
+msgid "Spyroligma"
 msgstr ""
 
 #: ../plug-ins/python/spyro-plus.py:1751 ../plug-ins/python/spyro-plus.py:2284
@@ -595,5 +595,5 @@ msgid "Please wait : Rendering Pattern"
 msgstr ""
 
 #: ../plug-ins/python/spyro-plus.py:2288
-msgid "Spyrogimp..."
+msgid "Spyroligma..."
 msgstr ""

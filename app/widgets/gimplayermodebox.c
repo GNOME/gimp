@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1999 Peter Mattis and Spencer Kimball
  *
- * gimplayermodebox.c
- * Copyright (C) 2017  Michael Natterer <mitch@gimp.org>
+ * ligmalayermodebox.c
+ * Copyright (C) 2017  Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,22 +23,22 @@
 #include <gtk/gtk.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "operations/layer-modes/gimp-layer-modes.h"
+#include "operations/layer-modes/ligma-layer-modes.h"
 
-#include "gimplayermodebox.h"
-#include "gimplayermodecombobox.h"
+#include "ligmalayermodebox.h"
+#include "ligmalayermodecombobox.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /**
- * SECTION: gimplayermodebox
- * @title: GimpLayerModeBox
+ * SECTION: ligmalayermodebox
+ * @title: LigmaLayerModeBox
  * @short_description: A #GtkBox subclass for selecting a layer mode.
  *
  * A #GtkBox subclass for selecting a layer mode
@@ -53,62 +53,62 @@ enum
 };
 
 
-struct _GimpLayerModeBoxPrivate
+struct _LigmaLayerModeBoxPrivate
 {
-  GimpLayerModeContext  context;
-  GimpLayerMode         layer_mode;
+  LigmaLayerModeContext  context;
+  LigmaLayerMode         layer_mode;
 
   GtkWidget            *mode_combo;
   GtkWidget            *group_combo;
 };
 
 
-static void   gimp_layer_mode_box_constructed  (GObject      *object);
-static void   gimp_layer_mode_box_set_property (GObject      *object,
+static void   ligma_layer_mode_box_constructed  (GObject      *object);
+static void   ligma_layer_mode_box_set_property (GObject      *object,
                                                 guint         prop_id,
                                                 const GValue *value,
                                                 GParamSpec   *pspec);
-static void   gimp_layer_mode_box_get_property (GObject      *object,
+static void   ligma_layer_mode_box_get_property (GObject      *object,
                                                 guint         prop_id,
                                                 GValue       *value,
                                                 GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpLayerModeBox, gimp_layer_mode_box, GTK_TYPE_BOX)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaLayerModeBox, ligma_layer_mode_box, GTK_TYPE_BOX)
 
-#define parent_class gimp_layer_mode_box_parent_class
+#define parent_class ligma_layer_mode_box_parent_class
 
 
 static void
-gimp_layer_mode_box_class_init (GimpLayerModeBoxClass *klass)
+ligma_layer_mode_box_class_init (LigmaLayerModeBoxClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->constructed  = gimp_layer_mode_box_constructed;
-  object_class->set_property = gimp_layer_mode_box_set_property;
-  object_class->get_property = gimp_layer_mode_box_get_property;
+  object_class->constructed  = ligma_layer_mode_box_constructed;
+  object_class->set_property = ligma_layer_mode_box_set_property;
+  object_class->get_property = ligma_layer_mode_box_get_property;
 
   g_object_class_install_property (object_class, PROP_CONTEXT,
                                    g_param_spec_flags ("context",
                                                        NULL, NULL,
-                                                       GIMP_TYPE_LAYER_MODE_CONTEXT,
-                                                       GIMP_LAYER_MODE_CONTEXT_ALL,
-                                                       GIMP_PARAM_READWRITE |
+                                                       LIGMA_TYPE_LAYER_MODE_CONTEXT,
+                                                       LIGMA_LAYER_MODE_CONTEXT_ALL,
+                                                       LIGMA_PARAM_READWRITE |
                                                        G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_LAYER_MODE,
                                    g_param_spec_enum ("layer-mode",
                                                       NULL, NULL,
-                                                      GIMP_TYPE_LAYER_MODE,
-                                                      GIMP_LAYER_MODE_NORMAL,
-                                                      GIMP_PARAM_READWRITE |
+                                                      LIGMA_TYPE_LAYER_MODE,
+                                                      LIGMA_LAYER_MODE_NORMAL,
+                                                      LIGMA_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
 }
 
 static void
-gimp_layer_mode_box_init (GimpLayerModeBox *box)
+ligma_layer_mode_box_init (LigmaLayerModeBox *box)
 {
-  box->priv = gimp_layer_mode_box_get_instance_private (box);
+  box->priv = ligma_layer_mode_box_get_instance_private (box);
 
   gtk_orientable_set_orientation (GTK_ORIENTABLE (box),
                                   GTK_ORIENTATION_HORIZONTAL);
@@ -116,9 +116,9 @@ gimp_layer_mode_box_init (GimpLayerModeBox *box)
 }
 
 static void
-gimp_layer_mode_box_constructed (GObject *object)
+ligma_layer_mode_box_constructed (GObject *object)
 {
-  GimpLayerModeBox *box = GIMP_LAYER_MODE_BOX (object);
+  LigmaLayerModeBox *box = LIGMA_LAYER_MODE_BOX (object);
   GtkWidget        *mode_combo;
   GtkWidget        *group_combo;
   GtkTreeModel     *group_model;
@@ -127,7 +127,7 @@ gimp_layer_mode_box_constructed (GObject *object)
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
   box->priv->mode_combo = mode_combo =
-    gimp_layer_mode_combo_box_new (box->priv->context);
+    ligma_layer_mode_combo_box_new (box->priv->context);
   gtk_box_pack_start (GTK_BOX (box), mode_combo, TRUE, TRUE, 0);
   gtk_widget_show (mode_combo);
 
@@ -142,13 +142,13 @@ gimp_layer_mode_box_constructed (GObject *object)
                           G_BINDING_SYNC_CREATE);
 
   box->priv->group_combo = group_combo =
-    gimp_prop_enum_combo_box_new (G_OBJECT (mode_combo),
+    ligma_prop_enum_combo_box_new (G_OBJECT (mode_combo),
                                   "group", 0, 0);
-  gimp_int_combo_box_set_layout (GIMP_INT_COMBO_BOX (group_combo),
-                                 GIMP_INT_COMBO_BOX_LAYOUT_ICON_ONLY);
+  ligma_int_combo_box_set_layout (LIGMA_INT_COMBO_BOX (group_combo),
+                                 LIGMA_INT_COMBO_BOX_LAYOUT_ICON_ONLY);
   gtk_box_pack_start (GTK_BOX (box), group_combo, FALSE, FALSE, 0);
 
-  gimp_help_set_help_data (group_combo,
+  ligma_help_set_help_data (group_combo,
                            _("Switch to another group of modes"),
                            NULL);
 
@@ -158,35 +158,35 @@ gimp_layer_mode_box_constructed (GObject *object)
     {
       static const gchar *icons[] =
       {
-        "gimp-reset",
-        "gimp-wilber-eek"
+        "ligma-reset",
+        "ligma-wilber-eek"
       };
 
       GtkTreeIter iter;
 
-      if (gimp_int_store_lookup_by_value (group_model, i, &iter))
+      if (ligma_int_store_lookup_by_value (group_model, i, &iter))
         gtk_list_store_set (GTK_LIST_STORE (group_model), &iter,
-                            GIMP_INT_STORE_ICON_NAME, icons[i],
+                            LIGMA_INT_STORE_ICON_NAME, icons[i],
                             -1);
     }
 }
 
 static void
-gimp_layer_mode_box_set_property (GObject      *object,
+ligma_layer_mode_box_set_property (GObject      *object,
                                   guint         prop_id,
                                   const GValue *value,
                                   GParamSpec   *pspec)
 {
-  GimpLayerModeBox *box = GIMP_LAYER_MODE_BOX (object);
+  LigmaLayerModeBox *box = LIGMA_LAYER_MODE_BOX (object);
 
   switch (prop_id)
     {
     case PROP_CONTEXT:
-      gimp_layer_mode_box_set_context (box, g_value_get_flags (value));
+      ligma_layer_mode_box_set_context (box, g_value_get_flags (value));
       break;
 
     case PROP_LAYER_MODE:
-      gimp_layer_mode_box_set_mode (box, g_value_get_enum (value));
+      ligma_layer_mode_box_set_mode (box, g_value_get_enum (value));
       break;
 
     default:
@@ -196,12 +196,12 @@ gimp_layer_mode_box_set_property (GObject      *object,
 }
 
 static void
-gimp_layer_mode_box_get_property (GObject    *object,
+ligma_layer_mode_box_get_property (GObject    *object,
                                   guint       prop_id,
                                   GValue     *value,
                                   GParamSpec *pspec)
 {
-  GimpLayerModeBox *box = GIMP_LAYER_MODE_BOX (object);
+  LigmaLayerModeBox *box = LIGMA_LAYER_MODE_BOX (object);
 
   switch (prop_id)
     {
@@ -221,24 +221,24 @@ gimp_layer_mode_box_get_property (GObject    *object,
 
 
 /**
- * gimp_layer_mode_box_new:
+ * ligma_layer_mode_box_new:
  * Foo.
  *
- * Returns: a new #GimpLayerModeBox.
+ * Returns: a new #LigmaLayerModeBox.
  **/
 GtkWidget *
-gimp_layer_mode_box_new (GimpLayerModeContext context)
+ligma_layer_mode_box_new (LigmaLayerModeContext context)
 {
-  return g_object_new (GIMP_TYPE_LAYER_MODE_BOX,
+  return g_object_new (LIGMA_TYPE_LAYER_MODE_BOX,
                        "context", context,
                        NULL);
 }
 
 void
-gimp_layer_mode_box_set_context (GimpLayerModeBox     *box,
-                                 GimpLayerModeContext  context)
+ligma_layer_mode_box_set_context (LigmaLayerModeBox     *box,
+                                 LigmaLayerModeContext  context)
 {
-  g_return_if_fail (GIMP_IS_LAYER_MODE_BOX (box));
+  g_return_if_fail (LIGMA_IS_LAYER_MODE_BOX (box));
 
   if (context != box->priv->context)
     {
@@ -248,34 +248,34 @@ gimp_layer_mode_box_set_context (GimpLayerModeBox     *box,
     }
 }
 
-GimpLayerModeContext
-gimp_layer_mode_box_get_context (GimpLayerModeBox *box)
+LigmaLayerModeContext
+ligma_layer_mode_box_get_context (LigmaLayerModeBox *box)
 {
-  g_return_val_if_fail (GIMP_IS_LAYER_MODE_BOX (box),
-                        GIMP_LAYER_MODE_CONTEXT_ALL);
+  g_return_val_if_fail (LIGMA_IS_LAYER_MODE_BOX (box),
+                        LIGMA_LAYER_MODE_CONTEXT_ALL);
 
   return box->priv->context;
 }
 
 void
-gimp_layer_mode_box_set_mode (GimpLayerModeBox *box,
-                              GimpLayerMode     mode)
+ligma_layer_mode_box_set_mode (LigmaLayerModeBox *box,
+                              LigmaLayerMode     mode)
 {
-  g_return_if_fail (GIMP_IS_LAYER_MODE_BOX (box));
+  g_return_if_fail (LIGMA_IS_LAYER_MODE_BOX (box));
 
   if (mode != box->priv->layer_mode)
     {
       if (mode == -1)
         {
-          GimpLayerModeComboBox *combo_box;
+          LigmaLayerModeComboBox *combo_box;
 
-          combo_box = GIMP_LAYER_MODE_COMBO_BOX (box->priv->mode_combo);
+          combo_box = LIGMA_LAYER_MODE_COMBO_BOX (box->priv->mode_combo);
 
-          /* Directly call gimp_layer_mode_combo_box_set_mode() instead of
+          /* Directly call ligma_layer_mode_combo_box_set_mode() instead of
            * changing the property because -1 is not accepted as a valid
            * value for the property.
            */
-          gimp_layer_mode_combo_box_set_mode (combo_box, -1);
+          ligma_layer_mode_combo_box_set_mode (combo_box, -1);
         }
       else
         {
@@ -285,30 +285,30 @@ gimp_layer_mode_box_set_mode (GimpLayerModeBox *box,
     }
 }
 
-GimpLayerMode
-gimp_layer_mode_box_get_mode (GimpLayerModeBox *box)
+LigmaLayerMode
+ligma_layer_mode_box_get_mode (LigmaLayerModeBox *box)
 {
-  g_return_val_if_fail (GIMP_IS_LAYER_MODE_BOX (box),
-                        GIMP_LAYER_MODE_NORMAL);
+  g_return_val_if_fail (LIGMA_IS_LAYER_MODE_BOX (box),
+                        LIGMA_LAYER_MODE_NORMAL);
 
   return box->priv->layer_mode;
 }
 
 void
-gimp_layer_mode_box_set_label (GimpLayerModeBox *box,
+ligma_layer_mode_box_set_label (LigmaLayerModeBox *box,
                                const gchar      *label)
 {
-  g_return_if_fail (GIMP_IS_LAYER_MODE_BOX (box));
+  g_return_if_fail (LIGMA_IS_LAYER_MODE_BOX (box));
 
-  gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (box->priv->mode_combo),
+  ligma_int_combo_box_set_label (LIGMA_INT_COMBO_BOX (box->priv->mode_combo),
                                 label);
 }
 
 void
-gimp_layer_mode_box_set_ellipsize (GimpLayerModeBox   *box,
+ligma_layer_mode_box_set_ellipsize (LigmaLayerModeBox   *box,
                                    PangoEllipsizeMode  mode)
 {
-  g_return_if_fail (GIMP_IS_LAYER_MODE_BOX (box));
+  g_return_if_fail (LIGMA_IS_LAYER_MODE_BOX (box));
 
   g_object_set (box->priv->mode_combo,
                 "ellipsize", mode,

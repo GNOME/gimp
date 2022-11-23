@@ -15,7 +15,7 @@
    width="16"
    version="1.1"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="gimp-display-filter-gamma.svg">
+   sodipodi:docname="ligma-display-filter-gamma.svg">
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -50,7 +50,7 @@
             <dc:title>Barbara Muraus, Jakub Steiner, Klaus Staedtler</dc:title>
           </cc:Agent>
         </dc:contributor>
-        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for GIMP</dc:description>
+        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for LIGMA</dc:description>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -141,7 +141,7 @@
      style="display:inline"
      id="stock">
     <g
-       id="gimp-display-filter-gamma"
+       id="ligma-display-filter-gamma"
        transform="translate(163.09523,-949.87153)">
       <path
          style="fill:url(#linearGradient7097);fill-opacity:1;stroke:none"

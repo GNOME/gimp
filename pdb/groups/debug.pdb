@@ -1,4 +1,4 @@
-# GIMP - The GNU Image Manipulation Program
+# LIGMA - The GNU Image Manipulation Program
 # Copyright (C) 1995 Spencer Kimball and Peter Mattis
 
 # This program is free software: you can redistribute it and/or modify
@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+# "Perlized" from C source by Manish Singh <yosh@ligma.org>
 
 sub debug_timer_start {
     $blurb = 'Starts measuring elapsed time.';
@@ -22,10 +22,10 @@ sub debug_timer_start {
     $help = <<'HELP';
 This procedure starts a timer, measuring the elapsed time since the call.
 Each call to this procedure should be matched by a call to
-gimp_debug_timer_end(), which returns the elapsed time.
+ligma_debug_timer_end(), which returns the elapsed time.
 
 If there is already an active timer, it is not affected by the call, however, a
-matching gimp_debug_timer_end() call is still required.
+matching ligma_debug_timer_end() call is still required.
 HELP
 
     &ell_pdb_misc('2017');
@@ -35,8 +35,8 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_debug_timer_counter++ == 0)
-    gimp_debug_timer = g_timer_new ();
+  if (ligma_debug_timer_counter++ == 0)
+    ligma_debug_timer = g_timer_new ();
 }
 CODE
     );
@@ -46,11 +46,11 @@ sub debug_timer_end {
     $blurb = 'Finishes measuring elapsed time.';
 
     $help = <<'HELP';
-This procedure stops the timer started by a previous gimp_debug_timer_start()
+This procedure stops the timer started by a previous ligma_debug_timer_start()
 call, and prints and returns the elapsed time.
 
 If there was already an active timer at the time of corresponding call to
-gimp_debug_timer_start(), a dummy value is returned.
+ligma_debug_timer_start(), a dummy value is returned.
 HELP
 
     &ell_pdb_misc('2017');
@@ -68,17 +68,17 @@ HELP
 {
   elapsed = 0.0;
 
-  if (gimp_debug_timer_counter == 0)
+  if (ligma_debug_timer_counter == 0)
     success = FALSE;
-  else if (--gimp_debug_timer_counter == 0)
+  else if (--ligma_debug_timer_counter == 0)
     {
-      elapsed = g_timer_elapsed (gimp_debug_timer, NULL);
+      elapsed = g_timer_elapsed (ligma_debug_timer, NULL);
 
-      g_printerr ("GIMP debug timer: %g seconds\n", elapsed);
+      g_printerr ("LIGMA debug timer: %g seconds\n", elapsed);
 
-      g_timer_destroy (gimp_debug_timer);
+      g_timer_destroy (ligma_debug_timer);
 
-      gimp_debug_timer = NULL;
+      ligma_debug_timer = NULL;
     }
 }
 CODE
@@ -87,8 +87,8 @@ CODE
 
 
 $extra{app}->{code} = <<'CODE';
-static GTimer *gimp_debug_timer         = NULL;
-static gint    gimp_debug_timer_counter = 0;
+static GTimer *ligma_debug_timer         = NULL;
+static gint    ligma_debug_timer_counter = 0;
 CODE
 
 
@@ -97,7 +97,7 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Debug';
-$doc_title = 'gimpdebug';
+$doc_title = 'ligmadebug';
 $doc_short_desc = 'Debug utility functions';
 $doc_long_desc = 'Miscellaneous debug utility functions. Not part of the stable library interface.';
 

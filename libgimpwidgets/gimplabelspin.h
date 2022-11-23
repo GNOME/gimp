@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpcolorscaleentry.h
+ * ligmacolorscaleentry.h
  * Copyright (C) 2020 Jehan
  *
  * This library is free software: you can redistribute it and/or
@@ -19,56 +19,56 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
-#error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
+#if !defined (__LIGMA_WIDGETS_H_INSIDE__) && !defined (LIGMA_WIDGETS_COMPILATION)
+#error "Only <libligmawidgets/ligmawidgets.h> can be included directly."
 #endif
 
-#ifndef __GIMP_LABEL_SPIN_H__
-#define __GIMP_LABEL_SPIN_H__
+#ifndef __LIGMA_LABEL_SPIN_H__
+#define __LIGMA_LABEL_SPIN_H__
 
-#include <libgimpwidgets/gimplabeled.h>
+#include <libligmawidgets/ligmalabeled.h>
 
 G_BEGIN_DECLS
 
-#define GIMP_TYPE_LABEL_SPIN (gimp_label_spin_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GimpLabelSpin, gimp_label_spin, GIMP, LABEL_SPIN, GimpLabeled)
+#define LIGMA_TYPE_LABEL_SPIN (ligma_label_spin_get_type ())
+G_DECLARE_DERIVABLE_TYPE (LigmaLabelSpin, ligma_label_spin, LIGMA, LABEL_SPIN, LigmaLabeled)
 
-struct _GimpLabelSpinClass
+struct _LigmaLabelSpinClass
 {
-  GimpLabeledClass   parent_class;
+  LigmaLabeledClass   parent_class;
 
   /*  Signals */
-  void            (* value_changed)    (GimpLabelSpin *spin);
+  void            (* value_changed)    (LigmaLabelSpin *spin);
 
   /* Padding for future expansion */
-  void (* _gimp_reserved1) (void);
-  void (* _gimp_reserved2) (void);
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
-  void (* _gimp_reserved5) (void);
-  void (* _gimp_reserved6) (void);
-  void (* _gimp_reserved7) (void);
-  void (* _gimp_reserved8) (void);
+  void (* _ligma_reserved1) (void);
+  void (* _ligma_reserved2) (void);
+  void (* _ligma_reserved3) (void);
+  void (* _ligma_reserved4) (void);
+  void (* _ligma_reserved5) (void);
+  void (* _ligma_reserved6) (void);
+  void (* _ligma_reserved7) (void);
+  void (* _ligma_reserved8) (void);
 };
 
-GtkWidget  * gimp_label_spin_new             (const gchar   *text,
+GtkWidget  * ligma_label_spin_new             (const gchar   *text,
                                               gdouble        value,
                                               gdouble        lower,
                                               gdouble        upper,
                                               gint           digits);
 
-void         gimp_label_spin_set_value       (GimpLabelSpin *spin,
+void         ligma_label_spin_set_value       (LigmaLabelSpin *spin,
                                               gdouble        value);
-gdouble      gimp_label_spin_get_value       (GimpLabelSpin *spin);
+gdouble      ligma_label_spin_get_value       (LigmaLabelSpin *spin);
 
-void         gimp_label_spin_set_increments  (GimpLabelSpin *spin,
+void         ligma_label_spin_set_increments  (LigmaLabelSpin *spin,
                                               gdouble        step,
                                               gdouble        page);
-void         gimp_label_spin_set_digits      (GimpLabelSpin *spin,
+void         ligma_label_spin_set_digits      (LigmaLabelSpin *spin,
                                               gint           digits);
 
-GtkWidget  * gimp_label_spin_get_spin_button (GimpLabelSpin *spin);
+GtkWidget  * ligma_label_spin_get_spin_button (LigmaLabelSpin *spin);
 
 G_END_DECLS
 
-#endif /* __GIMP_LABEL_SPIN_H__ */
+#endif /* __LIGMA_LABEL_SPIN_H__ */

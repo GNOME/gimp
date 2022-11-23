@@ -3,10 +3,10 @@
                       2.10 Development Branch
                    ------------------------------
 
-This used to be the development branch that lead to GIMP 2.10.
+This used to be the development branch that lead to LIGMA 2.10.
 
 
-Overview of Changes from GIMP 2.10.0 RC2 to GIMP 2.10.0
+Overview of Changes from LIGMA 2.10.0 RC2 to LIGMA 2.10.0
 =======================================================
 
 Core:
@@ -33,9 +33,9 @@ Plug-ins:
 
 PDB:
 
-  - New procedure: gimp-item-transform-translate.
-  - Make gimp-item-transform-* transform linked items too.
-  - Deprecate gimp-color-balance and gimp-layer-translate.
+  - New procedure: ligma-item-transform-translate.
+  - Make ligma-item-transform-* transform linked items too.
+  - Deprecate ligma-color-balance and ligma-layer-translate.
 
 Assets / Resources:
 
@@ -50,7 +50,7 @@ Translations:
     Polish, Swedish.
 
 
-Overview of Changes from GIMP 2.10.0 RC1 to GIMP 2.10.0 RC2
+Overview of Changes from LIGMA 2.10.0 RC1 to LIGMA 2.10.0 RC2
 ===========================================================
 
 Core:
@@ -72,7 +72,7 @@ Core:
     channels, masks. Also, make all channels linear in all images with
     >8bit.
 
-Libgimp:
+Libligma:
 
   - New group "drawable_edit" which contains all functions from "edit"
     that are not cut/copy/paste. The new functions have much less
@@ -88,7 +88,7 @@ User interface:
   - Lighter and Darker themes removed for now, Light and Dark themes
     rewritten from scratch to get rid of various usability issues and
     glitches. Only Gray theme from previous set kept as-is.
-  - New GimpToolGyroscope on-canvas control, currently used for
+  - New LigmaToolGyroscope on-canvas control, currently used for
     the Panorama Projection filter. The widget provides on-canvas
     interaction for 3D rotation (yaw, pitch, roll).
 
@@ -117,7 +117,7 @@ Building:
 
   - New --enable-bundled-mypaint-brushes option in configure to decide
     whether to use the configure-time installation path of MyPaint
-    brushes, or use a path relative to GIMP installation prefix
+    brushes, or use a path relative to LIGMA installation prefix
     (typically for bundled binaries, such as on Windows or macOS).
   - Detect freetype2 using pkg-config (`freetype-config` is on its way
     out in various distributions apparently).
@@ -129,7 +129,7 @@ Translations:
     Polish, Russian, Swedish.
 
 
-Overview of Changes from GIMP 2.9.8 to GIMP 2.10.0 RC1
+Overview of Changes from LIGMA 2.9.8 to LIGMA 2.10.0 RC1
 ======================================================
 
 Core:
@@ -140,7 +140,7 @@ Core:
     and an option to warn (by raising/blinking the dialog) when the swap
     size approaches its limit.
   - Make the selection boundary detection the same as 2.8.
-  - The environment variable GIMP_DEBUG can now be set to "list-all" to
+  - The environment variable LIGMA_DEBUG can now be set to "list-all" to
     display available debug domains. Non-recognized flags will also
     trigger the debug flag list output.
   - Improve migration from 2.8 to 2.10 by recursively migrating
@@ -149,7 +149,7 @@ Core:
   - Mark legacy plug-ins and scripts in menus.
   - Enable "save-tool-options" and "save-device-status" by default,
     it's the expected behavior these days.
-  - GIMP doesn't warn any more for unknown darktable XMP metadata. We now
+  - LIGMA doesn't warn any more for unknown darktable XMP metadata. We now
     register the corresponding namespace.
   - Adding settings for metadata export handling in "Image Import &
     Export" page of Preferences. By default, the settings are checked,
@@ -168,43 +168,43 @@ Core:
   - Re-arrange color models in the Color dock (WIP).
   - New debug tool and infrastructure to handle WARNING and CRITICAL
     errors, as well as fatal errors (crashes), raising a pop-up with all
-    version information on GIMP and its main dependencies, as well as
+    version information on LIGMA and its main dependencies, as well as
     the error message and backtraces, and encouraging people to make bug
     reports.
   - Support layer masks on layer groups.
-  - GIMP now attempts to backup unsaved images when it crashes. Then at
+  - LIGMA now attempts to backup unsaved images when it crashes. Then at
     next startup, it will suggest to recover the salvaged images. Image
     recovery is not 100% guaranteed.
-  - New gimp_spawn_async() function uses vfork() to help avoid hanging
+  - New ligma_spawn_async() function uses vfork() to help avoid hanging
     during a fork process, currently used for plug-ins.
   - Dock color picker is now color-managed on macOS.
 
-Libgimp:
+Libligma:
 
-   - New gimp_export_exif(), gimp_export_xmp() and gimp_export_iptc()
+   - New ligma_export_exif(), ligma_export_xmp() and ligma_export_iptc()
      functions returning the creator choice regarding default handling
      for metadata export (as set in the Preferences).
-   - GIMP Protocol version incremented.
-   - New gimp_get_pdb_status() to return the status of the last PDB
+   - LIGMA Protocol version incremented.
+   - New ligma_get_pdb_status() to return the status of the last PDB
      call. This is needed for plug-ins which depend on other plug-ins'
      procedures. If for instance, a second-level plug-in is interrupted
      interactively, we don't want to process this as an error but as a
      cancellation.
-   - New gimp_stack_trace_available(), gimp_stack_trace_print() and
-     gimp_stack_trace_query() for debugging.
-   - Use gegl:distance-transform in gimp_edit_blend() implementation
+   - New ligma_stack_trace_available(), ligma_stack_trace_print() and
+     ligma_stack_trace_query() for debugging.
+   - Use gegl:distance-transform in ligma_edit_blend() implementation
      making it much faster for all GRADIENT_SHAPEBURST_* gradient types.
-     Legacy gimp:shapeburst operation has been deleted.
-   - New gimp_context_get_distance_metric() and
-     gimp_context_set_distance_metric() for distance metric used in
-     gimp_edit_blend() (and future usage).
+     Legacy ligma:shapeburst operation has been deleted.
+   - New ligma_context_get_distance_metric() and
+     ligma_context_set_distance_metric() for distance metric used in
+     ligma_edit_blend() (and future usage).
 
 GUI and Usability:
 
-  - New icons: "gimp-attach", "gimp-color-space-linear",
-    "gimp-color-space-perceptual", "gimp-color-temperature",
-    "gimp-dashboard", "gimp-detach", "gimp-tool-desaturate",
-    "gimp-tool-exposure", "gimp-tool-shadows-highlights".
+  - New icons: "ligma-attach", "ligma-color-space-linear",
+    "ligma-color-space-perceptual", "ligma-color-temperature",
+    "ligma-dashboard", "ligma-detach", "ligma-tool-desaturate",
+    "ligma-tool-exposure", "ligma-tool-shadows-highlights".
   - Switching between linear and perceptual (gamma-corrected) spaces
     in the Histogram dialog is easier now: two buttons instead of one
     two-way button where current state was difficult to understand.
@@ -218,11 +218,11 @@ GUI and Usability:
   - Extend action search "initialism": Extend initialism-based search
     (e.g.: "gb" for "Gaussian Blur"), by matching arbitrarily-long
     initialisms, and by allowing partial matches (with lesser priority).
-  - Values in the GimpNumberPairEntry widgets can now be cleared by clicking
+  - Values in the LigmaNumberPairEntry widgets can now be cleared by clicking
     an icon.
   - Transform Grid controller is now available for custom UIs of GEGL
     operations (currently used for Recursive Transform op).
-  - New GimpHighlightableButton widget is used to draw attention to buttons
+  - New LigmaHighlightableButton widget is used to draw attention to buttons
     in certain cases. Currently used for anchoring and removing floating
     selections.
   - Composite modes were renamed to be more descriptive, as follows:
@@ -293,7 +293,7 @@ File formats:
   - JPEG2000 loading now done via OpenJPEG library and supports any bit
     depth (over 32-bit per channel will be clamped to 32-bit and
     non-multiple of 8-bit will be promoted, for instance 12-bit will end
-    up as 16-bit per channel in GIMP). JPEG 2000 codestream also
+    up as 16-bit per channel in LIGMA). JPEG 2000 codestream also
     supported and displays a dialog asking for the color space (whereas
     JPEG 2000 image color space are auto-detected).
     JPEG 2000 images or codestream in YCbCr, xvYCC and CMYK color spaces
@@ -311,7 +311,7 @@ Building:
   - Require glib >= 2.54.2.
   - New dependency to mypaint-brushes-1.0 for stable MyPaint brushes
     available at installation.
-  - AppStream ID renamed from gimp.desktop to org.gimp.GIMP following
+  - AppStream ID renamed from ligma.desktop to org.ligma.LIGMA following
     current convention.
   - Require fontconfig >= 2.12.4. Lower versions are particularly a
     problem on Win32, where many cache update failure were reported to
@@ -321,24 +321,24 @@ Building:
 Translations:
 
   - Windows installer now localized with gettext.
-  - String freeze has started and GIMP received updates from:
+  - String freeze has started and LIGMA received updates from:
     Basque, Brazilian Portuguese, Catalan, Chinese (Taiwan), Danish,
     Esperanto, French, German, Greek, Hungarian, Icelandic, Italian,
     Japanese, Latvian, Polish, Russian, Serbian, Slovenian, Spanish,
     Swedish, Turkish.
 
 
-Overview of Changes from GIMP 2.9.6 to GIMP 2.9.8
+Overview of Changes from LIGMA 2.9.6 to LIGMA 2.9.8
 =================================================
 
 Core:
 
   - The default brush is now "Hardness 050".
-  - Verbose version (command line: gimp -v) now displays C compiler
+  - Verbose version (command line: ligma -v) now displays C compiler
     information.
   - Transform tools don't commit identity transformation anymore.
   - Manual language can now be selected amongst all installed manuals,
-    which is particularly interesting when no GIMP manuals are available
+    which is particularly interesting when no LIGMA manuals are available
     in your GUI language. This will be proposed by default when a manual
     is not installed for the GUI language (alongside the possibility to
     read online) and the choice can be edited in preferences.
@@ -348,7 +348,7 @@ Core:
     exact coordinates it was copied from.
   - Color Picker should now work on KDE/Wayland.
   - Color Picker now reads values under cursor in local windows making
-    it work at least inside GIMP Windows on Wayland platforms with no
+    it work at least inside LIGMA Windows on Wayland platforms with no
     color-picking capabilities (for instance GNOME/Wayland) yet.
   - OpenCL is now disabled by default. Depending on graphics cards and
     drivers, OpenCL acceleration is often slower than multi-threaded
@@ -402,10 +402,10 @@ Tools:
 
 Painting:
 
-  - When copying a generated brush, GIMP now copies its 'Spacing' property.
+  - When copying a generated brush, LIGMA now copies its 'Spacing' property.
   - Rename "Wheel" dynamics labels as "Wheel/Rotation". It turns out
     that Wacom Art Pen and Airbrush pen use the same axis for barrel rotation
-    and wheel scrolling respectively. Therefore they already work in GIMP.
+    and wheel scrolling respectively. Therefore they already work in LIGMA.
     "Unhide" the feature with more obvious labels.
 
 Color management:
@@ -467,8 +467,8 @@ Translations:
 Building:
 
   - Require LittleCMS >= 2.8.
-  - Initial docker-based build environment for GIMP now available.
-  - Warn against use of GCC 7.2 which has a bug breaking GIMP.
+  - Initial docker-based build environment for LIGMA now available.
+  - Warn against use of GCC 7.2 which has a bug breaking LIGMA.
   - An official flatpak stable package is now available on flathub.
 
 Contributors:
@@ -482,7 +482,7 @@ Christopher Rogers, Michael Schumacher, shark0r, Dimitris Spingos,
 Tobias Stoeckmann, Andika Triwidada, Massimo Valentini.
 
 
-Overview of Changes from GIMP 2.9.4 to GIMP 2.9.6
+Overview of Changes from LIGMA 2.9.4 to LIGMA 2.9.6
 =================================================
 
 Core:
@@ -506,7 +506,7 @@ Core:
     some interactions.
   - Remove max size limitation of 4GB for XCF files.
   - Support clipboard images in the clipboard brush and pattern.
-  - libgimp calls are now thread-safe.
+  - libligma calls are now thread-safe.
 
 Layers and compositing:
 
@@ -545,7 +545,7 @@ GUI and usability:
   - Enhance the Layer Attributes dialog to provide the single UI for
     setting layer's name, blending mode, opacity, and offset,
     toggling visibility, link status, various locks, color tags.
-  - Add a Save As button to the “Quit GIMP” dialog and raise images
+  - Add a Save As button to the “Quit LIGMA” dialog and raise images
     on click for easy checks.
   - Allow to choose fill color when resizing layers and images.
   - Quick Mask and Channel Attributes dialogs use the new spinscale
@@ -556,7 +556,7 @@ GUI and usability:
     don't rely on the exact modifier being pressed or released. Instead,
     check if only the right modifier is pressed after *each* modifier
     change, and switch to color picking if it is.
-  - On startup, GIMP checks for duplicate accelerators in menus, and
+  - On startup, LIGMA checks for duplicate accelerators in menus, and
     removes duplicates.
   - Standard (Freedesktop) and GTK+ icons can now be set by the icon
     theme for a fully consistent style.
@@ -644,7 +644,7 @@ Tools:
     Sample Points dialog now), as well as values in CIE LAB and CIE LCH.
   - Uncommitted selection by the Intelligent Scissors tool is not
     discarded on tool change anymore.
-  - For Intelligent Scissors, GIMP now checks whether the first and the
+  - For Intelligent Scissors, LIGMA now checks whether the first and the
     last isegments are distinct before closing the curve.
   - Flip tool: add Clipping option to the flip tool. Add support for
     reflecting across guides: when clicking on a guide while using the
@@ -660,7 +660,7 @@ Painting:
   - Rulers, scrollbars, and the Navigation dialog follow canvas
     rotation now.
   - Canvas rotation is now snappier in certain cases.
-  - For bitmap brushes, GIMP now caches hardness and disables dynamic
+  - For bitmap brushes, LIGMA now caches hardness and disables dynamic
     change of hardness to improve painting performance. Bitmap brushes
     also don't get clipped anymore, when hardness is less than 100.
   - Allow painting on transparent layers with modes other than normal.
@@ -769,7 +769,7 @@ PDB:
 Build:
 
   - Depend on LCMS2.7+ now, because earlier LCMS2 releases caused
-    problems with certain GIMP blend modes.
+    problems with certain LIGMA blend modes.
   - Depend on libpng 1.6.25+ to avoid warnings about known incorrect
     sRGB profiles, also avoid various vulnerabilities.
   - Depend on glib-networking now for HTTPS support.
@@ -783,7 +783,7 @@ OS-specific changes:
 Bugs:
 
   - Overall 204 bugs have been fixed or partially addressed since
-    GIMP 2.9.4.
+    LIGMA 2.9.4.
 
 Translations:
 
@@ -793,24 +793,24 @@ Translations:
     Serbian, Slovak, Slovenian, Spanish, Swedish.
 
 
-Overview of Changes from GIMP 2.9.2 to GIMP 2.9.4
+Overview of Changes from LIGMA 2.9.2 to LIGMA 2.9.4
 =================================================
 
 Core:
 
   Color Management:
-  - add new GimpColorTransform object to create abstraction from LittleCMS
+  - add new LigmaColorTransform object to create abstraction from LittleCMS
   - now color-managed:
     - layer/image/color palette/gradient/pattern previews
     - Color Picker tool
-    - color buttons of GimpColorHistory
-    - GimpFgBgEditor, as used e.g. in the toolbox
+    - color buttons of LigmaColorHistory
+    - LigmaFgBgEditor, as used e.g. in the toolbox
     - color selectors
     - DND widget
     - painting tools
     - copying layers/paste buffer between images
     - Colors applied to images
-    - GimpColorPanel and its color dialog (color widgets in dialogs)
+    - LigmaColorPanel and its color dialog (color widgets in dialogs)
     - color areas created from menu actions
   - color management for grayscale images, including setting preferred
     ICC profile
@@ -826,9 +826,9 @@ Core:
   - don't let display color management settings affect file import
   - enable color management when a profile is assigned to the image
   - enable color management when the image is converted from/to grayscale
-  - pass the right color profile around in gimp_selection_float()
+  - pass the right color profile around in ligma_selection_float()
   - hardcode the CMYK selector's conversion parameters, as well as NTSC
-    parameters in babl/GEGL/GIMP
+    parameters in babl/GEGL/LIGMA
   - have all previews track the monitor they are on
 
   Core:
@@ -838,9 +838,9 @@ Core:
   - do not request xcf compat mode when compat_toggle not sensitive
   - initialize fontconfig in the background to be able to show a pulsing
     progress bar when rebuilding the list of fonts (typically, the first
-    time GIMP runs)
+    time LIGMA runs)
   - fix the Behind blending mode
-  - make Burn mode output match Gimp 2.8 (partial revert of bug 744265)
+  - make Burn mode output match Ligma 2.8 (partial revert of bug 744265)
   - improve file magic matching
   - add a custom guide concept
   - improve updating the statusbar messages and icons
@@ -873,15 +873,15 @@ GUI:
   Icons:
   - add icon theme selection and make the icon theme path configurable in prefs
   - preserve 2.8 pixel-perfect icon theme under the name "Legacy"
-  - add new symbolic icon theme for GIMP
+  - add new symbolic icon theme for LIGMA
   - add a scalable icon theme and a configure option --enable-vector-icons
 
   Widgets:
-  - add new GimpBufferSourceBox widget and use it in GimpOperationTool
+  - add new LigmaBufferSourceBox widget and use it in LigmaOperationTool
 
   View/Display:
   - fix various bugs related to rotated canvas
-  - make GIMP not ignore 'Maximized' hints on startup in Windows
+  - make LIGMA not ignore 'Maximized' hints on startup in Windows
   - enable a pulsing progress bar in the splash
   - make new images jump around much less
   - fix image position when entering/leaving fullscreen mode
@@ -983,7 +983,7 @@ Plug-ins/GEGL Filters:
     - fix various tiff exporting bugs
   - EXR support:
     - read comment, Exif, and XMP data from EXR files
-    - use GIMP's internal profile when loading EXR
+    - use LIGMA's internal profile when loading EXR
   - PSD support:
     - fix the loading of files with adjustment or fill layers
     - fix the reading of layer group structure
@@ -994,13 +994,13 @@ Plug-ins/GEGL Filters:
   - resurrect the email plugin
   - use GIO to figure if a file is hidden
 
-  PyGimp:
+  PyLigma:
   - update pyconsole code
-  - add binding for GimpImageType
-  - add GimpColorConfig object
-  - add type definition for GimpColorManaged
-  - make GimpParasite type known to the code generator
-  - require Pycairo in configure, link gimpui against pycairo
+  - add binding for LigmaImageType
+  - add LigmaColorConfig object
+  - add type definition for LigmaColorManaged
+  - make LigmaParasite type known to the code generator
+  - require Pycairo in configure, link ligmaui against pycairo
   - fix the application of paintbrush size in Python scripts
 
   Script-Fu:
@@ -1030,7 +1030,7 @@ OS-specific changes:
   - Add support for generating crash backtraces using Dr. MingW
 
 
-Overview of Changes from GIMP 2.8.0 to GIMP 2.9.2
+Overview of Changes from LIGMA 2.8.0 to LIGMA 2.9.2
 =================================================
 
 
@@ -1047,7 +1047,7 @@ Core:
     manipulation functions
 
   config:
-  - Remove GimpBaseConfig, add GimpGeglConfig
+  - Remove LigmaBaseConfig, add LigmaGeglConfig
   - Add config options for new features
 
   core:
@@ -1057,9 +1057,9 @@ Core:
   - Keep the image around as GEGL graph, all other compositing is gone
   - Add non-destructive drawable filters, but use them only for previews
   - Implement the floating selection as drawable filter
-  - Implement GimpImageMap using drawable filters
-  - Move batch processing to gimp-batch.[ch]
-  - Run batch commands in an already running GIMP instance
+  - Implement LigmaImageMap using drawable filters
+  - Move batch processing to ligma-batch.[ch]
+  - Run batch commands in an already running LIGMA instance
   - Ported almost everything from filenames/FILE/fd to GFile/GIO
   - Be smarter about migrating old user config files
   - Move many object struct members to private structs
@@ -1079,7 +1079,7 @@ Core:
   - Move all operations to the new operations/ directory
 
   operations:
-  - New directory containing all GIMP-internal GEGL operations
+  - New directory containing all LIGMA-internal GEGL operations
     and their config objects (if any)
   - Add a correct version of the overlay layer mode
   - Add LCH layer modes
@@ -1090,7 +1090,7 @@ Core:
 
   pdb:
   - Add compat procedures that work like the removed plug-ins
-  - Use the new GimpValueArray, GValueArray got deprecated
+  - Use the new LigmaValueArray, GValueArray got deprecated
 
   plug-in:
   - Allow plug-ins to access image data at full bit depth
@@ -1127,10 +1127,10 @@ GUI:
   - Color manage drawable and image thumbnails
   - Add more format string options for the image title
   - Use the external gtkosxapplication package instead of included code
-  - Add a generic GimpPopup class and use it instead of duplicating code
+  - Add a generic LigmaPopup class and use it instead of duplicating code
   - Make the generated GUI of GEGL ops much better
   - Allow to implement custom GUI for gegl ops, and do that in some cases
-  - Add GimpDial, GimpPolar and GimpCircle to be used for angle and hue picking
+  - Add LigmaDial, LigmaPolar and LigmaCircle to be used for angle and hue picking
 
 
 Tools:
@@ -1149,7 +1149,7 @@ Tools:
   - Add undo/redo to many tools (using the normal shortcuts)
 
 
-Libgimp:
+Libligma:
 
   - Deprecate the entire old pixel manipulation API
   - Add API to get a drawable's buffer, the rest can be done with GEGL
@@ -1160,14 +1160,14 @@ Libgimp:
   - Add more context API that affects other procedures
   - Deprecate API with weird names, and add new API with less arguments
   - Add metadata and color management API, utility functions and widgets
-  - Split GimpPickButton into per-platform backends and fix it on OS X
+  - Split LigmaPickButton into per-platform backends and fix it on OS X
 
 
 Plug-ins:
 
   - Remove lots of plug-ins that are now implemented as GEGL ops
-  - Remove the lcms plug-in, this is now done in the core/libgimp
-  - Remove the metadata plug-ins, this is now done in the core/libgimp
+  - Remove the lcms plug-in, this is now done in the core/libligma
+  - Remove the metadata plug-ins, this is now done in the core/libligma
   - Remove the file-uri plug-in, this is now done in the core using GIO
   - Port many file plug-ins to GIO
   - Port many plug-ins that are not strictly filters to GEGL

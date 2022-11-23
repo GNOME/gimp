@@ -1,8 +1,8 @@
 
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpapp.h
+ * ligmaapp.h
  * Copyright (C) 2021 Niels De Graef <nielsdegraef@gmail.com>
  *
  * This library is distributed in the hope that it will be useful,
@@ -15,14 +15,14 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CONSOLE_APP_H__
-#define __GIMP_CONSOLE_APP_H__
+#ifndef __LIGMA_CONSOLE_APP_H__
+#define __LIGMA_CONSOLE_APP_H__
 
 
-#define GIMP_TYPE_CONSOLE_APP (gimp_console_app_get_type ())
-G_DECLARE_FINAL_TYPE (GimpConsoleApp, gimp_console_app, GIMP, CONSOLE_APP, GApplication)
+#define LIGMA_TYPE_CONSOLE_APP (ligma_console_app_get_type ())
+G_DECLARE_FINAL_TYPE (LigmaConsoleApp, ligma_console_app, LIGMA, CONSOLE_APP, GApplication)
 
-GApplication  *    gimp_console_app_new                   (Gimp         *gimp,
+GApplication  *    ligma_console_app_new                   (Ligma         *ligma,
                                                            gboolean      quit,
                                                            gboolean      as_new,
                                                            const char  **filenames,
@@ -30,4 +30,4 @@ GApplication  *    gimp_console_app_new                   (Gimp         *gimp,
                                                            const char  **batch_commands);
 
 
-#endif /* __GIMP_CONSOLE_APP_H__ */
+#endif /* __LIGMA_CONSOLE_APP_H__ */

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE gimp-authors SYSTEM "authors.dtd">
+<!DOCTYPE ligma-authors SYSTEM "authors.dtd">
 
-<!-- This file is supposed to list all GIMP authors and contributors.       -->
+<!-- This file is supposed to list all LIGMA authors and contributors.       -->
 <!-- It's in XML format so that it can easily be used for the About dialog. -->
 
 <!-- When changing this file, please keep the alphabetical order.           -->
 
-<gimp-authors xmlns="http://purl.org/dc/elements/1.1/">
+<ligma-authors xmlns="http://purl.org/dc/elements/1.1/">
 
   <creator role="author" last-active="2.2">Spencer Kimball</creator>
   <creator role="author" last-active="1.0">Peter Mattis</creator>
@@ -367,4 +367,4 @@
   <contributor role="author" last-active="2.8">Simon Zilliken</contributor>
   <contributor role="author" last-active="2.8">Przemyslaw Zych</contributor>
   <contributor role="author" last-active="2.4">Robert Ögren</contributor>
-</gimp-authors>
+</ligma-authors>

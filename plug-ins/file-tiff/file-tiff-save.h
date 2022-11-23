@@ -1,4 +1,4 @@
-/* tiff saving for GIMP
+/* tiff saving for LIGMA
  *  -Peter Mattis
  *
  * The TIFF loading code has been completely revamped by Nick Lamb
@@ -24,14 +24,14 @@
 
 
 gboolean  save_image  (GFile         *file,
-                       GimpImage     *image,
-                       GimpImage     *orig_image,
+                       LigmaImage     *image,
+                       LigmaImage     *orig_image,
                        GObject       *config,
-                       GimpMetadata  *metadata,
+                       LigmaMetadata  *metadata,
                        GError       **error);
 
-gboolean  save_dialog (GimpImage     *image,
-                       GimpProcedure *procedure,
+gboolean  save_dialog (LigmaImage     *image,
+                       LigmaProcedure *procedure,
                        GObject       *config,
                        gboolean       has_alpha,
                        gboolean       is_monochrome,

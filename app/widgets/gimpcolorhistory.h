@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcolorhistory.h
+ * ligmacolorhistory.h
  * Copyright (C) 2015 Jehan <jehan@girinstud.io>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,26 +18,26 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_COLOR_HISTORY_H__
-#define __GIMP_COLOR_HISTORY_H__
+#ifndef __LIGMA_COLOR_HISTORY_H__
+#define __LIGMA_COLOR_HISTORY_H__
 
 
-#define GIMP_TYPE_COLOR_HISTORY            (gimp_color_history_get_type ())
-#define GIMP_COLOR_HISTORY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_COLOR_HISTORY, GimpColorHistory))
-#define GIMP_COLOR_HISTORY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COLOR_HISTORY, GimpColorHistoryClass))
-#define GIMP_IS_COLOR_HISTORY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_COLOR_HISTORY))
-#define GIMP_IS_COLOR_HISTORY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COLOR_HISTORY))
-#define GIMP_COLOR_HISTORY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_COLOR_HISTORY, GimpColorHistoryClass))
+#define LIGMA_TYPE_COLOR_HISTORY            (ligma_color_history_get_type ())
+#define LIGMA_COLOR_HISTORY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_COLOR_HISTORY, LigmaColorHistory))
+#define LIGMA_COLOR_HISTORY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_COLOR_HISTORY, LigmaColorHistoryClass))
+#define LIGMA_IS_COLOR_HISTORY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_COLOR_HISTORY))
+#define LIGMA_IS_COLOR_HISTORY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_COLOR_HISTORY))
+#define LIGMA_COLOR_HISTORY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_COLOR_HISTORY, LigmaColorHistoryClass))
 
 
-typedef struct _GimpColorHistoryClass GimpColorHistoryClass;
+typedef struct _LigmaColorHistoryClass LigmaColorHistoryClass;
 
-struct _GimpColorHistory
+struct _LigmaColorHistory
 {
   GtkGrid       parent_instance;
 
-  GimpContext  *context;
-  GimpImage    *active_image;
+  LigmaContext  *context;
+  LigmaImage    *active_image;
 
   GtkWidget   **color_areas;
   GtkWidget   **buttons;
@@ -45,20 +45,20 @@ struct _GimpColorHistory
   gint          n_rows;
 };
 
-struct _GimpColorHistoryClass
+struct _LigmaColorHistoryClass
 {
   GtkGridClass  parent_class;
 
   /*  signals  */
-  void   (* color_selected) (GimpColorHistory *history,
-                             const GimpRGB    *rgb);
+  void   (* color_selected) (LigmaColorHistory *history,
+                             const LigmaRGB    *rgb);
 };
 
 
-GType       gimp_color_history_get_type (void) G_GNUC_CONST;
+GType       ligma_color_history_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_color_history_new      (GimpContext     *context,
+GtkWidget * ligma_color_history_new      (LigmaContext     *context,
                                          gint             history_size);
 
-#endif /* __GIMP_COLOR_HISTORY_H__ */
+#endif /* __LIGMA_COLOR_HISTORY_H__ */
 

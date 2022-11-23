@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -51,7 +51,7 @@ EXRPrecision       exr_loader_get_precision  (EXRLoader  *loader);
 EXRImageType       exr_loader_get_image_type (EXRLoader  *loader);
 int                exr_loader_has_alpha      (EXRLoader  *loader);
 
-GimpColorProfile * exr_loader_get_profile    (EXRLoader  *loader);
+LigmaColorProfile * exr_loader_get_profile    (EXRLoader  *loader);
 gchar            * exr_loader_get_comment    (EXRLoader  *loader);
 guchar           * exr_loader_get_exif       (EXRLoader  *loader,
                                               guint      *size);

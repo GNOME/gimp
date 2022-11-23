@@ -1,9 +1,9 @@
-# GIMP tool preset file
+# LIGMA tool preset file
 
-(icon-name "gimp-tool-paintbrush")
+(icon-name "ligma-tool-paintbrush")
 (name "FX Confetti")
-(tool-options "GimpPaintOptions"
-    (tool "gimp-paintbrush-tool")
+(tool-options "LigmaPaintOptions"
+    (tool "ligma-paintbrush-tool")
     (foreground (color-rgb 0.102075 0.183901 0.594317))
     (opacity 0.800000)
     (brush "1. Pixel")
@@ -24,4 +24,4 @@
 (use-palette no)
 (use-font no)
 
-# end of GIMP tool preset file
+# end of LIGMA tool preset file

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * Copyright (C) 2004  Sven Neumann
@@ -21,8 +21,8 @@
 #define __QUIT_DIALOG_H__
 
 
-GtkWidget * quit_dialog_new      (Gimp *gimp);
-GtkWidget * close_all_dialog_new (Gimp *gimp);
+GtkWidget * quit_dialog_new      (Ligma *ligma);
+GtkWidget * close_all_dialog_new (Ligma *ligma);
 
 
 #endif  /*  __QUIT_DIALOG_H__  */

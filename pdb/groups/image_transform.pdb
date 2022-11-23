@@ -1,4 +1,4 @@
-# GIMP - The GNU Image Manipulation Program
+# LIGMA - The GNU Image Manipulation Program
 # Copyright (C) 1995 Spencer Kimball and Peter Mattis
 
 # This program is free software: you can redistribute it and/or modify
@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+# "Perlized" from C source by Manish Singh <yosh@ligma.org>
 
 sub image_resize {
     $blurb = 'Resize the image to the specified extents.';
@@ -33,9 +33,9 @@ HELP
     @inargs = (
         { name => 'image', type => 'image',
           desc => 'The image' },
-        { name => 'new_width', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
+        { name => 'new_width', type => '1 <= int32 <= LIGMA_MAX_IMAGE_SIZE',
           desc => 'New image width' },
-        { name => 'new_height', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
+        { name => 'new_height', type => '1 <= int32 <= LIGMA_MAX_IMAGE_SIZE',
           desc => 'New image height' },
         { name => 'offx', type => 'int32',
           desc => 'x offset between upper left corner of old and
@@ -46,10 +46,10 @@ HELP
     );
 
     %invoke = (
-        headers => [ qw("core/gimpimage-resize.h") ],
+        headers => [ qw("core/ligmaimage-resize.h") ],
         code => <<'CODE'
 {
-  gimp_image_resize (image, context,
+  ligma_image_resize (image, context,
                      new_width, new_height, offx, offy, NULL);
 }
 CODE
@@ -74,10 +74,10 @@ HELP
     );
 
     %invoke = (
-        headers => [ qw("core/gimpimage-resize.h") ],
+        headers => [ qw("core/ligmaimage-resize.h") ],
         code => <<'CODE'
 {
-  gimp_image_resize_to_layers (image, context, NULL, NULL, NULL, NULL, NULL);
+  ligma_image_resize_to_layers (image, context, NULL, NULL, NULL, NULL, NULL);
 }
 CODE
     );
@@ -92,7 +92,7 @@ This procedure scales the image so that its new width and height are
 equal to the supplied parameters. All layers and channels within the
 image are scaled according to the specified parameters; this includes
 the image selection mask. The interpolation method used can be set
-with gimp_context_set_interpolation().
+with ligma_context_set_interpolation().
 HELP
 
     &std_pdb_misc;
@@ -100,27 +100,27 @@ HELP
     @inargs = (
         { name => 'image', type => 'image',
           desc => 'The image' },
-        { name => 'new_width', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
+        { name => 'new_width', type => '1 <= int32 <= LIGMA_MAX_IMAGE_SIZE',
           desc => 'New image width' },
-        { name => 'new_height', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
+        { name => 'new_height', type => '1 <= int32 <= LIGMA_MAX_IMAGE_SIZE',
           desc => 'New image height' }
     );
 
     %invoke = (
-        headers => [ qw("core/gimpimage-scale.h") ],
+        headers => [ qw("core/ligmaimage-scale.h") ],
         code => <<'CODE'
 {
-  GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
+  LigmaPDBContext *pdb_context = LIGMA_PDB_CONTEXT (context);
 
   if (progress)
-    gimp_progress_start (progress, FALSE, _("Scaling"));
+    ligma_progress_start (progress, FALSE, _("Scaling"));
 
-  gimp_image_scale (image, new_width, new_height,
+  ligma_image_scale (image, new_width, new_height,
                     pdb_context->interpolation,
                     progress);
 
   if (progress)
-    gimp_progress_end (progress);
+    ligma_progress_end (progress);
 }
 CODE
     );
@@ -143,9 +143,9 @@ HELP
     @inargs = (
         { name => 'image', type => 'image',
           desc => 'The image' },
-        { name => 'new_width', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
+        { name => 'new_width', type => '1 <= int32 <= LIGMA_MAX_IMAGE_SIZE',
           desc => 'New image width: (0 < new_width <= width)' },
-        { name => 'new_height', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
+        { name => 'new_height', type => '1 <= int32 <= LIGMA_MAX_IMAGE_SIZE',
           desc => 'New image height: (0 < new_height <= height)' },
         { name => 'offx', type => '0 <= int32',
           desc => 'X offset: (0 <= offx <= (width - new_width))' },
@@ -154,16 +154,16 @@ HELP
     );
 
     %invoke = (
-        headers => [ qw("core/gimpimage-crop.h") ],
+        headers => [ qw("core/ligmaimage-crop.h") ],
         code => <<'CODE'
 {
-  if (new_width  >  gimp_image_get_width  (image)              ||
-      new_height >  gimp_image_get_height (image)              ||
-      offx       > (gimp_image_get_width  (image) - new_width) ||
-      offy       > (gimp_image_get_height (image) - new_height))
+  if (new_width  >  ligma_image_get_width  (image)              ||
+      new_height >  ligma_image_get_height (image)              ||
+      offx       > (ligma_image_get_width  (image) - new_width) ||
+      offy       > (ligma_image_get_height (image) - new_height))
     success = FALSE;
   else
-    gimp_image_crop (image, context, GIMP_FILL_TRANSPARENT,
+    ligma_image_crop (image, context, LIGMA_FILL_TRANSPARENT,
                      offx, offy, new_width, new_height,
                      TRUE);
 }
@@ -184,15 +184,15 @@ HELP
         { name => 'image', type => 'image',
           desc => 'The image' },
         { name => 'flip_type',
-          type => 'enum GimpOrientationType (no GIMP_ORIENTATION_UNKNOWN)',
+          type => 'enum LigmaOrientationType (no LIGMA_ORIENTATION_UNKNOWN)',
           desc => 'Type of flip' }
     );
 
     %invoke = (
-        headers => [ qw("core/gimpimage-flip.h") ],
+        headers => [ qw("core/ligmaimage-flip.h") ],
         code => <<'CODE'
 {
-  gimp_image_flip (image, context, flip_type, NULL);
+  ligma_image_flip (image, context, flip_type, NULL);
 }
 CODE
     );
@@ -207,29 +207,29 @@ sub image_rotate {
     @inargs = (
         { name => 'image', type => 'image',
           desc => 'The image' },
-        { name => 'rotate_type', type => 'enum GimpRotationType',
+        { name => 'rotate_type', type => 'enum LigmaRotationType',
           desc => 'Angle of rotation' }
     );
 
     %invoke = (
-        headers => [ qw("core/gimpimage-rotate.h") ],
+        headers => [ qw("core/ligmaimage-rotate.h") ],
         code => <<'CODE'
 {
   if (progress)
-    gimp_progress_start (progress, FALSE, _("Rotating"));
+    ligma_progress_start (progress, FALSE, _("Rotating"));
 
-  gimp_image_rotate (image, context, rotate_type, progress);
+  ligma_image_rotate (image, context, rotate_type, progress);
 
   if (progress)
-    gimp_progress_end (progress);
+    ligma_progress_end (progress);
 }
 CODE
     );
 }
 
-@headers = qw("core/gimpprogress.h"
-              "gimppdbcontext.h"
-              "gimp-intl.h");
+@headers = qw("core/ligmaprogress.h"
+              "ligmapdbcontext.h"
+              "ligma-intl.h");
 
 @procs = qw(image_resize image_resize_to_layers
             image_scale
@@ -238,7 +238,7 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Image Transform';
-$doc_title = 'gimpimagetransform';
+$doc_title = 'ligmaimagetransform';
 $doc_short_desc = 'Transformations on images.';
 $doc_long_desc = 'Operations to scale, resize, crop, flip and rotate images.';
 

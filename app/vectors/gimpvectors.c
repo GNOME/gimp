@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpvectors.c
- * Copyright (C) 2002 Simon Budig  <simon@gimp.org>
+ * ligmavectors.c
+ * Copyright (C) 2002 Simon Budig  <simon@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,34 +24,34 @@
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmamath/ligmamath.h"
 
 #include "vectors-types.h"
 
-#include "core/gimp.h"
-#include "core/gimp-transform-utils.h"
-#include "core/gimpbezierdesc.h"
-#include "core/gimpchannel-select.h"
-#include "core/gimpcontainer.h"
-#include "core/gimpcontext.h"
-#include "core/gimpdrawable-fill.h"
-#include "core/gimpdrawable-stroke.h"
-#include "core/gimperror.h"
-#include "core/gimpimage.h"
-#include "core/gimpimage-undo-push.h"
-#include "core/gimppaintinfo.h"
-#include "core/gimpstrokeoptions.h"
+#include "core/ligma.h"
+#include "core/ligma-transform-utils.h"
+#include "core/ligmabezierdesc.h"
+#include "core/ligmachannel-select.h"
+#include "core/ligmacontainer.h"
+#include "core/ligmacontext.h"
+#include "core/ligmadrawable-fill.h"
+#include "core/ligmadrawable-stroke.h"
+#include "core/ligmaerror.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaimage-undo-push.h"
+#include "core/ligmapaintinfo.h"
+#include "core/ligmastrokeoptions.h"
 
-#include "paint/gimppaintcore-stroke.h"
-#include "paint/gimppaintoptions.h"
+#include "paint/ligmapaintcore-stroke.h"
+#include "paint/ligmapaintoptions.h"
 
-#include "gimpanchor.h"
-#include "gimpstroke.h"
-#include "gimpvectors.h"
-#include "gimpvectors-preview.h"
+#include "ligmaanchor.h"
+#include "ligmastroke.h"
+#include "ligmavectors.h"
+#include "ligmavectors-preview.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -62,165 +62,165 @@ enum
 };
 
 
-static void       gimp_vectors_finalize      (GObject           *object);
+static void       ligma_vectors_finalize      (GObject           *object);
 
-static gint64     gimp_vectors_get_memsize   (GimpObject        *object,
+static gint64     ligma_vectors_get_memsize   (LigmaObject        *object,
                                               gint64            *gui_size);
 
-static gboolean   gimp_vectors_is_attached   (GimpItem          *item);
-static GimpItemTree * gimp_vectors_get_tree  (GimpItem          *item);
-static gboolean   gimp_vectors_bounds        (GimpItem          *item,
+static gboolean   ligma_vectors_is_attached   (LigmaItem          *item);
+static LigmaItemTree * ligma_vectors_get_tree  (LigmaItem          *item);
+static gboolean   ligma_vectors_bounds        (LigmaItem          *item,
                                               gdouble           *x,
                                               gdouble           *y,
                                               gdouble           *width,
                                               gdouble           *height);
-static GimpItem * gimp_vectors_duplicate     (GimpItem          *item,
+static LigmaItem * ligma_vectors_duplicate     (LigmaItem          *item,
                                               GType              new_type);
-static void       gimp_vectors_convert       (GimpItem          *item,
-                                              GimpImage         *dest_image,
+static void       ligma_vectors_convert       (LigmaItem          *item,
+                                              LigmaImage         *dest_image,
                                               GType              old_type);
-static void       gimp_vectors_translate     (GimpItem          *item,
+static void       ligma_vectors_translate     (LigmaItem          *item,
                                               gdouble            offset_x,
                                               gdouble            offset_y,
                                               gboolean           push_undo);
-static void       gimp_vectors_scale         (GimpItem          *item,
+static void       ligma_vectors_scale         (LigmaItem          *item,
                                               gint               new_width,
                                               gint               new_height,
                                               gint               new_offset_x,
                                               gint               new_offset_y,
-                                              GimpInterpolationType  interp_type,
-                                              GimpProgress      *progress);
-static void       gimp_vectors_resize        (GimpItem          *item,
-                                              GimpContext       *context,
-                                              GimpFillType       fill_type,
+                                              LigmaInterpolationType  interp_type,
+                                              LigmaProgress      *progress);
+static void       ligma_vectors_resize        (LigmaItem          *item,
+                                              LigmaContext       *context,
+                                              LigmaFillType       fill_type,
                                               gint               new_width,
                                               gint               new_height,
                                               gint               offset_x,
                                               gint               offset_y);
-static void       gimp_vectors_flip          (GimpItem          *item,
-                                              GimpContext       *context,
-                                              GimpOrientationType  flip_type,
+static void       ligma_vectors_flip          (LigmaItem          *item,
+                                              LigmaContext       *context,
+                                              LigmaOrientationType  flip_type,
                                               gdouble            axis,
                                               gboolean           clip_result);
-static void       gimp_vectors_rotate        (GimpItem          *item,
-                                              GimpContext       *context,
-                                              GimpRotationType   rotate_type,
+static void       ligma_vectors_rotate        (LigmaItem          *item,
+                                              LigmaContext       *context,
+                                              LigmaRotationType   rotate_type,
                                               gdouble            center_x,
                                               gdouble            center_y,
                                               gboolean           clip_result);
-static void       gimp_vectors_transform     (GimpItem          *item,
-                                              GimpContext       *context,
-                                              const GimpMatrix3 *matrix,
-                                              GimpTransformDirection direction,
-                                              GimpInterpolationType interp_type,
-                                              GimpTransformResize   clip_result,
-                                              GimpProgress      *progress);
-static GimpTransformResize
-                  gimp_vectors_get_clip      (GimpItem          *item,
-                                              GimpTransformResize clip_result);
-static gboolean   gimp_vectors_fill          (GimpItem          *item,
-                                              GimpDrawable      *drawable,
-                                              GimpFillOptions   *fill_options,
+static void       ligma_vectors_transform     (LigmaItem          *item,
+                                              LigmaContext       *context,
+                                              const LigmaMatrix3 *matrix,
+                                              LigmaTransformDirection direction,
+                                              LigmaInterpolationType interp_type,
+                                              LigmaTransformResize   clip_result,
+                                              LigmaProgress      *progress);
+static LigmaTransformResize
+                  ligma_vectors_get_clip      (LigmaItem          *item,
+                                              LigmaTransformResize clip_result);
+static gboolean   ligma_vectors_fill          (LigmaItem          *item,
+                                              LigmaDrawable      *drawable,
+                                              LigmaFillOptions   *fill_options,
                                               gboolean           push_undo,
-                                              GimpProgress      *progress,
+                                              LigmaProgress      *progress,
                                               GError           **error);
-static gboolean   gimp_vectors_stroke        (GimpItem          *item,
-                                              GimpDrawable      *drawable,
-                                              GimpStrokeOptions *stroke_options,
+static gboolean   ligma_vectors_stroke        (LigmaItem          *item,
+                                              LigmaDrawable      *drawable,
+                                              LigmaStrokeOptions *stroke_options,
                                               gboolean           push_undo,
-                                              GimpProgress      *progress,
+                                              LigmaProgress      *progress,
                                               GError           **error);
-static void       gimp_vectors_to_selection  (GimpItem          *item,
-                                              GimpChannelOps     op,
+static void       ligma_vectors_to_selection  (LigmaItem          *item,
+                                              LigmaChannelOps     op,
                                               gboolean           antialias,
                                               gboolean           feather,
                                               gdouble            feather_radius_x,
                                               gdouble            feather_radius_y);
 
-static void       gimp_vectors_real_freeze          (GimpVectors       *vectors);
-static void       gimp_vectors_real_thaw            (GimpVectors       *vectors);
-static void       gimp_vectors_real_stroke_add      (GimpVectors       *vectors,
-                                                     GimpStroke        *stroke);
-static void       gimp_vectors_real_stroke_remove   (GimpVectors       *vectors,
-                                                     GimpStroke        *stroke);
-static GimpStroke * gimp_vectors_real_stroke_get    (GimpVectors       *vectors,
-                                                     const GimpCoords  *coord);
-static GimpStroke *gimp_vectors_real_stroke_get_next(GimpVectors       *vectors,
-                                                     GimpStroke        *prev);
-static gdouble gimp_vectors_real_stroke_get_length  (GimpVectors       *vectors,
-                                                     GimpStroke        *prev);
-static GimpAnchor * gimp_vectors_real_anchor_get    (GimpVectors       *vectors,
-                                                     const GimpCoords  *coord,
-                                                     GimpStroke       **ret_stroke);
-static void       gimp_vectors_real_anchor_delete   (GimpVectors       *vectors,
-                                                     GimpAnchor        *anchor);
-static gdouble    gimp_vectors_real_get_length      (GimpVectors       *vectors,
-                                                     const GimpAnchor  *start);
-static gdouble    gimp_vectors_real_get_distance    (GimpVectors       *vectors,
-                                                     const GimpCoords  *coord);
-static gint       gimp_vectors_real_interpolate     (GimpVectors       *vectors,
-                                                     GimpStroke        *stroke,
+static void       ligma_vectors_real_freeze          (LigmaVectors       *vectors);
+static void       ligma_vectors_real_thaw            (LigmaVectors       *vectors);
+static void       ligma_vectors_real_stroke_add      (LigmaVectors       *vectors,
+                                                     LigmaStroke        *stroke);
+static void       ligma_vectors_real_stroke_remove   (LigmaVectors       *vectors,
+                                                     LigmaStroke        *stroke);
+static LigmaStroke * ligma_vectors_real_stroke_get    (LigmaVectors       *vectors,
+                                                     const LigmaCoords  *coord);
+static LigmaStroke *ligma_vectors_real_stroke_get_next(LigmaVectors       *vectors,
+                                                     LigmaStroke        *prev);
+static gdouble ligma_vectors_real_stroke_get_length  (LigmaVectors       *vectors,
+                                                     LigmaStroke        *prev);
+static LigmaAnchor * ligma_vectors_real_anchor_get    (LigmaVectors       *vectors,
+                                                     const LigmaCoords  *coord,
+                                                     LigmaStroke       **ret_stroke);
+static void       ligma_vectors_real_anchor_delete   (LigmaVectors       *vectors,
+                                                     LigmaAnchor        *anchor);
+static gdouble    ligma_vectors_real_get_length      (LigmaVectors       *vectors,
+                                                     const LigmaAnchor  *start);
+static gdouble    ligma_vectors_real_get_distance    (LigmaVectors       *vectors,
+                                                     const LigmaCoords  *coord);
+static gint       ligma_vectors_real_interpolate     (LigmaVectors       *vectors,
+                                                     LigmaStroke        *stroke,
                                                      gdouble            precision,
                                                      gint               max_points,
-                                                     GimpCoords        *ret_coords);
+                                                     LigmaCoords        *ret_coords);
 
-static GimpBezierDesc * gimp_vectors_make_bezier      (GimpVectors     *vectors);
-static GimpBezierDesc * gimp_vectors_real_make_bezier (GimpVectors     *vectors);
+static LigmaBezierDesc * ligma_vectors_make_bezier      (LigmaVectors     *vectors);
+static LigmaBezierDesc * ligma_vectors_real_make_bezier (LigmaVectors     *vectors);
 
 
-G_DEFINE_TYPE (GimpVectors, gimp_vectors, GIMP_TYPE_ITEM)
+G_DEFINE_TYPE (LigmaVectors, ligma_vectors, LIGMA_TYPE_ITEM)
 
-#define parent_class gimp_vectors_parent_class
+#define parent_class ligma_vectors_parent_class
 
-static guint gimp_vectors_signals[LAST_SIGNAL] = { 0 };
+static guint ligma_vectors_signals[LAST_SIGNAL] = { 0 };
 
 
 static void
-gimp_vectors_class_init (GimpVectorsClass *klass)
+ligma_vectors_class_init (LigmaVectorsClass *klass)
 {
   GObjectClass      *object_class      = G_OBJECT_CLASS (klass);
-  GimpObjectClass   *gimp_object_class = GIMP_OBJECT_CLASS (klass);
-  GimpViewableClass *viewable_class    = GIMP_VIEWABLE_CLASS (klass);
-  GimpItemClass     *item_class        = GIMP_ITEM_CLASS (klass);
+  LigmaObjectClass   *ligma_object_class = LIGMA_OBJECT_CLASS (klass);
+  LigmaViewableClass *viewable_class    = LIGMA_VIEWABLE_CLASS (klass);
+  LigmaItemClass     *item_class        = LIGMA_ITEM_CLASS (klass);
 
-  gimp_vectors_signals[FREEZE] =
+  ligma_vectors_signals[FREEZE] =
     g_signal_new ("freeze",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (GimpVectorsClass, freeze),
+                  G_STRUCT_OFFSET (LigmaVectorsClass, freeze),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
-  gimp_vectors_signals[THAW] =
+  ligma_vectors_signals[THAW] =
     g_signal_new ("thaw",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpVectorsClass, thaw),
+                  G_STRUCT_OFFSET (LigmaVectorsClass, thaw),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
-  object_class->finalize            = gimp_vectors_finalize;
+  object_class->finalize            = ligma_vectors_finalize;
 
-  gimp_object_class->get_memsize    = gimp_vectors_get_memsize;
+  ligma_object_class->get_memsize    = ligma_vectors_get_memsize;
 
-  viewable_class->get_new_preview   = gimp_vectors_get_new_preview;
-  viewable_class->default_icon_name = "gimp-path";
+  viewable_class->get_new_preview   = ligma_vectors_get_new_preview;
+  viewable_class->default_icon_name = "ligma-path";
 
-  item_class->is_attached           = gimp_vectors_is_attached;
-  item_class->get_tree              = gimp_vectors_get_tree;
-  item_class->bounds                = gimp_vectors_bounds;
-  item_class->duplicate             = gimp_vectors_duplicate;
-  item_class->convert               = gimp_vectors_convert;
-  item_class->translate             = gimp_vectors_translate;
-  item_class->scale                 = gimp_vectors_scale;
-  item_class->resize                = gimp_vectors_resize;
-  item_class->flip                  = gimp_vectors_flip;
-  item_class->rotate                = gimp_vectors_rotate;
-  item_class->transform             = gimp_vectors_transform;
-  item_class->get_clip              = gimp_vectors_get_clip;
-  item_class->fill                  = gimp_vectors_fill;
-  item_class->stroke                = gimp_vectors_stroke;
-  item_class->to_selection          = gimp_vectors_to_selection;
+  item_class->is_attached           = ligma_vectors_is_attached;
+  item_class->get_tree              = ligma_vectors_get_tree;
+  item_class->bounds                = ligma_vectors_bounds;
+  item_class->duplicate             = ligma_vectors_duplicate;
+  item_class->convert               = ligma_vectors_convert;
+  item_class->translate             = ligma_vectors_translate;
+  item_class->scale                 = ligma_vectors_scale;
+  item_class->resize                = ligma_vectors_resize;
+  item_class->flip                  = ligma_vectors_flip;
+  item_class->rotate                = ligma_vectors_rotate;
+  item_class->transform             = ligma_vectors_transform;
+  item_class->get_clip              = ligma_vectors_get_clip;
+  item_class->fill                  = ligma_vectors_fill;
+  item_class->stroke                = ligma_vectors_stroke;
+  item_class->to_selection          = ligma_vectors_to_selection;
   item_class->default_name          = _("Path");
   item_class->rename_desc           = C_("undo-type", "Rename Path");
   item_class->translate_desc        = C_("undo-type", "Move Path");
@@ -240,29 +240,29 @@ gimp_vectors_class_init (GimpVectorsClass *klass)
   item_class->raise_failed          = _("Path cannot be raised higher.");
   item_class->lower_failed          = _("Path cannot be lowered more.");
 
-  klass->freeze                     = gimp_vectors_real_freeze;
-  klass->thaw                       = gimp_vectors_real_thaw;
+  klass->freeze                     = ligma_vectors_real_freeze;
+  klass->thaw                       = ligma_vectors_real_thaw;
 
-  klass->stroke_add                 = gimp_vectors_real_stroke_add;
-  klass->stroke_remove              = gimp_vectors_real_stroke_remove;
-  klass->stroke_get                 = gimp_vectors_real_stroke_get;
-  klass->stroke_get_next            = gimp_vectors_real_stroke_get_next;
-  klass->stroke_get_length          = gimp_vectors_real_stroke_get_length;
+  klass->stroke_add                 = ligma_vectors_real_stroke_add;
+  klass->stroke_remove              = ligma_vectors_real_stroke_remove;
+  klass->stroke_get                 = ligma_vectors_real_stroke_get;
+  klass->stroke_get_next            = ligma_vectors_real_stroke_get_next;
+  klass->stroke_get_length          = ligma_vectors_real_stroke_get_length;
 
-  klass->anchor_get                 = gimp_vectors_real_anchor_get;
-  klass->anchor_delete              = gimp_vectors_real_anchor_delete;
+  klass->anchor_get                 = ligma_vectors_real_anchor_get;
+  klass->anchor_delete              = ligma_vectors_real_anchor_delete;
 
-  klass->get_length                 = gimp_vectors_real_get_length;
-  klass->get_distance               = gimp_vectors_real_get_distance;
-  klass->interpolate                = gimp_vectors_real_interpolate;
+  klass->get_length                 = ligma_vectors_real_get_length;
+  klass->get_distance               = ligma_vectors_real_get_distance;
+  klass->interpolate                = ligma_vectors_real_interpolate;
 
-  klass->make_bezier                = gimp_vectors_real_make_bezier;
+  klass->make_bezier                = ligma_vectors_real_make_bezier;
 }
 
 static void
-gimp_vectors_init (GimpVectors *vectors)
+ligma_vectors_init (LigmaVectors *vectors)
 {
-  gimp_item_set_visible (GIMP_ITEM (vectors), FALSE, FALSE);
+  ligma_item_set_visible (LIGMA_ITEM (vectors), FALSE, FALSE);
 
   vectors->strokes        = g_queue_new ();
   vectors->stroke_to_list = g_hash_table_new (g_direct_hash, g_direct_equal);
@@ -275,13 +275,13 @@ gimp_vectors_init (GimpVectors *vectors)
 }
 
 static void
-gimp_vectors_finalize (GObject *object)
+ligma_vectors_finalize (GObject *object)
 {
-  GimpVectors *vectors = GIMP_VECTORS (object);
+  LigmaVectors *vectors = LIGMA_VECTORS (object);
 
   if (vectors->bezier_desc)
     {
-      gimp_bezier_desc_free (vectors->bezier_desc);
+      ligma_bezier_desc_free (vectors->bezier_desc);
       vectors->bezier_desc = NULL;
     }
 
@@ -301,80 +301,80 @@ gimp_vectors_finalize (GObject *object)
 }
 
 static gint64
-gimp_vectors_get_memsize (GimpObject *object,
+ligma_vectors_get_memsize (LigmaObject *object,
                           gint64     *gui_size)
 {
-  GimpVectors *vectors;
+  LigmaVectors *vectors;
   GList       *list;
   gint64       memsize = 0;
 
-  vectors = GIMP_VECTORS (object);
+  vectors = LIGMA_VECTORS (object);
 
   for (list = vectors->strokes->head; list; list = g_list_next (list))
-    memsize += (gimp_object_get_memsize (GIMP_OBJECT (list->data), gui_size) +
+    memsize += (ligma_object_get_memsize (LIGMA_OBJECT (list->data), gui_size) +
                 sizeof (GList));
 
-  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
+  return memsize + LIGMA_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
 }
 
 static gboolean
-gimp_vectors_is_attached (GimpItem *item)
+ligma_vectors_is_attached (LigmaItem *item)
 {
-  GimpImage *image = gimp_item_get_image (item);
+  LigmaImage *image = ligma_item_get_image (item);
 
-  return (GIMP_IS_IMAGE (image) &&
-          gimp_container_have (gimp_image_get_vectors (image),
-                               GIMP_OBJECT (item)));
+  return (LIGMA_IS_IMAGE (image) &&
+          ligma_container_have (ligma_image_get_vectors (image),
+                               LIGMA_OBJECT (item)));
 }
 
-static GimpItemTree *
-gimp_vectors_get_tree (GimpItem *item)
+static LigmaItemTree *
+ligma_vectors_get_tree (LigmaItem *item)
 {
-  if (gimp_item_is_attached (item))
+  if (ligma_item_is_attached (item))
     {
-      GimpImage *image = gimp_item_get_image (item);
+      LigmaImage *image = ligma_item_get_image (item);
 
-      return gimp_image_get_vectors_tree (image);
+      return ligma_image_get_vectors_tree (image);
     }
 
   return NULL;
 }
 
 static gboolean
-gimp_vectors_bounds (GimpItem *item,
+ligma_vectors_bounds (LigmaItem *item,
                      gdouble  *x,
                      gdouble  *y,
                      gdouble  *width,
                      gdouble  *height)
 {
-  GimpVectors *vectors = GIMP_VECTORS (item);
+  LigmaVectors *vectors = LIGMA_VECTORS (item);
 
   if (! vectors->bounds_valid)
     {
-      GimpStroke *stroke;
+      LigmaStroke *stroke;
 
       vectors->bounds_empty = TRUE;
       vectors->bounds_x1 = vectors->bounds_x2 = 0.0;
       vectors->bounds_y1 = vectors->bounds_y2 = 0.0;
 
-      for (stroke = gimp_vectors_stroke_get_next (vectors, NULL);
+      for (stroke = ligma_vectors_stroke_get_next (vectors, NULL);
            stroke;
-           stroke = gimp_vectors_stroke_get_next (vectors, stroke))
+           stroke = ligma_vectors_stroke_get_next (vectors, stroke))
         {
           GArray   *stroke_coords;
           gboolean  closed;
 
-          stroke_coords = gimp_stroke_interpolate (stroke, 1.0, &closed);
+          stroke_coords = ligma_stroke_interpolate (stroke, 1.0, &closed);
 
           if (stroke_coords)
             {
-              GimpCoords point;
+              LigmaCoords point;
               gint       i;
 
               if (vectors->bounds_empty && stroke_coords->len > 0)
                 {
-                  point = g_array_index (stroke_coords, GimpCoords, 0);
+                  point = g_array_index (stroke_coords, LigmaCoords, 0);
 
                   vectors->bounds_x1 = vectors->bounds_x2 = point.x;
                   vectors->bounds_y1 = vectors->bounds_y2 = point.y;
@@ -384,7 +384,7 @@ gimp_vectors_bounds (GimpItem *item,
 
               for (i = 0; i < stroke_coords->len; i++)
                 {
-                  point = g_array_index (stroke_coords, GimpCoords, i);
+                  point = g_array_index (stroke_coords, LigmaCoords, i);
 
                   vectors->bounds_x1 = MIN (vectors->bounds_x1, point.x);
                   vectors->bounds_y1 = MIN (vectors->bounds_y1, point.y);
@@ -407,232 +407,232 @@ gimp_vectors_bounds (GimpItem *item,
   return ! vectors->bounds_empty;
 }
 
-static GimpItem *
-gimp_vectors_duplicate (GimpItem *item,
+static LigmaItem *
+ligma_vectors_duplicate (LigmaItem *item,
                         GType     new_type)
 {
-  GimpItem *new_item;
+  LigmaItem *new_item;
 
-  g_return_val_if_fail (g_type_is_a (new_type, GIMP_TYPE_VECTORS), NULL);
+  g_return_val_if_fail (g_type_is_a (new_type, LIGMA_TYPE_VECTORS), NULL);
 
-  new_item = GIMP_ITEM_CLASS (parent_class)->duplicate (item, new_type);
+  new_item = LIGMA_ITEM_CLASS (parent_class)->duplicate (item, new_type);
 
-  if (GIMP_IS_VECTORS (new_item))
+  if (LIGMA_IS_VECTORS (new_item))
     {
-      GimpVectors *vectors     = GIMP_VECTORS (item);
-      GimpVectors *new_vectors = GIMP_VECTORS (new_item);
+      LigmaVectors *vectors     = LIGMA_VECTORS (item);
+      LigmaVectors *new_vectors = LIGMA_VECTORS (new_item);
 
-      gimp_vectors_copy_strokes (vectors, new_vectors);
+      ligma_vectors_copy_strokes (vectors, new_vectors);
     }
 
   return new_item;
 }
 
 static void
-gimp_vectors_convert (GimpItem  *item,
-                      GimpImage *dest_image,
+ligma_vectors_convert (LigmaItem  *item,
+                      LigmaImage *dest_image,
                       GType      old_type)
 {
-  gimp_item_set_size (item,
-                      gimp_image_get_width  (dest_image),
-                      gimp_image_get_height (dest_image));
+  ligma_item_set_size (item,
+                      ligma_image_get_width  (dest_image),
+                      ligma_image_get_height (dest_image));
 
-  GIMP_ITEM_CLASS (parent_class)->convert (item, dest_image, old_type);
+  LIGMA_ITEM_CLASS (parent_class)->convert (item, dest_image, old_type);
 }
 
 static void
-gimp_vectors_translate (GimpItem *item,
+ligma_vectors_translate (LigmaItem *item,
                         gdouble   offset_x,
                         gdouble   offset_y,
                         gboolean  push_undo)
 {
-  GimpVectors *vectors = GIMP_VECTORS (item);
+  LigmaVectors *vectors = LIGMA_VECTORS (item);
   GList       *list;
 
-  gimp_vectors_freeze (vectors);
+  ligma_vectors_freeze (vectors);
 
   if (push_undo)
-    gimp_image_undo_push_vectors_mod (gimp_item_get_image (item),
+    ligma_image_undo_push_vectors_mod (ligma_item_get_image (item),
                                       _("Move Path"),
                                       vectors);
 
   for (list = vectors->strokes->head; list; list = g_list_next (list))
     {
-      GimpStroke *stroke = list->data;
+      LigmaStroke *stroke = list->data;
 
-      gimp_stroke_translate (stroke, offset_x, offset_y);
+      ligma_stroke_translate (stroke, offset_x, offset_y);
     }
 
-  gimp_vectors_thaw (vectors);
+  ligma_vectors_thaw (vectors);
 }
 
 static void
-gimp_vectors_scale (GimpItem              *item,
+ligma_vectors_scale (LigmaItem              *item,
                     gint                   new_width,
                     gint                   new_height,
                     gint                   new_offset_x,
                     gint                   new_offset_y,
-                    GimpInterpolationType  interpolation_type,
-                    GimpProgress          *progress)
+                    LigmaInterpolationType  interpolation_type,
+                    LigmaProgress          *progress)
 {
-  GimpVectors *vectors = GIMP_VECTORS (item);
-  GimpImage   *image   = gimp_item_get_image (item);
+  LigmaVectors *vectors = LIGMA_VECTORS (item);
+  LigmaImage   *image   = ligma_item_get_image (item);
   GList       *list;
 
-  gimp_vectors_freeze (vectors);
+  ligma_vectors_freeze (vectors);
 
-  if (gimp_item_is_attached (item))
-    gimp_image_undo_push_vectors_mod (image, NULL, vectors);
+  if (ligma_item_is_attached (item))
+    ligma_image_undo_push_vectors_mod (image, NULL, vectors);
 
   for (list = vectors->strokes->head; list; list = g_list_next (list))
     {
-      GimpStroke *stroke = list->data;
+      LigmaStroke *stroke = list->data;
 
-      gimp_stroke_scale (stroke,
-                         (gdouble) new_width  / (gdouble) gimp_item_get_width  (item),
-                         (gdouble) new_height / (gdouble) gimp_item_get_height (item));
-      gimp_stroke_translate (stroke, new_offset_x, new_offset_y);
+      ligma_stroke_scale (stroke,
+                         (gdouble) new_width  / (gdouble) ligma_item_get_width  (item),
+                         (gdouble) new_height / (gdouble) ligma_item_get_height (item));
+      ligma_stroke_translate (stroke, new_offset_x, new_offset_y);
     }
 
-  GIMP_ITEM_CLASS (parent_class)->scale (item,
-                                         gimp_image_get_width  (image),
-                                         gimp_image_get_height (image),
+  LIGMA_ITEM_CLASS (parent_class)->scale (item,
+                                         ligma_image_get_width  (image),
+                                         ligma_image_get_height (image),
                                          0, 0,
                                          interpolation_type, progress);
 
-  gimp_vectors_thaw (vectors);
+  ligma_vectors_thaw (vectors);
 }
 
 static void
-gimp_vectors_resize (GimpItem     *item,
-                     GimpContext  *context,
-                     GimpFillType  fill_type,
+ligma_vectors_resize (LigmaItem     *item,
+                     LigmaContext  *context,
+                     LigmaFillType  fill_type,
                      gint          new_width,
                      gint          new_height,
                      gint          offset_x,
                      gint          offset_y)
 {
-  GimpVectors *vectors = GIMP_VECTORS (item);
-  GimpImage   *image   = gimp_item_get_image (item);
+  LigmaVectors *vectors = LIGMA_VECTORS (item);
+  LigmaImage   *image   = ligma_item_get_image (item);
   GList       *list;
 
-  gimp_vectors_freeze (vectors);
+  ligma_vectors_freeze (vectors);
 
-  if (gimp_item_is_attached (item))
-    gimp_image_undo_push_vectors_mod (image, NULL, vectors);
+  if (ligma_item_is_attached (item))
+    ligma_image_undo_push_vectors_mod (image, NULL, vectors);
 
   for (list = vectors->strokes->head; list; list = g_list_next (list))
     {
-      GimpStroke *stroke = list->data;
+      LigmaStroke *stroke = list->data;
 
-      gimp_stroke_translate (stroke, offset_x, offset_y);
+      ligma_stroke_translate (stroke, offset_x, offset_y);
     }
 
-  GIMP_ITEM_CLASS (parent_class)->resize (item, context, fill_type,
-                                          gimp_image_get_width  (image),
-                                          gimp_image_get_height (image),
+  LIGMA_ITEM_CLASS (parent_class)->resize (item, context, fill_type,
+                                          ligma_image_get_width  (image),
+                                          ligma_image_get_height (image),
                                           0, 0);
 
-  gimp_vectors_thaw (vectors);
+  ligma_vectors_thaw (vectors);
 }
 
 static void
-gimp_vectors_flip (GimpItem            *item,
-                   GimpContext         *context,
-                   GimpOrientationType  flip_type,
+ligma_vectors_flip (LigmaItem            *item,
+                   LigmaContext         *context,
+                   LigmaOrientationType  flip_type,
                    gdouble              axis,
                    gboolean             clip_result)
 {
-  GimpVectors *vectors = GIMP_VECTORS (item);
+  LigmaVectors *vectors = LIGMA_VECTORS (item);
   GList       *list;
-  GimpMatrix3  matrix;
+  LigmaMatrix3  matrix;
 
-  gimp_matrix3_identity (&matrix);
-  gimp_transform_matrix_flip (&matrix, flip_type, axis);
+  ligma_matrix3_identity (&matrix);
+  ligma_transform_matrix_flip (&matrix, flip_type, axis);
 
-  gimp_vectors_freeze (vectors);
+  ligma_vectors_freeze (vectors);
 
-  gimp_image_undo_push_vectors_mod (gimp_item_get_image (item),
+  ligma_image_undo_push_vectors_mod (ligma_item_get_image (item),
                                     _("Flip Path"),
                                     vectors);
 
   for (list = vectors->strokes->head; list; list = g_list_next (list))
     {
-      GimpStroke *stroke = list->data;
+      LigmaStroke *stroke = list->data;
 
-      gimp_stroke_transform (stroke, &matrix, NULL);
+      ligma_stroke_transform (stroke, &matrix, NULL);
     }
 
-  gimp_vectors_thaw (vectors);
+  ligma_vectors_thaw (vectors);
 }
 
 static void
-gimp_vectors_rotate (GimpItem         *item,
-                     GimpContext      *context,
-                     GimpRotationType  rotate_type,
+ligma_vectors_rotate (LigmaItem         *item,
+                     LigmaContext      *context,
+                     LigmaRotationType  rotate_type,
                      gdouble           center_x,
                      gdouble           center_y,
                      gboolean          clip_result)
 {
-  GimpVectors *vectors = GIMP_VECTORS (item);
+  LigmaVectors *vectors = LIGMA_VECTORS (item);
   GList       *list;
-  GimpMatrix3  matrix;
+  LigmaMatrix3  matrix;
 
-  gimp_matrix3_identity (&matrix);
-  gimp_transform_matrix_rotate (&matrix, rotate_type, center_x, center_y);
+  ligma_matrix3_identity (&matrix);
+  ligma_transform_matrix_rotate (&matrix, rotate_type, center_x, center_y);
 
-  gimp_vectors_freeze (vectors);
+  ligma_vectors_freeze (vectors);
 
-  gimp_image_undo_push_vectors_mod (gimp_item_get_image (item),
+  ligma_image_undo_push_vectors_mod (ligma_item_get_image (item),
                                     _("Rotate Path"),
                                     vectors);
 
   for (list = vectors->strokes->head; list; list = g_list_next (list))
     {
-      GimpStroke *stroke = list->data;
+      LigmaStroke *stroke = list->data;
 
-      gimp_stroke_transform (stroke, &matrix, NULL);
+      ligma_stroke_transform (stroke, &matrix, NULL);
     }
 
-  gimp_vectors_thaw (vectors);
+  ligma_vectors_thaw (vectors);
 }
 
 static void
-gimp_vectors_transform (GimpItem               *item,
-                        GimpContext            *context,
-                        const GimpMatrix3      *matrix,
-                        GimpTransformDirection  direction,
-                        GimpInterpolationType   interpolation_type,
-                        GimpTransformResize     clip_result,
-                        GimpProgress           *progress)
+ligma_vectors_transform (LigmaItem               *item,
+                        LigmaContext            *context,
+                        const LigmaMatrix3      *matrix,
+                        LigmaTransformDirection  direction,
+                        LigmaInterpolationType   interpolation_type,
+                        LigmaTransformResize     clip_result,
+                        LigmaProgress           *progress)
 {
-  GimpVectors *vectors = GIMP_VECTORS (item);
-  GimpMatrix3  local_matrix;
+  LigmaVectors *vectors = LIGMA_VECTORS (item);
+  LigmaMatrix3  local_matrix;
   GQueue       strokes;
   GList       *list;
 
-  gimp_vectors_freeze (vectors);
+  ligma_vectors_freeze (vectors);
 
-  gimp_image_undo_push_vectors_mod (gimp_item_get_image (item),
+  ligma_image_undo_push_vectors_mod (ligma_item_get_image (item),
                                     _("Transform Path"),
                                     vectors);
 
   local_matrix = *matrix;
 
-  if (direction == GIMP_TRANSFORM_BACKWARD)
-    gimp_matrix3_invert (&local_matrix);
+  if (direction == LIGMA_TRANSFORM_BACKWARD)
+    ligma_matrix3_invert (&local_matrix);
 
   g_queue_init (&strokes);
 
   while (! g_queue_is_empty (vectors->strokes))
     {
-      GimpStroke *stroke = g_queue_peek_head (vectors->strokes);
+      LigmaStroke *stroke = g_queue_peek_head (vectors->strokes);
 
       g_object_ref (stroke);
 
-      gimp_vectors_stroke_remove (vectors, stroke);
+      ligma_vectors_stroke_remove (vectors, stroke);
 
-      gimp_stroke_transform (stroke, &local_matrix, &strokes);
+      ligma_stroke_transform (stroke, &local_matrix, &strokes);
 
       g_object_unref (stroke);
     }
@@ -641,86 +641,86 @@ gimp_vectors_transform (GimpItem               *item,
 
   for (list = strokes.head; list; list = g_list_next (list))
     {
-      GimpStroke *stroke = list->data;
+      LigmaStroke *stroke = list->data;
 
-      gimp_vectors_stroke_add (vectors, stroke);
+      ligma_vectors_stroke_add (vectors, stroke);
 
       g_object_unref (stroke);
     }
 
   g_queue_clear (&strokes);
 
-  gimp_vectors_thaw (vectors);
+  ligma_vectors_thaw (vectors);
 }
 
-static GimpTransformResize
-gimp_vectors_get_clip (GimpItem            *item,
-                       GimpTransformResize  clip_result)
+static LigmaTransformResize
+ligma_vectors_get_clip (LigmaItem            *item,
+                       LigmaTransformResize  clip_result)
 {
-  return GIMP_TRANSFORM_RESIZE_ADJUST;
+  return LIGMA_TRANSFORM_RESIZE_ADJUST;
 }
 
 static gboolean
-gimp_vectors_fill (GimpItem         *item,
-                   GimpDrawable     *drawable,
-                   GimpFillOptions  *fill_options,
+ligma_vectors_fill (LigmaItem         *item,
+                   LigmaDrawable     *drawable,
+                   LigmaFillOptions  *fill_options,
                    gboolean          push_undo,
-                   GimpProgress     *progress,
+                   LigmaProgress     *progress,
                    GError          **error)
 {
-  GimpVectors *vectors = GIMP_VECTORS (item);
+  LigmaVectors *vectors = LIGMA_VECTORS (item);
 
   if (g_queue_is_empty (vectors->strokes))
     {
-      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+      g_set_error_literal (error, LIGMA_ERROR, LIGMA_FAILED,
                            _("Not enough points to fill"));
       return FALSE;
     }
 
-  return gimp_drawable_fill_vectors (drawable, fill_options,
+  return ligma_drawable_fill_vectors (drawable, fill_options,
                                      vectors, push_undo, error);
 }
 
 static gboolean
-gimp_vectors_stroke (GimpItem           *item,
-                     GimpDrawable       *drawable,
-                     GimpStrokeOptions  *stroke_options,
+ligma_vectors_stroke (LigmaItem           *item,
+                     LigmaDrawable       *drawable,
+                     LigmaStrokeOptions  *stroke_options,
                      gboolean            push_undo,
-                     GimpProgress       *progress,
+                     LigmaProgress       *progress,
                      GError            **error)
 {
-  GimpVectors *vectors = GIMP_VECTORS (item);
+  LigmaVectors *vectors = LIGMA_VECTORS (item);
   gboolean     retval  = FALSE;
 
   if (g_queue_is_empty (vectors->strokes))
     {
-      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+      g_set_error_literal (error, LIGMA_ERROR, LIGMA_FAILED,
                            _("Not enough points to stroke"));
       return FALSE;
     }
 
-  switch (gimp_stroke_options_get_method (stroke_options))
+  switch (ligma_stroke_options_get_method (stroke_options))
     {
-    case GIMP_STROKE_LINE:
-      retval = gimp_drawable_stroke_vectors (drawable, stroke_options,
+    case LIGMA_STROKE_LINE:
+      retval = ligma_drawable_stroke_vectors (drawable, stroke_options,
                                              vectors, push_undo, error);
       break;
 
-    case GIMP_STROKE_PAINT_METHOD:
+    case LIGMA_STROKE_PAINT_METHOD:
       {
-        GimpPaintInfo    *paint_info;
-        GimpPaintCore    *core;
-        GimpPaintOptions *paint_options;
+        LigmaPaintInfo    *paint_info;
+        LigmaPaintCore    *core;
+        LigmaPaintOptions *paint_options;
         gboolean          emulate_dynamics;
 
-        paint_info = gimp_context_get_paint_info (GIMP_CONTEXT (stroke_options));
+        paint_info = ligma_context_get_paint_info (LIGMA_CONTEXT (stroke_options));
 
         core = g_object_new (paint_info->paint_type, NULL);
 
-        paint_options = gimp_stroke_options_get_paint_options (stroke_options);
-        emulate_dynamics = gimp_stroke_options_get_emulate_dynamics (stroke_options);
+        paint_options = ligma_stroke_options_get_paint_options (stroke_options);
+        emulate_dynamics = ligma_stroke_options_get_emulate_dynamics (stroke_options);
 
-        retval = gimp_paint_core_stroke_vectors (core, drawable,
+        retval = ligma_paint_core_stroke_vectors (core, drawable,
                                                  paint_options,
                                                  emulate_dynamics,
                                                  vectors, push_undo, error);
@@ -737,18 +737,18 @@ gimp_vectors_stroke (GimpItem           *item,
 }
 
 static void
-gimp_vectors_to_selection (GimpItem       *item,
-                           GimpChannelOps  op,
+ligma_vectors_to_selection (LigmaItem       *item,
+                           LigmaChannelOps  op,
                            gboolean        antialias,
                            gboolean        feather,
                            gdouble         feather_radius_x,
                            gdouble         feather_radius_y)
 {
-  GimpVectors *vectors = GIMP_VECTORS (item);
-  GimpImage   *image   = gimp_item_get_image (item);
+  LigmaVectors *vectors = LIGMA_VECTORS (item);
+  LigmaImage   *image   = ligma_item_get_image (item);
 
-  gimp_channel_select_vectors (gimp_image_get_mask (image),
-                               GIMP_ITEM_GET_CLASS (item)->to_selection_desc,
+  ligma_channel_select_vectors (ligma_image_get_mask (image),
+                               LIGMA_ITEM_GET_CLASS (item)->to_selection_desc,
                                vectors,
                                op, antialias,
                                feather, feather_radius_x, feather_radius_x,
@@ -756,12 +756,12 @@ gimp_vectors_to_selection (GimpItem       *item,
 }
 
 static void
-gimp_vectors_real_freeze (GimpVectors *vectors)
+ligma_vectors_real_freeze (LigmaVectors *vectors)
 {
   /*  release cached bezier representation  */
   if (vectors->bezier_desc)
     {
-      gimp_bezier_desc_free (vectors->bezier_desc);
+      ligma_bezier_desc_free (vectors->bezier_desc);
       vectors->bezier_desc = NULL;
     }
 
@@ -770,70 +770,70 @@ gimp_vectors_real_freeze (GimpVectors *vectors)
 }
 
 static void
-gimp_vectors_real_thaw (GimpVectors *vectors)
+ligma_vectors_real_thaw (LigmaVectors *vectors)
 {
-  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (vectors));
+  ligma_viewable_invalidate_preview (LIGMA_VIEWABLE (vectors));
 }
 
 
 /*  public functions  */
 
-GimpVectors *
-gimp_vectors_new (GimpImage   *image,
+LigmaVectors *
+ligma_vectors_new (LigmaImage   *image,
                   const gchar *name)
 {
-  GimpVectors *vectors;
+  LigmaVectors *vectors;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
 
-  vectors = GIMP_VECTORS (gimp_item_new (GIMP_TYPE_VECTORS,
+  vectors = LIGMA_VECTORS (ligma_item_new (LIGMA_TYPE_VECTORS,
                                          image, name,
                                          0, 0,
-                                         gimp_image_get_width  (image),
-                                         gimp_image_get_height (image)));
+                                         ligma_image_get_width  (image),
+                                         ligma_image_get_height (image)));
 
   return vectors;
 }
 
-GimpVectors *
-gimp_vectors_get_parent (GimpVectors *vectors)
+LigmaVectors *
+ligma_vectors_get_parent (LigmaVectors *vectors)
 {
-  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), NULL);
+  g_return_val_if_fail (LIGMA_IS_VECTORS (vectors), NULL);
 
-  return GIMP_VECTORS (gimp_viewable_get_parent (GIMP_VIEWABLE (vectors)));
+  return LIGMA_VECTORS (ligma_viewable_get_parent (LIGMA_VIEWABLE (vectors)));
 }
 
 void
-gimp_vectors_freeze (GimpVectors *vectors)
+ligma_vectors_freeze (LigmaVectors *vectors)
 {
-  g_return_if_fail (GIMP_IS_VECTORS (vectors));
+  g_return_if_fail (LIGMA_IS_VECTORS (vectors));
 
   vectors->freeze_count++;
 
   if (vectors->freeze_count == 1)
-    g_signal_emit (vectors, gimp_vectors_signals[FREEZE], 0);
+    g_signal_emit (vectors, ligma_vectors_signals[FREEZE], 0);
 }
 
 void
-gimp_vectors_thaw (GimpVectors *vectors)
+ligma_vectors_thaw (LigmaVectors *vectors)
 {
-  g_return_if_fail (GIMP_IS_VECTORS (vectors));
+  g_return_if_fail (LIGMA_IS_VECTORS (vectors));
   g_return_if_fail (vectors->freeze_count > 0);
 
   vectors->freeze_count--;
 
   if (vectors->freeze_count == 0)
-    g_signal_emit (vectors, gimp_vectors_signals[THAW], 0);
+    g_signal_emit (vectors, ligma_vectors_signals[THAW], 0);
 }
 
 void
-gimp_vectors_copy_strokes (GimpVectors *src_vectors,
-                           GimpVectors *dest_vectors)
+ligma_vectors_copy_strokes (LigmaVectors *src_vectors,
+                           LigmaVectors *dest_vectors)
 {
-  g_return_if_fail (GIMP_IS_VECTORS (src_vectors));
-  g_return_if_fail (GIMP_IS_VECTORS (dest_vectors));
+  g_return_if_fail (LIGMA_IS_VECTORS (src_vectors));
+  g_return_if_fail (LIGMA_IS_VECTORS (dest_vectors));
 
-  gimp_vectors_freeze (dest_vectors);
+  ligma_vectors_freeze (dest_vectors);
 
   g_queue_free_full (dest_vectors->strokes, (GDestroyNotify) g_object_unref);
   dest_vectors->strokes = g_queue_new ();
@@ -841,28 +841,28 @@ gimp_vectors_copy_strokes (GimpVectors *src_vectors,
 
   dest_vectors->last_stroke_id = 0;
 
-  gimp_vectors_add_strokes (src_vectors, dest_vectors);
+  ligma_vectors_add_strokes (src_vectors, dest_vectors);
 
-  gimp_vectors_thaw (dest_vectors);
+  ligma_vectors_thaw (dest_vectors);
 }
 
 
 void
-gimp_vectors_add_strokes (GimpVectors *src_vectors,
-                          GimpVectors *dest_vectors)
+ligma_vectors_add_strokes (LigmaVectors *src_vectors,
+                          LigmaVectors *dest_vectors)
 {
   GList *stroke;
 
-  g_return_if_fail (GIMP_IS_VECTORS (src_vectors));
-  g_return_if_fail (GIMP_IS_VECTORS (dest_vectors));
+  g_return_if_fail (LIGMA_IS_VECTORS (src_vectors));
+  g_return_if_fail (LIGMA_IS_VECTORS (dest_vectors));
 
-  gimp_vectors_freeze (dest_vectors);
+  ligma_vectors_freeze (dest_vectors);
 
   for (stroke = src_vectors->strokes->head;
        stroke != NULL;
        stroke = g_list_next (stroke))
     {
-      GimpStroke *newstroke = gimp_stroke_duplicate (stroke->data);
+      LigmaStroke *newstroke = ligma_stroke_duplicate (stroke->data);
 
       g_queue_push_tail (dest_vectors->strokes, newstroke);
 
@@ -872,31 +872,31 @@ gimp_vectors_add_strokes (GimpVectors *src_vectors,
                            g_queue_peek_tail_link (dest_vectors->strokes));
 
       dest_vectors->last_stroke_id++;
-      gimp_stroke_set_id (newstroke,
+      ligma_stroke_set_id (newstroke,
                           dest_vectors->last_stroke_id);
     }
 
-  gimp_vectors_thaw (dest_vectors);
+  ligma_vectors_thaw (dest_vectors);
 }
 
 
 void
-gimp_vectors_stroke_add (GimpVectors *vectors,
-                         GimpStroke  *stroke)
+ligma_vectors_stroke_add (LigmaVectors *vectors,
+                         LigmaStroke  *stroke)
 {
-  g_return_if_fail (GIMP_IS_VECTORS (vectors));
-  g_return_if_fail (GIMP_IS_STROKE (stroke));
+  g_return_if_fail (LIGMA_IS_VECTORS (vectors));
+  g_return_if_fail (LIGMA_IS_STROKE (stroke));
 
-  gimp_vectors_freeze (vectors);
+  ligma_vectors_freeze (vectors);
 
-  GIMP_VECTORS_GET_CLASS (vectors)->stroke_add (vectors, stroke);
+  LIGMA_VECTORS_GET_CLASS (vectors)->stroke_add (vectors, stroke);
 
-  gimp_vectors_thaw (vectors);
+  ligma_vectors_thaw (vectors);
 }
 
 static void
-gimp_vectors_real_stroke_add (GimpVectors *vectors,
-                              GimpStroke  *stroke)
+ligma_vectors_real_stroke_add (LigmaVectors *vectors,
+                              LigmaStroke  *stroke)
 {
   /*
    * Don't prepend into vector->strokes.  See ChangeLog 2003-05-21
@@ -910,26 +910,26 @@ gimp_vectors_real_stroke_add (GimpVectors *vectors,
                        g_queue_peek_tail_link (vectors->strokes));
 
   vectors->last_stroke_id++;
-  gimp_stroke_set_id (stroke, vectors->last_stroke_id);
+  ligma_stroke_set_id (stroke, vectors->last_stroke_id);
 }
 
 void
-gimp_vectors_stroke_remove (GimpVectors *vectors,
-                            GimpStroke  *stroke)
+ligma_vectors_stroke_remove (LigmaVectors *vectors,
+                            LigmaStroke  *stroke)
 {
-  g_return_if_fail (GIMP_IS_VECTORS (vectors));
-  g_return_if_fail (GIMP_IS_STROKE (stroke));
+  g_return_if_fail (LIGMA_IS_VECTORS (vectors));
+  g_return_if_fail (LIGMA_IS_STROKE (stroke));
 
-  gimp_vectors_freeze (vectors);
+  ligma_vectors_freeze (vectors);
 
-  GIMP_VECTORS_GET_CLASS (vectors)->stroke_remove (vectors, stroke);
+  LIGMA_VECTORS_GET_CLASS (vectors)->stroke_remove (vectors, stroke);
 
-  gimp_vectors_thaw (vectors);
+  ligma_vectors_thaw (vectors);
 }
 
 static void
-gimp_vectors_real_stroke_remove (GimpVectors *vectors,
-                                 GimpStroke  *stroke)
+ligma_vectors_real_stroke_remove (LigmaVectors *vectors,
+                                 LigmaStroke  *stroke)
 {
   GList *list = g_hash_table_lookup (vectors->stroke_to_list, stroke);
 
@@ -942,35 +942,35 @@ gimp_vectors_real_stroke_remove (GimpVectors *vectors,
 }
 
 gint
-gimp_vectors_get_n_strokes (GimpVectors *vectors)
+ligma_vectors_get_n_strokes (LigmaVectors *vectors)
 {
-  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), 0);
+  g_return_val_if_fail (LIGMA_IS_VECTORS (vectors), 0);
 
   return g_queue_get_length (vectors->strokes);
 }
 
 
-GimpStroke *
-gimp_vectors_stroke_get (GimpVectors      *vectors,
-                         const GimpCoords *coord)
+LigmaStroke *
+ligma_vectors_stroke_get (LigmaVectors      *vectors,
+                         const LigmaCoords *coord)
 {
-  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), NULL);
+  g_return_val_if_fail (LIGMA_IS_VECTORS (vectors), NULL);
 
-  return GIMP_VECTORS_GET_CLASS (vectors)->stroke_get (vectors, coord);
+  return LIGMA_VECTORS_GET_CLASS (vectors)->stroke_get (vectors, coord);
 }
 
-static GimpStroke *
-gimp_vectors_real_stroke_get (GimpVectors      *vectors,
-                              const GimpCoords *coord)
+static LigmaStroke *
+ligma_vectors_real_stroke_get (LigmaVectors      *vectors,
+                              const LigmaCoords *coord)
 {
-  GimpStroke *minstroke = NULL;
+  LigmaStroke *minstroke = NULL;
   gdouble     mindist   = G_MAXDOUBLE;
   GList      *list;
 
   for (list = vectors->strokes->head; list; list = g_list_next (list))
     {
-      GimpStroke *stroke = list->data;
-      GimpAnchor *anchor = gimp_stroke_anchor_get (stroke, coord);
+      LigmaStroke *stroke = list->data;
+      LigmaAnchor *anchor = ligma_stroke_anchor_get (stroke, coord);
 
       if (anchor)
         {
@@ -988,17 +988,17 @@ gimp_vectors_real_stroke_get (GimpVectors      *vectors,
   return minstroke;
 }
 
-GimpStroke *
-gimp_vectors_stroke_get_by_id (GimpVectors *vectors,
+LigmaStroke *
+ligma_vectors_stroke_get_by_id (LigmaVectors *vectors,
                                gint         id)
 {
   GList *list;
 
-  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), NULL);
+  g_return_val_if_fail (LIGMA_IS_VECTORS (vectors), NULL);
 
   for (list = vectors->strokes->head; list; list = g_list_next (list))
     {
-      if (gimp_stroke_get_id (list->data) == id)
+      if (ligma_stroke_get_id (list->data) == id)
         return list->data;
     }
 
@@ -1006,18 +1006,18 @@ gimp_vectors_stroke_get_by_id (GimpVectors *vectors,
 }
 
 
-GimpStroke *
-gimp_vectors_stroke_get_next (GimpVectors *vectors,
-                              GimpStroke  *prev)
+LigmaStroke *
+ligma_vectors_stroke_get_next (LigmaVectors *vectors,
+                              LigmaStroke  *prev)
 {
-  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), NULL);
+  g_return_val_if_fail (LIGMA_IS_VECTORS (vectors), NULL);
 
-  return GIMP_VECTORS_GET_CLASS (vectors)->stroke_get_next (vectors, prev);
+  return LIGMA_VECTORS_GET_CLASS (vectors)->stroke_get_next (vectors, prev);
 }
 
-static GimpStroke *
-gimp_vectors_real_stroke_get_next (GimpVectors *vectors,
-                                   GimpStroke  *prev)
+static LigmaStroke *
+ligma_vectors_real_stroke_get_next (LigmaVectors *vectors,
+                                   LigmaStroke  *prev)
 {
   if (! prev)
     {
@@ -1035,50 +1035,50 @@ gimp_vectors_real_stroke_get_next (GimpVectors *vectors,
 
 
 gdouble
-gimp_vectors_stroke_get_length (GimpVectors *vectors,
-                                GimpStroke  *stroke)
+ligma_vectors_stroke_get_length (LigmaVectors *vectors,
+                                LigmaStroke  *stroke)
 {
-  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), 0.0);
-  g_return_val_if_fail (GIMP_IS_STROKE (stroke), 0.0);
+  g_return_val_if_fail (LIGMA_IS_VECTORS (vectors), 0.0);
+  g_return_val_if_fail (LIGMA_IS_STROKE (stroke), 0.0);
 
-  return GIMP_VECTORS_GET_CLASS (vectors)->stroke_get_length (vectors, stroke);
+  return LIGMA_VECTORS_GET_CLASS (vectors)->stroke_get_length (vectors, stroke);
 }
 
 static gdouble
-gimp_vectors_real_stroke_get_length (GimpVectors *vectors,
-                                     GimpStroke  *stroke)
+ligma_vectors_real_stroke_get_length (LigmaVectors *vectors,
+                                     LigmaStroke  *stroke)
 {
-  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), 0.0);
-  g_return_val_if_fail (GIMP_IS_STROKE (stroke), 0.0);
+  g_return_val_if_fail (LIGMA_IS_VECTORS (vectors), 0.0);
+  g_return_val_if_fail (LIGMA_IS_STROKE (stroke), 0.0);
 
-  return gimp_stroke_get_length (stroke, vectors->precision);
+  return ligma_stroke_get_length (stroke, vectors->precision);
 }
 
 
-GimpAnchor *
-gimp_vectors_anchor_get (GimpVectors       *vectors,
-                         const GimpCoords  *coord,
-                         GimpStroke       **ret_stroke)
+LigmaAnchor *
+ligma_vectors_anchor_get (LigmaVectors       *vectors,
+                         const LigmaCoords  *coord,
+                         LigmaStroke       **ret_stroke)
 {
-  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), NULL);
+  g_return_val_if_fail (LIGMA_IS_VECTORS (vectors), NULL);
 
-  return GIMP_VECTORS_GET_CLASS (vectors)->anchor_get (vectors, coord,
+  return LIGMA_VECTORS_GET_CLASS (vectors)->anchor_get (vectors, coord,
                                                        ret_stroke);
 }
 
-static GimpAnchor *
-gimp_vectors_real_anchor_get (GimpVectors       *vectors,
-                              const GimpCoords  *coord,
-                              GimpStroke       **ret_stroke)
+static LigmaAnchor *
+ligma_vectors_real_anchor_get (LigmaVectors       *vectors,
+                              const LigmaCoords  *coord,
+                              LigmaStroke       **ret_stroke)
 {
-  GimpAnchor *minanchor = NULL;
+  LigmaAnchor *minanchor = NULL;
   gdouble     mindist   = -1;
   GList      *list;
 
   for (list = vectors->strokes->head; list; list = g_list_next (list))
     {
-      GimpStroke *stroke = list->data;
-      GimpAnchor *anchor = gimp_stroke_anchor_get (stroke, coord);
+      LigmaStroke *stroke = list->data;
+      LigmaAnchor *anchor = ligma_stroke_anchor_get (stroke, coord);
 
       if (anchor)
         {
@@ -1101,26 +1101,26 @@ gimp_vectors_real_anchor_get (GimpVectors       *vectors,
 
 
 void
-gimp_vectors_anchor_delete (GimpVectors *vectors,
-                            GimpAnchor  *anchor)
+ligma_vectors_anchor_delete (LigmaVectors *vectors,
+                            LigmaAnchor  *anchor)
 {
-  g_return_if_fail (GIMP_IS_VECTORS (vectors));
+  g_return_if_fail (LIGMA_IS_VECTORS (vectors));
   g_return_if_fail (anchor != NULL);
 
-  GIMP_VECTORS_GET_CLASS (vectors)->anchor_delete (vectors, anchor);
+  LIGMA_VECTORS_GET_CLASS (vectors)->anchor_delete (vectors, anchor);
 }
 
 static void
-gimp_vectors_real_anchor_delete (GimpVectors *vectors,
-                                 GimpAnchor  *anchor)
+ligma_vectors_real_anchor_delete (LigmaVectors *vectors,
+                                 LigmaAnchor  *anchor)
 {
 }
 
 
 void
-gimp_vectors_anchor_select (GimpVectors *vectors,
-                            GimpStroke  *target_stroke,
-                            GimpAnchor  *anchor,
+ligma_vectors_anchor_select (LigmaVectors *vectors,
+                            LigmaStroke  *target_stroke,
+                            LigmaAnchor  *anchor,
                             gboolean     selected,
                             gboolean     exclusive)
 {
@@ -1128,9 +1128,9 @@ gimp_vectors_anchor_select (GimpVectors *vectors,
 
   for (list = vectors->strokes->head; list; list = g_list_next (list))
     {
-      GimpStroke *stroke = list->data;
+      LigmaStroke *stroke = list->data;
 
-      gimp_stroke_anchor_select (stroke,
+      ligma_stroke_anchor_select (stroke,
                                  stroke == target_stroke ? anchor : NULL,
                                  selected, exclusive);
     }
@@ -1138,112 +1138,112 @@ gimp_vectors_anchor_select (GimpVectors *vectors,
 
 
 gdouble
-gimp_vectors_get_length (GimpVectors      *vectors,
-                         const GimpAnchor *start)
+ligma_vectors_get_length (LigmaVectors      *vectors,
+                         const LigmaAnchor *start)
 {
-  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), 0.0);
+  g_return_val_if_fail (LIGMA_IS_VECTORS (vectors), 0.0);
 
-  return GIMP_VECTORS_GET_CLASS (vectors)->get_length (vectors, start);
+  return LIGMA_VECTORS_GET_CLASS (vectors)->get_length (vectors, start);
 }
 
 static gdouble
-gimp_vectors_real_get_length (GimpVectors      *vectors,
-                              const GimpAnchor *start)
+ligma_vectors_real_get_length (LigmaVectors      *vectors,
+                              const LigmaAnchor *start)
 {
-  g_printerr ("gimp_vectors_get_length: default implementation\n");
+  g_printerr ("ligma_vectors_get_length: default implementation\n");
 
   return 0;
 }
 
 
 gdouble
-gimp_vectors_get_distance (GimpVectors      *vectors,
-                           const GimpCoords *coord)
+ligma_vectors_get_distance (LigmaVectors      *vectors,
+                           const LigmaCoords *coord)
 {
-  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), 0.0);
+  g_return_val_if_fail (LIGMA_IS_VECTORS (vectors), 0.0);
 
-  return GIMP_VECTORS_GET_CLASS (vectors)->get_distance (vectors, coord);
+  return LIGMA_VECTORS_GET_CLASS (vectors)->get_distance (vectors, coord);
 }
 
 static gdouble
-gimp_vectors_real_get_distance (GimpVectors      *vectors,
-                                const GimpCoords *coord)
+ligma_vectors_real_get_distance (LigmaVectors      *vectors,
+                                const LigmaCoords *coord)
 {
-  g_printerr ("gimp_vectors_get_distance: default implementation\n");
+  g_printerr ("ligma_vectors_get_distance: default implementation\n");
 
   return 0;
 }
 
 gint
-gimp_vectors_interpolate (GimpVectors *vectors,
-                          GimpStroke  *stroke,
+ligma_vectors_interpolate (LigmaVectors *vectors,
+                          LigmaStroke  *stroke,
                           gdouble      precision,
                           gint         max_points,
-                          GimpCoords  *ret_coords)
+                          LigmaCoords  *ret_coords)
 {
-  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), 0);
+  g_return_val_if_fail (LIGMA_IS_VECTORS (vectors), 0);
 
-  return GIMP_VECTORS_GET_CLASS (vectors)->interpolate (vectors, stroke,
+  return LIGMA_VECTORS_GET_CLASS (vectors)->interpolate (vectors, stroke,
                                                         precision, max_points,
                                                         ret_coords);
 }
 
 static gint
-gimp_vectors_real_interpolate (GimpVectors *vectors,
-                               GimpStroke  *stroke,
+ligma_vectors_real_interpolate (LigmaVectors *vectors,
+                               LigmaStroke  *stroke,
                                gdouble      precision,
                                gint         max_points,
-                               GimpCoords  *ret_coords)
+                               LigmaCoords  *ret_coords)
 {
-  g_printerr ("gimp_vectors_interpolate: default implementation\n");
+  g_printerr ("ligma_vectors_interpolate: default implementation\n");
 
   return 0;
 }
 
-const GimpBezierDesc *
-gimp_vectors_get_bezier (GimpVectors *vectors)
+const LigmaBezierDesc *
+ligma_vectors_get_bezier (LigmaVectors *vectors)
 {
-  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), NULL);
+  g_return_val_if_fail (LIGMA_IS_VECTORS (vectors), NULL);
 
   if (! vectors->bezier_desc)
     {
-      vectors->bezier_desc = gimp_vectors_make_bezier (vectors);
+      vectors->bezier_desc = ligma_vectors_make_bezier (vectors);
     }
 
   return  vectors->bezier_desc;
 }
 
-static GimpBezierDesc *
-gimp_vectors_make_bezier (GimpVectors *vectors)
+static LigmaBezierDesc *
+ligma_vectors_make_bezier (LigmaVectors *vectors)
 {
-  return GIMP_VECTORS_GET_CLASS (vectors)->make_bezier (vectors);
+  return LIGMA_VECTORS_GET_CLASS (vectors)->make_bezier (vectors);
 }
 
-static GimpBezierDesc *
-gimp_vectors_real_make_bezier (GimpVectors *vectors)
+static LigmaBezierDesc *
+ligma_vectors_real_make_bezier (LigmaVectors *vectors)
 {
-  GimpStroke     *stroke;
+  LigmaStroke     *stroke;
   GArray         *cmd_array;
-  GimpBezierDesc *ret_bezdesc = NULL;
+  LigmaBezierDesc *ret_bezdesc = NULL;
 
   cmd_array = g_array_new (FALSE, FALSE, sizeof (cairo_path_data_t));
 
-  for (stroke = gimp_vectors_stroke_get_next (vectors, NULL);
+  for (stroke = ligma_vectors_stroke_get_next (vectors, NULL);
        stroke;
-       stroke = gimp_vectors_stroke_get_next (vectors, stroke))
+       stroke = ligma_vectors_stroke_get_next (vectors, stroke))
     {
-      GimpBezierDesc *bezdesc = gimp_stroke_make_bezier (stroke);
+      LigmaBezierDesc *bezdesc = ligma_stroke_make_bezier (stroke);
 
       if (bezdesc)
         {
           cmd_array = g_array_append_vals (cmd_array, bezdesc->data,
                                            bezdesc->num_data);
-          gimp_bezier_desc_free (bezdesc);
+          ligma_bezier_desc_free (bezdesc);
         }
     }
 
   if (cmd_array->len > 0)
-    ret_bezdesc = gimp_bezier_desc_new ((cairo_path_data_t *) cmd_array->data,
+    ret_bezdesc = ligma_bezier_desc_new ((cairo_path_data_t *) cmd_array->data,
                                         cmd_array->len);
 
   g_array_free (cmd_array, FALSE);

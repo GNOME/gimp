@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpDisplayOptions
- * Copyright (C) 2003  Sven Neumann <sven@gimp.org>
+ * LigmaDisplayOptions
+ * Copyright (C) 2003  Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,18 +24,18 @@
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "config-types.h"
 
-#include "gimprc-blurbs.h"
+#include "ligmarc-blurbs.h"
 
-#include "gimpdisplayoptions.h"
+#include "ligmadisplayoptions.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -61,412 +61,412 @@ enum
 };
 
 
-static void   gimp_display_options_set_property (GObject      *object,
+static void   ligma_display_options_set_property (GObject      *object,
                                                  guint         property_id,
                                                  const GValue *value,
                                                  GParamSpec   *pspec);
-static void   gimp_display_options_get_property (GObject      *object,
+static void   ligma_display_options_get_property (GObject      *object,
                                                  guint         property_id,
                                                  GValue       *value,
                                                  GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpDisplayOptions,
-                         gimp_display_options,
+G_DEFINE_TYPE_WITH_CODE (LigmaDisplayOptions,
+                         ligma_display_options,
                          G_TYPE_OBJECT,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG, NULL))
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_CONFIG, NULL))
 
-typedef struct _GimpDisplayOptions      GimpDisplayOptionsFullscreen;
-typedef struct _GimpDisplayOptionsClass GimpDisplayOptionsFullscreenClass;
+typedef struct _LigmaDisplayOptions      LigmaDisplayOptionsFullscreen;
+typedef struct _LigmaDisplayOptionsClass LigmaDisplayOptionsFullscreenClass;
 
-#define gimp_display_options_fullscreen_init gimp_display_options_init
+#define ligma_display_options_fullscreen_init ligma_display_options_init
 
-G_DEFINE_TYPE_WITH_CODE (GimpDisplayOptionsFullscreen,
-                         gimp_display_options_fullscreen,
-                         GIMP_TYPE_DISPLAY_OPTIONS,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG, NULL))
+G_DEFINE_TYPE_WITH_CODE (LigmaDisplayOptionsFullscreen,
+                         ligma_display_options_fullscreen,
+                         LIGMA_TYPE_DISPLAY_OPTIONS,
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_CONFIG, NULL))
 
-typedef struct _GimpDisplayOptions      GimpDisplayOptionsNoImage;
-typedef struct _GimpDisplayOptionsClass GimpDisplayOptionsNoImageClass;
+typedef struct _LigmaDisplayOptions      LigmaDisplayOptionsNoImage;
+typedef struct _LigmaDisplayOptionsClass LigmaDisplayOptionsNoImageClass;
 
-#define gimp_display_options_no_image_init gimp_display_options_init
+#define ligma_display_options_no_image_init ligma_display_options_init
 
-G_DEFINE_TYPE_WITH_CODE (GimpDisplayOptionsNoImage,
-                         gimp_display_options_no_image,
-                         GIMP_TYPE_DISPLAY_OPTIONS,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG, NULL))
+G_DEFINE_TYPE_WITH_CODE (LigmaDisplayOptionsNoImage,
+                         ligma_display_options_no_image,
+                         LIGMA_TYPE_DISPLAY_OPTIONS,
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_CONFIG, NULL))
 
 
 static void
-gimp_display_options_class_init (GimpDisplayOptionsClass *klass)
+ligma_display_options_class_init (LigmaDisplayOptionsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
-  GimpRGB       white;
+  LigmaRGB       white;
 
-  gimp_rgba_set (&white, 1.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE);
+  ligma_rgba_set (&white, 1.0, 1.0, 1.0, LIGMA_OPACITY_OPAQUE);
 
-  object_class->set_property = gimp_display_options_set_property;
-  object_class->get_property = gimp_display_options_get_property;
+  object_class->set_property = ligma_display_options_set_property;
+  object_class->get_property = ligma_display_options_get_property;
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_MENUBAR,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_MENUBAR,
                             "show-menubar",
                             "Show menubar",
                             SHOW_MENUBAR_BLURB,
                             TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_STATUSBAR,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_STATUSBAR,
                             "show-statusbar",
                             "Show statusbar",
                             SHOW_STATUSBAR_BLURB,
                             TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_RULERS,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_RULERS,
                             "show-rulers",
                             "Show rulers",
                             SHOW_RULERS_BLURB,
                             TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_SCROLLBARS,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_SCROLLBARS,
                             "show-scrollbars",
                             "Show scrollbars",
                             SHOW_SCROLLBARS_BLURB,
                             TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_SELECTION,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_SELECTION,
                             "show-selection",
                             "Show selection",
                             SHOW_SELECTION_BLURB,
                             TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_LAYER_BOUNDARY,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_LAYER_BOUNDARY,
                             "show-layer-boundary",
                             "Show layer boundary",
                             SHOW_LAYER_BOUNDARY_BLURB,
                             TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_CANVAS_BOUNDARY,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_CANVAS_BOUNDARY,
                             "show-canvas-boundary",
                             "Show canvas boundary",
                             SHOW_CANVAS_BOUNDARY_BLURB,
                             TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_GUIDES,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_GUIDES,
                             "show-guides",
                             "Show guides",
                             SHOW_GUIDES_BLURB,
                             TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_GRID,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_GRID,
                             "show-grid",
                             "Show grid",
                             SHOW_GRID_BLURB,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_SAMPLE_POINTS,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_SAMPLE_POINTS,
                             "show-sample-points",
                             "Show sample points",
                             SHOW_SAMPLE_POINTS_BLURB,
                             TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SNAP_TO_GUIDES,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SNAP_TO_GUIDES,
                             "snap-to-guides",
                             "Snap to guides",
                             SNAP_TO_GUIDES_BLURB,
                             TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SNAP_TO_GRID,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SNAP_TO_GRID,
                             "snap-to-grid",
                             "Snap to grid",
                             SNAP_TO_GRID_BLURB,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SNAP_TO_CANVAS,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SNAP_TO_CANVAS,
                             "snap-to-canvas",
                             "Snap to canvas",
                             SNAP_TO_CANVAS_BLURB,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SNAP_TO_PATH,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SNAP_TO_PATH,
                             "snap-to-path",
                             "Snap to path",
                             SNAP_TO_PATH_BLURB,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_PADDING_MODE,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_PADDING_MODE,
                          "padding-mode",
                          "Padding mode",
                          CANVAS_PADDING_MODE_BLURB,
-                         GIMP_TYPE_CANVAS_PADDING_MODE,
-                         GIMP_CANVAS_PADDING_MODE_DEFAULT,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_TYPE_CANVAS_PADDING_MODE,
+                         LIGMA_CANVAS_PADDING_MODE_DEFAULT,
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_RGB (object_class, PROP_PADDING_COLOR,
+  LIGMA_CONFIG_PROP_RGB (object_class, PROP_PADDING_COLOR,
                         "padding-color",
                         "Padding color",
                         CANVAS_PADDING_COLOR_BLURB,
                         FALSE, &white,
-                        GIMP_PARAM_STATIC_STRINGS);
+                        LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_PADDING_IN_SHOW_ALL,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_PADDING_IN_SHOW_ALL,
                             "padding-in-show-all",
                             "Keep padding in \"Show All\" mode",
                             CANVAS_PADDING_IN_SHOW_ALL_BLURB,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 }
 
 static void
-gimp_display_options_fullscreen_class_init (GimpDisplayOptionsFullscreenClass *klass)
+ligma_display_options_fullscreen_class_init (LigmaDisplayOptionsFullscreenClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
-  GimpRGB       black;
+  LigmaRGB       black;
 
-  gimp_rgba_set (&black, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
+  ligma_rgba_set (&black, 0.0, 0.0, 0.0, LIGMA_OPACITY_OPAQUE);
 
-  object_class->set_property = gimp_display_options_set_property;
-  object_class->get_property = gimp_display_options_get_property;
+  object_class->set_property = ligma_display_options_set_property;
+  object_class->get_property = ligma_display_options_get_property;
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_MENUBAR,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_MENUBAR,
                             "show-menubar",
                             "Show menubar",
                             SHOW_MENUBAR_BLURB,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_STATUSBAR,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_STATUSBAR,
                             "show-statusbar",
                             "Show statusbar",
                             SHOW_STATUSBAR_BLURB,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_RULERS,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_RULERS,
                             "show-rulers",
                             "Show rulers",
                             SHOW_RULERS_BLURB,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_SCROLLBARS,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_SCROLLBARS,
                             "show-scrollbars",
                             "Show scrollbars",
                             SHOW_SCROLLBARS_BLURB,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_SELECTION,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_SELECTION,
                             "show-selection",
                             "Show selection",
                             SHOW_SELECTION_BLURB,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_LAYER_BOUNDARY,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_LAYER_BOUNDARY,
                             "show-layer-boundary",
                             "Show layer boundary",
                             SHOW_LAYER_BOUNDARY_BLURB,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_CANVAS_BOUNDARY,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_CANVAS_BOUNDARY,
                             "show-canvas-boundary",
                             "Show canvas boundary",
                             SHOW_CANVAS_BOUNDARY_BLURB,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_GUIDES,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_GUIDES,
                             "show-guides",
                             "Show guides",
                             SHOW_GUIDES_BLURB,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_GRID,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_GRID,
                             "show-grid",
                             "Show grid",
                             SHOW_GRID_BLURB,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_SAMPLE_POINTS,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_SAMPLE_POINTS,
                             "show-sample-points",
                             "Show sample points",
                             SHOW_SAMPLE_POINTS_BLURB,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SNAP_TO_GUIDES,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SNAP_TO_GUIDES,
                             "snap-to-guides",
                             "Snap to guides",
                             SNAP_TO_GUIDES_BLURB,
                             TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SNAP_TO_GRID,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SNAP_TO_GRID,
                             "snap-to-grid",
                             "Snap to grid",
                             SHOW_SCROLLBARS_BLURB,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SNAP_TO_CANVAS,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SNAP_TO_CANVAS,
                             "snap-to-canvas",
                             "Snap to canvas",
                             SNAP_TO_CANVAS_BLURB,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SNAP_TO_PATH,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SNAP_TO_PATH,
                             "snap-to-path",
                             "Snap to path",
                             SNAP_TO_PATH_BLURB,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_PADDING_MODE,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_PADDING_MODE,
                          "padding-mode",
                          "Padding mode",
                          CANVAS_PADDING_MODE_BLURB,
-                         GIMP_TYPE_CANVAS_PADDING_MODE,
-                         GIMP_CANVAS_PADDING_MODE_CUSTOM,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_TYPE_CANVAS_PADDING_MODE,
+                         LIGMA_CANVAS_PADDING_MODE_CUSTOM,
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_RGB (object_class, PROP_PADDING_COLOR,
+  LIGMA_CONFIG_PROP_RGB (object_class, PROP_PADDING_COLOR,
                         "padding-color",
                         "Padding color",
                         CANVAS_PADDING_COLOR_BLURB,
                         FALSE, &black,
-                        GIMP_PARAM_STATIC_STRINGS);
+                        LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_PADDING_IN_SHOW_ALL,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_PADDING_IN_SHOW_ALL,
                             "padding-in-show-all",
                             "Keep padding in \"Show All\" mode",
                             CANVAS_PADDING_IN_SHOW_ALL_BLURB,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 }
 
 static void
-gimp_display_options_no_image_class_init (GimpDisplayOptionsNoImageClass *klass)
+ligma_display_options_no_image_class_init (LigmaDisplayOptionsNoImageClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->set_property = gimp_display_options_set_property;
-  object_class->get_property = gimp_display_options_get_property;
+  object_class->set_property = ligma_display_options_set_property;
+  object_class->get_property = ligma_display_options_get_property;
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_RULERS,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_RULERS,
                             "show-rulers",
                             "Show rulers",
                             SHOW_RULERS_BLURB,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_SCROLLBARS,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_SCROLLBARS,
                             "show-scrollbars",
                             "Show scrollbars",
                             SHOW_SCROLLBARS_BLURB,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_SELECTION,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_SELECTION,
                             "show-selection",
                             "Show selection",
                             SHOW_SELECTION_BLURB,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_LAYER_BOUNDARY,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_LAYER_BOUNDARY,
                             "show-layer-boundary",
                             "Show layer boundary",
                             SHOW_LAYER_BOUNDARY_BLURB,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_CANVAS_BOUNDARY,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_CANVAS_BOUNDARY,
                             "show-canvas-boundary",
                             "Show canvas boundary",
                             SHOW_CANVAS_BOUNDARY_BLURB,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_GUIDES,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_GUIDES,
                             "show-guides",
                             "Show guides",
                             SHOW_GUIDES_BLURB,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_GRID,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_GRID,
                             "show-grid",
                             "Show grid",
                             SHOW_GRID_BLURB,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_SAMPLE_POINTS,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_SAMPLE_POINTS,
                             "show-sample-points",
                             "Show sample points",
                             SHOW_SAMPLE_POINTS_BLURB,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SNAP_TO_GUIDES,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SNAP_TO_GUIDES,
                             "snap-to-guides",
                             "Snap to guides",
                             SNAP_TO_GUIDES_BLURB,
                             TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SNAP_TO_GRID,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SNAP_TO_GRID,
                             "snap-to-grid",
                             "Snap to grid",
                             SHOW_SCROLLBARS_BLURB,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SNAP_TO_CANVAS,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SNAP_TO_CANVAS,
                             "snap-to-canvas",
                             "Snap to canvas",
                             SNAP_TO_CANVAS_BLURB,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SNAP_TO_PATH,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_SNAP_TO_PATH,
                             "snap-to-path",
                             "Snap tp path",
                             SNAP_TO_PATH_BLURB,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 }
 
 static void
-gimp_display_options_init (GimpDisplayOptions *options)
+ligma_display_options_init (LigmaDisplayOptions *options)
 {
   options->padding_mode_set = FALSE;
 }
 
 static void
-gimp_display_options_set_property (GObject      *object,
+ligma_display_options_set_property (GObject      *object,
                                    guint         property_id,
                                    const GValue *value,
                                    GParamSpec   *pspec)
 {
-  GimpDisplayOptions *options = GIMP_DISPLAY_OPTIONS (object);
+  LigmaDisplayOptions *options = LIGMA_DISPLAY_OPTIONS (object);
 
   switch (property_id)
     {
@@ -516,7 +516,7 @@ gimp_display_options_set_property (GObject      *object,
       options->padding_mode = g_value_get_enum (value);
       break;
     case PROP_PADDING_COLOR:
-      options->padding_color = *(GimpRGB *) g_value_get_boxed (value);
+      options->padding_color = *(LigmaRGB *) g_value_get_boxed (value);
       break;
     case PROP_PADDING_IN_SHOW_ALL:
       options->padding_in_show_all = g_value_get_boolean (value);
@@ -529,12 +529,12 @@ gimp_display_options_set_property (GObject      *object,
 }
 
 static void
-gimp_display_options_get_property (GObject    *object,
+ligma_display_options_get_property (GObject    *object,
                                    guint       property_id,
                                    GValue     *value,
                                    GParamSpec *pspec)
 {
-  GimpDisplayOptions *options = GIMP_DISPLAY_OPTIONS (object);
+  LigmaDisplayOptions *options = LIGMA_DISPLAY_OPTIONS (object);
 
   switch (property_id)
     {

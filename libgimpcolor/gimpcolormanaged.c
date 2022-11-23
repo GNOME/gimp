@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * GimpColorManaged interface
- * Copyright (C) 2007  Sven Neumann <sven@gimp.org>
+ * LigmaColorManaged interface
+ * Copyright (C) 2007  Sven Neumann <sven@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,15 +24,15 @@
 #include <gio/gio.h>
 #include <gegl.h>
 
-#include "gimpcolortypes.h"
+#include "ligmacolortypes.h"
 
-#include "gimpcolormanaged.h"
-#include "gimpcolorprofile.h"
+#include "ligmacolormanaged.h"
+#include "ligmacolorprofile.h"
 
 
 /**
- * SECTION: gimpcolormanaged
- * @title: GimpColorManaged
+ * SECTION: ligmacolormanaged
+ * @title: LigmaColorManaged
  * @short_description: An interface dealing with color profiles.
  *
  * An interface dealing with color profiles.
@@ -49,50 +49,50 @@ enum
 };
 
 
-G_DEFINE_INTERFACE (GimpColorManaged, gimp_color_managed, G_TYPE_OBJECT)
+G_DEFINE_INTERFACE (LigmaColorManaged, ligma_color_managed, G_TYPE_OBJECT)
 
 
-static guint gimp_color_managed_signals[LAST_SIGNAL] = { 0 };
+static guint ligma_color_managed_signals[LAST_SIGNAL] = { 0 };
 
 
 /*  private functions  */
 
 
 static void
-gimp_color_managed_default_init (GimpColorManagedInterface *iface)
+ligma_color_managed_default_init (LigmaColorManagedInterface *iface)
 {
-  gimp_color_managed_signals[PROFILE_CHANGED] =
+  ligma_color_managed_signals[PROFILE_CHANGED] =
     g_signal_new ("profile-changed",
                   G_TYPE_FROM_INTERFACE (iface),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpColorManagedInterface,
+                  G_STRUCT_OFFSET (LigmaColorManagedInterface,
                                    profile_changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
-  gimp_color_managed_signals[SIMULATION_PROFILE_CHANGED] =
+  ligma_color_managed_signals[SIMULATION_PROFILE_CHANGED] =
     g_signal_new ("simulation-profile-changed",
                   G_TYPE_FROM_INTERFACE (iface),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpColorManagedInterface,
+                  G_STRUCT_OFFSET (LigmaColorManagedInterface,
                                    simulation_profile_changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
-  gimp_color_managed_signals[SIMULATION_INTENT_CHANGED] =
+  ligma_color_managed_signals[SIMULATION_INTENT_CHANGED] =
     g_signal_new ("simulation-intent-changed",
                   G_TYPE_FROM_INTERFACE (iface),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpColorManagedInterface,
+                  G_STRUCT_OFFSET (LigmaColorManagedInterface,
                                    simulation_intent_changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
-  gimp_color_managed_signals[SIMULATION_BPC_CHANGED] =
+  ligma_color_managed_signals[SIMULATION_BPC_CHANGED] =
     g_signal_new ("simulation-bpc-changed",
                   G_TYPE_FROM_INTERFACE (iface),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpColorManagedInterface,
+                  G_STRUCT_OFFSET (LigmaColorManagedInterface,
                                    simulation_bpc_changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
@@ -103,8 +103,8 @@ gimp_color_managed_default_init (GimpColorManagedInterface *iface)
 
 
 /**
- * gimp_color_managed_get_icc_profile:
- * @managed: an object the implements the #GimpColorManaged interface
+ * ligma_color_managed_get_icc_profile:
+ * @managed: an object the implements the #LigmaColorManaged interface
  * @len: (out): return location for the number of bytes in the profile data
  *
  * Returns: (array length=len): A blob of data that represents an ICC color
@@ -113,17 +113,17 @@ gimp_color_managed_default_init (GimpColorManagedInterface *iface)
  * Since: 2.4
  */
 const guint8 *
-gimp_color_managed_get_icc_profile (GimpColorManaged *managed,
+ligma_color_managed_get_icc_profile (LigmaColorManaged *managed,
                                     gsize            *len)
 {
-  GimpColorManagedInterface *iface;
+  LigmaColorManagedInterface *iface;
 
-  g_return_val_if_fail (GIMP_IS_COLOR_MANAGED (managed), NULL);
+  g_return_val_if_fail (LIGMA_IS_COLOR_MANAGED (managed), NULL);
   g_return_val_if_fail (len != NULL, NULL);
 
   *len = 0;
 
-  iface = GIMP_COLOR_MANAGED_GET_IFACE (managed);
+  iface = LIGMA_COLOR_MANAGED_GET_IFACE (managed);
 
   if (iface->get_icc_profile)
     return iface->get_icc_profile (managed, len);
@@ -132,24 +132,24 @@ gimp_color_managed_get_icc_profile (GimpColorManaged *managed,
 }
 
 /**
- * gimp_color_managed_get_color_profile:
- * @managed: an object the implements the #GimpColorManaged interface
+ * ligma_color_managed_get_color_profile:
+ * @managed: an object the implements the #LigmaColorManaged interface
  *
- * This function always returns a #GimpColorProfile and falls back to
- * gimp_color_profile_new_rgb_srgb() if the method is not implemented.
+ * This function always returns a #LigmaColorProfile and falls back to
+ * ligma_color_profile_new_rgb_srgb() if the method is not implemented.
  *
- * Returns: (transfer full): The @managed's #GimpColorProfile.
+ * Returns: (transfer full): The @managed's #LigmaColorProfile.
  *
  * Since: 2.10
  **/
-GimpColorProfile *
-gimp_color_managed_get_color_profile (GimpColorManaged *managed)
+LigmaColorProfile *
+ligma_color_managed_get_color_profile (LigmaColorManaged *managed)
 {
-  GimpColorManagedInterface *iface;
+  LigmaColorManagedInterface *iface;
 
-  g_return_val_if_fail (GIMP_IS_COLOR_MANAGED (managed), NULL);
+  g_return_val_if_fail (LIGMA_IS_COLOR_MANAGED (managed), NULL);
 
-  iface = GIMP_COLOR_MANAGED_GET_IFACE (managed);
+  iface = LIGMA_COLOR_MANAGED_GET_IFACE (managed);
 
   if (iface->get_color_profile)
     return iface->get_color_profile (managed);
@@ -158,23 +158,23 @@ gimp_color_managed_get_color_profile (GimpColorManaged *managed)
 }
 
 /**
- * gimp_color_managed_get_simulation_profile:
- * @managed: an object the implements the #GimpColorManaged interface
+ * ligma_color_managed_get_simulation_profile:
+ * @managed: an object the implements the #LigmaColorManaged interface
  *
- * This function always returns a #GimpColorProfile
+ * This function always returns a #LigmaColorProfile
  *
- * Returns: (transfer full): The @managed's simulation #GimpColorProfile.
+ * Returns: (transfer full): The @managed's simulation #LigmaColorProfile.
  *
  * Since: 3.0
  **/
-GimpColorProfile *
-gimp_color_managed_get_simulation_profile (GimpColorManaged *managed)
+LigmaColorProfile *
+ligma_color_managed_get_simulation_profile (LigmaColorManaged *managed)
 {
-  GimpColorManagedInterface *iface;
+  LigmaColorManagedInterface *iface;
 
-  g_return_val_if_fail (GIMP_IS_COLOR_MANAGED (managed), NULL);
+  g_return_val_if_fail (LIGMA_IS_COLOR_MANAGED (managed), NULL);
 
-  iface = GIMP_COLOR_MANAGED_GET_IFACE (managed);
+  iface = LIGMA_COLOR_MANAGED_GET_IFACE (managed);
 
   if (iface->get_simulation_profile)
     return iface->get_simulation_profile (managed);
@@ -183,34 +183,34 @@ gimp_color_managed_get_simulation_profile (GimpColorManaged *managed)
 }
 
 /**
- * gimp_color_managed_get_simulation_intent:
- * @managed: an object the implements the #GimpColorManaged interface
+ * ligma_color_managed_get_simulation_intent:
+ * @managed: an object the implements the #LigmaColorManaged interface
  *
- * This function always returns a #GimpColorRenderingIntent
+ * This function always returns a #LigmaColorRenderingIntent
  *
- * Returns: The @managed's simulation #GimpColorRenderingIntent.
+ * Returns: The @managed's simulation #LigmaColorRenderingIntent.
  *
  * Since: 3.0
  **/
-GimpColorRenderingIntent
-gimp_color_managed_get_simulation_intent (GimpColorManaged *managed)
+LigmaColorRenderingIntent
+ligma_color_managed_get_simulation_intent (LigmaColorManaged *managed)
 {
-  GimpColorManagedInterface *iface;
+  LigmaColorManagedInterface *iface;
 
-  g_return_val_if_fail (GIMP_IS_COLOR_MANAGED (managed),
-                        GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC);
+  g_return_val_if_fail (LIGMA_IS_COLOR_MANAGED (managed),
+                        LIGMA_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC);
 
-  iface = GIMP_COLOR_MANAGED_GET_IFACE (managed);
+  iface = LIGMA_COLOR_MANAGED_GET_IFACE (managed);
 
   if (iface->get_simulation_intent)
     return iface->get_simulation_intent (managed);
 
-  return GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC;
+  return LIGMA_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC;
 }
 
 /**
- * gimp_color_managed_get_simulation_bpc:
- * @managed: an object the implements the #GimpColorManaged interface
+ * ligma_color_managed_get_simulation_bpc:
+ * @managed: an object the implements the #LigmaColorManaged interface
  *
  * This function always returns a gboolean representing whether
  * Black Point Compensation is enabled
@@ -220,13 +220,13 @@ gimp_color_managed_get_simulation_intent (GimpColorManaged *managed)
  * Since: 3.0
  **/
 gboolean
-gimp_color_managed_get_simulation_bpc (GimpColorManaged *managed)
+ligma_color_managed_get_simulation_bpc (LigmaColorManaged *managed)
 {
-  GimpColorManagedInterface *iface;
+  LigmaColorManagedInterface *iface;
 
-  g_return_val_if_fail (GIMP_IS_COLOR_MANAGED (managed), FALSE);
+  g_return_val_if_fail (LIGMA_IS_COLOR_MANAGED (managed), FALSE);
 
-  iface = GIMP_COLOR_MANAGED_GET_IFACE (managed);
+  iface = LIGMA_COLOR_MANAGED_GET_IFACE (managed);
 
   if (iface->get_simulation_bpc)
     return iface->get_simulation_bpc (managed);
@@ -236,65 +236,65 @@ gimp_color_managed_get_simulation_bpc (GimpColorManaged *managed)
 
 
 /**
- * gimp_color_managed_profile_changed:
- * @managed: an object that implements the #GimpColorManaged interface
+ * ligma_color_managed_profile_changed:
+ * @managed: an object that implements the #LigmaColorManaged interface
  *
  * Emits the "profile-changed" signal.
  *
  * Since: 2.4
  **/
 void
-gimp_color_managed_profile_changed (GimpColorManaged *managed)
+ligma_color_managed_profile_changed (LigmaColorManaged *managed)
 {
-  g_return_if_fail (GIMP_IS_COLOR_MANAGED (managed));
+  g_return_if_fail (LIGMA_IS_COLOR_MANAGED (managed));
 
-  g_signal_emit (managed, gimp_color_managed_signals[PROFILE_CHANGED], 0);
+  g_signal_emit (managed, ligma_color_managed_signals[PROFILE_CHANGED], 0);
 }
 
 /**
- * gimp_color_managed_simulation_profile_changed:
- * @managed: an object that implements the #GimpColorManaged interface
+ * ligma_color_managed_simulation_profile_changed:
+ * @managed: an object that implements the #LigmaColorManaged interface
  *
  * Emits the "simulation-profile-changed" signal.
  *
  * Since: 3.0
  **/
 void
-gimp_color_managed_simulation_profile_changed (GimpColorManaged *managed)
+ligma_color_managed_simulation_profile_changed (LigmaColorManaged *managed)
 {
-  g_return_if_fail (GIMP_IS_COLOR_MANAGED (managed));
+  g_return_if_fail (LIGMA_IS_COLOR_MANAGED (managed));
 
-  g_signal_emit (managed, gimp_color_managed_signals[SIMULATION_PROFILE_CHANGED], 0);
+  g_signal_emit (managed, ligma_color_managed_signals[SIMULATION_PROFILE_CHANGED], 0);
 }
 
 /**
- * gimp_color_managed_simulation_intent_changed:
- * @managed: an object that implements the #GimpColorManaged interface
+ * ligma_color_managed_simulation_intent_changed:
+ * @managed: an object that implements the #LigmaColorManaged interface
  *
  * Emits the "simulation-intent-changed" signal.
  *
  * Since: 3.0
  **/
 void
-gimp_color_managed_simulation_intent_changed (GimpColorManaged *managed)
+ligma_color_managed_simulation_intent_changed (LigmaColorManaged *managed)
 {
-  g_return_if_fail (GIMP_IS_COLOR_MANAGED (managed));
+  g_return_if_fail (LIGMA_IS_COLOR_MANAGED (managed));
 
-  g_signal_emit (managed, gimp_color_managed_signals[SIMULATION_INTENT_CHANGED], 0);
+  g_signal_emit (managed, ligma_color_managed_signals[SIMULATION_INTENT_CHANGED], 0);
 }
 
 /**
- * gimp_color_managed_simulation_bpc_changed:
- * @managed: an object that implements the #GimpColorManaged interface
+ * ligma_color_managed_simulation_bpc_changed:
+ * @managed: an object that implements the #LigmaColorManaged interface
  *
  * Emits the "simulation-bpc-changed" signal.
  *
  * Since: 3.0
  **/
 void
-gimp_color_managed_simulation_bpc_changed (GimpColorManaged *managed)
+ligma_color_managed_simulation_bpc_changed (LigmaColorManaged *managed)
 {
-  g_return_if_fail (GIMP_IS_COLOR_MANAGED (managed));
+  g_return_if_fail (LIGMA_IS_COLOR_MANAGED (managed));
 
-  g_signal_emit (managed, gimp_color_managed_signals[SIMULATION_BPC_CHANGED], 0);
+  g_signal_emit (managed, ligma_color_managed_signals[SIMULATION_BPC_CHANGED], 0);
 }

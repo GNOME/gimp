@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimptoolfocus.c
+ * ligmatoolfocus.c
  * Copyright (C) 2020 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,22 +23,22 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
 
 #include "display-types.h"
 
-#include "widgets/gimpwidgets-utils.h"
+#include "widgets/ligmawidgets-utils.h"
 
-#include "gimpcanvasgroup.h"
-#include "gimpcanvashandle.h"
-#include "gimpcanvaslimit.h"
-#include "gimpdisplayshell.h"
-#include "gimpdisplayshell-transform.h"
-#include "gimpdisplayshell-utils.h"
-#include "gimptoolfocus.h"
+#include "ligmacanvasgroup.h"
+#include "ligmacanvashandle.h"
+#include "ligmacanvaslimit.h"
+#include "ligmadisplayshell.h"
+#include "ligmadisplayshell-transform.h"
+#include "ligmadisplayshell-utils.h"
+#include "ligmatoolfocus.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 #define HANDLE_SIZE   12.0
@@ -82,24 +82,24 @@ typedef enum
 
 typedef struct
 {
-  GimpCanvasItem *item;
+  LigmaCanvasItem *item;
 
   GtkOrientation  orientation;
-  GimpVector2     dir;
-} GimpToolFocusHandle;
+  LigmaVector2     dir;
+} LigmaToolFocusHandle;
 
 typedef struct
 {
-  GimpCanvasGroup     *group;
-  GimpCanvasItem      *item;
+  LigmaCanvasGroup     *group;
+  LigmaCanvasItem      *item;
 
   gint                 n_handles;
-  GimpToolFocusHandle  handles[4];
-} GimpToolFocusLimit;
+  LigmaToolFocusHandle  handles[4];
+} LigmaToolFocusLimit;
 
-struct _GimpToolFocusPrivate
+struct _LigmaToolFocusPrivate
 {
-  GimpLimitType       type;
+  LigmaLimitType       type;
 
   gdouble             x;
   gdouble             y;
@@ -110,14 +110,14 @@ struct _GimpToolFocusPrivate
   gdouble             inner_limit;
   gdouble             midpoint;
 
-  GimpToolFocusLimit  limits[N_LIMITS];
+  LigmaToolFocusLimit  limits[N_LIMITS];
 
   Hover               hover;
   gint                hover_limit;
   gint                hover_handle;
-  GimpCanvasItem     *hover_item;
+  LigmaCanvasItem     *hover_item;
 
-  GimpCanvasItem     *last_hover_item;
+  LigmaCanvasItem     *last_hover_item;
 
   gdouble             saved_x;
   gdouble             saved_y;
@@ -135,102 +135,102 @@ struct _GimpToolFocusPrivate
 
 /*  local function prototypes  */
 
-static void       gimp_tool_focus_constructed      (GObject               *object);
-static void       gimp_tool_focus_set_property     (GObject               *object,
+static void       ligma_tool_focus_constructed      (GObject               *object);
+static void       ligma_tool_focus_set_property     (GObject               *object,
                                                     guint                  property_id,
                                                     const GValue          *value,
                                                     GParamSpec            *pspec);
-static void       gimp_tool_focus_get_property     (GObject               *object,
+static void       ligma_tool_focus_get_property     (GObject               *object,
                                                     guint                  property_id,
                                                     GValue                *value,
                                                     GParamSpec            *pspec);
 
-static void       gimp_tool_focus_changed          (GimpToolWidget        *widget);
-static gint       gimp_tool_focus_button_press     (GimpToolWidget        *widget,
-                                                    const GimpCoords      *coords,
+static void       ligma_tool_focus_changed          (LigmaToolWidget        *widget);
+static gint       ligma_tool_focus_button_press     (LigmaToolWidget        *widget,
+                                                    const LigmaCoords      *coords,
                                                     guint32                time,
                                                     GdkModifierType        state,
-                                                    GimpButtonPressType    press_type);
-static void       gimp_tool_focus_button_release   (GimpToolWidget        *widget,
-                                                    const GimpCoords      *coords,
+                                                    LigmaButtonPressType    press_type);
+static void       ligma_tool_focus_button_release   (LigmaToolWidget        *widget,
+                                                    const LigmaCoords      *coords,
                                                     guint32                time,
                                                     GdkModifierType        state,
-                                                    GimpButtonReleaseType  release_type);
-static void       gimp_tool_focus_motion           (GimpToolWidget        *widget,
-                                                    const GimpCoords      *coords,
+                                                    LigmaButtonReleaseType  release_type);
+static void       ligma_tool_focus_motion           (LigmaToolWidget        *widget,
+                                                    const LigmaCoords      *coords,
                                                     guint32                time,
                                                     GdkModifierType        state);
-static GimpHit    gimp_tool_focus_hit              (GimpToolWidget        *widget,
-                                                    const GimpCoords      *coords,
+static LigmaHit    ligma_tool_focus_hit              (LigmaToolWidget        *widget,
+                                                    const LigmaCoords      *coords,
                                                     GdkModifierType        state,
                                                     gboolean               proximity);
-static void       gimp_tool_focus_hover            (GimpToolWidget        *widget,
-                                                    const GimpCoords      *coords,
+static void       ligma_tool_focus_hover            (LigmaToolWidget        *widget,
+                                                    const LigmaCoords      *coords,
                                                     GdkModifierType        state,
                                                     gboolean               proximity);
-static void       gimp_tool_focus_leave_notify     (GimpToolWidget        *widget);
-static void       gimp_tool_focus_motion_modifier  (GimpToolWidget        *widget,
+static void       ligma_tool_focus_leave_notify     (LigmaToolWidget        *widget);
+static void       ligma_tool_focus_motion_modifier  (LigmaToolWidget        *widget,
                                                     GdkModifierType        key,
                                                     gboolean               press,
                                                     GdkModifierType        state);
-static void       gimp_tool_focus_hover_modifier   (GimpToolWidget        *widget,
+static void       ligma_tool_focus_hover_modifier   (LigmaToolWidget        *widget,
                                                     GdkModifierType        key,
                                                     gboolean               press,
                                                     GdkModifierType        state);
-static gboolean   gimp_tool_focus_get_cursor       (GimpToolWidget        *widget,
-                                                    const GimpCoords      *coords,
+static gboolean   ligma_tool_focus_get_cursor       (LigmaToolWidget        *widget,
+                                                    const LigmaCoords      *coords,
                                                     GdkModifierType        state,
-                                                    GimpCursorType        *cursor,
-                                                    GimpToolCursorType    *tool_cursor,
-                                                    GimpCursorModifier    *modifier);
+                                                    LigmaCursorType        *cursor,
+                                                    LigmaToolCursorType    *tool_cursor,
+                                                    LigmaCursorModifier    *modifier);
 
-static void       gimp_tool_focus_update_hover     (GimpToolFocus         *focus,
-                                                    const GimpCoords      *coords,
+static void       ligma_tool_focus_update_hover     (LigmaToolFocus         *focus,
+                                                    const LigmaCoords      *coords,
                                                     gboolean               proximity);
 
-static void       gimp_tool_focus_update_highlight (GimpToolFocus         *focus);
-static void       gimp_tool_focus_update_status    (GimpToolFocus         *focus,
+static void       ligma_tool_focus_update_highlight (LigmaToolFocus         *focus);
+static void       ligma_tool_focus_update_status    (LigmaToolFocus         *focus,
                                                     GdkModifierType        state);
 
-static void       gimp_tool_focus_save             (GimpToolFocus         *focus);
-static void       gimp_tool_focus_restore          (GimpToolFocus         *focus);
+static void       ligma_tool_focus_save             (LigmaToolFocus         *focus);
+static void       ligma_tool_focus_restore          (LigmaToolFocus         *focus);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpToolFocus, gimp_tool_focus,
-                            GIMP_TYPE_TOOL_WIDGET)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaToolFocus, ligma_tool_focus,
+                            LIGMA_TYPE_TOOL_WIDGET)
 
-#define parent_class gimp_tool_focus_parent_class
+#define parent_class ligma_tool_focus_parent_class
 
 
 /*  private functions  */
 
 static void
-gimp_tool_focus_class_init (GimpToolFocusClass *klass)
+ligma_tool_focus_class_init (LigmaToolFocusClass *klass)
 {
   GObjectClass        *object_class = G_OBJECT_CLASS (klass);
-  GimpToolWidgetClass *widget_class = GIMP_TOOL_WIDGET_CLASS (klass);
+  LigmaToolWidgetClass *widget_class = LIGMA_TOOL_WIDGET_CLASS (klass);
 
-  object_class->constructed     = gimp_tool_focus_constructed;
-  object_class->set_property    = gimp_tool_focus_set_property;
-  object_class->get_property    = gimp_tool_focus_get_property;
+  object_class->constructed     = ligma_tool_focus_constructed;
+  object_class->set_property    = ligma_tool_focus_set_property;
+  object_class->get_property    = ligma_tool_focus_get_property;
 
-  widget_class->changed         = gimp_tool_focus_changed;
-  widget_class->button_press    = gimp_tool_focus_button_press;
-  widget_class->button_release  = gimp_tool_focus_button_release;
-  widget_class->motion          = gimp_tool_focus_motion;
-  widget_class->hit             = gimp_tool_focus_hit;
-  widget_class->hover           = gimp_tool_focus_hover;
-  widget_class->leave_notify    = gimp_tool_focus_leave_notify;
-  widget_class->motion_modifier = gimp_tool_focus_motion_modifier;
-  widget_class->hover_modifier  = gimp_tool_focus_hover_modifier;
-  widget_class->get_cursor      = gimp_tool_focus_get_cursor;
+  widget_class->changed         = ligma_tool_focus_changed;
+  widget_class->button_press    = ligma_tool_focus_button_press;
+  widget_class->button_release  = ligma_tool_focus_button_release;
+  widget_class->motion          = ligma_tool_focus_motion;
+  widget_class->hit             = ligma_tool_focus_hit;
+  widget_class->hover           = ligma_tool_focus_hover;
+  widget_class->leave_notify    = ligma_tool_focus_leave_notify;
+  widget_class->motion_modifier = ligma_tool_focus_motion_modifier;
+  widget_class->hover_modifier  = ligma_tool_focus_hover_modifier;
+  widget_class->get_cursor      = ligma_tool_focus_get_cursor;
   widget_class->update_on_scale = TRUE;
 
   g_object_class_install_property (object_class, PROP_TYPE,
                                    g_param_spec_enum ("type", NULL, NULL,
-                                                      GIMP_TYPE_LIMIT_TYPE,
-                                                      GIMP_LIMIT_CIRCLE,
-                                                      GIMP_PARAM_READWRITE |
+                                                      LIGMA_TYPE_LIMIT_TYPE,
+                                                      LIGMA_LIMIT_CIRCLE,
+                                                      LIGMA_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_X,
@@ -238,7 +238,7 @@ gimp_tool_focus_class_init (GimpToolFocusClass *klass)
                                                         -G_MAXDOUBLE,
                                                         +G_MAXDOUBLE,
                                                         0.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_Y,
@@ -246,7 +246,7 @@ gimp_tool_focus_class_init (GimpToolFocusClass *klass)
                                                         -G_MAXDOUBLE,
                                                         +G_MAXDOUBLE,
                                                         0.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_RADIUS,
@@ -254,7 +254,7 @@ gimp_tool_focus_class_init (GimpToolFocusClass *klass)
                                                         0.0,
                                                         +G_MAXDOUBLE,
                                                         0.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_ASPECT_RATIO,
@@ -262,7 +262,7 @@ gimp_tool_focus_class_init (GimpToolFocusClass *klass)
                                                         -1.0,
                                                         +1.0,
                                                         0.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_ANGLE,
@@ -270,7 +270,7 @@ gimp_tool_focus_class_init (GimpToolFocusClass *klass)
                                                         -G_MAXDOUBLE,
                                                         +G_MAXDOUBLE,
                                                         0.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_INNER_LIMIT,
@@ -278,7 +278,7 @@ gimp_tool_focus_class_init (GimpToolFocusClass *klass)
                                                         0.0,
                                                         1.0,
                                                         0.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_MIDPOINT,
@@ -286,16 +286,16 @@ gimp_tool_focus_class_init (GimpToolFocusClass *klass)
                                                         0.0,
                                                         1.0,
                                                         0.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 }
 
 static void
-gimp_tool_focus_init (GimpToolFocus *focus)
+ligma_tool_focus_init (LigmaToolFocus *focus)
 {
-  GimpToolFocusPrivate *priv;
+  LigmaToolFocusPrivate *priv;
 
-  priv = gimp_tool_focus_get_instance_private (focus);
+  priv = ligma_tool_focus_get_instance_private (focus);
 
   focus->priv = priv;
 
@@ -303,24 +303,24 @@ gimp_tool_focus_init (GimpToolFocus *focus)
 }
 
 static void
-gimp_tool_focus_constructed (GObject *object)
+ligma_tool_focus_constructed (GObject *object)
 {
-  GimpToolFocus        *focus  = GIMP_TOOL_FOCUS (object);
-  GimpToolWidget       *widget = GIMP_TOOL_WIDGET (object);
-  GimpToolFocusPrivate *priv   = focus->priv;
+  LigmaToolFocus        *focus  = LIGMA_TOOL_FOCUS (object);
+  LigmaToolWidget       *widget = LIGMA_TOOL_WIDGET (object);
+  LigmaToolFocusPrivate *priv   = focus->priv;
   gint                  i;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
   for (i = N_LIMITS - 1; i >= 0; i--)
     {
-      priv->limits[i].group = gimp_tool_widget_add_group (widget);
+      priv->limits[i].group = ligma_tool_widget_add_group (widget);
 
-      gimp_tool_widget_push_group (widget, priv->limits[i].group);
+      ligma_tool_widget_push_group (widget, priv->limits[i].group);
 
-      priv->limits[i].item = gimp_tool_widget_add_limit (
+      priv->limits[i].item = ligma_tool_widget_add_limit (
         widget,
-        GIMP_LIMIT_CIRCLE,
+        LIGMA_LIMIT_CIRCLE,
         0.0, 0.0,
         0.0,
         1.0,
@@ -335,11 +335,11 @@ gimp_tool_focus_constructed (GObject *object)
 
           for (j = priv->limits[i].n_handles - 1; j >= 0; j--)
             {
-              priv->limits[i].handles[j].item = gimp_tool_widget_add_handle (
+              priv->limits[i].handles[j].item = ligma_tool_widget_add_handle (
                 widget,
-                GIMP_HANDLE_FILLED_CIRCLE,
+                LIGMA_HANDLE_FILLED_CIRCLE,
                 0.0, 0.0, HANDLE_SIZE, HANDLE_SIZE,
-                GIMP_HANDLE_ANCHOR_CENTER);
+                LIGMA_HANDLE_ANCHOR_CENTER);
 
               priv->limits[i].handles[j].orientation =
                 j % 2 == 0 ? GTK_ORIENTATION_HORIZONTAL :
@@ -350,20 +350,20 @@ gimp_tool_focus_constructed (GObject *object)
             }
         }
 
-      gimp_tool_widget_pop_group (widget);
+      ligma_tool_widget_pop_group (widget);
     }
 
-  gimp_tool_focus_changed (widget);
+  ligma_tool_focus_changed (widget);
 }
 
 static void
-gimp_tool_focus_set_property (GObject      *object,
+ligma_tool_focus_set_property (GObject      *object,
                               guint         property_id,
                               const GValue *value,
                               GParamSpec   *pspec)
 {
-  GimpToolFocus        *focus = GIMP_TOOL_FOCUS (object);
-  GimpToolFocusPrivate *priv  = focus->priv;
+  LigmaToolFocus        *focus = LIGMA_TOOL_FOCUS (object);
+  LigmaToolFocusPrivate *priv  = focus->priv;
 
   switch (property_id)
     {
@@ -406,13 +406,13 @@ gimp_tool_focus_set_property (GObject      *object,
 }
 
 static void
-gimp_tool_focus_get_property (GObject    *object,
+ligma_tool_focus_get_property (GObject    *object,
                               guint       property_id,
                               GValue     *value,
                               GParamSpec *pspec)
 {
-  GimpToolFocus        *focus = GIMP_TOOL_FOCUS (object);
-  GimpToolFocusPrivate *priv  = focus->priv;
+  LigmaToolFocus        *focus = LIGMA_TOOL_FOCUS (object);
+  LigmaToolFocusPrivate *priv  = focus->priv;
 
   switch (property_id)
     {
@@ -455,15 +455,15 @@ gimp_tool_focus_get_property (GObject    *object,
 }
 
 static void
-gimp_tool_focus_changed (GimpToolWidget *widget)
+ligma_tool_focus_changed (LigmaToolWidget *widget)
 {
-  GimpToolFocus        *focus = GIMP_TOOL_FOCUS (widget);
-  GimpToolFocusPrivate *priv  = focus->priv;
+  LigmaToolFocus        *focus = LIGMA_TOOL_FOCUS (widget);
+  LigmaToolFocusPrivate *priv  = focus->priv;
   gint                  i;
 
   for (i = 0; i < N_LIMITS; i++)
     {
-      gimp_canvas_item_begin_change (priv->limits[i].item);
+      ligma_canvas_item_begin_change (priv->limits[i].item);
 
       g_object_set (priv->limits[i].item,
                     "type",         priv->type,
@@ -494,26 +494,26 @@ gimp_tool_focus_changed (GimpToolWidget *widget)
       gdouble max_r = 0.0;
       gint    j;
 
-      gimp_canvas_limit_get_radii (GIMP_CANVAS_LIMIT (priv->limits[i].item),
+      ligma_canvas_limit_get_radii (LIGMA_CANVAS_LIMIT (priv->limits[i].item),
                                    &rx, &ry);
 
       for (j = 0; j < priv->limits[i].n_handles; j++)
         {
-          GimpVector2 p = priv->limits[i].handles[j].dir;
+          LigmaVector2 p = priv->limits[i].handles[j].dir;
           gdouble     r;
 
           p.x *= rx;
           p.y *= ry;
 
-          gimp_vector2_rotate (&p, -priv->angle);
+          ligma_vector2_rotate (&p, -priv->angle);
 
           p.x += priv->x;
           p.y += priv->y;
 
-          gimp_canvas_handle_set_position (priv->limits[i].handles[j].item,
+          ligma_canvas_handle_set_position (priv->limits[i].handles[j].item,
                                            p.x, p.y);
 
-          r = gimp_canvas_item_transform_distance (
+          r = ligma_canvas_item_transform_distance (
             priv->limits[i].handles[j].item,
             priv->x, priv->y,
             p.x,     p.y);
@@ -523,29 +523,29 @@ gimp_tool_focus_changed (GimpToolWidget *widget)
 
       for (j = 0; j < priv->limits[i].n_handles; j++)
         {
-          gimp_canvas_item_set_visible (priv->limits[i].handles[j].item,
-                                        priv->type != GIMP_LIMIT_HORIZONTAL &&
-                                        priv->type != GIMP_LIMIT_VERTICAL   &&
+          ligma_canvas_item_set_visible (priv->limits[i].handles[j].item,
+                                        priv->type != LIGMA_LIMIT_HORIZONTAL &&
+                                        priv->type != LIGMA_LIMIT_VERTICAL   &&
                                         max_r >= 1.5 * HANDLE_SIZE);
         }
 
-      gimp_canvas_item_end_change (priv->limits[i].item);
+      ligma_canvas_item_end_change (priv->limits[i].item);
     }
 }
 
 static gint
-gimp_tool_focus_button_press (GimpToolWidget      *widget,
-                              const GimpCoords    *coords,
+ligma_tool_focus_button_press (LigmaToolWidget      *widget,
+                              const LigmaCoords    *coords,
                               guint32              time,
                               GdkModifierType      state,
-                              GimpButtonPressType  press_type)
+                              LigmaButtonPressType  press_type)
 {
-  GimpToolFocus        *focus = GIMP_TOOL_FOCUS (widget);
-  GimpToolFocusPrivate *priv  = focus->priv;
+  LigmaToolFocus        *focus = LIGMA_TOOL_FOCUS (widget);
+  LigmaToolFocusPrivate *priv  = focus->priv;
 
-  if (press_type == GIMP_BUTTON_PRESS_NORMAL)
+  if (press_type == LIGMA_BUTTON_PRESS_NORMAL)
     {
-      gimp_tool_focus_save (focus);
+      ligma_tool_focus_save (focus);
 
       priv->orig_x = coords->x;
       priv->orig_y = coords->y;
@@ -557,32 +557,32 @@ gimp_tool_focus_button_press (GimpToolWidget      *widget,
 }
 
 static void
-gimp_tool_focus_button_release (GimpToolWidget        *widget,
-                                const GimpCoords      *coords,
+ligma_tool_focus_button_release (LigmaToolWidget        *widget,
+                                const LigmaCoords      *coords,
                                 guint32                time,
                                 GdkModifierType        state,
-                                GimpButtonReleaseType  release_type)
+                                LigmaButtonReleaseType  release_type)
 {
-  GimpToolFocus *focus = GIMP_TOOL_FOCUS (widget);
+  LigmaToolFocus *focus = LIGMA_TOOL_FOCUS (widget);
 
-  if (release_type == GIMP_BUTTON_RELEASE_CANCEL)
-    gimp_tool_focus_restore (focus);
+  if (release_type == LIGMA_BUTTON_RELEASE_CANCEL)
+    ligma_tool_focus_restore (focus);
 }
 
 static void
-gimp_tool_focus_motion (GimpToolWidget   *widget,
-                        const GimpCoords *coords,
+ligma_tool_focus_motion (LigmaToolWidget   *widget,
+                        const LigmaCoords *coords,
                         guint32           time,
                         GdkModifierType   state)
 {
-  GimpToolFocus        *focus = GIMP_TOOL_FOCUS (widget);
-  GimpToolFocusPrivate *priv  = focus->priv;
-  GimpDisplayShell     *shell = gimp_tool_widget_get_shell (widget);
+  LigmaToolFocus        *focus = LIGMA_TOOL_FOCUS (widget);
+  LigmaToolFocusPrivate *priv  = focus->priv;
+  LigmaDisplayShell     *shell = ligma_tool_widget_get_shell (widget);
   gboolean              extend;
   gboolean              constrain;
 
-  extend    = state & gimp_get_extend_selection_mask ();
-  constrain = state & gimp_get_constrain_behavior_mask ();
+  extend    = state & ligma_get_extend_selection_mask ();
+  constrain = state & ligma_get_constrain_behavior_mask ();
 
   switch (priv->hover)
     {
@@ -591,7 +591,7 @@ gimp_tool_focus_motion (GimpToolWidget   *widget,
 
     case HOVER_LIMIT:
       {
-        GimpCanvasItem *limit = priv->limits[priv->hover_limit].item;
+        LigmaCanvasItem *limit = priv->limits[priv->hover_limit].item;
         gdouble         radius;
         gdouble         outer_radius;
         gdouble         inner_radius;
@@ -601,11 +601,11 @@ gimp_tool_focus_motion (GimpToolWidget   *widget,
         x = coords->x;
         y = coords->y;
 
-        gimp_canvas_limit_center_point (GIMP_CANVAS_LIMIT (limit),
+        ligma_canvas_limit_center_point (LIGMA_CANVAS_LIMIT (limit),
                                         x,   y,
                                         &cx, &cy);
 
-        if (gimp_canvas_item_transform_distance (limit,
+        if (ligma_canvas_item_transform_distance (limit,
                                                  x,  y,
                                                  cx, cy) <= SNAP_DISTANCE)
           {
@@ -627,7 +627,7 @@ gimp_tool_focus_motion (GimpToolWidget   *widget,
               }
           }
 
-        radius = gimp_canvas_limit_boundary_radius (GIMP_CANVAS_LIMIT (limit),
+        radius = ligma_canvas_limit_boundary_radius (LIGMA_CANVAS_LIMIT (limit),
                                                     x, y);
 
         outer_radius = priv->radius;
@@ -712,10 +712,10 @@ gimp_tool_focus_motion (GimpToolWidget   *widget,
 
     case HOVER_HANDLE:
       {
-        GimpToolFocusHandle *handle;
-        GimpVector2          e;
-        GimpVector2          s;
-        GimpVector2          p;
+        LigmaToolFocusHandle *handle;
+        LigmaVector2          e;
+        LigmaVector2          s;
+        LigmaVector2          p;
         gdouble              rx, ry;
         gdouble              r;
 
@@ -723,28 +723,28 @@ gimp_tool_focus_motion (GimpToolWidget   *widget,
 
         e = handle->dir;
 
-        gimp_vector2_rotate (&e, -priv->angle);
+        ligma_vector2_rotate (&e, -priv->angle);
 
         s = e;
 
-        gimp_canvas_limit_get_radii (
-          GIMP_CANVAS_LIMIT (priv->limits[priv->hover_limit].item),
+        ligma_canvas_limit_get_radii (
+          LIGMA_CANVAS_LIMIT (priv->limits[priv->hover_limit].item),
           &rx, &ry);
 
         if (handle->orientation == GTK_ORIENTATION_HORIZONTAL)
-          gimp_vector2_mul (&s, ry);
+          ligma_vector2_mul (&s, ry);
         else
-          gimp_vector2_mul (&s, rx);
+          ligma_vector2_mul (&s, rx);
 
         p.x = coords->x - priv->x;
         p.y = coords->y - priv->y;
 
-        r = gimp_vector2_inner_product (&p, &e);
+        r = ligma_vector2_inner_product (&p, &e);
         r = MAX (r, 0.0);
 
         p = e;
 
-        gimp_vector2_mul (&p, r);
+        ligma_vector2_mul (&p, r);
 
         if (extend)
           {
@@ -765,7 +765,7 @@ gimp_tool_focus_motion (GimpToolWidget   *widget,
           }
         else
           {
-            if (gimp_canvas_item_transform_distance (
+            if (ligma_canvas_item_transform_distance (
                   priv->limits[priv->hover_limit].item,
                   s.x, s.y,
                   p.x, p.y) <= SNAP_DISTANCE * 0.75)
@@ -827,7 +827,7 @@ gimp_tool_focus_motion (GimpToolWidget   *widget,
         angle = priv->saved_angle + (angle - orig_angle);
 
         if (constrain)
-          angle = gimp_display_shell_constrain_angle (shell, angle, 12);
+          angle = ligma_display_shell_constrain_angle (shell, angle, 12);
 
         g_object_set (focus,
                       "angle", angle,
@@ -837,92 +837,92 @@ gimp_tool_focus_motion (GimpToolWidget   *widget,
     }
 }
 
-static GimpHit
-gimp_tool_focus_hit (GimpToolWidget   *widget,
-                     const GimpCoords *coords,
+static LigmaHit
+ligma_tool_focus_hit (LigmaToolWidget   *widget,
+                     const LigmaCoords *coords,
                      GdkModifierType   state,
                      gboolean          proximity)
 {
-  GimpToolFocus        *focus = GIMP_TOOL_FOCUS (widget);
-  GimpToolFocusPrivate *priv  = focus->priv;
+  LigmaToolFocus        *focus = LIGMA_TOOL_FOCUS (widget);
+  LigmaToolFocusPrivate *priv  = focus->priv;
 
-  gimp_tool_focus_update_hover (focus, coords, proximity);
+  ligma_tool_focus_update_hover (focus, coords, proximity);
 
   switch (priv->hover)
     {
     case HOVER_NONE:
-      return GIMP_HIT_NONE;
+      return LIGMA_HIT_NONE;
 
     case HOVER_LIMIT:
     case HOVER_HANDLE:
-      return GIMP_HIT_DIRECT;
+      return LIGMA_HIT_DIRECT;
 
     case HOVER_MOVE:
     case HOVER_ROTATE:
-      return GIMP_HIT_INDIRECT;
+      return LIGMA_HIT_INDIRECT;
     }
 
-  g_return_val_if_reached (GIMP_HIT_NONE);
+  g_return_val_if_reached (LIGMA_HIT_NONE);
 }
 
 static void
-gimp_tool_focus_hover (GimpToolWidget   *widget,
-                       const GimpCoords *coords,
+ligma_tool_focus_hover (LigmaToolWidget   *widget,
+                       const LigmaCoords *coords,
                        GdkModifierType   state,
                        gboolean          proximity)
 {
-  GimpToolFocus *focus = GIMP_TOOL_FOCUS (widget);
+  LigmaToolFocus *focus = LIGMA_TOOL_FOCUS (widget);
 
-  gimp_tool_focus_update_hover (focus, coords, proximity);
+  ligma_tool_focus_update_hover (focus, coords, proximity);
 
-  gimp_tool_focus_update_highlight (focus);
-  gimp_tool_focus_update_status    (focus, state);
+  ligma_tool_focus_update_highlight (focus);
+  ligma_tool_focus_update_status    (focus, state);
 }
 
 static void
-gimp_tool_focus_leave_notify (GimpToolWidget *widget)
+ligma_tool_focus_leave_notify (LigmaToolWidget *widget)
 {
-  GimpToolFocus *focus = GIMP_TOOL_FOCUS (widget);
+  LigmaToolFocus *focus = LIGMA_TOOL_FOCUS (widget);
 
-  gimp_tool_focus_update_hover (focus, NULL, FALSE);
+  ligma_tool_focus_update_hover (focus, NULL, FALSE);
 
-  gimp_tool_focus_update_highlight (focus);
+  ligma_tool_focus_update_highlight (focus);
 
-  GIMP_TOOL_WIDGET_CLASS (parent_class)->leave_notify (widget);
+  LIGMA_TOOL_WIDGET_CLASS (parent_class)->leave_notify (widget);
 }
 
 static void
-gimp_tool_focus_motion_modifier (GimpToolWidget  *widget,
+ligma_tool_focus_motion_modifier (LigmaToolWidget  *widget,
                                  GdkModifierType  key,
                                  gboolean         press,
                                  GdkModifierType  state)
 {
-  GimpToolFocus *focus = GIMP_TOOL_FOCUS (widget);
+  LigmaToolFocus *focus = LIGMA_TOOL_FOCUS (widget);
 
-  gimp_tool_focus_update_status (focus, state);
+  ligma_tool_focus_update_status (focus, state);
 }
 
 static void
-gimp_tool_focus_hover_modifier (GimpToolWidget  *widget,
+ligma_tool_focus_hover_modifier (LigmaToolWidget  *widget,
                                 GdkModifierType  key,
                                 gboolean         press,
                                 GdkModifierType  state)
 {
-  GimpToolFocus *focus = GIMP_TOOL_FOCUS (widget);
+  LigmaToolFocus *focus = LIGMA_TOOL_FOCUS (widget);
 
-  gimp_tool_focus_update_status (focus, state);
+  ligma_tool_focus_update_status (focus, state);
 }
 
 static gboolean
-gimp_tool_focus_get_cursor (GimpToolWidget     *widget,
-                            const GimpCoords   *coords,
+ligma_tool_focus_get_cursor (LigmaToolWidget     *widget,
+                            const LigmaCoords   *coords,
                             GdkModifierType     state,
-                            GimpCursorType     *cursor,
-                            GimpToolCursorType *tool_cursor,
-                            GimpCursorModifier *modifier)
+                            LigmaCursorType     *cursor,
+                            LigmaToolCursorType *tool_cursor,
+                            LigmaCursorModifier *modifier)
 {
-  GimpToolFocus        *focus = GIMP_TOOL_FOCUS (widget);
-  GimpToolFocusPrivate *priv  = focus->priv;
+  LigmaToolFocus        *focus = LIGMA_TOOL_FOCUS (widget);
+  LigmaToolFocusPrivate *priv  = focus->priv;
 
   switch (priv->hover)
     {
@@ -931,15 +931,15 @@ gimp_tool_focus_get_cursor (GimpToolWidget     *widget,
 
     case HOVER_LIMIT:
     case HOVER_HANDLE:
-      *modifier = GIMP_CURSOR_MODIFIER_RESIZE;
+      *modifier = LIGMA_CURSOR_MODIFIER_RESIZE;
       return TRUE;
 
     case HOVER_MOVE:
-      *modifier = GIMP_CURSOR_MODIFIER_MOVE;
+      *modifier = LIGMA_CURSOR_MODIFIER_MOVE;
       return TRUE;
 
     case HOVER_ROTATE:
-      *modifier = GIMP_CURSOR_MODIFIER_ROTATE;
+      *modifier = LIGMA_CURSOR_MODIFIER_ROTATE;
       return TRUE;
     }
 
@@ -947,11 +947,11 @@ gimp_tool_focus_get_cursor (GimpToolWidget     *widget,
 }
 
 static void
-gimp_tool_focus_update_hover (GimpToolFocus    *focus,
-                              const GimpCoords *coords,
+ligma_tool_focus_update_hover (LigmaToolFocus    *focus,
+                              const LigmaCoords *coords,
                               gboolean          proximity)
 {
-  GimpToolFocusPrivate *priv            = focus->priv;
+  LigmaToolFocusPrivate *priv            = focus->priv;
   gdouble               min_handle_dist = HANDLE_SIZE;
   gint                  i;
 
@@ -967,9 +967,9 @@ gimp_tool_focus_update_hover (GimpToolFocus    *focus,
 
       for (j = 0; j < priv->limits[i].n_handles; j++)
         {
-          GimpCanvasItem *handle = priv->limits[i].handles[j].item;
+          LigmaCanvasItem *handle = priv->limits[i].handles[j].item;
 
-          if (gimp_canvas_item_get_visible (handle))
+          if (ligma_canvas_item_get_visible (handle))
             {
               gdouble x, y;
               gdouble dist;
@@ -979,7 +979,7 @@ gimp_tool_focus_update_hover (GimpToolFocus    *focus,
                             "y", &y,
                             NULL);
 
-              dist = gimp_canvas_item_transform_distance (handle,
+              dist = ligma_canvas_item_transform_distance (handle,
                                                           x,         y,
                                                           coords->x, coords->y);
 
@@ -999,14 +999,14 @@ gimp_tool_focus_update_hover (GimpToolFocus    *focus,
   if (priv->hover != HOVER_NONE)
     return;
 
-  if (  gimp_canvas_limit_is_inside (
-          GIMP_CANVAS_LIMIT (priv->limits[LIMIT_OUTER].item),
+  if (  ligma_canvas_limit_is_inside (
+          LIGMA_CANVAS_LIMIT (priv->limits[LIMIT_OUTER].item),
           coords->x, coords->y) &&
-      ! gimp_canvas_limit_is_inside (
-          GIMP_CANVAS_LIMIT (priv->limits[LIMIT_INNER].item),
+      ! ligma_canvas_limit_is_inside (
+          LIGMA_CANVAS_LIMIT (priv->limits[LIMIT_INNER].item),
           coords->x, coords->y))
     {
-      if (gimp_canvas_item_hit (priv->limits[LIMIT_MIDDLE].item,
+      if (ligma_canvas_item_hit (priv->limits[LIMIT_MIDDLE].item,
                                 coords->x, coords->y))
         {
           priv->hover       = HOVER_LIMIT;
@@ -1017,11 +1017,11 @@ gimp_tool_focus_update_hover (GimpToolFocus    *focus,
         }
     }
 
-  if (! gimp_canvas_limit_is_inside (
-          GIMP_CANVAS_LIMIT (priv->limits[LIMIT_INNER].item),
+  if (! ligma_canvas_limit_is_inside (
+          LIGMA_CANVAS_LIMIT (priv->limits[LIMIT_INNER].item),
           coords->x, coords->y))
     {
-      if (gimp_canvas_item_hit (priv->limits[LIMIT_OUTER].item,
+      if (ligma_canvas_item_hit (priv->limits[LIMIT_OUTER].item,
                                 coords->x, coords->y))
         {
           priv->hover       = HOVER_LIMIT;
@@ -1032,7 +1032,7 @@ gimp_tool_focus_update_hover (GimpToolFocus    *focus,
         }
     }
 
-  if (gimp_canvas_item_hit (priv->limits[LIMIT_INNER].item,
+  if (ligma_canvas_item_hit (priv->limits[LIMIT_INNER].item,
                             coords->x, coords->y))
     {
       priv->hover       = HOVER_LIMIT;
@@ -1042,8 +1042,8 @@ gimp_tool_focus_update_hover (GimpToolFocus    *focus,
       return;
     }
 
-  if (gimp_canvas_limit_is_inside (
-        GIMP_CANVAS_LIMIT (priv->limits[LIMIT_OUTER].item),
+  if (ligma_canvas_limit_is_inside (
+        LIGMA_CANVAS_LIMIT (priv->limits[LIMIT_OUTER].item),
         coords->x, coords->y))
     {
       priv->hover = HOVER_MOVE;
@@ -1055,38 +1055,38 @@ gimp_tool_focus_update_hover (GimpToolFocus    *focus,
 }
 
 static void
-gimp_tool_focus_update_highlight (GimpToolFocus *focus)
+ligma_tool_focus_update_highlight (LigmaToolFocus *focus)
 {
-  GimpToolWidget       *widget = GIMP_TOOL_WIDGET (focus);
-  GimpToolFocusPrivate *priv   = focus->priv;
+  LigmaToolWidget       *widget = LIGMA_TOOL_WIDGET (focus);
+  LigmaToolFocusPrivate *priv   = focus->priv;
   gint                  i;
 
   if (priv->hover_item == priv->last_hover_item)
     return;
 
   if (priv->last_hover_item)
-    gimp_canvas_item_set_highlight (priv->last_hover_item, FALSE);
+    ligma_canvas_item_set_highlight (priv->last_hover_item, FALSE);
 
   #define RAISE_ITEM(item)                           \
     G_STMT_START                                     \
       {                                              \
         g_object_ref (item);                         \
                                                      \
-        gimp_tool_widget_remove_item (widget, item); \
-        gimp_tool_widget_add_item    (widget, item); \
+        ligma_tool_widget_remove_item (widget, item); \
+        ligma_tool_widget_add_item    (widget, item); \
                                                      \
         g_object_unref (item);                       \
       }                                              \
     G_STMT_END
 
   for (i = N_LIMITS - 1; i >= 0; i--)
-    RAISE_ITEM (GIMP_CANVAS_ITEM (priv->limits[i].group));
+    RAISE_ITEM (LIGMA_CANVAS_ITEM (priv->limits[i].group));
 
   if (priv->hover_item)
     {
-      gimp_canvas_item_set_highlight (priv->hover_item, TRUE);
+      ligma_canvas_item_set_highlight (priv->hover_item, TRUE);
 
-      RAISE_ITEM (GIMP_CANVAS_ITEM (priv->limits[priv->hover_limit].group));
+      RAISE_ITEM (LIGMA_CANVAS_ITEM (priv->limits[priv->hover_limit].group));
     }
 
   #undef RAISE_ITEM
@@ -1095,10 +1095,10 @@ gimp_tool_focus_update_highlight (GimpToolFocus *focus)
 }
 
 static void
-gimp_tool_focus_update_status (GimpToolFocus   *focus,
+ligma_tool_focus_update_status (LigmaToolFocus   *focus,
                                GdkModifierType  state)
 {
-  GimpToolFocusPrivate *priv                    = focus->priv;
+  LigmaToolFocusPrivate *priv                    = focus->priv;
   GdkModifierType       state_mask              = 0;
   const gchar          *message                 = NULL;
   const gchar          *extend_selection_format = NULL;
@@ -1111,7 +1111,7 @@ gimp_tool_focus_update_status (GimpToolFocus   *focus,
       break;
 
     case HOVER_LIMIT:
-      if (! (state & gimp_get_extend_selection_mask ()))
+      if (! (state & ligma_get_extend_selection_mask ()))
         {
           if (priv->hover_limit == LIMIT_MIDDLE)
             message                = _("Click-Drag to change the midpoint");
@@ -1119,7 +1119,7 @@ gimp_tool_focus_update_status (GimpToolFocus   *focus,
             message                = _("Click-Drag to resize the limit");
 
           extend_selection_format  = _("%s to resize the focus");
-          state_mask              |= gimp_get_extend_selection_mask ();
+          state_mask              |= ligma_get_extend_selection_mask ();
         }
       else
         {
@@ -1128,11 +1128,11 @@ gimp_tool_focus_update_status (GimpToolFocus   *focus,
       break;
 
     case HOVER_HANDLE:
-      if (! (state & gimp_get_extend_selection_mask ()))
+      if (! (state & ligma_get_extend_selection_mask ()))
         {
           message                  = _("Click-Drag to change the aspect ratio");
           extend_selection_format  = _("%s to resize the focus");
-          state_mask              |= gimp_get_extend_selection_mask ();
+          state_mask              |= ligma_get_extend_selection_mask ();
         }
       else
         {
@@ -1147,25 +1147,25 @@ gimp_tool_focus_update_status (GimpToolFocus   *focus,
     case HOVER_ROTATE:
       message                      = _("Click-Drag to rotate the focus");
       toggle_behavior_format       = _("%s for constrained angles");
-      state_mask                  |= gimp_get_constrain_behavior_mask ();
+      state_mask                  |= ligma_get_constrain_behavior_mask ();
       break;
     }
 
-  status = gimp_suggest_modifiers (message,
+  status = ligma_suggest_modifiers (message,
                                    ~state & state_mask,
                                    extend_selection_format,
                                    toggle_behavior_format,
                                    NULL);
 
-  gimp_tool_widget_set_status (GIMP_TOOL_WIDGET (focus), status);
+  ligma_tool_widget_set_status (LIGMA_TOOL_WIDGET (focus), status);
 
   g_free (status);
 }
 
 static void
-gimp_tool_focus_save (GimpToolFocus *focus)
+ligma_tool_focus_save (LigmaToolFocus *focus)
 {
-  GimpToolFocusPrivate *priv = focus->priv;
+  LigmaToolFocusPrivate *priv = focus->priv;
 
   priv->saved_x            = priv->x;
   priv->saved_y            = priv->y;
@@ -1178,9 +1178,9 @@ gimp_tool_focus_save (GimpToolFocus *focus)
 }
 
 static void
-gimp_tool_focus_restore (GimpToolFocus *focus)
+ligma_tool_focus_restore (LigmaToolFocus *focus)
 {
-  GimpToolFocusPrivate *priv = focus->priv;
+  LigmaToolFocusPrivate *priv = focus->priv;
 
   g_object_set (focus,
                 "x",            priv->saved_x,
@@ -1198,12 +1198,12 @@ gimp_tool_focus_restore (GimpToolFocus *focus)
 
 /*  public functions  */
 
-GimpToolWidget *
-gimp_tool_focus_new (GimpDisplayShell *shell)
+LigmaToolWidget *
+ligma_tool_focus_new (LigmaDisplayShell *shell)
 {
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
+  g_return_val_if_fail (LIGMA_IS_DISPLAY_SHELL (shell), NULL);
 
-  return g_object_new (GIMP_TYPE_TOOL_FOCUS,
+  return g_object_new (LIGMA_TYPE_TOOL_FOCUS,
                        "shell", shell,
                        NULL);
 }

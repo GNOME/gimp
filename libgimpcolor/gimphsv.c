@@ -1,4 +1,4 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * This library is free software: you can redistribute it and/or
@@ -20,14 +20,14 @@
 
 #include <glib-object.h>
 
-#include "gimpcolortypes.h"
+#include "ligmacolortypes.h"
 
-#include "gimphsv.h"
+#include "ligmahsv.h"
 
 
 /**
- * SECTION: gimphsv
- * @title: GimpHSV
+ * SECTION: ligmahsv
+ * @title: LigmaHSV
  * @short_description: Definitions and Functions relating to HSV colors.
  *
  * Definitions and Functions relating to HSV colors.
@@ -35,25 +35,25 @@
 
 
 /*
- * GIMP_TYPE_HSV
+ * LIGMA_TYPE_HSV
  */
 
-static GimpHSV * gimp_hsv_copy (const GimpHSV *hsv);
+static LigmaHSV * ligma_hsv_copy (const LigmaHSV *hsv);
 
 
-G_DEFINE_BOXED_TYPE (GimpHSV, gimp_hsv, gimp_hsv_copy, g_free)
+G_DEFINE_BOXED_TYPE (LigmaHSV, ligma_hsv, ligma_hsv_copy, g_free)
 
-static GimpHSV *
-gimp_hsv_copy (const GimpHSV *hsv)
+static LigmaHSV *
+ligma_hsv_copy (const LigmaHSV *hsv)
 {
-  return g_memdup2 (hsv, sizeof (GimpHSV));
+  return g_memdup2 (hsv, sizeof (LigmaHSV));
 }
 
 
 /*  HSV functions  */
 
 void
-gimp_hsv_set (GimpHSV *hsv,
+ligma_hsv_set (LigmaHSV *hsv,
               gdouble  h,
               gdouble  s,
               gdouble  v)
@@ -66,7 +66,7 @@ gimp_hsv_set (GimpHSV *hsv,
 }
 
 void
-gimp_hsv_clamp (GimpHSV *hsv)
+ligma_hsv_clamp (LigmaHSV *hsv)
 {
   g_return_if_fail (hsv != NULL);
 
@@ -81,7 +81,7 @@ gimp_hsv_clamp (GimpHSV *hsv)
 }
 
 void
-gimp_hsva_set (GimpHSV *hsva,
+ligma_hsva_set (LigmaHSV *hsva,
                gdouble  h,
                gdouble  s,
                gdouble  v,

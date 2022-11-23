@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -43,7 +43,7 @@ typedef struct
   gchar         *name;
   gdouble        opacity;
   gint           spacing;
-  GimpLayerMode  paint_mode;
+  LigmaLayerMode  paint_mode;
 } SFBrush;
 
 typedef struct
@@ -66,7 +66,7 @@ typedef union
   gint32         sfa_channel;
   gint32         sfa_vectors;
   gint32         sfa_display;
-  GimpRGB        sfa_color;
+  LigmaRGB        sfa_color;
   gint32         sfa_toggle;
   gchar         *sfa_value;
   SFAdjustment   sfa_adjustment;
@@ -101,7 +101,7 @@ typedef struct
   gint          n_args;
   SFArg        *args;
   SFDrawableArity drawable_arity;
-  GType           proc_class; /* GimpProcedure or GimpImageProcedure. */
+  GType           proc_class; /* LigmaProcedure or LigmaImageProcedure. */
 } SFScript;
 
 typedef struct

@@ -1,4 +1,4 @@
-# GIMP - The GNU Image Manipulation Program
+# LIGMA - The GNU Image Manipulation Program
 # Copyright (C) 1995 Spencer Kimball and Peter Mattis
 
 # This program is free software: you can redistribute it and/or modify
@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+# "Perlized" from C source by Manish Singh <yosh@ligma.org>
 
 sub drawable_edit_clear {
     $blurb = 'Clear selected area of drawable.';
@@ -28,7 +28,7 @@ selection if there is a selection active.
 
 
 This procedure is affected by the following context setters:
-gimp_context_set_background().
+ligma_context_set_background().
 HELP
 
     &std_pdb_misc;
@@ -41,11 +41,11 @@ HELP
     %invoke = (
 	code => <<CODE
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
-      gimp_drawable_edit_clear (drawable, context);
+      ligma_drawable_edit_clear (drawable, context);
     }
   else
     success = FALSE;
@@ -62,13 +62,13 @@ sub drawable_edit_fill {
 This procedure fills the specified drawable according to fill
 mode. This procedure only affects regions within a selection if there
 is a selection active. If you want to fill the whole drawable,
-regardless of the selection, use gimp_drawable_fill().
+regardless of the selection, use ligma_drawable_fill().
 
 
 This procedure is affected by the following context setters:
-gimp_context_set_opacity(), gimp_context_set_paint_mode(),
-gimp_context_set_foreground(), gimp_context_set_background(),
-gimp_context_set_pattern().
+ligma_context_set_opacity(), ligma_context_set_paint_mode(),
+ligma_context_set_foreground(), ligma_context_set_background(),
+ligma_context_set_pattern().
 HELP
 
     &std_pdb_misc;
@@ -78,28 +78,28 @@ HELP
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
 	  desc => "The drawable to fill to" },
-	{ name => 'fill_type', type => 'enum GimpFillType',
+	{ name => 'fill_type', type => 'enum LigmaFillType',
 	  desc => 'The type of fill' }
     );
 
     %invoke = (
 	code => <<CODE
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
-      GimpFillOptions *options = gimp_fill_options_new (gimp, NULL, FALSE);
+      LigmaFillOptions *options = ligma_fill_options_new (ligma, NULL, FALSE);
 
-      gimp_context_set_opacity (GIMP_CONTEXT (options),
-                                gimp_context_get_opacity (context));
-      gimp_context_set_paint_mode (GIMP_CONTEXT (options),
-                                   gimp_context_get_paint_mode (context));
+      ligma_context_set_opacity (LIGMA_CONTEXT (options),
+                                ligma_context_get_opacity (context));
+      ligma_context_set_paint_mode (LIGMA_CONTEXT (options),
+                                   ligma_context_get_paint_mode (context));
 
-      if (gimp_fill_options_set_by_fill_type (options, context,
+      if (ligma_fill_options_set_by_fill_type (options, context,
                                               fill_type, error))
         {
-          gimp_drawable_edit_fill (drawable, options, NULL);
+          ligma_drawable_edit_fill (drawable, options, NULL);
         }
       else
         success = FALSE;
@@ -128,11 +128,11 @@ origin.
 
 
 This procedure is affected by the following context setters:
-gimp_context_set_opacity(), gimp_context_set_paint_mode(),
-gimp_context_set_foreground(), gimp_context_set_background(),
-gimp_context_set_pattern(), gimp_context_set_sample_threshold(),
-gimp_context_set_sample_merged(), gimp_context_set_sample_criterion(),
-gimp_context_set_diagonal_neighbors(), gimp_context_set_antialias().
+ligma_context_set_opacity(), ligma_context_set_paint_mode(),
+ligma_context_set_foreground(), ligma_context_set_background(),
+ligma_context_set_pattern(), ligma_context_set_sample_threshold(),
+ligma_context_set_sample_merged(), ligma_context_set_sample_criterion(),
+ligma_context_set_diagonal_neighbors(), ligma_context_set_antialias().
 HELP
 
     &mitch_pdb_misc('2018', '2.10');
@@ -140,7 +140,7 @@ HELP
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The affected drawable' },
-	{ name => 'fill_type', type => 'enum GimpFillType',
+	{ name => 'fill_type', type => 'enum LigmaFillType',
 	  desc => 'The type of fill' },
 	{ name => 'x', type => 'float',
 	  desc => "The x coordinate of this bucket fill's application." },
@@ -149,32 +149,32 @@ HELP
     );
 
     %invoke = (
-        headers => [ qw ("core/gimpdrawable-bucket-fill.h") ],
+        headers => [ qw ("core/ligmadrawable-bucket-fill.h") ],
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
-      GimpFillOptions *options = gimp_fill_options_new (gimp, NULL, FALSE);
+      LigmaFillOptions *options = ligma_fill_options_new (ligma, NULL, FALSE);
 
-      gimp_context_set_opacity (GIMP_CONTEXT (options),
-                                gimp_context_get_opacity (context));
-      gimp_context_set_paint_mode (GIMP_CONTEXT (options),
-                                   gimp_context_get_paint_mode (context));
+      ligma_context_set_opacity (LIGMA_CONTEXT (options),
+                                ligma_context_get_opacity (context));
+      ligma_context_set_paint_mode (LIGMA_CONTEXT (options),
+                                   ligma_context_get_paint_mode (context));
 
-      gimp_fill_options_set_antialias (options,
-                                       GIMP_PDB_CONTEXT (context)->antialias);
+      ligma_fill_options_set_antialias (options,
+                                       LIGMA_PDB_CONTEXT (context)->antialias);
 
-      if (gimp_fill_options_set_by_fill_type (options, context,
+      if (ligma_fill_options_set_by_fill_type (options, context,
                                               fill_type, error))
         {
-          gimp_drawable_bucket_fill (drawable, options,
-                                     GIMP_PDB_CONTEXT (context)->sample_transparent,
-                                     GIMP_PDB_CONTEXT (context)->sample_criterion,
-                                     GIMP_PDB_CONTEXT (context)->sample_threshold,
-                                     GIMP_PDB_CONTEXT (context)->sample_merged,
-                                     GIMP_PDB_CONTEXT (context)->diagonal_neighbors,
+          ligma_drawable_bucket_fill (drawable, options,
+                                     LIGMA_PDB_CONTEXT (context)->sample_transparent,
+                                     LIGMA_PDB_CONTEXT (context)->sample_criterion,
+                                     LIGMA_PDB_CONTEXT (context)->sample_threshold,
+                                     LIGMA_PDB_CONTEXT (context)->sample_merged,
+                                     LIGMA_PDB_CONTEXT (context)->diagonal_neighbors,
                                      x, y);
         }
       else
@@ -200,14 +200,14 @@ This tool requires information on the gradient type. It creates the
 specified variety of gradient using the starting and ending
 coordinates as defined for each gradient type.  For shapeburst
 gradient types, the context's distance metric is also relevant and can
-be updated with gimp_context_set_distance_metric().
+be updated with ligma_context_set_distance_metric().
 
 
 This procedure is affected by the following context setters:
-gimp_context_set_opacity(), gimp_context_set_paint_mode(),
-gimp_context_set_foreground(), gimp_context_set_background(),
-gimp_context_set_gradient() and all gradient property settings,
-gimp_context_set_distance_metric().
+ligma_context_set_opacity(), ligma_context_set_paint_mode(),
+ligma_context_set_foreground(), ligma_context_set_background(),
+ligma_context_set_gradient() and all gradient property settings,
+ligma_context_set_distance_metric().
 HELP
 
     &mitch_pdb_misc('2018', '2.10');
@@ -215,7 +215,7 @@ HELP
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The affected drawable' },
-	{ name => 'gradient_type',  type => 'enum GimpGradientType',
+	{ name => 'gradient_type',  type => 'enum LigmaGradientType',
 	  desc => 'The type of gradient' },
 	{ name => 'offset', type => '0 <= float',
 	  desc => 'Offset relates to the starting and ending coordinates
@@ -241,12 +241,12 @@ HELP
     );
 
     %invoke = (
-        headers => [ qw("core/gimp-gradients.h" "core/gimpdrawable-gradient.h") ],
+        headers => [ qw("core/ligma-gradients.h" "core/ligmadrawable-gradient.h") ],
 	code => <<'CODE'
 {
-  success = (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                        GIMP_PDB_ITEM_CONTENT, error) &&
-             gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error));
+  success = (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                        LIGMA_PDB_ITEM_CONTENT, error) &&
+             ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error));
 
   if (success)
     {
@@ -268,20 +268,20 @@ HELP
   if (success)
     {
       /* all options should have the same value, so pick a random one */
-      GimpPaintOptions *options =
-        gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                            "gimp-paintbrush");
+      LigmaPaintOptions *options =
+        ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                            "ligma-paintbrush");
 
       if (progress)
-        gimp_progress_start (progress, FALSE, _("Gradient"));
+        ligma_progress_start (progress, FALSE, _("Gradient"));
 
-      gimp_drawable_gradient (drawable,
+      ligma_drawable_gradient (drawable,
                               context,
-                              gimp_context_get_gradient (context),
-                              GIMP_PDB_CONTEXT (context)->distance_metric,
-                              gimp_context_get_paint_mode (context),
+                              ligma_context_get_gradient (context),
+                              LIGMA_PDB_CONTEXT (context)->distance_metric,
+                              ligma_context_get_paint_mode (context),
                               gradient_type,
-                              gimp_context_get_opacity (context),
+                              ligma_context_get_opacity (context),
 	                      offset,
                               options->gradient_options->gradient_repeat,
                               options->gradient_options->gradient_reverse,
@@ -294,7 +294,7 @@ HELP
 	                      progress);
 
       if (progress)
-        gimp_progress_end (progress);
+        ligma_progress_end (progress);
     }
 }
 CODE
@@ -312,13 +312,13 @@ specified drawable regardless of the active selection.
 
 
 This procedure is affected by the following context setters:
-gimp_context_set_opacity(), gimp_context_set_paint_mode(),
-gimp_context_set_paint_method(), gimp_context_set_stroke_method(),
-gimp_context_set_foreground(),
-gimp_context_set_brush() and all brush property settings,
-gimp_context_set_gradient() and all gradient property settings,
-gimp_context_set_line_width() and all line property settings,
-gimp_context_set_antialias().
+ligma_context_set_opacity(), ligma_context_set_paint_mode(),
+ligma_context_set_paint_method(), ligma_context_set_stroke_method(),
+ligma_context_set_foreground(),
+ligma_context_set_brush() and all brush property settings,
+ligma_context_set_gradient() and all gradient property settings,
+ligma_context_set_line_width() and all line property settings,
+ligma_context_set_antialias().
 HELP
 
     &std_pdb_misc;
@@ -329,25 +329,25 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("core/gimpstrokeoptions.h") ],
+	headers => [ qw("core/ligmastrokeoptions.h") ],
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
-      GimpImage         *image = gimp_item_get_image (GIMP_ITEM (drawable));
-      GimpStrokeOptions *options;
-      GimpPaintOptions  *paint_options;
+      LigmaImage         *image = ligma_item_get_image (LIGMA_ITEM (drawable));
+      LigmaStrokeOptions *options;
+      LigmaPaintOptions  *paint_options;
       GList             *drawables = g_list_prepend (NULL, drawable);
 
-      options = gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+      options = ligma_pdb_context_get_stroke_options (LIGMA_PDB_CONTEXT (context));
 
       paint_options =
-        gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context), NULL);
-      paint_options = gimp_config_duplicate (GIMP_CONFIG (paint_options));
+        ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context), NULL);
+      paint_options = ligma_config_duplicate (LIGMA_CONFIG (paint_options));
 
-      success = gimp_item_stroke (GIMP_ITEM (gimp_image_get_mask (image)),
+      success = ligma_item_stroke (LIGMA_ITEM (ligma_image_get_mask (image)),
                                   drawables, context, options, paint_options,
                                   TRUE, progress, error);
 
@@ -372,13 +372,13 @@ properties.
 
 
 This procedure is affected by the following context setters:
-gimp_context_set_opacity(), gimp_context_set_paint_mode(),
-gimp_context_set_paint_method(), gimp_context_set_stroke_method(),
-gimp_context_set_foreground(),
-gimp_context_set_brush() and all brush property settings,
-gimp_context_set_gradient() and all gradient property settings,
-gimp_context_set_line_width() and all line property settings,
-gimp_context_set_antialias().
+ligma_context_set_opacity(), ligma_context_set_paint_mode(),
+ligma_context_set_paint_method(), ligma_context_set_stroke_method(),
+ligma_context_set_foreground(),
+ligma_context_set_brush() and all brush property settings,
+ligma_context_set_gradient() and all gradient property settings,
+ligma_context_set_line_width() and all line property settings,
+ligma_context_set_antialias().
 HELP
 
     &mitch_pdb_misc('2018', '2.10');
@@ -391,27 +391,27 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("core/gimpstrokeoptions.h") ],
+	headers => [ qw("core/ligmastrokeoptions.h") ],
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
-      gimp_pdb_item_is_attached (item,
-                                 gimp_item_get_image (GIMP_ITEM (drawable)),
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error) &&
+      ligma_pdb_item_is_attached (item,
+                                 ligma_item_get_image (LIGMA_ITEM (drawable)),
                                  0, error))
     {
-      GimpStrokeOptions *options;
-      GimpPaintOptions  *paint_options;
+      LigmaStrokeOptions *options;
+      LigmaPaintOptions  *paint_options;
       GList             *drawables = g_list_prepend (NULL, drawable);
 
-      options = gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+      options = ligma_pdb_context_get_stroke_options (LIGMA_PDB_CONTEXT (context));
 
       paint_options =
-        gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context), NULL);
-      paint_options = gimp_config_duplicate (GIMP_CONFIG (paint_options));
+        ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context), NULL);
+      paint_options = ligma_config_duplicate (LIGMA_CONFIG (paint_options));
 
-      success = gimp_item_stroke (item, drawables,
+      success = ligma_item_stroke (item, drawables,
                                   context, options, paint_options,
                                   TRUE, progress, error);
 
@@ -426,16 +426,16 @@ CODE
 }
 
 
-@headers = qw("libgimpconfig/gimpconfig.h"
-              "paint/gimppaintoptions.h"
-              "core/gimp.h"
-              "core/gimpdrawable-edit.h"
-              "core/gimpbuffer.h"
-              "core/gimpimage.h"
-              "core/gimpprogress.h"
-              "gimppdb-utils.h"
-              "gimppdbcontext.h"
-              "gimp-intl.h");
+@headers = qw("libligmaconfig/ligmaconfig.h"
+              "paint/ligmapaintoptions.h"
+              "core/ligma.h"
+              "core/ligmadrawable-edit.h"
+              "core/ligmabuffer.h"
+              "core/ligmaimage.h"
+              "core/ligmaprogress.h"
+              "ligmapdb-utils.h"
+              "ligmapdbcontext.h"
+              "ligma-intl.h");
 
 @procs = qw(drawable_edit_clear
             drawable_edit_fill
@@ -447,7 +447,7 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Drawable edit procedures';
-$doc_title = 'gimpdrawableedit';
+$doc_title = 'ligmadrawableedit';
 $doc_short_desc = 'Drawable edit functions (clear, fill, gradient, stroke etc.)';
 $doc_long_desc = 'Drawable edit functions (clear, fill, gradient, stroke etc.)';
 

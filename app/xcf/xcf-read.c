@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,14 +19,14 @@
 
 #include <gio/gio.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "core/core-types.h"
 
 #include "xcf-private.h"
 #include "xcf-read.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 #define MAX_XCF_STRING_LEN (16L * 1024 * 1024)
@@ -191,7 +191,7 @@ xcf_read_string (XcfInfo  *info,
           if (str[tmp - 1] != '\0')
             str[tmp - 1] = '\0';
 
-          data[i] = gimp_any_to_utf8 (str, -1,
+          data[i] = ligma_any_to_utf8 (str, -1,
                                       _("Invalid UTF-8 string in XCF file"));
 
           g_free (str);

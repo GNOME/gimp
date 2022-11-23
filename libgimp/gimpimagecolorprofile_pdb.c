@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimpimagecolorprofile_pdb.c
+ * ligmaimagecolorprofile_pdb.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,12 +24,12 @@
 
 #include "stamp-pdbgen.h"
 
-#include "gimp.h"
+#include "ligma.h"
 
 
 /**
- * SECTION: gimpimagecolorprofile
- * @title: gimpimagecolorprofile
+ * SECTION: ligmaimagecolorprofile
+ * @title: ligmaimagecolorprofile
  * @short_description: Operations on an image's color profile.
  *
  * Operations on an image's color profile.
@@ -37,7 +37,7 @@
 
 
 /**
- * _gimp_image_get_color_profile:
+ * _ligma_image_get_color_profile:
  * @image: The image.
  * @num_bytes: (out): Number of bytes in the color_profile array.
  *
@@ -53,37 +53,37 @@
  * Since: 2.10
  **/
 guint8 *
-_gimp_image_get_color_profile (GimpImage *image,
+_ligma_image_get_color_profile (LigmaImage *image,
                                gint      *num_bytes)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   guint8 *profile_data = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-get-color-profile",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-get-color-profile",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
   *num_bytes = 0;
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
     {
-      *num_bytes = GIMP_VALUES_GET_INT (return_vals, 1);
-      profile_data = GIMP_VALUES_DUP_UINT8_ARRAY (return_vals, 2);
+      *num_bytes = LIGMA_VALUES_GET_INT (return_vals, 1);
+      profile_data = LIGMA_VALUES_DUP_UINT8_ARRAY (return_vals, 2);
     }
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return profile_data;
 }
 
 /**
- * _gimp_image_get_effective_color_profile:
+ * _ligma_image_get_effective_color_profile:
  * @image: The image.
  * @num_bytes: (out): Number of bytes in the color_profile array.
  *
@@ -91,7 +91,7 @@ _gimp_image_get_color_profile (GimpImage *image,
  *
  * This procedure returns the color profile that is actually used for
  * this image, which is the profile returned by
- * gimp_image_get_color_profile() if the image has a profile assigned,
+ * ligma_image_get_color_profile() if the image has a profile assigned,
  * or a generated default RGB or grayscale profile, according to the
  * image's type.
  *
@@ -102,37 +102,37 @@ _gimp_image_get_color_profile (GimpImage *image,
  * Since: 2.10
  **/
 guint8 *
-_gimp_image_get_effective_color_profile (GimpImage *image,
+_ligma_image_get_effective_color_profile (LigmaImage *image,
                                          gint      *num_bytes)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   guint8 *profile_data = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-get-effective-color-profile",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-get-effective-color-profile",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
   *num_bytes = 0;
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
     {
-      *num_bytes = GIMP_VALUES_GET_INT (return_vals, 1);
-      profile_data = GIMP_VALUES_DUP_UINT8_ARRAY (return_vals, 2);
+      *num_bytes = LIGMA_VALUES_GET_INT (return_vals, 1);
+      profile_data = LIGMA_VALUES_DUP_UINT8_ARRAY (return_vals, 2);
     }
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return profile_data;
 }
 
 /**
- * _gimp_image_set_color_profile:
+ * _ligma_image_set_color_profile:
  * @image: The image.
  * @num_bytes: Number of bytes in the color_profile array.
  * @color_profile: (array length=num_bytes) (element-type guint8): The new serialized color profile.
@@ -150,35 +150,35 @@ _gimp_image_get_effective_color_profile (GimpImage *image,
  * Since: 2.10
  **/
 gboolean
-_gimp_image_set_color_profile (GimpImage    *image,
+_ligma_image_set_color_profile (LigmaImage    *image,
                                gint          num_bytes,
                                const guint8 *color_profile)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_INT, num_bytes,
-                                          GIMP_TYPE_UINT8_ARRAY, NULL,
+                                          LIGMA_TYPE_UINT8_ARRAY, NULL,
                                           G_TYPE_NONE);
-  gimp_value_set_uint8_array (gimp_value_array_index (args, 2), color_profile, num_bytes);
+  ligma_value_set_uint8_array (ligma_value_array_index (args, 2), color_profile, num_bytes);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-set-color-profile",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-set-color-profile",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_set_color_profile_from_file:
+ * ligma_image_set_color_profile_from_file:
  * @image: The image.
  * @file: The file containing the new color profile.
  *
@@ -196,32 +196,32 @@ _gimp_image_set_color_profile (GimpImage    *image,
  * Since: 2.10
  **/
 gboolean
-gimp_image_set_color_profile_from_file (GimpImage *image,
+ligma_image_set_color_profile_from_file (LigmaImage *image,
                                         GFile     *file)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_FILE, file,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-set-color-profile-from-file",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-set-color-profile-from-file",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * _gimp_image_get_simulation_profile:
+ * _ligma_image_get_simulation_profile:
  * @image: The image.
  * @num_bytes: (out): Number of bytes in the color_profile array.
  *
@@ -237,37 +237,37 @@ gimp_image_set_color_profile_from_file (GimpImage *image,
  * Since: 3.0
  **/
 guint8 *
-_gimp_image_get_simulation_profile (GimpImage *image,
+_ligma_image_get_simulation_profile (LigmaImage *image,
                                     gint      *num_bytes)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   guint8 *profile_data = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-get-simulation-profile",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-get-simulation-profile",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
   *num_bytes = 0;
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
     {
-      *num_bytes = GIMP_VALUES_GET_INT (return_vals, 1);
-      profile_data = GIMP_VALUES_DUP_UINT8_ARRAY (return_vals, 2);
+      *num_bytes = LIGMA_VALUES_GET_INT (return_vals, 1);
+      profile_data = LIGMA_VALUES_DUP_UINT8_ARRAY (return_vals, 2);
     }
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return profile_data;
 }
 
 /**
- * _gimp_image_set_simulation_profile:
+ * _ligma_image_set_simulation_profile:
  * @image: The image.
  * @num_bytes: Number of bytes in the color_profile array.
  * @color_profile: (array length=num_bytes) (element-type guint8): The new serialized simulation color profile.
@@ -283,35 +283,35 @@ _gimp_image_get_simulation_profile (GimpImage *image,
  * Since: 3.0
  **/
 gboolean
-_gimp_image_set_simulation_profile (GimpImage    *image,
+_ligma_image_set_simulation_profile (LigmaImage    *image,
                                     gint          num_bytes,
                                     const guint8 *color_profile)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_INT, num_bytes,
-                                          GIMP_TYPE_UINT8_ARRAY, NULL,
+                                          LIGMA_TYPE_UINT8_ARRAY, NULL,
                                           G_TYPE_NONE);
-  gimp_value_set_uint8_array (gimp_value_array_index (args, 2), color_profile, num_bytes);
+  ligma_value_set_uint8_array (ligma_value_array_index (args, 2), color_profile, num_bytes);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-set-simulation-profile",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-set-simulation-profile",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_set_simulation_profile_from_file:
+ * ligma_image_set_simulation_profile_from_file:
  * @image: The image.
  * @file: The file containing the new simulation color profile.
  *
@@ -326,32 +326,32 @@ _gimp_image_set_simulation_profile (GimpImage    *image,
  * Since: 3.0
  **/
 gboolean
-gimp_image_set_simulation_profile_from_file (GimpImage *image,
+ligma_image_set_simulation_profile_from_file (LigmaImage *image,
                                              GFile     *file)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_FILE, file,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-set-simulation-profile-from-file",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-set-simulation-profile-from-file",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_get_simulation_intent:
+ * ligma_image_get_simulation_intent:
  * @image: The image.
  *
  * Returns the image's simulation rendering intent
@@ -362,34 +362,34 @@ gimp_image_set_simulation_profile_from_file (GimpImage *image,
  *
  * Since: 3.0
  **/
-GimpColorRenderingIntent
-gimp_image_get_simulation_intent (GimpImage *image)
+LigmaColorRenderingIntent
+ligma_image_get_simulation_intent (LigmaImage *image)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpColorRenderingIntent intent = 0;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaColorRenderingIntent intent = 0;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-get-simulation-intent",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-get-simulation-intent",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    intent = GIMP_VALUES_GET_ENUM (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    intent = LIGMA_VALUES_GET_ENUM (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return intent;
 }
 
 /**
- * gimp_image_set_simulation_intent:
+ * ligma_image_set_simulation_intent:
  * @image: The image.
- * @intent: A GimpColorRenderingIntent.
+ * @intent: A LigmaColorRenderingIntent.
  *
  * Sets the image's simulation rendering intent
  *
@@ -400,32 +400,32 @@ gimp_image_get_simulation_intent (GimpImage *image)
  * Since: 3.0
  **/
 gboolean
-gimp_image_set_simulation_intent (GimpImage                *image,
-                                  GimpColorRenderingIntent  intent)
+ligma_image_set_simulation_intent (LigmaImage                *image,
+                                  LigmaColorRenderingIntent  intent)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
-                                          GIMP_TYPE_COLOR_RENDERING_INTENT, intent,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
+                                          LIGMA_TYPE_COLOR_RENDERING_INTENT, intent,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-set-simulation-intent",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-set-simulation-intent",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_get_simulation_bpc:
+ * ligma_image_get_simulation_bpc:
  * @image: The image.
  *
  * Returns whether the image has Black Point Compensation enabled for
@@ -439,31 +439,31 @@ gimp_image_set_simulation_intent (GimpImage                *image,
  * Since: 3.0
  **/
 gboolean
-gimp_image_get_simulation_bpc (GimpImage *image)
+ligma_image_get_simulation_bpc (LigmaImage *image)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean bpc = FALSE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-get-simulation-bpc",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-get-simulation-bpc",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    bpc = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    bpc = LIGMA_VALUES_GET_BOOLEAN (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return bpc;
 }
 
 /**
- * gimp_image_set_simulation_bpc:
+ * ligma_image_set_simulation_bpc:
  * @image: The image.
  * @bpc: The Black Point Compensation status.
  *
@@ -478,32 +478,32 @@ gimp_image_get_simulation_bpc (GimpImage *image)
  * Since: 3.0
  **/
 gboolean
-gimp_image_set_simulation_bpc (GimpImage *image,
+ligma_image_set_simulation_bpc (LigmaImage *image,
                                gboolean   bpc)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_BOOLEAN, bpc,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-set-simulation-bpc",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-set-simulation-bpc",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * _gimp_image_convert_color_profile:
+ * _ligma_image_convert_color_profile:
  * @image: The image.
  * @num_bytes: Number of bytes in the color_profile array.
  * @color_profile: (array length=num_bytes) (element-type guint8): The serialized color profile.
@@ -522,39 +522,39 @@ gimp_image_set_simulation_bpc (GimpImage *image,
  * Since: 2.10
  **/
 gboolean
-_gimp_image_convert_color_profile (GimpImage                *image,
+_ligma_image_convert_color_profile (LigmaImage                *image,
                                    gint                      num_bytes,
                                    const guint8             *color_profile,
-                                   GimpColorRenderingIntent  intent,
+                                   LigmaColorRenderingIntent  intent,
                                    gboolean                  bpc)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_INT, num_bytes,
-                                          GIMP_TYPE_UINT8_ARRAY, NULL,
-                                          GIMP_TYPE_COLOR_RENDERING_INTENT, intent,
+                                          LIGMA_TYPE_UINT8_ARRAY, NULL,
+                                          LIGMA_TYPE_COLOR_RENDERING_INTENT, intent,
                                           G_TYPE_BOOLEAN, bpc,
                                           G_TYPE_NONE);
-  gimp_value_set_uint8_array (gimp_value_array_index (args, 2), color_profile, num_bytes);
+  ligma_value_set_uint8_array (ligma_value_array_index (args, 2), color_profile, num_bytes);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-convert-color-profile",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-convert-color-profile",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_image_convert_color_profile_from_file:
+ * ligma_image_convert_color_profile_from_file:
  * @image: The image.
  * @file: The file containing the new color profile.
  * @intent: Rendering intent.
@@ -572,30 +572,30 @@ _gimp_image_convert_color_profile (GimpImage                *image,
  * Since: 2.10
  **/
 gboolean
-gimp_image_convert_color_profile_from_file (GimpImage                *image,
+ligma_image_convert_color_profile_from_file (LigmaImage                *image,
                                             GFile                    *file,
-                                            GimpColorRenderingIntent  intent,
+                                            LigmaColorRenderingIntent  intent,
                                             gboolean                  bpc)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_FILE, file,
-                                          GIMP_TYPE_COLOR_RENDERING_INTENT, intent,
+                                          LIGMA_TYPE_COLOR_RENDERING_INTENT, intent,
                                           G_TYPE_BOOLEAN, bpc,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-image-convert-color-profile-from-file",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-image-convert-color-profile-from-file",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }

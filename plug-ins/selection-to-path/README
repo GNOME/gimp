@@ -1,6 +1,6 @@
 
 
-Andy Thomas (alt@gimp.org) 9th July 1999
+Andy Thomas (alt@ligma.org) 9th July 1999
 
 
 This plug-in will take a selection and convert it into a path.
@@ -23,7 +23,7 @@ README from the limn part of the package.
 
 I thank Karl & Kathryn for producing such a well written set of utilities.
 
-I have just added a gimp front-end onto them. 
+I have just added a ligma front-end onto them. 
 
 
 How to use it.
@@ -48,4 +48,4 @@ Have fun!
 Andy.
 
 PS. Please direct any bugs etc found in this plugin to either
-myself or the gimp-developer mailing list. Thank.
+myself or the ligma-developer mailing list. Thank.

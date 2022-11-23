@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1999 Spencer Kimball and Peter Mattis
  *
- * gimp-contexts.c
+ * ligma-contexts.c
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,69 +22,69 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "core-types.h"
 
-#include "gimp.h"
-#include "gimperror.h"
-#include "gimp-contexts.h"
-#include "gimpcontext.h"
+#include "ligma.h"
+#include "ligmaerror.h"
+#include "ligma-contexts.h"
+#include "ligmacontext.h"
 
-#include "config/gimpconfig-file.h"
+#include "config/ligmaconfig-file.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 void
-gimp_contexts_init (Gimp *gimp)
+ligma_contexts_init (Ligma *ligma)
 {
-  GimpContext *context;
+  LigmaContext *context;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
 
   /*  the default context contains the user's saved preferences
    *
    *  TODO: load from disk
    */
-  context = gimp_context_new (gimp, "Default", NULL);
-  gimp_set_default_context (gimp, context);
+  context = ligma_context_new (ligma, "Default", NULL);
+  ligma_set_default_context (ligma, context);
   g_object_unref (context);
 
   /*  the initial user_context is a straight copy of the default context
    */
-  context = gimp_context_new (gimp, "User", context);
-  gimp_set_user_context (gimp, context);
+  context = ligma_context_new (ligma, "User", context);
+  ligma_set_user_context (ligma, context);
   g_object_unref (context);
 }
 
 void
-gimp_contexts_exit (Gimp *gimp)
+ligma_contexts_exit (Ligma *ligma)
 {
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
 
-  gimp_set_user_context (gimp, NULL);
-  gimp_set_default_context (gimp, NULL);
+  ligma_set_user_context (ligma, NULL);
+  ligma_set_default_context (ligma, NULL);
 }
 
 gboolean
-gimp_contexts_load (Gimp    *gimp,
+ligma_contexts_load (Ligma    *ligma,
                     GError **error)
 {
   GFile    *file;
   GError   *my_error = NULL;
   gboolean  success;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  file = gimp_directory_file ("contextrc", NULL);
+  file = ligma_directory_file ("contextrc", NULL);
 
-  if (gimp->be_verbose)
-    g_print ("Parsing '%s'\n", gimp_file_get_utf8_name (file));
+  if (ligma->be_verbose)
+    g_print ("Parsing '%s'\n", ligma_file_get_utf8_name (file));
 
-  success = gimp_config_deserialize_file (GIMP_CONFIG (gimp_get_user_context (gimp)),
+  success = ligma_config_deserialize_file (LIGMA_CONFIG (ligma_get_user_context (ligma)),
                                           file,
                                           NULL, &my_error);
 
@@ -92,7 +92,7 @@ gimp_contexts_load (Gimp    *gimp,
 
   if (! success)
     {
-      if (my_error->code == GIMP_CONFIG_ERROR_OPEN_ENOENT)
+      if (my_error->code == LIGMA_CONFIG_ERROR_OPEN_ENOENT)
         {
           g_clear_error (&my_error);
           success = TRUE;
@@ -107,23 +107,23 @@ gimp_contexts_load (Gimp    *gimp,
 }
 
 gboolean
-gimp_contexts_save (Gimp    *gimp,
+ligma_contexts_save (Ligma    *ligma,
                     GError **error)
 {
   GFile    *file;
   gboolean  success;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  file = gimp_directory_file ("contextrc", NULL);
+  file = ligma_directory_file ("contextrc", NULL);
 
-  if (gimp->be_verbose)
-    g_print ("Writing '%s'\n", gimp_file_get_utf8_name (file));
+  if (ligma->be_verbose)
+    g_print ("Writing '%s'\n", ligma_file_get_utf8_name (file));
 
-  success = gimp_config_serialize_to_file (GIMP_CONFIG (gimp_get_user_context (gimp)),
+  success = ligma_config_serialize_to_file (LIGMA_CONFIG (ligma_get_user_context (ligma)),
                                            file,
-                                           "GIMP user context",
+                                           "LIGMA user context",
                                            "end of user context",
                                            NULL, error);
 
@@ -133,25 +133,25 @@ gimp_contexts_save (Gimp    *gimp,
 }
 
 gboolean
-gimp_contexts_clear (Gimp    *gimp,
+ligma_contexts_clear (Ligma    *ligma,
                      GError **error)
 {
   GFile    *file;
   GError   *my_error = NULL;
   gboolean  success  = TRUE;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), FALSE);
 
-  file = gimp_directory_file ("contextrc", NULL);
+  file = ligma_directory_file ("contextrc", NULL);
 
   if (! g_file_delete (file, NULL, &my_error) &&
       my_error->code != G_IO_ERROR_NOT_FOUND)
     {
       success = FALSE;
 
-      g_set_error (error, GIMP_ERROR, GIMP_FAILED,
+      g_set_error (error, LIGMA_ERROR, LIGMA_FAILED,
                    _("Deleting \"%s\" failed: %s"),
-                   gimp_file_get_utf8_name (file), my_error->message);
+                   ligma_file_get_utf8_name (file), my_error->message);
     }
 
   g_clear_error (&my_error);

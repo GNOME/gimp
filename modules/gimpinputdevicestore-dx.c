@@ -1,9 +1,9 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpinputdevicestore-dx.c
+ * ligmainputdevicestore-dx.c
  * Input device store based on DirectX.
- * Copyright (C) 2007  Sven Neumann <sven@gimp.org>
+ * Copyright (C) 2007  Sven Neumann <sven@ligma.org>
  * Copyright (C) 2007  Tor Lillqvist <tml@novell.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -39,9 +39,9 @@
 
 #include <gdk/gdkwin32.h>
 
-#include "libgimpmodule/gimpmodule.h"
+#include "libligmamodule/ligmamodule.h"
 
-#include "gimpinputdevicestore.h"
+#include "ligmainputdevicestore.h"
 
 
 enum
@@ -59,9 +59,9 @@ enum
   LAST_SIGNAL
 };
 
-typedef struct _GimpInputDeviceStoreClass GimpInputDeviceStoreClass;
+typedef struct _LigmaInputDeviceStoreClass LigmaInputDeviceStoreClass;
 
-struct _GimpInputDeviceStore
+struct _LigmaInputDeviceStore
 {
   GtkListStore    parent_instance;
 
@@ -73,39 +73,39 @@ struct _GimpInputDeviceStore
 };
 
 
-struct _GimpInputDeviceStoreClass
+struct _LigmaInputDeviceStoreClass
 {
   GtkListStoreClass   parent_class;
 
-  void  (* device_added)   (GimpInputDeviceStore *store,
+  void  (* device_added)   (LigmaInputDeviceStore *store,
                             const gchar          *udi);
-  void  (* device_removed) (GimpInputDeviceStore *store,
+  void  (* device_removed) (LigmaInputDeviceStore *store,
                             const gchar          *udi);
 };
 
 
-static void      gimp_input_device_store_finalize (GObject              *object);
+static void      ligma_input_device_store_finalize (GObject              *object);
 
-static gboolean  gimp_input_device_store_add      (GimpInputDeviceStore *store,
+static gboolean  ligma_input_device_store_add      (LigmaInputDeviceStore *store,
                                                    const GUID           *guid);
-static gboolean  gimp_input_device_store_remove   (GimpInputDeviceStore *store,
+static gboolean  ligma_input_device_store_remove   (LigmaInputDeviceStore *store,
                                                    const gchar          *udi);
 
 
-G_DEFINE_DYNAMIC_TYPE (GimpInputDeviceStore, gimp_input_device_store,
+G_DEFINE_DYNAMIC_TYPE (LigmaInputDeviceStore, ligma_input_device_store,
                        GTK_TYPE_LIST_STORE)
 
 static guint store_signals[LAST_SIGNAL] = { 0 };
 
 
 void
-gimp_input_device_store_register_types (GTypeModule *module)
+ligma_input_device_store_register_types (GTypeModule *module)
 {
-  gimp_input_device_store_register_type (module);
+  ligma_input_device_store_register_type (module);
 }
 
 static void
-gimp_input_device_store_class_init (GimpInputDeviceStoreClass *klass)
+ligma_input_device_store_class_init (LigmaInputDeviceStoreClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
@@ -113,7 +113,7 @@ gimp_input_device_store_class_init (GimpInputDeviceStoreClass *klass)
     g_signal_new ("device-added",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpInputDeviceStoreClass, device_added),
+                  G_STRUCT_OFFSET (LigmaInputDeviceStoreClass, device_added),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1, G_TYPE_STRING);
 
@@ -121,18 +121,18 @@ gimp_input_device_store_class_init (GimpInputDeviceStoreClass *klass)
     g_signal_new ("device-removed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpInputDeviceStoreClass, device_removed),
+                  G_STRUCT_OFFSET (LigmaInputDeviceStoreClass, device_removed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1, G_TYPE_STRING);
 
-  object_class->finalize = gimp_input_device_store_finalize;
+  object_class->finalize = ligma_input_device_store_finalize;
 
   klass->device_added    = NULL;
   klass->device_removed  = NULL;
 }
 
 static void
-gimp_input_device_store_class_finalize (GimpInputDeviceStoreClass *klass)
+ligma_input_device_store_class_finalize (LigmaInputDeviceStoreClass *klass)
 {
 }
 
@@ -142,7 +142,7 @@ aux_window_filter (GdkXEvent *xevent,
                    gpointer   data)
 {
 #if 0
-  GimpInputDeviceStore *store = (GimpInputDeviceStore *) data;
+  LigmaInputDeviceStore *store = (LigmaInputDeviceStore *) data;
   const MSG *msg = (MSG *) xevent;
 
   /* Look for deviced being added or removed */
@@ -155,7 +155,7 @@ aux_window_filter (GdkXEvent *xevent,
 }
 
 static GdkWindow *
-create_aux_window (GimpInputDeviceStore *store)
+create_aux_window (LigmaInputDeviceStore *store)
 {
   GdkWindowAttr wa;
   GdkWindow *retval;
@@ -181,15 +181,15 @@ static BOOL CALLBACK
 enum_devices (const DIDEVICEINSTANCEW *di,
               void                    *user_data)
 {
-  GimpInputDeviceStore *store = (GimpInputDeviceStore *) user_data;
+  LigmaInputDeviceStore *store = (LigmaInputDeviceStore *) user_data;
 
-  gimp_input_device_store_add (store, &di->guidInstance);
+  ligma_input_device_store_add (store, &di->guidInstance);
 
   return DIENUM_CONTINUE;
 }
 
 static void
-gimp_input_device_store_init (GimpInputDeviceStore *store)
+ligma_input_device_store_init (LigmaInputDeviceStore *store)
 {
   GType   types[] = { G_TYPE_STRING, G_TYPE_STRING, G_TYPE_POINTER };
   HRESULT hresult;
@@ -205,27 +205,27 @@ gimp_input_device_store_init (GimpInputDeviceStore *store)
                                    G_N_ELEMENTS (types), types);
 
   if (!GetModuleHandleEx (GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS,
-                          (LPCTSTR) &gimp_input_device_store_init,
+                          (LPCTSTR) &ligma_input_device_store_init,
                           &thismodule))
     return;
 
   if ((store->window = create_aux_window (store)) == NULL)
     {
-      g_set_error_literal (&store->error, GIMP_MODULE_ERROR, GIMP_MODULE_FAILED,
+      g_set_error_literal (&store->error, LIGMA_MODULE_ERROR, LIGMA_MODULE_FAILED,
 			   "Could not create aux window");
       return;
     }
 
   if ((dinput8 = LoadLibrary ("dinput8.dll")) == NULL)
     {
-      g_set_error_literal (&store->error, GIMP_MODULE_ERROR, GIMP_MODULE_FAILED,
+      g_set_error_literal (&store->error, LIGMA_MODULE_ERROR, LIGMA_MODULE_FAILED,
 			   "Could not load dinput8.dll");
       return;
     }
 
   if ((p_DirectInput8Create = (t_DirectInput8Create) GetProcAddress (dinput8, "DirectInput8Create")) == NULL)
     {
-      g_set_error_literal (&store->error, GIMP_MODULE_ERROR, GIMP_MODULE_FAILED,
+      g_set_error_literal (&store->error, LIGMA_MODULE_ERROR, LIGMA_MODULE_FAILED,
 			   "Could not find DirectInput8Create in dinput8.dll");
       return;
     }
@@ -236,7 +236,7 @@ gimp_input_device_store_init (GimpInputDeviceStore *store)
                                                   (LPVOID *) &store->directinput8,
                                                   NULL))))
     {
-      g_set_error (&store->error, GIMP_MODULE_ERROR, GIMP_MODULE_FAILED,
+      g_set_error (&store->error, LIGMA_MODULE_ERROR, LIGMA_MODULE_FAILED,
 		   "DirectInput8Create failed: %s",
 		   g_win32_error_message (hresult));
       return;
@@ -248,7 +248,7 @@ gimp_input_device_store_init (GimpInputDeviceStore *store)
                                                     store,
                                                     DIEDFL_ATTACHEDONLY))))
     {
-      g_set_error (&store->error, GIMP_MODULE_ERROR, GIMP_MODULE_FAILED,
+      g_set_error (&store->error, LIGMA_MODULE_ERROR, LIGMA_MODULE_FAILED,
 		   "IDirectInput8::EnumDevices failed: %s",
 		   g_win32_error_message (hresult));
       return;
@@ -256,9 +256,9 @@ gimp_input_device_store_init (GimpInputDeviceStore *store)
 }
 
 static void
-gimp_input_device_store_finalize (GObject *object)
+ligma_input_device_store_finalize (GObject *object)
 {
-  GimpInputDeviceStore *store = GIMP_INPUT_DEVICE_STORE (object);
+  LigmaInputDeviceStore *store = LIGMA_INPUT_DEVICE_STORE (object);
 
   if (store->directinput8)
     {
@@ -272,11 +272,11 @@ gimp_input_device_store_finalize (GObject *object)
       store->error = NULL;
     }
 
-  G_OBJECT_CLASS (gimp_input_device_store_parent_class)->finalize (object);
+  G_OBJECT_CLASS (ligma_input_device_store_parent_class)->finalize (object);
 }
 
 static gboolean
-gimp_input_device_store_lookup (GimpInputDeviceStore *store,
+ligma_input_device_store_lookup (LigmaInputDeviceStore *store,
                                 const gchar          *guid,
                                 GtkTreeIter          *iter)
 {
@@ -308,7 +308,7 @@ gimp_input_device_store_lookup (GimpInputDeviceStore *store,
 
 /*  insert in alphabetic order  */
 static void
-gimp_input_device_store_insert (GimpInputDeviceStore  *store,
+ligma_input_device_store_insert (LigmaInputDeviceStore  *store,
                                 const gchar           *guid,
                                 const gchar           *label,
                                 LPDIRECTINPUTDEVICE8W  didevice8)
@@ -346,7 +346,7 @@ gimp_input_device_store_insert (GimpInputDeviceStore  *store,
 }
 
 static gboolean
-gimp_input_device_store_add (GimpInputDeviceStore *store,
+ligma_input_device_store_add (LigmaInputDeviceStore *store,
                              const GUID           *guid)
 {
   HRESULT               hresult;
@@ -392,18 +392,18 @@ gimp_input_device_store_add (GimpInputDeviceStore *store,
     }
 
   name = g_utf16_to_utf8 (di.tszInstanceName, -1, NULL, NULL, NULL);
-  gimp_input_device_store_insert (store, guidstring, name, didevice8);
+  ligma_input_device_store_insert (store, guidstring, name, didevice8);
 
   return added;
 }
 
 static gboolean
-gimp_input_device_store_remove (GimpInputDeviceStore *store,
+ligma_input_device_store_remove (LigmaInputDeviceStore *store,
                                 const gchar          *guid)
 {
   GtkTreeIter  iter;
 
-  if (gimp_input_device_store_lookup (store, guid, &iter))
+  if (ligma_input_device_store_lookup (store, guid, &iter))
     {
       gtk_list_store_remove (GTK_LIST_STORE (store), &iter);
       return TRUE;
@@ -415,24 +415,24 @@ gimp_input_device_store_remove (GimpInputDeviceStore *store,
 #if 0
 
 static void
-gimp_input_device_store_device_added (LibHalContext *ctx,
+ligma_input_device_store_device_added (LibHalContext *ctx,
                                       const char    *guid)
 {
-  GimpInputDeviceStore *store = libhal_ctx_get_user_data (ctx);
+  LigmaInputDeviceStore *store = libhal_ctx_get_user_data (ctx);
 
-  if (gimp_input_device_store_add (store, udi))
+  if (ligma_input_device_store_add (store, udi))
     {
       g_signal_emit (store, store_signals[DEVICE_ADDED], 0, udi);
     }
 }
 
 static void
-gimp_input_device_store_device_removed (LibHalContext *ctx,
+ligma_input_device_store_device_removed (LibHalContext *ctx,
                                         const char    *udi)
 {
-  GimpInputDeviceStore *store = libhal_ctx_get_user_data (ctx);
+  LigmaInputDeviceStore *store = libhal_ctx_get_user_data (ctx);
 
-  if (gimp_input_device_store_remove (store, udi))
+  if (ligma_input_device_store_remove (store, udi))
     {
       g_signal_emit (store, store_signals[DEVICE_REMOVED], 0, udi);
     }
@@ -440,26 +440,26 @@ gimp_input_device_store_device_removed (LibHalContext *ctx,
 
 #endif
 
-GimpInputDeviceStore *
-gimp_input_device_store_new (void)
+LigmaInputDeviceStore *
+ligma_input_device_store_new (void)
 {
-  return g_object_new (GIMP_TYPE_INPUT_DEVICE_STORE, NULL);
+  return g_object_new (LIGMA_TYPE_INPUT_DEVICE_STORE, NULL);
 }
 
 gchar *
-gimp_input_device_store_get_device_file (GimpInputDeviceStore *store,
+ligma_input_device_store_get_device_file (LigmaInputDeviceStore *store,
                                          const gchar          *udi)
 {
   GtkTreeIter iter;
   GValue      value = G_VALUE_INIT;
 
-  g_return_val_if_fail (GIMP_IS_INPUT_DEVICE_STORE (store), NULL);
+  g_return_val_if_fail (LIGMA_IS_INPUT_DEVICE_STORE (store), NULL);
   g_return_val_if_fail (udi != NULL, NULL);
 
   if (! store->directinput8)
     return NULL;
 
-  if (gimp_input_device_store_lookup (store, udi, &iter))
+  if (ligma_input_device_store_lookup (store, udi, &iter))
     {
       gtk_tree_model_get_value (GTK_TREE_MODEL (store),
                                 &iter, COLUMN_IDEVICE, &value);
@@ -470,9 +470,9 @@ gimp_input_device_store_get_device_file (GimpInputDeviceStore *store,
 }
 
 GError *
-gimp_input_device_store_get_error (GimpInputDeviceStore  *store)
+ligma_input_device_store_get_error (LigmaInputDeviceStore  *store)
 {
-  g_return_val_if_fail (GIMP_IS_INPUT_DEVICE_STORE (store), NULL);
+  g_return_val_if_fail (LIGMA_IS_INPUT_DEVICE_STORE (store), NULL);
 
   return store->error ? g_error_copy (store->error) : NULL;
 }

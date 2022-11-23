@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimp-babl.c
- * Copyright (C) 2012 Michael Natterer <mitch@gimp.org>
+ * ligma-babl.c
+ * Copyright (C) 2012 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,17 +26,17 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpcolor/gimpcolor.h"
+#include "libligmacolor/ligmacolor.h"
 
-#include "gimp-gegl-types.h"
+#include "ligma-gegl-types.h"
 
-#include "gimp-babl.h"
+#include "ligma-babl.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 void
-gimp_babl_init (void)
+ligma_babl_init (void)
 {
   static const gchar *babl_types[] =
   {
@@ -121,7 +121,7 @@ gimp_babl_init (void)
 }
 
 void
-gimp_babl_init_fishes (GimpInitStatusFunc status_callback)
+ligma_babl_init_fishes (LigmaInitStatusFunc status_callback)
 {
   /* create a bunch of fishes - to decrease the initial lazy
    * initialization cost for some interactions
@@ -325,7 +325,7 @@ babl_descriptions[] =
 static GHashTable *babl_description_hash = NULL;
 
 const gchar *
-gimp_babl_format_get_description (const Babl *babl)
+ligma_babl_format_get_description (const Babl *babl)
 {
   const gchar *description;
 
@@ -362,22 +362,22 @@ gimp_babl_format_get_description (const Babl *babl)
                       babl_format_get_encoding (babl), NULL);
 }
 
-GimpColorProfile *
-gimp_babl_get_builtin_color_profile (GimpImageBaseType base_type,
-                                     GimpTRCType       trc)
+LigmaColorProfile *
+ligma_babl_get_builtin_color_profile (LigmaImageBaseType base_type,
+                                     LigmaTRCType       trc)
 {
-  static GimpColorProfile *srgb_profile        = NULL;
-  static GimpColorProfile *linear_rgb_profile  = NULL;
-  static GimpColorProfile *gray_profile        = NULL;
-  static GimpColorProfile *linear_gray_profile = NULL;
+  static LigmaColorProfile *srgb_profile        = NULL;
+  static LigmaColorProfile *linear_rgb_profile  = NULL;
+  static LigmaColorProfile *gray_profile        = NULL;
+  static LigmaColorProfile *linear_gray_profile = NULL;
 
-  if (base_type == GIMP_GRAY)
+  if (base_type == LIGMA_GRAY)
     {
-      if (trc == GIMP_TRC_LINEAR)
+      if (trc == LIGMA_TRC_LINEAR)
         {
           if (! linear_gray_profile)
             {
-              linear_gray_profile = gimp_color_profile_new_d65_gray_linear ();
+              linear_gray_profile = ligma_color_profile_new_d65_gray_linear ();
               g_object_add_weak_pointer (G_OBJECT (linear_gray_profile),
                                          (gpointer) &linear_gray_profile);
             }
@@ -388,7 +388,7 @@ gimp_babl_get_builtin_color_profile (GimpImageBaseType base_type,
         {
           if (! gray_profile)
             {
-              gray_profile = gimp_color_profile_new_d65_gray_srgb_trc ();
+              gray_profile = ligma_color_profile_new_d65_gray_srgb_trc ();
               g_object_add_weak_pointer (G_OBJECT (gray_profile),
                                          (gpointer) &gray_profile);
             }
@@ -398,11 +398,11 @@ gimp_babl_get_builtin_color_profile (GimpImageBaseType base_type,
     }
   else
     {
-      if (trc == GIMP_TRC_LINEAR)
+      if (trc == LIGMA_TRC_LINEAR)
         {
           if (! linear_rgb_profile)
             {
-              linear_rgb_profile = gimp_color_profile_new_rgb_srgb_linear ();
+              linear_rgb_profile = ligma_color_profile_new_rgb_srgb_linear ();
               g_object_add_weak_pointer (G_OBJECT (linear_rgb_profile),
                                          (gpointer) &linear_rgb_profile);
             }
@@ -413,7 +413,7 @@ gimp_babl_get_builtin_color_profile (GimpImageBaseType base_type,
         {
           if (! srgb_profile)
             {
-              srgb_profile = gimp_color_profile_new_rgb_srgb ();
+              srgb_profile = ligma_color_profile_new_rgb_srgb ();
               g_object_add_weak_pointer (G_OBJECT (srgb_profile),
                                          (gpointer) &srgb_profile);
             }
@@ -423,44 +423,44 @@ gimp_babl_get_builtin_color_profile (GimpImageBaseType base_type,
     }
 }
 
-GimpColorProfile *
-gimp_babl_format_get_color_profile (const Babl *format)
+LigmaColorProfile *
+ligma_babl_format_get_color_profile (const Babl *format)
 {
   const Babl       *non_linear_format;
   const gchar      *icc;
   gint              icc_len;
-  GimpColorProfile *profile;
-  GimpColorProfile *retval = NULL;
+  LigmaColorProfile *profile;
+  LigmaColorProfile *retval = NULL;
 
   g_return_val_if_fail (format != NULL, NULL);
 
-  if (gimp_babl_format_get_trc (format) == GIMP_TRC_NON_LINEAR)
+  if (ligma_babl_format_get_trc (format) == LIGMA_TRC_NON_LINEAR)
     {
       non_linear_format = format;
     }
   else
     {
-      GimpImageBaseType base_type = GIMP_RGB;
-      GimpComponentType component_type;
+      LigmaImageBaseType base_type = LIGMA_RGB;
+      LigmaComponentType component_type;
 
-      switch (gimp_babl_format_get_base_type (format))
+      switch (ligma_babl_format_get_base_type (format))
         {
-        case GIMP_RGB:
-        case GIMP_INDEXED:
-          base_type = GIMP_RGB;
+        case LIGMA_RGB:
+        case LIGMA_INDEXED:
+          base_type = LIGMA_RGB;
           break;
 
-        case GIMP_GRAY:
-          base_type = GIMP_GRAY;
+        case LIGMA_GRAY:
+          base_type = LIGMA_GRAY;
           break;
         }
 
-      component_type = gimp_babl_format_get_component_type (format);
+      component_type = ligma_babl_format_get_component_type (format);
 
       non_linear_format =
-        gimp_babl_format (base_type,
-                          gimp_babl_precision (component_type,
-                                               GIMP_TRC_NON_LINEAR),
+        ligma_babl_format (base_type,
+                          ligma_babl_precision (component_type,
+                                               LIGMA_TRC_NON_LINEAR),
                           babl_format_has_alpha (format),
                           babl_format_get_space (format));
     }
@@ -468,21 +468,21 @@ gimp_babl_format_get_color_profile (const Babl *format)
   icc = babl_space_get_icc (babl_format_get_space (non_linear_format),
                             &icc_len);
 
-  profile = gimp_color_profile_new_from_icc_profile ((const guint8 *) icc,
+  profile = ligma_color_profile_new_from_icc_profile ((const guint8 *) icc,
                                                      icc_len, NULL);
 
-  switch (gimp_babl_format_get_trc (format))
+  switch (ligma_babl_format_get_trc (format))
     {
-    case GIMP_TRC_LINEAR:
-      retval = gimp_color_profile_new_linear_from_color_profile (profile);
+    case LIGMA_TRC_LINEAR:
+      retval = ligma_color_profile_new_linear_from_color_profile (profile);
       break;
 
-    case GIMP_TRC_NON_LINEAR:
+    case LIGMA_TRC_NON_LINEAR:
       retval = g_object_ref (profile);
       break;
 
-    case GIMP_TRC_PERCEPTUAL:
-      retval = gimp_color_profile_new_srgb_trc_from_color_profile (profile);
+    case LIGMA_TRC_PERCEPTUAL:
+      retval = ligma_color_profile_new_srgb_trc_from_color_profile (profile);
       break;
     }
 
@@ -491,8 +491,8 @@ gimp_babl_format_get_color_profile (const Babl *format)
   return retval;
 }
 
-GimpImageBaseType
-gimp_babl_format_get_base_type (const Babl *format)
+LigmaImageBaseType
+ligma_babl_format_get_base_type (const Babl *format)
 {
   const gchar *name;
 
@@ -507,7 +507,7 @@ gimp_babl_format_get_base_type (const Babl *format)
       ! strcmp (name, "Y'A") ||
       ! strcmp (name, "Y~A"))
     {
-      return GIMP_GRAY;
+      return LIGMA_GRAY;
     }
   else if (! strcmp (name, "RGB")        ||
            ! strcmp (name, "R'G'B'")     ||
@@ -519,18 +519,18 @@ gimp_babl_format_get_base_type (const Babl *format)
            ! strcmp (name, "R'aG'aB'aA") ||
            ! strcmp (name, "R~aG~aB~aA"))
     {
-      return GIMP_RGB;
+      return LIGMA_RGB;
     }
   else if (babl_format_is_palette (format))
     {
-      return GIMP_INDEXED;
+      return LIGMA_INDEXED;
     }
 
   g_return_val_if_reached (-1);
 }
 
-GimpComponentType
-gimp_babl_format_get_component_type (const Babl *format)
+LigmaComponentType
+ligma_babl_format_get_component_type (const Babl *format)
 {
   const Babl *type;
 
@@ -539,23 +539,23 @@ gimp_babl_format_get_component_type (const Babl *format)
   type = babl_format_get_type (format, 0);
 
   if (type == babl_type ("u8"))
-    return GIMP_COMPONENT_TYPE_U8;
+    return LIGMA_COMPONENT_TYPE_U8;
   else if (type == babl_type ("u16"))
-    return GIMP_COMPONENT_TYPE_U16;
+    return LIGMA_COMPONENT_TYPE_U16;
   else if (type == babl_type ("u32"))
-    return GIMP_COMPONENT_TYPE_U32;
+    return LIGMA_COMPONENT_TYPE_U32;
   else if (type == babl_type ("half"))
-    return GIMP_COMPONENT_TYPE_HALF;
+    return LIGMA_COMPONENT_TYPE_HALF;
   else if (type == babl_type ("float"))
-    return GIMP_COMPONENT_TYPE_FLOAT;
+    return LIGMA_COMPONENT_TYPE_FLOAT;
   else if (type == babl_type ("double"))
-    return GIMP_COMPONENT_TYPE_DOUBLE;
+    return LIGMA_COMPONENT_TYPE_DOUBLE;
 
   g_return_val_if_reached (-1);
 }
 
-GimpPrecision
-gimp_babl_format_get_precision (const Babl *format)
+LigmaPrecision
+ligma_babl_format_get_precision (const Babl *format)
 {
   const Babl *type;
 
@@ -563,59 +563,59 @@ gimp_babl_format_get_precision (const Babl *format)
 
   type = babl_format_get_type (format, 0);
 
-  switch (gimp_babl_format_get_trc (format))
+  switch (ligma_babl_format_get_trc (format))
     {
-    case GIMP_TRC_LINEAR:
+    case LIGMA_TRC_LINEAR:
       if (type == babl_type ("u8"))
-        return GIMP_PRECISION_U8_LINEAR;
+        return LIGMA_PRECISION_U8_LINEAR;
       else if (type == babl_type ("u16"))
-        return GIMP_PRECISION_U16_LINEAR;
+        return LIGMA_PRECISION_U16_LINEAR;
       else if (type == babl_type ("u32"))
-        return GIMP_PRECISION_U32_LINEAR;
+        return LIGMA_PRECISION_U32_LINEAR;
       else if (type == babl_type ("half"))
-        return GIMP_PRECISION_HALF_LINEAR;
+        return LIGMA_PRECISION_HALF_LINEAR;
       else if (type == babl_type ("float"))
-        return GIMP_PRECISION_FLOAT_LINEAR;
+        return LIGMA_PRECISION_FLOAT_LINEAR;
       else if (type == babl_type ("double"))
-        return GIMP_PRECISION_DOUBLE_LINEAR;
+        return LIGMA_PRECISION_DOUBLE_LINEAR;
       break;
 
-    case GIMP_TRC_NON_LINEAR:
+    case LIGMA_TRC_NON_LINEAR:
       if (type == babl_type ("u8"))
-        return GIMP_PRECISION_U8_NON_LINEAR;
+        return LIGMA_PRECISION_U8_NON_LINEAR;
       else if (type == babl_type ("u16"))
-        return GIMP_PRECISION_U16_NON_LINEAR;
+        return LIGMA_PRECISION_U16_NON_LINEAR;
       else if (type == babl_type ("u32"))
-        return GIMP_PRECISION_U32_NON_LINEAR;
+        return LIGMA_PRECISION_U32_NON_LINEAR;
       else if (type == babl_type ("half"))
-        return GIMP_PRECISION_HALF_NON_LINEAR;
+        return LIGMA_PRECISION_HALF_NON_LINEAR;
       else if (type == babl_type ("float"))
-        return GIMP_PRECISION_FLOAT_NON_LINEAR;
+        return LIGMA_PRECISION_FLOAT_NON_LINEAR;
       else if (type == babl_type ("double"))
-        return GIMP_PRECISION_DOUBLE_NON_LINEAR;
+        return LIGMA_PRECISION_DOUBLE_NON_LINEAR;
       break;
 
-    case GIMP_TRC_PERCEPTUAL:
+    case LIGMA_TRC_PERCEPTUAL:
       if (type == babl_type ("u8"))
-        return GIMP_PRECISION_U8_PERCEPTUAL;
+        return LIGMA_PRECISION_U8_PERCEPTUAL;
       else if (type == babl_type ("u16"))
-        return GIMP_PRECISION_U16_PERCEPTUAL;
+        return LIGMA_PRECISION_U16_PERCEPTUAL;
       else if (type == babl_type ("u32"))
-        return GIMP_PRECISION_U32_PERCEPTUAL;
+        return LIGMA_PRECISION_U32_PERCEPTUAL;
       else if (type == babl_type ("half"))
-        return GIMP_PRECISION_HALF_PERCEPTUAL;
+        return LIGMA_PRECISION_HALF_PERCEPTUAL;
       else if (type == babl_type ("float"))
-        return GIMP_PRECISION_FLOAT_PERCEPTUAL;
+        return LIGMA_PRECISION_FLOAT_PERCEPTUAL;
       else if (type == babl_type ("double"))
-        return GIMP_PRECISION_DOUBLE_PERCEPTUAL;
+        return LIGMA_PRECISION_DOUBLE_PERCEPTUAL;
       break;
     }
 
   g_return_val_if_reached (-1);
 }
 
-GimpTRCType
-gimp_babl_format_get_trc (const Babl *format)
+LigmaTRCType
+ligma_babl_format_get_trc (const Babl *format)
 {
   const gchar *name;
 
@@ -629,7 +629,7 @@ gimp_babl_format_get_trc (const Babl *format)
       ! strcmp (name, "RGBA") ||
       ! strcmp (name, "RaGaBaA"))
     {
-      return GIMP_TRC_LINEAR;
+      return LIGMA_TRC_LINEAR;
     }
   else if (! strcmp (name, "Y'")      ||
            ! strcmp (name, "Y'A")     ||
@@ -637,7 +637,7 @@ gimp_babl_format_get_trc (const Babl *format)
            ! strcmp (name, "R'G'B'A") ||
            ! strcmp (name, "R'aG'aB'aA"))
     {
-      return GIMP_TRC_NON_LINEAR;
+      return LIGMA_TRC_NON_LINEAR;
     }
   else if (! strcmp (name, "Y~")      ||
            ! strcmp (name, "Y~A")     ||
@@ -645,150 +645,150 @@ gimp_babl_format_get_trc (const Babl *format)
            ! strcmp (name, "R~G~B~A") ||
            ! strcmp (name, "R~aG~aB~aA"))
     {
-      return GIMP_TRC_PERCEPTUAL;
+      return LIGMA_TRC_PERCEPTUAL;
     }
   else if (babl_format_is_palette (format))
     {
-      return GIMP_TRC_NON_LINEAR;
+      return LIGMA_TRC_NON_LINEAR;
     }
 
-  g_return_val_if_reached (GIMP_TRC_LINEAR);
+  g_return_val_if_reached (LIGMA_TRC_LINEAR);
 }
 
-GimpComponentType
-gimp_babl_component_type (GimpPrecision precision)
+LigmaComponentType
+ligma_babl_component_type (LigmaPrecision precision)
 {
   switch (precision)
     {
-    case GIMP_PRECISION_U8_LINEAR:
-    case GIMP_PRECISION_U8_NON_LINEAR:
-    case GIMP_PRECISION_U8_PERCEPTUAL:
-      return GIMP_COMPONENT_TYPE_U8;
+    case LIGMA_PRECISION_U8_LINEAR:
+    case LIGMA_PRECISION_U8_NON_LINEAR:
+    case LIGMA_PRECISION_U8_PERCEPTUAL:
+      return LIGMA_COMPONENT_TYPE_U8;
 
-    case GIMP_PRECISION_U16_LINEAR:
-    case GIMP_PRECISION_U16_NON_LINEAR:
-    case GIMP_PRECISION_U16_PERCEPTUAL:
-      return GIMP_COMPONENT_TYPE_U16;
+    case LIGMA_PRECISION_U16_LINEAR:
+    case LIGMA_PRECISION_U16_NON_LINEAR:
+    case LIGMA_PRECISION_U16_PERCEPTUAL:
+      return LIGMA_COMPONENT_TYPE_U16;
 
-    case GIMP_PRECISION_U32_LINEAR:
-    case GIMP_PRECISION_U32_NON_LINEAR:
-    case GIMP_PRECISION_U32_PERCEPTUAL:
-      return GIMP_COMPONENT_TYPE_U32;
+    case LIGMA_PRECISION_U32_LINEAR:
+    case LIGMA_PRECISION_U32_NON_LINEAR:
+    case LIGMA_PRECISION_U32_PERCEPTUAL:
+      return LIGMA_COMPONENT_TYPE_U32;
 
-    case GIMP_PRECISION_HALF_LINEAR:
-    case GIMP_PRECISION_HALF_NON_LINEAR:
-    case GIMP_PRECISION_HALF_PERCEPTUAL:
-      return GIMP_COMPONENT_TYPE_HALF;
+    case LIGMA_PRECISION_HALF_LINEAR:
+    case LIGMA_PRECISION_HALF_NON_LINEAR:
+    case LIGMA_PRECISION_HALF_PERCEPTUAL:
+      return LIGMA_COMPONENT_TYPE_HALF;
 
-    case GIMP_PRECISION_FLOAT_LINEAR:
-    case GIMP_PRECISION_FLOAT_NON_LINEAR:
-    case GIMP_PRECISION_FLOAT_PERCEPTUAL:
-      return GIMP_COMPONENT_TYPE_FLOAT;
+    case LIGMA_PRECISION_FLOAT_LINEAR:
+    case LIGMA_PRECISION_FLOAT_NON_LINEAR:
+    case LIGMA_PRECISION_FLOAT_PERCEPTUAL:
+      return LIGMA_COMPONENT_TYPE_FLOAT;
 
-    case GIMP_PRECISION_DOUBLE_LINEAR:
-    case GIMP_PRECISION_DOUBLE_NON_LINEAR:
-    case GIMP_PRECISION_DOUBLE_PERCEPTUAL:
-      return GIMP_COMPONENT_TYPE_DOUBLE;
+    case LIGMA_PRECISION_DOUBLE_LINEAR:
+    case LIGMA_PRECISION_DOUBLE_NON_LINEAR:
+    case LIGMA_PRECISION_DOUBLE_PERCEPTUAL:
+      return LIGMA_COMPONENT_TYPE_DOUBLE;
     }
 
   g_return_val_if_reached (-1);
 }
 
-GimpTRCType
-gimp_babl_trc (GimpPrecision precision)
+LigmaTRCType
+ligma_babl_trc (LigmaPrecision precision)
 {
   switch (precision)
     {
-    case GIMP_PRECISION_U8_LINEAR:
-    case GIMP_PRECISION_U16_LINEAR:
-    case GIMP_PRECISION_U32_LINEAR:
-    case GIMP_PRECISION_HALF_LINEAR:
-    case GIMP_PRECISION_FLOAT_LINEAR:
-    case GIMP_PRECISION_DOUBLE_LINEAR:
-      return GIMP_TRC_LINEAR;
+    case LIGMA_PRECISION_U8_LINEAR:
+    case LIGMA_PRECISION_U16_LINEAR:
+    case LIGMA_PRECISION_U32_LINEAR:
+    case LIGMA_PRECISION_HALF_LINEAR:
+    case LIGMA_PRECISION_FLOAT_LINEAR:
+    case LIGMA_PRECISION_DOUBLE_LINEAR:
+      return LIGMA_TRC_LINEAR;
 
-    case GIMP_PRECISION_U8_NON_LINEAR:
-    case GIMP_PRECISION_U16_NON_LINEAR:
-    case GIMP_PRECISION_U32_NON_LINEAR:
-    case GIMP_PRECISION_HALF_NON_LINEAR:
-    case GIMP_PRECISION_FLOAT_NON_LINEAR:
-    case GIMP_PRECISION_DOUBLE_NON_LINEAR:
-      return GIMP_TRC_NON_LINEAR;
+    case LIGMA_PRECISION_U8_NON_LINEAR:
+    case LIGMA_PRECISION_U16_NON_LINEAR:
+    case LIGMA_PRECISION_U32_NON_LINEAR:
+    case LIGMA_PRECISION_HALF_NON_LINEAR:
+    case LIGMA_PRECISION_FLOAT_NON_LINEAR:
+    case LIGMA_PRECISION_DOUBLE_NON_LINEAR:
+      return LIGMA_TRC_NON_LINEAR;
 
-    case GIMP_PRECISION_U8_PERCEPTUAL:
-    case GIMP_PRECISION_U16_PERCEPTUAL:
-    case GIMP_PRECISION_U32_PERCEPTUAL:
-    case GIMP_PRECISION_HALF_PERCEPTUAL:
-    case GIMP_PRECISION_FLOAT_PERCEPTUAL:
-    case GIMP_PRECISION_DOUBLE_PERCEPTUAL:
-      return GIMP_TRC_PERCEPTUAL;
+    case LIGMA_PRECISION_U8_PERCEPTUAL:
+    case LIGMA_PRECISION_U16_PERCEPTUAL:
+    case LIGMA_PRECISION_U32_PERCEPTUAL:
+    case LIGMA_PRECISION_HALF_PERCEPTUAL:
+    case LIGMA_PRECISION_FLOAT_PERCEPTUAL:
+    case LIGMA_PRECISION_DOUBLE_PERCEPTUAL:
+      return LIGMA_TRC_PERCEPTUAL;
     }
 
-  g_return_val_if_reached (GIMP_TRC_LINEAR);
+  g_return_val_if_reached (LIGMA_TRC_LINEAR);
 }
 
-GimpPrecision
-gimp_babl_precision (GimpComponentType component,
-                     GimpTRCType       trc)
+LigmaPrecision
+ligma_babl_precision (LigmaComponentType component,
+                     LigmaTRCType       trc)
 {
   switch (component)
     {
-    case GIMP_COMPONENT_TYPE_U8:
+    case LIGMA_COMPONENT_TYPE_U8:
       switch (trc)
         {
-        case GIMP_TRC_LINEAR:     return GIMP_PRECISION_U8_LINEAR;
-        case GIMP_TRC_NON_LINEAR: return GIMP_PRECISION_U8_NON_LINEAR;
-        case GIMP_TRC_PERCEPTUAL: return GIMP_PRECISION_U8_PERCEPTUAL;
+        case LIGMA_TRC_LINEAR:     return LIGMA_PRECISION_U8_LINEAR;
+        case LIGMA_TRC_NON_LINEAR: return LIGMA_PRECISION_U8_NON_LINEAR;
+        case LIGMA_TRC_PERCEPTUAL: return LIGMA_PRECISION_U8_PERCEPTUAL;
         default:
           break;
         }
 
-    case GIMP_COMPONENT_TYPE_U16:
+    case LIGMA_COMPONENT_TYPE_U16:
       switch (trc)
         {
-        case GIMP_TRC_LINEAR:     return GIMP_PRECISION_U16_LINEAR;
-        case GIMP_TRC_NON_LINEAR: return GIMP_PRECISION_U16_NON_LINEAR;
-        case GIMP_TRC_PERCEPTUAL: return GIMP_PRECISION_U16_PERCEPTUAL;
+        case LIGMA_TRC_LINEAR:     return LIGMA_PRECISION_U16_LINEAR;
+        case LIGMA_TRC_NON_LINEAR: return LIGMA_PRECISION_U16_NON_LINEAR;
+        case LIGMA_TRC_PERCEPTUAL: return LIGMA_PRECISION_U16_PERCEPTUAL;
         default:
           break;
         }
 
-    case GIMP_COMPONENT_TYPE_U32:
+    case LIGMA_COMPONENT_TYPE_U32:
       switch (trc)
         {
-        case GIMP_TRC_LINEAR:     return GIMP_PRECISION_U32_LINEAR;
-        case GIMP_TRC_NON_LINEAR: return GIMP_PRECISION_U32_NON_LINEAR;
-        case GIMP_TRC_PERCEPTUAL: return GIMP_PRECISION_U32_PERCEPTUAL;
+        case LIGMA_TRC_LINEAR:     return LIGMA_PRECISION_U32_LINEAR;
+        case LIGMA_TRC_NON_LINEAR: return LIGMA_PRECISION_U32_NON_LINEAR;
+        case LIGMA_TRC_PERCEPTUAL: return LIGMA_PRECISION_U32_PERCEPTUAL;
         default:
           break;
         }
 
-    case GIMP_COMPONENT_TYPE_HALF:
+    case LIGMA_COMPONENT_TYPE_HALF:
       switch (trc)
         {
-        case GIMP_TRC_LINEAR:     return GIMP_PRECISION_HALF_LINEAR;
-        case GIMP_TRC_NON_LINEAR: return GIMP_PRECISION_HALF_NON_LINEAR;
-        case GIMP_TRC_PERCEPTUAL: return GIMP_PRECISION_HALF_PERCEPTUAL;
+        case LIGMA_TRC_LINEAR:     return LIGMA_PRECISION_HALF_LINEAR;
+        case LIGMA_TRC_NON_LINEAR: return LIGMA_PRECISION_HALF_NON_LINEAR;
+        case LIGMA_TRC_PERCEPTUAL: return LIGMA_PRECISION_HALF_PERCEPTUAL;
         default:
           break;
         }
 
-    case GIMP_COMPONENT_TYPE_FLOAT:
+    case LIGMA_COMPONENT_TYPE_FLOAT:
       switch (trc)
         {
-        case GIMP_TRC_LINEAR:     return GIMP_PRECISION_FLOAT_LINEAR;
-        case GIMP_TRC_NON_LINEAR: return GIMP_PRECISION_FLOAT_NON_LINEAR;
-        case GIMP_TRC_PERCEPTUAL: return GIMP_PRECISION_FLOAT_PERCEPTUAL;
+        case LIGMA_TRC_LINEAR:     return LIGMA_PRECISION_FLOAT_LINEAR;
+        case LIGMA_TRC_NON_LINEAR: return LIGMA_PRECISION_FLOAT_NON_LINEAR;
+        case LIGMA_TRC_PERCEPTUAL: return LIGMA_PRECISION_FLOAT_PERCEPTUAL;
         default:
           break;
         }
 
-    case GIMP_COMPONENT_TYPE_DOUBLE:
+    case LIGMA_COMPONENT_TYPE_DOUBLE:
       switch (trc)
         {
-        case GIMP_TRC_LINEAR:     return GIMP_PRECISION_DOUBLE_LINEAR;
-        case GIMP_TRC_NON_LINEAR: return GIMP_PRECISION_DOUBLE_NON_LINEAR;
-        case GIMP_TRC_PERCEPTUAL: return GIMP_PRECISION_DOUBLE_PERCEPTUAL;
+        case LIGMA_TRC_LINEAR:     return LIGMA_PRECISION_DOUBLE_LINEAR;
+        case LIGMA_TRC_NON_LINEAR: return LIGMA_PRECISION_DOUBLE_NON_LINEAR;
+        case LIGMA_TRC_PERCEPTUAL: return LIGMA_PRECISION_DOUBLE_PERCEPTUAL;
         default:
           break;
         }
@@ -801,19 +801,19 @@ gimp_babl_precision (GimpComponentType component,
 }
 
 gboolean
-gimp_babl_is_valid (GimpImageBaseType base_type,
-                    GimpPrecision     precision)
+ligma_babl_is_valid (LigmaImageBaseType base_type,
+                    LigmaPrecision     precision)
 {
   switch (base_type)
     {
-    case GIMP_RGB:
-    case GIMP_GRAY:
+    case LIGMA_RGB:
+    case LIGMA_GRAY:
       return TRUE;
 
-    case GIMP_INDEXED:
+    case LIGMA_INDEXED:
       switch (precision)
         {
-        case GIMP_PRECISION_U8_NON_LINEAR:
+        case LIGMA_PRECISION_U8_NON_LINEAR:
           return TRUE;
 
         default:
@@ -824,19 +824,19 @@ gimp_babl_is_valid (GimpImageBaseType base_type,
   g_return_val_if_reached (FALSE);
 }
 
-GimpComponentType
-gimp_babl_is_bounded (GimpPrecision precision)
+LigmaComponentType
+ligma_babl_is_bounded (LigmaPrecision precision)
 {
-  switch (gimp_babl_component_type (precision))
+  switch (ligma_babl_component_type (precision))
     {
-    case GIMP_COMPONENT_TYPE_U8:
-    case GIMP_COMPONENT_TYPE_U16:
-    case GIMP_COMPONENT_TYPE_U32:
+    case LIGMA_COMPONENT_TYPE_U8:
+    case LIGMA_COMPONENT_TYPE_U16:
+    case LIGMA_COMPONENT_TYPE_U32:
       return TRUE;
 
-    case GIMP_COMPONENT_TYPE_HALF:
-    case GIMP_COMPONENT_TYPE_FLOAT:
-    case GIMP_COMPONENT_TYPE_DOUBLE:
+    case LIGMA_COMPONENT_TYPE_HALF:
+    case LIGMA_COMPONENT_TYPE_FLOAT:
+    case LIGMA_COMPONENT_TYPE_DOUBLE:
       return FALSE;
     }
 
@@ -844,119 +844,119 @@ gimp_babl_is_bounded (GimpPrecision precision)
 }
 
 const Babl *
-gimp_babl_format (GimpImageBaseType  base_type,
-                  GimpPrecision      precision,
+ligma_babl_format (LigmaImageBaseType  base_type,
+                  LigmaPrecision      precision,
                   gboolean           with_alpha,
                   const Babl        *space)
 {
   switch (base_type)
     {
-    case GIMP_RGB:
+    case LIGMA_RGB:
       switch (precision)
         {
-        case GIMP_PRECISION_U8_LINEAR:
+        case LIGMA_PRECISION_U8_LINEAR:
           if (with_alpha)
             return babl_format_with_space ("RGBA u8", space);
           else
             return babl_format_with_space ("RGB u8", space);
 
-        case GIMP_PRECISION_U8_NON_LINEAR:
+        case LIGMA_PRECISION_U8_NON_LINEAR:
           if (with_alpha)
             return babl_format_with_space ("R'G'B'A u8", space);
           else
             return babl_format_with_space ("R'G'B' u8", space);
 
-        case GIMP_PRECISION_U8_PERCEPTUAL:
+        case LIGMA_PRECISION_U8_PERCEPTUAL:
           if (with_alpha)
             return babl_format_with_space ("R~G~B~A u8", space);
           else
             return babl_format_with_space ("R~G~B~ u8", space);
 
-        case GIMP_PRECISION_U16_LINEAR:
+        case LIGMA_PRECISION_U16_LINEAR:
           if (with_alpha)
             return babl_format_with_space ("RGBA u16", space);
           else
             return babl_format_with_space ("RGB u16", space);
 
-        case GIMP_PRECISION_U16_NON_LINEAR:
+        case LIGMA_PRECISION_U16_NON_LINEAR:
           if (with_alpha)
             return babl_format_with_space ("R'G'B'A u16", space);
           else
             return babl_format_with_space ("R'G'B' u16", space);
 
-        case GIMP_PRECISION_U16_PERCEPTUAL:
+        case LIGMA_PRECISION_U16_PERCEPTUAL:
           if (with_alpha)
             return babl_format_with_space ("R~G~B~A u16", space);
           else
             return babl_format_with_space ("R~G~B~ u16", space);
 
-        case GIMP_PRECISION_U32_LINEAR:
+        case LIGMA_PRECISION_U32_LINEAR:
           if (with_alpha)
             return babl_format_with_space ("RGBA u32", space);
           else
             return babl_format_with_space ("RGB u32", space);
 
-        case GIMP_PRECISION_U32_NON_LINEAR:
+        case LIGMA_PRECISION_U32_NON_LINEAR:
           if (with_alpha)
             return babl_format_with_space ("R'G'B'A u32", space);
           else
             return babl_format_with_space ("R'G'B' u32", space);
 
-        case GIMP_PRECISION_U32_PERCEPTUAL:
+        case LIGMA_PRECISION_U32_PERCEPTUAL:
           if (with_alpha)
             return babl_format_with_space ("R~G~B~A u32", space);
           else
             return babl_format_with_space ("R~G~B~ u32", space);
 
-        case GIMP_PRECISION_HALF_LINEAR:
+        case LIGMA_PRECISION_HALF_LINEAR:
           if (with_alpha)
             return babl_format_with_space ("RGBA half", space);
           else
             return babl_format_with_space ("RGB half", space);
 
-        case GIMP_PRECISION_HALF_NON_LINEAR:
+        case LIGMA_PRECISION_HALF_NON_LINEAR:
           if (with_alpha)
             return babl_format_with_space ("R'G'B'A half", space);
           else
             return babl_format_with_space ("R'G'B' half", space);
 
-        case GIMP_PRECISION_HALF_PERCEPTUAL:
+        case LIGMA_PRECISION_HALF_PERCEPTUAL:
           if (with_alpha)
             return babl_format_with_space ("R~G~B~A half", space);
           else
             return babl_format_with_space ("R~G~B~ half", space);
 
-        case GIMP_PRECISION_FLOAT_LINEAR:
+        case LIGMA_PRECISION_FLOAT_LINEAR:
           if (with_alpha)
             return babl_format_with_space ("RGBA float", space);
           else
             return babl_format_with_space ("RGB float", space);
 
-        case GIMP_PRECISION_FLOAT_NON_LINEAR:
+        case LIGMA_PRECISION_FLOAT_NON_LINEAR:
           if (with_alpha)
             return babl_format_with_space ("R'G'B'A float", space);
           else
             return babl_format_with_space ("R'G'B' float", space);
 
-        case GIMP_PRECISION_FLOAT_PERCEPTUAL:
+        case LIGMA_PRECISION_FLOAT_PERCEPTUAL:
           if (with_alpha)
             return babl_format_with_space ("R~G~B~A float", space);
           else
             return babl_format_with_space ("R~G~B~ float", space);
 
-        case GIMP_PRECISION_DOUBLE_LINEAR:
+        case LIGMA_PRECISION_DOUBLE_LINEAR:
           if (with_alpha)
             return babl_format_with_space ("RGBA double", space);
           else
             return babl_format_with_space ("RGB double", space);
 
-        case GIMP_PRECISION_DOUBLE_NON_LINEAR:
+        case LIGMA_PRECISION_DOUBLE_NON_LINEAR:
           if (with_alpha)
             return babl_format_with_space ("R'G'B'A double", space);
           else
             return babl_format_with_space ("R'G'B' double", space);
 
-        case GIMP_PRECISION_DOUBLE_PERCEPTUAL:
+        case LIGMA_PRECISION_DOUBLE_PERCEPTUAL:
           if (with_alpha)
             return babl_format_with_space ("R~G~B~A double", space);
           else
@@ -967,112 +967,112 @@ gimp_babl_format (GimpImageBaseType  base_type,
         }
       break;
 
-    case GIMP_GRAY:
+    case LIGMA_GRAY:
       switch (precision)
         {
-        case GIMP_PRECISION_U8_LINEAR:
+        case LIGMA_PRECISION_U8_LINEAR:
           if (with_alpha)
             return babl_format_with_space ("YA u8", space);
           else
             return babl_format_with_space ("Y u8", space);
 
-        case GIMP_PRECISION_U8_NON_LINEAR:
+        case LIGMA_PRECISION_U8_NON_LINEAR:
           if (with_alpha)
             return babl_format_with_space ("Y'A u8", space);
           else
             return babl_format_with_space ("Y' u8", space);
 
-        case GIMP_PRECISION_U8_PERCEPTUAL:
+        case LIGMA_PRECISION_U8_PERCEPTUAL:
           if (with_alpha)
             return babl_format_with_space ("Y~A u8", space);
           else
             return babl_format_with_space ("Y~ u8", space);
 
-        case GIMP_PRECISION_U16_LINEAR:
+        case LIGMA_PRECISION_U16_LINEAR:
           if (with_alpha)
             return babl_format_with_space ("YA u16", space);
           else
             return babl_format_with_space ("Y u16", space);
 
-        case GIMP_PRECISION_U16_NON_LINEAR:
+        case LIGMA_PRECISION_U16_NON_LINEAR:
           if (with_alpha)
             return babl_format_with_space ("Y'A u16", space);
           else
             return babl_format_with_space ("Y' u16", space);
 
-        case GIMP_PRECISION_U16_PERCEPTUAL:
+        case LIGMA_PRECISION_U16_PERCEPTUAL:
           if (with_alpha)
             return babl_format_with_space ("Y~A u16", space);
           else
             return babl_format_with_space ("Y~ u16", space);
 
-        case GIMP_PRECISION_U32_LINEAR:
+        case LIGMA_PRECISION_U32_LINEAR:
           if (with_alpha)
             return babl_format_with_space ("YA u32", space);
           else
             return babl_format_with_space ("Y u32", space);
 
-        case GIMP_PRECISION_U32_NON_LINEAR:
+        case LIGMA_PRECISION_U32_NON_LINEAR:
           if (with_alpha)
             return babl_format_with_space ("Y'A u32", space);
           else
             return babl_format_with_space ("Y' u32", space);
 
-        case GIMP_PRECISION_U32_PERCEPTUAL:
+        case LIGMA_PRECISION_U32_PERCEPTUAL:
           if (with_alpha)
             return babl_format_with_space ("Y~A u32", space);
           else
             return babl_format_with_space ("Y~ u32", space);
 
-        case GIMP_PRECISION_HALF_LINEAR:
+        case LIGMA_PRECISION_HALF_LINEAR:
           if (with_alpha)
             return babl_format_with_space ("YA half", space);
           else
             return babl_format_with_space ("Y half", space);
 
-        case GIMP_PRECISION_HALF_NON_LINEAR:
+        case LIGMA_PRECISION_HALF_NON_LINEAR:
           if (with_alpha)
             return babl_format_with_space ("Y'A half", space);
           else
             return babl_format_with_space ("Y' half", space);
 
-        case GIMP_PRECISION_HALF_PERCEPTUAL:
+        case LIGMA_PRECISION_HALF_PERCEPTUAL:
           if (with_alpha)
             return babl_format_with_space ("Y~A half", space);
           else
             return babl_format_with_space ("Y~ half", space);
 
-        case GIMP_PRECISION_FLOAT_LINEAR:
+        case LIGMA_PRECISION_FLOAT_LINEAR:
           if (with_alpha)
             return babl_format_with_space ("YA float", space);
           else
             return babl_format_with_space ("Y float", space);
 
-        case GIMP_PRECISION_FLOAT_NON_LINEAR:
+        case LIGMA_PRECISION_FLOAT_NON_LINEAR:
           if (with_alpha)
             return babl_format_with_space ("Y'A float", space);
           else
             return babl_format_with_space ("Y' float", space);
 
-        case GIMP_PRECISION_FLOAT_PERCEPTUAL:
+        case LIGMA_PRECISION_FLOAT_PERCEPTUAL:
           if (with_alpha)
             return babl_format_with_space ("Y~A float", space);
           else
             return babl_format_with_space ("Y~ float", space);
 
-        case GIMP_PRECISION_DOUBLE_LINEAR:
+        case LIGMA_PRECISION_DOUBLE_LINEAR:
           if (with_alpha)
             return babl_format_with_space ("YA double", space);
           else
             return babl_format_with_space ("Y double", space);
 
-        case GIMP_PRECISION_DOUBLE_NON_LINEAR:
+        case LIGMA_PRECISION_DOUBLE_NON_LINEAR:
           if (with_alpha)
             return babl_format_with_space ("Y'A double", space);
           else
             return babl_format_with_space ("Y' double", space);
 
-        case GIMP_PRECISION_DOUBLE_PERCEPTUAL:
+        case LIGMA_PRECISION_DOUBLE_PERCEPTUAL:
           if (with_alpha)
             return babl_format_with_space ("Y~A double", space);
           else
@@ -1083,7 +1083,7 @@ gimp_babl_format (GimpImageBaseType  base_type,
         }
       break;
 
-    case GIMP_INDEXED:
+    case LIGMA_INDEXED:
       /* need to use the image's api for this */
       break;
     }
@@ -1092,32 +1092,32 @@ gimp_babl_format (GimpImageBaseType  base_type,
 }
 
 const Babl *
-gimp_babl_mask_format (GimpPrecision precision)
+ligma_babl_mask_format (LigmaPrecision precision)
 {
-  switch (gimp_babl_component_type (precision))
+  switch (ligma_babl_component_type (precision))
     {
-    case GIMP_COMPONENT_TYPE_U8:     return babl_format ("Y u8");
-    case GIMP_COMPONENT_TYPE_U16:    return babl_format ("Y u16");
-    case GIMP_COMPONENT_TYPE_U32:    return babl_format ("Y u32");
-    case GIMP_COMPONENT_TYPE_HALF:   return babl_format ("Y half");
-    case GIMP_COMPONENT_TYPE_FLOAT:  return babl_format ("Y float");
-    case GIMP_COMPONENT_TYPE_DOUBLE: return babl_format ("Y double");
+    case LIGMA_COMPONENT_TYPE_U8:     return babl_format ("Y u8");
+    case LIGMA_COMPONENT_TYPE_U16:    return babl_format ("Y u16");
+    case LIGMA_COMPONENT_TYPE_U32:    return babl_format ("Y u32");
+    case LIGMA_COMPONENT_TYPE_HALF:   return babl_format ("Y half");
+    case LIGMA_COMPONENT_TYPE_FLOAT:  return babl_format ("Y float");
+    case LIGMA_COMPONENT_TYPE_DOUBLE: return babl_format ("Y double");
     }
 
   g_return_val_if_reached (NULL);
 }
 
 const Babl *
-gimp_babl_component_format (GimpImageBaseType base_type,
-                            GimpPrecision     precision,
+ligma_babl_component_format (LigmaImageBaseType base_type,
+                            LigmaPrecision     precision,
                             gint              index)
 {
   switch (base_type)
     {
-    case GIMP_RGB:
+    case LIGMA_RGB:
       switch (precision)
         {
-        case GIMP_PRECISION_U8_LINEAR:
+        case LIGMA_PRECISION_U8_LINEAR:
           switch (index)
             {
             case 0: return babl_format ("R u8");
@@ -1129,7 +1129,7 @@ gimp_babl_component_format (GimpImageBaseType base_type,
             }
           break;
 
-        case GIMP_PRECISION_U8_NON_LINEAR:
+        case LIGMA_PRECISION_U8_NON_LINEAR:
           switch (index)
             {
             case 0: return babl_format ("R' u8");
@@ -1141,7 +1141,7 @@ gimp_babl_component_format (GimpImageBaseType base_type,
             }
           break;
 
-        case GIMP_PRECISION_U8_PERCEPTUAL:
+        case LIGMA_PRECISION_U8_PERCEPTUAL:
           switch (index)
             {
             case 0: return babl_format ("R~ u8");
@@ -1153,7 +1153,7 @@ gimp_babl_component_format (GimpImageBaseType base_type,
             }
           break;
 
-        case GIMP_PRECISION_U16_LINEAR:
+        case LIGMA_PRECISION_U16_LINEAR:
           switch (index)
             {
             case 0: return babl_format ("R u16");
@@ -1165,7 +1165,7 @@ gimp_babl_component_format (GimpImageBaseType base_type,
             }
           break;
 
-        case GIMP_PRECISION_U16_NON_LINEAR:
+        case LIGMA_PRECISION_U16_NON_LINEAR:
           switch (index)
             {
             case 0: return babl_format ("R' u16");
@@ -1177,7 +1177,7 @@ gimp_babl_component_format (GimpImageBaseType base_type,
             }
           break;
 
-        case GIMP_PRECISION_U16_PERCEPTUAL:
+        case LIGMA_PRECISION_U16_PERCEPTUAL:
           switch (index)
             {
             case 0: return babl_format ("R~ u16");
@@ -1189,7 +1189,7 @@ gimp_babl_component_format (GimpImageBaseType base_type,
             }
           break;
 
-        case GIMP_PRECISION_U32_LINEAR:
+        case LIGMA_PRECISION_U32_LINEAR:
           switch (index)
             {
             case 0: return babl_format ("R u32");
@@ -1201,7 +1201,7 @@ gimp_babl_component_format (GimpImageBaseType base_type,
             }
           break;
 
-        case GIMP_PRECISION_U32_NON_LINEAR:
+        case LIGMA_PRECISION_U32_NON_LINEAR:
           switch (index)
             {
             case 0: return babl_format ("R' u32");
@@ -1213,7 +1213,7 @@ gimp_babl_component_format (GimpImageBaseType base_type,
             }
           break;
 
-        case GIMP_PRECISION_U32_PERCEPTUAL:
+        case LIGMA_PRECISION_U32_PERCEPTUAL:
           switch (index)
             {
             case 0: return babl_format ("R~ u32");
@@ -1225,7 +1225,7 @@ gimp_babl_component_format (GimpImageBaseType base_type,
             }
           break;
 
-        case GIMP_PRECISION_HALF_LINEAR:
+        case LIGMA_PRECISION_HALF_LINEAR:
           switch (index)
             {
             case 0: return babl_format ("R half");
@@ -1237,7 +1237,7 @@ gimp_babl_component_format (GimpImageBaseType base_type,
             }
           break;
 
-        case GIMP_PRECISION_HALF_NON_LINEAR:
+        case LIGMA_PRECISION_HALF_NON_LINEAR:
           switch (index)
             {
             case 0: return babl_format ("R' half");
@@ -1249,7 +1249,7 @@ gimp_babl_component_format (GimpImageBaseType base_type,
             }
           break;
 
-        case GIMP_PRECISION_HALF_PERCEPTUAL:
+        case LIGMA_PRECISION_HALF_PERCEPTUAL:
           switch (index)
             {
             case 0: return babl_format ("R~ half");
@@ -1261,7 +1261,7 @@ gimp_babl_component_format (GimpImageBaseType base_type,
             }
           break;
 
-        case GIMP_PRECISION_FLOAT_LINEAR:
+        case LIGMA_PRECISION_FLOAT_LINEAR:
           switch (index)
             {
             case 0: return babl_format ("R float");
@@ -1273,7 +1273,7 @@ gimp_babl_component_format (GimpImageBaseType base_type,
             }
           break;
 
-        case GIMP_PRECISION_FLOAT_NON_LINEAR:
+        case LIGMA_PRECISION_FLOAT_NON_LINEAR:
           switch (index)
             {
             case 0: return babl_format ("R' float");
@@ -1285,7 +1285,7 @@ gimp_babl_component_format (GimpImageBaseType base_type,
             }
           break;
 
-        case GIMP_PRECISION_FLOAT_PERCEPTUAL:
+        case LIGMA_PRECISION_FLOAT_PERCEPTUAL:
           switch (index)
             {
             case 0: return babl_format ("R~ float");
@@ -1297,7 +1297,7 @@ gimp_babl_component_format (GimpImageBaseType base_type,
             }
           break;
 
-        case GIMP_PRECISION_DOUBLE_LINEAR:
+        case LIGMA_PRECISION_DOUBLE_LINEAR:
           switch (index)
             {
             case 0: return babl_format ("R double");
@@ -1309,7 +1309,7 @@ gimp_babl_component_format (GimpImageBaseType base_type,
             }
           break;
 
-        case GIMP_PRECISION_DOUBLE_NON_LINEAR:
+        case LIGMA_PRECISION_DOUBLE_NON_LINEAR:
           switch (index)
             {
             case 0: return babl_format ("R' double");
@@ -1321,7 +1321,7 @@ gimp_babl_component_format (GimpImageBaseType base_type,
             }
           break;
 
-        case GIMP_PRECISION_DOUBLE_PERCEPTUAL:
+        case LIGMA_PRECISION_DOUBLE_PERCEPTUAL:
           switch (index)
             {
             case 0: return babl_format ("R~ double");
@@ -1338,10 +1338,10 @@ gimp_babl_component_format (GimpImageBaseType base_type,
         }
       break;
 
-    case GIMP_GRAY:
+    case LIGMA_GRAY:
       switch (precision)
         {
-        case GIMP_PRECISION_U8_LINEAR:
+        case LIGMA_PRECISION_U8_LINEAR:
           switch (index)
             {
             case 0: return babl_format ("Y u8");
@@ -1351,7 +1351,7 @@ gimp_babl_component_format (GimpImageBaseType base_type,
             }
           break;
 
-        case GIMP_PRECISION_U8_NON_LINEAR:
+        case LIGMA_PRECISION_U8_NON_LINEAR:
           switch (index)
             {
             case 0: return babl_format ("Y' u8");
@@ -1361,7 +1361,7 @@ gimp_babl_component_format (GimpImageBaseType base_type,
             }
           break;
 
-        case GIMP_PRECISION_U8_PERCEPTUAL:
+        case LIGMA_PRECISION_U8_PERCEPTUAL:
           switch (index)
             {
             case 0: return babl_format ("Y~ u8");
@@ -1371,7 +1371,7 @@ gimp_babl_component_format (GimpImageBaseType base_type,
             }
           break;
 
-        case GIMP_PRECISION_U16_LINEAR:
+        case LIGMA_PRECISION_U16_LINEAR:
           switch (index)
             {
             case 0: return babl_format ("Y u16");
@@ -1381,7 +1381,7 @@ gimp_babl_component_format (GimpImageBaseType base_type,
             }
           break;
 
-        case GIMP_PRECISION_U16_NON_LINEAR:
+        case LIGMA_PRECISION_U16_NON_LINEAR:
           switch (index)
             {
             case 0: return babl_format ("Y' u16");
@@ -1391,7 +1391,7 @@ gimp_babl_component_format (GimpImageBaseType base_type,
             }
           break;
 
-        case GIMP_PRECISION_U16_PERCEPTUAL:
+        case LIGMA_PRECISION_U16_PERCEPTUAL:
           switch (index)
             {
             case 0: return babl_format ("Y~ u16");
@@ -1401,7 +1401,7 @@ gimp_babl_component_format (GimpImageBaseType base_type,
             }
           break;
 
-        case GIMP_PRECISION_U32_LINEAR:
+        case LIGMA_PRECISION_U32_LINEAR:
           switch (index)
             {
             case 0: return babl_format ("Y u32");
@@ -1411,7 +1411,7 @@ gimp_babl_component_format (GimpImageBaseType base_type,
             }
           break;
 
-        case GIMP_PRECISION_U32_NON_LINEAR:
+        case LIGMA_PRECISION_U32_NON_LINEAR:
           switch (index)
             {
             case 0: return babl_format ("Y' u32");
@@ -1421,7 +1421,7 @@ gimp_babl_component_format (GimpImageBaseType base_type,
             }
           break;
 
-        case GIMP_PRECISION_U32_PERCEPTUAL:
+        case LIGMA_PRECISION_U32_PERCEPTUAL:
           switch (index)
             {
             case 0: return babl_format ("Y~ u32");
@@ -1431,7 +1431,7 @@ gimp_babl_component_format (GimpImageBaseType base_type,
             }
           break;
 
-        case GIMP_PRECISION_HALF_LINEAR:
+        case LIGMA_PRECISION_HALF_LINEAR:
           switch (index)
             {
             case 0: return babl_format ("Y half");
@@ -1441,7 +1441,7 @@ gimp_babl_component_format (GimpImageBaseType base_type,
             }
           break;
 
-        case GIMP_PRECISION_HALF_NON_LINEAR:
+        case LIGMA_PRECISION_HALF_NON_LINEAR:
           switch (index)
             {
             case 0: return babl_format ("Y' half");
@@ -1451,7 +1451,7 @@ gimp_babl_component_format (GimpImageBaseType base_type,
             }
           break;
 
-        case GIMP_PRECISION_HALF_PERCEPTUAL:
+        case LIGMA_PRECISION_HALF_PERCEPTUAL:
           switch (index)
             {
             case 0: return babl_format ("Y~ half");
@@ -1461,7 +1461,7 @@ gimp_babl_component_format (GimpImageBaseType base_type,
             }
           break;
 
-        case GIMP_PRECISION_FLOAT_LINEAR:
+        case LIGMA_PRECISION_FLOAT_LINEAR:
           switch (index)
             {
             case 0: return babl_format ("Y float");
@@ -1471,7 +1471,7 @@ gimp_babl_component_format (GimpImageBaseType base_type,
             }
           break;
 
-        case GIMP_PRECISION_FLOAT_NON_LINEAR:
+        case LIGMA_PRECISION_FLOAT_NON_LINEAR:
           switch (index)
             {
             case 0: return babl_format ("Y' float");
@@ -1481,7 +1481,7 @@ gimp_babl_component_format (GimpImageBaseType base_type,
             }
           break;
 
-        case GIMP_PRECISION_FLOAT_PERCEPTUAL:
+        case LIGMA_PRECISION_FLOAT_PERCEPTUAL:
           switch (index)
             {
             case 0: return babl_format ("Y~ float");
@@ -1491,7 +1491,7 @@ gimp_babl_component_format (GimpImageBaseType base_type,
             }
           break;
 
-        case GIMP_PRECISION_DOUBLE_LINEAR:
+        case LIGMA_PRECISION_DOUBLE_LINEAR:
           switch (index)
             {
             case 0: return babl_format ("Y double");
@@ -1501,7 +1501,7 @@ gimp_babl_component_format (GimpImageBaseType base_type,
             }
           break;
 
-        case GIMP_PRECISION_DOUBLE_NON_LINEAR:
+        case LIGMA_PRECISION_DOUBLE_NON_LINEAR:
           switch (index)
             {
             case 0: return babl_format ("Y' double");
@@ -1511,7 +1511,7 @@ gimp_babl_component_format (GimpImageBaseType base_type,
             }
           break;
 
-        case GIMP_PRECISION_DOUBLE_PERCEPTUAL:
+        case LIGMA_PRECISION_DOUBLE_PERCEPTUAL:
           switch (index)
             {
             case 0: return babl_format ("Y~ double");
@@ -1526,7 +1526,7 @@ gimp_babl_component_format (GimpImageBaseType base_type,
         }
       break;
 
-    case GIMP_INDEXED:
+    case LIGMA_INDEXED:
       /* need to use the image's api for this */
       break;
     }
@@ -1535,38 +1535,38 @@ gimp_babl_component_format (GimpImageBaseType base_type,
 }
 
 const Babl *
-gimp_babl_format_change_component_type (const Babl        *format,
-                                        GimpComponentType  component)
+ligma_babl_format_change_component_type (const Babl        *format,
+                                        LigmaComponentType  component)
 {
   g_return_val_if_fail (format != NULL, NULL);
 
-  return gimp_babl_format (gimp_babl_format_get_base_type (format),
-                           gimp_babl_precision (
+  return ligma_babl_format (ligma_babl_format_get_base_type (format),
+                           ligma_babl_precision (
                              component,
-                             gimp_babl_format_get_trc (format)),
+                             ligma_babl_format_get_trc (format)),
                            babl_format_has_alpha (format),
                            babl_format_get_space (format));
 }
 
 const Babl *
-gimp_babl_format_change_trc (const Babl  *format,
-                             GimpTRCType  trc)
+ligma_babl_format_change_trc (const Babl  *format,
+                             LigmaTRCType  trc)
 {
   g_return_val_if_fail (format != NULL, NULL);
 
-  return gimp_babl_format (gimp_babl_format_get_base_type (format),
-                           gimp_babl_precision (
-                             gimp_babl_format_get_component_type (format),
+  return ligma_babl_format (ligma_babl_format_get_base_type (format),
+                           ligma_babl_precision (
+                             ligma_babl_format_get_component_type (format),
                              trc),
                            babl_format_has_alpha (format),
                            babl_format_get_space (format));
 }
 
 gchar **
-gimp_babl_print_pixel (const Babl *format,
+ligma_babl_print_pixel (const Babl *format,
                        gpointer    pixel)
 {
-  GimpPrecision   precision;
+  LigmaPrecision   precision;
   gint            n_components;
   guchar          tmp_pixel[32];
   gchar         **strings;
@@ -1574,11 +1574,11 @@ gimp_babl_print_pixel (const Babl *format,
   g_return_val_if_fail (format != NULL, NULL);
   g_return_val_if_fail (pixel != NULL, NULL);
 
-  precision = gimp_babl_format_get_precision (format);
+  precision = ligma_babl_format_get_precision (format);
 
   if (babl_format_is_palette (format))
     {
-      const Babl *f = gimp_babl_format (GIMP_RGB, precision,
+      const Babl *f = ligma_babl_format (LIGMA_RGB, precision,
                                         babl_format_has_alpha (format),
                                         babl_format_get_space (format));
 
@@ -1592,9 +1592,9 @@ gimp_babl_print_pixel (const Babl *format,
 
   strings = g_new0 (gchar *, n_components + 1);
 
-  switch (gimp_babl_format_get_component_type (format))
+  switch (ligma_babl_format_get_component_type (format))
     {
-    case GIMP_COMPONENT_TYPE_U8:
+    case LIGMA_COMPONENT_TYPE_U8:
       {
         guchar *color = pixel;
         gint    i;
@@ -1604,7 +1604,7 @@ gimp_babl_print_pixel (const Babl *format,
       }
       break;
 
-    case GIMP_COMPONENT_TYPE_U16:
+    case LIGMA_COMPONENT_TYPE_U16:
       {
         guint16 *color = pixel;
         gint     i;
@@ -1614,7 +1614,7 @@ gimp_babl_print_pixel (const Babl *format,
       }
       break;
 
-    case GIMP_COMPONENT_TYPE_U32:
+    case LIGMA_COMPONENT_TYPE_U32:
       {
         guint32 *color = pixel;
         gint     i;
@@ -1624,15 +1624,15 @@ gimp_babl_print_pixel (const Babl *format,
       }
       break;
 
-    case GIMP_COMPONENT_TYPE_HALF:
+    case LIGMA_COMPONENT_TYPE_HALF:
       {
-        GimpPrecision p;
+        LigmaPrecision p;
         const Babl   *f;
 
-        p = gimp_babl_precision (GIMP_COMPONENT_TYPE_FLOAT,
-                                 gimp_babl_format_get_trc (format));
+        p = ligma_babl_precision (LIGMA_COMPONENT_TYPE_FLOAT,
+                                 ligma_babl_format_get_trc (format));
 
-        f = gimp_babl_format (gimp_babl_format_get_base_type (format),
+        f = ligma_babl_format (ligma_babl_format_get_base_type (format),
                               p,
                               babl_format_has_alpha (format),
                               babl_format_get_space (format));
@@ -1643,7 +1643,7 @@ gimp_babl_print_pixel (const Babl *format,
       }
       /* fall through */
 
-    case GIMP_COMPONENT_TYPE_FLOAT:
+    case LIGMA_COMPONENT_TYPE_FLOAT:
       {
         gfloat *color = pixel;
         gint    i;
@@ -1653,7 +1653,7 @@ gimp_babl_print_pixel (const Babl *format,
       }
       break;
 
-    case GIMP_COMPONENT_TYPE_DOUBLE:
+    case LIGMA_COMPONENT_TYPE_DOUBLE:
       {
         gdouble *color = pixel;
         gint     i;

@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * GimpXmlParser
- * Copyright (C) 2003  Sven Neumann <sven@gimp.org>
+ * LigmaXmlParser
+ * Copyright (C) 2003  Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,29 +18,29 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_XML_PARSER_H__
-#define __GIMP_XML_PARSER_H__
+#ifndef __LIGMA_XML_PARSER_H__
+#define __LIGMA_XML_PARSER_H__
 
 
-GimpXmlParser * gimp_xml_parser_new              (const GMarkupParser *markup_parser,
+LigmaXmlParser * ligma_xml_parser_new              (const GMarkupParser *markup_parser,
                                                   gpointer             user_data);
-gboolean        gimp_xml_parser_parse_file       (GimpXmlParser       *parser,
+gboolean        ligma_xml_parser_parse_file       (LigmaXmlParser       *parser,
                                                   const gchar         *filename,
                                                   GError             **error);
-gboolean        gimp_xml_parser_parse_gfile      (GimpXmlParser       *parser,
+gboolean        ligma_xml_parser_parse_gfile      (LigmaXmlParser       *parser,
                                                   GFile               *file,
                                                   GError             **error);
-gboolean        gimp_xml_parser_parse_fd         (GimpXmlParser       *parser,
+gboolean        ligma_xml_parser_parse_fd         (LigmaXmlParser       *parser,
                                                   gint                 fd,
                                                   GError             **error);
-gboolean        gimp_xml_parser_parse_io_channel (GimpXmlParser       *parser,
+gboolean        ligma_xml_parser_parse_io_channel (LigmaXmlParser       *parser,
                                                   GIOChannel          *io,
                                                   GError             **error);
-gboolean        gimp_xml_parser_parse_buffer     (GimpXmlParser       *parser,
+gboolean        ligma_xml_parser_parse_buffer     (LigmaXmlParser       *parser,
                                                   const gchar         *buffer,
                                                   gssize               len,
                                                   GError             **error);
-void            gimp_xml_parser_free             (GimpXmlParser       *parser);
+void            ligma_xml_parser_free             (LigmaXmlParser       *parser);
 
 
-#endif  /* __GIMP_XML_PARSER_H__ */
+#endif  /* __LIGMA_XML_PARSER_H__ */

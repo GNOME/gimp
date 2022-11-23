@@ -1,10 +1,10 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpTextTool
- * Copyright (C) 2002-2010  Sven Neumann <sven@gimp.org>
+ * LigmaTextTool
+ * Copyright (C) 2002-2010  Sven Neumann <sven@ligma.org>
  *                          Daniel Eddeland <danedde@svn.gnome.org>
- *                          Michael Natterer <mitch@gimp.org>
+ *                          Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,37 +20,37 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TEXT_TOOL_EDITOR_H__
-#define __GIMP_TEXT_TOOL_EDITOR_H__
+#ifndef __LIGMA_TEXT_TOOL_EDITOR_H__
+#define __LIGMA_TEXT_TOOL_EDITOR_H__
 
 
-void       gimp_text_tool_editor_init             (GimpTextTool        *text_tool);
-void       gimp_text_tool_editor_finalize         (GimpTextTool        *text_tool);
+void       ligma_text_tool_editor_init             (LigmaTextTool        *text_tool);
+void       ligma_text_tool_editor_finalize         (LigmaTextTool        *text_tool);
 
-void       gimp_text_tool_editor_start            (GimpTextTool        *text_tool);
-void       gimp_text_tool_editor_position         (GimpTextTool        *text_tool);
-void       gimp_text_tool_editor_halt             (GimpTextTool        *text_tool);
+void       ligma_text_tool_editor_start            (LigmaTextTool        *text_tool);
+void       ligma_text_tool_editor_position         (LigmaTextTool        *text_tool);
+void       ligma_text_tool_editor_halt             (LigmaTextTool        *text_tool);
 
-void       gimp_text_tool_editor_button_press     (GimpTextTool        *text_tool,
+void       ligma_text_tool_editor_button_press     (LigmaTextTool        *text_tool,
                                                    gdouble              x,
                                                    gdouble              y,
-                                                   GimpButtonPressType  press_type);
-void       gimp_text_tool_editor_button_release   (GimpTextTool        *text_tool);
-void       gimp_text_tool_editor_motion           (GimpTextTool        *text_tool,
+                                                   LigmaButtonPressType  press_type);
+void       ligma_text_tool_editor_button_release   (LigmaTextTool        *text_tool);
+void       ligma_text_tool_editor_motion           (LigmaTextTool        *text_tool,
                                                    gdouble              x,
                                                    gdouble              y);
-gboolean   gimp_text_tool_editor_key_press        (GimpTextTool        *text_tool,
+gboolean   ligma_text_tool_editor_key_press        (LigmaTextTool        *text_tool,
                                                    GdkEventKey         *kevent);
-gboolean   gimp_text_tool_editor_key_release      (GimpTextTool        *text_tool,
+gboolean   ligma_text_tool_editor_key_release      (LigmaTextTool        *text_tool,
                                                    GdkEventKey         *kevent);
 
-void       gimp_text_tool_reset_im_context        (GimpTextTool        *text_tool);
-void       gimp_text_tool_abort_im_context        (GimpTextTool        *text_tool);
+void       ligma_text_tool_reset_im_context        (LigmaTextTool        *text_tool);
+void       ligma_text_tool_abort_im_context        (LigmaTextTool        *text_tool);
 
-void       gimp_text_tool_editor_get_cursor_rect  (GimpTextTool        *text_tool,
+void       ligma_text_tool_editor_get_cursor_rect  (LigmaTextTool        *text_tool,
                                                    gboolean             overwrite,
                                                    PangoRectangle      *cursor_rect);
-void       gimp_text_tool_editor_update_im_cursor (GimpTextTool        *text_tool);
+void       ligma_text_tool_editor_update_im_cursor (LigmaTextTool        *text_tool);
 
 
-#endif /* __GIMP_TEXT_TOOL_EDITOR_H__ */
+#endif /* __LIGMA_TEXT_TOOL_EDITOR_H__ */

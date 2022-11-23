@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,19 +15,19 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_METADATA_H__
-#define __GIMP_IMAGE_METADATA_H__
+#ifndef __LIGMA_IMAGE_METADATA_H__
+#define __LIGMA_IMAGE_METADATA_H__
 
 
-GimpMetadata * gimp_image_get_metadata                    (GimpImage    *image);
-void           gimp_image_set_metadata                    (GimpImage    *image,
-                                                           GimpMetadata *metadata,
+LigmaMetadata * ligma_image_get_metadata                    (LigmaImage    *image);
+void           ligma_image_set_metadata                    (LigmaImage    *image,
+                                                           LigmaMetadata *metadata,
                                                            gboolean      push_undo);
 
-void           gimp_image_metadata_update_pixel_size      (GimpImage    *image);
-void           gimp_image_metadata_update_bits_per_sample (GimpImage    *image);
-void           gimp_image_metadata_update_resolution      (GimpImage    *image);
-void           gimp_image_metadata_update_colorspace      (GimpImage    *image);
+void           ligma_image_metadata_update_pixel_size      (LigmaImage    *image);
+void           ligma_image_metadata_update_bits_per_sample (LigmaImage    *image);
+void           ligma_image_metadata_update_resolution      (LigmaImage    *image);
+void           ligma_image_metadata_update_colorspace      (LigmaImage    *image);
 
 
-#endif /* __GIMP_IMAGE_METADATA_H__ */
+#endif /* __LIGMA_IMAGE_METADATA_H__ */

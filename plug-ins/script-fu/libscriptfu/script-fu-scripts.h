@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,7 +18,7 @@
 #ifndef __SCRIPT_FU_SCRIPTS_H__
 #define __SCRIPT_FU_SCRIPTS_H__
 
-void      script_fu_find_scripts  (GimpPlugIn *plug_in,
+void      script_fu_find_scripts  (LigmaPlugIn *plug_in,
                                    GList      *path);
 pointer   script_fu_add_script        (scheme     *sc,
                                        pointer     a);
@@ -27,7 +27,7 @@ pointer   script_fu_add_script_filter (scheme     *sc,
 pointer   script_fu_add_menu      (scheme     *sc,
                                    pointer     a);
 
-GTree          * script_fu_find_scripts_into_tree (GimpPlugIn  *plug_in,
+GTree          * script_fu_find_scripts_into_tree (LigmaPlugIn  *plug_in,
                                                    GList       *path);
 SFScript       * script_fu_find_script            (const gchar *name);
 GList          * script_fu_get_menu_list          (void);

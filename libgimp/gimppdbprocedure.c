@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimppdbprocedure.c
- * Copyright (C) 2019 Michael Natterer <mitch@gimp.org>
+ * ligmapdbprocedure.c
+ * Copyright (C) 2019 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,11 +20,11 @@
 
 #include "config.h"
 
-#include "gimp.h"
+#include "ligma.h"
 
-#include "gimppdb-private.h"
-#include "gimppdb_pdb.h"
-#include "gimppdbprocedure.h"
+#include "ligmapdb-private.h"
+#include "ligmapdb_pdb.h"
+#include "ligmapdbprocedure.h"
 
 
 enum
@@ -35,84 +35,84 @@ enum
 };
 
 
-struct _GimpPDBProcedurePrivate
+struct _LigmaPDBProcedurePrivate
 {
-  GimpPDB *pdb;
+  LigmaPDB *pdb;
 };
 
 
-static void       gimp_pdb_procedure_constructed   (GObject              *object);
-static void       gimp_pdb_procedure_finalize      (GObject              *object);
-static void       gimp_pdb_procedure_set_property  (GObject              *object,
+static void       ligma_pdb_procedure_constructed   (GObject              *object);
+static void       ligma_pdb_procedure_finalize      (GObject              *object);
+static void       ligma_pdb_procedure_set_property  (GObject              *object,
                                                     guint                 property_id,
                                                     const GValue         *value,
                                                     GParamSpec           *pspec);
-static void       gimp_pdb_procedure_get_property  (GObject              *object,
+static void       ligma_pdb_procedure_get_property  (GObject              *object,
                                                     guint                 property_id,
                                                     GValue               *value,
                                                     GParamSpec           *pspec);
 
-static void       gimp_pdb_procedure_install       (GimpProcedure        *procedure);
-static void       gimp_pdb_procedure_uninstall     (GimpProcedure        *procedure);
-static GimpValueArray *
-                  gimp_pdb_procedure_run           (GimpProcedure        *procedure,
-                                                    const GimpValueArray *args);
+static void       ligma_pdb_procedure_install       (LigmaProcedure        *procedure);
+static void       ligma_pdb_procedure_uninstall     (LigmaProcedure        *procedure);
+static LigmaValueArray *
+                  ligma_pdb_procedure_run           (LigmaProcedure        *procedure,
+                                                    const LigmaValueArray *args);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpPDBProcedure, _gimp_pdb_procedure,
-                            GIMP_TYPE_PROCEDURE)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaPDBProcedure, _ligma_pdb_procedure,
+                            LIGMA_TYPE_PROCEDURE)
 
-#define parent_class _gimp_pdb_procedure_parent_class
+#define parent_class _ligma_pdb_procedure_parent_class
 
 static GParamSpec *props[N_PROPS] = { NULL, };
 
 
 static void
-_gimp_pdb_procedure_class_init (GimpPDBProcedureClass *klass)
+_ligma_pdb_procedure_class_init (LigmaPDBProcedureClass *klass)
 {
   GObjectClass       *object_class    = G_OBJECT_CLASS (klass);
-  GimpProcedureClass *procedure_class = GIMP_PROCEDURE_CLASS (klass);
+  LigmaProcedureClass *procedure_class = LIGMA_PROCEDURE_CLASS (klass);
 
-  object_class->constructed  = gimp_pdb_procedure_constructed;
-  object_class->finalize     = gimp_pdb_procedure_finalize;
-  object_class->set_property = gimp_pdb_procedure_set_property;
-  object_class->get_property = gimp_pdb_procedure_get_property;
+  object_class->constructed  = ligma_pdb_procedure_constructed;
+  object_class->finalize     = ligma_pdb_procedure_finalize;
+  object_class->set_property = ligma_pdb_procedure_set_property;
+  object_class->get_property = ligma_pdb_procedure_get_property;
 
-  procedure_class->install   = gimp_pdb_procedure_install;
-  procedure_class->uninstall = gimp_pdb_procedure_uninstall;
-  procedure_class->run       = gimp_pdb_procedure_run;
+  procedure_class->install   = ligma_pdb_procedure_install;
+  procedure_class->uninstall = ligma_pdb_procedure_uninstall;
+  procedure_class->run       = ligma_pdb_procedure_run;
 
   props[PROP_PDB] =
     g_param_spec_object ("pdb",
                          "PDB",
-                         "The GimpPDB of this plug-in process",
-                         GIMP_TYPE_PDB,
-                         GIMP_PARAM_READWRITE |
+                         "The LigmaPDB of this plug-in process",
+                         LIGMA_TYPE_PDB,
+                         LIGMA_PARAM_READWRITE |
                          G_PARAM_CONSTRUCT_ONLY);
 
   g_object_class_install_properties (object_class, N_PROPS, props);
 }
 
 static void
-_gimp_pdb_procedure_init (GimpPDBProcedure *procedure)
+_ligma_pdb_procedure_init (LigmaPDBProcedure *procedure)
 {
-  procedure->priv = _gimp_pdb_procedure_get_instance_private (procedure);
+  procedure->priv = _ligma_pdb_procedure_get_instance_private (procedure);
 }
 
 static void
-gimp_pdb_procedure_constructed (GObject *object)
+ligma_pdb_procedure_constructed (GObject *object)
 {
-  GimpPDBProcedure *procedure = GIMP_PDB_PROCEDURE (object);
+  LigmaPDBProcedure *procedure = LIGMA_PDB_PROCEDURE (object);
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  g_assert (GIMP_IS_PDB (procedure->priv->pdb));
+  g_assert (LIGMA_IS_PDB (procedure->priv->pdb));
 }
 
 static void
-gimp_pdb_procedure_finalize (GObject *object)
+ligma_pdb_procedure_finalize (GObject *object)
 {
-  GimpPDBProcedure *procedure = GIMP_PDB_PROCEDURE (object);
+  LigmaPDBProcedure *procedure = LIGMA_PDB_PROCEDURE (object);
 
   g_clear_object (&procedure->priv->pdb);
 
@@ -120,12 +120,12 @@ gimp_pdb_procedure_finalize (GObject *object)
 }
 
 static void
-gimp_pdb_procedure_set_property (GObject      *object,
+ligma_pdb_procedure_set_property (GObject      *object,
                                  guint         property_id,
                                  const GValue *value,
                                  GParamSpec   *pspec)
 {
-  GimpPDBProcedure *procedure = GIMP_PDB_PROCEDURE (object);
+  LigmaPDBProcedure *procedure = LIGMA_PDB_PROCEDURE (object);
 
   switch (property_id)
     {
@@ -140,12 +140,12 @@ gimp_pdb_procedure_set_property (GObject      *object,
 }
 
 static void
-gimp_pdb_procedure_get_property (GObject    *object,
+ligma_pdb_procedure_get_property (GObject    *object,
                                  guint       property_id,
                                  GValue     *value,
                                  GParamSpec *pspec)
 {
-  GimpPDBProcedure *procedure = GIMP_PDB_PROCEDURE (object);
+  LigmaPDBProcedure *procedure = LIGMA_PDB_PROCEDURE (object);
 
   switch (property_id)
     {
@@ -160,108 +160,108 @@ gimp_pdb_procedure_get_property (GObject    *object,
 }
 
 static void
-gimp_pdb_procedure_install (GimpProcedure *procedure)
+ligma_pdb_procedure_install (LigmaProcedure *procedure)
 {
-  g_warning ("Cannot install a GimpPDBProcedure");
+  g_warning ("Cannot install a LigmaPDBProcedure");
 }
 
 static void
-gimp_pdb_procedure_uninstall (GimpProcedure *procedure)
+ligma_pdb_procedure_uninstall (LigmaProcedure *procedure)
 {
-  g_warning ("Cannot uninstall a GimpPDBProcedure");
+  g_warning ("Cannot uninstall a LigmaPDBProcedure");
 }
 
-static GimpValueArray *
-gimp_pdb_procedure_run (GimpProcedure        *procedure,
-                        const GimpValueArray *args)
+static LigmaValueArray *
+ligma_pdb_procedure_run (LigmaProcedure        *procedure,
+                        const LigmaValueArray *args)
 {
-  GimpPDBProcedure *pdb_procedure = GIMP_PDB_PROCEDURE (procedure);
+  LigmaPDBProcedure *pdb_procedure = LIGMA_PDB_PROCEDURE (procedure);
 
-  return gimp_pdb_run_procedure_array (pdb_procedure->priv->pdb,
-                                       gimp_procedure_get_name (procedure),
-                                       (GimpValueArray *) args);
+  return ligma_pdb_run_procedure_array (pdb_procedure->priv->pdb,
+                                       ligma_procedure_get_name (procedure),
+                                       (LigmaValueArray *) args);
 }
 
 
 /*  public functions  */
 
-GimpProcedure  *
-_gimp_pdb_procedure_new (GimpPDB     *pdb,
+LigmaProcedure  *
+_ligma_pdb_procedure_new (LigmaPDB     *pdb,
                          const gchar *name)
 {
-  GimpProcedure   *procedure;
+  LigmaProcedure   *procedure;
   gchar           *blurb;
   gchar           *help;
   gchar           *help_id;
   gchar           *authors;
   gchar           *copyright;
   gchar           *date;
-  GimpPDBProcType  type;
+  LigmaPDBProcType  type;
   gint             n_args;
   gint             n_return_vals;
   gint             i;
 
-  g_return_val_if_fail (GIMP_IS_PDB (pdb), NULL);
-  g_return_val_if_fail (gimp_is_canonical_identifier (name), NULL);
+  g_return_val_if_fail (LIGMA_IS_PDB (pdb), NULL);
+  g_return_val_if_fail (ligma_is_canonical_identifier (name), NULL);
 
-  _gimp_pdb_get_proc_info (name, &type, &n_args, &n_return_vals);
+  _ligma_pdb_get_proc_info (name, &type, &n_args, &n_return_vals);
 
-  procedure = g_object_new (GIMP_TYPE_PDB_PROCEDURE,
-                            "plug-in",        _gimp_pdb_get_plug_in (pdb),
+  procedure = g_object_new (LIGMA_TYPE_PDB_PROCEDURE,
+                            "plug-in",        _ligma_pdb_get_plug_in (pdb),
                             "name",           name,
                             "procedure-type", type,
                             "pdb",            pdb,
                             NULL);
 
-  _gimp_pdb_get_proc_documentation (name,      &blurb, &help, &help_id);
-  gimp_procedure_set_documentation (procedure,  blurb,  help,  help_id);
+  _ligma_pdb_get_proc_documentation (name,      &blurb, &help, &help_id);
+  ligma_procedure_set_documentation (procedure,  blurb,  help,  help_id);
   g_free (blurb);
   g_free (help);
   g_free (help_id);
 
-  _gimp_pdb_get_proc_attribution (name,      &authors, &copyright, &date);
-  gimp_procedure_set_attribution (procedure,  authors,  copyright,  date);
+  _ligma_pdb_get_proc_attribution (name,      &authors, &copyright, &date);
+  ligma_procedure_set_attribution (procedure,  authors,  copyright,  date);
   g_free (authors);
   g_free (copyright);
   g_free (date);
 
   for (i = 0; i < n_args; i++)
     {
-      GParamSpec *pspec = _gimp_pdb_get_proc_argument (name, i);
+      GParamSpec *pspec = _ligma_pdb_get_proc_argument (name, i);
 
-      gimp_procedure_add_argument (procedure, pspec);
+      ligma_procedure_add_argument (procedure, pspec);
     }
 
   for (i = 0; i < n_return_vals; i++)
     {
-      GParamSpec *pspec = _gimp_pdb_get_proc_return_value (name, i);
+      GParamSpec *pspec = _ligma_pdb_get_proc_return_value (name, i);
 
-      gimp_procedure_add_return_value (procedure, pspec);
+      ligma_procedure_add_return_value (procedure, pspec);
     }
 
-  if (type != GIMP_PDB_PROC_TYPE_INTERNAL)
+  if (type != LIGMA_PDB_PROC_TYPE_INTERNAL)
     {
       gchar  *string;
       gchar **menu_paths;
       gchar **path;
 
-      string = _gimp_pdb_get_proc_image_types (name);
+      string = _ligma_pdb_get_proc_image_types (name);
       if (string)
         {
-          gimp_procedure_set_image_types (procedure, string);
+          ligma_procedure_set_image_types (procedure, string);
           g_free (string);
         }
 
-      string = _gimp_pdb_get_proc_menu_label (name);
+      string = _ligma_pdb_get_proc_menu_label (name);
       if (string)
         {
-          gimp_procedure_set_menu_label (procedure, string);
+          ligma_procedure_set_menu_label (procedure, string);
           g_free (string);
         }
 
-      menu_paths = _gimp_pdb_get_proc_menu_paths (name);
+      menu_paths = _ligma_pdb_get_proc_menu_paths (name);
       for (path = menu_paths; path && *path; path++)
-        gimp_procedure_add_menu_path (procedure, *path);
+        ligma_procedure_add_menu_path (procedure, *path);
       g_strfreev (menu_paths);
     }
 

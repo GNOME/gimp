@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpsettingsbox.h
- * Copyright (C) 2008 Michael Natterer <mitch@gimp.org>
+ * ligmasettingsbox.h
+ * Copyright (C) 2008 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,59 +18,59 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SETTINGS_BOX_H__
-#define __GIMP_SETTINGS_BOX_H__
+#ifndef __LIGMA_SETTINGS_BOX_H__
+#define __LIGMA_SETTINGS_BOX_H__
 
 
-#define GIMP_TYPE_SETTINGS_BOX            (gimp_settings_box_get_type ())
-#define GIMP_SETTINGS_BOX(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_SETTINGS_BOX, GimpSettingsBox))
-#define GIMP_SETTINGS_BOX_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_SETTINGS_BOX, GimpSettingsBoxClass))
-#define GIMP_IS_SETTINGS_BOX(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_SETTINGS_BOX))
-#define GIMP_IS_SETTINGS_BOX_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_SETTINGS_BOX))
-#define GIMP_SETTINGS_BOX_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_SETTINGS_BOX, GimpSettingsBoxClass))
+#define LIGMA_TYPE_SETTINGS_BOX            (ligma_settings_box_get_type ())
+#define LIGMA_SETTINGS_BOX(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_SETTINGS_BOX, LigmaSettingsBox))
+#define LIGMA_SETTINGS_BOX_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_SETTINGS_BOX, LigmaSettingsBoxClass))
+#define LIGMA_IS_SETTINGS_BOX(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_SETTINGS_BOX))
+#define LIGMA_IS_SETTINGS_BOX_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_SETTINGS_BOX))
+#define LIGMA_SETTINGS_BOX_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_SETTINGS_BOX, LigmaSettingsBoxClass))
 
 
-typedef struct _GimpSettingsBoxClass GimpSettingsBoxClass;
+typedef struct _LigmaSettingsBoxClass LigmaSettingsBoxClass;
 
-struct _GimpSettingsBox
+struct _LigmaSettingsBox
 {
   GtkBox  parent_instance;
 };
 
-struct _GimpSettingsBoxClass
+struct _LigmaSettingsBoxClass
 {
   GtkBoxClass  parent_class;
 
   /*  signals  */
-  void (* file_dialog_setup) (GimpSettingsBox      *box,
+  void (* file_dialog_setup) (LigmaSettingsBox      *box,
                               GtkFileChooserDialog *dialog,
                               gboolean              export);
-  void (* import)            (GimpSettingsBox      *box,
+  void (* import)            (LigmaSettingsBox      *box,
                               GFile                *file);
-  void (* export)            (GimpSettingsBox      *box,
+  void (* export)            (LigmaSettingsBox      *box,
                               GFile                *file);
-  void (* selected)          (GimpSettingsBox      *box,
+  void (* selected)          (LigmaSettingsBox      *box,
                               GObject              *config);
 };
 
 
-GType       gimp_settings_box_get_type    (void) G_GNUC_CONST;
+GType       ligma_settings_box_get_type    (void) G_GNUC_CONST;
 
-GtkWidget * gimp_settings_box_new         (Gimp            *gimp,
+GtkWidget * ligma_settings_box_new         (Ligma            *ligma,
                                            GObject         *config,
-                                           GimpContainer   *container,
+                                           LigmaContainer   *container,
                                            const gchar     *import_dialog_title,
                                            const gchar     *export_dialog_title,
                                            const gchar     *file_dialog_help_id,
                                            GFile           *default_folder,
                                            GFile           *last_file);
 
-GtkWidget * gimp_settings_box_get_combo   (GimpSettingsBox *box);
+GtkWidget * ligma_settings_box_get_combo   (LigmaSettingsBox *box);
 
-void        gimp_settings_box_add_current (GimpSettingsBox *box,
+void        ligma_settings_box_add_current (LigmaSettingsBox *box,
                                            gint             max_recent);
 
-void        gimp_settings_box_unset       (GimpSettingsBox *box);
+void        ligma_settings_box_unset       (LigmaSettingsBox *box);
 
 
-#endif  /*  __GIMP_SETTINGS_BOX_H__  */
+#endif  /*  __LIGMA_SETTINGS_BOX_H__  */

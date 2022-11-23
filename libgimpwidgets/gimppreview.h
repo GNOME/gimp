@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimppreview.h
+ * ligmapreview.h
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -18,12 +18,12 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
-#error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
+#if !defined (__LIGMA_WIDGETS_H_INSIDE__) && !defined (LIGMA_WIDGETS_COMPILATION)
+#error "Only <libligmawidgets/ligmawidgets.h> can be included directly."
 #endif
 
-#ifndef __GIMP_PREVIEW_H__
-#define __GIMP_PREVIEW_H__
+#ifndef __LIGMA_PREVIEW_H__
+#define __LIGMA_PREVIEW_H__
 
 G_BEGIN_DECLS
 
@@ -31,129 +31,129 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-#define GIMP_TYPE_PREVIEW            (gimp_preview_get_type ())
-#define GIMP_PREVIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PREVIEW, GimpPreview))
-#define GIMP_PREVIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PREVIEW, GimpPreviewClass))
-#define GIMP_IS_PREVIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PREVIEW))
-#define GIMP_IS_PREVIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PREVIEW))
-#define GIMP_PREVIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PREVIEW, GimpPreviewClass))
+#define LIGMA_TYPE_PREVIEW            (ligma_preview_get_type ())
+#define LIGMA_PREVIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_PREVIEW, LigmaPreview))
+#define LIGMA_PREVIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_PREVIEW, LigmaPreviewClass))
+#define LIGMA_IS_PREVIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_PREVIEW))
+#define LIGMA_IS_PREVIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_PREVIEW))
+#define LIGMA_PREVIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_PREVIEW, LigmaPreviewClass))
 
 
-typedef struct _GimpPreviewPrivate GimpPreviewPrivate;
-typedef struct _GimpPreviewClass   GimpPreviewClass;
+typedef struct _LigmaPreviewPrivate LigmaPreviewPrivate;
+typedef struct _LigmaPreviewClass   LigmaPreviewClass;
 
-struct _GimpPreview
+struct _LigmaPreview
 {
   GtkBox              parent_instance;
 
-  GimpPreviewPrivate *priv;
+  LigmaPreviewPrivate *priv;
 };
 
-struct _GimpPreviewClass
+struct _LigmaPreviewClass
 {
   GtkBoxClass  parent_class;
 
   /* virtual methods */
-  void   (* draw)        (GimpPreview     *preview);
-  void   (* draw_thumb)  (GimpPreview     *preview,
-                          GimpPreviewArea *area,
+  void   (* draw)        (LigmaPreview     *preview);
+  void   (* draw_thumb)  (LigmaPreview     *preview,
+                          LigmaPreviewArea *area,
                           gint             width,
                           gint             height);
-  void   (* draw_buffer) (GimpPreview     *preview,
+  void   (* draw_buffer) (LigmaPreview     *preview,
                           const guchar    *buffer,
                           gint             rowstride);
-  void   (* set_cursor)  (GimpPreview     *preview);
+  void   (* set_cursor)  (LigmaPreview     *preview);
 
-  void   (* transform)   (GimpPreview     *preview,
+  void   (* transform)   (LigmaPreview     *preview,
                           gint             src_x,
                           gint             src_y,
                           gint            *dest_x,
                           gint            *dest_y);
-  void   (* untransform) (GimpPreview     *preview,
+  void   (* untransform) (LigmaPreview     *preview,
                           gint             src_x,
                           gint             src_y,
                           gint            *dest_x,
                           gint            *dest_y);
 
   /* signal */
-  void   (* invalidated) (GimpPreview     *preview);
+  void   (* invalidated) (LigmaPreview     *preview);
 
   /* Padding for future expansion */
-  void (* _gimp_reserved1) (void);
-  void (* _gimp_reserved2) (void);
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
-  void (* _gimp_reserved5) (void);
-  void (* _gimp_reserved6) (void);
-  void (* _gimp_reserved7) (void);
-  void (* _gimp_reserved8) (void);
+  void (* _ligma_reserved1) (void);
+  void (* _ligma_reserved2) (void);
+  void (* _ligma_reserved3) (void);
+  void (* _ligma_reserved4) (void);
+  void (* _ligma_reserved5) (void);
+  void (* _ligma_reserved6) (void);
+  void (* _ligma_reserved7) (void);
+  void (* _ligma_reserved8) (void);
 };
 
 
-GType       gimp_preview_get_type           (void) G_GNUC_CONST;
+GType       ligma_preview_get_type           (void) G_GNUC_CONST;
 
-void        gimp_preview_set_update         (GimpPreview  *preview,
+void        ligma_preview_set_update         (LigmaPreview  *preview,
                                              gboolean      update);
-gboolean    gimp_preview_get_update         (GimpPreview  *preview);
+gboolean    ligma_preview_get_update         (LigmaPreview  *preview);
 
-void        gimp_preview_set_bounds         (GimpPreview  *preview,
+void        ligma_preview_set_bounds         (LigmaPreview  *preview,
                                              gint          xmin,
                                              gint          ymin,
                                              gint          xmax,
                                              gint          ymax);
-void        gimp_preview_get_bounds         (GimpPreview  *preview,
+void        ligma_preview_get_bounds         (LigmaPreview  *preview,
                                              gint         *xmin,
                                              gint         *ymin,
                                              gint         *xmax,
                                              gint         *ymax);
 
-void        gimp_preview_set_size           (GimpPreview  *preview,
+void        ligma_preview_set_size           (LigmaPreview  *preview,
                                              gint          width,
                                              gint          height);
-void        gimp_preview_get_size           (GimpPreview  *preview,
+void        ligma_preview_get_size           (LigmaPreview  *preview,
                                              gint         *width,
                                              gint         *height);
 
-void        gimp_preview_set_offsets        (GimpPreview  *preview,
+void        ligma_preview_set_offsets        (LigmaPreview  *preview,
                                              gint          xoff,
                                              gint          yoff);
-void        gimp_preview_get_offsets        (GimpPreview  *preview,
+void        ligma_preview_get_offsets        (LigmaPreview  *preview,
                                              gint         *xoff,
                                              gint         *yoff);
 
-void        gimp_preview_get_position       (GimpPreview  *preview,
+void        ligma_preview_get_position       (LigmaPreview  *preview,
                                              gint         *x,
                                              gint         *y);
 
-void        gimp_preview_transform          (GimpPreview *preview,
+void        ligma_preview_transform          (LigmaPreview *preview,
                                              gint         src_x,
                                              gint         src_y,
                                              gint        *dest_x,
                                              gint        *dest_y);
-void        gimp_preview_untransform        (GimpPreview *preview,
+void        ligma_preview_untransform        (LigmaPreview *preview,
                                              gint         src_x,
                                              gint         src_y,
                                              gint        *dest_x,
                                              gint        *dest_y);
 
-GtkWidget * gimp_preview_get_frame          (GimpPreview  *preview);
-GtkWidget * gimp_preview_get_grid           (GimpPreview  *preview);
-GtkWidget * gimp_preview_get_area           (GimpPreview  *preview);
+GtkWidget * ligma_preview_get_frame          (LigmaPreview  *preview);
+GtkWidget * ligma_preview_get_grid           (LigmaPreview  *preview);
+GtkWidget * ligma_preview_get_area           (LigmaPreview  *preview);
 
-void        gimp_preview_draw               (GimpPreview  *preview);
-void        gimp_preview_draw_buffer        (GimpPreview  *preview,
+void        ligma_preview_draw               (LigmaPreview  *preview);
+void        ligma_preview_draw_buffer        (LigmaPreview  *preview,
                                              const guchar *buffer,
                                              gint          rowstride);
 
-void        gimp_preview_invalidate         (GimpPreview  *preview);
+void        ligma_preview_invalidate         (LigmaPreview  *preview);
 
-void        gimp_preview_set_default_cursor (GimpPreview  *preview,
+void        ligma_preview_set_default_cursor (LigmaPreview  *preview,
                                              GdkCursor    *cursor);
-GdkCursor * gimp_preview_get_default_cursor (GimpPreview  *preview);
+GdkCursor * ligma_preview_get_default_cursor (LigmaPreview  *preview);
 
-GtkWidget * gimp_preview_get_controls       (GimpPreview  *preview);
+GtkWidget * ligma_preview_get_controls       (LigmaPreview  *preview);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_PREVIEW_H__ */
+#endif /* __LIGMA_PREVIEW_H__ */

@@ -9,7 +9,7 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   sodipodi:docname="gimp-zoom-follow-window-symbolic.svg"
+   sodipodi:docname="ligma-zoom-follow-window-symbolic.svg"
    inkscape:version="1.1-dev (a78b094061, 2020-01-04)"
    version="1.1"
    width="12"
@@ -61,7 +61,7 @@
             <dc:title>Barbara Muraus, Jakub Steiner, Klaus Staedtler</dc:title>
           </cc:Agent>
         </dc:contributor>
-        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for GIMP</dc:description>
+        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for LIGMA</dc:description>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -154,7 +154,7 @@
        inkscape:collect="always" />
   </defs>
   <g
-     id="gimp-zoom-follow-window">
+     id="ligma-zoom-follow-window">
     <path
        id="path852"
        style="opacity:1;fill:url(#linearGradient887);fill-opacity:1.0;fill-rule:evenodd;stroke-width:3.94896;stop-color:#000000"

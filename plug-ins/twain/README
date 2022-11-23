@@ -28,7 +28,7 @@ Randomize
 Any suggestions, bug-reports or patches are welcome.
  
 This plug-in interfaces to the TWAIN support library in order
-to capture images from TWAIN devices directly into GIMP images.
+to capture images from TWAIN devices directly into LIGMA images.
 The plug-in is capable of acquiring the following type of
 images:
  - B/W (1 bit images translated to grayscale B/W)
@@ -85,7 +85,7 @@ If you find that you are unable to capture data from you datasource (the plug-in
 crashes or the image is wrong), please capture data using the following steps:
 
 1) Copy gtwain.exe to your plug-ins directory as "dtwain.exe".
-2) Run GIMP.
+2) Run LIGMA.
 3) Choose Xtns->TWAIN Acquire (Dump)...
 4) Choose the datasource settings that are causing problems.
 5) Choose a *SMALL* sample image.

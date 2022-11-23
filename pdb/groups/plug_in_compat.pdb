@@ -1,4 +1,4 @@
-# GIMP - The GNU Image Manipulation Program
+# LIGMA - The GNU Image Manipulation Program
 # Copyright (C) 1995 Spencer Kimball and Peter Mattis
 
 # This program is free software: you can redistribute it and/or modify
@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+# "Perlized" from C source by Manish Singh <yosh@ligma.org>
 
 sub plug_in_alienmap2 {
     $blurb = 'Alter colors in various psychedelic ways';
@@ -27,7 +27,7 @@ HELP
     $date = '2013';
 
     @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	{ name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
 	  desc => 'The run mode' },
 	{ name => 'image', type => 'image', dead => 1,
 	  desc => 'Input image (unused)' },
@@ -58,9 +58,9 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode *node =
         gegl_node_new_child (NULL,
@@ -77,7 +77,7 @@ HELP
                              "cpn-3-keep",       (gboolean) !bluemode,
                              NULL);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Alien Map"),
                                      node);
       g_object_unref (node);
@@ -100,7 +100,7 @@ HELP
     $date = '2013';
 
     @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	{ name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
 	  desc => 'The run mode' },
 	{ name => 'image', type => 'image', dead => 1,
 	  desc => 'Input image (unused)' },
@@ -111,16 +111,16 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode *node =
         gegl_node_new_child (NULL,
                              "operation", "gegl:antialias",
                              NULL);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Antialias"),
                                      node);
       g_object_unref (node);
@@ -143,7 +143,7 @@ HELP
     $date = '2014';
 
     @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	{ name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
 	  desc => 'The run mode' },
 	{ name => 'image', type => 'image', dead => 1,
 	  desc => 'Input image (unused)' },
@@ -158,9 +158,9 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode *node =
         gegl_node_new_child (NULL,
@@ -169,7 +169,7 @@ HELP
                              "depth",     depth,
                              NULL);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Apply Canvas"),
                                      node);
       g_object_unref (node);
@@ -192,7 +192,7 @@ HELP
     $date = '2014';
 
     @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	{ name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
 	  desc => 'The run mode' },
 	{ name => 'image', type => 'image', dead => 1,
 	  desc => 'Input image (unused)' },
@@ -211,20 +211,20 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
-      GimpRGB    color;
+      LigmaRGB    color;
       GeglColor *gegl_color;
       GeglNode  *node;
 
       if (set_background)
-        gimp_context_get_background (context, &color);
+        ligma_context_get_background (context, &color);
       else
-        gimp_rgba_set (&color, 0.0, 0.0, 0.0, 0.0);
+        ligma_rgba_set (&color, 0.0, 0.0, 0.0, 0.0);
 
-      gegl_color = gimp_gegl_color_new (&color, NULL);
+      gegl_color = ligma_gegl_color_new (&color, NULL);
 
       node = gegl_node_new_child (NULL,
                                  "operation",         "gegl:apply-lens",
@@ -237,7 +237,7 @@ HELP
 
       node = wrap_in_selection_bounds (node, drawable);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Apply Lens"),
                                      node);
       g_object_unref (node);
@@ -260,7 +260,7 @@ HELP
     $date = '1997';
 
     @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	{ name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
 	  desc => 'The run mode' },
 	{ name => 'image', type => 'image',
 	  desc => 'Input image)' },
@@ -271,43 +271,43 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error))
     {
       gint x, y, width, height;
       gint off_x, off_y;
 
-      gimp_pickable_auto_shrink (GIMP_PICKABLE (drawable),
+      ligma_pickable_auto_shrink (LIGMA_PICKABLE (drawable),
                                  0, 0,
-                                 gimp_item_get_width  (GIMP_ITEM (drawable)),
-                                 gimp_item_get_height (GIMP_ITEM (drawable)),
+                                 ligma_item_get_width  (LIGMA_ITEM (drawable)),
+                                 ligma_item_get_height (LIGMA_ITEM (drawable)),
                                  &x, &y, &width, &height);
 
-      gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
+      ligma_item_get_offset (LIGMA_ITEM (drawable), &off_x, &off_y);
       x += off_x;
       y += off_y;
 
-      gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_RESIZE,
+      ligma_image_undo_group_start (image, LIGMA_UNDO_GROUP_ITEM_RESIZE,
                                    _("Autocrop image"));
 
       if (x          < 0                             ||
           y          < 0                             ||
-          x + width  > gimp_image_get_width  (image) ||
-          y + height > gimp_image_get_height (image))
+          x + width  > ligma_image_get_width  (image) ||
+          y + height > ligma_image_get_height (image))
         {
           /*
            * partially outside the image area, we need to
            * resize the image to be able to crop properly.
            */
-          gimp_image_resize (image, context, width, height, -x, -y, NULL);
+          ligma_image_resize (image, context, width, height, -x, -y, NULL);
 
           x = y = 0;
         }
 
-      gimp_image_crop (image, context, GIMP_FILL_TRANSPARENT,
+      ligma_image_crop (image, context, LIGMA_FILL_TRANSPARENT,
                        x, y, width, height, TRUE);
 
-      gimp_image_undo_group_end (image);
+      ligma_image_undo_group_end (image);
     }
   else
     success = FALSE;
@@ -328,7 +328,7 @@ HELP
     $date = '1997';
 
     @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	{ name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
 	  desc => 'The run mode' },
 	{ name => 'image', type => 'image',
 	  desc => 'Input image)' },
@@ -339,31 +339,31 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error))
     {
-      GList *layers = gimp_image_get_selected_layers (image);
+      GList *layers = ligma_image_get_selected_layers (image);
       GList *iter;
       gint   x, y, width, height;
 
       if (layers)
         {
-          switch (gimp_pickable_auto_shrink (GIMP_PICKABLE (drawable),
+          switch (ligma_pickable_auto_shrink (LIGMA_PICKABLE (drawable),
                                              0, 0,
-                                             gimp_item_get_width  (GIMP_ITEM (drawable)),
-                                             gimp_item_get_height (GIMP_ITEM (drawable)),
+                                             ligma_item_get_width  (LIGMA_ITEM (drawable)),
+                                             ligma_item_get_height (LIGMA_ITEM (drawable)),
                                              &x, &y, &width, &height))
             {
-            case GIMP_AUTO_SHRINK_SHRINK:
-              gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_RESIZE,
+            case LIGMA_AUTO_SHRINK_SHRINK:
+              ligma_image_undo_group_start (image, LIGMA_UNDO_GROUP_ITEM_RESIZE,
                                            _("Autocrop layer"));
 
               for (iter = layers; iter; iter = iter->next)
-                  gimp_item_resize (GIMP_ITEM (iter->data),
-                                    context, GIMP_FILL_TRANSPARENT,
+                  ligma_item_resize (LIGMA_ITEM (iter->data),
+                                    context, LIGMA_FILL_TRANSPARENT,
                                     width, height, -x, -y);
 
-              gimp_image_undo_group_end (image);
+              ligma_image_undo_group_end (image);
 	      break;
 
 	    default:
@@ -400,7 +400,7 @@ HELP
     $date = '2013';
 
     @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	{ name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
 	  desc => 'The run mode' },
 	{ name => 'image', type => 'image', dead => 1,
 	  desc => 'Input image (unused)' },
@@ -411,16 +411,16 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode *node =
         gegl_node_new_child (NULL,
                              "operation",   "gegl:stretch-contrast-hsv",
                              NULL);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Stretch Contrast HSV"),
                                      node);
       g_object_unref (node);
@@ -447,7 +447,7 @@ HELP
     $date = '2015';
 
     @inargs = (
-  { name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+  { name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
     desc => 'The run mode' },
   { name => 'image', type => 'image', dead => 1,
     desc => 'Input image (unused)' },
@@ -515,7 +515,7 @@ HELP
     $date = '2015';
 
     @inargs = (
-  { name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+  { name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
     desc => 'The run mode' },
   { name => 'image', type => 'image', dead => 1,
     desc => 'Input image (unused)' },
@@ -583,7 +583,7 @@ HELP
     $date = '2013';
 
     @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	{ name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
 	  desc => 'The run mode' },
 	{ name => 'image', type => 'image', dead => 1,
 	  desc => 'Input image (unused)' },
@@ -594,9 +594,9 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode *node =
         gegl_node_new_child (NULL,
@@ -604,7 +604,7 @@ HELP
                              "keep-colors", (gboolean) FALSE,
                              NULL);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Stretch Contrast"),
                                      node);
       g_object_unref (node);
@@ -644,7 +644,7 @@ HELP
     $date = '2019';
 
     @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	{ name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
 	  desc => 'The run mode' },
 	{ name => 'image', type => 'image', dead => 1,
 	  desc => 'Input image (unused)' },
@@ -659,9 +659,9 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode *node =
         gegl_node_new_child (NULL,
@@ -670,7 +670,7 @@ HELP
 			     "pct-black",   pct_black,
                              NULL);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Cartoon"),
                                      node);
       g_object_unref (node);
@@ -693,7 +693,7 @@ HELP
     $date = '2013';
 
     @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	{ name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
 	  desc => 'The run mode' },
 	{ name => 'image', type => 'image', dead => 1,
 	  desc => 'Input image (unused)' },
@@ -724,9 +724,9 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode *node = NULL;
 
@@ -755,7 +755,7 @@ HELP
                                         NULL);
          }
 
-       gimp_drawable_apply_operation (drawable, progress,
+       ligma_drawable_apply_operation (drawable, progress,
                                       C_("undo-type", "Channel Mixer"),
                                       node);
        g_object_unref (node);
@@ -779,7 +779,7 @@ HELP
     $date = '1999';
 
     @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	{ name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
 	  desc => 'The run mode' },
 	{ name => 'image', type => 'image', dead => 1,
 	  desc => 'Input image (unused)' },
@@ -792,11 +792,11 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
-      GeglColor *gegl_color = gimp_gegl_color_new (&color, NULL);
+      GeglColor *gegl_color = ligma_gegl_color_new (&color, NULL);
       GeglNode  *node =
         gegl_node_new_child (NULL,
                              "operation", "gegl:color-to-alpha",
@@ -804,7 +804,7 @@ HELP
                              NULL);
       g_object_unref (gegl_color);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Color to Alpha"),
                                      node);
       g_object_unref (node);
@@ -827,7 +827,7 @@ HELP
     $date = '2014';
 
     @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	{ name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
 	  desc => 'The run mode' },
 	{ name => 'image', type => 'image', dead => 1,
 	  desc => 'Input image (unused)' },
@@ -856,7 +856,7 @@ HELP
 {
   if (argc_matrix != 25)
     {
-      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+      g_set_error (error, LIGMA_PDB_ERROR, LIGMA_PDB_ERROR_INVALID_ARGUMENT,
                    _("Array 'matrix' has only %d members, must have 25"),
                    argc_matrix);
       success = FALSE;
@@ -864,16 +864,16 @@ HELP
 
   if (success && argc_channels != 5)
     {
-      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+      g_set_error (error, LIGMA_PDB_ERROR, LIGMA_PDB_ERROR_INVALID_ARGUMENT,
                    _("Array 'channels' has only %d members, must have 5"),
                    argc_channels);
       success = FALSE;
     }
 
   if (success &&
-      gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode        *node;
       GeglAbyssPolicy  border = GEGL_ABYSS_CLAMP;
@@ -882,7 +882,7 @@ HELP
       gboolean         b      = channels[3];
       gboolean         a      = channels[4];
 
-      if (gimp_drawable_is_gray (drawable))
+      if (ligma_drawable_is_gray (drawable))
         {
           r = channels[0];
           g = channels[0];
@@ -936,7 +936,7 @@ HELP
 
       node = wrap_in_gamma_cast (node, drawable);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Convolution Matrix"),
                                      node);
       g_object_unref (node);
@@ -959,7 +959,7 @@ HELP
     $date = '2013';
 
     @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	{ name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
 	  desc => 'The run mode' },
 	{ name => 'image', type => 'image', dead => 1,
 	  desc => 'Input image (unused)' },
@@ -976,25 +976,25 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
-      GimpRGB    color;
+      LigmaRGB    color;
       GeglColor *gegl_color;
       GeglNode  *node;
 
       if (bg_color)
         {
-          gimp_context_get_background (context, &color);
-          gimp_rgb_set_alpha (&color, 0.0);
+          ligma_context_get_background (context, &color);
+          ligma_rgb_set_alpha (&color, 0.0);
         }
       else
         {
-          gimp_rgba_set (&color, 0.0, 0.0, 0.0, 0.0);
+          ligma_rgba_set (&color, 0.0, 0.0, 0.0, 0.0);
         }
 
-      gegl_color = gimp_gegl_color_new (&color, NULL);
+      gegl_color = ligma_gegl_color_new (&color, NULL);
 
       node = gegl_node_new_child (NULL,
                                   "operation",       "gegl:cubism",
@@ -1004,7 +1004,7 @@ HELP
                                   NULL);
       g_object_unref (gegl_color);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Cubism"),
                                      node);
       g_object_unref (node);
@@ -1029,7 +1029,7 @@ HELP
     $date = '2014';
 
     @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	{ name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
 	  desc => 'The run mode' },
 	{ name => 'image', type => 'image', dead => 1,
 	  desc => 'Input image (unused)' },
@@ -1042,9 +1042,9 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode *node;
 
@@ -1057,7 +1057,7 @@ HELP
 
       node = wrap_in_gamma_cast (node, drawable);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Deinterlace"),
                                      node);
       g_object_unref (node);
@@ -1080,7 +1080,7 @@ HELP
     $date = '2015';
 
     @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	{ name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
 	  desc => 'The run mode' },
 	{ name => 'image', type => 'image', dead => 1,
 	  desc => 'Input image (unused)' },
@@ -1115,14 +1115,14 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode *node;
       gint      x, y, width, height;
 
-      gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height);
+      ligma_item_mask_intersect (LIGMA_ITEM (drawable), &x, &y, &width, &height);
 
       node = gegl_node_new_child (NULL,
                                   "operation",       "gegl:diffraction-patterns",
@@ -1142,7 +1142,7 @@ HELP
                                   "height",          height,
                                   NULL);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Diffraction Patterns"),
                                      node);
       g_object_unref (node);
@@ -1167,7 +1167,7 @@ HELP
     $date = '2015';
 
     @inargs = (
-  { name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+  { name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
     desc => 'The run mode' },
   { name => 'image', type => 'image', dead => 1,
     desc => 'Input image (unused)' },
@@ -1220,7 +1220,7 @@ HELP
     $date = '2015';
 
     @inargs = (
-        { name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+        { name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
           desc => 'The run mode' },
         { name => 'image', type => 'image', dead => 1,
           desc => 'Input image (unused)' },
@@ -1273,7 +1273,7 @@ HELP
     $date = '2015';
 
     @inargs = (
-        { name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+        { name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
           desc => 'The run mode' },
         { name => 'image', type => 'image',
           desc => 'Input image (unused)' },
@@ -1292,14 +1292,14 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode *node;
 
       if (normalize || invert)
-        gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_MISC,
+        ligma_image_undo_group_start (image, LIGMA_UNDO_GROUP_MISC,
                                      C_("undo-type", "DoG Edge Detect"));
 
       node = gegl_node_new_child (NULL,
@@ -1310,7 +1310,7 @@ HELP
 
       node = wrap_in_gamma_cast (node, drawable);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "DoG Edge Detect"),
                                      node);
       g_object_unref (node);
@@ -1323,20 +1323,20 @@ HELP
                                       "perceptual",  TRUE,
                                       NULL);
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Normalize"),
                                          node);
           g_object_unref (node);
         }
 
       if (invert)
-        gimp_drawable_apply_operation_by_name (drawable, progress,
+        ligma_drawable_apply_operation_by_name (drawable, progress,
                                                C_("undo-type", "Invert"),
                                                "gegl:invert-gamma",
                                                NULL);
 
       if (normalize || invert)
-        gimp_image_undo_group_end (image);
+        ligma_image_undo_group_end (image);
     }
   else
     success = FALSE;
@@ -1359,7 +1359,7 @@ HELP
     $date = '2015';
 
     @inargs = (
-        { name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+        { name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
           desc => 'The run mode' },
         { name => 'image', type => 'image', dead => 1,
           desc => 'Input image (unused)' },
@@ -1376,9 +1376,9 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode        *node;
       GeglAbyssPolicy  border_behavior = GEGL_ABYSS_NONE;
@@ -1409,7 +1409,7 @@ HELP
                                   "border-behavior", border_behavior,
                                   NULL);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Edge"),
                                      node);
       g_object_unref (node);
@@ -1433,7 +1433,7 @@ HELP
     $date = '2019';
 
     @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	{ name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
 	  desc => 'The run mode' },
 	{ name => 'image', type => 'image', dead => 1,
 	  desc => 'Input image (unused)' },
@@ -1452,9 +1452,9 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode *node;
 
@@ -1468,7 +1468,7 @@ HELP
 
       node = wrap_in_gamma_cast (node, drawable);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Emboss"),
                                      node);
     }
@@ -1491,7 +1491,7 @@ HELP
     $date = '2014';
 
     @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	{ name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
 	  desc => 'The run mode' },
 	{ name => 'image', type => 'image', dead => 1,
 	  desc => 'Input image (unused)' },
@@ -1506,9 +1506,9 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode *node;
 
@@ -1518,7 +1518,7 @@ HELP
                                   "limit",       limit,
                                   NULL);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Engrave"),
                                      node);
     }
@@ -1541,7 +1541,7 @@ HELP
     $date = '2014';
 
     @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	{ name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
 	  desc => 'The run mode' },
 	{ name => 'image', type => 'image', dead => 1,
 	  desc => 'Input image (unused)' },
@@ -1571,21 +1571,21 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
-      GimpRGB    from;
-      GimpRGB    to;
+      LigmaRGB    from;
+      LigmaRGB    to;
       GeglColor *gegl_from;
       GeglColor *gegl_to;
       GeglNode  *node;
 
-      gimp_rgb_set_uchar (&from, from_red, from_green, from_blue);
-      gimp_rgb_set_uchar (&to,   to_red,   to_green,   to_blue);
+      ligma_rgb_set_uchar (&from, from_red, from_green, from_blue);
+      ligma_rgb_set_uchar (&to,   to_red,   to_green,   to_blue);
 
-      gegl_from = gimp_gegl_color_new (&from, NULL);
-      gegl_to   = gimp_gegl_color_new (&to,   NULL);
+      gegl_from = ligma_gegl_color_new (&from, NULL);
+      gegl_to   = ligma_gegl_color_new (&to,   NULL);
 
       node = gegl_node_new_child (NULL,
                                   "operation",       "gegl:color-exchange",
@@ -1599,7 +1599,7 @@ HELP
       g_object_unref (gegl_from);
       g_object_unref (gegl_to);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Color Exchange"),
                                      node);
       g_object_unref (node);
@@ -1623,7 +1623,7 @@ HELP
     $date = '2015';
 
     @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	{ name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
 	  desc => 'The run mode' },
 	{ name => 'image', type => 'image', dead => 1,
 	  desc => 'Input image (unused)' },
@@ -1638,13 +1638,13 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode *node;
-      gint      width  = gimp_item_get_width  (GIMP_ITEM (drawable));
-      gint      height = gimp_item_get_height (GIMP_ITEM (drawable));
+      gint      width  = ligma_item_get_width  (LIGMA_ITEM (drawable));
+      gint      height = ligma_item_get_height (LIGMA_ITEM (drawable));
       gdouble   x      = (gdouble) pos_x / (gdouble) width;
       gdouble   y      = (gdouble) pos_y / (gdouble) height;
 
@@ -1654,7 +1654,7 @@ HELP
                                   "pos-y",     y,
                                   NULL);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Lens Flare"),
                                      node);
       g_object_unref (node);
@@ -1677,7 +1677,7 @@ HELP
     $date = '2018';
 
     @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	{ name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
 	  desc => 'The run mode' },
 	{ name => 'image', type => 'image', dead => 1,
 	  desc => 'Input image (unused)' },
@@ -1700,9 +1700,9 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode        *node;
       GeglAbyssPolicy  abyss = GEGL_ABYSS_LOOP;
@@ -1725,7 +1725,7 @@ HELP
                                   "abyss-policy", abyss,
                                   NULL);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Fractal Trace"),
                                      node);
       g_object_unref (node);
@@ -1752,7 +1752,7 @@ HELP
     $date = '2014';
 
     @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	{ name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
 	  desc => 'The run mode' },
 	{ name => 'image', type => 'image', dead => 1,
 	  desc => 'Input image (unused)' },
@@ -1789,7 +1789,7 @@ HELP
     $date = '2014';
 
     @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	{ name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
 	  desc => 'The run mode' },
 	{ name => 'image', type => 'image', dead => 1,
 	  desc => 'Input image (unused)' },
@@ -1829,7 +1829,7 @@ HELP
     $date = '2014';
 
     @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	{ name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
 	  desc => 'The run mode' },
 	{ name => 'image', type => 'image', dead => 1,
 	  desc => 'Input image (unused)' },
@@ -1864,7 +1864,7 @@ HELP
     $date = '2014';
 
     @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	{ name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
 	  desc => 'The run mode' },
 	{ name => 'image', type => 'image', dead => 1,
 	  desc => 'Input image (unused)' },
@@ -1904,7 +1904,7 @@ HELP
     $date = '2014';
 
     @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	{ name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
 	  desc => 'The run mode' },
 	{ name => 'image', type => 'image', dead => 1,
 	  desc => 'Input image (unused)' },
@@ -1937,7 +1937,7 @@ HELP
     $date = '2014';
 
     @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	{ name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
 	  desc => 'The run mode' },
 	{ name => 'image', type => 'image', dead => 1,
 	  desc => 'Input image (unused)' },
@@ -1952,9 +1952,9 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode *node;
 
@@ -1964,7 +1964,7 @@ HELP
                                   "tile-height", tiley,
                                   NULL);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Glass Tile"),
                                      node);
       g_object_unref (node);
@@ -1987,7 +1987,7 @@ HELP
     $date = '2013';
 
     @inargs = (
-        { name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+        { name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
           desc => 'The run mode' },
         { name => 'image', type => 'image', dead => 1,
           desc => 'Input image (unused)' },
@@ -2006,9 +2006,9 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode  *node;
 
@@ -2024,7 +2024,7 @@ HELP
                                   "value-distance",      (gdouble) value,
                                   NULL);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Noise HSV"),
                                      node);
       g_object_unref (node);
@@ -2047,7 +2047,7 @@ HELP
     $date = '2014';
 
     @inargs = (
-        { name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+        { name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
           desc => 'The run mode' },
         { name => 'image', type => 'image', dead => 1,
           desc => 'Input image (unused)' },
@@ -2062,9 +2062,9 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode *node =
         gegl_node_new_child (NULL,
@@ -2073,7 +2073,7 @@ HELP
                              "illusion-type", (gint) type,
                              NULL);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Illusion"),
                                      node);
       g_object_unref (node);
@@ -2101,7 +2101,7 @@ HELP
     $date = '2013';
 
     @inargs = (
-        { name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+        { name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
           desc => 'The run mode' },
         { name => 'image', type => 'image', dead => 1,
           desc => 'Input image (unused)' },
@@ -2112,16 +2112,16 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode *node =
         gegl_node_new_child (NULL,
                              "operation", "gegl:edge-laplace",
                              NULL);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Laplace"),
                                      node);
       g_object_unref (node);
@@ -2144,7 +2144,7 @@ HELP
     $date = '2013';
 
     @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	{ name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
 	  desc => 'The run mode' },
 	{ name => 'image', type => 'image', dead => 1,
 	  desc => 'Input image (unused)' },
@@ -2167,26 +2167,26 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode  *node = NULL;
-      GimpRGB    color;
+      LigmaRGB    color;
       GeglColor *gegl_color;
 
-      gimp_context_get_background (context, &color);
+      ligma_context_get_background (context, &color);
 
-      if (gimp_drawable_has_alpha (drawable))
+      if (ligma_drawable_has_alpha (drawable))
         {
-          gimp_rgb_set_alpha (&color, 0.0);
+          ligma_rgb_set_alpha (&color, 0.0);
         }
       else
         {
-          gimp_rgb_set_alpha (&color, 1.0);
+          ligma_rgb_set_alpha (&color, 1.0);
         }
 
-      gegl_color = gimp_gegl_color_new (&color, NULL);
+      gegl_color = ligma_gegl_color_new (&color, NULL);
 
       node =  gegl_node_new_child (NULL,
                                    "operation", "gegl:lens-distortion",
@@ -2203,7 +2203,7 @@ HELP
 
       node = wrap_in_selection_bounds (node, drawable);
  
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                     C_("undo-type", "Lens Distortion"),
                                     node);
       g_object_unref (node);
@@ -2227,7 +2227,7 @@ HELP
     $date = '2013';
 
     @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	{ name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
 	  desc => 'The run mode' },
 	{ name => 'image', type => 'image', dead => 1,
 	  desc => 'Input image (unused)' },
@@ -2238,9 +2238,9 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode *node =
         gegl_node_new_child (NULL,
@@ -2249,7 +2249,7 @@ HELP
 
       node = wrap_in_selection_bounds (node, drawable);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Tile Seamless"),
                                      node);
       g_object_unref (node);
@@ -2273,7 +2273,7 @@ HELP
     $date = '2015';
 
     @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	{ name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
 	  desc => 'The run mode' },
 	{ name => 'image', type => 'image', dead => 1,
 	  desc => 'Input image (unused)' },
@@ -2298,20 +2298,20 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode  *node;
       GeglColor *fg_color;
       GeglColor *bg_color;
-      GimpRGB    color;
+      LigmaRGB    color;
 
-      gimp_context_get_foreground (context, &color);
-      fg_color = gimp_gegl_color_new (&color, NULL);
+      ligma_context_get_foreground (context, &color);
+      fg_color = ligma_gegl_color_new (&color, NULL);
 
-      gimp_context_get_background (context, &color);
-      bg_color = gimp_gegl_color_new (&color, NULL);
+      ligma_context_get_background (context, &color);
+      bg_color = ligma_gegl_color_new (&color, NULL);
 
       node =  gegl_node_new_child (NULL,
                                    "operation",      "gegl:maze",
@@ -2327,7 +2327,7 @@ HELP
       g_object_unref (fg_color);
       g_object_unref (bg_color);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Maze"),
                                     node);
       g_object_unref (node);
@@ -2352,7 +2352,7 @@ HELP
     $date = '2013';
 
     @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	{ name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
 	  desc => 'The run mode' },
 	{ name => 'image', type => 'image', dead => 1,
 	  desc => 'Input image (unused)' },
@@ -2373,13 +2373,13 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode *node   = NULL;
-      gint      width  = gimp_item_get_width  (GIMP_ITEM (drawable));
-      gint      height = gimp_item_get_height (GIMP_ITEM (drawable));
+      gint      width  = ligma_item_get_width  (LIGMA_ITEM (drawable));
+      gint      height = ligma_item_get_height (LIGMA_ITEM (drawable));
 
       center_x /= (gdouble) width;
       center_y /= (gdouble) height;
@@ -2418,7 +2418,7 @@ HELP
 
       if (node != NULL)
         {
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Motion Blur"),
                                          node);
           g_object_unref (node);
@@ -2446,7 +2446,7 @@ HELP
     $date = '2013';
 
     @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	{ name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
 	  desc => 'The run mode' },
 	{ name => 'image', type => 'image', dead => 1,
 	  desc => 'Input image (unused)' },
@@ -2467,13 +2467,13 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode *node   = NULL;
-      gint      width  = gimp_item_get_width  (GIMP_ITEM (drawable));
-      gint      height = gimp_item_get_height (GIMP_ITEM (drawable));
+      gint      width  = ligma_item_get_width  (LIGMA_ITEM (drawable));
+      gint      height = ligma_item_get_height (LIGMA_ITEM (drawable));
 
       center_x /= (gdouble) width;
       center_y /= (gdouble) height;
@@ -2509,7 +2509,7 @@ HELP
 
       if (node != NULL)
         {
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Motion Blur"),
                                          node);
           g_object_unref (node);
@@ -2537,7 +2537,7 @@ HELP
     $date = '2021';
 
     @inargs = (
-        { name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+        { name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
           desc => 'The run mode' },
         { name => 'image', type => 'image', dead => 1,
           desc => 'Input image (unused)' },
@@ -2552,9 +2552,9 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode *node =
         gegl_node_new_child (NULL,
@@ -2563,7 +2563,7 @@ HELP
                              "percentile", percentile,
                              NULL);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Median Blur"),
                                      node);
       g_object_unref (node);
@@ -2588,7 +2588,7 @@ HELP
     $date = '2013';
 
     @inargs = (
-        { name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+        { name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
           desc => 'The run mode' },
         { name => 'image', type => 'image', dead => 1,
           desc => 'Input image (unused)' },
@@ -2623,9 +2623,9 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglColor *fg_color;
       GeglColor *bg_color;
@@ -2633,13 +2633,13 @@ HELP
 
       if (grout_color)
         {
-          GimpRGB fgcolor, bgcolor;
+          LigmaRGB fgcolor, bgcolor;
 
-          gimp_context_get_background (context, &bgcolor);
-          bg_color = gimp_gegl_color_new (&bgcolor, NULL);
+          ligma_context_get_background (context, &bgcolor);
+          bg_color = ligma_gegl_color_new (&bgcolor, NULL);
 
-          gimp_context_get_foreground (context, &fgcolor);
-          fg_color = gimp_gegl_color_new (&fgcolor, NULL);
+          ligma_context_get_foreground (context, &fgcolor);
+          fg_color = ligma_gegl_color_new (&fgcolor, NULL);
         }
       else
         {
@@ -2668,7 +2668,7 @@ HELP
       g_object_unref (fg_color);
       g_object_unref (bg_color);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Mosaic"),
                                      node);
       g_object_unref (node);
@@ -2695,7 +2695,7 @@ HELP
     $date = '2019';
 
     @inargs = (
-        { name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+        { name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
           desc => 'The run mode' },
         { name => 'image', type => 'image', dead => 1,
           desc => 'Input image (unused)' },
@@ -2710,9 +2710,9 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode *node;
 
@@ -2722,7 +2722,7 @@ HELP
                                   "amount",    amount,
                                   NULL);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Neon"),
                                      node);
       g_object_unref (node);
@@ -2743,7 +2743,7 @@ sub plug_in_newsprint {
     $date = '2019';
 
     @inargs = (
-        { name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+        { name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
           desc => 'The run mode' },
         { name => 'image', type => 'image', dead => 1,
           desc => 'Input image (unused)' },
@@ -2778,9 +2778,9 @@ sub plug_in_newsprint {
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode *node;
       gint      color_model = newsprint_color_model (colorspace);
@@ -2814,7 +2814,7 @@ sub plug_in_newsprint {
 
       node = wrap_in_gamma_cast (node, drawable);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Newsprint"),
                                      node);
       g_object_unref (node);
@@ -2842,7 +2842,7 @@ HELP
     $date = '2019';
 
     @inargs = (
-        { name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+        { name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
           desc => 'The run mode' },
         { name => 'image', type => 'image', dead => 1,
           desc => 'Input image (unused)' },
@@ -2853,9 +2853,9 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode *node;
 
@@ -2865,7 +2865,7 @@ HELP
                                   "perceptual",  TRUE,
                                   NULL);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Normalize"),
                                      node);
       g_object_unref (node);
@@ -2890,7 +2890,7 @@ HELP
     $date = '2014';
 
     @inargs = (
-        { name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+        { name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
           desc => 'The run mode' },
         { name => 'image', type => 'image', dead => 1,
           desc => 'Input image (unused)' },
@@ -2913,14 +2913,14 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode  *node;
-      GeglColor *gegl_color = gimp_gegl_color_new (&color, NULL);
-      gdouble    center_x   = (gdouble) xcenter / (gdouble) gimp_item_get_width (GIMP_ITEM (drawable));
-      gdouble    center_y   = (gdouble) ycenter / (gdouble) gimp_item_get_height (GIMP_ITEM (drawable));
+      GeglColor *gegl_color = ligma_gegl_color_new (&color, NULL);
+      gdouble    center_x   = (gdouble) xcenter / (gdouble) ligma_item_get_width (LIGMA_ITEM (drawable));
+      gdouble    center_y   = (gdouble) ycenter / (gdouble) ligma_item_get_height (LIGMA_ITEM (drawable));
 
       node = gegl_node_new_child (NULL,
                                   "operation",    "gegl:supernova",
@@ -2935,7 +2935,7 @@ HELP
 
       g_object_unref (gegl_color);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Supernova"),
                                      node);
       g_object_unref (node);
@@ -2959,7 +2959,7 @@ HELP
     $date = '2019';
 
     @inargs = (
-        { name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+        { name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
           desc => 'The run mode' },
         { name => 'image', type => 'image', dead => 1,
           desc => 'Input image (unused)' },
@@ -2974,9 +2974,9 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode *node;
 
@@ -2986,7 +2986,7 @@ HELP
                                   "use-inten",       mode ? TRUE : FALSE,
                                   NULL);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Oilify"),
                                      node);
       g_object_unref (node);
@@ -3010,7 +3010,7 @@ HELP
     $date = '2019';
 
     @inargs = (
-        { name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+        { name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
           desc => 'The run mode' },
         { name => 'image', type => 'image', dead => 1,
           desc => 'Input image (unused)' },
@@ -3031,9 +3031,9 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode *graph;
       GeglNode *node;
@@ -3061,7 +3061,7 @@ HELP
           gegl_node_connect_to (src_node, "output", node, "aux2");
         }
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Oilify"),
                                      graph);
       g_object_unref (graph);
@@ -3084,7 +3084,7 @@ HELP
     $date = '2015';
 
     @inargs = (
-        { name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+        { name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
           desc => 'The run mode' },
         { name => 'image', type => 'image', dead => 1,
           desc => 'Input image (unused)' },
@@ -3111,12 +3111,12 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode  *node;
-      GimpRGB    color;
+      LigmaRGB    color;
       GeglColor *gegl_color;
       gint       bg_type;
 
@@ -3124,17 +3124,17 @@ HELP
         {
         default:
           bg_type = background_type;
-          gimp_rgba_set (&color, 0.0, 0.0, 1.0, 1.0);
+          ligma_rgba_set (&color, 0.0, 0.0, 1.0, 1.0);
           break;
 
         case 3:
           bg_type = 3;
-          gimp_context_get_foreground (context, &color);
+          ligma_context_get_foreground (context, &color);
 	  break;
 
 	case 4:
           bg_type = 3;
-          gimp_context_get_background (context, &color);
+          ligma_context_get_background (context, &color);
 	  break;
 
 	case 5:
@@ -3143,7 +3143,7 @@ HELP
 	  break;
         }
 
-      gegl_color = gimp_gegl_color_new (&color, NULL);
+      gegl_color = ligma_gegl_color_new (&color, NULL);
 
       node = gegl_node_new_child (NULL,
                                   "operation",       "gegl:tile-paper",
@@ -3159,7 +3159,7 @@ HELP
 
       g_object_unref (gegl_color);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Paper Tile"),
                                      node);
       g_object_unref (node);
@@ -3200,7 +3200,7 @@ HELP
     $date = '2019';
 
     @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	{ name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
 	  desc => 'The run mode' },
 	{ name => 'image', type => 'image', dead => 1,
 	  desc => 'Input image (unused)' },
@@ -3219,9 +3219,9 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode *node =
         gegl_node_new_child (NULL,
@@ -3232,7 +3232,7 @@ HELP
 			     "white",       pct_white,
                              NULL);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Photocopy"),
                                      node);
       g_object_unref (node);
@@ -3256,22 +3256,22 @@ HELP
     $date = '1997';
 
     @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	{ name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
 	  desc => 'The run mode' },
 	{ name => 'image', type => 'image', dead => 1,
 	  desc => 'Input image (unused)' },
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'Input drawable' },
-	{ name => 'pixel_width', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
+	{ name => 'pixel_width', type => '1 <= int32 <= LIGMA_MAX_IMAGE_SIZE',
 	  desc => 'Pixel width (the decrease in resolution)' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode *node =
         gegl_node_new_child (NULL,
@@ -3280,7 +3280,7 @@ HELP
                              "size-y",    pixel_width,
                              NULL);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Pixelize"),
                                      node);
       g_object_unref (node);
@@ -3304,24 +3304,24 @@ HELP
     $date = '1997';
 
     @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	{ name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
 	  desc => 'The run mode' },
 	{ name => 'image', type => 'image', dead => 1,
 	  desc => 'Input image (unused)' },
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'Input drawable' },
-	{ name => 'pixel_width', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
+	{ name => 'pixel_width', type => '1 <= int32 <= LIGMA_MAX_IMAGE_SIZE',
 	  desc => 'Pixel width (the decrease in horizontal resolution)' },
-	{ name => 'pixel_height', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
+	{ name => 'pixel_height', type => '1 <= int32 <= LIGMA_MAX_IMAGE_SIZE',
 	  desc => 'Pixel height (the decrease in vertical resolution)' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode *node =
         gegl_node_new_child (NULL,
@@ -3330,7 +3330,7 @@ HELP
                              "size-y",    pixel_height,
                              NULL);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Pixelize"),
                                      node);
       g_object_unref (node);
@@ -3353,7 +3353,7 @@ HELP
     $date = '2013';
 
     @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	{ name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
 	  desc => 'The run mode' },
 	{ name => 'image', type => 'image', dead => 1,
 	  desc => 'Input image (unused)' },
@@ -3368,14 +3368,14 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode *node;
       gint      x, y, width, height;
 
-      gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height);
+      ligma_item_mask_intersect (LIGMA_ITEM (drawable), &x, &y, &width, &height);
 
       node = gegl_node_new_child (NULL,
                                   "operation",  "gegl:plasma",
@@ -3387,7 +3387,7 @@ HELP
                                   "height",     height,
                                   NULL);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Plasma"),
                                      node);
       g_object_unref (node);
@@ -3411,7 +3411,7 @@ HELP
     $date = '1997';
 
     @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	{ name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
 	  desc => 'The run mode' },
 	{ name => 'image', type => 'image', dead => 1,
 	  desc => 'Input image (unused)' },
@@ -3432,9 +3432,9 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode *node =
         gegl_node_new_child (NULL,
@@ -3448,7 +3448,7 @@ HELP
 
       node = wrap_in_selection_bounds (node, drawable);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Polar Coordinates"),
                                      node);
       g_object_unref (node);
@@ -3473,7 +3473,7 @@ HELP
     $date = '2013';
 
     @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	{ name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
 	  desc => 'The run mode' },
 	{ name => 'image', type => 'image', dead => 1,
 	  desc => 'Input image (unused)' },
@@ -3492,9 +3492,9 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode *node;
 
@@ -3509,7 +3509,7 @@ HELP
                              "repeat",     (gint) rndm_rcount,
                              NULL);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Random Hurl"),
                                      node);
       g_object_unref (node);
@@ -3534,7 +3534,7 @@ HELP
     $date = '2013';
 
     @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	{ name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
 	  desc => 'The run mode' },
 	{ name => 'image', type => 'image', dead => 1,
 	  desc => 'Input image (unused)' },
@@ -3553,9 +3553,9 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode *node;
 
@@ -3570,7 +3570,7 @@ HELP
                              "repeat",     (gint) rndm_rcount,
                              NULL);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Random Pick"),
                                      node);
       g_object_unref (node);
@@ -3595,7 +3595,7 @@ HELP
     $date = '2013';
 
     @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	{ name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
 	  desc => 'The run mode' },
 	{ name => 'image', type => 'image', dead => 1,
 	  desc => 'Input image (unused)' },
@@ -3614,9 +3614,9 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode *node;
 
@@ -3631,7 +3631,7 @@ HELP
                              "repeat",     (gint) rndm_rcount,
                              NULL);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Random Slur"),
                                      node);
       g_object_unref (node);
@@ -3657,7 +3657,7 @@ HELP
     $date = '2013';
 
     @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	{ name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
 	  desc => 'The run mode' },
 	{ name => 'image', type => 'image', dead => 1,
 	  desc => 'Input image (unused)' },
@@ -3670,9 +3670,9 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode *node =
         gegl_node_new_child (NULL,
@@ -3680,7 +3680,7 @@ HELP
                              "threshold", (gdouble) (threshold - 50) / 50.0 * 0.2 + 0.4,
                              NULL);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Red Eye Removal"),
                                      node);
       g_object_unref (node);
@@ -3706,7 +3706,7 @@ HELP
     $date = '2013';
 
     @inargs = (
-        { name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+        { name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
           desc => 'The run mode' },
         { name => 'image', type => 'image', dead => 1,
           desc => 'Input image (unused)' },
@@ -3729,14 +3729,14 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode *node;
       gdouble   r, g, b, a;
 
-      if (gimp_drawable_is_gray (drawable))
+      if (ligma_drawable_is_gray (drawable))
         {
           r = noise_1;
           g = noise_1;
@@ -3764,7 +3764,7 @@ HELP
 
       node = wrap_in_gamma_cast (node, drawable);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "RGB Noise"),
                                      node);
       g_object_unref (node);
@@ -3789,7 +3789,7 @@ HELP
     $date = '2018';
 
     @inargs = (
-        { name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+        { name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
           desc => 'The run mode' },
         { name => 'image', type => 'image', dead => 1,
           desc => 'Input image (unused)' },
@@ -3814,9 +3814,9 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode *node;
       gdouble angle, phi;
@@ -3842,7 +3842,7 @@ HELP
 
       node = wrap_in_gamma_cast (node, drawable);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Ripple"),
                                      node);
       g_object_unref (node);
@@ -3869,7 +3869,7 @@ HELP
     $date = '2014';
 
     @inargs = (
-        { name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+        { name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
           desc => 'The run mode' },
         { name => 'image', type => 'image',
           desc => 'Input image (unused)' },
@@ -3884,26 +3884,26 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  GimpRotationType rotate_type = angle - 1;
+  LigmaRotationType rotate_type = angle - 1;
 
   if (everything)
     {
-      gimp_image_rotate (image, context, rotate_type, progress);
+      ligma_image_rotate (image, context, rotate_type, progress);
     }
-  else if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                      GIMP_PDB_ITEM_CONTENT, error))
+  else if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                      LIGMA_PDB_ITEM_CONTENT, error))
     {
-      GimpItem *item = GIMP_ITEM (drawable);
+      LigmaItem *item = LIGMA_ITEM (drawable);
       gint      off_x, off_y;
       gdouble   center_x, center_y;
 
-      gimp_item_get_offset (item, &off_x, &off_y);
+      ligma_item_get_offset (item, &off_x, &off_y);
 
-      center_x = ((gdouble) off_x + (gdouble) gimp_item_get_width  (item) / 2.0);
-      center_y = ((gdouble) off_y + (gdouble) gimp_item_get_height (item) / 2.0);
+      center_x = ((gdouble) off_x + (gdouble) ligma_item_get_width  (item) / 2.0);
+      center_y = ((gdouble) off_y + (gdouble) ligma_item_get_height (item) / 2.0);
 
-      gimp_item_rotate (item, context, rotate_type, center_x, center_y,
-                        GIMP_IS_CHANNEL (drawable));
+      ligma_item_rotate (item, context, rotate_type, center_x, center_y,
+                        LIGMA_IS_CHANNEL (drawable));
     }
   else
     success = FALSE;
@@ -3924,7 +3924,7 @@ HELP
     $date = '2013';
 
     @inargs = (
-        { name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+        { name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
           desc => 'The run mode' },
         { name => 'image', type => 'image', dead => 1,
           desc => 'Input image (unused)' },
@@ -3945,14 +3945,14 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode *node;
       gdouble   r, g, b, a;
 
-      if (gimp_drawable_is_gray (drawable))
+      if (ligma_drawable_is_gray (drawable))
         {
           r = noise_1;
           g = noise_1;
@@ -3980,7 +3980,7 @@ HELP
 
       node = wrap_in_gamma_cast (node, drawable);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Noisify"),
                                      node);
       g_object_unref (node);
@@ -4007,7 +4007,7 @@ HELP
     $date = '2099';
 
     @inargs = (
-        { name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+        { name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
           desc => 'The run mode' },
         { name => 'image', type => 'image', dead => 1,
           desc => 'Input image (unused)' },
@@ -4022,9 +4022,9 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode *node;
 
@@ -4034,7 +4034,7 @@ HELP
                                   "max-delta",   (gdouble) max_delta / 255.0,
                                   NULL);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Selective Gaussian Blur"),
                                      node);
       g_object_unref (node);
@@ -4051,14 +4051,14 @@ sub plug_in_semiflatten {
 
     $help = <<'HELP';
 This plug-in flattens pixels in an RGBA image that aren't completely
-transparent against the current GIMP background color.
+transparent against the current LIGMA background color.
 HELP
 
     &std_pdb_misc;
     $date = '1997';
 
     @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	{ name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
 	  desc => 'The run mode' },
 	{ name => 'image', type => 'image', dead => 1,
 	  desc => 'Input image (unused)' },
@@ -4069,23 +4069,23 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
-      gimp_drawable_has_alpha (drawable))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error) &&
+      ligma_drawable_has_alpha (drawable))
     {
       GeglNode *node;
-      GimpRGB   color;
+      LigmaRGB   color;
 
-      gimp_context_get_background (context, &color);
+      ligma_context_get_background (context, &color);
 
       node =
         gegl_node_new_child (NULL,
-                             "operation", "gimp:semi-flatten",
+                             "operation", "ligma:semi-flatten",
                              "color",     &color,
                              NULL);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Semi-Flatten"),
                                      node);
       g_object_unref (node);
@@ -4109,7 +4109,7 @@ HELP
     $date = '2013';
 
     @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	{ name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
 	  desc => 'The run mode' },
 	{ name => 'image', type => 'image', dead => 1,
 	  desc => 'Input image (unused)' },
@@ -4124,9 +4124,9 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode *node =
         gegl_node_new_child (NULL,
@@ -4135,7 +4135,7 @@ HELP
                              "direction", orientation ? 0 : 1,
                              NULL);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Shift"),
                                      node);
       g_object_unref (node);
@@ -4155,7 +4155,7 @@ sub plug_in_sinus {
     $date = '2014';
 
     @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	{ name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
 	  desc => 'The run mode' },
 	{ name => 'image', type => 'image', dead => 1,
 	  desc => 'Input image (unused)' },
@@ -4192,9 +4192,9 @@ sub plug_in_sinus {
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode  *node;
       GeglColor *gegl_color1;
@@ -4204,23 +4204,23 @@ sub plug_in_sinus {
       switch (colors)
         {
 	case 0:
-	  gimp_rgb_set (&col1, 0.0, 0.0, 0.0);
-	  gimp_rgb_set (&col2, 1.0, 1.0, 1.0);
+	  ligma_rgb_set (&col1, 0.0, 0.0, 0.0);
+	  ligma_rgb_set (&col2, 1.0, 1.0, 1.0);
           break;
 
         case 1:
-	  gimp_context_get_foreground (context, &col1);
-	  gimp_context_get_background (context, &col2);
+	  ligma_context_get_foreground (context, &col1);
+	  ligma_context_get_background (context, &col2);
 	  break;
 	}
 
-      gimp_rgb_set_alpha (&col1, alpha1);
-      gimp_rgb_set_alpha (&col2, alpha2);
+      ligma_rgb_set_alpha (&col1, alpha1);
+      ligma_rgb_set_alpha (&col2, alpha2);
 
-      gegl_color1 = gimp_gegl_color_new (&col1, NULL);
-      gegl_color2 = gimp_gegl_color_new (&col2, NULL);
+      gegl_color1 = ligma_gegl_color_new (&col1, NULL);
+      gegl_color2 = ligma_gegl_color_new (&col2, NULL);
 
-      gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height);
+      ligma_item_mask_intersect (LIGMA_ITEM (drawable), &x, &y, &width, &height);
 
       node = gegl_node_new_child (NULL,
                                   "operation",    "gegl:sinus",
@@ -4241,7 +4241,7 @@ sub plug_in_sinus {
       g_object_unref (gegl_color1);
       g_object_unref (gegl_color2);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Sinus"),
                                      node);
       g_object_unref (node);
@@ -4270,7 +4270,7 @@ HELP
     $date = '2014';
 
     @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	{ name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
 	  desc => 'The run mode' },
 	{ name => 'image', type => 'image', dead => 1,
 	  desc => 'Input image (unused)' },
@@ -4287,9 +4287,9 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode *node =
         gegl_node_new_child (NULL,
@@ -4301,7 +4301,7 @@ HELP
 
       node = wrap_in_gamma_cast (node, drawable);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Sobel"),
                                      node);
       g_object_unref (node);
@@ -4333,7 +4333,7 @@ HELP
     $date = '2019';
 
     @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	{ name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
 	  desc => 'The run mode' },
 	{ name => 'image', type => 'image', dead => 1,
 	  desc => 'Input image (unused)' },
@@ -4350,9 +4350,9 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode *node =
         gegl_node_new_child (NULL,
@@ -4364,7 +4364,7 @@ HELP
 
       node = wrap_in_gamma_cast (node, drawable);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Softglow"),
                                      node);
       g_object_unref (node);
@@ -4387,7 +4387,7 @@ HELP
     $date = '2014';
 
     @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	{ name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
 	  desc => 'The run mode' },
 	{ name => 'image', type => 'image', dead => 1,
 	  desc => 'Input image (unused)' },
@@ -4410,14 +4410,14 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode *node;
       gint      x, y, width, height;
 
-      gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height);
+      ligma_item_mask_intersect (LIGMA_ITEM (drawable), &x, &y, &width, &height);
 
       node = gegl_node_new_child (NULL,
                                   "operation", "gegl:noise-solid",
@@ -4431,7 +4431,7 @@ HELP
                                   "height",    height,
                                   NULL);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Solid Noise"),
                                      node);
       g_object_unref (node);
@@ -4456,7 +4456,7 @@ HELP
     $date = '2013';
 
     @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	{ name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
 	  desc => 'The run mode' },
 	{ name => 'image', type => 'image', dead => 1,
 	  desc => 'Input image (unused)' },
@@ -4471,9 +4471,9 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode *node =
         gegl_node_new_child (NULL,
@@ -4483,7 +4483,7 @@ HELP
                              "seed",      g_random_int (),
                              NULL);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Spread"),
                                      node);
       g_object_unref (node);
@@ -4506,7 +4506,7 @@ HELP
     $date = '1997';
 
     @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	{ name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
 	  desc => 'The run mode' },
 	{ name => 'image', type => 'image', dead => 1,
 	  desc => 'Input image (unused)' },
@@ -4519,18 +4519,18 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
-      gimp_drawable_has_alpha (drawable))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error) &&
+      ligma_drawable_has_alpha (drawable))
     {
       GeglNode *node =
         gegl_node_new_child (NULL,
-                             "operation", "gimp:threshold-alpha",
+                             "operation", "ligma:threshold-alpha",
                              "value",     threshold / 255.0,
                              NULL);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Threshold Alpha"),
                                      node);
       g_object_unref (node);
@@ -4556,7 +4556,7 @@ HELP
     $date = '2018';
 
     @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	{ name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
 	  desc => 'The run mode' },
 	{ name => 'image', type => 'image', dead => 1,
 	  desc => 'Input image (unused)' },
@@ -4573,9 +4573,9 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode *node =
         gegl_node_new_child (NULL,
@@ -4585,7 +4585,7 @@ HELP
                              "threshold", threshold / 255.0,
                              NULL);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Sharpen (Unsharp Mask)"),
                                      node);
       g_object_unref (node);
@@ -4609,7 +4609,7 @@ HELP
     $date = '2014';
 
     @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	{ name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
 	  desc => 'The run mode' },
 	{ name => 'image', type => 'image', dead => 1,
 	  desc => 'Input image (unused)' },
@@ -4626,9 +4626,9 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode *node =
         gegl_node_new_child (NULL,
@@ -4638,7 +4638,7 @@ HELP
                              "rotated",   rotated,
                              NULL);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Video"),
                                      node);
       g_object_unref (node);
@@ -4665,7 +4665,7 @@ HELP
     $date = '1997';
 
     @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	{ name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
 	  desc => 'The run mode' },
 	{ name => 'image', type => 'image', dead => 1,
 	  desc => 'Input image (unused)' },
@@ -4676,16 +4676,16 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode *node =
         gegl_node_new_child (NULL,
                              "operation", "gegl:value-invert",
                              NULL);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Value Invert"),
                                      node);
       g_object_unref (node);
@@ -4708,7 +4708,7 @@ HELP
     $date = '2015';
 
     @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	{ name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
 	  desc => 'The run mode' },
 	{ name => 'image', type => 'image', dead => 1,
 	  desc => 'Input image (unused)' },
@@ -4731,12 +4731,12 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode  *node;
-      GimpRGB    color;
+      LigmaRGB    color;
       GeglColor *gegl_color = NULL;
       gint       gegl_mode  = 0;
       gboolean   to_left    = (direction_mask & (0x1 << 0)) != 0;
@@ -4761,16 +4761,16 @@ HELP
             {
               gegl_mode = propagate_mode;
 
-              gimp_context_get_foreground (context, &color);
+              ligma_context_get_foreground (context, &color);
             }
           else
             {
               gegl_mode = 4;
 
-              gimp_context_get_background (context, &color);
+              ligma_context_get_background (context, &color);
             }
 
-          gegl_color = gimp_gegl_color_new (&color, NULL);
+          gegl_color = ligma_gegl_color_new (&color, NULL);
           break;
 
         case 6:
@@ -4798,7 +4798,7 @@ HELP
       if (gegl_color)
         g_object_unref (gegl_color);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Value Propagate"),
                                      node);
       g_object_unref (node);
@@ -4821,7 +4821,7 @@ HELP
     $date = '2015';
 
     @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	{ name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
 	  desc => 'The run mode' },
 	{ name => 'image', type => 'image', dead => 1,
 	  desc => 'Input image (unused)' },
@@ -4844,9 +4844,9 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode *node =
         gegl_node_new_child (NULL,
@@ -4863,7 +4863,7 @@ HELP
                              "alpha",           FALSE,
                              NULL);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Dilate"),
                                      node);
       g_object_unref (node);
@@ -4886,7 +4886,7 @@ HELP
     $date = '2015';
 
     @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	{ name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
 	  desc => 'The run mode' },
 	{ name => 'image', type => 'image', dead => 1,
 	  desc => 'Input image (unused)' },
@@ -4909,9 +4909,9 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode *node =
         gegl_node_new_child (NULL,
@@ -4928,7 +4928,7 @@ HELP
                              "alpha",           FALSE,
                              NULL);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Erode"),
                                      node);
       g_object_unref (node);
@@ -4951,7 +4951,7 @@ HELP
     $date = '2013';
 
     @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	{ name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
 	  desc => 'The run mode' },
 	{ name => 'image', type => 'image', dead => 1,
 	  desc => 'Input image (unused)' },
@@ -4972,13 +4972,13 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode *node;
-      gdouble   width  = gimp_item_get_width  (GIMP_ITEM (drawable));
-      gdouble   height = gimp_item_get_height (GIMP_ITEM (drawable));
+      gdouble   width  = ligma_item_get_width  (LIGMA_ITEM (drawable));
+      gdouble   height = ligma_item_get_height (LIGMA_ITEM (drawable));
       gdouble   aspect;
 
       while (phase < 0)
@@ -4999,7 +4999,7 @@ HELP
                                  "clamp",     ! type,
                                  NULL);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Waves"),
                                      node);
       g_object_unref (node);
@@ -5026,7 +5026,7 @@ HELP
     $date = '2013';
 
     @inargs = (
-	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	{ name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
 	  desc => 'The run mode' },
 	{ name => 'image', type => 'image', dead => 1,
 	  desc => 'Input image (unused)' },
@@ -5043,9 +5043,9 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode *node =
         gegl_node_new_child (NULL,
@@ -5057,7 +5057,7 @@ HELP
 
       node = wrap_in_selection_bounds (node, drawable);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Whirl and Pinch"),
                                      node);
       g_object_unref (node);
@@ -5080,7 +5080,7 @@ HELP
     $date = '2015';
 
     @inargs = (
-  { name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+  { name => 'run_mode', type => 'enum LigmaRunMode', dead => 1,
     desc => 'The run mode' },
   { name => 'image', type => 'image', dead => 1,
     desc => 'Input image (unused)' },
@@ -5101,9 +5101,9 @@ HELP
     %invoke = (
   code => <<'CODE'
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode *node =
         gegl_node_new_child (NULL,
@@ -5115,7 +5115,7 @@ HELP
                              "edge",      edge,
                              NULL);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Wind"),
                                      node);
       g_object_unref (node);
@@ -5140,7 +5140,7 @@ wrap_in_graph (GeglNode *node)
   gegl_node_add_child (new_node, node);
   g_object_unref (node);
 
-  gimp_gegl_node_set_underlying_operation (new_node, node);
+  ligma_gegl_node_set_underlying_operation (new_node, node);
 
   input  = gegl_node_get_input_proxy  (new_node, "input");
   output = gegl_node_get_output_proxy (new_node, "output");
@@ -5155,12 +5155,12 @@ wrap_in_graph (GeglNode *node)
 
 static GeglNode *
 wrap_in_selection_bounds (GeglNode     *node,
-                          GimpDrawable *drawable)
+                          LigmaDrawable *drawable)
 {
   gint x, y;
   gint width, height;
 
-  if (gimp_item_mask_intersect (GIMP_ITEM (drawable),
+  if (ligma_item_mask_intersect (LIGMA_ITEM (drawable),
                                 &x, &y, &width, &height))
     {
       GeglNode *new_node;
@@ -5175,7 +5175,7 @@ wrap_in_selection_bounds (GeglNode     *node,
       gegl_node_add_child (new_node, node);
       g_object_unref (node);
 
-      gimp_gegl_node_set_underlying_operation (new_node, node);
+      ligma_gegl_node_set_underlying_operation (new_node, node);
 
       input  = gegl_node_get_input_proxy  (new_node, "input");
       output = gegl_node_get_output_proxy (new_node, "output");
@@ -5214,9 +5214,9 @@ wrap_in_selection_bounds (GeglNode     *node,
 
 static GeglNode *
 wrap_in_gamma_cast (GeglNode     *node,
-                    GimpDrawable *drawable)
+                    LigmaDrawable *drawable)
 {
-  if (gimp_drawable_get_trc (drawable) != GIMP_TRC_LINEAR)
+  if (ligma_drawable_get_trc (drawable) != LIGMA_TRC_LINEAR)
     {
       const Babl *drawable_format;
       const Babl *cast_format;
@@ -5226,12 +5226,12 @@ wrap_in_gamma_cast (GeglNode     *node,
       GeglNode   *cast_before;
       GeglNode   *cast_after;
 
-      drawable_format = gimp_drawable_get_format (drawable);
+      drawable_format = ligma_drawable_get_format (drawable);
 
       cast_format =
-        gimp_babl_format (gimp_babl_format_get_base_type (drawable_format),
-                          gimp_babl_precision (gimp_babl_format_get_component_type (drawable_format),
-                                               GIMP_TRC_LINEAR),
+        ligma_babl_format (ligma_babl_format_get_base_type (drawable_format),
+                          ligma_babl_precision (ligma_babl_format_get_component_type (drawable_format),
+                                               LIGMA_TRC_LINEAR),
                           babl_format_has_alpha (drawable_format),
                           babl_format_get_space (drawable_format));
 
@@ -5240,7 +5240,7 @@ wrap_in_gamma_cast (GeglNode     *node,
       gegl_node_add_child (new_node, node);
       g_object_unref (node);
 
-      gimp_gegl_node_set_underlying_operation (new_node, node);
+      ligma_gegl_node_set_underlying_operation (new_node, node);
 
       input  = gegl_node_get_input_proxy  (new_node, "input");
       output = gegl_node_get_output_proxy (new_node, "output");
@@ -5273,12 +5273,12 @@ wrap_in_gamma_cast (GeglNode     *node,
 
 static GeglNode *
 create_buffer_source_node (GeglNode     *parent,
-                           GimpDrawable *drawable)
+                           LigmaDrawable *drawable)
 {
   GeglNode   *new_node;
   GeglBuffer *buffer;
 
-  buffer = gimp_drawable_get_buffer (drawable);
+  buffer = ligma_drawable_get_buffer (drawable);
   g_object_ref (buffer);
   new_node = gegl_node_new_child (parent,
                                   "operation", "gegl:buffer-source",
@@ -5289,8 +5289,8 @@ create_buffer_source_node (GeglNode     *parent,
 }
 
 static gboolean
-bump_map (GimpDrawable *drawable,
-          GimpDrawable *bump_map,
+bump_map (LigmaDrawable *drawable,
+          LigmaDrawable *bump_map,
           gdouble       azimuth,
           gdouble       elevation,
           gint          depth,
@@ -5302,12 +5302,12 @@ bump_map (GimpDrawable *drawable,
           gboolean      invert,
           gint          type,
           gboolean      tiled,
-          GimpProgress  *progress,
+          LigmaProgress  *progress,
           GError       **error)
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode *graph;
       GeglNode *node;
@@ -5334,7 +5334,7 @@ bump_map (GimpDrawable *drawable,
 
       gegl_node_connect_to (src_node, "output", node, "aux");
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Bump Map"),
                                      graph);
       g_object_unref (graph);
@@ -5346,21 +5346,21 @@ bump_map (GimpDrawable *drawable,
 }
 
 static gboolean
-displace (GimpDrawable  *drawable,
+displace (LigmaDrawable  *drawable,
           gdouble        amount_x,
           gdouble        amount_y,
           gboolean       do_x,
           gboolean       do_y,
-          GimpDrawable  *displace_map_x,
-          GimpDrawable  *displace_map_y,
+          LigmaDrawable  *displace_map_x,
+          LigmaDrawable  *displace_map_y,
           gint           displace_type,
           gint           displace_mode,
-          GimpProgress  *progress,
+          LigmaProgress  *progress,
           GError       **error)
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       if (do_x || do_y)
         {
@@ -5406,7 +5406,7 @@ displace (GimpDrawable  *drawable,
               gegl_node_connect_to (src_node, "output", node, "aux2");
             }
 
-          gimp_drawable_apply_operation (drawable, progress,
+          ligma_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Displace"),
                                          graph);
           g_object_unref (graph);
@@ -5419,15 +5419,15 @@ displace (GimpDrawable  *drawable,
 }
 
 static gboolean
-gaussian_blur (GimpDrawable  *drawable,
+gaussian_blur (LigmaDrawable  *drawable,
                gdouble        horizontal,
                gdouble        vertical,
-               GimpProgress  *progress,
+               LigmaProgress  *progress,
                GError       **error)
 {
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                 GIMP_PDB_ITEM_CONTENT, error) &&
-      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+  if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                 LIGMA_PDB_ITEM_CONTENT, error) &&
+      ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
     {
       GeglNode *node;
 
@@ -5440,7 +5440,7 @@ gaussian_blur (GimpDrawable  *drawable,
 
       node = wrap_in_gamma_cast (node, drawable);
 
-      gimp_drawable_apply_operation (drawable, progress,
+      ligma_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Gaussian Blur"),
                                      node);
       g_object_unref (node);
@@ -5493,25 +5493,25 @@ newsprint_angle (gdouble angle)
 }
 CODE
 
-@headers = qw("libgimpbase/gimpbase.h"
-              "libgimpconfig/gimpconfig.h"
-              "libgimpmath/gimpmath.h"
-              "gegl/gimp-babl.h"
-              "gegl/gimp-gegl-utils.h"
-              "config/gimpcoreconfig.h"
-              "core/gimp.h"
-              "core/gimpchannel.h"
-              "core/gimpcontext.h"
-              "core/gimpdrawable-operation.h"
-              "core/gimpimage-crop.h"
-              "core/gimpimage-resize.h"
-              "core/gimpimage-rotate.h"
-              "core/gimpimage-undo.h"
-              "core/gimppickable.h"
-              "core/gimppickable-auto-shrink.h"
-              "gimppdberror.h"
-              "gimppdb-utils.h"
-              "gimp-intl.h");
+@headers = qw("libligmabase/ligmabase.h"
+              "libligmaconfig/ligmaconfig.h"
+              "libligmamath/ligmamath.h"
+              "gegl/ligma-babl.h"
+              "gegl/ligma-gegl-utils.h"
+              "config/ligmacoreconfig.h"
+              "core/ligma.h"
+              "core/ligmachannel.h"
+              "core/ligmacontext.h"
+              "core/ligmadrawable-operation.h"
+              "core/ligmaimage-crop.h"
+              "core/ligmaimage-resize.h"
+              "core/ligmaimage-rotate.h"
+              "core/ligmaimage-undo.h"
+              "core/ligmapickable.h"
+              "core/ligmapickable-auto-shrink.h"
+              "ligmapdberror.h"
+              "ligmapdb-utils.h"
+              "ligma-intl.h");
 
 @procs = qw(plug_in_alienmap2
             plug_in_antialias
@@ -5597,8 +5597,8 @@ CODE
 %exports = (app => [@procs], lib => []);
 
 $desc = 'Plug-in Compat';
-$doc_title = 'gimpplugincompat';
+$doc_title = 'ligmaplugincompat';
 $doc_short_desc = 'Compatibility for removed plug-ins.';
-$doc_long_desc = 'Functions that perform the operation of removed plug-ins using GEGL operations or other GIMP internal functions.';
+$doc_long_desc = 'Functions that perform the operation of removed plug-ins using GEGL operations or other LIGMA internal functions.';
 
 1;

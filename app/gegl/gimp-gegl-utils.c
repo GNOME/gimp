@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimp-gegl-utils.h
- * Copyright (C) 2007 Michael Natterer <mitch@gimp.org>
+ * ligma-gegl-utils.h
+ * Copyright (C) 2007 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,16 +25,16 @@
 #include <gegl.h>
 #include <gegl-plugin.h>
 
-#include "gimp-gegl-types.h"
+#include "ligma-gegl-types.h"
 
-#include "core/gimpprogress.h"
+#include "core/ligmaprogress.h"
 
-#include "gimp-gegl-loops.h"
-#include "gimp-gegl-utils.h"
+#include "ligma-gegl-loops.h"
+#include "ligma-gegl-utils.h"
 
 
 GType
-gimp_gegl_get_op_enum_type (const gchar *operation,
+ligma_gegl_get_op_enum_type (const gchar *operation,
                             const gchar *property)
 {
   GeglNode   *node;
@@ -62,7 +62,7 @@ gimp_gegl_get_op_enum_type (const gchar *operation,
 }
 
 GeglColor *
-gimp_gegl_color_new (const GimpRGB *rgb,
+ligma_gegl_color_new (const LigmaRGB *rgb,
                      const Babl    *space)
 {
   GeglColor *color;
@@ -78,48 +78,48 @@ gimp_gegl_color_new (const GimpRGB *rgb,
 }
 
 static void
-gimp_gegl_progress_callback (GObject      *object,
+ligma_gegl_progress_callback (GObject      *object,
                              gdouble       value,
-                             GimpProgress *progress)
+                             LigmaProgress *progress)
 {
   if (value == 0.0)
     {
-      const gchar *text = g_object_get_data (object, "gimp-progress-text");
+      const gchar *text = g_object_get_data (object, "ligma-progress-text");
 
-      if (gimp_progress_is_active (progress))
-        gimp_progress_set_text (progress, "%s", text);
+      if (ligma_progress_is_active (progress))
+        ligma_progress_set_text (progress, "%s", text);
       else
-        gimp_progress_start (progress, FALSE, "%s", text);
+        ligma_progress_start (progress, FALSE, "%s", text);
     }
   else
     {
-      gimp_progress_set_value (progress, value);
+      ligma_progress_set_value (progress, value);
 
       if (value == 1.0)
-        gimp_progress_end (progress);
+        ligma_progress_end (progress);
     }
 }
 
 void
-gimp_gegl_progress_connect (GeglNode     *node,
-                            GimpProgress *progress,
+ligma_gegl_progress_connect (GeglNode     *node,
+                            LigmaProgress *progress,
                             const gchar  *text)
 {
   g_return_if_fail (GEGL_IS_NODE (node));
-  g_return_if_fail (GIMP_IS_PROGRESS (progress));
+  g_return_if_fail (LIGMA_IS_PROGRESS (progress));
   g_return_if_fail (text != NULL);
 
   g_signal_connect (node, "progress",
-                    G_CALLBACK (gimp_gegl_progress_callback),
+                    G_CALLBACK (ligma_gegl_progress_callback),
                     progress);
 
   g_object_set_data_full (G_OBJECT (node),
-                          "gimp-progress-text", g_strdup (text),
+                          "ligma-progress-text", g_strdup (text),
                           (GDestroyNotify) g_free);
 }
 
 gboolean
-gimp_gegl_node_is_source_operation (GeglNode *node)
+ligma_gegl_node_is_source_operation (GeglNode *node)
 {
   GeglOperation *operation;
 
@@ -134,7 +134,7 @@ gimp_gegl_node_is_source_operation (GeglNode *node)
 }
 
 gboolean
-gimp_gegl_node_is_point_operation (GeglNode *node)
+ligma_gegl_node_is_point_operation (GeglNode *node)
 {
   GeglOperation *operation;
 
@@ -152,7 +152,7 @@ gimp_gegl_node_is_point_operation (GeglNode *node)
 }
 
 gboolean
-gimp_gegl_node_is_area_filter_operation (GeglNode *node)
+ligma_gegl_node_is_area_filter_operation (GeglNode *node)
 {
   GeglOperation *operation;
 
@@ -171,7 +171,7 @@ gimp_gegl_node_is_area_filter_operation (GeglNode *node)
 }
 
 const gchar *
-gimp_gegl_node_get_key (GeglNode    *node,
+ligma_gegl_node_get_key (GeglNode    *node,
                         const gchar *key)
 {
   const gchar *operation_name;
@@ -187,14 +187,14 @@ gimp_gegl_node_get_key (GeglNode    *node,
 }
 
 gboolean
-gimp_gegl_node_has_key (GeglNode    *node,
+ligma_gegl_node_has_key (GeglNode    *node,
                         const gchar *key)
 {
-  return gimp_gegl_node_get_key (node, key) != NULL;
+  return ligma_gegl_node_get_key (node, key) != NULL;
 }
 
 const Babl *
-gimp_gegl_node_get_format (GeglNode    *node,
+ligma_gegl_node_get_format (GeglNode    *node,
                            const gchar *pad_name)
 {
   GeglOperation *op;
@@ -219,34 +219,34 @@ gimp_gegl_node_get_format (GeglNode    *node,
 }
 
 void
-gimp_gegl_node_set_underlying_operation (GeglNode *node,
+ligma_gegl_node_set_underlying_operation (GeglNode *node,
                                          GeglNode *operation)
 {
   g_return_if_fail (GEGL_IS_NODE (node));
   g_return_if_fail (operation == NULL || GEGL_IS_NODE (operation));
 
   g_object_set_data (G_OBJECT (node),
-                     "gimp-gegl-node-underlying-operation", operation);
+                     "ligma-gegl-node-underlying-operation", operation);
 }
 
 GeglNode *
-gimp_gegl_node_get_underlying_operation (GeglNode *node)
+ligma_gegl_node_get_underlying_operation (GeglNode *node)
 {
   GeglNode *operation;
 
   g_return_val_if_fail (GEGL_IS_NODE (node), NULL);
 
   operation = g_object_get_data (G_OBJECT (node),
-                                 "gimp-gegl-node-underlying-operation");
+                                 "ligma-gegl-node-underlying-operation");
 
   if (operation)
-    return gimp_gegl_node_get_underlying_operation (operation);
+    return ligma_gegl_node_get_underlying_operation (operation);
   else
     return node;
 }
 
 gboolean
-gimp_gegl_param_spec_has_key (GParamSpec  *pspec,
+ligma_gegl_param_spec_has_key (GParamSpec  *pspec,
                               const gchar *key,
                               const gchar *value)
 {
@@ -259,7 +259,7 @@ gimp_gegl_param_spec_has_key (GParamSpec  *pspec,
 }
 
 GeglBuffer *
-gimp_gegl_buffer_dup (GeglBuffer *buffer)
+ligma_gegl_buffer_dup (GeglBuffer *buffer)
 {
   GeglBuffer          *new_buffer;
   const GeglRectangle *extent;
@@ -301,14 +301,14 @@ gimp_gegl_buffer_dup (GeglBuffer *buffer)
   gegl_rectangle_align_to_buffer (&rect, extent, buffer,
                                   GEGL_RECTANGLE_ALIGNMENT_SUPERSET);
 
-  gimp_gegl_buffer_copy (buffer, &rect, GEGL_ABYSS_NONE,
+  ligma_gegl_buffer_copy (buffer, &rect, GEGL_ABYSS_NONE,
                          new_buffer, &rect);
 
   return new_buffer;
 }
 
 gboolean
-gimp_gegl_buffer_set_extent (GeglBuffer          *buffer,
+ligma_gegl_buffer_set_extent (GeglBuffer          *buffer,
                              const GeglRectangle *extent)
 {
   GeglRectangle aligned_old_extent;

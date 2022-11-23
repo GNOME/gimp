@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,38 +15,38 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CONVOLVE_OPTIONS_H__
-#define __GIMP_CONVOLVE_OPTIONS_H__
+#ifndef __LIGMA_CONVOLVE_OPTIONS_H__
+#define __LIGMA_CONVOLVE_OPTIONS_H__
 
 
-#include "gimppaintoptions.h"
+#include "ligmapaintoptions.h"
 
 
-#define GIMP_TYPE_CONVOLVE_OPTIONS            (gimp_convolve_options_get_type ())
-#define GIMP_CONVOLVE_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CONVOLVE_OPTIONS, GimpConvolveOptions))
-#define GIMP_CONVOLVE_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CONVOLVE_OPTIONS, GimpConvolveOptionsClass))
-#define GIMP_IS_CONVOLVE_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CONVOLVE_OPTIONS))
-#define GIMP_IS_CONVOLVE_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CONVOLVE_OPTIONS))
-#define GIMP_CONVOLVE_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CONVOLVE_OPTIONS, GimpConvolveOptionsClass))
+#define LIGMA_TYPE_CONVOLVE_OPTIONS            (ligma_convolve_options_get_type ())
+#define LIGMA_CONVOLVE_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_CONVOLVE_OPTIONS, LigmaConvolveOptions))
+#define LIGMA_CONVOLVE_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_CONVOLVE_OPTIONS, LigmaConvolveOptionsClass))
+#define LIGMA_IS_CONVOLVE_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_CONVOLVE_OPTIONS))
+#define LIGMA_IS_CONVOLVE_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_CONVOLVE_OPTIONS))
+#define LIGMA_CONVOLVE_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_CONVOLVE_OPTIONS, LigmaConvolveOptionsClass))
 
 
-typedef struct _GimpConvolveOptionsClass GimpConvolveOptionsClass;
+typedef struct _LigmaConvolveOptionsClass LigmaConvolveOptionsClass;
 
-struct _GimpConvolveOptions
+struct _LigmaConvolveOptions
 {
-  GimpPaintOptions  parent_instance;
+  LigmaPaintOptions  parent_instance;
 
-  GimpConvolveType  type;
+  LigmaConvolveType  type;
   gdouble           rate;
 };
 
-struct _GimpConvolveOptionsClass
+struct _LigmaConvolveOptionsClass
 {
-  GimpPaintOptionsClass  parent_class;
+  LigmaPaintOptionsClass  parent_class;
 };
 
 
-GType   gimp_convolve_options_get_type (void) G_GNUC_CONST;
+GType   ligma_convolve_options_get_type (void) G_GNUC_CONST;
 
 
-#endif  /*  __GIMP_CONVOLVE_OPTIONS_H__  */
+#endif  /*  __LIGMA_CONVOLVE_OPTIONS_H__  */

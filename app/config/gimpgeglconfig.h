@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpGeglConfig class
- * Copyright (C) 2001  Sven Neumann <sven@gimp.org>
+ * LigmaGeglConfig class
+ * Copyright (C) 2001  Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,20 +18,20 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_GEGL_CONFIG_H__
-#define __GIMP_GEGL_CONFIG_H__
+#ifndef __LIGMA_GEGL_CONFIG_H__
+#define __LIGMA_GEGL_CONFIG_H__
 
 
-#define GIMP_TYPE_GEGL_CONFIG            (gimp_gegl_config_get_type ())
-#define GIMP_GEGL_CONFIG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_GEGL_CONFIG, GimpGeglConfig))
-#define GIMP_GEGL_CONFIG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_GEGL_CONFIG, GimpGeglConfigClass))
-#define GIMP_IS_GEGL_CONFIG(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_GEGL_CONFIG))
-#define GIMP_IS_GEGL_CONFIG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_GEGL_CONFIG))
+#define LIGMA_TYPE_GEGL_CONFIG            (ligma_gegl_config_get_type ())
+#define LIGMA_GEGL_CONFIG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_GEGL_CONFIG, LigmaGeglConfig))
+#define LIGMA_GEGL_CONFIG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_GEGL_CONFIG, LigmaGeglConfigClass))
+#define LIGMA_IS_GEGL_CONFIG(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_GEGL_CONFIG))
+#define LIGMA_IS_GEGL_CONFIG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_GEGL_CONFIG))
 
 
-typedef struct _GimpGeglConfigClass GimpGeglConfigClass;
+typedef struct _LigmaGeglConfigClass LigmaGeglConfigClass;
 
-struct _GimpGeglConfig
+struct _LigmaGeglConfig
 {
   GObject   parent_instance;
 
@@ -43,13 +43,13 @@ struct _GimpGeglConfig
   gboolean  use_opencl;
 };
 
-struct _GimpGeglConfigClass
+struct _LigmaGeglConfigClass
 {
   GObjectClass  parent_class;
 };
 
 
-GType  gimp_gegl_config_get_type (void) G_GNUC_CONST;
+GType  ligma_gegl_config_get_type (void) G_GNUC_CONST;
 
 
-#endif /* GIMP_GEGL_CONFIG_H__ */
+#endif /* LIGMA_GEGL_CONFIG_H__ */

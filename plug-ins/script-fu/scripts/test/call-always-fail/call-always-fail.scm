@@ -1,13 +1,13 @@
-#!/usr/bin/env gimp-script-fu-interpreter-3.0
+#!/usr/bin/env ligma-script-fu-interpreter-3.0
 
 ; A script that calls a script that always fails
 ;
 ; Setup: copy this file w/ executable permission, and its parent dir to /plug-ins
-; Example: to ~/.gimp-2.99/plug-ins/always-fail/always-fail.scm
+; Example: to ~/.ligma-2.99/plug-ins/always-fail/always-fail.scm
 
 ; Expect "Test>Call always fail" in the menus
-; Expect when chosen, message on GIMP message bar "Failing" (from script-fu-always-fail)
-; Expect a dialog in GIMP app that requires an OK
+; Expect when chosen, message on LIGMA message bar "Failing" (from script-fu-always-fail)
+; Expect a dialog in LIGMA app that requires an OK
 
 (define (script-fu-call-always-fail)
   ; call a script that always fails
@@ -18,7 +18,7 @@
 
 (script-fu-register "script-fu-call-always-fail"
   "Call always fail"
-  "Expect error dialog in Gimp, having concatenated error messages"
+  "Expect error dialog in Ligma, having concatenated error messages"
   "lkk"
   "lkk"
   "2022"

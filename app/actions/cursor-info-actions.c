@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,62 +20,62 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "actions-types.h"
 
-#include "widgets/gimpactiongroup.h"
-#include "widgets/gimphelp-ids.h"
+#include "widgets/ligmaactiongroup.h"
+#include "widgets/ligmahelp-ids.h"
 
-#include "display/gimpcursorview.h"
+#include "display/ligmacursorview.h"
 
 #include "cursor-info-actions.h"
 #include "cursor-info-commands.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-static const GimpActionEntry cursor_info_actions[] =
+static const LigmaActionEntry cursor_info_actions[] =
 {
-  { "cursor-info-popup", GIMP_ICON_CURSOR,
+  { "cursor-info-popup", LIGMA_ICON_CURSOR,
     NC_("cursor-info-action", "Pointer Information Menu"), NULL, NULL, NULL,
-    GIMP_HELP_POINTER_INFO_DIALOG }
+    LIGMA_HELP_POINTER_INFO_DIALOG }
 };
 
-static const GimpToggleActionEntry cursor_info_toggle_actions[] =
+static const LigmaToggleActionEntry cursor_info_toggle_actions[] =
 {
   { "cursor-info-sample-merged", NULL,
     NC_("cursor-info-action", "_Sample Merged"), "",
     NC_("cursor-info-action", "Use the composite color of all visible layers"),
     cursor_info_sample_merged_cmd_callback,
     TRUE,
-    GIMP_HELP_POINTER_INFO_SAMPLE_MERGED }
+    LIGMA_HELP_POINTER_INFO_SAMPLE_MERGED }
 };
 
 
 void
-cursor_info_actions_setup (GimpActionGroup *group)
+cursor_info_actions_setup (LigmaActionGroup *group)
 {
-  gimp_action_group_add_actions (group, "cursor-info-action",
+  ligma_action_group_add_actions (group, "cursor-info-action",
                                  cursor_info_actions,
                                  G_N_ELEMENTS (cursor_info_actions));
 
-  gimp_action_group_add_toggle_actions (group, "cursor-info-action",
+  ligma_action_group_add_toggle_actions (group, "cursor-info-action",
                                         cursor_info_toggle_actions,
                                         G_N_ELEMENTS (cursor_info_toggle_actions));
 }
 
 void
-cursor_info_actions_update (GimpActionGroup *group,
+cursor_info_actions_update (LigmaActionGroup *group,
                             gpointer         data)
 {
-  GimpCursorView *view = GIMP_CURSOR_VIEW (data);
+  LigmaCursorView *view = LIGMA_CURSOR_VIEW (data);
 
 #define SET_ACTIVE(action,condition) \
-        gimp_action_group_set_action_active (group, action, (condition) != 0)
+        ligma_action_group_set_action_active (group, action, (condition) != 0)
 
   SET_ACTIVE ("cursor-info-sample-merged",
-              gimp_cursor_view_get_sample_merged (view));
+              ligma_cursor_view_get_sample_merged (view));
 
 #undef SET_ACTIVE
 }

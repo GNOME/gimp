@@ -1,14 +1,14 @@
-# Gimp'i eesti keele tõlge.
-# Estonian translation of Gimp.
+# Ligma'i eesti keele tõlge.
+# Estonian translation of Ligma.
 #
 # Copyright (C) 2001-2005 Free Software Foundation, Inc.
-# This file is distributed under the same license as the Gimp package.
+# This file is distributed under the same license as the Ligma package.
 #
 # Olle Niit <olle@paalalinn.com>, 2005-2007.
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-plug-ins\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma-plug-ins\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2007-07-25 22:07+0100\n"
 "PO-Revision-Date: 2010-10-06 15:52+0300\n"
 "Last-Translator: Mattias Põldaru <mahfiaz gmail com>\n"
@@ -22,12 +22,12 @@ msgstr ""
 
 #, c-format
 msgid ""
-"No %s in gimprc:\n"
+"No %s in ligmarc:\n"
 "You need to add an entry like\n"
 "(%s \"%s\")\n"
 "to your %s file."
 msgstr ""
-"%s puudub gimprc failis:\n"
+"%s puudub ligmarc failis:\n"
 "Pead lisama umbes sellise sissekande:\n"
 "(%s \"%s\")\n"
 "oma %s faili."
@@ -1316,7 +1316,7 @@ msgstr ""
 msgid "_Use the (invisible) bottom layer as the base"
 msgstr ""
 
-msgid "Preview a GIMP layer-based animation"
+msgid "Preview a LIGMA layer-based animation"
 msgstr ""
 
 msgid "_Playback..."
@@ -2082,7 +2082,7 @@ msgid "Cannot operate on layers with masks."
 msgstr ""
 
 #. could not float the selection because selection rectangle
-#. * is completely empty return GIMP_PDB_EXECUTION_ERROR
+#. * is completely empty return LIGMA_PDB_EXECUTION_ERROR
 #.
 msgid "Cannot operate on empty selections."
 msgstr ""
@@ -2949,15 +2949,15 @@ msgstr "_IIR"
 msgid "_RLE"
 msgstr "_RLE"
 
-msgid "GIMP brush"
-msgstr "GIMPi pintsel"
+msgid "LIGMA brush"
+msgstr "LIGMAi pintsel"
 
 msgid "Unsupported brush format"
 msgstr "Sellist pintsli vormingut ei toetata"
 
 #, c-format
-msgid "Error in GIMP brush file '%s'"
-msgstr "Viga GIMPi pintslifailis '%s'"
+msgid "Error in LIGMA brush file '%s'"
+msgstr "Viga LIGMAi pintslifailis '%s'"
 
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
@@ -2966,8 +2966,8 @@ msgstr "Vigane UTF-8 tekstilõik pintslifailis '%s'."
 msgid "Unnamed"
 msgstr "Nimetu"
 
-msgid "GIMP brushes are either GRAYSCALE or RGBA"
-msgstr "GIMPi pintslid on kas HALLTOONIDES või RGBA värvides"
+msgid "LIGMA brushes are either GRAYSCALE or RGBA"
+msgstr "LIGMAi pintslid on kas HALLTOONIDES või RGBA värvides"
 
 msgid "Save as Brush"
 msgstr "Salvesta pintslina"
@@ -2979,14 +2979,14 @@ msgstr "Vahemaa:"
 msgid "Description:"
 msgstr "Kirjeldus:"
 
-msgid "A big hello from the GIMP team!"
-msgstr "Tere tulemast GIMPi meeskonna poolt!"
+msgid "A big hello from the LIGMA team!"
+msgstr "Tere tulemast LIGMAi meeskonna poolt!"
 
 msgid "Gee Slime"
 msgstr ""
 
-msgid "Thank You for Choosing GIMP"
-msgstr "Aitäh et valisid GIMP'i"
+msgid "Thank You for Choosing LIGMA"
+msgstr "Aitäh et valisid LIGMA'i"
 
 #, c-format
 msgid "A less obsolete creation by %s"
@@ -3111,17 +3111,17 @@ msgstr "Viga väljundfaili kirjutamisel."
 msgid "The default comment is limited to %d characters."
 msgstr ""
 
-msgid "GIMP brush (animated)"
+msgid "LIGMA brush (animated)"
 msgstr ""
 
 #, c-format
 msgid "Layer %s doesn't have an alpha channel, skipped"
 msgstr ""
 
-msgid "Error in GIMP brush pipe file."
+msgid "Error in LIGMA brush pipe file."
 msgstr ""
 
-msgid "GIMP brush file appears to be corrupted."
+msgid "LIGMA brush file appears to be corrupted."
 msgstr ""
 
 msgid "Couldn't load one brush in the pipe, giving up."
@@ -4257,7 +4257,7 @@ msgstr ""
 msgid "_Paper Tile..."
 msgstr ""
 
-msgid "GIMP pattern"
+msgid "LIGMA pattern"
 msgstr ""
 
 #, c-format
@@ -4475,14 +4475,14 @@ msgstr "Fail ei ole toetatud vormingus."
 msgid "Invalid X resolution."
 msgstr "Vigane X eraldusvõime."
 
-msgid "Image width is larger than GIMP can handle."
-msgstr "Pildi laius on suurem kui GIMP suudab käsitleda."
+msgid "Image width is larger than LIGMA can handle."
+msgstr "Pildi laius on suurem kui LIGMA suudab käsitleda."
 
 msgid "Invalid Y resolution."
 msgstr "Vigane Y eraldusvõime."
 
-msgid "Image height is larger than GIMP can handle."
-msgstr "Pildi kõrgus on suurem kui GIMP suudab käsitleda."
+msgid "Image height is larger than LIGMA can handle."
+msgstr "Pildi kõrgus on suurem kui LIGMA suudab käsitleda."
 
 msgid "Invalid maximum value."
 msgstr "Vigane suurim väärtus."
@@ -4594,7 +4594,7 @@ msgstr "PostScripti salvestamine ei suuda käsitseda alfakanaliga pilte"
 #, c-format
 msgid ""
 "Error starting Ghostscript. Make sure that Ghostscript is installed and - if "
-"necessary - use the environment variable GS_PROG to tell GIMP about its "
+"necessary - use the environment variable GS_PROG to tell LIGMA about its "
 "location.\n"
 "(%s)"
 msgstr ""
@@ -4766,7 +4766,7 @@ msgid ""
 "plug-in does not support that, using normal mode instead."
 msgstr ""
 
-msgid "Error: Can't convert GIMP base imagetype to PSD mode"
+msgid "Error: Can't convert LIGMA base imagetype to PSD mode"
 msgstr ""
 
 #, c-format
@@ -5659,7 +5659,7 @@ msgstr ""
 #, c-format
 msgid ""
 "'%s':\n"
-"Image width is larger than GIMP can handle"
+"Image width is larger than LIGMA can handle"
 msgstr ""
 
 #, c-format
@@ -5671,7 +5671,7 @@ msgstr ""
 #, c-format
 msgid ""
 "'%s':\n"
-"Image height is larger than GIMP can handle"
+"Image height is larger than LIGMA can handle"
 msgstr ""
 
 msgid "This image depth is not supported"
@@ -5742,7 +5742,7 @@ msgid "Import _paths"
 msgstr ""
 
 msgid ""
-"Import path elements of the SVG so they can be used with the GIMP path tool"
+"Import path elements of the SVG so they can be used with the LIGMA path tool"
 msgstr ""
 
 msgid "Merge imported paths"
@@ -5806,7 +5806,7 @@ msgstr "TIFF kanal"
 
 msgid ""
 "Warning:\n"
-"The image you are loading has 16 bits per channel. GIMP can only handle 8 "
+"The image you are loading has 16 bits per channel. LIGMA can only handle 8 "
 "bit, so it will be converted for you. Information will be lost because of "
 "this conversion."
 msgstr ""
@@ -5924,19 +5924,19 @@ msgid "Saved"
 msgstr "Salvestatud"
 
 msgid ""
-"A unit definition will only be saved before GIMP exits if this column is "
+"A unit definition will only be saved before LIGMA exits if this column is "
 "checked."
 msgstr ""
-"Mõõtühik salvestatakse enne GIMPi sulgemist ainult siis, kui see "
+"Mõõtühik salvestatakse enne LIGMAi sulgemist ainult siis, kui see "
 "kontrollkast on märgitud."
 
 msgid "ID"
 msgstr "ID"
 
 msgid ""
-"This string will be used to identify a unit in GIMP's configuration files."
+"This string will be used to identify a unit in LIGMA's configuration files."
 msgstr ""
-"Seda tekstilõiku kasutatakse mõõtühiku identifitseerimiseks GIMPi "
+"Seda tekstilõiku kasutatakse mõõtühiku identifitseerimiseks LIGMAi "
 "häälestusfailides."
 
 msgid "Factor"
@@ -5991,8 +5991,8 @@ msgstr "Loo uus ühik tühjalt kohalt"
 msgid "Create a new unit using the currently selected unit as template"
 msgstr "Loo uus ühik kasutades valitud ühikut mallina"
 
-msgid "Create or alter units used in GIMP"
-msgstr "Loo või muuda GIMPis kasutatavaid ühikuid"
+msgid "Create or alter units used in LIGMA"
+msgstr "Loo või muuda LIGMAis kasutatavaid ühikuid"
 
 msgid "_Unit Editor"
 msgstr "_Mõõtühiku redaktor"
@@ -7241,13 +7241,13 @@ msgstr ""
 msgid "Performs various artistic operations"
 msgstr ""
 
-msgid "_GIMPressionist..."
+msgid "_LIGMAressionist..."
 msgstr ""
 
 msgid "Painting"
 msgstr "Värvimine"
 
-msgid "GIMPressionist"
+msgid "LIGMAressionist"
 msgstr ""
 
 msgid "Or_ientation"
@@ -7439,7 +7439,7 @@ msgid "The relative density of the brush strokes"
 msgstr ""
 
 #.
-#. * gimp_filename_to_utf8 () and g_strerror () return temporary strings
+#. * ligma_filename_to_utf8 () and g_strerror () return temporary strings
 #. * that need not and should not be freed. So this call is OK.
 #. *
 #, c-format
@@ -7449,7 +7449,7 @@ msgstr ""
 msgid "Save Current"
 msgstr "Salvesta aktiivne"
 
-msgid "Gimpressionist Defaults"
+msgid "Ligmaressionist Defaults"
 msgstr ""
 
 msgid "_Presets"
@@ -7566,18 +7566,18 @@ msgid ""
 "influence"
 msgstr ""
 
-msgid "The GIMP help files are not found."
-msgstr "GIMPi abiinfot sisaldavaid faile ei leitud."
+msgid "The LIGMA help files are not found."
+msgstr "LIGMAi abiinfot sisaldavaid faile ei leitud."
 
 msgid ""
 "Please install the additional help package or use the online user manual at "
-"http://docs.gimp.org/."
+"http://docs.ligma.org/."
 msgstr ""
 "Palun installeeri abiinfot sisaldav pakett või kasuta onlain "
-"kasutamisjuhendit aadressil http://docs.gimp.org/."
+"kasutamisjuhendit aadressil http://docs.ligma.org/."
 
-msgid "There is a problem with the GIMP help files."
-msgstr "Tekkis probleem GIMPi abiinfo failidega."
+msgid "There is a problem with the LIGMA help files."
+msgstr "Tekkis probleem LIGMAi abiinfo failidega."
 
 msgid "Please check your installation."
 msgstr "Palun kontrolli oma programmi paigaldust."
@@ -7592,8 +7592,8 @@ msgid ""
 "%s"
 msgstr ""
 
-msgid "GIMP Help Browser"
-msgstr "GIMPi abiinfo sirvija"
+msgid "LIGMA Help Browser"
+msgstr "LIGMAi abiinfo sirvija"
 
 msgid "Drag and drop this icon to a web browser"
 msgstr "Tõmba ja aseta see ikoon veebisirvijasse"
@@ -7607,8 +7607,8 @@ msgstr "Mine üks leht edasi"
 msgid "Go to the index page"
 msgstr "Mine indekslehele"
 
-msgid "Visit the GIMP documentation website"
-msgstr "Külasta GIMP-i dokumentatsiooni internetilehekülge"
+msgid "Visit the LIGMA documentation website"
+msgstr "Külasta LIGMA-i dokumentatsiooni internetilehekülge"
 
 msgid "Document not found"
 msgstr "Dokumenti ei leidnud"
@@ -7771,8 +7771,8 @@ msgid "Edit Object"
 msgstr "Redigeeri objekti"
 
 #. Create the areas
-msgid "Use Gimp Guides"
-msgstr "Kasuta GIMPi abijooni"
+msgid "Use Ligma Guides"
+msgstr "Kasuta LIGMAi abijooni"
 
 msgid "Al_ternate"
 msgstr ""
@@ -8114,8 +8114,8 @@ msgstr "_Tööriistad"
 msgid "Grid Settings..."
 msgstr "Ruudustiku seaded..."
 
-msgid "Use GIMP Guides..."
-msgstr "Kasuta GIMPi abijooni..."
+msgid "Use LIGMA Guides..."
+msgstr "Kasuta LIGMAi abijooni..."
 
 msgid "Create Guides..."
 msgstr "Loo abijooned..."
@@ -8276,7 +8276,7 @@ msgstr "Säilita _suund"
 msgid "According to the EXIF data, this image is rotated."
 msgstr "EXIF andmete järgi võib öelda, et pilt on pööratud."
 
-msgid "Would you like GIMP to rotate it into the standard orientation?"
+msgid "Would you like LIGMA to rotate it into the standard orientation?"
 msgstr ""
 
 msgid "JPEG preview"
@@ -8810,8 +8810,8 @@ msgstr "_Pilt ekraanilt..."
 msgid "No data captured"
 msgstr ""
 
-msgid "GIMP compressed XJT image"
-msgstr "GIMP-i tihendatud XJT pilt"
+msgid "LIGMA compressed XJT image"
+msgstr "LIGMA-i tihendatud XJT pilt"
 
 #, c-format
 msgid "XJT file contains unknown layermode %d"

@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpsessionmanaged.h
+ * ligmasessionmanaged.h
  * Copyright (C) 2011 Martin Nordholts <martinn@src.gnome.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,28 +18,28 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SESSION_MANAGED_H__
-#define __GIMP_SESSION_MANAGED_H__
+#ifndef __LIGMA_SESSION_MANAGED_H__
+#define __LIGMA_SESSION_MANAGED_H__
 
 
-#define GIMP_TYPE_SESSION_MANAGED (gimp_session_managed_get_type ())
-G_DECLARE_INTERFACE (GimpSessionManaged, gimp_session_managed, GIMP, SESSION_MANAGED, GtkWidget)
+#define LIGMA_TYPE_SESSION_MANAGED (ligma_session_managed_get_type ())
+G_DECLARE_INTERFACE (LigmaSessionManaged, ligma_session_managed, LIGMA, SESSION_MANAGED, GtkWidget)
 
 
-struct _GimpSessionManagedInterface
+struct _LigmaSessionManagedInterface
 {
   GTypeInterface base_iface;
 
   /*  virtual functions  */
-  GList * (* get_aux_info) (GimpSessionManaged *session_managed);
-  void    (* set_aux_info) (GimpSessionManaged *session_managed,
+  GList * (* get_aux_info) (LigmaSessionManaged *session_managed);
+  void    (* set_aux_info) (LigmaSessionManaged *session_managed,
                             GList              *aux_info);
 };
 
 
-GList            * gimp_session_managed_get_aux_info (GimpSessionManaged *session_managed);
-void               gimp_session_managed_set_aux_info (GimpSessionManaged *session_managed,
+GList            * ligma_session_managed_get_aux_info (LigmaSessionManaged *session_managed);
+void               ligma_session_managed_set_aux_info (LigmaSessionManaged *session_managed,
                                                       GList              *aux_info);
 
 
-#endif  /*  __GIMP_SESSION_MANAGED_H__  */
+#endif  /*  __LIGMA_SESSION_MANAGED_H__  */

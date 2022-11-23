@@ -9,7 +9,7 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   sodipodi:docname="gimp-paths-symbolic.svg"
+   sodipodi:docname="ligma-paths-symbolic.svg"
    inkscape:version="1.1-dev (a78b094061, 2020-01-04)"
    version="1.1"
    width="16.014006"
@@ -54,7 +54,7 @@
             <dc:title>Barbara Muraus, Jakub Steiner, Klaus Staedtler</dc:title>
           </cc:Agent>
         </dc:contributor>
-        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for GIMP</dc:description>
+        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for LIGMA</dc:description>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -202,8 +202,8 @@
        inkscape:collect="always" />
   </defs>
   <g
-     inkscape:label="gimp-paths"
-     id="gimp-paths"
+     inkscape:label="ligma-paths"
+     id="ligma-paths"
      style="display:inline"
      transform="matrix(1.0008752,0,0,1,-161.14111,-419)">
     <rect

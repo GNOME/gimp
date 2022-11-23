@@ -1,24 +1,24 @@
 # Guide to changes to ScriptFu v3 for script authors
 
-*Draft, until GIMP 3 is final.  FIXME: rearrange and rename the cited documents*
+*Draft, until LIGMA 3 is final.  FIXME: rearrange and rename the cited documents*
 
 ## About
 
 The audience is authors of Scriptfu plugins.
-This discusses how to edit v2 scripts so they will run in GIMP 3.
+This discusses how to edit v2 scripts so they will run in LIGMA 3.
 
 This is only about changes to ScriptFu proper.
-The GIMP PDB, which you can call in scripts, has also changed.
+The LIGMA PDB, which you can call in scripts, has also changed.
 That also may require you to edit scripts.
 
   - For changes in signatures of PDB procedures,
-    see devel-docs/GIMP3-plug-in-porting-guide/porting_scriptfu_scripts.md
+    see devel-docs/LIGMA3-plug-in-porting-guide/porting_scriptfu_scripts.md
   - For added, removed, and replaced PDB procedures,
-    see devel-docs/GIMP3-plug-in-porting-guide/removed_functions.md
+    see devel-docs/LIGMA3-plug-in-porting-guide/removed_functions.md
 
 ## Quickstart
 
-A lucky few existing scripts may work in GIMP v3.
+A lucky few existing scripts may work in LIGMA v3.
 
 Some changes are most likely to break an existing plugin.:
 
@@ -26,22 +26,22 @@ Some changes are most likely to break an existing plugin.:
   - TRUE and FALSE are obsolete
   - many PDB procedures are obsolete or renamed, or their signature changed
 
-Once you edit a script for these changes, the script won't work in GIMP v2.
+Once you edit a script for these changes, the script won't work in LIGMA v2.
 
 Other changes:
 
   - you can install scripts like plugins in other languages
-  - scripts can use the new mult-layer selection feature of GIMP
+  - scripts can use the new mult-layer selection feature of LIGMA
   - a script can abort with an error message
   - a script's settings are more fully saved
 
 Those changes might not affect an existing plugin.
-You need only understand those changes when you want to use new features of GIMP.
+You need only understand those changes when you want to use new features of LIGMA.
 
-A word of explanation: the GIMP developers understand these changes may be onerous.
+A word of explanation: the LIGMA developers understand these changes may be onerous.
 Script developers might need to maintain two different versions of their scripts.
-Some users will stick with GIMP 2 for a while and some will switch to GIMP 3.
-But GIMP 3 is a major version change with new features.
+Some users will stick with LIGMA 2 for a while and some will switch to LIGMA 3.
+But LIGMA 3 is a major version change with new features.
 A clean break is necessary to move forward with improvements.
 The situation is similar to the disruption caused by the move from Python 2 to 3.
 
@@ -63,7 +63,7 @@ meaning no decimal places, i.e. integer valued.
 You must also add the other fields, e.g. the lower and upper limits.
 
 A script that has been edited to replace SF-VALUE with SF-ADJUSTMENT
-will remain compatible with GIMP 2.
+will remain compatible with LIGMA 2.
 
 Example:
 
@@ -156,9 +156,9 @@ Registering a script:
 
 Calling a PDB procedure taking a boolean:
 
-    (gimp-context-set-feather TRUE)
+    (ligma-context-set-feather TRUE)
     =>
-    (gimp-context-set-feather #t)
+    (ligma-context-set-feather #t)
 
 Logically examining a variable for truth:
 
@@ -188,9 +188,9 @@ The ScriptFu language is smaller if concepts of truth are not duplicated.
 
 Calling a PDB procedure that is a predicate function:
 
-    (if (= FALSE (car (gimp-selection-is-empty theImage))) ...
+    (if (= FALSE (car (ligma-selection-is-empty theImage))) ...
     =>
-    (if (car (gimp-selection-is-empty theImage)) ...
+    (if (car (ligma-selection-is-empty theImage)) ...
 
 Here, the call to the PDB returns a list of one element.
 The "car" function returns that element.
@@ -212,15 +212,15 @@ In the ScriptFu console:
 The function "script-fu-script-abort" is new to ScriptFu v3.
 
 It causes the interpreter to stop evaluating a script
-and yield an error of type GimpPDBStatus.
+and yield an error of type LigmaPDBStatus.
 That is, it immediately returns an error to the caller.
 It is similar to the "return" statement in other languages,
 but the Scheme language has no "return" statement.
 
 The function takes an error message string.
 
-When the caller is the GIMP app,
-the GIMP app will show an error dialog
+When the caller is the LIGMA app,
+the LIGMA app will show an error dialog
 having the message string.
 
 When the caller is another PDB procedure (a plugin or script)
@@ -238,7 +238,7 @@ See below.
 
 #### Rationale
 
-Formerly, scripts usually called gimp-message on errors,
+Formerly, scripts usually called ligma-message on errors,
 without yielding an error to the caller.
 It was easy for a user to overlook the error message.
 An abort shows an error message that a user must acknowledge
@@ -250,7 +250,7 @@ This script defines a PDB procedure that aborts:
 
     (define (script-fu-abort)
       (script-fu-script-abort "Too many drawables.")
-      (gimp-message "this never evaluated")
+      (ligma-message "this never evaluated")
     )
     ...
 
@@ -266,7 +266,7 @@ is truthy.
 A ScriptFu plugin
 (the PDB procedure that a script defines in its run func)
 whose last evaluated expression is #f
-will yield an error of type GimpPDBStatus.
+will yield an error of type LigmaPDBStatus.
 
 If you don't want a ScriptFu plugin to yield an error,
 it must not evaluate to #f.
@@ -288,8 +288,8 @@ yielding #f, yields a PDB error to the caller.*
 
     (define (script-fu-always-fail)
       (begin
-        ; this will be evaluated and show a message in GIMP status bar
-        (gimp-message "Failing")
+        ; this will be evaluated and show a message in LIGMA status bar
+        (ligma-message "Failing")
         ; since last expression, is the result, and will mean error
         #f
       )
@@ -300,7 +300,7 @@ yielding #f, yields a PDB error to the caller.*
 In v3 you can install ScriptFu scripts to a /plug-ins directory.
 You must edit the script to include a shebang in the first line:
 
-    #!/usr/bin/env gimp-script-fu-interpreter-3.0
+    #!/usr/bin/env ligma-script-fu-interpreter-3.0
 
 In v2 all ScriptFu scripts were usually installed in a /scripts directory.
 In v3 you may install ScriptFu scripts with a shebang
@@ -316,14 +316,14 @@ A script file must:
 
 An example path to a script:
 
-    ~/.config/GIMP/2.99/plug-ins/myScript/myScript.scm
+    ~/.config/LIGMA/2.99/plug-ins/myScript/myScript.scm
 
 Such a script will execute in its own process.
-If it crashes, it doesn't affect GIMP or other scripts.
+If it crashes, it doesn't affect LIGMA or other scripts.
 In v2, all scripts in the /scripts directory are executed by the long-lived
 process "extension-script-fu."
 If one of those scripts crash, menu items implemented by ScriptFu dissappear
-from the GIMP app, and you should restart GIMP.
+from the LIGMA app, and you should restart LIGMA.
 
 ### Use script-fu-register-filter to register PDB procedures that take images
 
@@ -336,7 +336,7 @@ It lets you declare a script that:
 You don't specify the first two arguments "image" and "drawable"
 as you do with script-fu-register in v2.
 Those arguments are implicit.
-As a convenience, ScriptFu and GIMP registers those arguments in the PDB for you.
+As a convenience, ScriptFu and LIGMA registers those arguments in the PDB for you.
 
 The run func that you define in your script
 must have those formal arguments.  For example:
@@ -383,16 +383,16 @@ the given drawables independently and sequentially.
 Typically, SF_TWO_OR_MORE_DRAWABLE means a script will
 combine the given drawables, say into another drawable by a binary operation.
 
-The "multilayer-capability" argument tells GIMP to enable the script's menu item
+The "multilayer-capability" argument tells LIGMA to enable the script's menu item
 when a user has selected the appropriate count of drawables.
 
-#### Settings are handled by GIMP, not ScriptFu
+#### Settings are handled by LIGMA, not ScriptFu
 
 Scripts declared with script-fu-register-filter have settings that are persisted
-within and between Gimp sessions.  That is, the next time a user chooses the filter,
+within and between Ligma sessions.  That is, the next time a user chooses the filter,
 the dialog will show the same settings as the last time they chose the filter.
 This is not true for v2 script-register-filter,
-where settings are only kept during a GIMP session.
+where settings are only kept during a LIGMA session.
 
 The dialog for a script declared with script-fu-register-filter
 will also have buttons for resetting to initial or factory values of settings.
@@ -407,21 +407,21 @@ Existing scripts that use script-fu-register to declare a procedure
 that takes an image and single drawable,
 are deprecated.
 They will still work and have a correct dialog in v3.
-In some future version of GIMP,
+In some future version of LIGMA,
 such scripts may become obsolete.
 All newly written scripts taking an image and one or more drawables
 should use script-fu-register-filter.
 
-GIMP enables the menu item for such deprecated scripts if and only if a user
+LIGMA enables the menu item for such deprecated scripts if and only if a user
 selects exactly one drawable (layer or other.)
 
 ### ScriptFu plugins are expected to throw errors for improper count of drawables
 
-Starting with GIMP 3,
+Starting with LIGMA 3,
 a plugin that takes an image takes a container of possibly many drawables.
 This is the so-called "multi-layer selection" feature.
 Existing plugins that don't are deprecated,
-and may become obsoleted in a future version of GIMP.
+and may become obsoleted in a future version of LIGMA.
 
 Plugins should declare how many drawables they can process,
 also called the "multi-layer capability" or "drawable arity" of the algorithm.
@@ -433,7 +433,7 @@ Well-written image procedures always receive a container of drawables.
 
 For calls invoked by a user, the drawable arity describes
 how many drawables the user is expected to select.
-GIMP disables/enables the menu item for a plugin procedure
+LIGMA disables/enables the menu item for a plugin procedure
 according to its declared drawable arity.
 So a plugin procedure invoked directly by a user should never receive
 a count of drawables that the plugin can't handle.

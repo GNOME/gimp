@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimptriviallycancelablewaitable.c
+ * ligmatriviallycancelablewaitable.c
  * Copyright (C) 2018 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,49 +25,49 @@
 
 #include "core-types.h"
 
-#include "gimpcancelable.h"
-#include "gimptriviallycancelablewaitable.h"
-#include "gimpwaitable.h"
+#include "ligmacancelable.h"
+#include "ligmatriviallycancelablewaitable.h"
+#include "ligmawaitable.h"
 
 
 /*  local function prototypes  */
 
-static void   gimp_trivially_cancelable_waitable_cancelable_iface_init (GimpCancelableInterface *iface);
+static void   ligma_trivially_cancelable_waitable_cancelable_iface_init (LigmaCancelableInterface *iface);
 
-static void   gimp_trivially_cancelable_waitable_cancel                (GimpCancelable          *cancelable);
+static void   ligma_trivially_cancelable_waitable_cancel                (LigmaCancelable          *cancelable);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpTriviallyCancelableWaitable, gimp_trivially_cancelable_waitable, GIMP_TYPE_UNCANCELABLE_WAITABLE,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CANCELABLE,
-                                                gimp_trivially_cancelable_waitable_cancelable_iface_init))
+G_DEFINE_TYPE_WITH_CODE (LigmaTriviallyCancelableWaitable, ligma_trivially_cancelable_waitable, LIGMA_TYPE_UNCANCELABLE_WAITABLE,
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_CANCELABLE,
+                                                ligma_trivially_cancelable_waitable_cancelable_iface_init))
 
-#define parent_class gimp_trivially_cancelable_waitable_parent_class
+#define parent_class ligma_trivially_cancelable_waitable_parent_class
 
 
 /*  private functions  */
 
 
 static void
-gimp_trivially_cancelable_waitable_class_init (GimpTriviallyCancelableWaitableClass *klass)
+ligma_trivially_cancelable_waitable_class_init (LigmaTriviallyCancelableWaitableClass *klass)
 {
 }
 
 static void
-gimp_trivially_cancelable_waitable_cancelable_iface_init (GimpCancelableInterface *iface)
+ligma_trivially_cancelable_waitable_cancelable_iface_init (LigmaCancelableInterface *iface)
 {
-  iface->cancel = gimp_trivially_cancelable_waitable_cancel;
+  iface->cancel = ligma_trivially_cancelable_waitable_cancel;
 }
 
 static void
-gimp_trivially_cancelable_waitable_init (GimpTriviallyCancelableWaitable *trivially_cancelable_waitable)
+ligma_trivially_cancelable_waitable_init (LigmaTriviallyCancelableWaitable *trivially_cancelable_waitable)
 {
 }
 
 static void
-gimp_trivially_cancelable_waitable_cancel (GimpCancelable *cancelable)
+ligma_trivially_cancelable_waitable_cancel (LigmaCancelable *cancelable)
 {
-  GimpUncancelableWaitable *uncancelable_waitable =
-    GIMP_UNCANCELABLE_WAITABLE (cancelable);
+  LigmaUncancelableWaitable *uncancelable_waitable =
+    LIGMA_UNCANCELABLE_WAITABLE (cancelable);
 
   g_clear_object (&uncancelable_waitable->waitable);
 }
@@ -76,17 +76,17 @@ gimp_trivially_cancelable_waitable_cancel (GimpCancelable *cancelable)
 /*  public functions  */
 
 
-GimpWaitable *
-gimp_trivially_cancelable_waitable_new (GimpWaitable *waitable)
+LigmaWaitable *
+ligma_trivially_cancelable_waitable_new (LigmaWaitable *waitable)
 {
-  GimpUncancelableWaitable *uncancelable_waitable;
+  LigmaUncancelableWaitable *uncancelable_waitable;
 
-  g_return_val_if_fail (GIMP_IS_WAITABLE (waitable), NULL);
+  g_return_val_if_fail (LIGMA_IS_WAITABLE (waitable), NULL);
 
-  uncancelable_waitable = g_object_new (GIMP_TYPE_TRIVIALLY_CANCELABLE_WAITABLE,
+  uncancelable_waitable = g_object_new (LIGMA_TYPE_TRIVIALLY_CANCELABLE_WAITABLE,
                                         NULL);
 
   uncancelable_waitable->waitable = g_object_ref (waitable);
 
-  return GIMP_WAITABLE (uncancelable_waitable);
+  return LIGMA_WAITABLE (uncancelable_waitable);
 }

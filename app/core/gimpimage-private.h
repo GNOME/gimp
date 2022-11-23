@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,13 +15,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_PRIVATE_H__
-#define __GIMP_IMAGE_PRIVATE_H__
+#ifndef __LIGMA_IMAGE_PRIVATE_H__
+#define __LIGMA_IMAGE_PRIVATE_H__
 
 
-typedef struct _GimpImageFlushAccumulator GimpImageFlushAccumulator;
+typedef struct _LigmaImageFlushAccumulator LigmaImageFlushAccumulator;
 
-struct _GimpImageFlushAccumulator
+struct _LigmaImageFlushAccumulator
 {
   gboolean alpha_changed;
   gboolean mask_changed;
@@ -30,13 +30,13 @@ struct _GimpImageFlushAccumulator
 };
 
 
-struct _GimpImagePrivate
+struct _LigmaImagePrivate
 {
   gint               ID;                    /*  provides a unique ID         */
 
-  GimpPlugInProcedure *load_proc;           /*  procedure used for loading   */
-  GimpPlugInProcedure *save_proc;           /*  last save procedure used     */
-  GimpPlugInProcedure *export_proc;         /*  last export procedure used   */
+  LigmaPlugInProcedure *load_proc;           /*  procedure used for loading   */
+  LigmaPlugInProcedure *save_proc;           /*  last save procedure used     */
+  LigmaPlugInProcedure *export_proc;         /*  last export procedure used   */
 
   gchar             *display_name;          /*  display basename             */
   gchar             *display_path;          /*  display full path            */
@@ -44,11 +44,11 @@ struct _GimpImagePrivate
   gint               height;                /*  height in pixels             */
   gdouble            xresolution;           /*  image x-res, in dpi          */
   gdouble            yresolution;           /*  image y-res, in dpi          */
-  GimpUnit           resolution_unit;       /*  resolution unit              */
+  LigmaUnit           resolution_unit;       /*  resolution unit              */
   gboolean           resolution_set;        /*  resolution explicitly set    */
-  GimpImageBaseType  base_type;             /*  base gimp_image type         */
-  GimpPrecision      precision;             /*  image's precision            */
-  GimpLayerMode      new_layer_mode;        /*  default mode of new layers   */
+  LigmaImageBaseType  base_type;             /*  base ligma_image type         */
+  LigmaPrecision      precision;             /*  image's precision            */
+  LigmaLayerMode      new_layer_mode;        /*  default mode of new layers   */
 
   gint               show_all;              /*  render full image content    */
   GeglRectangle      bounding_box;          /*  image content bounding box   */
@@ -56,27 +56,27 @@ struct _GimpImagePrivate
   gboolean           bounding_box_update_pending;
   GeglBuffer        *pickable_buffer;
 
-  GimpPalette       *palette;               /*  palette of colormap          */
+  LigmaPalette       *palette;               /*  palette of colormap          */
   const Babl        *babl_palette_rgb;      /*  palette's RGB Babl format    */
   const Babl        *babl_palette_rgba;     /*  palette's RGBA Babl format   */
 
-  GimpColorProfile  *color_profile;         /*  image's color profile        */
+  LigmaColorProfile  *color_profile;         /*  image's color profile        */
   const Babl        *layer_space;           /*  image's Babl layer space     */
-  GimpColorProfile  *hidden_profile;        /*  hidden by "use sRGB"         */
+  LigmaColorProfile  *hidden_profile;        /*  hidden by "use sRGB"         */
 
   /* image's simulation/soft-proofing settings */
-  GimpColorProfile         *simulation_profile;
-  GimpColorRenderingIntent  simulation_intent;
+  LigmaColorProfile         *simulation_profile;
+  LigmaColorRenderingIntent  simulation_intent;
   gboolean                  simulation_bpc;
 
   /*  Cached color transforms: from layer to sRGB u8 and double, and back    */
   gboolean            color_transforms_created;
-  GimpColorTransform *transform_to_srgb_u8;
-  GimpColorTransform *transform_from_srgb_u8;
-  GimpColorTransform *transform_to_srgb_double;
-  GimpColorTransform *transform_from_srgb_double;
+  LigmaColorTransform *transform_to_srgb_u8;
+  LigmaColorTransform *transform_from_srgb_u8;
+  LigmaColorTransform *transform_to_srgb_double;
+  LigmaColorTransform *transform_from_srgb_double;
 
-  GimpMetadata      *metadata;              /*  image's metadata             */
+  LigmaMetadata      *metadata;              /*  image's metadata             */
 
   GFile             *file;                  /*  the image's XCF file         */
   GFile             *imported_file;         /*  the image's source file      */
@@ -95,23 +95,23 @@ struct _GimpImagePrivate
   gint               instance_count;        /*  number of instances          */
   gint               disp_count;            /*  number of displays           */
 
-  GimpTattoo         tattoo_state;          /*  the last used tattoo         */
+  LigmaTattoo         tattoo_state;          /*  the last used tattoo         */
 
-  GimpProjection    *projection;            /*  projection layers & channels */
+  LigmaProjection    *projection;            /*  projection layers & channels */
   GeglNode          *graph;                 /*  GEGL projection graph        */
   GeglNode          *visible_mask;          /*  component visibility node    */
 
   GList             *symmetries;            /*  Painting symmetries          */
-  GimpSymmetry      *active_symmetry;       /*  Active symmetry              */
+  LigmaSymmetry      *active_symmetry;       /*  Active symmetry              */
 
   GList             *guides;                /*  guides                       */
-  GimpGrid          *grid;                  /*  grid                         */
+  LigmaGrid          *grid;                  /*  grid                         */
   GList             *sample_points;         /*  color sample points          */
 
   /*  Layer/Channel attributes  */
-  GimpItemTree      *layers;                /*  the tree of layers           */
-  GimpItemTree      *channels;              /*  the tree of masks            */
-  GimpItemTree      *vectors;               /*  the tree of vectors          */
+  LigmaItemTree      *layers;                /*  the tree of layers           */
+  LigmaItemTree      *channels;              /*  the tree of masks            */
+  LigmaItemTree      *vectors;               /*  the tree of vectors          */
   GSList            *layer_stack;           /*  the layers in MRU order      */
 
   GList             *hidden_items;          /*  internal process-only items  */
@@ -127,32 +127,32 @@ struct _GimpImagePrivate
   GQuark             channel_name_changed_handler;
   GQuark             channel_color_changed_handler;
 
-  GimpLayer         *floating_sel;          /*  the FS layer                 */
-  GimpChannel       *selection_mask;        /*  the selection mask channel   */
+  LigmaLayer         *floating_sel;          /*  the FS layer                 */
+  LigmaChannel       *selection_mask;        /*  the selection mask channel   */
 
-  GimpParasiteList  *parasites;             /*  Plug-in parasite data        */
+  LigmaParasiteList  *parasites;             /*  Plug-in parasite data        */
 
   gboolean           visible[MAX_CHANNELS]; /*  visible channels             */
   gboolean           active[MAX_CHANNELS];  /*  active channels              */
 
   gboolean           quick_mask_state;      /*  TRUE if quick mask is on       */
   gboolean           quick_mask_inverted;   /*  TRUE if quick mask is inverted */
-  GimpRGB            quick_mask_color;      /*  rgba triplet of the color      */
+  LigmaRGB            quick_mask_color;      /*  rgba triplet of the color      */
 
   /*  Undo apparatus  */
-  GimpUndoStack     *undo_stack;            /*  stack for undo operations    */
-  GimpUndoStack     *redo_stack;            /*  stack for redo operations    */
+  LigmaUndoStack     *undo_stack;            /*  stack for undo operations    */
+  LigmaUndoStack     *redo_stack;            /*  stack for redo operations    */
   gint               group_count;           /*  nested undo groups           */
-  GimpUndoType       pushing_undo_group;    /*  undo group status flag       */
+  LigmaUndoType       pushing_undo_group;    /*  undo group status flag       */
 
   /*  Signal emission accumulator  */
-  GimpImageFlushAccumulator  flush_accum;
+  LigmaImageFlushAccumulator  flush_accum;
 };
 
-#define GIMP_IMAGE_GET_PRIVATE(image) (((GimpImage *) (image))->priv)
+#define LIGMA_IMAGE_GET_PRIVATE(image) (((LigmaImage *) (image))->priv)
 
-void   gimp_image_take_mask (GimpImage   *image,
-                             GimpChannel *mask);
+void   ligma_image_take_mask (LigmaImage   *image,
+                             LigmaChannel *mask);
 
 
-#endif  /* __GIMP_IMAGE_PRIVATE_H__ */
+#endif  /* __LIGMA_IMAGE_PRIVATE_H__ */

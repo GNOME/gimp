@@ -6,8 +6,8 @@
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-libgimp\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma-libligma\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2012-05-12 12:54+0000\n"
 "PO-Revision-Date: 2012-05-05 16:56+0900\n"
 "Last-Translator: Jihui Choi <jihui.choi@gmail.com>\n"
@@ -22,104 +22,104 @@ msgstr ""
 "X-Poedit-SourceCharset: utf-8\n"
 
 #. procedure executed successfully
-#: ../libgimp/gimp.c:1077
+#: ../libligma/ligma.c:1077
 msgid "success"
 msgstr "성공"
 
 #. procedure execution failed
-#: ../libgimp/gimp.c:1081
+#: ../libligma/ligma.c:1081
 msgid "execution error"
 msgstr "실행 오류"
 
 #. procedure called incorrectly
-#: ../libgimp/gimp.c:1085
+#: ../libligma/ligma.c:1085
 msgid "calling error"
 msgstr "호출 오류"
 
 #. procedure execution cancelled
-#: ../libgimp/gimp.c:1089
+#: ../libligma/ligma.c:1089
 msgid "cancelled"
 msgstr "취소됨"
 
-#: ../libgimp/gimpbrushselectbutton.c:178
+#: ../libligma/ligmabrushselectbutton.c:178
 msgid "Brush Selection"
 msgstr "붓 선택"
 
-#: ../libgimp/gimpbrushselectbutton.c:927
-#: ../libgimp/gimppatternselectbutton.c:725
+#: ../libligma/ligmabrushselectbutton.c:927
+#: ../libligma/ligmapatternselectbutton.c:725
 msgid "_Browse..."
 msgstr "찾아보기(_B)..."
 
-#: ../libgimp/gimpexport.c:243 ../libgimp/gimpexport.c:279
+#: ../libligma/ligmaexport.c:243 ../libligma/ligmaexport.c:279
 #, c-format
 msgid "%s plug-in can't handle layers"
 msgstr "%s 플러그인은 레이어를 처리할 수 없습니다."
 
-#: ../libgimp/gimpexport.c:244 ../libgimp/gimpexport.c:253
-#: ../libgimp/gimpexport.c:262 ../libgimp/gimpexport.c:280
+#: ../libligma/ligmaexport.c:244 ../libligma/ligmaexport.c:253
+#: ../libligma/ligmaexport.c:262 ../libligma/ligmaexport.c:280
 msgid "Merge Visible Layers"
 msgstr "보이는 레이어 합치기"
 
-#: ../libgimp/gimpexport.c:252
+#: ../libligma/ligmaexport.c:252
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
 msgstr "%s 플러그인은 레어어 위치, 크기, 투명도를 처리할 수 없습니다."
 
-#: ../libgimp/gimpexport.c:261 ../libgimp/gimpexport.c:270
+#: ../libligma/ligmaexport.c:261 ../libligma/ligmaexport.c:270
 #, c-format
 msgid "%s plug-in can only handle layers as animation frames"
 msgstr "%s 플러그인은 애니메이션 프레임 레이어만 처리할 수 있습니다."
 
-#: ../libgimp/gimpexport.c:262 ../libgimp/gimpexport.c:271
+#: ../libligma/ligmaexport.c:262 ../libligma/ligmaexport.c:271
 msgid "Save as Animation"
 msgstr "애니메이션으로 저장"
 
-#: ../libgimp/gimpexport.c:271 ../libgimp/gimpexport.c:280
-#: ../libgimp/gimpexport.c:289
+#: ../libligma/ligmaexport.c:271 ../libligma/ligmaexport.c:280
+#: ../libligma/ligmaexport.c:289
 msgid "Flatten Image"
 msgstr "배경 이미지로 합치기"
 
-#: ../libgimp/gimpexport.c:288
+#: ../libligma/ligmaexport.c:288
 #, c-format
 msgid "%s plug-in can't handle transparency"
 msgstr "%s 플러그인은 투명도를 처리할 수 없습니다."
 
-#: ../libgimp/gimpexport.c:297
+#: ../libligma/ligmaexport.c:297
 #, c-format
 msgid "%s plug-in can't handle layer masks"
 msgstr "%s 플러그인은 레이어 마스크를 처리할 수 없습니다."
 
-#: ../libgimp/gimpexport.c:298
+#: ../libligma/ligmaexport.c:298
 msgid "Apply Layer Masks"
 msgstr "레이어 마스크 적용"
 
-#: ../libgimp/gimpexport.c:306
+#: ../libligma/ligmaexport.c:306
 #, c-format
 msgid "%s plug-in can only handle RGB images"
 msgstr "%s 플러그인은 RGB 이미지만 처리할 수 있습니다."
 
-#: ../libgimp/gimpexport.c:307 ../libgimp/gimpexport.c:345
-#: ../libgimp/gimpexport.c:354
+#: ../libligma/ligmaexport.c:307 ../libligma/ligmaexport.c:345
+#: ../libligma/ligmaexport.c:354
 msgid "Convert to RGB"
 msgstr "RGB로 바꾸기"
 
-#: ../libgimp/gimpexport.c:315
+#: ../libligma/ligmaexport.c:315
 #, c-format
 msgid "%s plug-in can only handle grayscale images"
 msgstr "%s 플러그인은 그레이스케일 이미지만 처리할 수 있습니다."
 
-#: ../libgimp/gimpexport.c:316 ../libgimp/gimpexport.c:345
-#: ../libgimp/gimpexport.c:366
+#: ../libligma/ligmaexport.c:316 ../libligma/ligmaexport.c:345
+#: ../libligma/ligmaexport.c:366
 msgid "Convert to Grayscale"
 msgstr "그레이스케일로 바꾸기"
 
-#: ../libgimp/gimpexport.c:324
+#: ../libligma/ligmaexport.c:324
 #, c-format
 msgid "%s plug-in can only handle indexed images"
 msgstr "%s 플러그인은 인덱스된 이미지만 처리할 수 있습니다."
 
-#: ../libgimp/gimpexport.c:325 ../libgimp/gimpexport.c:354
-#: ../libgimp/gimpexport.c:364
+#: ../libligma/ligmaexport.c:325 ../libligma/ligmaexport.c:354
+#: ../libligma/ligmaexport.c:364
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -127,13 +127,13 @@ msgstr ""
 "기본 설정을 사용하여 인덱스된 이미지로 바꾸기\n"
 "(결과를 수동으로 조절하십시오)"
 
-#: ../libgimp/gimpexport.c:334
+#: ../libligma/ligmaexport.c:334
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
 msgstr ""
 "%s 플러그인은 비트맵(두 가지 색상)으로 인덱스된 이미지만 처리할 수 있습니다."
 
-#: ../libgimp/gimpexport.c:335
+#: ../libligma/ligmaexport.c:335
 msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
@@ -141,52 +141,52 @@ msgstr ""
 "비트맵 기본 설정을 사용하여 인덱스된 이미지로 바꾸기\n"
 "(결과를 수동으로 조절하십시오)"
 
-#: ../libgimp/gimpexport.c:344
+#: ../libligma/ligmaexport.c:344
 #, c-format
 msgid "%s plug-in can only handle RGB or grayscale images"
 msgstr "%s 플러그인은 RGB나 그레이스케일 이미지만 처리할 수 있습니다."
 
-#: ../libgimp/gimpexport.c:353
+#: ../libligma/ligmaexport.c:353
 #, c-format
 msgid "%s plug-in  can only handle RGB or indexed images"
 msgstr "%s 플러그인은 RGB나 인덱스된 이미지만 처리할 수 있습니다."
 
-#: ../libgimp/gimpexport.c:363
+#: ../libligma/ligmaexport.c:363
 #, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
 msgstr "%s 플러그인은 그레이스케일이나 인덱스된 이미지만 처리할 수 있습니다."
 
-#: ../libgimp/gimpexport.c:374
+#: ../libligma/ligmaexport.c:374
 #, c-format
 msgid "%s plug-in needs an alpha channel"
 msgstr "%s 플러그인을 사용하려면 알파 채널이 필요합니다."
 
-#: ../libgimp/gimpexport.c:375
+#: ../libligma/ligmaexport.c:375
 msgid "Add Alpha Channel"
 msgstr "알파 채널 더하기"
 
-#: ../libgimp/gimpexport.c:430
+#: ../libligma/ligmaexport.c:430
 msgid "Confirm Save"
 msgstr "저장 확인"
 
-#: ../libgimp/gimpexport.c:436
+#: ../libligma/ligmaexport.c:436
 msgid "Confirm"
 msgstr "확인"
 
-#: ../libgimp/gimpexport.c:512
+#: ../libligma/ligmaexport.c:512
 msgid "Export File"
 msgstr "파일 내보내기"
 
-#: ../libgimp/gimpexport.c:516
+#: ../libligma/ligmaexport.c:516
 msgid "_Ignore"
 msgstr "무시(_I)"
 
-#: ../libgimp/gimpexport.c:518 ../libgimp/gimpexport.c:988
+#: ../libligma/ligmaexport.c:518 ../libligma/ligmaexport.c:988
 msgid "_Export"
 msgstr "내보내기(_E)"
 
 #. the headline
-#: ../libgimp/gimpexport.c:548
+#: ../libligma/ligmaexport.c:548
 #, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
@@ -194,11 +194,11 @@ msgid ""
 msgstr "다음과 같은 이유로 %s(으)로 저장하기 전에 이미지를 내보내야 합니다.:"
 
 #. the footline
-#: ../libgimp/gimpexport.c:622
+#: ../libligma/ligmaexport.c:622
 msgid "The export conversion won't modify your original image."
 msgstr "내보내기 변환은 원래 이미지를 변경하지 않습니다."
 
-#: ../libgimp/gimpexport.c:725
+#: ../libligma/ligmaexport.c:725
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -207,7 +207,7 @@ msgstr ""
 "레이어 마스크를 %s(으)로 저장하려고 합니다.\n"
 "보이는 레이어를 저장하지 않습니다."
 
-#: ../libgimp/gimpexport.c:731
+#: ../libligma/ligmaexport.c:731
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -216,677 +216,677 @@ msgstr ""
 "채널(저장된 선택)을 %s(으)로 저장하려고 합니다.\n"
 "보이는 레이어를 저장하지 않습니다."
 
-#: ../libgimp/gimpexport.c:979
+#: ../libligma/ligmaexport.c:979
 msgid "Export Image as "
 msgstr "다른 형식으로 이미지 내보내기"
 
-#: ../libgimp/gimpfontselectbutton.c:138
+#: ../libligma/ligmafontselectbutton.c:138
 msgid "Font Selection"
 msgstr "글꼴 선택"
 
-#: ../libgimp/gimpfontselectbutton.c:153
+#: ../libligma/ligmafontselectbutton.c:153
 msgid "Sans"
 msgstr "Sans"
 
-#: ../libgimp/gimpgradientselectbutton.c:156
+#: ../libligma/ligmagradientselectbutton.c:156
 msgid "Gradient Selection"
 msgstr "그라디언트 선택"
 
 #. This string appears in an empty menu as in
 #. * "nothing selected and nothing to select"
 #.
-#: ../libgimp/gimpmenu.c:461 ../libgimpwidgets/gimpintstore.c:241
+#: ../libligma/ligmamenu.c:461 ../libligmawidgets/ligmaintstore.c:241
 msgid "(Empty)"
 msgstr "(비어 있음)"
 
-#: ../libgimp/gimppaletteselectbutton.c:138
+#: ../libligma/ligmapaletteselectbutton.c:138
 msgid "Palette Selection"
 msgstr "팔레트 선택"
 
-#: ../libgimp/gimppatternselectbutton.c:164
+#: ../libligma/ligmapatternselectbutton.c:164
 msgid "Pattern Selection"
 msgstr "무늬 선택"
 
-#: ../libgimp/gimpprocbrowserdialog.c:149
+#: ../libligma/ligmaprocbrowserdialog.c:149
 msgid "by name"
 msgstr "이름으로"
 
-#: ../libgimp/gimpprocbrowserdialog.c:150
+#: ../libligma/ligmaprocbrowserdialog.c:150
 msgid "by description"
 msgstr "설명에서"
 
-#: ../libgimp/gimpprocbrowserdialog.c:151
+#: ../libligma/ligmaprocbrowserdialog.c:151
 msgid "by help"
 msgstr "도움말에서"
 
-#: ../libgimp/gimpprocbrowserdialog.c:152
+#: ../libligma/ligmaprocbrowserdialog.c:152
 msgid "by author"
 msgstr "저자로"
 
-#: ../libgimp/gimpprocbrowserdialog.c:153
+#: ../libligma/ligmaprocbrowserdialog.c:153
 msgid "by copyright"
 msgstr "저작권으로"
 
-#: ../libgimp/gimpprocbrowserdialog.c:154
+#: ../libligma/ligmaprocbrowserdialog.c:154
 msgid "by date"
 msgstr "날짜로"
 
-#: ../libgimp/gimpprocbrowserdialog.c:155
+#: ../libligma/ligmaprocbrowserdialog.c:155
 msgid "by type"
 msgstr "형식으로"
 
 #. count label
-#: ../libgimp/gimpprocbrowserdialog.c:394
-#: ../libgimp/gimpprocbrowserdialog.c:545 ../libgimpwidgets/gimpbrowser.c:139
+#: ../libligma/ligmaprocbrowserdialog.c:394
+#: ../libligma/ligmaprocbrowserdialog.c:545 ../libligmawidgets/ligmabrowser.c:139
 msgid "No matches"
 msgstr "일치하는 항목이 없습니다."
 
-#: ../libgimp/gimpprocbrowserdialog.c:397
+#: ../libligma/ligmaprocbrowserdialog.c:397
 msgid "Search term invalid or incomplete"
 msgstr "검색어가 완전하지 않거나 잘못 되었습니다."
 
-#: ../libgimp/gimpprocbrowserdialog.c:406
+#: ../libligma/ligmaprocbrowserdialog.c:406
 msgid "Searching"
 msgstr "찾기"
 
-#: ../libgimp/gimpprocbrowserdialog.c:417
+#: ../libligma/ligmaprocbrowserdialog.c:417
 msgid "Searching by name"
 msgstr "이름으로 찾기"
 
-#: ../libgimp/gimpprocbrowserdialog.c:438
+#: ../libligma/ligmaprocbrowserdialog.c:438
 msgid "Searching by description"
 msgstr "설명으로 찾기"
 
-#: ../libgimp/gimpprocbrowserdialog.c:445
+#: ../libligma/ligmaprocbrowserdialog.c:445
 msgid "Searching by help"
 msgstr "도움말에서 찾기"
 
-#: ../libgimp/gimpprocbrowserdialog.c:452
+#: ../libligma/ligmaprocbrowserdialog.c:452
 msgid "Searching by author"
 msgstr "저자로 찾기"
 
-#: ../libgimp/gimpprocbrowserdialog.c:459
+#: ../libligma/ligmaprocbrowserdialog.c:459
 msgid "Searching by copyright"
 msgstr "저작권으로 찾기"
 
-#: ../libgimp/gimpprocbrowserdialog.c:466
+#: ../libligma/ligmaprocbrowserdialog.c:466
 msgid "Searching by date"
 msgstr "날짜로 찾기"
 
-#: ../libgimp/gimpprocbrowserdialog.c:473
+#: ../libligma/ligmaprocbrowserdialog.c:473
 msgid "Searching by type"
 msgstr "형식으로 찾기"
 
-#: ../libgimp/gimpprocbrowserdialog.c:483
+#: ../libligma/ligmaprocbrowserdialog.c:483
 #, c-format
 msgid "%d procedure"
 msgid_plural "%d procedures"
 msgstr[0] "프로시저 %d 개"
 
-#: ../libgimp/gimpprocbrowserdialog.c:492
+#: ../libligma/ligmaprocbrowserdialog.c:492
 msgid "No matches for your query"
 msgstr "일치하는 항목이 없습니다."
 
-#: ../libgimp/gimpprocbrowserdialog.c:496
+#: ../libligma/ligmaprocbrowserdialog.c:496
 #, c-format
 msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
 msgstr[0] "%d 개의 프로시저가 질의에 일치합니다."
 
-#: ../libgimp/gimpprocview.c:172
+#: ../libligma/ligmaprocview.c:172
 msgid "Parameters"
 msgstr "매개변수"
 
-#: ../libgimp/gimpprocview.c:185
+#: ../libligma/ligmaprocview.c:185
 msgid "Return Values"
 msgstr "반환값"
 
-#: ../libgimp/gimpprocview.c:198
+#: ../libligma/ligmaprocview.c:198
 msgid "Additional Information"
 msgstr "추가 정보"
 
-#: ../libgimp/gimpprocview.c:238
+#: ../libligma/ligmaprocview.c:238
 msgid "Author:"
 msgstr "저자:"
 
-#: ../libgimp/gimpprocview.c:250
+#: ../libligma/ligmaprocview.c:250
 msgid "Date:"
 msgstr "날짜:"
 
-#: ../libgimp/gimpprocview.c:262
+#: ../libligma/ligmaprocview.c:262
 msgid "Copyright:"
 msgstr "저작권:"
 
-#: ../libgimp/gimpunitcache.c:54
+#: ../libligma/ligmaunitcache.c:54
 msgid "percent"
 msgstr "백분율"
 
-#: ../libgimpbase/gimpbaseenums.c:28
+#: ../libligmabase/ligmabaseenums.c:28
 msgctxt "add-mask-type"
 msgid "_White (full opacity)"
 msgstr "흰색(완전 불투명)(_W)"
 
-#: ../libgimpbase/gimpbaseenums.c:29
+#: ../libligmabase/ligmabaseenums.c:29
 msgctxt "add-mask-type"
 msgid "_Black (full transparency)"
 msgstr "검은색(완전 투명)(_B)"
 
-#: ../libgimpbase/gimpbaseenums.c:30
+#: ../libligmabase/ligmabaseenums.c:30
 msgctxt "add-mask-type"
 msgid "Layer's _alpha channel"
 msgstr "레이어의 알파 채널(_A)"
 
-#: ../libgimpbase/gimpbaseenums.c:31
+#: ../libligmabase/ligmabaseenums.c:31
 msgctxt "add-mask-type"
 msgid "_Transfer layer's alpha channel"
 msgstr "레이어의 알파 채널 전송(_T)"
 
-#: ../libgimpbase/gimpbaseenums.c:32
+#: ../libligmabase/ligmabaseenums.c:32
 msgctxt "add-mask-type"
 msgid "_Selection"
 msgstr "선택(_S)"
 
-#: ../libgimpbase/gimpbaseenums.c:33
+#: ../libligmabase/ligmabaseenums.c:33
 msgctxt "add-mask-type"
 msgid "_Grayscale copy of layer"
 msgstr "레이어의 그레이스케일 사본(_G)"
 
-#: ../libgimpbase/gimpbaseenums.c:34
+#: ../libligmabase/ligmabaseenums.c:34
 msgctxt "add-mask-type"
 msgid "C_hannel"
 msgstr "채널(_H)"
 
-#: ../libgimpbase/gimpbaseenums.c:65
+#: ../libligmabase/ligmabaseenums.c:65
 msgctxt "blend-mode"
 msgid "FG to BG (RGB)"
 msgstr "전경색을 배경색으로 (RGB)"
 
-#: ../libgimpbase/gimpbaseenums.c:66
+#: ../libligmabase/ligmabaseenums.c:66
 msgctxt "blend-mode"
 msgid "FG to BG (HSV)"
 msgstr "전경색을 배경색으로 (HSV)"
 
-#: ../libgimpbase/gimpbaseenums.c:67
+#: ../libligmabase/ligmabaseenums.c:67
 msgctxt "blend-mode"
 msgid "FG to transparent"
 msgstr "전경색을 투명하게"
 
-#: ../libgimpbase/gimpbaseenums.c:68
+#: ../libligmabase/ligmabaseenums.c:68
 msgctxt "blend-mode"
 msgid "Custom gradient"
 msgstr "사용자 지정 그라디언트"
 
-#: ../libgimpbase/gimpbaseenums.c:98
+#: ../libligmabase/ligmabaseenums.c:98
 msgctxt "bucket-fill-mode"
 msgid "FG color fill"
 msgstr "전경색으로 채우기"
 
-#: ../libgimpbase/gimpbaseenums.c:99
+#: ../libligmabase/ligmabaseenums.c:99
 msgctxt "bucket-fill-mode"
 msgid "BG color fill"
 msgstr "배경색으로 채우기"
 
-#: ../libgimpbase/gimpbaseenums.c:100
+#: ../libligmabase/ligmabaseenums.c:100
 msgctxt "bucket-fill-mode"
 msgid "Pattern fill"
 msgstr "무늬로 채우기"
 
-#: ../libgimpbase/gimpbaseenums.c:131
+#: ../libligmabase/ligmabaseenums.c:131
 msgctxt "channel-ops"
 msgid "Add to the current selection"
 msgstr "현재 선택에 더하기"
 
-#: ../libgimpbase/gimpbaseenums.c:132
+#: ../libligmabase/ligmabaseenums.c:132
 msgctxt "channel-ops"
 msgid "Subtract from the current selection"
 msgstr "현재 선택에서 빼기"
 
-#: ../libgimpbase/gimpbaseenums.c:133
+#: ../libligmabase/ligmabaseenums.c:133
 msgctxt "channel-ops"
 msgid "Replace the current selection"
 msgstr "현재 선택 바꾸기"
 
-#: ../libgimpbase/gimpbaseenums.c:134
+#: ../libligmabase/ligmabaseenums.c:134
 msgctxt "channel-ops"
 msgid "Intersect with the current selection"
 msgstr "현재 선택과 교차하기"
 
-#: ../libgimpbase/gimpbaseenums.c:167
+#: ../libligmabase/ligmabaseenums.c:167
 msgctxt "channel-type"
 msgid "Red"
 msgstr "빨강"
 
-#: ../libgimpbase/gimpbaseenums.c:168
+#: ../libligmabase/ligmabaseenums.c:168
 msgctxt "channel-type"
 msgid "Green"
 msgstr "초록"
 
-#: ../libgimpbase/gimpbaseenums.c:169
+#: ../libligmabase/ligmabaseenums.c:169
 msgctxt "channel-type"
 msgid "Blue"
 msgstr "파랑"
 
-#: ../libgimpbase/gimpbaseenums.c:170
+#: ../libligmabase/ligmabaseenums.c:170
 msgctxt "channel-type"
 msgid "Gray"
 msgstr "회색"
 
-#: ../libgimpbase/gimpbaseenums.c:171
+#: ../libligmabase/ligmabaseenums.c:171
 msgctxt "channel-type"
 msgid "Indexed"
 msgstr "인덱스됨"
 
-#: ../libgimpbase/gimpbaseenums.c:172
+#: ../libligmabase/ligmabaseenums.c:172
 msgctxt "channel-type"
 msgid "Alpha"
 msgstr "알파"
 
-#: ../libgimpbase/gimpbaseenums.c:202
+#: ../libligmabase/ligmabaseenums.c:202
 msgctxt "check-size"
 msgid "Small"
 msgstr "작게"
 
-#: ../libgimpbase/gimpbaseenums.c:203
+#: ../libligmabase/ligmabaseenums.c:203
 msgctxt "check-size"
 msgid "Medium"
 msgstr "중간"
 
-#: ../libgimpbase/gimpbaseenums.c:204
+#: ../libligmabase/ligmabaseenums.c:204
 msgctxt "check-size"
 msgid "Large"
 msgstr "크게"
 
-#: ../libgimpbase/gimpbaseenums.c:237
+#: ../libligmabase/ligmabaseenums.c:237
 msgctxt "check-type"
 msgid "Light checks"
 msgstr "밝은색 체크무늬"
 
-#: ../libgimpbase/gimpbaseenums.c:238
+#: ../libligmabase/ligmabaseenums.c:238
 msgctxt "check-type"
 msgid "Mid-tone checks"
 msgstr "중간색 체크무늬"
 
-#: ../libgimpbase/gimpbaseenums.c:239
+#: ../libligmabase/ligmabaseenums.c:239
 msgctxt "check-type"
 msgid "Dark checks"
 msgstr "어두운색 체크무늬"
 
-#: ../libgimpbase/gimpbaseenums.c:240
+#: ../libligmabase/ligmabaseenums.c:240
 msgctxt "check-type"
 msgid "White only"
 msgstr "흰색만"
 
-#: ../libgimpbase/gimpbaseenums.c:241
+#: ../libligmabase/ligmabaseenums.c:241
 msgctxt "check-type"
 msgid "Gray only"
 msgstr "회색만"
 
-#: ../libgimpbase/gimpbaseenums.c:242
+#: ../libligmabase/ligmabaseenums.c:242
 msgctxt "check-type"
 msgid "Black only"
 msgstr "검은색만"
 
-#: ../libgimpbase/gimpbaseenums.c:271
+#: ../libligmabase/ligmabaseenums.c:271
 msgctxt "clone-type"
 msgid "Image"
 msgstr "이미지"
 
-#: ../libgimpbase/gimpbaseenums.c:272
+#: ../libligmabase/ligmabaseenums.c:272
 msgctxt "clone-type"
 msgid "Pattern"
 msgstr "무늬"
 
-#: ../libgimpbase/gimpbaseenums.c:302
+#: ../libligmabase/ligmabaseenums.c:302
 msgctxt "desaturate-mode"
 msgid "Lightness"
 msgstr "밝기"
 
-#: ../libgimpbase/gimpbaseenums.c:303
+#: ../libligmabase/ligmabaseenums.c:303
 msgctxt "desaturate-mode"
 msgid "Luminosity"
 msgstr "광도"
 
-#: ../libgimpbase/gimpbaseenums.c:304
+#: ../libligmabase/ligmabaseenums.c:304
 msgctxt "desaturate-mode"
 msgid "Average"
 msgstr "평균"
 
-#: ../libgimpbase/gimpbaseenums.c:333
+#: ../libligmabase/ligmabaseenums.c:333
 msgctxt "dodge-burn-type"
 msgid "Dodge"
 msgstr "닷지(Dodge)"
 
-#: ../libgimpbase/gimpbaseenums.c:334
+#: ../libligmabase/ligmabaseenums.c:334
 msgctxt "dodge-burn-type"
 msgid "Burn"
 msgstr "번(Burn)"
 
-#: ../libgimpbase/gimpbaseenums.c:400
+#: ../libligmabase/ligmabaseenums.c:400
 msgctxt "gradient-type"
 msgid "Linear"
 msgstr "선형"
 
-#: ../libgimpbase/gimpbaseenums.c:401
+#: ../libligmabase/ligmabaseenums.c:401
 msgctxt "gradient-type"
 msgid "Bi-linear"
 msgstr "이중 선형"
 
-#: ../libgimpbase/gimpbaseenums.c:402
+#: ../libligmabase/ligmabaseenums.c:402
 msgctxt "gradient-type"
 msgid "Radial"
 msgstr "원형"
 
-#: ../libgimpbase/gimpbaseenums.c:403
+#: ../libligmabase/ligmabaseenums.c:403
 msgctxt "gradient-type"
 msgid "Square"
 msgstr "사각형"
 
-#: ../libgimpbase/gimpbaseenums.c:404
+#: ../libligmabase/ligmabaseenums.c:404
 msgctxt "gradient-type"
 msgid "Conical (sym)"
 msgstr "원뿔형 (대칭)"
 
-#: ../libgimpbase/gimpbaseenums.c:405
+#: ../libligmabase/ligmabaseenums.c:405
 msgctxt "gradient-type"
 msgid "Conical (asym)"
 msgstr "원뿔형 (비대칭)"
 
-#: ../libgimpbase/gimpbaseenums.c:406
+#: ../libligmabase/ligmabaseenums.c:406
 msgctxt "gradient-type"
 msgid "Shaped (angular)"
 msgstr "모양대로 (각지게)"
 
-#: ../libgimpbase/gimpbaseenums.c:407
+#: ../libligmabase/ligmabaseenums.c:407
 msgctxt "gradient-type"
 msgid "Shaped (spherical)"
 msgstr "모양대로 (구형)"
 
-#: ../libgimpbase/gimpbaseenums.c:408
+#: ../libligmabase/ligmabaseenums.c:408
 msgctxt "gradient-type"
 msgid "Shaped (dimpled)"
 msgstr "모양대로 (물결)"
 
-#: ../libgimpbase/gimpbaseenums.c:409
+#: ../libligmabase/ligmabaseenums.c:409
 msgctxt "gradient-type"
 msgid "Spiral (cw)"
 msgstr "나선형 (시계방향)"
 
-#: ../libgimpbase/gimpbaseenums.c:410
+#: ../libligmabase/ligmabaseenums.c:410
 msgctxt "gradient-type"
 msgid "Spiral (ccw)"
 msgstr "나선형 (시계 반대방향)"
 
-#: ../libgimpbase/gimpbaseenums.c:442
+#: ../libligmabase/ligmabaseenums.c:442
 msgctxt "grid-style"
 msgid "Intersections (dots)"
 msgstr "교차(점)"
 
-#: ../libgimpbase/gimpbaseenums.c:443
+#: ../libligmabase/ligmabaseenums.c:443
 msgctxt "grid-style"
 msgid "Intersections (crosshairs)"
 msgstr "교차(십자선)"
 
-#: ../libgimpbase/gimpbaseenums.c:444
+#: ../libligmabase/ligmabaseenums.c:444
 msgctxt "grid-style"
 msgid "Dashed"
 msgstr "파선"
 
-#: ../libgimpbase/gimpbaseenums.c:445
+#: ../libligmabase/ligmabaseenums.c:445
 msgctxt "grid-style"
 msgid "Double dashed"
 msgstr "이중 파선"
 
-#: ../libgimpbase/gimpbaseenums.c:446
+#: ../libligmabase/ligmabaseenums.c:446
 msgctxt "grid-style"
 msgid "Solid"
 msgstr "단색"
 
-#: ../libgimpbase/gimpbaseenums.c:476
+#: ../libligmabase/ligmabaseenums.c:476
 msgctxt "icon-type"
 msgid "Stock ID"
 msgstr "Stock ID"
 
-#: ../libgimpbase/gimpbaseenums.c:477
+#: ../libligmabase/ligmabaseenums.c:477
 msgctxt "icon-type"
 msgid "Inline pixbuf"
 msgstr "직렬 pixbuf"
 
-#: ../libgimpbase/gimpbaseenums.c:478
+#: ../libligmabase/ligmabaseenums.c:478
 msgctxt "icon-type"
 msgid "Image file"
 msgstr "이미지 파일"
 
-#: ../libgimpbase/gimpbaseenums.c:508
+#: ../libligmabase/ligmabaseenums.c:508
 msgctxt "image-base-type"
 msgid "RGB color"
 msgstr "RGB 색상"
 
-#: ../libgimpbase/gimpbaseenums.c:509
+#: ../libligmabase/ligmabaseenums.c:509
 msgctxt "image-base-type"
 msgid "Grayscale"
 msgstr "그레이스케일"
 
-#: ../libgimpbase/gimpbaseenums.c:510
+#: ../libligmabase/ligmabaseenums.c:510
 msgctxt "image-base-type"
 msgid "Indexed color"
 msgstr "인덱스 색상"
 
-#: ../libgimpbase/gimpbaseenums.c:543
+#: ../libligmabase/ligmabaseenums.c:543
 msgctxt "image-type"
 msgid "RGB"
 msgstr "RGB"
 
-#: ../libgimpbase/gimpbaseenums.c:544
+#: ../libligmabase/ligmabaseenums.c:544
 msgctxt "image-type"
 msgid "RGB-alpha"
 msgstr "RGB-알파"
 
-#: ../libgimpbase/gimpbaseenums.c:545
+#: ../libligmabase/ligmabaseenums.c:545
 msgctxt "image-type"
 msgid "Grayscale"
 msgstr "그레이스케일"
 
-#: ../libgimpbase/gimpbaseenums.c:546
+#: ../libligmabase/ligmabaseenums.c:546
 msgctxt "image-type"
 msgid "Grayscale-alpha"
 msgstr "그레이스케일-알파"
 
-#: ../libgimpbase/gimpbaseenums.c:547
+#: ../libligmabase/ligmabaseenums.c:547
 msgctxt "image-type"
 msgid "Indexed"
 msgstr "인덱스됨"
 
-#: ../libgimpbase/gimpbaseenums.c:548
+#: ../libligmabase/ligmabaseenums.c:548
 msgctxt "image-type"
 msgid "Indexed-alpha"
 msgstr "인덱스-알파"
 
-#: ../libgimpbase/gimpbaseenums.c:579
+#: ../libligmabase/ligmabaseenums.c:579
 msgctxt "interpolation-type"
 msgid "None"
 msgstr "없음"
 
-#: ../libgimpbase/gimpbaseenums.c:580
+#: ../libligmabase/ligmabaseenums.c:580
 msgctxt "interpolation-type"
 msgid "Linear"
 msgstr "선형"
 
-#: ../libgimpbase/gimpbaseenums.c:581
+#: ../libligmabase/ligmabaseenums.c:581
 msgctxt "interpolation-type"
 msgid "Cubic"
 msgstr "큐빅"
 
-#: ../libgimpbase/gimpbaseenums.c:582
+#: ../libligmabase/ligmabaseenums.c:582
 msgctxt "interpolation-type"
 msgid "Sinc (Lanczos3)"
 msgstr "Sinc (Lanczos3)"
 
-#: ../libgimpbase/gimpbaseenums.c:611
+#: ../libligmabase/ligmabaseenums.c:611
 msgctxt "paint-application-mode"
 msgid "Constant"
 msgstr "상수"
 
-#: ../libgimpbase/gimpbaseenums.c:612
+#: ../libligmabase/ligmabaseenums.c:612
 msgctxt "paint-application-mode"
 msgid "Incremental"
 msgstr "증가"
 
-#: ../libgimpbase/gimpbaseenums.c:642
+#: ../libligmabase/ligmabaseenums.c:642
 msgctxt "repeat-mode"
 msgid "None"
 msgstr "없음"
 
-#: ../libgimpbase/gimpbaseenums.c:643
+#: ../libligmabase/ligmabaseenums.c:643
 msgctxt "repeat-mode"
 msgid "Sawtooth wave"
 msgstr "톱니파형"
 
-#: ../libgimpbase/gimpbaseenums.c:644
+#: ../libligmabase/ligmabaseenums.c:644
 msgctxt "repeat-mode"
 msgid "Triangular wave"
 msgstr "삼각파형"
 
-#: ../libgimpbase/gimpbaseenums.c:674
+#: ../libligmabase/ligmabaseenums.c:674
 msgctxt "run-mode"
 msgid "Run interactively"
 msgstr "대화식으로 실행"
 
-#: ../libgimpbase/gimpbaseenums.c:675
+#: ../libligmabase/ligmabaseenums.c:675
 msgctxt "run-mode"
 msgid "Run non-interactively"
 msgstr "비대화식으로 실행"
 
-#: ../libgimpbase/gimpbaseenums.c:676
+#: ../libligmabase/ligmabaseenums.c:676
 msgctxt "run-mode"
 msgid "Run with last used values"
 msgstr "마지막 사용 값으로 실행"
 
-#: ../libgimpbase/gimpbaseenums.c:705
+#: ../libligmabase/ligmabaseenums.c:705
 msgctxt "size-type"
 msgid "Pixels"
 msgstr "픽셀"
 
-#: ../libgimpbase/gimpbaseenums.c:706
+#: ../libligmabase/ligmabaseenums.c:706
 msgctxt "size-type"
 msgid "Points"
 msgstr "포인트"
 
-#: ../libgimpbase/gimpbaseenums.c:736
+#: ../libligmabase/ligmabaseenums.c:736
 msgctxt "transfer-mode"
 msgid "Shadows"
 msgstr "그림자"
 
-#: ../libgimpbase/gimpbaseenums.c:737
+#: ../libligmabase/ligmabaseenums.c:737
 msgctxt "transfer-mode"
 msgid "Midtones"
 msgstr "중간톤"
 
-#: ../libgimpbase/gimpbaseenums.c:738
+#: ../libligmabase/ligmabaseenums.c:738
 msgctxt "transfer-mode"
 msgid "Highlights"
 msgstr "강조"
 
-#: ../libgimpbase/gimpbaseenums.c:767
+#: ../libligmabase/ligmabaseenums.c:767
 msgctxt "transform-direction"
 msgid "Normal (Forward)"
 msgstr "일반 (앞으로)"
 
-#: ../libgimpbase/gimpbaseenums.c:768
+#: ../libligmabase/ligmabaseenums.c:768
 msgctxt "transform-direction"
 msgid "Corrective (Backward)"
 msgstr "교정 (뒤로)"
 
-#: ../libgimpbase/gimpbaseenums.c:799
+#: ../libligmabase/ligmabaseenums.c:799
 msgctxt "transform-resize"
 msgid "Adjust"
 msgstr "조정"
 
-#: ../libgimpbase/gimpbaseenums.c:800
+#: ../libligmabase/ligmabaseenums.c:800
 msgctxt "transform-resize"
 msgid "Clip"
 msgstr "오리기"
 
-#: ../libgimpbase/gimpbaseenums.c:801
+#: ../libligmabase/ligmabaseenums.c:801
 msgctxt "transform-resize"
 msgid "Crop to result"
 msgstr "결과물로 잘라내기"
 
-#: ../libgimpbase/gimpbaseenums.c:802
+#: ../libligmabase/ligmabaseenums.c:802
 msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "특정 종횡비로 잘라내기"
 
-#: ../libgimpbase/gimpbaseenums.c:935
+#: ../libligmabase/ligmabaseenums.c:935
 msgctxt "pdb-proc-type"
-msgid "Internal GIMP procedure"
+msgid "Internal LIGMA procedure"
 msgstr "김프 내부 프로시저"
 
-#: ../libgimpbase/gimpbaseenums.c:936
+#: ../libligmabase/ligmabaseenums.c:936
 msgctxt "pdb-proc-type"
-msgid "GIMP Plug-In"
+msgid "LIGMA Plug-In"
 msgstr "김프 플러그인"
 
-#: ../libgimpbase/gimpbaseenums.c:937
+#: ../libligmabase/ligmabaseenums.c:937
 msgctxt "pdb-proc-type"
-msgid "GIMP Extension"
+msgid "LIGMA Extension"
 msgstr "김프 확장 기능"
 
-#: ../libgimpbase/gimpbaseenums.c:938
+#: ../libligmabase/ligmabaseenums.c:938
 msgctxt "pdb-proc-type"
 msgid "Temporary Procedure"
 msgstr "임시 프로시저"
 
-#: ../libgimpbase/gimpbaseenums.c:1105
+#: ../libligmabase/ligmabaseenums.c:1105
 msgctxt "text-direction"
 msgid "From left to right"
 msgstr "왼쪽에서 오른쪽으로"
 
-#: ../libgimpbase/gimpbaseenums.c:1106
+#: ../libligmabase/ligmabaseenums.c:1106
 msgctxt "text-direction"
 msgid "From right to left"
 msgstr "오른쪽에서 왼쪽으로"
 
-#: ../libgimpbase/gimpbaseenums.c:1137
+#: ../libligmabase/ligmabaseenums.c:1137
 msgctxt "text-hint-style"
 msgid "None"
 msgstr "없음"
 
-#: ../libgimpbase/gimpbaseenums.c:1138
+#: ../libligmabase/ligmabaseenums.c:1138
 msgctxt "text-hint-style"
 msgid "Slight"
 msgstr "약간"
 
-#: ../libgimpbase/gimpbaseenums.c:1139
+#: ../libligmabase/ligmabaseenums.c:1139
 msgctxt "text-hint-style"
 msgid "Medium"
 msgstr "중간"
 
-#: ../libgimpbase/gimpbaseenums.c:1140
+#: ../libligmabase/ligmabaseenums.c:1140
 msgctxt "text-hint-style"
 msgid "Full"
 msgstr "전부"
 
-#: ../libgimpbase/gimpbaseenums.c:1171
+#: ../libligmabase/ligmabaseenums.c:1171
 msgctxt "text-justification"
 msgid "Left justified"
 msgstr "왼쪽 정렬"
 
-#: ../libgimpbase/gimpbaseenums.c:1172
+#: ../libligmabase/ligmabaseenums.c:1172
 msgctxt "text-justification"
 msgid "Right justified"
 msgstr "오른쪽 정렬"
 
-#: ../libgimpbase/gimpbaseenums.c:1173
+#: ../libligmabase/ligmabaseenums.c:1173
 msgctxt "text-justification"
 msgid "Centered"
 msgstr "중앙 정렬"
 
-#: ../libgimpbase/gimpbaseenums.c:1174
+#: ../libligmabase/ligmabaseenums.c:1174
 msgctxt "text-justification"
 msgid "Filled"
 msgstr "채움"
 
-#: ../libgimpbase/gimputils.c:178 ../libgimpbase/gimputils.c:183
+#: ../libligmabase/ligmautils.c:178 ../libligmabase/ligmautils.c:183
 #: ../modules/color-selector-cmyk-lcms.c:424
 #: ../modules/color-selector-cmyk-lcms.c:430
 #: ../modules/display-filter-lcms.c:178
@@ -894,152 +894,152 @@ msgid "(invalid UTF-8 string)"
 msgstr "(잘못된 UTF-8 문자열)"
 
 #. *
-#. * SECTION: gimpcolorconfig
-#. * @title: GimpColorConfig
+#. * SECTION: ligmacolorconfig
+#. * @title: LigmaColorConfig
 #. * @short_description: Color management settings.
 #. *
 #. * Color management settings.
 #. *
-#: ../libgimpconfig/gimpcolorconfig.c:52
+#: ../libligmaconfig/ligmacolorconfig.c:52
 msgid "Mode of operation for color management."
 msgstr "색상 관리 동작을 위한 모드"
 
-#: ../libgimpconfig/gimpcolorconfig.c:54
+#: ../libligmaconfig/ligmacolorconfig.c:54
 msgid "The color profile of your (primary) monitor."
 msgstr "기본 모니터의 색상 프로필"
 
-#: ../libgimpconfig/gimpcolorconfig.c:56
+#: ../libligmaconfig/ligmacolorconfig.c:56
 msgid ""
-"When enabled, GIMP will try to use the display color profile from the "
+"When enabled, LIGMA will try to use the display color profile from the "
 "windowing system.  The configured monitor profile is then only used as a "
 "fallback."
 msgstr ""
 "시스템의 화면 색상 프로필을 사용합니다. 설정된 모니터 프로필은 대체용으로만 "
 "사용됩니다."
 
-#: ../libgimpconfig/gimpcolorconfig.c:60
+#: ../libligmaconfig/ligmacolorconfig.c:60
 msgid "The default RGB working space color profile."
 msgstr "기본 RGB 작업 공간 색상 프로필"
 
-#: ../libgimpconfig/gimpcolorconfig.c:62
+#: ../libligmaconfig/ligmacolorconfig.c:62
 msgid "The CMYK color profile used to convert between RGB and CMYK."
 msgstr "RGB와 CMYK를 변환하는데, CMYK 색상 프로필을 사용합니다."
 
-#: ../libgimpconfig/gimpcolorconfig.c:64
+#: ../libligmaconfig/ligmacolorconfig.c:64
 msgid "The color profile used for simulating a printed version (softproof)."
 msgstr "모의 인쇄(softproof)를 위한 색상 프로필"
 
-#: ../libgimpconfig/gimpcolorconfig.c:66
+#: ../libligmaconfig/ligmacolorconfig.c:66
 msgid "Sets how colors are mapped for your display."
 msgstr "화면에 색상을 매핑할 방법을 설정합니다."
 
-#: ../libgimpconfig/gimpcolorconfig.c:68
+#: ../libligmaconfig/ligmacolorconfig.c:68
 msgid ""
 "Sets how colors are converted from RGB working space to the print simulation "
 "device."
 msgstr "RGB 색상 공간의 색상들을 모의 인쇄 장치로 변환시킬 방법을 설정합니다."
 
-#: ../libgimpconfig/gimpcolorconfig.c:71
+#: ../libligmaconfig/ligmacolorconfig.c:71
 msgid ""
 "When enabled, the print simulation will mark colors which can not be "
 "represented in the target color space."
 msgstr "모의 인쇄에서 대상 색상 공간에 표현할 수 없는 색상들을 표시합니다."
 
-#: ../libgimpconfig/gimpcolorconfig.c:74
+#: ../libligmaconfig/ligmacolorconfig.c:74
 msgid "The color to use for marking colors which are out of gamut."
 msgstr "범위를 벗어난 색상을 표시하는 데 사용될 색"
 
-#: ../libgimpconfig/gimpcolorconfig-enums.c:24
+#: ../libligmaconfig/ligmacolorconfig-enums.c:24
 msgctxt "color-management-mode"
 msgid "No color management"
 msgstr "색상 관리 사용 안 함"
 
-#: ../libgimpconfig/gimpcolorconfig-enums.c:25
+#: ../libligmaconfig/ligmacolorconfig-enums.c:25
 msgctxt "color-management-mode"
 msgid "Color managed display"
 msgstr "색상 관리를 적용한 화면"
 
-#: ../libgimpconfig/gimpcolorconfig-enums.c:26
+#: ../libligmaconfig/ligmacolorconfig-enums.c:26
 msgctxt "color-management-mode"
 msgid "Print simulation"
 msgstr "모의 인쇄"
 
-#: ../libgimpconfig/gimpcolorconfig-enums.c:57
+#: ../libligmaconfig/ligmacolorconfig-enums.c:57
 msgctxt "color-rendering-intent"
 msgid "Perceptual"
 msgstr "지각적"
 
-#: ../libgimpconfig/gimpcolorconfig-enums.c:58
+#: ../libligmaconfig/ligmacolorconfig-enums.c:58
 msgctxt "color-rendering-intent"
 msgid "Relative colorimetric"
 msgstr "상대 비색계"
 
-#: ../libgimpconfig/gimpcolorconfig-enums.c:59
+#: ../libligmaconfig/ligmacolorconfig-enums.c:59
 msgctxt "color-rendering-intent"
 msgid "Saturation"
 msgstr "채도"
 
-#: ../libgimpconfig/gimpcolorconfig-enums.c:60
+#: ../libligmaconfig/ligmacolorconfig-enums.c:60
 msgctxt "color-rendering-intent"
 msgid "Absolute colorimetric"
 msgstr "절대 비색계"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:106
+#: ../libligmaconfig/ligmaconfig-deserialize.c:106
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "잘못된 UTF-8 문자열 (토큰 %s)"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpconfig-deserialize.c:444
+#: ../libligmaconfig/ligmaconfig-deserialize.c:444
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr "불린 토큰 %s의 값 '%s'은(는) 'yes'나 'no'가 되어야 합니다."
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:518
+#: ../libligmaconfig/ligmaconfig-deserialize.c:518
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "잘못된 값 '%s' (토큰 '%s')"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:533
+#: ../libligmaconfig/ligmaconfig-deserialize.c:533
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "잘못된 값 '%ld' (토큰 %s)"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:602
+#: ../libligmaconfig/ligmaconfig-deserialize.c:602
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "토큰 '%s' 해석 중: %s"
 
-#: ../libgimpconfig/gimpconfig-iface.c:482
-#: ../libgimpconfig/gimpconfig-iface.c:495 ../libgimpconfig/gimpscanner.c:559
-#: ../libgimpconfig/gimpscanner.c:641
-#: ../libgimpwidgets/gimpcolorprofilestore.c:656
+#: ../libligmaconfig/ligmaconfig-iface.c:482
+#: ../libligmaconfig/ligmaconfig-iface.c:495 ../libligmaconfig/ligmascanner.c:559
+#: ../libligmaconfig/ligmascanner.c:641
+#: ../libligmawidgets/ligmacolorprofilestore.c:656
 msgid "fatal parse error"
 msgstr "치명적인 해석 오류"
 
-#: ../libgimpconfig/gimpconfig-path.c:387
+#: ../libligmaconfig/ligmaconfig-path.c:387
 #, c-format
 msgid "Cannot expand ${%s}"
 msgstr "${%s}을(를) 확장할 수 없습니다."
 
-#: ../libgimpconfig/gimpconfigwriter.c:87
-#: ../libgimpconfig/gimpconfigwriter.c:728
+#: ../libligmaconfig/ligmaconfigwriter.c:87
+#: ../libligmaconfig/ligmaconfigwriter.c:728
 #, c-format
 msgid "Error writing to '%s': %s"
 msgstr "'%s' 쓰기 오류: %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:145
+#: ../libligmaconfig/ligmaconfigwriter.c:145
 #, c-format
 msgid "Could not create temporary file for '%s': %s"
 msgstr "임시 파일 '%s' 만들기 실패: %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:158
+#: ../libligmaconfig/ligmaconfigwriter.c:158
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "'%s'을(를) 쓰기 모드로 열기 실패: %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:689
-#: ../libgimpconfig/gimpconfigwriter.c:709
+#: ../libligmaconfig/ligmaconfigwriter.c:689
+#: ../libligmaconfig/ligmaconfigwriter.c:709
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
@@ -1048,7 +1048,7 @@ msgstr ""
 "임시 파일 '%s' 쓰기 오류: %s\n"
 "원래 파일은 바뀌지 않았습니다."
 
-#: ../libgimpconfig/gimpconfigwriter.c:717
+#: ../libligmaconfig/ligmaconfigwriter.c:717
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
@@ -1057,51 +1057,51 @@ msgstr ""
 "임시 파일 '%s'에 쓰기 실패: %s\n"
 "아무 파일도 만들어 지지 않았습니다."
 
-#: ../libgimpconfig/gimpconfigwriter.c:741
+#: ../libligmaconfig/ligmaconfigwriter.c:741
 #, c-format
 msgid "Could not create '%s': %s"
 msgstr "'%s'을(를) 만들 수 없습니다: %s"
 
-#: ../libgimpconfig/gimpscanner.c:268
+#: ../libligmaconfig/ligmascanner.c:268
 #, c-format
 msgid "invalid UTF-8 string"
 msgstr "잘못된 UTF-8 문자열"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpscanner.c:431
+#: ../libligmaconfig/ligmascanner.c:431
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token, got '%s'"
 msgstr "부울 토큰 %s의 값은 'yes'나 'no'가 되어야 합니다."
 
-#: ../libgimpconfig/gimpscanner.c:668
+#: ../libligmaconfig/ligmascanner.c:668
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "'%s'의 %d행 해석 오류: %s"
 
-#: ../libgimpmodule/gimpmodule.c:163 ../libgimpmodule/gimpmodule.c:181
-#: ../libgimpmodule/gimpmodule.c:290 ../libgimpmodule/gimpmodule.c:317
-#: ../libgimpmodule/gimpmodule.c:443
+#: ../libligmamodule/ligmamodule.c:163 ../libligmamodule/ligmamodule.c:181
+#: ../libligmamodule/ligmamodule.c:290 ../libligmamodule/ligmamodule.c:317
+#: ../libligmamodule/ligmamodule.c:443
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr "모듈 '%s'을(를) 불러오는 중 오류: %s"
 
-#: ../libgimpmodule/gimpmodule.c:385
+#: ../libligmamodule/ligmamodule.c:385
 msgid "Module error"
 msgstr "모듈 오류"
 
-#: ../libgimpmodule/gimpmodule.c:386
+#: ../libligmamodule/ligmamodule.c:386
 msgid "Loaded"
 msgstr "불러오기 완료"
 
-#: ../libgimpmodule/gimpmodule.c:387
+#: ../libligmamodule/ligmamodule.c:387
 msgid "Load failed"
 msgstr "불러오기 실패"
 
-#: ../libgimpmodule/gimpmodule.c:388
+#: ../libligmamodule/ligmamodule.c:388
 msgid "Not loaded"
 msgstr "불러오지 않음"
 
-#: ../libgimpthumb/gimpthumb-utils.c:157
+#: ../libligmathumb/ligmathumb-utils.c:157
 #, c-format
 msgid ""
 "Cannot determine a valid home directory.\n"
@@ -1110,152 +1110,152 @@ msgstr ""
 "홈 디렉터리를 설정할 수 없습니다.\n"
 "미리 보기는 (%s) 대신 임시 파일 폴더에 저장될 것입니다."
 
-#: ../libgimpthumb/gimpthumb-utils.c:281 ../libgimpthumb/gimpthumb-utils.c:349
+#: ../libligmathumb/ligmathumb-utils.c:281 ../libligmathumb/ligmathumb-utils.c:349
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "썸네일 폴더 '%s'을(를) 만들지 못했습니다."
 
-#: ../libgimpthumb/gimpthumbnail.c:508
+#: ../libligmathumb/ligmathumbnail.c:508
 #, c-format
 msgid "Thumbnail contains no Thumb::URI tag"
 msgstr "미리 보기에 Thumb 파일이 없습니다.::URI 태그"
 
-#: ../libgimpthumb/gimpthumbnail.c:904
+#: ../libligmathumb/ligmathumbnail.c:904
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
 msgstr "썸네일 폴더 '%s'을(를) 만들지 못했습니다.:%s"
 
-#: ../libgimpwidgets/gimpbrowser.c:112
+#: ../libligmawidgets/ligmabrowser.c:112
 msgid "_Search:"
 msgstr "찾기(_S):"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:135
+#: ../libligmawidgets/ligmacolorbutton.c:135
 msgid "_Foreground Color"
 msgstr "전경색(_F)"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:139
+#: ../libligmawidgets/ligmacolorbutton.c:139
 msgid "_Background Color"
 msgstr "배경색(_B)"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:143
+#: ../libligmawidgets/ligmacolorbutton.c:143
 msgid "Blac_k"
 msgstr "검은색(_K)"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:147
+#: ../libligmawidgets/ligmacolorbutton.c:147
 msgid "_White"
 msgstr "흰색(_W)"
 
-#: ../libgimpwidgets/gimpcolorprofilestore.c:146
+#: ../libligmawidgets/ligmacolorprofilestore.c:146
 msgid "Select color profile from disk..."
 msgstr "디스크에서 색상 프로필 선택..."
 
-#: ../libgimpwidgets/gimpcolorprofilestore.c:280
+#: ../libligmawidgets/ligmacolorprofilestore.c:280
 msgctxt "profile"
 msgid "None"
 msgstr "없음"
 
-#: ../libgimpwidgets/gimpcolorscales.c:108
+#: ../libligmawidgets/ligmacolorscales.c:108
 msgid "Scales"
 msgstr "배율"
 
-#: ../libgimpwidgets/gimpcolorselection.c:220
+#: ../libligmawidgets/ligmacolorselection.c:220
 msgid "Current:"
 msgstr "현재:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:229
+#: ../libligmawidgets/ligmacolorselection.c:229
 msgid "Old:"
 msgstr "이전:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:314
+#: ../libligmawidgets/ligmacolorselection.c:314
 msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
 msgstr "HTML과 CSS용 16진수 색상 표기. 이 항목은 CSS 색상명을 사용합니다."
 
-#: ../libgimpwidgets/gimpcolorselection.c:320
+#: ../libligmawidgets/ligmacolorselection.c:320
 msgid "HTML _notation:"
 msgstr "HTML 표기(_N):"
 
-#: ../libgimpwidgets/gimpfileentry.c:200
+#: ../libligmawidgets/ligmafileentry.c:200
 msgid "Open a file selector to browse your folders"
 msgstr "폴더 선택을 위한 파일 선택기 열기"
 
-#: ../libgimpwidgets/gimpfileentry.c:201
+#: ../libligmawidgets/ligmafileentry.c:201
 msgid "Open a file selector to browse your files"
 msgstr "파일 선택을 위한 파일 선택기 열기"
 
-#: ../libgimpwidgets/gimpfileentry.c:361
+#: ../libligmawidgets/ligmafileentry.c:361
 msgid "Select Folder"
 msgstr "폴더 선택"
 
-#: ../libgimpwidgets/gimpfileentry.c:363
+#: ../libligmawidgets/ligmafileentry.c:363
 msgid "Select File"
 msgstr "파일 선택"
 
-#: ../libgimpwidgets/gimphelpui.c:432
+#: ../libligmawidgets/ligmahelpui.c:432
 msgid "Press F1 for more help"
 msgstr "더 많은 정보를 보려면 F1 키를 누르십시오."
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:220
+#: ../libligmawidgets/ligmamemsizeentry.c:220
 msgid "Kilobytes"
 msgstr "킬로바이트"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:221
+#: ../libligmawidgets/ligmamemsizeentry.c:221
 msgid "Megabytes"
 msgstr "메가바이트"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:222
+#: ../libligmawidgets/ligmamemsizeentry.c:222
 msgid "Gigabytes"
 msgstr "기가바이트"
 
 #. Count label
-#: ../libgimpwidgets/gimppageselector.c:282
-#: ../libgimpwidgets/gimppageselector.c:1178
+#: ../libligmawidgets/ligmapageselector.c:282
+#: ../libligmawidgets/ligmapageselector.c:1178
 msgid "Nothing selected"
 msgstr "선택한 것 없음"
 
-#: ../libgimpwidgets/gimppageselector.c:300
+#: ../libligmawidgets/ligmapageselector.c:300
 msgid "Select _All"
 msgstr "모두 선택(_A)"
 
-#: ../libgimpwidgets/gimppageselector.c:320
+#: ../libligmawidgets/ligmapageselector.c:320
 msgid "Select _range:"
 msgstr "범위 선택(_R):"
 
-#: ../libgimpwidgets/gimppageselector.c:332
+#: ../libligmawidgets/ligmapageselector.c:332
 msgid "Open _pages as"
 msgstr "페이지 열기(_P)"
 
-#: ../libgimpwidgets/gimppageselector.c:433
+#: ../libligmawidgets/ligmapageselector.c:433
 msgid "Page 000"
 msgstr "페이지 000"
 
-#: ../libgimpwidgets/gimppageselector.c:521
-#: ../libgimpwidgets/gimppageselector.c:758
+#: ../libligmawidgets/ligmapageselector.c:521
+#: ../libligmawidgets/ligmapageselector.c:758
 #, c-format
 msgid "Page %d"
 msgstr "페이지 %d"
 
-#: ../libgimpwidgets/gimppageselector.c:1183
+#: ../libligmawidgets/ligmapageselector.c:1183
 msgid "One page selected"
 msgstr "선택된 한 페이지"
 
-#: ../libgimpwidgets/gimppageselector.c:1190
-#: ../libgimpwidgets/gimppageselector.c:1194
+#: ../libligmawidgets/ligmapageselector.c:1190
+#: ../libligmawidgets/ligmapageselector.c:1194
 #, c-format
 msgid "%d page selected"
 msgid_plural "All %d pages selected"
 msgstr[0] "%d 페이지를 선택합니다."
 
-#: ../libgimpwidgets/gimppatheditor.c:239
+#: ../libligmawidgets/ligmapatheditor.c:239
 msgid "Writable"
 msgstr "기록 가능"
 
-#: ../libgimpwidgets/gimppatheditor.c:248
+#: ../libligmawidgets/ligmapatheditor.c:248
 msgid "Folder"
 msgstr "폴더"
 
-#: ../libgimpwidgets/gimppickbutton.c:127
+#: ../libligmawidgets/ligmapickbutton.c:127
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
@@ -1263,113 +1263,113 @@ msgstr ""
 "스포이드를 클릭한 다음, 화면 상의 아무 곳이나 클릭하여 색상을 선택합니다."
 
 #. toggle button to (de)activate the instant preview
-#: ../libgimpwidgets/gimppreview.c:290
+#: ../libligmawidgets/ligmapreview.c:290
 msgid "_Preview"
 msgstr "미리 보기(_P)"
 
-#: ../libgimpwidgets/gimppreviewarea.c:103
+#: ../libligmawidgets/ligmapreviewarea.c:103
 msgid "Check Size"
 msgstr "격자 크기"
 
-#: ../libgimpwidgets/gimppreviewarea.c:110
+#: ../libligmawidgets/ligmapreviewarea.c:110
 msgid "Check Style"
 msgstr "격자 형태"
 
-#: ../libgimpwidgets/gimppropwidgets.c:1878
+#: ../libligmawidgets/ligmapropwidgets.c:1878
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
 msgstr[0] "텍스트 입력란은 최대 %d 개의 문자를 입력할 수 있습니다."
 
-#: ../libgimpwidgets/gimpstock.c:127
+#: ../libligmawidgets/ligmastock.c:127
 msgid "Anchor"
 msgstr "고정점"
 
-#: ../libgimpwidgets/gimpstock.c:128
+#: ../libligmawidgets/ligmastock.c:128
 msgid "C_enter"
 msgstr "가운데(_E)"
 
-#: ../libgimpwidgets/gimpstock.c:129
+#: ../libligmawidgets/ligmastock.c:129
 msgid "_Duplicate"
 msgstr "복제(_D)"
 
-#: ../libgimpwidgets/gimpstock.c:130
+#: ../libligmawidgets/ligmastock.c:130
 msgid "_Edit"
 msgstr "편집(_E)"
 
-#: ../libgimpwidgets/gimpstock.c:131
+#: ../libligmawidgets/ligmastock.c:131
 msgid "Linked"
 msgstr "연결됨"
 
-#: ../libgimpwidgets/gimpstock.c:132
+#: ../libligmawidgets/ligmastock.c:132
 msgid "Paste as New"
 msgstr "새로 붙여넣기"
 
-#: ../libgimpwidgets/gimpstock.c:133
+#: ../libligmawidgets/ligmastock.c:133
 msgid "Paste Into"
 msgstr "안에 붙여넣기"
 
-#: ../libgimpwidgets/gimpstock.c:134
+#: ../libligmawidgets/ligmastock.c:134
 msgid "_Reset"
 msgstr "원래대로(_R)"
 
-#: ../libgimpwidgets/gimpstock.c:135
+#: ../libligmawidgets/ligmastock.c:135
 msgid "Visible"
 msgstr "보임"
 
-#: ../libgimpwidgets/gimpstock.c:171 ../libgimpwidgets/gimpstock.c:175
+#: ../libligmawidgets/ligmastock.c:171 ../libligmawidgets/ligmastock.c:175
 msgid "_Stroke"
 msgstr "따라 그리기(_S)"
 
-#: ../libgimpwidgets/gimpstock.c:187
+#: ../libligmawidgets/ligmastock.c:187
 msgid "L_etter Spacing"
 msgstr "자간(_E)"
 
-#: ../libgimpwidgets/gimpstock.c:188
+#: ../libligmawidgets/ligmastock.c:188
 msgid "L_ine Spacing"
 msgstr "행간(_I)"
 
-#: ../libgimpwidgets/gimpstock.c:204
+#: ../libligmawidgets/ligmastock.c:204
 msgid "_Resize"
 msgstr "크기 바꾸기(_R)"
 
-#: ../libgimpwidgets/gimpstock.c:205 ../libgimpwidgets/gimpstock.c:340
+#: ../libligmawidgets/ligmastock.c:205 ../libligmawidgets/ligmastock.c:340
 msgid "_Scale"
 msgstr "크기 조정(_S)"
 
-#: ../libgimpwidgets/gimpstock.c:315
+#: ../libligmawidgets/ligmastock.c:315
 msgid "Cr_op"
 msgstr "잘라내기(_O)"
 
-#: ../libgimpwidgets/gimpstock.c:335
+#: ../libligmawidgets/ligmastock.c:335
 msgid "_Transform"
 msgstr "변형(_T)"
 
-#: ../libgimpwidgets/gimpstock.c:339
+#: ../libligmawidgets/ligmastock.c:339
 msgid "_Rotate"
 msgstr "회전(_R)"
 
-#: ../libgimpwidgets/gimpstock.c:341
+#: ../libligmawidgets/ligmastock.c:341
 msgid "_Shear"
 msgstr "기울이기(_S)"
 
-#: ../libgimpwidgets/gimpunitmenu.c:264
+#: ../libligmawidgets/ligmaunitmenu.c:264
 msgid "More..."
 msgstr "다른 단위..."
 
-#: ../libgimpwidgets/gimpunitmenu.c:490
+#: ../libligmawidgets/ligmaunitmenu.c:490
 msgid "Unit Selection"
 msgstr "단위 선택"
 
-#: ../libgimpwidgets/gimpunitmenu.c:539
+#: ../libligmawidgets/ligmaunitmenu.c:539
 msgid "Unit"
 msgstr "단위"
 
-#: ../libgimpwidgets/gimpunitmenu.c:543
+#: ../libligmawidgets/ligmaunitmenu.c:543
 msgid "Factor"
 msgstr "팩터"
 
-#: ../libgimpwidgets/gimpwidgets.c:516
+#: ../libligmawidgets/ligmawidgets.c:516
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -1377,127 +1377,127 @@ msgstr ""
 "이 값을 난수 생성기의 씨앗으로 사용합니다 - 주어진 \"난수\" 연산을 반복할 수 "
 "있습니다."
 
-#: ../libgimpwidgets/gimpwidgets.c:520
+#: ../libligmawidgets/ligmawidgets.c:520
 msgid "_New Seed"
 msgstr "새 씨앗 값(_N)"
 
-#: ../libgimpwidgets/gimpwidgets.c:533
+#: ../libligmawidgets/ligmawidgets.c:533
 msgid "Seed random number generator with a generated random number"
 msgstr "생성된 난수를 난수 생성기의 시작 값으로 사용합니다."
 
-#: ../libgimpwidgets/gimpwidgets.c:537
+#: ../libligmawidgets/ligmawidgets.c:537
 msgid "_Randomize"
 msgstr "무작위화(_R)"
 
-#: ../libgimpwidgets/gimpwidgets-private.c:49
+#: ../libligmawidgets/ligmawidgets-private.c:49
 msgctxt "input-mode"
 msgid "Disabled"
 msgstr "사용 안 함"
 
-#: ../libgimpwidgets/gimpwidgets-private.c:50
+#: ../libligmawidgets/ligmawidgets-private.c:50
 msgctxt "input-mode"
 msgid "Screen"
 msgstr "화면"
 
-#: ../libgimpwidgets/gimpwidgets-private.c:51
+#: ../libligmawidgets/ligmawidgets-private.c:51
 msgctxt "input-mode"
 msgid "Window"
 msgstr "창"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:24
+#: ../libligmawidgets/ligmawidgetsenums.c:24
 msgctxt "aspect-type"
 msgid "Square"
 msgstr "사각형"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:25
+#: ../libligmawidgets/ligmawidgetsenums.c:25
 msgctxt "aspect-type"
 msgid "Portrait"
 msgstr "인물"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:26
+#: ../libligmawidgets/ligmawidgetsenums.c:26
 msgctxt "aspect-type"
 msgid "Landscape"
 msgstr "풍경"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:126
+#: ../libligmawidgets/ligmawidgetsenums.c:126
 msgctxt "color-selector-channel"
 msgid "_H"
 msgstr "_H"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:126
+#: ../libligmawidgets/ligmawidgetsenums.c:126
 msgid "Hue"
 msgstr "색상"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:127
+#: ../libligmawidgets/ligmawidgetsenums.c:127
 msgctxt "color-selector-channel"
 msgid "_S"
 msgstr "_S"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:127
+#: ../libligmawidgets/ligmawidgetsenums.c:127
 msgid "Saturation"
 msgstr "채도"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:128
+#: ../libligmawidgets/ligmawidgetsenums.c:128
 msgctxt "color-selector-channel"
 msgid "_V"
 msgstr "_V"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:128
+#: ../libligmawidgets/ligmawidgetsenums.c:128
 msgid "Value"
 msgstr "명도"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:129
+#: ../libligmawidgets/ligmawidgetsenums.c:129
 msgctxt "color-selector-channel"
 msgid "_R"
 msgstr "_R"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:129
+#: ../libligmawidgets/ligmawidgetsenums.c:129
 msgid "Red"
 msgstr "빨강"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:130
+#: ../libligmawidgets/ligmawidgetsenums.c:130
 msgctxt "color-selector-channel"
 msgid "_G"
 msgstr "_G"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:130
+#: ../libligmawidgets/ligmawidgetsenums.c:130
 msgid "Green"
 msgstr "초록"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:131
+#: ../libligmawidgets/ligmawidgetsenums.c:131
 msgctxt "color-selector-channel"
 msgid "_B"
 msgstr "_B"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:131
+#: ../libligmawidgets/ligmawidgetsenums.c:131
 msgid "Blue"
 msgstr "파랑"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:132
+#: ../libligmawidgets/ligmawidgetsenums.c:132
 msgctxt "color-selector-channel"
 msgid "_A"
 msgstr "_A"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:132
+#: ../libligmawidgets/ligmawidgetsenums.c:132
 msgid "Alpha"
 msgstr "알파"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:161
+#: ../libligmawidgets/ligmawidgetsenums.c:161
 msgctxt "page-selector-target"
 msgid "Layers"
 msgstr "레이어"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:162
+#: ../libligmawidgets/ligmawidgetsenums.c:162
 msgctxt "page-selector-target"
 msgid "Images"
 msgstr "이미지"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:223
+#: ../libligmawidgets/ligmawidgetsenums.c:223
 msgctxt "zoom-type"
 msgid "Zoom in"
 msgstr "확대"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:224
+#: ../libligmawidgets/ligmawidgetsenums.c:224
 msgctxt "zoom-type"
 msgid "Zoom out"
 msgstr "축소"
@@ -1932,11 +1932,11 @@ msgid "MIDI Events"
 msgstr "MIDI 이벤트"
 
 #: ../modules/controller-midi.c:425
-msgid "GIMP"
+msgid "LIGMA"
 msgstr "김프"
 
 #: ../modules/controller-midi.c:427
-msgid "GIMP MIDI Input Controller"
+msgid "LIGMA MIDI Input Controller"
 msgstr "김프 MIDI 입력 제어기"
 
 #: ../modules/display-filter-color-blind.c:67

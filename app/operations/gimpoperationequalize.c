@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationequalize.c
- * Copyright (C) 2007 Michael Natterer <mitch@gimp.org>
+ * ligmaoperationequalize.c
+ * Copyright (C) 2007 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,14 +24,14 @@
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmamath/ligmamath.h"
 
 #include "operations-types.h"
 
-#include "core/gimphistogram.h"
+#include "core/ligmahistogram.h"
 
-#include "gimpoperationequalize.h"
+#include "ligmaoperationequalize.h"
 
 
 enum
@@ -41,17 +41,17 @@ enum
 };
 
 
-static void     gimp_operation_equalize_finalize     (GObject             *object);
-static void     gimp_operation_equalize_get_property (GObject             *object,
+static void     ligma_operation_equalize_finalize     (GObject             *object);
+static void     ligma_operation_equalize_get_property (GObject             *object,
                                                       guint                property_id,
                                                       GValue              *value,
                                                       GParamSpec          *pspec);
-static void     gimp_operation_equalize_set_property (GObject             *object,
+static void     ligma_operation_equalize_set_property (GObject             *object,
                                                       guint                property_id,
                                                       const GValue        *value,
                                                       GParamSpec          *pspec);
 
-static gboolean gimp_operation_equalize_process      (GeglOperation       *operation,
+static gboolean ligma_operation_equalize_process      (GeglOperation       *operation,
                                                       void                *in_buf,
                                                       void                *out_buf,
                                                       glong                samples,
@@ -59,51 +59,51 @@ static gboolean gimp_operation_equalize_process      (GeglOperation       *opera
                                                       gint                 level);
 
 
-G_DEFINE_TYPE (GimpOperationEqualize, gimp_operation_equalize,
-               GIMP_TYPE_OPERATION_POINT_FILTER)
+G_DEFINE_TYPE (LigmaOperationEqualize, ligma_operation_equalize,
+               LIGMA_TYPE_OPERATION_POINT_FILTER)
 
-#define parent_class gimp_operation_equalize_parent_class
+#define parent_class ligma_operation_equalize_parent_class
 
 
 static void
-gimp_operation_equalize_class_init (GimpOperationEqualizeClass *klass)
+ligma_operation_equalize_class_init (LigmaOperationEqualizeClass *klass)
 {
   GObjectClass                  *object_class    = G_OBJECT_CLASS (klass);
   GeglOperationClass            *operation_class = GEGL_OPERATION_CLASS (klass);
   GeglOperationPointFilterClass *point_class     = GEGL_OPERATION_POINT_FILTER_CLASS (klass);
 
-  object_class->finalize       = gimp_operation_equalize_finalize;
-  object_class->set_property   = gimp_operation_equalize_set_property;
-  object_class->get_property   = gimp_operation_equalize_get_property;
+  object_class->finalize       = ligma_operation_equalize_finalize;
+  object_class->set_property   = ligma_operation_equalize_set_property;
+  object_class->get_property   = ligma_operation_equalize_get_property;
 
   gegl_operation_class_set_keys (operation_class,
-                                 "name",        "gimp:equalize",
+                                 "name",        "ligma:equalize",
                                  "categories",  "color",
-                                 "description", "GIMP Equalize operation",
+                                 "description", "LIGMA Equalize operation",
                                  NULL);
 
-  point_class->process = gimp_operation_equalize_process;
+  point_class->process = ligma_operation_equalize_process;
 
   g_object_class_install_property (object_class, PROP_HISTOGRAM,
                                    g_param_spec_object ("histogram",
                                                         "Histogram",
                                                         "The histogram",
-                                                        GIMP_TYPE_HISTOGRAM,
+                                                        LIGMA_TYPE_HISTOGRAM,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
-gimp_operation_equalize_init (GimpOperationEqualize *self)
+ligma_operation_equalize_init (LigmaOperationEqualize *self)
 {
   self->values = NULL;
   self->n_bins = 0;
 }
 
 static void
-gimp_operation_equalize_finalize (GObject *object)
+ligma_operation_equalize_finalize (GObject *object)
 {
-  GimpOperationEqualize *self = GIMP_OPERATION_EQUALIZE (object);
+  LigmaOperationEqualize *self = LIGMA_OPERATION_EQUALIZE (object);
 
   g_clear_pointer (&self->values, g_free);
   g_clear_object (&self->histogram);
@@ -112,12 +112,12 @@ gimp_operation_equalize_finalize (GObject *object)
 }
 
 static void
-gimp_operation_equalize_get_property (GObject    *object,
+ligma_operation_equalize_get_property (GObject    *object,
                                       guint       property_id,
                                       GValue     *value,
                                       GParamSpec *pspec)
 {
-  GimpOperationEqualize *self = GIMP_OPERATION_EQUALIZE (object);
+  LigmaOperationEqualize *self = LIGMA_OPERATION_EQUALIZE (object);
 
   switch (property_id)
     {
@@ -132,12 +132,12 @@ gimp_operation_equalize_get_property (GObject    *object,
 }
 
 static void
-gimp_operation_equalize_set_property (GObject      *object,
+ligma_operation_equalize_set_property (GObject      *object,
                                       guint         property_id,
                                       const GValue *value,
                                       GParamSpec   *pspec)
 {
-  GimpOperationEqualize *self = GIMP_OPERATION_EQUALIZE (object);
+  LigmaOperationEqualize *self = LIGMA_OPERATION_EQUALIZE (object);
 
   switch (property_id)
     {
@@ -154,7 +154,7 @@ gimp_operation_equalize_set_property (GObject      *object,
           gint    max;
           gint    k;
 
-          n_bins = gimp_histogram_n_bins (self->histogram);
+          n_bins = ligma_histogram_n_bins (self->histogram);
 
           if ((self->values != NULL) && (self->n_bins != n_bins))
             {
@@ -169,11 +169,11 @@ gimp_operation_equalize_set_property (GObject      *object,
 
           self->n_bins = n_bins;
 
-          pixels = gimp_histogram_get_count (self->histogram,
-                                             GIMP_HISTOGRAM_VALUE, 0, n_bins - 1);
+          pixels = ligma_histogram_get_count (self->histogram,
+                                             LIGMA_HISTOGRAM_VALUE, 0, n_bins - 1);
 
-          if (gimp_histogram_n_components (self->histogram) == 1 ||
-              gimp_histogram_n_components (self->histogram) == 2)
+          if (ligma_histogram_n_components (self->histogram) == 1 ||
+              ligma_histogram_n_components (self->histogram) == 2)
             max = 1;
           else
             max = 3;
@@ -187,7 +187,7 @@ gimp_operation_equalize_set_property (GObject      *object,
                 {
                   gdouble histi;
 
-                  histi = gimp_histogram_get_component (self->histogram, k, i);
+                  histi = ligma_histogram_get_component (self->histogram, k, i);
 
                   sum += histi;
 
@@ -210,7 +210,7 @@ gimp_operation_equalize_set_property (GObject      *object,
 }
 
 static inline float
-gimp_operation_equalize_map (GimpOperationEqualize *self,
+ligma_operation_equalize_map (LigmaOperationEqualize *self,
                              gint                   component,
                              gfloat                 value)
 {
@@ -222,22 +222,22 @@ gimp_operation_equalize_map (GimpOperationEqualize *self,
 }
 
 static gboolean
-gimp_operation_equalize_process (GeglOperation       *operation,
+ligma_operation_equalize_process (GeglOperation       *operation,
                                  void                *in_buf,
                                  void                *out_buf,
                                  glong                samples,
                                  const GeglRectangle *roi,
                                  gint                 level)
 {
-  GimpOperationEqualize *self = GIMP_OPERATION_EQUALIZE (operation);
+  LigmaOperationEqualize *self = LIGMA_OPERATION_EQUALIZE (operation);
   gfloat                *src  = in_buf;
   gfloat                *dest = out_buf;
 
   while (samples--)
     {
-      dest[RED]   = gimp_operation_equalize_map (self, RED,   src[RED]);
-      dest[GREEN] = gimp_operation_equalize_map (self, GREEN, src[GREEN]);
-      dest[BLUE]  = gimp_operation_equalize_map (self, BLUE,  src[BLUE]);
+      dest[RED]   = ligma_operation_equalize_map (self, RED,   src[RED]);
+      dest[GREEN] = ligma_operation_equalize_map (self, GREEN, src[GREEN]);
+      dest[BLUE]  = ligma_operation_equalize_map (self, BLUE,  src[BLUE]);
       dest[ALPHA] = src[ALPHA];
 
       src  += 4;

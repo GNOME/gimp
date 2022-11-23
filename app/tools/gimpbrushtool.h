@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,28 +15,28 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_BRUSH_TOOL_H__
-#define __GIMP_BRUSH_TOOL_H__
+#ifndef __LIGMA_BRUSH_TOOL_H__
+#define __LIGMA_BRUSH_TOOL_H__
 
 
-#include "gimppainttool.h"
+#include "ligmapainttool.h"
 
 
-#define GIMP_TYPE_BRUSH_TOOL            (gimp_brush_tool_get_type ())
-#define GIMP_BRUSH_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_BRUSH_TOOL, GimpBrushTool))
-#define GIMP_BRUSH_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_BRUSH_TOOL, GimpBrushToolClass))
-#define GIMP_IS_BRUSH_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_BRUSH_TOOL))
-#define GIMP_IS_BRUSH_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_BRUSH_TOOL))
-#define GIMP_BRUSH_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_BRUSH_TOOL, GimpBrushToolClass))
+#define LIGMA_TYPE_BRUSH_TOOL            (ligma_brush_tool_get_type ())
+#define LIGMA_BRUSH_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_BRUSH_TOOL, LigmaBrushTool))
+#define LIGMA_BRUSH_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_BRUSH_TOOL, LigmaBrushToolClass))
+#define LIGMA_IS_BRUSH_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_BRUSH_TOOL))
+#define LIGMA_IS_BRUSH_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_BRUSH_TOOL))
+#define LIGMA_BRUSH_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_BRUSH_TOOL, LigmaBrushToolClass))
 
 
-typedef struct _GimpBrushToolClass GimpBrushToolClass;
+typedef struct _LigmaBrushToolClass LigmaBrushToolClass;
 
-struct _GimpBrushTool
+struct _LigmaBrushTool
 {
-  GimpPaintTool   parent_instance;
+  LigmaPaintTool   parent_instance;
 
-  GimpBezierDesc *boundary;
+  LigmaBezierDesc *boundary;
   gint            boundary_width;
   gint            boundary_height;
   gdouble         boundary_scale;
@@ -46,18 +46,18 @@ struct _GimpBrushTool
   gdouble         boundary_hardness;
 };
 
-struct _GimpBrushToolClass
+struct _LigmaBrushToolClass
 {
-  GimpPaintToolClass  parent_class;
+  LigmaPaintToolClass  parent_class;
 };
 
 
-GType            gimp_brush_tool_get_type       (void) G_GNUC_CONST;
+GType            ligma_brush_tool_get_type       (void) G_GNUC_CONST;
 
-GimpCanvasItem * gimp_brush_tool_create_outline (GimpBrushTool *brush_tool,
-                                                 GimpDisplay   *display,
+LigmaCanvasItem * ligma_brush_tool_create_outline (LigmaBrushTool *brush_tool,
+                                                 LigmaDisplay   *display,
                                                  gdouble        x,
                                                  gdouble        y);
 
 
-#endif  /*  __GIMP_BRUSH_TOOL_H__  */
+#endif  /*  __LIGMA_BRUSH_TOOL_H__  */

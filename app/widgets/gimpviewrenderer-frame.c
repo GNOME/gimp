@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpviewrenderer-frame.c
- * Copyright (C) 2004 Sven Neumann <sven@gimp.org>
+ * ligmaviewrenderer-frame.c
+ * Copyright (C) 2004 Sven Neumann <sven@ligma.org>
  *
  * Contains code taken from eel, the Eazel Extensions Library.
  *
@@ -25,15 +25,15 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "core/gimpviewable.h"
+#include "core/ligmaviewable.h"
 
-#include "gimpviewrenderer.h"
-#include "gimpviewrenderer-frame.h"
-#include "gimpwidgets-utils.h"
+#include "ligmaviewrenderer.h"
+#include "ligmaviewrenderer-frame.h"
+#include "ligmawidgets-utils.h"
 
 
 /* utility to stretch a frame to the desired size */
@@ -176,11 +176,11 @@ stretch_frame_image (GdkPixbuf *frame_image,
 }
 
 static GdkPixbuf *
-gimp_view_renderer_get_frame (GimpViewRenderer *renderer,
+ligma_view_renderer_get_frame (LigmaViewRenderer *renderer,
                               gint              width,
                               gint              height)
 {
-  GimpViewRendererClass *class = GIMP_VIEW_RENDERER_GET_CLASS (renderer);
+  LigmaViewRendererClass *class = LIGMA_VIEW_RENDERER_GET_CLASS (renderer);
 
   return stretch_frame_image (class->frame,
                               class->frame_left,
@@ -191,14 +191,14 @@ gimp_view_renderer_get_frame (GimpViewRenderer *renderer,
 }
 
 static void
-gimp_view_renderer_ensure_frame (GimpViewRenderer *renderer,
+ligma_view_renderer_ensure_frame (LigmaViewRenderer *renderer,
                                  GtkWidget        *widget)
 {
-  GimpViewRendererClass *class = GIMP_VIEW_RENDERER_GET_CLASS (renderer);
+  LigmaViewRendererClass *class = LIGMA_VIEW_RENDERER_GET_CLASS (renderer);
 
   if (! class->frame)
     {
-      class->frame = gimp_widget_load_icon (widget, GIMP_ICON_FRAME, 48);
+      class->frame = ligma_widget_load_icon (widget, LIGMA_ICON_FRAME, 48);
 
       /*  FIXME: shouldn't be hardcoded  */
       class->frame_left   = 2;
@@ -209,30 +209,30 @@ gimp_view_renderer_ensure_frame (GimpViewRenderer *renderer,
 }
 
 GdkPixbuf *
-gimp_view_renderer_get_frame_pixbuf (GimpViewRenderer *renderer,
+ligma_view_renderer_get_frame_pixbuf (LigmaViewRenderer *renderer,
                                      GtkWidget        *widget,
                                      gint              width,
                                      gint              height)
 {
-  GimpViewRendererClass *class;
+  LigmaViewRendererClass *class;
   GdkPixbuf             *frame;
   GdkPixbuf             *pixbuf;
   gint                   w, h;
   gint                   x, y;
 
-  g_return_val_if_fail (GIMP_IS_VIEW_RENDERER (renderer), NULL);
-  g_return_val_if_fail (GIMP_IS_VIEWABLE (renderer->viewable), NULL);
+  g_return_val_if_fail (LIGMA_IS_VIEW_RENDERER (renderer), NULL);
+  g_return_val_if_fail (LIGMA_IS_VIEWABLE (renderer->viewable), NULL);
 
-  gimp_view_renderer_ensure_frame (renderer, widget);
+  ligma_view_renderer_ensure_frame (renderer, widget);
 
-  class = GIMP_VIEW_RENDERER_GET_CLASS (renderer);
+  class = LIGMA_VIEW_RENDERER_GET_CLASS (renderer);
 
   w = width  - class->frame_left - class->frame_right;
   h = height - class->frame_top  - class->frame_bottom;
 
   if (w > 12 && h > 12)
     {
-      pixbuf = gimp_viewable_get_pixbuf (renderer->viewable,
+      pixbuf = ligma_viewable_get_pixbuf (renderer->viewable,
                                          renderer->context,
                                          w, h);
       if (!pixbuf)
@@ -243,13 +243,13 @@ gimp_view_renderer_get_frame_pixbuf (GimpViewRenderer *renderer,
       w = gdk_pixbuf_get_width (pixbuf);
       h = gdk_pixbuf_get_height (pixbuf);
 
-      frame  = gimp_view_renderer_get_frame (renderer,
+      frame  = ligma_view_renderer_get_frame (renderer,
                                              w + x + class->frame_right,
                                              h + y + class->frame_bottom);
     }
   else
     {
-      pixbuf = gimp_viewable_get_pixbuf (renderer->viewable,
+      pixbuf = ligma_viewable_get_pixbuf (renderer->viewable,
                                          renderer->context,
                                          width - 2, height - 2);
       if (!pixbuf)
@@ -272,16 +272,16 @@ gimp_view_renderer_get_frame_pixbuf (GimpViewRenderer *renderer,
 }
 
 
-/* This API is somewhat weird but GimpThumbBox needs these values so
- * it can request the GimpImageFile view in the proper size.
+/* This API is somewhat weird but LigmaThumbBox needs these values so
+ * it can request the LigmaImageFile view in the proper size.
  */
 void
-gimp_view_renderer_get_frame_size (gint *horizontal,
+ligma_view_renderer_get_frame_size (gint *horizontal,
                                    gint *vertical)
 {
-  GimpViewRendererClass *class;
+  LigmaViewRendererClass *class;
 
-  class = g_type_class_ref (GIMP_TYPE_VIEW_RENDERER);
+  class = g_type_class_ref (LIGMA_TYPE_VIEW_RENDERER);
 
   if (horizontal)
     *horizontal = class->frame_left + class->frame_right;

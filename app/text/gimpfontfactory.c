@@ -1,11 +1,11 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpfontfactory.c
- * Copyright (C) 2003-2018 Michael Natterer <mitch@gimp.org>
+ * ligmafontfactory.c
+ * Copyright (C) 2003-2018 Michael Natterer <mitch@ligma.org>
  *
- * Partly based on code Copyright (C) Sven Neumann <sven@gimp.org>
- *                                    Manish Singh <yosh@gimp.org>
+ * Partly based on code Copyright (C) Sven Neumann <sven@ligma.org>
+ *                                    Manish Singh <yosh@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,22 +28,22 @@
 #include <pango/pangofc-fontmap.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "text-types.h"
 
-#include "core/gimp.h"
-#include "core/gimp-parallel.h"
-#include "core/gimpasync.h"
-#include "core/gimpasyncset.h"
-#include "core/gimpcancelable.h"
-#include "core/gimpcontainer.h"
+#include "core/ligma.h"
+#include "core/ligma-parallel.h"
+#include "core/ligmaasync.h"
+#include "core/ligmaasyncset.h"
+#include "core/ligmacancelable.h"
+#include "core/ligmacontainer.h"
 
-#include "gimpfont.h"
-#include "gimpfontfactory.h"
+#include "ligmafont.h"
+#include "ligmafontfactory.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /* Use fontconfig directly for speed. We can use the pango stuff when/if
@@ -58,104 +58,104 @@
 #define CONF_FNAME "fonts.conf"
 
 
-struct _GimpFontFactoryPrivate
+struct _LigmaFontFactoryPrivate
 {
   gpointer foo; /* can't have an empty struct */
 };
 
-#define GET_PRIVATE(obj) (((GimpFontFactory *) (obj))->priv)
+#define GET_PRIVATE(obj) (((LigmaFontFactory *) (obj))->priv)
 
 
-static void       gimp_font_factory_data_init       (GimpDataFactory *factory,
-                                                     GimpContext     *context);
-static void       gimp_font_factory_data_refresh    (GimpDataFactory *factory,
-                                                     GimpContext     *context);
-static void       gimp_font_factory_data_save       (GimpDataFactory *factory);
-static void       gimp_font_factory_data_cancel     (GimpDataFactory *factory);
-static GimpData * gimp_font_factory_data_duplicate  (GimpDataFactory *factory,
-                                                     GimpData        *data);
-static gboolean   gimp_font_factory_data_delete     (GimpDataFactory *factory,
-                                                     GimpData        *data,
+static void       ligma_font_factory_data_init       (LigmaDataFactory *factory,
+                                                     LigmaContext     *context);
+static void       ligma_font_factory_data_refresh    (LigmaDataFactory *factory,
+                                                     LigmaContext     *context);
+static void       ligma_font_factory_data_save       (LigmaDataFactory *factory);
+static void       ligma_font_factory_data_cancel     (LigmaDataFactory *factory);
+static LigmaData * ligma_font_factory_data_duplicate  (LigmaDataFactory *factory,
+                                                     LigmaData        *data);
+static gboolean   ligma_font_factory_data_delete     (LigmaDataFactory *factory,
+                                                     LigmaData        *data,
                                                      gboolean         delete_from_disk,
                                                      GError         **error);
 
-static void       gimp_font_factory_load            (GimpFontFactory *factory,
+static void       ligma_font_factory_load            (LigmaFontFactory *factory,
                                                      GError         **error);
-static gboolean   gimp_font_factory_load_fonts_conf (FcConfig        *config,
+static gboolean   ligma_font_factory_load_fonts_conf (FcConfig        *config,
                                                      GFile           *fonts_conf);
-static void       gimp_font_factory_add_directories (FcConfig        *config,
+static void       ligma_font_factory_add_directories (FcConfig        *config,
                                                      GList           *path,
                                                      GError         **error);
-static void       gimp_font_factory_recursive_add_fontdir
+static void       ligma_font_factory_recursive_add_fontdir
                                                     (FcConfig        *config,
                                                      GFile           *file,
                                                      GError         **error);
-static void       gimp_font_factory_load_names      (GimpContainer   *container,
+static void       ligma_font_factory_load_names      (LigmaContainer   *container,
                                                      PangoFontMap    *fontmap,
                                                      PangoContext    *context);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpFontFactory, gimp_font_factory,
-                            GIMP_TYPE_DATA_FACTORY)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaFontFactory, ligma_font_factory,
+                            LIGMA_TYPE_DATA_FACTORY)
 
-#define parent_class gimp_font_factory_parent_class
+#define parent_class ligma_font_factory_parent_class
 
 
 static void
-gimp_font_factory_class_init (GimpFontFactoryClass *klass)
+ligma_font_factory_class_init (LigmaFontFactoryClass *klass)
 {
-  GimpDataFactoryClass *factory_class = GIMP_DATA_FACTORY_CLASS (klass);
+  LigmaDataFactoryClass *factory_class = LIGMA_DATA_FACTORY_CLASS (klass);
 
-  factory_class->data_init      = gimp_font_factory_data_init;
-  factory_class->data_refresh   = gimp_font_factory_data_refresh;
-  factory_class->data_save      = gimp_font_factory_data_save;
-  factory_class->data_cancel    = gimp_font_factory_data_cancel;
-  factory_class->data_duplicate = gimp_font_factory_data_duplicate;
-  factory_class->data_delete    = gimp_font_factory_data_delete;
+  factory_class->data_init      = ligma_font_factory_data_init;
+  factory_class->data_refresh   = ligma_font_factory_data_refresh;
+  factory_class->data_save      = ligma_font_factory_data_save;
+  factory_class->data_cancel    = ligma_font_factory_data_cancel;
+  factory_class->data_duplicate = ligma_font_factory_data_duplicate;
+  factory_class->data_delete    = ligma_font_factory_data_delete;
 }
 
 static void
-gimp_font_factory_init (GimpFontFactory *factory)
+ligma_font_factory_init (LigmaFontFactory *factory)
 {
-  factory->priv = gimp_font_factory_get_instance_private (factory);
+  factory->priv = ligma_font_factory_get_instance_private (factory);
 }
 
 static void
-gimp_font_factory_data_init (GimpDataFactory *factory,
-                             GimpContext     *context)
+ligma_font_factory_data_init (LigmaDataFactory *factory,
+                             LigmaContext     *context)
 {
   GError *error = NULL;
 
-  gimp_font_factory_load (GIMP_FONT_FACTORY (factory), &error);
+  ligma_font_factory_load (LIGMA_FONT_FACTORY (factory), &error);
 
   if (error)
     {
-      gimp_message_literal (gimp_data_factory_get_gimp (factory), NULL,
-                            GIMP_MESSAGE_INFO,
+      ligma_message_literal (ligma_data_factory_get_ligma (factory), NULL,
+                            LIGMA_MESSAGE_INFO,
                             error->message);
       g_error_free (error);
     }
 }
 
 static void
-gimp_font_factory_data_refresh (GimpDataFactory *factory,
-                                GimpContext     *context)
+ligma_font_factory_data_refresh (LigmaDataFactory *factory,
+                                LigmaContext     *context)
 {
   GError *error = NULL;
 
-  gimp_font_factory_load (GIMP_FONT_FACTORY (factory), &error);
+  ligma_font_factory_load (LIGMA_FONT_FACTORY (factory), &error);
 
   if (error)
     {
-      gimp_message_literal (gimp_data_factory_get_gimp (factory), NULL,
-                            GIMP_MESSAGE_INFO,
+      ligma_message_literal (ligma_data_factory_get_ligma (factory), NULL,
+                            LIGMA_MESSAGE_INFO,
                             error->message);
       g_error_free (error);
     }
 }
 
 static void
-gimp_font_factory_data_save (GimpDataFactory *factory)
+ligma_font_factory_data_save (LigmaDataFactory *factory)
 {
   /*  this is not "saving" but this functions is called at the right
    *  time at exit to reset the config
@@ -164,7 +164,7 @@ gimp_font_factory_data_save (GimpDataFactory *factory)
   /* if font loading is in progress in another thread, do nothing.  calling
    * FcInitReinitialize() while loading takes place is unsafe.
    */
-  if (! gimp_async_set_is_empty (gimp_data_factory_get_async_set (factory)))
+  if (! ligma_async_set_is_empty (ligma_data_factory_get_async_set (factory)))
     return;
 
   /* Reinit the library with defaults. */
@@ -172,30 +172,30 @@ gimp_font_factory_data_save (GimpDataFactory *factory)
 }
 
 static void
-gimp_font_factory_data_cancel (GimpDataFactory *factory)
+ligma_font_factory_data_cancel (LigmaDataFactory *factory)
 {
-  GimpAsyncSet *async_set = gimp_data_factory_get_async_set (factory);
+  LigmaAsyncSet *async_set = ligma_data_factory_get_async_set (factory);
 
   /* we can't really cancel font loading, so we just clear the async set and
    * return without waiting for loading to finish.  we also cancel the async
    * set beforehand, as a way to signal to
-   * gimp_font_factory_load_async_callback() that loading was canceled and the
+   * ligma_font_factory_load_async_callback() that loading was canceled and the
    * factory might be dead, and that it should just do nothing.
    */
-  gimp_cancelable_cancel (GIMP_CANCELABLE (async_set));
-  gimp_async_set_clear (async_set);
+  ligma_cancelable_cancel (LIGMA_CANCELABLE (async_set));
+  ligma_async_set_clear (async_set);
 }
 
-static GimpData *
-gimp_font_factory_data_duplicate (GimpDataFactory *factory,
-                                  GimpData        *data)
+static LigmaData *
+ligma_font_factory_data_duplicate (LigmaDataFactory *factory,
+                                  LigmaData        *data)
 {
   return NULL;
 }
 
 static gboolean
-gimp_font_factory_data_delete (GimpDataFactory  *factory,
-                               GimpData         *data,
+ligma_font_factory_data_delete (LigmaDataFactory  *factory,
+                               LigmaData         *data,
                                gboolean          delete_from_disk,
                                GError          **error)
 {
@@ -205,18 +205,18 @@ gimp_font_factory_data_delete (GimpDataFactory  *factory,
 
 /*  public functions  */
 
-GimpDataFactory *
-gimp_font_factory_new (Gimp        *gimp,
+LigmaDataFactory *
+ligma_font_factory_new (Ligma        *ligma,
                        const gchar *path_property_name)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
   g_return_val_if_fail (path_property_name != NULL, NULL);
 
-  return g_object_new (GIMP_TYPE_FONT_FACTORY,
-                       "gimp",               gimp,
-                       "data-type",          GIMP_TYPE_FONT,
+  return g_object_new (LIGMA_TYPE_FONT_FACTORY,
+                       "ligma",               ligma,
+                       "data-type",          LIGMA_TYPE_FONT,
                        "path-property-name", path_property_name,
-                       "get-standard-func",  gimp_font_get_standard,
+                       "get-standard-func",  ligma_font_get_standard,
                        NULL);
 }
 
@@ -224,38 +224,38 @@ gimp_font_factory_new (Gimp        *gimp,
 /*  private functions  */
 
 static void
-gimp_font_factory_load_async (GimpAsync *async,
+ligma_font_factory_load_async (LigmaAsync *async,
                               FcConfig  *config)
 {
   if (FcConfigBuildFonts (config))
     {
-      gimp_async_finish (async, config);
+      ligma_async_finish (async, config);
     }
   else
     {
       FcConfigDestroy (config);
 
-      gimp_async_abort (async);
+      ligma_async_abort (async);
     }
 }
 
 static void
-gimp_font_factory_load_async_callback (GimpAsync       *async,
-                                       GimpFontFactory *factory)
+ligma_font_factory_load_async_callback (LigmaAsync       *async,
+                                       LigmaFontFactory *factory)
 {
-  GimpContainer *container;
+  LigmaContainer *container;
 
   /* the operation was canceled and the factory might be dead (see
-   * gimp_font_factory_data_cancel()).  bail.
+   * ligma_font_factory_data_cancel()).  bail.
    */
-  if (gimp_async_is_canceled (async))
+  if (ligma_async_is_canceled (async))
     return;
 
-  container = gimp_data_factory_get_container (GIMP_DATA_FACTORY (factory));
+  container = ligma_data_factory_get_container (LIGMA_DATA_FACTORY (factory));
 
-  if (gimp_async_is_finished (async))
+  if (ligma_async_is_finished (async))
     {
-      FcConfig     *config = gimp_async_get_result (async);
+      FcConfig     *config = ligma_async_get_result (async);
       PangoFontMap *fontmap;
       PangoContext *context;
 
@@ -271,39 +271,39 @@ gimp_font_factory_load_async_callback (GimpAsync       *async,
       context = pango_font_map_create_context (fontmap);
       g_object_unref (fontmap);
 
-      gimp_font_factory_load_names (container, PANGO_FONT_MAP (fontmap), context);
+      ligma_font_factory_load_names (container, PANGO_FONT_MAP (fontmap), context);
       g_object_unref (context);
       FcConfigDestroy (config);
     }
 
-  gimp_container_thaw (container);
+  ligma_container_thaw (container);
 }
 
 static void
-gimp_font_factory_load (GimpFontFactory  *factory,
+ligma_font_factory_load (LigmaFontFactory  *factory,
                         GError          **error)
 {
-  GimpContainer *container;
-  Gimp          *gimp;
-  GimpAsyncSet  *async_set;
+  LigmaContainer *container;
+  Ligma          *ligma;
+  LigmaAsyncSet  *async_set;
   FcConfig      *config;
   GFile         *fonts_conf;
   GList         *path;
-  GimpAsync     *async;
+  LigmaAsync     *async;
 
-  async_set = gimp_data_factory_get_async_set (GIMP_DATA_FACTORY (factory));
+  async_set = ligma_data_factory_get_async_set (LIGMA_DATA_FACTORY (factory));
 
-  if (! gimp_async_set_is_empty (async_set))
+  if (! ligma_async_set_is_empty (async_set))
     {
       /* font loading is already in progress */
       return;
     }
 
-  container = gimp_data_factory_get_container (GIMP_DATA_FACTORY (factory));
+  container = ligma_data_factory_get_container (LIGMA_DATA_FACTORY (factory));
 
-  gimp = gimp_data_factory_get_gimp (GIMP_DATA_FACTORY (factory));
+  ligma = ligma_data_factory_get_ligma (LIGMA_DATA_FACTORY (factory));
 
-  if (gimp->be_verbose)
+  if (ligma->be_verbose)
     g_print ("Loading fonts\n");
 
   config = FcInitLoadConfig ();
@@ -311,50 +311,50 @@ gimp_font_factory_load (GimpFontFactory  *factory,
   if (! config)
     return;
 
-  fonts_conf = gimp_directory_file (CONF_FNAME, NULL);
-  if (! gimp_font_factory_load_fonts_conf (config, fonts_conf))
+  fonts_conf = ligma_directory_file (CONF_FNAME, NULL);
+  if (! ligma_font_factory_load_fonts_conf (config, fonts_conf))
     g_printerr ("%s: failed to read '%s'.\n",
                 G_STRFUNC, g_file_peek_path (fonts_conf));
   g_object_unref (fonts_conf);
 
-  fonts_conf = gimp_sysconf_directory_file (CONF_FNAME, NULL);
-  if (! gimp_font_factory_load_fonts_conf (config, fonts_conf))
+  fonts_conf = ligma_sysconf_directory_file (CONF_FNAME, NULL);
+  if (! ligma_font_factory_load_fonts_conf (config, fonts_conf))
     g_printerr ("%s: failed to read '%s'.\n",
                 G_STRFUNC, g_file_peek_path (fonts_conf));
   g_object_unref (fonts_conf);
 
-  path = gimp_data_factory_get_data_path (GIMP_DATA_FACTORY (factory));
+  path = ligma_data_factory_get_data_path (LIGMA_DATA_FACTORY (factory));
   if (! path)
     return;
 
-  gimp_container_freeze (container);
-  gimp_container_clear (container);
+  ligma_container_freeze (container);
+  ligma_container_clear (container);
 
-  gimp_font_factory_add_directories (config, path, error);
+  ligma_font_factory_add_directories (config, path, error);
   g_list_free_full (path, (GDestroyNotify) g_object_unref);
 
   /* We perform font cache initialization in a separate thread, so
    * in the case a cache rebuild is to be done it will not block
    * the UI.
    */
-  async = gimp_parallel_run_async_independent_full (
+  async = ligma_parallel_run_async_independent_full (
     +10,
-    (GimpRunAsyncFunc) gimp_font_factory_load_async,
+    (LigmaRunAsyncFunc) ligma_font_factory_load_async,
     config);
 
-  gimp_async_add_callback_for_object (
+  ligma_async_add_callback_for_object (
     async,
-    (GimpAsyncCallback) gimp_font_factory_load_async_callback,
+    (LigmaAsyncCallback) ligma_font_factory_load_async_callback,
     factory,
     factory);
 
-  gimp_async_set_add (async_set, async);
+  ligma_async_set_add (async_set, async);
 
   g_object_unref (async);
 }
 
 static gboolean
-gimp_font_factory_load_fonts_conf (FcConfig *config,
+ligma_font_factory_load_fonts_conf (FcConfig *config,
                                    GFile    *fonts_conf)
 {
   gchar    *path = g_file_get_path (fonts_conf);
@@ -369,7 +369,7 @@ gimp_font_factory_load_fonts_conf (FcConfig *config,
 }
 
 static void
-gimp_font_factory_add_directories (FcConfig  *config,
+ligma_font_factory_add_directories (FcConfig  *config,
                                    GList     *path,
                                    GError   **error)
 {
@@ -387,7 +387,7 @@ gimp_font_factory_add_directories (FcConfig  *config,
        * the list, but are unusable and output many errors.
        * See bug 748553.
        */
-      gimp_font_factory_recursive_add_fontdir (config, list->data, error);
+      ligma_font_factory_recursive_add_fontdir (config, list->data, error);
     }
 
   if (error && *error)
@@ -402,7 +402,7 @@ gimp_font_factory_add_directories (FcConfig  *config,
 }
 
 static void
-gimp_font_factory_recursive_add_fontdir (FcConfig  *config,
+ligma_font_factory_recursive_add_fontdir (FcConfig  *config,
                                          GFile     *file,
                                          GError   **error)
 {
@@ -437,7 +437,7 @@ gimp_font_factory_recursive_add_fontdir (FcConfig  *config,
 
           if (file_type == G_FILE_TYPE_DIRECTORY)
             {
-              gimp_font_factory_recursive_add_fontdir (config, child, error);
+              ligma_font_factory_recursive_add_fontdir (config, child, error);
             }
           else if (file_type == G_FILE_TYPE_REGULAR)
             {
@@ -514,7 +514,7 @@ gimp_font_factory_recursive_add_fontdir (FcConfig  *config,
 }
 
 static void
-gimp_font_factory_add_font (GimpContainer        *container,
+ligma_font_factory_add_font (LigmaContainer        *container,
                             PangoContext         *context,
                             PangoFontDescription *desc)
 {
@@ -532,14 +532,14 @@ gimp_font_factory_add_font (GimpContainer        *container,
   if (name && strlen (name) > 0 &&
       g_utf8_validate (name, -1, NULL))
     {
-      GimpFont *font;
+      LigmaFont *font;
 
-      font = g_object_new (GIMP_TYPE_FONT,
+      font = g_object_new (LIGMA_TYPE_FONT,
                            "name",          name,
                            "pango-context", context,
                            NULL);
 
-      gimp_container_add (container, GIMP_OBJECT (font));
+      ligma_container_add (container, LIGMA_OBJECT (font));
       g_object_unref (font);
     }
 
@@ -550,10 +550,10 @@ gimp_font_factory_add_font (GimpContainer        *container,
 /* We're really chummy here with the implementation. Oh well. */
 
 /* This is copied straight from make_alias_description in pango, plus
- * the gimp_font_list_add_font bits.
+ * the ligma_font_list_add_font bits.
  */
 static void
-gimp_font_factory_make_alias (GimpContainer *container,
+ligma_font_factory_make_alias (LigmaContainer *container,
                               PangoContext  *context,
                               const gchar   *family,
                               gboolean       bold,
@@ -571,13 +571,13 @@ gimp_font_factory_make_alias (GimpContainer *container,
                                      PANGO_WEIGHT_BOLD : PANGO_WEIGHT_NORMAL);
   pango_font_description_set_stretch (desc, PANGO_STRETCH_NORMAL);
 
-  gimp_font_factory_add_font (container, context, desc);
+  ligma_font_factory_add_font (container, context, desc);
 
   pango_font_description_free (desc);
 }
 
 static void
-gimp_font_factory_load_aliases (GimpContainer *container,
+ligma_font_factory_load_aliases (LigmaContainer *container,
                                 PangoContext  *context)
 {
   const gchar *families[] = { "Sans-serif", "Serif", "Monospace" };
@@ -585,19 +585,19 @@ gimp_font_factory_load_aliases (GimpContainer *container,
 
   for (i = 0; i < 3; i++)
     {
-      gimp_font_factory_make_alias (container, context, families[i],
+      ligma_font_factory_make_alias (container, context, families[i],
                                     FALSE, FALSE);
-      gimp_font_factory_make_alias (container, context, families[i],
+      ligma_font_factory_make_alias (container, context, families[i],
                                     TRUE,  FALSE);
-      gimp_font_factory_make_alias (container, context, families[i],
+      ligma_font_factory_make_alias (container, context, families[i],
                                     FALSE, TRUE);
-      gimp_font_factory_make_alias (container, context, families[i],
+      ligma_font_factory_make_alias (container, context, families[i],
                                     TRUE,  TRUE);
     }
 }
 
 static void
-gimp_font_factory_load_names (GimpContainer *container,
+ligma_font_factory_load_names (LigmaContainer *container,
                               PangoFontMap  *fontmap,
                               PangoContext  *context)
 {
@@ -631,13 +631,13 @@ gimp_font_factory_load_names (GimpContainer *container,
       PangoFontDescription *desc;
 
       desc = pango_fc_font_description_from_pattern (fontset->fonts[i], FALSE);
-      gimp_font_factory_add_font (container, context, desc);
+      ligma_font_factory_add_font (container, context, desc);
       pango_font_description_free (desc);
     }
 
   /*  only create aliases if there is at least one font available  */
   if (fontset->nfont > 0)
-    gimp_font_factory_load_aliases (container, context);
+    ligma_font_factory_load_aliases (container, context);
 
   FcFontSetDestroy (fontset);
 }
@@ -645,7 +645,7 @@ gimp_font_factory_load_names (GimpContainer *container,
 #else  /* ! USE_FONTCONFIG_DIRECTLY */
 
 static void
-gimp_font_factory_load_names (GimpContainer *container,
+ligma_font_factory_load_names (LigmaContainer *container,
                               PangoFontMap  *fontmap,
                               PangoContext  *context)
 {
@@ -666,7 +666,7 @@ gimp_font_factory_load_names (GimpContainer *container,
           PangoFontDescription *desc;
 
           desc = pango_font_face_describe (faces[j]);
-          gimp_font_factory_add_font (container, context, desc);
+          ligma_font_factory_add_font (container, context, desc);
           pango_font_description_free (desc);
         }
     }

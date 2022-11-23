@@ -1,16 +1,16 @@
-## Makefile.am for gimp/data/images
+## Makefile.am for ligma/data/images
 
-imagedatadir = $(gimpdatadir)/images
+imagedatadir = $(ligmadatadir)/images
 
-if GIMP_UNSTABLE
-GIMP_LOGO = gimp-devel-logo.png
+if LIGMA_UNSTABLE
+LIGMA_LOGO = ligma-devel-logo.png
 else
-GIMP_LOGO = gimp-logo.png
+LIGMA_LOGO = ligma-logo.png
 endif
 
 imagedata_DATA = \
-	$(GIMP_LOGO)	\
-	gimp-splash.png	\
+	$(LIGMA_LOGO)	\
+	ligma-splash.png	\
 	wilber.png
 
 EXTRA_DIST = $(imagedata_DATA)

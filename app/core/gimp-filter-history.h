@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimp-filter-history.h
+ * ligma-filter-history.h
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,19 +17,19 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_FILTER_HISTORY_H__
-#define __GIMP_FILTER_HISTORY_H__
+#ifndef __LIGMA_FILTER_HISTORY_H__
+#define __LIGMA_FILTER_HISTORY_H__
 
 
-gint            gimp_filter_history_size   (Gimp          *gimp);
-gint            gimp_filter_history_length (Gimp          *gimp);
-GimpProcedure * gimp_filter_history_nth    (Gimp          *gimp,
+gint            ligma_filter_history_size   (Ligma          *ligma);
+gint            ligma_filter_history_length (Ligma          *ligma);
+LigmaProcedure * ligma_filter_history_nth    (Ligma          *ligma,
                                             gint           n);
-void            gimp_filter_history_add    (Gimp          *gimp,
-                                            GimpProcedure *procedure);
-void            gimp_filter_history_remove (Gimp          *gimp,
-                                            GimpProcedure *procedure);
-void            gimp_filter_history_clear  (Gimp          *gimp);
+void            ligma_filter_history_add    (Ligma          *ligma,
+                                            LigmaProcedure *procedure);
+void            ligma_filter_history_remove (Ligma          *ligma,
+                                            LigmaProcedure *procedure);
+void            ligma_filter_history_clear  (Ligma          *ligma);
 
 
-#endif /* __GIMP_FILTER_HISTORY_H__ */
+#endif /* __LIGMA_FILTER_HISTORY_H__ */

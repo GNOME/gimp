@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1999 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,21 +22,21 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "tools-types.h"
 
-#include "core/gimpimage.h"
-#include "core/gimptooloptions.h"
+#include "core/ligmaimage.h"
+#include "core/ligmatooloptions.h"
 
-#include "widgets/gimppropwidgets.h"
+#include "widgets/ligmapropwidgets.h"
 
-#include "gimprectangleoptions.h"
-#include "gimptooloptions-gui.h"
+#include "ligmarectangleoptions.h"
+#include "ligmatooloptions-gui.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 #define SB_WIDTH 5
@@ -53,30 +53,30 @@ enum
 
 /*  local function prototypes  */
 
-static void     gimp_rectangle_options_fixed_rule_changed     (GtkWidget                   *combo_box,
-                                                               GimpRectangleOptionsPrivate *private);
+static void     ligma_rectangle_options_fixed_rule_changed     (GtkWidget                   *combo_box,
+                                                               LigmaRectangleOptionsPrivate *private);
 
-static void     gimp_rectangle_options_string_current_updates (GimpNumberPairEntry         *entry,
+static void     ligma_rectangle_options_string_current_updates (LigmaNumberPairEntry         *entry,
                                                                GParamSpec                  *param,
-                                                               GimpRectangleOptions        *rectangle_options);
-static void     gimp_rectangle_options_setup_ratio_completion (GimpRectangleOptions        *rectangle_options,
+                                                               LigmaRectangleOptions        *rectangle_options);
+static void     ligma_rectangle_options_setup_ratio_completion (LigmaRectangleOptions        *rectangle_options,
                                                                GtkWidget                   *entry,
                                                                GtkListStore                *history);
 
-static gboolean gimp_number_pair_entry_history_select         (GtkEntryCompletion          *completion,
+static gboolean ligma_number_pair_entry_history_select         (GtkEntryCompletion          *completion,
                                                                GtkTreeModel                *model,
                                                                GtkTreeIter                 *iter,
-                                                               GimpNumberPairEntry         *entry);
+                                                               LigmaNumberPairEntry         *entry);
 
-static void     gimp_number_pair_entry_history_add            (GtkWidget                   *entry,
+static void     ligma_number_pair_entry_history_add            (GtkWidget                   *entry,
                                                                GtkTreeModel                *model);
 
 
-G_DEFINE_INTERFACE (GimpRectangleOptions, gimp_rectangle_options, GIMP_TYPE_TOOL_OPTIONS)
+G_DEFINE_INTERFACE (LigmaRectangleOptions, ligma_rectangle_options, LIGMA_TYPE_TOOL_OPTIONS)
 
 
 static void
-gimp_rectangle_options_default_init (GimpRectangleOptionsInterface *iface)
+ligma_rectangle_options_default_init (LigmaRectangleOptionsInterface *iface)
 {
   g_object_interface_install_property (iface,
                                        g_param_spec_boolean ("auto-shrink",
@@ -84,8 +84,8 @@ gimp_rectangle_options_default_init (GimpRectangleOptionsInterface *iface)
                                                              _("Automatically shrink to the nearest "
                                                                "rectangular shape in a layer"),
                                                              FALSE,
-                                                             GIMP_CONFIG_PARAM_FLAGS |
-                                                             GIMP_PARAM_STATIC_STRINGS));
+                                                             LIGMA_CONFIG_PARAM_FLAGS |
+                                                             LIGMA_PARAM_STATIC_STRINGS));
 
   g_object_interface_install_property (iface,
                                        g_param_spec_boolean ("shrink-merged",
@@ -93,72 +93,72 @@ gimp_rectangle_options_default_init (GimpRectangleOptionsInterface *iface)
                                                              _("Use all visible layers when shrinking "
                                                                "the selection"),
                                                              FALSE,
-                                                             GIMP_CONFIG_PARAM_FLAGS |
-                                                             GIMP_PARAM_STATIC_STRINGS));
+                                                             LIGMA_CONFIG_PARAM_FLAGS |
+                                                             LIGMA_PARAM_STATIC_STRINGS));
 
   g_object_interface_install_property (iface,
                                        g_param_spec_enum ("guide",
                                                           NULL,
                                                           _("Composition guides such as rule of thirds"),
-                                                          GIMP_TYPE_GUIDES_TYPE,
-                                                          GIMP_GUIDES_NONE,
-                                                          GIMP_CONFIG_PARAM_FLAGS |
-                                                          GIMP_PARAM_STATIC_STRINGS));
+                                                          LIGMA_TYPE_GUIDES_TYPE,
+                                                          LIGMA_GUIDES_NONE,
+                                                          LIGMA_CONFIG_PARAM_FLAGS |
+                                                          LIGMA_PARAM_STATIC_STRINGS));
 
   g_object_interface_install_property (iface,
                                        g_param_spec_double ("x",
                                                             NULL,
                                                             _("X coordinate of top left corner"),
-                                                            -GIMP_MAX_IMAGE_SIZE,
-                                                            GIMP_MAX_IMAGE_SIZE,
+                                                            -LIGMA_MAX_IMAGE_SIZE,
+                                                            LIGMA_MAX_IMAGE_SIZE,
                                                             0.0,
-                                                            GIMP_PARAM_READWRITE |
+                                                            LIGMA_PARAM_READWRITE |
                                                             G_PARAM_CONSTRUCT));
 
   g_object_interface_install_property (iface,
                                        g_param_spec_double ("y",
                                                             NULL,
                                                             _("Y coordinate of top left corner"),
-                                                            -GIMP_MAX_IMAGE_SIZE,
-                                                            GIMP_MAX_IMAGE_SIZE,
+                                                            -LIGMA_MAX_IMAGE_SIZE,
+                                                            LIGMA_MAX_IMAGE_SIZE,
                                                             0.0,
-                                                            GIMP_PARAM_READWRITE |
+                                                            LIGMA_PARAM_READWRITE |
                                                             G_PARAM_CONSTRUCT));
 
   g_object_interface_install_property (iface,
                                        g_param_spec_double ("width",
                                                             NULL,
                                                             _("Width of selection"),
-                                                            0.0, GIMP_MAX_IMAGE_SIZE,
+                                                            0.0, LIGMA_MAX_IMAGE_SIZE,
                                                             0.0,
-                                                            GIMP_PARAM_READWRITE |
+                                                            LIGMA_PARAM_READWRITE |
                                                             G_PARAM_CONSTRUCT));
 
   g_object_interface_install_property (iface,
                                        g_param_spec_double ("height",
                                                             NULL,
                                                             _("Height of selection"),
-                                                            0.0, GIMP_MAX_IMAGE_SIZE,
+                                                            0.0, LIGMA_MAX_IMAGE_SIZE,
                                                             0.0,
-                                                            GIMP_PARAM_READWRITE |
+                                                            LIGMA_PARAM_READWRITE |
                                                             G_PARAM_CONSTRUCT));
 
   g_object_interface_install_property (iface,
-                                       gimp_param_spec_unit ("position-unit",
+                                       ligma_param_spec_unit ("position-unit",
                                                              NULL,
                                                              _("Unit of top left corner coordinate"),
                                                              TRUE, TRUE,
-                                                             GIMP_UNIT_PIXEL,
-                                                             GIMP_PARAM_READWRITE |
+                                                             LIGMA_UNIT_PIXEL,
+                                                             LIGMA_PARAM_READWRITE |
                                                              G_PARAM_CONSTRUCT));
 
   g_object_interface_install_property (iface,
-                                       gimp_param_spec_unit ("size-unit",
+                                       ligma_param_spec_unit ("size-unit",
                                                              NULL,
                                                              _("Unit of selection size"),
                                                              TRUE, TRUE,
-                                                             GIMP_UNIT_PIXEL,
-                                                             GIMP_PARAM_READWRITE |
+                                                             LIGMA_UNIT_PIXEL,
+                                                             LIGMA_PARAM_READWRITE |
                                                              G_PARAM_CONSTRUCT));
 
   g_object_interface_install_property (iface,
@@ -167,128 +167,128 @@ gimp_rectangle_options_default_init (GimpRectangleOptionsInterface *iface)
                                                              _("Enable lock of aspect ratio, "
                                                                "width, height or size"),
                                                              FALSE,
-                                                             GIMP_CONFIG_PARAM_FLAGS |
-                                                             GIMP_PARAM_STATIC_STRINGS));
+                                                             LIGMA_CONFIG_PARAM_FLAGS |
+                                                             LIGMA_PARAM_STATIC_STRINGS));
 
   g_object_interface_install_property (iface,
                                        g_param_spec_enum ("fixed-rule",
                                                           NULL,
                                                           _("Choose what has to be locked"),
-                                                          GIMP_TYPE_RECTANGLE_FIXED_RULE,
-                                                          GIMP_RECTANGLE_FIXED_ASPECT,
-                                                          GIMP_CONFIG_PARAM_FLAGS |
-                                                          GIMP_PARAM_STATIC_STRINGS));
+                                                          LIGMA_TYPE_RECTANGLE_FIXED_RULE,
+                                                          LIGMA_RECTANGLE_FIXED_ASPECT,
+                                                          LIGMA_CONFIG_PARAM_FLAGS |
+                                                          LIGMA_PARAM_STATIC_STRINGS));
 
   g_object_interface_install_property (iface,
                                        g_param_spec_double ("desired-fixed-width",
                                                             NULL,
                                                             _("Custom fixed width"),
-                                                            0.0, GIMP_MAX_IMAGE_SIZE,
+                                                            0.0, LIGMA_MAX_IMAGE_SIZE,
                                                             100.0,
-                                                            GIMP_CONFIG_PARAM_FLAGS |
-                                                            GIMP_PARAM_STATIC_STRINGS));
+                                                            LIGMA_CONFIG_PARAM_FLAGS |
+                                                            LIGMA_PARAM_STATIC_STRINGS));
 
   g_object_interface_install_property (iface,
                                        g_param_spec_double ("desired-fixed-height",
                                                             NULL,
                                                             _("Custom fixed height"),
-                                                            0.0, GIMP_MAX_IMAGE_SIZE,
+                                                            0.0, LIGMA_MAX_IMAGE_SIZE,
                                                             100.0,
-                                                            GIMP_CONFIG_PARAM_FLAGS |
-                                                            GIMP_PARAM_STATIC_STRINGS));
+                                                            LIGMA_CONFIG_PARAM_FLAGS |
+                                                            LIGMA_PARAM_STATIC_STRINGS));
 
   g_object_interface_install_property (iface,
                                        g_param_spec_double ("desired-fixed-size-width",
                                                             NULL, NULL,
-                                                            0.0, GIMP_MAX_IMAGE_SIZE,
+                                                            0.0, LIGMA_MAX_IMAGE_SIZE,
                                                             100.0,
-                                                            GIMP_CONFIG_PARAM_FLAGS |
-                                                            GIMP_PARAM_STATIC_STRINGS));
+                                                            LIGMA_CONFIG_PARAM_FLAGS |
+                                                            LIGMA_PARAM_STATIC_STRINGS));
 
   g_object_interface_install_property (iface,
                                        g_param_spec_double ("desired-fixed-size-height",
                                                             NULL, NULL,
-                                                            0.0, GIMP_MAX_IMAGE_SIZE,
+                                                            0.0, LIGMA_MAX_IMAGE_SIZE,
                                                             100.0,
-                                                            GIMP_CONFIG_PARAM_FLAGS |
-                                                            GIMP_PARAM_STATIC_STRINGS));
+                                                            LIGMA_CONFIG_PARAM_FLAGS |
+                                                            LIGMA_PARAM_STATIC_STRINGS));
 
   g_object_interface_install_property (iface,
                                        g_param_spec_double ("default-fixed-size-width",
                                                             NULL, NULL,
-                                                            0.0, GIMP_MAX_IMAGE_SIZE,
+                                                            0.0, LIGMA_MAX_IMAGE_SIZE,
                                                             100.0,
-                                                            GIMP_PARAM_READWRITE |
-                                                            GIMP_PARAM_STATIC_STRINGS));
+                                                            LIGMA_PARAM_READWRITE |
+                                                            LIGMA_PARAM_STATIC_STRINGS));
 
   g_object_interface_install_property (iface,
                                        g_param_spec_double ("default-fixed-size-height",
                                                             NULL, NULL,
-                                                            0.0, GIMP_MAX_IMAGE_SIZE,
+                                                            0.0, LIGMA_MAX_IMAGE_SIZE,
                                                             100.0,
-                                                            GIMP_PARAM_READWRITE |
-                                                            GIMP_PARAM_STATIC_STRINGS));
+                                                            LIGMA_PARAM_READWRITE |
+                                                            LIGMA_PARAM_STATIC_STRINGS));
 
   g_object_interface_install_property (iface,
                                        g_param_spec_boolean ("overridden-fixed-size",
                                                              NULL, NULL,
                                                              FALSE,
-                                                             GIMP_CONFIG_PARAM_FLAGS |
-                                                             GIMP_PARAM_STATIC_STRINGS));
+                                                             LIGMA_CONFIG_PARAM_FLAGS |
+                                                             LIGMA_PARAM_STATIC_STRINGS));
 
   g_object_interface_install_property (iface,
                                        g_param_spec_double ("aspect-numerator",
                                                             NULL, NULL,
-                                                            0.0, GIMP_MAX_IMAGE_SIZE,
+                                                            0.0, LIGMA_MAX_IMAGE_SIZE,
                                                             1.0,
-                                                            GIMP_CONFIG_PARAM_FLAGS |
-                                                            GIMP_PARAM_STATIC_STRINGS));
+                                                            LIGMA_CONFIG_PARAM_FLAGS |
+                                                            LIGMA_PARAM_STATIC_STRINGS));
 
   g_object_interface_install_property (iface,
                                        g_param_spec_double ("aspect-denominator",
                                                             NULL, NULL,
-                                                            0.0, GIMP_MAX_IMAGE_SIZE,
+                                                            0.0, LIGMA_MAX_IMAGE_SIZE,
                                                             1.0,
-                                                            GIMP_CONFIG_PARAM_FLAGS |
-                                                            GIMP_PARAM_STATIC_STRINGS));
+                                                            LIGMA_CONFIG_PARAM_FLAGS |
+                                                            LIGMA_PARAM_STATIC_STRINGS));
 
   g_object_interface_install_property (iface,
                                        g_param_spec_double ("default-aspect-numerator",
                                                             NULL, NULL,
-                                                            0.001, GIMP_MAX_IMAGE_SIZE,
+                                                            0.001, LIGMA_MAX_IMAGE_SIZE,
                                                             1.0,
-                                                            GIMP_PARAM_READWRITE |
+                                                            LIGMA_PARAM_READWRITE |
                                                             G_PARAM_CONSTRUCT));
 
   g_object_interface_install_property (iface,
                                        g_param_spec_double ("default-aspect-denominator",
                                                             NULL, NULL,
-                                                            0.001, GIMP_MAX_IMAGE_SIZE,
+                                                            0.001, LIGMA_MAX_IMAGE_SIZE,
                                                             1.0,
-                                                            GIMP_PARAM_READWRITE |
+                                                            LIGMA_PARAM_READWRITE |
                                                             G_PARAM_CONSTRUCT));
 
   g_object_interface_install_property (iface,
                                        g_param_spec_boolean ("overridden-fixed-aspect",
                                                              NULL, NULL,
                                                              FALSE,
-                                                             GIMP_CONFIG_PARAM_FLAGS |
-                                                             GIMP_PARAM_STATIC_STRINGS));
+                                                             LIGMA_CONFIG_PARAM_FLAGS |
+                                                             LIGMA_PARAM_STATIC_STRINGS));
 
   g_object_interface_install_property (iface,
                                        g_param_spec_boolean ("use-string-current",
                                                              NULL, NULL,
                                                              FALSE,
-                                                             GIMP_PARAM_READWRITE |
-                                                             GIMP_PARAM_STATIC_STRINGS));
+                                                             LIGMA_PARAM_READWRITE |
+                                                             LIGMA_PARAM_STATIC_STRINGS));
 
   g_object_interface_install_property (iface,
-                                       gimp_param_spec_unit ("fixed-unit",
+                                       ligma_param_spec_unit ("fixed-unit",
                                                              NULL,
                                                              _("Unit of fixed width, height or size"),
                                                              TRUE, TRUE,
-                                                             GIMP_UNIT_PIXEL,
-                                                             GIMP_PARAM_READWRITE |
+                                                             LIGMA_UNIT_PIXEL,
+                                                             LIGMA_PARAM_READWRITE |
                                                              G_PARAM_CONSTRUCT));
 
   g_object_interface_install_property (iface,
@@ -296,36 +296,36 @@ gimp_rectangle_options_default_init (GimpRectangleOptionsInterface *iface)
                                                              _("Expand from center"),
                                                              _("Expand selection from center outwards"),
                                                              FALSE,
-                                                             GIMP_CONFIG_PARAM_FLAGS |
-                                                             GIMP_PARAM_STATIC_STRINGS));
+                                                             LIGMA_CONFIG_PARAM_FLAGS |
+                                                             LIGMA_PARAM_STATIC_STRINGS));
 }
 
 static void
-gimp_rectangle_options_private_finalize (GimpRectangleOptionsPrivate *private)
+ligma_rectangle_options_private_finalize (LigmaRectangleOptionsPrivate *private)
 {
   g_clear_object (&private->aspect_history);
   g_clear_object (&private->size_history);
 
-  g_slice_free (GimpRectangleOptionsPrivate, private);
+  g_slice_free (LigmaRectangleOptionsPrivate, private);
 }
 
-GimpRectangleOptionsPrivate *
-gimp_rectangle_options_get_private (GimpRectangleOptions *options)
+LigmaRectangleOptionsPrivate *
+ligma_rectangle_options_get_private (LigmaRectangleOptions *options)
 {
-  GimpRectangleOptionsPrivate *private;
+  LigmaRectangleOptionsPrivate *private;
 
   static GQuark private_key = 0;
 
-  g_return_val_if_fail (GIMP_IS_RECTANGLE_OPTIONS (options), NULL);
+  g_return_val_if_fail (LIGMA_IS_RECTANGLE_OPTIONS (options), NULL);
 
   if (! private_key)
-    private_key = g_quark_from_static_string ("gimp-rectangle-options-private");
+    private_key = g_quark_from_static_string ("ligma-rectangle-options-private");
 
   private = g_object_get_qdata (G_OBJECT (options), private_key);
 
   if (! private)
     {
-      private = g_slice_new0 (GimpRectangleOptionsPrivate);
+      private = g_slice_new0 (LigmaRectangleOptionsPrivate);
 
       private->aspect_history = gtk_list_store_new (N_COLUMNS,
                                                     G_TYPE_DOUBLE,
@@ -338,207 +338,207 @@ gimp_rectangle_options_get_private (GimpRectangleOptions *options)
                                                   G_TYPE_STRING);
 
       g_object_set_qdata_full (G_OBJECT (options), private_key, private,
-                               (GDestroyNotify) gimp_rectangle_options_private_finalize);
+                               (GDestroyNotify) ligma_rectangle_options_private_finalize);
     }
 
   return private;
 }
 
 /**
- * gimp_rectangle_options_install_properties:
+ * ligma_rectangle_options_install_properties:
  * @klass: the class structure for a type deriving from #GObject
  *
  * Installs the necessary properties for a class implementing
- * #GimpRectangleOptions. A #GimpRectangleOptionsProp property is installed
- * for each property, using the values from the #GimpRectangleOptionsProp
+ * #LigmaRectangleOptions. A #LigmaRectangleOptionsProp property is installed
+ * for each property, using the values from the #LigmaRectangleOptionsProp
  * enumeration. The caller must make sure itself that the enumeration
  * values don't collide with some other property values they
- * are using (that's what %GIMP_RECTANGLE_OPTIONS_PROP_LAST is good for).
+ * are using (that's what %LIGMA_RECTANGLE_OPTIONS_PROP_LAST is good for).
  **/
 void
-gimp_rectangle_options_install_properties (GObjectClass *klass)
+ligma_rectangle_options_install_properties (GObjectClass *klass)
 {
   g_object_class_override_property (klass,
-                                    GIMP_RECTANGLE_OPTIONS_PROP_AUTO_SHRINK,
+                                    LIGMA_RECTANGLE_OPTIONS_PROP_AUTO_SHRINK,
                                     "auto-shrink");
   g_object_class_override_property (klass,
-                                    GIMP_RECTANGLE_OPTIONS_PROP_SHRINK_MERGED,
+                                    LIGMA_RECTANGLE_OPTIONS_PROP_SHRINK_MERGED,
                                     "shrink-merged");
   g_object_class_override_property (klass,
-                                    GIMP_RECTANGLE_OPTIONS_PROP_GUIDE,
+                                    LIGMA_RECTANGLE_OPTIONS_PROP_GUIDE,
                                     "guide");
 
   g_object_class_override_property (klass,
-                                    GIMP_RECTANGLE_OPTIONS_PROP_X,
+                                    LIGMA_RECTANGLE_OPTIONS_PROP_X,
                                     "x");
   g_object_class_override_property (klass,
-                                    GIMP_RECTANGLE_OPTIONS_PROP_Y,
+                                    LIGMA_RECTANGLE_OPTIONS_PROP_Y,
                                     "y");
   g_object_class_override_property (klass,
-                                    GIMP_RECTANGLE_OPTIONS_PROP_WIDTH,
+                                    LIGMA_RECTANGLE_OPTIONS_PROP_WIDTH,
                                     "width");
   g_object_class_override_property (klass,
-                                    GIMP_RECTANGLE_OPTIONS_PROP_HEIGHT,
+                                    LIGMA_RECTANGLE_OPTIONS_PROP_HEIGHT,
                                     "height");
   g_object_class_override_property (klass,
-                                    GIMP_RECTANGLE_OPTIONS_PROP_POSITION_UNIT,
+                                    LIGMA_RECTANGLE_OPTIONS_PROP_POSITION_UNIT,
                                     "position-unit");
   g_object_class_override_property (klass,
-                                    GIMP_RECTANGLE_OPTIONS_PROP_SIZE_UNIT,
+                                    LIGMA_RECTANGLE_OPTIONS_PROP_SIZE_UNIT,
                                     "size-unit");
 
   g_object_class_override_property (klass,
-                                    GIMP_RECTANGLE_OPTIONS_PROP_FIXED_RULE_ACTIVE,
+                                    LIGMA_RECTANGLE_OPTIONS_PROP_FIXED_RULE_ACTIVE,
                                     "fixed-rule-active");
   g_object_class_override_property (klass,
-                                    GIMP_RECTANGLE_OPTIONS_PROP_FIXED_RULE,
+                                    LIGMA_RECTANGLE_OPTIONS_PROP_FIXED_RULE,
                                     "fixed-rule");
   g_object_class_override_property (klass,
-                                    GIMP_RECTANGLE_OPTIONS_PROP_DESIRED_FIXED_WIDTH,
+                                    LIGMA_RECTANGLE_OPTIONS_PROP_DESIRED_FIXED_WIDTH,
                                     "desired-fixed-width");
   g_object_class_override_property (klass,
-                                    GIMP_RECTANGLE_OPTIONS_PROP_DESIRED_FIXED_HEIGHT,
+                                    LIGMA_RECTANGLE_OPTIONS_PROP_DESIRED_FIXED_HEIGHT,
                                     "desired-fixed-height");
   g_object_class_override_property (klass,
-                                    GIMP_RECTANGLE_OPTIONS_PROP_DESIRED_FIXED_SIZE_WIDTH,
+                                    LIGMA_RECTANGLE_OPTIONS_PROP_DESIRED_FIXED_SIZE_WIDTH,
                                     "desired-fixed-size-width");
   g_object_class_override_property (klass,
-                                    GIMP_RECTANGLE_OPTIONS_PROP_DESIRED_FIXED_SIZE_HEIGHT,
+                                    LIGMA_RECTANGLE_OPTIONS_PROP_DESIRED_FIXED_SIZE_HEIGHT,
                                     "desired-fixed-size-height");
   g_object_class_override_property (klass,
-                                    GIMP_RECTANGLE_OPTIONS_PROP_DEFAULT_FIXED_SIZE_WIDTH,
+                                    LIGMA_RECTANGLE_OPTIONS_PROP_DEFAULT_FIXED_SIZE_WIDTH,
                                     "default-fixed-size-width");
   g_object_class_override_property (klass,
-                                    GIMP_RECTANGLE_OPTIONS_PROP_DEFAULT_FIXED_SIZE_HEIGHT,
+                                    LIGMA_RECTANGLE_OPTIONS_PROP_DEFAULT_FIXED_SIZE_HEIGHT,
                                     "default-fixed-size-height");
   g_object_class_override_property (klass,
-                                    GIMP_RECTANGLE_OPTIONS_PROP_OVERRIDDEN_FIXED_SIZE,
+                                    LIGMA_RECTANGLE_OPTIONS_PROP_OVERRIDDEN_FIXED_SIZE,
                                     "overridden-fixed-size");
   g_object_class_override_property (klass,
-                                    GIMP_RECTANGLE_OPTIONS_PROP_ASPECT_NUMERATOR,
+                                    LIGMA_RECTANGLE_OPTIONS_PROP_ASPECT_NUMERATOR,
                                     "aspect-numerator");
   g_object_class_override_property (klass,
-                                    GIMP_RECTANGLE_OPTIONS_PROP_ASPECT_DENOMINATOR,
+                                    LIGMA_RECTANGLE_OPTIONS_PROP_ASPECT_DENOMINATOR,
                                     "aspect-denominator");
   g_object_class_override_property (klass,
-                                    GIMP_RECTANGLE_OPTIONS_PROP_DEFAULT_ASPECT_NUMERATOR,
+                                    LIGMA_RECTANGLE_OPTIONS_PROP_DEFAULT_ASPECT_NUMERATOR,
                                     "default-aspect-numerator");
   g_object_class_override_property (klass,
-                                    GIMP_RECTANGLE_OPTIONS_PROP_DEFAULT_ASPECT_DENOMINATOR,
+                                    LIGMA_RECTANGLE_OPTIONS_PROP_DEFAULT_ASPECT_DENOMINATOR,
                                     "default-aspect-denominator");
   g_object_class_override_property (klass,
-                                    GIMP_RECTANGLE_OPTIONS_PROP_OVERRIDDEN_FIXED_ASPECT,
+                                    LIGMA_RECTANGLE_OPTIONS_PROP_OVERRIDDEN_FIXED_ASPECT,
                                     "overridden-fixed-aspect");
   g_object_class_override_property (klass,
-                                    GIMP_RECTANGLE_OPTIONS_PROP_USE_STRING_CURRENT,
+                                    LIGMA_RECTANGLE_OPTIONS_PROP_USE_STRING_CURRENT,
                                     "use-string-current");
   g_object_class_override_property (klass,
-                                    GIMP_RECTANGLE_OPTIONS_PROP_FIXED_UNIT,
+                                    LIGMA_RECTANGLE_OPTIONS_PROP_FIXED_UNIT,
                                     "fixed-unit");
 
   g_object_class_override_property (klass,
-                                    GIMP_RECTANGLE_OPTIONS_PROP_FIXED_CENTER,
+                                    LIGMA_RECTANGLE_OPTIONS_PROP_FIXED_CENTER,
                                     "fixed-center");
 }
 
 void
-gimp_rectangle_options_set_property (GObject      *object,
+ligma_rectangle_options_set_property (GObject      *object,
                                      guint         property_id,
                                      const GValue *value,
                                      GParamSpec   *pspec)
 {
-  GimpRectangleOptions        *options  = GIMP_RECTANGLE_OPTIONS (object);
-  GimpRectangleOptionsPrivate *private;
+  LigmaRectangleOptions        *options  = LIGMA_RECTANGLE_OPTIONS (object);
+  LigmaRectangleOptionsPrivate *private;
 
-  private = GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (options);
+  private = LIGMA_RECTANGLE_OPTIONS_GET_PRIVATE (options);
 
   switch (property_id)
     {
-    case GIMP_RECTANGLE_OPTIONS_PROP_AUTO_SHRINK:
+    case LIGMA_RECTANGLE_OPTIONS_PROP_AUTO_SHRINK:
       private->auto_shrink = g_value_get_boolean (value);
       break;
-    case GIMP_RECTANGLE_OPTIONS_PROP_SHRINK_MERGED:
+    case LIGMA_RECTANGLE_OPTIONS_PROP_SHRINK_MERGED:
       private->shrink_merged = g_value_get_boolean (value);
       break;
-    case GIMP_RECTANGLE_OPTIONS_PROP_HIGHLIGHT:
+    case LIGMA_RECTANGLE_OPTIONS_PROP_HIGHLIGHT:
       private->highlight = g_value_get_boolean (value);
       break;
-    case GIMP_RECTANGLE_OPTIONS_PROP_HIGHLIGHT_OPACITY:
+    case LIGMA_RECTANGLE_OPTIONS_PROP_HIGHLIGHT_OPACITY:
       private->highlight_opacity = g_value_get_double (value);
       break;
-    case GIMP_RECTANGLE_OPTIONS_PROP_GUIDE:
+    case LIGMA_RECTANGLE_OPTIONS_PROP_GUIDE:
       private->guide = g_value_get_enum (value);
       break;
 
-    case GIMP_RECTANGLE_OPTIONS_PROP_X:
+    case LIGMA_RECTANGLE_OPTIONS_PROP_X:
       private->x = g_value_get_double (value);
       break;
-    case GIMP_RECTANGLE_OPTIONS_PROP_Y:
+    case LIGMA_RECTANGLE_OPTIONS_PROP_Y:
       private->y = g_value_get_double (value);
       break;
-    case GIMP_RECTANGLE_OPTIONS_PROP_WIDTH:
+    case LIGMA_RECTANGLE_OPTIONS_PROP_WIDTH:
       private->width = g_value_get_double (value);
       break;
-    case GIMP_RECTANGLE_OPTIONS_PROP_HEIGHT:
+    case LIGMA_RECTANGLE_OPTIONS_PROP_HEIGHT:
       private->height = g_value_get_double (value);
       break;
-    case GIMP_RECTANGLE_OPTIONS_PROP_POSITION_UNIT:
+    case LIGMA_RECTANGLE_OPTIONS_PROP_POSITION_UNIT:
       private->position_unit = g_value_get_int (value);
       break;
-    case GIMP_RECTANGLE_OPTIONS_PROP_SIZE_UNIT:
+    case LIGMA_RECTANGLE_OPTIONS_PROP_SIZE_UNIT:
       private->size_unit = g_value_get_int (value);
       break;
 
-    case GIMP_RECTANGLE_OPTIONS_PROP_FIXED_RULE_ACTIVE:
+    case LIGMA_RECTANGLE_OPTIONS_PROP_FIXED_RULE_ACTIVE:
       private->fixed_rule_active = g_value_get_boolean (value);
       break;
-    case GIMP_RECTANGLE_OPTIONS_PROP_FIXED_RULE:
+    case LIGMA_RECTANGLE_OPTIONS_PROP_FIXED_RULE:
       private->fixed_rule = g_value_get_enum (value);
       break;
-    case GIMP_RECTANGLE_OPTIONS_PROP_DESIRED_FIXED_WIDTH:
+    case LIGMA_RECTANGLE_OPTIONS_PROP_DESIRED_FIXED_WIDTH:
       private->desired_fixed_width = g_value_get_double (value);
       break;
-    case GIMP_RECTANGLE_OPTIONS_PROP_DESIRED_FIXED_HEIGHT:
+    case LIGMA_RECTANGLE_OPTIONS_PROP_DESIRED_FIXED_HEIGHT:
       private->desired_fixed_height = g_value_get_double (value);
       break;
-    case GIMP_RECTANGLE_OPTIONS_PROP_DESIRED_FIXED_SIZE_WIDTH:
+    case LIGMA_RECTANGLE_OPTIONS_PROP_DESIRED_FIXED_SIZE_WIDTH:
       private->desired_fixed_size_width = g_value_get_double (value);
       break;
-    case GIMP_RECTANGLE_OPTIONS_PROP_DESIRED_FIXED_SIZE_HEIGHT:
+    case LIGMA_RECTANGLE_OPTIONS_PROP_DESIRED_FIXED_SIZE_HEIGHT:
       private->desired_fixed_size_height = g_value_get_double (value);
       break;
-    case GIMP_RECTANGLE_OPTIONS_PROP_DEFAULT_FIXED_SIZE_WIDTH:
+    case LIGMA_RECTANGLE_OPTIONS_PROP_DEFAULT_FIXED_SIZE_WIDTH:
       private->default_fixed_size_width = g_value_get_double (value);
       break;
-    case GIMP_RECTANGLE_OPTIONS_PROP_DEFAULT_FIXED_SIZE_HEIGHT:
+    case LIGMA_RECTANGLE_OPTIONS_PROP_DEFAULT_FIXED_SIZE_HEIGHT:
       private->default_fixed_size_height = g_value_get_double (value);
       break;
-    case GIMP_RECTANGLE_OPTIONS_PROP_OVERRIDDEN_FIXED_SIZE:
+    case LIGMA_RECTANGLE_OPTIONS_PROP_OVERRIDDEN_FIXED_SIZE:
       private->overridden_fixed_size = g_value_get_boolean (value);
       break;
-    case GIMP_RECTANGLE_OPTIONS_PROP_ASPECT_NUMERATOR:
+    case LIGMA_RECTANGLE_OPTIONS_PROP_ASPECT_NUMERATOR:
       private->aspect_numerator = g_value_get_double (value);
       break;
-    case GIMP_RECTANGLE_OPTIONS_PROP_ASPECT_DENOMINATOR:
+    case LIGMA_RECTANGLE_OPTIONS_PROP_ASPECT_DENOMINATOR:
       private->aspect_denominator = g_value_get_double (value);
       break;
-    case GIMP_RECTANGLE_OPTIONS_PROP_DEFAULT_ASPECT_NUMERATOR:
+    case LIGMA_RECTANGLE_OPTIONS_PROP_DEFAULT_ASPECT_NUMERATOR:
       private->default_aspect_numerator = g_value_get_double (value);
       break;
-    case GIMP_RECTANGLE_OPTIONS_PROP_DEFAULT_ASPECT_DENOMINATOR:
+    case LIGMA_RECTANGLE_OPTIONS_PROP_DEFAULT_ASPECT_DENOMINATOR:
       private->default_aspect_denominator = g_value_get_double (value);
       break;
-    case GIMP_RECTANGLE_OPTIONS_PROP_OVERRIDDEN_FIXED_ASPECT:
+    case LIGMA_RECTANGLE_OPTIONS_PROP_OVERRIDDEN_FIXED_ASPECT:
       private->overridden_fixed_aspect = g_value_get_boolean (value);
       break;
-    case GIMP_RECTANGLE_OPTIONS_PROP_USE_STRING_CURRENT:
+    case LIGMA_RECTANGLE_OPTIONS_PROP_USE_STRING_CURRENT:
       private->use_string_current = g_value_get_boolean (value);
       break;
-    case GIMP_RECTANGLE_OPTIONS_PROP_FIXED_UNIT:
+    case LIGMA_RECTANGLE_OPTIONS_PROP_FIXED_UNIT:
       private->fixed_unit = g_value_get_int (value);
       break;
 
-    case GIMP_RECTANGLE_OPTIONS_PROP_FIXED_CENTER:
+    case LIGMA_RECTANGLE_OPTIONS_PROP_FIXED_CENTER:
       private->fixed_center = g_value_get_boolean (value);
       break;
 
@@ -549,103 +549,103 @@ gimp_rectangle_options_set_property (GObject      *object,
 }
 
 void
-gimp_rectangle_options_get_property (GObject      *object,
+ligma_rectangle_options_get_property (GObject      *object,
                                      guint         property_id,
                                      GValue       *value,
                                      GParamSpec   *pspec)
 {
-  GimpRectangleOptions        *options  = GIMP_RECTANGLE_OPTIONS (object);
-  GimpRectangleOptionsPrivate *private;
+  LigmaRectangleOptions        *options  = LIGMA_RECTANGLE_OPTIONS (object);
+  LigmaRectangleOptionsPrivate *private;
 
-  private = GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (options);
+  private = LIGMA_RECTANGLE_OPTIONS_GET_PRIVATE (options);
 
   switch (property_id)
     {
-    case GIMP_RECTANGLE_OPTIONS_PROP_AUTO_SHRINK:
+    case LIGMA_RECTANGLE_OPTIONS_PROP_AUTO_SHRINK:
       g_value_set_boolean (value, private->auto_shrink);
       break;
-    case GIMP_RECTANGLE_OPTIONS_PROP_SHRINK_MERGED:
+    case LIGMA_RECTANGLE_OPTIONS_PROP_SHRINK_MERGED:
       g_value_set_boolean (value, private->shrink_merged);
       break;
-    case GIMP_RECTANGLE_OPTIONS_PROP_HIGHLIGHT:
+    case LIGMA_RECTANGLE_OPTIONS_PROP_HIGHLIGHT:
       g_value_set_boolean (value, private->highlight);
       break;
-    case GIMP_RECTANGLE_OPTIONS_PROP_HIGHLIGHT_OPACITY:
+    case LIGMA_RECTANGLE_OPTIONS_PROP_HIGHLIGHT_OPACITY:
       g_value_set_double (value, private->highlight_opacity);
       break;
-    case GIMP_RECTANGLE_OPTIONS_PROP_GUIDE:
+    case LIGMA_RECTANGLE_OPTIONS_PROP_GUIDE:
       g_value_set_enum (value, private->guide);
       break;
 
-    case GIMP_RECTANGLE_OPTIONS_PROP_X:
+    case LIGMA_RECTANGLE_OPTIONS_PROP_X:
       g_value_set_double (value, private->x);
       break;
-    case GIMP_RECTANGLE_OPTIONS_PROP_Y:
+    case LIGMA_RECTANGLE_OPTIONS_PROP_Y:
       g_value_set_double (value, private->y);
       break;
-    case GIMP_RECTANGLE_OPTIONS_PROP_WIDTH:
+    case LIGMA_RECTANGLE_OPTIONS_PROP_WIDTH:
       g_value_set_double (value, private->width);
       break;
-    case GIMP_RECTANGLE_OPTIONS_PROP_HEIGHT:
+    case LIGMA_RECTANGLE_OPTIONS_PROP_HEIGHT:
       g_value_set_double (value, private->height);
       break;
-    case GIMP_RECTANGLE_OPTIONS_PROP_POSITION_UNIT:
+    case LIGMA_RECTANGLE_OPTIONS_PROP_POSITION_UNIT:
       g_value_set_int (value, private->position_unit);
       break;
-    case GIMP_RECTANGLE_OPTIONS_PROP_SIZE_UNIT:
+    case LIGMA_RECTANGLE_OPTIONS_PROP_SIZE_UNIT:
       g_value_set_int (value, private->size_unit);
       break;
 
-    case GIMP_RECTANGLE_OPTIONS_PROP_FIXED_RULE_ACTIVE:
+    case LIGMA_RECTANGLE_OPTIONS_PROP_FIXED_RULE_ACTIVE:
       g_value_set_boolean (value, private->fixed_rule_active);
       break;
-    case GIMP_RECTANGLE_OPTIONS_PROP_FIXED_RULE:
+    case LIGMA_RECTANGLE_OPTIONS_PROP_FIXED_RULE:
       g_value_set_enum (value, private->fixed_rule);
       break;
-    case GIMP_RECTANGLE_OPTIONS_PROP_DESIRED_FIXED_WIDTH:
+    case LIGMA_RECTANGLE_OPTIONS_PROP_DESIRED_FIXED_WIDTH:
       g_value_set_double (value, private->desired_fixed_width);
       break;
-    case GIMP_RECTANGLE_OPTIONS_PROP_DESIRED_FIXED_HEIGHT:
+    case LIGMA_RECTANGLE_OPTIONS_PROP_DESIRED_FIXED_HEIGHT:
       g_value_set_double (value, private->desired_fixed_height);
       break;
-    case GIMP_RECTANGLE_OPTIONS_PROP_DESIRED_FIXED_SIZE_WIDTH:
+    case LIGMA_RECTANGLE_OPTIONS_PROP_DESIRED_FIXED_SIZE_WIDTH:
       g_value_set_double (value, private->desired_fixed_size_width);
       break;
-    case GIMP_RECTANGLE_OPTIONS_PROP_DESIRED_FIXED_SIZE_HEIGHT:
+    case LIGMA_RECTANGLE_OPTIONS_PROP_DESIRED_FIXED_SIZE_HEIGHT:
       g_value_set_double (value, private->desired_fixed_size_height);
       break;
-    case GIMP_RECTANGLE_OPTIONS_PROP_DEFAULT_FIXED_SIZE_WIDTH:
+    case LIGMA_RECTANGLE_OPTIONS_PROP_DEFAULT_FIXED_SIZE_WIDTH:
       g_value_set_double (value, private->default_fixed_size_width);
       break;
-    case GIMP_RECTANGLE_OPTIONS_PROP_DEFAULT_FIXED_SIZE_HEIGHT:
+    case LIGMA_RECTANGLE_OPTIONS_PROP_DEFAULT_FIXED_SIZE_HEIGHT:
       g_value_set_double (value, private->default_fixed_size_height);
       break;
-    case GIMP_RECTANGLE_OPTIONS_PROP_OVERRIDDEN_FIXED_SIZE:
+    case LIGMA_RECTANGLE_OPTIONS_PROP_OVERRIDDEN_FIXED_SIZE:
       g_value_set_boolean (value, private->overridden_fixed_size);
       break;
-    case GIMP_RECTANGLE_OPTIONS_PROP_ASPECT_NUMERATOR:
+    case LIGMA_RECTANGLE_OPTIONS_PROP_ASPECT_NUMERATOR:
       g_value_set_double (value, private->aspect_numerator);
       break;
-    case GIMP_RECTANGLE_OPTIONS_PROP_ASPECT_DENOMINATOR:
+    case LIGMA_RECTANGLE_OPTIONS_PROP_ASPECT_DENOMINATOR:
       g_value_set_double (value, private->aspect_denominator);
       break;
-    case GIMP_RECTANGLE_OPTIONS_PROP_DEFAULT_ASPECT_NUMERATOR:
+    case LIGMA_RECTANGLE_OPTIONS_PROP_DEFAULT_ASPECT_NUMERATOR:
       g_value_set_double (value, private->default_aspect_numerator);
       break;
-    case GIMP_RECTANGLE_OPTIONS_PROP_DEFAULT_ASPECT_DENOMINATOR:
+    case LIGMA_RECTANGLE_OPTIONS_PROP_DEFAULT_ASPECT_DENOMINATOR:
       g_value_set_double (value, private->default_aspect_denominator);
       break;
-    case GIMP_RECTANGLE_OPTIONS_PROP_OVERRIDDEN_FIXED_ASPECT:
+    case LIGMA_RECTANGLE_OPTIONS_PROP_OVERRIDDEN_FIXED_ASPECT:
       g_value_set_boolean (value, private->overridden_fixed_aspect);
       break;
-    case GIMP_RECTANGLE_OPTIONS_PROP_USE_STRING_CURRENT:
+    case LIGMA_RECTANGLE_OPTIONS_PROP_USE_STRING_CURRENT:
       g_value_set_boolean (value, private->use_string_current);
       break;
-    case GIMP_RECTANGLE_OPTIONS_PROP_FIXED_UNIT:
+    case LIGMA_RECTANGLE_OPTIONS_PROP_FIXED_UNIT:
       g_value_set_int (value, private->fixed_unit);
       break;
 
-    case GIMP_RECTANGLE_OPTIONS_PROP_FIXED_CENTER:
+    case LIGMA_RECTANGLE_OPTIONS_PROP_FIXED_CENTER:
       g_value_set_boolean (value, private->fixed_center);
       break;
 
@@ -656,50 +656,50 @@ gimp_rectangle_options_get_property (GObject      *object,
 }
 
 /**
- * gimp_rectangle_options_get_size_entry:
+ * ligma_rectangle_options_get_size_entry:
  * @rectangle_options:
  *
  * Returns: GtkEntry used to enter desired size of rectangle. For
  *          testing purposes.
  **/
 GtkWidget *
-gimp_rectangle_options_get_size_entry (GimpRectangleOptions *rectangle_options)
+ligma_rectangle_options_get_size_entry (LigmaRectangleOptions *rectangle_options)
 {
-  GimpRectangleOptionsPrivate *private;
+  LigmaRectangleOptionsPrivate *private;
 
-  private = GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (rectangle_options);
+  private = LIGMA_RECTANGLE_OPTIONS_GET_PRIVATE (rectangle_options);
 
   return private->size_entry;
 }
 
 /**
- * gimp_rectangle_options_fixed_rule_changed:
+ * ligma_rectangle_options_fixed_rule_changed:
  * @combo_box:
  * @private:
  *
  * Updates tool options widgets depending on current fixed rule state.
  */
 static void
-gimp_rectangle_options_fixed_rule_changed (GtkWidget                   *combo_box,
-                                           GimpRectangleOptionsPrivate *private)
+ligma_rectangle_options_fixed_rule_changed (GtkWidget                   *combo_box,
+                                           LigmaRectangleOptionsPrivate *private)
 {
   /* Setup sensitivity for Width and Height entries */
 
-  gtk_widget_set_sensitive (gimp_size_entry_get_help_widget (
-                              GIMP_SIZE_ENTRY (private->size_entry), 0),
+  gtk_widget_set_sensitive (ligma_size_entry_get_help_widget (
+                              LIGMA_SIZE_ENTRY (private->size_entry), 0),
                             ! (private->fixed_rule_active &&
                                (private->fixed_rule ==
-                                GIMP_RECTANGLE_FIXED_WIDTH ||
+                                LIGMA_RECTANGLE_FIXED_WIDTH ||
                                 private->fixed_rule ==
-                                GIMP_RECTANGLE_FIXED_SIZE)));
+                                LIGMA_RECTANGLE_FIXED_SIZE)));
 
-  gtk_widget_set_sensitive (gimp_size_entry_get_help_widget (
-                              GIMP_SIZE_ENTRY (private->size_entry), 1),
+  gtk_widget_set_sensitive (ligma_size_entry_get_help_widget (
+                              LIGMA_SIZE_ENTRY (private->size_entry), 1),
                             ! (private->fixed_rule_active &&
                                (private->fixed_rule ==
-                                GIMP_RECTANGLE_FIXED_HEIGHT ||
+                                LIGMA_RECTANGLE_FIXED_HEIGHT ||
                                 private->fixed_rule ==
-                                GIMP_RECTANGLE_FIXED_SIZE)));
+                                LIGMA_RECTANGLE_FIXED_SIZE)));
 
   /* Setup current fixed rule entries */
 
@@ -710,37 +710,37 @@ gimp_rectangle_options_fixed_rule_changed (GtkWidget                   *combo_bo
 
   switch (private->fixed_rule)
     {
-    case GIMP_RECTANGLE_FIXED_ASPECT:
+    case LIGMA_RECTANGLE_FIXED_ASPECT:
       gtk_widget_show (private->fixed_aspect_hbox);
       break;
 
-    case GIMP_RECTANGLE_FIXED_WIDTH:
+    case LIGMA_RECTANGLE_FIXED_WIDTH:
       gtk_widget_show (private->fixed_width_entry);
       break;
 
-    case GIMP_RECTANGLE_FIXED_HEIGHT:
+    case LIGMA_RECTANGLE_FIXED_HEIGHT:
       gtk_widget_show (private->fixed_height_entry);
       break;
 
-    case GIMP_RECTANGLE_FIXED_SIZE:
+    case LIGMA_RECTANGLE_FIXED_SIZE:
       gtk_widget_show (private->fixed_size_hbox);
       break;
     }
 }
 
 static void
-gimp_rectangle_options_string_current_updates (GimpNumberPairEntry  *entry,
+ligma_rectangle_options_string_current_updates (LigmaNumberPairEntry  *entry,
                                                GParamSpec           *param,
-                                               GimpRectangleOptions *rectangle_options)
+                                               LigmaRectangleOptions *rectangle_options)
 {
-  GimpRectangleOptionsPrivate *private;
+  LigmaRectangleOptionsPrivate *private;
   gboolean                     user_override;
 
-  private = GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (rectangle_options);
+  private = LIGMA_RECTANGLE_OPTIONS_GET_PRIVATE (rectangle_options);
 
-  user_override = gimp_number_pair_entry_get_user_override (entry);
+  user_override = ligma_number_pair_entry_get_user_override (entry);
 
-  gimp_number_pair_entry_set_default_text (entry,
+  ligma_number_pair_entry_set_default_text (entry,
                                            private->use_string_current ?
                                            /* Current, as in what is currently in use. */
                                            _("Current") : NULL);
@@ -750,7 +750,7 @@ gimp_rectangle_options_string_current_updates (GimpNumberPairEntry  *entry,
 }
 
 static GtkWidget *
-gimp_rectangle_options_prop_dimension_frame_new (GObject      *config,
+ligma_rectangle_options_prop_dimension_frame_new (GObject      *config,
                                                  const gchar  *x_property_name,
                                                  const gchar  *y_property_name,
                                                  const gchar  *unit_property_name,
@@ -758,7 +758,7 @@ gimp_rectangle_options_prop_dimension_frame_new (GObject      *config,
                                                  GtkSizeGroup *label_group,
                                                  GtkWidget   **entry)
 {
-  GimpUnit       unit_value;
+  LigmaUnit       unit_value;
   GtkWidget     *frame;
   GtkWidget     *hbox;
   GtkWidget     *label;
@@ -770,7 +770,7 @@ gimp_rectangle_options_prop_dimension_frame_new (GObject      *config,
                 unit_property_name, &unit_value,
                 NULL);
 
-  frame = gimp_frame_new (NULL);
+  frame = ligma_frame_new (NULL);
 
   /*  title  */
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
@@ -783,7 +783,7 @@ gimp_rectangle_options_prop_dimension_frame_new (GObject      *config,
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  menu = gimp_prop_unit_combo_box_new (config, unit_property_name);
+  menu = ligma_prop_unit_combo_box_new (config, unit_property_name);
   gtk_box_pack_end (GTK_BOX (hbox), menu, FALSE, FALSE, 0);
 
   /*  content  */
@@ -792,22 +792,22 @@ gimp_rectangle_options_prop_dimension_frame_new (GObject      *config,
   gtk_widget_show (hbox);
 
   adjustment = gtk_adjustment_new (1, 1, 1, 1, 10, 0);
-  spinbutton = gimp_spin_button_new (adjustment, 1.0, 0);
+  spinbutton = ligma_spin_button_new (adjustment, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), SB_WIDTH);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
-  *entry = gimp_size_entry_new (1, unit_value, "%a", TRUE, TRUE, FALSE,
-                                SB_WIDTH, GIMP_SIZE_ENTRY_UPDATE_SIZE);
+  *entry = ligma_size_entry_new (1, unit_value, "%a", TRUE, TRUE, FALSE,
+                                SB_WIDTH, LIGMA_SIZE_ENTRY_UPDATE_SIZE);
   gtk_grid_set_column_spacing (GTK_GRID (*entry), 0);
-  gimp_size_entry_show_unit_menu (GIMP_SIZE_ENTRY (*entry), FALSE);
-  gimp_size_entry_add_field (GIMP_SIZE_ENTRY (*entry),
+  ligma_size_entry_show_unit_menu (LIGMA_SIZE_ENTRY (*entry), FALSE);
+  ligma_size_entry_add_field (LIGMA_SIZE_ENTRY (*entry),
                              GTK_SPIN_BUTTON (spinbutton), NULL);
   gtk_box_pack_start (GTK_BOX (hbox), *entry, FALSE, FALSE, 0);
   gtk_widget_show (*entry);
 
-  gimp_prop_coordinates_connect (config,
+  ligma_prop_coordinates_connect (config,
                                  x_property_name, y_property_name,
                                  unit_property_name,
                                  *entry, NULL, 300, 300);
@@ -816,20 +816,20 @@ gimp_rectangle_options_prop_dimension_frame_new (GObject      *config,
 }
 
 GtkWidget *
-gimp_rectangle_options_gui (GimpToolOptions *tool_options)
+ligma_rectangle_options_gui (LigmaToolOptions *tool_options)
 {
-  GimpRectangleOptionsPrivate *private;
+  LigmaRectangleOptionsPrivate *private;
   GObject                     *config = G_OBJECT (tool_options);
-  GtkWidget                   *vbox   = gimp_tool_options_gui (tool_options);
+  GtkWidget                   *vbox   = ligma_tool_options_gui (tool_options);
   GtkWidget                   *button;
   GtkWidget                   *combo;
   GtkWidget                   *frame;
   GtkSizeGroup                *label_group;
 
-  private = GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (tool_options);
+  private = LIGMA_RECTANGLE_OPTIONS_GET_PRIVATE (tool_options);
 
   /* Fixed Center */
-  button = gimp_prop_check_button_new (config, "fixed-center", NULL);
+  button = ligma_prop_check_button_new (config, "fixed-center", NULL);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
 
   /* Rectangle fixed-rules (e.g. aspect or width). */
@@ -840,7 +840,7 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
     GtkSizeGroup *size_group;
     GList        *children;
 
-    frame = gimp_frame_new (NULL);
+    frame = ligma_frame_new (NULL);
     gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
     gtk_widget_show (frame);
 
@@ -850,21 +850,21 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
     gtk_frame_set_label_widget (GTK_FRAME (frame), hbox);
     gtk_widget_show (hbox);
 
-    button = gimp_prop_check_button_new (config, "fixed-rule-active", NULL);
+    button = ligma_prop_check_button_new (config, "fixed-rule-active", NULL);
     gtk_widget_destroy (gtk_bin_get_child (GTK_BIN (button)));
     gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, TRUE, 0);
 
     g_signal_connect (button, "toggled",
-                      G_CALLBACK (gimp_rectangle_options_fixed_rule_changed),
+                      G_CALLBACK (ligma_rectangle_options_fixed_rule_changed),
                       private);
 
-    combo = gimp_prop_enum_combo_box_new (config, "fixed-rule", 0, 0);
-    gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Fixed"));
+    combo = ligma_prop_enum_combo_box_new (config, "fixed-rule", 0, 0);
+    ligma_int_combo_box_set_label (LIGMA_INT_COMBO_BOX (combo), _("Fixed"));
     g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
     gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
 
     g_signal_connect (combo, "changed",
-                      G_CALLBACK (gimp_rectangle_options_fixed_rule_changed),
+                      G_CALLBACK (ligma_rectangle_options_fixed_rule_changed),
                       private);
 
     /* Setup frame content */
@@ -886,7 +886,7 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
     g_object_add_weak_pointer (G_OBJECT (private->fixed_aspect_hbox),
                                (gpointer) &private->fixed_aspect_hbox);
 
-    entry = gimp_prop_number_pair_entry_new (config,
+    entry = ligma_prop_number_pair_entry_new (config,
                                              "aspect-numerator",
                                              "aspect-denominator",
                                              "default-aspect-numerator",
@@ -895,24 +895,24 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
                                              FALSE, TRUE,
                                              ":/" "xX*",
                                              TRUE,
-                                             0.001, GIMP_MAX_IMAGE_SIZE);
+                                             0.001, LIGMA_MAX_IMAGE_SIZE);
     gtk_box_pack_start (GTK_BOX (private->fixed_aspect_hbox), entry,
                         TRUE, TRUE, 0);
 
     g_signal_connect (entry, "notify::user-override",
-                      G_CALLBACK (gimp_rectangle_options_string_current_updates),
+                      G_CALLBACK (ligma_rectangle_options_string_current_updates),
                       config);
     g_signal_connect_swapped (config, "notify::use-string-current",
-                              G_CALLBACK (gimp_rectangle_options_string_current_updates),
+                              G_CALLBACK (ligma_rectangle_options_string_current_updates),
                               entry);
 
-    gimp_rectangle_options_setup_ratio_completion (GIMP_RECTANGLE_OPTIONS (tool_options),
+    ligma_rectangle_options_setup_ratio_completion (LIGMA_RECTANGLE_OPTIONS (tool_options),
                                                    entry,
                                                    private->aspect_history);
 
     private->aspect_button_box =
-      gimp_prop_enum_icon_box_new (G_OBJECT (entry),
-                                   "aspect", "gimp", -1, -1);
+      ligma_prop_enum_icon_box_new (G_OBJECT (entry),
+                                   "aspect", "ligma", -1, -1);
     gtk_box_pack_start (GTK_BOX (private->fixed_aspect_hbox),
                         private->aspect_button_box, FALSE, FALSE, 0);
 
@@ -927,9 +927,9 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
 
     /* Fixed width entry */
     private->fixed_width_entry =
-      gimp_prop_size_entry_new (config,
+      ligma_prop_size_entry_new (config,
                                 "desired-fixed-width", TRUE, "fixed-unit", "%a",
-                                GIMP_SIZE_ENTRY_UPDATE_SIZE, 300);
+                                LIGMA_SIZE_ENTRY_UPDATE_SIZE, 300);
     gtk_box_pack_start (GTK_BOX (vbox2), private->fixed_width_entry,
                         FALSE, FALSE, 0);
     gtk_size_group_add_widget (size_group, private->fixed_width_entry);
@@ -940,9 +940,9 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
 
     /* Fixed height entry */
     private->fixed_height_entry =
-      gimp_prop_size_entry_new (config,
+      ligma_prop_size_entry_new (config,
                                 "desired-fixed-height", TRUE, "fixed-unit", "%a",
-                                GIMP_SIZE_ENTRY_UPDATE_SIZE, 300);
+                                LIGMA_SIZE_ENTRY_UPDATE_SIZE, 300);
     gtk_box_pack_start (GTK_BOX (vbox2), private->fixed_height_entry,
                         FALSE, FALSE, 0);
     gtk_size_group_add_widget (size_group, private->fixed_height_entry);
@@ -961,7 +961,7 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
     g_object_add_weak_pointer (G_OBJECT (private->fixed_size_hbox),
                                (gpointer) &private->fixed_size_hbox);
 
-    entry = gimp_prop_number_pair_entry_new (config,
+    entry = ligma_prop_number_pair_entry_new (config,
                                              "desired-fixed-size-width",
                                              "desired-fixed-size-height",
                                              "default-fixed-size-width",
@@ -970,17 +970,17 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
                                              TRUE, FALSE,
                                              "xX*" ":/",
                                              FALSE,
-                                             1, GIMP_MAX_IMAGE_SIZE);
+                                             1, LIGMA_MAX_IMAGE_SIZE);
     gtk_box_pack_start (GTK_BOX (private->fixed_size_hbox), entry,
                         TRUE, TRUE, 0);
 
-    gimp_rectangle_options_setup_ratio_completion (GIMP_RECTANGLE_OPTIONS (tool_options),
+    ligma_rectangle_options_setup_ratio_completion (LIGMA_RECTANGLE_OPTIONS (tool_options),
                                                    entry,
                                                    private->size_history);
 
     private->size_button_box =
-      gimp_prop_enum_icon_box_new (G_OBJECT (entry),
-                                   "aspect", "gimp", -1, -1);
+      ligma_prop_enum_icon_box_new (G_OBJECT (entry),
+                                   "aspect", "ligma", -1, -1);
     gtk_box_pack_start (GTK_BOX (private->fixed_size_hbox),
                         private->size_button_box, FALSE, FALSE, 0);
 
@@ -994,7 +994,7 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
   label_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
   /* X, Y */
-  frame = gimp_rectangle_options_prop_dimension_frame_new (config,
+  frame = ligma_rectangle_options_prop_dimension_frame_new (config,
                                                            "x", "y",
                                                            "position-unit",
                                                            _("Position:"),
@@ -1004,7 +1004,7 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (frame);
 
   /* Width, Height */
-  frame = gimp_rectangle_options_prop_dimension_frame_new (config,
+  frame = ligma_rectangle_options_prop_dimension_frame_new (config,
                                                            "width", "height",
                                                            "size-unit",
                                                            _("Size:"),
@@ -1019,19 +1019,19 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
   {
     GtkWidget *scale;
 
-    scale = gimp_prop_spin_scale_new (config, "highlight-opacity",
+    scale = ligma_prop_spin_scale_new (config, "highlight-opacity",
                                       0.01, 0.1, 0);
-    gimp_prop_widget_set_factor (scale, 100.0, 1.0, 10.0, 1);
+    ligma_prop_widget_set_factor (scale, 100.0, 1.0, 10.0, 1);
 
-    frame = gimp_prop_expanding_frame_new (config, "highlight", NULL,
+    frame = ligma_prop_expanding_frame_new (config, "highlight", NULL,
                                            scale, NULL);
     gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   }
 
   /*  Guide  */
-  combo = gimp_prop_enum_combo_box_new (config, "guide",
-                                        GIMP_GUIDES_NONE,
-                                        GIMP_GUIDES_DIAGONALS);
+  combo = ligma_prop_enum_combo_box_new (config, "guide",
+                                        LIGMA_GUIDES_NONE,
+                                        LIGMA_GUIDES_DIAGONALS);
   gtk_box_pack_start (GTK_BOX (vbox), combo, FALSE, FALSE, 0);
 
   /*  Auto Shrink  */
@@ -1044,76 +1044,76 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
   g_object_add_weak_pointer (G_OBJECT (private->auto_shrink_button),
                              (gpointer) &private->auto_shrink_button);
 
-  button = gimp_prop_check_button_new (config, "shrink-merged", NULL);
+  button = ligma_prop_check_button_new (config, "shrink-merged", NULL);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
 
   /* Setup initial fixed rule widgets */
-  gimp_rectangle_options_fixed_rule_changed (NULL, private);
+  ligma_rectangle_options_fixed_rule_changed (NULL, private);
 
   return vbox;
 }
 
 void
-gimp_rectangle_options_connect (GimpRectangleOptions *options,
-                                GimpImage            *image,
+ligma_rectangle_options_connect (LigmaRectangleOptions *options,
+                                LigmaImage            *image,
                                 GCallback             shrink_callback,
                                 gpointer              shrink_object)
 {
-  GimpRectangleOptionsPrivate *options_private;
+  LigmaRectangleOptionsPrivate *options_private;
   gdouble                      xres;
   gdouble                      yres;
 
-  g_return_if_fail (GIMP_IS_RECTANGLE_OPTIONS (options));
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (LIGMA_IS_RECTANGLE_OPTIONS (options));
+  g_return_if_fail (LIGMA_IS_IMAGE (image));
   g_return_if_fail (shrink_callback != NULL);
   g_return_if_fail (shrink_object != NULL);
 
-  options_private = GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (options);
+  options_private = LIGMA_RECTANGLE_OPTIONS_GET_PRIVATE (options);
 
-  gimp_image_get_resolution (image, &xres, &yres);
+  ligma_image_get_resolution (image, &xres, &yres);
 
   if (options_private->fixed_width_entry)
     {
       GtkWidget *entry = options_private->fixed_width_entry;
 
-      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (entry), 0, xres, FALSE);
-      gimp_size_entry_set_size (GIMP_SIZE_ENTRY (entry), 0,
-                                0, gimp_image_get_width (image));
+      ligma_size_entry_set_resolution (LIGMA_SIZE_ENTRY (entry), 0, xres, FALSE);
+      ligma_size_entry_set_size (LIGMA_SIZE_ENTRY (entry), 0,
+                                0, ligma_image_get_width (image));
     }
 
   if (options_private->fixed_height_entry)
     {
       GtkWidget *entry = options_private->fixed_height_entry;
 
-      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (entry), 0, yres, FALSE);
-      gimp_size_entry_set_size (GIMP_SIZE_ENTRY (entry), 0,
-                                0, gimp_image_get_height (image));
+      ligma_size_entry_set_resolution (LIGMA_SIZE_ENTRY (entry), 0, yres, FALSE);
+      ligma_size_entry_set_size (LIGMA_SIZE_ENTRY (entry), 0,
+                                0, ligma_image_get_height (image));
     }
 
   if (options_private->position_entry)
     {
       GtkWidget *entry = options_private->position_entry;
 
-      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (entry), 0, xres, FALSE);
-      gimp_size_entry_set_size (GIMP_SIZE_ENTRY (entry), 0,
-                                0, gimp_image_get_width (image));
+      ligma_size_entry_set_resolution (LIGMA_SIZE_ENTRY (entry), 0, xres, FALSE);
+      ligma_size_entry_set_size (LIGMA_SIZE_ENTRY (entry), 0,
+                                0, ligma_image_get_width (image));
 
-      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (entry), 1, yres, FALSE);
-      gimp_size_entry_set_size (GIMP_SIZE_ENTRY (entry), 1,
-                                0, gimp_image_get_height (image));
+      ligma_size_entry_set_resolution (LIGMA_SIZE_ENTRY (entry), 1, yres, FALSE);
+      ligma_size_entry_set_size (LIGMA_SIZE_ENTRY (entry), 1,
+                                0, ligma_image_get_height (image));
     }
 
   if (options_private->size_entry)
     {
       GtkWidget *entry = options_private->size_entry;
 
-      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (entry), 0, xres, FALSE);
-      gimp_size_entry_set_size (GIMP_SIZE_ENTRY (entry), 0,
-                                0, gimp_image_get_width (image));
+      ligma_size_entry_set_resolution (LIGMA_SIZE_ENTRY (entry), 0, xres, FALSE);
+      ligma_size_entry_set_size (LIGMA_SIZE_ENTRY (entry), 0,
+                                0, ligma_image_get_width (image));
 
-      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (entry), 1, yres, FALSE);
-      gimp_size_entry_set_size (GIMP_SIZE_ENTRY (entry), 1,
-                                0, gimp_image_get_height (image));
+      ligma_size_entry_set_resolution (LIGMA_SIZE_ENTRY (entry), 1, yres, FALSE);
+      ligma_size_entry_set_size (LIGMA_SIZE_ENTRY (entry), 1,
+                                0, ligma_image_get_height (image));
     }
 
   if (options_private->auto_shrink_button)
@@ -1127,17 +1127,17 @@ gimp_rectangle_options_connect (GimpRectangleOptions *options,
 }
 
 void
-gimp_rectangle_options_disconnect (GimpRectangleOptions *options,
+ligma_rectangle_options_disconnect (LigmaRectangleOptions *options,
                                    GCallback             shrink_callback,
                                    gpointer              shrink_object)
 {
-  GimpRectangleOptionsPrivate *options_private;
+  LigmaRectangleOptionsPrivate *options_private;
 
-  g_return_if_fail (GIMP_IS_RECTANGLE_OPTIONS (options));
+  g_return_if_fail (LIGMA_IS_RECTANGLE_OPTIONS (options));
   g_return_if_fail (shrink_callback != NULL);
   g_return_if_fail (shrink_object != NULL);
 
-  options_private = GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (options);
+  options_private = LIGMA_RECTANGLE_OPTIONS_GET_PRIVATE (options);
 
   if (options_private->auto_shrink_button)
     {
@@ -1150,28 +1150,28 @@ gimp_rectangle_options_disconnect (GimpRectangleOptions *options,
 }
 
 /**
- * gimp_rectangle_options_fixed_rule_active:
+ * ligma_rectangle_options_fixed_rule_active:
  * @rectangle_options:
  * @fixed_rule:
  *
  * Returns: %TRUE if @fixed_rule is active, %FALSE otherwise.
  */
 gboolean
-gimp_rectangle_options_fixed_rule_active (GimpRectangleOptions   *rectangle_options,
-                                          GimpRectangleFixedRule  fixed_rule)
+ligma_rectangle_options_fixed_rule_active (LigmaRectangleOptions   *rectangle_options,
+                                          LigmaRectangleFixedRule  fixed_rule)
 {
-  GimpRectangleOptionsPrivate *private;
+  LigmaRectangleOptionsPrivate *private;
 
-  g_return_val_if_fail (GIMP_IS_RECTANGLE_OPTIONS (rectangle_options), FALSE);
+  g_return_val_if_fail (LIGMA_IS_RECTANGLE_OPTIONS (rectangle_options), FALSE);
 
-  private = GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (rectangle_options);
+  private = LIGMA_RECTANGLE_OPTIONS_GET_PRIVATE (rectangle_options);
 
   return private->fixed_rule_active &&
          private->fixed_rule == fixed_rule;
 }
 
 static void
-gimp_rectangle_options_setup_ratio_completion (GimpRectangleOptions *rectangle_options,
+ligma_rectangle_options_setup_ratio_completion (LigmaRectangleOptions *rectangle_options,
                                                GtkWidget            *entry,
                                                GtkListStore         *history)
 {
@@ -1187,19 +1187,19 @@ gimp_rectangle_options_setup_ratio_completion (GimpRectangleOptions *rectangle_o
   g_object_unref (completion);
 
   g_signal_connect (entry, "ratio-changed",
-                    G_CALLBACK (gimp_number_pair_entry_history_add),
+                    G_CALLBACK (ligma_number_pair_entry_history_add),
                     history);
 
   g_signal_connect (completion, "match-selected",
-                    G_CALLBACK (gimp_number_pair_entry_history_select),
+                    G_CALLBACK (ligma_number_pair_entry_history_select),
                     entry);
 }
 
 static gboolean
-gimp_number_pair_entry_history_select (GtkEntryCompletion  *completion,
+ligma_number_pair_entry_history_select (GtkEntryCompletion  *completion,
                                        GtkTreeModel        *model,
                                        GtkTreeIter         *iter,
-                                       GimpNumberPairEntry *entry)
+                                       LigmaNumberPairEntry *entry)
 {
   gdouble left_number;
   gdouble right_number;
@@ -1209,13 +1209,13 @@ gimp_number_pair_entry_history_select (GtkEntryCompletion  *completion,
                       COLUMN_RIGHT_NUMBER, &right_number,
                       -1);
 
-  gimp_number_pair_entry_set_values (entry, left_number, right_number);
+  ligma_number_pair_entry_set_values (entry, left_number, right_number);
 
   return TRUE;
 }
 
 static void
-gimp_number_pair_entry_history_add (GtkWidget    *entry,
+ligma_number_pair_entry_history_add (GtkWidget    *entry,
                                     GtkTreeModel *model)
 {
   GValue       value = G_VALUE_INIT;
@@ -1226,7 +1226,7 @@ gimp_number_pair_entry_history_add (GtkWidget    *entry,
   const gchar *text;
 
   text = gtk_entry_get_text (GTK_ENTRY (entry));
-  gimp_number_pair_entry_get_values (GIMP_NUMBER_PAIR_ENTRY (entry),
+  ligma_number_pair_entry_get_values (LIGMA_NUMBER_PAIR_ENTRY (entry),
                                      &left_number,
                                      &right_number);
 

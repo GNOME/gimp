@@ -10,20 +10,20 @@ sizes = [
 
 foreach size : sizes
   sizedir = size+'x'+size
-  install_data(sizedir / 'gimp.png',
+  install_data(sizedir / 'ligma.png',
     install_dir: get_option('datadir') / 'icons' / 'hicolor' / sizedir / 'apps'
   )
 endforeach
-install_data('scalable/gimp.svg',
+install_data('scalable/ligma.svg',
   install_dir: get_option('datadir') / 'icons' / 'hicolor' / 'scalable' / 'apps'
 )
 
-desktopfilename = 'gimp.desktop'
+desktopfilename = 'ligma.desktop'
 
 desktop_conf = configuration_data()
-desktop_conf.set('GIMP_COMMAND',      gimp_command)
-desktop_conf.set('GIMP_VERSION',      gimp_version)
-desktop_conf.set('GIMP_APP_VERSION',  gimp_app_version)
+desktop_conf.set('LIGMA_COMMAND',      ligma_command)
+desktop_conf.set('LIGMA_VERSION',      ligma_version)
+desktop_conf.set('LIGMA_APP_VERSION',  ligma_app_version)
 desktop_conf.set('MIME_TYPES',        ';'.join(MIMEtypes))
 desktop_conf.set('BUG_REPORT_URL',    bug_report_url)
 
@@ -42,7 +42,7 @@ desktopfile = i18n.merge_file(
   install_dir: get_option('datadir') / 'applications',
 )
 
-appdatafilename = 'org.gimp.GIMP.appdata.xml'
+appdatafilename = 'org.ligma.LIGMA.appdata.xml'
 appdatafilein = configure_file(
   input : appdatafilename+'.in.in',
   output: appdatafilename+'.in',
@@ -69,7 +69,7 @@ if appstreamcli.found()
     appstreamcli,
     args: [ 'validate', appdatafile ],
     env: [
-      'GIMP_TESTING_ABS_TOP_BUILDDIR=' + meson.project_build_root(),
+      'LIGMA_TESTING_ABS_TOP_BUILDDIR=' + meson.project_build_root(),
     ],
     suite: 'desktop',
   )

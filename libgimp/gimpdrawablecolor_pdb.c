@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimpdrawablecolor_pdb.c
+ * ligmadrawablecolor_pdb.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,12 +24,12 @@
 
 #include "stamp-pdbgen.h"
 
-#include "gimp.h"
+#include "ligma.h"
 
 
 /**
- * SECTION: gimpdrawablecolor
- * @title: gimpdrawablecolor
+ * SECTION: ligmadrawablecolor
+ * @title: ligmadrawablecolor
  * @short_description: Functions for manipulating a drawable's color.
  *
  * Functions for manipulating a drawable's color, including curves and
@@ -38,7 +38,7 @@
 
 
 /**
- * gimp_drawable_brightness_contrast:
+ * ligma_drawable_brightness_contrast:
  * @drawable: The drawable.
  * @brightness: Brightness adjustment.
  * @contrast: Contrast adjustment.
@@ -54,34 +54,34 @@
  * Since: 2.10
  **/
 gboolean
-gimp_drawable_brightness_contrast (GimpDrawable *drawable,
+ligma_drawable_brightness_contrast (LigmaDrawable *drawable,
                                    gdouble       brightness,
                                    gdouble       contrast)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
                                           G_TYPE_DOUBLE, brightness,
                                           G_TYPE_DOUBLE, contrast,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-drawable-brightness-contrast",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-drawable-brightness-contrast",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_drawable_color_balance:
+ * ligma_drawable_color_balance:
  * @drawable: The drawable.
  * @transfer_mode: Transfer mode.
  * @preserve_lum: Preserve luminosity values at each pixel.
@@ -105,40 +105,40 @@ gimp_drawable_brightness_contrast (GimpDrawable *drawable,
  * Since: 2.10
  **/
 gboolean
-gimp_drawable_color_balance (GimpDrawable     *drawable,
-                             GimpTransferMode  transfer_mode,
+ligma_drawable_color_balance (LigmaDrawable     *drawable,
+                             LigmaTransferMode  transfer_mode,
                              gboolean          preserve_lum,
                              gdouble           cyan_red,
                              gdouble           magenta_green,
                              gdouble           yellow_blue)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
-                                          GIMP_TYPE_TRANSFER_MODE, transfer_mode,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
+                                          LIGMA_TYPE_TRANSFER_MODE, transfer_mode,
                                           G_TYPE_BOOLEAN, preserve_lum,
                                           G_TYPE_DOUBLE, cyan_red,
                                           G_TYPE_DOUBLE, magenta_green,
                                           G_TYPE_DOUBLE, yellow_blue,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-drawable-color-balance",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-drawable-color-balance",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_drawable_colorize_hsl:
+ * ligma_drawable_colorize_hsl:
  * @drawable: The drawable.
  * @hue: Hue in degrees.
  * @saturation: Saturation in percent.
@@ -156,36 +156,36 @@ gimp_drawable_color_balance (GimpDrawable     *drawable,
  * Since: 2.10
  **/
 gboolean
-gimp_drawable_colorize_hsl (GimpDrawable *drawable,
+ligma_drawable_colorize_hsl (LigmaDrawable *drawable,
                             gdouble       hue,
                             gdouble       saturation,
                             gdouble       lightness)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
                                           G_TYPE_DOUBLE, hue,
                                           G_TYPE_DOUBLE, saturation,
                                           G_TYPE_DOUBLE, lightness,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-drawable-colorize-hsl",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-drawable-colorize-hsl",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_drawable_curves_explicit:
+ * ligma_drawable_curves_explicit:
  * @drawable: The drawable.
  * @channel: The channel to modify.
  * @num_values: The number of values in the new curve.
@@ -197,7 +197,7 @@ gimp_drawable_colorize_hsl (GimpDrawable *drawable,
  * drawable. The channel can be either an intensity component, or the
  * value. The 'values' parameter is an array of doubles which
  * explicitly defines how each pixel value in the drawable will be
- * modified. Use the gimp_drawable_curves_spline() function to modify
+ * modified. Use the ligma_drawable_curves_spline() function to modify
  * intensity levels with Catmull Rom splines.
  *
  * Returns: TRUE on success.
@@ -205,37 +205,37 @@ gimp_drawable_colorize_hsl (GimpDrawable *drawable,
  * Since: 2.10
  **/
 gboolean
-gimp_drawable_curves_explicit (GimpDrawable         *drawable,
-                               GimpHistogramChannel  channel,
+ligma_drawable_curves_explicit (LigmaDrawable         *drawable,
+                               LigmaHistogramChannel  channel,
                                gint                  num_values,
                                const gdouble        *values)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
-                                          GIMP_TYPE_HISTOGRAM_CHANNEL, channel,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
+                                          LIGMA_TYPE_HISTOGRAM_CHANNEL, channel,
                                           G_TYPE_INT, num_values,
-                                          GIMP_TYPE_FLOAT_ARRAY, NULL,
+                                          LIGMA_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_NONE);
-  gimp_value_set_float_array (gimp_value_array_index (args, 3), values, num_values);
+  ligma_value_set_float_array (ligma_value_array_index (args, 3), values, num_values);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-drawable-curves-explicit",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-drawable-curves-explicit",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_drawable_curves_spline:
+ * ligma_drawable_curves_spline:
  * @drawable: The drawable.
  * @channel: The channel to modify.
  * @num_points: The number of values in the control point array.
@@ -248,7 +248,7 @@ gimp_drawable_curves_explicit (GimpDrawable         *drawable,
  * value. The 'points' parameter is an array of doubles which define a
  * set of control points which describe a Catmull Rom spline which
  * yields the final intensity curve. Use the
- * gimp_drawable_curves_explicit() function to explicitly modify
+ * ligma_drawable_curves_explicit() function to explicitly modify
  * intensity levels.
  *
  * Returns: TRUE on success.
@@ -256,37 +256,37 @@ gimp_drawable_curves_explicit (GimpDrawable         *drawable,
  * Since: 2.10
  **/
 gboolean
-gimp_drawable_curves_spline (GimpDrawable         *drawable,
-                             GimpHistogramChannel  channel,
+ligma_drawable_curves_spline (LigmaDrawable         *drawable,
+                             LigmaHistogramChannel  channel,
                              gint                  num_points,
                              const gdouble        *points)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
-                                          GIMP_TYPE_HISTOGRAM_CHANNEL, channel,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
+                                          LIGMA_TYPE_HISTOGRAM_CHANNEL, channel,
                                           G_TYPE_INT, num_points,
-                                          GIMP_TYPE_FLOAT_ARRAY, NULL,
+                                          LIGMA_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_NONE);
-  gimp_value_set_float_array (gimp_value_array_index (args, 3), points, num_points);
+  ligma_value_set_float_array (ligma_value_array_index (args, 3), points, num_points);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-drawable-curves-spline",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-drawable-curves-spline",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_drawable_desaturate:
+ * ligma_drawable_desaturate:
  * @drawable: The drawable.
  * @desaturate_mode: The formula to use to desaturate.
  *
@@ -302,32 +302,32 @@ gimp_drawable_curves_spline (GimpDrawable         *drawable,
  * Since: 2.10
  **/
 gboolean
-gimp_drawable_desaturate (GimpDrawable       *drawable,
-                          GimpDesaturateMode  desaturate_mode)
+ligma_drawable_desaturate (LigmaDrawable       *drawable,
+                          LigmaDesaturateMode  desaturate_mode)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
-                                          GIMP_TYPE_DESATURATE_MODE, desaturate_mode,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
+                                          LIGMA_TYPE_DESATURATE_MODE, desaturate_mode,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-drawable-desaturate",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-drawable-desaturate",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_drawable_equalize:
+ * ligma_drawable_equalize:
  * @drawable: The drawable.
  * @mask_only: Equalization option.
  *
@@ -346,32 +346,32 @@ gimp_drawable_desaturate (GimpDrawable       *drawable,
  * Since: 2.10
  **/
 gboolean
-gimp_drawable_equalize (GimpDrawable *drawable,
+ligma_drawable_equalize (LigmaDrawable *drawable,
                         gboolean      mask_only)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
                                           G_TYPE_BOOLEAN, mask_only,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-drawable-equalize",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-drawable-equalize",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_drawable_histogram:
+ * ligma_drawable_histogram:
  * @drawable: The drawable.
  * @channel: The channel to query.
  * @start_range: Start of the intensity measurement range.
@@ -390,7 +390,7 @@ gimp_drawable_equalize (GimpDrawable *drawable,
  * intensity histogram of a drawable. A channel to examine is first
  * specified. This can be either value, red, green, or blue, depending
  * on whether the drawable is of type color or grayscale. Second, a
- * range of intensities are specified. The gimp_drawable_histogram()
+ * range of intensities are specified. The ligma_drawable_histogram()
  * function returns statistics based on the pixels in the drawable that
  * fall under this range of values. Mean, standard deviation, median,
  * number of pixels, and percentile are all returned. Additionally, the
@@ -407,8 +407,8 @@ gimp_drawable_equalize (GimpDrawable *drawable,
  * Since: 2.10
  **/
 gboolean
-gimp_drawable_histogram (GimpDrawable         *drawable,
-                         GimpHistogramChannel  channel,
+ligma_drawable_histogram (LigmaDrawable         *drawable,
+                         LigmaHistogramChannel  channel,
                          gdouble               start_range,
                          gdouble               end_range,
                          gdouble              *mean,
@@ -418,21 +418,21 @@ gimp_drawable_histogram (GimpDrawable         *drawable,
                          gdouble              *count,
                          gdouble              *percentile)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
-                                          GIMP_TYPE_HISTOGRAM_CHANNEL, channel,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
+                                          LIGMA_TYPE_HISTOGRAM_CHANNEL, channel,
                                           G_TYPE_DOUBLE, start_range,
                                           G_TYPE_DOUBLE, end_range,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-drawable-histogram",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-drawable-histogram",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
   *mean = 0.0;
   *std_dev = 0.0;
@@ -441,25 +441,25 @@ gimp_drawable_histogram (GimpDrawable         *drawable,
   *count = 0.0;
   *percentile = 0.0;
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
   if (success)
     {
-      *mean = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
-      *std_dev = GIMP_VALUES_GET_DOUBLE (return_vals, 2);
-      *median = GIMP_VALUES_GET_DOUBLE (return_vals, 3);
-      *pixels = GIMP_VALUES_GET_DOUBLE (return_vals, 4);
-      *count = GIMP_VALUES_GET_DOUBLE (return_vals, 5);
-      *percentile = GIMP_VALUES_GET_DOUBLE (return_vals, 6);
+      *mean = LIGMA_VALUES_GET_DOUBLE (return_vals, 1);
+      *std_dev = LIGMA_VALUES_GET_DOUBLE (return_vals, 2);
+      *median = LIGMA_VALUES_GET_DOUBLE (return_vals, 3);
+      *pixels = LIGMA_VALUES_GET_DOUBLE (return_vals, 4);
+      *count = LIGMA_VALUES_GET_DOUBLE (return_vals, 5);
+      *percentile = LIGMA_VALUES_GET_DOUBLE (return_vals, 6);
     }
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_drawable_hue_saturation:
+ * ligma_drawable_hue_saturation:
  * @drawable: The drawable.
  * @hue_range: Range of affected hues.
  * @hue_offset: Hue offset in degrees.
@@ -480,40 +480,40 @@ gimp_drawable_histogram (GimpDrawable         *drawable,
  * Since: 2.10
  **/
 gboolean
-gimp_drawable_hue_saturation (GimpDrawable *drawable,
-                              GimpHueRange  hue_range,
+ligma_drawable_hue_saturation (LigmaDrawable *drawable,
+                              LigmaHueRange  hue_range,
                               gdouble       hue_offset,
                               gdouble       lightness,
                               gdouble       saturation,
                               gdouble       overlap)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
-                                          GIMP_TYPE_HUE_RANGE, hue_range,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
+                                          LIGMA_TYPE_HUE_RANGE, hue_range,
                                           G_TYPE_DOUBLE, hue_offset,
                                           G_TYPE_DOUBLE, lightness,
                                           G_TYPE_DOUBLE, saturation,
                                           G_TYPE_DOUBLE, overlap,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-drawable-hue-saturation",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-drawable-hue-saturation",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_drawable_invert:
+ * ligma_drawable_invert:
  * @drawable: The drawable.
  * @linear: Whether to invert in linear space.
  *
@@ -529,32 +529,32 @@ gimp_drawable_hue_saturation (GimpDrawable *drawable,
  * Since: 2.10
  **/
 gboolean
-gimp_drawable_invert (GimpDrawable *drawable,
+ligma_drawable_invert (LigmaDrawable *drawable,
                       gboolean      linear)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
                                           G_TYPE_BOOLEAN, linear,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-drawable-invert",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-drawable-invert",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_drawable_levels:
+ * ligma_drawable_levels:
  * @drawable: The drawable.
  * @channel: The channel to modify.
  * @low_input: Intensity of lowest input.
@@ -585,8 +585,8 @@ gimp_drawable_invert (GimpDrawable *drawable,
  * Since: 2.10
  **/
 gboolean
-gimp_drawable_levels (GimpDrawable         *drawable,
-                      GimpHistogramChannel  channel,
+ligma_drawable_levels (LigmaDrawable         *drawable,
+                      LigmaHistogramChannel  channel,
                       gdouble               low_input,
                       gdouble               high_input,
                       gboolean              clamp_input,
@@ -595,13 +595,13 @@ gimp_drawable_levels (GimpDrawable         *drawable,
                       gdouble               high_output,
                       gboolean              clamp_output)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
-                                          GIMP_TYPE_HISTOGRAM_CHANNEL, channel,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
+                                          LIGMA_TYPE_HISTOGRAM_CHANNEL, channel,
                                           G_TYPE_DOUBLE, low_input,
                                           G_TYPE_DOUBLE, high_input,
                                           G_TYPE_BOOLEAN, clamp_input,
@@ -611,20 +611,20 @@ gimp_drawable_levels (GimpDrawable         *drawable,
                                           G_TYPE_BOOLEAN, clamp_output,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-drawable-levels",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-drawable-levels",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_drawable_levels_stretch:
+ * ligma_drawable_levels_stretch:
  * @drawable: The drawable.
  *
  * Automatically modifies intensity levels in the specified drawable.
@@ -638,30 +638,30 @@ gimp_drawable_levels (GimpDrawable         *drawable,
  * Since: 2.10
  **/
 gboolean
-gimp_drawable_levels_stretch (GimpDrawable *drawable)
+ligma_drawable_levels_stretch (LigmaDrawable *drawable)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-drawable-levels-stretch",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-drawable-levels-stretch",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_drawable_posterize:
+ * ligma_drawable_posterize:
  * @drawable: The drawable.
  * @levels: Levels of posterization.
  *
@@ -675,32 +675,32 @@ gimp_drawable_levels_stretch (GimpDrawable *drawable)
  * Since: 2.10
  **/
 gboolean
-gimp_drawable_posterize (GimpDrawable *drawable,
+ligma_drawable_posterize (LigmaDrawable *drawable,
                          gint          levels)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
                                           G_TYPE_INT, levels,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-drawable-posterize",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-drawable-posterize",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_drawable_threshold:
+ * ligma_drawable_threshold:
  * @drawable: The drawable.
  * @channel: The channel to base the threshold on.
  * @low_threshold: The low threshold value.
@@ -718,30 +718,30 @@ gimp_drawable_posterize (GimpDrawable *drawable,
  * Since: 2.10
  **/
 gboolean
-gimp_drawable_threshold (GimpDrawable         *drawable,
-                         GimpHistogramChannel  channel,
+ligma_drawable_threshold (LigmaDrawable         *drawable,
+                         LigmaHistogramChannel  channel,
                          gdouble               low_threshold,
                          gdouble               high_threshold)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
-                                          GIMP_TYPE_HISTOGRAM_CHANNEL, channel,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
+                                          LIGMA_TYPE_HISTOGRAM_CHANNEL, channel,
                                           G_TYPE_DOUBLE, low_threshold,
                                           G_TYPE_DOUBLE, high_threshold,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-drawable-threshold",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-drawable-threshold",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }

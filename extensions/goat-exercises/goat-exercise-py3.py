@@ -14,10 +14,10 @@
 #   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import gi
-gi.require_version('Gimp', '3.0')
-from gi.repository import Gimp
-gi.require_version('GimpUi', '3.0')
-from gi.repository import GimpUi
+gi.require_version('Ligma', '3.0')
+from gi.repository import Ligma
+gi.require_version('LigmaUi', '3.0')
+from gi.repository import LigmaUi
 gi.require_version('Gegl', '0.4')
 from gi.repository import Gegl
 from gi.repository import GObject
@@ -30,21 +30,21 @@ import sys
 def N_(message): return message
 def _(message): return GLib.dgettext(None, message)
 
-class Goat (Gimp.PlugIn):
-    ## GimpPlugIn virtual methods ##
+class Goat (Ligma.PlugIn):
+    ## LigmaPlugIn virtual methods ##
     def do_query_procedures(self):
         return [ "plug-in-goat-exercise-python" ]
 
     def do_create_procedure(self, name):
-        procedure = Gimp.ImageProcedure.new(self, name,
-                                       Gimp.PDBProcType.PLUGIN,
+        procedure = Ligma.ImageProcedure.new(self, name,
+                                       Ligma.PDBProcType.PLUGIN,
                                        self.run, None)
 
         procedure.set_image_types("*")
-        procedure.set_sensitivity_mask (Gimp.ProcedureSensitivityMask.DRAWABLE)
+        procedure.set_sensitivity_mask (Ligma.ProcedureSensitivityMask.DRAWABLE)
 
         procedure.set_menu_label(N_("Exercise a goat and a python"))
-        procedure.set_icon_name(GimpUi.ICON_GEGL)
+        procedure.set_icon_name(LigmaUi.ICON_GEGL)
         procedure.add_menu_path('<Image>/Filters/Development/Goat exercises/')
 
         procedure.set_documentation(N_("Exercise a goat in the Python 3 language"),
@@ -57,20 +57,20 @@ class Goat (Gimp.PlugIn):
     def run(self, procedure, run_mode, image, n_drawables, drawables, args, run_data):
         if n_drawables != 1:
             msg = _("Procedure '{}' only works with one drawable.").format(procedure.get_name())
-            error = GLib.Error.new_literal(Gimp.PlugIn.error_quark(), msg, 0)
-            return procedure.new_return_values(Gimp.PDBStatusType.CALLING_ERROR, error)
+            error = GLib.Error.new_literal(Ligma.PlugIn.error_quark(), msg, 0)
+            return procedure.new_return_values(Ligma.PDBStatusType.CALLING_ERROR, error)
         else:
             drawable = drawables[0]
 
-        if run_mode == Gimp.RunMode.INTERACTIVE:
+        if run_mode == Ligma.RunMode.INTERACTIVE:
             gi.require_version('Gtk', '3.0')
             from gi.repository import Gtk
             gi.require_version('Gdk', '3.0')
             from gi.repository import Gdk
 
-            GimpUi.init("goat-exercise-py3.py")
+            LigmaUi.init("goat-exercise-py3.py")
 
-            dialog = GimpUi.Dialog(use_header_bar=True,
+            dialog = LigmaUi.Dialog(use_header_bar=True,
                                    title=_("Exercise a goat (Python 3)"),
                                    role="goat-exercise-Python3")
 
@@ -127,12 +127,12 @@ class Goat (Gimp.PlugIn):
                     dialog.destroy()
                     break
                 elif response == Gtk.ResponseType.APPLY:
-                    url = "https://gitlab.gnome.org/GNOME/gimp/-/blob/master/extensions/goat-exercises/goat-exercise-py3.py"
+                    url = "https://gitlab.gnome.org/GNOME/ligma/-/blob/master/extensions/goat-exercises/goat-exercise-py3.py"
                     Gio.app_info_launch_default_for_uri(url, None)
                     continue
                 else:
                     dialog.destroy()
-                    return procedure.new_return_values(Gimp.PDBStatusType.CANCEL,
+                    return procedure.new_return_values(Ligma.PDBStatusType.CANCEL,
                                                        GLib.Error())
 
         intersect, x, y, width, height = drawable.mask_intersect()
@@ -160,8 +160,8 @@ class Goat (Gimp.PlugIn):
 
             drawable.merge_shadow(True)
             drawable.update(x, y, width, height)
-            Gimp.displays_flush()
+            Ligma.displays_flush()
 
-        return procedure.new_return_values(Gimp.PDBStatusType.SUCCESS, GLib.Error())
+        return procedure.new_return_values(Ligma.PDBStatusType.SUCCESS, GLib.Error())
 
-Gimp.main(Goat.__gtype__, sys.argv)
+Ligma.main(Goat.__gtype__, sys.argv)

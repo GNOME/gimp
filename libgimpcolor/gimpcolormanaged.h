@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * GimpColorManaged interface
- * Copyright (C) 2007  Sven Neumann <sven@gimp.org>
+ * LigmaColorManaged interface
+ * Copyright (C) 2007  Sven Neumann <sven@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -19,44 +19,44 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_COLOR_H_INSIDE__) && !defined (GIMP_COLOR_COMPILATION)
-#error "Only <libgimpcolor/gimpcolor.h> can be included directly."
+#if !defined (__LIGMA_COLOR_H_INSIDE__) && !defined (LIGMA_COLOR_COMPILATION)
+#error "Only <libligmacolor/ligmacolor.h> can be included directly."
 #endif
 
-#ifndef __GIMP_COLOR_MANAGED_H__
-#define __GIMP_COLOR_MANAGED_H__
+#ifndef __LIGMA_COLOR_MANAGED_H__
+#define __LIGMA_COLOR_MANAGED_H__
 
 G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
 
-#define GIMP_TYPE_COLOR_MANAGED (gimp_color_managed_get_type ())
-G_DECLARE_INTERFACE (GimpColorManaged, gimp_color_managed, GIMP, COLOR_MANAGED, GObject)
+#define LIGMA_TYPE_COLOR_MANAGED (ligma_color_managed_get_type ())
+G_DECLARE_INTERFACE (LigmaColorManaged, ligma_color_managed, LIGMA, COLOR_MANAGED, GObject)
 
 /**
- * GimpColorManagedInterface:
+ * LigmaColorManagedInterface:
  * @base_iface: The parent interface
  * @get_icc_profile: Returns the ICC profile of the pixels managed by
  *                   the object
  * @profile_changed: This signal is emitted when the object's color profile
  *                   has changed
- * @get_color_profile: Returns the #GimpColorProfile of the pixels managed
+ * @get_color_profile: Returns the #LigmaColorProfile of the pixels managed
  *                     by the object
- * @get_simulation_profile: Returns the simulation #GimpColorProfile of the
+ * @get_simulation_profile: Returns the simulation #LigmaColorProfile of the
  *                          pixels managed by the object
- * @get_simulation_rendering_intent: Returns the simulation #GimpColorRenderingIntent
+ * @get_simulation_rendering_intent: Returns the simulation #LigmaColorRenderingIntent
  *                                   of the pixels managed by the object
  * @get_simulation_bpc: Returns whether black point compensation is enabled for the
  *                      simulation of the pixels managed by the object
  **/
-struct _GimpColorManagedInterface
+struct _LigmaColorManagedInterface
 {
   GTypeInterface  base_iface;
 
   /**
-   * GimpColorManagedInterface::get_icc_profile:
-   * @managed: an object the implements the #GimpColorManaged interface
+   * LigmaColorManagedInterface::get_icc_profile:
+   * @managed: an object the implements the #LigmaColorManaged interface
    * @len: (out): return location for the number of bytes in the profile data
    *
    * Returns: (array length=len): A blob of data that represents an ICC color
@@ -64,46 +64,46 @@ struct _GimpColorManagedInterface
    *
    * Since: 2.4
    */
-  const guint8     * (* get_icc_profile)                     (GimpColorManaged *managed,
+  const guint8     * (* get_icc_profile)                     (LigmaColorManaged *managed,
                                                               gsize            *len);
 
   /*  signals  */
-  void               (* profile_changed)                     (GimpColorManaged *managed);
+  void               (* profile_changed)                     (LigmaColorManaged *managed);
 
-  void               (* simulation_profile_changed)          (GimpColorManaged *managed);
+  void               (* simulation_profile_changed)          (LigmaColorManaged *managed);
 
-  void               (* simulation_intent_changed)           (GimpColorManaged *managed);
+  void               (* simulation_intent_changed)           (LigmaColorManaged *managed);
 
-  void               (* simulation_bpc_changed)              (GimpColorManaged *managed);
+  void               (* simulation_bpc_changed)              (LigmaColorManaged *managed);
 
   /*  virtual functions  */
-  GimpColorProfile * (* get_color_profile)               (GimpColorManaged *managed);
-  GimpColorProfile * (* get_simulation_profile)          (GimpColorManaged *managed);
-  GimpColorRenderingIntent
-                     (* get_simulation_intent)           (GimpColorManaged *managed);
-  gboolean           (* get_simulation_bpc)              (GimpColorManaged *managed);
+  LigmaColorProfile * (* get_color_profile)               (LigmaColorManaged *managed);
+  LigmaColorProfile * (* get_simulation_profile)          (LigmaColorManaged *managed);
+  LigmaColorRenderingIntent
+                     (* get_simulation_intent)           (LigmaColorManaged *managed);
+  gboolean           (* get_simulation_bpc)              (LigmaColorManaged *managed);
 };
 
 
-const guint8     *       gimp_color_managed_get_icc_profile            (GimpColorManaged *managed,
+const guint8     *       ligma_color_managed_get_icc_profile            (LigmaColorManaged *managed,
                                                                         gsize            *len);
-GimpColorProfile *       gimp_color_managed_get_color_profile          (GimpColorManaged *managed);
+LigmaColorProfile *       ligma_color_managed_get_color_profile          (LigmaColorManaged *managed);
 
-GimpColorProfile *       gimp_color_managed_get_simulation_profile     (GimpColorManaged *managed);
+LigmaColorProfile *       ligma_color_managed_get_simulation_profile     (LigmaColorManaged *managed);
 
-GimpColorRenderingIntent gimp_color_managed_get_simulation_intent      (GimpColorManaged *managed);
+LigmaColorRenderingIntent ligma_color_managed_get_simulation_intent      (LigmaColorManaged *managed);
 
-gboolean                 gimp_color_managed_get_simulation_bpc         (GimpColorManaged *managed);
+gboolean                 ligma_color_managed_get_simulation_bpc         (LigmaColorManaged *managed);
 
-void                     gimp_color_managed_profile_changed            (GimpColorManaged *managed);
+void                     ligma_color_managed_profile_changed            (LigmaColorManaged *managed);
 
-void                     gimp_color_managed_simulation_profile_changed (GimpColorManaged *managed);
+void                     ligma_color_managed_simulation_profile_changed (LigmaColorManaged *managed);
 
-void                     gimp_color_managed_simulation_intent_changed  (GimpColorManaged *managed);
+void                     ligma_color_managed_simulation_intent_changed  (LigmaColorManaged *managed);
 
-void                     gimp_color_managed_simulation_bpc_changed     (GimpColorManaged *managed);
+void                     ligma_color_managed_simulation_bpc_changed     (LigmaColorManaged *managed);
 
 
 G_END_DECLS
 
-#endif  /* __GIMP_COLOR_MANAGED_IFACE_H__ */
+#endif  /* __LIGMA_COLOR_MANAGED_IFACE_H__ */

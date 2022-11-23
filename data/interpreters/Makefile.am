@@ -1,6 +1,6 @@
-## Makefile.am for gimp/data/interpreters
+## Makefile.am for ligma/data/interpreters
 
-interpretersdir = $(gimpplugindir)/interpreters
+interpretersdir = $(ligmaplugindir)/interpreters
 
 interpreters_DATA = default.interp
 

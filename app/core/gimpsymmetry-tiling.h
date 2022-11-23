@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpsymmetry-tiling.h
- * Copyright (C) 2015 Jehan <jehan@gimp.org>
+ * ligmasymmetry-tiling.h
+ * Copyright (C) 2015 Jehan <jehan@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,26 +18,26 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TILING_H__
-#define __GIMP_TILING_H__
+#ifndef __LIGMA_TILING_H__
+#define __LIGMA_TILING_H__
 
 
-#include "gimpsymmetry.h"
+#include "ligmasymmetry.h"
 
 
-#define GIMP_TYPE_TILING            (gimp_tiling_get_type ())
-#define GIMP_TILING(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TILING, GimpTiling))
-#define GIMP_TILING_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TILING, GimpTilingClass))
-#define GIMP_IS_TILING(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_TILING))
-#define GIMP_IS_TILING_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_TILING))
-#define GIMP_TILING_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_TILING, GimpTilingClass))
+#define LIGMA_TYPE_TILING            (ligma_tiling_get_type ())
+#define LIGMA_TILING(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_TILING, LigmaTiling))
+#define LIGMA_TILING_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_TILING, LigmaTilingClass))
+#define LIGMA_IS_TILING(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_TILING))
+#define LIGMA_IS_TILING_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_TILING))
+#define LIGMA_TILING_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_TILING, LigmaTilingClass))
 
 
-typedef struct _GimpTilingClass GimpTilingClass;
+typedef struct _LigmaTilingClass LigmaTilingClass;
 
-struct _GimpTiling
+struct _LigmaTiling
 {
-  GimpSymmetry  parent_instance;
+  LigmaSymmetry  parent_instance;
 
   gdouble       interval_x;
   gdouble       interval_y;
@@ -46,13 +46,13 @@ struct _GimpTiling
   gint          max_y;
 };
 
-struct _GimpTilingClass
+struct _LigmaTilingClass
 {
-  GimpSymmetryClass  parent_class;
+  LigmaSymmetryClass  parent_class;
 };
 
 
-GType   gimp_tiling_get_type (void) G_GNUC_CONST;
+GType   ligma_tiling_get_type (void) G_GNUC_CONST;
 
 
-#endif  /*  __GIMP_TILING_H__  */
+#endif  /*  __LIGMA_TILING_H__  */

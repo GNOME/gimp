@@ -16,9 +16,9 @@
    version="1.1"
    id="svg8"
    inkscape:version="0.92.2 (5c3e80d, 2017-08-06)"
-   sodipodi:docname="gimp-dashboard.svg">
+   sodipodi:docname="ligma-dashboard.svg">
   <title
-     id="title4405">GIMP Dashboard</title>
+     id="title4405">LIGMA Dashboard</title>
   <defs
      id="defs2">
     <linearGradient
@@ -79,7 +79,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title>GIMP Dashboard</dc:title>
+        <dc:title>LIGMA Dashboard</dc:title>
         <dc:creator>
           <cc:Agent>
             <dc:title>Ell</dc:title>
@@ -111,7 +111,7 @@
      id="layer1"
      transform="translate(0,-292.76665)">
     <g
-       id="gimp-dashboard">
+       id="ligma-dashboard">
       <g
          id="g2910"
          transform="translate(0,0.26636769)">

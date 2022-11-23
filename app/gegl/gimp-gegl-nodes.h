@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimp-gegl-nodes.h
- * Copyright (C) 2012 Michael Natterer <mitch@gimp.org>
+ * ligma-gegl-nodes.h
+ * Copyright (C) 2012 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,37 +18,37 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_GEGL_NODES_H__
-#define __GIMP_GEGL_NODES_H__
+#ifndef __LIGMA_GEGL_NODES_H__
+#define __LIGMA_GEGL_NODES_H__
 
 
-GeglNode * gimp_gegl_create_flatten_node       (const GimpRGB         *background,
+GeglNode * ligma_gegl_create_flatten_node       (const LigmaRGB         *background,
                                                 const Babl            *space,
-                                                GimpLayerColorSpace    composite_space);
-GeglNode * gimp_gegl_create_apply_opacity_node (GeglBuffer            *mask,
+                                                LigmaLayerColorSpace    composite_space);
+GeglNode * ligma_gegl_create_apply_opacity_node (GeglBuffer            *mask,
                                                 gint                   mask_offset_x,
                                                 gint                   mask_offset_y,
                                                 gdouble                opacity);
-GeglNode * gimp_gegl_create_transform_node     (const GimpMatrix3     *matrix);
+GeglNode * ligma_gegl_create_transform_node     (const LigmaMatrix3     *matrix);
 
-GeglNode * gimp_gegl_add_buffer_source         (GeglNode              *parent,
+GeglNode * ligma_gegl_add_buffer_source         (GeglNode              *parent,
                                                 GeglBuffer            *buffer,
                                                 gint                   offset_x,
                                                 gint                   offset_y);
 
-void       gimp_gegl_mode_node_set_mode        (GeglNode               *node,
-                                                GimpLayerMode           mode,
-                                                GimpLayerColorSpace     blend_space,
-                                                GimpLayerColorSpace     composite_space,
-                                                GimpLayerCompositeMode  composite_mode);
-void       gimp_gegl_mode_node_set_opacity     (GeglNode               *node,
+void       ligma_gegl_mode_node_set_mode        (GeglNode               *node,
+                                                LigmaLayerMode           mode,
+                                                LigmaLayerColorSpace     blend_space,
+                                                LigmaLayerColorSpace     composite_space,
+                                                LigmaLayerCompositeMode  composite_mode);
+void       ligma_gegl_mode_node_set_opacity     (GeglNode               *node,
                                                 gdouble                 opacity);
 
-void       gimp_gegl_node_set_matrix           (GeglNode               *node,
-                                                const GimpMatrix3      *matrix);
-void       gimp_gegl_node_set_color            (GeglNode               *node,
-                                                const GimpRGB          *color,
+void       ligma_gegl_node_set_matrix           (GeglNode               *node,
+                                                const LigmaMatrix3      *matrix);
+void       ligma_gegl_node_set_color            (GeglNode               *node,
+                                                const LigmaRGB          *color,
                                                 const Babl             *space);
 
 
-#endif /* __GIMP_GEGL_NODES_H__ */
+#endif /* __LIGMA_GEGL_NODES_H__ */

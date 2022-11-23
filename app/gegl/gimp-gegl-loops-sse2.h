@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimp-gegl-loops-sse2.h
- * Copyright (C) 2012 Michael Natterer <mitch@gimp.org>
+ * ligma-gegl-loops-sse2.h
+ * Copyright (C) 2012 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,13 +18,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_GEGL_LOOPS_SSE2_H__
-#define __GIMP_GEGL_LOOPS_SSE2_H__
+#ifndef __LIGMA_GEGL_LOOPS_SSE2_H__
+#define __LIGMA_GEGL_LOOPS_SSE2_H__
 
 
 #if COMPILE_SSE2_INTRINISICS
 
-void   gimp_gegl_smudge_with_paint_process_sse2 (gfloat       *accum,
+void   ligma_gegl_smudge_with_paint_process_sse2 (gfloat       *accum,
                                                  const gfloat *canvas,
                                                  gfloat       *paint,
                                                  gint          count,
@@ -37,4 +37,4 @@ void   gimp_gegl_smudge_with_paint_process_sse2 (gfloat       *accum,
 #endif /* COMPILE_SSE2_INTRINISICS */
 
 
-#endif /* __GIMP_GEGL_LOOPS_SSE2_H__ */
+#endif /* __LIGMA_GEGL_LOOPS_SSE2_H__ */

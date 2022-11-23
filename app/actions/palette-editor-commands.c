@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,11 +22,11 @@
 
 #include "actions-types.h"
 
-#include "core/gimpcontext.h"
-#include "core/gimppalette.h"
+#include "core/ligmacontext.h"
+#include "core/ligmapalette.h"
 
-#include "widgets/gimppaletteeditor.h"
-#include "widgets/gimppaletteview.h"
+#include "widgets/ligmapaletteeditor.h"
+#include "widgets/ligmapaletteview.h"
 
 #include "palette-editor-commands.h"
 
@@ -34,63 +34,63 @@
 /*  public functions  */
 
 void
-palette_editor_edit_color_cmd_callback (GimpAction *action,
+palette_editor_edit_color_cmd_callback (LigmaAction *action,
                                         GVariant   *value,
                                         gpointer    data)
 {
-  GimpPaletteEditor *editor = GIMP_PALETTE_EDITOR (data);
+  LigmaPaletteEditor *editor = LIGMA_PALETTE_EDITOR (data);
 
-  gimp_palette_editor_edit_color (editor);
+  ligma_palette_editor_edit_color (editor);
 }
 
 void
-palette_editor_new_color_cmd_callback (GimpAction *action,
+palette_editor_new_color_cmd_callback (LigmaAction *action,
                                        GVariant   *value,
                                        gpointer    data)
 {
-  GimpPaletteEditor *editor      = GIMP_PALETTE_EDITOR (data);
-  GimpDataEditor    *data_editor = GIMP_DATA_EDITOR (data);
+  LigmaPaletteEditor *editor      = LIGMA_PALETTE_EDITOR (data);
+  LigmaDataEditor    *data_editor = LIGMA_DATA_EDITOR (data);
   gboolean           background  = (gboolean) g_variant_get_int32 (value);
 
   if (data_editor->data_editable)
     {
-      GimpPalette      *palette = GIMP_PALETTE (data_editor->data);
-      GimpPaletteEntry *entry;
-      GimpRGB           color;
+      LigmaPalette      *palette = LIGMA_PALETTE (data_editor->data);
+      LigmaPaletteEntry *entry;
+      LigmaRGB           color;
 
       if (background)
-        gimp_context_get_background (data_editor->context, &color);
+        ligma_context_get_background (data_editor->context, &color);
       else
-        gimp_context_get_foreground (data_editor->context, &color);
+        ligma_context_get_foreground (data_editor->context, &color);
 
-      entry = gimp_palette_add_entry (palette, -1, NULL, &color);
-      gimp_palette_view_select_entry (GIMP_PALETTE_VIEW (editor->view), entry);
+      entry = ligma_palette_add_entry (palette, -1, NULL, &color);
+      ligma_palette_view_select_entry (LIGMA_PALETTE_VIEW (editor->view), entry);
     }
 }
 
 void
-palette_editor_delete_color_cmd_callback (GimpAction *action,
+palette_editor_delete_color_cmd_callback (LigmaAction *action,
                                           GVariant   *value,
                                           gpointer    data)
 {
-  GimpPaletteEditor *editor      = GIMP_PALETTE_EDITOR (data);
-  GimpDataEditor    *data_editor = GIMP_DATA_EDITOR (data);
+  LigmaPaletteEditor *editor      = LIGMA_PALETTE_EDITOR (data);
+  LigmaDataEditor    *data_editor = LIGMA_DATA_EDITOR (data);
 
   if (data_editor->data_editable && editor->color)
     {
-      GimpPalette *palette = GIMP_PALETTE (data_editor->data);
+      LigmaPalette *palette = LIGMA_PALETTE (data_editor->data);
 
-      gimp_palette_delete_entry (palette, editor->color);
+      ligma_palette_delete_entry (palette, editor->color);
     }
 }
 
 void
-palette_editor_zoom_cmd_callback (GimpAction *action,
+palette_editor_zoom_cmd_callback (LigmaAction *action,
                                   GVariant   *value,
                                   gpointer    data)
 {
-  GimpPaletteEditor *editor    = GIMP_PALETTE_EDITOR (data);
-  GimpZoomType       zoom_type = (GimpZoomType) g_variant_get_int32 (value);
+  LigmaPaletteEditor *editor    = LIGMA_PALETTE_EDITOR (data);
+  LigmaZoomType       zoom_type = (LigmaZoomType) g_variant_get_int32 (value);
 
-  gimp_palette_editor_zoom (editor, zoom_type);
+  ligma_palette_editor_zoom (editor, zoom_type);
 }

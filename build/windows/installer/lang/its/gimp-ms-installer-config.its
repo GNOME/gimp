@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <its:rules xmlns:its="http://www.w3.org/2005/11/its" version="2.0"
            xmlns:gt="https://www.gnu.org/s/gettext/ns/its/extensions/1.0">
-  <its:translateRule selector="/gimp-ms-installer-config" translate="no"/>
+  <its:translateRule selector="/ligma-ms-installer-config" translate="no"/>
   <its:translateRule selector="//value" translate="yes"/>
   <gt:escapeRule selector="//value" escape="no"/>
 </its:rules>

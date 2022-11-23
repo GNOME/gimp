@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpText-vectors
- * Copyright (C) 2003  Sven Neumann <sven@gimp.org>
+ * LigmaText-vectors
+ * Copyright (C) 2003  Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,46 +26,46 @@
 
 #include "text-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpimage.h"
+#include "core/ligma.h"
+#include "core/ligmaimage.h"
 
-#include "vectors/gimpbezierstroke.h"
-#include "vectors/gimpvectors.h"
-#include "vectors/gimpanchor.h"
+#include "vectors/ligmabezierstroke.h"
+#include "vectors/ligmavectors.h"
+#include "vectors/ligmaanchor.h"
 
-#include "gimptext.h"
-#include "gimptext-vectors.h"
-#include "gimptextlayout.h"
-#include "gimptextlayout-render.h"
+#include "ligmatext.h"
+#include "ligmatext-vectors.h"
+#include "ligmatextlayout.h"
+#include "ligmatextlayout-render.h"
 
 
 typedef struct
 {
-  GimpVectors *vectors;
-  GimpStroke  *stroke;
-  GimpAnchor  *anchor;
+  LigmaVectors *vectors;
+  LigmaStroke  *stroke;
+  LigmaAnchor  *anchor;
 } RenderContext;
 
 
-static void  gimp_text_render_vectors (cairo_t       *cr,
+static void  ligma_text_render_vectors (cairo_t       *cr,
                                        RenderContext *context);
 
 
-GimpVectors *
-gimp_text_vectors_new (GimpImage *image,
-                       GimpText  *text)
+LigmaVectors *
+ligma_text_vectors_new (LigmaImage *image,
+                       LigmaText  *text)
 {
-  GimpVectors   *vectors;
+  LigmaVectors   *vectors;
   RenderContext  context = { NULL, };
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (GIMP_IS_TEXT (text), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_TEXT (text), NULL);
 
-  vectors = gimp_vectors_new (image, NULL);
+  vectors = ligma_vectors_new (image, NULL);
 
   if (text->text || text->markup)
     {
-      GimpTextLayout  *layout;
+      LigmaTextLayout  *layout;
       cairo_surface_t *surface;
       cairo_t         *cr;
       gdouble          xres;
@@ -73,31 +73,31 @@ gimp_text_vectors_new (GimpImage *image,
       GError          *error = NULL;
 
       if (text->text)
-        gimp_object_set_name_safe (GIMP_OBJECT (vectors), text->text);
+        ligma_object_set_name_safe (LIGMA_OBJECT (vectors), text->text);
 
       context.vectors = vectors;
 
       surface = cairo_recording_surface_create (CAIRO_CONTENT_ALPHA, NULL);
       cr = cairo_create (surface);
 
-      gimp_image_get_resolution (image, &xres, &yres);
+      ligma_image_get_resolution (image, &xres, &yres);
 
-      layout = gimp_text_layout_new (text, xres, yres, &error);
+      layout = ligma_text_layout_new (text, xres, yres, &error);
       if (error)
         {
-          gimp_message_literal (image->gimp, NULL, GIMP_MESSAGE_ERROR, error->message);
+          ligma_message_literal (image->ligma, NULL, LIGMA_MESSAGE_ERROR, error->message);
           g_error_free (error);
         }
-      gimp_text_layout_render (layout, cr, text->base_dir, TRUE);
+      ligma_text_layout_render (layout, cr, text->base_dir, TRUE);
       g_object_unref (layout);
 
-      gimp_text_render_vectors (cr, &context);
+      ligma_text_render_vectors (cr, &context);
 
       cairo_destroy (cr);
       cairo_surface_destroy (surface);
 
       if (context.stroke)
-        gimp_stroke_close (context.stroke);
+        ligma_stroke_close (context.stroke);
     }
 
   return vectors;
@@ -105,11 +105,11 @@ gimp_text_vectors_new (GimpImage *image,
 
 
 static inline void
-gimp_text_vector_coords (const double  x,
+ligma_text_vector_coords (const double  x,
                          const double  y,
-                         GimpCoords   *coords)
+                         LigmaCoords   *coords)
 {
-  const GimpCoords default_values = GIMP_COORDS_DEFAULT_VALUES;
+  const LigmaCoords default_values = LIGMA_COORDS_DEFAULT_VALUES;
 
   *coords = default_values;
 
@@ -122,20 +122,20 @@ moveto (RenderContext *context,
         const double   x,
         const double   y)
 {
-  GimpCoords     start;
+  LigmaCoords     start;
 
-#if GIMP_TEXT_DEBUG
+#if LIGMA_TEXT_DEBUG
   g_printerr ("moveto  %f, %f\n", x, y);
 #endif
 
-  gimp_text_vector_coords (x, y, &start);
+  ligma_text_vector_coords (x, y, &start);
 
   if (context->stroke)
-    gimp_stroke_close (context->stroke);
+    ligma_stroke_close (context->stroke);
 
-  context->stroke = gimp_bezier_stroke_new_moveto (&start);
+  context->stroke = ligma_bezier_stroke_new_moveto (&start);
 
-  gimp_vectors_stroke_add (context->vectors, context->stroke);
+  ligma_vectors_stroke_add (context->vectors, context->stroke);
   g_object_unref (context->stroke);
 
   return 0;
@@ -146,18 +146,18 @@ lineto (RenderContext *context,
         const double   x,
         const double   y)
 {
-  GimpCoords     end;
+  LigmaCoords     end;
 
-#if GIMP_TEXT_DEBUG
+#if LIGMA_TEXT_DEBUG
   g_printerr ("lineto  %f, %f\n", x, y);
 #endif
 
   if (! context->stroke)
     return 0;
 
-  gimp_text_vector_coords (x, y, &end);
+  ligma_text_vector_coords (x, y, &end);
 
-  gimp_bezier_stroke_lineto (context->stroke, &end);
+  ligma_bezier_stroke_lineto (context->stroke, &end);
 
   return 0;
 }
@@ -171,22 +171,22 @@ cubicto (RenderContext *context,
          const double   x3,
          const double   y3)
 {
-  GimpCoords     control1;
-  GimpCoords     control2;
-  GimpCoords     end;
+  LigmaCoords     control1;
+  LigmaCoords     control2;
+  LigmaCoords     end;
 
-#if GIMP_TEXT_DEBUG
+#if LIGMA_TEXT_DEBUG
   g_printerr ("cubicto %f, %f\n", x3, y3);
 #endif
 
   if (! context->stroke)
     return 0;
 
-  gimp_text_vector_coords (x1, y1, &control1);
-  gimp_text_vector_coords (x2, y2, &control2);
-  gimp_text_vector_coords (x3, y3, &end);
+  ligma_text_vector_coords (x1, y1, &control1);
+  ligma_text_vector_coords (x2, y2, &control2);
+  ligma_text_vector_coords (x3, y3, &end);
 
-  gimp_bezier_stroke_cubicto (context->stroke, &control1, &control2, &end);
+  ligma_bezier_stroke_cubicto (context->stroke, &control1, &control2, &end);
 
   return 0;
 }
@@ -194,14 +194,14 @@ cubicto (RenderContext *context,
 static gint
 closepath (RenderContext *context)
 {
-#if GIMP_TEXT_DEBUG
+#if LIGMA_TEXT_DEBUG
   g_printerr ("moveto\n");
 #endif
 
   if (! context->stroke)
     return 0;
 
-  gimp_stroke_close (context->stroke);
+  ligma_stroke_close (context->stroke);
 
   context->stroke = NULL;
 
@@ -209,7 +209,7 @@ closepath (RenderContext *context)
 }
 
 static void
-gimp_text_render_vectors (cairo_t       *cr,
+ligma_text_render_vectors (cairo_t       *cr,
                           RenderContext *context)
 {
   cairo_path_t *path;

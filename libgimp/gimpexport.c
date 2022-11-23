@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpexport.c
- * Copyright (C) 1999-2004 Sven Neumann <sven@gimp.org>
+ * ligmaexport.c
+ * Copyright (C) 1999-2004 Sven Neumann <sven@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -25,33 +25,33 @@
 
 #include <gtk/gtk.h>
 
-#include "gimp.h"
-#include "gimpui.h"
+#include "ligma.h"
+#include "ligmaui.h"
 
-#include "libgimp-intl.h"
+#include "libligma-intl.h"
 
 
 /**
- * SECTION: gimpexport
- * @title: gimpexport
+ * SECTION: ligmaexport
+ * @title: ligmaexport
  * @short_description: Export an image before it is saved.
  *
  * This function should be called by all save_plugins unless they are
- * able to save all image formats GIMP knows about. It takes care of
+ * able to save all image formats LIGMA knows about. It takes care of
  * asking the user if she wishes to export the image to a format the
  * save_plugin can handle. It then performs the necessary conversions
  * (e.g. Flatten) on a copy of the image so that the image can be
  * saved without changing the original image.
  *
  * The capabilities of the save_plugin are specified by combining
- * #GimpExportCapabilities using a bitwise OR.
+ * #LigmaExportCapabilities using a bitwise OR.
  *
  * Make sure you have initialized GTK+ before you call this function
  * as it will most probably have to open a dialog.
  **/
 
 
-typedef void (* ExportFunc) (GimpImage    *image,
+typedef void (* ExportFunc) (LigmaImage    *image,
                              GList       **drawables);
 
 
@@ -69,62 +69,62 @@ typedef struct
 /* the functions that do the actual export */
 
 static void
-export_merge (GimpImage  *image,
+export_merge (LigmaImage  *image,
               GList     **drawables)
 {
   GList  *layers;
   GList  *iter;
   gint32  nvisible = 0;
 
-  layers = gimp_image_list_layers (image);
+  layers = ligma_image_list_layers (image);
 
   for (iter = layers; iter; iter = g_list_next (iter))
     {
-      if (gimp_item_get_visible (GIMP_ITEM (iter->data)))
+      if (ligma_item_get_visible (LIGMA_ITEM (iter->data)))
         nvisible++;
     }
 
   if (nvisible <= 1)
     {
-      GimpLayer     *transp;
-      GimpImageType  layer_type;
+      LigmaLayer     *transp;
+      LigmaImageType  layer_type;
 
       /* if there is only one (or zero) visible layer, add a new
        * transparent layer that has the same size as the canvas.  The
        * merge that follows will ensure that the offset, opacity and
        * size are correct
        */
-      switch (gimp_image_get_base_type (image))
+      switch (ligma_image_get_base_type (image))
         {
-        case GIMP_RGB:
-          layer_type = GIMP_RGBA_IMAGE;
+        case LIGMA_RGB:
+          layer_type = LIGMA_RGBA_IMAGE;
           break;
-        case GIMP_GRAY:
-          layer_type = GIMP_GRAYA_IMAGE;
+        case LIGMA_GRAY:
+          layer_type = LIGMA_GRAYA_IMAGE;
           break;
-        case GIMP_INDEXED:
-          layer_type = GIMP_INDEXEDA_IMAGE;
+        case LIGMA_INDEXED:
+          layer_type = LIGMA_INDEXEDA_IMAGE;
           break;
         default:
           /* In case we add a new type in future. */
           g_return_if_reached ();
         }
-      transp = gimp_layer_new (image, "-",
-                               gimp_image_get_width (image),
-                               gimp_image_get_height (image),
+      transp = ligma_layer_new (image, "-",
+                               ligma_image_get_width (image),
+                               ligma_image_get_height (image),
                                layer_type,
-                               100.0, GIMP_LAYER_MODE_NORMAL);
-      gimp_image_insert_layer (image, transp, NULL, 1);
-      gimp_selection_none (image);
-      gimp_drawable_edit_clear (GIMP_DRAWABLE (transp));
+                               100.0, LIGMA_LAYER_MODE_NORMAL);
+      ligma_image_insert_layer (image, transp, NULL, 1);
+      ligma_selection_none (image);
+      ligma_drawable_edit_clear (LIGMA_DRAWABLE (transp));
       nvisible++;
     }
 
   if (nvisible > 1)
     {
-      GimpLayer *merged;
+      LigmaLayer *merged;
 
-      merged = gimp_image_merge_visible_layers (image, GIMP_CLIP_TO_IMAGE);
+      merged = ligma_image_merge_visible_layers (image, LIGMA_CLIP_TO_IMAGE);
 
       g_return_if_fail (merged != NULL);
 
@@ -132,20 +132,20 @@ export_merge (GimpImage  *image,
 
       g_list_free (layers);
 
-      layers = gimp_image_list_layers (image);
+      layers = ligma_image_list_layers (image);
 
       /*  make sure that the merged drawable matches the image size  */
-      if (gimp_drawable_get_width   (GIMP_DRAWABLE (merged)) !=
-          gimp_image_get_width  (image) ||
-          gimp_drawable_get_height  (GIMP_DRAWABLE (merged)) !=
-          gimp_image_get_height (image))
+      if (ligma_drawable_get_width   (LIGMA_DRAWABLE (merged)) !=
+          ligma_image_get_width  (image) ||
+          ligma_drawable_get_height  (LIGMA_DRAWABLE (merged)) !=
+          ligma_image_get_height (image))
         {
           gint off_x, off_y;
 
-          gimp_drawable_get_offsets (GIMP_DRAWABLE (merged), &off_x, &off_y);
-          gimp_layer_resize (merged,
-                             gimp_image_get_width (image),
-                             gimp_image_get_height (image),
+          ligma_drawable_get_offsets (LIGMA_DRAWABLE (merged), &off_x, &off_y);
+          ligma_layer_resize (merged,
+                             ligma_image_get_width (image),
+                             ligma_image_get_height (image),
                              off_x, off_y);
         }
     }
@@ -154,66 +154,66 @@ export_merge (GimpImage  *image,
   for (iter = layers; iter; iter = iter->next)
     {
       if (! g_list_find (*drawables, iter->data))
-        gimp_image_remove_layer (image, iter->data);
+        ligma_image_remove_layer (image, iter->data);
     }
 
   g_list_free (layers);
 }
 
 static void
-export_flatten (GimpImage  *image,
+export_flatten (LigmaImage  *image,
                 GList     **drawables)
 {
-  GimpLayer *flattened;
+  LigmaLayer *flattened;
 
-  flattened = gimp_image_flatten (image);
+  flattened = ligma_image_flatten (image);
 
   if (flattened != NULL)
     *drawables = g_list_prepend (NULL, flattened);
 }
 
 static void
-export_remove_alpha (GimpImage  *image,
+export_remove_alpha (LigmaImage  *image,
                      GList     **drawables)
 {
   GList  *layers;
   GList  *iter;
 
-  layers = gimp_image_list_layers (image);
+  layers = ligma_image_list_layers (image);
 
   for (iter = layers; iter; iter = iter->next)
     {
-      if (gimp_drawable_has_alpha (GIMP_DRAWABLE (iter->data)))
-        gimp_layer_flatten (iter->data);
+      if (ligma_drawable_has_alpha (LIGMA_DRAWABLE (iter->data)))
+        ligma_layer_flatten (iter->data);
     }
 
   g_list_free (layers);
 }
 
 static void
-export_apply_masks (GimpImage  *image,
+export_apply_masks (LigmaImage  *image,
                     GList     **drawables)
 {
   GList  *layers;
   GList  *iter;
 
-  layers = gimp_image_list_layers (image);
+  layers = ligma_image_list_layers (image);
 
   for (iter = layers; iter; iter = iter->next)
     {
-      GimpLayerMask *mask;
+      LigmaLayerMask *mask;
 
-      mask = gimp_layer_get_mask (iter->data);
+      mask = ligma_layer_get_mask (iter->data);
 
       if (mask)
         {
           /* we can't apply the mask directly to a layer group, so merge it
            * first
            */
-          if (gimp_item_is_group (iter->data))
-            iter->data = gimp_image_merge_layer_group (image, iter->data);
+          if (ligma_item_is_group (iter->data))
+            iter->data = ligma_image_merge_layer_group (image, iter->data);
 
-          gimp_layer_remove_mask (iter->data, GIMP_MASK_APPLY);
+          ligma_layer_remove_mask (iter->data, LIGMA_MASK_APPLY);
         }
     }
 
@@ -221,21 +221,21 @@ export_apply_masks (GimpImage  *image,
 }
 
 static void
-export_convert_rgb (GimpImage  *image,
+export_convert_rgb (LigmaImage  *image,
                     GList     **drawables)
 {
-  gimp_image_convert_rgb (image);
+  ligma_image_convert_rgb (image);
 }
 
 static void
-export_convert_grayscale (GimpImage  *image,
+export_convert_grayscale (LigmaImage  *image,
                           GList     **drawables)
 {
-  gimp_image_convert_grayscale (image);
+  ligma_image_convert_grayscale (image);
 }
 
 static void
-export_convert_indexed (GimpImage  *image,
+export_convert_indexed (LigmaImage  *image,
                         GList     **drawables)
 {
   GList    *layers;
@@ -243,11 +243,11 @@ export_convert_indexed (GimpImage  *image,
   gboolean  has_alpha = FALSE;
 
   /* check alpha */
-  layers = gimp_image_list_layers (image);
+  layers = ligma_image_list_layers (image);
 
   for (iter = *drawables; iter; iter = iter->next)
     {
-      if (gimp_drawable_has_alpha (iter->data))
+      if (ligma_drawable_has_alpha (iter->data))
         {
           has_alpha = TRUE;
           break;
@@ -255,68 +255,68 @@ export_convert_indexed (GimpImage  *image,
     }
 
   if (layers || has_alpha)
-    gimp_image_convert_indexed (image,
-                                GIMP_CONVERT_DITHER_NONE,
-                                GIMP_CONVERT_PALETTE_GENERATE,
+    ligma_image_convert_indexed (image,
+                                LIGMA_CONVERT_DITHER_NONE,
+                                LIGMA_CONVERT_PALETTE_GENERATE,
                                 255, FALSE, FALSE, "");
   else
-    gimp_image_convert_indexed (image,
-                                GIMP_CONVERT_DITHER_NONE,
-                                GIMP_CONVERT_PALETTE_GENERATE,
+    ligma_image_convert_indexed (image,
+                                LIGMA_CONVERT_DITHER_NONE,
+                                LIGMA_CONVERT_PALETTE_GENERATE,
                                 256, FALSE, FALSE, "");
   g_list_free (layers);
 }
 
 static void
-export_convert_bitmap (GimpImage  *image,
+export_convert_bitmap (LigmaImage  *image,
                        GList     **drawables)
 {
-  if (gimp_image_get_base_type (image) == GIMP_INDEXED)
-    gimp_image_convert_rgb (image);
+  if (ligma_image_get_base_type (image) == LIGMA_INDEXED)
+    ligma_image_convert_rgb (image);
 
-  gimp_image_convert_indexed (image,
-                              GIMP_CONVERT_DITHER_FS,
-                              GIMP_CONVERT_PALETTE_GENERATE,
+  ligma_image_convert_indexed (image,
+                              LIGMA_CONVERT_DITHER_FS,
+                              LIGMA_CONVERT_PALETTE_GENERATE,
                               2, FALSE, FALSE, "");
 }
 
 static void
-export_add_alpha (GimpImage  *image,
+export_add_alpha (LigmaImage  *image,
                   GList     **drawables)
 {
   GList  *layers;
   GList  *iter;
 
-  layers = gimp_image_list_layers (image);
+  layers = ligma_image_list_layers (image);
 
   for (iter = layers; iter; iter = iter->next)
     {
-      if (! gimp_drawable_has_alpha (GIMP_DRAWABLE (iter->data)))
-        gimp_layer_add_alpha (GIMP_LAYER (iter->data));
+      if (! ligma_drawable_has_alpha (LIGMA_DRAWABLE (iter->data)))
+        ligma_layer_add_alpha (LIGMA_LAYER (iter->data));
     }
 
   g_list_free (layers);
 }
 
 static void
-export_crop_image (GimpImage  *image,
+export_crop_image (LigmaImage  *image,
                    GList     **drawables)
 {
-  gimp_image_crop (image,
-                   gimp_image_get_width  (image),
-                   gimp_image_get_height (image),
+  ligma_image_crop (image,
+                   ligma_image_get_width  (image),
+                   ligma_image_get_height (image),
                    0, 0);
 }
 
 static void
-export_resize_image (GimpImage  *image,
+export_resize_image (LigmaImage  *image,
                      GList     **drawables)
 {
-  gimp_image_resize_to_layers (image);
+  ligma_image_resize_to_layers (image);
 }
 
 static void
-export_void (GimpImage  *image,
+export_void (LigmaImage  *image,
              GList     **drawables)
 {
   /* do nothing */
@@ -502,7 +502,7 @@ export_action_get_func (const ExportAction *action)
 
 static void
 export_action_perform (const ExportAction *action,
-                       GimpImage          *image,
+                       LigmaImage          *image,
                        GList             **drawables)
 {
   export_action_get_func (action) (image, drawables);
@@ -523,7 +523,7 @@ export_toggle_callback (GtkWidget *widget,
     *choice = TRUE;
 }
 
-static GimpExportReturn
+static LigmaExportReturn
 confirm_save_dialog (const gchar *message,
                      const gchar *format_name)
 {
@@ -533,28 +533,28 @@ confirm_save_dialog (const gchar *message,
   GtkWidget        *main_vbox;
   GtkWidget        *label;
   gchar            *text;
-  GimpExportReturn  retval;
+  LigmaExportReturn  retval;
 
-  g_return_val_if_fail (message != NULL, GIMP_EXPORT_CANCEL);
-  g_return_val_if_fail (format_name != NULL, GIMP_EXPORT_CANCEL);
+  g_return_val_if_fail (message != NULL, LIGMA_EXPORT_CANCEL);
+  g_return_val_if_fail (format_name != NULL, LIGMA_EXPORT_CANCEL);
 
-  dialog = gimp_dialog_new (_("Confirm Save"), "gimp-export-image-confirm",
+  dialog = ligma_dialog_new (_("Confirm Save"), "ligma-export-image-confirm",
                             NULL, 0,
-                            gimp_standard_help_func,
-                            "gimp-export-confirm-dialog",
+                            ligma_standard_help_func,
+                            "ligma-export-confirm-dialog",
 
                             _("_Cancel"),  GTK_RESPONSE_CANCEL,
                             _("C_onfirm"), GTK_RESPONSE_OK,
 
                             NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
   gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
-  gimp_window_set_transient (GTK_WINDOW (dialog));
+  ligma_window_set_transient (GTK_WINDOW (dialog));
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
@@ -576,7 +576,7 @@ confirm_save_dialog (const gchar *message,
   label = gtk_label_new (text);
   g_free (text);
 
-  gimp_label_set_attributes (GTK_LABEL (label),
+  ligma_label_set_attributes (GTK_LABEL (label),
                              PANGO_ATTR_SCALE,  PANGO_SCALE_LARGE,
                              PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
                              -1);
@@ -588,14 +588,14 @@ confirm_save_dialog (const gchar *message,
 
   gtk_widget_show (dialog);
 
-  switch (gimp_dialog_run (GIMP_DIALOG (dialog)))
+  switch (ligma_dialog_run (LIGMA_DIALOG (dialog)))
     {
     case GTK_RESPONSE_OK:
-      retval = GIMP_EXPORT_EXPORT;
+      retval = LIGMA_EXPORT_EXPORT;
       break;
 
     default:
-      retval = GIMP_EXPORT_CANCEL;
+      retval = LIGMA_EXPORT_CANCEL;
       break;
     }
 
@@ -604,7 +604,7 @@ confirm_save_dialog (const gchar *message,
   return retval;
 }
 
-static GimpExportReturn
+static LigmaExportReturn
 export_dialog (GSList      *actions,
                const gchar *format_name)
 {
@@ -615,14 +615,14 @@ export_dialog (GSList      *actions,
   GtkWidget        *label;
   GSList           *list;
   gchar            *text;
-  GimpExportReturn  retval;
+  LigmaExportReturn  retval;
 
-  g_return_val_if_fail (actions != NULL, GIMP_EXPORT_CANCEL);
-  g_return_val_if_fail (format_name != NULL, GIMP_EXPORT_CANCEL);
+  g_return_val_if_fail (actions != NULL, LIGMA_EXPORT_CANCEL);
+  g_return_val_if_fail (format_name != NULL, LIGMA_EXPORT_CANCEL);
 
-  dialog = gimp_dialog_new (_("Export File"), "gimp-export-image",
+  dialog = ligma_dialog_new (_("Export File"), "ligma-export-image",
                             NULL, 0,
-                            gimp_standard_help_func, "gimp-export-dialog",
+                            ligma_standard_help_func, "ligma-export-dialog",
 
                             _("_Ignore"), GTK_RESPONSE_NO,
                             _("_Cancel"), GTK_RESPONSE_CANCEL,
@@ -630,14 +630,14 @@ export_dialog (GSList      *actions,
 
                             NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_NO,
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
   gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
-  gimp_window_set_transient (GTK_WINDOW (dialog));
+  ligma_window_set_transient (GTK_WINDOW (dialog));
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
@@ -662,7 +662,7 @@ export_dialog (GSList      *actions,
   label = gtk_label_new (text);
   g_free (text);
 
-  gimp_label_set_attributes (GTK_LABEL (label),
+  ligma_label_set_attributes (GTK_LABEL (label),
                              PANGO_ATTR_SCALE,  PANGO_SCALE_LARGE,
                              -1);
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
@@ -678,7 +678,7 @@ export_dialog (GSList      *actions,
       GtkWidget    *vbox;
 
       text = g_strdup_printf (gettext (action->reason), format_name);
-      frame = gimp_frame_new (text);
+      frame = ligma_frame_new (text);
       g_free (text);
 
       gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
@@ -732,7 +732,7 @@ export_dialog (GSList      *actions,
   /* the footline */
   label = gtk_label_new (_("The export conversion won't modify your "
                            "original image."));
-  gimp_label_set_attributes (GTK_LABEL (label),
+  ligma_label_set_attributes (GTK_LABEL (label),
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
@@ -743,18 +743,18 @@ export_dialog (GSList      *actions,
 
   gtk_widget_show (dialog);
 
-  switch (gimp_dialog_run (GIMP_DIALOG (dialog)))
+  switch (ligma_dialog_run (LIGMA_DIALOG (dialog)))
     {
     case GTK_RESPONSE_OK:
-      retval = GIMP_EXPORT_EXPORT;
+      retval = LIGMA_EXPORT_EXPORT;
       break;
 
     case GTK_RESPONSE_NO:
-      retval = GIMP_EXPORT_IGNORE;
+      retval = LIGMA_EXPORT_IGNORE;
       break;
 
     default:
-      retval = GIMP_EXPORT_CANCEL;
+      retval = LIGMA_EXPORT_CANCEL;
       break;
     }
 
@@ -764,7 +764,7 @@ export_dialog (GSList      *actions,
 }
 
 /**
- * gimp_export_image:
+ * ligma_export_image:
  * @image:        Pointer to the image.
  * @n_drawables:  Size of @drawables.
  * @drawables: (array length=n_drawables): Array of pointers to drawables.
@@ -779,32 +779,32 @@ export_dialog (GSList      *actions,
  *
  * If the user chooses to export the image, a copy is created.
  * This copy is then converted, @image and @drawables are changed to
- * point to the new image and the procedure returns GIMP_EXPORT_EXPORT.
+ * point to the new image and the procedure returns LIGMA_EXPORT_EXPORT.
  * The save_plugin has to take care of deleting the created image using
- * gimp_image_delete() and the drawables list with g_free() once the
+ * ligma_image_delete() and the drawables list with g_free() once the
  * image has been saved.
  *
  * If the user chooses to Ignore the export problem, @image and
- * @drawables are not altered, GIMP_EXPORT_IGNORE is returned and the
+ * @drawables are not altered, LIGMA_EXPORT_IGNORE is returned and the
  * save_plugin should try to save the original image. If the user
- * chooses Cancel, GIMP_EXPORT_CANCEL is returned and the save_plugin
- * should quit itself with status %GIMP_PDB_CANCEL.
+ * chooses Cancel, LIGMA_EXPORT_CANCEL is returned and the save_plugin
+ * should quit itself with status %LIGMA_PDB_CANCEL.
  *
  * If @format_name is NULL, no dialogs will be shown and this function
  * will behave as if the user clicked on the 'Export' button, if a
  * dialog would have been shown.
  *
- * Returns: An enum of #GimpExportReturn describing the user_action.
+ * Returns: An enum of #LigmaExportReturn describing the user_action.
  **/
-GimpExportReturn
-gimp_export_image (GimpImage               **image,
+LigmaExportReturn
+ligma_export_image (LigmaImage               **image,
                    gint                     *n_drawables,
-                   GimpDrawable           ***drawables,
+                   LigmaDrawable           ***drawables,
                    const gchar              *format_name,
-                   GimpExportCapabilities    capabilities)
+                   LigmaExportCapabilities    capabilities)
 {
   GSList            *actions = NULL;
-  GimpImageBaseType  type;
+  LigmaImageBaseType  type;
   GList             *layers;
   GList             *iter;
   GType              drawables_type       = G_TYPE_NONE;
@@ -812,15 +812,15 @@ gimp_export_image (GimpImage               **image,
   gboolean           added_flatten        = FALSE;
   gboolean           has_layer_masks      = FALSE;
   gboolean           background_has_alpha = TRUE;
-  GimpExportReturn   retval               = GIMP_EXPORT_CANCEL;
+  LigmaExportReturn   retval               = LIGMA_EXPORT_CANCEL;
   gint               i;
 
-  g_return_val_if_fail (gimp_image_is_valid (*image) && drawables &&
+  g_return_val_if_fail (ligma_image_is_valid (*image) && drawables &&
                         n_drawables && *n_drawables > 0, FALSE);
 
   for (i = 0; i < *n_drawables; i++)
     {
-      g_return_val_if_fail (gimp_item_is_valid (GIMP_ITEM ((*drawables)[i])), FALSE);
+      g_return_val_if_fail (ligma_item_is_valid (LIGMA_ITEM ((*drawables)[i])), FALSE);
 
       if (drawables_type == G_TYPE_NONE ||
           g_type_is_a (drawables_type, G_OBJECT_TYPE ((*drawables)[i])))
@@ -830,30 +830,30 @@ gimp_export_image (GimpImage               **image,
     }
 
   /* do some sanity checks */
-  if (capabilities & GIMP_EXPORT_NEEDS_ALPHA)
-    capabilities |= GIMP_EXPORT_CAN_HANDLE_ALPHA;
+  if (capabilities & LIGMA_EXPORT_NEEDS_ALPHA)
+    capabilities |= LIGMA_EXPORT_CAN_HANDLE_ALPHA;
 
-  if (capabilities & GIMP_EXPORT_CAN_HANDLE_LAYERS_AS_ANIMATION)
-    capabilities |= GIMP_EXPORT_CAN_HANDLE_LAYERS;
+  if (capabilities & LIGMA_EXPORT_CAN_HANDLE_LAYERS_AS_ANIMATION)
+    capabilities |= LIGMA_EXPORT_CAN_HANDLE_LAYERS;
 
-  if (capabilities & GIMP_EXPORT_CAN_HANDLE_LAYER_MASKS)
-    capabilities |= GIMP_EXPORT_CAN_HANDLE_LAYERS;
+  if (capabilities & LIGMA_EXPORT_CAN_HANDLE_LAYER_MASKS)
+    capabilities |= LIGMA_EXPORT_CAN_HANDLE_LAYERS;
 
-  if (format_name && g_getenv ("GIMP_INTERACTIVE_EXPORT"))
+  if (format_name && g_getenv ("LIGMA_INTERACTIVE_EXPORT"))
     interactive = TRUE;
 
   /* ask for confirmation if the user is not saving a layer (see bug #51114) */
   if (interactive &&
-      ! g_type_is_a (drawables_type, GIMP_TYPE_LAYER) &&
-      ! (capabilities & GIMP_EXPORT_CAN_HANDLE_LAYERS))
+      ! g_type_is_a (drawables_type, LIGMA_TYPE_LAYER) &&
+      ! (capabilities & LIGMA_EXPORT_CAN_HANDLE_LAYERS))
     {
-      if (g_type_is_a (drawables_type, GIMP_TYPE_LAYER_MASK))
+      if (g_type_is_a (drawables_type, LIGMA_TYPE_LAYER_MASK))
         {
           retval = confirm_save_dialog
             (_("You are about to save a layer mask as %s.\n"
                "This will not save the visible layers."), format_name);
         }
-      else if (g_type_is_a (drawables_type, GIMP_TYPE_CHANNEL))
+      else if (g_type_is_a (drawables_type, LIGMA_TYPE_CHANNEL))
         {
           retval = confirm_save_dialog
             (_("You are about to save a channel (saved selection) as %s.\n"
@@ -866,23 +866,23 @@ gimp_export_image (GimpImage               **image,
         }
 
       /* cancel - the user can then select an appropriate layer to save */
-      if (retval == GIMP_EXPORT_CANCEL)
-        return GIMP_EXPORT_CANCEL;
+      if (retval == LIGMA_EXPORT_CANCEL)
+        return LIGMA_EXPORT_CANCEL;
     }
 
 
   /* check alpha and layer masks */
-  layers = gimp_image_list_layers (*image);
+  layers = ligma_image_list_layers (*image);
 
   for (iter = layers; iter; iter = iter->next)
     {
-      GimpLayer *layer = GIMP_LAYER (iter->data);
+      LigmaLayer *layer = LIGMA_LAYER (iter->data);
 
-      if (gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
+      if (ligma_drawable_has_alpha (LIGMA_DRAWABLE (layer)))
         {
-          if (! (capabilities & GIMP_EXPORT_CAN_HANDLE_ALPHA))
+          if (! (capabilities & LIGMA_EXPORT_CAN_HANDLE_ALPHA))
             {
-              if (! (capabilities & GIMP_EXPORT_CAN_HANDLE_LAYERS))
+              if (! (capabilities & LIGMA_EXPORT_CAN_HANDLE_LAYERS))
                 {
                   actions = g_slist_prepend (actions, &export_action_flatten);
                   added_flatten = TRUE;
@@ -900,10 +900,10 @@ gimp_export_image (GimpImage               **image,
           /*  If this is the last layer, it's visible and has no alpha
            *  channel, then the image has a "flat" background
            */
-          if (iter->next == NULL && gimp_item_get_visible (GIMP_ITEM (layer)))
+          if (iter->next == NULL && ligma_item_get_visible (LIGMA_ITEM (layer)))
             background_has_alpha = FALSE;
 
-          if (capabilities & GIMP_EXPORT_NEEDS_ALPHA)
+          if (capabilities & LIGMA_EXPORT_NEEDS_ALPHA)
             {
               actions = g_slist_prepend (actions, &export_action_add_alpha);
               break;
@@ -915,39 +915,39 @@ gimp_export_image (GimpImage               **image,
     {
       for (iter = layers; iter; iter = iter->next)
         {
-          if (gimp_layer_get_mask (iter->data))
+          if (ligma_layer_get_mask (iter->data))
             has_layer_masks = TRUE;
         }
     }
 
   if (! added_flatten)
     {
-      GimpLayer *layer = GIMP_LAYER (layers->data);
+      LigmaLayer *layer = LIGMA_LAYER (layers->data);
       GList     *children;
 
-      children = gimp_item_list_children (GIMP_ITEM (layer));
+      children = ligma_item_list_children (LIGMA_ITEM (layer));
 
-      if ((capabilities & GIMP_EXPORT_CAN_HANDLE_LAYERS) &&
-          (capabilities & GIMP_EXPORT_NEEDS_CROP))
+      if ((capabilities & LIGMA_EXPORT_CAN_HANDLE_LAYERS) &&
+          (capabilities & LIGMA_EXPORT_NEEDS_CROP))
         {
           GeglRectangle image_bounds;
           gboolean      needs_crop = FALSE;
 
           image_bounds.x      = 0;
           image_bounds.y      = 0;
-          image_bounds.width  = gimp_image_get_width  (*image);
-          image_bounds.height = gimp_image_get_height (*image);
+          image_bounds.width  = ligma_image_get_width  (*image);
+          image_bounds.height = ligma_image_get_height (*image);
 
           for (iter = layers; iter; iter = iter->next)
             {
-              GimpDrawable  *drawable = iter->data;
+              LigmaDrawable  *drawable = iter->data;
               GeglRectangle  layer_bounds;
 
-              gimp_drawable_get_offsets (drawable,
+              ligma_drawable_get_offsets (drawable,
                                      &layer_bounds.x, &layer_bounds.y);
 
-              layer_bounds.width  = gimp_drawable_get_width  (drawable);
-              layer_bounds.height = gimp_drawable_get_height (drawable);
+              layer_bounds.width  = ligma_drawable_get_width  (drawable);
+              layer_bounds.height = ligma_drawable_get_height (drawable);
 
               if (! gegl_rectangle_contains (&image_bounds, &layer_bounds))
                 {
@@ -967,23 +967,23 @@ gimp_export_image (GimpImage               **image,
       /* check if layer size != canvas size, opacity != 100%, or offsets != 0 */
       if (g_list_length (layers) == 1       &&
           ! children                        &&
-          g_type_is_a (drawables_type, GIMP_TYPE_LAYER) &&
-          ! (capabilities & GIMP_EXPORT_CAN_HANDLE_LAYERS))
+          g_type_is_a (drawables_type, LIGMA_TYPE_LAYER) &&
+          ! (capabilities & LIGMA_EXPORT_CAN_HANDLE_LAYERS))
         {
-          GimpDrawable *drawable = (*drawables)[0];
+          LigmaDrawable *drawable = (*drawables)[0];
           gint          offset_x;
           gint          offset_y;
 
-          gimp_drawable_get_offsets (drawable, &offset_x, &offset_y);
+          ligma_drawable_get_offsets (drawable, &offset_x, &offset_y);
 
-          if ((gimp_layer_get_opacity (GIMP_LAYER (drawable)) < 100.0) ||
-              (gimp_image_get_width (*image) !=
-               gimp_drawable_get_width (drawable))            ||
-              (gimp_image_get_height (*image) !=
-               gimp_drawable_get_height (drawable))           ||
+          if ((ligma_layer_get_opacity (LIGMA_LAYER (drawable)) < 100.0) ||
+              (ligma_image_get_width (*image) !=
+               ligma_drawable_get_width (drawable))            ||
+              (ligma_image_get_height (*image) !=
+               ligma_drawable_get_height (drawable))           ||
               offset_x || offset_y)
             {
-              if (capabilities & GIMP_EXPORT_CAN_HANDLE_ALPHA)
+              if (capabilities & LIGMA_EXPORT_CAN_HANDLE_ALPHA)
                 {
                   actions = g_slist_prepend (actions,
                                              &export_action_merge_single);
@@ -998,19 +998,19 @@ gimp_export_image (GimpImage               **image,
       /* check multiple layers */
       else if (layers && layers->next != NULL)
         {
-          if (capabilities & GIMP_EXPORT_CAN_HANDLE_LAYERS_AS_ANIMATION)
+          if (capabilities & LIGMA_EXPORT_CAN_HANDLE_LAYERS_AS_ANIMATION)
             {
               if (background_has_alpha ||
-                  capabilities & GIMP_EXPORT_NEEDS_ALPHA)
+                  capabilities & LIGMA_EXPORT_NEEDS_ALPHA)
                 actions = g_slist_prepend (actions,
                                            &export_action_animate_or_merge);
               else
                 actions = g_slist_prepend (actions,
                                            &export_action_animate_or_flatten);
             }
-          else if (! (capabilities & GIMP_EXPORT_CAN_HANDLE_LAYERS))
+          else if (! (capabilities & LIGMA_EXPORT_CAN_HANDLE_LAYERS))
             {
-              if (capabilities & GIMP_EXPORT_NEEDS_ALPHA)
+              if (capabilities & LIGMA_EXPORT_NEEDS_ALPHA)
                 actions = g_slist_prepend (actions,
                                            &export_action_merge);
               else
@@ -1021,9 +1021,9 @@ gimp_export_image (GimpImage               **image,
       /* check for a single toplevel layer group */
       else if (children)
         {
-          if (! (capabilities & GIMP_EXPORT_CAN_HANDLE_LAYERS))
+          if (! (capabilities & LIGMA_EXPORT_CAN_HANDLE_LAYERS))
             {
-              if (capabilities & GIMP_EXPORT_NEEDS_ALPHA)
+              if (capabilities & LIGMA_EXPORT_NEEDS_ALPHA)
                 actions = g_slist_prepend (actions,
                                            &export_action_merge);
               else
@@ -1036,72 +1036,72 @@ gimp_export_image (GimpImage               **image,
 
       /* check layer masks */
       if (has_layer_masks &&
-          ! (capabilities & GIMP_EXPORT_CAN_HANDLE_LAYER_MASKS))
+          ! (capabilities & LIGMA_EXPORT_CAN_HANDLE_LAYER_MASKS))
         actions = g_slist_prepend (actions, &export_action_apply_masks);
     }
 
   g_list_free (layers);
 
   /* check the image type */
-  type = gimp_image_get_base_type (*image);
+  type = ligma_image_get_base_type (*image);
   switch (type)
     {
-    case GIMP_RGB:
-      if (! (capabilities & GIMP_EXPORT_CAN_HANDLE_RGB))
+    case LIGMA_RGB:
+      if (! (capabilities & LIGMA_EXPORT_CAN_HANDLE_RGB))
         {
-          if ((capabilities & GIMP_EXPORT_CAN_HANDLE_INDEXED) &&
-              (capabilities & GIMP_EXPORT_CAN_HANDLE_GRAY))
+          if ((capabilities & LIGMA_EXPORT_CAN_HANDLE_INDEXED) &&
+              (capabilities & LIGMA_EXPORT_CAN_HANDLE_GRAY))
             actions = g_slist_prepend (actions,
                                        &export_action_convert_indexed_or_grayscale);
-          else if (capabilities & GIMP_EXPORT_CAN_HANDLE_INDEXED)
+          else if (capabilities & LIGMA_EXPORT_CAN_HANDLE_INDEXED)
             actions = g_slist_prepend (actions,
                                        &export_action_convert_indexed);
-          else if (capabilities & GIMP_EXPORT_CAN_HANDLE_GRAY)
+          else if (capabilities & LIGMA_EXPORT_CAN_HANDLE_GRAY)
             actions = g_slist_prepend (actions,
                                        &export_action_convert_grayscale);
-          else if (capabilities & GIMP_EXPORT_CAN_HANDLE_BITMAP)
+          else if (capabilities & LIGMA_EXPORT_CAN_HANDLE_BITMAP)
             actions = g_slist_prepend (actions,
                                        &export_action_convert_bitmap);
         }
       break;
 
-    case GIMP_GRAY:
-      if (! (capabilities & GIMP_EXPORT_CAN_HANDLE_GRAY))
+    case LIGMA_GRAY:
+      if (! (capabilities & LIGMA_EXPORT_CAN_HANDLE_GRAY))
         {
-          if ((capabilities & GIMP_EXPORT_CAN_HANDLE_RGB) &&
-              (capabilities & GIMP_EXPORT_CAN_HANDLE_INDEXED))
+          if ((capabilities & LIGMA_EXPORT_CAN_HANDLE_RGB) &&
+              (capabilities & LIGMA_EXPORT_CAN_HANDLE_INDEXED))
             actions = g_slist_prepend (actions,
                                        &export_action_convert_rgb_or_indexed);
-          else if (capabilities & GIMP_EXPORT_CAN_HANDLE_RGB)
+          else if (capabilities & LIGMA_EXPORT_CAN_HANDLE_RGB)
             actions = g_slist_prepend (actions,
                                        &export_action_convert_rgb);
-          else if (capabilities & GIMP_EXPORT_CAN_HANDLE_INDEXED)
+          else if (capabilities & LIGMA_EXPORT_CAN_HANDLE_INDEXED)
             actions = g_slist_prepend (actions,
                                        &export_action_convert_indexed);
-          else if (capabilities & GIMP_EXPORT_CAN_HANDLE_BITMAP)
+          else if (capabilities & LIGMA_EXPORT_CAN_HANDLE_BITMAP)
             actions = g_slist_prepend (actions,
                                        &export_action_convert_bitmap);
         }
       break;
 
-    case GIMP_INDEXED:
-      if (! (capabilities & GIMP_EXPORT_CAN_HANDLE_INDEXED))
+    case LIGMA_INDEXED:
+      if (! (capabilities & LIGMA_EXPORT_CAN_HANDLE_INDEXED))
         {
-          if ((capabilities & GIMP_EXPORT_CAN_HANDLE_RGB) &&
-              (capabilities & GIMP_EXPORT_CAN_HANDLE_GRAY))
+          if ((capabilities & LIGMA_EXPORT_CAN_HANDLE_RGB) &&
+              (capabilities & LIGMA_EXPORT_CAN_HANDLE_GRAY))
             actions = g_slist_prepend (actions,
                                        &export_action_convert_rgb_or_grayscale);
-          else if (capabilities & GIMP_EXPORT_CAN_HANDLE_RGB)
+          else if (capabilities & LIGMA_EXPORT_CAN_HANDLE_RGB)
             actions = g_slist_prepend (actions,
                                        &export_action_convert_rgb);
-          else if (capabilities & GIMP_EXPORT_CAN_HANDLE_GRAY)
+          else if (capabilities & LIGMA_EXPORT_CAN_HANDLE_GRAY)
             actions = g_slist_prepend (actions,
                                        &export_action_convert_grayscale);
-          else if (capabilities & GIMP_EXPORT_CAN_HANDLE_BITMAP)
+          else if (capabilities & LIGMA_EXPORT_CAN_HANDLE_BITMAP)
             {
               gint n_colors;
 
-              g_free (gimp_image_get_colormap (*image, &n_colors));
+              g_free (ligma_image_get_colormap (*image, &n_colors));
 
               if (n_colors > 2)
                 actions = g_slist_prepend (actions,
@@ -1118,25 +1118,25 @@ gimp_export_image (GimpImage               **image,
       if (interactive)
         retval = export_dialog (actions, format_name);
       else
-        retval = GIMP_EXPORT_EXPORT;
+        retval = LIGMA_EXPORT_EXPORT;
     }
   else
     {
-      retval = GIMP_EXPORT_IGNORE;
+      retval = LIGMA_EXPORT_IGNORE;
     }
 
-  if (retval == GIMP_EXPORT_EXPORT)
+  if (retval == LIGMA_EXPORT_EXPORT)
     {
       GSList *list;
       GList  *drawables_in;
       GList  *drawables_out;
       gint    i;
 
-      *image = gimp_image_duplicate (*image);
-      drawables_in  = gimp_image_list_selected_layers (*image);
+      *image = ligma_image_duplicate (*image);
+      drawables_in  = ligma_image_list_selected_layers (*image);
       drawables_out = drawables_in;
 
-      gimp_image_undo_disable (*image);
+      ligma_image_undo_disable (*image);
 
       for (list = actions; list; list = list->next)
         {
@@ -1150,7 +1150,7 @@ gimp_export_image (GimpImage               **image,
         }
 
       *n_drawables = g_list_length (drawables_out);
-      *drawables = g_new (GimpDrawable *, *n_drawables);
+      *drawables = g_new (LigmaDrawable *, *n_drawables);
       for (iter = drawables_out, i = 0; iter; iter = iter->next, i++)
         (*drawables)[i] = iter->data;
 
@@ -1163,17 +1163,17 @@ gimp_export_image (GimpImage               **image,
 }
 
 /**
- * gimp_export_dialog_new:
+ * ligma_export_dialog_new:
  * @format_name: The short name of the image_format (e.g. JPEG or PNG).
  * @role:        The dialog's @role which will be set with
  *               gtk_window_set_role().
- * @help_id:     The GIMP help id.
+ * @help_id:     The LIGMA help id.
  *
  * Creates a new export dialog. All file plug-ins should use this
  * dialog to get a consistent look on the export dialogs. Use
- * gimp_export_dialog_get_content_area() to get a vertical #GtkBox to be
+ * ligma_export_dialog_get_content_area() to get a vertical #GtkBox to be
  * filled with export options. The export dialog is a wrapped
- * #GimpDialog.
+ * #LigmaDialog.
  *
  * The dialog response when the user clicks on the Export button is
  * %GTK_RESPONSE_OK, and when the Cancel button is clicked it is
@@ -1184,7 +1184,7 @@ gimp_export_image (GimpImage               **image,
  * Since: 2.8
  **/
 GtkWidget *
-gimp_export_dialog_new (const gchar *format_name,
+ligma_export_dialog_new (const gchar *format_name,
                         const gchar *role,
                         const gchar *help_id)
 {
@@ -1192,21 +1192,21 @@ gimp_export_dialog_new (const gchar *format_name,
   /* TRANSLATORS: the %s parameter is an image format name (ex: PNG). */
   gchar     *title  = g_strdup_printf (_("Export Image as %s"), format_name);
 
-  dialog = gimp_dialog_new (title, role,
+  dialog = ligma_dialog_new (title, role,
                             NULL, 0,
-                            gimp_standard_help_func, help_id,
+                            ligma_standard_help_func, help_id,
 
                             _("_Cancel"), GTK_RESPONSE_CANCEL,
                             _("_Export"), GTK_RESPONSE_OK,
 
                             NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  gimp_window_set_transient (GTK_WINDOW (dialog));
+  ligma_window_set_transient (GTK_WINDOW (dialog));
 
   g_free (title);
 
@@ -1214,8 +1214,8 @@ gimp_export_dialog_new (const gchar *format_name,
 }
 
 /**
- * gimp_export_dialog_get_content_area:
- * @dialog: A dialog created with gimp_export_dialog_new()
+ * ligma_export_dialog_get_content_area:
+ * @dialog: A dialog created with ligma_export_dialog_new()
  *
  * Returns the vertical #GtkBox of the passed export dialog to be filled with
  * export options.
@@ -1225,7 +1225,7 @@ gimp_export_dialog_new (const gchar *format_name,
  * Since: 2.8
  **/
 GtkWidget *
-gimp_export_dialog_get_content_area (GtkWidget *dialog)
+ligma_export_dialog_get_content_area (GtkWidget *dialog)
 {
   return gtk_dialog_get_content_area (GTK_DIALOG (dialog));
 }

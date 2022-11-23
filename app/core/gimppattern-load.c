@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,28 +21,28 @@
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmacolor/ligmacolor.h"
 
 #include "core-types.h"
 
-#include "gimppattern.h"
-#include "gimppattern-header.h"
-#include "gimppattern-load.h"
-#include "gimptempbuf.h"
+#include "ligmapattern.h"
+#include "ligmapattern-header.h"
+#include "ligmapattern-load.h"
+#include "ligmatempbuf.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 GList *
-gimp_pattern_load (GimpContext   *context,
+ligma_pattern_load (LigmaContext   *context,
                    GFile         *file,
                    GInputStream  *input,
                    GError       **error)
 {
-  GimpPattern       *pattern = NULL;
+  LigmaPattern       *pattern = NULL;
   const Babl        *format  = NULL;
-  GimpPatternHeader  header;
+  LigmaPatternHeader  header;
   gsize              size;
   gsize              bytes_read;
   gsize              bn_size;
@@ -70,11 +70,11 @@ gimp_pattern_load (GimpContext   *context,
   header.magic_number = g_ntohl (header.magic_number);
 
   /*  Check for correct file format */
-  if (header.magic_number != GIMP_PATTERN_MAGIC ||
+  if (header.magic_number != LIGMA_PATTERN_MAGIC ||
       header.version      != 1                  ||
       header.header_size  <= sizeof (header))
     {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+      g_set_error (error, LIGMA_DATA_ERROR, LIGMA_DATA_ERROR_READ,
                    _("Unknown pattern format version %d."),
                    header.version);
       goto error;
@@ -83,24 +83,24 @@ gimp_pattern_load (GimpContext   *context,
   /*  Check for supported bit depths  */
   if (header.bytes < 1 || header.bytes > 4)
     {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+      g_set_error (error, LIGMA_DATA_ERROR, LIGMA_DATA_ERROR_READ,
                    _("Unsupported pattern depth %d.\n"
-                     "GIMP Patterns must be GRAY or RGB."),
+                     "LIGMA Patterns must be GRAY or RGB."),
                    header.bytes);
       goto error;
     }
 
   /*  Validate dimensions  */
-  if ((header.width  == 0) || (header.width  > GIMP_PATTERN_MAX_SIZE) ||
-      (header.height == 0) || (header.height > GIMP_PATTERN_MAX_SIZE) ||
+  if ((header.width  == 0) || (header.width  > LIGMA_PATTERN_MAX_SIZE) ||
+      (header.height == 0) || (header.height > LIGMA_PATTERN_MAX_SIZE) ||
       (G_MAXSIZE / header.width / header.height / header.bytes < 1))
     {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+      g_set_error (error, LIGMA_DATA_ERROR, LIGMA_DATA_ERROR_READ,
                    _("Invalid header data in '%s': width=%lu (maximum %lu), "
                      "height=%lu (maximum %lu), bytes=%lu"),
-                   gimp_file_get_utf8_name (file),
-                   (gulong) header.width,  (gulong) GIMP_PATTERN_MAX_SIZE,
-                   (gulong) header.height, (gulong) GIMP_PATTERN_MAX_SIZE,
+                   ligma_file_get_utf8_name (file),
+                   (gulong) header.width,  (gulong) LIGMA_PATTERN_MAX_SIZE,
+                   (gulong) header.height, (gulong) LIGMA_PATTERN_MAX_SIZE,
                    (gulong) header.bytes);
       goto error;
     }
@@ -110,12 +110,12 @@ gimp_pattern_load (GimpContext   *context,
     {
       gchar *utf8;
 
-      if (bn_size > GIMP_PATTERN_MAX_NAME)
+      if (bn_size > LIGMA_PATTERN_MAX_NAME)
         {
-          g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+          g_set_error (error, LIGMA_DATA_ERROR, LIGMA_DATA_ERROR_READ,
                        _("Invalid header data in '%s': "
                          "Pattern name is too long: %lu"),
-                       gimp_file_get_utf8_name (file),
+                       ligma_file_get_utf8_name (file),
                        (gulong) bn_size);
           goto error;
         }
@@ -131,9 +131,9 @@ gimp_pattern_load (GimpContext   *context,
           goto error;
         }
 
-      utf8 = gimp_any_to_utf8 (name, bn_size - 1,
+      utf8 = ligma_any_to_utf8 (name, bn_size - 1,
                                _("Invalid UTF-8 string in pattern file '%s'."),
-                               gimp_file_get_utf8_name (file));
+                               ligma_file_get_utf8_name (file));
       g_free (name);
       name = utf8;
     }
@@ -141,9 +141,9 @@ gimp_pattern_load (GimpContext   *context,
   if (! name)
     name = g_strdup (_("Unnamed"));
 
-  pattern = g_object_new (GIMP_TYPE_PATTERN,
+  pattern = g_object_new (LIGMA_TYPE_PATTERN,
                           "name",      name,
-                          "mime-type", "image/x-gimp-pat",
+                          "mime-type", "image/x-ligma-pat",
                           NULL);
 
   g_free (name);
@@ -156,11 +156,11 @@ gimp_pattern_load (GimpContext   *context,
     case 4: format = babl_format ("R'G'B'A u8"); break;
     }
 
-  pattern->mask = gimp_temp_buf_new (header.width, header.height, format);
+  pattern->mask = ligma_temp_buf_new (header.width, header.height, format);
   size = (gsize) header.width * header.height * header.bytes;
 
   if (! g_input_stream_read_all (input,
-                                 gimp_temp_buf_get_data (pattern->mask), size,
+                                 ligma_temp_buf_get_data (pattern->mask), size,
                                  &bytes_read, NULL, error) ||
       bytes_read != size)
     {
@@ -181,12 +181,12 @@ gimp_pattern_load (GimpContext   *context,
 }
 
 GList *
-gimp_pattern_load_pixbuf (GimpContext   *context,
+ligma_pattern_load_pixbuf (LigmaContext   *context,
                           GFile         *file,
                           GInputStream  *input,
                           GError       **error)
 {
-  GimpPattern *pattern;
+  LigmaPattern *pattern;
   GdkPixbuf   *pixbuf;
   gchar       *name;
 
@@ -204,15 +204,15 @@ gimp_pattern_load_pixbuf (GimpContext   *context,
     name = g_strdup (gdk_pixbuf_get_option (pixbuf, "tEXt::Comment"));
 
   if (! name)
-    name = g_path_get_basename (gimp_file_get_utf8_name (file));
+    name = g_path_get_basename (ligma_file_get_utf8_name (file));
 
-  pattern = g_object_new (GIMP_TYPE_PATTERN,
+  pattern = g_object_new (LIGMA_TYPE_PATTERN,
                           "name",      name,
                           "mime-type", NULL, /* FIXME!! */
                           NULL);
   g_free (name);
 
-  pattern->mask = gimp_temp_buf_new_from_pixbuf (pixbuf, NULL);
+  pattern->mask = ligma_temp_buf_new_from_pixbuf (pixbuf, NULL);
 
   g_object_unref (pixbuf);
 

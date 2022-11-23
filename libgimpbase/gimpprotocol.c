@@ -1,4 +1,4 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * This library is free software: you can redistribute it and/or
@@ -20,109 +20,109 @@
 
 #include <glib-object.h>
 
-#include "gimpbasetypes.h"
+#include "ligmabasetypes.h"
 
-#include "gimpparamspecs.h"
-#include "gimpparasite.h"
-#include "gimpprotocol.h"
-#include "gimpwire.h"
+#include "ligmaparamspecs.h"
+#include "ligmaparasite.h"
+#include "ligmaprotocol.h"
+#include "ligmawire.h"
 
 
 static void _gp_quit_read                (GIOChannel       *channel,
-                                          GimpWireMessage  *msg,
+                                          LigmaWireMessage  *msg,
                                           gpointer          user_data);
 static void _gp_quit_write               (GIOChannel       *channel,
-                                          GimpWireMessage  *msg,
+                                          LigmaWireMessage  *msg,
                                           gpointer          user_data);
-static void _gp_quit_destroy             (GimpWireMessage  *msg);
+static void _gp_quit_destroy             (LigmaWireMessage  *msg);
 
 static void _gp_config_read              (GIOChannel       *channel,
-                                          GimpWireMessage  *msg,
+                                          LigmaWireMessage  *msg,
                                           gpointer          user_data);
 static void _gp_config_write             (GIOChannel       *channel,
-                                          GimpWireMessage  *msg,
+                                          LigmaWireMessage  *msg,
                                           gpointer          user_data);
-static void _gp_config_destroy           (GimpWireMessage  *msg);
+static void _gp_config_destroy           (LigmaWireMessage  *msg);
 
 static void _gp_tile_req_read            (GIOChannel       *channel,
-                                          GimpWireMessage  *msg,
+                                          LigmaWireMessage  *msg,
                                           gpointer          user_data);
 static void _gp_tile_req_write           (GIOChannel       *channel,
-                                          GimpWireMessage  *msg,
+                                          LigmaWireMessage  *msg,
                                           gpointer          user_data);
-static void _gp_tile_req_destroy         (GimpWireMessage  *msg);
+static void _gp_tile_req_destroy         (LigmaWireMessage  *msg);
 
 static void _gp_tile_ack_read            (GIOChannel       *channel,
-                                          GimpWireMessage  *msg,
+                                          LigmaWireMessage  *msg,
                                           gpointer          user_data);
 static void _gp_tile_ack_write           (GIOChannel       *channel,
-                                          GimpWireMessage  *msg,
+                                          LigmaWireMessage  *msg,
                                           gpointer          user_data);
-static void _gp_tile_ack_destroy         (GimpWireMessage  *msg);
+static void _gp_tile_ack_destroy         (LigmaWireMessage  *msg);
 
 static void _gp_tile_data_read           (GIOChannel       *channel,
-                                          GimpWireMessage  *msg,
+                                          LigmaWireMessage  *msg,
                                           gpointer          user_data);
 static void _gp_tile_data_write          (GIOChannel       *channel,
-                                          GimpWireMessage  *msg,
+                                          LigmaWireMessage  *msg,
                                           gpointer          user_data);
-static void _gp_tile_data_destroy        (GimpWireMessage  *msg);
+static void _gp_tile_data_destroy        (LigmaWireMessage  *msg);
 
 static void _gp_proc_run_read            (GIOChannel       *channel,
-                                          GimpWireMessage  *msg,
+                                          LigmaWireMessage  *msg,
                                           gpointer          user_data);
 static void _gp_proc_run_write           (GIOChannel       *channel,
-                                          GimpWireMessage  *msg,
+                                          LigmaWireMessage  *msg,
                                           gpointer          user_data);
-static void _gp_proc_run_destroy         (GimpWireMessage  *msg);
+static void _gp_proc_run_destroy         (LigmaWireMessage  *msg);
 
 static void _gp_proc_return_read         (GIOChannel       *channel,
-                                          GimpWireMessage  *msg,
+                                          LigmaWireMessage  *msg,
                                           gpointer          user_data);
 static void _gp_proc_return_write        (GIOChannel       *channel,
-                                          GimpWireMessage  *msg,
+                                          LigmaWireMessage  *msg,
                                           gpointer          user_data);
-static void _gp_proc_return_destroy      (GimpWireMessage  *msg);
+static void _gp_proc_return_destroy      (LigmaWireMessage  *msg);
 
 static void _gp_temp_proc_run_read       (GIOChannel       *channel,
-                                          GimpWireMessage  *msg,
+                                          LigmaWireMessage  *msg,
                                           gpointer          user_data);
 static void _gp_temp_proc_run_write      (GIOChannel       *channel,
-                                          GimpWireMessage  *msg,
+                                          LigmaWireMessage  *msg,
                                           gpointer          user_data);
-static void _gp_temp_proc_run_destroy    (GimpWireMessage  *msg);
+static void _gp_temp_proc_run_destroy    (LigmaWireMessage  *msg);
 
 static void _gp_temp_proc_return_read    (GIOChannel       *channel,
-                                          GimpWireMessage  *msg,
+                                          LigmaWireMessage  *msg,
                                           gpointer          user_data);
 static void _gp_temp_proc_return_write   (GIOChannel       *channel,
-                                          GimpWireMessage  *msg,
+                                          LigmaWireMessage  *msg,
                                           gpointer          user_data);
-static void _gp_temp_proc_return_destroy (GimpWireMessage  *msg);
+static void _gp_temp_proc_return_destroy (LigmaWireMessage  *msg);
 
 static void _gp_proc_install_read        (GIOChannel       *channel,
-                                          GimpWireMessage  *msg,
+                                          LigmaWireMessage  *msg,
                                           gpointer          user_data);
 static void _gp_proc_install_write       (GIOChannel       *channel,
-                                          GimpWireMessage  *msg,
+                                          LigmaWireMessage  *msg,
                                           gpointer          user_data);
-static void _gp_proc_install_destroy     (GimpWireMessage  *msg);
+static void _gp_proc_install_destroy     (LigmaWireMessage  *msg);
 
 static void _gp_proc_uninstall_read      (GIOChannel       *channel,
-                                          GimpWireMessage  *msg,
+                                          LigmaWireMessage  *msg,
                                           gpointer          user_data);
 static void _gp_proc_uninstall_write     (GIOChannel       *channel,
-                                          GimpWireMessage  *msg,
+                                          LigmaWireMessage  *msg,
                                           gpointer          user_data);
-static void _gp_proc_uninstall_destroy   (GimpWireMessage  *msg);
+static void _gp_proc_uninstall_destroy   (LigmaWireMessage  *msg);
 
 static void _gp_extension_ack_read       (GIOChannel       *channel,
-                                          GimpWireMessage  *msg,
+                                          LigmaWireMessage  *msg,
                                           gpointer          user_data);
 static void _gp_extension_ack_write      (GIOChannel       *channel,
-                                          GimpWireMessage  *msg,
+                                          LigmaWireMessage  *msg,
                                           gpointer          user_data);
-static void _gp_extension_ack_destroy    (GimpWireMessage  *msg);
+static void _gp_extension_ack_destroy    (LigmaWireMessage  *msg);
 
 static void _gp_params_read              (GIOChannel       *channel,
                                           GPParam         **params,
@@ -137,67 +137,67 @@ static void _gp_params_destroy           (GPParam          *params,
 
 
 static void _gp_has_init_read            (GIOChannel       *channel,
-                                          GimpWireMessage  *msg,
+                                          LigmaWireMessage  *msg,
                                           gpointer          user_data);
 static void _gp_has_init_write           (GIOChannel       *channel,
-                                          GimpWireMessage  *msg,
+                                          LigmaWireMessage  *msg,
                                           gpointer          user_data);
-static void _gp_has_init_destroy         (GimpWireMessage  *msg);
+static void _gp_has_init_destroy         (LigmaWireMessage  *msg);
 
 
 
 void
 gp_init (void)
 {
-  gimp_wire_register (GP_QUIT,
+  ligma_wire_register (GP_QUIT,
                       _gp_quit_read,
                       _gp_quit_write,
                       _gp_quit_destroy);
-  gimp_wire_register (GP_CONFIG,
+  ligma_wire_register (GP_CONFIG,
                       _gp_config_read,
                       _gp_config_write,
                       _gp_config_destroy);
-  gimp_wire_register (GP_TILE_REQ,
+  ligma_wire_register (GP_TILE_REQ,
                       _gp_tile_req_read,
                       _gp_tile_req_write,
                       _gp_tile_req_destroy);
-  gimp_wire_register (GP_TILE_ACK,
+  ligma_wire_register (GP_TILE_ACK,
                       _gp_tile_ack_read,
                       _gp_tile_ack_write,
                       _gp_tile_ack_destroy);
-  gimp_wire_register (GP_TILE_DATA,
+  ligma_wire_register (GP_TILE_DATA,
                       _gp_tile_data_read,
                       _gp_tile_data_write,
                       _gp_tile_data_destroy);
-  gimp_wire_register (GP_PROC_RUN,
+  ligma_wire_register (GP_PROC_RUN,
                       _gp_proc_run_read,
                       _gp_proc_run_write,
                       _gp_proc_run_destroy);
-  gimp_wire_register (GP_PROC_RETURN,
+  ligma_wire_register (GP_PROC_RETURN,
                       _gp_proc_return_read,
                       _gp_proc_return_write,
                       _gp_proc_return_destroy);
-  gimp_wire_register (GP_TEMP_PROC_RUN,
+  ligma_wire_register (GP_TEMP_PROC_RUN,
                       _gp_temp_proc_run_read,
                       _gp_temp_proc_run_write,
                       _gp_temp_proc_run_destroy);
-  gimp_wire_register (GP_TEMP_PROC_RETURN,
+  ligma_wire_register (GP_TEMP_PROC_RETURN,
                       _gp_temp_proc_return_read,
                       _gp_temp_proc_return_write,
                       _gp_temp_proc_return_destroy);
-  gimp_wire_register (GP_PROC_INSTALL,
+  ligma_wire_register (GP_PROC_INSTALL,
                       _gp_proc_install_read,
                       _gp_proc_install_write,
                       _gp_proc_install_destroy);
-  gimp_wire_register (GP_PROC_UNINSTALL,
+  ligma_wire_register (GP_PROC_UNINSTALL,
                       _gp_proc_uninstall_read,
                       _gp_proc_uninstall_write,
                       _gp_proc_uninstall_destroy);
-  gimp_wire_register (GP_EXTENSION_ACK,
+  ligma_wire_register (GP_EXTENSION_ACK,
                       _gp_extension_ack_read,
                       _gp_extension_ack_write,
                       _gp_extension_ack_destroy);
-  gimp_wire_register (GP_HAS_INIT,
+  ligma_wire_register (GP_HAS_INIT,
                       _gp_has_init_read,
                       _gp_has_init_write,
                       _gp_has_init_destroy);
@@ -209,15 +209,15 @@ gboolean
 gp_quit_write (GIOChannel *channel,
                gpointer    user_data)
 {
-  GimpWireMessage msg;
+  LigmaWireMessage msg;
 
   msg.type = GP_QUIT;
   msg.data = NULL;
 
-  if (! gimp_wire_write_msg (channel, &msg, user_data))
+  if (! ligma_wire_write_msg (channel, &msg, user_data))
     return FALSE;
 
-  if (! gimp_wire_flush (channel, user_data))
+  if (! ligma_wire_flush (channel, user_data))
     return FALSE;
 
   return TRUE;
@@ -228,15 +228,15 @@ gp_config_write (GIOChannel *channel,
                  GPConfig   *config,
                  gpointer    user_data)
 {
-  GimpWireMessage msg;
+  LigmaWireMessage msg;
 
   msg.type = GP_CONFIG;
   msg.data = config;
 
-  if (! gimp_wire_write_msg (channel, &msg, user_data))
+  if (! ligma_wire_write_msg (channel, &msg, user_data))
     return FALSE;
 
-  if (! gimp_wire_flush (channel, user_data))
+  if (! ligma_wire_flush (channel, user_data))
     return FALSE;
 
   return TRUE;
@@ -247,15 +247,15 @@ gp_tile_req_write (GIOChannel *channel,
                    GPTileReq  *tile_req,
                    gpointer    user_data)
 {
-  GimpWireMessage msg;
+  LigmaWireMessage msg;
 
   msg.type = GP_TILE_REQ;
   msg.data = tile_req;
 
-  if (! gimp_wire_write_msg (channel, &msg, user_data))
+  if (! ligma_wire_write_msg (channel, &msg, user_data))
     return FALSE;
 
-  if (! gimp_wire_flush (channel, user_data))
+  if (! ligma_wire_flush (channel, user_data))
     return FALSE;
 
   return TRUE;
@@ -265,15 +265,15 @@ gboolean
 gp_tile_ack_write (GIOChannel *channel,
                    gpointer    user_data)
 {
-  GimpWireMessage msg;
+  LigmaWireMessage msg;
 
   msg.type = GP_TILE_ACK;
   msg.data = NULL;
 
-  if (! gimp_wire_write_msg (channel, &msg, user_data))
+  if (! ligma_wire_write_msg (channel, &msg, user_data))
     return FALSE;
 
-  if (! gimp_wire_flush (channel, user_data))
+  if (! ligma_wire_flush (channel, user_data))
     return FALSE;
 
   return TRUE;
@@ -284,15 +284,15 @@ gp_tile_data_write (GIOChannel *channel,
                     GPTileData *tile_data,
                     gpointer    user_data)
 {
-  GimpWireMessage msg;
+  LigmaWireMessage msg;
 
   msg.type = GP_TILE_DATA;
   msg.data = tile_data;
 
-  if (! gimp_wire_write_msg (channel, &msg, user_data))
+  if (! ligma_wire_write_msg (channel, &msg, user_data))
     return FALSE;
 
-  if (! gimp_wire_flush (channel, user_data))
+  if (! ligma_wire_flush (channel, user_data))
     return FALSE;
 
   return TRUE;
@@ -303,15 +303,15 @@ gp_proc_run_write (GIOChannel *channel,
                    GPProcRun  *proc_run,
                    gpointer    user_data)
 {
-  GimpWireMessage msg;
+  LigmaWireMessage msg;
 
   msg.type = GP_PROC_RUN;
   msg.data = proc_run;
 
-  if (! gimp_wire_write_msg (channel, &msg, user_data))
+  if (! ligma_wire_write_msg (channel, &msg, user_data))
     return FALSE;
 
-  if (! gimp_wire_flush (channel, user_data))
+  if (! ligma_wire_flush (channel, user_data))
     return FALSE;
 
   return TRUE;
@@ -322,15 +322,15 @@ gp_proc_return_write (GIOChannel   *channel,
                       GPProcReturn *proc_return,
                       gpointer      user_data)
 {
-  GimpWireMessage msg;
+  LigmaWireMessage msg;
 
   msg.type = GP_PROC_RETURN;
   msg.data = proc_return;
 
-  if (! gimp_wire_write_msg (channel, &msg, user_data))
+  if (! ligma_wire_write_msg (channel, &msg, user_data))
     return FALSE;
 
-  if (! gimp_wire_flush (channel, user_data))
+  if (! ligma_wire_flush (channel, user_data))
     return FALSE;
 
   return TRUE;
@@ -341,15 +341,15 @@ gp_temp_proc_run_write (GIOChannel *channel,
                         GPProcRun  *proc_run,
                         gpointer    user_data)
 {
-  GimpWireMessage msg;
+  LigmaWireMessage msg;
 
   msg.type = GP_TEMP_PROC_RUN;
   msg.data = proc_run;
 
-  if (! gimp_wire_write_msg (channel, &msg, user_data))
+  if (! ligma_wire_write_msg (channel, &msg, user_data))
     return FALSE;
 
-  if (! gimp_wire_flush (channel, user_data))
+  if (! ligma_wire_flush (channel, user_data))
     return FALSE;
 
   return TRUE;
@@ -360,15 +360,15 @@ gp_temp_proc_return_write (GIOChannel   *channel,
                            GPProcReturn *proc_return,
                            gpointer      user_data)
 {
-  GimpWireMessage msg;
+  LigmaWireMessage msg;
 
   msg.type = GP_TEMP_PROC_RETURN;
   msg.data = proc_return;
 
-  if (! gimp_wire_write_msg (channel, &msg, user_data))
+  if (! ligma_wire_write_msg (channel, &msg, user_data))
     return FALSE;
 
-  if (! gimp_wire_flush (channel, user_data))
+  if (! ligma_wire_flush (channel, user_data))
     return FALSE;
 
   return TRUE;
@@ -379,15 +379,15 @@ gp_proc_install_write (GIOChannel    *channel,
                        GPProcInstall *proc_install,
                        gpointer       user_data)
 {
-  GimpWireMessage msg;
+  LigmaWireMessage msg;
 
   msg.type = GP_PROC_INSTALL;
   msg.data = proc_install;
 
-  if (! gimp_wire_write_msg (channel, &msg, user_data))
+  if (! ligma_wire_write_msg (channel, &msg, user_data))
     return FALSE;
 
-  if (! gimp_wire_flush (channel, user_data))
+  if (! ligma_wire_flush (channel, user_data))
     return FALSE;
 
   return TRUE;
@@ -398,15 +398,15 @@ gp_proc_uninstall_write (GIOChannel      *channel,
                          GPProcUninstall *proc_uninstall,
                          gpointer         user_data)
 {
-  GimpWireMessage msg;
+  LigmaWireMessage msg;
 
   msg.type = GP_PROC_UNINSTALL;
   msg.data = proc_uninstall;
 
-  if (! gimp_wire_write_msg (channel, &msg, user_data))
+  if (! ligma_wire_write_msg (channel, &msg, user_data))
     return FALSE;
 
-  if (! gimp_wire_flush (channel, user_data))
+  if (! ligma_wire_flush (channel, user_data))
     return FALSE;
 
   return TRUE;
@@ -416,15 +416,15 @@ gboolean
 gp_extension_ack_write (GIOChannel *channel,
                         gpointer    user_data)
 {
-  GimpWireMessage msg;
+  LigmaWireMessage msg;
 
   msg.type = GP_EXTENSION_ACK;
   msg.data = NULL;
 
-  if (! gimp_wire_write_msg (channel, &msg, user_data))
+  if (! ligma_wire_write_msg (channel, &msg, user_data))
     return FALSE;
 
-  if (! gimp_wire_flush (channel, user_data))
+  if (! ligma_wire_flush (channel, user_data))
     return FALSE;
 
   return TRUE;
@@ -434,15 +434,15 @@ gboolean
 gp_has_init_write (GIOChannel *channel,
                    gpointer    user_data)
 {
-  GimpWireMessage msg;
+  LigmaWireMessage msg;
 
   msg.type = GP_HAS_INIT;
   msg.data = NULL;
 
-  if (! gimp_wire_write_msg (channel, &msg, user_data))
+  if (! ligma_wire_write_msg (channel, &msg, user_data))
     return FALSE;
 
-  if (! gimp_wire_flush (channel, user_data))
+  if (! ligma_wire_flush (channel, user_data))
     return FALSE;
 
   return TRUE;
@@ -452,20 +452,20 @@ gp_has_init_write (GIOChannel *channel,
 
 static void
 _gp_quit_read (GIOChannel      *channel,
-               GimpWireMessage *msg,
+               LigmaWireMessage *msg,
                gpointer         user_data)
 {
 }
 
 static void
 _gp_quit_write (GIOChannel      *channel,
-                GimpWireMessage *msg,
+                LigmaWireMessage *msg,
                 gpointer         user_data)
 {
 }
 
 static void
-_gp_quit_destroy (GimpWireMessage *msg)
+_gp_quit_destroy (LigmaWireMessage *msg)
 {
 }
 
@@ -473,98 +473,98 @@ _gp_quit_destroy (GimpWireMessage *msg)
 
 static void
 _gp_config_read (GIOChannel      *channel,
-                 GimpWireMessage *msg,
+                 LigmaWireMessage *msg,
                  gpointer         user_data)
 {
   GPConfig *config = g_slice_new0 (GPConfig);
 
-  if (! _gimp_wire_read_int32 (channel,
+  if (! _ligma_wire_read_int32 (channel,
                                &config->tile_width, 1, user_data))
     goto cleanup;
-  if (! _gimp_wire_read_int32 (channel,
+  if (! _ligma_wire_read_int32 (channel,
                                &config->tile_height, 1, user_data))
     goto cleanup;
-  if (! _gimp_wire_read_int32 (channel,
+  if (! _ligma_wire_read_int32 (channel,
                                (guint32 *) &config->shm_id, 1, user_data))
     goto cleanup;
-  if (! _gimp_wire_read_int8 (channel,
+  if (! _ligma_wire_read_int8 (channel,
                               (guint8 *) &config->check_size, 1, user_data))
     goto cleanup;
-  if (! _gimp_wire_read_int8 (channel,
+  if (! _ligma_wire_read_int8 (channel,
                               (guint8 *) &config->check_type, 1, user_data))
     goto cleanup;
-  if (! _gimp_wire_read_color (channel, &config->check_custom_color1,
+  if (! _ligma_wire_read_color (channel, &config->check_custom_color1,
                                1, user_data))
     goto cleanup;
-  if (! _gimp_wire_read_color (channel, &config->check_custom_color2,
+  if (! _ligma_wire_read_color (channel, &config->check_custom_color2,
                                1, user_data))
     goto cleanup;
-  if (! _gimp_wire_read_int8 (channel,
+  if (! _ligma_wire_read_int8 (channel,
                               (guint8 *) &config->show_help_button, 1,
                               user_data))
     goto cleanup;
-  if (! _gimp_wire_read_int8 (channel,
+  if (! _ligma_wire_read_int8 (channel,
                               (guint8 *) &config->use_cpu_accel, 1,
                               user_data))
     goto cleanup;
-  if (! _gimp_wire_read_int8 (channel,
+  if (! _ligma_wire_read_int8 (channel,
                               (guint8 *) &config->use_opencl, 1,
                               user_data))
     goto cleanup;
-  if (! _gimp_wire_read_int8 (channel,
+  if (! _ligma_wire_read_int8 (channel,
                               (guint8 *) &config->export_color_profile, 1,
                               user_data))
     goto cleanup;
-  if (! _gimp_wire_read_int8 (channel,
+  if (! _ligma_wire_read_int8 (channel,
                               (guint8 *) &config->export_comment, 1,
                               user_data))
     goto cleanup;
-  if (! _gimp_wire_read_int8 (channel,
+  if (! _ligma_wire_read_int8 (channel,
                               (guint8 *) &config->export_exif, 1,
                               user_data))
     goto cleanup;
-  if (! _gimp_wire_read_int8 (channel,
+  if (! _ligma_wire_read_int8 (channel,
                               (guint8 *) &config->export_xmp, 1,
                               user_data))
     goto cleanup;
-  if (! _gimp_wire_read_int8 (channel,
+  if (! _ligma_wire_read_int8 (channel,
                               (guint8 *) &config->export_iptc, 1,
                               user_data))
     goto cleanup;
-  if (! _gimp_wire_read_int32 (channel,
+  if (! _ligma_wire_read_int32 (channel,
                                (guint32 *) &config->default_display_id, 1,
                                user_data))
     goto cleanup;
 
-  if (! _gimp_wire_read_string (channel,
+  if (! _ligma_wire_read_string (channel,
                                 &config->app_name, 1, user_data))
     goto cleanup;
-  if (! _gimp_wire_read_string (channel,
+  if (! _ligma_wire_read_string (channel,
                                 &config->wm_class, 1, user_data))
     goto cleanup;
-  if (! _gimp_wire_read_string (channel,
+  if (! _ligma_wire_read_string (channel,
                                 &config->display_name, 1, user_data))
     goto cleanup;
-  if (! _gimp_wire_read_int32 (channel,
+  if (! _ligma_wire_read_int32 (channel,
                                (guint32 *) &config->monitor_number, 1,
                                user_data))
     goto cleanup;
-  if (! _gimp_wire_read_int32 (channel,
+  if (! _ligma_wire_read_int32 (channel,
                                &config->timestamp, 1, user_data))
     goto cleanup;
-  if (! _gimp_wire_read_string (channel,
+  if (! _ligma_wire_read_string (channel,
                                 &config->icon_theme_dir, 1, user_data))
     goto cleanup;
-  if (! _gimp_wire_read_int64 (channel,
+  if (! _ligma_wire_read_int64 (channel,
                                &config->tile_cache_size, 1, user_data))
     goto cleanup;
-  if (! _gimp_wire_read_string (channel,
+  if (! _ligma_wire_read_string (channel,
                                 &config->swap_path, 1, user_data))
     goto cleanup;
-  if (! _gimp_wire_read_string (channel,
+  if (! _ligma_wire_read_string (channel,
                                 &config->swap_compression, 1, user_data))
     goto cleanup;
-  if (! _gimp_wire_read_int32 (channel,
+  if (! _ligma_wire_read_int32 (channel,
                                (guint32 *) &config->num_processors, 1,
                                user_data))
     goto cleanup;
@@ -584,108 +584,108 @@ _gp_config_read (GIOChannel      *channel,
 
 static void
 _gp_config_write (GIOChannel      *channel,
-                  GimpWireMessage *msg,
+                  LigmaWireMessage *msg,
                   gpointer         user_data)
 {
   GPConfig *config = msg->data;
 
-  if (! _gimp_wire_write_int32 (channel,
+  if (! _ligma_wire_write_int32 (channel,
                                 &config->tile_width, 1, user_data))
     return;
-  if (! _gimp_wire_write_int32 (channel,
+  if (! _ligma_wire_write_int32 (channel,
                                 &config->tile_height, 1, user_data))
     return;
-  if (! _gimp_wire_write_int32 (channel,
+  if (! _ligma_wire_write_int32 (channel,
                                 (const guint32 *) &config->shm_id, 1,
                                 user_data))
     return;
-  if (! _gimp_wire_write_int8 (channel,
+  if (! _ligma_wire_write_int8 (channel,
                                (const guint8 *) &config->check_size, 1,
                                user_data))
     return;
-  if (! _gimp_wire_write_int8 (channel,
+  if (! _ligma_wire_write_int8 (channel,
                                (const guint8 *) &config->check_type, 1,
                                user_data))
     return;
-  if (! _gimp_wire_write_color (channel, &config->check_custom_color1,
+  if (! _ligma_wire_write_color (channel, &config->check_custom_color1,
                                 1, user_data))
     return;
-  if (! _gimp_wire_write_color (channel, &config->check_custom_color2,
+  if (! _ligma_wire_write_color (channel, &config->check_custom_color2,
                                 1, user_data))
     return;
-  if (! _gimp_wire_write_int8 (channel,
+  if (! _ligma_wire_write_int8 (channel,
                                (const guint8 *) &config->show_help_button, 1,
                                user_data))
     return;
-  if (! _gimp_wire_write_int8 (channel,
+  if (! _ligma_wire_write_int8 (channel,
                                (const guint8 *) &config->use_cpu_accel, 1,
                                user_data))
     return;
-  if (! _gimp_wire_write_int8 (channel,
+  if (! _ligma_wire_write_int8 (channel,
                                (const guint8 *) &config->use_opencl, 1,
                                user_data))
     return;
-  if (! _gimp_wire_write_int8 (channel,
+  if (! _ligma_wire_write_int8 (channel,
                                (const guint8 *) &config->export_color_profile, 1,
                                user_data))
     return;
-  if (! _gimp_wire_write_int8 (channel,
+  if (! _ligma_wire_write_int8 (channel,
                                (const guint8 *) &config->export_comment, 1,
                                user_data))
     return;
-  if (! _gimp_wire_write_int8 (channel,
+  if (! _ligma_wire_write_int8 (channel,
                                (const guint8 *) &config->export_exif, 1,
                                user_data))
     return;
-  if (! _gimp_wire_write_int8 (channel,
+  if (! _ligma_wire_write_int8 (channel,
                                (const guint8 *) &config->export_xmp, 1,
                                user_data))
     return;
-  if (! _gimp_wire_write_int8 (channel,
+  if (! _ligma_wire_write_int8 (channel,
                                (const guint8 *) &config->export_iptc, 1,
                                user_data))
     return;
-  if (! _gimp_wire_write_int32 (channel,
+  if (! _ligma_wire_write_int32 (channel,
                                 (const guint32 *) &config->default_display_id, 1,
                                 user_data))
     return;
-  if (! _gimp_wire_write_string (channel,
+  if (! _ligma_wire_write_string (channel,
                                  &config->app_name, 1, user_data))
     return;
-  if (! _gimp_wire_write_string (channel,
+  if (! _ligma_wire_write_string (channel,
                                  &config->wm_class, 1, user_data))
     return;
-  if (! _gimp_wire_write_string (channel,
+  if (! _ligma_wire_write_string (channel,
                                  &config->display_name, 1, user_data))
     return;
-  if (! _gimp_wire_write_int32 (channel,
+  if (! _ligma_wire_write_int32 (channel,
                                 (const guint32 *) &config->monitor_number, 1,
                                 user_data))
     return;
-  if (! _gimp_wire_write_int32 (channel,
+  if (! _ligma_wire_write_int32 (channel,
                                 (const guint32 *) &config->timestamp, 1,
                                 user_data))
     return;
-  if (! _gimp_wire_write_string (channel,
+  if (! _ligma_wire_write_string (channel,
                                  &config->icon_theme_dir, 1, user_data))
     return;
-  if (! _gimp_wire_write_int64 (channel,
+  if (! _ligma_wire_write_int64 (channel,
                                 &config->tile_cache_size, 1, user_data))
     return;
-  if (! _gimp_wire_write_string (channel,
+  if (! _ligma_wire_write_string (channel,
                                  &config->swap_path, 1, user_data))
     return;
-  if (! _gimp_wire_write_string (channel,
+  if (! _ligma_wire_write_string (channel,
                                  &config->swap_compression, 1, user_data))
     return;
-  if (! _gimp_wire_write_int32 (channel,
+  if (! _ligma_wire_write_int32 (channel,
                                 (const guint32 *) &config->num_processors, 1,
                                 user_data))
     return;
 }
 
 static void
-_gp_config_destroy (GimpWireMessage *msg)
+_gp_config_destroy (LigmaWireMessage *msg)
 {
   GPConfig *config = msg->data;
 
@@ -705,19 +705,19 @@ _gp_config_destroy (GimpWireMessage *msg)
 
 static void
 _gp_tile_req_read (GIOChannel      *channel,
-                   GimpWireMessage *msg,
+                   LigmaWireMessage *msg,
                    gpointer         user_data)
 {
   GPTileReq *tile_req = g_slice_new0 (GPTileReq);
 
-  if (! _gimp_wire_read_int32 (channel,
+  if (! _ligma_wire_read_int32 (channel,
                                (guint32 *) &tile_req->drawable_id, 1,
                                user_data))
     goto cleanup;
-  if (! _gimp_wire_read_int32 (channel,
+  if (! _ligma_wire_read_int32 (channel,
                                &tile_req->tile_num, 1, user_data))
     goto cleanup;
-  if (! _gimp_wire_read_int32 (channel,
+  if (! _ligma_wire_read_int32 (channel,
                                &tile_req->shadow, 1, user_data))
     goto cleanup;
 
@@ -731,25 +731,25 @@ _gp_tile_req_read (GIOChannel      *channel,
 
 static void
 _gp_tile_req_write (GIOChannel      *channel,
-                    GimpWireMessage *msg,
+                    LigmaWireMessage *msg,
                     gpointer         user_data)
 {
   GPTileReq *tile_req = msg->data;
 
-  if (! _gimp_wire_write_int32 (channel,
+  if (! _ligma_wire_write_int32 (channel,
                                 (const guint32 *) &tile_req->drawable_id, 1,
                                 user_data))
     return;
-  if (! _gimp_wire_write_int32 (channel,
+  if (! _ligma_wire_write_int32 (channel,
                                 &tile_req->tile_num, 1, user_data))
     return;
-  if (! _gimp_wire_write_int32 (channel,
+  if (! _ligma_wire_write_int32 (channel,
                                 &tile_req->shadow, 1, user_data))
     return;
 }
 
 static void
-_gp_tile_req_destroy (GimpWireMessage *msg)
+_gp_tile_req_destroy (LigmaWireMessage *msg)
 {
   GPTileReq *tile_req = msg->data;
 
@@ -761,20 +761,20 @@ _gp_tile_req_destroy (GimpWireMessage *msg)
 
 static void
 _gp_tile_ack_read (GIOChannel      *channel,
-                   GimpWireMessage *msg,
+                   LigmaWireMessage *msg,
                    gpointer         user_data)
 {
 }
 
 static void
 _gp_tile_ack_write (GIOChannel      *channel,
-                    GimpWireMessage *msg,
+                    LigmaWireMessage *msg,
                     gpointer         user_data)
 {
 }
 
 static void
-_gp_tile_ack_destroy (GimpWireMessage *msg)
+_gp_tile_ack_destroy (LigmaWireMessage *msg)
 {
 }
 
@@ -782,31 +782,31 @@ _gp_tile_ack_destroy (GimpWireMessage *msg)
 
 static void
 _gp_tile_data_read (GIOChannel      *channel,
-                    GimpWireMessage *msg,
+                    LigmaWireMessage *msg,
                     gpointer         user_data)
 {
   GPTileData *tile_data = g_slice_new0 (GPTileData);
 
-  if (! _gimp_wire_read_int32 (channel,
+  if (! _ligma_wire_read_int32 (channel,
                                (guint32 *) &tile_data->drawable_id, 1,
                                user_data))
     goto cleanup;
-  if (! _gimp_wire_read_int32 (channel,
+  if (! _ligma_wire_read_int32 (channel,
                                &tile_data->tile_num, 1, user_data))
     goto cleanup;
-  if (! _gimp_wire_read_int32 (channel,
+  if (! _ligma_wire_read_int32 (channel,
                                &tile_data->shadow, 1, user_data))
     goto cleanup;
-  if (! _gimp_wire_read_int32 (channel,
+  if (! _ligma_wire_read_int32 (channel,
                                &tile_data->bpp, 1, user_data))
     goto cleanup;
-  if (! _gimp_wire_read_int32 (channel,
+  if (! _ligma_wire_read_int32 (channel,
                                &tile_data->width, 1, user_data))
     goto cleanup;
-  if (! _gimp_wire_read_int32 (channel,
+  if (! _ligma_wire_read_int32 (channel,
                                &tile_data->height, 1, user_data))
     goto cleanup;
-  if (! _gimp_wire_read_int32 (channel,
+  if (! _ligma_wire_read_int32 (channel,
                                &tile_data->use_shm, 1, user_data))
     goto cleanup;
 
@@ -816,7 +816,7 @@ _gp_tile_data_read (GIOChannel      *channel,
 
       tile_data->data = g_new (guchar, length);
 
-      if (! _gimp_wire_read_int8 (channel,
+      if (! _ligma_wire_read_int8 (channel,
                                   (guint8 *) tile_data->data, length,
                                   user_data))
         goto cleanup;
@@ -833,31 +833,31 @@ _gp_tile_data_read (GIOChannel      *channel,
 
 static void
 _gp_tile_data_write (GIOChannel      *channel,
-                     GimpWireMessage *msg,
+                     LigmaWireMessage *msg,
                      gpointer         user_data)
 {
   GPTileData *tile_data = msg->data;
 
-  if (! _gimp_wire_write_int32 (channel,
+  if (! _ligma_wire_write_int32 (channel,
                                 (const guint32 *) &tile_data->drawable_id, 1,
                                 user_data))
     return;
-  if (! _gimp_wire_write_int32 (channel,
+  if (! _ligma_wire_write_int32 (channel,
                                 &tile_data->tile_num, 1, user_data))
     return;
-  if (! _gimp_wire_write_int32 (channel,
+  if (! _ligma_wire_write_int32 (channel,
                                 &tile_data->shadow, 1, user_data))
     return;
-  if (! _gimp_wire_write_int32 (channel,
+  if (! _ligma_wire_write_int32 (channel,
                                 &tile_data->bpp, 1, user_data))
     return;
-  if (! _gimp_wire_write_int32 (channel,
+  if (! _ligma_wire_write_int32 (channel,
                                 &tile_data->width, 1, user_data))
     return;
-  if (! _gimp_wire_write_int32 (channel,
+  if (! _ligma_wire_write_int32 (channel,
                                 &tile_data->height, 1, user_data))
     return;
-  if (! _gimp_wire_write_int32 (channel,
+  if (! _ligma_wire_write_int32 (channel,
                                 &tile_data->use_shm, 1, user_data))
     return;
 
@@ -865,7 +865,7 @@ _gp_tile_data_write (GIOChannel      *channel,
     {
       guint length = tile_data->width * tile_data->height * tile_data->bpp;
 
-      if (! _gimp_wire_write_int8 (channel,
+      if (! _ligma_wire_write_int8 (channel,
                                    (const guint8 *) tile_data->data, length,
                                    user_data))
         return;
@@ -873,7 +873,7 @@ _gp_tile_data_write (GIOChannel      *channel,
 }
 
 static void
-_gp_tile_data_destroy (GimpWireMessage *msg)
+_gp_tile_data_destroy (LigmaWireMessage *msg)
 {
   GPTileData *tile_data = msg->data;
 
@@ -893,12 +893,12 @@ _gp_tile_data_destroy (GimpWireMessage *msg)
 
 static void
 _gp_proc_run_read (GIOChannel      *channel,
-                   GimpWireMessage *msg,
+                   LigmaWireMessage *msg,
                    gpointer         user_data)
 {
   GPProcRun *proc_run = g_slice_new0 (GPProcRun);
 
-  if (! _gimp_wire_read_string (channel, &proc_run->name, 1, user_data))
+  if (! _ligma_wire_read_string (channel, &proc_run->name, 1, user_data))
     goto cleanup;
 
   _gp_params_read (channel,
@@ -915,19 +915,19 @@ _gp_proc_run_read (GIOChannel      *channel,
 
 static void
 _gp_proc_run_write (GIOChannel      *channel,
-                    GimpWireMessage *msg,
+                    LigmaWireMessage *msg,
                     gpointer         user_data)
 {
   GPProcRun *proc_run = msg->data;
 
-  if (! _gimp_wire_write_string (channel, &proc_run->name, 1, user_data))
+  if (! _ligma_wire_write_string (channel, &proc_run->name, 1, user_data))
     return;
 
   _gp_params_write (channel, proc_run->params, proc_run->n_params, user_data);
 }
 
 static void
-_gp_proc_run_destroy (GimpWireMessage *msg)
+_gp_proc_run_destroy (LigmaWireMessage *msg)
 {
   GPProcRun *proc_run = msg->data;
 
@@ -944,12 +944,12 @@ _gp_proc_run_destroy (GimpWireMessage *msg)
 
 static void
 _gp_proc_return_read (GIOChannel      *channel,
-                      GimpWireMessage *msg,
+                      LigmaWireMessage *msg,
                       gpointer         user_data)
 {
   GPProcReturn *proc_return = g_slice_new0 (GPProcReturn);
 
-  if (! _gimp_wire_read_string (channel, &proc_return->name, 1, user_data))
+  if (! _ligma_wire_read_string (channel, &proc_return->name, 1, user_data))
     goto cleanup;
 
   _gp_params_read (channel,
@@ -966,12 +966,12 @@ _gp_proc_return_read (GIOChannel      *channel,
 
 static void
 _gp_proc_return_write (GIOChannel      *channel,
-                       GimpWireMessage *msg,
+                       LigmaWireMessage *msg,
                        gpointer         user_data)
 {
   GPProcReturn *proc_return = msg->data;
 
-  if (! _gimp_wire_write_string (channel, &proc_return->name, 1, user_data))
+  if (! _ligma_wire_write_string (channel, &proc_return->name, 1, user_data))
     return;
 
   _gp_params_write (channel,
@@ -979,7 +979,7 @@ _gp_proc_return_write (GIOChannel      *channel,
 }
 
 static void
-_gp_proc_return_destroy (GimpWireMessage *msg)
+_gp_proc_return_destroy (LigmaWireMessage *msg)
 {
   GPProcReturn *proc_return = msg->data;
 
@@ -996,7 +996,7 @@ _gp_proc_return_destroy (GimpWireMessage *msg)
 
 static void
 _gp_temp_proc_run_read (GIOChannel      *channel,
-                        GimpWireMessage *msg,
+                        LigmaWireMessage *msg,
                         gpointer         user_data)
 {
   _gp_proc_run_read (channel, msg, user_data);
@@ -1004,14 +1004,14 @@ _gp_temp_proc_run_read (GIOChannel      *channel,
 
 static void
 _gp_temp_proc_run_write (GIOChannel      *channel,
-                         GimpWireMessage *msg,
+                         LigmaWireMessage *msg,
                          gpointer         user_data)
 {
   _gp_proc_run_write (channel, msg, user_data);
 }
 
 static void
-_gp_temp_proc_run_destroy (GimpWireMessage *msg)
+_gp_temp_proc_run_destroy (LigmaWireMessage *msg)
 {
   _gp_proc_run_destroy (msg);
 }
@@ -1020,7 +1020,7 @@ _gp_temp_proc_run_destroy (GimpWireMessage *msg)
 
 static void
 _gp_temp_proc_return_read (GIOChannel      *channel,
-                           GimpWireMessage *msg,
+                           LigmaWireMessage *msg,
                            gpointer         user_data)
 {
   _gp_proc_return_read (channel, msg, user_data);
@@ -1028,14 +1028,14 @@ _gp_temp_proc_return_read (GIOChannel      *channel,
 
 static void
 _gp_temp_proc_return_write (GIOChannel      *channel,
-                            GimpWireMessage *msg,
+                            LigmaWireMessage *msg,
                             gpointer         user_data)
 {
   _gp_proc_return_write (channel, msg, user_data);
 }
 
 static void
-_gp_temp_proc_return_destroy (GimpWireMessage *msg)
+_gp_temp_proc_return_destroy (LigmaWireMessage *msg)
 {
   _gp_proc_return_destroy (msg);
 }
@@ -1047,37 +1047,37 @@ _gp_param_def_read (GIOChannel *channel,
                     GPParamDef *param_def,
                     gpointer    user_data)
 {
-  if (! _gimp_wire_read_int32 (channel,
+  if (! _ligma_wire_read_int32 (channel,
                                &param_def->param_def_type, 1,
                                user_data))
     return FALSE;
 
-  if (! _gimp_wire_read_string (channel,
+  if (! _ligma_wire_read_string (channel,
                                 &param_def->type_name, 1,
                                 user_data))
     return FALSE;
 
-  if (! _gimp_wire_read_string (channel,
+  if (! _ligma_wire_read_string (channel,
                                 &param_def->value_type_name, 1,
                                 user_data))
     return FALSE;
 
-  if (! _gimp_wire_read_string (channel,
+  if (! _ligma_wire_read_string (channel,
                                 &param_def->name, 1,
                                 user_data))
     return FALSE;
 
-  if (! _gimp_wire_read_string (channel,
+  if (! _ligma_wire_read_string (channel,
                                 &param_def->nick, 1,
                                 user_data))
     return FALSE;
 
-  if (! _gimp_wire_read_string (channel,
+  if (! _ligma_wire_read_string (channel,
                                 &param_def->blurb, 1,
                                 user_data))
     return FALSE;
 
-  if (! _gimp_wire_read_int32 (channel,
+  if (! _ligma_wire_read_int32 (channel,
                                &param_def->flags, 1,
                                user_data))
     return FALSE;
@@ -1088,84 +1088,84 @@ _gp_param_def_read (GIOChannel *channel,
       break;
 
     case GP_PARAM_DEF_TYPE_INT:
-      if (! _gimp_wire_read_int64 (channel,
+      if (! _ligma_wire_read_int64 (channel,
                                    (guint64 *) &param_def->meta.m_int.min_val, 1,
                                    user_data) ||
-          ! _gimp_wire_read_int64 (channel,
+          ! _ligma_wire_read_int64 (channel,
                                    (guint64 *) &param_def->meta.m_int.max_val, 1,
                                    user_data) ||
-          ! _gimp_wire_read_int64 (channel,
+          ! _ligma_wire_read_int64 (channel,
                                    (guint64 *) &param_def->meta.m_int.default_val, 1,
                                    user_data))
         return FALSE;
       break;
 
     case GP_PARAM_DEF_TYPE_UNIT:
-      if (! _gimp_wire_read_int32 (channel,
+      if (! _ligma_wire_read_int32 (channel,
                                    (guint32 *) &param_def->meta.m_unit.allow_pixels, 1,
                                    user_data) ||
-          ! _gimp_wire_read_int32 (channel,
+          ! _ligma_wire_read_int32 (channel,
                                    (guint32 *) &param_def->meta.m_unit.allow_percent, 1,
                                    user_data) ||
-          ! _gimp_wire_read_int32 (channel,
+          ! _ligma_wire_read_int32 (channel,
                                    (guint32 *) &param_def->meta.m_unit.default_val, 1,
                                    user_data))
         return FALSE;
       break;
 
     case GP_PARAM_DEF_TYPE_ENUM:
-      if (! _gimp_wire_read_int32 (channel,
+      if (! _ligma_wire_read_int32 (channel,
                                    (guint32 *) &param_def->meta.m_enum.default_val, 1,
                                    user_data))
         return FALSE;
       break;
 
     case GP_PARAM_DEF_TYPE_BOOLEAN:
-      if (! _gimp_wire_read_int32 (channel,
+      if (! _ligma_wire_read_int32 (channel,
                                    (guint32 *) &param_def->meta.m_boolean.default_val, 1,
                                    user_data))
         return FALSE;
       break;
 
     case GP_PARAM_DEF_TYPE_FLOAT:
-      if (! _gimp_wire_read_double (channel,
+      if (! _ligma_wire_read_double (channel,
                                     &param_def->meta.m_float.min_val, 1,
                                     user_data) ||
-          ! _gimp_wire_read_double (channel,
+          ! _ligma_wire_read_double (channel,
                                     &param_def->meta.m_float.max_val, 1,
                                     user_data) ||
-          ! _gimp_wire_read_double (channel,
+          ! _ligma_wire_read_double (channel,
                                     &param_def->meta.m_float.default_val, 1,
                                     user_data))
         return FALSE;
       break;
 
     case GP_PARAM_DEF_TYPE_STRING:
-      if (! _gimp_wire_read_string (channel,
+      if (! _ligma_wire_read_string (channel,
                                     &param_def->meta.m_string.default_val, 1,
                                     user_data))
         return FALSE;
       break;
 
     case GP_PARAM_DEF_TYPE_COLOR:
-      if (! _gimp_wire_read_int32 (channel,
+      if (! _ligma_wire_read_int32 (channel,
                                    (guint32 *) &param_def->meta.m_color.has_alpha, 1,
                                    user_data) ||
-          ! _gimp_wire_read_color (channel,
+          ! _ligma_wire_read_color (channel,
                                    &param_def->meta.m_color.default_val, 1,
                                    user_data))
         return FALSE;
       break;
 
     case GP_PARAM_DEF_TYPE_ID:
-      if (! _gimp_wire_read_int32 (channel,
+      if (! _ligma_wire_read_int32 (channel,
                                    (guint32 *) &param_def->meta.m_id.none_ok, 1,
                                    user_data))
         return FALSE;
       break;
 
     case GP_PARAM_DEF_TYPE_ID_ARRAY:
-      if (! _gimp_wire_read_string (channel,
+      if (! _ligma_wire_read_string (channel,
                                     &param_def->meta.m_id_array.type_name, 1,
                                     user_data))
         return FALSE;
@@ -1212,19 +1212,19 @@ _gp_param_def_destroy (GPParamDef *param_def)
 
 static void
 _gp_proc_install_read (GIOChannel      *channel,
-                       GimpWireMessage *msg,
+                       LigmaWireMessage *msg,
                        gpointer         user_data)
 {
   GPProcInstall *proc_install = g_slice_new0 (GPProcInstall);
   gint           i;
 
-  if (! _gimp_wire_read_string (channel,
+  if (! _ligma_wire_read_string (channel,
                                 &proc_install->name, 1, user_data)    ||
-      ! _gimp_wire_read_int32 (channel,
+      ! _ligma_wire_read_int32 (channel,
                                &proc_install->type, 1, user_data)     ||
-      ! _gimp_wire_read_int32 (channel,
+      ! _ligma_wire_read_int32 (channel,
                                &proc_install->n_params, 1, user_data) ||
-      ! _gimp_wire_read_int32 (channel,
+      ! _ligma_wire_read_int32 (channel,
                                &proc_install->n_return_vals, 1, user_data))
     goto cleanup;
 
@@ -1289,37 +1289,37 @@ _gp_param_def_write (GIOChannel *channel,
                      GPParamDef *param_def,
                      gpointer    user_data)
 {
-  if (! _gimp_wire_write_int32 (channel,
+  if (! _ligma_wire_write_int32 (channel,
                                 &param_def->param_def_type, 1,
                                 user_data))
     return FALSE;
 
-  if (! _gimp_wire_write_string (channel,
+  if (! _ligma_wire_write_string (channel,
                                  &param_def->type_name, 1,
                                  user_data))
     return FALSE;
 
-  if (! _gimp_wire_write_string (channel,
+  if (! _ligma_wire_write_string (channel,
                                  &param_def->value_type_name, 1,
                                  user_data))
     return FALSE;
 
-  if (! _gimp_wire_write_string (channel,
+  if (! _ligma_wire_write_string (channel,
                                  &param_def->name, 1,
                                  user_data))
     return FALSE;
 
-  if (! _gimp_wire_write_string (channel,
+  if (! _ligma_wire_write_string (channel,
                                  &param_def->nick, 1,
                                  user_data))
     return FALSE;
 
-  if (! _gimp_wire_write_string (channel,
+  if (! _ligma_wire_write_string (channel,
                                  &param_def->blurb, 1,
                                  user_data))
     return FALSE;
 
-  if (! _gimp_wire_write_int32 (channel,
+  if (! _ligma_wire_write_int32 (channel,
                                 &param_def->flags, 1,
                                 user_data))
     return FALSE;
@@ -1330,84 +1330,84 @@ _gp_param_def_write (GIOChannel *channel,
       break;
 
     case GP_PARAM_DEF_TYPE_INT:
-      if (! _gimp_wire_write_int64 (channel,
+      if (! _ligma_wire_write_int64 (channel,
                                     (guint64 *) &param_def->meta.m_int.min_val, 1,
                                     user_data) ||
-          ! _gimp_wire_write_int64 (channel,
+          ! _ligma_wire_write_int64 (channel,
                                     (guint64 *) &param_def->meta.m_int.max_val, 1,
                                     user_data) ||
-          ! _gimp_wire_write_int64 (channel,
+          ! _ligma_wire_write_int64 (channel,
                                     (guint64 *) &param_def->meta.m_int.default_val, 1,
                                     user_data))
         return FALSE;
       break;
 
     case GP_PARAM_DEF_TYPE_UNIT:
-      if (! _gimp_wire_write_int32 (channel,
+      if (! _ligma_wire_write_int32 (channel,
                                     (guint32 *) &param_def->meta.m_unit.allow_pixels, 1,
                                     user_data) ||
-          ! _gimp_wire_write_int32 (channel,
+          ! _ligma_wire_write_int32 (channel,
                                     (guint32 *) &param_def->meta.m_unit.allow_percent, 1,
                                     user_data) ||
-          ! _gimp_wire_write_int32 (channel,
+          ! _ligma_wire_write_int32 (channel,
                                     (guint32 *) &param_def->meta.m_unit.default_val, 1,
                                     user_data))
         return FALSE;
       break;
 
     case GP_PARAM_DEF_TYPE_ENUM:
-      if (! _gimp_wire_write_int32 (channel,
+      if (! _ligma_wire_write_int32 (channel,
                                     (guint32 *) &param_def->meta.m_enum.default_val, 1,
                                     user_data))
         return FALSE;
       break;
 
     case GP_PARAM_DEF_TYPE_BOOLEAN:
-      if (! _gimp_wire_write_int32 (channel,
+      if (! _ligma_wire_write_int32 (channel,
                                     (guint32 *) &param_def->meta.m_boolean.default_val, 1,
                                     user_data))
         return FALSE;
       break;
 
     case GP_PARAM_DEF_TYPE_FLOAT:
-      if (! _gimp_wire_write_double (channel,
+      if (! _ligma_wire_write_double (channel,
                                      &param_def->meta.m_float.min_val, 1,
                                      user_data) ||
-          ! _gimp_wire_write_double (channel,
+          ! _ligma_wire_write_double (channel,
                                      &param_def->meta.m_float.max_val, 1,
                                      user_data) ||
-          ! _gimp_wire_write_double (channel,
+          ! _ligma_wire_write_double (channel,
                                      &param_def->meta.m_float.default_val, 1,
                                      user_data))
         return FALSE;
       break;
 
     case GP_PARAM_DEF_TYPE_STRING:
-      if (! _gimp_wire_write_string (channel,
+      if (! _ligma_wire_write_string (channel,
                                      &param_def->meta.m_string.default_val, 1,
                                      user_data))
         return FALSE;
       break;
 
     case GP_PARAM_DEF_TYPE_COLOR:
-      if (! _gimp_wire_write_int32 (channel,
+      if (! _ligma_wire_write_int32 (channel,
                                     (guint32 *) &param_def->meta.m_color.has_alpha, 1,
                                     user_data) ||
-          ! _gimp_wire_write_color (channel,
+          ! _ligma_wire_write_color (channel,
                                     &param_def->meta.m_color.default_val, 1,
                                     user_data))
         return FALSE;
       break;
 
     case GP_PARAM_DEF_TYPE_ID:
-      if (! _gimp_wire_write_int32 (channel,
+      if (! _ligma_wire_write_int32 (channel,
                                     (guint32 *) &param_def->meta.m_id.none_ok, 1,
                                     user_data))
         return FALSE;
       break;
 
     case GP_PARAM_DEF_TYPE_ID_ARRAY:
-      if (! _gimp_wire_write_string (channel,
+      if (! _ligma_wire_write_string (channel,
                                      &param_def->meta.m_id_array.type_name, 1,
                                      user_data))
         return FALSE;
@@ -1419,19 +1419,19 @@ _gp_param_def_write (GIOChannel *channel,
 
   static void
 _gp_proc_install_write (GIOChannel      *channel,
-                        GimpWireMessage *msg,
+                        LigmaWireMessage *msg,
                         gpointer         user_data)
 {
   GPProcInstall *proc_install = msg->data;
   gint           i;
 
-  if (! _gimp_wire_write_string (channel,
+  if (! _ligma_wire_write_string (channel,
                                  &proc_install->name, 1, user_data)    ||
-      ! _gimp_wire_write_int32 (channel,
+      ! _ligma_wire_write_int32 (channel,
                                 &proc_install->type, 1, user_data)     ||
-      ! _gimp_wire_write_int32 (channel,
+      ! _ligma_wire_write_int32 (channel,
                                 &proc_install->n_params, 1, user_data) ||
-      ! _gimp_wire_write_int32 (channel,
+      ! _ligma_wire_write_int32 (channel,
                                 &proc_install->n_return_vals, 1, user_data))
     return;
 
@@ -1453,7 +1453,7 @@ _gp_proc_install_write (GIOChannel      *channel,
 }
 
 static void
-_gp_proc_install_destroy (GimpWireMessage *msg)
+_gp_proc_install_destroy (LigmaWireMessage *msg)
 {
   GPProcInstall *proc_install = msg->data;
 
@@ -1483,12 +1483,12 @@ _gp_proc_install_destroy (GimpWireMessage *msg)
 
 static void
 _gp_proc_uninstall_read (GIOChannel      *channel,
-                         GimpWireMessage *msg,
+                         LigmaWireMessage *msg,
                          gpointer         user_data)
 {
   GPProcUninstall *proc_uninstall = g_slice_new0 (GPProcUninstall);
 
-  if (! _gimp_wire_read_string (channel, &proc_uninstall->name, 1, user_data))
+  if (! _ligma_wire_read_string (channel, &proc_uninstall->name, 1, user_data))
     goto cleanup;
 
   msg->data = proc_uninstall;
@@ -1500,17 +1500,17 @@ _gp_proc_uninstall_read (GIOChannel      *channel,
 
 static void
 _gp_proc_uninstall_write (GIOChannel      *channel,
-                          GimpWireMessage *msg,
+                          LigmaWireMessage *msg,
                           gpointer         user_data)
 {
   GPProcUninstall *proc_uninstall = msg->data;
 
-  if (! _gimp_wire_write_string (channel, &proc_uninstall->name, 1, user_data))
+  if (! _ligma_wire_write_string (channel, &proc_uninstall->name, 1, user_data))
     return;
 }
 
 static void
-_gp_proc_uninstall_destroy (GimpWireMessage *msg)
+_gp_proc_uninstall_destroy (LigmaWireMessage *msg)
 {
   GPProcUninstall *proc_uninstall = msg->data;
 
@@ -1525,20 +1525,20 @@ _gp_proc_uninstall_destroy (GimpWireMessage *msg)
 
 static void
 _gp_extension_ack_read (GIOChannel      *channel,
-                        GimpWireMessage *msg,
+                        LigmaWireMessage *msg,
                         gpointer         user_data)
 {
 }
 
 static void
 _gp_extension_ack_write (GIOChannel      *channel,
-                         GimpWireMessage *msg,
+                         LigmaWireMessage *msg,
                          gpointer         user_data)
 {
 }
 
 static void
-_gp_extension_ack_destroy (GimpWireMessage *msg)
+_gp_extension_ack_destroy (LigmaWireMessage *msg)
 {
 }
 
@@ -1552,7 +1552,7 @@ _gp_params_read (GIOChannel  *channel,
 {
   guint i;
 
-  if (! _gimp_wire_read_int32 (channel, (guint32 *) n_params, 1, user_data))
+  if (! _ligma_wire_read_int32 (channel, (guint32 *) n_params, 1, user_data))
     return;
 
   if (*n_params == 0)
@@ -1579,10 +1579,10 @@ _gp_params_read (GIOChannel  *channel,
 
   for (i = 0; i < *n_params; i++)
     {
-      if (! _gimp_wire_read_int32 (channel,
+      if (! _ligma_wire_read_int32 (channel,
                                    (guint32 *) &(*params)[i].param_type, 1,
                                    user_data) ||
-          ! _gimp_wire_read_string (channel,
+          ! _ligma_wire_read_string (channel,
                                     &(*params)[i].type_name, 1,
                                     user_data))
         return;
@@ -1590,14 +1590,14 @@ _gp_params_read (GIOChannel  *channel,
       switch ((*params)[i].param_type)
         {
         case GP_PARAM_TYPE_INT:
-          if (! _gimp_wire_read_int32 (channel,
+          if (! _ligma_wire_read_int32 (channel,
                                        (guint32 *) &(*params)[i].data.d_int, 1,
                                        user_data))
             goto cleanup;
           break;
 
         case GP_PARAM_TYPE_FLOAT:
-          if (! _gimp_wire_read_double (channel,
+          if (! _ligma_wire_read_double (channel,
                                         &(*params)[i].data.d_float, 1,
                                         user_data))
             goto cleanup;
@@ -1605,21 +1605,21 @@ _gp_params_read (GIOChannel  *channel,
 
         case GP_PARAM_TYPE_STRING:
         case GP_PARAM_TYPE_FILE:
-          if (! _gimp_wire_read_string (channel,
+          if (! _ligma_wire_read_string (channel,
                                         &(*params)[i].data.d_string, 1,
                                         user_data))
             goto cleanup;
           break;
 
         case GP_PARAM_TYPE_COLOR:
-          if (! _gimp_wire_read_color (channel,
+          if (! _ligma_wire_read_color (channel,
                                        &(*params)[i].data.d_color, 1,
                                        user_data))
             goto cleanup;
           break;
 
         case GP_PARAM_TYPE_ARRAY:
-          if (! _gimp_wire_read_int32 (channel,
+          if (! _ligma_wire_read_int32 (channel,
                                        &(*params)[i].data.d_array.size, 1,
                                        user_data))
             goto cleanup;
@@ -1627,7 +1627,7 @@ _gp_params_read (GIOChannel  *channel,
           (*params)[i].data.d_array.data = g_new0 (guint8,
                                                    (*params)[i].data.d_array.size);
 
-          if (! _gimp_wire_read_int8 (channel,
+          if (! _ligma_wire_read_int8 (channel,
                                       (*params)[i].data.d_array.data,
                                       (*params)[i].data.d_array.size,
                                       user_data))
@@ -1642,12 +1642,12 @@ _gp_params_read (GIOChannel  *channel,
           {
             guint32 size;
 
-            if (! _gimp_wire_read_int32 (channel, &size, 1, user_data))
+            if (! _ligma_wire_read_int32 (channel, &size, 1, user_data))
               goto cleanup;
 
             (*params)[i].data.d_strv = g_new0 (gchar *, size + 1);
 
-            if (! _gimp_wire_read_string (channel,
+            if (! _ligma_wire_read_string (channel,
                                           (*params)[i].data.d_strv,
                                           (int) size,
                                           user_data))
@@ -1660,12 +1660,12 @@ _gp_params_read (GIOChannel  *channel,
           }
 
         case GP_PARAM_TYPE_ID_ARRAY:
-          if (! _gimp_wire_read_string (channel,
+          if (! _ligma_wire_read_string (channel,
                                         &(*params)[i].data.d_id_array.type_name, 1,
                                         user_data))
             goto cleanup;
 
-          if (! _gimp_wire_read_int32 (channel,
+          if (! _ligma_wire_read_int32 (channel,
                                        &(*params)[i].data.d_id_array.size, 1,
                                        user_data))
             goto cleanup;
@@ -1673,7 +1673,7 @@ _gp_params_read (GIOChannel  *channel,
           (*params)[i].data.d_id_array.data = g_new0 (gint32,
                                                       (*params)[i].data.d_id_array.size);
 
-          if (! _gimp_wire_read_int32 (channel,
+          if (! _ligma_wire_read_int32 (channel,
                                        (guint32 *) (*params)[i].data.d_id_array.data,
                                        (*params)[i].data.d_id_array.size,
                                        user_data))
@@ -1685,7 +1685,7 @@ _gp_params_read (GIOChannel  *channel,
           break;
 
         case GP_PARAM_TYPE_PARASITE:
-          if (! _gimp_wire_read_string (channel,
+          if (! _ligma_wire_read_string (channel,
                                         &(*params)[i].data.d_parasite.name, 1,
                                         user_data))
             goto cleanup;
@@ -1695,11 +1695,11 @@ _gp_params_read (GIOChannel  *channel,
               (*params)[i].data.d_parasite.data = NULL;
               break;
             }
-          if (! _gimp_wire_read_int32 (channel,
+          if (! _ligma_wire_read_int32 (channel,
                                        &((*params)[i].data.d_parasite.flags), 1,
                                        user_data))
             goto cleanup;
-          if (! _gimp_wire_read_int32 (channel,
+          if (! _ligma_wire_read_int32 (channel,
                                        &((*params)[i].data.d_parasite.size), 1,
                                        user_data))
             goto cleanup;
@@ -1707,7 +1707,7 @@ _gp_params_read (GIOChannel  *channel,
             {
               (*params)[i].data.d_parasite.data =
                 g_malloc ((*params)[i].data.d_parasite.size);
-              if (! _gimp_wire_read_int8 (channel,
+              if (! _ligma_wire_read_int8 (channel,
                                           (*params)[i].data.d_parasite.data,
                                           (*params)[i].data.d_parasite.size,
                                           user_data))
@@ -1745,18 +1745,18 @@ _gp_params_write (GIOChannel *channel,
 {
   gint i;
 
-  if (! _gimp_wire_write_int32 (channel,
+  if (! _ligma_wire_write_int32 (channel,
                                 (const guint32 *) &n_params, 1, user_data))
     return;
 
   for (i = 0; i < n_params; i++)
     {
-      if (! _gimp_wire_write_int32 (channel,
+      if (! _ligma_wire_write_int32 (channel,
                                     (const guint32 *) &params[i].param_type, 1,
                                     user_data))
         return;
 
-      if (! _gimp_wire_write_string (channel,
+      if (! _ligma_wire_write_string (channel,
                                      &params[i].type_name, 1,
                                      user_data))
         return;
@@ -1764,14 +1764,14 @@ _gp_params_write (GIOChannel *channel,
       switch (params[i].param_type)
         {
         case GP_PARAM_TYPE_INT:
-          if (! _gimp_wire_write_int32 (channel,
+          if (! _ligma_wire_write_int32 (channel,
                                         (const guint32 *) &params[i].data.d_int, 1,
                                         user_data))
             return;
           break;
 
         case GP_PARAM_TYPE_FLOAT:
-          if (! _gimp_wire_write_double (channel,
+          if (! _ligma_wire_write_double (channel,
                                          (const gdouble *) &params[i].data.d_float, 1,
                                          user_data))
             return;
@@ -1779,24 +1779,24 @@ _gp_params_write (GIOChannel *channel,
 
         case GP_PARAM_TYPE_STRING:
         case GP_PARAM_TYPE_FILE:
-          if (! _gimp_wire_write_string (channel,
+          if (! _ligma_wire_write_string (channel,
                                          &params[i].data.d_string, 1,
                                          user_data))
             return;
           break;
 
         case GP_PARAM_TYPE_COLOR:
-          if (! _gimp_wire_write_color (channel,
+          if (! _ligma_wire_write_color (channel,
                                         &params[i].data.d_color, 1,
                                         user_data))
             return;
           break;
 
         case GP_PARAM_TYPE_ARRAY:
-          if (! _gimp_wire_write_int32 (channel,
+          if (! _ligma_wire_write_int32 (channel,
                                         (const guint32 *) &params[i].data.d_array.size, 1,
                                         user_data) ||
-              ! _gimp_wire_write_int8 (channel,
+              ! _ligma_wire_write_int8 (channel,
                                        (const guint8 *) params[i].data.d_array.data,
                                        params[i].data.d_array.size,
                                        user_data))
@@ -1812,10 +1812,10 @@ _gp_params_write (GIOChannel *channel,
             else
               size = 0;
 
-            if (! _gimp_wire_write_int32 (channel,
+            if (! _ligma_wire_write_int32 (channel,
                                           (guint32*) &size, 1,
                                           user_data) ||
-                ! _gimp_wire_write_string (channel,
+                ! _ligma_wire_write_string (channel,
                                            params[i].data.d_strv,
                                            size,
                                            user_data))
@@ -1824,13 +1824,13 @@ _gp_params_write (GIOChannel *channel,
           break;
 
         case GP_PARAM_TYPE_ID_ARRAY:
-          if (! _gimp_wire_write_string (channel,
+          if (! _ligma_wire_write_string (channel,
                                          &params[i].data.d_id_array.type_name, 1,
                                          user_data) ||
-              ! _gimp_wire_write_int32 (channel,
+              ! _ligma_wire_write_int32 (channel,
                                         (const guint32 *) &params[i].data.d_id_array.size, 1,
                                         user_data) ||
-              ! _gimp_wire_write_int32 (channel,
+              ! _ligma_wire_write_int32 (channel,
                                         (const guint32 *) params[i].data.d_id_array.data,
                                         params[i].data.d_id_array.size,
                                         user_data))
@@ -1839,24 +1839,24 @@ _gp_params_write (GIOChannel *channel,
 
         case GP_PARAM_TYPE_PARASITE:
           {
-            GimpParasite *p = &params[i].data.d_parasite;
+            LigmaParasite *p = &params[i].data.d_parasite;
 
             if (p->name == NULL)
               {
                 /* write a null string to signal a null parasite */
-                _gimp_wire_write_string (channel,  &p->name, 1, user_data);
+                _ligma_wire_write_string (channel,  &p->name, 1, user_data);
                 break;
               }
 
-            if (! _gimp_wire_write_string (channel, &p->name, 1, user_data))
+            if (! _ligma_wire_write_string (channel, &p->name, 1, user_data))
               return;
-            if (! _gimp_wire_write_int32 (channel, &p->flags, 1, user_data))
+            if (! _ligma_wire_write_int32 (channel, &p->flags, 1, user_data))
               return;
-            if (! _gimp_wire_write_int32 (channel, &p->size, 1, user_data))
+            if (! _ligma_wire_write_int32 (channel, &p->size, 1, user_data))
               return;
             if (p->size > 0)
               {
-                if (! _gimp_wire_write_int8 (channel,
+                if (! _ligma_wire_write_int8 (channel,
                                              p->data, p->size, user_data))
                   return;
               }
@@ -1930,19 +1930,19 @@ _gp_params_destroy (GPParam *params,
 
 static void
 _gp_has_init_read (GIOChannel      *channel,
-                   GimpWireMessage *msg,
+                   LigmaWireMessage *msg,
                    gpointer         user_data)
 {
 }
 
 static void
 _gp_has_init_write (GIOChannel      *channel,
-                    GimpWireMessage *msg,
+                    LigmaWireMessage *msg,
                     gpointer         user_data)
 {
 }
 
 static void
-_gp_has_init_destroy (GimpWireMessage *msg)
+_gp_has_init_destroy (LigmaWireMessage *msg)
 {
 }

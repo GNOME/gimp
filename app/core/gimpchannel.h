@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,27 +15,27 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CHANNEL_H__
-#define __GIMP_CHANNEL_H__
+#ifndef __LIGMA_CHANNEL_H__
+#define __LIGMA_CHANNEL_H__
 
-#include "gimpdrawable.h"
-
-
-#define GIMP_TYPE_CHANNEL            (gimp_channel_get_type ())
-#define GIMP_CHANNEL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CHANNEL, GimpChannel))
-#define GIMP_CHANNEL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CHANNEL, GimpChannelClass))
-#define GIMP_IS_CHANNEL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CHANNEL))
-#define GIMP_IS_CHANNEL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CHANNEL))
-#define GIMP_CHANNEL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CHANNEL, GimpChannelClass))
+#include "ligmadrawable.h"
 
 
-typedef struct _GimpChannelClass GimpChannelClass;
+#define LIGMA_TYPE_CHANNEL            (ligma_channel_get_type ())
+#define LIGMA_CHANNEL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_CHANNEL, LigmaChannel))
+#define LIGMA_CHANNEL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_CHANNEL, LigmaChannelClass))
+#define LIGMA_IS_CHANNEL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_CHANNEL))
+#define LIGMA_IS_CHANNEL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_CHANNEL))
+#define LIGMA_CHANNEL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_CHANNEL, LigmaChannelClass))
 
-struct _GimpChannel
+
+typedef struct _LigmaChannelClass LigmaChannelClass;
+
+struct _LigmaChannel
 {
-  GimpDrawable  parent_instance;
+  LigmaDrawable  parent_instance;
 
-  GimpRGB       color;             /*  Also stores the opacity        */
+  LigmaRGB       color;             /*  Also stores the opacity        */
   gboolean      show_masked;       /*  Show masked areas--as          */
                                    /*  opposed to selected areas      */
 
@@ -45,8 +45,8 @@ struct _GimpChannel
 
   /*  Selection mask variables  */
   gboolean      boundary_known;    /*  is the current boundary valid  */
-  GimpBoundSeg *segs_in;           /*  outline of selected region     */
-  GimpBoundSeg *segs_out;          /*  outline of selected region     */
+  LigmaBoundSeg *segs_in;           /*  outline of selected region     */
+  LigmaBoundSeg *segs_out;          /*  outline of selected region     */
   gint          num_segs_in;       /*  number of lines in boundary    */
   gint          num_segs_out;      /*  number of lines in boundary    */
   gboolean      empty;             /*  is the region empty?           */
@@ -55,55 +55,55 @@ struct _GimpChannel
   gint          x2, y2;            /*  lower right hand coordinate    */
 };
 
-struct _GimpChannelClass
+struct _LigmaChannelClass
 {
-  GimpDrawableClass  parent_class;
+  LigmaDrawableClass  parent_class;
 
   /*  signals  */
-  void     (* color_changed) (GimpChannel             *channel);
+  void     (* color_changed) (LigmaChannel             *channel);
 
   /*  virtual functions  */
-  gboolean (* boundary)      (GimpChannel             *channel,
-                              const GimpBoundSeg     **segs_in,
-                              const GimpBoundSeg     **segs_out,
+  gboolean (* boundary)      (LigmaChannel             *channel,
+                              const LigmaBoundSeg     **segs_in,
+                              const LigmaBoundSeg     **segs_out,
                               gint                    *num_segs_in,
                               gint                    *num_segs_out,
                               gint                     x1,
                               gint                     y1,
                               gint                     x2,
                               gint                     y2);
-  gboolean (* is_empty)      (GimpChannel             *channel);
+  gboolean (* is_empty)      (LigmaChannel             *channel);
 
-  void     (* feather)       (GimpChannel             *channel,
+  void     (* feather)       (LigmaChannel             *channel,
                               gdouble                  radius_x,
                               gdouble                  radius_y,
                               gboolean                 edge_lock,
                               gboolean                 push_undo);
-  void     (* sharpen)       (GimpChannel             *channel,
+  void     (* sharpen)       (LigmaChannel             *channel,
                               gboolean                 push_undo);
-  void     (* clear)         (GimpChannel             *channel,
+  void     (* clear)         (LigmaChannel             *channel,
                               const gchar             *undo_desc,
                               gboolean                 push_undo);
-  void     (* all)           (GimpChannel             *channel,
+  void     (* all)           (LigmaChannel             *channel,
                               gboolean                 push_undo);
-  void     (* invert)        (GimpChannel             *channel,
+  void     (* invert)        (LigmaChannel             *channel,
                               gboolean                 push_undo);
-  void     (* border)        (GimpChannel             *channel,
+  void     (* border)        (LigmaChannel             *channel,
                               gint                     radius_x,
                               gint                     radius_y,
-                              GimpChannelBorderStyle   style,
+                              LigmaChannelBorderStyle   style,
                               gboolean                 edge_lock,
                               gboolean                 push_undo);
-  void     (* grow)          (GimpChannel             *channel,
+  void     (* grow)          (LigmaChannel             *channel,
                               gint                     radius_x,
                               gint                     radius_y,
                               gboolean                 push_undo);
-  void     (* shrink)        (GimpChannel             *channel,
+  void     (* shrink)        (LigmaChannel             *channel,
                               gint                     radius_x,
                               gint                     radius_y,
                               gboolean                 edge_lock,
                               gboolean                 push_undo);
-  void     (* flood)         (GimpChannel             *channel,
+  void     (* flood)         (LigmaChannel             *channel,
                               gboolean                 push_undo);
 
   const gchar *feather_desc;
@@ -120,97 +120,97 @@ struct _GimpChannelClass
 
 /*  function declarations  */
 
-GType         gimp_channel_get_type           (void) G_GNUC_CONST;
+GType         ligma_channel_get_type           (void) G_GNUC_CONST;
 
-GimpChannel * gimp_channel_new                (GimpImage         *image,
+LigmaChannel * ligma_channel_new                (LigmaImage         *image,
                                                gint               width,
                                                gint               height,
                                                const gchar       *name,
-                                               const GimpRGB     *color);
-GimpChannel * gimp_channel_new_from_buffer    (GimpImage         *image,
+                                               const LigmaRGB     *color);
+LigmaChannel * ligma_channel_new_from_buffer    (LigmaImage         *image,
                                                GeglBuffer        *buffer,
                                                const gchar       *name,
-                                               const GimpRGB     *color);
-GimpChannel * gimp_channel_new_from_alpha     (GimpImage         *image,
-                                               GimpDrawable      *drawable,
+                                               const LigmaRGB     *color);
+LigmaChannel * ligma_channel_new_from_alpha     (LigmaImage         *image,
+                                               LigmaDrawable      *drawable,
                                                const gchar       *name,
-                                               const GimpRGB     *color);
-GimpChannel * gimp_channel_new_from_component (GimpImage         *image,
-                                               GimpChannelType    type,
+                                               const LigmaRGB     *color);
+LigmaChannel * ligma_channel_new_from_component (LigmaImage         *image,
+                                               LigmaChannelType    type,
                                                const gchar       *name,
-                                               const GimpRGB     *color);
+                                               const LigmaRGB     *color);
 
-GimpChannel * gimp_channel_get_parent         (GimpChannel       *channel);
+LigmaChannel * ligma_channel_get_parent         (LigmaChannel       *channel);
 
-gdouble       gimp_channel_get_opacity        (GimpChannel       *channel);
-void          gimp_channel_set_opacity        (GimpChannel       *channel,
+gdouble       ligma_channel_get_opacity        (LigmaChannel       *channel);
+void          ligma_channel_set_opacity        (LigmaChannel       *channel,
                                                gdouble            opacity,
                                                gboolean           push_undo);
 
-void          gimp_channel_get_color          (GimpChannel       *channel,
-                                               GimpRGB           *color);
-void          gimp_channel_set_color          (GimpChannel       *channel,
-                                               const GimpRGB     *color,
+void          ligma_channel_get_color          (LigmaChannel       *channel,
+                                               LigmaRGB           *color);
+void          ligma_channel_set_color          (LigmaChannel       *channel,
+                                               const LigmaRGB     *color,
                                                gboolean           push_undo);
 
-gboolean      gimp_channel_get_show_masked    (GimpChannel       *channel);
-void          gimp_channel_set_show_masked    (GimpChannel       *channel,
+gboolean      ligma_channel_get_show_masked    (LigmaChannel       *channel);
+void          ligma_channel_set_show_masked    (LigmaChannel       *channel,
                                                gboolean           show_masked);
 
-void          gimp_channel_push_undo          (GimpChannel       *mask,
+void          ligma_channel_push_undo          (LigmaChannel       *mask,
                                                const gchar       *undo_desc);
 
 
 /*  selection mask functions  */
 
-GimpChannel * gimp_channel_new_mask           (GimpImage              *image,
+LigmaChannel * ligma_channel_new_mask           (LigmaImage              *image,
                                                gint                    width,
                                                gint                    height);
 
-gboolean      gimp_channel_boundary           (GimpChannel            *mask,
-                                               const GimpBoundSeg    **segs_in,
-                                               const GimpBoundSeg    **segs_out,
+gboolean      ligma_channel_boundary           (LigmaChannel            *mask,
+                                               const LigmaBoundSeg    **segs_in,
+                                               const LigmaBoundSeg    **segs_out,
                                                gint                   *num_segs_in,
                                                gint                   *num_segs_out,
                                                gint                    x1,
                                                gint                    y1,
                                                gint                    x2,
                                                gint                    y2);
-gboolean      gimp_channel_is_empty           (GimpChannel            *mask);
+gboolean      ligma_channel_is_empty           (LigmaChannel            *mask);
 
-void          gimp_channel_feather            (GimpChannel            *mask,
+void          ligma_channel_feather            (LigmaChannel            *mask,
                                                gdouble                 radius_x,
                                                gdouble                 radius_y,
                                                gboolean                edge_lock,
                                                gboolean                push_undo);
-void          gimp_channel_sharpen            (GimpChannel            *mask,
+void          ligma_channel_sharpen            (LigmaChannel            *mask,
                                                gboolean                push_undo);
 
-void          gimp_channel_clear              (GimpChannel            *mask,
+void          ligma_channel_clear              (LigmaChannel            *mask,
                                                const gchar            *undo_desc,
                                                gboolean                push_undo);
-void          gimp_channel_all                (GimpChannel            *mask,
+void          ligma_channel_all                (LigmaChannel            *mask,
                                                gboolean                push_undo);
-void          gimp_channel_invert             (GimpChannel            *mask,
+void          ligma_channel_invert             (LigmaChannel            *mask,
                                                gboolean                push_undo);
 
-void          gimp_channel_border             (GimpChannel            *mask,
+void          ligma_channel_border             (LigmaChannel            *mask,
                                                gint                    radius_x,
                                                gint                    radius_y,
-                                               GimpChannelBorderStyle  style,
+                                               LigmaChannelBorderStyle  style,
                                                gboolean                edge_lock,
                                                gboolean                push_undo);
-void          gimp_channel_grow               (GimpChannel            *mask,
+void          ligma_channel_grow               (LigmaChannel            *mask,
                                                gint                    radius_x,
                                                gint                    radius_y,
                                                gboolean                push_undo);
-void          gimp_channel_shrink             (GimpChannel            *mask,
+void          ligma_channel_shrink             (LigmaChannel            *mask,
                                                gint                    radius_x,
                                                gint                    radius_y,
                                                gboolean                edge_lock,
                                                gboolean                push_undo);
-void          gimp_channel_flood              (GimpChannel            *mask,
+void          ligma_channel_flood              (LigmaChannel            *mask,
                                                gboolean                push_undo);
 
 
-#endif /* __GIMP_CHANNEL_H__ */
+#endif /* __LIGMA_CHANNEL_H__ */

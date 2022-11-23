@@ -1,7 +1,7 @@
- /* GIMP - The GNU Image Manipulation Program
+ /* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpwindowstrategy.c
+ * ligmawindowstrategy.c
  * Copyright (C) 2011 Martin Nordholts <martinn@src.gnome.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,17 +24,17 @@
 
 #include "widgets-types.h"
 
-#include "gimpwindowstrategy.h"
+#include "ligmawindowstrategy.h"
 
 
-G_DEFINE_INTERFACE (GimpWindowStrategy, gimp_window_strategy, G_TYPE_OBJECT)
+G_DEFINE_INTERFACE (LigmaWindowStrategy, ligma_window_strategy, G_TYPE_OBJECT)
 
 
 /*  private functions  */
 
 
 static void
-gimp_window_strategy_default_init (GimpWindowStrategyInterface *iface)
+ligma_window_strategy_default_init (LigmaWindowStrategyInterface *iface)
 {
 }
 
@@ -43,21 +43,21 @@ gimp_window_strategy_default_init (GimpWindowStrategyInterface *iface)
 
 
 GtkWidget *
-gimp_window_strategy_show_dockable_dialog (GimpWindowStrategy *strategy,
-                                           Gimp               *gimp,
-                                           GimpDialogFactory  *factory,
+ligma_window_strategy_show_dockable_dialog (LigmaWindowStrategy *strategy,
+                                           Ligma               *ligma,
+                                           LigmaDialogFactory  *factory,
                                            GdkMonitor         *monitor,
                                            const gchar        *identifiers)
 {
-  GimpWindowStrategyInterface *iface;
+  LigmaWindowStrategyInterface *iface;
 
-  g_return_val_if_fail (GIMP_IS_WINDOW_STRATEGY (strategy), NULL);
+  g_return_val_if_fail (LIGMA_IS_WINDOW_STRATEGY (strategy), NULL);
 
-  iface = GIMP_WINDOW_STRATEGY_GET_IFACE (strategy);
+  iface = LIGMA_WINDOW_STRATEGY_GET_IFACE (strategy);
 
   if (iface->show_dockable_dialog)
     return iface->show_dockable_dialog (strategy,
-                                        gimp,
+                                        ligma,
                                         factory,
                                         monitor,
                                         identifiers);

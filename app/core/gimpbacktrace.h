@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpbacktrace.h
+ * ligmabacktrace.h
  * Copyright (C) 2018 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,14 +18,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_BACKTRACE_H__
-#define __GIMP_BACKTRACE_H__
+#ifndef __LIGMA_BACKTRACE_H__
+#define __LIGMA_BACKTRACE_H__
 
 
-typedef struct _GimpBacktraceAddressInfo GimpBacktraceAddressInfo;
+typedef struct _LigmaBacktraceAddressInfo LigmaBacktraceAddressInfo;
 
 
-struct _GimpBacktraceAddressInfo
+struct _LigmaBacktraceAddressInfo
 {
   gchar    object_name[256];
 
@@ -37,34 +37,34 @@ struct _GimpBacktraceAddressInfo
 };
 
 
-void            gimp_backtrace_init              (void);
+void            ligma_backtrace_init              (void);
 
-gboolean        gimp_backtrace_start             (void);
-void            gimp_backtrace_stop              (void);
+gboolean        ligma_backtrace_start             (void);
+void            ligma_backtrace_stop              (void);
 
-GimpBacktrace * gimp_backtrace_new               (gboolean                 include_current_thread);
-void            gimp_backtrace_free              (GimpBacktrace           *backtrace);
+LigmaBacktrace * ligma_backtrace_new               (gboolean                 include_current_thread);
+void            ligma_backtrace_free              (LigmaBacktrace           *backtrace);
 
-gint            gimp_backtrace_get_n_threads     (GimpBacktrace           *backtrace);
-guintptr        gimp_backtrace_get_thread_id     (GimpBacktrace           *backtrace,
+gint            ligma_backtrace_get_n_threads     (LigmaBacktrace           *backtrace);
+guintptr        ligma_backtrace_get_thread_id     (LigmaBacktrace           *backtrace,
                                                   gint                     thread);
-const gchar   * gimp_backtrace_get_thread_name   (GimpBacktrace           *backtrace,
+const gchar   * ligma_backtrace_get_thread_name   (LigmaBacktrace           *backtrace,
                                                   gint                     thread);
-gboolean        gimp_backtrace_is_thread_running (GimpBacktrace           *backtrace,
+gboolean        ligma_backtrace_is_thread_running (LigmaBacktrace           *backtrace,
                                                   gint                     thread);
 
-gint            gimp_backtrace_find_thread_by_id (GimpBacktrace           *backtrace,
+gint            ligma_backtrace_find_thread_by_id (LigmaBacktrace           *backtrace,
                                                   guintptr                 thread_id,
                                                   gint                     thread_hint);
 
-gint            gimp_backtrace_get_n_frames      (GimpBacktrace           *backtrace,
+gint            ligma_backtrace_get_n_frames      (LigmaBacktrace           *backtrace,
                                                   gint                     thread);
-guintptr        gimp_backtrace_get_frame_address (GimpBacktrace           *backtrace,
+guintptr        ligma_backtrace_get_frame_address (LigmaBacktrace           *backtrace,
                                                   gint                     thread,
                                                   gint                     frame);
 
-gboolean        gimp_backtrace_get_address_info  (guintptr                  address,
-                                                  GimpBacktraceAddressInfo *info);
+gboolean        ligma_backtrace_get_address_info  (guintptr                  address,
+                                                  LigmaBacktraceAddressInfo *info);
 
 
-#endif  /*  __GIMP_BACKTRACE_H__  */
+#endif  /*  __LIGMA_BACKTRACE_H__  */

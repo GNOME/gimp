@@ -1,6 +1,6 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  *
- * gimpcagetool.h
+ * ligmacagetool.h
  * Copyright (C) 2010 Michael Muré <batolettre@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,31 +17,31 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CAGE_TOOL_H__
-#define __GIMP_CAGE_TOOL_H__
+#ifndef __LIGMA_CAGE_TOOL_H__
+#define __LIGMA_CAGE_TOOL_H__
 
 
-#include "gimpdrawtool.h"
+#include "ligmadrawtool.h"
 
 
-#define GIMP_TYPE_CAGE_TOOL            (gimp_cage_tool_get_type ())
-#define GIMP_CAGE_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CAGE_TOOL, GimpCageTool))
-#define GIMP_CAGE_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CAGE_TOOL, GimpCageToolClass))
-#define GIMP_IS_CAGE_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CAGE_TOOL))
-#define GIMP_IS_CAGE_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CAGE_TOOL))
-#define GIMP_CAGE_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CAGE_TOOL, GimpCageToolClass))
+#define LIGMA_TYPE_CAGE_TOOL            (ligma_cage_tool_get_type ())
+#define LIGMA_CAGE_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_CAGE_TOOL, LigmaCageTool))
+#define LIGMA_CAGE_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_CAGE_TOOL, LigmaCageToolClass))
+#define LIGMA_IS_CAGE_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_CAGE_TOOL))
+#define LIGMA_IS_CAGE_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_CAGE_TOOL))
+#define LIGMA_CAGE_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_CAGE_TOOL, LigmaCageToolClass))
 
-#define GIMP_CAGE_TOOL_GET_OPTIONS(t)  (GIMP_CAGE_OPTIONS (gimp_tool_get_options (GIMP_TOOL (t))))
+#define LIGMA_CAGE_TOOL_GET_OPTIONS(t)  (LIGMA_CAGE_OPTIONS (ligma_tool_get_options (LIGMA_TOOL (t))))
 
 
-typedef struct _GimpCageTool      GimpCageTool;
-typedef struct _GimpCageToolClass GimpCageToolClass;
+typedef struct _LigmaCageTool      LigmaCageTool;
+typedef struct _LigmaCageToolClass LigmaCageToolClass;
 
-struct _GimpCageTool
+struct _LigmaCageTool
 {
-  GimpDrawTool    parent_instance;
+  LigmaDrawTool    parent_instance;
 
-  GimpCageConfig *config;
+  LigmaCageConfig *config;
 
   gint            offset_x; /* used to convert the cage point coords */
   gint            offset_y; /* to drawable coords */
@@ -67,19 +67,19 @@ struct _GimpCageTool
 
   gint            tool_state; /* Current state in statemachine */
 
-  GimpDrawableFilter *filter; /* For preview */
+  LigmaDrawableFilter *filter; /* For preview */
 };
 
-struct _GimpCageToolClass
+struct _LigmaCageToolClass
 {
-  GimpDrawToolClass parent_class;
+  LigmaDrawToolClass parent_class;
 };
 
 
-void    gimp_cage_tool_register (GimpToolRegisterCallback  callback,
+void    ligma_cage_tool_register (LigmaToolRegisterCallback  callback,
                                  gpointer                  data);
 
-GType   gimp_cage_tool_get_type (void) G_GNUC_CONST;
+GType   ligma_cage_tool_get_type (void) G_GNUC_CONST;
 
 
-#endif  /*  __GIMP_CAGE_TOOL_H__  */
+#endif  /*  __LIGMA_CAGE_TOOL_H__  */

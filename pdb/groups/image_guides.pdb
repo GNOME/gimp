@@ -1,4 +1,4 @@
-# GIMP - The GNU Image Manipulation Program
+# LIGMA - The GNU Image Manipulation Program
 # Copyright (C) 1995 Spencer Kimball and Peter Mattis
 
 # This program is free software: you can redistribute it and/or modify
@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+# "Perlized" from C source by Manish Singh <yosh@ligma.org>
 
 sub image_add_hguide {
     $blurb = 'Add a horizontal guide to an image.';
@@ -42,12 +42,12 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (yposition <= gimp_image_get_height (image))
+  if (yposition <= ligma_image_get_height (image))
     {
-      GimpGuide *g;
+      LigmaGuide *g;
 
-      g = gimp_image_add_hguide (image, yposition, TRUE);
-      guide = gimp_aux_item_get_id (GIMP_AUX_ITEM (g));
+      g = ligma_image_add_hguide (image, yposition, TRUE);
+      guide = ligma_aux_item_get_id (LIGMA_AUX_ITEM (g));
     }
   else
     success = FALSE;
@@ -82,12 +82,12 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  if (xposition <= gimp_image_get_width (image))
+  if (xposition <= ligma_image_get_width (image))
     {
-      GimpGuide *g;
+      LigmaGuide *g;
 
-      g = gimp_image_add_vguide (image, xposition, TRUE);
-      guide = gimp_aux_item_get_id (GIMP_AUX_ITEM (g));
+      g = ligma_image_add_vguide (image, xposition, TRUE);
+      guide = ligma_aux_item_get_id (LIGMA_AUX_ITEM (g));
     }
   else
     success = FALSE;
@@ -116,10 +116,10 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpGuide *g = gimp_pdb_image_get_guide (image, guide, error);
+  LigmaGuide *g = ligma_pdb_image_get_guide (image, guide, error);
 
   if (g)
-    gimp_image_remove_guide (image, g, TRUE);
+    ligma_image_remove_guide (image, g, TRUE);
   else
     success = FALSE;
 }
@@ -154,16 +154,16 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpGuide *g = gimp_image_get_next_guide (image, guide, &success);
+  LigmaGuide *g = ligma_image_get_next_guide (image, guide, &success);
 
   if (g)
-    next_guide = gimp_aux_item_get_id (GIMP_AUX_ITEM (g));
+    next_guide = ligma_aux_item_get_id (LIGMA_AUX_ITEM (g));
 
   if (! success)
-    g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+    g_set_error (error, LIGMA_PDB_ERROR, LIGMA_PDB_ERROR_INVALID_ARGUMENT,
                  _("Image '%s' (%d) does not contain guide with ID %d"),
-                 gimp_image_get_display_name (image),
-                 gimp_image_get_id (image),
+                 ligma_image_get_display_name (image),
+                 ligma_image_get_id (image),
                  guide);
 }
 CODE
@@ -189,18 +189,18 @@ HELP
 
     @outargs = (
 	{ name => 'orientation',
-	  type => 'enum GimpOrientationType (no GIMP_ORIENTATION_UNKNOWN)',
+	  type => 'enum LigmaOrientationType (no LIGMA_ORIENTATION_UNKNOWN)',
 	  desc => "The guide's orientation",
-	  libdef => 'GIMP_ORIENTATION_UNKNOWN' }
+	  libdef => 'LIGMA_ORIENTATION_UNKNOWN' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  GimpGuide *g = gimp_pdb_image_get_guide (image, guide, error);
+  LigmaGuide *g = ligma_pdb_image_get_guide (image, guide, error);
 
   if (g)
-    orientation = gimp_guide_get_orientation (g);
+    orientation = ligma_guide_get_orientation (g);
   else
     success = FALSE;
 }
@@ -227,17 +227,17 @@ HELP
 
     @outargs = (
 	{ name => 'position', type => 'int32',
-          libdef => 'G_MININT /* GIMP_GUIDE_POSITION_UNDEFINED */',
+          libdef => 'G_MININT /* LIGMA_GUIDE_POSITION_UNDEFINED */',
 	  desc => "The guide's position relative to top or left of image" }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  GimpGuide *g = gimp_pdb_image_get_guide (image, guide, error);
+  LigmaGuide *g = ligma_pdb_image_get_guide (image, guide, error);
 
   if (g)
-    position = gimp_guide_get_position (g);
+    position = ligma_guide_get_position (g);
   else
     success = FALSE;
 }
@@ -247,12 +247,12 @@ CODE
 
 
 @headers = qw("cairo.h"
-              "core/gimpguide.h"
-              "core/gimpimage-guides.h"
-              "core/gimpimage-undo-push.h"
-              "gimppdb-utils.h"
-              "gimppdberror.h"
-              "gimp-intl.h");
+              "core/ligmaguide.h"
+              "core/ligmaimage-guides.h"
+              "core/ligmaimage-undo-push.h"
+              "ligmapdb-utils.h"
+              "ligmapdberror.h"
+              "ligma-intl.h");
 
 @procs = qw(image_add_hguide image_add_vguide
             image_delete_guide
@@ -263,7 +263,7 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Image Guide procedures';
-$doc_title = 'gimpimageguides';
+$doc_title = 'ligmaimageguides';
 $doc_short_desc = 'Functions for manipulating an image\'s guides.';
 $doc_long_desc = 'Functions for manipulating an image\'s guides.';
 

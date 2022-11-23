@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,37 +20,37 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "actions-types.h"
 
-#include "core/gimp.h"
+#include "core/ligma.h"
 
-#include "widgets/gimperrorconsole.h"
-#include "widgets/gimphelp-ids.h"
-#include "widgets/gimptextbuffer.h"
+#include "widgets/ligmaerrorconsole.h"
+#include "widgets/ligmahelp-ids.h"
+#include "widgets/ligmatextbuffer.h"
 
 #include "error-console-commands.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /*  local function prototypes  */
 
 static void   error_console_save_response (GtkWidget        *dialog,
                                            gint              response_id,
-                                           GimpErrorConsole *console);
+                                           LigmaErrorConsole *console);
 
 
 /*  public functions  */
 
 void
-error_console_clear_cmd_callback (GimpAction *action,
+error_console_clear_cmd_callback (LigmaAction *action,
                                   GVariant   *value,
                                   gpointer    data)
 {
-  GimpErrorConsole *console = GIMP_ERROR_CONSOLE (data);
+  LigmaErrorConsole *console = LIGMA_ERROR_CONSOLE (data);
   GtkTextIter       start_iter;
   GtkTextIter       end_iter;
 
@@ -59,11 +59,11 @@ error_console_clear_cmd_callback (GimpAction *action,
 }
 
 void
-error_console_select_all_cmd_callback (GimpAction *action,
+error_console_select_all_cmd_callback (LigmaAction *action,
                                        GVariant   *value,
                                        gpointer    data)
 {
-  GimpErrorConsole *console = GIMP_ERROR_CONSOLE (data);
+  LigmaErrorConsole *console = LIGMA_ERROR_CONSOLE (data);
   GtkTextIter       start_iter;
   GtkTextIter       end_iter;
 
@@ -72,19 +72,19 @@ error_console_select_all_cmd_callback (GimpAction *action,
 }
 
 void
-error_console_save_cmd_callback (GimpAction *action,
+error_console_save_cmd_callback (LigmaAction *action,
                                  GVariant   *value,
                                  gpointer    data)
 {
-  GimpErrorConsole *console   = GIMP_ERROR_CONSOLE (data);
+  LigmaErrorConsole *console   = LIGMA_ERROR_CONSOLE (data);
   gboolean          selection = (gboolean) g_variant_get_int32 (value);
 
   if (selection &&
       ! gtk_text_buffer_get_selection_bounds (console->text_buffer,
                                               NULL, NULL))
     {
-      gimp_message_literal (console->gimp,
-                            G_OBJECT (console), GIMP_MESSAGE_WARNING,
+      ligma_message_literal (console->ligma,
+                            G_OBJECT (console), LIGMA_MESSAGE_WARNING,
                             _("Cannot save. Nothing is selected."));
       return;
     }
@@ -103,7 +103,7 @@ error_console_save_cmd_callback (GimpAction *action,
                                      NULL);
 
       gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
-      gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+      ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                                GTK_RESPONSE_OK,
                                                GTK_RESPONSE_CANCEL,
                                                -1);
@@ -116,7 +116,7 @@ error_console_save_cmd_callback (GimpAction *action,
       gtk_window_set_screen (GTK_WINDOW (dialog),
                              gtk_widget_get_screen (GTK_WIDGET (console)));
       gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
-      gtk_window_set_role (GTK_WINDOW (dialog), "gimp-save-errors");
+      gtk_window_set_role (GTK_WINDOW (dialog), "ligma-save-errors");
 
       gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (dialog),
                                                       TRUE);
@@ -128,44 +128,44 @@ error_console_save_cmd_callback (GimpAction *action,
                         G_CALLBACK (gtk_true),
                         NULL);
 
-      gimp_help_connect (dialog, gimp_standard_help_func,
-                         GIMP_HELP_ERRORS_DIALOG, NULL, NULL);
+      ligma_help_connect (dialog, ligma_standard_help_func,
+                         LIGMA_HELP_ERRORS_DIALOG, NULL, NULL);
     }
 
   gtk_window_present (GTK_WINDOW (console->file_dialog));
 }
 
 void
-error_console_highlight_error_cmd_callback (GimpAction *action,
+error_console_highlight_error_cmd_callback (LigmaAction *action,
                                             GVariant   *value,
                                             gpointer    data)
 {
-  GimpErrorConsole *console = GIMP_ERROR_CONSOLE (data);
+  LigmaErrorConsole *console = LIGMA_ERROR_CONSOLE (data);
   gboolean          active  = g_variant_get_boolean (value);
 
-  console->highlight[GIMP_MESSAGE_ERROR] = active;
+  console->highlight[LIGMA_MESSAGE_ERROR] = active;
 }
 
 void
-error_console_highlight_warning_cmd_callback (GimpAction *action,
+error_console_highlight_warning_cmd_callback (LigmaAction *action,
                                               GVariant   *value,
                                               gpointer    data)
 {
-  GimpErrorConsole *console = GIMP_ERROR_CONSOLE (data);
+  LigmaErrorConsole *console = LIGMA_ERROR_CONSOLE (data);
   gboolean          active  = g_variant_get_boolean (value);
 
-  console->highlight[GIMP_MESSAGE_WARNING] = active;
+  console->highlight[LIGMA_MESSAGE_WARNING] = active;
 }
 
 void
-error_console_highlight_info_cmd_callback (GimpAction *action,
+error_console_highlight_info_cmd_callback (LigmaAction *action,
                                            GVariant   *value,
                                            gpointer    data)
 {
-  GimpErrorConsole *console = GIMP_ERROR_CONSOLE (data);
+  LigmaErrorConsole *console = LIGMA_ERROR_CONSOLE (data);
   gboolean          active  = g_variant_get_boolean (value);
 
-  console->highlight[GIMP_MESSAGE_INFO] = active;
+  console->highlight[LIGMA_MESSAGE_INFO] = active;
 }
 
 
@@ -174,20 +174,20 @@ error_console_highlight_info_cmd_callback (GimpAction *action,
 static void
 error_console_save_response (GtkWidget        *dialog,
                              gint              response_id,
-                             GimpErrorConsole *console)
+                             LigmaErrorConsole *console)
 {
   if (response_id == GTK_RESPONSE_OK)
     {
       GFile  *file  = gtk_file_chooser_get_file (GTK_FILE_CHOOSER (dialog));
       GError *error = NULL;
 
-      if (! gimp_text_buffer_save (GIMP_TEXT_BUFFER (console->text_buffer),
+      if (! ligma_text_buffer_save (LIGMA_TEXT_BUFFER (console->text_buffer),
                                    file,
                                    console->save_selection, &error))
         {
-          gimp_message (console->gimp, G_OBJECT (dialog), GIMP_MESSAGE_ERROR,
+          ligma_message (console->ligma, G_OBJECT (dialog), LIGMA_MESSAGE_ERROR,
                         _("Error writing file '%s':\n%s"),
-                        gimp_file_get_utf8_name (file),
+                        ligma_file_get_utf8_name (file),
                         error->message);
           g_clear_error (&error);
           g_object_unref (file);

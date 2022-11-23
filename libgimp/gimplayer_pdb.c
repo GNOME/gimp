@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimplayer_pdb.c
+ * ligmalayer_pdb.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,12 +24,12 @@
 
 #include "stamp-pdbgen.h"
 
-#include "gimp.h"
+#include "ligma.h"
 
 
 /**
- * SECTION: gimplayer
- * @title: gimplayer
+ * SECTION: ligmalayer
+ * @title: ligmalayer
  * @short_description: Operations on a single layer.
  *
  * Operations on a single layer.
@@ -37,7 +37,7 @@
 
 
 /**
- * _gimp_layer_new:
+ * _ligma_layer_new:
  * @image: The image to which to add the layer.
  * @width: The layer width.
  * @height: The layer height.
@@ -51,50 +51,50 @@
  * This procedure creates a new layer with the specified width, height,
  * and type. Name, opacity, and mode are also supplied parameters. The
  * new layer still needs to be added to the image, as this is not
- * automatic. Add the new layer with the gimp_image_insert_layer()
+ * automatic. Add the new layer with the ligma_image_insert_layer()
  * command. Other attributes such as layer mask modes, and offsets
  * should be set with explicit procedure calls.
  *
  * Returns: (transfer none): The newly created layer.
  **/
-GimpLayer *
-_gimp_layer_new (GimpImage     *image,
+LigmaLayer *
+_ligma_layer_new (LigmaImage     *image,
                  gint           width,
                  gint           height,
-                 GimpImageType  type,
+                 LigmaImageType  type,
                  const gchar   *name,
                  gdouble        opacity,
-                 GimpLayerMode  mode)
+                 LigmaLayerMode  mode)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpLayer *layer = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaLayer *layer = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_INT, width,
                                           G_TYPE_INT, height,
-                                          GIMP_TYPE_IMAGE_TYPE, type,
+                                          LIGMA_TYPE_IMAGE_TYPE, type,
                                           G_TYPE_STRING, name,
                                           G_TYPE_DOUBLE, opacity,
-                                          GIMP_TYPE_LAYER_MODE, mode,
+                                          LIGMA_TYPE_LAYER_MODE, mode,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-layer-new",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-layer-new",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    layer = GIMP_VALUES_GET_LAYER (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    layer = LIGMA_VALUES_GET_LAYER (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return layer;
 }
 
 /**
- * gimp_layer_new_from_visible:
+ * ligma_layer_new_from_visible:
  * @image: The source image from where the content is copied.
  * @dest_image: The destination image to which to add the layer.
  * @name: The layer name.
@@ -104,43 +104,43 @@ _gimp_layer_new (GimpImage     *image,
  * This procedure creates a new layer from what is visible in the given
  * image. The new layer still needs to be added to the destination
  * image, as this is not automatic. Add the new layer with the
- * gimp_image_insert_layer() command. Other attributes such as layer
+ * ligma_image_insert_layer() command. Other attributes such as layer
  * mask modes, and offsets should be set with explicit procedure calls.
  *
  * Returns: (transfer none): The newly created layer.
  *
  * Since: 2.6
  **/
-GimpLayer *
-gimp_layer_new_from_visible (GimpImage   *image,
-                             GimpImage   *dest_image,
+LigmaLayer *
+ligma_layer_new_from_visible (LigmaImage   *image,
+                             LigmaImage   *dest_image,
                              const gchar *name)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpLayer *layer = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaLayer *layer = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
-                                          GIMP_TYPE_IMAGE, dest_image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
+                                          LIGMA_TYPE_IMAGE, dest_image,
                                           G_TYPE_STRING, name,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-layer-new-from-visible",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-layer-new-from-visible",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    layer = GIMP_VALUES_GET_LAYER (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    layer = LIGMA_VALUES_GET_LAYER (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return layer;
 }
 
 /**
- * gimp_layer_new_from_drawable:
+ * ligma_layer_new_from_drawable:
  * @drawable: The source drawable from where the new layer is copied.
  * @dest_image: The destination image to which to add the layer.
  *
@@ -149,39 +149,39 @@ gimp_layer_new_from_visible (GimpImage   *image,
  * This procedure creates a new layer as a copy of the specified
  * drawable. The new layer still needs to be added to the image, as
  * this is not automatic. Add the new layer with the
- * gimp_image_insert_layer() command. Other attributes such as layer
+ * ligma_image_insert_layer() command. Other attributes such as layer
  * mask modes, and offsets should be set with explicit procedure calls.
  *
  * Returns: (transfer none): The newly copied layer.
  **/
-GimpLayer *
-gimp_layer_new_from_drawable (GimpDrawable *drawable,
-                              GimpImage    *dest_image)
+LigmaLayer *
+ligma_layer_new_from_drawable (LigmaDrawable *drawable,
+                              LigmaImage    *dest_image)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpLayer *layer_copy = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaLayer *layer_copy = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
-                                          GIMP_TYPE_IMAGE, dest_image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
+                                          LIGMA_TYPE_IMAGE, dest_image,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-layer-new-from-drawable",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-layer-new-from-drawable",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    layer_copy = GIMP_VALUES_GET_LAYER (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    layer_copy = LIGMA_VALUES_GET_LAYER (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return layer_copy;
 }
 
 /**
- * gimp_layer_group_new:
+ * ligma_layer_group_new:
  * @image: The image to which to add the layer group.
  *
  * Create a new layer group.
@@ -189,41 +189,41 @@ gimp_layer_new_from_drawable (GimpDrawable *drawable,
  * This procedure creates a new layer group. Attributes such as layer
  * mode and opacity should be set with explicit procedure calls. Add
  * the new layer group (which is a kind of layer) with the
- * gimp_image_insert_layer() command.
+ * ligma_image_insert_layer() command.
  * Other procedures useful with layer groups:
- * gimp_image_reorder_item(), gimp_item_get_parent(),
- * gimp_item_get_children(), gimp_item_is_group().
+ * ligma_image_reorder_item(), ligma_item_get_parent(),
+ * ligma_item_get_children(), ligma_item_is_group().
  *
  * Returns: (transfer none): The newly created layer group.
  *
  * Since: 2.8
  **/
-GimpLayer *
-gimp_layer_group_new (GimpImage *image)
+LigmaLayer *
+ligma_layer_group_new (LigmaImage *image)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpLayer *layer_group = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaLayer *layer_group = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-layer-group-new",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-layer-group-new",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    layer_group = GIMP_VALUES_GET_LAYER (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    layer_group = LIGMA_VALUES_GET_LAYER (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return layer_group;
 }
 
 /**
- * _gimp_layer_copy:
+ * _ligma_layer_copy:
  * @layer: The layer to copy.
  * @add_alpha: Add an alpha channel to the copied layer.
  *
@@ -238,34 +238,34 @@ gimp_layer_group_new (GimpImage *image)
  *
  * Returns: (transfer none): The newly copied layer.
  **/
-GimpLayer *
-_gimp_layer_copy (GimpLayer *layer,
+LigmaLayer *
+_ligma_layer_copy (LigmaLayer *layer,
                   gboolean   add_alpha)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpLayer *layer_copy = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaLayer *layer_copy = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, layer,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_LAYER, layer,
                                           G_TYPE_BOOLEAN, add_alpha,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-layer-copy",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-layer-copy",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    layer_copy = GIMP_VALUES_GET_LAYER (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    layer_copy = LIGMA_VALUES_GET_LAYER (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return layer_copy;
 }
 
 /**
- * gimp_layer_add_alpha:
+ * ligma_layer_add_alpha:
  * @layer: The layer.
  *
  * Add an alpha channel to the layer if it doesn't already have one.
@@ -279,30 +279,30 @@ _gimp_layer_copy (GimpLayer *layer,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_layer_add_alpha (GimpLayer *layer)
+ligma_layer_add_alpha (LigmaLayer *layer)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, layer,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_LAYER, layer,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-layer-add-alpha",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-layer-add-alpha",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_layer_flatten:
+ * ligma_layer_flatten:
  * @layer: The layer.
  *
  * Remove the alpha channel from the layer if it has one.
@@ -317,30 +317,30 @@ gimp_layer_add_alpha (GimpLayer *layer)
  * Since: 2.4
  **/
 gboolean
-gimp_layer_flatten (GimpLayer *layer)
+ligma_layer_flatten (LigmaLayer *layer)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, layer,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_LAYER, layer,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-layer-flatten",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-layer-flatten",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_layer_scale:
+ * ligma_layer_scale:
  * @layer: The layer.
  * @new_width: New layer width.
  * @new_height: New layer height.
@@ -353,41 +353,41 @@ gimp_layer_flatten (GimpLayer *layer)
  * specifies whether to scale from the center of the layer, or from the
  * image origin. This operation only works if the layer has been added
  * to an image. The interpolation method used can be set with
- * gimp_context_set_interpolation().
+ * ligma_context_set_interpolation().
  *
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_layer_scale (GimpLayer *layer,
+ligma_layer_scale (LigmaLayer *layer,
                   gint       new_width,
                   gint       new_height,
                   gboolean   local_origin)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, layer,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_LAYER, layer,
                                           G_TYPE_INT, new_width,
                                           G_TYPE_INT, new_height,
                                           G_TYPE_BOOLEAN, local_origin,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-layer-scale",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-layer-scale",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_layer_resize:
+ * ligma_layer_resize:
  * @layer: The layer.
  * @new_width: New layer width.
  * @new_height: New layer height.
@@ -404,38 +404,38 @@ gimp_layer_scale (GimpLayer *layer,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_layer_resize (GimpLayer *layer,
+ligma_layer_resize (LigmaLayer *layer,
                    gint       new_width,
                    gint       new_height,
                    gint       offx,
                    gint       offy)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, layer,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_LAYER, layer,
                                           G_TYPE_INT, new_width,
                                           G_TYPE_INT, new_height,
                                           G_TYPE_INT, offx,
                                           G_TYPE_INT, offy,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-layer-resize",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-layer-resize",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_layer_resize_to_image_size:
+ * ligma_layer_resize_to_image_size:
  * @layer: The layer to resize.
  *
  * Resize a layer to the image size.
@@ -446,30 +446,30 @@ gimp_layer_resize (GimpLayer *layer,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_layer_resize_to_image_size (GimpLayer *layer)
+ligma_layer_resize_to_image_size (LigmaLayer *layer)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, layer,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_LAYER, layer,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-layer-resize-to-image-size",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-layer-resize-to-image-size",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_layer_set_offsets:
+ * ligma_layer_set_offsets:
  * @layer: The layer.
  * @offx: Offset in x direction.
  * @offy: Offset in y direction.
@@ -483,34 +483,34 @@ gimp_layer_resize_to_image_size (GimpLayer *layer)
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_layer_set_offsets (GimpLayer *layer,
+ligma_layer_set_offsets (LigmaLayer *layer,
                         gint       offx,
                         gint       offy)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, layer,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_LAYER, layer,
                                           G_TYPE_INT, offx,
                                           G_TYPE_INT, offy,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-layer-set-offsets",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-layer-set-offsets",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_layer_create_mask:
+ * ligma_layer_create_mask:
  * @layer: The layer to which to add the mask.
  * @mask_type: The type of mask.
  *
@@ -529,9 +529,9 @@ gimp_layer_set_offsets (GimpLayer *layer,
  * - or a copy of the active channel.
  *
  * The layer mask still needs to be added to the layer. This can be
- * done with a call to gimp_layer_add_mask().
+ * done with a call to ligma_layer_add_mask().
  *
- * gimp_layer_create_mask() will fail if there are no active channels
+ * ligma_layer_create_mask() will fail if there are no active channels
  * on the image, when called with 'ADD-CHANNEL-MASK'. It will return a
  * black mask when called with 'ADD-ALPHA-MASK' or
  * 'ADD-ALPHA-TRANSFER-MASK' on a layer with no alpha channels, or with
@@ -539,34 +539,34 @@ gimp_layer_set_offsets (GimpLayer *layer,
  *
  * Returns: (transfer none): The newly created mask.
  **/
-GimpLayerMask *
-gimp_layer_create_mask (GimpLayer       *layer,
-                        GimpAddMaskType  mask_type)
+LigmaLayerMask *
+ligma_layer_create_mask (LigmaLayer       *layer,
+                        LigmaAddMaskType  mask_type)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpLayerMask *mask = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaLayerMask *mask = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, layer,
-                                          GIMP_TYPE_ADD_MASK_TYPE, mask_type,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_LAYER, layer,
+                                          LIGMA_TYPE_ADD_MASK_TYPE, mask_type,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-layer-create-mask",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-layer-create-mask",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    mask = GIMP_VALUES_GET_LAYER_MASK (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    mask = LIGMA_VALUES_GET_LAYER_MASK (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return mask;
 }
 
 /**
- * gimp_layer_get_mask:
+ * ligma_layer_get_mask:
  * @layer: The layer.
  *
  * Get the specified layer's mask if it exists.
@@ -576,32 +576,32 @@ gimp_layer_create_mask (GimpLayer       *layer,
  *
  * Returns: (transfer none): The layer mask.
  **/
-GimpLayerMask *
-gimp_layer_get_mask (GimpLayer *layer)
+LigmaLayerMask *
+ligma_layer_get_mask (LigmaLayer *layer)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpLayerMask *mask = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaLayerMask *mask = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, layer,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_LAYER, layer,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-layer-get-mask",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-layer-get-mask",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    mask = GIMP_VALUES_GET_LAYER_MASK (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    mask = LIGMA_VALUES_GET_LAYER_MASK (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return mask;
 }
 
 /**
- * gimp_layer_from_mask:
+ * ligma_layer_from_mask:
  * @mask: Mask for which to return the layer.
  *
  * Get the specified mask's layer.
@@ -613,32 +613,32 @@ gimp_layer_get_mask (GimpLayer *layer)
  *
  * Since: 2.2
  **/
-GimpLayer *
-gimp_layer_from_mask (GimpLayerMask *mask)
+LigmaLayer *
+ligma_layer_from_mask (LigmaLayerMask *mask)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpLayer *layer = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaLayer *layer = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER_MASK, mask,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_LAYER_MASK, mask,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-layer-from-mask",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-layer-from-mask",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    layer = GIMP_VALUES_GET_LAYER (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    layer = LIGMA_VALUES_GET_LAYER (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return layer;
 }
 
 /**
- * gimp_layer_add_mask:
+ * ligma_layer_add_mask:
  * @layer: The layer to receive the mask.
  * @mask: The mask to add to the layer.
  *
@@ -650,37 +650,37 @@ gimp_layer_from_mask (GimpLayerMask *mask)
  * already have a layer mask. The specified mask must exist and have
  * the same dimensions as the layer. The layer must have been created
  * for use with the specified image and the mask must have been created
- * with the procedure 'gimp-layer-create-mask'.
+ * with the procedure 'ligma-layer-create-mask'.
  *
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_layer_add_mask (GimpLayer     *layer,
-                     GimpLayerMask *mask)
+ligma_layer_add_mask (LigmaLayer     *layer,
+                     LigmaLayerMask *mask)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, layer,
-                                          GIMP_TYPE_LAYER_MASK, mask,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_LAYER, layer,
+                                          LIGMA_TYPE_LAYER_MASK, mask,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-layer-add-mask",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-layer-add-mask",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_layer_remove_mask:
+ * ligma_layer_remove_mask:
  * @layer: The layer from which to remove mask.
  * @mode: Removal mode.
  *
@@ -692,32 +692,32 @@ gimp_layer_add_mask (GimpLayer     *layer,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_layer_remove_mask (GimpLayer         *layer,
-                        GimpMaskApplyMode  mode)
+ligma_layer_remove_mask (LigmaLayer         *layer,
+                        LigmaMaskApplyMode  mode)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, layer,
-                                          GIMP_TYPE_MASK_APPLY_MODE, mode,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_LAYER, layer,
+                                          LIGMA_TYPE_MASK_APPLY_MODE, mode,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-layer-remove-mask",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-layer-remove-mask",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_layer_is_floating_sel:
+ * ligma_layer_is_floating_sel:
  * @layer: The layer.
  *
  * Is the specified layer a floating selection?
@@ -729,31 +729,31 @@ gimp_layer_remove_mask (GimpLayer         *layer,
  * Returns: TRUE if the layer is a floating selection.
  **/
 gboolean
-gimp_layer_is_floating_sel (GimpLayer *layer)
+ligma_layer_is_floating_sel (LigmaLayer *layer)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean is_floating_sel = FALSE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, layer,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_LAYER, layer,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-layer-is-floating-sel",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-layer-is-floating-sel",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    is_floating_sel = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    is_floating_sel = LIGMA_VALUES_GET_BOOLEAN (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return is_floating_sel;
 }
 
 /**
- * gimp_layer_get_lock_alpha:
+ * ligma_layer_get_lock_alpha:
  * @layer: The layer.
  *
  * Get the lock alpha channel setting of the specified layer.
@@ -764,31 +764,31 @@ gimp_layer_is_floating_sel (GimpLayer *layer)
  * Returns: The layer's lock alpha channel setting.
  **/
 gboolean
-gimp_layer_get_lock_alpha (GimpLayer *layer)
+ligma_layer_get_lock_alpha (LigmaLayer *layer)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean lock_alpha = FALSE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, layer,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_LAYER, layer,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-layer-get-lock-alpha",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-layer-get-lock-alpha",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    lock_alpha = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    lock_alpha = LIGMA_VALUES_GET_BOOLEAN (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return lock_alpha;
 }
 
 /**
- * gimp_layer_set_lock_alpha:
+ * ligma_layer_set_lock_alpha:
  * @layer: The layer.
  * @lock_alpha: The new layer's lock alpha channel setting.
  *
@@ -800,32 +800,32 @@ gimp_layer_get_lock_alpha (GimpLayer *layer)
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_layer_set_lock_alpha (GimpLayer *layer,
+ligma_layer_set_lock_alpha (LigmaLayer *layer,
                            gboolean   lock_alpha)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, layer,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_LAYER, layer,
                                           G_TYPE_BOOLEAN, lock_alpha,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-layer-set-lock-alpha",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-layer-set-lock-alpha",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_layer_get_apply_mask:
+ * ligma_layer_get_apply_mask:
  * @layer: The layer.
  *
  * Get the apply mask setting of the specified layer.
@@ -837,31 +837,31 @@ gimp_layer_set_lock_alpha (GimpLayer *layer,
  * Returns: The layer's apply mask setting.
  **/
 gboolean
-gimp_layer_get_apply_mask (GimpLayer *layer)
+ligma_layer_get_apply_mask (LigmaLayer *layer)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean apply_mask = FALSE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, layer,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_LAYER, layer,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-layer-get-apply-mask",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-layer-get-apply-mask",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    apply_mask = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    apply_mask = LIGMA_VALUES_GET_BOOLEAN (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return apply_mask;
 }
 
 /**
- * gimp_layer_set_apply_mask:
+ * ligma_layer_set_apply_mask:
  * @layer: The layer.
  * @apply_mask: The new layer's apply mask setting.
  *
@@ -875,32 +875,32 @@ gimp_layer_get_apply_mask (GimpLayer *layer)
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_layer_set_apply_mask (GimpLayer *layer,
+ligma_layer_set_apply_mask (LigmaLayer *layer,
                            gboolean   apply_mask)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, layer,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_LAYER, layer,
                                           G_TYPE_BOOLEAN, apply_mask,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-layer-set-apply-mask",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-layer-set-apply-mask",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_layer_get_show_mask:
+ * ligma_layer_get_show_mask:
  * @layer: The layer.
  *
  * Get the show mask setting of the specified layer.
@@ -913,31 +913,31 @@ gimp_layer_set_apply_mask (GimpLayer *layer,
  * Returns: The layer's show mask setting.
  **/
 gboolean
-gimp_layer_get_show_mask (GimpLayer *layer)
+ligma_layer_get_show_mask (LigmaLayer *layer)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean show_mask = FALSE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, layer,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_LAYER, layer,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-layer-get-show-mask",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-layer-get-show-mask",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    show_mask = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    show_mask = LIGMA_VALUES_GET_BOOLEAN (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return show_mask;
 }
 
 /**
- * gimp_layer_set_show_mask:
+ * ligma_layer_set_show_mask:
  * @layer: The layer.
  * @show_mask: The new layer's show mask setting.
  *
@@ -951,32 +951,32 @@ gimp_layer_get_show_mask (GimpLayer *layer)
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_layer_set_show_mask (GimpLayer *layer,
+ligma_layer_set_show_mask (LigmaLayer *layer,
                           gboolean   show_mask)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, layer,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_LAYER, layer,
                                           G_TYPE_BOOLEAN, show_mask,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-layer-set-show-mask",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-layer-set-show-mask",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_layer_get_edit_mask:
+ * ligma_layer_get_edit_mask:
  * @layer: The layer.
  *
  * Get the edit mask setting of the specified layer.
@@ -988,31 +988,31 @@ gimp_layer_set_show_mask (GimpLayer *layer,
  * Returns: The layer's edit mask setting.
  **/
 gboolean
-gimp_layer_get_edit_mask (GimpLayer *layer)
+ligma_layer_get_edit_mask (LigmaLayer *layer)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean edit_mask = FALSE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, layer,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_LAYER, layer,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-layer-get-edit-mask",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-layer-get-edit-mask",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    edit_mask = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    edit_mask = LIGMA_VALUES_GET_BOOLEAN (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return edit_mask;
 }
 
 /**
- * gimp_layer_set_edit_mask:
+ * ligma_layer_set_edit_mask:
  * @layer: The layer.
  * @edit_mask: The new layer's edit mask setting.
  *
@@ -1026,32 +1026,32 @@ gimp_layer_get_edit_mask (GimpLayer *layer)
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_layer_set_edit_mask (GimpLayer *layer,
+ligma_layer_set_edit_mask (LigmaLayer *layer,
                           gboolean   edit_mask)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, layer,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_LAYER, layer,
                                           G_TYPE_BOOLEAN, edit_mask,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-layer-set-edit-mask",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-layer-set-edit-mask",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_layer_get_opacity:
+ * ligma_layer_get_opacity:
  * @layer: The layer.
  *
  * Get the opacity of the specified layer.
@@ -1061,31 +1061,31 @@ gimp_layer_set_edit_mask (GimpLayer *layer,
  * Returns: The layer opacity.
  **/
 gdouble
-gimp_layer_get_opacity (GimpLayer *layer)
+ligma_layer_get_opacity (LigmaLayer *layer)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gdouble opacity = 0.0;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, layer,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_LAYER, layer,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-layer-get-opacity",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-layer-get-opacity",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    opacity = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    opacity = LIGMA_VALUES_GET_DOUBLE (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return opacity;
 }
 
 /**
- * gimp_layer_set_opacity:
+ * ligma_layer_set_opacity:
  * @layer: The layer.
  * @opacity: The new layer opacity.
  *
@@ -1096,32 +1096,32 @@ gimp_layer_get_opacity (GimpLayer *layer)
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_layer_set_opacity (GimpLayer *layer,
+ligma_layer_set_opacity (LigmaLayer *layer,
                         gdouble    opacity)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, layer,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_LAYER, layer,
                                           G_TYPE_DOUBLE, opacity,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-layer-set-opacity",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-layer-set-opacity",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_layer_get_mode:
+ * ligma_layer_get_mode:
  * @layer: The layer.
  *
  * Get the combination mode of the specified layer.
@@ -1130,32 +1130,32 @@ gimp_layer_set_opacity (GimpLayer *layer,
  *
  * Returns: The layer combination mode.
  **/
-GimpLayerMode
-gimp_layer_get_mode (GimpLayer *layer)
+LigmaLayerMode
+ligma_layer_get_mode (LigmaLayer *layer)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpLayerMode mode = 0;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaLayerMode mode = 0;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, layer,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_LAYER, layer,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-layer-get-mode",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-layer-get-mode",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    mode = GIMP_VALUES_GET_ENUM (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    mode = LIGMA_VALUES_GET_ENUM (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return mode;
 }
 
 /**
- * gimp_layer_set_mode:
+ * ligma_layer_set_mode:
  * @layer: The layer.
  * @mode: The new layer combination mode.
  *
@@ -1166,32 +1166,32 @@ gimp_layer_get_mode (GimpLayer *layer)
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_layer_set_mode (GimpLayer     *layer,
-                     GimpLayerMode  mode)
+ligma_layer_set_mode (LigmaLayer     *layer,
+                     LigmaLayerMode  mode)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, layer,
-                                          GIMP_TYPE_LAYER_MODE, mode,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_LAYER, layer,
+                                          LIGMA_TYPE_LAYER_MODE, mode,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-layer-set-mode",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-layer-set-mode",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_layer_get_blend_space:
+ * ligma_layer_get_blend_space:
  * @layer: The layer.
  *
  * Get the blend space of the specified layer.
@@ -1202,32 +1202,32 @@ gimp_layer_set_mode (GimpLayer     *layer,
  *
  * Since: 2.10
  **/
-GimpLayerColorSpace
-gimp_layer_get_blend_space (GimpLayer *layer)
+LigmaLayerColorSpace
+ligma_layer_get_blend_space (LigmaLayer *layer)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpLayerColorSpace blend_space = 0;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaLayerColorSpace blend_space = 0;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, layer,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_LAYER, layer,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-layer-get-blend-space",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-layer-get-blend-space",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    blend_space = GIMP_VALUES_GET_ENUM (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    blend_space = LIGMA_VALUES_GET_ENUM (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return blend_space;
 }
 
 /**
- * gimp_layer_set_blend_space:
+ * ligma_layer_set_blend_space:
  * @layer: The layer.
  * @blend_space: The new layer blend space.
  *
@@ -1240,32 +1240,32 @@ gimp_layer_get_blend_space (GimpLayer *layer)
  * Since: 2.10
  **/
 gboolean
-gimp_layer_set_blend_space (GimpLayer           *layer,
-                            GimpLayerColorSpace  blend_space)
+ligma_layer_set_blend_space (LigmaLayer           *layer,
+                            LigmaLayerColorSpace  blend_space)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, layer,
-                                          GIMP_TYPE_LAYER_COLOR_SPACE, blend_space,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_LAYER, layer,
+                                          LIGMA_TYPE_LAYER_COLOR_SPACE, blend_space,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-layer-set-blend-space",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-layer-set-blend-space",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_layer_get_composite_space:
+ * ligma_layer_get_composite_space:
  * @layer: The layer.
  *
  * Get the composite space of the specified layer.
@@ -1276,32 +1276,32 @@ gimp_layer_set_blend_space (GimpLayer           *layer,
  *
  * Since: 2.10
  **/
-GimpLayerColorSpace
-gimp_layer_get_composite_space (GimpLayer *layer)
+LigmaLayerColorSpace
+ligma_layer_get_composite_space (LigmaLayer *layer)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpLayerColorSpace composite_space = 0;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaLayerColorSpace composite_space = 0;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, layer,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_LAYER, layer,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-layer-get-composite-space",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-layer-get-composite-space",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    composite_space = GIMP_VALUES_GET_ENUM (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    composite_space = LIGMA_VALUES_GET_ENUM (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return composite_space;
 }
 
 /**
- * gimp_layer_set_composite_space:
+ * ligma_layer_set_composite_space:
  * @layer: The layer.
  * @composite_space: The new layer composite space.
  *
@@ -1314,32 +1314,32 @@ gimp_layer_get_composite_space (GimpLayer *layer)
  * Since: 2.10
  **/
 gboolean
-gimp_layer_set_composite_space (GimpLayer           *layer,
-                                GimpLayerColorSpace  composite_space)
+ligma_layer_set_composite_space (LigmaLayer           *layer,
+                                LigmaLayerColorSpace  composite_space)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, layer,
-                                          GIMP_TYPE_LAYER_COLOR_SPACE, composite_space,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_LAYER, layer,
+                                          LIGMA_TYPE_LAYER_COLOR_SPACE, composite_space,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-layer-set-composite-space",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-layer-set-composite-space",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_layer_get_composite_mode:
+ * ligma_layer_get_composite_mode:
  * @layer: The layer.
  *
  * Get the composite mode of the specified layer.
@@ -1350,32 +1350,32 @@ gimp_layer_set_composite_space (GimpLayer           *layer,
  *
  * Since: 2.10
  **/
-GimpLayerCompositeMode
-gimp_layer_get_composite_mode (GimpLayer *layer)
+LigmaLayerCompositeMode
+ligma_layer_get_composite_mode (LigmaLayer *layer)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpLayerCompositeMode composite_mode = 0;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaLayerCompositeMode composite_mode = 0;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, layer,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_LAYER, layer,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-layer-get-composite-mode",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-layer-get-composite-mode",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    composite_mode = GIMP_VALUES_GET_ENUM (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    composite_mode = LIGMA_VALUES_GET_ENUM (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return composite_mode;
 }
 
 /**
- * gimp_layer_set_composite_mode:
+ * ligma_layer_set_composite_mode:
  * @layer: The layer.
  * @composite_mode: The new layer composite mode.
  *
@@ -1388,26 +1388,26 @@ gimp_layer_get_composite_mode (GimpLayer *layer)
  * Since: 2.10
  **/
 gboolean
-gimp_layer_set_composite_mode (GimpLayer              *layer,
-                               GimpLayerCompositeMode  composite_mode)
+ligma_layer_set_composite_mode (LigmaLayer              *layer,
+                               LigmaLayerCompositeMode  composite_mode)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, layer,
-                                          GIMP_TYPE_LAYER_COMPOSITE_MODE, composite_mode,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_LAYER, layer,
+                                          LIGMA_TYPE_LAYER_COMPOSITE_MODE, composite_mode,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-layer-set-composite-mode",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-layer-set-composite-mode",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }

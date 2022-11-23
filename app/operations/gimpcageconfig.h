@@ -1,6 +1,6 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  *
- * gimpcageconfig.h
+ * ligmacageconfig.h
  * Copyright (C) 2010 Michael Muré <batolettre@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,92 +17,92 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CAGE_CONFIG_H__
-#define __GIMP_CAGE_CONFIG_H__
+#ifndef __LIGMA_CAGE_CONFIG_H__
+#define __LIGMA_CAGE_CONFIG_H__
 
 
-#include "gimpoperationsettings.h"
+#include "ligmaoperationsettings.h"
 
 
-struct _GimpCagePoint
+struct _LigmaCagePoint
 {
-  GimpVector2 src_point;
-  GimpVector2 dest_point;
-  GimpVector2 edge_normal;
+  LigmaVector2 src_point;
+  LigmaVector2 dest_point;
+  LigmaVector2 edge_normal;
   gdouble     edge_scaling_factor;
   gboolean    selected;
 };
 
 
-#define GIMP_TYPE_CAGE_CONFIG            (gimp_cage_config_get_type ())
-#define GIMP_CAGE_CONFIG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CAGE_CONFIG, GimpCageConfig))
-#define GIMP_CAGE_CONFIG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CAGE_CONFIG, GimpCageConfigClass))
-#define GIMP_IS_CAGE_CONFIG(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CAGE_CONFIG))
-#define GIMP_IS_CAGE_CONFIG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CAGE_CONFIG))
-#define GIMP_CAGE_CONFIG_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CAGE_CONFIG, GimpCageConfigClass))
+#define LIGMA_TYPE_CAGE_CONFIG            (ligma_cage_config_get_type ())
+#define LIGMA_CAGE_CONFIG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_CAGE_CONFIG, LigmaCageConfig))
+#define LIGMA_CAGE_CONFIG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_CAGE_CONFIG, LigmaCageConfigClass))
+#define LIGMA_IS_CAGE_CONFIG(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_CAGE_CONFIG))
+#define LIGMA_IS_CAGE_CONFIG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_CAGE_CONFIG))
+#define LIGMA_CAGE_CONFIG_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_CAGE_CONFIG, LigmaCageConfigClass))
 
 
-typedef struct _GimpCageConfigClass GimpCageConfigClass;
+typedef struct _LigmaCageConfigClass LigmaCageConfigClass;
 
-struct _GimpCageConfig
+struct _LigmaCageConfig
 {
-  GimpOperationSettings  parent_instance;
+  LigmaOperationSettings  parent_instance;
 
   GArray                *cage_points;
 
   gdouble                displacement_x;
   gdouble                displacement_y;
-  GimpCageMode           cage_mode;  /* Cage mode, used to commit displacement */
+  LigmaCageMode           cage_mode;  /* Cage mode, used to commit displacement */
 };
 
-struct _GimpCageConfigClass
+struct _LigmaCageConfigClass
 {
-  GimpOperationSettingsClass  parent_class;
+  LigmaOperationSettingsClass  parent_class;
 };
 
 
-GType           gimp_cage_config_get_type               (void) G_GNUC_CONST;
+GType           ligma_cage_config_get_type               (void) G_GNUC_CONST;
 
-guint           gimp_cage_config_get_n_points           (GimpCageConfig  *gcc);
-void            gimp_cage_config_add_cage_point         (GimpCageConfig  *gcc,
+guint           ligma_cage_config_get_n_points           (LigmaCageConfig  *gcc);
+void            ligma_cage_config_add_cage_point         (LigmaCageConfig  *gcc,
                                                          gdouble          x,
                                                          gdouble          y);
-void            gimp_cage_config_insert_cage_point      (GimpCageConfig  *gcc,
+void            ligma_cage_config_insert_cage_point      (LigmaCageConfig  *gcc,
                                                          gint             point_number,
                                                          gdouble          x,
                                                          gdouble          y);
-void            gimp_cage_config_remove_last_cage_point (GimpCageConfig  *gcc);
-void            gimp_cage_config_remove_cage_point      (GimpCageConfig  *gcc,
+void            ligma_cage_config_remove_last_cage_point (LigmaCageConfig  *gcc);
+void            ligma_cage_config_remove_cage_point      (LigmaCageConfig  *gcc,
                                                          gint             point_number);
-void            gimp_cage_config_remove_selected_points (GimpCageConfig  *gcc);
-GimpVector2     gimp_cage_config_get_point_coordinate   (GimpCageConfig  *gcc,
-                                                         GimpCageMode     mode,
+void            ligma_cage_config_remove_selected_points (LigmaCageConfig  *gcc);
+LigmaVector2     ligma_cage_config_get_point_coordinate   (LigmaCageConfig  *gcc,
+                                                         LigmaCageMode     mode,
                                                          gint             point_number);
-void            gimp_cage_config_add_displacement       (GimpCageConfig  *gcc,
-                                                         GimpCageMode     mode,
+void            ligma_cage_config_add_displacement       (LigmaCageConfig  *gcc,
+                                                         LigmaCageMode     mode,
                                                          gdouble          x,
                                                          gdouble          y);
-void            gimp_cage_config_commit_displacement    (GimpCageConfig  *gcc);
-void            gimp_cage_config_reset_displacement     (GimpCageConfig  *gcc);
-GeglRectangle   gimp_cage_config_get_bounding_box       (GimpCageConfig  *gcc);
-void            gimp_cage_config_reverse_cage_if_needed (GimpCageConfig  *gcc);
-void            gimp_cage_config_reverse_cage           (GimpCageConfig  *gcc);
-gboolean        gimp_cage_config_point_inside           (GimpCageConfig  *gcc,
+void            ligma_cage_config_commit_displacement    (LigmaCageConfig  *gcc);
+void            ligma_cage_config_reset_displacement     (LigmaCageConfig  *gcc);
+GeglRectangle   ligma_cage_config_get_bounding_box       (LigmaCageConfig  *gcc);
+void            ligma_cage_config_reverse_cage_if_needed (LigmaCageConfig  *gcc);
+void            ligma_cage_config_reverse_cage           (LigmaCageConfig  *gcc);
+gboolean        ligma_cage_config_point_inside           (LigmaCageConfig  *gcc,
                                                          gfloat           x,
                                                          gfloat           y);
-void            gimp_cage_config_select_point           (GimpCageConfig  *gcc,
+void            ligma_cage_config_select_point           (LigmaCageConfig  *gcc,
                                                          gint             point_number);
-void            gimp_cage_config_select_area            (GimpCageConfig  *gcc,
-                                                         GimpCageMode     mode,
+void            ligma_cage_config_select_area            (LigmaCageConfig  *gcc,
+                                                         LigmaCageMode     mode,
                                                          GeglRectangle    area);
-void            gimp_cage_config_select_add_area        (GimpCageConfig  *gcc,
-                                                         GimpCageMode     mode,
+void            ligma_cage_config_select_add_area        (LigmaCageConfig  *gcc,
+                                                         LigmaCageMode     mode,
                                                          GeglRectangle    area);
-void            gimp_cage_config_toggle_point_selection (GimpCageConfig  *gcc,
+void            ligma_cage_config_toggle_point_selection (LigmaCageConfig  *gcc,
                                                          gint             point_number);
-void            gimp_cage_config_deselect_points        (GimpCageConfig  *gcc);
-gboolean        gimp_cage_config_point_is_selected      (GimpCageConfig  *gcc,
+void            ligma_cage_config_deselect_points        (LigmaCageConfig  *gcc);
+gboolean        ligma_cage_config_point_is_selected      (LigmaCageConfig  *gcc,
                                                          gint             point_number);
 
 
-#endif /* __GIMP_CAGE_CONFIG_H__ */
+#endif /* __LIGMA_CAGE_CONFIG_H__ */

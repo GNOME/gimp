@@ -1,4 +1,4 @@
-# translation of gimp-tips.HEAD.po to
+# translation of ligma-tips.HEAD.po to
 # This file is distributed under the same license as the PACKAGE package.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
 #
@@ -8,8 +8,8 @@
 # Marko <mark0d0da@gmail.com>, 2007.
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-tips.HEAD\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma-tips.HEAD\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2008-09-05 07:31+0000\n"
 "PO-Revision-Date: 2007-10-27 17:54-0700\n"
 "Last-Translator: Marko <mark0d0da@gmail.com>\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 
-#: ../data/tips/gimp-tips.xml.in.h:1
+#: ../data/tips/ligma-tips.xml.in.h:1
 msgid ""
 "<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background "
 "color instead of the foreground color. Similarly, <tt>Ctrl</tt>-clicking "
@@ -31,7 +31,7 @@ msgstr ""
 "користите бојата на позадината наместо бојата на предниот план. Со пипетата "
 "кога избирате боја, избирате од позадината не од бојата на предниот план. "
 
-#: ../data/tips/gimp-tips.xml.in.h:2
+#: ../data/tips/ligma-tips.xml.in.h:2
 msgid ""
 "<tt>Ctrl</tt>-clicking on the layer mask's preview in the Layers dialog "
 "toggles the effect of the layer mask. <tt>Alt</tt>-clicking on the layer "
@@ -42,7 +42,7 @@ msgstr ""
 "прегледот на маската на слојот во дијалојот за слоеви го менува видикот "
 "директно на маската."
 
-#: ../data/tips/gimp-tips.xml.in.h:3
+#: ../data/tips/ligma-tips.xml.in.h:3
 msgid ""
 "<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
 "degree angles."
@@ -50,7 +50,7 @@ msgstr ""
 "<tt>Ctrl</tt>-повлечи со алатката за Ротација ќе ја задржи ротацијата на 15 "
 "аголни степени."
 
-#: ../data/tips/gimp-tips.xml.in.h:4
+#: ../data/tips/ligma-tips.xml.in.h:4
 msgid ""
 "<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers "
 "but that one. <tt>Shift</tt>-click again to show all layers."
@@ -59,7 +59,7 @@ msgstr ""
 "сите слоеви освен тој. <tt>Shift</tt>-кликни повторно за да се прикажат сите "
 "слоеви."
 
-#: ../data/tips/gimp-tips.xml.in.h:5
+#: ../data/tips/ligma-tips.xml.in.h:5
 msgid ""
 "A floating selection must be anchored to a new layer or to the last active "
 "layer before doing other operations on the image. Click on the &quot;New "
@@ -71,13 +71,13 @@ msgstr ""
 "Нов слој&quot; или на копчето &quot;Всидри слој&quot; во дијалогот за "
 "слоеви, или користете ги менијата за да го направите истото."
 
-#: ../data/tips/gimp-tips.xml.in.h:6
+#: ../data/tips/ligma-tips.xml.in.h:6
 msgid ""
 "After you enabled &quot;Dynamic Keyboard Shortcuts&quot; in the Preferences "
 "dialog, you can reassign shortcut keys. Do so by bringing up the menu, "
 "selecting a menu item, and pressing the desired key combination. If &quot;"
 "Save Keyboard Shortcuts&quot; is enabled, the key bindings are saved when "
-"you exit GIMP. You should probably disable &quot;Dynamic Keyboard "
+"you exit LIGMA. You should probably disable &quot;Dynamic Keyboard "
 "Shortcuts&quot; afterwards, to prevent accidentally assigning/reassigning "
 "shortcuts."
 msgstr ""
@@ -88,7 +88,7 @@ msgstr ""
 "&quot;Зачувај ги кратенките на тастатурата&quout;, поврзувањето на копчињата "
 "се зачувани кога ќе го напуштите ГИМП-от."
 
-#: ../data/tips/gimp-tips.xml.in.h:7
+#: ../data/tips/ligma-tips.xml.in.h:7
 msgid ""
 "Click and drag on a ruler to place a guide on an image. All dragged "
 "selections will snap to the guides. You can remove guides by dragging them "
@@ -98,9 +98,9 @@ msgstr ""
 "повлечени селекции ќе се држат во водичите. Можете да ги отстраните водичите "
 "повлекувајќи ги надвор од сликата со алатката Премести."
 
-#: ../data/tips/gimp-tips.xml.in.h:8
+#: ../data/tips/ligma-tips.xml.in.h:8
 msgid ""
-"GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>."
+"LIGMA supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>."
 "bz2</tt>, if you have bzip2 installed) to the filename and your image will "
 "be saved compressed. Of course loading compressed images works too."
 msgstr ""
@@ -109,9 +109,9 @@ msgstr ""
 "слика ќе биде зачувана компресирана. Се разбира дека работи и вчитување на "
 "компресирани слики."
 
-#: ../data/tips/gimp-tips.xml.in.h:9
+#: ../data/tips/ligma-tips.xml.in.h:9
 msgid ""
-"GIMP uses layers to let you organize your image. Think of them as a stack of "
+"LIGMA uses layers to let you organize your image. Think of them as a stack of "
 "slides or filters, such that looking through them you see a composite of "
 "their contents."
 msgstr ""
@@ -119,7 +119,7 @@ msgstr ""
 "нив како за пластови на слајдови или филтери, такви кои кога гледате низ нив "
 "ја гледате мешавината на нивниот состав."
 
-#: ../data/tips/gimp-tips.xml.in.h:10
+#: ../data/tips/ligma-tips.xml.in.h:10
 msgid ""
 "If a layer's name in the Layers dialog is displayed in <b>bold</b>, this "
 "layer doesn't have an alpha-channel. You can add an alpha-channel using "
@@ -129,7 +129,7 @@ msgstr ""
 "букви, тој слој нема алфа-канал. Можете да додадете алфа-канал со користење "
 "на Слој→Провидност→Додај алфа канал."
 
-#: ../data/tips/gimp-tips.xml.in.h:11
+#: ../data/tips/ligma-tips.xml.in.h:11
 msgid ""
 "If some of your scanned photos do not look colorful enough, you can easily "
 "improve their tonal range with the &quot;Auto&quot; button in the Levels "
@@ -141,7 +141,7 @@ msgstr ""
 "алатката Слоеви (Слој-&gt;Бои-&gt;Слоеви). Ако има било какво претопување на "
 "некои бои, можете да ги поправите со алатката Криви (Слој-&gt;Бои-&gt;Криви)."
 
-#: ../data/tips/gimp-tips.xml.in.h:12
+#: ../data/tips/ligma-tips.xml.in.h:12
 msgid ""
 "If you stroke a path (Edit→Stroke Path), the paint tools can be used with "
 "their current settings. You can use the Paintbrush in gradient mode or even "
@@ -152,7 +152,7 @@ msgstr ""
 "Четката за цртање во режим на нијансирање или дури и Бришачот или алатката "
 "за флеки."
 
-#: ../data/tips/gimp-tips.xml.in.h:13
+#: ../data/tips/ligma-tips.xml.in.h:13
 msgid ""
 "If your screen is too cluttered, you can press <tt>Tab</tt> in an image "
 "window to toggle the visibility of the toolbox and other dialogs."
@@ -161,7 +161,7 @@ msgstr ""
 "во прозорецот на сликата служи да ги скрие/прикаже алатниците или другите "
 "дијалози."
 
-#: ../data/tips/gimp-tips.xml.in.h:14
+#: ../data/tips/ligma-tips.xml.in.h:14
 msgid ""
 "Most plug-ins work on the current layer of the current image. In some cases, "
 "you will have to merge all layers (Image→Flatten Image) if you want the plug-"
@@ -171,7 +171,7 @@ msgstr ""
 "случаи, ќе морате да ги слепите сите слоеви(Слика-&gt;Израмни слика) ако "
 "сакате додатокот да работи на целата слика."
 
-#: ../data/tips/gimp-tips.xml.in.h:15
+#: ../data/tips/ligma-tips.xml.in.h:15
 msgid ""
 "Not all effects can be applied to all kinds of images. This is indicated by "
 "a grayed-out menu-entry. You may need to change the image mode to RGB "
@@ -183,7 +183,7 @@ msgstr ""
 "во RGB (Слика-&gt;Режим-&gt;RGB), да додадете алфа-канал (Слој-&gt;Додај "
 "Алфа канал) или да ја израмните (Слика-&gt;Израмни слика)."
 
-#: ../data/tips/gimp-tips.xml.in.h:16
+#: ../data/tips/ligma-tips.xml.in.h:16
 msgid ""
 "Pressing and holding the <tt>Shift</tt> key before making a selection allows "
 "you to add to the current selection instead of replacing it. Using <tt>Ctrl</"
@@ -194,9 +194,9 @@ msgstr ""
 "замените. Со користење на <tt>Ctrl</tt> пред да направите селекција, одзема "
 "од тековната селекција."
 
-#: ../data/tips/gimp-tips.xml.in.h:17
+#: ../data/tips/ligma-tips.xml.in.h:17
 msgid ""
-"When you save an image to work on it again later, try using XCF, GIMP's "
+"When you save an image to work on it again later, try using XCF, LIGMA's "
 "native file format (use the file extension <tt>.xcf</tt>). This preserves "
 "the layers and every aspect of your work-in-progress. Once a project is "
 "completed, you can save it as JPEG, PNG, GIF, ..."
@@ -206,7 +206,7 @@ msgstr ""
 "xcf</tt>. Ова ги зачувува слоевите и секој аспект од вашата работа. Кога "
 "проектот е завршен, можете да го снимите како JPEG, PNG, GIF, ..."
 
-#: ../data/tips/gimp-tips.xml.in.h:18
+#: ../data/tips/ligma-tips.xml.in.h:18
 msgid ""
 "You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes "
 "the window move, your window manager uses the <tt>Alt</tt> key already. Most "
@@ -219,7 +219,7 @@ msgstr ""
 "прозорци можат да се конфигурираат да ја игнорираат <tt>Alt</tt> "
 "комбинацијата или да ја користат <tt>Super</tt> key (or \"Windows лого\")."
 
-#: ../data/tips/gimp-tips.xml.in.h:19
+#: ../data/tips/ligma-tips.xml.in.h:19
 msgid ""
 "You can create and edit complex selections using the Path tool. The Paths "
 "dialog allows you to work on multiple paths and to convert them to "
@@ -229,7 +229,7 @@ msgstr ""
 "Патека. Дијалогот за патеки ви овозможува да работите на повеќе патеки и да "
 "ги префрлате во селекциите."
 
-#: ../data/tips/gimp-tips.xml.in.h:20
+#: ../data/tips/ligma-tips.xml.in.h:20
 msgid ""
 "You can drag a layer from the Layers dialog and drop it onto the toolbox. "
 "This will create a new image containing only that layer."
@@ -237,9 +237,9 @@ msgstr ""
 "Можете да го повлечете слојот од дијалогот Слоеви и да го испуштите во "
 "алатникот. Ова ќе создаде нова слика која ќе го содржи само тој слој."
 
-#: ../data/tips/gimp-tips.xml.in.h:21
+#: ../data/tips/ligma-tips.xml.in.h:21
 msgid ""
-"You can drag and drop many things in GIMP. For example, dragging a color "
+"You can drag and drop many things in LIGMA. For example, dragging a color "
 "from the toolbox or from a color palette and dropping it into an image will "
 "fill the current selection with that color."
 msgstr ""
@@ -247,7 +247,7 @@ msgstr ""
 "боја од алатникот или од палетата на бои и со испуштање врз сликата, ќе ја "
 "исполни активната слика или селекција со избраната боја."
 
-#: ../data/tips/gimp-tips.xml.in.h:22
+#: ../data/tips/ligma-tips.xml.in.h:22
 msgid ""
 "You can draw simple squares or circles using Edit→Stroke Selection. It "
 "strokes the edge of your current selection. More complex shapes can be drawn "
@@ -258,16 +258,16 @@ msgstr ""
 "комплексни форми можат да се цртат со користење на алатката Патека или со "
 "Филтри-&gt;Исцртај-&gt;Gfig."
 
-#: ../data/tips/gimp-tips.xml.in.h:23
+#: ../data/tips/ligma-tips.xml.in.h:23
 msgid ""
-"You can get context-sensitive help for most of GIMP's features by pressing "
+"You can get context-sensitive help for most of LIGMA's features by pressing "
 "the F1 key at any time. This also works inside the menus."
 msgstr ""
 "Можете да добиете помош при тековна работа за поевеќето елементи на ГИМП со "
 "притискање на F1 копчето во било кое време. Ова исто така работи и внатре во "
 "менијата."
 
-#: ../data/tips/gimp-tips.xml.in.h:24
+#: ../data/tips/ligma-tips.xml.in.h:24
 msgid ""
 "You can perform many layer operations by right-clicking on the text label of "
 "a layer in the Layers dialog."
@@ -275,7 +275,7 @@ msgstr ""
 "Можете да извршите многу операции врз слоевите со десен клик на текстот на "
 "слојот во дијалогот Слоеви."
 
-#: ../data/tips/gimp-tips.xml.in.h:25
+#: ../data/tips/ligma-tips.xml.in.h:25
 msgid ""
 "You can save a selection to a channel (Select→Save to Channel) and then "
 "modify this channel with any paint tools. Using the buttons in the Channels "
@@ -287,7 +287,7 @@ msgstr ""
 "на копчињата во дијалогот Канали, можете да ја префрлате видливоста на овој "
 "нов канал или да го претворите во селекција."
 
-#: ../data/tips/gimp-tips.xml.in.h:26
+#: ../data/tips/ligma-tips.xml.in.h:26
 msgid ""
 "You can use <tt>Ctrl</tt>-<tt>Tab</tt> to cycle through all layers in an "
 "image (if your window manager doesn't trap those keys...)."
@@ -296,7 +296,7 @@ msgstr ""
 "во сликата (ако вашиот управувач, веќе не ги резервирал со прозорци тие "
 "копчиња...)."
 
-#: ../data/tips/gimp-tips.xml.in.h:27
+#: ../data/tips/ligma-tips.xml.in.h:27
 msgid ""
 "You can use the middle mouse button to pan around the image (or optionally "
 "hold <tt>Spacebar</tt> while you move the mouse)."
@@ -305,7 +305,7 @@ msgstr ""
 "сликата (или по можност држете притиснато <tt>Space</tt> додека го движите "
 "глушецот)"
 
-#: ../data/tips/gimp-tips.xml.in.h:28
+#: ../data/tips/ligma-tips.xml.in.h:28
 msgid ""
 "You can use the paint tools to change the selection. Click on the &quot;"
 "Quick Mask&quot; button at the bottom left of an image window. Change your "
@@ -322,7 +322,7 @@ msgstr ""
 #~ "<big>Добродојдовте во ГНУ програмата за манипулација со слики!</big>"
 
 #~ msgid ""
-#~ "GIMP allows you to undo most changes to the image, so feel free to "
+#~ "LIGMA allows you to undo most changes to the image, so feel free to "
 #~ "experiment."
 #~ msgstr ""
 #~ "ГИМП ви овозможува да ги вратите назад повеќето промени на сликата, па "

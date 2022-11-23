@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpshortcutbutton.c
+ * ligmashortcutbutton.c
  * Copyright (C) 2022 Jehan
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,14 +23,14 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "gimpshortcutbutton.h"
+#include "ligmashortcutbutton.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -44,7 +44,7 @@ enum
   PROP_ACCELERATOR
 };
 
-struct _GimpShortcutButtonPrivate
+struct _LigmaShortcutButtonPrivate
 {
   guint            keyval;
   GdkModifierType  modifiers;
@@ -60,60 +60,60 @@ struct _GimpShortcutButtonPrivate
 };
 
 
-static void     gimp_shortcut_button_constructed         (GObject            *object);
-static void     gimp_shortcut_button_finalize            (GObject            *object);
-static void     gimp_shortcut_button_set_property        (GObject            *object,
+static void     ligma_shortcut_button_constructed         (GObject            *object);
+static void     ligma_shortcut_button_finalize            (GObject            *object);
+static void     ligma_shortcut_button_set_property        (GObject            *object,
                                                           guint               property_id,
                                                           const GValue       *value,
                                                           GParamSpec         *pspec);
-static void     gimp_shortcut_button_get_property        (GObject            *object,
+static void     ligma_shortcut_button_get_property        (GObject            *object,
                                                           guint               property_id,
                                                           GValue             *value,
                                                           GParamSpec         *pspec);
 
-static gboolean gimp_shortcut_button_key_press_event     (GtkWidget          *button,
+static gboolean ligma_shortcut_button_key_press_event     (GtkWidget          *button,
                                                           GdkEventKey        *event,
                                                           gpointer            user_data);
-static gboolean gimp_shortcut_button_focus_out_event     (GimpShortcutButton *button,
+static gboolean ligma_shortcut_button_focus_out_event     (LigmaShortcutButton *button,
                                                           GdkEventFocus       event,
                                                           gpointer            user_data);
-static void     gimp_shortcut_button_toggled             (GimpShortcutButton *button,
+static void     ligma_shortcut_button_toggled             (LigmaShortcutButton *button,
                                                           gpointer            user_data);
 
-static void     gimp_shortcut_button_update_label        (GimpShortcutButton *button);
+static void     ligma_shortcut_button_update_label        (LigmaShortcutButton *button);
 
-static gboolean gimp_shortcut_button_timeout             (GimpShortcutButton *button);
+static gboolean ligma_shortcut_button_timeout             (LigmaShortcutButton *button);
 
-static void     gimp_shortcut_button_keyval_to_modifiers (guint               keyval,
+static void     ligma_shortcut_button_keyval_to_modifiers (guint               keyval,
                                                           GdkModifierType    *modifiers);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpShortcutButton, gimp_shortcut_button, GTK_TYPE_TOGGLE_BUTTON)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaShortcutButton, ligma_shortcut_button, GTK_TYPE_TOGGLE_BUTTON)
 
-#define parent_class gimp_shortcut_button_parent_class
+#define parent_class ligma_shortcut_button_parent_class
 
 static guint signals[LAST_SIGNAL] = { 0 };
 
 static void
-gimp_shortcut_button_class_init (GimpShortcutButtonClass *klass)
+ligma_shortcut_button_class_init (LigmaShortcutButtonClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->constructed  = gimp_shortcut_button_constructed;
-  object_class->finalize     = gimp_shortcut_button_finalize;
-  object_class->get_property = gimp_shortcut_button_get_property;
-  object_class->set_property = gimp_shortcut_button_set_property;
+  object_class->constructed  = ligma_shortcut_button_constructed;
+  object_class->finalize     = ligma_shortcut_button_finalize;
+  object_class->get_property = ligma_shortcut_button_get_property;
+  object_class->set_property = ligma_shortcut_button_set_property;
 
   g_object_class_install_property (object_class, PROP_ACCELERATOR,
                                    g_param_spec_string ("accelerator",
                                                         NULL, NULL, NULL,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_EXPLICIT_NOTIFY));
 
   signals[ACCELERATOR_CHANGED] = g_signal_new ("accelerator-changed",
                                                G_TYPE_FROM_CLASS (klass),
                                                G_SIGNAL_RUN_FIRST,
-                                               G_STRUCT_OFFSET (GimpShortcutButtonClass, accelerator_changed),
+                                               G_STRUCT_OFFSET (LigmaShortcutButtonClass, accelerator_changed),
                                                NULL, NULL, NULL,
                                                G_TYPE_NONE, 1,
                                                G_TYPE_STRING);
@@ -122,11 +122,11 @@ gimp_shortcut_button_class_init (GimpShortcutButtonClass *klass)
 }
 
 static void
-gimp_shortcut_button_init (GimpShortcutButton *button)
+ligma_shortcut_button_init (LigmaShortcutButton *button)
 {
   GtkWidget *label;
 
-  button->priv = gimp_shortcut_button_get_instance_private (button);
+  button->priv = ligma_shortcut_button_get_instance_private (button);
 
   button->priv->timer = 0;
 
@@ -146,27 +146,27 @@ gimp_shortcut_button_init (GimpShortcutButton *button)
 }
 
 static void
-gimp_shortcut_button_constructed (GObject *object)
+ligma_shortcut_button_constructed (GObject *object)
 {
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_signal_connect (object, "key-press-event",
-                    G_CALLBACK (gimp_shortcut_button_key_press_event),
+                    G_CALLBACK (ligma_shortcut_button_key_press_event),
                     NULL);
   g_signal_connect (object, "focus-out-event",
-                    G_CALLBACK (gimp_shortcut_button_focus_out_event),
+                    G_CALLBACK (ligma_shortcut_button_focus_out_event),
                     NULL);
   g_signal_connect (object, "toggled",
-                    G_CALLBACK (gimp_shortcut_button_toggled),
+                    G_CALLBACK (ligma_shortcut_button_toggled),
                     NULL);
 
-  gimp_shortcut_button_toggled (GIMP_SHORTCUT_BUTTON (object), NULL);
+  ligma_shortcut_button_toggled (LIGMA_SHORTCUT_BUTTON (object), NULL);
 }
 
 static void
-gimp_shortcut_button_finalize (GObject *object)
+ligma_shortcut_button_finalize (GObject *object)
 {
-  GimpShortcutButton *button = GIMP_SHORTCUT_BUTTON (object);
+  LigmaShortcutButton *button = LIGMA_SHORTCUT_BUTTON (object);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 
@@ -178,17 +178,17 @@ gimp_shortcut_button_finalize (GObject *object)
 }
 
 static void
-gimp_shortcut_button_set_property (GObject      *object,
+ligma_shortcut_button_set_property (GObject      *object,
                                    guint         property_id,
                                    const GValue *value,
                                    GParamSpec   *pspec)
 {
-  GimpShortcutButton *button = GIMP_SHORTCUT_BUTTON (object);
+  LigmaShortcutButton *button = LIGMA_SHORTCUT_BUTTON (object);
 
   switch (property_id)
     {
     case PROP_ACCELERATOR:
-      gimp_shortcut_button_set_accelerator (button, g_value_get_string (value), 0, 0);
+      ligma_shortcut_button_set_accelerator (button, g_value_get_string (value), 0, 0);
       break;
 
    default:
@@ -198,12 +198,12 @@ gimp_shortcut_button_set_property (GObject      *object,
 }
 
 static void
-gimp_shortcut_button_get_property (GObject    *object,
+ligma_shortcut_button_get_property (GObject    *object,
                                    guint       property_id,
                                    GValue     *value,
                                    GParamSpec *pspec)
 {
-  GimpShortcutButton *button = GIMP_SHORTCUT_BUTTON (object);
+  LigmaShortcutButton *button = LIGMA_SHORTCUT_BUTTON (object);
 
   switch (property_id)
     {
@@ -225,11 +225,11 @@ gimp_shortcut_button_get_property (GObject    *object,
 /*  public functions  */
 
 GtkWidget *
-gimp_shortcut_button_new (const gchar *accelerator)
+ligma_shortcut_button_new (const gchar *accelerator)
 {
-  GimpShortcutButton *button;
+  LigmaShortcutButton *button;
 
-  button = g_object_new (GIMP_TYPE_SHORTCUT_BUTTON,
+  button = g_object_new (LIGMA_TYPE_SHORTCUT_BUTTON,
                          "accelerator", accelerator,
                          NULL);
 
@@ -237,19 +237,19 @@ gimp_shortcut_button_new (const gchar *accelerator)
 }
 
 gchar *
-gimp_shortcut_button_get_accelerator (GimpShortcutButton *button)
+ligma_shortcut_button_get_accelerator (LigmaShortcutButton *button)
 {
-  g_return_val_if_fail (GIMP_IS_SHORTCUT_BUTTON (button), NULL);
+  g_return_val_if_fail (LIGMA_IS_SHORTCUT_BUTTON (button), NULL);
 
   return gtk_accelerator_name (button->priv->keyval, button->priv->modifiers);
 }
 
 void
-gimp_shortcut_button_get_keys (GimpShortcutButton  *button,
+ligma_shortcut_button_get_keys (LigmaShortcutButton  *button,
                                guint               *keyval,
                                GdkModifierType     *modifiers)
 {
-  g_return_if_fail (GIMP_IS_SHORTCUT_BUTTON (button));
+  g_return_if_fail (LIGMA_IS_SHORTCUT_BUTTON (button));
 
   if (keyval)
     *keyval = button->priv->keyval;
@@ -258,12 +258,12 @@ gimp_shortcut_button_get_keys (GimpShortcutButton  *button,
 }
 
 void
-gimp_shortcut_button_set_accelerator (GimpShortcutButton *button,
+ligma_shortcut_button_set_accelerator (LigmaShortcutButton *button,
                                       const gchar        *accelerator,
                                       guint               keyval,
                                       GdkModifierType     modifiers)
 {
-  g_return_if_fail (GIMP_IS_SHORTCUT_BUTTON (button));
+  g_return_if_fail (LIGMA_IS_SHORTCUT_BUTTON (button));
 
   if (accelerator)
     gtk_accelerator_parse (accelerator, &keyval, &modifiers);
@@ -272,7 +272,7 @@ gimp_shortcut_button_set_accelerator (GimpShortcutButton *button,
     {
       if (button->priv->single_modifier)
         modifiers = 0;
-      gimp_shortcut_button_keyval_to_modifiers (keyval, &modifiers);
+      ligma_shortcut_button_keyval_to_modifiers (keyval, &modifiers);
       keyval = 0;
     }
 
@@ -300,12 +300,12 @@ gimp_shortcut_button_set_accelerator (GimpShortcutButton *button,
       g_free (previous_accel);
 
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), keyval != 0 || modifiers == 0);
-      gimp_shortcut_button_toggled (GIMP_SHORTCUT_BUTTON (button), NULL);
+      ligma_shortcut_button_toggled (LIGMA_SHORTCUT_BUTTON (button), NULL);
     }
 }
 
 /**
- * gimp_shortcut_button_accepts_modifier:
+ * ligma_shortcut_button_accepts_modifier:
  * @accepted: are shortcuts with only modifiers accepted?
  * @unique:   if @only and @unique are both %TRUE, then the button will
  *            grab a single modifier
@@ -320,26 +320,26 @@ gimp_shortcut_button_set_accelerator (GimpShortcutButton *button,
  * combination.
  */
 void
-gimp_shortcut_button_accepts_modifier (GimpShortcutButton *button,
+ligma_shortcut_button_accepts_modifier (LigmaShortcutButton *button,
                                        gboolean            accepted,
                                        gboolean            unique)
 {
-  g_return_if_fail (GIMP_IS_SHORTCUT_BUTTON (button));
+  g_return_if_fail (LIGMA_IS_SHORTCUT_BUTTON (button));
 
   button->priv->modifier_only_accepted = accepted;
   button->priv->single_modifier        = unique;
 
-  gimp_shortcut_button_update_label (button);
+  ligma_shortcut_button_update_label (button);
 }
 
 /* Private functions. */
 
 static gboolean
-gimp_shortcut_button_key_press_event (GtkWidget   *widget,
+ligma_shortcut_button_key_press_event (GtkWidget   *widget,
                                       GdkEventKey *event,
                                       gpointer     user_data)
 {
-  GimpShortcutButton *button = GIMP_SHORTCUT_BUTTON (widget);
+  LigmaShortcutButton *button = LIGMA_SHORTCUT_BUTTON (widget);
 
   if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button)))
     {
@@ -354,7 +354,7 @@ gimp_shortcut_button_key_press_event (GtkWidget   *widget,
             {
               if (event->is_modifier)
                 {
-                  gimp_shortcut_button_set_accelerator (button, NULL, event->keyval, 0);
+                  ligma_shortcut_button_set_accelerator (button, NULL, event->keyval, 0);
                   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), FALSE);
                 }
             }
@@ -365,14 +365,14 @@ gimp_shortcut_button_key_press_event (GtkWidget   *widget,
               if ((event->is_modifier || accel_mods != 0) && button->priv->timer == 0)
                 {
                   button->priv->timer = g_timeout_add (250,
-                                                       (GSourceFunc) gimp_shortcut_button_timeout,
+                                                       (GSourceFunc) ligma_shortcut_button_timeout,
                                                        button);
                 }
             }
         }
       else if (! event->is_modifier)
         {
-          gimp_shortcut_button_set_accelerator (button, NULL, event->keyval, event->state);
+          ligma_shortcut_button_set_accelerator (button, NULL, event->keyval, event->state);
           gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), FALSE);
         }
       return TRUE;
@@ -381,7 +381,7 @@ gimp_shortcut_button_key_press_event (GtkWidget   *widget,
 }
 
 static gboolean
-gimp_shortcut_button_focus_out_event (GimpShortcutButton* button,
+ligma_shortcut_button_focus_out_event (LigmaShortcutButton* button,
                                       GdkEventFocus       event,
                                       gpointer            user_data)
 {
@@ -402,10 +402,10 @@ gimp_shortcut_button_focus_out_event (GimpShortcutButton* button,
 }
 
 static void
-gimp_shortcut_button_toggled (GimpShortcutButton* button,
+ligma_shortcut_button_toggled (LigmaShortcutButton* button,
                               gpointer            user_data)
 {
-  gimp_shortcut_button_update_label (button);
+  ligma_shortcut_button_update_label (button);
 
   if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button)) ||
       (button->priv->keyval == 0 && button->priv->modifiers == 0))
@@ -415,12 +415,12 @@ gimp_shortcut_button_toggled (GimpShortcutButton* button,
 }
 
 static void
-gimp_shortcut_button_update_label (GimpShortcutButton *button)
+ligma_shortcut_button_update_label (LigmaShortcutButton *button)
 {
   GtkWidget *label;
   gchar     *markup;
 
-  g_return_if_fail (GIMP_IS_SHORTCUT_BUTTON (button));
+  g_return_if_fail (LIGMA_IS_SHORTCUT_BUTTON (button));
 
   label = gtk_stack_get_child_by_name (GTK_STACK (button->priv->stack),
                                        "label");
@@ -444,9 +444,9 @@ gimp_shortcut_button_update_label (GimpShortcutButton *button)
 }
 
 static gboolean
-gimp_shortcut_button_timeout (GimpShortcutButton *button)
+ligma_shortcut_button_timeout (LigmaShortcutButton *button)
 {
-  gimp_shortcut_button_set_accelerator (button, NULL,
+  ligma_shortcut_button_set_accelerator (button, NULL,
                                         button->priv->last_keyval,
                                         button->priv->last_modifiers);
 
@@ -458,7 +458,7 @@ gimp_shortcut_button_timeout (GimpShortcutButton *button)
 }
 
 static void
-gimp_shortcut_button_keyval_to_modifiers (guint            keyval,
+ligma_shortcut_button_keyval_to_modifiers (guint            keyval,
                                           GdkModifierType *modifiers)
 {
   /* XXX I believe that more keysyms are considered modifiers, but let's

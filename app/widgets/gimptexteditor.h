@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpTextEditor
- * Copyright (C) 2002-2003  Sven Neumann <sven@gimp.org>
+ * LigmaTextEditor
+ * Copyright (C) 2002-2003  Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,62 +18,62 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TEXT_EDITOR_H__
-#define __GIMP_TEXT_EDITOR_H__
+#ifndef __LIGMA_TEXT_EDITOR_H__
+#define __LIGMA_TEXT_EDITOR_H__
 
 
-#define GIMP_TYPE_TEXT_EDITOR    (gimp_text_editor_get_type ())
-#define GIMP_TEXT_EDITOR(obj)    (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TEXT_EDITOR, GimpTextEditor))
-#define GIMP_IS_TEXT_EDITOR(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_TEXT_EDITOR))
+#define LIGMA_TYPE_TEXT_EDITOR    (ligma_text_editor_get_type ())
+#define LIGMA_TEXT_EDITOR(obj)    (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_TEXT_EDITOR, LigmaTextEditor))
+#define LIGMA_IS_TEXT_EDITOR(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_TEXT_EDITOR))
 
 
-typedef struct _GimpTextEditorClass  GimpTextEditorClass;
+typedef struct _LigmaTextEditorClass  LigmaTextEditorClass;
 
-struct _GimpTextEditor
+struct _LigmaTextEditor
 {
-  GimpDialog         parent_instance;
+  LigmaDialog         parent_instance;
 
   /*<  private  >*/
-  GimpTextDirection  base_dir;
+  LigmaTextDirection  base_dir;
   gchar             *font_name;
 
   GtkWidget         *view;
   GtkWidget         *font_toggle;
   GtkWidget         *file_dialog;
-  GimpUIManager     *ui_manager;
+  LigmaUIManager     *ui_manager;
 };
 
-struct _GimpTextEditorClass
+struct _LigmaTextEditorClass
 {
-  GimpDialogClass   parent_class;
+  LigmaDialogClass   parent_class;
 
-  void (* text_changed) (GimpTextEditor *editor);
-  void (* dir_changed)  (GimpTextEditor *editor);
+  void (* text_changed) (LigmaTextEditor *editor);
+  void (* dir_changed)  (LigmaTextEditor *editor);
 };
 
 
-GType               gimp_text_editor_get_type      (void) G_GNUC_CONST;
-GtkWidget         * gimp_text_editor_new           (const gchar       *title,
+GType               ligma_text_editor_get_type      (void) G_GNUC_CONST;
+GtkWidget         * ligma_text_editor_new           (const gchar       *title,
                                                     GtkWindow         *parent,
-                                                    Gimp              *gimp,
-                                                    GimpMenuFactory   *menu_factory,
-                                                    GimpText          *text,
-                                                    GimpTextBuffer    *text_buffer,
+                                                    Ligma              *ligma,
+                                                    LigmaMenuFactory   *menu_factory,
+                                                    LigmaText          *text,
+                                                    LigmaTextBuffer    *text_buffer,
                                                     gdouble            xres,
                                                     gdouble            yres);
 
-void                gimp_text_editor_set_text      (GimpTextEditor    *editor,
+void                ligma_text_editor_set_text      (LigmaTextEditor    *editor,
                                                     const gchar       *text,
                                                     gint               len);
-gchar             * gimp_text_editor_get_text      (GimpTextEditor    *editor);
+gchar             * ligma_text_editor_get_text      (LigmaTextEditor    *editor);
 
-void                gimp_text_editor_set_direction (GimpTextEditor    *editor,
-                                                    GimpTextDirection  base_dir);
-GimpTextDirection   gimp_text_editor_get_direction (GimpTextEditor    *editor);
+void                ligma_text_editor_set_direction (LigmaTextEditor    *editor,
+                                                    LigmaTextDirection  base_dir);
+LigmaTextDirection   ligma_text_editor_get_direction (LigmaTextEditor    *editor);
 
-void                gimp_text_editor_set_font_name (GimpTextEditor    *editor,
+void                ligma_text_editor_set_font_name (LigmaTextEditor    *editor,
                                                     const gchar       *font_name);
-const gchar       * gimp_text_editor_get_font_name (GimpTextEditor    *editor);
+const gchar       * ligma_text_editor_get_font_name (LigmaTextEditor    *editor);
 
 
-#endif  /* __GIMP_TEXT_EDITOR_H__ */
+#endif  /* __LIGMA_TEXT_EDITOR_H__ */

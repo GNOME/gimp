@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * file-save.h
@@ -21,12 +21,12 @@
 #define __FILE_SAVE_H__
 
 
-GimpPDBStatusType   file_save (Gimp                 *gimp,
-                               GimpImage            *image,
-                               GimpProgress         *progress,
+LigmaPDBStatusType   file_save (Ligma                 *ligma,
+                               LigmaImage            *image,
+                               LigmaProgress         *progress,
                                GFile                *file,
-                               GimpPlugInProcedure  *file_proc,
-                               GimpRunMode           run_mode,
+                               LigmaPlugInProcedure  *file_proc,
+                               LigmaRunMode           run_mode,
                                gboolean              change_saved_state,
                                gboolean              export_backward,
                                gboolean              export_forward,

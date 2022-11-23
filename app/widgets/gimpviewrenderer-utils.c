@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpviewrenderer-utils.c
- * Copyright (C) 2003 Michael Natterer <mitch@gimp.org>
+ * ligmaviewrenderer-utils.c
+ * Copyright (C) 2003 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,73 +25,73 @@
 
 #include "widgets-types.h"
 
-#include "core/gimpbrush.h"
-#include "core/gimpbuffer.h"
-#include "core/gimpgradient.h"
-#include "core/gimpimage.h"
-#include "core/gimpimagefile.h"
+#include "core/ligmabrush.h"
+#include "core/ligmabuffer.h"
+#include "core/ligmagradient.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaimagefile.h"
 
-#include "core/gimpimageproxy.h"
-#include "core/gimplayer.h"
-#include "core/gimppalette.h"
+#include "core/ligmaimageproxy.h"
+#include "core/ligmalayer.h"
+#include "core/ligmapalette.h"
 
-#include "vectors/gimpvectors.h"
+#include "vectors/ligmavectors.h"
 
-#include "gimpviewrenderer-utils.h"
-#include "gimpviewrendererbrush.h"
-#include "gimpviewrendererbuffer.h"
-#include "gimpviewrendererlayer.h"
-#include "gimpviewrenderergradient.h"
-#include "gimpviewrendererimage.h"
-#include "gimpviewrendererimagefile.h"
-#include "gimpviewrendererpalette.h"
-#include "gimpviewrenderervectors.h"
+#include "ligmaviewrenderer-utils.h"
+#include "ligmaviewrendererbrush.h"
+#include "ligmaviewrendererbuffer.h"
+#include "ligmaviewrendererlayer.h"
+#include "ligmaviewrenderergradient.h"
+#include "ligmaviewrendererimage.h"
+#include "ligmaviewrendererimagefile.h"
+#include "ligmaviewrendererpalette.h"
+#include "ligmaviewrenderervectors.h"
 
 
 GType
-gimp_view_renderer_type_from_viewable_type (GType viewable_type)
+ligma_view_renderer_type_from_viewable_type (GType viewable_type)
 {
-  GType type = GIMP_TYPE_VIEW_RENDERER;
+  GType type = LIGMA_TYPE_VIEW_RENDERER;
 
-  g_return_val_if_fail (g_type_is_a (viewable_type, GIMP_TYPE_VIEWABLE),
+  g_return_val_if_fail (g_type_is_a (viewable_type, LIGMA_TYPE_VIEWABLE),
                         G_TYPE_NONE);
 
-  if (g_type_is_a (viewable_type, GIMP_TYPE_BRUSH))
+  if (g_type_is_a (viewable_type, LIGMA_TYPE_BRUSH))
     {
-      type = GIMP_TYPE_VIEW_RENDERER_BRUSH;
+      type = LIGMA_TYPE_VIEW_RENDERER_BRUSH;
     }
-  else if (g_type_is_a (viewable_type, GIMP_TYPE_BUFFER))
+  else if (g_type_is_a (viewable_type, LIGMA_TYPE_BUFFER))
     {
-      type = GIMP_TYPE_VIEW_RENDERER_BUFFER;
+      type = LIGMA_TYPE_VIEW_RENDERER_BUFFER;
     }
-  else if (g_type_is_a (viewable_type, GIMP_TYPE_IMAGE) ||
-           g_type_is_a (viewable_type, GIMP_TYPE_IMAGE_PROXY))
+  else if (g_type_is_a (viewable_type, LIGMA_TYPE_IMAGE) ||
+           g_type_is_a (viewable_type, LIGMA_TYPE_IMAGE_PROXY))
     {
-      type = GIMP_TYPE_VIEW_RENDERER_IMAGE;
+      type = LIGMA_TYPE_VIEW_RENDERER_IMAGE;
     }
-  else if (g_type_is_a (viewable_type, GIMP_TYPE_LAYER))
+  else if (g_type_is_a (viewable_type, LIGMA_TYPE_LAYER))
     {
-      type = GIMP_TYPE_VIEW_RENDERER_LAYER;
+      type = LIGMA_TYPE_VIEW_RENDERER_LAYER;
     }
-  else if (g_type_is_a (viewable_type, GIMP_TYPE_DRAWABLE))
+  else if (g_type_is_a (viewable_type, LIGMA_TYPE_DRAWABLE))
     {
-      type = GIMP_TYPE_VIEW_RENDERER_DRAWABLE;
+      type = LIGMA_TYPE_VIEW_RENDERER_DRAWABLE;
     }
-  else if (g_type_is_a (viewable_type, GIMP_TYPE_GRADIENT))
+  else if (g_type_is_a (viewable_type, LIGMA_TYPE_GRADIENT))
     {
-      type = GIMP_TYPE_VIEW_RENDERER_GRADIENT;
+      type = LIGMA_TYPE_VIEW_RENDERER_GRADIENT;
     }
-  else if (g_type_is_a (viewable_type, GIMP_TYPE_VECTORS))
+  else if (g_type_is_a (viewable_type, LIGMA_TYPE_VECTORS))
     {
-      type = GIMP_TYPE_VIEW_RENDERER_VECTORS;
+      type = LIGMA_TYPE_VIEW_RENDERER_VECTORS;
     }
-  else if (g_type_is_a (viewable_type, GIMP_TYPE_IMAGEFILE))
+  else if (g_type_is_a (viewable_type, LIGMA_TYPE_IMAGEFILE))
     {
-      type = GIMP_TYPE_VIEW_RENDERER_IMAGEFILE;
+      type = LIGMA_TYPE_VIEW_RENDERER_IMAGEFILE;
     }
-  else if (g_type_is_a (viewable_type, GIMP_TYPE_PALETTE))
+  else if (g_type_is_a (viewable_type, LIGMA_TYPE_PALETTE))
     {
-      type = GIMP_TYPE_VIEW_RENDERER_PALETTE;
+      type = LIGMA_TYPE_VIEW_RENDERER_PALETTE;
     }
 
   return type;

@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpoffsetarea.c
- * Copyright (C) 2001  Sven Neumann <sven@gimp.org>
+ * ligmaoffsetarea.c
+ * Copyright (C) 2001  Sven Neumann <sven@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,15 +23,15 @@
 
 #include <gtk/gtk.h>
 
-#include "gimpwidgetstypes.h"
+#include "ligmawidgetstypes.h"
 
-#include "gimpwidgetsmarshal.h"
-#include "gimpoffsetarea.h"
+#include "ligmawidgetsmarshal.h"
+#include "ligmaoffsetarea.h"
 
 
 /**
- * SECTION: gimpoffsetarea
- * @title: GimpOffsetArea
+ * SECTION: ligmaoffsetarea
+ * @title: LigmaOffsetArea
  * @short_description: Widget to control image offsets.
  *
  * Widget to control image offsets.
@@ -48,7 +48,7 @@ enum
 };
 
 
-struct _GimpOffsetAreaPrivate
+struct _LigmaOffsetAreaPrivate
 {
   gint    orig_width;
   gint    orig_height;
@@ -60,56 +60,56 @@ struct _GimpOffsetAreaPrivate
   gdouble display_ratio_y;
 };
 
-#define GET_PRIVATE(obj) (((GimpOffsetArea *) (obj))->priv)
+#define GET_PRIVATE(obj) (((LigmaOffsetArea *) (obj))->priv)
 
 
-static void      gimp_offset_area_resize        (GimpOffsetArea *area);
+static void      ligma_offset_area_resize        (LigmaOffsetArea *area);
 
-static void      gimp_offset_area_realize       (GtkWidget      *widget);
-static void      gimp_offset_area_size_allocate (GtkWidget      *widget,
+static void      ligma_offset_area_realize       (GtkWidget      *widget);
+static void      ligma_offset_area_size_allocate (GtkWidget      *widget,
                                                  GtkAllocation  *allocation);
-static gboolean  gimp_offset_area_event         (GtkWidget      *widget,
+static gboolean  ligma_offset_area_event         (GtkWidget      *widget,
                                                  GdkEvent       *event);
-static gboolean  gimp_offset_area_draw          (GtkWidget      *widget,
+static gboolean  ligma_offset_area_draw          (GtkWidget      *widget,
                                                  cairo_t        *cr);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpOffsetArea, gimp_offset_area,
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaOffsetArea, ligma_offset_area,
                             GTK_TYPE_DRAWING_AREA)
 
-#define parent_class gimp_offset_area_parent_class
+#define parent_class ligma_offset_area_parent_class
 
-static guint gimp_offset_area_signals[LAST_SIGNAL] = { 0 };
+static guint ligma_offset_area_signals[LAST_SIGNAL] = { 0 };
 
 
 static void
-gimp_offset_area_class_init (GimpOffsetAreaClass *klass)
+ligma_offset_area_class_init (LigmaOffsetAreaClass *klass)
 {
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  gimp_offset_area_signals[OFFSETS_CHANGED] =
+  ligma_offset_area_signals[OFFSETS_CHANGED] =
     g_signal_new ("offsets-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpOffsetAreaClass, offsets_changed),
+                  G_STRUCT_OFFSET (LigmaOffsetAreaClass, offsets_changed),
                   NULL, NULL,
-                  _gimp_widgets_marshal_VOID__INT_INT,
+                  _ligma_widgets_marshal_VOID__INT_INT,
                   G_TYPE_NONE, 2,
                   G_TYPE_INT,
                   G_TYPE_INT);
 
-  widget_class->size_allocate = gimp_offset_area_size_allocate;
-  widget_class->realize       = gimp_offset_area_realize;
-  widget_class->event         = gimp_offset_area_event;
-  widget_class->draw          = gimp_offset_area_draw;
+  widget_class->size_allocate = ligma_offset_area_size_allocate;
+  widget_class->realize       = ligma_offset_area_realize;
+  widget_class->event         = ligma_offset_area_event;
+  widget_class->draw          = ligma_offset_area_draw;
 }
 
 static void
-gimp_offset_area_init (GimpOffsetArea *area)
+ligma_offset_area_init (LigmaOffsetArea *area)
 {
-  GimpOffsetAreaPrivate *private;
+  LigmaOffsetAreaPrivate *private;
 
-  area->priv = gimp_offset_area_get_instance_private (area);
+  area->priv = ligma_offset_area_get_instance_private (area);
 
   private = GET_PRIVATE (area);
 
@@ -123,41 +123,41 @@ gimp_offset_area_init (GimpOffsetArea *area)
 }
 
 /**
- * gimp_offset_area_new:
+ * ligma_offset_area_new:
  * @orig_width: the original width
  * @orig_height: the original height
  *
- * Creates a new #GimpOffsetArea widget. A #GimpOffsetArea can be used
+ * Creates a new #LigmaOffsetArea widget. A #LigmaOffsetArea can be used
  * when resizing an image or a drawable to allow the user to interactively
  * specify the new offsets.
  *
- * Returns: the new #GimpOffsetArea widget.
+ * Returns: the new #LigmaOffsetArea widget.
  **/
 GtkWidget *
-gimp_offset_area_new (gint orig_width,
+ligma_offset_area_new (gint orig_width,
                       gint orig_height)
 {
-  GimpOffsetArea        *area;
-  GimpOffsetAreaPrivate *private;
+  LigmaOffsetArea        *area;
+  LigmaOffsetAreaPrivate *private;
 
   g_return_val_if_fail (orig_width  > 0, NULL);
   g_return_val_if_fail (orig_height > 0, NULL);
 
-  area = g_object_new (GIMP_TYPE_OFFSET_AREA, NULL);
+  area = g_object_new (LIGMA_TYPE_OFFSET_AREA, NULL);
 
   private = GET_PRIVATE (area);
 
   private->orig_width  = private->width  = orig_width;
   private->orig_height = private->height = orig_height;
 
-  gimp_offset_area_resize (area);
+  ligma_offset_area_resize (area);
 
   return GTK_WIDGET (area);
 }
 
 /**
- * gimp_offset_area_set_pixbuf:
- * @offset_area: a #GimpOffsetArea.
+ * ligma_offset_area_set_pixbuf:
+ * @offset_area: a #LigmaOffsetArea.
  * @pixbuf: a #GdkPixbuf.
  *
  * Sets the pixbuf which represents the original image/drawable which
@@ -166,10 +166,10 @@ gimp_offset_area_new (gint orig_width,
  * Since: 2.2
  **/
 void
-gimp_offset_area_set_pixbuf (GimpOffsetArea *area,
+ligma_offset_area_set_pixbuf (LigmaOffsetArea *area,
                              GdkPixbuf      *pixbuf)
 {
-  g_return_if_fail (GIMP_IS_OFFSET_AREA (area));
+  g_return_if_fail (LIGMA_IS_OFFSET_AREA (area));
   g_return_if_fail (GDK_IS_PIXBUF (pixbuf));
 
   g_object_set_data_full (G_OBJECT (area), "pixbuf",
@@ -180,23 +180,23 @@ gimp_offset_area_set_pixbuf (GimpOffsetArea *area,
 }
 
 /**
- * gimp_offset_area_set_size:
- * @offset_area: a #GimpOffsetArea.
+ * ligma_offset_area_set_size:
+ * @offset_area: a #LigmaOffsetArea.
  * @width: the new width
  * @height: the new height
  *
- * Sets the size of the image/drawable displayed by the #GimpOffsetArea.
+ * Sets the size of the image/drawable displayed by the #LigmaOffsetArea.
  * If the offsets change as a result of this change, the "offsets-changed"
  * signal is emitted.
  **/
 void
-gimp_offset_area_set_size (GimpOffsetArea *area,
+ligma_offset_area_set_size (LigmaOffsetArea *area,
                            gint            width,
                            gint            height)
 {
-  GimpOffsetAreaPrivate *private;
+  LigmaOffsetAreaPrivate *private;
 
-  g_return_if_fail (GIMP_IS_OFFSET_AREA (area));
+  g_return_if_fail (LIGMA_IS_OFFSET_AREA (area));
   g_return_if_fail (width > 0 && height > 0);
 
   private = GET_PRIVATE (area);
@@ -229,31 +229,31 @@ gimp_offset_area_set_size (GimpOffsetArea *area,
           private->offset_y = offset_y;
 
           g_signal_emit (area,
-                         gimp_offset_area_signals[OFFSETS_CHANGED], 0,
+                         ligma_offset_area_signals[OFFSETS_CHANGED], 0,
                          offset_x, offset_y);
         }
 
-      gimp_offset_area_resize (area);
+      ligma_offset_area_resize (area);
     }
 }
 
 /**
- * gimp_offset_area_set_offsets:
- * @offset_area: a #GimpOffsetArea.
+ * ligma_offset_area_set_offsets:
+ * @offset_area: a #LigmaOffsetArea.
  * @offset_x: the X offset
  * @offset_y: the Y offset
  *
- * Sets the offsets of the image/drawable displayed by the #GimpOffsetArea.
+ * Sets the offsets of the image/drawable displayed by the #LigmaOffsetArea.
  * It does not emit the "offsets-changed" signal.
  **/
 void
-gimp_offset_area_set_offsets (GimpOffsetArea *area,
+ligma_offset_area_set_offsets (LigmaOffsetArea *area,
                               gint            offset_x,
                               gint            offset_y)
 {
-  GimpOffsetAreaPrivate *private;
+  LigmaOffsetAreaPrivate *private;
 
-  g_return_if_fail (GIMP_IS_OFFSET_AREA (area));
+  g_return_if_fail (LIGMA_IS_OFFSET_AREA (area));
 
   private = GET_PRIVATE (area);
 
@@ -278,9 +278,9 @@ gimp_offset_area_set_offsets (GimpOffsetArea *area,
 }
 
 static void
-gimp_offset_area_resize (GimpOffsetArea *area)
+ligma_offset_area_resize (LigmaOffsetArea *area)
 {
-  GimpOffsetAreaPrivate *private = GET_PRIVATE (area);
+  LigmaOffsetAreaPrivate *private = GET_PRIVATE (area);
   gint                   width;
   gint                   height;
   gdouble                ratio;
@@ -308,11 +308,11 @@ gimp_offset_area_resize (GimpOffsetArea *area)
 }
 
 static void
-gimp_offset_area_size_allocate (GtkWidget     *widget,
+ligma_offset_area_size_allocate (GtkWidget     *widget,
                                 GtkAllocation *allocation)
 {
-  GimpOffsetArea        *area    = GIMP_OFFSET_AREA (widget);
-  GimpOffsetAreaPrivate *private = GET_PRIVATE (area);
+  LigmaOffsetArea        *area    = LIGMA_OFFSET_AREA (widget);
+  LigmaOffsetAreaPrivate *private = GET_PRIVATE (area);
   GdkPixbuf             *pixbuf;
 
   GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
@@ -362,7 +362,7 @@ gimp_offset_area_size_allocate (GtkWidget     *widget,
 }
 
 static void
-gimp_offset_area_realize (GtkWidget *widget)
+ligma_offset_area_realize (GtkWidget *widget)
 {
   GdkCursor *cursor;
 
@@ -375,7 +375,7 @@ gimp_offset_area_realize (GtkWidget *widget)
 }
 
 static gboolean
-gimp_offset_area_event (GtkWidget *widget,
+ligma_offset_area_event (GtkWidget *widget,
                         GdkEvent  *event)
 {
   static gint orig_offset_x = 0;
@@ -383,8 +383,8 @@ gimp_offset_area_event (GtkWidget *widget,
   static gint start_x       = 0;
   static gint start_y       = 0;
 
-  GimpOffsetArea        *area    = GIMP_OFFSET_AREA (widget);
-  GimpOffsetAreaPrivate *private = GET_PRIVATE (area);
+  LigmaOffsetArea        *area    = LIGMA_OFFSET_AREA (widget);
+  LigmaOffsetAreaPrivate *private = GET_PRIVATE (area);
   gint                   offset_x;
   gint                   offset_y;
 
@@ -413,10 +413,10 @@ gimp_offset_area_event (GtkWidget *widget,
 
       if (private->offset_x != offset_x || private->offset_y != offset_y)
         {
-          gimp_offset_area_set_offsets (area, offset_x, offset_y);
+          ligma_offset_area_set_offsets (area, offset_x, offset_y);
 
           g_signal_emit (area,
-                         gimp_offset_area_signals[OFFSETS_CHANGED], 0,
+                         ligma_offset_area_signals[OFFSETS_CHANGED], 0,
                          private->offset_x, private->offset_y);
         }
       break;
@@ -438,11 +438,11 @@ gimp_offset_area_event (GtkWidget *widget,
 }
 
 static gboolean
-gimp_offset_area_draw (GtkWidget *widget,
+ligma_offset_area_draw (GtkWidget *widget,
                        cairo_t   *cr)
 {
-  GimpOffsetArea        *area    = GIMP_OFFSET_AREA (widget);
-  GimpOffsetAreaPrivate *private = GET_PRIVATE (area);
+  LigmaOffsetArea        *area    = LIGMA_OFFSET_AREA (widget);
+  LigmaOffsetAreaPrivate *private = GET_PRIVATE (area);
   GtkStyleContext       *context = gtk_widget_get_style_context (widget);
   GtkAllocation          allocation;
   GdkPixbuf             *pixbuf;

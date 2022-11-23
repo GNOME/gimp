@@ -12,4 +12,4 @@
 #:Scheme-ext:E::scm::/path/to/scm:
 
 # Register a magic
-#:Scheme-magic:M::\x3b\x20GIMP Scheme::scm:
+#:Scheme-magic:M::\x3b\x20LIGMA Scheme::scm:

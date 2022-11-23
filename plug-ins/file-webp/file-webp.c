@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * file-webp - WebP file format plug-in for the GIMP
+ * file-webp - WebP file format plug-in for the LIGMA
  * Copyright (C) 2015  Nathan Osman
  * Copyright (C) 2016  Ben Touchette
  *
@@ -23,8 +23,8 @@
 
 #include <string.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
 #include <webp/encode.h>
 
@@ -33,7 +33,7 @@
 #include "file-webp-save.h"
 #include "file-webp.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 typedef struct _Webp      Webp;
@@ -41,12 +41,12 @@ typedef struct _WebpClass WebpClass;
 
 struct _Webp
 {
-  GimpPlugIn      parent_instance;
+  LigmaPlugIn      parent_instance;
 };
 
 struct _WebpClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -55,35 +55,35 @@ struct _WebpClass
 
 GType                   webp_get_type         (void) G_GNUC_CONST;
 
-static GList          * webp_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * webp_create_procedure (GimpPlugIn           *plug_in,
+static GList          * webp_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * webp_create_procedure (LigmaPlugIn           *plug_in,
                                                const gchar          *name);
 
-static GimpValueArray * webp_load             (GimpProcedure        *procedure,
-                                               GimpRunMode           run_mode,
+static LigmaValueArray * webp_load             (LigmaProcedure        *procedure,
+                                               LigmaRunMode           run_mode,
                                                GFile                *file,
-                                               const GimpValueArray *args,
+                                               const LigmaValueArray *args,
                                                gpointer              run_data);
-static GimpValueArray * webp_save             (GimpProcedure        *procedure,
-                                               GimpRunMode           run_mode,
-                                               GimpImage            *image,
+static LigmaValueArray * webp_save             (LigmaProcedure        *procedure,
+                                               LigmaRunMode           run_mode,
+                                               LigmaImage            *image,
                                                gint                  n_drawables,
-                                               GimpDrawable        **drawables,
+                                               LigmaDrawable        **drawables,
                                                GFile                *file,
-                                               const GimpValueArray *args,
+                                               const LigmaValueArray *args,
                                                gpointer              run_data);
 
 
-G_DEFINE_TYPE (Webp, webp, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Webp, webp, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (WEBP_TYPE)
+LIGMA_MAIN (WEBP_TYPE)
 DEFINE_STD_SET_I18N
 
 
 static void
 webp_class_init (WebpClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = webp_query_procedures;
   plug_in_class->create_procedure = webp_create_procedure;
@@ -96,7 +96,7 @@ webp_init (Webp *webp)
 }
 
 static GList *
-webp_query_procedures (GimpPlugIn *plug_in)
+webp_query_procedures (LigmaPlugIn *plug_in)
 {
   GList *list = NULL;
 
@@ -106,90 +106,90 @@ webp_query_procedures (GimpPlugIn *plug_in)
   return list;
 }
 
-static GimpProcedure *
-webp_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+webp_create_procedure (LigmaPlugIn  *plug_in,
                       const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, LOAD_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_load_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            webp_load, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure, _("WebP image"));
+      ligma_procedure_set_menu_label (procedure, _("WebP image"));
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Loads images in the WebP file format",
                                         "Loads images in the WebP file format",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Nathan Osman, Ben Touchette",
                                       "(C) 2015-2016 Nathan Osman, "
                                       "(C) 2016 Ben Touchette",
                                       "2015,2016");
 
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                           "image/webp");
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "webp");
-      gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_magics (LIGMA_FILE_PROCEDURE (procedure),
                                       "8,string,WEBP");
     }
   else if (! strcmp (name, SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_save_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            webp_save, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "*");
+      ligma_procedure_set_image_types (procedure, "*");
 
-      gimp_procedure_set_menu_label (procedure, _("WebP image"));
+      ligma_procedure_set_menu_label (procedure, _("WebP image"));
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Saves files in the WebP image format",
                                         "Saves files in the WebP image format",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Nathan Osman, Ben Touchette",
                                       "(C) 2015-2016 Nathan Osman, "
                                       "(C) 2016 Ben Touchette",
                                       "2015,2016");
 
-      gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_format_name (LIGMA_FILE_PROCEDURE (procedure),
                                            _("WebP"));
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                           "image/webp");
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "webp");
 
-      GIMP_PROC_ARG_INT (procedure, "preset",
+      LIGMA_PROC_ARG_INT (procedure, "preset",
                          _("Source _type"),
                          _("WebP encoder preset (Default=0, Picture=1, Photo=2, Drawing=3, "
                            "Icon=4, Text=5)"),
                          0, 5, WEBP_PRESET_DEFAULT,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "lossless",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "lossless",
                              _("L_ossless"),
                              _("Use lossless encoding"),
                              FALSE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "quality",
+      LIGMA_PROC_ARG_DOUBLE (procedure, "quality",
                             _("Image _quality"),
                             _("Quality of the image"),
                             0, 100, 90,
                             G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "alpha-quality",
+      LIGMA_PROC_ARG_DOUBLE (procedure, "alpha-quality",
                             _("Alpha q_uality"),
                             _("Quality of the image's alpha channel"),
                             0, 100, 100,
                             G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "use-sharp-yuv",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "use-sharp-yuv",
                              _("Use Sharp YU_V"),
                              /* TRANSLATORS: \xe2\x86\x92 is a Unicode
                               * "Rightward Arrow" in UTF-8 encoding.
@@ -198,62 +198,62 @@ webp_create_procedure (GimpPlugIn  *plug_in,
                              FALSE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "animation-loop",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "animation-loop",
                              _("Loop _forever"),
                              _("Loop animation infinitely"),
                              TRUE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "minimize-size",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "minimize-size",
                              _("_Minimize output size (slower)"),
                              _("Minimize output file size"),
                              TRUE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "keyframe-distance",
+      LIGMA_PROC_ARG_INT (procedure, "keyframe-distance",
                          _("Max distance between _key-frames"),
                          _("Maximum distance between keyframes"),
                          0, G_MAXINT, 50,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "default-delay",
+      LIGMA_PROC_ARG_INT (procedure, "default-delay",
                          _("_Default delay between frames"),
                          _("Default delay (in milliseconds) to use when timestamps"
                            " for frames are not available or forced."),
                          0, G_MAXINT, 200,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "force-delay",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "force-delay",
                              _("Use default dela_y for all frames"),
                              _("Force default delay on all frames"),
                              FALSE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "animation",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "animation",
                              _("Save a_nimation"),
                              _("Use layers for animation"),
                              FALSE,
                              G_PARAM_READWRITE);
 
-      gimp_save_procedure_set_support_exif      (GIMP_SAVE_PROCEDURE (procedure), TRUE);
-      gimp_save_procedure_set_support_iptc      (GIMP_SAVE_PROCEDURE (procedure), TRUE);
-      gimp_save_procedure_set_support_xmp       (GIMP_SAVE_PROCEDURE (procedure), TRUE);
-      gimp_save_procedure_set_support_profile   (GIMP_SAVE_PROCEDURE (procedure), TRUE);
-      gimp_save_procedure_set_support_thumbnail (GIMP_SAVE_PROCEDURE (procedure), TRUE);
+      ligma_save_procedure_set_support_exif      (LIGMA_SAVE_PROCEDURE (procedure), TRUE);
+      ligma_save_procedure_set_support_iptc      (LIGMA_SAVE_PROCEDURE (procedure), TRUE);
+      ligma_save_procedure_set_support_xmp       (LIGMA_SAVE_PROCEDURE (procedure), TRUE);
+      ligma_save_procedure_set_support_profile   (LIGMA_SAVE_PROCEDURE (procedure), TRUE);
+      ligma_save_procedure_set_support_thumbnail (LIGMA_SAVE_PROCEDURE (procedure), TRUE);
     }
 
   return procedure;
 }
 
-static GimpValueArray *
-webp_load (GimpProcedure        *procedure,
-           GimpRunMode           run_mode,
+static LigmaValueArray *
+webp_load (LigmaProcedure        *procedure,
+           LigmaRunMode           run_mode,
            GFile                *file,
-           const GimpValueArray *args,
+           const LigmaValueArray *args,
            gpointer              run_data)
 {
-  GimpValueArray *return_vals;
-  GimpImage      *image;
+  LigmaValueArray *return_vals;
+  LigmaImage      *image;
   GError         *error = NULL;
 
   gegl_init (NULL, NULL);
@@ -261,51 +261,51 @@ webp_load (GimpProcedure        *procedure,
   image = load_image (file, FALSE, &error);
 
   if (! image)
-    return gimp_procedure_new_return_values (procedure,
-                                             GIMP_PDB_EXECUTION_ERROR,
+    return ligma_procedure_new_return_values (procedure,
+                                             LIGMA_PDB_EXECUTION_ERROR,
                                              error);
 
-  return_vals = gimp_procedure_new_return_values (procedure,
-                                                  GIMP_PDB_SUCCESS,
+  return_vals = ligma_procedure_new_return_values (procedure,
+                                                  LIGMA_PDB_SUCCESS,
                                                   NULL);
 
-  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
+  LIGMA_VALUES_SET_IMAGE (return_vals, 1, image);
 
   return return_vals;
 }
 
-static GimpValueArray *
-webp_save (GimpProcedure        *procedure,
-           GimpRunMode           run_mode,
-           GimpImage            *image,
+static LigmaValueArray *
+webp_save (LigmaProcedure        *procedure,
+           LigmaRunMode           run_mode,
+           LigmaImage            *image,
            gint                  n_drawables,
-           GimpDrawable        **drawables,
+           LigmaDrawable        **drawables,
            GFile                *file,
-           const GimpValueArray *args,
+           const LigmaValueArray *args,
            gpointer              run_data)
 {
-  GimpProcedureConfig *config;
-  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
-  GimpExportReturn     export = GIMP_EXPORT_CANCEL;
-  GimpMetadata        *metadata;
+  LigmaProcedureConfig *config;
+  LigmaPDBStatusType    status = LIGMA_PDB_SUCCESS;
+  LigmaExportReturn     export = LIGMA_EXPORT_CANCEL;
+  LigmaMetadata        *metadata;
   gboolean             animation;
   GError              *error  = NULL;
 
   gegl_init (NULL, NULL);
 
-  config = gimp_procedure_create_config (procedure);
-  metadata = gimp_procedure_config_begin_export (config, image, run_mode,
+  config = ligma_procedure_create_config (procedure);
+  metadata = ligma_procedure_config_begin_export (config, image, run_mode,
                                                  args, "image/webp");
 
-  if (run_mode == GIMP_RUN_INTERACTIVE ||
-      run_mode == GIMP_RUN_WITH_LAST_VALS)
-    gimp_ui_init (PLUG_IN_BINARY);
+  if (run_mode == LIGMA_RUN_INTERACTIVE ||
+      run_mode == LIGMA_RUN_WITH_LAST_VALS)
+    ligma_ui_init (PLUG_IN_BINARY);
 
-  if (run_mode == GIMP_RUN_INTERACTIVE)
+  if (run_mode == LIGMA_RUN_INTERACTIVE)
     {
       if (! save_dialog (image, procedure, G_OBJECT (config)))
-        return gimp_procedure_new_return_values (procedure,
-                                                 GIMP_PDB_CANCEL,
+        return ligma_procedure_new_return_values (procedure,
+                                                 LIGMA_PDB_CANCEL,
                                                  NULL);
     }
 
@@ -313,23 +313,23 @@ webp_save (GimpProcedure        *procedure,
                 "animation", &animation,
                 NULL);
 
-  if (run_mode == GIMP_RUN_INTERACTIVE ||
-      run_mode == GIMP_RUN_WITH_LAST_VALS)
+  if (run_mode == LIGMA_RUN_INTERACTIVE ||
+      run_mode == LIGMA_RUN_WITH_LAST_VALS)
     {
-      GimpExportCapabilities capabilities = (GIMP_EXPORT_CAN_HANDLE_RGB     |
-                                             GIMP_EXPORT_CAN_HANDLE_GRAY    |
-                                             GIMP_EXPORT_CAN_HANDLE_INDEXED |
-                                             GIMP_EXPORT_CAN_HANDLE_ALPHA);
+      LigmaExportCapabilities capabilities = (LIGMA_EXPORT_CAN_HANDLE_RGB     |
+                                             LIGMA_EXPORT_CAN_HANDLE_GRAY    |
+                                             LIGMA_EXPORT_CAN_HANDLE_INDEXED |
+                                             LIGMA_EXPORT_CAN_HANDLE_ALPHA);
 
       if (animation)
-        capabilities |= GIMP_EXPORT_CAN_HANDLE_LAYERS_AS_ANIMATION;
+        capabilities |= LIGMA_EXPORT_CAN_HANDLE_LAYERS_AS_ANIMATION;
 
-      export = gimp_export_image (&image, &n_drawables, &drawables, "WebP",
+      export = ligma_export_image (&image, &n_drawables, &drawables, "WebP",
                                   capabilities);
 
-      if (export == GIMP_EXPORT_CANCEL)
-        return gimp_procedure_new_return_values (procedure,
-                                                 GIMP_PDB_CANCEL,
+      if (export == LIGMA_EXPORT_CANCEL)
+        return ligma_procedure_new_return_values (procedure,
+                                                 LIGMA_PDB_CANCEL,
                                                  NULL);
     }
 
@@ -338,7 +338,7 @@ webp_save (GimpProcedure        *procedure,
       if (! save_animation (file, image, n_drawables, drawables, G_OBJECT (config),
                             &error))
         {
-          status = GIMP_PDB_EXECUTION_ERROR;
+          status = LIGMA_PDB_EXECUTION_ERROR;
         }
     }
   else
@@ -348,19 +348,19 @@ webp_save (GimpProcedure        *procedure,
           g_set_error (&error, G_FILE_ERROR, 0,
                        _("The WebP plug-in cannot export multiple layer, except in animation mode."));
 
-          return gimp_procedure_new_return_values (procedure,
-                                                   GIMP_PDB_CALLING_ERROR,
+          return ligma_procedure_new_return_values (procedure,
+                                                   LIGMA_PDB_CALLING_ERROR,
                                                    error);
         }
 
       if (! save_layer (file, image, drawables[0], G_OBJECT (config),
                         &error))
         {
-          status = GIMP_PDB_EXECUTION_ERROR;
+          status = LIGMA_PDB_EXECUTION_ERROR;
         }
     }
 
-  if (status == GIMP_PDB_SUCCESS && metadata)
+  if (status == LIGMA_PDB_SUCCESS && metadata)
     {
       gboolean save_xmp;
 
@@ -372,17 +372,17 @@ webp_save (GimpProcedure        *procedure,
                     "save-iptc", save_xmp,
                     NULL);
 
-      gimp_metadata_set_bits_per_sample (metadata, 8);
+      ligma_metadata_set_bits_per_sample (metadata, 8);
     }
 
-  gimp_procedure_config_end_export (config, image, file, status);
+  ligma_procedure_config_end_export (config, image, file, status);
   g_object_unref (config);
 
-  if (export == GIMP_EXPORT_EXPORT)
+  if (export == LIGMA_EXPORT_EXPORT)
     {
-      gimp_image_delete (image);
+      ligma_image_delete (image);
       g_free (drawables);
     }
 
-  return gimp_procedure_new_return_values (procedure, status, error);
+  return ligma_procedure_new_return_values (procedure, status, error);
 }

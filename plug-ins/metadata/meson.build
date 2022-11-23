@@ -10,7 +10,7 @@ plugin_sources = [
 
 if platform_windows
   plugin_rc = configure_file(
-    input : gimp_plugins_rc.full_path(),
+    input : ligma_plugins_rc.full_path(),
     output: plugin_name + '.rc',
     copy: true,
   )
@@ -30,11 +30,11 @@ endif
 executable(plugin_name,
   plugin_sources,
   dependencies: [
-    libgimpui_dep,
+    libligmaui_dep,
     gexiv2,
   ],
   install: true,
-  install_dir: gimpplugindir / 'plug-ins' / plugin_name,
+  install_dir: ligmaplugindir / 'plug-ins' / plugin_name,
 )
 
 ###############################################################################
@@ -48,7 +48,7 @@ plugin_sources = [
 
 if platform_windows
   plugin_rc = configure_file(
-    input : gimp_plugins_rc.full_path(),
+    input : ligma_plugins_rc.full_path(),
     output: plugin_name + '.rc',
     copy: true,
   )
@@ -72,14 +72,14 @@ executable(plugin_name,
     gtk3, gegl, gexiv2,
   ],
   link_with: [
-    libgimp,
-    libgimpbase,
-    libgimpcolor,
-    libgimpconfig,
-    libgimpmath,
-    libgimpui,
-    libgimpwidgets,
+    libligma,
+    libligmabase,
+    libligmacolor,
+    libligmaconfig,
+    libligmamath,
+    libligmaui,
+    libligmawidgets,
   ],
   install: true,
-  install_dir: gimpplugindir / 'plug-ins' / plugin_name,
+  install_dir: ligmaplugindir / 'plug-ins' / plugin_name,
 )

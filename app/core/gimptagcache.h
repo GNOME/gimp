@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimptagcache.h
+ * ligmatagcache.h
  * Copyright (C) 2008 Aurimas Juška <aurisj@svn.gnome.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,46 +18,46 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TAG_CACHE_H__
-#define __GIMP_TAG_CACHE_H__
+#ifndef __LIGMA_TAG_CACHE_H__
+#define __LIGMA_TAG_CACHE_H__
 
 
-#include "gimpobject.h"
+#include "ligmaobject.h"
 
 
-#define GIMP_TYPE_TAG_CACHE            (gimp_tag_cache_get_type ())
-#define GIMP_TAG_CACHE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TAG_CACHE, GimpTagCache))
-#define GIMP_TAG_CACHE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TAG_CACHE, GimpTagCacheClass))
-#define GIMP_IS_TAG_CACHE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_TAG_CACHE))
-#define GIMP_IS_TAG_CACHE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_TAG_CACHE))
-#define GIMP_TAG_CACHE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_TAG_CACHE, GimpTagCacheClass))
+#define LIGMA_TYPE_TAG_CACHE            (ligma_tag_cache_get_type ())
+#define LIGMA_TAG_CACHE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_TAG_CACHE, LigmaTagCache))
+#define LIGMA_TAG_CACHE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_TAG_CACHE, LigmaTagCacheClass))
+#define LIGMA_IS_TAG_CACHE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_TAG_CACHE))
+#define LIGMA_IS_TAG_CACHE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_TAG_CACHE))
+#define LIGMA_TAG_CACHE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_TAG_CACHE, LigmaTagCacheClass))
 
 
-typedef struct _GimpTagCacheClass   GimpTagCacheClass;
-typedef struct _GimpTagCachePrivate GimpTagCachePrivate;
+typedef struct _LigmaTagCacheClass   LigmaTagCacheClass;
+typedef struct _LigmaTagCachePrivate LigmaTagCachePrivate;
 
-struct _GimpTagCache
+struct _LigmaTagCache
 {
-  GimpObject           parent_instance;
+  LigmaObject           parent_instance;
 
-  GimpTagCachePrivate *priv;
+  LigmaTagCachePrivate *priv;
 };
 
-struct _GimpTagCacheClass
+struct _LigmaTagCacheClass
 {
-  GimpObjectClass  parent_class;
+  LigmaObjectClass  parent_class;
 };
 
 
-GType           gimp_tag_cache_get_type      (void) G_GNUC_CONST;
+GType           ligma_tag_cache_get_type      (void) G_GNUC_CONST;
 
-GimpTagCache *  gimp_tag_cache_new           (void);
+LigmaTagCache *  ligma_tag_cache_new           (void);
 
-void            gimp_tag_cache_save          (GimpTagCache  *cache);
-void            gimp_tag_cache_load          (GimpTagCache  *cache);
+void            ligma_tag_cache_save          (LigmaTagCache  *cache);
+void            ligma_tag_cache_load          (LigmaTagCache  *cache);
 
-void            gimp_tag_cache_add_container (GimpTagCache  *cache,
-                                              GimpContainer *container);
+void            ligma_tag_cache_add_container (LigmaTagCache  *cache,
+                                              LigmaContainer *container);
 
 
-#endif  /*  __GIMP_TAG_CACHE_H__  */
+#endif  /*  __LIGMA_TAG_CACHE_H__  */

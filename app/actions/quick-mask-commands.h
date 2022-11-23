@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,13 +19,13 @@
 #define __QUICK_MASK_COMMANDS_H__
 
 
-void   quick_mask_toggle_cmd_callback    (GimpAction *action,
+void   quick_mask_toggle_cmd_callback    (LigmaAction *action,
                                           GVariant   *value,
                                           gpointer    data);
-void   quick_mask_invert_cmd_callback    (GimpAction *action,
+void   quick_mask_invert_cmd_callback    (LigmaAction *action,
                                           GVariant   *value,
                                           gpointer    data);
-void   quick_mask_configure_cmd_callback (GimpAction *action,
+void   quick_mask_configure_cmd_callback (LigmaAction *action,
                                           GVariant   *value,
                                           gpointer    data);
 

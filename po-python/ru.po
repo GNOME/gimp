@@ -1,4 +1,4 @@
-# translation of gimp python to Russian
+# translation of ligma python to Russian
 # Copyright (C) 2000-2002,2003, 2004, 2005, 2006 Free Software Foundation, Inc.
 #
 # Valek Filippov <frob@df.ru>, 2000-2002.
@@ -10,8 +10,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP Python-Fu 2.8\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: LIGMA Python-Fu 2.8\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2022-11-13 19:53+0300\n"
 "PO-Revision-Date: 2022-11-13 21:28+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
@@ -485,8 +485,8 @@ msgid "Python _Console"
 msgstr "_Консоль Python"
 
 #: ../plug-ins/python/python-console/python-console.py:358
-msgid "Interactive GIMP Python interpreter"
-msgstr "Интерактивный интерпретатор Python в GIMP"
+msgid "Interactive LIGMA Python interpreter"
+msgstr "Интерактивный интерпретатор Python в LIGMA"
 
 #: ../plug-ins/python/python-console/python-console.py:359
 msgid "Type in commands and see results"
@@ -802,8 +802,8 @@ msgid ""
 msgstr ""
 
 #: ../plug-ins/python/spyro-plus.py:1749
-msgid "Spyrogimp"
-msgstr "Spyrogimp"
+msgid "Spyroligma"
+msgstr "Spyroligma"
 
 #: ../plug-ins/python/spyro-plus.py:1758 ../plug-ins/python/spyro-plus.py:2295
 msgid "Draw spyrographs using current tool settings and selection."
@@ -893,7 +893,7 @@ msgid ""
 msgstr ""
 
 #: ../plug-ins/python/spyro-plus.py:2299
-msgid "Spyrogimp..."
+msgid "Spyroligma..."
 msgstr ""
 
 #~ msgid "Missing exception information"

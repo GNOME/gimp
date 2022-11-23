@@ -1,4 +1,4 @@
-# GIMP - The GNU Image Manipulation Program
+# LIGMA - The GNU Image Manipulation Program
 # Copyright (C) 1995 Spencer Kimball and Peter Mattis
 
 # This program is free software: you can redistribute it and/or modify
@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+# "Perlized" from C source by Manish Singh <yosh@ligma.org>
 
 sub text_fontname {
     $blurb = <<'BLURB';
@@ -58,7 +58,7 @@ HELP
           desc => 'Antialiasing' },
         { name => 'size', type => '0 < float',
           desc => 'The size of text in either pixels or points' },
-        { name => 'size_type', type => 'enum GimpSizeType', dead => 1,
+        { name => 'size_type', type => 'enum LigmaSizeType', dead => 1,
           desc => 'The units of specified size' },
         { name => 'fontname', type => 'string',
           desc => 'The name of the font' }
@@ -73,9 +73,9 @@ HELP
         code => <<'CODE'
 {
   if (drawable &&
-      (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), image,
-                                    GIMP_PDB_ITEM_CONTENT, error) ||
-       ! gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error)))
+      (! ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), image,
+                                    LIGMA_PDB_ITEM_CONTENT, error) ||
+       ! ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error)))
     success = FALSE;
 
   if (success)
@@ -114,7 +114,7 @@ HELP
           desc => 'The text to generate (in UTF-8 encoding)' },
         { name => 'size', type => '0 < float',
           desc => 'The size of text in either pixels or points' },
-        { name => 'size_type', type => 'enum GimpSizeType', dead => 1,
+        { name => 'size_type', type => 'enum LigmaSizeType', dead => 1,
           desc => 'The units of specified size' },
         { name => 'fontname', type => 'string',
           desc => 'The name of the font' }
@@ -136,7 +136,7 @@ HELP
 {
   gchar *real_fontname = g_strdup_printf ("%s %d", fontname, (gint) size);
 
-  success = text_get_extents (gimp,
+  success = text_get_extents (ligma,
                               real_fontname, text,
                               &width, &height,
                               &ascent, &descent);
@@ -148,9 +148,9 @@ CODE
 }
 
 
-@headers = qw("libgimpbase/gimpbase.h"
-              "text/gimptext-compat.h"
-              "gimppdb-utils.h");
+@headers = qw("libligmabase/ligmabase.h"
+              "text/ligmatext-compat.h"
+              "ligmapdb-utils.h");
 
 @procs = qw(text_fontname
             text_get_extents_fontname);
@@ -158,7 +158,7 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Text procedures';
-$doc_title = 'gimptexttool';
+$doc_title = 'ligmatexttool';
 $doc_short_desc = 'Functions for controlling the text tool.';
 $doc_long_desc = 'Functions for controlling the text tool.';
 

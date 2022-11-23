@@ -15,7 +15,7 @@
    width="16.000124"
    version="1.1"
    inkscape:version="0.92.2 2405546, 2018-03-11"
-   sodipodi:docname="gimp-image-reload-symbolic.svg">
+   sodipodi:docname="ligma-image-reload-symbolic.svg">
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -61,7 +61,7 @@
             <dc:title>Barbara Muraus, Jakub Steiner, Klaus Staedtler</dc:title>
           </cc:Agent>
         </dc:contributor>
-        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for GIMP</dc:description>
+        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for LIGMA</dc:description>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -156,9 +156,9 @@
   </defs>
   <g
      style="display:inline"
-     id="gimp-image-reload"
+     id="ligma-image-reload"
      transform="translate(1.2501967e-4,3.1180829e-4)"
-     inkscape:label="gimp-image-reload">
+     inkscape:label="ligma-image-reload">
     <g
        transform="matrix(0.44359232,0,0,0.43109129,18.091378,-432.8546)"
        id="refresh-1">

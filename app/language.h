@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,7 +18,7 @@
 #ifndef __LANGUAGE_H__
 #define __LANGUAGE_H__
 
-#ifndef GIMP_APP_GLUE_COMPILATION
+#ifndef LIGMA_APP_GLUE_COMPILATION
 #error You must not #include "language.h" from a subdir
 #endif
 

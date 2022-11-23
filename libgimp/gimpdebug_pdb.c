@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimpdebug_pdb.c
+ * ligmadebug_pdb.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,12 +24,12 @@
 
 #include "stamp-pdbgen.h"
 
-#include "gimp.h"
+#include "ligma.h"
 
 
 /**
- * SECTION: gimpdebug
- * @title: gimpdebug
+ * SECTION: ligmadebug
+ * @title: ligmadebug
  * @short_description: Debug utility functions
  *
  * Miscellaneous debug utility functions. Not part of the stable
@@ -38,15 +38,15 @@
 
 
 /**
- * gimp_debug_timer_start:
+ * ligma_debug_timer_start:
  *
  * Starts measuring elapsed time.
  *
  * This procedure starts a timer, measuring the elapsed time since the
  * call. Each call to this procedure should be matched by a call to
- * gimp_debug_timer_end(), which returns the elapsed time.
+ * ligma_debug_timer_end(), which returns the elapsed time.
  * If there is already an active timer, it is not affected by the call,
- * however, a matching gimp_debug_timer_end() call is still required.
+ * however, a matching ligma_debug_timer_end() call is still required.
  *
  * This is a debug utility procedure. It is subject to change at any
  * point, and should not be used in production.
@@ -54,37 +54,37 @@
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_debug_timer_start (void)
+ligma_debug_timer_start (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-debug-timer-start",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-debug-timer-start",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_debug_timer_end:
+ * ligma_debug_timer_end:
  *
  * Finishes measuring elapsed time.
  *
  * This procedure stops the timer started by a previous
- * gimp_debug_timer_start() call, and prints and returns the elapsed
+ * ligma_debug_timer_start() call, and prints and returns the elapsed
  * time.
  * If there was already an active timer at the time of corresponding
- * call to gimp_debug_timer_start(), a dummy value is returned.
+ * call to ligma_debug_timer_start(), a dummy value is returned.
  *
  * This is a debug utility procedure. It is subject to change at any
  * point, and should not be used in production.
@@ -92,24 +92,24 @@ gimp_debug_timer_start (void)
  * Returns: The elapsed time, in seconds.
  **/
 gdouble
-gimp_debug_timer_end (void)
+ligma_debug_timer_end (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gdouble elapsed = 0.0;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-debug-timer-end",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-debug-timer-end",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    elapsed = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    elapsed = LIGMA_VALUES_GET_DOUBLE (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return elapsed;
 }

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,26 +22,26 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "display-types.h"
 
-#include "config/gimpguiconfig.h"
+#include "config/ligmaguiconfig.h"
 
-#include "core/gimp.h"
-#include "core/gimpimage.h"
+#include "core/ligma.h"
+#include "core/ligmaimage.h"
 
-#include "gimpdisplay.h"
-#include "gimpdisplayshell.h"
-#include "gimpdisplayshell-expose.h"
-#include "gimpdisplayshell-render.h"
-#include "gimpdisplayshell-rotate.h"
-#include "gimpdisplayshell-scale.h"
-#include "gimpdisplayshell-scroll.h"
-#include "gimpdisplayshell-transform.h"
-#include "gimpimagewindow.h"
+#include "ligmadisplay.h"
+#include "ligmadisplayshell.h"
+#include "ligmadisplayshell-expose.h"
+#include "ligmadisplayshell-render.h"
+#include "ligmadisplayshell-rotate.h"
+#include "ligmadisplayshell-scale.h"
+#include "ligmadisplayshell-scroll.h"
+#include "ligmadisplayshell-transform.h"
+#include "ligmaimagewindow.h"
 
 
 #define SCALE_TIMEOUT             2
@@ -53,67 +53,67 @@
 
 /*  local function prototypes  */
 
-static void      gimp_display_shell_scale_get_screen_resolution
-                                                         (GimpDisplayShell *shell,
+static void      ligma_display_shell_scale_get_screen_resolution
+                                                         (LigmaDisplayShell *shell,
                                                           gdouble          *xres,
                                                           gdouble          *yres);
-static void      gimp_display_shell_scale_get_image_size_for_scale
-                                                         (GimpDisplayShell *shell,
+static void      ligma_display_shell_scale_get_image_size_for_scale
+                                                         (LigmaDisplayShell *shell,
                                                           gdouble           scale,
                                                           gint             *w,
                                                           gint             *h);
-static void      gimp_display_shell_calculate_scale_x_and_y
-                                                         (GimpDisplayShell *shell,
+static void      ligma_display_shell_calculate_scale_x_and_y
+                                                         (LigmaDisplayShell *shell,
                                                           gdouble           scale,
                                                           gdouble          *scale_x,
                                                           gdouble          *scale_y);
 
-static void      gimp_display_shell_scale_to             (GimpDisplayShell *shell,
+static void      ligma_display_shell_scale_to             (LigmaDisplayShell *shell,
                                                           gdouble           scale,
                                                           gdouble           viewport_x,
                                                           gdouble           viewport_y);
-static void      gimp_display_shell_scale_fit_or_fill    (GimpDisplayShell *shell,
+static void      ligma_display_shell_scale_fit_or_fill    (LigmaDisplayShell *shell,
                                                           gboolean          fill);
 
-static gboolean  gimp_display_shell_scale_image_starts_to_fit
-                                                         (GimpDisplayShell *shell,
+static gboolean  ligma_display_shell_scale_image_starts_to_fit
+                                                         (LigmaDisplayShell *shell,
                                                           gdouble           new_scale,
                                                           gdouble           current_scale,
                                                           gboolean         *horizontally,
                                                           gboolean         *vertically);
-static gboolean  gimp_display_shell_scale_image_stops_to_fit
-                                                         (GimpDisplayShell *shell,
+static gboolean  ligma_display_shell_scale_image_stops_to_fit
+                                                         (LigmaDisplayShell *shell,
                                                           gdouble           new_scale,
                                                           gdouble           current_scale,
                                                           gboolean         *horizontally,
                                                           gboolean         *vertically);
 
-static gboolean  gimp_display_shell_scale_viewport_coord_almost_centered
-                                                         (GimpDisplayShell *shell,
+static gboolean  ligma_display_shell_scale_viewport_coord_almost_centered
+                                                         (LigmaDisplayShell *shell,
                                                           gint              x,
                                                           gint              y,
                                                           gboolean         *horizontally,
                                                           gboolean         *vertically);
 
-static void      gimp_display_shell_scale_get_image_center_viewport
-                                                         (GimpDisplayShell *shell,
+static void      ligma_display_shell_scale_get_image_center_viewport
+                                                         (LigmaDisplayShell *shell,
                                                           gint             *image_center_x,
                                                           gint             *image_center_y);
 
 
-static void      gimp_display_shell_scale_get_zoom_focus (GimpDisplayShell *shell,
+static void      ligma_display_shell_scale_get_zoom_focus (LigmaDisplayShell *shell,
                                                           gdouble           new_scale,
                                                           gdouble           current_scale,
                                                           gdouble          *x,
                                                           gdouble          *y,
-                                                          GimpZoomFocus     zoom_focus);
+                                                          LigmaZoomFocus     zoom_focus);
 
 
 /*  public functions  */
 
 /**
- * gimp_display_shell_scale_revert:
- * @shell:     the #GimpDisplayShell
+ * ligma_display_shell_scale_revert:
+ * @shell:     the #LigmaDisplayShell
  *
  * Reverts the display to the previously used scale. If no previous
  * scale exist, then the call does nothing.
@@ -121,9 +121,9 @@ static void      gimp_display_shell_scale_get_zoom_focus (GimpDisplayShell *shel
  * Returns: %TRUE if the scale was reverted, otherwise %FALSE.
  **/
 gboolean
-gimp_display_shell_scale_revert (GimpDisplayShell *shell)
+ligma_display_shell_scale_revert (LigmaDisplayShell *shell)
 {
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
+  g_return_val_if_fail (LIGMA_IS_DISPLAY_SHELL (shell), FALSE);
 
   /* don't bother if no scale has been set */
   if (shell->last_scale < SCALE_EPSILON)
@@ -131,7 +131,7 @@ gimp_display_shell_scale_revert (GimpDisplayShell *shell)
 
   shell->last_scale_time = 0;
 
-  gimp_display_shell_scale_by_values (shell,
+  ligma_display_shell_scale_by_values (shell,
                                       shell->last_scale,
                                       shell->last_offset_x,
                                       shell->last_offset_y,
@@ -141,37 +141,37 @@ gimp_display_shell_scale_revert (GimpDisplayShell *shell)
 }
 
 /**
- * gimp_display_shell_scale_can_revert:
- * @shell: the #GimpDisplayShell
+ * ligma_display_shell_scale_can_revert:
+ * @shell: the #LigmaDisplayShell
  *
  * Returns: %TRUE if a previous display scale exists, otherwise %FALSE.
  **/
 gboolean
-gimp_display_shell_scale_can_revert (GimpDisplayShell *shell)
+ligma_display_shell_scale_can_revert (LigmaDisplayShell *shell)
 {
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
+  g_return_val_if_fail (LIGMA_IS_DISPLAY_SHELL (shell), FALSE);
 
   return (shell->last_scale > SCALE_EPSILON);
 }
 
 /**
- * gimp_display_shell_scale_save_revert_values:
+ * ligma_display_shell_scale_save_revert_values:
  * @shell:
  *
  * Handle the updating of the Revert Zoom variables.
  **/
 void
-gimp_display_shell_scale_save_revert_values (GimpDisplayShell *shell)
+ligma_display_shell_scale_save_revert_values (LigmaDisplayShell *shell)
 {
   guint now;
 
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
 
   now = time (NULL);
 
   if (now - shell->last_scale_time >= SCALE_TIMEOUT)
     {
-      shell->last_scale    = gimp_zoom_model_get_factor (shell->zoom);
+      shell->last_scale    = ligma_zoom_model_get_factor (shell->zoom);
       shell->last_offset_x = shell->offset_x;
       shell->last_offset_y = shell->offset_y;
     }
@@ -180,8 +180,8 @@ gimp_display_shell_scale_save_revert_values (GimpDisplayShell *shell)
 }
 
 /**
- * gimp_display_shell_scale_set_dot_for_dot:
- * @shell:        the #GimpDisplayShell
+ * ligma_display_shell_scale_set_dot_for_dot:
+ * @shell:        the #LigmaDisplayShell
  * @dot_for_dot:  whether "Dot for Dot" should be enabled
  *
  * If @dot_for_dot is set to %TRUE then the "Dot for Dot" mode (where image and
@@ -189,36 +189,36 @@ gimp_display_shell_scale_save_revert_values (GimpDisplayShell *shell)
  * disabled if @dot_for_dot is %FALSE.
  **/
 void
-gimp_display_shell_scale_set_dot_for_dot (GimpDisplayShell *shell,
+ligma_display_shell_scale_set_dot_for_dot (LigmaDisplayShell *shell,
                                           gboolean          dot_for_dot)
 {
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
 
   if (dot_for_dot != shell->dot_for_dot)
     {
-      GimpDisplayConfig *config = shell->display->config;
+      LigmaDisplayConfig *config = shell->display->config;
       gboolean           resize_window;
 
       /* Resize windows only in multi-window mode */
       resize_window = (config->resize_windows_on_zoom &&
-                       ! GIMP_GUI_CONFIG (config)->single_window_mode);
+                       ! LIGMA_GUI_CONFIG (config)->single_window_mode);
 
       /* freeze the active tool */
-      gimp_display_shell_pause (shell);
+      ligma_display_shell_pause (shell);
 
       shell->dot_for_dot = dot_for_dot;
 
-      gimp_display_shell_scale_update (shell);
+      ligma_display_shell_scale_update (shell);
 
-      gimp_display_shell_scale_resize (shell, resize_window, FALSE);
+      ligma_display_shell_scale_resize (shell, resize_window, FALSE);
 
       /* re-enable the active tool */
-      gimp_display_shell_resume (shell);
+      ligma_display_shell_resume (shell);
     }
 }
 
 /**
- * gimp_display_shell_scale_get_image_size:
+ * ligma_display_shell_scale_get_image_size:
  * @shell:
  * @w:
  * @h:
@@ -227,19 +227,19 @@ gimp_display_shell_scale_set_dot_for_dot (GimpDisplayShell *shell,
  *
  **/
 void
-gimp_display_shell_scale_get_image_size (GimpDisplayShell *shell,
+ligma_display_shell_scale_get_image_size (LigmaDisplayShell *shell,
                                          gint             *w,
                                          gint             *h)
 {
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
 
-  gimp_display_shell_scale_get_image_size_for_scale (shell,
-                                                     gimp_zoom_model_get_factor (shell->zoom),
+  ligma_display_shell_scale_get_image_size_for_scale (shell,
+                                                     ligma_zoom_model_get_factor (shell->zoom),
                                                      w, h);
 }
 
 /**
- * gimp_display_shell_scale_get_image_bounds:
+ * ligma_display_shell_scale_get_image_bounds:
  * @shell:
  * @x:
  * @y:
@@ -250,24 +250,24 @@ gimp_display_shell_scale_get_image_size (GimpDisplayShell *shell,
  * been transformed (i.e., scaled, rotated, and scrolled).
  **/
 void
-gimp_display_shell_scale_get_image_bounds (GimpDisplayShell *shell,
+ligma_display_shell_scale_get_image_bounds (LigmaDisplayShell *shell,
                                            gint             *x,
                                            gint             *y,
                                            gint             *w,
                                            gint             *h)
 {
-  GimpImage *image;
+  LigmaImage *image;
   gdouble    x1, y1;
   gdouble    x2, y2;
 
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
 
-  image = gimp_display_get_image (shell->display);
+  image = ligma_display_get_image (shell->display);
 
-  gimp_display_shell_transform_bounds (shell,
+  ligma_display_shell_transform_bounds (shell,
                                        0, 0,
-                                       gimp_image_get_width (image),
-                                       gimp_image_get_height (image),
+                                       ligma_image_get_width (image),
+                                       ligma_image_get_height (image),
                                        &x1, &y1,
                                        &x2, &y2);
 
@@ -283,7 +283,7 @@ gimp_display_shell_scale_get_image_bounds (GimpDisplayShell *shell,
 }
 
 /**
- * gimp_display_shell_scale_get_image_unrotated_bounds:
+ * ligma_display_shell_scale_get_image_unrotated_bounds:
  * @shell:
  * @x:
  * @y:
@@ -294,26 +294,26 @@ gimp_display_shell_scale_get_image_bounds (GimpDisplayShell *shell,
  * been scaled and scrolled, but before it has been rotated.
  **/
 void
-gimp_display_shell_scale_get_image_unrotated_bounds (GimpDisplayShell *shell,
+ligma_display_shell_scale_get_image_unrotated_bounds (LigmaDisplayShell *shell,
                                                      gint             *x,
                                                      gint             *y,
                                                      gint             *w,
                                                      gint             *h)
 {
-  GimpImage *image;
+  LigmaImage *image;
 
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
 
-  image = gimp_display_get_image (shell->display);
+  image = ligma_display_get_image (shell->display);
 
   if (x) *x = -shell->offset_x;
   if (y) *y = -shell->offset_y;
-  if (w) *w = floor (gimp_image_get_width  (image) * shell->scale_x);
-  if (h) *h = floor (gimp_image_get_height (image) * shell->scale_y);
+  if (w) *w = floor (ligma_image_get_width  (image) * shell->scale_x);
+  if (h) *h = floor (ligma_image_get_height (image) * shell->scale_y);
 }
 
 /**
- * gimp_display_shell_scale_get_image_bounding_box:
+ * ligma_display_shell_scale_get_image_bounding_box:
  * @shell:
  * @x:
  * @y:
@@ -324,7 +324,7 @@ gimp_display_shell_scale_get_image_unrotated_bounds (GimpDisplayShell *shell,
  * been transformed (i.e., scaled, rotated, and scrolled).
  **/
 void
-gimp_display_shell_scale_get_image_bounding_box (GimpDisplayShell *shell,
+ligma_display_shell_scale_get_image_bounding_box (LigmaDisplayShell *shell,
                                                  gint             *x,
                                                  gint             *y,
                                                  gint             *w,
@@ -334,11 +334,11 @@ gimp_display_shell_scale_get_image_bounding_box (GimpDisplayShell *shell,
   gdouble       x1, y1;
   gdouble       x2, y2;
 
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
 
-  bounding_box = gimp_display_shell_get_bounding_box (shell);
+  bounding_box = ligma_display_shell_get_bounding_box (shell);
 
-  gimp_display_shell_transform_bounds (shell,
+  ligma_display_shell_transform_bounds (shell,
                                        bounding_box.x,
                                        bounding_box.y,
                                        bounding_box.x + bounding_box.width,
@@ -368,7 +368,7 @@ gimp_display_shell_scale_get_image_bounding_box (GimpDisplayShell *shell,
 }
 
 /**
- * gimp_display_shell_scale_get_image_unrotated_bounding_box:
+ * ligma_display_shell_scale_get_image_unrotated_bounding_box:
  * @shell:
  * @x:
  * @y:
@@ -379,7 +379,7 @@ gimp_display_shell_scale_get_image_bounding_box (GimpDisplayShell *shell,
  * been scaled and scrolled, but before it has been rotated.
  **/
 void
-gimp_display_shell_scale_get_image_unrotated_bounding_box (GimpDisplayShell *shell,
+ligma_display_shell_scale_get_image_unrotated_bounding_box (LigmaDisplayShell *shell,
                                                            gint             *x,
                                                            gint             *y,
                                                            gint             *w,
@@ -389,9 +389,9 @@ gimp_display_shell_scale_get_image_unrotated_bounding_box (GimpDisplayShell *she
   gdouble       x1, y1;
   gdouble       x2, y2;
 
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
 
-  bounding_box = gimp_display_shell_get_bounding_box (shell);
+  bounding_box = ligma_display_shell_get_bounding_box (shell);
 
   x1 = bounding_box.x * shell->scale_x -
        shell->offset_x;
@@ -425,30 +425,30 @@ gimp_display_shell_scale_get_image_unrotated_bounding_box (GimpDisplayShell *she
 }
 
 /**
- * gimp_display_shell_scale_image_is_within_viewport:
+ * ligma_display_shell_scale_image_is_within_viewport:
  * @shell:
  *
  * Returns: %TRUE if the (scaled) image is smaller than and within the
  *          viewport.
  **/
 gboolean
-gimp_display_shell_scale_image_is_within_viewport (GimpDisplayShell *shell,
+ligma_display_shell_scale_image_is_within_viewport (LigmaDisplayShell *shell,
                                                    gboolean         *horizontally,
                                                    gboolean         *vertically)
 {
   gboolean horizontally_dummy, vertically_dummy;
 
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
+  g_return_val_if_fail (LIGMA_IS_DISPLAY_SHELL (shell), FALSE);
 
   if (! horizontally) horizontally = &horizontally_dummy;
   if (! vertically)   vertically   = &vertically_dummy;
 
-  if (! gimp_display_shell_get_infinite_canvas (shell))
+  if (! ligma_display_shell_get_infinite_canvas (shell))
     {
       gint sx, sy;
       gint sw, sh;
 
-      gimp_display_shell_scale_get_image_bounding_box (shell,
+      ligma_display_shell_scale_get_image_bounding_box (shell,
                                                        &sx, &sy, &sw, &sh);
 
       sx -= shell->offset_x;
@@ -472,18 +472,18 @@ gimp_display_shell_scale_image_is_within_viewport (GimpDisplayShell *shell,
  * shell and call this function whenever they need to be recalculated.
  */
 void
-gimp_display_shell_scale_update (GimpDisplayShell *shell)
+ligma_display_shell_scale_update (LigmaDisplayShell *shell)
 {
-  GimpImage *image;
+  LigmaImage *image;
 
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
 
-  image = gimp_display_get_image (shell->display);
+  image = ligma_display_get_image (shell->display);
 
   if (image)
     {
-      gimp_display_shell_calculate_scale_x_and_y (shell,
-                                                  gimp_zoom_model_get_factor (shell->zoom),
+      ligma_display_shell_calculate_scale_x_and_y (shell,
+                                                  ligma_zoom_model_get_factor (shell->zoom),
                                                   &shell->scale_x,
                                                   &shell->scale_y);
     }
@@ -495,39 +495,39 @@ gimp_display_shell_scale_update (GimpDisplayShell *shell)
 }
 
 /**
- * gimp_display_shell_scale:
- * @shell:     the #GimpDisplayShell
+ * ligma_display_shell_scale:
+ * @shell:     the #LigmaDisplayShell
  * @zoom_type: whether to zoom in, out or to a specific scale
- * @scale:     ignored unless @zoom_type == %GIMP_ZOOM_TO
+ * @scale:     ignored unless @zoom_type == %LIGMA_ZOOM_TO
  *
  * This function figures out the context of the zoom and behaves
  * appropriately thereafter.
  *
  **/
 void
-gimp_display_shell_scale (GimpDisplayShell *shell,
-                          GimpZoomType      zoom_type,
+ligma_display_shell_scale (LigmaDisplayShell *shell,
+                          LigmaZoomType      zoom_type,
                           gdouble           new_scale,
-                          GimpZoomFocus     zoom_focus)
+                          LigmaZoomFocus     zoom_focus)
 {
-  GimpDisplayConfig *config;
+  LigmaDisplayConfig *config;
   gdouble            current_scale;
   gdouble            delta = 0.0;
   gboolean           resize_window;
 
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (shell->canvas != NULL);
 
-  current_scale = gimp_zoom_model_get_factor (shell->zoom);
+  current_scale = ligma_zoom_model_get_factor (shell->zoom);
 
-  if (zoom_type == GIMP_ZOOM_SMOOTH)
+  if (zoom_type == LIGMA_ZOOM_SMOOTH)
     delta = -new_scale;
 
-  if (zoom_type == GIMP_ZOOM_PINCH)
+  if (zoom_type == LIGMA_ZOOM_PINCH)
     delta = new_scale;
 
-  if (zoom_type != GIMP_ZOOM_TO)
-    new_scale = gimp_zoom_model_zoom_step (zoom_type, current_scale, delta);
+  if (zoom_type != LIGMA_ZOOM_TO)
+    new_scale = ligma_zoom_model_zoom_step (zoom_type, current_scale, delta);
 
   if (SCALE_EQUALS (new_scale, current_scale))
     return;
@@ -536,16 +536,16 @@ gimp_display_shell_scale (GimpDisplayShell *shell,
 
   /* Resize windows only in multi-window mode */
   resize_window = (config->resize_windows_on_zoom &&
-                   ! GIMP_GUI_CONFIG (config)->single_window_mode);
+                   ! LIGMA_GUI_CONFIG (config)->single_window_mode);
 
   if (resize_window)
     {
       /* If the window is resized on zoom, simply do the zoom and get
        * things rolling
        */
-      gimp_zoom_model_zoom (shell->zoom, GIMP_ZOOM_TO, new_scale);
+      ligma_zoom_model_zoom (shell->zoom, LIGMA_ZOOM_TO, new_scale);
 
-      gimp_display_shell_scale_resize (shell, TRUE, FALSE);
+      ligma_display_shell_scale_resize (shell, TRUE, FALSE);
 
       /* XXX The @zoom_focus policy is clearly not working in this code
        * path. This should be fixed.
@@ -557,20 +557,20 @@ gimp_display_shell_scale (GimpDisplayShell *shell,
       gint     image_center_x;
       gint     image_center_y;
 
-      gimp_display_shell_scale_get_zoom_focus (shell,
+      ligma_display_shell_scale_get_zoom_focus (shell,
                                                new_scale,
                                                current_scale,
                                                &x,
                                                &y,
                                                zoom_focus);
-      gimp_display_shell_scale_get_image_center_viewport (shell,
+      ligma_display_shell_scale_get_image_center_viewport (shell,
                                                           &image_center_x,
                                                           &image_center_y);
 
-      gimp_display_shell_scale_to (shell, new_scale, x, y);
+      ligma_display_shell_scale_to (shell, new_scale, x, y);
 
       /* skip centering magic if pointer focus was requested */
-      if (zoom_focus != GIMP_ZOOM_FOCUS_POINTER)
+      if (zoom_focus != LIGMA_ZOOM_FOCUS_POINTER)
         {
           gboolean starts_fitting_horiz;
           gboolean starts_fitting_vert;
@@ -583,24 +583,24 @@ gimp_display_shell_scale (GimpDisplayShell *shell,
            * the focus point is as good as in the center, center on
            * that axis
            */
-          gimp_display_shell_scale_image_starts_to_fit (shell,
+          ligma_display_shell_scale_image_starts_to_fit (shell,
                                                         new_scale,
                                                         current_scale,
                                                         &starts_fitting_horiz,
                                                         &starts_fitting_vert);
 
-          gimp_display_shell_scale_viewport_coord_almost_centered (shell,
+          ligma_display_shell_scale_viewport_coord_almost_centered (shell,
                                                                    x,
                                                                    y,
                                                                    &zoom_focus_almost_centered_horiz,
                                                                    &zoom_focus_almost_centered_vert);
-          gimp_display_shell_scale_viewport_coord_almost_centered (shell,
+          ligma_display_shell_scale_viewport_coord_almost_centered (shell,
                                                                    image_center_x,
                                                                    image_center_y,
                                                                    &image_center_almost_centered_horiz,
                                                                    &image_center_almost_centered_vert);
 
-          gimp_display_shell_scroll_center_image (shell,
+          ligma_display_shell_scroll_center_image (shell,
                                                   starts_fitting_horiz ||
                                                   (zoom_focus_almost_centered_horiz &&
                                                    image_center_almost_centered_horiz),
@@ -612,8 +612,8 @@ gimp_display_shell_scale (GimpDisplayShell *shell,
 }
 
 /**
- * gimp_display_shell_scale_to_rectangle:
- * @shell:         the #GimpDisplayShell
+ * ligma_display_shell_scale_to_rectangle:
+ * @shell:         the #LigmaDisplayShell
  * @zoom_type:     whether to zoom in or out
  * @x:             retangle's x in image coordinates
  * @y:             retangle's y in image coordinates
@@ -624,8 +624,8 @@ gimp_display_shell_scale (GimpDisplayShell *shell,
  * Scales and scrolls to a specific image rectangle
  **/
 void
-gimp_display_shell_scale_to_rectangle (GimpDisplayShell *shell,
-                                       GimpZoomType      zoom_type,
+ligma_display_shell_scale_to_rectangle (LigmaDisplayShell *shell,
+                                       LigmaZoomType      zoom_type,
                                        gdouble           x,
                                        gdouble           y,
                                        gdouble           width,
@@ -638,9 +638,9 @@ gimp_display_shell_scale_to_rectangle (GimpDisplayShell *shell,
   gint    offset_x = 0;
   gint    offset_y = 0;
 
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
 
-  gimp_display_shell_transform_bounds (shell,
+  ligma_display_shell_transform_bounds (shell,
                                        x, y,
                                        x + width, y + height,
                                        &x, &y,
@@ -655,16 +655,16 @@ gimp_display_shell_scale_to_rectangle (GimpDisplayShell *shell,
   width  = MAX (1.0, width);
   height = MAX (1.0, height);
 
-  current_scale = gimp_zoom_model_get_factor (shell->zoom);
+  current_scale = ligma_zoom_model_get_factor (shell->zoom);
 
   switch (zoom_type)
     {
-    case GIMP_ZOOM_IN:
+    case LIGMA_ZOOM_IN:
       factor = MIN ((shell->disp_width  / width),
                     (shell->disp_height / height));
       break;
 
-    case GIMP_ZOOM_OUT:
+    case LIGMA_ZOOM_OUT:
       factor = MAX ((width  / shell->disp_width),
                     (height / shell->disp_height));
       break;
@@ -678,7 +678,7 @@ gimp_display_shell_scale_to_rectangle (GimpDisplayShell *shell,
 
   switch (zoom_type)
     {
-    case GIMP_ZOOM_IN:
+    case LIGMA_ZOOM_IN:
       /*  move the center of the rectangle to the center of the
        *  viewport:
        *
@@ -692,7 +692,7 @@ gimp_display_shell_scale_to_rectangle (GimpDisplayShell *shell,
       offset_y = RINT (factor * (y + height / 2.0) - (shell->disp_height / 2));
       break;
 
-    case GIMP_ZOOM_OUT:
+    case LIGMA_ZOOM_OUT:
       /*  move the center of the viewport to the center of the
        *  rectangle:
        *
@@ -717,7 +717,7 @@ gimp_display_shell_scale_to_rectangle (GimpDisplayShell *shell,
       offset_x  != shell->offset_x ||
       offset_y  != shell->offset_y)
     {
-      gimp_display_shell_scale_by_values (shell,
+      ligma_display_shell_scale_by_values (shell,
                                           new_scale,
                                           offset_x, offset_y,
                                           resize_window);
@@ -725,40 +725,40 @@ gimp_display_shell_scale_to_rectangle (GimpDisplayShell *shell,
 }
 
 /**
- * gimp_display_shell_scale_fit_in:
- * @shell: the #GimpDisplayShell
+ * ligma_display_shell_scale_fit_in:
+ * @shell: the #LigmaDisplayShell
  *
  * Sets the scale such that the entire image precisely fits in the
  * display area.
  **/
 void
-gimp_display_shell_scale_fit_in (GimpDisplayShell *shell)
+ligma_display_shell_scale_fit_in (LigmaDisplayShell *shell)
 {
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
 
-  gimp_display_shell_scale_fit_or_fill (shell,
+  ligma_display_shell_scale_fit_or_fill (shell,
                                         /* fill = */ FALSE);
  }
 
 /**
- * gimp_display_shell_scale_fill:
- * @shell: the #GimpDisplayShell
+ * ligma_display_shell_scale_fill:
+ * @shell: the #LigmaDisplayShell
  *
  * Sets the scale such that the entire display area is precisely
  * filled by the image.
  **/
 void
-gimp_display_shell_scale_fill (GimpDisplayShell *shell)
+ligma_display_shell_scale_fill (LigmaDisplayShell *shell)
 {
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
 
-  gimp_display_shell_scale_fit_or_fill (shell,
+  ligma_display_shell_scale_fit_or_fill (shell,
                                         /* fill = */ TRUE);
 }
 
 /**
- * gimp_display_shell_scale_by_values:
- * @shell:         the #GimpDisplayShell
+ * ligma_display_shell_scale_by_values:
+ * @shell:         the #LigmaDisplayShell
  * @scale:         the new scale
  * @offset_x:      the new X offset
  * @offset_y:      the new Y offset
@@ -766,45 +766,45 @@ gimp_display_shell_scale_fill (GimpDisplayShell *shell)
  *
  * Directly sets the image scale and image offsets used by the display. If
  * @resize_window is %TRUE then the display window is resized to better
- * accommodate the image, see gimp_display_shell_shrink_wrap().
+ * accommodate the image, see ligma_display_shell_shrink_wrap().
  **/
 void
-gimp_display_shell_scale_by_values (GimpDisplayShell *shell,
+ligma_display_shell_scale_by_values (LigmaDisplayShell *shell,
                                     gdouble           scale,
                                     gint              offset_x,
                                     gint              offset_y,
                                     gboolean          resize_window)
 {
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
 
   /*  Abort early if the values are all setup already. We don't
    *  want to inadvertently resize the window (bug #164281).
    */
-  if (SCALE_EQUALS (gimp_zoom_model_get_factor (shell->zoom), scale) &&
+  if (SCALE_EQUALS (ligma_zoom_model_get_factor (shell->zoom), scale) &&
       shell->offset_x == offset_x &&
       shell->offset_y == offset_y)
     return;
 
-  gimp_display_shell_scale_save_revert_values (shell);
+  ligma_display_shell_scale_save_revert_values (shell);
 
   /* freeze the active tool */
-  gimp_display_shell_pause (shell);
+  ligma_display_shell_pause (shell);
 
-  gimp_zoom_model_zoom (shell->zoom, GIMP_ZOOM_TO, scale);
+  ligma_zoom_model_zoom (shell->zoom, LIGMA_ZOOM_TO, scale);
 
   shell->offset_x = offset_x;
   shell->offset_y = offset_y;
 
-  gimp_display_shell_rotate_update_transform (shell);
+  ligma_display_shell_rotate_update_transform (shell);
 
-  gimp_display_shell_scale_resize (shell, resize_window, FALSE);
+  ligma_display_shell_scale_resize (shell, resize_window, FALSE);
 
   /* re-enable the active tool */
-  gimp_display_shell_resume (shell);
+  ligma_display_shell_resume (shell);
 }
 
 void
-gimp_display_shell_scale_drag (GimpDisplayShell *shell,
+ligma_display_shell_scale_drag (LigmaDisplayShell *shell,
                                gdouble           start_x,
                                gdouble           start_y,
                                gdouble           delta_x,
@@ -812,37 +812,37 @@ gimp_display_shell_scale_drag (GimpDisplayShell *shell,
 {
   gdouble scale;
 
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
 
-  scale = gimp_zoom_model_get_factor (shell->zoom);
+  scale = ligma_zoom_model_get_factor (shell->zoom);
 
   if (delta_y != 0.0)
     {
-      GimpDisplayConfig *config = shell->display->config;
+      LigmaDisplayConfig *config = shell->display->config;
       gdouble            speed  = config->drag_zoom_speed * 0.01;
 
-      gimp_display_shell_push_zoom_focus_pointer_pos (shell, start_x, start_y);
+      ligma_display_shell_push_zoom_focus_pointer_pos (shell, start_x, start_y);
 
       if (config->drag_zoom_mode == PROP_DRAG_ZOOM_MODE_DISTANCE)
         {
-          gimp_display_shell_scale (shell,
-                                    GIMP_ZOOM_TO,
+          ligma_display_shell_scale (shell,
+                                    LIGMA_ZOOM_TO,
                                     scale * exp (0.005 * speed * delta_y),
-                                    GIMP_ZOOM_FOCUS_POINTER);
+                                    LIGMA_ZOOM_FOCUS_POINTER);
         }
       else if (delta_y > 0.0) /* drag_zoom_mode == PROP_DRAG_ZOOM_MODE_DURATION */
         {
-          gimp_display_shell_scale (shell,
-                                    GIMP_ZOOM_TO,
+          ligma_display_shell_scale (shell,
+                                    LIGMA_ZOOM_TO,
                                     scale * (1 + 0.1 * speed),
-                                    GIMP_ZOOM_FOCUS_POINTER);
+                                    LIGMA_ZOOM_FOCUS_POINTER);
         }
       else /* delta_y < 0.0 */
         {
-          gimp_display_shell_scale (shell,
-                                    GIMP_ZOOM_TO,
+          ligma_display_shell_scale (shell,
+                                    LIGMA_ZOOM_TO,
                                     scale * (1 - 0.1 * speed),
-                                    GIMP_ZOOM_FOCUS_POINTER);
+                                    LIGMA_ZOOM_FOCUS_POINTER);
         }
 
 
@@ -858,69 +858,69 @@ gimp_display_shell_scale_drag (GimpDisplayShell *shell,
 }
 
 /**
- * gimp_display_shell_scale_shrink_wrap:
- * @shell: the #GimpDisplayShell
+ * ligma_display_shell_scale_shrink_wrap:
+ * @shell: the #LigmaDisplayShell
  *
  * Convenience function with the same functionality as
- * gimp_display_shell_scale_resize(@shell, TRUE, grow_only).
+ * ligma_display_shell_scale_resize(@shell, TRUE, grow_only).
  **/
 void
-gimp_display_shell_scale_shrink_wrap (GimpDisplayShell *shell,
+ligma_display_shell_scale_shrink_wrap (LigmaDisplayShell *shell,
                                       gboolean          grow_only)
 {
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
 
-  gimp_display_shell_scale_resize (shell, TRUE, grow_only);
+  ligma_display_shell_scale_resize (shell, TRUE, grow_only);
 }
 
 /**
- * gimp_display_shell_scale_resize:
- * @shell:          the #GimpDisplayShell
+ * ligma_display_shell_scale_resize:
+ * @shell:          the #LigmaDisplayShell
  * @resize_window:  whether the display window should be resized
  * @grow_only:      whether shrinking of the window is allowed or not
  *
  * Function commonly called after a change in display scale to make the changes
  * visible to the user. If @resize_window is %TRUE then the display window is
  * resized to accommodate the display image as per
- * gimp_display_shell_shrink_wrap().
+ * ligma_display_shell_shrink_wrap().
  **/
 void
-gimp_display_shell_scale_resize (GimpDisplayShell *shell,
+ligma_display_shell_scale_resize (LigmaDisplayShell *shell,
                                  gboolean          resize_window,
                                  gboolean          grow_only)
 {
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
 
   /* freeze the active tool */
-  gimp_display_shell_pause (shell);
+  ligma_display_shell_pause (shell);
 
   if (resize_window)
     {
-      GimpImageWindow *window = gimp_display_shell_get_window (shell);
+      LigmaImageWindow *window = ligma_display_shell_get_window (shell);
 
-      if (window && gimp_image_window_get_active_shell (window) == shell)
+      if (window && ligma_image_window_get_active_shell (window) == shell)
         {
-          gimp_image_window_shrink_wrap (window, grow_only);
+          ligma_image_window_shrink_wrap (window, grow_only);
         }
     }
 
-  gimp_display_shell_scroll_clamp_and_update (shell);
-  gimp_display_shell_scaled (shell);
+  ligma_display_shell_scroll_clamp_and_update (shell);
+  ligma_display_shell_scaled (shell);
 
-  gimp_display_shell_expose_full (shell);
-  gimp_display_shell_render_invalidate_full (shell);
+  ligma_display_shell_expose_full (shell);
+  ligma_display_shell_render_invalidate_full (shell);
 
   /* re-enable the active tool */
-  gimp_display_shell_resume (shell);
+  ligma_display_shell_resume (shell);
 }
 
 void
-gimp_display_shell_set_initial_scale (GimpDisplayShell *shell,
+ligma_display_shell_set_initial_scale (LigmaDisplayShell *shell,
                                       gdouble           scale,
                                       gint             *display_width,
                                       gint             *display_height)
 {
-  GimpImage    *image;
+  LigmaImage    *image;
   GdkRectangle  workarea;
   gint          image_width;
   gint          image_height;
@@ -929,20 +929,20 @@ gimp_display_shell_set_initial_scale (GimpDisplayShell *shell,
   gint          shell_width;
   gint          shell_height;
 
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
 
-  image = gimp_display_get_image (shell->display);
+  image = ligma_display_get_image (shell->display);
 
   gdk_monitor_get_workarea (shell->initial_monitor, &workarea);
 
-  image_width  = gimp_image_get_width  (image);
-  image_height = gimp_image_get_height (image);
+  image_width  = ligma_image_get_width  (image);
+  image_height = ligma_image_get_height (image);
 
   monitor_width  = workarea.width  * 0.75;
   monitor_height = workarea.height * 0.75;
 
   /* We need to zoom before we use SCALE[XY] */
-  gimp_zoom_model_zoom (shell->zoom, GIMP_ZOOM_TO, scale);
+  ligma_zoom_model_zoom (shell->zoom, LIGMA_ZOOM_TO, scale);
 
   shell_width  = SCALEX (shell, image_width);
   shell_height = SCALEY (shell, image_height);
@@ -953,23 +953,23 @@ gimp_display_shell_set_initial_scale (GimpDisplayShell *shell,
       if (shell_width > monitor_width || shell_height > monitor_height)
         {
           gdouble new_scale;
-          gdouble current = gimp_zoom_model_get_factor (shell->zoom);
+          gdouble current = ligma_zoom_model_get_factor (shell->zoom);
 
           new_scale = current * MIN (((gdouble) monitor_height) / shell_height,
                                      ((gdouble) monitor_width)  / shell_width);
 
-          new_scale = gimp_zoom_model_zoom_step (GIMP_ZOOM_OUT, new_scale, 0.0);
+          new_scale = ligma_zoom_model_zoom_step (LIGMA_ZOOM_OUT, new_scale, 0.0);
 
           /*  Since zooming out might skip a zoom step we zoom in
            *  again and test if we are small enough.
            */
-          gimp_zoom_model_zoom (shell->zoom, GIMP_ZOOM_TO,
-                                gimp_zoom_model_zoom_step (GIMP_ZOOM_IN,
+          ligma_zoom_model_zoom (shell->zoom, LIGMA_ZOOM_TO,
+                                ligma_zoom_model_zoom_step (LIGMA_ZOOM_IN,
                                                            new_scale, 0.0));
 
           if (SCALEX (shell, image_width)  > monitor_width ||
               SCALEY (shell, image_height) > monitor_height)
-            gimp_zoom_model_zoom (shell->zoom, GIMP_ZOOM_TO, new_scale);
+            ligma_zoom_model_zoom (shell->zoom, LIGMA_ZOOM_TO, new_scale);
 
           shell_width  = SCALEX (shell, image_width);
           shell_height = SCALEY (shell, image_height);
@@ -989,8 +989,8 @@ gimp_display_shell_set_initial_scale (GimpDisplayShell *shell,
 }
 
 /**
- * gimp_display_shell_get_rotated_scale:
- * @shell:   the #GimpDisplayShell
+ * ligma_display_shell_get_rotated_scale:
+ * @shell:   the #LigmaDisplayShell
  * @scale_x: horizontal scale output
  * @scale_y: vertical scale output
  *
@@ -998,11 +998,11 @@ gimp_display_shell_set_initial_scale (GimpDisplayShell *shell,
  * factors, taking rotation into account.
  **/
 void
-gimp_display_shell_get_rotated_scale (GimpDisplayShell *shell,
+ligma_display_shell_get_rotated_scale (LigmaDisplayShell *shell,
                                       gdouble          *scale_x,
                                       gdouble          *scale_y)
 {
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
 
   if (shell->rotate_angle == 0.0 || shell->scale_x == shell->scale_y)
     {
@@ -1024,7 +1024,7 @@ gimp_display_shell_get_rotated_scale (GimpDisplayShell *shell,
 }
 
 /**
- * gimp_display_shell_push_zoom_focus_pointer_pos:
+ * ligma_display_shell_push_zoom_focus_pointer_pos:
  * @shell:
  * @x:
  * @y:
@@ -1036,11 +1036,11 @@ gimp_display_shell_get_rotated_scale (GimpDisplayShell *shell,
  * Therefore it should not be used by our code. When it is, we should
  * make sure that @shell->zoom_focus_point has been properly used and
  * freed, if we don't want it to leak.
- * Just calling gimp_display_shell_scale() is not enough as there are
+ * Just calling ligma_display_shell_scale() is not enough as there are
  * currently some code paths where the values is not used.
  **/
 void
-gimp_display_shell_push_zoom_focus_pointer_pos (GimpDisplayShell *shell,
+ligma_display_shell_push_zoom_focus_pointer_pos (LigmaDisplayShell *shell,
                                                 gint              x,
                                                 gint              y)
 {
@@ -1056,7 +1056,7 @@ gimp_display_shell_push_zoom_focus_pointer_pos (GimpDisplayShell *shell,
 /*  private functions   */
 
 static void
-gimp_display_shell_scale_get_screen_resolution (GimpDisplayShell *shell,
+ligma_display_shell_scale_get_screen_resolution (LigmaDisplayShell *shell,
                                                 gdouble          *xres,
                                                 gdouble          *yres)
 {
@@ -1064,7 +1064,7 @@ gimp_display_shell_scale_get_screen_resolution (GimpDisplayShell *shell,
 
   if (shell->dot_for_dot)
     {
-      gimp_image_get_resolution (gimp_display_get_image (shell->display),
+      ligma_image_get_resolution (ligma_display_get_image (shell->display),
                                  &x, &y);
     }
   else
@@ -1078,7 +1078,7 @@ gimp_display_shell_scale_get_screen_resolution (GimpDisplayShell *shell,
 }
 
 /**
- * gimp_display_shell_scale_get_image_size_for_scale:
+ * ligma_display_shell_scale_get_image_size_for_scale:
  * @shell:
  * @scale:
  * @w:
@@ -1086,23 +1086,23 @@ gimp_display_shell_scale_get_screen_resolution (GimpDisplayShell *shell,
  *
  **/
 static void
-gimp_display_shell_scale_get_image_size_for_scale (GimpDisplayShell *shell,
+ligma_display_shell_scale_get_image_size_for_scale (LigmaDisplayShell *shell,
                                                    gdouble           scale,
                                                    gint             *w,
                                                    gint             *h)
 {
-  GimpImage *image = gimp_display_get_image (shell->display);
+  LigmaImage *image = ligma_display_get_image (shell->display);
   gdouble    scale_x;
   gdouble    scale_y;
 
-  gimp_display_shell_calculate_scale_x_and_y (shell, scale, &scale_x, &scale_y);
+  ligma_display_shell_calculate_scale_x_and_y (shell, scale, &scale_x, &scale_y);
 
-  if (w) *w = scale_x * gimp_image_get_width  (image);
-  if (h) *h = scale_y * gimp_image_get_height (image);
+  if (w) *w = scale_x * ligma_image_get_width  (image);
+  if (h) *h = scale_y * ligma_image_get_height (image);
 }
 
 /**
- * gimp_display_shell_calculate_scale_x_and_y:
+ * ligma_display_shell_calculate_scale_x_and_y:
  * @shell:
  * @scale:
  * @scale_x:
@@ -1110,19 +1110,19 @@ gimp_display_shell_scale_get_image_size_for_scale (GimpDisplayShell *shell,
  *
  **/
 static void
-gimp_display_shell_calculate_scale_x_and_y (GimpDisplayShell *shell,
+ligma_display_shell_calculate_scale_x_and_y (LigmaDisplayShell *shell,
                                             gdouble           scale,
                                             gdouble          *scale_x,
                                             gdouble          *scale_y)
 {
-  GimpImage *image = gimp_display_get_image (shell->display);
+  LigmaImage *image = ligma_display_get_image (shell->display);
   gdouble    xres;
   gdouble    yres;
   gdouble    screen_xres;
   gdouble    screen_yres;
 
-  gimp_image_get_resolution (image, &xres, &yres);
-  gimp_display_shell_scale_get_screen_resolution (shell,
+  ligma_image_get_resolution (image, &xres, &yres);
+  ligma_display_shell_scale_get_screen_resolution (shell,
                                                   &screen_xres, &screen_yres);
 
   if (scale_x) *scale_x = scale * screen_xres / xres;
@@ -1130,7 +1130,7 @@ gimp_display_shell_calculate_scale_x_and_y (GimpDisplayShell *shell,
 }
 
 /**
- * gimp_display_shell_scale_to:
+ * ligma_display_shell_scale_to:
  * @shell:
  * @scale:
  * @viewport_x:
@@ -1140,7 +1140,7 @@ gimp_display_shell_calculate_scale_x_and_y (GimpDisplayShell *shell,
  * by @x and @y doesn't change it's position on screen.
  **/
 static void
-gimp_display_shell_scale_to (GimpDisplayShell *shell,
+ligma_display_shell_scale_to (LigmaDisplayShell *shell,
                              gdouble           scale,
                              gdouble           viewport_x,
                              gdouble           viewport_y)
@@ -1148,15 +1148,15 @@ gimp_display_shell_scale_to (GimpDisplayShell *shell,
   gdouble image_x, image_y;
   gdouble new_viewport_x, new_viewport_y;
 
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
 
   if (! shell->display)
     return;
 
   /* freeze the active tool */
-  gimp_display_shell_pause (shell);
+  ligma_display_shell_pause (shell);
 
-  gimp_display_shell_untransform_xy_f (shell,
+  ligma_display_shell_untransform_xy_f (shell,
                                        viewport_x,
                                        viewport_y,
                                        &image_x,
@@ -1164,36 +1164,36 @@ gimp_display_shell_scale_to (GimpDisplayShell *shell,
 
   /* Note that we never come here if we need to resize_windows_on_zoom
    */
-  gimp_display_shell_scale_by_values (shell,
+  ligma_display_shell_scale_by_values (shell,
                                       scale,
                                       shell->offset_x,
                                       shell->offset_y,
                                       FALSE);
 
-  gimp_display_shell_transform_xy_f (shell,
+  ligma_display_shell_transform_xy_f (shell,
                                      image_x,
                                      image_y,
                                      &new_viewport_x,
                                      &new_viewport_y);
 
-  gimp_display_shell_scroll (shell,
+  ligma_display_shell_scroll (shell,
                              new_viewport_x - viewport_x,
                              new_viewport_y - viewport_y);
 
   /* re-enable the active tool */
-  gimp_display_shell_resume (shell);
+  ligma_display_shell_resume (shell);
 }
 
 /**
- * gimp_display_shell_scale_fit_or_fill:
- * @shell: the #GimpDisplayShell
+ * ligma_display_shell_scale_fit_or_fill:
+ * @shell: the #LigmaDisplayShell
  * @fill:  whether to scale the image to fill the viewport,
  *         or fit inside the viewport
  *
- * A common implementation for gimp_display_shell_scale_{fit_in,fill}().
+ * A common implementation for ligma_display_shell_scale_{fit_in,fill}().
  **/
 static void
-gimp_display_shell_scale_fit_or_fill (GimpDisplayShell *shell,
+ligma_display_shell_scale_fit_or_fill (LigmaDisplayShell *shell,
                                       gboolean          fill)
 {
   GeglRectangle bounding_box;
@@ -1204,21 +1204,21 @@ gimp_display_shell_scale_fit_or_fill (GimpDisplayShell *shell,
   gdouble       current_scale;
   gdouble       zoom_factor;
 
-  if (! gimp_display_shell_get_infinite_canvas (shell))
+  if (! ligma_display_shell_get_infinite_canvas (shell))
     {
-      GimpImage *image = gimp_display_get_image (shell->display);
+      LigmaImage *image = ligma_display_get_image (shell->display);
 
       bounding_box.x      = 0;
       bounding_box.y      = 0;
-      bounding_box.width  = gimp_image_get_width  (image);
-      bounding_box.height = gimp_image_get_height (image);
+      bounding_box.width  = ligma_image_get_width  (image);
+      bounding_box.height = ligma_image_get_height (image);
     }
   else
     {
-      bounding_box = gimp_display_shell_get_bounding_box (shell);
+      bounding_box = ligma_display_shell_get_bounding_box (shell);
     }
 
-  gimp_display_shell_transform_bounds (shell,
+  ligma_display_shell_transform_bounds (shell,
                                        bounding_box.x,
                                        bounding_box.y,
                                        bounding_box.x + bounding_box.width,
@@ -1231,7 +1231,7 @@ gimp_display_shell_scale_fit_or_fill (GimpDisplayShell *shell,
   image_width  -= image_x;
   image_height -= image_y;
 
-  current_scale = gimp_zoom_model_get_factor (shell->zoom);
+  current_scale = ligma_zoom_model_get_factor (shell->zoom);
 
   if (fill)
     {
@@ -1244,16 +1244,16 @@ gimp_display_shell_scale_fit_or_fill (GimpDisplayShell *shell,
                          shell->disp_height / image_height);
     }
 
-  gimp_display_shell_scale (shell,
-                            GIMP_ZOOM_TO,
+  ligma_display_shell_scale (shell,
+                            LIGMA_ZOOM_TO,
                             zoom_factor * current_scale,
-                            GIMP_ZOOM_FOCUS_BEST_GUESS);
+                            LIGMA_ZOOM_FOCUS_BEST_GUESS);
 
-  gimp_display_shell_scroll_center_content (shell, TRUE, TRUE);
+  ligma_display_shell_scroll_center_content (shell, TRUE, TRUE);
 }
 
 static gboolean
-gimp_display_shell_scale_image_starts_to_fit (GimpDisplayShell *shell,
+ligma_display_shell_scale_image_starts_to_fit (LigmaDisplayShell *shell,
                                               gdouble           new_scale,
                                               gdouble           current_scale,
                                               gboolean         *horizontally,
@@ -1267,7 +1267,7 @@ gimp_display_shell_scale_image_starts_to_fit (GimpDisplayShell *shell,
 
   /* The image can only start to fit if we zoom out */
   if (new_scale > current_scale ||
-      gimp_display_shell_get_infinite_canvas (shell))
+      ligma_display_shell_get_infinite_canvas (shell))
     {
       *vertically   = FALSE;
       *horizontally = FALSE;
@@ -1279,12 +1279,12 @@ gimp_display_shell_scale_image_starts_to_fit (GimpDisplayShell *shell,
       gint new_scale_width;
       gint new_scale_height;
 
-      gimp_display_shell_scale_get_image_size_for_scale (shell,
+      ligma_display_shell_scale_get_image_size_for_scale (shell,
                                                          current_scale,
                                                          &current_scale_width,
                                                          &current_scale_height);
 
-      gimp_display_shell_scale_get_image_size_for_scale (shell,
+      ligma_display_shell_scale_get_image_size_for_scale (shell,
                                                          new_scale,
                                                          &new_scale_width,
                                                          &new_scale_height);
@@ -1299,13 +1299,13 @@ gimp_display_shell_scale_image_starts_to_fit (GimpDisplayShell *shell,
 }
 
 static gboolean
-gimp_display_shell_scale_image_stops_to_fit (GimpDisplayShell *shell,
+ligma_display_shell_scale_image_stops_to_fit (LigmaDisplayShell *shell,
                                              gdouble           new_scale,
                                              gdouble           current_scale,
                                              gboolean         *horizontally,
                                              gboolean         *vertically)
 {
-  return gimp_display_shell_scale_image_starts_to_fit (shell,
+  return ligma_display_shell_scale_image_starts_to_fit (shell,
                                                        current_scale,
                                                        new_scale,
                                                        horizontally,
@@ -1313,7 +1313,7 @@ gimp_display_shell_scale_image_stops_to_fit (GimpDisplayShell *shell,
 }
 
 /**
- * gimp_display_shell_scale_viewport_coord_almost_centered:
+ * ligma_display_shell_scale_viewport_coord_almost_centered:
  * @shell:
  * @x:
  * @y:
@@ -1322,7 +1322,7 @@ gimp_display_shell_scale_image_stops_to_fit (GimpDisplayShell *shell,
  *
  **/
 static gboolean
-gimp_display_shell_scale_viewport_coord_almost_centered (GimpDisplayShell *shell,
+ligma_display_shell_scale_viewport_coord_almost_centered (LigmaDisplayShell *shell,
                                                          gint              x,
                                                          gint              y,
                                                          gboolean         *horizontally,
@@ -1333,7 +1333,7 @@ gimp_display_shell_scale_viewport_coord_almost_centered (GimpDisplayShell *shell
   gint     center_x           = shell->disp_width  / 2;
   gint     center_y           = shell->disp_height / 2;
 
-  if (! gimp_display_shell_get_infinite_canvas (shell))
+  if (! ligma_display_shell_get_infinite_canvas (shell))
     {
       local_horizontally = (x > center_x - ALMOST_CENTERED_THRESHOLD &&
                             x < center_x + ALMOST_CENTERED_THRESHOLD);
@@ -1349,20 +1349,20 @@ gimp_display_shell_scale_viewport_coord_almost_centered (GimpDisplayShell *shell
 }
 
 static void
-gimp_display_shell_scale_get_image_center_viewport (GimpDisplayShell *shell,
+ligma_display_shell_scale_get_image_center_viewport (LigmaDisplayShell *shell,
                                                     gint             *image_center_x,
                                                     gint             *image_center_y)
 {
   gint sw, sh;
 
-  gimp_display_shell_scale_get_image_size (shell, &sw, &sh);
+  ligma_display_shell_scale_get_image_size (shell, &sw, &sh);
 
   if (image_center_x) *image_center_x = -shell->offset_x + sw / 2;
   if (image_center_y) *image_center_y = -shell->offset_y + sh / 2;
 }
 
 /**
- * gimp_display_shell_scale_get_zoom_focus:
+ * ligma_display_shell_scale_get_zoom_focus:
  * @shell:
  * @new_scale:
  * @x:
@@ -1372,14 +1372,14 @@ gimp_display_shell_scale_get_image_center_viewport (GimpDisplayShell *shell,
  * independently for each axis.
  **/
 static void
-gimp_display_shell_scale_get_zoom_focus (GimpDisplayShell *shell,
+ligma_display_shell_scale_get_zoom_focus (LigmaDisplayShell *shell,
                                          gdouble           new_scale,
                                          gdouble           current_scale,
                                          gdouble          *x,
                                          gdouble          *y,
-                                         GimpZoomFocus     zoom_focus)
+                                         LigmaZoomFocus     zoom_focus)
 {
-  GtkWidget *window = GTK_WIDGET (gimp_display_shell_get_window (shell));
+  GtkWidget *window = GTK_WIDGET (ligma_display_shell_get_window (shell));
   GdkEvent  *event;
   gint       image_center_x;
   gint       image_center_y;
@@ -1387,7 +1387,7 @@ gimp_display_shell_scale_get_zoom_focus (GimpDisplayShell *shell,
   gint       other_y;
 
   /* Calculate stops-to-fit focus point */
-  gimp_display_shell_scale_get_image_center_viewport (shell,
+  ligma_display_shell_scale_get_image_center_viewport (shell,
                                                       &image_center_x,
                                                       &image_center_y);
 
@@ -1446,45 +1446,45 @@ gimp_display_shell_scale_get_zoom_focus (GimpDisplayShell *shell,
         }
     }
 
-  if (zoom_focus == GIMP_ZOOM_FOCUS_RETAIN_CENTERING_ELSE_BEST_GUESS)
+  if (zoom_focus == LIGMA_ZOOM_FOCUS_RETAIN_CENTERING_ELSE_BEST_GUESS)
     {
-      if (gimp_display_shell_scale_viewport_coord_almost_centered (shell,
+      if (ligma_display_shell_scale_viewport_coord_almost_centered (shell,
                                                                    image_center_x,
                                                                    image_center_y,
                                                                    NULL,
                                                                    NULL))
         {
-          zoom_focus = GIMP_ZOOM_FOCUS_IMAGE_CENTER;
+          zoom_focus = LIGMA_ZOOM_FOCUS_IMAGE_CENTER;
         }
       else
         {
-          zoom_focus = GIMP_ZOOM_FOCUS_BEST_GUESS;
+          zoom_focus = LIGMA_ZOOM_FOCUS_BEST_GUESS;
         }
     }
 
   switch (zoom_focus)
     {
-    case GIMP_ZOOM_FOCUS_POINTER:
+    case LIGMA_ZOOM_FOCUS_POINTER:
       *x = other_x;
       *y = other_y;
       break;
 
-    case GIMP_ZOOM_FOCUS_IMAGE_CENTER:
+    case LIGMA_ZOOM_FOCUS_IMAGE_CENTER:
       *x = image_center_x;
       *y = image_center_y;
       break;
 
-    case GIMP_ZOOM_FOCUS_BEST_GUESS:
+    case LIGMA_ZOOM_FOCUS_BEST_GUESS:
     default:
       {
         gboolean within_horizontally, within_vertically;
         gboolean stops_horizontally, stops_vertically;
 
-        gimp_display_shell_scale_image_is_within_viewport (shell,
+        ligma_display_shell_scale_image_is_within_viewport (shell,
                                                            &within_horizontally,
                                                            &within_vertically);
 
-        gimp_display_shell_scale_image_stops_to_fit (shell,
+        ligma_display_shell_scale_image_stops_to_fit (shell,
                                                      new_scale,
                                                      current_scale,
                                                      &stops_horizontally,

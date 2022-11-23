@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,23 +15,23 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef  __GIMP_DRAWABLE_BUCKET_FILL_H__
-#define  __GIMP_DRAWABLE_BUCKET_FILL_H__
+#ifndef  __LIGMA_DRAWABLE_BUCKET_FILL_H__
+#define  __LIGMA_DRAWABLE_BUCKET_FILL_H__
 
 
-void         gimp_drawable_bucket_fill              (GimpDrawable         *drawable,
-                                                     GimpFillOptions      *options,
+void         ligma_drawable_bucket_fill              (LigmaDrawable         *drawable,
+                                                     LigmaFillOptions      *options,
                                                      gboolean              fill_transparent,
-                                                     GimpSelectCriterion   fill_criterion,
+                                                     LigmaSelectCriterion   fill_criterion,
                                                      gdouble               threshold,
                                                      gboolean              sample_merged,
                                                      gboolean              diagonal_neighbors,
                                                      gdouble               x,
                                                      gdouble               y);
-GeglBuffer * gimp_drawable_get_bucket_fill_buffer   (GimpDrawable         *drawable,
-                                                     GimpFillOptions      *options,
+GeglBuffer * ligma_drawable_get_bucket_fill_buffer   (LigmaDrawable         *drawable,
+                                                     LigmaFillOptions      *options,
                                                      gboolean              fill_transparent,
-                                                     GimpSelectCriterion   fill_criterion,
+                                                     LigmaSelectCriterion   fill_criterion,
                                                      gdouble               threshold,
                                                      gboolean              show_all,
                                                      gboolean              sample_merged,
@@ -44,14 +44,14 @@ GeglBuffer * gimp_drawable_get_bucket_fill_buffer   (GimpDrawable         *drawa
                                                      gint                 *mask_width,
                                                      gint                 *mask_height);
 
-GeglBuffer * gimp_drawable_get_line_art_fill_buffer (GimpDrawable         *drawable,
-                                                     GimpLineArt          *line_art,
-                                                     GimpFillOptions      *options,
+GeglBuffer * ligma_drawable_get_line_art_fill_buffer (LigmaDrawable         *drawable,
+                                                     LigmaLineArt          *line_art,
+                                                     LigmaFillOptions      *options,
                                                      gboolean              sample_merged,
                                                      gboolean              fill_color_as_line_art,
                                                      gdouble               fill_color_threshold,
                                                      gboolean              line_art_stroke,
-                                                     GimpStrokeOptions    *stroke_options,
+                                                     LigmaStrokeOptions    *stroke_options,
                                                      gdouble               seed_x,
                                                      gdouble               seed_y,
                                                      GeglBuffer          **mask_buffer,
@@ -60,4 +60,4 @@ GeglBuffer * gimp_drawable_get_line_art_fill_buffer (GimpDrawable         *drawa
                                                      gint                 *mask_width,
                                                      gint                 *mask_height);
 
-#endif  /*  __GIMP_DRAWABLE_BUCKET_FILL_H__  */
+#endif  /*  __LIGMA_DRAWABLE_BUCKET_FILL_H__  */

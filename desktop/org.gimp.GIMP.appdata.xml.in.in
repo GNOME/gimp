@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Copyright 1995-2017 Spencer Kimball, Peter Mattis, and others -->
 <component type="desktop">
-  <id>org.gimp.GIMP</id>
+  <id>org.ligma.LIGMA</id>
 
   <!--
       The tag 'metadata_license' means the licence of this file, not the whole
@@ -12,12 +12,12 @@
   -->
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-3.0+ AND LGPL-3.0+</project_license>
-  <developer_name>The GIMP team</developer_name>
+  <developer_name>The LIGMA team</developer_name>
   <name>GNU Image Manipulation Program</name>
   <summary>Create images and edit photographs</summary>
   <description>
     <p>
-      GIMP is an acronym for GNU Image Manipulation Program. It is a
+      LIGMA is an acronym for GNU Image Manipulation Program. It is a
       freely distributed program for such tasks as photo retouching,
       image composition and image authoring.
     </p>
@@ -28,33 +28,33 @@
       image format converter, etc.
     </p>
     <p>
-      GIMP is expandable and extensible. It is designed to be
+      LIGMA is expandable and extensible. It is designed to be
       augmented with plug-ins and extensions to do just about
       anything. The advanced scripting interface allows everything
       from the simplest task to the most complex image manipulation
-      procedures to be easily scripted. GIMP is available for Linux,
+      procedures to be easily scripted. LIGMA is available for Linux,
       Microsoft Windows and OS X.
     </p>
   </description>
   <url type="bugtracker">@BUG_REPORT_URL@</url>
-  <url type="donation">https://www.gimp.org/donating/</url>
-  <url type="help">https://www.gimp.org/docs/</url>
-  <url type="homepage">https://www.gimp.org/</url>
-  <url type="vcs-browser">https://gitlab.gnome.org/GNOME/gimp/</url>
-  <url type="contribute">https://www.gimp.org/develop/</url>
+  <url type="donation">https://www.ligma.org/donating/</url>
+  <url type="help">https://www.ligma.org/docs/</url>
+  <url type="homepage">https://www.ligma.org/</url>
+  <url type="vcs-browser">https://gitlab.gnome.org/GNOME/ligma/</url>
+  <url type="contribute">https://www.ligma.org/develop/</url>
   <screenshots>
     <screenshot type="default">
-      <image>https://www.gimp.org/screenshots/Screenshot-gimp-2.10-painting.jpg</image>
-      <caption>Painting in GIMP</caption>
+      <image>https://www.ligma.org/screenshots/Screenshot-ligma-2.10-painting.jpg</image>
+      <caption>Painting in LIGMA</caption>
     </screenshot>
     <screenshot type="default">
-      <image>https://www.gimp.org/screenshots/Screenshot-gimp-2.10-photo-editing.jpg</image>
-      <caption>Photo editing in GIMP</caption>
+      <image>https://www.ligma.org/screenshots/Screenshot-ligma-2.10-photo-editing.jpg</image>
+      <caption>Photo editing in LIGMA</caption>
     </screenshot>
   </screenshots>
-  <update_contact>gimp-developer-list_at_gnome.org</update_contact>
+  <update_contact>ligma-developer-list_at_gnome.org</update_contact>
   <keywords>
-    <keyword>GIMP</keyword>
+    <keyword>LIGMA</keyword>
     <keyword>Photoshop</keyword>
   </keywords>
   <kudos>
@@ -63,21 +63,21 @@
     <kudo>ModernToolkit</kudo>
     <kudo>UserDocs</kudo>
   </kudos>
-  <translation type="gettext">gimp20</translation>
+  <translation type="gettext">ligma20</translation>
 
-  <launchable type="desktop-id">gimp.desktop</launchable>
+  <launchable type="desktop-id">ligma.desktop</launchable>
   <provides>
-    <binary>@GIMP_COMMAND@</binary>
+    <binary>@LIGMA_COMMAND@</binary>
     <!-- Fix the ID renaming, and things like past reviews made on the
          older ID in software installers. -->
-    <id>gimp.desktop</id>
+    <id>ligma.desktop</id>
   </provides>
 
   <releases>
     <release version="2.99.14" date="2022-11-13" type="development">
       <description>
         <p>
-        GIMP 2.99.14 was released with the following noteworthy improvements:
+        LIGMA 2.99.14 was released with the following noteworthy improvements:
         </p>
         <ul>
           <li demo="toolbox:align,
@@ -112,7 +112,7 @@
     <release version="2.99.12" date="2022-08-21" type="development">
       <description>
         <p>
-        One step further towards GIMP 3.0, GIMP 2.99.12 comes along with the following noteworthy improvements:
+        One step further towards LIGMA 3.0, LIGMA 2.99.12 comes along with the following noteworthy improvements:
         </p>
         <ul>
           <li demo="toolbox:bucket-fill,
@@ -154,7 +154,7 @@
           <li>New WBMP format initial support</li>
           <li>New ANI format initial support</li>
           <li>Huge internal work on script-fu</li>
-          <li>New command line option --quit to quit GIMP immediately after running batch commands, propagating script failure in exit code</li>
+          <li>New command line option --quit to quit LIGMA immediately after running batch commands, propagating script failure in exit code</li>
           <li>The command line option --batch-interpreter is now mandatory for --batch as there is no default interpreter anymore</li>
           <li>Many plug-in API improvements</li>
         </ul>
@@ -163,7 +163,7 @@
     <release version="2.99.10" date="2022-02-22" type="development">
       <description>
         <p>
-        GIMP 2.99.10 is a notable development release in the 2.99 series, featuring many changes.
+        LIGMA 2.99.10 is a notable development release in the 2.99 series, featuring many changes.
         Let's mention in particular:
         </p>
         <ul>
@@ -207,7 +207,7 @@
           Windows screenshot implementation now has an "Include mouse pointer" option
           </li>
           <li>
-          New and modified libgimp API for plug-in developers
+          New and modified libligma API for plug-in developers
           </li>
         </ul>
       </description>
@@ -216,7 +216,7 @@
       <description>
         <p>
         While during this fourth cycle of development, many efforts were devoted to
-        infrastructure, GIMP 2.99.8 still received many welcome improvements, notably:
+        infrastructure, LIGMA 2.99.8 still received many welcome improvements, notably:
         </p>
         <ul>
           <li>
@@ -232,7 +232,7 @@
           Marching ants display ported to Wayland and macOS Big Sur logics
           </li>
           <li>
-          Initial implementation of config folder migration for GIMP 3
+          Initial implementation of config folder migration for LIGMA 3
           </li>
           <li>
           Action "view-rotate-reset" renamed to "view-reset" and new "view-rotate-reset" and "view-flip-rotate" actions
@@ -250,7 +250,7 @@
           JPEG XL: new support (loading and exporting)
           </li>
           <li>
-          New API functions gimp_display_present() and gimp_procedure_dialog_fill_expander()
+          New API functions ligma_display_present() and ligma_procedure_dialog_fill_expander()
           </li>
           <li>
           Much porting to newer API, code cleanup and bug fixing done
@@ -259,7 +259,7 @@
       </description>
     </release>
     <release version="2.99.6" date="2021-04-26" type="development">
-      <url type="details">https://www.gimp.org/news/2021/04/29/gimp-2-99-6-released/</url>
+      <url type="details">https://www.ligma.org/news/2021/04/29/ligma-2-99-6-released/</url>
       <description>
         <p>
         For this third development release, more development effort has been shifted towards the API.
@@ -297,7 +297,7 @@
       </description>
     </release>
     <release version="2.99.4" date="2020-12-22" type="development">
-      <url type="details">https://www.gimp.org/news/2020/12/25/gimp-2-99-4-released/</url>
+      <url type="details">https://www.ligma.org/news/2020/12/25/ligma-2-99-4-released/</url>
       <description>
         <p>
         This second development release contains various usability and API updates.
@@ -335,10 +335,10 @@
       </description>
     </release>
     <release version="2.99.2" date="2020-10-25" type="development">
-      <url type="details">https://www.gimp.org/news/2020/10/25/gimp-2-99-2-released/</url>
+      <url type="details">https://www.ligma.org/news/2020/10/25/ligma-2-99-2-released/</url>
       <description>
         <p>
-        This is the first development release for GIMP 3.0, whose focus
+        This is the first development release for LIGMA 3.0, whose focus
         was the port to the GTK+3 toolkit. Noteworthy improvements
         (though some are still work-in-progress) include:
         </p>
@@ -374,7 +374,7 @@
     <release version="2.10.32" date="2022-06-12">
       <description>
         <p>
-          GIMP continues strengthening its bases with this new version 2.10.32 fixing many bugs and improving format support.
+          LIGMA continues strengthening its bases with this new version 2.10.32 fixing many bugs and improving format support.
           Notable changes:
         </p>
         <ul>
@@ -416,7 +416,7 @@
     <release version="2.10.30" date="2021-12-19">
       <description>
         <p>
-          GIMP 2.10.30 fixes many bugs, updates backend implementations
+          LIGMA 2.10.30 fixes many bugs, updates backend implementations
           to follow OS evolutions, improves metadata support as well as
           support of several formats, such as PSD and AVIF.
         </p>
@@ -425,7 +425,7 @@
     <release version="2.10.28" date="2021-09-14">
       <description>
         <p>
-          GIMP 2.10.28 fixes a build issue of GIMP 2.10.26, where some
+          LIGMA 2.10.28 fixes a build issue of LIGMA 2.10.26, where some
           theme data was not properly installed.
         </p>
       </description>
@@ -433,16 +433,16 @@
     <release version="2.10.26" date="2021-09-05">
       <description>
         <p>
-          GIMP 2.10.26 is a bug fix release, containing dozens of
+          LIGMA 2.10.26 is a bug fix release, containing dozens of
           fixes, both in core, scripts and plug-in code.
         </p>
       </description>
     </release>
     <release version="2.10.24" date="2021-03-28">
-      <url type="details">https://www.gimp.org/news/2021/03/29/gimp-2-10-24-released/</url>
+      <url type="details">https://www.ligma.org/news/2021/03/29/ligma-2-10-24-released/</url>
       <description>
         <p>
-          GIMP 2.10.24 is again mostly a bug fix release. Notable changes:
+          LIGMA 2.10.24 is again mostly a bug fix release. Notable changes:
         </p>
         <ul>
           <li>
@@ -471,10 +471,10 @@
       </description>
     </release>
     <release version="2.10.22" date="2020-10-04">
-      <url type="details">https://www.gimp.org/news/2020/10/04/gimp-2-10-22-released/</url>
+      <url type="details">https://www.ligma.org/news/2020/10/04/ligma-2-10-22-released/</url>
       <description>
         <p>
-          GIMP 2.10.22 is mainly a bug fix release. Notable changes:
+          LIGMA 2.10.22 is mainly a bug fix release. Notable changes:
         </p>
         <ul>
           <li>
@@ -511,10 +511,10 @@
       </description>
     </release>
     <release version="2.10.20" date="2020-06-07">
-      <url type="details">https://www.gimp.org/news/2020/06/07/gimp-2-10-20-released/</url>
+      <url type="details">https://www.ligma.org/news/2020/06/07/ligma-2-10-20-released/</url>
       <description>
         <p>
-          GIMP 2.10.20 comes with new features as well as important bugfixes.
+          LIGMA 2.10.20 comes with new features as well as important bugfixes.
           Notable changes:
         </p>
         <ul>
@@ -542,19 +542,19 @@
       </description>
     </release>
     <release version="2.10.18" date="2020-02-23">
-      <url type="details">https://www.gimp.org/news/2020/02/24/gimp-2-10-18-released/</url>
+      <url type="details">https://www.ligma.org/news/2020/02/24/ligma-2-10-18-released/</url>
       <description>
         <p>
-          GIMP 2.10.18 fixes some critical bugs, introduces naive support for CMYK PSD files,
+          LIGMA 2.10.18 fixes some critical bugs, introduces naive support for CMYK PSD files,
           and adds a higher-contrast variation of the symbolic icon theme.
         </p>
       </description>
     </release>
     <release version="2.10.16" date="2020-02-19">
-      <url type="details">https://www.gimp.org/news/2020/02/24/gimp-2-10-18-released/</url>
+      <url type="details">https://www.ligma.org/news/2020/02/24/ligma-2-10-18-released/</url>
       <description>
         <p>
-          GIMP 2.10.16 delivers several major usability improvements, a new tool
+          LIGMA 2.10.16 delivers several major usability improvements, a new tool
           for transformations in 3D space, new release checker, and the usual amount
           of bug fixes. Notable improvements:
         </p>
@@ -587,10 +587,10 @@
       </description>
     </release>
     <release version="2.10.14" date="2019-10-27">
-      <url type="details">https://www.gimp.org/news/2019/10/27/gimp-2-10-14-released/</url>
+      <url type="details">https://www.ligma.org/news/2019/10/27/ligma-2-10-14-released/</url>
       <description>
         <p>
-        GIMP 2.10.14 is again mostly a bug fix release, making GIMP rock-solid.
+        LIGMA 2.10.14 is again mostly a bug fix release, making LIGMA rock-solid.
         Furthermore many old filters got finally ported to GEGL.
 
         Of course it also has a few noteworthy improvements:
@@ -630,10 +630,10 @@
       </description>
     </release>
     <release version="2.10.12" date="2019-06-12">
-      <url type="details">https://www.gimp.org/news/2019/06/12/gimp-2-10-12-released/</url>
+      <url type="details">https://www.ligma.org/news/2019/06/12/ligma-2-10-12-released/</url>
       <description>
         <p>
-        GIMP 2.10.12 is a significant bug fix release, which is to be expected
+        LIGMA 2.10.12 is a significant bug fix release, which is to be expected
         after a 2.10.10 with so many changes!
         Still, very cool improvements are also available, in particular for
         curves editing:
@@ -661,10 +661,10 @@
       </description>
     </release>
     <release version="2.10.10" date="2019-04-07">
-      <url type="details">https://www.gimp.org/news/2019/04/07/gimp-2-10-10-released/</url>
+      <url type="details">https://www.ligma.org/news/2019/04/07/ligma-2-10-10-released/</url>
       <description>
         <p>
-          GIMP 2.10.10 is quite a big update with many new features and
+          LIGMA 2.10.10 is quite a big update with many new features and
           bug fixes. Notable improvements include:
         </p>
         <ul>
@@ -733,17 +733,17 @@
           New DDS format loading/exporting plug-in
           </li>
           <li>
-          Full rewrite of the Spyrogimp plug-in with more options and
+          Full rewrite of the Spyroligma plug-in with more options and
           better interaction
           </li>
         </ul>
       </description>
     </release>
     <release version="2.10.8" date="2018-11-07">
-      <url type="details">https://www.gimp.org/news/2018/11/08/gimp-2-10-8-released/</url>
+      <url type="details">https://www.ligma.org/news/2018/11/08/ligma-2-10-8-released/</url>
       <description>
         <p>
-          GIMP 2.10.8 is mostly a bug fix and optimization release. In
+          LIGMA 2.10.8 is mostly a bug fix and optimization release. In
           particular, it includes:
         </p>
         <ul>
@@ -767,10 +767,10 @@
       </description>
     </release>
     <release version="2.10.6" date="2018-08-19">
-      <url type="details">https://www.gimp.org/news/2018/08/19/gimp-2-10-6-released/</url>
+      <url type="details">https://www.ligma.org/news/2018/08/19/ligma-2-10-6-released/</url>
       <description>
         <p>
-          GIMP 2.10.6 comes with a lot of bug fixes, optimizations and
+          LIGMA 2.10.6 comes with a lot of bug fixes, optimizations and
           features. Most notable changes are:
         </p>
         <ul>
@@ -801,17 +801,17 @@
           confusing
           </li>
           <li>
-          New language (having GIMP translated in 81 languages now):
+          New language (having LIGMA translated in 81 languages now):
           Marathi
           </li>
         </ul>
       </description>
     </release>
     <release version="2.10.4" date="2018-07-04">
-      <url type="details">https://www.gimp.org/news/2018/07/04/gimp-2-10-4-released/</url>
+      <url type="details">https://www.ligma.org/news/2018/07/04/ligma-2-10-4-released/</url>
       <description>
         <p>
-          GIMP 2.10.4 includes a lot of bug fixes as well as various
+          LIGMA 2.10.4 includes a lot of bug fixes as well as various
           optimizations. Most notable changes are:
         </p>
         <ul>
@@ -838,10 +838,10 @@
       </description>
     </release>
     <release version="2.10.2" date="2018-05-20">
-      <url type="details">https://www.gimp.org/news/2018/05/20/gimp-2-10-2-released/</url>
+      <url type="details">https://www.ligma.org/news/2018/05/20/ligma-2-10-2-released/</url>
       <description>
         <p>
-          This second release in the GIMP 2.10 series, so soon after
+          This second release in the LIGMA 2.10 series, so soon after
           2.10.0, is mostly the usual bug-fixing version after a major
           release, with a few dozen bugs fixed.
         </p>
@@ -856,7 +856,7 @@
     </release>
 
     <release version="2.10.0" date="2018-04-27">
-      <url type="details">https://www.gimp.org/news/2018/04/27/gimp-2-10-0-released/</url>
+      <url type="details">https://www.ligma.org/news/2018/04/27/ligma-2-10-0-released/</url>
       <description>
         <p>
           First release of the 2.10 series which prominently features
@@ -900,7 +900,7 @@
             Basic HiDPI support: automatically or user-selected icon size
           </li>
           <li>
-            New themes for GIMP: Light, Gray, Dark, and System
+            New themes for LIGMA: Light, Gray, Dark, and System
           </li>
           <li>
             And much, much more…
@@ -910,10 +910,10 @@
     </release>
 
     <release version="2.10.0~rc2" date="2018-04-17" type="development">
-      <url type="details">https://www.gimp.org/news/2018/04/17/gimp-2-10-0-rc2-released/</url>
+      <url type="details">https://www.ligma.org/news/2018/04/17/ligma-2-10-0-rc2-released/</url>
       <description>
         <p>
-        In this second release candidate before GIMP 2.10.0, while
+        In this second release candidate before LIGMA 2.10.0, while
         debugging is still a prime target, a new focus has been put on
         speed and optimization in order to provide a smoother painting
         experience. Bigger changes are:
@@ -926,7 +926,7 @@
           <li>"Light" and "Dark" themes rewritten from scratch to get
           rid of various usability issues. "Lighter" and "Darker" themes
           removed.</li>
-          <li> New GimpToolGyroscope on-canvas control, currently used
+          <li> New LigmaToolGyroscope on-canvas control, currently used
           for the Panorama Projection filter. The widget provides
           on-canvas interaction for 3D rotation (yaw, pitch, roll).</li>
           <li>Plug-in debugging improved to output stack traces from
@@ -937,15 +937,15 @@
       </description>
     </release>
     <release version="2.10.0~rc1" date="2018-03-26" type="development">
-      <url type="details">https://www.gimp.org/news/2018/03/26/gimp-2-10-0-rc1-released/</url>
+      <url type="details">https://www.ligma.org/news/2018/03/26/ligma-2-10-0-rc1-released/</url>
       <description>
         <p>
-        GIMP 2.10.0-RC1 is the first release candidate before GIMP
+        LIGMA 2.10.0-RC1 is the first release candidate before LIGMA
         2.10.0 stable release, with a focus on debugging and stability.
         Other than the many bug fixes, most notable improvements are:
         </p>
         <ul>
-          <li>New dashboard dockable to monitor GIMP resource usage</li>
+          <li>New dashboard dockable to monitor LIGMA resource usage</li>
           <li>New debug dialog to produce back traces and other debug
           data, encouraging to report bugs</li>
           <li>Unsaved images can now be recovered after a crash</li>
@@ -960,9 +960,9 @@
     </release>
 
     <release version="2.9.8" date="2017-12-12" type="development">
-      <url type="details">https://www.gimp.org/news/2017/12/12/gimp-2-9-8-released/</url>
+      <url type="details">https://www.ligma.org/news/2017/12/12/ligma-2-9-8-released/</url>
       <description>
-        <p>GIMP 2.9.8 introduces on-canvas gradient
+        <p>LIGMA 2.9.8 introduces on-canvas gradient
         editing and various enhancements while focusing on bugfixing
         and stability.</p>
         <ul>

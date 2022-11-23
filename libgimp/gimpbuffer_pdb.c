@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimpbuffer_pdb.c
+ * ligmabuffer_pdb.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,12 +24,12 @@
 
 #include "stamp-pdbgen.h"
 
-#include "gimp.h"
+#include "ligma.h"
 
 
 /**
- * SECTION: gimpbuffer
- * @title: gimpbuffer
+ * SECTION: ligmabuffer
+ * @title: ligmabuffer
  * @short_description: Functions for manipulating cut buffers.
  *
  * Functions related to named cut buffers.
@@ -37,7 +37,7 @@
 
 
 /**
- * gimp_buffers_get_list:
+ * ligma_buffers_get_list:
  * @filter: An optional regular expression used to filter the list.
  *
  * Retrieve a complete listing of the available buffers.
@@ -52,31 +52,31 @@
  * Since: 2.4
  **/
 gchar **
-gimp_buffers_get_list (const gchar *filter)
+ligma_buffers_get_list (const gchar *filter)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gchar **buffer_list = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, filter,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-buffers-get-list",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-buffers-get-list",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    buffer_list = GIMP_VALUES_DUP_STRV (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    buffer_list = LIGMA_VALUES_DUP_STRV (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return buffer_list;
 }
 
 /**
- * gimp_buffer_rename:
+ * ligma_buffer_rename:
  * @buffer_name: The buffer name.
  * @new_name: The buffer's new name.
  *
@@ -90,33 +90,33 @@ gimp_buffers_get_list (const gchar *filter)
  * Since: 2.4
  **/
 gchar *
-gimp_buffer_rename (const gchar *buffer_name,
+ligma_buffer_rename (const gchar *buffer_name,
                     const gchar *new_name)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gchar *real_name = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, buffer_name,
                                           G_TYPE_STRING, new_name,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-buffer-rename",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-buffer-rename",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    real_name = GIMP_VALUES_DUP_STRING (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    real_name = LIGMA_VALUES_DUP_STRING (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return real_name;
 }
 
 /**
- * gimp_buffer_delete:
+ * ligma_buffer_delete:
  * @buffer_name: The buffer name.
  *
  * Deletes a named buffer.
@@ -128,30 +128,30 @@ gimp_buffer_rename (const gchar *buffer_name,
  * Since: 2.4
  **/
 gboolean
-gimp_buffer_delete (const gchar *buffer_name)
+ligma_buffer_delete (const gchar *buffer_name)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, buffer_name,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-buffer-delete",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-buffer-delete",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_buffer_get_width:
+ * ligma_buffer_get_width:
  * @buffer_name: The buffer name.
  *
  * Retrieves the specified buffer's width.
@@ -163,31 +163,31 @@ gimp_buffer_delete (const gchar *buffer_name)
  * Since: 2.4
  **/
 gint
-gimp_buffer_get_width (const gchar *buffer_name)
+ligma_buffer_get_width (const gchar *buffer_name)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gint width = 0;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, buffer_name,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-buffer-get-width",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-buffer-get-width",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    width = GIMP_VALUES_GET_INT (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    width = LIGMA_VALUES_GET_INT (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return width;
 }
 
 /**
- * gimp_buffer_get_height:
+ * ligma_buffer_get_height:
  * @buffer_name: The buffer name.
  *
  * Retrieves the specified buffer's height.
@@ -199,31 +199,31 @@ gimp_buffer_get_width (const gchar *buffer_name)
  * Since: 2.4
  **/
 gint
-gimp_buffer_get_height (const gchar *buffer_name)
+ligma_buffer_get_height (const gchar *buffer_name)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gint height = 0;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, buffer_name,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-buffer-get-height",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-buffer-get-height",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    height = GIMP_VALUES_GET_INT (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    height = LIGMA_VALUES_GET_INT (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return height;
 }
 
 /**
- * gimp_buffer_get_bytes:
+ * ligma_buffer_get_bytes:
  * @buffer_name: The buffer name.
  *
  * Retrieves the specified buffer's bytes.
@@ -235,31 +235,31 @@ gimp_buffer_get_height (const gchar *buffer_name)
  * Since: 2.4
  **/
 gint
-gimp_buffer_get_bytes (const gchar *buffer_name)
+ligma_buffer_get_bytes (const gchar *buffer_name)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gint bytes = 0;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, buffer_name,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-buffer-get-bytes",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-buffer-get-bytes",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    bytes = GIMP_VALUES_GET_INT (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    bytes = LIGMA_VALUES_GET_INT (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return bytes;
 }
 
 /**
- * gimp_buffer_get_image_type:
+ * ligma_buffer_get_image_type:
  * @buffer_name: The buffer name.
  *
  * Retrieves the specified buffer's image type.
@@ -270,26 +270,26 @@ gimp_buffer_get_bytes (const gchar *buffer_name)
  *
  * Since: 2.4
  **/
-GimpImageBaseType
-gimp_buffer_get_image_type (const gchar *buffer_name)
+LigmaImageBaseType
+ligma_buffer_get_image_type (const gchar *buffer_name)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpImageBaseType image_type = 0;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaImageBaseType image_type = 0;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, buffer_name,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-buffer-get-image-type",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-buffer-get-image-type",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    image_type = GIMP_VALUES_GET_ENUM (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    image_type = LIGMA_VALUES_GET_ENUM (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return image_type;
 }

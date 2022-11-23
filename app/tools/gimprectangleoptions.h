@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1999 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,85 +15,85 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_RECTANGLE_OPTIONS_H__
-#define __GIMP_RECTANGLE_OPTIONS_H__
+#ifndef __LIGMA_RECTANGLE_OPTIONS_H__
+#define __LIGMA_RECTANGLE_OPTIONS_H__
 
 
 typedef enum
 {
-  GIMP_RECTANGLE_OPTIONS_PROP_0,
+  LIGMA_RECTANGLE_OPTIONS_PROP_0,
 
-  GIMP_RECTANGLE_OPTIONS_PROP_AUTO_SHRINK,
-  GIMP_RECTANGLE_OPTIONS_PROP_SHRINK_MERGED,
-  GIMP_RECTANGLE_OPTIONS_PROP_HIGHLIGHT,
-  GIMP_RECTANGLE_OPTIONS_PROP_HIGHLIGHT_OPACITY,
-  GIMP_RECTANGLE_OPTIONS_PROP_GUIDE,
+  LIGMA_RECTANGLE_OPTIONS_PROP_AUTO_SHRINK,
+  LIGMA_RECTANGLE_OPTIONS_PROP_SHRINK_MERGED,
+  LIGMA_RECTANGLE_OPTIONS_PROP_HIGHLIGHT,
+  LIGMA_RECTANGLE_OPTIONS_PROP_HIGHLIGHT_OPACITY,
+  LIGMA_RECTANGLE_OPTIONS_PROP_GUIDE,
 
-  GIMP_RECTANGLE_OPTIONS_PROP_X,
-  GIMP_RECTANGLE_OPTIONS_PROP_Y,
-  GIMP_RECTANGLE_OPTIONS_PROP_WIDTH,
-  GIMP_RECTANGLE_OPTIONS_PROP_HEIGHT,
-  GIMP_RECTANGLE_OPTIONS_PROP_POSITION_UNIT,
-  GIMP_RECTANGLE_OPTIONS_PROP_SIZE_UNIT,
+  LIGMA_RECTANGLE_OPTIONS_PROP_X,
+  LIGMA_RECTANGLE_OPTIONS_PROP_Y,
+  LIGMA_RECTANGLE_OPTIONS_PROP_WIDTH,
+  LIGMA_RECTANGLE_OPTIONS_PROP_HEIGHT,
+  LIGMA_RECTANGLE_OPTIONS_PROP_POSITION_UNIT,
+  LIGMA_RECTANGLE_OPTIONS_PROP_SIZE_UNIT,
 
-  GIMP_RECTANGLE_OPTIONS_PROP_FIXED_RULE_ACTIVE,
-  GIMP_RECTANGLE_OPTIONS_PROP_FIXED_RULE,
-  GIMP_RECTANGLE_OPTIONS_PROP_DESIRED_FIXED_WIDTH,
-  GIMP_RECTANGLE_OPTIONS_PROP_DESIRED_FIXED_HEIGHT,
-  GIMP_RECTANGLE_OPTIONS_PROP_DESIRED_FIXED_SIZE_WIDTH,
-  GIMP_RECTANGLE_OPTIONS_PROP_DESIRED_FIXED_SIZE_HEIGHT,
-  GIMP_RECTANGLE_OPTIONS_PROP_DEFAULT_FIXED_SIZE_WIDTH,
-  GIMP_RECTANGLE_OPTIONS_PROP_DEFAULT_FIXED_SIZE_HEIGHT,
-  GIMP_RECTANGLE_OPTIONS_PROP_OVERRIDDEN_FIXED_SIZE,
-  GIMP_RECTANGLE_OPTIONS_PROP_ASPECT_NUMERATOR,
-  GIMP_RECTANGLE_OPTIONS_PROP_ASPECT_DENOMINATOR,
-  GIMP_RECTANGLE_OPTIONS_PROP_DEFAULT_ASPECT_NUMERATOR,
-  GIMP_RECTANGLE_OPTIONS_PROP_DEFAULT_ASPECT_DENOMINATOR,
-  GIMP_RECTANGLE_OPTIONS_PROP_OVERRIDDEN_FIXED_ASPECT,
-  GIMP_RECTANGLE_OPTIONS_PROP_USE_STRING_CURRENT,
-  GIMP_RECTANGLE_OPTIONS_PROP_FIXED_UNIT,
-  GIMP_RECTANGLE_OPTIONS_PROP_FIXED_CENTER,
+  LIGMA_RECTANGLE_OPTIONS_PROP_FIXED_RULE_ACTIVE,
+  LIGMA_RECTANGLE_OPTIONS_PROP_FIXED_RULE,
+  LIGMA_RECTANGLE_OPTIONS_PROP_DESIRED_FIXED_WIDTH,
+  LIGMA_RECTANGLE_OPTIONS_PROP_DESIRED_FIXED_HEIGHT,
+  LIGMA_RECTANGLE_OPTIONS_PROP_DESIRED_FIXED_SIZE_WIDTH,
+  LIGMA_RECTANGLE_OPTIONS_PROP_DESIRED_FIXED_SIZE_HEIGHT,
+  LIGMA_RECTANGLE_OPTIONS_PROP_DEFAULT_FIXED_SIZE_WIDTH,
+  LIGMA_RECTANGLE_OPTIONS_PROP_DEFAULT_FIXED_SIZE_HEIGHT,
+  LIGMA_RECTANGLE_OPTIONS_PROP_OVERRIDDEN_FIXED_SIZE,
+  LIGMA_RECTANGLE_OPTIONS_PROP_ASPECT_NUMERATOR,
+  LIGMA_RECTANGLE_OPTIONS_PROP_ASPECT_DENOMINATOR,
+  LIGMA_RECTANGLE_OPTIONS_PROP_DEFAULT_ASPECT_NUMERATOR,
+  LIGMA_RECTANGLE_OPTIONS_PROP_DEFAULT_ASPECT_DENOMINATOR,
+  LIGMA_RECTANGLE_OPTIONS_PROP_OVERRIDDEN_FIXED_ASPECT,
+  LIGMA_RECTANGLE_OPTIONS_PROP_USE_STRING_CURRENT,
+  LIGMA_RECTANGLE_OPTIONS_PROP_FIXED_UNIT,
+  LIGMA_RECTANGLE_OPTIONS_PROP_FIXED_CENTER,
 
-  GIMP_RECTANGLE_OPTIONS_PROP_LAST = GIMP_RECTANGLE_OPTIONS_PROP_FIXED_CENTER
-} GimpRectangleOptionsProp;
-
-
-#define GIMP_TYPE_RECTANGLE_OPTIONS               (gimp_rectangle_options_get_type ())
-#define GIMP_IS_RECTANGLE_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_RECTANGLE_OPTIONS))
-#define GIMP_RECTANGLE_OPTIONS(obj)               (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_RECTANGLE_OPTIONS, GimpRectangleOptions))
-#define GIMP_RECTANGLE_OPTIONS_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), GIMP_TYPE_RECTANGLE_OPTIONS, GimpRectangleOptionsInterface))
-
-#define GIMP_RECTANGLE_OPTIONS_GET_PRIVATE(obj)   (gimp_rectangle_options_get_private (GIMP_RECTANGLE_OPTIONS (obj)))
+  LIGMA_RECTANGLE_OPTIONS_PROP_LAST = LIGMA_RECTANGLE_OPTIONS_PROP_FIXED_CENTER
+} LigmaRectangleOptionsProp;
 
 
-typedef struct _GimpRectangleOptions          GimpRectangleOptions;
-typedef struct _GimpRectangleOptionsInterface GimpRectangleOptionsInterface;
-typedef struct _GimpRectangleOptionsPrivate   GimpRectangleOptionsPrivate;
+#define LIGMA_TYPE_RECTANGLE_OPTIONS               (ligma_rectangle_options_get_type ())
+#define LIGMA_IS_RECTANGLE_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_RECTANGLE_OPTIONS))
+#define LIGMA_RECTANGLE_OPTIONS(obj)               (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_RECTANGLE_OPTIONS, LigmaRectangleOptions))
+#define LIGMA_RECTANGLE_OPTIONS_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), LIGMA_TYPE_RECTANGLE_OPTIONS, LigmaRectangleOptionsInterface))
 
-struct _GimpRectangleOptionsInterface
+#define LIGMA_RECTANGLE_OPTIONS_GET_PRIVATE(obj)   (ligma_rectangle_options_get_private (LIGMA_RECTANGLE_OPTIONS (obj)))
+
+
+typedef struct _LigmaRectangleOptions          LigmaRectangleOptions;
+typedef struct _LigmaRectangleOptionsInterface LigmaRectangleOptionsInterface;
+typedef struct _LigmaRectangleOptionsPrivate   LigmaRectangleOptionsPrivate;
+
+struct _LigmaRectangleOptionsInterface
 {
   GTypeInterface base_iface;
 };
 
-struct _GimpRectangleOptionsPrivate
+struct _LigmaRectangleOptionsPrivate
 {
   gboolean                auto_shrink;
   gboolean                shrink_merged;
 
   gboolean                highlight;
   gdouble                 highlight_opacity;
-  GimpGuidesType          guide;
+  LigmaGuidesType          guide;
 
   gdouble                 x;
   gdouble                 y;
   gdouble                 width;
   gdouble                 height;
 
-  GimpUnit                position_unit;
-  GimpUnit                size_unit;
+  LigmaUnit                position_unit;
+  LigmaUnit                size_unit;
 
   gboolean                fixed_rule_active;
-  GimpRectangleFixedRule  fixed_rule;
+  LigmaRectangleFixedRule  fixed_rule;
 
   gdouble                 desired_fixed_width;
   gdouble                 desired_fixed_height;
@@ -119,7 +119,7 @@ struct _GimpRectangleOptionsPrivate
    */
   gboolean                use_string_current;
 
-  GimpUnit                fixed_unit;
+  LigmaUnit                fixed_unit;
 
   /* options gui */
 
@@ -141,33 +141,33 @@ struct _GimpRectangleOptionsPrivate
 };
 
 
-GType       gimp_rectangle_options_get_type           (void) G_GNUC_CONST;
+GType       ligma_rectangle_options_get_type           (void) G_GNUC_CONST;
 
-GtkWidget * gimp_rectangle_options_gui                (GimpToolOptions      *tool_options);
+GtkWidget * ligma_rectangle_options_gui                (LigmaToolOptions      *tool_options);
 
-void        gimp_rectangle_options_connect            (GimpRectangleOptions *options,
-                                                       GimpImage            *image,
+void        ligma_rectangle_options_connect            (LigmaRectangleOptions *options,
+                                                       LigmaImage            *image,
                                                        GCallback             shrink_callback,
                                                        gpointer              shrink_object);
-void        gimp_rectangle_options_disconnect         (GimpRectangleOptions *options,
+void        ligma_rectangle_options_disconnect         (LigmaRectangleOptions *options,
                                                        GCallback             shrink_callback,
                                                        gpointer              shrink_object);
 
-gboolean    gimp_rectangle_options_fixed_rule_active  (GimpRectangleOptions *rectangle_options,
-                                                       GimpRectangleFixedRule fixed_rule);
+gboolean    ligma_rectangle_options_fixed_rule_active  (LigmaRectangleOptions *rectangle_options,
+                                                       LigmaRectangleFixedRule fixed_rule);
 
-GimpRectangleOptionsPrivate *
-            gimp_rectangle_options_get_private        (GimpRectangleOptions *options);
+LigmaRectangleOptionsPrivate *
+            ligma_rectangle_options_get_private        (LigmaRectangleOptions *options);
 
 
 /*  convenience functions  */
 
-void        gimp_rectangle_options_install_properties (GObjectClass *klass);
-void        gimp_rectangle_options_set_property       (GObject      *object,
+void        ligma_rectangle_options_install_properties (GObjectClass *klass);
+void        ligma_rectangle_options_set_property       (GObject      *object,
                                                        guint         property_id,
                                                        const GValue *value,
                                                        GParamSpec   *pspec);
-void        gimp_rectangle_options_get_property       (GObject      *object,
+void        ligma_rectangle_options_get_property       (GObject      *object,
                                                        guint         property_id,
                                                        GValue       *value,
                                                        GParamSpec   *pspec);
@@ -175,7 +175,7 @@ void        gimp_rectangle_options_get_property       (GObject      *object,
 
 /*  testing helper functions  */
 
-GtkWidget * gimp_rectangle_options_get_size_entry     (GimpRectangleOptions *rectangle_options);
+GtkWidget * ligma_rectangle_options_get_size_entry     (LigmaRectangleOptions *rectangle_options);
 
 
-#endif  /* __GIMP_RECTANGLE_OPTIONS_H__ */
+#endif  /* __LIGMA_RECTANGLE_OPTIONS_H__ */

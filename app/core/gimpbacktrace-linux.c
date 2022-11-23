@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1999 Spencer Kimball and Peter Mattis
  *
- * gimpbacktrace-linux.c
+ * ligmabacktrace-linux.c
  * Copyright (C) 2018 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -26,10 +26,10 @@
 
 #include <gio/gio.h>
 
-#include "gimpbacktrace-backend.h"
+#include "ligmabacktrace-backend.h"
 
 
-#ifdef GIMP_BACKTRACE_BACKEND_LINUX
+#ifdef LIGMA_BACKTRACE_BACKEND_LINUX
 
 
 #include <sys/types.h>
@@ -55,7 +55,7 @@
 
 #include "core-types.h"
 
-#include "gimpbacktrace.h"
+#include "ligmabacktrace.h"
 
 
 #define MAX_N_THREADS        256
@@ -66,10 +66,10 @@
 #define BACKTRACE_SIGNAL     SIGUSR1
 
 
-typedef struct _GimpBacktraceThread GimpBacktraceThread;
+typedef struct _LigmaBacktraceThread LigmaBacktraceThread;
 
 
-struct _GimpBacktraceThread
+struct _LigmaBacktraceThread
 {
   pid_t    tid;
   gchar    name[MAX_THREAD_NAME_SIZE];
@@ -79,28 +79,28 @@ struct _GimpBacktraceThread
   gint     n_frames;
 };
 
-struct _GimpBacktrace
+struct _LigmaBacktrace
 {
-  GimpBacktraceThread *threads;
+  LigmaBacktraceThread *threads;
   gint                 n_threads;
 };
 
 
 /*  local function prototypes  */
 
-static inline gint   gimp_backtrace_normalize_frame   (GimpBacktrace *backtrace,
+static inline gint   ligma_backtrace_normalize_frame   (LigmaBacktrace *backtrace,
                                                        gint           thread,
                                                        gint           frame);
 
-static gint          gimp_backtrace_enumerate_threads (gboolean       include_current_thread,
+static gint          ligma_backtrace_enumerate_threads (gboolean       include_current_thread,
                                                        pid_t         *threads,
                                                        gint           size);
-static void          gimp_backtrace_read_thread_name  (pid_t          tid,
+static void          ligma_backtrace_read_thread_name  (pid_t          tid,
                                                        gchar         *name,
                                                        gint           size);
-static gchar         gimp_backtrace_read_thread_state (pid_t          tid);
+static gchar         ligma_backtrace_read_thread_state (pid_t          tid);
 
-static void          gimp_backtrace_signal_handler    (gint           signum);
+static void          ligma_backtrace_signal_handler    (gint           signum);
 
 
 /*  static variables  */
@@ -111,7 +111,7 @@ static gboolean          initialized;
 static struct sigaction  orig_action;
 static pid_t             blacklisted_threads[MAX_N_THREADS];
 static gint              n_blacklisted_threads;
-static GimpBacktrace    *handler_backtrace;
+static LigmaBacktrace    *handler_backtrace;
 static gint              handler_n_remaining_threads;
 static gint              handler_lock;
 
@@ -130,7 +130,7 @@ static const gchar * const blacklisted_thread_names[] =
 
 
 static inline gint
-gimp_backtrace_normalize_frame (GimpBacktrace *backtrace,
+ligma_backtrace_normalize_frame (LigmaBacktrace *backtrace,
                                 gint           thread,
                                 gint           frame)
 {
@@ -141,7 +141,7 @@ gimp_backtrace_normalize_frame (GimpBacktrace *backtrace,
 }
 
 static gint
-gimp_backtrace_enumerate_threads (gboolean  include_current_thread,
+ligma_backtrace_enumerate_threads (gboolean  include_current_thread,
                                   pid_t    *threads,
                                   gint      size)
 {
@@ -194,7 +194,7 @@ gimp_backtrace_enumerate_threads (gboolean  include_current_thread,
 }
 
 static void
-gimp_backtrace_read_thread_name (pid_t  tid,
+ligma_backtrace_read_thread_name (pid_t  tid,
                                  gchar *name,
                                  gint   size)
 {
@@ -224,7 +224,7 @@ gimp_backtrace_read_thread_name (pid_t  tid,
 }
 
 static gchar
-gimp_backtrace_read_thread_state (pid_t tid)
+ligma_backtrace_read_thread_state (pid_t tid)
 {
   gchar buffer[64];
   gint  fd;
@@ -252,9 +252,9 @@ gimp_backtrace_read_thread_state (pid_t tid)
 }
 
 static void
-gimp_backtrace_signal_handler (gint signum)
+ligma_backtrace_signal_handler (gint signum)
 {
-  GimpBacktrace *curr_backtrace;
+  LigmaBacktrace *curr_backtrace;
   gint           lock;
 
   do
@@ -275,7 +275,7 @@ gimp_backtrace_signal_handler (gint signum)
 
       for (i = 0; i < curr_backtrace->n_threads; i++)
         {
-          GimpBacktraceThread *thread = &curr_backtrace->threads[i];
+          LigmaBacktraceThread *thread = &curr_backtrace->threads[i];
 
           if (thread->tid == tid)
             {
@@ -297,7 +297,7 @@ gimp_backtrace_signal_handler (gint signum)
 
 
 void
-gimp_backtrace_init (void)
+ligma_backtrace_init (void)
 {
 #ifdef HAVE_LIBBACKTRACE
   backtrace_state = backtrace_create_state (NULL, 0, NULL, NULL);
@@ -305,7 +305,7 @@ gimp_backtrace_init (void)
 }
 
 gboolean
-gimp_backtrace_start (void)
+ligma_backtrace_start (void)
 {
   g_mutex_lock (&mutex);
 
@@ -313,7 +313,7 @@ gimp_backtrace_start (void)
     {
       struct sigaction action = {};
 
-      action.sa_handler = gimp_backtrace_signal_handler;
+      action.sa_handler = ligma_backtrace_signal_handler;
       action.sa_flags   = SA_RESTART;
 
       sigemptyset (&action.sa_mask);
@@ -328,7 +328,7 @@ gimp_backtrace_start (void)
 
           threads = g_new (pid_t, MAX_N_THREADS);
 
-          n_threads = gimp_backtrace_enumerate_threads (TRUE,
+          n_threads = ligma_backtrace_enumerate_threads (TRUE,
                                                         threads, MAX_N_THREADS);
 
           for (i = 0; i < n_threads; i++)
@@ -336,7 +336,7 @@ gimp_backtrace_start (void)
               gchar name[MAX_THREAD_NAME_SIZE];
               gint  j;
 
-              gimp_backtrace_read_thread_name (threads[i],
+              ligma_backtrace_read_thread_name (threads[i],
                                                name, MAX_THREAD_NAME_SIZE);
 
               for (j = 0; j < G_N_ELEMENTS (blacklisted_thread_names); j++)
@@ -362,7 +362,7 @@ gimp_backtrace_start (void)
 }
 
 void
-gimp_backtrace_stop (void)
+ligma_backtrace_stop (void)
 {
   g_return_if_fail (n_initializations > 0);
 
@@ -381,10 +381,10 @@ gimp_backtrace_stop (void)
   g_mutex_unlock (&mutex);
 }
 
-GimpBacktrace *
-gimp_backtrace_new (gboolean include_current_thread)
+LigmaBacktrace *
+ligma_backtrace_new (gboolean include_current_thread)
 {
-  GimpBacktrace *backtrace;
+  LigmaBacktrace *backtrace;
   pid_t          pid;
   pid_t         *threads;
   gint           n_threads;
@@ -398,7 +398,7 @@ gimp_backtrace_new (gboolean include_current_thread)
 
   threads = g_new (pid_t, MAX_N_THREADS);
 
-  n_threads = gimp_backtrace_enumerate_threads (include_current_thread,
+  n_threads = ligma_backtrace_enumerate_threads (include_current_thread,
                                                 threads, MAX_N_THREADS);
 
   if (n_threads == 0)
@@ -410,9 +410,9 @@ gimp_backtrace_new (gboolean include_current_thread)
 
   g_mutex_lock (&mutex);
 
-  backtrace = g_slice_new (GimpBacktrace);
+  backtrace = g_slice_new (LigmaBacktrace);
 
-  backtrace->threads   = g_new (GimpBacktraceThread, n_threads);
+  backtrace->threads   = g_new (LigmaBacktraceThread, n_threads);
   backtrace->n_threads = n_threads;
 
   while (! g_atomic_int_compare_and_exchange (&handler_lock, 0, -1));
@@ -424,15 +424,15 @@ gimp_backtrace_new (gboolean include_current_thread)
 
   for (i = 0; i < n_threads; i++)
     {
-      GimpBacktraceThread *thread = &backtrace->threads[i];
+      LigmaBacktraceThread *thread = &backtrace->threads[i];
 
       thread->tid      = threads[i];
       thread->n_frames = 0;
 
-      gimp_backtrace_read_thread_name (thread->tid,
+      ligma_backtrace_read_thread_name (thread->tid,
                                        thread->name, MAX_THREAD_NAME_SIZE);
 
-      thread->state = gimp_backtrace_read_thread_state (thread->tid);
+      thread->state = ligma_backtrace_read_thread_state (thread->tid);
 
       syscall (SYS_tgkill, pid, threads[i], BACKTRACE_SIGNAL);
     }
@@ -489,7 +489,7 @@ gimp_backtrace_new (gboolean include_current_thread)
 
   if (n_threads == 0)
     {
-      gimp_backtrace_free (backtrace);
+      ligma_backtrace_free (backtrace);
 
       return NULL;
     }
@@ -498,18 +498,18 @@ gimp_backtrace_new (gboolean include_current_thread)
 }
 
 void
-gimp_backtrace_free (GimpBacktrace *backtrace)
+ligma_backtrace_free (LigmaBacktrace *backtrace)
 {
   if (! backtrace)
     return;
 
   g_free (backtrace->threads);
 
-  g_slice_free (GimpBacktrace, backtrace);
+  g_slice_free (LigmaBacktrace, backtrace);
 }
 
 gint
-gimp_backtrace_get_n_threads (GimpBacktrace *backtrace)
+ligma_backtrace_get_n_threads (LigmaBacktrace *backtrace)
 {
   g_return_val_if_fail (backtrace != NULL, 0);
 
@@ -517,7 +517,7 @@ gimp_backtrace_get_n_threads (GimpBacktrace *backtrace)
 }
 
 guintptr
-gimp_backtrace_get_thread_id (GimpBacktrace *backtrace,
+ligma_backtrace_get_thread_id (LigmaBacktrace *backtrace,
                               gint           thread)
 {
   g_return_val_if_fail (backtrace != NULL, 0);
@@ -527,7 +527,7 @@ gimp_backtrace_get_thread_id (GimpBacktrace *backtrace,
 }
 
 const gchar *
-gimp_backtrace_get_thread_name (GimpBacktrace *backtrace,
+ligma_backtrace_get_thread_name (LigmaBacktrace *backtrace,
                                 gint           thread)
 {
   g_return_val_if_fail (backtrace != NULL, NULL);
@@ -540,7 +540,7 @@ gimp_backtrace_get_thread_name (GimpBacktrace *backtrace,
 }
 
 gboolean
-gimp_backtrace_is_thread_running (GimpBacktrace *backtrace,
+ligma_backtrace_is_thread_running (LigmaBacktrace *backtrace,
                                   gint           thread)
 {
   g_return_val_if_fail (backtrace != NULL, FALSE);
@@ -550,7 +550,7 @@ gimp_backtrace_is_thread_running (GimpBacktrace *backtrace,
 }
 
 gint
-gimp_backtrace_find_thread_by_id (GimpBacktrace *backtrace,
+ligma_backtrace_find_thread_by_id (LigmaBacktrace *backtrace,
                                   guintptr       thread_id,
                                   gint           thread_hint)
 {
@@ -576,7 +576,7 @@ gimp_backtrace_find_thread_by_id (GimpBacktrace *backtrace,
 }
 
 gint
-gimp_backtrace_get_n_frames (GimpBacktrace *backtrace,
+ligma_backtrace_get_n_frames (LigmaBacktrace *backtrace,
                              gint           thread)
 {
   g_return_val_if_fail (backtrace != NULL, 0);
@@ -586,14 +586,14 @@ gimp_backtrace_get_n_frames (GimpBacktrace *backtrace,
 }
 
 guintptr
-gimp_backtrace_get_frame_address (GimpBacktrace *backtrace,
+ligma_backtrace_get_frame_address (LigmaBacktrace *backtrace,
                                   gint           thread,
                                   gint           frame)
 {
   g_return_val_if_fail (backtrace != NULL, 0);
   g_return_val_if_fail (thread >= 0 && thread < backtrace->n_threads, 0);
 
-  frame = gimp_backtrace_normalize_frame (backtrace, thread, frame);
+  frame = ligma_backtrace_normalize_frame (backtrace, thread, frame);
 
   g_return_val_if_fail (frame >= N_SKIPPED_FRAMES &&
                         frame <  backtrace->threads[thread].n_frames, 0);
@@ -603,7 +603,7 @@ gimp_backtrace_get_frame_address (GimpBacktrace *backtrace,
 
 #ifdef HAVE_LIBBACKTRACE
 static void
-gimp_backtrace_syminfo_callback (GimpBacktraceAddressInfo *info,
+ligma_backtrace_syminfo_callback (LigmaBacktraceAddressInfo *info,
                                  guintptr                  pc,
                                  const gchar              *symname,
                                  guintptr                  symval,
@@ -616,7 +616,7 @@ gimp_backtrace_syminfo_callback (GimpBacktraceAddressInfo *info,
 }
 
 static gint
-gimp_backtrace_pcinfo_callback (GimpBacktraceAddressInfo *info,
+ligma_backtrace_pcinfo_callback (LigmaBacktraceAddressInfo *info,
                                 guintptr                  pc,
                                 const gchar              *filename,
                                 gint                      lineno,
@@ -635,8 +635,8 @@ gimp_backtrace_pcinfo_callback (GimpBacktraceAddressInfo *info,
 #endif /* HAVE_LIBBACKTRACE */
 
 gboolean
-gimp_backtrace_get_address_info (guintptr                  address,
-                                 GimpBacktraceAddressInfo *info)
+ligma_backtrace_get_address_info (guintptr                  address,
+                                 LigmaBacktraceAddressInfo *info)
 {
   Dl_info  dl_info;
   gboolean result = FALSE;
@@ -675,13 +675,13 @@ gimp_backtrace_get_address_info (guintptr                  address,
     {
       backtrace_syminfo (
         backtrace_state, address,
-        (backtrace_syminfo_callback) gimp_backtrace_syminfo_callback,
+        (backtrace_syminfo_callback) ligma_backtrace_syminfo_callback,
         NULL,
         info);
 
       backtrace_pcinfo (
         backtrace_state, address,
-        (backtrace_full_callback) gimp_backtrace_pcinfo_callback,
+        (backtrace_full_callback) ligma_backtrace_pcinfo_callback,
         NULL,
         info);
 
@@ -722,4 +722,4 @@ gimp_backtrace_get_address_info (guintptr                  address,
 }
 
 
-#endif /* GIMP_BACKTRACE_BACKEND_LINUX */
+#endif /* LIGMA_BACKTRACE_BACKEND_LINUX */

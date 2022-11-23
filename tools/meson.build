@@ -1,19 +1,19 @@
 
 if platform_windows
-  gimp_debug_resume = executable('gimp-debug-resume',
-    'gimp-debug-resume.c',
+  ligma_debug_resume = executable('ligma-debug-resume',
+    'ligma-debug-resume.c',
   )
 endif
 
 
-gimptool = executable('gimptool' + exec_ver,
-  'gimptool.c',
+ligmatool = executable('ligmatool' + exec_ver,
+  'ligmatool.c',
   include_directories: rootInclude,
   dependencies: [
     gtk3,
   ],
   link_with: [
-    libgimpbase,
+    libligmabase,
   ],
   c_args: [
     '-DDATADIR="@0@"'.format(get_option('datadir')),
@@ -21,8 +21,8 @@ gimptool = executable('gimptool' + exec_ver,
   install: true,
 )
 
-gimp_test_clipboard = executable('gimp-test-clipboard' + exec_ver,
-  'gimp-test-clipboard.c',
+ligma_test_clipboard = executable('ligma-test-clipboard' + exec_ver,
+  'ligma-test-clipboard.c',
   include_directories: rootInclude,
   dependencies: [
     gtk3,
@@ -31,12 +31,12 @@ gimp_test_clipboard = executable('gimp-test-clipboard' + exec_ver,
 )
 
 if enable_default_bin and meson.version().version_compare('>=0.61.0')
-  install_symlink(fs.name(gimptool.full_path()).replace(exec_ver, ''),
-    pointing_to: fs.name(gimptool.full_path()),
+  install_symlink(fs.name(ligmatool.full_path()).replace(exec_ver, ''),
+    pointing_to: fs.name(ligmatool.full_path()),
     install_dir: get_option('bindir')
   )
-  install_symlink(fs.name(gimp_test_clipboard.full_path()).replace(exec_ver, ''),
-    pointing_to: fs.name(gimp_test_clipboard.full_path()),
+  install_symlink(fs.name(ligma_test_clipboard.full_path()).replace(exec_ver, ''),
+    pointing_to: fs.name(ligma_test_clipboard.full_path()),
     install_dir: get_option('bindir')
   )
 endif

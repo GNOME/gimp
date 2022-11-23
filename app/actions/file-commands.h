@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,43 +19,43 @@
 #define __FILE_COMMANDS_H__
 
 
-void   file_open_cmd_callback                 (GimpAction *action,
+void   file_open_cmd_callback                 (LigmaAction *action,
                                                GVariant   *value,
                                                gpointer    data);
-void   file_open_as_layers_cmd_callback       (GimpAction *action,
+void   file_open_as_layers_cmd_callback       (LigmaAction *action,
                                                GVariant   *value,
                                                gpointer    data);
-void   file_open_location_cmd_callback        (GimpAction *action,
+void   file_open_location_cmd_callback        (LigmaAction *action,
                                                GVariant   *value,
                                                gpointer    data);
-void   file_open_recent_cmd_callback          (GimpAction *action,
-                                               GVariant   *value,
-                                               gpointer    data);
-
-void   file_save_cmd_callback                 (GimpAction *action,
-                                               GVariant   *value,
-                                               gpointer    data);
-void   file_create_template_cmd_callback      (GimpAction *action,
+void   file_open_recent_cmd_callback          (LigmaAction *action,
                                                GVariant   *value,
                                                gpointer    data);
 
-void   file_revert_cmd_callback               (GimpAction *action,
+void   file_save_cmd_callback                 (LigmaAction *action,
                                                GVariant   *value,
                                                gpointer    data);
-void   file_close_all_cmd_callback            (GimpAction *action,
-                                               GVariant   *value,
-                                               gpointer    data);
-void   file_copy_location_cmd_callback        (GimpAction *action,
-                                               GVariant   *value,
-                                               gpointer    data);
-void   file_show_in_file_manager_cmd_callback (GimpAction *action,
-                                               GVariant   *value,
-                                               gpointer    data);
-void   file_quit_cmd_callback                 (GimpAction *action,
+void   file_create_template_cmd_callback      (LigmaAction *action,
                                                GVariant   *value,
                                                gpointer    data);
 
-void   file_file_open_dialog                  (Gimp       *gimp,
+void   file_revert_cmd_callback               (LigmaAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
+void   file_close_all_cmd_callback            (LigmaAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
+void   file_copy_location_cmd_callback        (LigmaAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
+void   file_show_in_file_manager_cmd_callback (LigmaAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
+void   file_quit_cmd_callback                 (LigmaAction *action,
+                                               GVariant   *value,
+                                               gpointer    data);
+
+void   file_file_open_dialog                  (Ligma       *ligma,
                                                GFile      *file,
                                                GtkWidget  *parent);
 

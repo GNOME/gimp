@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  * Copyright (C) 1997 Daniel Risacher, magnus@alum.mit.edu
  *
@@ -19,7 +19,7 @@
 /* Minor changes to support file magic */
 /* 4 Oct 1997 -- Risacher */
 
-/* compressor plug-in for GIMP           */
+/* compressor plug-in for LIGMA           */
 /* based on gz.c which in turn is        */
 /* loosely based on url.c by             */
 /* Josh MacDonald, jmacd@cs.berkeley.edu */
@@ -30,7 +30,7 @@
 /* LZMA compression code is based on code by Lasse Collin which was
  * placed in the public-domain. */
 
-/* This is reads and writes compressed image files for GIMP
+/* This is reads and writes compressed image files for LIGMA
  *
  * It should work with file names of the form
  * filename.foo.[gz|bz2] where foo is some already-recognized extension
@@ -84,9 +84,9 @@
 #define _O_BINARY 0
 #endif
 
-#include <libgimp/gimp.h>
+#include <libligma/ligma.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 #include <zlib.h>
 #include <bzlib.h>
@@ -135,12 +135,12 @@ typedef struct _CompressorClass CompressorClass;
 
 struct _Compressor
 {
-  GimpPlugIn      parent_instance;
+  LigmaPlugIn      parent_instance;
 };
 
 struct _CompressorClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -149,34 +149,34 @@ struct _CompressorClass
 
 GType                   compressor_get_type         (void) G_GNUC_CONST;
 
-static GList          * compressor_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * compressor_create_procedure (GimpPlugIn           *plug_in,
+static GList          * compressor_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * compressor_create_procedure (LigmaPlugIn           *plug_in,
                                                      const gchar          *name);
 
-static GimpValueArray * compressor_save             (GimpProcedure        *procedure,
-                                                     GimpRunMode           run_mode,
-                                                     GimpImage            *image,
+static LigmaValueArray * compressor_save             (LigmaProcedure        *procedure,
+                                                     LigmaRunMode           run_mode,
+                                                     LigmaImage            *image,
                                                      gint                  n_drawables,
-                                                     GimpDrawable        **drawables,
+                                                     LigmaDrawable        **drawables,
                                                      GFile                *file,
-                                                     const GimpValueArray *args,
+                                                     const LigmaValueArray *args,
                                                      gpointer              run_data);
-static GimpValueArray * compressor_load             (GimpProcedure        *procedure,
-                                                     GimpRunMode           run_mode,
+static LigmaValueArray * compressor_load             (LigmaProcedure        *procedure,
+                                                     LigmaRunMode           run_mode,
                                                      GFile                *file,
-                                                     const GimpValueArray *args,
+                                                     const LigmaValueArray *args,
                                                      gpointer              run_data);
 
-static GimpImage         * load_image     (const CompressorEntry *compressor,
+static LigmaImage         * load_image     (const CompressorEntry *compressor,
                                            GFile                 *file,
                                            gint32                 run_mode,
-                                           GimpPDBStatusType     *status,
+                                           LigmaPDBStatusType     *status,
                                            GError               **error);
-static GimpPDBStatusType   save_image     (const CompressorEntry *compressor,
+static LigmaPDBStatusType   save_image     (const CompressorEntry *compressor,
                                            GFile                 *file,
-                                           GimpImage             *image,
+                                           LigmaImage             *image,
                                            gint                   n_drawables,
-                                           GimpDrawable         **drawables,
+                                           LigmaDrawable         **drawables,
                                            gint32                 run_mode,
                                            GError               **error);
 
@@ -201,9 +201,9 @@ static gboolean            xz_save        (GFile                 *infile,
 static goffset             get_file_info  (GFile                 *file);
 
 
-G_DEFINE_TYPE (Compressor, compressor, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Compressor, compressor, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (COMPRESSOR_TYPE)
+LIGMA_MAIN (COMPRESSOR_TYPE)
 DEFINE_STD_SET_I18N
 
 
@@ -271,7 +271,7 @@ static const CompressorEntry compressors[] =
 static void
 compressor_class_init (CompressorClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = compressor_query_procedures;
   plug_in_class->create_procedure = compressor_create_procedure;
@@ -284,7 +284,7 @@ compressor_init (Compressor *compressor)
 }
 
 static GList *
-compressor_query_procedures (GimpPlugIn *plug_in)
+compressor_query_procedures (LigmaPlugIn *plug_in)
 {
   GList *list = NULL;
   gint   i;
@@ -300,11 +300,11 @@ compressor_query_procedures (GimpPlugIn *plug_in)
   return list;
 }
 
-static GimpProcedure *
-compressor_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+compressor_create_procedure (LigmaPlugIn  *plug_in,
                              const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
   gint           i;
 
   for (i = 0; i < G_N_ELEMENTS (compressors); i++)
@@ -313,29 +313,29 @@ compressor_create_procedure (GimpPlugIn  *plug_in,
 
       if (! strcmp (name, compressor->load_proc))
         {
-          procedure = gimp_load_procedure_new (plug_in, name,
-                                               GIMP_PDB_PROC_TYPE_PLUGIN,
+          procedure = ligma_load_procedure_new (plug_in, name,
+                                               LIGMA_PDB_PROC_TYPE_PLUGIN,
                                                compressor_load,
                                                (gpointer) compressor, NULL);
 
-          gimp_procedure_set_documentation (procedure,
+          ligma_procedure_set_documentation (procedure,
                                             compressor->load_blurb,
                                             compressor->load_help,
                                             name);
 
-          gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
+          ligma_file_procedure_set_magics (LIGMA_FILE_PROCEDURE (procedure),
                                           compressor->magic);
         }
       else if (! strcmp (name, compressor->save_proc))
         {
-          procedure = gimp_save_procedure_new (plug_in, name,
-                                               GIMP_PDB_PROC_TYPE_PLUGIN,
+          procedure = ligma_save_procedure_new (plug_in, name,
+                                               LIGMA_PDB_PROC_TYPE_PLUGIN,
                                                compressor_save,
                                                (gpointer) compressor, NULL);
 
-          gimp_procedure_set_image_types (procedure, "RGB*, GRAY*, INDEXED*");
+          ligma_procedure_set_image_types (procedure, "RGB*, GRAY*, INDEXED*");
 
-          gimp_procedure_set_documentation (procedure,
+          ligma_procedure_set_documentation (procedure,
                                             compressor->save_blurb,
                                             compressor->save_help,
                                             name);
@@ -343,17 +343,17 @@ compressor_create_procedure (GimpPlugIn  *plug_in,
 
       if (procedure)
         {
-          gimp_procedure_set_menu_label (procedure, compressor->file_type);
+          ligma_procedure_set_menu_label (procedure, compressor->file_type);
 
-          gimp_procedure_set_attribution (procedure,
+          ligma_procedure_set_attribution (procedure,
                                           "Daniel Risacher",
                                           "Daniel Risacher, Spencer Kimball "
                                           "and Peter Mattis",
                                           "1995-1997");
 
-          gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+          ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                               compressor->mime_type);
-          gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+          ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                               compressor->extensions);
 
           return procedure;
@@ -363,68 +363,68 @@ compressor_create_procedure (GimpPlugIn  *plug_in,
   return NULL;
 }
 
-static GimpValueArray *
-compressor_load (GimpProcedure        *procedure,
-                 GimpRunMode           run_mode,
+static LigmaValueArray *
+compressor_load (LigmaProcedure        *procedure,
+                 LigmaRunMode           run_mode,
                  GFile                *file,
-                 const GimpValueArray *args,
+                 const LigmaValueArray *args,
                  gpointer              run_data)
 {
   const CompressorEntry *compressor = run_data;
-  GimpValueArray        *return_vals;
-  GimpPDBStatusType      status;
-  GimpImage             *image;
+  LigmaValueArray        *return_vals;
+  LigmaPDBStatusType      status;
+  LigmaImage             *image;
   GError                *error = NULL;
 
   /*  We handle PDB errors by forwarding them to the caller in
    *  our return values.
    */
-  gimp_plug_in_set_pdb_error_handler (gimp_procedure_get_plug_in (procedure),
-                                      GIMP_PDB_ERROR_HANDLER_PLUGIN);
+  ligma_plug_in_set_pdb_error_handler (ligma_procedure_get_plug_in (procedure),
+                                      LIGMA_PDB_ERROR_HANDLER_PLUGIN);
 
   image = load_image (compressor, file, run_mode,
                       &status, &error);
 
-  return_vals = gimp_procedure_new_return_values (procedure, status, error);
+  return_vals = ligma_procedure_new_return_values (procedure, status, error);
 
-  if (image && status == GIMP_PDB_SUCCESS)
-    GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
+  if (image && status == LIGMA_PDB_SUCCESS)
+    LIGMA_VALUES_SET_IMAGE (return_vals, 1, image);
 
   return return_vals;
 }
 
-static GimpValueArray *
-compressor_save (GimpProcedure        *procedure,
-                 GimpRunMode           run_mode,
-                 GimpImage            *image,
+static LigmaValueArray *
+compressor_save (LigmaProcedure        *procedure,
+                 LigmaRunMode           run_mode,
+                 LigmaImage            *image,
                  gint                  n_drawables,
-                 GimpDrawable        **drawables,
+                 LigmaDrawable        **drawables,
                  GFile                *file,
-                 const GimpValueArray *args,
+                 const LigmaValueArray *args,
                  gpointer              run_data)
 {
   const CompressorEntry *compressor = run_data;
-  GimpPDBStatusType      status;
+  LigmaPDBStatusType      status;
   GError                *error = NULL;
 
   /*  We handle PDB errors by forwarding them to the caller in
    *  our return values.
    */
-  gimp_plug_in_set_pdb_error_handler (gimp_procedure_get_plug_in (procedure),
-                                      GIMP_PDB_ERROR_HANDLER_PLUGIN);
+  ligma_plug_in_set_pdb_error_handler (ligma_procedure_get_plug_in (procedure),
+                                      LIGMA_PDB_ERROR_HANDLER_PLUGIN);
 
   status = save_image (compressor, file, image, n_drawables, drawables,
                        run_mode, &error);
 
-  return gimp_procedure_new_return_values (procedure, status, error);
+  return ligma_procedure_new_return_values (procedure, status, error);
 }
 
-static GimpPDBStatusType
+static LigmaPDBStatusType
 save_image (const CompressorEntry  *compressor,
             GFile                  *file,
-            GimpImage              *image,
+            LigmaImage              *image,
             gint                    n_drawables,
-            GimpDrawable          **drawables,
+            LigmaDrawable          **drawables,
             gint32                  run_mode,
             GError                **error)
 {
@@ -441,12 +441,12 @@ save_image (const CompressorEntry  *compressor,
 
   /* get a temp name with the right extension and save into it. */
 
-  tmp_file = gimp_temp_file (ext + 1);
+  tmp_file = ligma_temp_file (ext + 1);
 
-  if (! (gimp_file_save (run_mode,
+  if (! (ligma_file_save (run_mode,
                          image,
                          n_drawables,
-                         (const GimpItem **) drawables,
+                         (const LigmaItem **) drawables,
                          tmp_file) &&
          valid_file (tmp_file)))
     {
@@ -454,42 +454,42 @@ save_image (const CompressorEntry  *compressor,
       g_object_unref (tmp_file);
 
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                   "%s", gimp_pdb_get_last_error (gimp_get_pdb ()));
+                   "%s", ligma_pdb_get_last_error (ligma_get_pdb ()));
 
-      return GIMP_PDB_EXECUTION_ERROR;
+      return LIGMA_PDB_EXECUTION_ERROR;
     }
 
-  gimp_progress_init_printf (_("Compressing '%s'"),
-                             gimp_file_get_utf8_name  (file));
+  ligma_progress_init_printf (_("Compressing '%s'"),
+                             ligma_file_get_utf8_name  (file));
 
   if (! compressor->save_fn (tmp_file, file))
     {
       g_file_delete (tmp_file, NULL, NULL);
       g_object_unref (tmp_file);
 
-      return GIMP_PDB_EXECUTION_ERROR;
+      return LIGMA_PDB_EXECUTION_ERROR;
     }
 
   g_file_delete (tmp_file, NULL, NULL);
   g_object_unref (tmp_file);
 
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 
   /* ask the core to save a thumbnail for compressed XCF files */
   if (strcmp (ext, ".xcf") == 0)
-    gimp_file_save_thumbnail (image, file);
+    ligma_file_save_thumbnail (image, file);
 
-  return GIMP_PDB_SUCCESS;
+  return LIGMA_PDB_SUCCESS;
 }
 
-static GimpImage *
+static LigmaImage *
 load_image (const CompressorEntry  *compressor,
             GFile                  *file,
             gint32                  run_mode,
-            GimpPDBStatusType      *status,
+            LigmaPDBStatusType      *status,
             GError                **error)
 {
-  GimpImage   *image;
+  LigmaImage   *image;
   const gchar *ext;
   GFile       *tmp_file;
 
@@ -503,37 +503,37 @@ load_image (const CompressorEntry  *compressor,
     }
 
   /* find a temp name */
-  tmp_file = gimp_temp_file (ext + 1);
+  tmp_file = ligma_temp_file (ext + 1);
 
   if (! compressor->load_fn (file, tmp_file))
     {
       g_object_unref (tmp_file);
-      *status = GIMP_PDB_EXECUTION_ERROR;
+      *status = LIGMA_PDB_EXECUTION_ERROR;
       return NULL;
     }
 
   /* now that we uncompressed it, load the temp file */
 
-  image = gimp_file_load (run_mode, tmp_file);
+  image = ligma_file_load (run_mode, tmp_file);
 
   g_file_delete (tmp_file, NULL, NULL);
   g_object_unref (tmp_file);
 
   if (image)
     {
-      *status = GIMP_PDB_SUCCESS;
+      *status = LIGMA_PDB_SUCCESS;
 
-      gimp_image_set_file (image, file);
+      ligma_image_set_file (image, file);
     }
   else
     {
       /* Forward the return status of the underlining plug-in for the
        * given format.
        */
-      *status = gimp_pdb_get_last_status (gimp_get_pdb ());
+      *status = ligma_pdb_get_last_status (ligma_get_pdb ());
 
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                   "%s", gimp_pdb_get_last_error (gimp_get_pdb ()));
+                   "%s", ligma_pdb_get_last_error (ligma_get_pdb ()));
     }
 
   return image;
@@ -694,7 +694,7 @@ gzip_save (GFile *infile,
       if (gzwrite (out, buf, len) != len)
         break;
 
-      gimp_progress_update ((tot += len) * 1.0 / file_size);
+      ligma_progress_update ((tot += len) * 1.0 / file_size);
     }
 
  out:
@@ -816,7 +816,7 @@ bzip2_save (GFile *infile,
       if (BZ2_bzwrite (out, buf, len) != len)
         break;
 
-      gimp_progress_update ((tot += len) * 1.0 / file_size);
+      ligma_progress_update ((tot += len) * 1.0 / file_size);
     }
 
  out:
@@ -976,7 +976,7 @@ xz_save (GFile *infile,
           if (feof (in))
             action = LZMA_FINISH;
 
-          gimp_progress_update ((tot += strm.avail_in) * 1.0 / file_size);
+          ligma_progress_update ((tot += strm.avail_in) * 1.0 / file_size);
         }
 
       status = lzma_code (&strm, action);

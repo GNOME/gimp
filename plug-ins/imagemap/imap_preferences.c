@@ -1,5 +1,5 @@
 /*
- * This is a plug-in for GIMP.
+ * This is a plug-in for LIGMA.
  *
  * Generates clickable image maps.
  *
@@ -27,8 +27,8 @@
 
 #include <glib/gstdio.h>
 
-#include "libgimp/gimp.h"
-#include "libgimp/gimpui.h"
+#include "libligma/ligma.h"
+#include "libligma/ligmaui.h"
 
 #include "imap_command.h"
 #include "imap_file.h"
@@ -39,7 +39,7 @@
 #include "imap_preferences.h"
 #include "imap_ui_grid.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 typedef struct {
    DefaultDialog_t      *dialog;
@@ -171,7 +171,7 @@ preferences_load(PreferencesData_t *data)
   char buf[256];
   GFile *file;
 
-  file = gimp_directory_file ("imagemaprc", NULL);
+  file = ligma_directory_file ("imagemaprc", NULL);
 
   in = g_fopen (g_file_peek_path (file), "rb");
 
@@ -202,7 +202,7 @@ preferences_save(PreferencesData_t *data)
    GFile *file;
    ColorSelData_t *colors = &data->colors;
 
-   file = gimp_directory_file ("imagemaprc", NULL);
+   file = ligma_directory_file ("imagemaprc", NULL);
 
    out = g_fopen(g_file_peek_path (file), "wb");
 
@@ -264,7 +264,7 @@ preferences_save(PreferencesData_t *data)
    else
      {
        do_file_error_dialog (_("Couldn't save resource file:"),
-                             gimp_file_get_utf8_name (file));
+                             ligma_file_get_utf8_name (file));
      }
 
    g_object_unref (file);
@@ -316,8 +316,8 @@ static void
 get_button_color (GtkWidget *button,
                   GdkRGBA   *color)
 {
-  GimpRGB rgb;
-  gimp_color_button_get_color (GIMP_COLOR_BUTTON (button), &rgb);
+  LigmaRGB rgb;
+  ligma_color_button_get_color (LIGMA_COLOR_BUTTON (button), &rgb);
   color->red   = rgb.r;
   color->green = rgb.g;
   color->blue  = rgb.b;
@@ -339,8 +339,8 @@ static void
 set_button_color (GtkWidget *button,
                   GdkRGBA   *color)
 {
-  gimp_color_button_set_color (GIMP_COLOR_BUTTON (button),
-                               (GimpRGB *) color);
+  ligma_color_button_set_color (LIGMA_COLOR_BUTTON (button),
+                               (LigmaRGB *) color);
 }
 
 static void
@@ -384,7 +384,7 @@ create_general_tab(PreferencesDialog_t *data, GtkWidget *notebook)
    GtkWidget *frame;
    GtkWidget *hbox;
 
-   frame = gimp_frame_new( _("Default Map Type"));
+   frame = ligma_frame_new( _("Default Map Type"));
    gtk_widget_show(frame);
    gtk_grid_attach (GTK_GRID (grid), frame, 0, 0, 2, 1);
    hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 1);
@@ -438,10 +438,10 @@ static GtkWidget*
 create_color_field (PreferencesDialog_t *data, GtkWidget *grid, gint row,
                     gint col)
 {
-   GimpRGB color = {0.0, 0.0, 0.0, 1.0};
-   GtkWidget *area = gimp_color_button_new (_("Select Color"), 16, 8, &color,
-                                            GIMP_COLOR_AREA_FLAT);
-   gimp_color_button_set_update (GIMP_COLOR_BUTTON (area), TRUE);
+   LigmaRGB color = {0.0, 0.0, 0.0, 1.0};
+   GtkWidget *area = ligma_color_button_new (_("Select Color"), 16, 8, &color,
+                                            LIGMA_COLOR_AREA_FLAT);
+   ligma_color_button_set_update (LIGMA_COLOR_BUTTON (area), TRUE);
    gtk_grid_attach (GTK_GRID (grid), area, col, row, 1, 1);
    gtk_widget_show (area);
 

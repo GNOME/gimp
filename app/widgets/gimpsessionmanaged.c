@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpsessionmanaged.c
+ * ligmasessionmanaged.c
  * Copyright (C) 2011 Martin Nordholts <martinn@src.gnome.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,17 +24,17 @@
 
 #include "widgets-types.h"
 
-#include "gimpsessionmanaged.h"
+#include "ligmasessionmanaged.h"
 
 
-G_DEFINE_INTERFACE (GimpSessionManaged, gimp_session_managed, GTK_TYPE_WIDGET)
+G_DEFINE_INTERFACE (LigmaSessionManaged, ligma_session_managed, GTK_TYPE_WIDGET)
 
 
 /*  private functions  */
 
 
 static void
-gimp_session_managed_default_init (GimpSessionManagedInterface *iface)
+ligma_session_managed_default_init (LigmaSessionManagedInterface *iface)
 {
 }
 
@@ -43,20 +43,20 @@ gimp_session_managed_default_init (GimpSessionManagedInterface *iface)
 
 
 /**
- * gimp_session_managed_get_aux_info:
- * @session_managed: A #GimpSessionManaged
+ * ligma_session_managed_get_aux_info:
+ * @session_managed: A #LigmaSessionManaged
  *
- * Returns: A list of #GimpSessionInfoAux created with
- *          gimp_session_info_aux_new().
+ * Returns: A list of #LigmaSessionInfoAux created with
+ *          ligma_session_info_aux_new().
  **/
 GList *
-gimp_session_managed_get_aux_info (GimpSessionManaged *session_managed)
+ligma_session_managed_get_aux_info (LigmaSessionManaged *session_managed)
 {
-  GimpSessionManagedInterface *iface;
+  LigmaSessionManagedInterface *iface;
 
-  g_return_val_if_fail (GIMP_IS_SESSION_MANAGED (session_managed), NULL);
+  g_return_val_if_fail (LIGMA_IS_SESSION_MANAGED (session_managed), NULL);
 
-  iface = GIMP_SESSION_MANAGED_GET_IFACE (session_managed);
+  iface = LIGMA_SESSION_MANAGED_GET_IFACE (session_managed);
 
   if (iface->get_aux_info)
     return iface->get_aux_info (session_managed);
@@ -65,22 +65,22 @@ gimp_session_managed_get_aux_info (GimpSessionManaged *session_managed)
 }
 
 /**
- * gimp_session_managed_get_ui_manager:
- * @session_managed: A #GimpSessionManaged
- * @aux_info         A list of #GimpSessionInfoAux
+ * ligma_session_managed_get_ui_manager:
+ * @session_managed: A #LigmaSessionManaged
+ * @aux_info         A list of #LigmaSessionInfoAux
  *
  * Sets aux data previously returned from
- * gimp_session_managed_get_aux_info().
+ * ligma_session_managed_get_aux_info().
  **/
 void
-gimp_session_managed_set_aux_info (GimpSessionManaged *session_managed,
+ligma_session_managed_set_aux_info (LigmaSessionManaged *session_managed,
                                    GList              *aux_info)
 {
-  GimpSessionManagedInterface *iface;
+  LigmaSessionManagedInterface *iface;
 
-  g_return_if_fail (GIMP_IS_SESSION_MANAGED (session_managed));
+  g_return_if_fail (LIGMA_IS_SESSION_MANAGED (session_managed));
 
-  iface = GIMP_SESSION_MANAGED_GET_IFACE (session_managed);
+  iface = LIGMA_SESSION_MANAGED_GET_IFACE (session_managed);
 
   if (iface->set_aux_info)
     iface->set_aux_info (session_managed, aux_info);

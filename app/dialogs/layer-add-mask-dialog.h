@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,20 +19,20 @@
 #define __LAYER_ADD_MASK_DIALOG_H__
 
 
-typedef void (* GimpAddMaskCallback) (GtkWidget       *dialog,
+typedef void (* LigmaAddMaskCallback) (GtkWidget       *dialog,
                                       GList           *layers,
-                                      GimpAddMaskType  add_mask_type,
-                                      GimpChannel     *channel,
+                                      LigmaAddMaskType  add_mask_type,
+                                      LigmaChannel     *channel,
                                       gboolean         invert,
                                       gpointer         user_data);
 
 
 GtkWidget * layer_add_mask_dialog_new (GList               *layers,
-                                       GimpContext         *context,
+                                       LigmaContext         *context,
                                        GtkWidget           *parent,
-                                       GimpAddMaskType      add_mask_type,
+                                       LigmaAddMaskType      add_mask_type,
                                        gboolean             invert,
-                                       GimpAddMaskCallback  callback,
+                                       LigmaAddMaskCallback  callback,
                                        gpointer             user_data);
 
 

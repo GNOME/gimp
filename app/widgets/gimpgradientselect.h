@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpgradientselect.h
- * Copyright (C) 2004 Michael Natterer <mitch@gimp.org>
+ * ligmagradientselect.h
+ * Copyright (C) 2004 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,40 +18,40 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_GRADIENT_SELECT_H__
-#define __GIMP_GRADIENT_SELECT_H__
+#ifndef __LIGMA_GRADIENT_SELECT_H__
+#define __LIGMA_GRADIENT_SELECT_H__
 
-#include "gimppdbdialog.h"
+#include "ligmapdbdialog.h"
 
 G_BEGIN_DECLS
 
 
-#define GIMP_TYPE_GRADIENT_SELECT            (gimp_gradient_select_get_type ())
-#define GIMP_GRADIENT_SELECT(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_GRADIENT_SELECT, GimpGradientSelect))
-#define GIMP_GRADIENT_SELECT_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_GRADIENT_SELECT, GimpGradientSelectClass))
-#define GIMP_IS_GRADIENT_SELECT(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_GRADIENT_SELECT))
-#define GIMP_IS_GRADIENT_SELECT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_GRADIENT_SELECT))
-#define GIMP_GRADIENT_SELECT_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_GRADIENT_SELECT, GimpGradientSelectClass))
+#define LIGMA_TYPE_GRADIENT_SELECT            (ligma_gradient_select_get_type ())
+#define LIGMA_GRADIENT_SELECT(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_GRADIENT_SELECT, LigmaGradientSelect))
+#define LIGMA_GRADIENT_SELECT_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_GRADIENT_SELECT, LigmaGradientSelectClass))
+#define LIGMA_IS_GRADIENT_SELECT(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_GRADIENT_SELECT))
+#define LIGMA_IS_GRADIENT_SELECT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_GRADIENT_SELECT))
+#define LIGMA_GRADIENT_SELECT_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_GRADIENT_SELECT, LigmaGradientSelectClass))
 
 
-typedef struct _GimpGradientSelectClass  GimpGradientSelectClass;
+typedef struct _LigmaGradientSelectClass  LigmaGradientSelectClass;
 
-struct _GimpGradientSelect
+struct _LigmaGradientSelect
 {
-  GimpPdbDialog  parent_instance;
+  LigmaPdbDialog  parent_instance;
 
   gint           sample_size;
 };
 
-struct _GimpGradientSelectClass
+struct _LigmaGradientSelectClass
 {
-  GimpPdbDialogClass  parent_class;
+  LigmaPdbDialogClass  parent_class;
 };
 
 
-GType  gimp_gradient_select_get_type (void) G_GNUC_CONST;
+GType  ligma_gradient_select_get_type (void) G_GNUC_CONST;
 
 
 G_END_DECLS
 
-#endif /* __GIMP_GRADIENT_SELECT_H__ */
+#endif /* __LIGMA_GRADIENT_SELECT_H__ */

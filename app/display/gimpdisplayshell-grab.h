@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpdisplayshell-grab.h
+ * ligmadisplayshell-grab.h
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,15 +17,15 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DISPLAY_SHELL_GRAB_H__
-#define __GIMP_DISPLAY_SHELL_GRAB_H__
+#ifndef __LIGMA_DISPLAY_SHELL_GRAB_H__
+#define __LIGMA_DISPLAY_SHELL_GRAB_H__
 
 
-gboolean   gimp_display_shell_pointer_grab    (GimpDisplayShell *shell,
+gboolean   ligma_display_shell_pointer_grab    (LigmaDisplayShell *shell,
                                                const GdkEvent   *event,
                                                GdkEventMask      event_mask);
-void       gimp_display_shell_pointer_ungrab  (GimpDisplayShell *shell,
+void       ligma_display_shell_pointer_ungrab  (LigmaDisplayShell *shell,
                                                const GdkEvent   *event);
 
 
-#endif /* __GIMP_DISPLAY_SHELL_GRAB_H__ */
+#endif /* __LIGMA_DISPLAY_SHELL_GRAB_H__ */

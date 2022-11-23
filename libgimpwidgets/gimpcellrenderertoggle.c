@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpcellrenderertoggle.c
- * Copyright (C) 2003-2004  Sven Neumann <sven@gimp.org>
+ * ligmacellrenderertoggle.c
+ * Copyright (C) 2003-2004  Sven Neumann <sven@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,17 +23,17 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
-#include "gimpwidgetstypes.h"
+#include "ligmawidgetstypes.h"
 
-#include "gimpwidgetsmarshal.h"
-#include "gimpcellrenderertoggle.h"
+#include "ligmawidgetsmarshal.h"
+#include "ligmacellrenderertoggle.h"
 
 
 /**
- * SECTION: gimpcellrenderertoggle
- * @title: GimpCellRendererToggle
+ * SECTION: ligmacellrenderertoggle
+ * @title: LigmaCellRendererToggle
  * @short_description: A #GtkCellRendererToggle that displays icons instead
  *                     of a checkbox.
  *
@@ -59,7 +59,7 @@ enum
 };
 
 
-struct _GimpCellRendererTogglePrivate
+struct _LigmaCellRendererTogglePrivate
 {
   gchar       *icon_name;
   gint         icon_size;
@@ -68,52 +68,52 @@ struct _GimpCellRendererTogglePrivate
   GdkPixbuf   *pixbuf;
 };
 
-#define GET_PRIVATE(obj) (((GimpCellRendererToggle *) (obj))->priv)
+#define GET_PRIVATE(obj) (((LigmaCellRendererToggle *) (obj))->priv)
 
 
-static void gimp_cell_renderer_toggle_finalize     (GObject              *object);
-static void gimp_cell_renderer_toggle_get_property (GObject              *object,
+static void ligma_cell_renderer_toggle_finalize     (GObject              *object);
+static void ligma_cell_renderer_toggle_get_property (GObject              *object,
                                                     guint                 param_id,
                                                     GValue               *value,
                                                     GParamSpec           *pspec);
-static void gimp_cell_renderer_toggle_set_property (GObject              *object,
+static void ligma_cell_renderer_toggle_set_property (GObject              *object,
                                                     guint                 param_id,
                                                     const GValue         *value,
                                                     GParamSpec           *pspec);
-static void gimp_cell_renderer_toggle_get_size     (GtkCellRenderer      *cell,
+static void ligma_cell_renderer_toggle_get_size     (GtkCellRenderer      *cell,
                                                     GtkWidget            *widget,
                                                     const GdkRectangle   *rectangle,
                                                     gint                 *x_offset,
                                                     gint                 *y_offset,
                                                     gint                 *width,
                                                     gint                 *height);
-static void gimp_cell_renderer_toggle_render       (GtkCellRenderer      *cell,
+static void ligma_cell_renderer_toggle_render       (GtkCellRenderer      *cell,
                                                     cairo_t              *cr,
                                                     GtkWidget            *widget,
                                                     const GdkRectangle   *background_area,
                                                     const GdkRectangle   *cell_area,
                                                     GtkCellRendererState  flags);
-static gboolean gimp_cell_renderer_toggle_activate (GtkCellRenderer      *cell,
+static gboolean ligma_cell_renderer_toggle_activate (GtkCellRenderer      *cell,
                                                     GdkEvent             *event,
                                                     GtkWidget            *widget,
                                                     const gchar          *path,
                                                     const GdkRectangle   *background_area,
                                                     const GdkRectangle   *cell_area,
                                                     GtkCellRendererState  flags);
-static void gimp_cell_renderer_toggle_create_pixbuf (GimpCellRendererToggle *toggle,
+static void ligma_cell_renderer_toggle_create_pixbuf (LigmaCellRendererToggle *toggle,
                                                      GtkWidget              *widget);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpCellRendererToggle, gimp_cell_renderer_toggle,
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaCellRendererToggle, ligma_cell_renderer_toggle,
                             GTK_TYPE_CELL_RENDERER_TOGGLE)
 
-#define parent_class gimp_cell_renderer_toggle_parent_class
+#define parent_class ligma_cell_renderer_toggle_parent_class
 
 static guint toggle_cell_signals[LAST_SIGNAL] = { 0 };
 
 
 static void
-gimp_cell_renderer_toggle_class_init (GimpCellRendererToggleClass *klass)
+ligma_cell_renderer_toggle_class_init (LigmaCellRendererToggleClass *klass)
 {
   GObjectClass         *object_class = G_OBJECT_CLASS (klass);
   GtkCellRendererClass *cell_class   = GTK_CELL_RENDERER_CLASS (klass);
@@ -122,27 +122,27 @@ gimp_cell_renderer_toggle_class_init (GimpCellRendererToggleClass *klass)
     g_signal_new ("clicked",
                   G_OBJECT_CLASS_TYPE (object_class),
                   G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (GimpCellRendererToggleClass, clicked),
+                  G_STRUCT_OFFSET (LigmaCellRendererToggleClass, clicked),
                   NULL, NULL,
-                  _gimp_widgets_marshal_VOID__STRING_FLAGS,
+                  _ligma_widgets_marshal_VOID__STRING_FLAGS,
                   G_TYPE_NONE, 2,
                   G_TYPE_STRING,
                   GDK_TYPE_MODIFIER_TYPE);
 
-  object_class->finalize     = gimp_cell_renderer_toggle_finalize;
-  object_class->get_property = gimp_cell_renderer_toggle_get_property;
-  object_class->set_property = gimp_cell_renderer_toggle_set_property;
+  object_class->finalize     = ligma_cell_renderer_toggle_finalize;
+  object_class->get_property = ligma_cell_renderer_toggle_get_property;
+  object_class->set_property = ligma_cell_renderer_toggle_set_property;
 
-  cell_class->get_size       = gimp_cell_renderer_toggle_get_size;
-  cell_class->render         = gimp_cell_renderer_toggle_render;
-  cell_class->activate       = gimp_cell_renderer_toggle_activate;
+  cell_class->get_size       = ligma_cell_renderer_toggle_get_size;
+  cell_class->render         = ligma_cell_renderer_toggle_render;
+  cell_class->activate       = ligma_cell_renderer_toggle_activate;
 
   g_object_class_install_property (object_class, PROP_ICON_NAME,
                                    g_param_spec_string ("icon-name",
                                                         "Icon Name",
                                                         "The icon to display",
                                                         NULL,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_ICON_SIZE,
@@ -151,7 +151,7 @@ gimp_cell_renderer_toggle_class_init (GimpCellRendererToggleClass *klass)
                                                      "The desired icon size to use in pixel (before applying scaling factor)",
                                                      0, G_MAXINT,
                                                      DEFAULT_ICON_SIZE,
-                                                     GIMP_PARAM_READWRITE |
+                                                     LIGMA_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_OVERRIDE_BACKGROUND,
@@ -159,20 +159,20 @@ gimp_cell_renderer_toggle_class_init (GimpCellRendererToggleClass *klass)
                                                          "Override Background",
                                                          "Draw the background if the row is selected",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE |
+                                                         LIGMA_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
 }
 
 static void
-gimp_cell_renderer_toggle_init (GimpCellRendererToggle *toggle)
+ligma_cell_renderer_toggle_init (LigmaCellRendererToggle *toggle)
 {
-  toggle->priv = gimp_cell_renderer_toggle_get_instance_private (toggle);
+  toggle->priv = ligma_cell_renderer_toggle_get_instance_private (toggle);
 }
 
 static void
-gimp_cell_renderer_toggle_finalize (GObject *object)
+ligma_cell_renderer_toggle_finalize (GObject *object)
 {
-  GimpCellRendererTogglePrivate *priv = GET_PRIVATE (object);
+  LigmaCellRendererTogglePrivate *priv = GET_PRIVATE (object);
 
   g_clear_pointer (&priv->icon_name, g_free);
   g_clear_object (&priv->pixbuf);
@@ -181,12 +181,12 @@ gimp_cell_renderer_toggle_finalize (GObject *object)
 }
 
 static void
-gimp_cell_renderer_toggle_get_property (GObject    *object,
+ligma_cell_renderer_toggle_get_property (GObject    *object,
                                         guint       param_id,
                                         GValue     *value,
                                         GParamSpec *pspec)
 {
-  GimpCellRendererTogglePrivate *priv = GET_PRIVATE (object);
+  LigmaCellRendererTogglePrivate *priv = GET_PRIVATE (object);
 
   switch (param_id)
     {
@@ -209,12 +209,12 @@ gimp_cell_renderer_toggle_get_property (GObject    *object,
 }
 
 static void
-gimp_cell_renderer_toggle_set_property (GObject      *object,
+ligma_cell_renderer_toggle_set_property (GObject      *object,
                                         guint         param_id,
                                         const GValue *value,
                                         GParamSpec   *pspec)
 {
-  GimpCellRendererTogglePrivate *priv = GET_PRIVATE (object);
+  LigmaCellRendererTogglePrivate *priv = GET_PRIVATE (object);
 
   switch (param_id)
     {
@@ -241,7 +241,7 @@ gimp_cell_renderer_toggle_set_property (GObject      *object,
 }
 
 static void
-gimp_cell_renderer_toggle_get_size (GtkCellRenderer    *cell,
+ligma_cell_renderer_toggle_get_size (GtkCellRenderer    *cell,
                                     GtkWidget          *widget,
                                     const GdkRectangle *cell_area,
                                     gint               *x_offset,
@@ -249,8 +249,8 @@ gimp_cell_renderer_toggle_get_size (GtkCellRenderer    *cell,
                                     gint               *width,
                                     gint               *height)
 {
-  GimpCellRendererToggle        *toggle  = GIMP_CELL_RENDERER_TOGGLE (cell);
-  GimpCellRendererTogglePrivate *priv    = GET_PRIVATE (cell);
+  LigmaCellRendererToggle        *toggle  = LIGMA_CELL_RENDERER_TOGGLE (cell);
+  LigmaCellRendererTogglePrivate *priv    = GET_PRIVATE (cell);
   GtkStyleContext               *context = gtk_widget_get_style_context (widget);
   GtkBorder                      border;
   gint                           scale_factor;
@@ -281,7 +281,7 @@ gimp_cell_renderer_toggle_get_size (GtkCellRenderer    *cell,
   gtk_cell_renderer_get_padding (cell, &xpad, &ypad);
 
   if (! priv->pixbuf)
-    gimp_cell_renderer_toggle_create_pixbuf (toggle, widget);
+    ligma_cell_renderer_toggle_create_pixbuf (toggle, widget);
 
   pixbuf_width  = gdk_pixbuf_get_width  (priv->pixbuf);
   pixbuf_height = gdk_pixbuf_get_height (priv->pixbuf);
@@ -323,14 +323,14 @@ gimp_cell_renderer_toggle_get_size (GtkCellRenderer    *cell,
 }
 
 static void
-gimp_cell_renderer_toggle_render (GtkCellRenderer      *cell,
+ligma_cell_renderer_toggle_render (GtkCellRenderer      *cell,
                                   cairo_t              *cr,
                                   GtkWidget            *widget,
                                   const GdkRectangle   *background_area,
                                   const GdkRectangle   *cell_area,
                                   GtkCellRendererState  flags)
 {
-  GimpCellRendererTogglePrivate *priv    = GET_PRIVATE (cell);
+  LigmaCellRendererTogglePrivate *priv    = GET_PRIVATE (cell);
   GtkStyleContext               *context = gtk_widget_get_style_context (widget);
   GdkRectangle                   toggle_rect;
   GtkStateFlags                  state;
@@ -375,7 +375,7 @@ gimp_cell_renderer_toggle_render (GtkCellRenderer      *cell,
         }
     }
 
-  gimp_cell_renderer_toggle_get_size (cell, widget, cell_area,
+  ligma_cell_renderer_toggle_get_size (cell, widget, cell_area,
                                       &toggle_rect.x,
                                       &toggle_rect.y,
                                       &toggle_rect.width,
@@ -460,7 +460,7 @@ gimp_cell_renderer_toggle_render (GtkCellRenderer      *cell,
 }
 
 static gboolean
-gimp_cell_renderer_toggle_activate (GtkCellRenderer      *cell,
+ligma_cell_renderer_toggle_activate (GtkCellRenderer      *cell,
                                     GdkEvent             *event,
                                     GtkWidget            *widget,
                                     const gchar          *path,
@@ -477,7 +477,7 @@ gimp_cell_renderer_toggle_activate (GtkCellRenderer      *cell,
       if (event && ((GdkEventAny *) event)->type == GDK_BUTTON_PRESS)
         state = ((GdkEventButton *) event)->state;
 
-      gimp_cell_renderer_toggle_clicked (GIMP_CELL_RENDERER_TOGGLE (cell),
+      ligma_cell_renderer_toggle_clicked (LIGMA_CELL_RENDERER_TOGGLE (cell),
                                          path, state);
 
       return TRUE;
@@ -487,10 +487,10 @@ gimp_cell_renderer_toggle_activate (GtkCellRenderer      *cell,
 }
 
 static void
-gimp_cell_renderer_toggle_create_pixbuf (GimpCellRendererToggle *toggle,
+ligma_cell_renderer_toggle_create_pixbuf (LigmaCellRendererToggle *toggle,
                                          GtkWidget              *widget)
 {
-  GimpCellRendererTogglePrivate *priv = GET_PRIVATE (toggle);
+  LigmaCellRendererTogglePrivate *priv = GET_PRIVATE (toggle);
 
   g_clear_object (&priv->pixbuf);
 
@@ -534,43 +534,43 @@ gimp_cell_renderer_toggle_create_pixbuf (GimpCellRendererToggle *toggle,
 
 
 /**
- * gimp_cell_renderer_toggle_new:
+ * ligma_cell_renderer_toggle_new:
  * @icon_name: the icon name of the icon to use for the active state
  *
  * Creates a custom version of the #GtkCellRendererToggle. Instead of
  * showing the standard toggle button, it shows a named icon if the
  * cell is active and no icon otherwise. This cell renderer is for
  * example used in the Layers treeview to indicate and control the
- * layer's visibility by showing %GIMP_STOCK_VISIBLE.
+ * layer's visibility by showing %LIGMA_STOCK_VISIBLE.
  *
- * Returns: a new #GimpCellRendererToggle
+ * Returns: a new #LigmaCellRendererToggle
  *
  * Since: 2.2
  **/
 GtkCellRenderer *
-gimp_cell_renderer_toggle_new (const gchar *icon_name)
+ligma_cell_renderer_toggle_new (const gchar *icon_name)
 {
-  return g_object_new (GIMP_TYPE_CELL_RENDERER_TOGGLE,
+  return g_object_new (LIGMA_TYPE_CELL_RENDERER_TOGGLE,
                        "icon-name", icon_name,
                        NULL);
 }
 
 /**
- * gimp_cell_renderer_toggle_clicked:
- * @cell:  a #GimpCellRendererToggle
+ * ligma_cell_renderer_toggle_clicked:
+ * @cell:  a #LigmaCellRendererToggle
  * @path:  the path to the clicked row
  * @state: the modifier state
  *
- * Emits the "clicked" signal from a #GimpCellRendererToggle.
+ * Emits the "clicked" signal from a #LigmaCellRendererToggle.
  *
  * Since: 2.2
  **/
 void
-gimp_cell_renderer_toggle_clicked (GimpCellRendererToggle *cell,
+ligma_cell_renderer_toggle_clicked (LigmaCellRendererToggle *cell,
                                    const gchar            *path,
                                    GdkModifierType         state)
 {
-  g_return_if_fail (GIMP_IS_CELL_RENDERER_TOGGLE (cell));
+  g_return_if_fail (LIGMA_IS_CELL_RENDERER_TOGGLE (cell));
   g_return_if_fail (path != NULL);
 
   g_signal_emit (cell, toggle_cell_signals[CLICKED], 0, path, state);

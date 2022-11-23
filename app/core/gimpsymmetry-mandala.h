@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpsymmetry-mandala.h
- * Copyright (C) 2015 Jehan <jehan@gimp.org>
+ * ligmasymmetry-mandala.h
+ * Copyright (C) 2015 Jehan <jehan@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,26 +18,26 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_MANDALA_H__
-#define __GIMP_MANDALA_H__
+#ifndef __LIGMA_MANDALA_H__
+#define __LIGMA_MANDALA_H__
 
 
-#include "gimpsymmetry.h"
+#include "ligmasymmetry.h"
 
 
-#define GIMP_TYPE_MANDALA            (gimp_mandala_get_type ())
-#define GIMP_MANDALA(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_MANDALA, GimpMandala))
-#define GIMP_MANDALA_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_MANDALA, GimpMandalaClass))
-#define GIMP_IS_MANDALA(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_MANDALA))
-#define GIMP_IS_MANDALA_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_MANDALA))
-#define GIMP_MANDALA_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_MANDALA, GimpMandalaClass))
+#define LIGMA_TYPE_MANDALA            (ligma_mandala_get_type ())
+#define LIGMA_MANDALA(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_MANDALA, LigmaMandala))
+#define LIGMA_MANDALA_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_MANDALA, LigmaMandalaClass))
+#define LIGMA_IS_MANDALA(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_MANDALA))
+#define LIGMA_IS_MANDALA_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_MANDALA))
+#define LIGMA_MANDALA_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_MANDALA, LigmaMandalaClass))
 
 
-typedef struct _GimpMandalaClass GimpMandalaClass;
+typedef struct _LigmaMandalaClass LigmaMandalaClass;
 
-struct _GimpMandala
+struct _LigmaMandala
 {
-  GimpSymmetry  parent_instance;
+  LigmaSymmetry  parent_instance;
 
   gdouble       center_x;
   gdouble       center_y;
@@ -45,17 +45,17 @@ struct _GimpMandala
   gboolean      disable_transformation;
   gboolean      enable_reflection;
 
-  GimpGuide    *horizontal_guide;
-  GimpGuide    *vertical_guide;
+  LigmaGuide    *horizontal_guide;
+  LigmaGuide    *vertical_guide;
 };
 
-struct _GimpMandalaClass
+struct _LigmaMandalaClass
 {
-  GimpSymmetryClass  parent_class;
+  LigmaSymmetryClass  parent_class;
 };
 
 
-GType   gimp_mandala_get_type (void) G_GNUC_CONST;
+GType   ligma_mandala_get_type (void) G_GNUC_CONST;
 
 
-#endif  /*  __GIMP_MANDALA_H__  */
+#endif  /*  __LIGMA_MANDALA_H__  */

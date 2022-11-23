@@ -1,9 +1,9 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationdissolve.c
+ * ligmaoperationdissolve.c
  * Copyright (C) 2012 Ville Sokk <ville.sokk@gmail.com>
- *               2012 Øyvind Kolås <pippin@gimp.org>
+ *               2012 Øyvind Kolås <pippin@ligma.org>
  *               2003 Helvetix Victorinox
  *
  * This program is free software: you can redistribute it and/or modify
@@ -26,13 +26,13 @@
 
 #include "../operations-types.h"
 
-#include "gimpoperationdissolve.h"
+#include "ligmaoperationdissolve.h"
 
 
 #define RANDOM_TABLE_SIZE 4096
 
 
-static gboolean                   gimp_operation_dissolve_process             (GeglOperation          *op,
+static gboolean                   ligma_operation_dissolve_process             (GeglOperation          *op,
                                                                                void                   *in,
                                                                                void                   *layer,
                                                                                void                   *mask,
@@ -40,32 +40,32 @@ static gboolean                   gimp_operation_dissolve_process             (G
                                                                                glong                   samples,
                                                                                const GeglRectangle    *result,
                                                                                gint                    level);
-static GimpLayerCompositeRegion   gimp_operation_dissolve_get_affected_region (GimpOperationLayerMode *layer_mode);
+static LigmaLayerCompositeRegion   ligma_operation_dissolve_get_affected_region (LigmaOperationLayerMode *layer_mode);
 
 
-G_DEFINE_TYPE (GimpOperationDissolve, gimp_operation_dissolve,
-               GIMP_TYPE_OPERATION_LAYER_MODE)
+G_DEFINE_TYPE (LigmaOperationDissolve, ligma_operation_dissolve,
+               LIGMA_TYPE_OPERATION_LAYER_MODE)
 
 
 static gint32 random_table[RANDOM_TABLE_SIZE];
 
 
 static void
-gimp_operation_dissolve_class_init (GimpOperationDissolveClass *klass)
+ligma_operation_dissolve_class_init (LigmaOperationDissolveClass *klass)
 {
   GeglOperationClass          *operation_class  = GEGL_OPERATION_CLASS (klass);
-  GimpOperationLayerModeClass *layer_mode_class = GIMP_OPERATION_LAYER_MODE_CLASS (klass);
+  LigmaOperationLayerModeClass *layer_mode_class = LIGMA_OPERATION_LAYER_MODE_CLASS (klass);
   GRand                       *gr;
   gint                         i;
 
   gegl_operation_class_set_keys (operation_class,
-                                 "name",        "gimp:dissolve",
-                                 "description", "GIMP dissolve mode operation",
+                                 "name",        "ligma:dissolve",
+                                 "description", "LIGMA dissolve mode operation",
                                  "categories",  "compositors",
                                  NULL);
 
-  layer_mode_class->process             = gimp_operation_dissolve_process;
-  layer_mode_class->get_affected_region = gimp_operation_dissolve_get_affected_region;
+  layer_mode_class->process             = ligma_operation_dissolve_process;
+  layer_mode_class->get_affected_region = ligma_operation_dissolve_get_affected_region;
 
   /* generate a table of random seeds */
   gr = g_rand_new_with_seed (314159265);
@@ -76,12 +76,12 @@ gimp_operation_dissolve_class_init (GimpOperationDissolveClass *klass)
 }
 
 static void
-gimp_operation_dissolve_init (GimpOperationDissolve *self)
+ligma_operation_dissolve_init (LigmaOperationDissolve *self)
 {
 }
 
 static gboolean
-gimp_operation_dissolve_process (GeglOperation       *op,
+ligma_operation_dissolve_process (GeglOperation       *op,
                                  void                *in_p,
                                  void                *layer_p,
                                  void                *mask_p,
@@ -90,7 +90,7 @@ gimp_operation_dissolve_process (GeglOperation       *op,
                                  const GeglRectangle *result,
                                  gint                 level)
 {
-  GimpOperationLayerMode *layer_mode = (gpointer) op;
+  LigmaOperationLayerMode *layer_mode = (gpointer) op;
   gfloat                 *in         = in_p;
   gfloat                 *out        = out_p;
   gfloat                 *layer      = layer_p;
@@ -120,8 +120,8 @@ gimp_operation_dissolve_process (GeglOperation       *op,
               out[1] = in[1];
               out[2] = in[2];
 
-              if (layer_mode->composite_mode == GIMP_LAYER_COMPOSITE_UNION ||
-                  layer_mode->composite_mode == GIMP_LAYER_COMPOSITE_CLIP_TO_BACKDROP)
+              if (layer_mode->composite_mode == LIGMA_LAYER_COMPOSITE_UNION ||
+                  layer_mode->composite_mode == LIGMA_LAYER_COMPOSITE_CLIP_TO_BACKDROP)
                 {
                   out[3] = in[3];
                 }
@@ -136,8 +136,8 @@ gimp_operation_dissolve_process (GeglOperation       *op,
               out[1] = layer[1];
               out[2] = layer[2];
 
-              if (layer_mode->composite_mode == GIMP_LAYER_COMPOSITE_UNION ||
-                  layer_mode->composite_mode == GIMP_LAYER_COMPOSITE_CLIP_TO_LAYER)
+              if (layer_mode->composite_mode == LIGMA_LAYER_COMPOSITE_UNION ||
+                  layer_mode->composite_mode == LIGMA_LAYER_COMPOSITE_CLIP_TO_LAYER)
                 {
                   out[3] = 1.0f;
                 }
@@ -161,8 +161,8 @@ gimp_operation_dissolve_process (GeglOperation       *op,
   return TRUE;
 }
 
-static GimpLayerCompositeRegion
-gimp_operation_dissolve_get_affected_region (GimpOperationLayerMode *layer_mode)
+static LigmaLayerCompositeRegion
+ligma_operation_dissolve_get_affected_region (LigmaOperationLayerMode *layer_mode)
 {
-  return GIMP_LAYER_COMPOSITE_REGION_SOURCE;
+  return LIGMA_LAYER_COMPOSITE_REGION_SOURCE;
 }

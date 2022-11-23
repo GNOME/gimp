@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
-  <gresource prefix="/org/gimp/imagemap/icons">
+  <gresource prefix="/org/ligma/imagemap/icons">
     <file preprocess="to-pixdata">imagemap-circle.png</file>
     <file preprocess="to-pixdata">imagemap-coord.png</file>
     <file preprocess="to-pixdata">imagemap-dimension.png</file>

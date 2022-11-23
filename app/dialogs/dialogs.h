@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,16 +19,16 @@
 #define __DIALOGS_H__
 
 
-extern GimpDialogFactory *global_dialog_factory;
-extern GimpContainer     *global_recent_docks;
+extern LigmaDialogFactory *global_dialog_factory;
+extern LigmaContainer     *global_recent_docks;
 
 
-void        dialogs_init              (Gimp            *gimp,
-                                       GimpMenuFactory *menu_factory);
-void        dialogs_exit              (Gimp            *gimp);
+void        dialogs_init              (Ligma            *ligma,
+                                       LigmaMenuFactory *menu_factory);
+void        dialogs_exit              (Ligma            *ligma);
 
-void        dialogs_load_recent_docks (Gimp            *gimp);
-void        dialogs_save_recent_docks (Gimp            *gimp);
+void        dialogs_load_recent_docks (Ligma            *ligma);
+void        dialogs_save_recent_docks (Ligma            *ligma);
 
 GtkWidget * dialogs_get_toolbox       (void);
 

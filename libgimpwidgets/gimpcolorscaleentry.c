@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpcolorscaleentry.c
+ * ligmacolorscaleentry.c
  * Copyright (C) 2020 Jehan
  *
  * This library is free software: you can redistribute it and/or
@@ -24,57 +24,57 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpmath/gimpmath.h"
-#include "libgimpbase/gimpbase.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmabase/ligmabase.h"
 
-#include "gimpwidgets.h"
+#include "ligmawidgets.h"
 
 
 /**
- * SECTION: gimpcolorscaleentry
- * @title: GimpColorScaleEntry
+ * SECTION: ligmacolorscaleentry
+ * @title: LigmaColorScaleEntry
  * @short_description: Widget containing a color scale, a spin button
  *                     and a label.
  *
- * This widget is a subclass of #GimpScaleEntry showing a
- * #GimpColorScale instead of a #GtkScale.
+ * This widget is a subclass of #LigmaScaleEntry showing a
+ * #LigmaColorScale instead of a #GtkScale.
  **/
 
-struct _GimpColorScaleEntry
+struct _LigmaColorScaleEntry
 {
-  GimpScaleEntry parent_instance;
+  LigmaScaleEntry parent_instance;
 };
 
-static GtkWidget * gimp_color_scale_entry_new_range_widget (GtkAdjustment  *adjustment);
+static GtkWidget * ligma_color_scale_entry_new_range_widget (GtkAdjustment  *adjustment);
 
-G_DEFINE_TYPE (GimpColorScaleEntry, gimp_color_scale_entry, GIMP_TYPE_SCALE_ENTRY)
+G_DEFINE_TYPE (LigmaColorScaleEntry, ligma_color_scale_entry, LIGMA_TYPE_SCALE_ENTRY)
 
-#define parent_class gimp_color_scale_entry_parent_class
+#define parent_class ligma_color_scale_entry_parent_class
 
 
 static void
-gimp_color_scale_entry_class_init (GimpColorScaleEntryClass *klass)
+ligma_color_scale_entry_class_init (LigmaColorScaleEntryClass *klass)
 {
-  GimpScaleEntryClass *entry_class = GIMP_SCALE_ENTRY_CLASS (klass);
+  LigmaScaleEntryClass *entry_class = LIGMA_SCALE_ENTRY_CLASS (klass);
 
-  entry_class->new_range_widget = gimp_color_scale_entry_new_range_widget;
+  entry_class->new_range_widget = ligma_color_scale_entry_new_range_widget;
 }
 
 static void
-gimp_color_scale_entry_init (GimpColorScaleEntry *entry)
+ligma_color_scale_entry_init (LigmaColorScaleEntry *entry)
 {
 }
 
 static GtkWidget *
-gimp_color_scale_entry_new_range_widget (GtkAdjustment  *adjustment)
+ligma_color_scale_entry_new_range_widget (GtkAdjustment  *adjustment)
 {
   GtkWidget *scale;
 
   g_return_val_if_fail (GTK_IS_ADJUSTMENT (adjustment), NULL);
 
-  scale = gimp_color_scale_new (GTK_ORIENTATION_HORIZONTAL,
-                                GIMP_COLOR_SELECTOR_VALUE);
+  scale = ligma_color_scale_new (GTK_ORIENTATION_HORIZONTAL,
+                                LIGMA_COLOR_SELECTOR_VALUE);
 
   gtk_range_set_adjustment (GTK_RANGE (scale), adjustment);
 
@@ -82,17 +82,17 @@ gimp_color_scale_entry_new_range_widget (GtkAdjustment  *adjustment)
 }
 
 /**
- * gimp_color_scale_entry_new:
+ * ligma_color_scale_entry_new:
  * @text:           The text for the #GtkLabel.
  * @value:          The initial value.
  * @lower:          The lower boundary.
  * @upper:          The upper boundary.
  * @digits:         The number of decimal digits.
  *
- * Returns: (transfer full): The new #GimpColorScale widget.
+ * Returns: (transfer full): The new #LigmaColorScale widget.
  **/
 GtkWidget *
-gimp_color_scale_entry_new (const gchar *text,
+ligma_color_scale_entry_new (const gchar *text,
                             gdouble      value,
                             gdouble      lower,
                             gdouble      upper,
@@ -100,7 +100,7 @@ gimp_color_scale_entry_new (const gchar *text,
 {
   GtkWidget *entry;
 
-  entry = g_object_new (GIMP_TYPE_COLOR_SCALE_ENTRY,
+  entry = g_object_new (LIGMA_TYPE_COLOR_SCALE_ENTRY,
                         "label",          text,
                         "value",          value,
                         "lower",          lower,

@@ -19,8 +19,8 @@ pdb_names = [
   'floating_sel',
   'font_select',
   'fonts',
-  'gimp',
-  'gimprc',
+  'ligma',
+  'ligmarc',
   'gradient_select',
   'gradient',
   'gradients',
@@ -63,8 +63,8 @@ endforeach
 
 
 enum_headers = [
-  meson.project_source_root() + '/libgimpbase/gimpbaseenums.h',
-  meson.project_source_root() + '/libgimpconfig/gimpconfigenums.h',
+  meson.project_source_root() + '/libligmabase/ligmabaseenums.h',
+  meson.project_source_root() + '/libligmaconfig/ligmaconfigenums.h',
   meson.project_source_root() + '/app/operations/operations-enums.h',
   meson.project_source_root() + '/app/core/core-enums.h',
   meson.project_source_root() + '/app/paint/paint-enums.h'

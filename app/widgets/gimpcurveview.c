@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,21 +23,21 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmaconfig/ligmaconfig.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpcurve.h"
-#include "core/gimpcurve-map.h"
+#include "core/ligma.h"
+#include "core/ligmacurve.h"
+#include "core/ligmacurve-map.h"
 
-#include "gimpclipboard.h"
-#include "gimpcurveview.h"
-#include "gimpwidgets-utils.h"
+#include "ligmaclipboard.h"
+#include "ligmacurveview.h"
+#include "ligmawidgets-utils.h"
 
 
 #define POINT_MAX_DISTANCE 16.0
@@ -46,7 +46,7 @@
 enum
 {
   PROP_0,
-  PROP_GIMP,
+  PROP_LIGMA,
   PROP_BASE_LINE,
   PROP_GRID_ROWS,
   PROP_GRID_COLUMNS,
@@ -66,126 +66,126 @@ enum
 
 typedef struct
 {
-  GimpCurve *curve;
-  GimpRGB    color;
+  LigmaCurve *curve;
+  LigmaRGB    color;
   gboolean   color_set;
 } BGCurve;
 
 
-static void       gimp_curve_view_finalize              (GObject          *object);
-static void       gimp_curve_view_dispose               (GObject          *object);
-static void       gimp_curve_view_set_property          (GObject          *object,
+static void       ligma_curve_view_finalize              (GObject          *object);
+static void       ligma_curve_view_dispose               (GObject          *object);
+static void       ligma_curve_view_set_property          (GObject          *object,
                                                          guint             property_id,
                                                          const GValue     *value,
                                                          GParamSpec       *pspec);
-static void       gimp_curve_view_get_property          (GObject          *object,
+static void       ligma_curve_view_get_property          (GObject          *object,
                                                          guint             property_id,
                                                          GValue           *value,
                                                          GParamSpec       *pspec);
 
-static void       gimp_curve_view_style_updated         (GtkWidget        *widget);
-static gboolean   gimp_curve_view_draw                  (GtkWidget        *widget,
+static void       ligma_curve_view_style_updated         (GtkWidget        *widget);
+static gboolean   ligma_curve_view_draw                  (GtkWidget        *widget,
                                                          cairo_t          *cr);
-static gboolean   gimp_curve_view_button_press          (GtkWidget        *widget,
+static gboolean   ligma_curve_view_button_press          (GtkWidget        *widget,
                                                          GdkEventButton   *bevent);
-static gboolean   gimp_curve_view_button_release        (GtkWidget        *widget,
+static gboolean   ligma_curve_view_button_release        (GtkWidget        *widget,
                                                          GdkEventButton   *bevent);
-static gboolean   gimp_curve_view_motion_notify         (GtkWidget        *widget,
+static gboolean   ligma_curve_view_motion_notify         (GtkWidget        *widget,
                                                          GdkEventMotion   *bevent);
-static gboolean   gimp_curve_view_leave_notify          (GtkWidget        *widget,
+static gboolean   ligma_curve_view_leave_notify          (GtkWidget        *widget,
                                                          GdkEventCrossing *cevent);
-static gboolean   gimp_curve_view_key_press             (GtkWidget        *widget,
+static gboolean   ligma_curve_view_key_press             (GtkWidget        *widget,
                                                          GdkEventKey      *kevent);
 
-static void       gimp_curve_view_cut_clipboard         (GimpCurveView    *view);
-static void       gimp_curve_view_copy_clipboard        (GimpCurveView    *view);
-static void       gimp_curve_view_paste_clipboard       (GimpCurveView    *view);
+static void       ligma_curve_view_cut_clipboard         (LigmaCurveView    *view);
+static void       ligma_curve_view_copy_clipboard        (LigmaCurveView    *view);
+static void       ligma_curve_view_paste_clipboard       (LigmaCurveView    *view);
 
-static void       gimp_curve_view_curve_dirty           (GimpCurve        *curve,
-                                                         GimpCurveView    *view);
-static void       gimp_curve_view_curve_notify_n_points (GimpCurve        *curve,
+static void       ligma_curve_view_curve_dirty           (LigmaCurve        *curve,
+                                                         LigmaCurveView    *view);
+static void       ligma_curve_view_curve_notify_n_points (LigmaCurve        *curve,
                                                          GParamSpec       *pspec,
-                                                         GimpCurveView    *view);
+                                                         LigmaCurveView    *view);
 
-static void       gimp_curve_view_set_cursor            (GimpCurveView    *view,
+static void       ligma_curve_view_set_cursor            (LigmaCurveView    *view,
                                                          gdouble           x,
                                                          gdouble           y);
-static void       gimp_curve_view_unset_cursor          (GimpCurveView *view);
+static void       ligma_curve_view_unset_cursor          (LigmaCurveView *view);
 
 
-G_DEFINE_TYPE (GimpCurveView, gimp_curve_view,
-               GIMP_TYPE_HISTOGRAM_VIEW)
+G_DEFINE_TYPE (LigmaCurveView, ligma_curve_view,
+               LIGMA_TYPE_HISTOGRAM_VIEW)
 
-#define parent_class gimp_curve_view_parent_class
+#define parent_class ligma_curve_view_parent_class
 
 static guint curve_view_signals[LAST_SIGNAL] = { 0 };
 
 
 static void
-gimp_curve_view_class_init (GimpCurveViewClass *klass)
+ligma_curve_view_class_init (LigmaCurveViewClass *klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
   GtkBindingSet  *binding_set;
 
-  object_class->finalize             = gimp_curve_view_finalize;
-  object_class->dispose              = gimp_curve_view_dispose;
-  object_class->set_property         = gimp_curve_view_set_property;
-  object_class->get_property         = gimp_curve_view_get_property;
+  object_class->finalize             = ligma_curve_view_finalize;
+  object_class->dispose              = ligma_curve_view_dispose;
+  object_class->set_property         = ligma_curve_view_set_property;
+  object_class->get_property         = ligma_curve_view_get_property;
 
-  widget_class->style_updated        = gimp_curve_view_style_updated;
-  widget_class->draw                 = gimp_curve_view_draw;
-  widget_class->button_press_event   = gimp_curve_view_button_press;
-  widget_class->button_release_event = gimp_curve_view_button_release;
-  widget_class->motion_notify_event  = gimp_curve_view_motion_notify;
-  widget_class->leave_notify_event   = gimp_curve_view_leave_notify;
-  widget_class->key_press_event      = gimp_curve_view_key_press;
+  widget_class->style_updated        = ligma_curve_view_style_updated;
+  widget_class->draw                 = ligma_curve_view_draw;
+  widget_class->button_press_event   = ligma_curve_view_button_press;
+  widget_class->button_release_event = ligma_curve_view_button_release;
+  widget_class->motion_notify_event  = ligma_curve_view_motion_notify;
+  widget_class->leave_notify_event   = ligma_curve_view_leave_notify;
+  widget_class->key_press_event      = ligma_curve_view_key_press;
 
   klass->selection_changed           = NULL;
-  klass->cut_clipboard               = gimp_curve_view_cut_clipboard;
-  klass->copy_clipboard              = gimp_curve_view_copy_clipboard;
-  klass->paste_clipboard             = gimp_curve_view_paste_clipboard;
+  klass->cut_clipboard               = ligma_curve_view_cut_clipboard;
+  klass->copy_clipboard              = ligma_curve_view_copy_clipboard;
+  klass->paste_clipboard             = ligma_curve_view_paste_clipboard;
 
-  g_object_class_install_property (object_class, PROP_GIMP,
-                                   g_param_spec_object ("gimp",
+  g_object_class_install_property (object_class, PROP_LIGMA,
+                                   g_param_spec_object ("ligma",
                                                         NULL, NULL,
-                                                        GIMP_TYPE_GIMP,
-                                                        GIMP_PARAM_READWRITE));
+                                                        LIGMA_TYPE_LIGMA,
+                                                        LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_BASE_LINE,
                                    g_param_spec_boolean ("base-line",
                                                          NULL, NULL,
                                                          TRUE,
-                                                         GIMP_PARAM_READWRITE |
+                                                         LIGMA_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_GRID_ROWS,
                                    g_param_spec_int ("grid-rows", NULL, NULL,
                                                      0, 100, 8,
-                                                     GIMP_PARAM_READWRITE |
+                                                     LIGMA_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_GRID_COLUMNS,
                                    g_param_spec_int ("grid-columns", NULL, NULL,
                                                      0, 100, 8,
-                                                     GIMP_PARAM_READWRITE |
+                                                     LIGMA_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_X_AXIS_LABEL,
                                    g_param_spec_string ("x-axis-label", NULL, NULL,
                                                         NULL,
-                                                        GIMP_PARAM_READWRITE));
+                                                        LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_Y_AXIS_LABEL,
                                    g_param_spec_string ("y-axis-label", NULL, NULL,
                                                         NULL,
-                                                        GIMP_PARAM_READWRITE));
+                                                        LIGMA_PARAM_READWRITE));
 
   curve_view_signals[SELECTION_CHANGED] =
     g_signal_new ("selection-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpCurveViewClass, selection_changed),
+                  G_STRUCT_OFFSET (LigmaCurveViewClass, selection_changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
@@ -193,7 +193,7 @@ gimp_curve_view_class_init (GimpCurveViewClass *klass)
     g_signal_new ("cut-clipboard",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
-                  G_STRUCT_OFFSET (GimpCurveViewClass, cut_clipboard),
+                  G_STRUCT_OFFSET (LigmaCurveViewClass, cut_clipboard),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
@@ -201,7 +201,7 @@ gimp_curve_view_class_init (GimpCurveViewClass *klass)
     g_signal_new ("copy-clipboard",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
-                  G_STRUCT_OFFSET (GimpCurveViewClass, copy_clipboard),
+                  G_STRUCT_OFFSET (LigmaCurveViewClass, copy_clipboard),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
@@ -209,7 +209,7 @@ gimp_curve_view_class_init (GimpCurveViewClass *klass)
     g_signal_new ("paste-clipboard",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
-                  G_STRUCT_OFFSET (GimpCurveViewClass, paste_clipboard),
+                  G_STRUCT_OFFSET (LigmaCurveViewClass, paste_clipboard),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
@@ -224,7 +224,7 @@ gimp_curve_view_class_init (GimpCurveViewClass *klass)
 }
 
 static void
-gimp_curve_view_init (GimpCurveView *view)
+ligma_curve_view_init (LigmaCurveView *view)
 {
   view->curve       = NULL;
   view->selected    = -1;
@@ -255,9 +255,9 @@ gimp_curve_view_init (GimpCurveView *view)
 }
 
 static void
-gimp_curve_view_finalize (GObject *object)
+ligma_curve_view_finalize (GObject *object)
 {
-  GimpCurveView *view = GIMP_CURVE_VIEW (object);
+  LigmaCurveView *view = LIGMA_CURVE_VIEW (object);
 
   g_clear_object (&view->orig_curve);
 
@@ -271,30 +271,30 @@ gimp_curve_view_finalize (GObject *object)
 }
 
 static void
-gimp_curve_view_dispose (GObject *object)
+ligma_curve_view_dispose (GObject *object)
 {
-  GimpCurveView *view = GIMP_CURVE_VIEW (object);
+  LigmaCurveView *view = LIGMA_CURVE_VIEW (object);
 
-  gimp_curve_view_set_curve (view, NULL, NULL);
+  ligma_curve_view_set_curve (view, NULL, NULL);
 
   if (view->bg_curves)
-    gimp_curve_view_remove_all_backgrounds (view);
+    ligma_curve_view_remove_all_backgrounds (view);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
-gimp_curve_view_set_property (GObject      *object,
+ligma_curve_view_set_property (GObject      *object,
                               guint         property_id,
                               const GValue *value,
                               GParamSpec   *pspec)
 {
-  GimpCurveView *view = GIMP_CURVE_VIEW (object);
+  LigmaCurveView *view = LIGMA_CURVE_VIEW (object);
 
   switch (property_id)
     {
-    case PROP_GIMP:
-      view->gimp = g_value_get_object (value); /* don't ref */
+    case PROP_LIGMA:
+      view->ligma = g_value_get_object (value); /* don't ref */
       break;
     case PROP_GRID_ROWS:
       view->grid_rows = g_value_get_int (value);
@@ -306,10 +306,10 @@ gimp_curve_view_set_property (GObject      *object,
       view->draw_base_line = g_value_get_boolean (value);
       break;
     case PROP_X_AXIS_LABEL:
-      gimp_curve_view_set_x_axis_label (view, g_value_get_string (value));
+      ligma_curve_view_set_x_axis_label (view, g_value_get_string (value));
       break;
     case PROP_Y_AXIS_LABEL:
-      gimp_curve_view_set_y_axis_label (view, g_value_get_string (value));
+      ligma_curve_view_set_y_axis_label (view, g_value_get_string (value));
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -318,17 +318,17 @@ gimp_curve_view_set_property (GObject      *object,
 }
 
 static void
-gimp_curve_view_get_property (GObject    *object,
+ligma_curve_view_get_property (GObject    *object,
                               guint       property_id,
                               GValue     *value,
                               GParamSpec *pspec)
 {
-  GimpCurveView *view = GIMP_CURVE_VIEW (object);
+  LigmaCurveView *view = LIGMA_CURVE_VIEW (object);
 
   switch (property_id)
     {
-    case PROP_GIMP:
-      g_value_set_object (value, view->gimp);
+    case PROP_LIGMA:
+      g_value_set_object (value, view->ligma);
       break;
     case PROP_GRID_ROWS:
       g_value_set_int (value, view->grid_rows);
@@ -352,9 +352,9 @@ gimp_curve_view_get_property (GObject    *object,
 }
 
 static void
-gimp_curve_view_style_updated (GtkWidget *widget)
+ligma_curve_view_style_updated (GtkWidget *widget)
 {
-  GimpCurveView *view = GIMP_CURVE_VIEW (widget);
+  LigmaCurveView *view = LIGMA_CURVE_VIEW (widget);
 
   GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
 
@@ -363,7 +363,7 @@ gimp_curve_view_style_updated (GtkWidget *widget)
 }
 
 static void
-gimp_curve_view_draw_grid (GimpCurveView *view,
+ligma_curve_view_draw_grid (LigmaCurveView *view,
                            cairo_t       *cr,
                            gint           width,
                            gint           height,
@@ -423,7 +423,7 @@ gimp_curve_view_draw_grid (GimpCurveView *view,
 }
 
 static void
-gimp_curve_view_draw_point (GimpCurveView *view,
+ligma_curve_view_draw_point (LigmaCurveView *view,
                             cairo_t       *cr,
                             gint           i,
                             gint           width,
@@ -432,16 +432,16 @@ gimp_curve_view_draw_point (GimpCurveView *view,
 {
   gdouble x, y;
 
-  gimp_curve_get_point (view->curve, i, &x, &y);
+  ligma_curve_get_point (view->curve, i, &x, &y);
 
   y = 1.0 - y;
 
 #define CIRCLE_RADIUS  3
 #define DIAMOND_RADIUS (G_SQRT2 * CIRCLE_RADIUS)
 
-  switch (gimp_curve_get_point_type (view->curve, i))
+  switch (ligma_curve_get_point_type (view->curve, i))
     {
-    case GIMP_CURVE_POINT_SMOOTH:
+    case LIGMA_CURVE_POINT_SMOOTH:
       cairo_move_to (cr,
                      border + (gdouble) (width  - 1) * x + CIRCLE_RADIUS,
                      border + (gdouble) (height - 1) * y);
@@ -452,7 +452,7 @@ gimp_curve_view_draw_point (GimpCurveView *view,
                      0, 2 * G_PI);
       break;
 
-    case GIMP_CURVE_POINT_CORNER:
+    case LIGMA_CURVE_POINT_CORNER:
       cairo_move_to    (cr,
                         border + (gdouble) (width  - 1) * x,
                         border + (gdouble) (height - 1) * y - DIAMOND_RADIUS);
@@ -471,9 +471,9 @@ gimp_curve_view_draw_point (GimpCurveView *view,
 }
 
 static void
-gimp_curve_view_draw_curve (GimpCurveView *view,
+ligma_curve_view_draw_curve (LigmaCurveView *view,
                             cairo_t       *cr,
-                            GimpCurve     *curve,
+                            LigmaCurve     *curve,
                             gint           width,
                             gint           height,
                             gint           border)
@@ -482,7 +482,7 @@ gimp_curve_view_draw_curve (GimpCurveView *view,
   gint    i;
 
   x = 0.0;
-  y = 1.0 - gimp_curve_map_value (curve, 0.0);
+  y = 1.0 - ligma_curve_map_value (curve, 0.0);
 
   cairo_move_to (cr,
                  border + (gdouble) (width  - 1) * x,
@@ -491,7 +491,7 @@ gimp_curve_view_draw_curve (GimpCurveView *view,
   for (i = 1; i < 256; i++)
     {
       x = (gdouble) i / 255.0;
-      y = 1.0 - gimp_curve_map_value (curve, x);
+      y = 1.0 - ligma_curve_map_value (curve, x);
 
       cairo_line_to (cr,
                      border + (gdouble) (width  - 1) * x,
@@ -502,10 +502,10 @@ gimp_curve_view_draw_curve (GimpCurveView *view,
 }
 
 static gboolean
-gimp_curve_view_draw (GtkWidget *widget,
+ligma_curve_view_draw (GtkWidget *widget,
                       cairo_t   *cr)
 {
-  GimpCurveView   *view  = GIMP_CURVE_VIEW (widget);
+  LigmaCurveView   *view  = LIGMA_CURVE_VIEW (widget);
   GtkStyleContext *style = gtk_widget_get_style_context (widget);
   GtkAllocation    allocation;
   GdkRGBA          grid_color;
@@ -532,7 +532,7 @@ gimp_curve_view_draw (GtkWidget *widget,
 
   gtk_widget_get_allocation (widget, &allocation);
 
-  border = GIMP_HISTOGRAM_VIEW (view)->border_width;
+  border = LIGMA_HISTOGRAM_VIEW (view)->border_width;
   width  = allocation.width  - 2 * border;
   height = allocation.height - 2 * border;
 
@@ -562,7 +562,7 @@ gimp_curve_view_draw (GtkWidget *widget,
   /*  Draw the grid lines  */
   gdk_cairo_set_source_rgba (cr, &grid_color);
 
-  gimp_curve_view_draw_grid (view, cr, width, height, border);
+  ligma_curve_view_draw_grid (view, cr, width, height, border);
 
   /*  Draw the axis labels  */
 
@@ -624,21 +624,21 @@ gimp_curve_view_draw (GtkWidget *widget,
                                  0.5);
         }
 
-      gimp_curve_view_draw_curve (view, cr, bg->curve,
+      ligma_curve_view_draw_curve (view, cr, bg->curve,
                                   width, height, border);
     }
 
   /*  Draw the curve  */
   if (view->curve_color)
-    gimp_cairo_set_source_rgb (cr, view->curve_color);
+    ligma_cairo_set_source_rgb (cr, view->curve_color);
   else
     gdk_cairo_set_source_rgba (cr, &fg_color);
 
-  gimp_curve_view_draw_curve (view, cr, view->curve,
+  ligma_curve_view_draw_curve (view, cr, view->curve,
                               width, height, border);
 
   /*  Draw the points  */
-  if (gimp_curve_get_curve_type (view->curve) == GIMP_CURVE_SMOOTH)
+  if (ligma_curve_get_curve_type (view->curve) == LIGMA_CURVE_SMOOTH)
     {
       /*  Draw the unselected points  */
       for (i = 0; i < view->curve->n_points; i++)
@@ -646,7 +646,7 @@ gimp_curve_view_draw (GtkWidget *widget,
           if (i == view->selected)
             continue;
 
-          gimp_curve_view_draw_point (view, cr, i, width, height, border);
+          ligma_curve_view_draw_point (view, cr, i, width, height, border);
         }
 
       cairo_stroke (cr);
@@ -654,7 +654,7 @@ gimp_curve_view_draw (GtkWidget *widget,
       /*  Draw the selected point  */
       if (view->selected != -1)
         {
-          gimp_curve_view_draw_point (view, cr, view->selected,
+          ligma_curve_view_draw_point (view, cr, view->selected,
                                       width, height, border);
           cairo_fill (cr);
        }
@@ -798,7 +798,7 @@ gimp_curve_view_draw (GtkWidget *widget,
 }
 
 static void
-set_cursor (GimpCurveView *view,
+set_cursor (LigmaCurveView *view,
             GdkCursorType  new_cursor)
 {
   if (new_cursor != view->cursor_type)
@@ -814,11 +814,11 @@ set_cursor (GimpCurveView *view,
 }
 
 static gboolean
-gimp_curve_view_button_press (GtkWidget      *widget,
+ligma_curve_view_button_press (GtkWidget      *widget,
                               GdkEventButton *bevent)
 {
-  GimpCurveView *view  = GIMP_CURVE_VIEW (widget);
-  GimpCurve     *curve = view->curve;
+  LigmaCurveView *view  = LIGMA_CURVE_VIEW (widget);
+  LigmaCurve     *curve = view->curve;
   GtkAllocation  allocation;
   gint           border;
   gint           width, height;
@@ -833,7 +833,7 @@ gimp_curve_view_button_press (GtkWidget      *widget,
 
   gtk_widget_get_allocation (widget, &allocation);
 
-  border = GIMP_HISTOGRAM_VIEW (view)->border_width;
+  border = LIGMA_HISTOGRAM_VIEW (view)->border_width;
   width  = allocation.width  - 2 * border;
   height = allocation.height - 2 * border;
 
@@ -845,57 +845,57 @@ gimp_curve_view_button_press (GtkWidget      *widget,
 
   view->grabbed = TRUE;
 
-  view->orig_curve = GIMP_CURVE (gimp_data_duplicate (GIMP_DATA (curve)));
+  view->orig_curve = LIGMA_CURVE (ligma_data_duplicate (LIGMA_DATA (curve)));
 
   set_cursor (view, GDK_TCROSS);
 
-  switch (gimp_curve_get_curve_type (curve))
+  switch (ligma_curve_get_curve_type (curve))
     {
-    case GIMP_CURVE_SMOOTH:
-      point = gimp_curve_get_closest_point (curve, x, 1.0 - y,
+    case LIGMA_CURVE_SMOOTH:
+      point = ligma_curve_get_closest_point (curve, x, 1.0 - y,
                                             POINT_MAX_DISTANCE /
                                             MAX (width, height));
 
       if (point < 0)
         {
-          GimpCurvePointType type = GIMP_CURVE_POINT_SMOOTH;
+          LigmaCurvePointType type = LIGMA_CURVE_POINT_SMOOTH;
 
-          if (bevent->state & gimp_get_constrain_behavior_mask ())
-            y = 1.0 - gimp_curve_map_value (view->orig_curve, x);
+          if (bevent->state & ligma_get_constrain_behavior_mask ())
+            y = 1.0 - ligma_curve_map_value (view->orig_curve, x);
 
           if (view->selected >= 0)
-            type = gimp_curve_get_point_type (curve, view->selected);
+            type = ligma_curve_get_point_type (curve, view->selected);
 
-          point = gimp_curve_add_point (curve, x, 1.0 - y);
+          point = ligma_curve_add_point (curve, x, 1.0 - y);
 
-          gimp_curve_set_point_type (curve, point, type);
+          ligma_curve_set_point_type (curve, point, type);
         }
 
       if (point > 0)
-        gimp_curve_get_point (curve, point - 1, &view->leftmost, NULL);
+        ligma_curve_get_point (curve, point - 1, &view->leftmost, NULL);
       else
         view->leftmost = -1.0;
 
-      if (point < gimp_curve_get_n_points (curve) - 1)
-        gimp_curve_get_point (curve, point + 1, &view->rightmost, NULL);
+      if (point < ligma_curve_get_n_points (curve) - 1)
+        ligma_curve_get_point (curve, point + 1, &view->rightmost, NULL);
       else
         view->rightmost = 2.0;
 
-      gimp_curve_view_set_selected (view, point);
+      ligma_curve_view_set_selected (view, point);
 
-      gimp_curve_get_point (curve, point, &point_x, &point_y);
+      ligma_curve_get_point (curve, point, &point_x, &point_y);
 
       view->offset_x = point_x         - x;
       view->offset_y = (1.0 - point_y) - y;
 
-      view->point_type = gimp_curve_get_point_type (curve, point);
+      view->point_type = ligma_curve_get_point_type (curve, point);
       break;
 
-    case GIMP_CURVE_FREE:
+    case LIGMA_CURVE_FREE:
       view->last_x = x;
       view->last_y = y;
 
-      gimp_curve_set_curve (curve, x, 1.0 - y);
+      ligma_curve_set_curve (curve, x, 1.0 - y);
       break;
     }
 
@@ -906,10 +906,10 @@ gimp_curve_view_button_press (GtkWidget      *widget,
 }
 
 static gboolean
-gimp_curve_view_button_release (GtkWidget      *widget,
+ligma_curve_view_button_release (GtkWidget      *widget,
                                 GdkEventButton *bevent)
 {
-  GimpCurveView *view = GIMP_CURVE_VIEW (widget);
+  LigmaCurveView *view = LIGMA_CURVE_VIEW (widget);
 
   if (bevent->button != 1)
     return TRUE;
@@ -927,11 +927,11 @@ gimp_curve_view_button_release (GtkWidget      *widget,
 }
 
 static gboolean
-gimp_curve_view_motion_notify (GtkWidget      *widget,
+ligma_curve_view_motion_notify (GtkWidget      *widget,
                                GdkEventMotion *mevent)
 {
-  GimpCurveView  *view       = GIMP_CURVE_VIEW (widget);
-  GimpCurve      *curve      = view->curve;
+  LigmaCurveView  *view       = LIGMA_CURVE_VIEW (widget);
+  LigmaCurve      *curve      = view->curve;
   GtkAllocation   allocation;
   GdkCursorType   new_cursor = GDK_X_CURSOR;
   gint            border;
@@ -947,7 +947,7 @@ gimp_curve_view_motion_notify (GtkWidget      *widget,
 
   gtk_widget_get_allocation (widget, &allocation);
 
-  border = GIMP_HISTOGRAM_VIEW (view)->border_width;
+  border = LIGMA_HISTOGRAM_VIEW (view)->border_width;
   width  = allocation.width  - 2 * border;
   height = allocation.height - 2 * border;
 
@@ -960,18 +960,18 @@ gimp_curve_view_motion_notify (GtkWidget      *widget,
   x = CLAMP (x, 0.0, 1.0);
   y = CLAMP (y, 0.0, 1.0);
 
-  switch (gimp_curve_get_curve_type (curve))
+  switch (ligma_curve_get_curve_type (curve))
     {
-    case GIMP_CURVE_SMOOTH:
+    case LIGMA_CURVE_SMOOTH:
       if (! view->grabbed) /*  If no point is grabbed...  */
         {
-          point = gimp_curve_get_closest_point (curve, x, 1.0 - y,
+          point = ligma_curve_get_closest_point (curve, x, 1.0 - y,
                                                 POINT_MAX_DISTANCE /
                                                 MAX (width, height));
 
           if (point >= 0)
             {
-              gimp_curve_get_point (curve, point, &point_x, &point_y);
+              ligma_curve_get_point (curve, point, &point_x, &point_y);
 
               new_cursor = GDK_FLEUR;
 
@@ -982,53 +982,53 @@ gimp_curve_view_motion_notify (GtkWidget      *widget,
             {
               new_cursor = GDK_TCROSS;
 
-              if (mevent->state & gimp_get_constrain_behavior_mask ())
-                y = 1.0 - gimp_curve_map_value (view->curve, x);
+              if (mevent->state & ligma_get_constrain_behavior_mask ())
+                y = 1.0 - ligma_curve_map_value (view->curve, x);
             }
         }
       else /*  Else, drag the grabbed point  */
         {
           new_cursor = GDK_TCROSS;
 
-          if (mevent->state & gimp_get_constrain_behavior_mask ())
-            y = 1.0 - gimp_curve_map_value (view->orig_curve, x);
+          if (mevent->state & ligma_get_constrain_behavior_mask ())
+            y = 1.0 - ligma_curve_map_value (view->orig_curve, x);
 
-          gimp_data_freeze (GIMP_DATA (curve));
+          ligma_data_freeze (LIGMA_DATA (curve));
 
           if (x > view->leftmost && x < view->rightmost)
             {
               if (view->selected < 0)
                 {
-                  gimp_curve_view_set_selected (
+                  ligma_curve_view_set_selected (
                     view,
-                    gimp_curve_add_point (curve, x, 1.0 - y));
+                    ligma_curve_add_point (curve, x, 1.0 - y));
 
-                  gimp_curve_set_point_type (curve,
+                  ligma_curve_set_point_type (curve,
                                              view->selected, view->point_type);
                 }
               else
                 {
-                  gimp_curve_set_point (curve, view->selected, x, 1.0 - y);
+                  ligma_curve_set_point (curve, view->selected, x, 1.0 - y);
                 }
             }
           else
             {
               if (view->selected >= 0)
                 {
-                  gimp_curve_delete_point (curve, view->selected);
+                  ligma_curve_delete_point (curve, view->selected);
 
-                  gimp_curve_view_set_selected (view, -1);
+                  ligma_curve_view_set_selected (view, -1);
                 }
             }
 
-          gimp_data_thaw (GIMP_DATA (curve));
+          ligma_data_thaw (LIGMA_DATA (curve));
         }
       break;
 
-    case GIMP_CURVE_FREE:
+    case LIGMA_CURVE_FREE:
       if (view->grabbed)
         {
-          gint    n_samples = gimp_curve_get_n_samples (curve);
+          gint    n_samples = ligma_curve_get_n_samples (curve);
           gdouble x1, x2;
           gdouble y1, y2;
 
@@ -1053,7 +1053,7 @@ gimp_curve_view_motion_notify (GtkWidget      *widget,
               gint to   = ROUND (x2 * (gdouble) (n_samples - 1));
               gint i;
 
-              gimp_data_freeze (GIMP_DATA (curve));
+              ligma_data_freeze (LIGMA_DATA (curve));
 
               for (i = from; i <= to; i++)
                 {
@@ -1063,14 +1063,14 @@ gimp_curve_view_motion_notify (GtkWidget      *widget,
                   xpos = CLAMP (xpos, 0.0, 1.0);
                   ypos = CLAMP (ypos, 0.0, 1.0);
 
-                  gimp_curve_set_curve (curve, xpos, 1.0 - ypos);
+                  ligma_curve_set_curve (curve, xpos, 1.0 - ypos);
                 }
 
-              gimp_data_thaw (GIMP_DATA (curve));
+              ligma_data_thaw (LIGMA_DATA (curve));
             }
           else
             {
-              gimp_curve_set_curve (curve, x, 1.0 - y);
+              ligma_curve_set_curve (curve, x, 1.0 - y);
             }
 
           view->last_x = x;
@@ -1087,50 +1087,50 @@ gimp_curve_view_motion_notify (GtkWidget      *widget,
 
   set_cursor (view, new_cursor);
 
-  gimp_curve_view_set_cursor (view, x, y);
+  ligma_curve_view_set_cursor (view, x, y);
 
   return TRUE;
 }
 
 static gboolean
-gimp_curve_view_leave_notify (GtkWidget        *widget,
+ligma_curve_view_leave_notify (GtkWidget        *widget,
                               GdkEventCrossing *cevent)
 {
-  GimpCurveView *view = GIMP_CURVE_VIEW (widget);
+  LigmaCurveView *view = LIGMA_CURVE_VIEW (widget);
 
-  gimp_curve_view_unset_cursor (view);
+  ligma_curve_view_unset_cursor (view);
 
   return TRUE;
 }
 
 static gboolean
-gimp_curve_view_key_press (GtkWidget   *widget,
+ligma_curve_view_key_press (GtkWidget   *widget,
                            GdkEventKey *kevent)
 {
-  GimpCurveView *view    = GIMP_CURVE_VIEW (widget);
-  GimpCurve     *curve   = view->curve;
+  LigmaCurveView *view    = LIGMA_CURVE_VIEW (widget);
+  LigmaCurve     *curve   = view->curve;
   gboolean       handled = FALSE;
 
   if (! view->grabbed                                        &&
       curve                                                  &&
-      gimp_curve_get_curve_type (curve) == GIMP_CURVE_SMOOTH &&
+      ligma_curve_get_curve_type (curve) == LIGMA_CURVE_SMOOTH &&
       view->selected                    >= 0)
     {
       gint    i = view->selected;
       gdouble x, y;
 
-      gimp_curve_get_point (curve, i, NULL, &y);
+      ligma_curve_get_point (curve, i, NULL, &y);
 
       switch (kevent->keyval)
         {
         case GDK_KEY_Left:
           for (i = i - 1; i >= 0 && ! handled; i--)
             {
-              gimp_curve_get_point (curve, i, &x, NULL);
+              ligma_curve_get_point (curve, i, &x, NULL);
 
               if (x >= 0.0)
                 {
-                  gimp_curve_view_set_selected (view, i);
+                  ligma_curve_view_set_selected (view, i);
 
                   handled = TRUE;
                 }
@@ -1140,11 +1140,11 @@ gimp_curve_view_key_press (GtkWidget   *widget,
         case GDK_KEY_Right:
           for (i = i + 1; i < curve->n_points && ! handled; i++)
             {
-              gimp_curve_get_point (curve, i, &x, NULL);
+              ligma_curve_get_point (curve, i, &x, NULL);
 
               if (x >= 0.0)
                 {
-                  gimp_curve_view_set_selected (view, i);
+                  ligma_curve_view_set_selected (view, i);
 
                   handled = TRUE;
                 }
@@ -1157,7 +1157,7 @@ gimp_curve_view_key_press (GtkWidget   *widget,
               y = y + (kevent->state & GDK_SHIFT_MASK ?
                        (16.0 / 255.0) : (1.0 / 255.0));
 
-              gimp_curve_move_point (curve, i, CLAMP (y, 0.0, 1.0));
+              ligma_curve_move_point (curve, i, CLAMP (y, 0.0, 1.0));
 
               handled = TRUE;
             }
@@ -1169,14 +1169,14 @@ gimp_curve_view_key_press (GtkWidget   *widget,
               y = y - (kevent->state & GDK_SHIFT_MASK ?
                        (16.0 / 255.0) : (1.0 / 255.0));
 
-              gimp_curve_move_point (curve, i, CLAMP (y, 0.0, 1.0));
+              ligma_curve_move_point (curve, i, CLAMP (y, 0.0, 1.0));
 
               handled = TRUE;
             }
           break;
 
         case GDK_KEY_Delete:
-          gimp_curve_delete_point (curve, i);
+          ligma_curve_delete_point (curve, i);
           break;
 
         default:
@@ -1195,93 +1195,93 @@ gimp_curve_view_key_press (GtkWidget   *widget,
 }
 
 static void
-gimp_curve_view_cut_clipboard (GimpCurveView *view)
+ligma_curve_view_cut_clipboard (LigmaCurveView *view)
 {
   g_printerr ("%s\n", G_STRFUNC);
 
-  if (! view->curve || ! view->gimp)
+  if (! view->curve || ! view->ligma)
     {
       gtk_widget_error_bell (GTK_WIDGET (view));
       return;
     }
 
-  gimp_curve_view_copy_clipboard (view);
+  ligma_curve_view_copy_clipboard (view);
 
-  gimp_curve_reset (view->curve, FALSE);
+  ligma_curve_reset (view->curve, FALSE);
 }
 
 static void
-gimp_curve_view_copy_clipboard (GimpCurveView *view)
+ligma_curve_view_copy_clipboard (LigmaCurveView *view)
 {
-  GimpCurve *copy;
+  LigmaCurve *copy;
 
   g_printerr ("%s\n", G_STRFUNC);
 
-  if (! view->curve || ! view->gimp)
+  if (! view->curve || ! view->ligma)
     {
       gtk_widget_error_bell (GTK_WIDGET (view));
       return;
     }
 
-  copy = GIMP_CURVE (gimp_data_duplicate (GIMP_DATA (view->curve)));
-  gimp_clipboard_set_curve (view->gimp, copy);
+  copy = LIGMA_CURVE (ligma_data_duplicate (LIGMA_DATA (view->curve)));
+  ligma_clipboard_set_curve (view->ligma, copy);
   g_object_unref (copy);
 }
 
 static void
-gimp_curve_view_paste_clipboard (GimpCurveView *view)
+ligma_curve_view_paste_clipboard (LigmaCurveView *view)
 {
-  GimpCurve *copy;
+  LigmaCurve *copy;
 
   g_printerr ("%s\n", G_STRFUNC);
 
-  if (! view->curve || ! view->gimp)
+  if (! view->curve || ! view->ligma)
     {
       gtk_widget_error_bell (GTK_WIDGET (view));
       return;
     }
 
-  copy = gimp_clipboard_get_curve (view->gimp);
+  copy = ligma_clipboard_get_curve (view->ligma);
 
   if (copy)
     {
-      gimp_config_copy (GIMP_CONFIG (copy),
-                        GIMP_CONFIG (view->curve), 0);
+      ligma_config_copy (LIGMA_CONFIG (copy),
+                        LIGMA_CONFIG (view->curve), 0);
       g_object_unref (copy);
     }
 }
 
 static void
-gimp_curve_view_curve_dirty (GimpCurve     *curve,
-                             GimpCurveView *view)
+ligma_curve_view_curve_dirty (LigmaCurve     *curve,
+                             LigmaCurveView *view)
 {
   gtk_widget_queue_draw (GTK_WIDGET (view));
 }
 
 static void
-gimp_curve_view_curve_notify_n_points (GimpCurve     *curve,
+ligma_curve_view_curve_notify_n_points (LigmaCurve     *curve,
                                        GParamSpec    *pspec,
-                                       GimpCurveView *view)
+                                       LigmaCurveView *view)
 {
-  gimp_curve_view_set_selected (view, -1);
+  ligma_curve_view_set_selected (view, -1);
 }
 
 
 /*  public functions  */
 
 GtkWidget *
-gimp_curve_view_new (void)
+ligma_curve_view_new (void)
 {
-  return g_object_new (GIMP_TYPE_CURVE_VIEW, NULL);
+  return g_object_new (LIGMA_TYPE_CURVE_VIEW, NULL);
 }
 
 void
-gimp_curve_view_set_curve (GimpCurveView *view,
-                           GimpCurve     *curve,
-                           const GimpRGB *color)
+ligma_curve_view_set_curve (LigmaCurveView *view,
+                           LigmaCurve     *curve,
+                           const LigmaRGB *color)
 {
-  g_return_if_fail (GIMP_IS_CURVE_VIEW (view));
-  g_return_if_fail (curve == NULL || GIMP_IS_CURVE (curve));
+  g_return_if_fail (LIGMA_IS_CURVE_VIEW (view));
+  g_return_if_fail (curve == NULL || LIGMA_IS_CURVE (curve));
 
   if (view->curve == curve)
     return;
@@ -1289,10 +1289,10 @@ gimp_curve_view_set_curve (GimpCurveView *view,
   if (view->curve)
     {
       g_signal_handlers_disconnect_by_func (view->curve,
-                                            gimp_curve_view_curve_dirty,
+                                            ligma_curve_view_curve_dirty,
                                             view);
       g_signal_handlers_disconnect_by_func (view->curve,
-                                            gimp_curve_view_curve_notify_n_points,
+                                            ligma_curve_view_curve_notify_n_points,
                                             view);
       g_object_unref (view->curve);
     }
@@ -1303,10 +1303,10 @@ gimp_curve_view_set_curve (GimpCurveView *view,
     {
       g_object_ref (view->curve);
       g_signal_connect (view->curve, "dirty",
-                        G_CALLBACK (gimp_curve_view_curve_dirty),
+                        G_CALLBACK (ligma_curve_view_curve_dirty),
                         view);
       g_signal_connect (view->curve, "notify::n-points",
-                        G_CALLBACK (gimp_curve_view_curve_notify_n_points),
+                        G_CALLBACK (ligma_curve_view_curve_notify_n_points),
                         view);
     }
 
@@ -1314,33 +1314,33 @@ gimp_curve_view_set_curve (GimpCurveView *view,
     g_free (view->curve_color);
 
   if (color)
-    view->curve_color = g_memdup2 (color, sizeof (GimpRGB));
+    view->curve_color = g_memdup2 (color, sizeof (LigmaRGB));
   else
     view->curve_color = NULL;
 
-  gimp_curve_view_set_selected (view, -1);
+  ligma_curve_view_set_selected (view, -1);
 
   gtk_widget_queue_draw (GTK_WIDGET (view));
 }
 
-GimpCurve *
-gimp_curve_view_get_curve (GimpCurveView *view)
+LigmaCurve *
+ligma_curve_view_get_curve (LigmaCurveView *view)
 {
-  g_return_val_if_fail (GIMP_IS_CURVE_VIEW (view), NULL);
+  g_return_val_if_fail (LIGMA_IS_CURVE_VIEW (view), NULL);
 
   return view->curve;
 }
 
 void
-gimp_curve_view_add_background (GimpCurveView *view,
-                                GimpCurve     *curve,
-                                const GimpRGB *color)
+ligma_curve_view_add_background (LigmaCurveView *view,
+                                LigmaCurve     *curve,
+                                const LigmaRGB *color)
 {
   GList   *list;
   BGCurve *bg;
 
-  g_return_if_fail (GIMP_IS_CURVE_VIEW (view));
-  g_return_if_fail (GIMP_IS_CURVE (curve));
+  g_return_if_fail (LIGMA_IS_CURVE_VIEW (view));
+  g_return_if_fail (LIGMA_IS_CURVE (curve));
 
   for (list = view->bg_curves; list; list = g_list_next (list))
     {
@@ -1360,7 +1360,7 @@ gimp_curve_view_add_background (GimpCurveView *view,
     }
 
   g_signal_connect (bg->curve, "dirty",
-                    G_CALLBACK (gimp_curve_view_curve_dirty),
+                    G_CALLBACK (ligma_curve_view_curve_dirty),
                     view);
 
   view->bg_curves = g_list_append (view->bg_curves, bg);
@@ -1369,13 +1369,13 @@ gimp_curve_view_add_background (GimpCurveView *view,
 }
 
 void
-gimp_curve_view_remove_background (GimpCurveView *view,
-                                   GimpCurve     *curve)
+ligma_curve_view_remove_background (LigmaCurveView *view,
+                                   LigmaCurve     *curve)
 {
   GList *list;
 
-  g_return_if_fail (GIMP_IS_CURVE_VIEW (view));
-  g_return_if_fail (GIMP_IS_CURVE (curve));
+  g_return_if_fail (LIGMA_IS_CURVE_VIEW (view));
+  g_return_if_fail (LIGMA_IS_CURVE (curve));
 
   for (list = view->bg_curves; list; list = g_list_next (list))
     {
@@ -1384,7 +1384,7 @@ gimp_curve_view_remove_background (GimpCurveView *view,
       if (bg->curve == curve)
         {
           g_signal_handlers_disconnect_by_func (bg->curve,
-                                                gimp_curve_view_curve_dirty,
+                                                ligma_curve_view_curve_dirty,
                                                 view);
           g_object_unref (bg->curve);
 
@@ -1403,16 +1403,16 @@ gimp_curve_view_remove_background (GimpCurveView *view,
 }
 
 void
-gimp_curve_view_remove_all_backgrounds (GimpCurveView *view)
+ligma_curve_view_remove_all_backgrounds (LigmaCurveView *view)
 {
-  g_return_if_fail (GIMP_IS_CURVE_VIEW (view));
+  g_return_if_fail (LIGMA_IS_CURVE_VIEW (view));
 
   while (view->bg_curves)
     {
       BGCurve *bg = view->bg_curves->data;
 
       g_signal_handlers_disconnect_by_func (bg->curve,
-                                            gimp_curve_view_curve_dirty,
+                                            ligma_curve_view_curve_dirty,
                                             view);
       g_object_unref (bg->curve);
 
@@ -1425,10 +1425,10 @@ gimp_curve_view_remove_all_backgrounds (GimpCurveView *view)
 }
 
 void
-gimp_curve_view_set_selected (GimpCurveView *view,
+ligma_curve_view_set_selected (LigmaCurveView *view,
                               gint           selected)
 {
-  g_return_if_fail (GIMP_IS_CURVE_VIEW (view));
+  g_return_if_fail (LIGMA_IS_CURVE_VIEW (view));
 
   if (selected != view->selected)
     {
@@ -1441,22 +1441,22 @@ gimp_curve_view_set_selected (GimpCurveView *view,
 }
 
 gint
-gimp_curve_view_get_selected (GimpCurveView *view)
+ligma_curve_view_get_selected (LigmaCurveView *view)
 {
-  g_return_val_if_fail (GIMP_IS_CURVE_VIEW (view), -1);
+  g_return_val_if_fail (LIGMA_IS_CURVE_VIEW (view), -1);
 
-  if (view->curve && view->selected < gimp_curve_get_n_points (view->curve))
+  if (view->curve && view->selected < ligma_curve_get_n_points (view->curve))
     return view->selected;
   else
     return -1;
 }
 
 void
-gimp_curve_view_set_range_x (GimpCurveView *view,
+ligma_curve_view_set_range_x (LigmaCurveView *view,
                              gdouble        min,
                              gdouble        max)
 {
-  g_return_if_fail (GIMP_IS_CURVE_VIEW (view));
+  g_return_if_fail (LIGMA_IS_CURVE_VIEW (view));
 
   view->range_x_min = min;
   view->range_x_max = max;
@@ -1465,11 +1465,11 @@ gimp_curve_view_set_range_x (GimpCurveView *view,
 }
 
 void
-gimp_curve_view_set_range_y (GimpCurveView *view,
+ligma_curve_view_set_range_y (LigmaCurveView *view,
                              gdouble        min,
                              gdouble        max)
 {
-  g_return_if_fail (GIMP_IS_CURVE_VIEW (view));
+  g_return_if_fail (LIGMA_IS_CURVE_VIEW (view));
 
   view->range_y_min = min;
   view->range_y_max = max;
@@ -1478,10 +1478,10 @@ gimp_curve_view_set_range_y (GimpCurveView *view,
 }
 
 void
-gimp_curve_view_set_xpos (GimpCurveView *view,
+ligma_curve_view_set_xpos (LigmaCurveView *view,
                           gdouble        x)
 {
-  g_return_if_fail (GIMP_IS_CURVE_VIEW (view));
+  g_return_if_fail (LIGMA_IS_CURVE_VIEW (view));
 
   view->xpos = x;
 
@@ -1489,10 +1489,10 @@ gimp_curve_view_set_xpos (GimpCurveView *view,
 }
 
 void
-gimp_curve_view_set_x_axis_label (GimpCurveView *view,
+ligma_curve_view_set_x_axis_label (LigmaCurveView *view,
                                   const gchar   *label)
 {
-  g_return_if_fail (GIMP_IS_CURVE_VIEW (view));
+  g_return_if_fail (LIGMA_IS_CURVE_VIEW (view));
 
   if (view->x_axis_label)
     g_free (view->x_axis_label);
@@ -1505,10 +1505,10 @@ gimp_curve_view_set_x_axis_label (GimpCurveView *view,
 }
 
 void
-gimp_curve_view_set_y_axis_label (GimpCurveView *view,
+ligma_curve_view_set_y_axis_label (LigmaCurveView *view,
                                   const gchar   *label)
 {
-  g_return_if_fail (GIMP_IS_CURVE_VIEW (view));
+  g_return_if_fail (LIGMA_IS_CURVE_VIEW (view));
 
   if (view->y_axis_label)
     g_free (view->y_axis_label);
@@ -1524,7 +1524,7 @@ gimp_curve_view_set_y_axis_label (GimpCurveView *view,
 /*  private functions  */
 
 static void
-gimp_curve_view_set_cursor (GimpCurveView *view,
+ligma_curve_view_set_cursor (LigmaCurveView *view,
                             gdouble        x,
                             gdouble        y)
 {
@@ -1536,7 +1536,7 @@ gimp_curve_view_set_cursor (GimpCurveView *view,
 }
 
 static void
-gimp_curve_view_unset_cursor (GimpCurveView *view)
+ligma_curve_view_unset_cursor (LigmaCurveView *view)
 {
   view->cursor_x = -1.0;
   view->cursor_y = -1.0;

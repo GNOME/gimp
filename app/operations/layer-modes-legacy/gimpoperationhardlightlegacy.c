@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationhardlightmode.c
- * Copyright (C) 2008 Michael Natterer <mitch@gimp.org>
+ * ligmaoperationhardlightmode.c
+ * Copyright (C) 2008 Michael Natterer <mitch@ligma.org>
  *               2012 Ville Sokk <ville.sokk@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,10 +25,10 @@
 
 #include "../operations-types.h"
 
-#include "gimpoperationhardlightlegacy.h"
+#include "ligmaoperationhardlightlegacy.h"
 
 
-static gboolean   gimp_operation_hardlight_legacy_process (GeglOperation       *op,
+static gboolean   ligma_operation_hardlight_legacy_process (GeglOperation       *op,
                                                            void                *in,
                                                            void                *layer,
                                                            void                *mask,
@@ -38,31 +38,31 @@ static gboolean   gimp_operation_hardlight_legacy_process (GeglOperation       *
                                                            gint                 level);
 
 
-G_DEFINE_TYPE (GimpOperationHardlightLegacy, gimp_operation_hardlight_legacy,
-               GIMP_TYPE_OPERATION_LAYER_MODE)
+G_DEFINE_TYPE (LigmaOperationHardlightLegacy, ligma_operation_hardlight_legacy,
+               LIGMA_TYPE_OPERATION_LAYER_MODE)
 
 
 static void
-gimp_operation_hardlight_legacy_class_init (GimpOperationHardlightLegacyClass *klass)
+ligma_operation_hardlight_legacy_class_init (LigmaOperationHardlightLegacyClass *klass)
 {
   GeglOperationClass          *operation_class  = GEGL_OPERATION_CLASS (klass);
-  GimpOperationLayerModeClass *layer_mode_class = GIMP_OPERATION_LAYER_MODE_CLASS (klass);
+  LigmaOperationLayerModeClass *layer_mode_class = LIGMA_OPERATION_LAYER_MODE_CLASS (klass);
 
   gegl_operation_class_set_keys (operation_class,
-                                 "name",        "gimp:hardlight-legacy",
-                                 "description", "GIMP hardlight mode operation",
+                                 "name",        "ligma:hardlight-legacy",
+                                 "description", "LIGMA hardlight mode operation",
                                  NULL);
 
-  layer_mode_class->process = gimp_operation_hardlight_legacy_process;
+  layer_mode_class->process = ligma_operation_hardlight_legacy_process;
 }
 
 static void
-gimp_operation_hardlight_legacy_init (GimpOperationHardlightLegacy *self)
+ligma_operation_hardlight_legacy_init (LigmaOperationHardlightLegacy *self)
 {
 }
 
 static gboolean
-gimp_operation_hardlight_legacy_process (GeglOperation       *op,
+ligma_operation_hardlight_legacy_process (GeglOperation       *op,
                                          void                *in_p,
                                          void                *layer_p,
                                          void                *mask_p,
@@ -71,7 +71,7 @@ gimp_operation_hardlight_legacy_process (GeglOperation       *op,
                                          const GeglRectangle *roi,
                                          gint                 level)
 {
-  GimpOperationLayerMode *layer_mode = (gpointer) op;
+  LigmaOperationLayerMode *layer_mode = (gpointer) op;
   gfloat                 *in         = in_p;
   gfloat                 *out        = out_p;
   gfloat                 *layer      = layer_p;

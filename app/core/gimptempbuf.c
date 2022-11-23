@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -27,15 +27,15 @@
 
 #include "core-types.h"
 
-#include "libgimpcolor/gimpcolor.h"
+#include "libligmacolor/ligmacolor.h"
 
-#include "gimptempbuf.h"
+#include "ligmatempbuf.h"
 
 
 #define LOCK_DATA_ALIGNMENT 16
 
 
-struct _GimpTempBuf
+struct _LigmaTempBuf
 {
   gint        ref_count;
   gint        width;
@@ -55,17 +55,17 @@ G_STATIC_ASSERT (sizeof (LockData) <= LOCK_DATA_ALIGNMENT);
 
 /*  local variables  */
 
-static guintptr gimp_temp_buf_total_memsize = 0;
+static guintptr ligma_temp_buf_total_memsize = 0;
 
 
 /*  public functions  */
 
-GimpTempBuf *
-gimp_temp_buf_new (gint        width,
+LigmaTempBuf *
+ligma_temp_buf_new (gint        width,
                    gint        height,
                    const Babl *format)
 {
-  GimpTempBuf *temp;
+  LigmaTempBuf *temp;
   gint         bpp;
 
   g_return_val_if_fail (format != NULL, NULL);
@@ -75,7 +75,7 @@ gimp_temp_buf_new (gint        width,
   g_return_val_if_fail (width > 0 && height > 0 && bpp > 0, NULL);
   g_return_val_if_fail (G_MAXSIZE / width / height / bpp > 0, NULL);
 
-  temp = g_slice_new (GimpTempBuf);
+  temp = g_slice_new (LigmaTempBuf);
 
   temp->ref_count = 1;
   temp->width     = width;
@@ -83,19 +83,19 @@ gimp_temp_buf_new (gint        width,
   temp->format    = format;
   temp->data      = gegl_malloc ((gsize) width * height * bpp);
 
-  g_atomic_pointer_add (&gimp_temp_buf_total_memsize,
-                        +gimp_temp_buf_get_memsize (temp));
+  g_atomic_pointer_add (&ligma_temp_buf_total_memsize,
+                        +ligma_temp_buf_get_memsize (temp));
 
   return temp;
 }
 
-GimpTempBuf *
-gimp_temp_buf_new_from_pixbuf (GdkPixbuf  *pixbuf,
+LigmaTempBuf *
+ligma_temp_buf_new_from_pixbuf (GdkPixbuf  *pixbuf,
                                const Babl *f_or_null)
 {
   const Babl   *format = f_or_null;
   const Babl   *fish   = NULL;
-  GimpTempBuf  *temp_buf;
+  LigmaTempBuf  *temp_buf;
   const guchar *pixels;
   gint          width;
   gint          height;
@@ -107,20 +107,20 @@ gimp_temp_buf_new_from_pixbuf (GdkPixbuf  *pixbuf,
   g_return_val_if_fail (GDK_IS_PIXBUF (pixbuf), NULL);
 
   if (! format)
-    format = gimp_pixbuf_get_format (pixbuf);
+    format = ligma_pixbuf_get_format (pixbuf);
 
   pixels    = gdk_pixbuf_get_pixels (pixbuf);
   width     = gdk_pixbuf_get_width (pixbuf);
   height    = gdk_pixbuf_get_height (pixbuf);
   rowstride = gdk_pixbuf_get_rowstride (pixbuf);
 
-  temp_buf  = gimp_temp_buf_new (width, height, format);
-  data      = gimp_temp_buf_get_data (temp_buf);
+  temp_buf  = ligma_temp_buf_new (width, height, format);
+  data      = ligma_temp_buf_get_data (temp_buf);
 
   bpp       = babl_format_get_bytes_per_pixel (format);
 
-  if (gimp_pixbuf_get_format (pixbuf) != format)
-    fish = babl_fish (gimp_pixbuf_get_format (pixbuf), format);
+  if (ligma_pixbuf_get_format (pixbuf) != format)
+    fish = babl_fish (ligma_pixbuf_get_format (pixbuf), format);
 
   for (i = 0; i < height; i++)
     {
@@ -136,57 +136,57 @@ gimp_temp_buf_new_from_pixbuf (GdkPixbuf  *pixbuf,
   return temp_buf;
 }
 
-GimpTempBuf *
-gimp_temp_buf_copy (const GimpTempBuf *src)
+LigmaTempBuf *
+ligma_temp_buf_copy (const LigmaTempBuf *src)
 {
-  GimpTempBuf *dest;
+  LigmaTempBuf *dest;
 
   g_return_val_if_fail (src != NULL, NULL);
 
-  dest = gimp_temp_buf_new (src->width, src->height, src->format);
+  dest = ligma_temp_buf_new (src->width, src->height, src->format);
 
-  memcpy (gimp_temp_buf_get_data (dest),
-          gimp_temp_buf_get_data (src),
-          gimp_temp_buf_get_data_size (src));
+  memcpy (ligma_temp_buf_get_data (dest),
+          ligma_temp_buf_get_data (src),
+          ligma_temp_buf_get_data_size (src));
 
   return dest;
 }
 
-GimpTempBuf *
-gimp_temp_buf_ref (const GimpTempBuf *buf)
+LigmaTempBuf *
+ligma_temp_buf_ref (const LigmaTempBuf *buf)
 {
   g_return_val_if_fail (buf != NULL, NULL);
 
   g_atomic_int_inc ((gint *) &buf->ref_count);
 
-  return (GimpTempBuf *) buf;
+  return (LigmaTempBuf *) buf;
 }
 
 void
-gimp_temp_buf_unref (const GimpTempBuf *buf)
+ligma_temp_buf_unref (const LigmaTempBuf *buf)
 {
   g_return_if_fail (buf != NULL);
   g_return_if_fail (buf->ref_count > 0);
 
   if (g_atomic_int_dec_and_test ((gint *) &buf->ref_count))
     {
-      g_atomic_pointer_add (&gimp_temp_buf_total_memsize,
-                            -gimp_temp_buf_get_memsize (buf));
+      g_atomic_pointer_add (&ligma_temp_buf_total_memsize,
+                            -ligma_temp_buf_get_memsize (buf));
 
 
       if (buf->data)
         gegl_free (buf->data);
 
-      g_slice_free (GimpTempBuf, (GimpTempBuf *) buf);
+      g_slice_free (LigmaTempBuf, (LigmaTempBuf *) buf);
     }
 }
 
-GimpTempBuf *
-gimp_temp_buf_scale (const GimpTempBuf *src,
+LigmaTempBuf *
+ligma_temp_buf_scale (const LigmaTempBuf *src,
                      gint               new_width,
                      gint               new_height)
 {
-  GimpTempBuf  *dest;
+  LigmaTempBuf  *dest;
   const guchar *src_data;
   guchar       *dest_data;
   gdouble       x_ratio;
@@ -199,14 +199,14 @@ gimp_temp_buf_scale (const GimpTempBuf *src,
   g_return_val_if_fail (new_width > 0 && new_height > 0, NULL);
 
   if (new_width == src->width && new_height == src->height)
-    return gimp_temp_buf_copy (src);
+    return ligma_temp_buf_copy (src);
 
-  dest = gimp_temp_buf_new (new_width,
+  dest = ligma_temp_buf_new (new_width,
                             new_height,
                             src->format);
 
-  src_data  = gimp_temp_buf_get_data (src);
-  dest_data = gimp_temp_buf_get_data (dest);
+  src_data  = ligma_temp_buf_get_data (src);
+  dest_data = ligma_temp_buf_get_data (dest);
 
   x_ratio = (gdouble) src->width  / (gdouble) new_width;
   y_ratio = (gdouble) src->height / (gdouble) new_height;
@@ -237,25 +237,25 @@ gimp_temp_buf_scale (const GimpTempBuf *src,
 }
 
 gint
-gimp_temp_buf_get_width (const GimpTempBuf *buf)
+ligma_temp_buf_get_width (const LigmaTempBuf *buf)
 {
   return buf->width;
 }
 
 gint
-gimp_temp_buf_get_height (const GimpTempBuf *buf)
+ligma_temp_buf_get_height (const LigmaTempBuf *buf)
 {
   return buf->height;
 }
 
 const Babl *
-gimp_temp_buf_get_format (const GimpTempBuf *buf)
+ligma_temp_buf_get_format (const LigmaTempBuf *buf)
 {
   return buf->format;
 }
 
 void
-gimp_temp_buf_set_format (GimpTempBuf *buf,
+ligma_temp_buf_set_format (LigmaTempBuf *buf,
                           const Babl  *format)
 {
   g_return_if_fail (babl_format_get_bytes_per_pixel (buf->format) ==
@@ -265,28 +265,28 @@ gimp_temp_buf_set_format (GimpTempBuf *buf,
 }
 
 guchar *
-gimp_temp_buf_get_data (const GimpTempBuf *buf)
+ligma_temp_buf_get_data (const LigmaTempBuf *buf)
 {
   return buf->data;
 }
 
 gsize
-gimp_temp_buf_get_data_size (const GimpTempBuf *buf)
+ligma_temp_buf_get_data_size (const LigmaTempBuf *buf)
 {
   return (gsize) babl_format_get_bytes_per_pixel (buf->format) *
                  buf->width * buf->height;
 }
 
 guchar *
-gimp_temp_buf_data_clear (GimpTempBuf *buf)
+ligma_temp_buf_data_clear (LigmaTempBuf *buf)
 {
-  memset (buf->data, 0, gimp_temp_buf_get_data_size (buf));
+  memset (buf->data, 0, ligma_temp_buf_get_data_size (buf));
 
   return buf->data;
 }
 
 gpointer
-gimp_temp_buf_lock (const GimpTempBuf *buf,
+ligma_temp_buf_lock (const LigmaTempBuf *buf,
                     const Babl        *format,
                     GeglAccessMode     access_mode)
 {
@@ -298,7 +298,7 @@ gimp_temp_buf_lock (const GimpTempBuf *buf,
   g_return_val_if_fail (buf != NULL, NULL);
 
   if (! format || format == buf->format)
-    return gimp_temp_buf_get_data (buf);
+    return ligma_temp_buf_get_data (buf);
 
   n_pixels = buf->width * buf->height;
   bpp      = babl_format_get_bytes_per_pixel (format);
@@ -321,7 +321,7 @@ gimp_temp_buf_lock (const GimpTempBuf *buf,
   if (access_mode & GEGL_ACCESS_READ)
     {
       babl_process (babl_fish (buf->format, format),
-                    gimp_temp_buf_get_data (buf),
+                    ligma_temp_buf_get_data (buf),
                     data,
                     n_pixels);
     }
@@ -330,7 +330,7 @@ gimp_temp_buf_lock (const GimpTempBuf *buf,
 }
 
 void
-gimp_temp_buf_unlock (const GimpTempBuf *buf,
+ligma_temp_buf_unlock (const LigmaTempBuf *buf,
                       gconstpointer      data)
 {
   LockData *lock_data;
@@ -347,7 +347,7 @@ gimp_temp_buf_unlock (const GimpTempBuf *buf,
     {
       babl_process (babl_fish (lock_data->format, buf->format),
                     data,
-                    gimp_temp_buf_get_data (buf),
+                    ligma_temp_buf_get_data (buf),
                     buf->width * buf->height);
     }
 
@@ -355,39 +355,39 @@ gimp_temp_buf_unlock (const GimpTempBuf *buf,
 }
 
 gsize
-gimp_temp_buf_get_memsize (const GimpTempBuf *buf)
+ligma_temp_buf_get_memsize (const LigmaTempBuf *buf)
 {
   if (buf)
-    return (sizeof (GimpTempBuf) + gimp_temp_buf_get_data_size (buf));
+    return (sizeof (LigmaTempBuf) + ligma_temp_buf_get_data_size (buf));
 
   return 0;
 }
 
 GeglBuffer *
-gimp_temp_buf_create_buffer (const GimpTempBuf *temp_buf)
+ligma_temp_buf_create_buffer (const LigmaTempBuf *temp_buf)
 {
   GeglBuffer *buffer;
 
   g_return_val_if_fail (temp_buf != NULL, NULL);
 
   buffer =
-    gegl_buffer_linear_new_from_data (gimp_temp_buf_get_data (temp_buf),
+    gegl_buffer_linear_new_from_data (ligma_temp_buf_get_data (temp_buf),
                                       temp_buf->format,
                                       GEGL_RECTANGLE (0, 0,
                                                       temp_buf->width,
                                                       temp_buf->height),
                                       GEGL_AUTO_ROWSTRIDE,
-                                      (GDestroyNotify) gimp_temp_buf_unref,
-                                      gimp_temp_buf_ref (temp_buf));
+                                      (GDestroyNotify) ligma_temp_buf_unref,
+                                      ligma_temp_buf_ref (temp_buf));
 
   g_object_set_data (G_OBJECT (buffer),
-                     "gimp-temp-buf", (GimpTempBuf *) temp_buf);
+                     "ligma-temp-buf", (LigmaTempBuf *) temp_buf);
 
   return buffer;
 }
 
 GdkPixbuf *
-gimp_temp_buf_create_pixbuf (const GimpTempBuf *temp_buf)
+ligma_temp_buf_create_pixbuf (const LigmaTempBuf *temp_buf)
 {
   GdkPixbuf    *pixbuf;
   const Babl   *format;
@@ -402,10 +402,10 @@ gimp_temp_buf_create_pixbuf (const GimpTempBuf *temp_buf)
 
   g_return_val_if_fail (temp_buf != NULL, NULL);
 
-  data      = gimp_temp_buf_get_data (temp_buf);
-  format    = gimp_temp_buf_get_format (temp_buf);
-  width     = gimp_temp_buf_get_width (temp_buf);
-  height    = gimp_temp_buf_get_height (temp_buf);
+  data      = ligma_temp_buf_get_data (temp_buf);
+  format    = ligma_temp_buf_get_format (temp_buf);
+  width     = ligma_temp_buf_get_width (temp_buf);
+  height    = ligma_temp_buf_get_height (temp_buf);
   bpp       = babl_format_get_bytes_per_pixel (format);
 
   pixbuf    = gdk_pixbuf_new (GDK_COLORSPACE_RGB,
@@ -415,8 +415,8 @@ gimp_temp_buf_create_pixbuf (const GimpTempBuf *temp_buf)
   pixels    = gdk_pixbuf_get_pixels (pixbuf);
   rowstride = gdk_pixbuf_get_rowstride (pixbuf);
 
-  if (format != gimp_pixbuf_get_format (pixbuf))
-    fish = babl_fish (format, gimp_pixbuf_get_format (pixbuf));
+  if (format != ligma_pixbuf_get_format (pixbuf))
+    fish = babl_fish (format, ligma_pixbuf_get_format (pixbuf));
 
   for (i = 0; i < height; i++)
     {
@@ -432,19 +432,19 @@ gimp_temp_buf_create_pixbuf (const GimpTempBuf *temp_buf)
   return pixbuf;
 }
 
-GimpTempBuf *
-gimp_gegl_buffer_get_temp_buf (GeglBuffer *buffer)
+LigmaTempBuf *
+ligma_gegl_buffer_get_temp_buf (GeglBuffer *buffer)
 {
   g_return_val_if_fail (GEGL_IS_BUFFER (buffer), NULL);
 
-  return g_object_get_data (G_OBJECT (buffer), "gimp-temp-buf");
+  return g_object_get_data (G_OBJECT (buffer), "ligma-temp-buf");
 }
 
 
 /*  public functions (stats)  */
 
 guint64
-gimp_temp_buf_get_total_memsize (void)
+ligma_temp_buf_get_total_memsize (void)
 {
-  return gimp_temp_buf_total_memsize;
+  return ligma_temp_buf_total_memsize;
 }

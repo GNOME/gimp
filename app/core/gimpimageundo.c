@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,22 +23,22 @@
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "core-types.h"
 
-#include "gimp-memsize.h"
-#include "gimpdrawable.h"
-#include "gimpgrid.h"
-#include "gimpimage.h"
-#include "gimpimage-color-profile.h"
-#include "gimpimage-colormap.h"
-#include "gimpimage-grid.h"
-#include "gimpimage-metadata.h"
-#include "gimpimage-private.h"
-#include "gimpimageundo.h"
+#include "ligma-memsize.h"
+#include "ligmadrawable.h"
+#include "ligmagrid.h"
+#include "ligmaimage.h"
+#include "ligmaimage-color-profile.h"
+#include "ligmaimage-colormap.h"
+#include "ligmaimage-grid.h"
+#include "ligmaimage-metadata.h"
+#include "ligmaimage-private.h"
+#include "ligmaimageundo.h"
 
 
 enum
@@ -53,155 +53,155 @@ enum
 };
 
 
-static void     gimp_image_undo_constructed  (GObject             *object);
-static void     gimp_image_undo_set_property (GObject             *object,
+static void     ligma_image_undo_constructed  (GObject             *object);
+static void     ligma_image_undo_set_property (GObject             *object,
                                               guint                property_id,
                                               const GValue        *value,
                                               GParamSpec          *pspec);
-static void     gimp_image_undo_get_property (GObject             *object,
+static void     ligma_image_undo_get_property (GObject             *object,
                                               guint                property_id,
                                               GValue              *value,
                                               GParamSpec          *pspec);
 
-static gint64   gimp_image_undo_get_memsize  (GimpObject          *object,
+static gint64   ligma_image_undo_get_memsize  (LigmaObject          *object,
                                               gint64              *gui_size);
 
-static void     gimp_image_undo_pop          (GimpUndo            *undo,
-                                              GimpUndoMode         undo_mode,
-                                              GimpUndoAccumulator *accum);
-static void     gimp_image_undo_free         (GimpUndo            *undo,
-                                              GimpUndoMode         undo_mode);
+static void     ligma_image_undo_pop          (LigmaUndo            *undo,
+                                              LigmaUndoMode         undo_mode,
+                                              LigmaUndoAccumulator *accum);
+static void     ligma_image_undo_free         (LigmaUndo            *undo,
+                                              LigmaUndoMode         undo_mode);
 
 
-G_DEFINE_TYPE (GimpImageUndo, gimp_image_undo, GIMP_TYPE_UNDO)
+G_DEFINE_TYPE (LigmaImageUndo, ligma_image_undo, LIGMA_TYPE_UNDO)
 
-#define parent_class gimp_image_undo_parent_class
+#define parent_class ligma_image_undo_parent_class
 
 
 static void
-gimp_image_undo_class_init (GimpImageUndoClass *klass)
+ligma_image_undo_class_init (LigmaImageUndoClass *klass)
 {
   GObjectClass    *object_class      = G_OBJECT_CLASS (klass);
-  GimpObjectClass *gimp_object_class = GIMP_OBJECT_CLASS (klass);
-  GimpUndoClass   *undo_class        = GIMP_UNDO_CLASS (klass);
+  LigmaObjectClass *ligma_object_class = LIGMA_OBJECT_CLASS (klass);
+  LigmaUndoClass   *undo_class        = LIGMA_UNDO_CLASS (klass);
 
-  object_class->constructed      = gimp_image_undo_constructed;
-  object_class->set_property     = gimp_image_undo_set_property;
-  object_class->get_property     = gimp_image_undo_get_property;
+  object_class->constructed      = ligma_image_undo_constructed;
+  object_class->set_property     = ligma_image_undo_set_property;
+  object_class->get_property     = ligma_image_undo_get_property;
 
-  gimp_object_class->get_memsize = gimp_image_undo_get_memsize;
+  ligma_object_class->get_memsize = ligma_image_undo_get_memsize;
 
-  undo_class->pop                = gimp_image_undo_pop;
-  undo_class->free               = gimp_image_undo_free;
+  undo_class->pop                = ligma_image_undo_pop;
+  undo_class->free               = ligma_image_undo_free;
 
   g_object_class_install_property (object_class, PROP_PREVIOUS_ORIGIN_X,
                                    g_param_spec_int ("previous-origin-x",
                                                      NULL, NULL,
-                                                     -GIMP_MAX_IMAGE_SIZE,
-                                                     GIMP_MAX_IMAGE_SIZE,
+                                                     -LIGMA_MAX_IMAGE_SIZE,
+                                                     LIGMA_MAX_IMAGE_SIZE,
                                                      0,
-                                                     GIMP_PARAM_READWRITE));
+                                                     LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_PREVIOUS_ORIGIN_Y,
                                    g_param_spec_int ("previous-origin-y",
                                                      NULL, NULL,
-                                                     -GIMP_MAX_IMAGE_SIZE,
-                                                     GIMP_MAX_IMAGE_SIZE,
+                                                     -LIGMA_MAX_IMAGE_SIZE,
+                                                     LIGMA_MAX_IMAGE_SIZE,
                                                      0,
-                                                     GIMP_PARAM_READWRITE));
+                                                     LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_PREVIOUS_WIDTH,
                                    g_param_spec_int ("previous-width",
                                                      NULL, NULL,
-                                                     -GIMP_MAX_IMAGE_SIZE,
-                                                     GIMP_MAX_IMAGE_SIZE,
+                                                     -LIGMA_MAX_IMAGE_SIZE,
+                                                     LIGMA_MAX_IMAGE_SIZE,
                                                      0,
-                                                     GIMP_PARAM_READWRITE));
+                                                     LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_PREVIOUS_HEIGHT,
                                    g_param_spec_int ("previous-height",
                                                      NULL, NULL,
-                                                     -GIMP_MAX_IMAGE_SIZE,
-                                                     GIMP_MAX_IMAGE_SIZE,
+                                                     -LIGMA_MAX_IMAGE_SIZE,
+                                                     LIGMA_MAX_IMAGE_SIZE,
                                                      0,
-                                                     GIMP_PARAM_READWRITE));
+                                                     LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_GRID,
                                    g_param_spec_object ("grid", NULL, NULL,
-                                                        GIMP_TYPE_GRID,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_TYPE_GRID,
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_PARASITE_NAME,
                                    g_param_spec_string ("parasite-name",
                                                         NULL, NULL,
                                                         NULL,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
-gimp_image_undo_init (GimpImageUndo *undo)
+ligma_image_undo_init (LigmaImageUndo *undo)
 {
 }
 
 static void
-gimp_image_undo_constructed (GObject *object)
+ligma_image_undo_constructed (GObject *object)
 {
-  GimpImageUndo *image_undo = GIMP_IMAGE_UNDO (object);
-  GimpImage     *image;
+  LigmaImageUndo *image_undo = LIGMA_IMAGE_UNDO (object);
+  LigmaImage     *image;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  image = GIMP_UNDO (object)->image;
+  image = LIGMA_UNDO (object)->image;
 
-  switch (GIMP_UNDO (object)->undo_type)
+  switch (LIGMA_UNDO (object)->undo_type)
     {
-    case GIMP_UNDO_IMAGE_TYPE:
-      image_undo->base_type = gimp_image_get_base_type (image);
+    case LIGMA_UNDO_IMAGE_TYPE:
+      image_undo->base_type = ligma_image_get_base_type (image);
       break;
 
-    case GIMP_UNDO_IMAGE_PRECISION:
-      image_undo->precision = gimp_image_get_precision (image);
+    case LIGMA_UNDO_IMAGE_PRECISION:
+      image_undo->precision = ligma_image_get_precision (image);
       break;
 
-    case GIMP_UNDO_IMAGE_SIZE:
-      image_undo->width  = gimp_image_get_width  (image);
-      image_undo->height = gimp_image_get_height (image);
+    case LIGMA_UNDO_IMAGE_SIZE:
+      image_undo->width  = ligma_image_get_width  (image);
+      image_undo->height = ligma_image_get_height (image);
       break;
 
-    case GIMP_UNDO_IMAGE_RESOLUTION:
-      gimp_image_get_resolution (image,
+    case LIGMA_UNDO_IMAGE_RESOLUTION:
+      ligma_image_get_resolution (image,
                                  &image_undo->xresolution,
                                  &image_undo->yresolution);
-      image_undo->resolution_unit = gimp_image_get_unit (image);
+      image_undo->resolution_unit = ligma_image_get_unit (image);
       break;
 
-    case GIMP_UNDO_IMAGE_GRID:
-      gimp_assert (GIMP_IS_GRID (image_undo->grid));
+    case LIGMA_UNDO_IMAGE_GRID:
+      ligma_assert (LIGMA_IS_GRID (image_undo->grid));
       break;
 
-    case GIMP_UNDO_IMAGE_COLORMAP:
-      image_undo->num_colors = gimp_image_get_colormap_size (image);
-      image_undo->colormap   = gimp_image_get_colormap (image);
+    case LIGMA_UNDO_IMAGE_COLORMAP:
+      image_undo->num_colors = ligma_image_get_colormap_size (image);
+      image_undo->colormap   = ligma_image_get_colormap (image);
       break;
 
-    case GIMP_UNDO_IMAGE_HIDDEN_PROFILE:
+    case LIGMA_UNDO_IMAGE_HIDDEN_PROFILE:
       g_set_object (&image_undo->hidden_profile,
-                    _gimp_image_get_hidden_profile (image));
+                    _ligma_image_get_hidden_profile (image));
       break;
 
-    case GIMP_UNDO_IMAGE_METADATA:
+    case LIGMA_UNDO_IMAGE_METADATA:
       image_undo->metadata =
-        gimp_metadata_duplicate (gimp_image_get_metadata (image));
+        ligma_metadata_duplicate (ligma_image_get_metadata (image));
       break;
 
-    case GIMP_UNDO_PARASITE_ATTACH:
-    case GIMP_UNDO_PARASITE_REMOVE:
-      gimp_assert (image_undo->parasite_name != NULL);
+    case LIGMA_UNDO_PARASITE_ATTACH:
+    case LIGMA_UNDO_PARASITE_REMOVE:
+      ligma_assert (image_undo->parasite_name != NULL);
 
-      image_undo->parasite = gimp_parasite_copy
-        (gimp_image_parasite_find (image, image_undo->parasite_name));
+      image_undo->parasite = ligma_parasite_copy
+        (ligma_image_parasite_find (image, image_undo->parasite_name));
       break;
 
     default:
@@ -210,12 +210,12 @@ gimp_image_undo_constructed (GObject *object)
 }
 
 static void
-gimp_image_undo_set_property (GObject      *object,
+ligma_image_undo_set_property (GObject      *object,
                               guint         property_id,
                               const GValue *value,
                               GParamSpec   *pspec)
 {
-  GimpImageUndo *image_undo = GIMP_IMAGE_UNDO (object);
+  LigmaImageUndo *image_undo = LIGMA_IMAGE_UNDO (object);
 
   switch (property_id)
     {
@@ -233,10 +233,10 @@ gimp_image_undo_set_property (GObject      *object,
       break;
     case PROP_GRID:
       {
-        GimpGrid *grid = g_value_get_object (value);
+        LigmaGrid *grid = g_value_get_object (value);
 
         if (grid)
-          image_undo->grid = gimp_config_duplicate (GIMP_CONFIG (grid));
+          image_undo->grid = ligma_config_duplicate (LIGMA_CONFIG (grid));
       }
       break;
     case PROP_PARASITE_NAME:
@@ -250,12 +250,12 @@ gimp_image_undo_set_property (GObject      *object,
 }
 
 static void
-gimp_image_undo_get_property (GObject    *object,
+ligma_image_undo_get_property (GObject    *object,
                               guint       property_id,
                               GValue     *value,
                               GParamSpec *pspec)
 {
-  GimpImageUndo *image_undo = GIMP_IMAGE_UNDO (object);
+  LigmaImageUndo *image_undo = LIGMA_IMAGE_UNDO (object);
 
   switch (property_id)
     {
@@ -285,59 +285,59 @@ gimp_image_undo_get_property (GObject    *object,
 }
 
 static gint64
-gimp_image_undo_get_memsize (GimpObject *object,
+ligma_image_undo_get_memsize (LigmaObject *object,
                              gint64     *gui_size)
 {
-  GimpImageUndo *image_undo = GIMP_IMAGE_UNDO (object);
+  LigmaImageUndo *image_undo = LIGMA_IMAGE_UNDO (object);
   gint64         memsize    = 0;
 
   if (image_undo->colormap)
-    memsize += GIMP_IMAGE_COLORMAP_SIZE;
+    memsize += LIGMA_IMAGE_COLORMAP_SIZE;
 
   if (image_undo->metadata)
-    memsize += gimp_g_object_get_memsize (G_OBJECT (image_undo->metadata));
+    memsize += ligma_g_object_get_memsize (G_OBJECT (image_undo->metadata));
 
-  memsize += gimp_object_get_memsize (GIMP_OBJECT (image_undo->grid),
+  memsize += ligma_object_get_memsize (LIGMA_OBJECT (image_undo->grid),
                                       gui_size);
-  memsize += gimp_string_get_memsize (image_undo->parasite_name);
-  memsize += gimp_parasite_get_memsize (image_undo->parasite, gui_size);
+  memsize += ligma_string_get_memsize (image_undo->parasite_name);
+  memsize += ligma_parasite_get_memsize (image_undo->parasite, gui_size);
 
-  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
+  return memsize + LIGMA_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
 }
 
 static void
-gimp_image_undo_pop (GimpUndo            *undo,
-                     GimpUndoMode         undo_mode,
-                     GimpUndoAccumulator *accum)
+ligma_image_undo_pop (LigmaUndo            *undo,
+                     LigmaUndoMode         undo_mode,
+                     LigmaUndoAccumulator *accum)
 {
-  GimpImageUndo    *image_undo = GIMP_IMAGE_UNDO (undo);
-  GimpImage        *image      = undo->image;
-  GimpImagePrivate *private    = GIMP_IMAGE_GET_PRIVATE (image);
+  LigmaImageUndo    *image_undo = LIGMA_IMAGE_UNDO (undo);
+  LigmaImage        *image      = undo->image;
+  LigmaImagePrivate *private    = LIGMA_IMAGE_GET_PRIVATE (image);
 
-  GIMP_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);
+  LIGMA_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);
 
   switch (undo->undo_type)
     {
-    case GIMP_UNDO_IMAGE_TYPE:
+    case LIGMA_UNDO_IMAGE_TYPE:
       {
-        GimpImageBaseType base_type;
+        LigmaImageBaseType base_type;
 
         base_type = image_undo->base_type;
-        image_undo->base_type = gimp_image_get_base_type (image);
+        image_undo->base_type = ligma_image_get_base_type (image);
         g_object_set (image, "base-type", base_type, NULL);
 
-        gimp_image_colormap_changed (image, -1);
+        ligma_image_colormap_changed (image, -1);
 
-        if (image_undo->base_type != gimp_image_get_base_type (image))
+        if (image_undo->base_type != ligma_image_get_base_type (image))
           {
-            if ((image_undo->base_type            == GIMP_GRAY) ||
-                (gimp_image_get_base_type (image) == GIMP_GRAY))
+            if ((image_undo->base_type            == LIGMA_GRAY) ||
+                (ligma_image_get_base_type (image) == LIGMA_GRAY))
               {
                 /* in case there was no profile undo, we need to emit
                  * profile-changed anyway
                  */
-                gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (image));
+                ligma_color_managed_profile_changed (LIGMA_COLOR_MANAGED (image));
               }
 
             accum->mode_changed = TRUE;
@@ -345,20 +345,20 @@ gimp_image_undo_pop (GimpUndo            *undo,
       }
       break;
 
-    case GIMP_UNDO_IMAGE_PRECISION:
+    case LIGMA_UNDO_IMAGE_PRECISION:
       {
-        GimpPrecision precision;
+        LigmaPrecision precision;
 
         precision = image_undo->precision;
-        image_undo->precision = gimp_image_get_precision (image);
+        image_undo->precision = ligma_image_get_precision (image);
         g_object_set (image, "precision", precision, NULL);
 
-        if (image_undo->precision != gimp_image_get_precision (image))
+        if (image_undo->precision != ligma_image_get_precision (image))
           accum->precision_changed = TRUE;
       }
       break;
 
-    case GIMP_UNDO_IMAGE_SIZE:
+    case LIGMA_UNDO_IMAGE_SIZE:
       {
         gint width;
         gint height;
@@ -375,8 +375,8 @@ gimp_image_undo_pop (GimpUndo            *undo,
         previous_height   = image_undo->previous_height;
 
         /* Transform to a redo */
-        image_undo->width             = gimp_image_get_width  (image);
-        image_undo->height            = gimp_image_get_height (image);
+        image_undo->width             = ligma_image_get_width  (image);
+        image_undo->height            = ligma_image_get_height (image);
         image_undo->previous_origin_x = -previous_origin_x;
         image_undo->previous_origin_y = -previous_origin_y;
         image_undo->previous_width    = width;
@@ -387,11 +387,11 @@ gimp_image_undo_pop (GimpUndo            *undo,
                       "height", height,
                       NULL);
 
-        gimp_drawable_invalidate_boundary
-          (GIMP_DRAWABLE (gimp_image_get_mask (image)));
+        ligma_drawable_invalidate_boundary
+          (LIGMA_DRAWABLE (ligma_image_get_mask (image)));
 
-        if (gimp_image_get_width  (image) != image_undo->width ||
-            gimp_image_get_height (image) != image_undo->height)
+        if (ligma_image_get_width  (image) != image_undo->width ||
+            ligma_image_get_height (image) != image_undo->height)
           {
             accum->size_changed      = TRUE;
             accum->previous_origin_x = previous_origin_x;
@@ -402,12 +402,12 @@ gimp_image_undo_pop (GimpUndo            *undo,
       }
       break;
 
-    case GIMP_UNDO_IMAGE_RESOLUTION:
+    case LIGMA_UNDO_IMAGE_RESOLUTION:
       {
         gdouble xres;
         gdouble yres;
 
-        gimp_image_get_resolution (image, &xres, &yres);
+        ligma_image_get_resolution (image, &xres, &yres);
 
         if (ABS (image_undo->xresolution - xres) >= 1e-5 ||
             ABS (image_undo->yresolution - yres) >= 1e-5)
@@ -422,11 +422,11 @@ gimp_image_undo_pop (GimpUndo            *undo,
           }
       }
 
-      if (image_undo->resolution_unit != gimp_image_get_unit (image))
+      if (image_undo->resolution_unit != ligma_image_get_unit (image))
         {
-          GimpUnit unit;
+          LigmaUnit unit;
 
-          unit = gimp_image_get_unit (image);
+          unit = ligma_image_get_unit (image);
           private->resolution_unit = image_undo->resolution_unit;
           image_undo->resolution_unit = unit;
 
@@ -434,33 +434,33 @@ gimp_image_undo_pop (GimpUndo            *undo,
         }
       break;
 
-    case GIMP_UNDO_IMAGE_GRID:
+    case LIGMA_UNDO_IMAGE_GRID:
       {
-        GimpGrid *grid;
+        LigmaGrid *grid;
 
-        grid = gimp_config_duplicate (GIMP_CONFIG (gimp_image_get_grid (image)));
+        grid = ligma_config_duplicate (LIGMA_CONFIG (ligma_image_get_grid (image)));
 
-        gimp_image_set_grid (image, image_undo->grid, FALSE);
+        ligma_image_set_grid (image, image_undo->grid, FALSE);
 
         g_object_unref (image_undo->grid);
         image_undo->grid = grid;
       }
       break;
 
-    case GIMP_UNDO_IMAGE_COLORMAP:
+    case LIGMA_UNDO_IMAGE_COLORMAP:
       {
         guchar *colormap;
         gint    num_colors;
 
-        num_colors = gimp_image_get_colormap_size (image);
-        colormap   = gimp_image_get_colormap (image);
+        num_colors = ligma_image_get_colormap_size (image);
+        colormap   = ligma_image_get_colormap (image);
 
         if (image_undo->colormap)
-          gimp_image_set_colormap (image,
+          ligma_image_set_colormap (image,
                                    image_undo->colormap, image_undo->num_colors,
                                    FALSE);
         else
-          gimp_image_unset_colormap (image, FALSE);
+          ligma_image_unset_colormap (image, FALSE);
 
         if (image_undo->colormap)
           g_free (image_undo->colormap);
@@ -470,24 +470,24 @@ gimp_image_undo_pop (GimpUndo            *undo,
       }
       break;
 
-    case GIMP_UNDO_IMAGE_HIDDEN_PROFILE:
+    case LIGMA_UNDO_IMAGE_HIDDEN_PROFILE:
       {
-        GimpColorProfile *hidden_profile = NULL;
+        LigmaColorProfile *hidden_profile = NULL;
 
-        g_set_object (&hidden_profile, _gimp_image_get_hidden_profile (image));
-        _gimp_image_set_hidden_profile (image, image_undo->hidden_profile,
+        g_set_object (&hidden_profile, _ligma_image_get_hidden_profile (image));
+        _ligma_image_set_hidden_profile (image, image_undo->hidden_profile,
                                         FALSE);
         image_undo->hidden_profile = hidden_profile;
       }
       break;
 
-    case GIMP_UNDO_IMAGE_METADATA:
+    case LIGMA_UNDO_IMAGE_METADATA:
       {
-        GimpMetadata *metadata;
+        LigmaMetadata *metadata;
 
-        metadata = gimp_metadata_duplicate (gimp_image_get_metadata (image));
+        metadata = ligma_metadata_duplicate (ligma_image_get_metadata (image));
 
-        gimp_image_set_metadata (image, image_undo->metadata, FALSE);
+        ligma_image_set_metadata (image, image_undo->metadata, FALSE);
 
         if (image_undo->metadata)
           g_object_unref (image_undo->metadata);
@@ -495,21 +495,21 @@ gimp_image_undo_pop (GimpUndo            *undo,
       }
       break;
 
-    case GIMP_UNDO_PARASITE_ATTACH:
-    case GIMP_UNDO_PARASITE_REMOVE:
+    case LIGMA_UNDO_PARASITE_ATTACH:
+    case LIGMA_UNDO_PARASITE_REMOVE:
       {
-        GimpParasite *parasite = image_undo->parasite;
+        LigmaParasite *parasite = image_undo->parasite;
 
-        image_undo->parasite = gimp_parasite_copy
-          (gimp_image_parasite_find (image, image_undo->parasite_name));
+        image_undo->parasite = ligma_parasite_copy
+          (ligma_image_parasite_find (image, image_undo->parasite_name));
 
         if (parasite)
-          gimp_image_parasite_attach (image, parasite, FALSE);
+          ligma_image_parasite_attach (image, parasite, FALSE);
         else
-          gimp_image_parasite_detach (image, image_undo->parasite_name, FALSE);
+          ligma_image_parasite_detach (image, image_undo->parasite_name, FALSE);
 
         if (parasite)
-          gimp_parasite_free (parasite);
+          ligma_parasite_free (parasite);
       }
       break;
 
@@ -519,17 +519,17 @@ gimp_image_undo_pop (GimpUndo            *undo,
 }
 
 static void
-gimp_image_undo_free (GimpUndo     *undo,
-                      GimpUndoMode  undo_mode)
+ligma_image_undo_free (LigmaUndo     *undo,
+                      LigmaUndoMode  undo_mode)
 {
-  GimpImageUndo *image_undo = GIMP_IMAGE_UNDO (undo);
+  LigmaImageUndo *image_undo = LIGMA_IMAGE_UNDO (undo);
 
   g_clear_object (&image_undo->grid);
   g_clear_pointer (&image_undo->colormap, g_free);
   g_clear_object (&image_undo->hidden_profile);
   g_clear_object (&image_undo->metadata);
   g_clear_pointer (&image_undo->parasite_name, g_free);
-  g_clear_pointer (&image_undo->parasite, gimp_parasite_free);
+  g_clear_pointer (&image_undo->parasite, ligma_parasite_free);
 
-  GIMP_UNDO_CLASS (parent_class)->free (undo, undo_mode);
+  LIGMA_UNDO_CLASS (parent_class)->free (undo, undo_mode);
 }

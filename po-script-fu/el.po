@@ -1,12 +1,12 @@
-# Greek translation for gimp-script-fu.
+# Greek translation for ligma-script-fu.
 # Copyright (C) 2001, 2002 Free Software Foundation.
 # Simos Xenitellis <simos@hellug.gr>, 2001, 2002.
 # Vasilis Kontogiannis <vasilisk@ics.forth.gr>, 2009
 # Dimitris Spingos (Δημήτρης  Σπίγγος) <dmtrs32@gmail.com>, 2011-2022.
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-script-fu 1.0\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma-script-fu 1.0\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2022-04-17 12:27+0000\n"
 "PO-Revision-Date: 2022-01-29 19:21+0200\n"
 "Last-Translator: Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>\n"
@@ -36,8 +36,8 @@ msgid "Server for remote Script-Fu operation"
 msgstr "Εξυπηρετητής για απομακρυσμένη λειτουργία Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu.c:425
-msgid "_GIMP Online"
-msgstr "Το _GIMP στο διαδίκτυο"
+msgid "_LIGMA Online"
+msgstr "Το _LIGMA στο διαδίκτυο"
 
 #: ../plug-ins/script-fu/script-fu.c:426
 msgid "_User Manual"
@@ -77,8 +77,8 @@ msgid "_Beveled Pattern"
 msgstr "Υπόδειγμα λοξό_τμησης"
 
 #: ../plug-ins/script-fu/script-fu.c:447
-msgid "_Classic.Gimp.Org"
-msgstr "_Classic.Gimp.Org"
+msgid "_Classic.Ligma.Org"
+msgstr "_Classic.Ligma.Org"
 
 #: ../plug-ins/script-fu/script-fu.c:450
 msgid "Alpha to _Logo"
@@ -840,88 +840,88 @@ msgstr "Βαρύτητα σκιάς (%)"
 msgid "Flatten image"
 msgstr "Ισοπέδωση εικόνας"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:59
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:59
 msgid "Using _Paths"
 msgstr "Χρήση μονο_πατιών"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:60
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:73
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:86
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:99
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:112
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:125
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:138
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:151
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:60
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:73
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:86
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:99
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:112
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:125
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:138
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:151
 msgid "Bookmark to the user manual"
 msgstr "Σελιδοδείκτης στο εγχειρίδιο χρήστη"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:72
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:72
 msgid "_Preparing your Images for the Web"
 msgstr "_Προετοιμασία των εικόνων σας για τον ιστό"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:85
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:85
 msgid "_Working with Digital Camera Photos"
 msgstr "Εργα_σία με φωτογραφίες ψηφιακής κάμερας"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:98
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:98
 msgid "Create, Open and Save _Files"
 msgstr "Δημιουργία, άνοιγμα και αποθήκευση _αρχείων"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:111
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:111
 msgid "_Basic Concepts"
 msgstr "_Βασικές έννοιες"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:124
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:124
 msgid "How to Use _Dialogs"
 msgstr "Χρήση _διαλόγων"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:137
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:137
 msgid "Drawing _Simple Objects"
 msgstr "Σχεδία_ση απλών αντικειμένων"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:150
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:150
 msgid "Create and Use _Selections"
 msgstr "Δημιουργία και χρήση επ_ιλογών"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:190
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:190
 msgid "_Main Web Site"
 msgstr "_Κύρια ιστοσελίδα"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:191
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:204
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:256
-msgid "Bookmark to the GIMP web site"
-msgstr "Σελιδοδείκτης στην ιστοσελίδα GIMP"
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:191
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:204
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:256
+msgid "Bookmark to the LIGMA web site"
+msgstr "Σελιδοδείκτης στην ιστοσελίδα LIGMA"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:203
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:203
 msgid "_Developer Web Site"
 msgstr "Ιστοσελίδα πρ_ογραμματιστών"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:216
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:216
 msgid "_Roadmap"
 msgstr "Ο_δικός χάρτης"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:217
-msgid "Bookmark to the roadmap of GIMP"
-msgstr "Σελιδοδείκτης στον οδικό χάρτη του GIMP"
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:217
+msgid "Bookmark to the roadmap of LIGMA"
+msgstr "Σελιδοδείκτης στον οδικό χάρτη του LIGMA"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:229
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:229
 msgid "_Wiki"
 msgstr "_Βίκι"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:230
-msgid "Bookmark to the wiki of GIMP"
-msgstr "Σελιδοδείκτης στο βίκι του GIMP"
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:230
+msgid "Bookmark to the wiki of LIGMA"
+msgstr "Σελιδοδείκτης στο βίκι του LIGMA"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:242
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:242
 msgid "_Bug Reports and Feature Requests"
 msgstr "Αναφορές σ_φαλμάτων και αιτήματα γνωρισμάτων"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:243
-msgid "Bookmark to the bug tracker of GIMP"
-msgstr "Σελιδοδείκτης στον ανιχνευτή σφαλμάτων του GIMP"
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:243
+msgid "Bookmark to the bug tracker of LIGMA"
+msgstr "Σελιδοδείκτης στον ανιχνευτή σφαλμάτων του LIGMA"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:255
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:255
 msgid "_User Manual Web Site"
 msgstr "Ιστοσελίδα _εγχειριδίου χρήστη"
 
@@ -1664,13 +1664,13 @@ msgstr "Αντιστάθμιση Υ πίπτουσας σκιάς"
 #~ msgid "Rendering Spyro"
 #~ msgstr "Απόδοση σπειρογραφήματος"
 
-#~ msgid "_Spyrogimp (older script-fu version)..."
-#~ msgstr "_Σπειρογράφημα gimp (παλιά έκδοση script-fu)..."
+#~ msgid "_Spyroligma (older script-fu version)..."
+#~ msgstr "_Σπειρογράφημα ligma (παλιά έκδοση script-fu)..."
 
-#~ msgid "This procedure is deprecated! Use 'plug-in-spyrogimp' instead."
+#~ msgid "This procedure is deprecated! Use 'plug-in-spyroligma' instead."
 #~ msgstr ""
 #~ "Αυτή η διαδικασία είναι παρωχημένη! Χρησιμοποιήστε το 'πρόσθετο "
-#~ "σπειρογράφημα gimp (plug-in-spyrogimp)'"
+#~ "σπειρογράφημα ligma (plug-in-spyroligma)'"
 
 #~ msgid "Type"
 #~ msgstr "Τύπος"
@@ -1756,8 +1756,8 @@ msgstr "Αντιστάθμιση Υ πίπτουσας σκιάς"
 #~ msgid "Plug-in _Registry"
 #~ msgstr "Μητ_ρώο προσθέτων"
 
-#~ msgid "_Spyrogimp..."
-#~ msgstr "_Σπειρογράφημα gimp..."
+#~ msgid "_Spyroligma..."
+#~ msgstr "_Σπειρογράφημα ligma..."
 
 #~ msgid ""
 #~ "Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
@@ -2564,15 +2564,15 @@ msgstr "Αντιστάθμιση Υ πίπτουσας σκιάς"
 #~ msgid "Autocrop"
 #~ msgstr "Αυτοπερικοπή"
 
-#~ msgid "Create an image of a large header using the gimp.org webpage theme"
+#~ msgid "Create an image of a large header using the ligma.org webpage theme"
 #~ msgstr ""
 #~ "Δημιουργήστε μία εικόνα μεγάλης κεφαλίδας με τη χρήση του θέματος "
-#~ "ιστοσελίδας gimp.org"
+#~ "ιστοσελίδας ligma.org"
 
-#~ msgid "Create an image of a small header using the gimp.org webpage theme"
+#~ msgid "Create an image of a small header using the ligma.org webpage theme"
 #~ msgstr ""
 #~ "Δημιουργήστε μία εικόνα μικρής κεφαλίδας με τη χρήση του θέματος "
-#~ "ιστοσελίδας gimp.org"
+#~ "ιστοσελίδας ligma.org"
 
 #, fuzzy
 #~ msgid "Dark color"
@@ -2742,7 +2742,7 @@ msgstr "Αντιστάθμιση Υ πίπτουσας σκιάς"
 #~ msgstr "Κονσόλα Script-Fu"
 
 #, fuzzy
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org"
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Ligma.Org"
 #~ msgstr "Κονσόλα Script-Fu"
 
 #, fuzzy
@@ -3057,7 +3057,7 @@ msgstr "Αντιστάθμιση Υ πίπτουσας σκιάς"
 
 #
 #, fuzzy
-#~ msgid "<Image>/Script-Fu/Render/_Spyrogimp..."
+#~ msgid "<Image>/Script-Fu/Render/_Spyroligma..."
 #~ msgstr "Επιλογή Γραμματοσειράς"
 
 #

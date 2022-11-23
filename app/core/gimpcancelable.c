@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcancelable.c
+ * ligmacancelable.c
  * Copyright (C) 2018 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -26,7 +26,7 @@
 
 #include "core-types.h"
 
-#include "gimpcancelable.h"
+#include "ligmacancelable.h"
 
 
 enum
@@ -36,7 +36,7 @@ enum
 };
 
 
-G_DEFINE_INTERFACE (GimpCancelable, gimp_cancelable, G_TYPE_OBJECT)
+G_DEFINE_INTERFACE (LigmaCancelable, ligma_cancelable, G_TYPE_OBJECT)
 
 
 static guint cancelable_signals[LAST_SIGNAL] = { 0 };
@@ -46,13 +46,13 @@ static guint cancelable_signals[LAST_SIGNAL] = { 0 };
 
 
 static void
-gimp_cancelable_default_init (GimpCancelableInterface *iface)
+ligma_cancelable_default_init (LigmaCancelableInterface *iface)
 {
   cancelable_signals[CANCEL] =
     g_signal_new ("cancel",
                   G_TYPE_FROM_CLASS (iface),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpCancelableInterface, cancel),
+                  G_STRUCT_OFFSET (LigmaCancelableInterface, cancel),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 }
@@ -62,9 +62,9 @@ gimp_cancelable_default_init (GimpCancelableInterface *iface)
 
 
 void
-gimp_cancelable_cancel (GimpCancelable *cancelable)
+ligma_cancelable_cancel (LigmaCancelable *cancelable)
 {
-  g_return_if_fail (GIMP_IS_CANCELABLE (cancelable));
+  g_return_if_fail (LIGMA_IS_CANCELABLE (cancelable));
 
   g_signal_emit (cancelable, cancelable_signals[CANCEL], 0);
 }

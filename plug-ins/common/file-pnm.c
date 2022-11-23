@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * PNM reading and writing code Copyright (C) 1996 Erik Nygren
@@ -33,10 +33,10 @@
 #include <math.h>
 #include <errno.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 #define LOAD_PROC      "file-pnm-load"
@@ -46,7 +46,7 @@
 #define PPM_SAVE_PROC  "file-ppm-save"
 #define PFM_SAVE_PROC  "file-pfm-save"
 #define PLUG_IN_BINARY "file-pnm"
-#define PLUG_IN_ROLE   "gimp-file-pnm"
+#define PLUG_IN_ROLE   "ligma-file-pnm"
 
 
 /* Declare local data types
@@ -123,12 +123,12 @@ typedef struct _PnmClass PnmClass;
 
 struct _Pnm
 {
-  GimpPlugIn      parent_instance;
+  LigmaPlugIn      parent_instance;
 };
 
 struct _PnmClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -137,34 +137,34 @@ struct _PnmClass
 
 GType                   pnm_get_type         (void) G_GNUC_CONST;
 
-static GList          * pnm_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * pnm_create_procedure (GimpPlugIn           *plug_in,
+static GList          * pnm_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * pnm_create_procedure (LigmaPlugIn           *plug_in,
                                               const gchar          *name);
 
-static GimpValueArray * pnm_load             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
+static LigmaValueArray * pnm_load             (LigmaProcedure        *procedure,
+                                              LigmaRunMode           run_mode,
                                               GFile                *file,
-                                              const GimpValueArray *args,
+                                              const LigmaValueArray *args,
                                               gpointer              run_data);
-static GimpValueArray * pnm_save             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
-                                              GimpImage            *image,
+static LigmaValueArray * pnm_save             (LigmaProcedure        *procedure,
+                                              LigmaRunMode           run_mode,
+                                              LigmaImage            *image,
                                               gint                  n_drawables,
-                                              GimpDrawable        **drawables,
+                                              LigmaDrawable        **drawables,
                                               GFile                *file,
-                                              const GimpValueArray *args,
+                                              const LigmaValueArray *args,
                                               gpointer              run_data);
 
-static GimpImage      * load_image           (GFile                *file,
+static LigmaImage      * load_image           (GFile                *file,
                                               GError              **error);
 static gint             save_image           (GFile                *file,
-                                              GimpImage            *image,
-                                              GimpDrawable         *drawable,
+                                              LigmaImage            *image,
+                                              LigmaDrawable         *drawable,
                                               FileType              file_type,
                                               GObject              *config,
                                               GError              **error);
 
-static gboolean         save_dialog          (GimpProcedure        *procedure,
+static gboolean         save_dialog          (LigmaProcedure        *procedure,
                                               GObject              *config);
 
 static void             pnm_load_ascii       (PNMScanner           *scan,
@@ -220,9 +220,9 @@ static void         pnmscanner_getsmalltoken (PNMScanner           *s,
           { g_message (__VA_ARGS__); longjmp ((jmpbuf), 1); }
 
 
-G_DEFINE_TYPE (Pnm, pnm, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Pnm, pnm, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (PNM_TYPE)
+LIGMA_MAIN (PNM_TYPE)
 DEFINE_STD_SET_I18N
 
 
@@ -250,7 +250,7 @@ static const struct
 static void
 pnm_class_init (PnmClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = pnm_query_procedures;
   plug_in_class->create_procedure = pnm_create_procedure;
@@ -263,7 +263,7 @@ pnm_init (Pnm *pnm)
 }
 
 static GList *
-pnm_query_procedures (GimpPlugIn *plug_in)
+pnm_query_procedures (LigmaPlugIn *plug_in)
 {
   GList *list = NULL;
 
@@ -277,71 +277,71 @@ pnm_query_procedures (GimpPlugIn *plug_in)
   return list;
 }
 
-static GimpProcedure *
-pnm_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+pnm_create_procedure (LigmaPlugIn  *plug_in,
                       const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, LOAD_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_load_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            pnm_load, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure, _("PNM Image"));
+      ligma_procedure_set_menu_label (procedure, _("PNM Image"));
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Loads files in the PNM file format",
                                         "This plug-in loads files in the "
                                         "various Netpbm portable file formats.",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Erik Nygren",
                                       "Erik Nygren",
                                       "1996");
 
-      gimp_file_procedure_set_handles_remote (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_handles_remote (LIGMA_FILE_PROCEDURE (procedure),
                                               TRUE);
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                           "image/x-portable-anymap");
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "pnm,ppm,pgm,pbm,pfm");
-      gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_magics (LIGMA_FILE_PROCEDURE (procedure),
                                       "0,string,P1,0,string,P2,0,string,P3,"
                                       "0,string,P4,0,string,P5,0,string,P6,"
                                       "0,string,PF,0,string,Pf");
     }
   else if (! strcmp (name, PNM_SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_save_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            pnm_save,
                                            GINT_TO_POINTER (FILE_TYPE_PNM),
                                            NULL);
 
-      gimp_procedure_set_image_types (procedure, "RGB, GRAY, INDEXED");
+      ligma_procedure_set_image_types (procedure, "RGB, GRAY, INDEXED");
 
-      gimp_procedure_set_menu_label (procedure, _("PNM image"));
+      ligma_procedure_set_menu_label (procedure, _("PNM image"));
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Exports files in the PNM file format",
                                         "PNM export handles all image types "
                                         "without transparency.",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Erik Nygren",
                                       "Erik Nygren",
                                       "1996");
 
-      gimp_file_procedure_set_handles_remote (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_handles_remote (LIGMA_FILE_PROCEDURE (procedure),
                                               TRUE);
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                           "image/x-portable-anymap");
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "pnm");
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "raw",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "raw",
                              "Raw",
                              "TRUE for raw output, FALSE for ascii output",
                              TRUE,
@@ -349,34 +349,34 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, PBM_SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_save_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            pnm_save,
                                            GINT_TO_POINTER (FILE_TYPE_PBM),
                                            NULL);
 
-      gimp_procedure_set_image_types (procedure, "RGB, GRAY, INDEXED");
+      ligma_procedure_set_image_types (procedure, "RGB, GRAY, INDEXED");
 
-      gimp_procedure_set_menu_label (procedure, _("PBM image"));
+      ligma_procedure_set_menu_label (procedure, _("PBM image"));
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Exports files in the PBM file format",
                                         "PBM exporting produces mono images "
                                         "without transparency.",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Erik Nygren",
                                       "Erik Nygren",
                                       "1996");
 
-      gimp_file_procedure_set_handles_remote (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_handles_remote (LIGMA_FILE_PROCEDURE (procedure),
                                               TRUE);
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                           "image/x-portable-bitmap");
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "pbm");
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "raw",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "raw",
                              "Raw",
                              "TRUE for raw output, FALSE for ascii output",
                              TRUE,
@@ -384,34 +384,34 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, PGM_SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_save_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            pnm_save,
                                            GINT_TO_POINTER (FILE_TYPE_PGM),
                                            NULL);
 
-      gimp_procedure_set_image_types (procedure, "RGB, GRAY, INDEXED");
+      ligma_procedure_set_image_types (procedure, "RGB, GRAY, INDEXED");
 
-      gimp_procedure_set_menu_label (procedure, _("PGM image"));
+      ligma_procedure_set_menu_label (procedure, _("PGM image"));
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Exports files in the PGM file format",
                                         "PGM exporting produces grayscale "
                                         "images without transparency.",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Erik Nygren",
                                       "Erik Nygren",
                                       "1996");
 
-      gimp_file_procedure_set_handles_remote (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_handles_remote (LIGMA_FILE_PROCEDURE (procedure),
                                               TRUE);
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                           "image/x-portable-graymap");
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "pgm");
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "raw",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "raw",
                              "Raw",
                              "TRUE for raw output, FALSE for ascii output",
                              TRUE,
@@ -419,34 +419,34 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, PPM_SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_save_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            pnm_save,
                                            GINT_TO_POINTER (FILE_TYPE_PPM),
                                            NULL);
 
-      gimp_procedure_set_image_types (procedure, "RGB, GRAY, INDEXED");
+      ligma_procedure_set_image_types (procedure, "RGB, GRAY, INDEXED");
 
-      gimp_procedure_set_menu_label (procedure, _("PPM image"));
+      ligma_procedure_set_menu_label (procedure, _("PPM image"));
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Exports files in the PPM file format",
                                         "PPM export handles RGB images "
                                         "without transparency.",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Erik Nygren",
                                       "Erik Nygren",
                                       "1996");
 
-      gimp_file_procedure_set_handles_remote (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_handles_remote (LIGMA_FILE_PROCEDURE (procedure),
                                               TRUE);
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                           "image/x-portable-pixmap");
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "ppm");
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "raw",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "raw",
                              "Raw",
                              "TRUE for raw output, FALSE for ascii output",
                              TRUE,
@@ -454,46 +454,46 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, PFM_SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_save_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            pnm_save,
                                            GINT_TO_POINTER (FILE_TYPE_PFM),
                                            NULL);
 
-      gimp_procedure_set_image_types (procedure, "RGB, GRAY, INDEXED");
+      ligma_procedure_set_image_types (procedure, "RGB, GRAY, INDEXED");
 
-      gimp_procedure_set_menu_label (procedure, _("PFM image"));
+      ligma_procedure_set_menu_label (procedure, _("PFM image"));
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Exports files in the PFM file format",
                                         "PFM export handles all images "
                                         "without transparency.",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Mukund Sivaraman",
                                       "Mukund Sivaraman",
                                       "2015");
 
-      gimp_file_procedure_set_handles_remote (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_handles_remote (LIGMA_FILE_PROCEDURE (procedure),
                                               TRUE);
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                           "image/x-portable-floatmap");
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "pfm");
     }
 
   return procedure;
 }
 
-static GimpValueArray *
-pnm_load (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
+static LigmaValueArray *
+pnm_load (LigmaProcedure        *procedure,
+          LigmaRunMode           run_mode,
           GFile                *file,
-          const GimpValueArray *args,
+          const LigmaValueArray *args,
           gpointer              run_data)
 {
-  GimpValueArray *return_vals;
-  GimpImage      *image;
+  LigmaValueArray *return_vals;
+  LigmaImage      *image;
   GError         *error = NULL;
 
   gegl_init (NULL, NULL);
@@ -501,87 +501,87 @@ pnm_load (GimpProcedure        *procedure,
   image = load_image (file, &error);
 
   if (! image)
-    return gimp_procedure_new_return_values (procedure,
-                                             GIMP_PDB_EXECUTION_ERROR,
+    return ligma_procedure_new_return_values (procedure,
+                                             LIGMA_PDB_EXECUTION_ERROR,
                                              error);
 
-  return_vals = gimp_procedure_new_return_values (procedure,
-                                                  GIMP_PDB_SUCCESS,
+  return_vals = ligma_procedure_new_return_values (procedure,
+                                                  LIGMA_PDB_SUCCESS,
                                                   NULL);
 
-  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
+  LIGMA_VALUES_SET_IMAGE (return_vals, 1, image);
 
   return return_vals;
 }
 
-static GimpValueArray *
-pnm_save (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GimpImage            *image,
+static LigmaValueArray *
+pnm_save (LigmaProcedure        *procedure,
+          LigmaRunMode           run_mode,
+          LigmaImage            *image,
           gint                  n_drawables,
-          GimpDrawable        **drawables,
+          LigmaDrawable        **drawables,
           GFile                *file,
-          const GimpValueArray *args,
+          const LigmaValueArray *args,
           gpointer              run_data)
 {
-  GimpProcedureConfig *config;
+  LigmaProcedureConfig *config;
   FileType             file_type   = GPOINTER_TO_INT (run_data);
-  GimpPDBStatusType    status      = GIMP_PDB_SUCCESS;
-  GimpExportReturn     export      = GIMP_EXPORT_CANCEL;
+  LigmaPDBStatusType    status      = LIGMA_PDB_SUCCESS;
+  LigmaExportReturn     export      = LIGMA_EXPORT_CANCEL;
   const gchar         *format_name = NULL;
   GError              *error       = NULL;
 
   gegl_init (NULL, NULL);
 
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_export (config, image, run_mode, args, NULL);
+  config = ligma_procedure_create_config (procedure);
+  ligma_procedure_config_begin_export (config, image, run_mode, args, NULL);
 
   switch (run_mode)
     {
-    case GIMP_RUN_INTERACTIVE:
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_ui_init (PLUG_IN_BINARY);
+    case LIGMA_RUN_INTERACTIVE:
+    case LIGMA_RUN_WITH_LAST_VALS:
+      ligma_ui_init (PLUG_IN_BINARY);
 
       switch (file_type)
         {
         case FILE_TYPE_PNM:
           format_name = "PNM";
-          export = gimp_export_image (&image, &n_drawables, &drawables, "PNM",
-                                      GIMP_EXPORT_CAN_HANDLE_RGB  |
-                                      GIMP_EXPORT_CAN_HANDLE_GRAY |
-                                      GIMP_EXPORT_CAN_HANDLE_INDEXED);
+          export = ligma_export_image (&image, &n_drawables, &drawables, "PNM",
+                                      LIGMA_EXPORT_CAN_HANDLE_RGB  |
+                                      LIGMA_EXPORT_CAN_HANDLE_GRAY |
+                                      LIGMA_EXPORT_CAN_HANDLE_INDEXED);
           break;
 
         case FILE_TYPE_PBM:
           format_name = "PBM";
-          export = gimp_export_image (&image, &n_drawables, &drawables, "PBM",
-                                      GIMP_EXPORT_CAN_HANDLE_BITMAP);
+          export = ligma_export_image (&image, &n_drawables, &drawables, "PBM",
+                                      LIGMA_EXPORT_CAN_HANDLE_BITMAP);
           break;
 
         case FILE_TYPE_PGM:
           format_name = "PGM";
-          export = gimp_export_image (&image, &n_drawables, &drawables, "PGM",
-                                      GIMP_EXPORT_CAN_HANDLE_GRAY);
+          export = ligma_export_image (&image, &n_drawables, &drawables, "PGM",
+                                      LIGMA_EXPORT_CAN_HANDLE_GRAY);
           break;
 
         case FILE_TYPE_PPM:
           format_name = "PPM";
-          export = gimp_export_image (&image, &n_drawables, &drawables, "PPM",
-                                      GIMP_EXPORT_CAN_HANDLE_RGB |
-                                      GIMP_EXPORT_CAN_HANDLE_INDEXED);
+          export = ligma_export_image (&image, &n_drawables, &drawables, "PPM",
+                                      LIGMA_EXPORT_CAN_HANDLE_RGB |
+                                      LIGMA_EXPORT_CAN_HANDLE_INDEXED);
           break;
 
         case FILE_TYPE_PFM:
           format_name = "PFM";
-          export = gimp_export_image (&image, &n_drawables, &drawables, "PFM",
-                                      GIMP_EXPORT_CAN_HANDLE_RGB |
-                                      GIMP_EXPORT_CAN_HANDLE_GRAY);
+          export = ligma_export_image (&image, &n_drawables, &drawables, "PFM",
+                                      LIGMA_EXPORT_CAN_HANDLE_RGB |
+                                      LIGMA_EXPORT_CAN_HANDLE_GRAY);
           break;
         }
 
-      if (export == GIMP_EXPORT_CANCEL)
-        return gimp_procedure_new_return_values (procedure,
-                                                 GIMP_PDB_CANCEL,
+      if (export == LIGMA_EXPORT_CANCEL)
+        return ligma_procedure_new_return_values (procedure,
+                                                 LIGMA_PDB_CANCEL,
                                                  NULL);
       break;
 
@@ -595,54 +595,54 @@ pnm_save (GimpProcedure        *procedure,
                    _("%s format does not support multiple layers."),
                    format_name);
 
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_CALLING_ERROR,
                                                error);
     }
 
   if (file_type != FILE_TYPE_PFM &&
-      run_mode  == GIMP_RUN_INTERACTIVE)
+      run_mode  == LIGMA_RUN_INTERACTIVE)
     {
       if (! save_dialog (procedure, G_OBJECT (config)))
-        status = GIMP_PDB_CANCEL;
+        status = LIGMA_PDB_CANCEL;
     }
 
-  if (status == GIMP_PDB_SUCCESS)
+  if (status == LIGMA_PDB_SUCCESS)
     {
       if (! save_image (file, image, drawables[0], file_type, G_OBJECT (config),
                         &error))
         {
-          status = GIMP_PDB_EXECUTION_ERROR;
+          status = LIGMA_PDB_EXECUTION_ERROR;
         }
     }
 
-  gimp_procedure_config_end_export (config, image, file, status);
+  ligma_procedure_config_end_export (config, image, file, status);
   g_object_unref (config);
 
-  if (export == GIMP_EXPORT_EXPORT)
+  if (export == LIGMA_EXPORT_EXPORT)
     {
-      gimp_image_delete (image);
+      ligma_image_delete (image);
       g_free (drawables);
     }
 
-  return gimp_procedure_new_return_values (procedure, status, error);
+  return ligma_procedure_new_return_values (procedure, status, error);
 }
 
-static GimpImage *
+static LigmaImage *
 load_image (GFile   *file,
             GError **error)
 {
   GInputStream    *input;
   GeglBuffer      *buffer;
-  GimpImage * volatile image = NULL;
-  GimpLayer       *layer;
+  LigmaImage * volatile image = NULL;
+  LigmaLayer       *layer;
   char             buf[BUFLEN + 4];  /* buffer for random things like scanning */
   PNMInfo         *pnminfo;
   PNMScanner      *volatile scan;
   int             ctr;
-  GimpPrecision   precision;
+  LigmaPrecision   precision;
 
-  gimp_progress_init_printf (_("Opening '%s'"),
+  ligma_progress_init_printf (_("Opening '%s'"),
                              g_file_get_parse_name (file));
 
   input = G_INPUT_STREAM (g_file_read (file, NULL, error));
@@ -664,7 +664,7 @@ load_image (GFile   *file,
       g_free (pnminfo);
 
       if (image)
-        gimp_image_delete (image);
+        ligma_image_delete (image);
 
       return NULL;
     }
@@ -702,8 +702,8 @@ load_image (GFile   *file,
   pnminfo->xres = g_ascii_isdigit(*buf) ? atoi (buf) : 0;
   CHECK_FOR_ERROR (pnminfo->xres <= 0, pnminfo->jmpbuf,
                    _("Invalid X resolution."));
-  CHECK_FOR_ERROR (pnminfo->xres > GIMP_MAX_IMAGE_SIZE, pnminfo->jmpbuf,
-                   _("Image width is larger than GIMP can handle."));
+  CHECK_FOR_ERROR (pnminfo->xres > LIGMA_MAX_IMAGE_SIZE, pnminfo->jmpbuf,
+                   _("Image width is larger than LIGMA can handle."));
 
   pnmscanner_gettoken (scan, buf, BUFLEN);
   CHECK_FOR_ERROR (pnmscanner_eof (scan), pnminfo->jmpbuf,
@@ -711,8 +711,8 @@ load_image (GFile   *file,
   pnminfo->yres = g_ascii_isdigit (*buf) ? atoi (buf) : 0;
   CHECK_FOR_ERROR (pnminfo->yres <= 0, pnminfo->jmpbuf,
                    _("Invalid Y resolution."));
-  CHECK_FOR_ERROR (pnminfo->yres > GIMP_MAX_IMAGE_SIZE, pnminfo->jmpbuf,
-                   _("Image height is larger than GIMP can handle."));
+  CHECK_FOR_ERROR (pnminfo->yres > LIGMA_MAX_IMAGE_SIZE, pnminfo->jmpbuf,
+                   _("Image height is larger than LIGMA can handle."));
 
   if (pnminfo->float_format)
     {
@@ -727,7 +727,7 @@ load_image (GFile   *file,
                        pnminfo->jmpbuf, _("Bogus scale factor."));
       CHECK_FOR_ERROR (! isnormal (pnminfo->scale_factor),
                        pnminfo->jmpbuf, _("Unsupported scale factor."));
-      precision = GIMP_PRECISION_FLOAT_LINEAR;
+      precision = LIGMA_PRECISION_FLOAT_LINEAR;
     }
   else if (pnminfo->np != 0)         /* pbm's don't have a maxval field */
     {
@@ -740,36 +740,36 @@ load_image (GFile   *file,
                        pnminfo->jmpbuf, _("Unsupported maximum value."));
       if (pnminfo->maxval < 256)
         {
-          precision = GIMP_PRECISION_U8_NON_LINEAR;
+          precision = LIGMA_PRECISION_U8_NON_LINEAR;
         }
       else
         {
-          precision = GIMP_PRECISION_U16_NON_LINEAR;
+          precision = LIGMA_PRECISION_U16_NON_LINEAR;
         }
     }
   else
     {
-      precision = GIMP_PRECISION_U8_NON_LINEAR;
+      precision = LIGMA_PRECISION_U8_NON_LINEAR;
     }
 
   /* Create a new image of the proper size and associate the filename
    * with it.
    */
-  image = gimp_image_new_with_precision (pnminfo->xres, pnminfo->yres,
-                                         (pnminfo->np >= 3) ? GIMP_RGB : GIMP_GRAY,
+  image = ligma_image_new_with_precision (pnminfo->xres, pnminfo->yres,
+                                         (pnminfo->np >= 3) ? LIGMA_RGB : LIGMA_GRAY,
                                          precision);
 
-  gimp_image_set_file (image, file);
+  ligma_image_set_file (image, file);
 
-  layer = gimp_layer_new (image, _("Background"),
+  layer = ligma_layer_new (image, _("Background"),
                           pnminfo->xres, pnminfo->yres,
                           (pnminfo->np >= 3 ?
-                           GIMP_RGB_IMAGE : GIMP_GRAY_IMAGE),
+                           LIGMA_RGB_IMAGE : LIGMA_GRAY_IMAGE),
                           100,
-                          gimp_image_get_default_new_layer_mode (image));
-  gimp_image_insert_layer (image, layer, NULL, 0);
+                          ligma_image_get_default_new_layer_mode (image));
+  ligma_image_insert_layer (image, layer, NULL, 0);
 
-  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
+  buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (layer));
 
   pnminfo->loader (scan, pnminfo, buffer);
 
@@ -804,8 +804,8 @@ pnm_load_ascii (PNMScanner *scan,
   else
     bpc = 1;
 
-  /* No overflow as long as gimp_tile_height() < 1365 = 2^(31 - 18) / 6 */
-  data = g_new (guchar, gimp_tile_height () * info->xres * np * bpc);
+  /* No overflow as long as ligma_tile_height() < 1365 = 2^(31 - 18) / 6 */
+  data = g_new (guchar, ligma_tile_height () * info->xres * np * bpc);
 
   /* Buffer reads to increase performance */
   pnmscanner_createbuffer (scan, 4096);
@@ -813,7 +813,7 @@ pnm_load_ascii (PNMScanner *scan,
   for (y = 0; y < info->yres; y += scanlines)
     {
       start = y;
-      end   = y + gimp_tile_height ();
+      end   = y + ligma_tile_height ();
       end   = MIN (end, info->yres);
 
       scanlines = end - start;
@@ -882,12 +882,12 @@ pnm_load_ascii (PNMScanner *scan,
       gegl_buffer_set (buffer, GEGL_RECTANGLE (0, y, info->xres, scanlines), 0,
                        NULL, data, GEGL_AUTO_ROWSTRIDE);
 
-      gimp_progress_update ((double) y / (double) info->yres);
+      ligma_progress_update ((double) y / (double) info->yres);
     }
 
   g_free (data);
 
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 }
 
 static void
@@ -907,15 +907,15 @@ pnm_load_raw (PNMScanner *scan,
   else
     bpc = 1;
 
-  /* No overflow as long as gimp_tile_height() < 1365 = 2^(31 - 18) / 6 */
-  data = g_new (guchar, gimp_tile_height () * info->xres * info->np * bpc);
+  /* No overflow as long as ligma_tile_height() < 1365 = 2^(31 - 18) / 6 */
+  data = g_new (guchar, ligma_tile_height () * info->xres * info->np * bpc);
 
   input = pnmscanner_input (scan);
 
   for (y = 0; y < info->yres; y += scanlines)
     {
       start = y;
-      end = y + gimp_tile_height ();
+      end = y + ligma_tile_height ();
       end = MIN (end, info->yres);
       scanlines = end - start;
       d = data;
@@ -971,12 +971,12 @@ pnm_load_raw (PNMScanner *scan,
                        GEGL_RECTANGLE (0, y, info->xres, scanlines), 0,
                        NULL, data, GEGL_AUTO_ROWSTRIDE);
 
-      gimp_progress_update ((double) y / (double) info->yres);
+      ligma_progress_update ((double) y / (double) info->yres);
     }
 
   g_free (data);
 
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 }
 
 static void
@@ -995,13 +995,13 @@ pnm_load_rawpbm (PNMScanner *scan,
   input = pnmscanner_input (scan);
 
   rowlen = (int)ceil ((double)(info->xres)/8.0);
-  data = g_new (guchar, gimp_tile_height () * info->xres);
+  data = g_new (guchar, ligma_tile_height () * info->xres);
   buf = g_new (guchar, rowlen);
 
   for (y = 0; y < info->yres; y += scanlines)
     {
       start = y;
-      end = y + gimp_tile_height ();
+      end = y + ligma_tile_height ();
       end = MIN (end, info->yres);
       scanlines = end - start;
       d = data;
@@ -1040,13 +1040,13 @@ pnm_load_rawpbm (PNMScanner *scan,
       gegl_buffer_set (buffer, GEGL_RECTANGLE (0, y, info->xres, scanlines), 0,
                        NULL, data, GEGL_AUTO_ROWSTRIDE);
 
-      gimp_progress_update ((double) y / (double) info->yres);
+      ligma_progress_update ((double) y / (double) info->yres);
     }
 
   g_free (buf);
   g_free (data);
 
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 }
 
 static void
@@ -1112,12 +1112,12 @@ pnm_load_rawpfm (PNMScanner *scan,
                        NULL, data, GEGL_AUTO_ROWSTRIDE);
 
       if (y % 32 == 0)
-        gimp_progress_update ((double) (info->yres - y) / (double) info->yres);
+        ligma_progress_update ((double) (info->yres - y) / (double) info->yres);
     }
 
   g_free (data);
 
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 }
 
 static gboolean
@@ -1296,8 +1296,8 @@ pnmsaverow_ascii_indexed (PNMRowInfo    *ri,
 
 static gboolean
 save_image (GFile         *file,
-            GimpImage     *image,
-            GimpDrawable  *drawable,
+            LigmaImage     *image,
+            LigmaDrawable  *drawable,
             FileType       file_type,
             GObject       *config,
             GError       **error)
@@ -1307,7 +1307,7 @@ save_image (GFile         *file,
   GeglBuffer    *buffer = NULL;
   const Babl    *format;
   const gchar   *header_string = NULL;
-  GimpImageType  drawable_type;
+  LigmaImageType  drawable_type;
   PNMRowInfo     rowinfo;
   PNMSaverowFunc saverow = NULL;
   guchar         red[256];
@@ -1327,13 +1327,13 @@ save_image (GFile         *file,
                   NULL);
 
   /*  Make sure we're not saving an image with an alpha channel  */
-  if (gimp_drawable_has_alpha (drawable))
+  if (ligma_drawable_has_alpha (drawable))
     {
       g_message (_("Cannot export images with alpha channel."));
       goto out;
     }
 
-  gimp_progress_init_printf (_("Exporting '%s'"),
+  ligma_progress_init_printf (_("Exporting '%s'"),
                              g_file_get_parse_name (file));
 
   /* open the file */
@@ -1343,18 +1343,18 @@ save_image (GFile         *file,
   if (! output)
     goto out;
 
-  buffer = gimp_drawable_get_buffer (drawable);
+  buffer = ligma_drawable_get_buffer (drawable);
 
   xres = gegl_buffer_get_width  (buffer);
   yres = gegl_buffer_get_height (buffer);
 
-  drawable_type = gimp_drawable_type (drawable);
+  drawable_type = ligma_drawable_type (drawable);
 
-  switch (gimp_image_get_precision (image))
+  switch (ligma_image_get_precision (image))
     {
-    case GIMP_PRECISION_U8_LINEAR:
-    case GIMP_PRECISION_U8_NON_LINEAR:
-    case GIMP_PRECISION_U8_PERCEPTUAL:
+    case LIGMA_PRECISION_U8_LINEAR:
+    case LIGMA_PRECISION_U8_NON_LINEAR:
+    case LIGMA_PRECISION_U8_PERCEPTUAL:
       rowinfo.bpc = 1;
       break;
     default:
@@ -1377,7 +1377,7 @@ save_image (GFile         *file,
         {
           switch (drawable_type)
             {
-            case GIMP_GRAY_IMAGE:
+            case LIGMA_GRAY_IMAGE:
               header_string = "P2\n";
               if (rowinfo.bpc == 1)
                 {
@@ -1393,7 +1393,7 @@ save_image (GFile         *file,
               saverow = pnmsaverow_ascii;
               break;
 
-            case GIMP_RGB_IMAGE:
+            case LIGMA_RGB_IMAGE:
               header_string = "P3\n";
               if (rowinfo.bpc == 1)
                 {
@@ -1409,7 +1409,7 @@ save_image (GFile         *file,
               saverow = pnmsaverow_ascii;
               break;
 
-            case GIMP_INDEXED_IMAGE:
+            case LIGMA_INDEXED_IMAGE:
               header_string = "P3\n";
               format = gegl_buffer_get_format (buffer);
               np = 1;
@@ -1437,7 +1437,7 @@ save_image (GFile         *file,
         {
           switch (drawable_type)
             {
-            case GIMP_GRAY_IMAGE:
+            case LIGMA_GRAY_IMAGE:
               header_string = "P5\n";
               if (rowinfo.bpc == 1)
                 {
@@ -1453,7 +1453,7 @@ save_image (GFile         *file,
               saverow = pnmsaverow_raw;
               break;
 
-            case GIMP_RGB_IMAGE:
+            case LIGMA_RGB_IMAGE:
               header_string = "P6\n";
               if (rowinfo.bpc == 1)
                 {
@@ -1469,7 +1469,7 @@ save_image (GFile         *file,
               saverow = pnmsaverow_raw;
               break;
 
-            case GIMP_INDEXED_IMAGE:
+            case LIGMA_INDEXED_IMAGE:
               header_string = "P6\n";
               format = gegl_buffer_get_format (buffer);
               np = 1;
@@ -1487,13 +1487,13 @@ save_image (GFile         *file,
     {
       switch (drawable_type)
         {
-        case GIMP_GRAY_IMAGE:
+        case LIGMA_GRAY_IMAGE:
           header_string = "Pf\n";
           format = babl_format ("Y float");
           np = 1;
           break;
 
-        case GIMP_RGB_IMAGE:
+        case LIGMA_RGB_IMAGE:
           header_string = "PF\n";
           format = babl_format ("RGB float");
           np = 3;
@@ -1510,12 +1510,12 @@ save_image (GFile         *file,
 
   rowinfo.zero_is_black = FALSE;
 
-  if (drawable_type == GIMP_INDEXED_IMAGE)
+  if (drawable_type == LIGMA_INDEXED_IMAGE)
     {
       guchar *cmap;
       gint    num_colors;
 
-      cmap = gimp_image_get_colormap (image, &num_colors);
+      cmap = ligma_image_get_colormap (image, &num_colors);
 
       if (file_type == FILE_TYPE_PBM)
         {
@@ -1523,16 +1523,16 @@ save_image (GFile         *file,
           switch (num_colors)
             {
             case 1:
-              rowinfo.zero_is_black = (GIMP_RGB_LUMINANCE (cmap[0],
+              rowinfo.zero_is_black = (LIGMA_RGB_LUMINANCE (cmap[0],
                                                            cmap[1],
                                                            cmap[2]) < 128);
               break;
 
             case 2:
-              rowinfo.zero_is_black = (GIMP_RGB_LUMINANCE (cmap[0],
+              rowinfo.zero_is_black = (LIGMA_RGB_LUMINANCE (cmap[0],
                                                            cmap[1],
                                                            cmap[2]) <
-                                       GIMP_RGB_LUMINANCE (cmap[3],
+                                       LIGMA_RGB_LUMINANCE (cmap[3],
                                                            cmap[4],
                                                            cmap[5]));
               break;
@@ -1565,8 +1565,8 @@ save_image (GFile         *file,
   if (file_type != FILE_TYPE_PFM)
     {
       /* write out comment string */
-      comment = g_strdup_printf("# Created by GIMP version %s PNM plug-in\n",
-                                GIMP_VERSION);
+      comment = g_strdup_printf("# Created by LIGMA version %s PNM plug-in\n",
+                                LIGMA_VERSION);
 
       if (! output_write (output, comment, strlen (comment), error))
         goto out;
@@ -1599,7 +1599,7 @@ save_image (GFile         *file,
 
       /* allocate a buffer for retrieving information from the pixel region  */
       data = g_new (guchar,
-                    gimp_tile_height () * xres *
+                    ligma_tile_height () * xres *
                     babl_format_get_bytes_per_pixel (format));
 
       rowbuf = g_new (gchar, rowbufsize + 1);
@@ -1614,9 +1614,9 @@ save_image (GFile         *file,
       /* Write the body out */
       for (ypos = 0; ypos < yres; ypos++)
         {
-          if ((ypos % gimp_tile_height ()) == 0)
+          if ((ypos % ligma_tile_height ()) == 0)
             {
-              yend = ypos + gimp_tile_height ();
+              yend = ypos + ligma_tile_height ();
               yend = MIN (yend, yres);
 
               gegl_buffer_get (buffer,
@@ -1637,7 +1637,7 @@ save_image (GFile         *file,
           d += xres * (np ? np : 1) * rowinfo.bpc;
 
           if (ypos % 32 == 0)
-            gimp_progress_update ((double) ypos / (double) yres);
+            ligma_progress_update ((double) ypos / (double) yres);
         }
 
       g_free (rowbuf);
@@ -1670,13 +1670,13 @@ save_image (GFile         *file,
             }
 
           if (ypos % 32 == 0)
-            gimp_progress_update ((double) (yres - ypos) / (double) yres);
+            ligma_progress_update ((double) (yres - ypos) / (double) yres);
         }
 
       g_free (data);
     }
 
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
   status = TRUE;
 
  out:
@@ -1700,19 +1700,19 @@ save_image (GFile         *file,
 }
 
 static gboolean
-save_dialog (GimpProcedure *procedure,
+save_dialog (LigmaProcedure *procedure,
              GObject       *config)
 {
   GtkWidget *dialog;
   GtkWidget *frame;
   gboolean   run;
 
-  dialog = gimp_procedure_dialog_new (procedure,
-                                      GIMP_PROCEDURE_CONFIG (config),
+  dialog = ligma_procedure_dialog_new (procedure,
+                                      LIGMA_PROCEDURE_CONFIG (config),
                                       _("Export Image as PNM"));
 
   /*  file save type  */
-  frame = gimp_prop_boolean_radio_frame_new (config, "raw",
+  frame = ligma_prop_boolean_radio_frame_new (config, "raw",
                                              _("Data formatting"),
                                              _("_Raw"),
                                              _("_ASCII"));
@@ -1723,7 +1723,7 @@ save_dialog (GimpProcedure *procedure,
 
   gtk_widget_show (dialog);
 
-  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
+  run = ligma_procedure_dialog_run (LIGMA_PROCEDURE_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
 

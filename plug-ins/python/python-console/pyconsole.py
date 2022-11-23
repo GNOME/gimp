@@ -743,7 +743,7 @@ def _make_window():
     window.add(swin)
     console = Console(banner="Hello there!",
                       use_rlcompleter=False,
-                      start_script="gi.require_version('Gimp', '3.0')\nfrom gi.repository import Gimp\n")
+                      start_script="gi.require_version('Ligma', '3.0')\nfrom gi.repository import Ligma\n")
     swin.add(console)
 
     width, height = console.get_default_size()
@@ -759,5 +759,5 @@ def _make_window():
     return console
 
 if __name__ == '__main__':
-    if len(sys.argv) < 2 or sys.argv[1] != '-gimp':
+    if len(sys.argv) < 2 or sys.argv[1] != '-ligma':
         _make_window()

@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * GIMP Plug-in for Windows Icon files.
+ * LIGMA Plug-in for Windows Icon files.
  * Copyright (C) 2002 Christian Kreibich <christian@whoop.org>.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -26,7 +26,7 @@ GtkWidget * ico_dialog_new                 (IcoSaveInfo   *info,
                                             AniFileHeader *ani_header,
                                             AniSaveInfo   *ani_info);
 void        ico_dialog_add_icon            (GtkWidget     *dialog,
-                                            GimpDrawable  *layer,
+                                            LigmaDrawable  *layer,
                                             gint           layer_num);
 
 #endif /* __ICO_DIALOG_H__ */

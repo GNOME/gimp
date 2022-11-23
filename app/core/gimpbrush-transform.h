@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpbrush-transform.h
+ * ligmabrush-transform.h
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,43 +17,43 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_BRUSH_TRANSFORM_H__
-#define __GIMP_BRUSH_TRANSFORM_H__
+#ifndef __LIGMA_BRUSH_TRANSFORM_H__
+#define __LIGMA_BRUSH_TRANSFORM_H__
 
 
-/*  virtual functions of GimpBrush, don't call directly  */
+/*  virtual functions of LigmaBrush, don't call directly  */
 
-void          gimp_brush_real_transform_size   (GimpBrush   *brush,
+void          ligma_brush_real_transform_size   (LigmaBrush   *brush,
                                                 gdouble      scale,
                                                 gdouble      aspect_ratio,
                                                 gdouble      angle,
                                                 gboolean     reflect,
                                                 gint        *scaled_width,
                                                 gint        *scaled_height);
-GimpTempBuf * gimp_brush_real_transform_mask   (GimpBrush   *brush,
+LigmaTempBuf * ligma_brush_real_transform_mask   (LigmaBrush   *brush,
                                                 gdouble      scale,
                                                 gdouble      aspect_ratio,
                                                 gdouble      angle,
                                                 gboolean     reflect,
                                                 gdouble      hardness);
-GimpTempBuf * gimp_brush_real_transform_pixmap (GimpBrush   *brush,
+LigmaTempBuf * ligma_brush_real_transform_pixmap (LigmaBrush   *brush,
                                                 gdouble      scale,
                                                 gdouble      aspect_ratio,
                                                 gdouble      angle,
                                                 gboolean     reflect,
                                                 gdouble      hardness);
 
-void          gimp_brush_transform_get_scale   (gdouble      scale,
+void          ligma_brush_transform_get_scale   (gdouble      scale,
                                                 gdouble      aspect_ratio,
                                                 gdouble     *scale_x,
                                                 gdouble     *scale_y);
-void          gimp_brush_transform_matrix      (gdouble      width,
+void          ligma_brush_transform_matrix      (gdouble      width,
                                                 gdouble      height,
                                                 gdouble      scale_x,
                                                 gdouble      scale_y,
                                                 gdouble      angle,
                                                 gboolean     reflect,
-                                                GimpMatrix3 *matrix);
+                                                LigmaMatrix3 *matrix);
 
 
-#endif  /*  __GIMP_BRUSH_TRANSFORM_H__  */
+#endif  /*  __LIGMA_BRUSH_TRANSFORM_H__  */

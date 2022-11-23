@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimpedit_pdb.c
+ * ligmaedit_pdb.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,12 +24,12 @@
 
 #include "stamp-pdbgen.h"
 
-#include "gimp.h"
+#include "ligma.h"
 
 
 /**
- * SECTION: gimpedit
- * @title: gimpedit
+ * SECTION: ligmaedit
+ * @title: ligmaedit
  * @short_description: Edit menu functions (cut, copy, paste, clear, etc.)
  *
  * Edit menu functions (cut, copy, paste, clear, etc.)
@@ -37,62 +37,62 @@
 
 
 /**
- * gimp_edit_cut:
+ * ligma_edit_cut:
  * @num_drawables: The number of drawables.
- * @drawables: (array length=num_drawables) (element-type GimpItem): The drawables to cut from.
+ * @drawables: (array length=num_drawables) (element-type LigmaItem): The drawables to cut from.
  *
  * Cut from the specified drawables.
  *
  * If there is a selection in the image, then the area specified by the
  * selection is cut from the specified drawables and placed in an
- * internal GIMP edit buffer. It can subsequently be retrieved using
- * the gimp_edit_paste() command. If there is no selection and only one
+ * internal LIGMA edit buffer. It can subsequently be retrieved using
+ * the ligma_edit_paste() command. If there is no selection and only one
  * specified drawable, then the specified drawable will be removed and
- * its contents stored in the internal GIMP edit buffer. This procedure
+ * its contents stored in the internal LIGMA edit buffer. This procedure
  * will fail if the selected area lies completely outside the bounds of
  * the current drawables and there is nothing to cut from.
  *
  * Returns: TRUE if the cut was successful, FALSE if there was nothing to copy from.
  **/
 gboolean
-gimp_edit_cut (gint             num_drawables,
-               const GimpItem **drawables)
+ligma_edit_cut (gint             num_drawables,
+               const LigmaItem **drawables)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean non_empty = FALSE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_INT, num_drawables,
-                                          GIMP_TYPE_OBJECT_ARRAY, NULL,
+                                          LIGMA_TYPE_OBJECT_ARRAY, NULL,
                                           G_TYPE_NONE);
-  gimp_value_set_object_array (gimp_value_array_index (args, 1), GIMP_TYPE_ITEM, (GObject **) drawables, num_drawables);
+  ligma_value_set_object_array (ligma_value_array_index (args, 1), LIGMA_TYPE_ITEM, (GObject **) drawables, num_drawables);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-edit-cut",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-edit-cut",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    non_empty = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    non_empty = LIGMA_VALUES_GET_BOOLEAN (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return non_empty;
 }
 
 /**
- * gimp_edit_copy:
+ * ligma_edit_copy:
  * @num_drawables: The number of drawables to save.
- * @drawables: (array length=num_drawables) (element-type GimpItem): Drawables to copy from.
+ * @drawables: (array length=num_drawables) (element-type LigmaItem): Drawables to copy from.
  *
  * Copy from the specified drawables.
  *
  * If there is a selection in the image, then the area specified by the
  * selection is copied from the specified drawables and placed in an
- * internal GIMP edit buffer. It can subsequently be retrieved using
- * the gimp_edit_paste() command. If there is no selection, then the
- * specified drawables' contents will be stored in the internal GIMP
+ * internal LIGMA edit buffer. It can subsequently be retrieved using
+ * the ligma_edit_paste() command. If there is no selection, then the
+ * specified drawables' contents will be stored in the internal LIGMA
  * edit buffer. This procedure will fail if the selected area lies
  * completely outside the bounds of the current drawables and there is
  * nothing to copy from. All the drawables must belong to the same
@@ -101,43 +101,43 @@ gimp_edit_cut (gint             num_drawables,
  * Returns: TRUE if the cut was successful, FALSE if there was nothing to copy from.
  **/
 gboolean
-gimp_edit_copy (gint             num_drawables,
-                const GimpItem **drawables)
+ligma_edit_copy (gint             num_drawables,
+                const LigmaItem **drawables)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean non_empty = FALSE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_INT, num_drawables,
-                                          GIMP_TYPE_OBJECT_ARRAY, NULL,
+                                          LIGMA_TYPE_OBJECT_ARRAY, NULL,
                                           G_TYPE_NONE);
-  gimp_value_set_object_array (gimp_value_array_index (args, 1), GIMP_TYPE_ITEM, (GObject **) drawables, num_drawables);
+  ligma_value_set_object_array (ligma_value_array_index (args, 1), LIGMA_TYPE_ITEM, (GObject **) drawables, num_drawables);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-edit-copy",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-edit-copy",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    non_empty = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    non_empty = LIGMA_VALUES_GET_BOOLEAN (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return non_empty;
 }
 
 /**
- * gimp_edit_copy_visible:
+ * ligma_edit_copy_visible:
  * @image: The image to copy from.
  *
  * Copy from the projection.
  *
  * If there is a selection in the image, then the area specified by the
  * selection is copied from the projection and placed in an internal
- * GIMP edit buffer. It can subsequently be retrieved using the
- * gimp_edit_paste() command. If there is no selection, then the
- * projection's contents will be stored in the internal GIMP edit
+ * LIGMA edit buffer. It can subsequently be retrieved using the
+ * ligma_edit_paste() command. If there is no selection, then the
+ * projection's contents will be stored in the internal LIGMA edit
  * buffer.
  *
  * Returns: TRUE if the copy was successful.
@@ -145,40 +145,40 @@ gimp_edit_copy (gint             num_drawables,
  * Since: 2.2
  **/
 gboolean
-gimp_edit_copy_visible (GimpImage *image)
+ligma_edit_copy_visible (LigmaImage *image)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean non_empty = FALSE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-edit-copy-visible",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-edit-copy-visible",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    non_empty = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    non_empty = LIGMA_VALUES_GET_BOOLEAN (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return non_empty;
 }
 
 /**
- * gimp_edit_paste:
+ * ligma_edit_paste:
  * @drawable: The drawable to paste to.
  * @paste_into: Clear selection, or paste behind it?
  * @num_layers: (out): The newly pasted layers.
  *
  * Paste buffer to the specified drawable.
  *
- * This procedure pastes a copy of the internal GIMP edit buffer to the
- * specified drawable. The GIMP edit buffer will be empty unless a call
- * was previously made to either gimp_edit_cut() or gimp_edit_copy().
+ * This procedure pastes a copy of the internal LIGMA edit buffer to the
+ * specified drawable. The LIGMA edit buffer will be empty unless a call
+ * was previously made to either ligma_edit_cut() or ligma_edit_copy().
  * The \"paste_into\" option specifies whether to clear the current
  * image selection, or to paste the buffer \"behind\" the selection.
  * This allows the selection to act as a mask for the pasted buffer.
@@ -192,88 +192,88 @@ gimp_edit_copy_visible (GimpImage *image)
  * specified drawable, and a subsequent call to floating_sel_attach is
  * not needed.
  *
- * Returns: (array length=num_layers) (element-type GimpLayer) (transfer container):
+ * Returns: (array length=num_layers) (element-type LigmaLayer) (transfer container):
  *          The list of pasted layers.
  *          The returned value must be freed with g_free().
  **/
-GimpLayer **
-gimp_edit_paste (GimpDrawable *drawable,
+LigmaLayer **
+ligma_edit_paste (LigmaDrawable *drawable,
                  gboolean      paste_into,
                  gint         *num_layers)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpLayer **layers = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaLayer **layers = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
                                           G_TYPE_BOOLEAN, paste_into,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-edit-paste",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-edit-paste",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
   *num_layers = 0;
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
     {
-      *num_layers = GIMP_VALUES_GET_INT (return_vals, 1);
-      { GimpObjectArray *a = g_value_get_boxed (gimp_value_array_index (return_vals, 2)); if (a) layers = g_memdup2 (a->data, a->length * sizeof (gpointer)); };
+      *num_layers = LIGMA_VALUES_GET_INT (return_vals, 1);
+      { LigmaObjectArray *a = g_value_get_boxed (ligma_value_array_index (return_vals, 2)); if (a) layers = g_memdup2 (a->data, a->length * sizeof (gpointer)); };
     }
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return layers;
 }
 
 /**
- * gimp_edit_paste_as_new_image:
+ * ligma_edit_paste_as_new_image:
  *
  * Paste buffer to a new image.
  *
- * This procedure pastes a copy of the internal GIMP edit buffer to a
- * new image. The GIMP edit buffer will be empty unless a call was
- * previously made to either gimp_edit_cut() or gimp_edit_copy(). This
+ * This procedure pastes a copy of the internal LIGMA edit buffer to a
+ * new image. The LIGMA edit buffer will be empty unless a call was
+ * previously made to either ligma_edit_cut() or ligma_edit_copy(). This
  * procedure returns the new image or -1 if the edit buffer was empty.
  *
  * Returns: (transfer none): The new image.
  *
  * Since: 2.10
  **/
-GimpImage *
-gimp_edit_paste_as_new_image (void)
+LigmaImage *
+ligma_edit_paste_as_new_image (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpImage *image = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaImage *image = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-edit-paste-as-new-image",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-edit-paste-as-new-image",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    image = GIMP_VALUES_GET_IMAGE (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    image = LIGMA_VALUES_GET_IMAGE (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return image;
 }
 
 /**
- * gimp_edit_named_cut:
+ * ligma_edit_named_cut:
  * @num_drawables: The number of drawables.
- * @drawables: (array length=num_drawables) (element-type GimpItem): The drawables to cut from.
+ * @drawables: (array length=num_drawables) (element-type LigmaItem): The drawables to cut from.
  * @buffer_name: The name of the buffer to create.
  *
  * Cut into a named buffer.
  *
- * This procedure works like gimp_edit_cut(), but additionally stores
+ * This procedure works like ligma_edit_cut(), but additionally stores
  * the cut buffer into a named buffer that will stay available for
  * later pasting, regardless of any intermediate copy or cut
  * operations.
@@ -285,43 +285,43 @@ gimp_edit_paste_as_new_image (void)
  * Since: 2.4
  **/
 gchar *
-gimp_edit_named_cut (gint             num_drawables,
-                     const GimpItem **drawables,
+ligma_edit_named_cut (gint             num_drawables,
+                     const LigmaItem **drawables,
                      const gchar     *buffer_name)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gchar *real_name = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_INT, num_drawables,
-                                          GIMP_TYPE_OBJECT_ARRAY, NULL,
+                                          LIGMA_TYPE_OBJECT_ARRAY, NULL,
                                           G_TYPE_STRING, buffer_name,
                                           G_TYPE_NONE);
-  gimp_value_set_object_array (gimp_value_array_index (args, 1), GIMP_TYPE_ITEM, (GObject **) drawables, num_drawables);
+  ligma_value_set_object_array (ligma_value_array_index (args, 1), LIGMA_TYPE_ITEM, (GObject **) drawables, num_drawables);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-edit-named-cut",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-edit-named-cut",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    real_name = GIMP_VALUES_DUP_STRING (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    real_name = LIGMA_VALUES_DUP_STRING (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return real_name;
 }
 
 /**
- * gimp_edit_named_copy:
+ * ligma_edit_named_copy:
  * @num_drawables: The number of drawables.
- * @drawables: (array length=num_drawables) (element-type GimpItem): The drawables to copy from.
+ * @drawables: (array length=num_drawables) (element-type LigmaItem): The drawables to copy from.
  * @buffer_name: The name of the buffer to create.
  *
  * Copy into a named buffer.
  *
- * This procedure works like gimp_edit_copy(), but additionally stores
+ * This procedure works like ligma_edit_copy(), but additionally stores
  * the copied buffer into a named buffer that will stay available for
  * later pasting, regardless of any intermediate copy or cut
  * operations.
@@ -333,42 +333,42 @@ gimp_edit_named_cut (gint             num_drawables,
  * Since: 2.4
  **/
 gchar *
-gimp_edit_named_copy (gint             num_drawables,
-                      const GimpItem **drawables,
+ligma_edit_named_copy (gint             num_drawables,
+                      const LigmaItem **drawables,
                       const gchar     *buffer_name)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gchar *real_name = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_INT, num_drawables,
-                                          GIMP_TYPE_OBJECT_ARRAY, NULL,
+                                          LIGMA_TYPE_OBJECT_ARRAY, NULL,
                                           G_TYPE_STRING, buffer_name,
                                           G_TYPE_NONE);
-  gimp_value_set_object_array (gimp_value_array_index (args, 1), GIMP_TYPE_ITEM, (GObject **) drawables, num_drawables);
+  ligma_value_set_object_array (ligma_value_array_index (args, 1), LIGMA_TYPE_ITEM, (GObject **) drawables, num_drawables);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-edit-named-copy",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-edit-named-copy",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    real_name = GIMP_VALUES_DUP_STRING (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    real_name = LIGMA_VALUES_DUP_STRING (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return real_name;
 }
 
 /**
- * gimp_edit_named_copy_visible:
+ * ligma_edit_named_copy_visible:
  * @image: The image to copy from.
  * @buffer_name: The name of the buffer to create.
  *
  * Copy from the projection into a named buffer.
  *
- * This procedure works like gimp_edit_copy_visible(), but additionally
+ * This procedure works like ligma_edit_copy_visible(), but additionally
  * stores the copied buffer into a named buffer that will stay
  * available for later pasting, regardless of any intermediate copy or
  * cut operations.
@@ -380,107 +380,107 @@ gimp_edit_named_copy (gint             num_drawables,
  * Since: 2.4
  **/
 gchar *
-gimp_edit_named_copy_visible (GimpImage   *image,
+ligma_edit_named_copy_visible (LigmaImage   *image,
                               const gchar *buffer_name)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gchar *real_name = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_IMAGE, image,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_IMAGE, image,
                                           G_TYPE_STRING, buffer_name,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-edit-named-copy-visible",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-edit-named-copy-visible",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    real_name = GIMP_VALUES_DUP_STRING (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    real_name = LIGMA_VALUES_DUP_STRING (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return real_name;
 }
 
 /**
- * gimp_edit_named_paste:
+ * ligma_edit_named_paste:
  * @drawable: The drawable to paste to.
  * @buffer_name: The name of the buffer to paste.
  * @paste_into: Clear selection, or paste behind it?
  *
  * Paste named buffer to the specified drawable.
  *
- * This procedure works like gimp_edit_paste() but pastes a named
+ * This procedure works like ligma_edit_paste() but pastes a named
  * buffer instead of the global buffer.
  *
  * Returns: (transfer none): The new floating selection.
  *
  * Since: 2.4
  **/
-GimpLayer *
-gimp_edit_named_paste (GimpDrawable *drawable,
+LigmaLayer *
+ligma_edit_named_paste (LigmaDrawable *drawable,
                        const gchar  *buffer_name,
                        gboolean      paste_into)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpLayer *floating_sel = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaLayer *floating_sel = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
                                           G_TYPE_STRING, buffer_name,
                                           G_TYPE_BOOLEAN, paste_into,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-edit-named-paste",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-edit-named-paste",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    floating_sel = GIMP_VALUES_GET_LAYER (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    floating_sel = LIGMA_VALUES_GET_LAYER (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return floating_sel;
 }
 
 /**
- * gimp_edit_named_paste_as_new_image:
+ * ligma_edit_named_paste_as_new_image:
  * @buffer_name: The name of the buffer to paste.
  *
  * Paste named buffer to a new image.
  *
- * This procedure works like gimp_edit_paste_as_new_image() but pastes
+ * This procedure works like ligma_edit_paste_as_new_image() but pastes
  * a named buffer instead of the global buffer.
  *
  * Returns: (transfer none): The new image.
  *
  * Since: 2.10
  **/
-GimpImage *
-gimp_edit_named_paste_as_new_image (const gchar *buffer_name)
+LigmaImage *
+ligma_edit_named_paste_as_new_image (const gchar *buffer_name)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpImage *image = NULL;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaImage *image = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, buffer_name,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-edit-named-paste-as-new-image",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-edit-named-paste-as-new-image",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    image = GIMP_VALUES_GET_IMAGE (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    image = LIGMA_VALUES_GET_IMAGE (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return image;
 }

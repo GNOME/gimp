@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimp-gegl-utils.h
- * Copyright (C) 2007 Michael Natterer <mitch@gimp.org>
+ * ligma-gegl-utils.h
+ * Copyright (C) 2007 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,44 +18,44 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_GEGL_UTILS_H__
-#define __GIMP_GEGL_UTILS_H__
+#ifndef __LIGMA_GEGL_UTILS_H__
+#define __LIGMA_GEGL_UTILS_H__
 
 
-GType         gimp_gegl_get_op_enum_type              (const gchar         *operation,
+GType         ligma_gegl_get_op_enum_type              (const gchar         *operation,
                                                        const gchar         *property);
 
-GeglColor   * gimp_gegl_color_new                     (const GimpRGB       *rgb,
+GeglColor   * ligma_gegl_color_new                     (const LigmaRGB       *rgb,
                                                        const Babl          *space);
 
-void          gimp_gegl_progress_connect              (GeglNode            *node,
-                                                       GimpProgress        *progress,
+void          ligma_gegl_progress_connect              (GeglNode            *node,
+                                                       LigmaProgress        *progress,
                                                        const gchar         *text);
 
-gboolean      gimp_gegl_node_is_source_operation      (GeglNode            *node);
-gboolean      gimp_gegl_node_is_point_operation       (GeglNode            *node);
-gboolean      gimp_gegl_node_is_area_filter_operation (GeglNode            *node);
+gboolean      ligma_gegl_node_is_source_operation      (GeglNode            *node);
+gboolean      ligma_gegl_node_is_point_operation       (GeglNode            *node);
+gboolean      ligma_gegl_node_is_area_filter_operation (GeglNode            *node);
 
-const gchar * gimp_gegl_node_get_key                  (GeglNode            *node,
+const gchar * ligma_gegl_node_get_key                  (GeglNode            *node,
                                                        const gchar         *key);
-gboolean      gimp_gegl_node_has_key                  (GeglNode            *node,
+gboolean      ligma_gegl_node_has_key                  (GeglNode            *node,
                                                        const gchar         *key);
 
-const Babl  * gimp_gegl_node_get_format               (GeglNode            *node,
+const Babl  * ligma_gegl_node_get_format               (GeglNode            *node,
                                                        const gchar         *pad_name);
 
-void          gimp_gegl_node_set_underlying_operation (GeglNode           *node,
+void          ligma_gegl_node_set_underlying_operation (GeglNode           *node,
                                                        GeglNode           *operation);
-GeglNode    * gimp_gegl_node_get_underlying_operation (GeglNode           *node);
+GeglNode    * ligma_gegl_node_get_underlying_operation (GeglNode           *node);
 
-gboolean      gimp_gegl_param_spec_has_key            (GParamSpec          *pspec,
+gboolean      ligma_gegl_param_spec_has_key            (GParamSpec          *pspec,
                                                        const gchar         *key,
                                                        const gchar         *value);
 
-GeglBuffer  * gimp_gegl_buffer_dup                    (GeglBuffer          *buffer);
+GeglBuffer  * ligma_gegl_buffer_dup                    (GeglBuffer          *buffer);
 
-gboolean      gimp_gegl_buffer_set_extent             (GeglBuffer          *buffer,
+gboolean      ligma_gegl_buffer_set_extent             (GeglBuffer          *buffer,
                                                        const GeglRectangle *extent);
 
 
-#endif /* __GIMP_GEGL_UTILS_H__ */
+#endif /* __LIGMA_GEGL_UTILS_H__ */

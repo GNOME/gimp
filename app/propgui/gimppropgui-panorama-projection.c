@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * gimppropgui-panorama-projection.c
+ * ligmapropgui-panorama-projection.c
  * Copyright (C) 2018 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,18 +23,18 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpmath/gimpmath.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "propgui-types.h"
 
-#include "core/gimpcontext.h"
+#include "core/ligmacontext.h"
 
-#include "gimppropgui.h"
-#include "gimppropgui-generic.h"
-#include "gimppropgui-panorama-projection.h"
+#include "ligmapropgui.h"
+#include "ligmapropgui-generic.h"
+#include "ligmapropgui-panorama-projection.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 static void
@@ -64,7 +64,7 @@ config_notify (GObject          *config,
                const GParamSpec *pspec,
                gpointer          set_data)
 {
-  GimpControllerGyroscopeCallback  set_func;
+  LigmaControllerGyroscopeCallback  set_func;
   GeglRectangle                   *area;
   gdouble                          pan;
   gdouble                          tilt;
@@ -91,13 +91,13 @@ config_notify (GObject          *config,
 }
 
 GtkWidget *
-_gimp_prop_gui_new_panorama_projection (GObject                   *config,
+_ligma_prop_gui_new_panorama_projection (GObject                   *config,
                                         GParamSpec               **param_specs,
                                         guint                      n_param_specs,
                                         GeglRectangle             *area,
-                                        GimpContext               *context,
-                                        GimpCreatePickerFunc       create_picker_func,
-                                        GimpCreateControllerFunc   create_controller_func,
+                                        LigmaContext               *context,
+                                        LigmaCreatePickerFunc       create_picker_func,
+                                        LigmaCreateControllerFunc   create_controller_func,
                                         gpointer                   creator)
 {
   GtkWidget *vbox;
@@ -105,9 +105,9 @@ _gimp_prop_gui_new_panorama_projection (GObject                   *config,
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
   g_return_val_if_fail (param_specs != NULL, NULL);
   g_return_val_if_fail (n_param_specs > 0, NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
 
-  vbox = _gimp_prop_gui_new_generic (config,
+  vbox = _ligma_prop_gui_new_generic (config,
                                      param_specs, n_param_specs,
                                      area, context,
                                      create_picker_func,
@@ -121,7 +121,7 @@ _gimp_prop_gui_new_panorama_projection (GObject                   *config,
       gpointer  set_data;
 
       set_func = create_controller_func (creator,
-                                         GIMP_CONTROLLER_TYPE_GYROSCOPE,
+                                         LIGMA_CONTROLLER_TYPE_GYROSCOPE,
                                          _("Panorama Projection: "),
                                          (GCallback) gyroscope_callback,
                                          config,

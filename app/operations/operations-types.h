@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * operations-types.h
@@ -23,41 +23,41 @@
 
 #include <gegl-types.h>
 
-#include "gegl/gimp-gegl-types.h"
+#include "gegl/ligma-gegl-types.h"
 
 #include "operations-enums.h"
 
 
 /*  operations  */
 
-typedef struct _GimpOperationPointFilter        GimpOperationPointFilter;
-typedef struct _GimpOperationLayerMode          GimpOperationLayerMode;
+typedef struct _LigmaOperationPointFilter        LigmaOperationPointFilter;
+typedef struct _LigmaOperationLayerMode          LigmaOperationLayerMode;
 
 
 /*  operation config objects  */
 
-typedef struct _GimpOperationSettings           GimpOperationSettings;
+typedef struct _LigmaOperationSettings           LigmaOperationSettings;
 
-typedef struct _GimpBrightnessContrastConfig    GimpBrightnessContrastConfig;
-typedef struct _GimpCageConfig                  GimpCageConfig;
-typedef struct _GimpColorBalanceConfig          GimpColorBalanceConfig;
-typedef struct _GimpColorizeConfig              GimpColorizeConfig;
-typedef struct _GimpCurvesConfig                GimpCurvesConfig;
-typedef struct _GimpDesaturateConfig            GimpDesaturateConfig;
-typedef struct _GimpHueSaturationConfig         GimpHueSaturationConfig;
-typedef struct _GimpLevelsConfig                GimpLevelsConfig;
-typedef struct _GimpPosterizeConfig             GimpPosterizeConfig;
-typedef struct _GimpThresholdConfig             GimpThresholdConfig;
+typedef struct _LigmaBrightnessContrastConfig    LigmaBrightnessContrastConfig;
+typedef struct _LigmaCageConfig                  LigmaCageConfig;
+typedef struct _LigmaColorBalanceConfig          LigmaColorBalanceConfig;
+typedef struct _LigmaColorizeConfig              LigmaColorizeConfig;
+typedef struct _LigmaCurvesConfig                LigmaCurvesConfig;
+typedef struct _LigmaDesaturateConfig            LigmaDesaturateConfig;
+typedef struct _LigmaHueSaturationConfig         LigmaHueSaturationConfig;
+typedef struct _LigmaLevelsConfig                LigmaLevelsConfig;
+typedef struct _LigmaPosterizeConfig             LigmaPosterizeConfig;
+typedef struct _LigmaThresholdConfig             LigmaThresholdConfig;
 
 
 /*  non-object types  */
 
-typedef struct _GimpCagePoint                   GimpCagePoint;
+typedef struct _LigmaCagePoint                   LigmaCagePoint;
 
 
 /*  functions  */
 
-typedef gboolean (* GimpLayerModeFunc)      (GeglOperation          *operation,
+typedef gboolean (* LigmaLayerModeFunc)      (GeglOperation          *operation,
                                              void                   *in,
                                              void                   *aux,
                                              void                   *mask,
@@ -66,7 +66,7 @@ typedef gboolean (* GimpLayerModeFunc)      (GeglOperation          *operation,
                                              const GeglRectangle    *roi,
                                              gint                    level);
 
-typedef  void    (* GimpLayerModeBlendFunc) (GeglOperation          *operation,
+typedef  void    (* LigmaLayerModeBlendFunc) (GeglOperation          *operation,
                                              const gfloat           *in,
                                              const gfloat           *layer,
                                              gfloat                 *out,

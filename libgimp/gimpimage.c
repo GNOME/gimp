@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2000 Peter Mattis and Spencer Kimball
  *
- * gimpimage.c
+ * ligmaimage.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,13 +20,13 @@
 
 #include "config.h"
 
-#include "gimp.h"
+#include "ligma.h"
 
-#include "libgimpbase/gimpwire.h" /* FIXME kill this include */
+#include "libligmabase/ligmawire.h" /* FIXME kill this include */
 
-#include "gimppixbuf.h"
-#include "gimpplugin-private.h"
-#include "gimpprocedure-private.h"
+#include "ligmapixbuf.h"
+#include "ligmaplugin-private.h"
+#include "ligmaprocedure-private.h"
 
 
 enum
@@ -36,61 +36,61 @@ enum
   N_PROPS
 };
 
-struct _GimpImage
+struct _LigmaImage
 {
   GObject parent_instance;
   gint    id;
 };
 
 
-static void   gimp_image_set_property  (GObject      *object,
+static void   ligma_image_set_property  (GObject      *object,
                                         guint         property_id,
                                         const GValue *value,
                                         GParamSpec   *pspec);
-static void   gimp_image_get_property  (GObject      *object,
+static void   ligma_image_get_property  (GObject      *object,
                                         guint         property_id,
                                         GValue       *value,
                                         GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE (GimpImage, gimp_image, G_TYPE_OBJECT)
+G_DEFINE_TYPE (LigmaImage, ligma_image, G_TYPE_OBJECT)
 
-#define parent_class gimp_image_parent_class
+#define parent_class ligma_image_parent_class
 
 static GParamSpec *props[N_PROPS] = { NULL, };
 
 
 static void
-gimp_image_class_init (GimpImageClass *klass)
+ligma_image_class_init (LigmaImageClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->set_property = gimp_image_set_property;
-  object_class->get_property = gimp_image_get_property;
+  object_class->set_property = ligma_image_set_property;
+  object_class->get_property = ligma_image_get_property;
 
   props[PROP_ID] =
     g_param_spec_int ("id",
                       "The image id",
                       "The image id for internal use",
                       0, G_MAXINT32, 0,
-                      GIMP_PARAM_READWRITE |
+                      LIGMA_PARAM_READWRITE |
                       G_PARAM_CONSTRUCT_ONLY);
 
   g_object_class_install_properties (object_class, N_PROPS, props);
 }
 
 static void
-gimp_image_init (GimpImage *image)
+ligma_image_init (LigmaImage *image)
 {
 }
 
 static void
-gimp_image_set_property (GObject      *object,
+ligma_image_set_property (GObject      *object,
                          guint         property_id,
                          const GValue *value,
                          GParamSpec   *pspec)
 {
-  GimpImage *image = GIMP_IMAGE (object);
+  LigmaImage *image = LIGMA_IMAGE (object);
 
   switch (property_id)
     {
@@ -105,12 +105,12 @@ gimp_image_set_property (GObject      *object,
 }
 
 static void
-gimp_image_get_property (GObject    *object,
+ligma_image_get_property (GObject    *object,
                          guint       property_id,
                          GValue     *value,
                          GParamSpec *pspec)
 {
-  GimpImage *image = GIMP_IMAGE (object);
+  LigmaImage *image = LIGMA_IMAGE (object);
 
   switch (property_id)
     {
@@ -128,7 +128,7 @@ gimp_image_get_property (GObject    *object,
 /* Public API */
 
 /**
- * gimp_image_get_id:
+ * ligma_image_get_id:
  * @image: The image.
  *
  * Returns: the image ID.
@@ -136,38 +136,38 @@ gimp_image_get_property (GObject    *object,
  * Since: 3.0
  **/
 gint32
-gimp_image_get_id (GimpImage *image)
+ligma_image_get_id (LigmaImage *image)
 {
   return image ? image->id : -1;
 }
 
 /**
- * gimp_image_get_by_id:
+ * ligma_image_get_by_id:
  * @image_id: The image id.
  *
- * Returns: (nullable) (transfer none): a #GimpImage for @image_id or
+ * Returns: (nullable) (transfer none): a #LigmaImage for @image_id or
  *          %NULL if @image_id does not represent a valid image.
- *          The object belongs to libgimp and you must not modify
+ *          The object belongs to libligma and you must not modify
  *          or unref it.
  *
  * Since: 3.0
  **/
-GimpImage *
-gimp_image_get_by_id (gint32 image_id)
+LigmaImage *
+ligma_image_get_by_id (gint32 image_id)
 {
   if (image_id > 0)
     {
-      GimpPlugIn    *plug_in   = gimp_get_plug_in ();
-      GimpProcedure *procedure = _gimp_plug_in_get_procedure (plug_in);
+      LigmaPlugIn    *plug_in   = ligma_get_plug_in ();
+      LigmaProcedure *procedure = _ligma_plug_in_get_procedure (plug_in);
 
-      return _gimp_procedure_get_image (procedure, image_id);
+      return _ligma_procedure_get_image (procedure, image_id);
     }
 
   return NULL;
 }
 
 /**
- * gimp_image_is_valid:
+ * ligma_image_is_valid:
  * @image: The image to check.
  *
  * Returns TRUE if the image is valid.
@@ -180,34 +180,34 @@ gimp_image_get_by_id (gint32 image_id)
  * Since: 2.4
  **/
 gboolean
-gimp_image_is_valid (GimpImage *image)
+ligma_image_is_valid (LigmaImage *image)
 {
-  return gimp_image_id_is_valid (gimp_image_get_id (image));
+  return ligma_image_id_is_valid (ligma_image_get_id (image));
 }
 
 /**
- * gimp_list_images:
+ * ligma_list_images:
  *
  * Returns the list of images currently open.
  *
- * This procedure returns the list of images currently open in GIMP.
+ * This procedure returns the list of images currently open in LIGMA.
  *
- * Returns: (element-type GimpImage) (transfer container):
+ * Returns: (element-type LigmaImage) (transfer container):
  *          The list of images currently open.
  *          The returned list must be freed with g_list_free(). Image
- *          elements belong to libgimp and must not be freed.
+ *          elements belong to libligma and must not be freed.
  *
  * Since: 3.0
  **/
 GList *
-gimp_list_images (void)
+ligma_list_images (void)
 {
-  GimpImage **images;
+  LigmaImage **images;
   gint        num_images;
   GList      *list = NULL;
   gint        i;
 
-  images = gimp_get_images (&num_images);
+  images = ligma_get_images (&num_images);
 
   for (i = 0; i < num_images; i++)
     list = g_list_prepend (list, images[i]);
@@ -218,7 +218,7 @@ gimp_list_images (void)
 }
 
 /**
- * gimp_image_list_layers:
+ * ligma_image_list_layers:
  * @image: The image.
  *
  * Returns the list of layers contained in the specified image.
@@ -226,22 +226,22 @@ gimp_list_images (void)
  * This procedure returns the list of layers contained in the specified
  * image. The order of layers is from topmost to bottommost.
  *
- * Returns: (element-type GimpLayer) (transfer container):
+ * Returns: (element-type LigmaLayer) (transfer container):
  *          The list of layers contained in the image.
  *          The returned list must be freed with g_list_free(). Layer
- *          elements belong to libgimp and must not be freed.
+ *          elements belong to libligma and must not be freed.
  *
  * Since: 3.0
  **/
 GList *
-gimp_image_list_layers (GimpImage *image)
+ligma_image_list_layers (LigmaImage *image)
 {
-  GimpLayer **layers;
+  LigmaLayer **layers;
   gint        num_layers;
   GList      *list = NULL;
   gint        i;
 
-  layers = gimp_image_get_layers (image, &num_layers);
+  layers = ligma_image_get_layers (image, &num_layers);
 
   for (i = 0; i < num_layers; i++)
     list = g_list_prepend (list, layers[i]);
@@ -252,7 +252,7 @@ gimp_image_list_layers (GimpImage *image)
 }
 
 /**
- * gimp_image_list_selected_layers:
+ * ligma_image_list_selected_layers:
  * @image: The image.
  *
  * Returns the list of layers selected in the specified image.
@@ -260,22 +260,22 @@ gimp_image_list_layers (GimpImage *image)
  * This procedure returns the list of layers selected in the specified
  * image.
  *
- * Returns: (element-type GimpLayer) (transfer container):
+ * Returns: (element-type LigmaLayer) (transfer container):
  *          The list of selected layers in the image.
  *          The returned list must be freed with g_list_free(). Layer
- *          elements belong to libgimp and must not be freed.
+ *          elements belong to libligma and must not be freed.
  *
  * Since: 3.0
  **/
 GList *
-gimp_image_list_selected_layers (GimpImage *image)
+ligma_image_list_selected_layers (LigmaImage *image)
 {
-  GimpLayer **layers;
+  LigmaLayer **layers;
   gint        num_layers;
   GList      *list = NULL;
   gint        i;
 
-  layers = gimp_image_get_selected_layers (image, &num_layers);
+  layers = ligma_image_get_selected_layers (image, &num_layers);
 
   for (i = 0; i < num_layers; i++)
     list = g_list_prepend (list, layers[i]);
@@ -286,9 +286,9 @@ gimp_image_list_selected_layers (GimpImage *image)
 }
 
 /**
- * gimp_image_take_selected_layers:
+ * ligma_image_take_selected_layers:
  * @image: The image.
- * @layers: (transfer container) (element-type GimpLayer): The list of layers to select.
+ * @layers: (transfer container) (element-type LigmaLayer): The list of layers to select.
  *
  * The layers are set as the selected layers in the image. Any previous
  * selected layers or channels are unselected. An exception is a previously
@@ -300,27 +300,27 @@ gimp_image_list_selected_layers (GimpImage *image)
  * Since: 3.0
  **/
 gboolean
-gimp_image_take_selected_layers (GimpImage *image,
+ligma_image_take_selected_layers (LigmaImage *image,
                                  GList     *layers)
 {
-  GimpLayer **sel_layers;
+  LigmaLayer **sel_layers;
   GList      *list;
   gboolean    success;
   gint        i;
 
-  sel_layers = g_new0 (GimpLayer *, g_list_length (layers));
+  sel_layers = g_new0 (LigmaLayer *, g_list_length (layers));
   for (list = layers, i = 0; list; list = list->next, i++)
     sel_layers[i] = list->data;
 
-  success = gimp_image_set_selected_layers (image, g_list_length (layers),
-                                            (const GimpLayer **) sel_layers);
+  success = ligma_image_set_selected_layers (image, g_list_length (layers),
+                                            (const LigmaLayer **) sel_layers);
   g_list_free (layers);
 
   return success;
 }
 
 /**
- * gimp_image_list_selected_channels:
+ * ligma_image_list_selected_channels:
  * @image: The image.
  *
  * Returns the list of channels selected in the specified image.
@@ -328,22 +328,22 @@ gimp_image_take_selected_layers (GimpImage *image,
  * This procedure returns the list of channels selected in the specified
  * image.
  *
- * Returns: (element-type GimpChannel) (transfer container):
+ * Returns: (element-type LigmaChannel) (transfer container):
  *          The list of selected channels in the image.
  *          The returned list must be freed with g_list_free(). Layer
- *          elements belong to libgimp and must not be freed.
+ *          elements belong to libligma and must not be freed.
  *
  * Since: 3.0
  **/
 GList *
-gimp_image_list_selected_channels (GimpImage *image)
+ligma_image_list_selected_channels (LigmaImage *image)
 {
-  GimpChannel **channels;
+  LigmaChannel **channels;
   gint          num_channels;
   GList        *list = NULL;
   gint          i;
 
-  channels = gimp_image_get_selected_channels (image, &num_channels);
+  channels = ligma_image_get_selected_channels (image, &num_channels);
 
   for (i = 0; i < num_channels; i++)
     list = g_list_prepend (list, channels[i]);
@@ -354,9 +354,9 @@ gimp_image_list_selected_channels (GimpImage *image)
 }
 
 /**
- * gimp_image_take_selected_channels:
+ * ligma_image_take_selected_channels:
  * @image: The image.
- * @channels: (transfer container) (element-type GimpChannel): The list of channels to select.
+ * @channels: (transfer container) (element-type LigmaChannel): The list of channels to select.
  *
  * The channels are set as the selected channels in the image. Any previous
  * selected layers or channels are unselected. An exception is a previously
@@ -368,27 +368,27 @@ gimp_image_list_selected_channels (GimpImage *image)
  * Since: 3.0
  **/
 gboolean
-gimp_image_take_selected_channels (GimpImage *image,
+ligma_image_take_selected_channels (LigmaImage *image,
                                    GList     *channels)
 {
-  GimpChannel **sel_channels;
+  LigmaChannel **sel_channels;
   GList        *list;
   gboolean      success;
   gint          i;
 
-  sel_channels = g_new0 (GimpChannel *, g_list_length (channels));
+  sel_channels = g_new0 (LigmaChannel *, g_list_length (channels));
   for (list = channels, i = 0; list; list = list->next, i++)
     sel_channels[i] = list->data;
 
-  success = gimp_image_set_selected_channels (image, g_list_length (channels),
-                                              (const GimpChannel **) sel_channels);
+  success = ligma_image_set_selected_channels (image, g_list_length (channels),
+                                              (const LigmaChannel **) sel_channels);
   g_list_free (channels);
 
   return success;
 }
 
 /**
- * gimp_image_list_selected_vectors:
+ * ligma_image_list_selected_vectors:
  * @image: The image.
  *
  * Returns the list of paths selected in the specified image.
@@ -396,22 +396,22 @@ gimp_image_take_selected_channels (GimpImage *image,
  * This procedure returns the list of paths selected in the specified
  * image.
  *
- * Returns: (element-type GimpVectors) (transfer container):
+ * Returns: (element-type LigmaVectors) (transfer container):
  *          The list of selected paths in the image.
  *          The returned list must be freed with g_list_free().
- *          Path elements belong to libgimp and must not be freed.
+ *          Path elements belong to libligma and must not be freed.
  *
  * Since: 3.0
  **/
 GList *
-gimp_image_list_selected_vectors (GimpImage *image)
+ligma_image_list_selected_vectors (LigmaImage *image)
 {
-  GimpVectors **vectors;
+  LigmaVectors **vectors;
   gint          num_vectors;
   GList        *list = NULL;
   gint          i;
 
-  vectors = gimp_image_get_selected_vectors (image, &num_vectors);
+  vectors = ligma_image_get_selected_vectors (image, &num_vectors);
 
   for (i = 0; i < num_vectors; i++)
     list = g_list_prepend (list, vectors[i]);
@@ -422,9 +422,9 @@ gimp_image_list_selected_vectors (GimpImage *image)
 }
 
 /**
- * gimp_image_take_selected_vectors:
+ * ligma_image_take_selected_vectors:
  * @image: The image.
- * @vectors: (transfer container) (element-type GimpVectors): The list of paths to select.
+ * @vectors: (transfer container) (element-type LigmaVectors): The list of paths to select.
  *
  * The paths are set as the selected paths in the image. Any previous
  * selected paths are unselected.
@@ -434,27 +434,27 @@ gimp_image_list_selected_vectors (GimpImage *image)
  * Since: 3.0
  **/
 gboolean
-gimp_image_take_selected_vectors (GimpImage *image,
+ligma_image_take_selected_vectors (LigmaImage *image,
                                   GList     *vectors)
 {
-  GimpVectors **sel_vectors;
+  LigmaVectors **sel_vectors;
   GList        *list;
   gboolean      success;
   gint          i;
 
-  sel_vectors = g_new0 (GimpVectors *, g_list_length (vectors));
+  sel_vectors = g_new0 (LigmaVectors *, g_list_length (vectors));
   for (list = vectors, i = 0; list; list = list->next, i++)
     sel_vectors[i] = list->data;
 
-  success = gimp_image_set_selected_vectors (image, g_list_length (vectors),
-                                             (const GimpVectors **) sel_vectors);
+  success = ligma_image_set_selected_vectors (image, g_list_length (vectors),
+                                             (const LigmaVectors **) sel_vectors);
   g_list_free (vectors);
 
   return success;
 }
 
 /**
- * gimp_image_list_channels:
+ * ligma_image_list_channels:
  * @image: The image.
  *
  * Returns the list of channels contained in the specified image.
@@ -465,22 +465,22 @@ gimp_image_take_selected_vectors (GimpImage *image,
  * "channels" are custom channels and do not include the image's
  * color components.
  *
- * Returns: (element-type GimpChannel) (transfer container):
+ * Returns: (element-type LigmaChannel) (transfer container):
  *          The list of channels contained in the image.
  *          The returned list must be freed with g_list_free(). Channel
- *          elements belong to libgimp and must not be freed.
+ *          elements belong to libligma and must not be freed.
  *
  * Since: 3.0
  **/
 GList *
-gimp_image_list_channels (GimpImage *image)
+ligma_image_list_channels (LigmaImage *image)
 {
-  GimpChannel **channels;
+  LigmaChannel **channels;
   gint          num_channels;
   GList        *list = NULL;
   gint          i;
 
-  channels = gimp_image_get_channels (image, &num_channels);
+  channels = ligma_image_get_channels (image, &num_channels);
 
   for (i = 0; i < num_channels; i++)
     list = g_list_prepend (list, channels[i]);
@@ -491,7 +491,7 @@ gimp_image_list_channels (GimpImage *image)
 }
 
 /**
- * gimp_image_list_vectors:
+ * ligma_image_list_vectors:
  * @image: The image.
  *
  * Returns the list of vectors contained in the specified image.
@@ -499,22 +499,22 @@ gimp_image_list_channels (GimpImage *image)
  * This procedure returns the list of vectors contained in the
  * specified image.
  *
- * Returns: (element-type GimpVectors) (transfer container):
+ * Returns: (element-type LigmaVectors) (transfer container):
  *          The list of vectors contained in the image.
  *          The returned value must be freed with g_list_free(). Vectors
- *          elements belong to libgimp and must not be freed.
+ *          elements belong to libligma and must not be freed.
  *
  * Since: 3.0
  **/
 GList *
-gimp_image_list_vectors (GimpImage *image)
+ligma_image_list_vectors (LigmaImage *image)
 {
-  GimpVectors **vectors;
+  LigmaVectors **vectors;
   gint          num_vectors;
   GList        *list = NULL;
   gint          i;
 
-  vectors = gimp_image_get_vectors (image, &num_vectors);
+  vectors = ligma_image_get_vectors (image, &num_vectors);
 
   for (i = 0; i < num_vectors; i++)
     list = g_list_prepend (list, vectors[i]);
@@ -525,7 +525,7 @@ gimp_image_list_vectors (GimpImage *image)
 }
 
 /**
- * gimp_image_list_selected_drawables:
+ * ligma_image_list_selected_drawables:
  * @image: The image.
  *
  * Returns the list of drawables selected in the specified image.
@@ -537,22 +537,22 @@ gimp_image_list_vectors (GimpImage *image)
  * containing only a layer mask as single item), if a layer mask is in edit
  * mode.
  *
- * Returns: (element-type GimpItem) (transfer container):
+ * Returns: (element-type LigmaItem) (transfer container):
  *          The list of selected drawables in the image.
  *          The returned list must be freed with g_list_free(). Layer
- *          elements belong to libgimp and must not be freed.
+ *          elements belong to libligma and must not be freed.
  *
  * Since: 3.0
  **/
 GList *
-gimp_image_list_selected_drawables (GimpImage *image)
+ligma_image_list_selected_drawables (LigmaImage *image)
 {
-  GimpItem **drawables;
+  LigmaItem **drawables;
   gint       num_drawables;
   GList     *list = NULL;
   gint       i;
 
-  drawables = gimp_image_get_selected_drawables (image, &num_drawables);
+  drawables = ligma_image_get_selected_drawables (image, &num_drawables);
 
   for (i = 0; i < num_drawables; i++)
     list = g_list_prepend (list, drawables[i]);
@@ -563,7 +563,7 @@ gimp_image_list_selected_drawables (GimpImage *image)
 }
 
 /**
- * gimp_image_get_colormap:
+ * ligma_image_get_colormap:
  * @image:      The image.
  * @num_colors: (out): Returns the number of colors in the colormap array.
  *
@@ -576,13 +576,13 @@ gimp_image_list_selected_drawables (GimpImage *image)
  * Returns: (array): The image's colormap.
  */
 guchar *
-gimp_image_get_colormap (GimpImage *image,
+ligma_image_get_colormap (LigmaImage *image,
                          gint      *num_colors)
 {
   gint    num_bytes;
   guchar *cmap;
 
-  cmap = _gimp_image_get_colormap (image, &num_bytes);
+  cmap = _ligma_image_get_colormap (image, &num_bytes);
 
   if (num_colors)
     *num_colors = num_bytes / 3;
@@ -591,7 +591,7 @@ gimp_image_get_colormap (GimpImage *image,
 }
 
 /**
- * gimp_image_set_colormap:
+ * ligma_image_set_colormap:
  * @image:      The image.
  * @colormap: (array): The new colormap values.
  * @num_colors: Number of colors in the colormap array.
@@ -606,15 +606,15 @@ gimp_image_get_colormap (GimpImage *image,
  * Returns: TRUE on success.
  */
 gboolean
-gimp_image_set_colormap (GimpImage    *image,
+ligma_image_set_colormap (LigmaImage    *image,
                          const guchar *colormap,
                          gint          num_colors)
 {
-  return _gimp_image_set_colormap (image, num_colors * 3, colormap);
+  return _ligma_image_set_colormap (image, num_colors * 3, colormap);
 }
 
 /**
- * gimp_image_get_thumbnail_data:
+ * ligma_image_get_thumbnail_data:
  * @image:  The image.
  * @width:  (inout): The requested thumbnail width.
  * @height: (inout): The requested thumbnail height.
@@ -630,7 +630,7 @@ gimp_image_set_colormap (GimpImage    *image,
  * Returns: (array) (transfer full): the thumbnail data.
  **/
 guchar *
-gimp_image_get_thumbnail_data (GimpImage *image,
+ligma_image_get_thumbnail_data (LigmaImage *image,
                                gint      *width,
                                gint      *height,
                                gint      *bpp)
@@ -640,7 +640,7 @@ gimp_image_get_thumbnail_data (GimpImage *image,
   guchar *image_data;
   gint    data_size;
 
-  _gimp_image_thumbnail (image,
+  _ligma_image_thumbnail (image,
                          *width,
                          *height,
                          &ret_width,
@@ -656,8 +656,8 @@ gimp_image_get_thumbnail_data (GimpImage *image,
 }
 
 /**
- * gimp_image_get_thumbnail:
- * @image:  the #GimpImage
+ * ligma_image_get_thumbnail:
+ * @image:  the #LigmaImage
  * @width:  the requested thumbnail width  (<= 1024 pixels)
  * @height: the requested thumbnail height (<= 1024 pixels)
  * @alpha:  how to handle an alpha channel
@@ -670,10 +670,10 @@ gimp_image_get_thumbnail_data (GimpImage *image,
  * Since: 2.2
  **/
 GdkPixbuf *
-gimp_image_get_thumbnail (GimpImage              *image,
+ligma_image_get_thumbnail (LigmaImage              *image,
                           gint                    width,
                           gint                    height,
-                          GimpPixbufTransparency  alpha)
+                          LigmaPixbufTransparency  alpha)
 {
   gint    thumb_width  = width;
   gint    thumb_height = height;
@@ -683,12 +683,12 @@ gimp_image_get_thumbnail (GimpImage              *image,
   g_return_val_if_fail (width  > 0 && width  <= 1024, NULL);
   g_return_val_if_fail (height > 0 && height <= 1024, NULL);
 
-  data = gimp_image_get_thumbnail_data (image,
+  data = ligma_image_get_thumbnail_data (image,
                                         &thumb_width,
                                         &thumb_height,
                                         &thumb_bpp);
   if (data)
-    return _gimp_pixbuf_from_data (data,
+    return _ligma_pixbuf_from_data (data,
                                    thumb_width, thumb_height, thumb_bpp,
                                    alpha);
   else
@@ -696,7 +696,7 @@ gimp_image_get_thumbnail (GimpImage              *image,
 }
 
 /**
- * gimp_image_get_metadata:
+ * ligma_image_get_metadata:
  * @image: The image.
  *
  * Returns the image's metadata.
@@ -708,16 +708,16 @@ gimp_image_get_thumbnail (GimpImage              *image,
  *
  * Since: 2.10
  **/
-GimpMetadata *
-gimp_image_get_metadata (GimpImage *image)
+LigmaMetadata *
+ligma_image_get_metadata (LigmaImage *image)
 {
-  GimpMetadata *metadata = NULL;
+  LigmaMetadata *metadata = NULL;
   gchar        *metadata_string;
 
-  metadata_string = _gimp_image_get_metadata (image);
+  metadata_string = _ligma_image_get_metadata (image);
   if (metadata_string)
     {
-      metadata = gimp_metadata_deserialize (metadata_string);
+      metadata = ligma_metadata_deserialize (metadata_string);
       g_free (metadata_string);
     }
 
@@ -725,7 +725,7 @@ gimp_image_get_metadata (GimpImage *image)
 }
 
 /**
- * gimp_image_set_metadata:
+ * ligma_image_set_metadata:
  * @image:    The image.
  * @metadata: The exif/ptc/xmp metadata.
  *
@@ -739,16 +739,16 @@ gimp_image_get_metadata (GimpImage *image)
  * Since: 2.10
  **/
 gboolean
-gimp_image_set_metadata (GimpImage    *image,
-                         GimpMetadata *metadata)
+ligma_image_set_metadata (LigmaImage    *image,
+                         LigmaMetadata *metadata)
 {
   gchar    *metadata_string = NULL;
   gboolean  success;
 
   if (metadata)
-    metadata_string = gimp_metadata_serialize (metadata);
+    metadata_string = ligma_metadata_serialize (metadata);
 
-  success = _gimp_image_set_metadata (image, metadata_string);
+  success = _ligma_image_set_metadata (image, metadata_string);
 
   if (metadata_string)
     g_free (metadata_string);

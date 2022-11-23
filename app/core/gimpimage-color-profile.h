@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpimage-color-profile.h
- * Copyright (C) 2015-2018 Michael Natterer <mitch@gimp.org>
+ * ligmaimage-color-profile.h
+ * Copyright (C) 2015-2018 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,127 +18,127 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_COLOR_PROFILE_H__
-#define __GIMP_IMAGE_COLOR_PROFILE_H__
+#ifndef __LIGMA_IMAGE_COLOR_PROFILE_H__
+#define __LIGMA_IMAGE_COLOR_PROFILE_H__
 
 
-#define GIMP_ICC_PROFILE_PARASITE_NAME            "icc-profile"
-#define GIMP_SIMULATION_ICC_PROFILE_PARASITE_NAME "simulation-icc-profile"
+#define LIGMA_ICC_PROFILE_PARASITE_NAME            "icc-profile"
+#define LIGMA_SIMULATION_ICC_PROFILE_PARASITE_NAME "simulation-icc-profile"
 
 
-gboolean             gimp_image_get_use_srgb_profile   (GimpImage           *image,
+gboolean             ligma_image_get_use_srgb_profile   (LigmaImage           *image,
                                                         gboolean            *hidden_profile);
-void                 gimp_image_set_use_srgb_profile   (GimpImage           *image,
+void                 ligma_image_set_use_srgb_profile   (LigmaImage           *image,
                                                         gboolean             use_srgb);
 
-GimpColorProfile   * _gimp_image_get_hidden_profile    (GimpImage           *image);
-void                 _gimp_image_set_hidden_profile    (GimpImage           *image,
-                                                        GimpColorProfile    *profile,
+LigmaColorProfile   * _ligma_image_get_hidden_profile    (LigmaImage           *image);
+void                 _ligma_image_set_hidden_profile    (LigmaImage           *image,
+                                                        LigmaColorProfile    *profile,
                                                         gboolean             push_undo);
 
-gboolean             gimp_image_validate_icc_parasite  (GimpImage           *image,
-                                                        const GimpParasite  *icc_parasite,
+gboolean             ligma_image_validate_icc_parasite  (LigmaImage           *image,
+                                                        const LigmaParasite  *icc_parasite,
                                                         const gchar         *profile_type,
                                                         gboolean            *is_builtin,
                                                         GError             **error);
-const GimpParasite * gimp_image_get_icc_parasite       (GimpImage           *image);
-void                 gimp_image_set_icc_parasite       (GimpImage           *image,
-                                                        const GimpParasite  *icc_parasite,
+const LigmaParasite * ligma_image_get_icc_parasite       (LigmaImage           *image);
+void                 ligma_image_set_icc_parasite       (LigmaImage           *image,
+                                                        const LigmaParasite  *icc_parasite,
                                                         const gchar         *profile_type);
 
-gboolean             gimp_image_validate_icc_profile   (GimpImage           *image,
+gboolean             ligma_image_validate_icc_profile   (LigmaImage           *image,
                                                         const guint8        *data,
                                                         gsize                length,
                                                         const gchar         *profile_type,
                                                         gboolean            *is_builtin,
                                                         GError             **error);
-const guint8       * gimp_image_get_icc_profile        (GimpImage           *image,
+const guint8       * ligma_image_get_icc_profile        (LigmaImage           *image,
                                                         gsize               *length);
-gboolean             gimp_image_set_icc_profile        (GimpImage           *image,
+gboolean             ligma_image_set_icc_profile        (LigmaImage           *image,
                                                         const guint8        *data,
                                                         gsize                length,
                                                         const gchar         *profile_type,
                                                         GError             **error);
 
-gboolean             gimp_image_validate_color_profile (GimpImage           *image,
-                                                        GimpColorProfile    *profile,
+gboolean             ligma_image_validate_color_profile (LigmaImage           *image,
+                                                        LigmaColorProfile    *profile,
                                                         gboolean            *is_builtin,
                                                         GError             **error);
-GimpColorProfile   * gimp_image_get_color_profile      (GimpImage           *image);
-gboolean             gimp_image_set_color_profile      (GimpImage           *image,
-                                                        GimpColorProfile    *profile,
+LigmaColorProfile   * ligma_image_get_color_profile      (LigmaImage           *image);
+gboolean             ligma_image_set_color_profile      (LigmaImage           *image,
+                                                        LigmaColorProfile    *profile,
                                                         GError             **error);
 
-GimpColorProfile   * gimp_image_get_simulation_profile (GimpImage           *image);
-gboolean             gimp_image_set_simulation_profile (GimpImage           *image,
-                                                        GimpColorProfile    *profile);
+LigmaColorProfile   * ligma_image_get_simulation_profile (LigmaImage           *image);
+gboolean             ligma_image_set_simulation_profile (LigmaImage           *image,
+                                                        LigmaColorProfile    *profile);
 
-GimpColorRenderingIntent
-                     gimp_image_get_simulation_intent  (GimpImage           *image);
-void                 gimp_image_set_simulation_intent  (GimpImage                *image,
-                                                        GimpColorRenderingIntent intent);
+LigmaColorRenderingIntent
+                     ligma_image_get_simulation_intent  (LigmaImage           *image);
+void                 ligma_image_set_simulation_intent  (LigmaImage                *image,
+                                                        LigmaColorRenderingIntent intent);
 
-gboolean             gimp_image_get_simulation_bpc     (GimpImage           *image);
-void                 gimp_image_set_simulation_bpc     (GimpImage           *image,
+gboolean             ligma_image_get_simulation_bpc     (LigmaImage           *image);
+void                 ligma_image_set_simulation_bpc     (LigmaImage           *image,
                                                         gboolean             bpc);
 
-gboolean             gimp_image_validate_color_profile_by_format
+gboolean             ligma_image_validate_color_profile_by_format
                                                        (const Babl          *format,
-                                                        GimpColorProfile    *profile,
+                                                        LigmaColorProfile    *profile,
                                                         gboolean            *is_builtin,
                                                         GError             **error);
 
-GimpColorProfile   * gimp_image_get_builtin_color_profile
-                                                       (GimpImage           *image);
+LigmaColorProfile   * ligma_image_get_builtin_color_profile
+                                                       (LigmaImage           *image);
 
-gboolean             gimp_image_assign_color_profile   (GimpImage           *image,
-                                                        GimpColorProfile    *dest_profile,
-                                                        GimpProgress        *progress,
+gboolean             ligma_image_assign_color_profile   (LigmaImage           *image,
+                                                        LigmaColorProfile    *dest_profile,
+                                                        LigmaProgress        *progress,
                                                         GError             **error);
 
-gboolean             gimp_image_convert_color_profile  (GimpImage           *image,
-                                                        GimpColorProfile    *dest_profile,
-                                                        GimpColorRenderingIntent  intent,
+gboolean             ligma_image_convert_color_profile  (LigmaImage           *image,
+                                                        LigmaColorProfile    *dest_profile,
+                                                        LigmaColorRenderingIntent  intent,
                                                         gboolean             bpc,
-                                                        GimpProgress        *progress,
+                                                        LigmaProgress        *progress,
                                                         GError             **error);
 
-void                 gimp_image_import_color_profile   (GimpImage           *image,
-                                                        GimpContext         *context,
-                                                        GimpProgress        *progress,
+void                 ligma_image_import_color_profile   (LigmaImage           *image,
+                                                        LigmaContext         *context,
+                                                        LigmaProgress        *progress,
                                                         gboolean             interactive);
 
-GimpColorTransform * gimp_image_get_color_transform_to_srgb_u8
-                                                       (GimpImage           *image);
-GimpColorTransform * gimp_image_get_color_transform_from_srgb_u8
-                                                       (GimpImage           *image);
+LigmaColorTransform * ligma_image_get_color_transform_to_srgb_u8
+                                                       (LigmaImage           *image);
+LigmaColorTransform * ligma_image_get_color_transform_from_srgb_u8
+                                                       (LigmaImage           *image);
 
-GimpColorTransform * gimp_image_get_color_transform_to_srgb_double
-                                                       (GimpImage           *image);
-GimpColorTransform * gimp_image_get_color_transform_from_srgb_double
-                                                       (GimpImage           *image);
+LigmaColorTransform * ligma_image_get_color_transform_to_srgb_double
+                                                       (LigmaImage           *image);
+LigmaColorTransform * ligma_image_get_color_transform_from_srgb_double
+                                                       (LigmaImage           *image);
 
-void                 gimp_image_color_profile_pixel_to_srgb
-                                                       (GimpImage           *image,
+void                 ligma_image_color_profile_pixel_to_srgb
+                                                       (LigmaImage           *image,
                                                         const Babl          *pixel_format,
                                                         gpointer             pixel,
-                                                        GimpRGB             *color);
-void                 gimp_image_color_profile_srgb_to_pixel
-                                                       (GimpImage           *image,
-                                                        const GimpRGB       *color,
+                                                        LigmaRGB             *color);
+void                 ligma_image_color_profile_srgb_to_pixel
+                                                       (LigmaImage           *image,
+                                                        const LigmaRGB       *color,
                                                         const Babl          *pixel_format,
                                                         gpointer             pixel);
 
 
-/*  internal API, to be called only from gimpimage.c  */
+/*  internal API, to be called only from ligmaimage.c  */
 
-void                 _gimp_image_free_color_profile    (GimpImage           *image);
-void                 _gimp_image_free_color_transforms (GimpImage           *image);
-void                 _gimp_image_update_color_profile  (GimpImage           *image,
-                                                        const GimpParasite  *icc_parasite);
-void                 _gimp_image_update_simulation_profile
-                                                       (GimpImage           *image,
-                                                        const GimpParasite  *icc_parasite);
+void                 _ligma_image_free_color_profile    (LigmaImage           *image);
+void                 _ligma_image_free_color_transforms (LigmaImage           *image);
+void                 _ligma_image_update_color_profile  (LigmaImage           *image,
+                                                        const LigmaParasite  *icc_parasite);
+void                 _ligma_image_update_simulation_profile
+                                                       (LigmaImage           *image,
+                                                        const LigmaParasite  *icc_parasite);
 
 
-#endif /* __GIMP_IMAGE_COLOR_PROFILE_H__ */
+#endif /* __LIGMA_IMAGE_COLOR_PROFILE_H__ */

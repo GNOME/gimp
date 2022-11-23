@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * brush_generated module Copyright 1998 Jay Cox <jaycox@earthlink.net>
@@ -17,28 +17,28 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_BRUSH_GENERATED_H__
-#define __GIMP_BRUSH_GENERATED_H__
+#ifndef __LIGMA_BRUSH_GENERATED_H__
+#define __LIGMA_BRUSH_GENERATED_H__
 
 
-#include "gimpbrush.h"
+#include "ligmabrush.h"
 
 
-#define GIMP_TYPE_BRUSH_GENERATED            (gimp_brush_generated_get_type ())
-#define GIMP_BRUSH_GENERATED(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_BRUSH_GENERATED, GimpBrushGenerated))
-#define GIMP_BRUSH_GENERATED_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_BRUSH_GENERATED, GimpBrushGeneratedClass))
-#define GIMP_IS_BRUSH_GENERATED(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_BRUSH_GENERATED))
-#define GIMP_IS_BRUSH_GENERATED_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_BRUSH_GENERATED))
-#define GIMP_BRUSH_GENERATED_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_BRUSH_GENERATED, GimpBrushGeneratedClass))
+#define LIGMA_TYPE_BRUSH_GENERATED            (ligma_brush_generated_get_type ())
+#define LIGMA_BRUSH_GENERATED(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_BRUSH_GENERATED, LigmaBrushGenerated))
+#define LIGMA_BRUSH_GENERATED_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_BRUSH_GENERATED, LigmaBrushGeneratedClass))
+#define LIGMA_IS_BRUSH_GENERATED(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_BRUSH_GENERATED))
+#define LIGMA_IS_BRUSH_GENERATED_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_BRUSH_GENERATED))
+#define LIGMA_BRUSH_GENERATED_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_BRUSH_GENERATED, LigmaBrushGeneratedClass))
 
 
-typedef struct _GimpBrushGeneratedClass GimpBrushGeneratedClass;
+typedef struct _LigmaBrushGeneratedClass LigmaBrushGeneratedClass;
 
-struct _GimpBrushGenerated
+struct _LigmaBrushGenerated
 {
-  GimpBrush               parent_instance;
+  LigmaBrush               parent_instance;
 
-  GimpBrushGeneratedShape shape;
+  LigmaBrushGeneratedShape shape;
   gfloat                  radius;
   gint                    spikes;       /* 2 - 20     */
   gfloat                  hardness;     /* 0.0 - 1.0  */
@@ -46,43 +46,43 @@ struct _GimpBrushGenerated
   gfloat                  angle;        /* in degrees */
 };
 
-struct _GimpBrushGeneratedClass
+struct _LigmaBrushGeneratedClass
 {
-  GimpBrushClass  parent_class;
+  LigmaBrushClass  parent_class;
 };
 
 
-GType       gimp_brush_generated_get_type     (void) G_GNUC_CONST;
+GType       ligma_brush_generated_get_type     (void) G_GNUC_CONST;
 
-GimpData  * gimp_brush_generated_new          (const gchar             *name,
-                                               GimpBrushGeneratedShape  shape,
+LigmaData  * ligma_brush_generated_new          (const gchar             *name,
+                                               LigmaBrushGeneratedShape  shape,
                                                gfloat                   radius,
                                                gint                     spikes,
                                                gfloat                   hardness,
                                                gfloat                   aspect_ratio,
                                                gfloat                   angle);
 
-GimpBrushGeneratedShape
-        gimp_brush_generated_set_shape        (GimpBrushGenerated      *brush,
-                                               GimpBrushGeneratedShape  shape);
-gfloat  gimp_brush_generated_set_radius       (GimpBrushGenerated      *brush,
+LigmaBrushGeneratedShape
+        ligma_brush_generated_set_shape        (LigmaBrushGenerated      *brush,
+                                               LigmaBrushGeneratedShape  shape);
+gfloat  ligma_brush_generated_set_radius       (LigmaBrushGenerated      *brush,
                                                gfloat                   radius);
-gint    gimp_brush_generated_set_spikes       (GimpBrushGenerated      *brush,
+gint    ligma_brush_generated_set_spikes       (LigmaBrushGenerated      *brush,
                                                gint                     spikes);
-gfloat  gimp_brush_generated_set_hardness     (GimpBrushGenerated      *brush,
+gfloat  ligma_brush_generated_set_hardness     (LigmaBrushGenerated      *brush,
                                                gfloat                   hardness);
-gfloat  gimp_brush_generated_set_aspect_ratio (GimpBrushGenerated      *brush,
+gfloat  ligma_brush_generated_set_aspect_ratio (LigmaBrushGenerated      *brush,
                                                gfloat                   ratio);
-gfloat  gimp_brush_generated_set_angle        (GimpBrushGenerated      *brush,
+gfloat  ligma_brush_generated_set_angle        (LigmaBrushGenerated      *brush,
                                                gfloat                   angle);
 
-GimpBrushGeneratedShape
-        gimp_brush_generated_get_shape        (GimpBrushGenerated      *brush);
-gfloat  gimp_brush_generated_get_radius       (GimpBrushGenerated      *brush);
-gint    gimp_brush_generated_get_spikes       (GimpBrushGenerated      *brush);
-gfloat  gimp_brush_generated_get_hardness     (GimpBrushGenerated      *brush);
-gfloat  gimp_brush_generated_get_aspect_ratio (GimpBrushGenerated      *brush);
-gfloat  gimp_brush_generated_get_angle        (GimpBrushGenerated      *brush);
+LigmaBrushGeneratedShape
+        ligma_brush_generated_get_shape        (LigmaBrushGenerated      *brush);
+gfloat  ligma_brush_generated_get_radius       (LigmaBrushGenerated      *brush);
+gint    ligma_brush_generated_get_spikes       (LigmaBrushGenerated      *brush);
+gfloat  ligma_brush_generated_get_hardness     (LigmaBrushGenerated      *brush);
+gfloat  ligma_brush_generated_get_aspect_ratio (LigmaBrushGenerated      *brush);
+gfloat  ligma_brush_generated_get_angle        (LigmaBrushGenerated      *brush);
 
 
-#endif  /*  __GIMP_BRUSH_GENERATED_H__  */
+#endif  /*  __LIGMA_BRUSH_GENERATED_H__  */

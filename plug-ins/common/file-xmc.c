@@ -1,5 +1,5 @@
 /*
- *   X11 Mouse Cursor (XMC) plug-in for GIMP
+ *   X11 Mouse Cursor (XMC) plug-in for LIGMA
  *
  *   Copyright 2008-2009 Takeshi Matsuyama <tksmashiw@gmail.com>
  *
@@ -23,8 +23,8 @@
  */
 
 /*
- * Todo: if drawable->bpp != 4 in save_image for GIMP-2.8?
- * Todo: support for "gimp-metadata" parasite.
+ * Todo: if drawable->bpp != 4 in save_image for LIGMA-2.8?
+ * Todo: support for "ligma-metadata" parasite.
  *       "xmc-copyright" and "xmc-license" may be deprecated in future?
  */
 
@@ -33,7 +33,7 @@
  * "hot-spot"       common with file-xbm plug-in
  * "xmc-copyright"  original, store contents of type1 comment chunk of Xcursor
  * "xmc-license"    original, store contents of type2 comment chunk of Xcursor
- * "gimp-comment"   common, store contents of type3 comment chunk of Xcursor
+ * "ligma-comment"   common, store contents of type3 comment chunk of Xcursor
  */
 
 /* *** Caution: Size vs Dimension ***
@@ -55,13 +55,13 @@
 #include <glib/gstdio.h>
 #include <glib/gprintf.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
 #include <X11/Xlib.h>
 #include <X11/Xcursor/Xcursor.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 /* For debug */
 /* #define XMC_DEBUG */
@@ -80,7 +80,7 @@
 #define SAVE_PROC              "file-xmc-save"
 
 #define PLUG_IN_BINARY         "file-xmc"
-#define PLUG_IN_ROLE           "gimp-file-xmc"
+#define PLUG_IN_ROLE           "ligma-file-xmc"
 
 /* We use "xmc" as the file extension of X cursor for convenience */
 #define XCURSOR_EXTENSION      "xmc"
@@ -139,12 +139,12 @@ typedef struct _XmcClass XmcClass;
 
 struct _Xmc
 {
-  GimpPlugIn      parent_instance;
+  LigmaPlugIn      parent_instance;
 };
 
 struct _XmcClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -153,33 +153,33 @@ struct _XmcClass
 
 GType                   xmc_get_type         (void) G_GNUC_CONST;
 
-static GList          * xmc_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * xmc_create_procedure (GimpPlugIn           *plug_in,
+static GList          * xmc_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * xmc_create_procedure (LigmaPlugIn           *plug_in,
                                               const gchar          *name);
 
-static GimpValueArray * xmc_load             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
+static LigmaValueArray * xmc_load             (LigmaProcedure        *procedure,
+                                              LigmaRunMode           run_mode,
                                               GFile                *file,
-                                              const GimpValueArray *args,
+                                              const LigmaValueArray *args,
                                               gpointer              run_data);
-static GimpValueArray * xmc_load_thumb       (GimpProcedure        *procedure,
+static LigmaValueArray * xmc_load_thumb       (LigmaProcedure        *procedure,
                                               GFile                *file,
                                               gint                  size,
-                                              const GimpValueArray *args,
+                                              const LigmaValueArray *args,
                                               gpointer              run_data);
-static GimpValueArray * xmc_save             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
-                                              GimpImage            *image,
+static LigmaValueArray * xmc_save             (LigmaProcedure        *procedure,
+                                              LigmaRunMode           run_mode,
+                                              LigmaImage            *image,
                                               gint                  n_drawables,
-                                              GimpDrawable        **drawables,
+                                              LigmaDrawable        **drawables,
                                               GFile                *file,
-                                              const GimpValueArray *args,
+                                              const LigmaValueArray *args,
                                               gpointer              run_data);
 
-static GimpImage      * load_image           (GFile            *file,
+static LigmaImage      * load_image           (GFile            *file,
                                               GError          **error);
 
-static GimpImage      * load_thumbnail       (GFile            *file,
+static LigmaImage      * load_thumbnail       (GFile            *file,
                                               gint32            thumb_size,
                                               gint32           *width,
                                               gint32           *height,
@@ -190,19 +190,19 @@ static guint32          read32               (FILE             *f,
                                               GError          **error);
 
 static gboolean         save_image           (GFile            *file,
-                                              GimpImage        *image,
+                                              LigmaImage        *image,
                                               gint              n_drawables,
-                                              GimpDrawable    **drawables,
-                                              GimpImage        *orig_image,
+                                              LigmaDrawable    **drawables,
+                                              LigmaImage        *orig_image,
                                               GObject          *config,
                                               GError          **error);
 
-static gboolean         save_dialog          (GimpProcedure    *procedure,
+static gboolean         save_dialog          (LigmaProcedure    *procedure,
                                               GObject          *config,
-                                              GimpImage        *image,
+                                              LigmaImage        *image,
                                               GeglRectangle    *hotspot_range);
 
-static void             load_default_hotspot (GimpImage        *image,
+static void             load_default_hotspot (LigmaImage        *image,
                                               GeglRectangle    *hotspot_range,
                                               GObject          *config);
 
@@ -212,11 +212,11 @@ static inline guint32   premultiply_alpha    (guint32           pixel);
 
 static XcursorComments *set_cursor_comments  (GObject          *config);
 
-static gboolean         set_hotspot_to_parasite (GimpImage     *image,
+static gboolean         set_hotspot_to_parasite (LigmaImage     *image,
                                                  gint           hot_spot_x,
                                                  gint           hot_spot_y);
 
-static gboolean         get_hotspot_from_parasite (GimpImage  *image,
+static gboolean         get_hotspot_from_parasite (LigmaImage  *image,
                                                    gint       *hot_spot_x,
                                                    gint       *hot_spot_y);
 
@@ -237,7 +237,7 @@ static void             get_cropped_region   (GeglRectangle    *retrun_rgn,
 
 static inline gboolean  pix_is_opaque        (guint32           pix);
 
-static GeglRectangle  * get_intersection_of_frames (GimpImage  *image);
+static GeglRectangle  * get_intersection_of_frames (LigmaImage  *image);
 
 static gboolean         pix_in_region        (gint32            x,
                                               gint32            y,
@@ -251,16 +251,16 @@ static void             find_hotspots_and_dimensions
                                               gint32           *height);
 
 
-G_DEFINE_TYPE (Xmc, xmc, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Xmc, xmc, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (XMC_TYPE)
+LIGMA_MAIN (XMC_TYPE)
 DEFINE_STD_SET_I18N
 
 
 static void
 xmc_class_init (XmcClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = xmc_query_procedures;
   plug_in_class->create_procedure = xmc_create_procedure;
@@ -273,7 +273,7 @@ xmc_init (Xmc *xmc)
 }
 
 static GList *
-xmc_query_procedures (GimpPlugIn *plug_in)
+xmc_query_procedures (LigmaPlugIn *plug_in)
 {
   GList *list = NULL;
 
@@ -284,168 +284,168 @@ xmc_query_procedures (GimpPlugIn *plug_in)
   return list;
 }
 
-static GimpProcedure *
-xmc_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+xmc_create_procedure (LigmaPlugIn  *plug_in,
                       const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, LOAD_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_load_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            xmc_load, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure, _("X11 Mouse Cursor"));
+      ligma_procedure_set_menu_label (procedure, _("X11 Mouse Cursor"));
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Loads files of X11 Mouse Cursor "
                                         "file format",
                                         "This plug-in loads X11 Mouse Cursor "
                                         "(XMC) files.",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Takeshi Matsuyama <tksmashiw@gmail.com>",
                                       "Takeshi Matsuyama",
                                       "26 May 2009");
 
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                           XCURSOR_MIME_TYPE);
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           XCURSOR_EXTENSION);
-      gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_magics (LIGMA_FILE_PROCEDURE (procedure),
                                       "0,string,Xcur");
 
-      gimp_load_procedure_set_thumbnail_loader (GIMP_LOAD_PROCEDURE (procedure),
+      ligma_load_procedure_set_thumbnail_loader (LIGMA_LOAD_PROCEDURE (procedure),
                                                 LOAD_THUMB_PROC);
     }
   else if (! strcmp (name, LOAD_THUMB_PROC))
     {
-      procedure = gimp_thumbnail_procedure_new (plug_in, name,
-                                                GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_thumbnail_procedure_new (plug_in, name,
+                                                LIGMA_PDB_PROC_TYPE_PLUGIN,
                                                 xmc_load_thumb, NULL, NULL);
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Loads only first frame of X11 Mouse "
                                         "Cursor's animation sequence which "
                                         "nominal size is the closest of "
                                         "thumb-size to be used as a thumbnail",
                                         "",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Takeshi Matsuyama <tksmashiw@gmail.com>",
                                       "Takeshi Matsuyama",
                                       "26 May 2009");
     }
   else if (! strcmp (name, SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_save_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            xmc_save, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "RGBA");
+      ligma_procedure_set_image_types (procedure, "RGBA");
 
-      gimp_procedure_set_menu_label (procedure, _("X11 Mouse Cursor"));
+      ligma_procedure_set_menu_label (procedure, _("X11 Mouse Cursor"));
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Exports files of X11 cursor file",
                                         "This plug-in exports X11 Mouse Cursor "
                                         "(XMC) files",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Takeshi Matsuyama <tksmashiw@gmail.com>",
                                       "Takeshi Matsuyama",
                                       "26 May 2009");
 
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                           XCURSOR_MIME_TYPE);
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           XCURSOR_EXTENSION);
 
-      GIMP_PROC_ARG_INT (procedure, "hot-spot-x",
+      LIGMA_PROC_ARG_INT (procedure, "hot-spot-x",
                          "Hot spot X",
                          "X-coordinate of hot spot "
                          "(use -1, -1 to keep original hot spot",
-                         -1, GIMP_MAX_IMAGE_SIZE, -1,
+                         -1, LIGMA_MAX_IMAGE_SIZE, -1,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "hot-spot-y",
+      LIGMA_PROC_ARG_INT (procedure, "hot-spot-y",
                          "Hot spot Y",
                          "Y-coordinate of hot spot "
                          "(use -1, -1 to keep original hot spot",
-                         -1, GIMP_MAX_IMAGE_SIZE, -1,
+                         -1, LIGMA_MAX_IMAGE_SIZE, -1,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "crop",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "crop",
                              "Crop",
                              "Auto-crop or not",
                              FALSE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "size",
+      LIGMA_PROC_ARG_INT (procedure, "size",
                          "Size",
                          "Default nominal size",
                          1, G_MAXINT, 32,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "size-replace",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "size-replace",
                              "Size replace",
                              "Replace existent size or not",
                              FALSE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "delay",
+      LIGMA_PROC_ARG_INT (procedure, "delay",
                          "Delay",
                          "Default delay",
                          CURSOR_MINIMUM_DELAY, G_MAXINT, CURSOR_DEFAULT_DELAY,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "delay-replace",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "delay-replace",
                              "Delay replace",
                              "Replace existent delay or not",
                              FALSE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_STRING (procedure, "xmc-copyright",
+      LIGMA_PROC_ARG_STRING (procedure, "xmc-copyright",
                             "Copyright",
                             "Copyright information",
                             NULL,
                             G_PARAM_READWRITE);
 
-      gimp_procedure_set_argument_sync (procedure, "xmc-copyright",
-                                        GIMP_ARGUMENT_SYNC_PARASITE);
+      ligma_procedure_set_argument_sync (procedure, "xmc-copyright",
+                                        LIGMA_ARGUMENT_SYNC_PARASITE);
 
-      GIMP_PROC_ARG_STRING (procedure, "xmc-license",
+      LIGMA_PROC_ARG_STRING (procedure, "xmc-license",
                             "License",
                             "License information",
                             NULL,
                             G_PARAM_READWRITE);
 
-      gimp_procedure_set_argument_sync (procedure, "xmc-license",
-                                        GIMP_ARGUMENT_SYNC_PARASITE);
+      ligma_procedure_set_argument_sync (procedure, "xmc-license",
+                                        LIGMA_ARGUMENT_SYNC_PARASITE);
 
-      GIMP_PROC_ARG_STRING (procedure, "gimp-comment",
+      LIGMA_PROC_ARG_STRING (procedure, "ligma-comment",
                             "Other",
-                            "Other comment (taken from 'gimp-comment' parasite)",
-                            gimp_get_default_comment (),
+                            "Other comment (taken from 'ligma-comment' parasite)",
+                            ligma_get_default_comment (),
                             G_PARAM_READWRITE);
 
-      gimp_procedure_set_argument_sync (procedure, "gimp-comment",
-                                        GIMP_ARGUMENT_SYNC_PARASITE);
+      ligma_procedure_set_argument_sync (procedure, "ligma-comment",
+                                        LIGMA_ARGUMENT_SYNC_PARASITE);
     }
 
   return procedure;
 }
 
-static GimpValueArray *
-xmc_load (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
+static LigmaValueArray *
+xmc_load (LigmaProcedure        *procedure,
+          LigmaRunMode           run_mode,
           GFile                *file,
-          const GimpValueArray *args,
+          const LigmaValueArray *args,
           gpointer              run_data)
 {
-  GimpValueArray *return_vals;
-  GimpImage      *image;
+  LigmaValueArray *return_vals;
+  LigmaImage      *image;
   GError         *error = NULL;
 
   gegl_init (NULL, NULL);
@@ -453,31 +453,31 @@ xmc_load (GimpProcedure        *procedure,
   image = load_image (file, &error);
 
   if (! image)
-    return gimp_procedure_new_return_values (procedure,
-                                             GIMP_PDB_EXECUTION_ERROR,
+    return ligma_procedure_new_return_values (procedure,
+                                             LIGMA_PDB_EXECUTION_ERROR,
                                              error);
 
-  return_vals = gimp_procedure_new_return_values (procedure,
-                                                  GIMP_PDB_SUCCESS,
+  return_vals = ligma_procedure_new_return_values (procedure,
+                                                  LIGMA_PDB_SUCCESS,
                                                   NULL);
 
-  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
+  LIGMA_VALUES_SET_IMAGE (return_vals, 1, image);
 
   return return_vals;
 }
 
-static GimpValueArray *
-xmc_load_thumb (GimpProcedure        *procedure,
+static LigmaValueArray *
+xmc_load_thumb (LigmaProcedure        *procedure,
                 GFile                *file,
                 gint                  size,
-                const GimpValueArray *args,
+                const LigmaValueArray *args,
                 gpointer              run_data)
 {
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gint            width;
   gint            height;
   gint            num_layers;
-  GimpImage      *image;
+  LigmaImage      *image;
   GError         *error = NULL;
 
   gegl_init (NULL, NULL);
@@ -489,37 +489,37 @@ xmc_load_thumb (GimpProcedure        *procedure,
                           &error);
 
   if (! image)
-    return gimp_procedure_new_return_values (procedure,
-                                             GIMP_PDB_EXECUTION_ERROR,
+    return ligma_procedure_new_return_values (procedure,
+                                             LIGMA_PDB_EXECUTION_ERROR,
                                              error);
 
-  return_vals = gimp_procedure_new_return_values (procedure,
-                                                  GIMP_PDB_SUCCESS,
+  return_vals = ligma_procedure_new_return_values (procedure,
+                                                  LIGMA_PDB_SUCCESS,
                                                   NULL);
 
-  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
-  GIMP_VALUES_SET_INT   (return_vals, 2, width);
-  GIMP_VALUES_SET_INT   (return_vals, 3, height);
-  GIMP_VALUES_SET_ENUM  (return_vals, 4, GIMP_RGBA_IMAGE);
-  GIMP_VALUES_SET_INT   (return_vals, 5, num_layers);
+  LIGMA_VALUES_SET_IMAGE (return_vals, 1, image);
+  LIGMA_VALUES_SET_INT   (return_vals, 2, width);
+  LIGMA_VALUES_SET_INT   (return_vals, 3, height);
+  LIGMA_VALUES_SET_ENUM  (return_vals, 4, LIGMA_RGBA_IMAGE);
+  LIGMA_VALUES_SET_INT   (return_vals, 5, num_layers);
 
   return return_vals;
 }
 
-static GimpValueArray *
-xmc_save (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GimpImage            *image,
+static LigmaValueArray *
+xmc_save (LigmaProcedure        *procedure,
+          LigmaRunMode           run_mode,
+          LigmaImage            *image,
           gint                  n_drawables,
-          GimpDrawable        **drawables,
+          LigmaDrawable        **drawables,
           GFile                *file,
-          const GimpValueArray *args,
+          const LigmaValueArray *args,
           gpointer              run_data)
 {
-  GimpProcedureConfig *config;
-  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
-  GimpExportReturn     export = GIMP_EXPORT_CANCEL;
-  GimpImage           *orig_image;
+  LigmaProcedureConfig *config;
+  LigmaPDBStatusType    status = LIGMA_PDB_SUCCESS;
+  LigmaExportReturn     export = LIGMA_EXPORT_CANCEL;
+  LigmaImage           *orig_image;
   GeglRectangle       *hotspot_range;
   gint                 hot_spot_x;
   gint                 hot_spot_y;
@@ -538,29 +538,29 @@ xmc_save (GimpProcedure        *procedure,
                      "You must arrange layers so that all of them have "
                      "an intersection."));
 
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_EXECUTION_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_EXECUTION_ERROR,
                                                error);
     }
 
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_export (config, image, run_mode, args, NULL);
+  config = ligma_procedure_create_config (procedure);
+  ligma_procedure_config_begin_export (config, image, run_mode, args, NULL);
 
   switch (run_mode)
     {
-    case GIMP_RUN_INTERACTIVE:
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_ui_init (PLUG_IN_BINARY);
+    case LIGMA_RUN_INTERACTIVE:
+    case LIGMA_RUN_WITH_LAST_VALS:
+      ligma_ui_init (PLUG_IN_BINARY);
 
-      export = gimp_export_image (&image, &n_drawables, &drawables, "XMC",
-                                  GIMP_EXPORT_CAN_HANDLE_RGB    |
-                                  GIMP_EXPORT_CAN_HANDLE_ALPHA  |
-                                  GIMP_EXPORT_CAN_HANDLE_LAYERS |
-                                  GIMP_EXPORT_NEEDS_ALPHA);
+      export = ligma_export_image (&image, &n_drawables, &drawables, "XMC",
+                                  LIGMA_EXPORT_CAN_HANDLE_RGB    |
+                                  LIGMA_EXPORT_CAN_HANDLE_ALPHA  |
+                                  LIGMA_EXPORT_CAN_HANDLE_LAYERS |
+                                  LIGMA_EXPORT_NEEDS_ALPHA);
 
-      if (export == GIMP_EXPORT_CANCEL)
-        return gimp_procedure_new_return_values (procedure,
-                                                 GIMP_PDB_CANCEL,
+      if (export == LIGMA_EXPORT_CANCEL)
+        return ligma_procedure_new_return_values (procedure,
+                                                 LIGMA_PDB_CANCEL,
                                                  NULL);
       break;
 
@@ -570,16 +570,16 @@ xmc_save (GimpProcedure        *procedure,
 
   switch (run_mode)
     {
-    case GIMP_RUN_INTERACTIVE:
+    case LIGMA_RUN_INTERACTIVE:
       load_default_hotspot (image, hotspot_range, G_OBJECT (config));
 
       if (! save_dialog (procedure, G_OBJECT (config), image, hotspot_range))
-        return gimp_procedure_new_return_values (procedure,
-                                                 GIMP_PDB_CANCEL,
+        return ligma_procedure_new_return_values (procedure,
+                                                 LIGMA_PDB_CANCEL,
                                                  NULL);
       break;
 
-    case GIMP_RUN_NONINTERACTIVE:
+    case LIGMA_RUN_NONINTERACTIVE:
       g_object_get (config,
                     "hot-spot-x", &hot_spot_x,
                     "hot-spot-y", &hot_spot_y,
@@ -594,7 +594,7 @@ xmc_save (GimpProcedure        *procedure,
         }
       break;
 
-    case GIMP_RUN_WITH_LAST_VALS:
+    case LIGMA_RUN_WITH_LAST_VALS:
       load_default_hotspot (image, hotspot_range, G_OBJECT (config));
       break;
 
@@ -605,34 +605,34 @@ xmc_save (GimpProcedure        *procedure,
   if (! save_image (file, image, n_drawables, drawables,
                     orig_image, G_OBJECT (config), &error))
     {
-      status = GIMP_PDB_EXECUTION_ERROR;
+      status = LIGMA_PDB_EXECUTION_ERROR;
     }
 
-  if (export == GIMP_EXPORT_EXPORT)
+  if (export == LIGMA_EXPORT_EXPORT)
     {
-      gimp_image_delete (image);
+      ligma_image_delete (image);
       g_free (drawables);
     }
 
   g_free (hotspot_range);
 
-  gimp_procedure_config_end_export (config, image, file, status);
+  ligma_procedure_config_end_export (config, image, file, status);
   g_object_unref (config);
 
-  return gimp_procedure_new_return_values (procedure, status, error);
+  return ligma_procedure_new_return_values (procedure, status, error);
 }
 
 /*
  * 'load_image()' - Load a X cursor image into a new image window.
  */
 
-static GimpImage *
+static LigmaImage *
 load_image (GFile   *file,
             GError **error)
 {
   FILE            *fp;
-  GimpImage       *image;
-  GimpLayer       *layer;
+  LigmaImage       *image;
+  LigmaLayer       *layer;
   GeglBuffer      *buffer;
   XcursorComments *commentsp; /* pointer to comments */
   XcursorImages   *imagesp;   /* pointer to images*/
@@ -645,8 +645,8 @@ load_image (GFile   *file,
   gint             hot_spot_y;
   gint             i, j;
 
-  gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_file_get_utf8_name (file));
+  ligma_progress_init_printf (_("Opening '%s'"),
+                             ligma_file_get_utf8_name (file));
 
   /* Open the file and check it is a valid X cursor */
 
@@ -656,14 +656,14 @@ load_image (GFile   *file,
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),
-                   gimp_file_get_utf8_name (file), g_strerror (errno));
+                   ligma_file_get_utf8_name (file), g_strerror (errno));
       return NULL;
     }
 
   if (! XcursorFileLoad (fp, &commentsp, &imagesp))
     {
       g_set_error (error, 0, 0, _("'%s' is not a valid X cursor."),
-                   gimp_file_get_utf8_name (file));
+                   ligma_file_get_utf8_name (file));
       fclose (fp);
       return NULL;
     }
@@ -676,7 +676,7 @@ load_image (GFile   *file,
         {
           g_set_error (error, 0, 0,
                        _("Frame %d of '%s' is too wide for an X cursor."),
-                       i + 1, gimp_file_get_utf8_name (file));
+                       i + 1, ligma_file_get_utf8_name (file));
           fclose (fp);
           return NULL;
         }
@@ -684,7 +684,7 @@ load_image (GFile   *file,
         {
           g_set_error (error, 0, 0,
                        _("Frame %d of '%s' is too high for an X cursor."),
-                       i + 1, gimp_file_get_utf8_name (file));
+                       i + 1, ligma_file_get_utf8_name (file));
           fclose (fp);
           return NULL;
         }
@@ -697,9 +697,9 @@ load_image (GFile   *file,
   DM_XMC ("xhot=%i,\tyhot=%i,\timg_width=%i,\timg_height=%i\n",
           hot_spot_x, hot_spot_y, img_width, img_height);
 
-  image = gimp_image_new (img_width, img_height, GIMP_RGB);
+  image = ligma_image_new (img_width, img_height, LIGMA_RGB);
 
-  gimp_image_set_file (image, file);
+  ligma_image_set_file (image, file);
 
   if (! set_hotspot_to_parasite (image, hot_spot_x, hot_spot_y))
     {
@@ -734,14 +734,14 @@ load_image (GFile   *file,
           return NULL;
         }
 
-      layer = gimp_layer_new (image, framename, width, height,
-                              GIMP_RGBA_IMAGE,
+      layer = ligma_layer_new (image, framename, width, height,
+                              LIGMA_RGBA_IMAGE,
                               100,
-                              gimp_image_get_default_new_layer_mode (image));
-      gimp_image_insert_layer (image, layer, NULL, 0);
+                              ligma_image_get_default_new_layer_mode (image));
+      ligma_image_insert_layer (image, layer, NULL, 0);
 
       /* Adjust layer position to let hotspot sit on the same point. */
-      gimp_item_transform_translate (GIMP_ITEM (layer),
+      ligma_item_transform_translate (LIGMA_ITEM (layer),
                                      hot_spot_x - imagesp->images[i]->xhot,
                                      hot_spot_y - imagesp->images[i]->yhot);
 
@@ -749,7 +749,7 @@ load_image (GFile   *file,
 
       /* Get the buffer for our load... */
 
-      buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
+      buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (layer));
 
       /* set color to each pixel */
       for (j = 0; j < width * height; j++)
@@ -761,20 +761,20 @@ load_image (GFile   *file,
       gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0, width, height), 0,
                        NULL, tmppixel, GEGL_AUTO_ROWSTRIDE);
 
-      gimp_progress_update ((i + 1) / imagesp->nimage);
+      ligma_progress_update ((i + 1) / imagesp->nimage);
 
       g_object_unref (buffer);
     }
 
   g_free (tmppixel);
 
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 
   /* Comment parsing */
 
   if (commentsp)
     {
-      GimpParasite *parasite;
+      LigmaParasite *parasite;
       gchar        *comments[3] = { NULL, };
 
       for (i = 0; i < commentsp->ncomment; ++i)
@@ -804,36 +804,36 @@ load_image (GFile   *file,
 
       if (comments[0])
         {
-          parasite = gimp_parasite_new ("xmc-copyright",
-                                        GIMP_PARASITE_PERSISTENT,
+          parasite = ligma_parasite_new ("xmc-copyright",
+                                        LIGMA_PARASITE_PERSISTENT,
                                         strlen (comments[0]) + 1,
                                         (gpointer) comments[0]);
-          gimp_image_attach_parasite (image, parasite);
-          gimp_parasite_free (parasite);
+          ligma_image_attach_parasite (image, parasite);
+          ligma_parasite_free (parasite);
 
           g_free (comments[0]);
         }
 
       if (comments[1])
         {
-          parasite = gimp_parasite_new ("xmc-license",
-                                        GIMP_PARASITE_PERSISTENT,
+          parasite = ligma_parasite_new ("xmc-license",
+                                        LIGMA_PARASITE_PERSISTENT,
                                         strlen (comments[1]) + 1,
                                         (gpointer) comments[1]);
-          gimp_image_attach_parasite (image, parasite);
-          gimp_parasite_free (parasite);
+          ligma_image_attach_parasite (image, parasite);
+          ligma_parasite_free (parasite);
 
           g_free (comments[1]);
         }
 
       if (comments[2])
         {
-          parasite = gimp_parasite_new ("gimp-comment",
-                                        GIMP_PARASITE_PERSISTENT,
+          parasite = ligma_parasite_new ("ligma-comment",
+                                        LIGMA_PARASITE_PERSISTENT,
                                         strlen (comments[2]) + 1,
                                         (gpointer) comments[2]);
-          gimp_image_attach_parasite (image, parasite);
-          gimp_parasite_free (parasite);
+          ligma_image_attach_parasite (image, parasite);
+          ligma_parasite_free (parasite);
 
           g_free (comments[2]);
         }
@@ -843,7 +843,7 @@ load_image (GFile   *file,
   XcursorImagesDestroy (imagesp);
   fclose (fp);
 
-  gimp_progress_end ();
+  ligma_progress_end ();
 
   return image;
 }
@@ -852,7 +852,7 @@ load_image (GFile   *file,
  * load_thumbnail
  */
 
-static GimpImage *
+static LigmaImage *
 load_thumbnail (GFile   *file,
                 gint32   thumb_size,
                 gint32  *thumb_width,
@@ -873,8 +873,8 @@ load_thumbnail (GFile   *file,
   guint32        min_diff = XCURSOR_IMAGE_MAX_SIZE; /* minimum value of diff */
   guint32        type;         /* chunk type */
   FILE          *fp    = NULL;
-  GimpImage     *image = NULL;
-  GimpLayer     *layer;
+  LigmaImage     *image = NULL;
+  LigmaLayer     *layer;
   GeglBuffer    *buffer;
   guint32       *tmppixel;     /* pixel data (guchar * bpp = guint32) */
   guint32        ntoc = 0;     /* the number of table of contents */
@@ -897,7 +897,7 @@ load_thumbnail (GFile   *file,
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),
-                   gimp_file_get_utf8_name (file), g_strerror (errno));
+                   ligma_file_get_utf8_name (file), g_strerror (errno));
       return NULL;
     }
 
@@ -918,7 +918,7 @@ load_thumbnail (GFile   *file,
     {
       g_set_error (error, 0, 0,
                    "'%s' seems to have an incorrect toc size.",
-                   gimp_file_get_utf8_name (file));
+                   ligma_file_get_utf8_name (file));
       fclose (fp);
       return NULL;
     }
@@ -957,7 +957,7 @@ load_thumbnail (GFile   *file,
     {
       g_set_error (error, 0, 0,
                    _("there is no image chunk in \"%s\"."),
-                   gimp_file_get_utf8_name (file));
+                   ligma_file_get_utf8_name (file));
       fclose (fp);
       return NULL;
     }
@@ -998,7 +998,7 @@ load_thumbnail (GFile   *file,
     {
       g_set_error (error, 0, 0,
                    _("'%s' is too wide for an X cursor."),
-                   gimp_file_get_utf8_name (file));
+                   ligma_file_get_utf8_name (file));
       fclose (fp);
       return NULL;
     }
@@ -1007,7 +1007,7 @@ load_thumbnail (GFile   *file,
     {
       g_set_error (error, 0, 0,
                    _("'%s' is too high for an X cursor."),
-                   gimp_file_get_utf8_name (file));
+                   ligma_file_get_utf8_name (file));
       fclose (fp);
       return NULL;
     }
@@ -1017,20 +1017,20 @@ load_thumbnail (GFile   *file,
   width  = xcIs->images[sel_num]->width;
   height = xcIs->images[sel_num]->height;
 
-  image = gimp_image_new (width, height, GIMP_RGB);
+  image = ligma_image_new (width, height, LIGMA_RGB);
 
-  layer = gimp_layer_new (image, NULL, width, height,
-                          GIMP_RGBA_IMAGE,
+  layer = ligma_layer_new (image, NULL, width, height,
+                          LIGMA_RGBA_IMAGE,
                           100,
-                          gimp_image_get_default_new_layer_mode (image));
+                          ligma_image_get_default_new_layer_mode (image));
 
-  gimp_image_insert_layer (image, layer, NULL, 0);
+  ligma_image_insert_layer (image, layer, NULL, 0);
 
   /*
    * Get the drawable and set the pixel region for our load...
    */
 
-  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
+  buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (layer));
 
   /* Temporary buffer */
   tmppixel = g_new (guint32, width * height);
@@ -1090,9 +1090,9 @@ read32 (FILE    *f,
 /* 'save_dialog ()'
  */
 static gboolean
-save_dialog (GimpProcedure *procedure,
+save_dialog (LigmaProcedure *procedure,
              GObject       *config,
-             GimpImage     *image,
+             LigmaImage     *image,
              GeglRectangle *hotspot_range)
 {
   GtkWidget     *dialog;
@@ -1108,55 +1108,55 @@ save_dialog (GimpProcedure *procedure,
   gint           row;
   gboolean       run;
 
-  dialog = gimp_procedure_dialog_new (procedure,
-                                      GIMP_PROCEDURE_CONFIG (config),
+  dialog = ligma_procedure_dialog_new (procedure,
+                                      LIGMA_PROCEDURE_CONFIG (config),
                                       _("Export Image as X11 Mouse Cursor"));
 
   grid = gtk_grid_new ();
   gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
   gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
   gtk_container_set_border_width (GTK_CONTAINER (grid), 12);
-  gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (dialog)),
+  gtk_box_pack_start (GTK_BOX (ligma_export_dialog_get_content_area (dialog)),
                       grid, TRUE, TRUE, 0);
   gtk_widget_show (grid);
 
   row = 0;
 
   /* Hotspot */
-  button = gimp_prop_spin_button_new (config, "hot-spot-x",
+  button = ligma_prop_spin_button_new (config, "hot-spot-x",
                                       1, 10, 0);
   gtk_spin_button_set_range (GTK_SPIN_BUTTON (button),
                              hotspot_range->x,
                              hotspot_range->x + hotspot_range->width - 1);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, row++,
                             _("Hot spot _X:"), 0.0, 0.5,
                             button, 1);
 
-  gimp_help_set_help_data (button,
+  ligma_help_set_help_data (button,
                            _("Enter the X coordinate of the hot spot. "
                              "The origin is top left corner."),
                            NULL);
 
-  button = gimp_prop_spin_button_new (config, "hot-spot-y",
+  button = ligma_prop_spin_button_new (config, "hot-spot-y",
                                       1, 10, 0);
   gtk_spin_button_set_range (GTK_SPIN_BUTTON (button),
                              hotspot_range->y,
                              hotspot_range->y + hotspot_range->height - 1);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, row++,
                             _("Hot spot _Y:"), 0.0, 0.5,
                             button, 1);
 
-  gimp_help_set_help_data (button,
+  ligma_help_set_help_data (button,
                            _("Enter the Y coordinate of the hot spot. "
                              "The origin is top left corner."),
                            NULL);
 
   /* Auto-crop */
-  button = gimp_prop_check_button_new (config, "crop",
+  button = ligma_prop_check_button_new (config, "crop",
                                        _("_Auto-Crop all frames"));
   gtk_grid_attach (GTK_GRID (grid), button, 0, row++, 2, 1);
 
-  gimp_help_set_help_data (button,
+  ligma_help_set_help_data (button,
                            _("Remove the empty borders of all frames.\n"
                              "This reduces the file size and may fix "
                              "the problem that some large cursors disorder "
@@ -1166,20 +1166,20 @@ save_dialog (GimpProcedure *procedure,
                            NULL);
 
   /* Size */
-  store = gimp_int_store_new ("12px", 12, "16px", 16,
+  store = ligma_int_store_new ("12px", 12, "16px", 16,
                               "24px", 24, "32px", 32,
                               "36px", 36, "40px", 40,
                               "48px", 48, "64px", 64, NULL);
 
-  combo = gimp_prop_int_combo_box_new (config, "size",
-                                       GIMP_INT_STORE (store));
+  combo = ligma_prop_int_combo_box_new (config, "size",
+                                       LIGMA_INT_STORE (store));
   g_object_unref (store);
 
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, row++,
                             _("_Size where\nunspecified:"), 0.0, 0.5,
                             combo, 1);
 
-  gimp_help_set_help_data (combo,
+  ligma_help_set_help_data (combo,
                            _("Choose the nominal size of frames.\n"
                              "If you don't have plans to make multi-sized "
                              "cursor, or you have no idea, leave it \"32px\".\n"
@@ -1192,24 +1192,24 @@ save_dialog (GimpProcedure *procedure,
                            NULL);
 
   /* Replace size */
-  button = gimp_prop_check_button_new (config, "size-replace",
+  button = ligma_prop_check_button_new (config, "size-replace",
                                        _("Use size entered above for "
                                          "all frames"));
   gtk_grid_attach (GTK_GRID (grid), button, 1, row++, 2, 1);
 
   /* Delay */
   box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, row++,
                             _("_Delay where\nunspecified:"), 0, 0.5,
                             box, 3);
   gtk_widget_show (box);
 
-  gimp_help_set_help_data (box,
+  ligma_help_set_help_data (box,
                            _("Enter time span in milliseconds in which "
                              "each frame is rendered."),
                            NULL);
 
-  button = gimp_prop_spin_button_new (config, "delay",
+  button = ligma_prop_spin_button_new (config, "delay",
                                       1, 10, 0);
   gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 0);
 
@@ -1218,28 +1218,28 @@ save_dialog (GimpProcedure *procedure,
   gtk_widget_show (label);
 
   /* Replace delay */
-  button = gimp_prop_check_button_new (config, "delay-replace",
+  button = ligma_prop_check_button_new (config, "delay-replace",
                                        _("Use delay entered above for "
                                          "all frames"));
   gtk_grid_attach (GTK_GRID (grid), button, 1, row++, 2, 1);
 
   /* Copyright */
-  entry = gimp_prop_entry_new (config, "xmc-copyright",
+  entry = ligma_prop_entry_new (config, "xmc-copyright",
                                XCURSOR_COMMENT_MAX_LEN);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++, _("_Copyright:"),
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, row++, _("_Copyright:"),
                             0, 0.5, entry, 3);
 
-  gimp_help_set_help_data (entry,
+  ligma_help_set_help_data (entry,
                            _("Enter copyright information."),
                            NULL);
 
   /* License */
-  entry = gimp_prop_entry_new (config, "xmc-license",
+  entry = ligma_prop_entry_new (config, "xmc-license",
                                XCURSOR_COMMENT_MAX_LEN);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++, _("_License:"),
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, row++, _("_License:"),
                             0, 0.5, entry, 3);
 
-  gimp_help_set_help_data (entry,
+  ligma_help_set_help_data (entry,
                            _("Enter license information."),
                            NULL);
 
@@ -1250,10 +1250,10 @@ save_dialog (GimpProcedure *procedure,
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (box),
                                   GTK_POLICY_AUTOMATIC,
                                   GTK_POLICY_AUTOMATIC);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++, _("_Other:"),
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, row++, _("_Other:"),
                             0, 0.5, box, 3);
 
-  textbuffer = gimp_prop_text_buffer_new (config, "gimp-comment",
+  textbuffer = ligma_prop_text_buffer_new (config, "ligma-comment",
                                           XCURSOR_COMMENT_MAX_LEN);
   view = gtk_text_view_new_with_buffer (GTK_TEXT_BUFFER (textbuffer));
   gtk_text_view_set_accepts_tab (GTK_TEXT_VIEW (view), FALSE);
@@ -1263,13 +1263,13 @@ save_dialog (GimpProcedure *procedure,
   gtk_container_add (GTK_CONTAINER (box), view);
   gtk_widget_show (view);
 
-  gimp_help_set_help_data (view,
+  ligma_help_set_help_data (view,
                            _("Enter other comment if you want."),
                            NULL);
 
   gtk_widget_show (dialog);
 
-  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
+  run = ligma_procedure_dialog_run (LIGMA_PROCEDURE_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
 
@@ -1280,7 +1280,7 @@ save_dialog (GimpProcedure *procedure,
  * Set default hotspot based on hotspot_range.
 **/
 static void
-load_default_hotspot (GimpImage     *image,
+load_default_hotspot (LigmaImage     *image,
                       GeglRectangle *hotspot_range,
                       GObject       *config)
 {
@@ -1316,10 +1316,10 @@ load_default_hotspot (GimpImage     *image,
 
 static gboolean
 save_image (GFile         *file,
-            GimpImage     *image,
+            LigmaImage     *image,
             gint           n_drawables,
-            GimpDrawable **drawables,
-            GimpImage     *orig_image,
+            LigmaDrawable **drawables,
+            LigmaImage     *orig_image,
             GObject       *config,
             GError       **error)
 {
@@ -1369,8 +1369,8 @@ save_image (GFile         *file,
                     0,
                     NULL);
 
-  gimp_progress_init_printf (_("Saving '%s'"),
-                             gimp_file_get_utf8_name (file));
+  ligma_progress_init_printf (_("Saving '%s'"),
+                             ligma_file_get_utf8_name (file));
 
   /*
    * Open the file pointer.
@@ -1383,13 +1383,13 @@ save_image (GFile         *file,
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for writing: %s"),
-                   gimp_file_get_utf8_name (file), g_strerror (errno));
+                   ligma_file_get_utf8_name (file), g_strerror (errno));
       return FALSE;
     }
 
   /* get layers, in bottom-to-top order */
-  orig_layers = gimp_image_list_layers (orig_image);
-  layers      = gimp_image_list_layers (image);
+  orig_layers = ligma_image_list_layers (orig_image);
+  layers      = ligma_image_list_layers (image);
 
   orig_layers = g_list_reverse (orig_layers);
   layers      = g_list_reverse (layers);
@@ -1414,13 +1414,13 @@ save_image (GFile         *file,
        list && orig_list;
        list = g_list_next (layers), orig_list = g_list_next (orig_list), i++)
     {
-      GimpDrawable *drawable = list->data;
+      LigmaDrawable *drawable = list->data;
       GeglBuffer   *buffer;
       const Babl   *format;
       gint          width;
       gint          height;
 
-      buffer = gimp_drawable_get_buffer (drawable);
+      buffer = ligma_drawable_get_buffer (drawable);
 
       width  = gegl_buffer_get_width  (buffer);
       height = gegl_buffer_get_height (buffer);
@@ -1428,9 +1428,9 @@ save_image (GFile         *file,
       format = babl_format ("R'G'B'A u8");
 
       /* get framename of this layer */
-      framename = gimp_item_get_name (GIMP_ITEM (drawable));
+      framename = ligma_item_get_name (LIGMA_ITEM (drawable));
       /* get offset of this layer. */
-      gimp_drawable_get_offsets (drawable, &layer_xoffset, &layer_yoffset);
+      ligma_drawable_get_offsets (drawable, &layer_xoffset, &layer_yoffset);
 
       /*
        * layer dimension check.
@@ -1445,7 +1445,7 @@ save_image (GFile         *file,
         {
           g_set_error (error, 0, 0,
                        _("Frame '%s' is too wide. Please reduce to no more than %dpx."),
-                       gimp_any_to_utf8 (framename, -1, NULL),
+                       ligma_any_to_utf8 (framename, -1, NULL),
                        MAX_SAVE_DIMENSION);
           fclose (fp);
           return FALSE;
@@ -1455,7 +1455,7 @@ save_image (GFile         *file,
         {
           g_set_error (error, 0, 0,
                        _("Frame '%s' is too high. Please reduce to no more than %dpx."),
-                       gimp_any_to_utf8 (framename, -1, NULL),
+                       ligma_any_to_utf8 (framename, -1, NULL),
                        MAX_SAVE_DIMENSION);
           fclose (fp);
           return FALSE;
@@ -1465,7 +1465,7 @@ save_image (GFile         *file,
         {
           g_set_error (error, 0, 0,
                        _("Width and/or height of frame '%s' is zero!"),
-                       gimp_any_to_utf8 (framename, -1, NULL));
+                       ligma_any_to_utf8 (framename, -1, NULL));
           fclose (fp);
           return FALSE;
         }
@@ -1510,7 +1510,7 @@ save_image (GFile         *file,
                              "is not on frame '%s'.\n"
                              "Try to change the hot spot position, "
                              "layer geometry or export without auto-crop."),
-                           gimp_any_to_utf8 (framename, -1, NULL));
+                           ligma_any_to_utf8 (framename, -1, NULL));
               fclose (fp);
               return FALSE;
             }
@@ -1602,18 +1602,18 @@ save_image (GFile         *file,
           return FALSE;
         }
 
-      gimp_item_set_name (orig_list->data, framename);
+      ligma_item_set_name (orig_list->data, framename);
       g_free (framename);
 
       g_object_unref (buffer);
 
-      gimp_progress_update ((i + 1) / imagesp->nimage);
+      ligma_progress_update ((i + 1) / imagesp->nimage);
     }
 
   g_list_free (list);
   g_list_free (orig_list);
 
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 
   /*
    * comment parsing
@@ -1705,7 +1705,7 @@ save_image (GFile         *file,
   XcursorImagesDestroy (imagesp);
   DM_XMC ("Xcursor destroyed.\n");
   XcursorCommentsDestroy (commentsp); /* this is safe even if commentsp is NULL. */
-  gimp_progress_end ();
+  ligma_progress_end ();
 
   /* Save hotspot back to the original image */
   set_hotspot_to_parasite (orig_image, config_hot_spot_x, config_hot_spot_y);
@@ -1791,7 +1791,7 @@ set_cursor_comments (GObject *config)
   g_object_get (config,
                 "xmc-copyright", comments,
                 "xmc-license",   comments + 1,
-                "gimp-comment",  comments + 2,
+                "ligma-comment",  comments + 2,
                 NULL);
 
   xcCommentsArray = g_array_new (FALSE, FALSE, sizeof (XcursorComment *));
@@ -1845,27 +1845,27 @@ set_cursor_comments (GObject *config)
  * of file-xbm.
  */
 static gboolean
-set_hotspot_to_parasite (GimpImage *image,
+set_hotspot_to_parasite (LigmaImage *image,
                          gint       hot_spot_x,
                          gint       hot_spot_y)
 {
   gboolean      ret = FALSE;
   gchar        *tmpstr;
-  GimpParasite *parasite;
+  LigmaParasite *parasite;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), FALSE);
 
   tmpstr = g_strdup_printf ("%d %d", hot_spot_x, hot_spot_y);
-  parasite = gimp_parasite_new ("hot-spot",
-                                GIMP_PARASITE_PERSISTENT,
+  parasite = ligma_parasite_new ("hot-spot",
+                                LIGMA_PARASITE_PERSISTENT,
                                 strlen (tmpstr) + 1,
                                 tmpstr);
   g_free (tmpstr);
 
   if (parasite)
     {
-      ret = gimp_image_attach_parasite (image, parasite);
-      gimp_parasite_free (parasite);
+      ret = ligma_image_attach_parasite (image, parasite);
+      ligma_parasite_free (parasite);
     }
 
   return ret;
@@ -1877,17 +1877,17 @@ set_hotspot_to_parasite (GimpImage *image,
  * If "hot-spot" is not found or broken, return FALSE.
  */
 static gboolean
-get_hotspot_from_parasite (GimpImage *image,
+get_hotspot_from_parasite (LigmaImage *image,
                            gint      *hot_spot_x,
                            gint      *hot_spot_y)
 {
-  GimpParasite *parasite;
+  LigmaParasite *parasite;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), FALSE);
 
   DM_XMC ("function: getHotsopt\n");
 
-  parasite = gimp_image_get_parasite (image, "hot-spot");
+  parasite = ligma_image_get_parasite (image, "hot-spot");
 
   if (parasite)
     {
@@ -1895,7 +1895,7 @@ get_hotspot_from_parasite (GimpImage *image,
       guint32  parasite_size;
       gint     x, y;
 
-      parasite_data = (gchar *) gimp_parasite_get_data (parasite, &parasite_size);
+      parasite_data = (gchar *) ligma_parasite_get_data (parasite, &parasite_size);
       parasite_data = g_strndup (parasite_data, parasite_size);
 
       if (sscanf (parasite_data, "%i %i", &x, &y) == 2)
@@ -2217,7 +2217,7 @@ pix_is_opaque (guint32 pix)
  * don't forget to g_free returned pointer later.
  */
 static GeglRectangle *
-get_intersection_of_frames (GimpImage *image)
+get_intersection_of_frames (LigmaImage *image)
 {
   GeglRectangle *iregion;
   gint32         x1 = G_MININT32, x2 = G_MAXINT32;
@@ -2226,15 +2226,15 @@ get_intersection_of_frames (GimpImage *image)
   GList         *layers;
   GList         *list;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), FALSE);
 
-  layers = gimp_image_list_layers (image);
+  layers = ligma_image_list_layers (image);
 
   for (list = layers; list; list = g_list_next (list))
     {
-      GimpDrawable *drawable = list->data;
+      LigmaDrawable *drawable = list->data;
 
-      if (! gimp_drawable_get_offsets (drawable, &x_off, &y_off))
+      if (! ligma_drawable_get_offsets (drawable, &x_off, &y_off))
         {
           g_list_free (layers);
           return NULL;
@@ -2242,8 +2242,8 @@ get_intersection_of_frames (GimpImage *image)
 
       x1 = MAX (x1, x_off);
       y1 = MAX (y1, y_off);
-      x2 = MIN (x2, x_off + gimp_drawable_get_width  (drawable) - 1);
-      y2 = MIN (y2, y_off + gimp_drawable_get_height (drawable) - 1);
+      x2 = MIN (x2, x_off + ligma_drawable_get_width  (drawable) - 1);
+      y2 = MIN (y2, y_off + ligma_drawable_get_height (drawable) - 1);
     }
 
   g_list_free (layers);

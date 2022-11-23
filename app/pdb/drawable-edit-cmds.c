@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-2003 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,96 +25,96 @@
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmaconfig/ligmaconfig.h"
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "pdb-types.h"
 
-#include "core/gimp-gradients.h"
-#include "core/gimp.h"
-#include "core/gimpbuffer.h"
-#include "core/gimpdrawable-bucket-fill.h"
-#include "core/gimpdrawable-edit.h"
-#include "core/gimpdrawable-gradient.h"
-#include "core/gimpdrawable.h"
-#include "core/gimpimage.h"
-#include "core/gimpitem.h"
-#include "core/gimpparamspecs.h"
-#include "core/gimpprogress.h"
-#include "core/gimpstrokeoptions.h"
-#include "paint/gimppaintoptions.h"
+#include "core/ligma-gradients.h"
+#include "core/ligma.h"
+#include "core/ligmabuffer.h"
+#include "core/ligmadrawable-bucket-fill.h"
+#include "core/ligmadrawable-edit.h"
+#include "core/ligmadrawable-gradient.h"
+#include "core/ligmadrawable.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaitem.h"
+#include "core/ligmaparamspecs.h"
+#include "core/ligmaprogress.h"
+#include "core/ligmastrokeoptions.h"
+#include "paint/ligmapaintoptions.h"
 
-#include "gimppdb.h"
-#include "gimppdb-utils.h"
-#include "gimppdbcontext.h"
-#include "gimpprocedure.h"
+#include "ligmapdb.h"
+#include "ligmapdb-utils.h"
+#include "ligmapdbcontext.h"
+#include "ligmaprocedure.h"
 #include "internal-procs.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-static GimpValueArray *
-drawable_edit_clear_invoker (GimpProcedure         *procedure,
-                             Gimp                  *gimp,
-                             GimpContext           *context,
-                             GimpProgress          *progress,
-                             const GimpValueArray  *args,
+static LigmaValueArray *
+drawable_edit_clear_invoker (LigmaProcedure         *procedure,
+                             Ligma                  *ligma,
+                             LigmaContext           *context,
+                             LigmaProgress          *progress,
+                             const LigmaValueArray  *args,
                              GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 0));
+  drawable = g_value_get_object (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
-          gimp_drawable_edit_clear (drawable, context);
+          ligma_drawable_edit_clear (drawable, context);
         }
       else
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-drawable_edit_fill_invoker (GimpProcedure         *procedure,
-                            Gimp                  *gimp,
-                            GimpContext           *context,
-                            GimpProgress          *progress,
-                            const GimpValueArray  *args,
+static LigmaValueArray *
+drawable_edit_fill_invoker (LigmaProcedure         *procedure,
+                            Ligma                  *ligma,
+                            LigmaContext           *context,
+                            LigmaProgress          *progress,
+                            const LigmaValueArray  *args,
                             GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gint fill_type;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 0));
-  fill_type = g_value_get_enum (gimp_value_array_index (args, 1));
+  drawable = g_value_get_object (ligma_value_array_index (args, 0));
+  fill_type = g_value_get_enum (ligma_value_array_index (args, 1));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
-          GimpFillOptions *options = gimp_fill_options_new (gimp, NULL, FALSE);
+          LigmaFillOptions *options = ligma_fill_options_new (ligma, NULL, FALSE);
 
-          gimp_context_set_opacity (GIMP_CONTEXT (options),
-                                    gimp_context_get_opacity (context));
-          gimp_context_set_paint_mode (GIMP_CONTEXT (options),
-                                       gimp_context_get_paint_mode (context));
+          ligma_context_set_opacity (LIGMA_CONTEXT (options),
+                                    ligma_context_get_opacity (context));
+          ligma_context_set_paint_mode (LIGMA_CONTEXT (options),
+                                       ligma_context_get_paint_mode (context));
 
-          if (gimp_fill_options_set_by_fill_type (options, context,
+          if (ligma_fill_options_set_by_fill_type (options, context,
                                                   fill_type, error))
             {
-              gimp_drawable_edit_fill (drawable, options, NULL);
+              ligma_drawable_edit_fill (drawable, options, NULL);
             }
           else
             success = FALSE;
@@ -125,54 +125,54 @@ drawable_edit_fill_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-drawable_edit_bucket_fill_invoker (GimpProcedure         *procedure,
-                                   Gimp                  *gimp,
-                                   GimpContext           *context,
-                                   GimpProgress          *progress,
-                                   const GimpValueArray  *args,
+static LigmaValueArray *
+drawable_edit_bucket_fill_invoker (LigmaProcedure         *procedure,
+                                   Ligma                  *ligma,
+                                   LigmaContext           *context,
+                                   LigmaProgress          *progress,
+                                   const LigmaValueArray  *args,
                                    GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gint fill_type;
   gdouble x;
   gdouble y;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 0));
-  fill_type = g_value_get_enum (gimp_value_array_index (args, 1));
-  x = g_value_get_double (gimp_value_array_index (args, 2));
-  y = g_value_get_double (gimp_value_array_index (args, 3));
+  drawable = g_value_get_object (ligma_value_array_index (args, 0));
+  fill_type = g_value_get_enum (ligma_value_array_index (args, 1));
+  x = g_value_get_double (ligma_value_array_index (args, 2));
+  y = g_value_get_double (ligma_value_array_index (args, 3));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
-          GimpFillOptions *options = gimp_fill_options_new (gimp, NULL, FALSE);
+          LigmaFillOptions *options = ligma_fill_options_new (ligma, NULL, FALSE);
 
-          gimp_context_set_opacity (GIMP_CONTEXT (options),
-                                    gimp_context_get_opacity (context));
-          gimp_context_set_paint_mode (GIMP_CONTEXT (options),
-                                       gimp_context_get_paint_mode (context));
+          ligma_context_set_opacity (LIGMA_CONTEXT (options),
+                                    ligma_context_get_opacity (context));
+          ligma_context_set_paint_mode (LIGMA_CONTEXT (options),
+                                       ligma_context_get_paint_mode (context));
 
-          gimp_fill_options_set_antialias (options,
-                                           GIMP_PDB_CONTEXT (context)->antialias);
+          ligma_fill_options_set_antialias (options,
+                                           LIGMA_PDB_CONTEXT (context)->antialias);
 
-          if (gimp_fill_options_set_by_fill_type (options, context,
+          if (ligma_fill_options_set_by_fill_type (options, context,
                                                   fill_type, error))
             {
-              gimp_drawable_bucket_fill (drawable, options,
-                                         GIMP_PDB_CONTEXT (context)->sample_transparent,
-                                         GIMP_PDB_CONTEXT (context)->sample_criterion,
-                                         GIMP_PDB_CONTEXT (context)->sample_threshold,
-                                         GIMP_PDB_CONTEXT (context)->sample_merged,
-                                         GIMP_PDB_CONTEXT (context)->diagonal_neighbors,
+              ligma_drawable_bucket_fill (drawable, options,
+                                         LIGMA_PDB_CONTEXT (context)->sample_transparent,
+                                         LIGMA_PDB_CONTEXT (context)->sample_criterion,
+                                         LIGMA_PDB_CONTEXT (context)->sample_threshold,
+                                         LIGMA_PDB_CONTEXT (context)->sample_merged,
+                                         LIGMA_PDB_CONTEXT (context)->diagonal_neighbors,
                                          x, y);
             }
           else
@@ -184,20 +184,20 @@ drawable_edit_bucket_fill_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-drawable_edit_gradient_fill_invoker (GimpProcedure         *procedure,
-                                     Gimp                  *gimp,
-                                     GimpContext           *context,
-                                     GimpProgress          *progress,
-                                     const GimpValueArray  *args,
+static LigmaValueArray *
+drawable_edit_gradient_fill_invoker (LigmaProcedure         *procedure,
+                                     Ligma                  *ligma,
+                                     LigmaContext           *context,
+                                     LigmaProgress          *progress,
+                                     const LigmaValueArray  *args,
                                      GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   gint gradient_type;
   gdouble offset;
   gboolean supersample;
@@ -209,23 +209,23 @@ drawable_edit_gradient_fill_invoker (GimpProcedure         *procedure,
   gdouble x2;
   gdouble y2;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 0));
-  gradient_type = g_value_get_enum (gimp_value_array_index (args, 1));
-  offset = g_value_get_double (gimp_value_array_index (args, 2));
-  supersample = g_value_get_boolean (gimp_value_array_index (args, 3));
-  supersample_max_depth = g_value_get_int (gimp_value_array_index (args, 4));
-  supersample_threshold = g_value_get_double (gimp_value_array_index (args, 5));
-  dither = g_value_get_boolean (gimp_value_array_index (args, 6));
-  x1 = g_value_get_double (gimp_value_array_index (args, 7));
-  y1 = g_value_get_double (gimp_value_array_index (args, 8));
-  x2 = g_value_get_double (gimp_value_array_index (args, 9));
-  y2 = g_value_get_double (gimp_value_array_index (args, 10));
+  drawable = g_value_get_object (ligma_value_array_index (args, 0));
+  gradient_type = g_value_get_enum (ligma_value_array_index (args, 1));
+  offset = g_value_get_double (ligma_value_array_index (args, 2));
+  supersample = g_value_get_boolean (ligma_value_array_index (args, 3));
+  supersample_max_depth = g_value_get_int (ligma_value_array_index (args, 4));
+  supersample_threshold = g_value_get_double (ligma_value_array_index (args, 5));
+  dither = g_value_get_boolean (ligma_value_array_index (args, 6));
+  x1 = g_value_get_double (ligma_value_array_index (args, 7));
+  y1 = g_value_get_double (ligma_value_array_index (args, 8));
+  x2 = g_value_get_double (ligma_value_array_index (args, 9));
+  y2 = g_value_get_double (ligma_value_array_index (args, 10));
 
   if (success)
     {
-      success = (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                            GIMP_PDB_ITEM_CONTENT, error) &&
-                 gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error));
+      success = (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                            LIGMA_PDB_ITEM_CONTENT, error) &&
+                 ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error));
 
       if (success)
         {
@@ -247,20 +247,20 @@ drawable_edit_gradient_fill_invoker (GimpProcedure         *procedure,
       if (success)
         {
           /* all options should have the same value, so pick a random one */
-          GimpPaintOptions *options =
-            gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
-                                                "gimp-paintbrush");
+          LigmaPaintOptions *options =
+            ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context),
+                                                "ligma-paintbrush");
 
           if (progress)
-            gimp_progress_start (progress, FALSE, _("Gradient"));
+            ligma_progress_start (progress, FALSE, _("Gradient"));
 
-          gimp_drawable_gradient (drawable,
+          ligma_drawable_gradient (drawable,
                                   context,
-                                  gimp_context_get_gradient (context),
-                                  GIMP_PDB_CONTEXT (context)->distance_metric,
-                                  gimp_context_get_paint_mode (context),
+                                  ligma_context_get_gradient (context),
+                                  LIGMA_PDB_CONTEXT (context)->distance_metric,
+                                  ligma_context_get_paint_mode (context),
                                   gradient_type,
-                                  gimp_context_get_opacity (context),
+                                  ligma_context_get_opacity (context),
                                   offset,
                                   options->gradient_options->gradient_repeat,
                                   options->gradient_options->gradient_reverse,
@@ -273,45 +273,45 @@ drawable_edit_gradient_fill_invoker (GimpProcedure         *procedure,
                                   progress);
 
           if (progress)
-            gimp_progress_end (progress);
+            ligma_progress_end (progress);
         }
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-drawable_edit_stroke_selection_invoker (GimpProcedure         *procedure,
-                                        Gimp                  *gimp,
-                                        GimpContext           *context,
-                                        GimpProgress          *progress,
-                                        const GimpValueArray  *args,
+static LigmaValueArray *
+drawable_edit_stroke_selection_invoker (LigmaProcedure         *procedure,
+                                        Ligma                  *ligma,
+                                        LigmaContext           *context,
+                                        LigmaProgress          *progress,
+                                        const LigmaValueArray  *args,
                                         GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 0));
+  drawable = g_value_get_object (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error))
         {
-          GimpImage         *image = gimp_item_get_image (GIMP_ITEM (drawable));
-          GimpStrokeOptions *options;
-          GimpPaintOptions  *paint_options;
+          LigmaImage         *image = ligma_item_get_image (LIGMA_ITEM (drawable));
+          LigmaStrokeOptions *options;
+          LigmaPaintOptions  *paint_options;
           GList             *drawables = g_list_prepend (NULL, drawable);
 
-          options = gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+          options = ligma_pdb_context_get_stroke_options (LIGMA_PDB_CONTEXT (context));
 
           paint_options =
-            gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context), NULL);
-          paint_options = gimp_config_duplicate (GIMP_CONFIG (paint_options));
+            ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context), NULL);
+          paint_options = ligma_config_duplicate (LIGMA_CONFIG (paint_options));
 
-          success = gimp_item_stroke (GIMP_ITEM (gimp_image_get_mask (image)),
+          success = ligma_item_stroke (LIGMA_ITEM (ligma_image_get_mask (image)),
                                       drawables, context, options, paint_options,
                                       TRUE, progress, error);
 
@@ -322,45 +322,45 @@ drawable_edit_stroke_selection_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-drawable_edit_stroke_item_invoker (GimpProcedure         *procedure,
-                                   Gimp                  *gimp,
-                                   GimpContext           *context,
-                                   GimpProgress          *progress,
-                                   const GimpValueArray  *args,
+static LigmaValueArray *
+drawable_edit_stroke_item_invoker (LigmaProcedure         *procedure,
+                                   Ligma                  *ligma,
+                                   LigmaContext           *context,
+                                   LigmaProgress          *progress,
+                                   const LigmaValueArray  *args,
                                    GError               **error)
 {
   gboolean success = TRUE;
-  GimpDrawable *drawable;
-  GimpItem *item;
+  LigmaDrawable *drawable;
+  LigmaItem *item;
 
-  drawable = g_value_get_object (gimp_value_array_index (args, 0));
-  item = g_value_get_object (gimp_value_array_index (args, 1));
+  drawable = g_value_get_object (ligma_value_array_index (args, 0));
+  item = g_value_get_object (ligma_value_array_index (args, 1));
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
-                                     GIMP_PDB_ITEM_CONTENT, error) &&
-          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
-          gimp_pdb_item_is_attached (item,
-                                     gimp_item_get_image (GIMP_ITEM (drawable)),
+      if (ligma_pdb_item_is_attached (LIGMA_ITEM (drawable), NULL,
+                                     LIGMA_PDB_ITEM_CONTENT, error) &&
+          ligma_pdb_item_is_not_group (LIGMA_ITEM (drawable), error) &&
+          ligma_pdb_item_is_attached (item,
+                                     ligma_item_get_image (LIGMA_ITEM (drawable)),
                                      0, error))
         {
-          GimpStrokeOptions *options;
-          GimpPaintOptions  *paint_options;
+          LigmaStrokeOptions *options;
+          LigmaPaintOptions  *paint_options;
           GList             *drawables = g_list_prepend (NULL, drawable);
 
-          options = gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+          options = ligma_pdb_context_get_stroke_options (LIGMA_PDB_CONTEXT (context));
 
           paint_options =
-            gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context), NULL);
-          paint_options = gimp_config_duplicate (GIMP_CONFIG (paint_options));
+            ligma_pdb_context_get_paint_options (LIGMA_PDB_CONTEXT (context), NULL);
+          paint_options = ligma_config_duplicate (LIGMA_CONFIG (paint_options));
 
-          success = gimp_item_stroke (item, drawables,
+          success = ligma_item_stroke (item, drawables,
                                       context, options, paint_options,
                                       TRUE, progress, error);
 
@@ -371,256 +371,256 @@ drawable_edit_stroke_item_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
 void
-register_drawable_edit_procs (GimpPDB *pdb)
+register_drawable_edit_procs (LigmaPDB *pdb)
 {
-  GimpProcedure *procedure;
+  LigmaProcedure *procedure;
 
   /*
-   * gimp-drawable-edit-clear
+   * ligma-drawable-edit-clear
    */
-  procedure = gimp_procedure_new (drawable_edit_clear_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-drawable-edit-clear");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (drawable_edit_clear_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-drawable-edit-clear");
+  ligma_procedure_set_static_help (procedure,
                                   "Clear selected area of drawable.",
                                   "This procedure clears the specified drawable. If the drawable has an alpha channel, the cleared pixels will become transparent. If the drawable does not have an alpha channel, cleared pixels will be set to the background color. This procedure only affects regions within a selection if there is a selection active.\n"
                                   "\n"
-                                  "This procedure is affected by the following context setters: 'gimp-context-set-background'.",
+                                  "This procedure is affected by the following context setters: 'ligma-context-set-background'.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "The drawable to clear from",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-drawable-edit-fill
+   * ligma-drawable-edit-fill
    */
-  procedure = gimp_procedure_new (drawable_edit_fill_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-drawable-edit-fill");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (drawable_edit_fill_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-drawable-edit-fill");
+  ligma_procedure_set_static_help (procedure,
                                   "Fill selected area of drawable.",
-                                  "This procedure fills the specified drawable according to fill mode. This procedure only affects regions within a selection if there is a selection active. If you want to fill the whole drawable, regardless of the selection, use 'gimp-drawable-fill'.\n"
+                                  "This procedure fills the specified drawable according to fill mode. This procedure only affects regions within a selection if there is a selection active. If you want to fill the whole drawable, regardless of the selection, use 'ligma-drawable-fill'.\n"
                                   "\n"
-                                  "This procedure is affected by the following context setters: 'gimp-context-set-opacity', 'gimp-context-set-paint-mode', 'gimp-context-set-foreground', 'gimp-context-set-background', 'gimp-context-set-pattern'.",
+                                  "This procedure is affected by the following context setters: 'ligma-context-set-opacity', 'ligma-context-set-paint-mode', 'ligma-context-set-foreground', 'ligma-context-set-background', 'ligma-context-set-pattern'.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis & Raphael Quinet",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-2000");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "The drawable to fill to",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("fill-type",
                                                   "fill type",
                                                   "The type of fill",
-                                                  GIMP_TYPE_FILL_TYPE,
-                                                  GIMP_FILL_FOREGROUND,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                  LIGMA_TYPE_FILL_TYPE,
+                                                  LIGMA_FILL_FOREGROUND,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-drawable-edit-bucket-fill
+   * ligma-drawable-edit-bucket-fill
    */
-  procedure = gimp_procedure_new (drawable_edit_bucket_fill_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-drawable-edit-bucket-fill");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (drawable_edit_bucket_fill_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-drawable-edit-bucket-fill");
+  ligma_procedure_set_static_help (procedure,
                                   "Fill the area by a seed fill starting at the specified coordinates.",
                                   "This procedure does a seed fill at the specified coordinates, using various parameters from the current context.\n"
                                   "In the case of merged sampling, the x and y coordinates are relative to the image's origin; otherwise, they are relative to the drawable's origin.\n"
                                   "\n"
-                                  "This procedure is affected by the following context setters: 'gimp-context-set-opacity', 'gimp-context-set-paint-mode', 'gimp-context-set-foreground', 'gimp-context-set-background', 'gimp-context-set-pattern', 'gimp-context-set-sample-threshold', 'gimp-context-set-sample-merged', 'gimp-context-set-sample-criterion', 'gimp-context-set-diagonal-neighbors', 'gimp-context-set-antialias'.",
+                                  "This procedure is affected by the following context setters: 'ligma-context-set-opacity', 'ligma-context-set-paint-mode', 'ligma-context-set-foreground', 'ligma-context-set-background', 'ligma-context-set-pattern', 'ligma-context-set-sample-threshold', 'ligma-context-set-sample-merged', 'ligma-context-set-sample-criterion', 'ligma-context-set-diagonal-neighbors', 'ligma-context-set-antialias'.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2018");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "The affected drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("fill-type",
                                                   "fill type",
                                                   "The type of fill",
-                                                  GIMP_TYPE_FILL_TYPE,
-                                                  GIMP_FILL_FOREGROUND,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                  LIGMA_TYPE_FILL_TYPE,
+                                                  LIGMA_FILL_FOREGROUND,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("x",
                                                     "x",
                                                     "The x coordinate of this bucket fill's application.",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("y",
                                                     "y",
                                                     "The y coordinate of this bucket fill's application.",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-drawable-edit-gradient-fill
+   * ligma-drawable-edit-gradient-fill
    */
-  procedure = gimp_procedure_new (drawable_edit_gradient_fill_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-drawable-edit-gradient-fill");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (drawable_edit_gradient_fill_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-drawable-edit-gradient-fill");
+  ligma_procedure_set_static_help (procedure,
                                   "Draw a gradient between the starting and ending coordinates with the specified gradient type.",
-                                  "This tool requires information on the gradient type. It creates the specified variety of gradient using the starting and ending coordinates as defined for each gradient type. For shapeburst gradient types, the context's distance metric is also relevant and can be updated with 'gimp-context-set-distance-metric'.\n"
+                                  "This tool requires information on the gradient type. It creates the specified variety of gradient using the starting and ending coordinates as defined for each gradient type. For shapeburst gradient types, the context's distance metric is also relevant and can be updated with 'ligma-context-set-distance-metric'.\n"
                                   "\n"
-                                  "This procedure is affected by the following context setters: 'gimp-context-set-opacity', 'gimp-context-set-paint-mode', 'gimp-context-set-foreground', 'gimp-context-set-background', 'gimp-context-set-gradient' and all gradient property settings, 'gimp-context-set-distance-metric'.",
+                                  "This procedure is affected by the following context setters: 'ligma-context-set-opacity', 'ligma-context-set-paint-mode', 'ligma-context-set-foreground', 'ligma-context-set-background', 'ligma-context-set-gradient' and all gradient property settings, 'ligma-context-set-distance-metric'.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2018");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "The affected drawable",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("gradient-type",
                                                   "gradient type",
                                                   "The type of gradient",
-                                                  GIMP_TYPE_GRADIENT_TYPE,
-                                                  GIMP_GRADIENT_LINEAR,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                  LIGMA_TYPE_GRADIENT_TYPE,
+                                                  LIGMA_GRADIENT_LINEAR,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("offset",
                                                     "offset",
                                                     "Offset relates to the starting and ending coordinates specified for the blend. This parameter is mode dependent.",
                                                     0, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("supersample",
                                                      "supersample",
                                                      "Do adaptive supersampling",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("supersample-max-depth",
                                                  "supersample max depth",
                                                  "Maximum recursion levels for supersampling",
                                                  1, 9, 1,
-                                                 GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE | LIGMA_PARAM_NO_VALIDATE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("supersample-threshold",
                                                     "supersample threshold",
                                                     "Supersampling threshold",
                                                     0, 4, 0,
-                                                    GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE | LIGMA_PARAM_NO_VALIDATE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("dither",
                                                      "dither",
                                                      "Use dithering to reduce banding",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("x1",
                                                     "x1",
                                                     "The x coordinate of this gradient's starting point",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("y1",
                                                     "y1",
                                                     "The y coordinate of this gradient's starting point",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("x2",
                                                     "x2",
                                                     "The x coordinate of this gradient's ending point",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("y2",
                                                     "y2",
                                                     "The y coordinate of this gradient's ending point",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-drawable-edit-stroke-selection
+   * ligma-drawable-edit-stroke-selection
    */
-  procedure = gimp_procedure_new (drawable_edit_stroke_selection_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-drawable-edit-stroke-selection");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (drawable_edit_stroke_selection_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-drawable-edit-stroke-selection");
+  ligma_procedure_set_static_help (procedure,
                                   "Stroke the current selection",
                                   "This procedure strokes the current selection, painting along the selection boundary with the active paint method and brush, or using a plain line with configurable properties. The paint is applied to the specified drawable regardless of the active selection.\n"
                                   "\n"
-                                  "This procedure is affected by the following context setters: 'gimp-context-set-opacity', 'gimp-context-set-paint-mode', 'gimp-context-set-paint-method', 'gimp-context-set-stroke-method', 'gimp-context-set-foreground', 'gimp-context-set-brush' and all brush property settings, 'gimp-context-set-gradient' and all gradient property settings, 'gimp-context-set-line-width' and all line property settings, 'gimp-context-set-antialias'.",
+                                  "This procedure is affected by the following context setters: 'ligma-context-set-opacity', 'ligma-context-set-paint-mode', 'ligma-context-set-paint-method', 'ligma-context-set-stroke-method', 'ligma-context-set-foreground', 'ligma-context-set-brush' and all brush property settings, 'ligma-context-set-gradient' and all gradient property settings, 'ligma-context-set-line-width' and all line property settings, 'ligma-context-set-antialias'.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "The drawable to stroke to",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-drawable-edit-stroke-item
+   * ligma-drawable-edit-stroke-item
    */
-  procedure = gimp_procedure_new (drawable_edit_stroke_item_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-drawable-edit-stroke-item");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (drawable_edit_stroke_item_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-drawable-edit-stroke-item");
+  ligma_procedure_set_static_help (procedure,
                                   "Stroke the specified item",
                                   "This procedure strokes the specified item, painting along its outline (e.g. along a path, or along a channel's boundary), with the active paint method and brush, or using a plain line with configurable properties.\n"
                                   "\n"
-                                  "This procedure is affected by the following context setters: 'gimp-context-set-opacity', 'gimp-context-set-paint-mode', 'gimp-context-set-paint-method', 'gimp-context-set-stroke-method', 'gimp-context-set-foreground', 'gimp-context-set-brush' and all brush property settings, 'gimp-context-set-gradient' and all gradient property settings, 'gimp-context-set-line-width' and all line property settings, 'gimp-context-set-antialias'.",
+                                  "This procedure is affected by the following context setters: 'ligma-context-set-opacity', 'ligma-context-set-paint-mode', 'ligma-context-set-paint-method', 'ligma-context-set-stroke-method', 'ligma-context-set-foreground', 'ligma-context-set-brush' and all brush property settings, 'ligma-context-set-gradient' and all gradient property settings, 'ligma-context-set-line-width' and all line property settings, 'ligma-context-set-antialias'.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2018");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "drawable",
                                                          "The drawable to stroke to",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_item ("item",
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_item ("item",
                                                      "item",
                                                      "The item to stroke",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

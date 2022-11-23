@@ -1,4 +1,4 @@
-#!/usr/bin/env gimp-script-fu-interpreter-3.0
+#!/usr/bin/env ligma-script-fu-interpreter-3.0
 
 ; Test mismatch between name of defined run function and name for PDB procedure
 ; Not a high priority: a rare syntax error in a plugin text.
@@ -16,7 +16,7 @@
 ; A PDB procedure is created.
 ; When invoked from Test>Test SF interpreter 8"
 ; the interpreter enters an infinite loop.
-; There is no harm to the GIMP app, but the interpreter process can only be killed.
+; There is no harm to the LIGMA app, but the interpreter process can only be killed.
 ; During the run phase, the "(define foo)"
 ; should re-define an existing definition in the interpreter state.
 ; Instead, since the name is mismatched,
@@ -24,12 +24,12 @@
 ; So script-fu-script-proc instead calls the PDB again, an infinite loop.
 
 (define (mismatch)
-  (gimp-message "mismatch")
+  (ligma-message "mismatch")
 )
 
 (script-fu-register "script-fu-test8"
   "Test SF interpreter 8"
-  "Just gives a message from Gimp"
+  "Just gives a message from Ligma"
   "lkk"
   "lkk"
   "2022"

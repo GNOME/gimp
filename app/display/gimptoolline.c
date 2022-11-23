@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimptoolline.c
- * Copyright (C) 2017 Michael Natterer <mitch@gimp.org>
+ * ligmatoolline.c
+ * Copyright (C) 2017 Michael Natterer <mitch@ligma.org>
  *
  * Major improvements for interactivity
  * Copyright (C) 2014 Michael Henning <drawoc@darkrefraction.com>
@@ -27,32 +27,32 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
 
 #include "display-types.h"
 
-#include "core/gimp-utils.h"
-#include "core/gimpmarshal.h"
+#include "core/ligma-utils.h"
+#include "core/ligmamarshal.h"
 
-#include "widgets/gimpwidgets-utils.h"
+#include "widgets/ligmawidgets-utils.h"
 
-#include "gimpcanvasgroup.h"
-#include "gimpcanvashandle.h"
-#include "gimpcanvasline.h"
-#include "gimpdisplayshell.h"
-#include "gimpdisplayshell-cursor.h"
-#include "gimpdisplayshell-utils.h"
-#include "gimptoolline.h"
+#include "ligmacanvasgroup.h"
+#include "ligmacanvashandle.h"
+#include "ligmacanvasline.h"
+#include "ligmadisplayshell.h"
+#include "ligmadisplayshell-cursor.h"
+#include "ligmadisplayshell-utils.h"
+#include "ligmatoolline.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 #define SHOW_LINE            TRUE
 #define GRAB_LINE_MASK       GDK_MOD1_MASK
-#define ENDPOINT_HANDLE_TYPE GIMP_HANDLE_CROSS
-#define ENDPOINT_HANDLE_SIZE GIMP_CANVAS_HANDLE_SIZE_CROSS
-#define SLIDER_HANDLE_TYPE   GIMP_HANDLE_FILLED_DIAMOND
+#define ENDPOINT_HANDLE_TYPE LIGMA_HANDLE_CROSS
+#define ENDPOINT_HANDLE_SIZE LIGMA_CANVAS_HANDLE_SIZE_CROSS
+#define SLIDER_HANDLE_TYPE   LIGMA_HANDLE_FILLED_DIAMOND
 #define SLIDER_HANDLE_SIZE   (ENDPOINT_HANDLE_SIZE * 2 / 3)
 #define HANDLE_CIRCLE_SCALE  1.8
 #define LINE_VICINITY        ((gint) (SLIDER_HANDLE_SIZE * HANDLE_CIRCLE_SCALE) / 2)
@@ -60,7 +60,7 @@
 
 
 /* hover-only "handles" */
-#define HOVER_NEW_SLIDER     (GIMP_TOOL_LINE_HANDLE_NONE - 1)
+#define HOVER_NEW_SLIDER     (LIGMA_TOOL_LINE_HANDLE_NONE - 1)
 
 
 typedef enum
@@ -68,7 +68,7 @@ typedef enum
   GRAB_NONE,
   GRAB_SELECTION,
   GRAB_LINE
-} GimpToolLineGrab;
+} LigmaToolLineGrab;
 
 enum
 {
@@ -93,7 +93,7 @@ enum
   LAST_SIGNAL
 };
 
-struct _GimpToolLinePrivate
+struct _LigmaToolLinePrivate
 {
   gdouble            x1;
   gdouble            y1;
@@ -114,137 +114,137 @@ struct _GimpToolLinePrivate
   gint               hover;
   gdouble            new_slider_value;
   gboolean           remove_slider;
-  GimpToolLineGrab   grab;
+  LigmaToolLineGrab   grab;
 
-  GimpCanvasItem    *line;
-  GimpCanvasItem    *start_handle;
-  GimpCanvasItem    *end_handle;
-  GimpCanvasItem    *slider_group;
+  LigmaCanvasItem    *line;
+  LigmaCanvasItem    *start_handle;
+  LigmaCanvasItem    *end_handle;
+  LigmaCanvasItem    *slider_group;
   GArray            *slider_handles;
-  GimpCanvasItem    *handle_circle;
+  LigmaCanvasItem    *handle_circle;
 };
 
 
 /*  local function prototypes  */
 
-static void     gimp_tool_line_constructed     (GObject               *object);
-static void     gimp_tool_line_finalize        (GObject               *object);
-static void     gimp_tool_line_set_property    (GObject               *object,
+static void     ligma_tool_line_constructed     (GObject               *object);
+static void     ligma_tool_line_finalize        (GObject               *object);
+static void     ligma_tool_line_set_property    (GObject               *object,
                                                 guint                  property_id,
                                                 const GValue          *value,
                                                 GParamSpec            *pspec);
-static void     gimp_tool_line_get_property    (GObject               *object,
+static void     ligma_tool_line_get_property    (GObject               *object,
                                                 guint                  property_id,
                                                 GValue                *value,
                                                 GParamSpec            *pspec);
 
-static void     gimp_tool_line_changed         (GimpToolWidget        *widget);
-static void     gimp_tool_line_focus_changed   (GimpToolWidget        *widget);
-static gint     gimp_tool_line_button_press    (GimpToolWidget        *widget,
-                                                const GimpCoords      *coords,
+static void     ligma_tool_line_changed         (LigmaToolWidget        *widget);
+static void     ligma_tool_line_focus_changed   (LigmaToolWidget        *widget);
+static gint     ligma_tool_line_button_press    (LigmaToolWidget        *widget,
+                                                const LigmaCoords      *coords,
                                                 guint32                time,
                                                 GdkModifierType        state,
-                                                GimpButtonPressType    press_type);
-static void     gimp_tool_line_button_release  (GimpToolWidget        *widget,
-                                                const GimpCoords      *coords,
+                                                LigmaButtonPressType    press_type);
+static void     ligma_tool_line_button_release  (LigmaToolWidget        *widget,
+                                                const LigmaCoords      *coords,
                                                 guint32                time,
                                                 GdkModifierType        state,
-                                                GimpButtonReleaseType  release_type);
-static void     gimp_tool_line_motion          (GimpToolWidget        *widget,
-                                                const GimpCoords      *coords,
+                                                LigmaButtonReleaseType  release_type);
+static void     ligma_tool_line_motion          (LigmaToolWidget        *widget,
+                                                const LigmaCoords      *coords,
                                                 guint32                time,
                                                 GdkModifierType        state);
-static GimpHit  gimp_tool_line_hit             (GimpToolWidget        *widget,
-                                                const GimpCoords      *coords,
+static LigmaHit  ligma_tool_line_hit             (LigmaToolWidget        *widget,
+                                                const LigmaCoords      *coords,
                                                 GdkModifierType        state,
                                                 gboolean               proximity);
-static void     gimp_tool_line_hover           (GimpToolWidget        *widget,
-                                                const GimpCoords      *coords,
+static void     ligma_tool_line_hover           (LigmaToolWidget        *widget,
+                                                const LigmaCoords      *coords,
                                                 GdkModifierType        state,
                                                 gboolean               proximity);
-static void     gimp_tool_line_leave_notify    (GimpToolWidget        *widget);
-static gboolean gimp_tool_line_key_press       (GimpToolWidget        *widget,
+static void     ligma_tool_line_leave_notify    (LigmaToolWidget        *widget);
+static gboolean ligma_tool_line_key_press       (LigmaToolWidget        *widget,
                                                 GdkEventKey           *kevent);
-static void     gimp_tool_line_motion_modifier (GimpToolWidget        *widget,
+static void     ligma_tool_line_motion_modifier (LigmaToolWidget        *widget,
                                                 GdkModifierType        key,
                                                 gboolean               press,
                                                 GdkModifierType        state);
-static gboolean gimp_tool_line_get_cursor      (GimpToolWidget        *widget,
-                                                const GimpCoords      *coords,
+static gboolean ligma_tool_line_get_cursor      (LigmaToolWidget        *widget,
+                                                const LigmaCoords      *coords,
                                                 GdkModifierType        state,
-                                                GimpCursorType        *cursor,
-                                                GimpToolCursorType    *tool_cursor,
-                                                GimpCursorModifier    *modifier);
+                                                LigmaCursorType        *cursor,
+                                                LigmaToolCursorType    *tool_cursor,
+                                                LigmaCursorModifier    *modifier);
 
-static gint     gimp_tool_line_get_hover       (GimpToolLine          *line,
-                                                const GimpCoords      *coords,
+static gint     ligma_tool_line_get_hover       (LigmaToolLine          *line,
+                                                const LigmaCoords      *coords,
                                                 GdkModifierType        state);
-static GimpControllerSlider *
-                gimp_tool_line_get_slider      (GimpToolLine          *line,
+static LigmaControllerSlider *
+                ligma_tool_line_get_slider      (LigmaToolLine          *line,
                                                 gint                   slider);
-static GimpCanvasItem *
-                gimp_tool_line_get_handle      (GimpToolLine          *line,
+static LigmaCanvasItem *
+                ligma_tool_line_get_handle      (LigmaToolLine          *line,
                                                 gint                   handle);
-static gdouble  gimp_tool_line_project_point   (GimpToolLine          *line,
+static gdouble  ligma_tool_line_project_point   (LigmaToolLine          *line,
                                                 gdouble                x,
                                                 gdouble                y,
                                                 gboolean               constrain,
                                                 gdouble               *dist);
 
 static gboolean
-               gimp_tool_line_selection_motion (GimpToolLine          *line,
+               ligma_tool_line_selection_motion (LigmaToolLine          *line,
                                                 gboolean               constrain);
 
-static void     gimp_tool_line_update_handles  (GimpToolLine          *line);
-static void     gimp_tool_line_update_circle   (GimpToolLine          *line);
-static void     gimp_tool_line_update_hilight  (GimpToolLine          *line);
-static void     gimp_tool_line_update_status   (GimpToolLine          *line,
+static void     ligma_tool_line_update_handles  (LigmaToolLine          *line);
+static void     ligma_tool_line_update_circle   (LigmaToolLine          *line);
+static void     ligma_tool_line_update_hilight  (LigmaToolLine          *line);
+static void     ligma_tool_line_update_status   (LigmaToolLine          *line,
                                                 GdkModifierType        state,
                                                 gboolean               proximity);
 
-static gboolean gimp_tool_line_handle_hit      (GimpCanvasItem        *handle,
+static gboolean ligma_tool_line_handle_hit      (LigmaCanvasItem        *handle,
                                                 gdouble                x,
                                                 gdouble                y,
                                                 gdouble               *min_dist);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpToolLine, gimp_tool_line, GIMP_TYPE_TOOL_WIDGET)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaToolLine, ligma_tool_line, LIGMA_TYPE_TOOL_WIDGET)
 
-#define parent_class gimp_tool_line_parent_class
+#define parent_class ligma_tool_line_parent_class
 
 static guint line_signals[LAST_SIGNAL] = { 0, };
 
 
 static void
-gimp_tool_line_class_init (GimpToolLineClass *klass)
+ligma_tool_line_class_init (LigmaToolLineClass *klass)
 {
   GObjectClass        *object_class = G_OBJECT_CLASS (klass);
-  GimpToolWidgetClass *widget_class = GIMP_TOOL_WIDGET_CLASS (klass);
+  LigmaToolWidgetClass *widget_class = LIGMA_TOOL_WIDGET_CLASS (klass);
 
-  object_class->constructed     = gimp_tool_line_constructed;
-  object_class->finalize        = gimp_tool_line_finalize;
-  object_class->set_property    = gimp_tool_line_set_property;
-  object_class->get_property    = gimp_tool_line_get_property;
+  object_class->constructed     = ligma_tool_line_constructed;
+  object_class->finalize        = ligma_tool_line_finalize;
+  object_class->set_property    = ligma_tool_line_set_property;
+  object_class->get_property    = ligma_tool_line_get_property;
 
-  widget_class->changed         = gimp_tool_line_changed;
-  widget_class->focus_changed   = gimp_tool_line_focus_changed;
-  widget_class->button_press    = gimp_tool_line_button_press;
-  widget_class->button_release  = gimp_tool_line_button_release;
-  widget_class->motion          = gimp_tool_line_motion;
-  widget_class->hit             = gimp_tool_line_hit;
-  widget_class->hover           = gimp_tool_line_hover;
-  widget_class->leave_notify    = gimp_tool_line_leave_notify;
-  widget_class->key_press       = gimp_tool_line_key_press;
-  widget_class->motion_modifier = gimp_tool_line_motion_modifier;
-  widget_class->get_cursor      = gimp_tool_line_get_cursor;
+  widget_class->changed         = ligma_tool_line_changed;
+  widget_class->focus_changed   = ligma_tool_line_focus_changed;
+  widget_class->button_press    = ligma_tool_line_button_press;
+  widget_class->button_release  = ligma_tool_line_button_release;
+  widget_class->motion          = ligma_tool_line_motion;
+  widget_class->hit             = ligma_tool_line_hit;
+  widget_class->hover           = ligma_tool_line_hover;
+  widget_class->leave_notify    = ligma_tool_line_leave_notify;
+  widget_class->key_press       = ligma_tool_line_key_press;
+  widget_class->motion_modifier = ligma_tool_line_motion_modifier;
+  widget_class->get_cursor      = ligma_tool_line_get_cursor;
 
   line_signals[CAN_ADD_SLIDER] =
     g_signal_new ("can-add-slider",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (GimpToolLineClass, can_add_slider),
+                  G_STRUCT_OFFSET (LigmaToolLineClass, can_add_slider),
                   NULL, NULL,
-                  gimp_marshal_BOOLEAN__DOUBLE,
+                  ligma_marshal_BOOLEAN__DOUBLE,
                   G_TYPE_BOOLEAN, 1,
                   G_TYPE_DOUBLE);
 
@@ -252,9 +252,9 @@ gimp_tool_line_class_init (GimpToolLineClass *klass)
     g_signal_new ("add-slider",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (GimpToolLineClass, add_slider),
+                  G_STRUCT_OFFSET (LigmaToolLineClass, add_slider),
                   NULL, NULL,
-                  gimp_marshal_INT__DOUBLE,
+                  ligma_marshal_INT__DOUBLE,
                   G_TYPE_INT, 1,
                   G_TYPE_DOUBLE);
 
@@ -262,9 +262,9 @@ gimp_tool_line_class_init (GimpToolLineClass *klass)
     g_signal_new ("prepare-to-remove-slider",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpToolLineClass, prepare_to_remove_slider),
+                  G_STRUCT_OFFSET (LigmaToolLineClass, prepare_to_remove_slider),
                   NULL, NULL,
-                  gimp_marshal_VOID__INT_BOOLEAN,
+                  ligma_marshal_VOID__INT_BOOLEAN,
                   G_TYPE_NONE, 2,
                   G_TYPE_INT,
                   G_TYPE_BOOLEAN);
@@ -273,7 +273,7 @@ gimp_tool_line_class_init (GimpToolLineClass *klass)
     g_signal_new ("remove-slider",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpToolLineClass, remove_slider),
+                  G_STRUCT_OFFSET (LigmaToolLineClass, remove_slider),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   G_TYPE_INT);
@@ -282,7 +282,7 @@ gimp_tool_line_class_init (GimpToolLineClass *klass)
     g_signal_new ("selection-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpToolLineClass, selection_changed),
+                  G_STRUCT_OFFSET (LigmaToolLineClass, selection_changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
@@ -290,137 +290,137 @@ gimp_tool_line_class_init (GimpToolLineClass *klass)
     g_signal_new ("handle-clicked",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (GimpToolLineClass, handle_clicked),
+                  G_STRUCT_OFFSET (LigmaToolLineClass, handle_clicked),
                   NULL, NULL,
-                  gimp_marshal_BOOLEAN__INT_UINT_ENUM,
+                  ligma_marshal_BOOLEAN__INT_UINT_ENUM,
                   G_TYPE_BOOLEAN, 3,
                   G_TYPE_INT,
                   G_TYPE_UINT,
-                  GIMP_TYPE_BUTTON_PRESS_TYPE);
+                  LIGMA_TYPE_BUTTON_PRESS_TYPE);
 
   g_object_class_install_property (object_class, PROP_X1,
                                    g_param_spec_double ("x1", NULL, NULL,
-                                                        -GIMP_MAX_IMAGE_SIZE,
-                                                        GIMP_MAX_IMAGE_SIZE, 0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        -LIGMA_MAX_IMAGE_SIZE,
+                                                        LIGMA_MAX_IMAGE_SIZE, 0,
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_Y1,
                                    g_param_spec_double ("y1", NULL, NULL,
-                                                        -GIMP_MAX_IMAGE_SIZE,
-                                                        GIMP_MAX_IMAGE_SIZE, 0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        -LIGMA_MAX_IMAGE_SIZE,
+                                                        LIGMA_MAX_IMAGE_SIZE, 0,
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_X2,
                                    g_param_spec_double ("x2", NULL, NULL,
-                                                        -GIMP_MAX_IMAGE_SIZE,
-                                                        GIMP_MAX_IMAGE_SIZE, 0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        -LIGMA_MAX_IMAGE_SIZE,
+                                                        LIGMA_MAX_IMAGE_SIZE, 0,
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_Y2,
                                    g_param_spec_double ("y2", NULL, NULL,
-                                                        -GIMP_MAX_IMAGE_SIZE,
-                                                        GIMP_MAX_IMAGE_SIZE, 0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        -LIGMA_MAX_IMAGE_SIZE,
+                                                        LIGMA_MAX_IMAGE_SIZE, 0,
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_SLIDERS,
                                    g_param_spec_boxed ("sliders", NULL, NULL,
                                                        G_TYPE_ARRAY,
-                                                       GIMP_PARAM_READWRITE));
+                                                       LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_SELECTION,
                                    g_param_spec_int ("selection", NULL, NULL,
-                                                     GIMP_TOOL_LINE_HANDLE_NONE,
+                                                     LIGMA_TOOL_LINE_HANDLE_NONE,
                                                      G_MAXINT,
-                                                     GIMP_TOOL_LINE_HANDLE_NONE,
-                                                     GIMP_PARAM_READWRITE |
+                                                     LIGMA_TOOL_LINE_HANDLE_NONE,
+                                                     LIGMA_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_STATUS_TITLE,
                                    g_param_spec_string ("status-title",
                                                         NULL, NULL,
                                                         _("Line: "),
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 }
 
 static void
-gimp_tool_line_init (GimpToolLine *line)
+ligma_tool_line_init (LigmaToolLine *line)
 {
-  GimpToolLinePrivate *private;
+  LigmaToolLinePrivate *private;
 
-  private = line->private = gimp_tool_line_get_instance_private (line);
+  private = line->private = ligma_tool_line_get_instance_private (line);
 
-  private->sliders = g_array_new (FALSE, FALSE, sizeof (GimpControllerSlider));
+  private->sliders = g_array_new (FALSE, FALSE, sizeof (LigmaControllerSlider));
 
-  private->selection = GIMP_TOOL_LINE_HANDLE_NONE;
-  private->hover     = GIMP_TOOL_LINE_HANDLE_NONE;
+  private->selection = LIGMA_TOOL_LINE_HANDLE_NONE;
+  private->hover     = LIGMA_TOOL_LINE_HANDLE_NONE;
   private->grab      = GRAB_NONE;
 
   private->slider_handles = g_array_new (FALSE, TRUE,
-                                         sizeof (GimpCanvasItem *));
+                                         sizeof (LigmaCanvasItem *));
 }
 
 static void
-gimp_tool_line_constructed (GObject *object)
+ligma_tool_line_constructed (GObject *object)
 {
-  GimpToolLine        *line    = GIMP_TOOL_LINE (object);
-  GimpToolWidget      *widget  = GIMP_TOOL_WIDGET (object);
-  GimpToolLinePrivate *private = line->private;
+  LigmaToolLine        *line    = LIGMA_TOOL_LINE (object);
+  LigmaToolWidget      *widget  = LIGMA_TOOL_WIDGET (object);
+  LigmaToolLinePrivate *private = line->private;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  private->line = gimp_tool_widget_add_line (widget,
+  private->line = ligma_tool_widget_add_line (widget,
                                              private->x1,
                                              private->y1,
                                              private->x2,
                                              private->y2);
 
-  gimp_canvas_item_set_visible (private->line, SHOW_LINE);
+  ligma_canvas_item_set_visible (private->line, SHOW_LINE);
 
   private->start_handle =
-    gimp_tool_widget_add_handle (widget,
+    ligma_tool_widget_add_handle (widget,
                                  ENDPOINT_HANDLE_TYPE,
                                  private->x1,
                                  private->y1,
                                  ENDPOINT_HANDLE_SIZE,
                                  ENDPOINT_HANDLE_SIZE,
-                                 GIMP_HANDLE_ANCHOR_CENTER);
+                                 LIGMA_HANDLE_ANCHOR_CENTER);
 
   private->end_handle =
-    gimp_tool_widget_add_handle (widget,
+    ligma_tool_widget_add_handle (widget,
                                  ENDPOINT_HANDLE_TYPE,
                                  private->x2,
                                  private->y2,
                                  ENDPOINT_HANDLE_SIZE,
                                  ENDPOINT_HANDLE_SIZE,
-                                 GIMP_HANDLE_ANCHOR_CENTER);
+                                 LIGMA_HANDLE_ANCHOR_CENTER);
 
   private->slider_group =
-    gimp_canvas_group_new (gimp_tool_widget_get_shell (widget));
-  gimp_tool_widget_add_item (widget, private->slider_group);
+    ligma_canvas_group_new (ligma_tool_widget_get_shell (widget));
+  ligma_tool_widget_add_item (widget, private->slider_group);
   g_object_unref (private->slider_group);
 
   private->handle_circle =
-    gimp_tool_widget_add_handle (widget,
-                                 GIMP_HANDLE_CIRCLE,
+    ligma_tool_widget_add_handle (widget,
+                                 LIGMA_HANDLE_CIRCLE,
                                  private->x1,
                                  private->y1,
                                  ENDPOINT_HANDLE_SIZE * HANDLE_CIRCLE_SCALE,
                                  ENDPOINT_HANDLE_SIZE * HANDLE_CIRCLE_SCALE,
-                                 GIMP_HANDLE_ANCHOR_CENTER);
+                                 LIGMA_HANDLE_ANCHOR_CENTER);
 
-  gimp_tool_line_changed (widget);
+  ligma_tool_line_changed (widget);
 }
 
 static void
-gimp_tool_line_finalize (GObject *object)
+ligma_tool_line_finalize (GObject *object)
 {
-  GimpToolLine        *line    = GIMP_TOOL_LINE (object);
-  GimpToolLinePrivate *private = line->private;
+  LigmaToolLine        *line    = LIGMA_TOOL_LINE (object);
+  LigmaToolLinePrivate *private = line->private;
 
   g_clear_pointer (&private->sliders, g_array_unref);
   g_clear_pointer (&private->status_title, g_free);
@@ -430,13 +430,13 @@ gimp_tool_line_finalize (GObject *object)
 }
 
 static void
-gimp_tool_line_set_property (GObject      *object,
+ligma_tool_line_set_property (GObject      *object,
                              guint         property_id,
                              const GValue *value,
                              GParamSpec   *pspec)
 {
-  GimpToolLine        *line    = GIMP_TOOL_LINE (object);
-  GimpToolLinePrivate *private = line->private;
+  LigmaToolLine        *line    = LIGMA_TOOL_LINE (object);
+  LigmaToolLinePrivate *private = line->private;
 
   switch (property_id)
     {
@@ -461,18 +461,18 @@ gimp_tool_line_set_property (GObject      *object,
         g_return_if_fail (sliders != NULL);
 
         deselect =
-          GIMP_TOOL_LINE_HANDLE_IS_SLIDER (private->selection) &&
+          LIGMA_TOOL_LINE_HANDLE_IS_SLIDER (private->selection) &&
           (sliders->len != private->sliders->len               ||
-           ! gimp_tool_line_get_slider (line, private->selection)->selectable);
+           ! ligma_tool_line_get_slider (line, private->selection)->selectable);
 
         g_array_unref (private->sliders);
         private->sliders = sliders;
 
-        if (GIMP_TOOL_LINE_HANDLE_IS_SLIDER (private->hover))
-          private->hover = GIMP_TOOL_LINE_HANDLE_NONE;
+        if (LIGMA_TOOL_LINE_HANDLE_IS_SLIDER (private->hover))
+          private->hover = LIGMA_TOOL_LINE_HANDLE_NONE;
 
         if (deselect)
-          gimp_tool_line_set_selection (line, GIMP_TOOL_LINE_HANDLE_NONE);
+          ligma_tool_line_set_selection (line, LIGMA_TOOL_LINE_HANDLE_NONE);
       }
       break;
 
@@ -482,7 +482,7 @@ gimp_tool_line_set_property (GObject      *object,
 
         g_return_if_fail (selection < (gint) private->sliders->len);
         g_return_if_fail (selection < 0 ||
-                          gimp_tool_line_get_slider (line,
+                          ligma_tool_line_get_slider (line,
                                                      selection)->selectable);
 
         if (selection != private->selection)
@@ -511,13 +511,13 @@ gimp_tool_line_set_property (GObject      *object,
 }
 
 static void
-gimp_tool_line_get_property (GObject    *object,
+ligma_tool_line_get_property (GObject    *object,
                              guint       property_id,
                              GValue     *value,
                              GParamSpec *pspec)
 {
-  GimpToolLine        *line    = GIMP_TOOL_LINE (object);
-  GimpToolLinePrivate *private = line->private;
+  LigmaToolLine        *line    = LIGMA_TOOL_LINE (object);
+  LigmaToolLinePrivate *private = line->private;
 
   switch (property_id)
     {
@@ -553,31 +553,31 @@ gimp_tool_line_get_property (GObject    *object,
 }
 
 static void
-gimp_tool_line_changed (GimpToolWidget *widget)
+ligma_tool_line_changed (LigmaToolWidget *widget)
 {
-  GimpToolLine        *line    = GIMP_TOOL_LINE (widget);
-  GimpToolLinePrivate *private = line->private;
+  LigmaToolLine        *line    = LIGMA_TOOL_LINE (widget);
+  LigmaToolLinePrivate *private = line->private;
   gint                 i;
 
-  gimp_canvas_line_set (private->line,
+  ligma_canvas_line_set (private->line,
                         private->x1,
                         private->y1,
                         private->x2,
                         private->y2);
 
-  gimp_canvas_handle_set_position (private->start_handle,
+  ligma_canvas_handle_set_position (private->start_handle,
                                    private->x1,
                                    private->y1);
 
-  gimp_canvas_handle_set_position (private->end_handle,
+  ligma_canvas_handle_set_position (private->end_handle,
                                    private->x2,
                                    private->y2);
 
   /* remove excessive slider handles */
   for (i = private->sliders->len; i < private->slider_handles->len; i++)
     {
-      gimp_canvas_group_remove_item (GIMP_CANVAS_GROUP (private->slider_group),
-                                     gimp_tool_line_get_handle (line, i));
+      ligma_canvas_group_remove_item (LIGMA_CANVAS_GROUP (private->slider_group),
+                                     ligma_tool_line_get_handle (line, i));
     }
 
   g_array_set_size (private->slider_handles, private->sliders->len);
@@ -587,57 +587,57 @@ gimp_tool_line_changed (GimpToolWidget *widget)
       gdouble          value;
       gdouble          x;
       gdouble          y;
-      GimpCanvasItem **handle;
+      LigmaCanvasItem **handle;
 
-      value = gimp_tool_line_get_slider (line, i)->value;
+      value = ligma_tool_line_get_slider (line, i)->value;
 
       x = private->x1 + (private->x2 - private->x1) * value;
       y = private->y1 + (private->y2 - private->y1) * value;
 
-      handle = &g_array_index (private->slider_handles, GimpCanvasItem *, i);
+      handle = &g_array_index (private->slider_handles, LigmaCanvasItem *, i);
 
       if (*handle)
         {
-          gimp_canvas_handle_set_position (*handle, x, y);
+          ligma_canvas_handle_set_position (*handle, x, y);
         }
       else
         {
-          *handle = gimp_canvas_handle_new (gimp_tool_widget_get_shell (widget),
+          *handle = ligma_canvas_handle_new (ligma_tool_widget_get_shell (widget),
                                             SLIDER_HANDLE_TYPE,
-                                            GIMP_HANDLE_ANCHOR_CENTER,
+                                            LIGMA_HANDLE_ANCHOR_CENTER,
                                             x,
                                             y,
                                             SLIDER_HANDLE_SIZE,
                                             SLIDER_HANDLE_SIZE);
 
-          gimp_canvas_group_add_item (GIMP_CANVAS_GROUP (private->slider_group),
+          ligma_canvas_group_add_item (LIGMA_CANVAS_GROUP (private->slider_group),
                                       *handle);
           g_object_unref (*handle);
         }
     }
 
-  gimp_tool_line_update_handles (line);
-  gimp_tool_line_update_circle (line);
-  gimp_tool_line_update_hilight (line);
+  ligma_tool_line_update_handles (line);
+  ligma_tool_line_update_circle (line);
+  ligma_tool_line_update_hilight (line);
 }
 
 static void
-gimp_tool_line_focus_changed (GimpToolWidget *widget)
+ligma_tool_line_focus_changed (LigmaToolWidget *widget)
 {
-  GimpToolLine *line = GIMP_TOOL_LINE (widget);
+  LigmaToolLine *line = LIGMA_TOOL_LINE (widget);
 
-  gimp_tool_line_update_hilight (line);
+  ligma_tool_line_update_hilight (line);
 }
 
 gboolean
-gimp_tool_line_button_press (GimpToolWidget      *widget,
-                             const GimpCoords    *coords,
+ligma_tool_line_button_press (LigmaToolWidget      *widget,
+                             const LigmaCoords    *coords,
                              guint32              time,
                              GdkModifierType      state,
-                             GimpButtonPressType  press_type)
+                             LigmaButtonPressType  press_type)
 {
-  GimpToolLine        *line    = GIMP_TOOL_LINE (widget);
-  GimpToolLinePrivate *private = line->private;
+  LigmaToolLine        *line    = LIGMA_TOOL_LINE (widget);
+  LigmaToolLinePrivate *private = line->private;
   gboolean             result  = FALSE;
 
   private->grab          = GRAB_NONE;
@@ -648,33 +648,33 @@ gimp_tool_line_button_press (GimpToolWidget      *widget,
   private->saved_x2 = private->x2;
   private->saved_y2 = private->y2;
 
-  if (press_type         != GIMP_BUTTON_PRESS_NORMAL   &&
-      private->hover      > GIMP_TOOL_LINE_HANDLE_NONE &&
-      private->selection  > GIMP_TOOL_LINE_HANDLE_NONE)
+  if (press_type         != LIGMA_BUTTON_PRESS_NORMAL   &&
+      private->hover      > LIGMA_TOOL_LINE_HANDLE_NONE &&
+      private->selection  > LIGMA_TOOL_LINE_HANDLE_NONE)
     {
       g_signal_emit (line, line_signals[HANDLE_CLICKED], 0,
                      private->selection, state, press_type, &result);
 
       if (! result)
-        gimp_tool_widget_hover (widget, coords, state, TRUE);
+        ligma_tool_widget_hover (widget, coords, state, TRUE);
     }
 
-  if (press_type == GIMP_BUTTON_PRESS_NORMAL || ! result)
+  if (press_type == LIGMA_BUTTON_PRESS_NORMAL || ! result)
     {
       private->saved_x1 = private->x1;
       private->saved_y1 = private->y1;
       private->saved_x2 = private->x2;
       private->saved_y2 = private->y2;
 
-      if (GIMP_TOOL_LINE_HANDLE_IS_SLIDER (private->hover))
+      if (LIGMA_TOOL_LINE_HANDLE_IS_SLIDER (private->hover))
         {
           private->saved_slider_value =
-            gimp_tool_line_get_slider (line, private->hover)->value;
+            ligma_tool_line_get_slider (line, private->hover)->value;
         }
 
-      if (private->hover > GIMP_TOOL_LINE_HANDLE_NONE)
+      if (private->hover > LIGMA_TOOL_LINE_HANDLE_NONE)
         {
-          gimp_tool_line_set_selection (line, private->hover);
+          ligma_tool_line_set_selection (line, private->hover);
 
           private->grab = GRAB_SELECTION;
         }
@@ -689,10 +689,10 @@ gimp_tool_line_button_press (GimpToolWidget      *widget,
 
           if (slider >= 0)
             {
-              gimp_tool_line_set_selection (line, slider);
+              ligma_tool_line_set_selection (line, slider);
 
               private->saved_slider_value =
-                gimp_tool_line_get_slider (line, private->selection)->value;
+                ligma_tool_line_get_slider (line, private->selection)->value;
 
               private->grab = GRAB_SELECTION;
             }
@@ -707,39 +707,39 @@ gimp_tool_line_button_press (GimpToolWidget      *widget,
 
   if (! result)
     {
-      private->hover = GIMP_TOOL_LINE_HANDLE_NONE;
+      private->hover = LIGMA_TOOL_LINE_HANDLE_NONE;
 
-      gimp_tool_line_set_selection (line, GIMP_TOOL_LINE_HANDLE_NONE);
+      ligma_tool_line_set_selection (line, LIGMA_TOOL_LINE_HANDLE_NONE);
     }
 
-  gimp_tool_line_update_handles (line);
-  gimp_tool_line_update_circle (line);
-  gimp_tool_line_update_status (line, state, TRUE);
+  ligma_tool_line_update_handles (line);
+  ligma_tool_line_update_circle (line);
+  ligma_tool_line_update_status (line, state, TRUE);
 
   return result;
 }
 
 void
-gimp_tool_line_button_release (GimpToolWidget        *widget,
-                               const GimpCoords      *coords,
+ligma_tool_line_button_release (LigmaToolWidget        *widget,
+                               const LigmaCoords      *coords,
                                guint32                time,
                                GdkModifierType        state,
-                               GimpButtonReleaseType  release_type)
+                               LigmaButtonReleaseType  release_type)
 {
-  GimpToolLine        *line    = GIMP_TOOL_LINE (widget);
-  GimpToolLinePrivate *private = line->private;
-  GimpToolLineGrab     grab    = private->grab;
+  LigmaToolLine        *line    = LIGMA_TOOL_LINE (widget);
+  LigmaToolLinePrivate *private = line->private;
+  LigmaToolLineGrab     grab    = private->grab;
 
   private->grab = GRAB_NONE;
 
-  if (release_type == GIMP_BUTTON_RELEASE_CANCEL)
+  if (release_type == LIGMA_BUTTON_RELEASE_CANCEL)
     {
       if (grab != GRAB_NONE)
         {
           if (grab == GRAB_SELECTION &&
-              GIMP_TOOL_LINE_HANDLE_IS_SLIDER (private->selection))
+              LIGMA_TOOL_LINE_HANDLE_IS_SLIDER (private->selection))
             {
-              gimp_tool_line_get_slider (line, private->selection)->value =
+              ligma_tool_line_get_slider (line, private->selection)->value =
                 private->saved_slider_value;
 
               if (private->remove_slider)
@@ -768,25 +768,25 @@ gimp_tool_line_button_release (GimpToolWidget        *widget,
           g_signal_emit (line, line_signals[REMOVE_SLIDER], 0,
                          private->selection);
         }
-      else if (release_type == GIMP_BUTTON_RELEASE_CLICK)
+      else if (release_type == LIGMA_BUTTON_RELEASE_CLICK)
         {
           gboolean result;
 
           g_signal_emit (line, line_signals[HANDLE_CLICKED], 0,
-                         private->selection, state, GIMP_BUTTON_PRESS_NORMAL,
+                         private->selection, state, LIGMA_BUTTON_PRESS_NORMAL,
                          &result);
         }
     }
 }
 
 void
-gimp_tool_line_motion (GimpToolWidget   *widget,
-                       const GimpCoords *coords,
+ligma_tool_line_motion (LigmaToolWidget   *widget,
+                       const LigmaCoords *coords,
                        guint32           time,
                        GdkModifierType   state)
 {
-  GimpToolLine        *line    = GIMP_TOOL_LINE (widget);
-  GimpToolLinePrivate *private = line->private;
+  LigmaToolLine        *line    = LIGMA_TOOL_LINE (widget);
+  LigmaToolLinePrivate *private = line->private;
   gdouble              diff_x  = coords->x - private->mouse_x;
   gdouble              diff_y  = coords->y - private->mouse_y;
 
@@ -804,94 +804,94 @@ gimp_tool_line_motion (GimpToolWidget   *widget,
     }
   else
     {
-      gboolean constrain = (state & gimp_get_constrain_behavior_mask ()) != 0;
+      gboolean constrain = (state & ligma_get_constrain_behavior_mask ()) != 0;
 
-      gimp_tool_line_selection_motion (line, constrain);
+      ligma_tool_line_selection_motion (line, constrain);
     }
 
-  gimp_tool_line_update_status (line, state, TRUE);
+  ligma_tool_line_update_status (line, state, TRUE);
 }
 
-GimpHit
-gimp_tool_line_hit (GimpToolWidget   *widget,
-                    const GimpCoords *coords,
+LigmaHit
+ligma_tool_line_hit (LigmaToolWidget   *widget,
+                    const LigmaCoords *coords,
                     GdkModifierType   state,
                     gboolean          proximity)
 {
-  GimpToolLine *line = GIMP_TOOL_LINE (widget);
+  LigmaToolLine *line = LIGMA_TOOL_LINE (widget);
 
   if (! (state & GRAB_LINE_MASK))
     {
-      gint hover = gimp_tool_line_get_hover (line, coords, state);
+      gint hover = ligma_tool_line_get_hover (line, coords, state);
 
-      if (hover != GIMP_TOOL_LINE_HANDLE_NONE)
-        return GIMP_HIT_DIRECT;
+      if (hover != LIGMA_TOOL_LINE_HANDLE_NONE)
+        return LIGMA_HIT_DIRECT;
     }
   else
     {
-      return GIMP_HIT_INDIRECT;
+      return LIGMA_HIT_INDIRECT;
     }
 
-  return GIMP_HIT_NONE;
+  return LIGMA_HIT_NONE;
 }
 
 void
-gimp_tool_line_hover (GimpToolWidget   *widget,
-                      const GimpCoords *coords,
+ligma_tool_line_hover (LigmaToolWidget   *widget,
+                      const LigmaCoords *coords,
                       GdkModifierType   state,
                       gboolean          proximity)
 {
-  GimpToolLine        *line    = GIMP_TOOL_LINE (widget);
-  GimpToolLinePrivate *private = line->private;
+  LigmaToolLine        *line    = LIGMA_TOOL_LINE (widget);
+  LigmaToolLinePrivate *private = line->private;
 
   private->mouse_x = coords->x;
   private->mouse_y = coords->y;
 
   if (! (state & GRAB_LINE_MASK))
-    private->hover = gimp_tool_line_get_hover (line, coords, state);
+    private->hover = ligma_tool_line_get_hover (line, coords, state);
   else
-    private->hover = GIMP_TOOL_LINE_HANDLE_NONE;
+    private->hover = LIGMA_TOOL_LINE_HANDLE_NONE;
 
-  gimp_tool_line_update_handles (line);
-  gimp_tool_line_update_circle (line);
-  gimp_tool_line_update_status (line, state, proximity);
+  ligma_tool_line_update_handles (line);
+  ligma_tool_line_update_circle (line);
+  ligma_tool_line_update_status (line, state, proximity);
 }
 
 static void
-gimp_tool_line_leave_notify (GimpToolWidget *widget)
+ligma_tool_line_leave_notify (LigmaToolWidget *widget)
 {
-  GimpToolLine        *line    = GIMP_TOOL_LINE (widget);
-  GimpToolLinePrivate *private = line->private;
+  LigmaToolLine        *line    = LIGMA_TOOL_LINE (widget);
+  LigmaToolLinePrivate *private = line->private;
 
-  private->hover = GIMP_TOOL_LINE_HANDLE_NONE;
+  private->hover = LIGMA_TOOL_LINE_HANDLE_NONE;
 
-  gimp_tool_line_update_handles (line);
-  gimp_tool_line_update_circle (line);
+  ligma_tool_line_update_handles (line);
+  ligma_tool_line_update_circle (line);
 
-  GIMP_TOOL_WIDGET_CLASS (parent_class)->leave_notify (widget);
+  LIGMA_TOOL_WIDGET_CLASS (parent_class)->leave_notify (widget);
 }
 
 static gboolean
-gimp_tool_line_key_press (GimpToolWidget *widget,
+ligma_tool_line_key_press (LigmaToolWidget *widget,
                           GdkEventKey    *kevent)
 {
-  GimpToolLine        *line    = GIMP_TOOL_LINE (widget);
-  GimpToolLinePrivate *private = line->private;
-  GimpDisplayShell    *shell;
+  LigmaToolLine        *line    = LIGMA_TOOL_LINE (widget);
+  LigmaToolLinePrivate *private = line->private;
+  LigmaDisplayShell    *shell;
   gdouble              pixels  = 1.0;
   gboolean             move_line;
 
   move_line = kevent->state & GRAB_LINE_MASK;
 
-  if (private->selection == GIMP_TOOL_LINE_HANDLE_NONE && ! move_line)
-    return GIMP_TOOL_WIDGET_CLASS (parent_class)->key_press (widget, kevent);
+  if (private->selection == LIGMA_TOOL_LINE_HANDLE_NONE && ! move_line)
+    return LIGMA_TOOL_WIDGET_CLASS (parent_class)->key_press (widget, kevent);
 
-  shell = gimp_tool_widget_get_shell (widget);
+  shell = ligma_tool_widget_get_shell (widget);
 
-  if (kevent->state & gimp_get_extend_selection_mask ())
+  if (kevent->state & ligma_get_extend_selection_mask ())
     pixels = 10.0;
 
-  if (kevent->state & gimp_get_toggle_behavior_mask ())
+  if (kevent->state & ligma_get_toggle_behavior_mask ())
     pixels = 50.0;
 
   switch (kevent->keyval)
@@ -920,7 +920,7 @@ gimp_tool_line_key_press (GimpToolWidget *widget,
             case GDK_KEY_Down:  dy = +ydist; break;
             }
 
-          if (private->selection == GIMP_TOOL_LINE_HANDLE_START || move_line)
+          if (private->selection == LIGMA_TOOL_LINE_HANDLE_START || move_line)
             {
               g_object_set (line,
                             "x1", private->x1 + dx,
@@ -928,7 +928,7 @@ gimp_tool_line_key_press (GimpToolWidget *widget,
                             NULL);
             }
 
-          if (private->selection == GIMP_TOOL_LINE_HANDLE_END || move_line)
+          if (private->selection == LIGMA_TOOL_LINE_HANDLE_END || move_line)
             {
               g_object_set (line,
                             "x2", private->x2 + dx,
@@ -939,16 +939,16 @@ gimp_tool_line_key_press (GimpToolWidget *widget,
       /* move a slider */
       else
         {
-          GimpControllerSlider *slider;
+          LigmaControllerSlider *slider;
           gdouble               dist;
           gdouble               dvalue;
 
-          slider = gimp_tool_line_get_slider (line, private->selection);
+          slider = ligma_tool_line_get_slider (line, private->selection);
 
           if (! slider->movable)
             break;
 
-          dist = gimp_canvas_item_transform_distance (private->line,
+          dist = ligma_canvas_item_transform_distance (private->line,
                                                       private->x1, private->y1,
                                                       private->x2, private->y2);
 
@@ -995,9 +995,9 @@ gimp_tool_line_key_press (GimpToolWidget *widget,
 
     case GDK_KEY_BackSpace:
     case GDK_KEY_Delete:
-      if (GIMP_TOOL_LINE_HANDLE_IS_SLIDER (private->selection))
+      if (LIGMA_TOOL_LINE_HANDLE_IS_SLIDER (private->selection))
         {
-          if (gimp_tool_line_get_slider (line, private->selection)->removable)
+          if (ligma_tool_line_get_slider (line, private->selection)->removable)
             {
               g_signal_emit (line, line_signals[REMOVE_SLIDER], 0,
                              private->selection);
@@ -1006,73 +1006,73 @@ gimp_tool_line_key_press (GimpToolWidget *widget,
       return TRUE;
     }
 
-  return GIMP_TOOL_WIDGET_CLASS (parent_class)->key_press (widget, kevent);
+  return LIGMA_TOOL_WIDGET_CLASS (parent_class)->key_press (widget, kevent);
 }
 
 static void
-gimp_tool_line_motion_modifier (GimpToolWidget  *widget,
+ligma_tool_line_motion_modifier (LigmaToolWidget  *widget,
                                 GdkModifierType  key,
                                 gboolean         press,
                                 GdkModifierType  state)
 {
-  GimpToolLine *line = GIMP_TOOL_LINE (widget);
+  LigmaToolLine *line = LIGMA_TOOL_LINE (widget);
 
-  if (key == gimp_get_constrain_behavior_mask ())
+  if (key == ligma_get_constrain_behavior_mask ())
     {
-      gimp_tool_line_selection_motion (line, press);
+      ligma_tool_line_selection_motion (line, press);
 
-      gimp_tool_line_update_status (line, state, TRUE);
+      ligma_tool_line_update_status (line, state, TRUE);
     }
 }
 
 static gboolean
-gimp_tool_line_get_cursor (GimpToolWidget     *widget,
-                           const GimpCoords   *coords,
+ligma_tool_line_get_cursor (LigmaToolWidget     *widget,
+                           const LigmaCoords   *coords,
                            GdkModifierType     state,
-                           GimpCursorType     *cursor,
-                           GimpToolCursorType *tool_cursor,
-                           GimpCursorModifier *modifier)
+                           LigmaCursorType     *cursor,
+                           LigmaToolCursorType *tool_cursor,
+                           LigmaCursorModifier *modifier)
 {
-  GimpToolLine        *line    = GIMP_TOOL_LINE (widget);
-  GimpToolLinePrivate *private = line->private;
+  LigmaToolLine        *line    = LIGMA_TOOL_LINE (widget);
+  LigmaToolLinePrivate *private = line->private;
 
   if (private->grab ==GRAB_LINE || (state & GRAB_LINE_MASK))
     {
-      *modifier = GIMP_CURSOR_MODIFIER_MOVE;
+      *modifier = LIGMA_CURSOR_MODIFIER_MOVE;
 
       return TRUE;
     }
   else if (private->grab  == GRAB_SELECTION ||
-           private->hover >  GIMP_TOOL_LINE_HANDLE_NONE)
+           private->hover >  LIGMA_TOOL_LINE_HANDLE_NONE)
     {
-      const GimpControllerSlider *slider = NULL;
+      const LigmaControllerSlider *slider = NULL;
 
       if (private->grab == GRAB_SELECTION)
         {
-          if (GIMP_TOOL_LINE_HANDLE_IS_SLIDER (private->selection))
-            slider = gimp_tool_line_get_slider (line, private->selection);
+          if (LIGMA_TOOL_LINE_HANDLE_IS_SLIDER (private->selection))
+            slider = ligma_tool_line_get_slider (line, private->selection);
         }
-      else if (GIMP_TOOL_LINE_HANDLE_IS_SLIDER (private->hover))
+      else if (LIGMA_TOOL_LINE_HANDLE_IS_SLIDER (private->hover))
         {
-          slider = gimp_tool_line_get_slider (line, private->hover);
+          slider = ligma_tool_line_get_slider (line, private->hover);
         }
 
       if (private->grab == GRAB_SELECTION && slider && private->remove_slider)
         {
-          *modifier = GIMP_CURSOR_MODIFIER_MINUS;
+          *modifier = LIGMA_CURSOR_MODIFIER_MINUS;
 
           return TRUE;
         }
       else if (! slider || slider->movable)
         {
-          *modifier = GIMP_CURSOR_MODIFIER_MOVE;
+          *modifier = LIGMA_CURSOR_MODIFIER_MOVE;
 
           return TRUE;
         }
     }
   else if (private->hover == HOVER_NEW_SLIDER)
     {
-      *modifier = GIMP_CURSOR_MODIFIER_PLUS;
+      *modifier = LIGMA_CURSOR_MODIFIER_PLUS;
 
       return TRUE;
     }
@@ -1081,12 +1081,12 @@ gimp_tool_line_get_cursor (GimpToolWidget     *widget,
 }
 
 static gint
-gimp_tool_line_get_hover (GimpToolLine     *line,
-                          const GimpCoords *coords,
+ligma_tool_line_get_hover (LigmaToolLine     *line,
+                          const LigmaCoords *coords,
                           GdkModifierType   state)
 {
-  GimpToolLinePrivate *private = line->private;
-  gint                 hover   = GIMP_TOOL_LINE_HANDLE_NONE;
+  LigmaToolLinePrivate *private = line->private;
+  gint                 hover   = LIGMA_TOOL_LINE_HANDLE_NONE;
   gdouble              min_dist;
   gint                 first_handle;
   gint                 i;
@@ -1102,23 +1102,23 @@ gimp_tool_line_get_hover (GimpToolLine     *line,
   if (private->x1 == private->x2 && private->y1 == private->y2)
     first_handle = -1;
 
-  for (i = first_handle; i > GIMP_TOOL_LINE_HANDLE_NONE; i--)
+  for (i = first_handle; i > LIGMA_TOOL_LINE_HANDLE_NONE; i--)
     {
-      GimpCanvasItem *handle;
+      LigmaCanvasItem *handle;
 
-      if (GIMP_TOOL_LINE_HANDLE_IS_SLIDER (i))
+      if (LIGMA_TOOL_LINE_HANDLE_IS_SLIDER (i))
         {
-          const GimpControllerSlider *slider;
+          const LigmaControllerSlider *slider;
 
-          slider = gimp_tool_line_get_slider (line, i);
+          slider = ligma_tool_line_get_slider (line, i);
 
           if (! slider->visible || ! slider->selectable)
             continue;
         }
 
-      handle = gimp_tool_line_get_handle (line, i);
+      handle = ligma_tool_line_get_handle (line, i);
 
-      if (gimp_tool_line_handle_hit (handle,
+      if (ligma_tool_line_handle_hit (handle,
                                      private->mouse_x,
                                      private->mouse_y,
                                      &min_dist))
@@ -1127,15 +1127,15 @@ gimp_tool_line_get_hover (GimpToolLine     *line,
         }
     }
 
-  if (hover == GIMP_TOOL_LINE_HANDLE_NONE)
+  if (hover == LIGMA_TOOL_LINE_HANDLE_NONE)
     {
       gboolean constrain;
       gdouble  value;
       gdouble  dist;
 
-      constrain = (state & gimp_get_constrain_behavior_mask ()) != 0;
+      constrain = (state & ligma_get_constrain_behavior_mask ()) != 0;
 
-      value = gimp_tool_line_project_point (line,
+      value = ligma_tool_line_project_point (line,
                                             private->mouse_x,
                                             private->mouse_y,
                                             constrain,
@@ -1159,51 +1159,51 @@ gimp_tool_line_get_hover (GimpToolLine     *line,
   return hover;
 }
 
-static GimpControllerSlider *
-gimp_tool_line_get_slider (GimpToolLine *line,
+static LigmaControllerSlider *
+ligma_tool_line_get_slider (LigmaToolLine *line,
                            gint          slider)
 {
-  GimpToolLinePrivate *private = line->private;
+  LigmaToolLinePrivate *private = line->private;
 
-  gimp_assert (slider >= 0 && slider < private->sliders->len);
+  ligma_assert (slider >= 0 && slider < private->sliders->len);
 
-  return &g_array_index (private->sliders, GimpControllerSlider, slider);
+  return &g_array_index (private->sliders, LigmaControllerSlider, slider);
 }
 
-static GimpCanvasItem *
-gimp_tool_line_get_handle (GimpToolLine *line,
+static LigmaCanvasItem *
+ligma_tool_line_get_handle (LigmaToolLine *line,
                            gint          handle)
 {
-  GimpToolLinePrivate *private = line->private;
+  LigmaToolLinePrivate *private = line->private;
 
   switch (handle)
     {
-    case GIMP_TOOL_LINE_HANDLE_NONE:
+    case LIGMA_TOOL_LINE_HANDLE_NONE:
       return NULL;
 
-    case GIMP_TOOL_LINE_HANDLE_START:
+    case LIGMA_TOOL_LINE_HANDLE_START:
       return private->start_handle;
 
-    case GIMP_TOOL_LINE_HANDLE_END:
+    case LIGMA_TOOL_LINE_HANDLE_END:
       return private->end_handle;
 
     default:
-      gimp_assert (handle >= 0 &&
+      ligma_assert (handle >= 0 &&
                    handle <  (gint) private->slider_handles->len);
 
       return g_array_index (private->slider_handles,
-                            GimpCanvasItem *, handle);
+                            LigmaCanvasItem *, handle);
     }
 }
 
 static gdouble
-gimp_tool_line_project_point (GimpToolLine *line,
+ligma_tool_line_project_point (LigmaToolLine *line,
                               gdouble       x,
                               gdouble       y,
                               gboolean      constrain,
                               gdouble      *dist)
 {
-  GimpToolLinePrivate *private = line->private;
+  LigmaToolLinePrivate *private = line->private;
   gdouble              length_sqr;
   gdouble              value   = 0.0;
 
@@ -1227,7 +1227,7 @@ gimp_tool_line_project_point (GimpToolLine *line,
           px = private->x1 + (private->x2 - private->x1) * value;
           py = private->y1 + (private->y2 - private->y1) * value;
 
-          *dist = gimp_canvas_item_transform_distance (private->line,
+          *dist = ligma_canvas_item_transform_distance (private->line,
                                                        x,  y,
                                                        px, py);
         }
@@ -1239,7 +1239,7 @@ gimp_tool_line_project_point (GimpToolLine *line,
     {
       if (dist)
         {
-          *dist = gimp_canvas_item_transform_distance (private->line,
+          *dist = ligma_canvas_item_transform_distance (private->line,
                                                        x,           y,
                                                        private->x1, private->y1);
         }
@@ -1249,10 +1249,10 @@ gimp_tool_line_project_point (GimpToolLine *line,
 }
 
 static gboolean
-gimp_tool_line_selection_motion (GimpToolLine *line,
+ligma_tool_line_selection_motion (LigmaToolLine *line,
                                  gboolean      constrain)
 {
-  GimpToolLinePrivate *private = line->private;
+  LigmaToolLinePrivate *private = line->private;
   gdouble              x       = private->mouse_x;
   gdouble              y       = private->mouse_y;
 
@@ -1261,17 +1261,17 @@ gimp_tool_line_selection_motion (GimpToolLine *line,
 
   switch (private->selection)
     {
-    case GIMP_TOOL_LINE_HANDLE_NONE:
-      gimp_assert_not_reached ();
+    case LIGMA_TOOL_LINE_HANDLE_NONE:
+      ligma_assert_not_reached ();
 
-    case GIMP_TOOL_LINE_HANDLE_START:
+    case LIGMA_TOOL_LINE_HANDLE_START:
       if (constrain)
         {
-          gimp_display_shell_constrain_line (
-            gimp_tool_widget_get_shell (GIMP_TOOL_WIDGET (line)),
+          ligma_display_shell_constrain_line (
+            ligma_tool_widget_get_shell (LIGMA_TOOL_WIDGET (line)),
             private->x2, private->y2,
             &x, &y,
-            GIMP_CONSTRAIN_LINE_15_DEGREES);
+            LIGMA_CONSTRAIN_LINE_15_DEGREES);
         }
 
       g_object_set (line,
@@ -1280,14 +1280,14 @@ gimp_tool_line_selection_motion (GimpToolLine *line,
                     NULL);
       return TRUE;
 
-    case GIMP_TOOL_LINE_HANDLE_END:
+    case LIGMA_TOOL_LINE_HANDLE_END:
       if (constrain)
         {
-          gimp_display_shell_constrain_line (
-            gimp_tool_widget_get_shell (GIMP_TOOL_WIDGET (line)),
+          ligma_display_shell_constrain_line (
+            ligma_tool_widget_get_shell (LIGMA_TOOL_WIDGET (line)),
             private->x1, private->y1,
             &x, &y,
-            GIMP_CONSTRAIN_LINE_15_DEGREES);
+            LIGMA_CONSTRAIN_LINE_15_DEGREES);
         }
 
       g_object_set (line,
@@ -1298,18 +1298,18 @@ gimp_tool_line_selection_motion (GimpToolLine *line,
 
     default:
       {
-        GimpDisplayShell     *shell;
-        GimpControllerSlider *slider;
+        LigmaDisplayShell     *shell;
+        LigmaControllerSlider *slider;
         gdouble               value;
         gdouble               dist;
         gboolean              remove_slider;
 
-        shell = gimp_tool_widget_get_shell (GIMP_TOOL_WIDGET (line));
+        shell = ligma_tool_widget_get_shell (LIGMA_TOOL_WIDGET (line));
 
-        slider = gimp_tool_line_get_slider (line, private->selection);
+        slider = ligma_tool_line_get_slider (line, private->selection);
 
         /* project the cursor position onto the line */
-        value = gimp_tool_line_project_point (line, x, y, constrain, &dist);
+        value = ligma_tool_line_project_point (line, x, y, constrain, &dist);
 
         /* slider dragging */
         if (slider->movable)
@@ -1340,25 +1340,25 @@ gimp_tool_line_selection_motion (GimpToolLine *line,
              * directly -- eek!
              */
             {
-              GimpCursorType     cursor;
-              GimpToolCursorType tool_cursor;
-              GimpCursorModifier modifier;
+              LigmaCursorType     cursor;
+              LigmaToolCursorType tool_cursor;
+              LigmaCursorModifier modifier;
 
               cursor      = shell->current_cursor;
               tool_cursor = shell->tool_cursor;
-              modifier    = GIMP_CURSOR_MODIFIER_NONE;
+              modifier    = LIGMA_CURSOR_MODIFIER_NONE;
 
-              gimp_tool_line_get_cursor (GIMP_TOOL_WIDGET (line), NULL, 0,
+              ligma_tool_line_get_cursor (LIGMA_TOOL_WIDGET (line), NULL, 0,
                                          &cursor, &tool_cursor, &modifier);
 
-              gimp_display_shell_set_cursor (shell, cursor, tool_cursor, modifier);
+              ligma_display_shell_set_cursor (shell, cursor, tool_cursor, modifier);
             }
 
-            gimp_tool_line_update_handles (line);
-            gimp_tool_line_update_circle (line);
-            gimp_tool_line_update_status (line,
+            ligma_tool_line_update_handles (line);
+            ligma_tool_line_update_circle (line);
+            ligma_tool_line_update_status (line,
                                           constrain ?
-                                            gimp_get_constrain_behavior_mask () :
+                                            ligma_get_constrain_behavior_mask () :
                                             0,
                                           TRUE);
           }
@@ -1369,14 +1369,14 @@ gimp_tool_line_selection_motion (GimpToolLine *line,
 }
 
 static void
-gimp_tool_line_update_handles (GimpToolLine *line)
+ligma_tool_line_update_handles (LigmaToolLine *line)
 {
-  GimpToolLinePrivate *private = line->private;
+  LigmaToolLinePrivate *private = line->private;
   gdouble              value;
   gdouble              dist;
   gint                 i;
 
-  value = gimp_tool_line_project_point (line,
+  value = ligma_tool_line_project_point (line,
                                         private->mouse_x,
                                         private->mouse_y,
                                         FALSE,
@@ -1384,15 +1384,15 @@ gimp_tool_line_update_handles (GimpToolLine *line)
 
   for (i = 0; i < private->sliders->len; i++)
     {
-      const GimpControllerSlider *slider;
-      GimpCanvasItem             *handle;
+      const LigmaControllerSlider *slider;
+      LigmaCanvasItem             *handle;
       gint                        size;
       gint                        hit_radius;
       gboolean                    show_autohidden;
       gboolean                    visible;
 
-      slider = gimp_tool_line_get_slider (line, i);
-      handle = gimp_tool_line_get_handle (line, i);
+      slider = ligma_tool_line_get_slider (line, i);
+      handle = ligma_tool_line_get_handle (line, i);
 
       size = slider->size * SLIDER_HANDLE_SIZE;
       size = MAX (size, 1);
@@ -1405,7 +1405,7 @@ gimp_tool_line_update_handles (GimpToolLine *line)
        */
       show_autohidden = private->selection == i                        ||
                         (private->grab == GRAB_NONE                    &&
-                         (private->hover <= GIMP_TOOL_LINE_HANDLE_NONE ||
+                         (private->hover <= LIGMA_TOOL_LINE_HANDLE_NONE ||
                           private->hover == i)                         &&
                          dist <= hit_radius                            &&
                          value >= slider->min                          &&
@@ -1415,7 +1415,7 @@ gimp_tool_line_update_handles (GimpToolLine *line)
                 (! slider->autohide || show_autohidden) &&
                 ! (private->selection == i && private->remove_slider);
 
-      handle = gimp_tool_line_get_handle (line, i);
+      handle = ligma_tool_line_get_handle (line, i);
 
       if (visible)
         {
@@ -1426,18 +1426,18 @@ gimp_tool_line_update_handles (GimpToolLine *line)
                         NULL);
         }
 
-      gimp_canvas_item_set_visible (handle, visible);
+      ligma_canvas_item_set_visible (handle, visible);
     }
 }
 
 static void
-gimp_tool_line_update_circle (GimpToolLine *line)
+ligma_tool_line_update_circle (LigmaToolLine *line)
 {
-  GimpToolLinePrivate *private = line->private;
+  LigmaToolLinePrivate *private = line->private;
   gboolean             visible;
 
   visible = (private->grab == GRAB_NONE                    &&
-             private->hover != GIMP_TOOL_LINE_HANDLE_NONE) ||
+             private->hover != LIGMA_TOOL_LINE_HANDLE_NONE) ||
             (private->grab == GRAB_SELECTION               &&
              private->remove_slider);
 
@@ -1463,23 +1463,23 @@ gimp_tool_line_update_circle (GimpToolLine *line)
         }
       else
         {
-          GimpCanvasItem *handle;
+          LigmaCanvasItem *handle;
 
           if (private->grab == GRAB_SELECTION)
             {
               /* tear slider */
-              handle = gimp_tool_line_get_handle (line, private->selection);
+              handle = ligma_tool_line_get_handle (line, private->selection);
               dashed = TRUE;
             }
           else
             {
               /* hover over handle */
-              handle = gimp_tool_line_get_handle (line, private->hover);
+              handle = ligma_tool_line_get_handle (line, private->hover);
               dashed = FALSE;
             }
 
-          gimp_canvas_handle_get_position (handle, &x,     &y);
-          gimp_canvas_handle_get_size     (handle, &width, &height);
+          ligma_canvas_handle_get_position (handle, &x,     &y);
+          ligma_canvas_handle_get_size     (handle, &width, &height);
         }
 
       width   = MAX (width,  SLIDER_HANDLE_SIZE);
@@ -1488,66 +1488,66 @@ gimp_tool_line_update_circle (GimpToolLine *line)
       width  *= HANDLE_CIRCLE_SCALE;
       height *= HANDLE_CIRCLE_SCALE;
 
-      gimp_canvas_handle_set_position (private->handle_circle, x,     y);
-      gimp_canvas_handle_set_size     (private->handle_circle, width, height);
+      ligma_canvas_handle_set_position (private->handle_circle, x,     y);
+      ligma_canvas_handle_set_size     (private->handle_circle, width, height);
 
       g_object_set (private->handle_circle,
-                    "type", dashed ? GIMP_HANDLE_DASHED_CIRCLE :
-                                     GIMP_HANDLE_CIRCLE,
+                    "type", dashed ? LIGMA_HANDLE_DASHED_CIRCLE :
+                                     LIGMA_HANDLE_CIRCLE,
                     NULL);
     }
 
-  gimp_canvas_item_set_visible (private->handle_circle, visible);
+  ligma_canvas_item_set_visible (private->handle_circle, visible);
 }
 
 static void
-gimp_tool_line_update_hilight (GimpToolLine *line)
+ligma_tool_line_update_hilight (LigmaToolLine *line)
 {
-  GimpToolLinePrivate *private = line->private;
+  LigmaToolLinePrivate *private = line->private;
   gboolean             focus;
   gint                 i;
 
-  focus = gimp_tool_widget_get_focus (GIMP_TOOL_WIDGET (line));
+  focus = ligma_tool_widget_get_focus (LIGMA_TOOL_WIDGET (line));
 
-  for (i = GIMP_TOOL_LINE_HANDLE_NONE + 1;
+  for (i = LIGMA_TOOL_LINE_HANDLE_NONE + 1;
        i < (gint) private->sliders->len;
        i++)
     {
-      GimpCanvasItem *handle;
+      LigmaCanvasItem *handle;
 
-      handle = gimp_tool_line_get_handle (line, i);
+      handle = ligma_tool_line_get_handle (line, i);
 
-      gimp_canvas_item_set_highlight (handle, focus && i == private->selection);
+      ligma_canvas_item_set_highlight (handle, focus && i == private->selection);
     }
 }
 
 static void
-gimp_tool_line_update_status (GimpToolLine    *line,
+ligma_tool_line_update_status (LigmaToolLine    *line,
                               GdkModifierType  state,
                               gboolean         proximity)
 {
-  GimpToolLinePrivate *private = line->private;
+  LigmaToolLinePrivate *private = line->private;
 
   if (proximity)
     {
-      GimpDisplayShell *shell;
+      LigmaDisplayShell *shell;
       const gchar      *toggle_behavior_format = NULL;
       const gchar      *message                = NULL;
       gchar            *line_status            = NULL;
       gchar            *status;
       gint              handle;
 
-      shell = gimp_tool_widget_get_shell (GIMP_TOOL_WIDGET (line));
+      shell = ligma_tool_widget_get_shell (LIGMA_TOOL_WIDGET (line));
 
       if (private->grab == GRAB_SELECTION)
         handle = private->selection;
       else
         handle = private->hover;
 
-      if (handle == GIMP_TOOL_LINE_HANDLE_START ||
-          handle == GIMP_TOOL_LINE_HANDLE_END)
+      if (handle == LIGMA_TOOL_LINE_HANDLE_START ||
+          handle == LIGMA_TOOL_LINE_HANDLE_END)
         {
-          line_status = gimp_display_shell_get_line_status (shell,
+          line_status = ligma_display_shell_get_line_status (shell,
                                                             _("Click-Drag to move the endpoint"),
                                                             ". ",
                                                             private->x1,
@@ -1556,7 +1556,7 @@ gimp_tool_line_update_status (GimpToolLine    *line,
                                                             private->y2);
           toggle_behavior_format = _("%s for constrained angles");
         }
-      else if (GIMP_TOOL_LINE_HANDLE_IS_SLIDER (handle) ||
+      else if (LIGMA_TOOL_LINE_HANDLE_IS_SLIDER (handle) ||
                handle == HOVER_NEW_SLIDER)
         {
           if (private->grab == GRAB_SELECTION && private->remove_slider)
@@ -1567,11 +1567,11 @@ gimp_tool_line_update_status (GimpToolLine    *line,
             {
               toggle_behavior_format = _("%s for constrained values");
 
-              if (GIMP_TOOL_LINE_HANDLE_IS_SLIDER (handle))
+              if (LIGMA_TOOL_LINE_HANDLE_IS_SLIDER (handle))
                 {
-                  if (gimp_tool_line_get_slider (line, handle)->movable)
+                  if (ligma_tool_line_get_slider (line, handle)->movable)
                     {
-                      if (gimp_tool_line_get_slider (line, handle)->removable)
+                      if (ligma_tool_line_get_slider (line, handle)->removable)
                         {
                           if (private->grab == GRAB_SELECTION)
                             {
@@ -1592,7 +1592,7 @@ gimp_tool_line_update_status (GimpToolLine    *line,
                     {
                       toggle_behavior_format = NULL;
 
-                      if (gimp_tool_line_get_slider (line, handle)->removable)
+                      if (ligma_tool_line_get_slider (line, handle)->removable)
                         {
                           if (private->grab == GRAB_SELECTION)
                             {
@@ -1621,9 +1621,9 @@ gimp_tool_line_update_status (GimpToolLine    *line,
         }
 
       status =
-        gimp_suggest_modifiers (message ? message : (line_status ? line_status : ""),
+        ligma_suggest_modifiers (message ? message : (line_status ? line_status : ""),
                                 ((toggle_behavior_format ?
-                                   gimp_get_constrain_behavior_mask () : 0) |
+                                   ligma_get_constrain_behavior_mask () : 0) |
                                  (private->grab == GRAB_NONE ?
                                    GDK_MOD1_MASK : 0)) &
                                 ~state,
@@ -1633,18 +1633,18 @@ gimp_tool_line_update_status (GimpToolLine    *line,
 
       if (message || line_status)
         {
-          gimp_tool_widget_set_status (GIMP_TOOL_WIDGET (line), status);
+          ligma_tool_widget_set_status (LIGMA_TOOL_WIDGET (line), status);
         }
       else
         {
-          line_status = gimp_display_shell_get_line_status (shell,
+          line_status = ligma_display_shell_get_line_status (shell,
                                                             private->status_title,
                                                             ". ",
                                                             private->x1,
                                                             private->y1,
                                                             private->x2,
                                                             private->y2);
-          gimp_tool_widget_set_status_coords (GIMP_TOOL_WIDGET (line),
+          ligma_tool_widget_set_status_coords (LIGMA_TOOL_WIDGET (line),
                                               line_status,
                                               private->x2 - private->x1,
                                               ", ",
@@ -1658,12 +1658,12 @@ gimp_tool_line_update_status (GimpToolLine    *line,
     }
   else
     {
-      gimp_tool_widget_set_status (GIMP_TOOL_WIDGET (line), NULL);
+      ligma_tool_widget_set_status (LIGMA_TOOL_WIDGET (line), NULL);
     }
 }
 
 static gboolean
-gimp_tool_line_handle_hit (GimpCanvasItem *handle,
+ligma_tool_line_handle_hit (LigmaCanvasItem *handle,
                            gdouble         x,
                            gdouble         y,
                            gdouble        *min_dist)
@@ -1675,8 +1675,8 @@ gimp_tool_line_handle_hit (GimpCanvasItem *handle,
   gint    radius;
   gdouble dist;
 
-  gimp_canvas_handle_get_position (handle, &handle_x,     &handle_y);
-  gimp_canvas_handle_get_size     (handle, &handle_width, &handle_height);
+  ligma_canvas_handle_get_position (handle, &handle_x,     &handle_y);
+  ligma_canvas_handle_get_size     (handle, &handle_width, &handle_height);
 
   handle_width  = MAX (handle_width,  SLIDER_HANDLE_SIZE);
   handle_height = MAX (handle_height, SLIDER_HANDLE_SIZE);
@@ -1684,7 +1684,7 @@ gimp_tool_line_handle_hit (GimpCanvasItem *handle,
   radius = ((gint) (handle_width * HANDLE_CIRCLE_SCALE)) / 2;
   radius = MAX (radius, LINE_VICINITY);
 
-  dist = gimp_canvas_item_transform_distance (handle,
+  dist = ligma_canvas_item_transform_distance (handle,
                                               x, y, handle_x, handle_y);
 
   if (dist <= radius && dist < *min_dist)
@@ -1702,16 +1702,16 @@ gimp_tool_line_handle_hit (GimpCanvasItem *handle,
 
 /*  public functions  */
 
-GimpToolWidget *
-gimp_tool_line_new (GimpDisplayShell *shell,
+LigmaToolWidget *
+ligma_tool_line_new (LigmaDisplayShell *shell,
                     gdouble           x1,
                     gdouble           y1,
                     gdouble           x2,
                     gdouble           y2)
 {
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
+  g_return_val_if_fail (LIGMA_IS_DISPLAY_SHELL (shell), NULL);
 
-  return g_object_new (GIMP_TYPE_TOOL_LINE,
+  return g_object_new (LIGMA_TYPE_TOOL_LINE,
                        "shell", shell,
                        "x1",    x1,
                        "y1",    y1,
@@ -1721,59 +1721,59 @@ gimp_tool_line_new (GimpDisplayShell *shell,
 }
 
 void
-gimp_tool_line_set_sliders (GimpToolLine               *line,
-                            const GimpControllerSlider *sliders,
+ligma_tool_line_set_sliders (LigmaToolLine               *line,
+                            const LigmaControllerSlider *sliders,
                             gint                        n_sliders)
 {
-  GimpToolLinePrivate *private;
+  LigmaToolLinePrivate *private;
 
-  g_return_if_fail (GIMP_IS_TOOL_LINE (line));
+  g_return_if_fail (LIGMA_IS_TOOL_LINE (line));
   g_return_if_fail (n_sliders == 0 || (n_sliders > 0 && sliders != NULL));
 
   private = line->private;
 
-  if (GIMP_TOOL_LINE_HANDLE_IS_SLIDER (private->selection) &&
+  if (LIGMA_TOOL_LINE_HANDLE_IS_SLIDER (private->selection) &&
       private->sliders->len != n_sliders)
     {
-      gimp_tool_line_set_selection (line, GIMP_TOOL_LINE_HANDLE_NONE);
+      ligma_tool_line_set_selection (line, LIGMA_TOOL_LINE_HANDLE_NONE);
     }
 
   g_array_set_size (private->sliders, n_sliders);
 
   memcpy (private->sliders->data, sliders,
-          n_sliders * sizeof (GimpControllerSlider));
+          n_sliders * sizeof (LigmaControllerSlider));
 
   g_object_set (line,
                 "sliders", private->sliders,
                 NULL);
 }
 
-const GimpControllerSlider *
-gimp_tool_line_get_sliders (GimpToolLine *line,
+const LigmaControllerSlider *
+ligma_tool_line_get_sliders (LigmaToolLine *line,
                             gint         *n_sliders)
 {
-  GimpToolLinePrivate *private;
+  LigmaToolLinePrivate *private;
 
-  g_return_val_if_fail (GIMP_IS_TOOL_LINE (line), NULL);
+  g_return_val_if_fail (LIGMA_IS_TOOL_LINE (line), NULL);
 
   private = line->private;
 
   if (n_sliders) *n_sliders = private->sliders->len;
 
-  return (const GimpControllerSlider *) private->sliders->data;
+  return (const LigmaControllerSlider *) private->sliders->data;
 }
 
 void
-gimp_tool_line_set_selection (GimpToolLine *line,
+ligma_tool_line_set_selection (LigmaToolLine *line,
                               gint          handle)
 {
-  GimpToolLinePrivate *private;
+  LigmaToolLinePrivate *private;
 
-  g_return_if_fail (GIMP_IS_TOOL_LINE (line));
+  g_return_if_fail (LIGMA_IS_TOOL_LINE (line));
 
   private = line->private;
 
-  g_return_if_fail (handle >= GIMP_TOOL_LINE_HANDLE_NONE &&
+  g_return_if_fail (handle >= LIGMA_TOOL_LINE_HANDLE_NONE &&
                     handle <  (gint) private->sliders->len);
 
   g_object_set (line,
@@ -1782,11 +1782,11 @@ gimp_tool_line_set_selection (GimpToolLine *line,
 }
 
 gint
-gimp_tool_line_get_selection (GimpToolLine *line)
+ligma_tool_line_get_selection (LigmaToolLine *line)
 {
-  GimpToolLinePrivate *private;
+  LigmaToolLinePrivate *private;
 
-  g_return_val_if_fail (GIMP_IS_TOOL_LINE (line), GIMP_TOOL_LINE_HANDLE_NONE);
+  g_return_val_if_fail (LIGMA_IS_TOOL_LINE (line), LIGMA_TOOL_LINE_HANDLE_NONE);
 
   private = line->private;
 

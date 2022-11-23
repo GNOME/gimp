@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,23 +19,23 @@
 #define __CHANNEL_OPTIONS_DIALOG_H__
 
 
-typedef void (* GimpChannelOptionsCallback) (GtkWidget     *dialog,
-                                             GimpImage     *image,
-                                             GimpChannel   *channel,
-                                             GimpContext   *context,
+typedef void (* LigmaChannelOptionsCallback) (GtkWidget     *dialog,
+                                             LigmaImage     *image,
+                                             LigmaChannel   *channel,
+                                             LigmaContext   *context,
                                              const gchar   *channel_name,
-                                             const GimpRGB *channel_color,
+                                             const LigmaRGB *channel_color,
                                              gboolean       save_selection,
                                              gboolean       channel_visible,
-                                             GimpColorTag   channel_color_tag,
+                                             LigmaColorTag   channel_color_tag,
                                              gboolean       channel_lock_content,
                                              gboolean       channel_lock_position,
                                              gpointer       user_data);
 
 
-GtkWidget * channel_options_dialog_new (GimpImage                  *image,
-                                        GimpChannel                *channel,
-                                        GimpContext                *context,
+GtkWidget * channel_options_dialog_new (LigmaImage                  *image,
+                                        LigmaChannel                *channel,
+                                        LigmaContext                *context,
                                         GtkWidget                  *parent,
                                         const gchar                *title,
                                         const gchar                *role,
@@ -46,12 +46,12 @@ GtkWidget * channel_options_dialog_new (GimpImage                  *image,
                                         const gchar                *opacity_label,
                                         gboolean                    show_from_sel,
                                         const gchar                *channel_name,
-                                        const GimpRGB              *channel_color,
+                                        const LigmaRGB              *channel_color,
                                         gboolean                    channel_visible,
-                                        GimpColorTag                channel_color_tag,
+                                        LigmaColorTag                channel_color_tag,
                                         gboolean                    channel_lock_content,
                                         gboolean                    channel_lock_position,
-                                        GimpChannelOptionsCallback  callback,
+                                        LigmaChannelOptionsCallback  callback,
                                         gpointer                    user_data);
 
 

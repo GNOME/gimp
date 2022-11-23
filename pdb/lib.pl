@@ -1,5 +1,5 @@
-# GIMP - The GNU Image Manipulation Program
-# Copyright (C) 1998-2003 Manish Singh <yosh@gimp.org>
+# LIGMA - The GNU Image Manipulation Program
+# Copyright (C) 1998-2003 Manish Singh <yosh@ligma.org>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -14,19 +14,19 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-package Gimp::CodeGen::lib;
+package Ligma::CodeGen::lib;
 
-# Generates all the libgimp C wrappers (used by plugins)
-$destdir  = "$main::destdir/libgimp";
-$builddir = "$main::builddir/libgimp";
+# Generates all the libligma C wrappers (used by plugins)
+$destdir  = "$main::destdir/libligma";
+$builddir = "$main::builddir/libligma";
 
-*arg_types = \%Gimp::CodeGen::pdb::arg_types;
-*arg_parse = \&Gimp::CodeGen::pdb::arg_parse;
+*arg_types = \%Ligma::CodeGen::pdb::arg_types;
+*arg_parse = \&Ligma::CodeGen::pdb::arg_parse;
 
-*enums = \%Gimp::CodeGen::enums::enums;
+*enums = \%Ligma::CodeGen::enums::enums;
 
-*write_file = \&Gimp::CodeGen::util::write_file;
-*FILE_EXT   = \$Gimp::CodeGen::util::FILE_EXT;
+*write_file = \&Ligma::CodeGen::util::write_file;
+*FILE_EXT   = \$Ligma::CodeGen::util::FILE_EXT;
 
 use Text::Wrap qw(wrap);
 
@@ -76,7 +76,7 @@ sub generate_fun {
 	return $rettype;
     }
 
-    my $funcname = "gimp_$name";
+    my $funcname = "ligma_$name";
     my $wrapped = "";
     my $new_funcname = $funcname;
     my %usednames;
@@ -94,13 +94,13 @@ sub generate_fun {
 
     if ($proc->{deprecated}) {
         if ($proc->{deprecated} eq 'NONE') {
-            push @{$out->{protos}}, "GIMP_DEPRECATED\n";
+            push @{$out->{protos}}, "LIGMA_DEPRECATED\n";
         }
         else {
             my $underscores = $proc->{deprecated};
             $underscores =~ s/-/_/g;
 
-            push @{$out->{protos}}, "GIMP_DEPRECATED_FOR($underscores)\n";
+            push @{$out->{protos}}, "LIGMA_DEPRECATED_FOR($underscores)\n";
         }
     }
 
@@ -195,13 +195,13 @@ sub generate_fun {
         my $var_len;
         my $value;
 
-        # This gets passed to gimp_value_array_new_with_types()
+        # This gets passed to ligma_value_array_new_with_types()
         if ($type eq 'enum') {
             $enum_type = $typeinfo[0];
             $enum_type =~ s/([a-z])([A-Z])/$1_$2/g;
             $enum_type =~ s/([A-Z]+)([A-Z])/$1_$2/g;
             $enum_type =~ tr/[a-z]/[A-Z]/;
-            $enum_type =~ s/^GIMP/GIMP_TYPE/;
+            $enum_type =~ s/^LIGMA/LIGMA_TYPE/;
             $enum_type =~ s/^GEGL/GEGL_TYPE/;
 
             $value_array .= "$enum_type, ";
@@ -222,7 +222,7 @@ sub generate_fun {
         if (exists $_->{array}) {
             my $arrayarg = $_->{array};
 
-            $value = "gimp_value_array_index (args, $argc)";
+            $value = "ligma_value_array_index (args, $argc)";
 
             if (exists $arrayarg->{name}) {
                 $var_len = $arrayarg->{name};
@@ -269,7 +269,7 @@ sub generate_fun {
 
     # This marshals the return value(s)
     my $return_args = "";
-    my $return_marshal = "gimp_value_array_unref (return_vals);";
+    my $return_marshal = "ligma_value_array_unref (return_vals);";
 
     # return success/failure boolean if we don't have anything else
     if ($rettype eq 'void') {
@@ -344,14 +344,14 @@ sub generate_fun {
 
         if ($rettype eq 'void') {
             $return_marshal .= <<CODE;
-success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
   if (success)
 CODE
         }
         else {
             $return_marshal .= <<CODE;
-if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
 CODE
         }
 
@@ -414,7 +414,7 @@ CODE
 
         $return_marshal .= <<'CODE';
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
 CODE
         unless ($retvoid) {
@@ -426,7 +426,7 @@ CODE
     }
     else {
         $return_marshal = <<CODE;
-success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
   $return_marshal
 
@@ -528,16 +528,16 @@ $retdesc$sincedesc
 $rettype
 $wrapped$funcname ($clist)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;$return_args
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;$return_args
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           ${value_array}G_TYPE_NONE);
 $arg_array
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-$proc->{canonical_name}",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-$proc->{canonical_name}",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
   $return_marshal
 }
@@ -569,7 +569,7 @@ sub generate_hbody {
     foreach (@{$out->{protos}}) {
         my $arglist;
 
-        if (!/^GIMP_DEPRECATED/) {
+        if (!/^LIGMA_DEPRECATED/) {
             my $len;
 
             $arglist = [ split(' ', $_, 3) ];
@@ -643,7 +643,7 @@ sub generate_hbody {
     $body = $extra->{decls} if exists $extra->{decls};
     foreach (@{$out->{protos}}) { $body .= $_ }
     if ($out->{deprecated}) {
-        $body .= "#endif /* GIMP_DISABLE_DEPRECATED */\n";
+        $body .= "#endif /* LIGMA_DISABLE_DEPRECATED */\n";
     }
     chomp $body;
 
@@ -666,7 +666,7 @@ sub generate {
     }
 
     my $lgpl_top = <<'LGPL';
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
 LGPL
@@ -697,9 +697,9 @@ LGPL
     while (my($group, $out) = each %out) {
         my $hname = "${group}pdb.h"; 
         my $cname = "${group}pdb.c";
-        if ($group ne 'gimp') {
-	    $hname = "gimp${hname}"; 
-	    $cname = "gimp${cname}";
+        if ($group ne 'ligma') {
+	    $hname = "ligma${hname}"; 
+	    $cname = "ligma${cname}";
         }
         $hname =~ s/_//g; $hname =~ s/pdb\./_pdb./;
         $cname =~ s/_//g; $cname =~ s/pdb\./_pdb./;
@@ -718,10 +718,10 @@ LGPL
         print HFILE $lgpl_top;
         print HFILE " * $hname\n";
         print HFILE $lgpl_bottom;
- 	my $guard = "__GIMP_\U$group\E_PDB_H__";
+ 	my $guard = "__LIGMA_\U$group\E_PDB_H__";
 	print HFILE <<HEADER;
-#if !defined (__GIMP_H_INSIDE__) && !defined (GIMP_COMPILATION)
-#error "Only <libgimp/gimp.h> can be included directly."
+#if !defined (__LIGMA_H_INSIDE__) && !defined (LIGMA_COMPILATION)
+#error "Only <libligma/ligma.h> can be included directly."
 #endif
 
 #ifndef $guard
@@ -749,7 +749,7 @@ HEADER
         print CFILE qq/#include "config.h"\n\n/;
 	print CFILE qq/#include "stamp-pdbgen.h"\n\n/;
 	print CFILE $out->{headers}, "\n" if exists $out->{headers};
-	print CFILE qq/#include "gimp.h"\n/;
+	print CFILE qq/#include "ligma.h"\n/;
 
 	if (exists $main::grp{$group}->{lib_private}) {
 	    print CFILE qq/#include "$hname"\n/;
@@ -778,15 +778,15 @@ SECTION_DOCS
     }
 
     if (! $ENV{PDBGEN_GROUPS}) {
-        my $gimp_pdb_headers = "$builddir/gimp_pdb_headers.h$FILE_EXT";
-	open PFILE, "> $gimp_pdb_headers" or die "Can't open $gimp_pdb_headers: $!\n";
+        my $ligma_pdb_headers = "$builddir/ligma_pdb_headers.h$FILE_EXT";
+	open PFILE, "> $ligma_pdb_headers" or die "Can't open $ligma_pdb_headers: $!\n";
         print PFILE $lgpl_top;
-        print PFILE " * gimp_pdb_headers.h\n";
+        print PFILE " * ligma_pdb_headers.h\n";
         print PFILE $lgpl_bottom;
-	my $guard = "__GIMP_PDB_HEADERS_H__";
+	my $guard = "__LIGMA_PDB_HEADERS_H__";
 	print PFILE <<HEADER;
-#if !defined (__GIMP_H_INSIDE__) && !defined (GIMP_COMPILATION)
-#error "Only <libgimp/gimp.h> can be included directly."
+#if !defined (__LIGMA_H_INSIDE__) && !defined (LIGMA_COMPILATION)
+#error "Only <libligma/ligma.h> can be included directly."
 #endif
 
 #ifndef $guard
@@ -796,8 +796,8 @@ HEADER
 	my @groups;
 	foreach $group (keys %out) {
 	    my $hname = "${group}pdb.h";
-	    if ($group ne 'gimp') {
-		$hname = "gimp${hname}";
+	    if ($group ne 'ligma') {
+		$hname = "ligma${hname}";
 	    }
 	    $hname =~ s/_//g; $hname =~ s/pdb\./_pdb./;
 	    if (! exists $main::grp{$group}->{lib_private}) {
@@ -805,13 +805,13 @@ HEADER
 	    }
 	}
 	foreach $group (sort @groups) {
-	    print PFILE "#include <libgimp/$group>\n";
+	    print PFILE "#include <libligma/$group>\n";
 	}
 	print PFILE <<HEADER;
 
 #endif /* $guard */
 HEADER
 	close PFILE;
-	&write_file($gimp_pdb_headers, $destdir);
+	&write_file($ligma_pdb_headers, $destdir);
     }
 }

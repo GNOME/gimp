@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,50 +15,50 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_AIRBRUSH_H__
-#define __GIMP_AIRBRUSH_H__
+#ifndef __LIGMA_AIRBRUSH_H__
+#define __LIGMA_AIRBRUSH_H__
 
 
-#include "gimppaintbrush.h"
+#include "ligmapaintbrush.h"
 
 
-#define GIMP_TYPE_AIRBRUSH            (gimp_airbrush_get_type ())
-#define GIMP_AIRBRUSH(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_AIRBRUSH, GimpAirbrush))
-#define GIMP_AIRBRUSH_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_AIRBRUSH, GimpAirbrushClass))
-#define GIMP_IS_AIRBRUSH(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_AIRBRUSH))
-#define GIMP_IS_AIRBRUSH_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_AIRBRUSH))
-#define GIMP_AIRBRUSH_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_AIRBRUSH, GimpAirbrushClass))
+#define LIGMA_TYPE_AIRBRUSH            (ligma_airbrush_get_type ())
+#define LIGMA_AIRBRUSH(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_AIRBRUSH, LigmaAirbrush))
+#define LIGMA_AIRBRUSH_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_AIRBRUSH, LigmaAirbrushClass))
+#define LIGMA_IS_AIRBRUSH(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_AIRBRUSH))
+#define LIGMA_IS_AIRBRUSH_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_AIRBRUSH))
+#define LIGMA_AIRBRUSH_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_AIRBRUSH, LigmaAirbrushClass))
 
 
-typedef struct _GimpAirbrushClass GimpAirbrushClass;
+typedef struct _LigmaAirbrushClass LigmaAirbrushClass;
 
-struct _GimpAirbrush
+struct _LigmaAirbrush
 {
-  GimpPaintbrush    parent_instance;
+  LigmaPaintbrush    parent_instance;
 
   guint             timeout_id;
 
-  GimpSymmetry     *sym;
-  GimpDrawable     *drawable;
-  GimpPaintOptions *paint_options;
-  GimpCoords        coords;
+  LigmaSymmetry     *sym;
+  LigmaDrawable     *drawable;
+  LigmaPaintOptions *paint_options;
+  LigmaCoords        coords;
 };
 
-struct _GimpAirbrushClass
+struct _LigmaAirbrushClass
 {
-  GimpPaintbrushClass  parent_class;
+  LigmaPaintbrushClass  parent_class;
 
   /*  signals  */
-  void (* stamp) (GimpAirbrush *airbrush);
+  void (* stamp) (LigmaAirbrush *airbrush);
 };
 
 
-void    gimp_airbrush_register (Gimp                      *gimp,
-                                GimpPaintRegisterCallback  callback);
+void    ligma_airbrush_register (Ligma                      *ligma,
+                                LigmaPaintRegisterCallback  callback);
 
-GType   gimp_airbrush_get_type (void) G_GNUC_CONST;
+GType   ligma_airbrush_get_type (void) G_GNUC_CONST;
 
-void    gimp_airbrush_stamp    (GimpAirbrush              *airbrush);
+void    ligma_airbrush_stamp    (LigmaAirbrush              *airbrush);
 
 
-#endif  /*  __GIMP_AIRBRUSH_H__  */
+#endif  /*  __LIGMA_AIRBRUSH_H__  */

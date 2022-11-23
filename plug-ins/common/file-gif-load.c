@@ -1,9 +1,9 @@
-/* GIF loading file filter for GIMP 2.x
+/* GIF loading file filter for LIGMA 2.x
  * +-------------------------------------------------------------------+
  * |  Copyright Adam D. Moss, Peter Mattis, Spencer Kimball            |
  * +-------------------------------------------------------------------+
  * Version 1.50.4 - 2003/06/03
- *                        Adam D. Moss - <adam@gimp.org> <adam@foxbox.org>
+ *                        Adam D. Moss - <adam@ligma.org> <adam@foxbox.org>
  */
 
 /* Copyright notice for old GIF code from which this plugin was long ago */
@@ -30,7 +30,7 @@
  *     Also, fix a stupid old bug when clearing the code table between
  *     subimages.  (Enables us to deal better with errors when the stream is
  *     corrupted pretty early in a subimage.) [adam]
- *     Minor-version-bump to distinguish between gimp1.2/1.4 branches.
+ *     Minor-version-bump to distinguish between ligma1.2/1.4 branches.
  *
  * 2000/03/31
  * 1.00.03 - Just mildly more useful comments/messages concerning frame
@@ -70,9 +70,9 @@
 
 #include <glib/gstdio.h>
 
-#include <libgimp/gimp.h>
+#include <libligma/ligma.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 #define LOAD_PROC        "file-gif-load"
@@ -88,12 +88,12 @@ typedef struct _GifClass GifClass;
 
 struct _Gif
 {
-  GimpPlugIn      parent_instance;
+  LigmaPlugIn      parent_instance;
 };
 
 struct _GifClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -102,43 +102,43 @@ struct _GifClass
 
 GType                   gif_get_type         (void) G_GNUC_CONST;
 
-static GList          * gif_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * gif_create_procedure (GimpPlugIn           *plug_in,
+static GList          * gif_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * gif_create_procedure (LigmaPlugIn           *plug_in,
                                               const gchar          *name);
 
-static GimpValueArray * gif_load             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
+static LigmaValueArray * gif_load             (LigmaProcedure        *procedure,
+                                              LigmaRunMode           run_mode,
                                               GFile                *file,
-                                              const GimpValueArray *args,
+                                              const LigmaValueArray *args,
                                               gpointer              run_data);
-static GimpValueArray * gif_load_thumb       (GimpProcedure        *procedure,
+static LigmaValueArray * gif_load_thumb       (LigmaProcedure        *procedure,
                                               GFile                *file,
                                               gint                  size,
-                                              const GimpValueArray *args,
+                                              const LigmaValueArray *args,
                                               gpointer              run_data);
 
-static GimpImage      * load_image           (GFile                *file,
+static LigmaImage      * load_image           (GFile                *file,
                                               gboolean              thumbnail,
                                               GError              **error);
 
 
-G_DEFINE_TYPE (Gif, gif, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Gif, gif, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (GIF_TYPE)
+LIGMA_MAIN (GIF_TYPE)
 DEFINE_STD_SET_I18N
 
 
 static guchar        used_cmap[3][256];
 static guchar        highest_used_index;
 static gboolean      promote_to_rgb   = FALSE;
-static guchar        gimp_cmap[768];
-static GimpParasite *comment_parasite = NULL;
+static guchar        ligma_cmap[768];
+static LigmaParasite *comment_parasite = NULL;
 
 
 static void
 gif_class_init (GifClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = gif_query_procedures;
   plug_in_class->create_procedure = gif_create_procedure;
@@ -151,7 +151,7 @@ gif_init (Gif *gif)
 }
 
 static GList *
-gif_query_procedures (GimpPlugIn *plug_in)
+gif_query_procedures (LigmaPlugIn *plug_in)
 {
   GList *list = NULL;
 
@@ -161,55 +161,55 @@ gif_query_procedures (GimpPlugIn *plug_in)
   return list;
 }
 
-static GimpProcedure *
-gif_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+gif_create_procedure (LigmaPlugIn  *plug_in,
                       const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, LOAD_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_load_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            gif_load, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure, _("GIF image"));
+      ligma_procedure_set_menu_label (procedure, _("GIF image"));
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Loads files of Compuserve GIF "
                                         "file format",
                                         "FIXME: write help for gif_load",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Spencer Kimball, Peter Mattis, "
                                       "Adam Moss, David Koblas",
                                       "Spencer Kimball, Peter Mattis, "
                                       "Adam Moss, David Koblas",
                                       "1995-2006");
 
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                           "image/gif");
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "gif");
-      gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_magics (LIGMA_FILE_PROCEDURE (procedure),
                                       "0,string,GIF8");
 
-      gimp_load_procedure_set_thumbnail_loader (GIMP_LOAD_PROCEDURE (procedure),
+      ligma_load_procedure_set_thumbnail_loader (LIGMA_LOAD_PROCEDURE (procedure),
                                                 LOAD_THUMB_PROC);
     }
   else if (! strcmp (name, LOAD_THUMB_PROC))
     {
-      procedure = gimp_thumbnail_procedure_new (plug_in, name,
-                                                GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_thumbnail_procedure_new (plug_in, name,
+                                                LIGMA_PDB_PROC_TYPE_PLUGIN,
                                                 gif_load_thumb, NULL, NULL);
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Loads only the first frame of a "
                                         "GIF image, to be "
                                         "used as a thumbnail",
                                         "",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Sven Neumann",
                                       "Sven Neumann",
                                       "2006");
@@ -219,15 +219,15 @@ gif_create_procedure (GimpPlugIn  *plug_in,
 }
 
 
-static GimpValueArray *
-gif_load (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
+static LigmaValueArray *
+gif_load (LigmaProcedure        *procedure,
+          LigmaRunMode           run_mode,
           GFile                *file,
-          const GimpValueArray *args,
+          const LigmaValueArray *args,
           gpointer              run_data)
 {
-  GimpValueArray *return_vals;
-  GimpImage      *image;
+  LigmaValueArray *return_vals;
+  LigmaImage      *image;
   GError         *error = NULL;
 
   gegl_init (NULL, NULL);
@@ -235,8 +235,8 @@ gif_load (GimpProcedure        *procedure,
   image = load_image (file, FALSE, &error);
 
   if (! image)
-    return gimp_procedure_new_return_values (procedure,
-                                             GIMP_PDB_EXECUTION_ERROR,
+    return ligma_procedure_new_return_values (procedure,
+                                             LIGMA_PDB_EXECUTION_ERROR,
                                              error);
 
   /* The GIF format only tells you how many bits per pixel are in the
@@ -246,7 +246,7 @@ gif_load (GimpProcedure        *procedure,
    *  without intermediate indexed->RGB->indexed pumps up the number
    *  of bits used, as we add an index each time for the transparent
    *  color.  Ouch.  We either do some heavier analysis at save-time,
-   *  or trim down the number of GIMP colors at load-time.  We do the
+   *  or trim down the number of LIGMA colors at load-time.  We do the
    *  latter for now.
    */
 #ifdef GIFDEBUG
@@ -254,27 +254,27 @@ gif_load (GimpProcedure        *procedure,
 #endif
 
   if (! promote_to_rgb)
-    gimp_image_set_colormap (image,
-                             gimp_cmap, highest_used_index + 1);
+    ligma_image_set_colormap (image,
+                             ligma_cmap, highest_used_index + 1);
 
-  return_vals = gimp_procedure_new_return_values (procedure,
-                                                  GIMP_PDB_SUCCESS,
+  return_vals = ligma_procedure_new_return_values (procedure,
+                                                  LIGMA_PDB_SUCCESS,
                                                   NULL);
 
-  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
+  LIGMA_VALUES_SET_IMAGE (return_vals, 1, image);
 
   return return_vals;
 }
 
-static GimpValueArray *
-gif_load_thumb (GimpProcedure        *procedure,
+static LigmaValueArray *
+gif_load_thumb (LigmaProcedure        *procedure,
                 GFile                *file,
                 gint                  size,
-                const GimpValueArray *args,
+                const LigmaValueArray *args,
                 gpointer              run_data)
 {
-  GimpValueArray *return_vals;
-  GimpImage      *image;
+  LigmaValueArray *return_vals;
+  LigmaImage      *image;
   GError         *error = NULL;
 
   gegl_init (NULL, NULL);
@@ -282,22 +282,22 @@ gif_load_thumb (GimpProcedure        *procedure,
   image = load_image (file, TRUE, &error);
 
   if (! image)
-    return gimp_procedure_new_return_values (procedure,
-                                             GIMP_PDB_EXECUTION_ERROR,
+    return ligma_procedure_new_return_values (procedure,
+                                             LIGMA_PDB_EXECUTION_ERROR,
                                              error);
 
   if (! promote_to_rgb)
-    gimp_image_set_colormap (image, gimp_cmap, highest_used_index + 1);
+    ligma_image_set_colormap (image, ligma_cmap, highest_used_index + 1);
 
-  return_vals = gimp_procedure_new_return_values (procedure,
-                                                  GIMP_PDB_SUCCESS,
+  return_vals = ligma_procedure_new_return_values (procedure,
+                                                  LIGMA_PDB_SUCCESS,
                                                   NULL);
 
-  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
-  GIMP_VALUES_SET_INT   (return_vals, 2, gimp_image_get_width  (image));
-  GIMP_VALUES_SET_INT   (return_vals, 3, gimp_image_get_height (image));
+  LIGMA_VALUES_SET_IMAGE (return_vals, 1, image);
+  LIGMA_VALUES_SET_INT   (return_vals, 2, ligma_image_get_width  (image));
+  LIGMA_VALUES_SET_INT   (return_vals, 3, ligma_image_get_height (image));
 
-  gimp_value_array_truncate (return_vals, 4);
+  ligma_value_array_truncate (return_vals, 4);
 
   return return_vals;
 }
@@ -373,10 +373,10 @@ static gboolean ReadImage    (FILE        *fd,
                               guint        toppos,
                               guint        screenwidth,
                               guint        screenheight,
-                              GimpImage  **image);
+                              LigmaImage  **image);
 
 
-static GimpImage *
+static LigmaImage *
 load_image (GFile     *file,
             gboolean   thumbnail,
             GError   **error)
@@ -389,11 +389,11 @@ load_image (GFile     *file,
   gboolean   useGlobalColormap;
   gint       bitPixel;
   gint       imageCount = 0;
-  GimpImage *image      = NULL;
+  LigmaImage *image      = NULL;
   gboolean   status;
 
-  gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_file_get_utf8_name (file));
+  ligma_progress_init_printf (_("Opening '%s'"),
+                             ligma_file_get_utf8_name (file));
 
   fd = g_fopen (g_file_peek_path (file), "rb");
 
@@ -401,7 +401,7 @@ load_image (GFile     *file,
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),
-                   gimp_file_get_utf8_name (file), g_strerror (errno));
+                   ligma_file_get_utf8_name (file), g_strerror (errno));
       return NULL;
     }
 
@@ -553,9 +553,9 @@ load_image (GFile     *file,
       if (comment_parasite != NULL)
         {
           if (! thumbnail)
-            gimp_image_attach_parasite (image, comment_parasite);
+            ligma_image_attach_parasite (image, comment_parasite);
 
-          gimp_parasite_free (comment_parasite);
+          ligma_parasite_free (comment_parasite);
           comment_parasite = NULL;
         }
 
@@ -658,10 +658,10 @@ DoExtension (FILE *fd,
             continue;
 
           if (comment_parasite)
-            gimp_parasite_free (comment_parasite);
+            ligma_parasite_free (comment_parasite);
 
-          comment_parasite = gimp_parasite_new ("gimp-comment",
-                                                GIMP_PARASITE_PERSISTENT,
+          comment_parasite = ligma_parasite_new ("ligma-comment",
+                                                LIGMA_PARASITE_PERSISTENT,
                                                 strlen (comment) + 1, comment);
         }
       return TRUE;
@@ -920,7 +920,7 @@ LZWReadByte (FILE *fd,
           if (code == table[0][code])
             {
               g_message ("Circular table entry.  Corrupt file.");
-              gimp_quit ();
+              ligma_quit ();
             }
           code = table[0][code];
         }
@@ -969,11 +969,11 @@ ReadImage (FILE        *fd,
            guint        toppos,
            guint        screenwidth,
            guint        screenheight,
-           GimpImage  **image)
+           LigmaImage  **image)
 {
   static gint   frame_number = 1;
 
-  GimpLayer    *layer;
+  LigmaLayer    *layer;
   GeglBuffer   *buffer;
   guchar       *dest, *temp;
   guchar        c;
@@ -1020,17 +1020,17 @@ ReadImage (FILE        *fd,
       if (screenheight == 0)
         screenheight = height;
 
-      *image = gimp_image_new (screenwidth, screenheight, GIMP_INDEXED);
-      gimp_image_set_file (*image, file);
+      *image = ligma_image_new (screenwidth, screenheight, LIGMA_INDEXED);
+      ligma_image_set_file (*image, file);
 
       for (i = 0, j = 0; i < ncols; i++)
         {
-          used_cmap[0][i] = gimp_cmap[j++] = cmap[0][i];
-          used_cmap[1][i] = gimp_cmap[j++] = cmap[1][i];
-          used_cmap[2][i] = gimp_cmap[j++] = cmap[2][i];
+          used_cmap[0][i] = ligma_cmap[j++] = cmap[0][i];
+          used_cmap[1][i] = ligma_cmap[j++] = cmap[1][i];
+          used_cmap[2][i] = ligma_cmap[j++] = cmap[2][i];
         }
 
-      gimp_image_set_colormap (*image, gimp_cmap, ncols);
+      ligma_image_set_colormap (*image, ligma_cmap, ncols);
 
       if (Gif89.delayTime < 0)
         framename = g_strdup (_("Background"));
@@ -1042,19 +1042,19 @@ ReadImage (FILE        *fd,
 
       if (Gif89.transparent == -1)
         {
-          layer = gimp_layer_new (*image, framename,
+          layer = ligma_layer_new (*image, framename,
                                   len, height,
-                                  GIMP_INDEXED_IMAGE,
+                                  LIGMA_INDEXED_IMAGE,
                                   100,
-                                  gimp_image_get_default_new_layer_mode (*image));
+                                  ligma_image_get_default_new_layer_mode (*image));
         }
       else
         {
-          layer = gimp_layer_new (*image, framename,
+          layer = ligma_layer_new (*image, framename,
                                   len, height,
-                                  GIMP_INDEXEDA_IMAGE,
+                                  LIGMA_INDEXEDA_IMAGE,
                                   100,
-                                  gimp_image_get_default_new_layer_mode (*image));
+                                  ligma_image_get_default_new_layer_mode (*image));
           alpha_frame=TRUE;
         }
 
@@ -1062,10 +1062,10 @@ ReadImage (FILE        *fd,
     }
   else /* NOT FIRST FRAME */
     {
-      gimp_progress_set_text_printf (_("Opening '%s' (frame %d)"),
-                                     gimp_file_get_utf8_name (file),
+      ligma_progress_set_text_printf (_("Opening '%s' (frame %d)"),
+                                     ligma_file_get_utf8_name (file),
                                      frame_number);
-      gimp_progress_pulse ();
+      ligma_progress_pulse ();
 
        /* If the colormap is now different, we have to promote to RGB! */
       if (! promote_to_rgb)
@@ -1083,7 +1083,7 @@ ReadImage (FILE        *fd,
 #ifdef GIFDEBUG
                   g_print ("GIF: Promoting image to RGB...\n");
 #endif
-                  gimp_image_convert_rgb (*image);
+                  ligma_image_convert_rgb (*image);
 
                   break;
                 }
@@ -1111,7 +1111,7 @@ ReadImage (FILE        *fd,
           g_free (framename_ptr);
           break;
         case 0x03:  /* Rarely-used, and unhandled by many
-                       loaders/players (including GIMP: we treat as
+                       loaders/players (including LIGMA: we treat as
                        'combine' mode). */
           framename_ptr = framename;
           framename = g_strconcat (framename, " (combine) (!)", NULL);
@@ -1135,29 +1135,29 @@ ReadImage (FILE        *fd,
         }
       previous_disposal = Gif89.disposal;
 
-      layer = gimp_layer_new (*image, framename,
+      layer = ligma_layer_new (*image, framename,
                               len, height,
                               promote_to_rgb ?
-                              GIMP_RGBA_IMAGE : GIMP_INDEXEDA_IMAGE,
+                              LIGMA_RGBA_IMAGE : LIGMA_INDEXEDA_IMAGE,
                               100,
-                              gimp_image_get_default_new_layer_mode (*image));
+                              ligma_image_get_default_new_layer_mode (*image));
       alpha_frame = TRUE;
       g_free (framename);
     }
 
   frame_number++;
 
-  gimp_image_insert_layer (*image, layer, NULL, 0);
-  gimp_item_transform_translate (GIMP_ITEM (layer), (gint) leftpos, (gint) toppos);
+  ligma_image_insert_layer (*image, layer, NULL, 0);
+  ligma_item_transform_translate (LIGMA_ITEM (layer), (gint) leftpos, (gint) toppos);
 
   cur_progress = 0;
   max_progress = height;
 
   if (len > (G_MAXSIZE / height / (alpha_frame ? (promote_to_rgb ? 4 : 2) : 1)))
     {
-      g_message ("'%s' has a larger image size than GIMP can handle.",
-                 gimp_file_get_utf8_name (file));
-      gimp_image_delete (*image);
+      g_message ("'%s' has a larger image size than LIGMA can handle.",
+                 ligma_file_get_utf8_name (file));
+      ligma_image_delete (*image);
       *image = NULL;
       return FALSE;
     }
@@ -1178,8 +1178,8 @@ ReadImage (FILE        *fd,
          this could happen, but it's a mad mad world. */
       g_message ("Ouch!  Can't handle non-alpha RGB frames.\n"
                  "Please file a bug report at "
-                 "https://gitlab.gnome.org/GNOME/gimp/issues");
-      gimp_quit ();
+                 "https://gitlab.gnome.org/GNOME/ligma/issues");
+      ligma_quit ();
     }
 
   while ((v = LZWReadByte (fd, FALSE, c)) >= 0)
@@ -1261,7 +1261,7 @@ ReadImage (FILE        *fd,
             {
               cur_progress++;
               if ((cur_progress % 16) == 0)
-                gimp_progress_update ((gdouble) cur_progress /
+                ligma_progress_update ((gdouble) cur_progress /
                                       (gdouble) max_progress);
             }
         }
@@ -1276,7 +1276,7 @@ ReadImage (FILE        *fd,
     }
 
  fini:
-  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
+  buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (layer));
 
   gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0, len, height), 0,
                    NULL, dest, GEGL_AUTO_ROWSTRIDE);
@@ -1285,7 +1285,7 @@ ReadImage (FILE        *fd,
 
   g_object_unref (buffer);
 
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 
   if (LZWReadByte (fd, FALSE, c) >= 0)
     {

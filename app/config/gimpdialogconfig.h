@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpDialogConfig class
- * Copyright (C) 2016  Michael Natterer <mitch@gimp.org>
+ * LigmaDialogConfig class
+ * Copyright (C) 2016  Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,74 +18,74 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DIALOG_CONFIG_H__
-#define __GIMP_DIALOG_CONFIG_H__
+#ifndef __LIGMA_DIALOG_CONFIG_H__
+#define __LIGMA_DIALOG_CONFIG_H__
 
-#include "config/gimpguiconfig.h"
+#include "config/ligmaguiconfig.h"
 
 
 /* We don't want to include stuff from core/ here, instead do the next
  * less ugly hack...
  */
-typedef struct _GimpFillOptions   GimpFillOptions;
-typedef struct _GimpStrokeOptions GimpStrokeOptions;
+typedef struct _LigmaFillOptions   LigmaFillOptions;
+typedef struct _LigmaStrokeOptions LigmaStrokeOptions;
 
 
-#define GIMP_TYPE_DIALOG_CONFIG            (gimp_dialog_config_get_type ())
-#define GIMP_DIALOG_CONFIG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DIALOG_CONFIG, GimpDialogConfig))
-#define GIMP_DIALOG_CONFIG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DIALOG_CONFIG, GimpDialogConfigClass))
-#define GIMP_IS_DIALOG_CONFIG(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DIALOG_CONFIG))
-#define GIMP_IS_DIALOG_CONFIG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DIALOG_CONFIG))
+#define LIGMA_TYPE_DIALOG_CONFIG            (ligma_dialog_config_get_type ())
+#define LIGMA_DIALOG_CONFIG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_DIALOG_CONFIG, LigmaDialogConfig))
+#define LIGMA_DIALOG_CONFIG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_DIALOG_CONFIG, LigmaDialogConfigClass))
+#define LIGMA_IS_DIALOG_CONFIG(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_DIALOG_CONFIG))
+#define LIGMA_IS_DIALOG_CONFIG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_DIALOG_CONFIG))
 
 
-typedef struct _GimpDialogConfigClass GimpDialogConfigClass;
+typedef struct _LigmaDialogConfigClass LigmaDialogConfigClass;
 
-struct _GimpDialogConfig
+struct _LigmaDialogConfig
 {
-  GimpGuiConfig             parent_instance;
+  LigmaGuiConfig             parent_instance;
 
-  GimpColorProfilePolicy     color_profile_policy;
-  GimpMetadataRotationPolicy metadata_rotation_policy;
+  LigmaColorProfilePolicy     color_profile_policy;
+  LigmaMetadataRotationPolicy metadata_rotation_policy;
 
   gchar                    *color_profile_path;
 
-  GimpColorRenderingIntent  image_convert_profile_intent;
+  LigmaColorRenderingIntent  image_convert_profile_intent;
   gboolean                  image_convert_profile_bpc;
 
   GeglDitherMethod          image_convert_precision_layer_dither_method;
   GeglDitherMethod          image_convert_precision_text_layer_dither_method;
   GeglDitherMethod          image_convert_precision_channel_dither_method;
 
-  GimpConvertPaletteType    image_convert_indexed_palette_type;
+  LigmaConvertPaletteType    image_convert_indexed_palette_type;
   gint                      image_convert_indexed_max_colors;
   gboolean                  image_convert_indexed_remove_duplicates;
-  GimpConvertDitherType     image_convert_indexed_dither_type;
+  LigmaConvertDitherType     image_convert_indexed_dither_type;
   gboolean                  image_convert_indexed_dither_alpha;
   gboolean                  image_convert_indexed_dither_text_layers;
 
-  GimpFillType              image_resize_fill_type;
-  GimpItemSet               image_resize_layer_set;
+  LigmaFillType              image_resize_fill_type;
+  LigmaItemSet               image_resize_layer_set;
   gboolean                  image_resize_resize_text_layers;
 
   gchar                    *layer_new_name;
-  GimpLayerMode             layer_new_mode;
-  GimpLayerColorSpace       layer_new_blend_space;
-  GimpLayerColorSpace       layer_new_composite_space;
-  GimpLayerCompositeMode    layer_new_composite_mode;
+  LigmaLayerMode             layer_new_mode;
+  LigmaLayerColorSpace       layer_new_blend_space;
+  LigmaLayerColorSpace       layer_new_composite_space;
+  LigmaLayerCompositeMode    layer_new_composite_mode;
   gdouble                   layer_new_opacity;
-  GimpFillType              layer_new_fill_type;
+  LigmaFillType              layer_new_fill_type;
 
-  GimpFillType              layer_resize_fill_type;
+  LigmaFillType              layer_resize_fill_type;
 
-  GimpAddMaskType           layer_add_mask_type;
+  LigmaAddMaskType           layer_add_mask_type;
   gboolean                  layer_add_mask_invert;
 
-  GimpMergeType             layer_merge_type;
+  LigmaMergeType             layer_merge_type;
   gboolean                  layer_merge_active_group_only;
   gboolean                  layer_merge_discard_invisible;
 
   gchar                    *channel_new_name;
-  GimpRGB                   channel_new_color;
+  LigmaRGB                   channel_new_color;
 
   gchar                    *vectors_new_name;
 
@@ -106,19 +106,19 @@ struct _GimpDialogConfig
 
   gdouble                   selection_border_radius;
   gboolean                  selection_border_edge_lock;
-  GimpChannelBorderStyle    selection_border_style;
+  LigmaChannelBorderStyle    selection_border_style;
 
-  GimpFillOptions          *fill_options;
-  GimpStrokeOptions        *stroke_options;
+  LigmaFillOptions          *fill_options;
+  LigmaStrokeOptions        *stroke_options;
 };
 
-struct _GimpDialogConfigClass
+struct _LigmaDialogConfigClass
 {
-  GimpGuiConfigClass  parent_class;
+  LigmaGuiConfigClass  parent_class;
 };
 
 
-GType  gimp_dialog_config_get_type (void) G_GNUC_CONST;
+GType  ligma_dialog_config_get_type (void) G_GNUC_CONST;
 
 
-#endif /* GIMP_DIALOG_CONFIG_H__ */
+#endif /* LIGMA_DIALOG_CONFIG_H__ */

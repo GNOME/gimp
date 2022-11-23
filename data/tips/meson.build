@@ -1,14 +1,14 @@
-gimp_tips = i18n.merge_file(
-  input : 'gimp-tips.xml.in',
+ligma_tips = i18n.merge_file(
+  input : 'ligma-tips.xml.in',
   output: '@BASENAME@',
   data_dirs: meson.current_source_dir(),
   po_dir: potips_dir,
   install: true,
-  install_dir: gimpdatadir / 'tips',
+  install_dir: ligmadatadir / 'tips',
 )
 
 fortunes_tips = custom_target('fortunes-tips',
-  input : [ gimp_tips, 'fortunes.xsl', ],
+  input : [ ligma_tips, 'fortunes.xsl', ],
   output: 'fortunes-tips',
   command: [
     xsltproc,
@@ -26,7 +26,7 @@ if xmllint.found()
       xmllint,
       '--output', '@OUTPUT@',
       '--path', meson.current_source_dir(),
-      '--valid', gimp_tips,
+      '--valid', ligma_tips,
   ],
     output: [ 'validate-tips-output.xml' ],
     build_by_default: true,

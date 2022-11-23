@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpbezierdesc.c
- * Copyright (C) 2010 Michael Natterer <mitch@gimp.org>
+ * ligmabezierdesc.c
+ * Copyright (C) 2010 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,21 +25,21 @@
 
 #include "core-types.h"
 
-#include "gimpbezierdesc.h"
-#include "gimpboundary.h"
+#include "ligmabezierdesc.h"
+#include "ligmaboundary.h"
 
 
-G_DEFINE_BOXED_TYPE (GimpBezierDesc, gimp_bezier_desc, gimp_bezier_desc_copy, gimp_bezier_desc_free)
+G_DEFINE_BOXED_TYPE (LigmaBezierDesc, ligma_bezier_desc, ligma_bezier_desc_copy, ligma_bezier_desc_free)
 
-GimpBezierDesc *
-gimp_bezier_desc_new (cairo_path_data_t *data,
+LigmaBezierDesc *
+ligma_bezier_desc_new (cairo_path_data_t *data,
                       gint               n_data)
 {
-  GimpBezierDesc *desc;
+  LigmaBezierDesc *desc;
 
   g_return_val_if_fail (n_data == 0 || data != NULL, NULL);
 
-  desc = g_slice_new (GimpBezierDesc);
+  desc = g_slice_new (LigmaBezierDesc);
 
   desc->status   = CAIRO_STATUS_SUCCESS;
   desc->num_data = n_data;
@@ -50,11 +50,11 @@ gimp_bezier_desc_new (cairo_path_data_t *data,
 
 static void
 add_polyline (GArray            *path_data,
-              const GimpVector2 *points,
+              const LigmaVector2 *points,
               gint               n_points,
               gboolean           closed)
 {
-  GimpVector2       prev = { 0.0, 0.0, };
+  LigmaVector2       prev = { 0.0, 0.0, };
   cairo_path_data_t pd;
   gint              i;
 
@@ -89,13 +89,13 @@ add_polyline (GArray            *path_data,
     }
 }
 
-GimpBezierDesc *
-gimp_bezier_desc_new_from_bound_segs (GimpBoundSeg *bound_segs,
+LigmaBezierDesc *
+ligma_bezier_desc_new_from_bound_segs (LigmaBoundSeg *bound_segs,
                                       gint          n_bound_segs,
                                       gint          n_bound_groups)
 {
   GArray      *path_data;
-  GimpVector2 *points;
+  LigmaVector2 *points;
   gint         n_points;
   gint         seg;
   gint         i;
@@ -106,7 +106,7 @@ gimp_bezier_desc_new_from_bound_segs (GimpBoundSeg *bound_segs,
 
   path_data = g_array_new (FALSE, FALSE, sizeof (cairo_path_data_t));
 
-  points = g_new0 (GimpVector2, n_bound_segs + 4);
+  points = g_new0 (LigmaVector2, n_bound_segs + 4);
 
   seg = 0;
   n_points = 0;
@@ -150,12 +150,12 @@ gimp_bezier_desc_new_from_bound_segs (GimpBoundSeg *bound_segs,
 
   path_data_len = path_data->len;
 
-  return gimp_bezier_desc_new ((cairo_path_data_t *) g_array_free (path_data, FALSE),
+  return ligma_bezier_desc_new ((cairo_path_data_t *) g_array_free (path_data, FALSE),
                                path_data_len);
 }
 
 void
-gimp_bezier_desc_translate (GimpBezierDesc *desc,
+ligma_bezier_desc_translate (LigmaBezierDesc *desc,
                             gdouble         offset_x,
                             gdouble         offset_y)
 {
@@ -171,21 +171,21 @@ gimp_bezier_desc_translate (GimpBezierDesc *desc,
       }
 }
 
-GimpBezierDesc *
-gimp_bezier_desc_copy (const GimpBezierDesc *desc)
+LigmaBezierDesc *
+ligma_bezier_desc_copy (const LigmaBezierDesc *desc)
 {
   g_return_val_if_fail (desc != NULL, NULL);
 
-  return gimp_bezier_desc_new (g_memdup2 (desc->data,
+  return ligma_bezier_desc_new (g_memdup2 (desc->data,
                                           desc->num_data * sizeof (cairo_path_data_t)),
                                desc->num_data);
 }
 
 void
-gimp_bezier_desc_free (GimpBezierDesc *desc)
+ligma_bezier_desc_free (LigmaBezierDesc *desc)
 {
   g_return_if_fail (desc != NULL);
 
   g_free (desc->data);
-  g_slice_free (GimpBezierDesc, desc);
+  g_slice_free (LigmaBezierDesc, desc);
 }

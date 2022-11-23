@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * gimppropgui-utils.c
- * Copyright (C) 2002-2017  Michael Natterer <mitch@gimp.org>
+ * ligmapropgui-utils.c
+ * Copyright (C) 2002-2017  Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,31 +23,31 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpmath/gimpmath.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "propgui-types.h"
 
-#include "gimppropgui-utils.h"
+#include "ligmapropgui-utils.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /*  local function prototypes  */
 
-static gboolean  gimp_prop_kelvin_presets_button_press (GtkWidget      *widget,
+static gboolean  ligma_prop_kelvin_presets_button_press (GtkWidget      *widget,
                                                         GdkEventButton *bevent,
                                                         GtkMenu        *menu);
-static void      gimp_prop_kelvin_presets_activate     (GtkWidget      *widget,
+static void      ligma_prop_kelvin_presets_activate     (GtkWidget      *widget,
                                                         GObject        *config);
-static void      gimp_prop_random_seed_new_clicked     (GtkButton      *button,
+static void      ligma_prop_random_seed_new_clicked     (GtkButton      *button,
                                                         GtkAdjustment  *adj);
 
 
 /*  public functions  */
 
 GtkWidget *
-gimp_prop_kelvin_presets_new (GObject     *config,
+ligma_prop_kelvin_presets_new (GObject     *config,
                               const gchar *property_name)
 {
   GtkWidget *button;
@@ -87,18 +87,18 @@ gimp_prop_kelvin_presets_new (GObject     *config,
   gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
 
   gtk_button_set_image (GTK_BUTTON (button),
-                        gtk_image_new_from_icon_name (GIMP_ICON_MENU_LEFT,
+                        gtk_image_new_from_icon_name (LIGMA_ICON_MENU_LEFT,
                                                       GTK_ICON_SIZE_MENU));
 
   menu = gtk_menu_new ();
   gtk_menu_attach_to_widget (GTK_MENU (menu), button, NULL);
 
-  gimp_help_set_help_data (button,
+  ligma_help_set_help_data (button,
                            _("Choose from a list of common "
                              "color temperatures"), NULL);
 
   g_signal_connect (button, "button-press-event",
-                    G_CALLBACK (gimp_prop_kelvin_presets_button_press),
+                    G_CALLBACK (ligma_prop_kelvin_presets_button_press),
                     menu);
 
   for (i = 0; i < G_N_ELEMENTS (kelvin_presets); i++)
@@ -121,7 +121,7 @@ gimp_prop_kelvin_presets_new (GObject     *config,
                               kelvin, (GDestroyNotify) g_free);
 
       g_signal_connect (item, "activate",
-                        G_CALLBACK (gimp_prop_kelvin_presets_activate),
+                        G_CALLBACK (ligma_prop_kelvin_presets_activate),
                         config);
 
     }
@@ -130,7 +130,7 @@ gimp_prop_kelvin_presets_new (GObject     *config,
 }
 
 GtkWidget *
-gimp_prop_random_seed_new (GObject     *config,
+ligma_prop_random_seed_new (GObject     *config,
                            const gchar *property_name)
 {
   GtkAdjustment *adj;
@@ -140,7 +140,7 @@ gimp_prop_random_seed_new (GObject     *config,
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
 
-  spin = gimp_prop_spin_button_new (config, property_name,
+  spin = ligma_prop_spin_button_new (config, property_name,
                                     1.0, 10.0, 0);
   gtk_box_pack_start (GTK_BOX (hbox), spin, TRUE, TRUE, 0);
   gtk_widget_show (spin);
@@ -152,7 +152,7 @@ gimp_prop_random_seed_new (GObject     *config,
   adj = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (spin));
 
   g_signal_connect (button, "clicked",
-                    G_CALLBACK (gimp_prop_random_seed_new_clicked),
+                    G_CALLBACK (ligma_prop_random_seed_new_clicked),
                     adj);
 
   return hbox;
@@ -162,7 +162,7 @@ gimp_prop_random_seed_new (GObject     *config,
 /*  private functions  */
 
 static gboolean
-gimp_prop_kelvin_presets_button_press (GtkWidget      *widget,
+ligma_prop_kelvin_presets_button_press (GtkWidget      *widget,
                                        GdkEventButton *bevent,
                                        GtkMenu        *menu)
 {
@@ -178,7 +178,7 @@ gimp_prop_kelvin_presets_button_press (GtkWidget      *widget,
 }
 
 static void
-gimp_prop_kelvin_presets_activate (GtkWidget *widget,
+ligma_prop_kelvin_presets_activate (GtkWidget *widget,
                                    GObject   *config)
 {
   const gchar *property_name;
@@ -192,7 +192,7 @@ gimp_prop_kelvin_presets_activate (GtkWidget *widget,
 }
 
 static void
-gimp_prop_random_seed_new_clicked (GtkButton     *button,
+ligma_prop_random_seed_new_clicked (GtkButton     *button,
                                    GtkAdjustment *adj)
 {
   guint32 value;

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -26,7 +26,7 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimp/gimp.h"
+#include "libligma/ligma.h"
 
 #include "tinyscheme/scheme-private.h"
 #if USE_DL
@@ -92,22 +92,22 @@ typedef struct
 /* LHS is text in a script, RHS is constant defined in C. */
 static const NamedConstant script_constants[] =
 {
-  /* Useful values from libgimpbase/gimplimits.h */
-  { "MIN-IMAGE-SIZE", GIMP_MIN_IMAGE_SIZE },
-  { "MAX-IMAGE-SIZE", GIMP_MAX_IMAGE_SIZE },
-  { "MIN-RESOLUTION", GIMP_MIN_RESOLUTION },
-  { "MAX-RESOLUTION", GIMP_MAX_RESOLUTION },
+  /* Useful values from libligmabase/ligmalimits.h */
+  { "MIN-IMAGE-SIZE", LIGMA_MIN_IMAGE_SIZE },
+  { "MAX-IMAGE-SIZE", LIGMA_MAX_IMAGE_SIZE },
+  { "MIN-RESOLUTION", LIGMA_MIN_RESOLUTION },
+  { "MAX-RESOLUTION", LIGMA_MAX_RESOLUTION },
 
   /* Useful misc stuff */
   { "TRUE",           TRUE  },
   { "FALSE",          FALSE },
 
   /* Builtin units */
-  { "UNIT-PIXEL",     GIMP_UNIT_PIXEL },
-  { "UNIT-INCH",      GIMP_UNIT_INCH  },
-  { "UNIT-MM",        GIMP_UNIT_MM    },
-  { "UNIT-POINT",     GIMP_UNIT_POINT },
-  { "UNIT-PICA",      GIMP_UNIT_PICA  },
+  { "UNIT-PIXEL",     LIGMA_UNIT_PIXEL },
+  { "UNIT-INCH",      LIGMA_UNIT_INCH  },
+  { "UNIT-MM",        LIGMA_UNIT_MM    },
+  { "UNIT-POINT",     LIGMA_UNIT_POINT },
+  { "UNIT-PICA",      LIGMA_UNIT_PICA  },
 
   /* Script-Fu types */
 
@@ -202,7 +202,7 @@ tinyscheme_init (GList    *path,
   init_ftx (&sc);
   script_fu_regex_init (&sc);
 
-  /* register in the interpreter the gimp functions and types. */
+  /* register in the interpreter the ligma functions and types. */
   ts_init_constants (&sc);
   ts_init_procedures (&sc, register_scripts);
 
@@ -223,7 +223,7 @@ tinyscheme_init (GList    *path,
                */
               ts_load_file (dir, "script-fu-compat.init");
 
-              /*  To improve compatibility with older GIMP version,
+              /*  To improve compatibility with older LIGMA version,
                *  load plug-in-compat.init from the same directory.
                */
               ts_load_file (dir, "plug-in-compat.init");
@@ -244,10 +244,10 @@ tinyscheme_init (GList    *path,
 }
 
 /* Create an SF-RUN-MODE constant for use in scripts.
- * It is set to the run mode state determined by GIMP.
+ * It is set to the run mode state determined by LIGMA.
  */
 void
-ts_set_run_mode (GimpRunMode run_mode)
+ts_set_run_mode (LigmaRunMode run_mode)
 {
   pointer symbol;
 
@@ -345,7 +345,7 @@ ts_register_post_command_callback (TsCallbackFunc callback)
 
 /*
  * Below can be found the functions responsible for registering the
- * gimp functions and types against the scheme interpreter.
+ * ligma functions and types against the scheme interpreter.
  */
 static void
 ts_init_constants (scheme *sc)
@@ -356,33 +356,33 @@ ts_init_constants (scheme *sc)
   pointer       symbol;
   GQuark        quark;
 
-  symbol = sc->vptr->mk_symbol (sc, "gimp-directory");
+  symbol = sc->vptr->mk_symbol (sc, "ligma-directory");
   sc->vptr->scheme_define (sc, sc->global_env, symbol,
-                           sc->vptr->mk_string (sc, gimp_directory ()));
+                           sc->vptr->mk_string (sc, ligma_directory ()));
   sc->vptr->setimmutable (symbol);
 
-  symbol = sc->vptr->mk_symbol (sc, "gimp-data-directory");
+  symbol = sc->vptr->mk_symbol (sc, "ligma-data-directory");
   sc->vptr->scheme_define (sc, sc->global_env, symbol,
-                           sc->vptr->mk_string (sc, gimp_data_directory ()));
+                           sc->vptr->mk_string (sc, ligma_data_directory ()));
   sc->vptr->setimmutable (symbol);
 
-  symbol = sc->vptr->mk_symbol (sc, "gimp-plug-in-directory");
+  symbol = sc->vptr->mk_symbol (sc, "ligma-plug-in-directory");
   sc->vptr->scheme_define (sc, sc->global_env, symbol,
-                           sc->vptr->mk_string (sc, gimp_plug_in_directory ()));
+                           sc->vptr->mk_string (sc, ligma_plug_in_directory ()));
   sc->vptr->setimmutable (symbol);
 
-  symbol = sc->vptr->mk_symbol (sc, "gimp-locale-directory");
+  symbol = sc->vptr->mk_symbol (sc, "ligma-locale-directory");
   sc->vptr->scheme_define (sc, sc->global_env, symbol,
-                           sc->vptr->mk_string (sc, gimp_locale_directory ()));
+                           sc->vptr->mk_string (sc, ligma_locale_directory ()));
   sc->vptr->setimmutable (symbol);
 
-  symbol = sc->vptr->mk_symbol (sc, "gimp-sysconf-directory");
+  symbol = sc->vptr->mk_symbol (sc, "ligma-sysconf-directory");
   sc->vptr->scheme_define (sc, sc->global_env, symbol,
-                           sc->vptr->mk_string (sc, gimp_sysconf_directory ()));
+                           sc->vptr->mk_string (sc, ligma_sysconf_directory ()));
   sc->vptr->setimmutable (symbol);
 
-  enum_type_names = gimp_enums_get_type_names (&n_enum_type_names);
-  quark           = g_quark_from_static_string ("gimp-compat-enum");
+  enum_type_names = ligma_enums_get_type_names (&n_enum_type_names);
+  quark           = g_quark_from_static_string ("ligma-compat-enum");
 
   for (i = 0; i < n_enum_type_names; i++)
     {
@@ -420,19 +420,19 @@ ts_init_constants (scheme *sc)
   sc->vptr->setimmutable (symbol);
 
   /* These constants are deprecated and will be removed at a later date. */
-  symbol = sc->vptr->mk_symbol (sc, "gimp-dir");
+  symbol = sc->vptr->mk_symbol (sc, "ligma-dir");
   sc->vptr->scheme_define (sc, sc->global_env, symbol,
-                           sc->vptr->mk_string (sc, gimp_directory ()));
+                           sc->vptr->mk_string (sc, ligma_directory ()));
   sc->vptr->setimmutable (symbol);
 
-  symbol = sc->vptr->mk_symbol (sc, "gimp-data-dir");
+  symbol = sc->vptr->mk_symbol (sc, "ligma-data-dir");
   sc->vptr->scheme_define (sc, sc->global_env, symbol,
-                           sc->vptr->mk_string (sc, gimp_data_directory ()));
+                           sc->vptr->mk_string (sc, ligma_data_directory ()));
   sc->vptr->setimmutable (symbol);
 
-  symbol = sc->vptr->mk_symbol (sc, "gimp-plugin-dir");
+  symbol = sc->vptr->mk_symbol (sc, "ligma-plugin-dir");
   sc->vptr->scheme_define (sc, sc->global_env, symbol,
-                           sc->vptr->mk_string (sc, gimp_plug_in_directory ()));
+                           sc->vptr->mk_string (sc, ligma_plug_in_directory ()));
   sc->vptr->setimmutable (symbol);
 }
 
@@ -445,12 +445,12 @@ ts_init_enum (scheme *sc,
 
   for (value = enum_class->values; value->value_name; value++)
     {
-      if (g_str_has_prefix (value->value_name, "GIMP_"))
+      if (g_str_has_prefix (value->value_name, "LIGMA_"))
         {
           gchar   *scheme_name;
           pointer  symbol;
 
-          scheme_name = g_strdup (value->value_name + strlen ("GIMP_"));
+          scheme_name = g_strdup (value->value_name + strlen ("LIGMA_"));
           convert_string (scheme_name);
 
           symbol = sc->vptr->mk_symbol (sc, scheme_name);
@@ -514,11 +514,11 @@ ts_define_procedure (sc, "load-extension", scm_load_ext);
 
   ts_define_procedure (sc, "script-fu-quit",      script_fu_quit_call);
 
-  ts_define_procedure (sc, "gimp-proc-db-call",   script_fu_marshal_procedure_call_strict);
-  ts_define_procedure (sc, "-gimp-proc-db-call",  script_fu_marshal_procedure_call_permissive);
-  ts_define_procedure (sc, "--gimp-proc-db-call", script_fu_marshal_procedure_call_deprecated);
+  ts_define_procedure (sc, "ligma-proc-db-call",   script_fu_marshal_procedure_call_strict);
+  ts_define_procedure (sc, "-ligma-proc-db-call",  script_fu_marshal_procedure_call_permissive);
+  ts_define_procedure (sc, "--ligma-proc-db-call", script_fu_marshal_procedure_call_deprecated);
 
-  proc_list = gimp_pdb_query_procedures (gimp_get_pdb (),
+  proc_list = ligma_pdb_query_procedures (ligma_get_pdb (),
                                          ".*", ".*", ".*", ".*",
                                          ".*", ".*", ".*", ".*");
   num_procs = proc_list ? g_strv_length (proc_list) : 0;
@@ -531,13 +531,13 @@ ts_define_procedure (sc, "load-extension", scm_load_ext);
       /* Build a define that will call the foreign function.
        * The Scheme statement was suggested by Simon Budig.
        *
-       * Call the procedure through -gimp-proc-db-call, which is a more
-       * permissive version of gimp-proc-db-call, that accepts (and ignores)
+       * Call the procedure through -ligma-proc-db-call, which is a more
+       * permissive version of ligma-proc-db-call, that accepts (and ignores)
        * any number of arguments for nullary procedures, for backward
        * compatibility.
        */
       buff = g_strdup_printf (" (define (%s . args)"
-                              " (apply -gimp-proc-db-call \"%s\" args))",
+                              " (apply -ligma-proc-db-call \"%s\" args))",
                               proc_list[i], proc_list[i]);
 
       /*  Execute the 'define'  */
@@ -588,16 +588,16 @@ convert_string (gchar *str)
     }
 }
 
-/* Called by the Scheme interpreter on calls to GIMP PDB procedures */
+/* Called by the Scheme interpreter on calls to LIGMA PDB procedures */
 static pointer
 script_fu_marshal_procedure_call (scheme   *sc,
                                   pointer   a,
                                   gboolean  permissive,
                                   gboolean  deprecated)
 {
-  GimpProcedure   *procedure;
-  GimpValueArray  *args;
-  GimpValueArray  *values = NULL;
+  LigmaProcedure   *procedure;
+  LigmaValueArray  *args;
+  LigmaValueArray  *values = NULL;
   gchar           *proc_name;
   GParamSpec     **arg_specs;
   gint             n_arg_specs;
@@ -636,7 +636,7 @@ script_fu_marshal_procedure_call (scheme   *sc,
   script_fu_interface_report_cc (proc_name);
 
   /*  Attempt to fetch the procedure from the database  */
-  procedure = gimp_pdb_lookup_procedure (gimp_get_pdb (), proc_name);
+  procedure = ligma_pdb_lookup_procedure (ligma_get_pdb (), proc_name);
 
   if (! procedure)
     {
@@ -645,7 +645,7 @@ script_fu_marshal_procedure_call (scheme   *sc,
       return script_error (sc, error_str, 0);
     }
 
-  arg_specs = gimp_procedure_get_arguments (procedure, &n_arg_specs);
+  arg_specs = ligma_procedure_get_arguments (procedure, &n_arg_specs);
   actual_arg_count = sc->vptr->list_length (sc, a) - 1;
 
   /* Check the supplied number of arguments.
@@ -677,7 +677,7 @@ script_fu_marshal_procedure_call (scheme   *sc,
   }
 
   /*  Marshall the supplied arguments  */
-  args = gimp_value_array_new (n_arg_specs);
+  args = ligma_value_array_new (n_arg_specs);
 
   for (i = 0; i < n_arg_specs; i++)
     {
@@ -811,67 +811,67 @@ script_fu_marshal_procedure_call (scheme   *sc,
 #endif
             }
         }
-      else if (GIMP_VALUE_HOLDS_DISPLAY (&value))
+      else if (LIGMA_VALUE_HOLDS_DISPLAY (&value))
         {
           if (! sc->vptr->is_number (sc->vptr->pair_car (a)))
             return script_type_error (sc, "numeric", i, proc_name);
           else
             {
-              GimpDisplay *display =
-                gimp_display_get_by_id (sc->vptr->ivalue (sc->vptr->pair_car (a)));
+              LigmaDisplay *display =
+                ligma_display_get_by_id (sc->vptr->ivalue (sc->vptr->pair_car (a)));
 
               g_value_set_object (&value, display);
             }
         }
-      else if (GIMP_VALUE_HOLDS_IMAGE (&value))
+      else if (LIGMA_VALUE_HOLDS_IMAGE (&value))
         {
           if (! sc->vptr->is_number (sc->vptr->pair_car (a)))
             return script_type_error (sc, "numeric", i, proc_name);
           else
             {
-              GimpImage *image =
-                gimp_image_get_by_id (sc->vptr->ivalue (sc->vptr->pair_car (a)));
+              LigmaImage *image =
+                ligma_image_get_by_id (sc->vptr->ivalue (sc->vptr->pair_car (a)));
 
               g_value_set_object (&value, image);
             }
         }
-      else if (GIMP_VALUE_HOLDS_LAYER (&value))
+      else if (LIGMA_VALUE_HOLDS_LAYER (&value))
         {
           if (! sc->vptr->is_number (sc->vptr->pair_car (a)))
             return script_type_error (sc, "numeric", i, proc_name);
           else
             {
-              GimpLayer *layer =
-                gimp_layer_get_by_id (sc->vptr->ivalue (sc->vptr->pair_car (a)));
+              LigmaLayer *layer =
+                ligma_layer_get_by_id (sc->vptr->ivalue (sc->vptr->pair_car (a)));
 
               g_value_set_object (&value, layer);
             }
         }
-      else if (GIMP_VALUE_HOLDS_LAYER_MASK (&value))
+      else if (LIGMA_VALUE_HOLDS_LAYER_MASK (&value))
         {
           if (! sc->vptr->is_number (sc->vptr->pair_car (a)))
             return script_type_error (sc, "numeric", i, proc_name);
           else
             {
-              GimpLayerMask *layer_mask =
-                gimp_layer_mask_get_by_id (sc->vptr->ivalue (sc->vptr->pair_car (a)));
+              LigmaLayerMask *layer_mask =
+                ligma_layer_mask_get_by_id (sc->vptr->ivalue (sc->vptr->pair_car (a)));
 
               g_value_set_object (&value, layer_mask);
             }
         }
-      else if (GIMP_VALUE_HOLDS_CHANNEL (&value))
+      else if (LIGMA_VALUE_HOLDS_CHANNEL (&value))
         {
           if (! sc->vptr->is_number (sc->vptr->pair_car (a)))
             return script_type_error (sc, "numeric", i, proc_name);
           else
             {
-              GimpChannel *channel =
-                gimp_channel_get_by_id (sc->vptr->ivalue (sc->vptr->pair_car (a)));
+              LigmaChannel *channel =
+                ligma_channel_get_by_id (sc->vptr->ivalue (sc->vptr->pair_car (a)));
 
               g_value_set_object (&value, channel);
             }
         }
-      else if (GIMP_VALUE_HOLDS_DRAWABLE (&value))
+      else if (LIGMA_VALUE_HOLDS_DRAWABLE (&value))
         {
           if (! sc->vptr->is_number (sc->vptr->pair_car (a)))
             return script_type_error (sc, "numeric", i, proc_name);
@@ -884,19 +884,19 @@ script_fu_marshal_procedure_call (scheme   *sc,
                 return error;
             }
         }
-      else if (GIMP_VALUE_HOLDS_VECTORS (&value))
+      else if (LIGMA_VALUE_HOLDS_VECTORS (&value))
         {
           if (! sc->vptr->is_number (sc->vptr->pair_car (a)))
             return script_type_error (sc, "numeric", i, proc_name);
           else
             {
-              GimpVectors *vectors =
-                gimp_vectors_get_by_id (sc->vptr->ivalue (sc->vptr->pair_car (a)));
+              LigmaVectors *vectors =
+                ligma_vectors_get_by_id (sc->vptr->ivalue (sc->vptr->pair_car (a)));
 
               g_value_set_object (&value, vectors);
             }
         }
-      else if (GIMP_VALUE_HOLDS_ITEM (&value))
+      else if (LIGMA_VALUE_HOLDS_ITEM (&value))
         {
           if (! sc->vptr->is_number (sc->vptr->pair_car (a)))
             return script_type_error (sc, "numeric", i, proc_name);
@@ -905,10 +905,10 @@ script_fu_marshal_procedure_call (scheme   *sc,
               gint item_ID;
               item_ID = sc->vptr->ivalue (sc->vptr->pair_car (a));
 
-              /* Avoid failed assertion in libgimp.*/
-              if (gimp_item_id_is_valid (item_ID))
+              /* Avoid failed assertion in libligma.*/
+              if (ligma_item_id_is_valid (item_ID))
                 {
-                  GimpItem *item = gimp_item_get_by_id (item_ID);
+                  LigmaItem *item = ligma_item_get_by_id (item_ID);
                   g_value_set_object (&value, item);
                 }
               else
@@ -917,7 +917,7 @@ script_fu_marshal_procedure_call (scheme   *sc,
                 }
             }
         }
-      else if (GIMP_VALUE_HOLDS_INT32_ARRAY (&value))
+      else if (LIGMA_VALUE_HOLDS_INT32_ARRAY (&value))
         {
           vector = sc->vptr->pair_car (a);
           if (! sc->vptr->is_vector (vector))
@@ -945,7 +945,7 @@ script_fu_marshal_procedure_call (scheme   *sc,
                */
               gint32 *array;
 
-              n_elements = GIMP_VALUES_GET_INT (args, i - 1);
+              n_elements = LIGMA_VALUES_GET_INT (args, i - 1);
 
               if (n_elements > sc->vptr->vector_length (vector))
                 return script_length_error_in_vector (sc, i, proc_name, n_elements, vector);
@@ -966,12 +966,12 @@ script_fu_marshal_procedure_call (scheme   *sc,
                   array[j] = (gint32) sc->vptr->ivalue (v_element);
                 }
 
-              gimp_value_take_int32_array (&value, array, n_elements);
+              ligma_value_take_int32_array (&value, array, n_elements);
 
               debug_vector (sc, vector, "%ld");
             }
         }
-      else if (GIMP_VALUE_HOLDS_UINT8_ARRAY (&value))
+      else if (LIGMA_VALUE_HOLDS_UINT8_ARRAY (&value))
         {
           vector = sc->vptr->pair_car (a);
           if (! sc->vptr->is_vector (vector))
@@ -980,7 +980,7 @@ script_fu_marshal_procedure_call (scheme   *sc,
             {
               guint8 *array;
 
-              n_elements = GIMP_VALUES_GET_INT (args, i - 1);
+              n_elements = LIGMA_VALUES_GET_INT (args, i - 1);
 
               if (n_elements > sc->vptr->vector_length (vector))
                 return script_length_error_in_vector (sc, i, proc_name, n_elements, vector);
@@ -1000,12 +1000,12 @@ script_fu_marshal_procedure_call (scheme   *sc,
                   array[j] = (guint8) sc->vptr->ivalue (v_element);
                 }
 
-              gimp_value_take_uint8_array (&value, array, n_elements);
+              ligma_value_take_uint8_array (&value, array, n_elements);
 
               debug_vector (sc, vector, "%ld");
             }
         }
-      else if (GIMP_VALUE_HOLDS_FLOAT_ARRAY (&value))
+      else if (LIGMA_VALUE_HOLDS_FLOAT_ARRAY (&value))
         {
           vector = sc->vptr->pair_car (a);
           if (! sc->vptr->is_vector (vector))
@@ -1014,7 +1014,7 @@ script_fu_marshal_procedure_call (scheme   *sc,
             {
               gdouble *array;
 
-              n_elements = GIMP_VALUES_GET_INT (args, i - 1);
+              n_elements = LIGMA_VALUES_GET_INT (args, i - 1);
 
               if (n_elements > sc->vptr->vector_length (vector))
                 return script_length_error_in_vector (sc, i, proc_name, n_elements, vector);
@@ -1034,23 +1034,23 @@ script_fu_marshal_procedure_call (scheme   *sc,
                   array[j] = (gfloat) sc->vptr->rvalue (v_element);
                 }
 
-              gimp_value_take_float_array (&value, array, n_elements);
+              ligma_value_take_float_array (&value, array, n_elements);
 
               debug_vector (sc, vector, "%f");
             }
         }
-      else if (GIMP_VALUE_HOLDS_RGB (&value))
+      else if (LIGMA_VALUE_HOLDS_RGB (&value))
         {
-          GimpRGB color;
+          LigmaRGB color;
 
           if (sc->vptr->is_string (sc->vptr->pair_car (a)))
             {
-              if (! gimp_rgb_parse_css (&color,
+              if (! ligma_rgb_parse_css (&color,
                                         sc->vptr->string_value (sc->vptr->pair_car (a)),
                                         -1))
                 return script_type_error (sc, "color string", i, proc_name);
 
-              gimp_rgb_set_alpha (&color, 1.0);
+              ligma_rgb_set_alpha (&color, 1.0);
               g_debug ("(%s)", sc->vptr->string_value (sc->vptr->pair_car (a)));
             }
           else if (sc->vptr->is_list (sc, sc->vptr->pair_car (a)) &&
@@ -1082,28 +1082,28 @@ script_fu_marshal_procedure_call (scheme   *sc,
               else
                 return script_type_error_in_container (sc, "numeric", i, 2, proc_name, 0);
 
-              gimp_rgba_set_uchar (&color, r, g, b, 255);
-              gimp_value_set_rgb (&value, &color);
+              ligma_rgba_set_uchar (&color, r, g, b, 255);
+              ligma_value_set_rgb (&value, &color);
               g_debug ("(%d %d %d)", r, g, b);
             }
           else
             return script_type_error (sc, "color string or list", i, proc_name);
         }
-      else if (GIMP_VALUE_HOLDS_RGB_ARRAY (&value))
+      else if (LIGMA_VALUE_HOLDS_RGB_ARRAY (&value))
         {
           vector = sc->vptr->pair_car (a);
           if (! sc->vptr->is_vector (vector))
             return script_type_error (sc, "vector", i, proc_name);
           else
             {
-              GimpRGB *array;
+              LigmaRGB *array;
 
-              n_elements = GIMP_VALUES_GET_INT (args, i - 1);
+              n_elements = LIGMA_VALUES_GET_INT (args, i - 1);
 
               if (n_elements > sc->vptr->vector_length (vector))
                 return script_length_error_in_vector (sc, i, proc_name, n_elements, vector);
 
-              array = g_new0 (GimpRGB, n_elements);
+              array = g_new0 (LigmaRGB, n_elements);
 
               for (j = 0; j < n_elements; j++)
                 {
@@ -1134,22 +1134,22 @@ script_fu_marshal_procedure_call (scheme   *sc,
                   b = CLAMP (sc->vptr->ivalue (sc->vptr->pair_car (color_list)),
                              0, 255);
 
-                  gimp_rgba_set_uchar (&array[i], r, g, b, 255);
+                  ligma_rgba_set_uchar (&array[i], r, g, b, 255);
                 }
 
-              gimp_value_take_rgb_array (&value, array, n_elements);
+              ligma_value_take_rgb_array (&value, array, n_elements);
 
               g_debug ("color vector has %ld elements", sc->vptr->vector_length (vector));
             }
         }
-      else if (GIMP_VALUE_HOLDS_PARASITE (&value))
+      else if (LIGMA_VALUE_HOLDS_PARASITE (&value))
         {
           if (! sc->vptr->is_list (sc, sc->vptr->pair_car (a)) ||
               sc->vptr->list_length (sc, sc->vptr->pair_car (a)) != 3)
             return script_type_error (sc, "list", i, proc_name);
           else
             {
-              GimpParasite parasite;
+              LigmaParasite parasite;
               pointer      temp_val;
 
               /* parasite->name */
@@ -1189,7 +1189,7 @@ script_fu_marshal_procedure_call (scheme   *sc,
               g_value_set_boxed (&value, &parasite);
             }
         }
-      else if (GIMP_VALUE_HOLDS_OBJECT_ARRAY (&value))
+      else if (LIGMA_VALUE_HOLDS_OBJECT_ARRAY (&value))
         {
           vector = sc->vptr->pair_car (a);
 
@@ -1208,7 +1208,7 @@ script_fu_marshal_procedure_call (scheme   *sc,
             return script_type_error (sc, "string for path", i, proc_name);
           marshal_path_string_to_gfile (sc, a, &value);
         }
-      else if (G_VALUE_TYPE (&value) == GIMP_TYPE_PDB_STATUS_TYPE)
+      else if (G_VALUE_TYPE (&value) == LIGMA_TYPE_PDB_STATUS_TYPE)
         {
           /* A PDB procedure signature wrongly requires a status. */
           return implementation_error (sc,
@@ -1223,7 +1223,7 @@ script_fu_marshal_procedure_call (scheme   *sc,
           return implementation_error (sc, error_str, 0);
         }
       debug_gvalue (&value);
-      gimp_value_array_append (args, &value);
+      ligma_value_array_append (args, &value);
       g_value_unset (&value);
     }
 
@@ -1232,7 +1232,7 @@ script_fu_marshal_procedure_call (scheme   *sc,
       return script_error (sc, "A script cannot refresh scripts", 0);
 
   g_debug ("calling %s", proc_name);
-  values = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+  values = ligma_pdb_run_procedure_array (ligma_get_pdb (),
                                          proc_name, args);
   g_debug ("done.");
 
@@ -1248,16 +1248,16 @@ script_fu_marshal_procedure_call (scheme   *sc,
 
   /* No need to log a string for status, we log the cases, or caller will log it.*/
 
-  switch (GIMP_VALUES_GET_ENUM (values, 0))
+  switch (LIGMA_VALUES_GET_ENUM (values, 0))
     {
-    case GIMP_PDB_EXECUTION_ERROR:
-      if (gimp_value_array_length (values) > 1 &&
-          G_VALUE_HOLDS_STRING (gimp_value_array_index (values, 1)))
+    case LIGMA_PDB_EXECUTION_ERROR:
+      if (ligma_value_array_length (values) > 1 &&
+          G_VALUE_HOLDS_STRING (ligma_value_array_index (values, 1)))
         {
           g_snprintf (error_str, sizeof (error_str),
                       "Procedure execution of %s failed: %s",
                       proc_name,
-                      GIMP_VALUES_GET_STRING (values, 1));
+                      LIGMA_VALUES_GET_STRING (values, 1));
         }
       else
         {
@@ -1269,14 +1269,14 @@ script_fu_marshal_procedure_call (scheme   *sc,
       return foreign_error (sc, error_str, 0);
       break;
 
-    case GIMP_PDB_CALLING_ERROR:
-      if (gimp_value_array_length (values) > 1 &&
-          G_VALUE_HOLDS_STRING (gimp_value_array_index (values, 1)))
+    case LIGMA_PDB_CALLING_ERROR:
+      if (ligma_value_array_length (values) > 1 &&
+          G_VALUE_HOLDS_STRING (ligma_value_array_index (values, 1)))
         {
           g_snprintf (error_str, sizeof (error_str),
                       "Procedure execution of %s failed on invalid input arguments: %s",
                       proc_name,
-                      GIMP_VALUES_GET_STRING (values, 1));
+                      LIGMA_VALUES_GET_STRING (values, 1));
         }
       else
         {
@@ -1284,15 +1284,15 @@ script_fu_marshal_procedure_call (scheme   *sc,
                       "Procedure execution of %s failed on invalid input arguments",
                       proc_name);
         }
-      /* not language errors, GIMP validated the GValueArray
+      /* not language errors, LIGMA validated the GValueArray
        * and decided it doesn't match the registered signature
        * or the procedure decided its preconditions not met (e.g. out of range)
        */
       return foreign_error (sc, error_str, 0);
       break;
 
-    case GIMP_PDB_SUCCESS:
-      g_debug ("Count of non-status values returned: %d", gimp_value_array_length (values) - 1);
+    case LIGMA_PDB_SUCCESS:
+      g_debug ("Count of non-status values returned: %d", ligma_value_array_length (values) - 1);
 
       /* Counting down, i.e. traversing in reverse.
        * i+1 is the current index.  i is the preceding value.
@@ -1303,14 +1303,14 @@ script_fu_marshal_procedure_call (scheme   *sc,
        * that the returned length equals the actual length of the returned array,
        * and iterates over the returned array assuming it has the returned length.
        */
-      for (i = gimp_value_array_length (values) - 2; i >= 0; --i)
+      for (i = ligma_value_array_length (values) - 2; i >= 0; --i)
         {
-          GValue *value = gimp_value_array_index (values, i + 1);
+          GValue *value = ligma_value_array_index (values, i + 1);
           gint    j;
 
           g_debug ("Return value %d is type %s", i+1, G_VALUE_TYPE_NAME (value));
 
-          /* Order is important. GFile before GIMP objects. */
+          /* Order is important. GFile before LIGMA objects. */
           if (G_VALUE_TYPE (value) == G_TYPE_FILE)
             {
               gchar *parsed_filepath = marshal_returned_gfile_to_string (value);
@@ -1332,13 +1332,13 @@ script_fu_marshal_procedure_call (scheme   *sc,
           else if (G_VALUE_HOLDS_OBJECT (value))
             {
               /* G_VALUE_HOLDS_OBJECT only ensures value derives from GObject.
-               * Could be a GIMP or a GLib type.
-               * Here we handle GIMP types, which all have an id property.
+               * Could be a LIGMA or a GLib type.
+               * Here we handle LIGMA types, which all have an id property.
                */
               GObject *object = g_value_get_object (value);
               gint     id     = -1;
 
-              /* expect a GIMP opaque object having an "id" property */
+              /* expect a LIGMA opaque object having an "id" property */
               if (object)
                 g_object_get (object, "id", &id, NULL);
 
@@ -1348,7 +1348,7 @@ script_fu_marshal_procedure_call (scheme   *sc,
                * It is not necessarily an error in the script.
                */
               if (id == -1)
-                g_warning("PDB procedure returned NULL GIMP object or non-GIMP object.");
+                g_warning("PDB procedure returned NULL LIGMA object or non-LIGMA object.");
 
               g_debug ("PDB procedure returned object ID: %i", id);
 
@@ -1401,10 +1401,10 @@ script_fu_marshal_procedure_call (scheme   *sc,
               return_val = sc->vptr->cons (sc, sc->vptr->mk_string (sc, v),
                                            return_val);
             }
-          else if (GIMP_VALUE_HOLDS_INT32_ARRAY (value))
+          else if (LIGMA_VALUE_HOLDS_INT32_ARRAY (value))
             {
-              gint32        n      = GIMP_VALUES_GET_INT (values, i);
-              const gint32 *v      = gimp_value_get_int32_array (value);
+              gint32        n      = LIGMA_VALUES_GET_INT (values, i);
+              const gint32 *v      = ligma_value_get_int32_array (value);
               pointer       vector = sc->vptr->mk_vector (sc, n);
 
               for (j = 0; j < n; j++)
@@ -1415,10 +1415,10 @@ script_fu_marshal_procedure_call (scheme   *sc,
 
               return_val = sc->vptr->cons (sc, vector, return_val);
             }
-          else if (GIMP_VALUE_HOLDS_UINT8_ARRAY (value))
+          else if (LIGMA_VALUE_HOLDS_UINT8_ARRAY (value))
             {
-              gint32        n      = GIMP_VALUES_GET_INT (values, i);
-              const guint8 *v      = gimp_value_get_uint8_array (value);
+              gint32        n      = LIGMA_VALUES_GET_INT (values, i);
+              const guint8 *v      = ligma_value_get_uint8_array (value);
               pointer       vector = sc->vptr->mk_vector (sc, n);
 
               for (j = 0; j < n; j++)
@@ -1429,10 +1429,10 @@ script_fu_marshal_procedure_call (scheme   *sc,
 
               return_val = sc->vptr->cons (sc, vector, return_val);
             }
-          else if (GIMP_VALUE_HOLDS_FLOAT_ARRAY (value))
+          else if (LIGMA_VALUE_HOLDS_FLOAT_ARRAY (value))
             {
-              gint32         n      = GIMP_VALUES_GET_INT (values, i);
-              const gdouble *v      = gimp_value_get_float_array (value);
+              gint32         n      = LIGMA_VALUES_GET_INT (values, i);
+              const gdouble *v      = ligma_value_get_float_array (value);
               pointer        vector = sc->vptr->mk_vector (sc, n);
 
               for (j = 0; j < n; j++)
@@ -1461,14 +1461,14 @@ script_fu_marshal_procedure_call (scheme   *sc,
 
               return_val = sc->vptr->cons (sc, list, return_val);
             }
-          else if (GIMP_VALUE_HOLDS_RGB (value))
+          else if (LIGMA_VALUE_HOLDS_RGB (value))
             {
-              GimpRGB  v;
+              LigmaRGB  v;
               guchar   r, g, b;
               gpointer temp_val;
 
-              gimp_value_get_rgb (value, &v);
-              gimp_rgb_get_uchar (&v, &r, &g, &b);
+              ligma_value_get_rgb (value, &v);
+              ligma_rgb_get_uchar (&v, &r, &g, &b);
 
               temp_val = sc->vptr->cons
                            (sc,
@@ -1485,10 +1485,10 @@ script_fu_marshal_procedure_call (scheme   *sc,
                                            temp_val,
                                            return_val);
             }
-          else if (GIMP_VALUE_HOLDS_RGB_ARRAY (value))
+          else if (LIGMA_VALUE_HOLDS_RGB_ARRAY (value))
             {
-              gint32          n = GIMP_VALUES_GET_INT (values, i);
-              const GimpRGB  *v = gimp_value_get_rgb_array (value);
+              gint32          n = LIGMA_VALUES_GET_INT (values, i);
+              const LigmaRGB  *v = ligma_value_get_rgb_array (value);
               pointer  vector   = sc->vptr->mk_vector (sc, n);
 
               for (j = 0; j < n; j++)
@@ -1496,7 +1496,7 @@ script_fu_marshal_procedure_call (scheme   *sc,
                   guchar  r, g, b;
                   pointer temp_val;
 
-                  gimp_rgb_get_uchar (&v[j], &r, &g, &b);
+                  ligma_rgb_get_uchar (&v[j], &r, &g, &b);
 
                   temp_val = sc->vptr->cons
                               (sc,
@@ -1513,9 +1513,9 @@ script_fu_marshal_procedure_call (scheme   *sc,
 
               return_val = sc->vptr->cons (sc, vector, return_val);
             }
-          else if (GIMP_VALUE_HOLDS_PARASITE (value))
+          else if (LIGMA_VALUE_HOLDS_PARASITE (value))
             {
-              GimpParasite *v = g_value_get_boxed (value);
+              LigmaParasite *v = g_value_get_boxed (value);
 
               if (v->name == NULL)
                 {
@@ -1555,12 +1555,12 @@ script_fu_marshal_procedure_call (scheme   *sc,
                   g_debug ("data '%.*s'", v->size, (gchar *) v->data);
                 }
             }
-          else if (GIMP_VALUE_HOLDS_OBJECT_ARRAY (value))
+          else if (LIGMA_VALUE_HOLDS_OBJECT_ARRAY (value))
             {
               pointer vector = marshal_returned_object_array_to_vector (sc, value);
               return_val = sc->vptr->cons (sc, vector, return_val);
             }
-          else if (G_VALUE_TYPE (&value) == GIMP_TYPE_PDB_STATUS_TYPE)
+          else if (G_VALUE_TYPE (&value) == LIGMA_TYPE_PDB_STATUS_TYPE)
             {
               /* Called procedure implemented incorrectly. */
               return implementation_error (sc, "Procedure execution returned multiple status values", 0);
@@ -1576,8 +1576,8 @@ script_fu_marshal_procedure_call (scheme   *sc,
         }
       break;
 
-    case GIMP_PDB_PASS_THROUGH:
-    case GIMP_PDB_CANCEL:   /*  should we do something here?  */
+    case LIGMA_PDB_PASS_THROUGH:
+    case LIGMA_PDB_CANCEL:   /*  should we do something here?  */
       g_debug ("Status is PASS_THROUGH or CANCEL");
       break;
     }
@@ -1588,7 +1588,7 @@ script_fu_marshal_procedure_call (scheme   *sc,
   if (return_val == sc->NIL)
     {
       g_debug ("returning with only a status result");
-      if (GIMP_VALUES_GET_ENUM (values, 0) == GIMP_PDB_SUCCESS)
+      if (LIGMA_VALUES_GET_ENUM (values, 0) == LIGMA_PDB_SUCCESS)
         return_val = sc->vptr->cons (sc, sc->T, sc->NIL);
       else
         return_val = sc->vptr->cons (sc, sc->F, sc->NIL);
@@ -1601,10 +1601,10 @@ script_fu_marshal_procedure_call (scheme   *sc,
   g_free (proc_name);
 
   /*  free executed procedure return values  */
-  gimp_value_array_unref (values);
+  ligma_value_array_unref (values);
 
   /*  free arguments and values  */
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
   /* The callback is NULL except for script-fu-server.  See explanation there. */
   if (post_command_callback != NULL)

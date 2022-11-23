@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpasyncset.h
+ * ligmaasyncset.h
  * Copyright (C) 2018 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,44 +18,44 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_ASYNC_SET_H__
-#define __GIMP_ASYNC_SET_H__
+#ifndef __LIGMA_ASYNC_SET_H__
+#define __LIGMA_ASYNC_SET_H__
 
 
-#define GIMP_TYPE_ASYNC_SET            (gimp_async_set_get_type ())
-#define GIMP_ASYNC_SET(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_ASYNC_SET, GimpAsyncSet))
-#define GIMP_ASYNC_SET_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_ASYNC_SET, GimpAsyncSetClass))
-#define GIMP_IS_ASYNC_SET(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_ASYNC_SET))
-#define GIMP_IS_ASYNC_SET_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_ASYNC_SET))
-#define GIMP_ASYNC_SET_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_ASYNC_SET, GimpAsyncSetClass))
+#define LIGMA_TYPE_ASYNC_SET            (ligma_async_set_get_type ())
+#define LIGMA_ASYNC_SET(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_ASYNC_SET, LigmaAsyncSet))
+#define LIGMA_ASYNC_SET_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_ASYNC_SET, LigmaAsyncSetClass))
+#define LIGMA_IS_ASYNC_SET(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_ASYNC_SET))
+#define LIGMA_IS_ASYNC_SET_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_ASYNC_SET))
+#define LIGMA_ASYNC_SET_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_ASYNC_SET, LigmaAsyncSetClass))
 
 
-typedef struct _GimpAsyncSetPrivate GimpAsyncSetPrivate;
-typedef struct _GimpAsyncSetClass   GimpAsyncSetClass;
+typedef struct _LigmaAsyncSetPrivate LigmaAsyncSetPrivate;
+typedef struct _LigmaAsyncSetClass   LigmaAsyncSetClass;
 
-struct _GimpAsyncSet
+struct _LigmaAsyncSet
 {
   GObject              parent_instance;
 
-  GimpAsyncSetPrivate *priv;
+  LigmaAsyncSetPrivate *priv;
 };
 
-struct _GimpAsyncSetClass
+struct _LigmaAsyncSetClass
 {
   GObjectClass  parent_class;
 };
 
 
-GType          gimp_async_set_get_type (void) G_GNUC_CONST;
+GType          ligma_async_set_get_type (void) G_GNUC_CONST;
 
-GimpAsyncSet * gimp_async_set_new      (void);
+LigmaAsyncSet * ligma_async_set_new      (void);
 
-void           gimp_async_set_add      (GimpAsyncSet *async_set,
-                                        GimpAsync    *async);
-void           gimp_async_set_remove   (GimpAsyncSet *async_set,
-                                        GimpAsync    *async);
-void           gimp_async_set_clear    (GimpAsyncSet *async_set);
-gboolean       gimp_async_set_is_empty (GimpAsyncSet *async_set);
+void           ligma_async_set_add      (LigmaAsyncSet *async_set,
+                                        LigmaAsync    *async);
+void           ligma_async_set_remove   (LigmaAsyncSet *async_set,
+                                        LigmaAsync    *async);
+void           ligma_async_set_clear    (LigmaAsyncSet *async_set);
+gboolean       ligma_async_set_is_empty (LigmaAsyncSet *async_set);
 
 
-#endif /* __GIMP_ASYNC_SET_H__ */
+#endif /* __LIGMA_ASYNC_SET_H__ */

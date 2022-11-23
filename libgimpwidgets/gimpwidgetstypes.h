@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpwidgetstypes.h
+ * ligmawidgetstypes.h
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -18,98 +18,98 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_WIDGETS_TYPES_H__
-#define __GIMP_WIDGETS_TYPES_H__
+#ifndef __LIGMA_WIDGETS_TYPES_H__
+#define __LIGMA_WIDGETS_TYPES_H__
 
-#include <libgimpconfig/gimpconfigtypes.h>
+#include <libligmaconfig/ligmaconfigtypes.h>
 
-#include <libgimpwidgets/gimpwidgetsenums.h>
+#include <libligmawidgets/ligmawidgetsenums.h>
 
 G_BEGIN_DECLS
 
 /* For information look into the html documentation */
 
 
-typedef struct _GimpBrowser                   GimpBrowser;
-typedef struct _GimpBusyBox                   GimpBusyBox;
-typedef struct _GimpButton                    GimpButton;
-typedef struct _GimpCellRendererColor         GimpCellRendererColor;
-typedef struct _GimpCellRendererToggle        GimpCellRendererToggle;
-typedef struct _GimpChainButton               GimpChainButton;
-typedef struct _GimpColorArea                 GimpColorArea;
-typedef struct _GimpColorButton               GimpColorButton;
-typedef struct _GimpColorDisplay              GimpColorDisplay;
-typedef struct _GimpColorDisplayStack         GimpColorDisplayStack;
-typedef struct _GimpColorHexEntry             GimpColorHexEntry;
-typedef struct _GimpColorNotebook             GimpColorNotebook;
-typedef struct _GimpColorProfileChooserDialog GimpColorProfileChooserDialog;
-typedef struct _GimpColorProfileComboBox      GimpColorProfileComboBox;
-typedef struct _GimpColorProfileStore         GimpColorProfileStore;
-typedef struct _GimpColorProfileView          GimpColorProfileView;
-typedef struct _GimpColorScale                GimpColorScale;
-typedef struct _GimpColorScaleEntry           GimpColorScaleEntry;
-typedef struct _GimpColorScales               GimpColorScales;
-typedef struct _GimpColorSelector             GimpColorSelector;
-typedef struct _GimpColorSelect               GimpColorSelect;
-typedef struct _GimpColorSelection            GimpColorSelection;
-typedef struct _GimpController                GimpController;
-typedef struct _GimpDialog                    GimpDialog;
-typedef struct _GimpEnumStore                 GimpEnumStore;
-typedef struct _GimpEnumComboBox              GimpEnumComboBox;
-typedef struct _GimpEnumLabel                 GimpEnumLabel;
-typedef struct _GimpFileEntry                 GimpFileEntry;
-typedef struct _GimpFrame                     GimpFrame;
-typedef struct _GimpHintBox                   GimpHintBox;
-typedef struct _GimpIntComboBox               GimpIntComboBox;
-typedef struct _GimpIntRadioFrame             GimpIntRadioFrame;
-typedef struct _GimpIntStore                  GimpIntStore;
-typedef struct _GimpLabeled                   GimpLabeled;
-typedef struct _GimpLabelColor                GimpLabelColor;
-typedef struct _GimpLabelEntry                GimpLabelEntry;
-typedef struct _GimpLabelSpin                 GimpLabelSpin;
-typedef struct _GimpMemsizeEntry              GimpMemsizeEntry;
-typedef struct _GimpNumberPairEntry           GimpNumberPairEntry;
-typedef struct _GimpOffsetArea                GimpOffsetArea;
-typedef struct _GimpPageSelector              GimpPageSelector;
-typedef struct _GimpPathEditor                GimpPathEditor;
-typedef struct _GimpPickButton                GimpPickButton;
-typedef struct _GimpPreview                   GimpPreview;
-typedef struct _GimpPreviewArea               GimpPreviewArea;
-typedef struct _GimpRuler                     GimpRuler;
-typedef struct _GimpScaleEntry                GimpScaleEntry;
-typedef struct _GimpScrolledPreview           GimpScrolledPreview;
-typedef struct _GimpSizeEntry                 GimpSizeEntry;
-typedef struct _GimpSpinButton                GimpSpinButton;
-typedef struct _GimpStringComboBox            GimpStringComboBox;
-typedef struct _GimpUnitComboBox              GimpUnitComboBox;
-typedef struct _GimpUnitStore                 GimpUnitStore;
-typedef struct _GimpZoomModel                 GimpZoomModel;
+typedef struct _LigmaBrowser                   LigmaBrowser;
+typedef struct _LigmaBusyBox                   LigmaBusyBox;
+typedef struct _LigmaButton                    LigmaButton;
+typedef struct _LigmaCellRendererColor         LigmaCellRendererColor;
+typedef struct _LigmaCellRendererToggle        LigmaCellRendererToggle;
+typedef struct _LigmaChainButton               LigmaChainButton;
+typedef struct _LigmaColorArea                 LigmaColorArea;
+typedef struct _LigmaColorButton               LigmaColorButton;
+typedef struct _LigmaColorDisplay              LigmaColorDisplay;
+typedef struct _LigmaColorDisplayStack         LigmaColorDisplayStack;
+typedef struct _LigmaColorHexEntry             LigmaColorHexEntry;
+typedef struct _LigmaColorNotebook             LigmaColorNotebook;
+typedef struct _LigmaColorProfileChooserDialog LigmaColorProfileChooserDialog;
+typedef struct _LigmaColorProfileComboBox      LigmaColorProfileComboBox;
+typedef struct _LigmaColorProfileStore         LigmaColorProfileStore;
+typedef struct _LigmaColorProfileView          LigmaColorProfileView;
+typedef struct _LigmaColorScale                LigmaColorScale;
+typedef struct _LigmaColorScaleEntry           LigmaColorScaleEntry;
+typedef struct _LigmaColorScales               LigmaColorScales;
+typedef struct _LigmaColorSelector             LigmaColorSelector;
+typedef struct _LigmaColorSelect               LigmaColorSelect;
+typedef struct _LigmaColorSelection            LigmaColorSelection;
+typedef struct _LigmaController                LigmaController;
+typedef struct _LigmaDialog                    LigmaDialog;
+typedef struct _LigmaEnumStore                 LigmaEnumStore;
+typedef struct _LigmaEnumComboBox              LigmaEnumComboBox;
+typedef struct _LigmaEnumLabel                 LigmaEnumLabel;
+typedef struct _LigmaFileEntry                 LigmaFileEntry;
+typedef struct _LigmaFrame                     LigmaFrame;
+typedef struct _LigmaHintBox                   LigmaHintBox;
+typedef struct _LigmaIntComboBox               LigmaIntComboBox;
+typedef struct _LigmaIntRadioFrame             LigmaIntRadioFrame;
+typedef struct _LigmaIntStore                  LigmaIntStore;
+typedef struct _LigmaLabeled                   LigmaLabeled;
+typedef struct _LigmaLabelColor                LigmaLabelColor;
+typedef struct _LigmaLabelEntry                LigmaLabelEntry;
+typedef struct _LigmaLabelSpin                 LigmaLabelSpin;
+typedef struct _LigmaMemsizeEntry              LigmaMemsizeEntry;
+typedef struct _LigmaNumberPairEntry           LigmaNumberPairEntry;
+typedef struct _LigmaOffsetArea                LigmaOffsetArea;
+typedef struct _LigmaPageSelector              LigmaPageSelector;
+typedef struct _LigmaPathEditor                LigmaPathEditor;
+typedef struct _LigmaPickButton                LigmaPickButton;
+typedef struct _LigmaPreview                   LigmaPreview;
+typedef struct _LigmaPreviewArea               LigmaPreviewArea;
+typedef struct _LigmaRuler                     LigmaRuler;
+typedef struct _LigmaScaleEntry                LigmaScaleEntry;
+typedef struct _LigmaScrolledPreview           LigmaScrolledPreview;
+typedef struct _LigmaSizeEntry                 LigmaSizeEntry;
+typedef struct _LigmaSpinButton                LigmaSpinButton;
+typedef struct _LigmaStringComboBox            LigmaStringComboBox;
+typedef struct _LigmaUnitComboBox              LigmaUnitComboBox;
+typedef struct _LigmaUnitStore                 LigmaUnitStore;
+typedef struct _LigmaZoomModel                 LigmaZoomModel;
 
 
 /**
- * GimpHelpFunc:
+ * LigmaHelpFunc:
  * @help_id:   the help ID
  * @help_data: the help user data
  *
  * This is the prototype for all functions you pass as @help_func to
- * the various GIMP dialog constructors like gimp_dialog_new(),
- * gimp_query_int_box() etc.
+ * the various LIGMA dialog constructors like ligma_dialog_new(),
+ * ligma_query_int_box() etc.
  *
  * Help IDs are textual identifiers the help system uses to figure
  * which page to display.
  *
- * All these dialog constructors functions call gimp_help_connect().
+ * All these dialog constructors functions call ligma_help_connect().
  *
- * In most cases it will be ok to use gimp_standard_help_func() which
- * does nothing but passing the @help_id string to gimp_help(). If
+ * In most cases it will be ok to use ligma_standard_help_func() which
+ * does nothing but passing the @help_id string to ligma_help(). If
  * your plug-in needs some more sophisticated help handling you can
- * provide your own @help_func which has to call gimp_help() to
+ * provide your own @help_func which has to call ligma_help() to
  * actually display the help.
  **/
-typedef void (* GimpHelpFunc) (const gchar *help_id,
+typedef void (* LigmaHelpFunc) (const gchar *help_id,
                                gpointer     help_data);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_WIDGETS_TYPES_H__ */
+#endif /* __LIGMA_WIDGETS_TYPES_H__ */

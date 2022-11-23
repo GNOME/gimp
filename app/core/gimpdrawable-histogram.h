@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimphistogram module Copyright (C) 1999 Jay Cox <jaycox@gimp.org>
+ * ligmahistogram module Copyright (C) 1999 Jay Cox <jaycox@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,16 +17,16 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DRAWABLE_HISTOGRAM_H__
-#define __GIMP_DRAWABLE_HISTOGRAM_H__
+#ifndef __LIGMA_DRAWABLE_HISTOGRAM_H__
+#define __LIGMA_DRAWABLE_HISTOGRAM_H__
 
 
-void        gimp_drawable_calculate_histogram       (GimpDrawable  *drawable,
-                                                     GimpHistogram *histogram,
+void        ligma_drawable_calculate_histogram       (LigmaDrawable  *drawable,
+                                                     LigmaHistogram *histogram,
                                                      gboolean       with_filters);
-GimpAsync * gimp_drawable_calculate_histogram_async (GimpDrawable  *drawable,
-                                                     GimpHistogram *histogram,
+LigmaAsync * ligma_drawable_calculate_histogram_async (LigmaDrawable  *drawable,
+                                                     LigmaHistogram *histogram,
                                                      gboolean       with_filters);
 
 
-#endif /* __GIMP_HISTOGRAM_H__ */
+#endif /* __LIGMA_HISTOGRAM_H__ */

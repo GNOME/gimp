@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcanvaslimit.h
+ * ligmacanvaslimit.h
  * Copyright (C) 2020 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,39 +18,39 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CANVAS_LIMIT_H__
-#define __GIMP_CANVAS_LIMIT_H__
+#ifndef __LIGMA_CANVAS_LIMIT_H__
+#define __LIGMA_CANVAS_LIMIT_H__
 
 
-#include "gimpcanvasitem.h"
+#include "ligmacanvasitem.h"
 
 
-#define GIMP_TYPE_CANVAS_LIMIT            (gimp_canvas_limit_get_type ())
-#define GIMP_CANVAS_LIMIT(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CANVAS_LIMIT, GimpCanvasLimit))
-#define GIMP_CANVAS_LIMIT_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CANVAS_LIMIT, GimpCanvasLimitClass))
-#define GIMP_IS_CANVAS_LIMIT(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CANVAS_LIMIT))
-#define GIMP_IS_CANVAS_LIMIT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CANVAS_LIMIT))
-#define GIMP_CANVAS_LIMIT_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CANVAS_LIMIT, GimpCanvasLimitClass))
+#define LIGMA_TYPE_CANVAS_LIMIT            (ligma_canvas_limit_get_type ())
+#define LIGMA_CANVAS_LIMIT(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_CANVAS_LIMIT, LigmaCanvasLimit))
+#define LIGMA_CANVAS_LIMIT_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_CANVAS_LIMIT, LigmaCanvasLimitClass))
+#define LIGMA_IS_CANVAS_LIMIT(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_CANVAS_LIMIT))
+#define LIGMA_IS_CANVAS_LIMIT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_CANVAS_LIMIT))
+#define LIGMA_CANVAS_LIMIT_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_CANVAS_LIMIT, LigmaCanvasLimitClass))
 
 
-typedef struct _GimpCanvasLimit      GimpCanvasLimit;
-typedef struct _GimpCanvasLimitClass GimpCanvasLimitClass;
+typedef struct _LigmaCanvasLimit      LigmaCanvasLimit;
+typedef struct _LigmaCanvasLimitClass LigmaCanvasLimitClass;
 
-struct _GimpCanvasLimit
+struct _LigmaCanvasLimit
 {
-  GimpCanvasItem  parent_instance;
+  LigmaCanvasItem  parent_instance;
 };
 
-struct _GimpCanvasLimitClass
+struct _LigmaCanvasLimitClass
 {
-  GimpCanvasItemClass  parent_class;
+  LigmaCanvasItemClass  parent_class;
 };
 
 
-GType            gimp_canvas_limit_get_type        (void) G_GNUC_CONST;
+GType            ligma_canvas_limit_get_type        (void) G_GNUC_CONST;
 
-GimpCanvasItem * gimp_canvas_limit_new             (GimpDisplayShell *shell,
-                                                    GimpLimitType     type,
+LigmaCanvasItem * ligma_canvas_limit_new             (LigmaDisplayShell *shell,
+                                                    LigmaLimitType     type,
                                                     gdouble           x,
                                                     gdouble           y,
                                                     gdouble           radius,
@@ -58,27 +58,27 @@ GimpCanvasItem * gimp_canvas_limit_new             (GimpDisplayShell *shell,
                                                     gdouble           angle,
                                                     gboolean          dashed);
 
-void             gimp_canvas_limit_get_radii       (GimpCanvasLimit  *limit,
+void             ligma_canvas_limit_get_radii       (LigmaCanvasLimit  *limit,
                                                     gdouble          *rx,
                                                     gdouble          *ry);
 
-gboolean         gimp_canvas_limit_is_inside       (GimpCanvasLimit  *limit,
+gboolean         ligma_canvas_limit_is_inside       (LigmaCanvasLimit  *limit,
                                                     gdouble           x,
                                                     gdouble           y);
-void             gimp_canvas_limit_boundary_point  (GimpCanvasLimit  *limit,
+void             ligma_canvas_limit_boundary_point  (LigmaCanvasLimit  *limit,
                                                     gdouble           x,
                                                     gdouble           y,
                                                     gdouble          *bx,
                                                     gdouble          *by);
-gdouble          gimp_canvas_limit_boundary_radius (GimpCanvasLimit  *limit,
+gdouble          ligma_canvas_limit_boundary_radius (LigmaCanvasLimit  *limit,
                                                     gdouble           x,
                                                     gdouble           y);
 
-void             gimp_canvas_limit_center_point    (GimpCanvasLimit  *limit,
+void             ligma_canvas_limit_center_point    (LigmaCanvasLimit  *limit,
                                                     gdouble           x,
                                                     gdouble           y,
                                                     gdouble          *cx,
                                                     gdouble          *cy);
 
 
-#endif /* __GIMP_CANVAS_LIMIT_H__ */
+#endif /* __LIGMA_CANVAS_LIMIT_H__ */

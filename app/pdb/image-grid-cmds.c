@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-2003 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -27,42 +27,42 @@
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpbase/gimpbaseenums.h"
-#include "libgimpcolor/gimpcolor.h"
+#include "libligmabase/ligmabaseenums.h"
+#include "libligmacolor/ligmacolor.h"
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "pdb-types.h"
 
-#include "core/gimpgrid.h"
-#include "core/gimpimage-grid.h"
-#include "core/gimpimage.h"
-#include "core/gimpparamspecs.h"
+#include "core/ligmagrid.h"
+#include "core/ligmaimage-grid.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaparamspecs.h"
 
-#include "gimppdb.h"
-#include "gimpprocedure.h"
+#include "ligmapdb.h"
+#include "ligmaprocedure.h"
 #include "internal-procs.h"
 
 
-static GimpValueArray *
-image_grid_get_spacing_invoker (GimpProcedure         *procedure,
-                                Gimp                  *gimp,
-                                GimpContext           *context,
-                                GimpProgress          *progress,
-                                const GimpValueArray  *args,
+static LigmaValueArray *
+image_grid_get_spacing_invoker (LigmaProcedure         *procedure,
+                                Ligma                  *ligma,
+                                LigmaContext           *context,
+                                LigmaProgress          *progress,
+                                const LigmaValueArray  *args,
                                 GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpImage *image;
+  LigmaValueArray *return_vals;
+  LigmaImage *image;
   gdouble xspacing = 0.0;
   gdouble yspacing = 0.0;
 
-  image = g_value_get_object (gimp_value_array_index (args, 0));
+  image = g_value_get_object (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      GimpGrid *grid = gimp_image_get_grid (image);
+      LigmaGrid *grid = ligma_image_get_grid (image);
 
       if (grid)
         g_object_get (grid,
@@ -73,38 +73,38 @@ image_grid_get_spacing_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
     {
-      g_value_set_double (gimp_value_array_index (return_vals, 1), xspacing);
-      g_value_set_double (gimp_value_array_index (return_vals, 2), yspacing);
+      g_value_set_double (ligma_value_array_index (return_vals, 1), xspacing);
+      g_value_set_double (ligma_value_array_index (return_vals, 2), yspacing);
     }
 
   return return_vals;
 }
 
-static GimpValueArray *
-image_grid_set_spacing_invoker (GimpProcedure         *procedure,
-                                Gimp                  *gimp,
-                                GimpContext           *context,
-                                GimpProgress          *progress,
-                                const GimpValueArray  *args,
+static LigmaValueArray *
+image_grid_set_spacing_invoker (LigmaProcedure         *procedure,
+                                Ligma                  *ligma,
+                                LigmaContext           *context,
+                                LigmaProgress          *progress,
+                                const LigmaValueArray  *args,
                                 GError               **error)
 {
   gboolean success = TRUE;
-  GimpImage *image;
+  LigmaImage *image;
   gdouble xspacing;
   gdouble yspacing;
 
-  image = g_value_get_object (gimp_value_array_index (args, 0));
-  xspacing = g_value_get_double (gimp_value_array_index (args, 1));
-  yspacing = g_value_get_double (gimp_value_array_index (args, 2));
+  image = g_value_get_object (ligma_value_array_index (args, 0));
+  xspacing = g_value_get_double (ligma_value_array_index (args, 1));
+  yspacing = g_value_get_double (ligma_value_array_index (args, 2));
 
   if (success)
     {
-      GimpGrid *grid = gimp_image_get_grid (image);
+      LigmaGrid *grid = ligma_image_get_grid (image);
 
       if (grid)
         g_object_set (grid,
@@ -115,29 +115,29 @@ image_grid_set_spacing_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-image_grid_get_offset_invoker (GimpProcedure         *procedure,
-                               Gimp                  *gimp,
-                               GimpContext           *context,
-                               GimpProgress          *progress,
-                               const GimpValueArray  *args,
+static LigmaValueArray *
+image_grid_get_offset_invoker (LigmaProcedure         *procedure,
+                               Ligma                  *ligma,
+                               LigmaContext           *context,
+                               LigmaProgress          *progress,
+                               const LigmaValueArray  *args,
                                GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpImage *image;
+  LigmaValueArray *return_vals;
+  LigmaImage *image;
   gdouble xoffset = 0.0;
   gdouble yoffset = 0.0;
 
-  image = g_value_get_object (gimp_value_array_index (args, 0));
+  image = g_value_get_object (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      GimpGrid *grid = gimp_image_get_grid (image);
+      LigmaGrid *grid = ligma_image_get_grid (image);
 
       if (grid)
         g_object_get (grid,
@@ -148,38 +148,38 @@ image_grid_get_offset_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
     {
-      g_value_set_double (gimp_value_array_index (return_vals, 1), xoffset);
-      g_value_set_double (gimp_value_array_index (return_vals, 2), yoffset);
+      g_value_set_double (ligma_value_array_index (return_vals, 1), xoffset);
+      g_value_set_double (ligma_value_array_index (return_vals, 2), yoffset);
     }
 
   return return_vals;
 }
 
-static GimpValueArray *
-image_grid_set_offset_invoker (GimpProcedure         *procedure,
-                               Gimp                  *gimp,
-                               GimpContext           *context,
-                               GimpProgress          *progress,
-                               const GimpValueArray  *args,
+static LigmaValueArray *
+image_grid_set_offset_invoker (LigmaProcedure         *procedure,
+                               Ligma                  *ligma,
+                               LigmaContext           *context,
+                               LigmaProgress          *progress,
+                               const LigmaValueArray  *args,
                                GError               **error)
 {
   gboolean success = TRUE;
-  GimpImage *image;
+  LigmaImage *image;
   gdouble xoffset;
   gdouble yoffset;
 
-  image = g_value_get_object (gimp_value_array_index (args, 0));
-  xoffset = g_value_get_double (gimp_value_array_index (args, 1));
-  yoffset = g_value_get_double (gimp_value_array_index (args, 2));
+  image = g_value_get_object (ligma_value_array_index (args, 0));
+  xoffset = g_value_get_double (ligma_value_array_index (args, 1));
+  yoffset = g_value_get_double (ligma_value_array_index (args, 2));
 
   if (success)
     {
-      GimpGrid *grid = gimp_image_get_grid (image);
+      LigmaGrid *grid = ligma_image_get_grid (image);
 
       if (grid)
         g_object_set (grid,
@@ -190,28 +190,28 @@ image_grid_set_offset_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-image_grid_get_foreground_color_invoker (GimpProcedure         *procedure,
-                                         Gimp                  *gimp,
-                                         GimpContext           *context,
-                                         GimpProgress          *progress,
-                                         const GimpValueArray  *args,
+static LigmaValueArray *
+image_grid_get_foreground_color_invoker (LigmaProcedure         *procedure,
+                                         Ligma                  *ligma,
+                                         LigmaContext           *context,
+                                         LigmaProgress          *progress,
+                                         const LigmaValueArray  *args,
                                          GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpImage *image;
-  GimpRGB fgcolor = { 0.0, 0.0, 0.0, 1.0 };
+  LigmaValueArray *return_vals;
+  LigmaImage *image;
+  LigmaRGB fgcolor = { 0.0, 0.0, 0.0, 1.0 };
 
-  image = g_value_get_object (gimp_value_array_index (args, 0));
+  image = g_value_get_object (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      GimpGrid *grid = gimp_image_get_grid (image);
+      LigmaGrid *grid = ligma_image_get_grid (image);
 
       if (grid)
         fgcolor = grid->fgcolor;
@@ -219,33 +219,33 @@ image_grid_get_foreground_color_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    gimp_value_set_rgb (gimp_value_array_index (return_vals, 1), &fgcolor);
+    ligma_value_set_rgb (ligma_value_array_index (return_vals, 1), &fgcolor);
 
   return return_vals;
 }
 
-static GimpValueArray *
-image_grid_set_foreground_color_invoker (GimpProcedure         *procedure,
-                                         Gimp                  *gimp,
-                                         GimpContext           *context,
-                                         GimpProgress          *progress,
-                                         const GimpValueArray  *args,
+static LigmaValueArray *
+image_grid_set_foreground_color_invoker (LigmaProcedure         *procedure,
+                                         Ligma                  *ligma,
+                                         LigmaContext           *context,
+                                         LigmaProgress          *progress,
+                                         const LigmaValueArray  *args,
                                          GError               **error)
 {
   gboolean success = TRUE;
-  GimpImage *image;
-  GimpRGB fgcolor;
+  LigmaImage *image;
+  LigmaRGB fgcolor;
 
-  image = g_value_get_object (gimp_value_array_index (args, 0));
-  gimp_value_get_rgb (gimp_value_array_index (args, 1), &fgcolor);
+  image = g_value_get_object (ligma_value_array_index (args, 0));
+  ligma_value_get_rgb (ligma_value_array_index (args, 1), &fgcolor);
 
   if (success)
     {
-      GimpGrid *grid = gimp_image_get_grid (image);
+      LigmaGrid *grid = ligma_image_get_grid (image);
 
       if (grid)
         g_object_set (grid, "fgcolor", &fgcolor, NULL);
@@ -253,28 +253,28 @@ image_grid_set_foreground_color_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-image_grid_get_background_color_invoker (GimpProcedure         *procedure,
-                                         Gimp                  *gimp,
-                                         GimpContext           *context,
-                                         GimpProgress          *progress,
-                                         const GimpValueArray  *args,
+static LigmaValueArray *
+image_grid_get_background_color_invoker (LigmaProcedure         *procedure,
+                                         Ligma                  *ligma,
+                                         LigmaContext           *context,
+                                         LigmaProgress          *progress,
+                                         const LigmaValueArray  *args,
                                          GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpImage *image;
-  GimpRGB bgcolor = { 0.0, 0.0, 0.0, 1.0 };
+  LigmaValueArray *return_vals;
+  LigmaImage *image;
+  LigmaRGB bgcolor = { 0.0, 0.0, 0.0, 1.0 };
 
-  image = g_value_get_object (gimp_value_array_index (args, 0));
+  image = g_value_get_object (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      GimpGrid *grid = gimp_image_get_grid (image);
+      LigmaGrid *grid = ligma_image_get_grid (image);
 
       if (grid)
         bgcolor = grid->bgcolor;
@@ -282,33 +282,33 @@ image_grid_get_background_color_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    gimp_value_set_rgb (gimp_value_array_index (return_vals, 1), &bgcolor);
+    ligma_value_set_rgb (ligma_value_array_index (return_vals, 1), &bgcolor);
 
   return return_vals;
 }
 
-static GimpValueArray *
-image_grid_set_background_color_invoker (GimpProcedure         *procedure,
-                                         Gimp                  *gimp,
-                                         GimpContext           *context,
-                                         GimpProgress          *progress,
-                                         const GimpValueArray  *args,
+static LigmaValueArray *
+image_grid_set_background_color_invoker (LigmaProcedure         *procedure,
+                                         Ligma                  *ligma,
+                                         LigmaContext           *context,
+                                         LigmaProgress          *progress,
+                                         const LigmaValueArray  *args,
                                          GError               **error)
 {
   gboolean success = TRUE;
-  GimpImage *image;
-  GimpRGB bgcolor;
+  LigmaImage *image;
+  LigmaRGB bgcolor;
 
-  image = g_value_get_object (gimp_value_array_index (args, 0));
-  gimp_value_get_rgb (gimp_value_array_index (args, 1), &bgcolor);
+  image = g_value_get_object (ligma_value_array_index (args, 0));
+  ligma_value_get_rgb (ligma_value_array_index (args, 1), &bgcolor);
 
   if (success)
     {
-      GimpGrid *grid = gimp_image_get_grid (image);
+      LigmaGrid *grid = ligma_image_get_grid (image);
 
       if (grid)
         g_object_set (grid, "bgcolor", &bgcolor, NULL);
@@ -316,28 +316,28 @@ image_grid_set_background_color_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-image_grid_get_style_invoker (GimpProcedure         *procedure,
-                              Gimp                  *gimp,
-                              GimpContext           *context,
-                              GimpProgress          *progress,
-                              const GimpValueArray  *args,
+static LigmaValueArray *
+image_grid_get_style_invoker (LigmaProcedure         *procedure,
+                              Ligma                  *ligma,
+                              LigmaContext           *context,
+                              LigmaProgress          *progress,
+                              const LigmaValueArray  *args,
                               GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpImage *image;
+  LigmaValueArray *return_vals;
+  LigmaImage *image;
   gint style = 0;
 
-  image = g_value_get_object (gimp_value_array_index (args, 0));
+  image = g_value_get_object (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      GimpGrid *grid = gimp_image_get_grid (image);
+      LigmaGrid *grid = ligma_image_get_grid (image);
 
       if (grid)
         g_object_get (grid, "style", &style, NULL);
@@ -345,33 +345,33 @@ image_grid_get_style_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_enum (gimp_value_array_index (return_vals, 1), style);
+    g_value_set_enum (ligma_value_array_index (return_vals, 1), style);
 
   return return_vals;
 }
 
-static GimpValueArray *
-image_grid_set_style_invoker (GimpProcedure         *procedure,
-                              Gimp                  *gimp,
-                              GimpContext           *context,
-                              GimpProgress          *progress,
-                              const GimpValueArray  *args,
+static LigmaValueArray *
+image_grid_set_style_invoker (LigmaProcedure         *procedure,
+                              Ligma                  *ligma,
+                              LigmaContext           *context,
+                              LigmaProgress          *progress,
+                              const LigmaValueArray  *args,
                               GError               **error)
 {
   gboolean success = TRUE;
-  GimpImage *image;
+  LigmaImage *image;
   gint style;
 
-  image = g_value_get_object (gimp_value_array_index (args, 0));
-  style = g_value_get_enum (gimp_value_array_index (args, 1));
+  image = g_value_get_object (ligma_value_array_index (args, 0));
+  style = g_value_get_enum (ligma_value_array_index (args, 1));
 
   if (success)
     {
-      GimpGrid *grid = gimp_image_get_grid (image);
+      LigmaGrid *grid = ligma_image_get_grid (image);
 
       if (grid)
         g_object_set (grid, "style", style, NULL);
@@ -379,332 +379,332 @@ image_grid_set_style_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
 void
-register_image_grid_procs (GimpPDB *pdb)
+register_image_grid_procs (LigmaPDB *pdb)
 {
-  GimpProcedure *procedure;
+  LigmaProcedure *procedure;
 
   /*
-   * gimp-image-grid-get-spacing
+   * ligma-image-grid-get-spacing
    */
-  procedure = gimp_procedure_new (image_grid_get_spacing_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-grid-get-spacing");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (image_grid_get_spacing_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-image-grid-get-spacing");
+  ligma_procedure_set_static_help (procedure,
                                   "Gets the spacing of an image's grid.",
                                   "This procedure retrieves the horizontal and vertical spacing of an image's grid. It takes the image as parameter.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Sylvain Foret",
                                          "Sylvain Foret",
                                          "2005");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "The image",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_double ("xspacing",
                                                         "xspacing",
                                                         "The image's grid horizontal spacing",
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                        LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_double ("yspacing",
                                                         "yspacing",
                                                         "The image's grid vertical spacing",
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                        LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-image-grid-set-spacing
+   * ligma-image-grid-set-spacing
    */
-  procedure = gimp_procedure_new (image_grid_set_spacing_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-grid-set-spacing");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (image_grid_set_spacing_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-image-grid-set-spacing");
+  ligma_procedure_set_static_help (procedure,
                                   "Sets the spacing of an image's grid.",
                                   "This procedure sets the horizontal and vertical spacing of an image's grid.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Sylvain Foret",
                                          "Sylvain Foret",
                                          "2005");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "The image",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("xspacing",
                                                     "xspacing",
                                                     "The image's grid horizontal spacing",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("yspacing",
                                                     "yspacing",
                                                     "The image's grid vertical spacing",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-image-grid-get-offset
+   * ligma-image-grid-get-offset
    */
-  procedure = gimp_procedure_new (image_grid_get_offset_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-grid-get-offset");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (image_grid_get_offset_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-image-grid-get-offset");
+  ligma_procedure_set_static_help (procedure,
                                   "Gets the offset of an image's grid.",
                                   "This procedure retrieves the horizontal and vertical offset of an image's grid. It takes the image as parameter.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Sylvain Foret",
                                          "Sylvain Foret",
                                          "2005");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "The image",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_double ("xoffset",
                                                         "xoffset",
                                                         "The image's grid horizontal offset",
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                        LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_double ("yoffset",
                                                         "yoffset",
                                                         "The image's grid vertical offset",
                                                         -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                        LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-image-grid-set-offset
+   * ligma-image-grid-set-offset
    */
-  procedure = gimp_procedure_new (image_grid_set_offset_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-grid-set-offset");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (image_grid_set_offset_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-image-grid-set-offset");
+  ligma_procedure_set_static_help (procedure,
                                   "Sets the offset of an image's grid.",
                                   "This procedure sets the horizontal and vertical offset of an image's grid.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Sylvain Foret",
                                          "Sylvain Foret",
                                          "2005");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "The image",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("xoffset",
                                                     "xoffset",
                                                     "The image's grid horizontal offset",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("yoffset",
                                                     "yoffset",
                                                     "The image's grid vertical offset",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-image-grid-get-foreground-color
+   * ligma-image-grid-get-foreground-color
    */
-  procedure = gimp_procedure_new (image_grid_get_foreground_color_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-grid-get-foreground-color");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (image_grid_get_foreground_color_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-image-grid-get-foreground-color");
+  ligma_procedure_set_static_help (procedure,
                                   "Sets the foreground color of an image's grid.",
                                   "This procedure gets the foreground color of an image's grid.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Sylvain Foret",
                                          "Sylvain Foret",
                                          "2005");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "The image",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_rgb ("fgcolor",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_rgb ("fgcolor",
                                                         "fgcolor",
                                                         "The image's grid foreground color",
                                                         TRUE,
                                                         NULL,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                        LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-image-grid-set-foreground-color
+   * ligma-image-grid-set-foreground-color
    */
-  procedure = gimp_procedure_new (image_grid_set_foreground_color_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-grid-set-foreground-color");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (image_grid_set_foreground_color_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-image-grid-set-foreground-color");
+  ligma_procedure_set_static_help (procedure,
                                   "Gets the foreground color of an image's grid.",
                                   "This procedure sets the foreground color of an image's grid.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Sylvain Foret",
                                          "Sylvain Foret",
                                          "2005");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "The image",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_rgb ("fgcolor",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_rgb ("fgcolor",
                                                     "fgcolor",
                                                     "The new foreground color",
                                                     TRUE,
                                                     NULL,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-image-grid-get-background-color
+   * ligma-image-grid-get-background-color
    */
-  procedure = gimp_procedure_new (image_grid_get_background_color_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-grid-get-background-color");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (image_grid_get_background_color_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-image-grid-get-background-color");
+  ligma_procedure_set_static_help (procedure,
                                   "Sets the background color of an image's grid.",
                                   "This procedure gets the background color of an image's grid.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Sylvain Foret",
                                          "Sylvain Foret",
                                          "2005");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "The image",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_rgb ("bgcolor",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_rgb ("bgcolor",
                                                         "bgcolor",
                                                         "The image's grid background color",
                                                         TRUE,
                                                         NULL,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                        LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-image-grid-set-background-color
+   * ligma-image-grid-set-background-color
    */
-  procedure = gimp_procedure_new (image_grid_set_background_color_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-grid-set-background-color");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (image_grid_set_background_color_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-image-grid-set-background-color");
+  ligma_procedure_set_static_help (procedure,
                                   "Gets the background color of an image's grid.",
                                   "This procedure sets the background color of an image's grid.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Sylvain Foret",
                                          "Sylvain Foret",
                                          "2005");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "The image",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_rgb ("bgcolor",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_rgb ("bgcolor",
                                                     "bgcolor",
                                                     "The new background color",
                                                     TRUE,
                                                     NULL,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-image-grid-get-style
+   * ligma-image-grid-get-style
    */
-  procedure = gimp_procedure_new (image_grid_get_style_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-grid-get-style");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (image_grid_get_style_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-image-grid-get-style");
+  ligma_procedure_set_static_help (procedure,
                                   "Gets the style of an image's grid.",
                                   "This procedure retrieves the style of an image's grid.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Sylvain Foret",
                                          "Sylvain Foret",
                                          "2005");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "The image",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("style",
                                                       "style",
                                                       "The image's grid style",
-                                                      GIMP_TYPE_GRID_STYLE,
-                                                      GIMP_GRID_DOTS,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                      LIGMA_TYPE_GRID_STYLE,
+                                                      LIGMA_GRID_DOTS,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-image-grid-set-style
+   * ligma-image-grid-set-style
    */
-  procedure = gimp_procedure_new (image_grid_set_style_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-grid-set-style");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (image_grid_set_style_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-image-grid-set-style");
+  ligma_procedure_set_static_help (procedure,
                                   "Sets the style unit of an image's grid.",
                                   "This procedure sets the style of an image's grid. It takes the image and the new style as parameters.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Sylvain Foret",
                                          "Sylvain Foret",
                                          "2005");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "The image",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("style",
                                                   "style",
                                                   "The image's grid style",
-                                                  GIMP_TYPE_GRID_STYLE,
-                                                  GIMP_GRID_DOTS,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                  LIGMA_TYPE_GRID_STYLE,
+                                                  LIGMA_GRID_DOTS,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

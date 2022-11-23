@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,55 +15,55 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TEXT_OPTIONS_H__
-#define __GIMP_TEXT_OPTIONS_H__
+#ifndef __LIGMA_TEXT_OPTIONS_H__
+#define __LIGMA_TEXT_OPTIONS_H__
 
 
-#include "core/gimptooloptions.h"
+#include "core/ligmatooloptions.h"
 
 
-#define GIMP_TYPE_TEXT_OPTIONS            (gimp_text_options_get_type ())
-#define GIMP_TEXT_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TEXT_OPTIONS, GimpTextOptions))
-#define GIMP_TEXT_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TEXT_OPTIONS, GimpTextOptionsClass))
-#define GIMP_IS_TEXT_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_TEXT_OPTIONS))
-#define GIMP_IS_TEXT_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_TEXT_OPTIONS))
-#define GIMP_TEXT_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_TEXT_OPTIONS, GimpTextOptionsClass))
+#define LIGMA_TYPE_TEXT_OPTIONS            (ligma_text_options_get_type ())
+#define LIGMA_TEXT_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_TEXT_OPTIONS, LigmaTextOptions))
+#define LIGMA_TEXT_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_TEXT_OPTIONS, LigmaTextOptionsClass))
+#define LIGMA_IS_TEXT_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_TEXT_OPTIONS))
+#define LIGMA_IS_TEXT_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_TEXT_OPTIONS))
+#define LIGMA_TEXT_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_TEXT_OPTIONS, LigmaTextOptionsClass))
 
 
-typedef struct _GimpTextOptions      GimpTextOptions;
-typedef struct _GimpToolOptionsClass GimpTextOptionsClass;
+typedef struct _LigmaTextOptions      LigmaTextOptions;
+typedef struct _LigmaToolOptionsClass LigmaTextOptionsClass;
 
-struct _GimpTextOptions
+struct _LigmaTextOptions
 {
-  GimpToolOptions        tool_options;
+  LigmaToolOptions        tool_options;
 
-  GimpUnit               unit;
+  LigmaUnit               unit;
   gdouble                font_size;
   gboolean               antialias;
-  GimpTextHintStyle      hint_style;
+  LigmaTextHintStyle      hint_style;
   gchar                 *language;
-  GimpTextDirection      base_dir;
-  GimpTextJustification  justify;
+  LigmaTextDirection      base_dir;
+  LigmaTextJustification  justify;
   gdouble                indent;
   gdouble                line_spacing;
   gdouble                letter_spacing;
-  GimpTextBoxMode        box_mode;
+  LigmaTextBoxMode        box_mode;
 
-  GimpTextOutline        outline;
-  GimpFillStyle          outline_style;
-  GimpRGB                outline_foreground;
-  GimpPattern           *outline_pattern;
+  LigmaTextOutline        outline;
+  LigmaFillStyle          outline_style;
+  LigmaRGB                outline_foreground;
+  LigmaPattern           *outline_pattern;
   gdouble                outline_width;
-  GimpUnit               outline_unit;
-  GimpCapStyle           outline_cap_style;
-  GimpJoinStyle          outline_join_style;
+  LigmaUnit               outline_unit;
+  LigmaCapStyle           outline_cap_style;
+  LigmaJoinStyle          outline_join_style;
   gdouble                outline_miter_limit;
   gboolean               outline_antialias;
   gdouble                outline_dash_offset;
   GArray                *outline_dash_info;
 
-  GimpViewType           font_view_type;
-  GimpViewSize           font_view_size;
+  LigmaViewType           font_view_type;
+  LigmaViewSize           font_view_size;
 
   gboolean               use_editor;
 
@@ -72,22 +72,22 @@ struct _GimpTextOptions
 };
 
 
-GType       gimp_text_options_get_type     (void) G_GNUC_CONST;
+GType       ligma_text_options_get_type     (void) G_GNUC_CONST;
 
-void        gimp_text_options_connect_text (GimpTextOptions *options,
-                                            GimpText        *text);
+void        ligma_text_options_connect_text (LigmaTextOptions *options,
+                                            LigmaText        *text);
 
-GtkWidget * gimp_text_options_gui          (GimpToolOptions *tool_options);
+GtkWidget * ligma_text_options_gui          (LigmaToolOptions *tool_options);
 
-GtkWidget * gimp_text_options_editor_new   (GtkWindow       *parent,
-                                            Gimp            *gimp,
-                                            GimpTextOptions *options,
-                                            GimpMenuFactory *menu_factory,
+GtkWidget * ligma_text_options_editor_new   (GtkWindow       *parent,
+                                            Ligma            *ligma,
+                                            LigmaTextOptions *options,
+                                            LigmaMenuFactory *menu_factory,
                                             const gchar     *title,
-                                            GimpText        *text,
-                                            GimpTextBuffer  *text_buffer,
+                                            LigmaText        *text,
+                                            LigmaTextBuffer  *text_buffer,
                                             gdouble          xres,
                                             gdouble          yres);
 
 
-#endif /* __GIMP_TEXT_OPTIONS_H__ */
+#endif /* __LIGMA_TEXT_OPTIONS_H__ */

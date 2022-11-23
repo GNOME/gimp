@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimptemporaryprocedure.h
+ * ligmatemporaryprocedure.h
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,39 +17,39 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TEMPORARY_PROCEDURE_H__
-#define __GIMP_TEMPORARY_PROCEDURE_H__
+#ifndef __LIGMA_TEMPORARY_PROCEDURE_H__
+#define __LIGMA_TEMPORARY_PROCEDURE_H__
 
 
-#include "gimppluginprocedure.h"
+#include "ligmapluginprocedure.h"
 
 
-#define GIMP_TYPE_TEMPORARY_PROCEDURE            (gimp_temporary_procedure_get_type ())
-#define GIMP_TEMPORARY_PROCEDURE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TEMPORARY_PROCEDURE, GimpTemporaryProcedure))
-#define GIMP_TEMPORARY_PROCEDURE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TEMPORARY_PROCEDURE, GimpTemporaryProcedureClass))
-#define GIMP_IS_TEMPORARY_PROCEDURE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_TEMPORARY_PROCEDURE))
-#define GIMP_IS_TEMPORARY_PROCEDURE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_TEMPORARY_PROCEDURE))
-#define GIMP_TEMPORARY_PROCEDURE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_TEMPORARY_PROCEDURE, GimpTemporaryProcedureClass))
+#define LIGMA_TYPE_TEMPORARY_PROCEDURE            (ligma_temporary_procedure_get_type ())
+#define LIGMA_TEMPORARY_PROCEDURE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_TEMPORARY_PROCEDURE, LigmaTemporaryProcedure))
+#define LIGMA_TEMPORARY_PROCEDURE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_TEMPORARY_PROCEDURE, LigmaTemporaryProcedureClass))
+#define LIGMA_IS_TEMPORARY_PROCEDURE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_TEMPORARY_PROCEDURE))
+#define LIGMA_IS_TEMPORARY_PROCEDURE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_TEMPORARY_PROCEDURE))
+#define LIGMA_TEMPORARY_PROCEDURE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_TEMPORARY_PROCEDURE, LigmaTemporaryProcedureClass))
 
 
-typedef struct _GimpTemporaryProcedureClass GimpTemporaryProcedureClass;
+typedef struct _LigmaTemporaryProcedureClass LigmaTemporaryProcedureClass;
 
-struct _GimpTemporaryProcedure
+struct _LigmaTemporaryProcedure
 {
-  GimpPlugInProcedure  parent_instance;
+  LigmaPlugInProcedure  parent_instance;
 
-  GimpPlugIn          *plug_in;
+  LigmaPlugIn          *plug_in;
 };
 
-struct _GimpTemporaryProcedureClass
+struct _LigmaTemporaryProcedureClass
 {
-  GimpPlugInProcedureClass parent_class;
+  LigmaPlugInProcedureClass parent_class;
 };
 
 
-GType           gimp_temporary_procedure_get_type (void) G_GNUC_CONST;
+GType           ligma_temporary_procedure_get_type (void) G_GNUC_CONST;
 
-GimpProcedure * gimp_temporary_procedure_new      (GimpPlugIn *plug_in);
+LigmaProcedure * ligma_temporary_procedure_new      (LigmaPlugIn *plug_in);
 
 
-#endif /* __GIMP_TEMPORARY_PROCEDURE_H__ */
+#endif /* __LIGMA_TEMPORARY_PROCEDURE_H__ */

@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpdockwindow.c
- * Copyright (C) 2001-2005 Michael Natterer <mitch@gimp.org>
+ * ligmadockwindow.c
+ * Copyright (C) 2001-2005 Michael Natterer <mitch@ligma.org>
  * Copyright (C)      2009 Martin Nordholts <martinn@src.gnome.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,41 +25,41 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
 #include "dialogs/dialogs.h" /* FIXME, we are in the widget layer */
 
-#include "config/gimpguiconfig.h"
+#include "config/ligmaguiconfig.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontext.h"
-#include "core/gimpcontainer.h"
-#include "core/gimpcontainer.h"
-#include "core/gimplist.h"
-#include "core/gimpimage.h"
+#include "core/ligma.h"
+#include "core/ligmacontext.h"
+#include "core/ligmacontainer.h"
+#include "core/ligmacontainer.h"
+#include "core/ligmalist.h"
+#include "core/ligmaimage.h"
 
-#include "gimpcontainercombobox.h"
-#include "gimpcontainerview.h"
-#include "gimpdialogfactory.h"
-#include "gimpdock.h"
-#include "gimpdockbook.h"
-#include "gimpdockcolumns.h"
-#include "gimpdockcontainer.h"
-#include "gimpdockwindow.h"
-#include "gimphelp-ids.h"
-#include "gimpmenufactory.h"
-#include "gimpsessioninfo-aux.h"
-#include "gimpsessioninfo.h"
-#include "gimpsessionmanaged.h"
-#include "gimptoolbox.h"
-#include "gimpuimanager.h"
-#include "gimpwidgets-utils.h"
-#include "gimpwindow.h"
+#include "ligmacontainercombobox.h"
+#include "ligmacontainerview.h"
+#include "ligmadialogfactory.h"
+#include "ligmadock.h"
+#include "ligmadockbook.h"
+#include "ligmadockcolumns.h"
+#include "ligmadockcontainer.h"
+#include "ligmadockwindow.h"
+#include "ligmahelp-ids.h"
+#include "ligmamenufactory.h"
+#include "ligmasessioninfo-aux.h"
+#include "ligmasessioninfo.h"
+#include "ligmasessionmanaged.h"
+#include "ligmatoolbox.h"
+#include "ligmauimanager.h"
+#include "ligmawidgets-utils.h"
+#include "ligmawindow.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 #define DEFAULT_DOCK_HEIGHT          300
@@ -80,17 +80,17 @@ enum
 };
 
 
-struct _GimpDockWindowPrivate
+struct _LigmaDockWindowPrivate
 {
-  GimpContext       *context;
+  LigmaContext       *context;
 
-  GimpDialogFactory *dialog_factory;
+  LigmaDialogFactory *dialog_factory;
 
   gchar             *ui_manager_name;
-  GimpUIManager     *ui_manager;
+  LigmaUIManager     *ui_manager;
   GQuark             image_flush_handler_id;
 
-  GimpDockColumns   *dock_columns;
+  LigmaDockColumns   *dock_columns;
 
   gboolean           allow_dockbook_absence;
 
@@ -98,8 +98,8 @@ struct _GimpDockWindowPrivate
 
   gint               ID;
 
-  GimpContainer     *image_container;
-  GimpContainer     *display_container;
+  LigmaContainer     *image_container;
+  LigmaContainer     *display_container;
 
   gboolean           show_image_menu;
   gboolean           auto_follow_active;
@@ -109,125 +109,125 @@ struct _GimpDockWindowPrivate
 };
 
 
-static void            gimp_dock_window_dock_container_iface_init (GimpDockContainerInterface *iface);
-static void            gimp_dock_window_session_managed_iface_init(GimpSessionManagedInterface*iface);
-static void            gimp_dock_window_constructed               (GObject                    *object);
-static void            gimp_dock_window_dispose                   (GObject                    *object);
-static void            gimp_dock_window_finalize                  (GObject                    *object);
-static void            gimp_dock_window_set_property              (GObject                    *object,
+static void            ligma_dock_window_dock_container_iface_init (LigmaDockContainerInterface *iface);
+static void            ligma_dock_window_session_managed_iface_init(LigmaSessionManagedInterface*iface);
+static void            ligma_dock_window_constructed               (GObject                    *object);
+static void            ligma_dock_window_dispose                   (GObject                    *object);
+static void            ligma_dock_window_finalize                  (GObject                    *object);
+static void            ligma_dock_window_set_property              (GObject                    *object,
                                                                    guint                       property_id,
                                                                    const GValue               *value,
                                                                    GParamSpec                 *pspec);
-static void            gimp_dock_window_get_property              (GObject                    *object,
+static void            ligma_dock_window_get_property              (GObject                    *object,
                                                                    guint                       property_id,
                                                                    GValue                     *value,
                                                                    GParamSpec                 *pspec);
-static void            gimp_dock_window_style_updated             (GtkWidget                  *widget);
-static gboolean        gimp_dock_window_delete_event              (GtkWidget                  *widget,
+static void            ligma_dock_window_style_updated             (GtkWidget                  *widget);
+static gboolean        ligma_dock_window_delete_event              (GtkWidget                  *widget,
                                                                    GdkEventAny                *event);
-static GList         * gimp_dock_window_get_docks                 (GimpDockContainer          *dock_container);
-static GimpDialogFactory * gimp_dock_window_get_dialog_factory    (GimpDockContainer          *dock_container);
-static GimpUIManager * gimp_dock_window_get_ui_manager            (GimpDockContainer          *dock_container);
-static void            gimp_dock_window_add_dock_from_session     (GimpDockContainer          *dock_container,
-                                                                   GimpDock                   *dock,
-                                                                   GimpSessionInfoDock        *dock_info);
-static GList         * gimp_dock_window_get_aux_info              (GimpSessionManaged         *session_managed);
-static void            gimp_dock_window_set_aux_info              (GimpSessionManaged         *session_managed,
+static GList         * ligma_dock_window_get_docks                 (LigmaDockContainer          *dock_container);
+static LigmaDialogFactory * ligma_dock_window_get_dialog_factory    (LigmaDockContainer          *dock_container);
+static LigmaUIManager * ligma_dock_window_get_ui_manager            (LigmaDockContainer          *dock_container);
+static void            ligma_dock_window_add_dock_from_session     (LigmaDockContainer          *dock_container,
+                                                                   LigmaDock                   *dock,
+                                                                   LigmaSessionInfoDock        *dock_info);
+static GList         * ligma_dock_window_get_aux_info              (LigmaSessionManaged         *session_managed);
+static void            ligma_dock_window_set_aux_info              (LigmaSessionManaged         *session_managed,
                                                                    GList                      *aux_info);
-static GimpAlignmentType
-                       gimp_dock_window_get_dock_side             (GimpDockContainer          *dock_container,
-                                                                   GimpDock                   *dock);
-static gboolean        gimp_dock_window_should_add_to_recent      (GimpDockWindow             *dock_window);
-static void            gimp_dock_window_display_changed           (GimpDockWindow             *dock_window,
-                                                                   GimpDisplay                *display,
-                                                                   GimpContext                *context);
-static void            gimp_dock_window_image_changed             (GimpDockWindow             *dock_window,
-                                                                   GimpImage                  *image,
-                                                                   GimpContext                *context);
-static void            gimp_dock_window_image_flush               (GimpImage                  *image,
+static LigmaAlignmentType
+                       ligma_dock_window_get_dock_side             (LigmaDockContainer          *dock_container,
+                                                                   LigmaDock                   *dock);
+static gboolean        ligma_dock_window_should_add_to_recent      (LigmaDockWindow             *dock_window);
+static void            ligma_dock_window_display_changed           (LigmaDockWindow             *dock_window,
+                                                                   LigmaDisplay                *display,
+                                                                   LigmaContext                *context);
+static void            ligma_dock_window_image_changed             (LigmaDockWindow             *dock_window,
+                                                                   LigmaImage                  *image,
+                                                                   LigmaContext                *context);
+static void            ligma_dock_window_image_flush               (LigmaImage                  *image,
                                                                    gboolean                    invalidate_preview,
-                                                                   GimpDockWindow             *dock_window);
-static void            gimp_dock_window_update_title              (GimpDockWindow             *dock_window);
-static gboolean        gimp_dock_window_update_title_idle         (GimpDockWindow             *dock_window);
-static gchar         * gimp_dock_window_get_description           (GimpDockWindow             *dock_window,
+                                                                   LigmaDockWindow             *dock_window);
+static void            ligma_dock_window_update_title              (LigmaDockWindow             *dock_window);
+static gboolean        ligma_dock_window_update_title_idle         (LigmaDockWindow             *dock_window);
+static gchar         * ligma_dock_window_get_description           (LigmaDockWindow             *dock_window,
                                                                    gboolean                    complete);
-static void            gimp_dock_window_dock_removed              (GimpDockWindow             *dock_window,
-                                                                   GimpDock                   *dock,
-                                                                   GimpDockColumns            *dock_columns);
-static void            gimp_dock_window_factory_display_changed   (GimpContext                *context,
-                                                                   GimpDisplay                *display,
-                                                                   GimpDock                   *dock);
-static void            gimp_dock_window_factory_image_changed     (GimpContext                *context,
-                                                                   GimpImage                  *image,
-                                                                   GimpDock                   *dock);
-static void            gimp_dock_window_auto_clicked              (GtkWidget                  *widget,
-                                                                   GimpDock                   *dock);
+static void            ligma_dock_window_dock_removed              (LigmaDockWindow             *dock_window,
+                                                                   LigmaDock                   *dock,
+                                                                   LigmaDockColumns            *dock_columns);
+static void            ligma_dock_window_factory_display_changed   (LigmaContext                *context,
+                                                                   LigmaDisplay                *display,
+                                                                   LigmaDock                   *dock);
+static void            ligma_dock_window_factory_image_changed     (LigmaContext                *context,
+                                                                   LigmaImage                  *image,
+                                                                   LigmaDock                   *dock);
+static void            ligma_dock_window_auto_clicked              (GtkWidget                  *widget,
+                                                                   LigmaDock                   *dock);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpDockWindow, gimp_dock_window, GIMP_TYPE_WINDOW,
-                         G_ADD_PRIVATE (GimpDockWindow)
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCK_CONTAINER,
-                                                gimp_dock_window_dock_container_iface_init)
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_SESSION_MANAGED,
-                                                gimp_dock_window_session_managed_iface_init))
+G_DEFINE_TYPE_WITH_CODE (LigmaDockWindow, ligma_dock_window, LIGMA_TYPE_WINDOW,
+                         G_ADD_PRIVATE (LigmaDockWindow)
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_DOCK_CONTAINER,
+                                                ligma_dock_window_dock_container_iface_init)
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_SESSION_MANAGED,
+                                                ligma_dock_window_session_managed_iface_init))
 
-#define parent_class gimp_dock_window_parent_class
+#define parent_class ligma_dock_window_parent_class
 
 
 static void
-gimp_dock_window_class_init (GimpDockWindowClass *klass)
+ligma_dock_window_class_init (LigmaDockWindowClass *klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->constructed   = gimp_dock_window_constructed;
-  object_class->dispose       = gimp_dock_window_dispose;
-  object_class->finalize      = gimp_dock_window_finalize;
-  object_class->set_property  = gimp_dock_window_set_property;
-  object_class->get_property  = gimp_dock_window_get_property;
+  object_class->constructed   = ligma_dock_window_constructed;
+  object_class->dispose       = ligma_dock_window_dispose;
+  object_class->finalize      = ligma_dock_window_finalize;
+  object_class->set_property  = ligma_dock_window_set_property;
+  object_class->get_property  = ligma_dock_window_get_property;
 
-  widget_class->style_updated = gimp_dock_window_style_updated;
-  widget_class->delete_event  = gimp_dock_window_delete_event;
+  widget_class->style_updated = ligma_dock_window_style_updated;
+  widget_class->delete_event  = ligma_dock_window_delete_event;
 
   g_object_class_install_property (object_class, PROP_CONTEXT,
                                    g_param_spec_object ("context", NULL, NULL,
-                                                        GIMP_TYPE_CONTEXT,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_TYPE_CONTEXT,
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_DIALOG_FACTORY,
                                    g_param_spec_object ("dialog-factory",
                                                         NULL, NULL,
-                                                        GIMP_TYPE_DIALOG_FACTORY,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_TYPE_DIALOG_FACTORY,
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_UI_MANAGER_NAME,
                                    g_param_spec_string ("ui-manager-name",
                                                         NULL, NULL,
                                                         NULL,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_IMAGE_CONTAINER,
                                    g_param_spec_object ("image-container",
                                                         NULL, NULL,
-                                                        GIMP_TYPE_CONTAINER,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_TYPE_CONTAINER,
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_DISPLAY_CONTAINER,
                                    g_param_spec_object ("display-container",
                                                         NULL, NULL,
-                                                        GIMP_TYPE_CONTAINER,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_TYPE_CONTAINER,
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_ALLOW_DOCKBOOK_ABSENCE,
                                    g_param_spec_boolean ("allow-dockbook-absence",
                                                          NULL, NULL,
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE |
+                                                         LIGMA_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT_ONLY));
 
 
@@ -236,27 +236,27 @@ gimp_dock_window_class_init (GimpDockWindowClass *klass)
                                                              NULL, NULL,
                                                              -1, G_MAXINT,
                                                              DEFAULT_DOCK_HEIGHT,
-                                                             GIMP_PARAM_READABLE));
+                                                             LIGMA_PARAM_READABLE));
 
   gtk_widget_class_install_style_property (widget_class,
                                            g_param_spec_enum ("menu-preview-size",
                                                               NULL, NULL,
                                                               GTK_TYPE_ICON_SIZE,
                                                               DEFAULT_MENU_VIEW_SIZE,
-                                                              GIMP_PARAM_READABLE));
+                                                              LIGMA_PARAM_READABLE));
 }
 
 static void
-gimp_dock_window_init (GimpDockWindow *dock_window)
+ligma_dock_window_init (LigmaDockWindow *dock_window)
 {
   static gint  dock_window_ID = 1;
   gchar       *name           = NULL;
 
-  dock_window->p = gimp_dock_window_get_instance_private (dock_window);
+  dock_window->p = ligma_dock_window_get_instance_private (dock_window);
   dock_window->p->ID                 = dock_window_ID++;
   dock_window->p->auto_follow_active = TRUE;
 
-  name = g_strdup_printf ("gimp-dock-%d", dock_window->p->ID);
+  name = g_strdup_printf ("ligma-dock-%d", dock_window->p->ID);
   gtk_widget_set_name (GTK_WIDGET (dock_window), name);
   g_free (name);
 
@@ -266,87 +266,87 @@ gimp_dock_window_init (GimpDockWindow *dock_window)
 }
 
 static void
-gimp_dock_window_dock_container_iface_init (GimpDockContainerInterface *iface)
+ligma_dock_window_dock_container_iface_init (LigmaDockContainerInterface *iface)
 {
-  iface->get_docks          = gimp_dock_window_get_docks;
-  iface->get_dialog_factory = gimp_dock_window_get_dialog_factory;
-  iface->get_ui_manager     = gimp_dock_window_get_ui_manager;
-  iface->add_dock           = gimp_dock_window_add_dock_from_session;
-  iface->get_dock_side      = gimp_dock_window_get_dock_side;
+  iface->get_docks          = ligma_dock_window_get_docks;
+  iface->get_dialog_factory = ligma_dock_window_get_dialog_factory;
+  iface->get_ui_manager     = ligma_dock_window_get_ui_manager;
+  iface->add_dock           = ligma_dock_window_add_dock_from_session;
+  iface->get_dock_side      = ligma_dock_window_get_dock_side;
 }
 
 static void
-gimp_dock_window_session_managed_iface_init (GimpSessionManagedInterface *iface)
+ligma_dock_window_session_managed_iface_init (LigmaSessionManagedInterface *iface)
 {
-  iface->get_aux_info = gimp_dock_window_get_aux_info;
-  iface->set_aux_info = gimp_dock_window_set_aux_info;
+  iface->get_aux_info = ligma_dock_window_get_aux_info;
+  iface->set_aux_info = ligma_dock_window_set_aux_info;
 }
 
 static void
-gimp_dock_window_constructed (GObject *object)
+ligma_dock_window_constructed (GObject *object)
 {
-  GimpDockWindow  *dock_window = GIMP_DOCK_WINDOW (object);
-  GimpGuiConfig   *config;
-  GimpContext     *factory_context;
-  GimpMenuFactory *menu_factory;
+  LigmaDockWindow  *dock_window = LIGMA_DOCK_WINDOW (object);
+  LigmaGuiConfig   *config;
+  LigmaContext     *factory_context;
+  LigmaMenuFactory *menu_factory;
   GtkAccelGroup   *accel_group;
-  Gimp            *gimp;
+  Ligma            *ligma;
   gint             menu_view_width  = -1;
   gint             menu_view_height = -1;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp   = GIMP (dock_window->p->context->gimp);
-  config = GIMP_GUI_CONFIG (gimp->config);
+  ligma   = LIGMA (dock_window->p->context->ligma);
+  config = LIGMA_GUI_CONFIG (ligma->config);
 
   /* Create a separate context per dock so that docks can be bound to
    * a specific image and does not necessarily have to follow the
    * active image in the user context
    */
   g_object_unref (dock_window->p->context);
-  dock_window->p->context           = gimp_context_new (gimp, "Dock Context", NULL);
-  dock_window->p->image_container   = gimp->images;
-  dock_window->p->display_container = gimp->displays;
+  dock_window->p->context           = ligma_context_new (ligma, "Dock Context", NULL);
+  dock_window->p->image_container   = ligma->images;
+  dock_window->p->display_container = ligma->displays;
 
   factory_context =
-    gimp_dialog_factory_get_context (dock_window->p->dialog_factory);
+    ligma_dialog_factory_get_context (dock_window->p->dialog_factory);
 
   /* Setup hints */
-  gimp_window_set_hint (GTK_WINDOW (dock_window), config->dock_window_hint);
+  ligma_window_set_hint (GTK_WINDOW (dock_window), config->dock_window_hint);
 
   menu_factory =
-    gimp_dialog_factory_get_menu_factory (dock_window->p->dialog_factory);
+    ligma_dialog_factory_get_menu_factory (dock_window->p->dialog_factory);
 
   /* Make image window related keyboard shortcuts work also when a
    * dock window is the focused window
    */
   dock_window->p->ui_manager =
-    gimp_menu_factory_manager_new (menu_factory,
+    ligma_menu_factory_manager_new (menu_factory,
                                    dock_window->p->ui_manager_name,
                                    dock_window);
-  accel_group = gimp_ui_manager_get_accel_group (dock_window->p->ui_manager);
+  accel_group = ligma_ui_manager_get_accel_group (dock_window->p->ui_manager);
   gtk_window_add_accel_group (GTK_WINDOW (dock_window), accel_group);
 
   g_signal_connect_object (dock_window->p->context, "display-changed",
-                           G_CALLBACK (gimp_dock_window_display_changed),
+                           G_CALLBACK (ligma_dock_window_display_changed),
                            dock_window,
                            G_CONNECT_SWAPPED);
   g_signal_connect_object (dock_window->p->context, "image-changed",
-                           G_CALLBACK (gimp_dock_window_image_changed),
+                           G_CALLBACK (ligma_dock_window_image_changed),
                            dock_window,
                            G_CONNECT_SWAPPED);
 
   dock_window->p->image_flush_handler_id =
-    gimp_container_add_handler (gimp->images, "flush",
-                                G_CALLBACK (gimp_dock_window_image_flush),
+    ligma_container_add_handler (ligma->images, "flush",
+                                G_CALLBACK (ligma_dock_window_image_flush),
                                 dock_window);
 
-  gimp_context_define_properties (dock_window->p->context,
-                                  GIMP_CONTEXT_PROP_MASK_ALL &
-                                  ~(GIMP_CONTEXT_PROP_MASK_IMAGE |
-                                    GIMP_CONTEXT_PROP_MASK_DISPLAY),
+  ligma_context_define_properties (dock_window->p->context,
+                                  LIGMA_CONTEXT_PROP_MASK_ALL &
+                                  ~(LIGMA_CONTEXT_PROP_MASK_IMAGE |
+                                    LIGMA_CONTEXT_PROP_MASK_DISPLAY),
                                   FALSE);
-  gimp_context_set_parent (dock_window->p->context,
+  ligma_context_set_parent (dock_window->p->context,
                            factory_context);
 
   /* Setup widget hierarchy */
@@ -369,13 +369,13 @@ gimp_dock_window_constructed (GObject *object)
         gtk_widget_show (hbox);
 
       /* Image combo */
-      dock_window->p->image_combo = gimp_container_combo_box_new (NULL, NULL, 16, 1);
+      dock_window->p->image_combo = ligma_container_combo_box_new (NULL, NULL, 16, 1);
       gtk_box_pack_start (GTK_BOX (hbox), dock_window->p->image_combo, TRUE, TRUE, 0);
       g_signal_connect (dock_window->p->image_combo, "destroy",
                         G_CALLBACK (gtk_widget_destroyed),
                         &dock_window->p->image_combo);
-      gimp_help_set_help_data (dock_window->p->image_combo,
-                               NULL, GIMP_HELP_DOCK_IMAGE_MENU);
+      ligma_help_set_help_data (dock_window->p->image_combo,
+                               NULL, LIGMA_HELP_DOCK_IMAGE_MENU);
       gtk_widget_show (dock_window->p->image_combo);
 
       /* Auto button */
@@ -386,60 +386,60 @@ gimp_dock_window_constructed (GObject *object)
       gtk_widget_show (dock_window->p->auto_button);
 
       g_signal_connect (dock_window->p->auto_button, "clicked",
-                        G_CALLBACK (gimp_dock_window_auto_clicked),
+                        G_CALLBACK (ligma_dock_window_auto_clicked),
                         dock_window);
 
-      gimp_help_set_help_data (dock_window->p->auto_button,
+      ligma_help_set_help_data (dock_window->p->auto_button,
                                _("When enabled, the dialog automatically "
                                  "follows the image you are working on."),
-                               GIMP_HELP_DOCK_AUTO_BUTTON);
+                               LIGMA_HELP_DOCK_AUTO_BUTTON);
     }
 
-    /* GimpDockColumns */
-    /* Let the GimpDockColumns mirror the context so that a GimpDock can
+    /* LigmaDockColumns */
+    /* Let the LigmaDockColumns mirror the context so that a LigmaDock can
      * get it when inside a dock window. We do the same thing in the
-     * GimpImageWindow so docks can get the GimpContext there as well
+     * LigmaImageWindow so docks can get the LigmaContext there as well
      */
     dock_window->p->dock_columns =
-      GIMP_DOCK_COLUMNS (gimp_dock_columns_new (dock_window->p->context,
+      LIGMA_DOCK_COLUMNS (ligma_dock_columns_new (dock_window->p->context,
                                                 dock_window->p->dialog_factory,
                                                 dock_window->p->ui_manager));
     gtk_box_pack_start (GTK_BOX (vbox), GTK_WIDGET (dock_window->p->dock_columns),
                         TRUE, TRUE, 0);
     gtk_widget_show (GTK_WIDGET (dock_window->p->dock_columns));
     g_signal_connect_object (dock_window->p->dock_columns, "dock-removed",
-                             G_CALLBACK (gimp_dock_window_dock_removed),
+                             G_CALLBACK (ligma_dock_window_dock_removed),
                              dock_window,
                              G_CONNECT_SWAPPED);
 
     g_signal_connect_object (dock_window->p->dock_columns, "dock-added",
-                             G_CALLBACK (gimp_dock_window_update_title),
+                             G_CALLBACK (ligma_dock_window_update_title),
                              dock_window,
                              G_CONNECT_SWAPPED);
     g_signal_connect_object (dock_window->p->dock_columns, "dock-removed",
-                             G_CALLBACK (gimp_dock_window_update_title),
+                             G_CALLBACK (ligma_dock_window_update_title),
                              dock_window,
                              G_CONNECT_SWAPPED);
   }
 
   if (dock_window->p->auto_follow_active)
     {
-      if (gimp_context_get_display (factory_context))
-        gimp_context_copy_property (factory_context,
+      if (ligma_context_get_display (factory_context))
+        ligma_context_copy_property (factory_context,
                                     dock_window->p->context,
-                                    GIMP_CONTEXT_PROP_DISPLAY);
+                                    LIGMA_CONTEXT_PROP_DISPLAY);
       else
-        gimp_context_copy_property (factory_context,
+        ligma_context_copy_property (factory_context,
                                     dock_window->p->context,
-                                    GIMP_CONTEXT_PROP_IMAGE);
+                                    LIGMA_CONTEXT_PROP_IMAGE);
     }
 
   g_signal_connect_object (factory_context, "display-changed",
-                           G_CALLBACK (gimp_dock_window_factory_display_changed),
+                           G_CALLBACK (ligma_dock_window_factory_display_changed),
                            dock_window,
                            0);
   g_signal_connect_object (factory_context, "image-changed",
-                           G_CALLBACK (gimp_dock_window_factory_image_changed),
+                           G_CALLBACK (ligma_dock_window_factory_image_changed),
                            dock_window,
                            0);
 
@@ -452,26 +452,26 @@ gimp_dock_window_constructed (GObject *object)
                 "context",   dock_window->p->context,
                 NULL);
 
-  gimp_help_connect (GTK_WIDGET (dock_window), gimp_standard_help_func,
-                     GIMP_HELP_DOCK, NULL, NULL);
+  ligma_help_connect (GTK_WIDGET (dock_window), ligma_standard_help_func,
+                     LIGMA_HELP_DOCK, NULL, NULL);
 
   if (dock_window->p->auto_follow_active)
     {
-      if (gimp_context_get_display (factory_context))
-        gimp_context_copy_property (factory_context,
+      if (ligma_context_get_display (factory_context))
+        ligma_context_copy_property (factory_context,
                                     dock_window->p->context,
-                                    GIMP_CONTEXT_PROP_DISPLAY);
+                                    LIGMA_CONTEXT_PROP_DISPLAY);
       else
-        gimp_context_copy_property (factory_context,
+        ligma_context_copy_property (factory_context,
                                     dock_window->p->context,
-                                    GIMP_CONTEXT_PROP_IMAGE);
+                                    LIGMA_CONTEXT_PROP_IMAGE);
     }
 }
 
 static void
-gimp_dock_window_dispose (GObject *object)
+ligma_dock_window_dispose (GObject *object)
 {
-  GimpDockWindow *dock_window = GIMP_DOCK_WINDOW (object);
+  LigmaDockWindow *dock_window = LIGMA_DOCK_WINDOW (object);
 
   if (dock_window->p->update_title_idle_id)
     {
@@ -481,7 +481,7 @@ gimp_dock_window_dispose (GObject *object)
 
   if (dock_window->p->image_flush_handler_id)
     {
-      gimp_container_remove_handler (dock_window->p->context->gimp->images,
+      ligma_container_remove_handler (dock_window->p->context->ligma->images,
                                      dock_window->p->image_flush_handler_id);
       dock_window->p->image_flush_handler_id = 0;
     }
@@ -494,9 +494,9 @@ gimp_dock_window_dispose (GObject *object)
 }
 
 static void
-gimp_dock_window_finalize (GObject *object)
+ligma_dock_window_finalize (GObject *object)
 {
-  GimpDockWindow *dock_window = GIMP_DOCK_WINDOW (object);
+  LigmaDockWindow *dock_window = LIGMA_DOCK_WINDOW (object);
 
   g_clear_pointer (&dock_window->p->ui_manager_name, g_free);
 
@@ -504,12 +504,12 @@ gimp_dock_window_finalize (GObject *object)
 }
 
 static void
-gimp_dock_window_set_property (GObject      *object,
+ligma_dock_window_set_property (GObject      *object,
                                guint         property_id,
                                const GValue *value,
                                GParamSpec   *pspec)
 {
-  GimpDockWindow *dock_window = GIMP_DOCK_WINDOW (object);
+  LigmaDockWindow *dock_window = LIGMA_DOCK_WINDOW (object);
 
   switch (property_id)
     {
@@ -545,12 +545,12 @@ gimp_dock_window_set_property (GObject      *object,
 }
 
 static void
-gimp_dock_window_get_property (GObject    *object,
+ligma_dock_window_get_property (GObject    *object,
                                guint       property_id,
                                GValue     *value,
                                GParamSpec *pspec)
 {
-  GimpDockWindow *dock_window = GIMP_DOCK_WINDOW (object);
+  LigmaDockWindow *dock_window = LIGMA_DOCK_WINDOW (object);
 
   switch (property_id)
     {
@@ -585,9 +585,9 @@ gimp_dock_window_get_property (GObject    *object,
 }
 
 static void
-gimp_dock_window_style_updated (GtkWidget *widget)
+ligma_dock_window_style_updated (GtkWidget *widget)
 {
-  GimpDockWindow  *dock_window      = GIMP_DOCK_WINDOW (widget);
+  LigmaDockWindow  *dock_window      = LIGMA_DOCK_WINDOW (widget);
   GtkStyleContext *button_style;
   GtkIconSize      menu_view_size;
   gint             default_height = DEFAULT_DOCK_HEIGHT;
@@ -623,7 +623,7 @@ gimp_dock_window_style_updated (GtkWidget *widget)
                                     gtk_widget_get_state_flags (widget),
                                     &border);
 
-      gimp_container_view_set_view_size (GIMP_CONTAINER_VIEW (dock_window->p->image_combo),
+      ligma_container_view_set_view_size (LIGMA_CONTAINER_VIEW (dock_window->p->image_combo),
                                          menu_view_height, 1);
 
       gtk_widget_set_size_request (dock_window->p->auto_button, -1,
@@ -637,7 +637,7 @@ gimp_dock_window_style_updated (GtkWidget *widget)
 }
 
 /**
- * gimp_dock_window_delete_event:
+ * ligma_dock_window_delete_event:
  * @widget:
  * @event:
  *
@@ -645,85 +645,85 @@ gimp_dock_window_style_updated (GtkWidget *widget)
  * list of recently closed docks so that they are easy to bring back.
  **/
 static gboolean
-gimp_dock_window_delete_event (GtkWidget   *widget,
+ligma_dock_window_delete_event (GtkWidget   *widget,
                                GdkEventAny *event)
 {
-  GimpDockWindow         *dock_window = GIMP_DOCK_WINDOW (widget);
-  GimpSessionInfo        *info        = NULL;
+  LigmaDockWindow         *dock_window = LIGMA_DOCK_WINDOW (widget);
+  LigmaSessionInfo        *info        = NULL;
   const gchar            *entry_name  = NULL;
-  GimpDialogFactoryEntry *entry       = NULL;
+  LigmaDialogFactoryEntry *entry       = NULL;
   gchar                  *name        = NULL;
 
   /* Don't add docks with just a single dockable to the list of
    * recently closed dock since those can be brought back through the
    * normal Windows->Dockable Dialogs menu
    */
-  if (! gimp_dock_window_should_add_to_recent (dock_window))
+  if (! ligma_dock_window_should_add_to_recent (dock_window))
     return FALSE;
 
-  info = gimp_session_info_new ();
+  info = ligma_session_info_new ();
 
-  name = gimp_dock_window_get_description (dock_window, TRUE /*complete*/);
-  gimp_object_set_name (GIMP_OBJECT (info), name);
+  name = ligma_dock_window_get_description (dock_window, TRUE /*complete*/);
+  ligma_object_set_name (LIGMA_OBJECT (info), name);
   g_free (name);
 
-  gimp_session_info_get_info_with_widget (info, GTK_WIDGET (dock_window));
+  ligma_session_info_get_info_with_widget (info, GTK_WIDGET (dock_window));
 
-  entry_name = (gimp_dock_window_has_toolbox (dock_window) ?
-                "gimp-toolbox-window" :
-                "gimp-dock-window");
-  entry = gimp_dialog_factory_find_entry (dock_window->p->dialog_factory,
+  entry_name = (ligma_dock_window_has_toolbox (dock_window) ?
+                "ligma-toolbox-window" :
+                "ligma-dock-window");
+  entry = ligma_dialog_factory_find_entry (dock_window->p->dialog_factory,
                                           entry_name);
-  gimp_session_info_set_factory_entry (info, entry);
+  ligma_session_info_set_factory_entry (info, entry);
 
-  gimp_container_add (global_recent_docks, GIMP_OBJECT (info));
+  ligma_container_add (global_recent_docks, LIGMA_OBJECT (info));
   g_object_unref (info);
 
   return FALSE;
 }
 
 static GList *
-gimp_dock_window_get_docks (GimpDockContainer *dock_container)
+ligma_dock_window_get_docks (LigmaDockContainer *dock_container)
 {
-  GimpDockWindow *dock_window = GIMP_DOCK_WINDOW (dock_container);
+  LigmaDockWindow *dock_window = LIGMA_DOCK_WINDOW (dock_container);
 
-  return g_list_copy (gimp_dock_columns_get_docks (dock_window->p->dock_columns));
+  return g_list_copy (ligma_dock_columns_get_docks (dock_window->p->dock_columns));
 }
 
-static GimpDialogFactory *
-gimp_dock_window_get_dialog_factory (GimpDockContainer *dock_container)
+static LigmaDialogFactory *
+ligma_dock_window_get_dialog_factory (LigmaDockContainer *dock_container)
 {
-  GimpDockWindow *dock_window = GIMP_DOCK_WINDOW (dock_container);
+  LigmaDockWindow *dock_window = LIGMA_DOCK_WINDOW (dock_container);
 
   return dock_window->p->dialog_factory;
 }
 
-static GimpUIManager *
-gimp_dock_window_get_ui_manager (GimpDockContainer *dock_container)
+static LigmaUIManager *
+ligma_dock_window_get_ui_manager (LigmaDockContainer *dock_container)
 {
-  GimpDockWindow *dock_window = GIMP_DOCK_WINDOW (dock_container);
+  LigmaDockWindow *dock_window = LIGMA_DOCK_WINDOW (dock_container);
 
   return dock_window->p->ui_manager;
 }
 
 static void
-gimp_dock_window_add_dock_from_session (GimpDockContainer   *dock_container,
-                                        GimpDock            *dock,
-                                        GimpSessionInfoDock *dock_info)
+ligma_dock_window_add_dock_from_session (LigmaDockContainer   *dock_container,
+                                        LigmaDock            *dock,
+                                        LigmaSessionInfoDock *dock_info)
 {
-  GimpDockWindow *dock_window = GIMP_DOCK_WINDOW (dock_container);
+  LigmaDockWindow *dock_window = LIGMA_DOCK_WINDOW (dock_container);
 
-  gimp_dock_window_add_dock (dock_window,
+  ligma_dock_window_add_dock (dock_window,
                              dock,
                              -1 /*index*/);
 }
 
 static GList *
-gimp_dock_window_get_aux_info (GimpSessionManaged *session_managed)
+ligma_dock_window_get_aux_info (LigmaSessionManaged *session_managed)
 {
-  GimpDockWindow     *dock_window = GIMP_DOCK_WINDOW (session_managed);
+  LigmaDockWindow     *dock_window = LIGMA_DOCK_WINDOW (session_managed);
   GList              *aux_info    = NULL;
-  GimpSessionInfoAux *aux;
+  LigmaSessionInfoAux *aux;
 
   if (dock_window->p->allow_dockbook_absence)
     {
@@ -731,14 +731,14 @@ gimp_dock_window_get_aux_info (GimpSessionManaged *session_managed)
       return NULL;
     }
 
-  g_return_val_if_fail (GIMP_IS_DOCK_WINDOW (dock_window), NULL);
+  g_return_val_if_fail (LIGMA_IS_DOCK_WINDOW (dock_window), NULL);
 
-  aux = gimp_session_info_aux_new (AUX_INFO_SHOW_IMAGE_MENU,
+  aux = ligma_session_info_aux_new (AUX_INFO_SHOW_IMAGE_MENU,
                                    dock_window->p->show_image_menu ?
                                    "true" : "false");
   aux_info = g_list_append (aux_info, aux);
 
-  aux = gimp_session_info_aux_new (AUX_INFO_FOLLOW_ACTIVE_IMAGE,
+  aux = ligma_session_info_aux_new (AUX_INFO_FOLLOW_ACTIVE_IMAGE,
                                    dock_window->p->auto_follow_active ?
                                    "true" : "false");
   aux_info = g_list_append (aux_info, aux);
@@ -747,23 +747,23 @@ gimp_dock_window_get_aux_info (GimpSessionManaged *session_managed)
 }
 
 static void
-gimp_dock_window_set_aux_info (GimpSessionManaged *session_managed,
+ligma_dock_window_set_aux_info (LigmaSessionManaged *session_managed,
                                GList              *aux_info)
 {
-  GimpDockWindow *dock_window;
+  LigmaDockWindow *dock_window;
   GList          *list;
   gboolean        menu_shown;
   gboolean        auto_follow;
 
-  g_return_if_fail (GIMP_IS_DOCK_WINDOW (session_managed));
+  g_return_if_fail (LIGMA_IS_DOCK_WINDOW (session_managed));
 
-  dock_window = GIMP_DOCK_WINDOW (session_managed);
+  dock_window = LIGMA_DOCK_WINDOW (session_managed);
   menu_shown  = dock_window->p->show_image_menu;
   auto_follow = dock_window->p->auto_follow_active;
 
   for (list = aux_info; list; list = g_list_next (list))
     {
-      GimpSessionInfoAux *aux = list->data;
+      LigmaSessionInfoAux *aux = list->data;
 
       if (! strcmp (aux->name, AUX_INFO_SHOW_IMAGE_MENU))
         {
@@ -776,27 +776,27 @@ gimp_dock_window_set_aux_info (GimpSessionManaged *session_managed,
     }
 
   if (menu_shown != dock_window->p->show_image_menu)
-    gimp_dock_window_set_show_image_menu (dock_window, menu_shown);
+    ligma_dock_window_set_show_image_menu (dock_window, menu_shown);
 
   if (auto_follow != dock_window->p->auto_follow_active)
-    gimp_dock_window_set_auto_follow_active (dock_window, auto_follow);
+    ligma_dock_window_set_auto_follow_active (dock_window, auto_follow);
 }
 
-static GimpAlignmentType
-gimp_dock_window_get_dock_side (GimpDockContainer *dock_container,
-                                GimpDock          *dock)
+static LigmaAlignmentType
+ligma_dock_window_get_dock_side (LigmaDockContainer *dock_container,
+                                LigmaDock          *dock)
 {
-  g_return_val_if_fail (GIMP_IS_DOCK_WINDOW (dock_container), -1);
-  g_return_val_if_fail (GIMP_IS_DOCK (dock), -1);
+  g_return_val_if_fail (LIGMA_IS_DOCK_WINDOW (dock_container), -1);
+  g_return_val_if_fail (LIGMA_IS_DOCK (dock), -1);
 
-  /* A GimpDockWindow don't have docks on different sides, it's just
+  /* A LigmaDockWindow don't have docks on different sides, it's just
    * one set of columns
    */
   return -1;
 }
 
 /**
- * gimp_dock_window_should_add_to_recent:
+ * ligma_dock_window_should_add_to_recent:
  * @dock_window:
  *
  * Returns: %FALSE if the dock window can be recreated with one
@@ -805,12 +805,12 @@ gimp_dock_window_get_dock_side (GimpDockContainer *dock_container,
  *          then be added to the list of recently closed docks.
  **/
 static gboolean
-gimp_dock_window_should_add_to_recent (GimpDockWindow *dock_window)
+ligma_dock_window_should_add_to_recent (LigmaDockWindow *dock_window)
 {
   GList    *docks;
   gboolean  should_add = TRUE;
 
-  docks = gimp_dock_container_get_docks (GIMP_DOCK_CONTAINER (dock_window));
+  docks = ligma_dock_container_get_docks (LIGMA_DOCK_CONTAINER (dock_window));
 
   if (! docks)
     {
@@ -818,15 +818,15 @@ gimp_dock_window_should_add_to_recent (GimpDockWindow *dock_window)
     }
   else if (g_list_length (docks) == 1)
     {
-      GimpDock *dock = GIMP_DOCK (g_list_nth_data (docks, 0));
+      LigmaDock *dock = LIGMA_DOCK (g_list_nth_data (docks, 0));
 
-      if (GIMP_IS_TOOLBOX (dock) &&
-          gimp_dock_get_n_dockables (dock) == 0)
+      if (LIGMA_IS_TOOLBOX (dock) &&
+          ligma_dock_get_n_dockables (dock) == 0)
         {
           should_add = FALSE;
         }
-      else if (! GIMP_IS_TOOLBOX (dock) &&
-               gimp_dock_get_n_dockables (dock) == 1)
+      else if (! LIGMA_IS_TOOLBOX (dock) &&
+               ligma_dock_get_n_dockables (dock) == 1)
         {
           should_add = FALSE;
         }
@@ -838,34 +838,34 @@ gimp_dock_window_should_add_to_recent (GimpDockWindow *dock_window)
 }
 
 static void
-gimp_dock_window_image_flush (GimpImage      *image,
+ligma_dock_window_image_flush (LigmaImage      *image,
                               gboolean        invalidate_preview,
-                              GimpDockWindow *dock_window)
+                              LigmaDockWindow *dock_window)
 {
-  if (image == gimp_context_get_image (dock_window->p->context))
+  if (image == ligma_context_get_image (dock_window->p->context))
     {
-      GimpDisplay *display = gimp_context_get_display (dock_window->p->context);
+      LigmaDisplay *display = ligma_context_get_display (dock_window->p->context);
 
       if (display)
-        gimp_ui_manager_update (dock_window->p->ui_manager, display);
+        ligma_ui_manager_update (dock_window->p->ui_manager, display);
     }
 }
 
 static void
-gimp_dock_window_update_title (GimpDockWindow *dock_window)
+ligma_dock_window_update_title (LigmaDockWindow *dock_window)
 {
   if (dock_window->p->update_title_idle_id)
     g_source_remove (dock_window->p->update_title_idle_id);
 
   dock_window->p->update_title_idle_id =
-    g_idle_add ((GSourceFunc) gimp_dock_window_update_title_idle,
+    g_idle_add ((GSourceFunc) ligma_dock_window_update_title_idle,
                 dock_window);
 }
 
 static gboolean
-gimp_dock_window_update_title_idle (GimpDockWindow *dock_window)
+ligma_dock_window_update_title_idle (LigmaDockWindow *dock_window)
 {
-  gchar *desc = gimp_dock_window_get_description (dock_window,
+  gchar *desc = ligma_dock_window_get_description (dock_window,
                                                   FALSE /*complete*/);
   if (desc)
     {
@@ -879,25 +879,25 @@ gimp_dock_window_update_title_idle (GimpDockWindow *dock_window)
 }
 
 static gchar *
-gimp_dock_window_get_description (GimpDockWindow *dock_window,
+ligma_dock_window_get_description (LigmaDockWindow *dock_window,
                                   gboolean        complete)
 {
   GString *complete_desc = g_string_new (NULL);
   GList   *docks         = NULL;
   GList   *iter          = NULL;
 
-  docks = gimp_dock_container_get_docks (GIMP_DOCK_CONTAINER (dock_window));
+  docks = ligma_dock_container_get_docks (LIGMA_DOCK_CONTAINER (dock_window));
 
   for (iter = docks;
        iter;
        iter = g_list_next (iter))
     {
-      gchar *desc = gimp_dock_get_description (GIMP_DOCK (iter->data), complete);
+      gchar *desc = ligma_dock_get_description (LIGMA_DOCK (iter->data), complete);
       g_string_append (complete_desc, desc);
       g_free (desc);
 
       if (g_list_next (iter))
-        g_string_append (complete_desc, GIMP_DOCK_COLUMN_SEPARATOR);
+        g_string_append (complete_desc, LIGMA_DOCK_COLUMN_SEPARATOR);
     }
 
   g_list_free (docks);
@@ -906,96 +906,96 @@ gimp_dock_window_get_description (GimpDockWindow *dock_window,
 }
 
 static void
-gimp_dock_window_dock_removed (GimpDockWindow  *dock_window,
-                               GimpDock        *dock,
-                               GimpDockColumns *dock_columns)
+ligma_dock_window_dock_removed (LigmaDockWindow  *dock_window,
+                               LigmaDock        *dock,
+                               LigmaDockColumns *dock_columns)
 {
-  g_return_if_fail (GIMP_IS_DOCK (dock));
+  g_return_if_fail (LIGMA_IS_DOCK (dock));
 
-  if (gimp_dock_columns_get_docks (dock_columns) == NULL &&
+  if (ligma_dock_columns_get_docks (dock_columns) == NULL &&
       ! dock_window->p->allow_dockbook_absence)
     gtk_widget_destroy (GTK_WIDGET (dock_window));
 }
 
 static void
-gimp_dock_window_factory_display_changed (GimpContext *context,
-                                          GimpDisplay *display,
-                                          GimpDock    *dock)
+ligma_dock_window_factory_display_changed (LigmaContext *context,
+                                          LigmaDisplay *display,
+                                          LigmaDock    *dock)
 {
-  GimpDockWindow *dock_window = GIMP_DOCK_WINDOW (dock);
+  LigmaDockWindow *dock_window = LIGMA_DOCK_WINDOW (dock);
 
   if (display && dock_window->p->auto_follow_active)
-    gimp_context_set_display (dock_window->p->context, display);
+    ligma_context_set_display (dock_window->p->context, display);
 }
 
 static void
-gimp_dock_window_factory_image_changed (GimpContext *context,
-                                        GimpImage   *image,
-                                        GimpDock    *dock)
+ligma_dock_window_factory_image_changed (LigmaContext *context,
+                                        LigmaImage   *image,
+                                        LigmaDock    *dock)
 {
-  GimpDockWindow *dock_window = GIMP_DOCK_WINDOW (dock);
+  LigmaDockWindow *dock_window = LIGMA_DOCK_WINDOW (dock);
 
   /*  won't do anything if we already set the display above  */
   if (image && dock_window->p->auto_follow_active)
-    gimp_context_set_image (dock_window->p->context, image);
+    ligma_context_set_image (dock_window->p->context, image);
 }
 
 static void
-gimp_dock_window_display_changed (GimpDockWindow *dock_window,
-                                  GimpDisplay    *display,
-                                  GimpContext    *context)
+ligma_dock_window_display_changed (LigmaDockWindow *dock_window,
+                                  LigmaDisplay    *display,
+                                  LigmaContext    *context)
 {
   /*  make sure auto-follow-active works both ways  */
   if (display && dock_window->p->auto_follow_active)
     {
-      GimpContext *factory_context =
-        gimp_dialog_factory_get_context (dock_window->p->dialog_factory);
+      LigmaContext *factory_context =
+        ligma_dialog_factory_get_context (dock_window->p->dialog_factory);
 
-      gimp_context_set_display (factory_context, display);
+      ligma_context_set_display (factory_context, display);
     }
 
-  gimp_ui_manager_update (dock_window->p->ui_manager,
+  ligma_ui_manager_update (dock_window->p->ui_manager,
                           display);
 }
 
 static void
-gimp_dock_window_image_changed (GimpDockWindow *dock_window,
-                                GimpImage      *image,
-                                GimpContext    *context)
+ligma_dock_window_image_changed (LigmaDockWindow *dock_window,
+                                LigmaImage      *image,
+                                LigmaContext    *context)
 {
-  GimpContainer *image_container   = dock_window->p->image_container;
-  GimpContainer *display_container = dock_window->p->display_container;
+  LigmaContainer *image_container   = dock_window->p->image_container;
+  LigmaContainer *display_container = dock_window->p->display_container;
 
   /*  make sure auto-follow-active works both ways  */
   if (image && dock_window->p->auto_follow_active)
     {
-      GimpContext *factory_context =
-        gimp_dialog_factory_get_context (dock_window->p->dialog_factory);
+      LigmaContext *factory_context =
+        ligma_dialog_factory_get_context (dock_window->p->dialog_factory);
 
-      gimp_context_set_image (factory_context, image);
+      ligma_context_set_image (factory_context, image);
     }
 
-  if (image == NULL && ! gimp_container_is_empty (image_container))
+  if (image == NULL && ! ligma_container_is_empty (image_container))
     {
-      image = GIMP_IMAGE (gimp_container_get_first_child (image_container));
+      image = LIGMA_IMAGE (ligma_container_get_first_child (image_container));
 
       /*  this invokes this function recursively but we don't enter
        *  the if() branch the second time
        */
-      gimp_context_set_image (context, image);
+      ligma_context_set_image (context, image);
 
       /*  stop the emission of the original signal (the emission of
        *  the recursive signal is finished)
        */
       g_signal_stop_emission_by_name (context, "image-changed");
     }
-  else if (image != NULL && ! gimp_container_is_empty (display_container))
+  else if (image != NULL && ! ligma_container_is_empty (display_container))
     {
-      GimpDisplay *display;
-      GimpImage   *display_image;
+      LigmaDisplay *display;
+      LigmaImage   *display_image;
       gboolean     find_display = TRUE;
 
-      display = gimp_context_get_display (context);
+      display = ligma_context_get_display (context);
 
       if (display)
         {
@@ -1014,7 +1014,7 @@ gimp_dock_window_image_changed (GimpDockWindow *dock_window,
         {
           GList *list;
 
-          for (list = GIMP_LIST (display_container)->queue->head;
+          for (list = LIGMA_LIST (display_container)->queue->head;
                list;
                list = g_list_next (list))
             {
@@ -1032,7 +1032,7 @@ gimp_dock_window_image_changed (GimpDockWindow *dock_window,
                        *  don't enter the if(find_display) branch the
                        *  second time
                        */
-                      gimp_context_set_display (context, display);
+                      ligma_context_set_display (context, display);
 
                       /*  don't stop signal emission here because the
                        *  context's image was not changed by the
@@ -1045,84 +1045,84 @@ gimp_dock_window_image_changed (GimpDockWindow *dock_window,
         }
     }
 
-  gimp_ui_manager_update (dock_window->p->ui_manager,
-                          gimp_context_get_display (context));
+  ligma_ui_manager_update (dock_window->p->ui_manager,
+                          ligma_context_get_display (context));
 }
 
 static void
-gimp_dock_window_auto_clicked (GtkWidget *widget,
-                               GimpDock  *dock)
+ligma_dock_window_auto_clicked (GtkWidget *widget,
+                               LigmaDock  *dock)
 {
-  GimpDockWindow *dock_window = GIMP_DOCK_WINDOW (dock);
+  LigmaDockWindow *dock_window = LIGMA_DOCK_WINDOW (dock);
 
-  gimp_toggle_button_update (widget, &dock_window->p->auto_follow_active);
+  ligma_toggle_button_update (widget, &dock_window->p->auto_follow_active);
 
   if (dock_window->p->auto_follow_active)
     {
-      GimpContext *context;
+      LigmaContext *context;
 
-      context = gimp_dialog_factory_get_context (dock_window->p->dialog_factory);
+      context = ligma_dialog_factory_get_context (dock_window->p->dialog_factory);
 
-      gimp_context_copy_properties (context,
+      ligma_context_copy_properties (context,
                                     dock_window->p->context,
-                                    GIMP_CONTEXT_PROP_MASK_DISPLAY |
-                                    GIMP_CONTEXT_PROP_MASK_IMAGE);
+                                    LIGMA_CONTEXT_PROP_MASK_DISPLAY |
+                                    LIGMA_CONTEXT_PROP_MASK_IMAGE);
     }
 }
 
 
 void
-gimp_dock_window_add_dock (GimpDockWindow *dock_window,
-                           GimpDock       *dock,
+ligma_dock_window_add_dock (LigmaDockWindow *dock_window,
+                           LigmaDock       *dock,
                            gint            index)
 {
-  g_return_if_fail (GIMP_IS_DOCK_WINDOW (dock_window));
-  g_return_if_fail (GIMP_IS_DOCK (dock));
+  g_return_if_fail (LIGMA_IS_DOCK_WINDOW (dock_window));
+  g_return_if_fail (LIGMA_IS_DOCK (dock));
 
-  gimp_dock_columns_add_dock (dock_window->p->dock_columns,
-                              GIMP_DOCK (dock),
+  ligma_dock_columns_add_dock (dock_window->p->dock_columns,
+                              LIGMA_DOCK (dock),
                               index);
 
   g_signal_connect_object (dock, "description-invalidated",
-                           G_CALLBACK (gimp_dock_window_update_title),
+                           G_CALLBACK (ligma_dock_window_update_title),
                            dock_window,
                            G_CONNECT_SWAPPED);
 
   /* Some docks like the toolbox dock needs to maintain special hints
    * on its container GtkWindow, allow those to do so
    */
-  gimp_dock_set_host_geometry_hints (dock, GTK_WINDOW (dock_window));
+  ligma_dock_set_host_geometry_hints (dock, GTK_WINDOW (dock_window));
   g_signal_connect_object (dock, "geometry-invalidated",
-                           G_CALLBACK (gimp_dock_set_host_geometry_hints),
+                           G_CALLBACK (ligma_dock_set_host_geometry_hints),
                            dock_window, 0);
 }
 
 void
-gimp_dock_window_remove_dock (GimpDockWindow *dock_window,
-                              GimpDock       *dock)
+ligma_dock_window_remove_dock (LigmaDockWindow *dock_window,
+                              LigmaDock       *dock)
 {
-  gimp_dock_columns_remove_dock (dock_window->p->dock_columns,
-                                 GIMP_DOCK (dock));
+  ligma_dock_columns_remove_dock (dock_window->p->dock_columns,
+                                 LIGMA_DOCK (dock));
 
   g_signal_handlers_disconnect_by_func (dock,
-                                        gimp_dock_window_update_title,
+                                        ligma_dock_window_update_title,
                                         dock_window);
   g_signal_handlers_disconnect_by_func (dock,
-                                        gimp_dock_set_host_geometry_hints,
+                                        ligma_dock_set_host_geometry_hints,
                                         dock_window);
 }
 
 GtkWidget *
-gimp_dock_window_new (const gchar       *role,
+ligma_dock_window_new (const gchar       *role,
                       const gchar       *ui_manager_name,
                       gboolean           allow_dockbook_absence,
-                      GimpDialogFactory *dialog_factory,
-                      GimpContext       *context)
+                      LigmaDialogFactory *dialog_factory,
+                      LigmaContext       *context)
 {
-  g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (dialog_factory), NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_DIALOG_FACTORY (dialog_factory), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
 
-  return g_object_new (GIMP_TYPE_DOCK_WINDOW,
+  return g_object_new (LIGMA_TYPE_DOCK_WINDOW,
                        "role",                   role,
                        "ui-manager-name",        ui_manager_name,
                        "allow-dockbook-absence", allow_dockbook_absence,
@@ -1132,54 +1132,54 @@ gimp_dock_window_new (const gchar       *role,
 }
 
 gint
-gimp_dock_window_get_id (GimpDockWindow *dock_window)
+ligma_dock_window_get_id (LigmaDockWindow *dock_window)
 {
-  g_return_val_if_fail (GIMP_IS_DOCK_WINDOW (dock_window), 0);
+  g_return_val_if_fail (LIGMA_IS_DOCK_WINDOW (dock_window), 0);
 
   return dock_window->p->ID;
 }
 
-GimpContext *
-gimp_dock_window_get_context (GimpDockWindow *dock_window)
+LigmaContext *
+ligma_dock_window_get_context (LigmaDockWindow *dock_window)
 {
-  g_return_val_if_fail (GIMP_IS_DOCK_WINDOW (dock_window), NULL);
+  g_return_val_if_fail (LIGMA_IS_DOCK_WINDOW (dock_window), NULL);
 
   return dock_window->p->context;
 }
 
 gboolean
-gimp_dock_window_get_auto_follow_active (GimpDockWindow *dock_window)
+ligma_dock_window_get_auto_follow_active (LigmaDockWindow *dock_window)
 {
-  g_return_val_if_fail (GIMP_IS_DOCK_WINDOW (dock_window), FALSE);
+  g_return_val_if_fail (LIGMA_IS_DOCK_WINDOW (dock_window), FALSE);
 
   return dock_window->p->auto_follow_active;
 }
 
 void
-gimp_dock_window_set_auto_follow_active (GimpDockWindow *dock_window,
+ligma_dock_window_set_auto_follow_active (LigmaDockWindow *dock_window,
                                          gboolean        auto_follow_active)
 {
-  g_return_if_fail (GIMP_IS_DOCK_WINDOW (dock_window));
+  g_return_if_fail (LIGMA_IS_DOCK_WINDOW (dock_window));
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dock_window->p->auto_button),
                                 auto_follow_active ? TRUE : FALSE);
 }
 
 gboolean
-gimp_dock_window_get_show_image_menu (GimpDockWindow *dock_window)
+ligma_dock_window_get_show_image_menu (LigmaDockWindow *dock_window)
 {
-  g_return_val_if_fail (GIMP_IS_DOCK_WINDOW (dock_window), FALSE);
+  g_return_val_if_fail (LIGMA_IS_DOCK_WINDOW (dock_window), FALSE);
 
   return dock_window->p->show_image_menu;
 }
 
 void
-gimp_dock_window_set_show_image_menu (GimpDockWindow *dock_window,
+ligma_dock_window_set_show_image_menu (LigmaDockWindow *dock_window,
                                       gboolean        show)
 {
   GtkWidget *parent;
 
-  g_return_if_fail (GIMP_IS_DOCK_WINDOW (dock_window));
+  g_return_if_fail (LIGMA_IS_DOCK_WINDOW (dock_window));
 
   parent = gtk_widget_get_parent (dock_window->p->image_combo);
 
@@ -1189,34 +1189,34 @@ gimp_dock_window_set_show_image_menu (GimpDockWindow *dock_window,
 }
 
 void
-gimp_dock_window_setup (GimpDockWindow *dock_window,
-                        GimpDockWindow *template)
+ligma_dock_window_setup (LigmaDockWindow *dock_window,
+                        LigmaDockWindow *template)
 {
-  gimp_dock_window_set_auto_follow_active (GIMP_DOCK_WINDOW (dock_window),
+  ligma_dock_window_set_auto_follow_active (LIGMA_DOCK_WINDOW (dock_window),
                                            template->p->auto_follow_active);
-  gimp_dock_window_set_show_image_menu (GIMP_DOCK_WINDOW (dock_window),
+  ligma_dock_window_set_show_image_menu (LIGMA_DOCK_WINDOW (dock_window),
                                         template->p->show_image_menu);
 }
 
 /**
- * gimp_dock_window_has_toolbox:
+ * ligma_dock_window_has_toolbox:
  * @dock_window:
  *
- * Returns: %TRUE if the dock window has a GimpToolbox dock, %FALSE
+ * Returns: %TRUE if the dock window has a LigmaToolbox dock, %FALSE
  * otherwise.
  **/
 gboolean
-gimp_dock_window_has_toolbox (GimpDockWindow *dock_window)
+ligma_dock_window_has_toolbox (LigmaDockWindow *dock_window)
 {
   GList *iter = NULL;
 
-  g_return_val_if_fail (GIMP_IS_DOCK_WINDOW (dock_window), FALSE);
+  g_return_val_if_fail (LIGMA_IS_DOCK_WINDOW (dock_window), FALSE);
 
-  for (iter = gimp_dock_columns_get_docks (dock_window->p->dock_columns);
+  for (iter = ligma_dock_columns_get_docks (dock_window->p->dock_columns);
        iter;
        iter = g_list_next (iter))
     {
-      if (GIMP_IS_TOOLBOX (iter->data))
+      if (LIGMA_IS_TOOLBOX (iter->data))
         return TRUE;
     }
 
@@ -1225,25 +1225,25 @@ gimp_dock_window_has_toolbox (GimpDockWindow *dock_window)
 
 
 /**
- * gimp_dock_window_from_dock:
+ * ligma_dock_window_from_dock:
  * @dock:
  *
  * For convenience.
  *
- * Returns: If the toplevel widget for the dock is a GimpDockWindow,
+ * Returns: If the toplevel widget for the dock is a LigmaDockWindow,
  * return that. Otherwise return %NULL.
  **/
-GimpDockWindow *
-gimp_dock_window_from_dock (GimpDock *dock)
+LigmaDockWindow *
+ligma_dock_window_from_dock (LigmaDock *dock)
 {
   GtkWidget *toplevel = NULL;
 
-  g_return_val_if_fail (GIMP_IS_DOCK (dock), NULL);
+  g_return_val_if_fail (LIGMA_IS_DOCK (dock), NULL);
 
   toplevel = gtk_widget_get_toplevel (GTK_WIDGET (dock));
 
-  if (GIMP_IS_DOCK_WINDOW (toplevel))
-    return GIMP_DOCK_WINDOW (toplevel);
+  if (LIGMA_IS_DOCK_WINDOW (toplevel))
+    return LIGMA_DOCK_WINDOW (toplevel);
   else
     return NULL;
 }

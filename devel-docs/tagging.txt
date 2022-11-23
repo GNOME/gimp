@@ -1,33 +1,33 @@
 =============================================================
-How does resource tagging in Gimp work?
+How does resource tagging in Ligma work?
 =============================================================
 
 
-GimpTagged
+LigmaTagged
 
 Tagging is not limited to a concrete class hierarchy, but any class
-implementing the GimpTagged interface can be tagged. In addition to
+implementing the LigmaTagged interface can be tagged. In addition to
 methods for adding/removing/enumerating tags it also requires
-GimpTagged objects to identify themselves:
+LigmaTagged objects to identify themselves:
 
-* gimp_tagged_get_identifier: used to get a unique identifier of a
-GimpTagged object. For objects which are stored in a file it will
+* ligma_tagged_get_identifier: used to get a unique identifier of a
+LigmaTagged object. For objects which are stored in a file it will
 usually be a filename.
 
-* gimp_tagged_get_checksum: the identifier mentioned above has the problem
+* ligma_tagged_get_checksum: the identifier mentioned above has the problem
 that it can change during sessions (for example, user moves or renames
 a resource file). Therefore, there needs to be a way to get another
 identifier from the data of the tagged object, so that tags stored between
 session can be remapped properly.
 
 
-GimpTag
+LigmaTag
 
-Tags are represented by a GimpTag object. There are no limitations for
+Tags are represented by a LigmaTag object. There are no limitations for
 tag names except that they cannot contain a selected set of terminal
 punctuation characters (used to separate tags), leading or trailing
 whitespace and cannot begin with a reserved prefix for internal tags
-('gimp:'). These conditions are enforced when creating a tag object from a
+('ligma:'). These conditions are enforced when creating a tag object from a
 tag string. The only reason for tag creation to fail is if there are
 no characters left after trying to fix a tag according to the
 rules above. Tag names are displayed as the user typed them (case
@@ -41,7 +41,7 @@ function which can be used to sort tag lists and functions for storing
 tags in a GHashTable.
 
 
-GimpTagCache
+LigmaTagCache
 
 Between sessions, tags assigned to objects are stored in a cache
 file. The cache file is a simple XML file, which lists all resources and
@@ -58,86 +58,86 @@ a temporarily disconnected network directory is reconnected). The list
 is then written to a tag cache file in the user's home directory.
 
 When the session starts, the previously saved resource and tag mapping has to
-be loaded and assigned to GimpTagged objects. First the tag cache is
-loaded from file, and then containers are added (GimpContainer objects
-which contain items implementing the GimpTagged interface). After that,
+be loaded and assigned to LigmaTagged objects. First the tag cache is
+loaded from file, and then containers are added (LigmaContainer objects
+which contain items implementing the LigmaTagged interface). After that,
 loaded resources are assigned tags:
 
   If a resource identifier matches an identifier in the cache,
-    corresponding tags are assigned to the GimpTagged object.
+    corresponding tags are assigned to the LigmaTagged object.
   Else, if the identifier is not found in the tag cache,
     an attempt is made to check if the resource file has been
     moved/renamed. In such case the checksum is used to match the
-    GimpTagged object with all of the records in the tag cache.
+    LigmaTagged object with all of the records in the tag cache.
     If a match is found,
       the identifier is updated in the tag cache.
     Otherwise,
-      the loaded GimpTagged object is considered to be a newly
+      the loaded LigmaTagged object is considered to be a newly
       added resource.
 
 
-GimpFilteredContainer
+LigmaFilteredContainer
 
-A GimpFilteredContainer is a "view" (representation) of a
-GimpContainer. It is related to tagging in that it can be used to
-filter a GimpContainer to contain only GimpTagged objects which have
+A LigmaFilteredContainer is a "view" (representation) of a
+LigmaContainer. It is related to tagging in that it can be used to
+filter a LigmaContainer to contain only LigmaTagged objects which have
 certain tags assigned. It is automatically updated with any changes in
-the GimpContainer it wraps. However, items should not be added or removed
+the LigmaContainer it wraps. However, items should not be added or removed
 from this container manually as changes do not affect the original
-container and would be lost when the GimpFilteredContainer is
+container and would be lost when the LigmaFilteredContainer is
 updated. Instead, the contents should be changed by setting a tag list
-which would be used to filter GimpTagged objects containing all of the
-given GimpTags.
+which would be used to filter LigmaTagged objects containing all of the
+given LigmaTags.
 
-GimpFilteredContainer can use any GimpContainer as a source
+LigmaFilteredContainer can use any LigmaContainer as a source
 container. Therefore, it is possible to use the decorator design pattern
 to implement additional container views, such as a view combining items
 from multiple containers.
 
 
-GimpTagEntry widget
+LigmaTagEntry widget
 
-The GimpTagEntry widget extends GtkEntry and is used to either assign or
+The LigmaTagEntry widget extends GtkEntry and is used to either assign or
 query tags depending on the selected mode. The widget support various
 usability features:
 
  * Jellybeans: When a tag is entered and confirmed by either separator,
    pressing return or otherwise, it becomes a jellybean, i.e. a single
-   unit, not a bunch of characters. Navigating in a GimpTagEntry,
+   unit, not a bunch of characters. Navigating in a LigmaTagEntry,
    deleting tags, etc. can be performed much faster. However, while a tag
    is just being entered (not yet confirmed), all actions operate on
    characters as usual.
 
- * Custom auto completion is implemented in the GimpTagEntry widget which
+ * Custom auto completion is implemented in the LigmaTagEntry widget which
    allows to complete tags in the middle of a tag list, doesn't offer
    already completed tags, tab cycles all possible completions, etc.
 
- * If the GimpTagEntry is empty and unused it displays a description for
+ * If the LigmaTagEntry is empty and unused it displays a description for
    the user regarding its purpose.
 
 When operating in tag assignment mode, tags are assigned only when
 the user hits the return key.
 
-When operating in tag query mode, the given GimpFilteredContainer is
-filtered as the user types. The GimpTagEntry also remembers recently used
+When operating in tag query mode, the given LigmaFilteredContainer is
+filtered as the user types. The LigmaTagEntry also remembers recently used
 configurations, which can be cycled using up and down arrow keys.
 
 
-GimpComboTagEntry widget
+LigmaComboTagEntry widget
 
-The GimpComboTagEntry widget extends GimpTagEntry and adds the ability to pick
-tags from a menu-like list (using the GimpTagPopup widget).
+The LigmaComboTagEntry widget extends LigmaTagEntry and adds the ability to pick
+tags from a menu-like list (using the LigmaTagPopup widget).
 
 
-GimpTagPopup widget
+LigmaTagPopup widget
 
-The GimpTagPopup widget is used as a tag list menu from the GimpComboTagEntry
+The LigmaTagPopup widget is used as a tag list menu from the LigmaComboTagEntry
 widget. It is not designed to be used with any other widget.
 
-GimpTagPopup has many visual and behavioral similarities to GtkMenu.
+LigmaTagPopup has many visual and behavioral similarities to GtkMenu.
 In particular, it uses menu-like scrolling.
 
-GimpTagPopup implements various usability features, some of which are:
+LigmaTagPopup implements various usability features, some of which are:
 
  * Tags which would result in an empty selection of resources are made
    insensitive.

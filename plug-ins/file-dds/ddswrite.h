@@ -1,5 +1,5 @@
 /*
- * DDS GIMP plugin
+ * DDS LIGMA plugin
  *
  * Copyright (C) 2004-2012 Shawn Kirst <skirst@gmail.com>,
  * with parts (C) 2003 Arne Reuter <homepage@arnereuter.de> where specified.
@@ -22,11 +22,11 @@
 #define __DDSWRITE_H__
 
 
-extern GimpPDBStatusType write_dds (GFile         *file,
-                                    GimpImage     *image,
-                                    GimpDrawable  *drawable,
+extern LigmaPDBStatusType write_dds (GFile         *file,
+                                    LigmaImage     *image,
+                                    LigmaDrawable  *drawable,
                                     gboolean       interactive,
-                                    GimpProcedure *procedure,
+                                    LigmaProcedure *procedure,
                                     GObject       *config,
                                     gboolean       is_duplicate_image);
 

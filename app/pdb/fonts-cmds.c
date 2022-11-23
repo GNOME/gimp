@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-2003 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,120 +25,120 @@
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "pdb-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontainer-filter.h"
-#include "core/gimpcontainer.h"
-#include "core/gimpdatafactory.h"
-#include "core/gimpparamspecs.h"
+#include "core/ligma.h"
+#include "core/ligmacontainer-filter.h"
+#include "core/ligmacontainer.h"
+#include "core/ligmadatafactory.h"
+#include "core/ligmaparamspecs.h"
 
-#include "gimppdb.h"
-#include "gimpprocedure.h"
+#include "ligmapdb.h"
+#include "ligmaprocedure.h"
 #include "internal-procs.h"
 
 
-static GimpValueArray *
-fonts_refresh_invoker (GimpProcedure         *procedure,
-                       Gimp                  *gimp,
-                       GimpContext           *context,
-                       GimpProgress          *progress,
-                       const GimpValueArray  *args,
+static LigmaValueArray *
+fonts_refresh_invoker (LigmaProcedure         *procedure,
+                       Ligma                  *ligma,
+                       LigmaContext           *context,
+                       LigmaProgress          *progress,
+                       const LigmaValueArray  *args,
                        GError               **error)
 {
-  gimp_data_factory_data_refresh (gimp->font_factory, context);
-  gimp_data_factory_data_wait (gimp->font_factory);
+  ligma_data_factory_data_refresh (ligma->font_factory, context);
+  ligma_data_factory_data_wait (ligma->font_factory);
 
-  return gimp_procedure_get_return_values (procedure, TRUE, NULL);
+  return ligma_procedure_get_return_values (procedure, TRUE, NULL);
 }
 
-static GimpValueArray *
-fonts_get_list_invoker (GimpProcedure         *procedure,
-                        Gimp                  *gimp,
-                        GimpContext           *context,
-                        GimpProgress          *progress,
-                        const GimpValueArray  *args,
+static LigmaValueArray *
+fonts_get_list_invoker (LigmaProcedure         *procedure,
+                        Ligma                  *ligma,
+                        LigmaContext           *context,
+                        LigmaProgress          *progress,
+                        const LigmaValueArray  *args,
                         GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   const gchar *filter;
   gchar **font_list = NULL;
 
-  filter = g_value_get_string (gimp_value_array_index (args, 0));
+  filter = g_value_get_string (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      if (! gimp_data_factory_data_wait (gimp->font_factory))
+      if (! ligma_data_factory_data_wait (ligma->font_factory))
         success = FALSE;
 
       if (success)
         {
-          font_list = gimp_container_get_filtered_name_array (gimp_data_factory_get_container (gimp->font_factory),
+          font_list = ligma_container_get_filtered_name_array (ligma_data_factory_get_container (ligma->font_factory),
                                                               filter);
         }
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_take_boxed (gimp_value_array_index (return_vals, 1), font_list);
+    g_value_take_boxed (ligma_value_array_index (return_vals, 1), font_list);
 
   return return_vals;
 }
 
 void
-register_fonts_procs (GimpPDB *pdb)
+register_fonts_procs (LigmaPDB *pdb)
 {
-  GimpProcedure *procedure;
+  LigmaProcedure *procedure;
 
   /*
-   * gimp-fonts-refresh
+   * ligma-fonts-refresh
    */
-  procedure = gimp_procedure_new (fonts_refresh_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-fonts-refresh");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (fonts_refresh_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-fonts-refresh");
+  ligma_procedure_set_static_help (procedure,
                                   "Refresh current fonts. This function always succeeds.",
                                   "This procedure retrieves all fonts currently in the user's font path and updates the font dialogs accordingly. Depending on the amount of fonts on the system, this can take considerable time.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Sven Neumann <sven@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Sven Neumann <sven@ligma.org>",
                                          "Sven Neumann",
                                          "2003");
-  gimp_pdb_register_procedure (pdb, procedure);
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-fonts-get-list
+   * ligma-fonts-get-list
    */
-  procedure = gimp_procedure_new (fonts_get_list_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-fonts-get-list");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (fonts_get_list_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-fonts-get-list");
+  ligma_procedure_set_static_help (procedure,
                                   "Retrieve the list of loaded fonts.",
                                   "This procedure returns a list of the fonts that are currently available.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Sven Neumann <sven@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Sven Neumann <sven@ligma.org>",
                                          "Sven Neumann",
                                          "2003");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("filter",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("filter",
                                                        "filter",
                                                        "An optional regular expression used to filter the list",
                                                        FALSE, TRUE, FALSE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_boxed ("font-list",
                                                        "font list",
                                                        "The list of font names",
                                                        G_TYPE_STRV,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

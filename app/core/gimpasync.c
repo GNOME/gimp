@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpasync.c
+ * ligmaasync.c
  * Copyright (C) 2018 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,33 +25,33 @@
 
 #include "core-types.h"
 
-#include "gimpasync.h"
-#include "gimpcancelable.h"
-#include "gimpwaitable.h"
+#include "ligmaasync.h"
+#include "ligmacancelable.h"
+#include "ligmawaitable.h"
 
 
-/* GimpAsync represents an asynchronous task.  Both the public and the
+/* LigmaAsync represents an asynchronous task.  Both the public and the
  * protected interfaces are intentionally minimal at this point, to keep things
  * simple.  They may be extended in the future as needed.
  *
- * GimpAsync implements the GimpWaitable and GimpCancelable interfaces.
+ * LigmaAsync implements the LigmaWaitable and LigmaCancelable interfaces.
  *
- * Upon creation, a GimpAsync object is in the "running" state.  Once the task
+ * Upon creation, a LigmaAsync object is in the "running" state.  Once the task
  * is complete (and before the object's destruction), it should be transitioned
- * to the "stopped" state, using either 'gimp_async_finish()' or
- * 'gimp_async_abort()'.
+ * to the "stopped" state, using either 'ligma_async_finish()' or
+ * 'ligma_async_abort()'.
  *
- * Similarly, upon creation, a GimpAsync object is said to be "unsynced".  It
+ * Similarly, upon creation, a LigmaAsync object is said to be "unsynced".  It
  * becomes synced once the execution of any of the completion callbacks added
- * through 'gimp_async_add_callback()' had started, or after a successful call
- * to one of the 'gimp_waitable_wait()' family of functions.
+ * through 'ligma_async_add_callback()' had started, or after a successful call
+ * to one of the 'ligma_waitable_wait()' family of functions.
  *
- * Note that certain GimpAsync functions may only be called during a certain
+ * Note that certain LigmaAsync functions may only be called during a certain
  * state, on a certain thread, or depending on whether or not the object is
  * synced, as detailed for each function.  When referring to threads, the "main
  * thread" is the thread running the main loop, or any thread whose execution
  * is synchronized with the main thread, and the "async thread" is the thread
- * calling 'gimp_async_finish()' or 'gimp_async_abort()' (which may also be the
+ * calling 'ligma_async_finish()' or 'ligma_async_abort()' (which may also be the
  * main thread), or any thread whose execution is synchronized with the async
  * thread.
  */
@@ -67,18 +67,18 @@ enum
 };
 
 
-typedef struct _GimpAsyncCallbackInfo GimpAsyncCallbackInfo;
+typedef struct _LigmaAsyncCallbackInfo LigmaAsyncCallbackInfo;
 
 
-struct _GimpAsyncCallbackInfo
+struct _LigmaAsyncCallbackInfo
 {
-  GimpAsync         *async;
-  GimpAsyncCallback  callback;
+  LigmaAsync         *async;
+  LigmaAsyncCallback  callback;
   gpointer           data;
   gpointer           gobject;
 };
 
-struct _GimpAsyncPrivate
+struct _LigmaAsyncPrivate
 {
   GMutex         mutex;
   GCond          cond;
@@ -103,50 +103,50 @@ struct _GimpAsyncPrivate
 
 /*  local function prototypes  */
 
-static void       gimp_async_waitable_iface_init   (GimpWaitableInterface   *iface);
+static void       ligma_async_waitable_iface_init   (LigmaWaitableInterface   *iface);
 
-static void       gimp_async_cancelable_iface_init (GimpCancelableInterface *iface);
+static void       ligma_async_cancelable_iface_init (LigmaCancelableInterface *iface);
 
-static void       gimp_async_finalize              (GObject                 *object);
+static void       ligma_async_finalize              (GObject                 *object);
 
-static void       gimp_async_wait                  (GimpWaitable            *waitable);
-static gboolean   gimp_async_try_wait              (GimpWaitable            *waitable);
-static gboolean   gimp_async_wait_until            (GimpWaitable            *waitable,
+static void       ligma_async_wait                  (LigmaWaitable            *waitable);
+static gboolean   ligma_async_try_wait              (LigmaWaitable            *waitable);
+static gboolean   ligma_async_wait_until            (LigmaWaitable            *waitable,
                                                     gint64                   end_time);
 
-static void       gimp_async_cancel                (GimpCancelable          *cancelable);
+static void       ligma_async_cancel                (LigmaCancelable          *cancelable);
 
-static gboolean   gimp_async_idle                  (GimpAsync               *async);
+static gboolean   ligma_async_idle                  (LigmaAsync               *async);
 
-static void       gimp_async_callback_weak_notify  (GimpAsyncCallbackInfo   *callback_info,
+static void       ligma_async_callback_weak_notify  (LigmaAsyncCallbackInfo   *callback_info,
                                                     GObject                 *gobject);
 
-static void       gimp_async_stop                  (GimpAsync               *async);
-static void       gimp_async_run_callbacks         (GimpAsync               *async);
+static void       ligma_async_stop                  (LigmaAsync               *async);
+static void       ligma_async_run_callbacks         (LigmaAsync               *async);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpAsync, gimp_async, G_TYPE_OBJECT,
-                         G_ADD_PRIVATE (GimpAsync)
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_WAITABLE,
-                                                gimp_async_waitable_iface_init)
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CANCELABLE,
-                                                gimp_async_cancelable_iface_init))
+G_DEFINE_TYPE_WITH_CODE (LigmaAsync, ligma_async, G_TYPE_OBJECT,
+                         G_ADD_PRIVATE (LigmaAsync)
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_WAITABLE,
+                                                ligma_async_waitable_iface_init)
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_CANCELABLE,
+                                                ligma_async_cancelable_iface_init))
 
-#define parent_class gimp_async_parent_class
+#define parent_class ligma_async_parent_class
 
 static guint async_signals[LAST_SIGNAL] = { 0 };
 
 
 /*  local variables  */
 
-static volatile gint gimp_async_n_running = 0;
+static volatile gint ligma_async_n_running = 0;
 
 
 /*  private functions  */
 
 
 static void
-gimp_async_class_init (GimpAsyncClass *klass)
+ligma_async_class_init (LigmaAsyncClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
@@ -154,38 +154,38 @@ gimp_async_class_init (GimpAsyncClass *klass)
     g_signal_new ("waiting",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpAsyncClass, waiting),
+                  G_STRUCT_OFFSET (LigmaAsyncClass, waiting),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
-  object_class->finalize = gimp_async_finalize;
+  object_class->finalize = ligma_async_finalize;
 }
 
 static void
-gimp_async_waitable_iface_init (GimpWaitableInterface *iface)
+ligma_async_waitable_iface_init (LigmaWaitableInterface *iface)
 {
-  iface->wait       = gimp_async_wait;
-  iface->try_wait   = gimp_async_try_wait;
-  iface->wait_until = gimp_async_wait_until;
+  iface->wait       = ligma_async_wait;
+  iface->try_wait   = ligma_async_try_wait;
+  iface->wait_until = ligma_async_wait_until;
 }
 
 static void
-gimp_async_cancelable_iface_init (GimpCancelableInterface *iface)
+ligma_async_cancelable_iface_init (LigmaCancelableInterface *iface)
 {
-  iface->cancel = gimp_async_cancel;
+  iface->cancel = ligma_async_cancel;
 }
 
 static void
-gimp_async_init (GimpAsync *async)
+ligma_async_init (LigmaAsync *async)
 {
-  async->priv = gimp_async_get_instance_private (async);
+  async->priv = ligma_async_get_instance_private (async);
 
   g_mutex_init (&async->priv->mutex);
   g_cond_init  (&async->priv->cond);
 
   g_queue_init (&async->priv->callbacks);
 
-  g_atomic_int_inc (&gimp_async_n_running);
+  g_atomic_int_inc (&ligma_async_n_running);
 
 #ifdef TIME_ASYNC_OPS
   async->priv->start_time = g_get_monotonic_time ();
@@ -193,9 +193,9 @@ gimp_async_init (GimpAsync *async)
 }
 
 static void
-gimp_async_finalize (GObject *object)
+ligma_async_finalize (GObject *object)
 {
-  GimpAsync *async = GIMP_ASYNC (object);
+  LigmaAsync *async = LIGMA_ASYNC (object);
 
   g_warn_if_fail (async->priv->stopped);
   g_warn_if_fail (async->priv->idle_id == 0);
@@ -220,14 +220,14 @@ gimp_async_finalize (GObject *object)
  * already stopped, returns immediately.
  *
  * after the call, all callbacks previously added through
- * 'gimp_async_add_callback()' are guaranteed to have been called.
+ * 'ligma_async_add_callback()' are guaranteed to have been called.
  *
  * may only be called on the main thread.
  */
 static void
-gimp_async_wait (GimpWaitable *waitable)
+ligma_async_wait (LigmaWaitable *waitable)
 {
-  GimpAsync *async = GIMP_ASYNC (waitable);
+  LigmaAsync *async = LIGMA_ASYNC (waitable);
 
   g_mutex_lock (&async->priv->mutex);
 
@@ -241,19 +241,19 @@ gimp_async_wait (GimpWaitable *waitable)
 
   g_mutex_unlock (&async->priv->mutex);
 
-  gimp_async_run_callbacks (async);
+  ligma_async_run_callbacks (async);
 }
 
-/* same as 'gimp_async_wait()', but returns immediately if 'waitable' is not in
+/* same as 'ligma_async_wait()', but returns immediately if 'waitable' is not in
  * the "stopped" state.
  *
  * returns TRUE if 'waitable' has transitioned to the "stopped" state, or FALSE
  * otherwise.
  */
 static gboolean
-gimp_async_try_wait (GimpWaitable *waitable)
+ligma_async_try_wait (LigmaWaitable *waitable)
 {
-  GimpAsync *async = GIMP_ASYNC (waitable);
+  LigmaAsync *async = LIGMA_ASYNC (waitable);
 
   g_mutex_lock (&async->priv->mutex);
 
@@ -266,12 +266,12 @@ gimp_async_try_wait (GimpWaitable *waitable)
 
   g_mutex_unlock (&async->priv->mutex);
 
-  gimp_async_run_callbacks (async);
+  ligma_async_run_callbacks (async);
 
   return TRUE;
 }
 
-/* same as 'gimp_async_wait()', taking an additional 'end_time' parameter,
+/* same as 'ligma_async_wait()', taking an additional 'end_time' parameter,
  * specifying the maximal monotonic time until which to wait for 'waitable' to
  * stop.
  *
@@ -279,10 +279,10 @@ gimp_async_try_wait (GimpWaitable *waitable)
  * if the wait was interrupted before the transition.
  */
 static gboolean
-gimp_async_wait_until (GimpWaitable *waitable,
+ligma_async_wait_until (LigmaWaitable *waitable,
                        gint64        end_time)
 {
-  GimpAsync *async = GIMP_ASYNC (waitable);
+  LigmaAsync *async = LIGMA_ASYNC (waitable);
 
   g_mutex_lock (&async->priv->mutex);
 
@@ -304,47 +304,47 @@ gimp_async_wait_until (GimpWaitable *waitable,
 
   g_mutex_unlock (&async->priv->mutex);
 
-  gimp_async_run_callbacks (async);
+  ligma_async_run_callbacks (async);
 
   return TRUE;
 }
 
 /* requests the cancellation of the task managed by 'cancelable'.
  *
- * note that 'gimp_async_cancel()' doesn't directly cause 'cancelable' to be
+ * note that 'ligma_async_cancel()' doesn't directly cause 'cancelable' to be
  * stopped, nor synced.  furthermore, 'cancelable' may still complete
  * successfully even when cancellation has been requested.
  *
  * may only be called on the main thread.
  */
 static void
-gimp_async_cancel (GimpCancelable *cancelable)
+ligma_async_cancel (LigmaCancelable *cancelable)
 {
-  GimpAsync *async = GIMP_ASYNC (cancelable);
+  LigmaAsync *async = LIGMA_ASYNC (cancelable);
 
   async->priv->canceled = TRUE;
 }
 
 static gboolean
-gimp_async_idle (GimpAsync *async)
+ligma_async_idle (LigmaAsync *async)
 {
-  gimp_waitable_wait (GIMP_WAITABLE (async));
+  ligma_waitable_wait (LIGMA_WAITABLE (async));
 
   return G_SOURCE_REMOVE;
 }
 
 static void
-gimp_async_callback_weak_notify (GimpAsyncCallbackInfo *callback_info,
+ligma_async_callback_weak_notify (LigmaAsyncCallbackInfo *callback_info,
                                  GObject               *gobject)
 {
-  GimpAsync *async       = callback_info->async;
+  LigmaAsync *async       = callback_info->async;
   gboolean   unref_async = FALSE;
 
   g_mutex_lock (&async->priv->mutex);
 
   g_queue_remove (&async->priv->callbacks, callback_info);
 
-  g_slice_free (GimpAsyncCallbackInfo, callback_info);
+  g_slice_free (LigmaAsyncCallbackInfo, callback_info);
 
   if (g_queue_is_empty (&async->priv->callbacks) && async->priv->idle_id)
     {
@@ -361,7 +361,7 @@ gimp_async_callback_weak_notify (GimpAsyncCallbackInfo *callback_info,
 }
 
 static void
-gimp_async_stop (GimpAsync *async)
+ligma_async_stop (LigmaAsync *async)
 {
 #ifdef TIME_ASYNC_OPS
   {
@@ -373,14 +373,14 @@ gimp_async_stop (GimpAsync *async)
   }
 #endif
 
-  g_atomic_int_dec_and_test (&gimp_async_n_running);
+  g_atomic_int_dec_and_test (&ligma_async_n_running);
 
   if (! g_queue_is_empty (&async->priv->callbacks))
     {
       g_object_ref (async);
 
       async->priv->idle_id = g_idle_add_full (G_PRIORITY_DEFAULT,
-                                              (GSourceFunc) gimp_async_idle,
+                                              (GSourceFunc) ligma_async_idle,
                                               async, NULL);
     }
 
@@ -390,9 +390,9 @@ gimp_async_stop (GimpAsync *async)
 }
 
 static void
-gimp_async_run_callbacks (GimpAsync *async)
+ligma_async_run_callbacks (LigmaAsync *async)
 {
-  GimpAsyncCallbackInfo *callback_info;
+  LigmaAsyncCallbackInfo *callback_info;
   gboolean               unref_async = FALSE;
 
   if (async->priv->idle_id)
@@ -412,7 +412,7 @@ gimp_async_run_callbacks (GimpAsync *async)
           g_object_ref (callback_info->gobject);
 
           g_object_weak_unref (callback_info->gobject,
-                               (GWeakNotify) gimp_async_callback_weak_notify,
+                               (GWeakNotify) ligma_async_callback_weak_notify,
                                callback_info);
         }
 
@@ -421,7 +421,7 @@ gimp_async_run_callbacks (GimpAsync *async)
       if (callback_info->gobject)
         g_object_unref (callback_info->gobject);
 
-      g_slice_free (GimpAsyncCallbackInfo, callback_info);
+      g_slice_free (LigmaAsyncCallbackInfo, callback_info);
     }
 
   if (unref_async)
@@ -432,13 +432,13 @@ gimp_async_run_callbacks (GimpAsync *async)
 /*  public functions  */
 
 
-/* creates a new GimpAsync object, initially unsynced and placed in the
+/* creates a new LigmaAsync object, initially unsynced and placed in the
  * "running" state.
  */
-GimpAsync *
-gimp_async_new (void)
+LigmaAsync *
+ligma_async_new (void)
 {
-  return g_object_new (GIMP_TYPE_ASYNC,
+  return g_object_new (LIGMA_TYPE_ASYNC,
                        NULL);
 }
 
@@ -447,9 +447,9 @@ gimp_async_new (void)
  * may only be called on the main thread.
  */
 gboolean
-gimp_async_is_synced (GimpAsync *async)
+ligma_async_is_synced (LigmaAsync *async)
 {
-  g_return_val_if_fail (GIMP_IS_ASYNC (async), FALSE);
+  g_return_val_if_fail (LIGMA_IS_ASYNC (async), FALSE);
 
   return async->priv->synced;
 }
@@ -467,13 +467,13 @@ gimp_async_is_synced (GimpAsync *async)
  * may only be called on the main thread.
  */
 void
-gimp_async_add_callback (GimpAsync         *async,
-                         GimpAsyncCallback  callback,
+ligma_async_add_callback (LigmaAsync         *async,
+                         LigmaAsyncCallback  callback,
                          gpointer           data)
 {
-  GimpAsyncCallbackInfo *callback_info;
+  LigmaAsyncCallbackInfo *callback_info;
 
-  g_return_if_fail (GIMP_IS_ASYNC (async));
+  g_return_if_fail (LIGMA_IS_ASYNC (async));
   g_return_if_fail (callback != NULL);
 
   g_mutex_lock (&async->priv->mutex);
@@ -489,7 +489,7 @@ gimp_async_add_callback (GimpAsync         *async,
       return;
     }
 
-  callback_info           = g_slice_new0 (GimpAsyncCallbackInfo);
+  callback_info           = g_slice_new0 (LigmaAsyncCallbackInfo);
   callback_info->async    = async;
   callback_info->callback = callback;
   callback_info->data     = data;
@@ -499,7 +499,7 @@ gimp_async_add_callback (GimpAsync         *async,
   g_mutex_unlock (&async->priv->mutex);
 }
 
-/* same as 'gimp_async_add_callback()', however, takes an additional 'gobject'
+/* same as 'ligma_async_add_callback()', however, takes an additional 'gobject'
  * argument, which should be a GObject.
  *
  * 'gobject' is guaranteed to remain alive for the duration of the callback.
@@ -507,14 +507,14 @@ gimp_async_add_callback (GimpAsync         *async,
  * When 'gobject' is destroyed, the callback is automatically removed.
  */
 void
-gimp_async_add_callback_for_object (GimpAsync         *async,
-                                    GimpAsyncCallback  callback,
+ligma_async_add_callback_for_object (LigmaAsync         *async,
+                                    LigmaAsyncCallback  callback,
                                     gpointer           data,
                                     gpointer           gobject)
 {
-  GimpAsyncCallbackInfo *callback_info;
+  LigmaAsyncCallbackInfo *callback_info;
 
-  g_return_if_fail (GIMP_IS_ASYNC (async));
+  g_return_if_fail (LIGMA_IS_ASYNC (async));
   g_return_if_fail (callback != NULL);
   g_return_if_fail (G_IS_OBJECT (gobject));
 
@@ -535,7 +535,7 @@ gimp_async_add_callback_for_object (GimpAsync         *async,
       return;
     }
 
-  callback_info           = g_slice_new0 (GimpAsyncCallbackInfo);
+  callback_info           = g_slice_new0 (LigmaAsyncCallbackInfo);
   callback_info->async    = async;
   callback_info->callback = callback;
   callback_info->data     = data;
@@ -544,27 +544,27 @@ gimp_async_add_callback_for_object (GimpAsync         *async,
   g_queue_push_tail (&async->priv->callbacks, callback_info);
 
   g_object_weak_ref (gobject,
-                     (GWeakNotify) gimp_async_callback_weak_notify,
+                     (GWeakNotify) ligma_async_callback_weak_notify,
                      callback_info);
 
   g_mutex_unlock (&async->priv->mutex);
 }
 
 /* removes all callbacks previously registered through
- * 'gimp_async_add_callback()', matching 'callback' and 'data', which hasn't
+ * 'ligma_async_add_callback()', matching 'callback' and 'data', which hasn't
  * been called yet.
  *
  * may only be called on the main thread.
  */
 void
-gimp_async_remove_callback (GimpAsync         *async,
-                            GimpAsyncCallback  callback,
+ligma_async_remove_callback (LigmaAsync         *async,
+                            LigmaAsyncCallback  callback,
                             gpointer           data)
 {
   GList    *iter;
   gboolean  unref_async = FALSE;
 
-  g_return_if_fail (GIMP_IS_ASYNC (async));
+  g_return_if_fail (LIGMA_IS_ASYNC (async));
   g_return_if_fail (callback != NULL);
 
   g_mutex_lock (&async->priv->mutex);
@@ -573,7 +573,7 @@ gimp_async_remove_callback (GimpAsync         *async,
 
   while (iter)
     {
-      GimpAsyncCallbackInfo *callback_info = iter->data;
+      LigmaAsyncCallbackInfo *callback_info = iter->data;
       GList                 *next          = g_list_next (iter);
 
       if (callback_info->callback == callback &&
@@ -583,13 +583,13 @@ gimp_async_remove_callback (GimpAsync         *async,
             {
               g_object_weak_unref (
                 callback_info->gobject,
-                (GWeakNotify) gimp_async_callback_weak_notify,
+                (GWeakNotify) ligma_async_callback_weak_notify,
                 callback_info);
             }
 
           g_queue_delete_link (&async->priv->callbacks, iter);
 
-          g_slice_free (GimpAsyncCallbackInfo, callback_info);
+          g_slice_free (LigmaAsyncCallbackInfo, callback_info);
         }
 
       iter = next;
@@ -614,9 +614,9 @@ gimp_async_remove_callback (GimpAsync         *async,
  * may only be called on the async thread.
  */
 gboolean
-gimp_async_is_stopped (GimpAsync *async)
+ligma_async_is_stopped (LigmaAsync *async)
 {
-  g_return_val_if_fail (GIMP_IS_ASYNC (async), FALSE);
+  g_return_val_if_fail (LIGMA_IS_ASYNC (async), FALSE);
 
   return async->priv->stopped;
 }
@@ -629,21 +629,21 @@ gimp_async_is_stopped (GimpAsync *async)
  * may only be called on the async thread.
  */
 void
-gimp_async_finish (GimpAsync *async,
+ligma_async_finish (LigmaAsync *async,
                    gpointer   result)
 {
-  gimp_async_finish_full (async, result, NULL);
+  ligma_async_finish_full (async, result, NULL);
 }
 
-/* same as 'gimp_async_finish()', taking an additional GDestroyNotify function,
+/* same as 'ligma_async_finish()', taking an additional GDestroyNotify function,
  * used for freeing the result when 'async' is destroyed.
  */
 void
-gimp_async_finish_full (GimpAsync      *async,
+ligma_async_finish_full (LigmaAsync      *async,
                         gpointer        result,
                         GDestroyNotify  result_destroy_func)
 {
-  g_return_if_fail (GIMP_IS_ASYNC (async));
+  g_return_if_fail (LIGMA_IS_ASYNC (async));
   g_return_if_fail (! async->priv->stopped);
 
   g_mutex_lock (&async->priv->mutex);
@@ -652,13 +652,13 @@ gimp_async_finish_full (GimpAsync      *async,
   async->priv->result              = result;
   async->priv->result_destroy_func = result_destroy_func;
 
-  gimp_async_stop (async);
+  ligma_async_stop (async);
 
   g_mutex_unlock (&async->priv->mutex);
 }
 
-/* checks if 'async' completed normally, using 'gimp_async_finish()' (in
- * contrast to 'gimp_async_abort()').
+/* checks if 'async' completed normally, using 'ligma_async_finish()' (in
+ * contrast to 'ligma_async_abort()').
  *
  * 'async' shall be in the "stopped" state.
  *
@@ -666,15 +666,15 @@ gimp_async_finish_full (GimpAsync      *async,
  * is synced.
  */
 gboolean
-gimp_async_is_finished (GimpAsync *async)
+ligma_async_is_finished (LigmaAsync *async)
 {
-  g_return_val_if_fail (GIMP_IS_ASYNC (async), FALSE);
+  g_return_val_if_fail (LIGMA_IS_ASYNC (async), FALSE);
   g_return_val_if_fail (async->priv->stopped, FALSE);
 
   return async->priv->finished;
 }
 
-/* returns the result of 'async', as passed to 'gimp_async_finish()'.
+/* returns the result of 'async', as passed to 'ligma_async_finish()'.
  *
  * 'async' shall be in the "stopped" state, and should have completed normally.
  *
@@ -682,9 +682,9 @@ gimp_async_is_finished (GimpAsync *async)
  * is synced.
  */
 gpointer
-gimp_async_get_result (GimpAsync *async)
+ligma_async_get_result (LigmaAsync *async)
 {
-  g_return_val_if_fail (GIMP_IS_ASYNC (async), NULL);
+  g_return_val_if_fail (LIGMA_IS_ASYNC (async), NULL);
   g_return_val_if_fail (async->priv->stopped, NULL);
   g_return_val_if_fail (async->priv->finished, NULL);
 
@@ -693,21 +693,21 @@ gimp_async_get_result (GimpAsync *async)
 
 /* transitions 'async' to the "stopped" state, indicating that the task
  * was stopped before completion (normally, in response to a
- * 'gimp_cancelable_cancel()' call).
+ * 'ligma_cancelable_cancel()' call).
  *
  * 'async' shall be in the "running" state.
  *
  * may only be called on the async thread.
  */
 void
-gimp_async_abort (GimpAsync *async)
+ligma_async_abort (LigmaAsync *async)
 {
-  g_return_if_fail (GIMP_IS_ASYNC (async));
+  g_return_if_fail (LIGMA_IS_ASYNC (async));
   g_return_if_fail (! async->priv->stopped);
 
   g_mutex_lock (&async->priv->mutex);
 
-  gimp_async_stop (async);
+  ligma_async_stop (async);
 
   g_mutex_unlock (&async->priv->mutex);
 }
@@ -715,13 +715,13 @@ gimp_async_abort (GimpAsync *async)
 /* checks if cancellation of 'async' has been requested.
  *
  * note that a return value of TRUE only indicates that
- * 'gimp_cancelable_cancel()' has been called for 'async', and not that 'async'
+ * 'ligma_cancelable_cancel()' has been called for 'async', and not that 'async'
  * is stopped, or, if it is stopped, that it was aborted.
  */
 gboolean
-gimp_async_is_canceled (GimpAsync *async)
+ligma_async_is_canceled (LigmaAsync *async)
 {
-  g_return_val_if_fail (GIMP_IS_ASYNC (async), FALSE);
+  g_return_val_if_fail (LIGMA_IS_ASYNC (async), FALSE);
 
   return async->priv->canceled;
 }
@@ -731,12 +731,12 @@ gimp_async_is_canceled (GimpAsync *async)
  * may only be called on the main thread.
  */
 void
-gimp_async_cancel_and_wait (GimpAsync *async)
+ligma_async_cancel_and_wait (LigmaAsync *async)
 {
-  g_return_if_fail (GIMP_IS_ASYNC (async));
+  g_return_if_fail (LIGMA_IS_ASYNC (async));
 
-  gimp_cancelable_cancel (GIMP_CANCELABLE (async));
-  gimp_waitable_wait (GIMP_WAITABLE (async));
+  ligma_cancelable_cancel (LIGMA_CANCELABLE (async));
+  ligma_waitable_wait (LIGMA_WAITABLE (async));
 }
 
 
@@ -744,7 +744,7 @@ gimp_async_cancel_and_wait (GimpAsync *async)
 
 
 gint
-gimp_async_get_n_running (void)
+ligma_async_get_n_running (void)
 {
-  return gimp_async_n_running;
+  return ligma_async_n_running;
 }

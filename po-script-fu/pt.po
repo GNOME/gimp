@@ -1,7 +1,7 @@
-# translation of gimp-script-fu.HEAD.po to
-# gimp-script-fu's Portuguese translation.
-# Copyright © 2002-2022 gimp
-# This file is distributed under the same license as the GIMP package
+# translation of ligma-script-fu.HEAD.po to
+# ligma-script-fu's Portuguese translation.
+# Copyright © 2002-2022 ligma
+# This file is distributed under the same license as the LIGMA package
 #
 # Duarte Loreto <happyguy_pt@hotmail.com>, 2003, 2004.
 # Bruno Queirós <brunomiguelqueiros@sapo.pt>, 2008.
@@ -12,8 +12,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-script-fu.HEAD\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma-script-fu.HEAD\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2022-11-12 21:38+0000\n"
 "PO-Revision-Date: 2022-11-18 14:07+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
@@ -34,8 +34,8 @@ msgid "Interactive console for Script-Fu development"
 msgstr "Consola interativa para desenvolvimento do Script-Fu"
 
 #: plug-ins/script-fu/script-fu.c:310
-msgid "_GIMP Online"
-msgstr "_GIMP na Internet"
+msgid "_LIGMA Online"
+msgstr "_LIGMA na Internet"
 
 #: plug-ins/script-fu/script-fu.c:311
 msgid "_User Manual"
@@ -74,8 +74,8 @@ msgid "_Beveled Pattern"
 msgstr "_Textura biselada"
 
 #: plug-ins/script-fu/script-fu.c:332
-msgid "_Classic.Gimp.Org"
-msgstr "_Classic.Gimp.Org"
+msgid "_Classic.Ligma.Org"
+msgstr "_Classic.Ligma.Org"
 
 #: plug-ins/script-fu/script-fu.c:335
 msgid "Alpha to _Logo"
@@ -824,88 +824,88 @@ msgstr "Peso da sombra (%)"
 msgid "Flatten image"
 msgstr "Achatar imagem"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:59
+#: plug-ins/script-fu/scripts/ligma-online.scm:59
 msgid "Using _Paths"
 msgstr "Utilizando _caminhos"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:60
-#: plug-ins/script-fu/scripts/gimp-online.scm:73
-#: plug-ins/script-fu/scripts/gimp-online.scm:86
-#: plug-ins/script-fu/scripts/gimp-online.scm:99
-#: plug-ins/script-fu/scripts/gimp-online.scm:112
-#: plug-ins/script-fu/scripts/gimp-online.scm:125
-#: plug-ins/script-fu/scripts/gimp-online.scm:138
-#: plug-ins/script-fu/scripts/gimp-online.scm:151
+#: plug-ins/script-fu/scripts/ligma-online.scm:60
+#: plug-ins/script-fu/scripts/ligma-online.scm:73
+#: plug-ins/script-fu/scripts/ligma-online.scm:86
+#: plug-ins/script-fu/scripts/ligma-online.scm:99
+#: plug-ins/script-fu/scripts/ligma-online.scm:112
+#: plug-ins/script-fu/scripts/ligma-online.scm:125
+#: plug-ins/script-fu/scripts/ligma-online.scm:138
+#: plug-ins/script-fu/scripts/ligma-online.scm:151
 msgid "Bookmark to the user manual"
 msgstr "Favorito para o manual do utilizador"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:72
+#: plug-ins/script-fu/scripts/ligma-online.scm:72
 msgid "_Preparing your Images for the Web"
 msgstr "_Preparar as suas imagens para a web"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:85
+#: plug-ins/script-fu/scripts/ligma-online.scm:85
 msgid "_Working with Digital Camera Photos"
 msgstr "_Trabalhar com fotografias de câmaras digitais"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:98
+#: plug-ins/script-fu/scripts/ligma-online.scm:98
 msgid "Create, Open and Save _Files"
 msgstr "Criar, abrir e guardar _ficheiros"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:111
+#: plug-ins/script-fu/scripts/ligma-online.scm:111
 msgid "_Basic Concepts"
 msgstr "_Conceitos básicos"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:124
+#: plug-ins/script-fu/scripts/ligma-online.scm:124
 msgid "How to Use _Dialogs"
 msgstr "Como utilizar _diálogos"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:137
+#: plug-ins/script-fu/scripts/ligma-online.scm:137
 msgid "Drawing _Simple Objects"
 msgstr "Desenhar objetos _simples"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:150
+#: plug-ins/script-fu/scripts/ligma-online.scm:150
 msgid "Create and Use _Selections"
 msgstr "Criar e utilizar _seleções"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:190
+#: plug-ins/script-fu/scripts/ligma-online.scm:190
 msgid "_Main Web Site"
 msgstr "_Página web principal"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:191
-#: plug-ins/script-fu/scripts/gimp-online.scm:204
-#: plug-ins/script-fu/scripts/gimp-online.scm:256
-msgid "Bookmark to the GIMP web site"
-msgstr "Favorito para o sítio web do GIMP"
+#: plug-ins/script-fu/scripts/ligma-online.scm:191
+#: plug-ins/script-fu/scripts/ligma-online.scm:204
+#: plug-ins/script-fu/scripts/ligma-online.scm:256
+msgid "Bookmark to the LIGMA web site"
+msgstr "Favorito para o sítio web do LIGMA"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:203
+#: plug-ins/script-fu/scripts/ligma-online.scm:203
 msgid "_Developer Web Site"
 msgstr "Sítio web do _criador"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:216
+#: plug-ins/script-fu/scripts/ligma-online.scm:216
 msgid "_Roadmap"
 msgstr "_Calendário de implementações"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:217
-msgid "Bookmark to the roadmap of GIMP"
-msgstr "Favorito para o calendário de implementações (roadmap) do GIMP"
+#: plug-ins/script-fu/scripts/ligma-online.scm:217
+msgid "Bookmark to the roadmap of LIGMA"
+msgstr "Favorito para o calendário de implementações (roadmap) do LIGMA"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:229
+#: plug-ins/script-fu/scripts/ligma-online.scm:229
 msgid "_Wiki"
 msgstr "_Wiki"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:230
-msgid "Bookmark to the wiki of GIMP"
-msgstr "Favorito para a wiki do GIMP"
+#: plug-ins/script-fu/scripts/ligma-online.scm:230
+msgid "Bookmark to the wiki of LIGMA"
+msgstr "Favorito para a wiki do LIGMA"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:242
+#: plug-ins/script-fu/scripts/ligma-online.scm:242
 msgid "_Bug Reports and Feature Requests"
 msgstr "_Erros reportados e pedidos de funcionalidades"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:243
-msgid "Bookmark to the bug tracker of GIMP"
-msgstr "Favorito para o rastreador de erros do GIMP"
+#: plug-ins/script-fu/scripts/ligma-online.scm:243
+msgid "Bookmark to the bug tracker of LIGMA"
+msgstr "Favorito para o rastreador de erros do LIGMA"
 
-#: plug-ins/script-fu/scripts/gimp-online.scm:255
+#: plug-ins/script-fu/scripts/ligma-online.scm:255
 msgid "_User Manual Web Site"
 msgstr "_Página web do manual do utilizador"
 
@@ -1641,8 +1641,8 @@ msgstr "Deslocamento Y da sombra projetada"
 #~ msgid "Rendering Spyro"
 #~ msgstr "Renderizando Spyro"
 
-#~ msgid "_Spyrogimp..."
-#~ msgstr "E_spirografo Gimp..."
+#~ msgid "_Spyroligma..."
+#~ msgstr "E_spirografo Ligma..."
 
 #~ msgid ""
 #~ "Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"

@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpfontselect.c
+ * ligmafontselect.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,7 +20,7 @@
 
 #include "config.h"
 
-#include "gimp.h"
+#include "ligma.h"
 
 
 typedef struct
@@ -28,97 +28,97 @@ typedef struct
   gchar               *font_callback;
   guint                idle_id;
   gchar               *font_name;
-  GimpRunFontCallback  callback;
+  LigmaRunFontCallback  callback;
   gboolean             closing;
   gpointer             data;
   GDestroyNotify       data_destroy;
-} GimpFontData;
+} LigmaFontData;
 
 
 /*  local function prototypes  */
 
-static void             gimp_font_data_free (GimpFontData         *data);
+static void             ligma_font_data_free (LigmaFontData         *data);
 
-static GimpValueArray * gimp_temp_font_run  (GimpProcedure        *procedure,
-                                             const GimpValueArray *args,
+static LigmaValueArray * ligma_temp_font_run  (LigmaProcedure        *procedure,
+                                             const LigmaValueArray *args,
                                              gpointer              run_data);
-static gboolean         gimp_temp_font_idle (GimpFontData         *data);
+static gboolean         ligma_temp_font_idle (LigmaFontData         *data);
 
 
 /*  public functions  */
 
 const gchar *
-gimp_font_select_new (const gchar         *title,
+ligma_font_select_new (const gchar         *title,
                       const gchar         *font_name,
-                      GimpRunFontCallback  callback,
+                      LigmaRunFontCallback  callback,
                       gpointer             data,
                       GDestroyNotify       data_destroy)
 {
-  GimpPlugIn    *plug_in = gimp_get_plug_in ();
-  GimpProcedure *procedure;
+  LigmaPlugIn    *plug_in = ligma_get_plug_in ();
+  LigmaProcedure *procedure;
   gchar         *font_callback;
-  GimpFontData  *font_data;
+  LigmaFontData  *font_data;
 
-  font_callback = gimp_pdb_temp_procedure_name (gimp_get_pdb ());
+  font_callback = ligma_pdb_temp_procedure_name (ligma_get_pdb ());
 
-  font_data = g_slice_new0 (GimpFontData);
+  font_data = g_slice_new0 (LigmaFontData);
 
   font_data->font_callback = font_callback;
   font_data->callback      = callback;
   font_data->data          = data;
   font_data->data_destroy  = data_destroy;
 
-  procedure = gimp_procedure_new (plug_in,
+  procedure = ligma_procedure_new (plug_in,
                                   font_callback,
-                                  GIMP_PDB_PROC_TYPE_TEMPORARY,
-                                  gimp_temp_font_run,
+                                  LIGMA_PDB_PROC_TYPE_TEMPORARY,
+                                  ligma_temp_font_run,
                                   font_data,
                                   (GDestroyNotify)
-                                  gimp_font_data_free);
+                                  ligma_font_data_free);
 
-  GIMP_PROC_ARG_STRING (procedure, "font-name",
+  LIGMA_PROC_ARG_STRING (procedure, "font-name",
                         "Font name",
                         "The font name",
                         NULL,
                         G_PARAM_READWRITE);
 
-  GIMP_PROC_ARG_BOOLEAN (procedure, "closing",
+  LIGMA_PROC_ARG_BOOLEAN (procedure, "closing",
                          "Closing",
                          "If the dialog was closing",
                          FALSE,
                          G_PARAM_READWRITE);
 
-  gimp_plug_in_add_temp_procedure (plug_in, procedure);
+  ligma_plug_in_add_temp_procedure (plug_in, procedure);
   g_object_unref (procedure);
 
-  if (gimp_fonts_popup (font_callback, title, font_name))
+  if (ligma_fonts_popup (font_callback, title, font_name))
     {
       /* Allow callbacks to be watched */
-      gimp_plug_in_extension_enable (plug_in);
+      ligma_plug_in_extension_enable (plug_in);
 
       return font_callback;
     }
 
-  gimp_plug_in_remove_temp_procedure (plug_in, font_callback);
+  ligma_plug_in_remove_temp_procedure (plug_in, font_callback);
 
   return NULL;
 }
 
 void
-gimp_font_select_destroy (const gchar *font_callback)
+ligma_font_select_destroy (const gchar *font_callback)
 {
-  GimpPlugIn *plug_in = gimp_get_plug_in ();
+  LigmaPlugIn *plug_in = ligma_get_plug_in ();
 
   g_return_if_fail (font_callback != NULL);
 
-  gimp_plug_in_remove_temp_procedure (plug_in, font_callback);
+  ligma_plug_in_remove_temp_procedure (plug_in, font_callback);
 }
 
 
 /*  private functions  */
 
 static void
-gimp_font_data_free (GimpFontData *data)
+ligma_font_data_free (LigmaFontData *data)
 {
   if (data->idle_id)
     g_source_remove (data->idle_id);
@@ -127,37 +127,37 @@ gimp_font_data_free (GimpFontData *data)
 
   if (data->font_callback)
     {
-      gimp_fonts_close_popup (data->font_callback);
+      ligma_fonts_close_popup (data->font_callback);
       g_free (data->font_callback);
     }
 
   if (data->data_destroy)
     data->data_destroy (data->data);
 
-  g_slice_free (GimpFontData, data);
+  g_slice_free (LigmaFontData, data);
 }
 
-static GimpValueArray *
-gimp_temp_font_run (GimpProcedure        *procedure,
-                    const GimpValueArray *args,
+static LigmaValueArray *
+ligma_temp_font_run (LigmaProcedure        *procedure,
+                    const LigmaValueArray *args,
                     gpointer              run_data)
 {
-  GimpFontData *data = run_data;
+  LigmaFontData *data = run_data;
 
   g_free (data->font_name);
 
-  data->font_name = GIMP_VALUES_DUP_STRING  (args, 0);
-  data->closing   = GIMP_VALUES_GET_BOOLEAN (args, 1);
+  data->font_name = LIGMA_VALUES_DUP_STRING  (args, 0);
+  data->closing   = LIGMA_VALUES_GET_BOOLEAN (args, 1);
 
   if (! data->idle_id)
-    data->idle_id = g_idle_add ((GSourceFunc) gimp_temp_font_idle,
+    data->idle_id = g_idle_add ((GSourceFunc) ligma_temp_font_idle,
                                 data);
 
-  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
+  return ligma_procedure_new_return_values (procedure, LIGMA_PDB_SUCCESS, NULL);
 }
 
 static gboolean
-gimp_temp_font_idle (GimpFontData *data)
+ligma_temp_font_idle (LigmaFontData *data)
 {
   data->idle_id = 0;
 
@@ -171,7 +171,7 @@ gimp_temp_font_idle (GimpFontData *data)
       gchar *font_callback = data->font_callback;
 
       data->font_callback = NULL;
-      gimp_font_select_destroy (font_callback);
+      ligma_font_select_destroy (font_callback);
       g_free (font_callback);
     }
 

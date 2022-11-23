@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-2002 Spencer Kimball, Peter Mattis, and others
  *
- * gimp-palettes.h
- * Copyright (C) 2014 Michael Natterer  <mitch@gimp.org>
+ * ligma-palettes.h
+ * Copyright (C) 2014 Michael Natterer  <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,18 +18,18 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PALETTES__
-#define __GIMP_PALETTES__
+#ifndef __LIGMA_PALETTES__
+#define __LIGMA_PALETTES__
 
 
-void          gimp_palettes_init              (Gimp          *gimp);
+void          ligma_palettes_init              (Ligma          *ligma);
 
-void          gimp_palettes_load              (Gimp          *gimp);
-void          gimp_palettes_save              (Gimp          *gimp);
+void          ligma_palettes_load              (Ligma          *ligma);
+void          ligma_palettes_save              (Ligma          *ligma);
 
-GimpPalette * gimp_palettes_get_color_history (Gimp          *gimp);
-void          gimp_palettes_add_color_history (Gimp          *gimp,
-                                               const GimpRGB *color);
+LigmaPalette * ligma_palettes_get_color_history (Ligma          *ligma);
+void          ligma_palettes_add_color_history (Ligma          *ligma,
+                                               const LigmaRGB *color);
 
 
-#endif /* __GIMP_PALETTES__ */
+#endif /* __LIGMA_PALETTES__ */

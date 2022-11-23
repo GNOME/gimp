@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,12 +21,12 @@
 
 #include "widgets-types.h"
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
 
-#include "paint/gimpink-blob.h"
+#include "paint/ligmaink-blob.h"
 
-#include "gimpblobeditor.h"
+#include "ligmablobeditor.h"
 
 
 enum
@@ -38,75 +38,75 @@ enum
 };
 
 
-static void      gimp_blob_editor_set_property   (GObject        *object,
+static void      ligma_blob_editor_set_property   (GObject        *object,
                                                   guint           property_id,
                                                   const GValue   *value,
                                                   GParamSpec     *pspec);
-static void      gimp_blob_editor_get_property   (GObject        *object,
+static void      ligma_blob_editor_get_property   (GObject        *object,
                                                   guint           property_id,
                                                   GValue         *value,
                                                   GParamSpec     *pspec);
 
-static gboolean  gimp_blob_editor_draw           (GtkWidget      *widget,
+static gboolean  ligma_blob_editor_draw           (GtkWidget      *widget,
                                                   cairo_t        *cr);
-static gboolean  gimp_blob_editor_button_press   (GtkWidget      *widget,
+static gboolean  ligma_blob_editor_button_press   (GtkWidget      *widget,
                                                   GdkEventButton *event);
-static gboolean  gimp_blob_editor_button_release (GtkWidget      *widget,
+static gboolean  ligma_blob_editor_button_release (GtkWidget      *widget,
                                                   GdkEventButton *event);
-static gboolean  gimp_blob_editor_motion_notify  (GtkWidget      *widget,
+static gboolean  ligma_blob_editor_motion_notify  (GtkWidget      *widget,
                                                   GdkEventMotion *event);
 
-static void      gimp_blob_editor_get_handle     (GimpBlobEditor *editor,
+static void      ligma_blob_editor_get_handle     (LigmaBlobEditor *editor,
                                                   GdkRectangle   *rect);
-static void      gimp_blob_editor_draw_blob      (GimpBlobEditor *editor,
+static void      ligma_blob_editor_draw_blob      (LigmaBlobEditor *editor,
                                                   cairo_t        *cr,
                                                   gdouble         xc,
                                                   gdouble         yc,
                                                   gdouble         radius);
 
 
-G_DEFINE_TYPE (GimpBlobEditor, gimp_blob_editor, GTK_TYPE_DRAWING_AREA)
+G_DEFINE_TYPE (LigmaBlobEditor, ligma_blob_editor, GTK_TYPE_DRAWING_AREA)
 
-#define parent_class gimp_blob_editor_parent_class
+#define parent_class ligma_blob_editor_parent_class
 
 
 static void
-gimp_blob_editor_class_init (GimpBlobEditorClass *klass)
+ligma_blob_editor_class_init (LigmaBlobEditorClass *klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->set_property         = gimp_blob_editor_set_property;
-  object_class->get_property         = gimp_blob_editor_get_property;
+  object_class->set_property         = ligma_blob_editor_set_property;
+  object_class->get_property         = ligma_blob_editor_get_property;
 
-  widget_class->draw                 = gimp_blob_editor_draw;
-  widget_class->button_press_event   = gimp_blob_editor_button_press;
-  widget_class->button_release_event = gimp_blob_editor_button_release;
-  widget_class->motion_notify_event  = gimp_blob_editor_motion_notify;
+  widget_class->draw                 = ligma_blob_editor_draw;
+  widget_class->button_press_event   = ligma_blob_editor_button_press;
+  widget_class->button_release_event = ligma_blob_editor_button_release;
+  widget_class->motion_notify_event  = ligma_blob_editor_motion_notify;
 
   g_object_class_install_property (object_class, PROP_TYPE,
                                    g_param_spec_enum ("blob-type",
                                                       NULL, NULL,
-                                                      GIMP_TYPE_INK_BLOB_TYPE,
-                                                      GIMP_INK_BLOB_TYPE_CIRCLE,
-                                                      GIMP_PARAM_READWRITE |
+                                                      LIGMA_TYPE_INK_BLOB_TYPE,
+                                                      LIGMA_INK_BLOB_TYPE_CIRCLE,
+                                                      LIGMA_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
   g_object_class_install_property (object_class, PROP_ASPECT,
                                    g_param_spec_double ("blob-aspect",
                                                         NULL, NULL,
                                                         1.0, 10.0, 1.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
   g_object_class_install_property (object_class, PROP_ANGLE,
                                    g_param_spec_double ("blob-angle",
                                                         NULL, NULL,
                                                         -G_PI, G_PI, 0.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 }
 
 static void
-gimp_blob_editor_init (GimpBlobEditor *editor)
+ligma_blob_editor_init (LigmaBlobEditor *editor)
 {
   editor->active = FALSE;
 
@@ -118,11 +118,11 @@ gimp_blob_editor_init (GimpBlobEditor *editor)
 }
 
 GtkWidget *
-gimp_blob_editor_new (GimpInkBlobType  type,
+ligma_blob_editor_new (LigmaInkBlobType  type,
                       gdouble          aspect,
                       gdouble          angle)
 {
-  return g_object_new (GIMP_TYPE_BLOB_EDITOR,
+  return g_object_new (LIGMA_TYPE_BLOB_EDITOR,
                        "blob-type",   type,
                        "blob-aspect", aspect,
                        "blob-angle",  angle,
@@ -130,12 +130,12 @@ gimp_blob_editor_new (GimpInkBlobType  type,
 }
 
 static void
-gimp_blob_editor_set_property (GObject      *object,
+ligma_blob_editor_set_property (GObject      *object,
                                guint         property_id,
                                const GValue *value,
                                GParamSpec   *pspec)
 {
-  GimpBlobEditor *editor = GIMP_BLOB_EDITOR (object);
+  LigmaBlobEditor *editor = LIGMA_BLOB_EDITOR (object);
 
   switch (property_id)
     {
@@ -158,12 +158,12 @@ gimp_blob_editor_set_property (GObject      *object,
 }
 
 static void
-gimp_blob_editor_get_property (GObject    *object,
+ligma_blob_editor_get_property (GObject    *object,
                                guint       property_id,
                                GValue     *value,
                                GParamSpec *pspec)
 {
-  GimpBlobEditor *editor = GIMP_BLOB_EDITOR (object);
+  LigmaBlobEditor *editor = LIGMA_BLOB_EDITOR (object);
 
   switch (property_id)
     {
@@ -184,10 +184,10 @@ gimp_blob_editor_get_property (GObject    *object,
 }
 
 static gboolean
-gimp_blob_editor_draw (GtkWidget *widget,
+ligma_blob_editor_draw (GtkWidget *widget,
                        cairo_t   *cr)
 {
-  GimpBlobEditor  *editor = GIMP_BLOB_EDITOR (widget);
+  LigmaBlobEditor  *editor = LIGMA_BLOB_EDITOR (widget);
   GtkStyleContext *style  = gtk_widget_get_style_context (widget);
   GtkAllocation    allocation;
   GdkRectangle     rect;
@@ -200,12 +200,12 @@ gimp_blob_editor_draw (GtkWidget *widget,
   if (r0 < 2)
     return TRUE;
 
-  gimp_blob_editor_draw_blob (editor, cr,
+  ligma_blob_editor_draw_blob (editor, cr,
                               allocation.width  / 2.0,
                               allocation.height / 2.0,
                               0.9 * r0);
 
-  gimp_blob_editor_get_handle (editor, &rect);
+  ligma_blob_editor_get_handle (editor, &rect);
 
   gtk_style_context_save (style);
 
@@ -224,10 +224,10 @@ gimp_blob_editor_draw (GtkWidget *widget,
 }
 
 static gboolean
-gimp_blob_editor_button_press (GtkWidget      *widget,
+ligma_blob_editor_button_press (GtkWidget      *widget,
                                GdkEventButton *event)
 {
-  GimpBlobEditor *editor = GIMP_BLOB_EDITOR (widget);
+  LigmaBlobEditor *editor = LIGMA_BLOB_EDITOR (widget);
 
   if (editor->in_handle)
     editor->active = TRUE;
@@ -236,10 +236,10 @@ gimp_blob_editor_button_press (GtkWidget      *widget,
 }
 
 static gboolean
-gimp_blob_editor_button_release (GtkWidget      *widget,
+ligma_blob_editor_button_release (GtkWidget      *widget,
                                  GdkEventButton *event)
 {
-  GimpBlobEditor *editor = GIMP_BLOB_EDITOR (widget);
+  LigmaBlobEditor *editor = LIGMA_BLOB_EDITOR (widget);
 
   editor->active = FALSE;
 
@@ -247,10 +247,10 @@ gimp_blob_editor_button_release (GtkWidget      *widget,
 }
 
 static gboolean
-gimp_blob_editor_motion_notify (GtkWidget      *widget,
+ligma_blob_editor_motion_notify (GtkWidget      *widget,
                                 GdkEventMotion *event)
 {
-  GimpBlobEditor *editor = GIMP_BLOB_EDITOR (widget);
+  LigmaBlobEditor *editor = LIGMA_BLOB_EDITOR (widget);
 
   if (editor->active)
     {
@@ -290,7 +290,7 @@ gimp_blob_editor_motion_notify (GtkWidget      *widget,
       GdkRectangle rect;
       gboolean     in_handle;
 
-      gimp_blob_editor_get_handle (editor, &rect);
+      ligma_blob_editor_get_handle (editor, &rect);
 
       if ((event->x >= rect.x) && (event->x - rect.x < rect.width) &&
           (event->y >= rect.y) && (event->y - rect.y < rect.height))
@@ -314,7 +314,7 @@ gimp_blob_editor_motion_notify (GtkWidget      *widget,
 }
 
 static void
-gimp_blob_editor_get_handle (GimpBlobEditor *editor,
+ligma_blob_editor_get_handle (LigmaBlobEditor *editor,
                              GdkRectangle   *rect)
 {
   GtkWidget     *widget = GTK_WIDGET (editor);
@@ -339,7 +339,7 @@ gimp_blob_editor_get_handle (GimpBlobEditor *editor,
 }
 
 static void
-gimp_blob_editor_draw_blob (GimpBlobEditor *editor,
+ligma_blob_editor_draw_blob (LigmaBlobEditor *editor,
                             cairo_t        *cr,
                             gdouble         xc,
                             gdouble         yc,
@@ -347,23 +347,23 @@ gimp_blob_editor_draw_blob (GimpBlobEditor *editor,
 {
   GtkWidget       *widget   = GTK_WIDGET (editor);
   GtkStyleContext *style    = gtk_widget_get_style_context (widget);
-  GimpBlob        *blob;
-  GimpBlobFunc     function = gimp_blob_ellipse;
+  LigmaBlob        *blob;
+  LigmaBlobFunc     function = ligma_blob_ellipse;
   GdkRGBA          color;
   gint             i;
 
   switch (editor->type)
     {
-    case GIMP_INK_BLOB_TYPE_CIRCLE:
-      function = gimp_blob_ellipse;
+    case LIGMA_INK_BLOB_TYPE_CIRCLE:
+      function = ligma_blob_ellipse;
       break;
 
-    case GIMP_INK_BLOB_TYPE_SQUARE:
-      function = gimp_blob_square;
+    case LIGMA_INK_BLOB_TYPE_SQUARE:
+      function = ligma_blob_square;
       break;
 
-    case GIMP_INK_BLOB_TYPE_DIAMOND:
-      function = gimp_blob_diamond;
+    case LIGMA_INK_BLOB_TYPE_DIAMOND:
+      function = ligma_blob_diamond;
       break;
     }
 

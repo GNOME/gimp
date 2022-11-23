@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,58 +15,58 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DISPLAY_SHELL_TOOL_EVENTS_H__
-#define __GIMP_DISPLAY_SHELL_TOOL_EVENTS_H__
+#ifndef __LIGMA_DISPLAY_SHELL_TOOL_EVENTS_H__
+#define __LIGMA_DISPLAY_SHELL_TOOL_EVENTS_H__
 
 
-gboolean   gimp_display_shell_events                  (GtkWidget        *widget,
+gboolean   ligma_display_shell_events                  (GtkWidget        *widget,
                                                        GdkEvent         *event,
-                                                       GimpDisplayShell *shell);
+                                                       LigmaDisplayShell *shell);
 
-gboolean   gimp_display_shell_canvas_tool_events      (GtkWidget        *widget,
+gboolean   ligma_display_shell_canvas_tool_events      (GtkWidget        *widget,
                                                        GdkEvent         *event,
-                                                       GimpDisplayShell *shell);
-void       gimp_display_shell_canvas_grab_notify      (GtkWidget        *widget,
+                                                       LigmaDisplayShell *shell);
+void       ligma_display_shell_canvas_grab_notify      (GtkWidget        *widget,
                                                        gboolean          was_grabbed,
-                                                       GimpDisplayShell *shell);
+                                                       LigmaDisplayShell *shell);
 
-void       gimp_display_shell_zoom_gesture_begin      (GtkGestureZoom   *gesture,
+void       ligma_display_shell_zoom_gesture_begin      (GtkGestureZoom   *gesture,
                                                        GdkEventSequence *sequence,
-                                                       GimpDisplayShell *shell);
-void       gimp_display_shell_zoom_gesture_update     (GtkGestureZoom   *gesture,
+                                                       LigmaDisplayShell *shell);
+void       ligma_display_shell_zoom_gesture_update     (GtkGestureZoom   *gesture,
                                                        GdkEventSequence *sequence,
-                                                       GimpDisplayShell *shell);
-void       gimp_display_shell_zoom_gesture_end        (GtkGestureZoom   *gesture,
+                                                       LigmaDisplayShell *shell);
+void       ligma_display_shell_zoom_gesture_end        (GtkGestureZoom   *gesture,
                                                        GdkEventSequence *sequence,
-                                                       GimpDisplayShell *shell);
+                                                       LigmaDisplayShell *shell);
 
-void       gimp_display_shell_rotate_gesture_begin    (GtkGestureRotate *gesture,
+void       ligma_display_shell_rotate_gesture_begin    (GtkGestureRotate *gesture,
                                                        GdkEventSequence *sequence,
-                                                       GimpDisplayShell *shell);
-void       gimp_display_shell_rotate_gesture_update   (GtkGestureRotate *gesture,
+                                                       LigmaDisplayShell *shell);
+void       ligma_display_shell_rotate_gesture_update   (GtkGestureRotate *gesture,
                                                        GdkEventSequence *sequence,
-                                                       GimpDisplayShell *shell);
-void       gimp_display_shell_rotate_gesture_end      (GtkGestureRotate *gesture,
+                                                       LigmaDisplayShell *shell);
+void       ligma_display_shell_rotate_gesture_end      (GtkGestureRotate *gesture,
                                                        GdkEventSequence *sequence,
-                                                       GimpDisplayShell *shell);
+                                                       LigmaDisplayShell *shell);
 
-void       gimp_display_shell_buffer_stroke           (GimpMotionBuffer *buffer,
-                                                       const GimpCoords *coords,
+void       ligma_display_shell_buffer_stroke           (LigmaMotionBuffer *buffer,
+                                                       const LigmaCoords *coords,
                                                        guint32           time,
                                                        GdkModifierType   state,
-                                                       GimpDisplayShell *shell);
-void       gimp_display_shell_buffer_hover            (GimpMotionBuffer *buffer,
-                                                       const GimpCoords *coords,
+                                                       LigmaDisplayShell *shell);
+void       ligma_display_shell_buffer_hover            (LigmaMotionBuffer *buffer,
+                                                       const LigmaCoords *coords,
                                                        GdkModifierType   state,
                                                        gboolean          proximity,
-                                                       GimpDisplayShell *shell);
+                                                       LigmaDisplayShell *shell);
 
-gboolean   gimp_display_shell_hruler_button_press     (GtkWidget        *widget,
+gboolean   ligma_display_shell_hruler_button_press     (GtkWidget        *widget,
                                                        GdkEventButton   *bevent,
-                                                       GimpDisplayShell *shell);
-gboolean   gimp_display_shell_vruler_button_press     (GtkWidget        *widget,
+                                                       LigmaDisplayShell *shell);
+gboolean   ligma_display_shell_vruler_button_press     (GtkWidget        *widget,
                                                        GdkEventButton   *bevent,
-                                                       GimpDisplayShell *shell);
+                                                       LigmaDisplayShell *shell);
 
 
-#endif /* __GIMP_DISPLAY_SHELL_TOOL_EVENT_H__ */
+#endif /* __LIGMA_DISPLAY_SHELL_TOOL_EVENT_H__ */

@@ -1,4 +1,4 @@
-gimpiconsdir = gimpdatadir / 'icons'
+ligmaiconsdir = ligmadatadir / 'icons'
 
 themes = [
   'Color',

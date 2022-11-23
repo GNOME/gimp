@@ -1,5 +1,5 @@
 /*
- * pcx.c GIMP plug-in for loading & exporting PCX files
+ * pcx.c LIGMA plug-in for loading & exporting PCX files
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,16 +26,16 @@
 
 #include <glib/gstdio.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 #define LOAD_PROC      "file-pcx-load"
 #define SAVE_PROC      "file-pcx-save"
 #define PLUG_IN_BINARY "file-pcx"
-#define PLUG_IN_ROLE   "gimp-file-pcx"
+#define PLUG_IN_ROLE   "ligma-file-pcx"
 
 
 typedef struct _Pcx      Pcx;
@@ -43,12 +43,12 @@ typedef struct _PcxClass PcxClass;
 
 struct _Pcx
 {
-  GimpPlugIn      parent_instance;
+  LigmaPlugIn      parent_instance;
 };
 
 struct _PcxClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -57,25 +57,25 @@ struct _PcxClass
 
 GType                   pcx_get_type         (void) G_GNUC_CONST;
 
-static GList          * pcx_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * pcx_create_procedure (GimpPlugIn           *plug_in,
+static GList          * pcx_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * pcx_create_procedure (LigmaPlugIn           *plug_in,
                                               const gchar          *name);
 
-static GimpValueArray * pcx_load             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
+static LigmaValueArray * pcx_load             (LigmaProcedure        *procedure,
+                                              LigmaRunMode           run_mode,
                                               GFile                *file,
-                                              const GimpValueArray *args,
+                                              const LigmaValueArray *args,
                                               gpointer              run_data);
-static GimpValueArray * pcx_save             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
-                                              GimpImage            *image,
+static LigmaValueArray * pcx_save             (LigmaProcedure        *procedure,
+                                              LigmaRunMode           run_mode,
+                                              LigmaImage            *image,
                                               gint                  n_drawables,
-                                              GimpDrawable        **drawables,
+                                              LigmaDrawable        **drawables,
                                               GFile                *file,
-                                              const GimpValueArray *args,
+                                              const LigmaValueArray *args,
                                               gpointer              run_data);
 
-static GimpImage      * load_image           (GFile                *file,
+static LigmaImage      * load_image           (GFile                *file,
                                               GError              **error);
 
 static void             load_1               (FILE                 *fp,
@@ -110,8 +110,8 @@ static void             readline             (FILE                 *fp,
                                               gint                  bytes);
 
 static gboolean         save_image           (GFile                *file,
-                                              GimpImage            *image,
-                                              GimpDrawable         *drawable,
+                                              LigmaImage            *image,
+                                              LigmaDrawable         *drawable,
                                               GError              **error);
 static void             save_less_than_8     (FILE                 *fp,
                                               gint                  width,
@@ -134,16 +134,16 @@ static void             writeline            (FILE                 *fp,
                                               gint                  bytes);
 
 
-G_DEFINE_TYPE (Pcx, pcx, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Pcx, pcx, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (PCX_TYPE)
+LIGMA_MAIN (PCX_TYPE)
 DEFINE_STD_SET_I18N
 
 
 static void
 pcx_class_init (PcxClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = pcx_query_procedures;
   plug_in_class->create_procedure = pcx_create_procedure;
@@ -156,7 +156,7 @@ pcx_init (Pcx *pcx)
 }
 
 static GList *
-pcx_query_procedures (GimpPlugIn *plug_in)
+pcx_query_procedures (LigmaPlugIn *plug_in)
 {
   GList *list = NULL;
 
@@ -166,73 +166,73 @@ pcx_query_procedures (GimpPlugIn *plug_in)
   return list;
 }
 
-static GimpProcedure *
-pcx_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+pcx_create_procedure (LigmaPlugIn  *plug_in,
                       const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, LOAD_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_load_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            pcx_load, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure, _("ZSoft PCX image"));
+      ligma_procedure_set_menu_label (procedure, _("ZSoft PCX image"));
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Loads files in Zsoft PCX file format",
                                         "FIXME: write help for pcx_load",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Francisco Bustamante & Nick Lamb",
                                       "Nick Lamb <njl195@zepler.org.uk>",
                                       "January 1997");
 
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                           "image/x-pcx");
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "pcx,pcc");
-      gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_magics (LIGMA_FILE_PROCEDURE (procedure),
                                       "0&,byte,10,2&,byte,1,3&,byte,>0,3,byte,<9");
     }
   else if (! strcmp (name, SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_save_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            pcx_save, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "INDEXED, RGB, GRAY");
+      ligma_procedure_set_image_types (procedure, "INDEXED, RGB, GRAY");
 
-      gimp_procedure_set_menu_label (procedure, _("ZSoft PCX image"));
+      ligma_procedure_set_menu_label (procedure, _("ZSoft PCX image"));
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Exports files in ZSoft PCX file format",
                                         "FIXME: write help for pcx_save",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Francisco Bustamante & Nick Lamb",
                                       "Nick Lamb <njl195@zepler.org.uk>",
                                       "January 1997");
 
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                           "image/x-pcx");
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "pcx,pcc");
     }
 
   return procedure;
 }
 
-static GimpValueArray *
-pcx_load (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
+static LigmaValueArray *
+pcx_load (LigmaProcedure        *procedure,
+          LigmaRunMode           run_mode,
           GFile                *file,
-          const GimpValueArray *args,
+          const LigmaValueArray *args,
           gpointer              run_data)
 {
-  GimpValueArray *return_vals;
-  GimpImage      *image;
+  LigmaValueArray *return_vals;
+  LigmaImage      *image;
   GError         *error = NULL;
 
   gegl_init (NULL, NULL);
@@ -240,49 +240,49 @@ pcx_load (GimpProcedure        *procedure,
   image = load_image (file, &error);
 
   if (! image)
-    return gimp_procedure_new_return_values (procedure,
-                                             GIMP_PDB_EXECUTION_ERROR,
+    return ligma_procedure_new_return_values (procedure,
+                                             LIGMA_PDB_EXECUTION_ERROR,
                                              error);
 
-  return_vals = gimp_procedure_new_return_values (procedure,
-                                                  GIMP_PDB_SUCCESS,
+  return_vals = ligma_procedure_new_return_values (procedure,
+                                                  LIGMA_PDB_SUCCESS,
                                                   NULL);
 
-  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
+  LIGMA_VALUES_SET_IMAGE (return_vals, 1, image);
 
   return return_vals;
 }
 
-static GimpValueArray *
-pcx_save (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GimpImage            *image,
+static LigmaValueArray *
+pcx_save (LigmaProcedure        *procedure,
+          LigmaRunMode           run_mode,
+          LigmaImage            *image,
           gint                  n_drawables,
-          GimpDrawable        **drawables,
+          LigmaDrawable        **drawables,
           GFile                *file,
-          const GimpValueArray *args,
+          const LigmaValueArray *args,
           gpointer              run_data)
 {
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  GimpExportReturn   export = GIMP_EXPORT_CANCEL;
+  LigmaPDBStatusType  status = LIGMA_PDB_SUCCESS;
+  LigmaExportReturn   export = LIGMA_EXPORT_CANCEL;
   GError            *error = NULL;
 
   gegl_init (NULL, NULL);
 
   switch (run_mode)
     {
-    case GIMP_RUN_INTERACTIVE:
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_ui_init (PLUG_IN_BINARY);
+    case LIGMA_RUN_INTERACTIVE:
+    case LIGMA_RUN_WITH_LAST_VALS:
+      ligma_ui_init (PLUG_IN_BINARY);
 
-      export = gimp_export_image (&image, &n_drawables, &drawables, "PCX",
-                                  GIMP_EXPORT_CAN_HANDLE_RGB  |
-                                  GIMP_EXPORT_CAN_HANDLE_GRAY |
-                                  GIMP_EXPORT_CAN_HANDLE_INDEXED);
+      export = ligma_export_image (&image, &n_drawables, &drawables, "PCX",
+                                  LIGMA_EXPORT_CAN_HANDLE_RGB  |
+                                  LIGMA_EXPORT_CAN_HANDLE_GRAY |
+                                  LIGMA_EXPORT_CAN_HANDLE_INDEXED);
 
-      if (export == GIMP_EXPORT_CANCEL)
-        return gimp_procedure_new_return_values (procedure,
-                                                 GIMP_PDB_CANCEL,
+      if (export == LIGMA_EXPORT_CANCEL)
+        return ligma_procedure_new_return_values (procedure,
+                                                 LIGMA_PDB_CANCEL,
                                                  NULL);
       break;
 
@@ -295,8 +295,8 @@ pcx_save (GimpProcedure        *procedure,
       g_set_error (&error, G_FILE_ERROR, 0,
                    _("PCX format does not support multiple layers."));
 
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_CALLING_ERROR,
                                                error);
     }
 
@@ -304,16 +304,16 @@ pcx_save (GimpProcedure        *procedure,
                     image, drawables[0],
                     &error))
     {
-      status = GIMP_PDB_EXECUTION_ERROR;
+      status = LIGMA_PDB_EXECUTION_ERROR;
     }
 
-  if (export == GIMP_EXPORT_EXPORT)
+  if (export == LIGMA_EXPORT_EXPORT)
     {
-      gimp_image_delete (image);
+      ligma_image_delete (image);
       g_free (drawables);
     }
 
-  return gimp_procedure_new_return_values (procedure, status, error);
+  return ligma_procedure_new_return_values (procedure, status, error);
 }
 
 static struct
@@ -385,7 +385,7 @@ pcx_header_to_buffer (guint8 *buf)
     }
 }
 
-static GimpImage *
+static LigmaImage *
 load_image (GFile   *file,
             GError **error)
 {
@@ -394,13 +394,13 @@ load_image (GFile   *file,
   guint16       offset_x, offset_y, bytesperline;
   gint32        width, height;
   guint16       resolution_x, resolution_y;
-  GimpImage    *image;
-  GimpLayer    *layer;
+  LigmaImage    *image;
+  LigmaLayer    *layer;
   guchar       *dest, cmap[768];
   guint8        header_buf[128];
 
-  gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_file_get_utf8_name (file));
+  ligma_progress_init_printf (_("Opening '%s'"),
+                             ligma_file_get_utf8_name (file));
 
   fd = g_fopen (g_file_peek_path (file), "rb");
 
@@ -408,7 +408,7 @@ load_image (GFile   *file,
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for reading: %s"),
-                   gimp_file_get_utf8_name (file), g_strerror (errno));
+                   ligma_file_get_utf8_name (file), g_strerror (errno));
       return NULL;
     }
 
@@ -416,7 +416,7 @@ load_image (GFile   *file,
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Could not read header from '%s'"),
-                   gimp_file_get_utf8_name (file));
+                   ligma_file_get_utf8_name (file));
       fclose (fd);
       return NULL;
     }
@@ -427,7 +427,7 @@ load_image (GFile   *file,
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("'%s' is not a PCX file"),
-                   gimp_file_get_utf8_name (file));
+                   ligma_file_get_utf8_name (file));
       fclose (fd);
       return NULL;
     }
@@ -440,13 +440,13 @@ load_image (GFile   *file,
   resolution_x = GUINT16_FROM_LE (pcx_header.hdpi);
   resolution_y = GUINT16_FROM_LE (pcx_header.vdpi);
 
-  if ((width <= 0) || (width > GIMP_MAX_IMAGE_SIZE))
+  if ((width <= 0) || (width > LIGMA_MAX_IMAGE_SIZE))
     {
       g_message (_("Unsupported or invalid image width: %d"), width);
       fclose (fd);
       return NULL;
     }
-  if ((height <= 0) || (height > GIMP_MAX_IMAGE_SIZE))
+  if ((height <= 0) || (height > LIGMA_MAX_IMAGE_SIZE))
     {
       g_message (_("Unsupported or invalid image height: %d"), height);
       fclose (fd);
@@ -458,8 +458,8 @@ load_image (GFile   *file,
       fclose (fd);
       return NULL;
     }
-  if ((resolution_x < 1) || (resolution_x > GIMP_MAX_RESOLUTION) ||
-      (resolution_y < 1) || (resolution_y > GIMP_MAX_RESOLUTION))
+  if ((resolution_x < 1) || (resolution_x > LIGMA_MAX_RESOLUTION) ||
+      (resolution_y < 1) || (resolution_y > LIGMA_MAX_RESOLUTION))
     {
       g_message (_("Resolution out of bounds in XCX header, using 72x72"));
       resolution_x = 72;
@@ -476,28 +476,28 @@ load_image (GFile   *file,
 
   if (pcx_header.planes == 3 && pcx_header.bpp == 8)
     {
-      image = gimp_image_new (width, height, GIMP_RGB);
-      layer = gimp_layer_new (image, _("Background"), width, height,
-                              GIMP_RGB_IMAGE,
+      image = ligma_image_new (width, height, LIGMA_RGB);
+      layer = ligma_layer_new (image, _("Background"), width, height,
+                              LIGMA_RGB_IMAGE,
                               100,
-                              gimp_image_get_default_new_layer_mode (image));
+                              ligma_image_get_default_new_layer_mode (image));
     }
   else
     {
-      image = gimp_image_new (width, height, GIMP_INDEXED);
-      layer = gimp_layer_new (image, _("Background"), width, height,
-                              GIMP_INDEXED_IMAGE,
+      image = ligma_image_new (width, height, LIGMA_INDEXED);
+      layer = ligma_layer_new (image, _("Background"), width, height,
+                              LIGMA_INDEXED_IMAGE,
                               100,
-                              gimp_image_get_default_new_layer_mode (image));
+                              ligma_image_get_default_new_layer_mode (image));
     }
 
-  gimp_image_set_file (image, file);
-  gimp_image_set_resolution (image, resolution_x, resolution_y);
+  ligma_image_set_file (image, file);
+  ligma_image_set_resolution (image, resolution_x, resolution_y);
 
-  gimp_image_insert_layer (image, layer, NULL, 0);
-  gimp_layer_set_offsets (layer, offset_x, offset_y);
+  ligma_image_insert_layer (image, layer, NULL, 0);
+  ligma_layer_set_offsets (layer, offset_x, offset_y);
 
-  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
+  buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (layer));
 
   if (pcx_header.planes == 1 && pcx_header.bpp == 1)
     {
@@ -517,7 +517,7 @@ load_image (GFile   *file,
       /* ... Actually, there *are* files out there with a zeroed 1-bit palette,
        * which are supposed to be displayed as B&W (see issue #2997.)  These
        * files *might* be in the wrong (who knows...) but the fact is that
-       * other software, including older versions of GIMP, do display them
+       * other software, including older versions of LIGMA, do display them
        * "correctly", so let's follow suit: if the two palette colors are
        * equal, use a B&W palette instead.
        */
@@ -527,37 +527,37 @@ load_image (GFile   *file,
                                                 255, 255, 255};
           colormap = bw_colormap;
         }
-      gimp_image_set_colormap (image, colormap, 2);
+      ligma_image_set_colormap (image, colormap, 2);
     }
   else if (pcx_header.bpp == 1 && pcx_header.planes == 2)
     {
       dest = g_new (guchar, ((gsize) width) * height);
       load_sub_8 (fd, width, height, 1, 2, dest, bytesperline);
-      gimp_image_set_colormap (image, pcx_header.colormap, 4);
+      ligma_image_set_colormap (image, pcx_header.colormap, 4);
     }
   else if (pcx_header.bpp == 2 && pcx_header.planes == 1)
     {
       dest = g_new (guchar, ((gsize) width) * height);
       load_sub_8 (fd, width, height, 2, 1, dest, bytesperline);
-      gimp_image_set_colormap (image, pcx_header.colormap, 4);
+      ligma_image_set_colormap (image, pcx_header.colormap, 4);
     }
   else if (pcx_header.bpp == 1 && pcx_header.planes == 3)
     {
       dest = g_new (guchar, ((gsize) width) * height);
       load_sub_8 (fd, width, height, 1, 3, dest, bytesperline);
-      gimp_image_set_colormap (image, pcx_header.colormap, 8);
+      ligma_image_set_colormap (image, pcx_header.colormap, 8);
     }
   else if (pcx_header.bpp == 1 && pcx_header.planes == 4)
     {
       dest = g_new (guchar, ((gsize) width) * height);
       load_4 (fd, width, height, dest, bytesperline);
-      gimp_image_set_colormap (image, pcx_header.colormap, 16);
+      ligma_image_set_colormap (image, pcx_header.colormap, 16);
     }
   else if (pcx_header.bpp == 4 && pcx_header.planes == 1)
     {
       dest = g_new (guchar, ((gsize) width) * height);
       load_sub_8 (fd, width, height, 4, 1, dest, bytesperline);
-      gimp_image_set_colormap (image, pcx_header.colormap, 16);
+      ligma_image_set_colormap (image, pcx_header.colormap, 16);
     }
   else if (pcx_header.bpp == 8 && pcx_header.planes == 1)
     {
@@ -565,7 +565,7 @@ load_image (GFile   *file,
       load_8 (fd, width, height, dest, bytesperline);
       fseek (fd, -768L, SEEK_END);
       fread (cmap, 768, 1, fd);
-      gimp_image_set_colormap (image, cmap, 256);
+      ligma_image_set_colormap (image, cmap, 256);
     }
   else if (pcx_header.bpp == 8 && pcx_header.planes == 3)
     {
@@ -586,7 +586,7 @@ load_image (GFile   *file,
   g_free (dest);
   g_object_unref (buffer);
 
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 
   return image;
 }
@@ -605,7 +605,7 @@ load_8 (FILE    *fp,
     {
       readline (fp, line, bytes);
       memcpy (buf, line, width);
-      gimp_progress_update ((double) row / (double) height);
+      ligma_progress_update ((double) row / (double) height);
     }
 
   g_free (line);
@@ -631,7 +631,7 @@ load_24 (FILE    *fp,
               buf[x * 3 + c] = line[x];
             }
         }
-      gimp_progress_update ((double) y / (double) height);
+      ligma_progress_update ((double) y / (double) height);
     }
 
   g_free (line);
@@ -657,7 +657,7 @@ load_1 (FILE    *fp,
           else
             buf[x] = 0;
         }
-      gimp_progress_update ((double) y / (double) height);
+      ligma_progress_update ((double) y / (double) height);
     }
 
   g_free (line);
@@ -686,7 +686,7 @@ load_4 (FILE    *fp,
                 buf[x] += (1 << c);
             }
         }
-      gimp_progress_update ((double) y / (double) height);
+      ligma_progress_update ((double) y / (double) height);
     }
 
   g_free (line);
@@ -723,7 +723,7 @@ load_sub_8 (FILE    *fp,
                 }
             }
         }
-      gimp_progress_update ((double) y / (double) height);
+      ligma_progress_update ((double) y / (double) height);
     }
 
   g_free (line);
@@ -765,14 +765,14 @@ readline (FILE   *fp,
 
 static gboolean
 save_image (GFile         *file,
-            GimpImage     *image,
-            GimpDrawable  *drawable,
+            LigmaImage     *image,
+            LigmaDrawable  *drawable,
             GError       **error)
 {
   FILE          *fp;
   GeglBuffer    *buffer;
   const Babl    *format;
-  GimpImageType  drawable_type;
+  LigmaImageType  drawable_type;
   guchar        *cmap= NULL;
   guchar        *pixels;
   gint           offset_x, offset_y;
@@ -782,16 +782,16 @@ save_image (GFile         *file,
   guint8         header_buf[128];
   gboolean       padding = FALSE;
 
-  drawable_type = gimp_drawable_type (drawable);
-  gimp_drawable_get_offsets (drawable, &offset_x, &offset_y);
+  drawable_type = ligma_drawable_type (drawable);
+  ligma_drawable_get_offsets (drawable, &offset_x, &offset_y);
 
-  buffer = gimp_drawable_get_buffer (drawable);
+  buffer = ligma_drawable_get_buffer (drawable);
 
   width  = gegl_buffer_get_width  (buffer);
   height = gegl_buffer_get_height (buffer);
 
-  gimp_progress_init_printf (_("Exporting '%s'"),
-                             gimp_file_get_utf8_name (file));
+  ligma_progress_init_printf (_("Exporting '%s'"),
+                             ligma_file_get_utf8_name (file));
 
   pcx_header.manufacturer = 0x0a;
   pcx_header.version      = 5;
@@ -799,8 +799,8 @@ save_image (GFile         *file,
 
   switch (drawable_type)
     {
-    case GIMP_INDEXED_IMAGE:
-      cmap                          = gimp_image_get_colormap (image, &colors);
+    case LIGMA_INDEXED_IMAGE:
+      cmap                          = ligma_image_get_colormap (image, &colors);
       if (colors > 16)
         {
           pcx_header.bpp            = 8;
@@ -839,7 +839,7 @@ save_image (GFile         *file,
 
       break;
 
-    case GIMP_RGB_IMAGE:
+    case LIGMA_RGB_IMAGE:
       pcx_header.bpp          = 8;
       pcx_header.planes       = 3;
       pcx_header.color        = GUINT16_TO_LE (1);
@@ -847,7 +847,7 @@ save_image (GFile         *file,
       format                  = babl_format ("R'G'B' u8");
       break;
 
-    case GIMP_GRAY_IMAGE:
+    case LIGMA_GRAY_IMAGE:
       pcx_header.bpp          = 8;
       pcx_header.planes       = 1;
       pcx_header.color        = GUINT16_TO_LE (2);
@@ -906,7 +906,7 @@ save_image (GFile         *file,
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for writing: %s"),
-                   gimp_file_get_utf8_name (file), g_strerror (errno));
+                   ligma_file_get_utf8_name (file), g_strerror (errno));
       return FALSE;
     }
 
@@ -915,7 +915,7 @@ save_image (GFile         *file,
   pcx_header.x2 = GUINT16_TO_LE ((guint16)(offset_x + width - 1));
   pcx_header.y2 = GUINT16_TO_LE ((guint16)(offset_y + height - 1));
 
-  gimp_image_get_resolution (image, &resolution_x, &resolution_y);
+  ligma_image_get_resolution (image, &resolution_x, &resolution_y);
 
   pcx_header.hdpi = GUINT16_TO_LE (RINT (MAX (resolution_x, 1.0)));
   pcx_header.vdpi = GUINT16_TO_LE (RINT (MAX (resolution_y, 1.0)));
@@ -927,7 +927,7 @@ save_image (GFile         *file,
 
   switch (drawable_type)
     {
-    case GIMP_INDEXED_IMAGE:
+    case LIGMA_INDEXED_IMAGE:
       if (colors > 16)
         {
           save_8 (fp, width, height, pixels, padding);
@@ -946,11 +946,11 @@ save_image (GFile         *file,
         }
       break;
 
-    case GIMP_RGB_IMAGE:
+    case LIGMA_RGB_IMAGE:
       save_24 (fp, width, height, pixels, padding);
       break;
 
-    case GIMP_GRAY_IMAGE:
+    case LIGMA_GRAY_IMAGE:
       save_8 (fp, width, height, pixels, padding);
       fputc (0x0c, fp);
       for (i = 0; i < 256; i++)
@@ -972,7 +972,7 @@ save_image (GFile         *file,
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Writing to file '%s' failed: %s"),
-                   gimp_file_get_utf8_name (file), g_strerror (errno));
+                   ligma_file_get_utf8_name (file), g_strerror (errno));
       return FALSE;
     }
 
@@ -1016,7 +1016,7 @@ save_less_than_8 (FILE         *fp,
               count = 0;
               if (padding)
                 fputc ('\0', fp);
-              gimp_progress_update ((double) x / (double) buf_size);
+              ligma_progress_update ((double) x / (double) buf_size);
             }
         }
     }
@@ -1038,7 +1038,7 @@ save_8 (FILE         *fp,
       buf += width;
       if (padding)
         fputc ('\0', fp);
-      gimp_progress_update ((double) row / (double) height);
+      ligma_progress_update ((double) row / (double) height);
     }
 }
 
@@ -1067,7 +1067,7 @@ save_24 (FILE         *fp,
             fputc ('\0', fp);
         }
       buf += width * 3;
-      gimp_progress_update ((double) y / (double) height);
+      ligma_progress_update ((double) y / (double) height);
     }
   g_free (line);
 }

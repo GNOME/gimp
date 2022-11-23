@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationprofiletransform.c
- * Copyright (C) 2016 Michael Natterer <mitch@gimp.org>
+ * ligmaoperationprofiletransform.c
+ * Copyright (C) 2016 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,12 +24,12 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpcolor/gimpcolor.h"
+#include "libligmaconfig/ligmaconfig.h"
+#include "libligmacolor/ligmacolor.h"
 
 #include "operations-types.h"
 
-#include "gimpoperationprofiletransform.h"
+#include "ligmaoperationprofiletransform.h"
 
 
 enum
@@ -44,19 +44,19 @@ enum
 };
 
 
-static void       gimp_operation_profile_transform_finalize     (GObject             *object);
+static void       ligma_operation_profile_transform_finalize     (GObject             *object);
 
-static void       gimp_operation_profile_transform_get_property (GObject             *object,
+static void       ligma_operation_profile_transform_get_property (GObject             *object,
                                                                  guint                property_id,
                                                                  GValue              *value,
                                                                  GParamSpec          *pspec);
-static void       gimp_operation_profile_transform_set_property (GObject             *object,
+static void       ligma_operation_profile_transform_set_property (GObject             *object,
                                                                  guint                property_id,
                                                                  const GValue        *value,
                                                                  GParamSpec          *pspec);
 
-static void       gimp_operation_profile_transform_prepare      (GeglOperation       *operation);
-static gboolean   gimp_operation_profile_transform_process      (GeglOperation       *operation,
+static void       ligma_operation_profile_transform_prepare      (GeglOperation       *operation);
+static gboolean   ligma_operation_profile_transform_process      (GeglOperation       *operation,
                                                                  void                *in_buf,
                                                                  void                *out_buf,
                                                                  glong                samples,
@@ -64,39 +64,39 @@ static gboolean   gimp_operation_profile_transform_process      (GeglOperation  
                                                                  gint                 level);
 
 
-G_DEFINE_TYPE (GimpOperationProfileTransform, gimp_operation_profile_transform,
+G_DEFINE_TYPE (LigmaOperationProfileTransform, ligma_operation_profile_transform,
                GEGL_TYPE_OPERATION_POINT_FILTER)
 
-#define parent_class gimp_operation_profile_transform_parent_class
+#define parent_class ligma_operation_profile_transform_parent_class
 
 
 static void
-gimp_operation_profile_transform_class_init (GimpOperationProfileTransformClass *klass)
+ligma_operation_profile_transform_class_init (LigmaOperationProfileTransformClass *klass)
 {
   GObjectClass                  *object_class    = G_OBJECT_CLASS (klass);
   GeglOperationClass            *operation_class = GEGL_OPERATION_CLASS (klass);
   GeglOperationPointFilterClass *point_class     = GEGL_OPERATION_POINT_FILTER_CLASS (klass);
 
-  object_class->finalize     = gimp_operation_profile_transform_finalize;
-  object_class->set_property = gimp_operation_profile_transform_set_property;
-  object_class->get_property = gimp_operation_profile_transform_get_property;
+  object_class->finalize     = ligma_operation_profile_transform_finalize;
+  object_class->set_property = ligma_operation_profile_transform_set_property;
+  object_class->get_property = ligma_operation_profile_transform_get_property;
 
   gegl_operation_class_set_keys (operation_class,
-                                 "name",        "gimp:profile-transform",
+                                 "name",        "ligma:profile-transform",
                                  "categories",  "color",
                                  "description",
                                  "Transform between two color profiles",
                                  NULL);
 
-  operation_class->prepare = gimp_operation_profile_transform_prepare;
+  operation_class->prepare = ligma_operation_profile_transform_prepare;
 
-  point_class->process     = gimp_operation_profile_transform_process;
+  point_class->process     = ligma_operation_profile_transform_process;
 
   g_object_class_install_property (object_class, PROP_SRC_PROFILE,
                                    g_param_spec_object ("src-profile",
                                                         "Source Profile",
                                                         "Source Profile",
-                                                        GIMP_TYPE_COLOR_PROFILE,
+                                                        LIGMA_TYPE_COLOR_PROFILE,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
@@ -111,7 +111,7 @@ gimp_operation_profile_transform_class_init (GimpOperationProfileTransformClass 
                                    g_param_spec_object ("dest-profile",
                                                         "Destination Profile",
                                                         "Destination Profile",
-                                                        GIMP_TYPE_COLOR_PROFILE,
+                                                        LIGMA_TYPE_COLOR_PROFILE,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
@@ -126,8 +126,8 @@ gimp_operation_profile_transform_class_init (GimpOperationProfileTransformClass 
                                    g_param_spec_enum ("rendering-intent",
                                                       "Rendering Intent",
                                                       "Rendering Intent",
-                                                      GIMP_TYPE_COLOR_RENDERING_INTENT,
-                                                      GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                                      LIGMA_TYPE_COLOR_RENDERING_INTENT,
+                                                      LIGMA_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
                                                       G_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
 
@@ -141,14 +141,14 @@ gimp_operation_profile_transform_class_init (GimpOperationProfileTransformClass 
 }
 
 static void
-gimp_operation_profile_transform_init (GimpOperationProfileTransform *self)
+ligma_operation_profile_transform_init (LigmaOperationProfileTransform *self)
 {
 }
 
 static void
-gimp_operation_profile_transform_finalize (GObject *object)
+ligma_operation_profile_transform_finalize (GObject *object)
 {
-  GimpOperationProfileTransform *self = GIMP_OPERATION_PROFILE_TRANSFORM (object);
+  LigmaOperationProfileTransform *self = LIGMA_OPERATION_PROFILE_TRANSFORM (object);
 
   g_clear_object (&self->src_profile);
   g_clear_object (&self->dest_profile);
@@ -158,12 +158,12 @@ gimp_operation_profile_transform_finalize (GObject *object)
 }
 
 static void
-gimp_operation_profile_transform_get_property (GObject    *object,
+ligma_operation_profile_transform_get_property (GObject    *object,
                                                guint       property_id,
                                                GValue     *value,
                                                GParamSpec *pspec)
 {
-  GimpOperationProfileTransform *self = GIMP_OPERATION_PROFILE_TRANSFORM (object);
+  LigmaOperationProfileTransform *self = LIGMA_OPERATION_PROFILE_TRANSFORM (object);
 
   switch (property_id)
     {
@@ -198,12 +198,12 @@ gimp_operation_profile_transform_get_property (GObject    *object,
 }
 
 static void
-gimp_operation_profile_transform_set_property (GObject      *object,
+ligma_operation_profile_transform_set_property (GObject      *object,
                                                guint         property_id,
                                                const GValue *value,
                                                GParamSpec   *pspec)
 {
-  GimpOperationProfileTransform *self = GIMP_OPERATION_PROFILE_TRANSFORM (object);
+  LigmaOperationProfileTransform *self = LIGMA_OPERATION_PROFILE_TRANSFORM (object);
 
   switch (property_id)
     {
@@ -242,9 +242,9 @@ gimp_operation_profile_transform_set_property (GObject      *object,
 }
 
 static void
-gimp_operation_profile_transform_prepare (GeglOperation *operation)
+ligma_operation_profile_transform_prepare (GeglOperation *operation)
 {
-  GimpOperationProfileTransform *self = GIMP_OPERATION_PROFILE_TRANSFORM (operation);
+  LigmaOperationProfileTransform *self = LIGMA_OPERATION_PROFILE_TRANSFORM (operation);
 
   g_clear_object (&self->transform);
 
@@ -256,14 +256,14 @@ gimp_operation_profile_transform_prepare (GeglOperation *operation)
 
   if (self->src_profile && self->dest_profile)
     {
-      GimpColorTransformFlags flags = 0;
+      LigmaColorTransformFlags flags = 0;
 
       if (self->black_point_compensation)
-        flags |= GIMP_COLOR_TRANSFORM_FLAGS_BLACK_POINT_COMPENSATION;
+        flags |= LIGMA_COLOR_TRANSFORM_FLAGS_BLACK_POINT_COMPENSATION;
 
-      flags |= GIMP_COLOR_TRANSFORM_FLAGS_NOOPTIMIZE;
+      flags |= LIGMA_COLOR_TRANSFORM_FLAGS_NOOPTIMIZE;
 
-      self->transform = gimp_color_transform_new (self->src_profile,
+      self->transform = ligma_color_transform_new (self->src_profile,
                                                   self->src_format,
                                                   self->dest_profile,
                                                   self->dest_format,
@@ -276,20 +276,20 @@ gimp_operation_profile_transform_prepare (GeglOperation *operation)
 }
 
 static gboolean
-gimp_operation_profile_transform_process (GeglOperation       *operation,
+ligma_operation_profile_transform_process (GeglOperation       *operation,
                                           void                *in_buf,
                                           void                *out_buf,
                                           glong                samples,
                                           const GeglRectangle *roi,
                                           gint                 level)
 {
-  GimpOperationProfileTransform *self = GIMP_OPERATION_PROFILE_TRANSFORM (operation);
+  LigmaOperationProfileTransform *self = LIGMA_OPERATION_PROFILE_TRANSFORM (operation);
   gpointer                      *src  = in_buf;
   gpointer                      *dest = out_buf;
 
   if (self->transform)
     {
-      gimp_color_transform_process_pixels (self->transform,
+      ligma_color_transform_process_pixels (self->transform,
                                            self->src_format,
                                            src,
                                            self->dest_format,

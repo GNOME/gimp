@@ -17,7 +17,7 @@
    id="svg9430"
    version="1.1"
    inkscape:version="0.92.2 2405546, 2018-03-11"
-   sodipodi:docname="gimp-prefs-folders-symbolic.svg">
+   sodipodi:docname="ligma-prefs-folders-symbolic.svg">
   <defs
      id="defs9432">
     <linearGradient
@@ -92,8 +92,8 @@
     <g
        transform="translate(-593.29234,1008.6896)"
        style="display:inline"
-       id="gimp-prefs-folders"
-       inkscape:export-filename="/home/jehan/dev/src/gimp/icons/Symbolic/22/gimp-prefs-folders.png"
+       id="ligma-prefs-folders"
+       inkscape:export-filename="/home/jehan/dev/src/ligma/icons/Symbolic/22/ligma-prefs-folders.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90">
       <rect

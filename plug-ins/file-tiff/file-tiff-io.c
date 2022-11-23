@@ -1,4 +1,4 @@
-/* tiff loading for GIMP
+/* tiff loading for LIGMA
  *  -Peter Mattis
  *
  * The TIFF loading code has been completely revamped by Nick Lamb
@@ -26,8 +26,8 @@
 
 #include <tiffio.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
 #include "file-tiff-io.h"
 
@@ -253,7 +253,7 @@ tiff_io_warning (const gchar *module,
            g_str_has_prefix (module, "Fax3Decode"))
     {
       /* Certain corrupt TIFF Fax images can produce a large amount of
-       * warnings which can cause GIMP to run out of GDI resources on
+       * warnings which can cause LIGMA to run out of GDI resources on
        * Windows and eventually crash.
        * The real problem seems to be that the amount of error console
        * messages does not have a limit.

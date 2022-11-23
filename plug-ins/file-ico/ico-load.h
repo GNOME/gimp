@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * GIMP Plug-in for Windows Icon files.
+ * LIGMA Plug-in for Windows Icon files.
  * Copyright (C) 2002 Christian Kreibich <christian@whoop.org>.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,15 +22,15 @@
 #define __ICO_LOAD_H__
 
 
-GimpImage * ico_load_image           (GFile         *file,
+LigmaImage * ico_load_image           (GFile         *file,
                                       gint32        *file_offset,
                                       GError       **error);
-GimpImage * ani_load_image           (GFile         *file,
+LigmaImage * ani_load_image           (GFile         *file,
                                       gboolean       load_thumb,
                                       gint          *width,
                                       gint          *height,
                                       GError       **error);
-GimpImage * ico_load_thumbnail_image (GFile         *file,
+LigmaImage * ico_load_thumbnail_image (GFile         *file,
                                       gint          *width,
                                       gint          *height,
                                       gint32         file_offset,

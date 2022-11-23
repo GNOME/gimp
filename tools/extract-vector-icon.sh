@@ -64,7 +64,7 @@ icon=`echo $icon | sed 's/<\([^<>]*\)inkscape:label="color-important"\([^>]*\)st
 # since we don't want to end up with invalid XML, we just keep them all
 # declared here.
 svg_start='<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created by GIMP build. -->
+<!-- Created by LIGMA build. -->
 
 <svg
   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"

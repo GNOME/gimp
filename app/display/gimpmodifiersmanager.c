@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpmodifiersmanager.c
+ * ligmamodifiersmanager.c
  * Copyright (C) 2022 Jehan
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,16 +22,16 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "display-types.h"
 
-#include "widgets/gimpwidgets-utils.h"
+#include "widgets/ligmawidgets-utils.h"
 
-#include "gimpmodifiersmanager.h"
+#include "ligmamodifiersmanager.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 enum
 {
@@ -43,74 +43,74 @@ enum
 typedef struct
 {
   GdkModifierType     modifiers;
-  GimpModifierAction  mod_action;
+  LigmaModifierAction  mod_action;
   gchar              *action_desc;
-} GimpModifierMapping;
+} LigmaModifierMapping;
 
-struct _GimpModifiersManagerPrivate
+struct _LigmaModifiersManagerPrivate
 {
   GHashTable *actions;
   GList      *buttons;
 };
 
-static void      gimp_modifiers_manager_config_iface_init  (GimpConfigInterface    *iface);
-static void      gimp_modifiers_manager_finalize           (GObject                *object);
-static gboolean  gimp_modifiers_manager_serialize          (GimpConfig             *config,
-                                                            GimpConfigWriter       *writer,
+static void      ligma_modifiers_manager_config_iface_init  (LigmaConfigInterface    *iface);
+static void      ligma_modifiers_manager_finalize           (GObject                *object);
+static gboolean  ligma_modifiers_manager_serialize          (LigmaConfig             *config,
+                                                            LigmaConfigWriter       *writer,
                                                             gpointer                data);
-static gboolean  gimp_modifiers_manager_deserialize        (GimpConfig             *config,
+static gboolean  ligma_modifiers_manager_deserialize        (LigmaConfig             *config,
                                                             GScanner               *scanner,
                                                             gint                    nest_level,
                                                             gpointer                data);
 
-static void      gimp_modifiers_manager_free_mapping       (GimpModifierMapping       *mapping);
+static void      ligma_modifiers_manager_free_mapping       (LigmaModifierMapping       *mapping);
 
-static void      gimp_modifiers_manager_get_keys           (GdkDevice              *device,
+static void      ligma_modifiers_manager_get_keys           (GdkDevice              *device,
                                                             guint                   button,
                                                             GdkModifierType         modifiers,
                                                             gchar                 **actions_key,
                                                             gchar                 **buttons_key);
-static void      gimp_modifiers_manager_initialize         (GimpModifiersManager   *manager,
+static void      ligma_modifiers_manager_initialize         (LigmaModifiersManager   *manager,
                                                             GdkDevice              *device,
                                                             guint                   button);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpModifiersManager, gimp_modifiers_manager, G_TYPE_OBJECT,
-                         G_ADD_PRIVATE (GimpModifiersManager)
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
-                                                gimp_modifiers_manager_config_iface_init))
+G_DEFINE_TYPE_WITH_CODE (LigmaModifiersManager, ligma_modifiers_manager, G_TYPE_OBJECT,
+                         G_ADD_PRIVATE (LigmaModifiersManager)
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_CONFIG,
+                                                ligma_modifiers_manager_config_iface_init))
 
-#define parent_class gimp_modifiers_manager_parent_class
+#define parent_class ligma_modifiers_manager_parent_class
 
 
 static void
-gimp_modifiers_manager_class_init (GimpModifiersManagerClass *klass)
+ligma_modifiers_manager_class_init (LigmaModifiersManagerClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->finalize = gimp_modifiers_manager_finalize;
+  object_class->finalize = ligma_modifiers_manager_finalize;
 }
 
 static void
-gimp_modifiers_manager_init (GimpModifiersManager *manager)
+ligma_modifiers_manager_init (LigmaModifiersManager *manager)
 {
-  manager->p = gimp_modifiers_manager_get_instance_private (manager);
+  manager->p = ligma_modifiers_manager_get_instance_private (manager);
 
   manager->p->actions = g_hash_table_new_full (g_str_hash, g_str_equal, g_free,
-                                               (GDestroyNotify) gimp_modifiers_manager_free_mapping);
+                                               (GDestroyNotify) ligma_modifiers_manager_free_mapping);
 }
 
 static void
-gimp_modifiers_manager_config_iface_init (GimpConfigInterface *iface)
+ligma_modifiers_manager_config_iface_init (LigmaConfigInterface *iface)
 {
-  iface->serialize   = gimp_modifiers_manager_serialize;
-  iface->deserialize = gimp_modifiers_manager_deserialize;
+  iface->serialize   = ligma_modifiers_manager_serialize;
+  iface->deserialize = ligma_modifiers_manager_deserialize;
 }
 
 static void
-gimp_modifiers_manager_finalize (GObject *object)
+ligma_modifiers_manager_finalize (GObject *object)
 {
-  GimpModifiersManager *manager = GIMP_MODIFIERS_MANAGER (object);
+  LigmaModifiersManager *manager = LIGMA_MODIFIERS_MANAGER (object);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 
@@ -119,41 +119,41 @@ gimp_modifiers_manager_finalize (GObject *object)
 }
 
 static gboolean
-gimp_modifiers_manager_serialize (GimpConfig       *config,
-                                  GimpConfigWriter *writer,
+ligma_modifiers_manager_serialize (LigmaConfig       *config,
+                                  LigmaConfigWriter *writer,
                                   gpointer          data)
 {
-  GimpModifiersManager *manager = GIMP_MODIFIERS_MANAGER (config);
+  LigmaModifiersManager *manager = LIGMA_MODIFIERS_MANAGER (config);
   GEnumClass           *enum_class;
   GList                *keys;
   GList                *iter;
 
-  enum_class = g_type_class_ref (GIMP_TYPE_MODIFIER_ACTION);
+  enum_class = g_type_class_ref (LIGMA_TYPE_MODIFIER_ACTION);
   keys       = g_hash_table_get_keys (manager->p->actions);
 
   for (iter = keys; iter; iter = iter->next)
     {
       const gchar         *button = iter->data;
-      GimpModifierMapping *mapping;
+      LigmaModifierMapping *mapping;
       GEnumValue          *enum_value;
 
-      gimp_config_writer_open (writer, "mapping");
-      gimp_config_writer_string (writer, button);
+      ligma_config_writer_open (writer, "mapping");
+      ligma_config_writer_string (writer, button);
 
       mapping = g_hash_table_lookup (manager->p->actions, button);
 
-      gimp_config_writer_open (writer, "modifiers");
-      gimp_config_writer_printf (writer, "%d", mapping->modifiers);
-      gimp_config_writer_close (writer);
+      ligma_config_writer_open (writer, "modifiers");
+      ligma_config_writer_printf (writer, "%d", mapping->modifiers);
+      ligma_config_writer_close (writer);
 
       enum_value = g_enum_get_value (enum_class, GPOINTER_TO_INT (mapping->mod_action));
-      gimp_config_writer_open (writer, "mod-action");
-      gimp_config_writer_identifier (writer, enum_value->value_nick);
-      if (mapping->mod_action == GIMP_MODIFIER_ACTION_ACTION)
-        gimp_config_writer_string (writer, mapping->action_desc);
-      gimp_config_writer_close (writer);
+      ligma_config_writer_open (writer, "mod-action");
+      ligma_config_writer_identifier (writer, enum_value->value_nick);
+      if (mapping->mod_action == LIGMA_MODIFIER_ACTION_ACTION)
+        ligma_config_writer_string (writer, mapping->action_desc);
+      ligma_config_writer_close (writer);
 
-      gimp_config_writer_close (writer);
+      ligma_config_writer_close (writer);
     }
 
   g_list_free (keys);
@@ -163,12 +163,12 @@ gimp_modifiers_manager_serialize (GimpConfig       *config,
 }
 
 static gboolean
-gimp_modifiers_manager_deserialize (GimpConfig *config,
+ligma_modifiers_manager_deserialize (LigmaConfig *config,
                                     GScanner   *scanner,
                                     gint        nest_level,
                                     gpointer    data)
 {
-  GimpModifiersManager *manager = GIMP_MODIFIERS_MANAGER (config);
+  LigmaModifiersManager *manager = LIGMA_MODIFIERS_MANAGER (config);
   GEnumClass           *enum_class;
   GTokenType            token;
   guint                 scope_id;
@@ -178,7 +178,7 @@ gimp_modifiers_manager_deserialize (GimpConfig *config,
 
   scope_id = g_type_qname (G_TYPE_FROM_INSTANCE (config));
   old_scope_id = g_scanner_set_scope (scanner, scope_id);
-  enum_class = g_type_class_ref (GIMP_TYPE_MODIFIER_ACTION);
+  enum_class = g_type_class_ref (LIGMA_TYPE_MODIFIER_ACTION);
 
   g_scanner_scope_add_symbol (scanner, scope_id, "mapping",
                               GINT_TO_POINTER (MODIFIERS_MANAGER_MAPPING));
@@ -204,13 +204,13 @@ gimp_modifiers_manager_deserialize (GimpConfig *config,
             {
             case MODIFIERS_MANAGER_MAPPING:
               token = G_TOKEN_LEFT_PAREN;
-              if (! gimp_scanner_parse_string (scanner, &actions_key))
+              if (! ligma_scanner_parse_string (scanner, &actions_key))
                 goto error;
               break;
 
             case MODIFIERS_MANAGER_MOD_ACTION:
                 {
-                  GimpModifierMapping *mapping;
+                  LigmaModifierMapping *mapping;
                   GEnumValue          *enum_value;
 
                   token = G_TOKEN_IDENTIFIER;
@@ -250,9 +250,9 @@ gimp_modifiers_manager_deserialize (GimpConfig *config,
                       gchar *suffix;
                       gchar *action_desc = NULL;
 
-                      if (enum_value->value == GIMP_MODIFIER_ACTION_ACTION)
+                      if (enum_value->value == LIGMA_MODIFIER_ACTION_ACTION)
                         {
-                          if (! gimp_scanner_parse_string (scanner, &action_desc))
+                          if (! ligma_scanner_parse_string (scanner, &action_desc))
                             {
                               g_printerr ("%s: missing action description for mapping %s\n",
                                           G_STRFUNC, actions_key);
@@ -267,7 +267,7 @@ gimp_modifiers_manager_deserialize (GimpConfig *config,
                           gchar *buttons_key = g_strndup (actions_key,
                                                           strlen (actions_key) - strlen (suffix));
 
-                          mapping = g_slice_new (GimpModifierMapping);
+                          mapping = g_slice_new (LigmaModifierMapping);
                           mapping->modifiers   = modifiers;
                           mapping->mod_action  = enum_value->value;
                           mapping->action_desc = action_desc;
@@ -299,7 +299,7 @@ gimp_modifiers_manager_deserialize (GimpConfig *config,
 
             case MODIFIERS_MANAGER_MODIFIERS:
               token = G_TOKEN_RIGHT_PAREN;
-              if (! gimp_scanner_parse_int (scanner, (int *) &modifiers))
+              if (! ligma_scanner_parse_int (scanner, (int *) &modifiers))
                 goto error;
               break;
 
@@ -332,14 +332,14 @@ gimp_modifiers_manager_deserialize (GimpConfig *config,
 
 /*  public functions  */
 
-GimpModifiersManager *
-gimp_modifiers_manager_new (void)
+LigmaModifiersManager *
+ligma_modifiers_manager_new (void)
 {
-  return g_object_new (GIMP_TYPE_MODIFIERS_MANAGER, NULL);
+  return g_object_new (LIGMA_TYPE_MODIFIERS_MANAGER, NULL);
 }
 
-GimpModifierAction
-gimp_modifiers_manager_get_action (GimpModifiersManager *manager,
+LigmaModifierAction
+ligma_modifiers_manager_get_action (LigmaModifiersManager *manager,
                                    GdkDevice            *device,
                                    guint                 button,
                                    GdkModifierType       state,
@@ -348,50 +348,50 @@ gimp_modifiers_manager_get_action (GimpModifiersManager *manager,
   gchar              *actions_key = NULL;
   gchar              *buttons_key = NULL;
   GdkModifierType     mod_state;
-  GimpModifierAction  retval      = GIMP_MODIFIER_ACTION_NONE;
+  LigmaModifierAction  retval      = LIGMA_MODIFIER_ACTION_NONE;
 
-  g_return_val_if_fail (GIMP_IS_MODIFIERS_MANAGER (manager), GIMP_MODIFIER_ACTION_NONE);
-  g_return_val_if_fail (GDK_IS_DEVICE (device), GIMP_MODIFIER_ACTION_NONE);
-  g_return_val_if_fail (action_desc != NULL && *action_desc == NULL, GIMP_MODIFIER_ACTION_NONE);
+  g_return_val_if_fail (LIGMA_IS_MODIFIERS_MANAGER (manager), LIGMA_MODIFIER_ACTION_NONE);
+  g_return_val_if_fail (GDK_IS_DEVICE (device), LIGMA_MODIFIER_ACTION_NONE);
+  g_return_val_if_fail (action_desc != NULL && *action_desc == NULL, LIGMA_MODIFIER_ACTION_NONE);
 
-  mod_state = state & gimp_get_all_modifiers_mask ();
+  mod_state = state & ligma_get_all_modifiers_mask ();
 
-  gimp_modifiers_manager_get_keys (device, button, mod_state,
+  ligma_modifiers_manager_get_keys (device, button, mod_state,
                                    &actions_key, &buttons_key);
 
   if (g_list_find_custom (manager->p->buttons, buttons_key, (GCompareFunc) g_strcmp0))
     {
-      GimpModifierMapping *mapping;
+      LigmaModifierMapping *mapping;
 
       mapping = g_hash_table_lookup (manager->p->actions, actions_key);
 
       if (mapping == NULL)
-        retval = GIMP_MODIFIER_ACTION_NONE;
+        retval = LIGMA_MODIFIER_ACTION_NONE;
       else
         retval = mapping->mod_action;
 
-      if (retval == GIMP_MODIFIER_ACTION_ACTION)
+      if (retval == LIGMA_MODIFIER_ACTION_ACTION)
         *action_desc = mapping->action_desc;
     }
   else if (button == 2)
     {
-      if (mod_state == gimp_get_extend_selection_mask ())
-        retval = GIMP_MODIFIER_ACTION_ROTATING;
-      else if (mod_state == (gimp_get_extend_selection_mask () | GDK_CONTROL_MASK))
-        retval = GIMP_MODIFIER_ACTION_STEP_ROTATING;
-      else if (mod_state == gimp_get_toggle_behavior_mask ())
-        retval = GIMP_MODIFIER_ACTION_ZOOMING;
+      if (mod_state == ligma_get_extend_selection_mask ())
+        retval = LIGMA_MODIFIER_ACTION_ROTATING;
+      else if (mod_state == (ligma_get_extend_selection_mask () | GDK_CONTROL_MASK))
+        retval = LIGMA_MODIFIER_ACTION_STEP_ROTATING;
+      else if (mod_state == ligma_get_toggle_behavior_mask ())
+        retval = LIGMA_MODIFIER_ACTION_ZOOMING;
       else if (mod_state == GDK_MOD1_MASK)
-        retval = GIMP_MODIFIER_ACTION_LAYER_PICKING;
+        retval = LIGMA_MODIFIER_ACTION_LAYER_PICKING;
       else if (mod_state == 0)
-        retval = GIMP_MODIFIER_ACTION_PANNING;
+        retval = LIGMA_MODIFIER_ACTION_PANNING;
     }
   else if (button == 3)
     {
       if (mod_state == GDK_MOD1_MASK)
-        retval = GIMP_MODIFIER_ACTION_BRUSH_PIXEL_SIZE;
+        retval = LIGMA_MODIFIER_ACTION_BRUSH_PIXEL_SIZE;
       else if (mod_state == 0)
-        retval = GIMP_MODIFIER_ACTION_MENU;
+        retval = LIGMA_MODIFIER_ACTION_MENU;
     }
 
   g_free (actions_key);
@@ -401,7 +401,7 @@ gimp_modifiers_manager_get_action (GimpModifiersManager *manager,
 }
 
 GList *
-gimp_modifiers_manager_get_modifiers (GimpModifiersManager *manager,
+ligma_modifiers_manager_get_modifiers (LigmaModifiersManager *manager,
                                       GdkDevice            *device,
                                       guint                 button)
 {
@@ -411,9 +411,9 @@ gimp_modifiers_manager_get_modifiers (GimpModifiersManager *manager,
   GList *iter;
   gchar *action_prefix;
 
-  gimp_modifiers_manager_initialize (manager, device, button);
+  ligma_modifiers_manager_initialize (manager, device, button);
 
-  gimp_modifiers_manager_get_keys (device, button, 0, NULL,
+  ligma_modifiers_manager_get_keys (device, button, 0, NULL,
                                    &buttons_key);
   action_prefix = g_strdup_printf ("%s-", buttons_key);
   g_free (buttons_key);
@@ -423,7 +423,7 @@ gimp_modifiers_manager_get_modifiers (GimpModifiersManager *manager,
     {
       if (g_str_has_prefix (iter->data, action_prefix))
         {
-          GimpModifierMapping *mapping;
+          LigmaModifierMapping *mapping;
 
           mapping = g_hash_table_lookup (manager->p->actions, iter->data);
 
@@ -441,36 +441,36 @@ gimp_modifiers_manager_get_modifiers (GimpModifiersManager *manager,
 }
 
 void
-gimp_modifiers_manager_set (GimpModifiersManager *manager,
+ligma_modifiers_manager_set (LigmaModifiersManager *manager,
                             GdkDevice            *device,
                             guint                 button,
                             GdkModifierType       modifiers,
-                            GimpModifierAction    action,
+                            LigmaModifierAction    action,
                             const gchar          *action_desc)
 {
   gchar *actions_key = NULL;
   gchar *buttons_key = NULL;
 
-  g_return_if_fail (GIMP_IS_MODIFIERS_MANAGER (manager));
+  g_return_if_fail (LIGMA_IS_MODIFIERS_MANAGER (manager));
   g_return_if_fail (GDK_IS_DEVICE (device));
 
-  gimp_modifiers_manager_get_keys (device, button, modifiers,
+  ligma_modifiers_manager_get_keys (device, button, modifiers,
                                    &actions_key, &buttons_key);
   g_free (buttons_key);
 
-  gimp_modifiers_manager_initialize (manager, device, button);
+  ligma_modifiers_manager_initialize (manager, device, button);
 
-  if (action == GIMP_MODIFIER_ACTION_NONE ||
-      (action == GIMP_MODIFIER_ACTION_ACTION && action_desc == NULL))
+  if (action == LIGMA_MODIFIER_ACTION_NONE ||
+      (action == LIGMA_MODIFIER_ACTION_ACTION && action_desc == NULL))
     {
       g_hash_table_remove (manager->p->actions, actions_key);
       g_free (actions_key);
     }
   else
     {
-      GimpModifierMapping *mapping;
+      LigmaModifierMapping *mapping;
 
-      mapping = g_slice_new (GimpModifierMapping);
+      mapping = g_slice_new (LigmaModifierMapping);
       mapping->modifiers   = modifiers;
       mapping->mod_action  = action;
       mapping->action_desc = action_desc ? g_strdup (action_desc) : NULL;
@@ -480,17 +480,17 @@ gimp_modifiers_manager_set (GimpModifiersManager *manager,
 }
 
 void
-gimp_modifiers_manager_remove (GimpModifiersManager *manager,
+ligma_modifiers_manager_remove (LigmaModifiersManager *manager,
                                GdkDevice            *device,
                                guint                 button,
                                GdkModifierType       modifiers)
 {
-  gimp_modifiers_manager_set (manager, device, button, modifiers,
-                              GIMP_MODIFIER_ACTION_NONE, NULL);
+  ligma_modifiers_manager_set (manager, device, button, modifiers,
+                              LIGMA_MODIFIER_ACTION_NONE, NULL);
 }
 
 void
-gimp_modifiers_manager_clear (GimpModifiersManager *manager)
+ligma_modifiers_manager_clear (LigmaModifiersManager *manager)
 {
   g_hash_table_remove_all (manager->p->actions);
   g_list_free_full (manager->p->buttons, g_free);
@@ -500,14 +500,14 @@ gimp_modifiers_manager_clear (GimpModifiersManager *manager)
 /* Private functions */
 
 static void
-gimp_modifiers_manager_free_mapping (GimpModifierMapping *mapping)
+ligma_modifiers_manager_free_mapping (LigmaModifierMapping *mapping)
 {
   g_free (mapping->action_desc);
-  g_slice_free (GimpModifierMapping, mapping);
+  g_slice_free (LigmaModifierMapping, mapping);
 }
 
 static void
-gimp_modifiers_manager_get_keys (GdkDevice        *device,
+ligma_modifiers_manager_get_keys (GdkDevice        *device,
                                  guint             button,
                                  GdkModifierType   modifiers,
                                  gchar           **actions_key,
@@ -520,7 +520,7 @@ gimp_modifiers_manager_get_keys (GdkDevice        *device,
 
   vendor_id  = device ? gdk_device_get_vendor_id (device) : NULL;
   product_id = device ? gdk_device_get_product_id (device) : NULL;
-  modifiers  = modifiers & gimp_get_all_modifiers_mask ();
+  modifiers  = modifiers & ligma_get_all_modifiers_mask ();
 
   if (actions_key)
     *actions_key = g_strdup_printf ("%s:%s-%d-%d",
@@ -535,16 +535,16 @@ gimp_modifiers_manager_get_keys (GdkDevice        *device,
 }
 
 static void
-gimp_modifiers_manager_initialize (GimpModifiersManager *manager,
+ligma_modifiers_manager_initialize (LigmaModifiersManager *manager,
                                    GdkDevice            *device,
                                    guint                 button)
 {
   gchar *buttons_key = NULL;
 
-  g_return_if_fail (GIMP_IS_MODIFIERS_MANAGER (manager));
+  g_return_if_fail (LIGMA_IS_MODIFIERS_MANAGER (manager));
   g_return_if_fail (GDK_IS_DEVICE (device));
 
-  gimp_modifiers_manager_get_keys (device, button, 0,
+  ligma_modifiers_manager_get_keys (device, button, 0,
                                    NULL, &buttons_key);
 
   /* Add the button to buttons whether or not we insert or remove an
@@ -558,45 +558,45 @@ gimp_modifiers_manager_initialize (GimpModifiersManager *manager,
   else
     {
       gchar               *actions_key = NULL;
-      GimpModifierMapping *mapping;
+      LigmaModifierMapping *mapping;
 
       manager->p->buttons = g_list_prepend (manager->p->buttons, buttons_key);
       if (button == 2)
         {
           /* The default mapping for second (middle) button which had no explicit configuration. */
 
-          mapping = g_slice_new (GimpModifierMapping);
+          mapping = g_slice_new (LigmaModifierMapping);
           mapping->modifiers  = GDK_MOD1_MASK;
-          mapping->mod_action = GIMP_MODIFIER_ACTION_LAYER_PICKING;
-          gimp_modifiers_manager_get_keys (device, 2, mapping->modifiers,
+          mapping->mod_action = LIGMA_MODIFIER_ACTION_LAYER_PICKING;
+          ligma_modifiers_manager_get_keys (device, 2, mapping->modifiers,
                                            &actions_key, NULL);
           g_hash_table_insert (manager->p->actions, actions_key, mapping);
 
-          mapping = g_slice_new (GimpModifierMapping);
-          mapping->modifiers  = gimp_get_extend_selection_mask () | GDK_CONTROL_MASK;
-          mapping->mod_action = GIMP_MODIFIER_ACTION_STEP_ROTATING;
-          gimp_modifiers_manager_get_keys (device, 2, mapping->modifiers,
+          mapping = g_slice_new (LigmaModifierMapping);
+          mapping->modifiers  = ligma_get_extend_selection_mask () | GDK_CONTROL_MASK;
+          mapping->mod_action = LIGMA_MODIFIER_ACTION_STEP_ROTATING;
+          ligma_modifiers_manager_get_keys (device, 2, mapping->modifiers,
                                            &actions_key, NULL);
           g_hash_table_insert (manager->p->actions, actions_key, mapping);
 
-          mapping = g_slice_new (GimpModifierMapping);
-          mapping->modifiers  = gimp_get_extend_selection_mask ();
-          mapping->mod_action = GIMP_MODIFIER_ACTION_ROTATING;
-          gimp_modifiers_manager_get_keys (device, 2, mapping->modifiers,
+          mapping = g_slice_new (LigmaModifierMapping);
+          mapping->modifiers  = ligma_get_extend_selection_mask ();
+          mapping->mod_action = LIGMA_MODIFIER_ACTION_ROTATING;
+          ligma_modifiers_manager_get_keys (device, 2, mapping->modifiers,
                                            &actions_key, NULL);
           g_hash_table_insert (manager->p->actions, actions_key, mapping);
 
-          mapping = g_slice_new (GimpModifierMapping);
-          mapping->modifiers  = gimp_get_toggle_behavior_mask ();
-          mapping->mod_action = GIMP_MODIFIER_ACTION_ZOOMING;
-          gimp_modifiers_manager_get_keys (device, 2, mapping->modifiers,
+          mapping = g_slice_new (LigmaModifierMapping);
+          mapping->modifiers  = ligma_get_toggle_behavior_mask ();
+          mapping->mod_action = LIGMA_MODIFIER_ACTION_ZOOMING;
+          ligma_modifiers_manager_get_keys (device, 2, mapping->modifiers,
                                            &actions_key, NULL);
           g_hash_table_insert (manager->p->actions, actions_key, mapping);
 
-          mapping = g_slice_new (GimpModifierMapping);
+          mapping = g_slice_new (LigmaModifierMapping);
           mapping->modifiers  = 0;
-          mapping->mod_action = GIMP_MODIFIER_ACTION_PANNING;
-          gimp_modifiers_manager_get_keys (device, 2, mapping->modifiers,
+          mapping->mod_action = LIGMA_MODIFIER_ACTION_PANNING;
+          ligma_modifiers_manager_get_keys (device, 2, mapping->modifiers,
                                            &actions_key, NULL);
           g_hash_table_insert (manager->p->actions, actions_key, mapping);
         }
@@ -604,17 +604,17 @@ gimp_modifiers_manager_initialize (GimpModifiersManager *manager,
         {
           /* The default mapping for third button which had no explicit configuration. */
 
-          mapping = g_slice_new (GimpModifierMapping);
+          mapping = g_slice_new (LigmaModifierMapping);
           mapping->modifiers  = GDK_MOD1_MASK;
-          mapping->mod_action = GIMP_MODIFIER_ACTION_BRUSH_PIXEL_SIZE;
-          gimp_modifiers_manager_get_keys (device, 3, mapping->modifiers,
+          mapping->mod_action = LIGMA_MODIFIER_ACTION_BRUSH_PIXEL_SIZE;
+          ligma_modifiers_manager_get_keys (device, 3, mapping->modifiers,
                                            &actions_key, NULL);
           g_hash_table_insert (manager->p->actions, actions_key, mapping);
 
-          mapping = g_slice_new (GimpModifierMapping);
+          mapping = g_slice_new (LigmaModifierMapping);
           mapping->modifiers  = 0;
-          mapping->mod_action = GIMP_MODIFIER_ACTION_MENU;
-          gimp_modifiers_manager_get_keys (device, 3, mapping->modifiers,
+          mapping->mod_action = LIGMA_MODIFIER_ACTION_MENU;
+          ligma_modifiers_manager_get_keys (device, 3, mapping->modifiers,
                                            &actions_key, NULL);
           g_hash_table_insert (manager->p->actions, actions_key, mapping);
         }

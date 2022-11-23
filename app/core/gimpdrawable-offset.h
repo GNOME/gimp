@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,16 +15,16 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DRAWABLE_OFFSET_H__
-#define __GIMP_DRAWABLE_OFFSET_H__
+#ifndef __LIGMA_DRAWABLE_OFFSET_H__
+#define __LIGMA_DRAWABLE_OFFSET_H__
 
 
-void   gimp_drawable_offset (GimpDrawable   *drawable,
-                             GimpContext    *context,
+void   ligma_drawable_offset (LigmaDrawable   *drawable,
+                             LigmaContext    *context,
                              gboolean        wrap_around,
-                             GimpOffsetType  fill_type,
+                             LigmaOffsetType  fill_type,
                              gint            offset_x,
                              gint            offset_y);
 
 
-#endif  /*  __GIMP_DRAWABLE_OFFSET_H__  */
+#endif  /*  __LIGMA_DRAWABLE_OFFSET_H__  */

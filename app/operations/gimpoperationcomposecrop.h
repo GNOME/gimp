@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationcomposecrop.h
- * Copyright (C) 2012 Michael Natterer <mitch@gimp.org>
+ * ligmaoperationcomposecrop.h
+ * Copyright (C) 2012 Michael Natterer <mitch@ligma.org>
  * Copyright (C) 2016 Massimo Valentini <mvalentini@src.gnome.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,37 +19,37 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OPERATION_COMPOSE_CROP_H__
-#define __GIMP_OPERATION_COMPOSE_CROP_H__
+#ifndef __LIGMA_OPERATION_COMPOSE_CROP_H__
+#define __LIGMA_OPERATION_COMPOSE_CROP_H__
 
 #include <gegl-plugin.h>
 
 
-#define GIMP_TYPE_OPERATION_COMPOSE_CROP            (gimp_operation_compose_crop_get_type ())
-#define GIMP_OPERATION_COMPOSE_CROP(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OPERATION_COMPOSE_CROP, GimpOperationComposeCrop))
-#define GIMP_OPERATION_COMPOSE_CROP_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  GIMP_TYPE_OPERATION_COMPOSE_CROP, GimpOperationComposeCropClass))
-#define GIMP_IS_OPERATION_COMPOSE_CROP(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_OPERATION_COMPOSE_CROP))
-#define GIMP_IS_OPERATION_COMPOSE_CROP_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  GIMP_TYPE_OPERATION_COMPOSE_CROP))
-#define GIMP_OPERATION_COMPOSE_CROP_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_COMPOSE_CROP, GimpOperationComposeCropClass))
+#define LIGMA_TYPE_OPERATION_COMPOSE_CROP            (ligma_operation_compose_crop_get_type ())
+#define LIGMA_OPERATION_COMPOSE_CROP(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_OPERATION_COMPOSE_CROP, LigmaOperationComposeCrop))
+#define LIGMA_OPERATION_COMPOSE_CROP_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  LIGMA_TYPE_OPERATION_COMPOSE_CROP, LigmaOperationComposeCropClass))
+#define LIGMA_IS_OPERATION_COMPOSE_CROP(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_OPERATION_COMPOSE_CROP))
+#define LIGMA_IS_OPERATION_COMPOSE_CROP_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  LIGMA_TYPE_OPERATION_COMPOSE_CROP))
+#define LIGMA_OPERATION_COMPOSE_CROP_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  LIGMA_TYPE_OPERATION_COMPOSE_CROP, LigmaOperationComposeCropClass))
 
 
-typedef struct _GimpOperationComposeCrop      GimpOperationComposeCrop;
-typedef struct _GimpOperationComposeCropClass GimpOperationComposeCropClass;
+typedef struct _LigmaOperationComposeCrop      LigmaOperationComposeCrop;
+typedef struct _LigmaOperationComposeCropClass LigmaOperationComposeCropClass;
 
-struct _GimpOperationComposeCrop
+struct _LigmaOperationComposeCrop
 {
   GeglOperationPointComposer  parent_instance;
 
   GeglRectangle               rect;
 };
 
-struct _GimpOperationComposeCropClass
+struct _LigmaOperationComposeCropClass
 {
   GeglOperationPointComposerClass  parent_class;
 };
 
 
-GType   gimp_operation_compose_crop_get_type (void) G_GNUC_CONST;
+GType   ligma_operation_compose_crop_get_type (void) G_GNUC_CONST;
 
 
-#endif /* __GIMP_OPERATION_COMPOSE_CROP_H__ */
+#endif /* __LIGMA_OPERATION_COMPOSE_CROP_H__ */

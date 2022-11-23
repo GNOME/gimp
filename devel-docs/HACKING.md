@@ -1,6 +1,6 @@
 # Building from git and contributing
 
-While packagers are expected to compile GIMP from tarballs (same for
+While packagers are expected to compile LIGMA from tarballs (same for
 personal usage), developers who wish to contribute patches should
 compile from the git repository.
 
@@ -12,10 +12,10 @@ extra steps.
 
 ## Git
 
-GIMP is available from GNOME Git. You can use the following commands
-to get GIMP from the the git server:
+LIGMA is available from GNOME Git. You can use the following commands
+to get LIGMA from the the git server:
 
-    $ git clone https://gitlab.gnome.org/GNOME/gimp.git
+    $ git clone https://gitlab.gnome.org/GNOME/ligma.git
 
 You can read more on using GNOME's git service at these URLs:
 
@@ -23,7 +23,7 @@ You can read more on using GNOME's git service at these URLs:
     https://www.kernel.org/pub/software/scm/git/docs/
 
 
-The development branches of GIMP closely follow the development branches
+The development branches of LIGMA closely follow the development branches
 of `babl` and `GEGL` which are considered part of the project. Therefore
 you will also have to clone and build these repositories:
 
@@ -36,11 +36,11 @@ a development-oriented Linux distribution (Debian Testing or Fedora for
 instance), you will often be able to install all of them from your
 package manager. On Windows, the MSYS2 project is great for keeping up
 with libraries too. On macOS, it is unfortunately much more of a hurdle
-and you should probably look at instructions in our [gimp-macos-build
-repository](https://gitlab.gnome.org/Infrastructure/gimp-macos-build)
-which is how we build GIMP for macOS.
+and you should probably look at instructions in our [ligma-macos-build
+repository](https://gitlab.gnome.org/Infrastructure/ligma-macos-build)
+which is how we build LIGMA for macOS.
 
-We also know that GIMP is built on various \*BSD, proprietary Unixes,
+We also know that LIGMA is built on various \*BSD, proprietary Unixes,
 even on GNU-Hurd and less known systems such as Haiku OS but we don't
 have much details to help you there. Yet we still welcome patches to
 improve situation on any platform.
@@ -83,19 +83,19 @@ depend on.
 
 ## Additional Compilation Steps
 
-If you are accessing GIMP via git, then you will need to take more
+If you are accessing LIGMA via git, then you will need to take more
 steps to get it to compile.  You can do all these steps at once by
 running:
 
-    gimp/trunk$ ./autogen.sh
+    ligma/trunk$ ./autogen.sh
 
 Basically this does the following for you:
 
-    gimp/trunk$ aclocal-1.9; libtoolize; automake-1.9 -a;
-    gimp/trunk$ autoconf;
+    ligma/trunk$ aclocal-1.9; libtoolize; automake-1.9 -a;
+    ligma/trunk$ autoconf;
 
 The above commands create the "configure" script.  Now you can run the
-configure script in gimp/trunk to create all the Makefiles.
+configure script in ligma/trunk to create all the Makefiles.
 
 Before running autogen.sh or configure, make sure you have libtool in
 your path. Also make sure glib-2.0.m4 glib-gettext.m4, gtk-3.0.m4 and
@@ -110,14 +110,14 @@ autogen.sh and they will be passed on to configure.
 
 If AUTOGEN_CONFIGURE_ARGS is set, these options will also be passed to
 the configure script. If for example you want to enable the build of
-the GIMP API reference manuals, you can set AUTOGEN_CONFIGURE_ARGS to
+the LIGMA API reference manuals, you can set AUTOGEN_CONFIGURE_ARGS to
 "--enable-gi-docgen".
 
 If you want to use libraries from a non-standard prefix, you should set
 PKG_CONFIG_PATH appropriately. Some libraries do not use pkgconfig, see
 the output of ./configure --help for information on what environment
 variables to set to point the compiler and linker to the correct path.
-Note that you need to do this even if you are installing GIMP itself
+Note that you need to do this even if you are installing LIGMA itself
 into the same prefix as the library.
 
 
@@ -130,12 +130,12 @@ git-format-patch. The recommended command for a patch against the
   $ git format-patch origin/master
 
 It is recommended that you file a bug report in our
-[tracker](https://gitlab.gnome.org/GNOME/gimp) and either create a merge
+[tracker](https://gitlab.gnome.org/GNOME/ligma) and either create a merge
 request or attach your patch to the report as a plain text file, not
 compressed.
 
 Please follow the guidelines for coding style and other requirements
-listed in [CODING_STYLE.md](https://developer.gimp.org/core/coding_style/). When
+listed in [CODING_STYLE.md](https://developer.ligma.org/core/coding_style/). When
 you will contribute your first patches, you will notice that we care very much
 about clean and tidy code, which helps for understanding. Hence we care about
 coding style and consistency!
@@ -146,7 +146,7 @@ coding style and consistency!
 Please notice that some files in the source are generated from other
 sources. All those files have a short notice about being generated
 somewhere at the top. Among them are the files ending in `pdb.[ch]` in
-the `libgimp/` directory and the files ending in `cmds.c` in the
+the `libligma/` directory and the files ending in `cmds.c` in the
 `app/pdb/` subdirectory. Those are generated from the respective `.pdb`
 files in `pdb/groups`.
 

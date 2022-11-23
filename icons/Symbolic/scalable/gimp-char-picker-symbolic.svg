@@ -16,7 +16,7 @@
    id="svg30571"
    version="1.1"
    inkscape:version="0.92.2 2405546, 2018-03-11"
-   sodipodi:docname="gimp-char-picker-symbolic.svg">
+   sodipodi:docname="ligma-char-picker-symbolic.svg">
   <defs
      id="defs30573">
     <linearGradient
@@ -99,8 +99,8 @@
     <g
        transform="translate(-101.0002,503.1747)"
        style="display:inline"
-       id="gimp-char-picker"
-       inkscape:label="gimp-char-picker">
+       id="ligma-char-picker"
+       inkscape:label="ligma-char-picker">
       <rect
          transform="translate(241.0002,217)"
          y="322"

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattisbvf
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,18 +15,18 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_ROTATE_H__
-#define __GIMP_IMAGE_ROTATE_H__
+#ifndef __LIGMA_IMAGE_ROTATE_H__
+#define __LIGMA_IMAGE_ROTATE_H__
 
 
-void   gimp_image_rotate                   (GimpImage        *image,
-                                            GimpContext      *context,
-                                            GimpRotationType  rotate_type,
-                                            GimpProgress     *progress);
+void   ligma_image_rotate                   (LigmaImage        *image,
+                                            LigmaContext      *context,
+                                            LigmaRotationType  rotate_type,
+                                            LigmaProgress     *progress);
 
-void   gimp_image_import_rotation_metadata (GimpImage        *image,
-                                            GimpContext      *context,
-                                            GimpProgress     *progress,
+void   ligma_image_import_rotation_metadata (LigmaImage        *image,
+                                            LigmaContext      *context,
+                                            LigmaProgress     *progress,
                                             gboolean          interactive);
 
-#endif /* __GIMP_IMAGE_ROTATE_H__ */
+#endif /* __LIGMA_IMAGE_ROTATE_H__ */

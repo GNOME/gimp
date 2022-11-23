@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpmeter.c
+ * ligmameter.c
  * Copyright (C) 2017 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,14 +25,14 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "gimpmeter.h"
+#include "ligmameter.h"
 
 
 #define BORDER_WIDTH 1.0
@@ -68,11 +68,11 @@ typedef struct
   gboolean              active;
   gboolean              show_in_gauge;
   gboolean              show_in_history;
-  GimpRGB               color;
-  GimpInterpolationType interpolation;
+  LigmaRGB               color;
+  LigmaInterpolationType interpolation;
 } Value;
 
-struct _GimpMeterPrivate
+struct _LigmaMeterPrivate
 {
   GMutex   mutex;
 
@@ -86,7 +86,7 @@ struct _GimpMeterPrivate
   gdouble   history_duration;
   gdouble   history_resolution;
   gboolean  led_active;
-  GimpRGB   led_color;
+  LigmaRGB   led_color;
 
   gdouble  *samples;
   gint      n_samples;
@@ -100,118 +100,118 @@ struct _GimpMeterPrivate
 
 /*  local function prototypes  */
 
-static void       gimp_meter_dispose                (GObject        *object);
-static void       gimp_meter_finalize               (GObject        *object);
-static void       gimp_meter_set_property           (GObject        *object,
+static void       ligma_meter_dispose                (GObject        *object);
+static void       ligma_meter_finalize               (GObject        *object);
+static void       ligma_meter_set_property           (GObject        *object,
                                                      guint           property_id,
                                                      const GValue   *value,
                                                      GParamSpec     *pspec);
-static void       gimp_meter_get_property           (GObject        *object,
+static void       ligma_meter_get_property           (GObject        *object,
                                                      guint           property_id,
                                                      GValue         *value,
                                                      GParamSpec     *pspec);
 
-static void       gimp_meter_map                    (GtkWidget      *widget);
-static void       gimp_meter_unmap                  (GtkWidget      *widget);
-static void       gimp_meter_get_preferred_width    (GtkWidget      *widget,
+static void       ligma_meter_map                    (GtkWidget      *widget);
+static void       ligma_meter_unmap                  (GtkWidget      *widget);
+static void       ligma_meter_get_preferred_width    (GtkWidget      *widget,
                                                      gint           *minimum_width,
                                                      gint           *natural_width);
-static void       gimp_meter_get_preferred_height   (GtkWidget      *widget,
+static void       ligma_meter_get_preferred_height   (GtkWidget      *widget,
                                                      gint           *minimum_height,
                                                      gint           *natural_height);
-static gboolean   gimp_meter_draw                   (GtkWidget      *widget,
+static gboolean   ligma_meter_draw                   (GtkWidget      *widget,
                                                      cairo_t        *cr);
 
-static gboolean   gimp_meter_timeout                (GimpMeter      *meter);
+static gboolean   ligma_meter_timeout                (LigmaMeter      *meter);
 
-static void       gimp_meter_clear_history_unlocked (GimpMeter      *meter);
-static void       gimp_meter_update_samples         (GimpMeter      *meter);
-static void       gimp_meter_shift_samples          (GimpMeter      *meter);
+static void       ligma_meter_clear_history_unlocked (LigmaMeter      *meter);
+static void       ligma_meter_update_samples         (LigmaMeter      *meter);
+static void       ligma_meter_shift_samples          (LigmaMeter      *meter);
 
-static void       gimp_meter_mask_sample            (GimpMeter      *meter,
+static void       ligma_meter_mask_sample            (LigmaMeter      *meter,
                                                      const gdouble  *sample,
                                                      gdouble        *result);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpMeter, gimp_meter, GTK_TYPE_WIDGET)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaMeter, ligma_meter, GTK_TYPE_WIDGET)
 
-#define parent_class gimp_meter_parent_class
+#define parent_class ligma_meter_parent_class
 
 
 /*  private functions  */
 
 
 static void
-gimp_meter_class_init (GimpMeterClass *klass)
+ligma_meter_class_init (LigmaMeterClass *klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->dispose              = gimp_meter_dispose;
-  object_class->finalize             = gimp_meter_finalize;
-  object_class->get_property         = gimp_meter_get_property;
-  object_class->set_property         = gimp_meter_set_property;
+  object_class->dispose              = ligma_meter_dispose;
+  object_class->finalize             = ligma_meter_finalize;
+  object_class->get_property         = ligma_meter_get_property;
+  object_class->set_property         = ligma_meter_set_property;
 
-  widget_class->map                  = gimp_meter_map;
-  widget_class->unmap                = gimp_meter_unmap;
-  widget_class->get_preferred_width  = gimp_meter_get_preferred_width;
-  widget_class->get_preferred_height = gimp_meter_get_preferred_height;
-  widget_class->draw                 = gimp_meter_draw;
+  widget_class->map                  = ligma_meter_map;
+  widget_class->unmap                = ligma_meter_unmap;
+  widget_class->get_preferred_width  = ligma_meter_get_preferred_width;
+  widget_class->get_preferred_height = ligma_meter_get_preferred_height;
+  widget_class->draw                 = ligma_meter_draw;
 
   g_object_class_install_property (object_class, PROP_SIZE,
                                    g_param_spec_int ("size",
                                                      NULL, NULL,
                                                      32, 1024, 48,
-                                                     GIMP_PARAM_READWRITE |
+                                                     LIGMA_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_REFRESH_RATE,
                                    g_param_spec_double ("refresh-rate",
                                                         NULL, NULL,
                                                         0.001, 1000.0, 8.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_RANGE_MIN,
                                    g_param_spec_double ("range-min",
                                                         NULL, NULL,
                                                         0.0, G_MAXDOUBLE, 0.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_RANGE_MAX,
                                    g_param_spec_double ("range-max",
                                                         NULL, NULL,
                                                         0.0, G_MAXDOUBLE, 1.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_N_VALUES,
                                    g_param_spec_int ("n-values",
                                                      NULL, NULL,
                                                      0, 32, 0,
-                                                     GIMP_PARAM_READWRITE |
+                                                     LIGMA_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_HISTORY_VISIBLE,
                                    g_param_spec_boolean ("history-visible",
                                                          NULL, NULL,
                                                          TRUE,
-                                                         GIMP_PARAM_READWRITE |
+                                                         LIGMA_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_HISTORY_DURATION,
                                    g_param_spec_double ("history-duration",
                                                         NULL, NULL,
                                                         0.0, 3600.0, 60.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_HISTORY_RESOLUTION,
                                    g_param_spec_double ("history-resolution",
                                                         NULL, NULL,
                                                         0.1, 3600.0, 1.0,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
 
@@ -219,21 +219,21 @@ gimp_meter_class_init (GimpMeterClass *klass)
                                    g_param_spec_boolean ("led-active",
                                                          NULL, NULL,
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE |
+                                                         LIGMA_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_LED_COLOR,
-                                   gimp_param_spec_rgb ("led-color",
+                                   ligma_param_spec_rgb ("led-color",
                                                         NULL, NULL,
-                                                        TRUE, &(GimpRGB) {},
-                                                        GIMP_PARAM_READWRITE |
+                                                        TRUE, &(LigmaRGB) {},
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 }
 
 static void
-gimp_meter_init (GimpMeter *meter)
+ligma_meter_init (LigmaMeter *meter)
 {
-  meter->priv = gimp_meter_get_instance_private (meter);
+  meter->priv = ligma_meter_get_instance_private (meter);
 
   g_mutex_init (&meter->priv->mutex);
 
@@ -245,13 +245,13 @@ gimp_meter_init (GimpMeter *meter)
   meter->priv->history_duration   = 60.0;
   meter->priv->history_resolution = 1.0;
 
-  gimp_meter_update_samples (meter);
+  ligma_meter_update_samples (meter);
 }
 
 static void
-gimp_meter_dispose (GObject *object)
+ligma_meter_dispose (GObject *object)
 {
-  GimpMeter *meter = GIMP_METER (object);
+  LigmaMeter *meter = LIGMA_METER (object);
 
   g_clear_pointer (&meter->priv->values, g_free);
   g_clear_pointer (&meter->priv->samples, g_free);
@@ -267,9 +267,9 @@ gimp_meter_dispose (GObject *object)
 }
 
 static void
-gimp_meter_finalize (GObject *object)
+ligma_meter_finalize (GObject *object)
 {
-  GimpMeter *meter = GIMP_METER (object);
+  LigmaMeter *meter = LIGMA_METER (object);
 
   g_mutex_clear (&meter->priv->mutex);
 
@@ -277,57 +277,57 @@ gimp_meter_finalize (GObject *object)
 }
 
 static void
-gimp_meter_set_property (GObject      *object,
+ligma_meter_set_property (GObject      *object,
                           guint         property_id,
                           const GValue *value,
                           GParamSpec   *pspec)
 {
-  GimpMeter *meter = GIMP_METER (object);
+  LigmaMeter *meter = LIGMA_METER (object);
 
   switch (property_id)
     {
     case PROP_SIZE:
-      gimp_meter_set_size (meter, g_value_get_int (value));
+      ligma_meter_set_size (meter, g_value_get_int (value));
       break;
 
     case PROP_REFRESH_RATE:
-      gimp_meter_set_refresh_rate (meter, g_value_get_double (value));
+      ligma_meter_set_refresh_rate (meter, g_value_get_double (value));
       break;
 
     case PROP_RANGE_MIN:
-      gimp_meter_set_range (meter,
+      ligma_meter_set_range (meter,
                             g_value_get_double (value),
-                            gimp_meter_get_range_max (meter));
+                            ligma_meter_get_range_max (meter));
       break;
 
     case PROP_RANGE_MAX:
-      gimp_meter_set_range (meter,
-                            gimp_meter_get_range_min (meter),
+      ligma_meter_set_range (meter,
+                            ligma_meter_get_range_min (meter),
                             g_value_get_double (value));
       break;
 
     case PROP_N_VALUES:
-      gimp_meter_set_n_values (meter, g_value_get_int (value));
+      ligma_meter_set_n_values (meter, g_value_get_int (value));
       break;
 
     case PROP_HISTORY_VISIBLE:
-      gimp_meter_set_history_visible (meter, g_value_get_boolean (value));
+      ligma_meter_set_history_visible (meter, g_value_get_boolean (value));
       break;
 
     case PROP_HISTORY_DURATION:
-      gimp_meter_set_history_duration (meter, g_value_get_double (value));
+      ligma_meter_set_history_duration (meter, g_value_get_double (value));
       break;
 
     case PROP_HISTORY_RESOLUTION:
-      gimp_meter_set_history_resolution (meter, g_value_get_double (value));
+      ligma_meter_set_history_resolution (meter, g_value_get_double (value));
       break;
 
     case PROP_LED_ACTIVE:
-      gimp_meter_set_led_active (meter, g_value_get_boolean (value));
+      ligma_meter_set_led_active (meter, g_value_get_boolean (value));
       break;
 
     case PROP_LED_COLOR:
-      gimp_meter_set_led_color (meter, g_value_get_boxed (value));
+      ligma_meter_set_led_color (meter, g_value_get_boxed (value));
       break;
 
     default:
@@ -337,53 +337,53 @@ gimp_meter_set_property (GObject      *object,
 }
 
 static void
-gimp_meter_get_property (GObject    *object,
+ligma_meter_get_property (GObject    *object,
                           guint       property_id,
                           GValue     *value,
                           GParamSpec *pspec)
 {
-  GimpMeter *meter = GIMP_METER (object);
+  LigmaMeter *meter = LIGMA_METER (object);
 
   switch (property_id)
     {
     case PROP_SIZE:
-      g_value_set_int (value, gimp_meter_get_size (meter));
+      g_value_set_int (value, ligma_meter_get_size (meter));
       break;
 
     case PROP_REFRESH_RATE:
-      g_value_set_double (value, gimp_meter_get_refresh_rate (meter));
+      g_value_set_double (value, ligma_meter_get_refresh_rate (meter));
       break;
 
     case PROP_RANGE_MIN:
-      g_value_set_double (value, gimp_meter_get_range_min (meter));
+      g_value_set_double (value, ligma_meter_get_range_min (meter));
       break;
 
     case PROP_RANGE_MAX:
-      g_value_set_double (value, gimp_meter_get_range_max (meter));
+      g_value_set_double (value, ligma_meter_get_range_max (meter));
       break;
 
     case PROP_N_VALUES:
-      g_value_set_int (value, gimp_meter_get_n_values (meter));
+      g_value_set_int (value, ligma_meter_get_n_values (meter));
       break;
 
     case PROP_HISTORY_VISIBLE:
-      g_value_set_boolean (value, gimp_meter_get_history_visible (meter));
+      g_value_set_boolean (value, ligma_meter_get_history_visible (meter));
       break;
 
     case PROP_HISTORY_DURATION:
-      g_value_set_int (value, gimp_meter_get_history_duration (meter));
+      g_value_set_int (value, ligma_meter_get_history_duration (meter));
       break;
 
     case PROP_HISTORY_RESOLUTION:
-      g_value_set_int (value, gimp_meter_get_history_resolution (meter));
+      g_value_set_int (value, ligma_meter_get_history_resolution (meter));
       break;
 
     case PROP_LED_ACTIVE:
-      g_value_set_boolean (value, gimp_meter_get_led_active (meter));
+      g_value_set_boolean (value, ligma_meter_get_led_active (meter));
       break;
 
     case PROP_LED_COLOR:
-      g_value_set_boxed (value, gimp_meter_get_led_color (meter));
+      g_value_set_boxed (value, ligma_meter_get_led_color (meter));
       break;
 
     default:
@@ -393,9 +393,9 @@ gimp_meter_get_property (GObject    *object,
 }
 
 static void
-gimp_meter_map (GtkWidget *widget)
+ligma_meter_map (GtkWidget *widget)
 {
-  GimpMeter *meter = GIMP_METER (widget);
+  LigmaMeter *meter = LIGMA_METER (widget);
 
   GTK_WIDGET_CLASS (parent_class)->map (widget);
 
@@ -404,15 +404,15 @@ gimp_meter_map (GtkWidget *widget)
       gint interval = ROUND (1000.0 / meter->priv->refresh_rate);
 
       meter->priv->timeout_id = g_timeout_add (interval,
-                                               (GSourceFunc) gimp_meter_timeout,
+                                               (GSourceFunc) ligma_meter_timeout,
                                                meter);
     }
 }
 
 static void
-gimp_meter_unmap (GtkWidget *widget)
+ligma_meter_unmap (GtkWidget *widget)
 {
-  GimpMeter *meter = GIMP_METER (widget);
+  LigmaMeter *meter = LIGMA_METER (widget);
 
   if (meter->priv->timeout_id)
     {
@@ -424,11 +424,11 @@ gimp_meter_unmap (GtkWidget *widget)
 }
 
 static void
-gimp_meter_get_preferred_width (GtkWidget *widget,
+ligma_meter_get_preferred_width (GtkWidget *widget,
                                 gint      *minimum_width,
                                 gint      *natural_width)
 {
-  GimpMeter *meter = GIMP_METER (widget);
+  LigmaMeter *meter = LIGMA_METER (widget);
   gint       hsize = meter->priv->size;
 
   if (meter->priv->history_visible)
@@ -438,21 +438,21 @@ gimp_meter_get_preferred_width (GtkWidget *widget,
 }
 
 static void
-gimp_meter_get_preferred_height (GtkWidget *widget,
+ligma_meter_get_preferred_height (GtkWidget *widget,
                                  gint      *minimum_height,
                                  gint      *natural_height)
 {
-  GimpMeter *meter = GIMP_METER (widget);
+  LigmaMeter *meter = LIGMA_METER (widget);
   gint       vsize = meter->priv->size;
 
   *minimum_height = *natural_height = ceil (3.0 / 4.0 * vsize + 4.0 * BORDER_WIDTH);
 }
 
 static gboolean
-gimp_meter_draw (GtkWidget *widget,
+ligma_meter_draw (GtkWidget *widget,
                  cairo_t   *cr)
 {
-  GimpMeter       *meter = GIMP_METER (widget);
+  LigmaMeter       *meter = LIGMA_METER (widget);
   GtkAllocation    allocation;
   gint             size  = meter->priv->size;
   GtkStyleContext *style = gtk_widget_get_style_context (widget);
@@ -483,7 +483,7 @@ gimp_meter_draw (GtkWidget *widget,
                  0.06 * size,
                  0.0 * REV, 1.0 * REV);
 
-      gimp_cairo_set_source_rgba (cr, &meter->priv->led_color);
+      ligma_cairo_set_source_rgba (cr, &meter->priv->led_color);
       cairo_fill (cr);
     }
 
@@ -516,7 +516,7 @@ gimp_meter_draw (GtkWidget *widget,
               continue;
             }
 
-          gimp_cairo_set_source_rgba (cr, &meter->priv->values[i].color);
+          ligma_cairo_set_source_rgba (cr, &meter->priv->values[i].color);
           cairo_move_to (cr, 0.0, 0.0);
           cairo_arc (cr,
                      0.0, 0.0,
@@ -620,12 +620,12 @@ gimp_meter_draw (GtkWidget *widget,
                   continue;
                 }
 
-              gimp_cairo_set_source_rgba (cr, &meter->priv->values[i].color);
+              ligma_cairo_set_source_rgba (cr, &meter->priv->values[i].color);
               cairo_move_to (cr, 0.0, 0.0);
 
               switch (meter->priv->values[i].interpolation)
                 {
-                case GIMP_INTERPOLATION_NONE:
+                case LIGMA_INTERPOLATION_NONE:
                   {
                     for (j = 1; j < meter->priv->n_samples - 2; j++)
                       {
@@ -638,7 +638,7 @@ gimp_meter_draw (GtkWidget *widget,
                   }
                   break;
 
-                case GIMP_INTERPOLATION_LINEAR:
+                case LIGMA_INTERPOLATION_LINEAR:
                   {
                     for (j = 1; j < meter->priv->n_samples - 2; j++)
                       {
@@ -649,7 +649,7 @@ gimp_meter_draw (GtkWidget *widget,
                   }
                   break;
 
-                case GIMP_INTERPOLATION_CUBIC:
+                case LIGMA_INTERPOLATION_CUBIC:
                 default:
                   {
                     for (j = 1; j < meter->priv->n_samples - 2; j++)
@@ -741,7 +741,7 @@ gimp_meter_draw (GtkWidget *widget,
 }
 
 static gboolean
-gimp_meter_timeout (GimpMeter *meter)
+ligma_meter_timeout (LigmaMeter *meter)
 {
   gboolean uniform = TRUE;
   gboolean redraw  = TRUE;
@@ -750,9 +750,9 @@ gimp_meter_timeout (GimpMeter *meter)
 
   g_mutex_lock (&meter->priv->mutex);
 
-  gimp_meter_shift_samples (meter);
+  ligma_meter_shift_samples (meter);
 
-  gimp_meter_mask_sample (meter, SAMPLE (0), sample0);
+  ligma_meter_mask_sample (meter, SAMPLE (0), sample0);
 
   if (meter->priv->history_visible)
     {
@@ -760,7 +760,7 @@ gimp_meter_timeout (GimpMeter *meter)
         {
           gdouble sample[meter->priv->n_values];
 
-          gimp_meter_mask_sample (meter, SAMPLE (i), sample);
+          ligma_meter_mask_sample (meter, SAMPLE (i), sample);
 
           uniform = ! memcmp (sample0, sample, SAMPLE_SIZE);
         }
@@ -790,7 +790,7 @@ gimp_meter_timeout (GimpMeter *meter)
 }
 
 static void
-gimp_meter_clear_history_unlocked (GimpMeter *meter)
+ligma_meter_clear_history_unlocked (LigmaMeter *meter)
 {
   meter->priv->current_time     = g_get_monotonic_time ();
   meter->priv->last_sample_time = meter->priv->current_time /
@@ -802,7 +802,7 @@ gimp_meter_clear_history_unlocked (GimpMeter *meter)
 }
 
 static void
-gimp_meter_update_samples (GimpMeter *meter)
+ligma_meter_update_samples (LigmaMeter *meter)
 {
   meter->priv->n_samples = ceil (meter->priv->history_duration /
                                  meter->priv->history_resolution) + 4;
@@ -814,11 +814,11 @@ gimp_meter_update_samples (GimpMeter *meter)
   meter->priv->sample_duration = ROUND (meter->priv->history_resolution *
                                         G_TIME_SPAN_SECOND);
 
-  gimp_meter_clear_history_unlocked (meter);
+  ligma_meter_clear_history_unlocked (meter);
 }
 
 static void
-gimp_meter_shift_samples (GimpMeter *meter)
+ligma_meter_shift_samples (LigmaMeter *meter)
 {
   gint64 time;
   gint   n_new_samples;
@@ -839,7 +839,7 @@ gimp_meter_shift_samples (GimpMeter *meter)
 }
 
 static void
-gimp_meter_mask_sample (GimpMeter     *meter,
+ligma_meter_mask_sample (LigmaMeter     *meter,
                         const gdouble *sample,
                         gdouble       *result)
 {
@@ -865,18 +865,18 @@ gimp_meter_mask_sample (GimpMeter     *meter,
 
 
 GtkWidget *
-gimp_meter_new (gint n_values)
+ligma_meter_new (gint n_values)
 {
-  return g_object_new (GIMP_TYPE_METER,
+  return g_object_new (LIGMA_TYPE_METER,
                        "n-values", n_values,
                        NULL);
 }
 
 void
-gimp_meter_set_size (GimpMeter *meter,
+ligma_meter_set_size (LigmaMeter *meter,
                      gint       size)
 {
-  g_return_if_fail (GIMP_IS_METER (meter));
+  g_return_if_fail (LIGMA_IS_METER (meter));
   g_return_if_fail (size > 0);
 
   if (size != meter->priv->size)
@@ -890,18 +890,18 @@ gimp_meter_set_size (GimpMeter *meter,
 }
 
 gint
-gimp_meter_get_size (GimpMeter *meter)
+ligma_meter_get_size (LigmaMeter *meter)
 {
-  g_return_val_if_fail (GIMP_IS_METER (meter), 0);
+  g_return_val_if_fail (LIGMA_IS_METER (meter), 0);
 
   return meter->priv->size;
 }
 
 void
-gimp_meter_set_refresh_rate (GimpMeter *meter,
+ligma_meter_set_refresh_rate (LigmaMeter *meter,
                              gdouble    rate)
 {
-  g_return_if_fail (GIMP_IS_METER (meter));
+  g_return_if_fail (LIGMA_IS_METER (meter));
   g_return_if_fail (rate > 0.0);
 
   if (rate != meter->priv->refresh_rate)
@@ -915,7 +915,7 @@ gimp_meter_set_refresh_rate (GimpMeter *meter,
           g_source_remove (meter->priv->timeout_id);
 
           meter->priv->timeout_id = g_timeout_add (interval,
-                                                   (GSourceFunc) gimp_meter_timeout,
+                                                   (GSourceFunc) ligma_meter_timeout,
                                                    meter);
         }
 
@@ -924,19 +924,19 @@ gimp_meter_set_refresh_rate (GimpMeter *meter,
 }
 
 gdouble
-gimp_meter_get_refresh_rate (GimpMeter *meter)
+ligma_meter_get_refresh_rate (LigmaMeter *meter)
 {
-  g_return_val_if_fail (GIMP_IS_METER (meter), 0);
+  g_return_val_if_fail (LIGMA_IS_METER (meter), 0);
 
   return meter->priv->refresh_rate;
 }
 
 void
-gimp_meter_set_range (GimpMeter *meter,
+ligma_meter_set_range (LigmaMeter *meter,
                       gdouble    min,
                       gdouble    max)
 {
-  g_return_if_fail (GIMP_IS_METER (meter));
+  g_return_if_fail (LIGMA_IS_METER (meter));
   g_return_if_fail (min <= max);
 
   if (min != meter->priv->range_min)
@@ -967,26 +967,26 @@ gimp_meter_set_range (GimpMeter *meter,
 }
 
 gdouble
-gimp_meter_get_range_min (GimpMeter *meter)
+ligma_meter_get_range_min (LigmaMeter *meter)
 {
-  g_return_val_if_fail (GIMP_IS_METER (meter), 0.0);
+  g_return_val_if_fail (LIGMA_IS_METER (meter), 0.0);
 
   return meter->priv->range_min;
 }
 
 gdouble
-gimp_meter_get_range_max (GimpMeter *meter)
+ligma_meter_get_range_max (LigmaMeter *meter)
 {
-  g_return_val_if_fail (GIMP_IS_METER (meter), 0.0);
+  g_return_val_if_fail (LIGMA_IS_METER (meter), 0.0);
 
   return meter->priv->range_max;
 }
 
 void
-gimp_meter_set_n_values (GimpMeter *meter,
+ligma_meter_set_n_values (LigmaMeter *meter,
                          gint       n_values)
 {
-  g_return_if_fail (GIMP_IS_METER (meter));
+  g_return_if_fail (LIGMA_IS_METER (meter));
   g_return_if_fail (n_values >= 0);
 
   if (n_values != meter->priv->n_values)
@@ -1001,14 +1001,14 @@ gimp_meter_set_n_values (GimpMeter *meter,
                                &(Value) { .active          = TRUE,
                                           .show_in_gauge   = TRUE,
                                           .show_in_history = TRUE,
-                                          .interpolation   = GIMP_INTERPOLATION_CUBIC},
+                                          .interpolation   = LIGMA_INTERPOLATION_CUBIC},
                                sizeof (Value),
                                n_values - meter->priv->n_values);
         }
 
       meter->priv->n_values = n_values;
 
-      gimp_meter_update_samples (meter);
+      ligma_meter_update_samples (meter);
 
       g_mutex_unlock (&meter->priv->mutex);
 
@@ -1019,19 +1019,19 @@ gimp_meter_set_n_values (GimpMeter *meter,
 }
 
 gint
-gimp_meter_get_n_values (GimpMeter *meter)
+ligma_meter_get_n_values (LigmaMeter *meter)
 {
-  g_return_val_if_fail (GIMP_IS_METER (meter), 0);
+  g_return_val_if_fail (LIGMA_IS_METER (meter), 0);
 
   return meter->priv->n_values;
 }
 
 void
-gimp_meter_set_value_active (GimpMeter *meter,
+ligma_meter_set_value_active (LigmaMeter *meter,
                              gint       value,
                              gboolean   active)
 {
-  g_return_if_fail (GIMP_IS_METER (meter));
+  g_return_if_fail (LIGMA_IS_METER (meter));
   g_return_if_fail (value >= 0 && value < meter->priv->n_values);
 
   if (active != meter->priv->values[value].active)
@@ -1043,10 +1043,10 @@ gimp_meter_set_value_active (GimpMeter *meter,
 }
 
 gboolean
-gimp_meter_get_value_active (GimpMeter *meter,
+ligma_meter_get_value_active (LigmaMeter *meter,
                              gint       value)
 {
-  g_return_val_if_fail (GIMP_IS_METER (meter), FALSE);
+  g_return_val_if_fail (LIGMA_IS_METER (meter), FALSE);
   g_return_val_if_fail (value >= 0 && value < meter->priv->n_values, FALSE);
 
   return meter->priv->values[value].active;
@@ -1054,15 +1054,15 @@ gimp_meter_get_value_active (GimpMeter *meter,
 
 
 void
-gimp_meter_set_value_color (GimpMeter     *meter,
+ligma_meter_set_value_color (LigmaMeter     *meter,
                             gint           value,
-                            const GimpRGB *color)
+                            const LigmaRGB *color)
 {
-  g_return_if_fail (GIMP_IS_METER (meter));
+  g_return_if_fail (LIGMA_IS_METER (meter));
   g_return_if_fail (value >= 0 && value < meter->priv->n_values);
   g_return_if_fail (color != NULL);
 
-  if (memcmp (color, &meter->priv->values[value].color, sizeof (GimpRGB)))
+  if (memcmp (color, &meter->priv->values[value].color, sizeof (LigmaRGB)))
     {
       meter->priv->values[value].color = *color;
 
@@ -1070,22 +1070,22 @@ gimp_meter_set_value_color (GimpMeter     *meter,
     }
 }
 
-const GimpRGB *
-gimp_meter_get_value_color (GimpMeter *meter,
+const LigmaRGB *
+ligma_meter_get_value_color (LigmaMeter *meter,
                             gint       value)
 {
-  g_return_val_if_fail (GIMP_IS_METER (meter), NULL);
+  g_return_val_if_fail (LIGMA_IS_METER (meter), NULL);
   g_return_val_if_fail (value >= 0 && value < meter->priv->n_values, NULL);
 
   return &meter->priv->values[value].color;
 }
 
 void
-gimp_meter_set_value_interpolation (GimpMeter             *meter,
+ligma_meter_set_value_interpolation (LigmaMeter             *meter,
                                     gint                   value,
-                                    GimpInterpolationType  interpolation)
+                                    LigmaInterpolationType  interpolation)
 {
-  g_return_if_fail (GIMP_IS_METER (meter));
+  g_return_if_fail (LIGMA_IS_METER (meter));
   g_return_if_fail (value >= 0 && value < meter->priv->n_values);
 
   if (meter->priv->values[value].interpolation != interpolation)
@@ -1096,23 +1096,23 @@ gimp_meter_set_value_interpolation (GimpMeter             *meter,
     }
 }
 
-GimpInterpolationType
-gimp_meter_get_value_interpolation (GimpMeter *meter,
+LigmaInterpolationType
+ligma_meter_get_value_interpolation (LigmaMeter *meter,
                                     gint       value)
 {
-  g_return_val_if_fail (GIMP_IS_METER (meter), GIMP_INTERPOLATION_NONE);
+  g_return_val_if_fail (LIGMA_IS_METER (meter), LIGMA_INTERPOLATION_NONE);
   g_return_val_if_fail (value >= 0 && value < meter->priv->n_values,
-                        GIMP_INTERPOLATION_NONE);
+                        LIGMA_INTERPOLATION_NONE);
 
   return meter->priv->values[value].interpolation;
 }
 
 void
-gimp_meter_set_value_show_in_gauge (GimpMeter *meter,
+ligma_meter_set_value_show_in_gauge (LigmaMeter *meter,
                                     gint       value,
                                     gboolean   show)
 {
-  g_return_if_fail (GIMP_IS_METER (meter));
+  g_return_if_fail (LIGMA_IS_METER (meter));
   g_return_if_fail (value >= 0 && value < meter->priv->n_values);
 
   if (meter->priv->values[value].show_in_gauge != show)
@@ -1124,21 +1124,21 @@ gimp_meter_set_value_show_in_gauge (GimpMeter *meter,
 }
 
 gboolean
-gimp_meter_get_value_show_in_gauge (GimpMeter *meter,
+ligma_meter_get_value_show_in_gauge (LigmaMeter *meter,
                                     gint       value)
 {
-  g_return_val_if_fail (GIMP_IS_METER (meter), FALSE);
+  g_return_val_if_fail (LIGMA_IS_METER (meter), FALSE);
   g_return_val_if_fail (value >= 0 && value < meter->priv->n_values, FALSE);
 
   return meter->priv->values[value].show_in_gauge;
 }
 
 void
-gimp_meter_set_value_show_in_history (GimpMeter *meter,
+ligma_meter_set_value_show_in_history (LigmaMeter *meter,
                                       gint       value,
                                       gboolean   show)
 {
-  g_return_if_fail (GIMP_IS_METER (meter));
+  g_return_if_fail (LIGMA_IS_METER (meter));
   g_return_if_fail (value >= 0 && value < meter->priv->n_values);
 
   if (meter->priv->values[value].show_in_history != show)
@@ -1150,20 +1150,20 @@ gimp_meter_set_value_show_in_history (GimpMeter *meter,
 }
 
 gboolean
-gimp_meter_get_value_show_in_history (GimpMeter *meter,
+ligma_meter_get_value_show_in_history (LigmaMeter *meter,
                                       gint       value)
 {
-  g_return_val_if_fail (GIMP_IS_METER (meter), FALSE);
+  g_return_val_if_fail (LIGMA_IS_METER (meter), FALSE);
   g_return_val_if_fail (value >= 0 && value < meter->priv->n_values, FALSE);
 
   return meter->priv->values[value].show_in_history;
 }
 
 void
-gimp_meter_set_history_visible (GimpMeter *meter,
+ligma_meter_set_history_visible (LigmaMeter *meter,
                                 gboolean   visible)
 {
-  g_return_if_fail (GIMP_IS_METER (meter));
+  g_return_if_fail (LIGMA_IS_METER (meter));
 
   if (visible != meter->priv->history_visible)
     {
@@ -1176,18 +1176,18 @@ gimp_meter_set_history_visible (GimpMeter *meter,
 }
 
 gboolean
-gimp_meter_get_history_visible (GimpMeter *meter)
+ligma_meter_get_history_visible (LigmaMeter *meter)
 {
-  g_return_val_if_fail (GIMP_IS_METER (meter), FALSE);
+  g_return_val_if_fail (LIGMA_IS_METER (meter), FALSE);
 
   return meter->priv->history_visible;
 }
 
 void
-gimp_meter_set_history_duration (GimpMeter *meter,
+ligma_meter_set_history_duration (LigmaMeter *meter,
                                  gdouble    duration)
 {
-  g_return_if_fail (GIMP_IS_METER (meter));
+  g_return_if_fail (LIGMA_IS_METER (meter));
   g_return_if_fail (duration >= 0.0);
 
   if (duration != meter->priv->history_duration)
@@ -1196,7 +1196,7 @@ gimp_meter_set_history_duration (GimpMeter *meter,
 
       meter->priv->history_duration = duration;
 
-      gimp_meter_update_samples (meter);
+      ligma_meter_update_samples (meter);
 
       g_mutex_unlock (&meter->priv->mutex);
 
@@ -1205,18 +1205,18 @@ gimp_meter_set_history_duration (GimpMeter *meter,
 }
 
 gdouble
-gimp_meter_get_history_duration (GimpMeter *meter)
+ligma_meter_get_history_duration (LigmaMeter *meter)
 {
-  g_return_val_if_fail (GIMP_IS_METER (meter), 0.0);
+  g_return_val_if_fail (LIGMA_IS_METER (meter), 0.0);
 
   return meter->priv->history_duration;
 }
 
 void
-gimp_meter_set_history_resolution (GimpMeter *meter,
+ligma_meter_set_history_resolution (LigmaMeter *meter,
                                    gdouble    resolution)
 {
-  g_return_if_fail (GIMP_IS_METER (meter));
+  g_return_if_fail (LIGMA_IS_METER (meter));
   g_return_if_fail (resolution > 0.0);
 
   if (resolution != meter->priv->history_resolution)
@@ -1225,7 +1225,7 @@ gimp_meter_set_history_resolution (GimpMeter *meter,
 
       meter->priv->history_resolution = resolution;
 
-      gimp_meter_update_samples (meter);
+      ligma_meter_update_samples (meter);
 
       g_mutex_unlock (&meter->priv->mutex);
 
@@ -1234,21 +1234,21 @@ gimp_meter_set_history_resolution (GimpMeter *meter,
 }
 
 gdouble
-gimp_meter_get_history_resolution (GimpMeter *meter)
+ligma_meter_get_history_resolution (LigmaMeter *meter)
 {
-  g_return_val_if_fail (GIMP_IS_METER (meter), 0.0);
+  g_return_val_if_fail (LIGMA_IS_METER (meter), 0.0);
 
   return meter->priv->history_resolution;
 }
 
 void
-gimp_meter_clear_history (GimpMeter *meter)
+ligma_meter_clear_history (LigmaMeter *meter)
 {
-  g_return_if_fail (GIMP_IS_METER (meter));
+  g_return_if_fail (LIGMA_IS_METER (meter));
 
   g_mutex_lock (&meter->priv->mutex);
 
-  gimp_meter_clear_history_unlocked (meter);
+  ligma_meter_clear_history_unlocked (meter);
 
   g_mutex_unlock (&meter->priv->mutex);
 
@@ -1256,15 +1256,15 @@ gimp_meter_clear_history (GimpMeter *meter)
 }
 
 void
-gimp_meter_add_sample (GimpMeter     *meter,
+ligma_meter_add_sample (LigmaMeter     *meter,
                        const gdouble *sample)
 {
-  g_return_if_fail (GIMP_IS_METER (meter));
+  g_return_if_fail (LIGMA_IS_METER (meter));
   g_return_if_fail (sample != NULL || meter->priv->n_values == 0);
 
   g_mutex_lock (&meter->priv->mutex);
 
-  gimp_meter_shift_samples (meter);
+  ligma_meter_shift_samples (meter);
 
   memcpy (SAMPLE (0), sample, SAMPLE_SIZE);
 
@@ -1272,10 +1272,10 @@ gimp_meter_add_sample (GimpMeter     *meter,
 }
 
 void
-gimp_meter_set_led_active (GimpMeter *meter,
+ligma_meter_set_led_active (LigmaMeter *meter,
                            gboolean   active)
 {
-  g_return_if_fail (GIMP_IS_METER (meter));
+  g_return_if_fail (LIGMA_IS_METER (meter));
 
   if (active != meter->priv->led_active)
     {
@@ -1288,21 +1288,21 @@ gimp_meter_set_led_active (GimpMeter *meter,
 }
 
 gboolean
-gimp_meter_get_led_active (GimpMeter *meter)
+ligma_meter_get_led_active (LigmaMeter *meter)
 {
-  g_return_val_if_fail (GIMP_IS_METER (meter), FALSE);
+  g_return_val_if_fail (LIGMA_IS_METER (meter), FALSE);
 
   return meter->priv->led_active;
 }
 
 void
-gimp_meter_set_led_color (GimpMeter     *meter,
-                          const GimpRGB *color)
+ligma_meter_set_led_color (LigmaMeter     *meter,
+                          const LigmaRGB *color)
 {
-  g_return_if_fail (GIMP_IS_METER (meter));
+  g_return_if_fail (LIGMA_IS_METER (meter));
   g_return_if_fail (color != NULL);
 
-  if (memcmp (color, &meter->priv->led_color, sizeof (GimpRGB)))
+  if (memcmp (color, &meter->priv->led_color, sizeof (LigmaRGB)))
     {
       meter->priv->led_color = *color;
 
@@ -1313,10 +1313,10 @@ gimp_meter_set_led_color (GimpMeter     *meter,
     }
 }
 
-const GimpRGB *
-gimp_meter_get_led_color (GimpMeter *meter)
+const LigmaRGB *
+ligma_meter_get_led_color (LigmaMeter *meter)
 {
-  g_return_val_if_fail (GIMP_IS_METER (meter), NULL);
+  g_return_val_if_fail (LIGMA_IS_METER (meter), NULL);
 
   return &meter->priv->led_color;
 }

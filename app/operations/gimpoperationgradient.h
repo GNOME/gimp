@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationgradient.h
+ * ligmaoperationgradient.h
  * Copyright (C) 2014 Michael Henning <drawoc@darkrefraction.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,37 +18,37 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OPERATION_GRADIENT_H__
-#define __GIMP_OPERATION_GRADIENT_H__
+#ifndef __LIGMA_OPERATION_GRADIENT_H__
+#define __LIGMA_OPERATION_GRADIENT_H__
 
 
 #include <gegl-plugin.h>
 
 
-#define GIMP_TYPE_OPERATION_GRADIENT            (gimp_operation_gradient_get_type ())
-#define GIMP_OPERATION_GRADIENT(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OPERATION_GRADIENT, GimpOperationGradient))
-#define GIMP_OPERATION_GRADIENT_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  GIMP_TYPE_OPERATION_GRADIENT, GimpOperationGradientClass))
-#define GIMP_IS_OPERATION_GRADIENT(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_OPERATION_GRADIENT))
-#define GIMP_IS_OPERATION_GRADIENT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  GIMP_TYPE_OPERATION_GRADIENT))
-#define GIMP_OPERATION_GRADIENT_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_GRADIENT, GimpOperationGradientClass))
+#define LIGMA_TYPE_OPERATION_GRADIENT            (ligma_operation_gradient_get_type ())
+#define LIGMA_OPERATION_GRADIENT(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_OPERATION_GRADIENT, LigmaOperationGradient))
+#define LIGMA_OPERATION_GRADIENT_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  LIGMA_TYPE_OPERATION_GRADIENT, LigmaOperationGradientClass))
+#define LIGMA_IS_OPERATION_GRADIENT(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_OPERATION_GRADIENT))
+#define LIGMA_IS_OPERATION_GRADIENT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  LIGMA_TYPE_OPERATION_GRADIENT))
+#define LIGMA_OPERATION_GRADIENT_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  LIGMA_TYPE_OPERATION_GRADIENT, LigmaOperationGradientClass))
 
 
-typedef struct _GimpOperationGradient      GimpOperationGradient;
-typedef struct _GimpOperationGradientClass GimpOperationGradientClass;
+typedef struct _LigmaOperationGradient      LigmaOperationGradient;
+typedef struct _LigmaOperationGradientClass LigmaOperationGradientClass;
 
-struct _GimpOperationGradient
+struct _LigmaOperationGradient
 {
   GeglOperationFilter          parent_instance;
 
-  GimpContext                 *context;
+  LigmaContext                 *context;
 
-  GimpGradient                *gradient;
+  LigmaGradient                *gradient;
   gdouble                      start_x, start_y, end_x, end_y;
-  GimpGradientType             gradient_type;
-  GimpRepeatMode               gradient_repeat;
+  LigmaGradientType             gradient_type;
+  LigmaRepeatMode               gradient_repeat;
   gdouble                      offset;
   gboolean                     gradient_reverse;
-  GimpGradientBlendColorSpace  gradient_blend_color_space;
+  LigmaGradientBlendColorSpace  gradient_blend_color_space;
 
   gboolean                     supersample;
   gint                         supersample_depth;
@@ -56,18 +56,18 @@ struct _GimpOperationGradient
 
   gboolean                     dither;
 
-  GimpRGB                     *gradient_cache;
+  LigmaRGB                     *gradient_cache;
   gint                         gradient_cache_size;
   GMutex                       gradient_cache_mutex;
 };
 
-struct _GimpOperationGradientClass
+struct _LigmaOperationGradientClass
 {
   GeglOperationFilterClass  parent_class;
 };
 
 
-GType   gimp_operation_gradient_get_type (void) G_GNUC_CONST;
+GType   ligma_operation_gradient_get_type (void) G_GNUC_CONST;
 
 
-#endif /* __GIMP_OPERATION_GRADIENT_H__ */
+#endif /* __LIGMA_OPERATION_GRADIENT_H__ */

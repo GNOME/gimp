@@ -170,12 +170,12 @@ foreach plugin : common_plugins_list
 
   if platform_windows
     plugin_rc = configure_file(
-      input : gimp_plugins_rc.full_path(),
+      input : ligma_plugins_rc.full_path(),
       output: plugin_name + '.rc',
       copy: true,
     )
 
-    # See https://gitlab.gnome.org/GNOME/gimp/-/issues/8537
+    # See https://gitlab.gnome.org/GNOME/ligma/-/issues/8537
     if generate_version_h
       compile_resources_depfiles = []
       compile_resources_depends  = [ gitversion_h ]
@@ -203,17 +203,17 @@ foreach plugin : common_plugins_list
     plugin_sources,
     include_directories: [ rootInclude, ],
     link_with : [
-      libgimp,
-      libgimpbase,
-      libgimpcolor,
-      libgimpconfig,
-      libgimpmath,
-      libgimpui,
-      libgimpwidgets,
+      libligma,
+      libligmabase,
+      libligmacolor,
+      libligmaconfig,
+      libligmamath,
+      libligmaui,
+      libligmawidgets,
     ],
     dependencies: [ plugin_deps, math ],
     c_args: plugin_cflags,
     install: true,
-    install_dir: gimpplugindir / 'plug-ins' / plugin_name,
+    install_dir: ligmaplugindir / 'plug-ins' / plugin_name,
   )
 endforeach

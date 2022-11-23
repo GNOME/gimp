@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpdrawable-stroke.h
- * Copyright (C) 2003 Simon Budig  <simon@gimp.org>
+ * ligmadrawable-stroke.h
+ * Copyright (C) 2003 Simon Budig  <simon@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,28 +18,28 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef  __GIMP_DRAWABLE_STROKE_H__
-#define  __GIMP_DRAWABLE_STROKE_H__
+#ifndef  __LIGMA_DRAWABLE_STROKE_H__
+#define  __LIGMA_DRAWABLE_STROKE_H__
 
 
-void       gimp_drawable_stroke_boundary     (GimpDrawable       *drawable,
-                                              GimpStrokeOptions  *options,
-                                              const GimpBoundSeg *bound_segs,
+void       ligma_drawable_stroke_boundary     (LigmaDrawable       *drawable,
+                                              LigmaStrokeOptions  *options,
+                                              const LigmaBoundSeg *bound_segs,
                                               gint                n_bound_segs,
                                               gint                offset_x,
                                               gint                offset_y,
                                               gboolean            push_undo);
 
-gboolean   gimp_drawable_stroke_vectors      (GimpDrawable       *drawable,
-                                              GimpStrokeOptions  *options,
-                                              GimpVectors        *vectors,
+gboolean   ligma_drawable_stroke_vectors      (LigmaDrawable       *drawable,
+                                              LigmaStrokeOptions  *options,
+                                              LigmaVectors        *vectors,
                                               gboolean            push_undo,
                                               GError            **error);
 
-void       gimp_drawable_stroke_scan_convert (GimpDrawable      *drawable,
-                                              GimpStrokeOptions *options,
-                                              GimpScanConvert   *scan_convert,
+void       ligma_drawable_stroke_scan_convert (LigmaDrawable      *drawable,
+                                              LigmaStrokeOptions *options,
+                                              LigmaScanConvert   *scan_convert,
                                               gboolean           push_undo);
 
 
-#endif  /*  __GIMP_DRAWABLE_STROKE_H__  */
+#endif  /*  __LIGMA_DRAWABLE_STROKE_H__  */

@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpaccellabel.h
+ * ligmaaccellabel.h
  * Copyright (C) 2020 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,41 +18,41 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_ACCEL_LABEL_H__
-#define __GIMP_ACCEL_LABEL_H__
+#ifndef __LIGMA_ACCEL_LABEL_H__
+#define __LIGMA_ACCEL_LABEL_H__
 
 
-#define GIMP_TYPE_ACCEL_LABEL            (gimp_accel_label_get_type ())
-#define GIMP_ACCEL_LABEL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_ACCEL_LABEL, GimpAccelLabel))
-#define GIMP_ACCEL_LABEL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_ACCEL_LABEL, GimpAccelLabelClass))
-#define GIMP_IS_ACCEL_LABEL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE (obj, GIMP_TYPE_ACCEL_LABEL))
-#define GIMP_IS_ACCEL_LABEL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_ACCEL_LABEL))
-#define GIMP_ACCEL_LABEL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_ACCEL_LABEL, GimpAccelLabelClass))
+#define LIGMA_TYPE_ACCEL_LABEL            (ligma_accel_label_get_type ())
+#define LIGMA_ACCEL_LABEL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_ACCEL_LABEL, LigmaAccelLabel))
+#define LIGMA_ACCEL_LABEL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_ACCEL_LABEL, LigmaAccelLabelClass))
+#define LIGMA_IS_ACCEL_LABEL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE (obj, LIGMA_TYPE_ACCEL_LABEL))
+#define LIGMA_IS_ACCEL_LABEL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_ACCEL_LABEL))
+#define LIGMA_ACCEL_LABEL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_ACCEL_LABEL, LigmaAccelLabelClass))
 
 
-typedef struct _GimpAccelLabelPrivate GimpAccelLabelPrivate;
-typedef struct _GimpAccelLabelClass   GimpAccelLabelClass;
+typedef struct _LigmaAccelLabelPrivate LigmaAccelLabelPrivate;
+typedef struct _LigmaAccelLabelClass   LigmaAccelLabelClass;
 
-struct _GimpAccelLabel
+struct _LigmaAccelLabel
 {
   GtkLabel               parent_instance;
 
-  GimpAccelLabelPrivate *priv;
+  LigmaAccelLabelPrivate *priv;
 };
 
-struct _GimpAccelLabelClass
+struct _LigmaAccelLabelClass
 {
   GtkLabelClass  parent_class;
 };
 
 
-GType        gimp_accel_label_get_type   (void) G_GNUC_CONST;
+GType        ligma_accel_label_get_type   (void) G_GNUC_CONST;
 
-GtkWidget  * gimp_accel_label_new        (GimpAction     *action);
+GtkWidget  * ligma_accel_label_new        (LigmaAction     *action);
 
-void         gimp_accel_label_set_action (GimpAccelLabel *accel_label,
-                                          GimpAction     *action);
-GimpAction * gimp_accel_label_get_action (GimpAccelLabel *accel_label);
+void         ligma_accel_label_set_action (LigmaAccelLabel *accel_label,
+                                          LigmaAction     *action);
+LigmaAction * ligma_accel_label_get_action (LigmaAccelLabel *accel_label);
 
 
-#endif /* __GIMP_ACCEL_LABEL_H__ */
+#endif /* __LIGMA_ACCEL_LABEL_H__ */

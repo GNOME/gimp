@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpcellrenderertoggle.h
- * Copyright (C) 2003-2004  Sven Neumann <sven@gimp.org>
+ * ligmacellrenderertoggle.h
+ * Copyright (C) 2003-2004  Sven Neumann <sven@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -19,63 +19,63 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
-#error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
+#if !defined (__LIGMA_WIDGETS_H_INSIDE__) && !defined (LIGMA_WIDGETS_COMPILATION)
+#error "Only <libligmawidgets/ligmawidgets.h> can be included directly."
 #endif
 
-#ifndef __GIMP_CELL_RENDERER_TOGGLE_H__
-#define __GIMP_CELL_RENDERER_TOGGLE_H__
+#ifndef __LIGMA_CELL_RENDERER_TOGGLE_H__
+#define __LIGMA_CELL_RENDERER_TOGGLE_H__
 
 G_BEGIN_DECLS
 
 
-#define GIMP_TYPE_CELL_RENDERER_TOGGLE            (gimp_cell_renderer_toggle_get_type ())
-#define GIMP_CELL_RENDERER_TOGGLE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CELL_RENDERER_TOGGLE, GimpCellRendererToggle))
-#define GIMP_CELL_RENDERER_TOGGLE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CELL_RENDERER_TOGGLE, GimpCellRendererToggleClass))
-#define GIMP_IS_CELL_RENDERER_TOGGLE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CELL_RENDERER_TOGGLE))
-#define GIMP_IS_CELL_RENDERER_TOGGLE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CELL_RENDERER_TOGGLE))
-#define GIMP_CELL_RENDERER_TOGGLE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CELL_RENDERER_TOGGLE, GimpCellRendererToggleClass))
+#define LIGMA_TYPE_CELL_RENDERER_TOGGLE            (ligma_cell_renderer_toggle_get_type ())
+#define LIGMA_CELL_RENDERER_TOGGLE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_CELL_RENDERER_TOGGLE, LigmaCellRendererToggle))
+#define LIGMA_CELL_RENDERER_TOGGLE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_CELL_RENDERER_TOGGLE, LigmaCellRendererToggleClass))
+#define LIGMA_IS_CELL_RENDERER_TOGGLE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_CELL_RENDERER_TOGGLE))
+#define LIGMA_IS_CELL_RENDERER_TOGGLE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_CELL_RENDERER_TOGGLE))
+#define LIGMA_CELL_RENDERER_TOGGLE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_CELL_RENDERER_TOGGLE, LigmaCellRendererToggleClass))
 
 
-typedef struct _GimpCellRendererTogglePrivate GimpCellRendererTogglePrivate;
-typedef struct _GimpCellRendererToggleClass   GimpCellRendererToggleClass;
+typedef struct _LigmaCellRendererTogglePrivate LigmaCellRendererTogglePrivate;
+typedef struct _LigmaCellRendererToggleClass   LigmaCellRendererToggleClass;
 
-struct _GimpCellRendererToggle
+struct _LigmaCellRendererToggle
 {
   GtkCellRendererToggle          parent_instance;
 
-  GimpCellRendererTogglePrivate *priv;
+  LigmaCellRendererTogglePrivate *priv;
 };
 
-struct _GimpCellRendererToggleClass
+struct _LigmaCellRendererToggleClass
 {
   GtkCellRendererToggleClass  parent_class;
 
-  void (* clicked) (GimpCellRendererToggle *cell,
+  void (* clicked) (LigmaCellRendererToggle *cell,
                     const gchar            *path,
                     GdkModifierType         state);
 
   /* Padding for future expansion */
-  void (* _gimp_reserved1) (void);
-  void (* _gimp_reserved2) (void);
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
-  void (* _gimp_reserved5) (void);
-  void (* _gimp_reserved6) (void);
-  void (* _gimp_reserved7) (void);
-  void (* _gimp_reserved8) (void);
+  void (* _ligma_reserved1) (void);
+  void (* _ligma_reserved2) (void);
+  void (* _ligma_reserved3) (void);
+  void (* _ligma_reserved4) (void);
+  void (* _ligma_reserved5) (void);
+  void (* _ligma_reserved6) (void);
+  void (* _ligma_reserved7) (void);
+  void (* _ligma_reserved8) (void);
 };
 
 
-GType             gimp_cell_renderer_toggle_get_type (void) G_GNUC_CONST;
+GType             ligma_cell_renderer_toggle_get_type (void) G_GNUC_CONST;
 
-GtkCellRenderer * gimp_cell_renderer_toggle_new      (const gchar *icon_name);
+GtkCellRenderer * ligma_cell_renderer_toggle_new      (const gchar *icon_name);
 
-void    gimp_cell_renderer_toggle_clicked (GimpCellRendererToggle *cell,
+void    ligma_cell_renderer_toggle_clicked (LigmaCellRendererToggle *cell,
                                            const gchar            *path,
                                            GdkModifierType         state);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_CELL_RENDERER_TOGGLE_H__ */
+#endif /* __LIGMA_CELL_RENDERER_TOGGLE_H__ */

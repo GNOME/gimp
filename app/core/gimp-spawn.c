@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimp-spawn.c
+ * ligma-spawn.c
  * Copyright (C) 2018 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -40,9 +40,9 @@
 
 #include "core-types.h"
 
-#include "gimp-spawn.h"
+#include "ligma-spawn.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 #ifdef HAVE_VFORK
@@ -158,7 +158,7 @@ exec_err_to_g_error (gint en)
 #endif /* HAVE_VFORK */
 
 gboolean
-gimp_spawn_async (gchar       **argv,
+ligma_spawn_async (gchar       **argv,
                   gchar       **envp,
                   GSpawnFlags   flags,
                   GPid         *child_pid,
@@ -209,7 +209,7 @@ gimp_spawn_async (gchar       **argv,
               if (result < 0)
                 {
                   g_warning ("waitpid() should not fail in "
-                             "gimp_spawn_async()");
+                             "ligma_spawn_async()");
                 }
 
               if (WIFEXITED (status))
@@ -238,13 +238,13 @@ gimp_spawn_async (gchar       **argv,
 }
 
 void
-gimp_spawn_set_cloexec (gint fd)
+ligma_spawn_set_cloexec (gint fd)
 {
 #if defined (G_OS_WIN32)
   SetHandleInformation ((HANDLE) _get_osfhandle (fd), HANDLE_FLAG_INHERIT, 0);
 #elif defined (HAVE_FCNTL_H)
   fcntl (fd, F_SETFD, fcntl (fd, F_GETFD, 0) | FD_CLOEXEC);
 #elif defined (__GNUC__)
-#warning gimp_spawn_set_cloexec() is not implemented for the target platform
+#warning ligma_spawn_set_cloexec() is not implemented for the target platform
 #endif
 }

@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * Wilber Cairo rendering
- * Copyright (C) 2008  Sven Neumann <sven@gimp.org>
+ * Copyright (C) 2008  Sven Neumann <sven@ligma.org>
  *
  * Some code here is based on code from librsvg that was originally
  * written by Raph Levien <raph@artofcode.com> for Gill.
@@ -27,20 +27,20 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimpmath/gimpmath.h"
+#include "libligmamath/ligmamath.h"
 
 #include "widgets-types.h"
 
-#include "gimpcairo-wilber.h"
+#include "ligmacairo-wilber.h"
 
 
-static void   gimp_cairo_wilber_internal (GtkWidget *widget,
+static void   ligma_cairo_wilber_internal (GtkWidget *widget,
                                           cairo_t   *cr,
                                           gdouble    x,
                                           gdouble    y,
                                           gdouble    factor,
                                           gdouble    max_eye_angle);
-static void   gimp_cairo_eyes            (GtkWidget *widget,
+static void   ligma_cairo_eyes            (GtkWidget *widget,
                                           cairo_t   *cr,
                                           gdouble    x,
                                           gdouble    y,
@@ -53,7 +53,7 @@ static GSList   *cairo_wilber_widgets = NULL;
 
 
 void
-gimp_cairo_wilber_toggle_pointer_eyes (void)
+ligma_cairo_wilber_toggle_pointer_eyes (void)
 {
   GSList *iter;
 
@@ -69,7 +69,7 @@ gimp_cairo_wilber_toggle_pointer_eyes (void)
 }
 
 void
-gimp_cairo_draw_toolbox_wilber (GtkWidget *widget,
+ligma_cairo_draw_toolbox_wilber (GtkWidget *widget,
                                 cairo_t   *cr)
 {
   GtkStyleContext *context;
@@ -86,7 +86,7 @@ gimp_cairo_draw_toolbox_wilber (GtkWidget *widget,
 
   gtk_widget_get_allocation (widget, &allocation);
 
-  gimp_cairo_wilber_get_size (cr, &wilber_width, &wilber_height);
+  ligma_cairo_wilber_get_size (cr, &wilber_width, &wilber_height);
 
   factor = allocation.width / wilber_width * 0.9;
 
@@ -95,7 +95,7 @@ gimp_cairo_draw_toolbox_wilber (GtkWidget *widget,
 
   cairo_scale (cr, factor, factor);
 
-  gimp_cairo_wilber_internal (widget, cr,
+  ligma_cairo_wilber_internal (widget, cr,
                               (allocation.width  / factor - wilber_width)  / 2.0,
                               (allocation.height / factor - wilber_height) / 2.0,
                               factor, 30.0 * G_PI / 180.0);
@@ -109,7 +109,7 @@ gimp_cairo_draw_toolbox_wilber (GtkWidget *widget,
 }
 
 void
-gimp_cairo_draw_drop_wilber (GtkWidget *widget,
+ligma_cairo_draw_drop_wilber (GtkWidget *widget,
                              cairo_t   *cr,
                              gboolean   blink)
 {
@@ -130,7 +130,7 @@ gimp_cairo_draw_drop_wilber (GtkWidget *widget,
 
   gtk_widget_get_allocation (widget, &allocation);
 
-  gimp_cairo_wilber_get_size (cr, &wilber_width, &wilber_height);
+  ligma_cairo_wilber_get_size (cr, &wilber_width, &wilber_height);
 
   wilber_width  /= 2;
   wilber_height /= 2;
@@ -150,7 +150,7 @@ gimp_cairo_draw_drop_wilber (GtkWidget *widget,
 
   /*  magic factors depend on the image used, everything else is generic
    */
-  gimp_cairo_wilber_internal (widget, cr,
+  ligma_cairo_wilber_internal (widget, cr,
                               - wilber_width * 0.6,
                               allocation.height / factor - wilber_height * 1.1,
                               factor, 50.0 * G_PI / 180.0);
@@ -165,7 +165,7 @@ gimp_cairo_draw_drop_wilber (GtkWidget *widget,
 
   if (blink)
     {
-      gimp_cairo_eyes (widget, cr,
+      ligma_cairo_eyes (widget, cr,
                        - wilber_width * 0.6,
                        allocation.height / factor - wilber_height * 1.1,
                        factor, 50.0 * G_PI / 180.0);
@@ -207,7 +207,7 @@ static void  eyes_get_extents   (cairo_t     *cr);
 
 
 /**
- * gimp_cairo_wilber:
+ * ligma_cairo_wilber:
  * @cr: Cairo context
  * @x: x position
  * @y: y position
@@ -215,22 +215,22 @@ static void  eyes_get_extents   (cairo_t     *cr);
  * Draw a Wilber path at position @x, @y.
  */
 void
-gimp_cairo_wilber (cairo_t *cr,
+ligma_cairo_wilber (cairo_t *cr,
                    gdouble  x,
                    gdouble  y)
 {
-  gimp_cairo_wilber_internal (NULL, cr, x, y, 1.0, 0.0);
+  ligma_cairo_wilber_internal (NULL, cr, x, y, 1.0, 0.0);
 }
 
 static void
-gimp_cairo_wilber_weak_notify (gpointer  data,
+ligma_cairo_wilber_weak_notify (gpointer  data,
                                GObject  *widget)
 {
   cairo_wilber_widgets = g_slist_remove (cairo_wilber_widgets, widget);
 }
 
 static void
-gimp_cairo_wilber_internal (GtkWidget *widget,
+ligma_cairo_wilber_internal (GtkWidget *widget,
                             cairo_t   *cr,
                             gdouble    x,
                             gdouble    y,
@@ -246,14 +246,14 @@ gimp_cairo_wilber_internal (GtkWidget *widget,
 
   cairo_restore (cr);
 
-  gimp_cairo_eyes (widget, cr, x, y, factor, max_eye_angle);
+  ligma_cairo_eyes (widget, cr, x, y, factor, max_eye_angle);
 
   if (widget && ! g_slist_find (cairo_wilber_widgets, widget))
     {
       cairo_wilber_widgets = g_slist_prepend (cairo_wilber_widgets, widget);
 
       g_object_weak_ref (G_OBJECT (widget),
-                         gimp_cairo_wilber_weak_notify, NULL);
+                         ligma_cairo_wilber_weak_notify, NULL);
     }
 }
 
@@ -333,7 +333,7 @@ eyes_state_free (EyesState *state)
 }
 
 static gboolean
-gimp_cairo_pointer_eyes_timeout (GtkWidget *widget)
+ligma_cairo_pointer_eyes_timeout (GtkWidget *widget)
 {
   GdkSeat       *seat;
   EyesState     *state;
@@ -369,9 +369,9 @@ gimp_cairo_pointer_eyes_timeout (GtkWidget *widget)
       gdouble      a;
       gdouble      b;
       gdouble      c;
-      GimpVector3  u;
-      GimpVector3  v;
-      GimpVector3  w;
+      LigmaVector3  u;
+      LigmaVector3  v;
+      LigmaVector3  w;
 
       if (pointer_eyes)
         {
@@ -421,7 +421,7 @@ gimp_cairo_pointer_eyes_timeout (GtkWidget *widget)
       v.y = sin (b) * sin (a);
       v.z = cos (b);
 
-      c = acos (gimp_vector3_inner_product (&u, &v));
+      c = acos (ligma_vector3_inner_product (&u, &v));
 
       if (c < 1e-2)
         {
@@ -433,9 +433,9 @@ gimp_cairo_pointer_eyes_timeout (GtkWidget *widget)
 
       c *= 1.0 - exp (-(t - state->t) * 15.0);
 
-      w = gimp_vector3_cross_product (&u, &v);
-      w = gimp_vector3_cross_product (&w, &u);
-      gimp_vector3_normalize (&w);
+      w = ligma_vector3_cross_product (&u, &v);
+      w = ligma_vector3_cross_product (&w, &u);
+      ligma_vector3_normalize (&w);
 
       v.x = u.x * cos (c) + w.x * sin (c);
       v.y = u.y * cos (c) + w.y * sin (c);
@@ -472,7 +472,7 @@ gimp_cairo_pointer_eyes_timeout (GtkWidget *widget)
 }
 
 static void
-gimp_cairo_pointer_eyes (GtkWidget *widget,
+ligma_cairo_pointer_eyes (GtkWidget *widget,
                          cairo_t   *cr,
                          gdouble    x,
                          gdouble    y,
@@ -535,13 +535,13 @@ gimp_cairo_pointer_eyes (GtkWidget *widget,
     {
       state->timeout_id =
         g_timeout_add (17,
-                       (GSourceFunc) gimp_cairo_pointer_eyes_timeout,
+                       (GSourceFunc) ligma_cairo_pointer_eyes_timeout,
                        widget);
     }
 }
 
 static void
-gimp_cairo_eyes (GtkWidget *widget,
+ligma_cairo_eyes (GtkWidget *widget,
                  cairo_t   *cr,
                  gdouble    x,
                  gdouble    y,
@@ -558,7 +558,7 @@ gimp_cairo_eyes (GtkWidget *widget,
       (pointer_eyes ||
        g_object_get_data (G_OBJECT (widget), "wilber-eyes-state")))
     {
-      gimp_cairo_pointer_eyes (widget, cr, x, y, factor, max_eye_angle);
+      ligma_cairo_pointer_eyes (widget, cr, x, y, factor, max_eye_angle);
     }
   else
     {
@@ -569,7 +569,7 @@ gimp_cairo_eyes (GtkWidget *widget,
 }
 
 void
-gimp_cairo_wilber_get_size (cairo_t *cr,
+ligma_cairo_wilber_get_size (cairo_t *cr,
                             gdouble *width,
                             gdouble *height)
 {

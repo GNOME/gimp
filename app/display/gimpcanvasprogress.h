@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcanvasprogress.h
- * Copyright (C) 2010 Michael Natterer <mitch@gimp.org>
+ * ligmacanvasprogress.h
+ * Copyright (C) 2010 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,41 +18,41 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CANVAS_PROGRESS_H__
-#define __GIMP_CANVAS_PROGRESS_H__
+#ifndef __LIGMA_CANVAS_PROGRESS_H__
+#define __LIGMA_CANVAS_PROGRESS_H__
 
 
-#include "gimpcanvasitem.h"
+#include "ligmacanvasitem.h"
 
 
-#define GIMP_TYPE_CANVAS_PROGRESS            (gimp_canvas_progress_get_type ())
-#define GIMP_CANVAS_PROGRESS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CANVAS_PROGRESS, GimpCanvasProgress))
-#define GIMP_CANVAS_PROGRESS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CANVAS_PROGRESS, GimpCanvasProgressClass))
-#define GIMP_IS_CANVAS_PROGRESS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CANVAS_PROGRESS))
-#define GIMP_IS_CANVAS_PROGRESS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CANVAS_PROGRESS))
-#define GIMP_CANVAS_PROGRESS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CANVAS_PROGRESS, GimpCanvasProgressClass))
+#define LIGMA_TYPE_CANVAS_PROGRESS            (ligma_canvas_progress_get_type ())
+#define LIGMA_CANVAS_PROGRESS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_CANVAS_PROGRESS, LigmaCanvasProgress))
+#define LIGMA_CANVAS_PROGRESS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_CANVAS_PROGRESS, LigmaCanvasProgressClass))
+#define LIGMA_IS_CANVAS_PROGRESS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_CANVAS_PROGRESS))
+#define LIGMA_IS_CANVAS_PROGRESS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_CANVAS_PROGRESS))
+#define LIGMA_CANVAS_PROGRESS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_CANVAS_PROGRESS, LigmaCanvasProgressClass))
 
 
-typedef struct _GimpCanvasProgress      GimpCanvasProgress;
-typedef struct _GimpCanvasProgressClass GimpCanvasProgressClass;
+typedef struct _LigmaCanvasProgress      LigmaCanvasProgress;
+typedef struct _LigmaCanvasProgressClass LigmaCanvasProgressClass;
 
-struct _GimpCanvasProgress
+struct _LigmaCanvasProgress
 {
-  GimpCanvasItem  parent_instance;
+  LigmaCanvasItem  parent_instance;
 };
 
-struct _GimpCanvasProgressClass
+struct _LigmaCanvasProgressClass
 {
-  GimpCanvasItemClass  parent_class;
+  LigmaCanvasItemClass  parent_class;
 };
 
 
-GType            gimp_canvas_progress_get_type (void) G_GNUC_CONST;
+GType            ligma_canvas_progress_get_type (void) G_GNUC_CONST;
 
-GimpCanvasItem * gimp_canvas_progress_new      (GimpDisplayShell *shell,
-                                                GimpHandleAnchor  anchor,
+LigmaCanvasItem * ligma_canvas_progress_new      (LigmaDisplayShell *shell,
+                                                LigmaHandleAnchor  anchor,
                                                 gdouble           x,
                                                 gdouble           y);
 
 
-#endif /* __GIMP_CANVAS_PROGRESS_H__ */
+#endif /* __LIGMA_CANVAS_PROGRESS_H__ */

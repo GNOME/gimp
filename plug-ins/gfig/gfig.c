@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * This is a plug-in for GIMP.
+ * This is a plug-in for LIGMA.
  *
  * Generates images containing vector type drawings.
  *
@@ -33,8 +33,8 @@
 
 #include <glib/gstdio.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
 #include "gfig.h"
 #include "gfig-style.h"
@@ -52,7 +52,7 @@
 #include "gfig-spiral.h"
 #include "gfig-star.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 #define GFIG_HEADER      "GFIG Version 0.2\n"
@@ -62,12 +62,12 @@ typedef struct _GfigClass GfigClass;
 
 struct _Gfig
 {
-  GimpPlugIn parent_instance;
+  LigmaPlugIn parent_instance;
 };
 
 struct _GfigClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -76,16 +76,16 @@ struct _GfigClass
 
 GType                   gfig_get_type         (void) G_GNUC_CONST;
 
-static GList          * gfig_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * gfig_create_procedure (GimpPlugIn           *plug_in,
+static GList          * gfig_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * gfig_create_procedure (LigmaPlugIn           *plug_in,
                                                const gchar          *name);
 
-static GimpValueArray * gfig_run              (GimpProcedure        *procedure,
-                                               GimpRunMode           run_mode,
-                                               GimpImage            *image,
+static LigmaValueArray * gfig_run              (LigmaProcedure        *procedure,
+                                               LigmaRunMode           run_mode,
+                                               LigmaImage            *image,
                                                gint                  n_drawables,
-                                               GimpDrawable        **drawables,
-                                               const GimpValueArray *args,
+                                               LigmaDrawable        **drawables,
+                                               const LigmaValueArray *args,
                                                gpointer              run_data);
 
 static gint             load_options          (GFigObj              *gfig,
@@ -93,9 +93,9 @@ static gint             load_options          (GFigObj              *gfig,
 
 
 
-G_DEFINE_TYPE (Gfig, gfig, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Gfig, gfig, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (GFIG_TYPE)
+LIGMA_MAIN (GFIG_TYPE)
 DEFINE_STD_SET_I18N
 
 
@@ -131,7 +131,7 @@ GdkPixbuf   *back_pixbuf = NULL;
 static void
 gfig_class_init (GfigClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = gfig_query_procedures;
   plug_in_class->create_procedure = gfig_create_procedure;
@@ -144,31 +144,31 @@ gfig_init (Gfig *gfig)
 }
 
 static GList *
-gfig_query_procedures (GimpPlugIn *plug_in)
+gfig_query_procedures (LigmaPlugIn *plug_in)
 {
   return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
 }
 
-static GimpProcedure *
-gfig_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+gfig_create_procedure (LigmaPlugIn  *plug_in,
                        const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_image_procedure_new (plug_in, name,
+                                            LIGMA_PDB_PROC_TYPE_PLUGIN,
                                             gfig_run, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "RGB*, GRAY*");
-      gimp_procedure_set_sensitivity_mask (procedure,
-                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
+      ligma_procedure_set_image_types (procedure, "RGB*, GRAY*");
+      ligma_procedure_set_sensitivity_mask (procedure,
+                                           LIGMA_PROCEDURE_SENSITIVE_DRAWABLE);
 
-      gimp_procedure_set_menu_label (procedure, _("_Gfig..."));
-      gimp_procedure_add_menu_path (procedure, "<Image>/Filters/Render");
+      ligma_procedure_set_menu_label (procedure, _("_Gfig..."));
+      ligma_procedure_add_menu_path (procedure, "<Image>/Filters/Render");
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         _("Create geometric shapes"),
                                         "Draw Vector Graphics and paint them "
                                         "onto your images. Gfig allows you "
@@ -182,7 +182,7 @@ gfig_create_procedure (GimpPlugIn  *plug_in,
                                         "Gfig objects can also be used to "
                                         "create selections.",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Andy Thomas",
                                       "Andy Thomas",
                                       "1997");
@@ -191,29 +191,29 @@ gfig_create_procedure (GimpPlugIn  *plug_in,
   return procedure;
 }
 
-static GimpValueArray *
-gfig_run (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GimpImage            *image,
+static LigmaValueArray *
+gfig_run (LigmaProcedure        *procedure,
+          LigmaRunMode           run_mode,
+          LigmaImage            *image,
           gint                  n_drawables,
-          GimpDrawable        **drawables,
-          const GimpValueArray *args,
+          LigmaDrawable        **drawables,
+          const LigmaValueArray *args,
           gpointer              run_data)
 {
-  GimpDrawable      *drawable;
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  LigmaDrawable      *drawable;
+  LigmaPDBStatusType  status = LIGMA_PDB_SUCCESS;
   gint               pwidth, pheight;
 
   if (n_drawables != 1)
     {
       GError *error = NULL;
 
-      g_set_error (&error, GIMP_PLUG_IN_ERROR, 0,
+      g_set_error (&error, LIGMA_PLUG_IN_ERROR, 0,
                    _("Procedure '%s' only works with one drawable."),
-                   gimp_procedure_get_name (procedure));
+                   ligma_procedure_get_name (procedure));
 
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_CALLING_ERROR,
                                                error);
     }
   else
@@ -229,22 +229,22 @@ gfig_run (GimpProcedure        *procedure,
   gfig_context->image    = image;
   gfig_context->drawable = drawable;
 
-  gimp_image_undo_group_start (gfig_context->image);
+  ligma_image_undo_group_start (gfig_context->image);
 
-  gimp_context_push ();
+  ligma_context_push ();
 
   /* TMP Hack - clear any selections */
-  if (! gimp_selection_is_empty (gfig_context->image))
-    gimp_selection_none (gfig_context->image);
+  if (! ligma_selection_is_empty (gfig_context->image))
+    ligma_selection_none (gfig_context->image);
 
-  if (! gimp_drawable_mask_intersect (drawable, &sel_x, &sel_y,
+  if (! ligma_drawable_mask_intersect (drawable, &sel_x, &sel_y,
                                       &sel_width, &sel_height))
     {
-      gimp_context_pop ();
+      ligma_context_pop ();
 
-      gimp_image_undo_group_end (gfig_context->image);
+      ligma_image_undo_group_end (gfig_context->image);
 
-      return gimp_procedure_new_return_values (procedure, status, NULL);
+      return ligma_procedure_new_return_values (procedure, status, NULL);
     }
 
   /* Calculate preview size */
@@ -273,33 +273,33 @@ gfig_run (GimpProcedure        *procedure,
 
   switch (run_mode)
     {
-    case GIMP_RUN_INTERACTIVE:
-    case GIMP_RUN_WITH_LAST_VALS:
+    case LIGMA_RUN_INTERACTIVE:
+    case LIGMA_RUN_WITH_LAST_VALS:
       if (! gfig_dialog ())
         {
-          gimp_image_undo_group_end (gfig_context->image);
+          ligma_image_undo_group_end (gfig_context->image);
 
-          return gimp_procedure_new_return_values (procedure, GIMP_PDB_CANCEL,
+          return ligma_procedure_new_return_values (procedure, LIGMA_PDB_CANCEL,
                                                    NULL);
         }
       break;
 
-    case GIMP_RUN_NONINTERACTIVE:
-      status = GIMP_PDB_CALLING_ERROR;
+    case LIGMA_RUN_NONINTERACTIVE:
+      status = LIGMA_PDB_CALLING_ERROR;
       break;
 
     default:
       break;
     }
 
-  gimp_context_pop ();
+  ligma_context_pop ();
 
-  gimp_image_undo_group_end (gfig_context->image);
+  ligma_image_undo_group_end (gfig_context->image);
 
-  if (run_mode != GIMP_RUN_NONINTERACTIVE)
-    gimp_displays_flush ();
+  if (run_mode != LIGMA_RUN_NONINTERACTIVE)
+    ligma_displays_flush ();
 
-  return gimp_procedure_new_return_values (procedure, status, NULL);
+  return ligma_procedure_new_return_values (procedure, status, NULL);
 }
 
 /*
@@ -474,7 +474,7 @@ gfig_load (const gchar *filename,
   if (!fp)
     {
       g_message (_("Could not open '%s' for reading: %s"),
-                 gimp_filename_to_utf8 (filename), g_strerror (errno));
+                 ligma_filename_to_utf8 (filename), g_strerror (errno));
       return NULL;
     }
 
@@ -497,7 +497,7 @@ gfig_load (const gchar *filename,
   if (strcmp (magic1, "GFIG") || strcmp (magic2, "Version"))
     {
       g_message ("File '%s' is not a gfig file",
-                  gimp_filename_to_utf8 (gfig->filename));
+                  ligma_filename_to_utf8 (gfig->filename));
       gfig_free (gfig);
       fclose (fp);
       return NULL;
@@ -518,7 +518,7 @@ gfig_load (const gchar *filename,
   if (load_options (gfig, fp))
     {
       g_message ("File '%s' corrupt file - Line %d Option section incorrect",
-                 gimp_filename_to_utf8 (filename), line_no);
+                 ligma_filename_to_utf8 (filename), line_no);
       gfig_free (gfig);
       fclose (fp);
       return NULL;
@@ -527,7 +527,7 @@ gfig_load (const gchar *filename,
   if (gfig_load_styles (gfig, fp))
     {
       g_message ("File '%s' corrupt file - Line %d Option section incorrect",
-                 gimp_filename_to_utf8 (filename), line_no);
+                 ligma_filename_to_utf8 (filename), line_no);
       gfig_free (gfig);
       fclose (fp);
       return NULL;
@@ -544,7 +544,7 @@ gfig_load (const gchar *filename,
   if (chk_count != load_count)
     {
       g_message ("File '%s' corrupt file - Line %d Object count to small",
-                 gimp_filename_to_utf8 (filename), line_no);
+                 ligma_filename_to_utf8 (filename), line_no);
       gfig_free (gfig);
       fclose (fp);
       return NULL;
@@ -764,28 +764,28 @@ gfig_save_as_string (void)
 gboolean
 gfig_save_as_parasite (void)
 {
-  GimpParasite *parasite;
+  LigmaParasite *parasite;
   GString       *string;
 
   string = gfig_save_as_string ();
 
-  parasite = gimp_parasite_new ("gfig",
-                                GIMP_PARASITE_PERSISTENT |
-                                GIMP_PARASITE_UNDOABLE,
+  parasite = ligma_parasite_new ("gfig",
+                                LIGMA_PARASITE_PERSISTENT |
+                                LIGMA_PARASITE_UNDOABLE,
                                 string->len, string->str);
 
   g_string_free (string, TRUE);
 
-  if (!gimp_item_attach_parasite (GIMP_ITEM (gfig_context->drawable),
+  if (!ligma_item_attach_parasite (LIGMA_ITEM (gfig_context->drawable),
                                   parasite))
     {
       g_message (_("Error trying to save figure as a parasite: "
                    "can't attach parasite to drawable."));
-      gimp_parasite_free (parasite);
+      ligma_parasite_free (parasite);
       return FALSE;
     }
 
-  gimp_parasite_free (parasite);
+  ligma_parasite_free (parasite);
   return TRUE;
 }
 
@@ -794,32 +794,32 @@ gfig_load_from_parasite (void)
 {
   GFile        *file;
   FILE         *fp;
-  GimpParasite *parasite;
+  LigmaParasite *parasite;
   const gchar  *parasite_data;
   guint32       parasite_size;
   GFigObj      *gfig;
 
-  parasite = gimp_item_get_parasite (GIMP_ITEM (gfig_context->drawable),
+  parasite = ligma_item_get_parasite (LIGMA_ITEM (gfig_context->drawable),
                                      "gfig");
   if (! parasite)
     return NULL;
 
-  file  = gimp_temp_file ("gfigtmp");
+  file  = ligma_temp_file ("gfigtmp");
 
   fp = g_fopen (g_file_peek_path (file), "wb");
   if (! fp)
     {
       g_message (_("Error trying to open temporary file '%s' "
                    "for parasite loading: %s"),
-                 gimp_file_get_utf8_name (file), g_strerror (errno));
+                 ligma_file_get_utf8_name (file), g_strerror (errno));
       return NULL;
     }
 
-  parasite_data = gimp_parasite_get_data (parasite, &parasite_size);
+  parasite_data = ligma_parasite_get_data (parasite, &parasite_size);
   fwrite (parasite_data, sizeof (guchar), parasite_size, fp);
   fclose (fp);
 
-  gimp_parasite_free (parasite);
+  ligma_parasite_free (parasite);
 
   gfig = gfig_load (g_file_peek_path (file), "(none)");
 
@@ -844,7 +844,7 @@ gfig_save_callbk (void)
   if (!fp)
     {
       g_message (_("Could not open '%s' for writing: %s"),
-                 gimp_filename_to_utf8 (savename), g_strerror (errno));
+                 ligma_filename_to_utf8 (savename), g_strerror (errno));
       return;
     }
 

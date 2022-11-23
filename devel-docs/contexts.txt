@@ -4,14 +4,14 @@ contexts.txt
 Introduction
 ------------
 
-This file describes how GimpContexts are used in GIMP.
+This file describes how LigmaContexts are used in LIGMA.
 
 
 Overview
 --------
 
 One important context is the so called "user context",
-gimp_get_user_context(). This context keeps track on what image the
+ligma_get_user_context(). This context keeps track on what image the
 user currently has active, for example. Dock windows have their own
 context which does not necessarily mirror the user context. A dock
 window can be set to show information for a specific image. Plug-ins
@@ -23,7 +23,7 @@ Communication between contexts
 
 So how do the various contexts synchronize and propagate changes?
 This is most easily explained by a sequence diagram. Let's say there
-are two image windows with different images opened in GIMP. Call them
+are two image windows with different images opened in LIGMA. Call them
 A and B. Let's say A is currently active. When the user activates B,
 this is the sequence of events from the focus event to the layers
 dockable have been updated with the new image. To understand the
@@ -33,21 +33,21 @@ factory getter), and the layer dockable have connected a signal
 handler to image changes in the dock window context. The sequence of
 events is as follows:
 
-                    GimpContext                  GimpContext   GimpItemTreeView,
- GimpDisplayShell      user      GimpDockWindow  dock window   GimpLayerTreeView
+                    LigmaContext                  LigmaContext   LigmaItemTreeView,
+ LigmaDisplayShell      user      LigmaDockWindow  dock window   LigmaLayerTreeView
 
         |                |              |              |             |
  focus event             |              |              |             |
 ------->|                |              |              |             |
-        |  gimp_context_set_display()   |              |             |
+        |  ligma_context_set_display()   |              |             |
         |--------------->|----------+   |              |             |
         |                |          |   |              |             |
-        |  gimp_context_set_image() |   |              |             |
+        |  ligma_context_set_image() |   |              |             |
         |                |<---------+   |              |             |
         |                |              |              |             |
         |                |    "image-changed"          |             |
         |                |------------->|              |             |
-        |                |              |  gimp_context_set_image()  |
+        |                |              |  ligma_context_set_image()  |
         |                |              |------------->|             |
         |                |              |              |      "image-changed" /
         |                |              |              |         set_image()
@@ -60,16 +60,16 @@ the dockables are updated with their new context, just as when moving
 a dockable between different dock windows and thus also different
 contexts. The sequence diagram for single-window mode is:
 
-                    GimpContext  GimpItemTreeView
- GimpDisplayShell      user      GimpLayerTreeView
+                    LigmaContext  LigmaItemTreeView
+ LigmaDisplayShell      user      LigmaLayerTreeView
 
         |                |              |
  focus event             |              |
 ------->|                |              |
-        |  gimp_context_set_display()   |
+        |  ligma_context_set_display()   |
         |--------------->|----------+   |
         |                |          |   |
-        |  gimp_context_set_image() |   |
+        |  ligma_context_set_image() |   |
         |                |<---------+   |
         |                |              |
         |                |    "image-changed" /

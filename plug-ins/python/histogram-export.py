@@ -32,7 +32,7 @@ from the current drawable only.;
 The output is in "weighted pixels" - meaning
 all fully transparent pixels are not counted.
 
-Check the gimp-histogram call
+Check the ligma-histogram call
 """
 
 import csv
@@ -40,10 +40,10 @@ import math
 import sys
 
 import gi
-gi.require_version('Gimp', '3.0')
-from gi.repository import Gimp
-gi.require_version('GimpUi', '3.0')
-from gi.repository import GimpUi
+gi.require_version('Ligma', '3.0')
+from gi.repository import Ligma
+gi.require_version('LigmaUi', '3.0')
+from gi.repository import LigmaUi
 from gi.repository import GObject
 from gi.repository import GLib
 from gi.repository import Gio
@@ -102,17 +102,17 @@ def histogram_export(procedure, img, layers, gio_file,
     layer = layers[0]
     if sample_average:
         new_img = img.duplicate()
-        layer = new_img.merge_visible_layers(Gimp.MergeType.CLIP_TO_IMAGE)
+        layer = new_img.merge_visible_layers(Ligma.MergeType.CLIP_TO_IMAGE)
 
     channels_txt = ["Value"]
-    channels_gimp = [Gimp.HistogramChannel.VALUE]
+    channels_ligma = [Ligma.HistogramChannel.VALUE]
     if layer.is_rgb():
         channels_txt += ["Red", "Green", "Blue", "Luminance"]
-        channels_gimp += [Gimp.HistogramChannel.RED, Gimp.HistogramChannel.GREEN, Gimp.HistogramChannel.BLUE,
-                          Gimp.HistogramChannel.LUMINANCE]
+        channels_ligma += [Ligma.HistogramChannel.RED, Ligma.HistogramChannel.GREEN, Ligma.HistogramChannel.BLUE,
+                          Ligma.HistogramChannel.LUMINANCE]
     if layer.has_alpha():
         channels_txt += ["Alpha"]
-        channels_gimp += [Gimp.HistogramChannel.ALPHA]
+        channels_ligma += [Ligma.HistogramChannel.ALPHA]
 
     try:
         with open(gio_file.get_path(), "wt") as hfile:
@@ -131,10 +131,10 @@ def histogram_export(procedure, img, layers, gio_file,
                     break
 
                 row = [start_range]
-                for channel in channels_gimp:
-                    result = Gimp.get_pdb().run_procedure('gimp-drawable-histogram',
-                                                          [ GObject.Value(Gimp.Drawable, layer),
-                                                            GObject.Value(Gimp.HistogramChannel, channel),
+                for channel in channels_ligma:
+                    result = Ligma.get_pdb().run_procedure('ligma-drawable-histogram',
+                                                          [ GObject.Value(Ligma.Drawable, layer),
+                                                            GObject.Value(Ligma.HistogramChannel, channel),
                                                             GObject.Value(GObject.TYPE_DOUBLE,
                                                                           float(start_range)),
                                                             GObject.Value(GObject.TYPE_DOUBLE,
@@ -162,19 +162,19 @@ def histogram_export(procedure, img, layers, gio_file,
                         while Gtk.events_pending():
                             Gtk.main_iteration()
     except IsADirectoryError:
-        return procedure.new_return_values(Gimp.PDBStatusType.EXECUTION_ERROR,
+        return procedure.new_return_values(Ligma.PDBStatusType.EXECUTION_ERROR,
                                            GLib.Error(_("File is either a directory or file name is empty.")))
     except FileNotFoundError:
-        return procedure.new_return_values(Gimp.PDBStatusType.EXECUTION_ERROR,
+        return procedure.new_return_values(Ligma.PDBStatusType.EXECUTION_ERROR,
                                            GLib.Error(_("Directory not found.")))
     except PermissionError:
-        return procedure.new_return_values(Gimp.PDBStatusType.EXECUTION_ERROR,
+        return procedure.new_return_values(Ligma.PDBStatusType.EXECUTION_ERROR,
                                            GLib.Error("You do not have permissions to write that file."))
 
     if sample_average:
         new_img.delete()
 
-    return procedure.new_return_values(Gimp.PDBStatusType.SUCCESS, GLib.Error())
+    return procedure.new_return_values(Ligma.PDBStatusType.SUCCESS, GLib.Error())
 
 
 def run(procedure, run_mode, image, n_layers, layers, args, data):
@@ -186,7 +186,7 @@ def run(procedure, run_mode, image, n_layers, layers, args, data):
     progress_bar = None
     config = None
 
-    if run_mode == Gimp.RunMode.INTERACTIVE:
+    if run_mode == Ligma.RunMode.INTERACTIVE:
 
         config = procedure.create_config()
 
@@ -197,9 +197,9 @@ def run(procedure, run_mode, image, n_layers, layers, args, data):
         #config.set_property("output_format", output_format)
         config.begin_run(image, run_mode, args)
 
-        GimpUi.init("histogram-export.py")
+        LigmaUi.init("histogram-export.py")
         use_header_bar = Gtk.Settings.get_default().get_property("gtk-dialogs-use-header")
-        dialog = GimpUi.Dialog(use_header_bar=use_header_bar,
+        dialog = LigmaUi.Dialog(use_header_bar=use_header_bar,
                              title=_("Histogram Export..."))
         dialog.add_button("_Cancel", Gtk.ResponseType.CANCEL)
         dialog.add_button("_OK", Gtk.ResponseType.OK)
@@ -250,12 +250,12 @@ def run(procedure, run_mode, image, n_layers, layers, args, data):
         label = Gtk.Label.new_with_mnemonic(_("_Bucket Size"))
         grid.attach(label, 0, 1, 1, 1)
         label.show()
-        spin = GimpUi.prop_spin_button_new(config, "bucket_size", step_increment=0.001, page_increment=0.1, digits=3)
+        spin = LigmaUi.prop_spin_button_new(config, "bucket_size", step_increment=0.001, page_increment=0.1, digits=3)
         grid.attach(spin, 1, 1, 1, 1)
         spin.show()
 
         # Sample average parameter
-        spin = GimpUi.prop_check_button_new(config, "sample_average", _("Sample _Average"))
+        spin = LigmaUi.prop_check_button_new(config, "sample_average", _("Sample _Average"))
         spin.set_tooltip_text(_("If checked, the histogram is generated from merging all visible layers."
                                 " Otherwise, the histogram is only for the current layer."))
         grid.attach(spin, 1, 2, 1, 1)
@@ -265,7 +265,7 @@ def run(procedure, run_mode, image, n_layers, layers, args, data):
         label = Gtk.Label.new_with_mnemonic(_("_Output Format"))
         grid.attach(label, 0, 3, 1, 1)
         label.show()
-        combo = GimpUi.prop_string_combo_box_new(config, "output_format", output_format_enum.get_tree_model(), 0, 1)
+        combo = LigmaUi.prop_string_combo_box_new(config, "output_format", output_format_enum.get_tree_model(), 0, 1)
         grid.attach(combo, 1, 3, 1, 1)
         combo.show()
 
@@ -275,7 +275,7 @@ def run(procedure, run_mode, image, n_layers, layers, args, data):
 
         dialog.show()
         if dialog.run() != Gtk.ResponseType.OK:
-            return procedure.new_return_values(Gimp.PDBStatusType.CANCEL,
+            return procedure.new_return_values(Ligma.PDBStatusType.CANCEL,
                                                GLib.Error())
 
         # Extract values from UI
@@ -286,31 +286,31 @@ def run(procedure, run_mode, image, n_layers, layers, args, data):
 
     if gio_file is None:
         error = 'No file given'
-        return procedure.new_return_values(Gimp.PDBStatusType.CALLING_ERROR,
+        return procedure.new_return_values(Ligma.PDBStatusType.CALLING_ERROR,
                                            GLib.Error(error))
 
     result = histogram_export(procedure, image, layers, gio_file,
                               bucket_size, sample_average, output_format, progress_bar)
 
     # If the execution was successful, save parameters so they will be restored next time we show dialog.
-    if result.index(0) == Gimp.PDBStatusType.SUCCESS and config is not None:
-        config.end_run(Gimp.PDBStatusType.SUCCESS)
+    if result.index(0) == Ligma.PDBStatusType.SUCCESS and config is not None:
+        config.end_run(Ligma.PDBStatusType.SUCCESS)
 
     return result
 
 
-class HistogramExport(Gimp.PlugIn):
+class HistogramExport(Ligma.PlugIn):
 
     ## Parameters ##
     __gproperties__ = {
         # "filename": (str,
         #              # TODO: I wanted this property to be a path (and not just str) , so I could use
         #              # prop_file_chooser_button_new to open a file dialog. However, it fails without an error message.
-        #              # Gimp.ConfigPath,
+        #              # Ligma.ConfigPath,
         #              _("Histogram _File"),
         #              _("Histogram _File"),
         #              "histogram_export.csv",
-        #              # Gimp.ConfigPathType.FILE,
+        #              # Ligma.ConfigPathType.FILE,
         #              GObject.ParamFlags.READWRITE),
         "file": (Gio.File,
                  _("Histogram _File"),
@@ -333,9 +333,9 @@ class HistogramExport(Gimp.PlugIn):
                           GObject.ParamFlags.READWRITE),
     }
 
-    ## GimpPlugIn virtual methods ##
+    ## LigmaPlugIn virtual methods ##
     def do_set_i18n(self, procname):
-        return True, 'gimp30-python', None
+        return True, 'ligma30-python', None
 
     def do_query_procedures(self):
         return ['histogram-export']
@@ -343,8 +343,8 @@ class HistogramExport(Gimp.PlugIn):
     def do_create_procedure(self, name):
         procedure = None
         if name == 'histogram-export':
-            procedure = Gimp.ImageProcedure.new(self, name,
-                                                Gimp.PDBProcType.PLUGIN,
+            procedure = Ligma.ImageProcedure.new(self, name,
+                                                Ligma.PDBProcType.PLUGIN,
                                                 run, None)
 
             procedure.set_image_types("*")
@@ -366,4 +366,4 @@ class HistogramExport(Gimp.PlugIn):
         return procedure
 
 
-Gimp.main(HistogramExport.__gtype__, sys.argv)
+Ligma.main(HistogramExport.__gtype__, sys.argv)

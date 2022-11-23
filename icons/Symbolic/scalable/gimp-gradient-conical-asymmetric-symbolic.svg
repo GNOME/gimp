@@ -15,7 +15,7 @@
    width="16"
    version="1.1"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="gimp-gradient-conical-asymmetric.svg">
+   sodipodi:docname="ligma-gradient-conical-asymmetric.svg">
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -50,7 +50,7 @@
             <dc:title>Barbara Muraus, Jakub Steiner, Klaus Staedtler</dc:title>
           </cc:Agent>
         </dc:contributor>
-        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for GIMP</dc:description>
+        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for LIGMA</dc:description>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -220,7 +220,7 @@
      style="display:inline"
      id="stock">
     <g
-       id="gimp-gradient-conical-asymmetric"
+       id="ligma-gradient-conical-asymmetric"
        style="display:inline"
        transform="translate(-2.7171208,-328.05274)">
       <path

@@ -108,7 +108,7 @@ Brush Tab
 
 This tab now contains a preview of the selected brush in black ink. If the
 brush is too large to fit in the preview use the mouse button to "move" it
-around (as with the brush dialog in the main GIMP - until that brush 
+around (as with the brush dialog in the main LIGMA - until that brush 
 patch went in!).
 
 Four types of brush can be used:-
@@ -121,11 +121,11 @@ nifty anims can be created with this option.
 
 Pencil brush
 ~~~~~~~~~~~~
-Same as the GIMPS pencil. 
+Same as the LIGMAS pencil. 
 
 Airbrush
 ~~~~~~~~
-As GIMPS airbrush. The "pressure" can be specified and this is reflected in the
+As LIGMAS airbrush. The "pressure" can be specified and this is reflected in the
 preview window.
 
 Pattern
@@ -134,7 +134,7 @@ The lines are drawn with the currently selected pattern. The preview will
 show this pattern.
 
 Note a patch to enable a couple of "hidden" paintbrush features was recently
-posted to the GIMP developers list. The patch only allowed these features
+posted to the LIGMA developers list. The patch only allowed these features
 to be called via the UI and not the PDB so they cannot be used by Gfig. If they were exported via the PDB then they would have probably broken a number of 
 scripts and Gfig itself (number of args changes on the PDB call).
 
@@ -246,7 +246,7 @@ The buttons on the right of the list area allow the following operations:-
 Rescan:-
 This popus up a window which allows you to add directories to the internal 
 gfig-path.  A (re)scan of these directories can the performed. Note any 
-modification to the gfig-path will NOT be mirrored in your ~/.gimp/gimprc file.
+modification to the gfig-path will NOT be mirrored in your ~/.ligma/ligmarc file.
 
 Load:-
 Allows you to load a single collection of objects.
@@ -277,7 +277,7 @@ Edit:-
 Same as the "Edit button".
 
 Double click on entry with Button 1 popups up a dialog that allows you to 
-modify the nme of an entry (similar to other list areas in GIMP).
+modify the nme of an entry (similar to other list areas in LIGMA).
 
 Bezier
 ~~~~~~

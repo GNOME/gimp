@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimp-shm.h
+ * ligma-shm.h
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -18,18 +18,18 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SHM_H__
-#define __GIMP_SHM_H__
+#ifndef __LIGMA_SHM_H__
+#define __LIGMA_SHM_H__
 
 G_BEGIN_DECLS
 
 
-guchar * _gimp_shm_addr  (void);
+guchar * _ligma_shm_addr  (void);
 
-void     _gimp_shm_open  (gint shm_ID);
-void     _gimp_shm_close (void);
+void     _ligma_shm_open  (gint shm_ID);
+void     _ligma_shm_close (void);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_SHM_H__ */
+#endif /* __LIGMA_SHM_H__ */

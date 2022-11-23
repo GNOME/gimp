@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpText
- * Copyright (C) 2002-2003  Sven Neumann <sven@gimp.org>
+ * LigmaText
+ * Copyright (C) 2002-2003  Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,24 +26,24 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <pango/pangocairo.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmamath/ligmamath.h"
 
 #include "text-types.h"
 
-#include "core/gimperror.h"
+#include "core/ligmaerror.h"
 
-#include "gimptext.h"
-#include "gimptextlayout.h"
+#include "ligmatext.h"
+#include "ligmatextlayout.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
-struct _GimpTextLayout
+struct _LigmaTextLayout
 {
   GObject         object;
 
-  GimpText       *text;
+  LigmaText       *text;
   gdouble         xres;
   gdouble         yres;
   PangoLayout    *layout;
@@ -51,41 +51,41 @@ struct _GimpTextLayout
 };
 
 
-static void           gimp_text_layout_finalize   (GObject        *object);
+static void           ligma_text_layout_finalize   (GObject        *object);
 
-static void           gimp_text_layout_position   (GimpTextLayout *layout);
-static void           gimp_text_layout_set_markup (GimpTextLayout *layout,
+static void           ligma_text_layout_position   (LigmaTextLayout *layout);
+static void           ligma_text_layout_set_markup (LigmaTextLayout *layout,
                                                    GError        **error);
 
-static PangoContext * gimp_text_get_pango_context (GimpText       *text,
+static PangoContext * ligma_text_get_pango_context (LigmaText       *text,
                                                    gdouble         xres,
                                                    gdouble         yres);
 
 
-G_DEFINE_TYPE (GimpTextLayout, gimp_text_layout, G_TYPE_OBJECT)
+G_DEFINE_TYPE (LigmaTextLayout, ligma_text_layout, G_TYPE_OBJECT)
 
-#define parent_class gimp_text_layout_parent_class
+#define parent_class ligma_text_layout_parent_class
 
 
 static void
-gimp_text_layout_class_init (GimpTextLayoutClass *klass)
+ligma_text_layout_class_init (LigmaTextLayoutClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->finalize = gimp_text_layout_finalize;
+  object_class->finalize = ligma_text_layout_finalize;
 }
 
 static void
-gimp_text_layout_init (GimpTextLayout *layout)
+ligma_text_layout_init (LigmaTextLayout *layout)
 {
   layout->text   = NULL;
   layout->layout = NULL;
 }
 
 static void
-gimp_text_layout_finalize (GObject *object)
+ligma_text_layout_finalize (GObject *object)
 {
-  GimpTextLayout *layout = GIMP_TEXT_LAYOUT (object);
+  LigmaTextLayout *layout = LIGMA_TEXT_LAYOUT (object);
 
   if (layout->text)
     {
@@ -102,32 +102,32 @@ gimp_text_layout_finalize (GObject *object)
 }
 
 
-GimpTextLayout *
-gimp_text_layout_new (GimpText  *text,
+LigmaTextLayout *
+ligma_text_layout_new (LigmaText  *text,
                       gdouble    xres,
                       gdouble    yres,
                       GError   **error)
 {
-  GimpTextLayout       *layout;
+  LigmaTextLayout       *layout;
   PangoContext         *context;
   PangoFontDescription *font_desc;
   PangoAlignment        alignment = PANGO_ALIGN_LEFT;
   gint                  size;
 
-  g_return_val_if_fail (GIMP_IS_TEXT (text), NULL);
+  g_return_val_if_fail (LIGMA_IS_TEXT (text), NULL);
 
   font_desc = pango_font_description_from_string (text->font);
   g_return_val_if_fail (font_desc != NULL, NULL);
 
-  size = pango_units_from_double (gimp_units_to_points (text->font_size,
+  size = pango_units_from_double (ligma_units_to_points (text->font_size,
                                                         text->unit,
                                                         yres));
 
   pango_font_description_set_size (font_desc, MAX (1, size));
 
-  context = gimp_text_get_pango_context (text, xres, yres);
+  context = ligma_text_get_pango_context (text, xres, yres);
 
-  layout = g_object_new (GIMP_TYPE_TEXT_LAYOUT, NULL);
+  layout = g_object_new (LIGMA_TYPE_TEXT_LAYOUT, NULL);
 
   layout->text   = g_object_ref (text);
   layout->layout = pango_layout_new (context);
@@ -139,20 +139,20 @@ gimp_text_layout_new (GimpText  *text,
   pango_layout_set_font_description (layout->layout, font_desc);
   pango_font_description_free (font_desc);
 
-  gimp_text_layout_set_markup (layout, error);
+  ligma_text_layout_set_markup (layout, error);
 
   switch (text->justify)
     {
-    case GIMP_TEXT_JUSTIFY_LEFT:
+    case LIGMA_TEXT_JUSTIFY_LEFT:
       alignment = PANGO_ALIGN_LEFT;
       break;
-    case GIMP_TEXT_JUSTIFY_RIGHT:
+    case LIGMA_TEXT_JUSTIFY_RIGHT:
       alignment = PANGO_ALIGN_RIGHT;
       break;
-    case GIMP_TEXT_JUSTIFY_CENTER:
+    case LIGMA_TEXT_JUSTIFY_CENTER:
       alignment = PANGO_ALIGN_CENTER;
       break;
-    case GIMP_TEXT_JUSTIFY_FILL:
+    case LIGMA_TEXT_JUSTIFY_FILL:
       alignment = PANGO_ALIGN_LEFT;
       pango_layout_set_justify (layout->layout, TRUE);
       break;
@@ -162,19 +162,19 @@ gimp_text_layout_new (GimpText  *text,
 
   switch (text->box_mode)
     {
-    case GIMP_TEXT_BOX_DYNAMIC:
+    case LIGMA_TEXT_BOX_DYNAMIC:
       break;
-    case GIMP_TEXT_BOX_FIXED:
+    case LIGMA_TEXT_BOX_FIXED:
       if (! PANGO_GRAVITY_IS_VERTICAL (pango_context_get_base_gravity (context)))
         pango_layout_set_width (layout->layout,
                                 pango_units_from_double
-                                (gimp_units_to_pixels (text->box_width,
+                                (ligma_units_to_pixels (text->box_width,
                                                        text->box_unit,
                                                        xres)));
       else
         pango_layout_set_width (layout->layout,
                                 pango_units_from_double
-                                (gimp_units_to_pixels (text->box_height,
+                                (ligma_units_to_pixels (text->box_height,
                                                        text->box_unit,
                                                        yres)));
       break;
@@ -182,26 +182,26 @@ gimp_text_layout_new (GimpText  *text,
 
   pango_layout_set_indent (layout->layout,
                            pango_units_from_double
-                           (gimp_units_to_pixels (text->indent,
+                           (ligma_units_to_pixels (text->indent,
                                                   text->unit,
                                                   xres)));
   pango_layout_set_spacing (layout->layout,
                             pango_units_from_double
-                            (gimp_units_to_pixels (text->line_spacing,
+                            (ligma_units_to_pixels (text->line_spacing,
                                                    text->unit,
                                                    yres)));
 
-  gimp_text_layout_position (layout);
+  ligma_text_layout_position (layout);
 
   switch (text->box_mode)
     {
-    case GIMP_TEXT_BOX_DYNAMIC:
+    case LIGMA_TEXT_BOX_DYNAMIC:
       break;
-    case GIMP_TEXT_BOX_FIXED:
-      layout->extents.width  = ceil (gimp_units_to_pixels (text->box_width,
+    case LIGMA_TEXT_BOX_FIXED:
+      layout->extents.width  = ceil (ligma_units_to_pixels (text->box_width,
                                                            text->box_unit,
                                                            xres));
-      layout->extents.height = ceil (gimp_units_to_pixels (text->box_height,
+      layout->extents.height = ceil (ligma_units_to_pixels (text->box_height,
                                                            text->box_unit,
                                                            yres));
 
@@ -220,11 +220,11 @@ gimp_text_layout_new (GimpText  *text,
 }
 
 gboolean
-gimp_text_layout_get_size (GimpTextLayout *layout,
+ligma_text_layout_get_size (LigmaTextLayout *layout,
                            gint           *width,
                            gint           *height)
 {
-  g_return_val_if_fail (GIMP_IS_TEXT_LAYOUT (layout), FALSE);
+  g_return_val_if_fail (LIGMA_IS_TEXT_LAYOUT (layout), FALSE);
 
   if (width)
     *width = layout->extents.width;
@@ -236,11 +236,11 @@ gimp_text_layout_get_size (GimpTextLayout *layout,
 }
 
 void
-gimp_text_layout_get_offsets (GimpTextLayout *layout,
+ligma_text_layout_get_offsets (LigmaTextLayout *layout,
                               gint           *x,
                               gint           *y)
 {
-  g_return_if_fail (GIMP_IS_TEXT_LAYOUT (layout));
+  g_return_if_fail (LIGMA_IS_TEXT_LAYOUT (layout));
 
   if (x)
     *x = layout->extents.x;
@@ -250,11 +250,11 @@ gimp_text_layout_get_offsets (GimpTextLayout *layout,
 }
 
 void
-gimp_text_layout_get_resolution (GimpTextLayout *layout,
+ligma_text_layout_get_resolution (LigmaTextLayout *layout,
                                  gdouble        *xres,
                                  gdouble        *yres)
 {
-  g_return_if_fail (GIMP_IS_TEXT_LAYOUT (layout));
+  g_return_if_fail (LIGMA_IS_TEXT_LAYOUT (layout));
 
   if (xres)
     *xres = layout->xres;
@@ -263,37 +263,37 @@ gimp_text_layout_get_resolution (GimpTextLayout *layout,
     *yres = layout->yres;
 }
 
-GimpText *
-gimp_text_layout_get_text (GimpTextLayout *layout)
+LigmaText *
+ligma_text_layout_get_text (LigmaTextLayout *layout)
 {
-  g_return_val_if_fail (GIMP_IS_TEXT_LAYOUT (layout), NULL);
+  g_return_val_if_fail (LIGMA_IS_TEXT_LAYOUT (layout), NULL);
 
   return layout->text;
 }
 
 PangoLayout *
-gimp_text_layout_get_pango_layout (GimpTextLayout *layout)
+ligma_text_layout_get_pango_layout (LigmaTextLayout *layout)
 {
-  g_return_val_if_fail (GIMP_IS_TEXT_LAYOUT (layout), NULL);
+  g_return_val_if_fail (LIGMA_IS_TEXT_LAYOUT (layout), NULL);
 
   return layout->layout;
 }
 
 void
-gimp_text_layout_get_transform (GimpTextLayout *layout,
+ligma_text_layout_get_transform (LigmaTextLayout *layout,
                                 cairo_matrix_t *matrix)
 {
-  GimpText *text;
+  LigmaText *text;
   gdouble   xres;
   gdouble   yres;
   gdouble   norm;
 
-  g_return_if_fail (GIMP_IS_TEXT_LAYOUT (layout));
+  g_return_if_fail (LIGMA_IS_TEXT_LAYOUT (layout));
   g_return_if_fail (matrix != NULL);
 
-  text = gimp_text_layout_get_text (layout);
+  text = ligma_text_layout_get_text (layout);
 
-  gimp_text_layout_get_resolution (layout, &xres, &yres);
+  ligma_text_layout_get_resolution (layout, &xres, &yres);
 
   norm = 1.0 / yres * xres;
 
@@ -306,14 +306,14 @@ gimp_text_layout_get_transform (GimpTextLayout *layout,
 }
 
 void
-gimp_text_layout_transform_rect (GimpTextLayout *layout,
+ligma_text_layout_transform_rect (LigmaTextLayout *layout,
                                  PangoRectangle *rect)
 {
   cairo_matrix_t matrix;
   gdouble        x, y;
   gdouble        width, height;
 
-  g_return_if_fail (GIMP_IS_TEXT_LAYOUT (layout));
+  g_return_if_fail (LIGMA_IS_TEXT_LAYOUT (layout));
   g_return_if_fail (rect != NULL);
 
   x      = rect->x;
@@ -321,7 +321,7 @@ gimp_text_layout_transform_rect (GimpTextLayout *layout,
   width  = rect->width;
   height = rect->height;
 
-  gimp_text_layout_get_transform (layout, &matrix);
+  ligma_text_layout_get_transform (layout, &matrix);
 
   cairo_matrix_transform_point (&matrix, &x, &y);
   cairo_matrix_transform_distance (&matrix, &width, &height);
@@ -333,7 +333,7 @@ gimp_text_layout_transform_rect (GimpTextLayout *layout,
 }
 
 void
-gimp_text_layout_transform_point (GimpTextLayout *layout,
+ligma_text_layout_transform_point (LigmaTextLayout *layout,
                                   gdouble        *x,
                                   gdouble        *y)
 {
@@ -341,12 +341,12 @@ gimp_text_layout_transform_point (GimpTextLayout *layout,
   gdouble        _x = 0.0;
   gdouble        _y = 0.0;
 
-  g_return_if_fail (GIMP_IS_TEXT_LAYOUT (layout));
+  g_return_if_fail (LIGMA_IS_TEXT_LAYOUT (layout));
 
   if (x) _x = *x;
   if (y) _y = *y;
 
-  gimp_text_layout_get_transform (layout, &matrix);
+  ligma_text_layout_get_transform (layout, &matrix);
 
   cairo_matrix_transform_point (&matrix, &_x, &_y);
 
@@ -355,7 +355,7 @@ gimp_text_layout_transform_point (GimpTextLayout *layout,
 }
 
 void
-gimp_text_layout_transform_distance (GimpTextLayout *layout,
+ligma_text_layout_transform_distance (LigmaTextLayout *layout,
                                      gdouble        *x,
                                      gdouble        *y)
 {
@@ -363,12 +363,12 @@ gimp_text_layout_transform_distance (GimpTextLayout *layout,
   gdouble        _x = 0.0;
   gdouble        _y = 0.0;
 
-  g_return_if_fail (GIMP_IS_TEXT_LAYOUT (layout));
+  g_return_if_fail (LIGMA_IS_TEXT_LAYOUT (layout));
 
   if (x) _x = *x;
   if (y) _y = *y;
 
-  gimp_text_layout_get_transform (layout, &matrix);
+  ligma_text_layout_get_transform (layout, &matrix);
 
   cairo_matrix_transform_distance (&matrix, &_x, &_y);
 
@@ -377,14 +377,14 @@ gimp_text_layout_transform_distance (GimpTextLayout *layout,
 }
 
 void
-gimp_text_layout_untransform_rect (GimpTextLayout *layout,
+ligma_text_layout_untransform_rect (LigmaTextLayout *layout,
                                    PangoRectangle *rect)
 {
   cairo_matrix_t matrix;
   gdouble        x, y;
   gdouble        width, height;
 
-  g_return_if_fail (GIMP_IS_TEXT_LAYOUT (layout));
+  g_return_if_fail (LIGMA_IS_TEXT_LAYOUT (layout));
   g_return_if_fail (rect != NULL);
 
   x      = rect->x;
@@ -392,7 +392,7 @@ gimp_text_layout_untransform_rect (GimpTextLayout *layout,
   width  = rect->width;
   height = rect->height;
 
-  gimp_text_layout_get_transform (layout, &matrix);
+  ligma_text_layout_get_transform (layout, &matrix);
 
   if (cairo_matrix_invert (&matrix) == CAIRO_STATUS_SUCCESS)
     {
@@ -407,7 +407,7 @@ gimp_text_layout_untransform_rect (GimpTextLayout *layout,
 }
 
 void
-gimp_text_layout_untransform_point (GimpTextLayout *layout,
+ligma_text_layout_untransform_point (LigmaTextLayout *layout,
                                     gdouble        *x,
                                     gdouble        *y)
 {
@@ -415,12 +415,12 @@ gimp_text_layout_untransform_point (GimpTextLayout *layout,
   gdouble        _x = 0.0;
   gdouble        _y = 0.0;
 
-  g_return_if_fail (GIMP_IS_TEXT_LAYOUT (layout));
+  g_return_if_fail (LIGMA_IS_TEXT_LAYOUT (layout));
 
   if (x) _x = *x;
   if (y) _y = *y;
 
-  gimp_text_layout_get_transform (layout, &matrix);
+  ligma_text_layout_get_transform (layout, &matrix);
 
   if (cairo_matrix_invert (&matrix) == CAIRO_STATUS_SUCCESS)
     {
@@ -432,7 +432,7 @@ gimp_text_layout_untransform_point (GimpTextLayout *layout,
 }
 
 void
-gimp_text_layout_untransform_distance (GimpTextLayout *layout,
+ligma_text_layout_untransform_distance (LigmaTextLayout *layout,
                                        gdouble        *x,
                                        gdouble        *y)
 {
@@ -440,12 +440,12 @@ gimp_text_layout_untransform_distance (GimpTextLayout *layout,
   gdouble        _x = 0.0;
   gdouble        _y = 0.0;
 
-  g_return_if_fail (GIMP_IS_TEXT_LAYOUT (layout));
+  g_return_if_fail (LIGMA_IS_TEXT_LAYOUT (layout));
 
   if (x) _x = *x;
   if (y) _y = *y;
 
-  gimp_text_layout_get_transform (layout, &matrix);
+  ligma_text_layout_get_transform (layout, &matrix);
 
   if (cairo_matrix_invert (&matrix) == CAIRO_STATUS_SUCCESS)
     {
@@ -457,7 +457,7 @@ gimp_text_layout_untransform_distance (GimpTextLayout *layout,
 }
 
 static gboolean
-gimp_text_layout_split_markup (const gchar  *markup,
+ligma_text_layout_split_markup (const gchar  *markup,
                                gchar       **open_tag,
                                gchar       **content,
                                gchar       **close_tag)
@@ -494,16 +494,16 @@ gimp_text_layout_split_markup (const gchar  *markup,
 }
 
 static gchar *
-gimp_text_layout_apply_tags (GimpTextLayout *layout,
+ligma_text_layout_apply_tags (LigmaTextLayout *layout,
                              const gchar    *markup)
 {
-  GimpText *text = layout->text;
+  LigmaText *text = layout->text;
   gchar    *result;
 
   {
     guchar r, g, b;
 
-    gimp_rgb_get_uchar (&text->color, &r, &g, &b);
+    ligma_rgb_get_uchar (&text->color, &r, &g, &b);
 
     result = g_strdup_printf ("<span color=\"#%02x%02x%02x\">%s</span>",
                               r, g, b, markup);
@@ -531,10 +531,10 @@ gimp_text_layout_apply_tags (GimpTextLayout *layout,
 }
 
 static void
-gimp_text_layout_set_markup (GimpTextLayout  *layout,
+ligma_text_layout_set_markup (LigmaTextLayout  *layout,
                              GError         **error)
 {
-  GimpText *text      = layout->text;
+  LigmaText *text      = layout->text;
   gchar    *open_tag  = NULL;
   gchar    *content   = NULL;
   gchar    *close_tag = NULL;
@@ -543,7 +543,7 @@ gimp_text_layout_set_markup (GimpTextLayout  *layout,
 
   if (text->markup)
     {
-      if (! gimp_text_layout_split_markup (text->markup,
+      if (! ligma_text_layout_split_markup (text->markup,
                                            &open_tag, &content, &close_tag))
         {
           open_tag  = g_strdup ("<markup>");
@@ -562,7 +562,7 @@ gimp_text_layout_set_markup (GimpTextLayout  *layout,
         content = g_strdup ("");
     }
 
-  tagged = gimp_text_layout_apply_tags (layout, content);
+  tagged = ligma_text_layout_apply_tags (layout, content);
 
   g_free (content);
 
@@ -581,16 +581,16 @@ gimp_text_layout_set_markup (GimpTextLayout  *layout,
           /* Errors from pango lib are not accurate enough.
            * Other possible error codes are: G_MARKUP_ERROR_UNKNOWN_ELEMENT
            * and G_MARKUP_ERROR_UNKNOWN_ATTRIBUTE, which likely indicate a bug
-           * in GIMP code or a pango library version issue.
+           * in LIGMA code or a pango library version issue.
            * G_MARKUP_ERROR_INVALID_CONTENT on the other hand likely indicates
            * size/color/style/weight/variant/etc. value issue. Font size is the
-           * only free text in GIMP GUI so we assume that must be it.
+           * only free text in LIGMA GUI so we assume that must be it.
            * Also we output a custom message because pango's error->message is
            * too technical (telling of <span> tags, not using user's font size
            * unit, and such). */
           g_error_free (*error);
           *error = NULL;
-          g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+          g_set_error_literal (error, LIGMA_ERROR, LIGMA_FAILED,
                                _("The new text layout cannot be generated. "
                                  "Most likely the font size is too big."));
         }
@@ -602,7 +602,7 @@ gimp_text_layout_set_markup (GimpTextLayout  *layout,
 }
 
 static void
-gimp_text_layout_position (GimpTextLayout *layout)
+ligma_text_layout_position (LigmaTextLayout *layout)
 {
   PangoRectangle  ink;
   PangoRectangle  logical;
@@ -652,17 +652,17 @@ gimp_text_layout_position (GimpTextLayout *layout)
   if (pango_layout_get_width (layout->layout) > 0)
     {
       PangoAlignment    align    = pango_layout_get_alignment (layout->layout);
-      GimpTextDirection base_dir = layout->text->base_dir;
+      LigmaTextDirection base_dir = layout->text->base_dir;
       gint              width;
 
       pango_layout_get_pixel_size (layout->layout, &width, NULL);
 
-      if ((base_dir == GIMP_TEXT_DIRECTION_LTR && align == PANGO_ALIGN_RIGHT) ||
-          (base_dir == GIMP_TEXT_DIRECTION_RTL && align == PANGO_ALIGN_LEFT) ||
-          (base_dir == GIMP_TEXT_DIRECTION_TTB_RTL && align == PANGO_ALIGN_RIGHT) ||
-          (base_dir == GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT && align == PANGO_ALIGN_RIGHT) ||
-          (base_dir == GIMP_TEXT_DIRECTION_TTB_LTR && align == PANGO_ALIGN_LEFT) ||
-          (base_dir == GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT && align == PANGO_ALIGN_LEFT))
+      if ((base_dir == LIGMA_TEXT_DIRECTION_LTR && align == PANGO_ALIGN_RIGHT) ||
+          (base_dir == LIGMA_TEXT_DIRECTION_RTL && align == PANGO_ALIGN_LEFT) ||
+          (base_dir == LIGMA_TEXT_DIRECTION_TTB_RTL && align == PANGO_ALIGN_RIGHT) ||
+          (base_dir == LIGMA_TEXT_DIRECTION_TTB_RTL_UPRIGHT && align == PANGO_ALIGN_RIGHT) ||
+          (base_dir == LIGMA_TEXT_DIRECTION_TTB_LTR && align == PANGO_ALIGN_LEFT) ||
+          (base_dir == LIGMA_TEXT_DIRECTION_TTB_LTR_UPRIGHT && align == PANGO_ALIGN_LEFT))
         {
           layout->extents.x +=
             PANGO_PIXELS (pango_layout_get_width (layout->layout)) - width;
@@ -705,7 +705,7 @@ gimp_text_layout_position (GimpTextLayout *layout)
 }
 
 static cairo_font_options_t *
-gimp_text_get_font_options (GimpText *text)
+ligma_text_get_font_options (LigmaText *text)
 {
   cairo_font_options_t *options = cairo_font_options_create ();
 
@@ -715,19 +715,19 @@ gimp_text_get_font_options (GimpText *text)
 
   switch (text->hint_style)
     {
-    case GIMP_TEXT_HINT_STYLE_NONE:
+    case LIGMA_TEXT_HINT_STYLE_NONE:
       cairo_font_options_set_hint_style (options, CAIRO_HINT_STYLE_NONE);
       break;
 
-    case GIMP_TEXT_HINT_STYLE_SLIGHT:
+    case LIGMA_TEXT_HINT_STYLE_SLIGHT:
       cairo_font_options_set_hint_style (options, CAIRO_HINT_STYLE_SLIGHT);
       break;
 
-    case GIMP_TEXT_HINT_STYLE_MEDIUM:
+    case LIGMA_TEXT_HINT_STYLE_MEDIUM:
       cairo_font_options_set_hint_style (options, CAIRO_HINT_STYLE_MEDIUM);
       break;
 
-    case GIMP_TEXT_HINT_STYLE_FULL:
+    case LIGMA_TEXT_HINT_STYLE_FULL:
       cairo_font_options_set_hint_style (options, CAIRO_HINT_STYLE_FULL);
       break;
     }
@@ -736,7 +736,7 @@ gimp_text_get_font_options (GimpText *text)
 }
 
 static PangoContext *
-gimp_text_get_pango_context (GimpText *text,
+ligma_text_get_pango_context (LigmaText *text,
                              gdouble   xres,
                              gdouble   yres)
 {
@@ -754,7 +754,7 @@ gimp_text_get_pango_context (GimpText *text,
   context = pango_font_map_create_context (fontmap);
   g_object_unref (fontmap);
 
-  options = gimp_text_get_font_options (text);
+  options = ligma_text_get_font_options (text);
   pango_cairo_context_set_font_options (context, options);
   cairo_font_options_destroy (options);
 
@@ -764,37 +764,37 @@ gimp_text_get_pango_context (GimpText *text,
 
   switch (text->base_dir)
     {
-    case GIMP_TEXT_DIRECTION_LTR:
+    case LIGMA_TEXT_DIRECTION_LTR:
       pango_context_set_base_dir (context, PANGO_DIRECTION_LTR);
       pango_context_set_gravity_hint (context, PANGO_GRAVITY_HINT_NATURAL);
       pango_context_set_base_gravity (context, PANGO_GRAVITY_SOUTH);
       break;
 
-    case GIMP_TEXT_DIRECTION_RTL:
+    case LIGMA_TEXT_DIRECTION_RTL:
       pango_context_set_base_dir (context, PANGO_DIRECTION_RTL);
       pango_context_set_gravity_hint (context, PANGO_GRAVITY_HINT_NATURAL);
       pango_context_set_base_gravity (context, PANGO_GRAVITY_SOUTH);
       break;
 
-    case GIMP_TEXT_DIRECTION_TTB_RTL:
+    case LIGMA_TEXT_DIRECTION_TTB_RTL:
       pango_context_set_base_dir (context, PANGO_DIRECTION_LTR);
       pango_context_set_gravity_hint (context, PANGO_GRAVITY_HINT_LINE);
       pango_context_set_base_gravity (context, PANGO_GRAVITY_EAST);
       break;
 
-    case GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT:
+    case LIGMA_TEXT_DIRECTION_TTB_RTL_UPRIGHT:
       pango_context_set_base_dir (context, PANGO_DIRECTION_LTR);
       pango_context_set_gravity_hint (context, PANGO_GRAVITY_HINT_STRONG);
       pango_context_set_base_gravity (context, PANGO_GRAVITY_EAST);
       break;
 
-    case GIMP_TEXT_DIRECTION_TTB_LTR:
+    case LIGMA_TEXT_DIRECTION_TTB_LTR:
       pango_context_set_base_dir (context, PANGO_DIRECTION_LTR);
       pango_context_set_gravity_hint (context, PANGO_GRAVITY_HINT_LINE);
       pango_context_set_base_gravity (context, PANGO_GRAVITY_WEST);
       break;
 
-    case GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT:
+    case LIGMA_TEXT_DIRECTION_TTB_LTR_UPRIGHT:
       pango_context_set_base_dir (context, PANGO_DIRECTION_LTR);
       pango_context_set_gravity_hint (context, PANGO_GRAVITY_HINT_STRONG);
       pango_context_set_base_gravity (context, PANGO_GRAVITY_WEST);

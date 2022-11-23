@@ -1,13 +1,13 @@
-#!/usr/bin/env gimp-script-fu-interpreter-3.0
+#!/usr/bin/env ligma-script-fu-interpreter-3.0
 
 ; "Hello, World" Test v1.00 February 29, 2004
 ; by Kevin Cozens <kcozens@interlog.com>
 ;
 ; Creates an image with the text "Hello, World!"
 ; This was the first TinyScheme based script ever created and run for the
-; 2.x version of GIMP.
+; 2.x version of LIGMA.
 
-; GIMP - The GNU Image Manipulation Program
+; LIGMA - The GNU Image Manipulation Program
 ; Copyright (C) 1995 Spencer Kimball and Peter Mattis
 ;
 ; This program is free software: you can redistribute it and/or modify
@@ -29,24 +29,24 @@
   (let* (
         (width 10)
         (height 10)
-        (img (car (gimp-image-new width height RGB)))
+        (img (car (ligma-image-new width height RGB)))
         (text-layer)
         )
 
-    (gimp-context-push)
+    (ligma-context-push)
 
-    (gimp-image-undo-disable img)
-    (gimp-context-set-foreground color)
+    (ligma-image-undo-disable img)
+    (ligma-context-set-foreground color)
 
-    (set! text-layer (car (gimp-text-fontname img -1 0 0 text 10 TRUE size PIXELS font)))
-    (set! width (car (gimp-drawable-get-width text-layer)))
-    (set! height (car (gimp-drawable-get-height text-layer)))
-    (gimp-image-resize img width height 0 0)
+    (set! text-layer (car (ligma-text-fontname img -1 0 0 text 10 TRUE size PIXELS font)))
+    (set! width (car (ligma-drawable-get-width text-layer)))
+    (set! height (car (ligma-drawable-get-height text-layer)))
+    (ligma-image-resize img width height 0 0)
 
-    (gimp-image-undo-enable img)
-    (gimp-display-new img)
+    (ligma-image-undo-enable img)
+    (ligma-display-new img)
 
-    (gimp-context-pop)
+    (ligma-context-pop)
   )
 )
 

@@ -1,11 +1,11 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * Thumbnail handling according to the Thumbnail Managing Standard.
  * https://specifications.freedesktop.org/thumbnail-spec/
  *
- * Copyright (C) 2001-2003  Sven Neumann <sven@gimp.org>
- *                          Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2001-2003  Sven Neumann <sven@ligma.org>
+ *                          Michael Natterer <mitch@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -36,35 +36,35 @@
 #include <glib/gstdio.h>
 
 #ifdef G_OS_WIN32
-#include "libgimpbase/gimpwin32-io.h"
+#include "libligmabase/ligmawin32-io.h"
 #endif
 
-#include "gimpthumb-error.h"
-#include "gimpthumb-types.h"
-#include "gimpthumb-utils.h"
+#include "ligmathumb-error.h"
+#include "ligmathumb-types.h"
+#include "ligmathumb-utils.h"
 
-#include "libgimp/libgimp-intl.h"
+#include "libligma/libligma-intl.h"
 
 
 /**
- * SECTION: gimpthumb-utils
- * @title: GimpThumb-utils
- * @short_description: Utility functions provided and used by libgimpthumb
+ * SECTION: ligmathumb-utils
+ * @title: LigmaThumb-utils
+ * @short_description: Utility functions provided and used by libligmathumb
  *
- * Utility functions provided and used by libgimpthumb
+ * Utility functions provided and used by libligmathumb
  **/
 
 
-static gint           gimp_thumb_size       (GimpThumbSize  size);
-static gchar        * gimp_thumb_png_lookup (const gchar   *name,
+static gint           ligma_thumb_size       (LigmaThumbSize  size);
+static gchar        * ligma_thumb_png_lookup (const gchar   *name,
                                              const gchar   *basedir,
-                                             GimpThumbSize *size) G_GNUC_MALLOC;
-static const gchar  * gimp_thumb_png_name   (const gchar   *uri);
-static void           gimp_thumb_exit       (void);
+                                             LigmaThumbSize *size) G_GNUC_MALLOC;
+static const gchar  * ligma_thumb_png_name   (const gchar   *uri);
+static void           ligma_thumb_exit       (void);
 
 
 
-static gboolean      gimp_thumb_initialized = FALSE;
+static gboolean      ligma_thumb_initialized = FALSE;
 static gint          thumb_num_sizes        = 0;
 static gint         *thumb_sizes            = NULL;
 static const gchar **thumb_sizenames        = NULL;
@@ -74,15 +74,15 @@ static gchar        *thumb_fail_subdir      = NULL;
 
 
 /**
- * gimp_thumb_init:
+ * ligma_thumb_init:
  * @creator: an ASCII string that identifies the thumbnail creator
  * @thumb_basedir: an absolute path or %NULL to use the default
  *
  * This function initializes the thumbnail system. It must be called
- * before any other functions from libgimpthumb are used. You may call
+ * before any other functions from libligmathumb are used. You may call
  * it more than once if you want to change the @thumb_basedir but if
  * you do that, you should make sure that no thread is still using the
- * library. Apart from this function, libgimpthumb is multi-thread
+ * library. Apart from this function, libligmathumb is multi-thread
  * safe.
  *
  * The @creator string must be 7bit ASCII and should contain the name
@@ -91,14 +91,14 @@ static gchar        *thumb_fail_subdir      = NULL;
  *
  * Usually you will pass %NULL for @thumb_basedir. Thumbnails will
  * then be stored in the user's personal thumbnail directory as
- * defined in the spec. If you wish to use libgimpthumb to store
+ * defined in the spec. If you wish to use libligmathumb to store
  * application-specific thumbnails, you can specify a different base
  * directory here.
  *
  * Returns: %TRUE if the library was successfully initialized.
  **/
 gboolean
-gimp_thumb_init (const gchar *creator,
+ligma_thumb_init (const gchar *creator,
                  const gchar *thumb_basedir)
 {
   GEnumClass *enum_class;
@@ -109,8 +109,8 @@ gimp_thumb_init (const gchar *creator,
   g_return_val_if_fail (thumb_basedir == NULL ||
                         g_path_is_absolute (thumb_basedir), FALSE);
 
-  if (gimp_thumb_initialized)
-    gimp_thumb_exit ();
+  if (ligma_thumb_initialized)
+    ligma_thumb_exit ();
 
   if (thumb_basedir)
     {
@@ -159,7 +159,7 @@ gimp_thumb_init (const gchar *creator,
         }
     }
 
-  enum_class = g_type_class_ref (GIMP_TYPE_THUMB_SIZE);
+  enum_class = g_type_class_ref (LIGMA_TYPE_THUMB_SIZE);
 
   thumb_num_sizes = enum_class->n_values;
   thumb_sizes     = g_new (gint, thumb_num_sizes);
@@ -181,60 +181,60 @@ gimp_thumb_init (const gchar *creator,
 
   g_type_class_unref (enum_class);
 
-  gimp_thumb_initialized = TRUE;
+  ligma_thumb_initialized = TRUE;
 
-  return gimp_thumb_initialized;
+  return ligma_thumb_initialized;
 }
 
 /**
- * gimp_thumb_get_thumb_base_dir:
+ * ligma_thumb_get_thumb_base_dir:
  *
  * Returns the base directory of thumbnails cache.
  * It uses the Freedesktop Thumbnail Managing Standard on UNIX,
  * "~/Library/Caches/org.freedesktop.thumbnails" on OSX, and a cache
  * folder determined by glib on Windows (currently the common repository
  * for temporary Internet files).
- * The returned string belongs to GIMP and must not be changed nor freed.
+ * The returned string belongs to LIGMA and must not be changed nor freed.
  *
  * Returns: the thumbnails cache directory.
  *
  * Since: 2.10
  **/
 const gchar *
-gimp_thumb_get_thumb_base_dir (void)
+ligma_thumb_get_thumb_base_dir (void)
 {
-  g_return_val_if_fail (gimp_thumb_initialized, NULL);
+  g_return_val_if_fail (ligma_thumb_initialized, NULL);
 
   return thumb_dir;
 }
 
 /**
- * gimp_thumb_get_thumb_dir:
- * @size: a GimpThumbSize
+ * ligma_thumb_get_thumb_dir:
+ * @size: a LigmaThumbSize
  *
  * Retrieve the name of the thumbnail folder for a specific size. The
- * returned pointer will become invalid if gimp_thumb_init() is used
+ * returned pointer will become invalid if ligma_thumb_init() is used
  * again. It must not be changed or freed.
  *
  * Returns: the thumbnail directory in the encoding of the filesystem
  **/
 const gchar *
-gimp_thumb_get_thumb_dir (GimpThumbSize  size)
+ligma_thumb_get_thumb_dir (LigmaThumbSize  size)
 {
-  g_return_val_if_fail (gimp_thumb_initialized, NULL);
+  g_return_val_if_fail (ligma_thumb_initialized, NULL);
 
-  size = gimp_thumb_size (size);
+  size = ligma_thumb_size (size);
 
   return thumb_subdirs[size];
 }
 
 /**
- * gimp_thumb_get_thumb_dir_local:
+ * ligma_thumb_get_thumb_dir_local:
  * @dirname: the basename of the dir, without the actual dirname itself
- * @size:    a GimpThumbSize
+ * @size:    a LigmaThumbSize
  *
  * Retrieve the name of the local thumbnail folder for a specific
- * size.  Unlike gimp_thumb_get_thumb_dir() the returned string is not
+ * size.  Unlike ligma_thumb_get_thumb_dir() the returned string is not
  * constant and should be free'd when it is not any longer needed.
  *
  * Returns: the thumbnail directory in the encoding of the filesystem
@@ -242,21 +242,21 @@ gimp_thumb_get_thumb_dir (GimpThumbSize  size)
  * Since: 2.2
  **/
 gchar *
-gimp_thumb_get_thumb_dir_local (const gchar   *dirname,
-                                GimpThumbSize  size)
+ligma_thumb_get_thumb_dir_local (const gchar   *dirname,
+                                LigmaThumbSize  size)
 {
-  g_return_val_if_fail (gimp_thumb_initialized, NULL);
+  g_return_val_if_fail (ligma_thumb_initialized, NULL);
   g_return_val_if_fail (dirname != NULL, NULL);
-  g_return_val_if_fail (size > GIMP_THUMB_SIZE_FAIL, NULL);
+  g_return_val_if_fail (size > LIGMA_THUMB_SIZE_FAIL, NULL);
 
-  size = gimp_thumb_size (size);
+  size = ligma_thumb_size (size);
 
   return g_build_filename (dirname, thumb_sizenames[size], NULL);
 }
 
 /**
- * gimp_thumb_ensure_thumb_dir:
- * @size: a GimpThumbSize
+ * ligma_thumb_ensure_thumb_dir:
+ * @size: a LigmaThumbSize
  * @error: return location for possible errors
  *
  * This function checks if the directory that is required to store
@@ -264,20 +264,20 @@ gimp_thumb_get_thumb_dir_local (const gchar   *dirname,
  * if necessary.
  *
  * You shouldn't have to call this function directly since
- * gimp_thumbnail_save_thumb() and gimp_thumbnail_save_failure() will
+ * ligma_thumbnail_save_thumb() and ligma_thumbnail_save_failure() will
  * do this for you.
  *
  * Returns: %TRUE is the directory exists, %FALSE if it could not
  *               be created
  **/
 gboolean
-gimp_thumb_ensure_thumb_dir (GimpThumbSize   size,
+ligma_thumb_ensure_thumb_dir (LigmaThumbSize   size,
                              GError        **error)
 {
-  g_return_val_if_fail (gimp_thumb_initialized, FALSE);
+  g_return_val_if_fail (ligma_thumb_initialized, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  size = gimp_thumb_size (size);
+  size = ligma_thumb_size (size);
 
   if (g_file_test (thumb_subdirs[size], G_FILE_TEST_IS_DIR))
     return TRUE;
@@ -295,7 +295,7 @@ gimp_thumb_ensure_thumb_dir (GimpThumbSize   size,
     return TRUE;
 
   g_set_error (error,
-               GIMP_THUMB_ERROR, GIMP_THUMB_ERROR_MKDIR,
+               LIGMA_THUMB_ERROR, LIGMA_THUMB_ERROR_MKDIR,
                _("Failed to create thumbnail folder '%s'."),
                thumb_subdirs[size]);
 
@@ -303,9 +303,9 @@ gimp_thumb_ensure_thumb_dir (GimpThumbSize   size,
 }
 
 /**
- * gimp_thumb_ensure_thumb_dir_local:
+ * ligma_thumb_ensure_thumb_dir_local:
  * @dirname: the basename of the dir, without the actual dirname itself
- * @size:    a GimpThumbSize
+ * @size:    a LigmaThumbSize
  * @error:   return location for possible errors
  *
  * This function checks if the directory that is required to store
@@ -313,7 +313,7 @@ gimp_thumb_ensure_thumb_dir (GimpThumbSize   size,
  * create it if necessary.
  *
  * You shouldn't have to call this function directly since
- * gimp_thumbnail_save_thumb_local() will do this for you.
+ * ligma_thumbnail_save_thumb_local() will do this for you.
  *
  * Returns: %TRUE is the directory exists, %FALSE if it could not
  *               be created
@@ -321,20 +321,20 @@ gimp_thumb_ensure_thumb_dir (GimpThumbSize   size,
  * Since: 2.2
  **/
 gboolean
-gimp_thumb_ensure_thumb_dir_local (const gchar    *dirname,
-                                   GimpThumbSize   size,
+ligma_thumb_ensure_thumb_dir_local (const gchar    *dirname,
+                                   LigmaThumbSize   size,
                                    GError        **error)
 {
   gchar *basedir;
   gchar *subdir;
 
-  g_return_val_if_fail (gimp_thumb_initialized, FALSE);
+  g_return_val_if_fail (ligma_thumb_initialized, FALSE);
   g_return_val_if_fail (dirname != NULL, FALSE);
   g_return_val_if_fail (g_path_is_absolute (dirname), FALSE);
-  g_return_val_if_fail (size > GIMP_THUMB_SIZE_FAIL, FALSE);
+  g_return_val_if_fail (size > LIGMA_THUMB_SIZE_FAIL, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  size = gimp_thumb_size (size);
+  size = ligma_thumb_size (size);
 
   subdir = g_build_filename (dirname,
                              ".thumblocal", thumb_sizenames[size],
@@ -363,7 +363,7 @@ gimp_thumb_ensure_thumb_dir_local (const gchar    *dirname,
     }
 
   g_set_error (error,
-               GIMP_THUMB_ERROR, GIMP_THUMB_ERROR_MKDIR,
+               LIGMA_THUMB_ERROR, LIGMA_THUMB_ERROR_MKDIR,
                _("Failed to create thumbnail folder '%s'."),
                subdir);
   g_free (subdir);
@@ -372,9 +372,9 @@ gimp_thumb_ensure_thumb_dir_local (const gchar    *dirname,
 }
 
 /**
- * gimp_thumb_name_from_uri:
+ * ligma_thumb_name_from_uri:
  * @uri: an escaped URI
- * @size: a #GimpThumbSize
+ * @size: a #LigmaThumbSize
  *
  * Creates the name of the thumbnail file of the specified @size that
  * belongs to an image file located at the given @uri.
@@ -384,26 +384,26 @@ gimp_thumb_ensure_thumb_dir_local (const gchar    *dirname,
  *               thumbnail repository.
  **/
 gchar *
-gimp_thumb_name_from_uri (const gchar   *uri,
-                          GimpThumbSize  size)
+ligma_thumb_name_from_uri (const gchar   *uri,
+                          LigmaThumbSize  size)
 {
-  g_return_val_if_fail (gimp_thumb_initialized, NULL);
+  g_return_val_if_fail (ligma_thumb_initialized, NULL);
   g_return_val_if_fail (uri != NULL, NULL);
 
   if (strstr (uri, thumb_dir))
     return NULL;
 
-  size = gimp_thumb_size (size);
+  size = ligma_thumb_size (size);
 
   return g_build_filename (thumb_subdirs[size],
-                           gimp_thumb_png_name (uri),
+                           ligma_thumb_png_name (uri),
                            NULL);
 }
 
 /**
- * gimp_thumb_name_from_uri_local:
+ * ligma_thumb_name_from_uri_local:
  * @uri: an escaped URI
- * @size: a #GimpThumbSize
+ * @size: a #LigmaThumbSize
  *
  * Creates the name of a local thumbnail file of the specified @size
  * that belongs to an image file located at the given @uri. Local
@@ -416,20 +416,20 @@ gimp_thumb_name_from_uri (const gchar   *uri,
  * Since: 2.2
  **/
 gchar *
-gimp_thumb_name_from_uri_local (const gchar   *uri,
-                                GimpThumbSize  size)
+ligma_thumb_name_from_uri_local (const gchar   *uri,
+                                LigmaThumbSize  size)
 {
   gchar *filename;
   gchar *result = NULL;
 
-  g_return_val_if_fail (gimp_thumb_initialized, NULL);
+  g_return_val_if_fail (ligma_thumb_initialized, NULL);
   g_return_val_if_fail (uri != NULL, NULL);
-  g_return_val_if_fail (size > GIMP_THUMB_SIZE_FAIL, NULL);
+  g_return_val_if_fail (size > LIGMA_THUMB_SIZE_FAIL, NULL);
 
   if (strstr (uri, thumb_dir))
     return NULL;
 
-  filename = _gimp_thumb_filename_from_uri (uri);
+  filename = _ligma_thumb_filename_from_uri (uri);
 
   if (filename)
     {
@@ -438,11 +438,11 @@ gimp_thumb_name_from_uri_local (const gchar   *uri,
       if (baseuri && baseuri[0] && baseuri[1])
         {
           gchar *dirname = g_path_get_dirname (filename);
-          gint   i       = gimp_thumb_size (size);
+          gint   i       = ligma_thumb_size (size);
 
           result = g_build_filename (dirname,
                                      ".thumblocal", thumb_sizenames[i],
-                                     gimp_thumb_png_name (uri),
+                                     ligma_thumb_png_name (uri),
                                      NULL);
 
           g_free (dirname);
@@ -455,9 +455,9 @@ gimp_thumb_name_from_uri_local (const gchar   *uri,
 }
 
 /**
- * gimp_thumb_find_thumb:
+ * ligma_thumb_find_thumb:
  * @uri: an escaped URI
- * @size: pointer to a #GimpThumbSize
+ * @size: pointer to a #LigmaThumbSize
  *
  * This function attempts to locate a thumbnail for the given
  * @uri. First it tries the size that is stored at @size. If no
@@ -476,21 +476,21 @@ gimp_thumb_name_from_uri_local (const gchar   *uri,
  *               filesystem or %NULL if no thumbnail for @uri was found
  **/
 gchar *
-gimp_thumb_find_thumb (const gchar   *uri,
-                       GimpThumbSize *size)
+ligma_thumb_find_thumb (const gchar   *uri,
+                       LigmaThumbSize *size)
 {
   gchar *result;
 
-  g_return_val_if_fail (gimp_thumb_initialized, NULL);
+  g_return_val_if_fail (ligma_thumb_initialized, NULL);
   g_return_val_if_fail (uri != NULL, NULL);
   g_return_val_if_fail (size != NULL, NULL);
-  g_return_val_if_fail (*size > GIMP_THUMB_SIZE_FAIL, NULL);
+  g_return_val_if_fail (*size > LIGMA_THUMB_SIZE_FAIL, NULL);
 
-  result = gimp_thumb_png_lookup (gimp_thumb_png_name (uri), NULL, size);
+  result = ligma_thumb_png_lookup (ligma_thumb_png_name (uri), NULL, size);
 
   if (! result)
     {
-      gchar *filename = _gimp_thumb_filename_from_uri (uri);
+      gchar *filename = _ligma_thumb_filename_from_uri (uri);
 
       if (filename)
         {
@@ -500,7 +500,7 @@ gimp_thumb_find_thumb (const gchar   *uri,
             {
               gchar *dirname = g_path_get_dirname (filename);
 
-              result = gimp_thumb_png_lookup (gimp_thumb_png_name (baseuri + 1),
+              result = ligma_thumb_png_lookup (ligma_thumb_png_name (baseuri + 1),
                                               dirname, size);
 
               g_free (dirname);
@@ -514,7 +514,7 @@ gimp_thumb_find_thumb (const gchar   *uri,
 }
 
 /**
- * gimp_thumb_file_test:
+ * ligma_thumb_file_test:
  * @filename: a filename in the encoding of the filesystem
  * @mtime: return location for modification time
  * @size: return location for file size
@@ -524,16 +524,16 @@ gimp_thumb_find_thumb (const gchar   *uri,
  * checks if the given @filename exists and returns modification time
  * and file size in 64bit integer values.
  *
- * Returns: The type of the file, or #GIMP_THUMB_FILE_TYPE_NONE if
+ * Returns: The type of the file, or #LIGMA_THUMB_FILE_TYPE_NONE if
  *               the file doesn't exist.
  **/
-GimpThumbFileType
-gimp_thumb_file_test (const gchar *filename,
+LigmaThumbFileType
+ligma_thumb_file_test (const gchar *filename,
                       gint64      *mtime,
                       gint64      *size,
                       gint        *err_no)
 {
-  GimpThumbFileType  type = GIMP_THUMB_FILE_TYPE_NONE;
+  LigmaThumbFileType  type = LIGMA_THUMB_FILE_TYPE_NONE;
   GFile             *file;
   GFileInfo         *info;
 
@@ -565,15 +565,15 @@ gimp_thumb_file_test (const gchar *filename,
                                                 G_FILE_ATTRIBUTE_STANDARD_TYPE))
         {
         case G_FILE_TYPE_REGULAR:
-          type = GIMP_THUMB_FILE_TYPE_REGULAR;
+          type = LIGMA_THUMB_FILE_TYPE_REGULAR;
           break;
 
         case G_FILE_TYPE_DIRECTORY:
-          type = GIMP_THUMB_FILE_TYPE_FOLDER;
+          type = LIGMA_THUMB_FILE_TYPE_FOLDER;
           break;
 
         default:
-          type = GIMP_THUMB_FILE_TYPE_SPECIAL;
+          type = LIGMA_THUMB_FILE_TYPE_SPECIAL;
           break;
         }
 
@@ -592,7 +592,7 @@ gimp_thumb_file_test (const gchar *filename,
 }
 
 /**
- * gimp_thumbs_delete_for_uri:
+ * ligma_thumbs_delete_for_uri:
  * @uri: an escaped URI
  *
  * Deletes all thumbnails for the image file specified by @uri from the
@@ -601,16 +601,16 @@ gimp_thumb_file_test (const gchar *filename,
  * Since: 2.2
  **/
 void
-gimp_thumbs_delete_for_uri (const gchar *uri)
+ligma_thumbs_delete_for_uri (const gchar *uri)
 {
   gint i;
 
-  g_return_if_fail (gimp_thumb_initialized);
+  g_return_if_fail (ligma_thumb_initialized);
   g_return_if_fail (uri != NULL);
 
   for (i = 0; i < thumb_num_sizes; i++)
     {
-      gchar *filename = gimp_thumb_name_from_uri (uri, thumb_sizes[i]);
+      gchar *filename = ligma_thumb_name_from_uri (uri, thumb_sizes[i]);
 
       if (filename)
         {
@@ -621,7 +621,7 @@ gimp_thumbs_delete_for_uri (const gchar *uri)
 }
 
 /**
- * gimp_thumbs_delete_for_uri_local:
+ * ligma_thumbs_delete_for_uri_local:
  * @uri: an escaped URI
  *
  * Deletes all thumbnails for the image file specified by @uri from
@@ -630,16 +630,16 @@ gimp_thumbs_delete_for_uri (const gchar *uri)
  * Since: 2.2
  **/
 void
-gimp_thumbs_delete_for_uri_local (const gchar *uri)
+ligma_thumbs_delete_for_uri_local (const gchar *uri)
 {
   gint i;
 
-  g_return_if_fail (gimp_thumb_initialized);
+  g_return_if_fail (ligma_thumb_initialized);
   g_return_if_fail (uri != NULL);
 
   for (i = 0; i < thumb_num_sizes; i++)
     {
-      gchar *filename = gimp_thumb_name_from_uri_local (uri, thumb_sizes[i]);
+      gchar *filename = ligma_thumb_name_from_uri_local (uri, thumb_sizes[i]);
 
       if (filename)
         {
@@ -650,15 +650,15 @@ gimp_thumbs_delete_for_uri_local (const gchar *uri)
 }
 
 void
-_gimp_thumbs_delete_others (const gchar   *uri,
-                            GimpThumbSize  size)
+_ligma_thumbs_delete_others (const gchar   *uri,
+                            LigmaThumbSize  size)
 {
   gint i;
 
-  g_return_if_fail (gimp_thumb_initialized);
+  g_return_if_fail (ligma_thumb_initialized);
   g_return_if_fail (uri != NULL);
 
-  size = gimp_thumb_size (size);
+  size = ligma_thumb_size (size);
 
   for (i = 0; i < thumb_num_sizes; i++)
     {
@@ -667,7 +667,7 @@ _gimp_thumbs_delete_others (const gchar   *uri,
       if (i == size)
         continue;
 
-      filename = gimp_thumb_name_from_uri (uri, thumb_sizes[i]);
+      filename = ligma_thumb_name_from_uri (uri, thumb_sizes[i]);
       if (filename)
         {
           g_unlink (filename);
@@ -677,7 +677,7 @@ _gimp_thumbs_delete_others (const gchar   *uri,
 }
 
 gchar *
-_gimp_thumb_filename_from_uri (const gchar *uri)
+_ligma_thumb_filename_from_uri (const gchar *uri)
 {
   gchar *filename;
   gchar *hostname;
@@ -712,7 +712,7 @@ _gimp_thumb_filename_from_uri (const gchar *uri)
 }
 
 static void
-gimp_thumb_exit (void)
+ligma_thumb_exit (void)
 {
   gint i;
 
@@ -730,15 +730,15 @@ gimp_thumb_exit (void)
   thumb_dir              = NULL;
   thumb_subdirs          = NULL;
   thumb_fail_subdir      = NULL;
-  gimp_thumb_initialized = FALSE;
+  ligma_thumb_initialized = FALSE;
 }
 
 static gint
-gimp_thumb_size (GimpThumbSize size)
+ligma_thumb_size (LigmaThumbSize size)
 {
   gint i = 0;
 
-  if (size > GIMP_THUMB_SIZE_FAIL)
+  if (size > LIGMA_THUMB_SIZE_FAIL)
     {
       for (i = 1;
            i < thumb_num_sizes && thumb_sizes[i] < size;
@@ -753,9 +753,9 @@ gimp_thumb_size (GimpThumbSize size)
 }
 
 static gchar *
-gimp_thumb_png_lookup (const gchar   *name,
+ligma_thumb_png_lookup (const gchar   *name,
                        const gchar   *basedir,
-                       GimpThumbSize *size)
+                       LigmaThumbSize *size)
 {
   gchar  *thumb_name = NULL;
   gchar **subdirs    = NULL;
@@ -771,7 +771,7 @@ gimp_thumb_png_lookup (const gchar   *name,
 
           subdirs = g_new (gchar *, thumb_num_sizes);
 
-          subdirs[0] = NULL;  /*  GIMP_THUMB_SIZE_FAIL  */
+          subdirs[0] = NULL;  /*  LIGMA_THUMB_SIZE_FAIL  */
 
           for (i = 1; i < thumb_num_sizes; i++)
             subdirs[i] = g_build_filename (dir, thumb_sizenames[i], NULL);
@@ -787,7 +787,7 @@ gimp_thumb_png_lookup (const gchar   *name,
   if (! subdirs)
     return NULL;
 
-  i = n = gimp_thumb_size (*size);
+  i = n = ligma_thumb_size (*size);
 
   for (; i < thumb_num_sizes; i++)
     {
@@ -796,9 +796,9 @@ gimp_thumb_png_lookup (const gchar   *name,
 
       thumb_name = g_build_filename (subdirs[i], name, NULL);
 
-      if (gimp_thumb_file_test (thumb_name,
+      if (ligma_thumb_file_test (thumb_name,
                                 NULL, NULL,
-                                NULL) == GIMP_THUMB_FILE_TYPE_REGULAR)
+                                NULL) == LIGMA_THUMB_FILE_TYPE_REGULAR)
         {
           *size = thumb_sizes[i];
           goto finish;
@@ -814,9 +814,9 @@ gimp_thumb_png_lookup (const gchar   *name,
 
       thumb_name = g_build_filename (subdirs[i], name, NULL);
 
-      if (gimp_thumb_file_test (thumb_name,
+      if (ligma_thumb_file_test (thumb_name,
                                 NULL, NULL,
-                                NULL) == GIMP_THUMB_FILE_TYPE_REGULAR)
+                                NULL) == LIGMA_THUMB_FILE_TYPE_REGULAR)
         {
           *size = thumb_sizes[i];
           goto finish;
@@ -839,7 +839,7 @@ gimp_thumb_png_lookup (const gchar   *name,
 }
 
 static const gchar *
-gimp_thumb_png_name (const gchar *uri)
+ligma_thumb_png_name (const gchar *uri)
 {
   static gchar name[40];
 

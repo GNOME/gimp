@@ -1,8 +1,8 @@
 /*
  * pat plug-in version 1.01
- * Loads/exports version 1 GIMP .pat files, by Tim Newsome <drz@frody.bloke.com>
+ * Loads/exports version 1 LIGMA .pat files, by Tim Newsome <drz@frody.bloke.com>
  *
- * GIMP - The GNU Image Manipulation Program
+ * LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,10 +21,10 @@
 
 #include "config.h"
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 #define SAVE_PROC      "file-pat-save"
@@ -36,12 +36,12 @@ typedef struct _PatClass PatClass;
 
 struct _Pat
 {
-  GimpPlugIn      parent_instance;
+  LigmaPlugIn      parent_instance;
 };
 
 struct _PatClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -50,33 +50,33 @@ struct _PatClass
 
 GType                   pat_get_type         (void) G_GNUC_CONST;
 
-static GList          * pat_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * pat_create_procedure (GimpPlugIn           *plug_in,
+static GList          * pat_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * pat_create_procedure (LigmaPlugIn           *plug_in,
                                               const gchar          *name);
 
-static GimpValueArray * pat_save             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
-                                              GimpImage            *image,
+static LigmaValueArray * pat_save             (LigmaProcedure        *procedure,
+                                              LigmaRunMode           run_mode,
+                                              LigmaImage            *image,
                                               gint                  n_drawables,
-                                              GimpDrawable        **drawables,
+                                              LigmaDrawable        **drawables,
                                               GFile                *file,
-                                              const GimpValueArray *args,
+                                              const LigmaValueArray *args,
                                               gpointer              run_data);
 
-static gboolean         save_dialog          (GimpProcedure        *procedure,
+static gboolean         save_dialog          (LigmaProcedure        *procedure,
                                               GObject              *config);
 
 
-G_DEFINE_TYPE (Pat, pat, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Pat, pat, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (PAT_TYPE)
+LIGMA_MAIN (PAT_TYPE)
 DEFINE_STD_SET_I18N
 
 
 static void
 pat_class_init (PatClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = pat_query_procedures;
   plug_in_class->create_procedure = pat_create_procedure;
@@ -89,74 +89,74 @@ pat_init (Pat *pat)
 }
 
 static GList *
-pat_query_procedures (GimpPlugIn *plug_in)
+pat_query_procedures (LigmaPlugIn *plug_in)
 {
   return g_list_append (NULL, g_strdup (SAVE_PROC));
 }
 
-static GimpProcedure *
-pat_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+pat_create_procedure (LigmaPlugIn  *plug_in,
                       const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_save_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            pat_save, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "*");
+      ligma_procedure_set_image_types (procedure, "*");
 
-      gimp_procedure_set_menu_label (procedure, _("GIMP pattern"));
-      gimp_procedure_set_icon_name (procedure, GIMP_ICON_PATTERN);
+      ligma_procedure_set_menu_label (procedure, _("LIGMA pattern"));
+      ligma_procedure_set_icon_name (procedure, LIGMA_ICON_PATTERN);
 
-      gimp_procedure_set_documentation (procedure,
-                                        "Exports Gimp pattern file (.PAT)",
-                                        "New Gimp patterns can be created "
+      ligma_procedure_set_documentation (procedure,
+                                        "Exports Ligma pattern file (.PAT)",
+                                        "New Ligma patterns can be created "
                                         "by exporting them in the "
                                         "appropriate place with this plug-in.",
                                         SAVE_PROC);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Tim Newsome",
                                       "Tim Newsome",
                                       "1997");
 
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
-                                          "image/x-gimp-pat");
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
+                                          "image/x-ligma-pat");
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "pat");
-      gimp_file_procedure_set_handles_remote (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_handles_remote (LIGMA_FILE_PROCEDURE (procedure),
                                               TRUE);
 
-      GIMP_PROC_ARG_STRING (procedure, "description",
+      LIGMA_PROC_ARG_STRING (procedure, "description",
                             "Description",
                             "Short description of the pattern",
-                            "GIMP Pattern",
-                            GIMP_PARAM_READWRITE);
+                            "LIGMA Pattern",
+                            LIGMA_PARAM_READWRITE);
     }
 
   return procedure;
 }
 
-static GimpValueArray *
-pat_save (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GimpImage            *image,
+static LigmaValueArray *
+pat_save (LigmaProcedure        *procedure,
+          LigmaRunMode           run_mode,
+          LigmaImage            *image,
           gint                  n_drawables,
-          GimpDrawable        **drawables,
+          LigmaDrawable        **drawables,
           GFile                *file,
-          const GimpValueArray *args,
+          const LigmaValueArray *args,
           gpointer              run_data)
 {
-  GimpProcedureConfig *config;
-  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
-  GimpExportReturn     export = GIMP_EXPORT_CANCEL;
+  LigmaProcedureConfig *config;
+  LigmaPDBStatusType    status = LIGMA_PDB_SUCCESS;
+  LigmaExportReturn     export = LIGMA_EXPORT_CANCEL;
   gchar               *description;
   GError              *error  = NULL;
 
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, image, run_mode, args);
+  config = ligma_procedure_create_config (procedure);
+  ligma_procedure_config_begin_run (config, image, run_mode, args);
 
   g_object_get (config,
                 "description", &description,
@@ -164,7 +164,7 @@ pat_save (GimpProcedure        *procedure,
 
   if (! description || ! strlen (description))
     {
-      gchar *name = g_path_get_basename (gimp_file_get_utf8_name (file));
+      gchar *name = g_path_get_basename (ligma_file_get_utf8_name (file));
 
       if (g_str_has_suffix (name, ".pat"))
         name[strlen (name) - 4] = '\0';
@@ -181,18 +181,18 @@ pat_save (GimpProcedure        *procedure,
 
   switch (run_mode)
     {
-    case GIMP_RUN_INTERACTIVE:
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_ui_init (PLUG_IN_BINARY);
+    case LIGMA_RUN_INTERACTIVE:
+    case LIGMA_RUN_WITH_LAST_VALS:
+      ligma_ui_init (PLUG_IN_BINARY);
 
-      export = gimp_export_image (&image, &n_drawables, &drawables, "PAT",
-                                  GIMP_EXPORT_CAN_HANDLE_GRAY    |
-                                  GIMP_EXPORT_CAN_HANDLE_RGB     |
-                                  GIMP_EXPORT_CAN_HANDLE_INDEXED |
-                                  GIMP_EXPORT_CAN_HANDLE_ALPHA);
+      export = ligma_export_image (&image, &n_drawables, &drawables, "PAT",
+                                  LIGMA_EXPORT_CAN_HANDLE_GRAY    |
+                                  LIGMA_EXPORT_CAN_HANDLE_RGB     |
+                                  LIGMA_EXPORT_CAN_HANDLE_INDEXED |
+                                  LIGMA_EXPORT_CAN_HANDLE_ALPHA);
 
-      if (export == GIMP_EXPORT_CANCEL)
-        return gimp_procedure_new_return_values (procedure, GIMP_PDB_CANCEL,
+      if (export == LIGMA_EXPORT_CANCEL)
+        return ligma_procedure_new_return_values (procedure, LIGMA_PDB_CANCEL,
                                                  NULL);
       break;
 
@@ -200,64 +200,64 @@ pat_save (GimpProcedure        *procedure,
       break;
     }
 
-  if (run_mode == GIMP_RUN_INTERACTIVE)
+  if (run_mode == LIGMA_RUN_INTERACTIVE)
     {
       if (! save_dialog (procedure, G_OBJECT (config)))
-        status = GIMP_PDB_CANCEL;
+        status = LIGMA_PDB_CANCEL;
     }
 
-  if (status == GIMP_PDB_SUCCESS)
+  if (status == LIGMA_PDB_SUCCESS)
     {
-      GimpValueArray *save_retvals;
-      GimpValueArray *args;
+      LigmaValueArray *save_retvals;
+      LigmaValueArray *args;
 
       g_object_get (config,
                     "description", &description,
                     NULL);
 
-      args = gimp_value_array_new_from_types (NULL,
-                                              GIMP_TYPE_RUN_MODE,     GIMP_RUN_NONINTERACTIVE,
-                                              GIMP_TYPE_IMAGE,        image,
+      args = ligma_value_array_new_from_types (NULL,
+                                              LIGMA_TYPE_RUN_MODE,     LIGMA_RUN_NONINTERACTIVE,
+                                              LIGMA_TYPE_IMAGE,        image,
                                               G_TYPE_INT,             n_drawables,
-                                              GIMP_TYPE_OBJECT_ARRAY, NULL,
+                                              LIGMA_TYPE_OBJECT_ARRAY, NULL,
                                               G_TYPE_FILE,            file,
                                               G_TYPE_STRING,          description,
                                               G_TYPE_NONE);
-      gimp_value_set_object_array (gimp_value_array_index (args, 3),
-                                   GIMP_TYPE_ITEM, (GObject **) drawables, n_drawables);
+      ligma_value_set_object_array (ligma_value_array_index (args, 3),
+                                   LIGMA_TYPE_ITEM, (GObject **) drawables, n_drawables);
 
-      save_retvals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+      save_retvals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
                                                    "file-pat-save-internal",
                                                    args);
-      gimp_value_array_unref (args);
+      ligma_value_array_unref (args);
 
-      if (GIMP_VALUES_GET_ENUM (save_retvals, 0) != GIMP_PDB_SUCCESS)
+      if (LIGMA_VALUES_GET_ENUM (save_retvals, 0) != LIGMA_PDB_SUCCESS)
         {
           g_set_error (&error, 0, 0,
                        "Running procedure 'file-pat-save-internal' "
                        "failed: %s",
-                       gimp_pdb_get_last_error (gimp_get_pdb ()));
+                       ligma_pdb_get_last_error (ligma_get_pdb ()));
 
-          status = GIMP_PDB_EXECUTION_ERROR;
+          status = LIGMA_PDB_EXECUTION_ERROR;
         }
 
-      gimp_value_array_unref (save_retvals);
+      ligma_value_array_unref (save_retvals);
     }
 
-  gimp_procedure_config_end_run (config, status);
+  ligma_procedure_config_end_run (config, status);
   g_object_unref (config);
 
-  if (export == GIMP_EXPORT_EXPORT)
+  if (export == LIGMA_EXPORT_EXPORT)
     {
-      gimp_image_delete (image);
+      ligma_image_delete (image);
       g_free (drawables);
     }
 
-  return gimp_procedure_new_return_values (procedure, status, error);
+  return ligma_procedure_new_return_values (procedure, status, error);
 }
 
 static gboolean
-save_dialog (GimpProcedure *procedure,
+save_dialog (LigmaProcedure *procedure,
              GObject       *config)
 {
   GtkWidget *dialog;
@@ -265,8 +265,8 @@ save_dialog (GimpProcedure *procedure,
   GtkWidget *entry;
   gboolean   run;
 
-  dialog = gimp_procedure_dialog_new (procedure,
-                                      GIMP_PROCEDURE_CONFIG (config),
+  dialog = ligma_procedure_dialog_new (procedure,
+                                      LIGMA_PROCEDURE_CONFIG (config),
                                       _("Export Image as Pattern"));
 
   grid = gtk_grid_new ();
@@ -276,17 +276,17 @@ save_dialog (GimpProcedure *procedure,
                       grid, TRUE, TRUE, 0);
   gtk_widget_show (grid);
 
-  entry = gimp_prop_entry_new (config, "description", 256);
+  entry = ligma_prop_entry_new (config, "description", 256);
   gtk_entry_set_width_chars (GTK_ENTRY (entry), 20);
   gtk_entry_set_activates_default (GTK_ENTRY (entry), TRUE);
 
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 0,
                             _("_Description:"), 1.0, 0.5,
                             entry, 1);
 
   gtk_widget_show (dialog);
 
-  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
+  run = ligma_procedure_dialog_run (LIGMA_PROCEDURE_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
 

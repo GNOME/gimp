@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpsamplepointeditor.h
- * Copyright (C) 2005-2016 Michael Natterer <mitch@gimp.org>
+ * ligmasamplepointeditor.h
+ * Copyright (C) 2005-2016 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,26 +18,26 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SAMPLE_POINT_EDITOR_H__
-#define __GIMP_SAMPLE_POINT_EDITOR_H__
+#ifndef __LIGMA_SAMPLE_POINT_EDITOR_H__
+#define __LIGMA_SAMPLE_POINT_EDITOR_H__
 
 
-#include "gimpimageeditor.h"
+#include "ligmaimageeditor.h"
 
 
-#define GIMP_TYPE_SAMPLE_POINT_EDITOR            (gimp_sample_point_editor_get_type ())
-#define GIMP_SAMPLE_POINT_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_SAMPLE_POINT_EDITOR, GimpSamplePointEditor))
-#define GIMP_SAMPLE_POINT_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_SAMPLE_POINT_EDITOR, GimpSamplePointEditorClass))
-#define GIMP_IS_SAMPLE_POINT_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_SAMPLE_POINT_EDITOR))
-#define GIMP_IS_SAMPLE_POINT_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_SAMPLE_POINT_EDITOR))
-#define GIMP_SAMPLE_POINT_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_SAMPLE_POINT_EDITOR, GimpSamplePointEditorClass))
+#define LIGMA_TYPE_SAMPLE_POINT_EDITOR            (ligma_sample_point_editor_get_type ())
+#define LIGMA_SAMPLE_POINT_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_SAMPLE_POINT_EDITOR, LigmaSamplePointEditor))
+#define LIGMA_SAMPLE_POINT_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_SAMPLE_POINT_EDITOR, LigmaSamplePointEditorClass))
+#define LIGMA_IS_SAMPLE_POINT_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_SAMPLE_POINT_EDITOR))
+#define LIGMA_IS_SAMPLE_POINT_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_SAMPLE_POINT_EDITOR))
+#define LIGMA_SAMPLE_POINT_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_SAMPLE_POINT_EDITOR, LigmaSamplePointEditorClass))
 
 
-typedef struct _GimpSamplePointEditorClass GimpSamplePointEditorClass;
+typedef struct _LigmaSamplePointEditorClass LigmaSamplePointEditorClass;
 
-struct _GimpSamplePointEditor
+struct _LigmaSamplePointEditor
 {
-  GimpImageEditor  parent_instance;
+  LigmaImageEditor  parent_instance;
 
   GtkWidget       *empty_icon;
   GtkWidget       *empty_label;
@@ -51,19 +51,19 @@ struct _GimpSamplePointEditor
   gboolean         sample_merged;
 };
 
-struct _GimpSamplePointEditorClass
+struct _LigmaSamplePointEditorClass
 {
-  GimpImageEditorClass  parent_class;
+  LigmaImageEditorClass  parent_class;
 };
 
 
-GType       gimp_sample_point_editor_get_type          (void) G_GNUC_CONST;
+GType       ligma_sample_point_editor_get_type          (void) G_GNUC_CONST;
 
-GtkWidget * gimp_sample_point_editor_new               (GimpMenuFactory *menu_factory);
+GtkWidget * ligma_sample_point_editor_new               (LigmaMenuFactory *menu_factory);
 
-void        gimp_sample_point_editor_set_sample_merged (GimpSamplePointEditor *editor,
+void        ligma_sample_point_editor_set_sample_merged (LigmaSamplePointEditor *editor,
                                                         gboolean               sample_merged);
-gboolean    gimp_sample_point_editor_get_sample_merged (GimpSamplePointEditor *editor);
+gboolean    ligma_sample_point_editor_get_sample_merged (LigmaSamplePointEditor *editor);
 
 
-#endif /* __GIMP_SAMPLE_POINT_EDITOR_H__ */
+#endif /* __LIGMA_SAMPLE_POINT_EDITOR_H__ */

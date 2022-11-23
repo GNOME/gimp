@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpuitypes.h
+ * ligmauitypes.h
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -18,39 +18,39 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_UI_TYPES_H__
-#define __GIMP_UI_TYPES_H__
+#ifndef __LIGMA_UI_TYPES_H__
+#define __LIGMA_UI_TYPES_H__
 
-#include <libgimpwidgets/gimpwidgetstypes.h>
+#include <libligmawidgets/ligmawidgetstypes.h>
 
 G_BEGIN_DECLS
 
 /* For information look into the html documentation */
 
 
-typedef struct _GimpProcedureDialog      GimpProcedureDialog;
-typedef struct _GimpSaveProcedureDialog  GimpSaveProcedureDialog;
+typedef struct _LigmaProcedureDialog      LigmaProcedureDialog;
+typedef struct _LigmaSaveProcedureDialog  LigmaSaveProcedureDialog;
 
-typedef struct _GimpAspectPreview        GimpAspectPreview;
-typedef struct _GimpDrawablePreview      GimpDrawablePreview;
-typedef struct _GimpProcBrowserDialog    GimpProcBrowserDialog;
-typedef struct _GimpProgressBar          GimpProgressBar;
-typedef struct _GimpZoomPreview          GimpZoomPreview;
+typedef struct _LigmaAspectPreview        LigmaAspectPreview;
+typedef struct _LigmaDrawablePreview      LigmaDrawablePreview;
+typedef struct _LigmaProcBrowserDialog    LigmaProcBrowserDialog;
+typedef struct _LigmaProgressBar          LigmaProgressBar;
+typedef struct _LigmaZoomPreview          LigmaZoomPreview;
 
-typedef struct _GimpDrawableComboBox     GimpDrawableComboBox;
-typedef struct _GimpChannelComboBox      GimpChannelComboBox;
-typedef struct _GimpLayerComboBox        GimpLayerComboBox;
-typedef struct _GimpVectorsComboBox      GimpVectorsComboBox;
-typedef struct _GimpImageComboBox        GimpImageComboBox;
+typedef struct _LigmaDrawableComboBox     LigmaDrawableComboBox;
+typedef struct _LigmaChannelComboBox      LigmaChannelComboBox;
+typedef struct _LigmaLayerComboBox        LigmaLayerComboBox;
+typedef struct _LigmaVectorsComboBox      LigmaVectorsComboBox;
+typedef struct _LigmaImageComboBox        LigmaImageComboBox;
 
-typedef struct _GimpSelectButton         GimpSelectButton;
-typedef struct _GimpBrushSelectButton    GimpBrushSelectButton;
-typedef struct _GimpFontSelectButton     GimpFontSelectButton;
-typedef struct _GimpGradientSelectButton GimpGradientSelectButton;
-typedef struct _GimpPaletteSelectButton  GimpPaletteSelectButton;
-typedef struct _GimpPatternSelectButton  GimpPatternSelectButton;
+typedef struct _LigmaSelectButton         LigmaSelectButton;
+typedef struct _LigmaBrushSelectButton    LigmaBrushSelectButton;
+typedef struct _LigmaFontSelectButton     LigmaFontSelectButton;
+typedef struct _LigmaGradientSelectButton LigmaGradientSelectButton;
+typedef struct _LigmaPaletteSelectButton  LigmaPaletteSelectButton;
+typedef struct _LigmaPatternSelectButton  LigmaPatternSelectButton;
 
 
 G_END_DECLS
 
-#endif /* __GIMP_UI_TYPES_H__ */
+#endif /* __LIGMA_UI_TYPES_H__ */

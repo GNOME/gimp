@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimppaletteview.c
- * Copyright (C) 2005 Michael Natterer <mitch@gimp.org>
+ * ligmapaletteview.c
+ * Copyright (C) 2005 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,17 +24,17 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "core/gimppalette.h"
-#include "core/gimpmarshal.h"
+#include "core/ligmapalette.h"
+#include "core/ligmamarshal.h"
 
-#include "gimpdnd.h"
-#include "gimppaletteview.h"
-#include "gimpviewrendererpalette.h"
+#include "ligmadnd.h"
+#include "ligmapaletteview.h"
+#include "ligmaviewrendererpalette.h"
 
 
 enum
@@ -47,55 +47,55 @@ enum
 };
 
 
-static gboolean gimp_palette_view_draw           (GtkWidget        *widget,
+static gboolean ligma_palette_view_draw           (GtkWidget        *widget,
                                                   cairo_t          *cr);
-static gboolean gimp_palette_view_button_press   (GtkWidget        *widget,
+static gboolean ligma_palette_view_button_press   (GtkWidget        *widget,
                                                   GdkEventButton   *bevent);
-static gboolean gimp_palette_view_key_press      (GtkWidget        *widget,
+static gboolean ligma_palette_view_key_press      (GtkWidget        *widget,
                                                   GdkEventKey      *kevent);
-static gboolean gimp_palette_view_focus          (GtkWidget        *widget,
+static gboolean ligma_palette_view_focus          (GtkWidget        *widget,
                                                   GtkDirectionType  direction);
-static void     gimp_palette_view_set_viewable   (GimpView         *view,
-                                                  GimpViewable     *old_viewable,
-                                                  GimpViewable     *new_viewable);
-static GimpPaletteEntry *
-                gimp_palette_view_find_entry     (GimpPaletteView *view,
+static void     ligma_palette_view_set_viewable   (LigmaView         *view,
+                                                  LigmaViewable     *old_viewable,
+                                                  LigmaViewable     *new_viewable);
+static LigmaPaletteEntry *
+                ligma_palette_view_find_entry     (LigmaPaletteView *view,
                                                   gint             x,
                                                   gint             y);
-static void     gimp_palette_view_expose_entry   (GimpPaletteView  *view,
-                                                  GimpPaletteEntry *entry);
-static void     gimp_palette_view_invalidate     (GimpPalette      *palette,
-                                                  GimpPaletteView  *view);
-static void     gimp_palette_view_drag_color     (GtkWidget        *widget,
-                                                  GimpRGB          *color,
+static void     ligma_palette_view_expose_entry   (LigmaPaletteView  *view,
+                                                  LigmaPaletteEntry *entry);
+static void     ligma_palette_view_invalidate     (LigmaPalette      *palette,
+                                                  LigmaPaletteView  *view);
+static void     ligma_palette_view_drag_color     (GtkWidget        *widget,
+                                                  LigmaRGB          *color,
                                                   gpointer          data);
-static void     gimp_palette_view_drop_color     (GtkWidget        *widget,
+static void     ligma_palette_view_drop_color     (GtkWidget        *widget,
                                                   gint              x,
                                                   gint              y,
-                                                  const GimpRGB    *color,
+                                                  const LigmaRGB    *color,
                                                   gpointer          data);
 
 
-G_DEFINE_TYPE (GimpPaletteView, gimp_palette_view, GIMP_TYPE_VIEW)
+G_DEFINE_TYPE (LigmaPaletteView, ligma_palette_view, LIGMA_TYPE_VIEW)
 
-#define parent_class gimp_palette_view_parent_class
+#define parent_class ligma_palette_view_parent_class
 
 static guint view_signals[LAST_SIGNAL] = { 0 };
 
 
 static void
-gimp_palette_view_class_init (GimpPaletteViewClass *klass)
+ligma_palette_view_class_init (LigmaPaletteViewClass *klass)
 {
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
-  GimpViewClass  *view_class   = GIMP_VIEW_CLASS (klass);
+  LigmaViewClass  *view_class   = LIGMA_VIEW_CLASS (klass);
 
   view_signals[ENTRY_CLICKED] =
     g_signal_new ("entry-clicked",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpPaletteViewClass, entry_clicked),
+                  G_STRUCT_OFFSET (LigmaPaletteViewClass, entry_clicked),
                   NULL, NULL,
-                  gimp_marshal_VOID__POINTER_ENUM,
+                  ligma_marshal_VOID__POINTER_ENUM,
                   G_TYPE_NONE, 2,
                   G_TYPE_POINTER,
                   GDK_TYPE_MODIFIER_TYPE);
@@ -104,7 +104,7 @@ gimp_palette_view_class_init (GimpPaletteViewClass *klass)
     g_signal_new ("entry-selected",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpPaletteViewClass, entry_selected),
+                  G_STRUCT_OFFSET (LigmaPaletteViewClass, entry_selected),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   G_TYPE_POINTER);
@@ -113,7 +113,7 @@ gimp_palette_view_class_init (GimpPaletteViewClass *klass)
     g_signal_new ("entry-activated",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpPaletteViewClass, entry_activated),
+                  G_STRUCT_OFFSET (LigmaPaletteViewClass, entry_activated),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   G_TYPE_POINTER);
@@ -122,23 +122,23 @@ gimp_palette_view_class_init (GimpPaletteViewClass *klass)
     g_signal_new ("color-dropped",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpPaletteViewClass, color_dropped),
+                  G_STRUCT_OFFSET (LigmaPaletteViewClass, color_dropped),
                   NULL, NULL,
-                  gimp_marshal_VOID__POINTER_BOXED,
+                  ligma_marshal_VOID__POINTER_BOXED,
                   G_TYPE_NONE, 2,
                   G_TYPE_POINTER,
-                  GIMP_TYPE_RGB);
+                  LIGMA_TYPE_RGB);
 
-  widget_class->draw               = gimp_palette_view_draw;
-  widget_class->button_press_event = gimp_palette_view_button_press;
-  widget_class->key_press_event    = gimp_palette_view_key_press;
-  widget_class->focus              = gimp_palette_view_focus;
+  widget_class->draw               = ligma_palette_view_draw;
+  widget_class->button_press_event = ligma_palette_view_button_press;
+  widget_class->key_press_event    = ligma_palette_view_key_press;
+  widget_class->focus              = ligma_palette_view_focus;
 
-  view_class->set_viewable         = gimp_palette_view_set_viewable;
+  view_class->set_viewable         = ligma_palette_view_set_viewable;
 }
 
 static void
-gimp_palette_view_init (GimpPaletteView *view)
+ligma_palette_view_init (LigmaPaletteView *view)
 {
   gtk_widget_set_can_focus (GTK_WIDGET (view), TRUE);
 
@@ -147,14 +147,14 @@ gimp_palette_view_init (GimpPaletteView *view)
 }
 
 static gboolean
-gimp_palette_view_draw (GtkWidget *widget,
+ligma_palette_view_draw (GtkWidget *widget,
                         cairo_t   *cr)
 {
-  GimpPaletteView *pal_view = GIMP_PALETTE_VIEW (widget);
-  GimpView        *view     = GIMP_VIEW (widget);
-  GimpPalette     *palette;
+  LigmaPaletteView *pal_view = LIGMA_PALETTE_VIEW (widget);
+  LigmaView        *view     = LIGMA_VIEW (widget);
+  LigmaPalette     *palette;
 
-  palette = GIMP_PALETTE (GIMP_VIEW (view)->renderer->viewable);
+  palette = LIGMA_PALETTE (LIGMA_VIEW (view)->renderer->viewable);
 
   cairo_save (cr);
   GTK_WIDGET_CLASS (parent_class)->draw (widget, cr);
@@ -162,15 +162,15 @@ gimp_palette_view_draw (GtkWidget *widget,
 
   if (view->renderer->viewable && pal_view->selected)
     {
-      GimpViewRendererPalette *renderer;
+      LigmaViewRendererPalette *renderer;
       GtkAllocation            allocation;
       gint                     pos, row, col;
 
-      renderer = GIMP_VIEW_RENDERER_PALETTE (view->renderer);
+      renderer = LIGMA_VIEW_RENDERER_PALETTE (view->renderer);
 
       gtk_widget_get_allocation (widget, &allocation);
 
-      pos = gimp_palette_get_entry_position (palette, pal_view->selected);
+      pos = ligma_palette_get_entry_position (palette, pal_view->selected);
 
       row = pos / renderer->columns;
       col = pos % renderer->columns;
@@ -185,7 +185,7 @@ gimp_palette_view_draw (GtkWidget *widget,
       cairo_set_source_rgba (cr, 1.0, 1.0, 1.0, 1.0);
       cairo_stroke_preserve (cr);
 
-      if (gimp_cairo_set_focus_line_pattern (cr, widget))
+      if (ligma_cairo_set_focus_line_pattern (cr, widget))
         {
           cairo_set_source_rgba (cr, 0.0, 0.0, 0.0, 1.0);
           cairo_stroke (cr);
@@ -196,16 +196,16 @@ gimp_palette_view_draw (GtkWidget *widget,
 }
 
 static gboolean
-gimp_palette_view_button_press (GtkWidget      *widget,
+ligma_palette_view_button_press (GtkWidget      *widget,
                                 GdkEventButton *bevent)
 {
-  GimpPaletteView  *view = GIMP_PALETTE_VIEW (widget);
-  GimpPaletteEntry *entry;
+  LigmaPaletteView  *view = LIGMA_PALETTE_VIEW (widget);
+  LigmaPaletteEntry *entry;
 
   if (gtk_widget_get_can_focus (widget) && ! gtk_widget_has_focus (widget))
     gtk_widget_grab_focus (widget);
 
-  entry = gimp_palette_view_find_entry (view, bevent->x, bevent->y);
+  entry = ligma_palette_view_find_entry (view, bevent->x, bevent->y);
 
   view->dnd_entry = entry;
 
@@ -219,9 +219,9 @@ gimp_palette_view_button_press (GtkWidget      *widget,
   if (gdk_event_triggers_context_menu ((GdkEvent *) bevent))
     {
       if (entry != view->selected)
-        gimp_palette_view_select_entry (view, entry);
+        ligma_palette_view_select_entry (view, entry);
 
-      /* Usually the menu is provided by a GimpEditor.
+      /* Usually the menu is provided by a LigmaEditor.
 	   * Make sure it's also run by returning FALSE here */
       return FALSE;
     }
@@ -229,7 +229,7 @@ gimp_palette_view_button_press (GtkWidget      *widget,
     {
       if (bevent->type == GDK_BUTTON_PRESS)
         {
-          gimp_palette_view_select_entry (view, entry);
+          ligma_palette_view_select_entry (view, entry);
         }
       else if (bevent->type == GDK_2BUTTON_PRESS && entry == view->selected)
         {
@@ -241,10 +241,10 @@ gimp_palette_view_button_press (GtkWidget      *widget,
 }
 
 static gboolean
-gimp_palette_view_key_press (GtkWidget   *widget,
+ligma_palette_view_key_press (GtkWidget   *widget,
                              GdkEventKey *kevent)
 {
-  GimpPaletteView *view = GIMP_PALETTE_VIEW (widget);
+  LigmaPaletteView *view = LIGMA_PALETTE_VIEW (widget);
 
   if (view->selected &&
       (kevent->keyval == GDK_KEY_space    ||
@@ -261,13 +261,13 @@ gimp_palette_view_key_press (GtkWidget   *widget,
 }
 
 static gboolean
-gimp_palette_view_focus (GtkWidget        *widget,
+ligma_palette_view_focus (GtkWidget        *widget,
                          GtkDirectionType  direction)
 {
-  GimpPaletteView *view = GIMP_PALETTE_VIEW (widget);
-  GimpPalette     *palette;
+  LigmaPaletteView *view = LIGMA_PALETTE_VIEW (widget);
+  LigmaPalette     *palette;
 
-  palette = GIMP_PALETTE (GIMP_VIEW (view)->renderer->viewable);
+  palette = LIGMA_PALETTE (LIGMA_VIEW (view)->renderer->viewable);
 
   if (gtk_widget_get_can_focus (widget) &&
       ! gtk_widget_has_focus (widget))
@@ -275,11 +275,11 @@ gimp_palette_view_focus (GtkWidget        *widget,
       gtk_widget_grab_focus (widget);
 
       if (! view->selected &&
-          palette && gimp_palette_get_n_colors (palette) > 0)
+          palette && ligma_palette_get_n_colors (palette) > 0)
         {
-          GimpPaletteEntry *entry = gimp_palette_get_entry (palette, 0);
+          LigmaPaletteEntry *entry = ligma_palette_get_entry (palette, 0);
 
-          gimp_palette_view_select_entry (view, entry);
+          ligma_palette_view_select_entry (view, entry);
         }
 
       return TRUE;
@@ -287,10 +287,10 @@ gimp_palette_view_focus (GtkWidget        *widget,
 
   if (view->selected)
     {
-      GimpViewRendererPalette *renderer;
+      LigmaViewRendererPalette *renderer;
       gint                     skip = 0;
 
-      renderer = GIMP_VIEW_RENDERER_PALETTE (GIMP_VIEW (view)->renderer);
+      renderer = LIGMA_VIEW_RENDERER_PALETTE (LIGMA_VIEW (view)->renderer);
 
       switch (direction)
         {
@@ -314,18 +314,18 @@ gimp_palette_view_focus (GtkWidget        *widget,
 
       if (skip != 0)
         {
-          GimpPaletteEntry *entry;
-          GimpPalette      *palette;
+          LigmaPaletteEntry *entry;
+          LigmaPalette      *palette;
           gint              position;
 
-          palette = GIMP_PALETTE (GIMP_VIEW (view)->renderer->viewable);
-          position = gimp_palette_get_entry_position (palette, view->selected);
+          palette = LIGMA_PALETTE (LIGMA_VIEW (view)->renderer->viewable);
+          position = ligma_palette_get_entry_position (palette, view->selected);
           position += skip;
 
-          entry = gimp_palette_get_entry (palette, position);
+          entry = ligma_palette_get_entry (palette, position);
 
           if (entry)
-            gimp_palette_view_select_entry (view, entry);
+            ligma_palette_view_select_entry (view, entry);
         }
 
       return TRUE;
@@ -335,47 +335,47 @@ gimp_palette_view_focus (GtkWidget        *widget,
 }
 
 static void
-gimp_palette_view_set_viewable (GimpView     *view,
-                                GimpViewable *old_viewable,
-                                GimpViewable *new_viewable)
+ligma_palette_view_set_viewable (LigmaView     *view,
+                                LigmaViewable *old_viewable,
+                                LigmaViewable *new_viewable)
 {
-  GimpPaletteView *pal_view = GIMP_PALETTE_VIEW (view);
+  LigmaPaletteView *pal_view = LIGMA_PALETTE_VIEW (view);
 
   pal_view->dnd_entry = NULL;
-  gimp_palette_view_select_entry (pal_view, NULL);
+  ligma_palette_view_select_entry (pal_view, NULL);
 
   if (old_viewable)
     {
       g_signal_handlers_disconnect_by_func (old_viewable,
-                                            gimp_palette_view_invalidate,
+                                            ligma_palette_view_invalidate,
                                             view);
 
       if (! new_viewable)
         {
-          gimp_dnd_color_source_remove (GTK_WIDGET (view));
-          gimp_dnd_color_dest_remove (GTK_WIDGET (view));
+          ligma_dnd_color_source_remove (GTK_WIDGET (view));
+          ligma_dnd_color_dest_remove (GTK_WIDGET (view));
         }
     }
 
-  GIMP_VIEW_CLASS (parent_class)->set_viewable (view,
+  LIGMA_VIEW_CLASS (parent_class)->set_viewable (view,
                                                 old_viewable, new_viewable);
 
   if (new_viewable)
     {
       g_signal_connect (new_viewable, "invalidate-preview",
-                        G_CALLBACK (gimp_palette_view_invalidate),
+                        G_CALLBACK (ligma_palette_view_invalidate),
                         view);
 
-      /*  unset the palette drag handler set by GimpView  */
-      gimp_dnd_viewable_source_remove (GTK_WIDGET (view), GIMP_TYPE_PALETTE);
+      /*  unset the palette drag handler set by LigmaView  */
+      ligma_dnd_viewable_source_remove (GTK_WIDGET (view), LIGMA_TYPE_PALETTE);
 
       if (! old_viewable)
         {
-          gimp_dnd_color_source_add (GTK_WIDGET (view),
-                                     gimp_palette_view_drag_color,
+          ligma_dnd_color_source_add (GTK_WIDGET (view),
+                                     ligma_palette_view_drag_color,
                                      view);
-          gimp_dnd_color_dest_add (GTK_WIDGET (view),
-                                   gimp_palette_view_drop_color,
+          ligma_dnd_color_dest_add (GTK_WIDGET (view),
+                                   ligma_palette_view_drop_color,
                                    view);
         }
     }
@@ -385,52 +385,52 @@ gimp_palette_view_set_viewable (GimpView     *view,
 /*  public functions  */
 
 void
-gimp_palette_view_select_entry (GimpPaletteView  *view,
-                                GimpPaletteEntry *entry)
+ligma_palette_view_select_entry (LigmaPaletteView  *view,
+                                LigmaPaletteEntry *entry)
 {
-  g_return_if_fail (GIMP_IS_PALETTE_VIEW (view));
+  g_return_if_fail (LIGMA_IS_PALETTE_VIEW (view));
 
   if (entry == view->selected)
     return;
 
   if (view->selected)
-    gimp_palette_view_expose_entry (view, view->selected);
+    ligma_palette_view_expose_entry (view, view->selected);
 
   view->selected = entry;
 
   if (view->selected)
-    gimp_palette_view_expose_entry (view, view->selected);
+    ligma_palette_view_expose_entry (view, view->selected);
 
   g_signal_emit (view, view_signals[ENTRY_SELECTED], 0, view->selected);
 }
 
-GimpPaletteEntry *
-gimp_palette_view_get_selected_entry (GimpPaletteView *view)
+LigmaPaletteEntry *
+ligma_palette_view_get_selected_entry (LigmaPaletteView *view)
 {
-  g_return_val_if_fail (GIMP_IS_PALETTE_VIEW (view), NULL);
+  g_return_val_if_fail (LIGMA_IS_PALETTE_VIEW (view), NULL);
 
   return view->selected;
 }
 
 void
-gimp_palette_view_get_entry_rect (GimpPaletteView  *view,
-                                  GimpPaletteEntry *entry,
+ligma_palette_view_get_entry_rect (LigmaPaletteView  *view,
+                                  LigmaPaletteEntry *entry,
                                   GdkRectangle     *rect)
 {
-  GimpViewRendererPalette *renderer;
-  GimpPalette             *palette;
+  LigmaViewRendererPalette *renderer;
+  LigmaPalette             *palette;
   GtkAllocation            allocation;
   gint                     pos, row, col;
 
-  g_return_if_fail (GIMP_IS_PALETTE_VIEW (view));
+  g_return_if_fail (LIGMA_IS_PALETTE_VIEW (view));
   g_return_if_fail (entry);
   g_return_if_fail (rect);
 
   gtk_widget_get_allocation (GTK_WIDGET (view), &allocation);
 
-  renderer = GIMP_VIEW_RENDERER_PALETTE (GIMP_VIEW (view)->renderer);
-  palette = GIMP_PALETTE (GIMP_VIEW_RENDERER (renderer)->viewable);
-  pos = gimp_palette_get_entry_position (palette, entry);
+  renderer = LIGMA_VIEW_RENDERER_PALETTE (LIGMA_VIEW (view)->renderer);
+  palette = LIGMA_PALETTE (LIGMA_VIEW_RENDERER (renderer)->viewable);
+  pos = ligma_palette_get_entry_position (palette, entry);
   row = pos / renderer->columns;
   col = pos % renderer->columns;
 
@@ -443,20 +443,20 @@ gimp_palette_view_get_entry_rect (GimpPaletteView  *view,
 
 /*  private functions  */
 
-static GimpPaletteEntry *
-gimp_palette_view_find_entry (GimpPaletteView *view,
+static LigmaPaletteEntry *
+ligma_palette_view_find_entry (LigmaPaletteView *view,
                               gint             x,
                               gint             y)
 {
-  GimpPalette             *palette;
-  GimpViewRendererPalette *renderer;
-  GimpPaletteEntry        *entry = NULL;
+  LigmaPalette             *palette;
+  LigmaViewRendererPalette *renderer;
+  LigmaPaletteEntry        *entry = NULL;
   gint                     col, row;
 
-  renderer = GIMP_VIEW_RENDERER_PALETTE (GIMP_VIEW (view)->renderer);
-  palette  = GIMP_PALETTE (GIMP_VIEW_RENDERER (renderer)->viewable);
+  renderer = LIGMA_VIEW_RENDERER_PALETTE (LIGMA_VIEW (view)->renderer);
+  palette  = LIGMA_PALETTE (LIGMA_VIEW_RENDERER (renderer)->viewable);
 
-  if (! palette || ! gimp_palette_get_n_colors (palette))
+  if (! palette || ! ligma_palette_get_n_colors (palette))
     return NULL;
 
   col = x / renderer->cell_width;
@@ -465,7 +465,7 @@ gimp_palette_view_find_entry (GimpPaletteView *view,
   if (col >= 0 && col < renderer->columns &&
       row >= 0 && row < renderer->rows)
     {
-      entry = gimp_palette_get_entry (palette,
+      entry = ligma_palette_get_entry (palette,
                                       row * renderer->columns + col);
     }
 
@@ -473,21 +473,21 @@ gimp_palette_view_find_entry (GimpPaletteView *view,
 }
 
 static void
-gimp_palette_view_expose_entry (GimpPaletteView  *view,
-                                GimpPaletteEntry *entry)
+ligma_palette_view_expose_entry (LigmaPaletteView  *view,
+                                LigmaPaletteEntry *entry)
 {
-  GimpViewRendererPalette *renderer;
+  LigmaViewRendererPalette *renderer;
   gint                     pos, row, col;
   GtkWidget               *widget = GTK_WIDGET (view);
   GtkAllocation            allocation;
-  GimpPalette             *palette;
+  LigmaPalette             *palette;
 
-  renderer = GIMP_VIEW_RENDERER_PALETTE (GIMP_VIEW (view)->renderer);
-  palette = GIMP_PALETTE (GIMP_VIEW_RENDERER (renderer)->viewable);
+  renderer = LIGMA_VIEW_RENDERER_PALETTE (LIGMA_VIEW (view)->renderer);
+  palette = LIGMA_PALETTE (LIGMA_VIEW_RENDERER (renderer)->viewable);
 
   gtk_widget_get_allocation (widget, &allocation);
 
-  pos = gimp_palette_get_entry_position (palette, entry);
+  pos = ligma_palette_get_entry_position (palette, entry);
   row = pos / renderer->columns;
   col = pos % renderer->columns;
 
@@ -499,42 +499,42 @@ gimp_palette_view_expose_entry (GimpPaletteView  *view,
 }
 
 static void
-gimp_palette_view_invalidate (GimpPalette     *palette,
-                              GimpPaletteView *view)
+ligma_palette_view_invalidate (LigmaPalette     *palette,
+                              LigmaPaletteView *view)
 {
   view->dnd_entry = NULL;
 
   if (view->selected &&
-      ! g_list_find (gimp_palette_get_colors (palette), view->selected))
+      ! g_list_find (ligma_palette_get_colors (palette), view->selected))
     {
-      gimp_palette_view_select_entry (view, NULL);
+      ligma_palette_view_select_entry (view, NULL);
     }
 }
 
 static void
-gimp_palette_view_drag_color (GtkWidget *widget,
-                              GimpRGB   *color,
+ligma_palette_view_drag_color (GtkWidget *widget,
+                              LigmaRGB   *color,
                               gpointer   data)
 {
-  GimpPaletteView *view = GIMP_PALETTE_VIEW (data);
+  LigmaPaletteView *view = LIGMA_PALETTE_VIEW (data);
 
   if (view->dnd_entry)
     *color = view->dnd_entry->color;
   else
-    gimp_rgba_set (color, 0.0, 0.0, 0.0, 1.0);
+    ligma_rgba_set (color, 0.0, 0.0, 0.0, 1.0);
 }
 
 static void
-gimp_palette_view_drop_color (GtkWidget     *widget,
+ligma_palette_view_drop_color (GtkWidget     *widget,
                               gint           x,
                               gint           y,
-                              const GimpRGB *color,
+                              const LigmaRGB *color,
                               gpointer       data)
 {
-  GimpPaletteView  *view = GIMP_PALETTE_VIEW (data);
-  GimpPaletteEntry *entry;
+  LigmaPaletteView  *view = LIGMA_PALETTE_VIEW (data);
+  LigmaPaletteEntry *entry;
 
-  entry = gimp_palette_view_find_entry (view, x, y);
+  entry = ligma_palette_view_find_entry (view, x, y);
 
   g_signal_emit (view, view_signals[COLOR_DROPPED], 0,
                  entry, color);

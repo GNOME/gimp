@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpchainbutton.c
- * Copyright (C) 1999-2000 Sven Neumann <sven@gimp.org>
+ * ligmachainbutton.c
+ * Copyright (C) 1999-2000 Sven Neumann <sven@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,21 +23,21 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
-#include "gimpwidgetstypes.h"
+#include "ligmawidgetstypes.h"
 
-#include "gimpchainbutton.h"
-#include "gimpicons.h"
+#include "ligmachainbutton.h"
+#include "ligmaicons.h"
 
 
 /**
- * SECTION: gimpchainbutton
- * @title: GimpChainButton
+ * SECTION: ligmachainbutton
+ * @title: LigmaChainButton
  * @short_description: Widget to visually connect two entry widgets.
  * @see_also: You may want to use the convenience function
- *            gimp_coordinates_new() to set up two GimpSizeEntries
- *            (see #GimpSizeEntry) linked with a #GimpChainButton.
+ *            ligma_coordinates_new() to set up two LigmaSizeEntries
+ *            (see #LigmaSizeEntry) linked with a #LigmaChainButton.
  *
  * This widget provides a button showing either a linked or a broken
  * chain that can be used to link two entries, spinbuttons, colors or
@@ -45,9 +45,9 @@
  * example to connect X and Y ratios to provide the possibility of a
  * constrained aspect ratio.
  *
- * The #GimpChainButton only gives visual feedback, it does not really
+ * The #LigmaChainButton only gives visual feedback, it does not really
  * connect widgets. You have to take care of locking the values
- * yourself by checking the state of the #GimpChainButton whenever a
+ * yourself by checking the state of the #LigmaChainButton whenever a
  * value changes in one of the connected widgets and adjusting the
  * other value if necessary.
  **/
@@ -68,9 +68,9 @@ enum
 };
 
 
-struct _GimpChainButtonPrivate
+struct _LigmaChainButtonPrivate
 {
-  GimpChainPosition  position;
+  LigmaChainPosition  position;
   gboolean           active;
 
   GtkWidget         *button;
@@ -79,70 +79,70 @@ struct _GimpChainButtonPrivate
   GtkWidget         *image;
 };
 
-#define GET_PRIVATE(obj) (((GimpChainButton *) (obj))->priv)
+#define GET_PRIVATE(obj) (((LigmaChainButton *) (obj))->priv)
 
 
-static void      gimp_chain_button_constructed      (GObject         *object);
-static void      gimp_chain_button_set_property     (GObject         *object,
+static void      ligma_chain_button_constructed      (GObject         *object);
+static void      ligma_chain_button_set_property     (GObject         *object,
                                                      guint            property_id,
                                                      const GValue    *value,
                                                      GParamSpec      *pspec);
-static void      gimp_chain_button_get_property     (GObject         *object,
+static void      ligma_chain_button_get_property     (GObject         *object,
                                                      guint            property_id,
                                                      GValue          *value,
                                                      GParamSpec      *pspec);
 
-static void      gimp_chain_button_compute_expand   (GtkWidget       *widget,
+static void      ligma_chain_button_compute_expand   (GtkWidget       *widget,
                                                      gboolean        *hexpand_p,
                                                      gboolean        *vexpand_p);
 
-static void      gimp_chain_button_clicked_callback (GtkWidget       *widget,
-                                                     GimpChainButton *button);
-static void      gimp_chain_button_update_image     (GimpChainButton *button);
+static void      ligma_chain_button_clicked_callback (GtkWidget       *widget,
+                                                     LigmaChainButton *button);
+static void      ligma_chain_button_update_image     (LigmaChainButton *button);
 
-static GtkWidget * gimp_chain_line_new            (GimpChainPosition  position,
+static GtkWidget * ligma_chain_line_new            (LigmaChainPosition  position,
                                                    gint               which);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpChainButton, gimp_chain_button, GTK_TYPE_GRID)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaChainButton, ligma_chain_button, GTK_TYPE_GRID)
 
-#define parent_class gimp_chain_button_parent_class
+#define parent_class ligma_chain_button_parent_class
 
-static guint gimp_chain_button_signals[LAST_SIGNAL] = { 0 };
+static guint ligma_chain_button_signals[LAST_SIGNAL] = { 0 };
 
-static const gchar * const gimp_chain_icon_names[] =
+static const gchar * const ligma_chain_icon_names[] =
 {
-  GIMP_ICON_CHAIN_HORIZONTAL,
-  GIMP_ICON_CHAIN_HORIZONTAL_BROKEN,
-  GIMP_ICON_CHAIN_VERTICAL,
-  GIMP_ICON_CHAIN_VERTICAL_BROKEN
+  LIGMA_ICON_CHAIN_HORIZONTAL,
+  LIGMA_ICON_CHAIN_HORIZONTAL_BROKEN,
+  LIGMA_ICON_CHAIN_VERTICAL,
+  LIGMA_ICON_CHAIN_VERTICAL_BROKEN
 };
 
 
 static void
-gimp_chain_button_class_init (GimpChainButtonClass *klass)
+ligma_chain_button_class_init (LigmaChainButtonClass *klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->constructed    = gimp_chain_button_constructed;
-  object_class->set_property   = gimp_chain_button_set_property;
-  object_class->get_property   = gimp_chain_button_get_property;
+  object_class->constructed    = ligma_chain_button_constructed;
+  object_class->set_property   = ligma_chain_button_set_property;
+  object_class->get_property   = ligma_chain_button_get_property;
 
-  widget_class->compute_expand = gimp_chain_button_compute_expand;
+  widget_class->compute_expand = ligma_chain_button_compute_expand;
 
-  gimp_chain_button_signals[TOGGLED] =
+  ligma_chain_button_signals[TOGGLED] =
     g_signal_new ("toggled",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpChainButtonClass, toggled),
+                  G_STRUCT_OFFSET (LigmaChainButtonClass, toggled),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   klass->toggled = NULL;
 
   /**
-   * GimpChainButton:position:
+   * LigmaChainButton:position:
    *
    * The position in which the chain button will be used.
    *
@@ -152,13 +152,13 @@ gimp_chain_button_class_init (GimpChainButtonClass *klass)
                                    g_param_spec_enum ("position",
                                                       "Position",
                                                       "The chain's position",
-                                                      GIMP_TYPE_CHAIN_POSITION,
-                                                      GIMP_CHAIN_TOP,
+                                                      LIGMA_TYPE_CHAIN_POSITION,
+                                                      LIGMA_CHAIN_TOP,
                                                       G_PARAM_CONSTRUCT_ONLY |
-                                                      GIMP_PARAM_READWRITE));
+                                                      LIGMA_PARAM_READWRITE));
 
   /**
-   * GimpChainButton:icon-size:
+   * LigmaChainButton:icon-size:
    *
    * The chain button icon size.
    *
@@ -171,10 +171,10 @@ gimp_chain_button_class_init (GimpChainButtonClass *klass)
                                                       GTK_TYPE_ICON_SIZE,
                                                       GTK_ICON_SIZE_BUTTON,
                                                       G_PARAM_CONSTRUCT |
-                                                      GIMP_PARAM_READWRITE));
+                                                      LIGMA_PARAM_READWRITE));
 
   /**
-   * GimpChainButton:active:
+   * LigmaChainButton:active:
    *
    * The toggled state of the chain button.
    *
@@ -186,18 +186,18 @@ gimp_chain_button_class_init (GimpChainButtonClass *klass)
                                                          "The chain's toggled state",
                                                          FALSE,
                                                          G_PARAM_CONSTRUCT |
-                                                         GIMP_PARAM_READWRITE));
+                                                         LIGMA_PARAM_READWRITE));
 }
 
 static void
-gimp_chain_button_init (GimpChainButton *button)
+ligma_chain_button_init (LigmaChainButton *button)
 {
-  GimpChainButtonPrivate *private;
+  LigmaChainButtonPrivate *private;
 
-  button->priv = gimp_chain_button_get_instance_private (button);
+  button->priv = ligma_chain_button_get_instance_private (button);
 
   private           = GET_PRIVATE (button);
-  private->position = GIMP_CHAIN_TOP;
+  private->position = LIGMA_CHAIN_TOP;
   private->active   = FALSE;
   private->image    = gtk_image_new ();
   private->button   = gtk_button_new ();
@@ -207,24 +207,24 @@ gimp_chain_button_init (GimpChainButton *button)
   gtk_widget_show (private->image);
 
   g_signal_connect (private->button, "clicked",
-                    G_CALLBACK (gimp_chain_button_clicked_callback),
+                    G_CALLBACK (ligma_chain_button_clicked_callback),
                     button);
 }
 
 static void
-gimp_chain_button_constructed (GObject *object)
+ligma_chain_button_constructed (GObject *object)
 {
-  GimpChainButton        *button  = GIMP_CHAIN_BUTTON (object);
-  GimpChainButtonPrivate *private = GET_PRIVATE (button);
+  LigmaChainButton        *button  = LIGMA_CHAIN_BUTTON (object);
+  LigmaChainButtonPrivate *private = GET_PRIVATE (button);
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  private->line1 = gimp_chain_line_new (private->position, 1);
-  private->line2 = gimp_chain_line_new (private->position, -1);
+  private->line1 = ligma_chain_line_new (private->position, 1);
+  private->line2 = ligma_chain_line_new (private->position, -1);
 
-  gimp_chain_button_update_image (button);
+  ligma_chain_button_update_image (button);
 
-  if (private->position & GIMP_CHAIN_LEFT) /* are we a vertical chainbutton? */
+  if (private->position & LIGMA_CHAIN_LEFT) /* are we a vertical chainbutton? */
     {
       gtk_widget_set_vexpand (private->line1, TRUE);
       gtk_widget_set_vexpand (private->line2, TRUE);
@@ -249,13 +249,13 @@ gimp_chain_button_constructed (GObject *object)
 }
 
 static void
-gimp_chain_button_set_property (GObject      *object,
+ligma_chain_button_set_property (GObject      *object,
                                 guint         property_id,
                                 const GValue *value,
                                 GParamSpec   *pspec)
 {
-  GimpChainButton        *button  = GIMP_CHAIN_BUTTON (object);
-  GimpChainButtonPrivate *private = GET_PRIVATE (button);
+  LigmaChainButton        *button  = LIGMA_CHAIN_BUTTON (object);
+  LigmaChainButtonPrivate *private = GET_PRIVATE (button);
 
   switch (property_id)
     {
@@ -268,7 +268,7 @@ gimp_chain_button_set_property (GObject      *object,
       break;
 
     case PROP_ACTIVE:
-      gimp_chain_button_set_active (button, g_value_get_boolean (value));
+      ligma_chain_button_set_active (button, g_value_get_boolean (value));
       break;
 
     default:
@@ -278,13 +278,13 @@ gimp_chain_button_set_property (GObject      *object,
 }
 
 static void
-gimp_chain_button_get_property (GObject    *object,
+ligma_chain_button_get_property (GObject    *object,
                                 guint       property_id,
                                 GValue     *value,
                                 GParamSpec *pspec)
 {
-  GimpChainButton        *button  = GIMP_CHAIN_BUTTON (object);
-  GimpChainButtonPrivate *private = GET_PRIVATE (button);
+  LigmaChainButton        *button  = LIGMA_CHAIN_BUTTON (object);
+  LigmaChainButtonPrivate *private = GET_PRIVATE (button);
 
   switch (property_id)
     {
@@ -297,7 +297,7 @@ gimp_chain_button_get_property (GObject    *object,
       break;
 
     case PROP_ACTIVE:
-      g_value_set_boolean (value, gimp_chain_button_get_active (button));
+      g_value_set_boolean (value, ligma_chain_button_get_active (button));
       break;
 
     default:
@@ -307,7 +307,7 @@ gimp_chain_button_get_property (GObject    *object,
 }
 
 static void
-gimp_chain_button_compute_expand (GtkWidget *widget,
+ligma_chain_button_compute_expand (GtkWidget *widget,
                                   gboolean  *hexpand_p,
                                   gboolean  *vexpand_p)
 {
@@ -317,11 +317,11 @@ gimp_chain_button_compute_expand (GtkWidget *widget,
 }
 
 /**
- * gimp_chain_button_new:
+ * ligma_chain_button_new:
  * @position: The position you are going to use for the button
  *            with respect to the widgets you want to chain.
  *
- * Creates a new #GimpChainButton widget.
+ * Creates a new #LigmaChainButton widget.
  *
  * This returns a button showing either a broken or a linked chain and
  * small clamps attached to both sides that visually group the two
@@ -330,32 +330,32 @@ gimp_chain_button_compute_expand (GtkWidget *widget,
  * widgets that it is supposed to connect. It may work for more than
  * two widgets, but the look is optimized for two.
  *
- * Returns: Pointer to the new #GimpChainButton, which is inactive
- *          by default. Use gimp_chain_button_set_active() to
+ * Returns: Pointer to the new #LigmaChainButton, which is inactive
+ *          by default. Use ligma_chain_button_set_active() to
  *          change its state.
  */
 GtkWidget *
-gimp_chain_button_new (GimpChainPosition position)
+ligma_chain_button_new (LigmaChainPosition position)
 {
-  return g_object_new (GIMP_TYPE_CHAIN_BUTTON,
+  return g_object_new (LIGMA_TYPE_CHAIN_BUTTON,
                        "position", position,
                        NULL);
 }
 
 /**
- * gimp_chain_button_set_icon_size:
- * @button: Pointer to a #GimpChainButton.
+ * ligma_chain_button_set_icon_size:
+ * @button: Pointer to a #LigmaChainButton.
  * @size: The new icon size.
  *
- * Sets the icon size of the #GimpChainButton.
+ * Sets the icon size of the #LigmaChainButton.
  *
  * Since: 2.10.10
  */
 void
-gimp_chain_button_set_icon_size (GimpChainButton *button,
+ligma_chain_button_set_icon_size (LigmaChainButton *button,
                                  GtkIconSize      size)
 {
-  g_return_if_fail (GIMP_IS_CHAIN_BUTTON (button));
+  g_return_if_fail (LIGMA_IS_CHAIN_BUTTON (button));
 
   g_object_set (button,
                 "icon-size", size,
@@ -363,21 +363,21 @@ gimp_chain_button_set_icon_size (GimpChainButton *button,
 }
 
 /**
- * gimp_chain_button_get_icon_size:
- * @button: Pointer to a #GimpChainButton.
+ * ligma_chain_button_get_icon_size:
+ * @button: Pointer to a #LigmaChainButton.
  *
- * Gets the icon size of the #GimpChainButton.
+ * Gets the icon size of the #LigmaChainButton.
  *
  * Returns: The icon size.
  *
  * Since: 2.10.10
  */
 GtkIconSize
-gimp_chain_button_get_icon_size (GimpChainButton *button)
+ligma_chain_button_get_icon_size (LigmaChainButton *button)
 {
   GtkIconSize size;
 
-  g_return_val_if_fail (GIMP_IS_CHAIN_BUTTON (button), GTK_ICON_SIZE_BUTTON);
+  g_return_val_if_fail (LIGMA_IS_CHAIN_BUTTON (button), GTK_ICON_SIZE_BUTTON);
 
   g_object_get (button,
                 "icon-size", &size,
@@ -387,20 +387,20 @@ gimp_chain_button_get_icon_size (GimpChainButton *button)
 }
 
 /**
- * gimp_chain_button_set_active:
- * @button: Pointer to a #GimpChainButton.
+ * ligma_chain_button_set_active:
+ * @button: Pointer to a #LigmaChainButton.
  * @active: The new state.
  *
- * Sets the state of the #GimpChainButton to be either locked (%TRUE) or
+ * Sets the state of the #LigmaChainButton to be either locked (%TRUE) or
  * unlocked (%FALSE) and changes the showed pixmap to reflect the new state.
  */
 void
-gimp_chain_button_set_active (GimpChainButton  *button,
+ligma_chain_button_set_active (LigmaChainButton  *button,
                               gboolean          active)
 {
-  GimpChainButtonPrivate *private;
+  LigmaChainButtonPrivate *private;
 
-  g_return_if_fail (GIMP_IS_CHAIN_BUTTON (button));
+  g_return_if_fail (LIGMA_IS_CHAIN_BUTTON (button));
 
   private = GET_PRIVATE (button);
 
@@ -408,28 +408,28 @@ gimp_chain_button_set_active (GimpChainButton  *button,
     {
       private->active = active ? TRUE : FALSE;
 
-      gimp_chain_button_update_image (button);
+      ligma_chain_button_update_image (button);
 
-      g_signal_emit (button, gimp_chain_button_signals[TOGGLED], 0);
+      g_signal_emit (button, ligma_chain_button_signals[TOGGLED], 0);
 
       g_object_notify (G_OBJECT (button), "active");
     }
 }
 
 /**
- * gimp_chain_button_get_active
- * @button: Pointer to a #GimpChainButton.
+ * ligma_chain_button_get_active
+ * @button: Pointer to a #LigmaChainButton.
  *
- * Checks the state of the #GimpChainButton.
+ * Checks the state of the #LigmaChainButton.
  *
- * Returns: %TRUE if the #GimpChainButton is active (locked).
+ * Returns: %TRUE if the #LigmaChainButton is active (locked).
  */
 gboolean
-gimp_chain_button_get_active (GimpChainButton *button)
+ligma_chain_button_get_active (LigmaChainButton *button)
 {
-  GimpChainButtonPrivate *private;
+  LigmaChainButtonPrivate *private;
 
-  g_return_val_if_fail (GIMP_IS_CHAIN_BUTTON (button), FALSE);
+  g_return_val_if_fail (LIGMA_IS_CHAIN_BUTTON (button), FALSE);
 
   private = GET_PRIVATE (button);
 
@@ -437,19 +437,19 @@ gimp_chain_button_get_active (GimpChainButton *button)
 }
 
 /**
- * gimp_chain_button_get_button
- * @button: A #GimpChainButton.
+ * ligma_chain_button_get_button
+ * @button: A #LigmaChainButton.
  *
- * Returns: (transfer none) (type GtkButton): The #GimpChainButton's button.
+ * Returns: (transfer none) (type GtkButton): The #LigmaChainButton's button.
  *
  * Since: 3.0
  */
 GtkWidget *
-gimp_chain_button_get_button (GimpChainButton *button)
+ligma_chain_button_get_button (LigmaChainButton *button)
 {
-  GimpChainButtonPrivate *private;
+  LigmaChainButtonPrivate *private;
 
-  g_return_val_if_fail (GIMP_IS_CHAIN_BUTTON (button), FALSE);
+  g_return_val_if_fail (LIGMA_IS_CHAIN_BUTTON (button), FALSE);
 
   private = GET_PRIVATE (button);
 
@@ -460,70 +460,70 @@ gimp_chain_button_get_button (GimpChainButton *button)
 /*  private functions  */
 
 static void
-gimp_chain_button_clicked_callback (GtkWidget       *widget,
-                                    GimpChainButton *button)
+ligma_chain_button_clicked_callback (GtkWidget       *widget,
+                                    LigmaChainButton *button)
 {
-  GimpChainButtonPrivate *private = GET_PRIVATE (button);
+  LigmaChainButtonPrivate *private = GET_PRIVATE (button);
 
-  gimp_chain_button_set_active (button, ! private->active);
+  ligma_chain_button_set_active (button, ! private->active);
 }
 
 static void
-gimp_chain_button_update_image (GimpChainButton *button)
+ligma_chain_button_update_image (LigmaChainButton *button)
 {
-  GimpChainButtonPrivate *private = GET_PRIVATE (button);
+  LigmaChainButtonPrivate *private = GET_PRIVATE (button);
   guint                   i;
 
-  i = ((private->position & GIMP_CHAIN_LEFT) << 1) + (private->active ? 0 : 1);
+  i = ((private->position & LIGMA_CHAIN_LEFT) << 1) + (private->active ? 0 : 1);
 
   gtk_image_set_from_icon_name (GTK_IMAGE (private->image),
-                                gimp_chain_icon_names[i],
-                                gimp_chain_button_get_icon_size (button));
+                                ligma_chain_icon_names[i],
+                                ligma_chain_button_get_icon_size (button));
 }
 
 
-/* GimpChainLine is a simple no-window widget for drawing the lines.
+/* LigmaChainLine is a simple no-window widget for drawing the lines.
  *
  * Originally this used to be a GtkDrawingArea but this turned out to
  * be a bad idea. We don't need an extra window to draw on and we also
  * don't need any input events.
  */
 
-static GType     gimp_chain_line_get_type (void) G_GNUC_CONST;
-static gboolean  gimp_chain_line_draw     (GtkWidget *widget,
+static GType     ligma_chain_line_get_type (void) G_GNUC_CONST;
+static gboolean  ligma_chain_line_draw     (GtkWidget *widget,
                                            cairo_t   *cr);
 
-struct _GimpChainLine
+struct _LigmaChainLine
 {
   GtkWidget          parent_instance;
-  GimpChainPosition  position;
+  LigmaChainPosition  position;
   gint               which;
 };
 
-typedef struct _GimpChainLine  GimpChainLine;
-typedef GtkWidgetClass         GimpChainLineClass;
+typedef struct _LigmaChainLine  LigmaChainLine;
+typedef GtkWidgetClass         LigmaChainLineClass;
 
-G_DEFINE_TYPE (GimpChainLine, gimp_chain_line, GTK_TYPE_WIDGET)
+G_DEFINE_TYPE (LigmaChainLine, ligma_chain_line, GTK_TYPE_WIDGET)
 
 static void
-gimp_chain_line_class_init (GimpChainLineClass *klass)
+ligma_chain_line_class_init (LigmaChainLineClass *klass)
 {
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  widget_class->draw = gimp_chain_line_draw;
+  widget_class->draw = ligma_chain_line_draw;
 }
 
 static void
-gimp_chain_line_init (GimpChainLine *line)
+ligma_chain_line_init (LigmaChainLine *line)
 {
   gtk_widget_set_has_window (GTK_WIDGET (line), FALSE);
 }
 
 static GtkWidget *
-gimp_chain_line_new (GimpChainPosition  position,
+ligma_chain_line_new (LigmaChainPosition  position,
                      gint               which)
 {
-  GimpChainLine *line = g_object_new (gimp_chain_line_get_type (), NULL);
+  LigmaChainLine *line = g_object_new (ligma_chain_line_get_type (), NULL);
 
   line->position = position;
   line->which    = which;
@@ -532,14 +532,14 @@ gimp_chain_line_new (GimpChainPosition  position,
 }
 
 static gboolean
-gimp_chain_line_draw (GtkWidget *widget,
+ligma_chain_line_draw (GtkWidget *widget,
                       cairo_t   *cr)
 {
   GtkStyleContext   *context = gtk_widget_get_style_context (widget);
-  GimpChainLine     *line    = ((GimpChainLine *) widget);
+  LigmaChainLine     *line    = ((LigmaChainLine *) widget);
   GtkAllocation      allocation;
   GdkPoint           points[3];
-  GimpChainPosition  position;
+  LigmaChainPosition  position;
   GdkRGBA            color;
 
   gtk_widget_get_allocation (widget, &allocation);
@@ -554,23 +554,23 @@ gimp_chain_line_draw (GtkWidget *widget,
     {
       switch (position)
         {
-        case GIMP_CHAIN_TOP:
-        case GIMP_CHAIN_BOTTOM:
+        case LIGMA_CHAIN_TOP:
+        case LIGMA_CHAIN_BOTTOM:
           break;
 
-        case GIMP_CHAIN_LEFT:
-          position = GIMP_CHAIN_RIGHT;
+        case LIGMA_CHAIN_LEFT:
+          position = LIGMA_CHAIN_RIGHT;
           break;
 
-        case GIMP_CHAIN_RIGHT:
-          position = GIMP_CHAIN_LEFT;
+        case LIGMA_CHAIN_RIGHT:
+          position = LIGMA_CHAIN_LEFT;
           break;
         }
     }
 
   switch (position)
     {
-    case GIMP_CHAIN_LEFT:
+    case LIGMA_CHAIN_LEFT:
       points[0].x += SHORT_LINE;
       points[1].x = points[0].x - SHORT_LINE;
       points[1].y = points[0].y;
@@ -578,7 +578,7 @@ gimp_chain_line_draw (GtkWidget *widget,
       points[2].y = (line->which == 1 ? allocation.height - 1 : 0);
       break;
 
-    case GIMP_CHAIN_RIGHT:
+    case LIGMA_CHAIN_RIGHT:
       points[0].x -= SHORT_LINE;
       points[1].x = points[0].x + SHORT_LINE;
       points[1].y = points[0].y;
@@ -586,7 +586,7 @@ gimp_chain_line_draw (GtkWidget *widget,
       points[2].y = (line->which == 1 ? allocation.height - 1 : 0);
       break;
 
-    case GIMP_CHAIN_TOP:
+    case LIGMA_CHAIN_TOP:
       points[0].y += SHORT_LINE;
       points[1].x = points[0].x;
       points[1].y = points[0].y - SHORT_LINE;
@@ -594,7 +594,7 @@ gimp_chain_line_draw (GtkWidget *widget,
       points[2].y = points[1].y;
       break;
 
-    case GIMP_CHAIN_BOTTOM:
+    case LIGMA_CHAIN_BOTTOM:
       points[0].y -= SHORT_LINE;
       points[1].x = points[0].x;
       points[1].y = points[0].y + SHORT_LINE;

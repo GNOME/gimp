@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimppdb.c
- * Copyright (C) 2019 Michael Natterer <mitch@gimp.org>
+ * ligmapdb.c
+ * Copyright (C) 2019 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,75 +20,75 @@
 
 #include "config.h"
 
-#include "gimp.h"
+#include "ligma.h"
 
-#include "libgimpbase/gimpprotocol.h"
-#include "libgimpbase/gimpwire.h"
+#include "libligmabase/ligmaprotocol.h"
+#include "libligmabase/ligmawire.h"
 
-#include "gimp-private.h"
-#include "gimpgpparams.h"
-#include "gimppdb-private.h"
-#include "gimppdb_pdb.h"
-#include "gimppdbprocedure.h"
-#include "gimpplugin-private.h"
+#include "ligma-private.h"
+#include "ligmagpparams.h"
+#include "ligmapdb-private.h"
+#include "ligmapdb_pdb.h"
+#include "ligmapdbprocedure.h"
+#include "ligmaplugin-private.h"
 
-#include "libgimp-intl.h"
+#include "libligma-intl.h"
 
 
 /**
- * GimpPDB:
+ * LigmaPDB:
  *
  * Provides access to the Procedural DataBase (PDB).
  */
 
 
-struct _GimpPDBPrivate
+struct _LigmaPDBPrivate
 {
-  GimpPlugIn         *plug_in;
+  LigmaPlugIn         *plug_in;
 
   GHashTable         *procedures;
 
-  GimpPDBStatusType   error_status;
+  LigmaPDBStatusType   error_status;
   gchar              *error_message;
 };
 
 
-static void   gimp_pdb_dispose   (GObject        *object);
-static void   gimp_pdb_finalize  (GObject        *object);
+static void   ligma_pdb_dispose   (GObject        *object);
+static void   ligma_pdb_finalize  (GObject        *object);
 
-static void   gimp_pdb_set_error (GimpPDB        *pdb,
-                                  GimpValueArray *return_values);
+static void   ligma_pdb_set_error (LigmaPDB        *pdb,
+                                  LigmaValueArray *return_values);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpPDB, gimp_pdb, G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaPDB, ligma_pdb, G_TYPE_OBJECT)
 
-#define parent_class gimp_pdb_parent_class
+#define parent_class ligma_pdb_parent_class
 
 
 static void
-gimp_pdb_class_init (GimpPDBClass *klass)
+ligma_pdb_class_init (LigmaPDBClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->dispose  = gimp_pdb_dispose;
-  object_class->finalize = gimp_pdb_finalize;
+  object_class->dispose  = ligma_pdb_dispose;
+  object_class->finalize = ligma_pdb_finalize;
 }
 
 static void
-gimp_pdb_init (GimpPDB *pdb)
+ligma_pdb_init (LigmaPDB *pdb)
 {
-  pdb->priv = gimp_pdb_get_instance_private (pdb);
+  pdb->priv = ligma_pdb_get_instance_private (pdb);
 
   pdb->priv->procedures = g_hash_table_new_full (g_str_hash, g_str_equal,
                                                  g_free, g_object_unref);
 
-  pdb->priv->error_status = GIMP_PDB_SUCCESS;
+  pdb->priv->error_status = LIGMA_PDB_SUCCESS;
 }
 
 static void
-gimp_pdb_dispose (GObject *object)
+ligma_pdb_dispose (GObject *object)
 {
-  GimpPDB *pdb = GIMP_PDB (object);
+  LigmaPDB *pdb = LIGMA_PDB (object);
 
   g_clear_pointer (&pdb->priv->procedures, g_hash_table_unref);
 
@@ -96,9 +96,9 @@ gimp_pdb_dispose (GObject *object)
 }
 
 static void
-gimp_pdb_finalize (GObject *object)
+ligma_pdb_finalize (GObject *object)
 {
-  GimpPDB *pdb = GIMP_PDB (object);
+  LigmaPDB *pdb = LIGMA_PDB (object);
 
   g_clear_object (&pdb->priv->plug_in);
   g_clear_pointer (&pdb->priv->error_message, g_free);
@@ -106,30 +106,30 @@ gimp_pdb_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
-GimpPDB *
-_gimp_pdb_new (GimpPlugIn *plug_in)
+LigmaPDB *
+_ligma_pdb_new (LigmaPlugIn *plug_in)
 {
-  GimpPDB *pdb;
+  LigmaPDB *pdb;
 
-  g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), NULL);
+  g_return_val_if_fail (LIGMA_IS_PLUG_IN (plug_in), NULL);
 
-  pdb = g_object_new (GIMP_TYPE_PDB, NULL);
+  pdb = g_object_new (LIGMA_TYPE_PDB, NULL);
 
   pdb->priv->plug_in = g_object_ref (plug_in);
 
   return pdb;
 }
 
-GimpPlugIn *
-_gimp_pdb_get_plug_in (GimpPDB *pdb)
+LigmaPlugIn *
+_ligma_pdb_get_plug_in (LigmaPDB *pdb)
 {
-  g_return_val_if_fail (GIMP_IS_PDB (pdb), NULL);
+  g_return_val_if_fail (LIGMA_IS_PDB (pdb), NULL);
 
   return pdb->priv->plug_in;
 }
 
 /**
- * gimp_pdb_procedure_exists:
+ * ligma_pdb_procedure_exists:
  * @pdb:            A PDB instance.
  * @procedure_name: A procedure name
  *
@@ -141,18 +141,18 @@ _gimp_pdb_get_plug_in (GimpPDB *pdb)
  * Since: 3.0
  **/
 gboolean
-gimp_pdb_procedure_exists (GimpPDB     *pdb,
+ligma_pdb_procedure_exists (LigmaPDB     *pdb,
                            const gchar *procedure_name)
 {
-  g_return_val_if_fail (GIMP_IS_PDB (pdb), FALSE);
-  g_return_val_if_fail (gimp_is_canonical_identifier (procedure_name), FALSE);
+  g_return_val_if_fail (LIGMA_IS_PDB (pdb), FALSE);
+  g_return_val_if_fail (ligma_is_canonical_identifier (procedure_name), FALSE);
 
-  return _gimp_pdb_proc_exists (procedure_name);
+  return _ligma_pdb_proc_exists (procedure_name);
 }
 
 /**
- * gimp_pdb_lookup_procedure:
- * @pdb:            A #GimpPDB instance.
+ * ligma_pdb_lookup_procedure:
+ * @pdb:            A #LigmaPDB instance.
  * @procedure_name: A procedure name
  *
  * This function returns the [class@Procedure] which is registered
@@ -164,20 +164,20 @@ gimp_pdb_procedure_exists (GimpPDB     *pdb,
  *
  * Since: 3.0
  **/
-GimpProcedure *
-gimp_pdb_lookup_procedure (GimpPDB     *pdb,
+LigmaProcedure *
+ligma_pdb_lookup_procedure (LigmaPDB     *pdb,
                            const gchar *procedure_name)
 {
-  GimpProcedure *procedure;
+  LigmaProcedure *procedure;
 
-  g_return_val_if_fail (GIMP_IS_PDB (pdb), NULL);
-  g_return_val_if_fail (gimp_is_canonical_identifier (procedure_name), NULL);
+  g_return_val_if_fail (LIGMA_IS_PDB (pdb), NULL);
+  g_return_val_if_fail (ligma_is_canonical_identifier (procedure_name), NULL);
 
   procedure = g_hash_table_lookup (pdb->priv->procedures, procedure_name);
 
   if (! procedure)
     {
-      procedure = _gimp_pdb_procedure_new (pdb, procedure_name);
+      procedure = _ligma_pdb_procedure_new (pdb, procedure_name);
 
       if (procedure)
         g_hash_table_insert (pdb->priv->procedures,
@@ -188,8 +188,8 @@ gimp_pdb_lookup_procedure (GimpPDB     *pdb,
 }
 
 /**
- * gimp_pdb_run_procedure: (skip)
- * @pdb:            the #GimpPDB object.
+ * ligma_pdb_run_procedure: (skip)
+ * @pdb:            the #LigmaPDB object.
  * @procedure_name: the procedure registered name.
  * @first_type:     the #GType of the first argument, or #G_TYPE_NONE.
  * @...:            the call arguments.
@@ -201,21 +201,21 @@ gimp_pdb_lookup_procedure (GimpPDB     *pdb,
  *
  * Since: 3.0
  */
-GimpValueArray *
-gimp_pdb_run_procedure (GimpPDB     *pdb,
+LigmaValueArray *
+ligma_pdb_run_procedure (LigmaPDB     *pdb,
                         const gchar *procedure_name,
                         GType        first_type,
                         ...)
 {
-  GimpValueArray *return_values;
+  LigmaValueArray *return_values;
   va_list         args;
 
-  g_return_val_if_fail (GIMP_IS_PDB (pdb), NULL);
-  g_return_val_if_fail (gimp_is_canonical_identifier (procedure_name), NULL);
+  g_return_val_if_fail (LIGMA_IS_PDB (pdb), NULL);
+  g_return_val_if_fail (ligma_is_canonical_identifier (procedure_name), NULL);
 
   va_start (args, first_type);
 
-  return_values = gimp_pdb_run_procedure_valist (pdb, procedure_name,
+  return_values = ligma_pdb_run_procedure_valist (pdb, procedure_name,
                                                  first_type, args);
 
   va_end (args);
@@ -224,8 +224,8 @@ gimp_pdb_run_procedure (GimpPDB     *pdb,
 }
 
 /**
- * gimp_pdb_run_procedure_valist: (skip)
- * @pdb:            the #GimpPDB object.
+ * ligma_pdb_run_procedure_valist: (skip)
+ * @pdb:            the #LigmaPDB object.
  * @procedure_name: the procedure registered name.
  * @first_type:     the #GType of the first argument, or #G_TYPE_NONE.
  * @args:           the call arguments.
@@ -237,46 +237,46 @@ gimp_pdb_run_procedure (GimpPDB     *pdb,
  *
  * Since: 3.0
  */
-GimpValueArray *
-gimp_pdb_run_procedure_valist (GimpPDB     *pdb,
+LigmaValueArray *
+ligma_pdb_run_procedure_valist (LigmaPDB     *pdb,
                                const gchar *procedure_name,
                                GType        first_type,
                                va_list      args)
 {
-  GimpValueArray *arguments;
-  GimpValueArray *return_values;
+  LigmaValueArray *arguments;
+  LigmaValueArray *return_values;
   gchar          *error_msg = NULL;
 
-  g_return_val_if_fail (GIMP_IS_PDB (pdb), NULL);
-  g_return_val_if_fail (gimp_is_canonical_identifier (procedure_name), NULL);
+  g_return_val_if_fail (LIGMA_IS_PDB (pdb), NULL);
+  g_return_val_if_fail (ligma_is_canonical_identifier (procedure_name), NULL);
 
-  arguments = gimp_value_array_new_from_types_valist (&error_msg,
+  arguments = ligma_value_array_new_from_types_valist (&error_msg,
                                                       first_type,
                                                       args);
 
   if (! arguments)
     {
-      GError *error = g_error_new_literal (GIMP_PDB_ERROR,
-                                           GIMP_PDB_ERROR_INTERNAL_ERROR,
+      GError *error = g_error_new_literal (LIGMA_PDB_ERROR,
+                                           LIGMA_PDB_ERROR_INTERNAL_ERROR,
                                            error_msg);
       g_printerr ("%s: %s", G_STRFUNC, error_msg);
       g_free (error_msg);
 
-      return gimp_procedure_new_return_values (NULL,
-                                               GIMP_PDB_CALLING_ERROR,
+      return ligma_procedure_new_return_values (NULL,
+                                               LIGMA_PDB_CALLING_ERROR,
                                                error);
     }
 
-  return_values = gimp_pdb_run_procedure_array (pdb, procedure_name,
+  return_values = ligma_pdb_run_procedure_array (pdb, procedure_name,
                                                 arguments);
-  gimp_value_array_unref (arguments);
+  ligma_value_array_unref (arguments);
 
   return return_values;
 }
 
 /**
- * gimp_pdb_run_procedure_argv: (rename-to gimp_pdb_run_procedure)
- * @pdb:                                              the #GimpPDB object.
+ * ligma_pdb_run_procedure_argv: (rename-to ligma_pdb_run_procedure)
+ * @pdb:                                              the #LigmaPDB object.
  * @procedure_name:                                   the registered name to call.
  * @arguments: (array length=n_arguments) (nullable): the call arguments or %NULL.
  * @n_arguments:                                      the number of arguments.
@@ -287,31 +287,31 @@ gimp_pdb_run_procedure_valist (GimpPDB     *pdb,
  *
  * Since: 3.0
  */
-GimpValueArray *
-gimp_pdb_run_procedure_argv (GimpPDB      *pdb,
+LigmaValueArray *
+ligma_pdb_run_procedure_argv (LigmaPDB      *pdb,
                              const gchar  *procedure_name,
                              const GValue *arguments,
                              gint          n_arguments)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_values;
+  LigmaValueArray *args;
+  LigmaValueArray *return_values;
 
-  g_return_val_if_fail (GIMP_IS_PDB (pdb), NULL);
-  g_return_val_if_fail (gimp_is_canonical_identifier (procedure_name), NULL);
+  g_return_val_if_fail (LIGMA_IS_PDB (pdb), NULL);
+  g_return_val_if_fail (ligma_is_canonical_identifier (procedure_name), NULL);
   /* Not require arguments != NULL.
-   * gimp_value_array_new_from_values(NULL, 0) will return empty GValueArray.
+   * ligma_value_array_new_from_values(NULL, 0) will return empty GValueArray.
    */
 
-  args = gimp_value_array_new_from_values (arguments, n_arguments);
-  return_values = gimp_pdb_run_procedure_array (pdb, procedure_name, args);
-  gimp_value_array_unref (args);
+  args = ligma_value_array_new_from_values (arguments, n_arguments);
+  return_values = ligma_pdb_run_procedure_array (pdb, procedure_name, args);
+  ligma_value_array_unref (args);
 
   return return_values;
 }
 
 /**
- * gimp_pdb_run_procedure_array:
- * @pdb:            the #GimpPDB object.
+ * ligma_pdb_run_procedure_array:
+ * @pdb:            the #LigmaPDB object.
  * @procedure_name: the procedure registered name.
  * @arguments:      the call arguments.
  *
@@ -321,52 +321,52 @@ gimp_pdb_run_procedure_argv (GimpPDB      *pdb,
  *
  * Since: 3.0
  */
-GimpValueArray *
-gimp_pdb_run_procedure_array (GimpPDB              *pdb,
+LigmaValueArray *
+ligma_pdb_run_procedure_array (LigmaPDB              *pdb,
                               const gchar          *procedure_name,
-                              const GimpValueArray *arguments)
+                              const LigmaValueArray *arguments)
 {
   GPProcRun        proc_run;
   GPProcReturn    *proc_return;
-  GimpWireMessage  msg;
-  GimpValueArray  *return_values;
+  LigmaWireMessage  msg;
+  LigmaValueArray  *return_values;
 
-  g_return_val_if_fail (GIMP_IS_PDB (pdb), NULL);
-  g_return_val_if_fail (gimp_is_canonical_identifier (procedure_name), NULL);
+  g_return_val_if_fail (LIGMA_IS_PDB (pdb), NULL);
+  g_return_val_if_fail (ligma_is_canonical_identifier (procedure_name), NULL);
   g_return_val_if_fail (arguments != NULL, NULL);
 
   proc_run.name     = (gchar *) procedure_name;
-  proc_run.n_params = gimp_value_array_length (arguments);
-  proc_run.params   = _gimp_value_array_to_gp_params (arguments, FALSE);
+  proc_run.n_params = ligma_value_array_length (arguments);
+  proc_run.params   = _ligma_value_array_to_gp_params (arguments, FALSE);
 
-  if (! gp_proc_run_write (_gimp_plug_in_get_write_channel (pdb->priv->plug_in),
+  if (! gp_proc_run_write (_ligma_plug_in_get_write_channel (pdb->priv->plug_in),
                            &proc_run, pdb->priv->plug_in))
-    gimp_quit ();
+    ligma_quit ();
 
-  _gimp_gp_params_free (proc_run.params, proc_run.n_params, FALSE);
+  _ligma_gp_params_free (proc_run.params, proc_run.n_params, FALSE);
 
-  _gimp_plug_in_read_expect_msg (pdb->priv->plug_in, &msg, GP_PROC_RETURN);
+  _ligma_plug_in_read_expect_msg (pdb->priv->plug_in, &msg, GP_PROC_RETURN);
 
   proc_return = msg.data;
 
-  return_values = _gimp_gp_params_to_value_array (NULL,
+  return_values = _ligma_gp_params_to_value_array (NULL,
                                                   NULL, 0,
                                                   proc_return->params,
                                                   proc_return->n_params,
                                                   TRUE);
 
-  gimp_wire_destroy (&msg);
+  ligma_wire_destroy (&msg);
 
-  gimp_pdb_set_error (pdb, return_values);
+  ligma_pdb_set_error (pdb, return_values);
 
   return return_values;
 }
 
 /**
- * gimp_pdb_run_procedure_config:
- * @pdb:            the #GimpPDB object.
+ * ligma_pdb_run_procedure_config:
+ * @pdb:            the #LigmaPDB object.
  * @procedure_name: the registered name to call.
- * @config:         a config object obtained with gimp_procedure_create_config().
+ * @config:         a config object obtained with ligma_procedure_create_config().
  *
  * Runs the procedure named @procedure_name with @config.
  *
@@ -374,37 +374,37 @@ gimp_pdb_run_procedure_array (GimpPDB              *pdb,
  *
  * Since: 3.0
  */
-GimpValueArray *
-gimp_pdb_run_procedure_config (GimpPDB             *pdb,
+LigmaValueArray *
+ligma_pdb_run_procedure_config (LigmaPDB             *pdb,
                                const gchar         *procedure_name,
-                               GimpProcedureConfig *config)
+                               LigmaProcedureConfig *config)
 {
-  GimpProcedure  *procedure;
-  GimpValueArray *args;
-  GimpValueArray *return_values;
+  LigmaProcedure  *procedure;
+  LigmaValueArray *args;
+  LigmaValueArray *return_values;
 
-  g_return_val_if_fail (GIMP_IS_PDB (pdb), NULL);
-  g_return_val_if_fail (gimp_is_canonical_identifier (procedure_name), NULL);
-  g_return_val_if_fail (GIMP_IS_PROCEDURE_CONFIG (config), NULL);
+  g_return_val_if_fail (LIGMA_IS_PDB (pdb), NULL);
+  g_return_val_if_fail (ligma_is_canonical_identifier (procedure_name), NULL);
+  g_return_val_if_fail (LIGMA_IS_PROCEDURE_CONFIG (config), NULL);
 
-  procedure = gimp_pdb_lookup_procedure (pdb, procedure_name);
+  procedure = ligma_pdb_lookup_procedure (pdb, procedure_name);
 
-  g_return_val_if_fail (gimp_procedure_config_get_procedure (config) == procedure,
+  g_return_val_if_fail (ligma_procedure_config_get_procedure (config) == procedure,
                         NULL);
 
-  args = gimp_procedure_new_arguments (procedure);
+  args = ligma_procedure_new_arguments (procedure);
 
-  gimp_procedure_config_get_values (config, args);
-  return_values = gimp_pdb_run_procedure_array (pdb, procedure_name, args);
+  ligma_procedure_config_get_values (config, args);
+  return_values = ligma_pdb_run_procedure_array (pdb, procedure_name, args);
 
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
   return return_values;
 }
 
 /**
- * gimp_pdb_temp_procedure_name:
- * @pdb: the #GimpPDB object.
+ * ligma_pdb_temp_procedure_name:
+ * @pdb: the #LigmaPDB object.
  *
  * Generates a unique temporary PDB name.
  *
@@ -418,16 +418,16 @@ gimp_pdb_run_procedure_config (GimpPDB             *pdb,
  * Since: 3.0
  **/
 gchar *
-gimp_pdb_temp_procedure_name (GimpPDB *pdb)
+ligma_pdb_temp_procedure_name (LigmaPDB *pdb)
 {
-  g_return_val_if_fail (GIMP_IS_PDB (pdb), NULL);
+  g_return_val_if_fail (LIGMA_IS_PDB (pdb), NULL);
 
-  return _gimp_pdb_temp_name ();
+  return _ligma_pdb_temp_name ();
 }
 
 /**
- * gimp_pdb_dump_to_file:
- * @pdb:  A #GimpPDB.
+ * ligma_pdb_dump_to_file:
+ * @pdb:  A #LigmaPDB.
  * @file: The dump file.
  *
  * Dumps the current contents of the procedural database
@@ -441,18 +441,18 @@ gimp_pdb_temp_procedure_name (GimpPDB *pdb)
  * Since: 3.0
  **/
 gboolean
-gimp_pdb_dump_to_file (GimpPDB *pdb,
+ligma_pdb_dump_to_file (LigmaPDB *pdb,
                        GFile   *file)
 {
-  g_return_val_if_fail (GIMP_IS_PDB (pdb), FALSE);
+  g_return_val_if_fail (LIGMA_IS_PDB (pdb), FALSE);
   g_return_val_if_fail (G_IS_FILE (file), FALSE);
 
-  return _gimp_pdb_dump (file);
+  return _ligma_pdb_dump (file);
 }
 
 /**
- * gimp_pdb_query_procedures:
- * @pdb:         A #GimpPDB.
+ * ligma_pdb_query_procedures:
+ * @pdb:         A #LigmaPDB.
  * @name:        The regex for procedure name.
  * @blurb:       The regex for procedure blurb.
  * @help:        The regex for procedure help.
@@ -460,7 +460,7 @@ gimp_pdb_dump_to_file (GimpPDB *pdb,
  * @authors:     The regex for procedure authors.
  * @copyright:   The regex for procedure copyright.
  * @date:        The regex for procedure date.
- * @proc_type:   The regex for procedure type: { 'Internal GIMP procedure', 'GIMP Plug-in', 'GIMP Extension', 'Temporary Procedure' }.
+ * @proc_type:   The regex for procedure type: { 'Internal LIGMA procedure', 'LIGMA Plug-in', 'LIGMA Extension', 'Temporary Procedure' }.
  *
  * Queries the procedural database for its contents using regular
  * expression matching.
@@ -486,7 +486,7 @@ gimp_pdb_dump_to_file (GimpPDB *pdb,
  * Since: 3.0
  **/
 gchar **
-gimp_pdb_query_procedures (GimpPDB     *pdb,
+ligma_pdb_query_procedures (LigmaPDB     *pdb,
                            const gchar *name,
                            const gchar *blurb,
                            const gchar *help,
@@ -498,9 +498,9 @@ gimp_pdb_query_procedures (GimpPDB     *pdb,
 {
   gchar **matches;
 
-  g_return_val_if_fail (GIMP_IS_PDB (pdb), NULL);
+  g_return_val_if_fail (LIGMA_IS_PDB (pdb), NULL);
 
-  _gimp_pdb_query (name,
+  _ligma_pdb_query (name,
                    blurb, help, /* FIXME help_id */
                    authors, copyright, date,
                    proc_type,
@@ -510,23 +510,23 @@ gimp_pdb_query_procedures (GimpPDB     *pdb,
 }
 
 GQuark
-_gimp_pdb_error_quark (void)
+_ligma_pdb_error_quark (void)
 {
-  return g_quark_from_static_string ("gimp-pdb-error-quark");
+  return g_quark_from_static_string ("ligma-pdb-error-quark");
 }
 
 
 /*  Temporary API, to go away before 3.0  */
 
 /**
- * gimp_pdb_get_last_error:
- * @pdb: a #GimpPDB.
+ * ligma_pdb_get_last_error:
+ * @pdb: a #LigmaPDB.
  *
  * Retrieves the error message from the last procedure call.
  *
  * If a procedure call fails, then it might pass an error message with
- * the return values. Plug-ins that are using the libgimp C wrappers
- * don't access the procedure return values directly. Thus #GimpPDB
+ * the return values. Plug-ins that are using the libligma C wrappers
+ * don't access the procedure return values directly. Thus #LigmaPDB
  * stores the error message and makes it available with this
  * function. The next procedure call unsets the error message again.
  *
@@ -538,28 +538,28 @@ _gimp_pdb_error_quark (void)
  * Since: 3.0
  **/
 const gchar *
-gimp_pdb_get_last_error (GimpPDB *pdb)
+ligma_pdb_get_last_error (LigmaPDB *pdb)
 {
-  g_return_val_if_fail (GIMP_IS_PDB (pdb), NULL);
+  g_return_val_if_fail (LIGMA_IS_PDB (pdb), NULL);
 
   if (pdb->priv->error_message && strlen (pdb->priv->error_message))
     return pdb->priv->error_message;
 
   switch (pdb->priv->error_status)
     {
-    case GIMP_PDB_SUCCESS:
+    case LIGMA_PDB_SUCCESS:
       /*  procedure executed successfully  */
       return _("success");
 
-    case GIMP_PDB_EXECUTION_ERROR:
+    case LIGMA_PDB_EXECUTION_ERROR:
       /*  procedure execution failed       */
       return _("execution error");
 
-    case GIMP_PDB_CALLING_ERROR:
+    case LIGMA_PDB_CALLING_ERROR:
       /*  procedure called incorrectly     */
       return _("calling error");
 
-    case GIMP_PDB_CANCEL:
+    case LIGMA_PDB_CANCEL:
       /*  procedure execution cancelled    */
       return _("cancelled");
 
@@ -569,19 +569,19 @@ gimp_pdb_get_last_error (GimpPDB *pdb)
 }
 
 /**
- * gimp_pdb_get_last_status:
- * @pdb: a #GimpPDB.
+ * ligma_pdb_get_last_status:
+ * @pdb: a #LigmaPDB.
  *
  * Retrieves the status from the last procedure call.
  *
- * Returns: the #GimpPDBStatusType.
+ * Returns: the #LigmaPDBStatusType.
  *
  * Since: 3.0
  **/
-GimpPDBStatusType
-gimp_pdb_get_last_status (GimpPDB *pdb)
+LigmaPDBStatusType
+ligma_pdb_get_last_status (LigmaPDB *pdb)
 {
-  g_return_val_if_fail (GIMP_IS_PDB (pdb), GIMP_PDB_SUCCESS);
+  g_return_val_if_fail (LIGMA_IS_PDB (pdb), LIGMA_PDB_SUCCESS);
 
   return pdb->priv->error_status;
 }
@@ -589,7 +589,7 @@ gimp_pdb_get_last_status (GimpPDB *pdb)
 /*  Cruft API  */
 
 /**
- * gimp_pdb_get_data:
+ * ligma_pdb_get_data:
  * @identifier: The identifier associated with data.
  * @data: A byte array containing data.
  *
@@ -603,14 +603,14 @@ gimp_pdb_get_last_status (GimpPDB *pdb)
  * the identifier
  */
 gboolean
-gimp_pdb_get_data (const gchar *identifier,
+ligma_pdb_get_data (const gchar *identifier,
                    gpointer     data)
 {
   gint      size;
   guint8   *hack;
   gboolean  success;
 
-  success = _gimp_pdb_get_data (identifier, &size, &hack);
+  success = _ligma_pdb_get_data (identifier, &size, &hack);
 
   if (hack)
     {
@@ -622,7 +622,7 @@ gimp_pdb_get_data (const gchar *identifier,
 }
 
 /**
- * gimp_pdb_get_data_size:
+ * ligma_pdb_get_data_size:
  * @identifier: The identifier associated with data.
  *
  * Returns size of data associated with the specified identifier.
@@ -634,13 +634,13 @@ gimp_pdb_get_data (const gchar *identifier,
  * Returns: The number of bytes in the data.
  **/
 gint
-gimp_pdb_get_data_size (const gchar *identifier)
+ligma_pdb_get_data_size (const gchar *identifier)
 {
-  return _gimp_pdb_get_data_size (identifier);
+  return _ligma_pdb_get_data_size (identifier);
 }
 
 /**
- * gimp_pdb_set_data:
+ * ligma_pdb_set_data:
  * @identifier: The identifier associated with data.
  * @data: A byte array containing data.
  * @bytes: The number of bytes in the data
@@ -654,39 +654,39 @@ gimp_pdb_get_data_size (const gchar *identifier)
  * Returns: TRUE on success.
  */
 gboolean
-gimp_pdb_set_data (const gchar   *identifier,
+ligma_pdb_set_data (const gchar   *identifier,
                    gconstpointer  data,
                    guint32        bytes)
 {
-  return _gimp_pdb_set_data (identifier, bytes, data);
+  return _ligma_pdb_set_data (identifier, bytes, data);
 }
 
 
 /*  private functions  */
 
 static void
-gimp_pdb_set_error (GimpPDB        *pdb,
-                    GimpValueArray *return_values)
+ligma_pdb_set_error (LigmaPDB        *pdb,
+                    LigmaValueArray *return_values)
 {
   g_clear_pointer (&pdb->priv->error_message, g_free);
-  pdb->priv->error_status = GIMP_PDB_SUCCESS;
+  pdb->priv->error_status = LIGMA_PDB_SUCCESS;
 
-  if (gimp_value_array_length (return_values) > 0)
+  if (ligma_value_array_length (return_values) > 0)
     {
-      pdb->priv->error_status = GIMP_VALUES_GET_ENUM (return_values, 0);
+      pdb->priv->error_status = LIGMA_VALUES_GET_ENUM (return_values, 0);
 
       switch (pdb->priv->error_status)
         {
-        case GIMP_PDB_SUCCESS:
-        case GIMP_PDB_PASS_THROUGH:
+        case LIGMA_PDB_SUCCESS:
+        case LIGMA_PDB_PASS_THROUGH:
           break;
 
-        case GIMP_PDB_EXECUTION_ERROR:
-        case GIMP_PDB_CALLING_ERROR:
-        case GIMP_PDB_CANCEL:
-          if (gimp_value_array_length (return_values) > 1)
+        case LIGMA_PDB_EXECUTION_ERROR:
+        case LIGMA_PDB_CALLING_ERROR:
+        case LIGMA_PDB_CANCEL:
+          if (ligma_value_array_length (return_values) > 1)
             {
-              GValue *value = gimp_value_array_index (return_values, 1);
+              GValue *value = ligma_value_array_index (return_values, 1);
 
               if (G_VALUE_HOLDS_STRING (value))
                 pdb->priv->error_message = g_value_dup_string (value);

@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * gimppropgui-motion-blur-circular.c
- * Copyright (C) 2019  Michael Natterer <mitch@gimp.org>
+ * ligmapropgui-motion-blur-circular.c
+ * Copyright (C) 2019  Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,17 +23,17 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpmath/gimpmath.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "propgui-types.h"
 
-#include "core/gimpcontext.h"
+#include "core/ligmacontext.h"
 
-#include "gimppropgui-generic.h"
-#include "gimppropgui-motion-blur-circular.h"
+#include "ligmapropgui-generic.h"
+#include "ligmapropgui-motion-blur-circular.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 static void
@@ -72,7 +72,7 @@ config_notify (GObject          *config,
                const GParamSpec *pspec,
                gpointer          set_data)
 {
-  GimpControllerLineCallback  set_func;
+  LigmaControllerLineCallback  set_func;
   GeglRectangle              *area;
   gdouble                     x, y;
   gdouble                     angle;
@@ -98,13 +98,13 @@ config_notify (GObject          *config,
 }
 
 GtkWidget *
-_gimp_prop_gui_new_motion_blur_circular (GObject                  *config,
+_ligma_prop_gui_new_motion_blur_circular (GObject                  *config,
                                          GParamSpec              **param_specs,
                                          guint                     n_param_specs,
                                          GeglRectangle            *area,
-                                         GimpContext              *context,
-                                         GimpCreatePickerFunc      create_picker_func,
-                                         GimpCreateControllerFunc  create_controller_func,
+                                         LigmaContext              *context,
+                                         LigmaCreatePickerFunc      create_picker_func,
+                                         LigmaCreateControllerFunc  create_controller_func,
                                          gpointer                  creator)
 {
   GtkWidget *vbox;
@@ -112,9 +112,9 @@ _gimp_prop_gui_new_motion_blur_circular (GObject                  *config,
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
   g_return_val_if_fail (param_specs != NULL, NULL);
   g_return_val_if_fail (n_param_specs > 0, NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
 
-  vbox = _gimp_prop_gui_new_generic (config,
+  vbox = _ligma_prop_gui_new_generic (config,
                                      param_specs, n_param_specs,
                                      area, context,
                                      create_picker_func,
@@ -128,7 +128,7 @@ _gimp_prop_gui_new_motion_blur_circular (GObject                  *config,
       gpointer  set_data;
 
       set_func = create_controller_func (creator,
-                                         GIMP_CONTROLLER_TYPE_LINE,
+                                         LIGMA_CONTROLLER_TYPE_LINE,
                                          _("Circular Motion Blur: "),
                                          (GCallback) line_callback,
                                          config,

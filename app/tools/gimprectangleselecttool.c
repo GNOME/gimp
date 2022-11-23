@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,221 +20,221 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpmath/gimpmath.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "tools-types.h"
 
-#include "core/gimpchannel-select.h"
-#include "core/gimpchannel.h"
-#include "core/gimpimage.h"
-#include "core/gimplayer-floating-selection.h"
-#include "core/gimppickable.h"
+#include "core/ligmachannel-select.h"
+#include "core/ligmachannel.h"
+#include "core/ligmaimage.h"
+#include "core/ligmalayer-floating-selection.h"
+#include "core/ligmapickable.h"
 
-#include "widgets/gimphelp-ids.h"
-#include "widgets/gimpwidgets-utils.h"
+#include "widgets/ligmahelp-ids.h"
+#include "widgets/ligmawidgets-utils.h"
 
-#include "display/gimpdisplay.h"
-#include "display/gimpdisplayshell.h"
-#include "display/gimptoolrectangle.h"
+#include "display/ligmadisplay.h"
+#include "display/ligmadisplayshell.h"
+#include "display/ligmatoolrectangle.h"
 
-#include "gimpeditselectiontool.h"
-#include "gimprectangleoptions.h"
-#include "gimprectangleselecttool.h"
-#include "gimprectangleselectoptions.h"
-#include "gimptoolcontrol.h"
+#include "ligmaeditselectiontool.h"
+#include "ligmarectangleoptions.h"
+#include "ligmarectangleselecttool.h"
+#include "ligmarectangleselectoptions.h"
+#include "ligmatoolcontrol.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-struct _GimpRectangleSelectToolPrivate
+struct _LigmaRectangleSelectToolPrivate
 {
-  GimpChannelOps  operation;    /* remember for use when modifying   */
+  LigmaChannelOps  operation;    /* remember for use when modifying   */
   gboolean        use_saved_op; /* use operation or get from options */
 
   gdouble         press_x;
   gdouble         press_y;
 
-  GimpToolWidget *widget;
-  GimpToolWidget *grab_widget;
+  LigmaToolWidget *widget;
+  LigmaToolWidget *grab_widget;
   GList          *bindings;
 };
 
 
-static void     gimp_rectangle_select_tool_control        (GimpTool              *tool,
-                                                           GimpToolAction         action,
-                                                           GimpDisplay           *display);
-static void     gimp_rectangle_select_tool_button_press   (GimpTool              *tool,
-                                                           const GimpCoords      *coords,
+static void     ligma_rectangle_select_tool_control        (LigmaTool              *tool,
+                                                           LigmaToolAction         action,
+                                                           LigmaDisplay           *display);
+static void     ligma_rectangle_select_tool_button_press   (LigmaTool              *tool,
+                                                           const LigmaCoords      *coords,
                                                            guint32                time,
                                                            GdkModifierType        state,
-                                                           GimpButtonPressType    press_type,
-                                                           GimpDisplay           *display);
-static void     gimp_rectangle_select_tool_button_release (GimpTool              *tool,
-                                                           const GimpCoords      *coords,
+                                                           LigmaButtonPressType    press_type,
+                                                           LigmaDisplay           *display);
+static void     ligma_rectangle_select_tool_button_release (LigmaTool              *tool,
+                                                           const LigmaCoords      *coords,
                                                            guint32                time,
                                                            GdkModifierType        state,
-                                                           GimpButtonReleaseType  release_type,
-                                                           GimpDisplay           *display);
-static void     gimp_rectangle_select_tool_motion         (GimpTool              *tool,
-                                                           const GimpCoords      *coords,
+                                                           LigmaButtonReleaseType  release_type,
+                                                           LigmaDisplay           *display);
+static void     ligma_rectangle_select_tool_motion         (LigmaTool              *tool,
+                                                           const LigmaCoords      *coords,
                                                            guint32                time,
                                                            GdkModifierType        state,
-                                                           GimpDisplay           *display);
-static gboolean gimp_rectangle_select_tool_key_press      (GimpTool              *tool,
+                                                           LigmaDisplay           *display);
+static gboolean ligma_rectangle_select_tool_key_press      (LigmaTool              *tool,
                                                            GdkEventKey           *kevent,
-                                                           GimpDisplay           *display);
-static void     gimp_rectangle_select_tool_oper_update    (GimpTool              *tool,
-                                                           const GimpCoords      *coords,
+                                                           LigmaDisplay           *display);
+static void     ligma_rectangle_select_tool_oper_update    (LigmaTool              *tool,
+                                                           const LigmaCoords      *coords,
                                                            GdkModifierType        state,
                                                            gboolean               proximity,
-                                                           GimpDisplay           *display);
-static void     gimp_rectangle_select_tool_cursor_update  (GimpTool              *tool,
-                                                           const GimpCoords      *coords,
+                                                           LigmaDisplay           *display);
+static void     ligma_rectangle_select_tool_cursor_update  (LigmaTool              *tool,
+                                                           const LigmaCoords      *coords,
                                                            GdkModifierType        state,
-                                                           GimpDisplay           *display);
-static void     gimp_rectangle_select_tool_options_notify (GimpTool              *tool,
-                                                           GimpToolOptions       *options,
+                                                           LigmaDisplay           *display);
+static void     ligma_rectangle_select_tool_options_notify (LigmaTool              *tool,
+                                                           LigmaToolOptions       *options,
                                                            const GParamSpec      *pspec);
 
-static gboolean gimp_rectangle_select_tool_select         (GimpRectangleSelectTool *rect_tool,
+static gboolean ligma_rectangle_select_tool_select         (LigmaRectangleSelectTool *rect_tool,
                                                            gint                   x,
                                                            gint                   y,
                                                            gint                   w,
                                                            gint                   h);
-static void     gimp_rectangle_select_tool_real_select    (GimpRectangleSelectTool *rect_tool,
-                                                           GimpChannelOps         operation,
+static void     ligma_rectangle_select_tool_real_select    (LigmaRectangleSelectTool *rect_tool,
+                                                           LigmaChannelOps         operation,
                                                            gint                   x,
                                                            gint                   y,
                                                            gint                   w,
                                                            gint                   h);
 
-static void     gimp_rectangle_select_tool_rectangle_response
-                                                          (GimpToolWidget          *widget,
+static void     ligma_rectangle_select_tool_rectangle_response
+                                                          (LigmaToolWidget          *widget,
                                                            gint                     response_id,
-                                                           GimpRectangleSelectTool *rect_tool);
-static void     gimp_rectangle_select_tool_rectangle_change_complete
-                                                          (GimpToolWidget          *widget,
-                                                           GimpRectangleSelectTool *rect_tool);
+                                                           LigmaRectangleSelectTool *rect_tool);
+static void     ligma_rectangle_select_tool_rectangle_change_complete
+                                                          (LigmaToolWidget          *widget,
+                                                           LigmaRectangleSelectTool *rect_tool);
 
-static void     gimp_rectangle_select_tool_start          (GimpRectangleSelectTool *rect_tool,
-                                                           GimpDisplay             *display);
-static void     gimp_rectangle_select_tool_commit         (GimpRectangleSelectTool *rect_tool);
-static void     gimp_rectangle_select_tool_halt           (GimpRectangleSelectTool *rect_tool);
+static void     ligma_rectangle_select_tool_start          (LigmaRectangleSelectTool *rect_tool,
+                                                           LigmaDisplay             *display);
+static void     ligma_rectangle_select_tool_commit         (LigmaRectangleSelectTool *rect_tool);
+static void     ligma_rectangle_select_tool_halt           (LigmaRectangleSelectTool *rect_tool);
 
-static GimpChannelOps
-                gimp_rectangle_select_tool_get_operation  (GimpRectangleSelectTool *rect_tool);
-static void     gimp_rectangle_select_tool_update_option_defaults
-                                                          (GimpRectangleSelectTool *rect_tool,
+static LigmaChannelOps
+                ligma_rectangle_select_tool_get_operation  (LigmaRectangleSelectTool *rect_tool);
+static void     ligma_rectangle_select_tool_update_option_defaults
+                                                          (LigmaRectangleSelectTool *rect_tool,
                                                            gboolean                 ignore_pending);
-static void     gimp_rectangle_select_tool_update         (GimpRectangleSelectTool *rect_tool);
-static void     gimp_rectangle_select_tool_auto_shrink    (GimpRectangleSelectTool *rect_tool);
+static void     ligma_rectangle_select_tool_update         (LigmaRectangleSelectTool *rect_tool);
+static void     ligma_rectangle_select_tool_auto_shrink    (LigmaRectangleSelectTool *rect_tool);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpRectangleSelectTool, gimp_rectangle_select_tool,
-                            GIMP_TYPE_SELECTION_TOOL)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaRectangleSelectTool, ligma_rectangle_select_tool,
+                            LIGMA_TYPE_SELECTION_TOOL)
 
-#define parent_class gimp_rectangle_select_tool_parent_class
+#define parent_class ligma_rectangle_select_tool_parent_class
 
 
 void
-gimp_rectangle_select_tool_register (GimpToolRegisterCallback  callback,
+ligma_rectangle_select_tool_register (LigmaToolRegisterCallback  callback,
                                      gpointer                  data)
 {
-  (* callback) (GIMP_TYPE_RECTANGLE_SELECT_TOOL,
-                GIMP_TYPE_RECTANGLE_SELECT_OPTIONS,
-                gimp_rectangle_select_options_gui,
+  (* callback) (LIGMA_TYPE_RECTANGLE_SELECT_TOOL,
+                LIGMA_TYPE_RECTANGLE_SELECT_OPTIONS,
+                ligma_rectangle_select_options_gui,
                 0,
-                "gimp-rect-select-tool",
+                "ligma-rect-select-tool",
                 _("Rectangle Select"),
                 _("Rectangle Select Tool: Select a rectangular region"),
                 N_("_Rectangle Select"), "R",
-                NULL, GIMP_HELP_TOOL_RECT_SELECT,
-                GIMP_ICON_TOOL_RECT_SELECT,
+                NULL, LIGMA_HELP_TOOL_RECT_SELECT,
+                LIGMA_ICON_TOOL_RECT_SELECT,
                 data);
 }
 
 static void
-gimp_rectangle_select_tool_class_init (GimpRectangleSelectToolClass *klass)
+ligma_rectangle_select_tool_class_init (LigmaRectangleSelectToolClass *klass)
 {
-  GimpToolClass *tool_class = GIMP_TOOL_CLASS (klass);
+  LigmaToolClass *tool_class = LIGMA_TOOL_CLASS (klass);
 
-  tool_class->control        = gimp_rectangle_select_tool_control;
-  tool_class->button_press   = gimp_rectangle_select_tool_button_press;
-  tool_class->button_release = gimp_rectangle_select_tool_button_release;
-  tool_class->motion         = gimp_rectangle_select_tool_motion;
-  tool_class->key_press      = gimp_rectangle_select_tool_key_press;
-  tool_class->oper_update    = gimp_rectangle_select_tool_oper_update;
-  tool_class->cursor_update  = gimp_rectangle_select_tool_cursor_update;
-  tool_class->options_notify = gimp_rectangle_select_tool_options_notify;
+  tool_class->control        = ligma_rectangle_select_tool_control;
+  tool_class->button_press   = ligma_rectangle_select_tool_button_press;
+  tool_class->button_release = ligma_rectangle_select_tool_button_release;
+  tool_class->motion         = ligma_rectangle_select_tool_motion;
+  tool_class->key_press      = ligma_rectangle_select_tool_key_press;
+  tool_class->oper_update    = ligma_rectangle_select_tool_oper_update;
+  tool_class->cursor_update  = ligma_rectangle_select_tool_cursor_update;
+  tool_class->options_notify = ligma_rectangle_select_tool_options_notify;
 
-  klass->select              = gimp_rectangle_select_tool_real_select;
+  klass->select              = ligma_rectangle_select_tool_real_select;
 }
 
 static void
-gimp_rectangle_select_tool_init (GimpRectangleSelectTool *rect_tool)
+ligma_rectangle_select_tool_init (LigmaRectangleSelectTool *rect_tool)
 {
-  GimpTool *tool = GIMP_TOOL (rect_tool);
+  LigmaTool *tool = LIGMA_TOOL (rect_tool);
 
   rect_tool->private =
-    gimp_rectangle_select_tool_get_instance_private (rect_tool);
+    ligma_rectangle_select_tool_get_instance_private (rect_tool);
 
-  gimp_tool_control_set_wants_click      (tool->control, TRUE);
-  gimp_tool_control_set_active_modifiers (tool->control,
-                                          GIMP_TOOL_ACTIVE_MODIFIERS_SEPARATE);
-  gimp_tool_control_set_precision        (tool->control,
-                                          GIMP_CURSOR_PRECISION_PIXEL_BORDER);
-  gimp_tool_control_set_tool_cursor      (tool->control,
-                                          GIMP_TOOL_CURSOR_RECT_SELECT);
-  gimp_tool_control_set_preserve         (tool->control, FALSE);
-  gimp_tool_control_set_dirty_mask       (tool->control,
-                                          GIMP_DIRTY_IMAGE_SIZE |
-                                          GIMP_DIRTY_SELECTION);
-  gimp_tool_control_set_dirty_action     (tool->control,
-                                          GIMP_TOOL_ACTION_COMMIT);
+  ligma_tool_control_set_wants_click      (tool->control, TRUE);
+  ligma_tool_control_set_active_modifiers (tool->control,
+                                          LIGMA_TOOL_ACTIVE_MODIFIERS_SEPARATE);
+  ligma_tool_control_set_precision        (tool->control,
+                                          LIGMA_CURSOR_PRECISION_PIXEL_BORDER);
+  ligma_tool_control_set_tool_cursor      (tool->control,
+                                          LIGMA_TOOL_CURSOR_RECT_SELECT);
+  ligma_tool_control_set_preserve         (tool->control, FALSE);
+  ligma_tool_control_set_dirty_mask       (tool->control,
+                                          LIGMA_DIRTY_IMAGE_SIZE |
+                                          LIGMA_DIRTY_SELECTION);
+  ligma_tool_control_set_dirty_action     (tool->control,
+                                          LIGMA_TOOL_ACTION_COMMIT);
 }
 
 static void
-gimp_rectangle_select_tool_control (GimpTool       *tool,
-                                    GimpToolAction  action,
-                                    GimpDisplay    *display)
+ligma_rectangle_select_tool_control (LigmaTool       *tool,
+                                    LigmaToolAction  action,
+                                    LigmaDisplay    *display)
 {
-  GimpRectangleSelectTool *rect_tool = GIMP_RECTANGLE_SELECT_TOOL (tool);
+  LigmaRectangleSelectTool *rect_tool = LIGMA_RECTANGLE_SELECT_TOOL (tool);
 
   switch (action)
     {
-    case GIMP_TOOL_ACTION_PAUSE:
-    case GIMP_TOOL_ACTION_RESUME:
+    case LIGMA_TOOL_ACTION_PAUSE:
+    case LIGMA_TOOL_ACTION_RESUME:
       break;
 
-    case GIMP_TOOL_ACTION_HALT:
-      gimp_rectangle_select_tool_halt (rect_tool);
+    case LIGMA_TOOL_ACTION_HALT:
+      ligma_rectangle_select_tool_halt (rect_tool);
       break;
 
-    case GIMP_TOOL_ACTION_COMMIT:
-      gimp_rectangle_select_tool_commit (rect_tool);
+    case LIGMA_TOOL_ACTION_COMMIT:
+      ligma_rectangle_select_tool_commit (rect_tool);
       break;
     }
 
-  GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);
+  LIGMA_TOOL_CLASS (parent_class)->control (tool, action, display);
 }
 
 static void
-gimp_rectangle_select_tool_button_press (GimpTool            *tool,
-                                         const GimpCoords    *coords,
+ligma_rectangle_select_tool_button_press (LigmaTool            *tool,
+                                         const LigmaCoords    *coords,
                                          guint32              time,
                                          GdkModifierType      state,
-                                         GimpButtonPressType  press_type,
-                                         GimpDisplay         *display)
+                                         LigmaButtonPressType  press_type,
+                                         LigmaDisplay         *display)
 {
-  GimpRectangleSelectTool        *rect_tool = GIMP_RECTANGLE_SELECT_TOOL (tool);
-  GimpRectangleSelectToolPrivate *private   = rect_tool->private;
-  GimpRectangleFunction           function;
+  LigmaRectangleSelectTool        *rect_tool = LIGMA_RECTANGLE_SELECT_TOOL (tool);
+  LigmaRectangleSelectToolPrivate *private   = rect_tool->private;
+  LigmaRectangleFunction           function;
 
   if (tool->display && display != tool->display)
-    gimp_tool_control (tool, GIMP_TOOL_ACTION_COMMIT, tool->display);
+    ligma_tool_control (tool, LIGMA_TOOL_ACTION_COMMIT, tool->display);
 
-  if (gimp_selection_tool_start_edit (GIMP_SELECTION_TOOL (tool),
+  if (ligma_selection_tool_start_edit (LIGMA_SELECTION_TOOL (tool),
                                       display, coords))
     {
       /* In some cases we want to finish the rectangle select tool
@@ -247,7 +247,7 @@ gimp_rectangle_select_tool_button_press (GimpTool            *tool,
         {
           gdouble x1, y1, x2, y2;
 
-          gimp_tool_rectangle_get_public_rect (GIMP_TOOL_RECTANGLE (private->widget),
+          ligma_tool_rectangle_get_public_rect (LIGMA_TOOL_RECTANGLE (private->widget),
                                                &x1, &y1, &x2, &y2);
           if (x1 == x2 && y1 == y2)
             zero_rect = TRUE;
@@ -259,39 +259,39 @@ gimp_rectangle_select_tool_button_press (GimpTool            *tool,
        * zero-size rectangle. See bug #796073.
        */
       if (zero_rect)
-        gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
+        ligma_tool_control (tool, LIGMA_TOOL_ACTION_HALT, display);
       else
-        gimp_tool_control (tool, GIMP_TOOL_ACTION_COMMIT, display);
+        ligma_tool_control (tool, LIGMA_TOOL_ACTION_COMMIT, display);
 
-      gimp_rectangle_select_tool_update_option_defaults (rect_tool, TRUE);
+      ligma_rectangle_select_tool_update_option_defaults (rect_tool, TRUE);
       return;
     }
 
   if (! tool->display)
     {
-      gimp_rectangle_select_tool_start (rect_tool, display);
+      ligma_rectangle_select_tool_start (rect_tool, display);
 
-      gimp_tool_widget_hover (private->widget, coords, state, TRUE);
+      ligma_tool_widget_hover (private->widget, coords, state, TRUE);
 
       /* HACK: force CREATING on a newly created rectangle; otherwise,
        * the above binding of properties would cause the rectangle to
        * start with the size from tool options.
        */
-      gimp_tool_rectangle_set_function (GIMP_TOOL_RECTANGLE (private->widget),
-                                        GIMP_TOOL_RECTANGLE_CREATING);
+      ligma_tool_rectangle_set_function (LIGMA_TOOL_RECTANGLE (private->widget),
+                                        LIGMA_TOOL_RECTANGLE_CREATING);
     }
 
   /* if the shift or ctrl keys are down, we don't want to adjust, we
    * want to create a new rectangle, regardless of pointer loc
    */
-  if (state & (gimp_get_extend_selection_mask () |
-               gimp_get_modify_selection_mask ()))
+  if (state & (ligma_get_extend_selection_mask () |
+               ligma_get_modify_selection_mask ()))
     {
-      gimp_tool_rectangle_set_function (GIMP_TOOL_RECTANGLE (private->widget),
-                                        GIMP_TOOL_RECTANGLE_CREATING);
+      ligma_tool_rectangle_set_function (LIGMA_TOOL_RECTANGLE (private->widget),
+                                        LIGMA_TOOL_RECTANGLE_CREATING);
     }
 
-  if (gimp_tool_widget_button_press (private->widget, coords, time, state,
+  if (ligma_tool_widget_button_press (private->widget, coords, time, state,
                                      press_type))
     {
       private->grab_widget = private->widget;
@@ -305,135 +305,135 @@ gimp_rectangle_select_tool_button_press (GimpTool            *tool,
    * unless the user has done something in the meantime
    */
   function =
-    gimp_tool_rectangle_get_function (GIMP_TOOL_RECTANGLE (private->widget));
+    ligma_tool_rectangle_get_function (LIGMA_TOOL_RECTANGLE (private->widget));
 
-  if (function == GIMP_TOOL_RECTANGLE_CREATING)
+  if (function == LIGMA_TOOL_RECTANGLE_CREATING)
     private->use_saved_op = FALSE;
 
-  gimp_selection_tool_start_change (
-    GIMP_SELECTION_TOOL (tool),
-    function == GIMP_TOOL_RECTANGLE_CREATING,
-    gimp_rectangle_select_tool_get_operation (rect_tool));
+  ligma_selection_tool_start_change (
+    LIGMA_SELECTION_TOOL (tool),
+    function == LIGMA_TOOL_RECTANGLE_CREATING,
+    ligma_rectangle_select_tool_get_operation (rect_tool));
 
-  gimp_tool_control_activate (tool->control);
+  ligma_tool_control_activate (tool->control);
 }
 
 static void
-gimp_rectangle_select_tool_button_release (GimpTool              *tool,
-                                           const GimpCoords      *coords,
+ligma_rectangle_select_tool_button_release (LigmaTool              *tool,
+                                           const LigmaCoords      *coords,
                                            guint32                time,
                                            GdkModifierType        state,
-                                           GimpButtonReleaseType  release_type,
-                                           GimpDisplay           *display)
+                                           LigmaButtonReleaseType  release_type,
+                                           LigmaDisplay           *display)
 {
-  GimpRectangleSelectTool        *rect_tool = GIMP_RECTANGLE_SELECT_TOOL (tool);
-  GimpRectangleSelectToolPrivate *priv      = rect_tool->private;
+  LigmaRectangleSelectTool        *rect_tool = LIGMA_RECTANGLE_SELECT_TOOL (tool);
+  LigmaRectangleSelectToolPrivate *priv      = rect_tool->private;
 
-  gimp_tool_control_halt (tool->control);
+  ligma_tool_control_halt (tool->control);
 
-  gimp_selection_tool_end_change (GIMP_SELECTION_TOOL (tool),
+  ligma_selection_tool_end_change (LIGMA_SELECTION_TOOL (tool),
                                   /* if the user has not moved the mouse,
                                    * cancel the change
                                    */
-                                  release_type == GIMP_BUTTON_RELEASE_CLICK ||
-                                  release_type == GIMP_BUTTON_RELEASE_CANCEL);
+                                  release_type == LIGMA_BUTTON_RELEASE_CLICK ||
+                                  release_type == LIGMA_BUTTON_RELEASE_CANCEL);
 
-  gimp_tool_pop_status (tool, display);
+  ligma_tool_pop_status (tool, display);
 
   if (priv->grab_widget)
     {
-      gimp_tool_widget_button_release (priv->grab_widget,
+      ligma_tool_widget_button_release (priv->grab_widget,
                                        coords, time, state, release_type);
       priv->grab_widget = NULL;
     }
 }
 
 static void
-gimp_rectangle_select_tool_motion (GimpTool         *tool,
-                                   const GimpCoords *coords,
+ligma_rectangle_select_tool_motion (LigmaTool         *tool,
+                                   const LigmaCoords *coords,
                                    guint32           time,
                                    GdkModifierType   state,
-                                   GimpDisplay      *display)
+                                   LigmaDisplay      *display)
 {
-  GimpRectangleSelectTool        *rect_tool = GIMP_RECTANGLE_SELECT_TOOL (tool);
-  GimpRectangleSelectToolPrivate *priv      = rect_tool->private;
+  LigmaRectangleSelectTool        *rect_tool = LIGMA_RECTANGLE_SELECT_TOOL (tool);
+  LigmaRectangleSelectToolPrivate *priv      = rect_tool->private;
 
   if (priv->grab_widget)
     {
-      gimp_tool_widget_motion (priv->grab_widget, coords, time, state);
+      ligma_tool_widget_motion (priv->grab_widget, coords, time, state);
     }
 }
 
 static gboolean
-gimp_rectangle_select_tool_key_press (GimpTool    *tool,
+ligma_rectangle_select_tool_key_press (LigmaTool    *tool,
                                       GdkEventKey *kevent,
-                                      GimpDisplay *display)
+                                      LigmaDisplay *display)
 {
-  GimpRectangleSelectTool        *rect_tool = GIMP_RECTANGLE_SELECT_TOOL (tool);
-  GimpRectangleSelectToolPrivate *priv      = rect_tool->private;
+  LigmaRectangleSelectTool        *rect_tool = LIGMA_RECTANGLE_SELECT_TOOL (tool);
+  LigmaRectangleSelectToolPrivate *priv      = rect_tool->private;
 
   if (priv->widget && display == tool->display)
     {
-      if (gimp_tool_widget_key_press (priv->widget, kevent))
+      if (ligma_tool_widget_key_press (priv->widget, kevent))
         return TRUE;
     }
 
-  return gimp_edit_selection_tool_key_press (tool, kevent, display);
+  return ligma_edit_selection_tool_key_press (tool, kevent, display);
 }
 
 static void
-gimp_rectangle_select_tool_oper_update (GimpTool         *tool,
-                                        const GimpCoords *coords,
+ligma_rectangle_select_tool_oper_update (LigmaTool         *tool,
+                                        const LigmaCoords *coords,
                                         GdkModifierType   state,
                                         gboolean          proximity,
-                                        GimpDisplay      *display)
+                                        LigmaDisplay      *display)
 {
-  GimpRectangleSelectTool        *rect_tool = GIMP_RECTANGLE_SELECT_TOOL (tool);
-  GimpRectangleSelectToolPrivate *priv      = rect_tool->private;
+  LigmaRectangleSelectTool        *rect_tool = LIGMA_RECTANGLE_SELECT_TOOL (tool);
+  LigmaRectangleSelectToolPrivate *priv      = rect_tool->private;
 
   if (priv->widget && display == tool->display)
     {
-      gimp_tool_widget_hover (priv->widget, coords, state, proximity);
+      ligma_tool_widget_hover (priv->widget, coords, state, proximity);
     }
 
-  GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, proximity,
+  LIGMA_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, proximity,
                                                display);
 }
 
 static void
-gimp_rectangle_select_tool_cursor_update (GimpTool         *tool,
-                                          const GimpCoords *coords,
+ligma_rectangle_select_tool_cursor_update (LigmaTool         *tool,
+                                          const LigmaCoords *coords,
                                           GdkModifierType   state,
-                                          GimpDisplay      *display)
+                                          LigmaDisplay      *display)
 {
-  GimpRectangleSelectTool        *rect_tool = GIMP_RECTANGLE_SELECT_TOOL (tool);
-  GimpRectangleSelectToolPrivate *private   = rect_tool->private;
-  GimpCursorType                  cursor    = GIMP_CURSOR_CROSSHAIR_SMALL;
-  GimpCursorModifier              modifier  = GIMP_CURSOR_MODIFIER_NONE;
+  LigmaRectangleSelectTool        *rect_tool = LIGMA_RECTANGLE_SELECT_TOOL (tool);
+  LigmaRectangleSelectToolPrivate *private   = rect_tool->private;
+  LigmaCursorType                  cursor    = LIGMA_CURSOR_CROSSHAIR_SMALL;
+  LigmaCursorModifier              modifier  = LIGMA_CURSOR_MODIFIER_NONE;
 
   if (private->widget && display == tool->display)
     {
-      gimp_tool_widget_get_cursor (private->widget, coords, state,
+      ligma_tool_widget_get_cursor (private->widget, coords, state,
                                    &cursor, NULL, &modifier);
     }
 
-  gimp_tool_control_set_cursor          (tool->control, cursor);
-  gimp_tool_control_set_cursor_modifier (tool->control, modifier);
+  ligma_tool_control_set_cursor          (tool->control, cursor);
+  ligma_tool_control_set_cursor_modifier (tool->control, modifier);
 
   /* override the previous if shift or ctrl are down */
-  if (state & (gimp_get_extend_selection_mask () |
-               gimp_get_modify_selection_mask ()))
+  if (state & (ligma_get_extend_selection_mask () |
+               ligma_get_modify_selection_mask ()))
     {
-      gimp_tool_control_set_cursor (tool->control,
-                                    GIMP_CURSOR_CROSSHAIR_SMALL);
+      ligma_tool_control_set_cursor (tool->control,
+                                    LIGMA_CURSOR_CROSSHAIR_SMALL);
     }
 
-  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
+  LIGMA_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
 }
 
 static void
-gimp_rectangle_select_tool_options_notify (GimpTool         *tool,
-                                           GimpToolOptions  *options,
+ligma_rectangle_select_tool_options_notify (LigmaTool         *tool,
+                                           LigmaToolOptions  *options,
                                            const GParamSpec *pspec)
 {
   if (! strcmp (pspec->name, "antialias")      ||
@@ -442,47 +442,47 @@ gimp_rectangle_select_tool_options_notify (GimpTool         *tool,
       ! strcmp (pspec->name, "round-corners")  ||
       ! strcmp (pspec->name, "corner-radius"))
     {
-      gimp_rectangle_select_tool_update (GIMP_RECTANGLE_SELECT_TOOL (tool));
+      ligma_rectangle_select_tool_update (LIGMA_RECTANGLE_SELECT_TOOL (tool));
     }
 
-  GIMP_TOOL_CLASS (parent_class)->options_notify (tool, options, pspec);
+  LIGMA_TOOL_CLASS (parent_class)->options_notify (tool, options, pspec);
 }
 
 static gboolean
-gimp_rectangle_select_tool_select (GimpRectangleSelectTool *rect_tool,
+ligma_rectangle_select_tool_select (LigmaRectangleSelectTool *rect_tool,
                                    gint                     x,
                                    gint                     y,
                                    gint                     w,
                                    gint                     h)
 {
-  GimpTool       *tool  = GIMP_TOOL (rect_tool);
-  GimpImage      *image = gimp_display_get_image (tool->display);
+  LigmaTool       *tool  = LIGMA_TOOL (rect_tool);
+  LigmaImage      *image = ligma_display_get_image (tool->display);
   gboolean        rectangle_exists;
-  GimpChannelOps  operation;
+  LigmaChannelOps  operation;
 
-  gimp_tool_pop_status (tool, tool->display);
+  ligma_tool_pop_status (tool, tool->display);
 
-  rectangle_exists = (x <= gimp_image_get_width  (image) &&
-                      y <= gimp_image_get_height (image) &&
+  rectangle_exists = (x <= ligma_image_get_width  (image) &&
+                      y <= ligma_image_get_height (image) &&
                       x + w >= 0                         &&
                       y + h >= 0                         &&
                       w > 0                              &&
                       h > 0);
 
-  operation = gimp_rectangle_select_tool_get_operation (rect_tool);
+  operation = ligma_rectangle_select_tool_get_operation (rect_tool);
 
   /* if rectangle exists, turn it into a selection */
   if (rectangle_exists)
     {
-      gimp_selection_tool_start_change (GIMP_SELECTION_TOOL (rect_tool),
+      ligma_selection_tool_start_change (LIGMA_SELECTION_TOOL (rect_tool),
                                         FALSE,
                                         operation);
 
-      GIMP_RECTANGLE_SELECT_TOOL_GET_CLASS (rect_tool)->select (rect_tool,
+      LIGMA_RECTANGLE_SELECT_TOOL_GET_CLASS (rect_tool)->select (rect_tool,
                                                                 operation,
                                                                 x, y, w, h);
 
-      gimp_selection_tool_end_change (GIMP_SELECTION_TOOL (rect_tool),
+      ligma_selection_tool_end_change (LIGMA_SELECTION_TOOL (rect_tool),
                                       FALSE);
     }
 
@@ -490,21 +490,21 @@ gimp_rectangle_select_tool_select (GimpRectangleSelectTool *rect_tool,
 }
 
 static void
-gimp_rectangle_select_tool_real_select (GimpRectangleSelectTool *rect_tool,
-                                        GimpChannelOps           operation,
+ligma_rectangle_select_tool_real_select (LigmaRectangleSelectTool *rect_tool,
+                                        LigmaChannelOps           operation,
                                         gint                     x,
                                         gint                     y,
                                         gint                     w,
                                         gint                     h)
 {
-  GimpTool                   *tool    = GIMP_TOOL (rect_tool);
-  GimpSelectionOptions       *options = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
-  GimpRectangleSelectOptions *rect_options;
-  GimpChannel                *channel;
+  LigmaTool                   *tool    = LIGMA_TOOL (rect_tool);
+  LigmaSelectionOptions       *options = LIGMA_SELECTION_TOOL_GET_OPTIONS (tool);
+  LigmaRectangleSelectOptions *rect_options;
+  LigmaChannel                *channel;
 
-  rect_options = GIMP_RECTANGLE_SELECT_TOOL_GET_OPTIONS (tool);
+  rect_options = LIGMA_RECTANGLE_SELECT_TOOL_GET_OPTIONS (tool);
 
-  channel = gimp_image_get_mask (gimp_display_get_image (tool->display));
+  channel = ligma_image_get_mask (ligma_display_get_image (tool->display));
 
   if (rect_options->round_corners)
     {
@@ -514,7 +514,7 @@ gimp_rectangle_select_tool_real_select (GimpRectangleSelectTool *rect_tool,
       gdouble max    = MIN (w / 2.0, h / 2.0);
       gdouble radius = MIN (rect_options->corner_radius, max);
 
-      gimp_channel_select_round_rect (channel,
+      ligma_channel_select_round_rect (channel,
                                       x, y, w, h,
                                       radius, radius,
                                       operation,
@@ -526,7 +526,7 @@ gimp_rectangle_select_tool_real_select (GimpRectangleSelectTool *rect_tool,
     }
   else
     {
-      gimp_channel_select_rectangle (channel,
+      ligma_channel_select_rectangle (channel,
                                      x, y, w, h,
                                      operation,
                                      options->feather,
@@ -537,19 +537,19 @@ gimp_rectangle_select_tool_real_select (GimpRectangleSelectTool *rect_tool,
 }
 
 static void
-gimp_rectangle_select_tool_rectangle_response (GimpToolWidget          *widget,
+ligma_rectangle_select_tool_rectangle_response (LigmaToolWidget          *widget,
                                                gint                     response_id,
-                                               GimpRectangleSelectTool *rect_tool)
+                                               LigmaRectangleSelectTool *rect_tool)
 {
-  GimpTool *tool = GIMP_TOOL (rect_tool);
+  LigmaTool *tool = LIGMA_TOOL (rect_tool);
 
   switch (response_id)
     {
-    case GIMP_TOOL_WIDGET_RESPONSE_CONFIRM:
+    case LIGMA_TOOL_WIDGET_RESPONSE_CONFIRM:
       {
         gdouble x1, y1, x2, y2;
 
-        gimp_tool_rectangle_get_public_rect (GIMP_TOOL_RECTANGLE (widget),
+        ligma_tool_rectangle_get_public_rect (LIGMA_TOOL_RECTANGLE (widget),
                                              &x1, &y1, &x2, &y2);
         if (x1 == x2 && y1 == y2)
           {
@@ -558,9 +558,9 @@ gimp_rectangle_select_tool_rectangle_response (GimpToolWidget          *widget,
              *  reconfigure the rectangle and continue, instead of
              *  HALTing it like calling COMMIT would do
              */
-            gimp_rectangle_select_tool_commit (rect_tool);
+            ligma_rectangle_select_tool_commit (rect_tool);
 
-            gimp_tool_rectangle_get_public_rect (GIMP_TOOL_RECTANGLE (widget),
+            ligma_tool_rectangle_get_public_rect (LIGMA_TOOL_RECTANGLE (widget),
                                                  &x1, &y1, &x2, &y2);
             if (x1 == x2 && y1 == y2)
               {
@@ -568,32 +568,32 @@ gimp_rectangle_select_tool_rectangle_response (GimpToolWidget          *widget,
                  *  tool_commit(), the click was outside the selection
                  *  and we HALT to get rid of a zero-size tool widget.
                  */
-                gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, tool->display);
+                ligma_tool_control (tool, LIGMA_TOOL_ACTION_HALT, tool->display);
               }
          }
         else
           {
-            gimp_tool_control (tool, GIMP_TOOL_ACTION_COMMIT, tool->display);
+            ligma_tool_control (tool, LIGMA_TOOL_ACTION_COMMIT, tool->display);
           }
       }
       break;
 
-    case GIMP_TOOL_WIDGET_RESPONSE_CANCEL:
-      gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, tool->display);
+    case LIGMA_TOOL_WIDGET_RESPONSE_CANCEL:
+      ligma_tool_control (tool, LIGMA_TOOL_ACTION_HALT, tool->display);
       break;
     }
 }
 
 static void
-gimp_rectangle_select_tool_rectangle_change_complete (GimpToolWidget          *widget,
-                                                      GimpRectangleSelectTool *rect_tool)
+ligma_rectangle_select_tool_rectangle_change_complete (LigmaToolWidget          *widget,
+                                                      LigmaRectangleSelectTool *rect_tool)
 {
-  gimp_rectangle_select_tool_update (rect_tool);
+  ligma_rectangle_select_tool_update (rect_tool);
 }
 
 static void
-gimp_rectangle_select_tool_start (GimpRectangleSelectTool *rect_tool,
-                                  GimpDisplay             *display)
+ligma_rectangle_select_tool_start (LigmaRectangleSelectTool *rect_tool,
+                                  LigmaDisplay             *display)
 {
   static const gchar *properties[] =
   {
@@ -617,28 +617,28 @@ gimp_rectangle_select_tool_start (GimpRectangleSelectTool *rect_tool,
     "fixed-center"
   };
 
-  GimpTool                       *tool    = GIMP_TOOL (rect_tool);
-  GimpRectangleSelectToolPrivate *private = rect_tool->private;
-  GimpDisplayShell               *shell   = gimp_display_get_shell (display);
-  GimpRectangleSelectOptions     *options;
-  GimpToolWidget                 *widget;
+  LigmaTool                       *tool    = LIGMA_TOOL (rect_tool);
+  LigmaRectangleSelectToolPrivate *private = rect_tool->private;
+  LigmaDisplayShell               *shell   = ligma_display_get_shell (display);
+  LigmaRectangleSelectOptions     *options;
+  LigmaToolWidget                 *widget;
   gboolean                        draw_ellipse;
   gint                            i;
 
-  options = GIMP_RECTANGLE_SELECT_TOOL_GET_OPTIONS (rect_tool);
+  options = LIGMA_RECTANGLE_SELECT_TOOL_GET_OPTIONS (rect_tool);
 
   tool->display = display;
 
-  private->widget = widget = gimp_tool_rectangle_new (shell);
+  private->widget = widget = ligma_tool_rectangle_new (shell);
 
-  draw_ellipse = GIMP_RECTANGLE_SELECT_TOOL_GET_CLASS (rect_tool)->draw_ellipse;
+  draw_ellipse = LIGMA_RECTANGLE_SELECT_TOOL_GET_CLASS (rect_tool)->draw_ellipse;
 
   g_object_set (widget,
                 "draw-ellipse", draw_ellipse,
                 "status-title", draw_ellipse ? _("Ellipse: ") : _("Rectangle: "),
                 NULL);
 
-  gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (tool), widget);
+  ligma_draw_tool_set_widget (LIGMA_DRAW_TOOL (tool), widget);
 
   for (i = 0; i < G_N_ELEMENTS (properties); i++)
     {
@@ -651,19 +651,19 @@ gimp_rectangle_select_tool_start (GimpRectangleSelectTool *rect_tool,
       private->bindings = g_list_prepend (private->bindings, binding);
     }
 
-  gimp_rectangle_options_connect (GIMP_RECTANGLE_OPTIONS (options),
-                                  gimp_display_get_image (shell->display),
-                                  G_CALLBACK (gimp_rectangle_select_tool_auto_shrink),
+  ligma_rectangle_options_connect (LIGMA_RECTANGLE_OPTIONS (options),
+                                  ligma_display_get_image (shell->display),
+                                  G_CALLBACK (ligma_rectangle_select_tool_auto_shrink),
                                   rect_tool);
 
   g_signal_connect (widget, "response",
-                    G_CALLBACK (gimp_rectangle_select_tool_rectangle_response),
+                    G_CALLBACK (ligma_rectangle_select_tool_rectangle_response),
                     rect_tool);
   g_signal_connect (widget, "change-complete",
-                    G_CALLBACK (gimp_rectangle_select_tool_rectangle_change_complete),
+                    G_CALLBACK (ligma_rectangle_select_tool_rectangle_change_complete),
                     rect_tool);
 
-  gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), display);
+  ligma_draw_tool_start (LIGMA_DRAW_TOOL (tool), display);
 }
 
 /* This function is called if the user clicks and releases the left
@@ -681,32 +681,32 @@ gimp_rectangle_select_tool_start (GimpRectangleSelectTool *rect_tool,
  *    we clear the selection.
  */
 static void
-gimp_rectangle_select_tool_commit (GimpRectangleSelectTool *rect_tool)
+ligma_rectangle_select_tool_commit (LigmaRectangleSelectTool *rect_tool)
 {
-  GimpTool                       *tool = GIMP_TOOL (rect_tool);
-  GimpRectangleSelectToolPrivate *priv = rect_tool->private;
+  LigmaTool                       *tool = LIGMA_TOOL (rect_tool);
+  LigmaRectangleSelectToolPrivate *priv = rect_tool->private;
 
   if (priv->widget)
     {
       gdouble x1, y1, x2, y2;
       gint    w, h;
 
-      gimp_tool_rectangle_get_public_rect (GIMP_TOOL_RECTANGLE (priv->widget),
+      ligma_tool_rectangle_get_public_rect (LIGMA_TOOL_RECTANGLE (priv->widget),
                                            &x1, &y1, &x2, &y2);
       w = x2 - x1;
       h = y2 - y1;
 
       if (w == 0 && h == 0)
         {
-          GimpImage   *image     = gimp_display_get_image (tool->display);
-          GimpChannel *selection = gimp_image_get_mask (image);
+          LigmaImage   *image     = ligma_display_get_image (tool->display);
+          LigmaChannel *selection = ligma_image_get_mask (image);
           gint         press_x;
           gint         press_y;
 
-          if (gimp_image_get_floating_selection (image))
+          if (ligma_image_get_floating_selection (image))
             {
-              floating_sel_anchor (gimp_image_get_floating_selection (image));
-              gimp_image_flush (image);
+              floating_sel_anchor (ligma_image_get_floating_selection (image));
+              ligma_image_flush (image);
 
               return;
             }
@@ -715,12 +715,12 @@ gimp_rectangle_select_tool_commit (GimpRectangleSelectTool *rect_tool)
           press_y = ROUND (priv->press_y);
 
           /*  if the click was inside the marching ants  */
-          if (gimp_pickable_get_opacity_at (GIMP_PICKABLE (selection),
+          if (ligma_pickable_get_opacity_at (LIGMA_PICKABLE (selection),
                                             press_x, press_y) > 0.5)
             {
               gint x, y, w, h;
 
-              if (gimp_item_bounds (GIMP_ITEM (selection), &x, &y, &w, &h))
+              if (ligma_item_bounds (LIGMA_ITEM (selection), &x, &y, &w, &h))
                 {
                   g_object_set (priv->widget,
                                 "x1", (gdouble) x,
@@ -730,66 +730,66 @@ gimp_rectangle_select_tool_commit (GimpRectangleSelectTool *rect_tool)
                                 NULL);
                 }
 
-              gimp_rectangle_select_tool_update (rect_tool);
+              ligma_rectangle_select_tool_update (rect_tool);
             }
           else
             {
-              GimpChannelOps  operation;
+              LigmaChannelOps  operation;
 
               /* prevent this change from halting the tool */
-              gimp_tool_control_push_preserve (tool->control, TRUE);
+              ligma_tool_control_push_preserve (tool->control, TRUE);
 
               /* We can conceptually think of a click outside of the
                * selection as adding a 0px selection. Behave intuitively
                * for the current selection mode
                */
-              operation = gimp_rectangle_select_tool_get_operation (rect_tool);
+              operation = ligma_rectangle_select_tool_get_operation (rect_tool);
 
               switch (operation)
                 {
-                case GIMP_CHANNEL_OP_REPLACE:
-                case GIMP_CHANNEL_OP_INTERSECT:
-                  gimp_channel_clear (selection, NULL, TRUE);
-                  gimp_image_flush (image);
+                case LIGMA_CHANNEL_OP_REPLACE:
+                case LIGMA_CHANNEL_OP_INTERSECT:
+                  ligma_channel_clear (selection, NULL, TRUE);
+                  ligma_image_flush (image);
                   break;
 
-                case GIMP_CHANNEL_OP_ADD:
-                case GIMP_CHANNEL_OP_SUBTRACT:
+                case LIGMA_CHANNEL_OP_ADD:
+                case LIGMA_CHANNEL_OP_SUBTRACT:
                 default:
                   /* Do nothing */
                   break;
                 }
 
-              gimp_tool_control_pop_preserve (tool->control);
+              ligma_tool_control_pop_preserve (tool->control);
             }
         }
 
-      gimp_rectangle_select_tool_update_option_defaults (rect_tool, FALSE);
+      ligma_rectangle_select_tool_update_option_defaults (rect_tool, FALSE);
     }
 }
 
 static void
-gimp_rectangle_select_tool_halt (GimpRectangleSelectTool *rect_tool)
+ligma_rectangle_select_tool_halt (LigmaRectangleSelectTool *rect_tool)
 {
-  GimpTool                       *tool = GIMP_TOOL (rect_tool);
-  GimpRectangleSelectToolPrivate *priv = rect_tool->private;
-  GimpRectangleSelectOptions     *options;
+  LigmaTool                       *tool = LIGMA_TOOL (rect_tool);
+  LigmaRectangleSelectToolPrivate *priv = rect_tool->private;
+  LigmaRectangleSelectOptions     *options;
 
-  options = GIMP_RECTANGLE_SELECT_TOOL_GET_OPTIONS (rect_tool);
+  options = LIGMA_RECTANGLE_SELECT_TOOL_GET_OPTIONS (rect_tool);
 
   if (tool->display)
     {
-      GimpDisplayShell *shell = gimp_display_get_shell (tool->display);
+      LigmaDisplayShell *shell = ligma_display_get_shell (tool->display);
 
-      gimp_display_shell_set_highlight (shell, NULL, 0.0);
+      ligma_display_shell_set_highlight (shell, NULL, 0.0);
 
-      gimp_rectangle_options_disconnect (GIMP_RECTANGLE_OPTIONS (options),
-                                         G_CALLBACK (gimp_rectangle_select_tool_auto_shrink),
+      ligma_rectangle_options_disconnect (LIGMA_RECTANGLE_OPTIONS (options),
+                                         G_CALLBACK (ligma_rectangle_select_tool_auto_shrink),
                                          rect_tool);
     }
 
-  if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (tool)))
-    gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
+  if (ligma_draw_tool_is_active (LIGMA_DRAW_TOOL (tool)))
+    ligma_draw_tool_stop (LIGMA_DRAW_TOOL (tool));
 
   /*  disconnect bindings manually so they are really gone *now*, we
    *  might be in the middle of a signal emission that keeps the
@@ -798,21 +798,21 @@ gimp_rectangle_select_tool_halt (GimpRectangleSelectTool *rect_tool)
   g_list_free_full (priv->bindings, (GDestroyNotify) g_object_unref);
   priv->bindings = NULL;
 
-  gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (tool), NULL);
+  ligma_draw_tool_set_widget (LIGMA_DRAW_TOOL (tool), NULL);
   g_clear_object (&priv->widget);
 
   tool->display = NULL;
 
-  gimp_rectangle_select_tool_update_option_defaults (rect_tool, TRUE);
+  ligma_rectangle_select_tool_update_option_defaults (rect_tool, TRUE);
 }
 
-static GimpChannelOps
-gimp_rectangle_select_tool_get_operation (GimpRectangleSelectTool *rect_tool)
+static LigmaChannelOps
+ligma_rectangle_select_tool_get_operation (LigmaRectangleSelectTool *rect_tool)
 {
-  GimpRectangleSelectToolPrivate *priv = rect_tool->private;
-  GimpSelectionOptions           *options;
+  LigmaRectangleSelectToolPrivate *priv = rect_tool->private;
+  LigmaSelectionOptions           *options;
 
-  options = GIMP_SELECTION_TOOL_GET_OPTIONS (rect_tool);
+  options = LIGMA_SELECTION_TOOL_GET_OPTIONS (rect_tool);
 
   if (priv->use_saved_op)
     return priv->operation;
@@ -821,7 +821,7 @@ gimp_rectangle_select_tool_get_operation (GimpRectangleSelectTool *rect_tool)
 }
 
 /**
- * gimp_rectangle_select_tool_update_option_defaults:
+ * ligma_rectangle_select_tool_update_option_defaults:
  * @crop_tool:
  * @ignore_pending: %TRUE to ignore any pending crop rectangle.
  *
@@ -829,14 +829,14 @@ gimp_rectangle_select_tool_get_operation (GimpRectangleSelectTool *rect_tool)
  * properties.
  */
 static void
-gimp_rectangle_select_tool_update_option_defaults (GimpRectangleSelectTool *rect_tool,
+ligma_rectangle_select_tool_update_option_defaults (LigmaRectangleSelectTool *rect_tool,
                                                    gboolean                 ignore_pending)
 {
-  GimpRectangleSelectToolPrivate *priv = rect_tool->private;
-  GimpTool                       *tool = GIMP_TOOL (rect_tool);
-  GimpRectangleOptions           *rect_options;
+  LigmaRectangleSelectToolPrivate *priv = rect_tool->private;
+  LigmaTool                       *tool = LIGMA_TOOL (rect_tool);
+  LigmaRectangleOptions           *rect_options;
 
-  rect_options = GIMP_RECTANGLE_OPTIONS (gimp_tool_get_options (tool));
+  rect_options = LIGMA_RECTANGLE_OPTIONS (ligma_tool_get_options (tool));
 
   if (priv->widget && ! ignore_pending)
     {
@@ -845,7 +845,7 @@ gimp_rectangle_select_tool_update_option_defaults (GimpRectangleSelectTool *rect
        * rectangle width/height.
        */
 
-      gimp_tool_rectangle_pending_size_set (GIMP_TOOL_RECTANGLE (priv->widget),
+      ligma_tool_rectangle_pending_size_set (LIGMA_TOOL_RECTANGLE (priv->widget),
                                             G_OBJECT (rect_options),
                                             "default-aspect-numerator",
                                             "default-aspect-denominator");
@@ -868,29 +868,29 @@ gimp_rectangle_select_tool_update_option_defaults (GimpRectangleSelectTool *rect
 }
 
 static void
-gimp_rectangle_select_tool_update (GimpRectangleSelectTool *rect_tool)
+ligma_rectangle_select_tool_update (LigmaRectangleSelectTool *rect_tool)
 {
-  GimpTool                       *tool = GIMP_TOOL (rect_tool);
-  GimpRectangleSelectToolPrivate *priv = rect_tool->private;
+  LigmaTool                       *tool = LIGMA_TOOL (rect_tool);
+  LigmaRectangleSelectToolPrivate *priv = rect_tool->private;
 
   /* prevent change in selection from halting the tool */
-  gimp_tool_control_push_preserve (tool->control, TRUE);
+  ligma_tool_control_push_preserve (tool->control, TRUE);
 
-  if (tool->display && ! gimp_tool_control_is_active (tool->control))
+  if (tool->display && ! ligma_tool_control_is_active (tool->control))
     {
       gdouble x1, y1, x2, y2;
 
-      gimp_tool_rectangle_get_public_rect (GIMP_TOOL_RECTANGLE (priv->widget),
+      ligma_tool_rectangle_get_public_rect (LIGMA_TOOL_RECTANGLE (priv->widget),
                                            &x1, &y1, &x2, &y2);
 
-      gimp_rectangle_select_tool_select (rect_tool,
+      ligma_rectangle_select_tool_select (rect_tool,
                                          x1, y1, x2 - x1, y2 - y1);
 
       if (! priv->use_saved_op)
         {
-          GimpSelectionOptions *options;
+          LigmaSelectionOptions *options;
 
-          options = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
+          options = LIGMA_SELECTION_TOOL_GET_OPTIONS (tool);
 
           /* remember the operation now in case we modify the rectangle */
           priv->operation    = options->operation;
@@ -898,21 +898,21 @@ gimp_rectangle_select_tool_update (GimpRectangleSelectTool *rect_tool)
         }
     }
 
-  gimp_tool_control_pop_preserve (tool->control);
+  ligma_tool_control_pop_preserve (tool->control);
 
-  gimp_rectangle_select_tool_update_option_defaults (rect_tool, FALSE);
+  ligma_rectangle_select_tool_update_option_defaults (rect_tool, FALSE);
 }
 
 static void
-gimp_rectangle_select_tool_auto_shrink (GimpRectangleSelectTool *rect_tool)
+ligma_rectangle_select_tool_auto_shrink (LigmaRectangleSelectTool *rect_tool)
 {
-  GimpRectangleSelectToolPrivate *private = rect_tool->private;
+  LigmaRectangleSelectToolPrivate *private = rect_tool->private;
   gboolean                        shrink_merged;
 
-  g_object_get (gimp_tool_get_options (GIMP_TOOL (rect_tool)),
+  g_object_get (ligma_tool_get_options (LIGMA_TOOL (rect_tool)),
                 "shrink-merged", &shrink_merged,
                 NULL);
 
-  gimp_tool_rectangle_auto_shrink (GIMP_TOOL_RECTANGLE (private->widget),
+  ligma_tool_rectangle_auto_shrink (LIGMA_TOOL_RECTANGLE (private->widget),
                                    shrink_merged);
 }

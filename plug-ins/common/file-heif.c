@@ -1,5 +1,5 @@
 /*
- * GIMP HEIF loader / write plugin.
+ * LIGMA HEIF loader / write plugin.
  * Copyright (c) 2018 struktur AG, Dirk Farin <farin@struktur.de>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,10 +23,10 @@
 #include <gexiv2/gexiv2.h>
 #include <sys/time.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 #define LOAD_PROC      "file-heif-load"
@@ -56,83 +56,83 @@ typedef enum _HeifpluginExportFormat
   HEIFPLUGIN_EXPORT_FORMAT_YUV420 = 3
 } HeifpluginExportFormat;
 
-typedef struct _GimpHeif      GimpHeif;
-typedef struct _GimpHeifClass GimpHeifClass;
+typedef struct _LigmaHeif      LigmaHeif;
+typedef struct _LigmaHeifClass LigmaHeifClass;
 
-struct _GimpHeif
+struct _LigmaHeif
 {
-  GimpPlugIn      parent_instance;
+  LigmaPlugIn      parent_instance;
 };
 
-struct _GimpHeifClass
+struct _LigmaHeifClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
-#define GIMP_HEIF_TYPE  (gimp_heif_get_type ())
-#define GIMP_HEIF (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_HEIF_TYPE, GimpHeif))
+#define LIGMA_HEIF_TYPE  (ligma_heif_get_type ())
+#define LIGMA_HEIF (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_HEIF_TYPE, LigmaHeif))
 
-GType                   gimp_heif_get_type    (void) G_GNUC_CONST;
+GType                   ligma_heif_get_type    (void) G_GNUC_CONST;
 
-static GList          * heif_init_procedures  (GimpPlugIn           *plug_in);
-static GimpProcedure  * heif_create_procedure (GimpPlugIn           *plug_in,
+static GList          * heif_init_procedures  (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * heif_create_procedure (LigmaPlugIn           *plug_in,
                                                const gchar          *name);
 
-static GimpValueArray * heif_load             (GimpProcedure        *procedure,
-                                               GimpRunMode           run_mode,
+static LigmaValueArray * heif_load             (LigmaProcedure        *procedure,
+                                               LigmaRunMode           run_mode,
                                                GFile                *file,
-                                               const GimpValueArray *args,
+                                               const LigmaValueArray *args,
                                                gpointer              run_data);
-static GimpValueArray * heif_save             (GimpProcedure        *procedure,
-                                               GimpRunMode           run_mode,
-                                               GimpImage            *image,
+static LigmaValueArray * heif_save             (LigmaProcedure        *procedure,
+                                               LigmaRunMode           run_mode,
+                                               LigmaImage            *image,
                                                gint                  n_drawables,
-                                               GimpDrawable        **drawables,
+                                               LigmaDrawable        **drawables,
                                                GFile                *file,
-                                               const GimpValueArray *args,
+                                               const LigmaValueArray *args,
                                                gpointer              run_data);
 
 #if LIBHEIF_HAVE_VERSION(1,8,0)
-static GimpValueArray * heif_av1_save         (GimpProcedure        *procedure,
-                                               GimpRunMode           run_mode,
-                                               GimpImage            *image,
+static LigmaValueArray * heif_av1_save         (LigmaProcedure        *procedure,
+                                               LigmaRunMode           run_mode,
+                                               LigmaImage            *image,
                                                gint                  n_drawables,
-                                               GimpDrawable        **drawables,
+                                               LigmaDrawable        **drawables,
                                                GFile                *file,
-                                               const GimpValueArray *args,
+                                               const LigmaValueArray *args,
                                                gpointer              run_data);
 #endif
 
-static GimpImage      * load_image            (GFile               *file,
+static LigmaImage      * load_image            (GFile               *file,
                                                gboolean             interactive,
-                                               GimpPDBStatusType    *status,
+                                               LigmaPDBStatusType    *status,
                                                GError              **error);
 static gboolean         save_image            (GFile                        *file,
-                                               GimpImage                    *image,
-                                               GimpDrawable                 *drawable,
+                                               LigmaImage                    *image,
+                                               LigmaDrawable                 *drawable,
                                                GObject                      *config,
                                                GError                      **error,
                                                enum heif_compression_format  compression,
-                                               GimpMetadata                 *metadata);
+                                               LigmaMetadata                 *metadata);
 
 static gboolean         load_dialog           (struct heif_context  *heif,
                                                uint32_t             *selected_image);
-static gboolean         save_dialog           (GimpProcedure        *procedure,
+static gboolean         save_dialog           (LigmaProcedure        *procedure,
                                                GObject              *config,
-                                               GimpImage            *image);
+                                               LigmaImage            *image);
 
 
-G_DEFINE_TYPE (GimpHeif, gimp_heif, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (LigmaHeif, ligma_heif, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (GIMP_HEIF_TYPE)
+LIGMA_MAIN (LIGMA_HEIF_TYPE)
 DEFINE_STD_SET_I18N
 
 
 static void
-gimp_heif_class_init (GimpHeifClass *klass)
+ligma_heif_class_init (LigmaHeifClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->init_procedures  = heif_init_procedures;
   plug_in_class->create_procedure = heif_create_procedure;
@@ -140,12 +140,12 @@ gimp_heif_class_init (GimpHeifClass *klass)
 }
 
 static void
-gimp_heif_init (GimpHeif *heif)
+ligma_heif_init (LigmaHeif *heif)
 {
 }
 
 static GList *
-heif_init_procedures (GimpPlugIn *plug_in)
+heif_init_procedures (LigmaPlugIn *plug_in)
 {
   GList *list = NULL;
 
@@ -181,44 +181,44 @@ heif_init_procedures (GimpPlugIn *plug_in)
   return list;
 }
 
-static GimpProcedure *
-heif_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+heif_create_procedure (LigmaPlugIn  *plug_in,
                        const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, LOAD_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_load_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            heif_load, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure, _("HEIF/HEIC"));
+      ligma_procedure_set_menu_label (procedure, _("HEIF/HEIC"));
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         _("Loads HEIF images"),
                                         _("Load image stored in HEIF format (High "
                                           "Efficiency Image File Format). Typical "
                                           "suffices for HEIF files are .heif, "
                                           ".heic."),
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Dirk Farin <farin@struktur.de>",
                                       "Dirk Farin <farin@struktur.de>",
                                       "2018");
 
-      gimp_file_procedure_set_handles_remote (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_handles_remote (LIGMA_FILE_PROCEDURE (procedure),
                                               TRUE);
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                           "image/heif");
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "heif,heic");
 
       /* HEIF is an ISOBMFF format whose "brand" (the value after "ftyp")
        * can be of various values.
-       * See also: https://gitlab.gnome.org/GNOME/gimp/issues/2209
+       * See also: https://gitlab.gnome.org/GNOME/ligma/issues/2209
        */
-      gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_magics (LIGMA_FILE_PROCEDURE (procedure),
                                       "4,string,ftypheic,4,string,ftypheix,"
                                       "4,string,ftyphevc,4,string,ftypheim,"
                                       "4,string,ftypheis,4,string,ftyphevm,"
@@ -227,212 +227,212 @@ heif_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_save_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            heif_save, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "RGB*");
+      ligma_procedure_set_image_types (procedure, "RGB*");
 
-      gimp_procedure_set_menu_label (procedure, _("HEIF/HEIC"));
+      ligma_procedure_set_menu_label (procedure, _("HEIF/HEIC"));
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         _("Exports HEIF images"),
                                         _("Save image in HEIF format (High "
                                           "Efficiency Image File Format)."),
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Dirk Farin <farin@struktur.de>",
                                       "Dirk Farin <farin@struktur.de>",
                                       "2018");
 
-      gimp_file_procedure_set_handles_remote (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_handles_remote (LIGMA_FILE_PROCEDURE (procedure),
                                               TRUE);
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                           "image/heif");
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "heif,heic");
 
-      GIMP_PROC_ARG_INT (procedure, "quality",
+      LIGMA_PROC_ARG_INT (procedure, "quality",
                          "Quality",
                          "Quality factor (0 = worst, 100 = best)",
                          0, 100, 50,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "lossless",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "lossless",
                              "Lossless",
                              "Use lossless compression",
                              FALSE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-color-profile",
+      LIGMA_PROC_AUX_ARG_BOOLEAN (procedure, "save-color-profile",
                                  "Save color profile",
                                  "Save the image's color profile",
-                                 gimp_export_color_profile (),
+                                 ligma_export_color_profile (),
                                  G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "save-bit-depth",
+      LIGMA_PROC_ARG_INT (procedure, "save-bit-depth",
                          "Bit depth",
                          "Bit depth of exported image",
                          8, 12, 8,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "pixel-format",
+      LIGMA_PROC_ARG_INT (procedure, "pixel-format",
                          "Pixel format",
                          "Format of color sub-sampling",
                          HEIFPLUGIN_EXPORT_FORMAT_RGB, HEIFPLUGIN_EXPORT_FORMAT_YUV420,
                          HEIFPLUGIN_EXPORT_FORMAT_YUV420,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "encoder-speed",
+      LIGMA_PROC_ARG_INT (procedure, "encoder-speed",
                          "Encoder speed",
                          "Tradeoff between speed and compression",
                          HEIFPLUGIN_ENCODER_SPEED_SLOW, HEIFPLUGIN_ENCODER_SPEED_FASTER,
                          HEIFPLUGIN_ENCODER_SPEED_BALANCED,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "save-exif",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "save-exif",
                              "Save Exif",
                              "Toggle saving Exif data",
-                             gimp_export_exif (),
+                             ligma_export_exif (),
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "save-xmp",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "save-xmp",
                              "Save XMP",
                              "Toggle saving XMP data",
-                             gimp_export_xmp (),
+                             ligma_export_xmp (),
                              G_PARAM_READWRITE);
     }
 #if LIBHEIF_HAVE_VERSION(1,8,0)
   else if (! strcmp (name, LOAD_PROC_AV1))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_load_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            heif_load, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure, "HEIF/AVIF");
+      ligma_procedure_set_menu_label (procedure, "HEIF/AVIF");
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         _("Loads AVIF images"),
                                         _("Load image stored in AV1 Image File Format (AVIF)"),
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Daniel Novomesky <dnovomesky@gmail.com>",
                                       "Daniel Novomesky <dnovomesky@gmail.com>",
                                       "2020");
 
-      gimp_file_procedure_set_handles_remote (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_handles_remote (LIGMA_FILE_PROCEDURE (procedure),
                                               TRUE);
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                           "image/avif");
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "avif");
 
-      gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_magics (LIGMA_FILE_PROCEDURE (procedure),
                                       "4,string,ftypmif1,4,string,ftypavif");
 
-      gimp_file_procedure_set_priority (GIMP_FILE_PROCEDURE (procedure), 100);
+      ligma_file_procedure_set_priority (LIGMA_FILE_PROCEDURE (procedure), 100);
     }
   else if (! strcmp (name, SAVE_PROC_AV1))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_save_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            heif_av1_save, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "RGB*");
+      ligma_procedure_set_image_types (procedure, "RGB*");
 
-      gimp_procedure_set_menu_label (procedure, "HEIF/AVIF");
+      ligma_procedure_set_menu_label (procedure, "HEIF/AVIF");
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         _("Exports AVIF images"),
                                         _("Save image in AV1 Image File Format (AVIF)"),
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Daniel Novomesky <dnovomesky@gmail.com>",
                                       "Daniel Novomesky <dnovomesky@gmail.com>",
                                       "2020");
 
-      gimp_file_procedure_set_handles_remote (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_handles_remote (LIGMA_FILE_PROCEDURE (procedure),
                                               TRUE);
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                           "image/avif");
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "avif");
 
-      gimp_file_procedure_set_priority (GIMP_FILE_PROCEDURE (procedure), 100);
+      ligma_file_procedure_set_priority (LIGMA_FILE_PROCEDURE (procedure), 100);
 
-      GIMP_PROC_ARG_INT (procedure, "quality",
+      LIGMA_PROC_ARG_INT (procedure, "quality",
                          "Quality",
                          "Quality factor (0 = worst, 100 = best)",
                          0, 100, 50,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "lossless",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "lossless",
                              "Lossless",
                              "Use lossless compression",
                              FALSE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-color-profile",
+      LIGMA_PROC_AUX_ARG_BOOLEAN (procedure, "save-color-profile",
                                  "Save color profile",
                                  "Save the image's color profile",
-                                 gimp_export_color_profile (),
+                                 ligma_export_color_profile (),
                                  G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "save-bit-depth",
+      LIGMA_PROC_ARG_INT (procedure, "save-bit-depth",
                          "Bit depth",
                          "Bit depth of exported image",
                          8, 12, 8,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "pixel-format",
+      LIGMA_PROC_ARG_INT (procedure, "pixel-format",
                          "Pixel format",
                          "Format of color sub-sampling",
                          HEIFPLUGIN_EXPORT_FORMAT_RGB, HEIFPLUGIN_EXPORT_FORMAT_YUV420,
                          HEIFPLUGIN_EXPORT_FORMAT_YUV420,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "encoder-speed",
+      LIGMA_PROC_ARG_INT (procedure, "encoder-speed",
                          "Encoder speed",
                          "Tradeoff between speed and compression",
                          HEIFPLUGIN_ENCODER_SPEED_SLOW, HEIFPLUGIN_ENCODER_SPEED_FASTER,
                          HEIFPLUGIN_ENCODER_SPEED_BALANCED,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "save-exif",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "save-exif",
                              "Save Exif",
                              "Toggle saving Exif data",
-                             gimp_export_exif (),
+                             ligma_export_exif (),
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "save-xmp",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "save-xmp",
                              "Save XMP",
                              "Toggle saving XMP data",
-                             gimp_export_xmp (),
+                             ligma_export_xmp (),
                              G_PARAM_READWRITE);
     }
 #endif
   return procedure;
 }
 
-static GimpValueArray *
-heif_load (GimpProcedure        *procedure,
-           GimpRunMode           run_mode,
+static LigmaValueArray *
+heif_load (LigmaProcedure        *procedure,
+           LigmaRunMode           run_mode,
            GFile                *file,
-           const GimpValueArray *args,
+           const LigmaValueArray *args,
            gpointer              run_data)
 {
-  GimpValueArray    *return_vals;
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  GimpImage         *image;
+  LigmaValueArray    *return_vals;
+  LigmaPDBStatusType  status = LIGMA_PDB_SUCCESS;
+  LigmaImage         *image;
   gboolean           interactive;
   GError            *error = NULL;
 
   gegl_init (NULL, NULL);
 
-  interactive = (run_mode == GIMP_RUN_INTERACTIVE);
+  interactive = (run_mode == LIGMA_RUN_INTERACTIVE);
 
   if (interactive)
-    gimp_ui_init (PLUG_IN_BINARY);
+    ligma_ui_init (PLUG_IN_BINARY);
 
 #if LIBHEIF_HAVE_VERSION(1,13,0)
   heif_init (NULL);
@@ -445,51 +445,51 @@ heif_load (GimpProcedure        *procedure,
 #endif
 
   if (! image)
-    return gimp_procedure_new_return_values (procedure, status, error);
+    return ligma_procedure_new_return_values (procedure, status, error);
 
-  return_vals = gimp_procedure_new_return_values (procedure,
-                                                  GIMP_PDB_SUCCESS,
+  return_vals = ligma_procedure_new_return_values (procedure,
+                                                  LIGMA_PDB_SUCCESS,
                                                   NULL);
 
-  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
+  LIGMA_VALUES_SET_IMAGE (return_vals, 1, image);
 
   return return_vals;
 }
 
-static GimpValueArray *
-heif_save (GimpProcedure        *procedure,
-           GimpRunMode           run_mode,
-           GimpImage            *image,
+static LigmaValueArray *
+heif_save (LigmaProcedure        *procedure,
+           LigmaRunMode           run_mode,
+           LigmaImage            *image,
            gint                  n_drawables,
-           GimpDrawable        **drawables,
+           LigmaDrawable        **drawables,
            GFile                *file,
-           const GimpValueArray *args,
+           const LigmaValueArray *args,
            gpointer              run_data)
 {
-  GimpProcedureConfig *config;
-  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
-  GimpExportReturn     export = GIMP_EXPORT_CANCEL;
-  GimpMetadata        *metadata;
+  LigmaProcedureConfig *config;
+  LigmaPDBStatusType    status = LIGMA_PDB_SUCCESS;
+  LigmaExportReturn     export = LIGMA_EXPORT_CANCEL;
+  LigmaMetadata        *metadata;
   GError              *error  = NULL;
 
   gegl_init (NULL, NULL);
 
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, image, run_mode, args);
+  config = ligma_procedure_create_config (procedure);
+  ligma_procedure_config_begin_run (config, image, run_mode, args);
 
   switch (run_mode)
     {
-    case GIMP_RUN_INTERACTIVE:
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_ui_init (PLUG_IN_BINARY);
+    case LIGMA_RUN_INTERACTIVE:
+    case LIGMA_RUN_WITH_LAST_VALS:
+      ligma_ui_init (PLUG_IN_BINARY);
 
-      export = gimp_export_image (&image, &n_drawables, &drawables, "HEIF",
-                                  GIMP_EXPORT_CAN_HANDLE_RGB |
-                                  GIMP_EXPORT_CAN_HANDLE_ALPHA);
+      export = ligma_export_image (&image, &n_drawables, &drawables, "HEIF",
+                                  LIGMA_EXPORT_CAN_HANDLE_RGB |
+                                  LIGMA_EXPORT_CAN_HANDLE_ALPHA);
 
-      if (export == GIMP_EXPORT_CANCEL)
-        return gimp_procedure_new_return_values (procedure,
-                                                 GIMP_PDB_CANCEL,
+      if (export == LIGMA_EXPORT_CANCEL)
+        return ligma_procedure_new_return_values (procedure,
+                                                 LIGMA_PDB_CANCEL,
                                                  NULL);
       break;
 
@@ -502,22 +502,22 @@ heif_save (GimpProcedure        *procedure,
       g_set_error (&error, G_FILE_ERROR, 0,
                    _("HEIF format does not support multiple layers."));
 
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_CALLING_ERROR,
                                                error);
     }
 
-  if (run_mode == GIMP_RUN_INTERACTIVE)
+  if (run_mode == LIGMA_RUN_INTERACTIVE)
     {
       if (! save_dialog (procedure, G_OBJECT (config), image))
-        status = GIMP_PDB_CANCEL;
+        status = LIGMA_PDB_CANCEL;
     }
 
-  if (status == GIMP_PDB_SUCCESS)
+  if (status == LIGMA_PDB_SUCCESS)
     {
-      GimpMetadataSaveFlags metadata_flags;
+      LigmaMetadataSaveFlags metadata_flags;
 
-      metadata = gimp_image_metadata_save_prepare (image, "image/heif", &metadata_flags);
+      metadata = ligma_image_metadata_save_prepare (image, "image/heif", &metadata_flags);
 
 #if LIBHEIF_HAVE_VERSION(1,13,0)
       heif_init (NULL);
@@ -526,7 +526,7 @@ heif_save (GimpProcedure        *procedure,
       if (! save_image (file, image, drawables[0], G_OBJECT (config),
                         &error, heif_compression_HEVC, metadata))
         {
-          status = GIMP_PDB_EXECUTION_ERROR;
+          status = LIGMA_PDB_EXECUTION_ERROR;
         }
 
 #if LIBHEIF_HAVE_VERSION(1,13,0)
@@ -539,53 +539,53 @@ heif_save (GimpProcedure        *procedure,
         }
     }
 
-  gimp_procedure_config_end_run (config, status);
+  ligma_procedure_config_end_run (config, status);
   g_object_unref (config);
 
-  if (export == GIMP_EXPORT_EXPORT)
+  if (export == LIGMA_EXPORT_EXPORT)
     {
-      gimp_image_delete (image);
+      ligma_image_delete (image);
       g_free (drawables);
     }
 
-  return gimp_procedure_new_return_values (procedure, status, error);
+  return ligma_procedure_new_return_values (procedure, status, error);
 }
 
 #if LIBHEIF_HAVE_VERSION(1,8,0)
-static GimpValueArray *
-heif_av1_save (GimpProcedure        *procedure,
-               GimpRunMode           run_mode,
-               GimpImage            *image,
+static LigmaValueArray *
+heif_av1_save (LigmaProcedure        *procedure,
+               LigmaRunMode           run_mode,
+               LigmaImage            *image,
                gint                  n_drawables,
-               GimpDrawable        **drawables,
+               LigmaDrawable        **drawables,
                GFile                *file,
-               const GimpValueArray *args,
+               const LigmaValueArray *args,
                gpointer              run_data)
 {
-  GimpProcedureConfig *config;
-  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
-  GimpExportReturn     export = GIMP_EXPORT_CANCEL;
-  GimpMetadata        *metadata;
+  LigmaProcedureConfig *config;
+  LigmaPDBStatusType    status = LIGMA_PDB_SUCCESS;
+  LigmaExportReturn     export = LIGMA_EXPORT_CANCEL;
+  LigmaMetadata        *metadata;
   GError              *error  = NULL;
 
   gegl_init (NULL, NULL);
 
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, image, run_mode, args);
+  config = ligma_procedure_create_config (procedure);
+  ligma_procedure_config_begin_run (config, image, run_mode, args);
 
   switch (run_mode)
     {
-    case GIMP_RUN_INTERACTIVE:
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_ui_init (PLUG_IN_BINARY);
+    case LIGMA_RUN_INTERACTIVE:
+    case LIGMA_RUN_WITH_LAST_VALS:
+      ligma_ui_init (PLUG_IN_BINARY);
 
-      export = gimp_export_image (&image, &n_drawables, &drawables, "AVIF",
-                                  GIMP_EXPORT_CAN_HANDLE_RGB |
-                                  GIMP_EXPORT_CAN_HANDLE_ALPHA);
+      export = ligma_export_image (&image, &n_drawables, &drawables, "AVIF",
+                                  LIGMA_EXPORT_CAN_HANDLE_RGB |
+                                  LIGMA_EXPORT_CAN_HANDLE_ALPHA);
 
-      if (export == GIMP_EXPORT_CANCEL)
-        return gimp_procedure_new_return_values (procedure,
-                                                 GIMP_PDB_CANCEL,
+      if (export == LIGMA_EXPORT_CANCEL)
+        return ligma_procedure_new_return_values (procedure,
+                                                 LIGMA_PDB_CANCEL,
                                                  NULL);
       break;
 
@@ -598,22 +598,22 @@ heif_av1_save (GimpProcedure        *procedure,
       g_set_error (&error, G_FILE_ERROR, 0,
                    _("HEIF format does not support multiple layers."));
 
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_CALLING_ERROR,
                                                error);
     }
 
-  if (run_mode == GIMP_RUN_INTERACTIVE)
+  if (run_mode == LIGMA_RUN_INTERACTIVE)
     {
       if (! save_dialog (procedure, G_OBJECT (config), image))
-        status = GIMP_PDB_CANCEL;
+        status = LIGMA_PDB_CANCEL;
     }
 
-  if (status == GIMP_PDB_SUCCESS)
+  if (status == LIGMA_PDB_SUCCESS)
     {
-      GimpMetadataSaveFlags metadata_flags;
+      LigmaMetadataSaveFlags metadata_flags;
 
-      metadata = gimp_image_metadata_save_prepare (image, "image/avif", &metadata_flags);
+      metadata = ligma_image_metadata_save_prepare (image, "image/avif", &metadata_flags);
 
 #if LIBHEIF_HAVE_VERSION(1,13,0)
       heif_init (NULL);
@@ -622,7 +622,7 @@ heif_av1_save (GimpProcedure        *procedure,
       if (! save_image (file, image, drawables[0], G_OBJECT (config),
                         &error, heif_compression_AV1, metadata))
         {
-          status = GIMP_PDB_EXECUTION_ERROR;
+          status = LIGMA_PDB_EXECUTION_ERROR;
         }
 
 #if LIBHEIF_HAVE_VERSION(1,13,0)
@@ -635,16 +635,16 @@ heif_av1_save (GimpProcedure        *procedure,
         }
     }
 
-  gimp_procedure_config_end_run (config, status);
+  ligma_procedure_config_end_run (config, status);
   g_object_unref (config);
 
-  if (export == GIMP_EXPORT_EXPORT)
+  if (export == LIGMA_EXPORT_EXPORT)
     {
-      gimp_image_delete (image);
+      ligma_image_delete (image);
       g_free (drawables);
     }
 
-  return gimp_procedure_new_return_values (procedure, status, error);
+  return ligma_procedure_new_return_values (procedure, status, error);
 }
 #endif
 
@@ -683,8 +683,8 @@ heifplugin_color_profile_set_tag (cmsHPROFILE      profile,
   cmsMLUfree (mlu);
 }
 
-static GimpColorProfile *
-nclx_to_gimp_profile (const struct heif_color_profile_nclx *nclx)
+static LigmaColorProfile *
+nclx_to_ligma_profile (const struct heif_color_profile_nclx *nclx)
 {
   const gchar *primaries_name = "";
   const gchar *trc_name = "";
@@ -713,12 +713,12 @@ nclx_to_gimp_profile (const struct heif_color_profile_nclx *nclx)
     {
       if (nclx->transfer_characteristics == heif_transfer_characteristic_IEC_61966_2_1)
         {
-          return gimp_color_profile_new_rgb_srgb();
+          return ligma_color_profile_new_rgb_srgb();
         }
 
       if (nclx->transfer_characteristics == heif_transfer_characteristic_linear)
         {
-          return gimp_color_profile_new_rgb_srgb_linear();
+          return ligma_color_profile_new_rgb_srgb_linear();
         }
     }
 
@@ -820,19 +820,19 @@ nclx_to_gimp_profile (const struct heif_color_profile_nclx *nclx)
 
   if (profile)
     {
-      GimpColorProfile *new_profile;
+      LigmaColorProfile *new_profile;
       gchar *description = g_strdup_printf ("%s %s", primaries_name, trc_name);
 
       heifplugin_color_profile_set_tag (profile, cmsSigProfileDescriptionTag,
                                         description);
       heifplugin_color_profile_set_tag (profile, cmsSigDeviceMfgDescTag,
-                                        "GIMP");
+                                        "LIGMA");
       heifplugin_color_profile_set_tag (profile, cmsSigDeviceModelDescTag,
                                         description);
       heifplugin_color_profile_set_tag (profile, cmsSigCopyrightTag,
                                         "Public Domain");
 
-      new_profile = gimp_color_profile_new_from_lcms_profile (profile, NULL);
+      new_profile = ligma_color_profile_new_from_lcms_profile (profile, NULL);
 
       cmsCloseProfile (profile);
       g_free (description);
@@ -843,10 +843,10 @@ nclx_to_gimp_profile (const struct heif_color_profile_nclx *nclx)
 }
 #endif
 
-GimpImage *
+LigmaImage *
 load_image (GFile              *file,
             gboolean            interactive,
-            GimpPDBStatusType  *status,
+            LigmaPDBStatusType  *status,
             GError            **error)
 {
   GInputStream             *input;
@@ -857,29 +857,29 @@ load_image (GFile              *file,
   struct heif_error         err;
   struct heif_image_handle *handle  = NULL;
   struct heif_image        *img     = NULL;
-  GimpColorProfile         *profile = NULL;
+  LigmaColorProfile         *profile = NULL;
   gint                      n_images;
   heif_item_id              primary;
   heif_item_id              selected_image;
   gboolean                  has_alpha;
   gint                      width;
   gint                      height;
-  GimpImage                *image;
-  GimpLayer                *layer;
+  LigmaImage                *image;
+  LigmaLayer                *layer;
   GeglBuffer               *buffer;
   const Babl               *format;
   const guint8             *data;
   gint                      stride;
   gint                      bit_depth = 8;
   enum heif_chroma          chroma    = heif_chroma_interleaved_RGB;
-  GimpPrecision             precision;
+  LigmaPrecision             precision;
   gboolean                  load_linear;
   const char               *encoding;
 
-  gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_file_get_utf8_name (file));
+  ligma_progress_init_printf (_("Opening '%s'"),
+                             ligma_file_get_utf8_name (file));
 
-  *status = GIMP_PDB_EXECUTION_ERROR;
+  *status = LIGMA_PDB_EXECUTION_ERROR;
 
   file_size = get_file_size (file, error);
   if (file_size <= 0)
@@ -900,7 +900,7 @@ load_image (GFile              *file,
       return NULL;
     }
 
-  gimp_progress_update (0.25);
+  ligma_progress_update (0.25);
 
   ctx = heif_context_alloc ();
   if (!ctx)
@@ -928,7 +928,7 @@ load_image (GFile              *file,
   g_free (file_buffer);
   g_object_unref (input);
 
-  gimp_progress_update (0.5);
+  ligma_progress_update (0.5);
 
   /* analyze image content
    * Is there more than one image? Which image is the primary image?
@@ -978,7 +978,7 @@ load_image (GFile              *file,
         {
           heif_context_free (ctx);
 
-          *status = GIMP_PDB_CANCEL;
+          *status = LIGMA_PDB_CANCEL;
 
           return NULL;
         }
@@ -1086,7 +1086,7 @@ load_image (GFile              *file,
           g_warning ("%s: ICC profile loading failed and discarded.",
                      G_STRFUNC);
         else
-          profile = gimp_color_profile_new_from_icc_profile ((guint8 *) profile_data,
+          profile = ligma_color_profile_new_from_icc_profile ((guint8 *) profile_data,
                                                              profile_size, NULL);
 
         g_free (profile_data);
@@ -1105,7 +1105,7 @@ load_image (GFile              *file,
           }
         else
           {
-            profile = nclx_to_gimp_profile (nclx);
+            profile = nclx_to_ligma_profile (nclx);
             heif_nclx_color_profile_free (nclx);
           }
       }
@@ -1118,18 +1118,18 @@ load_image (GFile              *file,
     }
 #endif /* LIBHEIF_HAVE_VERSION(1,4,0) */
 
-  gimp_progress_update (0.75);
+  ligma_progress_update (0.75);
 
   width  = heif_image_get_width  (img, heif_channel_interleaved);
   height = heif_image_get_height (img, heif_channel_interleaved);
 
-  /* create GIMP image and copy HEIF image into the GIMP image
+  /* create LIGMA image and copy HEIF image into the LIGMA image
    * (converting it to RGB)
    */
 
   if (profile)
     {
-      load_linear = gimp_color_profile_is_linear (profile);
+      load_linear = ligma_color_profile_is_linear (profile);
     }
   else
     {
@@ -1140,12 +1140,12 @@ load_image (GFile              *file,
     {
       if (bit_depth == 8)
         {
-          precision = GIMP_PRECISION_U8_LINEAR;
+          precision = LIGMA_PRECISION_U8_LINEAR;
           encoding = has_alpha ? "RGBA u8" : "RGB u8";
         }
       else
         {
-          precision = GIMP_PRECISION_U16_LINEAR;
+          precision = LIGMA_PRECISION_U16_LINEAR;
           encoding = has_alpha ? "RGBA u16" : "RGB u16";
         }
     }
@@ -1153,26 +1153,26 @@ load_image (GFile              *file,
     {
       if (bit_depth == 8)
         {
-          precision = GIMP_PRECISION_U8_NON_LINEAR;
+          precision = LIGMA_PRECISION_U8_NON_LINEAR;
           encoding = has_alpha ? "R'G'B'A u8" : "R'G'B' u8";
         }
       else
         {
-          precision = GIMP_PRECISION_U16_NON_LINEAR;
+          precision = LIGMA_PRECISION_U16_NON_LINEAR;
           encoding = has_alpha ? "R'G'B'A u16" : "R'G'B' u16";
         }
     }
 
-  image = gimp_image_new_with_precision (width, height, GIMP_RGB, precision);
-  gimp_image_set_file (image, file);
+  image = ligma_image_new_with_precision (width, height, LIGMA_RGB, precision);
+  ligma_image_set_file (image, file);
 
   if (profile)
     {
-      if (gimp_color_profile_is_rgb (profile))
+      if (ligma_color_profile_is_rgb (profile))
         {
-          gimp_image_set_color_profile (image, profile);
+          ligma_image_set_color_profile (image, profile);
         }
-      else if (gimp_color_profile_is_gray (profile))
+      else if (ligma_color_profile_is_gray (profile))
         {
           g_warning ("Gray ICC profile was not applied to the imported image.");
         }
@@ -1182,16 +1182,16 @@ load_image (GFile              *file,
         }
     }
 
-  layer = gimp_layer_new (image,
+  layer = ligma_layer_new (image,
                           _("image content"),
                           width, height,
-                          has_alpha ? GIMP_RGBA_IMAGE : GIMP_RGB_IMAGE,
+                          has_alpha ? LIGMA_RGBA_IMAGE : LIGMA_RGB_IMAGE,
                           100.0,
-                          gimp_image_get_default_new_layer_mode (image));
+                          ligma_image_get_default_new_layer_mode (image));
 
-  gimp_image_insert_layer (image, layer, NULL, 0);
+  ligma_image_insert_layer (image, layer, NULL, 0);
 
-  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
+  buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (layer));
 
   data = heif_image_get_plane_readonly (img, heif_channel_interleaved,
                                         &stride);
@@ -1327,8 +1327,8 @@ load_image (GFile              *file,
 
     if (exif_data || xmp_data)
       {
-        GimpMetadata          *metadata = gimp_metadata_new ();
-        GimpMetadataLoadFlags  flags    = GIMP_METADATA_LOAD_COMMENT | GIMP_METADATA_LOAD_RESOLUTION;
+        LigmaMetadata          *metadata = ligma_metadata_new ();
+        LigmaMetadataLoadFlags  flags    = LIGMA_METADATA_LOAD_COMMENT | LIGMA_METADATA_LOAD_RESOLUTION;
 
         if (exif_data)
           {
@@ -1370,7 +1370,7 @@ load_image (GFile              *file,
 
         if (xmp_data)
           {
-            if (!gimp_metadata_set_from_xmp (metadata, xmp_data, xmp_data_size, error))
+            if (!ligma_metadata_set_from_xmp (metadata, xmp_data, xmp_data_size, error))
               {
                 g_printerr ("%s: Failed to set XMP metadata: %s\n", G_STRFUNC, (*error)->message);
                 g_clear_error (error);
@@ -1383,7 +1383,7 @@ load_image (GFile              *file,
                                                       width, NULL);
         gexiv2_metadata_try_set_metadata_pixel_height (GEXIV2_METADATA (metadata),
                                                        height, NULL);
-        gimp_image_metadata_load_finish (image, "image/heif",
+        ligma_image_metadata_load_finish (image, "image/heif",
                                          metadata, flags);
       }
   }
@@ -1395,11 +1395,11 @@ load_image (GFile              *file,
   heif_context_free (ctx);
   heif_image_release (img);
 
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 
   if (image)
     {
-      *status = GIMP_PDB_SUCCESS;
+      *status = LIGMA_PDB_SUCCESS;
     }
   return image;
 }
@@ -1429,12 +1429,12 @@ write_callback (struct heif_context *ctx,
 
 static gboolean
 save_image (GFile                        *file,
-            GimpImage                    *image,
-            GimpDrawable                 *drawable,
+            LigmaImage                    *image,
+            LigmaDrawable                 *drawable,
             GObject                      *config,
             GError                      **error,
             enum heif_compression_format  compression,
-            GimpMetadata                 *metadata)
+            LigmaMetadata                 *metadata)
 {
   struct heif_image                    *h_image = NULL;
   struct heif_context                  *context = heif_context_alloc ();
@@ -1535,13 +1535,13 @@ save_image (GFile                        *file,
         }
     }
 
-  gimp_progress_init_printf (_("Exporting '%s' using %s encoder"),
-                             gimp_file_get_utf8_name (file), encoder_name);
+  ligma_progress_init_printf (_("Exporting '%s' using %s encoder"),
+                             ligma_file_get_utf8_name (file), encoder_name);
 
-  width   = gimp_drawable_get_width  (drawable);
-  height  = gimp_drawable_get_height (drawable);
+  width   = ligma_drawable_get_width  (drawable);
+  height  = ligma_drawable_get_height (drawable);
 
-  has_alpha = gimp_drawable_has_alpha (drawable);
+  has_alpha = ligma_drawable_has_alpha (drawable);
 
   switch (save_bit_depth)
     {
@@ -1594,26 +1594,26 @@ save_image (GFile                        *file,
 #if LIBHEIF_HAVE_VERSION(1,4,0)
   if (save_profile)
     {
-      GimpColorProfile *profile = NULL;
+      LigmaColorProfile *profile = NULL;
       const guint8     *icc_data;
       gsize             icc_length;
 
-      profile = gimp_image_get_color_profile (image);
-      if (profile && gimp_color_profile_is_linear (profile))
+      profile = ligma_image_get_color_profile (image);
+      if (profile && ligma_color_profile_is_linear (profile))
         out_linear = TRUE;
 
       if (! profile)
         {
-          profile = gimp_image_get_effective_color_profile (image);
+          profile = ligma_image_get_effective_color_profile (image);
 
-          if (gimp_color_profile_is_linear (profile))
+          if (ligma_color_profile_is_linear (profile))
             {
-              if (gimp_image_get_precision (image) != GIMP_PRECISION_U8_LINEAR)
+              if (ligma_image_get_precision (image) != LIGMA_PRECISION_U8_LINEAR)
                 {
                   /* If stored data was linear, let's convert the profile. */
-                  GimpColorProfile *saved_profile;
+                  LigmaColorProfile *saved_profile;
 
-                  saved_profile = gimp_color_profile_new_srgb_trc_from_color_profile (profile);
+                  saved_profile = ligma_color_profile_new_srgb_trc_from_color_profile (profile);
                   g_clear_object (&profile);
                   profile = saved_profile;
                 }
@@ -1647,10 +1647,10 @@ save_image (GFile                        *file,
         }
 #endif
 
-      icc_data = gimp_color_profile_get_icc_profile (profile, &icc_length);
+      icc_data = ligma_color_profile_get_icc_profile (profile, &icc_length);
       heif_image_set_raw_color_profile (h_image, "prof", icc_data, icc_length);
-      space = gimp_color_profile_get_space (profile,
-                                            GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+      space = ligma_color_profile_get_space (profile,
+                                            LIGMA_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
                                             error);
       if (error && *error)
         {
@@ -1689,7 +1689,7 @@ save_image (GFile                        *file,
 #endif /* LIBHEIF_HAVE_VERSION(1,4,0) */
 
   if (! space)
-    space = gimp_drawable_get_format (drawable);
+    space = ligma_drawable_get_format (drawable);
 
 
   if (save_bit_depth > 8)
@@ -1724,7 +1724,7 @@ save_image (GFile                        *file,
 
       format = babl_format_with_space (encoding, space);
 
-      buffer = gimp_drawable_get_buffer (drawable);
+      buffer = ligma_drawable_get_buffer (drawable);
 
       gegl_buffer_get (buffer,
                        GEGL_RECTANGLE (0, 0, width, height),
@@ -1793,7 +1793,7 @@ save_image (GFile                        *file,
 
       data = heif_image_get_plane (h_image, heif_channel_interleaved, &stride);
 
-      buffer = gimp_drawable_get_buffer (drawable);
+      buffer = ligma_drawable_get_buffer (drawable);
 
       if (has_alpha)
         {
@@ -1818,7 +1818,7 @@ save_image (GFile                        *file,
       g_object_unref (buffer);
     }
 
-  gimp_progress_update (0.33);
+  ligma_progress_update (0.33);
 
   /*  encode to HEIF file  */
   err = heif_context_get_encoder (context,
@@ -1902,7 +1902,7 @@ save_image (GFile                        *file,
     {
       int parameter_number;
 
-      parameter_number = gimp_get_num_processors();
+      parameter_number = ligma_get_num_processors();
       parameter_number = CLAMP(parameter_number, 1, 16);
 
       err = heif_encoder_set_parameter_integer (encoder, "threads", parameter_number);
@@ -2002,20 +2002,20 @@ save_image (GFile                        *file,
 
   if (metadata && (save_exif || save_xmp))
     {
-      GimpMetadata         *filtered_metadata;
-      GimpMetadataSaveFlags metadata_flags = 0;
+      LigmaMetadata         *filtered_metadata;
+      LigmaMetadataSaveFlags metadata_flags = 0;
 
       if (save_exif)
         {
-          metadata_flags |= GIMP_METADATA_SAVE_EXIF;
+          metadata_flags |= LIGMA_METADATA_SAVE_EXIF;
         }
 
       if (save_xmp)
         {
-          metadata_flags |= GIMP_METADATA_SAVE_XMP;
+          metadata_flags |= LIGMA_METADATA_SAVE_XMP;
         }
 
-      filtered_metadata = gimp_image_metadata_save_filter (image, "image/heif", metadata, metadata_flags, NULL, error);
+      filtered_metadata = ligma_image_metadata_save_filter (image, "image/heif", metadata, metadata_flags, NULL, error);
       if(! filtered_metadata)
         {
           if (error && *error)
@@ -2086,7 +2086,7 @@ save_image (GFile                        *file,
 
   heif_image_handle_release (handle);
 
-  gimp_progress_update (0.66);
+  ligma_progress_update (0.66);
 
   writer.writer_api_version = 1;
   writer.write              = write_callback;
@@ -2128,7 +2128,7 @@ save_image (GFile                        *file,
   heif_image_release (h_image);
   heif_context_free (context);
 
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 
   return TRUE;
 }
@@ -2190,7 +2190,7 @@ load_thumbnails (struct heif_context *heif,
       err = heif_context_get_image_handle (heif, IDs[i], &handle);
       if (err.code)
         {
-          gimp_message (err.message);
+          ligma_message (err.message);
           continue;
         }
 
@@ -2226,7 +2226,7 @@ load_thumbnails (struct heif_context *heif,
                                                  &thumbnail_handle);
           if (err.code)
             {
-              gimp_message (err.message);
+              ligma_message (err.message);
               continue;
             }
         }
@@ -2235,7 +2235,7 @@ load_thumbnails (struct heif_context *heif,
           err = heif_context_get_image_handle (heif, IDs[i], &thumbnail_handle);
           if (err.code)
             {
-              gimp_message (err.message);
+              ligma_message (err.message);
               continue;
             }
         }
@@ -2249,7 +2249,7 @@ load_thumbnails (struct heif_context *heif,
                                NULL);
       if (err.code)
         {
-          gimp_message (err.message);
+          ligma_message (err.message);
           continue;
         }
 
@@ -2287,7 +2287,7 @@ load_thumbnails (struct heif_context *heif,
                                         NULL);
           if (err.code)
             {
-              gimp_message (err.message);
+              ligma_message (err.message);
               continue;
             }
 
@@ -2347,9 +2347,9 @@ load_dialog (struct heif_context *heif,
   if (! load_thumbnails (heif, heif_images))
     return FALSE;
 
-  dialog = gimp_dialog_new (_("Load HEIF Image"), PLUG_IN_BINARY,
+  dialog = ligma_dialog_new (_("Load HEIF Image"), PLUG_IN_BINARY,
                             NULL, 0,
-                            gimp_standard_help_func, LOAD_PROC,
+                            ligma_standard_help_func, LOAD_PROC,
 
                             _("_Cancel"), GTK_RESPONSE_CANCEL,
                             _("_OK"),     GTK_RESPONSE_OK,
@@ -2361,7 +2361,7 @@ load_dialog (struct heif_context *heif,
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       main_vbox, TRUE, TRUE, 0);
 
-  frame = gimp_frame_new (_("Select Image"));
+  frame = ligma_frame_new (_("Select Image"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
@@ -2452,7 +2452,7 @@ load_dialog (struct heif_context *heif,
   gtk_widget_show (main_vbox);
   gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+  run = (ligma_dialog_run (LIGMA_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
   if (run)
     {
@@ -2485,9 +2485,9 @@ load_dialog (struct heif_context *heif,
 /*  the save dialog  */
 
 gboolean
-save_dialog (GimpProcedure *procedure,
+save_dialog (LigmaProcedure *procedure,
              GObject       *config,
-             GimpImage     *image)
+             LigmaImage     *image)
 {
   GtkWidget *dialog;
   GtkWidget *main_vbox;
@@ -2502,9 +2502,9 @@ save_dialog (GimpProcedure *procedure,
 #endif
   gboolean   run;
 
-  dialog = gimp_procedure_dialog_new (procedure,
-                                      GIMP_PROCEDURE_CONFIG (config),
-                                      g_strcmp0 (gimp_procedure_get_name (procedure), SAVE_PROC_AV1) == 0 ?
+  dialog = ligma_procedure_dialog_new (procedure,
+                                      LIGMA_PROCEDURE_CONFIG (config),
+                                      g_strcmp0 (ligma_procedure_get_name (procedure), SAVE_PROC_AV1) == 0 ?
                                       _("Export Image as AVIF") : _("Export Image as HEIF"));
 
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
@@ -2513,11 +2513,11 @@ save_dialog (GimpProcedure *procedure,
                       main_vbox, FALSE, FALSE, 0);
   gtk_widget_show (main_vbox);
 
-  frame = gimp_frame_new (NULL);
+  frame = ligma_frame_new (NULL);
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  button = gimp_prop_check_button_new (config, "lossless",
+  button = ligma_prop_check_button_new (config, "lossless",
                                        _("_Lossless"));
   gtk_frame_set_label_widget (GTK_FRAME (frame), button);
 
@@ -2532,23 +2532,23 @@ save_dialog (GimpProcedure *procedure,
                           G_BINDING_SYNC_CREATE |
                           G_BINDING_INVERT_BOOLEAN);
 
-  scale = gimp_prop_scale_entry_new (config, "quality",
+  scale = ligma_prop_scale_entry_new (config, "quality",
                                      NULL, 1.0, FALSE, 0, 0);
-  gtk_widget_hide (gimp_labeled_get_label (GIMP_LABELED (scale)));
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+  gtk_widget_hide (ligma_labeled_get_label (LIGMA_LABELED (scale)));
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 1,
                             _("_Quality"),
                             0.0, 0.5, scale, 2);
 
 #if LIBHEIF_HAVE_VERSION(1,10,0)
-  store = gimp_int_store_new (_("RGB"), HEIFPLUGIN_EXPORT_FORMAT_RGB,
+  store = ligma_int_store_new (_("RGB"), HEIFPLUGIN_EXPORT_FORMAT_RGB,
                               _("YUV444"), HEIFPLUGIN_EXPORT_FORMAT_YUV444,
                               _("YUV420"), HEIFPLUGIN_EXPORT_FORMAT_YUV420,
                               NULL);
 
-  combo = gimp_prop_int_combo_box_new (config, "pixel-format",
-                                       GIMP_INT_STORE (store));
+  combo = ligma_prop_int_combo_box_new (config, "pixel-format",
+                                       LIGMA_INT_STORE (store));
   g_object_unref (store);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 2,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 2,
                             _("Pixel format:"), 0.0, 0.5,
                             combo, 2);
 #endif
@@ -2560,50 +2560,50 @@ save_dialog (GimpProcedure *procedure,
   gtk_box_pack_start (GTK_BOX (main_vbox), grid2, FALSE, FALSE, 0);
   gtk_widget_show (grid2);
 
-  store = gimp_int_store_new (_("8 bit/channel"),   8,
+  store = ligma_int_store_new (_("8 bit/channel"),   8,
                               _("10 bit/channel"), 10,
                               _("12 bit/channel"), 12,
                               NULL);
 
-  combo = gimp_prop_int_combo_box_new (config, "save-bit-depth",
-                                       GIMP_INT_STORE (store));
+  combo = ligma_prop_int_combo_box_new (config, "save-bit-depth",
+                                       LIGMA_INT_STORE (store));
   g_object_unref (store);
-  gimp_grid_attach_aligned (GTK_GRID (grid2), 0, 1,
+  ligma_grid_attach_aligned (GTK_GRID (grid2), 0, 1,
                             _("Bit depth:"), 0.0, 0.5,
                             combo, 2);
 
-  store = gimp_int_store_new (_("Slow"), HEIFPLUGIN_ENCODER_SPEED_SLOW,
+  store = ligma_int_store_new (_("Slow"), HEIFPLUGIN_ENCODER_SPEED_SLOW,
                               _("Balanced"), HEIFPLUGIN_ENCODER_SPEED_BALANCED,
                               _("Fast"), HEIFPLUGIN_ENCODER_SPEED_FASTER,
                               NULL);
 
-  combo = gimp_prop_int_combo_box_new (config, "encoder-speed",
-                                       GIMP_INT_STORE (store));
+  combo = ligma_prop_int_combo_box_new (config, "encoder-speed",
+                                       LIGMA_INT_STORE (store));
   g_object_unref (store);
-  gimp_grid_attach_aligned (GTK_GRID (grid2), 0, 2,
+  ligma_grid_attach_aligned (GTK_GRID (grid2), 0, 2,
                             _("Speed:"), 0.0, 0.5,
                             combo, 2);
 #endif
 
 #if LIBHEIF_HAVE_VERSION(1,4,0)
-  button = gimp_prop_check_button_new (config, "save-color-profile",
+  button = ligma_prop_check_button_new (config, "save-color-profile",
                                        _("Save color _profile"));
   gtk_box_pack_start (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
 #endif
 
   /* Save EXIF data */
-  button = gimp_prop_check_button_new (config, "save-exif",
+  button = ligma_prop_check_button_new (config, "save-exif",
                                        _("_Save Exif data"));
   gtk_box_pack_start (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
 
   /* XMP metadata */
-  button = gimp_prop_check_button_new (config, "save-xmp",
+  button = ligma_prop_check_button_new (config, "save-xmp",
                                        _("Save _XMP data"));
   gtk_box_pack_start (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
 
   gtk_widget_show (dialog);
 
-  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
+  run = ligma_procedure_dialog_run (LIGMA_PROCEDURE_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
 

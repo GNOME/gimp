@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,12 +18,12 @@
 #ifndef __SIGNALS_H__
 #define __SIGNALS_H__
 
-#ifndef GIMP_APP_GLUE_COMPILATION
+#ifndef LIGMA_APP_GLUE_COMPILATION
 #signal You must not #include "signals.h" from an app/ subdir
 #endif
 
 
-void   gimp_init_signal_handlers (gchar **backtrace_file);
+void   ligma_init_signal_handlers (gchar **backtrace_file);
 
 
 #endif /* __SIGNALS_H__ */

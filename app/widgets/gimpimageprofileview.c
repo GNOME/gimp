@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpImageProfileView
- * Copyright (C) 2006  Sven Neumann <sven@gimp.org>
+ * LigmaImageProfileView
+ * Copyright (C) 2006  Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,42 +25,42 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmaconfig/ligmaconfig.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "core/gimpimage.h"
-#include "core/gimpimage-color-profile.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaimage-color-profile.h"
 
-#include "gimpimageprofileview.h"
+#include "ligmaimageprofileview.h"
 
-#include "gimp-intl.h"
-
-
-static void   gimp_image_profile_view_update (GimpImageParasiteView *view);
+#include "ligma-intl.h"
 
 
-G_DEFINE_TYPE (GimpImageProfileView,
-               gimp_image_profile_view, GIMP_TYPE_IMAGE_PARASITE_VIEW)
+static void   ligma_image_profile_view_update (LigmaImageParasiteView *view);
 
-#define parent_class gimp_image_profile_view_parent_class
+
+G_DEFINE_TYPE (LigmaImageProfileView,
+               ligma_image_profile_view, LIGMA_TYPE_IMAGE_PARASITE_VIEW)
+
+#define parent_class ligma_image_profile_view_parent_class
 
 
 static void
-gimp_image_profile_view_class_init (GimpImageProfileViewClass *klass)
+ligma_image_profile_view_class_init (LigmaImageProfileViewClass *klass)
 {
-  GimpImageParasiteViewClass *view_class;
+  LigmaImageParasiteViewClass *view_class;
 
-  view_class = GIMP_IMAGE_PARASITE_VIEW_CLASS (klass);
+  view_class = LIGMA_IMAGE_PARASITE_VIEW_CLASS (klass);
 
-  view_class->update = gimp_image_profile_view_update;
+  view_class->update = ligma_image_profile_view_update;
 }
 
 static void
-gimp_image_profile_view_init (GimpImageProfileView *view)
+ligma_image_profile_view_init (LigmaImageProfileView *view)
 {
   GtkWidget *scrolled_window;
   GtkWidget *profile_view;
@@ -73,24 +73,24 @@ gimp_image_profile_view_init (GimpImageProfileView *view)
   gtk_box_pack_start (GTK_BOX (view), scrolled_window, TRUE, TRUE, 0);
   gtk_widget_show (scrolled_window);
 
-  profile_view = gimp_color_profile_view_new ();
+  profile_view = ligma_color_profile_view_new ();
   gtk_container_add (GTK_CONTAINER (scrolled_window), profile_view);
   gtk_widget_show (profile_view);
 
-  view->profile_view = GIMP_COLOR_PROFILE_VIEW (profile_view);
+  view->profile_view = LIGMA_COLOR_PROFILE_VIEW (profile_view);
 }
 
 
 /*  public functions  */
 
 GtkWidget *
-gimp_image_profile_view_new (GimpImage *image)
+ligma_image_profile_view_new (LigmaImage *image)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), NULL);
 
-  return g_object_new (GIMP_TYPE_IMAGE_PROFILE_VIEW,
+  return g_object_new (LIGMA_TYPE_IMAGE_PROFILE_VIEW,
                        "image",    image,
-                       "parasite", GIMP_ICC_PROFILE_PARASITE_NAME,
+                       "parasite", LIGMA_ICC_PROFILE_PARASITE_NAME,
                        NULL);
 }
 
@@ -98,17 +98,17 @@ gimp_image_profile_view_new (GimpImage *image)
 /*  private functions  */
 
 static void
-gimp_image_profile_view_update (GimpImageParasiteView *view)
+ligma_image_profile_view_update (LigmaImageParasiteView *view)
 {
-  GimpImageProfileView *profile_view = GIMP_IMAGE_PROFILE_VIEW (view);
-  GimpImage            *image;
-  GimpColorManaged     *managed;
-  GimpColorProfile     *profile;
+  LigmaImageProfileView *profile_view = LIGMA_IMAGE_PROFILE_VIEW (view);
+  LigmaImage            *image;
+  LigmaColorManaged     *managed;
+  LigmaColorProfile     *profile;
 
-  image   = gimp_image_parasite_view_get_image (view);
-  managed = GIMP_COLOR_MANAGED (image);
+  image   = ligma_image_parasite_view_get_image (view);
+  managed = LIGMA_COLOR_MANAGED (image);
 
-  profile = gimp_color_managed_get_color_profile (managed);
+  profile = ligma_color_managed_get_color_profile (managed);
 
-  gimp_color_profile_view_set_profile (profile_view->profile_view, profile);
+  ligma_color_profile_view_set_profile (profile_view->profile_view, profile);
 }

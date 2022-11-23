@@ -60,7 +60,7 @@ NOTE about the gimage->dirty counter:
   the image back to the state on disk, since the redo info has been
   freed.  See undo.c for the gorey details.
 
-NEVER CALL gimp_image_dirty() directly!
+NEVER CALL ligma_image_dirty() directly!
 
 If your code has just dirtied the image, push an undo instead.
 Failing that, push the trivial undo which tells the user the

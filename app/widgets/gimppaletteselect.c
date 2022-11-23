@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimppaletteselect.c
- * Copyright (C) 2004 Michael Natterer <mitch@gimp.org>
+ * ligmapaletteselect.c
+ * Copyright (C) 2004 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,72 +23,72 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontext.h"
-#include "core/gimppalette.h"
-#include "core/gimpparamspecs.h"
+#include "core/ligma.h"
+#include "core/ligmacontext.h"
+#include "core/ligmapalette.h"
+#include "core/ligmaparamspecs.h"
 
-#include "pdb/gimppdb.h"
+#include "pdb/ligmapdb.h"
 
-#include "gimpcontainerbox.h"
-#include "gimpdatafactoryview.h"
-#include "gimppaletteselect.h"
+#include "ligmacontainerbox.h"
+#include "ligmadatafactoryview.h"
+#include "ligmapaletteselect.h"
 
 
-static void             gimp_palette_select_constructed  (GObject        *object);
+static void             ligma_palette_select_constructed  (GObject        *object);
 
-static GimpValueArray * gimp_palette_select_run_callback (GimpPdbDialog  *dialog,
-                                                          GimpObject     *object,
+static LigmaValueArray * ligma_palette_select_run_callback (LigmaPdbDialog  *dialog,
+                                                          LigmaObject     *object,
                                                           gboolean        closing,
                                                           GError        **error);
 
 
-G_DEFINE_TYPE (GimpPaletteSelect, gimp_palette_select, GIMP_TYPE_PDB_DIALOG)
+G_DEFINE_TYPE (LigmaPaletteSelect, ligma_palette_select, LIGMA_TYPE_PDB_DIALOG)
 
-#define parent_class gimp_palette_select_parent_class
+#define parent_class ligma_palette_select_parent_class
 
 
 static void
-gimp_palette_select_class_init (GimpPaletteSelectClass *klass)
+ligma_palette_select_class_init (LigmaPaletteSelectClass *klass)
 {
   GObjectClass       *object_class = G_OBJECT_CLASS (klass);
-  GimpPdbDialogClass *pdb_class    = GIMP_PDB_DIALOG_CLASS (klass);
+  LigmaPdbDialogClass *pdb_class    = LIGMA_PDB_DIALOG_CLASS (klass);
 
-  object_class->constructed = gimp_palette_select_constructed;
+  object_class->constructed = ligma_palette_select_constructed;
 
-  pdb_class->run_callback   = gimp_palette_select_run_callback;
+  pdb_class->run_callback   = ligma_palette_select_run_callback;
 }
 
 static void
-gimp_palette_select_init (GimpPaletteSelect *dialog)
+ligma_palette_select_init (LigmaPaletteSelect *dialog)
 {
 }
 
 static void
-gimp_palette_select_constructed (GObject *object)
+ligma_palette_select_constructed (GObject *object)
 {
-  GimpPdbDialog *dialog = GIMP_PDB_DIALOG (object);
+  LigmaPdbDialog *dialog = LIGMA_PDB_DIALOG (object);
   GtkWidget     *content_area;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
   dialog->view =
-    gimp_data_factory_view_new (GIMP_VIEW_TYPE_LIST,
-                                dialog->context->gimp->palette_factory,
+    ligma_data_factory_view_new (LIGMA_VIEW_TYPE_LIST,
+                                dialog->context->ligma->palette_factory,
                                 dialog->context,
-                                GIMP_VIEW_SIZE_MEDIUM, 1,
+                                LIGMA_VIEW_SIZE_MEDIUM, 1,
                                 dialog->menu_factory, "<Palettes>",
                                 "/palettes-popup",
                                 "palettes");
 
-  gimp_container_box_set_size_request (GIMP_CONTAINER_BOX (GIMP_CONTAINER_EDITOR (dialog->view)->view),
-                                       5 * (GIMP_VIEW_SIZE_MEDIUM + 2),
-                                       8 * (GIMP_VIEW_SIZE_MEDIUM + 2));
+  ligma_container_box_set_size_request (LIGMA_CONTAINER_BOX (LIGMA_CONTAINER_EDITOR (dialog->view)->view),
+                                       5 * (LIGMA_VIEW_SIZE_MEDIUM + 2),
+                                       8 * (LIGMA_VIEW_SIZE_MEDIUM + 2));
 
   gtk_container_set_border_width (GTK_CONTAINER (dialog->view), 12);
 
@@ -97,20 +97,20 @@ gimp_palette_select_constructed (GObject *object)
   gtk_widget_show (dialog->view);
 }
 
-static GimpValueArray *
-gimp_palette_select_run_callback (GimpPdbDialog  *dialog,
-                                  GimpObject     *object,
+static LigmaValueArray *
+ligma_palette_select_run_callback (LigmaPdbDialog  *dialog,
+                                  LigmaObject     *object,
                                   gboolean        closing,
                                   GError        **error)
 {
-  GimpPalette *palette = GIMP_PALETTE (object);
+  LigmaPalette *palette = LIGMA_PALETTE (object);
 
-  return gimp_pdb_execute_procedure_by_name (dialog->pdb,
+  return ligma_pdb_execute_procedure_by_name (dialog->pdb,
                                              dialog->caller_context,
                                              NULL, error,
                                              dialog->callback_name,
-                                             G_TYPE_STRING,  gimp_object_get_name (object),
-                                             G_TYPE_INT,     gimp_palette_get_n_colors (palette),
+                                             G_TYPE_STRING,  ligma_object_get_name (object),
+                                             G_TYPE_INT,     ligma_palette_get_n_colors (palette),
                                              G_TYPE_BOOLEAN, closing,
                                              G_TYPE_NONE);
 }

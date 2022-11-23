@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * Measure tool
- * Copyright (C) 1999-2003 Sven Neumann <sven@gimp.org>
+ * Copyright (C) 1999-2003 Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,201 +24,201 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "tools-types.h"
 
-#include "core/gimpimage.h"
-#include "core/gimpimage-guides.h"
-#include "core/gimpimage-undo.h"
-#include "core/gimpimage-undo-push.h"
-#include "core/gimpprogress.h"
-#include "core/gimp-transform-utils.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaimage-guides.h"
+#include "core/ligmaimage-undo.h"
+#include "core/ligmaimage-undo-push.h"
+#include "core/ligmaprogress.h"
+#include "core/ligma-transform-utils.h"
 
-#include "widgets/gimphelp-ids.h"
-#include "widgets/gimpwidgets-utils.h"
+#include "widgets/ligmahelp-ids.h"
+#include "widgets/ligmawidgets-utils.h"
 
-#include "display/gimpdisplay.h"
-#include "display/gimpdisplayshell.h"
-#include "display/gimpdisplayshell-appearance.h"
-#include "display/gimptoolcompass.h"
-#include "display/gimptoolgui.h"
+#include "display/ligmadisplay.h"
+#include "display/ligmadisplayshell.h"
+#include "display/ligmadisplayshell-appearance.h"
+#include "display/ligmatoolcompass.h"
+#include "display/ligmatoolgui.h"
 
-#include "gimpmeasureoptions.h"
-#include "gimpmeasuretool.h"
-#include "gimptoolcontrol.h"
+#include "ligmameasureoptions.h"
+#include "ligmameasuretool.h"
+#include "ligmatoolcontrol.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /*  local function prototypes  */
 
-static void     gimp_measure_tool_control         (GimpTool              *tool,
-                                                   GimpToolAction         action,
-                                                   GimpDisplay           *display);
-static void     gimp_measure_tool_modifier_key    (GimpTool              *tool,
+static void     ligma_measure_tool_control         (LigmaTool              *tool,
+                                                   LigmaToolAction         action,
+                                                   LigmaDisplay           *display);
+static void     ligma_measure_tool_modifier_key    (LigmaTool              *tool,
                                                    GdkModifierType        key,
                                                    gboolean               press,
                                                    GdkModifierType        state,
-                                                   GimpDisplay           *display);
-static void     gimp_measure_tool_button_press    (GimpTool              *tool,
-                                                   const GimpCoords      *coords,
+                                                   LigmaDisplay           *display);
+static void     ligma_measure_tool_button_press    (LigmaTool              *tool,
+                                                   const LigmaCoords      *coords,
                                                    guint32                time,
                                                    GdkModifierType        state,
-                                                   GimpButtonPressType    press_type,
-                                                   GimpDisplay           *display);
-static void     gimp_measure_tool_button_release  (GimpTool              *tool,
-                                                   const GimpCoords      *coords,
+                                                   LigmaButtonPressType    press_type,
+                                                   LigmaDisplay           *display);
+static void     ligma_measure_tool_button_release  (LigmaTool              *tool,
+                                                   const LigmaCoords      *coords,
                                                    guint32                time,
                                                    GdkModifierType        state,
-                                                   GimpButtonReleaseType  release_type,
-                                                   GimpDisplay           *display);
-static void     gimp_measure_tool_motion          (GimpTool              *tool,
-                                                   const GimpCoords      *coords,
+                                                   LigmaButtonReleaseType  release_type,
+                                                   LigmaDisplay           *display);
+static void     ligma_measure_tool_motion          (LigmaTool              *tool,
+                                                   const LigmaCoords      *coords,
                                                    guint32                time,
                                                    GdkModifierType        state,
-                                                   GimpDisplay           *display);
+                                                   LigmaDisplay           *display);
 
-static void     gimp_measure_tool_recalc_matrix   (GimpTransformTool     *tr_tool);
-static gchar  * gimp_measure_tool_get_undo_desc   (GimpTransformTool     *tr_tool);
+static void     ligma_measure_tool_recalc_matrix   (LigmaTransformTool     *tr_tool);
+static gchar  * ligma_measure_tool_get_undo_desc   (LigmaTransformTool     *tr_tool);
 
-static void     gimp_measure_tool_compass_changed (GimpToolWidget        *widget,
-                                                   GimpMeasureTool       *measure);
-static void     gimp_measure_tool_compass_response(GimpToolWidget        *widget,
+static void     ligma_measure_tool_compass_changed (LigmaToolWidget        *widget,
+                                                   LigmaMeasureTool       *measure);
+static void     ligma_measure_tool_compass_response(LigmaToolWidget        *widget,
                                                    gint                   response_id,
-                                                   GimpMeasureTool       *measure);
-static void     gimp_measure_tool_compass_status  (GimpToolWidget        *widget,
+                                                   LigmaMeasureTool       *measure);
+static void     ligma_measure_tool_compass_status  (LigmaToolWidget        *widget,
                                                    const gchar           *status,
-                                                   GimpMeasureTool       *measure);
-static void     gimp_measure_tool_compass_create_guides
-                                                  (GimpToolWidget        *widget,
+                                                   LigmaMeasureTool       *measure);
+static void     ligma_measure_tool_compass_create_guides
+                                                  (LigmaToolWidget        *widget,
                                                    gint                   x,
                                                    gint                   y,
                                                    gboolean               horizontal,
                                                    gboolean               vertical,
-                                                   GimpMeasureTool       *measure);
+                                                   LigmaMeasureTool       *measure);
 
-static void     gimp_measure_tool_start           (GimpMeasureTool       *measure,
-                                                   GimpDisplay           *display,
-                                                   const GimpCoords      *coords);
-static void     gimp_measure_tool_halt            (GimpMeasureTool       *measure);
+static void     ligma_measure_tool_start           (LigmaMeasureTool       *measure,
+                                                   LigmaDisplay           *display,
+                                                   const LigmaCoords      *coords);
+static void     ligma_measure_tool_halt            (LigmaMeasureTool       *measure);
 
-static GimpToolGui * gimp_measure_tool_dialog_new (GimpMeasureTool       *measure);
-static void     gimp_measure_tool_dialog_update   (GimpMeasureTool       *measure,
-                                                   GimpDisplay           *display);
+static LigmaToolGui * ligma_measure_tool_dialog_new (LigmaMeasureTool       *measure);
+static void     ligma_measure_tool_dialog_update   (LigmaMeasureTool       *measure,
+                                                   LigmaDisplay           *display);
 
-static void     gimp_measure_tool_straighten_button_clicked
+static void     ligma_measure_tool_straighten_button_clicked
                                                   (GtkWidget             *button,
-                                                   GimpMeasureTool       *measure);
+                                                   LigmaMeasureTool       *measure);
 
-G_DEFINE_TYPE (GimpMeasureTool, gimp_measure_tool, GIMP_TYPE_TRANSFORM_TOOL)
+G_DEFINE_TYPE (LigmaMeasureTool, ligma_measure_tool, LIGMA_TYPE_TRANSFORM_TOOL)
 
-#define parent_class gimp_measure_tool_parent_class
+#define parent_class ligma_measure_tool_parent_class
 
 
 void
-gimp_measure_tool_register (GimpToolRegisterCallback  callback,
+ligma_measure_tool_register (LigmaToolRegisterCallback  callback,
                             gpointer                  data)
 {
-  (* callback) (GIMP_TYPE_MEASURE_TOOL,
-                GIMP_TYPE_MEASURE_OPTIONS,
-                gimp_measure_options_gui,
+  (* callback) (LIGMA_TYPE_MEASURE_TOOL,
+                LIGMA_TYPE_MEASURE_OPTIONS,
+                ligma_measure_options_gui,
                 0,
-                "gimp-measure-tool",
+                "ligma-measure-tool",
                 _("Measure"),
                 _("Measure Tool: Measure distances and angles"),
                 N_("_Measure"), "<shift>M",
-                NULL, GIMP_HELP_TOOL_MEASURE,
-                GIMP_ICON_TOOL_MEASURE,
+                NULL, LIGMA_HELP_TOOL_MEASURE,
+                LIGMA_ICON_TOOL_MEASURE,
                 data);
 }
 
 static void
-gimp_measure_tool_class_init (GimpMeasureToolClass *klass)
+ligma_measure_tool_class_init (LigmaMeasureToolClass *klass)
 {
-  GimpToolClass          *tool_class = GIMP_TOOL_CLASS (klass);
-  GimpTransformToolClass *tr_class   = GIMP_TRANSFORM_TOOL_CLASS (klass);
+  LigmaToolClass          *tool_class = LIGMA_TOOL_CLASS (klass);
+  LigmaTransformToolClass *tr_class   = LIGMA_TRANSFORM_TOOL_CLASS (klass);
 
-  tool_class->control        = gimp_measure_tool_control;
-  tool_class->modifier_key   = gimp_measure_tool_modifier_key;
-  tool_class->button_press   = gimp_measure_tool_button_press;
-  tool_class->button_release = gimp_measure_tool_button_release;
-  tool_class->motion         = gimp_measure_tool_motion;
+  tool_class->control        = ligma_measure_tool_control;
+  tool_class->modifier_key   = ligma_measure_tool_modifier_key;
+  tool_class->button_press   = ligma_measure_tool_button_press;
+  tool_class->button_release = ligma_measure_tool_button_release;
+  tool_class->motion         = ligma_measure_tool_motion;
 
-  tr_class->recalc_matrix    = gimp_measure_tool_recalc_matrix;
-  tr_class->get_undo_desc    = gimp_measure_tool_get_undo_desc;
+  tr_class->recalc_matrix    = ligma_measure_tool_recalc_matrix;
+  tr_class->get_undo_desc    = ligma_measure_tool_get_undo_desc;
 
   tr_class->undo_desc        = C_("undo-type", "Straighten");
   tr_class->progress_text    = _("Straightening");
 }
 
 static void
-gimp_measure_tool_init (GimpMeasureTool *measure)
+ligma_measure_tool_init (LigmaMeasureTool *measure)
 {
-  GimpTool *tool = GIMP_TOOL (measure);
+  LigmaTool *tool = LIGMA_TOOL (measure);
 
-  gimp_tool_control_set_handle_empty_image (tool->control, TRUE);
-  gimp_tool_control_set_active_modifiers   (tool->control,
-                                            GIMP_TOOL_ACTIVE_MODIFIERS_SEPARATE);
-  gimp_tool_control_set_precision          (tool->control,
-                                            GIMP_CURSOR_PRECISION_PIXEL_BORDER);
-  gimp_tool_control_set_cursor             (tool->control,
-                                            GIMP_CURSOR_CROSSHAIR_SMALL);
-  gimp_tool_control_set_tool_cursor        (tool->control,
-                                            GIMP_TOOL_CURSOR_MEASURE);
+  ligma_tool_control_set_handle_empty_image (tool->control, TRUE);
+  ligma_tool_control_set_active_modifiers   (tool->control,
+                                            LIGMA_TOOL_ACTIVE_MODIFIERS_SEPARATE);
+  ligma_tool_control_set_precision          (tool->control,
+                                            LIGMA_CURSOR_PRECISION_PIXEL_BORDER);
+  ligma_tool_control_set_cursor             (tool->control,
+                                            LIGMA_CURSOR_CROSSHAIR_SMALL);
+  ligma_tool_control_set_tool_cursor        (tool->control,
+                                            LIGMA_TOOL_CURSOR_MEASURE);
 
-  gimp_draw_tool_set_default_status (GIMP_DRAW_TOOL (tool),
+  ligma_draw_tool_set_default_status (LIGMA_DRAW_TOOL (tool),
                                      _("Click-Drag to create a line"));
 }
 
 static void
-gimp_measure_tool_control (GimpTool       *tool,
-                           GimpToolAction  action,
-                           GimpDisplay    *display)
+ligma_measure_tool_control (LigmaTool       *tool,
+                           LigmaToolAction  action,
+                           LigmaDisplay    *display)
 {
-  GimpMeasureTool *measure = GIMP_MEASURE_TOOL (tool);
+  LigmaMeasureTool *measure = LIGMA_MEASURE_TOOL (tool);
 
   switch (action)
     {
-    case GIMP_TOOL_ACTION_PAUSE:
-    case GIMP_TOOL_ACTION_RESUME:
+    case LIGMA_TOOL_ACTION_PAUSE:
+    case LIGMA_TOOL_ACTION_RESUME:
       break;
 
-    case GIMP_TOOL_ACTION_HALT:
-      gimp_measure_tool_halt (measure);
+    case LIGMA_TOOL_ACTION_HALT:
+      ligma_measure_tool_halt (measure);
       break;
 
-    case GIMP_TOOL_ACTION_COMMIT:
+    case LIGMA_TOOL_ACTION_COMMIT:
       break;
     }
 
-  GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);
+  LIGMA_TOOL_CLASS (parent_class)->control (tool, action, display);
 }
 
 static void
-gimp_measure_tool_modifier_key (GimpTool        *tool,
+ligma_measure_tool_modifier_key (LigmaTool        *tool,
                                 GdkModifierType  key,
                                 gboolean         press,
                                 GdkModifierType  state,
-                                GimpDisplay     *display)
+                                LigmaDisplay     *display)
 {
-  GimpMeasureOptions *options = GIMP_MEASURE_TOOL_GET_OPTIONS (tool);
+  LigmaMeasureOptions *options = LIGMA_MEASURE_TOOL_GET_OPTIONS (tool);
 
-  if (key == gimp_get_toggle_behavior_mask ())
+  if (key == ligma_get_toggle_behavior_mask ())
     {
       switch (options->orientation)
         {
-        case GIMP_COMPASS_ORIENTATION_HORIZONTAL:
+        case LIGMA_COMPASS_ORIENTATION_HORIZONTAL:
           g_object_set (options,
-                        "orientation", GIMP_COMPASS_ORIENTATION_VERTICAL,
+                        "orientation", LIGMA_COMPASS_ORIENTATION_VERTICAL,
                         NULL);
           break;
 
-        case GIMP_COMPASS_ORIENTATION_VERTICAL:
+        case LIGMA_COMPASS_ORIENTATION_VERTICAL:
           g_object_set (options,
-                        "orientation", GIMP_COMPASS_ORIENTATION_HORIZONTAL,
+                        "orientation", LIGMA_COMPASS_ORIENTATION_HORIZONTAL,
                         NULL);
           break;
 
@@ -229,31 +229,31 @@ gimp_measure_tool_modifier_key (GimpTool        *tool,
 }
 
 static void
-gimp_measure_tool_button_press (GimpTool            *tool,
-                                const GimpCoords    *coords,
+ligma_measure_tool_button_press (LigmaTool            *tool,
+                                const LigmaCoords    *coords,
                                 guint32              time,
                                 GdkModifierType      state,
-                                GimpButtonPressType  press_type,
-                                GimpDisplay         *display)
+                                LigmaButtonPressType  press_type,
+                                LigmaDisplay         *display)
 {
-  GimpMeasureTool    *measure = GIMP_MEASURE_TOOL (tool);
-  GimpMeasureOptions *options = GIMP_MEASURE_TOOL_GET_OPTIONS (tool);
-  GimpDisplayShell   *shell   = gimp_display_get_shell (display);
-  GimpImage          *image   = gimp_display_get_image (display);
+  LigmaMeasureTool    *measure = LIGMA_MEASURE_TOOL (tool);
+  LigmaMeasureOptions *options = LIGMA_MEASURE_TOOL_GET_OPTIONS (tool);
+  LigmaDisplayShell   *shell   = ligma_display_get_shell (display);
+  LigmaImage          *image   = ligma_display_get_image (display);
 
   if (tool->display && display != tool->display)
-    gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, tool->display);
+    ligma_tool_control (tool, LIGMA_TOOL_ACTION_HALT, tool->display);
 
   if (! measure->widget)
     {
       measure->supress_guides = TRUE;
 
-      gimp_measure_tool_start (measure, display, coords);
+      ligma_measure_tool_start (measure, display, coords);
 
-      gimp_tool_widget_hover (measure->widget, coords, state, TRUE);
+      ligma_tool_widget_hover (measure->widget, coords, state, TRUE);
     }
 
-  if (gimp_tool_widget_button_press (measure->widget, coords, time, state,
+  if (ligma_tool_widget_button_press (measure->widget, coords, time, state,
                                      press_type))
     {
       measure->grab_widget = measure->widget;
@@ -263,9 +263,9 @@ gimp_measure_tool_button_press (GimpTool            *tool,
   if (! measure->gui)
     {
       if (options->use_info_window ||
-          ! gimp_display_shell_get_show_statusbar (shell))
+          ! ligma_display_shell_get_show_statusbar (shell))
         {
-          measure->gui = gimp_measure_tool_dialog_new (measure);
+          measure->gui = ligma_measure_tool_dialog_new (measure);
           g_object_add_weak_pointer (G_OBJECT (measure->gui),
                                      (gpointer) &measure->gui);
         }
@@ -273,30 +273,30 @@ gimp_measure_tool_button_press (GimpTool            *tool,
 
   if (measure->gui)
     {
-      gimp_tool_gui_set_shell (measure->gui, shell);
-      gimp_tool_gui_set_viewable (measure->gui, GIMP_VIEWABLE (image));
+      ligma_tool_gui_set_shell (measure->gui, shell);
+      ligma_tool_gui_set_viewable (measure->gui, LIGMA_VIEWABLE (image));
 
-      gimp_measure_tool_dialog_update (measure, display);
+      ligma_measure_tool_dialog_update (measure, display);
     }
 
-  gimp_tool_control_activate (tool->control);
+  ligma_tool_control_activate (tool->control);
 }
 
 static void
-gimp_measure_tool_button_release (GimpTool              *tool,
-                                  const GimpCoords      *coords,
+ligma_measure_tool_button_release (LigmaTool              *tool,
+                                  const LigmaCoords      *coords,
                                   guint32                time,
                                   GdkModifierType        state,
-                                  GimpButtonReleaseType  release_type,
-                                  GimpDisplay           *display)
+                                  LigmaButtonReleaseType  release_type,
+                                  LigmaDisplay           *display)
 {
-  GimpMeasureTool *measure = GIMP_MEASURE_TOOL (tool);
+  LigmaMeasureTool *measure = LIGMA_MEASURE_TOOL (tool);
 
-  gimp_tool_control_halt (tool->control);
+  ligma_tool_control_halt (tool->control);
 
   if (measure->grab_widget)
     {
-      gimp_tool_widget_button_release (measure->grab_widget,
+      ligma_tool_widget_button_release (measure->grab_widget,
                                        coords, time, state, release_type);
       measure->grab_widget = NULL;
     }
@@ -305,24 +305,24 @@ gimp_measure_tool_button_release (GimpTool              *tool,
 }
 
 static void
-gimp_measure_tool_motion (GimpTool         *tool,
-                          const GimpCoords *coords,
+ligma_measure_tool_motion (LigmaTool         *tool,
+                          const LigmaCoords *coords,
                           guint32           time,
                           GdkModifierType   state,
-                          GimpDisplay      *display)
+                          LigmaDisplay      *display)
 {
-  GimpMeasureTool *measure = GIMP_MEASURE_TOOL (tool);
+  LigmaMeasureTool *measure = LIGMA_MEASURE_TOOL (tool);
 
   if (measure->grab_widget)
     {
-      gimp_tool_widget_motion (measure->grab_widget, coords, time, state);
+      ligma_tool_widget_motion (measure->grab_widget, coords, time, state);
     }
 }
 
 static void
-gimp_measure_tool_recalc_matrix (GimpTransformTool *tr_tool)
+ligma_measure_tool_recalc_matrix (LigmaTransformTool *tr_tool)
 {
-  GimpMeasureTool *measure = GIMP_MEASURE_TOOL (tr_tool);
+  LigmaMeasureTool *measure = LIGMA_MEASURE_TOOL (tr_tool);
   gdouble          angle;
 
   if (measure->n_points < 2)
@@ -336,8 +336,8 @@ gimp_measure_tool_recalc_matrix (GimpTransformTool *tr_tool)
                 "pixel-angle", &angle,
                 NULL);
 
-  gimp_matrix3_identity (&tr_tool->transform);
-  gimp_transform_matrix_rotate_center (&tr_tool->transform,
+  ligma_matrix3_identity (&tr_tool->transform);
+  ligma_transform_matrix_rotate_center (&tr_tool->transform,
                                        measure->x[0], measure->y[0],
                                        angle);
 
@@ -345,10 +345,10 @@ gimp_measure_tool_recalc_matrix (GimpTransformTool *tr_tool)
 }
 
 static gchar *
-gimp_measure_tool_get_undo_desc (GimpTransformTool *tr_tool)
+ligma_measure_tool_get_undo_desc (LigmaTransformTool *tr_tool)
 {
-  GimpMeasureTool        *measure = GIMP_MEASURE_TOOL (tr_tool);
-  GimpCompassOrientation  orientation;
+  LigmaMeasureTool        *measure = LIGMA_MEASURE_TOOL (tr_tool);
+  LigmaCompassOrientation  orientation;
   gdouble                 angle;
 
   g_object_get (measure->widget,
@@ -356,21 +356,21 @@ gimp_measure_tool_get_undo_desc (GimpTransformTool *tr_tool)
                 "pixel-angle",           &angle,
                 NULL);
 
-  angle = gimp_rad_to_deg (fabs (angle));
+  angle = ligma_rad_to_deg (fabs (angle));
 
   switch (orientation)
     {
-    case GIMP_COMPASS_ORIENTATION_AUTO:
+    case LIGMA_COMPASS_ORIENTATION_AUTO:
       return g_strdup_printf (C_("undo-type",
                                  "Straighten by %-3.3g°"),
                               angle);
 
-    case GIMP_COMPASS_ORIENTATION_HORIZONTAL:
+    case LIGMA_COMPASS_ORIENTATION_HORIZONTAL:
       return g_strdup_printf (C_("undo-type",
                                  "Straighten Horizontally by %-3.3g°"),
                               angle);
 
-    case GIMP_COMPASS_ORIENTATION_VERTICAL:
+    case LIGMA_COMPASS_ORIENTATION_VERTICAL:
       return g_strdup_printf (C_("undo-type",
                                  "Straighten Vertically by %-3.3g°"),
                               angle);
@@ -380,10 +380,10 @@ gimp_measure_tool_get_undo_desc (GimpTransformTool *tr_tool)
 }
 
 static void
-gimp_measure_tool_compass_changed (GimpToolWidget  *widget,
-                                   GimpMeasureTool *measure)
+ligma_measure_tool_compass_changed (LigmaToolWidget  *widget,
+                                   LigmaMeasureTool *measure)
 {
-  GimpMeasureOptions *options = GIMP_MEASURE_TOOL_GET_OPTIONS (measure);
+  LigmaMeasureOptions *options = LIGMA_MEASURE_TOOL_GET_OPTIONS (measure);
 
   g_object_get (widget,
                 "n-points", &measure->n_points,
@@ -396,82 +396,82 @@ gimp_measure_tool_compass_changed (GimpToolWidget  *widget,
                 NULL);
 
   gtk_widget_set_sensitive (options->straighten_button, measure->n_points >= 2);
-  gimp_measure_tool_dialog_update (measure, GIMP_TOOL (measure)->display);
+  ligma_measure_tool_dialog_update (measure, LIGMA_TOOL (measure)->display);
 }
 
 static void
-gimp_measure_tool_compass_response (GimpToolWidget  *widget,
+ligma_measure_tool_compass_response (LigmaToolWidget  *widget,
                                     gint             response_id,
-                                    GimpMeasureTool *measure)
+                                    LigmaMeasureTool *measure)
 {
-  GimpTool *tool = GIMP_TOOL (measure);
+  LigmaTool *tool = LIGMA_TOOL (measure);
 
-  if (response_id == GIMP_TOOL_WIDGET_RESPONSE_CANCEL)
-    gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, tool->display);
+  if (response_id == LIGMA_TOOL_WIDGET_RESPONSE_CANCEL)
+    ligma_tool_control (tool, LIGMA_TOOL_ACTION_HALT, tool->display);
 }
 
 static void
-gimp_measure_tool_compass_status (GimpToolWidget  *widget,
+ligma_measure_tool_compass_status (LigmaToolWidget  *widget,
                                   const gchar     *status,
-                                  GimpMeasureTool *measure)
+                                  LigmaMeasureTool *measure)
 {
-  GimpTool *tool = GIMP_TOOL (measure);
+  LigmaTool *tool = LIGMA_TOOL (measure);
 
   if (! status)
     {
       /* replace status bar hint by distance and angle */
-      gimp_measure_tool_dialog_update (measure, tool->display);
+      ligma_measure_tool_dialog_update (measure, tool->display);
     }
 }
 
 static void
-gimp_measure_tool_compass_create_guides (GimpToolWidget  *widget,
+ligma_measure_tool_compass_create_guides (LigmaToolWidget  *widget,
                                          gint             x,
                                          gint             y,
                                          gboolean         horizontal,
                                          gboolean         vertical,
-                                         GimpMeasureTool *measure)
+                                         LigmaMeasureTool *measure)
 {
-  GimpDisplay *display = GIMP_TOOL (measure)->display;
-  GimpImage   *image   = gimp_display_get_image (display);
+  LigmaDisplay *display = LIGMA_TOOL (measure)->display;
+  LigmaImage   *image   = ligma_display_get_image (display);
 
   if (measure->supress_guides)
     return;
 
-  if (x < 0 || x > gimp_image_get_width (image))
+  if (x < 0 || x > ligma_image_get_width (image))
     vertical = FALSE;
 
-  if (y < 0 || y > gimp_image_get_height (image))
+  if (y < 0 || y > ligma_image_get_height (image))
     horizontal = FALSE;
 
   if (horizontal || vertical)
     {
       if (horizontal && vertical)
-        gimp_image_undo_group_start (image,
-                                     GIMP_UNDO_GROUP_GUIDE,
+        ligma_image_undo_group_start (image,
+                                     LIGMA_UNDO_GROUP_GUIDE,
                                      _("Add Guides"));
 
       if (horizontal)
-        gimp_image_add_hguide (image, y, TRUE);
+        ligma_image_add_hguide (image, y, TRUE);
 
       if (vertical)
-        gimp_image_add_vguide (image, x, TRUE);
+        ligma_image_add_vguide (image, x, TRUE);
 
       if (horizontal && vertical)
-        gimp_image_undo_group_end (image);
+        ligma_image_undo_group_end (image);
 
-      gimp_image_flush (image);
+      ligma_image_flush (image);
     }
 }
 
 static void
-gimp_measure_tool_start (GimpMeasureTool  *measure,
-                         GimpDisplay      *display,
-                         const GimpCoords *coords)
+ligma_measure_tool_start (LigmaMeasureTool  *measure,
+                         LigmaDisplay      *display,
+                         const LigmaCoords *coords)
 {
-  GimpTool           *tool    = GIMP_TOOL (measure);
-  GimpDisplayShell   *shell   = gimp_display_get_shell (display);
-  GimpMeasureOptions *options = GIMP_MEASURE_TOOL_GET_OPTIONS (tool);
+  LigmaTool           *tool    = LIGMA_TOOL (measure);
+  LigmaDisplayShell   *shell   = ligma_display_get_shell (display);
+  LigmaMeasureOptions *options = LIGMA_MEASURE_TOOL_GET_OPTIONS (tool);
 
   measure->n_points = 1;
   measure->x[0]     = coords->x;
@@ -481,7 +481,7 @@ gimp_measure_tool_start (GimpMeasureTool  *measure,
   measure->x[2]     = 0;
   measure->y[2]     = 0;
 
-  measure->widget = gimp_tool_compass_new (shell,
+  measure->widget = ligma_tool_compass_new (shell,
                                            options->orientation,
                                            measure->n_points,
                                            measure->x[0],
@@ -491,38 +491,38 @@ gimp_measure_tool_start (GimpMeasureTool  *measure,
                                            measure->x[2],
                                            measure->y[2]);
 
-  gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (tool), measure->widget);
+  ligma_draw_tool_set_widget (LIGMA_DRAW_TOOL (tool), measure->widget);
 
   g_object_bind_property (options,         "orientation",
                           measure->widget, "orientation",
                           G_BINDING_DEFAULT);
 
   g_signal_connect (measure->widget, "changed",
-                    G_CALLBACK (gimp_measure_tool_compass_changed),
+                    G_CALLBACK (ligma_measure_tool_compass_changed),
                     measure);
   g_signal_connect (measure->widget, "response",
-                    G_CALLBACK (gimp_measure_tool_compass_response),
+                    G_CALLBACK (ligma_measure_tool_compass_response),
                     measure);
   g_signal_connect (measure->widget, "status",
-                    G_CALLBACK (gimp_measure_tool_compass_status),
+                    G_CALLBACK (ligma_measure_tool_compass_status),
                     measure);
   g_signal_connect (measure->widget, "create-guides",
-                    G_CALLBACK (gimp_measure_tool_compass_create_guides),
+                    G_CALLBACK (ligma_measure_tool_compass_create_guides),
                     measure);
   g_signal_connect (options->straighten_button, "clicked",
-                    G_CALLBACK (gimp_measure_tool_straighten_button_clicked),
+                    G_CALLBACK (ligma_measure_tool_straighten_button_clicked),
                     measure);
 
   tool->display = display;
 
-  gimp_draw_tool_start (GIMP_DRAW_TOOL (measure), display);
+  ligma_draw_tool_start (LIGMA_DRAW_TOOL (measure), display);
 }
 
 static void
-gimp_measure_tool_halt (GimpMeasureTool *measure)
+ligma_measure_tool_halt (LigmaMeasureTool *measure)
 {
-  GimpMeasureOptions *options = GIMP_MEASURE_TOOL_GET_OPTIONS (measure);
-  GimpTool           *tool    = GIMP_TOOL (measure);
+  LigmaMeasureOptions *options = LIGMA_MEASURE_TOOL_GET_OPTIONS (measure);
+  LigmaTool           *tool    = LIGMA_TOOL (measure);
 
   if (options->straighten_button)
     {
@@ -530,17 +530,17 @@ gimp_measure_tool_halt (GimpMeasureTool *measure)
 
       g_signal_handlers_disconnect_by_func (
         options->straighten_button,
-        G_CALLBACK (gimp_measure_tool_straighten_button_clicked),
+        G_CALLBACK (ligma_measure_tool_straighten_button_clicked),
         measure);
     }
 
   if (tool->display)
-    gimp_tool_pop_status (tool, tool->display);
+    ligma_tool_pop_status (tool, tool->display);
 
-  if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (measure)))
-    gimp_draw_tool_stop (GIMP_DRAW_TOOL (measure));
+  if (ligma_draw_tool_is_active (LIGMA_DRAW_TOOL (measure)))
+    ligma_draw_tool_stop (LIGMA_DRAW_TOOL (measure));
 
-  gimp_draw_tool_set_widget (GIMP_DRAW_TOOL (tool), NULL);
+  ligma_draw_tool_set_widget (LIGMA_DRAW_TOOL (tool), NULL);
   g_clear_object (&measure->widget);
 
   g_clear_object (&measure->gui);
@@ -549,11 +549,11 @@ gimp_measure_tool_halt (GimpMeasureTool *measure)
 }
 
 static void
-gimp_measure_tool_dialog_update (GimpMeasureTool *measure,
-                                 GimpDisplay     *display)
+ligma_measure_tool_dialog_update (LigmaMeasureTool *measure,
+                                 LigmaDisplay     *display)
 {
-  GimpDisplayShell *shell = gimp_display_get_shell (display);
-  GimpImage        *image = gimp_display_get_image (display);
+  LigmaDisplayShell *shell = ligma_display_get_shell (display);
+  LigmaImage        *image = ligma_display_get_image (display);
   gint              ax, ay;
   gint              bx, by;
   gint              pixel_width;
@@ -590,15 +590,15 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *measure,
   pixel_width  = ABS (ax - bx);
   pixel_height = ABS (ay - by);
 
-  gimp_image_get_resolution (image, &xres, &yres);
+  ligma_image_get_resolution (image, &xres, &yres);
 
-  unit_width  = gimp_pixels_to_units (pixel_width,  shell->unit, xres);
-  unit_height = gimp_pixels_to_units (pixel_height, shell->unit, yres);
+  unit_width  = ligma_pixels_to_units (pixel_width,  shell->unit, xres);
+  unit_height = ligma_pixels_to_units (pixel_height, shell->unit, yres);
 
   pixel_distance = sqrt (SQR (ax - bx) + SQR (ay - by));
   inch_distance = sqrt (SQR ((gdouble) (ax - bx) / xres) +
                         SQR ((gdouble) (ay - by) / yres));
-  unit_distance  = gimp_unit_get_factor (shell->unit) * inch_distance;
+  unit_distance  = ligma_unit_get_factor (shell->unit) * inch_distance;
 
   g_object_get (measure->widget,
                 "pixel-angle", &pixel_angle,
@@ -612,15 +612,15 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *measure,
    * every pixel shows a different value in unit.
    */
   if (inch_distance)
-    unit_distance_digits = gimp_unit_get_scaled_digits (shell->unit,
+    unit_distance_digits = ligma_unit_get_scaled_digits (shell->unit,
                                                         pixel_distance /
                                                         inch_distance);
-  unit_width_digits  = gimp_unit_get_scaled_digits (shell->unit, xres);
-  unit_height_digits = gimp_unit_get_scaled_digits (shell->unit, yres);
+  unit_width_digits  = ligma_unit_get_scaled_digits (shell->unit, xres);
+  unit_height_digits = ligma_unit_get_scaled_digits (shell->unit, yres);
 
-  if (shell->unit == GIMP_UNIT_PIXEL)
+  if (shell->unit == LIGMA_UNIT_PIXEL)
     {
-      gimp_tool_replace_status (GIMP_TOOL (measure), display,
+      ligma_tool_replace_status (LIGMA_TOOL (measure), display,
                                 "%.1f %s, %.2f\302\260 (%d × %d)",
                                 pixel_distance, _("pixels"), pixel_angle,
                                 pixel_width, pixel_height);
@@ -630,11 +630,11 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *measure,
       g_snprintf (format, sizeof (format),
                   "%%.%df %s, %%.2f\302\260 (%%.%df × %%.%df)",
                   unit_distance_digits,
-                  gimp_unit_get_plural (shell->unit),
+                  ligma_unit_get_plural (shell->unit),
                   unit_width_digits,
                   unit_height_digits);
 
-      gimp_tool_replace_status (GIMP_TOOL (measure), display, format,
+      ligma_tool_replace_status (LIGMA_TOOL (measure), display, format,
                                 unit_distance, unit_angle,
                                 unit_width, unit_height);
     }
@@ -647,7 +647,7 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *measure,
       g_snprintf (buf, sizeof (buf), "%.1f", pixel_distance);
       gtk_label_set_text (GTK_LABEL (measure->distance_label[0]), buf);
 
-      if (shell->unit != GIMP_UNIT_PIXEL)
+      if (shell->unit != LIGMA_UNIT_PIXEL)
         {
           g_snprintf (format, sizeof (format), "%%.%df",
                       unit_distance_digits);
@@ -655,7 +655,7 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *measure,
           gtk_label_set_text (GTK_LABEL (measure->distance_label[1]), buf);
 
           gtk_label_set_text (GTK_LABEL (measure->unit_label[0]),
-                              gimp_unit_get_plural (shell->unit));
+                              ligma_unit_get_plural (shell->unit));
         }
       else
         {
@@ -684,7 +684,7 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *measure,
       g_snprintf (buf, sizeof (buf), "%d", pixel_width);
       gtk_label_set_text (GTK_LABEL (measure->width_label[0]), buf);
 
-      if (shell->unit != GIMP_UNIT_PIXEL)
+      if (shell->unit != LIGMA_UNIT_PIXEL)
         {
           g_snprintf (format, sizeof (format), "%%.%df",
                       unit_width_digits);
@@ -692,7 +692,7 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *measure,
           gtk_label_set_text (GTK_LABEL (measure->width_label[1]), buf);
 
           gtk_label_set_text (GTK_LABEL (measure->unit_label[2]),
-                              gimp_unit_get_plural (shell->unit));
+                              ligma_unit_get_plural (shell->unit));
         }
       else
         {
@@ -704,7 +704,7 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *measure,
       gtk_label_set_text (GTK_LABEL (measure->height_label[0]), buf);
 
       /* Height */
-      if (shell->unit != GIMP_UNIT_PIXEL)
+      if (shell->unit != LIGMA_UNIT_PIXEL)
         {
           g_snprintf (format, sizeof (format), "%%.%df",
                       unit_height_digits);
@@ -712,7 +712,7 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *measure,
           gtk_label_set_text (GTK_LABEL (measure->height_label[1]), buf);
 
           gtk_label_set_text (GTK_LABEL (measure->unit_label[3]),
-                              gimp_unit_get_plural (shell->unit));
+                              ligma_unit_get_plural (shell->unit));
         }
       else
         {
@@ -720,36 +720,36 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *measure,
           gtk_label_set_text (GTK_LABEL (measure->unit_label[3]), NULL);
         }
 
-      gimp_tool_gui_show (measure->gui);
+      ligma_tool_gui_show (measure->gui);
     }
 }
 
-static GimpToolGui *
-gimp_measure_tool_dialog_new (GimpMeasureTool *measure)
+static LigmaToolGui *
+ligma_measure_tool_dialog_new (LigmaMeasureTool *measure)
 {
-  GimpTool         *tool = GIMP_TOOL (measure);
-  GimpDisplayShell *shell;
-  GimpToolGui      *gui;
+  LigmaTool         *tool = LIGMA_TOOL (measure);
+  LigmaDisplayShell *shell;
+  LigmaToolGui      *gui;
   GtkWidget        *grid;
   GtkWidget        *label;
 
   g_return_val_if_fail (tool->display != NULL, NULL);
 
-  shell = gimp_display_get_shell (tool->display);
+  shell = ligma_display_get_shell (tool->display);
 
-  gui = gimp_tool_gui_new (tool->tool_info,
+  gui = ligma_tool_gui_new (tool->tool_info,
                            NULL,
                            _("Measure Distances and Angles"),
                            NULL, NULL,
-                           gimp_widget_get_monitor (GTK_WIDGET (shell)),
+                           ligma_widget_get_monitor (GTK_WIDGET (shell)),
                            TRUE,
 
                            _("_Close"), GTK_RESPONSE_CLOSE,
 
                            NULL);
 
-  gimp_tool_gui_set_auto_overlay (gui, TRUE);
-  gimp_tool_gui_set_focus_on_map (gui, FALSE);
+  ligma_tool_gui_set_auto_overlay (gui, TRUE);
+  ligma_tool_gui_set_focus_on_map (gui, FALSE);
 
   g_signal_connect (gui, "response",
                     G_CALLBACK (g_object_unref),
@@ -758,7 +758,7 @@ gimp_measure_tool_dialog_new (GimpMeasureTool *measure)
   grid = gtk_grid_new ();
   gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
   gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
-  gtk_box_pack_start (GTK_BOX (gimp_tool_gui_get_vbox (gui)), grid,
+  gtk_box_pack_start (GTK_BOX (ligma_tool_gui_get_vbox (gui)), grid,
                       FALSE, FALSE, 0);
   gtk_widget_show (grid);
 
@@ -878,12 +878,12 @@ gimp_measure_tool_dialog_new (GimpMeasureTool *measure)
 }
 
 static void
-gimp_measure_tool_straighten_button_clicked (GtkWidget       *button,
-                                             GimpMeasureTool *measure)
+ligma_measure_tool_straighten_button_clicked (GtkWidget       *button,
+                                             LigmaMeasureTool *measure)
 {
-  GimpTool          *tool    = GIMP_TOOL (measure);
-  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (measure);
+  LigmaTool          *tool    = LIGMA_TOOL (measure);
+  LigmaTransformTool *tr_tool = LIGMA_TRANSFORM_TOOL (measure);
 
-  if (gimp_transform_tool_transform (tr_tool, tool->display))
-    gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, tool->display);
+  if (ligma_transform_tool_transform (tr_tool, tool->display))
+    ligma_tool_control (tool, LIGMA_TOOL_ACTION_HALT, tool->display);
 }

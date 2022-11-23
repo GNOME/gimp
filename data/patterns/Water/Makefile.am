@@ -1,6 +1,6 @@
-## Makefile.am for gimp/data/patterns/Water
+## Makefile.am for ligma/data/patterns/Water
 
-patternwaterdatadir = $(gimpdatadir)/patterns/Water
+patternwaterdatadir = $(ligmadatadir)/patterns/Water
 
 patternwaterdata_DATA = \
 	electric.pat		\

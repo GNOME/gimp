@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpdocumentview.c
- * Copyright (C) 2001 Michael Natterer <mitch@gimp.org>
+ * ligmadocumentview.c
+ * Copyright (C) 2001 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,49 +23,49 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontainer.h"
-#include "core/gimpcontext.h"
-#include "core/gimpimagefile.h"
+#include "core/ligma.h"
+#include "core/ligmacontainer.h"
+#include "core/ligmacontext.h"
+#include "core/ligmaimagefile.h"
 
-#include "gimpcontainerview.h"
-#include "gimpdocumentview.h"
-#include "gimpdnd.h"
-#include "gimpeditor.h"
-#include "gimpmenufactory.h"
-#include "gimpuimanager.h"
-#include "gimpviewrenderer.h"
-#include "gimpwidgets-utils.h"
+#include "ligmacontainerview.h"
+#include "ligmadocumentview.h"
+#include "ligmadnd.h"
+#include "ligmaeditor.h"
+#include "ligmamenufactory.h"
+#include "ligmauimanager.h"
+#include "ligmaviewrenderer.h"
+#include "ligmawidgets-utils.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-static void    gimp_document_view_activate_item (GimpContainerEditor *editor,
-                                                 GimpViewable        *viewable);
-static GList * gimp_document_view_drag_uri_list (GtkWidget           *widget,
+static void    ligma_document_view_activate_item (LigmaContainerEditor *editor,
+                                                 LigmaViewable        *viewable);
+static GList * ligma_document_view_drag_uri_list (GtkWidget           *widget,
                                                  gpointer             data);
 
 
-G_DEFINE_TYPE (GimpDocumentView, gimp_document_view,
-               GIMP_TYPE_CONTAINER_EDITOR)
+G_DEFINE_TYPE (LigmaDocumentView, ligma_document_view,
+               LIGMA_TYPE_CONTAINER_EDITOR)
 
-#define parent_class gimp_document_view_parent_class
+#define parent_class ligma_document_view_parent_class
 
 
 static void
-gimp_document_view_class_init (GimpDocumentViewClass *klass)
+ligma_document_view_class_init (LigmaDocumentViewClass *klass)
 {
-  GimpContainerEditorClass *editor_class = GIMP_CONTAINER_EDITOR_CLASS (klass);
+  LigmaContainerEditorClass *editor_class = LIGMA_CONTAINER_EDITOR_CLASS (klass);
 
-  editor_class->activate_item = gimp_document_view_activate_item;
+  editor_class->activate_item = ligma_document_view_activate_item;
 }
 
 static void
-gimp_document_view_init (GimpDocumentView *view)
+ligma_document_view_init (LigmaDocumentView *view)
 {
   view->open_button    = NULL;
   view->remove_button  = NULL;
@@ -73,27 +73,27 @@ gimp_document_view_init (GimpDocumentView *view)
 }
 
 GtkWidget *
-gimp_document_view_new (GimpViewType     view_type,
-                        GimpContainer   *container,
-                        GimpContext     *context,
+ligma_document_view_new (LigmaViewType     view_type,
+                        LigmaContainer   *container,
+                        LigmaContext     *context,
                         gint             view_size,
                         gint             view_border_width,
-                        GimpMenuFactory *menu_factory)
+                        LigmaMenuFactory *menu_factory)
 {
-  GimpDocumentView    *document_view;
-  GimpContainerEditor *editor;
+  LigmaDocumentView    *document_view;
+  LigmaContainerEditor *editor;
 
-  g_return_val_if_fail (GIMP_IS_CONTAINER (container), NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTAINER (container), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (view_size > 0 &&
-                        view_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, FALSE);
+                        view_size <= LIGMA_VIEWABLE_MAX_PREVIEW_SIZE, FALSE);
   g_return_val_if_fail (view_border_width >= 0 &&
-                        view_border_width <= GIMP_VIEW_MAX_BORDER_WIDTH,
+                        view_border_width <= LIGMA_VIEW_MAX_BORDER_WIDTH,
                         FALSE);
   g_return_val_if_fail (menu_factory == NULL ||
-                        GIMP_IS_MENU_FACTORY (menu_factory), NULL);
+                        LIGMA_IS_MENU_FACTORY (menu_factory), NULL);
 
-  document_view = g_object_new (GIMP_TYPE_DOCUMENT_VIEW,
+  document_view = g_object_new (LIGMA_TYPE_DOCUMENT_VIEW,
                                 "view-type",         view_type,
                                 "container",         container,
                                 "context",           context,
@@ -104,83 +104,83 @@ gimp_document_view_new (GimpViewType     view_type,
                                 "ui-path",           "/documents-popup",
                                 NULL);
 
-  editor = GIMP_CONTAINER_EDITOR (document_view);
+  editor = LIGMA_CONTAINER_EDITOR (document_view);
 
   document_view->open_button =
-    gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "documents",
+    ligma_editor_add_action_button (LIGMA_EDITOR (editor->view), "documents",
                                    "documents-open",
                                    "documents-raise-or-open",
                                    GDK_SHIFT_MASK,
                                    "documents-file-open-dialog",
-                                   gimp_get_toggle_behavior_mask (),
+                                   ligma_get_toggle_behavior_mask (),
                                    NULL);
-  gimp_container_view_enable_dnd (editor->view,
+  ligma_container_view_enable_dnd (editor->view,
                                   GTK_BUTTON (document_view->open_button),
-                                  GIMP_TYPE_IMAGEFILE);
+                                  LIGMA_TYPE_IMAGEFILE);
 
   document_view->remove_button =
-    gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "documents",
+    ligma_editor_add_action_button (LIGMA_EDITOR (editor->view), "documents",
                                    "documents-remove", NULL);
-  gimp_container_view_enable_dnd (editor->view,
+  ligma_container_view_enable_dnd (editor->view,
                                   GTK_BUTTON (document_view->remove_button),
-                                  GIMP_TYPE_IMAGEFILE);
+                                  LIGMA_TYPE_IMAGEFILE);
 
-  gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "documents",
+  ligma_editor_add_action_button (LIGMA_EDITOR (editor->view), "documents",
                                  "documents-clear", NULL);
 
   document_view->refresh_button =
-    gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "documents",
+    ligma_editor_add_action_button (LIGMA_EDITOR (editor->view), "documents",
                                    "documents-recreate-preview",
                                    "documents-reload-previews",
                                    GDK_SHIFT_MASK,
                                    "documents-remove-dangling",
-                                   gimp_get_toggle_behavior_mask (),
+                                   ligma_get_toggle_behavior_mask (),
                                    NULL);
 
-  if (view_type == GIMP_VIEW_TYPE_LIST)
+  if (view_type == LIGMA_VIEW_TYPE_LIST)
     {
       GtkWidget *dnd_widget;
 
-      dnd_widget = gimp_container_view_get_dnd_widget (editor->view);
+      dnd_widget = ligma_container_view_get_dnd_widget (editor->view);
 
-      gimp_dnd_uri_list_source_add (dnd_widget,
-                                    gimp_document_view_drag_uri_list,
+      ligma_dnd_uri_list_source_add (dnd_widget,
+                                    ligma_document_view_drag_uri_list,
                                     editor);
     }
 
-  gimp_ui_manager_update (gimp_editor_get_ui_manager (GIMP_EDITOR (editor->view)),
+  ligma_ui_manager_update (ligma_editor_get_ui_manager (LIGMA_EDITOR (editor->view)),
                           editor);
 
   return GTK_WIDGET (document_view);
 }
 
 static void
-gimp_document_view_activate_item (GimpContainerEditor *editor,
-                                  GimpViewable        *viewable)
+ligma_document_view_activate_item (LigmaContainerEditor *editor,
+                                  LigmaViewable        *viewable)
 {
-  GimpDocumentView *view = GIMP_DOCUMENT_VIEW (editor);
-  GimpContainer    *container;
+  LigmaDocumentView *view = LIGMA_DOCUMENT_VIEW (editor);
+  LigmaContainer    *container;
 
-  if (GIMP_CONTAINER_EDITOR_CLASS (parent_class)->activate_item)
-    GIMP_CONTAINER_EDITOR_CLASS (parent_class)->activate_item (editor, viewable);
+  if (LIGMA_CONTAINER_EDITOR_CLASS (parent_class)->activate_item)
+    LIGMA_CONTAINER_EDITOR_CLASS (parent_class)->activate_item (editor, viewable);
 
-  container = gimp_container_view_get_container (editor->view);
+  container = ligma_container_view_get_container (editor->view);
 
-  if (viewable && gimp_container_have (container, GIMP_OBJECT (viewable)))
+  if (viewable && ligma_container_have (container, LIGMA_OBJECT (viewable)))
     {
       gtk_button_clicked (GTK_BUTTON (view->open_button));
     }
 }
 
 static GList *
-gimp_document_view_drag_uri_list (GtkWidget *widget,
+ligma_document_view_drag_uri_list (GtkWidget *widget,
                                   gpointer   data)
 {
-  GimpViewable *viewable = gimp_dnd_get_drag_viewable (widget);
+  LigmaViewable *viewable = ligma_dnd_get_drag_viewable (widget);
 
   if (viewable)
     {
-      const gchar *uri = gimp_object_get_name (viewable);
+      const gchar *uri = ligma_object_get_name (viewable);
 
       return g_list_append (NULL, g_strdup (uri));
     }

@@ -1,5 +1,5 @@
 /*
- * This is a plug-in for GIMP.
+ * This is a plug-in for LIGMA.
  *
  * Generates clickable image maps.
  *
@@ -42,5 +42,5 @@ init_icons (void)
 
   icon_theme = gtk_icon_theme_get_default ();
 
-  gtk_icon_theme_add_resource_path (icon_theme, "/org/gimp/imagemap/icons");
+  gtk_icon_theme_add_resource_path (icon_theme, "/org/ligma/imagemap/icons");
 }

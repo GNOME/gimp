@@ -1,9 +1,9 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpfont.c
- * Copyright (C) 2003 Michael Natterer <mitch@gimp.org>
- *                    Sven Neumann <sven@gimp.org>
+ * ligmafont.c
+ * Copyright (C) 2003 Michael Natterer <mitch@ligma.org>
+ *                    Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,22 +36,22 @@
 #include <ft2build.h>
 #include FT_TRUETYPE_TABLES_H
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "text-types.h"
 
-#include "core/gimptempbuf.h"
+#include "core/ligmatempbuf.h"
 
-#include "gimpfont.h"
+#include "ligmafont.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /* This is a so-called pangram; it's supposed to
    contain all characters found in the alphabet. */
-#define GIMP_TEXT_PANGRAM     N_("Pack my box with\nfive dozen liquor jugs.")
+#define LIGMA_TEXT_PANGRAM     N_("Pack my box with\nfive dozen liquor jugs.")
 
-#define GIMP_FONT_POPUP_SIZE  (PANGO_SCALE * 30)
+#define LIGMA_FONT_POPUP_SIZE  (PANGO_SCALE * 30)
 
 #define DEBUGPRINT(x) /* g_print x */
 
@@ -62,9 +62,9 @@ enum
 };
 
 
-struct _GimpFont
+struct _LigmaFont
 {
-  GimpData      parent_instance;
+  LigmaData      parent_instance;
 
   PangoContext *pango_context;
 
@@ -73,58 +73,58 @@ struct _GimpFont
   gint          popup_height;
 };
 
-struct _GimpFontClass
+struct _LigmaFontClass
 {
-  GimpDataClass   parent_class;
+  LigmaDataClass   parent_class;
 };
 
 
-static void          gimp_font_constructed      (GObject       *object);
-static void          gimp_font_finalize         (GObject       *object);
-static void          gimp_font_set_property     (GObject       *object,
+static void          ligma_font_constructed      (GObject       *object);
+static void          ligma_font_finalize         (GObject       *object);
+static void          ligma_font_set_property     (GObject       *object,
                                                  guint          property_id,
                                                  const GValue  *value,
                                                  GParamSpec    *pspec);
 
-static void          gimp_font_get_preview_size (GimpViewable  *viewable,
+static void          ligma_font_get_preview_size (LigmaViewable  *viewable,
                                                  gint           size,
                                                  gboolean       popup,
                                                  gboolean       dot_for_dot,
                                                  gint          *width,
                                                  gint          *height);
-static gboolean      gimp_font_get_popup_size   (GimpViewable  *viewable,
+static gboolean      ligma_font_get_popup_size   (LigmaViewable  *viewable,
                                                  gint           width,
                                                  gint           height,
                                                  gboolean       dot_for_dot,
                                                  gint          *popup_width,
                                                  gint          *popup_height);
-static GimpTempBuf * gimp_font_get_new_preview  (GimpViewable  *viewable,
-                                                 GimpContext   *context,
+static LigmaTempBuf * ligma_font_get_new_preview  (LigmaViewable  *viewable,
+                                                 LigmaContext   *context,
                                                  gint           width,
                                                  gint           height);
 
-static const gchar * gimp_font_get_sample_string (PangoContext         *context,
+static const gchar * ligma_font_get_sample_string (PangoContext         *context,
                                                   PangoFontDescription *font_desc);
 
 
-G_DEFINE_TYPE (GimpFont, gimp_font, GIMP_TYPE_DATA)
+G_DEFINE_TYPE (LigmaFont, ligma_font, LIGMA_TYPE_DATA)
 
-#define parent_class gimp_font_parent_class
+#define parent_class ligma_font_parent_class
 
 
 static void
-gimp_font_class_init (GimpFontClass *klass)
+ligma_font_class_init (LigmaFontClass *klass)
 {
   GObjectClass      *object_class   = G_OBJECT_CLASS (klass);
-  GimpViewableClass *viewable_class = GIMP_VIEWABLE_CLASS (klass);
+  LigmaViewableClass *viewable_class = LIGMA_VIEWABLE_CLASS (klass);
 
-  object_class->constructed         = gimp_font_constructed;
-  object_class->finalize            = gimp_font_finalize;
-  object_class->set_property        = gimp_font_set_property;
+  object_class->constructed         = ligma_font_constructed;
+  object_class->finalize            = ligma_font_finalize;
+  object_class->set_property        = ligma_font_set_property;
 
-  viewable_class->get_preview_size  = gimp_font_get_preview_size;
-  viewable_class->get_popup_size    = gimp_font_get_popup_size;
-  viewable_class->get_new_preview   = gimp_font_get_new_preview;
+  viewable_class->get_preview_size  = ligma_font_get_preview_size;
+  viewable_class->get_popup_size    = ligma_font_get_popup_size;
+  viewable_class->get_new_preview   = ligma_font_get_new_preview;
 
   viewable_class->default_icon_name = "gtk-select-font";
 
@@ -132,27 +132,27 @@ gimp_font_class_init (GimpFontClass *klass)
                                    g_param_spec_object ("pango-context",
                                                         NULL, NULL,
                                                         PANGO_TYPE_CONTEXT,
-                                                        GIMP_PARAM_WRITABLE));
+                                                        LIGMA_PARAM_WRITABLE));
 }
 
 static void
-gimp_font_init (GimpFont *font)
+ligma_font_init (LigmaFont *font)
 {
 }
 
 static void
-gimp_font_constructed (GObject *object)
+ligma_font_constructed (GObject *object)
 {
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_data_make_internal (GIMP_DATA (object),
-                           gimp_object_get_name (object));
+  ligma_data_make_internal (LIGMA_DATA (object),
+                           ligma_object_get_name (object));
 }
 
 static void
-gimp_font_finalize (GObject *object)
+ligma_font_finalize (GObject *object)
 {
-  GimpFont *font = GIMP_FONT (object);
+  LigmaFont *font = LIGMA_FONT (object);
 
   g_clear_object (&font->pango_context);
   g_clear_object (&font->popup_layout);
@@ -161,12 +161,12 @@ gimp_font_finalize (GObject *object)
 }
 
 static void
-gimp_font_set_property (GObject       *object,
+ligma_font_set_property (GObject       *object,
                         guint          property_id,
                         const GValue  *value,
                         GParamSpec    *pspec)
 {
-  GimpFont *font = GIMP_FONT (object);
+  LigmaFont *font = LIGMA_FONT (object);
 
   switch (property_id)
     {
@@ -183,7 +183,7 @@ gimp_font_set_property (GObject       *object,
 }
 
 static void
-gimp_font_get_preview_size (GimpViewable *viewable,
+ligma_font_get_preview_size (LigmaViewable *viewable,
                             gint          size,
                             gboolean      popup,
                             gboolean      dot_for_dot,
@@ -195,14 +195,14 @@ gimp_font_get_preview_size (GimpViewable *viewable,
 }
 
 static gboolean
-gimp_font_get_popup_size (GimpViewable *viewable,
+ligma_font_get_popup_size (LigmaViewable *viewable,
                           gint          width,
                           gint          height,
                           gboolean      dot_for_dot,
                           gint         *popup_width,
                           gint         *popup_height)
 {
-  GimpFont             *font = GIMP_FONT (viewable);
+  LigmaFont             *font = LIGMA_FONT (viewable);
   PangoFontDescription *font_desc;
   PangoRectangle        ink;
   PangoRectangle        logical;
@@ -211,12 +211,12 @@ gimp_font_get_popup_size (GimpViewable *viewable,
   if (! font->pango_context)
     return FALSE;
 
-  name = gimp_object_get_name (font);
+  name = ligma_object_get_name (font);
 
   font_desc = pango_font_description_from_string (name);
   g_return_val_if_fail (font_desc != NULL, FALSE);
 
-  pango_font_description_set_size (font_desc, GIMP_FONT_POPUP_SIZE);
+  pango_font_description_set_size (font_desc, LIGMA_FONT_POPUP_SIZE);
 
   if (font->popup_layout)
     g_object_unref (font->popup_layout);
@@ -225,7 +225,7 @@ gimp_font_get_popup_size (GimpViewable *viewable,
   pango_layout_set_font_description (font->popup_layout, font_desc);
   pango_font_description_free (font_desc);
 
-  pango_layout_set_text (font->popup_layout, gettext (GIMP_TEXT_PANGRAM), -1);
+  pango_layout_set_text (font->popup_layout, gettext (LIGMA_TEXT_PANGRAM), -1);
   pango_layout_get_pixel_extents (font->popup_layout, &ink, &logical);
 
   *popup_width  = MAX (ink.width,  logical.width)  + 6;
@@ -239,13 +239,13 @@ gimp_font_get_popup_size (GimpViewable *viewable,
   return TRUE;
 }
 
-static GimpTempBuf *
-gimp_font_get_new_preview (GimpViewable *viewable,
-                           GimpContext  *context,
+static LigmaTempBuf *
+ligma_font_get_new_preview (LigmaViewable *viewable,
+                           LigmaContext  *context,
                            gint          width,
                            gint          height)
 {
-  GimpFont        *font = GIMP_FONT (viewable);
+  LigmaFont        *font = LIGMA_FONT (viewable);
   PangoLayout     *layout;
   PangoRectangle   ink;
   PangoRectangle   logical;
@@ -253,7 +253,7 @@ gimp_font_get_new_preview (GimpViewable *viewable,
   gint             layout_height;
   gint             layout_x;
   gint             layout_y;
-  GimpTempBuf     *temp_buf;
+  LigmaTempBuf     *temp_buf;
   cairo_t         *cr;
   cairo_surface_t *surface;
 
@@ -266,7 +266,7 @@ gimp_font_get_new_preview (GimpViewable *viewable,
       PangoFontDescription *font_desc;
       const gchar          *name;
 
-      name = gimp_object_get_name (font);
+      name = ligma_object_get_name (font);
 
       DEBUGPRINT (("%s: ", name));
 
@@ -280,7 +280,7 @@ gimp_font_get_new_preview (GimpViewable *viewable,
 
       pango_layout_set_font_description (layout, font_desc);
       pango_layout_set_text (layout,
-                             gimp_font_get_sample_string (font->pango_context,
+                             ligma_font_get_sample_string (font->pango_context,
                                                           font_desc),
                              -1);
 
@@ -293,10 +293,10 @@ gimp_font_get_new_preview (GimpViewable *viewable,
 
   width = cairo_format_stride_for_width (CAIRO_FORMAT_A8, width);
 
-  temp_buf = gimp_temp_buf_new (width, height, babl_format ("Y' u8"));
-  memset (gimp_temp_buf_get_data (temp_buf), 255, width * height);
+  temp_buf = ligma_temp_buf_new (width, height, babl_format ("Y' u8"));
+  memset (ligma_temp_buf_get_data (temp_buf), 255, width * height);
 
-  surface = cairo_image_surface_create_for_data (gimp_temp_buf_get_data (temp_buf),
+  surface = cairo_image_surface_create_for_data (ligma_temp_buf_get_data (temp_buf),
                                                  CAIRO_FORMAT_A8,
                                                  width, height, width);
 
@@ -328,19 +328,19 @@ gimp_font_get_new_preview (GimpViewable *viewable,
   return temp_buf;
 }
 
-GimpData *
-gimp_font_get_standard (void)
+LigmaData *
+ligma_font_get_standard (void)
 {
-  static GimpData *standard_font = NULL;
+  static LigmaData *standard_font = NULL;
 
   if (! standard_font)
     {
-      standard_font = g_object_new (GIMP_TYPE_FONT,
+      standard_font = g_object_new (LIGMA_TYPE_FONT,
                                     "name", "Standard",
                                     NULL);
 
-      gimp_data_clean (standard_font);
-      gimp_data_make_internal (standard_font, "gimp-font-standard");
+      ligma_data_clean (standard_font);
+      ligma_data_make_internal (standard_font, "ligma-font-standard");
 
       g_object_add_weak_pointer (G_OBJECT (standard_font),
                                  (gpointer *) &standard_font);
@@ -351,7 +351,7 @@ gimp_font_get_standard (void)
 
 
 static inline gboolean
-gimp_font_covers_string (PangoFont   *font,
+ligma_font_covers_string (PangoFont   *font,
                          const gchar *sample)
 {
   const gchar *p;
@@ -384,7 +384,7 @@ get_hb_table_type (PangoOTTableType table_type)
 
 /* Guess a suitable short sample string for the font. */
 static const gchar *
-gimp_font_get_sample_string (PangoContext         *context,
+ligma_font_get_sample_string (PangoContext         *context,
                              PangoFontDescription *font_desc)
 {
   PangoFont        *font;
@@ -754,7 +754,7 @@ gimp_font_get_sample_string (PangoContext         *context,
 #define TAG(s) FT_MAKE_TAG (s[0], s[1], s[2], s[3])
 
                   if (slist[j] == TAG (scripts[i].script) &&
-                      gimp_font_covers_string (font, scripts[i].sample))
+                      ligma_font_covers_string (font, scripts[i].sample))
                     {
                       ot_alts[n_ot_alts++] = i;
                       DEBUGPRINT (("%.4s ", scripts[i].script));
@@ -785,7 +785,7 @@ gimp_font_get_sample_string (PangoContext         *context,
         {
           if (scripts[i].bit >= 0 &&
               (&os2->ulUnicodeRange1)[scripts[i].bit/32] & (1 << (scripts[i].bit % 32)) &&
-              gimp_font_covers_string (font, scripts[i].sample))
+              ligma_font_covers_string (font, scripts[i].sample))
             {
               sr_alts[n_sr_alts++] = i;
               DEBUGPRINT (("%.4s ", scripts[i].script));

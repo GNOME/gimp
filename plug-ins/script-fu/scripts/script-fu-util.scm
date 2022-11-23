@@ -1,4 +1,4 @@
-; GIMP - The GNU Image Manipulation Program
+; LIGMA - The GNU Image Manipulation Program
 ; Copyright (C) 1995 Spencer Kimball and Peter Mattis
 ;
 ; This program is free software: you can redistribute it and/or modify
@@ -20,13 +20,13 @@
 ;
 (define (script-fu-util-image-resize-from-layer image layer)
   (let* (
-        (width (car (gimp-drawable-get-width layer)))
-        (height (car (gimp-drawable-get-height layer)))
-        (posx (- (car (gimp-drawable-get-offsets layer))))
-        (posy (- (cadr (gimp-drawable-get-offsets layer))))
+        (width (car (ligma-drawable-get-width layer)))
+        (height (car (ligma-drawable-get-height layer)))
+        (posx (- (car (ligma-drawable-get-offsets layer))))
+        (posy (- (cadr (ligma-drawable-get-offsets layer))))
         )
 
-    (gimp-image-resize image width height posx posy)
+    (ligma-image-resize image width height posx posy)
   )
 )
 
@@ -38,15 +38,15 @@
   (while (not (null? layers))
     (let ((layer (car layers)))
       (set! layers (cdr layers))
-      (gimp-image-insert-layer image layer 0 -1)
-      (gimp-image-lower-item image layer)
+      (ligma-image-insert-layer image layer 0 -1)
+      (ligma-image-lower-item image layer)
     )
   )
 )
 
-; Allow command line usage of GIMP such as:
+; Allow command line usage of LIGMA such as:
 ;
-;     gimp -i -b '(with-files "*.png" <body>)'
+;     ligma -i -b '(with-files "*.png" <body>)'
 ;
 ; where <body> is the code that handles whatever processing you want to
 ; perform on the files. There are four variables that are available
@@ -60,13 +60,13 @@
 ; For example, to invert the colors of all of the PNG files in the
 ; start directory:
 ;
-;    gimp -i -b '(with-files "*.png" (gimp-drawable-invert layer FALSE) \
-;                 (gimp-file-save 1 image layer filename))'
+;    ligma -i -b '(with-files "*.png" (ligma-drawable-invert layer FALSE) \
+;                 (ligma-file-save 1 image layer filename))'
 ;
 ; To do the same thing, but saving them as jpeg instead:
 ;
-;    gimp -i -b '(with-files "*.png" (gimp-drawable-invert layer FALSE) \
-;                 (gimp-file-save 1 image layer \
+;    ligma -i -b '(with-files "*.png" (ligma-drawable-invert layer FALSE) \
+;                 (ligma-file-save 1 image layer \
 ;                  (string-append basename ".jpg") ))'
 
 (define-macro (with-files pattern . body)
@@ -77,13 +77,13 @@
        (let ,loop ((,filenames (cadr (file-glob ,pattern 1))))
          (unless (null? ,filenames)
            (let* ((filename (car ,filenames))
-                  (image (catch #f (car (gimp-file-load RUN-NONINTERACTIVE
+                  (image (catch #f (car (ligma-file-load RUN-NONINTERACTIVE
                                                         filename))))
-                  (layer (if image (aref (cadr (gimp-image-get-selected-layers image)) 0) #f))
+                  (layer (if image (aref (cadr (ligma-image-get-selected-layers image)) 0) #f))
                   (basename (unbreakupstr (butlast (strbreakup filename ".")) ".")))
              (when image
                ,@body
-               (gimp-image-delete image)))
+               (ligma-image-delete image)))
            (,loop (cdr ,filenames))
          )
        )

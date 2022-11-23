@@ -1,9 +1,9 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * Screenshot plug-in
- * Copyright 1998-2007 Sven Neumann <sven@gimp.org>
- * Copyright 2003      Henrik Brix Andersen <brix@gimp.org>
+ * Copyright 1998-2007 Sven Neumann <sven@ligma.org>
+ * Copyright 2003      Henrik Brix Andersen <brix@ligma.org>
  * Copyright 2012      Simone Karin Lehmann - OS X patches
  *
  * This program is free software: you can redistribute it and/or modify
@@ -30,8 +30,8 @@
 #include <glib.h>
 #include <glib/gstdio.h> /* g_unlink() */
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
 #include "screenshot.h"
 #include "screenshot-osx.h"
@@ -45,7 +45,7 @@
  *
  * Since Mac OS X 10.2 a system utility for screencapturing is
  * included. We can safely use this, since it's available on every OS
- * X version GIMP is running on.
+ * X version LIGMA is running on.
  *
  * The main drawbacks are that it's not possible to shoot windows or
  * regions in scripts in noninteractive mode, and that windows always
@@ -73,10 +73,10 @@ screenshot_osx_get_capabilities (void)
           SCREENSHOT_CAN_DELAY_WINDOW_SHOT);
 }
 
-GimpPDBStatusType
+LigmaPDBStatusType
 screenshot_osx_shoot (ScreenshotValues  *shootvals,
                       GdkScreen         *screen,
-                      GimpImage        **image,
+                      LigmaImage        **image,
                       GError           **error)
 {
   const gchar *mode    = " ";
@@ -114,13 +114,13 @@ screenshot_osx_shoot (ScreenshotValues  *shootvals,
       break;
 
     default:
-      g_return_val_if_reached (GIMP_PDB_CALLING_ERROR);
+      g_return_val_if_reached (LIGMA_PDB_CALLING_ERROR);
       break;
     }
 
   delay = g_strdup_printf ("-T %i", shootvals->screenshot_delay);
 
-  tmpfile = gimp_temp_file ("png");
+  tmpfile = ligma_temp_file ("png");
   quoted  = g_shell_quote (g_file_peek_path (tmpfile));
 
   command = g_strjoin (" ",
@@ -139,19 +139,19 @@ screenshot_osx_shoot (ScreenshotValues  *shootvals,
       /* don't attach a profile, screencapture attached one
        */
 
-      *image = gimp_file_load (GIMP_RUN_NONINTERACTIVE,
+      *image = ligma_file_load (LIGMA_RUN_NONINTERACTIVE,
                                tmpfile);
-      gimp_image_set_file (*image, g_file_new_for_uri ("screenshot.png"));
+      ligma_image_set_file (*image, g_file_new_for_uri ("screenshot.png"));
 
       g_file_delete (tmpfile, NULL, NULL);
       g_free (command);
 
-      return GIMP_PDB_SUCCESS;
+      return LIGMA_PDB_SUCCESS;
    }
 
   g_free (command);
 
-  return GIMP_PDB_EXECUTION_ERROR;
+  return LIGMA_PDB_EXECUTION_ERROR;
 }
 
 #endif /* PLATFORM_OSX */

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,90 +21,90 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpcolor/gimpcolor.h"
+#include "libligmacolor/ligmacolor.h"
 
 #include "core-types.h"
 
-#include "gegl/gimp-babl.h"
-#include "gegl/gimp-gegl-apply-operation.h"
-#include "gegl/gimp-gegl-loops.h"
-#include "gegl/gimp-gegl-utils.h"
+#include "gegl/ligma-babl.h"
+#include "gegl/ligma-gegl-apply-operation.h"
+#include "gegl/ligma-gegl-loops.h"
+#include "gegl/ligma-gegl-utils.h"
 
-#include "operations/layer-modes/gimp-layer-modes.h"
+#include "operations/layer-modes/ligma-layer-modes.h"
 
-#include "gimp-utils.h"
-#include "gimpbezierdesc.h"
-#include "gimpchannel.h"
-#include "gimpdrawable-fill.h"
-#include "gimperror.h"
-#include "gimpfilloptions.h"
-#include "gimpimage.h"
-#include "gimppattern.h"
-#include "gimppickable.h"
-#include "gimpscanconvert.h"
+#include "ligma-utils.h"
+#include "ligmabezierdesc.h"
+#include "ligmachannel.h"
+#include "ligmadrawable-fill.h"
+#include "ligmaerror.h"
+#include "ligmafilloptions.h"
+#include "ligmaimage.h"
+#include "ligmapattern.h"
+#include "ligmapickable.h"
+#include "ligmascanconvert.h"
 
-#include "vectors/gimpvectors.h"
+#include "vectors/ligmavectors.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /*  public functions  */
 
 void
-gimp_drawable_fill (GimpDrawable *drawable,
-                    GimpContext  *context,
-                    GimpFillType  fill_type)
+ligma_drawable_fill (LigmaDrawable *drawable,
+                    LigmaContext  *context,
+                    LigmaFillType  fill_type)
 {
-  GimpRGB      color;
-  GimpPattern *pattern;
+  LigmaRGB      color;
+  LigmaPattern *pattern;
 
-  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-  g_return_if_fail (GIMP_IS_CONTEXT (context));
+  g_return_if_fail (LIGMA_IS_DRAWABLE (drawable));
+  g_return_if_fail (LIGMA_IS_CONTEXT (context));
 
-  if (fill_type == GIMP_FILL_TRANSPARENT &&
-      ! gimp_drawable_has_alpha (drawable))
+  if (fill_type == LIGMA_FILL_TRANSPARENT &&
+      ! ligma_drawable_has_alpha (drawable))
     {
-      fill_type = GIMP_FILL_BACKGROUND;
+      fill_type = LIGMA_FILL_BACKGROUND;
     }
 
-  if (! gimp_get_fill_params (context, fill_type, &color, &pattern, NULL))
+  if (! ligma_get_fill_params (context, fill_type, &color, &pattern, NULL))
     return;
 
-  gimp_drawable_fill_buffer (drawable,
-                             gimp_drawable_get_buffer (drawable),
+  ligma_drawable_fill_buffer (drawable,
+                             ligma_drawable_get_buffer (drawable),
                              &color, pattern, 0, 0);
 
-  gimp_drawable_update (drawable, 0, 0, -1, -1);
+  ligma_drawable_update (drawable, 0, 0, -1, -1);
 }
 
 void
-gimp_drawable_fill_buffer (GimpDrawable  *drawable,
+ligma_drawable_fill_buffer (LigmaDrawable  *drawable,
                            GeglBuffer    *buffer,
-                           const GimpRGB *color,
-                           GimpPattern   *pattern,
+                           const LigmaRGB *color,
+                           LigmaPattern   *pattern,
                            gint           pattern_offset_x,
                            gint           pattern_offset_y)
 {
-  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (LIGMA_IS_DRAWABLE (drawable));
   g_return_if_fail (GEGL_IS_BUFFER (buffer));
   g_return_if_fail (color != NULL || pattern != NULL);
-  g_return_if_fail (pattern == NULL || GIMP_IS_PATTERN (pattern));
+  g_return_if_fail (pattern == NULL || LIGMA_IS_PATTERN (pattern));
 
   if (pattern)
     {
       GeglBuffer       *src_buffer;
       GeglBuffer       *dest_buffer;
-      GimpColorProfile *src_profile;
-      GimpColorProfile *dest_profile;
+      LigmaColorProfile *src_profile;
+      LigmaColorProfile *dest_profile;
 
-      src_buffer = gimp_pattern_create_buffer (pattern);
+      src_buffer = ligma_pattern_create_buffer (pattern);
 
-      src_profile  = gimp_babl_format_get_color_profile (
+      src_profile  = ligma_babl_format_get_color_profile (
                        gegl_buffer_get_format (src_buffer));
-      dest_profile = gimp_color_managed_get_color_profile (
-                       GIMP_COLOR_MANAGED (drawable));
+      dest_profile = ligma_color_managed_get_color_profile (
+                       LIGMA_COLOR_MANAGED (drawable));
 
-      if (gimp_color_transform_can_gegl_copy (src_profile, dest_profile))
+      if (ligma_color_transform_can_gegl_copy (src_profile, dest_profile))
         {
           dest_buffer = g_object_ref (src_buffer);
         }
@@ -113,10 +113,10 @@ gimp_drawable_fill_buffer (GimpDrawable  *drawable,
           dest_buffer = gegl_buffer_new (gegl_buffer_get_extent (src_buffer),
                                          gegl_buffer_get_format (buffer));
 
-          gimp_gegl_convert_color_profile (
+          ligma_gegl_convert_color_profile (
             src_buffer,  NULL, src_profile,
             dest_buffer, NULL, dest_profile,
-            GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
+            LIGMA_COLOR_RENDERING_INTENT_PERCEPTUAL,
             TRUE,
             NULL);
         }
@@ -131,116 +131,116 @@ gimp_drawable_fill_buffer (GimpDrawable  *drawable,
     }
   else
     {
-      GimpRGB    image_color;
+      LigmaRGB    image_color;
       GeglColor *gegl_color;
 
-      gimp_pickable_srgb_to_image_color (GIMP_PICKABLE (drawable),
+      ligma_pickable_srgb_to_image_color (LIGMA_PICKABLE (drawable),
                                          color, &image_color);
 
-      if (! gimp_drawable_has_alpha (drawable))
-        gimp_rgb_set_alpha (&image_color, 1.0);
+      if (! ligma_drawable_has_alpha (drawable))
+        ligma_rgb_set_alpha (&image_color, 1.0);
 
-      gegl_color = gimp_gegl_color_new (&image_color,
-                                        gimp_drawable_get_space (drawable));
+      gegl_color = ligma_gegl_color_new (&image_color,
+                                        ligma_drawable_get_space (drawable));
       gegl_buffer_set_color (buffer, NULL, gegl_color);
       g_object_unref (gegl_color);
     }
 }
 
 void
-gimp_drawable_fill_boundary (GimpDrawable       *drawable,
-                             GimpFillOptions    *options,
-                             const GimpBoundSeg *bound_segs,
+ligma_drawable_fill_boundary (LigmaDrawable       *drawable,
+                             LigmaFillOptions    *options,
+                             const LigmaBoundSeg *bound_segs,
                              gint                n_bound_segs,
                              gint                offset_x,
                              gint                offset_y,
                              gboolean            push_undo)
 {
-  GimpScanConvert *scan_convert;
+  LigmaScanConvert *scan_convert;
 
-  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
-  g_return_if_fail (GIMP_IS_FILL_OPTIONS (options));
+  g_return_if_fail (LIGMA_IS_DRAWABLE (drawable));
+  g_return_if_fail (ligma_item_is_attached (LIGMA_ITEM (drawable)));
+  g_return_if_fail (LIGMA_IS_FILL_OPTIONS (options));
   g_return_if_fail (bound_segs == NULL || n_bound_segs != 0);
-  g_return_if_fail (gimp_fill_options_get_style (options) !=
-                    GIMP_FILL_STYLE_PATTERN ||
-                    gimp_context_get_pattern (GIMP_CONTEXT (options)) != NULL);
+  g_return_if_fail (ligma_fill_options_get_style (options) !=
+                    LIGMA_FILL_STYLE_PATTERN ||
+                    ligma_context_get_pattern (LIGMA_CONTEXT (options)) != NULL);
 
-  scan_convert = gimp_scan_convert_new_from_boundary (bound_segs, n_bound_segs,
+  scan_convert = ligma_scan_convert_new_from_boundary (bound_segs, n_bound_segs,
                                                       offset_x, offset_y);
 
   if (scan_convert)
     {
-      gimp_drawable_fill_scan_convert (drawable, options,
+      ligma_drawable_fill_scan_convert (drawable, options,
                                        scan_convert, push_undo);
-      gimp_scan_convert_free (scan_convert);
+      ligma_scan_convert_free (scan_convert);
     }
 }
 
 gboolean
-gimp_drawable_fill_vectors (GimpDrawable     *drawable,
-                            GimpFillOptions  *options,
-                            GimpVectors      *vectors,
+ligma_drawable_fill_vectors (LigmaDrawable     *drawable,
+                            LigmaFillOptions  *options,
+                            LigmaVectors      *vectors,
                             gboolean          push_undo,
                             GError          **error)
 {
-  const GimpBezierDesc *bezier;
+  const LigmaBezierDesc *bezier;
 
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
-  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), FALSE);
-  g_return_val_if_fail (GIMP_IS_FILL_OPTIONS (options), FALSE);
-  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), FALSE);
-  g_return_val_if_fail (gimp_fill_options_get_style (options) !=
-                        GIMP_FILL_STYLE_PATTERN ||
-                        gimp_context_get_pattern (GIMP_CONTEXT (options)) != NULL,
+  g_return_val_if_fail (LIGMA_IS_DRAWABLE (drawable), FALSE);
+  g_return_val_if_fail (ligma_item_is_attached (LIGMA_ITEM (drawable)), FALSE);
+  g_return_val_if_fail (LIGMA_IS_FILL_OPTIONS (options), FALSE);
+  g_return_val_if_fail (LIGMA_IS_VECTORS (vectors), FALSE);
+  g_return_val_if_fail (ligma_fill_options_get_style (options) !=
+                        LIGMA_FILL_STYLE_PATTERN ||
+                        ligma_context_get_pattern (LIGMA_CONTEXT (options)) != NULL,
                         FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  bezier = gimp_vectors_get_bezier (vectors);
+  bezier = ligma_vectors_get_bezier (vectors);
 
   if (bezier && bezier->num_data > 4)
     {
-      GimpScanConvert *scan_convert = gimp_scan_convert_new ();
+      LigmaScanConvert *scan_convert = ligma_scan_convert_new ();
 
-      gimp_scan_convert_add_bezier (scan_convert, bezier);
-      gimp_drawable_fill_scan_convert (drawable, options,
+      ligma_scan_convert_add_bezier (scan_convert, bezier);
+      ligma_drawable_fill_scan_convert (drawable, options,
                                        scan_convert, push_undo);
 
-      gimp_scan_convert_free (scan_convert);
+      ligma_scan_convert_free (scan_convert);
 
       return TRUE;
     }
 
-  g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+  g_set_error_literal (error, LIGMA_ERROR, LIGMA_FAILED,
                        _("Not enough points to fill"));
 
   return FALSE;
 }
 
 void
-gimp_drawable_fill_scan_convert (GimpDrawable    *drawable,
-                                 GimpFillOptions *options,
-                                 GimpScanConvert *scan_convert,
+ligma_drawable_fill_scan_convert (LigmaDrawable    *drawable,
+                                 LigmaFillOptions *options,
+                                 LigmaScanConvert *scan_convert,
                                  gboolean         push_undo)
 {
-  GimpContext *context;
+  LigmaContext *context;
   GeglBuffer  *buffer;
   GeglBuffer  *mask_buffer;
   gint         x, y, w, h;
   gint         off_x;
   gint         off_y;
 
-  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
-  g_return_if_fail (GIMP_IS_FILL_OPTIONS (options));
+  g_return_if_fail (LIGMA_IS_DRAWABLE (drawable));
+  g_return_if_fail (ligma_item_is_attached (LIGMA_ITEM (drawable)));
+  g_return_if_fail (LIGMA_IS_FILL_OPTIONS (options));
   g_return_if_fail (scan_convert != NULL);
-  g_return_if_fail (gimp_fill_options_get_style (options) !=
-                    GIMP_FILL_STYLE_PATTERN ||
-                    gimp_context_get_pattern (GIMP_CONTEXT (options)) != NULL);
+  g_return_if_fail (ligma_fill_options_get_style (options) !=
+                    LIGMA_FILL_STYLE_PATTERN ||
+                    ligma_context_get_pattern (LIGMA_CONTEXT (options)) != NULL);
 
-  context = GIMP_CONTEXT (options);
+  context = LIGMA_CONTEXT (options);
 
-  if (! gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &w, &h))
+  if (! ligma_item_mask_intersect (LIGMA_ITEM (drawable), &x, &y, &w, &h))
     return;
 
   /* fill a 1-bpp GeglBuffer with black, this will describe the shape
@@ -250,33 +250,33 @@ gimp_drawable_fill_scan_convert (GimpDrawable    *drawable,
                                  babl_format ("Y u8"));
 
   /* render the stroke into it */
-  gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
+  ligma_item_get_offset (LIGMA_ITEM (drawable), &off_x, &off_y);
 
-  gimp_scan_convert_render (scan_convert, mask_buffer,
+  ligma_scan_convert_render (scan_convert, mask_buffer,
                             x + off_x, y + off_y,
-                            gimp_fill_options_get_antialias (options));
+                            ligma_fill_options_get_antialias (options));
 
-  buffer = gimp_fill_options_create_buffer (options, drawable,
+  buffer = ligma_fill_options_create_buffer (options, drawable,
                                             GEGL_RECTANGLE (0, 0, w, h),
                                             -x, -y);
 
-  gimp_gegl_apply_opacity (buffer, NULL, NULL, buffer,
+  ligma_gegl_apply_opacity (buffer, NULL, NULL, buffer,
                            mask_buffer, 0, 0, 1.0);
   g_object_unref (mask_buffer);
 
   /* Apply to drawable */
-  gimp_drawable_apply_buffer (drawable, buffer,
+  ligma_drawable_apply_buffer (drawable, buffer,
                               GEGL_RECTANGLE (0, 0, w, h),
                               push_undo, C_("undo-type", "Render Stroke"),
-                              gimp_context_get_opacity (context),
-                              gimp_context_get_paint_mode (context),
-                              GIMP_LAYER_COLOR_SPACE_AUTO,
-                              GIMP_LAYER_COLOR_SPACE_AUTO,
-                              gimp_layer_mode_get_paint_composite_mode (
-                                gimp_context_get_paint_mode (context)),
+                              ligma_context_get_opacity (context),
+                              ligma_context_get_paint_mode (context),
+                              LIGMA_LAYER_COLOR_SPACE_AUTO,
+                              LIGMA_LAYER_COLOR_SPACE_AUTO,
+                              ligma_layer_mode_get_paint_composite_mode (
+                                ligma_context_get_paint_mode (context)),
                               NULL, x, y);
 
   g_object_unref (buffer);
 
-  gimp_drawable_update (drawable, x, y, w, h);
+  ligma_drawable_update (drawable, x, y, w, h);
 }

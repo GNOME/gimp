@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1999 Spencer Kimball and Peter Mattis
  *
- * gimpbacktrace-none.c
+ * ligmabacktrace-none.c
  * Copyright (C) 2018 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,77 +23,77 @@
 
 #include <gio/gio.h>
 
-#include "gimpbacktrace-backend.h"
+#include "ligmabacktrace-backend.h"
 
 
-#ifdef GIMP_BACKTRACE_BACKEND_NONE
+#ifdef LIGMA_BACKTRACE_BACKEND_NONE
 
 
 #include "core-types.h"
 
-#include "gimpbacktrace.h"
+#include "ligmabacktrace.h"
 
 
 /*  public functions  */
 
 
 void
-gimp_backtrace_init (void)
+ligma_backtrace_init (void)
 {
 }
 
 gboolean
-gimp_backtrace_start (void)
+ligma_backtrace_start (void)
 {
   return FALSE;
 }
 
 void
-gimp_backtrace_stop (void)
+ligma_backtrace_stop (void)
 {
 }
 
-GimpBacktrace *
-gimp_backtrace_new (gboolean include_current_thread)
+LigmaBacktrace *
+ligma_backtrace_new (gboolean include_current_thread)
 {
   return NULL;
 }
 
 void
-gimp_backtrace_free (GimpBacktrace *backtrace)
+ligma_backtrace_free (LigmaBacktrace *backtrace)
 {
   g_return_if_fail (backtrace == NULL);
 }
 
 gint
-gimp_backtrace_get_n_threads (GimpBacktrace *backtrace)
+ligma_backtrace_get_n_threads (LigmaBacktrace *backtrace)
 {
   g_return_val_if_reached (0);
 }
 
 guintptr
-gimp_backtrace_get_thread_id (GimpBacktrace *backtrace,
+ligma_backtrace_get_thread_id (LigmaBacktrace *backtrace,
                               gint           thread)
 {
   g_return_val_if_reached (0);
 }
 
 const gchar *
-gimp_backtrace_get_thread_name (GimpBacktrace *backtrace,
+ligma_backtrace_get_thread_name (LigmaBacktrace *backtrace,
                                 gint           thread)
 {
   g_return_val_if_reached (NULL);
 }
 
 gboolean
-gimp_backtrace_is_thread_running (GimpBacktrace *backtrace,
+ligma_backtrace_is_thread_running (LigmaBacktrace *backtrace,
                                   gint           thread)
 {
   g_return_val_if_reached (FALSE);
 }
 
 gint
-gimp_backtrace_find_thread_by_id (GimpBacktrace *backtrace,
+ligma_backtrace_find_thread_by_id (LigmaBacktrace *backtrace,
                                   guintptr       thread_id,
                                   gint           thread_hint)
 {
@@ -101,14 +101,14 @@ gimp_backtrace_find_thread_by_id (GimpBacktrace *backtrace,
 }
 
 gint
-gimp_backtrace_get_n_frames (GimpBacktrace *backtrace,
+ligma_backtrace_get_n_frames (LigmaBacktrace *backtrace,
                              gint           thread)
 {
   g_return_val_if_reached (0);
 }
 
 guintptr
-gimp_backtrace_get_frame_address (GimpBacktrace *backtrace,
+ligma_backtrace_get_frame_address (LigmaBacktrace *backtrace,
                                   gint           thread,
                                   gint           frame)
 {
@@ -116,11 +116,11 @@ gimp_backtrace_get_frame_address (GimpBacktrace *backtrace,
 }
 
 gboolean
-gimp_backtrace_get_address_info (guintptr                  address,
-                                 GimpBacktraceAddressInfo *info)
+ligma_backtrace_get_address_info (guintptr                  address,
+                                 LigmaBacktraceAddressInfo *info)
 {
   return FALSE;
 }
 
 
-#endif /* GIMP_BACKTRACE_BACKEND_NONE */
+#endif /* LIGMA_BACKTRACE_BACKEND_NONE */

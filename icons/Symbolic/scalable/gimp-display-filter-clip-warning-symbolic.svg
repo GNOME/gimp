@@ -17,9 +17,9 @@
    version="1.1"
    id="svg9286"
    inkscape:version="0.92.2 (5c3e80d, 2017-08-06)"
-   sodipodi:docname="gimp-display-filter-clip-warning.svg">
+   sodipodi:docname="ligma-display-filter-clip-warning.svg">
   <title
-     id="title13765">GIMP Clip-Warning Display Filter</title>
+     id="title13765">LIGMA Clip-Warning Display Filter</title>
   <defs
      id="defs9280">
     <linearGradient
@@ -73,7 +73,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title>GIMP Clip-Warning Display Filter</dc:title>
+        <dc:title>LIGMA Clip-Warning Display Filter</dc:title>
         <dc:creator>
           <cc:Agent>
             <dc:title>Ell</dc:title>
@@ -105,8 +105,8 @@
      id="layer1"
      transform="translate(0,-292.76665)">
     <g
-       id="gimp-display-filter-clip-warning"
-       inkscape:label="#gimp-display-filter-clip-warning">
+       id="ligma-display-filter-clip-warning"
+       inkscape:label="#ligma-display-filter-clip-warning">
       <g
          id="g22265">
         <path

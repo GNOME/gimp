@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1999 Spencer Kimball and Peter Mattis
  *
- * gimperrorconsole.c
- * Copyright (C) 2003 Michael Natterer <mitch@gimp.org>
+ * ligmaerrorconsole.c
+ * Copyright (C) 2003 Michael Natterer <mitch@ligma.org>
  *
  * partly based on errorconsole.c
  * Copyright (C) 1998 Nick Fetchak <nuke@bayside.net>
@@ -26,74 +26,74 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "core/gimp.h"
+#include "core/ligma.h"
 
-#include "gimpdocked.h"
-#include "gimperrorconsole.h"
-#include "gimpmenufactory.h"
-#include "gimpsessioninfo-aux.h"
-#include "gimptextbuffer.h"
-#include "gimpwidgets-utils.h"
+#include "ligmadocked.h"
+#include "ligmaerrorconsole.h"
+#include "ligmamenufactory.h"
+#include "ligmasessioninfo-aux.h"
+#include "ligmatextbuffer.h"
+#include "ligmawidgets-utils.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 static const gboolean default_highlight[] =
 {
-  [GIMP_MESSAGE_ERROR]   = TRUE,
-  [GIMP_MESSAGE_WARNING] = TRUE,
-  [GIMP_MESSAGE_INFO]    = FALSE
+  [LIGMA_MESSAGE_ERROR]   = TRUE,
+  [LIGMA_MESSAGE_WARNING] = TRUE,
+  [LIGMA_MESSAGE_INFO]    = FALSE
 };
 
 
-static void       gimp_error_console_docked_iface_init (GimpDockedInterface *iface);
+static void       ligma_error_console_docked_iface_init (LigmaDockedInterface *iface);
 
-static void       gimp_error_console_constructed       (GObject          *object);
-static void       gimp_error_console_dispose           (GObject          *object);
+static void       ligma_error_console_constructed       (GObject          *object);
+static void       ligma_error_console_dispose           (GObject          *object);
 
-static void       gimp_error_console_unmap             (GtkWidget        *widget);
+static void       ligma_error_console_unmap             (GtkWidget        *widget);
 
-static gboolean   gimp_error_console_button_press      (GtkWidget        *widget,
+static gboolean   ligma_error_console_button_press      (GtkWidget        *widget,
                                                         GdkEventButton   *event,
-                                                        GimpErrorConsole *console);
+                                                        LigmaErrorConsole *console);
 
-static void       gimp_error_console_set_aux_info      (GimpDocked       *docked,
+static void       ligma_error_console_set_aux_info      (LigmaDocked       *docked,
                                                         GList            *aux_info);
-static GList    * gimp_error_console_get_aux_info      (GimpDocked       *docked);
+static GList    * ligma_error_console_get_aux_info      (LigmaDocked       *docked);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpErrorConsole, gimp_error_console, GIMP_TYPE_EDITOR,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED,
-                                                gimp_error_console_docked_iface_init))
+G_DEFINE_TYPE_WITH_CODE (LigmaErrorConsole, ligma_error_console, LIGMA_TYPE_EDITOR,
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_DOCKED,
+                                                ligma_error_console_docked_iface_init))
 
-#define parent_class gimp_error_console_parent_class
+#define parent_class ligma_error_console_parent_class
 
-static GimpDockedInterface *parent_docked_iface = NULL;
+static LigmaDockedInterface *parent_docked_iface = NULL;
 
 
 static void
-gimp_error_console_class_init (GimpErrorConsoleClass *klass)
+ligma_error_console_class_init (LigmaErrorConsoleClass *klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->constructed = gimp_error_console_constructed;
-  object_class->dispose     = gimp_error_console_dispose;
+  object_class->constructed = ligma_error_console_constructed;
+  object_class->dispose     = ligma_error_console_dispose;
 
-  widget_class->unmap       = gimp_error_console_unmap;
+  widget_class->unmap       = ligma_error_console_unmap;
 }
 
 static void
-gimp_error_console_init (GimpErrorConsole *console)
+ligma_error_console_init (LigmaErrorConsole *console)
 {
   GtkWidget *scrolled_window;
 
-  console->text_buffer = GTK_TEXT_BUFFER (gimp_text_buffer_new ());
+  console->text_buffer = GTK_TEXT_BUFFER (ligma_text_buffer_new ());
 
   gtk_text_buffer_create_tag (console->text_buffer, "title",
                               "scale",  PANGO_SCALE_LARGE,
@@ -119,7 +119,7 @@ gimp_error_console_init (GimpErrorConsole *console)
   gtk_widget_show (console->text_view);
 
   g_signal_connect (console->text_view, "button-press-event",
-                    G_CALLBACK (gimp_error_console_button_press),
+                    G_CALLBACK (ligma_error_console_button_press),
                     console);
 
   console->file_dialog = NULL;
@@ -128,30 +128,30 @@ gimp_error_console_init (GimpErrorConsole *console)
 }
 
 static void
-gimp_error_console_docked_iface_init (GimpDockedInterface *iface)
+ligma_error_console_docked_iface_init (LigmaDockedInterface *iface)
 {
   parent_docked_iface = g_type_interface_peek_parent (iface);
 
   if (! parent_docked_iface)
-    parent_docked_iface = g_type_default_interface_peek (GIMP_TYPE_DOCKED);
+    parent_docked_iface = g_type_default_interface_peek (LIGMA_TYPE_DOCKED);
 
-  iface->set_aux_info = gimp_error_console_set_aux_info;
-  iface->get_aux_info = gimp_error_console_get_aux_info;
+  iface->set_aux_info = ligma_error_console_set_aux_info;
+  iface->get_aux_info = ligma_error_console_get_aux_info;
 }
 
 static void
-gimp_error_console_constructed (GObject *object)
+ligma_error_console_constructed (GObject *object)
 {
-  GimpErrorConsole *console = GIMP_ERROR_CONSOLE (object);
+  LigmaErrorConsole *console = LIGMA_ERROR_CONSOLE (object);
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
   console->clear_button =
-    gimp_editor_add_action_button (GIMP_EDITOR (console), "error-console",
+    ligma_editor_add_action_button (LIGMA_EDITOR (console), "error-console",
                                    "error-console-clear", NULL);
 
   console->save_button =
-    gimp_editor_add_action_button (GIMP_EDITOR (console), "error-console",
+    ligma_editor_add_action_button (LIGMA_EDITOR (console), "error-console",
                                    "error-console-save-all",
                                    "error-console-save-selection",
                                    GDK_SHIFT_MASK,
@@ -159,22 +159,22 @@ gimp_error_console_constructed (GObject *object)
 }
 
 static void
-gimp_error_console_dispose (GObject *object)
+ligma_error_console_dispose (GObject *object)
 {
-  GimpErrorConsole *console = GIMP_ERROR_CONSOLE (object);
+  LigmaErrorConsole *console = LIGMA_ERROR_CONSOLE (object);
 
   if (console->file_dialog)
     gtk_widget_destroy (console->file_dialog);
 
-  console->gimp->message_handler = GIMP_MESSAGE_BOX;
+  console->ligma->message_handler = LIGMA_MESSAGE_BOX;
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
-gimp_error_console_unmap (GtkWidget *widget)
+ligma_error_console_unmap (GtkWidget *widget)
 {
-  GimpErrorConsole *console = GIMP_ERROR_CONSOLE (widget);
+  LigmaErrorConsole *console = LIGMA_ERROR_CONSOLE (widget);
 
   if (console->file_dialog)
     gtk_widget_destroy (console->file_dialog);
@@ -183,30 +183,30 @@ gimp_error_console_unmap (GtkWidget *widget)
 }
 
 GtkWidget *
-gimp_error_console_new (Gimp            *gimp,
-                        GimpMenuFactory *menu_factory)
+ligma_error_console_new (Ligma            *ligma,
+                        LigmaMenuFactory *menu_factory)
 {
-  GimpErrorConsole *console;
+  LigmaErrorConsole *console;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
+  g_return_val_if_fail (LIGMA_IS_MENU_FACTORY (menu_factory), NULL);
 
-  console = g_object_new (GIMP_TYPE_ERROR_CONSOLE,
+  console = g_object_new (LIGMA_TYPE_ERROR_CONSOLE,
                           "menu-factory",   menu_factory,
                           "menu-identifier", "<ErrorConsole>",
                           "ui-path",        "/error-console-popup",
                           NULL);
 
-  console->gimp = gimp;
+  console->ligma = ligma;
 
-  console->gimp->message_handler = GIMP_ERROR_CONSOLE;
+  console->ligma->message_handler = LIGMA_ERROR_CONSOLE;
 
   return GTK_WIDGET (console);
 }
 
 void
-gimp_error_console_add (GimpErrorConsole    *console,
-                        GimpMessageSeverity  severity,
+ligma_error_console_add (LigmaErrorConsole    *console,
+                        LigmaMessageSeverity  severity,
                         const gchar         *domain,
                         const gchar         *message)
 {
@@ -217,11 +217,11 @@ gimp_error_console_add (GimpErrorConsole    *console,
   GtkWidget          *image;
   gchar              *str;
 
-  g_return_if_fail (GIMP_IS_ERROR_CONSOLE (console));
+  g_return_if_fail (LIGMA_IS_ERROR_CONSOLE (console));
   g_return_if_fail (domain != NULL);
   g_return_if_fail (message != NULL);
 
-  gimp_enum_get_value (GIMP_TYPE_MESSAGE_SEVERITY, severity,
+  ligma_enum_get_value (LIGMA_TYPE_MESSAGE_SEVERITY, severity,
                        NULL, NULL, &desc, NULL);
 
   gtk_text_buffer_get_end_iter (console->text_buffer, &end);
@@ -229,7 +229,7 @@ gimp_error_console_add (GimpErrorConsole    *console,
   anchor = gtk_text_child_anchor_new ();
   gtk_text_buffer_insert_child_anchor (console->text_buffer, &end, anchor);
 
-  image = gtk_image_new_from_icon_name (gimp_get_message_icon_name (severity),
+  image = gtk_image_new_from_icon_name (ligma_get_message_icon_name (severity),
                                         GTK_ICON_SIZE_BUTTON);
   gtk_text_view_add_child_at_anchor (GTK_TEXT_VIEW (console->text_view),
                                      image, anchor);
@@ -266,13 +266,13 @@ gimp_error_console_add (GimpErrorConsole    *console,
 /*  private functions  */
 
 static gboolean
-gimp_error_console_button_press (GtkWidget        *widget,
+ligma_error_console_button_press (GtkWidget        *widget,
                                  GdkEventButton   *bevent,
-                                 GimpErrorConsole *console)
+                                 LigmaErrorConsole *console)
 {
   if (gdk_event_triggers_context_menu ((GdkEvent *) bevent))
     {
-      return gimp_editor_popup_menu_at_pointer (GIMP_EDITOR (console), (GdkEvent *) bevent);
+      return ligma_editor_popup_menu_at_pointer (LIGMA_EDITOR (console), (GdkEvent *) bevent);
     }
 
   return FALSE;
@@ -280,23 +280,23 @@ gimp_error_console_button_press (GtkWidget        *widget,
 
 static const gchar * const aux_info_highlight[] =
 {
-  [GIMP_MESSAGE_ERROR]   = "highlight-error",
-  [GIMP_MESSAGE_WARNING] = "highlight-warning",
-  [GIMP_MESSAGE_INFO]    = "highlight-info"
+  [LIGMA_MESSAGE_ERROR]   = "highlight-error",
+  [LIGMA_MESSAGE_WARNING] = "highlight-warning",
+  [LIGMA_MESSAGE_INFO]    = "highlight-info"
 };
 
 static void
-gimp_error_console_set_aux_info (GimpDocked *docked,
+ligma_error_console_set_aux_info (LigmaDocked *docked,
                                  GList      *aux_info)
 {
-  GimpErrorConsole *console = GIMP_ERROR_CONSOLE (docked);
+  LigmaErrorConsole *console = LIGMA_ERROR_CONSOLE (docked);
   GList            *list;
 
   parent_docked_iface->set_aux_info (docked, aux_info);
 
   for (list = aux_info; list; list = g_list_next (list))
     {
-      GimpSessionInfoAux *aux = list->data;
+      LigmaSessionInfoAux *aux = list->data;
       gint                i;
 
       for (i = 0; i < G_N_ELEMENTS (aux_info_highlight); i++)
@@ -311,9 +311,9 @@ gimp_error_console_set_aux_info (GimpDocked *docked,
 }
 
 static GList *
-gimp_error_console_get_aux_info (GimpDocked *docked)
+ligma_error_console_get_aux_info (LigmaDocked *docked)
 {
-  GimpErrorConsole   *console = GIMP_ERROR_CONSOLE (docked);
+  LigmaErrorConsole   *console = LIGMA_ERROR_CONSOLE (docked);
   GList              *aux_info;
   gint                i;
 
@@ -321,9 +321,9 @@ gimp_error_console_get_aux_info (GimpDocked *docked)
 
   for (i = 0; i < G_N_ELEMENTS (aux_info_highlight); i++)
     {
-      GimpSessionInfoAux *aux;
+      LigmaSessionInfoAux *aux;
 
-      aux = gimp_session_info_aux_new (aux_info_highlight[i],
+      aux = ligma_session_info_aux_new (aux_info_highlight[i],
                                        console->highlight[i] ? "yes" : "no");
 
       aux_info = g_list_append (aux_info, aux);

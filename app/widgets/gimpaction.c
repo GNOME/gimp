@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpaction.c
- * Copyright (C) 2004-2019 Michael Natterer <mitch@gimp.org>
+ * ligmaaction.c
+ * Copyright (C) 2004-2019 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,11 +23,11 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "gimpaction.h"
+#include "ligmaaction.h"
 
 
 enum
@@ -38,53 +38,53 @@ enum
 };
 
 
-static void   gimp_action_set_proxy_tooltip (GimpAction       *action,
+static void   ligma_action_set_proxy_tooltip (LigmaAction       *action,
                                              GtkWidget        *proxy);
-static void   gimp_action_label_notify      (GimpAction       *action,
+static void   ligma_action_label_notify      (LigmaAction       *action,
                                              const GParamSpec *pspec,
                                              gpointer          data);
-static void   gimp_action_tooltip_notify    (GimpAction       *action,
+static void   ligma_action_tooltip_notify    (LigmaAction       *action,
                                              const GParamSpec *pspec,
                                              gpointer          data);
 
 
-G_DEFINE_INTERFACE (GimpAction, gimp_action, GTK_TYPE_ACTION)
+G_DEFINE_INTERFACE (LigmaAction, ligma_action, GTK_TYPE_ACTION)
 
 static guint action_signals[LAST_SIGNAL];
 
 
 static void
-gimp_action_default_init (GimpActionInterface *iface)
+ligma_action_default_init (LigmaActionInterface *iface)
 {
   action_signals[ACTIVATE] =
-    g_signal_new ("gimp-activate",
+    g_signal_new ("ligma-activate",
                   G_TYPE_FROM_INTERFACE (iface),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpActionInterface, activate),
+                  G_STRUCT_OFFSET (LigmaActionInterface, activate),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   G_TYPE_VARIANT);
 
   action_signals[CHANGE_STATE] =
-    g_signal_new ("gimp-change-state",
+    g_signal_new ("ligma-change-state",
                   G_TYPE_FROM_INTERFACE (iface),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpActionInterface, change_state),
+                  G_STRUCT_OFFSET (LigmaActionInterface, change_state),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   G_TYPE_VARIANT);
 }
 
 void
-gimp_action_init (GimpAction *action)
+ligma_action_init (LigmaAction *action)
 {
-  g_return_if_fail (GIMP_IS_ACTION (action));
+  g_return_if_fail (LIGMA_IS_ACTION (action));
 
   g_signal_connect (action, "notify::label",
-                    G_CALLBACK (gimp_action_label_notify),
+                    G_CALLBACK (ligma_action_label_notify),
                     NULL);
   g_signal_connect (action, "notify::tooltip",
-                    G_CALLBACK (gimp_action_tooltip_notify),
+                    G_CALLBACK (ligma_action_tooltip_notify),
                     NULL);
 }
 
@@ -92,10 +92,10 @@ gimp_action_init (GimpAction *action)
 /*  public functions  */
 
 void
-gimp_action_emit_activate (GimpAction *action,
+ligma_action_emit_activate (LigmaAction *action,
                            GVariant   *value)
 {
-  g_return_if_fail (GIMP_IS_ACTION (action));
+  g_return_if_fail (LIGMA_IS_ACTION (action));
 
   if (value)
     g_variant_ref_sink (value);
@@ -107,10 +107,10 @@ gimp_action_emit_activate (GimpAction *action,
 }
 
 void
-gimp_action_emit_change_state (GimpAction *action,
+ligma_action_emit_change_state (LigmaAction *action,
                                GVariant   *value)
 {
-  g_return_if_fail (GIMP_IS_ACTION (action));
+  g_return_if_fail (LIGMA_IS_ACTION (action));
 
   if (value)
     g_variant_ref_sink (value);
@@ -122,125 +122,125 @@ gimp_action_emit_change_state (GimpAction *action,
 }
 
 void
-gimp_action_set_proxy (GimpAction *action,
+ligma_action_set_proxy (LigmaAction *action,
                        GtkWidget  *proxy)
 {
-  g_return_if_fail (GIMP_IS_ACTION (action));
+  g_return_if_fail (LIGMA_IS_ACTION (action));
   g_return_if_fail (GTK_IS_WIDGET (proxy));
 
-  gimp_action_set_proxy_tooltip (action, proxy);
+  ligma_action_set_proxy_tooltip (action, proxy);
 }
 
 const gchar *
-gimp_action_get_name (GimpAction *action)
+ligma_action_get_name (LigmaAction *action)
 {
   return gtk_action_get_name ((GtkAction *) action);
 }
 
 void
-gimp_action_set_label (GimpAction  *action,
+ligma_action_set_label (LigmaAction  *action,
                        const gchar *label)
 {
   gtk_action_set_label ((GtkAction *) action, label);
 }
 
 const gchar *
-gimp_action_get_label (GimpAction *action)
+ligma_action_get_label (LigmaAction *action)
 {
   return gtk_action_get_label ((GtkAction *) action);
 }
 
 void
-gimp_action_set_tooltip (GimpAction  *action,
+ligma_action_set_tooltip (LigmaAction  *action,
                          const gchar *tooltip)
 {
   gtk_action_set_tooltip ((GtkAction *) action, tooltip);
 }
 
 const gchar *
-gimp_action_get_tooltip (GimpAction *action)
+ligma_action_get_tooltip (LigmaAction *action)
 {
   return gtk_action_get_tooltip ((GtkAction *) action);
 }
 
 void
-gimp_action_set_icon_name (GimpAction  *action,
+ligma_action_set_icon_name (LigmaAction  *action,
                            const gchar *icon_name)
 {
   gtk_action_set_icon_name ((GtkAction *) action, icon_name);
 }
 
 const gchar *
-gimp_action_get_icon_name (GimpAction *action)
+ligma_action_get_icon_name (LigmaAction *action)
 {
   return gtk_action_get_icon_name ((GtkAction *) action);
 }
 
 void
-gimp_action_set_gicon (GimpAction *action,
+ligma_action_set_gicon (LigmaAction *action,
                        GIcon      *icon)
 {
   gtk_action_set_gicon ((GtkAction *) action, icon);
 }
 
 GIcon *
-gimp_action_get_gicon (GimpAction *action)
+ligma_action_get_gicon (LigmaAction *action)
 {
   return gtk_action_get_gicon ((GtkAction *) action);
 }
 
 void
-gimp_action_set_help_id (GimpAction  *action,
+ligma_action_set_help_id (LigmaAction  *action,
                          const gchar *help_id)
 {
-  g_return_if_fail (GIMP_IS_ACTION (action));
+  g_return_if_fail (LIGMA_IS_ACTION (action));
 
-  g_object_set_qdata_full (G_OBJECT (action), GIMP_HELP_ID,
+  g_object_set_qdata_full (G_OBJECT (action), LIGMA_HELP_ID,
                            g_strdup (help_id),
                            (GDestroyNotify) g_free);
 }
 
 const gchar *
-gimp_action_get_help_id (GimpAction *action)
+ligma_action_get_help_id (LigmaAction *action)
 {
-  g_return_val_if_fail (GIMP_IS_ACTION (action), NULL);
+  g_return_val_if_fail (LIGMA_IS_ACTION (action), NULL);
 
-  return g_object_get_qdata (G_OBJECT (action), GIMP_HELP_ID);
+  return g_object_get_qdata (G_OBJECT (action), LIGMA_HELP_ID);
 }
 
 void
-gimp_action_set_visible (GimpAction *action,
+ligma_action_set_visible (LigmaAction *action,
                          gboolean    visible)
 {
   gtk_action_set_visible ((GtkAction *) action, visible);
 }
 
 gboolean
-gimp_action_get_visible (GimpAction *action)
+ligma_action_get_visible (LigmaAction *action)
 {
   return gtk_action_get_visible ((GtkAction *) action);
 }
 
 gboolean
-gimp_action_is_visible (GimpAction *action)
+ligma_action_is_visible (LigmaAction *action)
 {
   return gtk_action_is_visible ((GtkAction *) action);
 }
 
 void
-gimp_action_set_sensitive (GimpAction  *action,
+ligma_action_set_sensitive (LigmaAction  *action,
                            gboolean     sensitive,
                            const gchar *reason)
 {
   gtk_action_set_sensitive ((GtkAction *) action, sensitive);
 
-  if (GIMP_ACTION_GET_INTERFACE (action)->set_disable_reason)
-    GIMP_ACTION_GET_INTERFACE (action)->set_disable_reason (action,
+  if (LIGMA_ACTION_GET_INTERFACE (action)->set_disable_reason)
+    LIGMA_ACTION_GET_INTERFACE (action)->set_disable_reason (action,
                                                             ! sensitive ? reason : NULL);
 }
 
 gboolean
-gimp_action_get_sensitive (GimpAction   *action,
+ligma_action_get_sensitive (LigmaAction   *action,
                            const gchar **reason)
 {
   gboolean sensitive;
@@ -250,15 +250,15 @@ gimp_action_get_sensitive (GimpAction   *action,
   if (reason)
     {
       *reason = NULL;
-      if (! sensitive && GIMP_ACTION_GET_INTERFACE (action)->get_disable_reason)
-        *reason = GIMP_ACTION_GET_INTERFACE (action)->get_disable_reason (action);
+      if (! sensitive && LIGMA_ACTION_GET_INTERFACE (action)->get_disable_reason)
+        *reason = LIGMA_ACTION_GET_INTERFACE (action)->get_disable_reason (action);
     }
 
   return sensitive;
 }
 
 gboolean
-gimp_action_is_sensitive (GimpAction   *action,
+ligma_action_is_sensitive (LigmaAction   *action,
                           const gchar **reason)
 {
   gboolean sensitive;
@@ -268,67 +268,67 @@ gimp_action_is_sensitive (GimpAction   *action,
   if (reason)
     {
       *reason = NULL;
-      if (! sensitive && GIMP_ACTION_GET_INTERFACE (action)->get_disable_reason)
-        *reason = GIMP_ACTION_GET_INTERFACE (action)->get_disable_reason (action);
+      if (! sensitive && LIGMA_ACTION_GET_INTERFACE (action)->get_disable_reason)
+        *reason = LIGMA_ACTION_GET_INTERFACE (action)->get_disable_reason (action);
     }
 
   return sensitive;
 }
 
 GClosure *
-gimp_action_get_accel_closure (GimpAction *action)
+ligma_action_get_accel_closure (LigmaAction *action)
 {
   return gtk_action_get_accel_closure ((GtkAction *) action);
 }
 
 void
-gimp_action_set_accel_path (GimpAction  *action,
+ligma_action_set_accel_path (LigmaAction  *action,
                             const gchar *accel_path)
 {
   gtk_action_set_accel_path ((GtkAction *) action, accel_path);
 }
 
 const gchar *
-gimp_action_get_accel_path (GimpAction *action)
+ligma_action_get_accel_path (LigmaAction *action)
 {
   return gtk_action_get_accel_path ((GtkAction *) action);
 }
 
 void
-gimp_action_set_accel_group (GimpAction  *action,
+ligma_action_set_accel_group (LigmaAction  *action,
                              GtkAccelGroup *accel_group)
 {
   gtk_action_set_accel_group ((GtkAction *) action, accel_group);
 }
 
 void
-gimp_action_connect_accelerator (GimpAction  *action)
+ligma_action_connect_accelerator (LigmaAction  *action)
 {
   gtk_action_connect_accelerator ((GtkAction *) action);
 }
 
 GSList *
-gimp_action_get_proxies (GimpAction *action)
+ligma_action_get_proxies (LigmaAction *action)
 {
   return gtk_action_get_proxies ((GtkAction *) action);
 }
 
 void
-gimp_action_activate (GimpAction *action)
+ligma_action_activate (LigmaAction *action)
 {
   gtk_action_activate ((GtkAction *) action);
 }
 
 gint
-gimp_action_name_compare (GimpAction  *action1,
-                          GimpAction  *action2)
+ligma_action_name_compare (LigmaAction  *action1,
+                          LigmaAction  *action2)
 {
-  return strcmp (gimp_action_get_name (action1),
-                 gimp_action_get_name (action2));
+  return strcmp (ligma_action_get_name (action1),
+                 ligma_action_get_name (action2));
 }
 
 gboolean
-gimp_action_is_gui_blacklisted (const gchar *action_name)
+ligma_action_is_gui_blacklisted (const gchar *action_name)
 {
   static const gchar *suffixes[] =
     {
@@ -396,7 +396,7 @@ gimp_action_is_gui_blacklisted (const gchar *action_name)
 /*  private functions  */
 
 static void
-gimp_action_set_proxy_tooltip (GimpAction *action,
+ligma_action_set_proxy_tooltip (LigmaAction *action,
                                GtkWidget  *proxy)
 {
   const gchar *tooltip;
@@ -404,9 +404,9 @@ gimp_action_set_proxy_tooltip (GimpAction *action,
   gchar       *escaped_reason = NULL;
   gchar       *markup;
 
-  tooltip = gimp_action_get_tooltip (action);
+  tooltip = ligma_action_get_tooltip (action);
 
-  gimp_action_get_sensitive (action, &reason);
+  ligma_action_get_sensitive (action, &reason);
   if (reason)
     escaped_reason = g_markup_escape_text (reason, -1);
 
@@ -417,22 +417,22 @@ gimp_action_set_proxy_tooltip (GimpAction *action,
                             escaped_reason ? escaped_reason : "");
 
   if (tooltip || escaped_reason)
-    gimp_help_set_help_data_with_markup (proxy, markup,
+    ligma_help_set_help_data_with_markup (proxy, markup,
                                          g_object_get_qdata (G_OBJECT (proxy),
-                                                             GIMP_HELP_ID));
+                                                             LIGMA_HELP_ID));
 
   g_free (escaped_reason);
   g_free (markup);
 }
 
 static void
-gimp_action_label_notify (GimpAction       *action,
+ligma_action_label_notify (LigmaAction       *action,
                           const GParamSpec *pspec,
                           gpointer          data)
 {
   GSList *list;
 
-  for (list = gimp_action_get_proxies (action);
+  for (list = ligma_action_get_proxies (action);
        list;
        list = g_slist_next (list))
     {
@@ -443,27 +443,27 @@ gimp_action_label_notify (GimpAction       *action,
           if (GTK_IS_BOX (child))
             {
               child = g_object_get_data (G_OBJECT (list->data),
-                                         "gimp-menu-item-label");
+                                         "ligma-menu-item-label");
 
               if (GTK_IS_LABEL (child))
                 gtk_label_set_text (GTK_LABEL (child),
-                                    gimp_action_get_label (action));
+                                    ligma_action_get_label (action));
             }
         }
     }
 }
 
 static void
-gimp_action_tooltip_notify (GimpAction       *action,
+ligma_action_tooltip_notify (LigmaAction       *action,
                             const GParamSpec *pspec,
                             gpointer          data)
 {
   GSList *list;
 
-  for (list = gimp_action_get_proxies (action);
+  for (list = ligma_action_get_proxies (action);
        list;
        list = g_slist_next (list))
     {
-      gimp_action_set_proxy_tooltip (action, list->data);
+      ligma_action_set_proxy_tooltip (action, list->data);
     }
 }

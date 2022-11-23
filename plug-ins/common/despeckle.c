@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * Despeckle (adaptive median) filter
@@ -24,10 +24,10 @@
 
 #include <stdlib.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 /*
@@ -71,12 +71,12 @@ typedef struct _DespeckleClass DespeckleClass;
 
 struct _Despeckle
 {
-  GimpPlugIn parent_instance;
+  LigmaPlugIn parent_instance;
 };
 
 struct _DespeckleClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -85,19 +85,19 @@ struct _DespeckleClass
 
 GType                   despeckle_get_type         (void) G_GNUC_CONST;
 
-static GList          * despeckle_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * despeckle_create_procedure (GimpPlugIn           *plug_in,
+static GList          * despeckle_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * despeckle_create_procedure (LigmaPlugIn           *plug_in,
                                                     const gchar          *name);
 
-static GimpValueArray * despeckle_run              (GimpProcedure        *procedure,
-                                                    GimpRunMode           run_mode,
-                                                    GimpImage            *image,
+static LigmaValueArray * despeckle_run              (LigmaProcedure        *procedure,
+                                                    LigmaRunMode           run_mode,
+                                                    LigmaImage            *image,
                                                     gint                  n_drawables,
-                                                    GimpDrawable        **drawables,
-                                                    const GimpValueArray *args,
+                                                    LigmaDrawable        **drawables,
+                                                    const LigmaValueArray *args,
                                                     gpointer              run_data);
 
-static void             despeckle                  (GimpDrawable         *drawable,
+static void             despeckle                  (LigmaDrawable         *drawable,
                                                     GObject              *config);
 static void             despeckle_median           (GObject              *config,
                                                     guchar               *src,
@@ -107,9 +107,9 @@ static void             despeckle_median           (GObject              *config
                                                     gint                  bpp,
                                                     gboolean              preview);
 
-static gboolean         despeckle_dialog           (GimpProcedure        *procedure,
+static gboolean         despeckle_dialog           (LigmaProcedure        *procedure,
                                                     GObject              *config,
-                                                    GimpDrawable         *drawable);
+                                                    LigmaDrawable         *drawable);
 
 static void             dialog_adaptive_callback   (GtkWidget            *button,
                                                     GObject              *config);
@@ -126,9 +126,9 @@ static void             preview_update             (GtkWidget            *previe
                                                     GObject              *config);
 
 
-G_DEFINE_TYPE (Despeckle, despeckle, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Despeckle, despeckle, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (DESPECKLE_TYPE)
+LIGMA_MAIN (DESPECKLE_TYPE)
 DEFINE_STD_SET_I18N
 
 
@@ -143,7 +143,7 @@ static DespeckleHistogram  histogram;
 static void
 despeckle_class_init (DespeckleClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = despeckle_query_procedures;
   plug_in_class->create_procedure = despeckle_create_procedure;
@@ -156,62 +156,62 @@ despeckle_init (Despeckle *despeckle)
 }
 
 static GList *
-despeckle_query_procedures (GimpPlugIn *plug_in)
+despeckle_query_procedures (LigmaPlugIn *plug_in)
 {
   return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
 }
 
-static GimpProcedure *
-despeckle_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+despeckle_create_procedure (LigmaPlugIn  *plug_in,
                             const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_image_procedure_new (plug_in, name,
+                                            LIGMA_PDB_PROC_TYPE_PLUGIN,
                                             despeckle_run, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "RGB*, GRAY*");
-      gimp_procedure_set_sensitivity_mask (procedure,
-                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
+      ligma_procedure_set_image_types (procedure, "RGB*, GRAY*");
+      ligma_procedure_set_sensitivity_mask (procedure,
+                                           LIGMA_PROCEDURE_SENSITIVE_DRAWABLE);
 
-      gimp_procedure_set_menu_label (procedure, _("Des_peckle..."));
-      gimp_procedure_add_menu_path (procedure, "<Image>/Filters/Enhance");
+      ligma_procedure_set_menu_label (procedure, _("Des_peckle..."));
+      ligma_procedure_add_menu_path (procedure, "<Image>/Filters/Enhance");
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         _("Remove speckle noise from the "
                                           "image"),
                                         "This plug-in selectively performs "
                                         "a median or adaptive box filter on "
                                         "an image.",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Michael Sweet <mike@easysw.com>",
                                       "Copyright 1997-1998 by Michael Sweet",
                                       PLUG_IN_VERSION);
 
-      GIMP_PROC_ARG_INT (procedure, "radius",
+      LIGMA_PROC_ARG_INT (procedure, "radius",
                          "Radius",
                          "Filter box radius",
                          1, MAX_RADIUS, 3,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "type",
+      LIGMA_PROC_ARG_INT (procedure, "type",
                          "Type",
                          "Filter type { MEDIAN (0), ADAPTIVE (1), "
                          "RECURSIVE-MEDIAN (2), RECURSIVE-ADAPTIVE (3) }",
                          0, 3, FILTER_ADAPTIVE,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "black",
+      LIGMA_PROC_ARG_INT (procedure, "black",
                          "Black",
                          "Black level",
                          -1, 255, 7,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "white",
+      LIGMA_PROC_ARG_INT (procedure, "white",
                          "White",
                          "White level",
                          0, 256, 248,
@@ -221,17 +221,17 @@ despeckle_create_procedure (GimpPlugIn  *plug_in,
   return procedure;
 }
 
-static GimpValueArray *
-despeckle_run (GimpProcedure        *procedure,
-               GimpRunMode           run_mode,
-               GimpImage            *image,
+static LigmaValueArray *
+despeckle_run (LigmaProcedure        *procedure,
+               LigmaRunMode           run_mode,
+               LigmaImage            *image,
                gint                  n_drawables,
-               GimpDrawable        **drawables,
-               const GimpValueArray *args,
+               LigmaDrawable        **drawables,
+               const LigmaValueArray *args,
                gpointer              run_data)
 {
-  GimpProcedureConfig *config;
-  GimpDrawable        *drawable;
+  LigmaProcedureConfig *config;
+  LigmaDrawable        *drawable;
 
   gegl_init (NULL, NULL);
 
@@ -239,12 +239,12 @@ despeckle_run (GimpProcedure        *procedure,
     {
       GError *error = NULL;
 
-      g_set_error (&error, GIMP_PLUG_IN_ERROR, 0,
+      g_set_error (&error, LIGMA_PLUG_IN_ERROR, 0,
                    _("Procedure '%s' only works with one drawable."),
                    PLUG_IN_PROC);
 
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_CALLING_ERROR,
                                                error);
     }
   else
@@ -252,33 +252,33 @@ despeckle_run (GimpProcedure        *procedure,
       drawable = drawables[0];
     }
 
-  if (! gimp_drawable_is_rgb  (drawable) &&
-      ! gimp_drawable_is_gray (drawable))
+  if (! ligma_drawable_is_rgb  (drawable) &&
+      ! ligma_drawable_is_gray (drawable))
     {
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_EXECUTION_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_EXECUTION_ERROR,
                                                NULL);
     }
 
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, NULL, run_mode, args);
+  config = ligma_procedure_create_config (procedure);
+  ligma_procedure_config_begin_run (config, NULL, run_mode, args);
 
-  if (run_mode == GIMP_RUN_INTERACTIVE)
+  if (run_mode == LIGMA_RUN_INTERACTIVE)
     {
       if (! despeckle_dialog (procedure, G_OBJECT (config), drawable))
         {
-          return gimp_procedure_new_return_values (procedure,
-                                                   GIMP_PDB_CANCEL,
+          return ligma_procedure_new_return_values (procedure,
+                                                   LIGMA_PDB_CANCEL,
                                                    NULL);
         }
     }
 
   despeckle (drawable, G_OBJECT (config));
 
-  gimp_procedure_config_end_run (config, GIMP_PDB_SUCCESS);
+  ligma_procedure_config_end_run (config, LIGMA_PDB_SUCCESS);
   g_object_unref (config);
 
-  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
+  return ligma_procedure_new_return_values (procedure, LIGMA_PDB_SUCCESS, NULL);
 }
 
 static inline guchar
@@ -293,7 +293,7 @@ pixel_luminance (const guchar *p,
 
     case 3:
     case 4:
-      return GIMP_RGB_LUMINANCE (p[0], p[1], p[2]);
+      return LIGMA_RGB_LUMINANCE (p[0], p[1], p[2]);
 
     default:
       return 0; /* should not be reached */
@@ -331,18 +331,18 @@ pixel_copy (guchar       *dest,
  */
 
 static const Babl *
-get_u8_format (GimpDrawable *drawable)
+get_u8_format (LigmaDrawable *drawable)
 {
-  if (gimp_drawable_is_rgb (drawable))
+  if (ligma_drawable_is_rgb (drawable))
     {
-      if (gimp_drawable_has_alpha (drawable))
+      if (ligma_drawable_has_alpha (drawable))
         return babl_format ("R'G'B'A u8");
       else
         return babl_format ("R'G'B' u8");
     }
   else
     {
-      if (gimp_drawable_has_alpha (drawable))
+      if (ligma_drawable_has_alpha (drawable))
         return babl_format ("Y'A u8");
       else
         return babl_format ("Y' u8");
@@ -350,7 +350,7 @@ get_u8_format (GimpDrawable *drawable)
 }
 
 static void
-despeckle (GimpDrawable *drawable,
+despeckle (LigmaDrawable *drawable,
            GObject      *config)
 {
   GeglBuffer *src_buffer;
@@ -362,15 +362,15 @@ despeckle (GimpDrawable *drawable,
   gint        x, y;
   gint        width, height;
 
-  if (! gimp_drawable_mask_intersect (drawable,
+  if (! ligma_drawable_mask_intersect (drawable,
                                       &x, &y, &width, &height))
     return;
 
   format  = get_u8_format (drawable);
   img_bpp = babl_format_get_bytes_per_pixel (format);
 
-  src_buffer  = gimp_drawable_get_buffer (drawable);
-  dest_buffer = gimp_drawable_get_shadow_buffer (drawable);
+  src_buffer  = ligma_drawable_get_buffer (drawable);
+  dest_buffer = ligma_drawable_get_shadow_buffer (drawable);
 
   src = g_new (guchar, width * height * img_bpp);
   dst = g_new (guchar, width * height * img_bpp);
@@ -389,17 +389,17 @@ despeckle (GimpDrawable *drawable,
   g_object_unref (src_buffer);
   g_object_unref (dest_buffer);
 
-  gimp_drawable_merge_shadow (drawable, TRUE);
-  gimp_drawable_update (drawable, x, y, width, height);
+  ligma_drawable_merge_shadow (drawable, TRUE);
+  ligma_drawable_update (drawable, x, y, width, height);
 
   g_free (dst);
   g_free (src);
 }
 
 static gboolean
-despeckle_dialog (GimpProcedure *procedure,
+despeckle_dialog (LigmaProcedure *procedure,
                   GObject       *config,
-                  GimpDrawable  *drawable)
+                  LigmaDrawable  *drawable)
 {
   GtkWidget *dialog;
   GtkWidget *main_vbox;
@@ -412,10 +412,10 @@ despeckle_dialog (GimpProcedure *procedure,
   gint       filter_type;
   gboolean   run;
 
-  gimp_ui_init (PLUG_IN_BINARY);
+  ligma_ui_init (PLUG_IN_BINARY);
 
-  dialog = gimp_procedure_dialog_new (procedure,
-                                      GIMP_PROCEDURE_CONFIG (config),
+  dialog = ligma_procedure_dialog_new (procedure,
+                                      LIGMA_PROCEDURE_CONFIG (config),
                                       _("Despeckle"));
 
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
@@ -424,7 +424,7 @@ despeckle_dialog (GimpProcedure *procedure,
                       main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_drawable_preview_new_from_drawable (drawable);
+  preview = ligma_drawable_preview_new_from_drawable (drawable);
   gtk_box_pack_start (GTK_BOX (main_vbox), preview, TRUE, TRUE, 0);
   gtk_widget_show (preview);
 
@@ -434,7 +434,7 @@ despeckle_dialog (GimpProcedure *procedure,
                     G_CALLBACK (preview_update),
                     config);
 
-  frame = gimp_frame_new (_("Median"));
+  frame = ligma_frame_new (_("Median"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -480,7 +480,7 @@ despeckle_dialog (GimpProcedure *procedure,
    * Box size (diameter) control...
    */
 
-  scale = gimp_prop_scale_entry_new (config, "radius",
+  scale = ligma_prop_scale_entry_new (config, "radius",
                                      _("_Radius:"),
                                      1.0, FALSE, 0, 0);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, 0, 1, 1);
@@ -490,7 +490,7 @@ despeckle_dialog (GimpProcedure *procedure,
    * Black level control...
    */
 
-  scale = gimp_prop_scale_entry_new (config, "black",
+  scale = ligma_prop_scale_entry_new (config, "black",
                                      _("_Black level:"),
                                      1.0, FALSE, 0, 0);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, 1, 1, 1);
@@ -500,19 +500,19 @@ despeckle_dialog (GimpProcedure *procedure,
    * White level control...
    */
 
-  scale = gimp_prop_scale_entry_new (config, "white",
+  scale = ligma_prop_scale_entry_new (config, "white",
                                      _("_White level:"),
                                      1.0, FALSE, 0, 0);
   gtk_grid_attach (GTK_GRID (grid), scale, 0, 2, 1, 1);
   gtk_widget_show (scale);
 
   g_signal_connect_swapped (config, "notify",
-                            G_CALLBACK (gimp_preview_invalidate),
+                            G_CALLBACK (ligma_preview_invalidate),
                             preview);
 
   gtk_widget_show (dialog);
 
-  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
+  run = ligma_procedure_dialog_run (LIGMA_PROCEDURE_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
 
@@ -523,8 +523,8 @@ static void
 preview_update (GtkWidget *widget,
                 GObject   *config)
 {
-  GimpPreview  *preview = GIMP_PREVIEW (widget);
-  GimpDrawable *drawable = g_object_get_data (config, "drawable");
+  LigmaPreview  *preview = LIGMA_PREVIEW (widget);
+  LigmaDrawable *drawable = g_object_get_data (config, "drawable");
   GeglBuffer   *src_buffer;
   const Babl   *format;
   guchar       *dst;
@@ -536,10 +536,10 @@ preview_update (GtkWidget *widget,
   format  = get_u8_format (drawable);
   img_bpp = babl_format_get_bytes_per_pixel (format);
 
-  gimp_preview_get_size (preview, &width, &height);
-  gimp_preview_get_position (preview, &x1, &y1);
+  ligma_preview_get_size (preview, &width, &height);
+  ligma_preview_get_position (preview, &x1, &y1);
 
-  src_buffer = gimp_drawable_get_buffer (drawable);
+  src_buffer = ligma_drawable_get_buffer (drawable);
 
   dst = g_new (guchar, width * height * img_bpp);
   src = g_new (guchar, width * height * img_bpp);
@@ -551,7 +551,7 @@ preview_update (GtkWidget *widget,
   despeckle_median (config,
                     src, dst, width, height, img_bpp, TRUE);
 
-  gimp_preview_draw_buffer (preview, dst, width * img_bpp);
+  ligma_preview_draw_buffer (preview, dst, width * img_bpp);
 
   g_object_unref (src_buffer);
 
@@ -919,7 +919,7 @@ despeckle_median (GObject  *config,
   max_progress = width * height;
 
   if (! preview)
-    gimp_progress_init (_("Despeckle"));
+    ligma_progress_init (_("Despeckle"));
 
   adapt_radius = radius;
   for (y = 0; y < height; y++)
@@ -994,9 +994,9 @@ despeckle_median (GObject  *config,
       progress += width;
 
       if (! preview && y % 32 == 0)
-        gimp_progress_update ((gdouble) progress / (gdouble) max_progress);
+        ligma_progress_update ((gdouble) progress / (gdouble) max_progress);
     }
 
   if (! preview)
-    gimp_progress_update (1.0);
+    ligma_progress_update (1.0);
 }

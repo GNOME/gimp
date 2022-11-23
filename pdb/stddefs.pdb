@@ -1,5 +1,5 @@
-# GIMP - The GNU Image Manipulation Program
-# Copyright (C) 1998-2003 Manish Singh <yosh@gimp.org>
+# LIGMA - The GNU Image Manipulation Program
+# Copyright (C) 1998-2003 Manish Singh <yosh@ligma.org>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -46,7 +46,7 @@ sub adam_pdb_misc {
 }
 
 sub adrian_pdb_misc {
-    contrib_pdb_misc('Adrian Likins', 'adrian@gimp.org', @_);
+    contrib_pdb_misc('Adrian Likins', 'adrian@ligma.org', @_);
 }
 
 sub adeath_pdb_misc {
@@ -122,11 +122,11 @@ sub martin_pdb_misc {
 }
 
 sub mitch_pdb_misc {
-    contrib_pdb_misc('Michael Natterer', 'mitch@gimp.org', @_);
+    contrib_pdb_misc('Michael Natterer', 'mitch@ligma.org', @_);
 }
 
 sub neo_pdb_misc {
-    contrib_pdb_misc('Sven Neumann', 'sven@gimp.org', @_);
+    contrib_pdb_misc('Sven Neumann', 'sven@ligma.org', @_);
 }
 
 sub nick_pdb_misc {
@@ -134,11 +134,11 @@ sub nick_pdb_misc {
 }
 
 sub raphael_pdb_misc {
-    contrib_pdb_misc('Rapha\xc3\xabl Quinet', 'raphael@gimp.org', @_);
+    contrib_pdb_misc('Rapha\xc3\xabl Quinet', 'raphael@ligma.org', @_);
 }
 
 sub rock_pdb_misc {
-    contrib_pdb_misc('Nathan Summers', 'rock@gimp.org', @_);
+    contrib_pdb_misc('Nathan Summers', 'rock@ligma.org', @_);
 }
 
 sub seth_pdb_misc {

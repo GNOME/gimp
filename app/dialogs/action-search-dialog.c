@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * action-search-dialog.c
@@ -27,113 +27,113 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "dialogs-types.h"
 
-#include "config/gimpguiconfig.h"
+#include "config/ligmaguiconfig.h"
 
-#include "core/gimp.h"
+#include "core/ligma.h"
 
-#include "widgets/gimpaction.h"
-#include "widgets/gimpactiongroup.h"
-#include "widgets/gimpaction-history.h"
-#include "widgets/gimpdialogfactory.h"
-#include "widgets/gimpsearchpopup.h"
-#include "widgets/gimpuimanager.h"
+#include "widgets/ligmaaction.h"
+#include "widgets/ligmaactiongroup.h"
+#include "widgets/ligmaaction-history.h"
+#include "widgets/ligmadialogfactory.h"
+#include "widgets/ligmasearchpopup.h"
+#include "widgets/ligmauimanager.h"
 
 #include "action-search-dialog.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 #define ACTION_SECTION_INACTIVE 7
 
-static void         action_search_history_and_actions      (GimpSearchPopup   *popup,
+static void         action_search_history_and_actions      (LigmaSearchPopup   *popup,
                                                             const gchar       *keyword,
                                                             gpointer           data);
-static gboolean     action_search_match_keyword            (GimpAction        *action,
+static gboolean     action_search_match_keyword            (LigmaAction        *action,
                                                             const gchar*       keyword,
                                                             gint              *section,
-                                                            Gimp              *gimp);
+                                                            Ligma              *ligma);
 
 
 /* Public Functions */
 
 GtkWidget *
-action_search_dialog_create (Gimp *gimp)
+action_search_dialog_create (Ligma *ligma)
 {
   GtkWidget *dialog;
 
-  dialog = gimp_search_popup_new (gimp,
-                                  "gimp-action-search-dialog",
+  dialog = ligma_search_popup_new (ligma,
+                                  "ligma-action-search-dialog",
                                   _("Search Actions"),
                                   action_search_history_and_actions,
-                                  gimp);
+                                  ligma);
   return dialog;
 }
 
 /* Private Functions */
 
 static void
-action_search_history_and_actions (GimpSearchPopup *popup,
+action_search_history_and_actions (LigmaSearchPopup *popup,
                                    const gchar     *keyword,
                                    gpointer         data)
 {
-  GimpUIManager *manager;
+  LigmaUIManager *manager;
   GList         *list;
   GList         *history_actions = NULL;
-  Gimp          *gimp;
+  Ligma          *ligma;
 
-  g_return_if_fail (GIMP_IS_GIMP (data));
+  g_return_if_fail (LIGMA_IS_LIGMA (data));
 
-  gimp = GIMP (data);
-  manager = gimp_ui_managers_from_name ("<Image>")->data;
+  ligma = LIGMA (data);
+  manager = ligma_ui_managers_from_name ("<Image>")->data;
 
   if (g_strcmp0 (keyword, "") == 0)
     return;
 
-  history_actions = gimp_action_history_search (gimp,
+  history_actions = ligma_action_history_search (ligma,
                                                 action_search_match_keyword,
                                                 keyword);
 
   /* 0. Top result: matching action in run history. */
   for (list = history_actions; list; list = g_list_next (list))
-    gimp_search_popup_add_result (popup, list->data,
-                                  gimp_action_is_sensitive (list->data, NULL) ? 0 : ACTION_SECTION_INACTIVE);
+    ligma_search_popup_add_result (popup, list->data,
+                                  ligma_action_is_sensitive (list->data, NULL) ? 0 : ACTION_SECTION_INACTIVE);
 
   /* 1. Then other matching actions. */
-  for (list = gimp_ui_manager_get_action_groups (manager);
+  for (list = ligma_ui_manager_get_action_groups (manager);
        list;
        list = g_list_next (list))
     {
       GList           *list2;
-      GimpActionGroup *group   = list->data;
+      LigmaActionGroup *group   = list->data;
       GList           *actions = NULL;
 
-      actions = gimp_action_group_list_actions (group);
-      actions = g_list_sort (actions, (GCompareFunc) gimp_action_name_compare);
+      actions = ligma_action_group_list_actions (group);
+      actions = g_list_sort (actions, (GCompareFunc) ligma_action_name_compare);
 
       for (list2 = actions; list2; list2 = g_list_next (list2))
         {
           const gchar *name;
-          GimpAction  *action       = list2->data;
+          LigmaAction  *action       = list2->data;
           gboolean     is_redundant = FALSE;
           gint         section;
 
-          name = gimp_action_get_name (action);
+          name = ligma_action_get_name (action);
 
           /* The action search dialog doesn't show any non-historized
            * actions, with a few exceptions.  See the difference between
-           * gimp_action_history_is_blacklisted_action() and
-           * gimp_action_history_is_excluded_action().
+           * ligma_action_history_is_blacklisted_action() and
+           * ligma_action_history_is_excluded_action().
            */
-          if (gimp_action_history_is_blacklisted_action (name))
+          if (ligma_action_history_is_blacklisted_action (name))
             continue;
 
-          if (! gimp_action_is_visible (action))
+          if (! ligma_action_is_visible (action))
             continue;
 
-          if (action_search_match_keyword (action, keyword, &section, gimp))
+          if (action_search_match_keyword (action, keyword, &section, ligma))
             {
               GList *list3;
 
@@ -142,7 +142,7 @@ action_search_history_and_actions (GimpSearchPopup *popup,
                */
               for (list3 = history_actions; list3; list3 = g_list_next (list3))
                 {
-                  if (strcmp (gimp_action_get_name (list3->data),
+                  if (strcmp (ligma_action_get_name (list3->data),
                               name) == 0)
                     {
                       is_redundant = TRUE;
@@ -152,7 +152,7 @@ action_search_history_and_actions (GimpSearchPopup *popup,
 
               if (! is_redundant)
                 {
-                  gimp_search_popup_add_result (popup, action, section);
+                  ligma_search_popup_add_result (popup, action, section);
                 }
             }
         }
@@ -165,14 +165,14 @@ action_search_history_and_actions (GimpSearchPopup *popup,
 
 /**
  * action_search_match_keyword:
- * @action: a #GimpAction to be matched.
+ * @action: a #LigmaAction to be matched.
  * @keyword: free text keyword to match with @action.
  * @section: relative section telling "how well" @keyword matched
  *           @action. The smaller the @section, the better the match. In
  *           particular this value can be used in the call to
- *           gimp_search_popup_add_result() to show best matches at the
+ *           ligma_search_popup_add_result() to show best matches at the
  *           top of the list.
- * @gimp: the #Gimp object. This matters because we will tokenize
+ * @ligma: the #Ligma object. This matters because we will tokenize
  *        keywords, labels and tooltip by language.
  *
  * This function will check if some freely typed text @keyword matches
@@ -202,10 +202,10 @@ action_search_history_and_actions (GimpSearchPopup *popup,
  * will be set as well).
  */
 static gboolean
-action_search_match_keyword (GimpAction  *action,
+action_search_match_keyword (LigmaAction  *action,
                              const gchar *keyword,
                              gint        *section,
-                             Gimp        *gimp)
+                             Ligma        *ligma)
 {
   gboolean   matched = FALSE;
   gchar    **key_tokens;
@@ -219,14 +219,14 @@ action_search_match_keyword (GimpAction  *action,
        * matches.
        */
       if (section)
-        *section = gimp_action_is_sensitive (action, NULL) ? 0 : ACTION_SECTION_INACTIVE;
+        *section = ligma_action_is_sensitive (action, NULL) ? 0 : ACTION_SECTION_INACTIVE;
 
       return TRUE;
     }
 
-  key_tokens   = g_str_tokenize_and_fold (keyword, gimp->config->language, NULL);
-  tmp          = gimp_strip_uline (gimp_action_get_label (action));
-  label_tokens = g_str_tokenize_and_fold (tmp, gimp->config->language, &label_alternates);
+  key_tokens   = g_str_tokenize_and_fold (keyword, ligma->config->language, NULL);
+  tmp          = ligma_strip_uline (ligma_action_get_label (action));
+  label_tokens = g_str_tokenize_and_fold (tmp, ligma->config->language, &label_alternates);
   g_free (tmp);
 
   /* Try to match the keyword as an initialism of the action's label.
@@ -319,15 +319,15 @@ one_matched:
     }
 
   if (! matched && key_tokens[0] && g_utf8_strlen (key_tokens[0], -1) > 2 &&
-      gimp_action_get_tooltip (action) != NULL)
+      ligma_action_get_tooltip (action) != NULL)
     {
       gchar    **tooltip_tokens;
       gchar    **tooltip_alternates = NULL;
       gboolean   mixed_match;
       gint       i;
 
-      tooltip_tokens = g_str_tokenize_and_fold (gimp_action_get_tooltip (action),
-                                                gimp->config->language, &tooltip_alternates);
+      tooltip_tokens = g_str_tokenize_and_fold (ligma_action_get_tooltip (action),
+                                                ligma->config->language, &tooltip_alternates);
 
       if (g_strv_length (tooltip_tokens) > 0)
         {
@@ -389,7 +389,7 @@ one_tooltip_matched:
   g_strfreev (label_tokens);
   g_strfreev (label_alternates);
 
-  if (matched && section && ! gimp_action_is_sensitive (action, NULL))
+  if (matched && section && ! ligma_action_is_sensitive (action, NULL))
     *section += ACTION_SECTION_INACTIVE;
 
   return matched;

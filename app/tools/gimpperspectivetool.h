@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,39 +15,39 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PERSPECTIVE_TOOL_H__
-#define __GIMP_PERSPECTIVE_TOOL_H__
+#ifndef __LIGMA_PERSPECTIVE_TOOL_H__
+#define __LIGMA_PERSPECTIVE_TOOL_H__
 
 
-#include "gimpgenerictransformtool.h"
+#include "ligmagenerictransformtool.h"
 
 
-#define GIMP_TYPE_PERSPECTIVE_TOOL            (gimp_perspective_tool_get_type ())
-#define GIMP_PERSPECTIVE_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PERSPECTIVE_TOOL, GimpPerspectiveTool))
-#define GIMP_PERSPECTIVE_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PERSPECTIVE_TOOL, GimpPerspectiveToolClass))
-#define GIMP_IS_PERSPECTIVE_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PERSPECTIVE_TOOL))
-#define GIMP_IS_PERSPECTIVE_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PERSPECTIVE_TOOL))
-#define GIMP_PERSPECTIVE_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PERSPECTIVE_TOOL, GimpPerspectiveToolClass))
+#define LIGMA_TYPE_PERSPECTIVE_TOOL            (ligma_perspective_tool_get_type ())
+#define LIGMA_PERSPECTIVE_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_PERSPECTIVE_TOOL, LigmaPerspectiveTool))
+#define LIGMA_PERSPECTIVE_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_PERSPECTIVE_TOOL, LigmaPerspectiveToolClass))
+#define LIGMA_IS_PERSPECTIVE_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_PERSPECTIVE_TOOL))
+#define LIGMA_IS_PERSPECTIVE_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_PERSPECTIVE_TOOL))
+#define LIGMA_PERSPECTIVE_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_PERSPECTIVE_TOOL, LigmaPerspectiveToolClass))
 
 
-typedef struct _GimpPerspectiveTool      GimpPerspectiveTool;
-typedef struct _GimpPerspectiveToolClass GimpPerspectiveToolClass;
+typedef struct _LigmaPerspectiveTool      LigmaPerspectiveTool;
+typedef struct _LigmaPerspectiveToolClass LigmaPerspectiveToolClass;
 
-struct _GimpPerspectiveTool
+struct _LigmaPerspectiveTool
 {
-  GimpGenericTransformTool  parent_instance;
+  LigmaGenericTransformTool  parent_instance;
 };
 
-struct _GimpPerspectiveToolClass
+struct _LigmaPerspectiveToolClass
 {
-  GimpGenericTransformToolClass  parent_class;
+  LigmaGenericTransformToolClass  parent_class;
 };
 
 
-void    gimp_perspective_tool_register (GimpToolRegisterCallback  callback,
+void    ligma_perspective_tool_register (LigmaToolRegisterCallback  callback,
                                         gpointer                  data);
 
-GType   gimp_perspective_tool_get_type (void) G_GNUC_CONST;
+GType   ligma_perspective_tool_get_type (void) G_GNUC_CONST;
 
 
-#endif  /*  __GIMP_PERSPECTIVE_TOOL_H__  */
+#endif  /*  __LIGMA_PERSPECTIVE_TOOL_H__  */

@@ -1,16 +1,16 @@
-# GIMP sessionrc
+# LIGMA sessionrc
 # 
 # This file takes session-specific info (that is info, you want to keep
-# between two GIMP sessions).  You are not supposed to edit it manually, but
+# between two LIGMA sessions).  You are not supposed to edit it manually, but
 # of course you can do.  The sessionrc will be entirely rewritten every time
-# you quit GIMP.  If this file isn't found, defaults are used.
+# you quit LIGMA.  If this file isn't found, defaults are used.
 
 (session-info "toplevel"
-    (factory-entry "gimp-empty-image-window")
+    (factory-entry "ligma-empty-image-window")
     (position 200 100)
     (size 640 480))
 (session-info "toplevel"
-    (factory-entry "gimp-single-image-window")
+    (factory-entry "ligma-single-image-window")
     (position 0 0)
     (size 800 600)
     (open-on-exit)
@@ -18,60 +18,60 @@
         (left-docks-width "188")
         (right-docks-width "205")
         (maximized "no"))
-    (gimp-toolbox
+    (ligma-toolbox
         (side left)
         (book
             (current-page 0)
-            (dockable "gimp-tool-options"
+            (dockable "ligma-tool-options"
                 (tab-style automatic)
                 (aux-info
                     (show-button-bar "true")))
-            (dockable "gimp-device-status"
+            (dockable "ligma-device-status"
                 (tab-style automatic)
                 (aux-info
                     (show-button-bar "true")))
-            (dockable "gimp-undo-history"
+            (dockable "ligma-undo-history"
                 (tab-style automatic)
                 (aux-info
                     (show-button-bar "true")))
-            (dockable "gimp-image-list"
+            (dockable "ligma-image-list"
                 (tab-style automatic)
                 (aux-info
                     (show-button-bar "true")))))
-    (gimp-dock
+    (ligma-dock
         (side right)
         (book
             (current-page 0)
-            (dockable "gimp-brush-grid"
+            (dockable "ligma-brush-grid"
                 (tab-style automatic)
                 (aux-info
                     (show-button-bar "true")))
-            (dockable "gimp-pattern-grid"
+            (dockable "ligma-pattern-grid"
                 (tab-style automatic)
                 (aux-info
                     (show-button-bar "true")))
-            (dockable "gimp-font-list"
+            (dockable "ligma-font-list"
                 (tab-style automatic)
                 (aux-info
                     (show-button-bar "true")))
-            (dockable "gimp-document-list"
+            (dockable "ligma-document-list"
                 (tab-style automatic)
                 (aux-info
                     (show-button-bar "true"))))
         (book
             (position 336)
             (current-page 0)
-            (dockable "gimp-layer-list"
+            (dockable "ligma-layer-list"
                 (tab-style automatic)
                 (preview-size 32)
                 (aux-info
                     (show-button-bar "true")))
-            (dockable "gimp-channel-list"
+            (dockable "ligma-channel-list"
                 (tab-style automatic)
                 (preview-size 32)
                 (aux-info
                     (show-button-bar "true")))
-            (dockable "gimp-vectors-list"
+            (dockable "ligma-vectors-list"
                 (tab-style automatic)
                 (preview-size 32)
                 (aux-info

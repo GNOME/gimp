@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,10 +18,10 @@
 #ifndef __SPLASH_H__
 #define __SPLASH_H__
 
-void   splash_create    (Gimp         *gimp,
+void   splash_create    (Ligma         *ligma,
                          gboolean      be_verbose,
                          GdkMonitor   *monitor,
-                         GimpApp      *app);
+                         LigmaApp      *app);
 void   splash_destroy   (void);
 
 void   splash_update    (const gchar *label1,

@@ -1,11 +1,11 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpnavigationeditor.c
- * Copyright (C) 2001 Michael Natterer <mitch@gimp.org>
+ * ligmanavigationeditor.c
+ * Copyright (C) 2001 Michael Natterer <mitch@ligma.org>
  *
  * partly based on app/nav_window
- * Copyright (C) 1999 Andy Thomas <alt@gimp.org>
+ * Copyright (C) 1999 Andy Thomas <alt@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,117 +26,117 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpmath/gimpmath.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "display-types.h"
 
-#include "config/gimpdisplayconfig.h"
+#include "config/ligmadisplayconfig.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontext.h"
-#include "core/gimpimage.h"
-#include "core/gimpimageproxy.h"
+#include "core/ligma.h"
+#include "core/ligmacontext.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaimageproxy.h"
 
-#include "widgets/gimpdocked.h"
-#include "widgets/gimphelp-ids.h"
-#include "widgets/gimpmenufactory.h"
-#include "widgets/gimpnavigationview.h"
-#include "widgets/gimpuimanager.h"
-#include "widgets/gimpviewrenderer.h"
+#include "widgets/ligmadocked.h"
+#include "widgets/ligmahelp-ids.h"
+#include "widgets/ligmamenufactory.h"
+#include "widgets/ligmanavigationview.h"
+#include "widgets/ligmauimanager.h"
+#include "widgets/ligmaviewrenderer.h"
 
-#include "gimpdisplay.h"
-#include "gimpdisplayshell.h"
-#include "gimpdisplayshell-appearance.h"
-#include "gimpdisplayshell-scale.h"
-#include "gimpdisplayshell-scroll.h"
-#include "gimpdisplayshell-transform.h"
-#include "gimpnavigationeditor.h"
+#include "ligmadisplay.h"
+#include "ligmadisplayshell.h"
+#include "ligmadisplayshell-appearance.h"
+#include "ligmadisplayshell-scale.h"
+#include "ligmadisplayshell-scroll.h"
+#include "ligmadisplayshell-transform.h"
+#include "ligmanavigationeditor.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 #define UPDATE_DELAY 300 /* From GtkRange in GTK+ 2.22 */
 
 
-static void        gimp_navigation_editor_docked_iface_init            (GimpDockedInterface  *iface);
+static void        ligma_navigation_editor_docked_iface_init            (LigmaDockedInterface  *iface);
 
-static void        gimp_navigation_editor_dispose                      (GObject              *object);
+static void        ligma_navigation_editor_dispose                      (GObject              *object);
 
-static void        gimp_navigation_editor_set_context                  (GimpDocked           *docked,
-                                                                        GimpContext          *context);
+static void        ligma_navigation_editor_set_context                  (LigmaDocked           *docked,
+                                                                        LigmaContext          *context);
 
-static GtkWidget * gimp_navigation_editor_new_private                  (GimpMenuFactory      *menu_factory,
-                                                                        GimpDisplayShell     *shell);
+static GtkWidget * ligma_navigation_editor_new_private                  (LigmaMenuFactory      *menu_factory,
+                                                                        LigmaDisplayShell     *shell);
 
-static void        gimp_navigation_editor_set_shell                    (GimpNavigationEditor *editor,
-                                                                        GimpDisplayShell     *shell);
-static gboolean    gimp_navigation_editor_button_release               (GtkWidget            *widget,
+static void        ligma_navigation_editor_set_shell                    (LigmaNavigationEditor *editor,
+                                                                        LigmaDisplayShell     *shell);
+static gboolean    ligma_navigation_editor_button_release               (GtkWidget            *widget,
                                                                         GdkEventButton       *bevent,
-                                                                        GimpDisplayShell     *shell);
-static void        gimp_navigation_editor_marker_changed               (GimpNavigationView   *view,
+                                                                        LigmaDisplayShell     *shell);
+static void        ligma_navigation_editor_marker_changed               (LigmaNavigationView   *view,
                                                                         gdouble               center_x,
                                                                         gdouble               center_y,
                                                                         gdouble               width,
                                                                         gdouble               height,
-                                                                        GimpNavigationEditor *editor);
-static void        gimp_navigation_editor_zoom                         (GimpNavigationView   *view,
-                                                                        GimpZoomType          direction,
+                                                                        LigmaNavigationEditor *editor);
+static void        ligma_navigation_editor_zoom                         (LigmaNavigationView   *view,
+                                                                        LigmaZoomType          direction,
                                                                         gdouble               delta,
-                                                                        GimpNavigationEditor *editor);
-static void        gimp_navigation_editor_scroll                       (GimpNavigationView   *view,
+                                                                        LigmaNavigationEditor *editor);
+static void        ligma_navigation_editor_scroll                       (LigmaNavigationView   *view,
                                                                         GdkEventScroll       *sevent,
-                                                                        GimpNavigationEditor *editor);
+                                                                        LigmaNavigationEditor *editor);
 
-static void        gimp_navigation_editor_zoom_adj_changed             (GtkAdjustment        *adj,
-                                                                        GimpNavigationEditor *editor);
+static void        ligma_navigation_editor_zoom_adj_changed             (GtkAdjustment        *adj,
+                                                                        LigmaNavigationEditor *editor);
 
-static void        gimp_navigation_editor_shell_infinite_canvas_notify (GimpDisplayShell     *shell,
+static void        ligma_navigation_editor_shell_infinite_canvas_notify (LigmaDisplayShell     *shell,
                                                                         const GParamSpec     *pspec,
-                                                                        GimpNavigationEditor *editor);
-static void        gimp_navigation_editor_shell_scaled                 (GimpDisplayShell     *shell,
-                                                                        GimpNavigationEditor *editor);
-static void        gimp_navigation_editor_shell_scrolled               (GimpDisplayShell     *shell,
-                                                                        GimpNavigationEditor *editor);
-static void        gimp_navigation_editor_shell_rotated                (GimpDisplayShell     *shell,
-                                                                        GimpNavigationEditor *editor);
-static void        gimp_navigation_editor_shell_reconnect              (GimpDisplayShell     *shell,
-                                                                        GimpNavigationEditor *editor);
+                                                                        LigmaNavigationEditor *editor);
+static void        ligma_navigation_editor_shell_scaled                 (LigmaDisplayShell     *shell,
+                                                                        LigmaNavigationEditor *editor);
+static void        ligma_navigation_editor_shell_scrolled               (LigmaDisplayShell     *shell,
+                                                                        LigmaNavigationEditor *editor);
+static void        ligma_navigation_editor_shell_rotated                (LigmaDisplayShell     *shell,
+                                                                        LigmaNavigationEditor *editor);
+static void        ligma_navigation_editor_shell_reconnect              (LigmaDisplayShell     *shell,
+                                                                        LigmaNavigationEditor *editor);
 
-static void        gimp_navigation_editor_viewable_size_changed        (GimpViewable         *viewable,
-                                                                        GimpNavigationEditor *editor);
+static void        ligma_navigation_editor_viewable_size_changed        (LigmaViewable         *viewable,
+                                                                        LigmaNavigationEditor *editor);
 
-static void        gimp_navigation_editor_options_show_canvas_notify   (GimpDisplayOptions   *options,
+static void        ligma_navigation_editor_options_show_canvas_notify   (LigmaDisplayOptions   *options,
                                                                         const GParamSpec     *pspec,
-                                                                        GimpNavigationEditor *editor);
+                                                                        LigmaNavigationEditor *editor);
 
-static void        gimp_navigation_editor_update_marker                (GimpNavigationEditor *editor);
+static void        ligma_navigation_editor_update_marker                (LigmaNavigationEditor *editor);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpNavigationEditor, gimp_navigation_editor,
-                         GIMP_TYPE_EDITOR,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED,
-                                                gimp_navigation_editor_docked_iface_init))
+G_DEFINE_TYPE_WITH_CODE (LigmaNavigationEditor, ligma_navigation_editor,
+                         LIGMA_TYPE_EDITOR,
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_DOCKED,
+                                                ligma_navigation_editor_docked_iface_init))
 
-#define parent_class gimp_navigation_editor_parent_class
+#define parent_class ligma_navigation_editor_parent_class
 
 
 static void
-gimp_navigation_editor_class_init (GimpNavigationEditorClass *klass)
+ligma_navigation_editor_class_init (LigmaNavigationEditorClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->dispose = gimp_navigation_editor_dispose;
+  object_class->dispose = ligma_navigation_editor_dispose;
 }
 
 static void
-gimp_navigation_editor_docked_iface_init (GimpDockedInterface *iface)
+ligma_navigation_editor_docked_iface_init (LigmaDockedInterface *iface)
 {
-  iface->set_context = gimp_navigation_editor_set_context;
+  iface->set_context = ligma_navigation_editor_set_context;
 }
 
 static void
-gimp_navigation_editor_init (GimpNavigationEditor *editor)
+ligma_navigation_editor_init (LigmaNavigationEditor *editor)
 {
   GtkWidget *frame;
 
@@ -149,33 +149,33 @@ gimp_navigation_editor_init (GimpNavigationEditor *editor)
   gtk_box_pack_start (GTK_BOX (editor), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  editor->view = gimp_view_new_by_types (NULL,
-                                         GIMP_TYPE_NAVIGATION_VIEW,
-                                         GIMP_TYPE_IMAGE_PROXY,
-                                         GIMP_VIEW_SIZE_MEDIUM, 0, TRUE);
+  editor->view = ligma_view_new_by_types (NULL,
+                                         LIGMA_TYPE_NAVIGATION_VIEW,
+                                         LIGMA_TYPE_IMAGE_PROXY,
+                                         LIGMA_VIEW_SIZE_MEDIUM, 0, TRUE);
   gtk_container_add (GTK_CONTAINER (frame), editor->view);
   gtk_widget_show (editor->view);
 
   g_signal_connect (editor->view, "marker-changed",
-                    G_CALLBACK (gimp_navigation_editor_marker_changed),
+                    G_CALLBACK (ligma_navigation_editor_marker_changed),
                     editor);
   g_signal_connect (editor->view, "zoom",
-                    G_CALLBACK (gimp_navigation_editor_zoom),
+                    G_CALLBACK (ligma_navigation_editor_zoom),
                     editor);
   g_signal_connect (editor->view, "scroll",
-                    G_CALLBACK (gimp_navigation_editor_scroll),
+                    G_CALLBACK (ligma_navigation_editor_scroll),
                     editor);
 
   gtk_widget_set_sensitive (GTK_WIDGET (editor), FALSE);
 }
 
 static void
-gimp_navigation_editor_dispose (GObject *object)
+ligma_navigation_editor_dispose (GObject *object)
 {
-  GimpNavigationEditor *editor = GIMP_NAVIGATION_EDITOR (object);
+  LigmaNavigationEditor *editor = LIGMA_NAVIGATION_EDITOR (object);
 
   if (editor->shell)
-    gimp_navigation_editor_set_shell (editor, NULL);
+    ligma_navigation_editor_set_shell (editor, NULL);
 
   if (editor->scale_timeout)
     {
@@ -187,46 +187,46 @@ gimp_navigation_editor_dispose (GObject *object)
 }
 
 static void
-gimp_navigation_editor_display_changed (GimpContext          *context,
-                                        GimpDisplay          *display,
-                                        GimpNavigationEditor *editor)
+ligma_navigation_editor_display_changed (LigmaContext          *context,
+                                        LigmaDisplay          *display,
+                                        LigmaNavigationEditor *editor)
 {
-  GimpDisplayShell *shell = NULL;
+  LigmaDisplayShell *shell = NULL;
 
-  if (display && gimp_display_get_image (display))
-    shell = gimp_display_get_shell (display);
+  if (display && ligma_display_get_image (display))
+    shell = ligma_display_get_shell (display);
 
-  gimp_navigation_editor_set_shell (editor, shell);
+  ligma_navigation_editor_set_shell (editor, shell);
 }
 
 static void
-gimp_navigation_editor_image_chaged (GimpContext          *context,
-                                     GimpImage            *image,
-                                     GimpNavigationEditor *editor)
+ligma_navigation_editor_image_chaged (LigmaContext          *context,
+                                     LigmaImage            *image,
+                                     LigmaNavigationEditor *editor)
 {
-  GimpDisplay      *display = gimp_context_get_display (context);
-  GimpDisplayShell *shell   = NULL;
+  LigmaDisplay      *display = ligma_context_get_display (context);
+  LigmaDisplayShell *shell   = NULL;
 
   if (display && image)
-    shell = gimp_display_get_shell (display);
+    shell = ligma_display_get_shell (display);
 
-  gimp_navigation_editor_set_shell (editor, shell);
+  ligma_navigation_editor_set_shell (editor, shell);
 }
 
 static void
-gimp_navigation_editor_set_context (GimpDocked  *docked,
-                                    GimpContext *context)
+ligma_navigation_editor_set_context (LigmaDocked  *docked,
+                                    LigmaContext *context)
 {
-  GimpNavigationEditor *editor  = GIMP_NAVIGATION_EDITOR (docked);
-  GimpDisplay          *display = NULL;
+  LigmaNavigationEditor *editor  = LIGMA_NAVIGATION_EDITOR (docked);
+  LigmaDisplay          *display = NULL;
 
   if (editor->context)
     {
       g_signal_handlers_disconnect_by_func (editor->context,
-                                            gimp_navigation_editor_display_changed,
+                                            ligma_navigation_editor_display_changed,
                                             editor);
       g_signal_handlers_disconnect_by_func (editor->context,
-                                            gimp_navigation_editor_image_chaged,
+                                            ligma_navigation_editor_image_chaged,
                                             editor);
     }
 
@@ -235,23 +235,23 @@ gimp_navigation_editor_set_context (GimpDocked  *docked,
   if (editor->context)
     {
       g_signal_connect (context, "display-changed",
-                        G_CALLBACK (gimp_navigation_editor_display_changed),
+                        G_CALLBACK (ligma_navigation_editor_display_changed),
                         editor);
-      /* make sure to also call gimp_navigation_editor_set_shell() when the
+      /* make sure to also call ligma_navigation_editor_set_shell() when the
        * last image is closed, even though the display isn't changed, so that
        * the editor is properly cleared.
        */
       g_signal_connect (context, "image-changed",
-                        G_CALLBACK (gimp_navigation_editor_image_chaged),
+                        G_CALLBACK (ligma_navigation_editor_image_chaged),
                         editor);
 
-      display = gimp_context_get_display (context);
+      display = ligma_context_get_display (context);
     }
 
-  gimp_view_renderer_set_context (GIMP_VIEW (editor->view)->renderer,
+  ligma_view_renderer_set_context (LIGMA_VIEW (editor->view)->renderer,
                                   context);
 
-  gimp_navigation_editor_display_changed (editor->context,
+  ligma_navigation_editor_display_changed (editor->context,
                                           display,
                                           editor);
 }
@@ -260,26 +260,26 @@ gimp_navigation_editor_set_context (GimpDocked  *docked,
 /*  public functions  */
 
 GtkWidget *
-gimp_navigation_editor_new (GimpMenuFactory *menu_factory)
+ligma_navigation_editor_new (LigmaMenuFactory *menu_factory)
 {
-  return gimp_navigation_editor_new_private (menu_factory, NULL);
+  return ligma_navigation_editor_new_private (menu_factory, NULL);
 }
 
 void
-gimp_navigation_editor_popup (GimpDisplayShell *shell,
+ligma_navigation_editor_popup (LigmaDisplayShell *shell,
                               GtkWidget        *widget,
                               GdkEvent         *event,
                               gint              click_x,
                               gint              click_y)
 {
   GtkStyleContext      *style = gtk_widget_get_style_context (widget);
-  GimpNavigationEditor *editor;
-  GimpNavigationView   *view;
+  LigmaNavigationEditor *editor;
+  LigmaNavigationView   *view;
   gint                  x, y;
   gint                  view_marker_center_x, view_marker_center_y;
   gint                  view_marker_width, view_marker_height;
 
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
   if (! shell->nav_popup)
@@ -294,29 +294,29 @@ gimp_navigation_editor_popup (GimpDisplayShell *shell,
       gtk_widget_show (frame);
 
       editor =
-        GIMP_NAVIGATION_EDITOR (gimp_navigation_editor_new_private (NULL,
+        LIGMA_NAVIGATION_EDITOR (ligma_navigation_editor_new_private (NULL,
                                                                     shell));
       gtk_container_add (GTK_CONTAINER (frame), GTK_WIDGET (editor));
       gtk_widget_show (GTK_WIDGET (editor));
 
       g_signal_connect (editor->view, "button-release-event",
-                        G_CALLBACK (gimp_navigation_editor_button_release),
+                        G_CALLBACK (ligma_navigation_editor_button_release),
                         shell);
     }
   else
     {
       GtkWidget *bin = gtk_bin_get_child (GTK_BIN (shell->nav_popup));
 
-      editor = GIMP_NAVIGATION_EDITOR (gtk_bin_get_child (GTK_BIN (bin)));
+      editor = LIGMA_NAVIGATION_EDITOR (gtk_bin_get_child (GTK_BIN (bin)));
     }
 
-  view = GIMP_NAVIGATION_VIEW (editor->view);
+  view = LIGMA_NAVIGATION_VIEW (editor->view);
 
   /* Set poup screen */
   gtk_window_set_screen (GTK_WINDOW (shell->nav_popup),
                          gtk_widget_get_screen (widget));
 
-  gimp_navigation_view_get_local_marker (view,
+  ligma_navigation_view_get_local_marker (view,
                                          &view_marker_center_x,
                                          &view_marker_center_y,
                                          &view_marker_width,
@@ -331,7 +331,7 @@ gimp_navigation_editor_popup (GimpDisplayShell *shell,
     gint          border_width, border_height;
     gint          screen_click_x, screen_click_y;
 
-    monitor = gimp_widget_get_monitor (widget);
+    monitor = ligma_widget_get_monitor (widget);
     gdk_monitor_get_workarea (monitor, &workarea);
 
     gdk_window_get_origin (gtk_widget_get_window (widget),
@@ -344,8 +344,8 @@ gimp_navigation_editor_popup (GimpDisplayShell *shell,
     screen_click_y = y_origin + click_y;
     border_width   = 2 * border.left;
     border_height  = 2 * border.top;
-    popup_width    = GIMP_VIEW (view)->renderer->width  - 2 * border_width;
-    popup_height   = GIMP_VIEW (view)->renderer->height - 2 * border_height;
+    popup_width    = LIGMA_VIEW (view)->renderer->width  - 2 * border_width;
+    popup_height   = LIGMA_VIEW (view)->renderer->height - 2 * border_height;
 
     x = screen_click_x -
         border_width -
@@ -381,43 +381,43 @@ gimp_navigation_editor_popup (GimpDisplayShell *shell,
   gdk_display_flush (gtk_widget_get_display (shell->nav_popup));
 
   /* fill in then grab pointer */
-  gimp_navigation_view_set_motion_offset (view, 0, 0);
-  gimp_navigation_view_grab_pointer (view, event);
+  ligma_navigation_view_set_motion_offset (view, 0, 0);
+  ligma_navigation_view_grab_pointer (view, event);
 }
 
 
 /*  private functions  */
 
 static GtkWidget *
-gimp_navigation_editor_new_private (GimpMenuFactory  *menu_factory,
-                                    GimpDisplayShell *shell)
+ligma_navigation_editor_new_private (LigmaMenuFactory  *menu_factory,
+                                    LigmaDisplayShell *shell)
 {
-  GimpNavigationEditor *editor;
+  LigmaNavigationEditor *editor;
 
   g_return_val_if_fail (menu_factory == NULL ||
-                        GIMP_IS_MENU_FACTORY (menu_factory), NULL);
-  g_return_val_if_fail (shell == NULL || GIMP_IS_DISPLAY_SHELL (shell), NULL);
+                        LIGMA_IS_MENU_FACTORY (menu_factory), NULL);
+  g_return_val_if_fail (shell == NULL || LIGMA_IS_DISPLAY_SHELL (shell), NULL);
   g_return_val_if_fail (menu_factory || shell, NULL);
 
   if (shell)
     {
-      Gimp              *gimp   = shell->display->gimp;
-      GimpDisplayConfig *config = shell->display->config;
-      GimpView          *view;
+      Ligma              *ligma   = shell->display->ligma;
+      LigmaDisplayConfig *config = shell->display->config;
+      LigmaView          *view;
 
-      editor = g_object_new (GIMP_TYPE_NAVIGATION_EDITOR, NULL);
+      editor = g_object_new (LIGMA_TYPE_NAVIGATION_EDITOR, NULL);
 
-      view = GIMP_VIEW (editor->view);
+      view = LIGMA_VIEW (editor->view);
 
-      gimp_view_renderer_set_size (view->renderer,
+      ligma_view_renderer_set_size (view->renderer,
                                    config->nav_preview_size * 3,
                                    view->renderer->border_width);
-      gimp_view_renderer_set_context (view->renderer,
-                                      gimp_get_user_context (gimp));
-      gimp_view_renderer_set_color_config (view->renderer,
-                                           gimp_display_shell_get_color_config (shell));
+      ligma_view_renderer_set_context (view->renderer,
+                                      ligma_get_user_context (ligma));
+      ligma_view_renderer_set_color_config (view->renderer,
+                                           ligma_display_shell_get_color_config (shell));
 
-      gimp_navigation_editor_set_shell (editor, shell);
+      ligma_navigation_editor_set_shell (editor, shell);
 
     }
   else
@@ -425,40 +425,40 @@ gimp_navigation_editor_new_private (GimpMenuFactory  *menu_factory,
       GtkWidget *hscale;
       GtkWidget *hbox;
 
-      editor = g_object_new (GIMP_TYPE_NAVIGATION_EDITOR,
+      editor = g_object_new (LIGMA_TYPE_NAVIGATION_EDITOR,
                              "menu-factory",    menu_factory,
                              "menu-identifier", "<NavigationEditor>",
                              NULL);
 
       gtk_widget_set_size_request (editor->view,
-                                   GIMP_VIEW_SIZE_HUGE,
-                                   GIMP_VIEW_SIZE_HUGE);
-      gimp_view_set_expand (GIMP_VIEW (editor->view), TRUE);
+                                   LIGMA_VIEW_SIZE_HUGE,
+                                   LIGMA_VIEW_SIZE_HUGE);
+      ligma_view_set_expand (LIGMA_VIEW (editor->view), TRUE);
 
       /* the editor buttons */
 
       editor->zoom_out_button =
-        gimp_editor_add_action_button (GIMP_EDITOR (editor), "view",
+        ligma_editor_add_action_button (LIGMA_EDITOR (editor), "view",
                                        "view-zoom-out", NULL);
 
       editor->zoom_in_button =
-        gimp_editor_add_action_button (GIMP_EDITOR (editor), "view",
+        ligma_editor_add_action_button (LIGMA_EDITOR (editor), "view",
                                        "view-zoom-in", NULL);
 
       editor->zoom_100_button =
-        gimp_editor_add_action_button (GIMP_EDITOR (editor), "view",
+        ligma_editor_add_action_button (LIGMA_EDITOR (editor), "view",
                                        "view-zoom-1-1", NULL);
 
       editor->zoom_fit_in_button =
-        gimp_editor_add_action_button (GIMP_EDITOR (editor), "view",
+        ligma_editor_add_action_button (LIGMA_EDITOR (editor), "view",
                                        "view-zoom-fit-in", NULL);
 
       editor->zoom_fill_button =
-        gimp_editor_add_action_button (GIMP_EDITOR (editor), "view",
+        ligma_editor_add_action_button (LIGMA_EDITOR (editor), "view",
                                        "view-zoom-fill", NULL);
 
       editor->shrink_wrap_button =
-        gimp_editor_add_action_button (GIMP_EDITOR (editor), "view",
+        ligma_editor_add_action_button (LIGMA_EDITOR (editor), "view",
                                        "view-shrink-wrap", NULL);
 
       /* the zoom scale */
@@ -471,7 +471,7 @@ gimp_navigation_editor_new_private (GimpMenuFactory  *menu_factory,
                                                     0.5, 1.0, 0.0);
 
       g_signal_connect (editor->zoom_adjustment, "value-changed",
-                        G_CALLBACK (gimp_navigation_editor_zoom_adj_changed),
+                        G_CALLBACK (ligma_navigation_editor_zoom_adj_changed),
                         editor);
 
       hscale = gtk_scale_new (GTK_ORIENTATION_HORIZONTAL,
@@ -488,18 +488,18 @@ gimp_navigation_editor_new_private (GimpMenuFactory  *menu_factory,
       gtk_widget_show (editor->zoom_label);
     }
 
-  gimp_view_renderer_set_background (GIMP_VIEW (editor->view)->renderer,
-                                     GIMP_ICON_TEXTURE);
+  ligma_view_renderer_set_background (LIGMA_VIEW (editor->view)->renderer,
+                                     LIGMA_ICON_TEXTURE);
 
   return GTK_WIDGET (editor);
 }
 
 static void
-gimp_navigation_editor_set_shell (GimpNavigationEditor *editor,
-                                  GimpDisplayShell     *shell)
+ligma_navigation_editor_set_shell (LigmaNavigationEditor *editor,
+                                  LigmaDisplayShell     *shell)
 {
-  g_return_if_fail (GIMP_IS_NAVIGATION_EDITOR (editor));
-  g_return_if_fail (! shell || GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (LIGMA_IS_NAVIGATION_EDITOR (editor));
+  g_return_if_fail (! shell || LIGMA_IS_DISPLAY_SHELL (shell));
 
   if (shell == editor->shell)
     return;
@@ -507,26 +507,26 @@ gimp_navigation_editor_set_shell (GimpNavigationEditor *editor,
   if (editor->shell)
     {
       g_signal_handlers_disconnect_by_func (editor->shell,
-                                            gimp_navigation_editor_shell_infinite_canvas_notify,
+                                            ligma_navigation_editor_shell_infinite_canvas_notify,
                                             editor);
       g_signal_handlers_disconnect_by_func (editor->shell,
-                                            gimp_navigation_editor_shell_scaled,
+                                            ligma_navigation_editor_shell_scaled,
                                             editor);
       g_signal_handlers_disconnect_by_func (editor->shell,
-                                            gimp_navigation_editor_shell_scrolled,
+                                            ligma_navigation_editor_shell_scrolled,
                                             editor);
       g_signal_handlers_disconnect_by_func (editor->shell,
-                                            gimp_navigation_editor_shell_rotated,
+                                            ligma_navigation_editor_shell_rotated,
                                             editor);
       g_signal_handlers_disconnect_by_func (editor->shell,
-                                            gimp_navigation_editor_shell_reconnect,
+                                            ligma_navigation_editor_shell_reconnect,
                                             editor);
 
       g_signal_handlers_disconnect_by_func (editor->shell->options,
-                                            gimp_navigation_editor_options_show_canvas_notify,
+                                            ligma_navigation_editor_options_show_canvas_notify,
                                             editor);
       g_signal_handlers_disconnect_by_func (editor->shell->fullscreen_options,
-                                            gimp_navigation_editor_options_show_canvas_notify,
+                                            ligma_navigation_editor_options_show_canvas_notify,
                                             editor);
     }
   else if (shell)
@@ -538,65 +538,65 @@ gimp_navigation_editor_set_shell (GimpNavigationEditor *editor,
 
   if (editor->shell)
     {
-      GimpImage *image = gimp_display_get_image (shell->display);
+      LigmaImage *image = ligma_display_get_image (shell->display);
 
       g_clear_object (&editor->image_proxy);
 
       if (image)
         {
-          editor->image_proxy = gimp_image_proxy_new (image);
+          editor->image_proxy = ligma_image_proxy_new (image);
 
           g_signal_connect (
             editor->image_proxy, "size-changed",
-            G_CALLBACK (gimp_navigation_editor_viewable_size_changed),
+            G_CALLBACK (ligma_navigation_editor_viewable_size_changed),
             editor);
         }
 
-      gimp_view_set_viewable (GIMP_VIEW (editor->view),
-                              GIMP_VIEWABLE (editor->image_proxy));
+      ligma_view_set_viewable (LIGMA_VIEW (editor->view),
+                              LIGMA_VIEWABLE (editor->image_proxy));
 
       g_signal_connect (editor->shell, "notify::infinite-canvas",
-                        G_CALLBACK (gimp_navigation_editor_shell_infinite_canvas_notify),
+                        G_CALLBACK (ligma_navigation_editor_shell_infinite_canvas_notify),
                         editor);
       g_signal_connect (editor->shell, "scaled",
-                        G_CALLBACK (gimp_navigation_editor_shell_scaled),
+                        G_CALLBACK (ligma_navigation_editor_shell_scaled),
                         editor);
       g_signal_connect (editor->shell, "scrolled",
-                        G_CALLBACK (gimp_navigation_editor_shell_scrolled),
+                        G_CALLBACK (ligma_navigation_editor_shell_scrolled),
                         editor);
       g_signal_connect (editor->shell, "rotated",
-                        G_CALLBACK (gimp_navigation_editor_shell_rotated),
+                        G_CALLBACK (ligma_navigation_editor_shell_rotated),
                         editor);
       g_signal_connect (editor->shell, "reconnect",
-                        G_CALLBACK (gimp_navigation_editor_shell_reconnect),
+                        G_CALLBACK (ligma_navigation_editor_shell_reconnect),
                         editor);
 
       g_signal_connect (editor->shell->options, "notify::show-canvas-boundary",
-                        G_CALLBACK (gimp_navigation_editor_options_show_canvas_notify),
+                        G_CALLBACK (ligma_navigation_editor_options_show_canvas_notify),
                         editor);
       g_signal_connect (editor->shell->fullscreen_options, "notify::show-canvas-boundary",
-                        G_CALLBACK (gimp_navigation_editor_options_show_canvas_notify),
+                        G_CALLBACK (ligma_navigation_editor_options_show_canvas_notify),
                         editor);
 
-      gimp_navigation_editor_shell_scaled (editor->shell, editor);
+      ligma_navigation_editor_shell_scaled (editor->shell, editor);
     }
   else
     {
-      gimp_view_set_viewable (GIMP_VIEW (editor->view), NULL);
+      ligma_view_set_viewable (LIGMA_VIEW (editor->view), NULL);
       gtk_widget_set_sensitive (GTK_WIDGET (editor), FALSE);
 
       g_clear_object (&editor->image_proxy);
     }
 
-  if (gimp_editor_get_ui_manager (GIMP_EDITOR (editor)))
-    gimp_ui_manager_update (gimp_editor_get_ui_manager (GIMP_EDITOR (editor)),
-                            gimp_editor_get_popup_data (GIMP_EDITOR (editor)));
+  if (ligma_editor_get_ui_manager (LIGMA_EDITOR (editor)))
+    ligma_ui_manager_update (ligma_editor_get_ui_manager (LIGMA_EDITOR (editor)),
+                            ligma_editor_get_popup_data (LIGMA_EDITOR (editor)));
 }
 
 static gboolean
-gimp_navigation_editor_button_release (GtkWidget        *widget,
+ligma_navigation_editor_button_release (GtkWidget        *widget,
                                        GdkEventButton   *bevent,
-                                       GimpDisplayShell *shell)
+                                       LigmaDisplayShell *shell)
 {
   if (bevent->button == 1)
     {
@@ -607,62 +607,62 @@ gimp_navigation_editor_button_release (GtkWidget        *widget,
 }
 
 static void
-gimp_navigation_editor_marker_changed (GimpNavigationView   *view,
+ligma_navigation_editor_marker_changed (LigmaNavigationView   *view,
                                        gdouble               center_x,
                                        gdouble               center_y,
                                        gdouble               width,
                                        gdouble               height,
-                                       GimpNavigationEditor *editor)
+                                       LigmaNavigationEditor *editor)
 {
-  GimpViewRenderer *renderer = GIMP_VIEW (editor->view)->renderer;
+  LigmaViewRenderer *renderer = LIGMA_VIEW (editor->view)->renderer;
 
   if (editor->shell)
     {
-      if (gimp_display_get_image (editor->shell->display))
+      if (ligma_display_get_image (editor->shell->display))
         {
           GeglRectangle bounding_box;
 
-          bounding_box = gimp_image_proxy_get_bounding_box (
-            GIMP_IMAGE_PROXY (renderer->viewable));
+          bounding_box = ligma_image_proxy_get_bounding_box (
+            LIGMA_IMAGE_PROXY (renderer->viewable));
 
           center_x += bounding_box.x;
           center_y += bounding_box.y;
 
-          gimp_display_shell_scroll_center_image_xy (editor->shell,
+          ligma_display_shell_scroll_center_image_xy (editor->shell,
                                                      center_x, center_y);
         }
     }
 }
 
 static void
-gimp_navigation_editor_zoom (GimpNavigationView   *view,
-                             GimpZoomType          direction,
+ligma_navigation_editor_zoom (LigmaNavigationView   *view,
+                             LigmaZoomType          direction,
                              gdouble               delta,
-                             GimpNavigationEditor *editor)
+                             LigmaNavigationEditor *editor)
 {
-  g_return_if_fail (direction != GIMP_ZOOM_TO);
+  g_return_if_fail (direction != LIGMA_ZOOM_TO);
 
   if (editor->shell)
     {
-      if (gimp_display_get_image (editor->shell->display))
-        gimp_display_shell_scale (editor->shell,
+      if (ligma_display_get_image (editor->shell->display))
+        ligma_display_shell_scale (editor->shell,
                                   direction,
                                   delta,
-                                  GIMP_ZOOM_FOCUS_BEST_GUESS);
+                                  LIGMA_ZOOM_FOCUS_BEST_GUESS);
     }
 }
 
 static void
-gimp_navigation_editor_scroll (GimpNavigationView   *view,
+ligma_navigation_editor_scroll (LigmaNavigationView   *view,
                                GdkEventScroll       *sevent,
-                               GimpNavigationEditor *editor)
+                               LigmaNavigationEditor *editor)
 {
   if (editor->shell)
     {
       gdouble value_x;
       gdouble value_y;
 
-      gimp_scroll_adjustment_values (sevent,
+      ligma_scroll_adjustment_values (sevent,
                                      editor->shell->hsbdata,
                                      editor->shell->vsbdata,
                                      &value_x, &value_y);
@@ -673,16 +673,16 @@ gimp_navigation_editor_scroll (GimpNavigationView   *view,
 }
 
 static gboolean
-gimp_navigation_editor_zoom_adj_changed_timeout (gpointer data)
+ligma_navigation_editor_zoom_adj_changed_timeout (gpointer data)
 {
-  GimpNavigationEditor *editor = GIMP_NAVIGATION_EDITOR (data);
+  LigmaNavigationEditor *editor = LIGMA_NAVIGATION_EDITOR (data);
   GtkAdjustment        *adj    = editor->zoom_adjustment;
 
-  if (gimp_display_get_image (editor->shell->display))
-    gimp_display_shell_scale (editor->shell,
-                              GIMP_ZOOM_TO,
+  if (ligma_display_get_image (editor->shell->display))
+    ligma_display_shell_scale (editor->shell,
+                              LIGMA_ZOOM_TO,
                               pow (2.0, gtk_adjustment_get_value (adj)),
-                              GIMP_ZOOM_FOCUS_BEST_GUESS);
+                              LIGMA_ZOOM_FOCUS_BEST_GUESS);
 
   editor->scale_timeout = 0;
 
@@ -690,33 +690,33 @@ gimp_navigation_editor_zoom_adj_changed_timeout (gpointer data)
 }
 
 static void
-gimp_navigation_editor_zoom_adj_changed (GtkAdjustment        *adj,
-                                         GimpNavigationEditor *editor)
+ligma_navigation_editor_zoom_adj_changed (GtkAdjustment        *adj,
+                                         LigmaNavigationEditor *editor)
 {
   if (editor->scale_timeout)
     g_source_remove (editor->scale_timeout);
 
   editor->scale_timeout =
     g_timeout_add (UPDATE_DELAY,
-                   gimp_navigation_editor_zoom_adj_changed_timeout,
+                   ligma_navigation_editor_zoom_adj_changed_timeout,
                    editor);
 }
 
 static void
-gimp_navigation_editor_shell_infinite_canvas_notify (GimpDisplayShell     *shell,
+ligma_navigation_editor_shell_infinite_canvas_notify (LigmaDisplayShell     *shell,
                                                      const GParamSpec     *pspec,
-                                                     GimpNavigationEditor *editor)
+                                                     LigmaNavigationEditor *editor)
 {
-  gimp_navigation_editor_update_marker (editor);
+  ligma_navigation_editor_update_marker (editor);
 
-  if (gimp_editor_get_ui_manager (GIMP_EDITOR (editor)))
-    gimp_ui_manager_update (gimp_editor_get_ui_manager (GIMP_EDITOR (editor)),
-                            gimp_editor_get_popup_data (GIMP_EDITOR (editor)));
+  if (ligma_editor_get_ui_manager (LIGMA_EDITOR (editor)))
+    ligma_ui_manager_update (ligma_editor_get_ui_manager (LIGMA_EDITOR (editor)),
+                            ligma_editor_get_popup_data (LIGMA_EDITOR (editor)));
 }
 
 static void
-gimp_navigation_editor_shell_scaled (GimpDisplayShell     *shell,
-                                     GimpNavigationEditor *editor)
+ligma_navigation_editor_shell_scaled (LigmaDisplayShell     *shell,
+                                     LigmaNavigationEditor *editor)
 {
   if (editor->zoom_label)
     {
@@ -733,122 +733,122 @@ gimp_navigation_editor_shell_scaled (GimpDisplayShell     *shell,
     {
       gdouble val;
 
-      val = log (gimp_zoom_model_get_factor (shell->zoom)) / G_LN2;
+      val = log (ligma_zoom_model_get_factor (shell->zoom)) / G_LN2;
 
       g_signal_handlers_block_by_func (editor->zoom_adjustment,
-                                       gimp_navigation_editor_zoom_adj_changed,
+                                       ligma_navigation_editor_zoom_adj_changed,
                                        editor);
 
       gtk_adjustment_set_value (editor->zoom_adjustment, val);
 
       g_signal_handlers_unblock_by_func (editor->zoom_adjustment,
-                                         gimp_navigation_editor_zoom_adj_changed,
+                                         ligma_navigation_editor_zoom_adj_changed,
                                          editor);
     }
 
-  gimp_navigation_editor_update_marker (editor);
+  ligma_navigation_editor_update_marker (editor);
 
-  if (gimp_editor_get_ui_manager (GIMP_EDITOR (editor)))
-    gimp_ui_manager_update (gimp_editor_get_ui_manager (GIMP_EDITOR (editor)),
-                            gimp_editor_get_popup_data (GIMP_EDITOR (editor)));
+  if (ligma_editor_get_ui_manager (LIGMA_EDITOR (editor)))
+    ligma_ui_manager_update (ligma_editor_get_ui_manager (LIGMA_EDITOR (editor)),
+                            ligma_editor_get_popup_data (LIGMA_EDITOR (editor)));
 }
 
 static void
-gimp_navigation_editor_shell_scrolled (GimpDisplayShell     *shell,
-                                       GimpNavigationEditor *editor)
+ligma_navigation_editor_shell_scrolled (LigmaDisplayShell     *shell,
+                                       LigmaNavigationEditor *editor)
 {
-  gimp_navigation_editor_update_marker (editor);
+  ligma_navigation_editor_update_marker (editor);
 
-  if (gimp_editor_get_ui_manager (GIMP_EDITOR (editor)))
-    gimp_ui_manager_update (gimp_editor_get_ui_manager (GIMP_EDITOR (editor)),
-                            gimp_editor_get_popup_data (GIMP_EDITOR (editor)));
+  if (ligma_editor_get_ui_manager (LIGMA_EDITOR (editor)))
+    ligma_ui_manager_update (ligma_editor_get_ui_manager (LIGMA_EDITOR (editor)),
+                            ligma_editor_get_popup_data (LIGMA_EDITOR (editor)));
 }
 
 static void
-gimp_navigation_editor_shell_rotated (GimpDisplayShell     *shell,
-                                      GimpNavigationEditor *editor)
+ligma_navigation_editor_shell_rotated (LigmaDisplayShell     *shell,
+                                      LigmaNavigationEditor *editor)
 {
-  gimp_navigation_editor_update_marker (editor);
+  ligma_navigation_editor_update_marker (editor);
 
-  if (gimp_editor_get_ui_manager (GIMP_EDITOR (editor)))
-    gimp_ui_manager_update (gimp_editor_get_ui_manager (GIMP_EDITOR (editor)),
-                            gimp_editor_get_popup_data (GIMP_EDITOR (editor)));
+  if (ligma_editor_get_ui_manager (LIGMA_EDITOR (editor)))
+    ligma_ui_manager_update (ligma_editor_get_ui_manager (LIGMA_EDITOR (editor)),
+                            ligma_editor_get_popup_data (LIGMA_EDITOR (editor)));
 }
 
 static void
-gimp_navigation_editor_viewable_size_changed (GimpViewable         *viewable,
-                                              GimpNavigationEditor *editor)
+ligma_navigation_editor_viewable_size_changed (LigmaViewable         *viewable,
+                                              LigmaNavigationEditor *editor)
 {
-  gimp_navigation_editor_update_marker (editor);
+  ligma_navigation_editor_update_marker (editor);
 
-  if (gimp_editor_get_ui_manager (GIMP_EDITOR (editor)))
-    gimp_ui_manager_update (gimp_editor_get_ui_manager (GIMP_EDITOR (editor)),
-                            gimp_editor_get_popup_data (GIMP_EDITOR (editor)));
+  if (ligma_editor_get_ui_manager (LIGMA_EDITOR (editor)))
+    ligma_ui_manager_update (ligma_editor_get_ui_manager (LIGMA_EDITOR (editor)),
+                            ligma_editor_get_popup_data (LIGMA_EDITOR (editor)));
 }
 
 static void
-gimp_navigation_editor_options_show_canvas_notify (GimpDisplayOptions   *options,
+ligma_navigation_editor_options_show_canvas_notify (LigmaDisplayOptions   *options,
                                                    const GParamSpec     *pspec,
-                                                   GimpNavigationEditor *editor)
+                                                   LigmaNavigationEditor *editor)
 {
-  gimp_navigation_editor_update_marker (editor);
+  ligma_navigation_editor_update_marker (editor);
 }
 
 static void
-gimp_navigation_editor_shell_reconnect (GimpDisplayShell     *shell,
-                                        GimpNavigationEditor *editor)
+ligma_navigation_editor_shell_reconnect (LigmaDisplayShell     *shell,
+                                        LigmaNavigationEditor *editor)
 {
-  GimpImage *image = gimp_display_get_image (shell->display);
+  LigmaImage *image = ligma_display_get_image (shell->display);
 
   g_clear_object (&editor->image_proxy);
 
   if (image)
     {
-      editor->image_proxy = gimp_image_proxy_new (image);
+      editor->image_proxy = ligma_image_proxy_new (image);
 
       g_signal_connect (
         editor->image_proxy, "size-changed",
-        G_CALLBACK (gimp_navigation_editor_viewable_size_changed),
+        G_CALLBACK (ligma_navigation_editor_viewable_size_changed),
         editor);
     }
 
-  gimp_view_set_viewable (GIMP_VIEW (editor->view),
-                          GIMP_VIEWABLE (editor->image_proxy));
+  ligma_view_set_viewable (LIGMA_VIEW (editor->view),
+                          LIGMA_VIEWABLE (editor->image_proxy));
 
-  if (gimp_editor_get_ui_manager (GIMP_EDITOR (editor)))
-    gimp_ui_manager_update (gimp_editor_get_ui_manager (GIMP_EDITOR (editor)),
-                            gimp_editor_get_popup_data (GIMP_EDITOR (editor)));
+  if (ligma_editor_get_ui_manager (LIGMA_EDITOR (editor)))
+    ligma_ui_manager_update (ligma_editor_get_ui_manager (LIGMA_EDITOR (editor)),
+                            ligma_editor_get_popup_data (LIGMA_EDITOR (editor)));
 }
 
 static void
-gimp_navigation_editor_update_marker (GimpNavigationEditor *editor)
+ligma_navigation_editor_update_marker (LigmaNavigationEditor *editor)
 {
-  GimpViewRenderer *renderer = GIMP_VIEW (editor->view)->renderer;
-  GimpDisplayShell *shell    = editor->shell;
+  LigmaViewRenderer *renderer = LIGMA_VIEW (editor->view)->renderer;
+  LigmaDisplayShell *shell    = editor->shell;
 
   if (renderer->dot_for_dot != shell->dot_for_dot)
-    gimp_view_renderer_set_dot_for_dot (renderer, shell->dot_for_dot);
+    ligma_view_renderer_set_dot_for_dot (renderer, shell->dot_for_dot);
 
   if (renderer->viewable)
     {
-      GimpNavigationView *view = GIMP_NAVIGATION_VIEW (editor->view);
-      GimpImage          *image;
+      LigmaNavigationView *view = LIGMA_NAVIGATION_VIEW (editor->view);
+      LigmaImage          *image;
       GeglRectangle       bounding_box;
       gdouble             x, y;
       gdouble             w, h;
 
-      image = gimp_image_proxy_get_image (
-        GIMP_IMAGE_PROXY (renderer->viewable));
+      image = ligma_image_proxy_get_image (
+        LIGMA_IMAGE_PROXY (renderer->viewable));
 
-      gimp_image_proxy_set_show_all (
-        GIMP_IMAGE_PROXY (renderer->viewable),
-        gimp_display_shell_get_infinite_canvas (shell));
+      ligma_image_proxy_set_show_all (
+        LIGMA_IMAGE_PROXY (renderer->viewable),
+        ligma_display_shell_get_infinite_canvas (shell));
 
-      bounding_box = gimp_image_proxy_get_bounding_box (
-        GIMP_IMAGE_PROXY (renderer->viewable));
+      bounding_box = ligma_image_proxy_get_bounding_box (
+        LIGMA_IMAGE_PROXY (renderer->viewable));
 
-      gimp_display_shell_scroll_get_viewport (shell, &x, &y, &w, &h);
-      gimp_display_shell_untransform_xy_f (shell,
+      ligma_display_shell_scroll_get_viewport (shell, &x, &y, &w, &h);
+      ligma_display_shell_untransform_xy_f (shell,
                                            shell->disp_width  / 2,
                                            shell->disp_height / 2,
                                            &x, &y);
@@ -856,17 +856,17 @@ gimp_navigation_editor_update_marker (GimpNavigationEditor *editor)
       x -= bounding_box.x;
       y -= bounding_box.y;
 
-      gimp_navigation_view_set_marker (view,
+      ligma_navigation_view_set_marker (view,
                                        x, y, w, h,
                                        shell->flip_horizontally,
                                        shell->flip_vertically,
                                        shell->rotate_angle);
 
-      gimp_navigation_view_set_canvas (
+      ligma_navigation_view_set_canvas (
         view,
-        gimp_display_shell_get_infinite_canvas (shell) &&
-        gimp_display_shell_get_show_canvas (shell),
+        ligma_display_shell_get_infinite_canvas (shell) &&
+        ligma_display_shell_get_show_canvas (shell),
         -bounding_box.x,              -bounding_box.y,
-        gimp_image_get_width (image), gimp_image_get_height (image));
+        ligma_image_get_width (image), ligma_image_get_height (image));
     }
 }

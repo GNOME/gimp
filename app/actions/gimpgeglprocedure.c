@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpgeglprocedure.c
- * Copyright (C) 2016-2018 Michael Natterer <mitch@gimp.org>
+ * ligmageglprocedure.c
+ * Copyright (C) 2016-2018 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,98 +25,98 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "actions-types.h"
 
-#include "config/gimpguiconfig.h"
+#include "config/ligmaguiconfig.h"
 
-#include "operations/gimp-operation-config.h"
-#include "operations/gimpoperationsettings.h"
+#include "operations/ligma-operation-config.h"
+#include "operations/ligmaoperationsettings.h"
 
-#include "core/gimp.h"
-#include "core/gimp-memsize.h"
-#include "core/gimpcontainer.h"
-#include "core/gimpcontext.h"
-#include "core/gimpdisplay.h"
-#include "core/gimpdrawable-operation.h"
-#include "core/gimpimage.h"
-#include "core/gimplayermask.h"
-#include "core/gimpparamspecs.h"
-#include "core/gimpsettings.h"
-#include "core/gimptoolinfo.h"
+#include "core/ligma.h"
+#include "core/ligma-memsize.h"
+#include "core/ligmacontainer.h"
+#include "core/ligmacontext.h"
+#include "core/ligmadisplay.h"
+#include "core/ligmadrawable-operation.h"
+#include "core/ligmaimage.h"
+#include "core/ligmalayermask.h"
+#include "core/ligmaparamspecs.h"
+#include "core/ligmasettings.h"
+#include "core/ligmatoolinfo.h"
 
-#include "tools/gimpoperationtool.h"
+#include "tools/ligmaoperationtool.h"
 #include "tools/tool_manager.h"
 
-#include "gimpgeglprocedure.h"
+#include "ligmageglprocedure.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-static void     gimp_gegl_procedure_finalize            (GObject        *object);
+static void     ligma_gegl_procedure_finalize            (GObject        *object);
 
-static gint64   gimp_gegl_procedure_get_memsize         (GimpObject     *object,
+static gint64   ligma_gegl_procedure_get_memsize         (LigmaObject     *object,
                                                          gint64         *gui_size);
 
-static gchar  * gimp_gegl_procedure_get_description     (GimpViewable   *viewable,
+static gchar  * ligma_gegl_procedure_get_description     (LigmaViewable   *viewable,
                                                          gchar         **tooltip);
 
-static const gchar * gimp_gegl_procedure_get_menu_label (GimpProcedure  *procedure);
-static gboolean      gimp_gegl_procedure_get_sensitive  (GimpProcedure  *procedure,
-                                                         GimpObject     *object,
+static const gchar * ligma_gegl_procedure_get_menu_label (LigmaProcedure  *procedure);
+static gboolean      ligma_gegl_procedure_get_sensitive  (LigmaProcedure  *procedure,
+                                                         LigmaObject     *object,
                                                          const gchar   **reason);
-static GimpValueArray * gimp_gegl_procedure_execute     (GimpProcedure  *procedure,
-                                                         Gimp           *gimp,
-                                                         GimpContext    *context,
-                                                         GimpProgress   *progress,
-                                                         GimpValueArray *args,
+static LigmaValueArray * ligma_gegl_procedure_execute     (LigmaProcedure  *procedure,
+                                                         Ligma           *ligma,
+                                                         LigmaContext    *context,
+                                                         LigmaProgress   *progress,
+                                                         LigmaValueArray *args,
                                                          GError        **error);
-static void     gimp_gegl_procedure_execute_async       (GimpProcedure  *procedure,
-                                                         Gimp           *gimp,
-                                                         GimpContext    *context,
-                                                         GimpProgress   *progress,
-                                                         GimpValueArray *args,
-                                                         GimpDisplay    *display);
+static void     ligma_gegl_procedure_execute_async       (LigmaProcedure  *procedure,
+                                                         Ligma           *ligma,
+                                                         LigmaContext    *context,
+                                                         LigmaProgress   *progress,
+                                                         LigmaValueArray *args,
+                                                         LigmaDisplay    *display);
 
 
-G_DEFINE_TYPE (GimpGeglProcedure, gimp_gegl_procedure,
-               GIMP_TYPE_PROCEDURE)
+G_DEFINE_TYPE (LigmaGeglProcedure, ligma_gegl_procedure,
+               LIGMA_TYPE_PROCEDURE)
 
-#define parent_class gimp_gegl_procedure_parent_class
+#define parent_class ligma_gegl_procedure_parent_class
 
 
 static void
-gimp_gegl_procedure_class_init (GimpGeglProcedureClass *klass)
+ligma_gegl_procedure_class_init (LigmaGeglProcedureClass *klass)
 {
   GObjectClass       *object_class      = G_OBJECT_CLASS (klass);
-  GimpObjectClass    *gimp_object_class = GIMP_OBJECT_CLASS (klass);
-  GimpViewableClass  *viewable_class    = GIMP_VIEWABLE_CLASS (klass);
-  GimpProcedureClass *proc_class        = GIMP_PROCEDURE_CLASS (klass);
+  LigmaObjectClass    *ligma_object_class = LIGMA_OBJECT_CLASS (klass);
+  LigmaViewableClass  *viewable_class    = LIGMA_VIEWABLE_CLASS (klass);
+  LigmaProcedureClass *proc_class        = LIGMA_PROCEDURE_CLASS (klass);
 
-  object_class->finalize            = gimp_gegl_procedure_finalize;
+  object_class->finalize            = ligma_gegl_procedure_finalize;
 
-  gimp_object_class->get_memsize    = gimp_gegl_procedure_get_memsize;
+  ligma_object_class->get_memsize    = ligma_gegl_procedure_get_memsize;
 
-  viewable_class->default_icon_name = "gimp-gegl";
-  viewable_class->get_description   = gimp_gegl_procedure_get_description;
+  viewable_class->default_icon_name = "ligma-gegl";
+  viewable_class->get_description   = ligma_gegl_procedure_get_description;
 
-  proc_class->get_menu_label        = gimp_gegl_procedure_get_menu_label;
-  proc_class->get_sensitive         = gimp_gegl_procedure_get_sensitive;
-  proc_class->execute               = gimp_gegl_procedure_execute;
-  proc_class->execute_async         = gimp_gegl_procedure_execute_async;
+  proc_class->get_menu_label        = ligma_gegl_procedure_get_menu_label;
+  proc_class->get_sensitive         = ligma_gegl_procedure_get_sensitive;
+  proc_class->execute               = ligma_gegl_procedure_execute;
+  proc_class->execute_async         = ligma_gegl_procedure_execute_async;
 }
 
 static void
-gimp_gegl_procedure_init (GimpGeglProcedure *proc)
+ligma_gegl_procedure_init (LigmaGeglProcedure *proc)
 {
 }
 
 static void
-gimp_gegl_procedure_finalize (GObject *object)
+ligma_gegl_procedure_finalize (GObject *object)
 {
-  GimpGeglProcedure *proc = GIMP_GEGL_PROCEDURE (object);
+  LigmaGeglProcedure *proc = LIGMA_GEGL_PROCEDURE (object);
 
   g_clear_object (&proc->default_settings);
 
@@ -127,67 +127,67 @@ gimp_gegl_procedure_finalize (GObject *object)
 }
 
 static gint64
-gimp_gegl_procedure_get_memsize (GimpObject *object,
+ligma_gegl_procedure_get_memsize (LigmaObject *object,
                                  gint64     *gui_size)
 {
-  GimpGeglProcedure *proc    = GIMP_GEGL_PROCEDURE (object);
+  LigmaGeglProcedure *proc    = LIGMA_GEGL_PROCEDURE (object);
   gint64             memsize = 0;
 
-  memsize += gimp_string_get_memsize (proc->operation);
-  memsize += gimp_string_get_memsize (proc->menu_label);
+  memsize += ligma_string_get_memsize (proc->operation);
+  memsize += ligma_string_get_memsize (proc->menu_label);
 
-  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
+  return memsize + LIGMA_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
 }
 
 static gchar *
-gimp_gegl_procedure_get_description (GimpViewable  *viewable,
+ligma_gegl_procedure_get_description (LigmaViewable  *viewable,
                                      gchar        **tooltip)
 {
-  GimpProcedure *procedure = GIMP_PROCEDURE (viewable);
+  LigmaProcedure *procedure = LIGMA_PROCEDURE (viewable);
 
   if (tooltip)
-    *tooltip = g_strdup (gimp_procedure_get_blurb (procedure));
+    *tooltip = g_strdup (ligma_procedure_get_blurb (procedure));
 
-  return g_strdup (gimp_procedure_get_label (procedure));
+  return g_strdup (ligma_procedure_get_label (procedure));
 }
 
 static const gchar *
-gimp_gegl_procedure_get_menu_label (GimpProcedure *procedure)
+ligma_gegl_procedure_get_menu_label (LigmaProcedure *procedure)
 {
-  GimpGeglProcedure *proc = GIMP_GEGL_PROCEDURE (procedure);
+  LigmaGeglProcedure *proc = LIGMA_GEGL_PROCEDURE (procedure);
 
   if (proc->menu_label)
     return proc->menu_label;
 
-  return GIMP_PROCEDURE_CLASS (parent_class)->get_menu_label (procedure);
+  return LIGMA_PROCEDURE_CLASS (parent_class)->get_menu_label (procedure);
 }
 
 static gboolean
-gimp_gegl_procedure_get_sensitive (GimpProcedure  *procedure,
-                                   GimpObject     *object,
+ligma_gegl_procedure_get_sensitive (LigmaProcedure  *procedure,
+                                   LigmaObject     *object,
                                    const gchar   **reason)
 {
-  GimpImage *image     = GIMP_IMAGE (object);
+  LigmaImage *image     = LIGMA_IMAGE (object);
   GList     *drawables = NULL;
   gboolean   sensitive = FALSE;
 
   if (image)
-    drawables = gimp_image_get_selected_drawables (image);
+    drawables = ligma_image_get_selected_drawables (image);
 
   if (g_list_length (drawables) == 1)
     {
-      GimpDrawable *drawable  = drawables->data;
-      GimpItem     *item;
+      LigmaDrawable *drawable  = drawables->data;
+      LigmaItem     *item;
 
-      if (GIMP_IS_LAYER_MASK (drawable))
-        item = GIMP_ITEM (gimp_layer_mask_get_layer (GIMP_LAYER_MASK (drawable)));
+      if (LIGMA_IS_LAYER_MASK (drawable))
+        item = LIGMA_ITEM (ligma_layer_mask_get_layer (LIGMA_LAYER_MASK (drawable)));
       else
-        item = GIMP_ITEM (drawable);
+        item = LIGMA_ITEM (drawable);
 
-      sensitive = ! gimp_item_is_content_locked (item, NULL);
+      sensitive = ! ligma_item_is_content_locked (item, NULL);
 
-      if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
+      if (ligma_viewable_get_children (LIGMA_VIEWABLE (drawable)))
         sensitive = FALSE;
     }
   g_list_free (drawables);
@@ -195,191 +195,191 @@ gimp_gegl_procedure_get_sensitive (GimpProcedure  *procedure,
   return sensitive;
 }
 
-static GimpValueArray *
-gimp_gegl_procedure_execute (GimpProcedure   *procedure,
-                             Gimp            *gimp,
-                             GimpContext     *context,
-                             GimpProgress    *progress,
-                             GimpValueArray  *args,
+static LigmaValueArray *
+ligma_gegl_procedure_execute (LigmaProcedure   *procedure,
+                             Ligma            *ligma,
+                             LigmaContext     *context,
+                             LigmaProgress    *progress,
+                             LigmaValueArray  *args,
                              GError         **error)
 {
-  GimpImage    *image;
-  GimpDrawable *drawable;
+  LigmaImage    *image;
+  LigmaDrawable *drawable;
   GObject      *config;
   GeglNode     *node;
 
-  image    = g_value_get_object (gimp_value_array_index (args, 1));
-  drawable = g_value_get_object (gimp_value_array_index (args, 2));
-  config   = g_value_get_object (gimp_value_array_index (args, 3));
+  image    = g_value_get_object (ligma_value_array_index (args, 1));
+  drawable = g_value_get_object (ligma_value_array_index (args, 2));
+  config   = g_value_get_object (ligma_value_array_index (args, 3));
 
   node = gegl_node_new_child (NULL,
                               "operation",
-                              GIMP_GEGL_PROCEDURE (procedure)->operation,
+                              LIGMA_GEGL_PROCEDURE (procedure)->operation,
                               NULL);
 
-  gimp_drawable_apply_operation_with_config (
+  ligma_drawable_apply_operation_with_config (
     drawable,
-    progress, gimp_procedure_get_label (procedure),
+    progress, ligma_procedure_get_label (procedure),
     node, config);
 
   g_object_unref (node);
 
-  gimp_image_flush (image);
+  ligma_image_flush (image);
 
-  return gimp_procedure_get_return_values (procedure, TRUE, NULL);
+  return ligma_procedure_get_return_values (procedure, TRUE, NULL);
 }
 
 static void
-gimp_gegl_procedure_execute_async (GimpProcedure  *procedure,
-                                   Gimp           *gimp,
-                                   GimpContext    *context,
-                                   GimpProgress   *progress,
-                                   GimpValueArray *args,
-                                   GimpDisplay    *display)
+ligma_gegl_procedure_execute_async (LigmaProcedure  *procedure,
+                                   Ligma           *ligma,
+                                   LigmaContext    *context,
+                                   LigmaProgress   *progress,
+                                   LigmaValueArray *args,
+                                   LigmaDisplay    *display)
 {
-  GimpGeglProcedure *gegl_procedure = GIMP_GEGL_PROCEDURE (procedure);
-  GimpRunMode        run_mode;
-  GimpObject        *settings;
-  GimpTool          *active_tool;
+  LigmaGeglProcedure *gegl_procedure = LIGMA_GEGL_PROCEDURE (procedure);
+  LigmaRunMode        run_mode;
+  LigmaObject        *settings;
+  LigmaTool          *active_tool;
   const gchar       *tool_name;
 
-  run_mode = g_value_get_enum   (gimp_value_array_index (args, 0));
-  settings = g_value_get_object (gimp_value_array_index (args, 3));
+  run_mode = g_value_get_enum   (ligma_value_array_index (args, 0));
+  settings = g_value_get_object (ligma_value_array_index (args, 3));
 
   if (! settings &&
-      (run_mode != GIMP_RUN_INTERACTIVE ||
-       GIMP_GUI_CONFIG (gimp->config)->filter_tool_use_last_settings))
+      (run_mode != LIGMA_RUN_INTERACTIVE ||
+       LIGMA_GUI_CONFIG (ligma->config)->filter_tool_use_last_settings))
     {
       /*  if we didn't get settings passed, get the last used settings  */
 
       GType          config_type;
-      GimpContainer *container;
+      LigmaContainer *container;
 
-      config_type = G_VALUE_TYPE (gimp_value_array_index (args, 3));
+      config_type = G_VALUE_TYPE (ligma_value_array_index (args, 3));
 
-      container = gimp_operation_config_get_container (gimp, config_type,
+      container = ligma_operation_config_get_container (ligma, config_type,
                                                        (GCompareFunc)
-                                                       gimp_settings_compare);
+                                                       ligma_settings_compare);
 
-      settings = gimp_container_get_child_by_index (container, 0);
+      settings = ligma_container_get_child_by_index (container, 0);
 
       /*  only use the settings if they are automatically created
        *  "last used" values, not if they were saved explicitly and
        *  have a zero timestamp; and if they are not a separator.
        */
       if (settings &&
-          (GIMP_SETTINGS (settings)->time == 0 ||
-           ! gimp_object_get_name (settings)))
+          (LIGMA_SETTINGS (settings)->time == 0 ||
+           ! ligma_object_get_name (settings)))
         {
           settings = NULL;
         }
     }
 
-  if (run_mode == GIMP_RUN_NONINTERACTIVE ||
-      run_mode == GIMP_RUN_WITH_LAST_VALS)
+  if (run_mode == LIGMA_RUN_NONINTERACTIVE ||
+      run_mode == LIGMA_RUN_WITH_LAST_VALS)
     {
-      if (settings || run_mode == GIMP_RUN_NONINTERACTIVE)
+      if (settings || run_mode == LIGMA_RUN_NONINTERACTIVE)
         {
-          GimpValueArray *return_vals;
+          LigmaValueArray *return_vals;
 
-          g_value_set_object (gimp_value_array_index (args, 3), settings);
-          return_vals = gimp_procedure_execute (procedure, gimp, context, progress,
+          g_value_set_object (ligma_value_array_index (args, 3), settings);
+          return_vals = ligma_procedure_execute (procedure, ligma, context, progress,
                                                 args, NULL);
-          gimp_value_array_unref (return_vals);
+          ligma_value_array_unref (return_vals);
           return;
         }
 
-      gimp_message (gimp,
-                    G_OBJECT (progress), GIMP_MESSAGE_WARNING,
+      ligma_message (ligma,
+                    G_OBJECT (progress), LIGMA_MESSAGE_WARNING,
                     _("There are no last settings for '%s', "
                       "showing the filter dialog instead."),
-                    gimp_procedure_get_label (procedure));
+                    ligma_procedure_get_label (procedure));
     }
 
-  if (! strcmp (gegl_procedure->operation, "gimp:brightness-contrast"))
+  if (! strcmp (gegl_procedure->operation, "ligma:brightness-contrast"))
     {
-      tool_name = "gimp-brightness-contrast-tool";
+      tool_name = "ligma-brightness-contrast-tool";
     }
-  else if (! strcmp (gegl_procedure->operation, "gimp:curves"))
+  else if (! strcmp (gegl_procedure->operation, "ligma:curves"))
     {
-      tool_name = "gimp-curves-tool";
+      tool_name = "ligma-curves-tool";
     }
-  else if (! strcmp (gegl_procedure->operation, "gimp:levels"))
+  else if (! strcmp (gegl_procedure->operation, "ligma:levels"))
     {
-      tool_name = "gimp-levels-tool";
+      tool_name = "ligma-levels-tool";
     }
-  else if (! strcmp (gegl_procedure->operation, "gimp:threshold"))
+  else if (! strcmp (gegl_procedure->operation, "ligma:threshold"))
     {
-      tool_name = "gimp-threshold-tool";
+      tool_name = "ligma-threshold-tool";
     }
-  else if (! strcmp (gegl_procedure->operation, "gimp:offset"))
+  else if (! strcmp (gegl_procedure->operation, "ligma:offset"))
     {
-      tool_name = "gimp-offset-tool";
+      tool_name = "ligma-offset-tool";
     }
   else
     {
-      tool_name = "gimp-operation-tool";
+      tool_name = "ligma-operation-tool";
     }
 
-  active_tool = tool_manager_get_active (gimp);
+  active_tool = tool_manager_get_active (ligma);
 
   /*  do not use the passed context because we need to set the active
    *  tool on the global user context
    */
-  context = gimp_get_user_context (gimp);
+  context = ligma_get_user_context (ligma);
 
-  if (strcmp (gimp_object_get_name (active_tool->tool_info), tool_name))
+  if (strcmp (ligma_object_get_name (active_tool->tool_info), tool_name))
     {
-      GimpToolInfo *tool_info = gimp_get_tool_info (gimp, tool_name);
+      LigmaToolInfo *tool_info = ligma_get_tool_info (ligma, tool_name);
 
-      if (GIMP_IS_TOOL_INFO (tool_info))
-        gimp_context_set_tool (context, tool_info);
+      if (LIGMA_IS_TOOL_INFO (tool_info))
+        ligma_context_set_tool (context, tool_info);
     }
   else
     {
-      gimp_context_tool_changed (context);
+      ligma_context_tool_changed (context);
     }
 
-  active_tool = tool_manager_get_active (gimp);
+  active_tool = tool_manager_get_active (ligma);
 
-  if (! strcmp (gimp_object_get_name (active_tool->tool_info), tool_name))
+  if (! strcmp (ligma_object_get_name (active_tool->tool_info), tool_name))
     {
       /*  Remember the procedure that created this tool, because
        *  we can't just switch to an operation tool using
-       *  gimp_context_set_tool(), we also have to go through the
+       *  ligma_context_set_tool(), we also have to go through the
        *  initialization code below, otherwise we end up with a
        *  dummy tool that does nothing. See bug #776370.
        */
-      g_object_set_data_full (G_OBJECT (active_tool), "gimp-gegl-procedure",
+      g_object_set_data_full (G_OBJECT (active_tool), "ligma-gegl-procedure",
                               g_object_ref (procedure),
                               (GDestroyNotify) g_object_unref);
 
-      if (! strcmp (tool_name, "gimp-operation-tool"))
+      if (! strcmp (tool_name, "ligma-operation-tool"))
         {
-          gimp_operation_tool_set_operation (GIMP_OPERATION_TOOL (active_tool),
+          ligma_operation_tool_set_operation (LIGMA_OPERATION_TOOL (active_tool),
                                              gegl_procedure->operation,
-                                             gimp_procedure_get_label (procedure),
-                                             gimp_procedure_get_label (procedure),
-                                             gimp_procedure_get_label (procedure),
-                                             gimp_viewable_get_icon_name (GIMP_VIEWABLE (procedure)),
-                                             gimp_procedure_get_help_id (procedure));
+                                             ligma_procedure_get_label (procedure),
+                                             ligma_procedure_get_label (procedure),
+                                             ligma_procedure_get_label (procedure),
+                                             ligma_viewable_get_icon_name (LIGMA_VIEWABLE (procedure)),
+                                             ligma_procedure_get_help_id (procedure));
         }
 
-      tool_manager_initialize_active (gimp, display);
+      tool_manager_initialize_active (ligma, display);
 
       if (settings)
-        gimp_filter_tool_set_config (GIMP_FILTER_TOOL (active_tool),
-                                     GIMP_CONFIG (settings));
+        ligma_filter_tool_set_config (LIGMA_FILTER_TOOL (active_tool),
+                                     LIGMA_CONFIG (settings));
     }
 }
 
 
 /*  public functions  */
 
-GimpProcedure *
-gimp_gegl_procedure_new (Gimp        *gimp,
-                         GimpRunMode  default_run_mode,
-                         GimpObject  *default_settings,
+LigmaProcedure *
+ligma_gegl_procedure_new (Ligma        *ligma,
+                         LigmaRunMode  default_run_mode,
+                         LigmaObject  *default_settings,
                          const gchar *operation,
                          const gchar *name,
                          const gchar *menu_label,
@@ -387,21 +387,21 @@ gimp_gegl_procedure_new (Gimp        *gimp,
                          const gchar *icon_name,
                          const gchar *help_id)
 {
-  GimpProcedure     *procedure;
-  GimpGeglProcedure *gegl_procedure;
+  LigmaProcedure     *procedure;
+  LigmaGeglProcedure *gegl_procedure;
   GType              config_type;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
   g_return_val_if_fail (operation != NULL, NULL);
   g_return_val_if_fail (name != NULL, NULL);
   g_return_val_if_fail (menu_label != NULL, NULL);
 
-  config_type = gimp_operation_config_get_type (gimp, operation, icon_name,
-                                                GIMP_TYPE_OPERATION_SETTINGS);
+  config_type = ligma_operation_config_get_type (ligma, operation, icon_name,
+                                                LIGMA_TYPE_OPERATION_SETTINGS);
 
-  procedure = g_object_new (GIMP_TYPE_GEGL_PROCEDURE, NULL);
+  procedure = g_object_new (LIGMA_TYPE_GEGL_PROCEDURE, NULL);
 
-  gegl_procedure = GIMP_GEGL_PROCEDURE (procedure);
+  gegl_procedure = LIGMA_GEGL_PROCEDURE (procedure);
 
   gegl_procedure->operation        = g_strdup (operation);
   gegl_procedure->default_run_mode = default_run_mode;
@@ -410,40 +410,40 @@ gimp_gegl_procedure_new (Gimp        *gimp,
   if (default_settings)
     gegl_procedure->default_settings = g_object_ref (default_settings);
 
-  gimp_object_set_name (GIMP_OBJECT (procedure), name);
-  gimp_viewable_set_icon_name (GIMP_VIEWABLE (procedure), icon_name);
-  gimp_procedure_set_help (procedure,
+  ligma_object_set_name (LIGMA_OBJECT (procedure), name);
+  ligma_viewable_set_icon_name (LIGMA_VIEWABLE (procedure), icon_name);
+  ligma_procedure_set_help (procedure,
                            tooltip,
                            tooltip,
                            help_id);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "author", "copyright", "date");
 
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_enum ("run-mode",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_enum ("run-mode",
                                                      "Run mode",
                                                      "Run mode",
-                                                     GIMP_TYPE_RUN_MODE,
-                                                     GIMP_RUN_INTERACTIVE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+                                                     LIGMA_TYPE_RUN_MODE,
+                                                     LIGMA_RUN_INTERACTIVE,
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "Image",
                                                       "Input image",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable ("drawable",
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_drawable ("drawable",
                                                          "Drawable",
                                                          "Input drawable",
                                                          TRUE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_object ("settings",
                                                     "Settings",
                                                     "Settings",
                                                     config_type,
-                                                    GIMP_PARAM_READWRITE));
+                                                    LIGMA_PARAM_READWRITE));
 
   return procedure;
 }

@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimppickbutton-private.h
+ * ligmapickbutton-private.h
  *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -13,15 +13,15 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PICK_BUTTON_PRIVATE_H__
-#define __GIMP_PICK_BUTTON_PRIVATE_H__
+#ifndef __LIGMA_PICK_BUTTON_PRIVATE_H__
+#define __LIGMA_PICK_BUTTON_PRIVATE_H__
 
 
-struct _GimpPickButtonPrivate
+struct _LigmaPickButtonPrivate
 {
   GdkCursor *cursor;
   GtkWidget *grab_widget;
 };
 
 
-#endif /* ! __GIMP_PICK_BUTTON_PRIVATE_H__ */
+#endif /* ! __LIGMA_PICK_BUTTON_PRIVATE_H__ */

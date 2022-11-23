@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,18 +19,18 @@
 #define __FILE_DATA_PAT_H__
 
 
-GimpValueArray * file_pat_load_invoker (GimpProcedure         *procedure,
-                                        Gimp                  *gimp,
-                                        GimpContext           *context,
-                                        GimpProgress          *progress,
-                                        const GimpValueArray  *args,
+LigmaValueArray * file_pat_load_invoker (LigmaProcedure         *procedure,
+                                        Ligma                  *ligma,
+                                        LigmaContext           *context,
+                                        LigmaProgress          *progress,
+                                        const LigmaValueArray  *args,
                                         GError               **error);
 
-GimpValueArray * file_pat_save_invoker (GimpProcedure         *procedure,
-                                        Gimp                  *gimp,
-                                        GimpContext           *context,
-                                        GimpProgress          *progress,
-                                        const GimpValueArray  *args,
+LigmaValueArray * file_pat_save_invoker (LigmaProcedure         *procedure,
+                                        Ligma                  *ligma,
+                                        LigmaContext           *context,
+                                        LigmaProgress          *progress,
+                                        const LigmaValueArray  *args,
                                         GError               **error);
 
 

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,39 +15,39 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_GUIDE_UNDO_H__
-#define __GIMP_GUIDE_UNDO_H__
+#ifndef __LIGMA_GUIDE_UNDO_H__
+#define __LIGMA_GUIDE_UNDO_H__
 
 
-#include "gimpauxitemundo.h"
+#include "ligmaauxitemundo.h"
 
 
-#define GIMP_TYPE_GUIDE_UNDO            (gimp_guide_undo_get_type ())
-#define GIMP_GUIDE_UNDO(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_GUIDE_UNDO, GimpGuideUndo))
-#define GIMP_GUIDE_UNDO_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_GUIDE_UNDO, GimpGuideUndoClass))
-#define GIMP_IS_GUIDE_UNDO(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_GUIDE_UNDO))
-#define GIMP_IS_GUIDE_UNDO_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_GUIDE_UNDO))
-#define GIMP_GUIDE_UNDO_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_GUIDE_UNDO, GimpGuideUndoClass))
+#define LIGMA_TYPE_GUIDE_UNDO            (ligma_guide_undo_get_type ())
+#define LIGMA_GUIDE_UNDO(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_GUIDE_UNDO, LigmaGuideUndo))
+#define LIGMA_GUIDE_UNDO_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_GUIDE_UNDO, LigmaGuideUndoClass))
+#define LIGMA_IS_GUIDE_UNDO(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_GUIDE_UNDO))
+#define LIGMA_IS_GUIDE_UNDO_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_GUIDE_UNDO))
+#define LIGMA_GUIDE_UNDO_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_GUIDE_UNDO, LigmaGuideUndoClass))
 
 
-typedef struct _GimpGuideUndo      GimpGuideUndo;
-typedef struct _GimpGuideUndoClass GimpGuideUndoClass;
+typedef struct _LigmaGuideUndo      LigmaGuideUndo;
+typedef struct _LigmaGuideUndoClass LigmaGuideUndoClass;
 
-struct _GimpGuideUndo
+struct _LigmaGuideUndo
 {
-  GimpAuxItemUndo      parent_instance;
+  LigmaAuxItemUndo      parent_instance;
 
-  GimpOrientationType  orientation;
+  LigmaOrientationType  orientation;
   gint                 position;
 };
 
-struct _GimpGuideUndoClass
+struct _LigmaGuideUndoClass
 {
-  GimpAuxItemUndoClass  parent_class;
+  LigmaAuxItemUndoClass  parent_class;
 };
 
 
-GType   gimp_guide_undo_get_type (void) G_GNUC_CONST;
+GType   ligma_guide_undo_get_type (void) G_GNUC_CONST;
 
 
-#endif /* __GIMP_GUIDE_UNDO_H__ */
+#endif /* __LIGMA_GUIDE_UNDO_H__ */

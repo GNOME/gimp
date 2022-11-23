@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,16 +15,16 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_GEGL_MASK_H__
-#define __GIMP_GEGL_MASK_H__
+#ifndef __LIGMA_GEGL_MASK_H__
+#define __LIGMA_GEGL_MASK_H__
 
 
-gboolean   gimp_gegl_mask_bounds   (GeglBuffer *buffer,
+gboolean   ligma_gegl_mask_bounds   (GeglBuffer *buffer,
                                     gint        *x1,
                                     gint        *y1,
                                     gint        *x2,
                                     gint        *y2);
-gboolean   gimp_gegl_mask_is_empty (GeglBuffer *buffer);
+gboolean   ligma_gegl_mask_is_empty (GeglBuffer *buffer);
 
 
-#endif /* __GIMP_GEGL_MASK_H__ */
+#endif /* __LIGMA_GEGL_MASK_H__ */

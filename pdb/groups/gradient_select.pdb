@@ -1,4 +1,4 @@
-# GIMP - The GNU Image Manipulation Program
+# LIGMA - The GNU Image Manipulation Program
 # Copyright (C) 1995 Spencer Kimball and Peter Mattis
 
 # This program is free software: you can redistribute it and/or modify
@@ -14,10 +14,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+# "Perlized" from C source by Manish Singh <yosh@ligma.org>
 
 sub gradients_popup {
-    $blurb = 'Invokes the Gimp gradients selection.';
+    $blurb = 'Invokes the Ligma gradients selection.';
     $help  = 'This procedure opens the gradient selection dialog.';
 
     &andy_pdb_misc('1998');
@@ -38,12 +38,12 @@ sub gradients_popup {
 	code => <<'CODE'
 {
   if (sample_size < 1 || sample_size > 10000)
-    sample_size = GIMP_GRADIENT_DEFAULT_SAMPLE_SIZE;
+    sample_size = LIGMA_GRADIENT_DEFAULT_SAMPLE_SIZE;
 
-  if (gimp->no_interface ||
-      ! gimp_pdb_lookup_procedure (gimp->pdb, gradient_callback) ||
-      ! gimp_pdb_dialog_new (gimp, context, progress,
-                             gimp_data_factory_get_container (gimp->gradient_factory),
+  if (ligma->no_interface ||
+      ! ligma_pdb_lookup_procedure (ligma->pdb, gradient_callback) ||
+      ! ligma_pdb_dialog_new (ligma, context, progress,
+                             ligma_data_factory_get_container (ligma->gradient_factory),
                              popup_title, gradient_callback, initial_gradient,
                              "sample-size", sample_size,
                              NULL))
@@ -67,9 +67,9 @@ sub gradients_close_popup {
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp->no_interface ||
-      ! gimp_pdb_lookup_procedure (gimp->pdb, gradient_callback) ||
-      ! gimp_pdb_dialog_close (gimp, gimp_data_factory_get_container (gimp->gradient_factory),
+  if (ligma->no_interface ||
+      ! ligma_pdb_lookup_procedure (ligma->pdb, gradient_callback) ||
+      ! ligma_pdb_dialog_close (ligma, ligma_data_factory_get_container (ligma->gradient_factory),
                                gradient_callback))
     success = FALSE;
 }
@@ -93,9 +93,9 @@ sub gradients_set_popup {
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp->no_interface ||
-      ! gimp_pdb_lookup_procedure (gimp->pdb, gradient_callback) ||
-      ! gimp_pdb_dialog_set (gimp, gimp_data_factory_get_container (gimp->gradient_factory),
+  if (ligma->no_interface ||
+      ! ligma_pdb_lookup_procedure (ligma->pdb, gradient_callback) ||
+      ! ligma_pdb_dialog_set (ligma, ligma_data_factory_get_container (ligma->gradient_factory),
                              gradient_callback, gradient_name,
                              NULL))
     success = FALSE;
@@ -105,9 +105,9 @@ CODE
 }
 
 
-@headers = qw("core/gimp.h"
-              "core/gimpdatafactory.h"
-              "core/gimpgradient.h");
+@headers = qw("core/ligma.h"
+              "core/ligmadatafactory.h"
+              "core/ligmagradient.h");
 
 @procs = qw(gradients_popup
             gradients_close_popup
@@ -116,7 +116,7 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Gradient UI';
-$doc_title = 'gimpgradientselect';
+$doc_title = 'ligmagradientselect';
 $doc_short_desc = 'Functions providing a gradient selection dialog.';
 $doc_long_desc = 'Functions providing a gradient selection dialog.';
 

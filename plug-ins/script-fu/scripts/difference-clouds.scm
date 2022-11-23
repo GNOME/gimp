@@ -21,48 +21,48 @@
 (define (script-fu-difference-clouds image
                                      drawable)
 
-  (let* ((draw-offset-x (car (gimp-drawable-get-offsets drawable)))
-         (draw-offset-y (cadr (gimp-drawable-get-offsets drawable)))
-         (has-sel       (car (gimp-drawable-mask-intersect drawable)))
-         (sel-offset-x  (cadr (gimp-drawable-mask-intersect drawable)))
-         (sel-offset-y  (caddr (gimp-drawable-mask-intersect drawable)))
-         (width         (cadddr (gimp-drawable-mask-intersect drawable)))
-         (height        (caddr (cddr (gimp-drawable-mask-intersect drawable))))
-         (type          (car (gimp-drawable-type-with-alpha drawable)))
+  (let* ((draw-offset-x (car (ligma-drawable-get-offsets drawable)))
+         (draw-offset-y (cadr (ligma-drawable-get-offsets drawable)))
+         (has-sel       (car (ligma-drawable-mask-intersect drawable)))
+         (sel-offset-x  (cadr (ligma-drawable-mask-intersect drawable)))
+         (sel-offset-y  (caddr (ligma-drawable-mask-intersect drawable)))
+         (width         (cadddr (ligma-drawable-mask-intersect drawable)))
+         (height        (caddr (cddr (ligma-drawable-mask-intersect drawable))))
+         (type          (car (ligma-drawable-type-with-alpha drawable)))
          (diff-clouds  -1)
          (offset-x      0)
          (offset-y      0)
         )
 
-    (gimp-image-undo-group-start image)
+    (ligma-image-undo-group-start image)
 
     ; Create the cloud layer
-    (set! diff-clouds (car (gimp-layer-new image width height type
+    (set! diff-clouds (car (ligma-layer-new image width height type
                                              "Clouds" 100 LAYER-MODE-DIFFERENCE)))
 
     ; Add the cloud layer above the current layer
-    (gimp-image-insert-layer image diff-clouds 0 -1)
+    (ligma-image-insert-layer image diff-clouds 0 -1)
 
     ; Clear the layer (so there are no noise in it)
-    (gimp-drawable-fill diff-clouds FILL-TRANSPARENT)
+    (ligma-drawable-fill diff-clouds FILL-TRANSPARENT)
 
     ; Selections are relative to the drawable; adjust the final offset
     (set! offset-x (+ draw-offset-x sel-offset-x))
     (set! offset-y (+ draw-offset-y sel-offset-y))
 
     ; Offset the clouds layer
-    (if (gimp-item-is-layer drawable)
-      (gimp-item-transform-translate diff-clouds offset-x offset-y))
+    (if (ligma-item-is-layer drawable)
+      (ligma-item-transform-translate diff-clouds offset-x offset-y))
 
     ; Show the solid noise dialog
     (plug-in-solid-noise SF-RUN-MODE image diff-clouds 0 0 0 1 4.0 4.0)
 
     ; Merge the clouds layer with the layer below
-    (gimp-image-merge-down image diff-clouds EXPAND-AS-NECESSARY)
+    (ligma-image-merge-down image diff-clouds EXPAND-AS-NECESSARY)
 
-    (gimp-image-undo-group-end image)
+    (ligma-image-undo-group-end image)
 
-    (gimp-displays-flush)
+    (ligma-displays-flush)
   )
 )
 

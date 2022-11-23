@@ -1,4 +1,4 @@
-; GIMP - The GNU Image Manipulation Program
+; LIGMA - The GNU Image Manipulation Program
 ; Copyright (C) 1995 Spencer Kimball and Peter Mattis
 ;
 ; Lava effect
@@ -32,9 +32,9 @@
                         separate-layer
                         current-grad)
   (let* (
-        (type (car (gimp-drawable-type-with-alpha drawable)))
-        (image-width (car (gimp-image-get-width image)))
-        (image-height (car (gimp-image-get-height image)))
+        (type (car (ligma-drawable-type-with-alpha drawable)))
+        (image-width (car (ligma-image-get-width image)))
+        (image-height (car (ligma-image-get-height image)))
         (active-selection 0)
         (selection-bounds 0)
         (select-offset-x 0)
@@ -43,29 +43,29 @@
         (select-height 0)
         (lava-layer 0)
         (active-layer 0)
-        (selected-layers (gimp-image-get-selected-layers image))
+        (selected-layers (ligma-image-get-selected-layers image))
         (num-selected-layers (car selected-layers))
         (selected-layers-array (cadr selected-layers))
         )
 
     (if (= num-selected-layers 1)
         (begin
-            (gimp-context-push)
-            (gimp-context-set-defaults)
-            (gimp-image-undo-group-start image)
+            (ligma-context-push)
+            (ligma-context-set-defaults)
+            (ligma-image-undo-group-start image)
 
-            (if (= (car (gimp-drawable-has-alpha drawable)) FALSE)
-                (gimp-layer-add-alpha drawable)
+            (if (= (car (ligma-drawable-has-alpha drawable)) FALSE)
+                (ligma-layer-add-alpha drawable)
             )
 
-            (if (= (car (gimp-selection-is-empty image)) TRUE)
-                (gimp-image-select-item image CHANNEL-OP-REPLACE drawable)
+            (if (= (car (ligma-selection-is-empty image)) TRUE)
+                (ligma-image-select-item image CHANNEL-OP-REPLACE drawable)
             )
 
-            (set! active-selection (car (gimp-selection-save image)))
-            (gimp-image-set-selected-layers image 1 (make-vector 1 drawable))
+            (set! active-selection (car (ligma-selection-save image)))
+            (ligma-image-set-selected-layers image 1 (make-vector 1 drawable))
 
-            (set! selection-bounds (gimp-selection-bounds image))
+            (set! selection-bounds (ligma-selection-bounds image))
             (set! select-offset-x (cadr selection-bounds))
             (set! select-offset-y (caddr selection-bounds))
             (set! select-width (- (cadr (cddr selection-bounds)) select-offset-x))
@@ -73,7 +73,7 @@
 
             (if (= separate-layer TRUE)
                 (begin
-                  (set! lava-layer (car (gimp-layer-new image
+                  (set! lava-layer (car (ligma-layer-new image
                                                         select-width
                                                         select-height
                                                         type
@@ -81,23 +81,23 @@
                                                         100
                                                         LAYER-MODE-NORMAL-LEGACY)))
 
-                  (gimp-image-insert-layer image lava-layer 0 -1)
-                  (gimp-layer-set-offsets lava-layer select-offset-x select-offset-y)
-                  (gimp-selection-none image)
-                  (gimp-drawable-edit-clear lava-layer)
+                  (ligma-image-insert-layer image lava-layer 0 -1)
+                  (ligma-layer-set-offsets lava-layer select-offset-x select-offset-y)
+                  (ligma-selection-none image)
+                  (ligma-drawable-edit-clear lava-layer)
 
-                  (gimp-image-select-item image CHANNEL-OP-REPLACE drawable)
-                  (gimp-image-set-selected-layers image 1 (make-vector 1 lava-layer))
+                  (ligma-image-select-item image CHANNEL-OP-REPLACE drawable)
+                  (ligma-image-set-selected-layers image 1 (make-vector 1 lava-layer))
                 )
             )
 
-            (set! selected-layers (gimp-image-get-selected-layers image))
+            (set! selected-layers (ligma-image-get-selected-layers image))
             (set! num-selected-layers (car selected-layers))
             (set! selected-layers-array (cadr selected-layers))
             (set! active-layer (aref selected-layers-array (- num-selected-layers 1)))
 
             (if (= current-grad FALSE)
-                (gimp-context-set-gradient gradient)
+                (ligma-context-set-gradient gradient)
             )
 
             (plug-in-solid-noise RUN-NONINTERACTIVE image active-layer FALSE TRUE seed 2 2 2)
@@ -108,19 +108,19 @@
             (plug-in-gradmap RUN-NONINTERACTIVE image num-selected-layers selected-layers-array)
 
             (if (= keep-selection FALSE)
-                (gimp-selection-none image)
+                (ligma-selection-none image)
             )
 
-            (gimp-image-set-selected-layers image 1 (make-vector 1 drawable))
-            (gimp-image-remove-channel image active-selection)
+            (ligma-image-set-selected-layers image 1 (make-vector 1 drawable))
+            (ligma-image-remove-channel image active-selection)
 
-            (gimp-image-undo-group-end image)
-            (gimp-context-pop)
+            (ligma-image-undo-group-end image)
+            (ligma-context-pop)
 
-            (gimp-displays-flush)
+            (ligma-displays-flush)
         )
     ; else
-        (gimp-message _"Lava works with exactly one selected layer")
+        (ligma-message _"Lava works with exactly one selected layer")
     )
   )
 )
@@ -128,7 +128,7 @@
 (script-fu-register "script-fu-lava"
   _"_Lava..."
   _"Fill the current selection with lava"
-  "Adrian Likins <adrian@gimp.org>"
+  "Adrian Likins <adrian@ligma.org>"
   "Adrian Likins"
   "10/12/97"
   "RGB* GRAY*"

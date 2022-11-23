@@ -1,10 +1,10 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * The GIMP Help plug-in
- * Copyright (C) 1999-2008 Sven Neumann <sven@gimp.org>
- *                         Michael Natterer <mitch@gimp.org>
- *                         Henrik Brix Andersen <brix@gimp.org>
+ * The LIGMA Help plug-in
+ * Copyright (C) 1999-2008 Sven Neumann <sven@ligma.org>
+ *                         Michael Natterer <mitch@ligma.org>
+ *                         Henrik Brix Andersen <brix@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,11 +20,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_HELP_LOCALE_H__
-#define __GIMP_HELP_LOCALE_H__
+#ifndef __LIGMA_HELP_LOCALE_H__
+#define __LIGMA_HELP_LOCALE_H__
 
 
-struct _GimpHelpLocale
+struct _LigmaHelpLocale
 {
   gchar      *locale_id;
   GHashTable *help_id_mapping;
@@ -35,17 +35,17 @@ struct _GimpHelpLocale
 };
 
 
-GimpHelpLocale * gimp_help_locale_new   (const gchar       *locale_id);
-void             gimp_help_locale_free  (GimpHelpLocale    *locale);
+LigmaHelpLocale * ligma_help_locale_new   (const gchar       *locale_id);
+void             ligma_help_locale_free  (LigmaHelpLocale    *locale);
 
-const gchar    * gimp_help_locale_map   (GimpHelpLocale    *locale,
+const gchar    * ligma_help_locale_map   (LigmaHelpLocale    *locale,
                                          const gchar       *help_id);
 
-gboolean         gimp_help_locale_parse (GimpHelpLocale    *locale,
+gboolean         ligma_help_locale_parse (LigmaHelpLocale    *locale,
                                          const gchar       *uri,
                                          const gchar       *help_domain,
-                                         GimpHelpProgress  *progress,
+                                         LigmaHelpProgress  *progress,
                                          GError           **error);
 
 
-#endif /* __GIMP_HELP_LOCALE_H__ */
+#endif /* __LIGMA_HELP_LOCALE_H__ */

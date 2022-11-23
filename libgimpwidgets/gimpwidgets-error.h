@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpwidgets-error.h
+ * ligmawidgets-error.h
  * Copyright (C) 2008  Martin Nordholts <martinn@svn.gnome.org>
  *
  * This library is free software: you can redistribute it and/or
@@ -19,40 +19,40 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
-#error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
+#if !defined (__LIGMA_WIDGETS_H_INSIDE__) && !defined (LIGMA_WIDGETS_COMPILATION)
+#error "Only <libligmawidgets/ligmawidgets.h> can be included directly."
 #endif
 
-#ifndef __GIMP_WIDGETS_ERROR_H__
-#define __GIMP_WIDGETS_ERROR_H__
+#ifndef __LIGMA_WIDGETS_ERROR_H__
+#define __LIGMA_WIDGETS_ERROR_H__
 
 G_BEGIN_DECLS
 
 
 /**
- * GimpWidgetsError:
- * @GIMP_WIDGETS_PARSE_ERROR: A parse error has occurred
+ * LigmaWidgetsError:
+ * @LIGMA_WIDGETS_PARSE_ERROR: A parse error has occurred
  *
- * Types of errors returned by libgimpwidgets functions
+ * Types of errors returned by libligmawidgets functions
  **/
 typedef enum
 {
-  GIMP_WIDGETS_PARSE_ERROR
-} GimpWidgetsError;
+  LIGMA_WIDGETS_PARSE_ERROR
+} LigmaWidgetsError;
 
 
 /**
- * GIMP_WIDGETS_ERROR:
+ * LIGMA_WIDGETS_ERROR:
  *
- * The GIMP widgets error domain.
+ * The LIGMA widgets error domain.
  *
  * Since: 2.8
  */
-#define GIMP_WIDGETS_ERROR (gimp_widgets_error_quark ())
+#define LIGMA_WIDGETS_ERROR (ligma_widgets_error_quark ())
 
-GQuark  gimp_widgets_error_quark (void) G_GNUC_CONST;
+GQuark  ligma_widgets_error_quark (void) G_GNUC_CONST;
 
 
 G_END_DECLS
 
-#endif  /* __GIMP_WIDGETS_ERROR_H__ */
+#endif  /* __LIGMA_WIDGETS_ERROR_H__ */

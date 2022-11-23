@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,79 +22,79 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "core-types.h"
 
-#include "gimp.h"
-#include "gimp-templates.h"
-#include "gimplist.h"
-#include "gimptemplate.h"
+#include "ligma.h"
+#include "ligma-templates.h"
+#include "ligmalist.h"
+#include "ligmatemplate.h"
 
 
-/* functions to load and save the gimp templates files */
+/* functions to load and save the ligma templates files */
 
 void
-gimp_templates_load (Gimp *gimp)
+ligma_templates_load (Ligma *ligma)
 {
   GFile  *file;
   GError *error = NULL;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (GIMP_IS_LIST (gimp->templates));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
+  g_return_if_fail (LIGMA_IS_LIST (ligma->templates));
 
-  file = gimp_directory_file ("templaterc", NULL);
+  file = ligma_directory_file ("templaterc", NULL);
 
-  if (gimp->be_verbose)
-    g_print ("Parsing '%s'\n", gimp_file_get_utf8_name (file));
+  if (ligma->be_verbose)
+    g_print ("Parsing '%s'\n", ligma_file_get_utf8_name (file));
 
-  if (! gimp_config_deserialize_file (GIMP_CONFIG (gimp->templates),
+  if (! ligma_config_deserialize_file (LIGMA_CONFIG (ligma->templates),
                                       file, NULL, &error))
     {
-      if (error->code == GIMP_CONFIG_ERROR_OPEN_ENOENT)
+      if (error->code == LIGMA_CONFIG_ERROR_OPEN_ENOENT)
         {
           g_clear_error (&error);
           g_object_unref (file);
 
-          if (g_getenv ("GIMP_TESTING_ABS_TOP_SRCDIR"))
+          if (g_getenv ("LIGMA_TESTING_ABS_TOP_SRCDIR"))
             {
               gchar *path;
-              path = g_build_filename (g_getenv ("GIMP_TESTING_ABS_TOP_SRCDIR"),
+              path = g_build_filename (g_getenv ("LIGMA_TESTING_ABS_TOP_SRCDIR"),
                                        "etc", "templaterc", NULL);
               file = g_file_new_for_path (path);
               g_free (path);
             }
           else
             {
-              file = gimp_sysconf_directory_file ("templaterc", NULL);
+              file = ligma_sysconf_directory_file ("templaterc", NULL);
             }
 
-          if (! gimp_config_deserialize_file (GIMP_CONFIG (gimp->templates),
+          if (! ligma_config_deserialize_file (LIGMA_CONFIG (ligma->templates),
                                               file, NULL, &error))
             {
-              gimp_message_literal (gimp, NULL, GIMP_MESSAGE_ERROR,
+              ligma_message_literal (ligma, NULL, LIGMA_MESSAGE_ERROR,
                                     error->message);
             }
         }
       else
         {
-          gimp_message_literal (gimp, NULL, GIMP_MESSAGE_ERROR, error->message);
+          ligma_message_literal (ligma, NULL, LIGMA_MESSAGE_ERROR, error->message);
         }
 
       g_clear_error (&error);
     }
 
-  gimp_list_reverse (GIMP_LIST (gimp->templates));
+  ligma_list_reverse (LIGMA_LIST (ligma->templates));
 
   g_object_unref (file);
 }
 
 void
-gimp_templates_save (Gimp *gimp)
+ligma_templates_save (Ligma *ligma)
 {
   const gchar *header =
-    "GIMP templaterc\n"
+    "LIGMA templaterc\n"
     "\n"
     "This file will be entirely rewritten each time you exit.";
   const gchar *footer =
@@ -103,20 +103,20 @@ gimp_templates_save (Gimp *gimp)
   GFile  *file;
   GError *error = NULL;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (GIMP_IS_LIST (gimp->templates));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
+  g_return_if_fail (LIGMA_IS_LIST (ligma->templates));
 
-  file = gimp_directory_file ("templaterc", NULL);
+  file = ligma_directory_file ("templaterc", NULL);
 
-  if (gimp->be_verbose)
-    g_print ("Writing '%s'\n", gimp_file_get_utf8_name (file));
+  if (ligma->be_verbose)
+    g_print ("Writing '%s'\n", ligma_file_get_utf8_name (file));
 
-  if (! gimp_config_serialize_to_file (GIMP_CONFIG (gimp->templates),
+  if (! ligma_config_serialize_to_file (LIGMA_CONFIG (ligma->templates),
                                        file,
                                        header, footer, NULL,
                                        &error))
     {
-      gimp_message_literal (gimp, NULL, GIMP_MESSAGE_ERROR, error->message);
+      ligma_message_literal (ligma, NULL, LIGMA_MESSAGE_ERROR, error->message);
       g_error_free (error);
     }
 
@@ -124,21 +124,21 @@ gimp_templates_save (Gimp *gimp)
 }
 
 
-/*  just like gimp_list_get_child_by_name() but matches case-insensitive
+/*  just like ligma_list_get_child_by_name() but matches case-insensitive
  *  and dpi/ppi-insensitive
  */
-static GimpObject *
-gimp_templates_migrate_get_child_by_name (GimpContainer *container,
+static LigmaObject *
+ligma_templates_migrate_get_child_by_name (LigmaContainer *container,
                                           const gchar   *name)
 {
-  GimpList   *list   = GIMP_LIST (container);
-  GimpObject *retval = NULL;
+  LigmaList   *list   = LIGMA_LIST (container);
+  LigmaObject *retval = NULL;
   GList      *glist;
 
   for (glist = list->queue->head; glist; glist = g_list_next (glist))
     {
-      GimpObject *object = glist->data;
-      gchar      *str1   = g_ascii_strdown (gimp_object_get_name (object), -1);
+      LigmaObject *object = glist->data;
+      gchar      *str1   = g_ascii_strdown (ligma_object_get_name (object), -1);
       gchar      *str2   = g_ascii_strdown (name, -1);
 
       if (! strcmp (str1, str2))
@@ -168,26 +168,26 @@ gimp_templates_migrate_get_child_by_name (GimpContainer *container,
 }
 
 /**
- * gimp_templates_migrate:
+ * ligma_templates_migrate:
  * @olddir: the old user directory
  *
- * Migrating the templaterc from GIMP 2.0 to GIMP 2.2 needs this special
+ * Migrating the templaterc from LIGMA 2.0 to LIGMA 2.2 needs this special
  * hack since we changed the way that units are handled. This function
  * merges the user's templaterc with the systemwide templaterc. The goal
  * is to replace the unit for a couple of default templates with "pixels".
  **/
 void
-gimp_templates_migrate (const gchar *olddir)
+ligma_templates_migrate (const gchar *olddir)
 {
-  GimpContainer *templates = gimp_list_new (GIMP_TYPE_TEMPLATE, TRUE);
-  GFile         *file      = gimp_directory_file ("templaterc", NULL);
+  LigmaContainer *templates = ligma_list_new (LIGMA_TYPE_TEMPLATE, TRUE);
+  GFile         *file      = ligma_directory_file ("templaterc", NULL);
 
-  if (gimp_config_deserialize_file (GIMP_CONFIG (templates), file,
+  if (ligma_config_deserialize_file (LIGMA_CONFIG (templates), file,
                                     NULL, NULL))
     {
       GFile *sysconf_file;
 
-      sysconf_file = gimp_sysconf_directory_file ("templaterc", NULL);
+      sysconf_file = ligma_sysconf_directory_file ("templaterc", NULL);
 
       if (olddir && (strstr (olddir, "2.0") || strstr (olddir, "2.2")))
         {
@@ -196,27 +196,27 @@ gimp_templates_migrate (const gchar *olddir)
            * - from upper to lower case between 2.0 and 2.2
            * - from "dpi" to "ppi" between 2.2 and 2.4
            */
-          GimpContainerClass *class = GIMP_CONTAINER_GET_CLASS (templates);
+          LigmaContainerClass *class = LIGMA_CONTAINER_GET_CLASS (templates);
           gpointer            func  = class->get_child_by_name;
 
-          class->get_child_by_name = gimp_templates_migrate_get_child_by_name;
+          class->get_child_by_name = ligma_templates_migrate_get_child_by_name;
 
-          gimp_config_deserialize_file (GIMP_CONFIG (templates),
+          ligma_config_deserialize_file (LIGMA_CONFIG (templates),
                                         sysconf_file, NULL, NULL);
 
           class->get_child_by_name = func;
         }
       else
         {
-          gimp_config_deserialize_file (GIMP_CONFIG (templates),
+          ligma_config_deserialize_file (LIGMA_CONFIG (templates),
                                         sysconf_file, NULL, NULL);
         }
 
       g_object_unref (sysconf_file);
 
-      gimp_list_reverse (GIMP_LIST (templates));
+      ligma_list_reverse (LIGMA_LIST (templates));
 
-      gimp_config_serialize_to_file (GIMP_CONFIG (templates), file,
+      ligma_config_serialize_to_file (LIGMA_CONFIG (templates), file,
                                      NULL, NULL, NULL, NULL);
     }
 

@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationcurves.c
- * Copyright (C) 2007 Michael Natterer <mitch@gimp.org>
+ * ligmaoperationcurves.c
+ * Copyright (C) 2007 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,20 +24,20 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpmath/gimpmath.h"
+#include "libligmamath/ligmamath.h"
 
 #include "operations-types.h"
 
-#include "core/gimpcurve.h"
-#include "core/gimpcurve-map.h"
+#include "core/ligmacurve.h"
+#include "core/ligmacurve-map.h"
 
-#include "gimpcurvesconfig.h"
-#include "gimpoperationcurves.h"
+#include "ligmacurvesconfig.h"
+#include "ligmaoperationcurves.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-static gboolean gimp_operation_curves_process (GeglOperation       *operation,
+static gboolean ligma_operation_curves_process (GeglOperation       *operation,
                                                void                *in_buf,
                                                void                *out_buf,
                                                glong                samples,
@@ -45,71 +45,71 @@ static gboolean gimp_operation_curves_process (GeglOperation       *operation,
                                                gint                 level);
 
 
-G_DEFINE_TYPE (GimpOperationCurves, gimp_operation_curves,
-               GIMP_TYPE_OPERATION_POINT_FILTER)
+G_DEFINE_TYPE (LigmaOperationCurves, ligma_operation_curves,
+               LIGMA_TYPE_OPERATION_POINT_FILTER)
 
-#define parent_class gimp_operation_curves_parent_class
+#define parent_class ligma_operation_curves_parent_class
 
 
 static void
-gimp_operation_curves_class_init (GimpOperationCurvesClass *klass)
+ligma_operation_curves_class_init (LigmaOperationCurvesClass *klass)
 {
   GObjectClass                  *object_class    = G_OBJECT_CLASS (klass);
   GeglOperationClass            *operation_class = GEGL_OPERATION_CLASS (klass);
   GeglOperationPointFilterClass *point_class     = GEGL_OPERATION_POINT_FILTER_CLASS (klass);
 
-  object_class->set_property   = gimp_operation_point_filter_set_property;
-  object_class->get_property   = gimp_operation_point_filter_get_property;
+  object_class->set_property   = ligma_operation_point_filter_set_property;
+  object_class->get_property   = ligma_operation_point_filter_get_property;
 
   gegl_operation_class_set_keys (operation_class,
-                                 "name",        "gimp:curves",
+                                 "name",        "ligma:curves",
                                  "categories",  "color",
                                  "description", _("Adjust color curves"),
                                  NULL);
 
-  point_class->process = gimp_operation_curves_process;
+  point_class->process = ligma_operation_curves_process;
 
   g_object_class_install_property (object_class,
-                                   GIMP_OPERATION_POINT_FILTER_PROP_TRC,
+                                   LIGMA_OPERATION_POINT_FILTER_PROP_TRC,
                                    g_param_spec_enum ("trc",
                                                       "Linear/Percptual",
                                                       "What TRC to operate on",
-                                                      GIMP_TYPE_TRC_TYPE,
-                                                      GIMP_TRC_NON_LINEAR,
+                                                      LIGMA_TYPE_TRC_TYPE,
+                                                      LIGMA_TRC_NON_LINEAR,
                                                       G_PARAM_READWRITE));
 
   g_object_class_install_property (object_class,
-                                   GIMP_OPERATION_POINT_FILTER_PROP_CONFIG,
+                                   LIGMA_OPERATION_POINT_FILTER_PROP_CONFIG,
                                    g_param_spec_object ("config",
                                                         "Config",
                                                         "The config object",
-                                                        GIMP_TYPE_CURVES_CONFIG,
+                                                        LIGMA_TYPE_CURVES_CONFIG,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 }
 
 static void
-gimp_operation_curves_init (GimpOperationCurves *self)
+ligma_operation_curves_init (LigmaOperationCurves *self)
 {
 }
 
 static gboolean
-gimp_operation_curves_process (GeglOperation       *operation,
+ligma_operation_curves_process (GeglOperation       *operation,
                                void                *in_buf,
                                void                *out_buf,
                                glong                samples,
                                const GeglRectangle *roi,
                                gint                 level)
 {
-  GimpOperationPointFilter *point  = GIMP_OPERATION_POINT_FILTER (operation);
-  GimpCurvesConfig         *config = GIMP_CURVES_CONFIG (point->config);
+  LigmaOperationPointFilter *point  = LIGMA_OPERATION_POINT_FILTER (operation);
+  LigmaCurvesConfig         *config = LIGMA_CURVES_CONFIG (point->config);
   gfloat                   *src    = in_buf;
   gfloat                   *dest   = out_buf;
 
   if (! config)
     return FALSE;
 
-  gimp_curve_map_pixels (config->curve[0],
+  ligma_curve_map_pixels (config->curve[0],
                          config->curve[1],
                          config->curve[2],
                          config->curve[3],

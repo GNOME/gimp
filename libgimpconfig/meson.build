@@ -1,89 +1,89 @@
 
-stamp_config_enums = custom_target('stamp-gimpconfigenums.h',
+stamp_config_enums = custom_target('stamp-ligmaconfigenums.h',
   input : [
     files(
-      'gimpconfigenums.h'
+      'ligmaconfigenums.h'
     ),
   ],
-  output: [ 'stamp-gimpconfigenums.h', ],
+  output: [ 'stamp-ligmaconfigenums.h', ],
   command: [
     mkenums_wrap, perl,
     meson.project_source_root(), meson.current_source_dir(),
     meson.current_build_dir(),
-    'gimpconfig',
+    'ligmaconfig',
     '#include <gio/gio.h>\n' +
-    '#include "libgimpbase/gimpbase.h"\n',
-    '#include "libgimp/libgimp-intl.h"',
-    libgimp_mkenums_dtails
+    '#include "libligmabase/ligmabase.h"\n',
+    '#include "libligma/libligma-intl.h"',
+    libligma_mkenums_dtails
   ],
   build_by_default: true
 )
 
-libgimpconfig_sources_introspectable = files(
-  'gimpcolorconfig.c',
-  'gimpconfig-deserialize.c',
-  'gimpconfig-error.c',
-  'gimpconfig-iface.c',
-  'gimpconfig-params.c',
-  'gimpconfig-path.c',
-  'gimpconfig-register.c',
-  'gimpconfig-serialize.c',
-  'gimpconfig-utils.c',
-  'gimpconfigwriter.c',
-  'gimpscanner.c',
+libligmaconfig_sources_introspectable = files(
+  'ligmacolorconfig.c',
+  'ligmaconfig-deserialize.c',
+  'ligmaconfig-error.c',
+  'ligmaconfig-iface.c',
+  'ligmaconfig-params.c',
+  'ligmaconfig-path.c',
+  'ligmaconfig-register.c',
+  'ligmaconfig-serialize.c',
+  'ligmaconfig-utils.c',
+  'ligmaconfigwriter.c',
+  'ligmascanner.c',
 )
 
-libgimpconfig_sources = [
-  libgimpconfig_sources_introspectable,
+libligmaconfig_sources = [
+  libligmaconfig_sources_introspectable,
 
-  'gimpconfigenums.c',
+  'ligmaconfigenums.c',
   stamp_config_enums
 ]
 
-libgimpconfig_headers_introspectable = files(
-  'gimpcolorconfig.h',
-  'gimpconfig-deserialize.h',
-  'gimpconfig-error.h',
-  'gimpconfig-iface.h',
-  'gimpconfig-params.h',
-  'gimpconfig-path.h',
-  'gimpconfig-register.h',
-  'gimpconfig-serialize.h',
-  'gimpconfig-utils.h',
-  'gimpconfigenums.h',
-  'gimpconfigtypes.h',
-  'gimpconfigwriter.h',
-  'gimpscanner.h',
+libligmaconfig_headers_introspectable = files(
+  'ligmacolorconfig.h',
+  'ligmaconfig-deserialize.h',
+  'ligmaconfig-error.h',
+  'ligmaconfig-iface.h',
+  'ligmaconfig-params.h',
+  'ligmaconfig-path.h',
+  'ligmaconfig-register.h',
+  'ligmaconfig-serialize.h',
+  'ligmaconfig-utils.h',
+  'ligmaconfigenums.h',
+  'ligmaconfigtypes.h',
+  'ligmaconfigwriter.h',
+  'ligmascanner.h',
 )
 
-libgimpconfig_headers = [
-  libgimpconfig_headers_introspectable,
-  'gimpconfig.h',
+libligmaconfig_headers = [
+  libligmaconfig_headers_introspectable,
+  'ligmaconfig.h',
 ]
 
-libgimpconfig_introspectable = [
-  libgimpconfig_headers_introspectable,
-  libgimpconfig_sources_introspectable,
+libligmaconfig_introspectable = [
+  libligmaconfig_headers_introspectable,
+  libligmaconfig_sources_introspectable,
 ]
 
-libgimpconfig = library('gimpconfig-' + gimp_api_version,
-  libgimpconfig_sources,
+libligmaconfig = library('ligmaconfig-' + ligma_api_version,
+  libligmaconfig_sources,
   include_directories: rootInclude,
   dependencies: [
     cairo, gdk_pixbuf, gegl, gio, gio_specific,
   ],
-  c_args: [ '-DG_LOG_DOMAIN="LibGimpConfig"', '-DGIMP_CONFIG_COMPILATION', ],
+  c_args: [ '-DG_LOG_DOMAIN="LibLigmaConfig"', '-DLIGMA_CONFIG_COMPILATION', ],
   link_with: [
-    libgimpbase,
-    libgimpcolor,
-    libgimpmath,
+    libligmabase,
+    libligmacolor,
+    libligmamath,
   ],
-  vs_module_defs: 'gimpconfig.def',
+  vs_module_defs: 'ligmaconfig.def',
   install: true,
   version: so_version,
 )
 
 install_headers(
-  libgimpconfig_headers,
-  subdir: gimp_api_name / 'libgimpconfig',
+  libligmaconfig_headers,
+  subdir: ligma_api_name / 'libligmaconfig',
 )

@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpdrawable.c
+ * ligmadrawable.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -20,24 +20,24 @@
 
 #include "config.h"
 
-#include "gimp.h"
+#include "ligma.h"
 
-#include "gimppixbuf.h"
-#include "gimptilebackendplugin.h"
+#include "ligmapixbuf.h"
+#include "ligmatilebackendplugin.h"
 
 
-G_DEFINE_ABSTRACT_TYPE (GimpDrawable, gimp_drawable, GIMP_TYPE_ITEM)
+G_DEFINE_ABSTRACT_TYPE (LigmaDrawable, ligma_drawable, LIGMA_TYPE_ITEM)
 
-#define parent_class gimp_drawable_parent_class
+#define parent_class ligma_drawable_parent_class
 
 
 static void
-gimp_drawable_class_init (GimpDrawableClass *klass)
+ligma_drawable_class_init (LigmaDrawableClass *klass)
 {
 }
 
 static void
-gimp_drawable_init (GimpDrawable *drawable)
+ligma_drawable_init (LigmaDrawable *drawable)
 {
 }
 
@@ -45,33 +45,33 @@ gimp_drawable_init (GimpDrawable *drawable)
 /* Public API. */
 
 /**
- * gimp_drawable_get_by_id:
+ * ligma_drawable_get_by_id:
  * @drawable_id: The drawable id.
  *
- * Returns a #GimpDrawable representing @drawable_id. This function
- * calls gimp_item_get_by_id() and returns the item if it is drawable
+ * Returns a #LigmaDrawable representing @drawable_id. This function
+ * calls ligma_item_get_by_id() and returns the item if it is drawable
  * or %NULL otherwise.
  *
- * Returns: (nullable) (transfer none): a #GimpDrawable for
+ * Returns: (nullable) (transfer none): a #LigmaDrawable for
  *          @drawable_id or %NULL if @drawable_id does not represent a
- *          valid drawable. The object belongs to libgimp and you must
+ *          valid drawable. The object belongs to libligma and you must
  *          not modify or unref it.
  *
  * Since: 3.0
  **/
-GimpDrawable *
-gimp_drawable_get_by_id (gint32 drawable_id)
+LigmaDrawable *
+ligma_drawable_get_by_id (gint32 drawable_id)
 {
-  GimpItem *item = gimp_item_get_by_id (drawable_id);
+  LigmaItem *item = ligma_item_get_by_id (drawable_id);
 
-  if (GIMP_IS_DRAWABLE (item))
-    return (GimpDrawable *) item;
+  if (LIGMA_IS_DRAWABLE (item))
+    return (LigmaDrawable *) item;
 
   return NULL;
 }
 
 /**
- * gimp_drawable_get_thumbnail_data:
+ * ligma_drawable_get_thumbnail_data:
  * @drawable: the drawable
  * @width:    (inout): the requested thumbnail width  (<= 1024 pixels)
  * @height:   (inout): the requested thumbnail height (<= 1024 pixels)
@@ -84,7 +84,7 @@ gimp_drawable_get_by_id (gint32 drawable_id)
  *          @drawable is invalid.
  **/
 guchar *
-gimp_drawable_get_thumbnail_data (GimpDrawable *drawable,
+ligma_drawable_get_thumbnail_data (LigmaDrawable *drawable,
                                   gint         *width,
                                   gint         *height,
                                   gint         *bpp)
@@ -94,7 +94,7 @@ gimp_drawable_get_thumbnail_data (GimpDrawable *drawable,
   guchar *image_data;
   gint    data_size;
 
-  _gimp_drawable_thumbnail (drawable,
+  _ligma_drawable_thumbnail (drawable,
                             *width,
                             *height,
                             &ret_width,
@@ -110,7 +110,7 @@ gimp_drawable_get_thumbnail_data (GimpDrawable *drawable,
 }
 
 /**
- * gimp_drawable_get_thumbnail:
+ * ligma_drawable_get_thumbnail:
  * @drawable: the drawable
  * @width:    the requested thumbnail width  (<= 1024 pixels)
  * @height:   the requested thumbnail height (<= 1024 pixels)
@@ -125,10 +125,10 @@ gimp_drawable_get_thumbnail_data (GimpDrawable *drawable,
  * Since: 2.2
  **/
 GdkPixbuf *
-gimp_drawable_get_thumbnail (GimpDrawable           *drawable,
+ligma_drawable_get_thumbnail (LigmaDrawable           *drawable,
                              gint                    width,
                              gint                    height,
-                             GimpPixbufTransparency  alpha)
+                             LigmaPixbufTransparency  alpha)
 {
   gint    thumb_width  = width;
   gint    thumb_height = height;
@@ -138,13 +138,13 @@ gimp_drawable_get_thumbnail (GimpDrawable           *drawable,
   g_return_val_if_fail (width  > 0 && width  <= 1024, NULL);
   g_return_val_if_fail (height > 0 && height <= 1024, NULL);
 
-  data = gimp_drawable_get_thumbnail_data (drawable,
+  data = ligma_drawable_get_thumbnail_data (drawable,
                                            &thumb_width,
                                            &thumb_height,
                                            &thumb_bpp);
 
   if (data)
-    return _gimp_pixbuf_from_data (data,
+    return _ligma_pixbuf_from_data (data,
                                    thumb_width, thumb_height, thumb_bpp,
                                    alpha);
 
@@ -152,7 +152,7 @@ gimp_drawable_get_thumbnail (GimpDrawable           *drawable,
 }
 
 /**
- * gimp_drawable_get_sub_thumbnail_data:
+ * ligma_drawable_get_sub_thumbnail_data:
  * @drawable:             the drawable ID
  * @src_x:                the x coordinate of the area
  * @src_y:                the y coordinate of the area
@@ -169,7 +169,7 @@ gimp_drawable_get_thumbnail (GimpDrawable           *drawable,
  *          @drawable is invalid.
  **/
 guchar *
-gimp_drawable_get_sub_thumbnail_data (GimpDrawable *drawable,
+ligma_drawable_get_sub_thumbnail_data (LigmaDrawable *drawable,
                                       gint          src_x,
                                       gint          src_y,
                                       gint          src_width,
@@ -183,7 +183,7 @@ gimp_drawable_get_sub_thumbnail_data (GimpDrawable *drawable,
   guchar *image_data;
   gint    data_size;
 
-  _gimp_drawable_sub_thumbnail (drawable,
+  _ligma_drawable_sub_thumbnail (drawable,
                                 src_x, src_y,
                                 src_width, src_height,
                                 *dest_width,
@@ -201,7 +201,7 @@ gimp_drawable_get_sub_thumbnail_data (GimpDrawable *drawable,
 }
 
 /**
- * gimp_drawable_get_sub_thumbnail:
+ * ligma_drawable_get_sub_thumbnail:
  * @drawable:    the drawable ID
  * @src_x:       the x coordinate of the area
  * @src_y:       the y coordinate of the area
@@ -220,14 +220,14 @@ gimp_drawable_get_sub_thumbnail_data (GimpDrawable *drawable,
  * Since: 2.2
  **/
 GdkPixbuf *
-gimp_drawable_get_sub_thumbnail (GimpDrawable           *drawable,
+ligma_drawable_get_sub_thumbnail (LigmaDrawable           *drawable,
                                  gint                    src_x,
                                  gint                    src_y,
                                  gint                    src_width,
                                  gint                    src_height,
                                  gint                    dest_width,
                                  gint                    dest_height,
-                                 GimpPixbufTransparency  alpha)
+                                 LigmaPixbufTransparency  alpha)
 {
   gint    thumb_width  = dest_width;
   gint    thumb_height = dest_height;
@@ -241,7 +241,7 @@ gimp_drawable_get_sub_thumbnail (GimpDrawable           *drawable,
   g_return_val_if_fail (dest_width  > 0 && dest_width  <= 1024, NULL);
   g_return_val_if_fail (dest_height > 0 && dest_height <= 1024, NULL);
 
-  data = gimp_drawable_get_sub_thumbnail_data (drawable,
+  data = ligma_drawable_get_sub_thumbnail_data (drawable,
                                                src_x, src_y,
                                                src_width, src_height,
                                                &thumb_width,
@@ -249,7 +249,7 @@ gimp_drawable_get_sub_thumbnail (GimpDrawable           *drawable,
                                                &thumb_bpp);
 
   if (data)
-    return _gimp_pixbuf_from_data (data,
+    return _ligma_pixbuf_from_data (data,
                                    thumb_width, thumb_height, thumb_bpp,
                                    alpha);
 
@@ -257,8 +257,8 @@ gimp_drawable_get_sub_thumbnail (GimpDrawable           *drawable,
 }
 
 /**
- * gimp_drawable_get_buffer:
- * @drawable: the ID of the #GimpDrawable to get the buffer for.
+ * ligma_drawable_get_buffer:
+ * @drawable: the ID of the #LigmaDrawable to get the buffer for.
  *
  * Returns a #GeglBuffer of a specified drawable. The buffer can be used
  * like any other GEGL buffer. Its data will we synced back with the core
@@ -267,19 +267,19 @@ gimp_drawable_get_sub_thumbnail (GimpDrawable           *drawable,
  *
  * Returns: (transfer full): The #GeglBuffer.
  *
- * See Also: gimp_drawable_get_shadow_buffer()
+ * See Also: ligma_drawable_get_shadow_buffer()
  *
  * Since: 2.10
  */
 GeglBuffer *
-gimp_drawable_get_buffer (GimpDrawable *drawable)
+ligma_drawable_get_buffer (LigmaDrawable *drawable)
 {
-  if (gimp_item_is_valid (GIMP_ITEM (drawable)))
+  if (ligma_item_is_valid (LIGMA_ITEM (drawable)))
     {
       GeglTileBackend *backend;
       GeglBuffer      *buffer;
 
-      backend = _gimp_tile_backend_plugin_new (drawable, FALSE);
+      backend = _ligma_tile_backend_plugin_new (drawable, FALSE);
       buffer = gegl_buffer_new_for_backend (NULL, backend);
       g_object_unref (backend);
 
@@ -290,8 +290,8 @@ gimp_drawable_get_buffer (GimpDrawable *drawable)
 }
 
 /**
- * gimp_drawable_get_shadow_buffer:
- * @drawable: the ID of the #GimpDrawable to get the buffer for.
+ * ligma_drawable_get_shadow_buffer:
+ * @drawable: the ID of the #LigmaDrawable to get the buffer for.
  *
  * Returns a #GeglBuffer of a specified drawable's shadow tiles. The
  * buffer can be used like any other GEGL buffer. Its data will we
@@ -303,14 +303,14 @@ gimp_drawable_get_buffer (GimpDrawable *drawable)
  * Since: 2.10
  */
 GeglBuffer *
-gimp_drawable_get_shadow_buffer (GimpDrawable *drawable)
+ligma_drawable_get_shadow_buffer (LigmaDrawable *drawable)
 {
-  if (gimp_item_is_valid (GIMP_ITEM (drawable)))
+  if (ligma_item_is_valid (LIGMA_ITEM (drawable)))
     {
       GeglTileBackend *backend;
       GeglBuffer      *buffer;
 
-      backend = _gimp_tile_backend_plugin_new (drawable, TRUE);
+      backend = _ligma_tile_backend_plugin_new (drawable, TRUE);
       buffer = gegl_buffer_new_for_backend (NULL, backend);
       g_object_unref (backend);
 
@@ -321,8 +321,8 @@ gimp_drawable_get_shadow_buffer (GimpDrawable *drawable)
 }
 
 /**
- * gimp_drawable_get_format:
- * @drawable: the ID of the #GimpDrawable to get the format for.
+ * ligma_drawable_get_format:
+ * @drawable: the ID of the #LigmaDrawable to get the format for.
  *
  * Returns the #Babl format of the drawable.
  *
@@ -331,31 +331,31 @@ gimp_drawable_get_shadow_buffer (GimpDrawable *drawable)
  * Since: 2.10
  */
 const Babl *
-gimp_drawable_get_format (GimpDrawable *drawable)
+ligma_drawable_get_format (LigmaDrawable *drawable)
 {
   const Babl *format     = NULL;
-  gchar      *format_str = _gimp_drawable_get_format (drawable);
+  gchar      *format_str = _ligma_drawable_get_format (drawable);
 
-  /* _gimp_drawable_get_format() only returns the encoding, so we
+  /* _ligma_drawable_get_format() only returns the encoding, so we
    * create the actual space from the image's profile
    */
 
   if (format_str)
     {
       const Babl *space = NULL;
-      GimpImage  *image = gimp_item_get_image (GIMP_ITEM (drawable));
+      LigmaImage  *image = ligma_item_get_image (LIGMA_ITEM (drawable));
 
-      if (gimp_item_is_layer (GIMP_ITEM (drawable)))
+      if (ligma_item_is_layer (LIGMA_ITEM (drawable)))
         {
-          GimpColorProfile *profile = gimp_image_get_color_profile (image);
+          LigmaColorProfile *profile = ligma_image_get_color_profile (image);
 
           if (profile)
             {
               GError *error = NULL;
 
-              space = gimp_color_profile_get_space
+              space = ligma_color_profile_get_space
                 (profile,
-                 GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                 LIGMA_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
                  &error);
 
               if (! space)
@@ -370,7 +370,7 @@ gimp_drawable_get_format (GimpDrawable *drawable)
             }
         }
 
-      if (gimp_drawable_is_indexed (drawable))
+      if (ligma_drawable_is_indexed (drawable))
         {
           const Babl *palette;
           const Babl *palette_alpha;
@@ -380,12 +380,12 @@ gimp_drawable_get_format (GimpDrawable *drawable)
           babl_new_palette_with_space (format_str, space,
                                        &palette, &palette_alpha);
 
-          if (gimp_drawable_has_alpha (drawable))
+          if (ligma_drawable_has_alpha (drawable))
             format = palette_alpha;
           else
             format = palette;
 
-          colormap = gimp_image_get_colormap (image, &n_colors);
+          colormap = ligma_image_get_colormap (image, &n_colors);
 
           if (colormap)
             {
@@ -407,8 +407,8 @@ gimp_drawable_get_format (GimpDrawable *drawable)
   return format;
 }
 /**
- * gimp_drawable_get_thumbnail_format:
- * @drawable: the ID of the #GimpDrawable to get the thumbnail format for.
+ * ligma_drawable_get_thumbnail_format:
+ * @drawable: the ID of the #LigmaDrawable to get the thumbnail format for.
  *
  * Returns the #Babl thumbnail format of the drawable.
  *
@@ -417,10 +417,10 @@ gimp_drawable_get_format (GimpDrawable *drawable)
  * Since: 2.10.14
  */
 const Babl *
-gimp_drawable_get_thumbnail_format (GimpDrawable *drawable)
+ligma_drawable_get_thumbnail_format (LigmaDrawable *drawable)
 {
   const Babl *format     = NULL;
-  gchar      *format_str = _gimp_drawable_get_thumbnail_format (drawable);
+  gchar      *format_str = _ligma_drawable_get_thumbnail_format (drawable);
 
   if (format_str)
     {

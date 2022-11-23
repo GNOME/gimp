@@ -4,8 +4,8 @@
 
 (define (script-fu-guide-new-percent image drawable direction position)
   (let* (
-        (width (car (gimp-image-get-width image)))
-      	(height (car (gimp-image-get-height image)))
+        (width (car (ligma-image-get-width image)))
+      	(height (car (ligma-image-get-height image)))
         )
 
     (if (= direction 0)
@@ -15,11 +15,11 @@
 
     (if (= direction 0)
 	      ;; convert position to pixel
-	      (if (<= position height) (gimp-image-add-hguide image position))
-	      (if (<= position width) (gimp-image-add-vguide image position))
+	      (if (<= position height) (ligma-image-add-hguide image position))
+	      (if (<= position width) (ligma-image-add-vguide image position))
     )
 
-    (gimp-displays-flush)
+    (ligma-displays-flush)
   )
 )
 

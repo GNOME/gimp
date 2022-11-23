@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpplugin-message.h
+ * ligmaplugin-message.h
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,12 +17,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PLUG_IN_MESSAGE_H__
-#define __GIMP_PLUG_IN_MESSAGE_H__
+#ifndef __LIGMA_PLUG_IN_MESSAGE_H__
+#define __LIGMA_PLUG_IN_MESSAGE_H__
 
 
-void   gimp_plug_in_handle_message (GimpPlugIn      *plug_in,
-                                    GimpWireMessage *msg);
+void   ligma_plug_in_handle_message (LigmaPlugIn      *plug_in,
+                                    LigmaWireMessage *msg);
 
 
-#endif /* __GIMP_PLUG_IN_MESSAGE_H__ */
+#endif /* __LIGMA_PLUG_IN_MESSAGE_H__ */

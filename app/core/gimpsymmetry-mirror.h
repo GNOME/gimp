@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpsymmetry-mirror.h
- * Copyright (C) 2015 Jehan <jehan@gimp.org>
+ * ligmasymmetry-mirror.h
+ * Copyright (C) 2015 Jehan <jehan@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,26 +18,26 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_MIRROR_H__
-#define __GIMP_MIRROR_H__
+#ifndef __LIGMA_MIRROR_H__
+#define __LIGMA_MIRROR_H__
 
 
-#include "gimpsymmetry.h"
+#include "ligmasymmetry.h"
 
 
-#define GIMP_TYPE_MIRROR            (gimp_mirror_get_type ())
-#define GIMP_MIRROR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_MIRROR, GimpMirror))
-#define GIMP_MIRROR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_MIRROR, GimpMirrorClass))
-#define GIMP_IS_MIRROR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_MIRROR))
-#define GIMP_IS_MIRROR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_MIRROR))
-#define GIMP_MIRROR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_MIRROR, GimpMirrorClass))
+#define LIGMA_TYPE_MIRROR            (ligma_mirror_get_type ())
+#define LIGMA_MIRROR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_MIRROR, LigmaMirror))
+#define LIGMA_MIRROR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_MIRROR, LigmaMirrorClass))
+#define LIGMA_IS_MIRROR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_MIRROR))
+#define LIGMA_IS_MIRROR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_MIRROR))
+#define LIGMA_MIRROR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_MIRROR, LigmaMirrorClass))
 
 
-typedef struct _GimpMirrorClass GimpMirrorClass;
+typedef struct _LigmaMirrorClass LigmaMirrorClass;
 
-struct _GimpMirror
+struct _LigmaMirror
 {
-  GimpSymmetry  parent_instance;
+  LigmaSymmetry  parent_instance;
 
   gboolean      horizontal_mirror;
   gboolean      vertical_mirror;
@@ -46,17 +46,17 @@ struct _GimpMirror
 
   gdouble       mirror_position_y;
   gdouble       mirror_position_x;
-  GimpGuide    *horizontal_guide;
-  GimpGuide    *vertical_guide;
+  LigmaGuide    *horizontal_guide;
+  LigmaGuide    *vertical_guide;
 };
 
-struct _GimpMirrorClass
+struct _LigmaMirrorClass
 {
-  GimpSymmetryClass  parent_class;
+  LigmaSymmetryClass  parent_class;
 };
 
 
-GType   gimp_mirror_get_type (void) G_GNUC_CONST;
+GType   ligma_mirror_get_type (void) G_GNUC_CONST;
 
 
-#endif  /*  __GIMP_MIRROR_H__  */
+#endif  /*  __LIGMA_MIRROR_H__  */

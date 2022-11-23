@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,25 +15,25 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DRAWABLE_PRIVATE_H__
-#define __GIMP_DRAWABLE_PRIVATE_H__
+#ifndef __LIGMA_DRAWABLE_PRIVATE_H__
+#define __LIGMA_DRAWABLE_PRIVATE_H__
 
-struct _GimpDrawablePrivate
+struct _LigmaDrawablePrivate
 {
   GeglBuffer       *buffer; /* buffer for drawable data */
   GeglBuffer       *shadow; /* shadow buffer            */
 
-  GimpColorProfile *format_profile;
+  LigmaColorProfile *format_profile;
 
   GeglNode         *source_node;
   GeglNode         *buffer_source_node;
-  GimpContainer    *filter_stack;
+  LigmaContainer    *filter_stack;
   GeglRectangle     bounding_box;
 
-  GimpLayer        *floating_selection;
-  GimpFilter       *fs_filter;
+  LigmaLayer        *floating_selection;
+  LigmaFilter       *fs_filter;
   GeglNode         *fs_crop_node;
-  GimpApplicator   *fs_applicator;
+  LigmaApplicator   *fs_applicator;
 
   GeglNode         *mode_node;
 
@@ -43,4 +43,4 @@ struct _GimpDrawablePrivate
   cairo_region_t   *paint_update_region;
 };
 
-#endif /* __GIMP_DRAWABLE_PRIVATE_H__ */
+#endif /* __LIGMA_DRAWABLE_PRIVATE_H__ */

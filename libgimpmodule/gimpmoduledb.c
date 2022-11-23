@@ -1,4 +1,4 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * This library is free software: you can redistribute it and/or
@@ -22,24 +22,24 @@
 
 #include <gio/gio.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
 
-#include "gimpmoduletypes.h"
+#include "ligmamoduletypes.h"
 
-#include "gimpmodule.h"
-#include "gimpmoduledb.h"
+#include "ligmamodule.h"
+#include "ligmamoduledb.h"
 
-#include "libgimp/libgimp-intl.h"
+#include "libligma/libligma-intl.h"
 
 
 /**
- * SECTION: gimpmoduledb
- * @title: GimpModuleDB
- * @short_description: Keeps a list of #GimpModule's found in a given
+ * SECTION: ligmamoduledb
+ * @title: LigmaModuleDB
+ * @short_description: Keeps a list of #LigmaModule's found in a given
  *                     searchpath.
  *
- * Keeps a list of #GimpModule's found in a given searchpath.
+ * Keeps a list of #LigmaModule's found in a given searchpath.
  **/
 
 
@@ -52,7 +52,7 @@ enum
 };
 
 
-struct _GimpModuleDBPrivate
+struct _LigmaModuleDBPrivate
 {
   GList    *modules;
 
@@ -61,32 +61,32 @@ struct _GimpModuleDBPrivate
 };
 
 
-static void         gimp_module_db_finalize            (GObject      *object);
+static void         ligma_module_db_finalize            (GObject      *object);
 
-static void         gimp_module_db_load_directory      (GimpModuleDB *db,
+static void         ligma_module_db_load_directory      (LigmaModuleDB *db,
                                                         GFile        *directory);
-static void         gimp_module_db_load_module         (GimpModuleDB *db,
+static void         ligma_module_db_load_module         (LigmaModuleDB *db,
                                                         GFile        *file);
 
-static GimpModule * gimp_module_db_module_find_by_file (GimpModuleDB *db,
+static LigmaModule * ligma_module_db_module_find_by_file (LigmaModuleDB *db,
                                                         GFile        *file);
 
-static void         gimp_module_db_module_dump_func    (gpointer      data,
+static void         ligma_module_db_module_dump_func    (gpointer      data,
                                                         gpointer      user_data);
 
-static void         gimp_module_db_module_modified     (GimpModule   *module,
-                                                        GimpModuleDB *db);
+static void         ligma_module_db_module_modified     (LigmaModule   *module,
+                                                        LigmaModuleDB *db);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpModuleDB, gimp_module_db, G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaModuleDB, ligma_module_db, G_TYPE_OBJECT)
 
-#define parent_class gimp_module_db_parent_class
+#define parent_class ligma_module_db_parent_class
 
 static guint db_signals[LAST_SIGNAL] = { 0 };
 
 
 static void
-gimp_module_db_class_init (GimpModuleDBClass *klass)
+ligma_module_db_class_init (LigmaModuleDBClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
@@ -94,39 +94,39 @@ gimp_module_db_class_init (GimpModuleDBClass *klass)
     g_signal_new ("add",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpModuleDBClass, add),
+                  G_STRUCT_OFFSET (LigmaModuleDBClass, add),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
-                  GIMP_TYPE_MODULE);
+                  LIGMA_TYPE_MODULE);
 
   db_signals[REMOVE] =
     g_signal_new ("remove",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpModuleDBClass, remove),
+                  G_STRUCT_OFFSET (LigmaModuleDBClass, remove),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
-                  GIMP_TYPE_MODULE);
+                  LIGMA_TYPE_MODULE);
 
   db_signals[MODULE_MODIFIED] =
     g_signal_new ("module-modified",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpModuleDBClass, module_modified),
+                  G_STRUCT_OFFSET (LigmaModuleDBClass, module_modified),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
-                  GIMP_TYPE_MODULE);
+                  LIGMA_TYPE_MODULE);
 
-  object_class->finalize = gimp_module_db_finalize;
+  object_class->finalize = ligma_module_db_finalize;
 
   klass->add             = NULL;
   klass->remove          = NULL;
 }
 
 static void
-gimp_module_db_init (GimpModuleDB *db)
+ligma_module_db_init (LigmaModuleDB *db)
 {
-  db->priv = gimp_module_db_get_instance_private (db);
+  db->priv = ligma_module_db_get_instance_private (db);
 
   db->priv->modules      = NULL;
   db->priv->load_inhibit = NULL;
@@ -134,15 +134,15 @@ gimp_module_db_init (GimpModuleDB *db)
 }
 
 static void
-gimp_module_db_finalize (GObject *object)
+ligma_module_db_finalize (GObject *object)
 {
-  GimpModuleDB *db = GIMP_MODULE_DB (object);
+  LigmaModuleDB *db = LIGMA_MODULE_DB (object);
   GList        *list;
 
   for (list = db->priv->modules; list; list = g_list_next (list))
     {
       g_signal_handlers_disconnect_by_func (list->data,
-                                            gimp_module_db_module_modified,
+                                            ligma_module_db_module_modified,
                                             object);
     }
 
@@ -153,20 +153,20 @@ gimp_module_db_finalize (GObject *object)
 }
 
 /**
- * gimp_module_db_new:
+ * ligma_module_db_new:
  * @verbose: Pass %TRUE to enable debugging output.
  *
- * Creates a new #GimpModuleDB instance. The @verbose parameter will be
- * passed to the created #GimpModule instances using gimp_module_new().
+ * Creates a new #LigmaModuleDB instance. The @verbose parameter will be
+ * passed to the created #LigmaModule instances using ligma_module_new().
  *
- * Returns: The new #GimpModuleDB instance.
+ * Returns: The new #LigmaModuleDB instance.
  **/
-GimpModuleDB *
-gimp_module_db_new (gboolean verbose)
+LigmaModuleDB *
+ligma_module_db_new (gboolean verbose)
 {
-  GimpModuleDB *db;
+  LigmaModuleDB *db;
 
-  db = g_object_new (GIMP_TYPE_MODULE_DB, NULL);
+  db = g_object_new (LIGMA_TYPE_MODULE_DB, NULL);
 
   db->priv->verbose = verbose ? TRUE : FALSE;
 
@@ -174,28 +174,28 @@ gimp_module_db_new (gboolean verbose)
 }
 
 /**
- * gimp_module_db_get_modules:
- * @db: A #GimpModuleDB.
+ * ligma_module_db_get_modules:
+ * @db: A #LigmaModuleDB.
  *
  * Returns a #GList of the modules kept by @db. The list must not be
  * modified or freed.
  *
- * Returns: (element-type GimpModule) (transfer none): a #GList
- * of #GimpModule instances.
+ * Returns: (element-type LigmaModule) (transfer none): a #GList
+ * of #LigmaModule instances.
  *
  * Since: 3.0
  **/
 GList *
-gimp_module_db_get_modules (GimpModuleDB *db)
+ligma_module_db_get_modules (LigmaModuleDB *db)
 {
-  g_return_val_if_fail (GIMP_IS_MODULE_DB (db), NULL);
+  g_return_val_if_fail (LIGMA_IS_MODULE_DB (db), NULL);
 
   return db->priv->modules;
 }
 
 /**
- * gimp_module_db_set_verbose:
- * @db:      A #GimpModuleDB.
+ * ligma_module_db_set_verbose:
+ * @db:      A #LigmaModuleDB.
  * @verbose: the new 'verbose' setting
  *
  * Sets the 'verbose' setting of @db.
@@ -203,17 +203,17 @@ gimp_module_db_get_modules (GimpModuleDB *db)
  * Since: 3.0
  **/
 void
-gimp_module_db_set_verbose (GimpModuleDB *db,
+ligma_module_db_set_verbose (LigmaModuleDB *db,
                             gboolean      verbose)
 {
-  g_return_if_fail (GIMP_IS_MODULE_DB (db));
+  g_return_if_fail (LIGMA_IS_MODULE_DB (db));
 
   db->priv->verbose = verbose ? TRUE : FALSE;
 }
 
 /**
- * gimp_module_db_get_verbose:
- * @db: A #GimpModuleDB.
+ * ligma_module_db_get_verbose:
+ * @db: A #LigmaModuleDB.
  *
  * Returns the 'verbose' setting of @db.
  *
@@ -222,9 +222,9 @@ gimp_module_db_set_verbose (GimpModuleDB *db,
  * Since: 3.0
  **/
 gboolean
-gimp_module_db_get_verbose (GimpModuleDB *db)
+ligma_module_db_get_verbose (LigmaModuleDB *db)
 {
-  g_return_val_if_fail (GIMP_IS_MODULE_DB (db), FALSE);
+  g_return_val_if_fail (LIGMA_IS_MODULE_DB (db), FALSE);
 
   return db->priv->verbose;
 }
@@ -274,21 +274,21 @@ is_in_inhibit_list (GFile       *file,
 }
 
 /**
- * gimp_module_db_set_load_inhibit:
- * @db:           A #GimpModuleDB.
+ * ligma_module_db_set_load_inhibit:
+ * @db:           A #LigmaModuleDB.
  * @load_inhibit: A #G_SEARCHPATH_SEPARATOR delimited list of module
  *                filenames to exclude from auto-loading.
  *
- * Sets the @load_inhibit flag for all #GimpModule's which are kept
- * by @db (using gimp_module_set_load_inhibit()).
+ * Sets the @load_inhibit flag for all #LigmaModule's which are kept
+ * by @db (using ligma_module_set_load_inhibit()).
  **/
 void
-gimp_module_db_set_load_inhibit (GimpModuleDB *db,
+ligma_module_db_set_load_inhibit (LigmaModuleDB *db,
                                  const gchar  *load_inhibit)
 {
   GList *list;
 
-  g_return_if_fail (GIMP_IS_MODULE_DB (db));
+  g_return_if_fail (LIGMA_IS_MODULE_DB (db));
 
   if (db->priv->load_inhibit)
     g_free (db->priv->load_inhibit);
@@ -297,19 +297,19 @@ gimp_module_db_set_load_inhibit (GimpModuleDB *db,
 
   for (list = db->priv->modules; list; list = g_list_next (list))
     {
-      GimpModule *module = list->data;
+      LigmaModule *module = list->data;
       gboolean    inhibit;
 
-      inhibit =is_in_inhibit_list (gimp_module_get_file (module),
+      inhibit =is_in_inhibit_list (ligma_module_get_file (module),
                                    load_inhibit);
 
-      gimp_module_set_auto_load (module, ! inhibit);
+      ligma_module_set_auto_load (module, ! inhibit);
     }
 }
 
 /**
- * gimp_module_db_get_load_inhibit:
- * @db: A #GimpModuleDB.
+ * ligma_module_db_get_load_inhibit:
+ * @db: A #LigmaModuleDB.
  *
  * Return the #G_SEARCHPATH_SEPARATOR delimited list of module filenames
  * which are excluded from auto-loading.
@@ -317,28 +317,28 @@ gimp_module_db_set_load_inhibit (GimpModuleDB *db,
  * Returns: the @db's @load_inhibit string.
  **/
 const gchar *
-gimp_module_db_get_load_inhibit (GimpModuleDB *db)
+ligma_module_db_get_load_inhibit (LigmaModuleDB *db)
 {
-  g_return_val_if_fail (GIMP_IS_MODULE_DB (db), NULL);
+  g_return_val_if_fail (LIGMA_IS_MODULE_DB (db), NULL);
 
   return db->priv->load_inhibit;
 }
 
 /**
- * gimp_module_db_load:
- * @db:          A #GimpModuleDB.
+ * ligma_module_db_load:
+ * @db:          A #LigmaModuleDB.
  * @module_path: A #G_SEARCHPATH_SEPARATOR delimited list of directories
  *               to load modules from.
  *
  * Scans the directories contained in @module_path and creates a
- * #GimpModule instance for every loadable module contained in the
+ * #LigmaModule instance for every loadable module contained in the
  * directories.
  **/
 void
-gimp_module_db_load (GimpModuleDB *db,
+ligma_module_db_load (LigmaModuleDB *db,
                      const gchar  *module_path)
 {
-  g_return_if_fail (GIMP_IS_MODULE_DB (db));
+  g_return_if_fail (LIGMA_IS_MODULE_DB (db));
   g_return_if_fail (module_path != NULL);
 
   if (g_module_supported ())
@@ -346,55 +346,55 @@ gimp_module_db_load (GimpModuleDB *db,
       GList *path;
       GList *list;
 
-      path = gimp_config_path_expand_to_files (module_path, NULL);
+      path = ligma_config_path_expand_to_files (module_path, NULL);
 
       for (list = path; list; list = g_list_next (list))
         {
-          gimp_module_db_load_directory (db, list->data);
+          ligma_module_db_load_directory (db, list->data);
         }
 
       g_list_free_full (path, (GDestroyNotify) g_object_unref);
     }
 
   if (FALSE)
-    g_list_foreach (db->priv->modules, gimp_module_db_module_dump_func, NULL);
+    g_list_foreach (db->priv->modules, ligma_module_db_module_dump_func, NULL);
 }
 
 /**
- * gimp_module_db_refresh:
- * @db:          A #GimpModuleDB.
+ * ligma_module_db_refresh:
+ * @db:          A #LigmaModuleDB.
  * @module_path: A #G_SEARCHPATH_SEPARATOR delimited list of directories
  *               to load modules from.
  *
- * Does the same as gimp_module_db_load(), plus removes all #GimpModule
+ * Does the same as ligma_module_db_load(), plus removes all #LigmaModule
  * instances whose modules have been deleted from disk.
  *
- * Note that the #GimpModule's will just be removed from the internal
+ * Note that the #LigmaModule's will just be removed from the internal
  * list and not freed as this is not possible with #GTypeModule
  * instances which actually implement types.
  **/
 void
-gimp_module_db_refresh (GimpModuleDB *db,
+ligma_module_db_refresh (LigmaModuleDB *db,
                         const gchar  *module_path)
 {
   GList *list;
 
-  g_return_if_fail (GIMP_IS_MODULE_DB (db));
+  g_return_if_fail (LIGMA_IS_MODULE_DB (db));
   g_return_if_fail (module_path != NULL);
 
   list = db->priv->modules;
 
   while (list)
     {
-      GimpModule *module = list->data;
+      LigmaModule *module = list->data;
 
       list = g_list_next (list);
 
-      if (! gimp_module_is_on_disk (module) &&
-          ! gimp_module_is_loaded (module))
+      if (! ligma_module_is_on_disk (module) &&
+          ! ligma_module_is_loaded (module))
         {
           g_signal_handlers_disconnect_by_func (module,
-                                                gimp_module_db_module_modified,
+                                                ligma_module_db_module_modified,
                                                 db);
 
           db->priv->modules = g_list_remove (db->priv->modules, module);
@@ -404,11 +404,11 @@ gimp_module_db_refresh (GimpModuleDB *db,
     }
 
   /* walk filesystem and add new things we find */
-  gimp_module_db_load (db, module_path);
+  ligma_module_db_load (db, module_path);
 }
 
 static void
-gimp_module_db_load_directory (GimpModuleDB *db,
+ligma_module_db_load_directory (LigmaModuleDB *db,
                                GFile        *directory)
 {
   GFileEnumerator *enumerator;
@@ -433,7 +433,7 @@ gimp_module_db_load_directory (GimpModuleDB *db,
             {
               GFile *child = g_file_enumerator_get_child (enumerator, info);
 
-              gimp_module_db_load_module (db, child);
+              ligma_module_db_load_module (db, child);
 
               g_object_unref (child);
             }
@@ -446,27 +446,27 @@ gimp_module_db_load_directory (GimpModuleDB *db,
 }
 
 static void
-gimp_module_db_load_module (GimpModuleDB *db,
+ligma_module_db_load_module (LigmaModuleDB *db,
                             GFile        *file)
 {
-  GimpModule *module;
+  LigmaModule *module;
   gboolean   load_inhibit;
 
-  if (! gimp_file_has_extension (file, "." G_MODULE_SUFFIX))
+  if (! ligma_file_has_extension (file, "." G_MODULE_SUFFIX))
     return;
 
   /* don't load if we already know about it */
-  if (gimp_module_db_module_find_by_file (db, file))
+  if (ligma_module_db_module_find_by_file (db, file))
     return;
 
   load_inhibit = is_in_inhibit_list (file, db->priv->load_inhibit);
 
-  module = gimp_module_new (file,
+  module = ligma_module_new (file,
                             ! load_inhibit,
                             db->priv->verbose);
 
   g_signal_connect (module, "modified",
-                    G_CALLBACK (gimp_module_db_module_modified),
+                    G_CALLBACK (ligma_module_db_module_modified),
                     db);
 
   db->priv->modules = g_list_append (db->priv->modules, module);
@@ -474,17 +474,17 @@ gimp_module_db_load_module (GimpModuleDB *db,
   g_signal_emit (db, db_signals[ADD], 0, module);
 }
 
-static GimpModule *
-gimp_module_db_module_find_by_file (GimpModuleDB *db,
+static LigmaModule *
+ligma_module_db_module_find_by_file (LigmaModuleDB *db,
                                     GFile        *file)
 {
   GList *list;
 
   for (list = db->priv->modules; list; list = g_list_next (list))
     {
-      GimpModule *module = list->data;
+      LigmaModule *module = list->data;
 
-      if (g_file_equal (file, gimp_module_get_file (module)))
+      if (g_file_equal (file, ligma_module_get_file (module)))
         return module;
     }
 
@@ -492,7 +492,7 @@ gimp_module_db_module_find_by_file (GimpModuleDB *db,
 }
 
 static void
-gimp_module_db_module_dump_func (gpointer data,
+ligma_module_db_module_dump_func (gpointer data,
                                  gpointer user_data)
 {
   static const gchar * const statenames[] =
@@ -503,12 +503,12 @@ gimp_module_db_module_dump_func (gpointer data,
     N_("Not loaded")
   };
 
-  GimpModule           *module = data;
-  const GimpModuleInfo *info   = gimp_module_get_info (module);
+  LigmaModule           *module = data;
+  const LigmaModuleInfo *info   = ligma_module_get_info (module);
 
   g_print ("\n%s: %s\n",
-           gimp_file_get_utf8_name (gimp_module_get_file (module)),
-           gettext (statenames[gimp_module_get_state (module)]));
+           ligma_file_get_utf8_name (ligma_module_get_file (module)),
+           gettext (statenames[ligma_module_get_state (module)]));
 
 #if 0
   g_print ("  module: %p  lasterr: %s  query: %p register: %p\n",
@@ -534,8 +534,8 @@ gimp_module_db_module_dump_func (gpointer data,
 }
 
 static void
-gimp_module_db_module_modified (GimpModule   *module,
-                                GimpModuleDB *db)
+ligma_module_db_module_modified (LigmaModule   *module,
+                                LigmaModuleDB *db)
 {
   g_signal_emit (db, db_signals[MODULE_MODIFIED], 0, module);
 }

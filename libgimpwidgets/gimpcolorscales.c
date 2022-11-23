@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpcolorscales.c
- * Copyright (C) 2002 Michael Natterer <mitch@gimp.org>
+ * ligmacolorscales.c
+ * Copyright (C) 2002 Michael Natterer <mitch@ligma.org>
  *
  * based on color_notebook module
  * Copyright (C) 1998 Austin Donnelly <austin@greenend.org.uk>
@@ -29,26 +29,26 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmamath/ligmamath.h"
 
-#include "gimpwidgetstypes.h"
+#include "ligmawidgetstypes.h"
 
-#include "gimpcolorscale.h"
-#include "gimpcolorscales.h"
-#include "gimpwidgets.h"
+#include "ligmacolorscale.h"
+#include "ligmacolorscales.h"
+#include "ligmawidgets.h"
 
-#include "libgimp/libgimp-intl.h"
+#include "libligma/libligma-intl.h"
 
 
 /**
- * SECTION: gimpcolorscales
- * @title: GimpColorScales
- * @short_description: A #GimpColorSelector implementation.
+ * SECTION: ligmacolorscales
+ * @title: LigmaColorScales
+ * @short_description: A #LigmaColorSelector implementation.
  *
- * The #GimpColorScales widget is an implementation of a
- * #GimpColorSelector. It shows a group of #GimpColorScale widgets
+ * The #LigmaColorScales widget is an implementation of a
+ * #LigmaColorSelector. It shows a group of #LigmaColorScale widgets
  * that allow to adjust the HSV, LCH, and RGB color channels.
  **/
 
@@ -61,16 +61,16 @@ enum
 
 enum
 {
-  GIMP_COLOR_SELECTOR_RED_U8 = GIMP_COLOR_SELECTOR_LCH_HUE + 1,
-  GIMP_COLOR_SELECTOR_GREEN_U8,
-  GIMP_COLOR_SELECTOR_BLUE_U8,
-  GIMP_COLOR_SELECTOR_ALPHA_U8
+  LIGMA_COLOR_SELECTOR_RED_U8 = LIGMA_COLOR_SELECTOR_LCH_HUE + 1,
+  LIGMA_COLOR_SELECTOR_GREEN_U8,
+  LIGMA_COLOR_SELECTOR_BLUE_U8,
+  LIGMA_COLOR_SELECTOR_ALPHA_U8
 };
 
 
-typedef struct _GimpLCH  GimpLCH;
+typedef struct _LigmaLCH  LigmaLCH;
 
-struct _GimpLCH
+struct _LigmaLCH
 {
   gdouble l, c, h, a;
 };
@@ -80,7 +80,7 @@ typedef struct _ColorScale ColorScale;
 
 struct _ColorScale
 {
-  GimpColorSelectorChannel  channel;
+  LigmaColorSelectorChannel  channel;
 
   gdouble                   default_value;
   gdouble                   scale_min_value;
@@ -91,16 +91,16 @@ struct _ColorScale
 };
 
 
-#define GIMP_COLOR_SCALES_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COLOR_SCALES, GimpColorScalesClass))
-#define GIMP_IS_COLOR_SCALES_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COLOR_SCALES))
-#define GIMP_COLOR_SCALES_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_COLOR_SCALES, GimpColorScalesClass))
+#define LIGMA_COLOR_SCALES_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_COLOR_SCALES, LigmaColorScalesClass))
+#define LIGMA_IS_COLOR_SCALES_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_COLOR_SCALES))
+#define LIGMA_COLOR_SCALES_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_COLOR_SCALES, LigmaColorScalesClass))
 
 
-typedef struct _GimpColorScalesClass GimpColorScalesClass;
+typedef struct _LigmaColorScalesClass LigmaColorScalesClass;
 
-struct _GimpColorScales
+struct _LigmaColorScales
 {
-  GimpColorSelector  parent_instance;
+  LigmaColorSelector  parent_instance;
 
   gboolean           show_rgb_u8;
 
@@ -116,112 +116,112 @@ struct _GimpColorScales
   GtkWidget         *scales[14];
 };
 
-struct _GimpColorScalesClass
+struct _LigmaColorScalesClass
 {
-  GimpColorSelectorClass  parent_class;
+  LigmaColorSelectorClass  parent_class;
 };
 
 
-static void   gimp_color_scales_dispose        (GObject           *object);
-static void   gimp_color_scales_get_property   (GObject           *object,
+static void   ligma_color_scales_dispose        (GObject           *object);
+static void   ligma_color_scales_get_property   (GObject           *object,
                                                 guint              property_id,
                                                 GValue            *value,
                                                 GParamSpec        *pspec);
-static void   gimp_color_scales_set_property   (GObject           *object,
+static void   ligma_color_scales_set_property   (GObject           *object,
                                                 guint              property_id,
                                                 const GValue      *value,
                                                 GParamSpec        *pspec);
 
-static void   gimp_color_scales_togg_sensitive (GimpColorSelector *selector,
+static void   ligma_color_scales_togg_sensitive (LigmaColorSelector *selector,
                                                 gboolean           sensitive);
-static void   gimp_color_scales_togg_visible   (GimpColorSelector *selector,
+static void   ligma_color_scales_togg_visible   (LigmaColorSelector *selector,
                                                 gboolean           visible);
 
-static void   gimp_color_scales_set_show_alpha (GimpColorSelector *selector,
+static void   ligma_color_scales_set_show_alpha (LigmaColorSelector *selector,
                                                 gboolean           show_alpha);
-static void   gimp_color_scales_set_color      (GimpColorSelector *selector,
-                                                const GimpRGB     *rgb,
-                                                const GimpHSV     *hsv);
-static void   gimp_color_scales_set_channel    (GimpColorSelector *selector,
-                                                GimpColorSelectorChannel  channel);
-static void   gimp_color_scales_set_model_visible
-                                               (GimpColorSelector *selector,
-                                                GimpColorSelectorModel  model,
+static void   ligma_color_scales_set_color      (LigmaColorSelector *selector,
+                                                const LigmaRGB     *rgb,
+                                                const LigmaHSV     *hsv);
+static void   ligma_color_scales_set_channel    (LigmaColorSelector *selector,
+                                                LigmaColorSelectorChannel  channel);
+static void   ligma_color_scales_set_model_visible
+                                               (LigmaColorSelector *selector,
+                                                LigmaColorSelectorModel  model,
                                                 gboolean           visible);
-static void   gimp_color_scales_set_config     (GimpColorSelector *selector,
-                                                GimpColorConfig   *config);
+static void   ligma_color_scales_set_config     (LigmaColorSelector *selector,
+                                                LigmaColorConfig   *config);
 
-static void   gimp_color_scales_update_visible (GimpColorScales   *scales);
-static void   gimp_color_scales_update_scales  (GimpColorScales   *scales,
+static void   ligma_color_scales_update_visible (LigmaColorScales   *scales);
+static void   ligma_color_scales_update_scales  (LigmaColorScales   *scales,
                                                 gint               skip);
-static void   gimp_color_scales_toggle_changed (GtkWidget         *widget,
-                                                GimpColorScales   *scales);
-static void   gimp_color_scales_scale_changed  (GtkWidget         *scale,
-                                                GimpColorScales   *scales);
-static void   gimp_color_scales_toggle_lch_hsv (GtkToggleButton   *toggle,
-                                                GimpColorScales   *scales);
+static void   ligma_color_scales_toggle_changed (GtkWidget         *widget,
+                                                LigmaColorScales   *scales);
+static void   ligma_color_scales_scale_changed  (GtkWidget         *scale,
+                                                LigmaColorScales   *scales);
+static void   ligma_color_scales_toggle_lch_hsv (GtkToggleButton   *toggle,
+                                                LigmaColorScales   *scales);
 
 
-G_DEFINE_TYPE (GimpColorScales, gimp_color_scales, GIMP_TYPE_COLOR_SELECTOR)
+G_DEFINE_TYPE (LigmaColorScales, ligma_color_scales, LIGMA_TYPE_COLOR_SELECTOR)
 
-#define parent_class gimp_color_scales_parent_class
+#define parent_class ligma_color_scales_parent_class
 
 static const Babl *fish_rgb_to_lch = NULL;
 static const Babl *fish_lch_to_rgb = NULL;
 
 static const ColorScale scale_defs[] =
 {
-  { GIMP_COLOR_SELECTOR_HUE,           0, 0, 360, 30,     0,  360 },
-  { GIMP_COLOR_SELECTOR_SATURATION,    0, 0, 100, 10,     0,  500 },
-  { GIMP_COLOR_SELECTOR_VALUE,         0, 0, 100, 10,     0,  500 },
+  { LIGMA_COLOR_SELECTOR_HUE,           0, 0, 360, 30,     0,  360 },
+  { LIGMA_COLOR_SELECTOR_SATURATION,    0, 0, 100, 10,     0,  500 },
+  { LIGMA_COLOR_SELECTOR_VALUE,         0, 0, 100, 10,     0,  500 },
 
-  { GIMP_COLOR_SELECTOR_RED,           0, 0, 100, 10,  -500,  500 },
-  { GIMP_COLOR_SELECTOR_GREEN,         0, 0, 100, 10,  -500,  500 },
-  { GIMP_COLOR_SELECTOR_BLUE,          0, 0, 100, 10,  -500,  500 },
-  { GIMP_COLOR_SELECTOR_ALPHA,         0, 0, 100, 10,     0,  100 },
+  { LIGMA_COLOR_SELECTOR_RED,           0, 0, 100, 10,  -500,  500 },
+  { LIGMA_COLOR_SELECTOR_GREEN,         0, 0, 100, 10,  -500,  500 },
+  { LIGMA_COLOR_SELECTOR_BLUE,          0, 0, 100, 10,  -500,  500 },
+  { LIGMA_COLOR_SELECTOR_ALPHA,         0, 0, 100, 10,     0,  100 },
 
-  { GIMP_COLOR_SELECTOR_LCH_LIGHTNESS, 0, 0, 100, 10,     0,  300 },
-  { GIMP_COLOR_SELECTOR_LCH_CHROMA,    0, 0, 200, 10,     0,  300 },
-  { GIMP_COLOR_SELECTOR_LCH_HUE,       0, 0, 360, 30,     0,  360 },
+  { LIGMA_COLOR_SELECTOR_LCH_LIGHTNESS, 0, 0, 100, 10,     0,  300 },
+  { LIGMA_COLOR_SELECTOR_LCH_CHROMA,    0, 0, 200, 10,     0,  300 },
+  { LIGMA_COLOR_SELECTOR_LCH_HUE,       0, 0, 360, 30,     0,  360 },
 
-  { GIMP_COLOR_SELECTOR_RED_U8,        0, 0, 255, 16, -1275, 1275 },
-  { GIMP_COLOR_SELECTOR_GREEN_U8,      0, 0, 255, 16, -1275, 1275 },
-  { GIMP_COLOR_SELECTOR_BLUE_U8,       0, 0, 255, 16, -1275, 1275 },
-  { GIMP_COLOR_SELECTOR_ALPHA_U8,      0, 0, 255, 16,     0,  255 }
+  { LIGMA_COLOR_SELECTOR_RED_U8,        0, 0, 255, 16, -1275, 1275 },
+  { LIGMA_COLOR_SELECTOR_GREEN_U8,      0, 0, 255, 16, -1275, 1275 },
+  { LIGMA_COLOR_SELECTOR_BLUE_U8,       0, 0, 255, 16, -1275, 1275 },
+  { LIGMA_COLOR_SELECTOR_ALPHA_U8,      0, 0, 255, 16,     0,  255 }
 };
 
 
 static void
-gimp_color_scales_class_init (GimpColorScalesClass *klass)
+ligma_color_scales_class_init (LigmaColorScalesClass *klass)
 {
   GObjectClass           *object_class   = G_OBJECT_CLASS (klass);
   GtkWidgetClass         *widget_class   = GTK_WIDGET_CLASS (klass);
-  GimpColorSelectorClass *selector_class = GIMP_COLOR_SELECTOR_CLASS (klass);
+  LigmaColorSelectorClass *selector_class = LIGMA_COLOR_SELECTOR_CLASS (klass);
 
-  object_class->dispose                 = gimp_color_scales_dispose;
-  object_class->get_property            = gimp_color_scales_get_property;
-  object_class->set_property            = gimp_color_scales_set_property;
+  object_class->dispose                 = ligma_color_scales_dispose;
+  object_class->get_property            = ligma_color_scales_get_property;
+  object_class->set_property            = ligma_color_scales_set_property;
 
   selector_class->name                  = _("Scales");
-  selector_class->help_id               = "gimp-colorselector-scales";
-  selector_class->icon_name             = GIMP_ICON_DIALOG_TOOL_OPTIONS;
-  selector_class->set_toggles_visible   = gimp_color_scales_togg_visible;
-  selector_class->set_toggles_sensitive = gimp_color_scales_togg_sensitive;
-  selector_class->set_show_alpha        = gimp_color_scales_set_show_alpha;
-  selector_class->set_color             = gimp_color_scales_set_color;
-  selector_class->set_channel           = gimp_color_scales_set_channel;
-  selector_class->set_model_visible     = gimp_color_scales_set_model_visible;
-  selector_class->set_config            = gimp_color_scales_set_config;
+  selector_class->help_id               = "ligma-colorselector-scales";
+  selector_class->icon_name             = LIGMA_ICON_DIALOG_TOOL_OPTIONS;
+  selector_class->set_toggles_visible   = ligma_color_scales_togg_visible;
+  selector_class->set_toggles_sensitive = ligma_color_scales_togg_sensitive;
+  selector_class->set_show_alpha        = ligma_color_scales_set_show_alpha;
+  selector_class->set_color             = ligma_color_scales_set_color;
+  selector_class->set_channel           = ligma_color_scales_set_channel;
+  selector_class->set_model_visible     = ligma_color_scales_set_model_visible;
+  selector_class->set_config            = ligma_color_scales_set_config;
 
   g_object_class_install_property (object_class, PROP_SHOW_RGB_U8,
                                    g_param_spec_boolean ("show-rgb-u8",
                                                          "Show RGB 0..255",
                                                          "Show RGB 0..255 scales",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE |
+                                                         LIGMA_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
 
-  gtk_widget_class_set_css_name (widget_class, "GimpColorScales");
+  gtk_widget_class_set_css_name (widget_class, "LigmaColorScales");
 
   fish_rgb_to_lch = babl_fish (babl_format ("R'G'B'A double"),
                                babl_format ("CIE LCH(ab) alpha double"));
@@ -230,15 +230,15 @@ gimp_color_scales_class_init (GimpColorScalesClass *klass)
 }
 
 static GtkWidget *
-create_group (GimpColorScales           *scales,
+create_group (LigmaColorScales           *scales,
               GSList                   **radio_group,
               GtkSizeGroup              *size_group0,
               GtkSizeGroup              *size_group1,
               GtkSizeGroup              *size_group2,
-              GimpColorSelectorChannel   first_channel,
-              GimpColorSelectorChannel   last_channel)
+              LigmaColorSelectorChannel   first_channel,
+              LigmaColorSelectorChannel   last_channel)
 {
-  GimpColorSelector *selector = GIMP_COLOR_SELECTOR (scales);
+  LigmaColorSelector *selector = LIGMA_COLOR_SELECTOR (scales);
   GtkWidget         *grid;
   GEnumClass        *enum_class;
   gint               row;
@@ -248,25 +248,25 @@ create_group (GimpColorScales           *scales,
   gtk_grid_set_row_spacing (GTK_GRID (grid), 1);
   gtk_grid_set_column_spacing (GTK_GRID (grid), 1);
 
-  enum_class = g_type_class_ref (GIMP_TYPE_COLOR_SELECTOR_CHANNEL);
+  enum_class = g_type_class_ref (LIGMA_TYPE_COLOR_SELECTOR_CHANNEL);
 
   for (i = first_channel, row = 0; i <= last_channel; i++, row++)
     {
-      const GimpEnumDesc *enum_desc;
+      const LigmaEnumDesc *enum_desc;
       gint                enum_value = i;
       gboolean            is_u8      = FALSE;
 
-      if (enum_value >= GIMP_COLOR_SELECTOR_RED_U8 &&
-          enum_value <= GIMP_COLOR_SELECTOR_ALPHA_U8)
+      if (enum_value >= LIGMA_COLOR_SELECTOR_RED_U8 &&
+          enum_value <= LIGMA_COLOR_SELECTOR_ALPHA_U8)
         {
           enum_value -= 7;
           is_u8 = TRUE;
         }
 
-      enum_desc = gimp_enum_get_desc (enum_class, enum_value);
+      enum_desc = ligma_enum_get_desc (enum_class, enum_value);
 
-      if (i == GIMP_COLOR_SELECTOR_ALPHA ||
-          i == GIMP_COLOR_SELECTOR_ALPHA_U8)
+      if (i == LIGMA_COLOR_SELECTOR_ALPHA ||
+          i == LIGMA_COLOR_SELECTOR_ALPHA_U8)
         {
           /*  just to allocate the space via the size group  */
           scales->toggles[i] = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
@@ -277,7 +277,7 @@ create_group (GimpColorScales           *scales,
           *radio_group =
             gtk_radio_button_get_group (GTK_RADIO_BUTTON (scales->toggles[i]));
 
-          if (enum_value == gimp_color_selector_get_channel (selector))
+          if (enum_value == ligma_color_selector_get_channel (selector))
             gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (scales->toggles[i]),
                                           TRUE);
 
@@ -292,36 +292,36 @@ create_group (GimpColorScales           *scales,
           else
             {
               g_signal_connect (scales->toggles[i], "toggled",
-                                G_CALLBACK (gimp_color_scales_toggle_changed),
+                                G_CALLBACK (ligma_color_scales_toggle_changed),
                                 scales);
             }
         }
 
       gtk_grid_attach (GTK_GRID (grid), scales->toggles[i], 0, row, 1, 1);
 
-      if (gimp_color_selector_get_toggles_visible (selector))
+      if (ligma_color_selector_get_toggles_visible (selector))
         gtk_widget_show (scales->toggles[i]);
 
-      gimp_help_set_help_data (scales->toggles[i],
+      ligma_help_set_help_data (scales->toggles[i],
                                gettext (enum_desc->value_help), NULL);
 
       gtk_size_group_add_widget (size_group0, scales->toggles[i]);
 
       scales->scales[i] =
-        gimp_color_scale_entry_new (gettext (enum_desc->value_desc),
+        ligma_color_scale_entry_new (gettext (enum_desc->value_desc),
                                     scale_defs[i].default_value,
                                     scale_defs[i].spin_min_value,
                                     scale_defs[i].spin_max_value,
                                     1);
       gtk_grid_attach (GTK_GRID (grid), scales->scales[i], 1, row, 3, 1);
-      gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scales->scales[i]),
+      ligma_label_spin_set_increments (LIGMA_LABEL_SPIN (scales->scales[i]),
                                       1.0, scale_defs[i].scale_inc);
-      gimp_help_set_help_data (scales->scales[i],
+      ligma_help_set_help_data (scales->scales[i],
                                gettext (enum_desc->value_help),
                                NULL);
       gtk_widget_show (scales->scales[i]);
 
-      gimp_scale_entry_set_bounds (GIMP_SCALE_ENTRY (scales->scales[i]),
+      ligma_scale_entry_set_bounds (LIGMA_SCALE_ENTRY (scales->scales[i]),
                                    scale_defs[i].scale_min_value,
                                    scale_defs[i].scale_max_value,
                                    TRUE);
@@ -329,15 +329,15 @@ create_group (GimpColorScales           *scales,
       g_object_add_weak_pointer (G_OBJECT (scales->scales[i]),
                                  (gpointer) &scales->scales[i]);
 
-      gimp_color_scale_set_channel (GIMP_COLOR_SCALE (gimp_scale_entry_get_range (GIMP_SCALE_ENTRY (scales->scales[i]))),
+      ligma_color_scale_set_channel (LIGMA_COLOR_SCALE (ligma_scale_entry_get_range (LIGMA_SCALE_ENTRY (scales->scales[i]))),
                                     enum_value);
       gtk_size_group_add_widget (size_group1, scales->scales[i]);
 
       gtk_size_group_add_widget (size_group2,
-                                 gimp_label_spin_get_spin_button (GIMP_LABEL_SPIN (scales->scales[i])));
+                                 ligma_label_spin_get_spin_button (LIGMA_LABEL_SPIN (scales->scales[i])));
 
       g_signal_connect (scales->scales[i], "value-changed",
-                        G_CALLBACK (gimp_color_scales_scale_changed),
+                        G_CALLBACK (ligma_color_scales_scale_changed),
                         scales);
     }
 
@@ -347,9 +347,9 @@ create_group (GimpColorScales           *scales,
 }
 
 static void
-gimp_color_scales_init (GimpColorScales *scales)
+ligma_color_scales_init (LigmaColorScales *scales)
 {
-  GimpColorSelector *selector = GIMP_COLOR_SELECTOR (scales);
+  LigmaColorSelector *selector = LIGMA_COLOR_SELECTOR (scales);
   GtkSizeGroup      *size_group0;
   GtkSizeGroup      *size_group1;
   GtkSizeGroup      *size_group2;
@@ -384,50 +384,50 @@ gimp_color_scales_init (GimpColorScales *scales)
   scales->rgb_percent_group =
     grid = create_group (scales, &main_group,
                          size_group0, size_group1, size_group2,
-                         GIMP_COLOR_SELECTOR_RED,
-                         GIMP_COLOR_SELECTOR_BLUE);
+                         LIGMA_COLOR_SELECTOR_RED,
+                         LIGMA_COLOR_SELECTOR_BLUE);
   gtk_box_pack_start (GTK_BOX (scales), grid, FALSE, FALSE, 0);
 
   scales->rgb_u8_group =
     grid = create_group (scales, &u8_group,
                          size_group0, size_group1, size_group2,
-                         GIMP_COLOR_SELECTOR_RED_U8,
-                         GIMP_COLOR_SELECTOR_BLUE_U8);
+                         LIGMA_COLOR_SELECTOR_RED_U8,
+                         LIGMA_COLOR_SELECTOR_BLUE_U8);
   gtk_box_pack_start (GTK_BOX (scales), grid, FALSE, FALSE, 0);
 
   scales->lch_group =
     grid = create_group (scales, &main_group,
                          size_group0, size_group1, size_group2,
-                         GIMP_COLOR_SELECTOR_LCH_LIGHTNESS,
-                         GIMP_COLOR_SELECTOR_LCH_HUE);
+                         LIGMA_COLOR_SELECTOR_LCH_LIGHTNESS,
+                         LIGMA_COLOR_SELECTOR_LCH_HUE);
   gtk_box_pack_start (GTK_BOX (scales), grid, FALSE, FALSE, 0);
 
  scales->hsv_group =
     grid = create_group (scales, &main_group,
                          size_group0, size_group1, size_group2,
-                         GIMP_COLOR_SELECTOR_HUE,
-                         GIMP_COLOR_SELECTOR_VALUE);
+                         LIGMA_COLOR_SELECTOR_HUE,
+                         LIGMA_COLOR_SELECTOR_VALUE);
  gtk_box_pack_start (GTK_BOX (scales), grid, FALSE, FALSE, 0);
 
   scales->alpha_percent_group =
     grid = create_group (scales, &main_group,
                          size_group0, size_group1, size_group2,
-                         GIMP_COLOR_SELECTOR_ALPHA,
-                         GIMP_COLOR_SELECTOR_ALPHA);
+                         LIGMA_COLOR_SELECTOR_ALPHA,
+                         LIGMA_COLOR_SELECTOR_ALPHA);
   gtk_box_pack_start (GTK_BOX (scales), grid, FALSE, FALSE, 0);
 
   scales->alpha_u8_group =
     grid = create_group (scales, &u8_group,
                          size_group0, size_group1, size_group2,
-                         GIMP_COLOR_SELECTOR_ALPHA_U8,
-                         GIMP_COLOR_SELECTOR_ALPHA_U8);
+                         LIGMA_COLOR_SELECTOR_ALPHA_U8,
+                         LIGMA_COLOR_SELECTOR_ALPHA_U8);
   gtk_box_pack_start (GTK_BOX (scales), grid, FALSE, FALSE, 0);
 
   g_object_unref (size_group0);
   g_object_unref (size_group1);
   g_object_unref (size_group2);
 
-  gimp_color_scales_update_visible (scales);
+  ligma_color_scales_update_visible (scales);
 
   radio_group = NULL;
 
@@ -467,19 +467,19 @@ gimp_color_scales_init (GimpColorScales *scales)
   gtk_widget_show (radio1);
   gtk_widget_show (radio2);
 
-  if (gimp_color_selector_get_model_visible (selector,
-                                             GIMP_COLOR_SELECTOR_MODEL_HSV))
+  if (ligma_color_selector_get_model_visible (selector,
+                                             LIGMA_COLOR_SELECTOR_MODEL_HSV))
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio2), TRUE);
 
   g_signal_connect (radio1, "toggled",
-                    G_CALLBACK (gimp_color_scales_toggle_lch_hsv),
+                    G_CALLBACK (ligma_color_scales_toggle_lch_hsv),
                     scales);
 }
 
 static void
-gimp_color_scales_dispose (GObject *object)
+ligma_color_scales_dispose (GObject *object)
 {
-  GimpColorScales *scales = GIMP_COLOR_SCALES (object);
+  LigmaColorScales *scales = LIGMA_COLOR_SCALES (object);
 
   g_clear_object (&scales->dummy_u8_toggle);
 
@@ -487,12 +487,12 @@ gimp_color_scales_dispose (GObject *object)
 }
 
 static void
-gimp_color_scales_get_property (GObject    *object,
+ligma_color_scales_get_property (GObject    *object,
                                 guint       property_id,
                                 GValue     *value,
                                 GParamSpec *pspec)
 {
-  GimpColorScales *scales = GIMP_COLOR_SCALES (object);
+  LigmaColorScales *scales = LIGMA_COLOR_SCALES (object);
 
   switch (property_id)
     {
@@ -507,17 +507,17 @@ gimp_color_scales_get_property (GObject    *object,
 }
 
 static void
-gimp_color_scales_set_property (GObject      *object,
+ligma_color_scales_set_property (GObject      *object,
                                 guint         property_id,
                                 const GValue *value,
                                 GParamSpec   *pspec)
 {
-  GimpColorScales *scales = GIMP_COLOR_SCALES (object);
+  LigmaColorScales *scales = LIGMA_COLOR_SCALES (object);
 
   switch (property_id)
     {
     case PROP_SHOW_RGB_U8:
-      gimp_color_scales_set_show_rgb_u8 (scales, g_value_get_boolean (value));
+      ligma_color_scales_set_show_rgb_u8 (scales, g_value_get_boolean (value));
       break;
 
     default:
@@ -527,10 +527,10 @@ gimp_color_scales_set_property (GObject      *object,
 }
 
 static void
-gimp_color_scales_togg_sensitive (GimpColorSelector *selector,
+ligma_color_scales_togg_sensitive (LigmaColorSelector *selector,
                                   gboolean           sensitive)
 {
-  GimpColorScales *scales = GIMP_COLOR_SCALES (selector);
+  LigmaColorScales *scales = LIGMA_COLOR_SCALES (selector);
   gint             i;
 
   for (i = 0; i < G_N_ELEMENTS (scale_defs); i++)
@@ -539,10 +539,10 @@ gimp_color_scales_togg_sensitive (GimpColorSelector *selector,
 }
 
 static void
-gimp_color_scales_togg_visible (GimpColorSelector *selector,
+ligma_color_scales_togg_visible (LigmaColorSelector *selector,
                                 gboolean           visible)
 {
-  GimpColorScales *scales = GIMP_COLOR_SCALES (selector);
+  LigmaColorScales *scales = LIGMA_COLOR_SCALES (selector);
   gint             i;
 
   for (i = 0; i < G_N_ELEMENTS (scale_defs); i++)
@@ -551,62 +551,62 @@ gimp_color_scales_togg_visible (GimpColorSelector *selector,
 }
 
 static void
-gimp_color_scales_set_show_alpha (GimpColorSelector *selector,
+ligma_color_scales_set_show_alpha (LigmaColorSelector *selector,
                                   gboolean           show_alpha)
 {
-  gimp_color_scales_update_visible (GIMP_COLOR_SCALES (selector));
+  ligma_color_scales_update_visible (LIGMA_COLOR_SCALES (selector));
 }
 
 static void
-gimp_color_scales_set_color (GimpColorSelector *selector,
-                             const GimpRGB     *rgb,
-                             const GimpHSV     *hsv)
+ligma_color_scales_set_color (LigmaColorSelector *selector,
+                             const LigmaRGB     *rgb,
+                             const LigmaHSV     *hsv)
 {
-  GimpColorScales *scales = GIMP_COLOR_SCALES (selector);
+  LigmaColorScales *scales = LIGMA_COLOR_SCALES (selector);
 
-  gimp_color_scales_update_scales (scales, -1);
+  ligma_color_scales_update_scales (scales, -1);
 }
 
 static void
-gimp_color_scales_set_channel (GimpColorSelector        *selector,
-                               GimpColorSelectorChannel  channel)
+ligma_color_scales_set_channel (LigmaColorSelector        *selector,
+                               LigmaColorSelectorChannel  channel)
 {
-  GimpColorScales *scales = GIMP_COLOR_SCALES (selector);
+  LigmaColorScales *scales = LIGMA_COLOR_SCALES (selector);
 
   if (GTK_IS_RADIO_BUTTON (scales->toggles[channel]))
     {
       g_signal_handlers_block_by_func (scales->toggles[channel],
-                                       gimp_color_scales_toggle_changed,
+                                       ligma_color_scales_toggle_changed,
                                        scales);
 
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (scales->toggles[channel]),
                                     TRUE);
 
       g_signal_handlers_unblock_by_func (scales->toggles[channel],
-                                         gimp_color_scales_toggle_changed,
+                                         ligma_color_scales_toggle_changed,
                                          scales);
     }
 }
 
 static void
-gimp_color_scales_set_model_visible (GimpColorSelector      *selector,
-                                     GimpColorSelectorModel  model,
+ligma_color_scales_set_model_visible (LigmaColorSelector      *selector,
+                                     LigmaColorSelectorModel  model,
                                      gboolean                visible)
 {
-  gimp_color_scales_update_visible (GIMP_COLOR_SCALES (selector));
+  ligma_color_scales_update_visible (LIGMA_COLOR_SCALES (selector));
 }
 
 static void
-gimp_color_scales_set_config (GimpColorSelector *selector,
-                              GimpColorConfig   *config)
+ligma_color_scales_set_config (LigmaColorSelector *selector,
+                              LigmaColorConfig   *config)
 {
-  GimpColorScales *scales = GIMP_COLOR_SCALES (selector);
+  LigmaColorScales *scales = LIGMA_COLOR_SCALES (selector);
   gint             i;
 
   for (i = 0; i < G_N_ELEMENTS (scale_defs); i++)
     {
       if (scales->scales[i])
-        gimp_color_scale_set_color_config (GIMP_COLOR_SCALE (gimp_scale_entry_get_range (GIMP_SCALE_ENTRY (scales->scales[i]))),
+        ligma_color_scale_set_color_config (LIGMA_COLOR_SCALE (ligma_scale_entry_get_range (LIGMA_SCALE_ENTRY (scales->scales[i]))),
                                            config);
     }
 }
@@ -615,10 +615,10 @@ gimp_color_scales_set_config (GimpColorSelector *selector,
 /*  public functions  */
 
 void
-gimp_color_scales_set_show_rgb_u8 (GimpColorScales *scales,
+ligma_color_scales_set_show_rgb_u8 (LigmaColorScales *scales,
                                    gboolean         show_rgb_u8)
 {
-  g_return_if_fail (GIMP_IS_COLOR_SCALES (scales));
+  g_return_if_fail (LIGMA_IS_COLOR_SCALES (scales));
 
   show_rgb_u8 = show_rgb_u8 ? TRUE : FALSE;
 
@@ -628,14 +628,14 @@ gimp_color_scales_set_show_rgb_u8 (GimpColorScales *scales,
 
       g_object_notify (G_OBJECT (scales), "show-rgb-u8");
 
-      gimp_color_scales_update_visible (scales);
+      ligma_color_scales_update_visible (scales);
     }
 }
 
 gboolean
-gimp_color_scales_get_show_rgb_u8 (GimpColorScales *scales)
+ligma_color_scales_get_show_rgb_u8 (LigmaColorScales *scales)
 {
-  g_return_val_if_fail (GIMP_IS_COLOR_SCALES (scales), FALSE);
+  g_return_val_if_fail (LIGMA_IS_COLOR_SCALES (scales), FALSE);
 
   return scales->show_rgb_u8;
 }
@@ -644,21 +644,21 @@ gimp_color_scales_get_show_rgb_u8 (GimpColorScales *scales)
 /*  private functions  */
 
 static void
-gimp_color_scales_update_visible (GimpColorScales *scales)
+ligma_color_scales_update_visible (LigmaColorScales *scales)
 {
-  GimpColorSelector *selector = GIMP_COLOR_SELECTOR (scales);
+  LigmaColorSelector *selector = LIGMA_COLOR_SELECTOR (scales);
   gboolean           show_alpha;
   gboolean           rgb_visible;
   gboolean           lch_visible;
   gboolean           hsv_visible;
 
-  show_alpha  = gimp_color_selector_get_show_alpha (selector);
-  rgb_visible = gimp_color_selector_get_model_visible (selector,
-                                                       GIMP_COLOR_SELECTOR_MODEL_RGB);
-  lch_visible = gimp_color_selector_get_model_visible (selector,
-                                                       GIMP_COLOR_SELECTOR_MODEL_LCH);
-  hsv_visible = gimp_color_selector_get_model_visible (selector,
-                                                       GIMP_COLOR_SELECTOR_MODEL_HSV);
+  show_alpha  = ligma_color_selector_get_show_alpha (selector);
+  rgb_visible = ligma_color_selector_get_model_visible (selector,
+                                                       LIGMA_COLOR_SELECTOR_MODEL_RGB);
+  lch_visible = ligma_color_selector_get_model_visible (selector,
+                                                       LIGMA_COLOR_SELECTOR_MODEL_LCH);
+  hsv_visible = ligma_color_selector_get_model_visible (selector,
+                                                       LIGMA_COLOR_SELECTOR_MODEL_HSV);
 
   gtk_widget_set_visible (scales->rgb_percent_group,
                           rgb_visible && ! scales->show_rgb_u8);
@@ -675,59 +675,59 @@ gimp_color_scales_update_visible (GimpColorScales *scales)
 }
 
 static void
-gimp_color_scales_update_scales (GimpColorScales *scales,
+ligma_color_scales_update_scales (LigmaColorScales *scales,
                                  gint             skip)
 {
-  GimpColorSelector *selector = GIMP_COLOR_SELECTOR (scales);
-  GimpLCH            lch;
+  LigmaColorSelector *selector = LIGMA_COLOR_SELECTOR (scales);
+  LigmaLCH            lch;
   gdouble            values[G_N_ELEMENTS (scale_defs)];
   gint               i;
 
   babl_process (fish_rgb_to_lch, &selector->rgb, &lch, 1);
 
-  values[GIMP_COLOR_SELECTOR_HUE]           = selector->hsv.h * 360.0;
-  values[GIMP_COLOR_SELECTOR_SATURATION]    = selector->hsv.s * 100.0;
-  values[GIMP_COLOR_SELECTOR_VALUE]         = selector->hsv.v * 100.0;
+  values[LIGMA_COLOR_SELECTOR_HUE]           = selector->hsv.h * 360.0;
+  values[LIGMA_COLOR_SELECTOR_SATURATION]    = selector->hsv.s * 100.0;
+  values[LIGMA_COLOR_SELECTOR_VALUE]         = selector->hsv.v * 100.0;
 
-  values[GIMP_COLOR_SELECTOR_RED]           = selector->rgb.r * 100.0;
-  values[GIMP_COLOR_SELECTOR_GREEN]         = selector->rgb.g * 100.0;
-  values[GIMP_COLOR_SELECTOR_BLUE]          = selector->rgb.b * 100.0;
-  values[GIMP_COLOR_SELECTOR_ALPHA]         = selector->rgb.a * 100.0;
+  values[LIGMA_COLOR_SELECTOR_RED]           = selector->rgb.r * 100.0;
+  values[LIGMA_COLOR_SELECTOR_GREEN]         = selector->rgb.g * 100.0;
+  values[LIGMA_COLOR_SELECTOR_BLUE]          = selector->rgb.b * 100.0;
+  values[LIGMA_COLOR_SELECTOR_ALPHA]         = selector->rgb.a * 100.0;
 
-  values[GIMP_COLOR_SELECTOR_LCH_LIGHTNESS] = lch.l;
-  values[GIMP_COLOR_SELECTOR_LCH_CHROMA]    = lch.c;
-  values[GIMP_COLOR_SELECTOR_LCH_HUE]       = lch.h;
+  values[LIGMA_COLOR_SELECTOR_LCH_LIGHTNESS] = lch.l;
+  values[LIGMA_COLOR_SELECTOR_LCH_CHROMA]    = lch.c;
+  values[LIGMA_COLOR_SELECTOR_LCH_HUE]       = lch.h;
 
-  values[GIMP_COLOR_SELECTOR_RED_U8]        = selector->rgb.r * 255.0;
-  values[GIMP_COLOR_SELECTOR_GREEN_U8]      = selector->rgb.g * 255.0;
-  values[GIMP_COLOR_SELECTOR_BLUE_U8]       = selector->rgb.b * 255.0;
-  values[GIMP_COLOR_SELECTOR_ALPHA_U8]      = selector->rgb.a * 255.0;
+  values[LIGMA_COLOR_SELECTOR_RED_U8]        = selector->rgb.r * 255.0;
+  values[LIGMA_COLOR_SELECTOR_GREEN_U8]      = selector->rgb.g * 255.0;
+  values[LIGMA_COLOR_SELECTOR_BLUE_U8]       = selector->rgb.b * 255.0;
+  values[LIGMA_COLOR_SELECTOR_ALPHA_U8]      = selector->rgb.a * 255.0;
 
   for (i = 0; i < G_N_ELEMENTS (scale_defs); i++)
     {
       if (i != skip)
         {
           g_signal_handlers_block_by_func (scales->scales[i],
-                                           gimp_color_scales_scale_changed,
+                                           ligma_color_scales_scale_changed,
                                            scales);
 
-          gimp_label_spin_set_value (GIMP_LABEL_SPIN (scales->scales[i]), values[i]);
+          ligma_label_spin_set_value (LIGMA_LABEL_SPIN (scales->scales[i]), values[i]);
 
           g_signal_handlers_unblock_by_func (scales->scales[i],
-                                             gimp_color_scales_scale_changed,
+                                             ligma_color_scales_scale_changed,
                                              scales);
         }
 
-      gimp_color_scale_set_color (GIMP_COLOR_SCALE (gimp_scale_entry_get_range (GIMP_SCALE_ENTRY (scales->scales[i]))),
+      ligma_color_scale_set_color (LIGMA_COLOR_SCALE (ligma_scale_entry_get_range (LIGMA_SCALE_ENTRY (scales->scales[i]))),
                                   &selector->rgb, &selector->hsv);
     }
 }
 
 static void
-gimp_color_scales_toggle_changed (GtkWidget       *widget,
-                                  GimpColorScales *scales)
+ligma_color_scales_toggle_changed (GtkWidget       *widget,
+                                  LigmaColorScales *scales)
 {
-  GimpColorSelector *selector = GIMP_COLOR_SELECTOR (scales);
+  LigmaColorSelector *selector = LIGMA_COLOR_SELECTOR (scales);
 
   if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
     {
@@ -737,10 +737,10 @@ gimp_color_scales_toggle_changed (GtkWidget       *widget,
         {
           if (widget == scales->toggles[i])
             {
-              gimp_color_selector_set_channel (selector, i);
+              ligma_color_selector_set_channel (selector, i);
 
-              if (i < GIMP_COLOR_SELECTOR_RED ||
-                  i > GIMP_COLOR_SELECTOR_BLUE)
+              if (i < LIGMA_COLOR_SELECTOR_RED ||
+                  i > LIGMA_COLOR_SELECTOR_BLUE)
                 {
                   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (scales->dummy_u8_toggle),
                                                 TRUE);
@@ -753,12 +753,12 @@ gimp_color_scales_toggle_changed (GtkWidget       *widget,
 }
 
 static void
-gimp_color_scales_scale_changed (GtkWidget       *scale,
-                                 GimpColorScales *scales)
+ligma_color_scales_scale_changed (GtkWidget       *scale,
+                                 LigmaColorScales *scales)
 {
-  GimpColorSelector *selector = GIMP_COLOR_SELECTOR (scales);
-  gdouble            value    = gimp_label_spin_get_value (GIMP_LABEL_SPIN (scale));
-  GimpLCH            lch;
+  LigmaColorSelector *selector = LIGMA_COLOR_SELECTOR (scales);
+  gdouble            value    = ligma_label_spin_get_value (LIGMA_LABEL_SPIN (scale));
+  LigmaLCH            lch;
   gint               i;
 
   for (i = 0; i < G_N_ELEMENTS (scale_defs); i++)
@@ -767,115 +767,115 @@ gimp_color_scales_scale_changed (GtkWidget       *scale,
 
   switch (i)
     {
-    case GIMP_COLOR_SELECTOR_HUE:
+    case LIGMA_COLOR_SELECTOR_HUE:
       selector->hsv.h = value / 360.0;
       break;
 
-    case GIMP_COLOR_SELECTOR_SATURATION:
+    case LIGMA_COLOR_SELECTOR_SATURATION:
       selector->hsv.s = value / 100.0;
       break;
 
-    case GIMP_COLOR_SELECTOR_VALUE:
+    case LIGMA_COLOR_SELECTOR_VALUE:
       selector->hsv.v = value / 100.0;
       break;
 
-    case GIMP_COLOR_SELECTOR_RED:
+    case LIGMA_COLOR_SELECTOR_RED:
       selector->rgb.r = value / 100.0;
       break;
 
-    case GIMP_COLOR_SELECTOR_GREEN:
+    case LIGMA_COLOR_SELECTOR_GREEN:
       selector->rgb.g = value / 100.0;
       break;
 
-    case GIMP_COLOR_SELECTOR_BLUE:
+    case LIGMA_COLOR_SELECTOR_BLUE:
       selector->rgb.b = value / 100.0;
       break;
 
-    case GIMP_COLOR_SELECTOR_ALPHA:
+    case LIGMA_COLOR_SELECTOR_ALPHA:
       selector->hsv.a = selector->rgb.a = value / 100.0;
       break;
 
-    case GIMP_COLOR_SELECTOR_LCH_LIGHTNESS:
+    case LIGMA_COLOR_SELECTOR_LCH_LIGHTNESS:
       babl_process (fish_rgb_to_lch, &selector->rgb, &lch, 1);
       lch.l = value;
       break;
 
-    case GIMP_COLOR_SELECTOR_LCH_CHROMA:
+    case LIGMA_COLOR_SELECTOR_LCH_CHROMA:
       babl_process (fish_rgb_to_lch, &selector->rgb, &lch, 1);
       lch.c = value;
       break;
 
-    case GIMP_COLOR_SELECTOR_LCH_HUE:
+    case LIGMA_COLOR_SELECTOR_LCH_HUE:
       babl_process (fish_rgb_to_lch, &selector->rgb, &lch, 1);
       lch.h = value;
       break;
 
-    case GIMP_COLOR_SELECTOR_RED_U8:
+    case LIGMA_COLOR_SELECTOR_RED_U8:
       selector->rgb.r = value / 255.0;
       break;
 
-    case GIMP_COLOR_SELECTOR_GREEN_U8:
+    case LIGMA_COLOR_SELECTOR_GREEN_U8:
       selector->rgb.g = value / 255.0;
       break;
 
-    case GIMP_COLOR_SELECTOR_BLUE_U8:
+    case LIGMA_COLOR_SELECTOR_BLUE_U8:
       selector->rgb.b = value / 255.0;
       break;
 
-    case GIMP_COLOR_SELECTOR_ALPHA_U8:
+    case LIGMA_COLOR_SELECTOR_ALPHA_U8:
       selector->hsv.a = selector->rgb.a = value / 255.0;
       break;
     }
 
-  if ((i >= GIMP_COLOR_SELECTOR_HUE) &&
-      (i <= GIMP_COLOR_SELECTOR_VALUE))
+  if ((i >= LIGMA_COLOR_SELECTOR_HUE) &&
+      (i <= LIGMA_COLOR_SELECTOR_VALUE))
     {
-      gimp_hsv_to_rgb (&selector->hsv, &selector->rgb);
+      ligma_hsv_to_rgb (&selector->hsv, &selector->rgb);
     }
-  else if ((i >= GIMP_COLOR_SELECTOR_LCH_LIGHTNESS) &&
-           (i <= GIMP_COLOR_SELECTOR_LCH_HUE))
+  else if ((i >= LIGMA_COLOR_SELECTOR_LCH_LIGHTNESS) &&
+           (i <= LIGMA_COLOR_SELECTOR_LCH_HUE))
     {
       babl_process (fish_lch_to_rgb, &lch, &selector->rgb, 1);
-      gimp_rgb_to_hsv (&selector->rgb, &selector->hsv);
+      ligma_rgb_to_hsv (&selector->rgb, &selector->hsv);
     }
-  else if ((i >= GIMP_COLOR_SELECTOR_RED) &&
-           (i <= GIMP_COLOR_SELECTOR_BLUE))
+  else if ((i >= LIGMA_COLOR_SELECTOR_RED) &&
+           (i <= LIGMA_COLOR_SELECTOR_BLUE))
     {
-      gimp_rgb_to_hsv (&selector->rgb, &selector->hsv);
+      ligma_rgb_to_hsv (&selector->rgb, &selector->hsv);
     }
-  else if ((i >= GIMP_COLOR_SELECTOR_RED_U8) &&
-           (i <= GIMP_COLOR_SELECTOR_BLUE_U8))
+  else if ((i >= LIGMA_COLOR_SELECTOR_RED_U8) &&
+           (i <= LIGMA_COLOR_SELECTOR_BLUE_U8))
     {
-      gimp_rgb_to_hsv (&selector->rgb, &selector->hsv);
+      ligma_rgb_to_hsv (&selector->rgb, &selector->hsv);
     }
 
-  gimp_color_scales_update_scales (scales, i);
+  ligma_color_scales_update_scales (scales, i);
 
-  gimp_color_selector_emit_color_changed (selector);
+  ligma_color_selector_emit_color_changed (selector);
 }
 
 static void
-gimp_color_scales_toggle_lch_hsv (GtkToggleButton *toggle,
-                                  GimpColorScales *scales)
+ligma_color_scales_toggle_lch_hsv (GtkToggleButton *toggle,
+                                  LigmaColorScales *scales)
 {
-  GimpColorSelector *selector = GIMP_COLOR_SELECTOR (scales);
+  LigmaColorSelector *selector = LIGMA_COLOR_SELECTOR (scales);
 
   if (gtk_toggle_button_get_active (toggle))
     {
-      gimp_color_selector_set_model_visible (selector,
-                                             GIMP_COLOR_SELECTOR_MODEL_LCH,
+      ligma_color_selector_set_model_visible (selector,
+                                             LIGMA_COLOR_SELECTOR_MODEL_LCH,
                                              TRUE);
-      gimp_color_selector_set_model_visible (selector,
-                                             GIMP_COLOR_SELECTOR_MODEL_HSV,
+      ligma_color_selector_set_model_visible (selector,
+                                             LIGMA_COLOR_SELECTOR_MODEL_HSV,
                                              FALSE);
     }
   else
     {
-      gimp_color_selector_set_model_visible (selector,
-                                             GIMP_COLOR_SELECTOR_MODEL_LCH,
+      ligma_color_selector_set_model_visible (selector,
+                                             LIGMA_COLOR_SELECTOR_MODEL_LCH,
                                              FALSE);
-      gimp_color_selector_set_model_visible (selector,
-                                             GIMP_COLOR_SELECTOR_MODEL_HSV,
+      ligma_color_selector_set_model_visible (selector,
+                                             LIGMA_COLOR_SELECTOR_MODEL_HSV,
                                              TRUE);
     }
 }

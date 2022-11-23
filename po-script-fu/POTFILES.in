@@ -1,4 +1,4 @@
-# Files from the Gimp distribution which have already been
+# Files from the Ligma distribution which have already been
 # marked to allow runtime translation of messages
 
 plug-ins/script-fu/script-fu.c
@@ -24,7 +24,7 @@ plug-ins/script-fu/scripts/drop-shadow.scm
 plug-ins/script-fu/scripts/erase-rows.scm
 plug-ins/script-fu/scripts/font-map.scm
 plug-ins/script-fu/scripts/fuzzyborder.scm
-plug-ins/script-fu/scripts/gimp-online.scm
+plug-ins/script-fu/scripts/ligma-online.scm
 plug-ins/script-fu/scripts/gradient-example.scm
 plug-ins/script-fu/scripts/grid-system.scm
 plug-ins/script-fu/scripts/guides-from-selection.scm

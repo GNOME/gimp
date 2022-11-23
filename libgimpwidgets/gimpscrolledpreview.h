@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpscrolledpreview.h
+ * ligmascrolledpreview.h
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -18,14 +18,14 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
-#error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
+#if !defined (__LIGMA_WIDGETS_H_INSIDE__) && !defined (LIGMA_WIDGETS_COMPILATION)
+#error "Only <libligmawidgets/ligmawidgets.h> can be included directly."
 #endif
 
-#ifndef __GIMP_SCROLLED_PREVIEW_H__
-#define __GIMP_SCROLLED_PREVIEW_H__
+#ifndef __LIGMA_SCROLLED_PREVIEW_H__
+#define __LIGMA_SCROLLED_PREVIEW_H__
 
-#include "gimppreview.h"
+#include "ligmapreview.h"
 
 G_BEGIN_DECLS
 
@@ -33,57 +33,57 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-#define GIMP_TYPE_SCROLLED_PREVIEW            (gimp_scrolled_preview_get_type ())
-#define GIMP_SCROLLED_PREVIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_SCROLLED_PREVIEW, GimpScrolledPreview))
-#define GIMP_SCROLLED_PREVIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_SCROLLED_PREVIEW, GimpScrolledPreviewClass))
-#define GIMP_IS_SCROLLED_PREVIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_SCROLLED_PREVIEW))
-#define GIMP_IS_SCROLLED_PREVIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_SCROLLED_PREVIEW))
-#define GIMP_SCROLLED_PREVIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_SCROLLED_PREVIEW, GimpScrolledPreviewClass))
+#define LIGMA_TYPE_SCROLLED_PREVIEW            (ligma_scrolled_preview_get_type ())
+#define LIGMA_SCROLLED_PREVIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_SCROLLED_PREVIEW, LigmaScrolledPreview))
+#define LIGMA_SCROLLED_PREVIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_SCROLLED_PREVIEW, LigmaScrolledPreviewClass))
+#define LIGMA_IS_SCROLLED_PREVIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_SCROLLED_PREVIEW))
+#define LIGMA_IS_SCROLLED_PREVIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_SCROLLED_PREVIEW))
+#define LIGMA_SCROLLED_PREVIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_SCROLLED_PREVIEW, LigmaScrolledPreviewClass))
 
 
-typedef struct _GimpScrolledPreviewPrivate GimpScrolledPreviewPrivate;
-typedef struct _GimpScrolledPreviewClass   GimpScrolledPreviewClass;
+typedef struct _LigmaScrolledPreviewPrivate LigmaScrolledPreviewPrivate;
+typedef struct _LigmaScrolledPreviewClass   LigmaScrolledPreviewClass;
 
-struct _GimpScrolledPreview
+struct _LigmaScrolledPreview
 {
-  GimpPreview                 parent_instance;
+  LigmaPreview                 parent_instance;
 };
 
-struct _GimpScrolledPreviewClass
+struct _LigmaScrolledPreviewClass
 {
-  GimpPreviewClass  parent_class;
+  LigmaPreviewClass  parent_class;
 
   /* Padding for future expansion */
-  void (* _gimp_reserved1) (void);
-  void (* _gimp_reserved2) (void);
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
-  void (* _gimp_reserved5) (void);
-  void (* _gimp_reserved6) (void);
-  void (* _gimp_reserved7) (void);
-  void (* _gimp_reserved8) (void);
+  void (* _ligma_reserved1) (void);
+  void (* _ligma_reserved2) (void);
+  void (* _ligma_reserved3) (void);
+  void (* _ligma_reserved4) (void);
+  void (* _ligma_reserved5) (void);
+  void (* _ligma_reserved6) (void);
+  void (* _ligma_reserved7) (void);
+  void (* _ligma_reserved8) (void);
 };
 
 
-GType  gimp_scrolled_preview_get_type        (void) G_GNUC_CONST;
+GType  ligma_scrolled_preview_get_type        (void) G_GNUC_CONST;
 
-void   gimp_scrolled_preview_set_position    (GimpScrolledPreview  *preview,
+void   ligma_scrolled_preview_set_position    (LigmaScrolledPreview  *preview,
                                               gint                  x,
                                               gint                  y);
-void   gimp_scrolled_preview_set_policy      (GimpScrolledPreview  *preview,
+void   ligma_scrolled_preview_set_policy      (LigmaScrolledPreview  *preview,
                                               GtkPolicyType         hscrollbar_policy,
                                               GtkPolicyType         vscrollbar_policy);
 
-void   gimp_scrolled_preview_get_adjustments (GimpScrolledPreview  *preview,
+void   ligma_scrolled_preview_get_adjustments (LigmaScrolledPreview  *preview,
                                               GtkAdjustment       **hadj,
                                               GtkAdjustment       **vadj);
 
 /*  only for use from derived widgets  */
-void   gimp_scrolled_preview_freeze          (GimpScrolledPreview  *preview);
-void   gimp_scrolled_preview_thaw            (GimpScrolledPreview  *preview);
+void   ligma_scrolled_preview_freeze          (LigmaScrolledPreview  *preview);
+void   ligma_scrolled_preview_thaw            (LigmaScrolledPreview  *preview);
 
-/*  utility function for scrolled-window like gimp widgets like the canvas  */
-void   gimp_scroll_adjustment_values         (GdkEventScroll       *sevent,
+/*  utility function for scrolled-window like ligma widgets like the canvas  */
+void   ligma_scroll_adjustment_values         (GdkEventScroll       *sevent,
                                               GtkAdjustment        *hadj,
                                               GtkAdjustment        *vadj,
                                               gdouble              *hvalue,
@@ -92,4 +92,4 @@ void   gimp_scroll_adjustment_values         (GdkEventScroll       *sevent,
 
 G_END_DECLS
 
-#endif /* __GIMP_SCROLLED_PREVIEW_H__ */
+#endif /* __LIGMA_SCROLLED_PREVIEW_H__ */

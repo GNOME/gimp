@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcontainertreeview-private.h
- * Copyright (C) 2003-2004 Michael Natterer <mitch@gimp.org>
+ * ligmacontainertreeview-private.h
+ * Copyright (C) 2003-2004 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,11 +18,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CONTAINER_TREE_VIEW_PRIVATE_H__
-#define __GIMP_CONTAINER_TREE_VIEW_PRIVATE_H__
+#ifndef __LIGMA_CONTAINER_TREE_VIEW_PRIVATE_H__
+#define __LIGMA_CONTAINER_TREE_VIEW_PRIVATE_H__
 
 
-struct _GimpContainerTreeViewPrivate
+struct _LigmaContainerTreeViewPrivate
 {
   GtkTreeSelection   *selection;
 
@@ -33,7 +33,7 @@ struct _GimpContainerTreeViewPrivate
   GList              *editable_cells;
   gchar              *editing_path;
 
-  GimpViewRenderer   *dnd_renderer;
+  LigmaViewRenderer   *dnd_renderer;
 
   GList              *toggle_cells;
   GList              *renderer_cells;
@@ -50,4 +50,4 @@ struct _GimpContainerTreeViewPrivate
 };
 
 
-#endif  /*  __GIMP_CONTAINER_TREE_VIEW_PRIVATE_H__  */
+#endif  /*  __LIGMA_CONTAINER_TREE_VIEW_PRIVATE_H__  */

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,13 +19,13 @@
 #define __COLORMAP_COMMANDS_H__
 
 
-void   colormap_edit_color_cmd_callback   (GimpAction *action,
+void   colormap_edit_color_cmd_callback   (LigmaAction *action,
                                            GVariant   *value,
                                            gpointer    data);
-void   colormap_add_color_cmd_callback    (GimpAction *action,
+void   colormap_add_color_cmd_callback    (LigmaAction *action,
                                            GVariant   *value,
                                            gpointer    data);
-void   colormap_to_selection_cmd_callback (GimpAction *action,
+void   colormap_to_selection_cmd_callback (LigmaAction *action,
                                            GVariant   *value,
                                            gpointer    data);
 

@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationnormalmode.c
- * Copyright (C) 2012 Michael Natterer <mitch@gimp.org>
+ * ligmaoperationnormalmode.c
+ * Copyright (C) 2012 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,20 +23,20 @@
 #include <gio/gio.h>
 #include <gegl-plugin.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "../operations-types.h"
 
-#include "gimpoperationnormal.h"
+#include "ligmaoperationnormal.h"
 
 
-G_DEFINE_TYPE (GimpOperationNormal, gimp_operation_normal,
-               GIMP_TYPE_OPERATION_LAYER_MODE)
+G_DEFINE_TYPE (LigmaOperationNormal, ligma_operation_normal,
+               LIGMA_TYPE_OPERATION_LAYER_MODE)
 
 
 static const gchar* reference_xml = "<?xml version='1.0' encoding='UTF-8'?>"
 "<gegl>"
-"<node operation='gimp:normal'>"
+"<node operation='ligma:normal'>"
 "  <node operation='gegl:load'>"
 "    <params>"
 "      <param name='path'>blending-test-B.png</param>"
@@ -52,38 +52,38 @@ static const gchar* reference_xml = "<?xml version='1.0' encoding='UTF-8'?>"
 
 
 static void
-gimp_operation_normal_class_init (GimpOperationNormalClass *klass)
+ligma_operation_normal_class_init (LigmaOperationNormalClass *klass)
 {
   GeglOperationClass          *operation_class  = GEGL_OPERATION_CLASS (klass);
-  GimpOperationLayerModeClass *layer_mode_class = GIMP_OPERATION_LAYER_MODE_CLASS (klass);
+  LigmaOperationLayerModeClass *layer_mode_class = LIGMA_OPERATION_LAYER_MODE_CLASS (klass);
 
   gegl_operation_class_set_keys (operation_class,
-                                 "name",                  "gimp:normal",
-                                 "description",           "GIMP normal mode operation",
+                                 "name",                  "ligma:normal",
+                                 "description",           "LIGMA normal mode operation",
                                  "reference-image",       "normal-mode.png",
                                  "reference-composition", reference_xml,
                                  NULL);
 
-  layer_mode_class->process = gimp_operation_normal_process;
+  layer_mode_class->process = ligma_operation_normal_process;
 
 #if COMPILE_SSE2_INTRINISICS
-  if (gimp_cpu_accel_get_support() & GIMP_CPU_ACCEL_X86_SSE2)
-    layer_mode_class->process = gimp_operation_normal_process_sse2;
+  if (ligma_cpu_accel_get_support() & LIGMA_CPU_ACCEL_X86_SSE2)
+    layer_mode_class->process = ligma_operation_normal_process_sse2;
 #endif /* COMPILE_SSE2_INTRINISICS */
 
 #if COMPILE_SSE4_1_INTRINISICS
-  if (gimp_cpu_accel_get_support() & GIMP_CPU_ACCEL_X86_SSE4_1)
-    layer_mode_class->process = gimp_operation_normal_process_sse4;
+  if (ligma_cpu_accel_get_support() & LIGMA_CPU_ACCEL_X86_SSE4_1)
+    layer_mode_class->process = ligma_operation_normal_process_sse4;
 #endif /* COMPILE_SSE4_1_INTRINISICS */
 }
 
 static void
-gimp_operation_normal_init (GimpOperationNormal *self)
+ligma_operation_normal_init (LigmaOperationNormal *self)
 {
 }
 
 gboolean
-gimp_operation_normal_process (GeglOperation       *op,
+ligma_operation_normal_process (GeglOperation       *op,
                                void                *in_p,
                                void                *layer_p,
                                void                *mask_p,
@@ -92,7 +92,7 @@ gimp_operation_normal_process (GeglOperation       *op,
                                const GeglRectangle *roi,
                                gint                 level)
 {
-  GimpOperationLayerMode *layer_mode = (gpointer) op;
+  LigmaOperationLayerMode *layer_mode = (gpointer) op;
   gfloat                 *in         = in_p;
   gfloat                 *out        = out_p;
   gfloat                 *layer      = layer_p;
@@ -102,8 +102,8 @@ gimp_operation_normal_process (GeglOperation       *op,
 
   switch (layer_mode->composite_mode)
     {
-    case GIMP_LAYER_COMPOSITE_UNION:
-    case GIMP_LAYER_COMPOSITE_AUTO:
+    case LIGMA_LAYER_COMPOSITE_UNION:
+    case LIGMA_LAYER_COMPOSITE_AUTO:
       while (samples--)
         {
           gfloat layer_alpha;
@@ -144,7 +144,7 @@ gimp_operation_normal_process (GeglOperation       *op,
         }
       break;
 
-    case GIMP_LAYER_COMPOSITE_CLIP_TO_BACKDROP:
+    case LIGMA_LAYER_COMPOSITE_CLIP_TO_BACKDROP:
       while (samples--)
         {
           gfloat layer_alpha;
@@ -183,7 +183,7 @@ gimp_operation_normal_process (GeglOperation       *op,
         }
       break;
 
-    case GIMP_LAYER_COMPOSITE_CLIP_TO_LAYER:
+    case LIGMA_LAYER_COMPOSITE_CLIP_TO_LAYER:
       while (samples--)
         {
           gfloat layer_alpha;
@@ -222,7 +222,7 @@ gimp_operation_normal_process (GeglOperation       *op,
         }
       break;
 
-    case GIMP_LAYER_COMPOSITE_INTERSECTION:
+    case LIGMA_LAYER_COMPOSITE_INTERSECTION:
       while (samples--)
         {
           gfloat layer_alpha;

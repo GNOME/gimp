@@ -1,6 +1,6 @@
-## Makefile.am for gimp/data/environ
+## Makefile.am for ligma/data/environ
 
-environdir = $(gimpplugindir)/environ
+environdir = $(ligmaplugindir)/environ
 
 environ_DATA = \
 	default.env	\

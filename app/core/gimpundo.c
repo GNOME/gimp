@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,24 +22,24 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "core-types.h"
 
-#include "config/gimpcoreconfig.h"
+#include "config/ligmacoreconfig.h"
 
-#include "gimp.h"
-#include "gimpcontext.h"
-#include "gimpimage.h"
-#include "gimpimage-undo.h"
-#include "gimpmarshal.h"
-#include "gimptempbuf.h"
-#include "gimpundo.h"
-#include "gimpundostack.h"
+#include "ligma.h"
+#include "ligmacontext.h"
+#include "ligmaimage.h"
+#include "ligmaimage-undo.h"
+#include "ligmamarshal.h"
+#include "ligmatempbuf.h"
+#include "ligmaundo.h"
+#include "ligmaundostack.h"
 
-#include "gimp-priorities.h"
+#include "ligma-priorities.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -59,137 +59,137 @@ enum
 };
 
 
-static void          gimp_undo_constructed         (GObject             *object);
-static void          gimp_undo_finalize            (GObject             *object);
-static void          gimp_undo_set_property        (GObject             *object,
+static void          ligma_undo_constructed         (GObject             *object);
+static void          ligma_undo_finalize            (GObject             *object);
+static void          ligma_undo_set_property        (GObject             *object,
                                                     guint                property_id,
                                                     const GValue        *value,
                                                     GParamSpec          *pspec);
-static void          gimp_undo_get_property        (GObject             *object,
+static void          ligma_undo_get_property        (GObject             *object,
                                                     guint                property_id,
                                                     GValue              *value,
                                                     GParamSpec          *pspec);
 
-static gint64        gimp_undo_get_memsize         (GimpObject          *object,
+static gint64        ligma_undo_get_memsize         (LigmaObject          *object,
                                                     gint64              *gui_size);
 
-static gboolean      gimp_undo_get_popup_size      (GimpViewable        *viewable,
+static gboolean      ligma_undo_get_popup_size      (LigmaViewable        *viewable,
                                                     gint                 width,
                                                     gint                 height,
                                                     gboolean             dot_for_dot,
                                                     gint                *popup_width,
                                                     gint                *popup_height);
-static GimpTempBuf * gimp_undo_get_new_preview     (GimpViewable        *viewable,
-                                                    GimpContext         *context,
+static LigmaTempBuf * ligma_undo_get_new_preview     (LigmaViewable        *viewable,
+                                                    LigmaContext         *context,
                                                     gint                 width,
                                                     gint                 height);
 
-static void          gimp_undo_real_pop            (GimpUndo            *undo,
-                                                    GimpUndoMode         undo_mode,
-                                                    GimpUndoAccumulator *accum);
-static void          gimp_undo_real_free           (GimpUndo            *undo,
-                                                    GimpUndoMode         undo_mode);
+static void          ligma_undo_real_pop            (LigmaUndo            *undo,
+                                                    LigmaUndoMode         undo_mode,
+                                                    LigmaUndoAccumulator *accum);
+static void          ligma_undo_real_free           (LigmaUndo            *undo,
+                                                    LigmaUndoMode         undo_mode);
 
-static gboolean      gimp_undo_create_preview_idle (gpointer             data);
-static void       gimp_undo_create_preview_private (GimpUndo            *undo,
-                                                    GimpContext         *context);
+static gboolean      ligma_undo_create_preview_idle (gpointer             data);
+static void       ligma_undo_create_preview_private (LigmaUndo            *undo,
+                                                    LigmaContext         *context);
 
 
-G_DEFINE_TYPE (GimpUndo, gimp_undo, GIMP_TYPE_VIEWABLE)
+G_DEFINE_TYPE (LigmaUndo, ligma_undo, LIGMA_TYPE_VIEWABLE)
 
-#define parent_class gimp_undo_parent_class
+#define parent_class ligma_undo_parent_class
 
 static guint undo_signals[LAST_SIGNAL] = { 0 };
 
 
 static void
-gimp_undo_class_init (GimpUndoClass *klass)
+ligma_undo_class_init (LigmaUndoClass *klass)
 {
   GObjectClass      *object_class      = G_OBJECT_CLASS (klass);
-  GimpObjectClass   *gimp_object_class = GIMP_OBJECT_CLASS (klass);
-  GimpViewableClass *viewable_class    = GIMP_VIEWABLE_CLASS (klass);
+  LigmaObjectClass   *ligma_object_class = LIGMA_OBJECT_CLASS (klass);
+  LigmaViewableClass *viewable_class    = LIGMA_VIEWABLE_CLASS (klass);
 
   undo_signals[POP] =
     g_signal_new ("pop",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpUndoClass, pop),
+                  G_STRUCT_OFFSET (LigmaUndoClass, pop),
                   NULL, NULL,
-                  gimp_marshal_VOID__ENUM_POINTER,
+                  ligma_marshal_VOID__ENUM_POINTER,
                   G_TYPE_NONE, 2,
-                  GIMP_TYPE_UNDO_MODE,
+                  LIGMA_TYPE_UNDO_MODE,
                   G_TYPE_POINTER);
 
   undo_signals[FREE] =
     g_signal_new ("free",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpUndoClass, free),
+                  G_STRUCT_OFFSET (LigmaUndoClass, free),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
-                  GIMP_TYPE_UNDO_MODE);
+                  LIGMA_TYPE_UNDO_MODE);
 
-  object_class->constructed         = gimp_undo_constructed;
-  object_class->finalize            = gimp_undo_finalize;
-  object_class->set_property        = gimp_undo_set_property;
-  object_class->get_property        = gimp_undo_get_property;
+  object_class->constructed         = ligma_undo_constructed;
+  object_class->finalize            = ligma_undo_finalize;
+  object_class->set_property        = ligma_undo_set_property;
+  object_class->get_property        = ligma_undo_get_property;
 
-  gimp_object_class->get_memsize    = gimp_undo_get_memsize;
+  ligma_object_class->get_memsize    = ligma_undo_get_memsize;
 
   viewable_class->default_icon_name = "edit-undo";
-  viewable_class->get_popup_size    = gimp_undo_get_popup_size;
-  viewable_class->get_new_preview   = gimp_undo_get_new_preview;
+  viewable_class->get_popup_size    = ligma_undo_get_popup_size;
+  viewable_class->get_new_preview   = ligma_undo_get_new_preview;
 
-  klass->pop                        = gimp_undo_real_pop;
-  klass->free                       = gimp_undo_real_free;
+  klass->pop                        = ligma_undo_real_pop;
+  klass->free                       = ligma_undo_real_free;
 
   g_object_class_install_property (object_class, PROP_IMAGE,
                                    g_param_spec_object ("image", NULL, NULL,
-                                                        GIMP_TYPE_IMAGE,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_TYPE_IMAGE,
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_TIME,
                                    g_param_spec_uint ("time", NULL, NULL,
                                                       0, G_MAXUINT, 0,
-                                                      GIMP_PARAM_READWRITE));
+                                                      LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_UNDO_TYPE,
                                    g_param_spec_enum ("undo-type", NULL, NULL,
-                                                      GIMP_TYPE_UNDO_TYPE,
-                                                      GIMP_UNDO_GROUP_NONE,
-                                                      GIMP_PARAM_READWRITE |
+                                                      LIGMA_TYPE_UNDO_TYPE,
+                                                      LIGMA_UNDO_GROUP_NONE,
+                                                      LIGMA_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_DIRTY_MASK,
                                    g_param_spec_flags ("dirty-mask",
                                                        NULL, NULL,
-                                                       GIMP_TYPE_DIRTY_MASK,
-                                                       GIMP_DIRTY_NONE,
-                                                       GIMP_PARAM_READWRITE |
+                                                       LIGMA_TYPE_DIRTY_MASK,
+                                                       LIGMA_DIRTY_NONE,
+                                                       LIGMA_PARAM_READWRITE |
                                                        G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
-gimp_undo_init (GimpUndo *undo)
+ligma_undo_init (LigmaUndo *undo)
 {
   undo->time = time (NULL);
 }
 
 static void
-gimp_undo_constructed (GObject *object)
+ligma_undo_constructed (GObject *object)
 {
-  GimpUndo *undo = GIMP_UNDO (object);
+  LigmaUndo *undo = LIGMA_UNDO (object);
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_assert (GIMP_IS_IMAGE (undo->image));
+  ligma_assert (LIGMA_IS_IMAGE (undo->image));
 }
 
 static void
-gimp_undo_finalize (GObject *object)
+ligma_undo_finalize (GObject *object)
 {
-  GimpUndo *undo = GIMP_UNDO (object);
+  LigmaUndo *undo = LIGMA_UNDO (object);
 
   if (undo->preview_idle_id)
     {
@@ -197,18 +197,18 @@ gimp_undo_finalize (GObject *object)
       undo->preview_idle_id = 0;
     }
 
-  g_clear_pointer (&undo->preview, gimp_temp_buf_unref);
+  g_clear_pointer (&undo->preview, ligma_temp_buf_unref);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
-gimp_undo_set_property (GObject      *object,
+ligma_undo_set_property (GObject      *object,
                         guint         property_id,
                         const GValue *value,
                         GParamSpec   *pspec)
 {
-  GimpUndo *undo = GIMP_UNDO (object);
+  LigmaUndo *undo = LIGMA_UNDO (object);
 
   switch (property_id)
     {
@@ -233,12 +233,12 @@ gimp_undo_set_property (GObject      *object,
 }
 
 static void
-gimp_undo_get_property (GObject    *object,
+ligma_undo_get_property (GObject    *object,
                         guint       property_id,
                         GValue     *value,
                         GParamSpec *pspec)
 {
-  GimpUndo *undo = GIMP_UNDO (object);
+  LigmaUndo *undo = LIGMA_UNDO (object);
 
   switch (property_id)
     {
@@ -262,34 +262,34 @@ gimp_undo_get_property (GObject    *object,
 }
 
 static gint64
-gimp_undo_get_memsize (GimpObject *object,
+ligma_undo_get_memsize (LigmaObject *object,
                        gint64     *gui_size)
 {
-  GimpUndo *undo    = GIMP_UNDO (object);
+  LigmaUndo *undo    = LIGMA_UNDO (object);
   gint64    memsize = 0;
 
-  *gui_size += gimp_temp_buf_get_memsize (undo->preview);
+  *gui_size += ligma_temp_buf_get_memsize (undo->preview);
 
-  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
+  return memsize + LIGMA_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
 }
 
 static gboolean
-gimp_undo_get_popup_size (GimpViewable *viewable,
+ligma_undo_get_popup_size (LigmaViewable *viewable,
                           gint          width,
                           gint          height,
                           gboolean      dot_for_dot,
                           gint         *popup_width,
                           gint         *popup_height)
 {
-  GimpUndo *undo = GIMP_UNDO (viewable);
+  LigmaUndo *undo = LIGMA_UNDO (viewable);
 
   if (undo->preview &&
-      (gimp_temp_buf_get_width  (undo->preview) > width ||
-       gimp_temp_buf_get_height (undo->preview) > height))
+      (ligma_temp_buf_get_width  (undo->preview) > width ||
+       ligma_temp_buf_get_height (undo->preview) > height))
     {
-      *popup_width  = gimp_temp_buf_get_width  (undo->preview);
-      *popup_height = gimp_temp_buf_get_height (undo->preview);
+      *popup_width  = ligma_temp_buf_get_width  (undo->preview);
+      *popup_height = ligma_temp_buf_get_height (undo->preview);
 
       return TRUE;
     }
@@ -297,21 +297,21 @@ gimp_undo_get_popup_size (GimpViewable *viewable,
   return FALSE;
 }
 
-static GimpTempBuf *
-gimp_undo_get_new_preview (GimpViewable *viewable,
-                           GimpContext  *context,
+static LigmaTempBuf *
+ligma_undo_get_new_preview (LigmaViewable *viewable,
+                           LigmaContext  *context,
                            gint          width,
                            gint          height)
 {
-  GimpUndo *undo = GIMP_UNDO (viewable);
+  LigmaUndo *undo = LIGMA_UNDO (viewable);
 
   if (undo->preview)
     {
       gint preview_width;
       gint preview_height;
 
-      gimp_viewable_calc_preview_size (gimp_temp_buf_get_width  (undo->preview),
-                                       gimp_temp_buf_get_height (undo->preview),
+      ligma_viewable_calc_preview_size (ligma_temp_buf_get_width  (undo->preview),
+                                       ligma_temp_buf_get_height (undo->preview),
                                        width,
                                        height,
                                        TRUE, 1.0, 1.0,
@@ -319,50 +319,50 @@ gimp_undo_get_new_preview (GimpViewable *viewable,
                                        &preview_height,
                                        NULL);
 
-      if (preview_width  < gimp_temp_buf_get_width  (undo->preview) &&
-          preview_height < gimp_temp_buf_get_height (undo->preview))
+      if (preview_width  < ligma_temp_buf_get_width  (undo->preview) &&
+          preview_height < ligma_temp_buf_get_height (undo->preview))
         {
-          return gimp_temp_buf_scale (undo->preview,
+          return ligma_temp_buf_scale (undo->preview,
                                       preview_width, preview_height);
         }
 
-      return gimp_temp_buf_copy (undo->preview);
+      return ligma_temp_buf_copy (undo->preview);
     }
 
   return NULL;
 }
 
 static void
-gimp_undo_real_pop (GimpUndo            *undo,
-                    GimpUndoMode         undo_mode,
-                    GimpUndoAccumulator *accum)
+ligma_undo_real_pop (LigmaUndo            *undo,
+                    LigmaUndoMode         undo_mode,
+                    LigmaUndoAccumulator *accum)
 {
 }
 
 static void
-gimp_undo_real_free (GimpUndo     *undo,
-                     GimpUndoMode  undo_mode)
+ligma_undo_real_free (LigmaUndo     *undo,
+                     LigmaUndoMode  undo_mode)
 {
 }
 
 void
-gimp_undo_pop (GimpUndo            *undo,
-               GimpUndoMode         undo_mode,
-               GimpUndoAccumulator *accum)
+ligma_undo_pop (LigmaUndo            *undo,
+               LigmaUndoMode         undo_mode,
+               LigmaUndoAccumulator *accum)
 {
-  g_return_if_fail (GIMP_IS_UNDO (undo));
+  g_return_if_fail (LIGMA_IS_UNDO (undo));
   g_return_if_fail (accum != NULL);
 
-  if (undo->dirty_mask != GIMP_DIRTY_NONE)
+  if (undo->dirty_mask != LIGMA_DIRTY_NONE)
     {
       switch (undo_mode)
         {
-        case GIMP_UNDO_MODE_UNDO:
-          gimp_image_clean (undo->image, undo->dirty_mask);
+        case LIGMA_UNDO_MODE_UNDO:
+          ligma_image_clean (undo->image, undo->dirty_mask);
           break;
 
-        case GIMP_UNDO_MODE_REDO:
-          gimp_image_dirty (undo->image, undo->dirty_mask);
+        case LIGMA_UNDO_MODE_REDO:
+          ligma_image_dirty (undo->image, undo->dirty_mask);
           break;
         }
     }
@@ -371,49 +371,49 @@ gimp_undo_pop (GimpUndo            *undo,
 }
 
 void
-gimp_undo_free (GimpUndo     *undo,
-                GimpUndoMode  undo_mode)
+ligma_undo_free (LigmaUndo     *undo,
+                LigmaUndoMode  undo_mode)
 {
-  g_return_if_fail (GIMP_IS_UNDO (undo));
+  g_return_if_fail (LIGMA_IS_UNDO (undo));
 
   g_signal_emit (undo, undo_signals[FREE], 0, undo_mode);
 }
 
-typedef struct _GimpUndoIdle GimpUndoIdle;
+typedef struct _LigmaUndoIdle LigmaUndoIdle;
 
-struct _GimpUndoIdle
+struct _LigmaUndoIdle
 {
-  GimpUndo    *undo;
-  GimpContext *context;
+  LigmaUndo    *undo;
+  LigmaContext *context;
 };
 
 static void
-gimp_undo_idle_free (GimpUndoIdle *idle)
+ligma_undo_idle_free (LigmaUndoIdle *idle)
 {
   if (idle->context)
     g_object_unref (idle->context);
 
-  g_slice_free (GimpUndoIdle, idle);
+  g_slice_free (LigmaUndoIdle, idle);
 }
 
 void
-gimp_undo_create_preview (GimpUndo    *undo,
-                          GimpContext *context,
+ligma_undo_create_preview (LigmaUndo    *undo,
+                          LigmaContext *context,
                           gboolean     create_now)
 {
-  g_return_if_fail (GIMP_IS_UNDO (undo));
-  g_return_if_fail (context == NULL || GIMP_IS_CONTEXT (context));
+  g_return_if_fail (LIGMA_IS_UNDO (undo));
+  g_return_if_fail (context == NULL || LIGMA_IS_CONTEXT (context));
 
   if (undo->preview || undo->preview_idle_id)
     return;
 
   if (create_now)
     {
-      gimp_undo_create_preview_private (undo, context);
+      ligma_undo_create_preview_private (undo, context);
     }
   else
     {
-      GimpUndoIdle *idle = g_slice_new0 (GimpUndoIdle);
+      LigmaUndoIdle *idle = g_slice_new0 (LigmaUndoIdle);
 
       idle->undo = undo;
 
@@ -421,21 +421,21 @@ gimp_undo_create_preview (GimpUndo    *undo,
         idle->context = g_object_ref (context);
 
       undo->preview_idle_id =
-        g_idle_add_full (GIMP_PRIORITY_VIEWABLE_IDLE,
-                         gimp_undo_create_preview_idle, idle,
-                         (GDestroyNotify) gimp_undo_idle_free);
+        g_idle_add_full (LIGMA_PRIORITY_VIEWABLE_IDLE,
+                         ligma_undo_create_preview_idle, idle,
+                         (GDestroyNotify) ligma_undo_idle_free);
     }
 }
 
 static gboolean
-gimp_undo_create_preview_idle (gpointer data)
+ligma_undo_create_preview_idle (gpointer data)
 {
-  GimpUndoIdle *idle   = data;
-  GimpUndoStack *stack = gimp_image_get_undo_stack (idle->undo->image);
+  LigmaUndoIdle *idle   = data;
+  LigmaUndoStack *stack = ligma_image_get_undo_stack (idle->undo->image);
 
-  if (idle->undo == gimp_undo_stack_peek (stack))
+  if (idle->undo == ligma_undo_stack_peek (stack))
     {
-      gimp_undo_create_preview_private (idle->undo, idle->context);
+      ligma_undo_create_preview_private (idle->undo, idle->context);
     }
 
   idle->undo->preview_idle_id = 0;
@@ -444,102 +444,102 @@ gimp_undo_create_preview_idle (gpointer data)
 }
 
 static void
-gimp_undo_create_preview_private (GimpUndo    *undo,
-                                  GimpContext *context)
+ligma_undo_create_preview_private (LigmaUndo    *undo,
+                                  LigmaContext *context)
 {
-  GimpImage    *image = undo->image;
-  GimpViewable *preview_viewable;
-  GimpViewSize  preview_size;
+  LigmaImage    *image = undo->image;
+  LigmaViewable *preview_viewable;
+  LigmaViewSize  preview_size;
   gint          width;
   gint          height;
 
   switch (undo->undo_type)
     {
-    case GIMP_UNDO_GROUP_IMAGE_QUICK_MASK:
-    case GIMP_UNDO_GROUP_MASK:
-    case GIMP_UNDO_MASK:
-      preview_viewable = GIMP_VIEWABLE (gimp_image_get_mask (image));
+    case LIGMA_UNDO_GROUP_IMAGE_QUICK_MASK:
+    case LIGMA_UNDO_GROUP_MASK:
+    case LIGMA_UNDO_MASK:
+      preview_viewable = LIGMA_VIEWABLE (ligma_image_get_mask (image));
       break;
 
     default:
-      preview_viewable = GIMP_VIEWABLE (image);
+      preview_viewable = LIGMA_VIEWABLE (image);
       break;
     }
 
-  preview_size = image->gimp->config->undo_preview_size;
+  preview_size = image->ligma->config->undo_preview_size;
 
-  if (gimp_image_get_width  (image) <= preview_size &&
-      gimp_image_get_height (image) <= preview_size)
+  if (ligma_image_get_width  (image) <= preview_size &&
+      ligma_image_get_height (image) <= preview_size)
     {
-      width  = gimp_image_get_width  (image);
-      height = gimp_image_get_height (image);
+      width  = ligma_image_get_width  (image);
+      height = ligma_image_get_height (image);
     }
   else
     {
-      if (gimp_image_get_width (image) > gimp_image_get_height (image))
+      if (ligma_image_get_width (image) > ligma_image_get_height (image))
         {
           width  = preview_size;
-          height = MAX (1, (gimp_image_get_height (image) * preview_size /
-                            gimp_image_get_width (image)));
+          height = MAX (1, (ligma_image_get_height (image) * preview_size /
+                            ligma_image_get_width (image)));
         }
       else
         {
           height = preview_size;
-          width  = MAX (1, (gimp_image_get_width (image) * preview_size /
-                            gimp_image_get_height (image)));
+          width  = MAX (1, (ligma_image_get_width (image) * preview_size /
+                            ligma_image_get_height (image)));
         }
     }
 
-  undo->preview = gimp_viewable_get_new_preview (preview_viewable, context,
+  undo->preview = ligma_viewable_get_new_preview (preview_viewable, context,
                                                  width, height);
 
-  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (undo));
+  ligma_viewable_invalidate_preview (LIGMA_VIEWABLE (undo));
 }
 
 void
-gimp_undo_refresh_preview (GimpUndo    *undo,
-                           GimpContext *context)
+ligma_undo_refresh_preview (LigmaUndo    *undo,
+                           LigmaContext *context)
 {
-  g_return_if_fail (GIMP_IS_UNDO (undo));
-  g_return_if_fail (context == NULL || GIMP_IS_CONTEXT (context));
+  g_return_if_fail (LIGMA_IS_UNDO (undo));
+  g_return_if_fail (context == NULL || LIGMA_IS_CONTEXT (context));
 
   if (undo->preview_idle_id)
     return;
 
   if (undo->preview)
     {
-      g_clear_pointer (&undo->preview, gimp_temp_buf_unref);
-      gimp_undo_create_preview (undo, context, FALSE);
+      g_clear_pointer (&undo->preview, ligma_temp_buf_unref);
+      ligma_undo_create_preview (undo, context, FALSE);
     }
 }
 
 const gchar *
-gimp_undo_type_to_name (GimpUndoType type)
+ligma_undo_type_to_name (LigmaUndoType type)
 {
   const gchar *desc;
 
-  if (gimp_enum_get_value (GIMP_TYPE_UNDO_TYPE, type, NULL, NULL, &desc, NULL))
+  if (ligma_enum_get_value (LIGMA_TYPE_UNDO_TYPE, type, NULL, NULL, &desc, NULL))
     return desc;
   else
     return "";
 }
 
 gboolean
-gimp_undo_is_weak (GimpUndo *undo)
+ligma_undo_is_weak (LigmaUndo *undo)
 {
   if (! undo)
     return FALSE;
 
   switch (undo->undo_type)
     {
-    case GIMP_UNDO_GROUP_ITEM_VISIBILITY:
-    case GIMP_UNDO_GROUP_ITEM_PROPERTIES:
-    case GIMP_UNDO_GROUP_LAYER_APPLY_MASK:
-    case GIMP_UNDO_ITEM_VISIBILITY:
-    case GIMP_UNDO_LAYER_MODE:
-    case GIMP_UNDO_LAYER_OPACITY:
-    case GIMP_UNDO_LAYER_MASK_APPLY:
-    case GIMP_UNDO_LAYER_MASK_SHOW:
+    case LIGMA_UNDO_GROUP_ITEM_VISIBILITY:
+    case LIGMA_UNDO_GROUP_ITEM_PROPERTIES:
+    case LIGMA_UNDO_GROUP_LAYER_APPLY_MASK:
+    case LIGMA_UNDO_ITEM_VISIBILITY:
+    case LIGMA_UNDO_LAYER_MODE:
+    case LIGMA_UNDO_LAYER_OPACITY:
+    case LIGMA_UNDO_LAYER_MASK_APPLY:
+    case LIGMA_UNDO_LAYER_MASK_SHOW:
       return TRUE;
       break;
 
@@ -551,32 +551,32 @@ gimp_undo_is_weak (GimpUndo *undo)
 }
 
 /**
- * gimp_undo_get_age:
+ * ligma_undo_get_age:
  * @undo:
  *
  * Returns: the time in seconds since this undo item was created
  */
 gint
-gimp_undo_get_age (GimpUndo *undo)
+ligma_undo_get_age (LigmaUndo *undo)
 {
   guint now = time (NULL);
 
-  g_return_val_if_fail (GIMP_IS_UNDO (undo), 0);
+  g_return_val_if_fail (LIGMA_IS_UNDO (undo), 0);
   g_return_val_if_fail (now >= undo->time, 0);
 
   return now - undo->time;
 }
 
 /**
- * gimp_undo_reset_age:
+ * ligma_undo_reset_age:
  * @undo:
  *
  * Changes the creation time of this undo item to the current time.
  */
 void
-gimp_undo_reset_age (GimpUndo *undo)
+ligma_undo_reset_age (LigmaUndo *undo)
 {
-  g_return_if_fail (GIMP_IS_UNDO (undo));
+  g_return_if_fail (LIGMA_IS_UNDO (undo));
 
   undo->time = time (NULL);
 

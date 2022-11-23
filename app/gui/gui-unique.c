@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -31,43 +31,43 @@
 
 #include "gui/gui-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontainer.h"
+#include "core/ligma.h"
+#include "core/ligmacontainer.h"
 
-#include "display/gimpdisplay.h"
-#include "display/gimpdisplayshell.h"
-#include "display/gimpimagewindow.h"
+#include "display/ligmadisplay.h"
+#include "display/ligmadisplayshell.h"
+#include "display/ligmaimagewindow.h"
 
 #include "file/file-open.h"
 
-#include "gimpdbusservice.h"
+#include "ligmadbusservice.h"
 #include "gui-unique.h"
 
 
 #ifdef G_OS_WIN32
 
-static void  gui_unique_win32_init (Gimp *gimp);
+static void  gui_unique_win32_init (Ligma *ligma);
 static void  gui_unique_win32_exit (void);
 
-static Gimp *unique_gimp  = NULL;
+static Ligma *unique_ligma  = NULL;
 static HWND  proxy_window = NULL;
 
 #elif defined (GDK_WINDOWING_QUARTZ)
 
-static void gui_unique_quartz_init (Gimp *gimp);
+static void gui_unique_quartz_init (Ligma *ligma);
 static void gui_unique_quartz_exit (void);
 
-@interface GimpAppleEventHandler : NSObject {}
+@interface LigmaAppleEventHandler : NSObject {}
 - (void) handleEvent:(NSAppleEventDescriptor *) inEvent
         andReplyWith:(NSAppleEventDescriptor *) replyEvent;
 @end
 
-static Gimp                   *unique_gimp   = NULL;
-static GimpAppleEventHandler  *event_handler = NULL;
+static Ligma                   *unique_ligma   = NULL;
+static LigmaAppleEventHandler  *event_handler = NULL;
 
 #else
 
-static void  gui_dbus_service_init (Gimp *gimp);
+static void  gui_dbus_service_init (Ligma *ligma);
 static void  gui_dbus_service_exit (void);
 
 static GDBusObjectManagerServer *dbus_manager = NULL;
@@ -77,14 +77,14 @@ static guint                     dbus_name_id = 0;
 
 
 void
-gui_unique_init (Gimp *gimp)
+gui_unique_init (Ligma *ligma)
 {
 #ifdef G_OS_WIN32
-  gui_unique_win32_init (gimp);
+  gui_unique_win32_init (ligma);
 #elif defined (GDK_WINDOWING_QUARTZ)
-  gui_unique_quartz_init (gimp);
+  gui_unique_quartz_init (ligma);
 #else
-  gui_dbus_service_init (gimp);
+  gui_dbus_service_init (ligma);
 #endif
 }
 
@@ -131,25 +131,25 @@ idle_open_data_free (IdleOpenData *data)
 static gboolean
 gui_unique_win32_idle_open (IdleOpenData *data)
 {
-  /*  We want to be called again later in case that GIMP is not fully
+  /*  We want to be called again later in case that LIGMA is not fully
    *  started yet.
    */
-  if (! gimp_is_restored (unique_gimp))
+  if (! ligma_is_restored (unique_ligma))
     return TRUE;
 
   if (data->file)
     {
-      file_open_from_command_line (unique_gimp, data->file,
+      file_open_from_command_line (unique_ligma, data->file,
                                    data->as_new, NULL);
     }
   else
     {
       /*  raise the first display  */
-      GimpObject *display;
+      LigmaObject *display;
 
-      display = gimp_container_get_first_child (unique_gimp->displays);
+      display = ligma_container_get_first_child (unique_ligma->displays);
 
-      gimp_display_shell_present (gimp_display_get_shell (GIMP_DISPLAY (display)));
+      ligma_display_shell_present (ligma_display_get_shell (LIGMA_DISPLAY (display)));
     }
 
   return FALSE;
@@ -164,10 +164,10 @@ gui_unique_win32_message_handler (HWND   hWnd,
   switch (uMsg)
     {
     case WM_COPYDATA:
-      if (unique_gimp)
+      if (unique_ligma)
         {
           COPYDATASTRUCT *copydata = (COPYDATASTRUCT *) lParam;
-          GimpObject     *display;
+          LigmaObject     *display;
 
           if (copydata->cbData > 0)
             {
@@ -187,7 +187,7 @@ gui_unique_win32_message_handler (HWND   hWnd,
                                         data,
                                         (GClosureNotify) idle_open_data_free);
 
-              g_object_watch_closure (G_OBJECT (unique_gimp), closure);
+              g_object_watch_closure (G_OBJECT (unique_ligma), closure);
 
               source = g_idle_source_new ();
               g_source_set_priority (source, G_PRIORITY_LOW);
@@ -197,9 +197,9 @@ gui_unique_win32_message_handler (HWND   hWnd,
             }
 
           /* Deiconify the window if minimized. */
-          display = gimp_container_get_first_child (unique_gimp->displays);
+          display = ligma_container_get_first_child (unique_ligma->displays);
           if (display)
-            gimp_display_shell_present (gimp_display_get_shell (GIMP_DISPLAY (display)));
+            ligma_display_shell_present (ligma_display_get_shell (LIGMA_DISPLAY (display)));
         }
       return TRUE;
 
@@ -209,36 +209,36 @@ gui_unique_win32_message_handler (HWND   hWnd,
 }
 
 static void
-gui_unique_win32_init (Gimp *gimp)
+gui_unique_win32_init (Ligma *ligma)
 {
   WNDCLASSW wc;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (unique_gimp == NULL);
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
+  g_return_if_fail (unique_ligma == NULL);
 
-  unique_gimp = gimp;
+  unique_ligma = ligma;
 
   /* register window class for proxy window */
   memset (&wc, 0, sizeof (wc));
 
   wc.hInstance     = GetModuleHandle (NULL);
   wc.lpfnWndProc   = gui_unique_win32_message_handler;
-  wc.lpszClassName = GIMP_UNIQUE_WIN32_WINDOW_CLASS;
+  wc.lpszClassName = LIGMA_UNIQUE_WIN32_WINDOW_CLASS;
 
   RegisterClassW (&wc);
 
   proxy_window = CreateWindowExW (0,
-                                  GIMP_UNIQUE_WIN32_WINDOW_CLASS,
-                                  GIMP_UNIQUE_WIN32_WINDOW_NAME,
+                                  LIGMA_UNIQUE_WIN32_WINDOW_CLASS,
+                                  LIGMA_UNIQUE_WIN32_WINDOW_NAME,
                                   WS_POPUP, 0, 0, 1, 1, NULL, NULL, wc.hInstance, NULL);
 }
 
 static void
 gui_unique_win32_exit (void)
 {
-  g_return_if_fail (GIMP_IS_GIMP (unique_gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (unique_ligma));
 
-  unique_gimp = NULL;
+  unique_ligma = NULL;
 
   DestroyWindow (proxy_window);
 }
@@ -248,15 +248,15 @@ gui_unique_win32_exit (void)
 static gboolean
 gui_unique_quartz_idle_open (GFile *file)
 {
-  /*  We want to be called again later in case that GIMP is not fully
+  /*  We want to be called again later in case that LIGMA is not fully
    *  started yet.
    */
-  if (! gimp_is_restored (unique_gimp))
+  if (! ligma_is_restored (unique_ligma))
     return TRUE;
 
   if (file)
     {
-      file_open_from_command_line (unique_gimp, file, FALSE, NULL);
+      file_open_from_command_line (unique_ligma, file, FALSE, NULL);
     }
 
   return FALSE;
@@ -274,7 +274,7 @@ gui_unique_quartz_nsopen_file_callback (GtkosxApplication *osx_app,
                             g_file_new_for_path (path),
                             (GClosureNotify) g_object_unref);
 
-  g_object_watch_closure (G_OBJECT (unique_gimp), closure);
+  g_object_watch_closure (G_OBJECT (unique_ligma), closure);
 
   source = g_idle_source_new ();
 
@@ -286,7 +286,7 @@ gui_unique_quartz_nsopen_file_callback (GtkosxApplication *osx_app,
   return TRUE;
 }
 
-@implementation GimpAppleEventHandler
+@implementation LigmaAppleEventHandler
 - (void) handleEvent: (NSAppleEventDescriptor *) inEvent
         andReplyWith: (NSAppleEventDescriptor *) replyEvent
 {
@@ -312,7 +312,7 @@ gui_unique_quartz_nsopen_file_callback (GtkosxApplication *osx_app,
                                 g_file_new_for_path (path),
                                 (GClosureNotify) g_object_unref);
 
-      g_object_watch_closure (G_OBJECT (unique_gimp), closure);
+      g_object_watch_closure (G_OBJECT (unique_ligma), closure);
 
       source = g_idle_source_new ();
       g_source_set_priority (source, G_PRIORITY_LOW);
@@ -326,27 +326,27 @@ gui_unique_quartz_nsopen_file_callback (GtkosxApplication *osx_app,
 @end
 
 static void
-gui_unique_quartz_init (Gimp *gimp)
+gui_unique_quartz_init (Ligma *ligma)
 {
   GtkosxApplication *osx_app;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (unique_gimp == NULL);
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
+  g_return_if_fail (unique_ligma == NULL);
 
   osx_app = gtkosx_application_get ();
 
-  unique_gimp = gimp;
+  unique_ligma = ligma;
 
   g_signal_connect (osx_app, "NSApplicationOpenFile",
                     G_CALLBACK (gui_unique_quartz_nsopen_file_callback),
-                    gimp);
+                    ligma);
 
   /* Using the event handler is a hack, it is necessary because
    * gtkosx_application will drop the file open events if any
    * event processing is done before gtkosx_application_ready is
    * called, which we unfortuantly can't avoid doing right now.
    */
-  event_handler = [[GimpAppleEventHandler alloc] init];
+  event_handler = [[LigmaAppleEventHandler alloc] init];
 
   [[NSAppleEventManager sharedAppleEventManager]
       setEventHandler: event_handler
@@ -358,9 +358,9 @@ gui_unique_quartz_init (Gimp *gimp)
 static void
 gui_unique_quartz_exit (void)
 {
-  g_return_if_fail (GIMP_IS_GIMP (unique_gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (unique_ligma));
 
-  unique_gimp = NULL;
+  unique_ligma = NULL;
 
   [[NSAppleEventManager sharedAppleEventManager]
       removeEventHandlerForEventClass: kCoreEventClass
@@ -376,17 +376,17 @@ gui_unique_quartz_exit (void)
 static void
 gui_dbus_bus_acquired (GDBusConnection *connection,
                        const gchar     *name,
-                       Gimp            *gimp)
+                       Ligma            *ligma)
 {
   GDBusObjectSkeleton *object;
   GObject             *service;
 
-  /* this should use GIMP_DBUS_SERVICE_PATH, but that's historically wrong */
-  dbus_manager = g_dbus_object_manager_server_new ("/org/gimp/GIMP");
+  /* this should use LIGMA_DBUS_SERVICE_PATH, but that's historically wrong */
+  dbus_manager = g_dbus_object_manager_server_new ("/org/ligma/LIGMA");
 
-  object = g_dbus_object_skeleton_new (GIMP_DBUS_INTERFACE_PATH);
+  object = g_dbus_object_skeleton_new (LIGMA_DBUS_INTERFACE_PATH);
 
-  service = gimp_dbus_service_new (gimp);
+  service = ligma_dbus_service_new (ligma);
   g_dbus_object_skeleton_add_interface (object,
                                         G_DBUS_INTERFACE_SKELETON (service));
   g_object_unref (service);
@@ -400,14 +400,14 @@ gui_dbus_bus_acquired (GDBusConnection *connection,
 static void
 gui_dbus_name_acquired (GDBusConnection *connection,
                         const gchar     *name,
-                        Gimp            *gimp)
+                        Ligma            *ligma)
 {
 }
 
 static void
 gui_dbus_name_lost (GDBusConnection *connection,
                     const gchar     *name,
-                    Gimp            *gimp)
+                    Ligma            *ligma)
 {
   if (connection == NULL)
     g_printerr ("%s: connection to the bus cannot be established.\n",
@@ -418,18 +418,18 @@ gui_dbus_name_lost (GDBusConnection *connection,
 }
 
 static void
-gui_dbus_service_init (Gimp *gimp)
+gui_dbus_service_init (Ligma *ligma)
 {
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
   g_return_if_fail (dbus_name_id == 0);
 
   dbus_name_id = g_bus_own_name (G_BUS_TYPE_SESSION,
-                                 GIMP_DBUS_SERVICE_NAME,
+                                 LIGMA_DBUS_SERVICE_NAME,
                                  G_BUS_NAME_OWNER_FLAGS_NONE,
                                  (GBusAcquiredCallback) gui_dbus_bus_acquired,
                                  (GBusNameAcquiredCallback) gui_dbus_name_acquired,
                                  (GBusNameLostCallback) gui_dbus_name_lost,
-                                 gimp, NULL);
+                                 ligma, NULL);
 }
 
 static void

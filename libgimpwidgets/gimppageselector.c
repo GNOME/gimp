@@ -1,8 +1,8 @@
-#/* LIBGIMP - The GIMP Library
+#/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimppageselector.c
- * Copyright (C) 2005 Michael Natterer <mitch@gimp.org>
+ * ligmapageselector.c
+ * Copyright (C) 2005 Michael Natterer <mitch@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -27,21 +27,21 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
-#include "gimpwidgetstypes.h"
+#include "ligmawidgetstypes.h"
 
-#include "gimpicons.h"
-#include "gimppageselector.h"
-#include "gimppropwidgets.h"
-#include "gimpwidgets.h"
+#include "ligmaicons.h"
+#include "ligmapageselector.h"
+#include "ligmapropwidgets.h"
+#include "ligmawidgets.h"
 
-#include "libgimp/libgimp-intl.h"
+#include "libligma/libligma-intl.h"
 
 
 /**
- * SECTION: gimppageselector
- * @title: GimpPageSelector
+ * SECTION: ligmapageselector
+ * @title: LigmaPageSelector
  * @short_description: A widget to select pages from multi-page things.
  *
  * Use this for example for specifying what pages to import from
@@ -72,10 +72,10 @@ enum
 };
 
 
-struct _GimpPageSelectorPrivate
+struct _LigmaPageSelectorPrivate
 {
   gint                    n_pages;
-  GimpPageSelectorTarget  target;
+  LigmaPageSelectorTarget  target;
 
   GtkListStore           *store;
   GtkWidget              *view;
@@ -86,61 +86,61 @@ struct _GimpPageSelectorPrivate
   GdkPixbuf              *default_thumbnail;
 };
 
-#define GET_PRIVATE(obj) (((GimpPageSelector *) (obj))->priv)
+#define GET_PRIVATE(obj) (((LigmaPageSelector *) (obj))->priv)
 
 
-static void   gimp_page_selector_finalize          (GObject          *object);
-static void   gimp_page_selector_get_property      (GObject          *object,
+static void   ligma_page_selector_finalize          (GObject          *object);
+static void   ligma_page_selector_get_property      (GObject          *object,
                                                     guint             property_id,
                                                     GValue           *value,
                                                     GParamSpec       *pspec);
-static void   gimp_page_selector_set_property      (GObject          *object,
+static void   ligma_page_selector_set_property      (GObject          *object,
                                                     guint             property_id,
                                                     const GValue     *value,
                                                     GParamSpec       *pspec);
 
-static void   gimp_page_selector_selection_changed (GtkIconView      *icon_view,
-                                                    GimpPageSelector *selector);
-static void   gimp_page_selector_item_activated    (GtkIconView      *icon_view,
+static void   ligma_page_selector_selection_changed (GtkIconView      *icon_view,
+                                                    LigmaPageSelector *selector);
+static void   ligma_page_selector_item_activated    (GtkIconView      *icon_view,
                                                     GtkTreePath      *path,
-                                                    GimpPageSelector *selector);
-static gboolean gimp_page_selector_range_focus_out (GtkEntry         *entry,
+                                                    LigmaPageSelector *selector);
+static gboolean ligma_page_selector_range_focus_out (GtkEntry         *entry,
                                                     GdkEventFocus    *fevent,
-                                                    GimpPageSelector *selector);
-static void   gimp_page_selector_range_activate    (GtkEntry         *entry,
-                                                    GimpPageSelector *selector);
-static gint   gimp_page_selector_int_compare       (gconstpointer     a,
+                                                    LigmaPageSelector *selector);
+static void   ligma_page_selector_range_activate    (GtkEntry         *entry,
+                                                    LigmaPageSelector *selector);
+static gint   ligma_page_selector_int_compare       (gconstpointer     a,
                                                     gconstpointer     b);
-static void   gimp_page_selector_print_range       (GString          *string,
+static void   ligma_page_selector_print_range       (GString          *string,
                                                     gint              start,
                                                     gint              end);
 
-static GdkPixbuf * gimp_page_selector_add_frame    (GtkWidget        *widget,
+static GdkPixbuf * ligma_page_selector_add_frame    (GtkWidget        *widget,
                                                     GdkPixbuf        *pixbuf);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpPageSelector, gimp_page_selector, GTK_TYPE_BOX)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaPageSelector, ligma_page_selector, GTK_TYPE_BOX)
 
-#define parent_class gimp_page_selector_parent_class
+#define parent_class ligma_page_selector_parent_class
 
 static guint selector_signals[LAST_SIGNAL] = { 0 };
 
 
 static void
-gimp_page_selector_class_init (GimpPageSelectorClass *klass)
+ligma_page_selector_class_init (LigmaPageSelectorClass *klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->finalize     = gimp_page_selector_finalize;
-  object_class->get_property = gimp_page_selector_get_property;
-  object_class->set_property = gimp_page_selector_set_property;
+  object_class->finalize     = ligma_page_selector_finalize;
+  object_class->get_property = ligma_page_selector_get_property;
+  object_class->set_property = ligma_page_selector_set_property;
 
   klass->selection_changed   = NULL;
   klass->activate            = NULL;
 
   /**
-   * GimpPageSelector::selection-changed:
+   * LigmaPageSelector::selection-changed:
    * @widget: the object which received the signal.
    *
    * This signal is emitted whenever the set of selected pages changes.
@@ -151,15 +151,15 @@ gimp_page_selector_class_init (GimpPageSelectorClass *klass)
     g_signal_new ("selection-changed",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpPageSelectorClass, selection_changed),
+                  G_STRUCT_OFFSET (LigmaPageSelectorClass, selection_changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 
   /**
-   * GimpPageSelector::activate:
+   * LigmaPageSelector::activate:
    * @widget: the object which received the signal.
    *
-   * The "activate" signal on GimpPageSelector is an action signal. It
+   * The "activate" signal on LigmaPageSelector is an action signal. It
    * is emitted when a user double-clicks an item in the page selection.
    *
    * Since: 2.4
@@ -168,13 +168,13 @@ gimp_page_selector_class_init (GimpPageSelectorClass *klass)
     g_signal_new ("activate",
                   G_OBJECT_CLASS_TYPE (object_class),
                   G_SIGNAL_RUN_FIRST | G_SIGNAL_ACTION,
-                  G_STRUCT_OFFSET (GimpPageSelectorClass, activate),
+                  G_STRUCT_OFFSET (LigmaPageSelectorClass, activate),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
   widget_class->activate_signal = selector_signals[ACTIVATE];
 
   /**
-   * GimpPageSelector:n-pages:
+   * LigmaPageSelector:n-pages:
    *
    * The number of pages of the document to open.
    *
@@ -185,10 +185,10 @@ gimp_page_selector_class_init (GimpPageSelectorClass *klass)
                                                      "N Pages",
                                                      "The number of pages to open",
                                                      0, G_MAXINT, 0,
-                                                     GIMP_PARAM_READWRITE));
+                                                     LIGMA_PARAM_READWRITE));
 
   /**
-   * GimpPageSelector:target:
+   * LigmaPageSelector:target:
    *
    * The target to open the document to.
    *
@@ -198,15 +198,15 @@ gimp_page_selector_class_init (GimpPageSelectorClass *klass)
                                    g_param_spec_enum ("target",
                                                       "Target",
                                                       "the target to open to",
-                                                      GIMP_TYPE_PAGE_SELECTOR_TARGET,
-                                                      GIMP_PAGE_SELECTOR_TARGET_LAYERS,
-                                                      GIMP_PARAM_READWRITE));
+                                                      LIGMA_TYPE_PAGE_SELECTOR_TARGET,
+                                                      LIGMA_PAGE_SELECTOR_TARGET_LAYERS,
+                                                      LIGMA_PARAM_READWRITE));
 }
 
 static void
-gimp_page_selector_init (GimpPageSelector *selector)
+ligma_page_selector_init (LigmaPageSelector *selector)
 {
-  GimpPageSelectorPrivate *priv;
+  LigmaPageSelectorPrivate *priv;
   GtkWidget               *vbox;
   GtkWidget               *sw;
   GtkWidget               *hbox;
@@ -216,12 +216,12 @@ gimp_page_selector_init (GimpPageSelector *selector)
   GtkWidget               *combo;
   GtkCellRenderer         *renderer;
 
-  selector->priv = gimp_page_selector_get_instance_private (selector);
+  selector->priv = ligma_page_selector_get_instance_private (selector);
 
   priv = GET_PRIVATE (selector);
 
   priv->n_pages = 0;
-  priv->target  = GIMP_PAGE_SELECTOR_TARGET_LAYERS;
+  priv->target  = LIGMA_PAGE_SELECTOR_TARGET_LAYERS;
 
   gtk_orientable_set_orientation (GTK_ORIENTABLE (selector),
                                   GTK_ORIENTATION_VERTICAL);
@@ -272,17 +272,17 @@ gimp_page_selector_init (GimpPageSelector *selector)
                 NULL);
 
   g_signal_connect (priv->view, "selection-changed",
-                    G_CALLBACK (gimp_page_selector_selection_changed),
+                    G_CALLBACK (ligma_page_selector_selection_changed),
                     selector);
   g_signal_connect (priv->view, "item-activated",
-                    G_CALLBACK (gimp_page_selector_item_activated),
+                    G_CALLBACK (ligma_page_selector_item_activated),
                     selector);
 
   /*  Count label  */
 
   priv->count_label = gtk_label_new (_("Nothing selected"));
   gtk_label_set_xalign (GTK_LABEL (priv->count_label), 0.0);
-  gimp_label_set_attributes (GTK_LABEL (priv->count_label),
+  ligma_label_set_attributes (GTK_LABEL (priv->count_label),
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);
   gtk_box_pack_start (GTK_BOX (vbox), priv->count_label, FALSE, FALSE, 0);
@@ -303,7 +303,7 @@ gimp_page_selector_init (GimpPageSelector *selector)
   gtk_widget_show (button);
 
   g_signal_connect_swapped (button, "clicked",
-                            G_CALLBACK (gimp_page_selector_select_all),
+                            G_CALLBACK (ligma_page_selector_select_all),
                             selector);
 
   priv->range_entry = gtk_entry_new ();
@@ -312,10 +312,10 @@ gimp_page_selector_init (GimpPageSelector *selector)
   gtk_widget_show (priv->range_entry);
 
   g_signal_connect (priv->range_entry, "focus-out-event",
-                    G_CALLBACK (gimp_page_selector_range_focus_out),
+                    G_CALLBACK (ligma_page_selector_range_focus_out),
                     selector);
   g_signal_connect (priv->range_entry, "activate",
-                    G_CALLBACK (gimp_page_selector_range_activate),
+                    G_CALLBACK (ligma_page_selector_range_activate),
                     selector);
 
   label = gtk_label_new_with_mnemonic (_("Select _range:"));
@@ -334,7 +334,7 @@ gimp_page_selector_init (GimpPageSelector *selector)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  combo = gimp_prop_enum_combo_box_new (G_OBJECT (selector), "target", -1, -1);
+  combo = ligma_prop_enum_combo_box_new (G_OBJECT (selector), "target", -1, -1);
   gtk_box_pack_start (GTK_BOX (hbox), combo, FALSE, FALSE, 0);
   gtk_widget_show (combo);
 
@@ -346,9 +346,9 @@ gimp_page_selector_init (GimpPageSelector *selector)
 }
 
 static void
-gimp_page_selector_finalize (GObject *object)
+ligma_page_selector_finalize (GObject *object)
 {
-  GimpPageSelectorPrivate *priv = GET_PRIVATE (object);
+  LigmaPageSelectorPrivate *priv = GET_PRIVATE (object);
 
   g_clear_object (&priv->default_thumbnail);
 
@@ -356,12 +356,12 @@ gimp_page_selector_finalize (GObject *object)
 }
 
 static void
-gimp_page_selector_get_property (GObject    *object,
+ligma_page_selector_get_property (GObject    *object,
                                  guint       property_id,
                                  GValue     *value,
                                  GParamSpec *pspec)
 {
-  GimpPageSelectorPrivate *priv = GET_PRIVATE (object);
+  LigmaPageSelectorPrivate *priv = GET_PRIVATE (object);
 
   switch (property_id)
     {
@@ -378,18 +378,18 @@ gimp_page_selector_get_property (GObject    *object,
 }
 
 static void
-gimp_page_selector_set_property (GObject      *object,
+ligma_page_selector_set_property (GObject      *object,
                                  guint         property_id,
                                  const GValue *value,
                                  GParamSpec   *pspec)
 {
-  GimpPageSelector        *selector = GIMP_PAGE_SELECTOR (object);
-  GimpPageSelectorPrivate *priv     = GET_PRIVATE (object);
+  LigmaPageSelector        *selector = LIGMA_PAGE_SELECTOR (object);
+  LigmaPageSelectorPrivate *priv     = GET_PRIVATE (object);
 
   switch (property_id)
     {
     case PROP_N_PAGES:
-      gimp_page_selector_set_n_pages (selector, g_value_get_int (value));
+      ligma_page_selector_set_n_pages (selector, g_value_get_int (value));
       break;
     case PROP_TARGET:
       priv->target = g_value_get_enum (value);
@@ -404,23 +404,23 @@ gimp_page_selector_set_property (GObject      *object,
 /*  public functions  */
 
 /**
- * gimp_page_selector_new:
+ * ligma_page_selector_new:
  *
- * Creates a new #GimpPageSelector widget.
+ * Creates a new #LigmaPageSelector widget.
  *
- * Returns: Pointer to the new #GimpPageSelector widget.
+ * Returns: Pointer to the new #LigmaPageSelector widget.
  *
  * Since: 2.4
  **/
 GtkWidget *
-gimp_page_selector_new (void)
+ligma_page_selector_new (void)
 {
-  return g_object_new (GIMP_TYPE_PAGE_SELECTOR, NULL);
+  return g_object_new (LIGMA_TYPE_PAGE_SELECTOR, NULL);
 }
 
 /**
- * gimp_page_selector_set_n_pages:
- * @selector: Pointer to a #GimpPageSelector.
+ * ligma_page_selector_set_n_pages:
+ * @selector: Pointer to a #LigmaPageSelector.
  * @n_pages:  The number of pages.
  *
  * Sets the number of pages in the document to open.
@@ -428,12 +428,12 @@ gimp_page_selector_new (void)
  * Since: 2.4
  **/
 void
-gimp_page_selector_set_n_pages (GimpPageSelector *selector,
+ligma_page_selector_set_n_pages (LigmaPageSelector *selector,
                                 gint              n_pages)
 {
-  GimpPageSelectorPrivate *priv;
+  LigmaPageSelectorPrivate *priv;
 
-  g_return_if_fail (GIMP_IS_PAGE_SELECTOR (selector));
+  g_return_if_fail (LIGMA_IS_PAGE_SELECTOR (selector));
   g_return_if_fail (n_pages >= 0);
 
   priv = GET_PRIVATE (selector);
@@ -479,19 +479,19 @@ gimp_page_selector_set_n_pages (GimpPageSelector *selector,
 }
 
 /**
- * gimp_page_selector_get_n_pages:
- * @selector: Pointer to a #GimpPageSelector.
+ * ligma_page_selector_get_n_pages:
+ * @selector: Pointer to a #LigmaPageSelector.
  *
  * Returns: the number of pages in the document to open.
  *
  * Since: 2.4
  **/
 gint
-gimp_page_selector_get_n_pages (GimpPageSelector *selector)
+ligma_page_selector_get_n_pages (LigmaPageSelector *selector)
 {
-  GimpPageSelectorPrivate *priv;
+  LigmaPageSelectorPrivate *priv;
 
-  g_return_val_if_fail (GIMP_IS_PAGE_SELECTOR (selector), 0);
+  g_return_val_if_fail (LIGMA_IS_PAGE_SELECTOR (selector), 0);
 
   priv = GET_PRIVATE (selector);
 
@@ -499,20 +499,20 @@ gimp_page_selector_get_n_pages (GimpPageSelector *selector)
 }
 
 /**
- * gimp_page_selector_set_target:
- * @selector: Pointer to a #GimpPageSelector.
+ * ligma_page_selector_set_target:
+ * @selector: Pointer to a #LigmaPageSelector.
  * @target:   How to open the selected pages.
  *
  * Since: 2.4
  **/
 void
-gimp_page_selector_set_target (GimpPageSelector       *selector,
-                               GimpPageSelectorTarget  target)
+ligma_page_selector_set_target (LigmaPageSelector       *selector,
+                               LigmaPageSelectorTarget  target)
 {
-  GimpPageSelectorPrivate *priv;
+  LigmaPageSelectorPrivate *priv;
 
-  g_return_if_fail (GIMP_IS_PAGE_SELECTOR (selector));
-  g_return_if_fail (target <= GIMP_PAGE_SELECTOR_TARGET_IMAGES);
+  g_return_if_fail (LIGMA_IS_PAGE_SELECTOR (selector));
+  g_return_if_fail (target <= LIGMA_PAGE_SELECTOR_TARGET_IMAGES);
 
   priv = GET_PRIVATE (selector);
 
@@ -525,20 +525,20 @@ gimp_page_selector_set_target (GimpPageSelector       *selector,
 }
 
 /**
- * gimp_page_selector_get_target:
- * @selector: Pointer to a #GimpPageSelector.
+ * ligma_page_selector_get_target:
+ * @selector: Pointer to a #LigmaPageSelector.
  *
  * Returns: How the selected pages should be opened.
  *
  * Since: 2.4
  **/
-GimpPageSelectorTarget
-gimp_page_selector_get_target (GimpPageSelector *selector)
+LigmaPageSelectorTarget
+ligma_page_selector_get_target (LigmaPageSelector *selector)
 {
-  GimpPageSelectorPrivate *priv;
+  LigmaPageSelectorPrivate *priv;
 
-  g_return_val_if_fail (GIMP_IS_PAGE_SELECTOR (selector),
-                        GIMP_PAGE_SELECTOR_TARGET_LAYERS);
+  g_return_val_if_fail (LIGMA_IS_PAGE_SELECTOR (selector),
+                        LIGMA_PAGE_SELECTOR_TARGET_LAYERS);
 
   priv = GET_PRIVATE (selector);
 
@@ -546,8 +546,8 @@ gimp_page_selector_get_target (GimpPageSelector *selector)
 }
 
 /**
- * gimp_page_selector_set_page_thumbnail:
- * @selector: Pointer to a #GimpPageSelector.
+ * ligma_page_selector_set_page_thumbnail:
+ * @selector: Pointer to a #LigmaPageSelector.
  * @page_no: The number of the page to set the thumbnail for.
  * @thumbnail: The thumbnail pixbuf.
  *
@@ -557,14 +557,14 @@ gimp_page_selector_get_target (GimpPageSelector *selector)
  * Since: 2.4
  **/
 void
-gimp_page_selector_set_page_thumbnail (GimpPageSelector *selector,
+ligma_page_selector_set_page_thumbnail (LigmaPageSelector *selector,
                                        gint              page_no,
                                        GdkPixbuf        *thumbnail)
 {
-  GimpPageSelectorPrivate *priv;
+  LigmaPageSelectorPrivate *priv;
   GtkTreeIter              iter;
 
-  g_return_if_fail (GIMP_IS_PAGE_SELECTOR (selector));
+  g_return_if_fail (LIGMA_IS_PAGE_SELECTOR (selector));
   g_return_if_fail (thumbnail == NULL || GDK_IS_PIXBUF (thumbnail));
 
   priv = GET_PRIVATE (selector);
@@ -580,7 +580,7 @@ gimp_page_selector_set_page_thumbnail (GimpPageSelector *selector,
     }
   else
     {
-      thumbnail = gimp_page_selector_add_frame (GTK_WIDGET (selector),
+      thumbnail = ligma_page_selector_add_frame (GTK_WIDGET (selector),
                                                 thumbnail);
     }
 
@@ -591,25 +591,25 @@ gimp_page_selector_set_page_thumbnail (GimpPageSelector *selector,
 }
 
 /**
- * gimp_page_selector_get_page_thumbnail:
- * @selector: Pointer to a #GimpPageSelector.
+ * ligma_page_selector_get_page_thumbnail:
+ * @selector: Pointer to a #LigmaPageSelector.
  * @page_no: The number of the page to get the thumbnail for.
  *
  * Returns: (nullable) (transfer none): The page's thumbnail, or %NULL if none
- *          is set. The returned pixbuf is owned by #GimpPageSelector and must
+ *          is set. The returned pixbuf is owned by #LigmaPageSelector and must
  *          not be unref'ed when no longer needed.
  *
  * Since: 2.4
  **/
 GdkPixbuf *
-gimp_page_selector_get_page_thumbnail (GimpPageSelector *selector,
+ligma_page_selector_get_page_thumbnail (LigmaPageSelector *selector,
                                        gint              page_no)
 {
-  GimpPageSelectorPrivate *priv;
+  LigmaPageSelectorPrivate *priv;
   GdkPixbuf               *thumbnail;
   GtkTreeIter              iter;
 
-  g_return_val_if_fail (GIMP_IS_PAGE_SELECTOR (selector), NULL);
+  g_return_val_if_fail (LIGMA_IS_PAGE_SELECTOR (selector), NULL);
 
   priv = GET_PRIVATE (selector);
 
@@ -631,8 +631,8 @@ gimp_page_selector_get_page_thumbnail (GimpPageSelector *selector,
 }
 
 /**
- * gimp_page_selector_set_page_label:
- * @selector: Pointer to a #GimpPageSelector.
+ * ligma_page_selector_set_page_label:
+ * @selector: Pointer to a #LigmaPageSelector.
  * @page_no:  The number of the page to set the label for.
  * @label:    The label.
  *
@@ -641,15 +641,15 @@ gimp_page_selector_get_page_thumbnail (GimpPageSelector *selector,
  * Since: 2.4
  **/
 void
-gimp_page_selector_set_page_label (GimpPageSelector *selector,
+ligma_page_selector_set_page_label (LigmaPageSelector *selector,
                                    gint              page_no,
                                    const gchar      *label)
 {
-  GimpPageSelectorPrivate *priv;
+  LigmaPageSelectorPrivate *priv;
   GtkTreeIter              iter;
   gchar                   *tmp;
 
-  g_return_if_fail (GIMP_IS_PAGE_SELECTOR (selector));
+  g_return_if_fail (LIGMA_IS_PAGE_SELECTOR (selector));
 
   priv = GET_PRIVATE (selector);
 
@@ -672,8 +672,8 @@ gimp_page_selector_set_page_label (GimpPageSelector *selector,
 }
 
 /**
- * gimp_page_selector_get_page_label:
- * @selector: Pointer to a #GimpPageSelector.
+ * ligma_page_selector_get_page_label:
+ * @selector: Pointer to a #LigmaPageSelector.
  * @page_no: The number of the page to get the thumbnail for.
  *
  * Returns: (nullable) (transfer full): The page's label, or %NULL if none is
@@ -683,15 +683,15 @@ gimp_page_selector_set_page_label (GimpPageSelector *selector,
  * Since: 2.4
  **/
 gchar *
-gimp_page_selector_get_page_label (GimpPageSelector *selector,
+ligma_page_selector_get_page_label (LigmaPageSelector *selector,
                                    gint              page_no)
 {
-  GimpPageSelectorPrivate *priv;
+  LigmaPageSelectorPrivate *priv;
   GtkTreeIter              iter;
   gchar                   *label;
   gboolean                 label_set;
 
-  g_return_val_if_fail (GIMP_IS_PAGE_SELECTOR (selector), NULL);
+  g_return_val_if_fail (LIGMA_IS_PAGE_SELECTOR (selector), NULL);
 
   priv = GET_PRIVATE (selector);
 
@@ -714,19 +714,19 @@ gimp_page_selector_get_page_label (GimpPageSelector *selector,
 }
 
 /**
- * gimp_page_selector_select_all:
- * @selector: Pointer to a #GimpPageSelector.
+ * ligma_page_selector_select_all:
+ * @selector: Pointer to a #LigmaPageSelector.
  *
  * Selects all pages.
  *
  * Since: 2.4
  **/
 void
-gimp_page_selector_select_all (GimpPageSelector *selector)
+ligma_page_selector_select_all (LigmaPageSelector *selector)
 {
-  GimpPageSelectorPrivate *priv;
+  LigmaPageSelectorPrivate *priv;
 
-  g_return_if_fail (GIMP_IS_PAGE_SELECTOR (selector));
+  g_return_if_fail (LIGMA_IS_PAGE_SELECTOR (selector));
 
   priv = GET_PRIVATE (selector);
 
@@ -734,19 +734,19 @@ gimp_page_selector_select_all (GimpPageSelector *selector)
 }
 
 /**
- * gimp_page_selector_unselect_all:
- * @selector: Pointer to a #GimpPageSelector.
+ * ligma_page_selector_unselect_all:
+ * @selector: Pointer to a #LigmaPageSelector.
  *
  * Unselects all pages.
  *
  * Since: 2.4
  **/
 void
-gimp_page_selector_unselect_all (GimpPageSelector *selector)
+ligma_page_selector_unselect_all (LigmaPageSelector *selector)
 {
-  GimpPageSelectorPrivate *priv;
+  LigmaPageSelectorPrivate *priv;
 
-  g_return_if_fail (GIMP_IS_PAGE_SELECTOR (selector));
+  g_return_if_fail (LIGMA_IS_PAGE_SELECTOR (selector));
 
   priv = GET_PRIVATE (selector);
 
@@ -754,8 +754,8 @@ gimp_page_selector_unselect_all (GimpPageSelector *selector)
 }
 
 /**
- * gimp_page_selector_select_page:
- * @selector: Pointer to a #GimpPageSelector.
+ * ligma_page_selector_select_page:
+ * @selector: Pointer to a #LigmaPageSelector.
  * @page_no: The number of the page to select.
  *
  * Adds a page to the selection.
@@ -763,14 +763,14 @@ gimp_page_selector_unselect_all (GimpPageSelector *selector)
  * Since: 2.4
  **/
 void
-gimp_page_selector_select_page (GimpPageSelector *selector,
+ligma_page_selector_select_page (LigmaPageSelector *selector,
                                 gint              page_no)
 {
-  GimpPageSelectorPrivate *priv;
+  LigmaPageSelectorPrivate *priv;
   GtkTreeIter              iter;
   GtkTreePath             *path;
 
-  g_return_if_fail (GIMP_IS_PAGE_SELECTOR (selector));
+  g_return_if_fail (LIGMA_IS_PAGE_SELECTOR (selector));
 
   priv = GET_PRIVATE (selector);
 
@@ -786,8 +786,8 @@ gimp_page_selector_select_page (GimpPageSelector *selector,
 }
 
 /**
- * gimp_page_selector_unselect_page:
- * @selector: Pointer to a #GimpPageSelector.
+ * ligma_page_selector_unselect_page:
+ * @selector: Pointer to a #LigmaPageSelector.
  * @page_no: The number of the page to unselect.
  *
  * Removes a page from the selection.
@@ -795,14 +795,14 @@ gimp_page_selector_select_page (GimpPageSelector *selector,
  * Since: 2.4
  **/
 void
-gimp_page_selector_unselect_page (GimpPageSelector *selector,
+ligma_page_selector_unselect_page (LigmaPageSelector *selector,
                                   gint              page_no)
 {
-  GimpPageSelectorPrivate *priv;
+  LigmaPageSelectorPrivate *priv;
   GtkTreeIter              iter;
   GtkTreePath             *path;
 
-  g_return_if_fail (GIMP_IS_PAGE_SELECTOR (selector));
+  g_return_if_fail (LIGMA_IS_PAGE_SELECTOR (selector));
 
   priv = GET_PRIVATE (selector);
 
@@ -818,8 +818,8 @@ gimp_page_selector_unselect_page (GimpPageSelector *selector,
 }
 
 /**
- * gimp_page_selector_page_is_selected:
- * @selector: Pointer to a #GimpPageSelector.
+ * ligma_page_selector_page_is_selected:
+ * @selector: Pointer to a #LigmaPageSelector.
  * @page_no: The number of the page to check.
  *
  * Returns: %TRUE if the page is selected, %FALSE otherwise.
@@ -827,15 +827,15 @@ gimp_page_selector_unselect_page (GimpPageSelector *selector,
  * Since: 2.4
  **/
 gboolean
-gimp_page_selector_page_is_selected (GimpPageSelector *selector,
+ligma_page_selector_page_is_selected (LigmaPageSelector *selector,
                                      gint              page_no)
 {
-  GimpPageSelectorPrivate *priv;
+  LigmaPageSelectorPrivate *priv;
   GtkTreeIter              iter;
   GtkTreePath             *path;
   gboolean                 selected;
 
-  g_return_val_if_fail (GIMP_IS_PAGE_SELECTOR (selector), FALSE);
+  g_return_val_if_fail (LIGMA_IS_PAGE_SELECTOR (selector), FALSE);
 
   priv = GET_PRIVATE (selector);
 
@@ -854,8 +854,8 @@ gimp_page_selector_page_is_selected (GimpPageSelector *selector,
 }
 
 /**
- * gimp_page_selector_get_selected_pages:
- * @selector: Pointer to a #GimpPageSelector.
+ * ligma_page_selector_get_selected_pages:
+ * @selector: Pointer to a #LigmaPageSelector.
  * @n_selected_pages: (out): Returns the number of selected pages.
  *
  * Returns: (array length=n_selected_pages): A sorted array of page numbers of
@@ -864,16 +864,16 @@ gimp_page_selector_page_is_selected (GimpPageSelector *selector,
  * Since: 2.4
  **/
 gint *
-gimp_page_selector_get_selected_pages (GimpPageSelector *selector,
+ligma_page_selector_get_selected_pages (LigmaPageSelector *selector,
                                        gint             *n_selected_pages)
 {
-  GimpPageSelectorPrivate *priv;
+  LigmaPageSelectorPrivate *priv;
   GList                   *selected;
   GList                   *list;
   gint                    *array;
   gint                     i;
 
-  g_return_val_if_fail (GIMP_IS_PAGE_SELECTOR (selector), NULL);
+  g_return_val_if_fail (LIGMA_IS_PAGE_SELECTOR (selector), NULL);
   g_return_val_if_fail (n_selected_pages != NULL, NULL);
 
   priv = GET_PRIVATE (selector);
@@ -891,7 +891,7 @@ gimp_page_selector_get_selected_pages (GimpPageSelector *selector,
     }
 
   qsort (array, *n_selected_pages, sizeof (gint),
-         gimp_page_selector_int_compare);
+         ligma_page_selector_int_compare);
 
   g_list_free_full (selected, (GDestroyNotify) gtk_tree_path_free);
 
@@ -899,8 +899,8 @@ gimp_page_selector_get_selected_pages (GimpPageSelector *selector,
 }
 
 /**
- * gimp_page_selector_select_range:
- * @selector: Pointer to a #GimpPageSelector.
+ * ligma_page_selector_select_range:
+ * @selector: Pointer to a #LigmaPageSelector.
  * @range: A string representing the set of selected pages.
  *
  * Selects the pages described by @range. The range string is a
@@ -914,13 +914,13 @@ gimp_page_selector_get_selected_pages (GimpPageSelector *selector,
  * Since: 2.4
  **/
 void
-gimp_page_selector_select_range (GimpPageSelector *selector,
+ligma_page_selector_select_range (LigmaPageSelector *selector,
                                  const gchar      *range)
 {
-  GimpPageSelectorPrivate  *priv;
+  LigmaPageSelectorPrivate  *priv;
   gchar                   **ranges;
 
-  g_return_if_fail (GIMP_IS_PAGE_SELECTOR (selector));
+  g_return_if_fail (LIGMA_IS_PAGE_SELECTOR (selector));
 
   priv = GET_PRIVATE (selector);
 
@@ -928,10 +928,10 @@ gimp_page_selector_select_range (GimpPageSelector *selector,
     range = "";
 
   g_signal_handlers_block_by_func (priv->view,
-                                   gimp_page_selector_selection_changed,
+                                   ligma_page_selector_selection_changed,
                                    selector);
 
-  gimp_page_selector_unselect_all (selector);
+  ligma_page_selector_unselect_all (selector);
 
   ranges = g_strsplit (range, ",", -1);
 
@@ -975,7 +975,7 @@ gimp_page_selector_select_range (GimpPageSelector *selector,
                   page_to   = MIN (page_to, priv->n_pages) - 1;
 
                   for (page_no = page_from; page_no <= page_to; page_no++)
-                    gimp_page_selector_select_page (selector, page_no);
+                    ligma_page_selector_select_page (selector, page_no);
                 }
             }
           else
@@ -986,7 +986,7 @@ gimp_page_selector_select_range (GimpPageSelector *selector,
                   page_no >= 1                        &&
                   page_no <= priv->n_pages)
                 {
-                  gimp_page_selector_select_page (selector, page_no - 1);
+                  ligma_page_selector_select_page (selector, page_no - 1);
                 }
             }
         }
@@ -995,34 +995,34 @@ gimp_page_selector_select_range (GimpPageSelector *selector,
     }
 
   g_signal_handlers_unblock_by_func (priv->view,
-                                     gimp_page_selector_selection_changed,
+                                     ligma_page_selector_selection_changed,
                                      selector);
 
-  gimp_page_selector_selection_changed (GTK_ICON_VIEW (priv->view), selector);
+  ligma_page_selector_selection_changed (GTK_ICON_VIEW (priv->view), selector);
 }
 
 /**
- * gimp_page_selector_get_selected_range:
- * @selector: Pointer to a #GimpPageSelector.
+ * ligma_page_selector_get_selected_range:
+ * @selector: Pointer to a #LigmaPageSelector.
  *
  * Returns: A newly allocated string representing the set of selected
- *          pages. See gimp_page_selector_select_range() for the
+ *          pages. See ligma_page_selector_select_range() for the
  *          format of the string.
  *
  * Since: 2.4
  **/
 gchar *
-gimp_page_selector_get_selected_range (GimpPageSelector *selector)
+ligma_page_selector_get_selected_range (LigmaPageSelector *selector)
 {
   gint    *pages;
   gint     n_pages;
   GString *string;
 
-  g_return_val_if_fail (GIMP_IS_PAGE_SELECTOR (selector), NULL);
+  g_return_val_if_fail (LIGMA_IS_PAGE_SELECTOR (selector), NULL);
 
   string = g_string_new ("");
 
-  pages = gimp_page_selector_get_selected_pages (selector, &n_pages);
+  pages = ligma_page_selector_get_selected_pages (selector, &n_pages);
 
   if (pages)
     {
@@ -1038,7 +1038,7 @@ gimp_page_selector_get_selected_range (GimpPageSelector *selector)
         {
           if (pages[i] > range_end + 1)
             {
-              gimp_page_selector_print_range (string,
+              ligma_page_selector_print_range (string,
                                               range_start, range_end);
 
               last_printed = range_end;
@@ -1049,7 +1049,7 @@ gimp_page_selector_get_selected_range (GimpPageSelector *selector)
         }
 
       if (range_end != last_printed)
-        gimp_page_selector_print_range (string, range_start, range_end);
+        ligma_page_selector_print_range (string, range_start, range_end);
 
       g_free (pages);
     }
@@ -1061,10 +1061,10 @@ gimp_page_selector_get_selected_range (GimpPageSelector *selector)
 /*  private functions  */
 
 static void
-gimp_page_selector_selection_changed (GtkIconView      *icon_view,
-                                      GimpPageSelector *selector)
+ligma_page_selector_selection_changed (GtkIconView      *icon_view,
+                                      LigmaPageSelector *selector)
 {
-  GimpPageSelectorPrivate *priv = GET_PRIVATE (selector);
+  LigmaPageSelectorPrivate *priv = GET_PRIVATE (selector);
   GList                   *selected;
   gint                     n_selected;
   gchar                   *range;
@@ -1101,7 +1101,7 @@ gimp_page_selector_selection_changed (GtkIconView      *icon_view,
       g_free (text);
     }
 
-  range = gimp_page_selector_get_selected_range (selector);
+  range = ligma_page_selector_get_selected_range (selector);
   gtk_entry_set_text (GTK_ENTRY (priv->range_entry), range);
   g_free (range);
 
@@ -1111,39 +1111,39 @@ gimp_page_selector_selection_changed (GtkIconView      *icon_view,
 }
 
 static void
-gimp_page_selector_item_activated (GtkIconView      *icon_view,
+ligma_page_selector_item_activated (GtkIconView      *icon_view,
                                    GtkTreePath      *path,
-                                   GimpPageSelector *selector)
+                                   LigmaPageSelector *selector)
 {
   g_signal_emit (selector, selector_signals[ACTIVATE], 0);
 }
 
 static gboolean
-gimp_page_selector_range_focus_out (GtkEntry         *entry,
+ligma_page_selector_range_focus_out (GtkEntry         *entry,
                                     GdkEventFocus    *fevent,
-                                    GimpPageSelector *selector)
+                                    LigmaPageSelector *selector)
 {
-  gimp_page_selector_range_activate (entry, selector);
+  ligma_page_selector_range_activate (entry, selector);
 
   return FALSE;
 }
 
 static void
-gimp_page_selector_range_activate (GtkEntry         *entry,
-                                   GimpPageSelector *selector)
+ligma_page_selector_range_activate (GtkEntry         *entry,
+                                   LigmaPageSelector *selector)
 {
-  gimp_page_selector_select_range (selector, gtk_entry_get_text (entry));
+  ligma_page_selector_select_range (selector, gtk_entry_get_text (entry));
 }
 
 static gint
-gimp_page_selector_int_compare (gconstpointer a,
+ligma_page_selector_int_compare (gconstpointer a,
                                 gconstpointer b)
 {
   return *(gint*)a - *(gint*)b;
 }
 
 static void
-gimp_page_selector_print_range (GString *string,
+ligma_page_selector_print_range (GString *string,
                                 gint     start,
                                 gint     end)
 {
@@ -1298,7 +1298,7 @@ stretch_frame_image (GdkPixbuf *frame_image,
 #define FRAME_BOTTOM 4
 
 static GdkPixbuf *
-gimp_page_selector_add_frame (GtkWidget *widget,
+ligma_page_selector_add_frame (GtkWidget *widget,
                               GdkPixbuf *pixbuf)
 {
   GdkPixbuf *frame;
@@ -1314,7 +1314,7 @@ gimp_page_selector_add_frame (GtkWidget *widget,
       GError *error = NULL;
 
       frame = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
-                                        GIMP_ICON_FRAME, 64, 0, &error);
+                                        LIGMA_ICON_FRAME, 64, 0, &error);
       if (error)
         {
           g_printerr ("%s: %s\n", G_STRFUNC, error->message);

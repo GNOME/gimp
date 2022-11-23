@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimp-tool-options-manager.h
- * Copyright (C) 2018 Michael Natterer <mitch@gimp.org>
+ * ligma-tool-options-manager.h
+ * Copyright (C) 2018 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,12 +18,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TOOL_OPTIONS_MANAGER_H__
-#define __GIMP_TOOL_OPTIONS_MANAGER_H__
+#ifndef __LIGMA_TOOL_OPTIONS_MANAGER_H__
+#define __LIGMA_TOOL_OPTIONS_MANAGER_H__
 
 
-void   gimp_tool_options_manager_init (Gimp *gimp);
-void   gimp_tool_options_manager_exit (Gimp *gimp);
+void   ligma_tool_options_manager_init (Ligma *ligma);
+void   ligma_tool_options_manager_exit (Ligma *ligma);
 
 
-#endif  /*  __GIMP_TOOL_OPTIONS_MANAGER_H__  */
+#endif  /*  __LIGMA_TOOL_OPTIONS_MANAGER_H__  */

@@ -1,11 +1,11 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * color-profile-import-dialog.h
- * Copyright (C) 2015 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2015 Michael Natterer <mitch@ligma.org>
  *
  * Partly based on the lcms plug-in
- * Copyright (C) 2006, 2007  Sven Neumann <sven@gimp.org>
+ * Copyright (C) 2006, 2007  Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,37 +26,37 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmaconfig/ligmaconfig.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "dialogs-types.h"
 
-#include "config/gimpcoreconfig.h"
+#include "config/ligmacoreconfig.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontext.h"
-#include "core/gimpimage.h"
-#include "core/gimpimage-color-profile.h"
+#include "core/ligma.h"
+#include "core/ligmacontext.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaimage-color-profile.h"
 
-#include "widgets/gimphelp-ids.h"
-#include "widgets/gimpviewabledialog.h"
-#include "widgets/gimpwidgets-constructors.h"
+#include "widgets/ligmahelp-ids.h"
+#include "widgets/ligmaviewabledialog.h"
+#include "widgets/ligmawidgets-constructors.h"
 
 #include "color-profile-import-dialog.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /*  public functions  */
 
-GimpColorProfilePolicy
-color_profile_import_dialog_run (GimpImage                 *image,
-                                 GimpContext               *context,
+LigmaColorProfilePolicy
+color_profile_import_dialog_run (LigmaImage                 *image,
+                                 LigmaContext               *context,
                                  GtkWidget                 *parent,
-                                 GimpColorProfile         **dest_profile,
-                                 GimpColorRenderingIntent  *intent,
+                                 LigmaColorProfile         **dest_profile,
+                                 LigmaColorRenderingIntent  *intent,
                                  gboolean                  *bpc,
                                  gboolean                  *dont_ask)
 {
@@ -70,47 +70,47 @@ color_profile_import_dialog_run (GimpImage                 *image,
   GtkWidget              *intent_combo;
   GtkWidget              *bpc_toggle;
   GtkWidget              *dont_ask_toggle;
-  GimpColorProfile       *src_profile;
-  GimpColorProfile       *pref_profile = NULL;
-  GimpColorProfilePolicy  policy;
+  LigmaColorProfile       *src_profile;
+  LigmaColorProfile       *pref_profile = NULL;
+  LigmaColorProfilePolicy  policy;
   const gchar            *frame_title;
   gchar                  *text;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), GIMP_COLOR_PROFILE_POLICY_KEEP);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), GIMP_COLOR_PROFILE_POLICY_KEEP);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), LIGMA_COLOR_PROFILE_POLICY_KEEP);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), LIGMA_COLOR_PROFILE_POLICY_KEEP);
   g_return_val_if_fail (parent == NULL || GTK_IS_WIDGET (parent),
-                        GIMP_COLOR_PROFILE_POLICY_KEEP);
-  g_return_val_if_fail (dest_profile != NULL, GIMP_COLOR_PROFILE_POLICY_KEEP);
+                        LIGMA_COLOR_PROFILE_POLICY_KEEP);
+  g_return_val_if_fail (dest_profile != NULL, LIGMA_COLOR_PROFILE_POLICY_KEEP);
 
-  src_profile   = gimp_image_get_color_profile (image);
-  *dest_profile = gimp_image_get_builtin_color_profile (image);
+  src_profile   = ligma_image_get_color_profile (image);
+  *dest_profile = ligma_image_get_builtin_color_profile (image);
 
-  if (gimp_image_get_base_type (image) == GIMP_GRAY)
+  if (ligma_image_get_base_type (image) == LIGMA_GRAY)
     {
       frame_title = _("Convert the image to the built-in grayscale color profile?");
 
-      pref_profile = gimp_color_config_get_gray_color_profile (image->gimp->config->color_management, NULL);
-      if (pref_profile && gimp_color_profile_is_equal (pref_profile, *dest_profile))
+      pref_profile = ligma_color_config_get_gray_color_profile (image->ligma->config->color_management, NULL);
+      if (pref_profile && ligma_color_profile_is_equal (pref_profile, *dest_profile))
         g_clear_object (&pref_profile);
     }
   else
     {
       frame_title = _("Convert the image to the built-in sRGB color profile?");
 
-      pref_profile = gimp_color_config_get_rgb_color_profile (image->gimp->config->color_management, NULL);
-      if (pref_profile && gimp_color_profile_is_equal (pref_profile, *dest_profile))
+      pref_profile = ligma_color_config_get_rgb_color_profile (image->ligma->config->color_management, NULL);
+      if (pref_profile && ligma_color_profile_is_equal (pref_profile, *dest_profile))
         g_clear_object (&pref_profile);
     }
 
   dialog =
-    gimp_viewable_dialog_new (g_list_prepend (NULL, image), context,
+    ligma_viewable_dialog_new (g_list_prepend (NULL, image), context,
                               _("Keep the Embedded Working Space?"),
-                              "gimp-image-color-profile-import",
+                              "ligma-image-color-profile-import",
                               NULL,
                               _("Keep the image's color profile"),
                               parent,
-                              gimp_standard_help_func,
-                              GIMP_HELP_IMAGE_COLOR_PROFILE_IMPORT,
+                              ligma_standard_help_func,
+                              LIGMA_HELP_IMAGE_COLOR_PROFILE_IMPORT,
 
                               _("_Keep"),    GTK_RESPONSE_YES,
                               _("_Convert"), GTK_RESPONSE_NO,
@@ -128,13 +128,13 @@ color_profile_import_dialog_run (GimpImage                 *image,
   gtk_widget_show (main_vbox);
 
   text = g_strdup_printf (_("The image '%s' has an embedded color profile"),
-                          gimp_image_get_display_name (image));
-  frame = gimp_frame_new (text);
+                          ligma_image_get_display_name (image));
+  frame = ligma_frame_new (text);
   g_free (text);
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  label = gimp_color_profile_label_new (src_profile);
+  label = ligma_color_profile_label_new (src_profile);
   gtk_container_add (GTK_CONTAINER (frame), label);
   gtk_widget_show (label);
 
@@ -146,26 +146,26 @@ color_profile_import_dialog_run (GimpImage                 *image,
   gtk_box_pack_start (GTK_BOX (main_vbox), switcher, FALSE, FALSE, 0);
   gtk_widget_show (stack);
 
-  frame = gimp_frame_new (frame_title);
+  frame = ligma_frame_new (frame_title);
   gtk_stack_add_titled (GTK_STACK (stack), frame, "builtin", "Built-in Profile");
   gtk_widget_show (frame);
 
-  label = gimp_color_profile_label_new (*dest_profile);
+  label = ligma_color_profile_label_new (*dest_profile);
   gtk_container_add (GTK_CONTAINER (frame), label);
   gtk_widget_show (label);
 
   if (pref_profile)
     {
-      if (gimp_image_get_base_type (image) == GIMP_GRAY)
+      if (ligma_image_get_base_type (image) == LIGMA_GRAY)
         frame_title  = _("Convert the image to the preferred grayscale color profile?");
       else
         frame_title = _("Convert the image to the preferred RGB color profile?");
 
-      frame = gimp_frame_new (frame_title);
+      frame = ligma_frame_new (frame_title);
       gtk_stack_add_titled (GTK_STACK (stack), frame, "preferred", "Preferred Profile");
       gtk_widget_show (frame);
 
-      label = gimp_color_profile_label_new (pref_profile);
+      label = ligma_color_profile_label_new (pref_profile);
       gtk_container_add (GTK_CONTAINER (frame), label);
       gtk_widget_show (label);
 
@@ -196,8 +196,8 @@ color_profile_import_dialog_run (GimpImage                 *image,
       gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
       gtk_widget_show (label);
 
-      intent_combo = gimp_enum_combo_box_new (GIMP_TYPE_COLOR_RENDERING_INTENT);
-      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (intent_combo),
+      intent_combo = ligma_enum_combo_box_new (LIGMA_TYPE_COLOR_RENDERING_INTENT);
+      ligma_int_combo_box_set_active (LIGMA_INT_COMBO_BOX (intent_combo),
                                      *intent);
       gtk_box_pack_start (GTK_BOX (hbox), intent_combo, TRUE, TRUE, 0);
       gtk_widget_show (intent_combo);
@@ -231,23 +231,23 @@ color_profile_import_dialog_run (GimpImage                 *image,
       if (g_strcmp0 (gtk_stack_get_visible_child_name (GTK_STACK (stack)),
                      "builtin") == 0)
         {
-          policy = GIMP_COLOR_PROFILE_POLICY_CONVERT_BUILTIN;
+          policy = LIGMA_COLOR_PROFILE_POLICY_CONVERT_BUILTIN;
           g_object_ref (*dest_profile);
         }
       else
         {
-          policy = GIMP_COLOR_PROFILE_POLICY_CONVERT_PREFERRED;
+          policy = LIGMA_COLOR_PROFILE_POLICY_CONVERT_PREFERRED;
           *dest_profile = g_object_ref (pref_profile);
         }
       break;
 
     default:
-      policy = GIMP_COLOR_PROFILE_POLICY_KEEP;
+      policy = LIGMA_COLOR_PROFILE_POLICY_KEEP;
       break;
     }
 
   if (intent)
-    gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (intent_combo),
+    ligma_int_combo_box_get_active (LIGMA_INT_COMBO_BOX (intent_combo),
                                    (gint *) intent);
 
   if (bpc)

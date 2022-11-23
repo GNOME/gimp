@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1999 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,41 +15,41 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SCAN_CONVERT_H__
-#define __GIMP_SCAN_CONVERT_H__
+#ifndef __LIGMA_SCAN_CONVERT_H__
+#define __LIGMA_SCAN_CONVERT_H__
 
 
-GimpScanConvert *
-          gimp_scan_convert_new               (void);
+LigmaScanConvert *
+          ligma_scan_convert_new               (void);
 
-GimpScanConvert *
-          gimp_scan_convert_new_from_boundary (const GimpBoundSeg *bound_segs,
+LigmaScanConvert *
+          ligma_scan_convert_new_from_boundary (const LigmaBoundSeg *bound_segs,
                                                gint                n_bound_segs,
                                                gint                offset_x,
                                                gint                offset_y);
 
-void      gimp_scan_convert_free               (GimpScanConvert   *sc);
-void      gimp_scan_convert_set_pixel_ratio    (GimpScanConvert   *sc,
+void      ligma_scan_convert_free               (LigmaScanConvert   *sc);
+void      ligma_scan_convert_set_pixel_ratio    (LigmaScanConvert   *sc,
                                                 gdouble            ratio_xy);
-void      gimp_scan_convert_set_clip_rectangle (GimpScanConvert   *sc,
+void      ligma_scan_convert_set_clip_rectangle (LigmaScanConvert   *sc,
                                                 gint               x,
                                                 gint               y,
                                                 gint               width,
                                                 gint               height);
-void      gimp_scan_convert_add_polyline       (GimpScanConvert   *sc,
+void      ligma_scan_convert_add_polyline       (LigmaScanConvert   *sc,
                                                 guint              n_points,
-                                                const GimpVector2 *points,
+                                                const LigmaVector2 *points,
                                                 gboolean           closed);
-void      gimp_scan_convert_add_bezier         (GimpScanConvert      *sc,
-                                                const GimpBezierDesc *bezier);
-void      gimp_scan_convert_stroke             (GimpScanConvert   *sc,
+void      ligma_scan_convert_add_bezier         (LigmaScanConvert      *sc,
+                                                const LigmaBezierDesc *bezier);
+void      ligma_scan_convert_stroke             (LigmaScanConvert   *sc,
                                                 gdouble            width,
-                                                GimpJoinStyle      join,
-                                                GimpCapStyle       cap,
+                                                LigmaJoinStyle      join,
+                                                LigmaCapStyle       cap,
                                                 gdouble            miter,
                                                 gdouble            dash_offset,
                                                 GArray            *dash_info);
-void      gimp_scan_convert_render_full        (GimpScanConvert   *sc,
+void      ligma_scan_convert_render_full        (LigmaScanConvert   *sc,
                                                 GeglBuffer        *buffer,
                                                 gint               off_x,
                                                 gint               off_y,
@@ -57,25 +57,25 @@ void      gimp_scan_convert_render_full        (GimpScanConvert   *sc,
                                                 gboolean           antialias,
                                                 gdouble            value);
 
-void      gimp_scan_convert_render             (GimpScanConvert   *sc,
+void      ligma_scan_convert_render             (LigmaScanConvert   *sc,
                                                 GeglBuffer        *buffer,
                                                 gint               off_x,
                                                 gint               off_y,
                                                 gboolean           antialias);
-void      gimp_scan_convert_render_value       (GimpScanConvert   *sc,
+void      ligma_scan_convert_render_value       (LigmaScanConvert   *sc,
                                                 GeglBuffer        *buffer,
                                                 gint               off_x,
                                                 gint               off_y,
                                                 gdouble            value);
-void      gimp_scan_convert_compose            (GimpScanConvert   *sc,
+void      ligma_scan_convert_compose            (LigmaScanConvert   *sc,
                                                 GeglBuffer        *buffer,
                                                 gint               off_x,
                                                 gint               off_y);
-void      gimp_scan_convert_compose_value      (GimpScanConvert   *sc,
+void      ligma_scan_convert_compose_value      (LigmaScanConvert   *sc,
                                                 GeglBuffer        *buffer,
                                                 gint               off_x,
                                                 gint               off_y,
                                                 gdouble            value);
 
 
-#endif /* __GIMP_SCAN_CONVERT_H__ */
+#endif /* __LIGMA_SCAN_CONVERT_H__ */

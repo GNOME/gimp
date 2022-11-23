@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpproceduredialog.c
- * Copyright (C) 2019 Michael Natterer <mitch@gimp.org>
+ * ligmaproceduredialog.c
+ * Copyright (C) 2019 Michael Natterer <mitch@ligma.org>
  * Copyright (C) 2020 Jehan
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,14 +24,14 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
-#include "gimp.h"
-#include "gimpui.h"
+#include "ligma.h"
+#include "ligmaui.h"
 
-#include "gimpprocedureconfig-private.h"
+#include "ligmaprocedureconfig-private.h"
 
-#include "libgimp-intl.h"
+#include "libligma-intl.h"
 
 
 enum
@@ -49,11 +49,11 @@ enum
 #define RESPONSE_RESET 1
 
 
-struct _GimpProcedureDialogPrivate
+struct _LigmaProcedureDialogPrivate
 {
-  GimpProcedure       *procedure;
-  GimpProcedureConfig *config;
-  GimpProcedureConfig *initial_config;
+  LigmaProcedure       *procedure;
+  LigmaProcedureConfig *config;
+  LigmaProcedureConfig *initial_config;
 
   GtkWidget           *reset_popover;
   GtkWidget           *load_settings_button;
@@ -66,101 +66,101 @@ struct _GimpProcedureDialogPrivate
   GHashTable          *sensitive_data;
 };
 
-typedef struct GimpProcedureDialogSensitiveData
+typedef struct LigmaProcedureDialogSensitiveData
 {
   gboolean  sensitive;
 
   GObject  *config;
   gchar    *config_property;
   gboolean  config_invert;
-} GimpProcedureDialogSensitiveData;
+} LigmaProcedureDialogSensitiveData;
 
 
-static GObject * gimp_procedure_dialog_constructor    (GType                  type,
+static GObject * ligma_procedure_dialog_constructor    (GType                  type,
                                                        guint                  n_construct_properties,
                                                        GObjectConstructParam *construct_properties);
-static void      gimp_procedure_dialog_constructed    (GObject               *object);
-static void      gimp_procedure_dialog_dispose        (GObject               *object);
-static void      gimp_procedure_dialog_set_property   (GObject               *object,
+static void      ligma_procedure_dialog_constructed    (GObject               *object);
+static void      ligma_procedure_dialog_dispose        (GObject               *object);
+static void      ligma_procedure_dialog_set_property   (GObject               *object,
                                                        guint                  property_id,
                                                        const GValue          *value,
                                                        GParamSpec            *pspec);
-static void      gimp_procedure_dialog_get_property   (GObject               *object,
+static void      ligma_procedure_dialog_get_property   (GObject               *object,
                                                        guint                  property_id,
                                                        GValue                *value,
                                                        GParamSpec            *pspec);
 
-static void      gimp_procedure_dialog_real_fill_list (GimpProcedureDialog   *dialog,
-                                                       GimpProcedure         *procedure,
-                                                       GimpProcedureConfig   *config,
+static void      ligma_procedure_dialog_real_fill_list (LigmaProcedureDialog   *dialog,
+                                                       LigmaProcedure         *procedure,
+                                                       LigmaProcedureConfig   *config,
                                                        GList                 *properties);
 
-static void      gimp_procedure_dialog_reset_initial  (GtkWidget             *button,
-                                                       GimpProcedureDialog   *dialog);
-static void      gimp_procedure_dialog_reset_factory  (GtkWidget             *button,
-                                                       GimpProcedureDialog   *dialog);
-static void      gimp_procedure_dialog_load_defaults  (GtkWidget             *button,
-                                                       GimpProcedureDialog   *dialog);
-static void      gimp_procedure_dialog_save_defaults  (GtkWidget             *button,
-                                                       GimpProcedureDialog   *dialog);
+static void      ligma_procedure_dialog_reset_initial  (GtkWidget             *button,
+                                                       LigmaProcedureDialog   *dialog);
+static void      ligma_procedure_dialog_reset_factory  (GtkWidget             *button,
+                                                       LigmaProcedureDialog   *dialog);
+static void      ligma_procedure_dialog_load_defaults  (GtkWidget             *button,
+                                                       LigmaProcedureDialog   *dialog);
+static void      ligma_procedure_dialog_save_defaults  (GtkWidget             *button,
+                                                       LigmaProcedureDialog   *dialog);
 
-static gboolean  gimp_procedure_dialog_check_mnemonic (GimpProcedureDialog  *dialog,
+static gboolean  ligma_procedure_dialog_check_mnemonic (LigmaProcedureDialog  *dialog,
                                                        GtkWidget            *widget,
                                                        const gchar          *id,
                                                        const gchar          *core_id);
 static GtkWidget *
-            gimp_procedure_dialog_fill_container_list (GimpProcedureDialog  *dialog,
+            ligma_procedure_dialog_fill_container_list (LigmaProcedureDialog  *dialog,
                                                        const gchar          *container_id,
                                                        GtkContainer         *container,
                                                        GList                *properties);
 
-static void gimp_procedure_dialog_sensitive_data_free (GimpProcedureDialogSensitiveData *data);
+static void ligma_procedure_dialog_sensitive_data_free (LigmaProcedureDialogSensitiveData *data);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpProcedureDialog, gimp_procedure_dialog,
-                            GIMP_TYPE_DIALOG)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaProcedureDialog, ligma_procedure_dialog,
+                            LIGMA_TYPE_DIALOG)
 
-#define parent_class gimp_procedure_dialog_parent_class
+#define parent_class ligma_procedure_dialog_parent_class
 
 static GParamSpec *props[N_PROPS] = { NULL, };
 
 
 static void
-gimp_procedure_dialog_class_init (GimpProcedureDialogClass *klass)
+ligma_procedure_dialog_class_init (LigmaProcedureDialogClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->constructor  = gimp_procedure_dialog_constructor;
-  object_class->constructed  = gimp_procedure_dialog_constructed;
-  object_class->dispose      = gimp_procedure_dialog_dispose;
-  object_class->get_property = gimp_procedure_dialog_get_property;
-  object_class->set_property = gimp_procedure_dialog_set_property;
+  object_class->constructor  = ligma_procedure_dialog_constructor;
+  object_class->constructed  = ligma_procedure_dialog_constructed;
+  object_class->dispose      = ligma_procedure_dialog_dispose;
+  object_class->get_property = ligma_procedure_dialog_get_property;
+  object_class->set_property = ligma_procedure_dialog_set_property;
 
-  klass->fill_list           = gimp_procedure_dialog_real_fill_list;
+  klass->fill_list           = ligma_procedure_dialog_real_fill_list;
 
   props[PROP_PROCEDURE] =
     g_param_spec_object ("procedure",
                          "Procedure",
-                         "The GimpProcedure this dialog is used with",
-                         GIMP_TYPE_PROCEDURE,
-                         GIMP_PARAM_READWRITE |
+                         "The LigmaProcedure this dialog is used with",
+                         LIGMA_TYPE_PROCEDURE,
+                         LIGMA_PARAM_READWRITE |
                          G_PARAM_CONSTRUCT_ONLY);
 
   props[PROP_CONFIG] =
     g_param_spec_object ("config",
                          "Config",
-                         "The GimpProcedureConfig this dialog is editing",
-                         GIMP_TYPE_PROCEDURE_CONFIG,
-                         GIMP_PARAM_READWRITE |
+                         "The LigmaProcedureConfig this dialog is editing",
+                         LIGMA_TYPE_PROCEDURE_CONFIG,
+                         LIGMA_PARAM_READWRITE |
                          G_PARAM_CONSTRUCT);
 
   g_object_class_install_properties (object_class, N_PROPS - 1, props);
 
   /**
-   * GimpProcedureDialog:title:
+   * LigmaProcedureDialog:title:
    *
    * Overrides the "title" property of #GtkWindow.
-   * When %NULL, the title is taken from the #GimpProcedure menu label.
+   * When %NULL, the title is taken from the #LigmaProcedure menu label.
    *
    * Since: 3.0
    */
@@ -168,20 +168,20 @@ gimp_procedure_dialog_class_init (GimpProcedureDialogClass *klass)
 }
 
 static void
-gimp_procedure_dialog_init (GimpProcedureDialog *dialog)
+ligma_procedure_dialog_init (LigmaProcedureDialog *dialog)
 {
-  dialog->priv = gimp_procedure_dialog_get_instance_private (dialog);
+  dialog->priv = ligma_procedure_dialog_get_instance_private (dialog);
 
   dialog->priv->widgets        = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_object_unref);
   dialog->priv->mnemonics      = g_hash_table_new_full (g_direct_hash, NULL, NULL, g_free);
   dialog->priv->core_mnemonics = g_hash_table_new_full (g_direct_hash, NULL, NULL, g_free);
   dialog->priv->label_group    = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
   dialog->priv->sensitive_data = g_hash_table_new_full (g_str_hash, g_str_equal, g_free,
-                                                        (GDestroyNotify) gimp_procedure_dialog_sensitive_data_free);
+                                                        (GDestroyNotify) ligma_procedure_dialog_sensitive_data_free);
 }
 
 static GObject *
-gimp_procedure_dialog_constructor (GType                  type,
+ligma_procedure_dialog_constructor (GType                  type,
                                    guint                  n_construct_properties,
                                    GObjectConstructParam *construct_properties)
 {
@@ -222,7 +222,7 @@ gimp_procedure_dialog_constructor (GType                  type,
         {
           if (g_value_get_pointer (property.value) == NULL)
             g_value_set_pointer (property.value,
-                                 gimp_standard_help_func);
+                                 ligma_standard_help_func);
 
           help_func_edited = TRUE;
         }
@@ -237,10 +237,10 @@ gimp_procedure_dialog_constructor (GType                  type,
 }
 
 static void
-gimp_procedure_dialog_constructed (GObject *object)
+ligma_procedure_dialog_constructed (GObject *object)
 {
-  GimpProcedureDialog *dialog;
-  GimpProcedure       *procedure;
+  LigmaProcedureDialog *dialog;
+  LigmaProcedure       *procedure;
   const gchar         *help_id;
   const gchar         *ok_label;
   GtkWidget           *hbox;
@@ -252,11 +252,11 @@ gimp_procedure_dialog_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  dialog = GIMP_PROCEDURE_DIALOG (object);
+  dialog = LIGMA_PROCEDURE_DIALOG (object);
   procedure = dialog->priv->procedure;
 
-  role    = g_strdup_printf ("gimp-%s", gimp_procedure_get_name (procedure));
-  help_id = gimp_procedure_get_help_id (procedure);
+  role    = g_strdup_printf ("ligma-%s", ligma_procedure_get_name (procedure));
+  help_id = ligma_procedure_get_help_id (procedure);
   g_object_set (object,
                 "role",    role,
                 "help-id", help_id,
@@ -269,9 +269,9 @@ gimp_procedure_dialog_constructed (GObject *object)
                 NULL);
   g_free (role);
 
-  if (GIMP_IS_LOAD_PROCEDURE (procedure))
+  if (LIGMA_IS_LOAD_PROCEDURE (procedure))
     ok_label = _("_Open");
-  else if (GIMP_IS_SAVE_PROCEDURE (procedure))
+  else if (LIGMA_IS_SAVE_PROCEDURE (procedure))
     ok_label = _("_Export");
   else
     ok_label = _("_OK");
@@ -287,7 +287,7 @@ gimp_procedure_dialog_constructed (GObject *object)
   gtk_box_pack_start (GTK_BOX (box), widget, FALSE, FALSE, 1);
   gtk_widget_show (widget);
 
-  widget = gtk_image_new_from_icon_name (GIMP_ICON_GO_DOWN, GTK_ICON_SIZE_MENU);
+  widget = gtk_image_new_from_icon_name (LIGMA_ICON_GO_DOWN, GTK_ICON_SIZE_MENU);
   gtk_box_pack_start (GTK_BOX (box), widget, FALSE, FALSE, 1);
   gtk_widget_show (widget);
 
@@ -296,15 +296,15 @@ gimp_procedure_dialog_constructed (GObject *object)
 
   gtk_dialog_add_action_widget (GTK_DIALOG (dialog), button, RESPONSE_RESET);
   gtk_widget_show (button);
-  gimp_procedure_dialog_check_mnemonic (GIMP_PROCEDURE_DIALOG (dialog), button, NULL, "reset");
+  ligma_procedure_dialog_check_mnemonic (LIGMA_PROCEDURE_DIALOG (dialog), button, NULL, "reset");
 
   /* Cancel and OK buttons. */
-  button = gimp_dialog_add_button (GIMP_DIALOG (dialog),
+  button = ligma_dialog_add_button (LIGMA_DIALOG (dialog),
                                    _("_Cancel"), GTK_RESPONSE_CANCEL);
-  gimp_procedure_dialog_check_mnemonic (GIMP_PROCEDURE_DIALOG (dialog), button, NULL, "cancel");
-  button = gimp_dialog_add_button (GIMP_DIALOG (dialog),
+  ligma_procedure_dialog_check_mnemonic (LIGMA_PROCEDURE_DIALOG (dialog), button, NULL, "cancel");
+  button = ligma_dialog_add_button (LIGMA_DIALOG (dialog),
                                    ok_label, GTK_RESPONSE_OK);
-  gimp_procedure_dialog_check_mnemonic (GIMP_PROCEDURE_DIALOG (dialog), button, NULL, "ok");
+  ligma_procedure_dialog_check_mnemonic (LIGMA_PROCEDURE_DIALOG (dialog), button, NULL, "ok");
   /* OK button is the default action and has focus from start.
    * This allows to just accept quickly whatever default values.
    */
@@ -312,13 +312,13 @@ gimp_procedure_dialog_constructed (GObject *object)
   gtk_widget_grab_focus (button);
   gtk_widget_grab_default (button);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                             GTK_RESPONSE_OK,
                                             RESPONSE_RESET,
                                             GTK_RESPONSE_CANCEL,
                                             -1);
 
-  gimp_window_set_transient (GTK_WINDOW (dialog));
+  ligma_window_set_transient (GTK_WINDOW (dialog));
 
   /* Main content area. */
   content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
@@ -336,32 +336,32 @@ gimp_procedure_dialog_constructed (GObject *object)
 
   button = gtk_button_new_with_mnemonic (_("_Load Saved Settings"));
   gtk_widget_set_tooltip_text (button, _("Load settings saved with \"Save Settings\" button"));
-  gimp_procedure_dialog_check_mnemonic (GIMP_PROCEDURE_DIALOG (dialog), button, NULL, "load-defaults");
+  ligma_procedure_dialog_check_mnemonic (LIGMA_PROCEDURE_DIALOG (dialog), button, NULL, "load-defaults");
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   g_signal_connect (button, "clicked",
-                    G_CALLBACK (gimp_procedure_dialog_load_defaults),
+                    G_CALLBACK (ligma_procedure_dialog_load_defaults),
                     dialog);
   gtk_widget_set_sensitive (button,
-                            gimp_procedure_config_has_default (dialog->priv->config));
+                            ligma_procedure_config_has_default (dialog->priv->config));
   dialog->priv->load_settings_button = button;
 
   button = gtk_button_new_with_mnemonic (_("_Save Settings"));
   gtk_widget_set_tooltip_text (button, _("Store current settings for later reuse"));
-  gimp_procedure_dialog_check_mnemonic (GIMP_PROCEDURE_DIALOG (dialog), button, NULL, "save-defaults");
+  ligma_procedure_dialog_check_mnemonic (LIGMA_PROCEDURE_DIALOG (dialog), button, NULL, "save-defaults");
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   g_signal_connect (button, "clicked",
-                    G_CALLBACK (gimp_procedure_dialog_save_defaults),
+                    G_CALLBACK (ligma_procedure_dialog_save_defaults),
                     dialog);
 }
 
 static void
-gimp_procedure_dialog_dispose (GObject *object)
+ligma_procedure_dialog_dispose (GObject *object)
 {
-  GimpProcedureDialog *dialog = GIMP_PROCEDURE_DIALOG (object);
+  LigmaProcedureDialog *dialog = LIGMA_PROCEDURE_DIALOG (object);
 
   g_clear_object (&dialog->priv->procedure);
   g_clear_object (&dialog->priv->config);
@@ -381,12 +381,12 @@ gimp_procedure_dialog_dispose (GObject *object)
 }
 
 static void
-gimp_procedure_dialog_set_property (GObject      *object,
+ligma_procedure_dialog_set_property (GObject      *object,
                                     guint         property_id,
                                     const GValue *value,
                                     GParamSpec   *pspec)
 {
-  GimpProcedureDialog *dialog = GIMP_PROCEDURE_DIALOG (object);
+  LigmaProcedureDialog *dialog = LIGMA_PROCEDURE_DIALOG (object);
 
   switch (property_id)
     {
@@ -399,7 +399,7 @@ gimp_procedure_dialog_set_property (GObject      *object,
 
       if (dialog->priv->config)
         dialog->priv->initial_config =
-          gimp_config_duplicate (GIMP_CONFIG (dialog->priv->config));
+          ligma_config_duplicate (LIGMA_CONFIG (dialog->priv->config));
       break;
 
     case PROP_TITLE:
@@ -418,7 +418,7 @@ gimp_procedure_dialog_set_property (GObject      *object,
                */
               bogus = gtk_label_new (NULL);
               gtk_label_set_markup_with_mnemonic (GTK_LABEL (g_object_ref_sink (bogus)),
-                                                  gimp_procedure_get_menu_label (dialog->priv->procedure));
+                                                  ligma_procedure_get_menu_label (dialog->priv->procedure));
               title = gtk_label_get_text (GTK_LABEL (bogus));
             }
           if (title != NULL)
@@ -435,12 +435,12 @@ gimp_procedure_dialog_set_property (GObject      *object,
 }
 
 static void
-gimp_procedure_dialog_get_property (GObject    *object,
+ligma_procedure_dialog_get_property (GObject    *object,
                                     guint       property_id,
                                     GValue     *value,
                                     GParamSpec *pspec)
 {
-  GimpProcedureDialog *dialog = GIMP_PROCEDURE_DIALOG (object);
+  LigmaProcedureDialog *dialog = LIGMA_PROCEDURE_DIALOG (object);
 
   switch (property_id)
     {
@@ -464,9 +464,9 @@ gimp_procedure_dialog_get_property (GObject    *object,
 }
 
 static void
-gimp_procedure_dialog_real_fill_list (GimpProcedureDialog *dialog,
-                                      GimpProcedure       *procedure,
-                                      GimpProcedureConfig *config,
+ligma_procedure_dialog_real_fill_list (LigmaProcedureDialog *dialog,
+                                      LigmaProcedure       *procedure,
+                                      LigmaProcedureConfig *config,
                                       GList               *properties)
 {
   GtkWidget *content_area;
@@ -478,7 +478,7 @@ gimp_procedure_dialog_real_fill_list (GimpProcedureDialog *dialog,
     {
       GtkWidget *widget;
 
-      widget = gimp_procedure_dialog_get_widget (dialog, iter->data, G_TYPE_NONE);
+      widget = ligma_procedure_dialog_get_widget (dialog, iter->data, G_TYPE_NONE);
       if (widget)
         {
           /* Reference the widget because the hash table will
@@ -493,38 +493,38 @@ gimp_procedure_dialog_real_fill_list (GimpProcedureDialog *dialog,
 }
 
 /**
- * gimp_procedure_dialog_new:
- * @procedure: the associated #GimpProcedure.
- * @config:    a #GimpProcedureConfig from which properties will be
+ * ligma_procedure_dialog_new:
+ * @procedure: the associated #LigmaProcedure.
+ * @config:    a #LigmaProcedureConfig from which properties will be
  *             turned into widgets.
  * @title: (nullable): a dialog title.
  *
  * Creates a new dialog for @procedure using widgets generated from
  * properties of @config.
  * A %NULL title will only be accepted if a menu label was set with
- * gimp_procedure_set_menu_label() (this menu label will then be used as
+ * ligma_procedure_set_menu_label() (this menu label will then be used as
  * dialog title instead). If neither an explicit label nor a @procedure
  * menu label was set, the call will fail.
  *
- * As for all #GtkWindow, the returned #GimpProcedureDialog object is
+ * As for all #GtkWindow, the returned #LigmaProcedureDialog object is
  * owned by GTK and its initial reference is stored in an internal list
  * of top-level windows. To delete the dialog, call
  * gtk_widget_destroy().
  *
- * Returns: (transfer none): the newly created #GimpProcedureDialog.
+ * Returns: (transfer none): the newly created #LigmaProcedureDialog.
  */
 GtkWidget *
-gimp_procedure_dialog_new (GimpProcedure       *procedure,
-                           GimpProcedureConfig *config,
+ligma_procedure_dialog_new (LigmaProcedure       *procedure,
+                           LigmaProcedureConfig *config,
                            const gchar         *title)
 {
-  g_return_val_if_fail (GIMP_IS_PROCEDURE (procedure), NULL);
-  g_return_val_if_fail (GIMP_IS_PROCEDURE_CONFIG (config), NULL);
-  g_return_val_if_fail (gimp_procedure_config_get_procedure (config) ==
+  g_return_val_if_fail (LIGMA_IS_PROCEDURE (procedure), NULL);
+  g_return_val_if_fail (LIGMA_IS_PROCEDURE_CONFIG (config), NULL);
+  g_return_val_if_fail (ligma_procedure_config_get_procedure (config) ==
                         procedure, NULL);
-  g_return_val_if_fail (title != NULL || gimp_procedure_get_menu_label (procedure), NULL);
+  g_return_val_if_fail (title != NULL || ligma_procedure_get_menu_label (procedure), NULL);
 
-  return g_object_new (GIMP_TYPE_PROCEDURE_DIALOG,
+  return g_object_new (LIGMA_TYPE_PROCEDURE_DIALOG,
                        "procedure", procedure,
                        "config",    config,
                        "title",     title,
@@ -532,10 +532,10 @@ gimp_procedure_dialog_new (GimpProcedure       *procedure,
 }
 
 /**
- * gimp_procedure_dialog_get_widget:
- * @dialog:      the associated #GimpProcedureDialog.
+ * ligma_procedure_dialog_get_widget:
+ * @dialog:      the associated #LigmaProcedureDialog.
  * @property:    name of the property to build a widget for. It must be
- *               a property of the #GimpProcedure @dialog has been
+ *               a property of the #LigmaProcedure @dialog has been
  *               created for.
  * @widget_type: alternative widget type. %G_TYPE_NONE will create the
  *               default type of widget for the associated property
@@ -548,24 +548,24 @@ gimp_procedure_dialog_new (GimpProcedure       *procedure,
  *     * %GTK_TYPE_CHECK_BUTTON (default)
  *     * %GTK_TYPE_SWITCH
  * - %G_TYPE_PARAM_INT or %G_TYPE_PARAM_DOUBLE:
- *     * %GIMP_TYPE_LABEL_SPIN (default): a spin button with a label.
- *     * %GIMP_TYPE_SCALE_ENTRY: a scale entry with label.
- *     * %GIMP_TYPE_SPIN_SCALE: a spin scale with label embedded.
- *     * %GIMP_TYPE_SPIN_BUTTON: a spin button with no label.
+ *     * %LIGMA_TYPE_LABEL_SPIN (default): a spin button with a label.
+ *     * %LIGMA_TYPE_SCALE_ENTRY: a scale entry with label.
+ *     * %LIGMA_TYPE_SPIN_SCALE: a spin scale with label embedded.
+ *     * %LIGMA_TYPE_SPIN_BUTTON: a spin button with no label.
  * - %G_TYPE_PARAM_STRING:
- *     * %GIMP_TYPE_LABEL_ENTRY (default): an entry with a label.
+ *     * %LIGMA_TYPE_LABEL_ENTRY (default): an entry with a label.
  *     * %GTK_TYPE_ENTRY: an entry with no label.
  *     * %GTK_TYPE_TEXT_VIEW: a text view with no label.
- * - %GIMP_TYPE_PARAM_RGB:
- *     * %GIMP_TYPE_LABEL_COLOR (default): a color button with a label.
- *         Please use gimp_procedure_dialog_get_color_widget() for a
+ * - %LIGMA_TYPE_PARAM_RGB:
+ *     * %LIGMA_TYPE_LABEL_COLOR (default): a color button with a label.
+ *         Please use ligma_procedure_dialog_get_color_widget() for a
  *         non-editable color area with a label.
- *     * %GIMP_TYPE_COLOR_BUTTON: a color button with no label.
- *     * %GIMP_TYPE_COLOR_AREA: a color area with no label.
+ *     * %LIGMA_TYPE_COLOR_BUTTON: a color button with no label.
+ *     * %LIGMA_TYPE_COLOR_AREA: a color area with no label.
  * - %G_TYPE_PARAM_FILE:
  *     * %GTK_FILE_CHOOSER_BUTTON (default): generic file chooser button
  *     in %GTK_FILE_CHOOSER_ACTION_OPEN mode. Please use
- *     gimp_procedure_dialog_get_file_chooser() to create buttons in
+ *     ligma_procedure_dialog_get_file_chooser() to create buttons in
  *     other modes.
  *
  * If the @widget_type is not supported for the actual type of
@@ -580,13 +580,13 @@ gimp_procedure_dialog_new (GimpProcedure       *procedure,
  *                           freed.
  */
 GtkWidget *
-gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
+ligma_procedure_dialog_get_widget (LigmaProcedureDialog *dialog,
                                   const gchar         *property,
                                   GType                widget_type)
 {
   GtkWidget                        *widget = NULL;
   GtkWidget                        *label  = NULL;
-  GimpProcedureDialogSensitiveData *binding;
+  LigmaProcedureDialogSensitiveData *binding;
   GParamSpec                       *pspec;
 
   g_return_val_if_fail (property != NULL, NULL);
@@ -609,11 +609,11 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
   if (G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_BOOLEAN)
     {
       if (widget_type == G_TYPE_NONE || widget_type == GTK_TYPE_CHECK_BUTTON)
-        widget = gimp_prop_check_button_new (G_OBJECT (dialog->priv->config),
+        widget = ligma_prop_check_button_new (G_OBJECT (dialog->priv->config),
                                              property,
                                              g_param_spec_get_nick (pspec));
       else if (widget_type == GTK_TYPE_SWITCH)
-        widget = gimp_prop_switch_new (G_OBJECT (dialog->priv->config),
+        widget = ligma_prop_switch_new (G_OBJECT (dialog->priv->config),
                                        property,
                                        g_param_spec_get_nick (pspec),
                                        &label, NULL);
@@ -641,37 +641,37 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
           minimum = pspecdouble->minimum;
           maximum = pspecdouble->maximum;
         }
-      gimp_range_estimate_settings (minimum, maximum, &step, &page, &digits);
+      ligma_range_estimate_settings (minimum, maximum, &step, &page, &digits);
 
-      if (widget_type == G_TYPE_NONE || widget_type == GIMP_TYPE_LABEL_SPIN)
+      if (widget_type == G_TYPE_NONE || widget_type == LIGMA_TYPE_LABEL_SPIN)
         {
-          widget = gimp_prop_label_spin_new (G_OBJECT (dialog->priv->config),
+          widget = ligma_prop_label_spin_new (G_OBJECT (dialog->priv->config),
                                              property, digits);
         }
-      else if (widget_type == GIMP_TYPE_SCALE_ENTRY)
+      else if (widget_type == LIGMA_TYPE_SCALE_ENTRY)
         {
-          widget = gimp_prop_scale_entry_new (G_OBJECT (dialog->priv->config),
+          widget = ligma_prop_scale_entry_new (G_OBJECT (dialog->priv->config),
                                               property,
                                               g_param_spec_get_nick (pspec),
                                               1.0, FALSE, 0.0, 0.0);
         }
-      else if (widget_type == GIMP_TYPE_SPIN_SCALE)
+      else if (widget_type == LIGMA_TYPE_SPIN_SCALE)
         {
-          widget = gimp_prop_spin_scale_new (G_OBJECT (dialog->priv->config),
+          widget = ligma_prop_spin_scale_new (G_OBJECT (dialog->priv->config),
                                              property, step, page, digits);
         }
-      else if (widget_type == GIMP_TYPE_SPIN_BUTTON)
+      else if (widget_type == LIGMA_TYPE_SPIN_BUTTON)
         {
           /* Just some spin button without label. */
-          widget = gimp_prop_spin_button_new (G_OBJECT (dialog->priv->config),
+          widget = ligma_prop_spin_button_new (G_OBJECT (dialog->priv->config),
                                               property, step, page, digits);
         }
     }
   else if (G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_STRING)
     {
-      if (widget_type == G_TYPE_NONE || widget_type == GIMP_TYPE_LABEL_ENTRY)
+      if (widget_type == G_TYPE_NONE || widget_type == LIGMA_TYPE_LABEL_ENTRY)
         {
-          widget = gimp_prop_label_entry_new (G_OBJECT (dialog->priv->config),
+          widget = ligma_prop_label_entry_new (G_OBJECT (dialog->priv->config),
                                               property, -1);
         }
       else if (widget_type == GTK_TYPE_TEXT_VIEW)
@@ -679,7 +679,7 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
           GtkTextBuffer *buffer;
 
           /* Text view with no label. */
-          buffer = gimp_prop_text_buffer_new (G_OBJECT (dialog->priv->config),
+          buffer = ligma_prop_text_buffer_new (G_OBJECT (dialog->priv->config),
                                               property, -1);
           widget = gtk_text_view_new_with_buffer (buffer);
           gtk_text_view_set_top_margin (GTK_TEXT_VIEW (widget), 3);
@@ -691,52 +691,52 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
       else if (widget_type == GTK_TYPE_ENTRY)
         {
           /* Entry with no label. */
-          widget = gimp_prop_entry_new (G_OBJECT (dialog->priv->config),
+          widget = ligma_prop_entry_new (G_OBJECT (dialog->priv->config),
                                         property, -1);
         }
     }
-  else if (G_PARAM_SPEC_TYPE (pspec) == GIMP_TYPE_PARAM_RGB)
+  else if (G_PARAM_SPEC_TYPE (pspec) == LIGMA_TYPE_PARAM_RGB)
     {
-      if (widget_type == G_TYPE_NONE || widget_type == GIMP_TYPE_LABEL_COLOR)
+      if (widget_type == G_TYPE_NONE || widget_type == LIGMA_TYPE_LABEL_COLOR)
         {
-          widget = gimp_prop_label_color_new (G_OBJECT (dialog->priv->config),
+          widget = ligma_prop_label_color_new (G_OBJECT (dialog->priv->config),
                                               property, TRUE);
         }
-      else if (widget_type == GIMP_TYPE_COLOR_BUTTON)
+      else if (widget_type == LIGMA_TYPE_COLOR_BUTTON)
         {
-          widget = gimp_prop_color_select_new (G_OBJECT (dialog->priv->config),
+          widget = ligma_prop_color_select_new (G_OBJECT (dialog->priv->config),
                                                property, 20, 20,
-                                               GIMP_COLOR_AREA_SMALL_CHECKS);
+                                               LIGMA_COLOR_AREA_SMALL_CHECKS);
           gtk_widget_set_vexpand (widget, FALSE);
           gtk_widget_set_hexpand (widget, FALSE);
         }
-      else if (widget_type == GIMP_TYPE_COLOR_AREA)
+      else if (widget_type == LIGMA_TYPE_COLOR_AREA)
         {
-          widget = gimp_prop_color_area_new (G_OBJECT (dialog->priv->config),
+          widget = ligma_prop_color_area_new (G_OBJECT (dialog->priv->config),
                                              property, 20, 20,
-                                             GIMP_COLOR_AREA_SMALL_CHECKS);
+                                             LIGMA_COLOR_AREA_SMALL_CHECKS);
           gtk_widget_set_vexpand (widget, FALSE);
           gtk_widget_set_hexpand (widget, FALSE);
         }
     }
   else if (G_IS_PARAM_SPEC_OBJECT (pspec) && pspec->value_type == G_TYPE_FILE)
     {
-      widget = gimp_prop_file_chooser_button_new (G_OBJECT (dialog->priv->config),
+      widget = ligma_prop_file_chooser_button_new (G_OBJECT (dialog->priv->config),
                                                   property, NULL,
                                                   GTK_FILE_CHOOSER_ACTION_OPEN);
     }
   else  if (G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_ENUM)
     {
-      GimpIntStore *store;
+      LigmaIntStore *store;
 
-      store = (GimpIntStore *) gimp_enum_store_new (G_PARAM_SPEC_VALUE_TYPE (pspec));
+      store = (LigmaIntStore *) ligma_enum_store_new (G_PARAM_SPEC_VALUE_TYPE (pspec));
 
-      widget = gimp_prop_int_combo_box_new (G_OBJECT (dialog->priv->config),
+      widget = ligma_prop_int_combo_box_new (G_OBJECT (dialog->priv->config),
                                             property,
                                             store);
       gtk_widget_set_vexpand (widget, FALSE);
       gtk_widget_set_hexpand (widget, TRUE);
-      widget = gimp_label_int_widget_new (g_param_spec_get_nick (pspec),
+      widget = ligma_label_int_widget_new (g_param_spec_get_nick (pspec),
                                           widget);
     }
   else
@@ -759,11 +759,11 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
     {
       const gchar *tooltip = g_param_spec_get_blurb (pspec);
       if (tooltip)
-        gimp_help_set_help_data (widget, tooltip, NULL);
-      if (GIMP_IS_LABELED (widget) || label)
+        ligma_help_set_help_data (widget, tooltip, NULL);
+      if (LIGMA_IS_LABELED (widget) || label)
         {
           if (! label)
-            label = gimp_labeled_get_label (GIMP_LABELED (widget));
+            label = ligma_labeled_get_label (LIGMA_LABELED (widget));
 
           gtk_size_group_add_widget (dialog->priv->label_group, label);
         }
@@ -786,7 +786,7 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
       g_hash_table_remove (dialog->priv->sensitive_data, property);
     }
 
-  gimp_procedure_dialog_check_mnemonic (dialog, widget, property, NULL);
+  ligma_procedure_dialog_check_mnemonic (dialog, widget, property, NULL);
   g_hash_table_insert (dialog->priv->widgets, g_strdup (property), widget);
   if (g_object_is_floating (widget))
     g_object_ref_sink (widget);
@@ -795,32 +795,32 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
 }
 
 /**
- * gimp_procedure_dialog_get_color_widget:
- * @dialog:   the associated #GimpProcedureDialog.
- * @property: name of the #GimpRGB property to build a widget for. It
- *            must be a property of the #GimpProcedure @dialog has been
+ * ligma_procedure_dialog_get_color_widget:
+ * @dialog:   the associated #LigmaProcedureDialog.
+ * @property: name of the #LigmaRGB property to build a widget for. It
+ *            must be a property of the #LigmaProcedure @dialog has been
  *            created for.
  * @editable: whether the color can be edited or is only for display.
- * @type:     the #GimpColorAreaType.
+ * @type:     the #LigmaColorAreaType.
  *
  * Creates a new widget for @property which must necessarily be a
- * #GimpRGB property.
- * This must be used instead of gimp_procedure_dialog_get_widget() when
- * you want a #GimpLabelColor which is not customizable for an RGB
+ * #LigmaRGB property.
+ * This must be used instead of ligma_procedure_dialog_get_widget() when
+ * you want a #LigmaLabelColor which is not customizable for an RGB
  * property, or when to set a specific @type.
  *
  * If a widget has already been created for this procedure, it will be
  * returned instead (whatever its actual widget type).
  *
- * Returns: (transfer none): a #GimpLabelColor representing @property.
+ * Returns: (transfer none): a #LigmaLabelColor representing @property.
  *                           The object belongs to @dialog and must not
  *                           be freed.
  */
 GtkWidget *
-gimp_procedure_dialog_get_color_widget (GimpProcedureDialog *dialog,
+ligma_procedure_dialog_get_color_widget (LigmaProcedureDialog *dialog,
                                         const gchar         *property,
                                         gboolean             editable,
-                                        GimpColorAreaType    type)
+                                        LigmaColorAreaType    type)
 {
   GtkWidget  *widget = NULL;
   GParamSpec *pspec;
@@ -842,9 +842,9 @@ gimp_procedure_dialog_get_color_widget (GimpProcedureDialog *dialog,
       return NULL;
     }
 
-  if (G_PARAM_SPEC_TYPE (pspec) == GIMP_TYPE_PARAM_RGB)
+  if (G_PARAM_SPEC_TYPE (pspec) == LIGMA_TYPE_PARAM_RGB)
     {
-      widget = gimp_prop_label_color_new (G_OBJECT (dialog->priv->config),
+      widget = ligma_prop_label_color_new (G_OBJECT (dialog->priv->config),
                                           property, editable);
 
       gtk_widget_set_vexpand (widget, FALSE);
@@ -857,18 +857,18 @@ gimp_procedure_dialog_get_color_widget (GimpProcedureDialog *dialog,
                  G_STRFUNC, property, G_PARAM_SPEC_TYPE_NAME (pspec));
       return NULL;
     }
-  else if (GIMP_IS_LABELED (widget))
+  else if (LIGMA_IS_LABELED (widget))
     {
-      GtkWidget   *label   = gimp_labeled_get_label (GIMP_LABELED (widget));
+      GtkWidget   *label   = ligma_labeled_get_label (LIGMA_LABELED (widget));
       const gchar *tooltip = g_param_spec_get_blurb (pspec);
 
       gtk_size_group_add_widget (dialog->priv->label_group, label);
       if (tooltip)
-        gimp_help_set_help_data (label, tooltip, NULL);
+        ligma_help_set_help_data (label, tooltip, NULL);
     }
 
 
-  gimp_procedure_dialog_check_mnemonic (dialog, widget, property, NULL);
+  ligma_procedure_dialog_check_mnemonic (dialog, widget, property, NULL);
   g_hash_table_insert (dialog->priv->widgets, g_strdup (property), widget);
   if (g_object_is_floating (widget))
     g_object_ref_sink (widget);
@@ -877,16 +877,16 @@ gimp_procedure_dialog_get_color_widget (GimpProcedureDialog *dialog,
 }
 
 /**
- * gimp_procedure_dialog_get_int_combo:
- * @dialog:   the associated #GimpProcedureDialog.
+ * ligma_procedure_dialog_get_int_combo:
+ * @dialog:   the associated #LigmaProcedureDialog.
  * @property: name of the int property to build a combo for. It must be
- *            a property of the #GimpProcedure @dialog has been created
+ *            a property of the #LigmaProcedure @dialog has been created
  *            for.
- * @store: (transfer full): the #GimpIntStore which will be used.
+ * @store: (transfer full): the #LigmaIntStore which will be used.
  *
- * Creates a new #GimpLabelIntWidget for @property which must
+ * Creates a new #LigmaLabelIntWidget for @property which must
  * necessarily be an integer or boolean property.
- * This must be used instead of gimp_procedure_dialog_get_widget() when
+ * This must be used instead of ligma_procedure_dialog_get_widget() when
  * you want to create a combo box from an integer property.
  *
  * If a widget has already been created for this procedure, it will be
@@ -897,16 +897,16 @@ gimp_procedure_dialog_get_color_widget (GimpProcedureDialog *dialog,
  *                           freed.
  */
 GtkWidget *
-gimp_procedure_dialog_get_int_combo (GimpProcedureDialog *dialog,
+ligma_procedure_dialog_get_int_combo (LigmaProcedureDialog *dialog,
                                      const gchar         *property,
-                                     GimpIntStore        *store)
+                                     LigmaIntStore        *store)
 {
   GtkWidget  *widget = NULL;
   GParamSpec *pspec;
 
-  g_return_val_if_fail (GIMP_IS_PROCEDURE_DIALOG (dialog), NULL);
+  g_return_val_if_fail (LIGMA_IS_PROCEDURE_DIALOG (dialog), NULL);
   g_return_val_if_fail (property != NULL, NULL);
-  g_return_val_if_fail (GIMP_IS_INT_STORE (store), NULL);
+  g_return_val_if_fail (LIGMA_IS_INT_STORE (store), NULL);
 
   /* First check if it already exists. */
   widget = g_hash_table_lookup (dialog->priv->widgets, property);
@@ -929,18 +929,18 @@ gimp_procedure_dialog_get_int_combo (GimpProcedureDialog *dialog,
   if (G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_BOOLEAN ||
       G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_INT)
     {
-      widget = gimp_prop_int_combo_box_new (G_OBJECT (dialog->priv->config),
+      widget = ligma_prop_int_combo_box_new (G_OBJECT (dialog->priv->config),
                                             property, store);
       gtk_widget_set_vexpand (widget, FALSE);
       gtk_widget_set_hexpand (widget, TRUE);
-      widget = gimp_label_int_widget_new (g_param_spec_get_nick (pspec),
+      widget = ligma_label_int_widget_new (g_param_spec_get_nick (pspec),
                                           widget);
     }
   g_object_unref (store);
 
   if (! widget)
     {
-      g_warning ("%s: parameter '%s' of type %s not suitable as GimpIntComboBox",
+      g_warning ("%s: parameter '%s' of type %s not suitable as LigmaIntComboBox",
                  G_STRFUNC, property, G_PARAM_SPEC_TYPE_NAME (pspec));
       return NULL;
     }
@@ -948,16 +948,16 @@ gimp_procedure_dialog_get_int_combo (GimpProcedureDialog *dialog,
     {
       const gchar *tooltip = g_param_spec_get_blurb (pspec);
       if (tooltip)
-        gimp_help_set_help_data (widget, tooltip, NULL);
-      if (GIMP_IS_LABELED (widget))
+        ligma_help_set_help_data (widget, tooltip, NULL);
+      if (LIGMA_IS_LABELED (widget))
         {
-          GtkWidget *label = gimp_labeled_get_label (GIMP_LABELED (widget));
+          GtkWidget *label = ligma_labeled_get_label (LIGMA_LABELED (widget));
 
           gtk_size_group_add_widget (dialog->priv->label_group, label);
         }
     }
 
-  gimp_procedure_dialog_check_mnemonic (dialog, widget, property, NULL);
+  ligma_procedure_dialog_check_mnemonic (dialog, widget, property, NULL);
   g_hash_table_insert (dialog->priv->widgets, g_strdup (property), widget);
   if (g_object_is_floating (widget))
     g_object_ref_sink (widget);
@@ -966,16 +966,16 @@ gimp_procedure_dialog_get_int_combo (GimpProcedureDialog *dialog,
 }
 
 /**
- * gimp_procedure_dialog_get_int_radio:
- * @dialog:   the associated #GimpProcedureDialog.
+ * ligma_procedure_dialog_get_int_radio:
+ * @dialog:   the associated #LigmaProcedureDialog.
  * @property: name of the int property to build radio buttons for. It
- *            must be a property of the #GimpProcedure @dialog has been
+ *            must be a property of the #LigmaProcedure @dialog has been
  *            created for.
- * @store: (transfer full): the #GimpIntStore which will be used.
+ * @store: (transfer full): the #LigmaIntStore which will be used.
  *
- * Creates a new #GimpLabelIntRadioFrame for @property which must
+ * Creates a new #LigmaLabelIntRadioFrame for @property which must
  * necessarily be an integer, enum or boolean property.
- * This must be used instead of gimp_procedure_dialog_get_widget() when
+ * This must be used instead of ligma_procedure_dialog_get_widget() when
  * you want to create a group of %GtkRadioButton-s from an integer
  * property.
  *
@@ -987,16 +987,16 @@ gimp_procedure_dialog_get_int_combo (GimpProcedureDialog *dialog,
  *                           freed.
  */
 GtkWidget *
-gimp_procedure_dialog_get_int_radio (GimpProcedureDialog *dialog,
+ligma_procedure_dialog_get_int_radio (LigmaProcedureDialog *dialog,
                                      const gchar         *property,
-                                     GimpIntStore        *store)
+                                     LigmaIntStore        *store)
 {
   GtkWidget  *widget = NULL;
   GParamSpec *pspec;
 
-  g_return_val_if_fail (GIMP_IS_PROCEDURE_DIALOG (dialog), NULL);
+  g_return_val_if_fail (LIGMA_IS_PROCEDURE_DIALOG (dialog), NULL);
   g_return_val_if_fail (property != NULL, NULL);
-  g_return_val_if_fail (GIMP_IS_INT_STORE (store), NULL);
+  g_return_val_if_fail (LIGMA_IS_INT_STORE (store), NULL);
 
   /* First check if it already exists. */
   widget = g_hash_table_lookup (dialog->priv->widgets, property);
@@ -1019,7 +1019,7 @@ gimp_procedure_dialog_get_int_radio (GimpProcedureDialog *dialog,
   if (G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_BOOLEAN ||
       G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_INT)
     {
-      widget = gimp_prop_int_radio_frame_new (G_OBJECT (dialog->priv->config),
+      widget = ligma_prop_int_radio_frame_new (G_OBJECT (dialog->priv->config),
                                               property, NULL, store);
       gtk_widget_set_vexpand (widget, FALSE);
       gtk_widget_set_hexpand (widget, TRUE);
@@ -1028,12 +1028,12 @@ gimp_procedure_dialog_get_int_radio (GimpProcedureDialog *dialog,
 
   if (! widget)
     {
-      g_warning ("%s: parameter '%s' of type %s not suitable as GimpIntRadioFrame",
+      g_warning ("%s: parameter '%s' of type %s not suitable as LigmaIntRadioFrame",
                  G_STRFUNC, property, G_PARAM_SPEC_TYPE_NAME (pspec));
       return NULL;
     }
 
-  gimp_procedure_dialog_check_mnemonic (dialog, widget, property, NULL);
+  ligma_procedure_dialog_check_mnemonic (dialog, widget, property, NULL);
   g_hash_table_insert (dialog->priv->widgets, g_strdup (property), widget);
   if (g_object_is_floating (widget))
     g_object_ref_sink (widget);
@@ -1042,16 +1042,16 @@ gimp_procedure_dialog_get_int_radio (GimpProcedureDialog *dialog,
 }
 
 /**
- * gimp_procedure_dialog_get_spin_scale:
- * @dialog:   the associated #GimpProcedureDialog.
+ * ligma_procedure_dialog_get_spin_scale:
+ * @dialog:   the associated #LigmaProcedureDialog.
  * @property: name of the int or double property to build a
- *            #GimpSpinScale for. It must be a property of the
- *            #GimpProcedure @dialog has been created for.
+ *            #LigmaSpinScale for. It must be a property of the
+ *            #LigmaProcedure @dialog has been created for.
  * @factor:   a display factor for the range shown by the widget.
  *
- * Creates a new #GimpSpinScale for @property which must necessarily be
+ * Creates a new #LigmaSpinScale for @property which must necessarily be
  * an integer or double property.
- * This can be used instead of gimp_procedure_dialog_get_widget() in
+ * This can be used instead of ligma_procedure_dialog_get_widget() in
  * particular if you want to tweak the display factor. A typical example
  * is showing a [0.0, 1.0] range as [0.0, 100.0] instead (@factor = 100.0).
  *
@@ -1063,7 +1063,7 @@ gimp_procedure_dialog_get_int_radio (GimpProcedureDialog *dialog,
  *                           freed.
  */
 GtkWidget *
-gimp_procedure_dialog_get_spin_scale (GimpProcedureDialog *dialog,
+ligma_procedure_dialog_get_spin_scale (LigmaProcedureDialog *dialog,
                                       const gchar         *property,
                                       gdouble              factor)
 {
@@ -1075,7 +1075,7 @@ gimp_procedure_dialog_get_spin_scale (GimpProcedureDialog *dialog,
   gdouble     page   = 0.0;
   gint        digits = 0;
 
-  g_return_val_if_fail (GIMP_IS_PROCEDURE_DIALOG (dialog), NULL);
+  g_return_val_if_fail (LIGMA_IS_PROCEDURE_DIALOG (dialog), NULL);
   g_return_val_if_fail (property != NULL, NULL);
 
   pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (dialog->priv->config),
@@ -1111,13 +1111,13 @@ gimp_procedure_dialog_get_spin_scale (GimpProcedureDialog *dialog,
       minimum = pspecdouble->minimum;
       maximum = pspecdouble->maximum;
     }
-  gimp_range_estimate_settings (minimum * factor, maximum * factor, &step, &page, &digits);
+  ligma_range_estimate_settings (minimum * factor, maximum * factor, &step, &page, &digits);
 
-  widget = gimp_prop_spin_scale_new (G_OBJECT (dialog->priv->config),
+  widget = ligma_prop_spin_scale_new (G_OBJECT (dialog->priv->config),
                                      property, step, page, digits);
-  gimp_prop_widget_set_factor (widget, factor, step, page, digits);
+  ligma_prop_widget_set_factor (widget, factor, step, page, digits);
 
-  gimp_procedure_dialog_check_mnemonic (dialog, widget, property, NULL);
+  ligma_procedure_dialog_check_mnemonic (dialog, widget, property, NULL);
   g_hash_table_insert (dialog->priv->widgets, g_strdup (property), widget);
   if (g_object_is_floating (widget))
     g_object_ref_sink (widget);
@@ -1126,16 +1126,16 @@ gimp_procedure_dialog_get_spin_scale (GimpProcedureDialog *dialog,
 }
 
 /**
- * gimp_procedure_dialog_get_scale_entry:
- * @dialog:   the associated #GimpProcedureDialog.
+ * ligma_procedure_dialog_get_scale_entry:
+ * @dialog:   the associated #LigmaProcedureDialog.
  * @property: name of the int property to build a combo for. It must be
- *            a property of the #GimpProcedure @dialog has been created
+ *            a property of the #LigmaProcedure @dialog has been created
  *            for.
  * @factor:   a display factor for the range shown by the widget.
  *
- * Creates a new #GimpScaleEntry for @property which must necessarily be
+ * Creates a new #LigmaScaleEntry for @property which must necessarily be
  * an integer or double property.
- * This can be used instead of gimp_procedure_dialog_get_widget() in
+ * This can be used instead of ligma_procedure_dialog_get_widget() in
  * particular if you want to tweak the display factor. A typical example
  * is showing a [0.0, 1.0] range as [0.0, 100.0] instead (@factor = 100.0).
  *
@@ -1147,14 +1147,14 @@ gimp_procedure_dialog_get_spin_scale (GimpProcedureDialog *dialog,
  *                           freed.
  */
 GtkWidget *
-gimp_procedure_dialog_get_scale_entry (GimpProcedureDialog *dialog,
+ligma_procedure_dialog_get_scale_entry (LigmaProcedureDialog *dialog,
                                        const gchar         *property,
                                        gdouble              factor)
 {
   GtkWidget  *widget = NULL;
   GParamSpec *pspec;
 
-  g_return_val_if_fail (GIMP_IS_PROCEDURE_DIALOG (dialog), NULL);
+  g_return_val_if_fail (LIGMA_IS_PROCEDURE_DIALOG (dialog), NULL);
   g_return_val_if_fail (property != NULL, NULL);
 
   pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (dialog->priv->config),
@@ -1176,15 +1176,15 @@ gimp_procedure_dialog_get_scale_entry (GimpProcedureDialog *dialog,
   if (widget)
     return widget;
 
-  widget = gimp_prop_scale_entry_new (G_OBJECT (dialog->priv->config),
+  widget = ligma_prop_scale_entry_new (G_OBJECT (dialog->priv->config),
                                       property,
                                       g_param_spec_get_nick (pspec),
                                       factor, FALSE, 0.0, 0.0);
 
   gtk_size_group_add_widget (dialog->priv->label_group,
-                             gimp_labeled_get_label (GIMP_LABELED (widget)));
+                             ligma_labeled_get_label (LIGMA_LABELED (widget)));
 
-  gimp_procedure_dialog_check_mnemonic (dialog, widget, property, NULL);
+  ligma_procedure_dialog_check_mnemonic (dialog, widget, property, NULL);
   g_hash_table_insert (dialog->priv->widgets, g_strdup (property), widget);
   if (g_object_is_floating (widget))
     g_object_ref_sink (widget);
@@ -1193,8 +1193,8 @@ gimp_procedure_dialog_get_scale_entry (GimpProcedureDialog *dialog,
 }
 
 /**
- * gimp_procedure_dialog_get_label:
- * @dialog:   the #GimpProcedureDialog.
+ * ligma_procedure_dialog_get_label:
+ * @dialog:   the #LigmaProcedureDialog.
  * @label_id: the label for the #GtkLabel.
  * @text:     the text for the label.
  *
@@ -1202,7 +1202,7 @@ gimp_procedure_dialog_get_scale_entry (GimpProcedureDialog *dialog,
  * textual information in between property settings.
  *
  * The @label_id must be a unique ID which is neither the name of a
- * property of the #GimpProcedureConfig associated to @dialog, nor is it
+ * property of the #LigmaProcedureConfig associated to @dialog, nor is it
  * the ID of any previously created label or container. This ID can
  * later be used together with property names to be packed in other
  * containers or inside @dialog itself.
@@ -1212,7 +1212,7 @@ gimp_procedure_dialog_get_scale_entry (GimpProcedureDialog *dialog,
  *                           freed.
  */
 GtkWidget *
-gimp_procedure_dialog_get_label (GimpProcedureDialog *dialog,
+ligma_procedure_dialog_get_label (LigmaProcedureDialog *dialog,
                                  const gchar         *label_id,
                                  const gchar         *text)
 {
@@ -1244,17 +1244,17 @@ gimp_procedure_dialog_get_label (GimpProcedureDialog *dialog,
 }
 
 /**
- * gimp_procedure_dialog_get_file_chooser:
- * @dialog:   the associated #GimpProcedureDialog.
- * @property: name of the %GimpParamConfigPath or %GParamObject of value
+ * ligma_procedure_dialog_get_file_chooser:
+ * @dialog:   the associated #LigmaProcedureDialog.
+ * @property: name of the %LigmaParamConfigPath or %GParamObject of value
  *            type %GFile property to build a #GtkFileChooserButton for.
- *            It must be a property of the #GimpProcedure @dialog has
+ *            It must be a property of the #LigmaProcedure @dialog has
  *            been created for.
  * @action:   The open mode for the widget.
  *
  * Creates a new %GtkFileChooserButton for @property which must
  * necessarily be a config path or %GFile property.
- * This can be used instead of gimp_procedure_dialog_get_widget() in
+ * This can be used instead of ligma_procedure_dialog_get_widget() in
  * particular if you want to create a button in non-open modes (i.e. to
  * save files, and select or create folders).
  *
@@ -1266,14 +1266,14 @@ gimp_procedure_dialog_get_label (GimpProcedureDialog *dialog,
  *                           freed.
  */
 GtkWidget *
-gimp_procedure_dialog_get_file_chooser (GimpProcedureDialog  *dialog,
+ligma_procedure_dialog_get_file_chooser (LigmaProcedureDialog  *dialog,
                                         const gchar          *property,
                                         GtkFileChooserAction  action)
 {
   GtkWidget  *widget = NULL;
   GParamSpec *pspec;
 
-  g_return_val_if_fail (GIMP_IS_PROCEDURE_DIALOG (dialog), NULL);
+  g_return_val_if_fail (LIGMA_IS_PROCEDURE_DIALOG (dialog), NULL);
   g_return_val_if_fail (property != NULL, NULL);
 
   pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (dialog->priv->config),
@@ -1286,7 +1286,7 @@ gimp_procedure_dialog_get_file_chooser (GimpProcedureDialog  *dialog,
       return NULL;
     }
 
-  g_return_val_if_fail (GIMP_IS_PARAM_SPEC_CONFIG_PATH (pspec) ||
+  g_return_val_if_fail (LIGMA_IS_PARAM_SPEC_CONFIG_PATH (pspec) ||
                         (G_IS_PARAM_SPEC_OBJECT (pspec) && pspec->value_type != G_TYPE_FILE),
                         NULL);
 
@@ -1296,14 +1296,14 @@ gimp_procedure_dialog_get_file_chooser (GimpProcedureDialog  *dialog,
   if (widget)
     return widget;
 
-  widget = gimp_prop_file_chooser_button_new (G_OBJECT (dialog->priv->config),
+  widget = ligma_prop_file_chooser_button_new (G_OBJECT (dialog->priv->config),
                                               property, NULL, action);
 
   /* TODO: make is a file chooser with label. */
   /*gtk_size_group_add_widget (dialog->priv->label_group,
-                             gimp_labeled_get_label (GIMP_LABELED (widget)));
+                             ligma_labeled_get_label (LIGMA_LABELED (widget)));
 
-  gimp_procedure_dialog_check_mnemonic (dialog, widget, property, NULL);*/
+  ligma_procedure_dialog_check_mnemonic (dialog, widget, property, NULL);*/
   g_hash_table_insert (dialog->priv->widgets, g_strdup (property), widget);
   if (g_object_is_floating (widget))
     g_object_ref_sink (widget);
@@ -1312,39 +1312,39 @@ gimp_procedure_dialog_get_file_chooser (GimpProcedureDialog  *dialog,
 }
 
 /**
- * gimp_procedure_dialog_fill:
- * @dialog: the #GimpProcedureDialog.
+ * ligma_procedure_dialog_fill:
+ * @dialog: the #LigmaProcedureDialog.
  * @...: a %NULL-terminated list of property names.
  *
  * Populate @dialog with the widgets corresponding to every listed
  * properties. If the list is empty, @dialog will be filled by the whole
- * list of properties of the associated #GimpProcedure, in the defined
+ * list of properties of the associated #LigmaProcedure, in the defined
  * order:
  * |[<!-- language="C" -->
- * gimp_procedure_dialog_fill (dialog, NULL);
+ * ligma_procedure_dialog_fill (dialog, NULL);
  * ]|
  * Nevertheless if you only wish to display a partial list of
  * properties, or if you wish to change the display order, then you have
  * to give an explicit list:
  * |[<!-- language="C" -->
- * gimp_procedure_dialog_fill (dialog, "property-1", "property-2", NULL);
+ * ligma_procedure_dialog_fill (dialog, "property-1", "property-2", NULL);
  * ]|
  *
- * Note: you do not have to call gimp_procedure_dialog_get_widget() on
+ * Note: you do not have to call ligma_procedure_dialog_get_widget() on
  * every property before calling this function unless you want a given
  * property to be represented by an alternative widget type. By default,
  * each property will get a default representation according to its
  * type.
  */
 void
-gimp_procedure_dialog_fill (GimpProcedureDialog *dialog,
+ligma_procedure_dialog_fill (LigmaProcedureDialog *dialog,
                             ...)
 {
   const gchar *prop_name;
   GList       *list      = NULL;
   va_list      va_args;
 
-  g_return_if_fail (GIMP_IS_PROCEDURE_DIALOG (dialog));
+  g_return_if_fail (LIGMA_IS_PROCEDURE_DIALOG (dialog));
 
   va_start (va_args, dialog);
 
@@ -1354,38 +1354,38 @@ gimp_procedure_dialog_fill (GimpProcedureDialog *dialog,
   va_end (va_args);
 
   list = g_list_reverse (list);
-  gimp_procedure_dialog_fill_list (dialog, list);
+  ligma_procedure_dialog_fill_list (dialog, list);
   if (list)
     g_list_free (list);
 }
 
 /**
- * gimp_procedure_dialog_fill_list: (rename-to gimp_procedure_dialog_fill)
- * @dialog: the #GimpProcedureDialog.
+ * ligma_procedure_dialog_fill_list: (rename-to ligma_procedure_dialog_fill)
+ * @dialog: the #LigmaProcedureDialog.
  * @properties: (nullable) (element-type gchar*): the list of property names.
  *
  * Populate @dialog with the widgets corresponding to every listed
  * properties. If the list is %NULL, @dialog will be filled by the whole
- * list of properties of the associated #GimpProcedure, in the defined
+ * list of properties of the associated #LigmaProcedure, in the defined
  * order:
  * |[<!-- language="C" -->
- * gimp_procedure_dialog_fill_list (dialog, NULL);
+ * ligma_procedure_dialog_fill_list (dialog, NULL);
  * ]|
  * Nevertheless if you only wish to display a partial list of
  * properties, or if you wish to change the display order, then you have
  * to give an explicit list:
  * |[<!-- language="C" -->
- * gimp_procedure_dialog_fill (dialog, "property-1", "property-2", NULL);
+ * ligma_procedure_dialog_fill (dialog, "property-1", "property-2", NULL);
  * ]|
  *
- * Note: you do not have to call gimp_procedure_dialog_get_widget() on
+ * Note: you do not have to call ligma_procedure_dialog_get_widget() on
  * every property before calling this function unless you want a given
  * property to be represented by an alternative widget type. By default,
  * each property will get a default representation according to its
  * type.
  */
 void
-gimp_procedure_dialog_fill_list (GimpProcedureDialog *dialog,
+ligma_procedure_dialog_fill_list (LigmaProcedureDialog *dialog,
                                  GList               *properties)
 {
   gboolean free_properties = FALSE;
@@ -1405,7 +1405,7 @@ gimp_procedure_dialog_fill_list (GimpProcedureDialog *dialog,
           GParamSpec  *pspec = pspecs[i];
 
           /*  skip our own properties  */
-          if (pspec->owner_type == GIMP_TYPE_PROCEDURE_CONFIG)
+          if (pspec->owner_type == LIGMA_TYPE_PROCEDURE_CONFIG)
             continue;
 
           prop_name  = g_param_spec_get_name (pspec);
@@ -1418,7 +1418,7 @@ gimp_procedure_dialog_fill_list (GimpProcedureDialog *dialog,
         free_properties = TRUE;
     }
 
-  GIMP_PROCEDURE_DIALOG_GET_CLASS (dialog)->fill_list (dialog,
+  LIGMA_PROCEDURE_DIALOG_GET_CLASS (dialog)->fill_list (dialog,
                                                        dialog->priv->procedure,
                                                        dialog->priv->config,
                                                        properties);
@@ -1428,8 +1428,8 @@ gimp_procedure_dialog_fill_list (GimpProcedureDialog *dialog,
 }
 
 /**
- * gimp_procedure_dialog_fill_box:
- * @dialog:         the #GimpProcedureDialog.
+ * ligma_procedure_dialog_fill_box:
+ * @dialog:         the #LigmaProcedureDialog.
  * @container_id:   a container identifier.
  * @first_property: the first property name.
  * @...:            a %NULL-terminated list of other property names.
@@ -1437,12 +1437,12 @@ gimp_procedure_dialog_fill_list (GimpProcedureDialog *dialog,
  * Creates and populates a new #GtkBox with widgets corresponding to
  * every listed properties. If the list is empty, the created box will
  * be filled by the whole list of properties of the associated
- * #GimpProcedure, in the defined order. This is similar of how
- * gimp_procedure_dialog_fill() works except that it creates a new
+ * #LigmaProcedure, in the defined order. This is similar of how
+ * ligma_procedure_dialog_fill() works except that it creates a new
  * widget which is not inside @dialog itself.
  *
  * The @container_id must be a unique ID which is neither the name of a
- * property of the #GimpProcedureConfig associated to @dialog, nor is it
+ * property of the #LigmaProcedureConfig associated to @dialog, nor is it
  * the ID of any previously created container. This ID can later be used
  * together with property names to be packed in other containers or
  * inside @dialog itself.
@@ -1452,7 +1452,7 @@ gimp_procedure_dialog_fill_list (GimpProcedureDialog *dialog,
  *                           freed.
  */
 GtkWidget *
-gimp_procedure_dialog_fill_box (GimpProcedureDialog *dialog,
+ligma_procedure_dialog_fill_box (LigmaProcedureDialog *dialog,
                                 const gchar         *container_id,
                                 const gchar         *first_property,
                                 ...)
@@ -1462,7 +1462,7 @@ gimp_procedure_dialog_fill_box (GimpProcedureDialog *dialog,
   GList       *list      = NULL;
   va_list      va_args;
 
-  g_return_val_if_fail (GIMP_IS_PROCEDURE_DIALOG (dialog), NULL);
+  g_return_val_if_fail (LIGMA_IS_PROCEDURE_DIALOG (dialog), NULL);
   g_return_val_if_fail (container_id != NULL, NULL);
 
   if (first_property)
@@ -1477,7 +1477,7 @@ gimp_procedure_dialog_fill_box (GimpProcedureDialog *dialog,
     }
 
   list = g_list_reverse (list);
-  box = gimp_procedure_dialog_fill_box_list (dialog, container_id, list);
+  box = ligma_procedure_dialog_fill_box_list (dialog, container_id, list);
   if (list)
     g_list_free (list);
 
@@ -1485,20 +1485,20 @@ gimp_procedure_dialog_fill_box (GimpProcedureDialog *dialog,
 }
 
 /**
- * gimp_procedure_dialog_fill_box_list: (rename-to gimp_procedure_dialog_fill_box)
- * @dialog:        the #GimpProcedureDialog.
+ * ligma_procedure_dialog_fill_box_list: (rename-to ligma_procedure_dialog_fill_box)
+ * @dialog:        the #LigmaProcedureDialog.
  * @container_id:  a container identifier.
  * @properties: (nullable) (element-type gchar*): the list of property names.
  *
  * Creates and populates a new #GtkBox with widgets corresponding to
  * every listed @properties. If the list is empty, the created box will
  * be filled by the whole list of properties of the associated
- * #GimpProcedure, in the defined order. This is similar of how
- * gimp_procedure_dialog_fill() works except that it creates a new
+ * #LigmaProcedure, in the defined order. This is similar of how
+ * ligma_procedure_dialog_fill() works except that it creates a new
  * widget which is not inside @dialog itself.
  *
  * The @container_id must be a unique ID which is neither the name of a
- * property of the #GimpProcedureConfig associated to @dialog, nor is it
+ * property of the #LigmaProcedureConfig associated to @dialog, nor is it
  * the ID of any previously created container. This ID can later be used
  * together with property names to be packed in other containers or
  * inside @dialog itself.
@@ -1508,20 +1508,20 @@ gimp_procedure_dialog_fill_box (GimpProcedureDialog *dialog,
  *                           freed.
  */
 GtkWidget *
-gimp_procedure_dialog_fill_box_list (GimpProcedureDialog *dialog,
+ligma_procedure_dialog_fill_box_list (LigmaProcedureDialog *dialog,
                                      const gchar         *container_id,
                                      GList               *properties)
 {
   g_return_val_if_fail (container_id != NULL, NULL);
 
-  return gimp_procedure_dialog_fill_container_list (dialog, container_id,
+  return ligma_procedure_dialog_fill_container_list (dialog, container_id,
                                                     GTK_CONTAINER (gtk_box_new (GTK_ORIENTATION_VERTICAL, 2)),
                                                     properties);
 }
 
 /**
- * gimp_procedure_dialog_fill_flowbox:
- * @dialog:         the #GimpProcedureDialog.
+ * ligma_procedure_dialog_fill_flowbox:
+ * @dialog:         the #LigmaProcedureDialog.
  * @container_id:   a container identifier.
  * @first_property: the first property name.
  * @...:            a %NULL-terminated list of other property names.
@@ -1529,12 +1529,12 @@ gimp_procedure_dialog_fill_box_list (GimpProcedureDialog *dialog,
  * Creates and populates a new #GtkFlowBox with widgets corresponding to
  * every listed properties. If the list is empty, the created flowbox
  * will be filled by the whole list of properties of the associated
- * #GimpProcedure, in the defined order. This is similar of how
- * gimp_procedure_dialog_fill() works except that it creates a new
+ * #LigmaProcedure, in the defined order. This is similar of how
+ * ligma_procedure_dialog_fill() works except that it creates a new
  * widget which is not inside @dialog itself.
  *
  * The @container_id must be a unique ID which is neither the name of a
- * property of the #GimpProcedureConfig associated to @dialog, nor is it
+ * property of the #LigmaProcedureConfig associated to @dialog, nor is it
  * the ID of any previously created container. This ID can later be used
  * together with property names to be packed in other containers or
  * inside @dialog itself.
@@ -1544,7 +1544,7 @@ gimp_procedure_dialog_fill_box_list (GimpProcedureDialog *dialog,
  *                           freed.
  */
 GtkWidget *
-gimp_procedure_dialog_fill_flowbox (GimpProcedureDialog *dialog,
+ligma_procedure_dialog_fill_flowbox (LigmaProcedureDialog *dialog,
                                     const gchar         *container_id,
                                     const gchar         *first_property,
                                     ...)
@@ -1554,7 +1554,7 @@ gimp_procedure_dialog_fill_flowbox (GimpProcedureDialog *dialog,
   GList       *list      = NULL;
   va_list      va_args;
 
-  g_return_val_if_fail (GIMP_IS_PROCEDURE_DIALOG (dialog), NULL);
+  g_return_val_if_fail (LIGMA_IS_PROCEDURE_DIALOG (dialog), NULL);
   g_return_val_if_fail (container_id != NULL, NULL);
 
   if (first_property)
@@ -1569,7 +1569,7 @@ gimp_procedure_dialog_fill_flowbox (GimpProcedureDialog *dialog,
     }
 
   list = g_list_reverse (list);
-  flowbox = gimp_procedure_dialog_fill_flowbox_list (dialog, container_id, list);
+  flowbox = ligma_procedure_dialog_fill_flowbox_list (dialog, container_id, list);
   if (list)
     g_list_free (list);
 
@@ -1577,20 +1577,20 @@ gimp_procedure_dialog_fill_flowbox (GimpProcedureDialog *dialog,
 }
 
 /**
- * gimp_procedure_dialog_fill_flowbox_list: (rename-to gimp_procedure_dialog_fill_flowbox)
- * @dialog:        the #GimpProcedureDialog.
+ * ligma_procedure_dialog_fill_flowbox_list: (rename-to ligma_procedure_dialog_fill_flowbox)
+ * @dialog:        the #LigmaProcedureDialog.
  * @container_id:  a container identifier.
  * @properties: (nullable) (element-type gchar*): the list of property names.
  *
  * Creates and populates a new #GtkFlowBox with widgets corresponding to
  * every listed @properties. If the list is empty, the created flowbox
  * will be filled by the whole list of properties of the associated
- * #GimpProcedure, in the defined order. This is similar of how
- * gimp_procedure_dialog_fill() works except that it creates a new
+ * #LigmaProcedure, in the defined order. This is similar of how
+ * ligma_procedure_dialog_fill() works except that it creates a new
  * widget which is not inside @dialog itself.
  *
  * The @container_id must be a unique ID which is neither the name of a
- * property of the #GimpProcedureConfig associated to @dialog, nor is it
+ * property of the #LigmaProcedureConfig associated to @dialog, nor is it
  * the ID of any previously created container. This ID can later be used
  * together with property names to be packed in other containers or
  * inside @dialog itself.
@@ -1600,21 +1600,21 @@ gimp_procedure_dialog_fill_flowbox (GimpProcedureDialog *dialog,
  *                           freed.
  */
 GtkWidget *
-gimp_procedure_dialog_fill_flowbox_list (GimpProcedureDialog *dialog,
+ligma_procedure_dialog_fill_flowbox_list (LigmaProcedureDialog *dialog,
                                          const gchar         *container_id,
                                          GList               *properties)
 {
   g_return_val_if_fail (container_id != NULL, NULL);
 
-  return gimp_procedure_dialog_fill_container_list (dialog, container_id,
+  return ligma_procedure_dialog_fill_container_list (dialog, container_id,
                                                     GTK_CONTAINER (gtk_flow_box_new ()),
                                                     properties);
 }
 
 
 /**
- * gimp_procedure_dialog_fill_frame:
- * @dialog:        the #GimpProcedureDialog.
+ * ligma_procedure_dialog_fill_frame:
+ * @dialog:        the #LigmaProcedureDialog.
  * @container_id:  a container identifier.
  * @title_id: (nullable): the identifier for the title widget.
  * @invert_title:  whether to use the opposite value of @title_id if it
@@ -1628,7 +1628,7 @@ gimp_procedure_dialog_fill_flowbox_list (GimpProcedureDialog *dialog,
  * sensitivity binding is inverted.
  *
  * The @container_id must be a unique ID which is neither the name of a
- * property of the #GimpProcedureConfig associated to @dialog, nor is it
+ * property of the #LigmaProcedureConfig associated to @dialog, nor is it
  * the ID of any previously created container. This ID can later be used
  * together with property names to be packed in other containers or
  * inside @dialog itself.
@@ -1638,7 +1638,7 @@ gimp_procedure_dialog_fill_flowbox_list (GimpProcedureDialog *dialog,
  *                           freed.
  */
 GtkWidget *
-gimp_procedure_dialog_fill_frame (GimpProcedureDialog *dialog,
+ligma_procedure_dialog_fill_frame (LigmaProcedureDialog *dialog,
                                   const gchar         *container_id,
                                   const gchar         *title_id,
                                   gboolean             invert_title,
@@ -1665,11 +1665,11 @@ gimp_procedure_dialog_fill_frame (GimpProcedureDialog *dialog,
       return frame;
     }
 
-  frame = gimp_frame_new (NULL);
+  frame = ligma_frame_new (NULL);
 
   if (contents_id)
     {
-      contents = gimp_procedure_dialog_get_widget (dialog, contents_id, G_TYPE_NONE);
+      contents = ligma_procedure_dialog_get_widget (dialog, contents_id, G_TYPE_NONE);
       if (! contents)
         {
           g_warning ("%s: no property or configured widget with identifier '%s'.",
@@ -1684,7 +1684,7 @@ gimp_procedure_dialog_fill_frame (GimpProcedureDialog *dialog,
 
   if (title_id)
     {
-      title = gimp_procedure_dialog_get_widget (dialog, title_id, G_TYPE_NONE);
+      title = ligma_procedure_dialog_get_widget (dialog, title_id, G_TYPE_NONE);
       if (! title)
         {
           g_warning ("%s: no property or configured widget with identifier '%s'.",
@@ -1718,8 +1718,8 @@ gimp_procedure_dialog_fill_frame (GimpProcedureDialog *dialog,
 
 
 /**
- * gimp_procedure_dialog_fill_expander:
- * @dialog:        the #GimpProcedureDialog.
+ * ligma_procedure_dialog_fill_expander:
+ * @dialog:        the #LigmaProcedureDialog.
  * @container_id:  a container identifier.
  * @title_id: (nullable): the identifier for the title widget.
  * @invert_title:  whether to use the opposite value of @title_id if it
@@ -1733,7 +1733,7 @@ gimp_procedure_dialog_fill_frame (GimpProcedureDialog *dialog,
  * inverted.
  *
  * The @container_id must be a unique ID which is neither the name of a
- * property of the #GimpProcedureConfig associated to @dialog, nor is it
+ * property of the #LigmaProcedureConfig associated to @dialog, nor is it
  * the ID of any previously created container. This ID can later be used
  * together with property names to be packed in other containers or
  * inside @dialog itself.
@@ -1743,7 +1743,7 @@ gimp_procedure_dialog_fill_frame (GimpProcedureDialog *dialog,
  *                           freed.
  */
 GtkWidget *
-gimp_procedure_dialog_fill_expander (GimpProcedureDialog *dialog,
+ligma_procedure_dialog_fill_expander (LigmaProcedureDialog *dialog,
                                      const gchar         *container_id,
                                      const gchar         *title_id,
                                      gboolean             invert_title,
@@ -1774,7 +1774,7 @@ gimp_procedure_dialog_fill_expander (GimpProcedureDialog *dialog,
 
   if (contents_id)
     {
-      contents = gimp_procedure_dialog_get_widget (dialog, contents_id, G_TYPE_NONE);
+      contents = ligma_procedure_dialog_get_widget (dialog, contents_id, G_TYPE_NONE);
       if (! contents)
         {
           g_warning ("%s: no property or configured widget with identifier '%s'.",
@@ -1789,7 +1789,7 @@ gimp_procedure_dialog_fill_expander (GimpProcedureDialog *dialog,
 
   if (title_id)
     {
-      title = gimp_procedure_dialog_get_widget (dialog, title_id, G_TYPE_NONE);
+      title = ligma_procedure_dialog_get_widget (dialog, title_id, G_TYPE_NONE);
       if (! title)
         {
           g_warning ("%s: no property or configured widget with identifier '%s'.",
@@ -1836,9 +1836,9 @@ gimp_procedure_dialog_fill_expander (GimpProcedureDialog *dialog,
 
 
 /**
- * gimp_procedure_dialog_set_sensitive:
- * @dialog:          the #GimpProcedureDialog.
- * @property:        name of a property of the #GimpProcedure @dialog
+ * ligma_procedure_dialog_set_sensitive:
+ * @dialog:          the #LigmaProcedureDialog.
+ * @property:        name of a property of the #LigmaProcedure @dialog
  *                   has been created for.
  * @sensitive:       whether the widget associated to @property should
  *                   be sensitive.
@@ -1853,7 +1853,7 @@ gimp_procedure_dialog_fill_expander (GimpProcedureDialog *dialog,
  * if @config_reverse is %TRUE).
  */
 void
-gimp_procedure_dialog_set_sensitive (GimpProcedureDialog *dialog,
+ligma_procedure_dialog_set_sensitive (LigmaProcedureDialog *dialog,
                                      const gchar         *property,
                                      gboolean             sensitive,
                                      GObject             *config,
@@ -1863,7 +1863,7 @@ gimp_procedure_dialog_set_sensitive (GimpProcedureDialog *dialog,
   GtkWidget  *widget = NULL;
   GParamSpec *pspec;
 
-  g_return_if_fail (GIMP_IS_PROCEDURE_DIALOG (dialog));
+  g_return_if_fail (LIGMA_IS_PROCEDURE_DIALOG (dialog));
   g_return_if_fail (property != NULL);
   g_return_if_fail (config == NULL || config_property != NULL);
 
@@ -1875,7 +1875,7 @@ gimp_procedure_dialog_set_sensitive (GimpProcedureDialog *dialog,
                                             property);
       if (! pspec)
         {
-          g_warning ("%s: parameter %s does not exist on the GimpProcedure.",
+          g_warning ("%s: parameter %s does not exist on the LigmaProcedure.",
                      G_STRFUNC, property);
           return;
         }
@@ -1909,9 +1909,9 @@ gimp_procedure_dialog_set_sensitive (GimpProcedureDialog *dialog,
   else
     {
       /* Set for later creation. */
-      GimpProcedureDialogSensitiveData *data;
+      LigmaProcedureDialogSensitiveData *data;
 
-      data = g_slice_new0 (GimpProcedureDialogSensitiveData);
+      data = g_slice_new0 (LigmaProcedureDialogSensitiveData);
 
       data->sensitive = sensitive;
       if (config)
@@ -1926,8 +1926,8 @@ gimp_procedure_dialog_set_sensitive (GimpProcedureDialog *dialog,
 }
 
 /**
- * gimp_procedure_dialog_run:
- * @dialog: the #GimpProcedureDialog.
+ * ligma_procedure_dialog_run:
+ * @dialog: the #LigmaProcedureDialog.
  *
  * Show @dialog and only returns when the user finished interacting with
  * it (either validating choices or canceling).
@@ -1935,13 +1935,13 @@ gimp_procedure_dialog_set_sensitive (GimpProcedureDialog *dialog,
  * Returns: %TRUE if the dialog was validated, %FALSE otherwise.
  */
 gboolean
-gimp_procedure_dialog_run (GimpProcedureDialog *dialog)
+ligma_procedure_dialog_run (LigmaProcedureDialog *dialog)
 {
-  g_return_val_if_fail (GIMP_IS_PROCEDURE_DIALOG (dialog), FALSE);
+  g_return_val_if_fail (LIGMA_IS_PROCEDURE_DIALOG (dialog), FALSE);
 
   while (TRUE)
     {
-      gint response = gimp_dialog_run (GIMP_DIALOG (dialog));
+      gint response = ligma_dialog_run (LIGMA_DIALOG (dialog));
 
       if (response == RESPONSE_RESET)
         {
@@ -1967,7 +1967,7 @@ gimp_procedure_dialog_run (GimpProcedureDialog *dialog)
               gtk_widget_show (button);
 
               g_signal_connect (button, "clicked",
-                                G_CALLBACK (gimp_procedure_dialog_reset_initial),
+                                G_CALLBACK (ligma_procedure_dialog_reset_initial),
                                 dialog);
 
               button = gtk_button_new_with_mnemonic (_("Reset to _Factory "
@@ -1976,7 +1976,7 @@ gimp_procedure_dialog_run (GimpProcedureDialog *dialog)
               gtk_widget_show (button);
 
               g_signal_connect (button, "clicked",
-                                G_CALLBACK (gimp_procedure_dialog_reset_factory),
+                                G_CALLBACK (ligma_procedure_dialog_reset_factory),
                                 dialog);
             }
 
@@ -1993,32 +1993,32 @@ gimp_procedure_dialog_run (GimpProcedureDialog *dialog)
 /*  private functions  */
 
 static void
-gimp_procedure_dialog_reset_initial (GtkWidget           *button,
-                                     GimpProcedureDialog *dialog)
+ligma_procedure_dialog_reset_initial (GtkWidget           *button,
+                                     LigmaProcedureDialog *dialog)
 {
-  gimp_config_copy (GIMP_CONFIG (dialog->priv->initial_config),
-                    GIMP_CONFIG (dialog->priv->config),
+  ligma_config_copy (LIGMA_CONFIG (dialog->priv->initial_config),
+                    LIGMA_CONFIG (dialog->priv->config),
                     0);
 
   gtk_popover_popdown (GTK_POPOVER (dialog->priv->reset_popover));
 }
 
 static void
-gimp_procedure_dialog_reset_factory (GtkWidget           *button,
-                                     GimpProcedureDialog *dialog)
+ligma_procedure_dialog_reset_factory (GtkWidget           *button,
+                                     LigmaProcedureDialog *dialog)
 {
-  gimp_config_reset (GIMP_CONFIG (dialog->priv->config));
+  ligma_config_reset (LIGMA_CONFIG (dialog->priv->config));
 
   gtk_popover_popdown (GTK_POPOVER (dialog->priv->reset_popover));
 }
 
 static void
-gimp_procedure_dialog_load_defaults (GtkWidget           *button,
-                                     GimpProcedureDialog *dialog)
+ligma_procedure_dialog_load_defaults (GtkWidget           *button,
+                                     LigmaProcedureDialog *dialog)
 {
   GError *error = NULL;
 
-  if (! gimp_procedure_config_load_default (dialog->priv->config, &error))
+  if (! ligma_procedure_config_load_default (dialog->priv->config, &error))
     {
       if (error)
         {
@@ -2034,23 +2034,23 @@ gimp_procedure_dialog_load_defaults (GtkWidget           *button,
 }
 
 static void
-gimp_procedure_dialog_save_defaults (GtkWidget           *button,
-                                     GimpProcedureDialog *dialog)
+ligma_procedure_dialog_save_defaults (GtkWidget           *button,
+                                     LigmaProcedureDialog *dialog)
 {
   GError *error = NULL;
 
-  if (! gimp_procedure_config_save_default (dialog->priv->config, &error))
+  if (! ligma_procedure_config_save_default (dialog->priv->config, &error))
     {
       g_printerr ("Saving default values to disk failed: %s\n",
                   error->message);
       g_clear_error (&error);
     }
   gtk_widget_set_sensitive (dialog->priv->load_settings_button,
-                            gimp_procedure_config_has_default (dialog->priv->config));
+                            ligma_procedure_config_has_default (dialog->priv->config));
 }
 
 static gboolean
-gimp_procedure_dialog_check_mnemonic (GimpProcedureDialog *dialog,
+ligma_procedure_dialog_check_mnemonic (LigmaProcedureDialog *dialog,
                                       GtkWidget           *widget,
                                       const gchar         *id,
                                       const gchar         *core_id)
@@ -2062,9 +2062,9 @@ gimp_procedure_dialog_check_mnemonic (GimpProcedureDialog *dialog,
 
   g_return_val_if_fail ((id && ! core_id) || (core_id && ! id), FALSE);
 
-  if (GIMP_IS_LABELED (widget))
+  if (LIGMA_IS_LABELED (widget))
     {
-      label = gimp_labeled_get_label (GIMP_LABELED (widget));
+      label = ligma_labeled_get_label (LIGMA_LABELED (widget));
     }
   else
     {
@@ -2074,7 +2074,7 @@ gimp_procedure_dialog_check_mnemonic (GimpProcedureDialog *dialog,
         {
           if (g_list_length (labels) > 1)
             g_printerr ("Procedure '%s': %d mnemonics for property %s. Too much?\n",
-                        gimp_procedure_get_name (dialog->priv->procedure),
+                        ligma_procedure_get_name (dialog->priv->procedure),
                         g_list_length (labels),
                         id ? id : core_id);
 
@@ -2092,7 +2092,7 @@ gimp_procedure_dialog_check_mnemonic (GimpProcedureDialog *dialog,
       if (duplicate && g_strcmp0 (duplicate, id ? id : core_id) != 0)
         {
           g_printerr ("Procedure '%s': duplicate mnemonic %s for label of property %s and dialog button %s\n",
-                      gimp_procedure_get_name (dialog->priv->procedure),
+                      ligma_procedure_get_name (dialog->priv->procedure),
                       gdk_keyval_name (mnemonic), id, duplicate);
           success = FALSE;
         }
@@ -2103,7 +2103,7 @@ gimp_procedure_dialog_check_mnemonic (GimpProcedureDialog *dialog,
           if (duplicate && g_strcmp0 (duplicate, id ? id : core_id) != 0)
             {
               g_printerr ("Procedure '%s': duplicate mnemonic %s for label of properties %s and %s\n",
-                          gimp_procedure_get_name (dialog->priv->procedure),
+                          ligma_procedure_get_name (dialog->priv->procedure),
                           gdk_keyval_name (mnemonic), id, duplicate);
               success = FALSE;
             }
@@ -2119,7 +2119,7 @@ gimp_procedure_dialog_check_mnemonic (GimpProcedureDialog *dialog,
   else
     {
       g_printerr ("Procedure '%s': no mnemonic for property %s\n",
-                  gimp_procedure_get_name (dialog->priv->procedure),
+                  ligma_procedure_get_name (dialog->priv->procedure),
                   id ? id : core_id);
       success = FALSE;
     }
@@ -2128,15 +2128,15 @@ gimp_procedure_dialog_check_mnemonic (GimpProcedureDialog *dialog,
 }
 
 /**
- * gimp_procedure_dialog_fill_container_list:
- * @dialog:        the #GimpProcedureDialog.
+ * ligma_procedure_dialog_fill_container_list:
+ * @dialog:        the #LigmaProcedureDialog.
  * @container_id:  a container identifier.
  * @container: (transfer full): The new container that should be used if none
  *                              exists yet
  * @properties: (nullable) (element-type gchar*): the list of property names.
  *
  * A generic function to be used by various public functions
- * gimp_procedure_dialog_fill_*_list(). Note in particular that
+ * ligma_procedure_dialog_fill_*_list(). Note in particular that
  * @container is taken over by this function which may return it or not.
  * @container is assumed to be a floating GtkContainer (i.e. newly
  * created widget without a parent yet).
@@ -2146,7 +2146,7 @@ gimp_procedure_dialog_check_mnemonic (GimpProcedureDialog *dialog,
  * pointer anymore.
  */
 static GtkWidget *
-gimp_procedure_dialog_fill_container_list (GimpProcedureDialog *dialog,
+ligma_procedure_dialog_fill_container_list (LigmaProcedureDialog *dialog,
                                            const gchar         *container_id,
                                            GtkContainer        *container,
                                            GList               *properties)
@@ -2192,7 +2192,7 @@ gimp_procedure_dialog_fill_container_list (GimpProcedureDialog *dialog,
           GParamSpec  *pspec = pspecs[i];
 
           /*  skip our own properties  */
-          if (pspec->owner_type == GIMP_TYPE_PROCEDURE_CONFIG)
+          if (pspec->owner_type == LIGMA_TYPE_PROCEDURE_CONFIG)
             continue;
 
           prop_name  = g_param_spec_get_name (pspec);
@@ -2210,7 +2210,7 @@ gimp_procedure_dialog_fill_container_list (GimpProcedureDialog *dialog,
     {
       GtkWidget *widget;
 
-      widget = gimp_procedure_dialog_get_widget (dialog, iter->data, G_TYPE_NONE);
+      widget = ligma_procedure_dialog_get_widget (dialog, iter->data, G_TYPE_NONE);
       if (widget)
         {
           /* Reference the widget because the hash table will
@@ -2219,9 +2219,9 @@ gimp_procedure_dialog_fill_container_list (GimpProcedureDialog *dialog,
            */
           g_object_ref (widget);
           gtk_container_add (container, widget);
-          if (GIMP_IS_LABELED (widget))
+          if (LIGMA_IS_LABELED (widget))
             {
-              GtkWidget *label = gimp_labeled_get_label (GIMP_LABELED (widget));
+              GtkWidget *label = ligma_labeled_get_label (LIGMA_LABELED (widget));
               gtk_size_group_remove_widget (dialog->priv->label_group, label);
               gtk_size_group_add_widget (sz_group, label);
             }
@@ -2241,10 +2241,10 @@ gimp_procedure_dialog_fill_container_list (GimpProcedureDialog *dialog,
 }
 
 static void
-gimp_procedure_dialog_sensitive_data_free (GimpProcedureDialogSensitiveData *data)
+ligma_procedure_dialog_sensitive_data_free (LigmaProcedureDialogSensitiveData *data)
 {
   g_free (data->config_property);
   g_clear_object (&data->config);
 
-  g_slice_free (GimpProcedureDialogSensitiveData, data);
+  g_slice_free (LigmaProcedureDialogSensitiveData, data);
 }

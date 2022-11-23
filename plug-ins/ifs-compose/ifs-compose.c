@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * IfsCompose is a interface for creating IFS fractals by
@@ -34,12 +34,12 @@
 
 #include <glib/gstdio.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
 #include "ifs-compose.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 #define RESPONSE_RESET           1
@@ -55,7 +55,7 @@
 #define PLUG_IN_PARASITE "ifscompose-parasite"
 #define PLUG_IN_PROC     "plug-in-ifscompose"
 #define PLUG_IN_BINARY   "ifs-compose"
-#define PLUG_IN_ROLE     "gimp-ifs-compose"
+#define PLUG_IN_ROLE     "ligma-ifs-compose"
 
 typedef enum
 {
@@ -96,7 +96,7 @@ typedef struct
 
 typedef struct
 {
-  GimpRGB   *color;
+  LigmaRGB   *color;
   GtkWidget *hbox;
   GtkWidget *orig_preview;
   GtkWidget *button;
@@ -181,12 +181,12 @@ typedef struct _IfsClass IfsClass;
 
 struct _Ifs
 {
-  GimpPlugIn parent_instance;
+  LigmaPlugIn parent_instance;
 };
 
 struct _IfsClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -195,20 +195,20 @@ struct _IfsClass
 
 GType                   ifs_get_type         (void) G_GNUC_CONST;
 
-static GList          * ifs_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * ifs_create_procedure (GimpPlugIn           *plug_in,
+static GList          * ifs_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * ifs_create_procedure (LigmaPlugIn           *plug_in,
                                               const gchar          *name);
 
-static GimpValueArray * ifs_run              (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
-                                              GimpImage            *image,
+static LigmaValueArray * ifs_run              (LigmaProcedure        *procedure,
+                                              LigmaRunMode           run_mode,
+                                              LigmaImage            *image,
                                               gint                  n_drawables,
-                                              GimpDrawable        **drawables,
-                                              const GimpValueArray *args,
+                                              LigmaDrawable        **drawables,
+                                              const LigmaValueArray *args,
                                               gpointer              run_data);
 
 /*  user interface functions  */
-static gint           ifs_compose_dialog          (GimpDrawable *drawable);
+static gint           ifs_compose_dialog          (LigmaDrawable *drawable);
 static void           ifs_options_dialog          (GtkWidget     *parent);
 static GtkWidget    * ifs_compose_trans_page      (void);
 static GtkWidget    * ifs_compose_color_page      (void);
@@ -247,11 +247,11 @@ static void recompute_center              (gboolean   save_undo);
 static void recompute_center_cb           (GtkWidget *widget,
                                            gpointer   data);
 
-static void ifs_compose                   (GimpDrawable *drawable);
+static void ifs_compose                   (LigmaDrawable *drawable);
 
 static ColorMap *color_map_create         (const gchar  *name,
-                                           GimpRGB      *orig_color,
-                                           GimpRGB      *data,
+                                           LigmaRGB      *orig_color,
+                                           LigmaRGB      *data,
                                            gboolean      fixed_point);
 static void color_map_color_changed_cb    (GtkWidget    *widget,
                                            ColorMap     *color_map);
@@ -291,9 +291,9 @@ static void ifs_compose_response          (GtkWidget *widget,
                                            gpointer   data);
 
 
-G_DEFINE_TYPE (Ifs, ifs, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Ifs, ifs, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (IFS_TYPE)
+LIGMA_MAIN (IFS_TYPE)
 DEFINE_STD_SET_I18N
 
 
@@ -335,7 +335,7 @@ static IfsComposeInterface ifscint =
 static void
 ifs_class_init (IfsClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = ifs_query_procedures;
   plug_in_class->create_procedure = ifs_create_procedure;
@@ -348,32 +348,32 @@ ifs_init (Ifs *ifs)
 }
 
 static GList *
-ifs_query_procedures (GimpPlugIn *plug_in)
+ifs_query_procedures (LigmaPlugIn *plug_in)
 {
   return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
 }
 
-static GimpProcedure *
-ifs_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+ifs_create_procedure (LigmaPlugIn  *plug_in,
                            const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_image_procedure_new (plug_in, name,
+                                            LIGMA_PDB_PROC_TYPE_PLUGIN,
                                             ifs_run, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "*");
-      gimp_procedure_set_sensitivity_mask (procedure,
-                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
+      ligma_procedure_set_image_types (procedure, "*");
+      ligma_procedure_set_sensitivity_mask (procedure,
+                                           LIGMA_PROCEDURE_SENSITIVE_DRAWABLE);
 
-      gimp_procedure_set_menu_label (procedure, _("_IFS Fractal..."));
-      gimp_procedure_add_menu_path (procedure,
+      ligma_procedure_set_menu_label (procedure, _("_IFS Fractal..."));
+      ligma_procedure_add_menu_path (procedure,
                                     "<Image>/Filters/Render/Fractals");
 
-      gimp_procedure_set_documentation
+      ligma_procedure_set_documentation
         (procedure,
          _("Create an Iterated Function System (IFS) fractal"),
          "Interactively create an Iterated Function System "
@@ -385,7 +385,7 @@ ifs_create_procedure (GimpPlugIn  *plug_in,
          "will be rendered with a transparent background if "
          "the current image has an alpha channel.",
          name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Owen Taylor",
                                       "Owen Taylor",
                                       "1997");
@@ -394,17 +394,17 @@ ifs_create_procedure (GimpPlugIn  *plug_in,
   return procedure;
 }
 
-static GimpValueArray *
-ifs_run (GimpProcedure        *procedure,
-         GimpRunMode           run_mode,
-         GimpImage            *image,
+static LigmaValueArray *
+ifs_run (LigmaProcedure        *procedure,
+         LigmaRunMode           run_mode,
+         LigmaImage            *image,
          gint                  n_drawables,
-         GimpDrawable        **drawables,
-         const GimpValueArray *args,
+         LigmaDrawable        **drawables,
+         const LigmaValueArray *args,
          gpointer              run_data)
 {
-  GimpDrawable *drawable;
-  GimpParasite *parasite = NULL;
+  LigmaDrawable *drawable;
+  LigmaParasite *parasite = NULL;
   gboolean      found_parasite = FALSE;
 
   gegl_init (NULL, NULL);
@@ -413,12 +413,12 @@ ifs_run (GimpProcedure        *procedure,
     {
       GError *error = NULL;
 
-      g_set_error (&error, GIMP_PLUG_IN_ERROR, 0,
+      g_set_error (&error, LIGMA_PLUG_IN_ERROR, 0,
                    _("Procedure '%s' only works with one drawable."),
-                   gimp_procedure_get_name (procedure));
+                   ligma_procedure_get_name (procedure));
 
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_CALLING_ERROR,
                                                error);
     }
   else
@@ -428,33 +428,33 @@ ifs_run (GimpProcedure        *procedure,
 
   switch (run_mode)
     {
-    case GIMP_RUN_INTERACTIVE:
+    case LIGMA_RUN_INTERACTIVE:
       /*  Possibly retrieve data; first look for a parasite -
        *  if not found, fall back to global values
        */
-      parasite = gimp_item_get_parasite (GIMP_ITEM (drawable),
+      parasite = ligma_item_get_parasite (LIGMA_ITEM (drawable),
                                          PLUG_IN_PARASITE);
       if (parasite)
         {
           gchar   *parasite_data;
           guint32  parasite_size;
 
-          parasite_data = (gchar *) gimp_parasite_get_data (parasite, &parasite_size);
+          parasite_data = (gchar *) ligma_parasite_get_data (parasite, &parasite_size);
           parasite_data = g_strndup (parasite_data, parasite_size);
           found_parasite = ifsvals_parse_string (parasite_data, &ifsvals, &elements);
-          gimp_parasite_free (parasite);
+          ligma_parasite_free (parasite);
           g_free (parasite_data);
         }
 
       if (! found_parasite)
         {
-          gint length = gimp_get_data_size (PLUG_IN_PROC);
+          gint length = ligma_get_data_size (PLUG_IN_PROC);
 
           if (length > 0)
             {
               gchar *data = g_new (gchar, length);
 
-              gimp_get_data (PLUG_IN_PROC, data);
+              ligma_get_data (PLUG_IN_PROC, data);
               ifsvals_parse_string (data, &ifsvals, &elements);
               g_free (data);
             }
@@ -465,26 +465,26 @@ ifs_run (GimpProcedure        *procedure,
 
       /*  First acquire information with a dialog  */
       if (! ifs_compose_dialog (drawable))
-        return gimp_procedure_new_return_values (procedure,
-                                                 GIMP_PDB_CANCEL,
+        return ligma_procedure_new_return_values (procedure,
+                                                 LIGMA_PDB_CANCEL,
                                                  NULL);
       break;
 
-    case GIMP_RUN_NONINTERACTIVE:
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
+    case LIGMA_RUN_NONINTERACTIVE:
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_CALLING_ERROR,
                                                NULL);
       break;
 
-    case GIMP_RUN_WITH_LAST_VALS:
+    case LIGMA_RUN_WITH_LAST_VALS:
       {
-        gint length = gimp_get_data_size (PLUG_IN_PROC);
+        gint length = ligma_get_data_size (PLUG_IN_PROC);
 
         if (length > 0)
           {
             gchar *data = g_new (gchar, length);
 
-            gimp_get_data (PLUG_IN_PROC, data);
+            ligma_get_data (PLUG_IN_PROC, data);
             ifsvals_parse_string (data, &ifsvals, &elements);
             g_free (data);
           }
@@ -499,12 +499,12 @@ ifs_run (GimpProcedure        *procedure,
       break;
     }
 
-  if (run_mode == GIMP_RUN_INTERACTIVE)
+  if (run_mode == LIGMA_RUN_INTERACTIVE)
     {
       gchar        *str;
-      GimpParasite *parasite;
+      LigmaParasite *parasite;
 
-      gimp_image_undo_group_start (image);
+      ligma_image_undo_group_start (image);
 
       /*  run the effect  */
       ifs_compose (drawable);
@@ -514,20 +514,20 @@ ifs_run (GimpProcedure        *procedure,
        */
       str = ifsvals_stringify (&ifsvals, elements);
 
-      gimp_set_data (PLUG_IN_PROC, str, strlen (str) + 1);
+      ligma_set_data (PLUG_IN_PROC, str, strlen (str) + 1);
 
-      parasite = gimp_parasite_new (PLUG_IN_PARASITE,
-                                    GIMP_PARASITE_PERSISTENT |
-                                    GIMP_PARASITE_UNDOABLE,
+      parasite = ligma_parasite_new (PLUG_IN_PARASITE,
+                                    LIGMA_PARASITE_PERSISTENT |
+                                    LIGMA_PARASITE_UNDOABLE,
                                     strlen (str) + 1, str);
-      gimp_item_attach_parasite (GIMP_ITEM (drawable), parasite);
-      gimp_parasite_free (parasite);
+      ligma_item_attach_parasite (LIGMA_ITEM (drawable), parasite);
+      ligma_parasite_free (parasite);
 
       g_free (str);
 
-      gimp_image_undo_group_end (image);
+      ligma_image_undo_group_end (image);
 
-      gimp_displays_flush ();
+      ligma_displays_flush ();
     }
   else
     {
@@ -535,7 +535,7 @@ ifs_run (GimpProcedure        *procedure,
       ifs_compose (drawable);
     }
 
-  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
+  return ligma_procedure_new_return_values (procedure, LIGMA_PDB_SUCCESS, NULL);
 }
 
 static GtkWidget *
@@ -658,7 +658,7 @@ ifs_compose_color_page (void)
   GtkWidget *grid;
   GtkWidget *label;
   GSList    *group = NULL;
-  GimpRGB    color;
+  LigmaRGB    color;
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
@@ -724,32 +724,32 @@ ifs_compose_color_page (void)
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (ifsD->full_button));
   gtk_widget_show (ifsD->full_button);
 
-  gimp_rgb_parse_name (&color, "red", -1);
-  gimp_rgb_set_alpha (&color, 1.0);
+  ligma_rgb_parse_name (&color, "red", -1);
+  ligma_rgb_set_alpha (&color, 1.0);
   ifsD->red_cmap = color_map_create (_("IFS Fractal: Red"), &color,
                                      &ifsD->current_vals.red_color, FALSE);
   gtk_grid_attach (GTK_GRID (grid), ifsD->red_cmap->hbox, 1, 2, 1, 1);
                     // GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (ifsD->red_cmap->hbox);
 
-  gimp_rgb_parse_name (&color, "green", -1);
-  gimp_rgb_set_alpha (&color, 1.0);
+  ligma_rgb_parse_name (&color, "green", -1);
+  ligma_rgb_set_alpha (&color, 1.0);
   ifsD->green_cmap = color_map_create (_("IFS Fractal: Green"), &color,
                                        &ifsD->current_vals.green_color, FALSE);
   gtk_grid_attach (GTK_GRID (grid), ifsD->green_cmap->hbox, 2, 2, 1, 1);
                     // GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (ifsD->green_cmap->hbox);
 
-  gimp_rgb_parse_name (&color, "blue", -1);
-  gimp_rgb_set_alpha (&color, 1.0);
+  ligma_rgb_parse_name (&color, "blue", -1);
+  ligma_rgb_set_alpha (&color, 1.0);
   ifsD->blue_cmap = color_map_create (_("IFS Fractal: Blue"), &color,
                                       &ifsD->current_vals.blue_color, FALSE);
   gtk_grid_attach (GTK_GRID (grid), ifsD->blue_cmap->hbox, 3, 2, 1, 1);
                     // GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (ifsD->blue_cmap->hbox);
 
-  gimp_rgb_parse_name (&color, "black", -1);
-  gimp_rgb_set_alpha (&color, 1.0);
+  ligma_rgb_parse_name (&color, "black", -1);
+  ligma_rgb_set_alpha (&color, 1.0);
   ifsD->black_cmap = color_map_create (_("IFS Fractal: Black"), &color,
                                        &ifsD->current_vals.black_color, FALSE);
   gtk_grid_attach (GTK_GRID (grid), ifsD->black_cmap->hbox, 4, 2, 1, 1);
@@ -760,7 +760,7 @@ ifs_compose_color_page (void)
 }
 
 static gint
-ifs_compose_dialog (GimpDrawable *drawable)
+ifs_compose_dialog (LigmaDrawable *drawable)
 {
   GtkWidget *dialog;
   GtkWidget *label;
@@ -771,8 +771,8 @@ ifs_compose_dialog (GimpDrawable *drawable)
   GtkWidget *aspect_frame;
   GtkWidget *notebook;
   GtkWidget *page;
-  gint       design_width  = gimp_drawable_get_width  (drawable);
-  gint       design_height = gimp_drawable_get_height (drawable);
+  gint       design_width  = ligma_drawable_get_width  (drawable);
+  gint       design_height = ligma_drawable_get_height (drawable);
 
   if (design_width > design_height)
     {
@@ -793,16 +793,16 @@ ifs_compose_dialog (GimpDrawable *drawable)
 
   ifsD = g_new0 (IfsDialog, 1);
 
-  ifsD->drawable_width  = gimp_drawable_get_width  (drawable);
-  ifsD->drawable_height = gimp_drawable_get_height (drawable);
+  ifsD->drawable_width  = ligma_drawable_get_width  (drawable);
+  ifsD->drawable_height = ligma_drawable_get_height (drawable);
   ifsD->preview_width   = design_width;
   ifsD->preview_height  = design_height;
 
-  gimp_ui_init (PLUG_IN_BINARY);
+  ligma_ui_init (PLUG_IN_BINARY);
 
-  dialog = gimp_dialog_new (_("IFS Fractal"), PLUG_IN_ROLE,
+  dialog = ligma_dialog_new (_("IFS Fractal"), PLUG_IN_ROLE,
                             NULL, 0,
-                            gimp_standard_help_func, PLUG_IN_PROC,
+                            ligma_standard_help_func, PLUG_IN_PROC,
 
                             _("_Open"),   RESPONSE_OPEN,
                             _("_Save"),   RESPONSE_SAVE,
@@ -812,7 +812,7 @@ ifs_compose_dialog (GimpDrawable *drawable)
 
                             NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            RESPONSE_OPEN,
                                            RESPONSE_SAVE,
                                            RESPONSE_RESET,
@@ -820,7 +820,7 @@ ifs_compose_dialog (GimpDrawable *drawable)
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  gimp_window_set_transient (GTK_WINDOW (dialog));
+  ligma_window_set_transient (GTK_WINDOW (dialog));
 
   g_object_add_weak_pointer (G_OBJECT (dialog), (gpointer) &dialog);
 
@@ -870,7 +870,7 @@ ifs_compose_dialog (GimpDrawable *drawable)
   gtk_frame_set_shadow_type (GTK_FRAME (aspect_frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (hbox), aspect_frame, TRUE, TRUE, 0);
 
-  ifsD->preview = gimp_preview_area_new ();
+  ifsD->preview = ligma_preview_area_new ();
   gtk_widget_set_size_request (ifsD->preview,
                                ifsD->preview_width,
                                ifsD->preview_height);
@@ -883,7 +883,7 @@ ifs_compose_dialog (GimpDrawable *drawable)
 
   /* The current transformation frame */
 
-  ifsD->current_frame = gimp_frame_new (NULL);
+  ifsD->current_frame = ligma_frame_new (NULL);
   gtk_box_pack_start (GTK_BOX (main_vbox), ifsD->current_frame,
                       FALSE, FALSE, 0);
 
@@ -1070,43 +1070,43 @@ design_op_menu_create (GtkWidget *window)
   {
     { "ifs-compose-menu", NULL, "IFS Fractal Menu" },
 
-    { "new", GIMP_ICON_DOCUMENT_NEW,
+    { "new", LIGMA_ICON_DOCUMENT_NEW,
       N_("_New"), "<primary>N", NULL,
       G_CALLBACK (ifs_compose_new_callback) },
 
-    { "delete", GIMP_ICON_EDIT_DELETE,
+    { "delete", LIGMA_ICON_EDIT_DELETE,
       N_("_Delete"), "<primary>D", NULL,
       G_CALLBACK (ifs_compose_delete_callback) },
 
-    { "undo", GIMP_ICON_EDIT_UNDO,
+    { "undo", LIGMA_ICON_EDIT_UNDO,
       N_("_Undo"), "<primary>Z", NULL,
       G_CALLBACK (undo) },
 
-    { "redo", GIMP_ICON_EDIT_REDO,
+    { "redo", LIGMA_ICON_EDIT_REDO,
       N_("_Redo"), "<primary>Y", NULL,
       G_CALLBACK (redo) },
 
-    { "select-all", GIMP_ICON_SELECTION_ALL,
+    { "select-all", LIGMA_ICON_SELECTION_ALL,
       N_("Select _All"), "<primary>A", NULL,
       G_CALLBACK (design_area_select_all_callback) },
 
-    { "center", GIMP_ICON_CENTER,
+    { "center", LIGMA_ICON_CENTER,
       N_("Re_center"), "<primary>C", N_("Recompute Center"),
       G_CALLBACK (recompute_center_cb) },
 
-    { "options", GIMP_ICON_PREFERENCES_SYSTEM,
+    { "options", LIGMA_ICON_PREFERENCES_SYSTEM,
       N_("Render Options"), NULL, NULL,
       G_CALLBACK (ifs_compose_options_callback) }
   };
   static GtkRadioActionEntry radio_actions[] =
   {
-    { "move", GIMP_ICON_TOOL_MOVE,
+    { "move", LIGMA_ICON_TOOL_MOVE,
       N_("Move"), "M", NULL, OP_TRANSLATE },
 
-    { "rotate", GIMP_ICON_TOOL_ROTATE,
+    { "rotate", LIGMA_ICON_TOOL_ROTATE,
       N_("Rotate"), "R", N_("Rotate / Scale"), OP_ROTATE },
 
-    { "stretch", GIMP_ICON_TOOL_PERSPECTIVE,
+    { "stretch", LIGMA_ICON_TOOL_PERSPECTIVE,
       N_("Stretch"), "S", NULL, OP_STRETCH }
   };
 
@@ -1205,9 +1205,9 @@ ifs_options_dialog (GtkWidget *parent)
       ifsOptD = g_new0 (IfsOptionsDialog, 1);
 
       ifsOptD->dialog =
-        gimp_dialog_new (_("IFS Fractal Render Options"), PLUG_IN_ROLE,
+        ligma_dialog_new (_("IFS Fractal Render Options"), PLUG_IN_ROLE,
                          parent, 0,
-                         gimp_standard_help_func, PLUG_IN_PROC,
+                         ligma_standard_help_func, PLUG_IN_PROC,
 
                          _("_Close"), GTK_RESPONSE_CLOSE,
 
@@ -1300,12 +1300,12 @@ ifs_options_dialog (GtkWidget *parent)
 }
 
 static void
-ifs_compose (GimpDrawable *drawable)
+ifs_compose (LigmaDrawable *drawable)
 {
-  GeglBuffer *buffer = gimp_drawable_get_shadow_buffer (drawable);
-  gint        width  = gimp_drawable_get_width (drawable);
-  gint        height = gimp_drawable_get_height (drawable);
-  gboolean    alpha  = gimp_drawable_has_alpha (drawable);
+  GeglBuffer *buffer = ligma_drawable_get_shadow_buffer (drawable);
+  gint        width  = ligma_drawable_get_width (drawable);
+  gint        height = ligma_drawable_get_height (drawable);
+  gboolean    alpha  = ligma_drawable_has_alpha (drawable);
   const Babl *format;
   gint        num_bands;
   gint        band_height;
@@ -1316,7 +1316,7 @@ ifs_compose (GimpDrawable *drawable)
   guchar     *mask = NULL;
   guchar     *nhits;
   guchar      rc, gc, bc;
-  GimpRGB     color;
+  LigmaRGB     color;
 
   if (alpha)
     format = babl_format ("R'G'B'A u8");
@@ -1334,15 +1334,15 @@ ifs_compose (GimpDrawable *drawable)
   data  = g_new (guchar, width * band_height * SQR (ifsvals.subdivide) * 3);
   nhits = g_new (guchar, width * band_height * SQR (ifsvals.subdivide));
 
-  gimp_context_get_background (&color);
-  gimp_rgb_get_uchar (&color, &rc, &gc, &bc);
+  ligma_context_get_background (&color);
+  ligma_rgb_get_uchar (&color, &rc, &gc, &bc);
 
   for (band_no = 0, band_y = 0; band_no < num_bands; band_no++)
     {
       GeglBufferIterator *iter;
       GeglRectangle      *roi;
 
-      gimp_progress_init_printf (_("Rendering IFS (%d/%d)"),
+      ligma_progress_init_printf (_("Rendering IFS (%d/%d)"),
                                  band_no + 1, num_bands);
 
       /* render the band to a buffer */
@@ -1449,8 +1449,8 @@ ifs_compose (GimpDrawable *drawable)
 
   g_object_unref (buffer);
 
-  gimp_drawable_merge_shadow (drawable, TRUE);
-  gimp_drawable_update (drawable, 0, 0, width, height);
+  ligma_drawable_merge_shadow (drawable, TRUE);
+  ligma_drawable_update (drawable, 0, 0, width, height);
 }
 
 static void
@@ -2005,15 +2005,15 @@ val_changed_update (void)
 
 static ColorMap *
 color_map_create (const gchar *name,
-                  GimpRGB     *orig_color,
-                  GimpRGB     *data,
+                  LigmaRGB     *orig_color,
+                  LigmaRGB     *data,
                   gboolean     fixed_point)
 {
   GtkWidget *frame;
   GtkWidget *arrow;
   ColorMap  *color_map = g_new (ColorMap, 1);
 
-  gimp_rgb_set_alpha (data, 1.0);
+  ligma_rgb_set_alpha (data, 1.0);
   color_map->color       = data;
   color_map->fixed_point = fixed_point;
   color_map->hbox        = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
@@ -2024,8 +2024,8 @@ color_map_create (const gchar *name,
   gtk_widget_show (frame);
 
   color_map->orig_preview =
-    gimp_color_area_new (fixed_point ? data : orig_color,
-                         GIMP_COLOR_AREA_FLAT, 0);
+    ligma_color_area_new (fixed_point ? data : orig_color,
+                         LIGMA_COLOR_AREA_FLAT, 0);
   gtk_drag_dest_unset (color_map->orig_preview);
   gtk_widget_set_size_request (color_map->orig_preview,
                                COLOR_SAMPLE_SIZE, COLOR_SAMPLE_SIZE);
@@ -2036,17 +2036,17 @@ color_map_create (const gchar *name,
   gtk_box_pack_start (GTK_BOX (color_map->hbox), arrow, FALSE, FALSE, 0);
   gtk_widget_show (arrow);
 
-  color_map->button = gimp_color_button_new (name,
+  color_map->button = ligma_color_button_new (name,
                                              COLOR_SAMPLE_SIZE,
                                              COLOR_SAMPLE_SIZE,
                                              data,
-                                             GIMP_COLOR_AREA_FLAT);
+                                             LIGMA_COLOR_AREA_FLAT);
   gtk_box_pack_start (GTK_BOX (color_map->hbox), color_map->button,
                       FALSE, FALSE, 0);
   gtk_widget_show (color_map->button);
 
   g_signal_connect (color_map->button, "color-changed",
-                    G_CALLBACK (gimp_color_button_get_color),
+                    G_CALLBACK (ligma_color_button_get_color),
                     data);
 
   g_signal_connect (color_map->button, "color-changed",
@@ -2078,11 +2078,11 @@ color_map_color_changed_cb (GtkWidget *widget,
 static void
 color_map_update (ColorMap *color_map)
 {
-  gimp_color_button_set_color (GIMP_COLOR_BUTTON (color_map->button),
+  ligma_color_button_set_color (LIGMA_COLOR_BUTTON (color_map->button),
                                color_map->color);
 
   if (color_map->fixed_point)
-    gimp_color_area_set_color (GIMP_COLOR_AREA (color_map->orig_preview),
+    ligma_color_area_set_color (LIGMA_COLOR_AREA (color_map->orig_preview),
                                color_map->color);
 }
 
@@ -2141,7 +2141,7 @@ value_pair_create (gpointer      data,
                                                (upper - lower) / 100,
                                                (upper - lower) / 10,
                                                0.0);
-  value_pair->spin = gimp_spin_button_new (value_pair->adjustment, 1.0, 3);
+  value_pair->spin = ligma_spin_button_new (value_pair->adjustment, 1.0, 3);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (value_pair->spin), TRUE);
   gtk_widget_set_size_request (value_pair->spin, 72, -1);
 
@@ -2328,9 +2328,9 @@ static void
 ifs_compose_set_defaults (void)
 {
   gint     i;
-  GimpRGB  color;
+  LigmaRGB  color;
 
-  gimp_context_get_foreground (&color);
+  ligma_context_get_foreground (&color);
 
   ifsvals.aspect_ratio =
     (gdouble)ifsD->drawable_height / ifsD->drawable_width;
@@ -2421,7 +2421,7 @@ ifsfile_save_response (GtkWidget *dialog,
         {
           gchar *message =
             g_strdup_printf (_("Could not open '%s' for writing: %s"),
-                             gimp_filename_to_utf8 (filename),
+                             ligma_filename_to_utf8 (filename),
                              g_strerror (errno));
 
           ifscompose_message_dialog (GTK_MESSAGE_ERROR, GTK_WINDOW (dialog),
@@ -2518,7 +2518,7 @@ ifsfile_load_response (GtkWidget *dialog,
         {
           gchar *message = g_strdup_printf (_("File '%s' doesn't seem to be "
                                               "an IFS Fractal file."),
-                                            gimp_filename_to_utf8 (filename));
+                                            ligma_filename_to_utf8 (filename));
 
           ifscompose_message_dialog (GTK_MESSAGE_ERROR, GTK_WINDOW (dialog),
                                      _("Open failed"), message);
@@ -2565,7 +2565,7 @@ ifs_compose_save (GtkWidget *parent)
 
                                      NULL);
 
-      gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+      ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                                GTK_RESPONSE_OK,
                                                GTK_RESPONSE_CANCEL,
                                                -1);
@@ -2602,7 +2602,7 @@ ifs_compose_load (GtkWidget *parent)
 
                                      NULL);
 
-      gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+      ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                                GTK_RESPONSE_OK,
                                                GTK_RESPONSE_CANCEL,
                                                -1);
@@ -2625,7 +2625,7 @@ ifs_compose_new_callback (GtkAction *action,
                           gpointer   data)
 {
   GtkAllocation  allocation;
-  GimpRGB        color;
+  LigmaRGB        color;
   gint           i;
   AffElement    *elem;
 
@@ -2633,7 +2633,7 @@ ifs_compose_new_callback (GtkAction *action,
 
   undo_begin ();
 
-  gimp_context_get_foreground (&color);
+  ligma_context_get_foreground (&color);
 
   elem = aff_element_new (0.5, 0.5 * allocation.height / allocation.width,
                           &color,
@@ -2740,9 +2740,9 @@ preview_idle_render (gpointer data)
 
   ifsD->preview_iterations -= iterations;
 
-  gimp_preview_area_draw (GIMP_PREVIEW_AREA (ifsD->preview),
+  ligma_preview_area_draw (LIGMA_PREVIEW_AREA (ifsD->preview),
                           0, 0, allocation.width, allocation.height,
-                          GIMP_RGB_IMAGE,
+                          LIGMA_RGB_IMAGE,
                           ifsD->preview_data,
                           allocation.width * 3);
 
@@ -2758,13 +2758,13 @@ ifs_compose_preview (void)
   gint     height = ifsD->preview_height;
   guchar   rc, gc, bc;
   guchar  *ptr;
-  GimpRGB  color;
+  LigmaRGB  color;
 
   if (!ifsD->preview_data)
     ifsD->preview_data = g_new (guchar, 3 * width * height);
 
-  gimp_context_get_background (&color);
-  gimp_rgb_get_uchar (&color, &rc, &gc, &bc);
+  ligma_context_get_background (&color);
+  ligma_rgb_get_uchar (&color, &rc, &gc, &bc);
 
   ptr = ifsD->preview_data;
   for (i = 0; i < width * height; i++)

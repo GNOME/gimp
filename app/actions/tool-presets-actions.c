@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,136 +20,136 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "actions-types.h"
 
-#include "core/gimpcontext.h"
-#include "core/gimpdata.h"
-#include "core/gimptoolpreset.h"
-#include "core/gimptooloptions.h"
+#include "core/ligmacontext.h"
+#include "core/ligmadata.h"
+#include "core/ligmatoolpreset.h"
+#include "core/ligmatooloptions.h"
 
-#include "widgets/gimpactiongroup.h"
-#include "widgets/gimphelp-ids.h"
+#include "widgets/ligmaactiongroup.h"
+#include "widgets/ligmahelp-ids.h"
 
 #include "actions.h"
 #include "data-commands.h"
 #include "tool-presets-actions.h"
 #include "tool-presets-commands.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-static const GimpActionEntry tool_presets_actions[] =
+static const LigmaActionEntry tool_presets_actions[] =
 {
-  { "tool-presets-popup", GIMP_ICON_TOOL_PRESET,
+  { "tool-presets-popup", LIGMA_ICON_TOOL_PRESET,
     NC_("tool-presets-action", "Tool Presets Menu"), NULL, NULL, NULL,
-    GIMP_HELP_TOOL_PRESET_DIALOG },
+    LIGMA_HELP_TOOL_PRESET_DIALOG },
 
-  { "tool-presets-new", GIMP_ICON_DOCUMENT_NEW,
+  { "tool-presets-new", LIGMA_ICON_DOCUMENT_NEW,
     NC_("tool-presets-action", "_New Tool Preset"), NULL,
     NC_("tool-presets-action", "Create a new tool preset"),
     data_new_cmd_callback,
-    GIMP_HELP_TOOL_PRESET_NEW },
+    LIGMA_HELP_TOOL_PRESET_NEW },
 
-  { "tool-presets-duplicate", GIMP_ICON_OBJECT_DUPLICATE,
+  { "tool-presets-duplicate", LIGMA_ICON_OBJECT_DUPLICATE,
     NC_("tool-presets-action", "D_uplicate Tool Preset"), NULL,
     NC_("tool-presets-action", "Duplicate this tool preset"),
     data_duplicate_cmd_callback,
-    GIMP_HELP_TOOL_PRESET_DUPLICATE },
+    LIGMA_HELP_TOOL_PRESET_DUPLICATE },
 
-  { "tool-presets-copy-location", GIMP_ICON_EDIT_COPY,
+  { "tool-presets-copy-location", LIGMA_ICON_EDIT_COPY,
     NC_("tool-presets-action", "Copy Tool Preset _Location"), NULL,
     NC_("tool-presets-action", "Copy tool preset file location to clipboard"),
     data_copy_location_cmd_callback,
-    GIMP_HELP_TOOL_PRESET_COPY_LOCATION },
+    LIGMA_HELP_TOOL_PRESET_COPY_LOCATION },
 
-  { "tool-presets-show-in-file-manager", GIMP_ICON_FILE_MANAGER,
+  { "tool-presets-show-in-file-manager", LIGMA_ICON_FILE_MANAGER,
     NC_("tool-presets-action", "Show in _File Manager"), NULL,
     NC_("tool-presets-action", "Show tool preset file location in the file manager"),
     data_show_in_file_manager_cmd_callback,
-    GIMP_HELP_TOOL_PRESET_SHOW_IN_FILE_MANAGER },
+    LIGMA_HELP_TOOL_PRESET_SHOW_IN_FILE_MANAGER },
 
-  { "tool-presets-save", GIMP_ICON_DOCUMENT_SAVE,
+  { "tool-presets-save", LIGMA_ICON_DOCUMENT_SAVE,
     NC_("tool-presets-action", "_Save Tool Options to Preset"), NULL,
     NC_("tool-presets-action", "Save the active tool options to this "
         "tool preset"),
     tool_presets_save_cmd_callback,
-    GIMP_HELP_TOOL_PRESET_SAVE },
+    LIGMA_HELP_TOOL_PRESET_SAVE },
 
-  { "tool-presets-restore", GIMP_ICON_DOCUMENT_REVERT,
+  { "tool-presets-restore", LIGMA_ICON_DOCUMENT_REVERT,
     NC_("tool-presets-action", "_Restore Tool Preset"), NULL,
     NC_("tool-presets-action", "Restore this tool preset"),
     tool_presets_restore_cmd_callback,
-    GIMP_HELP_TOOL_PRESET_RESTORE },
+    LIGMA_HELP_TOOL_PRESET_RESTORE },
 
-  { "tool-presets-delete", GIMP_ICON_EDIT_DELETE,
+  { "tool-presets-delete", LIGMA_ICON_EDIT_DELETE,
     NC_("tool-presets-action", "_Delete Tool Preset"), NULL,
     NC_("tool-presets-action", "Delete this tool preset"),
     data_delete_cmd_callback,
-    GIMP_HELP_TOOL_PRESET_DELETE },
+    LIGMA_HELP_TOOL_PRESET_DELETE },
 
-  { "tool-presets-refresh", GIMP_ICON_VIEW_REFRESH,
+  { "tool-presets-refresh", LIGMA_ICON_VIEW_REFRESH,
     NC_("tool-presets-action", "_Refresh Tool Presets"), NULL,
     NC_("tool-presets-action", "Refresh tool presets"),
     data_refresh_cmd_callback,
-    GIMP_HELP_TOOL_PRESET_REFRESH }
+    LIGMA_HELP_TOOL_PRESET_REFRESH }
 };
 
-static const GimpStringActionEntry tool_presets_edit_actions[] =
+static const LigmaStringActionEntry tool_presets_edit_actions[] =
 {
-  { "tool-presets-edit", GIMP_ICON_EDIT,
+  { "tool-presets-edit", LIGMA_ICON_EDIT,
     NC_("tool-presets-action", "_Edit Tool Preset..."), NULL,
     NC_("tool-presets-action", "Edit this tool preset"),
-    "gimp-tool-preset-editor",
-    GIMP_HELP_TOOL_PRESET_EDIT }
+    "ligma-tool-preset-editor",
+    LIGMA_HELP_TOOL_PRESET_EDIT }
 };
 
 
 void
-tool_presets_actions_setup (GimpActionGroup *group)
+tool_presets_actions_setup (LigmaActionGroup *group)
 {
-  gimp_action_group_add_actions (group, "tool-presets-action",
+  ligma_action_group_add_actions (group, "tool-presets-action",
                                  tool_presets_actions,
                                  G_N_ELEMENTS (tool_presets_actions));
 
-  gimp_action_group_add_string_actions (group, "tool-presets-action",
+  ligma_action_group_add_string_actions (group, "tool-presets-action",
                                         tool_presets_edit_actions,
                                         G_N_ELEMENTS (tool_presets_edit_actions),
                                         data_edit_cmd_callback);
 }
 
 void
-tool_presets_actions_update (GimpActionGroup *group,
+tool_presets_actions_update (LigmaActionGroup *group,
                              gpointer         user_data)
 {
-  GimpContext    *context     = action_data_get_context (user_data);
-  GimpToolPreset *tool_preset = NULL;
-  GimpData       *data        = NULL;
+  LigmaContext    *context     = action_data_get_context (user_data);
+  LigmaToolPreset *tool_preset = NULL;
+  LigmaData       *data        = NULL;
   GFile          *file        = NULL;
 
   if (context)
     {
-      tool_preset = gimp_context_get_tool_preset (context);
+      tool_preset = ligma_context_get_tool_preset (context);
 
       if (tool_preset)
         {
-          data = GIMP_DATA (tool_preset);
+          data = LIGMA_DATA (tool_preset);
 
-          file = gimp_data_get_file (data);
+          file = ligma_data_get_file (data);
         }
     }
 
 #define SET_SENSITIVE(action,condition) \
-        gimp_action_group_set_action_sensitive (group, action, (condition) != 0, NULL)
+        ligma_action_group_set_action_sensitive (group, action, (condition) != 0, NULL)
 
   SET_SENSITIVE ("tool-presets-edit",                 tool_preset);
-  SET_SENSITIVE ("tool-presets-duplicate",            tool_preset && gimp_data_is_duplicatable (data));
+  SET_SENSITIVE ("tool-presets-duplicate",            tool_preset && ligma_data_is_duplicatable (data));
   SET_SENSITIVE ("tool-presets-copy-location",        file);
   SET_SENSITIVE ("tool-presets-show-in-file-manager", file);
   SET_SENSITIVE ("tool-presets-save",                 tool_preset);
   SET_SENSITIVE ("tool-presets-restore",              tool_preset);
-  SET_SENSITIVE ("tool-presets-delete",               tool_preset && gimp_data_is_deletable (data));
+  SET_SENSITIVE ("tool-presets-delete",               tool_preset && ligma_data_is_deletable (data));
 
 #undef SET_SENSITIVE
 }

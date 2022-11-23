@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * GIMP Plug-in for Windows Icon files.
+ * LIGMA Plug-in for Windows Icon files.
  * Copyright (C) 2002 Christian Kreibich <christian@whoop.org>.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,13 +22,13 @@
 #define __ICO_SAVE_H__
 
 
-GimpPDBStatusType ico_save_image          (GFile         *file,
-                                           GimpImage     *image,
+LigmaPDBStatusType ico_save_image          (GFile         *file,
+                                           LigmaImage     *image,
                                            gint32         run_mode,
                                            GError       **error);
 
-GimpPDBStatusType cur_save_image          (GFile         *file,
-                                           GimpImage     *image,
+LigmaPDBStatusType cur_save_image          (GFile         *file,
+                                           LigmaImage     *image,
                                            gint32         run_mode,
                                            gint          *n_hot_spot_x,
                                            gint32       **hot_spot_x,
@@ -36,8 +36,8 @@ GimpPDBStatusType cur_save_image          (GFile         *file,
                                            gint32       **hot_spot_y,
                                            GError       **error);
 
-GimpPDBStatusType ani_save_image          (GFile         *file,
-                                           GimpImage     *image,
+LigmaPDBStatusType ani_save_image          (GFile         *file,
+                                           LigmaImage     *image,
                                            gint32         run_mode,
                                            gint          *n_hot_spot_x,
                                            gint32       **hot_spot_x,

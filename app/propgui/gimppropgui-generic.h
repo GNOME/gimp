@@ -1,9 +1,9 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * gimppropgui-generic.h
- * Copyright (C) 2002-2014  Michael Natterer <mitch@gimp.org>
- *                          Sven Neumann <sven@gimp.org>
+ * ligmapropgui-generic.h
+ * Copyright (C) 2002-2014  Michael Natterer <mitch@ligma.org>
+ *                          Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,18 +19,18 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PROP_GUI_GENERIC_H__
-#define __GIMP_PROP_GUI_GENERIC_H__
+#ifndef __LIGMA_PROP_GUI_GENERIC_H__
+#define __LIGMA_PROP_GUI_GENERIC_H__
 
 
-GtkWidget * _gimp_prop_gui_new_generic (GObject                  *config,
+GtkWidget * _ligma_prop_gui_new_generic (GObject                  *config,
                                         GParamSpec              **param_specs,
                                         guint                     n_param_specs,
                                         GeglRectangle            *area,
-                                        GimpContext              *context,
-                                        GimpCreatePickerFunc      create_picker_func,
-                                        GimpCreateControllerFunc  create_controller_func,
+                                        LigmaContext              *context,
+                                        LigmaCreatePickerFunc      create_picker_func,
+                                        LigmaCreateControllerFunc  create_controller_func,
                                         gpointer                  creator);
 
 
-#endif /* __GIMP_PROP_GUI_GENERIC_H__ */
+#endif /* __LIGMA_PROP_GUI_GENERIC_H__ */

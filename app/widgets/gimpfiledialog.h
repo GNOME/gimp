@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpfiledialog.h
- * Copyright (C) 2004 Michael Natterer <mitch@gimp.org>
+ * ligmafiledialog.h
+ * Copyright (C) 2004 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,30 +18,30 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_FILE_DIALOG_H__
-#define __GIMP_FILE_DIALOG_H__
+#ifndef __LIGMA_FILE_DIALOG_H__
+#define __LIGMA_FILE_DIALOG_H__
 
 G_BEGIN_DECLS
 
 
-#define GIMP_TYPE_FILE_DIALOG            (gimp_file_dialog_get_type ())
-#define GIMP_FILE_DIALOG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_FILE_DIALOG, GimpFileDialog))
-#define GIMP_FILE_DIALOG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_FILE_DIALOG, GimpFileDialogClass))
-#define GIMP_IS_FILE_DIALOG(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_FILE_DIALOG))
-#define GIMP_IS_FILE_DIALOG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_FILE_DIALOG))
-#define GIMP_FILE_DIALOG_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_FILE_DIALOG, GimpFileDialogClass))
+#define LIGMA_TYPE_FILE_DIALOG            (ligma_file_dialog_get_type ())
+#define LIGMA_FILE_DIALOG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_FILE_DIALOG, LigmaFileDialog))
+#define LIGMA_FILE_DIALOG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_FILE_DIALOG, LigmaFileDialogClass))
+#define LIGMA_IS_FILE_DIALOG(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_FILE_DIALOG))
+#define LIGMA_IS_FILE_DIALOG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_FILE_DIALOG))
+#define LIGMA_FILE_DIALOG_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_FILE_DIALOG, LigmaFileDialogClass))
 
 
-typedef struct _GimpFileDialogClass  GimpFileDialogClass;
+typedef struct _LigmaFileDialogClass  LigmaFileDialogClass;
 
-struct _GimpFileDialog
+struct _LigmaFileDialog
 {
   GtkFileChooserDialog  parent_instance;
 
-  Gimp                 *gimp;
-  GimpImage            *image;
+  Ligma                 *ligma;
+  LigmaImage            *image;
 
-  GimpPlugInProcedure  *file_proc;
+  LigmaPlugInProcedure  *file_proc;
 
   GtkWidget            *thumb_box;
   GtkWidget            *extra_vbox;
@@ -64,41 +64,41 @@ struct _GimpFileDialog
   gboolean              show_all_files;
 };
 
-struct _GimpFileDialogClass
+struct _LigmaFileDialogClass
 {
   GtkFileChooserDialogClass  parent_class;
 
-  GFile * (* get_default_folder) (GimpFileDialog *dialog);
+  GFile * (* get_default_folder) (LigmaFileDialog *dialog);
 
-  void    (* save_state)         (GimpFileDialog *dialog,
+  void    (* save_state)         (LigmaFileDialog *dialog,
                                   const gchar    *state_name);
-  void    (* load_state)         (GimpFileDialog *dialog,
+  void    (* load_state)         (LigmaFileDialog *dialog,
                                   const gchar    *state_name);
 };
 
 
-GType   gimp_file_dialog_get_type           (void) G_GNUC_CONST;
+GType   ligma_file_dialog_get_type           (void) G_GNUC_CONST;
 
-void    gimp_file_dialog_add_extra_widget   (GimpFileDialog      *dialog,
+void    ligma_file_dialog_add_extra_widget   (LigmaFileDialog      *dialog,
                                              GtkWidget           *widget,
                                              gboolean             expand,
                                              gboolean             fill,
                                              guint                padding);
 
-void    gimp_file_dialog_set_sensitive      (GimpFileDialog      *dialog,
+void    ligma_file_dialog_set_sensitive      (LigmaFileDialog      *dialog,
                                              gboolean             sensitive);
 
-void    gimp_file_dialog_set_file_proc      (GimpFileDialog      *dialog,
-                                             GimpPlugInProcedure *file_proc);
+void    ligma_file_dialog_set_file_proc      (LigmaFileDialog      *dialog,
+                                             LigmaPlugInProcedure *file_proc);
 
-GFile * gimp_file_dialog_get_default_folder (GimpFileDialog      *dialog);
+GFile * ligma_file_dialog_get_default_folder (LigmaFileDialog      *dialog);
 
-void    gimp_file_dialog_save_state         (GimpFileDialog      *dialog,
+void    ligma_file_dialog_save_state         (LigmaFileDialog      *dialog,
                                              const gchar         *state_name);
-void    gimp_file_dialog_load_state         (GimpFileDialog      *dialog,
+void    ligma_file_dialog_load_state         (LigmaFileDialog      *dialog,
                                              const gchar         *state_name);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_FILE_DIALOG_H__ */
+#endif /* __LIGMA_FILE_DIALOG_H__ */

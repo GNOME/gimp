@@ -15,7 +15,7 @@
    id="svg2"
    viewBox="0 0 16 16.000122"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="gimp-prefs-folders-palettes.svg">
+   sodipodi:docname="ligma-prefs-folders-palettes.svg">
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -43,13 +43,13 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title>Gimp Color Icon Theme</dc:title>
+        <dc:title>Ligma Color Icon Theme</dc:title>
         <dc:contributor>
           <cc:Agent>
             <dc:title>many unknown and unnamed, Andrew Chadwick, Alexandre Prokoudine, Aryeom Han, Benoit Touchette, Jakub Steiner, Jehan, Johannes Matschke, Kevin Payne, Klaus Staedtler, Marek Dvoroznak, Michael Natterer</dc:title>
           </cc:Agent>
         </dc:contributor>
-        <dc:description>Enhanced, extended tango-art-libre for GIMP</dc:description>
+        <dc:description>Enhanced, extended tango-art-libre for LIGMA</dc:description>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -251,7 +251,7 @@
      id="preferences">
     <g
        transform="translate(327.71239,26.809234)"
-       id="gimp-prefs-folders-palettes">
+       id="ligma-prefs-folders-palettes">
       <path
          d="m 1.1301486,46.443051 c 0.00852,0.162654 0.1796902,0.32531 0.3423452,0.32531 l 12.2398302,0 c 0.162654,0 0.316794,-0.162656 0.308278,-0.32531 L 13.654723,35.805249 c -0.0085,-0.162654 -0.179687,-0.325312 -0.342342,-0.325312 l -5.185084,0 c -0.1895174,0 -0.482323,-0.123305 -0.5476386,-0.432374 L 7.3407808,33.917206 C 7.2800373,33.62977 6.9960896,33.511692 6.8334348,33.511692 l -5.7742718,0 c -0.16265828,0 -0.31679713,0.162655 -0.30828122,0.32531 z"
          id="path216-52"
@@ -259,7 +259,7 @@
          inkscape:connector-curvature="0" />
       <g
          transform="matrix(0.1293392,-0.61147067,0.61147067,0.1293392,-629.01954,-94.823906)"
-         id="gimp-color-palette">
+         id="ligma-color-palette">
         <g
            transform="translate(-2.3419761,0.78065922)"
            id="g4007">

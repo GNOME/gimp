@@ -1,6 +1,6 @@
 # Version resources for Microsoft Windows
 
-GIMPPLUGINRC = $(top_builddir)/build/windows/gimp-plug-ins.rc
+LIGMAPLUGINRC = $(top_builddir)/build/windows/ligma-plug-ins.rc
 
 # `windres` seems a very stupid tool and it breaks with double shlashes
 # in parameter paths. Strengthen the rule a little.
@@ -11,4 +11,4 @@ GIMPPLUGINRC = $(top_builddir)/build/windows/gimp-plug-ins.rc
 		-I"`echo $(top_srcdir)/app | sed 's%/\+%/%'`" \
 		-I"`echo $(top_builddir)/app | sed 's%/\+%/%'`"\
 		-I"`echo $(top_builddir) | sed 's%/\+%/%'`"\
-		$(GIMPPLUGINRC) $@
+		$(LIGMAPLUGINRC) $@

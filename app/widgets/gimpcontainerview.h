@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcontainerview.h
- * Copyright (C) 2001-2010 Michael Natterer <mitch@gimp.org>
+ * ligmacontainerview.h
+ * Copyright (C) 2001-2010 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,69 +18,69 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CONTAINER_VIEW_H__
-#define __GIMP_CONTAINER_VIEW_H__
+#ifndef __LIGMA_CONTAINER_VIEW_H__
+#define __LIGMA_CONTAINER_VIEW_H__
 
 
 typedef enum
 {
-  GIMP_CONTAINER_VIEW_PROP_0,
-  GIMP_CONTAINER_VIEW_PROP_CONTAINER,
-  GIMP_CONTAINER_VIEW_PROP_CONTEXT,
-  GIMP_CONTAINER_VIEW_PROP_SELECTION_MODE,
-  GIMP_CONTAINER_VIEW_PROP_REORDERABLE,
-  GIMP_CONTAINER_VIEW_PROP_VIEW_SIZE,
-  GIMP_CONTAINER_VIEW_PROP_VIEW_BORDER_WIDTH,
-  GIMP_CONTAINER_VIEW_PROP_LAST = GIMP_CONTAINER_VIEW_PROP_VIEW_BORDER_WIDTH
-} GimpContainerViewProp;
+  LIGMA_CONTAINER_VIEW_PROP_0,
+  LIGMA_CONTAINER_VIEW_PROP_CONTAINER,
+  LIGMA_CONTAINER_VIEW_PROP_CONTEXT,
+  LIGMA_CONTAINER_VIEW_PROP_SELECTION_MODE,
+  LIGMA_CONTAINER_VIEW_PROP_REORDERABLE,
+  LIGMA_CONTAINER_VIEW_PROP_VIEW_SIZE,
+  LIGMA_CONTAINER_VIEW_PROP_VIEW_BORDER_WIDTH,
+  LIGMA_CONTAINER_VIEW_PROP_LAST = LIGMA_CONTAINER_VIEW_PROP_VIEW_BORDER_WIDTH
+} LigmaContainerViewProp;
 
 
-#define GIMP_TYPE_CONTAINER_VIEW (gimp_container_view_get_type ())
-G_DECLARE_INTERFACE (GimpContainerView, gimp_container_view, GIMP, CONTAINER_VIEW, GtkWidget)
+#define LIGMA_TYPE_CONTAINER_VIEW (ligma_container_view_get_type ())
+G_DECLARE_INTERFACE (LigmaContainerView, ligma_container_view, LIGMA, CONTAINER_VIEW, GtkWidget)
 
 
-struct _GimpContainerViewInterface
+struct _LigmaContainerViewInterface
 {
   GTypeInterface base_iface;
 
   /*  signals  */
-  gboolean (* select_items)       (GimpContainerView *view,
+  gboolean (* select_items)       (LigmaContainerView *view,
                                    GList             *items,
                                    GList             *paths);
 
-  void     (* activate_item)      (GimpContainerView *view,
-                                   GimpViewable      *object,
+  void     (* activate_item)      (LigmaContainerView *view,
+                                   LigmaViewable      *object,
                                    gpointer           insert_data);
 
   /*  virtual functions  */
-  void     (* set_container)      (GimpContainerView *view,
-                                   GimpContainer     *container);
-  void     (* set_context)        (GimpContainerView *view,
-                                   GimpContext       *context);
-  void     (* set_selection_mode) (GimpContainerView *view,
+  void     (* set_container)      (LigmaContainerView *view,
+                                   LigmaContainer     *container);
+  void     (* set_context)        (LigmaContainerView *view,
+                                   LigmaContext       *context);
+  void     (* set_selection_mode) (LigmaContainerView *view,
                                    GtkSelectionMode   mode);
 
-  gpointer (* insert_item)        (GimpContainerView *view,
-                                   GimpViewable      *object,
+  gpointer (* insert_item)        (LigmaContainerView *view,
+                                   LigmaViewable      *object,
                                    gpointer           parent_insert_data,
                                    gint               index);
-  void     (* insert_items_after) (GimpContainerView *view);
-  void     (* remove_item)        (GimpContainerView *view,
-                                   GimpViewable      *object,
+  void     (* insert_items_after) (LigmaContainerView *view);
+  void     (* remove_item)        (LigmaContainerView *view,
+                                   LigmaViewable      *object,
                                    gpointer           insert_data);
-  void     (* reorder_item)       (GimpContainerView *view,
-                                   GimpViewable      *object,
+  void     (* reorder_item)       (LigmaContainerView *view,
+                                   LigmaViewable      *object,
                                    gint               new_index,
                                    gpointer           insert_data);
-  void     (* rename_item)        (GimpContainerView *view,
-                                   GimpViewable      *object,
+  void     (* rename_item)        (LigmaContainerView *view,
+                                   LigmaViewable      *object,
                                    gpointer           insert_data);
-  void     (* expand_item)        (GimpContainerView *view,
-                                   GimpViewable      *object,
+  void     (* expand_item)        (LigmaContainerView *view,
+                                   LigmaViewable      *object,
                                    gpointer           insert_data);
-  void     (* clear_items)        (GimpContainerView *view);
-  void     (* set_view_size)      (GimpContainerView *view);
-  gint     (* get_selected)       (GimpContainerView  *view,
+  void     (* clear_items)        (LigmaContainerView *view);
+  void     (* set_view_size)      (LigmaContainerView *view);
+  gint     (* get_selected)       (LigmaContainerView  *view,
                                    GList             **items,
                                    GList             **insert_data);
 
@@ -91,74 +91,74 @@ struct _GimpContainerViewInterface
 };
 
 
-GimpContainer    * gimp_container_view_get_container      (GimpContainerView  *view);
-void               gimp_container_view_set_container      (GimpContainerView  *view,
-                                                           GimpContainer      *container);
+LigmaContainer    * ligma_container_view_get_container      (LigmaContainerView  *view);
+void               ligma_container_view_set_container      (LigmaContainerView  *view,
+                                                           LigmaContainer      *container);
 
-GimpContext      * gimp_container_view_get_context        (GimpContainerView  *view);
-void               gimp_container_view_set_context        (GimpContainerView  *view,
-                                                           GimpContext        *context);
+LigmaContext      * ligma_container_view_get_context        (LigmaContainerView  *view);
+void               ligma_container_view_set_context        (LigmaContainerView  *view,
+                                                           LigmaContext        *context);
 
-GtkSelectionMode   gimp_container_view_get_selection_mode (GimpContainerView  *view);
-void               gimp_container_view_set_selection_mode (GimpContainerView  *view,
+GtkSelectionMode   ligma_container_view_get_selection_mode (LigmaContainerView  *view);
+void               ligma_container_view_set_selection_mode (LigmaContainerView  *view,
                                                            GtkSelectionMode    mode);
 
-gint               gimp_container_view_get_view_size      (GimpContainerView  *view,
+gint               ligma_container_view_get_view_size      (LigmaContainerView  *view,
                                                            gint               *view_border_width);
-void               gimp_container_view_set_view_size      (GimpContainerView  *view,
+void               ligma_container_view_set_view_size      (LigmaContainerView  *view,
                                                            gint                view_size,
                                                            gint                view_border_width);
 
-gboolean           gimp_container_view_get_reorderable    (GimpContainerView  *view);
-void               gimp_container_view_set_reorderable    (GimpContainerView  *view,
+gboolean           ligma_container_view_get_reorderable    (LigmaContainerView  *view);
+void               ligma_container_view_set_reorderable    (LigmaContainerView  *view,
                                                            gboolean            reorderable);
 
-GtkWidget        * gimp_container_view_get_dnd_widget     (GimpContainerView  *view);
-void               gimp_container_view_set_dnd_widget     (GimpContainerView  *view,
+GtkWidget        * ligma_container_view_get_dnd_widget     (LigmaContainerView  *view);
+void               ligma_container_view_set_dnd_widget     (LigmaContainerView  *view,
                                                            GtkWidget          *dnd_widget);
 
-void               gimp_container_view_enable_dnd         (GimpContainerView  *editor,
+void               ligma_container_view_enable_dnd         (LigmaContainerView  *editor,
                                                            GtkButton          *button,
                                                            GType               children_type);
 
-gboolean           gimp_container_view_select_items       (GimpContainerView  *view,
+gboolean           ligma_container_view_select_items       (LigmaContainerView  *view,
                                                            GList              *viewables);
-gboolean           gimp_container_view_select_item        (GimpContainerView  *view,
-                                                           GimpViewable       *viewable);
-void               gimp_container_view_activate_item      (GimpContainerView  *view,
-                                                           GimpViewable       *viewable);
-gint               gimp_container_view_get_selected       (GimpContainerView  *view,
+gboolean           ligma_container_view_select_item        (LigmaContainerView  *view,
+                                                           LigmaViewable       *viewable);
+void               ligma_container_view_activate_item      (LigmaContainerView  *view,
+                                                           LigmaViewable       *viewable);
+gint               ligma_container_view_get_selected       (LigmaContainerView  *view,
                                                            GList             **items,
                                                            GList             **items_data);
-gboolean           gimp_container_view_is_item_selected   (GimpContainerView  *view,
-                                                           GimpViewable       *viewable);
+gboolean           ligma_container_view_is_item_selected   (LigmaContainerView  *view,
+                                                           LigmaViewable       *viewable);
 
 /*  protected  */
 
-gpointer           gimp_container_view_lookup             (GimpContainerView  *view,
-                                                           GimpViewable       *viewable);
-gboolean           gimp_container_view_contains           (GimpContainerView *view,
+gpointer           ligma_container_view_lookup             (LigmaContainerView  *view,
+                                                           LigmaViewable       *viewable);
+gboolean           ligma_container_view_contains           (LigmaContainerView *view,
                                                            GList             *viewables);
 
 
-gboolean           gimp_container_view_item_selected      (GimpContainerView  *view,
-                                                           GimpViewable       *item);
-gboolean           gimp_container_view_multi_selected     (GimpContainerView  *view,
+gboolean           ligma_container_view_item_selected      (LigmaContainerView  *view,
+                                                           LigmaViewable       *item);
+gboolean           ligma_container_view_multi_selected     (LigmaContainerView  *view,
                                                            GList              *items,
                                                            GList              *paths);
-void               gimp_container_view_item_activated     (GimpContainerView  *view,
-                                                           GimpViewable       *item);
+void               ligma_container_view_item_activated     (LigmaContainerView  *view,
+                                                           LigmaViewable       *item);
 
 /*  convenience functions  */
 
-void               gimp_container_view_install_properties (GObjectClass       *klass);
-void               gimp_container_view_set_property       (GObject            *object,
+void               ligma_container_view_install_properties (GObjectClass       *klass);
+void               ligma_container_view_set_property       (GObject            *object,
                                                            guint               property_id,
                                                            const GValue       *value,
                                                            GParamSpec         *pspec);
-void               gimp_container_view_get_property       (GObject            *object,
+void               ligma_container_view_get_property       (GObject            *object,
                                                            guint               property_id,
                                                            GValue             *value,
                                                            GParamSpec         *pspec);
 
-#endif  /*  __GIMP_CONTAINER_VIEW_H__  */
+#endif  /*  __LIGMA_CONTAINER_VIEW_H__  */

@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpcolorscaleentry.h
+ * ligmacolorscaleentry.h
  * Copyright (C) 2020 Jehan
  *
  * This library is free software: you can redistribute it and/or
@@ -19,21 +19,21 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
-#error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
+#if !defined (__LIGMA_WIDGETS_H_INSIDE__) && !defined (LIGMA_WIDGETS_COMPILATION)
+#error "Only <libligmawidgets/ligmawidgets.h> can be included directly."
 #endif
 
-#ifndef __GIMP_COLOR_SCALE_ENTRY_H__
-#define __GIMP_COLOR_SCALE_ENTRY_H__
+#ifndef __LIGMA_COLOR_SCALE_ENTRY_H__
+#define __LIGMA_COLOR_SCALE_ENTRY_H__
 
-#include <libgimpwidgets/gimpscaleentry.h>
+#include <libligmawidgets/ligmascaleentry.h>
 
 G_BEGIN_DECLS
 
-#define GIMP_TYPE_COLOR_SCALE_ENTRY (gimp_color_scale_entry_get_type ())
-G_DECLARE_FINAL_TYPE (GimpColorScaleEntry, gimp_color_scale_entry, GIMP, COLOR_SCALE_ENTRY, GimpScaleEntry)
+#define LIGMA_TYPE_COLOR_SCALE_ENTRY (ligma_color_scale_entry_get_type ())
+G_DECLARE_FINAL_TYPE (LigmaColorScaleEntry, ligma_color_scale_entry, LIGMA, COLOR_SCALE_ENTRY, LigmaScaleEntry)
 
-GtkWidget     * gimp_color_scale_entry_new        (const gchar *text,
+GtkWidget     * ligma_color_scale_entry_new        (const gchar *text,
                                                    gdouble      value,
                                                    gdouble      lower,
                                                    gdouble      upper,
@@ -42,4 +42,4 @@ GtkWidget     * gimp_color_scale_entry_new        (const gchar *text,
 
 G_END_DECLS
 
-#endif /* __GIMP_COLOR_SCALE_ENTRY_H__ */
+#endif /* __LIGMA_COLOR_SCALE_ENTRY_H__ */

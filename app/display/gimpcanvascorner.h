@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcanvascorner.h
- * Copyright (C) 2010 Michael Natterer <mitch@gimp.org>
+ * ligmacanvascorner.h
+ * Copyright (C) 2010 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,48 +18,48 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CANVAS_CORNER_H__
-#define __GIMP_CANVAS_CORNER_H__
+#ifndef __LIGMA_CANVAS_CORNER_H__
+#define __LIGMA_CANVAS_CORNER_H__
 
 
-#include "gimpcanvasitem.h"
+#include "ligmacanvasitem.h"
 
 
-#define GIMP_TYPE_CANVAS_CORNER            (gimp_canvas_corner_get_type ())
-#define GIMP_CANVAS_CORNER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CANVAS_CORNER, GimpCanvasCorner))
-#define GIMP_CANVAS_CORNER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CANVAS_CORNER, GimpCanvasCornerClass))
-#define GIMP_IS_CANVAS_CORNER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CANVAS_CORNER))
-#define GIMP_IS_CANVAS_CORNER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CANVAS_CORNER))
-#define GIMP_CANVAS_CORNER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CANVAS_CORNER, GimpCanvasCornerClass))
+#define LIGMA_TYPE_CANVAS_CORNER            (ligma_canvas_corner_get_type ())
+#define LIGMA_CANVAS_CORNER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_CANVAS_CORNER, LigmaCanvasCorner))
+#define LIGMA_CANVAS_CORNER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_CANVAS_CORNER, LigmaCanvasCornerClass))
+#define LIGMA_IS_CANVAS_CORNER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_CANVAS_CORNER))
+#define LIGMA_IS_CANVAS_CORNER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_CANVAS_CORNER))
+#define LIGMA_CANVAS_CORNER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_CANVAS_CORNER, LigmaCanvasCornerClass))
 
 
-typedef struct _GimpCanvasCorner      GimpCanvasCorner;
-typedef struct _GimpCanvasCornerClass GimpCanvasCornerClass;
+typedef struct _LigmaCanvasCorner      LigmaCanvasCorner;
+typedef struct _LigmaCanvasCornerClass LigmaCanvasCornerClass;
 
-struct _GimpCanvasCorner
+struct _LigmaCanvasCorner
 {
-  GimpCanvasItem  parent_instance;
+  LigmaCanvasItem  parent_instance;
 };
 
-struct _GimpCanvasCornerClass
+struct _LigmaCanvasCornerClass
 {
-  GimpCanvasItemClass  parent_class;
+  LigmaCanvasItemClass  parent_class;
 };
 
 
-GType            gimp_canvas_corner_get_type (void) G_GNUC_CONST;
+GType            ligma_canvas_corner_get_type (void) G_GNUC_CONST;
 
-GimpCanvasItem * gimp_canvas_corner_new      (GimpDisplayShell *shell,
+LigmaCanvasItem * ligma_canvas_corner_new      (LigmaDisplayShell *shell,
                                               gdouble           x,
                                               gdouble           y,
                                               gdouble           width,
                                               gdouble           height,
-                                              GimpHandleAnchor  anchor,
+                                              LigmaHandleAnchor  anchor,
                                               gint              corner_width,
                                               gint              corner_height,
                                               gboolean          outside);
 
-void             gimp_canvas_corner_set      (GimpCanvasItem   *corner,
+void             ligma_canvas_corner_set      (LigmaCanvasItem   *corner,
                                               gdouble           x,
                                               gdouble           y,
                                               gdouble           width,
@@ -69,4 +69,4 @@ void             gimp_canvas_corner_set      (GimpCanvasItem   *corner,
                                               gboolean          outside);
 
 
-#endif /* __GIMP_CANVAS_CORNER_H__ */
+#endif /* __LIGMA_CANVAS_CORNER_H__ */

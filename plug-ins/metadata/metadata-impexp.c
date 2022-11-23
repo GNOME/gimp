@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * metadata-editor.c
@@ -24,10 +24,10 @@
 
 #include <glib/gstdio.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 #include "metadata-xml.h"
 #include "metadata-misc.h"
@@ -35,7 +35,7 @@
 #include "metadata-impexp.h"
 #include "metadata-editor.h"
 
-extern gboolean gimpmetadata;
+extern gboolean ligmametadata;
 extern gboolean xmptag;
 extern gboolean iptctag;
 extern gboolean tagvalue;
@@ -61,11 +61,11 @@ const GMarkupParser xml_markup_parser =
 void
 import_file_metadata(metadata_editor *args)
 {
-  GimpXmlParser  *xml_parser;
+  LigmaXmlParser  *xml_parser;
   GError         *error = NULL;
   FILE           *file;
 
-  gimpmetadata = FALSE;
+  ligmametadata = FALSE;
   xmptag = FALSE;
   iptctag = FALSE;
   tagvalue = FALSE;
@@ -103,11 +103,11 @@ export_file_metadata (metadata_editor *args)
       /* Save fields in case of updates */
       metadata_editor_write_callback (args->dialog, args->builder, args->image);
       /* Fetch a fresh copy of the metadata */
-      args->metadata = GEXIV2_METADATA (gimp_image_get_metadata (args->image));
+      args->metadata = GEXIV2_METADATA (ligma_image_get_metadata (args->image));
     }
 
   xmldata = g_string_new ("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
-                          "<gimp-metadata>\n");
+                          "<ligma-metadata>\n");
 
   /* HANDLE IPTC */
   for (i = 0; i < n_equivalent_metadata_tags; i++)
@@ -219,7 +219,7 @@ export_file_metadata (metadata_editor *args)
 
     }
 
-  g_string_append (xmldata, "</gimp-metadata>\n");
+  g_string_append (xmldata, "</ligma-metadata>\n");
 
 
   size = strlen (xmldata->str);

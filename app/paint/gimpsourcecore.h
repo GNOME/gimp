@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,26 +15,26 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SOURCE_CORE_H__
-#define __GIMP_SOURCE_CORE_H__
+#ifndef __LIGMA_SOURCE_CORE_H__
+#define __LIGMA_SOURCE_CORE_H__
 
 
-#include "gimpbrushcore.h"
+#include "ligmabrushcore.h"
 
 
-#define GIMP_TYPE_SOURCE_CORE            (gimp_source_core_get_type ())
-#define GIMP_SOURCE_CORE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_SOURCE_CORE, GimpSourceCore))
-#define GIMP_SOURCE_CORE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_SOURCE_CORE, GimpSourceCoreClass))
-#define GIMP_IS_SOURCE_CORE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_SOURCE_CORE))
-#define GIMP_IS_SOURCE_CORE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_SOURCE_CORE))
-#define GIMP_SOURCE_CORE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_SOURCE_CORE, GimpSourceCoreClass))
+#define LIGMA_TYPE_SOURCE_CORE            (ligma_source_core_get_type ())
+#define LIGMA_SOURCE_CORE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_SOURCE_CORE, LigmaSourceCore))
+#define LIGMA_SOURCE_CORE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_SOURCE_CORE, LigmaSourceCoreClass))
+#define LIGMA_IS_SOURCE_CORE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_SOURCE_CORE))
+#define LIGMA_IS_SOURCE_CORE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_SOURCE_CORE))
+#define LIGMA_SOURCE_CORE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_SOURCE_CORE, LigmaSourceCoreClass))
 
 
-typedef struct _GimpSourceCoreClass GimpSourceCoreClass;
+typedef struct _LigmaSourceCoreClass LigmaSourceCoreClass;
 
-struct _GimpSourceCore
+struct _LigmaSourceCore
 {
-  GimpBrushCore  parent_instance;
+  LigmaBrushCore  parent_instance;
 
   gboolean       set_source;
 
@@ -46,18 +46,18 @@ struct _GimpSourceCore
   gboolean       first_stroke;
 };
 
-struct _GimpSourceCoreClass
+struct _LigmaSourceCoreClass
 {
-  GimpBrushCoreClass  parent_class;
+  LigmaBrushCoreClass  parent_class;
 
-  gboolean     (* use_source) (GimpSourceCore    *source_core,
-                               GimpSourceOptions *options);
+  gboolean     (* use_source) (LigmaSourceCore    *source_core,
+                               LigmaSourceOptions *options);
 
-  GeglBuffer * (* get_source) (GimpSourceCore    *source_core,
-                               GimpDrawable      *drawable,
-                               GimpPaintOptions  *paint_options,
+  GeglBuffer * (* get_source) (LigmaSourceCore    *source_core,
+                               LigmaDrawable      *drawable,
+                               LigmaPaintOptions  *paint_options,
                                gboolean           self_drawable,
-                               GimpPickable      *src_pickable,
+                               LigmaPickable      *src_pickable,
                                gint               src_offset_x,
                                gint               src_offset_y,
                                GeglBuffer        *paint_buffer,
@@ -70,13 +70,13 @@ struct _GimpSourceCoreClass
                                gint              *paint_area_height,
                                GeglRectangle     *src_rect);
 
-  void         (*  motion)    (GimpSourceCore    *source_core,
-                               GimpDrawable      *drawable,
-                               GimpPaintOptions  *paint_options,
-                               const GimpCoords  *coords,
+  void         (*  motion)    (LigmaSourceCore    *source_core,
+                               LigmaDrawable      *drawable,
+                               LigmaPaintOptions  *paint_options,
+                               const LigmaCoords  *coords,
                                GeglNode          *op,
                                gdouble            opacity,
-                               GimpPickable      *src_pickable,
+                               LigmaPickable      *src_pickable,
                                GeglBuffer        *src_buffer,
                                GeglRectangle     *src_rect,
                                gint               src_offset_x,
@@ -92,17 +92,17 @@ struct _GimpSourceCoreClass
 };
 
 
-GType    gimp_source_core_get_type   (void) G_GNUC_CONST;
+GType    ligma_source_core_get_type   (void) G_GNUC_CONST;
 
-gboolean gimp_source_core_use_source (GimpSourceCore    *source_core,
-                                      GimpSourceOptions *options);
+gboolean ligma_source_core_use_source (LigmaSourceCore    *source_core,
+                                      LigmaSourceOptions *options);
 
 /* TEMP HACK */
-void     gimp_source_core_motion     (GimpSourceCore    *source_core,
-                                      GimpDrawable      *drawable,
-                                      GimpPaintOptions  *paint_options,
+void     ligma_source_core_motion     (LigmaSourceCore    *source_core,
+                                      LigmaDrawable      *drawable,
+                                      LigmaPaintOptions  *paint_options,
                                       gboolean           self_drawable,
-                                      GimpSymmetry      *sym);
+                                      LigmaSymmetry      *sym);
 
 
-#endif  /*  __GIMP_SOURCE_CORE_H__  */
+#endif  /*  __LIGMA_SOURCE_CORE_H__  */

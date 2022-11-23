@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * file-import.h
@@ -21,11 +21,11 @@
 #define __FILE_IMPORT_H__
 
 
-void   file_import_image (GimpImage    *image,
-                          GimpContext  *context,
+void   file_import_image (LigmaImage    *image,
+                          LigmaContext  *context,
                           GFile        *file,
                           gboolean      interactive,
-                          GimpProgress *progress);
+                          LigmaProgress *progress);
 
 
 #endif /* __FILE_IMPORT_H__ */

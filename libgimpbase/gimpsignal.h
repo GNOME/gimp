@@ -1,4 +1,4 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2000 Peter Mattis and Spencer Kimball
  *
  * This library is free software: you can redistribute it and/or
@@ -16,8 +16,8 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SIGNAL_H__
-#define __GIMP_SIGNAL_H__
+#ifndef __LIGMA_SIGNAL_H__
+#define __LIGMA_SIGNAL_H__
 
 #include <signal.h>
 
@@ -27,7 +27,7 @@ G_BEGIN_DECLS
 
 
 /**
- * GimpSignalHandlerFunc:
+ * LigmaSignalHandlerFunc:
  * @signum: The number of the signal. Useful if different signals are
  *          handled by a single handler.
  *
@@ -36,13 +36,13 @@ G_BEGIN_DECLS
  * also accepts or may return special values defined by your system's
  * signal.h header file (like @SIG_DFL or @SIG_IGN).
  **/
-typedef void (* GimpSignalHandlerFunc) (gint signum);
+typedef void (* LigmaSignalHandlerFunc) (gint signum);
 
-GimpSignalHandlerFunc  gimp_signal_private (gint                   signum,
-                                            GimpSignalHandlerFunc  handler,
+LigmaSignalHandlerFunc  ligma_signal_private (gint                   signum,
+                                            LigmaSignalHandlerFunc  handler,
                                             gint                   flags);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_SIGNAL_H__ */
+#endif /* __LIGMA_SIGNAL_H__ */

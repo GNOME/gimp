@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * This is a plug-in for GIMP.
+ * This is a plug-in for LIGMA.
  *
  * Generates images containing vector type drawings.
  *
@@ -29,13 +29,13 @@
 
 #include <gtk/gtk.h>
 
-#include <libgimp/gimp.h>
+#include <libligma/ligma.h>
 
 #include "gfig.h"
 #include "gfig-dobject.h"
 #include "gfig-arc.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 static gdouble     dist                (gdouble   x1,
                                         gdouble   y1,

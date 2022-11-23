@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpbatchprocedure.h
+ * ligmabatchprocedure.h
  * Copyright (C) 2022 Jehan
  *
  * This library is free software: you can redistribute it and/or
@@ -19,10 +19,10 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_BATCH_PROCEDURE_H__
-#define __GIMP_BATCH_PROCEDURE_H__
+#ifndef __LIGMA_BATCH_PROCEDURE_H__
+#define __LIGMA_BATCH_PROCEDURE_H__
 
-#include <libgimp/gimpprocedure.h>
+#include <libligma/ligmaprocedure.h>
 
 G_BEGIN_DECLS
 
@@ -30,65 +30,65 @@ G_BEGIN_DECLS
 
 
 /**
- * GimpBatchFunc:
- * @procedure:   the #GimpProcedure that runs.
- * @run_mode:    the #GimpRunMode.
+ * LigmaBatchFunc:
+ * @procedure:   the #LigmaProcedure that runs.
+ * @run_mode:    the #LigmaRunMode.
  * @args:        the @procedure's remaining arguments.
- * @run_data: (closure): the run_data given in gimp_batch_procedure_new().
+ * @run_data: (closure): the run_data given in ligma_batch_procedure_new().
  *
- * The batch function is run during the lifetime of the GIMP session,
+ * The batch function is run during the lifetime of the LIGMA session,
  * each time a plug-in batch procedure is called.
  *
  * Returns: (transfer full): the @procedure's return values.
  *
  * Since: 3.0
  **/
-typedef GimpValueArray * (* GimpBatchFunc) (GimpProcedure        *procedure,
-                                            GimpRunMode           run_mode,
+typedef LigmaValueArray * (* LigmaBatchFunc) (LigmaProcedure        *procedure,
+                                            LigmaRunMode           run_mode,
                                             const gchar          *command,
-                                            const GimpValueArray *args,
+                                            const LigmaValueArray *args,
                                             gpointer              run_data);
 
 
-#define GIMP_TYPE_BATCH_PROCEDURE            (gimp_batch_procedure_get_type ())
-#define GIMP_BATCH_PROCEDURE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_BATCH_PROCEDURE, GimpBatchProcedure))
-#define GIMP_BATCH_PROCEDURE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_BATCH_PROCEDURE, GimpBatchProcedureClass))
-#define GIMP_IS_BATCH_PROCEDURE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_BATCH_PROCEDURE))
-#define GIMP_IS_BATCH_PROCEDURE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_BATCH_PROCEDURE))
-#define GIMP_BATCH_PROCEDURE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_BATCH_PROCEDURE, GimpBatchProcedureClass))
+#define LIGMA_TYPE_BATCH_PROCEDURE            (ligma_batch_procedure_get_type ())
+#define LIGMA_BATCH_PROCEDURE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_BATCH_PROCEDURE, LigmaBatchProcedure))
+#define LIGMA_BATCH_PROCEDURE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_BATCH_PROCEDURE, LigmaBatchProcedureClass))
+#define LIGMA_IS_BATCH_PROCEDURE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_BATCH_PROCEDURE))
+#define LIGMA_IS_BATCH_PROCEDURE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_BATCH_PROCEDURE))
+#define LIGMA_BATCH_PROCEDURE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_BATCH_PROCEDURE, LigmaBatchProcedureClass))
 
 
-typedef struct _GimpBatchProcedure        GimpBatchProcedure;
-typedef struct _GimpBatchProcedureClass   GimpBatchProcedureClass;
-typedef struct _GimpBatchProcedurePrivate GimpBatchProcedurePrivate;
+typedef struct _LigmaBatchProcedure        LigmaBatchProcedure;
+typedef struct _LigmaBatchProcedureClass   LigmaBatchProcedureClass;
+typedef struct _LigmaBatchProcedurePrivate LigmaBatchProcedurePrivate;
 
-struct _GimpBatchProcedure
+struct _LigmaBatchProcedure
 {
-  GimpProcedure              parent_instance;
+  LigmaProcedure              parent_instance;
 
-  GimpBatchProcedurePrivate *priv;
+  LigmaBatchProcedurePrivate *priv;
 };
 
-struct _GimpBatchProcedureClass
+struct _LigmaBatchProcedureClass
 {
-  GimpProcedureClass parent_class;
+  LigmaProcedureClass parent_class;
 };
 
 
-GType           gimp_batch_procedure_get_type             (void) G_GNUC_CONST;
+GType           ligma_batch_procedure_get_type             (void) G_GNUC_CONST;
 
-GimpProcedure * gimp_batch_procedure_new                  (GimpPlugIn      *plug_in,
+LigmaProcedure * ligma_batch_procedure_new                  (LigmaPlugIn      *plug_in,
                                                            const gchar     *name,
                                                            const gchar     *interpreter_name,
-                                                           GimpPDBProcType  proc_type,
-                                                           GimpBatchFunc    run_func,
+                                                           LigmaPDBProcType  proc_type,
+                                                           LigmaBatchFunc    run_func,
                                                            gpointer         run_data,
                                                            GDestroyNotify   run_data_destroy);
 
-void            gimp_batch_procedure_set_interpreter_name (GimpBatchProcedure *procedure,
+void            ligma_batch_procedure_set_interpreter_name (LigmaBatchProcedure *procedure,
                                                            const gchar        *interpreter_name);
-const gchar *   gimp_batch_procedure_get_interpreter_name (GimpBatchProcedure *procedure);
+const gchar *   ligma_batch_procedure_get_interpreter_name (LigmaBatchProcedure *procedure);
 
 G_END_DECLS
 
-#endif  /*  __GIMP_BATCH_PROCEDURE_H__  */
+#endif  /*  __LIGMA_BATCH_PROCEDURE_H__  */

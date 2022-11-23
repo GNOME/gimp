@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,61 +20,61 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "tools-types.h"
 
-#include "config/gimpcoreconfig.h"
+#include "config/ligmacoreconfig.h"
 
-#include "core/gimp.h"
+#include "core/ligma.h"
 
-#include "paint/gimpmybrushoptions.h"
+#include "paint/ligmamybrushoptions.h"
 
-#include "widgets/gimppropwidgets.h"
-#include "widgets/gimpviewablebox.h"
+#include "widgets/ligmapropwidgets.h"
+#include "widgets/ligmaviewablebox.h"
 
-#include "gimpmybrushoptions-gui.h"
-#include "gimppaintoptions-gui.h"
+#include "ligmamybrushoptions-gui.h"
+#include "ligmapaintoptions-gui.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 GtkWidget *
-gimp_mybrush_options_gui (GimpToolOptions *tool_options)
+ligma_mybrush_options_gui (LigmaToolOptions *tool_options)
 {
   GObject   *config = G_OBJECT (tool_options);
-  GtkWidget *vbox   = gimp_paint_options_gui (tool_options);
+  GtkWidget *vbox   = ligma_paint_options_gui (tool_options);
   GtkWidget *button;
   GtkWidget *scale;
 
   /* the brush */
-  button = gimp_prop_mybrush_box_new (NULL, GIMP_CONTEXT (tool_options),
+  button = ligma_prop_mybrush_box_new (NULL, LIGMA_CONTEXT (tool_options),
                                       _("Brush"), 2,
                                       NULL, NULL);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
 
   /* erase mode */
-  scale = gimp_prop_check_button_new (config, "eraser", NULL);
+  scale = ligma_prop_check_button_new (config, "eraser", NULL);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
 
   /* no erasing */
-  scale = gimp_prop_check_button_new (config, "no-erasing", NULL);
+  scale = ligma_prop_check_button_new (config, "no-erasing", NULL);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
 
   /* radius */
-  scale = gimp_prop_spin_scale_new (config, "radius",
+  scale = ligma_prop_spin_scale_new (config, "radius",
                                     0.1, 1.0, 2);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
 
   /* opaque */
-  scale = gimp_prop_spin_scale_new (config, "opaque",
+  scale = ligma_prop_spin_scale_new (config, "opaque",
                                     0.1, 1.0, 2);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
 
   /* hardness */
-  scale = gimp_prop_spin_scale_new (config, "hardness",
+  scale = ligma_prop_spin_scale_new (config, "hardness",
                                     0.1, 1.0, 2);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
 

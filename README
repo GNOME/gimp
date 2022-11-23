@@ -4,94 +4,94 @@
                    ------------------------------
 
 This is an unstable development release, an intermediate state on the
-way to the next stable release: GIMP 3.0. GIMP 2.99 may or may not do
+way to the next stable release: LIGMA 3.0. LIGMA 2.99 may or may not do
 what you expect. Save your work early and often. If you want a stable
-version, please use GIMP 2.10 instead.
+version, please use LIGMA 2.10 instead.
 
 If you think you found a bug in this version, please make sure that it
 hasn't been reported earlier and that it is not just new stuff that is
 still being worked on and obviously not quite finished yet.
 
-If you want to hack on GIMP, please read the file devel-docs/README.md.
+If you want to hack on LIGMA, please read the file devel-docs/README.md.
 For detailed installation instructions, see the file INSTALL.
 
 
 1. Web Resources
 ================
 
-GIMP's home page is at:
+LIGMA's home page is at:
 
-	https://www.gimp.org/
+	https://www.ligma.org/
 
 Please be sure to visit this site for information, documentation,
-tutorials, news, etc.  All things GIMP-ish are available from there.
+tutorials, news, etc.  All things LIGMA-ish are available from there.
 
-The latest version of GIMP can be found at:
+The latest version of LIGMA can be found at:
 
-	https://www.gimp.org/downloads/
+	https://www.ligma.org/downloads/
 
 
 2. Contributing
 ===============
 
-GIMP source code can be found at:
+LIGMA source code can be found at:
 
-	https://gitlab.gnome.org/GNOME/gimp/
+	https://gitlab.gnome.org/GNOME/ligma/
 
 Resources for contributors:
 
-        https://developer.gimp.org/
+        https://developer.ligma.org/
 
 In particular, you may want to look in the "Core Development" section. Some
 articles of particular interest for newcomers could be:
 
-* Setting up your developer environment: https://developer.gimp.org/core/setup/
-* GIMP Coding Style: https://developer.gimp.org/core/coding_style/
-* Submit your first patch: https://developer.gimp.org/core/submit-patch/
+* Setting up your developer environment: https://developer.ligma.org/core/setup/
+* LIGMA Coding Style: https://developer.ligma.org/core/coding_style/
+* Submit your first patch: https://developer.ligma.org/core/submit-patch/
 
 
 3. Discussion Channels
 ======================
 
-We have several discussion channels dedicated to GIMP user and
+We have several discussion channels dedicated to LIGMA user and
 development discussion. There is more info at:
 
-        https://www.gimp.org/discuss.html
+        https://www.ligma.org/discuss.html
 
 Links to several archives of the mailing lists are included in that page.
 
-Gimp-user-list is a mailing list dedicated to user problems, hints and
-tips, discussion of cool effects, etc.  Gimp-developer-list is oriented
-to GIMP core and plug-in developers.  Gimp-gui-list is for discussing
-about GIMP interface to improve user experience. Most people will only
-want to be subscribed to gimp-user-list. If you want to help develop
-GIMP, the gimp-developer mailing list is a good starting point; if you
-want to help with GUI design, the gimp-gui list is where you want to
+Ligma-user-list is a mailing list dedicated to user problems, hints and
+tips, discussion of cool effects, etc.  Ligma-developer-list is oriented
+to LIGMA core and plug-in developers.  Ligma-gui-list is for discussing
+about LIGMA interface to improve user experience. Most people will only
+want to be subscribed to ligma-user-list. If you want to help develop
+LIGMA, the ligma-developer mailing list is a good starting point; if you
+want to help with GUI design, the ligma-gui list is where you want to
 subscribe.
 
 Other discussion channels can be listed on this page when they are
 moderated by a team member, such as forums.
 
-Finally, for the real junkies, there are IRC channels devoted to GIMP.
-On GIMPNet (a private free software oriented network) there is #gimp.
-Many of the developers hang out there. Some of the GIMPNet servers are:
+Finally, for the real junkies, there are IRC channels devoted to LIGMA.
+On LIGMANet (a private free software oriented network) there is #ligma.
+Many of the developers hang out there. Some of the LIGMANet servers are:
 
-	irc.gimp.org:6667
-	irc.us.gimp.org:6667
-	irc.eu.gimp.org:6667
+	irc.ligma.org:6667
+	irc.us.ligma.org:6667
+	irc.eu.ligma.org:6667
 
 
 4. Customizing
 ==============
 
-The look of GIMP's interface can be customized like any other GTK+ app
+The look of LIGMA's interface can be customized like any other GTK+ app
 by editing files in `${XDG_CONFIG_HOME}/gtk-3.0/` (settings.ini and
 gtk.css in particular) or by using "themes" (ready-made customizations).
-Additionally, GIMP reads `${XDG_CONFIG_HOME}/GIMP/2.99/gimp.css` so you
-can have settings that only apply to GIMP.
+Additionally, LIGMA reads `${XDG_CONFIG_HOME}/LIGMA/2.99/ligma.css` so you
+can have settings that only apply to LIGMA.
 
 You can also manually change the keybindings to any of your choice by
-editing: `${XDG_CONFIG_HOME}/GIMP/2.99/menurc`.
+editing: `${XDG_CONFIG_HOME}/LIGMA/2.99/menurc`.
 
 
 Have fun,

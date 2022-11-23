@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,19 +20,19 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "display-types.h"
 
-#include "config/gimpdisplayconfig.h"
+#include "config/ligmadisplayconfig.h"
 
-#include "widgets/gimpwidgets-utils.h"
+#include "widgets/ligmawidgets-utils.h"
 
-#include "gimpcanvas.h"
+#include "ligmacanvas.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 #define MAX_BATCH_SIZE 32000
@@ -47,68 +47,68 @@ enum
 
 /*  local function prototypes  */
 
-static void       gimp_canvas_set_property    (GObject         *object,
+static void       ligma_canvas_set_property    (GObject         *object,
                                                guint            property_id,
                                                const GValue    *value,
                                                GParamSpec      *pspec);
-static void       gimp_canvas_get_property    (GObject         *object,
+static void       ligma_canvas_get_property    (GObject         *object,
                                                guint            property_id,
                                                GValue          *value,
                                                GParamSpec      *pspec);
 
-static void       gimp_canvas_unrealize       (GtkWidget       *widget);
-static void       gimp_canvas_style_updated   (GtkWidget       *widget);
-static gboolean   gimp_canvas_focus_in_event  (GtkWidget       *widget,
+static void       ligma_canvas_unrealize       (GtkWidget       *widget);
+static void       ligma_canvas_style_updated   (GtkWidget       *widget);
+static gboolean   ligma_canvas_focus_in_event  (GtkWidget       *widget,
                                                GdkEventFocus   *event);
-static gboolean   gimp_canvas_focus_out_event (GtkWidget       *widget,
+static gboolean   ligma_canvas_focus_out_event (GtkWidget       *widget,
                                                GdkEventFocus   *event);
-static gboolean   gimp_canvas_focus           (GtkWidget       *widget,
+static gboolean   ligma_canvas_focus           (GtkWidget       *widget,
                                                GtkDirectionType direction);
 
 
-G_DEFINE_TYPE (GimpCanvas, gimp_canvas, GIMP_TYPE_OVERLAY_BOX)
+G_DEFINE_TYPE (LigmaCanvas, ligma_canvas, LIGMA_TYPE_OVERLAY_BOX)
 
-#define parent_class gimp_canvas_parent_class
+#define parent_class ligma_canvas_parent_class
 
 
 static void
-gimp_canvas_class_init (GimpCanvasClass *klass)
+ligma_canvas_class_init (LigmaCanvasClass *klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->set_property    = gimp_canvas_set_property;
-  object_class->get_property    = gimp_canvas_get_property;
+  object_class->set_property    = ligma_canvas_set_property;
+  object_class->get_property    = ligma_canvas_get_property;
 
-  widget_class->unrealize       = gimp_canvas_unrealize;
-  widget_class->style_updated   = gimp_canvas_style_updated;
-  widget_class->focus_in_event  = gimp_canvas_focus_in_event;
-  widget_class->focus_out_event = gimp_canvas_focus_out_event;
-  widget_class->focus           = gimp_canvas_focus;
+  widget_class->unrealize       = ligma_canvas_unrealize;
+  widget_class->style_updated   = ligma_canvas_style_updated;
+  widget_class->focus_in_event  = ligma_canvas_focus_in_event;
+  widget_class->focus_out_event = ligma_canvas_focus_out_event;
+  widget_class->focus           = ligma_canvas_focus;
 
   g_object_class_install_property (object_class, PROP_CONFIG,
                                    g_param_spec_object ("config", NULL, NULL,
-                                                        GIMP_TYPE_DISPLAY_CONFIG,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_TYPE_DISPLAY_CONFIG,
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
-gimp_canvas_init (GimpCanvas *canvas)
+ligma_canvas_init (LigmaCanvas *canvas)
 {
   GtkWidget *widget = GTK_WIDGET (canvas);
 
   gtk_widget_set_can_focus (widget, TRUE);
-  gtk_widget_add_events (widget, GIMP_CANVAS_EVENT_MASK);
+  gtk_widget_add_events (widget, LIGMA_CANVAS_EVENT_MASK);
 }
 
 static void
-gimp_canvas_set_property (GObject      *object,
+ligma_canvas_set_property (GObject      *object,
                           guint         property_id,
                           const GValue *value,
                           GParamSpec   *pspec)
 {
-  GimpCanvas *canvas = GIMP_CANVAS (object);
+  LigmaCanvas *canvas = LIGMA_CANVAS (object);
 
   switch (property_id)
     {
@@ -123,12 +123,12 @@ gimp_canvas_set_property (GObject      *object,
 }
 
 static void
-gimp_canvas_get_property (GObject    *object,
+ligma_canvas_get_property (GObject    *object,
                           guint       property_id,
                           GValue     *value,
                           GParamSpec *pspec)
 {
-  GimpCanvas *canvas = GIMP_CANVAS (object);
+  LigmaCanvas *canvas = LIGMA_CANVAS (object);
 
   switch (property_id)
     {
@@ -143,9 +143,9 @@ gimp_canvas_get_property (GObject    *object,
 }
 
 static void
-gimp_canvas_unrealize (GtkWidget *widget)
+ligma_canvas_unrealize (GtkWidget *widget)
 {
-  GimpCanvas *canvas = GIMP_CANVAS (widget);
+  LigmaCanvas *canvas = LIGMA_CANVAS (widget);
 
   g_clear_object (&canvas->layout);
 
@@ -153,9 +153,9 @@ gimp_canvas_unrealize (GtkWidget *widget)
 }
 
 static void
-gimp_canvas_style_updated (GtkWidget *widget)
+ligma_canvas_style_updated (GtkWidget *widget)
 {
-  GimpCanvas *canvas = GIMP_CANVAS (widget);
+  LigmaCanvas *canvas = LIGMA_CANVAS (widget);
 
   g_clear_object (&canvas->layout);
 
@@ -163,7 +163,7 @@ gimp_canvas_style_updated (GtkWidget *widget)
 }
 
 static gboolean
-gimp_canvas_focus_in_event (GtkWidget     *widget,
+ligma_canvas_focus_in_event (GtkWidget     *widget,
                             GdkEventFocus *event)
 {
   /*  don't allow the default impl to invalidate the whole widget,
@@ -173,7 +173,7 @@ gimp_canvas_focus_in_event (GtkWidget     *widget,
 }
 
 static gboolean
-gimp_canvas_focus_out_event (GtkWidget     *widget,
+ligma_canvas_focus_out_event (GtkWidget     *widget,
                              GdkEventFocus *event)
 {
   /*  see focus-in-event
@@ -182,7 +182,7 @@ gimp_canvas_focus_out_event (GtkWidget     *widget,
 }
 
 static gboolean
-gimp_canvas_focus (GtkWidget        *widget,
+ligma_canvas_focus (GtkWidget        *widget,
                    GtkDirectionType  direction)
 {
   GtkWidget *focus = gtk_container_get_focus_child (GTK_CONTAINER (widget));
@@ -204,35 +204,35 @@ gimp_canvas_focus (GtkWidget        *widget,
 /*  public functions  */
 
 /**
- * gimp_canvas_new:
+ * ligma_canvas_new:
  *
- * Creates a new #GimpCanvas widget.
+ * Creates a new #LigmaCanvas widget.
  *
- * The #GimpCanvas widget is a #GtkDrawingArea abstraction. It manages
- * a set of graphic contexts for drawing on a GIMP display. If you
- * draw using a #GimpCanvasStyle, #GimpCanvas makes sure that the
+ * The #LigmaCanvas widget is a #GtkDrawingArea abstraction. It manages
+ * a set of graphic contexts for drawing on a LIGMA display. If you
+ * draw using a #LigmaCanvasStyle, #LigmaCanvas makes sure that the
  * associated #GdkGC is created. All drawing on the canvas needs to
- * happen by means of the #GimpCanvas drawing functions. Besides from
- * not needing a #GdkGC pointer, the #GimpCanvas drawing functions
- * look and work like their #GdkDrawable counterparts. #GimpCanvas
+ * happen by means of the #LigmaCanvas drawing functions. Besides from
+ * not needing a #GdkGC pointer, the #LigmaCanvas drawing functions
+ * look and work like their #GdkDrawable counterparts. #LigmaCanvas
  * gracefully handles attempts to draw on the unrealized widget.
  *
- * Returns: a new #GimpCanvas widget
+ * Returns: a new #LigmaCanvas widget
  **/
 GtkWidget *
-gimp_canvas_new (GimpDisplayConfig *config)
+ligma_canvas_new (LigmaDisplayConfig *config)
 {
-  g_return_val_if_fail (GIMP_IS_DISPLAY_CONFIG (config), NULL);
+  g_return_val_if_fail (LIGMA_IS_DISPLAY_CONFIG (config), NULL);
 
-  return g_object_new (GIMP_TYPE_CANVAS,
-                       "name",   "gimp-canvas",
+  return g_object_new (LIGMA_TYPE_CANVAS,
+                       "name",   "ligma-canvas",
                        "config", config,
                        NULL);
 }
 
 /**
- * gimp_canvas_get_layout:
- * @canvas:  a #GimpCanvas widget
+ * ligma_canvas_get_layout:
+ * @canvas:  a #LigmaCanvas widget
  * @format:  a standard printf() format string.
  * @Varargs: the parameters to insert into the format string.
  *
@@ -244,7 +244,7 @@ gimp_canvas_new (GimpDisplayConfig *config)
  * Returns: a #PangoLayout owned by the canvas.
  **/
 PangoLayout *
-gimp_canvas_get_layout (GimpCanvas  *canvas,
+ligma_canvas_get_layout (LigmaCanvas  *canvas,
                         const gchar *format,
                         ...)
 {
@@ -266,19 +266,19 @@ gimp_canvas_get_layout (GimpCanvas  *canvas,
 }
 
 /**
- * gimp_canvas_set_padding:
- * @canvas:   a #GimpCanvas widget
- * @color:    a color in #GimpRGB format
+ * ligma_canvas_set_padding:
+ * @canvas:   a #LigmaCanvas widget
+ * @color:    a color in #LigmaRGB format
  *
  * Sets the background color of the canvas's window.  This
  * is the color the canvas is set to if it is cleared.
  **/
 void
-gimp_canvas_set_padding (GimpCanvas            *canvas,
-                         GimpCanvasPaddingMode  padding_mode,
-                         const GimpRGB         *padding_color)
+ligma_canvas_set_padding (LigmaCanvas            *canvas,
+                         LigmaCanvasPaddingMode  padding_mode,
+                         const LigmaRGB         *padding_color)
 {
-  g_return_if_fail (GIMP_IS_CANVAS (canvas));
+  g_return_if_fail (LIGMA_IS_CANVAS (canvas));
   g_return_if_fail (padding_color != NULL);
 
   canvas->padding_mode  = padding_mode;

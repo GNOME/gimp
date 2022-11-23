@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimppdbprocedure.h
- * Copyright (C) 2019 Michael Natterer <mitch@gimp.org>
+ * ligmapdbprocedure.h
+ * Copyright (C) 2019 Michael Natterer <mitch@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -19,45 +19,45 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PDB_PROCEDURE_H__
-#define __GIMP_PDB_PROCEDURE_H__
+#ifndef __LIGMA_PDB_PROCEDURE_H__
+#define __LIGMA_PDB_PROCEDURE_H__
 
 G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
 
-#define GIMP_TYPE_PDB_PROCEDURE            (_gimp_pdb_procedure_get_type ())
-#define GIMP_PDB_PROCEDURE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PDB_PROCEDURE, GimpPDBProcedure))
-#define GIMP_PDB_PROCEDURE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PDB_PROCEDURE, GimpPDBProcedureClass))
-#define GIMP_IS_PDB_PROCEDURE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PDB_PROCEDURE))
-#define GIMP_IS_PDB_PROCEDURE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PDB_PROCEDURE))
-#define GIMP_PDB_PROCEDURE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PDB_PROCEDURE, GimpPDBProcedureClass))
+#define LIGMA_TYPE_PDB_PROCEDURE            (_ligma_pdb_procedure_get_type ())
+#define LIGMA_PDB_PROCEDURE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_PDB_PROCEDURE, LigmaPDBProcedure))
+#define LIGMA_PDB_PROCEDURE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_PDB_PROCEDURE, LigmaPDBProcedureClass))
+#define LIGMA_IS_PDB_PROCEDURE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_PDB_PROCEDURE))
+#define LIGMA_IS_PDB_PROCEDURE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_PDB_PROCEDURE))
+#define LIGMA_PDB_PROCEDURE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_PDB_PROCEDURE, LigmaPDBProcedureClass))
 
 
-typedef struct _GimpPDBProcedure        GimpPDBProcedure;
-typedef struct _GimpPDBProcedureClass   GimpPDBProcedureClass;
-typedef struct _GimpPDBProcedurePrivate GimpPDBProcedurePrivate;
+typedef struct _LigmaPDBProcedure        LigmaPDBProcedure;
+typedef struct _LigmaPDBProcedureClass   LigmaPDBProcedureClass;
+typedef struct _LigmaPDBProcedurePrivate LigmaPDBProcedurePrivate;
 
-struct _GimpPDBProcedure
+struct _LigmaPDBProcedure
 {
-  GimpProcedure            parent_instance;
+  LigmaProcedure            parent_instance;
 
-  GimpPDBProcedurePrivate *priv;
+  LigmaPDBProcedurePrivate *priv;
 };
 
-struct _GimpPDBProcedureClass
+struct _LigmaPDBProcedureClass
 {
-  GimpProcedureClass parent_class;
+  LigmaProcedureClass parent_class;
 };
 
 
-GType           _gimp_pdb_procedure_get_type (void) G_GNUC_CONST;
+GType           _ligma_pdb_procedure_get_type (void) G_GNUC_CONST;
 
-GimpProcedure * _gimp_pdb_procedure_new      (GimpPDB     *pdb,
+LigmaProcedure * _ligma_pdb_procedure_new      (LigmaPDB     *pdb,
                                               const gchar *name);
 
 
 G_END_DECLS
 
-#endif  /*  __GIMP_PDB_PROCEDURE_H__  */
+#endif  /*  __LIGMA_PDB_PROCEDURE_H__  */

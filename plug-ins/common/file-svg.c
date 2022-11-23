@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,7 +18,7 @@
 /* SVG loader plug-in
  * (C) Copyright 2003  Dom Lachowicz <cinamod@hotmail.com>
  *
- * Largely rewritten in September 2003 by Sven Neumann <sven@gimp.org>
+ * Largely rewritten in September 2003 by Sven Neumann <sven@ligma.org>
  */
 
 #include "config.h"
@@ -28,16 +28,16 @@
 
 #include <librsvg/rsvg.h>
 
-#include "libgimp/gimp.h"
-#include "libgimp/gimpui.h"
+#include "libligma/ligma.h"
+#include "libligma/ligmaui.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 #define LOAD_PROC               "file-svg-load"
 #define LOAD_THUMB_PROC         "file-svg-load-thumb"
 #define PLUG_IN_BINARY          "file-svg"
-#define PLUG_IN_ROLE            "gimp-file-svg"
+#define PLUG_IN_ROLE            "ligma-file-svg"
 #define SVG_VERSION             "2.5.0"
 #define SVG_DEFAULT_RESOLUTION  90.0
 #define SVG_DEFAULT_SIZE        500
@@ -59,12 +59,12 @@ typedef struct _SvgClass SvgClass;
 
 struct _Svg
 {
-  GimpPlugIn      parent_instance;
+  LigmaPlugIn      parent_instance;
 };
 
 struct _SvgClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -73,22 +73,22 @@ struct _SvgClass
 
 GType                   svg_get_type         (void) G_GNUC_CONST;
 
-static GList          * svg_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * svg_create_procedure (GimpPlugIn           *plug_in,
+static GList          * svg_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * svg_create_procedure (LigmaPlugIn           *plug_in,
                                               const gchar          *name);
 
-static GimpValueArray * svg_load             (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
+static LigmaValueArray * svg_load             (LigmaProcedure        *procedure,
+                                              LigmaRunMode           run_mode,
                                               GFile                *file,
-                                              const GimpValueArray *args,
+                                              const LigmaValueArray *args,
                                               gpointer              run_data);
-static GimpValueArray * svg_load_thumb       (GimpProcedure        *procedure,
+static LigmaValueArray * svg_load_thumb       (LigmaProcedure        *procedure,
                                               GFile                *file,
                                               gint                  size,
-                                              const GimpValueArray *args,
+                                              const LigmaValueArray *args,
                                               gpointer              run_data);
 
-static GimpImage         * load_image        (GFile                *file,
+static LigmaImage         * load_image        (GFile                *file,
                                               RsvgHandleFlags       rsvg_flags,
                                               GError              **error);
 static GdkPixbuf         * load_rsvg_pixbuf  (GFile                *file,
@@ -100,15 +100,15 @@ static gboolean            load_rsvg_size    (GFile                *file,
                                               SvgLoadVals          *vals,
                                               RsvgHandleFlags       rsvg_flags,
                                               GError              **error);
-static GimpPDBStatusType   load_dialog       (GFile                *file,
+static LigmaPDBStatusType   load_dialog       (GFile                *file,
                                               RsvgHandleFlags      *rsvg_flags,
                                               GError              **error);
 
 
 
-G_DEFINE_TYPE (Svg, svg, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Svg, svg, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (SVG_TYPE)
+LIGMA_MAIN (SVG_TYPE)
 DEFINE_STD_SET_I18N
 
 
@@ -125,7 +125,7 @@ static SvgLoadVals load_vals =
 static void
 svg_class_init (SvgClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = svg_query_procedures;
   plug_in_class->create_procedure = svg_create_procedure;
@@ -138,7 +138,7 @@ svg_init (Svg *svg)
 }
 
 static GList *
-svg_query_procedures (GimpPlugIn *plug_in)
+svg_query_procedures (LigmaPlugIn *plug_in)
 {
   GList *list = NULL;
 
@@ -148,81 +148,81 @@ svg_query_procedures (GimpPlugIn *plug_in)
   return list;
 }
 
-static GimpProcedure *
-svg_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+svg_create_procedure (LigmaPlugIn  *plug_in,
                       const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, LOAD_PROC))
     {
-      procedure = gimp_load_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_load_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            svg_load, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure, _("SVG image"));
+      ligma_procedure_set_menu_label (procedure, _("SVG image"));
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Loads files in the SVG file format",
                                         "Renders SVG files to raster graphics "
                                         "using librsvg.",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Dom Lachowicz, Sven Neumann",
                                       "Dom Lachowicz <cinamod@hotmail.com>",
                                       SVG_VERSION);
 
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                           "image/svg+xml");
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "svg");
-      gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_magics (LIGMA_FILE_PROCEDURE (procedure),
                                       "0,string,<?xml,0,string,<svg");
 
-      gimp_load_procedure_set_thumbnail_loader (GIMP_LOAD_PROCEDURE (procedure),
+      ligma_load_procedure_set_thumbnail_loader (LIGMA_LOAD_PROCEDURE (procedure),
                                                 LOAD_THUMB_PROC);
 
-      GIMP_PROC_ARG_DOUBLE (procedure, "resolution",
+      LIGMA_PROC_ARG_DOUBLE (procedure, "resolution",
                             "Resolution",
                             "Resolution to use for rendering the SVG",
-                            GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION, 90,
-                            GIMP_PARAM_READWRITE);
+                            LIGMA_MIN_RESOLUTION, LIGMA_MAX_RESOLUTION, 90,
+                            LIGMA_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "width",
+      LIGMA_PROC_ARG_INT (procedure, "width",
                          "Width",
                          "Width (in pixels) to load the SVG in. "
                          "(0 for original width, a negative width to "
                          "specify a maximum width)",
-                         -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE, 0,
-                         GIMP_PARAM_READWRITE);
+                         -LIGMA_MAX_IMAGE_SIZE, LIGMA_MAX_IMAGE_SIZE, 0,
+                         LIGMA_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "height",
+      LIGMA_PROC_ARG_INT (procedure, "height",
                          "Height",
                          "Height (in pixels) to load the SVG in. "
                          "(0 for original height, a negative height to "
                          "specify a maximum height)",
-                         -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE, 0,
-                         GIMP_PARAM_READWRITE);
+                         -LIGMA_MAX_IMAGE_SIZE, LIGMA_MAX_IMAGE_SIZE, 0,
+                         LIGMA_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "paths",
+      LIGMA_PROC_ARG_INT (procedure, "paths",
                          "Paths",
                          "(0) don't import paths, (1) paths individually, "
                          "(2) paths merged",
                          0, 2, 0,
-                         GIMP_PARAM_READWRITE);
+                         LIGMA_PARAM_READWRITE);
     }
   else if (! strcmp (name, LOAD_THUMB_PROC))
     {
-      procedure = gimp_thumbnail_procedure_new (plug_in, name,
-                                                GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_thumbnail_procedure_new (plug_in, name,
+                                                LIGMA_PDB_PROC_TYPE_PLUGIN,
                                                 svg_load_thumb, NULL, NULL);
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Generates a thumbnail of an SVG image",
                                         "Renders a thumbnail of an SVG file "
                                         "using librsvg.",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Dom Lachowicz, Sven Neumann",
                                       "Dom Lachowicz <cinamod@hotmail.com>",
                                       SVG_VERSION);
@@ -231,84 +231,84 @@ svg_create_procedure (GimpPlugIn  *plug_in,
   return procedure;
 }
 
-static GimpValueArray *
-svg_load (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
+static LigmaValueArray *
+svg_load (LigmaProcedure        *procedure,
+          LigmaRunMode           run_mode,
           GFile                *file,
-          const GimpValueArray *args,
+          const LigmaValueArray *args,
           gpointer              run_data)
 {
-  GimpValueArray    *return_vals;
-  GimpImage         *image;
+  LigmaValueArray    *return_vals;
+  LigmaImage         *image;
   GError            *error      = NULL;
   RsvgHandleFlags    rsvg_flags = RSVG_HANDLE_FLAGS_NONE;
-  GimpPDBStatusType  status;
+  LigmaPDBStatusType  status;
 
   gegl_init (NULL, NULL);
 
   switch (run_mode)
     {
-    case GIMP_RUN_NONINTERACTIVE:
-      load_vals.resolution = GIMP_VALUES_GET_DOUBLE (args, 0);
-      load_vals.width      = GIMP_VALUES_GET_INT    (args, 1);
-      load_vals.height     = GIMP_VALUES_GET_INT    (args, 2);
-      load_vals.import     = GIMP_VALUES_GET_INT    (args, 3) != FALSE;
-      load_vals.merge      = GIMP_VALUES_GET_INT    (args, 3) == 2;
+    case LIGMA_RUN_NONINTERACTIVE:
+      load_vals.resolution = LIGMA_VALUES_GET_DOUBLE (args, 0);
+      load_vals.width      = LIGMA_VALUES_GET_INT    (args, 1);
+      load_vals.height     = LIGMA_VALUES_GET_INT    (args, 2);
+      load_vals.import     = LIGMA_VALUES_GET_INT    (args, 3) != FALSE;
+      load_vals.merge      = LIGMA_VALUES_GET_INT    (args, 3) == 2;
       break;
 
-    case GIMP_RUN_INTERACTIVE:
-      gimp_get_data (LOAD_PROC, &load_vals);
+    case LIGMA_RUN_INTERACTIVE:
+      ligma_get_data (LOAD_PROC, &load_vals);
       status = load_dialog (file, &rsvg_flags, &error);
-      if (status != GIMP_PDB_SUCCESS)
-        return gimp_procedure_new_return_values (procedure, status, error);
+      if (status != LIGMA_PDB_SUCCESS)
+        return ligma_procedure_new_return_values (procedure, status, error);
       break;
 
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_get_data (LOAD_PROC, &load_vals);
+    case LIGMA_RUN_WITH_LAST_VALS:
+      ligma_get_data (LOAD_PROC, &load_vals);
       break;
     }
 
   image = load_image (file, rsvg_flags, &error);
 
   if (! image)
-    return gimp_procedure_new_return_values (procedure,
-                                             GIMP_PDB_EXECUTION_ERROR,
+    return ligma_procedure_new_return_values (procedure,
+                                             LIGMA_PDB_EXECUTION_ERROR,
                                              error);
   if (load_vals.import)
     {
-      GimpVectors **vectors;
+      LigmaVectors **vectors;
       gint          num_vectors;
 
-      gimp_vectors_import_from_file (image, file,
+      ligma_vectors_import_from_file (image, file,
                                      load_vals.merge, TRUE,
                                      &num_vectors, &vectors);
       if (num_vectors > 0)
         g_free (vectors);
     }
 
-  if (run_mode != GIMP_RUN_NONINTERACTIVE)
-    gimp_set_data (LOAD_PROC, &load_vals, sizeof (load_vals));
+  if (run_mode != LIGMA_RUN_NONINTERACTIVE)
+    ligma_set_data (LOAD_PROC, &load_vals, sizeof (load_vals));
 
-  return_vals = gimp_procedure_new_return_values (procedure,
-                                                  GIMP_PDB_SUCCESS,
+  return_vals = ligma_procedure_new_return_values (procedure,
+                                                  LIGMA_PDB_SUCCESS,
                                                   NULL);
 
-  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
+  LIGMA_VALUES_SET_IMAGE (return_vals, 1, image);
 
   return return_vals;
 }
 
-static GimpValueArray *
-svg_load_thumb (GimpProcedure        *procedure,
+static LigmaValueArray *
+svg_load_thumb (LigmaProcedure        *procedure,
                 GFile                *file,
                 gint                  size,
-                const GimpValueArray *args,
+                const LigmaValueArray *args,
                 gpointer              run_data)
 {
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gint            width  = 0;
   gint            height = 0;
-  GimpImage      *image;
+  LigmaImage      *image;
   GError         *error = NULL;
 
   gegl_init (NULL, NULL);
@@ -326,30 +326,30 @@ svg_load_thumb (GimpProcedure        *procedure,
   image = load_image (file, RSVG_HANDLE_FLAGS_NONE, &error);
 
   if (! image)
-    return gimp_procedure_new_return_values (procedure,
-                                             GIMP_PDB_EXECUTION_ERROR,
+    return ligma_procedure_new_return_values (procedure,
+                                             LIGMA_PDB_EXECUTION_ERROR,
                                              error);
 
-  return_vals = gimp_procedure_new_return_values (procedure,
-                                                  GIMP_PDB_SUCCESS,
+  return_vals = ligma_procedure_new_return_values (procedure,
+                                                  LIGMA_PDB_SUCCESS,
                                                   NULL);
 
-  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
-  GIMP_VALUES_SET_INT   (return_vals, 2, width);
-  GIMP_VALUES_SET_INT   (return_vals, 3, height);
+  LIGMA_VALUES_SET_IMAGE (return_vals, 1, image);
+  LIGMA_VALUES_SET_INT   (return_vals, 2, width);
+  LIGMA_VALUES_SET_INT   (return_vals, 3, height);
 
-  gimp_value_array_truncate (return_vals, 4);
+  ligma_value_array_truncate (return_vals, 4);
 
   return return_vals;
 }
 
-static GimpImage *
+static LigmaImage *
 load_image (GFile            *file,
             RsvgHandleFlags   rsvg_flags,
             GError          **load_error)
 {
-  GimpImage    *image;
-  GimpLayer    *layer;
+  LigmaImage    *image;
+  LigmaLayer    *layer;
   GdkPixbuf    *pixbuf;
   gint          width;
   gint          height;
@@ -363,32 +363,32 @@ load_image (GFile            *file,
       g_set_error (load_error,
                    error ? error->domain : 0, error ? error->code : 0,
                    _("Could not open '%s' for reading: %s"),
-                   gimp_file_get_utf8_name (file),
+                   ligma_file_get_utf8_name (file),
                    error ? error->message : _("Unknown reason"));
       g_clear_error (&error);
 
       return NULL;
     }
 
-  gimp_progress_init (_("Rendering SVG"));
+  ligma_progress_init (_("Rendering SVG"));
 
   width  = gdk_pixbuf_get_width (pixbuf);
   height = gdk_pixbuf_get_height (pixbuf);
 
-  image = gimp_image_new (width, height, GIMP_RGB);
-  gimp_image_undo_disable (image);
+  image = ligma_image_new (width, height, LIGMA_RGB);
+  ligma_image_undo_disable (image);
 
-  gimp_image_set_file (image, file);
-  gimp_image_set_resolution (image,
+  ligma_image_set_file (image, file);
+  ligma_image_set_resolution (image,
                              load_vals.resolution, load_vals.resolution);
 
-  layer = gimp_layer_new_from_pixbuf (image, _("Rendered SVG"), pixbuf,
+  layer = ligma_layer_new_from_pixbuf (image, _("Rendered SVG"), pixbuf,
                                       100,
-                                      gimp_image_get_default_new_layer_mode (image),
+                                      ligma_image_get_default_new_layer_mode (image),
                                       0.0, 1.0);
-  gimp_image_insert_layer (image, layer, NULL, 0);
+  ligma_image_insert_layer (image, layer, NULL, 0);
 
-  gimp_image_undo_enable (image);
+  ligma_image_undo_enable (image);
 
   return image;
 }
@@ -536,7 +536,7 @@ load_rsvg_size (GFile            *file,
 
 /*  User interface  */
 
-static GimpSizeEntry *size       = NULL;
+static LigmaSizeEntry *size       = NULL;
 static GtkAdjustment *xadj       = NULL;
 static GtkAdjustment *yadj       = NULL;
 static GtkWidget     *constrain  = NULL;
@@ -553,10 +553,10 @@ static void
 load_dialog_size_callback (GtkWidget *widget,
                            gpointer   data)
 {
-  if (gimp_chain_button_get_active (GIMP_CHAIN_BUTTON (constrain)))
+  if (ligma_chain_button_get_active (LIGMA_CHAIN_BUTTON (constrain)))
     {
-      gdouble x = gimp_size_entry_get_refval (size, 0) / (gdouble) svg_width;
-      gdouble y = gimp_size_entry_get_refval (size, 1) / (gdouble) svg_height;
+      gdouble x = ligma_size_entry_get_refval (size, 0) / (gdouble) svg_width;
+      gdouble y = ligma_size_entry_get_refval (size, 1) / (gdouble) svg_height;
 
       if (x != ratio_x)
         {
@@ -576,7 +576,7 @@ load_dialog_ratio_callback (GtkAdjustment *adj,
   gdouble x = gtk_adjustment_get_value (xadj);
   gdouble y = gtk_adjustment_get_value (yadj);
 
-  if (gimp_chain_button_get_active (GIMP_CHAIN_BUTTON (constrain)))
+  if (ligma_chain_button_get_active (LIGMA_CHAIN_BUTTON (constrain)))
     {
       if (x != ratio_x)
         y = x;
@@ -588,7 +588,7 @@ load_dialog_ratio_callback (GtkAdjustment *adj,
 }
 
 static void
-load_dialog_resolution_callback (GimpSizeEntry *res,
+load_dialog_resolution_callback (LigmaSizeEntry *res,
                                  GFile         *file)
 {
   SvgLoadVals     vals = { 0.0, 0, 0 };
@@ -596,22 +596,22 @@ load_dialog_resolution_callback (GimpSizeEntry *res,
 
   rsvg_flags = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (file), "rsvg-flags"));
 
-  load_vals.resolution = vals.resolution = gimp_size_entry_get_refval (res, 0);
+  load_vals.resolution = vals.resolution = ligma_size_entry_get_refval (res, 0);
 
   if (! load_rsvg_size (file, &vals, rsvg_flags, NULL))
     return;
 
   g_signal_handlers_block_by_func (size, load_dialog_size_callback, NULL);
 
-  gimp_size_entry_set_resolution (size, 0, load_vals.resolution, FALSE);
-  gimp_size_entry_set_resolution (size, 1, load_vals.resolution, FALSE);
+  ligma_size_entry_set_resolution (size, 0, load_vals.resolution, FALSE);
+  ligma_size_entry_set_resolution (size, 1, load_vals.resolution, FALSE);
 
   g_signal_handlers_unblock_by_func (size, load_dialog_size_callback, NULL);
 
-  if (gimp_size_entry_get_unit (size) != GIMP_UNIT_PIXEL)
+  if (ligma_size_entry_get_unit (size) != LIGMA_UNIT_PIXEL)
     {
-      ratio_x = gimp_size_entry_get_refval (size, 0) / vals.width;
-      ratio_y = gimp_size_entry_get_refval (size, 1) / vals.height;
+      ratio_x = ligma_size_entry_get_refval (size, 0) / vals.width;
+      ratio_y = ligma_size_entry_get_refval (size, 1) / vals.height;
     }
 
   svg_width  = vals.width;
@@ -629,8 +629,8 @@ load_dialog_set_ratio (gdouble x,
 
   g_signal_handlers_block_by_func (size, load_dialog_size_callback, NULL);
 
-  gimp_size_entry_set_refval (size, 0, svg_width  * x);
-  gimp_size_entry_set_refval (size, 1, svg_height * y);
+  ligma_size_entry_set_refval (size, 0, svg_width  * x);
+  ligma_size_entry_set_refval (size, 1, svg_height * y);
 
   g_signal_handlers_unblock_by_func (size, load_dialog_size_callback, NULL);
 
@@ -644,7 +644,7 @@ load_dialog_set_ratio (gdouble x,
   g_signal_handlers_unblock_by_func (yadj, load_dialog_ratio_callback, NULL);
 }
 
-static GimpPDBStatusType
+static LigmaPDBStatusType
 load_dialog (GFile            *file,
              RsvgHandleFlags  *rsvg_flags,
              GError          **load_error)
@@ -676,7 +676,7 @@ load_dialog (GFile            *file,
 
   preview = load_rsvg_pixbuf (file, &vals, *rsvg_flags, &allow_retry, &error);
 
-  gimp_ui_init (PLUG_IN_BINARY);
+  ligma_ui_init (PLUG_IN_BINARY);
 
   if (! preview && *rsvg_flags == RSVG_HANDLE_FLAGS_NONE && allow_retry)
     {
@@ -685,10 +685,10 @@ load_dialog (GFile            *file,
        * unsafe, possibly consumming too much memory with malicious XML
        * files.
        */
-      dialog = gimp_dialog_new (_("Disable safety size limits?"),
+      dialog = ligma_dialog_new (_("Disable safety size limits?"),
                                 PLUG_IN_ROLE,
                                 NULL, 0,
-                                gimp_standard_help_func, LOAD_PROC,
+                                ligma_standard_help_func, LOAD_PROC,
 
                                 _("_No"),  GTK_RESPONSE_NO,
                                 _("_Yes"), GTK_RESPONSE_YES,
@@ -697,7 +697,7 @@ load_dialog (GFile            *file,
 
       gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_NO);
       gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
-      gimp_window_set_transient (GTK_WINDOW (dialog));
+      ligma_window_set_transient (GTK_WINDOW (dialog));
 
       hbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
       gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
@@ -741,7 +741,7 @@ load_dialog (GFile            *file,
 
       gtk_widget_show (dialog);
 
-      run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_YES);
+      run = (ligma_dialog_run (LIGMA_DIALOG (dialog)) == GTK_RESPONSE_YES);
       gtk_widget_destroy (dialog);
 
       if (run)
@@ -758,32 +758,32 @@ load_dialog (GFile            *file,
       g_set_error (load_error,
                    error ? error->domain : 0, error ? error->code : 0,
                    _("Could not open '%s' for reading: %s"),
-                   gimp_file_get_utf8_name (file),
+                   ligma_file_get_utf8_name (file),
                    error ? error->message : _("Unknown reason"));
       g_clear_error (&error);
 
-      return GIMP_PDB_EXECUTION_ERROR;
+      return LIGMA_PDB_EXECUTION_ERROR;
     }
 
   /* Scalable Vector Graphics is SVG, should perhaps not be translated */
-  dialog = gimp_dialog_new (_("Render Scalable Vector Graphics"),
+  dialog = ligma_dialog_new (_("Render Scalable Vector Graphics"),
                             PLUG_IN_ROLE,
                             NULL, 0,
-                            gimp_standard_help_func, LOAD_PROC,
+                            ligma_standard_help_func, LOAD_PROC,
 
                             _("_Cancel"), GTK_RESPONSE_CANCEL,
                             _("_OK"),     GTK_RESPONSE_OK,
 
                             NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
   gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 
-  gimp_window_set_transient (GTK_WINDOW (dialog));
+  ligma_window_set_transient (GTK_WINDOW (dialog));
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
@@ -843,7 +843,7 @@ load_dialog (GFile            *file,
   gtk_widget_show (hbox);
 
   adj = gtk_adjustment_new (1, 1, 1, 1, 10, 0);
-  spinbutton = gimp_spin_button_new (adj, 1.0, 2);
+  spinbutton = ligma_spin_button_new (adj, 1.0, 2);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 10);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
@@ -854,27 +854,27 @@ load_dialog (GFile            *file,
                     // GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (hbox);
 
-  size = GIMP_SIZE_ENTRY (gimp_size_entry_new (1, GIMP_UNIT_PIXEL, "%a",
+  size = LIGMA_SIZE_ENTRY (ligma_size_entry_new (1, LIGMA_UNIT_PIXEL, "%a",
                                                TRUE, FALSE, FALSE, 10,
-                                               GIMP_SIZE_ENTRY_UPDATE_SIZE));
+                                               LIGMA_SIZE_ENTRY_UPDATE_SIZE));
 
-  gimp_size_entry_add_field (size, GTK_SPIN_BUTTON (spinbutton), NULL);
+  ligma_size_entry_add_field (size, GTK_SPIN_BUTTON (spinbutton), NULL);
 
   gtk_box_pack_start (GTK_BOX (hbox), GTK_WIDGET (size), FALSE, FALSE, 0);
   gtk_widget_show (GTK_WIDGET (size));
 
-  gimp_size_entry_set_refval_boundaries (size, 0,
-                                         GIMP_MIN_IMAGE_SIZE,
-                                         GIMP_MAX_IMAGE_SIZE);
-  gimp_size_entry_set_refval_boundaries (size, 1,
-                                         GIMP_MIN_IMAGE_SIZE,
-                                         GIMP_MAX_IMAGE_SIZE);
+  ligma_size_entry_set_refval_boundaries (size, 0,
+                                         LIGMA_MIN_IMAGE_SIZE,
+                                         LIGMA_MAX_IMAGE_SIZE);
+  ligma_size_entry_set_refval_boundaries (size, 1,
+                                         LIGMA_MIN_IMAGE_SIZE,
+                                         LIGMA_MAX_IMAGE_SIZE);
 
-  gimp_size_entry_set_refval (size, 0, svg_width);
-  gimp_size_entry_set_refval (size, 1, svg_height);
+  ligma_size_entry_set_refval (size, 0, svg_width);
+  ligma_size_entry_set_refval (size, 1, svg_height);
 
-  gimp_size_entry_set_resolution (size, 0, load_vals.resolution, FALSE);
-  gimp_size_entry_set_resolution (size, 1, load_vals.resolution, FALSE);
+  ligma_size_entry_set_resolution (size, 0, load_vals.resolution, FALSE);
+  ligma_size_entry_set_resolution (size, 1, load_vals.resolution, FALSE);
 
   g_signal_connect (size, "value-changed",
                     G_CALLBACK (load_dialog_size_callback),
@@ -890,10 +890,10 @@ load_dialog (GFile            *file,
   gtk_box_pack_start (GTK_BOX (hbox), grid2, FALSE, FALSE, 0);
 
   xadj = gtk_adjustment_new (ratio_x,
-                             (gdouble) GIMP_MIN_IMAGE_SIZE / (gdouble) svg_width,
-                             (gdouble) GIMP_MAX_IMAGE_SIZE / (gdouble) svg_width,
+                             (gdouble) LIGMA_MIN_IMAGE_SIZE / (gdouble) svg_width,
+                             (gdouble) LIGMA_MAX_IMAGE_SIZE / (gdouble) svg_width,
                              0.01, 0.1, 0);
-  spinbutton = gimp_spin_button_new (xadj, 0.01, 4);
+  spinbutton = ligma_spin_button_new (xadj, 0.01, 4);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 10);
   gtk_grid_attach (GTK_GRID (grid2), spinbutton, 0, 0, 1, 1);
@@ -911,10 +911,10 @@ load_dialog (GFile            *file,
   gtk_widget_show (label);
 
   yadj = gtk_adjustment_new (ratio_y,
-                             (gdouble) GIMP_MIN_IMAGE_SIZE / (gdouble) svg_height,
-                             (gdouble) GIMP_MAX_IMAGE_SIZE / (gdouble) svg_height,
+                             (gdouble) LIGMA_MIN_IMAGE_SIZE / (gdouble) svg_height,
+                             (gdouble) LIGMA_MAX_IMAGE_SIZE / (gdouble) svg_height,
                              0.01, 0.1, 0);
-  spinbutton = gimp_spin_button_new (yadj, 0.01, 4);
+  spinbutton = ligma_spin_button_new (yadj, 0.01, 4);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 10);
   gtk_grid_attach (GTK_GRID (grid2), spinbutton, 0, 1, 1, 1);
@@ -932,12 +932,12 @@ load_dialog (GFile            *file,
   gtk_widget_show (label);
 
   /*  the constrain ratio chainbutton  */
-  constrain = gimp_chain_button_new (GIMP_CHAIN_RIGHT);
-  gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (constrain), TRUE);
+  constrain = ligma_chain_button_new (LIGMA_CHAIN_RIGHT);
+  ligma_chain_button_set_active (LIGMA_CHAIN_BUTTON (constrain), TRUE);
   gtk_grid_attach (GTK_GRID (grid2), constrain, 1, 0, 1, 2);
   gtk_widget_show (constrain);
 
-  gimp_help_set_help_data (gimp_chain_button_get_button (GIMP_CHAIN_BUTTON (constrain)),
+  ligma_help_set_help_data (ligma_chain_button_get_button (LIGMA_CHAIN_BUTTON (constrain)),
                            _("Constrain aspect ratio"), NULL);
 
   gtk_widget_show (grid2);
@@ -949,9 +949,9 @@ load_dialog (GFile            *file,
                     // GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
-  res = gimp_size_entry_new (1, GIMP_UNIT_INCH, _("pixels/%a"),
+  res = ligma_size_entry_new (1, LIGMA_UNIT_INCH, _("pixels/%a"),
                              FALSE, FALSE, FALSE, 10,
-                             GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);
+                             LIGMA_SIZE_ENTRY_UPDATE_RESOLUTION);
 
   gtk_grid_attach (GTK_GRID (grid), res, 1, 4, 1, 1);
                     // GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
@@ -959,9 +959,9 @@ load_dialog (GFile            *file,
 
   /* don't let the resolution become too small, librsvg tends to
      crash with very small resolutions */
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (res), 0,
-                                         5.0, GIMP_MAX_RESOLUTION);
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (res), 0, load_vals.resolution);
+  ligma_size_entry_set_refval_boundaries (LIGMA_SIZE_ENTRY (res), 0,
+                                         5.0, LIGMA_MAX_RESOLUTION);
+  ligma_size_entry_set_refval (LIGMA_SIZE_ENTRY (res), 0, load_vals.resolution);
 
   g_object_set_data (G_OBJECT (file), "rsvg-flags", GINT_TO_POINTER (rsvg_flags));
   g_signal_connect (res, "value-changed",
@@ -975,13 +975,13 @@ load_dialog (GFile            *file,
                     // GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (toggle);
 
-  gimp_help_set_help_data (toggle,
+  ligma_help_set_help_data (toggle,
                            _("Import path elements of the SVG so they "
-                             "can be used with the GIMP path tool"),
+                             "can be used with the LIGMA path tool"),
                            NULL);
 
   g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
+                    G_CALLBACK (ligma_toggle_button_update),
                     &load_vals.import);
 
   toggle2 = gtk_check_button_new_with_mnemonic (_("Merge imported paths"));
@@ -991,7 +991,7 @@ load_dialog (GFile            *file,
   gtk_widget_show (toggle2);
 
   g_signal_connect (toggle2, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
+                    G_CALLBACK (ligma_toggle_button_update),
                     &load_vals.merge);
 
   g_object_bind_property (toggle,  "active",
@@ -1000,15 +1000,15 @@ load_dialog (GFile            *file,
 
   gtk_widget_show (dialog);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+  run = (ligma_dialog_run (LIGMA_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
   if (run)
     {
-      load_vals.width  = ROUND (gimp_size_entry_get_refval (size, 0));
-      load_vals.height = ROUND (gimp_size_entry_get_refval (size, 1));
+      load_vals.width  = ROUND (ligma_size_entry_get_refval (size, 0));
+      load_vals.height = ROUND (ligma_size_entry_get_refval (size, 1));
     }
 
   gtk_widget_destroy (dialog);
 
-  return run ? GIMP_PDB_SUCCESS : GIMP_PDB_CANCEL;
+  return run ? LIGMA_PDB_SUCCESS : LIGMA_PDB_CANCEL;
 }

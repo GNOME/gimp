@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * brush_generated module Copyright 1998 Jay Cox <jaycox@earthlink.net>
@@ -17,17 +17,17 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_BRUSH_GENERATED_LOAD_H__
-#define __GIMP_BRUSH_GENERATED_LOAD_H__
+#ifndef __LIGMA_BRUSH_GENERATED_LOAD_H__
+#define __LIGMA_BRUSH_GENERATED_LOAD_H__
 
 
-#define GIMP_BRUSH_GENERATED_FILE_EXTENSION ".vbr"
+#define LIGMA_BRUSH_GENERATED_FILE_EXTENSION ".vbr"
 
 
-GList * gimp_brush_generated_load (GimpContext   *context,
+GList * ligma_brush_generated_load (LigmaContext   *context,
                                    GFile         *file,
                                    GInputStream  *input,
                                    GError       **error);
 
 
-#endif  /*  __GIMP_BRUSH_GENERATED_LOAD_H__  */
+#endif  /*  __LIGMA_BRUSH_GENERATED_LOAD_H__  */

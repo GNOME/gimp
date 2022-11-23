@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimppatterns_pdb.c
+ * ligmapatterns_pdb.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,12 +24,12 @@
 
 #include "stamp-pdbgen.h"
 
-#include "gimp.h"
+#include "ligma.h"
 
 
 /**
- * SECTION: gimppatterns
- * @title: gimppatterns
+ * SECTION: ligmapatterns
+ * @title: ligmapatterns
  * @short_description: Functions relating to patterns.
  *
  * Functions relating to patterns.
@@ -37,7 +37,7 @@
 
 
 /**
- * gimp_patterns_refresh:
+ * ligma_patterns_refresh:
  *
  * Refresh current patterns. This function always succeeds.
  *
@@ -47,61 +47,61 @@
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_patterns_refresh (void)
+ligma_patterns_refresh (void)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-patterns-refresh",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-patterns-refresh",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_patterns_get_list:
+ * ligma_patterns_get_list:
  * @filter: An optional regular expression used to filter the list.
  *
  * Retrieve a complete listing of the available patterns.
  *
- * This procedure returns a complete listing of available GIMP
+ * This procedure returns a complete listing of available LIGMA
  * patterns. Each name returned can be used as input to the
- * gimp_context_set_pattern().
+ * ligma_context_set_pattern().
  *
  * Returns: (array zero-terminated=1) (transfer full):
  *          The list of pattern names.
  *          The returned value must be freed with g_strfreev().
  **/
 gchar **
-gimp_patterns_get_list (const gchar *filter)
+ligma_patterns_get_list (const gchar *filter)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gchar **pattern_list = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, filter,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-patterns-get-list",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-patterns-get-list",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    pattern_list = GIMP_VALUES_DUP_STRV (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    pattern_list = LIGMA_VALUES_DUP_STRV (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return pattern_list;
 }

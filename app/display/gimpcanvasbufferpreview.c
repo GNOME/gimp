@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcanvasbufferpreview.c
+ * ligmacanvasbufferpreview.c
  * Copyright (C) 2013 Marek Dvoroznak <dvoromar@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,17 +24,17 @@
 #include <gtk/gtk.h>
 #include <cairo.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
 
 #include "display/display-types.h"
 
-#include "core/gimpimage.h"
+#include "core/ligmaimage.h"
 
-#include "gimpcanvas.h"
-#include "gimpcanvasbufferpreview.h"
-#include "gimpdisplayshell.h"
-#include "gimpdisplayshell-scroll.h"
+#include "ligmacanvas.h"
+#include "ligmacanvasbufferpreview.h"
+#include "ligmadisplayshell.h"
+#include "ligmadisplayshell-scroll.h"
 
 
 enum
@@ -44,72 +44,72 @@ enum
 };
 
 
-typedef struct _GimpCanvasBufferPreviewPrivate GimpCanvasBufferPreviewPrivate;
+typedef struct _LigmaCanvasBufferPreviewPrivate LigmaCanvasBufferPreviewPrivate;
 
-struct _GimpCanvasBufferPreviewPrivate
+struct _LigmaCanvasBufferPreviewPrivate
 {
   GeglBuffer *buffer;
 };
 
 
 #define GET_PRIVATE(transform_preview) \
-        ((GimpCanvasBufferPreviewPrivate *) gimp_canvas_buffer_preview_get_instance_private ((GimpCanvasBufferPreview *) (transform_preview)))
+        ((LigmaCanvasBufferPreviewPrivate *) ligma_canvas_buffer_preview_get_instance_private ((LigmaCanvasBufferPreview *) (transform_preview)))
 
 
 /*  local function prototypes  */
 
-static void             gimp_canvas_buffer_preview_dispose        (GObject               *object);
-static void             gimp_canvas_buffer_preview_set_property   (GObject               *object,
+static void             ligma_canvas_buffer_preview_dispose        (GObject               *object);
+static void             ligma_canvas_buffer_preview_set_property   (GObject               *object,
                                                                    guint                  property_id,
                                                                    const GValue          *value,
                                                                    GParamSpec            *pspec);
-static void             gimp_canvas_buffer_preview_get_property   (GObject               *object,
+static void             ligma_canvas_buffer_preview_get_property   (GObject               *object,
                                                                    guint                  property_id,
                                                                    GValue                *value,
                                                                    GParamSpec            *pspec);
 
-static void             gimp_canvas_buffer_preview_draw           (GimpCanvasItem        *item,
+static void             ligma_canvas_buffer_preview_draw           (LigmaCanvasItem        *item,
                                                                    cairo_t               *cr);
-static cairo_region_t * gimp_canvas_buffer_preview_get_extents    (GimpCanvasItem        *item);
-static void             gimp_canvas_buffer_preview_compute_bounds (GimpCanvasItem        *item,
+static cairo_region_t * ligma_canvas_buffer_preview_get_extents    (LigmaCanvasItem        *item);
+static void             ligma_canvas_buffer_preview_compute_bounds (LigmaCanvasItem        *item,
                                                                    cairo_rectangle_int_t *bounds);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpCanvasBufferPreview, gimp_canvas_buffer_preview,
-                            GIMP_TYPE_CANVAS_ITEM)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaCanvasBufferPreview, ligma_canvas_buffer_preview,
+                            LIGMA_TYPE_CANVAS_ITEM)
 
-#define parent_class gimp_canvas_buffer_preview_parent_class
+#define parent_class ligma_canvas_buffer_preview_parent_class
 
 
 static void
-gimp_canvas_buffer_preview_class_init (GimpCanvasBufferPreviewClass *klass)
+ligma_canvas_buffer_preview_class_init (LigmaCanvasBufferPreviewClass *klass)
 {
   GObjectClass        *object_class = G_OBJECT_CLASS (klass);
-  GimpCanvasItemClass *item_class   = GIMP_CANVAS_ITEM_CLASS (klass);
+  LigmaCanvasItemClass *item_class   = LIGMA_CANVAS_ITEM_CLASS (klass);
 
-  object_class->dispose      = gimp_canvas_buffer_preview_dispose;
-  object_class->set_property = gimp_canvas_buffer_preview_set_property;
-  object_class->get_property = gimp_canvas_buffer_preview_get_property;
+  object_class->dispose      = ligma_canvas_buffer_preview_dispose;
+  object_class->set_property = ligma_canvas_buffer_preview_set_property;
+  object_class->get_property = ligma_canvas_buffer_preview_get_property;
 
-  item_class->draw           = gimp_canvas_buffer_preview_draw;
-  item_class->get_extents    = gimp_canvas_buffer_preview_get_extents;
+  item_class->draw           = ligma_canvas_buffer_preview_draw;
+  item_class->get_extents    = ligma_canvas_buffer_preview_get_extents;
 
   g_object_class_install_property (object_class, PROP_BUFFER,
                                    g_param_spec_object ("buffer",
                                                         NULL, NULL,
                                                         GEGL_TYPE_BUFFER,
-                                                        GIMP_PARAM_READWRITE));
+                                                        LIGMA_PARAM_READWRITE));
 }
 
 static void
-gimp_canvas_buffer_preview_init (GimpCanvasBufferPreview *transform_preview)
+ligma_canvas_buffer_preview_init (LigmaCanvasBufferPreview *transform_preview)
 {
 }
 
 static void
-gimp_canvas_buffer_preview_dispose (GObject *object)
+ligma_canvas_buffer_preview_dispose (GObject *object)
 {
-  GimpCanvasBufferPreviewPrivate *private = GET_PRIVATE (object);
+  LigmaCanvasBufferPreviewPrivate *private = GET_PRIVATE (object);
 
   g_clear_object (&private->buffer);
 
@@ -117,12 +117,12 @@ gimp_canvas_buffer_preview_dispose (GObject *object)
 }
 
 static void
-gimp_canvas_buffer_preview_set_property (GObject      *object,
+ligma_canvas_buffer_preview_set_property (GObject      *object,
                                          guint         property_id,
                                          const GValue *value,
                                          GParamSpec   *pspec)
 {
-  GimpCanvasBufferPreviewPrivate *private = GET_PRIVATE (object);
+  LigmaCanvasBufferPreviewPrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
@@ -137,12 +137,12 @@ gimp_canvas_buffer_preview_set_property (GObject      *object,
 }
 
 static void
-gimp_canvas_buffer_preview_get_property (GObject    *object,
+ligma_canvas_buffer_preview_get_property (GObject    *object,
                                          guint       property_id,
                                          GValue     *value,
                                          GParamSpec *pspec)
 {
-  GimpCanvasBufferPreviewPrivate *private = GET_PRIVATE (object);
+  LigmaCanvasBufferPreviewPrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
@@ -157,10 +157,10 @@ gimp_canvas_buffer_preview_get_property (GObject    *object,
 }
 
 static void
-gimp_canvas_buffer_preview_draw (GimpCanvasItem *item,
+ligma_canvas_buffer_preview_draw (LigmaCanvasItem *item,
                                  cairo_t        *cr)
 {
-  GimpDisplayShell      *shell  = gimp_canvas_item_get_shell (item);
+  LigmaDisplayShell      *shell  = ligma_canvas_item_get_shell (item);
   GeglBuffer            *buffer = GET_PRIVATE (item)->buffer;
   cairo_surface_t       *area;
   guchar                *data;
@@ -168,7 +168,7 @@ gimp_canvas_buffer_preview_draw (GimpCanvasItem *item,
 
   g_return_if_fail (GEGL_IS_BUFFER (buffer));
 
-  gimp_canvas_buffer_preview_compute_bounds (item, &rectangle);
+  ligma_canvas_buffer_preview_compute_bounds (item, &rectangle);
 
   area = cairo_image_surface_create (CAIRO_FORMAT_ARGB32,
                                      rectangle.width,
@@ -199,10 +199,10 @@ gimp_canvas_buffer_preview_draw (GimpCanvasItem *item,
 }
 
 static void
-gimp_canvas_buffer_preview_compute_bounds (GimpCanvasItem        *item,
+ligma_canvas_buffer_preview_compute_bounds (LigmaCanvasItem        *item,
                                            cairo_rectangle_int_t *bounds)
 {
-  GimpDisplayShell *shell  = gimp_canvas_item_get_shell (item);
+  LigmaDisplayShell *shell  = ligma_canvas_item_get_shell (item);
   GeglBuffer       *buffer = GET_PRIVATE (item)->buffer;
   GeglRectangle     extent;
   gdouble           x1, y1;
@@ -212,11 +212,11 @@ gimp_canvas_buffer_preview_compute_bounds (GimpCanvasItem        *item,
 
   extent = *gegl_buffer_get_extent (buffer);
 
-  gimp_canvas_item_transform_xy_f (item,
+  ligma_canvas_item_transform_xy_f (item,
                                    extent.x,
                                    extent.y,
                                    &x1, &y1);
-  gimp_canvas_item_transform_xy_f (item,
+  ligma_canvas_item_transform_xy_f (item,
                                    extent.x + extent.width,
                                    extent.y + extent.height,
                                    &x2, &y2);
@@ -240,23 +240,23 @@ gimp_canvas_buffer_preview_compute_bounds (GimpCanvasItem        *item,
 }
 
 static cairo_region_t *
-gimp_canvas_buffer_preview_get_extents (GimpCanvasItem *item)
+ligma_canvas_buffer_preview_get_extents (LigmaCanvasItem *item)
 {
   cairo_rectangle_int_t rectangle;
 
-  gimp_canvas_buffer_preview_compute_bounds (item, &rectangle);
+  ligma_canvas_buffer_preview_compute_bounds (item, &rectangle);
 
   return cairo_region_create_rectangle (&rectangle);
 }
 
-GimpCanvasItem *
-gimp_canvas_buffer_preview_new (GimpDisplayShell  *shell,
+LigmaCanvasItem *
+ligma_canvas_buffer_preview_new (LigmaDisplayShell  *shell,
                                 GeglBuffer        *buffer)
 {
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
+  g_return_val_if_fail (LIGMA_IS_DISPLAY_SHELL (shell), NULL);
   g_return_val_if_fail (GEGL_IS_BUFFER (buffer), NULL);
 
-  return g_object_new (GIMP_TYPE_CANVAS_BUFFER_PREVIEW,
+  return g_object_new (LIGMA_TYPE_CANVAS_BUFFER_PREVIEW,
                        "shell",       shell,
                        "buffer",      buffer,
                        NULL);

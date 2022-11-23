@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimptagentry.h
+ * ligmatagentry.h
  * Copyright (C) 2008 Aurimas Juška <aurisj@svn.gnome.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,27 +18,27 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TAG_ENTRY_H__
-#define __GIMP_TAG_ENTRY_H__
+#ifndef __LIGMA_TAG_ENTRY_H__
+#define __LIGMA_TAG_ENTRY_H__
 
 
-#define GIMP_TYPE_TAG_ENTRY            (gimp_tag_entry_get_type ())
-#define GIMP_TAG_ENTRY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TAG_ENTRY, GimpTagEntry))
-#define GIMP_TAG_ENTRY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TAG_ENTRY, GimpTagEntryClass))
-#define GIMP_IS_TAG_ENTRY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_TAG_ENTRY))
-#define GIMP_IS_TAG_ENTRY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_TAG_ENTRY))
-#define GIMP_TAG_ENTRY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_TAG_ENTRY, GimpTagEntryClass))
+#define LIGMA_TYPE_TAG_ENTRY            (ligma_tag_entry_get_type ())
+#define LIGMA_TAG_ENTRY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_TAG_ENTRY, LigmaTagEntry))
+#define LIGMA_TAG_ENTRY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_TAG_ENTRY, LigmaTagEntryClass))
+#define LIGMA_IS_TAG_ENTRY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_TAG_ENTRY))
+#define LIGMA_IS_TAG_ENTRY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_TAG_ENTRY))
+#define LIGMA_TAG_ENTRY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_TAG_ENTRY, LigmaTagEntryClass))
 
 
-typedef struct _GimpTagEntryClass  GimpTagEntryClass;
+typedef struct _LigmaTagEntryClass  LigmaTagEntryClass;
 
-struct _GimpTagEntry
+struct _LigmaTagEntry
 {
   GtkEntry             parent_instance;
 
-  GimpTaggedContainer *container;
+  LigmaTaggedContainer *container;
 
-  /* mask describes the meaning of each char in GimpTagEntry.
+  /* mask describes the meaning of each char in LigmaTagEntry.
    * It is maintained automatically on insert-text and delete-text
    * events. If manual mask modification is desired, then
    * suppress_mask_update must be increased before calling any
@@ -57,30 +57,30 @@ struct _GimpTagEntry
   gint                 internal_operation;
   gint                 suppress_mask_update;
   gint                 suppress_tag_query;
-  GimpTagEntryMode     mode;
+  LigmaTagEntryMode     mode;
   gboolean             description_shown;
   gboolean             has_invalid_tags;
   guint                tag_query_idle_id;
 };
 
-struct _GimpTagEntryClass
+struct _LigmaTagEntryClass
 {
   GtkEntryClass   parent_class;
 };
 
 
-GType          gimp_tag_entry_get_type           (void) G_GNUC_CONST;
+GType          ligma_tag_entry_get_type           (void) G_GNUC_CONST;
 
-GtkWidget    * gimp_tag_entry_new                (GimpTaggedContainer *container,
-                                                  GimpTagEntryMode     mode);
+GtkWidget    * ligma_tag_entry_new                (LigmaTaggedContainer *container,
+                                                  LigmaTagEntryMode     mode);
 
-void           gimp_tag_entry_set_selected_items (GimpTagEntry        *entry,
+void           ligma_tag_entry_set_selected_items (LigmaTagEntry        *entry,
                                                   GList               *items);
-gchar       ** gimp_tag_entry_parse_tags         (GimpTagEntry        *entry);
-void           gimp_tag_entry_set_tag_string     (GimpTagEntry        *entry,
+gchar       ** ligma_tag_entry_parse_tags         (LigmaTagEntry        *entry);
+void           ligma_tag_entry_set_tag_string     (LigmaTagEntry        *entry,
                                                   const gchar         *tag_string);
 
-const gchar  * gimp_tag_entry_get_separator      (void);
+const gchar  * ligma_tag_entry_get_separator      (void);
 
 
-#endif  /*  __GIMP_TAG_ENTRY_H__  */
+#endif  /*  __LIGMA_TAG_ENTRY_H__  */

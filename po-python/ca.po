@@ -1,20 +1,20 @@
 # translation of ca.po to Catalan
-# gimp-python translation to Catalan.
+# ligma-python translation to Catalan.
 # Copyright © 2000, 2001, 2003, 2004, 2005, 2006, 2007, 2008 Free Software Foundation, Inc.
 #
 #
-# Softcatala <gimp a llistes.softcatala.org>, 2000-2008.
+# Softcatala <ligma a llistes.softcatala.org>, 2000-2008.
 # Quim Perez i Noguer <noguer a gmail.com>, 2005-2008.
 # Xavier Beà <xbea a pie.xtec.es>, 2003, 2004.
 # Xavier Conde Rueda <xaviconde a eresmas.com>, 2004.
 msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2022-02-18 23:17+0000\n"
 "PO-Revision-Date: 2020-11-26 19:18+0100\n"
 "Last-Translator: Carles Ferrando Garcia <carles.ferrando@gmail.com>\n"
-"Language-Team: Catalan <gimp@llistes.softcatala.org>\n"
+"Language-Team: Catalan <ligma@llistes.softcatala.org>\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -426,8 +426,8 @@ msgid "Python _Console"
 msgstr "_Consola Python"
 
 #: ../plug-ins/python/python-console/python-console.py:357
-msgid "Interactive GIMP Python interpreter"
-msgstr "Intèrpret interactiu de Python del GIMP"
+msgid "Interactive LIGMA Python interpreter"
+msgstr "Intèrpret interactiu de Python del LIGMA"
 
 #: ../plug-ins/python/spyro-plus.py:50
 msgid "Spyro Layer"
@@ -781,7 +781,7 @@ msgstr ""
 "desar-la al camí"
 
 #: ../plug-ins/python/spyro-plus.py:1750
-msgid "Spyrogimp"
+msgid "Spyroligma"
 msgstr "Espirògraf"
 
 #: ../plug-ins/python/spyro-plus.py:1759 ../plug-ins/python/spyro-plus.py:2297
@@ -810,7 +810,7 @@ msgid "Please wait : Rendering Pattern"
 msgstr "Espereu: s'està renderitzant el patró"
 
 #: ../plug-ins/python/spyro-plus.py:2301
-msgid "Spyrogimp..."
+msgid "Spyroligma..."
 msgstr "Espirògraf..."
 
 #~ msgid "Fog _color"

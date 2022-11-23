@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,9 +19,9 @@
 #define __DATA_DELETE_DIALOG_H__
 
 
-GtkWidget * data_delete_dialog_new (GimpDataFactory *factory,
-                                    GimpData        *data,
-                                    GimpContext     *context,
+GtkWidget * data_delete_dialog_new (LigmaDataFactory *factory,
+                                    LigmaData        *data,
+                                    LigmaContext     *context,
                                     GtkWidget       *parent);
 
 

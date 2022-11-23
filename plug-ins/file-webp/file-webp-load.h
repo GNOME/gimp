@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * file-webp - WebP file format plug-in for the GIMP
+ * file-webp - WebP file format plug-in for the LIGMA
  * Copyright (C) 2015  Nathan Osman
  * Copyright (C) 2016  Ben Touchette
  *
@@ -23,7 +23,7 @@
 #define __WEBP_LOAD_H__
 
 
-GimpImage * load_image (GFile       *file,
+LigmaImage * load_image (GFile       *file,
                         gboolean     interactive,
                         GError     **error);
 

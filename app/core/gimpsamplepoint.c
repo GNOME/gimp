@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,12 +19,12 @@
 
 #include <gio/gio.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "core-types.h"
 
-#include "gimpsamplepoint.h"
+#include "ligmasamplepoint.h"
 
 
 enum
@@ -36,73 +36,73 @@ enum
 };
 
 
-struct _GimpSamplePointPrivate
+struct _LigmaSamplePointPrivate
 {
   gint              position_x;
   gint              position_y;
-  GimpColorPickMode pick_mode;
+  LigmaColorPickMode pick_mode;
 };
 
 
-static void   gimp_sample_point_get_property (GObject      *object,
+static void   ligma_sample_point_get_property (GObject      *object,
                                               guint         property_id,
                                               GValue       *value,
                                               GParamSpec   *pspec);
-static void   gimp_sample_point_set_property (GObject      *object,
+static void   ligma_sample_point_set_property (GObject      *object,
                                               guint         property_id,
                                               const GValue *value,
                                               GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpSamplePoint, gimp_sample_point,
-                            GIMP_TYPE_AUX_ITEM)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaSamplePoint, ligma_sample_point,
+                            LIGMA_TYPE_AUX_ITEM)
 
 
 static void
-gimp_sample_point_class_init (GimpSamplePointClass *klass)
+ligma_sample_point_class_init (LigmaSamplePointClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->get_property = gimp_sample_point_get_property;
-  object_class->set_property = gimp_sample_point_set_property;
+  object_class->get_property = ligma_sample_point_get_property;
+  object_class->set_property = ligma_sample_point_set_property;
 
-  GIMP_CONFIG_PROP_INT (object_class, PROP_POSITION_X,
+  LIGMA_CONFIG_PROP_INT (object_class, PROP_POSITION_X,
                         "position-x",
                         NULL, NULL,
-                        GIMP_SAMPLE_POINT_POSITION_UNDEFINED,
-                        GIMP_MAX_IMAGE_SIZE,
-                        GIMP_SAMPLE_POINT_POSITION_UNDEFINED,
+                        LIGMA_SAMPLE_POINT_POSITION_UNDEFINED,
+                        LIGMA_MAX_IMAGE_SIZE,
+                        LIGMA_SAMPLE_POINT_POSITION_UNDEFINED,
                         0);
 
-  GIMP_CONFIG_PROP_INT (object_class, PROP_POSITION_Y,
+  LIGMA_CONFIG_PROP_INT (object_class, PROP_POSITION_Y,
                         "position-y",
                         NULL, NULL,
-                        GIMP_SAMPLE_POINT_POSITION_UNDEFINED,
-                        GIMP_MAX_IMAGE_SIZE,
-                        GIMP_SAMPLE_POINT_POSITION_UNDEFINED,
+                        LIGMA_SAMPLE_POINT_POSITION_UNDEFINED,
+                        LIGMA_MAX_IMAGE_SIZE,
+                        LIGMA_SAMPLE_POINT_POSITION_UNDEFINED,
                         0);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_PICK_MODE,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_PICK_MODE,
                          "pick-mode",
                          NULL, NULL,
-                         GIMP_TYPE_COLOR_PICK_MODE,
-                         GIMP_COLOR_PICK_MODE_PIXEL,
+                         LIGMA_TYPE_COLOR_PICK_MODE,
+                         LIGMA_COLOR_PICK_MODE_PIXEL,
                          0);
 }
 
 static void
-gimp_sample_point_init (GimpSamplePoint *sample_point)
+ligma_sample_point_init (LigmaSamplePoint *sample_point)
 {
-  sample_point->priv = gimp_sample_point_get_instance_private (sample_point);
+  sample_point->priv = ligma_sample_point_get_instance_private (sample_point);
 }
 
 static void
-gimp_sample_point_get_property (GObject    *object,
+ligma_sample_point_get_property (GObject    *object,
                                 guint       property_id,
                                 GValue     *value,
                                 GParamSpec *pspec)
 {
-  GimpSamplePoint *sample_point = GIMP_SAMPLE_POINT (object);
+  LigmaSamplePoint *sample_point = LIGMA_SAMPLE_POINT (object);
 
   switch (property_id)
     {
@@ -123,12 +123,12 @@ gimp_sample_point_get_property (GObject    *object,
 }
 
 static void
-gimp_sample_point_set_property (GObject      *object,
+ligma_sample_point_set_property (GObject      *object,
                                 guint         property_id,
                                 const GValue *value,
                                 GParamSpec   *pspec)
 {
-  GimpSamplePoint *sample_point = GIMP_SAMPLE_POINT (object);
+  LigmaSamplePoint *sample_point = LIGMA_SAMPLE_POINT (object);
 
   switch (property_id)
     {
@@ -148,20 +148,20 @@ gimp_sample_point_set_property (GObject      *object,
     }
 }
 
-GimpSamplePoint *
-gimp_sample_point_new (guint32 sample_point_ID)
+LigmaSamplePoint *
+ligma_sample_point_new (guint32 sample_point_ID)
 {
-  return g_object_new (GIMP_TYPE_SAMPLE_POINT,
+  return g_object_new (LIGMA_TYPE_SAMPLE_POINT,
                        "id", sample_point_ID,
                        NULL);
 }
 
 void
-gimp_sample_point_get_position (GimpSamplePoint *sample_point,
+ligma_sample_point_get_position (LigmaSamplePoint *sample_point,
                                 gint            *position_x,
                                 gint            *position_y)
 {
-  g_return_if_fail (GIMP_IS_SAMPLE_POINT (sample_point));
+  g_return_if_fail (LIGMA_IS_SAMPLE_POINT (sample_point));
   g_return_if_fail (position_x != NULL);
   g_return_if_fail (position_y != NULL);
 
@@ -170,11 +170,11 @@ gimp_sample_point_get_position (GimpSamplePoint *sample_point,
 }
 
 void
-gimp_sample_point_set_position (GimpSamplePoint *sample_point,
+ligma_sample_point_set_position (LigmaSamplePoint *sample_point,
                                 gint             position_x,
                                 gint             position_y)
 {
-  g_return_if_fail (GIMP_IS_SAMPLE_POINT (sample_point));
+  g_return_if_fail (LIGMA_IS_SAMPLE_POINT (sample_point));
 
   if (sample_point->priv->position_x != position_x ||
       sample_point->priv->position_y != position_y)
@@ -191,20 +191,20 @@ gimp_sample_point_set_position (GimpSamplePoint *sample_point,
     }
 }
 
-GimpColorPickMode
-gimp_sample_point_get_pick_mode (GimpSamplePoint *sample_point)
+LigmaColorPickMode
+ligma_sample_point_get_pick_mode (LigmaSamplePoint *sample_point)
 {
-  g_return_val_if_fail (GIMP_IS_SAMPLE_POINT (sample_point),
-                        GIMP_COLOR_PICK_MODE_PIXEL);
+  g_return_val_if_fail (LIGMA_IS_SAMPLE_POINT (sample_point),
+                        LIGMA_COLOR_PICK_MODE_PIXEL);
 
   return sample_point->priv->pick_mode;
 }
 
 void
-gimp_sample_point_set_pick_mode (GimpSamplePoint   *sample_point,
-                                 GimpColorPickMode  pick_mode)
+ligma_sample_point_set_pick_mode (LigmaSamplePoint   *sample_point,
+                                 LigmaColorPickMode  pick_mode)
 {
-  g_return_if_fail (GIMP_IS_SAMPLE_POINT (sample_point));
+  g_return_if_fail (LIGMA_IS_SAMPLE_POINT (sample_point));
 
   if (sample_point->priv->pick_mode != pick_mode)
     {

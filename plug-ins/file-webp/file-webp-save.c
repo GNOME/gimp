@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * file-webp - WebP file format plug-in for the GIMP
+ * file-webp - WebP file format plug-in for the LIGMA
  * Copyright (C) 2015  Nathan Osman
  * Copyright (C) 2016  Ben Touchette
  *
@@ -31,15 +31,15 @@
 
 #include <gegl.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
 #include <webp/encode.h>
 #include <webp/mux.h>
 
 #include "file-webp-save.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 int           webp_anim_file_writer (FILE              *outfile,
@@ -52,9 +52,9 @@ int           webp_file_progress    (int                percent,
                                      const WebPPicture *picture);
 gchar *       webp_error_string     (WebPEncodingError  error_code);
 
-static void   webp_decide_output    (GimpImage         *image,
+static void   webp_decide_output    (LigmaImage         *image,
                                      GObject           *config,
-                                     GimpColorProfile **profile,
+                                     LigmaColorProfile **profile,
                                      gboolean          *out_linear);
 
 int
@@ -89,7 +89,7 @@ int
 webp_file_progress (int                percent,
                     const WebPPicture *picture)
 {
-  return gimp_progress_update (percent / 100.0);
+  return ligma_progress_update (percent / 100.0);
 }
 
 gchar *
@@ -128,8 +128,8 @@ webp_error_string (WebPEncodingError error_code)
 
 gboolean
 save_layer (GFile         *file,
-            GimpImage     *image,
-            GimpDrawable  *drawable,
+            LigmaImage     *image,
+            LigmaDrawable  *drawable,
             GObject       *config,
             GError       **error)
 {
@@ -144,7 +144,7 @@ save_layer (GFile         *file,
   const Babl       *format;
   const Babl       *space      = NULL;
   gint              bpp;
-  GimpColorProfile *profile    = NULL;
+  LigmaColorProfile *profile    = NULL;
   GeglBuffer       *geglbuffer = NULL;
   GeglRectangle     extent;
   gchar            *indata;
@@ -171,8 +171,8 @@ save_layer (GFile         *file,
   webp_decide_output (image, config, &profile, &out_linear);
   if (profile)
     {
-      space = gimp_color_profile_get_space (profile,
-                                            GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+      space = ligma_color_profile_get_space (profile,
+                                            LIGMA_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
                                             error);
       if (error && *error)
         {
@@ -185,7 +185,7 @@ save_layer (GFile         *file,
 
     }
   if (! space)
-    space = gimp_drawable_get_format (drawable);
+    space = ligma_drawable_get_format (drawable);
 
   /* The do...while() loop is a neat little trick that makes it easier
    * to jump to error handling code while still ensuring proper
@@ -195,8 +195,8 @@ save_layer (GFile         *file,
   do
     {
       /* Begin displaying export progress */
-      gimp_progress_init_printf (_("Saving '%s'"),
-                                 gimp_file_get_utf8_name (file));
+      ligma_progress_init_printf (_("Saving '%s'"),
+                                 ligma_file_get_utf8_name (file));
 
       /* Attempt to open the output file */
       outfile = g_fopen (g_file_peek_path (file), "w+b");
@@ -206,13 +206,13 @@ save_layer (GFile         *file,
           g_set_error (error, G_FILE_ERROR,
                        g_file_error_from_errno (errno),
                        _("Unable to open '%s' for writing: %s"),
-                       gimp_file_get_utf8_name (file),
+                       ligma_file_get_utf8_name (file),
                        g_strerror (errno));
           break;
         }
 
       /* Obtain the drawable type */
-      has_alpha = gimp_drawable_has_alpha (drawable);
+      has_alpha = ligma_drawable_has_alpha (drawable);
 
       if (has_alpha)
         {
@@ -233,7 +233,7 @@ save_layer (GFile         *file,
       bpp = babl_format_get_bytes_per_pixel (format);
 
       /* Retrieve the buffer for the layer */
-      geglbuffer = gimp_drawable_get_buffer (drawable);
+      geglbuffer = ligma_drawable_get_buffer (drawable);
       extent = *gegl_buffer_get_extent (geglbuffer);
       w = extent.width;
       h = extent.height;
@@ -338,7 +338,7 @@ save_layer (GFile         *file,
                   const guint8 *icc_data;
                   gsize         icc_data_size;
 
-                  icc_data = gimp_color_profile_get_icc_profile (profile,
+                  icc_data = ligma_color_profile_get_icc_profile (profile,
                                                                  &icc_data_size);
                   chunk.bytes = icc_data;
                   chunk.size = icc_data_size;
@@ -417,12 +417,12 @@ parse_ms_tag (const gchar *str)
 }
 
 static gint
-get_layer_delay (GimpLayer *layer)
+get_layer_delay (LigmaLayer *layer)
 {
   gchar *layer_name;
   gint   delay_ms;
 
-  layer_name = gimp_item_get_name (GIMP_ITEM (layer));
+  layer_name = ligma_item_get_name (LIGMA_ITEM (layer));
   delay_ms   = parse_ms_tag (layer_name);
   g_free (layer_name);
 
@@ -450,12 +450,12 @@ parse_combine (const char* str)
 }
 
 static gboolean
-get_layer_needs_combine (GimpLayer *layer)
+get_layer_needs_combine (LigmaLayer *layer)
 {
   gchar     *layer_name;
   gboolean   needs_combine;
 
-  layer_name    = gimp_item_get_name (GIMP_ITEM (layer));
+  layer_name    = ligma_item_get_name (LIGMA_ITEM (layer));
   needs_combine = parse_combine (layer_name);
   g_free (layer_name);
 
@@ -504,9 +504,9 @@ combine_buffers (GeglBuffer *layer_buffer,
 
 gboolean
 save_animation (GFile         *file,
-                GimpImage     *image,
+                LigmaImage     *image,
                 gint           n_drawables,
-                GimpDrawable **drawables,
+                LigmaDrawable **drawables,
                 GObject       *config,
                 GError       **error)
 {
@@ -522,7 +522,7 @@ save_animation (GFile         *file,
   const gchar           *encoding;
   const Babl            *format;
   const Babl            *space   = NULL;
-  GimpColorProfile      *profile = NULL;
+  LigmaColorProfile      *profile = NULL;
   WebPAnimEncoderOptions enc_options;
   WebPData               webp_data;
   int                    frame_timestamp = 0;
@@ -557,7 +557,7 @@ save_animation (GFile         *file,
                 "use-sharp-yuv",      &use_sharp_yuv,
                 NULL);
 
-  layers = gimp_image_list_layers (image);
+  layers = ligma_image_list_layers (image);
 
   if (! layers)
     return FALSE;
@@ -568,8 +568,8 @@ save_animation (GFile         *file,
   webp_decide_output (image, config, &profile, &out_linear);
   if (profile)
     {
-      space = gimp_color_profile_get_space (profile,
-                                            GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+      space = ligma_color_profile_get_space (profile,
+                                            LIGMA_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
                                             error);
       if (error && *error)
         {
@@ -583,9 +583,9 @@ save_animation (GFile         *file,
     }
 
   if (! space)
-    space = gimp_drawable_get_format (drawables[0]);
+    space = ligma_drawable_get_format (drawables[0]);
 
-  gimp_image_undo_freeze (image);
+  ligma_image_undo_freeze (image);
 
   WebPDataInit (&webp_data);
 
@@ -595,8 +595,8 @@ save_animation (GFile         *file,
       gint   i;
 
       /* Begin displaying export progress */
-      gimp_progress_init_printf (_("Saving '%s'"),
-                                 gimp_file_get_utf8_name (file));
+      ligma_progress_init_printf (_("Saving '%s'"),
+                                 ligma_file_get_utf8_name (file));
 
       /* Attempt to open the output file */
       outfile = g_fopen (g_file_peek_path (file), "wb");
@@ -606,7 +606,7 @@ save_animation (GFile         *file,
           g_set_error (error, G_FILE_ERROR,
                        g_file_error_from_errno (errno),
                        _("Unable to open '%s' for writing: %s"),
-                       gimp_file_get_utf8_name (file),
+                       ligma_file_get_utf8_name (file),
                        g_strerror (errno));
           status = FALSE;
           break;
@@ -642,15 +642,15 @@ save_animation (GFile         *file,
           WebPConfig        webp_config;
           WebPPicture       picture;
           WebPMemoryWriter  mw       = { 0 };
-          GimpDrawable     *drawable = list->data;
+          LigmaDrawable     *drawable = list->data;
           gint              delay;
           gboolean          needs_combine;
 
-          delay         = get_layer_delay (GIMP_LAYER (drawable));
-          needs_combine = get_layer_needs_combine (GIMP_LAYER (drawable));
+          delay         = get_layer_delay (LIGMA_LAYER (drawable));
+          needs_combine = get_layer_needs_combine (LIGMA_LAYER (drawable));
 
           /* Obtain the drawable type */
-          has_alpha = gimp_drawable_has_alpha (drawable);
+          has_alpha = ligma_drawable_has_alpha (drawable);
 
           if (has_alpha)
             {
@@ -671,10 +671,10 @@ save_animation (GFile         *file,
           bpp = babl_format_get_bytes_per_pixel (format);
 
           /* fix layers to avoid offset errors */
-          gimp_layer_resize_to_image_size (GIMP_LAYER (drawable));
+          ligma_layer_resize_to_image_size (LIGMA_LAYER (drawable));
 
           /* Retrieve the buffer for the layer */
-          geglbuffer = gimp_drawable_get_buffer (drawable);
+          geglbuffer = ligma_drawable_get_buffer (drawable);
           extent = *gegl_buffer_get_extent (geglbuffer);
           w = extent.width;
           h = extent.height;
@@ -778,7 +778,7 @@ save_animation (GFile         *file,
           if (status == FALSE)
             break;
 
-          gimp_progress_update ((i + 1.0) / n_layers);
+          ligma_progress_update ((i + 1.0) / n_layers);
           frame_timestamp += (delay <= 0 || force_delay) ? default_delay : delay;
         }
 
@@ -814,7 +814,7 @@ save_animation (GFile         *file,
             }
 
           /* Save ICC data */
-          icc_data = gimp_color_profile_get_icc_profile (profile, &icc_data_size);
+          icc_data = ligma_color_profile_get_icc_profile (profile, &icc_data_size);
           chunk.bytes = icc_data;
           chunk.size  = icc_data_size;
           WebPMuxSetChunk (mux, "ICCP", &chunk, 1);
@@ -851,9 +851,9 @@ save_animation (GFile         *file,
 }
 
 static void
-webp_decide_output (GimpImage         *image,
+webp_decide_output (LigmaImage         *image,
                     GObject           *config,
-                    GimpColorProfile **profile,
+                    LigmaColorProfile **profile,
                     gboolean          *out_linear)
 {
   gboolean save_profile;
@@ -868,12 +868,12 @@ webp_decide_output (GimpImage         *image,
 
   if (save_profile)
     {
-      *profile = gimp_image_get_color_profile (image);
+      *profile = ligma_image_get_color_profile (image);
 
       /* If a profile is explicitly set, follow its TRC, whatever the
        * storage format.
        */
-      if (*profile && gimp_color_profile_is_linear (*profile))
+      if (*profile && ligma_color_profile_is_linear (*profile))
         *out_linear = TRUE;
 
       /* When no profile was explicitly set, since WebP is apparently
@@ -885,16 +885,16 @@ webp_decide_output (GimpImage         *image,
       if (! *profile)
         {
           /* There is always an effective profile. */
-          *profile = gimp_image_get_effective_color_profile (image);
+          *profile = ligma_image_get_effective_color_profile (image);
 
-          if (gimp_color_profile_is_linear (*profile))
+          if (ligma_color_profile_is_linear (*profile))
             {
-              if (gimp_image_get_precision (image) != GIMP_PRECISION_U8_LINEAR)
+              if (ligma_image_get_precision (image) != LIGMA_PRECISION_U8_LINEAR)
                 {
                   /* If stored data was linear, let's convert the profile. */
-                  GimpColorProfile *saved_profile;
+                  LigmaColorProfile *saved_profile;
 
-                  saved_profile = gimp_color_profile_new_srgb_trc_from_color_profile (*profile);
+                  saved_profile = ligma_color_profile_new_srgb_trc_from_color_profile (*profile);
                   g_clear_object (profile);
                   *profile = saved_profile;
                 }

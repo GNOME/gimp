@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,30 +20,30 @@
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
 
 #include "core-types.h"
 
-#include "config/gimpguiconfig.h"
+#include "config/ligmaguiconfig.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontainer.h"
-#include "core/gimpcontext.h"
+#include "core/ligma.h"
+#include "core/ligmacontainer.h"
+#include "core/ligmacontext.h"
 
-#include "gimpdisplay.h"
+#include "ligmadisplay.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 enum
 {
   PROP_0,
   PROP_ID,
-  PROP_GIMP
+  PROP_LIGMA
 };
 
 
-struct _GimpDisplayPrivate
+struct _LigmaDisplayPrivate
 {
   gint id; /* unique identifier for this display */
 };
@@ -51,75 +51,75 @@ struct _GimpDisplayPrivate
 
 /*  local function prototypes  */
 
-static void     gimp_display_set_property           (GObject             *object,
+static void     ligma_display_set_property           (GObject             *object,
                                                      guint                property_id,
                                                      const GValue        *value,
                                                      GParamSpec          *pspec);
-static void     gimp_display_get_property           (GObject             *object,
+static void     ligma_display_get_property           (GObject             *object,
                                                      guint                property_id,
                                                      GValue              *value,
                                                      GParamSpec          *pspec);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpDisplay, gimp_display, GIMP_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaDisplay, ligma_display, LIGMA_TYPE_OBJECT)
 
-#define parent_class gimp_display_parent_class
+#define parent_class ligma_display_parent_class
 
 
 static void
-gimp_display_class_init (GimpDisplayClass *klass)
+ligma_display_class_init (LigmaDisplayClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->set_property = gimp_display_set_property;
-  object_class->get_property = gimp_display_get_property;
+  object_class->set_property = ligma_display_set_property;
+  object_class->get_property = ligma_display_get_property;
 
   g_object_class_install_property (object_class, PROP_ID,
                                    g_param_spec_int ("id",
                                                      NULL, NULL,
                                                      0, G_MAXINT, 0,
-                                                     GIMP_PARAM_READABLE));
+                                                     LIGMA_PARAM_READABLE));
 
-  g_object_class_install_property (object_class, PROP_GIMP,
-                                   g_param_spec_object ("gimp",
+  g_object_class_install_property (object_class, PROP_LIGMA,
+                                   g_param_spec_object ("ligma",
                                                         NULL, NULL,
-                                                        GIMP_TYPE_GIMP,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_TYPE_LIGMA,
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
-gimp_display_init (GimpDisplay *display)
+ligma_display_init (LigmaDisplay *display)
 {
-  display->priv = gimp_display_get_instance_private (display);
+  display->priv = ligma_display_get_instance_private (display);
 }
 
 static void
-gimp_display_set_property (GObject      *object,
+ligma_display_set_property (GObject      *object,
                            guint         property_id,
                            const GValue *value,
                            GParamSpec   *pspec)
 {
-  GimpDisplay        *display = GIMP_DISPLAY (object);
-  GimpDisplayPrivate *private = display->priv;
+  LigmaDisplay        *display = LIGMA_DISPLAY (object);
+  LigmaDisplayPrivate *private = display->priv;
 
   switch (property_id)
     {
-    case PROP_GIMP:
+    case PROP_LIGMA:
       {
         gint id;
 
-        display->gimp = g_value_get_object (value); /* don't ref the gimp */
-        display->config = GIMP_DISPLAY_CONFIG (display->gimp->config);
+        display->ligma = g_value_get_object (value); /* don't ref the ligma */
+        display->config = LIGMA_DISPLAY_CONFIG (display->ligma->config);
 
         do
           {
-            id = display->gimp->next_display_id++;
+            id = display->ligma->next_display_id++;
 
-            if (display->gimp->next_display_id == G_MAXINT)
-              display->gimp->next_display_id = 1;
+            if (display->ligma->next_display_id == G_MAXINT)
+              display->ligma->next_display_id = 1;
           }
-        while (gimp_display_get_by_id (display->gimp, id));
+        while (ligma_display_get_by_id (display->ligma, id));
 
         private->id = id;
       }
@@ -132,12 +132,12 @@ gimp_display_set_property (GObject      *object,
 }
 
 static void
-gimp_display_get_property (GObject    *object,
+ligma_display_get_property (GObject    *object,
                            guint       property_id,
                            GValue     *value,
                            GParamSpec *pspec)
 {
-  GimpDisplay *display = GIMP_DISPLAY (object);
+  LigmaDisplay *display = LIGMA_DISPLAY (object);
 
   switch (property_id)
     {
@@ -145,8 +145,8 @@ gimp_display_get_property (GObject    *object,
       g_value_set_int (value, display->priv->id);
       break;
 
-    case PROP_GIMP:
-      g_value_set_object (value, display->gimp);
+    case PROP_LIGMA:
+      g_value_set_object (value, display->ligma);
       break;
 
     default:
@@ -158,28 +158,28 @@ gimp_display_get_property (GObject    *object,
 /*  public functions  */
 
 gint
-gimp_display_get_id (GimpDisplay *display)
+ligma_display_get_id (LigmaDisplay *display)
 {
-  g_return_val_if_fail (GIMP_IS_DISPLAY (display), -1);
+  g_return_val_if_fail (LIGMA_IS_DISPLAY (display), -1);
 
   return display->priv->id;
 }
 
-GimpDisplay *
-gimp_display_get_by_id (Gimp *gimp,
+LigmaDisplay *
+ligma_display_get_by_id (Ligma *ligma,
                         gint  id)
 {
   GList *list;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
 
-  for (list = gimp_get_display_iter (gimp);
+  for (list = ligma_get_display_iter (ligma);
        list;
        list = g_list_next (list))
     {
-      GimpDisplay *display = list->data;
+      LigmaDisplay *display = list->data;
 
-      if (gimp_display_get_id (display) == id)
+      if (ligma_display_get_id (display) == id)
         return display;
     }
 
@@ -187,31 +187,31 @@ gimp_display_get_by_id (Gimp *gimp,
 }
 
 gboolean
-gimp_display_present (GimpDisplay *display)
+ligma_display_present (LigmaDisplay *display)
 {
-  g_return_val_if_fail (GIMP_IS_DISPLAY (display), FALSE);
+  g_return_val_if_fail (LIGMA_IS_DISPLAY (display), FALSE);
 
-  if (GIMP_DISPLAY_GET_CLASS (display)->present)
-    return GIMP_DISPLAY_GET_CLASS (display)->present (display);
+  if (LIGMA_DISPLAY_GET_CLASS (display)->present)
+    return LIGMA_DISPLAY_GET_CLASS (display)->present (display);
 
   return FALSE;
 }
 
 gboolean
-gimp_display_grab_focus (GimpDisplay *display)
+ligma_display_grab_focus (LigmaDisplay *display)
 {
-  g_return_val_if_fail (GIMP_IS_DISPLAY (display), FALSE);
+  g_return_val_if_fail (LIGMA_IS_DISPLAY (display), FALSE);
 
-  if (GIMP_DISPLAY_GET_CLASS (display)->grab_focus)
-    return GIMP_DISPLAY_GET_CLASS (display)->grab_focus (display);
+  if (LIGMA_DISPLAY_GET_CLASS (display)->grab_focus)
+    return LIGMA_DISPLAY_GET_CLASS (display)->grab_focus (display);
 
   return FALSE;
 }
 
-Gimp *
-gimp_display_get_gimp (GimpDisplay *display)
+Ligma *
+ligma_display_get_ligma (LigmaDisplay *display)
 {
-  g_return_val_if_fail (GIMP_IS_DISPLAY (display), NULL);
+  g_return_val_if_fail (LIGMA_IS_DISPLAY (display), NULL);
 
-  return display->gimp;
+  return display->ligma;
 }

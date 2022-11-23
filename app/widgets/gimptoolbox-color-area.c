@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,51 +20,51 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "config/gimpguiconfig.h"
+#include "config/ligmaguiconfig.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontext.h"
-#include "core/gimpdisplay.h"
+#include "core/ligma.h"
+#include "core/ligmacontext.h"
+#include "core/ligmadisplay.h"
 
-#include "gimpaction.h"
-#include "gimpcolordialog.h"
-#include "gimpdialogfactory.h"
-#include "gimpfgbgeditor.h"
-#include "gimphelp-ids.h"
-#include "gimpsessioninfo.h"
-#include "gimptoolbox.h"
-#include "gimptoolbox-color-area.h"
-#include "gimpuimanager.h"
+#include "ligmaaction.h"
+#include "ligmacolordialog.h"
+#include "ligmadialogfactory.h"
+#include "ligmafgbgeditor.h"
+#include "ligmahelp-ids.h"
+#include "ligmasessioninfo.h"
+#include "ligmatoolbox.h"
+#include "ligmatoolbox-color-area.h"
+#include "ligmauimanager.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /*  local function prototypes  */
 
-static void   color_area_foreground_changed (GimpContext          *context,
-                                             const GimpRGB        *color,
-                                             GimpColorDialog      *dialog);
-static void   color_area_background_changed (GimpContext          *context,
-                                             const GimpRGB        *color,
-                                             GimpColorDialog      *dialog);
+static void   color_area_foreground_changed (LigmaContext          *context,
+                                             const LigmaRGB        *color,
+                                             LigmaColorDialog      *dialog);
+static void   color_area_background_changed (LigmaContext          *context,
+                                             const LigmaRGB        *color,
+                                             LigmaColorDialog      *dialog);
 
-static void   color_area_dialog_update      (GimpColorDialog      *dialog,
-                                             const GimpRGB        *color,
-                                             GimpColorDialogState  state,
-                                             GimpContext          *context);
+static void   color_area_dialog_update      (LigmaColorDialog      *dialog,
+                                             const LigmaRGB        *color,
+                                             LigmaColorDialogState  state,
+                                             LigmaContext          *context);
 
-static void   color_area_color_clicked      (GimpFgBgEditor       *editor,
-                                             GimpActiveColor       active_color,
-                                             GimpContext          *context);
-static void   color_area_color_changed      (GimpContext          *context);
-static void   color_area_tooltip            (GimpFgBgEditor       *editor,
-                                             GimpFgBgTarget        target,
+static void   color_area_color_clicked      (LigmaFgBgEditor       *editor,
+                                             LigmaActiveColor       active_color,
+                                             LigmaContext          *context);
+static void   color_area_color_changed      (LigmaContext          *context);
+static void   color_area_tooltip            (LigmaFgBgEditor       *editor,
+                                             LigmaFgBgTarget        target,
                                              GtkTooltip           *tooltip,
-                                             GimpToolbox          *toolbox);
+                                             LigmaToolbox          *toolbox);
 
 
 /*  local variables  */
@@ -72,29 +72,29 @@ static void   color_area_tooltip            (GimpFgBgEditor       *editor,
 static GtkWidget       *color_area          = NULL;
 static GtkWidget       *color_dialog        = NULL;
 static gboolean         color_dialog_active = FALSE;
-static GimpActiveColor  edit_color          = GIMP_ACTIVE_COLOR_FOREGROUND;
-static GimpRGB          revert_fg;
-static GimpRGB          revert_bg;
+static LigmaActiveColor  edit_color          = LIGMA_ACTIVE_COLOR_FOREGROUND;
+static LigmaRGB          revert_fg;
+static LigmaRGB          revert_bg;
 
 
 /*  public functions  */
 
 GtkWidget *
-gimp_toolbox_color_area_create (GimpToolbox *toolbox,
+ligma_toolbox_color_area_create (LigmaToolbox *toolbox,
                                 gint         width,
                                 gint         height)
 {
-  GimpContext *context;
+  LigmaContext *context;
 
-  g_return_val_if_fail (GIMP_IS_TOOLBOX (toolbox), NULL);
+  g_return_val_if_fail (LIGMA_IS_TOOLBOX (toolbox), NULL);
 
-  context = gimp_toolbox_get_context (toolbox);
+  context = ligma_toolbox_get_context (toolbox);
 
-  color_area = gimp_fg_bg_editor_new (context);
+  color_area = ligma_fg_bg_editor_new (context);
   gtk_widget_set_size_request (color_area, width, height);
 
-  gimp_help_set_help_data (color_area, NULL,
-                           GIMP_HELP_TOOLBOX_COLOR_AREA);
+  ligma_help_set_help_data (color_area, NULL,
+                           LIGMA_HELP_TOOLBOX_COLOR_AREA);
   g_object_set (color_area, "has-tooltip", TRUE, NULL);
 
   g_signal_connect (color_area, "color-clicked",
@@ -121,18 +121,18 @@ gimp_toolbox_color_area_create (GimpToolbox *toolbox,
 /*  private functions  */
 
 static void
-color_area_foreground_changed (GimpContext     *context,
-                               const GimpRGB   *color,
-                               GimpColorDialog *dialog)
+color_area_foreground_changed (LigmaContext     *context,
+                               const LigmaRGB   *color,
+                               LigmaColorDialog *dialog)
 {
-  if (edit_color == GIMP_ACTIVE_COLOR_FOREGROUND)
+  if (edit_color == LIGMA_ACTIVE_COLOR_FOREGROUND)
     {
       g_signal_handlers_block_by_func (dialog,
                                        color_area_dialog_update,
                                        context);
 
-      /* FIXME this should use GimpColorDialog API */
-      gimp_color_selection_set_color (GIMP_COLOR_SELECTION (dialog->selection),
+      /* FIXME this should use LigmaColorDialog API */
+      ligma_color_selection_set_color (LIGMA_COLOR_SELECTION (dialog->selection),
                                       color);
 
       g_signal_handlers_unblock_by_func (dialog,
@@ -142,18 +142,18 @@ color_area_foreground_changed (GimpContext     *context,
 }
 
 static void
-color_area_background_changed (GimpContext     *context,
-                               const GimpRGB   *color,
-                               GimpColorDialog *dialog)
+color_area_background_changed (LigmaContext     *context,
+                               const LigmaRGB   *color,
+                               LigmaColorDialog *dialog)
 {
-  if (edit_color == GIMP_ACTIVE_COLOR_BACKGROUND)
+  if (edit_color == LIGMA_ACTIVE_COLOR_BACKGROUND)
     {
       g_signal_handlers_block_by_func (dialog,
                                        color_area_dialog_update,
                                        context);
 
-      /* FIXME this should use GimpColorDialog API */
-      gimp_color_selection_set_color (GIMP_COLOR_SELECTION (dialog->selection),
+      /* FIXME this should use LigmaColorDialog API */
+      ligma_color_selection_set_color (LIGMA_COLOR_SELECTION (dialog->selection),
                                       color);
 
       g_signal_handlers_unblock_by_func (dialog,
@@ -163,26 +163,26 @@ color_area_background_changed (GimpContext     *context,
 }
 
 static void
-color_area_dialog_update (GimpColorDialog      *dialog,
-                          const GimpRGB        *color,
-                          GimpColorDialogState  state,
-                          GimpContext          *context)
+color_area_dialog_update (LigmaColorDialog      *dialog,
+                          const LigmaRGB        *color,
+                          LigmaColorDialogState  state,
+                          LigmaContext          *context)
 {
   switch (state)
     {
-    case GIMP_COLOR_DIALOG_OK:
+    case LIGMA_COLOR_DIALOG_OK:
       gtk_widget_hide (color_dialog);
       color_dialog_active = FALSE;
       /* Fallthrough */
 
-    case GIMP_COLOR_DIALOG_UPDATE:
-      if (edit_color == GIMP_ACTIVE_COLOR_FOREGROUND)
+    case LIGMA_COLOR_DIALOG_UPDATE:
+      if (edit_color == LIGMA_ACTIVE_COLOR_FOREGROUND)
         {
           g_signal_handlers_block_by_func (context,
                                            color_area_foreground_changed,
                                            dialog);
 
-          gimp_context_set_foreground (context, color);
+          ligma_context_set_foreground (context, color);
 
           g_signal_handlers_unblock_by_func (context,
                                              color_area_foreground_changed,
@@ -194,7 +194,7 @@ color_area_dialog_update (GimpColorDialog      *dialog,
                                            color_area_background_changed,
                                            dialog);
 
-          gimp_context_set_background (context, color);
+          ligma_context_set_background (context, color);
 
           g_signal_handlers_unblock_by_func (context,
                                              color_area_background_changed,
@@ -202,40 +202,40 @@ color_area_dialog_update (GimpColorDialog      *dialog,
         }
       break;
 
-    case GIMP_COLOR_DIALOG_CANCEL:
+    case LIGMA_COLOR_DIALOG_CANCEL:
       gtk_widget_hide (color_dialog);
       color_dialog_active = FALSE;
-      gimp_context_set_foreground (context, &revert_fg);
-      gimp_context_set_background (context, &revert_bg);
+      ligma_context_set_foreground (context, &revert_fg);
+      ligma_context_set_background (context, &revert_bg);
       break;
     }
 
-  if (gimp_context_get_display (context))
-    gimp_display_grab_focus (gimp_context_get_display (context));
+  if (ligma_context_get_display (context))
+    ligma_display_grab_focus (ligma_context_get_display (context));
 }
 
 static void
-color_area_color_clicked (GimpFgBgEditor  *editor,
-                          GimpActiveColor  active_color,
-                          GimpContext     *context)
+color_area_color_clicked (LigmaFgBgEditor  *editor,
+                          LigmaActiveColor  active_color,
+                          LigmaContext     *context)
 {
-  GimpRGB      color;
+  LigmaRGB      color;
   const gchar *title;
 
   if (! color_dialog_active)
     {
-      gimp_context_get_foreground (context, &revert_fg);
-      gimp_context_get_background (context, &revert_bg);
+      ligma_context_get_foreground (context, &revert_fg);
+      ligma_context_get_background (context, &revert_bg);
     }
 
-  if (active_color == GIMP_ACTIVE_COLOR_FOREGROUND)
+  if (active_color == LIGMA_ACTIVE_COLOR_FOREGROUND)
     {
-      gimp_context_get_foreground (context, &color);
+      ligma_context_get_foreground (context, &color);
       title = _("Change Foreground Color");
     }
   else
     {
-      gimp_context_get_background (context, &color);
+      ligma_context_get_background (context, &color);
       title = _("Change Background Color");
     }
 
@@ -243,11 +243,11 @@ color_area_color_clicked (GimpFgBgEditor  *editor,
 
   if (! color_dialog)
     {
-      color_dialog = gimp_color_dialog_new (NULL, context, TRUE,
+      color_dialog = ligma_color_dialog_new (NULL, context, TRUE,
                                             NULL, NULL, NULL,
                                             GTK_WIDGET (editor),
-                                            gimp_dialog_factory_get_singleton (),
-                                            "gimp-toolbox-color-dialog",
+                                            ligma_dialog_factory_get_singleton (),
+                                            "ligma-toolbox-color-dialog",
                                             &color,
                                             TRUE, FALSE);
 
@@ -264,24 +264,24 @@ color_area_color_clicked (GimpFgBgEditor  *editor,
     }
   else if (! gtk_widget_get_visible (color_dialog))
     {
-      gimp_dialog_factory_position_dialog (gimp_dialog_factory_get_singleton (),
-                                           "gimp-toolbox-color-dialog",
+      ligma_dialog_factory_position_dialog (ligma_dialog_factory_get_singleton (),
+                                           "ligma-toolbox-color-dialog",
                                            color_dialog,
-                                           gimp_widget_get_monitor (GTK_WIDGET (editor)));
+                                           ligma_widget_get_monitor (GTK_WIDGET (editor)));
     }
 
   gtk_window_set_title (GTK_WINDOW (color_dialog), title);
-  gimp_color_dialog_set_color (GIMP_COLOR_DIALOG (color_dialog), &color);
+  ligma_color_dialog_set_color (LIGMA_COLOR_DIALOG (color_dialog), &color);
 
   gtk_window_present (GTK_WINDOW (color_dialog));
   color_dialog_active = TRUE;
 }
 
 static void
-color_area_color_changed (GimpContext *context)
+color_area_color_changed (LigmaContext *context)
 {
-  if (gimp_context_get_display (context))
-    gimp_display_grab_focus (gimp_context_get_display (context));
+  if (ligma_context_get_display (context))
+    ligma_display_grab_focus (ligma_context_get_display (context));
 }
 
 static gboolean
@@ -293,37 +293,37 @@ accel_find_func (GtkAccelKey *key,
 }
 
 static void
-color_area_tooltip (GimpFgBgEditor *editor,
-                    GimpFgBgTarget  target,
+color_area_tooltip (LigmaFgBgEditor *editor,
+                    LigmaFgBgTarget  target,
                     GtkTooltip     *tooltip,
-                    GimpToolbox    *toolbox)
+                    LigmaToolbox    *toolbox)
 {
-  GimpUIManager *manager = gimp_dock_get_ui_manager (GIMP_DOCK (toolbox));
-  GimpAction    *action  = NULL;
+  LigmaUIManager *manager = ligma_dock_get_ui_manager (LIGMA_DOCK (toolbox));
+  LigmaAction    *action  = NULL;
   const gchar   *text    = NULL;
 
   switch (target)
     {
-    case GIMP_FG_BG_TARGET_FOREGROUND:
+    case LIGMA_FG_BG_TARGET_FOREGROUND:
       text = _("The active foreground color.\n"
                "Click to open the color selection dialog.");
       break;
 
-    case GIMP_FG_BG_TARGET_BACKGROUND:
+    case LIGMA_FG_BG_TARGET_BACKGROUND:
       text = _("The active background color.\n"
                "Click to open the color selection dialog.");
       break;
 
-    case GIMP_FG_BG_TARGET_SWAP:
-      action = gimp_ui_manager_find_action (manager, "context",
+    case LIGMA_FG_BG_TARGET_SWAP:
+      action = ligma_ui_manager_find_action (manager, "context",
                                             "context-colors-swap");
-      text = gimp_action_get_tooltip (action);
+      text = ligma_action_get_tooltip (action);
       break;
 
-    case GIMP_FG_BG_TARGET_DEFAULT:
-      action = gimp_ui_manager_find_action (manager, "context",
+    case LIGMA_FG_BG_TARGET_DEFAULT:
+      action = ligma_ui_manager_find_action (manager, "context",
                                             "context-colors-default");
-      text = gimp_action_get_tooltip (action);
+      text = ligma_action_get_tooltip (action);
       break;
 
     default:
@@ -340,7 +340,7 @@ color_area_tooltip (GimpFgBgEditor *editor,
           GClosure      *accel_closure;
           GtkAccelKey   *accel_key;
 
-          accel_closure = gimp_action_get_accel_closure (action);
+          accel_closure = ligma_action_get_accel_closure (action);
           accel_group   = gtk_accel_group_from_accel_closure (accel_closure);
 
           accel_key = gtk_accel_group_find (accel_group,

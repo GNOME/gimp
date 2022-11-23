@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpfgbgeditor.h
- * Copyright (C) 2004 Michael Natterer <mitch@gimp.org>
+ * ligmafgbgeditor.h
+ * Copyright (C) 2004 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,41 +18,41 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_FG_BG_EDITOR_H__
-#define __GIMP_FG_BG_EDITOR_H__
+#ifndef __LIGMA_FG_BG_EDITOR_H__
+#define __LIGMA_FG_BG_EDITOR_H__
 
 
 typedef enum
 {
-  GIMP_FG_BG_TARGET_INVALID,
-  GIMP_FG_BG_TARGET_FOREGROUND,
-  GIMP_FG_BG_TARGET_BACKGROUND,
-  GIMP_FG_BG_TARGET_SWAP,
-  GIMP_FG_BG_TARGET_DEFAULT
-} GimpFgBgTarget;
+  LIGMA_FG_BG_TARGET_INVALID,
+  LIGMA_FG_BG_TARGET_FOREGROUND,
+  LIGMA_FG_BG_TARGET_BACKGROUND,
+  LIGMA_FG_BG_TARGET_SWAP,
+  LIGMA_FG_BG_TARGET_DEFAULT
+} LigmaFgBgTarget;
 
 
-#define GIMP_TYPE_FG_BG_EDITOR            (gimp_fg_bg_editor_get_type ())
-#define GIMP_FG_BG_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_FG_BG_EDITOR, GimpFgBgEditor))
-#define GIMP_FG_BG_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_FG_BG_EDITOR, GimpFgBgEditorClass))
-#define GIMP_IS_FG_BG_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_FG_BG_EDITOR))
-#define GIMP_IS_FG_BG_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_FG_BG_EDITOR))
-#define GIMP_FG_BG_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_FG_BG_EDITOR, GimpFgBgEditorClass))
+#define LIGMA_TYPE_FG_BG_EDITOR            (ligma_fg_bg_editor_get_type ())
+#define LIGMA_FG_BG_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_FG_BG_EDITOR, LigmaFgBgEditor))
+#define LIGMA_FG_BG_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_FG_BG_EDITOR, LigmaFgBgEditorClass))
+#define LIGMA_IS_FG_BG_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_FG_BG_EDITOR))
+#define LIGMA_IS_FG_BG_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_FG_BG_EDITOR))
+#define LIGMA_FG_BG_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_FG_BG_EDITOR, LigmaFgBgEditorClass))
 
 
-typedef struct _GimpFgBgEditorClass GimpFgBgEditorClass;
+typedef struct _LigmaFgBgEditorClass LigmaFgBgEditorClass;
 
-struct _GimpFgBgEditor
+struct _LigmaFgBgEditor
 {
   GtkEventBox         parent_instance;
 
-  GimpContext        *context;
-  GimpColorConfig    *color_config;
-  GimpColorTransform *transform;
+  LigmaContext        *context;
+  LigmaColorConfig    *color_config;
+  LigmaColorTransform *transform;
 
-  GimpActiveColor     active_color;
+  LigmaActiveColor     active_color;
 
-  GimpImage          *active_image;
+  LigmaImage          *active_image;
 
   GdkPixbuf          *default_icon;
   GdkPixbuf          *swap_icon;
@@ -62,33 +62,33 @@ struct _GimpFgBgEditor
   gint                click_target;
 };
 
-struct _GimpFgBgEditorClass
+struct _LigmaFgBgEditorClass
 {
   GtkEventBoxClass    parent_class;
 
   /*  signals  */
 
-  void (* color_clicked)  (GimpFgBgEditor  *editor,
-                           GimpActiveColor  color);
-  void (* color_dropped)  (GimpFgBgEditor  *editor,
-                           GimpActiveColor  color);
-  void (* colors_swapped) (GimpFgBgEditor  *editor);
-  void (* colors_default) (GimpFgBgEditor  *editor);
+  void (* color_clicked)  (LigmaFgBgEditor  *editor,
+                           LigmaActiveColor  color);
+  void (* color_dropped)  (LigmaFgBgEditor  *editor,
+                           LigmaActiveColor  color);
+  void (* colors_swapped) (LigmaFgBgEditor  *editor);
+  void (* colors_default) (LigmaFgBgEditor  *editor);
 
-  void (* tooltip)        (GimpFgBgEditor *editor,
-                           GimpFgBgTarget  target,
+  void (* tooltip)        (LigmaFgBgEditor *editor,
+                           LigmaFgBgTarget  target,
                            GtkTooltip      tooltip);
 };
 
 
-GType       gimp_fg_bg_editor_get_type    (void) G_GNUC_CONST;
+GType       ligma_fg_bg_editor_get_type    (void) G_GNUC_CONST;
 
-GtkWidget * gimp_fg_bg_editor_new         (GimpContext     *context);
+GtkWidget * ligma_fg_bg_editor_new         (LigmaContext     *context);
 
-void        gimp_fg_bg_editor_set_context (GimpFgBgEditor  *editor,
-                                           GimpContext     *context);
-void        gimp_fg_bg_editor_set_active  (GimpFgBgEditor  *editor,
-                                           GimpActiveColor  active);
+void        ligma_fg_bg_editor_set_context (LigmaFgBgEditor  *editor,
+                                           LigmaContext     *context);
+void        ligma_fg_bg_editor_set_active  (LigmaFgBgEditor  *editor,
+                                           LigmaActiveColor  active);
 
 
-#endif  /*  __GIMP_FG_BG_EDITOR_H__  */
+#endif  /*  __LIGMA_FG_BG_EDITOR_H__  */

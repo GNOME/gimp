@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpenumaction.c
- * Copyright (C) 2004 Michael Natterer <mitch@gimp.org>
+ * ligmaenumaction.c
+ * Copyright (C) 2004 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,13 +22,13 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "widgets-types.h"
 
-#include "gimpaction.h"
-#include "gimpaction-history.h"
-#include "gimpenumaction.h"
+#include "ligmaaction.h"
+#include "ligmaaction-history.h"
+#include "ligmaenumaction.h"
 
 
 enum
@@ -39,59 +39,59 @@ enum
 };
 
 
-static void   gimp_enum_action_set_property (GObject      *object,
+static void   ligma_enum_action_set_property (GObject      *object,
                                              guint         prop_id,
                                              const GValue *value,
                                              GParamSpec   *pspec);
-static void   gimp_enum_action_get_property (GObject      *object,
+static void   ligma_enum_action_get_property (GObject      *object,
                                              guint         prop_id,
                                              GValue       *value,
                                              GParamSpec   *pspec);
 
-static void   gimp_enum_action_activate     (GtkAction    *action);
+static void   ligma_enum_action_activate     (GtkAction    *action);
 
 
-G_DEFINE_TYPE (GimpEnumAction, gimp_enum_action, GIMP_TYPE_ACTION_IMPL)
+G_DEFINE_TYPE (LigmaEnumAction, ligma_enum_action, LIGMA_TYPE_ACTION_IMPL)
 
-#define parent_class gimp_enum_action_parent_class
+#define parent_class ligma_enum_action_parent_class
 
 
 static void
-gimp_enum_action_class_init (GimpEnumActionClass *klass)
+ligma_enum_action_class_init (LigmaEnumActionClass *klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkActionClass *action_class = GTK_ACTION_CLASS (klass);
 
-  object_class->set_property = gimp_enum_action_set_property;
-  object_class->get_property = gimp_enum_action_get_property;
+  object_class->set_property = ligma_enum_action_set_property;
+  object_class->get_property = ligma_enum_action_get_property;
 
-  action_class->activate     = gimp_enum_action_activate;
+  action_class->activate     = ligma_enum_action_activate;
 
   g_object_class_install_property (object_class, PROP_VALUE,
                                    g_param_spec_int ("value",
                                                      NULL, NULL,
                                                      G_MININT, G_MAXINT, 0,
-                                                     GIMP_PARAM_READWRITE));
+                                                     LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_VALUE_VARIABLE,
                                    g_param_spec_boolean ("value-variable",
                                                          NULL, NULL,
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                                                         LIGMA_PARAM_READWRITE));
 }
 
 static void
-gimp_enum_action_init (GimpEnumAction *action)
+ligma_enum_action_init (LigmaEnumAction *action)
 {
 }
 
 static void
-gimp_enum_action_get_property (GObject    *object,
+ligma_enum_action_get_property (GObject    *object,
                                guint       prop_id,
                                GValue     *value,
                                GParamSpec *pspec)
 {
-  GimpEnumAction *action = GIMP_ENUM_ACTION (object);
+  LigmaEnumAction *action = LIGMA_ENUM_ACTION (object);
 
   switch (prop_id)
     {
@@ -108,12 +108,12 @@ gimp_enum_action_get_property (GObject    *object,
 }
 
 static void
-gimp_enum_action_set_property (GObject      *object,
+ligma_enum_action_set_property (GObject      *object,
                                guint         prop_id,
                                const GValue *value,
                                GParamSpec   *pspec)
 {
-  GimpEnumAction *action = GIMP_ENUM_ACTION (object);
+  LigmaEnumAction *action = LIGMA_ENUM_ACTION (object);
 
   switch (prop_id)
     {
@@ -129,8 +129,8 @@ gimp_enum_action_set_property (GObject      *object,
     }
 }
 
-GimpEnumAction *
-gimp_enum_action_new (const gchar *name,
+LigmaEnumAction *
+ligma_enum_action_new (const gchar *name,
                       const gchar *label,
                       const gchar *tooltip,
                       const gchar *icon_name,
@@ -138,9 +138,9 @@ gimp_enum_action_new (const gchar *name,
                       gint         value,
                       gboolean     value_variable)
 {
-  GimpEnumAction *action;
+  LigmaEnumAction *action;
 
-  action = g_object_new (GIMP_TYPE_ENUM_ACTION,
+  action = g_object_new (LIGMA_TYPE_ENUM_ACTION,
                          "name",           name,
                          "label",          label,
                          "tooltip",        tooltip,
@@ -149,18 +149,18 @@ gimp_enum_action_new (const gchar *name,
                          "value-variable", value_variable,
                          NULL);
 
-  gimp_action_set_help_id (GIMP_ACTION (action), help_id);
+  ligma_action_set_help_id (LIGMA_ACTION (action), help_id);
 
   return action;
 }
 
 static void
-gimp_enum_action_activate (GtkAction *action)
+ligma_enum_action_activate (GtkAction *action)
 {
-  GimpEnumAction *enum_action = GIMP_ENUM_ACTION (action);
+  LigmaEnumAction *enum_action = LIGMA_ENUM_ACTION (action);
 
-  gimp_action_emit_activate (GIMP_ACTION (enum_action),
+  ligma_action_emit_activate (LIGMA_ACTION (enum_action),
                              g_variant_new_int32 (enum_action->value));
 
-  gimp_action_history_action_activated (GIMP_ACTION (action));
+  ligma_action_history_action_activated (LIGMA_ACTION (action));
 }

@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcellrendererbutton.c
- * Copyright (C) 2016 Michael Natterer <mitch@gimp.org>
+ * ligmacellrendererbutton.c
+ * Copyright (C) 2016 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,9 +24,9 @@
 
 #include "widgets-types.h"
 
-#include "core/gimpmarshal.h"
+#include "core/ligmamarshal.h"
 
-#include "gimpcellrendererbutton.h"
+#include "ligmacellrendererbutton.h"
 
 
 enum
@@ -36,7 +36,7 @@ enum
 };
 
 
-static gboolean gimp_cell_renderer_button_activate (GtkCellRenderer     *cell,
+static gboolean ligma_cell_renderer_button_activate (GtkCellRenderer     *cell,
                                                     GdkEvent            *event,
                                                     GtkWidget           *widget,
                                                     const gchar         *path,
@@ -45,22 +45,22 @@ static gboolean gimp_cell_renderer_button_activate (GtkCellRenderer     *cell,
                                                     GtkCellRendererState flags);
 
 
-G_DEFINE_TYPE (GimpCellRendererButton, gimp_cell_renderer_button,
+G_DEFINE_TYPE (LigmaCellRendererButton, ligma_cell_renderer_button,
                GTK_TYPE_CELL_RENDERER_PIXBUF)
 
-#define parent_class gimp_cell_renderer_button_parent_class
+#define parent_class ligma_cell_renderer_button_parent_class
 
 static guint button_cell_signals[LAST_SIGNAL] = { 0 };
 
 
 static void
-gimp_cell_renderer_button_class_init (GimpCellRendererButtonClass *klass)
+ligma_cell_renderer_button_class_init (LigmaCellRendererButtonClass *klass)
 {
   GObjectClass         *object_class = G_OBJECT_CLASS (klass);
   GtkCellRendererClass *cell_class   = GTK_CELL_RENDERER_CLASS (klass);
 
   /**
-   * GimpCellRendererButton::clicked:
+   * LigmaCellRendererButton::clicked:
    * @cell:
    * @path:
    * @state:
@@ -71,20 +71,20 @@ gimp_cell_renderer_button_class_init (GimpCellRendererButtonClass *klass)
     g_signal_new ("clicked",
                   G_OBJECT_CLASS_TYPE (object_class),
                   G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (GimpCellRendererButtonClass, clicked),
+                  G_STRUCT_OFFSET (LigmaCellRendererButtonClass, clicked),
                   NULL, NULL,
-                  gimp_marshal_VOID__STRING_FLAGS,
+                  ligma_marshal_VOID__STRING_FLAGS,
                   G_TYPE_NONE, 2,
                   G_TYPE_STRING,
                   GDK_TYPE_MODIFIER_TYPE);
 
-  cell_class->activate = gimp_cell_renderer_button_activate;
+  cell_class->activate = ligma_cell_renderer_button_activate;
 
   klass->clicked       = NULL;
 }
 
 static void
-gimp_cell_renderer_button_init (GimpCellRendererButton *cell_button)
+ligma_cell_renderer_button_init (LigmaCellRendererButton *cell_button)
 {
   g_object_set (cell_button,
                 "mode",       GTK_CELL_RENDERER_MODE_ACTIVATABLE,
@@ -95,7 +95,7 @@ gimp_cell_renderer_button_init (GimpCellRendererButton *cell_button)
 }
 
 static gboolean
-gimp_cell_renderer_button_activate (GtkCellRenderer      *cell,
+ligma_cell_renderer_button_activate (GtkCellRenderer      *cell,
                                     GdkEvent             *event,
                                     GtkWidget            *widget,
                                     const gchar          *path,
@@ -103,7 +103,7 @@ gimp_cell_renderer_button_activate (GtkCellRenderer      *cell,
                                     const GdkRectangle   *cell_area,
                                     GtkCellRendererState  flags)
 {
-  GimpCellRendererButton *cell_button = GIMP_CELL_RENDERER_BUTTON (cell);
+  LigmaCellRendererButton *cell_button = LIGMA_CELL_RENDERER_BUTTON (cell);
   GdkModifierType         state       = 0;
 
   if (event && ((GdkEventAny *) event)->type == GDK_BUTTON_PRESS)
@@ -113,7 +113,7 @@ gimp_cell_renderer_button_activate (GtkCellRenderer      *cell,
       (((GdkEventAny *) event)->type == GDK_BUTTON_PRESS &&
        ((GdkEventButton *) event)->button == 1))
     {
-      gimp_cell_renderer_button_clicked (cell_button, path, state);
+      ligma_cell_renderer_button_clicked (cell_button, path, state);
 
       return TRUE;
     }
@@ -125,17 +125,17 @@ gimp_cell_renderer_button_activate (GtkCellRenderer      *cell,
 /*  public functions  */
 
 GtkCellRenderer *
-gimp_cell_renderer_button_new (void)
+ligma_cell_renderer_button_new (void)
 {
-  return g_object_new (GIMP_TYPE_CELL_RENDERER_BUTTON, NULL);
+  return g_object_new (LIGMA_TYPE_CELL_RENDERER_BUTTON, NULL);
 }
 
 void
-gimp_cell_renderer_button_clicked (GimpCellRendererButton *cell,
+ligma_cell_renderer_button_clicked (LigmaCellRendererButton *cell,
                                    const gchar            *path,
                                    GdkModifierType         state)
 {
-  g_return_if_fail (GIMP_IS_CELL_RENDERER_BUTTON (cell));
+  g_return_if_fail (LIGMA_IS_CELL_RENDERER_BUTTON (cell));
   g_return_if_fail (path != NULL);
 
   g_signal_emit (cell, button_cell_signals[CLICKED], 0, path, state);

@@ -1,12 +1,12 @@
-# Ukrainian translation of gimp
+# Ukrainian translation of ligma
 # Copyright (C) Free Software Foundation
-# This file is distributed under the same license as the gimp package.
+# This file is distributed under the same license as the ligma package.
 # Maxim Dziumanenko <dziumanenko@gmail.com>, 2010.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2010-04-03 15:39+0300\n"
 "PO-Revision-Date: 2010-04-02 17:59+0200\n"
 "Last-Translator: Maxim Dziumanenko <dziumanenko@gmail.com>\n"
@@ -16,10 +16,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../data/tags/gimp-tags-default.xml.in.h:1
+#: ../data/tags/ligma-tags-default.xml.in.h:1
 msgid "fuzzy"
 msgstr "розтушовані"
 
-#: ../data/tags/gimp-tags-default.xml.in.h:2
+#: ../data/tags/ligma-tags-default.xml.in.h:2
 msgid "round"
 msgstr "круглі"

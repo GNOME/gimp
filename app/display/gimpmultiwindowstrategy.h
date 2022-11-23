@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpmultiwindowstrategy.h
+ * ligmamultiwindowstrategy.h
  * Copyright (C) 2011 Martin Nordholts <martinn@src.gnome.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,37 +18,37 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_MULTI_WINDOW_STRATEGY_H__
-#define __GIMP_MULTI_WINDOW_STRATEGY_H__
+#ifndef __LIGMA_MULTI_WINDOW_STRATEGY_H__
+#define __LIGMA_MULTI_WINDOW_STRATEGY_H__
 
 
-#include "core/gimpobject.h"
+#include "core/ligmaobject.h"
 
 
-#define GIMP_TYPE_MULTI_WINDOW_STRATEGY            (gimp_multi_window_strategy_get_type ())
-#define GIMP_MULTI_WINDOW_STRATEGY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_MULTI_WINDOW_STRATEGY, GimpMultiWindowStrategy))
-#define GIMP_MULTI_WINDOW_STRATEGY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_MULTI_WINDOW_STRATEGY, GimpMultiWindowStrategyClass))
-#define GIMP_IS_MULTI_WINDOW_STRATEGY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_MULTI_WINDOW_STRATEGY))
-#define GIMP_IS_MULTI_WINDOW_STRATEGY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_MULTI_WINDOW_STRATEGY))
-#define GIMP_MULTI_WINDOW_STRATEGY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_MULTI_WINDOW_STRATEGY, GimpMultiWindowStrategyClass))
+#define LIGMA_TYPE_MULTI_WINDOW_STRATEGY            (ligma_multi_window_strategy_get_type ())
+#define LIGMA_MULTI_WINDOW_STRATEGY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_MULTI_WINDOW_STRATEGY, LigmaMultiWindowStrategy))
+#define LIGMA_MULTI_WINDOW_STRATEGY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_MULTI_WINDOW_STRATEGY, LigmaMultiWindowStrategyClass))
+#define LIGMA_IS_MULTI_WINDOW_STRATEGY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_MULTI_WINDOW_STRATEGY))
+#define LIGMA_IS_MULTI_WINDOW_STRATEGY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_MULTI_WINDOW_STRATEGY))
+#define LIGMA_MULTI_WINDOW_STRATEGY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_MULTI_WINDOW_STRATEGY, LigmaMultiWindowStrategyClass))
 
 
-typedef struct _GimpMultiWindowStrategyClass GimpMultiWindowStrategyClass;
+typedef struct _LigmaMultiWindowStrategyClass LigmaMultiWindowStrategyClass;
 
-struct _GimpMultiWindowStrategy
+struct _LigmaMultiWindowStrategy
 {
-  GimpObject  parent_instance;
+  LigmaObject  parent_instance;
 };
 
-struct _GimpMultiWindowStrategyClass
+struct _LigmaMultiWindowStrategyClass
 {
-  GimpObjectClass  parent_class;
+  LigmaObjectClass  parent_class;
 };
 
 
-GType        gimp_multi_window_strategy_get_type          (void) G_GNUC_CONST;
+GType        ligma_multi_window_strategy_get_type          (void) G_GNUC_CONST;
 
-GimpObject * gimp_multi_window_strategy_get_singleton     (void);
+LigmaObject * ligma_multi_window_strategy_get_singleton     (void);
 
 
-#endif /* __GIMP_MULTI_WINDOW_STRATEGY_H__ */
+#endif /* __LIGMA_MULTI_WINDOW_STRATEGY_H__ */

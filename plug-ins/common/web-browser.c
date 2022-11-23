@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * Web Browser Plug-in
- * Copyright (C) 2003  Henrik Brix Andersen <brix@gimp.org>
+ * Copyright (C) 2003  Henrik Brix Andersen <brix@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,15 +32,15 @@
 #include <windows.h>
 #endif
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 #define PLUG_IN_PROC   "plug-in-web-browser"
 #define PLUG_IN_BINARY "web-browser"
-#define PLUG_IN_ROLE   "gimp-web-browser"
+#define PLUG_IN_ROLE   "ligma-web-browser"
 
 
 typedef struct _Browser      Browser;
@@ -48,12 +48,12 @@ typedef struct _BrowserClass BrowserClass;
 
 struct _Browser
 {
-  GimpPlugIn parent_instance;
+  LigmaPlugIn parent_instance;
 };
 
 struct _BrowserClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -62,12 +62,12 @@ struct _BrowserClass
 
 GType                   browser_get_type         (void) G_GNUC_CONST;
 
-static GList          * browser_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * browser_create_procedure (GimpPlugIn           *plug_in,
+static GList          * browser_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * browser_create_procedure (LigmaPlugIn           *plug_in,
                                                   const gchar          *name);
 
-static GimpValueArray * browser_run              (GimpProcedure        *procedure,
-                                                  const GimpValueArray *args,
+static LigmaValueArray * browser_run              (LigmaProcedure        *procedure,
+                                                  const LigmaValueArray *args,
                                                   gpointer              run_data);
 
 static gboolean         browser_open_url         (GtkWindow            *window,
@@ -75,16 +75,16 @@ static gboolean         browser_open_url         (GtkWindow            *window,
                                                   GError              **error);
 
 
-G_DEFINE_TYPE (Browser, browser, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Browser, browser, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (BROWSER_TYPE)
+LIGMA_MAIN (BROWSER_TYPE)
 DEFINE_STD_SET_I18N
 
 
 static void
 browser_class_init (BrowserClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = browser_query_procedures;
   plug_in_class->create_procedure = browser_create_procedure;
@@ -97,61 +97,61 @@ browser_init (Browser *browser)
 }
 
 static GList *
-browser_query_procedures (GimpPlugIn *plug_in)
+browser_query_procedures (LigmaPlugIn *plug_in)
 {
   return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
 }
 
-static GimpProcedure *
-browser_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+browser_create_procedure (LigmaPlugIn  *plug_in,
                           const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_procedure_new (plug_in, name,
-                                      GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_procedure_new (plug_in, name,
+                                      LIGMA_PDB_PROC_TYPE_PLUGIN,
                                       browser_run, NULL, NULL);
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Open an URL in the user specified "
                                         "web browser",
                                         "Opens the given URL in the user "
                                         "specified web browser.",
                                         name);
-      gimp_procedure_set_attribution (procedure,
-                                      "Henrik Brix Andersen <brix@gimp.org>",
+      ligma_procedure_set_attribution (procedure,
+                                      "Henrik Brix Andersen <brix@ligma.org>",
                                       "2003",
                                       "2003/09/16");
 
-      GIMP_PROC_ARG_STRING (procedure, "url",
+      LIGMA_PROC_ARG_STRING (procedure, "url",
                             "URL",
                             "URL to open",
-                            "http://www.gimp.org/",
+                            "http://www.ligma.org/",
                             G_PARAM_READWRITE);
     }
 
   return procedure;
 }
 
-static GimpValueArray *
-browser_run (GimpProcedure        *procedure,
-             const GimpValueArray *args,
+static LigmaValueArray *
+browser_run (LigmaProcedure        *procedure,
+             const LigmaValueArray *args,
              gpointer              run_data)
 {
   GError *error = NULL;
 
-  if (! browser_open_url (NULL, GIMP_VALUES_GET_STRING (args, 0),
+  if (! browser_open_url (NULL, LIGMA_VALUES_GET_STRING (args, 0),
                           &error))
     {
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_EXECUTION_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_EXECUTION_ERROR,
                                                error);
     }
 
-  return gimp_procedure_new_return_values (procedure,
-                                           GIMP_PDB_SUCCESS,
+  return ligma_procedure_new_return_values (procedure,
+                                           LIGMA_PDB_SUCCESS,
                                            NULL);
 }
 
@@ -236,7 +236,7 @@ browser_open_url (GtkWindow    *window,
 
 #else
 
-  gimp_ui_init (PLUG_IN_BINARY);
+  ligma_ui_init (PLUG_IN_BINARY);
 
   return gtk_show_uri_on_window (window,
                                  url,

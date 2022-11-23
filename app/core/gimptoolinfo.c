@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,52 +22,52 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "core-types.h"
 
-#include "gimp.h"
-#include "gimpdatafactory.h"
-#include "gimpfilteredcontainer.h"
-#include "gimppaintinfo.h"
-#include "gimptoolinfo.h"
-#include "gimptooloptions.h"
-#include "gimptoolpreset.h"
+#include "ligma.h"
+#include "ligmadatafactory.h"
+#include "ligmafilteredcontainer.h"
+#include "ligmapaintinfo.h"
+#include "ligmatoolinfo.h"
+#include "ligmatooloptions.h"
+#include "ligmatoolpreset.h"
 
 
-static void    gimp_tool_info_dispose         (GObject       *object);
-static void    gimp_tool_info_finalize        (GObject       *object);
+static void    ligma_tool_info_dispose         (GObject       *object);
+static void    ligma_tool_info_finalize        (GObject       *object);
 
-static gchar * gimp_tool_info_get_description (GimpViewable  *viewable,
+static gchar * ligma_tool_info_get_description (LigmaViewable  *viewable,
                                                gchar        **tooltip);
 
 
-G_DEFINE_TYPE (GimpToolInfo, gimp_tool_info, GIMP_TYPE_TOOL_ITEM)
+G_DEFINE_TYPE (LigmaToolInfo, ligma_tool_info, LIGMA_TYPE_TOOL_ITEM)
 
-#define parent_class gimp_tool_info_parent_class
+#define parent_class ligma_tool_info_parent_class
 
 
 static void
-gimp_tool_info_class_init (GimpToolInfoClass *klass)
+ligma_tool_info_class_init (LigmaToolInfoClass *klass)
 {
   GObjectClass      *object_class   = G_OBJECT_CLASS (klass);
-  GimpViewableClass *viewable_class = GIMP_VIEWABLE_CLASS (klass);
+  LigmaViewableClass *viewable_class = LIGMA_VIEWABLE_CLASS (klass);
 
-  object_class->dispose           = gimp_tool_info_dispose;
-  object_class->finalize          = gimp_tool_info_finalize;
+  object_class->dispose           = ligma_tool_info_dispose;
+  object_class->finalize          = ligma_tool_info_finalize;
 
-  viewable_class->get_description = gimp_tool_info_get_description;
+  viewable_class->get_description = ligma_tool_info_get_description;
 }
 
 static void
-gimp_tool_info_init (GimpToolInfo *tool_info)
+ligma_tool_info_init (LigmaToolInfo *tool_info)
 {
 }
 
 static void
-gimp_tool_info_dispose (GObject *object)
+ligma_tool_info_dispose (GObject *object)
 {
-  GimpToolInfo *tool_info = GIMP_TOOL_INFO (object);
+  LigmaToolInfo *tool_info = LIGMA_TOOL_INFO (object);
 
   if (tool_info->tool_options)
     {
@@ -81,9 +81,9 @@ gimp_tool_info_dispose (GObject *object)
 }
 
 static void
-gimp_tool_info_finalize (GObject *object)
+ligma_tool_info_finalize (GObject *object)
 {
-  GimpToolInfo *tool_info = GIMP_TOOL_INFO (object);
+  LigmaToolInfo *tool_info = LIGMA_TOOL_INFO (object);
 
   g_clear_pointer (&tool_info->label,       g_free);
   g_clear_pointer (&tool_info->tooltip,     g_free);
@@ -96,10 +96,10 @@ gimp_tool_info_finalize (GObject *object)
 }
 
 static gchar *
-gimp_tool_info_get_description (GimpViewable  *viewable,
+ligma_tool_info_get_description (LigmaViewable  *viewable,
                                 gchar        **tooltip)
 {
-  GimpToolInfo *tool_info = GIMP_TOOL_INFO (viewable);
+  LigmaToolInfo *tool_info = LIGMA_TOOL_INFO (viewable);
 
   if (tooltip)
     *tooltip = g_strdup (tool_info->tooltip);
@@ -108,20 +108,20 @@ gimp_tool_info_get_description (GimpViewable  *viewable,
 }
 
 static gboolean
-gimp_tool_info_filter_preset (GimpObject *object,
+ligma_tool_info_filter_preset (LigmaObject *object,
                               gpointer    user_data)
 {
-  GimpToolPreset *preset    = GIMP_TOOL_PRESET (object);
-  GimpToolInfo   *tool_info = user_data;
+  LigmaToolPreset *preset    = LIGMA_TOOL_PRESET (object);
+  LigmaToolInfo   *tool_info = user_data;
 
   return preset->tool_options->tool_info == tool_info;
 }
 
-GimpToolInfo *
-gimp_tool_info_new (Gimp                *gimp,
+LigmaToolInfo *
+ligma_tool_info_new (Ligma                *ligma,
                     GType                tool_type,
                     GType                tool_options_type,
-                    GimpContextPropMask  context_props,
+                    LigmaContextPropMask  context_props,
                     const gchar         *identifier,
                     const gchar         *label,
                     const gchar         *tooltip,
@@ -132,10 +132,10 @@ gimp_tool_info_new (Gimp                *gimp,
                     const gchar         *paint_core_name,
                     const gchar         *icon_name)
 {
-  GimpPaintInfo *paint_info;
-  GimpToolInfo  *tool_info;
+  LigmaPaintInfo *paint_info;
+  LigmaToolInfo  *tool_info;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
   g_return_val_if_fail (identifier != NULL, NULL);
   g_return_val_if_fail (label != NULL, NULL);
   g_return_val_if_fail (tooltip != NULL, NULL);
@@ -143,17 +143,17 @@ gimp_tool_info_new (Gimp                *gimp,
   g_return_val_if_fail (paint_core_name != NULL, NULL);
   g_return_val_if_fail (icon_name != NULL, NULL);
 
-  paint_info = (GimpPaintInfo *)
-    gimp_container_get_child_by_name (gimp->paint_info_list, paint_core_name);
+  paint_info = (LigmaPaintInfo *)
+    ligma_container_get_child_by_name (ligma->paint_info_list, paint_core_name);
 
-  g_return_val_if_fail (GIMP_IS_PAINT_INFO (paint_info), NULL);
+  g_return_val_if_fail (LIGMA_IS_PAINT_INFO (paint_info), NULL);
 
-  tool_info = g_object_new (GIMP_TYPE_TOOL_INFO,
+  tool_info = g_object_new (LIGMA_TYPE_TOOL_INFO,
                             "name",      identifier,
                             "icon-name", icon_name,
                             NULL);
 
-  tool_info->gimp              = gimp;
+  tool_info->ligma              = ligma;
   tool_info->tool_type         = tool_type;
   tool_info->tool_options_type = tool_options_type;
   tool_info->context_props     = context_props;
@@ -171,12 +171,12 @@ gimp_tool_info_new (Gimp                *gimp,
 
   if (tool_info->tool_options_type == paint_info->paint_options_type)
     {
-      tool_info->tool_options = g_object_ref (GIMP_TOOL_OPTIONS (paint_info->paint_options));
+      tool_info->tool_options = g_object_ref (LIGMA_TOOL_OPTIONS (paint_info->paint_options));
     }
   else
     {
       tool_info->tool_options = g_object_new (tool_info->tool_options_type,
-                                              "gimp", gimp,
+                                              "ligma", ligma,
                                               "name", identifier,
                                               NULL);
     }
@@ -185,17 +185,17 @@ gimp_tool_info_new (Gimp                *gimp,
                 "tool",      tool_info,
                 "tool-info", tool_info, NULL);
 
-  gimp_tool_options_set_gui_mode (tool_info->tool_options, TRUE);
+  ligma_tool_options_set_gui_mode (tool_info->tool_options, TRUE);
 
-  if (tool_info->tool_options_type != GIMP_TYPE_TOOL_OPTIONS)
+  if (tool_info->tool_options_type != LIGMA_TYPE_TOOL_OPTIONS)
     {
-      GimpContainer *presets;
+      LigmaContainer *presets;
 
-      presets = gimp_data_factory_get_container (gimp->tool_preset_factory);
+      presets = ligma_data_factory_get_container (ligma->tool_preset_factory);
 
       tool_info->presets =
-        gimp_filtered_container_new (presets,
-                                     gimp_tool_info_filter_preset,
+        ligma_filtered_container_new (presets,
+                                     ligma_tool_info_filter_preset,
                                      tool_info);
     }
 
@@ -203,39 +203,39 @@ gimp_tool_info_new (Gimp                *gimp,
 }
 
 void
-gimp_tool_info_set_standard (Gimp         *gimp,
-                             GimpToolInfo *tool_info)
+ligma_tool_info_set_standard (Ligma         *ligma,
+                             LigmaToolInfo *tool_info)
 {
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (! tool_info || GIMP_IS_TOOL_INFO (tool_info));
+  g_return_if_fail (LIGMA_IS_LIGMA (ligma));
+  g_return_if_fail (! tool_info || LIGMA_IS_TOOL_INFO (tool_info));
 
-  g_set_object (&gimp->standard_tool_info, tool_info);
+  g_set_object (&ligma->standard_tool_info, tool_info);
 }
 
-GimpToolInfo *
-gimp_tool_info_get_standard (Gimp *gimp)
+LigmaToolInfo *
+ligma_tool_info_get_standard (Ligma *ligma)
 {
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (LIGMA_IS_LIGMA (ligma), NULL);
 
-  return gimp->standard_tool_info;
+  return ligma->standard_tool_info;
 }
 
 gchar *
-gimp_tool_info_get_action_name (GimpToolInfo *tool_info)
+ligma_tool_info_get_action_name (LigmaToolInfo *tool_info)
 {
   const gchar *identifier;
   gchar       *tmp;
   gchar       *name;
 
-  g_return_val_if_fail (GIMP_IS_TOOL_INFO (tool_info), NULL);
+  g_return_val_if_fail (LIGMA_IS_TOOL_INFO (tool_info), NULL);
 
-  identifier = gimp_object_get_name (GIMP_OBJECT (tool_info));
+  identifier = ligma_object_get_name (LIGMA_OBJECT (tool_info));
 
-  g_return_val_if_fail (g_str_has_prefix (identifier, "gimp-"), NULL);
+  g_return_val_if_fail (g_str_has_prefix (identifier, "ligma-"), NULL);
   g_return_val_if_fail (g_str_has_suffix (identifier, "-tool"), NULL);
 
-  tmp = g_strndup (identifier + strlen ("gimp-"),
-                    strlen (identifier) - strlen ("gimp--tool"));
+  tmp = g_strndup (identifier + strlen ("ligma-"),
+                    strlen (identifier) - strlen ("ligma--tool"));
 
   name = g_strdup_printf ("tools-%s", tmp);
 
@@ -245,18 +245,18 @@ gimp_tool_info_get_action_name (GimpToolInfo *tool_info)
 }
 
 GFile *
-gimp_tool_info_get_options_file (GimpToolInfo *tool_info,
+ligma_tool_info_get_options_file (LigmaToolInfo *tool_info,
                                  const gchar  *suffix)
 {
   gchar *basename;
   GFile *file;
 
-  g_return_val_if_fail (GIMP_IS_TOOL_INFO (tool_info), NULL);
+  g_return_val_if_fail (LIGMA_IS_TOOL_INFO (tool_info), NULL);
 
   /* also works for a NULL suffix */
-  basename = g_strconcat (gimp_object_get_name (tool_info), suffix, NULL);
+  basename = g_strconcat (ligma_object_get_name (tool_info), suffix, NULL);
 
-  file = gimp_directory_file ("tool-options", basename, NULL);
+  file = ligma_directory_file ("tool-options", basename, NULL);
   g_free (basename);
 
   return file;

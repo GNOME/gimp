@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpdatafactory.h
- * Copyright (C) 2001-2018 Michael Natterer <mitch@gimp.org>
+ * ligmadatafactory.h
+ * Copyright (C) 2001-2018 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,109 +18,109 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DATA_FACTORY_H__
-#define __GIMP_DATA_FACTORY_H__
+#ifndef __LIGMA_DATA_FACTORY_H__
+#define __LIGMA_DATA_FACTORY_H__
 
 
-#include "gimpobject.h"
+#include "ligmaobject.h"
 
 
-typedef GimpData * (* GimpDataNewFunc)         (GimpContext     *context,
+typedef LigmaData * (* LigmaDataNewFunc)         (LigmaContext     *context,
                                                 const gchar     *name);
-typedef GimpData * (* GimpDataGetStandardFunc) (GimpContext     *context);
+typedef LigmaData * (* LigmaDataGetStandardFunc) (LigmaContext     *context);
 
-typedef void       (* GimpDataForeachFunc)     (GimpDataFactory *factory,
-                                                GimpData        *data,
+typedef void       (* LigmaDataForeachFunc)     (LigmaDataFactory *factory,
+                                                LigmaData        *data,
                                                 gpointer         user_data);
 
 
-#define GIMP_TYPE_DATA_FACTORY            (gimp_data_factory_get_type ())
-#define GIMP_DATA_FACTORY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DATA_FACTORY, GimpDataFactory))
-#define GIMP_DATA_FACTORY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DATA_FACTORY, GimpDataFactoryClass))
-#define GIMP_IS_DATA_FACTORY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DATA_FACTORY))
-#define GIMP_IS_DATA_FACTORY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DATA_FACTORY))
-#define GIMP_DATA_FACTORY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DATA_FACTORY, GimpDataFactoryClass))
+#define LIGMA_TYPE_DATA_FACTORY            (ligma_data_factory_get_type ())
+#define LIGMA_DATA_FACTORY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_DATA_FACTORY, LigmaDataFactory))
+#define LIGMA_DATA_FACTORY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_DATA_FACTORY, LigmaDataFactoryClass))
+#define LIGMA_IS_DATA_FACTORY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_DATA_FACTORY))
+#define LIGMA_IS_DATA_FACTORY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_DATA_FACTORY))
+#define LIGMA_DATA_FACTORY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_DATA_FACTORY, LigmaDataFactoryClass))
 
 
-typedef struct _GimpDataFactoryPrivate GimpDataFactoryPrivate;
-typedef struct _GimpDataFactoryClass   GimpDataFactoryClass;
+typedef struct _LigmaDataFactoryPrivate LigmaDataFactoryPrivate;
+typedef struct _LigmaDataFactoryClass   LigmaDataFactoryClass;
 
-struct _GimpDataFactory
+struct _LigmaDataFactory
 {
-  GimpObject              parent_instance;
+  LigmaObject              parent_instance;
 
-  GimpDataFactoryPrivate *priv;
+  LigmaDataFactoryPrivate *priv;
 };
 
-struct _GimpDataFactoryClass
+struct _LigmaDataFactoryClass
 {
-  GimpObjectClass  parent_class;
+  LigmaObjectClass  parent_class;
 
-  void           (* data_init)      (GimpDataFactory *factory,
-                                     GimpContext     *context);
-  void           (* data_refresh)   (GimpDataFactory *factory,
-                                     GimpContext     *context);
-  void           (* data_save)      (GimpDataFactory *factory);
+  void           (* data_init)      (LigmaDataFactory *factory,
+                                     LigmaContext     *context);
+  void           (* data_refresh)   (LigmaDataFactory *factory,
+                                     LigmaContext     *context);
+  void           (* data_save)      (LigmaDataFactory *factory);
 
-  void           (* data_cancel)    (GimpDataFactory *factory);
+  void           (* data_cancel)    (LigmaDataFactory *factory);
 
-  GimpData     * (* data_duplicate) (GimpDataFactory  *factory,
-                                     GimpData         *data);
-  gboolean       (* data_delete)    (GimpDataFactory  *factory,
-                                     GimpData         *data,
+  LigmaData     * (* data_duplicate) (LigmaDataFactory  *factory,
+                                     LigmaData         *data);
+  gboolean       (* data_delete)    (LigmaDataFactory  *factory,
+                                     LigmaData         *data,
                                      gboolean          delete_from_disk,
                                      GError          **error);
 };
 
 
-GType           gimp_data_factory_get_type          (void) G_GNUC_CONST;
+GType           ligma_data_factory_get_type          (void) G_GNUC_CONST;
 
-void            gimp_data_factory_data_init         (GimpDataFactory  *factory,
-                                                     GimpContext      *context,
+void            ligma_data_factory_data_init         (LigmaDataFactory  *factory,
+                                                     LigmaContext      *context,
                                                      gboolean          no_data);
-void            gimp_data_factory_data_clean        (GimpDataFactory  *factory);
-void            gimp_data_factory_data_refresh      (GimpDataFactory  *factory,
-                                                     GimpContext      *context);
-void            gimp_data_factory_data_save         (GimpDataFactory  *factory);
-void            gimp_data_factory_data_free         (GimpDataFactory  *factory);
+void            ligma_data_factory_data_clean        (LigmaDataFactory  *factory);
+void            ligma_data_factory_data_refresh      (LigmaDataFactory  *factory,
+                                                     LigmaContext      *context);
+void            ligma_data_factory_data_save         (LigmaDataFactory  *factory);
+void            ligma_data_factory_data_free         (LigmaDataFactory  *factory);
 
-GimpAsyncSet  * gimp_data_factory_get_async_set     (GimpDataFactory  *factory);
-gboolean        gimp_data_factory_data_wait         (GimpDataFactory  *factory);
-void            gimp_data_factory_data_cancel       (GimpDataFactory  *factory);
+LigmaAsyncSet  * ligma_data_factory_get_async_set     (LigmaDataFactory  *factory);
+gboolean        ligma_data_factory_data_wait         (LigmaDataFactory  *factory);
+void            ligma_data_factory_data_cancel       (LigmaDataFactory  *factory);
 
-gboolean        gimp_data_factory_has_data_new_func (GimpDataFactory  *factory);
-GimpData      * gimp_data_factory_data_new          (GimpDataFactory  *factory,
-                                                     GimpContext      *context,
+gboolean        ligma_data_factory_has_data_new_func (LigmaDataFactory  *factory);
+LigmaData      * ligma_data_factory_data_new          (LigmaDataFactory  *factory,
+                                                     LigmaContext      *context,
                                                      const gchar      *name);
-GimpData      * gimp_data_factory_data_get_standard (GimpDataFactory  *factory,
-                                                     GimpContext      *context);
+LigmaData      * ligma_data_factory_data_get_standard (LigmaDataFactory  *factory,
+                                                     LigmaContext      *context);
 
-GimpData      * gimp_data_factory_data_duplicate    (GimpDataFactory  *factory,
-                                                     GimpData         *data);
-gboolean        gimp_data_factory_data_delete       (GimpDataFactory  *factory,
-                                                     GimpData         *data,
+LigmaData      * ligma_data_factory_data_duplicate    (LigmaDataFactory  *factory,
+                                                     LigmaData         *data);
+gboolean        ligma_data_factory_data_delete       (LigmaDataFactory  *factory,
+                                                     LigmaData         *data,
                                                      gboolean          delete_from_disk,
                                                      GError          **error);
 
-gboolean        gimp_data_factory_data_save_single  (GimpDataFactory  *factory,
-                                                     GimpData         *data,
+gboolean        ligma_data_factory_data_save_single  (LigmaDataFactory  *factory,
+                                                     LigmaData         *data,
                                                      GError          **error);
 
-void            gimp_data_factory_data_foreach      (GimpDataFactory  *factory,
+void            ligma_data_factory_data_foreach      (LigmaDataFactory  *factory,
                                                      gboolean          skip_internal,
-                                                     GimpDataForeachFunc  callback,
+                                                     LigmaDataForeachFunc  callback,
                                                      gpointer          user_data);
 
-Gimp          * gimp_data_factory_get_gimp          (GimpDataFactory  *factory);
-GType           gimp_data_factory_get_data_type     (GimpDataFactory  *factory);
-GimpContainer * gimp_data_factory_get_container     (GimpDataFactory  *factory);
-GimpContainer * gimp_data_factory_get_container_obsolete
-                                                    (GimpDataFactory  *factory);
-GList         * gimp_data_factory_get_data_path     (GimpDataFactory  *factory);
-GList         * gimp_data_factory_get_data_path_writable
-                                                    (GimpDataFactory  *factory);
-const GList   * gimp_data_factory_get_data_path_ext (GimpDataFactory  *factory);
+Ligma          * ligma_data_factory_get_ligma          (LigmaDataFactory  *factory);
+GType           ligma_data_factory_get_data_type     (LigmaDataFactory  *factory);
+LigmaContainer * ligma_data_factory_get_container     (LigmaDataFactory  *factory);
+LigmaContainer * ligma_data_factory_get_container_obsolete
+                                                    (LigmaDataFactory  *factory);
+GList         * ligma_data_factory_get_data_path     (LigmaDataFactory  *factory);
+GList         * ligma_data_factory_get_data_path_writable
+                                                    (LigmaDataFactory  *factory);
+const GList   * ligma_data_factory_get_data_path_ext (LigmaDataFactory  *factory);
 
 
 
-#endif  /*  __GIMP_DATA_FACTORY_H__  */
+#endif  /*  __LIGMA_DATA_FACTORY_H__  */

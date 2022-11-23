@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcanvasgroup.c
- * Copyright (C) 2010 Michael Natterer <mitch@gimp.org>
+ * ligmacanvasgroup.c
+ * Copyright (C) 2010 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,13 +23,13 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
 
 #include "display-types.h"
 
-#include "gimpcanvasgroup.h"
-#include "gimpdisplayshell.h"
+#include "ligmacanvasgroup.h"
+#include "ligmadisplayshell.h"
 
 
 enum
@@ -40,7 +40,7 @@ enum
 };
 
 
-struct _GimpCanvasGroupPrivate
+struct _LigmaCanvasGroupPrivate
 {
   GQueue   *items;
   gboolean  group_stroking;
@@ -50,76 +50,76 @@ struct _GimpCanvasGroupPrivate
 
 /*  local function prototypes  */
 
-static void             gimp_canvas_group_finalize     (GObject         *object);
-static void             gimp_canvas_group_set_property (GObject         *object,
+static void             ligma_canvas_group_finalize     (GObject         *object);
+static void             ligma_canvas_group_set_property (GObject         *object,
                                                         guint            property_id,
                                                         const GValue    *value,
                                                         GParamSpec      *pspec);
-static void             gimp_canvas_group_get_property (GObject         *object,
+static void             ligma_canvas_group_get_property (GObject         *object,
                                                         guint            property_id,
                                                         GValue          *value,
                                                         GParamSpec      *pspec);
-static void             gimp_canvas_group_draw         (GimpCanvasItem  *item,
+static void             ligma_canvas_group_draw         (LigmaCanvasItem  *item,
                                                         cairo_t         *cr);
-static cairo_region_t * gimp_canvas_group_get_extents  (GimpCanvasItem  *item);
-static gboolean         gimp_canvas_group_hit          (GimpCanvasItem  *item,
+static cairo_region_t * ligma_canvas_group_get_extents  (LigmaCanvasItem  *item);
+static gboolean         ligma_canvas_group_hit          (LigmaCanvasItem  *item,
                                                         gdouble          x,
                                                         gdouble          y);
 
-static void             gimp_canvas_group_child_update (GimpCanvasItem  *item,
+static void             ligma_canvas_group_child_update (LigmaCanvasItem  *item,
                                                         cairo_region_t  *region,
-                                                        GimpCanvasGroup *group);
+                                                        LigmaCanvasGroup *group);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpCanvasGroup, gimp_canvas_group,
-                            GIMP_TYPE_CANVAS_ITEM)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaCanvasGroup, ligma_canvas_group,
+                            LIGMA_TYPE_CANVAS_ITEM)
 
-#define parent_class gimp_canvas_group_parent_class
+#define parent_class ligma_canvas_group_parent_class
 
 
 static void
-gimp_canvas_group_class_init (GimpCanvasGroupClass *klass)
+ligma_canvas_group_class_init (LigmaCanvasGroupClass *klass)
 {
   GObjectClass        *object_class = G_OBJECT_CLASS (klass);
-  GimpCanvasItemClass *item_class   = GIMP_CANVAS_ITEM_CLASS (klass);
+  LigmaCanvasItemClass *item_class   = LIGMA_CANVAS_ITEM_CLASS (klass);
 
-  object_class->finalize     = gimp_canvas_group_finalize;
-  object_class->set_property = gimp_canvas_group_set_property;
-  object_class->get_property = gimp_canvas_group_get_property;
+  object_class->finalize     = ligma_canvas_group_finalize;
+  object_class->set_property = ligma_canvas_group_set_property;
+  object_class->get_property = ligma_canvas_group_get_property;
 
-  item_class->draw           = gimp_canvas_group_draw;
-  item_class->get_extents    = gimp_canvas_group_get_extents;
-  item_class->hit            = gimp_canvas_group_hit;
+  item_class->draw           = ligma_canvas_group_draw;
+  item_class->get_extents    = ligma_canvas_group_get_extents;
+  item_class->hit            = ligma_canvas_group_hit;
 
   g_object_class_install_property (object_class, PROP_GROUP_STROKING,
                                    g_param_spec_boolean ("group-stroking",
                                                          NULL, NULL,
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                                                         LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_GROUP_FILLING,
                                    g_param_spec_boolean ("group-filling",
                                                          NULL, NULL,
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                                                         LIGMA_PARAM_READWRITE));
 }
 
 static void
-gimp_canvas_group_init (GimpCanvasGroup *group)
+ligma_canvas_group_init (LigmaCanvasGroup *group)
 {
-  group->priv = gimp_canvas_group_get_instance_private (group);
+  group->priv = ligma_canvas_group_get_instance_private (group);
 
   group->priv->items = g_queue_new ();
 }
 
 static void
-gimp_canvas_group_finalize (GObject *object)
+ligma_canvas_group_finalize (GObject *object)
 {
-  GimpCanvasGroup *group = GIMP_CANVAS_GROUP (object);
-  GimpCanvasItem  *item;
+  LigmaCanvasGroup *group = LIGMA_CANVAS_GROUP (object);
+  LigmaCanvasItem  *item;
 
   while ((item = g_queue_peek_head (group->priv->items)))
-    gimp_canvas_group_remove_item (group, item);
+    ligma_canvas_group_remove_item (group, item);
 
   g_queue_free (group->priv->items);
   group->priv->items = NULL;
@@ -128,12 +128,12 @@ gimp_canvas_group_finalize (GObject *object)
 }
 
 static void
-gimp_canvas_group_set_property (GObject      *object,
+ligma_canvas_group_set_property (GObject      *object,
                                 guint         property_id,
                                 const GValue *value,
                                 GParamSpec   *pspec)
 {
-  GimpCanvasGroup *group = GIMP_CANVAS_GROUP (object);
+  LigmaCanvasGroup *group = LIGMA_CANVAS_GROUP (object);
 
   switch (property_id)
     {
@@ -151,12 +151,12 @@ gimp_canvas_group_set_property (GObject      *object,
 }
 
 static void
-gimp_canvas_group_get_property (GObject    *object,
+ligma_canvas_group_get_property (GObject    *object,
                                 guint       property_id,
                                 GValue     *value,
                                 GParamSpec *pspec)
 {
-  GimpCanvasGroup *group = GIMP_CANVAS_GROUP (object);
+  LigmaCanvasGroup *group = LIGMA_CANVAS_GROUP (object);
 
   switch (property_id)
     {
@@ -174,37 +174,37 @@ gimp_canvas_group_get_property (GObject    *object,
 }
 
 static void
-gimp_canvas_group_draw (GimpCanvasItem *item,
+ligma_canvas_group_draw (LigmaCanvasItem *item,
                         cairo_t        *cr)
 {
-  GimpCanvasGroup *group = GIMP_CANVAS_GROUP (item);
+  LigmaCanvasGroup *group = LIGMA_CANVAS_GROUP (item);
   GList           *list;
 
   for (list = group->priv->items->head; list; list = g_list_next (list))
     {
-      GimpCanvasItem *sub_item = list->data;
+      LigmaCanvasItem *sub_item = list->data;
 
-      gimp_canvas_item_draw (sub_item, cr);
+      ligma_canvas_item_draw (sub_item, cr);
     }
 
   if (group->priv->group_stroking)
-    _gimp_canvas_item_stroke (item, cr);
+    _ligma_canvas_item_stroke (item, cr);
 
   if (group->priv->group_filling)
-    _gimp_canvas_item_fill (item, cr);
+    _ligma_canvas_item_fill (item, cr);
 }
 
 static cairo_region_t *
-gimp_canvas_group_get_extents (GimpCanvasItem *item)
+ligma_canvas_group_get_extents (LigmaCanvasItem *item)
 {
-  GimpCanvasGroup *group  = GIMP_CANVAS_GROUP (item);
+  LigmaCanvasGroup *group  = LIGMA_CANVAS_GROUP (item);
   cairo_region_t  *region = NULL;
   GList           *list;
 
   for (list = group->priv->items->head; list; list = g_list_next (list))
     {
-      GimpCanvasItem *sub_item   = list->data;
-      cairo_region_t *sub_region = gimp_canvas_item_get_extents (sub_item);
+      LigmaCanvasItem *sub_item   = list->data;
+      cairo_region_t *sub_region = ligma_canvas_item_get_extents (sub_item);
 
       if (! region)
         {
@@ -221,16 +221,16 @@ gimp_canvas_group_get_extents (GimpCanvasItem *item)
 }
 
 static gboolean
-gimp_canvas_group_hit (GimpCanvasItem *item,
+ligma_canvas_group_hit (LigmaCanvasItem *item,
                        gdouble         x,
                        gdouble         y)
 {
-  GimpCanvasGroup *group = GIMP_CANVAS_GROUP (item);
+  LigmaCanvasGroup *group = LIGMA_CANVAS_GROUP (item);
   GList           *list;
 
   for (list = group->priv->items->head; list; list = g_list_next (list))
     {
-      if (gimp_canvas_item_hit (list->data, x, y))
+      if (ligma_canvas_item_hit (list->data, x, y))
         return TRUE;
     }
 
@@ -238,67 +238,67 @@ gimp_canvas_group_hit (GimpCanvasItem *item,
 }
 
 static void
-gimp_canvas_group_child_update (GimpCanvasItem  *item,
+ligma_canvas_group_child_update (LigmaCanvasItem  *item,
                                 cairo_region_t  *region,
-                                GimpCanvasGroup *group)
+                                LigmaCanvasGroup *group)
 {
-  if (_gimp_canvas_item_needs_update (GIMP_CANVAS_ITEM (group)))
-    _gimp_canvas_item_update (GIMP_CANVAS_ITEM (group), region);
+  if (_ligma_canvas_item_needs_update (LIGMA_CANVAS_ITEM (group)))
+    _ligma_canvas_item_update (LIGMA_CANVAS_ITEM (group), region);
 }
 
 
 /*  public functions  */
 
-GimpCanvasItem *
-gimp_canvas_group_new (GimpDisplayShell *shell)
+LigmaCanvasItem *
+ligma_canvas_group_new (LigmaDisplayShell *shell)
 {
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
+  g_return_val_if_fail (LIGMA_IS_DISPLAY_SHELL (shell), NULL);
 
-  return g_object_new (GIMP_TYPE_CANVAS_GROUP,
+  return g_object_new (LIGMA_TYPE_CANVAS_GROUP,
                        "shell", shell,
                        NULL);
 }
 
 void
-gimp_canvas_group_add_item (GimpCanvasGroup *group,
-                            GimpCanvasItem  *item)
+ligma_canvas_group_add_item (LigmaCanvasGroup *group,
+                            LigmaCanvasItem  *item)
 {
-  g_return_if_fail (GIMP_IS_CANVAS_GROUP (group));
-  g_return_if_fail (GIMP_IS_CANVAS_ITEM (item));
-  g_return_if_fail (GIMP_CANVAS_ITEM (group) != item);
+  g_return_if_fail (LIGMA_IS_CANVAS_GROUP (group));
+  g_return_if_fail (LIGMA_IS_CANVAS_ITEM (item));
+  g_return_if_fail (LIGMA_CANVAS_ITEM (group) != item);
 
   if (group->priv->group_stroking)
-    gimp_canvas_item_suspend_stroking (item);
+    ligma_canvas_item_suspend_stroking (item);
 
   if (group->priv->group_filling)
-    gimp_canvas_item_suspend_filling (item);
+    ligma_canvas_item_suspend_filling (item);
 
   g_queue_push_tail (group->priv->items, g_object_ref (item));
 
-  if (_gimp_canvas_item_needs_update (GIMP_CANVAS_ITEM (group)))
+  if (_ligma_canvas_item_needs_update (LIGMA_CANVAS_ITEM (group)))
     {
-      cairo_region_t *region = gimp_canvas_item_get_extents (item);
+      cairo_region_t *region = ligma_canvas_item_get_extents (item);
 
       if (region)
         {
-          _gimp_canvas_item_update (GIMP_CANVAS_ITEM (group), region);
+          _ligma_canvas_item_update (LIGMA_CANVAS_ITEM (group), region);
           cairo_region_destroy (region);
         }
     }
 
   g_signal_connect (item, "update",
-                    G_CALLBACK (gimp_canvas_group_child_update),
+                    G_CALLBACK (ligma_canvas_group_child_update),
                     group);
 }
 
 void
-gimp_canvas_group_remove_item (GimpCanvasGroup *group,
-                               GimpCanvasItem  *item)
+ligma_canvas_group_remove_item (LigmaCanvasGroup *group,
+                               LigmaCanvasItem  *item)
 {
   GList *list;
 
-  g_return_if_fail (GIMP_IS_CANVAS_GROUP (group));
-  g_return_if_fail (GIMP_IS_CANVAS_ITEM (item));
+  g_return_if_fail (LIGMA_IS_CANVAS_GROUP (group));
+  g_return_if_fail (LIGMA_IS_CANVAS_ITEM (item));
 
   list = g_queue_find (group->priv->items, item);
 
@@ -307,40 +307,40 @@ gimp_canvas_group_remove_item (GimpCanvasGroup *group,
   g_queue_delete_link (group->priv->items, list);
 
   if (group->priv->group_stroking)
-    gimp_canvas_item_resume_stroking (item);
+    ligma_canvas_item_resume_stroking (item);
 
   if (group->priv->group_filling)
-    gimp_canvas_item_resume_filling (item);
+    ligma_canvas_item_resume_filling (item);
 
-  if (_gimp_canvas_item_needs_update (GIMP_CANVAS_ITEM (group)))
+  if (_ligma_canvas_item_needs_update (LIGMA_CANVAS_ITEM (group)))
     {
-      cairo_region_t *region = gimp_canvas_item_get_extents (item);
+      cairo_region_t *region = ligma_canvas_item_get_extents (item);
 
       if (region)
         {
-          _gimp_canvas_item_update (GIMP_CANVAS_ITEM (group), region);
+          _ligma_canvas_item_update (LIGMA_CANVAS_ITEM (group), region);
           cairo_region_destroy (region);
         }
     }
 
   g_signal_handlers_disconnect_by_func (item,
-                                        gimp_canvas_group_child_update,
+                                        ligma_canvas_group_child_update,
                                         group);
 
   g_object_unref (item);
 }
 
 void
-gimp_canvas_group_set_group_stroking (GimpCanvasGroup *group,
+ligma_canvas_group_set_group_stroking (LigmaCanvasGroup *group,
                                       gboolean         group_stroking)
 {
-  g_return_if_fail (GIMP_IS_CANVAS_GROUP (group));
+  g_return_if_fail (LIGMA_IS_CANVAS_GROUP (group));
 
   if (group->priv->group_stroking != group_stroking)
     {
       GList *list;
 
-      gimp_canvas_item_begin_change (GIMP_CANVAS_ITEM (group));
+      ligma_canvas_item_begin_change (LIGMA_CANVAS_ITEM (group));
 
       g_object_set (group,
                     "group-stroking", group_stroking ? TRUE : FALSE,
@@ -349,26 +349,26 @@ gimp_canvas_group_set_group_stroking (GimpCanvasGroup *group,
       for (list = group->priv->items->head; list; list = g_list_next (list))
         {
           if (group->priv->group_stroking)
-            gimp_canvas_item_suspend_stroking (list->data);
+            ligma_canvas_item_suspend_stroking (list->data);
           else
-            gimp_canvas_item_resume_stroking (list->data);
+            ligma_canvas_item_resume_stroking (list->data);
         }
 
-      gimp_canvas_item_end_change (GIMP_CANVAS_ITEM (group));
+      ligma_canvas_item_end_change (LIGMA_CANVAS_ITEM (group));
     }
 }
 
 void
-gimp_canvas_group_set_group_filling (GimpCanvasGroup *group,
+ligma_canvas_group_set_group_filling (LigmaCanvasGroup *group,
                                      gboolean         group_filling)
 {
-  g_return_if_fail (GIMP_IS_CANVAS_GROUP (group));
+  g_return_if_fail (LIGMA_IS_CANVAS_GROUP (group));
 
   if (group->priv->group_filling != group_filling)
     {
       GList *list;
 
-      gimp_canvas_item_begin_change (GIMP_CANVAS_ITEM (group));
+      ligma_canvas_item_begin_change (LIGMA_CANVAS_ITEM (group));
 
       g_object_set (group,
                     "group-filling", group_filling ? TRUE : FALSE,
@@ -377,11 +377,11 @@ gimp_canvas_group_set_group_filling (GimpCanvasGroup *group,
       for (list = group->priv->items->head; list; list = g_list_next (list))
         {
           if (group->priv->group_filling)
-            gimp_canvas_item_suspend_filling (list->data);
+            ligma_canvas_item_suspend_filling (list->data);
           else
-            gimp_canvas_item_resume_filling (list->data);
+            ligma_canvas_item_resume_filling (list->data);
         }
 
-      gimp_canvas_item_end_change (GIMP_CANVAS_ITEM (group));
+      ligma_canvas_item_end_change (LIGMA_CANVAS_ITEM (group));
     }
 }

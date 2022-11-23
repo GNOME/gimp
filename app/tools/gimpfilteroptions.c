@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-2001 Spencer Kimball, Peter Mattis, and others
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,14 +20,14 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "tools-types.h"
 
-#include "gimpfilteroptions.h"
+#include "ligmafilteroptions.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -43,92 +43,92 @@ enum
 };
 
 
-static void   gimp_filter_options_set_property (GObject      *object,
+static void   ligma_filter_options_set_property (GObject      *object,
                                                 guint         property_id,
                                                 const GValue *value,
                                                 GParamSpec   *pspec);
-static void   gimp_filter_options_get_property (GObject      *object,
+static void   ligma_filter_options_get_property (GObject      *object,
                                                 guint         property_id,
                                                 GValue       *value,
                                                 GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE (GimpFilterOptions, gimp_filter_options,
-               GIMP_TYPE_COLOR_OPTIONS)
+G_DEFINE_TYPE (LigmaFilterOptions, ligma_filter_options,
+               LIGMA_TYPE_COLOR_OPTIONS)
 
-#define parent_class gimp_filter_options_parent_class
+#define parent_class ligma_filter_options_parent_class
 
 
 static void
-gimp_filter_options_class_init (GimpFilterOptionsClass *klass)
+ligma_filter_options_class_init (LigmaFilterOptionsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->set_property = gimp_filter_options_set_property;
-  object_class->get_property = gimp_filter_options_get_property;
+  object_class->set_property = ligma_filter_options_set_property;
+  object_class->get_property = ligma_filter_options_get_property;
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_PREVIEW,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_PREVIEW,
                             "preview",
                             _("_Preview"),
                             NULL,
                             TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
   g_object_class_install_property (object_class, PROP_PREVIEW_SPLIT,
                                    g_param_spec_boolean ("preview-split",
                                                          _("Split _view"),
                                                          NULL,
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE |
+                                                         LIGMA_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_PREVIEW_SPLIT_ALIGNMENT,
                                    g_param_spec_enum ("preview-split-alignment",
                                                       NULL, NULL,
-                                                      GIMP_TYPE_ALIGNMENT_TYPE,
-                                                      GIMP_ALIGN_LEFT,
-                                                      GIMP_PARAM_READWRITE |
+                                                      LIGMA_TYPE_ALIGNMENT_TYPE,
+                                                      LIGMA_ALIGN_LEFT,
+                                                      LIGMA_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_PREVIEW_SPLIT_POSITION,
                                    g_param_spec_int ("preview-split-position",
                                                      NULL, NULL,
                                                      G_MININT, G_MAXINT, 0,
-                                                     GIMP_PARAM_READWRITE |
+                                                     LIGMA_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT));
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_CONTROLLER,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_CONTROLLER,
                             "controller",
                             _("On-canvas con_trols"),
                             _("Show on-canvas filter controls"),
                             TRUE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_BLENDING_OPTIONS_EXPANDED,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_BLENDING_OPTIONS_EXPANDED,
                             "blending-options-expanded",
                             NULL, NULL,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_COLOR_OPTIONS_EXPANDED,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_COLOR_OPTIONS_EXPANDED,
                             "color-options-expanded",
                             NULL, NULL,
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 }
 
 static void
-gimp_filter_options_init (GimpFilterOptions *options)
+ligma_filter_options_init (LigmaFilterOptions *options)
 {
 }
 
 static void
-gimp_filter_options_set_property (GObject      *object,
+ligma_filter_options_set_property (GObject      *object,
                                   guint         property_id,
                                   const GValue *value,
                                   GParamSpec   *pspec)
 {
-  GimpFilterOptions *options = GIMP_FILTER_OPTIONS (object);
+  LigmaFilterOptions *options = LIGMA_FILTER_OPTIONS (object);
 
   switch (property_id)
     {
@@ -167,12 +167,12 @@ gimp_filter_options_set_property (GObject      *object,
 }
 
 static void
-gimp_filter_options_get_property (GObject    *object,
+ligma_filter_options_get_property (GObject    *object,
                                   guint       property_id,
                                   GValue     *value,
                                   GParamSpec *pspec)
 {
-  GimpFilterOptions *options = GIMP_FILTER_OPTIONS (object);
+  LigmaFilterOptions *options = LIGMA_FILTER_OPTIONS (object);
 
   switch (property_id)
     {
@@ -214,18 +214,18 @@ gimp_filter_options_get_property (GObject    *object,
 /*  public functions  */
 
 void
-gimp_filter_options_switch_preview_side (GimpFilterOptions *options)
+ligma_filter_options_switch_preview_side (LigmaFilterOptions *options)
 {
-  GimpAlignmentType alignment;
+  LigmaAlignmentType alignment;
 
-  g_return_if_fail (GIMP_IS_FILTER_OPTIONS (options));
+  g_return_if_fail (LIGMA_IS_FILTER_OPTIONS (options));
 
   switch (options->preview_split_alignment)
     {
-    case GIMP_ALIGN_LEFT:   alignment = GIMP_ALIGN_RIGHT;  break;
-    case GIMP_ALIGN_RIGHT:  alignment = GIMP_ALIGN_LEFT;   break;
-    case GIMP_ALIGN_TOP:    alignment = GIMP_ALIGN_BOTTOM; break;
-    case GIMP_ALIGN_BOTTOM: alignment = GIMP_ALIGN_TOP;    break;
+    case LIGMA_ALIGN_LEFT:   alignment = LIGMA_ALIGN_RIGHT;  break;
+    case LIGMA_ALIGN_RIGHT:  alignment = LIGMA_ALIGN_LEFT;   break;
+    case LIGMA_ALIGN_TOP:    alignment = LIGMA_ALIGN_BOTTOM; break;
+    case LIGMA_ALIGN_BOTTOM: alignment = LIGMA_ALIGN_TOP;    break;
     default:
       g_return_if_reached ();
     }
@@ -234,27 +234,27 @@ gimp_filter_options_switch_preview_side (GimpFilterOptions *options)
 }
 
 void
-gimp_filter_options_switch_preview_orientation (GimpFilterOptions *options,
+ligma_filter_options_switch_preview_orientation (LigmaFilterOptions *options,
                                                 gint               position_x,
                                                 gint               position_y)
 {
-  GimpAlignmentType alignment;
+  LigmaAlignmentType alignment;
   gint              position;
 
-  g_return_if_fail (GIMP_IS_FILTER_OPTIONS (options));
+  g_return_if_fail (LIGMA_IS_FILTER_OPTIONS (options));
 
   switch (options->preview_split_alignment)
     {
-    case GIMP_ALIGN_LEFT:   alignment = GIMP_ALIGN_TOP;    break;
-    case GIMP_ALIGN_RIGHT:  alignment = GIMP_ALIGN_BOTTOM; break;
-    case GIMP_ALIGN_TOP:    alignment = GIMP_ALIGN_LEFT;   break;
-    case GIMP_ALIGN_BOTTOM: alignment = GIMP_ALIGN_RIGHT;  break;
+    case LIGMA_ALIGN_LEFT:   alignment = LIGMA_ALIGN_TOP;    break;
+    case LIGMA_ALIGN_RIGHT:  alignment = LIGMA_ALIGN_BOTTOM; break;
+    case LIGMA_ALIGN_TOP:    alignment = LIGMA_ALIGN_LEFT;   break;
+    case LIGMA_ALIGN_BOTTOM: alignment = LIGMA_ALIGN_RIGHT;  break;
     default:
       g_return_if_reached ();
     }
 
-  if (alignment == GIMP_ALIGN_LEFT ||
-      alignment == GIMP_ALIGN_RIGHT)
+  if (alignment == LIGMA_ALIGN_LEFT ||
+      alignment == LIGMA_ALIGN_RIGHT)
     {
       position = position_x;
     }

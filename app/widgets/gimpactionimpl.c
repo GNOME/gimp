@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpaction.c
- * Copyright (C) 2004-2019 Michael Natterer <mitch@gimp.org>
+ * ligmaaction.c
+ * Copyright (C) 2004-2019 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,24 +23,24 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "config/gimpcoreconfig.h"
+#include "config/ligmacoreconfig.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontext.h"
-#include "core/gimpimagefile.h"  /* eek */
+#include "core/ligma.h"
+#include "core/ligmacontext.h"
+#include "core/ligmaimagefile.h"  /* eek */
 
-#include "gimpaction.h"
-#include "gimpactionimpl.h"
-#include "gimpaction-history.h"
-#include "gimpview.h"
-#include "gimpviewrenderer.h"
-#include "gimpwidgets-utils.h"
+#include "ligmaaction.h"
+#include "ligmaactionimpl.h"
+#include "ligmaaction-history.h"
+#include "ligmaview.h"
+#include "ligmaviewrenderer.h"
+#include "ligmawidgets-utils.h"
 
 
 enum
@@ -54,106 +54,106 @@ enum
 };
 
 
-static void   gimp_action_iface_init              (GimpActionInterface *iface);
+static void   ligma_action_iface_init              (LigmaActionInterface *iface);
 
-static void   gimp_action_impl_finalize           (GObject             *object);
-static void   gimp_action_impl_set_property       (GObject             *object,
+static void   ligma_action_impl_finalize           (GObject             *object);
+static void   ligma_action_impl_set_property       (GObject             *object,
                                                    guint                prop_id,
                                                    const GValue        *value,
                                                    GParamSpec          *pspec);
-static void   gimp_action_impl_get_property       (GObject             *object,
+static void   ligma_action_impl_get_property       (GObject             *object,
                                                    guint                prop_id,
                                                    GValue              *value,
                                                    GParamSpec          *pspec);
 
-static void   gimp_action_impl_set_disable_reason (GimpAction          *action,
+static void   ligma_action_impl_set_disable_reason (LigmaAction          *action,
                                                    const gchar         *reason);
 static const gchar *
-              gimp_action_impl_get_disable_reason (GimpAction          *action);
+              ligma_action_impl_get_disable_reason (LigmaAction          *action);
 
-static void   gimp_action_impl_activate           (GtkAction           *action);
-static void   gimp_action_impl_connect_proxy      (GtkAction           *action,
+static void   ligma_action_impl_activate           (GtkAction           *action);
+static void   ligma_action_impl_connect_proxy      (GtkAction           *action,
                                                    GtkWidget           *proxy);
 
-static void   gimp_action_impl_set_proxy          (GimpActionImpl      *impl,
+static void   ligma_action_impl_set_proxy          (LigmaActionImpl      *impl,
                                                    GtkWidget           *proxy);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpActionImpl, gimp_action_impl, GTK_TYPE_ACTION,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_ACTION, gimp_action_iface_init))
+G_DEFINE_TYPE_WITH_CODE (LigmaActionImpl, ligma_action_impl, GTK_TYPE_ACTION,
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_ACTION, ligma_action_iface_init))
 
-#define parent_class gimp_action_impl_parent_class
+#define parent_class ligma_action_impl_parent_class
 
 
 static void
-gimp_action_impl_class_init (GimpActionImplClass *klass)
+ligma_action_impl_class_init (LigmaActionImplClass *klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkActionClass *action_class = GTK_ACTION_CLASS (klass);
-  GimpRGB         black;
+  LigmaRGB         black;
 
-  object_class->finalize      = gimp_action_impl_finalize;
-  object_class->set_property  = gimp_action_impl_set_property;
-  object_class->get_property  = gimp_action_impl_get_property;
+  object_class->finalize      = ligma_action_impl_finalize;
+  object_class->set_property  = ligma_action_impl_set_property;
+  object_class->get_property  = ligma_action_impl_get_property;
 
-  action_class->activate      = gimp_action_impl_activate;
-  action_class->connect_proxy = gimp_action_impl_connect_proxy;
+  action_class->activate      = ligma_action_impl_activate;
+  action_class->connect_proxy = ligma_action_impl_connect_proxy;
 
-  gimp_rgba_set (&black, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
+  ligma_rgba_set (&black, 0.0, 0.0, 0.0, LIGMA_OPACITY_OPAQUE);
 
   g_object_class_install_property (object_class, PROP_CONTEXT,
                                    g_param_spec_object ("context",
                                                         NULL, NULL,
-                                                        GIMP_TYPE_CONTEXT,
-                                                        GIMP_PARAM_READWRITE));
+                                                        LIGMA_TYPE_CONTEXT,
+                                                        LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_COLOR,
-                                   gimp_param_spec_rgb ("color",
+                                   ligma_param_spec_rgb ("color",
                                                         NULL, NULL,
                                                         TRUE, &black,
-                                                        GIMP_PARAM_READWRITE));
+                                                        LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_VIEWABLE,
                                    g_param_spec_object ("viewable",
                                                         NULL, NULL,
-                                                        GIMP_TYPE_VIEWABLE,
-                                                        GIMP_PARAM_READWRITE));
+                                                        LIGMA_TYPE_VIEWABLE,
+                                                        LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_ELLIPSIZE,
                                    g_param_spec_enum ("ellipsize",
                                                       NULL, NULL,
                                                       PANGO_TYPE_ELLIPSIZE_MODE,
                                                       PANGO_ELLIPSIZE_NONE,
-                                                      GIMP_PARAM_READWRITE));
+                                                      LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_MAX_WIDTH_CHARS,
                                    g_param_spec_int ("max-width-chars",
                                                      NULL, NULL,
                                                      -1, G_MAXINT, -1,
-                                                     GIMP_PARAM_READWRITE));
+                                                     LIGMA_PARAM_READWRITE));
 }
 
 static void
-gimp_action_iface_init (GimpActionInterface *iface)
+ligma_action_iface_init (LigmaActionInterface *iface)
 {
-  iface->set_disable_reason = gimp_action_impl_set_disable_reason;
-  iface->get_disable_reason = gimp_action_impl_get_disable_reason;
+  iface->set_disable_reason = ligma_action_impl_set_disable_reason;
+  iface->get_disable_reason = ligma_action_impl_get_disable_reason;
 }
 
 static void
-gimp_action_impl_init (GimpActionImpl *impl)
+ligma_action_impl_init (LigmaActionImpl *impl)
 {
   impl->ellipsize       = PANGO_ELLIPSIZE_NONE;
   impl->max_width_chars = -1;
   impl->disable_reason  = NULL;
 
-  gimp_action_init (GIMP_ACTION (impl));
+  ligma_action_init (LIGMA_ACTION (impl));
 }
 
 static void
-gimp_action_impl_finalize (GObject *object)
+ligma_action_impl_finalize (GObject *object)
 {
-  GimpActionImpl *impl = GIMP_ACTION_IMPL (object);
+  LigmaActionImpl *impl = LIGMA_ACTION_IMPL (object);
 
   g_clear_pointer (&impl->disable_reason, g_free);
   g_clear_object  (&impl->context);
@@ -164,12 +164,12 @@ gimp_action_impl_finalize (GObject *object)
 }
 
 static void
-gimp_action_impl_get_property (GObject    *object,
+ligma_action_impl_get_property (GObject    *object,
                                guint       prop_id,
                                GValue     *value,
                                GParamSpec *pspec)
 {
-  GimpActionImpl *impl = GIMP_ACTION_IMPL (object);
+  LigmaActionImpl *impl = LIGMA_ACTION_IMPL (object);
 
   switch (prop_id)
     {
@@ -200,12 +200,12 @@ gimp_action_impl_get_property (GObject    *object,
 }
 
 static void
-gimp_action_impl_set_property (GObject      *object,
+ligma_action_impl_set_property (GObject      *object,
                                guint         prop_id,
                                const GValue *value,
                                GParamSpec   *pspec)
 {
-  GimpActionImpl *impl      = GIMP_ACTION_IMPL (object);
+  LigmaActionImpl *impl      = LIGMA_ACTION_IMPL (object);
   gboolean        set_proxy = FALSE;
 
   switch (prop_id)
@@ -244,20 +244,20 @@ gimp_action_impl_set_property (GObject      *object,
     {
       GSList *list;
 
-      for (list = gimp_action_get_proxies (GIMP_ACTION (impl));
+      for (list = ligma_action_get_proxies (LIGMA_ACTION (impl));
            list;
            list = g_slist_next (list))
         {
-          gimp_action_impl_set_proxy (impl, list->data);
+          ligma_action_impl_set_proxy (impl, list->data);
         }
     }
 }
 
 static void
-gimp_action_impl_set_disable_reason (GimpAction  *action,
+ligma_action_impl_set_disable_reason (LigmaAction  *action,
                                      const gchar *reason)
 {
-  GimpActionImpl *impl = GIMP_ACTION_IMPL (action);
+  LigmaActionImpl *impl = LIGMA_ACTION_IMPL (action);
 
   g_clear_pointer (&impl->disable_reason, g_free);
   if (reason)
@@ -265,55 +265,55 @@ gimp_action_impl_set_disable_reason (GimpAction  *action,
 }
 
 static const gchar *
-gimp_action_impl_get_disable_reason (GimpAction *action)
+ligma_action_impl_get_disable_reason (LigmaAction *action)
 {
-  GimpActionImpl *impl = GIMP_ACTION_IMPL (action);
+  LigmaActionImpl *impl = LIGMA_ACTION_IMPL (action);
 
   return (const gchar *) impl->disable_reason;
 }
 
 static void
-gimp_action_impl_activate (GtkAction *action)
+ligma_action_impl_activate (GtkAction *action)
 {
   if (GTK_ACTION_CLASS (parent_class)->activate)
     GTK_ACTION_CLASS (parent_class)->activate (action);
 
-  gimp_action_emit_activate (GIMP_ACTION (action), NULL);
+  ligma_action_emit_activate (LIGMA_ACTION (action), NULL);
 
-  gimp_action_history_action_activated (GIMP_ACTION (action));
+  ligma_action_history_action_activated (LIGMA_ACTION (action));
 }
 
 static void
-gimp_action_impl_connect_proxy (GtkAction *action,
+ligma_action_impl_connect_proxy (GtkAction *action,
                                 GtkWidget *proxy)
 {
   GTK_ACTION_CLASS (parent_class)->connect_proxy (action, proxy);
 
-  gimp_action_impl_set_proxy (GIMP_ACTION_IMPL (action), proxy);
+  ligma_action_impl_set_proxy (LIGMA_ACTION_IMPL (action), proxy);
 
-  gimp_action_set_proxy (GIMP_ACTION (action), proxy);
+  ligma_action_set_proxy (LIGMA_ACTION (action), proxy);
 }
 
 
 /*  public functions  */
 
-GimpAction *
-gimp_action_impl_new (const gchar *name,
+LigmaAction *
+ligma_action_impl_new (const gchar *name,
                       const gchar *label,
                       const gchar *tooltip,
                       const gchar *icon_name,
                       const gchar *help_id)
 {
-  GimpAction *action;
+  LigmaAction *action;
 
-  action = g_object_new (GIMP_TYPE_ACTION_IMPL,
+  action = g_object_new (LIGMA_TYPE_ACTION_IMPL,
                          "name",      name,
                          "label",     label,
                          "tooltip",   tooltip,
                          "icon-name", icon_name,
                          NULL);
 
-  gimp_action_set_help_id (action, help_id);
+  ligma_action_set_help_id (action, help_id);
 
   return action;
 }
@@ -322,7 +322,7 @@ gimp_action_impl_new (const gchar *name,
 /*  private functions  */
 
 static void
-gimp_action_impl_set_proxy (GimpActionImpl *impl,
+ligma_action_impl_set_proxy (LigmaActionImpl *impl,
                             GtkWidget      *proxy)
 {
   if (! GTK_IS_MENU_ITEM (proxy))
@@ -332,27 +332,27 @@ gimp_action_impl_set_proxy (GimpActionImpl *impl,
     {
       GtkWidget *area;
 
-      area = gimp_menu_item_get_image (GTK_MENU_ITEM (proxy));
+      area = ligma_menu_item_get_image (GTK_MENU_ITEM (proxy));
 
-      if (GIMP_IS_COLOR_AREA (area))
+      if (LIGMA_IS_COLOR_AREA (area))
         {
-          gimp_color_area_set_color (GIMP_COLOR_AREA (area), impl->color);
+          ligma_color_area_set_color (LIGMA_COLOR_AREA (area), impl->color);
         }
       else
         {
           gint width, height;
 
-          area = gimp_color_area_new (impl->color,
-                                      GIMP_COLOR_AREA_SMALL_CHECKS, 0);
-          gimp_color_area_set_draw_border (GIMP_COLOR_AREA (area), TRUE);
+          area = ligma_color_area_new (impl->color,
+                                      LIGMA_COLOR_AREA_SMALL_CHECKS, 0);
+          ligma_color_area_set_draw_border (LIGMA_COLOR_AREA (area), TRUE);
 
           if (impl->context)
-            gimp_color_area_set_color_config (GIMP_COLOR_AREA (area),
-                                              impl->context->gimp->config->color_management);
+            ligma_color_area_set_color_config (LIGMA_COLOR_AREA (area),
+                                              impl->context->ligma->config->color_management);
 
           gtk_icon_size_lookup (GTK_ICON_SIZE_MENU, &width, &height);
           gtk_widget_set_size_request (area, width, height);
-          gimp_menu_item_set_image (GTK_MENU_ITEM (proxy), area);
+          ligma_menu_item_set_image (GTK_MENU_ITEM (proxy), area);
           gtk_widget_show (area);
         }
     }
@@ -360,13 +360,13 @@ gimp_action_impl_set_proxy (GimpActionImpl *impl,
     {
       GtkWidget *view;
 
-      view = gimp_menu_item_get_image (GTK_MENU_ITEM (proxy));
+      view = ligma_menu_item_get_image (GTK_MENU_ITEM (proxy));
 
-      if (GIMP_IS_VIEW (view) &&
+      if (LIGMA_IS_VIEW (view) &&
           g_type_is_a (G_TYPE_FROM_INSTANCE (impl->viewable),
-                       GIMP_VIEW (view)->renderer->viewable_type))
+                       LIGMA_VIEW (view)->renderer->viewable_type))
         {
-          gimp_view_set_viewable (GIMP_VIEW (view), impl->viewable);
+          ligma_view_set_viewable (LIGMA_VIEW (view), impl->viewable);
         }
       else
         {
@@ -374,7 +374,7 @@ gimp_action_impl_set_proxy (GimpActionImpl *impl,
           gint        width, height;
           gint        border_width;
 
-          if (GIMP_IS_IMAGEFILE (impl->viewable))
+          if (LIGMA_IS_IMAGEFILE (impl->viewable))
             {
               size         = GTK_ICON_SIZE_LARGE_TOOLBAR;
               border_width = 0;
@@ -386,10 +386,10 @@ gimp_action_impl_set_proxy (GimpActionImpl *impl,
             }
 
           gtk_icon_size_lookup (size, &width, &height);
-          view = gimp_view_new_full (impl->context, impl->viewable,
+          view = ligma_view_new_full (impl->context, impl->viewable,
                                      width, height, border_width,
                                      FALSE, FALSE, FALSE);
-          gimp_menu_item_set_image (GTK_MENU_ITEM (proxy), view);
+          ligma_menu_item_set_image (GTK_MENU_ITEM (proxy), view);
           gtk_widget_show (view);
         }
     }
@@ -397,11 +397,11 @@ gimp_action_impl_set_proxy (GimpActionImpl *impl,
     {
       GtkWidget *image;
 
-      image = gimp_menu_item_get_image (GTK_MENU_ITEM (proxy));
+      image = ligma_menu_item_get_image (GTK_MENU_ITEM (proxy));
 
-      if (GIMP_IS_VIEW (image) || GIMP_IS_COLOR_AREA (image))
+      if (LIGMA_IS_VIEW (image) || LIGMA_IS_COLOR_AREA (image))
         {
-          gimp_menu_item_set_image (GTK_MENU_ITEM (proxy), NULL);
+          ligma_menu_item_set_image (GTK_MENU_ITEM (proxy), NULL);
           g_object_notify (G_OBJECT (impl), "icon-name");
         }
     }
@@ -410,7 +410,7 @@ gimp_action_impl_set_proxy (GimpActionImpl *impl,
     GtkWidget *child = gtk_bin_get_child (GTK_BIN (proxy));
 
     if (GTK_IS_BOX (child))
-      child = g_object_get_data (G_OBJECT (proxy), "gimp-menu-item-label");
+      child = g_object_get_data (G_OBJECT (proxy), "ligma-menu-item-label");
 
     if (GTK_IS_LABEL (child))
       {

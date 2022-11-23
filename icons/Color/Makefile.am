@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-iconsdir = $(gimpdatadir)/icons/Color
+iconsdir = $(ligmadatadir)/icons/Color
 
 icons_DATA = \
 	index.theme
@@ -57,24 +57,24 @@ endif
 	mkdir -p $(@D) && \
 	$(top_builddir)/tools/colorsvg2png $< $@ $(@D)
 
-## Compiled-in icons for both the core and libgimpwidgets
+## Compiled-in icons for both the core and libligmawidgets
 
 CORE_IMAGES = \
 	64/dialog-question.png
 
 ICON_IMAGES = \
-	64/gimp-wilber-eek.png
+	64/ligma-wilber-eek.png
 
 EXTRA_DIST = \
 	$(icons_DATA)		\
-	64/gimp-frame.png	\
-	64/gimp-texture.png	\
+	64/ligma-frame.png	\
+	64/ligma-texture.png	\
 	$(scalable_images)	\
 	color-scalable.svg
 
 noinst_DATA = \
-	gimp-core-pixbufs.gresource.xml	\
-	gimp-icon-pixbufs.gresource.xml
+	ligma-core-pixbufs.gresource.xml	\
+	ligma-icon-pixbufs.gresource.xml
 
 if ENABLE_VECTOR_ICONS
 noinst_DATA += $(CORE_IMAGES) $(ICON_IMAGES)
@@ -85,7 +85,7 @@ CLEANFILES = $(noinst_DATA)
 # This is basically the same rule as the catch all 64/%.png rule above,
 # because somehow the native Windows build fail without it (no problem
 # on cross-build for Windows or native Linux builds). When trying to
-# build gimp-core-pixbufs.gresource.xml, we were getting an error
+# build ligma-core-pixbufs.gresource.xml, we were getting an error
 # because of "No rule to make target '64/dialog-question.png'".
 # Interestingly, the problem doesn't happen for the other XML, but maybe
 # it's because it's not needed from within icons/Makefile.am.
@@ -93,22 +93,22 @@ CLEANFILES = $(noinst_DATA)
 	mkdir -p $(@D) && \
 	$(top_builddir)/tools/colorsvg2png $< $@ $(@D)
 
-gimp-core-pixbufs.gresource.xml: $(CORE_IMAGES) Makefile.am
+ligma-core-pixbufs.gresource.xml: $(CORE_IMAGES) Makefile.am
 	$(AM_V_GEN) ( rm -f $@; \
 	  echo '<?xml version="1.0" encoding="UTF-8"?>' > $@; \
 	  echo '<gresources>' >> $@; \
-	  echo '  <gresource prefix="/org/gimp/icons">' >> $@; \
+	  echo '  <gresource prefix="/org/ligma/icons">' >> $@; \
 	  for image in $(CORE_IMAGES); do \
 	    echo "    <file preprocess=\"to-pixdata\">$$image</file>" >> $@; \
 	  done; \
 	  echo '  </gresource>' >> $@; \
 	  echo '</gresources>' >> $@ )
 
-gimp-icon-pixbufs.gresource.xml: $(ICON_IMAGES) Makefile.am
+ligma-icon-pixbufs.gresource.xml: $(ICON_IMAGES) Makefile.am
 	$(AM_V_GEN) ( rm -f $@; \
 	  echo '<?xml version="1.0" encoding="UTF-8"?>' > $@; \
 	  echo '<gresources>' >> $@; \
-	  echo '  <gresource prefix="/org/gimp/icons">' >> $@; \
+	  echo '  <gresource prefix="/org/ligma/icons">' >> $@; \
 	  for image in $(ICON_IMAGES); do \
 	    echo "    <file preprocess=\"to-pixdata\">$$image</file>" >> $@; \
 	  done; \

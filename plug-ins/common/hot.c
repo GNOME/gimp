@@ -1,5 +1,5 @@
 /*
- * GIMP - The GNU Image Manipulation Program
+ * LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -66,15 +66,15 @@
 
 #include <string.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 #define PLUG_IN_PROC   "plug-in-hot"
 #define PLUG_IN_BINARY "hot"
-#define PLUG_IN_ROLE   "gimp-hot"
+#define PLUG_IN_ROLE   "ligma-hot"
 
 
 typedef enum
@@ -142,12 +142,12 @@ typedef struct _HotClass HotClass;
 
 struct _Hot
 {
-  GimpPlugIn parent_instance;
+  LigmaPlugIn parent_instance;
 };
 
 struct _HotClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -156,20 +156,20 @@ struct _HotClass
 
 GType                   hot_get_type         (void) G_GNUC_CONST;
 
-static GList          * hot_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * hot_create_procedure (GimpPlugIn           *plug_in,
+static GList          * hot_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * hot_create_procedure (LigmaPlugIn           *plug_in,
                                               const gchar          *name);
 
-static GimpValueArray * hot_run              (GimpProcedure        *procedure,
-                                              GimpRunMode           run_mode,
-                                              GimpImage            *image,
+static LigmaValueArray * hot_run              (LigmaProcedure        *procedure,
+                                              LigmaRunMode           run_mode,
+                                              LigmaImage            *image,
                                               gint                  n_drawables,
-                                              GimpDrawable        **drawables,
-                                              const GimpValueArray *args,
+                                              LigmaDrawable        **drawables,
+                                              const LigmaValueArray *args,
                                               gpointer              run_data);
 
-static gboolean         pluginCore           (GimpImage            *image,
-                                              GimpDrawable         *drawable,
+static gboolean         pluginCore           (LigmaImage            *image,
+                                              LigmaDrawable         *drawable,
                                               piArgs               *argp);
 static gboolean         plugin_dialog        (piArgs               *argp);
 static gboolean         hotp                 (guint8                r,
@@ -202,9 +202,9 @@ static void             build_tab            (gint                  m);
 #define pix_encode(v)  ((int)(v * (double)MAXPIX + 0.5))
 
 
-G_DEFINE_TYPE (Hot, hot, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Hot, hot, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (HOT_TYPE)
+LIGMA_MAIN (HOT_TYPE)
 DEFINE_STD_SET_I18N
 
 
@@ -218,7 +218,7 @@ static gint     icompos_lim;         /* composite amplitude limit (scaled intege
 static void
 hot_class_init (HotClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = hot_query_procedures;
   plug_in_class->create_procedure = hot_create_procedure;
@@ -231,31 +231,31 @@ hot_init (Hot *hot)
 }
 
 static GList *
-hot_query_procedures (GimpPlugIn *plug_in)
+hot_query_procedures (LigmaPlugIn *plug_in)
 {
   return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
 }
 
-static GimpProcedure *
-hot_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+hot_create_procedure (LigmaPlugIn  *plug_in,
                                const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_image_procedure_new (plug_in, name,
+                                            LIGMA_PDB_PROC_TYPE_PLUGIN,
                                             hot_run, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "RGB");
-      gimp_procedure_set_sensitivity_mask (procedure,
-                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
+      ligma_procedure_set_image_types (procedure, "RGB");
+      ligma_procedure_set_sensitivity_mask (procedure,
+                                           LIGMA_PROCEDURE_SENSITIVE_DRAWABLE);
 
-      gimp_procedure_set_menu_label (procedure, _("_Hot..."));
-      gimp_procedure_add_menu_path (procedure, "<Image>/Colors/Modify");
+      ligma_procedure_set_menu_label (procedure, _("_Hot..."));
+      ligma_procedure_add_menu_path (procedure, "<Image>/Colors/Modify");
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         _("Find and fix pixels that may "
                                           "be unsafely bright"),
                                         "hot scans an image for pixels that "
@@ -267,25 +267,25 @@ hot_create_procedure (GimpPlugIn  *plug_in,
                                         "(0) reduce luminance, "
                                         "(1) reduce saturation, or (2) Blacken.",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Eric L. Hernes, Alan Wm Paeth",
                                       "Eric L. Hernes",
                                       "1997");
 
-      GIMP_PROC_ARG_INT (procedure, "mode",
+      LIGMA_PROC_ARG_INT (procedure, "mode",
                          "Mode",
                          "Mode { NTSC (0), PAL (1) }",
                          0, 1, MODE_NTSC,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "action",
+      LIGMA_PROC_ARG_INT (procedure, "action",
                          "Action",
                          "Action { (0) reduce luminance, "
                          "(1) reduce saturation, or (2) Blacken }",
                          0, 2, ACT_LREDUX,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "new-layer",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "new-layer",
                              "New layer",
                              "Create a new layer",
                              TRUE,
@@ -295,16 +295,16 @@ hot_create_procedure (GimpPlugIn  *plug_in,
   return procedure;
 }
 
-static GimpValueArray *
-hot_run (GimpProcedure        *procedure,
-         GimpRunMode           run_mode,
-         GimpImage            *image,
+static LigmaValueArray *
+hot_run (LigmaProcedure        *procedure,
+         LigmaRunMode           run_mode,
+         LigmaImage            *image,
          gint                  n_drawables,
-         GimpDrawable        **drawables,
-         const GimpValueArray *args,
+         LigmaDrawable        **drawables,
+         const LigmaValueArray *args,
          gpointer              run_data)
 {
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
   piArgs        pi_args;
 
   gegl_init (NULL, NULL);
@@ -313,12 +313,12 @@ hot_run (GimpProcedure        *procedure,
     {
       GError *error = NULL;
 
-      g_set_error (&error, GIMP_PLUG_IN_ERROR, 0,
+      g_set_error (&error, LIGMA_PLUG_IN_ERROR, 0,
                    _("Procedure '%s' only works with one drawable."),
-                   gimp_procedure_get_name (procedure));
+                   ligma_procedure_get_name (procedure));
 
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_CALLING_ERROR,
                                                error);
     }
   else
@@ -326,50 +326,50 @@ hot_run (GimpProcedure        *procedure,
       drawable = drawables[0];
     }
 
-  pi_args.mode       = GIMP_VALUES_GET_INT     (args, 0);
-  pi_args.action     = GIMP_VALUES_GET_INT     (args, 1);
-  pi_args.new_layerp = GIMP_VALUES_GET_BOOLEAN (args, 2);
+  pi_args.mode       = LIGMA_VALUES_GET_INT     (args, 0);
+  pi_args.action     = LIGMA_VALUES_GET_INT     (args, 1);
+  pi_args.new_layerp = LIGMA_VALUES_GET_BOOLEAN (args, 2);
 
   switch (run_mode)
     {
-    case GIMP_RUN_INTERACTIVE:
-      gimp_get_data (PLUG_IN_PROC, &pi_args);
+    case LIGMA_RUN_INTERACTIVE:
+      ligma_get_data (PLUG_IN_PROC, &pi_args);
 
       if (! plugin_dialog (&pi_args))
         {
-          return gimp_procedure_new_return_values (procedure,
-                                                   GIMP_PDB_CANCEL,
+          return ligma_procedure_new_return_values (procedure,
+                                                   LIGMA_PDB_CANCEL,
                                                    NULL);
         }
       break;
 
-    case GIMP_RUN_NONINTERACTIVE:
+    case LIGMA_RUN_NONINTERACTIVE:
       break;
 
-    case GIMP_RUN_WITH_LAST_VALS:
-      gimp_get_data (PLUG_IN_PROC, &pi_args);
+    case LIGMA_RUN_WITH_LAST_VALS:
+      ligma_get_data (PLUG_IN_PROC, &pi_args);
       break;
     }
 
   if (! pluginCore (image, drawable, &pi_args))
     {
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_EXECUTION_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_EXECUTION_ERROR,
                                                NULL);
     }
 
-  if (run_mode != GIMP_RUN_NONINTERACTIVE)
-    gimp_displays_flush ();
+  if (run_mode != LIGMA_RUN_NONINTERACTIVE)
+    ligma_displays_flush ();
 
-  if (run_mode == GIMP_RUN_INTERACTIVE)
-    gimp_set_data (PLUG_IN_PROC, &pi_args, sizeof (pi_args));
+  if (run_mode == LIGMA_RUN_INTERACTIVE)
+    ligma_set_data (PLUG_IN_PROC, &pi_args, sizeof (pi_args));
 
-  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
+  return ligma_procedure_new_return_values (procedure, LIGMA_PDB_SUCCESS, NULL);
 }
 
 static gboolean
-pluginCore (GimpImage    *image,
-            GimpDrawable *drawable,
+pluginCore (LigmaImage    *image,
+            LigmaDrawable *drawable,
             piArgs       *argp)
 {
   GeglBuffer *src_buffer;
@@ -379,7 +379,7 @@ pluginCore (GimpImage    *image,
   gint        src_bpp;
   gint        dest_bpp;
   gboolean    success = TRUE;
-  GimpLayer  *nl      = NULL;
+  LigmaLayer  *nl      = NULL;
   gint        y, i;
   gint        Y, I, Q;
   gint        width, height;
@@ -393,10 +393,10 @@ pluginCore (GimpImage    *image,
   gdouble     pr, pg, pb;
   gdouble     py;
 
-  width  = gimp_drawable_get_width  (drawable);
-  height = gimp_drawable_get_height (drawable);
+  width  = ligma_drawable_get_width  (drawable);
+  height = ligma_drawable_get_height (drawable);
 
-  if (gimp_drawable_has_alpha (drawable))
+  if (ligma_drawable_has_alpha (drawable))
     src_format = babl_format ("R'G'B'A u8");
   else
     src_format = babl_format ("R'G'B' u8");
@@ -422,18 +422,18 @@ pluginCore (GimpImage    *image,
                   mode_names[argp->mode],
                   action_names[argp->action]);
 
-      nl = gimp_layer_new (image, name, width, height,
-                           GIMP_RGBA_IMAGE,
+      nl = ligma_layer_new (image, name, width, height,
+                           LIGMA_RGBA_IMAGE,
                            100,
-                           gimp_image_get_default_new_layer_mode (image));
+                           ligma_image_get_default_new_layer_mode (image));
 
-      gimp_drawable_fill (GIMP_DRAWABLE (nl), GIMP_FILL_TRANSPARENT);
-      gimp_image_insert_layer (image, nl, NULL, 0);
+      ligma_drawable_fill (LIGMA_DRAWABLE (nl), LIGMA_FILL_TRANSPARENT);
+      ligma_image_insert_layer (image, nl, NULL, 0);
 
       dest_format = babl_format ("R'G'B'A u8");
     }
 
-  if (! gimp_drawable_mask_intersect (drawable,
+  if (! ligma_drawable_mask_intersect (drawable,
                                       &sel_x1, &sel_y1, &width, &height))
     return success;
 
@@ -446,15 +446,15 @@ pluginCore (GimpImage    *image,
   src = g_new (guchar, width * height * src_bpp);
   dst = g_new (guchar, width * height * dest_bpp);
 
-  src_buffer = gimp_drawable_get_buffer (drawable);
+  src_buffer = ligma_drawable_get_buffer (drawable);
 
   if (argp->new_layerp)
     {
-      dest_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (nl));
+      dest_buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (nl));
     }
   else
     {
-      dest_buffer = gimp_drawable_get_shadow_buffer (drawable);
+      dest_buffer = ligma_drawable_get_shadow_buffer (drawable);
     }
 
   gegl_buffer_get (src_buffer,
@@ -467,7 +467,7 @@ pluginCore (GimpImage    *image,
 
   build_tab (argp->mode);
 
-  gimp_progress_init (_("Hot"));
+  ligma_progress_init (_("Hot"));
   prog_interval = height / 10;
 
   for (y = sel_y1; y < sel_y2; y++)
@@ -475,7 +475,7 @@ pluginCore (GimpImage    *image,
       gint x;
 
       if (y % prog_interval == 0)
-        gimp_progress_update ((double) y / (double) (sel_y2 - sel_y1));
+        ligma_progress_update ((double) y / (double) (sel_y2 - sel_y1));
 
       for (x = sel_x1; x < sel_x2; x++)
         {
@@ -637,7 +637,7 @@ pluginCore (GimpImage    *image,
                    dest_format, dst,
                    GEGL_AUTO_ROWSTRIDE);
 
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 
   g_free (src);
   g_free (dst);
@@ -647,15 +647,15 @@ pluginCore (GimpImage    *image,
 
   if (argp->new_layerp)
     {
-      gimp_drawable_update (GIMP_DRAWABLE (nl), sel_x1, sel_y1, width, height);
+      ligma_drawable_update (LIGMA_DRAWABLE (nl), sel_x1, sel_y1, width, height);
     }
   else
     {
-      gimp_drawable_merge_shadow (drawable, TRUE);
-      gimp_drawable_update (drawable, sel_x1, sel_y1, width, height);
+      ligma_drawable_merge_shadow (drawable, TRUE);
+      ligma_drawable_update (drawable, sel_x1, sel_y1, width, height);
     }
 
-  gimp_displays_flush ();
+  ligma_displays_flush ();
 
   return success;
 }
@@ -670,23 +670,23 @@ plugin_dialog (piArgs *argp)
   GtkWidget *frame;
   gboolean   run;
 
-  gimp_ui_init (PLUG_IN_BINARY);
+  ligma_ui_init (PLUG_IN_BINARY);
 
-  dlg = gimp_dialog_new (_("Hot"), PLUG_IN_ROLE,
+  dlg = ligma_dialog_new (_("Hot"), PLUG_IN_ROLE,
                          NULL, 0,
-                         gimp_standard_help_func, PLUG_IN_PROC,
+                         ligma_standard_help_func, PLUG_IN_PROC,
 
                          _("_Cancel"), GTK_RESPONSE_CANCEL,
                          _("_OK"),     GTK_RESPONSE_OK,
 
                          NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  gimp_window_set_transient (GTK_WINDOW (dlg));
+  ligma_window_set_transient (GTK_WINDOW (dlg));
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
@@ -698,8 +698,8 @@ plugin_dialog (piArgs *argp)
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  frame = gimp_int_radio_group_new (TRUE, _("Mode"),
-                                    G_CALLBACK (gimp_radio_button_update),
+  frame = ligma_int_radio_group_new (TRUE, _("Mode"),
+                                    G_CALLBACK (ligma_radio_button_update),
                                     &argp->mode, NULL, argp->mode,
 
                                     "N_TSC", MODE_NTSC, NULL,
@@ -716,11 +716,11 @@ plugin_dialog (piArgs *argp)
   gtk_widget_show (toggle);
 
   g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
+                    G_CALLBACK (ligma_toggle_button_update),
                     &argp->new_layerp);
 
-  frame = gimp_int_radio_group_new (TRUE, _("Action"),
-                                    G_CALLBACK (gimp_radio_button_update),
+  frame = ligma_int_radio_group_new (TRUE, _("Action"),
+                                    G_CALLBACK (ligma_radio_button_update),
                                     &argp->action, NULL, argp->action,
 
                                     _("Reduce _Luminance"),  ACT_LREDUX, NULL,
@@ -734,7 +734,7 @@ plugin_dialog (piArgs *argp)
 
   gtk_widget_show (dlg);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
+  run = (ligma_dialog_run (LIGMA_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
   gtk_widget_destroy (dlg);
 

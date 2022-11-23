@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,41 +15,41 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_ERASER_TOOL_H__
-#define __GIMP_ERASER_TOOL_H__
+#ifndef __LIGMA_ERASER_TOOL_H__
+#define __LIGMA_ERASER_TOOL_H__
 
 
-#include "gimpbrushtool.h"
+#include "ligmabrushtool.h"
 
 
-#define GIMP_TYPE_ERASER_TOOL            (gimp_eraser_tool_get_type ())
-#define GIMP_ERASER_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_ERASER_TOOL, GimpEraserTool))
-#define GIMP_ERASER_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_ERASER_TOOL, GimpEraserToolClass))
-#define GIMP_IS_ERASER_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_ERASER_TOOL))
-#define GIMP_IS_ERASER_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_ERASER_TOOL))
-#define GIMP_ERASER_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_ERASER_TOOL, GimpEraserToolClass))
+#define LIGMA_TYPE_ERASER_TOOL            (ligma_eraser_tool_get_type ())
+#define LIGMA_ERASER_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_ERASER_TOOL, LigmaEraserTool))
+#define LIGMA_ERASER_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_ERASER_TOOL, LigmaEraserToolClass))
+#define LIGMA_IS_ERASER_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_ERASER_TOOL))
+#define LIGMA_IS_ERASER_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_ERASER_TOOL))
+#define LIGMA_ERASER_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_ERASER_TOOL, LigmaEraserToolClass))
 
-#define GIMP_ERASER_TOOL_GET_OPTIONS(t)  (GIMP_ERASER_OPTIONS (gimp_tool_get_options (GIMP_TOOL (t))))
+#define LIGMA_ERASER_TOOL_GET_OPTIONS(t)  (LIGMA_ERASER_OPTIONS (ligma_tool_get_options (LIGMA_TOOL (t))))
 
 
-typedef struct _GimpEraserTool      GimpEraserTool;
-typedef struct _GimpEraserToolClass GimpEraserToolClass;
+typedef struct _LigmaEraserTool      LigmaEraserTool;
+typedef struct _LigmaEraserToolClass LigmaEraserToolClass;
 
-struct _GimpEraserTool
+struct _LigmaEraserTool
 {
-  GimpBrushTool parent_instance;
+  LigmaBrushTool parent_instance;
 };
 
-struct _GimpEraserToolClass
+struct _LigmaEraserToolClass
 {
-  GimpBrushToolClass parent_class;
+  LigmaBrushToolClass parent_class;
 };
 
 
-void    gimp_eraser_tool_register (GimpToolRegisterCallback  callback,
+void    ligma_eraser_tool_register (LigmaToolRegisterCallback  callback,
                                    gpointer                  data);
 
-GType   gimp_eraser_tool_get_type (void) G_GNUC_CONST;
+GType   ligma_eraser_tool_get_type (void) G_GNUC_CONST;
 
 
-#endif  /*  __GIMP_ERASER_TOOL_H__  */
+#endif  /*  __LIGMA_ERASER_TOOL_H__  */

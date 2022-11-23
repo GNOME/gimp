@@ -1,4 +1,4 @@
-# GIMP - The GNU Image Manipulation Program
+# LIGMA - The GNU Image Manipulation Program
 # Copyright (C) 1995 Spencer Kimball and Peter Mattis
 
 # This program is free software: you can redistribute it and/or modify
@@ -14,10 +14,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+# "Perlized" from C source by Manish Singh <yosh@ligma.org>
 
 sub palettes_popup {
-    $blurb = 'Invokes the Gimp palette selection.';
+    $blurb = 'Invokes the Ligma palette selection.';
     $help  = 'This procedure opens the palette selection dialog.';
 
     &mitch_pdb_misc('2002');
@@ -35,10 +35,10 @@ sub palettes_popup {
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp->no_interface ||
-      ! gimp_pdb_lookup_procedure (gimp->pdb, palette_callback) ||
-      ! gimp_pdb_dialog_new (gimp, context, progress,
-                             gimp_data_factory_get_container (gimp->palette_factory),
+  if (ligma->no_interface ||
+      ! ligma_pdb_lookup_procedure (ligma->pdb, palette_callback) ||
+      ! ligma_pdb_dialog_new (ligma, context, progress,
+                             ligma_data_factory_get_container (ligma->palette_factory),
                              popup_title, palette_callback, initial_palette,
                              NULL))
     success = FALSE;
@@ -61,9 +61,9 @@ sub palettes_close_popup {
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp->no_interface ||
-      ! gimp_pdb_lookup_procedure (gimp->pdb, palette_callback) ||
-      ! gimp_pdb_dialog_close (gimp, gimp_data_factory_get_container (gimp->palette_factory),
+  if (ligma->no_interface ||
+      ! ligma_pdb_lookup_procedure (ligma->pdb, palette_callback) ||
+      ! ligma_pdb_dialog_close (ligma, ligma_data_factory_get_container (ligma->palette_factory),
                                palette_callback))
     success = FALSE;
 }
@@ -87,9 +87,9 @@ sub palettes_set_popup {
     %invoke = (
 	code => <<'CODE'
 {
-  if (gimp->no_interface ||
-      ! gimp_pdb_lookup_procedure (gimp->pdb, palette_callback) ||
-      ! gimp_pdb_dialog_set (gimp, gimp_data_factory_get_container (gimp->palette_factory),
+  if (ligma->no_interface ||
+      ! ligma_pdb_lookup_procedure (ligma->pdb, palette_callback) ||
+      ! ligma_pdb_dialog_set (ligma, ligma_data_factory_get_container (ligma->palette_factory),
                              palette_callback, palette_name,
                              NULL))
     success = FALSE;
@@ -99,8 +99,8 @@ CODE
 }
 
 
-@headers = qw("core/gimp.h"
-              "core/gimpdatafactory.h");
+@headers = qw("core/ligma.h"
+              "core/ligmadatafactory.h");
 
 @procs = qw(palettes_popup
             palettes_close_popup
@@ -109,7 +109,7 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Palette UI';
-$doc_title = 'gimppaletteselect';
+$doc_title = 'ligmapaletteselect';
 $doc_short_desc = 'Functions providing a palette selection dialog.';
 $doc_long_desc = 'Functions providing a palette selection dialog.';
 

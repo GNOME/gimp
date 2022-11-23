@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,49 +16,49 @@
  */
 
 
-#ifndef __GIMP_FOREGROUND_SELECT_OPTIONS_H__
-#define __GIMP_FOREGROUND_SELECT_OPTIONS_H__
+#ifndef __LIGMA_FOREGROUND_SELECT_OPTIONS_H__
+#define __LIGMA_FOREGROUND_SELECT_OPTIONS_H__
 
 
-#include "gimpselectionoptions.h"
+#include "ligmaselectionoptions.h"
 
 
-#define GIMP_TYPE_FOREGROUND_SELECT_OPTIONS            (gimp_foreground_select_options_get_type ())
-#define GIMP_FOREGROUND_SELECT_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_FOREGROUND_SELECT_OPTIONS, GimpForegroundSelectOptions))
-#define GIMP_FOREGROUND_SELECT_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_FOREGROUND_SELECT_OPTIONS, GimpForegroundSelectOptionsClass))
-#define GIMP_IS_FOREGROUND_SELECT_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_FOREGROUND_SELECT_OPTIONS))
-#define GIMP_IS_FOREGROUND_SELECT_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_FOREGROUND_SELECT_OPTIONS))
-#define GIMP_FOREGROUND_SELECT_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_FOREGROUND_SELECT_OPTIONS, GimpForegroundSelectOptionsClass))
+#define LIGMA_TYPE_FOREGROUND_SELECT_OPTIONS            (ligma_foreground_select_options_get_type ())
+#define LIGMA_FOREGROUND_SELECT_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_FOREGROUND_SELECT_OPTIONS, LigmaForegroundSelectOptions))
+#define LIGMA_FOREGROUND_SELECT_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_FOREGROUND_SELECT_OPTIONS, LigmaForegroundSelectOptionsClass))
+#define LIGMA_IS_FOREGROUND_SELECT_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_FOREGROUND_SELECT_OPTIONS))
+#define LIGMA_IS_FOREGROUND_SELECT_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_FOREGROUND_SELECT_OPTIONS))
+#define LIGMA_FOREGROUND_SELECT_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_FOREGROUND_SELECT_OPTIONS, LigmaForegroundSelectOptionsClass))
 
 
-typedef struct _GimpForegroundSelectOptions      GimpForegroundSelectOptions;
-typedef struct _GimpForegroundSelectOptionsClass GimpForegroundSelectOptionsClass;
+typedef struct _LigmaForegroundSelectOptions      LigmaForegroundSelectOptions;
+typedef struct _LigmaForegroundSelectOptionsClass LigmaForegroundSelectOptionsClass;
 
-struct _GimpForegroundSelectOptions
+struct _LigmaForegroundSelectOptions
 {
-  GimpSelectionOptions  parent_instance;
+  LigmaSelectionOptions  parent_instance;
 
-  GimpMattingDrawMode    draw_mode;
-  GimpMattingPreviewMode preview_mode;
+  LigmaMattingDrawMode    draw_mode;
+  LigmaMattingPreviewMode preview_mode;
   gint                   stroke_width;
-  GimpRGB                mask_color;
-  GimpMattingEngine      engine;
+  LigmaRGB                mask_color;
+  LigmaMattingEngine      engine;
   gint                   levels;
   gint                   active_levels;
   gint                   iterations;
 };
 
-struct _GimpForegroundSelectOptionsClass
+struct _LigmaForegroundSelectOptionsClass
 {
-  GimpSelectionOptionsClass  parent_class;
+  LigmaSelectionOptionsClass  parent_class;
 };
 
 
-GType       gimp_foreground_select_options_get_type       (void) G_GNUC_CONST;
+GType       ligma_foreground_select_options_get_type       (void) G_GNUC_CONST;
 
-GtkWidget * gimp_foreground_select_options_gui            (GimpToolOptions             *tool_options);
+GtkWidget * ligma_foreground_select_options_gui            (LigmaToolOptions             *tool_options);
 
 
 
-#endif /* __GIMP_FOREGROUND_SELECT_OPTIONS_H__ */
+#endif /* __LIGMA_FOREGROUND_SELECT_OPTIONS_H__ */
 

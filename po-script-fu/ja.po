@@ -1,4 +1,4 @@
-# GIMP Script-Fu Japanese message catalog
+# LIGMA Script-Fu Japanese message catalog
 # Copyright (C) 2000, 2003, 2005, 2008-2011, 2018, 2020 Free Software Foundation, Inc.
 # Shirasaki Yasuhiro <yasuhiro@gnome.gr.jp>, 2000
 # Takashi Kido <yositaka@yd5.so-net.ne.jp>, 2000
@@ -12,8 +12,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp trunk\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma trunk\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2020-06-08 09:15+0000\n"
 "PO-Revision-Date: 2020-06-08 00:00+0900\n"
 "Last-Translator: sicklylife <translation@sicklylife.jp>\n"
@@ -42,8 +42,8 @@ msgid "Server for remote Script-Fu operation"
 msgstr "Script-Fu をリモート操作するためのサーバーを開始します"
 
 #: ../plug-ins/script-fu/script-fu.c:394
-msgid "_GIMP Online"
-msgstr "GIMP 関連のウェブサイト(_G)"
+msgid "_LIGMA Online"
+msgstr "LIGMA 関連のウェブサイト(_G)"
 
 #: ../plug-ins/script-fu/script-fu.c:395
 msgid "_User Manual"
@@ -82,8 +82,8 @@ msgid "_Beveled Pattern"
 msgstr "ベベルパターン(_B)"
 
 #: ../plug-ins/script-fu/script-fu.c:416
-msgid "_Classic.Gimp.Org"
-msgstr "クラシック Gimp.Org(_C)"
+msgid "_Classic.Ligma.Org"
+msgstr "クラシック Ligma.Org(_C)"
 
 # これまでは「透明度をロゴに(_L)」
 # この表記では機能が連想しにくいと感じたため「ロゴ効果(_L)」に変更した
@@ -822,88 +822,88 @@ msgstr "影の幅 (%)"
 msgid "Flatten image"
 msgstr "画像を統合する"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:59
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:59
 msgid "Using _Paths"
 msgstr "パスを使う (英語)(_P)"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:60
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:73
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:86
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:99
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:112
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:125
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:138
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:151
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:60
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:73
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:86
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:99
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:112
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:125
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:138
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:151
 msgid "Bookmark to the user manual"
 msgstr "ユーザーマニュアルへのブックマーク"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:72
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:72
 msgid "_Preparing your Images for the Web"
 msgstr "ウェブ用画像を作成するには (英語)(_P)"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:85
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:85
 msgid "_Working with Digital Camera Photos"
 msgstr "デジカメ画像を修正する (英語)(_W)"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:98
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:98
 msgid "Create, Open and Save _Files"
 msgstr "ファイルを開く・作成・保存 (英語)(_F)"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:111
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:111
 msgid "_Basic Concepts"
 msgstr "基本コンセプト (英語)(_B)"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:124
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:124
 msgid "How to Use _Dialogs"
 msgstr "ダイアログの使い方 (英語)(_D)"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:137
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:137
 msgid "Drawing _Simple Objects"
 msgstr "シンプルなオブジェクトを描く (英語)(_S)"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:150
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:150
 msgid "Create and Use _Selections"
 msgstr "選択範囲の作成と使用 (英語)(_S)"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:190
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:190
 msgid "_Main Web Site"
 msgstr "メインのウェブサイト (英語)(_M)"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:191
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:204
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:256
-msgid "Bookmark to the GIMP web site"
-msgstr "GIMP ウェブサイトへのブックマーク"
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:191
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:204
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:256
+msgid "Bookmark to the LIGMA web site"
+msgstr "LIGMA ウェブサイトへのブックマーク"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:203
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:203
 msgid "_Developer Web Site"
 msgstr "開発者用ウェブサイト (英語)(_D)"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:216
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:216
 msgid "_Roadmap"
 msgstr "ロードマップ(_R)"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:217
-msgid "Bookmark to the roadmap of GIMP"
-msgstr "GIMP のロードマップへのブックマーク"
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:217
+msgid "Bookmark to the roadmap of LIGMA"
+msgstr "LIGMA のロードマップへのブックマーク"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:229
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:229
 msgid "_Wiki"
 msgstr "ウィキ(_W)"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:230
-msgid "Bookmark to the wiki of GIMP"
-msgstr "GIMP のウィキへのブックマーク"
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:230
+msgid "Bookmark to the wiki of LIGMA"
+msgstr "LIGMA のウィキへのブックマーク"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:242
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:242
 msgid "_Bug Reports and Feature Requests"
 msgstr "バグ報告と機能の要望(_B)"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:243
-msgid "Bookmark to the bug tracker of GIMP"
-msgstr "GIMP のバグトラッカーへのブックマーク"
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:243
+msgid "Bookmark to the bug tracker of LIGMA"
+msgstr "LIGMA のバグトラッカーへのブックマーク"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:255
+#: ../plug-ins/script-fu/scripts/ligma-online.scm:255
 msgid "_User Manual Web Site"
 msgstr "ユーザーマニュアル (英語)(_U)"
 
@@ -1624,10 +1624,10 @@ msgstr "ドロップシャドウ Y オフセット"
 #~ msgstr "プラグインレジストリ (英語)(_R)"
 
 #~ msgid "Rendering Spyro"
-#~ msgstr "SpyroGimp を描いています..."
+#~ msgstr "SpyroLigma を描いています..."
 
-#~ msgid "_Spyrogimp..."
-#~ msgstr "Spyrogimp(_S)..."
+#~ msgid "_Spyroligma..."
+#~ msgstr "Spyroligma(_S)..."
 
 #~ msgid ""
 #~ "Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
@@ -2279,7 +2279,7 @@ msgstr "ドロップシャドウ Y オフセット"
 #~ msgid "Create a logo in a two-color, scribbled text style"
 #~ msgstr ""
 #~ "2 種類のサインペンで手書きしたようなロゴを生成します。\n"
-#~ "(以前の GIMP では「ぐにゃぐにゃ」)"
+#~ "(以前の LIGMA では「ぐにゃぐにゃ」)"
 
 #~ msgid "Frame color"
 #~ msgstr "枠の色"
@@ -2515,13 +2515,13 @@ msgstr "ドロップシャドウ Y オフセット"
 #~ msgid "Autocrop"
 #~ msgstr "自動切り抜き"
 
-#~ msgid "Create an image of a large header using the gimp.org webpage theme"
+#~ msgid "Create an image of a large header using the ligma.org webpage theme"
 #~ msgstr ""
-#~ "gimp.org ウェブページテーマに沿った、大きなヘッダー用画像を生成します"
+#~ "ligma.org ウェブページテーマに沿った、大きなヘッダー用画像を生成します"
 
-#~ msgid "Create an image of a small header using the gimp.org webpage theme"
+#~ msgid "Create an image of a small header using the ligma.org webpage theme"
 #~ msgstr ""
-#~ "gimp.org ウェブページテーマに沿った、小さなヘッダー用画像を生成します"
+#~ "ligma.org ウェブページテーマに沿った、小さなヘッダー用画像を生成します"
 
 #~ msgid "Dark color"
 #~ msgstr "ダーク色"
@@ -2548,30 +2548,30 @@ msgstr "ドロップシャドウ Y オフセット"
 #~ msgstr "小さなヘッダー(_S)..."
 
 #~ msgid ""
-#~ "Create an image of a Tube Button Label Header using the gimp.org webpage "
+#~ "Create an image of a Tube Button Label Header using the ligma.org webpage "
 #~ "theme"
 #~ msgstr ""
-#~ "gimp.org ウェブページテーマに沿った、チューブボタンラベルヘッダー用画像を"
+#~ "ligma.org ウェブページテーマに沿った、チューブボタンラベルヘッダー用画像を"
 #~ "生成します。"
 
 #~ msgid ""
-#~ "Create an image of a Tube Button Label using the gimp.org webpage theme"
+#~ "Create an image of a Tube Button Label using the ligma.org webpage theme"
 #~ msgstr ""
-#~ "gimp.org ウェブページテーマに沿った、チューブボタンラベル用画像を生成しま"
+#~ "ligma.org ウェブページテーマに沿った、チューブボタンラベル用画像を生成しま"
 #~ "す"
 
 #~ msgid ""
-#~ "Create an image of a second level Tube Button Label using the gimp.org "
+#~ "Create an image of a second level Tube Button Label using the ligma.org "
 #~ "webpage theme"
 #~ msgstr ""
-#~ "gimp.org ウェブページテーマに沿った、(第 2 レベル) チューブボタンラベル用"
+#~ "ligma.org ウェブページテーマに沿った、(第 2 レベル) チューブボタンラベル用"
 #~ "画像を生成します"
 
 #~ msgid ""
-#~ "Create an image of a third level Tube Button Label using the gimp.org "
+#~ "Create an image of a third level Tube Button Label using the ligma.org "
 #~ "webpage theme"
 #~ msgstr ""
-#~ "gimp.org ウェブページテーマに沿った、(第 3 レベル) チューブボタンラベル用"
+#~ "ligma.org ウェブページテーマに沿った、(第 3 レベル) チューブボタンラベル用"
 #~ "画像を生成します"
 
 #~ msgid "T_ube Sub-Button Label..."
@@ -2826,11 +2826,11 @@ msgstr "ドロップシャドウ Y オフセット"
 #~ msgid "Additional Information"
 #~ msgstr "追加情報"
 
-#~ msgid "Internal GIMP procedure"
-#~ msgstr "内部 GIMP プロシージャ"
+#~ msgid "Internal LIGMA procedure"
+#~ msgstr "内部 LIGMA プロシージャ"
 
-#~ msgid "GIMP Plug-In"
-#~ msgstr "GIMP プラグイン"
+#~ msgid "LIGMA Plug-In"
+#~ msgstr "LIGMA プラグイン"
 
 #~ msgid "Temporary Procedure"
 #~ msgstr "一時プロシージャ"
@@ -2881,8 +2881,8 @@ msgstr "ドロップシャドウ Y オフセット"
 #~ msgid "<Toolbox>/Xtns/Script-Fu/Utils"
 #~ msgstr "<Toolbox>/拡張/Script-Fu/ユーティリティ"
 
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org"
-#~ msgstr "<Toolbox>/拡張/Script-Fu/Web ページテーマ/クラシック Gimp.Org"
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Ligma.Org"
+#~ msgstr "<Toolbox>/拡張/Script-Fu/Web ページテーマ/クラシック Ligma.Org"
 
 #~ msgid "<Image>/Script-Fu/Utils"
 #~ msgstr "<Image>/Script-Fu/ユーティリティ"
@@ -2926,8 +2926,8 @@ msgstr "ドロップシャドウ Y オフセット"
 #~ msgid "<Toolbox>/Xtns/Script-Fu/Misc"
 #~ msgstr "<Toolbox>/拡張/Script-Fu/その他"
 
-#~ msgid "<Toolbox>/Help/The GIMP Online"
-#~ msgstr "<Toolbox>/ヘルプ/GIMP オンライン"
+#~ msgid "<Toolbox>/Help/The LIGMA Online"
+#~ msgstr "<Toolbox>/ヘルプ/LIGMA オンライン"
 
 #~ msgid "Linear"
 #~ msgstr "線形"
@@ -3104,37 +3104,37 @@ msgstr "ドロップシャドウ Y オフセット"
 
 #, fuzzy
 #~ msgid ""
-#~ "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Small Header..."
-#~ msgstr "<Toolbox>/拡張/Script-Fu/Web ページテーマ/Gimp.Org/小見出し(_S)..."
+#~ "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Ligma.Org/_Small Header..."
+#~ msgstr "<Toolbox>/拡張/Script-Fu/Web ページテーマ/Ligma.Org/小見出し(_S)..."
 
 #, fuzzy
 #~ msgid ""
-#~ "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/T_ube Sub-"
+#~ "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Ligma.Org/T_ube Sub-"
 #~ "Button Label..."
 #~ msgstr ""
-#~ "<Toolbox>/拡張/Script-Fu/Web ページテーマ/Gimp.Org/管副ボタンラベル(_U)..."
+#~ "<Toolbox>/拡張/Script-Fu/Web ページテーマ/Ligma.Org/管副ボタンラベル(_U)..."
 
 #, fuzzy
 #~ msgid ""
-#~ "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/Tub_e Sub-Sub-"
+#~ "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Ligma.Org/Tub_e Sub-Sub-"
 #~ "Button Label..."
 #~ msgstr ""
-#~ "<Toolbox>/拡張/Script-Fu/Web ページテーマ/Gimp.Org/管副々ボタンラベル"
+#~ "<Toolbox>/拡張/Script-Fu/Web ページテーマ/Ligma.Org/管副々ボタンラベル"
 #~ "(_E)..."
 
 #, fuzzy
 #~ msgid ""
-#~ "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_General Tube "
+#~ "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Ligma.Org/_General Tube "
 #~ "Labels..."
 #~ msgstr ""
-#~ "<Toolbox>/拡張/Script-Fu/Web ページテーマ/Gimp.Org/汎用管ラベル(_G)..."
+#~ "<Toolbox>/拡張/Script-Fu/Web ページテーマ/Ligma.Org/汎用管ラベル(_G)..."
 
 #, fuzzy
 #~ msgid ""
-#~ "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Tube Button "
+#~ "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Ligma.Org/_Tube Button "
 #~ "Label..."
 #~ msgstr ""
-#~ "<Toolbox>/拡張/Script-Fu/Web ページテーマ/Gimp.Org/管ボタンラベル(_T)..."
+#~ "<Toolbox>/拡張/Script-Fu/Web ページテーマ/Ligma.Org/管ボタンラベル(_T)..."
 
 #~ msgid "<Image>/Script-Fu/Alpha to Logo/Glo_ssy..."
 #~ msgstr "<Image>/Script-Fu/透明度をロゴに/光沢(_S)..."
@@ -3227,7 +3227,7 @@ msgstr "ドロップシャドウ Y オフセット"
 #~ msgstr "<Image>/Script-Fu/動画/回転球(_S)..."
 
 #, fuzzy
-#~ msgid "<Image>/Script-Fu/Render/_Spyrogimp..."
+#~ msgid "<Image>/Script-Fu/Render/_Spyroligma..."
 #~ msgstr "<Image>/Script-Fu/下塗り/格子(_G)..."
 
 #~ msgid "<Image>/Script-Fu/Alpha to Logo/Starb_urst..."
@@ -3388,47 +3388,47 @@ msgstr "ドロップシャドウ Y オフセット"
 #~ msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
 #~ msgstr "<Toolbox>/拡張/Web ブラウザー/開発者向け FAQ"
 
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Bugs"
-#~ msgstr "<Toolbox>/拡張/Web ブラウザー/GIMP のバグ"
+#~ msgid "<Toolbox>/Xtns/Web Browser/LIGMA Bugs"
+#~ msgstr "<Toolbox>/拡張/Web ブラウザー/LIGMA のバグ"
 
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Manual"
-#~ msgstr "<Toolbox>/拡張/Web ブラウザー/GIMP マニュアル"
+#~ msgid "<Toolbox>/Xtns/Web Browser/LIGMA Manual"
+#~ msgstr "<Toolbox>/拡張/Web ブラウザー/LIGMA マニュアル"
 
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP News"
-#~ msgstr "<Toolbox>/拡張/Web ブラウザー/GIMP ニュース"
+#~ msgid "<Toolbox>/Xtns/Web Browser/LIGMA News"
+#~ msgstr "<Toolbox>/拡張/Web ブラウザー/LIGMA ニュース"
 
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Tutorials"
-#~ msgstr "<Toolbox>/拡張/Web ブラウザー/GIMP チュートリアル"
+#~ msgid "<Toolbox>/Xtns/Web Browser/LIGMA Tutorials"
+#~ msgstr "<Toolbox>/拡張/Web ブラウザー/LIGMA チュートリアル"
 
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Documenation"
-#~ msgstr "<Toolbox>/拡張/Web ブラウザー/GIMP.ORG/関連文書"
+#~ msgid "<Toolbox>/Xtns/Web Browser/LIGMA.ORG/Documenation"
+#~ msgstr "<Toolbox>/拡張/Web ブラウザー/LIGMA.ORG/関連文書"
 
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Download"
-#~ msgstr "<Toolbox>/拡張/Web ブラウザー/GIMP.ORG/ダウンロード"
+#~ msgid "<Toolbox>/Xtns/Web Browser/LIGMA.ORG/Download"
+#~ msgstr "<Toolbox>/拡張/Web ブラウザー/LIGMA.ORG/ダウンロード"
 
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GIMP Art"
-#~ msgstr "<Toolbox>/拡張/Web ブラウザー/GIMP.ORG/GIMP 利用作品"
+#~ msgid "<Toolbox>/Xtns/Web Browser/LIGMA.ORG/LIGMA Art"
+#~ msgstr "<Toolbox>/拡張/Web ブラウザー/LIGMA.ORG/LIGMA 利用作品"
 
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GTK"
-#~ msgstr "<Toolbox>/拡張/Web ブラウザー/GIMP.ORG/GTK"
+#~ msgid "<Toolbox>/Xtns/Web Browser/LIGMA.ORG/GTK"
+#~ msgstr "<Toolbox>/拡張/Web ブラウザー/LIGMA.ORG/GTK"
 
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Links"
-#~ msgstr "<Toolbox>/拡張/Web ブラウザー/GIMP.ORG/リンク"
+#~ msgid "<Toolbox>/Xtns/Web Browser/LIGMA.ORG/Links"
+#~ msgstr "<Toolbox>/拡張/Web ブラウザー/LIGMA.ORG/リンク"
 
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Mailing Lists"
-#~ msgstr "<Toolbox>/拡張/Web ブラウザー/GIMP.ORG/メーリングリスト"
+#~ msgid "<Toolbox>/Xtns/Web Browser/LIGMA.ORG/Mailing Lists"
+#~ msgstr "<Toolbox>/拡張/Web ブラウザー/LIGMA.ORG/メーリングリスト"
 
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Resources"
-#~ msgstr "<Toolbox>/拡張/Web ブラウザー/GIMP.ORG/リソース"
+#~ msgid "<Toolbox>/Xtns/Web Browser/LIGMA.ORG/Resources"
+#~ msgstr "<Toolbox>/拡張/Web ブラウザー/LIGMA.ORG/リソース"
 
-#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/The GIMP"
-#~ msgstr "<Toolbox>/拡張/Web ブラウザー/GIMP.ORG/GIMP"
+#~ msgid "<Toolbox>/Xtns/Web Browser/LIGMA.ORG/The LIGMA"
+#~ msgstr "<Toolbox>/拡張/Web ブラウザー/LIGMA.ORG/LIGMA"
 
-#~ msgid "<Toolbox>/Xtns/Web Browser/Gimp-Savvy.com"
-#~ msgstr "<Toolbox>/拡張/Web ブラウザー/GIMP-Savvy.com"
+#~ msgid "<Toolbox>/Xtns/Web Browser/Ligma-Savvy.com"
+#~ msgstr "<Toolbox>/拡張/Web ブラウザー/LIGMA-Savvy.com"
 
-#~ msgid "<Toolbox>/Xtns/Web Browser/Grokking the GIMP"
-#~ msgstr "<Toolbox>/拡張/Web ブラウザー/GIMP を理解しよう"
+#~ msgid "<Toolbox>/Xtns/Web Browser/Grokking the LIGMA"
+#~ msgstr "<Toolbox>/拡張/Web ブラウザー/LIGMA を理解しよう"
 
 #~ msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
 #~ msgstr "<Toolbox>/拡張/Web ブラウザー/利用者向け FAQ"

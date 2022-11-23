@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,104 +15,104 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DRAWABLE_H__
-#define __GIMP_DRAWABLE_H__
+#ifndef __LIGMA_DRAWABLE_H__
+#define __LIGMA_DRAWABLE_H__
 
 
-#include "gimpitem.h"
+#include "ligmaitem.h"
 
 
-#define GIMP_TYPE_DRAWABLE            (gimp_drawable_get_type ())
-#define GIMP_DRAWABLE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DRAWABLE, GimpDrawable))
-#define GIMP_DRAWABLE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DRAWABLE, GimpDrawableClass))
-#define GIMP_IS_DRAWABLE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DRAWABLE))
-#define GIMP_IS_DRAWABLE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DRAWABLE))
-#define GIMP_DRAWABLE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DRAWABLE, GimpDrawableClass))
+#define LIGMA_TYPE_DRAWABLE            (ligma_drawable_get_type ())
+#define LIGMA_DRAWABLE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_DRAWABLE, LigmaDrawable))
+#define LIGMA_DRAWABLE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_DRAWABLE, LigmaDrawableClass))
+#define LIGMA_IS_DRAWABLE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_DRAWABLE))
+#define LIGMA_IS_DRAWABLE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_DRAWABLE))
+#define LIGMA_DRAWABLE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_DRAWABLE, LigmaDrawableClass))
 
 
-typedef struct _GimpDrawablePrivate GimpDrawablePrivate;
-typedef struct _GimpDrawableClass   GimpDrawableClass;
+typedef struct _LigmaDrawablePrivate LigmaDrawablePrivate;
+typedef struct _LigmaDrawableClass   LigmaDrawableClass;
 
-struct _GimpDrawable
+struct _LigmaDrawable
 {
-  GimpItem             parent_instance;
+  LigmaItem             parent_instance;
 
-  GimpDrawablePrivate *private;
+  LigmaDrawablePrivate *private;
 };
 
-struct _GimpDrawableClass
+struct _LigmaDrawableClass
 {
-  GimpItemClass  parent_class;
+  LigmaItemClass  parent_class;
 
   /*  signals  */
-  void          (* update)                (GimpDrawable         *drawable,
+  void          (* update)                (LigmaDrawable         *drawable,
                                            gint                  x,
                                            gint                  y,
                                            gint                  width,
                                            gint                  height);
-  void          (* format_changed)        (GimpDrawable         *drawable);
-  void          (* alpha_changed)         (GimpDrawable         *drawable);
-  void          (* bounding_box_changed)  (GimpDrawable         *drawable);
+  void          (* format_changed)        (LigmaDrawable         *drawable);
+  void          (* alpha_changed)         (LigmaDrawable         *drawable);
+  void          (* bounding_box_changed)  (LigmaDrawable         *drawable);
 
   /*  virtual functions  */
-  gint64        (* estimate_memsize)      (GimpDrawable         *drawable,
-                                           GimpComponentType     component_type,
+  gint64        (* estimate_memsize)      (LigmaDrawable         *drawable,
+                                           LigmaComponentType     component_type,
                                            gint                  width,
                                            gint                  height);
-  void          (* update_all)            (GimpDrawable         *drawable);
-  void          (* invalidate_boundary)   (GimpDrawable         *drawable);
-  void          (* get_active_components) (GimpDrawable         *drawable,
+  void          (* update_all)            (LigmaDrawable         *drawable);
+  void          (* invalidate_boundary)   (LigmaDrawable         *drawable);
+  void          (* get_active_components) (LigmaDrawable         *drawable,
                                            gboolean             *active);
-  GimpComponentMask (* get_active_mask)   (GimpDrawable         *drawable);
-  gboolean      (* supports_alpha)        (GimpDrawable         *drawable);
-  void          (* convert_type)          (GimpDrawable         *drawable,
-                                           GimpImage            *dest_image,
+  LigmaComponentMask (* get_active_mask)   (LigmaDrawable         *drawable);
+  gboolean      (* supports_alpha)        (LigmaDrawable         *drawable);
+  void          (* convert_type)          (LigmaDrawable         *drawable,
+                                           LigmaImage            *dest_image,
                                            const Babl           *new_format,
-                                           GimpColorProfile     *src_profile,
-                                           GimpColorProfile     *dest_profile,
+                                           LigmaColorProfile     *src_profile,
+                                           LigmaColorProfile     *dest_profile,
                                            GeglDitherMethod      layer_dither_type,
                                            GeglDitherMethod      mask_dither_type,
                                            gboolean              push_undo,
-                                           GimpProgress         *progress);
-  void          (* apply_buffer)          (GimpDrawable         *drawable,
+                                           LigmaProgress         *progress);
+  void          (* apply_buffer)          (LigmaDrawable         *drawable,
                                            GeglBuffer           *buffer,
                                            const GeglRectangle  *buffer_region,
                                            gboolean              push_undo,
                                            const gchar          *undo_desc,
                                            gdouble               opacity,
-                                           GimpLayerMode         mode,
-                                           GimpLayerColorSpace   blend_space,
-                                           GimpLayerColorSpace   composite_space,
-                                           GimpLayerCompositeMode composite_mode,
+                                           LigmaLayerMode         mode,
+                                           LigmaLayerColorSpace   blend_space,
+                                           LigmaLayerColorSpace   composite_space,
+                                           LigmaLayerCompositeMode composite_mode,
                                            GeglBuffer           *base_buffer,
                                            gint                  base_x,
                                            gint                  base_y);
-  GeglBuffer  * (* get_buffer)            (GimpDrawable         *drawable);
-  void          (* set_buffer)            (GimpDrawable         *drawable,
+  GeglBuffer  * (* get_buffer)            (LigmaDrawable         *drawable);
+  void          (* set_buffer)            (LigmaDrawable         *drawable,
                                            gboolean              push_undo,
                                            const gchar          *undo_desc,
                                            GeglBuffer           *buffer,
                                            const GeglRectangle  *bounds);
-  GeglRectangle (* get_bounding_box)      (GimpDrawable         *drawable);
-  void          (* push_undo)             (GimpDrawable         *drawable,
+  GeglRectangle (* get_bounding_box)      (LigmaDrawable         *drawable);
+  void          (* push_undo)             (LigmaDrawable         *drawable,
                                            const gchar          *undo_desc,
                                            GeglBuffer           *buffer,
                                            gint                  x,
                                            gint                  y,
                                            gint                  width,
                                            gint                  height);
-  void          (* swap_pixels)           (GimpDrawable         *drawable,
+  void          (* swap_pixels)           (LigmaDrawable         *drawable,
                                            GeglBuffer           *buffer,
                                            gint                  x,
                                            gint                  y);
-  GeglNode    * (* get_source_node)       (GimpDrawable         *drawable);
+  GeglNode    * (* get_source_node)       (LigmaDrawable         *drawable);
 };
 
 
-GType           gimp_drawable_get_type           (void) G_GNUC_CONST;
+GType           ligma_drawable_get_type           (void) G_GNUC_CONST;
 
-GimpDrawable  * gimp_drawable_new                (GType               type,
-                                                  GimpImage          *image,
+LigmaDrawable  * ligma_drawable_new                (GType               type,
+                                                  LigmaImage          *image,
                                                   const gchar        *name,
                                                   gint                offset_x,
                                                   gint                offset_y,
@@ -120,84 +120,84 @@ GimpDrawable  * gimp_drawable_new                (GType               type,
                                                   gint                height,
                                                   const Babl         *format);
 
-gint64          gimp_drawable_estimate_memsize   (GimpDrawable       *drawable,
-                                                  GimpComponentType   component_type,
+gint64          ligma_drawable_estimate_memsize   (LigmaDrawable       *drawable,
+                                                  LigmaComponentType   component_type,
                                                   gint                width,
                                                   gint                height);
 
-void            gimp_drawable_update             (GimpDrawable       *drawable,
+void            ligma_drawable_update             (LigmaDrawable       *drawable,
                                                   gint                x,
                                                   gint                y,
                                                   gint                width,
                                                   gint                height);
-void            gimp_drawable_update_all         (GimpDrawable       *drawable);
+void            ligma_drawable_update_all         (LigmaDrawable       *drawable);
 
-void           gimp_drawable_invalidate_boundary (GimpDrawable       *drawable);
-void         gimp_drawable_get_active_components (GimpDrawable       *drawable,
+void           ligma_drawable_invalidate_boundary (LigmaDrawable       *drawable);
+void         ligma_drawable_get_active_components (LigmaDrawable       *drawable,
                                                   gboolean           *active);
-GimpComponentMask gimp_drawable_get_active_mask  (GimpDrawable       *drawable);
+LigmaComponentMask ligma_drawable_get_active_mask  (LigmaDrawable       *drawable);
 
-gboolean        gimp_drawable_supports_alpha     (GimpDrawable       *drawable);
+gboolean        ligma_drawable_supports_alpha     (LigmaDrawable       *drawable);
 
-void            gimp_drawable_convert_type       (GimpDrawable       *drawable,
-                                                  GimpImage          *dest_image,
-                                                  GimpImageBaseType   new_base_type,
-                                                  GimpPrecision       new_precision,
+void            ligma_drawable_convert_type       (LigmaDrawable       *drawable,
+                                                  LigmaImage          *dest_image,
+                                                  LigmaImageBaseType   new_base_type,
+                                                  LigmaPrecision       new_precision,
                                                   gboolean            new_has_alpha,
-                                                  GimpColorProfile   *src_profile,
-                                                  GimpColorProfile   *dest_profile,
+                                                  LigmaColorProfile   *src_profile,
+                                                  LigmaColorProfile   *dest_profile,
                                                   GeglDitherMethod    layer_dither_type,
                                                   GeglDitherMethod    mask_dither_type,
                                                   gboolean            push_undo,
-                                                  GimpProgress       *progress);
+                                                  LigmaProgress       *progress);
 
-void            gimp_drawable_apply_buffer       (GimpDrawable        *drawable,
+void            ligma_drawable_apply_buffer       (LigmaDrawable        *drawable,
                                                   GeglBuffer          *buffer,
                                                   const GeglRectangle *buffer_rect,
                                                   gboolean             push_undo,
                                                   const gchar         *undo_desc,
                                                   gdouble              opacity,
-                                                  GimpLayerMode        mode,
-                                                  GimpLayerColorSpace  blend_space,
-                                                  GimpLayerColorSpace  composite_space,
-                                                  GimpLayerCompositeMode composite_mode,
+                                                  LigmaLayerMode        mode,
+                                                  LigmaLayerColorSpace  blend_space,
+                                                  LigmaLayerColorSpace  composite_space,
+                                                  LigmaLayerCompositeMode composite_mode,
                                                   GeglBuffer          *base_buffer,
                                                   gint                 base_x,
                                                   gint                 base_y);
 
-GeglBuffer    * gimp_drawable_get_buffer         (GimpDrawable       *drawable);
-void            gimp_drawable_set_buffer         (GimpDrawable       *drawable,
+GeglBuffer    * ligma_drawable_get_buffer         (LigmaDrawable       *drawable);
+void            ligma_drawable_set_buffer         (LigmaDrawable       *drawable,
                                                   gboolean            push_undo,
                                                   const gchar        *undo_desc,
                                                   GeglBuffer         *buffer);
-void            gimp_drawable_set_buffer_full    (GimpDrawable       *drawable,
+void            ligma_drawable_set_buffer_full    (LigmaDrawable       *drawable,
                                                   gboolean            push_undo,
                                                   const gchar        *undo_desc,
                                                   GeglBuffer         *buffer,
                                                   const GeglRectangle *bounds,
                                                   gboolean            update);
 
-void            gimp_drawable_steal_buffer       (GimpDrawable       *drawable,
-                                                  GimpDrawable       *src_drawable);
+void            ligma_drawable_steal_buffer       (LigmaDrawable       *drawable,
+                                                  LigmaDrawable       *src_drawable);
 
-void            gimp_drawable_set_format         (GimpDrawable       *drawable,
+void            ligma_drawable_set_format         (LigmaDrawable       *drawable,
                                                   const Babl         *format,
                                                   gboolean            copy_buffer,
                                                   gboolean            push_undo);
 
-GeglNode      * gimp_drawable_get_source_node    (GimpDrawable       *drawable);
-GeglNode      * gimp_drawable_get_mode_node      (GimpDrawable       *drawable);
+GeglNode      * ligma_drawable_get_source_node    (LigmaDrawable       *drawable);
+GeglNode      * ligma_drawable_get_mode_node      (LigmaDrawable       *drawable);
 
-GeglRectangle   gimp_drawable_get_bounding_box   (GimpDrawable       *drawable);
-gboolean        gimp_drawable_update_bounding_box
-                                                 (GimpDrawable       *drawable);
+GeglRectangle   ligma_drawable_get_bounding_box   (LigmaDrawable       *drawable);
+gboolean        ligma_drawable_update_bounding_box
+                                                 (LigmaDrawable       *drawable);
 
-void            gimp_drawable_swap_pixels        (GimpDrawable       *drawable,
+void            ligma_drawable_swap_pixels        (LigmaDrawable       *drawable,
                                                   GeglBuffer         *buffer,
                                                   gint                x,
                                                   gint                y);
 
-void            gimp_drawable_push_undo          (GimpDrawable       *drawable,
+void            ligma_drawable_push_undo          (LigmaDrawable       *drawable,
                                                   const gchar        *undo_desc,
                                                   GeglBuffer         *buffer,
                                                   gint                x,
@@ -205,31 +205,31 @@ void            gimp_drawable_push_undo          (GimpDrawable       *drawable,
                                                   gint                width,
                                                   gint                height);
 
-const Babl      * gimp_drawable_get_space            (GimpDrawable    *drawable);
-const Babl      * gimp_drawable_get_format           (GimpDrawable    *drawable);
-const Babl      * gimp_drawable_get_format_with_alpha(GimpDrawable    *drawable);
-const Babl      * gimp_drawable_get_format_without_alpha
-                                                     (GimpDrawable    *drawable);
-GimpTRCType       gimp_drawable_get_trc              (GimpDrawable    *drawable);
-gboolean          gimp_drawable_has_alpha            (GimpDrawable    *drawable);
-GimpImageBaseType gimp_drawable_get_base_type        (GimpDrawable    *drawable);
-GimpComponentType gimp_drawable_get_component_type   (GimpDrawable    *drawable);
-GimpPrecision     gimp_drawable_get_precision        (GimpDrawable    *drawable);
-gboolean          gimp_drawable_is_rgb               (GimpDrawable    *drawable);
-gboolean          gimp_drawable_is_gray              (GimpDrawable    *drawable);
-gboolean          gimp_drawable_is_indexed           (GimpDrawable    *drawable);
+const Babl      * ligma_drawable_get_space            (LigmaDrawable    *drawable);
+const Babl      * ligma_drawable_get_format           (LigmaDrawable    *drawable);
+const Babl      * ligma_drawable_get_format_with_alpha(LigmaDrawable    *drawable);
+const Babl      * ligma_drawable_get_format_without_alpha
+                                                     (LigmaDrawable    *drawable);
+LigmaTRCType       ligma_drawable_get_trc              (LigmaDrawable    *drawable);
+gboolean          ligma_drawable_has_alpha            (LigmaDrawable    *drawable);
+LigmaImageBaseType ligma_drawable_get_base_type        (LigmaDrawable    *drawable);
+LigmaComponentType ligma_drawable_get_component_type   (LigmaDrawable    *drawable);
+LigmaPrecision     ligma_drawable_get_precision        (LigmaDrawable    *drawable);
+gboolean          ligma_drawable_is_rgb               (LigmaDrawable    *drawable);
+gboolean          ligma_drawable_is_gray              (LigmaDrawable    *drawable);
+gboolean          ligma_drawable_is_indexed           (LigmaDrawable    *drawable);
 
-const Babl      * gimp_drawable_get_component_format (GimpDrawable    *drawable,
-                                                      GimpChannelType  channel);
-gint              gimp_drawable_get_component_index  (GimpDrawable    *drawable,
-                                                      GimpChannelType  channel);
+const Babl      * ligma_drawable_get_component_format (LigmaDrawable    *drawable,
+                                                      LigmaChannelType  channel);
+gint              ligma_drawable_get_component_index  (LigmaDrawable    *drawable,
+                                                      LigmaChannelType  channel);
 
-guchar          * gimp_drawable_get_colormap         (GimpDrawable    *drawable);
+guchar          * ligma_drawable_get_colormap         (LigmaDrawable    *drawable);
 
-void              gimp_drawable_start_paint          (GimpDrawable    *drawable);
-gboolean          gimp_drawable_end_paint            (GimpDrawable    *drawable);
-gboolean          gimp_drawable_flush_paint          (GimpDrawable    *drawable);
-gboolean          gimp_drawable_is_painting          (GimpDrawable    *drawable);
+void              ligma_drawable_start_paint          (LigmaDrawable    *drawable);
+gboolean          ligma_drawable_end_paint            (LigmaDrawable    *drawable);
+gboolean          ligma_drawable_flush_paint          (LigmaDrawable    *drawable);
+gboolean          ligma_drawable_is_painting          (LigmaDrawable    *drawable);
 
 
-#endif /* __GIMP_DRAWABLE_H__ */
+#endif /* __LIGMA_DRAWABLE_H__ */

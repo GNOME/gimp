@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 2013 Daniel Sabo
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,33 +15,33 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PAINT_CORE_LOOPS_H__
-#define __GIMP_PAINT_CORE_LOOPS_H__
+#ifndef __LIGMA_PAINT_CORE_LOOPS_H__
+#define __LIGMA_PAINT_CORE_LOOPS_H__
 
 
 typedef enum
 {
-  GIMP_PAINT_CORE_LOOPS_ALGORITHM_NONE                                = 0,
+  LIGMA_PAINT_CORE_LOOPS_ALGORITHM_NONE                                = 0,
 
-  GIMP_PAINT_CORE_LOOPS_ALGORITHM_COMBINE_PAINT_MASK_TO_CANVAS_BUFFER = 1 << 0,
-  GIMP_PAINT_CORE_LOOPS_ALGORITHM_CANVAS_BUFFER_TO_PAINT_BUF_ALPHA    = 1 << 1,
-  GIMP_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_PAINT_BUF_ALPHA       = 1 << 2,
-  GIMP_PAINT_CORE_LOOPS_ALGORITHM_CANVAS_BUFFER_TO_COMP_MASK          = 1 << 3,
-  GIMP_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_COMP_MASK             = 1 << 4,
-  GIMP_PAINT_CORE_LOOPS_ALGORITHM_DO_LAYER_BLEND                      = 1 << 5,
-  GIMP_PAINT_CORE_LOOPS_ALGORITHM_MASK_COMPONENTS                     = 1 << 6
-} GimpPaintCoreLoopsAlgorithm;
+  LIGMA_PAINT_CORE_LOOPS_ALGORITHM_COMBINE_PAINT_MASK_TO_CANVAS_BUFFER = 1 << 0,
+  LIGMA_PAINT_CORE_LOOPS_ALGORITHM_CANVAS_BUFFER_TO_PAINT_BUF_ALPHA    = 1 << 1,
+  LIGMA_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_PAINT_BUF_ALPHA       = 1 << 2,
+  LIGMA_PAINT_CORE_LOOPS_ALGORITHM_CANVAS_BUFFER_TO_COMP_MASK          = 1 << 3,
+  LIGMA_PAINT_CORE_LOOPS_ALGORITHM_PAINT_MASK_TO_COMP_MASK             = 1 << 4,
+  LIGMA_PAINT_CORE_LOOPS_ALGORITHM_DO_LAYER_BLEND                      = 1 << 5,
+  LIGMA_PAINT_CORE_LOOPS_ALGORITHM_MASK_COMPONENTS                     = 1 << 6
+} LigmaPaintCoreLoopsAlgorithm;
 
 
 typedef struct
 {
   GeglBuffer        *canvas_buffer;
 
-  GimpTempBuf       *paint_buf;
+  LigmaTempBuf       *paint_buf;
   gint               paint_buf_offset_x;
   gint               paint_buf_offset_y;
 
-  const GimpTempBuf *paint_mask;
+  const LigmaTempBuf *paint_mask;
   gint               paint_mask_offset_x;
   gint               paint_mask_offset_y;
 
@@ -57,14 +57,14 @@ typedef struct
   gdouble            paint_opacity;
   gdouble            image_opacity;
 
-  GimpLayerMode      paint_mode;
+  LigmaLayerMode      paint_mode;
 
-  GimpComponentMask  affect;
-} GimpPaintCoreLoopsParams;
-
-
-void   gimp_paint_core_loops_process (const GimpPaintCoreLoopsParams *params,
-                                      GimpPaintCoreLoopsAlgorithm     algorithms);
+  LigmaComponentMask  affect;
+} LigmaPaintCoreLoopsParams;
 
 
-#endif /* __GIMP_PAINT_CORE_LOOPS_H__ */
+void   ligma_paint_core_loops_process (const LigmaPaintCoreLoopsParams *params,
+                                      LigmaPaintCoreLoopsAlgorithm     algorithms);
+
+
+#endif /* __LIGMA_PAINT_CORE_LOOPS_H__ */

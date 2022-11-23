@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpsymmetry.h
- * Copyright (C) 2015 Jehan <jehan@gimp.org>
+ * ligmasymmetry.h
+ * Copyright (C) 2015 Jehan <jehan@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,34 +18,34 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_SYMMETRY_H__
-#define __GIMP_SYMMETRY_H__
+#ifndef __LIGMA_SYMMETRY_H__
+#define __LIGMA_SYMMETRY_H__
 
 
-#include "gimpobject.h"
+#include "ligmaobject.h"
 
 
-/* shift one more than GIMP_CONFIG_PARAM_DONT_COMPARE */
-#define GIMP_SYMMETRY_PARAM_GUI (1 << (7 + G_PARAM_USER_SHIFT))
+/* shift one more than LIGMA_CONFIG_PARAM_DONT_COMPARE */
+#define LIGMA_SYMMETRY_PARAM_GUI (1 << (7 + G_PARAM_USER_SHIFT))
 
 
-#define GIMP_TYPE_SYMMETRY            (gimp_symmetry_get_type ())
-#define GIMP_SYMMETRY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_SYMMETRY, GimpSymmetry))
-#define GIMP_SYMMETRY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_SYMMETRY, GimpSymmetryClass))
-#define GIMP_IS_SYMMETRY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_SYMMETRY))
-#define GIMP_IS_SYMMETRY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_SYMMETRY))
-#define GIMP_SYMMETRY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_SYMMETRY, GimpSymmetryClass))
+#define LIGMA_TYPE_SYMMETRY            (ligma_symmetry_get_type ())
+#define LIGMA_SYMMETRY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_SYMMETRY, LigmaSymmetry))
+#define LIGMA_SYMMETRY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_SYMMETRY, LigmaSymmetryClass))
+#define LIGMA_IS_SYMMETRY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_SYMMETRY))
+#define LIGMA_IS_SYMMETRY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_SYMMETRY))
+#define LIGMA_SYMMETRY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_SYMMETRY, LigmaSymmetryClass))
 
 
-typedef struct _GimpSymmetryClass   GimpSymmetryClass;
+typedef struct _LigmaSymmetryClass   LigmaSymmetryClass;
 
-struct _GimpSymmetry
+struct _LigmaSymmetry
 {
-  GimpObject    parent_instance;
+  LigmaObject    parent_instance;
 
-  GimpImage    *image;
-  GimpDrawable *drawable;
-  GimpCoords   *origin;
+  LigmaImage    *image;
+  LigmaDrawable *drawable;
+  LigmaCoords   *origin;
   gboolean      active;
   gint          version;
 
@@ -53,54 +53,54 @@ struct _GimpSymmetry
   gboolean      stateful;
 };
 
-struct _GimpSymmetryClass
+struct _LigmaSymmetryClass
 {
-  GimpObjectClass  parent_class;
+  LigmaObjectClass  parent_class;
 
   const gchar * label;
 
   /* Virtual functions */
-  void       (* update_strokes)             (GimpSymmetry       *symmetry,
-                                             GimpDrawable       *drawable,
-                                             GimpCoords         *origin);
-  void       (* get_transform)              (GimpSymmetry       *symmetry,
+  void       (* update_strokes)             (LigmaSymmetry       *symmetry,
+                                             LigmaDrawable       *drawable,
+                                             LigmaCoords         *origin);
+  void       (* get_transform)              (LigmaSymmetry       *symmetry,
                                              gint                stroke,
                                              gdouble            *angle,
                                              gboolean           *reflect);
-  void       (* active_changed)             (GimpSymmetry       *symmetry);
+  void       (* active_changed)             (LigmaSymmetry       *symmetry);
 
-  gboolean   (* update_version)             (GimpSymmetry       *symmetry);
+  gboolean   (* update_version)             (LigmaSymmetry       *symmetry);
 };
 
 
-GType          gimp_symmetry_get_type       (void) G_GNUC_CONST;
+GType          ligma_symmetry_get_type       (void) G_GNUC_CONST;
 
-void           gimp_symmetry_set_stateful   (GimpSymmetry       *symmetry,
+void           ligma_symmetry_set_stateful   (LigmaSymmetry       *symmetry,
                                              gboolean            stateful);
-void           gimp_symmetry_set_origin     (GimpSymmetry       *symmetry,
-                                             GimpDrawable       *drawable,
-                                             GimpCoords         *origin);
-void           gimp_symmetry_clear_origin   (GimpSymmetry       *symmetry);
+void           ligma_symmetry_set_origin     (LigmaSymmetry       *symmetry,
+                                             LigmaDrawable       *drawable,
+                                             LigmaCoords         *origin);
+void           ligma_symmetry_clear_origin   (LigmaSymmetry       *symmetry);
 
-GimpCoords   * gimp_symmetry_get_origin     (GimpSymmetry       *symmetry);
-gint           gimp_symmetry_get_size       (GimpSymmetry       *symmetry);
-GimpCoords   * gimp_symmetry_get_coords     (GimpSymmetry       *symmetry,
+LigmaCoords   * ligma_symmetry_get_origin     (LigmaSymmetry       *symmetry);
+gint           ligma_symmetry_get_size       (LigmaSymmetry       *symmetry);
+LigmaCoords   * ligma_symmetry_get_coords     (LigmaSymmetry       *symmetry,
                                              gint                stroke);
-void           gimp_symmetry_get_transform  (GimpSymmetry       *symmetry,
+void           ligma_symmetry_get_transform  (LigmaSymmetry       *symmetry,
                                              gint                stroke,
                                              gdouble            *angle,
                                              gboolean           *reflect);
-void           gimp_symmetry_get_matrix     (GimpSymmetry       *symmetry,
+void           ligma_symmetry_get_matrix     (LigmaSymmetry       *symmetry,
                                              gint                stroke,
-                                             GimpMatrix3        *matrix);
-GeglNode     * gimp_symmetry_get_operation  (GimpSymmetry       *symmetry,
+                                             LigmaMatrix3        *matrix);
+GeglNode     * ligma_symmetry_get_operation  (LigmaSymmetry       *symmetry,
                                              gint                stroke);
 
-gchar        * gimp_symmetry_parasite_name  (GType               type);
-GimpParasite * gimp_symmetry_to_parasite    (const GimpSymmetry *symmetry);
-GimpSymmetry * gimp_symmetry_from_parasite  (const GimpParasite *parasite,
-                                             GimpImage          *image,
+gchar        * ligma_symmetry_parasite_name  (GType               type);
+LigmaParasite * ligma_symmetry_to_parasite    (const LigmaSymmetry *symmetry);
+LigmaSymmetry * ligma_symmetry_from_parasite  (const LigmaParasite *parasite,
+                                             LigmaImage          *image,
                                              GType               type);
 
 
-#endif  /*  __GIMP_SYMMETRY_H__  */
+#endif  /*  __LIGMA_SYMMETRY_H__  */

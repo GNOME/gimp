@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpGrid
- * Copyright (C) 2003  Henrik Brix Andersen <brix@gimp.org>
+ * LigmaGrid
+ * Copyright (C) 2003  Henrik Brix Andersen <brix@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,17 +26,17 @@
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpmath/gimpmath.h"
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
 
-#include "libgimpcolor/gimpcolor.h"
+#include "libligmacolor/ligmacolor.h"
 
 #include "core-types.h"
 
-#include "gimpgrid.h"
+#include "ligmagrid.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 enum
@@ -54,115 +54,115 @@ enum
 };
 
 
-static void   gimp_grid_get_property (GObject      *object,
+static void   ligma_grid_get_property (GObject      *object,
                                       guint         property_id,
                                       GValue       *value,
                                       GParamSpec   *pspec);
-static void   gimp_grid_set_property (GObject      *object,
+static void   ligma_grid_set_property (GObject      *object,
                                       guint         property_id,
                                       const GValue *value,
                                       GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpGrid, gimp_grid, GIMP_TYPE_OBJECT,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG, NULL))
+G_DEFINE_TYPE_WITH_CODE (LigmaGrid, ligma_grid, LIGMA_TYPE_OBJECT,
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_CONFIG, NULL))
 
 
 static void
-gimp_grid_class_init (GimpGridClass *klass)
+ligma_grid_class_init (LigmaGridClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
-  GimpRGB       black;
-  GimpRGB       white;
+  LigmaRGB       black;
+  LigmaRGB       white;
 
-  object_class->get_property = gimp_grid_get_property;
-  object_class->set_property = gimp_grid_set_property;
+  object_class->get_property = ligma_grid_get_property;
+  object_class->set_property = ligma_grid_set_property;
 
-  gimp_rgba_set (&black, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
-  gimp_rgba_set (&white, 1.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE);
+  ligma_rgba_set (&black, 0.0, 0.0, 0.0, LIGMA_OPACITY_OPAQUE);
+  ligma_rgba_set (&white, 1.0, 1.0, 1.0, LIGMA_OPACITY_OPAQUE);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_STYLE,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_STYLE,
                          "style",
                          _("Line style"),
                          _("Line style used for the grid."),
-                         GIMP_TYPE_GRID_STYLE,
-                         GIMP_GRID_SOLID,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_TYPE_GRID_STYLE,
+                         LIGMA_GRID_SOLID,
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_RGB (object_class, PROP_FGCOLOR,
+  LIGMA_CONFIG_PROP_RGB (object_class, PROP_FGCOLOR,
                         "fgcolor",
                         _("Foreground color"),
                         _("The foreground color of the grid."),
                         TRUE, &black,
-                        GIMP_PARAM_STATIC_STRINGS);
+                        LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_RGB (object_class, PROP_BGCOLOR,
+  LIGMA_CONFIG_PROP_RGB (object_class, PROP_BGCOLOR,
                         "bgcolor",
                         _("Background color"),
                         _("The background color of the grid; "
                           "only used in double dashed line style."),
                         TRUE, &white,
-                        GIMP_PARAM_STATIC_STRINGS);
+                        LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_XSPACING,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_XSPACING,
                            "xspacing",
                            _("Spacing X"),
                            _("Horizontal spacing of grid lines."),
-                           0.0, GIMP_MAX_IMAGE_SIZE, 10.0,
-                           GIMP_PARAM_STATIC_STRINGS);
+                           0.0, LIGMA_MAX_IMAGE_SIZE, 10.0,
+                           LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_YSPACING,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_YSPACING,
                            "yspacing",
                            _("Spacing Y"),
                            _("Vertical spacing of grid lines."),
-                           0.0, GIMP_MAX_IMAGE_SIZE, 10.0,
-                           GIMP_PARAM_STATIC_STRINGS);
+                           0.0, LIGMA_MAX_IMAGE_SIZE, 10.0,
+                           LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_UNIT (object_class, PROP_SPACING_UNIT,
+  LIGMA_CONFIG_PROP_UNIT (object_class, PROP_SPACING_UNIT,
                          "spacing-unit",
                          _("Spacing unit"),
                          NULL,
-                         FALSE, FALSE, GIMP_UNIT_INCH,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         FALSE, FALSE, LIGMA_UNIT_INCH,
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_XOFFSET,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_XOFFSET,
                            "xoffset",
                            _("Offset X"),
                            _("Horizontal offset of the first grid "
                              "line; this may be a negative number."),
-                           - GIMP_MAX_IMAGE_SIZE,
-                           GIMP_MAX_IMAGE_SIZE, 0.0,
-                           GIMP_PARAM_STATIC_STRINGS);
+                           - LIGMA_MAX_IMAGE_SIZE,
+                           LIGMA_MAX_IMAGE_SIZE, 0.0,
+                           LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_YOFFSET,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_YOFFSET,
                            "yoffset",
                            _("Offset Y"),
                            _("Vertical offset of the first grid "
                              "line; this may be a negative number."),
-                           - GIMP_MAX_IMAGE_SIZE,
-                           GIMP_MAX_IMAGE_SIZE, 0.0,
-                           GIMP_PARAM_STATIC_STRINGS);
+                           - LIGMA_MAX_IMAGE_SIZE,
+                           LIGMA_MAX_IMAGE_SIZE, 0.0,
+                           LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_UNIT (object_class, PROP_OFFSET_UNIT,
+  LIGMA_CONFIG_PROP_UNIT (object_class, PROP_OFFSET_UNIT,
                          "offset-unit",
                          _("Offset unit"),
                          NULL,
-                         FALSE, FALSE, GIMP_UNIT_INCH,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         FALSE, FALSE, LIGMA_UNIT_INCH,
+                         LIGMA_PARAM_STATIC_STRINGS);
 }
 
 static void
-gimp_grid_init (GimpGrid *grid)
+ligma_grid_init (LigmaGrid *grid)
 {
 }
 
 static void
-gimp_grid_get_property (GObject      *object,
+ligma_grid_get_property (GObject      *object,
                         guint         property_id,
                         GValue       *value,
                         GParamSpec   *pspec)
 {
-  GimpGrid *grid = GIMP_GRID (object);
+  LigmaGrid *grid = LIGMA_GRID (object);
 
   switch (property_id)
     {
@@ -200,13 +200,13 @@ gimp_grid_get_property (GObject      *object,
 }
 
 static void
-gimp_grid_set_property (GObject      *object,
+ligma_grid_set_property (GObject      *object,
                         guint         property_id,
                         const GValue *value,
                         GParamSpec   *pspec)
 {
-  GimpGrid *grid = GIMP_GRID (object);
-  GimpRGB  *color;
+  LigmaGrid *grid = LIGMA_GRID (object);
+  LigmaRGB  *color;
 
   switch (property_id)
     {
@@ -248,93 +248,93 @@ gimp_grid_set_property (GObject      *object,
 
 /*  public functions  */
 
-GimpGridStyle
-gimp_grid_get_style (GimpGrid *grid)
+LigmaGridStyle
+ligma_grid_get_style (LigmaGrid *grid)
 {
-  g_return_val_if_fail (GIMP_IS_GRID (grid), GIMP_GRID_SOLID);
+  g_return_val_if_fail (LIGMA_IS_GRID (grid), LIGMA_GRID_SOLID);
 
   return grid->style;
 }
 
 void
-gimp_grid_get_fgcolor (GimpGrid *grid,
-                       GimpRGB  *fgcolor)
+ligma_grid_get_fgcolor (LigmaGrid *grid,
+                       LigmaRGB  *fgcolor)
 {
-  g_return_if_fail (GIMP_IS_GRID (grid));
+  g_return_if_fail (LIGMA_IS_GRID (grid));
   g_return_if_fail (fgcolor != NULL);
 
   *fgcolor = grid->fgcolor;
 }
 
 void
-gimp_grid_get_bgcolor (GimpGrid *grid,
-                       GimpRGB  *bgcolor)
+ligma_grid_get_bgcolor (LigmaGrid *grid,
+                       LigmaRGB  *bgcolor)
 {
-  g_return_if_fail (GIMP_IS_GRID (grid));
+  g_return_if_fail (LIGMA_IS_GRID (grid));
   g_return_if_fail (bgcolor != NULL);
 
   *bgcolor = grid->bgcolor;
 }
 
 void
-gimp_grid_get_spacing (GimpGrid *grid,
+ligma_grid_get_spacing (LigmaGrid *grid,
                        gdouble  *xspacing,
                        gdouble  *yspacing)
 {
-  g_return_if_fail (GIMP_IS_GRID (grid));
+  g_return_if_fail (LIGMA_IS_GRID (grid));
 
   if (xspacing) *xspacing = grid->xspacing;
   if (yspacing) *yspacing = grid->yspacing;
 }
 
 void
-gimp_grid_get_offset (GimpGrid *grid,
+ligma_grid_get_offset (LigmaGrid *grid,
                       gdouble  *xoffset,
                       gdouble  *yoffset)
 {
-  g_return_if_fail (GIMP_IS_GRID (grid));
+  g_return_if_fail (LIGMA_IS_GRID (grid));
 
   if (xoffset) *xoffset = grid->xoffset;
   if (yoffset) *yoffset = grid->yoffset;
 }
 
 const gchar *
-gimp_grid_parasite_name (void)
+ligma_grid_parasite_name (void)
 {
-  return "gimp-image-grid";
+  return "ligma-image-grid";
 }
 
-GimpParasite *
-gimp_grid_to_parasite (GimpGrid *grid)
+LigmaParasite *
+ligma_grid_to_parasite (LigmaGrid *grid)
 {
-  g_return_val_if_fail (GIMP_IS_GRID (grid), NULL);
+  g_return_val_if_fail (LIGMA_IS_GRID (grid), NULL);
 
-  return gimp_config_serialize_to_parasite (GIMP_CONFIG (grid),
-                                            gimp_grid_parasite_name (),
-                                            GIMP_PARASITE_PERSISTENT,
+  return ligma_config_serialize_to_parasite (LIGMA_CONFIG (grid),
+                                            ligma_grid_parasite_name (),
+                                            LIGMA_PARASITE_PERSISTENT,
                                             NULL);
 }
 
-GimpGrid *
-gimp_grid_from_parasite (const GimpParasite *parasite)
+LigmaGrid *
+ligma_grid_from_parasite (const LigmaParasite *parasite)
 {
-  GimpGrid *grid;
+  LigmaGrid *grid;
   GError   *error = NULL;
 
   g_return_val_if_fail (parasite != NULL, NULL);
-  g_return_val_if_fail (strcmp (gimp_parasite_get_name (parasite),
-                                gimp_grid_parasite_name ()) == 0, NULL);
+  g_return_val_if_fail (strcmp (ligma_parasite_get_name (parasite),
+                                ligma_grid_parasite_name ()) == 0, NULL);
 
-  if (! gimp_parasite_get_data (parasite, NULL))
+  if (! ligma_parasite_get_data (parasite, NULL))
     {
       g_warning ("Empty grid parasite");
 
       return NULL;
     }
 
-  grid = g_object_new (GIMP_TYPE_GRID, NULL);
+  grid = g_object_new (LIGMA_TYPE_GRID, NULL);
 
-  if (! gimp_config_deserialize_parasite (GIMP_CONFIG (grid),
+  if (! ligma_config_deserialize_parasite (LIGMA_CONFIG (grid),
                                           parasite,
                                           NULL,
                                           &error))

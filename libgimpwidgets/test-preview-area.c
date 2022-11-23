@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * Copyright (C) 2004  Sven Neumann <sven@gimp.org>
+ * Copyright (C) 2004  Sven Neumann <sven@ligma.org>
  * test-preview-area.c
  *
  * This library is free software: you can redistribute it and/or
@@ -19,7 +19,7 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-/* This code is based on testrgb.c from GTK+ - The GIMP Toolkit
+/* This code is based on testrgb.c from GTK+ - The LIGMA Toolkit
  * Copyright (C) 1995-1997 Peter Mattis, Spencer Kimball and Josh MacDonald
  */
 
@@ -29,9 +29,9 @@
 
 #include <gtk/gtk.h>
 
-#include "gimpwidgetstypes.h"
+#include "ligmawidgetstypes.h"
 
-#include "gimppreviewarea.h"
+#include "ligmapreviewarea.h"
 
 
 #define WIDTH      256
@@ -57,7 +57,7 @@ test_run (GtkWidget *area,
 
   gtk_widget_realize (area);
 
-  g_print ("\nPerformance tests for GimpPreviewArea "
+  g_print ("\nPerformance tests for LigmaPreviewArea "
            "(%d x %d, %s, %d iterations):\n\n",
            WIDTH, HEIGHT, visible ? "visible" : "hidden", num_iters);
 
@@ -68,7 +68,7 @@ test_run (GtkWidget *area,
       buf[j] = val;
     }
 
-  gimp_preview_area_set_colormap (GIMP_PREVIEW_AREA (area), buf, 256);
+  ligma_preview_area_set_colormap (LIGMA_PREVIEW_AREA (area), buf, 256);
 
   /* Let's warm up the cache, and also wait for the window manager
      to settle. */
@@ -76,9 +76,9 @@ test_run (GtkWidget *area,
     {
       gint offset = (rand () % (WIDTH * HEIGHT * 4)) & -4;
 
-      gimp_preview_area_draw (GIMP_PREVIEW_AREA (area),
+      ligma_preview_area_draw (LIGMA_PREVIEW_AREA (area),
                               0, 0, WIDTH, HEIGHT,
-                              GIMP_RGB_IMAGE,
+                              LIGMA_RGB_IMAGE,
                               buf + offset,
                               WIDTH * 4);
     }
@@ -87,18 +87,18 @@ test_run (GtkWidget *area,
 
   timer = g_timer_new ();
 
-  enum_class = g_type_class_ref (GIMP_TYPE_IMAGE_TYPE);
+  enum_class = g_type_class_ref (LIGMA_TYPE_IMAGE_TYPE);
 
   for (enum_value = enum_class->values; enum_value->value_name; enum_value++)
     {
-      /* gimp_preview_area_draw */
+      /* ligma_preview_area_draw */
       start_time = g_timer_elapsed (timer, NULL);
 
       for (i = 0; i < num_iters; i++)
         {
           gint offset = (rand () % (WIDTH * HEIGHT * 4)) & -4;
 
-          gimp_preview_area_draw (GIMP_PREVIEW_AREA (area),
+          ligma_preview_area_draw (LIGMA_PREVIEW_AREA (area),
                                   0, 0, WIDTH, HEIGHT,
                                   enum_value->value,
                                   buf + offset,
@@ -115,7 +115,7 @@ test_run (GtkWidget *area,
                num_iters / total_time,
                num_iters * (WIDTH * HEIGHT * 1e-6) / total_time);
 
-      /* gimp_preview_area_blend */
+      /* ligma_preview_area_blend */
       start_time = g_timer_elapsed (timer, NULL);
 
       for (i = 0; i < num_iters; i++)
@@ -123,7 +123,7 @@ test_run (GtkWidget *area,
           gint offset  = (rand () % (WIDTH * HEIGHT * 4)) & -4;
           gint offset2 = (rand () % (WIDTH * HEIGHT * 4)) & -4;
 
-          gimp_preview_area_blend (GIMP_PREVIEW_AREA (area),
+          ligma_preview_area_blend (LIGMA_PREVIEW_AREA (area),
                                    0, 0, WIDTH, HEIGHT,
                                    enum_value->value,
                                    buf + offset,
@@ -143,7 +143,7 @@ test_run (GtkWidget *area,
                num_iters / total_time,
                num_iters * (WIDTH * HEIGHT * 1e-6) / total_time);
 
-      /* gimp_preview_area_mask */
+      /* ligma_preview_area_mask */
       start_time = g_timer_elapsed (timer, NULL);
 
       for (i = 0; i < num_iters; i++)
@@ -152,7 +152,7 @@ test_run (GtkWidget *area,
           gint offset2 = (rand () % (WIDTH * HEIGHT * 4)) & -4;
           gint offset3 = (rand () % (WIDTH * HEIGHT * 4)) & -4;
 
-          gimp_preview_area_mask (GIMP_PREVIEW_AREA (area),
+          ligma_preview_area_mask (LIGMA_PREVIEW_AREA (area),
                                   0, 0, WIDTH, HEIGHT,
                                   enum_value->value,
                                   buf + offset,
@@ -183,7 +183,7 @@ test_run (GtkWidget *area,
       guchar  g = rand () % 0xFF;
       guchar  b = rand () % 0xFF;
 
-      gimp_preview_area_fill (GIMP_PREVIEW_AREA (area),
+      ligma_preview_area_fill (LIGMA_PREVIEW_AREA (area),
                               0, 0, WIDTH, HEIGHT,
                               r, g, b);
     }
@@ -209,7 +209,7 @@ test_preview_area (void)
 
   gtk_window_set_accept_focus (GTK_WINDOW (window), FALSE);
 
-  area = gimp_preview_area_new ();
+  area = ligma_preview_area_new ();
   gtk_container_add (GTK_CONTAINER (window), area);
   gtk_widget_show (area);
 

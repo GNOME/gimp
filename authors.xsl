@@ -13,10 +13,10 @@
     <xsl:apply-templates select="dc:contributor[contains(@role, $role)]" />
   </xsl:template>
 
-  <xsl:template match="/dc:gimp-authors">
+  <xsl:template match="/dc:ligma-authors">
     <xsl:text> -- This file is generated from authors.xml, do not edit it directly. --
 
-GIMP was originally written by:
+LIGMA was originally written by:
 
 </xsl:text>
     <xsl:apply-templates select="dc:creator" />
@@ -28,7 +28,7 @@ The current maintainers are:
     <xsl:apply-templates select="dc:maintainer" />
     <xsl:text>
 
-The following people have contributed code to GIMP:
+The following people have contributed code to LIGMA:
 
 </xsl:text>
     <xsl:call-template name="contributor">
@@ -36,7 +36,7 @@ The following people have contributed code to GIMP:
     </xsl:call-template>
     <xsl:text>
 
-The following people have contributed art to GIMP:
+The following people have contributed art to LIGMA:
 
 </xsl:text>
     <xsl:call-template name="contributor">
@@ -44,7 +44,7 @@ The following people have contributed art to GIMP:
     </xsl:call-template>
     <xsl:text>
 
-The following people have helped to document GIMP:
+The following people have helped to document LIGMA:
 
 </xsl:text>
     <xsl:call-template name="contributor">

@@ -15,7 +15,7 @@
    width="12.010503"
    version="1.1"
    inkscape:version="0.92.2 2405546, 2018-03-11"
-   sodipodi:docname="gimp-swap-colors-symbolic.svg">
+   sodipodi:docname="ligma-swap-colors-symbolic.svg">
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -54,7 +54,7 @@
             <dc:title>Barbara Muraus, Jakub Steiner, Klaus Staedtler</dc:title>
           </cc:Agent>
         </dc:contributor>
-        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for GIMP</dc:description>
+        <dc:description>Images originally created as the &quot;Art Libre&quot; icon set. Extended and adopted for LIGMA</dc:description>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -127,12 +127,12 @@
   <g
      style="display:inline"
      transform="matrix(1.0008752,0,0,1,3.1170056e-7,-1040.3622)"
-     id="gimp-swap-colors">
+     id="ligma-swap-colors">
     <g
        inkscape:export-ydpi="67.5"
        inkscape:export-xdpi="67.5"
-       inkscape:label="gimp-swap-colors"
-       id="gimp-swap-colors-7"
+       inkscape:label="ligma-swap-colors"
+       id="ligma-swap-colors-7"
        style="display:inline"
        transform="matrix(0.85714286,0,0,0.79876989,-35.143029,529.1679)">
       <path

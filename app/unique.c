@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,52 +25,52 @@
 
 #include "core/core-types.h"
 
-#ifndef GIMP_CONSOLE_COMPILATION
+#ifndef LIGMA_CONSOLE_COMPILATION
 /*  for the DBus service names  */
-#include "gui/gimpdbusservice.h"
+#include "gui/ligmadbusservice.h"
 #endif
 
 #include "unique.h"
 
 
-static gboolean  gimp_unique_dbus_open  (const gchar **filenames,
+static gboolean  ligma_unique_dbus_open  (const gchar **filenames,
                                          gboolean      as_new);
 #ifdef G_OS_WIN32
-static gboolean  gimp_unique_win32_open (const gchar **filenames,
+static gboolean  ligma_unique_win32_open (const gchar **filenames,
                                          gboolean      as_new);
 #endif
-static gboolean  gimp_unique_dbus_batch_run (const gchar  *batch_interpreter,
+static gboolean  ligma_unique_dbus_batch_run (const gchar  *batch_interpreter,
                                              const gchar **batch_commands);
 
 gboolean
-gimp_unique_open (const gchar **filenames,
+ligma_unique_open (const gchar **filenames,
                   gboolean      as_new)
 {
 #ifdef G_OS_WIN32
-  return gimp_unique_win32_open (filenames, as_new);
+  return ligma_unique_win32_open (filenames, as_new);
 #else
-  return gimp_unique_dbus_open (filenames, as_new);
+  return ligma_unique_dbus_open (filenames, as_new);
 #endif
 }
 
 gboolean
-gimp_unique_batch_run (const gchar  *batch_interpreter,
+ligma_unique_batch_run (const gchar  *batch_interpreter,
                        const gchar **batch_commands)
 {
 #ifdef G_OS_WIN32
   g_printerr ("Batch commands cannot be run in existing instance in Win32.\n");
   return FALSE;
 #else
-  return gimp_unique_dbus_batch_run (batch_interpreter,
+  return ligma_unique_dbus_batch_run (batch_interpreter,
                                      batch_commands);
 #endif
 }
 
 static gboolean
-gimp_unique_dbus_open (const gchar **filenames,
+ligma_unique_dbus_open (const gchar **filenames,
                        gboolean      as_new)
 {
-#ifndef GIMP_CONSOLE_COMPILATION
+#ifndef LIGMA_CONSOLE_COMPILATION
 
   GDBusConnection *connection;
   GError          *error = NULL;
@@ -99,9 +99,9 @@ gimp_unique_dbus_open (const gchar **filenames,
                   gchar    *uri = g_file_get_uri (file);
 
                   result = g_dbus_connection_call_sync (connection,
-                                                        GIMP_DBUS_SERVICE_NAME,
-                                                        GIMP_DBUS_SERVICE_PATH,
-                                                        GIMP_DBUS_INTERFACE_NAME,
+                                                        LIGMA_DBUS_SERVICE_NAME,
+                                                        LIGMA_DBUS_SERVICE_PATH,
+                                                        LIGMA_DBUS_INTERFACE_NAME,
                                                         method,
                                                         g_variant_new ("(s)",
                                                                        uri),
@@ -133,9 +133,9 @@ gimp_unique_dbus_open (const gchar **filenames,
           GVariant *result;
 
           result = g_dbus_connection_call_sync (connection,
-                                                GIMP_DBUS_SERVICE_NAME,
-                                                GIMP_DBUS_SERVICE_PATH,
-                                                GIMP_DBUS_INTERFACE_NAME,
+                                                LIGMA_DBUS_SERVICE_NAME,
+                                                LIGMA_DBUS_SERVICE_PATH,
+                                                LIGMA_DBUS_INTERFACE_NAME,
                                                 "Activate",
                                                 NULL,
                                                 NULL,
@@ -165,16 +165,16 @@ gimp_unique_dbus_open (const gchar **filenames,
 #ifdef G_OS_WIN32
 
 static gboolean
-gimp_unique_win32_open (const gchar **filenames,
+ligma_unique_win32_open (const gchar **filenames,
                         gboolean      as_new)
 {
-#ifndef GIMP_CONSOLE_COMPILATION
+#ifndef LIGMA_CONSOLE_COMPILATION
 
 /*  for the proxy window names  */
 #include "gui/gui-unique.h"
 
-  HWND  window_handle = FindWindowW (GIMP_UNIQUE_WIN32_WINDOW_CLASS,
-                                     GIMP_UNIQUE_WIN32_WINDOW_NAME);
+  HWND  window_handle = FindWindowW (LIGMA_UNIQUE_WIN32_WINDOW_CLASS,
+                                     LIGMA_UNIQUE_WIN32_WINDOW_NAME);
 
   if (window_handle)
     {
@@ -230,10 +230,10 @@ gimp_unique_win32_open (const gchar **filenames,
 #endif  /* G_OS_WIN32 */
 
 static gboolean
-gimp_unique_dbus_batch_run (const gchar  *batch_interpreter,
+ligma_unique_dbus_batch_run (const gchar  *batch_interpreter,
                             const gchar **batch_commands)
 {
-#ifndef GIMP_CONSOLE_COMPILATION
+#ifndef LIGMA_CONSOLE_COMPILATION
 
   GDBusConnection *connection;
   GError          *error = NULL;
@@ -255,9 +255,9 @@ gimp_unique_dbus_batch_run (const gchar  *batch_interpreter,
           interpreter = batch_interpreter ? batch_interpreter : "";
 
           result = g_dbus_connection_call_sync (connection,
-                                                GIMP_DBUS_SERVICE_NAME,
-                                                GIMP_DBUS_SERVICE_PATH,
-                                                GIMP_DBUS_INTERFACE_NAME,
+                                                LIGMA_DBUS_SERVICE_NAME,
+                                                LIGMA_DBUS_SERVICE_PATH,
+                                                LIGMA_DBUS_INTERFACE_NAME,
                                                 method,
                                                 g_variant_new ("(ss)",
                                                                interpreter,

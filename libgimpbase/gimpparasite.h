@@ -1,8 +1,8 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpparasite.h
- * Copyright (C) 1998 Jay Cox <jaycox@gimp.org>
+ * ligmaparasite.h
+ * Copyright (C) 1998 Jay Cox <jaycox@ligma.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -19,12 +19,12 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_BASE_H_INSIDE__) && !defined (GIMP_BASE_COMPILATION)
-#error "Only <libgimpbase/gimpbase.h> can be included directly."
+#if !defined (__LIGMA_BASE_H_INSIDE__) && !defined (LIGMA_BASE_COMPILATION)
+#error "Only <libligmabase/ligmabase.h> can be included directly."
 #endif
 
-#ifndef __GIMP_PARASITE_H__
-#define __GIMP_PARASITE_H__
+#ifndef __LIGMA_PARASITE_H__
+#define __LIGMA_PARASITE_H__
 
 G_BEGIN_DECLS
 
@@ -32,53 +32,53 @@ G_BEGIN_DECLS
 
 
 /*
- * GIMP_TYPE_PARASITE
+ * LIGMA_TYPE_PARASITE
  */
 
-#define GIMP_TYPE_PARASITE               (gimp_parasite_get_type ())
-#define GIMP_VALUE_HOLDS_PARASITE(value) (G_TYPE_CHECK_VALUE_TYPE ((value), GIMP_TYPE_PARASITE))
+#define LIGMA_TYPE_PARASITE               (ligma_parasite_get_type ())
+#define LIGMA_VALUE_HOLDS_PARASITE(value) (G_TYPE_CHECK_VALUE_TYPE ((value), LIGMA_TYPE_PARASITE))
 
-GType   gimp_parasite_get_type           (void) G_GNUC_CONST;
+GType   ligma_parasite_get_type           (void) G_GNUC_CONST;
 
 
 /*
- * GIMP_TYPE_PARAM_PARASITE
+ * LIGMA_TYPE_PARAM_PARASITE
  */
 
-#define GIMP_TYPE_PARAM_PARASITE           (gimp_param_parasite_get_type ())
-#define GIMP_IS_PARAM_SPEC_PARASITE(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_PARASITE))
+#define LIGMA_TYPE_PARAM_PARASITE           (ligma_param_parasite_get_type ())
+#define LIGMA_IS_PARAM_SPEC_PARASITE(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), LIGMA_TYPE_PARAM_PARASITE))
 
-typedef struct _GimpParamSpecParasite GimpParamSpecParasite;
+typedef struct _LigmaParamSpecParasite LigmaParamSpecParasite;
 
-GType        gimp_param_parasite_get_type  (void) G_GNUC_CONST;
+GType        ligma_param_parasite_get_type  (void) G_GNUC_CONST;
 
-GParamSpec * gimp_param_spec_parasite      (const gchar  *name,
+GParamSpec * ligma_param_spec_parasite      (const gchar  *name,
                                             const gchar  *nick,
                                             const gchar  *blurb,
                                             GParamFlags   flags);
 
 
-#define GIMP_PARASITE_PERSISTENT 1
-#define GIMP_PARASITE_UNDOABLE   2
+#define LIGMA_PARASITE_PERSISTENT 1
+#define LIGMA_PARASITE_UNDOABLE   2
 
-#define GIMP_PARASITE_ATTACH_PARENT     (0x80 << 8)
-#define GIMP_PARASITE_PARENT_PERSISTENT (GIMP_PARASITE_PERSISTENT << 8)
-#define GIMP_PARASITE_PARENT_UNDOABLE   (GIMP_PARASITE_UNDOABLE << 8)
+#define LIGMA_PARASITE_ATTACH_PARENT     (0x80 << 8)
+#define LIGMA_PARASITE_PARENT_PERSISTENT (LIGMA_PARASITE_PERSISTENT << 8)
+#define LIGMA_PARASITE_PARENT_UNDOABLE   (LIGMA_PARASITE_UNDOABLE << 8)
 
-#define GIMP_PARASITE_ATTACH_GRANDPARENT     (0x80 << 16)
-#define GIMP_PARASITE_GRANDPARENT_PERSISTENT (GIMP_PARASITE_PERSISTENT << 16)
-#define GIMP_PARASITE_GRANDPARENT_UNDOABLE   (GIMP_PARASITE_UNDOABLE << 16)
+#define LIGMA_PARASITE_ATTACH_GRANDPARENT     (0x80 << 16)
+#define LIGMA_PARASITE_GRANDPARENT_PERSISTENT (LIGMA_PARASITE_PERSISTENT << 16)
+#define LIGMA_PARASITE_GRANDPARENT_UNDOABLE   (LIGMA_PARASITE_UNDOABLE << 16)
 
 
 /**
- * GimpParasite:
+ * LigmaParasite:
  * @name:  the parasite name, USE A UNIQUE PREFIX
  * @flags: the parasite flags, like save in XCF etc.
  * @size:  the parasite size in bytes
  * @data:  the parasite data, the owner os the parasite is responsible
  *   for tracking byte order and internal structure
  **/
-struct _GimpParasite
+struct _LigmaParasite
 {
   gchar    *name;
   guint32   flags;
@@ -87,29 +87,29 @@ struct _GimpParasite
 };
 
 
-GimpParasite * gimp_parasite_new           (const gchar        *name,
+LigmaParasite * ligma_parasite_new           (const gchar        *name,
                                             guint32             flags,
                                             guint32             size,
                                             gconstpointer       data);
-void           gimp_parasite_free          (GimpParasite       *parasite);
+void           ligma_parasite_free          (LigmaParasite       *parasite);
 
-GimpParasite * gimp_parasite_copy          (const GimpParasite *parasite);
+LigmaParasite * ligma_parasite_copy          (const LigmaParasite *parasite);
 
-gboolean       gimp_parasite_compare       (const GimpParasite *a,
-                                            const GimpParasite *b);
+gboolean       ligma_parasite_compare       (const LigmaParasite *a,
+                                            const LigmaParasite *b);
 
-gboolean       gimp_parasite_is_type       (const GimpParasite *parasite,
+gboolean       ligma_parasite_is_type       (const LigmaParasite *parasite,
                                             const gchar        *name);
-gboolean       gimp_parasite_is_persistent (const GimpParasite *parasite);
-gboolean       gimp_parasite_is_undoable   (const GimpParasite *parasite);
-gboolean       gimp_parasite_has_flag      (const GimpParasite *parasite,
+gboolean       ligma_parasite_is_persistent (const LigmaParasite *parasite);
+gboolean       ligma_parasite_is_undoable   (const LigmaParasite *parasite);
+gboolean       ligma_parasite_has_flag      (const LigmaParasite *parasite,
                                             gulong              flag);
-gulong         gimp_parasite_get_flags     (const GimpParasite *parasite);
-const gchar  * gimp_parasite_get_name      (const GimpParasite *parasite);
+gulong         ligma_parasite_get_flags     (const LigmaParasite *parasite);
+const gchar  * ligma_parasite_get_name      (const LigmaParasite *parasite);
 
-gconstpointer  gimp_parasite_get_data      (const GimpParasite *parasite,
+gconstpointer  ligma_parasite_get_data      (const LigmaParasite *parasite,
                                             guint32            *num_bytes);
 
 G_END_DECLS
 
-#endif /* __GIMP_PARASITE_H__ */
+#endif /* __LIGMA_PARASITE_H__ */

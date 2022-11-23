@@ -3,8 +3,8 @@
 import sys,re
 
 """
-gimppath2svg.py -- Converts Gimp-Paths to a SVG-File.
-Copyright (C) 2000  Simon Budig <simon@gimp.org>
+ligmapath2svg.py -- Converts Ligma-Paths to a SVG-File.
+Copyright (C) 2000  Simon Budig <simon@ligma.org>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-Usage: gimppath2svg.py [infile [outfile]]
+Usage: ligmapath2svg.py [infile [outfile]]
 """
 
 
@@ -44,10 +44,10 @@ class Path:
    def __init__(self):
       self.name = ""
       self.svgpath = ""
-      self.gimppoints = [[]]
+      self.ligmapoints = [[]]
       self.bounds = None
 
-   def readgimpfile (self, filedesc):
+   def readligmafile (self, filedesc):
       text = filedesc.readlines()
       for line in text:
          namematch = re.match ("Name: (.*)$", line)
@@ -56,9 +56,9 @@ class Path:
          pointmatch = re.match ("TYPE: (\d) X: (\d+) Y: (\d+)", line)
          if pointmatch:
             if pointmatch.group (1) == "3":
-               path.gimppoints.append ([])
+               path.ligmapoints.append ([])
             (x, y) = map (int, pointmatch.groups()[1:])
-            path.gimppoints[-1].append (map (int, pointmatch.groups()))
+            path.ligmapoints[-1].append (map (int, pointmatch.groups()))
             if self.bounds:
                if self.bounds[0] > x: self.bounds[0] = x
                if self.bounds[1] > y: self.bounds[1] = y
@@ -68,7 +68,7 @@ class Path:
                self.bounds = [x,y,x,y]
 
    def makesvg (self):
-      for path in self.gimppoints:
+      for path in self.ligmapoints:
          if path:
             start = path[0]
             svg = "M %d %d " % tuple (start[1:])
@@ -112,6 +112,6 @@ else:
 
 
 path = Path()
-path.readgimpfile (infile)
+path.readligmafile (infile)
 path.makesvg()
 path.writesvgfile (outfile)

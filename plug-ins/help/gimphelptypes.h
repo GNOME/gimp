@@ -1,10 +1,10 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * The GIMP Help plug-in
- * Copyright (C) 1999-2008 Sven Neumann <sven@gimp.org>
- *                         Michael Natterer <mitch@gimp.org>
- *                         Henrik Brix Andersen <brix@gimp.org>
+ * The LIGMA Help plug-in
+ * Copyright (C) 1999-2008 Sven Neumann <sven@ligma.org>
+ *                         Michael Natterer <mitch@ligma.org>
+ *                         Henrik Brix Andersen <brix@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,14 +20,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_HELP_TYPES_H__
-#define __GIMP_HELP_TYPES_H__
+#ifndef __LIGMA_HELP_TYPES_H__
+#define __LIGMA_HELP_TYPES_H__
 
 
-typedef struct _GimpHelpDomain    GimpHelpDomain;
-typedef struct _GimpHelpItem      GimpHelpItem;
-typedef struct _GimpHelpLocale    GimpHelpLocale;
-typedef struct _GimpHelpProgress  GimpHelpProgress;
+typedef struct _LigmaHelpDomain    LigmaHelpDomain;
+typedef struct _LigmaHelpItem      LigmaHelpItem;
+typedef struct _LigmaHelpLocale    LigmaHelpLocale;
+typedef struct _LigmaHelpProgress  LigmaHelpProgress;
 
 
-#endif /* ! __GIMP_HELP_TYPES_H__ */
+#endif /* ! __LIGMA_HELP_TYPES_H__ */

@@ -1,7 +1,7 @@
 /*
- * gimp-test-clipboard.c -- do clipboard things
+ * ligma-test-clipboard.c -- do clipboard things
  *
- * Copyright (C) 2005  Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2005  Michael Natterer <mitch@ligma.org>
  *
  * Use this code for whatever you like.
  */
@@ -25,7 +25,7 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 
 typedef struct _CopyData CopyData;
@@ -206,8 +206,8 @@ main (gint   argc,
 static void
 test_clipboard_show_version (void)
 {
-  g_print ("gimp-test-clipboard (GIMP clipboard testbed) version %s\n",
-           GIMP_VERSION);
+  g_print ("ligma-test-clipboard (LIGMA clipboard testbed) version %s\n",
+           LIGMA_VERSION);
 
   exit (EXIT_SUCCESS);
 }

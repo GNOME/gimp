@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcanvastextcursor.c
- * Copyright (C) 2010 Michael Natterer <mitch@gimp.org>
+ * ligmacanvastextcursor.c
+ * Copyright (C) 2010 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,13 +23,13 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
 
 #include "display-types.h"
 
-#include "gimpcanvastextcursor.h"
-#include "gimpdisplayshell.h"
+#include "ligmacanvastextcursor.h"
+#include "ligmadisplayshell.h"
 
 
 enum
@@ -44,103 +44,103 @@ enum
 };
 
 
-typedef struct _GimpCanvasTextCursorPrivate GimpCanvasTextCursorPrivate;
+typedef struct _LigmaCanvasTextCursorPrivate LigmaCanvasTextCursorPrivate;
 
-struct _GimpCanvasTextCursorPrivate
+struct _LigmaCanvasTextCursorPrivate
 {
   gint              x;
   gint              y;
   gint              width;
   gint              height;
   gboolean          overwrite;
-  GimpTextDirection direction;
+  LigmaTextDirection direction;
 };
 
 #define GET_PRIVATE(text_cursor) \
-        ((GimpCanvasTextCursorPrivate *) gimp_canvas_text_cursor_get_instance_private ((GimpCanvasTextCursor *) (text_cursor)))
+        ((LigmaCanvasTextCursorPrivate *) ligma_canvas_text_cursor_get_instance_private ((LigmaCanvasTextCursor *) (text_cursor)))
 
 
 /*  local function prototypes  */
 
-static void             gimp_canvas_text_cursor_set_property (GObject        *object,
+static void             ligma_canvas_text_cursor_set_property (GObject        *object,
                                                               guint           property_id,
                                                               const GValue   *value,
                                                               GParamSpec     *pspec);
-static void             gimp_canvas_text_cursor_get_property (GObject        *object,
+static void             ligma_canvas_text_cursor_get_property (GObject        *object,
                                                               guint           property_id,
                                                               GValue         *value,
                                                               GParamSpec     *pspec);
-static void             gimp_canvas_text_cursor_draw         (GimpCanvasItem *item,
+static void             ligma_canvas_text_cursor_draw         (LigmaCanvasItem *item,
                                                               cairo_t        *cr);
-static cairo_region_t * gimp_canvas_text_cursor_get_extents  (GimpCanvasItem *item);
+static cairo_region_t * ligma_canvas_text_cursor_get_extents  (LigmaCanvasItem *item);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpCanvasTextCursor, gimp_canvas_text_cursor,
-                            GIMP_TYPE_CANVAS_ITEM)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaCanvasTextCursor, ligma_canvas_text_cursor,
+                            LIGMA_TYPE_CANVAS_ITEM)
 
-#define parent_class gimp_canvas_text_cursor_parent_class
+#define parent_class ligma_canvas_text_cursor_parent_class
 
 
 static void
-gimp_canvas_text_cursor_class_init (GimpCanvasTextCursorClass *klass)
+ligma_canvas_text_cursor_class_init (LigmaCanvasTextCursorClass *klass)
 {
   GObjectClass        *object_class = G_OBJECT_CLASS (klass);
-  GimpCanvasItemClass *item_class   = GIMP_CANVAS_ITEM_CLASS (klass);
+  LigmaCanvasItemClass *item_class   = LIGMA_CANVAS_ITEM_CLASS (klass);
 
-  object_class->set_property = gimp_canvas_text_cursor_set_property;
-  object_class->get_property = gimp_canvas_text_cursor_get_property;
+  object_class->set_property = ligma_canvas_text_cursor_set_property;
+  object_class->get_property = ligma_canvas_text_cursor_get_property;
 
-  item_class->draw           = gimp_canvas_text_cursor_draw;
-  item_class->get_extents    = gimp_canvas_text_cursor_get_extents;
+  item_class->draw           = ligma_canvas_text_cursor_draw;
+  item_class->get_extents    = ligma_canvas_text_cursor_get_extents;
 
   g_object_class_install_property (object_class, PROP_X,
                                    g_param_spec_int ("x", NULL, NULL,
-                                                     -GIMP_MAX_IMAGE_SIZE,
-                                                     GIMP_MAX_IMAGE_SIZE, 0,
-                                                     GIMP_PARAM_READWRITE));
+                                                     -LIGMA_MAX_IMAGE_SIZE,
+                                                     LIGMA_MAX_IMAGE_SIZE, 0,
+                                                     LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_Y,
                                    g_param_spec_int ("y", NULL, NULL,
-                                                     -GIMP_MAX_IMAGE_SIZE,
-                                                     GIMP_MAX_IMAGE_SIZE, 0,
-                                                     GIMP_PARAM_READWRITE));
+                                                     -LIGMA_MAX_IMAGE_SIZE,
+                                                     LIGMA_MAX_IMAGE_SIZE, 0,
+                                                     LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_WIDTH,
                                    g_param_spec_int ("width", NULL, NULL,
-                                                     -GIMP_MAX_IMAGE_SIZE,
-                                                     GIMP_MAX_IMAGE_SIZE, 0,
-                                                     GIMP_PARAM_READWRITE));
+                                                     -LIGMA_MAX_IMAGE_SIZE,
+                                                     LIGMA_MAX_IMAGE_SIZE, 0,
+                                                     LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_HEIGHT,
                                    g_param_spec_int ("height", NULL, NULL,
-                                                     -GIMP_MAX_IMAGE_SIZE,
-                                                     GIMP_MAX_IMAGE_SIZE, 0,
-                                                     GIMP_PARAM_READWRITE));
+                                                     -LIGMA_MAX_IMAGE_SIZE,
+                                                     LIGMA_MAX_IMAGE_SIZE, 0,
+                                                     LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_OVERWRITE,
                                    g_param_spec_boolean ("overwrite", NULL, NULL,
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                                                         LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_DIRECTION,
                                    g_param_spec_enum ("direction", NULL, NULL,
-                                                     gimp_text_direction_get_type(),
-                                                     GIMP_TEXT_DIRECTION_LTR,
-                                                     GIMP_PARAM_READWRITE));
+                                                     ligma_text_direction_get_type(),
+                                                     LIGMA_TEXT_DIRECTION_LTR,
+                                                     LIGMA_PARAM_READWRITE));
 }
 
 static void
-gimp_canvas_text_cursor_init (GimpCanvasTextCursor *text_cursor)
+ligma_canvas_text_cursor_init (LigmaCanvasTextCursor *text_cursor)
 {
 }
 
 static void
-gimp_canvas_text_cursor_set_property (GObject      *object,
+ligma_canvas_text_cursor_set_property (GObject      *object,
                                       guint         property_id,
                                       const GValue *value,
                                       GParamSpec   *pspec)
 {
-  GimpCanvasTextCursorPrivate *private = GET_PRIVATE (object);
+  LigmaCanvasTextCursorPrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
@@ -170,12 +170,12 @@ gimp_canvas_text_cursor_set_property (GObject      *object,
 }
 
 static void
-gimp_canvas_text_cursor_get_property (GObject    *object,
+ligma_canvas_text_cursor_get_property (GObject    *object,
                                       guint       property_id,
                                       GValue     *value,
                                       GParamSpec *pspec)
 {
-  GimpCanvasTextCursorPrivate *private = GET_PRIVATE (object);
+  LigmaCanvasTextCursorPrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
@@ -205,21 +205,21 @@ gimp_canvas_text_cursor_get_property (GObject    *object,
 }
 
 static void
-gimp_canvas_text_cursor_transform (GimpCanvasItem *item,
+ligma_canvas_text_cursor_transform (LigmaCanvasItem *item,
                                    gdouble        *x,
                                    gdouble        *y,
                                    gdouble        *w,
                                    gdouble        *h)
 {
-  GimpCanvasTextCursorPrivate *private = GET_PRIVATE (item);
+  LigmaCanvasTextCursorPrivate *private = GET_PRIVATE (item);
 
-  gimp_canvas_item_transform_xy_f (item,
+  ligma_canvas_item_transform_xy_f (item,
                                    MIN (private->x,
                                         private->x + private->width),
                                    MIN (private->y,
                                         private->y + private->height),
                                    x, y);
-  gimp_canvas_item_transform_xy_f (item,
+  ligma_canvas_item_transform_xy_f (item,
                                    MAX (private->x,
                                         private->x + private->width),
                                    MAX (private->y,
@@ -233,15 +233,15 @@ gimp_canvas_text_cursor_transform (GimpCanvasItem *item,
   *y = floor (*y) + 0.5;
   switch (private->direction)
     {
-    case GIMP_TEXT_DIRECTION_LTR:
-    case GIMP_TEXT_DIRECTION_RTL:
+    case LIGMA_TEXT_DIRECTION_LTR:
+    case LIGMA_TEXT_DIRECTION_RTL:
       break;
-    case GIMP_TEXT_DIRECTION_TTB_RTL:
-    case GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT:
+    case LIGMA_TEXT_DIRECTION_TTB_RTL:
+    case LIGMA_TEXT_DIRECTION_TTB_RTL_UPRIGHT:
       *x = *x - *w;
       break;
-    case GIMP_TEXT_DIRECTION_TTB_LTR:
-    case GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT:
+    case LIGMA_TEXT_DIRECTION_TTB_LTR:
+    case LIGMA_TEXT_DIRECTION_TTB_LTR_UPRIGHT:
       *y = *y + *h;
       break;
     }
@@ -255,18 +255,18 @@ gimp_canvas_text_cursor_transform (GimpCanvasItem *item,
     {
       switch (private->direction)
         {
-        case GIMP_TEXT_DIRECTION_LTR:
-        case GIMP_TEXT_DIRECTION_RTL:
+        case LIGMA_TEXT_DIRECTION_LTR:
+        case LIGMA_TEXT_DIRECTION_RTL:
           *w = 0;
           *h = ceil (*h) - 1.0;
            break;
-        case GIMP_TEXT_DIRECTION_TTB_RTL:
-        case GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT:
+        case LIGMA_TEXT_DIRECTION_TTB_RTL:
+        case LIGMA_TEXT_DIRECTION_TTB_RTL_UPRIGHT:
           *w = ceil (*w) - 1.0;
           *h = 0;
           break;
-        case GIMP_TEXT_DIRECTION_TTB_LTR:
-        case GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT:
+        case LIGMA_TEXT_DIRECTION_TTB_LTR:
+        case LIGMA_TEXT_DIRECTION_TTB_LTR_UPRIGHT:
           *w = ceil (*w) - 1.0;
           *h = 0;
           break;
@@ -275,14 +275,14 @@ gimp_canvas_text_cursor_transform (GimpCanvasItem *item,
 }
 
 static void
-gimp_canvas_text_cursor_draw (GimpCanvasItem *item,
+ligma_canvas_text_cursor_draw (LigmaCanvasItem *item,
                               cairo_t        *cr)
 {
-  GimpCanvasTextCursorPrivate *private = GET_PRIVATE (item);
+  LigmaCanvasTextCursorPrivate *private = GET_PRIVATE (item);
   gdouble                      x, y;
   gdouble                      w, h;
 
-  gimp_canvas_text_cursor_transform (item, &x, &y, &w, &h);
+  ligma_canvas_text_cursor_transform (item, &x, &y, &w, &h);
 
   if (private->overwrite)
     {
@@ -292,8 +292,8 @@ gimp_canvas_text_cursor_draw (GimpCanvasItem *item,
     {
       switch (private->direction)
         {
-        case GIMP_TEXT_DIRECTION_LTR:
-        case GIMP_TEXT_DIRECTION_RTL:
+        case LIGMA_TEXT_DIRECTION_LTR:
+        case LIGMA_TEXT_DIRECTION_RTL:
           cairo_move_to (cr, x, y);
           cairo_line_to (cr, x, y + h);
 
@@ -303,10 +303,10 @@ gimp_canvas_text_cursor_draw (GimpCanvasItem *item,
           cairo_move_to (cr, x - 3.0, y + h);
           cairo_line_to (cr, x + 3.0, y + h);
           break;
-        case GIMP_TEXT_DIRECTION_TTB_RTL:
-        case GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT:
-        case GIMP_TEXT_DIRECTION_TTB_LTR:
-        case GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT:
+        case LIGMA_TEXT_DIRECTION_TTB_RTL:
+        case LIGMA_TEXT_DIRECTION_TTB_RTL_UPRIGHT:
+        case LIGMA_TEXT_DIRECTION_TTB_LTR:
+        case LIGMA_TEXT_DIRECTION_TTB_LTR_UPRIGHT:
           cairo_move_to (cr, x, y);
           cairo_line_to (cr, x + w, y);
 
@@ -319,18 +319,18 @@ gimp_canvas_text_cursor_draw (GimpCanvasItem *item,
         }
     }
 
-  _gimp_canvas_item_stroke (item, cr);
+  _ligma_canvas_item_stroke (item, cr);
 }
 
 static cairo_region_t *
-gimp_canvas_text_cursor_get_extents (GimpCanvasItem *item)
+ligma_canvas_text_cursor_get_extents (LigmaCanvasItem *item)
 {
-  GimpCanvasTextCursorPrivate *private = GET_PRIVATE (item);
+  LigmaCanvasTextCursorPrivate *private = GET_PRIVATE (item);
   cairo_rectangle_int_t        rectangle;
   gdouble                      x, y;
   gdouble                      w, h;
 
-  gimp_canvas_text_cursor_transform (item, &x, &y, &w, &h);
+  ligma_canvas_text_cursor_transform (item, &x, &y, &w, &h);
 
   if (private->overwrite)
     {
@@ -343,17 +343,17 @@ gimp_canvas_text_cursor_get_extents (GimpCanvasItem *item)
     {
       switch (private->direction)
         {
-        case GIMP_TEXT_DIRECTION_LTR:
-        case GIMP_TEXT_DIRECTION_RTL:
+        case LIGMA_TEXT_DIRECTION_LTR:
+        case LIGMA_TEXT_DIRECTION_RTL:
           rectangle.x      = floor (x - 4.5);
           rectangle.y      = floor (y - 1.5);
           rectangle.width  = ceil (9.0);
           rectangle.height = ceil (h + 3.0);
           break;
-        case GIMP_TEXT_DIRECTION_TTB_RTL:
-        case GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT:
-        case GIMP_TEXT_DIRECTION_TTB_LTR:
-        case GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT:
+        case LIGMA_TEXT_DIRECTION_TTB_RTL:
+        case LIGMA_TEXT_DIRECTION_TTB_RTL_UPRIGHT:
+        case LIGMA_TEXT_DIRECTION_TTB_LTR:
+        case LIGMA_TEXT_DIRECTION_TTB_LTR_UPRIGHT:
           rectangle.x      = floor (x - 1.5);
           rectangle.y      = floor (y - 4.5);
           rectangle.width  = ceil (w + 3.0);
@@ -365,16 +365,16 @@ gimp_canvas_text_cursor_get_extents (GimpCanvasItem *item)
   return cairo_region_create_rectangle (&rectangle);
 }
 
-GimpCanvasItem *
-gimp_canvas_text_cursor_new (GimpDisplayShell *shell,
+LigmaCanvasItem *
+ligma_canvas_text_cursor_new (LigmaDisplayShell *shell,
                              PangoRectangle   *cursor,
                              gboolean          overwrite,
-                             GimpTextDirection direction)
+                             LigmaTextDirection direction)
 {
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
+  g_return_val_if_fail (LIGMA_IS_DISPLAY_SHELL (shell), NULL);
   g_return_val_if_fail (cursor != NULL, NULL);
 
-  return g_object_new (GIMP_TYPE_CANVAS_TEXT_CURSOR,
+  return g_object_new (LIGMA_TYPE_CANVAS_TEXT_CURSOR,
                        "shell",     shell,
                        "x",         cursor->x,
                        "y",         cursor->y,

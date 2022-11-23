@@ -1,12 +1,12 @@
 /*************************************/
-/* GIMP image manipulation routines. */
+/* LIGMA image manipulation routines. */
 /*************************************/
 
 #include "config.h"
 
 #include <gtk/gtk.h>
 
-#include <libgimp/gimp.h>
+#include <libligma/ligma.h>
 
 #include "lighting-main.h"
 #include "lighting-image.h"
@@ -14,16 +14,16 @@
 #include "lighting-ui.h"
 
 
-GimpDrawable *input_drawable;
-GimpDrawable *output_drawable;
+LigmaDrawable *input_drawable;
+LigmaDrawable *output_drawable;
 GeglBuffer   *source_buffer;
 GeglBuffer   *dest_buffer;
 
-GimpDrawable *bump_drawable;
+LigmaDrawable *bump_drawable;
 GeglBuffer   *bump_buffer;
 const Babl   *bump_format;
 
-GimpDrawable *env_drawable;
+LigmaDrawable *env_drawable;
 GeglBuffer   *env_buffer;
 
 guchar          *preview_rgb_data = NULL;
@@ -33,7 +33,7 @@ cairo_surface_t *preview_surface = NULL;
 glong   maxcounter;
 gint    width, height;
 gint    env_width, env_height;
-GimpRGB background;
+LigmaRGB background;
 
 gint border_x1, border_y1, border_x2, border_y2;
 
@@ -67,11 +67,11 @@ peek_map (GeglBuffer *buffer,
   return ret_val;
 }
 
-GimpRGB
+LigmaRGB
 peek (gint x,
       gint y)
 {
-  GimpRGB color;
+  LigmaRGB color;
 
   gegl_buffer_sample (source_buffer, x, y, NULL,
                       &color, babl_format ("R'G'B'A double"),
@@ -83,11 +83,11 @@ peek (gint x,
   return color;
 }
 
-GimpRGB
+LigmaRGB
 peek_env_map (gint x,
 	      gint y)
 {
-  GimpRGB color;
+  LigmaRGB color;
 
   if (x < 0)
     x = 0;
@@ -110,7 +110,7 @@ peek_env_map (gint x,
 void
 poke (gint    x,
       gint    y,
-      GimpRGB *color)
+      LigmaRGB *color)
 {
   if (x < 0)
     x = 0;
@@ -139,11 +139,11 @@ check_bounds (gint x,
     return TRUE;
 }
 
-GimpVector3
+LigmaVector3
 int_to_pos (gint x,
 	    gint y)
 {
-  GimpVector3 pos;
+  LigmaVector3 pos;
 
   if (width >= height)
     {
@@ -164,11 +164,11 @@ int_to_pos (gint x,
   return pos;
 }
 
-GimpVector3
+LigmaVector3
 int_to_posf (gdouble x,
 	     gdouble y)
 {
-  GimpVector3 pos;
+  LigmaVector3 pos;
 
   if (width >= height)
     {
@@ -237,13 +237,13 @@ pos_to_float (gdouble  x,
 /* Quartics bilinear interpolation stuff.     */
 /**********************************************/
 
-GimpRGB
+LigmaRGB
 get_image_color (gdouble  u,
 		 gdouble  v,
 		 gint    *inside)
 {
   gint    x1, y1, x2, y2;
-  GimpRGB p[4];
+  LigmaRGB p[4];
 
   x1 = RINT (u);
   y1 = RINT (v);
@@ -269,7 +269,7 @@ get_image_color (gdouble  u,
   p[2] = peek (x1, y2);
   p[3] = peek (x2, y2);
 
-  return gimp_bilinear_rgba (u, v, p);
+  return ligma_bilinear_rgba (u, v, p);
 }
 
 gdouble
@@ -300,7 +300,7 @@ get_map_value (GeglBuffer *buffer,
   p[2] = (gdouble) peek_map (buffer, format, x1, y2);
   p[3] = (gdouble) peek_map (buffer, format, x2, y2);
 
-  return gimp_bilinear (u, v, p);
+  return ligma_bilinear (u, v, p);
 }
 
 static void
@@ -335,7 +335,7 @@ compute_maps (void)
 /****************************************/
 
 gint
-image_setup (GimpDrawable *drawable,
+image_setup (LigmaDrawable *drawable,
 	     gint          interactive)
 {
   gint	   w, h;
@@ -349,7 +349,7 @@ image_setup (GimpDrawable *drawable,
   input_drawable  = drawable;
   output_drawable = drawable;
 
-  ret = gimp_drawable_mask_intersect (drawable,
+  ret = ligma_drawable_mask_intersect (drawable,
                                       &border_x1, &border_y1, &w, &h);
 
   border_x2 = border_x1 + w;
@@ -358,10 +358,10 @@ image_setup (GimpDrawable *drawable,
   if (! ret)
     return FALSE;
 
-  width  = gimp_drawable_get_width  (input_drawable);
-  height = gimp_drawable_get_height (input_drawable);
+  width  = ligma_drawable_get_width  (input_drawable);
+  height = ligma_drawable_get_height (input_drawable);
 
-  source_buffer = gimp_drawable_get_buffer (input_drawable);
+  source_buffer = ligma_drawable_get_buffer (input_drawable);
 
   maxcounter = (glong) width * (glong) height;
 
@@ -381,16 +381,16 @@ image_setup (GimpDrawable *drawable,
 }
 
 void
-bumpmap_setup (GimpDrawable *bumpmap)
+bumpmap_setup (LigmaDrawable *bumpmap)
 {
   if (bumpmap)
     {
       if (! bump_buffer)
         {
-          bump_buffer = gimp_drawable_get_buffer (bumpmap);
+          bump_buffer = ligma_drawable_get_buffer (bumpmap);
         }
 
-      if (gimp_drawable_is_rgb (bumpmap))
+      if (ligma_drawable_is_rgb (bumpmap))
         bump_format = babl_format ("R'G'B' u8");
       else
         bump_format = babl_format ("Y' u8"); /* FIXME */
@@ -398,13 +398,13 @@ bumpmap_setup (GimpDrawable *bumpmap)
 }
 
 void
-envmap_setup (GimpDrawable *envmap)
+envmap_setup (LigmaDrawable *envmap)
 {
   if (envmap && ! env_buffer)
     {
-      env_width  = gimp_drawable_get_width  (envmap);
-      env_height = gimp_drawable_get_height (envmap);
+      env_width  = ligma_drawable_get_width  (envmap);
+      env_height = ligma_drawable_get_height (envmap);
 
-      env_buffer = gimp_drawable_get_buffer (envmap);
+      env_buffer = ligma_drawable_get_buffer (envmap);
     }
 }

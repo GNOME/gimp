@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimppatternselectbutton.c
+ * ligmapatternselectbutton.c
  * Copyright (C) 1998 Andy Thomas
  *
  * This library is free software: you can redistribute it and/or
@@ -24,20 +24,20 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
-#include "gimp.h"
+#include "ligma.h"
 
-#include "gimpuitypes.h"
-#include "gimppatternselectbutton.h"
-#include "gimpuimarshal.h"
+#include "ligmauitypes.h"
+#include "ligmapatternselectbutton.h"
+#include "ligmauimarshal.h"
 
-#include "libgimp-intl.h"
+#include "libligma-intl.h"
 
 
 /**
- * SECTION: gimppatternselectbutton
- * @title: GimpPatternSelectButton
+ * SECTION: ligmapatternselectbutton
+ * @title: LigmaPatternSelectButton
  * @short_description: A button which pops up a pattern select dialog.
  *
  * A button which pops up a pattern select dialog.
@@ -47,9 +47,9 @@
 #define CELL_SIZE 20
 
 
-#define GET_PRIVATE(obj) (((GimpPatternSelectButtonPrivate *) (obj))->priv)
+#define GET_PRIVATE(obj) (((LigmaPatternSelectButtonPrivate *) (obj))->priv)
 
-struct _GimpPatternSelectButtonPrivate
+struct _LigmaPatternSelectButtonPrivate
 {
   gchar     *title;
 
@@ -81,20 +81,20 @@ enum
 
 /*  local function prototypes  */
 
-static void   gimp_pattern_select_button_finalize     (GObject      *object);
+static void   ligma_pattern_select_button_finalize     (GObject      *object);
 
-static void   gimp_pattern_select_button_set_property (GObject      *object,
+static void   ligma_pattern_select_button_set_property (GObject      *object,
                                                        guint         property_id,
                                                        const GValue *value,
                                                        GParamSpec   *pspec);
-static void   gimp_pattern_select_button_get_property (GObject      *object,
+static void   ligma_pattern_select_button_get_property (GObject      *object,
                                                        guint         property_id,
                                                        GValue       *value,
                                                        GParamSpec   *pspec);
 
-static void   gimp_pattern_select_button_clicked  (GimpPatternSelectButton *button);
+static void   ligma_pattern_select_button_clicked  (LigmaPatternSelectButton *button);
 
-static void   gimp_pattern_select_button_callback (const gchar  *pattern_name,
+static void   ligma_pattern_select_button_callback (const gchar  *pattern_name,
                                                    gint          width,
                                                    gint          height,
                                                    gint          bytes,
@@ -102,22 +102,22 @@ static void   gimp_pattern_select_button_callback (const gchar  *pattern_name,
                                                    gboolean      dialog_closing,
                                                    gpointer      user_data);
 
-static void     gimp_pattern_select_preview_resize  (GimpPatternSelectButton *button);
-static gboolean gimp_pattern_select_preview_events  (GtkWidget               *widget,
+static void     ligma_pattern_select_preview_resize  (LigmaPatternSelectButton *button);
+static gboolean ligma_pattern_select_preview_events  (GtkWidget               *widget,
                                                      GdkEvent                *event,
-                                                     GimpPatternSelectButton *button);
-static void     gimp_pattern_select_preview_update  (GtkWidget               *preview,
+                                                     LigmaPatternSelectButton *button);
+static void     ligma_pattern_select_preview_update  (GtkWidget               *preview,
                                                      gint                     width,
                                                      gint                     height,
                                                      gint                     bytes,
                                                      const guchar            *mask_data);
 
-static void     gimp_pattern_select_button_open_popup  (GimpPatternSelectButton *button,
+static void     ligma_pattern_select_button_open_popup  (LigmaPatternSelectButton *button,
                                                         gint                     x,
                                                         gint                     y);
-static void     gimp_pattern_select_button_close_popup (GimpPatternSelectButton *button);
+static void     ligma_pattern_select_button_close_popup (LigmaPatternSelectButton *button);
 
-static void   gimp_pattern_select_drag_data_received (GimpPatternSelectButton *button,
+static void   ligma_pattern_select_drag_data_received (LigmaPatternSelectButton *button,
                                                       GdkDragContext          *context,
                                                       gint                     x,
                                                       gint                     y,
@@ -125,35 +125,35 @@ static void   gimp_pattern_select_drag_data_received (GimpPatternSelectButton *b
                                                       guint                    info,
                                                       guint                    time);
 
-static GtkWidget * gimp_pattern_select_button_create_inside (GimpPatternSelectButton *button);
+static GtkWidget * ligma_pattern_select_button_create_inside (LigmaPatternSelectButton *button);
 
 
-static const GtkTargetEntry target = { "application/x-gimp-pattern-name", 0 };
+static const GtkTargetEntry target = { "application/x-ligma-pattern-name", 0 };
 
 static guint pattern_button_signals[LAST_SIGNAL] = { 0 };
 static GParamSpec *pattern_button_props[N_PROPS] = { NULL, };
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpPatternSelectButton, gimp_pattern_select_button,
-                            GIMP_TYPE_SELECT_BUTTON)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaPatternSelectButton, ligma_pattern_select_button,
+                            LIGMA_TYPE_SELECT_BUTTON)
 
 
 static void
-gimp_pattern_select_button_class_init (GimpPatternSelectButtonClass *klass)
+ligma_pattern_select_button_class_init (LigmaPatternSelectButtonClass *klass)
 {
   GObjectClass          *object_class        = G_OBJECT_CLASS (klass);
-  GimpSelectButtonClass *select_button_class = GIMP_SELECT_BUTTON_CLASS (klass);
+  LigmaSelectButtonClass *select_button_class = LIGMA_SELECT_BUTTON_CLASS (klass);
 
-  object_class->finalize     = gimp_pattern_select_button_finalize;
-  object_class->set_property = gimp_pattern_select_button_set_property;
-  object_class->get_property = gimp_pattern_select_button_get_property;
+  object_class->finalize     = ligma_pattern_select_button_finalize;
+  object_class->set_property = ligma_pattern_select_button_set_property;
+  object_class->get_property = ligma_pattern_select_button_get_property;
 
-  select_button_class->select_destroy = gimp_pattern_select_destroy;
+  select_button_class->select_destroy = ligma_pattern_select_destroy;
 
   klass->pattern_set = NULL;
 
   /**
-   * GimpPatternSelectButton:title:
+   * LigmaPatternSelectButton:title:
    *
    * The title to be used for the pattern selection popup dialog.
    *
@@ -163,11 +163,11 @@ gimp_pattern_select_button_class_init (GimpPatternSelectButtonClass *klass)
                                                           "Title",
                                                           "The title to be used for the pattern selection popup dialog",
                                                           _("Pattern Selection"),
-                                                          GIMP_PARAM_READWRITE |
+                                                          LIGMA_PARAM_READWRITE |
                                                           G_PARAM_CONSTRUCT_ONLY);
 
   /**
-   * GimpPatternSelectButton:pattern-name:
+   * LigmaPatternSelectButton:pattern-name:
    *
    * The name of the currently selected pattern.
    *
@@ -177,12 +177,12 @@ gimp_pattern_select_button_class_init (GimpPatternSelectButtonClass *klass)
                                                                  "Pattern name",
                                                                  "The name of the currently selected pattern",
                                                                  NULL,
-                                                                 GIMP_PARAM_READWRITE);
+                                                                 LIGMA_PARAM_READWRITE);
 
   g_object_class_install_properties (object_class, N_PROPS, pattern_button_props);
 
   /**
-   * GimpPatternSelectButton::pattern-set:
+   * LigmaPatternSelectButton::pattern-set:
    * @widget: the object which received the signal.
    * @pattern_name: the name of the currently selected pattern.
    * @width: width of the pattern
@@ -199,9 +199,9 @@ gimp_pattern_select_button_class_init (GimpPatternSelectButtonClass *klass)
     g_signal_new ("pattern-set",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpPatternSelectButtonClass, pattern_set),
+                  G_STRUCT_OFFSET (LigmaPatternSelectButtonClass, pattern_set),
                   NULL, NULL,
-                  _gimpui_marshal_VOID__STRING_INT_INT_INT_POINTER_BOOLEAN,
+                  _ligmaui_marshal_VOID__STRING_INT_INT_INT_POINTER_BOOLEAN,
                   G_TYPE_NONE, 6,
                   G_TYPE_STRING,
                   G_TYPE_INT,
@@ -212,26 +212,26 @@ gimp_pattern_select_button_class_init (GimpPatternSelectButtonClass *klass)
 }
 
 static void
-gimp_pattern_select_button_init (GimpPatternSelectButton *button)
+ligma_pattern_select_button_init (LigmaPatternSelectButton *button)
 {
   gint mask_data_size;
 
-  button->priv = gimp_pattern_select_button_get_instance_private (button);
+  button->priv = ligma_pattern_select_button_get_instance_private (button);
 
-  button->priv->pattern_name = gimp_context_get_pattern ();
-  gimp_pattern_get_pixels (button->priv->pattern_name,
+  button->priv->pattern_name = ligma_context_get_pattern ();
+  ligma_pattern_get_pixels (button->priv->pattern_name,
                            &button->priv->width,
                            &button->priv->height,
                            &button->priv->bytes,
                            &mask_data_size,
                            &button->priv->mask_data);
 
-  button->priv->inside = gimp_pattern_select_button_create_inside (button);
+  button->priv->inside = ligma_pattern_select_button_create_inside (button);
   gtk_container_add (GTK_CONTAINER (button), button->priv->inside);
 }
 
 /**
- * gimp_pattern_select_button_new:
+ * ligma_pattern_select_button_new:
  * @title: (nullable): Title of the dialog to use or %NULL to use the default title.
  * @pattern_name: (nullable): Initial pattern name or %NULL to use current selection.
  *
@@ -244,18 +244,18 @@ gimp_pattern_select_button_init (GimpPatternSelectButton *button)
  * Since: 2.4
  */
 GtkWidget *
-gimp_pattern_select_button_new (const gchar *title,
+ligma_pattern_select_button_new (const gchar *title,
                                 const gchar *pattern_name)
 {
   GtkWidget *button;
 
   if (title)
-    button = g_object_new (GIMP_TYPE_PATTERN_SELECT_BUTTON,
+    button = g_object_new (LIGMA_TYPE_PATTERN_SELECT_BUTTON,
                            "title",        title,
                            "pattern-name", pattern_name,
                            NULL);
   else
-    button = g_object_new (GIMP_TYPE_PATTERN_SELECT_BUTTON,
+    button = g_object_new (LIGMA_TYPE_PATTERN_SELECT_BUTTON,
                            "pattern-name", pattern_name,
                            NULL);
 
@@ -263,8 +263,8 @@ gimp_pattern_select_button_new (const gchar *title,
 }
 
 /**
- * gimp_pattern_select_button_get_pattern:
- * @button: A #GimpPatternSelectButton
+ * ligma_pattern_select_button_get_pattern:
+ * @button: A #LigmaPatternSelectButton
  *
  * Retrieves the name of currently selected pattern.
  *
@@ -273,16 +273,16 @@ gimp_pattern_select_button_new (const gchar *title,
  * Since: 2.4
  */
 const gchar *
-gimp_pattern_select_button_get_pattern (GimpPatternSelectButton *button)
+ligma_pattern_select_button_get_pattern (LigmaPatternSelectButton *button)
 {
-  g_return_val_if_fail (GIMP_IS_PATTERN_SELECT_BUTTON (button), NULL);
+  g_return_val_if_fail (LIGMA_IS_PATTERN_SELECT_BUTTON (button), NULL);
 
   return button->priv->pattern_name;
 }
 
 /**
- * gimp_pattern_select_button_set_pattern:
- * @button: A #GimpPatternSelectButton
+ * ligma_pattern_select_button_set_pattern:
+ * @button: A #LigmaPatternSelectButton
  * @pattern_name: (nullable): Pattern name to set; %NULL means no change.
  *
  * Sets the current pattern for the pattern select button.
@@ -290,18 +290,18 @@ gimp_pattern_select_button_get_pattern (GimpPatternSelectButton *button)
  * Since: 2.4
  */
 void
-gimp_pattern_select_button_set_pattern (GimpPatternSelectButton *button,
+ligma_pattern_select_button_set_pattern (LigmaPatternSelectButton *button,
                                         const gchar             *pattern_name)
 {
-  GimpSelectButton *select_button;
+  LigmaSelectButton *select_button;
 
-  g_return_if_fail (GIMP_IS_PATTERN_SELECT_BUTTON (button));
+  g_return_if_fail (LIGMA_IS_PATTERN_SELECT_BUTTON (button));
 
-  select_button = GIMP_SELECT_BUTTON (button);
+  select_button = LIGMA_SELECT_BUTTON (button);
 
   if (select_button->temp_callback)
     {
-      gimp_patterns_set_popup (select_button->temp_callback, pattern_name);
+      ligma_patterns_set_popup (select_button->temp_callback, pattern_name);
     }
   else
     {
@@ -315,16 +315,16 @@ gimp_pattern_select_button_set_pattern (GimpPatternSelectButton *button,
       if (pattern_name && *pattern_name)
         name = g_strdup (pattern_name);
       else
-        name = gimp_context_get_pattern ();
+        name = ligma_context_get_pattern ();
 
-      if (gimp_pattern_get_pixels (name,
+      if (ligma_pattern_get_pixels (name,
                                    &width,
                                    &height,
                                    &bytes,
                                    &mask_data_size,
                                    &mask_data))
         {
-          gimp_pattern_select_button_callback (name,
+          ligma_pattern_select_button_callback (name,
                                                width, height, bytes, mask_data,
                                                FALSE, button);
 
@@ -339,24 +339,24 @@ gimp_pattern_select_button_set_pattern (GimpPatternSelectButton *button,
 /*  private functions  */
 
 static void
-gimp_pattern_select_button_finalize (GObject *object)
+ligma_pattern_select_button_finalize (GObject *object)
 {
-  GimpPatternSelectButton *button = GIMP_PATTERN_SELECT_BUTTON (object);
+  LigmaPatternSelectButton *button = LIGMA_PATTERN_SELECT_BUTTON (object);
 
   g_clear_pointer (&button->priv->pattern_name, g_free);
   g_clear_pointer (&button->priv->mask_data,    g_free);
   g_clear_pointer (&button->priv->title,        g_free);
 
-  G_OBJECT_CLASS (gimp_pattern_select_button_parent_class)->finalize (object);
+  G_OBJECT_CLASS (ligma_pattern_select_button_parent_class)->finalize (object);
 }
 
 static void
-gimp_pattern_select_button_set_property (GObject      *object,
+ligma_pattern_select_button_set_property (GObject      *object,
                                          guint         property_id,
                                          const GValue *value,
                                          GParamSpec   *pspec)
 {
-  GimpPatternSelectButton *button = GIMP_PATTERN_SELECT_BUTTON (object);
+  LigmaPatternSelectButton *button = LIGMA_PATTERN_SELECT_BUTTON (object);
 
   switch (property_id)
     {
@@ -365,7 +365,7 @@ gimp_pattern_select_button_set_property (GObject      *object,
       break;
 
     case PROP_PATTERN_NAME:
-      gimp_pattern_select_button_set_pattern (button,
+      ligma_pattern_select_button_set_pattern (button,
                                               g_value_get_string (value));
       break;
 
@@ -376,12 +376,12 @@ gimp_pattern_select_button_set_property (GObject      *object,
 }
 
 static void
-gimp_pattern_select_button_get_property (GObject    *object,
+ligma_pattern_select_button_get_property (GObject    *object,
                                          guint       property_id,
                                          GValue     *value,
                                          GParamSpec *pspec)
 {
-  GimpPatternSelectButton *button = GIMP_PATTERN_SELECT_BUTTON (object);
+  LigmaPatternSelectButton *button = LIGMA_PATTERN_SELECT_BUTTON (object);
 
   switch (property_id)
     {
@@ -400,7 +400,7 @@ gimp_pattern_select_button_get_property (GObject    *object,
 }
 
 static void
-gimp_pattern_select_button_callback (const gchar  *pattern_name,
+ligma_pattern_select_button_callback (const gchar  *pattern_name,
                                      gint          width,
                                      gint          height,
                                      gint          bytes,
@@ -408,8 +408,8 @@ gimp_pattern_select_button_callback (const gchar  *pattern_name,
                                      gboolean      dialog_closing,
                                      gpointer      user_data)
 {
-  GimpPatternSelectButton *button        = user_data;
-  GimpSelectButton        *select_button = GIMP_SELECT_BUTTON (button);
+  LigmaPatternSelectButton *button        = user_data;
+  LigmaSelectButton        *select_button = LIGMA_SELECT_BUTTON (button);
 
   g_free (button->priv->pattern_name);
   g_free (button->priv->mask_data);
@@ -420,7 +420,7 @@ gimp_pattern_select_button_callback (const gchar  *pattern_name,
   button->priv->bytes        = bytes;
   button->priv->mask_data    = g_memdup2 (mask_data, width * height * bytes);
 
-  gimp_pattern_select_preview_update (button->priv->preview,
+  ligma_pattern_select_preview_update (button->priv->preview,
                                       width, height, bytes, mask_data);
 
   if (dialog_closing)
@@ -432,31 +432,31 @@ gimp_pattern_select_button_callback (const gchar  *pattern_name,
 }
 
 static void
-gimp_pattern_select_button_clicked (GimpPatternSelectButton *button)
+ligma_pattern_select_button_clicked (LigmaPatternSelectButton *button)
 {
-  GimpSelectButton *select_button = GIMP_SELECT_BUTTON (button);
+  LigmaSelectButton *select_button = LIGMA_SELECT_BUTTON (button);
 
   if (select_button->temp_callback)
     {
-      /*  calling gimp_patterns_set_popup() raises the dialog  */
-      gimp_patterns_set_popup (select_button->temp_callback,
+      /*  calling ligma_patterns_set_popup() raises the dialog  */
+      ligma_patterns_set_popup (select_button->temp_callback,
                                button->priv->pattern_name);
     }
   else
     {
       select_button->temp_callback =
-        gimp_pattern_select_new (button->priv->title,
+        ligma_pattern_select_new (button->priv->title,
                                  button->priv->pattern_name,
-                                 gimp_pattern_select_button_callback,
+                                 ligma_pattern_select_button_callback,
                                  button, NULL);
     }
 }
 
 static void
-gimp_pattern_select_preview_resize (GimpPatternSelectButton *button)
+ligma_pattern_select_preview_resize (LigmaPatternSelectButton *button)
 {
   if (button->priv->width > 0 && button->priv->height > 0)
-    gimp_pattern_select_preview_update (button->priv->preview,
+    ligma_pattern_select_preview_update (button->priv->preview,
                                         button->priv->width,
                                         button->priv->height,
                                         button->priv->bytes,
@@ -464,9 +464,9 @@ gimp_pattern_select_preview_resize (GimpPatternSelectButton *button)
 }
 
 static gboolean
-gimp_pattern_select_preview_events (GtkWidget               *widget,
+ligma_pattern_select_preview_events (GtkWidget               *widget,
                                     GdkEvent                *event,
-                                    GimpPatternSelectButton *button)
+                                    LigmaPatternSelectButton *button)
 {
   GdkEventButton *bevent;
 
@@ -480,7 +480,7 @@ gimp_pattern_select_preview_events (GtkWidget               *widget,
           if (bevent->button == 1)
             {
               gtk_grab_add (widget);
-              gimp_pattern_select_button_open_popup (button,
+              ligma_pattern_select_button_open_popup (button,
                                                      bevent->x, bevent->y);
             }
           break;
@@ -491,7 +491,7 @@ gimp_pattern_select_preview_events (GtkWidget               *widget,
           if (bevent->button == 1)
             {
               gtk_grab_remove (widget);
-              gimp_pattern_select_button_close_popup (button);
+              ligma_pattern_select_button_close_popup (button);
             }
           break;
 
@@ -504,25 +504,25 @@ gimp_pattern_select_preview_events (GtkWidget               *widget,
 }
 
 static void
-gimp_pattern_select_preview_update (GtkWidget    *preview,
+ligma_pattern_select_preview_update (GtkWidget    *preview,
                                     gint          width,
                                     gint          height,
                                     gint          bytes,
                                     const guchar *mask_data)
 {
-  GimpImageType type;
+  LigmaImageType type;
 
   switch (bytes)
     {
-    case 1:  type = GIMP_GRAY_IMAGE;   break;
-    case 2:  type = GIMP_GRAYA_IMAGE;  break;
-    case 3:  type = GIMP_RGB_IMAGE;    break;
-    case 4:  type = GIMP_RGBA_IMAGE;   break;
+    case 1:  type = LIGMA_GRAY_IMAGE;   break;
+    case 2:  type = LIGMA_GRAYA_IMAGE;  break;
+    case 3:  type = LIGMA_RGB_IMAGE;    break;
+    case 4:  type = LIGMA_RGBA_IMAGE;   break;
     default:
       return;
     }
 
-  gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
+  ligma_preview_area_draw (LIGMA_PREVIEW_AREA (preview),
                           0, 0, width, height,
                           type,
                           mask_data,
@@ -530,11 +530,11 @@ gimp_pattern_select_preview_update (GtkWidget    *preview,
 }
 
 static void
-gimp_pattern_select_button_open_popup (GimpPatternSelectButton *button,
+ligma_pattern_select_button_open_popup (LigmaPatternSelectButton *button,
                                        gint                     x,
                                        gint                     y)
 {
-  GimpPatternSelectButtonPrivate *priv = button->priv;
+  LigmaPatternSelectButtonPrivate *priv = button->priv;
   GtkWidget                      *frame;
   GtkWidget                      *preview;
   GdkMonitor                    *monitor;
@@ -543,7 +543,7 @@ gimp_pattern_select_button_open_popup (GimpPatternSelectButton *button,
   gint                            y_org;
 
   if (priv->popup)
-    gimp_pattern_select_button_close_popup (button);
+    ligma_pattern_select_button_close_popup (button);
 
   if (priv->width <= CELL_SIZE && priv->height <= CELL_SIZE)
     return;
@@ -558,7 +558,7 @@ gimp_pattern_select_button_open_popup (GimpPatternSelectButton *button,
   gtk_container_add (GTK_CONTAINER (priv->popup), frame);
   gtk_widget_show (frame);
 
-  preview = gimp_preview_area_new ();
+  preview = ligma_preview_area_new ();
   gtk_widget_set_size_request (preview, priv->width, priv->height);
   gtk_container_add (GTK_CONTAINER (frame), preview);
   gtk_widget_show (preview);
@@ -567,7 +567,7 @@ gimp_pattern_select_button_open_popup (GimpPatternSelectButton *button,
   gdk_window_get_origin (gtk_widget_get_window (priv->preview),
                          &x_org, &y_org);
 
-  monitor = gimp_widget_get_monitor (GTK_WIDGET (button));
+  monitor = ligma_widget_get_monitor (GTK_WIDGET (button));
   gdk_monitor_get_workarea (monitor, &workarea);
 
   x = x_org + x - (priv->width  / 2);
@@ -581,7 +581,7 @@ gimp_pattern_select_button_open_popup (GimpPatternSelectButton *button,
   gtk_widget_show (priv->popup);
 
   /*  Draw the pattern  */
-  gimp_pattern_select_preview_update (preview,
+  ligma_pattern_select_preview_update (preview,
                                       priv->width,
                                       priv->height,
                                       priv->bytes,
@@ -589,13 +589,13 @@ gimp_pattern_select_button_open_popup (GimpPatternSelectButton *button,
 }
 
 static void
-gimp_pattern_select_button_close_popup (GimpPatternSelectButton *button)
+ligma_pattern_select_button_close_popup (LigmaPatternSelectButton *button)
 {
   g_clear_pointer (&button->priv->popup, gtk_widget_destroy);
 }
 
 static void
-gimp_pattern_select_drag_data_received (GimpPatternSelectButton *button,
+ligma_pattern_select_drag_data_received (LigmaPatternSelectButton *button,
                                         GdkDragContext          *context,
                                         gint                     x,
                                         gint                     y,
@@ -622,11 +622,11 @@ gimp_pattern_select_drag_data_received (GimpPatternSelectButton *button,
       gint     name_offset = 0;
 
       if (sscanf (str, "%i:%p:%n", &pid, &unused, &name_offset) >= 2 &&
-          pid == gimp_getpid () && name_offset > 0)
+          pid == ligma_getpid () && name_offset > 0)
         {
           gchar *name = str + name_offset;
 
-          gimp_pattern_select_button_set_pattern (button, name);
+          ligma_pattern_select_button_set_pattern (button, name);
         }
     }
 
@@ -634,9 +634,9 @@ gimp_pattern_select_drag_data_received (GimpPatternSelectButton *button,
 }
 
 static GtkWidget *
-gimp_pattern_select_button_create_inside (GimpPatternSelectButton *pattern_button)
+ligma_pattern_select_button_create_inside (LigmaPatternSelectButton *pattern_button)
 {
-  GimpPatternSelectButtonPrivate *priv = pattern_button->priv;
+  LigmaPatternSelectButtonPrivate *priv = pattern_button->priv;
   GtkWidget                      *hbox;
   GtkWidget                      *frame;
   GtkWidget                      *button;
@@ -647,17 +647,17 @@ gimp_pattern_select_button_create_inside (GimpPatternSelectButton *pattern_butto
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
 
-  priv->preview = gimp_preview_area_new ();
+  priv->preview = ligma_preview_area_new ();
   gtk_widget_add_events (priv->preview,
                          GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK);
   gtk_widget_set_size_request (priv->preview, CELL_SIZE, CELL_SIZE);
   gtk_container_add (GTK_CONTAINER (frame), priv->preview);
 
   g_signal_connect_swapped (priv->preview, "size-allocate",
-                            G_CALLBACK (gimp_pattern_select_preview_resize),
+                            G_CALLBACK (ligma_pattern_select_preview_resize),
                             pattern_button);
   g_signal_connect (priv->preview, "event",
-                    G_CALLBACK (gimp_pattern_select_preview_events),
+                    G_CALLBACK (ligma_pattern_select_preview_events),
                     pattern_button);
 
   gtk_drag_dest_set (GTK_WIDGET (priv->preview),
@@ -668,14 +668,14 @@ gimp_pattern_select_button_create_inside (GimpPatternSelectButton *pattern_butto
                      GDK_ACTION_COPY);
 
   g_signal_connect_swapped (priv->preview, "drag-data-received",
-                            G_CALLBACK (gimp_pattern_select_drag_data_received),
+                            G_CALLBACK (ligma_pattern_select_drag_data_received),
                             pattern_button);
 
   button = gtk_button_new_with_mnemonic (_("_Browse..."));
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
 
   g_signal_connect_swapped (button, "clicked",
-                            G_CALLBACK (gimp_pattern_select_button_clicked),
+                            G_CALLBACK (ligma_pattern_select_button_clicked),
                             pattern_button);
 
   gtk_widget_show_all (hbox);

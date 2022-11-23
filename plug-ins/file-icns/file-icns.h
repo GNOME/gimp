@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1999 Spencer Kimball and Peter Mattis
  *
  * file-icns.h
@@ -33,7 +33,7 @@
 #endif
 
 #define PLUG_IN_BINARY      "file-icns"
-#define PLUG_IN_ROLE        "gimp-file-icns"
+#define PLUG_IN_ROLE        "ligma-file-icns"
 
 #define ICNS_MAXBUF          4096
 #define ICNS_TYPE_NUM        34

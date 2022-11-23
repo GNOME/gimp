@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-2003 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -27,136 +27,136 @@
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmacolor/ligmacolor.h"
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "pdb-types.h"
 
-#include "core/gimpchannel-combine.h"
-#include "core/gimpchannel.h"
-#include "core/gimpimage.h"
-#include "core/gimpparamspecs.h"
+#include "core/ligmachannel-combine.h"
+#include "core/ligmachannel.h"
+#include "core/ligmaimage.h"
+#include "core/ligmaparamspecs.h"
 
-#include "gimppdb.h"
-#include "gimpprocedure.h"
+#include "ligmapdb.h"
+#include "ligmaprocedure.h"
 #include "internal-procs.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
-static GimpValueArray *
-channel_new_invoker (GimpProcedure         *procedure,
-                     Gimp                  *gimp,
-                     GimpContext           *context,
-                     GimpProgress          *progress,
-                     const GimpValueArray  *args,
+static LigmaValueArray *
+channel_new_invoker (LigmaProcedure         *procedure,
+                     Ligma                  *ligma,
+                     LigmaContext           *context,
+                     LigmaProgress          *progress,
+                     const LigmaValueArray  *args,
                      GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpImage *image;
+  LigmaValueArray *return_vals;
+  LigmaImage *image;
   gint width;
   gint height;
   const gchar *name;
   gdouble opacity;
-  GimpRGB color;
-  GimpChannel *channel = NULL;
+  LigmaRGB color;
+  LigmaChannel *channel = NULL;
 
-  image = g_value_get_object (gimp_value_array_index (args, 0));
-  width = g_value_get_int (gimp_value_array_index (args, 1));
-  height = g_value_get_int (gimp_value_array_index (args, 2));
-  name = g_value_get_string (gimp_value_array_index (args, 3));
-  opacity = g_value_get_double (gimp_value_array_index (args, 4));
-  gimp_value_get_rgb (gimp_value_array_index (args, 5), &color);
+  image = g_value_get_object (ligma_value_array_index (args, 0));
+  width = g_value_get_int (ligma_value_array_index (args, 1));
+  height = g_value_get_int (ligma_value_array_index (args, 2));
+  name = g_value_get_string (ligma_value_array_index (args, 3));
+  opacity = g_value_get_double (ligma_value_array_index (args, 4));
+  ligma_value_get_rgb (ligma_value_array_index (args, 5), &color);
 
   if (success)
     {
-      GimpRGB rgb_color = color;
+      LigmaRGB rgb_color = color;
 
       rgb_color.a = opacity / 100.0;
-      channel = gimp_channel_new (image, width, height, name, &rgb_color);
+      channel = ligma_channel_new (image, width, height, name, &rgb_color);
 
       if (! channel)
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_object (gimp_value_array_index (return_vals, 1), channel);
+    g_value_set_object (ligma_value_array_index (return_vals, 1), channel);
 
   return return_vals;
 }
 
-static GimpValueArray *
-channel_new_from_component_invoker (GimpProcedure         *procedure,
-                                    Gimp                  *gimp,
-                                    GimpContext           *context,
-                                    GimpProgress          *progress,
-                                    const GimpValueArray  *args,
+static LigmaValueArray *
+channel_new_from_component_invoker (LigmaProcedure         *procedure,
+                                    Ligma                  *ligma,
+                                    LigmaContext           *context,
+                                    LigmaProgress          *progress,
+                                    const LigmaValueArray  *args,
                                     GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpImage *image;
+  LigmaValueArray *return_vals;
+  LigmaImage *image;
   gint component;
   const gchar *name;
-  GimpChannel *channel = NULL;
+  LigmaChannel *channel = NULL;
 
-  image = g_value_get_object (gimp_value_array_index (args, 0));
-  component = g_value_get_enum (gimp_value_array_index (args, 1));
-  name = g_value_get_string (gimp_value_array_index (args, 2));
+  image = g_value_get_object (ligma_value_array_index (args, 0));
+  component = g_value_get_enum (ligma_value_array_index (args, 1));
+  name = g_value_get_string (ligma_value_array_index (args, 2));
 
   if (success)
     {
-      if (gimp_image_get_component_format (image, component) != NULL)
-        channel = gimp_channel_new_from_component (image,
+      if (ligma_image_get_component_format (image, component) != NULL)
+        channel = ligma_channel_new_from_component (image,
                                                    component, name, NULL);
 
       if (channel)
-        gimp_item_set_visible (GIMP_ITEM (channel), FALSE, FALSE);
+        ligma_item_set_visible (LIGMA_ITEM (channel), FALSE, FALSE);
       else
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_object (gimp_value_array_index (return_vals, 1), channel);
+    g_value_set_object (ligma_value_array_index (return_vals, 1), channel);
 
   return return_vals;
 }
 
-static GimpValueArray *
-channel_copy_invoker (GimpProcedure         *procedure,
-                      Gimp                  *gimp,
-                      GimpContext           *context,
-                      GimpProgress          *progress,
-                      const GimpValueArray  *args,
+static LigmaValueArray *
+channel_copy_invoker (LigmaProcedure         *procedure,
+                      Ligma                  *ligma,
+                      LigmaContext           *context,
+                      LigmaProgress          *progress,
+                      const LigmaValueArray  *args,
                       GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpChannel *channel;
-  GimpChannel *channel_copy = NULL;
+  LigmaValueArray *return_vals;
+  LigmaChannel *channel;
+  LigmaChannel *channel_copy = NULL;
 
-  channel = g_value_get_object (gimp_value_array_index (args, 0));
+  channel = g_value_get_object (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      GimpImage *image  = gimp_item_get_image (GIMP_ITEM (channel));
-      gint       width  = gimp_image_get_width  (image);
-      gint       height = gimp_image_get_height (image);
+      LigmaImage *image  = ligma_item_get_image (LIGMA_ITEM (channel));
+      gint       width  = ligma_image_get_width  (image);
+      gint       height = ligma_image_get_height (image);
 
-      if (gimp_item_get_width  (GIMP_ITEM (channel)) == width &&
-          gimp_item_get_height (GIMP_ITEM (channel)) == height)
+      if (ligma_item_get_width  (LIGMA_ITEM (channel)) == width &&
+          ligma_item_get_height (LIGMA_ITEM (channel)) == height)
         {
-          channel_copy = GIMP_CHANNEL (gimp_item_duplicate (GIMP_ITEM (channel),
-                                                            GIMP_TYPE_CHANNEL));
+          channel_copy = LIGMA_CHANNEL (ligma_item_duplicate (LIGMA_ITEM (channel),
+                                                            LIGMA_TYPE_CHANNEL));
 
           if (! channel_copy)
             success = FALSE;
@@ -165,574 +165,574 @@ channel_copy_invoker (GimpProcedure         *procedure,
         success = FALSE;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_object (gimp_value_array_index (return_vals, 1), channel_copy);
+    g_value_set_object (ligma_value_array_index (return_vals, 1), channel_copy);
 
   return return_vals;
 }
 
-static GimpValueArray *
-channel_combine_masks_invoker (GimpProcedure         *procedure,
-                               Gimp                  *gimp,
-                               GimpContext           *context,
-                               GimpProgress          *progress,
-                               const GimpValueArray  *args,
+static LigmaValueArray *
+channel_combine_masks_invoker (LigmaProcedure         *procedure,
+                               Ligma                  *ligma,
+                               LigmaContext           *context,
+                               LigmaProgress          *progress,
+                               const LigmaValueArray  *args,
                                GError               **error)
 {
   gboolean success = TRUE;
-  GimpChannel *channel1;
-  GimpChannel *channel2;
+  LigmaChannel *channel1;
+  LigmaChannel *channel2;
   gint operation;
   gint offx;
   gint offy;
 
-  channel1 = g_value_get_object (gimp_value_array_index (args, 0));
-  channel2 = g_value_get_object (gimp_value_array_index (args, 1));
-  operation = g_value_get_enum (gimp_value_array_index (args, 2));
-  offx = g_value_get_int (gimp_value_array_index (args, 3));
-  offy = g_value_get_int (gimp_value_array_index (args, 4));
+  channel1 = g_value_get_object (ligma_value_array_index (args, 0));
+  channel2 = g_value_get_object (ligma_value_array_index (args, 1));
+  operation = g_value_get_enum (ligma_value_array_index (args, 2));
+  offx = g_value_get_int (ligma_value_array_index (args, 3));
+  offy = g_value_get_int (ligma_value_array_index (args, 4));
 
   if (success)
     {
-      if (gimp_item_is_attached (GIMP_ITEM (channel1)))
-        gimp_channel_push_undo (channel1, _("Combine Masks"));
+      if (ligma_item_is_attached (LIGMA_ITEM (channel1)))
+        ligma_channel_push_undo (channel1, _("Combine Masks"));
 
-      gimp_channel_combine_mask (channel1, channel2, operation, offx, offy);
+      ligma_channel_combine_mask (channel1, channel2, operation, offx, offy);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-channel_get_show_masked_invoker (GimpProcedure         *procedure,
-                                 Gimp                  *gimp,
-                                 GimpContext           *context,
-                                 GimpProgress          *progress,
-                                 const GimpValueArray  *args,
+static LigmaValueArray *
+channel_get_show_masked_invoker (LigmaProcedure         *procedure,
+                                 Ligma                  *ligma,
+                                 LigmaContext           *context,
+                                 LigmaProgress          *progress,
+                                 const LigmaValueArray  *args,
                                  GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpChannel *channel;
+  LigmaValueArray *return_vals;
+  LigmaChannel *channel;
   gboolean show_masked = FALSE;
 
-  channel = g_value_get_object (gimp_value_array_index (args, 0));
+  channel = g_value_get_object (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      show_masked = gimp_channel_get_show_masked (channel);
+      show_masked = ligma_channel_get_show_masked (channel);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_boolean (gimp_value_array_index (return_vals, 1), show_masked);
+    g_value_set_boolean (ligma_value_array_index (return_vals, 1), show_masked);
 
   return return_vals;
 }
 
-static GimpValueArray *
-channel_set_show_masked_invoker (GimpProcedure         *procedure,
-                                 Gimp                  *gimp,
-                                 GimpContext           *context,
-                                 GimpProgress          *progress,
-                                 const GimpValueArray  *args,
+static LigmaValueArray *
+channel_set_show_masked_invoker (LigmaProcedure         *procedure,
+                                 Ligma                  *ligma,
+                                 LigmaContext           *context,
+                                 LigmaProgress          *progress,
+                                 const LigmaValueArray  *args,
                                  GError               **error)
 {
   gboolean success = TRUE;
-  GimpChannel *channel;
+  LigmaChannel *channel;
   gboolean show_masked;
 
-  channel = g_value_get_object (gimp_value_array_index (args, 0));
-  show_masked = g_value_get_boolean (gimp_value_array_index (args, 1));
+  channel = g_value_get_object (ligma_value_array_index (args, 0));
+  show_masked = g_value_get_boolean (ligma_value_array_index (args, 1));
 
   if (success)
     {
-      gimp_channel_set_show_masked (channel, show_masked);
+      ligma_channel_set_show_masked (channel, show_masked);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-channel_get_opacity_invoker (GimpProcedure         *procedure,
-                             Gimp                  *gimp,
-                             GimpContext           *context,
-                             GimpProgress          *progress,
-                             const GimpValueArray  *args,
+static LigmaValueArray *
+channel_get_opacity_invoker (LigmaProcedure         *procedure,
+                             Ligma                  *ligma,
+                             LigmaContext           *context,
+                             LigmaProgress          *progress,
+                             const LigmaValueArray  *args,
                              GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpChannel *channel;
+  LigmaValueArray *return_vals;
+  LigmaChannel *channel;
   gdouble opacity = 0.0;
 
-  channel = g_value_get_object (gimp_value_array_index (args, 0));
+  channel = g_value_get_object (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      opacity = gimp_channel_get_opacity (channel) * 100;
+      opacity = ligma_channel_get_opacity (channel) * 100;
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_double (gimp_value_array_index (return_vals, 1), opacity);
+    g_value_set_double (ligma_value_array_index (return_vals, 1), opacity);
 
   return return_vals;
 }
 
-static GimpValueArray *
-channel_set_opacity_invoker (GimpProcedure         *procedure,
-                             Gimp                  *gimp,
-                             GimpContext           *context,
-                             GimpProgress          *progress,
-                             const GimpValueArray  *args,
+static LigmaValueArray *
+channel_set_opacity_invoker (LigmaProcedure         *procedure,
+                             Ligma                  *ligma,
+                             LigmaContext           *context,
+                             LigmaProgress          *progress,
+                             const LigmaValueArray  *args,
                              GError               **error)
 {
   gboolean success = TRUE;
-  GimpChannel *channel;
+  LigmaChannel *channel;
   gdouble opacity;
 
-  channel = g_value_get_object (gimp_value_array_index (args, 0));
-  opacity = g_value_get_double (gimp_value_array_index (args, 1));
+  channel = g_value_get_object (ligma_value_array_index (args, 0));
+  opacity = g_value_get_double (ligma_value_array_index (args, 1));
 
   if (success)
     {
-      gimp_channel_set_opacity (channel, opacity / 100.0, TRUE);
+      ligma_channel_set_opacity (channel, opacity / 100.0, TRUE);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-channel_get_color_invoker (GimpProcedure         *procedure,
-                           Gimp                  *gimp,
-                           GimpContext           *context,
-                           GimpProgress          *progress,
-                           const GimpValueArray  *args,
+static LigmaValueArray *
+channel_get_color_invoker (LigmaProcedure         *procedure,
+                           Ligma                  *ligma,
+                           LigmaContext           *context,
+                           LigmaProgress          *progress,
+                           const LigmaValueArray  *args,
                            GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
-  GimpChannel *channel;
-  GimpRGB color = { 0.0, 0.0, 0.0, 1.0 };
+  LigmaValueArray *return_vals;
+  LigmaChannel *channel;
+  LigmaRGB color = { 0.0, 0.0, 0.0, 1.0 };
 
-  channel = g_value_get_object (gimp_value_array_index (args, 0));
+  channel = g_value_get_object (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      gimp_channel_get_color (channel, &color);
-      gimp_rgb_set_alpha (&color, 1.0);
+      ligma_channel_get_color (channel, &color);
+      ligma_rgb_set_alpha (&color, 1.0);
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    gimp_value_set_rgb (gimp_value_array_index (return_vals, 1), &color);
+    ligma_value_set_rgb (ligma_value_array_index (return_vals, 1), &color);
 
   return return_vals;
 }
 
-static GimpValueArray *
-channel_set_color_invoker (GimpProcedure         *procedure,
-                           Gimp                  *gimp,
-                           GimpContext           *context,
-                           GimpProgress          *progress,
-                           const GimpValueArray  *args,
+static LigmaValueArray *
+channel_set_color_invoker (LigmaProcedure         *procedure,
+                           Ligma                  *ligma,
+                           LigmaContext           *context,
+                           LigmaProgress          *progress,
+                           const LigmaValueArray  *args,
                            GError               **error)
 {
   gboolean success = TRUE;
-  GimpChannel *channel;
-  GimpRGB color;
+  LigmaChannel *channel;
+  LigmaRGB color;
 
-  channel = g_value_get_object (gimp_value_array_index (args, 0));
-  gimp_value_get_rgb (gimp_value_array_index (args, 1), &color);
+  channel = g_value_get_object (ligma_value_array_index (args, 0));
+  ligma_value_get_rgb (ligma_value_array_index (args, 1), &color);
 
   if (success)
     {
-      GimpRGB rgb_color = color;
+      LigmaRGB rgb_color = color;
 
       rgb_color.a = channel->color.a;
-      gimp_channel_set_color (channel, &rgb_color, TRUE);
+      ligma_channel_set_color (channel, &rgb_color, TRUE);
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
 void
-register_channel_procs (GimpPDB *pdb)
+register_channel_procs (LigmaPDB *pdb)
 {
-  GimpProcedure *procedure;
+  LigmaProcedure *procedure;
 
   /*
-   * gimp-channel-new
+   * ligma-channel-new
    */
-  procedure = gimp_procedure_new (channel_new_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-channel-new");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (channel_new_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-channel-new");
+  ligma_procedure_set_static_help (procedure,
                                   "Create a new channel.",
                                   "This procedure creates a new channel with the specified width, height, name, opacity and color.\n"
-                                  "The new channel still needs to be added to the image, as this is not automatic. Add the new channel with 'gimp-image-insert-channel'. Other attributes, such as channel visibility, should be set with explicit procedure calls.\n"
+                                  "The new channel still needs to be added to the image, as this is not automatic. Add the new channel with 'ligma-image-insert-channel'. Other attributes, such as channel visibility, should be set with explicit procedure calls.\n"
                                   "The channel's contents are undefined initially.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "The image to which to add the channel",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("width",
                                                  "width",
                                                  "The channel width",
-                                                 1, GIMP_MAX_IMAGE_SIZE, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 1, LIGMA_MAX_IMAGE_SIZE, 1,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("height",
                                                  "height",
                                                  "The channel height",
-                                                 1, GIMP_MAX_IMAGE_SIZE, 1,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
+                                                 1, LIGMA_MAX_IMAGE_SIZE, 1,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("name",
                                                        "name",
                                                        "The channel name",
                                                        FALSE, FALSE, FALSE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("opacity",
                                                     "opacity",
                                                     "The channel opacity",
                                                     0, 100, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_rgb ("color",
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_rgb ("color",
                                                     "color",
                                                     "The channel compositing color",
                                                     FALSE,
                                                     NULL,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_channel ("channel",
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_channel ("channel",
                                                             "channel",
                                                             "The newly created channel",
                                                             FALSE,
-                                                            GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                            LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-channel-new-from-component
+   * ligma-channel-new-from-component
    */
-  procedure = gimp_procedure_new (channel_new_from_component_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-channel-new-from-component");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (channel_new_from_component_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-channel-new-from-component");
+  ligma_procedure_set_static_help (procedure,
                                   "Create a new channel from a color component",
                                   "This procedure creates a new channel from a color component.\n"
-                                  "The new channel still needs to be added to the image, as this is not automatic. Add the new channel with 'gimp-image-insert-channel'. Other attributes, such as channel visibility, should be set with explicit procedure calls.",
+                                  "The new channel still needs to be added to the image, as this is not automatic. Add the new channel with 'ligma-image-insert-channel'. Other attributes, such as channel visibility, should be set with explicit procedure calls.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Shlomi Fish <shlomif@iglu.org.il>",
                                          "Shlomi Fish",
                                          "2005");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image ("image",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_image ("image",
                                                       "image",
                                                       "The image to which to add the channel",
                                                       FALSE,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                      LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("component",
                                                   "component",
                                                   "The image component",
-                                                  GIMP_TYPE_CHANNEL_TYPE,
-                                                  GIMP_CHANNEL_RED,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("name",
+                                                  LIGMA_TYPE_CHANNEL_TYPE,
+                                                  LIGMA_CHANNEL_RED,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("name",
                                                        "name",
                                                        "The channel name",
                                                        FALSE, FALSE, FALSE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_channel ("channel",
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_channel ("channel",
                                                             "channel",
                                                             "The newly created channel",
                                                             FALSE,
-                                                            GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                            LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-channel-copy
+   * ligma-channel-copy
    */
-  procedure = gimp_procedure_new (channel_copy_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-channel-copy");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (channel_copy_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-channel-copy");
+  ligma_procedure_set_static_help (procedure,
                                   "Copy a channel.",
                                   "This procedure copies the specified channel and returns the copy.\n"
-                                  "The new channel still needs to be added to the image, as this is not automatic. Add the new channel with 'gimp-image-insert-channel'.",
+                                  "The new channel still needs to be added to the image, as this is not automatic. Add the new channel with 'ligma-image-insert-channel'.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_channel ("channel",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_channel ("channel",
                                                         "channel",
                                                         "The channel to copy",
                                                         FALSE,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_channel ("channel-copy",
+                                                        LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_channel ("channel-copy",
                                                             "channel copy",
                                                             "The newly copied channel",
                                                             FALSE,
-                                                            GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                            LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-channel-combine-masks
+   * ligma-channel-combine-masks
    */
-  procedure = gimp_procedure_new (channel_combine_masks_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-channel-combine-masks");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (channel_combine_masks_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-channel-combine-masks");
+  ligma_procedure_set_static_help (procedure,
                                   "Combine two channel masks.",
                                   "This procedure combines two channel masks. The result is stored in the first channel.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_channel ("channel1",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_channel ("channel1",
                                                         "channel1",
                                                         "The channel1",
                                                         FALSE,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_channel ("channel2",
+                                                        LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_channel ("channel2",
                                                         "channel2",
                                                         "The channel2",
                                                         FALSE,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                        LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_enum ("operation",
                                                   "operation",
                                                   "The selection operation",
-                                                  GIMP_TYPE_CHANNEL_OPS,
-                                                  GIMP_CHANNEL_OP_ADD,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                  LIGMA_TYPE_CHANNEL_OPS,
+                                                  LIGMA_CHANNEL_OP_ADD,
+                                                  LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("offx",
                                                  "offx",
                                                  "x offset between upper left corner of channels: (second - first)",
                                                  G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_int ("offy",
                                                  "offy",
                                                  "y offset between upper left corner of channels: (second - first)",
                                                  G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                 LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-channel-get-show-masked
+   * ligma-channel-get-show-masked
    */
-  procedure = gimp_procedure_new (channel_get_show_masked_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-channel-get-show-masked");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (channel_get_show_masked_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-channel-get-show-masked");
+  ligma_procedure_set_static_help (procedure,
                                   "Get the composite method of the specified channel.",
                                   "This procedure returns the specified channel's composite method. If it is TRUE, then the channel is composited with the image so that masked regions are shown. Otherwise, selected regions are shown.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_channel ("channel",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_channel ("channel",
                                                         "channel",
                                                         "The channel",
                                                         FALSE,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                        LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("show-masked",
                                                          "show masked",
                                                          "The channel composite method",
                                                          FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                         LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-channel-set-show-masked
+   * ligma-channel-set-show-masked
    */
-  procedure = gimp_procedure_new (channel_set_show_masked_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-channel-set-show-masked");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (channel_set_show_masked_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-channel-set-show-masked");
+  ligma_procedure_set_static_help (procedure,
                                   "Set the composite method of the specified channel.",
                                   "This procedure sets the specified channel's composite method. If it is TRUE, then the channel is composited with the image so that masked regions are shown. Otherwise, selected regions are shown.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_channel ("channel",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_channel ("channel",
                                                         "channel",
                                                         "The channel",
                                                         FALSE,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                        LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_boolean ("show-masked",
                                                      "show masked",
                                                      "The new channel composite method",
                                                      FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-channel-get-opacity
+   * ligma-channel-get-opacity
    */
-  procedure = gimp_procedure_new (channel_get_opacity_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-channel-get-opacity");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (channel_get_opacity_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-channel-get-opacity");
+  ligma_procedure_set_static_help (procedure,
                                   "Get the opacity of the specified channel.",
                                   "This procedure returns the specified channel's opacity.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_channel ("channel",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_channel ("channel",
                                                         "channel",
                                                         "The channel",
                                                         FALSE,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
+                                                        LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_double ("opacity",
                                                         "opacity",
                                                         "The channel opacity",
                                                         0, 100, 0,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                        LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-channel-set-opacity
+   * ligma-channel-set-opacity
    */
-  procedure = gimp_procedure_new (channel_set_opacity_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-channel-set-opacity");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (channel_set_opacity_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-channel-set-opacity");
+  ligma_procedure_set_static_help (procedure,
                                   "Set the opacity of the specified channel.",
                                   "This procedure sets the specified channel's opacity.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_channel ("channel",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_channel ("channel",
                                                         "channel",
                                                         "The channel",
                                                         FALSE,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
+                                                        LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("opacity",
                                                     "opacity",
                                                     "The new channel opacity",
                                                     0, 100, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-channel-get-color
+   * ligma-channel-get-color
    */
-  procedure = gimp_procedure_new (channel_get_color_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-channel-get-color");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (channel_get_color_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-channel-get-color");
+  ligma_procedure_set_static_help (procedure,
                                   "Get the compositing color of the specified channel.",
                                   "This procedure returns the specified channel's compositing color.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_channel ("channel",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_channel ("channel",
                                                         "channel",
                                                         "The channel",
                                                         FALSE,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_rgb ("color",
+                                                        LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_return_value (procedure,
+                                   ligma_param_spec_rgb ("color",
                                                         "color",
                                                         "The channel compositing color",
                                                         FALSE,
                                                         NULL,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                        LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-channel-set-color
+   * ligma-channel-set-color
    */
-  procedure = gimp_procedure_new (channel_set_color_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-channel-set-color");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (channel_set_color_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-channel-set-color");
+  ligma_procedure_set_static_help (procedure,
                                   "Set the compositing color of the specified channel.",
                                   "This procedure sets the specified channel's compositing color.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_channel ("channel",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_channel ("channel",
                                                         "channel",
                                                         "The channel",
                                                         FALSE,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_rgb ("color",
+                                                        LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_rgb ("color",
                                                     "color",
                                                     "The new channel compositing color",
                                                     FALSE,
                                                     NULL,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

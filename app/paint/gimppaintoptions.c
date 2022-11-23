@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1999 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,25 +20,25 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
-#include "libgimpconfig/gimpconfig.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmaconfig/ligmaconfig.h"
 
 #include "paint-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpbrush-header.h"
-#include "core/gimpbrushgenerated.h"
-#include "core/gimpimage.h"
-#include "core/gimpdynamics.h"
-#include "core/gimpdynamicsoutput.h"
-#include "core/gimpgradient.h"
-#include "core/gimppaintinfo.h"
+#include "core/ligma.h"
+#include "core/ligmabrush-header.h"
+#include "core/ligmabrushgenerated.h"
+#include "core/ligmaimage.h"
+#include "core/ligmadynamics.h"
+#include "core/ligmadynamicsoutput.h"
+#include "core/ligmagradient.h"
+#include "core/ligmapaintinfo.h"
 
-#include "gimpbrushcore.h"
-#include "gimppaintoptions.h"
+#include "ligmabrushcore.h"
+#include "ligmapaintoptions.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 #define DEFAULT_BRUSH_SIZE              20.0
@@ -56,7 +56,7 @@
 
 #define DEFAULT_BRUSH_LOCK_TO_VIEW      FALSE
 
-#define DEFAULT_APPLICATION_MODE        GIMP_PAINT_CONSTANT
+#define DEFAULT_APPLICATION_MODE        LIGMA_PAINT_CONSTANT
 #define DEFAULT_HARD                    FALSE
 
 #define DEFAULT_USE_JITTER              FALSE
@@ -66,12 +66,12 @@
 
 #define DEFAULT_FADE_LENGTH             100.0
 #define DEFAULT_FADE_REVERSE            FALSE
-#define DEFAULT_FADE_REPEAT             GIMP_REPEAT_NONE
-#define DEFAULT_FADE_UNIT               GIMP_UNIT_PIXEL
+#define DEFAULT_FADE_REPEAT             LIGMA_REPEAT_NONE
+#define DEFAULT_FADE_UNIT               LIGMA_UNIT_PIXEL
 
 #define DEFAULT_GRADIENT_REVERSE        FALSE
-#define DEFAULT_GRADIENT_BLEND_SPACE    GIMP_GRADIENT_BLEND_RGB_PERCEPTUAL
-#define DEFAULT_GRADIENT_REPEAT         GIMP_REPEAT_NONE
+#define DEFAULT_GRADIENT_BLEND_SPACE    LIGMA_GRADIENT_BLEND_RGB_PERCEPTUAL
+#define DEFAULT_GRADIENT_REPEAT         LIGMA_REPEAT_NONE
 
 #define DYNAMIC_MAX_VALUE               1.0
 #define DYNAMIC_MIN_VALUE               0.0
@@ -134,304 +134,304 @@ enum
 };
 
 
-static void         gimp_paint_options_config_iface_init (GimpConfigInterface *config_iface);
+static void         ligma_paint_options_config_iface_init (LigmaConfigInterface *config_iface);
 
-static void         gimp_paint_options_dispose           (GObject          *object);
-static void         gimp_paint_options_finalize          (GObject          *object);
-static void         gimp_paint_options_set_property      (GObject          *object,
+static void         ligma_paint_options_dispose           (GObject          *object);
+static void         ligma_paint_options_finalize          (GObject          *object);
+static void         ligma_paint_options_set_property      (GObject          *object,
                                                           guint             property_id,
                                                           const GValue     *value,
                                                           GParamSpec       *pspec);
-static void         gimp_paint_options_get_property      (GObject          *object,
+static void         ligma_paint_options_get_property      (GObject          *object,
                                                           guint             property_id,
                                                           GValue           *value,
                                                           GParamSpec       *pspec);
 
-static void         gimp_paint_options_brush_changed     (GimpContext      *context,
-                                                          GimpBrush        *brush);
-static void         gimp_paint_options_brush_notify      (GimpBrush        *brush,
+static void         ligma_paint_options_brush_changed     (LigmaContext      *context,
+                                                          LigmaBrush        *brush);
+static void         ligma_paint_options_brush_notify      (LigmaBrush        *brush,
                                                           const GParamSpec *pspec,
-                                                          GimpPaintOptions *options);
+                                                          LigmaPaintOptions *options);
 
-static GimpConfig * gimp_paint_options_duplicate         (GimpConfig       *config);
-static gboolean     gimp_paint_options_copy              (GimpConfig       *src,
-                                                          GimpConfig       *dest,
+static LigmaConfig * ligma_paint_options_duplicate         (LigmaConfig       *config);
+static gboolean     ligma_paint_options_copy              (LigmaConfig       *src,
+                                                          LigmaConfig       *dest,
                                                           GParamFlags       flags);
-static void         gimp_paint_options_reset             (GimpConfig       *config);
+static void         ligma_paint_options_reset             (LigmaConfig       *config);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpPaintOptions, gimp_paint_options,
-                         GIMP_TYPE_TOOL_OPTIONS,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
-                                                gimp_paint_options_config_iface_init))
+G_DEFINE_TYPE_WITH_CODE (LigmaPaintOptions, ligma_paint_options,
+                         LIGMA_TYPE_TOOL_OPTIONS,
+                         G_IMPLEMENT_INTERFACE (LIGMA_TYPE_CONFIG,
+                                                ligma_paint_options_config_iface_init))
 
-#define parent_class gimp_paint_options_parent_class
+#define parent_class ligma_paint_options_parent_class
 
-static GimpConfigInterface *parent_config_iface = NULL;
+static LigmaConfigInterface *parent_config_iface = NULL;
 
 
 static void
-gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
+ligma_paint_options_class_init (LigmaPaintOptionsClass *klass)
 {
   GObjectClass     *object_class  = G_OBJECT_CLASS (klass);
-  GimpContextClass *context_class = GIMP_CONTEXT_CLASS (klass);
+  LigmaContextClass *context_class = LIGMA_CONTEXT_CLASS (klass);
 
-  object_class->dispose         = gimp_paint_options_dispose;
-  object_class->finalize        = gimp_paint_options_finalize;
-  object_class->set_property    = gimp_paint_options_set_property;
-  object_class->get_property    = gimp_paint_options_get_property;
+  object_class->dispose         = ligma_paint_options_dispose;
+  object_class->finalize        = ligma_paint_options_finalize;
+  object_class->set_property    = ligma_paint_options_set_property;
+  object_class->get_property    = ligma_paint_options_get_property;
 
-  context_class->brush_changed  = gimp_paint_options_brush_changed;
+  context_class->brush_changed  = ligma_paint_options_brush_changed;
 
   g_object_class_install_property (object_class, PROP_PAINT_INFO,
                                    g_param_spec_object ("paint-info",
                                                         NULL, NULL,
-                                                        GIMP_TYPE_PAINT_INFO,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_TYPE_PAINT_INFO,
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_USE_APPLICATOR,
                                    g_param_spec_boolean ("use-applicator",
-                                                         "Use GimpApplicator",
+                                                         "Use LigmaApplicator",
                                                          NULL,
                                                          FALSE,
                                                          G_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_BRUSH_SIZE,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_BRUSH_SIZE,
                            "brush-size",
                            _("Size"),
                            _("Brush Size"),
-                           1.0, GIMP_BRUSH_MAX_SIZE, DEFAULT_BRUSH_SIZE,
-                           GIMP_PARAM_STATIC_STRINGS);
+                           1.0, LIGMA_BRUSH_MAX_SIZE, DEFAULT_BRUSH_SIZE,
+                           LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_BRUSH_ASPECT_RATIO,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_BRUSH_ASPECT_RATIO,
                            "brush-aspect-ratio",
                            _("Aspect Ratio"),
                            _("Brush Aspect Ratio"),
                            -20.0, 20.0, DEFAULT_BRUSH_ASPECT_RATIO,
-                           GIMP_PARAM_STATIC_STRINGS);
+                           LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_BRUSH_ANGLE,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_BRUSH_ANGLE,
                            "brush-angle",
                            _("Angle"),
                            _("Brush Angle"),
                            -180.0, 180.0, DEFAULT_BRUSH_ANGLE,
-                           GIMP_PARAM_STATIC_STRINGS);
+                           LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_BRUSH_SPACING,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_BRUSH_SPACING,
                            "brush-spacing",
                            _("Spacing"),
                            _("Brush Spacing"),
                            0.01, 50.0, DEFAULT_BRUSH_SPACING,
-                           GIMP_PARAM_STATIC_STRINGS);
+                           LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_BRUSH_HARDNESS,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_BRUSH_HARDNESS,
                            "brush-hardness",
                            _("Hardness"),
                            _("Brush Hardness"),
                            0.0, 1.0, DEFAULT_BRUSH_HARDNESS,
-                           GIMP_PARAM_STATIC_STRINGS);
+                           LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_BRUSH_FORCE,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_BRUSH_FORCE,
                            "brush-force",
                            _("Force"),
                            _("Brush Force"),
                            0.0, 1.0, DEFAULT_BRUSH_FORCE,
-                           GIMP_PARAM_STATIC_STRINGS);
+                           LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_BRUSH_LINK_SIZE,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_BRUSH_LINK_SIZE,
                             "brush-link-size",
                             _("Link Size"),
                             _("Link brush size to brush native"),
                             DEFAULT_BRUSH_LINK_SIZE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_BRUSH_LINK_ASPECT_RATIO,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_BRUSH_LINK_ASPECT_RATIO,
                             "brush-link-aspect-ratio",
                             _("Link Aspect Ratio"),
                             _("Link brush aspect ratio to brush native"),
                             DEFAULT_BRUSH_LINK_ASPECT_RATIO,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_BRUSH_LINK_ANGLE,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_BRUSH_LINK_ANGLE,
                             "brush-link-angle",
                             _("Link Angle"),
                             _("Link brush angle to brush native"),
                             DEFAULT_BRUSH_LINK_ANGLE,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_BRUSH_LINK_SPACING,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_BRUSH_LINK_SPACING,
                             "brush-link-spacing",
                             _("Link Spacing"),
                             _("Link brush spacing to brush native"),
                             DEFAULT_BRUSH_LINK_SPACING,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_BRUSH_LINK_HARDNESS,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_BRUSH_LINK_HARDNESS,
                             "brush-link-hardness",
                             _("Link Hardness"),
                             _("Link brush hardness to brush native"),
                             DEFAULT_BRUSH_LINK_HARDNESS,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_BRUSH_LOCK_TO_VIEW,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_BRUSH_LOCK_TO_VIEW,
                             "brush-lock-to-view",
                             _("Lock brush to view"),
                             _("Keep brush appearance fixed relative to the view"),
                             DEFAULT_BRUSH_LOCK_TO_VIEW,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_APPLICATION_MODE,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_APPLICATION_MODE,
                          "application-mode",
                          _("Incremental"),
                          _("Every stamp has its own opacity"),
-                         GIMP_TYPE_PAINT_APPLICATION_MODE,
+                         LIGMA_TYPE_PAINT_APPLICATION_MODE,
                          DEFAULT_APPLICATION_MODE,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_HARD,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_HARD,
                             "hard",
                             _("Hard edge"),
                             _("Ignore fuzziness of the current brush"),
                             DEFAULT_HARD,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_USE_JITTER,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_USE_JITTER,
                             "use-jitter",
                             _("Apply Jitter"),
                             _("Scatter brush as you paint"),
                             DEFAULT_USE_JITTER,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_DYNAMICS_ENABLED,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_DYNAMICS_ENABLED,
                             "dynamics-enabled",
                             _("Enable dynamics"),
                             _("Apply dynamics curves to paint settings"),
                             DEFAULT_DYNAMICS_ENABLED,
-                            GIMP_PARAM_STATIC_STRINGS);
+                            LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_JITTER_AMOUNT,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_JITTER_AMOUNT,
                            "jitter-amount",
                            _("Amount"),
                            _("Distance of scattering"),
                            0.0, 50.0, DEFAULT_JITTER_AMOUNT,
-                           GIMP_PARAM_STATIC_STRINGS);
+                           LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_FADE_LENGTH,
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_FADE_LENGTH,
                            "fade-length",
                            _("Fade length"),
                            _("Distance over which strokes fade out"),
                            0.0, 32767.0, DEFAULT_FADE_LENGTH,
-                           GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_PROP_UNIT (object_class, PROP_FADE_UNIT,
+                           LIGMA_PARAM_STATIC_STRINGS);
+  LIGMA_CONFIG_PROP_UNIT (object_class, PROP_FADE_UNIT,
                          "fade-unit",
                          NULL, NULL,
                          TRUE, TRUE, DEFAULT_FADE_UNIT,
-                         GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_FADE_REVERSE,
+                         LIGMA_PARAM_STATIC_STRINGS);
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_FADE_REVERSE,
                             "fade-reverse",
                             _("Reverse"),
                             _("Reverse direction of fading"),
                             DEFAULT_FADE_REVERSE,
-                            GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_FADE_REPEAT,
+                            LIGMA_PARAM_STATIC_STRINGS);
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_FADE_REPEAT,
                          "fade-repeat",
                          _("Repeat"),
                          _("How fade is repeated as you paint"),
-                         GIMP_TYPE_REPEAT_MODE,
+                         LIGMA_TYPE_REPEAT_MODE,
                          DEFAULT_FADE_REPEAT,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_GRADIENT_REVERSE,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_GRADIENT_REVERSE,
                             "gradient-reverse",
                             NULL, NULL,
                             DEFAULT_GRADIENT_REVERSE,
-                            GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_GRADIENT_BLEND_COLOR_SPACE,
+                            LIGMA_PARAM_STATIC_STRINGS);
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_GRADIENT_BLEND_COLOR_SPACE,
                          "gradient-blend-color-space",
                          _("Blend Color Space"),
                          _("Which color space to use when blending RGB gradient segments"),
-                         GIMP_TYPE_GRADIENT_BLEND_COLOR_SPACE,
+                         LIGMA_TYPE_GRADIENT_BLEND_COLOR_SPACE,
                          DEFAULT_GRADIENT_BLEND_SPACE,
-                         GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_GRADIENT_REPEAT,
+                         LIGMA_PARAM_STATIC_STRINGS);
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_GRADIENT_REPEAT,
                          "gradient-repeat",
                          _("Repeat"),
                          NULL,
-                         GIMP_TYPE_REPEAT_MODE,
+                         LIGMA_TYPE_REPEAT_MODE,
                          DEFAULT_GRADIENT_REPEAT,
-                         GIMP_PARAM_STATIC_STRINGS);
+                         LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_BRUSH_VIEW_TYPE,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_BRUSH_VIEW_TYPE,
                          "brush-view-type",
                          NULL, NULL,
-                         GIMP_TYPE_VIEW_TYPE,
-                         GIMP_VIEW_TYPE_GRID,
-                         GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_PROP_INT (object_class, PROP_BRUSH_VIEW_SIZE,
+                         LIGMA_TYPE_VIEW_TYPE,
+                         LIGMA_VIEW_TYPE_GRID,
+                         LIGMA_PARAM_STATIC_STRINGS);
+  LIGMA_CONFIG_PROP_INT (object_class, PROP_BRUSH_VIEW_SIZE,
                         "brush-view-size",
                         NULL, NULL,
-                        GIMP_VIEW_SIZE_TINY,
-                        GIMP_VIEWABLE_MAX_BUTTON_SIZE,
-                        GIMP_VIEW_SIZE_SMALL,
-                        GIMP_PARAM_STATIC_STRINGS);
+                        LIGMA_VIEW_SIZE_TINY,
+                        LIGMA_VIEWABLE_MAX_BUTTON_SIZE,
+                        LIGMA_VIEW_SIZE_SMALL,
+                        LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_DYNAMICS_VIEW_TYPE,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_DYNAMICS_VIEW_TYPE,
                          "dynamics-view-type",
                          NULL, NULL,
-                         GIMP_TYPE_VIEW_TYPE,
-                         GIMP_VIEW_TYPE_LIST,
-                         GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_PROP_INT (object_class, PROP_DYNAMICS_VIEW_SIZE,
+                         LIGMA_TYPE_VIEW_TYPE,
+                         LIGMA_VIEW_TYPE_LIST,
+                         LIGMA_PARAM_STATIC_STRINGS);
+  LIGMA_CONFIG_PROP_INT (object_class, PROP_DYNAMICS_VIEW_SIZE,
                         "dynamics-view-size",
                         NULL, NULL,
-                        GIMP_VIEW_SIZE_TINY,
-                        GIMP_VIEWABLE_MAX_BUTTON_SIZE,
-                        GIMP_VIEW_SIZE_SMALL,
-                        GIMP_PARAM_STATIC_STRINGS);
+                        LIGMA_VIEW_SIZE_TINY,
+                        LIGMA_VIEWABLE_MAX_BUTTON_SIZE,
+                        LIGMA_VIEW_SIZE_SMALL,
+                        LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_PATTERN_VIEW_TYPE,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_PATTERN_VIEW_TYPE,
                          "pattern-view-type",
                          NULL, NULL,
-                         GIMP_TYPE_VIEW_TYPE,
-                         GIMP_VIEW_TYPE_GRID,
-                         GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_PROP_INT (object_class, PROP_PATTERN_VIEW_SIZE,
+                         LIGMA_TYPE_VIEW_TYPE,
+                         LIGMA_VIEW_TYPE_GRID,
+                         LIGMA_PARAM_STATIC_STRINGS);
+  LIGMA_CONFIG_PROP_INT (object_class, PROP_PATTERN_VIEW_SIZE,
                         "pattern-view-size",
                         NULL, NULL,
-                        GIMP_VIEW_SIZE_TINY,
-                        GIMP_VIEWABLE_MAX_BUTTON_SIZE,
-                        GIMP_VIEW_SIZE_SMALL,
-                        GIMP_PARAM_STATIC_STRINGS);
+                        LIGMA_VIEW_SIZE_TINY,
+                        LIGMA_VIEWABLE_MAX_BUTTON_SIZE,
+                        LIGMA_VIEW_SIZE_SMALL,
+                        LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_ENUM (object_class, PROP_GRADIENT_VIEW_TYPE,
+  LIGMA_CONFIG_PROP_ENUM (object_class, PROP_GRADIENT_VIEW_TYPE,
                          "gradient-view-type",
                          NULL, NULL,
-                         GIMP_TYPE_VIEW_TYPE,
-                         GIMP_VIEW_TYPE_LIST,
-                         GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_PROP_INT (object_class, PROP_GRADIENT_VIEW_SIZE,
+                         LIGMA_TYPE_VIEW_TYPE,
+                         LIGMA_VIEW_TYPE_LIST,
+                         LIGMA_PARAM_STATIC_STRINGS);
+  LIGMA_CONFIG_PROP_INT (object_class, PROP_GRADIENT_VIEW_SIZE,
                         "gradient-view-size",
                         NULL, NULL,
-                        GIMP_VIEW_SIZE_TINY,
-                        GIMP_VIEWABLE_MAX_BUTTON_SIZE,
-                        GIMP_VIEW_SIZE_LARGE,
-                        GIMP_PARAM_STATIC_STRINGS);
+                        LIGMA_VIEW_SIZE_TINY,
+                        LIGMA_VIEWABLE_MAX_BUTTON_SIZE,
+                        LIGMA_VIEW_SIZE_LARGE,
+                        LIGMA_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_USE_SMOOTHING,
+  LIGMA_CONFIG_PROP_BOOLEAN (object_class, PROP_USE_SMOOTHING,
                             "use-smoothing",
                             _("Smooth stroke"),
                             _("Paint smoother strokes"),
                             FALSE,
-                            GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_PROP_INT (object_class, PROP_SMOOTHING_QUALITY,
+                            LIGMA_PARAM_STATIC_STRINGS);
+  LIGMA_CONFIG_PROP_INT (object_class, PROP_SMOOTHING_QUALITY,
                         "smoothing-quality",
                         _("Quality"),
                         _("Depth of smoothing"),
                         1, 100, DEFAULT_SMOOTHING_QUALITY,
-                        GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_SMOOTHING_FACTOR,
+                        LIGMA_PARAM_STATIC_STRINGS);
+  LIGMA_CONFIG_PROP_DOUBLE (object_class, PROP_SMOOTHING_FACTOR,
                            "smoothing-factor",
                            _("Weight"),
                            _("Gravity of the pen"),
@@ -440,37 +440,37 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
                             * results in numeric instablility
                             */
                            3.0, 1000.0, DEFAULT_SMOOTHING_FACTOR,
-                           GIMP_PARAM_STATIC_STRINGS);
+                           LIGMA_PARAM_STATIC_STRINGS);
 }
 
 static void
-gimp_paint_options_config_iface_init (GimpConfigInterface *config_iface)
+ligma_paint_options_config_iface_init (LigmaConfigInterface *config_iface)
 {
   parent_config_iface = g_type_interface_peek_parent (config_iface);
 
   if (! parent_config_iface)
-    parent_config_iface = g_type_default_interface_peek (GIMP_TYPE_CONFIG);
+    parent_config_iface = g_type_default_interface_peek (LIGMA_TYPE_CONFIG);
 
-  config_iface->duplicate = gimp_paint_options_duplicate;
-  config_iface->copy      = gimp_paint_options_copy;
-  config_iface->reset     = gimp_paint_options_reset;
+  config_iface->duplicate = ligma_paint_options_duplicate;
+  config_iface->copy      = ligma_paint_options_copy;
+  config_iface->reset     = ligma_paint_options_reset;
 }
 
 static void
-gimp_paint_options_init (GimpPaintOptions *options)
+ligma_paint_options_init (LigmaPaintOptions *options)
 {
   options->application_mode_save = DEFAULT_APPLICATION_MODE;
 
-  options->jitter_options    = g_slice_new0 (GimpJitterOptions);
-  options->fade_options      = g_slice_new0 (GimpFadeOptions);
-  options->gradient_options  = g_slice_new0 (GimpGradientPaintOptions);
-  options->smoothing_options = g_slice_new0 (GimpSmoothingOptions);
+  options->jitter_options    = g_slice_new0 (LigmaJitterOptions);
+  options->fade_options      = g_slice_new0 (LigmaFadeOptions);
+  options->gradient_options  = g_slice_new0 (LigmaGradientPaintOptions);
+  options->smoothing_options = g_slice_new0 (LigmaSmoothingOptions);
 }
 
 static void
-gimp_paint_options_dispose (GObject *object)
+ligma_paint_options_dispose (GObject *object)
 {
-  GimpPaintOptions *options = GIMP_PAINT_OPTIONS (object);
+  LigmaPaintOptions *options = LIGMA_PAINT_OPTIONS (object);
 
   g_clear_object (&options->paint_info);
 
@@ -478,29 +478,29 @@ gimp_paint_options_dispose (GObject *object)
 }
 
 static void
-gimp_paint_options_finalize (GObject *object)
+ligma_paint_options_finalize (GObject *object)
 {
-  GimpPaintOptions *options = GIMP_PAINT_OPTIONS (object);
+  LigmaPaintOptions *options = LIGMA_PAINT_OPTIONS (object);
 
-  g_slice_free (GimpJitterOptions,        options->jitter_options);
-  g_slice_free (GimpFadeOptions,          options->fade_options);
-  g_slice_free (GimpGradientPaintOptions, options->gradient_options);
-  g_slice_free (GimpSmoothingOptions,     options->smoothing_options);
+  g_slice_free (LigmaJitterOptions,        options->jitter_options);
+  g_slice_free (LigmaFadeOptions,          options->fade_options);
+  g_slice_free (LigmaGradientPaintOptions, options->gradient_options);
+  g_slice_free (LigmaSmoothingOptions,     options->smoothing_options);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
-gimp_paint_options_set_property (GObject      *object,
+ligma_paint_options_set_property (GObject      *object,
                                  guint         property_id,
                                  const GValue *value,
                                  GParamSpec   *pspec)
 {
-  GimpPaintOptions         *options           = GIMP_PAINT_OPTIONS (object);
-  GimpFadeOptions          *fade_options      = options->fade_options;
-  GimpJitterOptions        *jitter_options    = options->jitter_options;
-  GimpGradientPaintOptions *gradient_options  = options->gradient_options;
-  GimpSmoothingOptions     *smoothing_options = options->smoothing_options;
+  LigmaPaintOptions         *options           = LIGMA_PAINT_OPTIONS (object);
+  LigmaFadeOptions          *fade_options      = options->fade_options;
+  LigmaJitterOptions        *jitter_options    = options->jitter_options;
+  LigmaGradientPaintOptions *gradient_options  = options->gradient_options;
+  LigmaSmoothingOptions     *smoothing_options = options->smoothing_options;
 
   switch (property_id)
     {
@@ -637,16 +637,16 @@ gimp_paint_options_set_property (GObject      *object,
 }
 
 static void
-gimp_paint_options_get_property (GObject    *object,
+ligma_paint_options_get_property (GObject    *object,
                                  guint       property_id,
                                  GValue     *value,
                                  GParamSpec *pspec)
 {
-  GimpPaintOptions         *options           = GIMP_PAINT_OPTIONS (object);
-  GimpFadeOptions          *fade_options      = options->fade_options;
-  GimpJitterOptions        *jitter_options    = options->jitter_options;
-  GimpGradientPaintOptions *gradient_options  = options->gradient_options;
-  GimpSmoothingOptions     *smoothing_options = options->smoothing_options;
+  LigmaPaintOptions         *options           = LIGMA_PAINT_OPTIONS (object);
+  LigmaFadeOptions          *fade_options      = options->fade_options;
+  LigmaJitterOptions        *jitter_options    = options->jitter_options;
+  LigmaGradientPaintOptions *gradient_options  = options->gradient_options;
+  LigmaSmoothingOptions     *smoothing_options = options->smoothing_options;
 
   switch (property_id)
     {
@@ -783,19 +783,19 @@ gimp_paint_options_get_property (GObject    *object,
 }
 
 static void
-gimp_paint_options_brush_changed (GimpContext *context,
-                                  GimpBrush   *brush)
+ligma_paint_options_brush_changed (LigmaContext *context,
+                                  LigmaBrush   *brush)
 {
-  GimpPaintOptions *options = GIMP_PAINT_OPTIONS (context);
+  LigmaPaintOptions *options = LIGMA_PAINT_OPTIONS (context);
 
   if (options->paint_info &&
       g_type_is_a (options->paint_info->paint_type,
-                   GIMP_TYPE_BRUSH_CORE))
+                   LIGMA_TYPE_BRUSH_CORE))
     {
       if (options->brush)
         {
           g_signal_handlers_disconnect_by_func (options->brush,
-                                                gimp_paint_options_brush_notify,
+                                                ligma_paint_options_brush_notify,
                                                 options);
           g_object_remove_weak_pointer (G_OBJECT (options->brush),
                                         (gpointer) &options->brush);
@@ -808,88 +808,88 @@ gimp_paint_options_brush_changed (GimpContext *context,
           g_object_add_weak_pointer (G_OBJECT (options->brush),
                                      (gpointer) &options->brush);
           g_signal_connect_object (options->brush, "notify",
-                                   G_CALLBACK (gimp_paint_options_brush_notify),
+                                   G_CALLBACK (ligma_paint_options_brush_notify),
                                    options, 0);
 
-          gimp_paint_options_brush_notify (options->brush, NULL, options);
+          ligma_paint_options_brush_notify (options->brush, NULL, options);
         }
     }
 }
 
 static void
-gimp_paint_options_brush_notify (GimpBrush        *brush,
+ligma_paint_options_brush_notify (LigmaBrush        *brush,
                                  const GParamSpec *pspec,
-                                 GimpPaintOptions *options)
+                                 LigmaPaintOptions *options)
 {
-  if (gimp_tool_options_get_gui_mode (GIMP_TOOL_OPTIONS (options)))
+  if (ligma_tool_options_get_gui_mode (LIGMA_TOOL_OPTIONS (options)))
     {
 #define IS_PSPEC(p,n) (p == NULL || ! strcmp (n, p->name))
 
       if (options->brush_link_size && IS_PSPEC (pspec, "radius"))
-        gimp_paint_options_set_default_brush_size (options, brush);
+        ligma_paint_options_set_default_brush_size (options, brush);
 
       if (options->brush_link_aspect_ratio && IS_PSPEC (pspec, "aspect-ratio"))
-        gimp_paint_options_set_default_brush_aspect_ratio (options, brush);
+        ligma_paint_options_set_default_brush_aspect_ratio (options, brush);
 
       if (options->brush_link_angle && IS_PSPEC (pspec, "angle"))
-        gimp_paint_options_set_default_brush_angle (options, brush);
+        ligma_paint_options_set_default_brush_angle (options, brush);
 
       if (options->brush_link_spacing && IS_PSPEC (pspec, "spacing"))
-        gimp_paint_options_set_default_brush_spacing (options, brush);
+        ligma_paint_options_set_default_brush_spacing (options, brush);
 
       if (options->brush_link_hardness && IS_PSPEC (pspec, "hardness"))
-        gimp_paint_options_set_default_brush_hardness (options, brush);
+        ligma_paint_options_set_default_brush_hardness (options, brush);
 
 #undef IS_SPEC
     }
 }
 
-static GimpConfig *
-gimp_paint_options_duplicate (GimpConfig *config)
+static LigmaConfig *
+ligma_paint_options_duplicate (LigmaConfig *config)
 {
   return parent_config_iface->duplicate (config);
 }
 
 static gboolean
-gimp_paint_options_copy (GimpConfig  *src,
-                         GimpConfig  *dest,
+ligma_paint_options_copy (LigmaConfig  *src,
+                         LigmaConfig  *dest,
                          GParamFlags  flags)
 {
   return parent_config_iface->copy (src, dest, flags);
 }
 
 static void
-gimp_paint_options_reset (GimpConfig *config)
+ligma_paint_options_reset (LigmaConfig *config)
 {
-  GimpBrush *brush = gimp_context_get_brush (GIMP_CONTEXT (config));
+  LigmaBrush *brush = ligma_context_get_brush (LIGMA_CONTEXT (config));
 
   parent_config_iface->reset (config);
 
   if (brush)
     {
-      gimp_paint_options_set_default_brush_size (GIMP_PAINT_OPTIONS (config),
+      ligma_paint_options_set_default_brush_size (LIGMA_PAINT_OPTIONS (config),
                                                  brush);
-      gimp_paint_options_set_default_brush_hardness (GIMP_PAINT_OPTIONS (config),
+      ligma_paint_options_set_default_brush_hardness (LIGMA_PAINT_OPTIONS (config),
                                                      brush);
-      gimp_paint_options_set_default_brush_aspect_ratio (GIMP_PAINT_OPTIONS (config),
+      ligma_paint_options_set_default_brush_aspect_ratio (LIGMA_PAINT_OPTIONS (config),
                                                          brush);
-      gimp_paint_options_set_default_brush_angle (GIMP_PAINT_OPTIONS (config),
+      ligma_paint_options_set_default_brush_angle (LIGMA_PAINT_OPTIONS (config),
                                                   brush);
-      gimp_paint_options_set_default_brush_spacing (GIMP_PAINT_OPTIONS (config),
+      ligma_paint_options_set_default_brush_spacing (LIGMA_PAINT_OPTIONS (config),
                                                     brush);
     }
 }
 
-GimpPaintOptions *
-gimp_paint_options_new (GimpPaintInfo *paint_info)
+LigmaPaintOptions *
+ligma_paint_options_new (LigmaPaintInfo *paint_info)
 {
-  GimpPaintOptions *options;
+  LigmaPaintOptions *options;
 
-  g_return_val_if_fail (GIMP_IS_PAINT_INFO (paint_info), NULL);
+  g_return_val_if_fail (LIGMA_IS_PAINT_INFO (paint_info), NULL);
 
   options = g_object_new (paint_info->paint_options_type,
-                          "gimp",       paint_info->gimp,
-                          "name",       gimp_object_get_name (paint_info),
+                          "ligma",       paint_info->ligma,
+                          "name",       ligma_object_get_name (paint_info),
                           "paint-info", paint_info,
                           NULL);
 
@@ -897,31 +897,31 @@ gimp_paint_options_new (GimpPaintInfo *paint_info)
 }
 
 gdouble
-gimp_paint_options_get_fade (GimpPaintOptions *paint_options,
-                             GimpImage        *image,
+ligma_paint_options_get_fade (LigmaPaintOptions *paint_options,
+                             LigmaImage        *image,
                              gdouble           pixel_dist)
 {
-  GimpFadeOptions *fade_options;
+  LigmaFadeOptions *fade_options;
   gdouble          z        = -1.0;
   gdouble          fade_out =  0.0;
   gdouble          unit_factor;
   gdouble          pos;
 
-  g_return_val_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options),
+  g_return_val_if_fail (LIGMA_IS_PAINT_OPTIONS (paint_options),
                         DYNAMIC_MAX_VALUE);
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), DYNAMIC_MAX_VALUE);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), DYNAMIC_MAX_VALUE);
 
   fade_options = paint_options->fade_options;
 
   switch (fade_options->fade_unit)
     {
-    case GIMP_UNIT_PIXEL:
+    case LIGMA_UNIT_PIXEL:
       fade_out = fade_options->fade_length;
       break;
 
-    case GIMP_UNIT_PERCENT:
-      fade_out = (MAX (gimp_image_get_width  (image),
-                       gimp_image_get_height (image)) *
+    case LIGMA_UNIT_PERCENT:
+      fade_out = (MAX (ligma_image_get_width  (image),
+                       ligma_image_get_height (image)) *
                   fade_options->fade_length / 100);
       break;
 
@@ -930,9 +930,9 @@ gimp_paint_options_get_fade (GimpPaintOptions *paint_options,
         gdouble xres;
         gdouble yres;
 
-        gimp_image_get_resolution (image, &xres, &yres);
+        ligma_image_get_resolution (image, &xres, &yres);
 
-        unit_factor = gimp_unit_get_factor (fade_options->fade_unit);
+        unit_factor = ligma_unit_get_factor (fade_options->fade_unit);
         fade_out    = (fade_options->fade_length *
                        MAX (xres, yres) / unit_factor);
       }
@@ -948,11 +948,11 @@ gimp_paint_options_get_fade (GimpPaintOptions *paint_options,
     pos = DYNAMIC_MAX_VALUE;
 
   /*  for no repeat, set pos close to 1.0 after the first chunk  */
-  if (fade_options->fade_repeat == GIMP_REPEAT_NONE && pos >= DYNAMIC_MAX_VALUE)
+  if (fade_options->fade_repeat == LIGMA_REPEAT_NONE && pos >= DYNAMIC_MAX_VALUE)
     pos = DYNAMIC_MAX_VALUE - 0.0000001;
 
   if (((gint) pos & 1) &&
-      fade_options->fade_repeat != GIMP_REPEAT_SAWTOOTH)
+      fade_options->fade_repeat != LIGMA_REPEAT_SAWTOOTH)
     pos = DYNAMIC_MAX_VALUE - (pos - (gint) pos);
   else
     pos = pos - (gint) pos;
@@ -966,12 +966,12 @@ gimp_paint_options_get_fade (GimpPaintOptions *paint_options,
 }
 
 gdouble
-gimp_paint_options_get_jitter (GimpPaintOptions *paint_options,
-                               GimpImage        *image)
+ligma_paint_options_get_jitter (LigmaPaintOptions *paint_options,
+                               LigmaImage        *image)
 {
-  GimpJitterOptions *jitter_options;
+  LigmaJitterOptions *jitter_options;
 
-  g_return_val_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options), 0.0);
+  g_return_val_if_fail (LIGMA_IS_PAINT_OPTIONS (paint_options), 0.0);
 
   jitter_options = paint_options->jitter_options;
 
@@ -984,28 +984,28 @@ gimp_paint_options_get_jitter (GimpPaintOptions *paint_options,
 }
 
 gboolean
-gimp_paint_options_get_gradient_color (GimpPaintOptions *paint_options,
-                                       GimpImage        *image,
+ligma_paint_options_get_gradient_color (LigmaPaintOptions *paint_options,
+                                       LigmaImage        *image,
                                        gdouble           grad_point,
                                        gdouble           pixel_dist,
-                                       GimpRGB          *color)
+                                       LigmaRGB          *color)
 {
-  GimpDynamics *dynamics;
+  LigmaDynamics *dynamics;
 
-  g_return_val_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options), FALSE);
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (LIGMA_IS_PAINT_OPTIONS (paint_options), FALSE);
+  g_return_val_if_fail (LIGMA_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (color != NULL, FALSE);
 
-  dynamics = gimp_context_get_dynamics (GIMP_CONTEXT (paint_options));
+  dynamics = ligma_context_get_dynamics (LIGMA_CONTEXT (paint_options));
 
-  if (gimp_dynamics_is_output_enabled (dynamics, GIMP_DYNAMICS_OUTPUT_COLOR))
+  if (ligma_dynamics_is_output_enabled (dynamics, LIGMA_DYNAMICS_OUTPUT_COLOR))
     {
-      GimpGradientPaintOptions *gradient_options = paint_options->gradient_options;
-      GimpGradient             *gradient;
+      LigmaGradientPaintOptions *gradient_options = paint_options->gradient_options;
+      LigmaGradient             *gradient;
 
-      gradient = gimp_context_get_gradient (GIMP_CONTEXT (paint_options));
+      gradient = ligma_context_get_gradient (LIGMA_CONTEXT (paint_options));
 
-      gimp_gradient_get_color_at (gradient, GIMP_CONTEXT (paint_options),
+      ligma_gradient_get_color_at (gradient, LIGMA_CONTEXT (paint_options),
                                   NULL, grad_point,
                                   gradient_options->gradient_reverse,
                                   gradient_options->gradient_blend_color_space,
@@ -1017,44 +1017,44 @@ gimp_paint_options_get_gradient_color (GimpPaintOptions *paint_options,
   return FALSE;
 }
 
-GimpBrushApplicationMode
-gimp_paint_options_get_brush_mode (GimpPaintOptions *paint_options)
+LigmaBrushApplicationMode
+ligma_paint_options_get_brush_mode (LigmaPaintOptions *paint_options)
 {
-  GimpDynamics *dynamics;
+  LigmaDynamics *dynamics;
   gboolean      dynamic_force = FALSE;
 
-  g_return_val_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options), GIMP_BRUSH_SOFT);
+  g_return_val_if_fail (LIGMA_IS_PAINT_OPTIONS (paint_options), LIGMA_BRUSH_SOFT);
 
   if (paint_options->hard)
-    return GIMP_BRUSH_HARD;
+    return LIGMA_BRUSH_HARD;
 
-  dynamics = gimp_context_get_dynamics (GIMP_CONTEXT (paint_options));
+  dynamics = ligma_context_get_dynamics (LIGMA_CONTEXT (paint_options));
 
-  dynamic_force = gimp_dynamics_is_output_enabled (dynamics,
-                                                   GIMP_DYNAMICS_OUTPUT_FORCE);
+  dynamic_force = ligma_dynamics_is_output_enabled (dynamics,
+                                                   LIGMA_DYNAMICS_OUTPUT_FORCE);
 
   if (dynamic_force || (paint_options->brush_force != 0.5))
-    return GIMP_BRUSH_PRESSURE;
+    return LIGMA_BRUSH_PRESSURE;
 
-  return GIMP_BRUSH_SOFT;
+  return LIGMA_BRUSH_SOFT;
 }
 
 void
-gimp_paint_options_set_default_brush_size (GimpPaintOptions *paint_options,
-                                           GimpBrush        *brush)
+ligma_paint_options_set_default_brush_size (LigmaPaintOptions *paint_options,
+                                           LigmaBrush        *brush)
 {
-  g_return_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options));
-  g_return_if_fail (brush == NULL || GIMP_IS_BRUSH (brush));
+  g_return_if_fail (LIGMA_IS_PAINT_OPTIONS (paint_options));
+  g_return_if_fail (brush == NULL || LIGMA_IS_BRUSH (brush));
 
   if (! brush)
-    brush = gimp_context_get_brush (GIMP_CONTEXT (paint_options));
+    brush = ligma_context_get_brush (LIGMA_CONTEXT (paint_options));
 
   if (brush)
     {
       gint height;
       gint width;
 
-      gimp_brush_transform_size (brush, 1.0, 0.0, 0.0, FALSE, &width, &height);
+      ligma_brush_transform_size (brush, 1.0, 0.0, 0.0, FALSE, &width, &height);
 
       g_object_set (paint_options,
                     "brush-size", (gdouble) MAX (height, width),
@@ -1063,21 +1063,21 @@ gimp_paint_options_set_default_brush_size (GimpPaintOptions *paint_options,
 }
 
 void
-gimp_paint_options_set_default_brush_angle (GimpPaintOptions *paint_options,
-                                            GimpBrush        *brush)
+ligma_paint_options_set_default_brush_angle (LigmaPaintOptions *paint_options,
+                                            LigmaBrush        *brush)
 {
-  g_return_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options));
-  g_return_if_fail (brush == NULL || GIMP_IS_BRUSH (brush));
+  g_return_if_fail (LIGMA_IS_PAINT_OPTIONS (paint_options));
+  g_return_if_fail (brush == NULL || LIGMA_IS_BRUSH (brush));
 
   if (! brush)
-    brush = gimp_context_get_brush (GIMP_CONTEXT (paint_options));
+    brush = ligma_context_get_brush (LIGMA_CONTEXT (paint_options));
 
-  if (GIMP_IS_BRUSH_GENERATED (brush))
+  if (LIGMA_IS_BRUSH_GENERATED (brush))
     {
-      GimpBrushGenerated *generated_brush = GIMP_BRUSH_GENERATED (brush);
+      LigmaBrushGenerated *generated_brush = LIGMA_BRUSH_GENERATED (brush);
 
       g_object_set (paint_options,
-                    "brush-angle", (gdouble) gimp_brush_generated_get_angle (generated_brush),
+                    "brush-angle", (gdouble) ligma_brush_generated_get_angle (generated_brush),
                     NULL);
     }
   else
@@ -1089,21 +1089,21 @@ gimp_paint_options_set_default_brush_angle (GimpPaintOptions *paint_options,
 }
 
 void
-gimp_paint_options_set_default_brush_aspect_ratio (GimpPaintOptions *paint_options,
-                                                   GimpBrush        *brush)
+ligma_paint_options_set_default_brush_aspect_ratio (LigmaPaintOptions *paint_options,
+                                                   LigmaBrush        *brush)
 {
-  g_return_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options));
-  g_return_if_fail (brush == NULL || GIMP_IS_BRUSH (brush));
+  g_return_if_fail (LIGMA_IS_PAINT_OPTIONS (paint_options));
+  g_return_if_fail (brush == NULL || LIGMA_IS_BRUSH (brush));
 
   if (! brush)
-    brush = gimp_context_get_brush (GIMP_CONTEXT (paint_options));
+    brush = ligma_context_get_brush (LIGMA_CONTEXT (paint_options));
 
-  if (GIMP_IS_BRUSH_GENERATED (brush))
+  if (LIGMA_IS_BRUSH_GENERATED (brush))
     {
-      GimpBrushGenerated *generated_brush = GIMP_BRUSH_GENERATED (brush);
+      LigmaBrushGenerated *generated_brush = LIGMA_BRUSH_GENERATED (brush);
       gdouble             ratio;
 
-      ratio = gimp_brush_generated_get_aspect_ratio (generated_brush);
+      ratio = ligma_brush_generated_get_aspect_ratio (generated_brush);
 
       ratio = (ratio - 1.0) * 20.0 / 19.0;
 
@@ -1120,39 +1120,39 @@ gimp_paint_options_set_default_brush_aspect_ratio (GimpPaintOptions *paint_optio
 }
 
 void
-gimp_paint_options_set_default_brush_spacing (GimpPaintOptions *paint_options,
-                                              GimpBrush        *brush)
+ligma_paint_options_set_default_brush_spacing (LigmaPaintOptions *paint_options,
+                                              LigmaBrush        *brush)
 {
-  g_return_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options));
-  g_return_if_fail (brush == NULL || GIMP_IS_BRUSH (brush));
+  g_return_if_fail (LIGMA_IS_PAINT_OPTIONS (paint_options));
+  g_return_if_fail (brush == NULL || LIGMA_IS_BRUSH (brush));
 
   if (! brush)
-    brush = gimp_context_get_brush (GIMP_CONTEXT (paint_options));
+    brush = ligma_context_get_brush (LIGMA_CONTEXT (paint_options));
 
   if (brush)
     {
       g_object_set (paint_options,
-                    "brush-spacing", (gdouble) gimp_brush_get_spacing (brush) / 100.0,
+                    "brush-spacing", (gdouble) ligma_brush_get_spacing (brush) / 100.0,
                     NULL);
     }
 }
 
 void
-gimp_paint_options_set_default_brush_hardness (GimpPaintOptions *paint_options,
-                                               GimpBrush        *brush)
+ligma_paint_options_set_default_brush_hardness (LigmaPaintOptions *paint_options,
+                                               LigmaBrush        *brush)
 {
-  g_return_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options));
-  g_return_if_fail (brush == NULL || GIMP_IS_BRUSH (brush));
+  g_return_if_fail (LIGMA_IS_PAINT_OPTIONS (paint_options));
+  g_return_if_fail (brush == NULL || LIGMA_IS_BRUSH (brush));
 
   if (! brush)
-    brush = gimp_context_get_brush (GIMP_CONTEXT (paint_options));
+    brush = ligma_context_get_brush (LIGMA_CONTEXT (paint_options));
 
-  if (GIMP_IS_BRUSH_GENERATED (brush))
+  if (LIGMA_IS_BRUSH_GENERATED (brush))
     {
-      GimpBrushGenerated *generated_brush = GIMP_BRUSH_GENERATED (brush);
+      LigmaBrushGenerated *generated_brush = LIGMA_BRUSH_GENERATED (brush);
 
       g_object_set (paint_options,
-                    "brush-hardness", (gdouble) gimp_brush_generated_get_hardness (generated_brush),
+                    "brush-hardness", (gdouble) ligma_brush_generated_get_hardness (generated_brush),
                     NULL);
     }
   else
@@ -1164,13 +1164,13 @@ gimp_paint_options_set_default_brush_hardness (GimpPaintOptions *paint_options,
 }
 
 gboolean
-gimp_paint_options_are_dynamics_enabled (GimpPaintOptions *paint_options)
+ligma_paint_options_are_dynamics_enabled (LigmaPaintOptions *paint_options)
 {
   return paint_options->dynamics_enabled;
 }
 
 void
-gimp_paint_options_enable_dynamics (GimpPaintOptions *paint_options,
+ligma_paint_options_enable_dynamics (LigmaPaintOptions *paint_options,
                                     gboolean          enable)
 {
   if (paint_options->dynamics_enabled != enable)
@@ -1218,28 +1218,28 @@ static const gint max_n_props = (G_N_ELEMENTS (brush_props) +
                                  G_N_ELEMENTS (gradient_props));
 
 gboolean
-gimp_paint_options_is_prop (const gchar         *prop_name,
-                            GimpContextPropMask  prop_mask)
+ligma_paint_options_is_prop (const gchar         *prop_name,
+                            LigmaContextPropMask  prop_mask)
 {
   gint i;
 
   g_return_val_if_fail (prop_name != NULL, FALSE);
 
-  if (prop_mask & GIMP_CONTEXT_PROP_MASK_BRUSH)
+  if (prop_mask & LIGMA_CONTEXT_PROP_MASK_BRUSH)
     {
       for (i = 0; i < G_N_ELEMENTS (brush_props); i++)
         if (! strcmp (prop_name, brush_props[i]))
           return TRUE;
     }
 
-  if (prop_mask & GIMP_CONTEXT_PROP_MASK_DYNAMICS)
+  if (prop_mask & LIGMA_CONTEXT_PROP_MASK_DYNAMICS)
     {
       for (i = 0; i < G_N_ELEMENTS (dynamics_props); i++)
         if (! strcmp (prop_name, dynamics_props[i]))
           return TRUE;
     }
 
-  if (prop_mask & GIMP_CONTEXT_PROP_MASK_GRADIENT)
+  if (prop_mask & LIGMA_CONTEXT_PROP_MASK_GRADIENT)
     {
       for (i = 0; i < G_N_ELEMENTS (gradient_props); i++)
         if (! strcmp (prop_name, gradient_props[i]))
@@ -1250,31 +1250,31 @@ gimp_paint_options_is_prop (const gchar         *prop_name,
 }
 
 void
-gimp_paint_options_copy_props (GimpPaintOptions    *src,
-                               GimpPaintOptions    *dest,
-                               GimpContextPropMask  prop_mask)
+ligma_paint_options_copy_props (LigmaPaintOptions    *src,
+                               LigmaPaintOptions    *dest,
+                               LigmaContextPropMask  prop_mask)
 {
   const gchar *names[max_n_props];
   GValue       values[max_n_props];
   gint         n_props = 0;
   gint         i;
 
-  g_return_if_fail (GIMP_IS_PAINT_OPTIONS (src));
-  g_return_if_fail (GIMP_IS_PAINT_OPTIONS (dest));
+  g_return_if_fail (LIGMA_IS_PAINT_OPTIONS (src));
+  g_return_if_fail (LIGMA_IS_PAINT_OPTIONS (dest));
 
-  if (prop_mask & GIMP_CONTEXT_PROP_MASK_BRUSH)
+  if (prop_mask & LIGMA_CONTEXT_PROP_MASK_BRUSH)
     {
       for (i = 0; i < G_N_ELEMENTS (brush_props); i++)
         names[n_props++] = brush_props[i];
     }
 
-  if (prop_mask & GIMP_CONTEXT_PROP_MASK_DYNAMICS)
+  if (prop_mask & LIGMA_CONTEXT_PROP_MASK_DYNAMICS)
     {
       for (i = 0; i < G_N_ELEMENTS (dynamics_props); i++)
         names[n_props++] = dynamics_props[i];
     }
 
-  if (prop_mask & GIMP_CONTEXT_PROP_MASK_GRADIENT)
+  if (prop_mask & LIGMA_CONTEXT_PROP_MASK_GRADIENT)
     {
       for (i = 0; i < G_N_ELEMENTS (gradient_props); i++)
         names[n_props++] = gradient_props[i];

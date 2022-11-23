@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpparasiteio.h
+ * ligmaparasiteio.h
  * Copyright (C) 1999 Tor Lillqvist <tml@iki.fi>
  *
  * This library is free software: you can redistribute it and/or
@@ -19,8 +19,8 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PARASITE_IO_H__
-#define __GIMP_PARASITE_IO_H__
+#ifndef __LIGMA_PARASITE_IO_H__
+#define __LIGMA_PARASITE_IO_H__
 
 G_BEGIN_DECLS
 
@@ -28,7 +28,7 @@ G_BEGIN_DECLS
 
 
 /*  Data structures for various standard parasites used by plug-ins and
- *  the GIMP core, and functions to build and parse their string
+ *  the LIGMA core, and functions to build and parse their string
  *  representations.
  */
 
@@ -36,12 +36,12 @@ G_BEGIN_DECLS
  *  Pixmap brush pipes.
  */
 
-#define GIMP_PIXPIPE_MAXDIM 4
+#define LIGMA_PIXPIPE_MAXDIM 4
 
-typedef struct _GimpPixPipeParams GimpPixPipeParams;
+typedef struct _LigmaPixPipeParams LigmaPixPipeParams;
 
 /**
- * GimpPixPipeParams:
+ * LigmaPixPipeParams:
  * @step:       Step
  * @ncells:     Number of cells
  * @dim:        Dimension
@@ -55,7 +55,7 @@ typedef struct _GimpPixPipeParams GimpPixPipeParams;
  *
  * PLease somebody help documenting this.
  **/
-struct _GimpPixPipeParams
+struct _LigmaPixPipeParams
 {
   gint   step;
   gint   ncells;
@@ -65,23 +65,23 @@ struct _GimpPixPipeParams
   gint   cellwidth;
   gint   cellheight;
   gchar *placement;
-  gint   rank[GIMP_PIXPIPE_MAXDIM];
-  gchar *selection[GIMP_PIXPIPE_MAXDIM];
+  gint   rank[LIGMA_PIXPIPE_MAXDIM];
+  gchar *selection[LIGMA_PIXPIPE_MAXDIM];
 };
 
 /* Initialize with dummy values */
-void    gimp_pixpipe_params_init  (GimpPixPipeParams *params);
+void    ligma_pixpipe_params_init  (LigmaPixPipeParams *params);
 
-/* Parse a string into a GimpPixPipeParams */
-void    gimp_pixpipe_params_parse (const gchar       *parameters,
-                                   GimpPixPipeParams *params);
+/* Parse a string into a LigmaPixPipeParams */
+void    ligma_pixpipe_params_parse (const gchar       *parameters,
+                                   LigmaPixPipeParams *params);
 
-/* Build a string representation of GimpPixPipeParams */
-gchar * gimp_pixpipe_params_build (GimpPixPipeParams *params) G_GNUC_MALLOC;
+/* Build a string representation of LigmaPixPipeParams */
+gchar * ligma_pixpipe_params_build (LigmaPixPipeParams *params) G_GNUC_MALLOC;
 
 /* Free the internal values. It does not free the struct itself. */
-void    gimp_pixpipe_params_free  (GimpPixPipeParams *params);
+void    ligma_pixpipe_params_free  (LigmaPixPipeParams *params);
 
 G_END_DECLS
 
-#endif /* __GIMP_PARASITE_IO_H__ */
+#endif /* __LIGMA_PARASITE_IO_H__ */

@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimpdrawable_pdb.c
+ * ligmadrawable_pdb.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,12 +24,12 @@
 
 #include "stamp-pdbgen.h"
 
-#include "gimp.h"
+#include "ligma.h"
 
 
 /**
- * SECTION: gimpdrawable
- * @title: gimpdrawable
+ * SECTION: ligmadrawable
+ * @title: ligmadrawable
  * @short_description: Functions to manipulate drawables.
  *
  * Functions to manipulate drawables.
@@ -37,14 +37,14 @@
 
 
 /**
- * _gimp_drawable_get_format:
+ * _ligma_drawable_get_format:
  * @drawable: The drawable.
  *
  * Returns the drawable's Babl format
  *
  * This procedure returns the drawable's Babl format.
  * Note that the actual PDB procedure only transfers the format's
- * encoding. In order to get to the real format, the libbgimp C wrapper
+ * encoding. In order to get to the real format, the libbligma C wrapper
  * must be used.
  *
  * Returns: (transfer full): The drawable's Babl format.
@@ -53,38 +53,38 @@
  * Since: 2.10
  **/
 gchar *
-_gimp_drawable_get_format (GimpDrawable *drawable)
+_ligma_drawable_get_format (LigmaDrawable *drawable)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gchar *format = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-drawable-get-format",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-drawable-get-format",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    format = GIMP_VALUES_DUP_STRING (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    format = LIGMA_VALUES_DUP_STRING (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return format;
 }
 
 /**
- * _gimp_drawable_get_thumbnail_format:
+ * _ligma_drawable_get_thumbnail_format:
  * @drawable: The drawable.
  *
  * Returns the drawable's thumbnail Babl format
  *
  * This procedure returns the drawable's thumbnail Babl format.
- * Thumbnails are always 8-bit images, see gimp_drawable_thumbnail()
- * and gimp_drawable_sub_thmbnail().
+ * Thumbnails are always 8-bit images, see ligma_drawable_thumbnail()
+ * and ligma_drawable_sub_thmbnail().
  *
  * Returns: (transfer full): The drawable's thumbnail Babl format.
  *          The returned value must be freed with g_free().
@@ -92,31 +92,31 @@ _gimp_drawable_get_format (GimpDrawable *drawable)
  * Since: 2.10.14
  **/
 gchar *
-_gimp_drawable_get_thumbnail_format (GimpDrawable *drawable)
+_ligma_drawable_get_thumbnail_format (LigmaDrawable *drawable)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gchar *format = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-drawable-get-thumbnail-format",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-drawable-get-thumbnail-format",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    format = GIMP_VALUES_DUP_STRING (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    format = LIGMA_VALUES_DUP_STRING (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return format;
 }
 
 /**
- * gimp_drawable_type:
+ * ligma_drawable_type:
  * @drawable: The drawable.
  *
  * Returns the drawable's type.
@@ -125,32 +125,32 @@ _gimp_drawable_get_thumbnail_format (GimpDrawable *drawable)
  *
  * Returns: The drawable's type.
  **/
-GimpImageType
-gimp_drawable_type (GimpDrawable *drawable)
+LigmaImageType
+ligma_drawable_type (LigmaDrawable *drawable)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpImageType type = 0;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaImageType type = 0;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-drawable-type",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-drawable-type",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    type = GIMP_VALUES_GET_ENUM (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    type = LIGMA_VALUES_GET_ENUM (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return type;
 }
 
 /**
- * gimp_drawable_type_with_alpha:
+ * ligma_drawable_type_with_alpha:
  * @drawable: The drawable.
  *
  * Returns the drawable's type with alpha.
@@ -162,32 +162,32 @@ gimp_drawable_type (GimpDrawable *drawable)
  *
  * Returns: The drawable's type with alpha.
  **/
-GimpImageType
-gimp_drawable_type_with_alpha (GimpDrawable *drawable)
+LigmaImageType
+ligma_drawable_type_with_alpha (LigmaDrawable *drawable)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  GimpImageType type_with_alpha = 0;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
+  LigmaImageType type_with_alpha = 0;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-drawable-type-with-alpha",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-drawable-type-with-alpha",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    type_with_alpha = GIMP_VALUES_GET_ENUM (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    type_with_alpha = LIGMA_VALUES_GET_ENUM (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return type_with_alpha;
 }
 
 /**
- * gimp_drawable_has_alpha:
+ * ligma_drawable_has_alpha:
  * @drawable: The drawable.
  *
  * Returns TRUE if the drawable has an alpha channel.
@@ -199,31 +199,31 @@ gimp_drawable_type_with_alpha (GimpDrawable *drawable)
  * Returns: Does the drawable have an alpha channel?
  **/
 gboolean
-gimp_drawable_has_alpha (GimpDrawable *drawable)
+ligma_drawable_has_alpha (LigmaDrawable *drawable)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean has_alpha = FALSE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-drawable-has-alpha",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-drawable-has-alpha",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    has_alpha = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    has_alpha = LIGMA_VALUES_GET_BOOLEAN (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return has_alpha;
 }
 
 /**
- * gimp_drawable_is_rgb:
+ * ligma_drawable_is_rgb:
  * @drawable: The drawable.
  *
  * Returns whether the drawable is an RGB type.
@@ -234,31 +234,31 @@ gimp_drawable_has_alpha (GimpDrawable *drawable)
  * Returns: TRUE if the drawable is an RGB type.
  **/
 gboolean
-gimp_drawable_is_rgb (GimpDrawable *drawable)
+ligma_drawable_is_rgb (LigmaDrawable *drawable)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean is_rgb = FALSE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-drawable-is-rgb",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-drawable-is-rgb",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    is_rgb = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    is_rgb = LIGMA_VALUES_GET_BOOLEAN (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return is_rgb;
 }
 
 /**
- * gimp_drawable_is_gray:
+ * ligma_drawable_is_gray:
  * @drawable: The drawable.
  *
  * Returns whether the drawable is a grayscale type.
@@ -269,31 +269,31 @@ gimp_drawable_is_rgb (GimpDrawable *drawable)
  * Returns: TRUE if the drawable is a grayscale type.
  **/
 gboolean
-gimp_drawable_is_gray (GimpDrawable *drawable)
+ligma_drawable_is_gray (LigmaDrawable *drawable)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean is_gray = FALSE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-drawable-is-gray",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-drawable-is-gray",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    is_gray = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    is_gray = LIGMA_VALUES_GET_BOOLEAN (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return is_gray;
 }
 
 /**
- * gimp_drawable_is_indexed:
+ * ligma_drawable_is_indexed:
  * @drawable: The drawable.
  *
  * Returns whether the drawable is an indexed type.
@@ -304,31 +304,31 @@ gimp_drawable_is_gray (GimpDrawable *drawable)
  * Returns: TRUE if the drawable is an indexed type.
  **/
 gboolean
-gimp_drawable_is_indexed (GimpDrawable *drawable)
+ligma_drawable_is_indexed (LigmaDrawable *drawable)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean is_indexed = FALSE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-drawable-is-indexed",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-drawable-is-indexed",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    is_indexed = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    is_indexed = LIGMA_VALUES_GET_BOOLEAN (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return is_indexed;
 }
 
 /**
- * gimp_drawable_get_bpp:
+ * ligma_drawable_get_bpp:
  * @drawable: The drawable.
  *
  * Returns the bytes per pixel.
@@ -338,31 +338,31 @@ gimp_drawable_is_indexed (GimpDrawable *drawable)
  * Returns: Bytes per pixel.
  **/
 gint
-gimp_drawable_get_bpp (GimpDrawable *drawable)
+ligma_drawable_get_bpp (LigmaDrawable *drawable)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gint bpp = 0;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-drawable-get-bpp",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-drawable-get-bpp",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    bpp = GIMP_VALUES_GET_INT (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    bpp = LIGMA_VALUES_GET_INT (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return bpp;
 }
 
 /**
- * gimp_drawable_get_width:
+ * ligma_drawable_get_width:
  * @drawable: The drawable.
  *
  * Returns the width of the drawable.
@@ -372,31 +372,31 @@ gimp_drawable_get_bpp (GimpDrawable *drawable)
  * Returns: Width of drawable.
  **/
 gint
-gimp_drawable_get_width (GimpDrawable *drawable)
+ligma_drawable_get_width (LigmaDrawable *drawable)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gint width = 0;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-drawable-get-width",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-drawable-get-width",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    width = GIMP_VALUES_GET_INT (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    width = LIGMA_VALUES_GET_INT (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return width;
 }
 
 /**
- * gimp_drawable_get_height:
+ * ligma_drawable_get_height:
  * @drawable: The drawable.
  *
  * Returns the height of the drawable.
@@ -406,31 +406,31 @@ gimp_drawable_get_width (GimpDrawable *drawable)
  * Returns: Height of drawable.
  **/
 gint
-gimp_drawable_get_height (GimpDrawable *drawable)
+ligma_drawable_get_height (LigmaDrawable *drawable)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gint height = 0;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-drawable-get-height",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-drawable-get-height",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    height = GIMP_VALUES_GET_INT (return_vals, 1);
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
+    height = LIGMA_VALUES_GET_INT (return_vals, 1);
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return height;
 }
 
 /**
- * gimp_drawable_get_offsets:
+ * ligma_drawable_get_offsets:
  * @drawable: The drawable.
  * @offset_x: (out): x offset of drawable.
  * @offset_y: (out): y offset of drawable.
@@ -444,41 +444,41 @@ gimp_drawable_get_height (GimpDrawable *drawable)
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_drawable_get_offsets (GimpDrawable *drawable,
+ligma_drawable_get_offsets (LigmaDrawable *drawable,
                            gint         *offset_x,
                            gint         *offset_y)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-drawable-get-offsets",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-drawable-get-offsets",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
   *offset_x = 0;
   *offset_y = 0;
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
   if (success)
     {
-      *offset_x = GIMP_VALUES_GET_INT (return_vals, 1);
-      *offset_y = GIMP_VALUES_GET_INT (return_vals, 2);
+      *offset_x = LIGMA_VALUES_GET_INT (return_vals, 1);
+      *offset_y = LIGMA_VALUES_GET_INT (return_vals, 2);
     }
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_drawable_mask_bounds:
+ * ligma_drawable_mask_bounds:
  * @drawable: The drawable.
  * @x1: (out): x coordinate of the upper left corner of selection bounds.
  * @y1: (out): y coordinate of the upper left corner of selection bounds.
@@ -498,47 +498,47 @@ gimp_drawable_get_offsets (GimpDrawable *drawable,
  * selection can be calculated as (x2 - x1), its height as (y2 - y1).
  * Note that the returned boolean does NOT correspond with the returned
  * region being empty or not, it always returns whether the selection
- * is non_empty. See gimp_drawable_mask_intersect() for a boolean
+ * is non_empty. See ligma_drawable_mask_intersect() for a boolean
  * return value which is more useful in most cases.
  *
  * Returns: TRUE if there is a selection.
  **/
 gboolean
-gimp_drawable_mask_bounds (GimpDrawable *drawable,
+ligma_drawable_mask_bounds (LigmaDrawable *drawable,
                            gint         *x1,
                            gint         *y1,
                            gint         *x2,
                            gint         *y2)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean non_empty = FALSE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-drawable-mask-bounds",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-drawable-mask-bounds",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
     {
-      non_empty = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
-      *x1 = GIMP_VALUES_GET_INT (return_vals, 2);
-      *y1 = GIMP_VALUES_GET_INT (return_vals, 3);
-      *x2 = GIMP_VALUES_GET_INT (return_vals, 4);
-      *y2 = GIMP_VALUES_GET_INT (return_vals, 5);
+      non_empty = LIGMA_VALUES_GET_BOOLEAN (return_vals, 1);
+      *x1 = LIGMA_VALUES_GET_INT (return_vals, 2);
+      *y1 = LIGMA_VALUES_GET_INT (return_vals, 3);
+      *x2 = LIGMA_VALUES_GET_INT (return_vals, 4);
+      *y2 = LIGMA_VALUES_GET_INT (return_vals, 5);
     }
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return non_empty;
 }
 
 /**
- * gimp_drawable_mask_intersect:
+ * ligma_drawable_mask_intersect:
  * @drawable: The drawable.
  * @x: (out): x coordinate of the upper left corner of the intersection.
  * @y: (out): y coordinate of the upper left corner of the intersection.
@@ -549,7 +549,7 @@ gimp_drawable_mask_bounds (GimpDrawable *drawable,
  * specified drawable.
  *
  * This procedure returns whether there is an intersection between the
- * drawable and the selection. Unlike gimp_drawable_mask_bounds(), the
+ * drawable and the selection. Unlike ligma_drawable_mask_bounds(), the
  * intersection's bounds are returned as x, y, width, height.
  * If there is no selection this function returns TRUE and the returned
  * bounds are the extents of the whole drawable.
@@ -559,41 +559,41 @@ gimp_drawable_mask_bounds (GimpDrawable *drawable,
  * Since: 2.2
  **/
 gboolean
-gimp_drawable_mask_intersect (GimpDrawable *drawable,
+ligma_drawable_mask_intersect (LigmaDrawable *drawable,
                               gint         *x,
                               gint         *y,
                               gint         *width,
                               gint         *height)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean non_empty = FALSE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-drawable-mask-intersect",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-drawable-mask-intersect",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
     {
-      non_empty = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
-      *x = GIMP_VALUES_GET_INT (return_vals, 2);
-      *y = GIMP_VALUES_GET_INT (return_vals, 3);
-      *width = GIMP_VALUES_GET_INT (return_vals, 4);
-      *height = GIMP_VALUES_GET_INT (return_vals, 5);
+      non_empty = LIGMA_VALUES_GET_BOOLEAN (return_vals, 1);
+      *x = LIGMA_VALUES_GET_INT (return_vals, 2);
+      *y = LIGMA_VALUES_GET_INT (return_vals, 3);
+      *width = LIGMA_VALUES_GET_INT (return_vals, 4);
+      *height = LIGMA_VALUES_GET_INT (return_vals, 5);
     }
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return non_empty;
 }
 
 /**
- * gimp_drawable_merge_shadow:
+ * ligma_drawable_merge_shadow:
  * @drawable: The drawable.
  * @undo: Push merge to undo stack?
  *
@@ -607,32 +607,32 @@ gimp_drawable_mask_intersect (GimpDrawable *drawable,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_drawable_merge_shadow (GimpDrawable *drawable,
+ligma_drawable_merge_shadow (LigmaDrawable *drawable,
                             gboolean      undo)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
                                           G_TYPE_BOOLEAN, undo,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-drawable-merge-shadow",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-drawable-merge-shadow",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_drawable_free_shadow:
+ * ligma_drawable_free_shadow:
  * @drawable: The drawable.
  *
  * Free the specified drawable's shadow data (if it exists).
@@ -647,30 +647,30 @@ gimp_drawable_merge_shadow (GimpDrawable *drawable,
  * Since: 2.6
  **/
 gboolean
-gimp_drawable_free_shadow (GimpDrawable *drawable)
+ligma_drawable_free_shadow (LigmaDrawable *drawable)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-drawable-free-shadow",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-drawable-free-shadow",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_drawable_update:
+ * ligma_drawable_update:
  * @drawable: The drawable.
  * @x: x coordinate of upper left corner of update region.
  * @y: y coordinate of upper left corner of update region.
@@ -687,38 +687,38 @@ gimp_drawable_free_shadow (GimpDrawable *drawable)
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_drawable_update (GimpDrawable *drawable,
+ligma_drawable_update (LigmaDrawable *drawable,
                       gint          x,
                       gint          y,
                       gint          width,
                       gint          height)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
                                           G_TYPE_INT, x,
                                           G_TYPE_INT, y,
                                           G_TYPE_INT, width,
                                           G_TYPE_INT, height,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-drawable-update",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-drawable-update",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_drawable_get_pixel:
+ * ligma_drawable_get_pixel:
  * @drawable: The drawable.
  * @x_coord: The x coordinate.
  * @y_coord: The y coordinate.
@@ -735,41 +735,41 @@ gimp_drawable_update (GimpDrawable *drawable,
  *          The returned value must be freed with g_free().
  **/
 guint8 *
-gimp_drawable_get_pixel (GimpDrawable *drawable,
+ligma_drawable_get_pixel (LigmaDrawable *drawable,
                          gint          x_coord,
                          gint          y_coord,
                          gint         *num_channels)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   guint8 *pixel = NULL;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
                                           G_TYPE_INT, x_coord,
                                           G_TYPE_INT, y_coord,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-drawable-get-pixel",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-drawable-get-pixel",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
   *num_channels = 0;
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+  if (LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS)
     {
-      *num_channels = GIMP_VALUES_GET_INT (return_vals, 1);
-      pixel = GIMP_VALUES_DUP_UINT8_ARRAY (return_vals, 2);
+      *num_channels = LIGMA_VALUES_GET_INT (return_vals, 1);
+      pixel = LIGMA_VALUES_DUP_UINT8_ARRAY (return_vals, 2);
     }
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return pixel;
 }
 
 /**
- * gimp_drawable_set_pixel:
+ * ligma_drawable_set_pixel:
  * @drawable: The drawable.
  * @x_coord: The x coordinate.
  * @y_coord: The y coordinate.
@@ -787,39 +787,39 @@ gimp_drawable_get_pixel (GimpDrawable *drawable,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_drawable_set_pixel (GimpDrawable *drawable,
+ligma_drawable_set_pixel (LigmaDrawable *drawable,
                          gint          x_coord,
                          gint          y_coord,
                          gint          num_channels,
                          const guint8 *pixel)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
                                           G_TYPE_INT, x_coord,
                                           G_TYPE_INT, y_coord,
                                           G_TYPE_INT, num_channels,
-                                          GIMP_TYPE_UINT8_ARRAY, NULL,
+                                          LIGMA_TYPE_UINT8_ARRAY, NULL,
                                           G_TYPE_NONE);
-  gimp_value_set_uint8_array (gimp_value_array_index (args, 4), pixel, num_channels);
+  ligma_value_set_uint8_array (ligma_value_array_index (args, 4), pixel, num_channels);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-drawable-set-pixel",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-drawable-set-pixel",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_drawable_fill:
+ * ligma_drawable_fill:
  * @drawable: The drawable.
  * @fill_type: The type of fill.
  *
@@ -832,7 +832,7 @@ gimp_drawable_set_pixel (GimpDrawable *drawable,
  * with an alpha channel, in which case the alpha channel is set to
  * transparent. If the drawable has no alpha channel, it is filled to
  * white. No fill leaves the drawable's contents undefined.
- * This procedure is unlike gimp_drawable_edit_fill() or the bucket
+ * This procedure is unlike ligma_drawable_edit_fill() or the bucket
  * fill tool because it fills regardless of a selection. Its main
  * purpose is to fill a newly created drawable before adding it to the
  * image. This operation cannot be undone.
@@ -840,32 +840,32 @@ gimp_drawable_set_pixel (GimpDrawable *drawable,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_drawable_fill (GimpDrawable *drawable,
-                    GimpFillType  fill_type)
+ligma_drawable_fill (LigmaDrawable *drawable,
+                    LigmaFillType  fill_type)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
-                                          GIMP_TYPE_FILL_TYPE, fill_type,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
+                                          LIGMA_TYPE_FILL_TYPE, fill_type,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-drawable-fill",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-drawable-fill",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_drawable_offset:
+ * ligma_drawable_offset:
  * @drawable: The drawable to offset.
  * @wrap_around: wrap image around or fill vacated regions.
  * @fill_type: fill vacated regions of drawable with background or transparent.
@@ -885,38 +885,38 @@ gimp_drawable_fill (GimpDrawable *drawable,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_drawable_offset (GimpDrawable   *drawable,
+ligma_drawable_offset (LigmaDrawable   *drawable,
                       gboolean        wrap_around,
-                      GimpOffsetType  fill_type,
+                      LigmaOffsetType  fill_type,
                       gint            offset_x,
                       gint            offset_y)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
                                           G_TYPE_BOOLEAN, wrap_around,
-                                          GIMP_TYPE_OFFSET_TYPE, fill_type,
+                                          LIGMA_TYPE_OFFSET_TYPE, fill_type,
                                           G_TYPE_INT, offset_x,
                                           G_TYPE_INT, offset_y,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-drawable-offset",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-drawable-offset",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * _gimp_drawable_thumbnail:
+ * _ligma_drawable_thumbnail:
  * @drawable: The drawable.
  * @width: The requested thumbnail width.
  * @height: The requested thumbnail height.
@@ -936,7 +936,7 @@ gimp_drawable_offset (GimpDrawable   *drawable,
  * Returns: TRUE on success.
  **/
 gboolean
-_gimp_drawable_thumbnail (GimpDrawable  *drawable,
+_ligma_drawable_thumbnail (LigmaDrawable  *drawable,
                           gint           width,
                           gint           height,
                           gint          *actual_width,
@@ -945,20 +945,20 @@ _gimp_drawable_thumbnail (GimpDrawable  *drawable,
                           gint          *thumbnail_data_count,
                           guint8       **thumbnail_data)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
                                           G_TYPE_INT, width,
                                           G_TYPE_INT, height,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-drawable-thumbnail",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-drawable-thumbnail",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
   *actual_width = 0;
   *actual_height = 0;
@@ -966,24 +966,24 @@ _gimp_drawable_thumbnail (GimpDrawable  *drawable,
   *thumbnail_data_count = 0;
   *thumbnail_data = NULL;
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
   if (success)
     {
-      *actual_width = GIMP_VALUES_GET_INT (return_vals, 1);
-      *actual_height = GIMP_VALUES_GET_INT (return_vals, 2);
-      *bpp = GIMP_VALUES_GET_INT (return_vals, 3);
-      *thumbnail_data_count = GIMP_VALUES_GET_INT (return_vals, 4);
-      *thumbnail_data = GIMP_VALUES_DUP_UINT8_ARRAY (return_vals, 5);
+      *actual_width = LIGMA_VALUES_GET_INT (return_vals, 1);
+      *actual_height = LIGMA_VALUES_GET_INT (return_vals, 2);
+      *bpp = LIGMA_VALUES_GET_INT (return_vals, 3);
+      *thumbnail_data_count = LIGMA_VALUES_GET_INT (return_vals, 4);
+      *thumbnail_data = LIGMA_VALUES_DUP_UINT8_ARRAY (return_vals, 5);
     }
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * _gimp_drawable_sub_thumbnail:
+ * _ligma_drawable_sub_thumbnail:
  * @drawable: The drawable.
  * @src_x: The x coordinate of the area.
  * @src_y: The y coordinate of the area.
@@ -1009,7 +1009,7 @@ _gimp_drawable_thumbnail (GimpDrawable  *drawable,
  * Since: 2.2
  **/
 gboolean
-_gimp_drawable_sub_thumbnail (GimpDrawable  *drawable,
+_ligma_drawable_sub_thumbnail (LigmaDrawable  *drawable,
                               gint           src_x,
                               gint           src_y,
                               gint           src_width,
@@ -1022,12 +1022,12 @@ _gimp_drawable_sub_thumbnail (GimpDrawable  *drawable,
                               gint          *thumbnail_data_count,
                               guint8       **thumbnail_data)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
                                           G_TYPE_INT, src_x,
                                           G_TYPE_INT, src_y,
                                           G_TYPE_INT, src_width,
@@ -1036,10 +1036,10 @@ _gimp_drawable_sub_thumbnail (GimpDrawable  *drawable,
                                           G_TYPE_INT, dest_height,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-drawable-sub-thumbnail",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-drawable-sub-thumbnail",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
   *width = 0;
   *height = 0;
@@ -1047,24 +1047,24 @@ _gimp_drawable_sub_thumbnail (GimpDrawable  *drawable,
   *thumbnail_data_count = 0;
   *thumbnail_data = NULL;
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
   if (success)
     {
-      *width = GIMP_VALUES_GET_INT (return_vals, 1);
-      *height = GIMP_VALUES_GET_INT (return_vals, 2);
-      *bpp = GIMP_VALUES_GET_INT (return_vals, 3);
-      *thumbnail_data_count = GIMP_VALUES_GET_INT (return_vals, 4);
-      *thumbnail_data = GIMP_VALUES_DUP_UINT8_ARRAY (return_vals, 5);
+      *width = LIGMA_VALUES_GET_INT (return_vals, 1);
+      *height = LIGMA_VALUES_GET_INT (return_vals, 2);
+      *bpp = LIGMA_VALUES_GET_INT (return_vals, 3);
+      *thumbnail_data_count = LIGMA_VALUES_GET_INT (return_vals, 4);
+      *thumbnail_data = LIGMA_VALUES_DUP_UINT8_ARRAY (return_vals, 5);
     }
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_drawable_foreground_extract:
+ * ligma_drawable_foreground_extract:
  * @drawable: The drawable.
  * @mode: The algorithm to use.
  * @mask: Tri-Map.
@@ -1079,28 +1079,28 @@ _gimp_drawable_sub_thumbnail (GimpDrawable  *drawable,
  * Since: 2.4
  **/
 gboolean
-gimp_drawable_foreground_extract (GimpDrawable              *drawable,
-                                  GimpForegroundExtractMode  mode,
-                                  GimpDrawable              *mask)
+ligma_drawable_foreground_extract (LigmaDrawable              *drawable,
+                                  LigmaForegroundExtractMode  mode,
+                                  LigmaDrawable              *mask)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_DRAWABLE, drawable,
-                                          GIMP_TYPE_FOREGROUND_EXTRACT_MODE, mode,
-                                          GIMP_TYPE_DRAWABLE, mask,
+  args = ligma_value_array_new_from_types (NULL,
+                                          LIGMA_TYPE_DRAWABLE, drawable,
+                                          LIGMA_TYPE_FOREGROUND_EXTRACT_MODE, mode,
+                                          LIGMA_TYPE_DRAWABLE, mask,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-drawable-foreground-extract",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-drawable-foreground-extract",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }

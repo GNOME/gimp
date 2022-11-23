@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpcolorbutton.h
+ * ligmacolorbutton.h
  * Copyright (C) 1999-2001 Sven Neumann
  *
  * This library is free software: you can redistribute it and/or
@@ -25,89 +25,89 @@
  * fully functional wired to the preview button.
  */
 
-#if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
-#error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
+#if !defined (__LIGMA_WIDGETS_H_INSIDE__) && !defined (LIGMA_WIDGETS_COMPILATION)
+#error "Only <libligmawidgets/ligmawidgets.h> can be included directly."
 #endif
 
-#ifndef __GIMP_COLOR_BUTTON_H__
-#define __GIMP_COLOR_BUTTON_H__
+#ifndef __LIGMA_COLOR_BUTTON_H__
+#define __LIGMA_COLOR_BUTTON_H__
 
-#include <libgimpwidgets/gimpbutton.h>
+#include <libligmawidgets/ligmabutton.h>
 
 G_BEGIN_DECLS
 
 
-#define GIMP_TYPE_COLOR_BUTTON            (gimp_color_button_get_type ())
-#define GIMP_COLOR_BUTTON(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_COLOR_BUTTON, GimpColorButton))
-#define GIMP_COLOR_BUTTON_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COLOR_BUTTON, GimpColorButtonClass))
-#define GIMP_IS_COLOR_BUTTON(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_COLOR_BUTTON))
-#define GIMP_IS_COLOR_BUTTON_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COLOR_BUTTON))
-#define GIMP_COLOR_BUTTON_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_COLOR_BUTTON, GimpColorButtonClass))
+#define LIGMA_TYPE_COLOR_BUTTON            (ligma_color_button_get_type ())
+#define LIGMA_COLOR_BUTTON(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_COLOR_BUTTON, LigmaColorButton))
+#define LIGMA_COLOR_BUTTON_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_COLOR_BUTTON, LigmaColorButtonClass))
+#define LIGMA_IS_COLOR_BUTTON(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_COLOR_BUTTON))
+#define LIGMA_IS_COLOR_BUTTON_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_COLOR_BUTTON))
+#define LIGMA_COLOR_BUTTON_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_COLOR_BUTTON, LigmaColorButtonClass))
 
 
-typedef struct _GimpColorButtonPrivate GimpColorButtonPrivate;
-typedef struct _GimpColorButtonClass   GimpColorButtonClass;
+typedef struct _LigmaColorButtonPrivate LigmaColorButtonPrivate;
+typedef struct _LigmaColorButtonClass   LigmaColorButtonClass;
 
-struct _GimpColorButton
+struct _LigmaColorButton
 {
-  GimpButton              parent_instance;
+  LigmaButton              parent_instance;
 
-  GimpColorButtonPrivate *priv;
+  LigmaColorButtonPrivate *priv;
 };
 
-struct _GimpColorButtonClass
+struct _LigmaColorButtonClass
 {
-  GimpButtonClass  parent_class;
+  LigmaButtonClass  parent_class;
 
   /*  signals  */
-  void  (* color_changed)   (GimpColorButton *button);
+  void  (* color_changed)   (LigmaColorButton *button);
 
   /*  virtual functions  */
-  GType (* get_action_type) (GimpColorButton *button);
+  GType (* get_action_type) (LigmaColorButton *button);
 
   /* Padding for future expansion */
-  void (* _gimp_reserved1) (void);
-  void (* _gimp_reserved2) (void);
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
-  void (* _gimp_reserved5) (void);
-  void (* _gimp_reserved6) (void);
-  void (* _gimp_reserved7) (void);
-  void (* _gimp_reserved8) (void);
+  void (* _ligma_reserved1) (void);
+  void (* _ligma_reserved2) (void);
+  void (* _ligma_reserved3) (void);
+  void (* _ligma_reserved4) (void);
+  void (* _ligma_reserved5) (void);
+  void (* _ligma_reserved6) (void);
+  void (* _ligma_reserved7) (void);
+  void (* _ligma_reserved8) (void);
 };
 
 
-GType          gimp_color_button_get_type         (void) G_GNUC_CONST;
+GType          ligma_color_button_get_type         (void) G_GNUC_CONST;
 
-GtkWidget    * gimp_color_button_new              (const gchar       *title,
+GtkWidget    * ligma_color_button_new              (const gchar       *title,
                                                    gint               width,
                                                    gint               height,
-                                                   const GimpRGB     *color,
-                                                   GimpColorAreaType  type);
+                                                   const LigmaRGB     *color,
+                                                   LigmaColorAreaType  type);
 
-void           gimp_color_button_set_title        (GimpColorButton   *button,
+void           ligma_color_button_set_title        (LigmaColorButton   *button,
                                                    const gchar       *title);
-const gchar  * gimp_color_button_get_title        (GimpColorButton   *button);
+const gchar  * ligma_color_button_get_title        (LigmaColorButton   *button);
 
-void           gimp_color_button_set_color        (GimpColorButton   *button,
-                                                   const GimpRGB     *color);
-void           gimp_color_button_get_color        (GimpColorButton   *button,
-                                                   GimpRGB           *color);
+void           ligma_color_button_set_color        (LigmaColorButton   *button,
+                                                   const LigmaRGB     *color);
+void           ligma_color_button_get_color        (LigmaColorButton   *button,
+                                                   LigmaRGB           *color);
 
-gboolean       gimp_color_button_has_alpha        (GimpColorButton   *button);
-void           gimp_color_button_set_type         (GimpColorButton   *button,
-                                                   GimpColorAreaType  type);
+gboolean       ligma_color_button_has_alpha        (LigmaColorButton   *button);
+void           ligma_color_button_set_type         (LigmaColorButton   *button,
+                                                   LigmaColorAreaType  type);
 
-gboolean       gimp_color_button_get_update       (GimpColorButton   *button);
-void           gimp_color_button_set_update       (GimpColorButton   *button,
+gboolean       ligma_color_button_get_update       (LigmaColorButton   *button);
+void           ligma_color_button_set_update       (LigmaColorButton   *button,
                                                    gboolean           continuous);
 
-void           gimp_color_button_set_color_config (GimpColorButton   *button,
-                                                   GimpColorConfig   *config);
+void           ligma_color_button_set_color_config (LigmaColorButton   *button,
+                                                   LigmaColorConfig   *config);
 
-GtkUIManager * gimp_color_button_get_ui_manager   (GimpColorButton   *button);
+GtkUIManager * ligma_color_button_get_ui_manager   (LigmaColorButton   *button);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_COLOR_BUTTON_H__ */
+#endif /* __LIGMA_COLOR_BUTTON_H__ */

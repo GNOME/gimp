@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,77 +19,77 @@
 #define __TOOL_MANAGER_H__
 
 
-void       tool_manager_init                       (Gimp             *gimp);
-void       tool_manager_exit                       (Gimp             *gimp);
+void       tool_manager_init                       (Ligma             *ligma);
+void       tool_manager_exit                       (Ligma             *ligma);
 
-GimpTool * tool_manager_get_active                 (Gimp             *gimp);
+LigmaTool * tool_manager_get_active                 (Ligma             *ligma);
 
-void       tool_manager_push_tool                  (Gimp             *gimp,
-                                                    GimpTool         *tool);
-void       tool_manager_pop_tool                   (Gimp             *gimp);
+void       tool_manager_push_tool                  (Ligma             *ligma,
+                                                    LigmaTool         *tool);
+void       tool_manager_pop_tool                   (Ligma             *ligma);
 
 
-gboolean   tool_manager_initialize_active          (Gimp             *gimp,
-                                                    GimpDisplay      *display);
-void       tool_manager_control_active             (Gimp             *gimp,
-                                                    GimpToolAction    action,
-                                                    GimpDisplay      *display);
-void       tool_manager_button_press_active        (Gimp             *gimp,
-                                                    const GimpCoords *coords,
+gboolean   tool_manager_initialize_active          (Ligma             *ligma,
+                                                    LigmaDisplay      *display);
+void       tool_manager_control_active             (Ligma             *ligma,
+                                                    LigmaToolAction    action,
+                                                    LigmaDisplay      *display);
+void       tool_manager_button_press_active        (Ligma             *ligma,
+                                                    const LigmaCoords *coords,
                                                     guint32           time,
                                                     GdkModifierType   state,
-                                                    GimpButtonPressType press_type,
-                                                    GimpDisplay      *display);
-void       tool_manager_button_release_active      (Gimp             *gimp,
-                                                    const GimpCoords *coords,
+                                                    LigmaButtonPressType press_type,
+                                                    LigmaDisplay      *display);
+void       tool_manager_button_release_active      (Ligma             *ligma,
+                                                    const LigmaCoords *coords,
                                                     guint32           time,
                                                     GdkModifierType   state,
-                                                    GimpDisplay      *display);
-void       tool_manager_motion_active              (Gimp             *gimp,
-                                                    const GimpCoords *coords,
+                                                    LigmaDisplay      *display);
+void       tool_manager_motion_active              (Ligma             *ligma,
+                                                    const LigmaCoords *coords,
                                                     guint32           time,
                                                     GdkModifierType   state,
-                                                    GimpDisplay      *display);
-gboolean   tool_manager_key_press_active           (Gimp             *gimp,
+                                                    LigmaDisplay      *display);
+gboolean   tool_manager_key_press_active           (Ligma             *ligma,
                                                     GdkEventKey      *kevent,
-                                                    GimpDisplay      *display);
-gboolean   tool_manager_key_release_active         (Gimp             *gimp,
+                                                    LigmaDisplay      *display);
+gboolean   tool_manager_key_release_active         (Ligma             *ligma,
                                                     GdkEventKey      *kevent,
-                                                    GimpDisplay      *display);
+                                                    LigmaDisplay      *display);
 
-void       tool_manager_focus_display_active       (Gimp             *gimp,
-                                                    GimpDisplay      *display);
-void       tool_manager_modifier_state_active      (Gimp             *gimp,
+void       tool_manager_focus_display_active       (Ligma             *ligma,
+                                                    LigmaDisplay      *display);
+void       tool_manager_modifier_state_active      (Ligma             *ligma,
                                                     GdkModifierType   state,
-                                                    GimpDisplay      *display);
+                                                    LigmaDisplay      *display);
 
-void     tool_manager_active_modifier_state_active (Gimp             *gimp,
+void     tool_manager_active_modifier_state_active (Ligma             *ligma,
                                                     GdkModifierType   state,
-                                                    GimpDisplay      *display);
+                                                    LigmaDisplay      *display);
 
-void       tool_manager_oper_update_active         (Gimp             *gimp,
-                                                    const GimpCoords *coords,
+void       tool_manager_oper_update_active         (Ligma             *ligma,
+                                                    const LigmaCoords *coords,
                                                     GdkModifierType   state,
                                                     gboolean          proximity,
-                                                    GimpDisplay      *display);
-void       tool_manager_cursor_update_active       (Gimp             *gimp,
-                                                    const GimpCoords *coords,
+                                                    LigmaDisplay      *display);
+void       tool_manager_cursor_update_active       (Ligma             *ligma,
+                                                    const LigmaCoords *coords,
                                                     GdkModifierType   state,
-                                                    GimpDisplay      *display);
+                                                    LigmaDisplay      *display);
 
-const gchar   * tool_manager_can_undo_active       (Gimp             *gimp,
-                                                    GimpDisplay      *display);
-const gchar   * tool_manager_can_redo_active       (Gimp             *gimp,
-                                                    GimpDisplay      *display);
-gboolean        tool_manager_undo_active           (Gimp             *gimp,
-                                                    GimpDisplay      *display);
-gboolean        tool_manager_redo_active           (Gimp             *gimp,
-                                                    GimpDisplay      *display);
+const gchar   * tool_manager_can_undo_active       (Ligma             *ligma,
+                                                    LigmaDisplay      *display);
+const gchar   * tool_manager_can_redo_active       (Ligma             *ligma,
+                                                    LigmaDisplay      *display);
+gboolean        tool_manager_undo_active           (Ligma             *ligma,
+                                                    LigmaDisplay      *display);
+gboolean        tool_manager_redo_active           (Ligma             *ligma,
+                                                    LigmaDisplay      *display);
 
-GimpUIManager * tool_manager_get_popup_active      (Gimp             *gimp,
-                                                    const GimpCoords *coords,
+LigmaUIManager * tool_manager_get_popup_active      (Ligma             *ligma,
+                                                    const LigmaCoords *coords,
                                                     GdkModifierType   state,
-                                                    GimpDisplay      *display,
+                                                    LigmaDisplay      *display,
                                                     const gchar     **ui_path);
 
 

@@ -1,9 +1,9 @@
-# GIMP tool preset file
+# LIGMA tool preset file
 
-(icon-name "gimp-tool-smudge")
+(icon-name "ligma-tool-smudge")
 (name "Smudge Soft")
-(tool-options "GimpSmudgeOptions"
-    (tool "gimp-smudge-tool")
+(tool-options "LigmaSmudgeOptions"
+    (tool "ligma-smudge-tool")
     (opacity 0.500000)
     (brush "2. Hardness 050")
     (dynamics "Pressure Opacity")
@@ -18,4 +18,4 @@
 (use-palette no)
 (use-font no)
 
-# end of GIMP tool preset file
+# end of LIGMA tool preset file

@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * gimpitemtree.h
- * Copyright (C) 2010 Michael Natterer <mitch@gimp.org>
+ * ligmaitemtree.h
+ * Copyright (C) 2010 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,76 +18,76 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_ITEM_TREE_H__
-#define __GIMP_ITEM_TREE_H__
+#ifndef __LIGMA_ITEM_TREE_H__
+#define __LIGMA_ITEM_TREE_H__
 
 
-#include "gimpobject.h"
+#include "ligmaobject.h"
 
 
-#define GIMP_TYPE_ITEM_TREE            (gimp_item_tree_get_type ())
-#define GIMP_ITEM_TREE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_ITEM_TREE, GimpItemTree))
-#define GIMP_ITEM_TREE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_ITEM_TREE, GimpItemTreeClass))
-#define GIMP_IS_ITEM_TREE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_ITEM_TREE))
-#define GIMP_IS_ITEM_TREE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_ITEM_TREE))
+#define LIGMA_TYPE_ITEM_TREE            (ligma_item_tree_get_type ())
+#define LIGMA_ITEM_TREE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_ITEM_TREE, LigmaItemTree))
+#define LIGMA_ITEM_TREE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_ITEM_TREE, LigmaItemTreeClass))
+#define LIGMA_IS_ITEM_TREE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_ITEM_TREE))
+#define LIGMA_IS_ITEM_TREE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_ITEM_TREE))
 
 
-typedef struct _GimpItemTreeClass GimpItemTreeClass;
+typedef struct _LigmaItemTreeClass LigmaItemTreeClass;
 
-struct _GimpItemTree
+struct _LigmaItemTree
 {
-  GimpObject     parent_instance;
+  LigmaObject     parent_instance;
 
-  GimpContainer *container;
+  LigmaContainer *container;
 };
 
-struct _GimpItemTreeClass
+struct _LigmaItemTreeClass
 {
-  GimpObjectClass  parent_class;
+  LigmaObjectClass  parent_class;
 };
 
 
-GType          gimp_item_tree_get_type         (void) G_GNUC_CONST;
-GimpItemTree * gimp_item_tree_new              (GimpImage     *image,
+GType          ligma_item_tree_get_type         (void) G_GNUC_CONST;
+LigmaItemTree * ligma_item_tree_new              (LigmaImage     *image,
                                                 GType          container_type,
                                                 GType          item_type);
 
-GimpItem     * gimp_item_tree_get_active_item  (GimpItemTree  *tree);
-void           gimp_item_tree_set_active_item  (GimpItemTree  *tree,
-                                                GimpItem      *item);
+LigmaItem     * ligma_item_tree_get_active_item  (LigmaItemTree  *tree);
+void           ligma_item_tree_set_active_item  (LigmaItemTree  *tree,
+                                                LigmaItem      *item);
 
-GList        * gimp_item_tree_get_selected_items (GimpItemTree  *tree);
-void           gimp_item_tree_set_selected_items (GimpItemTree  *tree,
+GList        * ligma_item_tree_get_selected_items (LigmaItemTree  *tree);
+void           ligma_item_tree_set_selected_items (LigmaItemTree  *tree,
                                                   GList         *items);
 
-GimpItem     * gimp_item_tree_get_item_by_name (GimpItemTree  *tree,
+LigmaItem     * ligma_item_tree_get_item_by_name (LigmaItemTree  *tree,
                                                 const gchar   *name);
 
-gboolean       gimp_item_tree_get_insert_pos   (GimpItemTree  *tree,
-                                                GimpItem      *item,
-                                                GimpItem     **parent,
+gboolean       ligma_item_tree_get_insert_pos   (LigmaItemTree  *tree,
+                                                LigmaItem      *item,
+                                                LigmaItem     **parent,
                                                 gint          *position);
 
-void           gimp_item_tree_add_item         (GimpItemTree  *tree,
-                                                GimpItem      *item,
-                                                GimpItem      *parent,
+void           ligma_item_tree_add_item         (LigmaItemTree  *tree,
+                                                LigmaItem      *item,
+                                                LigmaItem      *parent,
                                                 gint           position);
-GList        * gimp_item_tree_remove_item      (GimpItemTree  *tree,
-                                                GimpItem      *item,
+GList        * ligma_item_tree_remove_item      (LigmaItemTree  *tree,
+                                                LigmaItem      *item,
                                                 GList         *new_selected);
 
-gboolean       gimp_item_tree_reorder_item     (GimpItemTree  *tree,
-                                                GimpItem      *item,
-                                                GimpItem      *new_parent,
+gboolean       ligma_item_tree_reorder_item     (LigmaItemTree  *tree,
+                                                LigmaItem      *item,
+                                                LigmaItem      *new_parent,
                                                 gint           new_index,
                                                 gboolean       push_undo,
                                                 const gchar   *undo_desc);
 
-void           gimp_item_tree_rename_item      (GimpItemTree  *tree,
-                                                GimpItem      *item,
+void           ligma_item_tree_rename_item      (LigmaItemTree  *tree,
+                                                LigmaItem      *item,
                                                 const gchar   *new_name,
                                                 gboolean       push_undo,
                                                 const gchar   *undo_desc);
 
 
-#endif  /*  __GIMP_ITEM_TREE_H__  */
+#endif  /*  __LIGMA_ITEM_TREE_H__  */

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,15 +15,15 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_UNITS_H__
-#define __GIMP_UNITS_H__
+#ifndef __LIGMA_UNITS_H__
+#define __LIGMA_UNITS_H__
 
 
-void   gimp_units_init  (Gimp *gimp);
-void   gimp_units_exit  (Gimp *gimp);
+void   ligma_units_init  (Ligma *ligma);
+void   ligma_units_exit  (Ligma *ligma);
 
-void   gimp_unitrc_load (Gimp *gimp);
-void   gimp_unitrc_save (Gimp *gimp);
+void   ligma_unitrc_load (Ligma *ligma);
+void   ligma_unitrc_save (Ligma *ligma);
 
 
-#endif  /*  __GIMP_UNITS_H__  */
+#endif  /*  __LIGMA_UNITS_H__  */

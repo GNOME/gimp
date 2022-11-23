@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-2003 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,480 +25,480 @@
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "pdb-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpparamspecs.h"
-#include "plug-in/gimpplugin-progress.h"
-#include "plug-in/gimpplugin.h"
-#include "plug-in/gimppluginmanager.h"
+#include "core/ligma.h"
+#include "core/ligmaparamspecs.h"
+#include "plug-in/ligmaplugin-progress.h"
+#include "plug-in/ligmaplugin.h"
+#include "plug-in/ligmapluginmanager.h"
 
-#include "gimppdb.h"
-#include "gimpprocedure.h"
+#include "ligmapdb.h"
+#include "ligmaprocedure.h"
 #include "internal-procs.h"
 
 
-static GimpValueArray *
-progress_init_invoker (GimpProcedure         *procedure,
-                       Gimp                  *gimp,
-                       GimpContext           *context,
-                       GimpProgress          *progress,
-                       const GimpValueArray  *args,
+static LigmaValueArray *
+progress_init_invoker (LigmaProcedure         *procedure,
+                       Ligma                  *ligma,
+                       LigmaContext           *context,
+                       LigmaProgress          *progress,
+                       const LigmaValueArray  *args,
                        GError               **error)
 {
   gboolean success = TRUE;
   const gchar *message;
-  GimpDisplay *gdisplay;
+  LigmaDisplay *gdisplay;
 
-  message = g_value_get_string (gimp_value_array_index (args, 0));
-  gdisplay = g_value_get_object (gimp_value_array_index (args, 1));
+  message = g_value_get_string (ligma_value_array_index (args, 0));
+  gdisplay = g_value_get_object (ligma_value_array_index (args, 1));
 
   if (success)
     {
-      GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+      LigmaPlugIn *plug_in = ligma->plug_in_manager->current_plug_in;
 
       if (plug_in && plug_in->open)
         {
-          if (! gimp->no_interface)
-            gimp_plug_in_progress_start (plug_in, message, gdisplay);
+          if (! ligma->no_interface)
+            ligma_plug_in_progress_start (plug_in, message, gdisplay);
         }
       else
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-progress_update_invoker (GimpProcedure         *procedure,
-                         Gimp                  *gimp,
-                         GimpContext           *context,
-                         GimpProgress          *progress,
-                         const GimpValueArray  *args,
+static LigmaValueArray *
+progress_update_invoker (LigmaProcedure         *procedure,
+                         Ligma                  *ligma,
+                         LigmaContext           *context,
+                         LigmaProgress          *progress,
+                         const LigmaValueArray  *args,
                          GError               **error)
 {
   gboolean success = TRUE;
   gdouble percentage;
 
-  percentage = g_value_get_double (gimp_value_array_index (args, 0));
+  percentage = g_value_get_double (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+      LigmaPlugIn *plug_in = ligma->plug_in_manager->current_plug_in;
 
       if (plug_in && plug_in->open)
         {
-          if (! gimp->no_interface)
-            gimp_plug_in_progress_set_value (plug_in, percentage);
+          if (! ligma->no_interface)
+            ligma_plug_in_progress_set_value (plug_in, percentage);
         }
       else
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-progress_pulse_invoker (GimpProcedure         *procedure,
-                        Gimp                  *gimp,
-                        GimpContext           *context,
-                        GimpProgress          *progress,
-                        const GimpValueArray  *args,
+static LigmaValueArray *
+progress_pulse_invoker (LigmaProcedure         *procedure,
+                        Ligma                  *ligma,
+                        LigmaContext           *context,
+                        LigmaProgress          *progress,
+                        const LigmaValueArray  *args,
                         GError               **error)
 {
   gboolean success = TRUE;
-  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+  LigmaPlugIn *plug_in = ligma->plug_in_manager->current_plug_in;
 
   if (plug_in && plug_in->open)
     {
-      if (! gimp->no_interface)
-        gimp_plug_in_progress_pulse (plug_in);
+      if (! ligma->no_interface)
+        ligma_plug_in_progress_pulse (plug_in);
     }
   else
     success = FALSE;
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-progress_set_text_invoker (GimpProcedure         *procedure,
-                           Gimp                  *gimp,
-                           GimpContext           *context,
-                           GimpProgress          *progress,
-                           const GimpValueArray  *args,
+static LigmaValueArray *
+progress_set_text_invoker (LigmaProcedure         *procedure,
+                           Ligma                  *ligma,
+                           LigmaContext           *context,
+                           LigmaProgress          *progress,
+                           const LigmaValueArray  *args,
                            GError               **error)
 {
   gboolean success = TRUE;
   const gchar *message;
 
-  message = g_value_get_string (gimp_value_array_index (args, 0));
+  message = g_value_get_string (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+      LigmaPlugIn *plug_in = ligma->plug_in_manager->current_plug_in;
 
       if (plug_in && plug_in->open)
         {
-          if (! gimp->no_interface)
-            gimp_plug_in_progress_set_text (plug_in, message);
+          if (! ligma->no_interface)
+            ligma_plug_in_progress_set_text (plug_in, message);
         }
       else
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-progress_end_invoker (GimpProcedure         *procedure,
-                      Gimp                  *gimp,
-                      GimpContext           *context,
-                      GimpProgress          *progress,
-                      const GimpValueArray  *args,
+static LigmaValueArray *
+progress_end_invoker (LigmaProcedure         *procedure,
+                      Ligma                  *ligma,
+                      LigmaContext           *context,
+                      LigmaProgress          *progress,
+                      const LigmaValueArray  *args,
                       GError               **error)
 {
   gboolean success = TRUE;
-  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+  LigmaPlugIn *plug_in = ligma->plug_in_manager->current_plug_in;
 
   if (plug_in && plug_in->open)
     {
-      GimpPlugInProcFrame *proc_frame = gimp_plug_in_get_proc_frame (plug_in);
+      LigmaPlugInProcFrame *proc_frame = ligma_plug_in_get_proc_frame (plug_in);
 
-      gimp_plug_in_progress_end (plug_in, proc_frame);
+      ligma_plug_in_progress_end (plug_in, proc_frame);
     }
   else
     success = FALSE;
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-progress_get_window_handle_invoker (GimpProcedure         *procedure,
-                                    Gimp                  *gimp,
-                                    GimpContext           *context,
-                                    GimpProgress          *progress,
-                                    const GimpValueArray  *args,
+static LigmaValueArray *
+progress_get_window_handle_invoker (LigmaProcedure         *procedure,
+                                    Ligma                  *ligma,
+                                    LigmaContext           *context,
+                                    LigmaProgress          *progress,
+                                    const LigmaValueArray  *args,
                                     GError               **error)
 {
   gboolean success = TRUE;
-  GimpValueArray *return_vals;
+  LigmaValueArray *return_vals;
   gint window = 0;
 
-  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+  LigmaPlugIn *plug_in = ligma->plug_in_manager->current_plug_in;
 
   if (plug_in && plug_in->open)
     {
-      if (! gimp->no_interface)
-        window = gimp_plug_in_progress_get_window_id (plug_in);
+      if (! ligma->no_interface)
+        window = ligma_plug_in_progress_get_window_id (plug_in);
     }
   else
     success = FALSE;
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_set_int (gimp_value_array_index (return_vals, 1), window);
+    g_value_set_int (ligma_value_array_index (return_vals, 1), window);
 
   return return_vals;
 }
 
-static GimpValueArray *
-progress_install_invoker (GimpProcedure         *procedure,
-                          Gimp                  *gimp,
-                          GimpContext           *context,
-                          GimpProgress          *progress,
-                          const GimpValueArray  *args,
+static LigmaValueArray *
+progress_install_invoker (LigmaProcedure         *procedure,
+                          Ligma                  *ligma,
+                          LigmaContext           *context,
+                          LigmaProgress          *progress,
+                          const LigmaValueArray  *args,
                           GError               **error)
 {
   gboolean success = TRUE;
   const gchar *progress_callback;
 
-  progress_callback = g_value_get_string (gimp_value_array_index (args, 0));
+  progress_callback = g_value_get_string (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+      LigmaPlugIn *plug_in = ligma->plug_in_manager->current_plug_in;
 
       if (plug_in && plug_in->open)
-        success = gimp_plug_in_progress_install (plug_in, progress_callback);
+        success = ligma_plug_in_progress_install (plug_in, progress_callback);
       else
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-progress_uninstall_invoker (GimpProcedure         *procedure,
-                            Gimp                  *gimp,
-                            GimpContext           *context,
-                            GimpProgress          *progress,
-                            const GimpValueArray  *args,
+static LigmaValueArray *
+progress_uninstall_invoker (LigmaProcedure         *procedure,
+                            Ligma                  *ligma,
+                            LigmaContext           *context,
+                            LigmaProgress          *progress,
+                            const LigmaValueArray  *args,
                             GError               **error)
 {
   gboolean success = TRUE;
   const gchar *progress_callback;
 
-  progress_callback = g_value_get_string (gimp_value_array_index (args, 0));
+  progress_callback = g_value_get_string (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+      LigmaPlugIn *plug_in = ligma->plug_in_manager->current_plug_in;
 
       if (plug_in && plug_in->open)
-        success = gimp_plug_in_progress_uninstall (plug_in, progress_callback);
+        success = ligma_plug_in_progress_uninstall (plug_in, progress_callback);
       else
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
-static GimpValueArray *
-progress_cancel_invoker (GimpProcedure         *procedure,
-                         Gimp                  *gimp,
-                         GimpContext           *context,
-                         GimpProgress          *progress,
-                         const GimpValueArray  *args,
+static LigmaValueArray *
+progress_cancel_invoker (LigmaProcedure         *procedure,
+                         Ligma                  *ligma,
+                         LigmaContext           *context,
+                         LigmaProgress          *progress,
+                         const LigmaValueArray  *args,
                          GError               **error)
 {
   gboolean success = TRUE;
   const gchar *progress_callback;
 
-  progress_callback = g_value_get_string (gimp_value_array_index (args, 0));
+  progress_callback = g_value_get_string (ligma_value_array_index (args, 0));
 
   if (success)
     {
-      GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+      LigmaPlugIn *plug_in = ligma->plug_in_manager->current_plug_in;
 
       if (plug_in && plug_in->open)
-        success = gimp_plug_in_progress_cancel (plug_in, progress_callback);
+        success = ligma_plug_in_progress_cancel (plug_in, progress_callback);
       else
         success = FALSE;
     }
 
-  return gimp_procedure_get_return_values (procedure, success,
+  return ligma_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
 }
 
 void
-register_progress_procs (GimpPDB *pdb)
+register_progress_procs (LigmaPDB *pdb)
 {
-  GimpProcedure *procedure;
+  LigmaProcedure *procedure;
 
   /*
-   * gimp-progress-init
+   * ligma-progress-init
    */
-  procedure = gimp_procedure_new (progress_init_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-progress-init");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (progress_init_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-progress-init");
+  ligma_procedure_set_static_help (procedure,
                                   "Initializes the progress bar for the current plug-in.",
                                   "Initializes the progress bar for the current plug-in. It is only valid to call this procedure from a plug-in.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("message",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("message",
                                                        "message",
                                                        "Message to use in the progress dialog",
                                                        FALSE, TRUE, FALSE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_display ("gdisplay",
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_display ("gdisplay",
                                                         "gdisplay",
-                                                        "GimpDisplay to update progressbar in, or %NULL for a separate window",
+                                                        "LigmaDisplay to update progressbar in, or %NULL for a separate window",
                                                         TRUE,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                        LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-progress-update
+   * ligma-progress-update
    */
-  procedure = gimp_procedure_new (progress_update_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-progress-update");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (progress_update_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-progress-update");
+  ligma_procedure_set_static_help (procedure,
                                   "Updates the progress bar for the current plug-in.",
                                   "Updates the progress bar for the current plug-in. It is only valid to call this procedure from a plug-in.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
+  ligma_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
                                          "Spencer Kimball & Peter Mattis",
                                          "1995-1996");
-  gimp_procedure_add_argument (procedure,
+  ligma_procedure_add_argument (procedure,
                                g_param_spec_double ("percentage",
                                                     "percentage",
                                                     "Percentage of progress completed which must be between 0.0 and 1.0",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                    LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-progress-pulse
+   * ligma-progress-pulse
    */
-  procedure = gimp_procedure_new (progress_pulse_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-progress-pulse");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (progress_pulse_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-progress-pulse");
+  ligma_procedure_set_static_help (procedure,
                                   "Pulses the progress bar for the current plug-in.",
-                                  "Updates the progress bar for the current plug-in. It is only valid to call this procedure from a plug-in. Use this function instead of 'gimp-progress-update' if you cannot tell how much progress has been made. This usually causes the the progress bar to enter \"activity mode\", where a block bounces back and forth.",
+                                  "Updates the progress bar for the current plug-in. It is only valid to call this procedure from a plug-in. Use this function instead of 'ligma-progress-update' if you cannot tell how much progress has been made. This usually causes the the progress bar to enter \"activity mode\", where a block bounces back and forth.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Sven Neumann <sven@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Sven Neumann <sven@ligma.org>",
                                          "Sven Neumann",
                                          "2005");
-  gimp_pdb_register_procedure (pdb, procedure);
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-progress-set-text
+   * ligma-progress-set-text
    */
-  procedure = gimp_procedure_new (progress_set_text_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-progress-set-text");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (progress_set_text_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-progress-set-text");
+  ligma_procedure_set_static_help (procedure,
                                   "Changes the text in the progress bar for the current plug-in.",
-                                  "This function changes the text in the progress bar for the current plug-in. Unlike 'gimp-progress-init' it does not change the displayed value.",
+                                  "This function changes the text in the progress bar for the current plug-in. Unlike 'ligma-progress-init' it does not change the displayed value.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Sven Neumann <sven@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Sven Neumann <sven@ligma.org>",
                                          "Sven Neumann",
                                          "2005");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("message",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("message",
                                                        "message",
                                                        "Message to use in the progress dialog",
                                                        FALSE, TRUE, FALSE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-progress-end
+   * ligma-progress-end
    */
-  procedure = gimp_procedure_new (progress_end_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-progress-end");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (progress_end_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-progress-end");
+  ligma_procedure_set_static_help (procedure,
                                   "Ends the progress bar for the current plug-in.",
                                   "Ends the progress display for the current plug-in. Most plug-ins don't need to call this, they just exit when the work is done. It is only valid to call this procedure from a plug-in.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Sven Neumann <sven@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Sven Neumann <sven@ligma.org>",
                                          "Sven Neumann",
                                          "2007");
-  gimp_pdb_register_procedure (pdb, procedure);
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-progress-get-window-handle
+   * ligma-progress-get-window-handle
    */
-  procedure = gimp_procedure_new (progress_get_window_handle_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-progress-get-window-handle");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (progress_get_window_handle_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-progress-get-window-handle");
+  ligma_procedure_set_static_help (procedure,
                                   "Returns the native window ID of the toplevel window this plug-in's progress is displayed in.",
                                   "This function returns the native window ID of the toplevel window this plug-in\'s progress is displayed in.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2004");
-  gimp_procedure_add_return_value (procedure,
+  ligma_procedure_add_return_value (procedure,
                                    g_param_spec_int ("window",
                                                      "window",
                                                      "The progress bar's toplevel window",
                                                      G_MININT32, G_MAXINT32, 0,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                     LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-progress-install
+   * ligma-progress-install
    */
-  procedure = gimp_procedure_new (progress_install_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-progress-install");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (progress_install_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-progress-install");
+  ligma_procedure_set_static_help (procedure,
                                   "Installs a progress callback for the current plug-in.",
                                   "This function installs a temporary PDB procedure which will handle all progress calls made by this plug-in and any procedure it calls. Calling this function multiple times simply replaces the old progress callbacks.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2004");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("progress-callback",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("progress-callback",
                                                        "progress callback",
                                                        "The callback PDB proc to call",
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-progress-uninstall
+   * ligma-progress-uninstall
    */
-  procedure = gimp_procedure_new (progress_uninstall_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-progress-uninstall");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (progress_uninstall_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-progress-uninstall");
+  ligma_procedure_set_static_help (procedure,
                                   "Uninstalls the progress callback for the current plug-in.",
-                                  "This function uninstalls any progress callback installed with 'gimp-progress-install' before.",
+                                  "This function uninstalls any progress callback installed with 'ligma-progress-install' before.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2004");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("progress-callback",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("progress-callback",
                                                        "progress callback",
                                                        "The name of the callback registered for this progress",
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-progress-cancel
+   * ligma-progress-cancel
    */
-  procedure = gimp_procedure_new (progress_cancel_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-progress-cancel");
-  gimp_procedure_set_static_help (procedure,
+  procedure = ligma_procedure_new (progress_cancel_invoker);
+  ligma_object_set_static_name (LIGMA_OBJECT (procedure),
+                               "ligma-progress-cancel");
+  ligma_procedure_set_static_help (procedure,
                                   "Cancels a running progress.",
                                   "This function cancels the currently running progress.",
                                   NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Michael Natterer <mitch@gimp.org>",
+  ligma_procedure_set_static_attribution (procedure,
+                                         "Michael Natterer <mitch@ligma.org>",
                                          "Michael Natterer",
                                          "2004");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("progress-callback",
+  ligma_procedure_add_argument (procedure,
+                               ligma_param_spec_string ("progress-callback",
                                                        "progress callback",
                                                        "The name of the callback registered for this progress",
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
+                                                       LIGMA_PARAM_READWRITE));
+  ligma_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

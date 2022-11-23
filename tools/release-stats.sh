@@ -6,12 +6,12 @@
 
 #### Usage ####
 if [ "$#" -ne 2 -a "$#" -ne 1 ]; then
-    echo "Usage: $0 <GIMP_TAG_PREV> <GIMP_TAG_CUR>"
+    echo "Usage: $0 <LIGMA_TAG_PREV> <LIGMA_TAG_CUR>"
     echo
-    echo "  GIMP_TAG_PREV: last tag release or commit (non-included in stats)"
-    echo "                 ex: GIMP_2_9_6"
-    echo "  GIMP_TAG_CUR:  current tag release or commit (included in stats); ex: GIMP_2_9_8"
-    echo "                 ex: GIMP_2_9_8."
+    echo "  LIGMA_TAG_PREV: last tag release or commit (non-included in stats)"
+    echo "                 ex: LIGMA_2_9_6"
+    echo "  LIGMA_TAG_CUR:  current tag release or commit (included in stats); ex: LIGMA_2_9_8"
+    echo "                 ex: LIGMA_2_9_8."
     echo "                 Optional. If absent, statistics up to HEAD."
     exit 1
 fi
@@ -34,7 +34,7 @@ else
   CUR='HEAD'
 fi
 
-echo "## GIMP contributions between $PREV and $CUR ##"
+echo "## LIGMA contributions between $PREV and $CUR ##"
 echo
 
 # Main stats:
@@ -50,7 +50,7 @@ days_n=$(( (`date -d  "$cur_date" +%s` - `date -d "$prev_date" +%s`)/(60*60*24) 
 commits_rate=$(( $commits_n / $days_n ))
 
 echo "Start date: $prev_date - End date: $cur_date"
-echo "Between $PREV and $CUR, $contribs_n people contributed $commits_n commits to GIMP."
+echo "Between $PREV and $CUR, $contribs_n people contributed $commits_n commits to LIGMA."
 echo "This is an average of $commits_rate commits a day."
 echo
 echo "Statistics on all files:" `git diff --shortstat $PREV..$CUR 2>/dev/null`
@@ -67,7 +67,7 @@ echo "Statistics on C files:" `git diff --shortstat $PREV..$CUR  -- "*.[ch]" 2>/
 echo
 echo "Core developers:"
 
-git --no-pager shortlog -s -n $PREV..$CUR -- app/ "libgimp*" pdb tools/pdbgen/
+git --no-pager shortlog -s -n $PREV..$CUR -- app/ "libligma*" pdb tools/pdbgen/
 
 echo "Plugin and module developers:"
 

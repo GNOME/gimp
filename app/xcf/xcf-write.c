@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -26,7 +26,7 @@
 #include "xcf-private.h"
 #include "xcf-write.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 guint

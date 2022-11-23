@@ -1,9 +1,9 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * gimppropgui-generic.c
- * Copyright (C) 2002-2014  Michael Natterer <mitch@gimp.org>
- *                          Sven Neumann <sven@gimp.org>
+ * ligmapropgui-generic.c
+ * Copyright (C) 2002-2014  Michael Natterer <mitch@ligma.org>
+ *                          Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,43 +28,43 @@
 #include <gegl-paramspecs.h>
 #include <gtk/gtk.h>
 
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmaconfig/ligmaconfig.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "propgui-types.h"
 
-#include "gegl/gimp-gegl-utils.h"
+#include "gegl/ligma-gegl-utils.h"
 
-#include "core/gimpcontext.h"
+#include "core/ligmacontext.h"
 
-#include "widgets/gimppropwidgets.h"
-#include "widgets/gimpwidgets-utils.h"
+#include "widgets/ligmapropwidgets.h"
+#include "widgets/ligmawidgets-utils.h"
 
-#include "gimppropgui.h"
-#include "gimppropgui-generic.h"
+#include "ligmapropgui.h"
+#include "ligmapropgui-generic.h"
 
-#include "gimp-intl.h"
-
-
-#define HAS_KEY(p,k,v) gimp_gegl_param_spec_has_key (p, k, v)
+#include "ligma-intl.h"
 
 
-static void   gimp_prop_gui_chain_toggled (GimpChainButton *chain,
+#define HAS_KEY(p,k,v) ligma_gegl_param_spec_has_key (p, k, v)
+
+
+static void   ligma_prop_gui_chain_toggled (LigmaChainButton *chain,
                                            GtkAdjustment   *x_adj);
 
 
 /*  public functions  */
 
 GtkWidget *
-_gimp_prop_gui_new_generic (GObject                  *config,
+_ligma_prop_gui_new_generic (GObject                  *config,
                             GParamSpec              **param_specs,
                             guint                     n_param_specs,
                             GeglRectangle            *area,
-                            GimpContext              *context,
-                            GimpCreatePickerFunc      create_picker_func,
-                            GimpCreateControllerFunc  create_controller_func,
+                            LigmaContext              *context,
+                            LigmaCreatePickerFunc      create_picker_func,
+                            LigmaCreateControllerFunc  create_controller_func,
                             gpointer                  creator)
 {
   GtkWidget    *main_vbox;
@@ -75,7 +75,7 @@ _gimp_prop_gui_new_generic (GObject                  *config,
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
   g_return_val_if_fail (param_specs != NULL, NULL);
   g_return_val_if_fail (n_param_specs > 0, NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
 
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
 
@@ -105,13 +105,13 @@ _gimp_prop_gui_new_generic (GObject                  *config,
 
           i++;
 
-          widget_x = gimp_prop_widget_new_from_pspec (config, pspec,
+          widget_x = ligma_prop_widget_new_from_pspec (config, pspec,
                                                       area, context,
                                                       create_picker_func,
                                                       create_controller_func,
                                                       creator,
                                                       &label_x);
-          widget_y = gimp_prop_widget_new_from_pspec (config, next_pspec,
+          widget_y = ligma_prop_widget_new_from_pspec (config, next_pspec,
                                                       area, context,
                                                       create_picker_func,
                                                       create_controller_func,
@@ -125,7 +125,7 @@ _gimp_prop_gui_new_generic (GObject                  *config,
           gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
           gtk_widget_show (hbox);
 
-          gimp_prop_gui_bind_container (widget_x, hbox);
+          ligma_prop_gui_bind_container (widget_x, hbox);
 
           vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
           gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
@@ -137,7 +137,7 @@ _gimp_prop_gui_new_generic (GObject                  *config,
           gtk_box_pack_start (GTK_BOX (vbox), widget_y, FALSE, FALSE, 0);
           gtk_widget_show (widget_y);
 
-          chain = gimp_chain_button_new (GIMP_CHAIN_RIGHT);
+          chain = ligma_chain_button_new (LIGMA_CHAIN_RIGHT);
           gtk_box_pack_end (GTK_BOX (hbox), chain, FALSE, FALSE, 0);
           gtk_widget_show (chain);
 
@@ -148,7 +148,7 @@ _gimp_prop_gui_new_generic (GObject                  *config,
             {
               GBinding *binding;
 
-              gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (chain), TRUE);
+              ligma_chain_button_set_active (LIGMA_CHAIN_BUTTON (chain), TRUE);
 
               binding = g_object_bind_property (adj_x, "value",
                                                 adj_y, "value",
@@ -165,7 +165,7 @@ _gimp_prop_gui_new_generic (GObject                  *config,
           chains = g_list_prepend (chains, chain);
 
           g_signal_connect (chain, "toggled",
-                            G_CALLBACK (gimp_prop_gui_chain_toggled),
+                            G_CALLBACK (ligma_prop_gui_chain_toggled),
                             adj_x);
 
           g_object_set_data (G_OBJECT (adj_x), "y-adjustment", adj_y);
@@ -182,7 +182,7 @@ _gimp_prop_gui_new_generic (GObject                  *config,
 
               button = create_picker_func (creator,
                                            pspec_name,
-                                           GIMP_ICON_CURSOR,
+                                           LIGMA_ICON_CURSOR,
                                            _("Pick coordinates from the image"),
                                            /* pick_abyss = */ TRUE,
                                            NULL, NULL);
@@ -215,7 +215,7 @@ _gimp_prop_gui_new_generic (GObject                  *config,
           vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
           gtk_box_pack_start (GTK_BOX (main_vbox), vbox, FALSE, FALSE, 0);
 
-          spin_scale = gimp_prop_widget_new_from_pspec (
+          spin_scale = ligma_prop_widget_new_from_pspec (
             config, pspec,
             area, context,
             create_picker_func,
@@ -225,7 +225,7 @@ _gimp_prop_gui_new_generic (GObject                  *config,
           gtk_widget_show (spin_scale);
 
           g_object_set_data_full (G_OBJECT (vbox),
-                                  "gimp-underlying-widget",
+                                  "ligma-underlying-widget",
                                   g_object_ref_sink (spin_scale),
                                   g_object_unref);
 
@@ -238,7 +238,7 @@ _gimp_prop_gui_new_generic (GObject                  *config,
           gtk_spin_button_get_increments (GTK_SPIN_BUTTON (spin_scale),
                                           &step_increment, &page_increment);
 
-          gimp_spin_scale_get_scale_limits (GIMP_SPIN_SCALE (spin_scale),
+          ligma_spin_scale_get_scale_limits (LIGMA_SPIN_SCALE (spin_scale),
                                             &ui_lower, &ui_upper);
 
           label = gtk_label_new_with_mnemonic (label_str);
@@ -253,23 +253,23 @@ _gimp_prop_gui_new_generic (GObject                  *config,
                                       G_BINDING_SYNC_CREATE);
             }
 
-          frame = gimp_frame_new (NULL);
+          frame = ligma_frame_new (NULL);
           gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
           gtk_widget_show (frame);
 
-          range = gimp_prop_range_new (config,
+          range = ligma_prop_range_new (config,
                                        pspec->name, next_pspec->name,
                                        step_increment, page_increment,
                                        gtk_spin_button_get_digits (
                                          GTK_SPIN_BUTTON (spin_scale)),
                                        ! HAS_KEY (pspec,
                                                   "range-sorted", "false"));
-          gimp_prop_range_set_ui_limits (range, ui_lower, ui_upper);
+          ligma_prop_range_set_ui_limits (range, ui_lower, ui_upper);
           gtk_container_add (GTK_CONTAINER (frame), range);
           gtk_widget_show (range);
 
-          gimp_prop_gui_bind_container (spin_scale, vbox);
-          gimp_prop_gui_bind_tooltip   (spin_scale, vbox);
+          ligma_prop_gui_bind_container (spin_scale, vbox);
+          ligma_prop_gui_bind_tooltip   (spin_scale, vbox);
         }
       else
         {
@@ -277,7 +277,7 @@ _gimp_prop_gui_new_generic (GObject                  *config,
           const gchar *label;
           gboolean     expand = FALSE;
 
-          widget = gimp_prop_widget_new_from_pspec (config, pspec,
+          widget = ligma_prop_widget_new_from_pspec (config, pspec,
                                                     area, context,
                                                     create_picker_func,
                                                     create_controller_func,
@@ -295,7 +295,7 @@ _gimp_prop_gui_new_generic (GObject                  *config,
               gtk_label_set_xalign (GTK_LABEL (l), 0.0);
               gtk_widget_show (l);
 
-              gimp_prop_gui_bind_label (widget, l);
+              ligma_prop_gui_bind_label (widget, l);
 
               if (GTK_IS_SCROLLED_WINDOW (widget))
                 {
@@ -304,14 +304,14 @@ _gimp_prop_gui_new_generic (GObject                  *config,
                   /* don't set as frame title, it should not be bold */
                   gtk_box_pack_start (GTK_BOX (main_vbox), l, FALSE, FALSE, 0);
 
-                  frame = gimp_frame_new (NULL);
+                  frame = ligma_frame_new (NULL);
                   gtk_box_pack_start (GTK_BOX (main_vbox), frame, TRUE, TRUE, 0);
                   gtk_widget_show (frame);
 
                   gtk_container_add (GTK_CONTAINER (frame), widget);
                   gtk_widget_show (widget);
 
-                  gimp_prop_gui_bind_container (widget, frame);
+                  ligma_prop_gui_bind_container (widget, frame);
                 }
               else
                 {
@@ -328,7 +328,7 @@ _gimp_prop_gui_new_generic (GObject                  *config,
                   gtk_box_pack_start (GTK_BOX (hbox), widget, TRUE, TRUE, 0);
                   gtk_widget_show (widget);
 
-                  gimp_prop_gui_bind_container (widget, hbox);
+                  ligma_prop_gui_bind_container (widget, hbox);
                 }
             }
           else if (widget)
@@ -354,7 +354,7 @@ _gimp_prop_gui_new_generic (GObject                  *config,
 /*  private functions  */
 
 static void
-gimp_prop_gui_chain_toggled (GimpChainButton *chain,
+ligma_prop_gui_chain_toggled (LigmaChainButton *chain,
                              GtkAdjustment   *x_adj)
 {
   GBinding      *binding;
@@ -363,7 +363,7 @@ gimp_prop_gui_chain_toggled (GimpChainButton *chain,
   binding = g_object_get_data (G_OBJECT (chain), "binding");
   y_adj   = g_object_get_data (G_OBJECT (x_adj), "y-adjustment");
 
-  if (gimp_chain_button_get_active (chain))
+  if (ligma_chain_button_get_active (chain))
     {
       if (! binding)
         binding = g_object_bind_property (x_adj, "value",

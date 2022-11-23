@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpmybrush-private.h
+ * ligmamybrush-private.h
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,11 +17,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_MYBRUSH_PRIVATE_H__
-#define __GIMP_MYBRUSH_PRIVATE_H__
+#ifndef __LIGMA_MYBRUSH_PRIVATE_H__
+#define __LIGMA_MYBRUSH_PRIVATE_H__
 
 
-struct _GimpMybrushPrivate
+struct _LigmaMybrushPrivate
 {
   gchar   *brush_json;
   gdouble  radius;
@@ -32,4 +32,4 @@ struct _GimpMybrushPrivate
 };
 
 
-#endif /* __GIMP_MYBRUSH_PRIVATE_H__ */
+#endif /* __LIGMA_MYBRUSH_PRIVATE_H__ */

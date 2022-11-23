@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,19 +19,19 @@
 #define __TEMPLATES_COMMANDS_H__
 
 
-void   templates_create_image_cmd_callback (GimpAction *action,
+void   templates_create_image_cmd_callback (LigmaAction *action,
                                             GVariant   *value,
                                             gpointer    data);
-void   templates_new_cmd_callback          (GimpAction *action,
+void   templates_new_cmd_callback          (LigmaAction *action,
                                             GVariant   *value,
                                             gpointer    data);
-void   templates_duplicate_cmd_callback    (GimpAction *action,
+void   templates_duplicate_cmd_callback    (LigmaAction *action,
                                             GVariant   *value,
                                             gpointer    data);
-void   templates_edit_cmd_callback         (GimpAction *action,
+void   templates_edit_cmd_callback         (LigmaAction *action,
                                             GVariant   *value,
                                             gpointer    data);
-void   templates_delete_cmd_callback       (GimpAction *action,
+void   templates_delete_cmd_callback       (LigmaAction *action,
                                             GVariant   *value,
                                             gpointer    data);
 

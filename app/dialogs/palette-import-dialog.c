@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,30 +22,30 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpmath/gimpmath.h"
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmamath/ligmamath.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "dialogs-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontainer.h"
-#include "core/gimpcontext.h"
-#include "core/gimpdatafactory.h"
-#include "core/gimpdrawable.h"
-#include "core/gimpgradient.h"
-#include "core/gimpimage.h"
-#include "core/gimppalette.h"
-#include "core/gimppalette-import.h"
+#include "core/ligma.h"
+#include "core/ligmacontainer.h"
+#include "core/ligmacontext.h"
+#include "core/ligmadatafactory.h"
+#include "core/ligmadrawable.h"
+#include "core/ligmagradient.h"
+#include "core/ligmaimage.h"
+#include "core/ligmapalette.h"
+#include "core/ligmapalette-import.h"
 
-#include "widgets/gimpcontainercombobox.h"
-#include "widgets/gimpdnd.h"
-#include "widgets/gimphelp-ids.h"
-#include "widgets/gimpview.h"
-#include "widgets/gimpwidgets-utils.h"
+#include "widgets/ligmacontainercombobox.h"
+#include "widgets/ligmadnd.h"
+#include "widgets/ligmahelp-ids.h"
+#include "widgets/ligmaview.h"
+#include "widgets/ligmawidgets-utils.h"
 
 #include "palette-import-dialog.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 typedef enum
@@ -63,10 +63,10 @@ struct _ImportDialog
   GtkWidget     *dialog;
 
   ImportType     import_type;
-  GimpContext   *context;
-  GimpImage     *image;
+  LigmaContext   *context;
+  LigmaImage     *image;
 
-  GimpPalette   *palette;
+  LigmaPalette   *palette;
 
   GtkWidget     *gradient_radio;
   GtkWidget     *image_radio;
@@ -93,22 +93,22 @@ static void   palette_import_free                 (ImportDialog   *private);
 static void   palette_import_response             (GtkWidget      *dialog,
                                                    gint            response_id,
                                                    ImportDialog   *private);
-static void   palette_import_gradient_changed     (GimpContext    *context,
-                                                   GimpGradient   *gradient,
+static void   palette_import_gradient_changed     (LigmaContext    *context,
+                                                   LigmaGradient   *gradient,
                                                    ImportDialog   *private);
-static void   palette_import_image_changed        (GimpContext    *context,
-                                                   GimpImage      *image,
+static void   palette_import_image_changed        (LigmaContext    *context,
+                                                   LigmaImage      *image,
                                                    ImportDialog   *private);
-static void   palette_import_layer_changed        (GimpImage      *image,
+static void   palette_import_layer_changed        (LigmaImage      *image,
                                                    ImportDialog   *private);
-static void   palette_import_mask_changed         (GimpImage      *image,
+static void   palette_import_mask_changed         (LigmaImage      *image,
                                                    ImportDialog   *private);
 static void   palette_import_filename_changed     (GtkFileChooser *button,
                                                    ImportDialog   *private);
 static void   import_dialog_drop_callback         (GtkWidget      *widget,
                                                    gint            x,
                                                    gint            y,
-                                                   GimpViewable   *viewable,
+                                                   LigmaViewable   *viewable,
                                                    gpointer        data);
 static void   palette_import_grad_callback        (GtkWidget      *widget,
                                                    ImportDialog   *private);
@@ -116,13 +116,13 @@ static void   palette_import_image_callback       (GtkWidget      *widget,
                                                    ImportDialog   *private);
 static void   palette_import_file_callback        (GtkWidget      *widget,
                                                    ImportDialog   *private);
-static void   palette_import_columns_changed      (GimpLabelSpin  *columns,
+static void   palette_import_columns_changed      (LigmaLabelSpin  *columns,
                                                    ImportDialog   *private);
-static void   palette_import_image_add            (GimpContainer  *container,
-                                                   GimpImage      *image,
+static void   palette_import_image_add            (LigmaContainer  *container,
+                                                   LigmaImage      *image,
                                                    ImportDialog   *private);
-static void   palette_import_image_remove         (GimpContainer  *container,
-                                                   GimpImage      *image,
+static void   palette_import_image_remove         (LigmaContainer  *container,
+                                                   LigmaImage      *image,
                                                    ImportDialog   *private);
 static void   palette_import_make_palette         (ImportDialog   *private);
 
@@ -130,10 +130,10 @@ static void   palette_import_make_palette         (ImportDialog   *private);
 /*  public functions  */
 
 GtkWidget *
-palette_import_dialog_new (GimpContext *context)
+palette_import_dialog_new (LigmaContext *context)
 {
   ImportDialog *private;
-  GimpGradient *gradient;
+  LigmaGradient *gradient;
   GtkWidget    *dialog;
   GtkWidget    *main_hbox;
   GtkWidget    *frame;
@@ -142,28 +142,28 @@ palette_import_dialog_new (GimpContext *context)
   GtkSizeGroup *size_group;
   GSList       *group = NULL;
 
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
 
-  gradient = gimp_context_get_gradient (context);
+  gradient = ligma_context_get_gradient (context);
 
   private = g_slice_new0 (ImportDialog);
 
   private->import_type = GRADIENT_IMPORT;
-  private->context     = gimp_context_new (context->gimp, "Palette Import",
+  private->context     = ligma_context_new (context->ligma, "Palette Import",
                                           context);
 
   dialog = private->dialog =
-    gimp_dialog_new (_("Import a New Palette"),
-                     "gimp-palette-import", NULL, 0,
-                     gimp_standard_help_func,
-                     GIMP_HELP_PALETTE_IMPORT,
+    ligma_dialog_new (_("Import a New Palette"),
+                     "ligma-palette-import", NULL, 0,
+                     ligma_standard_help_func,
+                     LIGMA_HELP_PALETTE_IMPORT,
 
                      _("_Cancel"), GTK_RESPONSE_CANCEL,
                      _("_Import"), GTK_RESPONSE_OK,
 
                      NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  ligma_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
@@ -175,12 +175,12 @@ palette_import_dialog_new (GimpContext *context)
                     G_CALLBACK (palette_import_response),
                     private);
 
-  gimp_dnd_viewable_dest_add (dialog,
-                              GIMP_TYPE_GRADIENT,
+  ligma_dnd_viewable_dest_add (dialog,
+                              LIGMA_TYPE_GRADIENT,
                               import_dialog_drop_callback,
                               private);
-  gimp_dnd_viewable_dest_add (dialog,
-                              GIMP_TYPE_IMAGE,
+  ligma_dnd_viewable_dest_add (dialog,
+                              LIGMA_TYPE_IMAGE,
                               import_dialog_drop_callback,
                               private);
 
@@ -197,7 +197,7 @@ palette_import_dialog_new (GimpContext *context)
 
   /*  The "Source" frame  */
 
-  frame = gimp_frame_new (_("Select Source"));
+  frame = ligma_frame_new (_("Select Source"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -228,7 +228,7 @@ palette_import_dialog_new (GimpContext *context)
                     private);
 
   gtk_widget_set_sensitive (private->image_radio,
-                            ! gimp_container_is_empty (context->gimp->images));
+                            ! ligma_container_is_empty (context->ligma->images));
 
   private->sample_merged_toggle =
     gtk_check_button_new_with_mnemonic (_("Sample _Merged"));
@@ -266,24 +266,24 @@ palette_import_dialog_new (GimpContext *context)
 
   /*  The gradient menu  */
   private->gradient_combo =
-    gimp_container_combo_box_new (gimp_data_factory_get_container (context->gimp->gradient_factory),
+    ligma_container_combo_box_new (ligma_data_factory_get_container (context->ligma->gradient_factory),
                                   private->context, 24, 1);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 0,
                             NULL, 0.0, 0.5, private->gradient_combo, 1);
   gtk_size_group_add_widget (size_group, private->gradient_combo);
 
   /*  The image menu  */
   private->image_combo =
-    gimp_container_combo_box_new (context->gimp->images, private->context,
+    ligma_container_combo_box_new (context->ligma->images, private->context,
                                   24, 1);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 1,
                             NULL, 0.0, 0.5, private->image_combo, 1);
   gtk_size_group_add_widget (size_group, private->image_combo);
 
   /*  Palette file name entry  */
   private->file_chooser = gtk_file_chooser_button_new (_("Select Palette File"),
                                                       GTK_FILE_CHOOSER_ACTION_OPEN);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 4,
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 4,
                             NULL, 0.0, 0.5, private->file_chooser, 1);
   gtk_size_group_add_widget (size_group, private->file_chooser);
 
@@ -292,7 +292,7 @@ palette_import_dialog_new (GimpContext *context)
 
   /*  The "Import" frame  */
 
-  frame = gimp_frame_new (_("Import Options"));
+  frame = ligma_frame_new (_("Import Options"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -306,18 +306,18 @@ palette_import_dialog_new (GimpContext *context)
   private->entry = gtk_entry_new ();
   gtk_entry_set_text (GTK_ENTRY (private->entry),
                       gradient ?
-                      gimp_object_get_name (gradient) : _("New import"));
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+                      ligma_object_get_name (gradient) : _("New import"));
+  ligma_grid_attach_aligned (GTK_GRID (grid), 0, 0,
                             _("Palette _name:"), 0.0, 0.5,
                             private->entry, 2);
 
   /*  The # of colors  */
-  private->num_colors = gimp_scale_entry_new (_("N_umber of colors:"),
+  private->num_colors = ligma_scale_entry_new (_("N_umber of colors:"),
                                               256, 2, 10000, 0);
-  gimp_grid_attach_aligned (GTK_GRID (grid), -1, 1,
+  ligma_grid_attach_aligned (GTK_GRID (grid), -1, 1,
                             NULL, 0.0, 0.5,
                             private->num_colors, 3);
-  gimp_scale_entry_set_logarithmic (GIMP_SCALE_ENTRY (private->num_colors), TRUE);
+  ligma_scale_entry_set_logarithmic (LIGMA_SCALE_ENTRY (private->num_colors), TRUE);
 
   g_signal_connect_swapped (private->num_colors,
                             "value-changed",
@@ -325,8 +325,8 @@ palette_import_dialog_new (GimpContext *context)
                             private);
 
   /*  The columns  */
-  private->columns = gimp_scale_entry_new (_("C_olumns:"), 16, 0, 64, 0);
-  gimp_grid_attach_aligned (GTK_GRID (grid), -1, 2,
+  private->columns = ligma_scale_entry_new (_("C_olumns:"), 16, 0, 64, 0);
+  ligma_grid_attach_aligned (GTK_GRID (grid), -1, 2,
                             NULL, 0.0, 0.5,
                             private->columns, 3);
 
@@ -335,8 +335,8 @@ palette_import_dialog_new (GimpContext *context)
                     private);
 
   /*  The interval  */
-  private->threshold = gimp_scale_entry_new (_("I_nterval:"), 1, 1, 128, 0);
-  gimp_grid_attach_aligned (GTK_GRID (grid), -1, 3,
+  private->threshold = ligma_scale_entry_new (_("I_nterval:"), 1, 1, 128, 0);
+  ligma_grid_attach_aligned (GTK_GRID (grid), -1, 3,
                             NULL, 0.0, 0.5,
                             private->threshold, 3);
 
@@ -346,7 +346,7 @@ palette_import_dialog_new (GimpContext *context)
 
 
   /*  The "Preview" frame  */
-  frame = gimp_frame_new (_("Preview"));
+  frame = ligma_frame_new (_("Preview"));
   gtk_box_pack_start (GTK_BOX (main_hbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -354,9 +354,9 @@ palette_import_dialog_new (GimpContext *context)
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  private->preview = gimp_view_new_full_by_types (private->context,
-                                                 GIMP_TYPE_VIEW,
-                                                 GIMP_TYPE_PALETTE,
+  private->preview = ligma_view_new_full_by_types (private->context,
+                                                 LIGMA_TYPE_VIEW,
+                                                 LIGMA_TYPE_PALETTE,
                                                  192, 192, 1,
                                                  TRUE, FALSE, FALSE);
   gtk_widget_set_halign (private->preview, 0.0);
@@ -367,7 +367,7 @@ palette_import_dialog_new (GimpContext *context)
     gtk_label_new (_("The selected source contains no colors."));
   gtk_widget_set_size_request (private->no_colors_label, 194, -1);
   gtk_label_set_line_wrap (GTK_LABEL (private->no_colors_label), TRUE);
-  gimp_label_set_attributes (GTK_LABEL (private->no_colors_label),
+  ligma_label_set_attributes (GTK_LABEL (private->no_colors_label),
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);
   gtk_box_pack_start (GTK_BOX (vbox), private->no_colors_label, FALSE, FALSE, 0);
@@ -376,10 +376,10 @@ palette_import_dialog_new (GimpContext *context)
 
   /*  keep the dialog up-to-date  */
 
-  g_signal_connect (context->gimp->images, "add",
+  g_signal_connect (context->ligma->images, "add",
                     G_CALLBACK (palette_import_image_add),
                     private);
-  g_signal_connect (context->gimp->images, "remove",
+  g_signal_connect (context->ligma->images, "remove",
                     G_CALLBACK (palette_import_image_remove),
                     private);
 
@@ -404,12 +404,12 @@ palette_import_dialog_new (GimpContext *context)
 static void
 palette_import_free (ImportDialog *private)
 {
-  Gimp *gimp = private->context->gimp;
+  Ligma *ligma = private->context->ligma;
 
-  g_signal_handlers_disconnect_by_func (gimp->images,
+  g_signal_handlers_disconnect_by_func (ligma->images,
                                         palette_import_image_add,
                                         private);
-  g_signal_handlers_disconnect_by_func (gimp->images,
+  g_signal_handlers_disconnect_by_func (ligma->images,
                                         palette_import_image_remove,
                                         private);
 
@@ -433,22 +433,22 @@ palette_import_response (GtkWidget    *dialog,
 
   if (response_id == GTK_RESPONSE_OK)
     {
-      Gimp *gimp = private->context->gimp;
+      Ligma *ligma = private->context->ligma;
 
       if (private->palette &&
-          gimp_palette_get_n_colors (private->palette) > 0)
+          ligma_palette_get_n_colors (private->palette) > 0)
         {
           const gchar *name = gtk_entry_get_text (GTK_ENTRY (private->entry));
 
           if (name && *name)
-            gimp_object_set_name (GIMP_OBJECT (private->palette), name);
+            ligma_object_set_name (LIGMA_OBJECT (private->palette), name);
 
-          gimp_container_add (gimp_data_factory_get_container (gimp->palette_factory),
-                              GIMP_OBJECT (private->palette));
+          ligma_container_add (ligma_data_factory_get_container (ligma->palette_factory),
+                              LIGMA_OBJECT (private->palette));
         }
       else
         {
-          gimp_message_literal (gimp, G_OBJECT (dialog), GIMP_MESSAGE_ERROR,
+          ligma_message_literal (ligma, G_OBJECT (dialog), LIGMA_MESSAGE_ERROR,
                                 _("There is no palette to import."));
           return;
         }
@@ -461,22 +461,22 @@ palette_import_response (GtkWidget    *dialog,
 /*  functions to create & update the import dialog's gradient selection  *****/
 
 static void
-palette_import_gradient_changed (GimpContext  *context,
-                                 GimpGradient *gradient,
+palette_import_gradient_changed (LigmaContext  *context,
+                                 LigmaGradient *gradient,
                                  ImportDialog *private)
 {
   if (gradient && private->import_type == GRADIENT_IMPORT)
     {
       gtk_entry_set_text (GTK_ENTRY (private->entry),
-                          gimp_object_get_name (gradient));
+                          ligma_object_get_name (gradient));
 
       palette_import_make_palette (private);
     }
 }
 
 static void
-palette_import_image_changed (GimpContext  *context,
-                              GimpImage    *image,
+palette_import_image_changed (LigmaContext  *context,
+                              LigmaImage    *image,
                               ImportDialog *private)
 {
   if (private->image)
@@ -500,15 +500,15 @@ palette_import_image_changed (GimpContext  *context,
           gchar *label;
 
           label = g_strdup_printf ("%s-%d",
-                                   gimp_image_get_display_name (image),
-                                   gimp_image_get_id (image));
+                                   ligma_image_get_display_name (image),
+                                   ligma_image_get_id (image));
 
           gtk_entry_set_text (GTK_ENTRY (private->entry), label);
           g_free (label);
 
           palette_import_make_palette (private);
 
-          if (gimp_image_get_base_type (image) != GIMP_INDEXED)
+          if (ligma_image_get_base_type (image) != LIGMA_INDEXED)
             sensitive = TRUE;
         }
 
@@ -530,7 +530,7 @@ palette_import_image_changed (GimpContext  *context,
 }
 
 static void
-palette_import_layer_changed (GimpImage    *image,
+palette_import_layer_changed (LigmaImage    *image,
                               ImportDialog *private)
 {
   if (private->import_type == IMAGE_IMPORT &&
@@ -542,7 +542,7 @@ palette_import_layer_changed (GimpImage    *image,
 }
 
 static void
-palette_import_mask_changed (GimpImage    *image,
+palette_import_mask_changed (LigmaImage    *image,
                              ImportDialog *private)
 {
   if (private->import_type == IMAGE_IMPORT &&
@@ -586,22 +586,22 @@ static void
 import_dialog_drop_callback (GtkWidget    *widget,
                              gint          x,
                              gint          y,
-                             GimpViewable *viewable,
+                             LigmaViewable *viewable,
                              gpointer      data)
 {
   ImportDialog *private = data;
 
-  gimp_context_set_by_type (private->context,
+  ligma_context_set_by_type (private->context,
                             G_TYPE_FROM_INSTANCE (viewable),
-                            GIMP_OBJECT (viewable));
+                            LIGMA_OBJECT (viewable));
 
-  if (GIMP_IS_GRADIENT (viewable) &&
+  if (LIGMA_IS_GRADIENT (viewable) &&
       private->import_type != GRADIENT_IMPORT)
     {
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (private->gradient_radio),
                                     TRUE);
     }
-  else if (GIMP_IS_IMAGE (viewable) &&
+  else if (LIGMA_IS_IMAGE (viewable) &&
            private->import_type != IMAGE_IMPORT)
     {
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (private->image_radio),
@@ -634,17 +634,17 @@ static void
 palette_import_grad_callback (GtkWidget    *widget,
                               ImportDialog *private)
 {
-  GimpGradient *gradient;
+  LigmaGradient *gradient;
 
   if (! gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
     return;
 
   private->import_type = GRADIENT_IMPORT;
 
-  gradient = gimp_context_get_gradient (private->context);
+  gradient = ligma_context_get_gradient (private->context);
 
   gtk_entry_set_text (GTK_ENTRY (private->entry),
-                      gimp_object_get_name (gradient));
+                      ligma_object_get_name (gradient));
 
   palette_import_set_sensitive (private);
 
@@ -655,20 +655,20 @@ static void
 palette_import_image_callback (GtkWidget    *widget,
                                ImportDialog *private)
 {
-  GimpImage *image;
+  LigmaImage *image;
 
   if (! gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
     return;
 
   private->import_type = IMAGE_IMPORT;
 
-  image = gimp_context_get_image (private->context);
+  image = ligma_context_get_image (private->context);
 
   if (! image)
     {
-      GimpContainer *images = private->context->gimp->images;
+      LigmaContainer *images = private->context->ligma->images;
 
-      image = GIMP_IMAGE (gimp_container_get_first_child (images));
+      image = LIGMA_IMAGE (ligma_container_get_first_child (images));
     }
 
   palette_import_set_sensitive (private);
@@ -709,35 +709,35 @@ palette_import_file_callback (GtkWidget    *widget,
 }
 
 static void
-palette_import_columns_changed (GimpLabelSpin *columns,
+palette_import_columns_changed (LigmaLabelSpin *columns,
                                 ImportDialog  *private)
 {
   if (private->palette)
-    gimp_palette_set_columns (private->palette,
-                              ROUND (gimp_label_spin_get_value (columns)));
+    ligma_palette_set_columns (private->palette,
+                              ROUND (ligma_label_spin_get_value (columns)));
 }
 
 
 /*  functions & callbacks to keep the import dialog uptodate  ****************/
 
 static void
-palette_import_image_add (GimpContainer *container,
-                          GimpImage     *image,
+palette_import_image_add (LigmaContainer *container,
+                          LigmaImage     *image,
                           ImportDialog  *private)
 {
   if (! gtk_widget_is_sensitive (private->image_radio))
     {
       gtk_widget_set_sensitive (private->image_radio, TRUE);
-      gimp_context_set_image (private->context, image);
+      ligma_context_set_image (private->context, image);
     }
 }
 
 static void
-palette_import_image_remove (GimpContainer *container,
-                             GimpImage     *image,
+palette_import_image_remove (LigmaContainer *container,
+                             LigmaImage     *image,
                              ImportDialog  *private)
 {
-  if (! gimp_container_get_n_children (private->context->gimp->images))
+  if (! ligma_container_get_n_children (private->context->ligma->images))
     {
       if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (private->image_radio)))
         gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (private->gradient_radio),
@@ -750,7 +750,7 @@ palette_import_image_remove (GimpContainer *container,
 static void
 palette_import_make_palette (ImportDialog *private)
 {
-  GimpPalette  *palette = NULL;
+  LigmaPalette  *palette = NULL;
   const gchar  *palette_name;
   gint          n_colors;
   gint          n_columns;
@@ -761,22 +761,22 @@ palette_import_make_palette (ImportDialog *private)
   if (! palette_name || ! strlen (palette_name))
     palette_name = _("Untitled");
 
-  n_colors  = ROUND (gimp_label_spin_get_value (GIMP_LABEL_SPIN (private->num_colors)));
-  n_columns = ROUND (gimp_label_spin_get_value (GIMP_LABEL_SPIN (private->columns)));
-  threshold = ROUND (gimp_label_spin_get_value (GIMP_LABEL_SPIN (private->threshold)));
+  n_colors  = ROUND (ligma_label_spin_get_value (LIGMA_LABEL_SPIN (private->num_colors)));
+  n_columns = ROUND (ligma_label_spin_get_value (LIGMA_LABEL_SPIN (private->columns)));
+  threshold = ROUND (ligma_label_spin_get_value (LIGMA_LABEL_SPIN (private->threshold)));
 
   switch (private->import_type)
     {
     case GRADIENT_IMPORT:
       {
-        GimpGradient *gradient;
+        LigmaGradient *gradient;
 
-        gradient = gimp_context_get_gradient (private->context);
+        gradient = ligma_context_get_gradient (private->context);
 
-        palette = gimp_palette_import_from_gradient (gradient,
+        palette = ligma_palette_import_from_gradient (gradient,
                                                      private->context,
                                                      FALSE,
-                                                     GIMP_GRADIENT_BLEND_RGB_PERCEPTUAL,
+                                                     LIGMA_GRADIENT_BLEND_RGB_PERCEPTUAL,
                                                      palette_name,
                                                      n_colors);
       }
@@ -784,7 +784,7 @@ palette_import_make_palette (ImportDialog *private)
 
     case IMAGE_IMPORT:
       {
-        GimpImage *image = gimp_context_get_image (private->context);
+        LigmaImage *image = ligma_context_get_image (private->context);
         gboolean   sample_merged;
         gboolean   selection_only;
 
@@ -796,15 +796,15 @@ palette_import_make_palette (ImportDialog *private)
           gtk_toggle_button_get_active
           (GTK_TOGGLE_BUTTON (private->selection_only_toggle));
 
-        if (gimp_image_get_base_type (image) == GIMP_INDEXED)
+        if (ligma_image_get_base_type (image) == LIGMA_INDEXED)
           {
-            palette = gimp_palette_import_from_indexed_image (image,
+            palette = ligma_palette_import_from_indexed_image (image,
                                                               private->context,
                                                               palette_name);
           }
         else if (sample_merged)
           {
-            palette = gimp_palette_import_from_image (image,
+            palette = ligma_palette_import_from_image (image,
                                                       private->context,
                                                       palette_name,
                                                       n_colors,
@@ -815,10 +815,10 @@ palette_import_make_palette (ImportDialog *private)
           {
             GList *drawables;
 
-            drawables = gimp_image_get_selected_layers (image);
+            drawables = ligma_image_get_selected_layers (image);
 
             if (drawables)
-              palette = gimp_palette_import_from_drawables (drawables,
+              palette = ligma_palette_import_from_drawables (drawables,
                                                             private->context,
                                                             palette_name,
                                                             n_colors,
@@ -835,15 +835,15 @@ palette_import_make_palette (ImportDialog *private)
 
         file = gtk_file_chooser_get_file (GTK_FILE_CHOOSER (private->file_chooser));
 
-        palette = gimp_palette_import_from_file (private->context,
+        palette = ligma_palette_import_from_file (private->context,
                                                  file,
                                                  palette_name, &error);
         g_object_unref (file);
 
         if (! palette)
           {
-            gimp_message_literal (private->context->gimp,
-                                  G_OBJECT (private->dialog), GIMP_MESSAGE_ERROR,
+            ligma_message_literal (private->context->ligma,
+                                  G_OBJECT (private->dialog), LIGMA_MESSAGE_ERROR,
                                   error->message);
             g_error_free (error);
           }
@@ -858,14 +858,14 @@ palette_import_make_palette (ImportDialog *private)
 
   if (palette)
     {
-      gimp_palette_set_columns (palette, n_columns);
+      ligma_palette_set_columns (palette, n_columns);
 
-      gimp_view_set_viewable (GIMP_VIEW (private->preview),
-                              GIMP_VIEWABLE (palette));
+      ligma_view_set_viewable (LIGMA_VIEW (private->preview),
+                              LIGMA_VIEWABLE (palette));
 
     }
 
   gtk_widget_set_visible (private->no_colors_label,
                           ! (palette &&
-                             gimp_palette_get_n_colors (palette) > 0));
+                             ligma_palette_get_n_colors (palette) > 0));
 }

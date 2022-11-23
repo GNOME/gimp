@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,8 +21,8 @@
 #include <glib.h>
 #include <gtk/gtk.h>
 
-#include <libgimp/gimp.h>
-#include "libgimp/stdplugins-intl.h"
+#include <libligma/ligma.h>
+#include "libligma/stdplugins-intl.h"
 
 #include "metadata-tags.h"
 
@@ -37,106 +37,106 @@
 const metadata_tag default_metadata_tags[] =
 {
   /* Description */
-  { "Xmp.dc.title",                              "single", 16,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, //  0
-  { "Xmp.dc.creator",                            "single", 13,  TAG_TYPE_XMP, GIMP_XMP_SEQ   }, //  1
-  { "Xmp.dc.description",                        "multi",  14,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, //  2
-  { "Xmp.dc.subject",                            "multi",  15,  TAG_TYPE_XMP, GIMP_XMP_BAG   }, //  3
-  { "Xmp.dc.rights",                             "single", 17,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, //  4
-  { "Xmp.photoshop.AuthorsPosition",             "single", 19,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, //  5
-  { "Xmp.photoshop.CaptionWriter",               "single", 21,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, //  6
-  { "Xmp.xmp.Rating",                            "combo",  -1,  TAG_TYPE_XMP, GIMP_XMP_NONE  }, //  7
-  { "Xmp.xmpRights.Marked",                      "combo",  -1,  TAG_TYPE_XMP, GIMP_XMP_NONE  }, //  8
-  { "Xmp.xmpRights.WebStatement",                "single", -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, //  9
+  { "Xmp.dc.title",                              "single", 16,  TAG_TYPE_XMP, LIGMA_XMP_TEXT  }, //  0
+  { "Xmp.dc.creator",                            "single", 13,  TAG_TYPE_XMP, LIGMA_XMP_SEQ   }, //  1
+  { "Xmp.dc.description",                        "multi",  14,  TAG_TYPE_XMP, LIGMA_XMP_TEXT  }, //  2
+  { "Xmp.dc.subject",                            "multi",  15,  TAG_TYPE_XMP, LIGMA_XMP_BAG   }, //  3
+  { "Xmp.dc.rights",                             "single", 17,  TAG_TYPE_XMP, LIGMA_XMP_TEXT  }, //  4
+  { "Xmp.photoshop.AuthorsPosition",             "single", 19,  TAG_TYPE_XMP, LIGMA_XMP_TEXT  }, //  5
+  { "Xmp.photoshop.CaptionWriter",               "single", 21,  TAG_TYPE_XMP, LIGMA_XMP_TEXT  }, //  6
+  { "Xmp.xmp.Rating",                            "combo",  -1,  TAG_TYPE_XMP, LIGMA_XMP_NONE  }, //  7
+  { "Xmp.xmpRights.Marked",                      "combo",  -1,  TAG_TYPE_XMP, LIGMA_XMP_NONE  }, //  8
+  { "Xmp.xmpRights.WebStatement",                "single", -1,  TAG_TYPE_XMP, LIGMA_XMP_TEXT  }, //  9
 
   /* IPTC */
-  { "Xmp.photoshop.DateCreated",                 "single",  0,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 10
-  { "Xmp.photoshop.Headline",                    "multi",   3,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 11
-  { "Xmp.photoshop.TransmissionReference",       "single",  1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 12
-  { "Xmp.photoshop.Instructions",                "multi",   2,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 13
-  { "Xmp.iptc.IntellectualGenre",                "single", -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 14
-  { "Xmp.iptc.Scene",                            "multi",  -1,  TAG_TYPE_XMP, GIMP_XMP_BAG   }, // 15
-  { "Xmp.iptc.Location",                         "single", 18,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 16
-  { "Xmp.iptc.CountryCode",                      "single", 20,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 17
-  { "Xmp.iptc.SubjectCode",                      "multi",  -1,  TAG_TYPE_XMP, GIMP_XMP_BAG   }, // 18
-  { "Xmp.xmpRights.UsageTerms",                  "multi",  -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 19
-  { "Xmp.photoshop.City",                        "single",  5,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 20
-  { "Xmp.photoshop.State",                       "single",  6,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 21
-  { "Xmp.photoshop.Country",                     "single",  7,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 22
+  { "Xmp.photoshop.DateCreated",                 "single",  0,  TAG_TYPE_XMP, LIGMA_XMP_TEXT  }, // 10
+  { "Xmp.photoshop.Headline",                    "multi",   3,  TAG_TYPE_XMP, LIGMA_XMP_TEXT  }, // 11
+  { "Xmp.photoshop.TransmissionReference",       "single",  1,  TAG_TYPE_XMP, LIGMA_XMP_TEXT  }, // 12
+  { "Xmp.photoshop.Instructions",                "multi",   2,  TAG_TYPE_XMP, LIGMA_XMP_TEXT  }, // 13
+  { "Xmp.iptc.IntellectualGenre",                "single", -1,  TAG_TYPE_XMP, LIGMA_XMP_TEXT  }, // 14
+  { "Xmp.iptc.Scene",                            "multi",  -1,  TAG_TYPE_XMP, LIGMA_XMP_BAG   }, // 15
+  { "Xmp.iptc.Location",                         "single", 18,  TAG_TYPE_XMP, LIGMA_XMP_TEXT  }, // 16
+  { "Xmp.iptc.CountryCode",                      "single", 20,  TAG_TYPE_XMP, LIGMA_XMP_TEXT  }, // 17
+  { "Xmp.iptc.SubjectCode",                      "multi",  -1,  TAG_TYPE_XMP, LIGMA_XMP_BAG   }, // 18
+  { "Xmp.xmpRights.UsageTerms",                  "multi",  -1,  TAG_TYPE_XMP, LIGMA_XMP_TEXT  }, // 19
+  { "Xmp.photoshop.City",                        "single",  5,  TAG_TYPE_XMP, LIGMA_XMP_TEXT  }, // 20
+  { "Xmp.photoshop.State",                       "single",  6,  TAG_TYPE_XMP, LIGMA_XMP_TEXT  }, // 21
+  { "Xmp.photoshop.Country",                     "single",  7,  TAG_TYPE_XMP, LIGMA_XMP_TEXT  }, // 22
   /* Xmp.photoshop.CaptionWriter here is a duplicate of #6 above. We keep it here to not have
    * to renumber the tag references. It seems it is not used on the IPTC tab. */
-  { "Xmp.photoshop.CaptionWriter",               "single", -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 23
-  { "Xmp.photoshop.Credit",                      "single",  8,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 24
-  { "Xmp.photoshop.Source",                      "single",  9,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 25
-  { "Xmp.photoshop.Urgency",                     "combo",  11,  TAG_TYPE_XMP, GIMP_XMP_NONE  }, // 26
+  { "Xmp.photoshop.CaptionWriter",               "single", -1,  TAG_TYPE_XMP, LIGMA_XMP_TEXT  }, // 23
+  { "Xmp.photoshop.Credit",                      "single",  8,  TAG_TYPE_XMP, LIGMA_XMP_TEXT  }, // 24
+  { "Xmp.photoshop.Source",                      "single",  9,  TAG_TYPE_XMP, LIGMA_XMP_TEXT  }, // 25
+  { "Xmp.photoshop.Urgency",                     "combo",  11,  TAG_TYPE_XMP, LIGMA_XMP_NONE  }, // 26
 
   /* IPTC Extension */
-  { "Xmp.iptcExt.PersonInImage",                 "multi",  -1,  TAG_TYPE_XMP, GIMP_XMP_BAG   }, // 27
-  { "Xmp.iptcExt.Sublocation",                   "single", 12,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 28
-  { "Xmp.iptcExt.City",                          "single", -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 29
-  { "Xmp.iptcExt.ProvinceState",                 "single", -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 30
-  { "Xmp.iptcExt.CountryName",                   "single", -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 31
-  { "Xmp.iptcExt.CountryCode",                   "single", -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 32
-  { "Xmp.iptcExt.WorldRegion",                   "single", -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 33
-  { "Xmp.iptcExt.LocationShown",                 "list",   -1,  TAG_TYPE_XMP, GIMP_XMP_NONE  }, // 34
-  { "Xmp.iptcExt.OrganisationInImageName",       "list",   -1,  TAG_TYPE_XMP, GIMP_XMP_NONE  }, // 35
-  { "Xmp.iptcExt.OrganisationInImageCode",       "list",   -1,  TAG_TYPE_XMP, GIMP_XMP_NONE  }, // 36
-  { "Xmp.iptcExt.Event",                         "single", -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 37
-  { "Xmp.iptcExt.RegistryId",                    "list",   -1,  TAG_TYPE_XMP, GIMP_XMP_NONE  }, // 38
-  { "Xmp.iptcExt.ArtworkOrObject",               "list",   -1,  TAG_TYPE_XMP, GIMP_XMP_NONE  }, // 39
-  { "Xmp.iptcExt.AddlModelInfo",                 "multi",  -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 40
-  { "Xmp.iptcExt.ModelAge",                      "single", -1,  TAG_TYPE_XMP, GIMP_XMP_BAG   }, // 41
-  { "Xmp.iptcExt.MaxAvailWidth",                 "single", -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 42
-  { "Xmp.iptcExt.MaxAvailHeight",                "single", -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 43
-  { "Xmp.iptcExt.DigitalSourceType",             "combo",  -1,  TAG_TYPE_XMP, GIMP_XMP_NONE  }, // 44
-  { "Xmp.plus.MinorModelAgeDisclosure",          "combo",  -1,  TAG_TYPE_XMP, GIMP_XMP_NONE  }, // 45
-  { "Xmp.plus.ModelReleaseStatus",               "combo",  -1,  TAG_TYPE_XMP, GIMP_XMP_NONE  }, // 46
-  { "Xmp.plus.ModelReleaseID",                   "list",   -1,  TAG_TYPE_XMP, GIMP_XMP_NONE  }, // 47
-  { "Xmp.plus.ImageSupplierName",                "multi",  -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 48
-  { "Xmp.plus.ImageSupplierID",                  "single", -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 49
-  { "Xmp.plus.ImageSupplierImageID",             "single", -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 50
-  { "Xmp.plus.ImageCreator",                     "list",   -1,  TAG_TYPE_XMP, GIMP_XMP_NONE  }, // 51
-  { "Xmp.plus.CopyrightOwner",                   "list",   -1,  TAG_TYPE_XMP, GIMP_XMP_NONE  }, // 52
-  { "Xmp.plus.Licensor",                         "list",   -1,  TAG_TYPE_XMP, GIMP_XMP_NONE  }, // 53
-  { "Xmp.plus.PropertyReleaseStatus",            "combo",  -1,  TAG_TYPE_XMP, GIMP_XMP_NONE  }, // 54
-  { "Xmp.plus.PropertyReleaseID",                "list",   -1,  TAG_TYPE_XMP, GIMP_XMP_NONE  }, // 55
+  { "Xmp.iptcExt.PersonInImage",                 "multi",  -1,  TAG_TYPE_XMP, LIGMA_XMP_BAG   }, // 27
+  { "Xmp.iptcExt.Sublocation",                   "single", 12,  TAG_TYPE_XMP, LIGMA_XMP_TEXT  }, // 28
+  { "Xmp.iptcExt.City",                          "single", -1,  TAG_TYPE_XMP, LIGMA_XMP_TEXT  }, // 29
+  { "Xmp.iptcExt.ProvinceState",                 "single", -1,  TAG_TYPE_XMP, LIGMA_XMP_TEXT  }, // 30
+  { "Xmp.iptcExt.CountryName",                   "single", -1,  TAG_TYPE_XMP, LIGMA_XMP_TEXT  }, // 31
+  { "Xmp.iptcExt.CountryCode",                   "single", -1,  TAG_TYPE_XMP, LIGMA_XMP_TEXT  }, // 32
+  { "Xmp.iptcExt.WorldRegion",                   "single", -1,  TAG_TYPE_XMP, LIGMA_XMP_TEXT  }, // 33
+  { "Xmp.iptcExt.LocationShown",                 "list",   -1,  TAG_TYPE_XMP, LIGMA_XMP_NONE  }, // 34
+  { "Xmp.iptcExt.OrganisationInImageName",       "list",   -1,  TAG_TYPE_XMP, LIGMA_XMP_NONE  }, // 35
+  { "Xmp.iptcExt.OrganisationInImageCode",       "list",   -1,  TAG_TYPE_XMP, LIGMA_XMP_NONE  }, // 36
+  { "Xmp.iptcExt.Event",                         "single", -1,  TAG_TYPE_XMP, LIGMA_XMP_TEXT  }, // 37
+  { "Xmp.iptcExt.RegistryId",                    "list",   -1,  TAG_TYPE_XMP, LIGMA_XMP_NONE  }, // 38
+  { "Xmp.iptcExt.ArtworkOrObject",               "list",   -1,  TAG_TYPE_XMP, LIGMA_XMP_NONE  }, // 39
+  { "Xmp.iptcExt.AddlModelInfo",                 "multi",  -1,  TAG_TYPE_XMP, LIGMA_XMP_TEXT  }, // 40
+  { "Xmp.iptcExt.ModelAge",                      "single", -1,  TAG_TYPE_XMP, LIGMA_XMP_BAG   }, // 41
+  { "Xmp.iptcExt.MaxAvailWidth",                 "single", -1,  TAG_TYPE_XMP, LIGMA_XMP_TEXT  }, // 42
+  { "Xmp.iptcExt.MaxAvailHeight",                "single", -1,  TAG_TYPE_XMP, LIGMA_XMP_TEXT  }, // 43
+  { "Xmp.iptcExt.DigitalSourceType",             "combo",  -1,  TAG_TYPE_XMP, LIGMA_XMP_NONE  }, // 44
+  { "Xmp.plus.MinorModelAgeDisclosure",          "combo",  -1,  TAG_TYPE_XMP, LIGMA_XMP_NONE  }, // 45
+  { "Xmp.plus.ModelReleaseStatus",               "combo",  -1,  TAG_TYPE_XMP, LIGMA_XMP_NONE  }, // 46
+  { "Xmp.plus.ModelReleaseID",                   "list",   -1,  TAG_TYPE_XMP, LIGMA_XMP_NONE  }, // 47
+  { "Xmp.plus.ImageSupplierName",                "multi",  -1,  TAG_TYPE_XMP, LIGMA_XMP_TEXT  }, // 48
+  { "Xmp.plus.ImageSupplierID",                  "single", -1,  TAG_TYPE_XMP, LIGMA_XMP_TEXT  }, // 49
+  { "Xmp.plus.ImageSupplierImageID",             "single", -1,  TAG_TYPE_XMP, LIGMA_XMP_TEXT  }, // 50
+  { "Xmp.plus.ImageCreator",                     "list",   -1,  TAG_TYPE_XMP, LIGMA_XMP_NONE  }, // 51
+  { "Xmp.plus.CopyrightOwner",                   "list",   -1,  TAG_TYPE_XMP, LIGMA_XMP_NONE  }, // 52
+  { "Xmp.plus.Licensor",                         "list",   -1,  TAG_TYPE_XMP, LIGMA_XMP_NONE  }, // 53
+  { "Xmp.plus.PropertyReleaseStatus",            "combo",  -1,  TAG_TYPE_XMP, LIGMA_XMP_NONE  }, // 54
+  { "Xmp.plus.PropertyReleaseID",                "list",   -1,  TAG_TYPE_XMP, LIGMA_XMP_NONE  }, // 55
 
   /* Categories */
-  { "Xmp.photoshop.Category",                    "single",  4,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 56
-  { "Xmp.photoshop.SupplementalCategories",      "multi",  10,  TAG_TYPE_XMP, GIMP_XMP_BAG   }, // 57
+  { "Xmp.photoshop.Category",                    "single",  4,  TAG_TYPE_XMP, LIGMA_XMP_TEXT  }, // 56
+  { "Xmp.photoshop.SupplementalCategories",      "multi",  10,  TAG_TYPE_XMP, LIGMA_XMP_BAG   }, // 57
 
   /* GPS */
-  { "Exif.GPSInfo.GPSLongitude",                 "single", -1,  TAG_TYPE_EXIF, GIMP_XMP_NONE }, // 58
-  { "Exif.GPSInfo.GPSLongitudeRef",              "combo",  -1,  TAG_TYPE_EXIF, GIMP_XMP_NONE }, // 59
-  { "Exif.GPSInfo.GPSLatitude",                  "single", -1,  TAG_TYPE_EXIF, GIMP_XMP_NONE }, // 60
-  { "Exif.GPSInfo.GPSLatitudeRef",               "combo",  -1,  TAG_TYPE_EXIF, GIMP_XMP_NONE }, // 61
-  { "Exif.GPSInfo.GPSAltitude",                  "single", -1,  TAG_TYPE_EXIF, GIMP_XMP_NONE }, // 62
-  { "Exif.GPSInfo.GPSAltitudeRef",               "combo",  -1,  TAG_TYPE_EXIF, GIMP_XMP_NONE }, // 63
+  { "Exif.GPSInfo.GPSLongitude",                 "single", -1,  TAG_TYPE_EXIF, LIGMA_XMP_NONE }, // 58
+  { "Exif.GPSInfo.GPSLongitudeRef",              "combo",  -1,  TAG_TYPE_EXIF, LIGMA_XMP_NONE }, // 59
+  { "Exif.GPSInfo.GPSLatitude",                  "single", -1,  TAG_TYPE_EXIF, LIGMA_XMP_NONE }, // 60
+  { "Exif.GPSInfo.GPSLatitudeRef",               "combo",  -1,  TAG_TYPE_EXIF, LIGMA_XMP_NONE }, // 61
+  { "Exif.GPSInfo.GPSAltitude",                  "single", -1,  TAG_TYPE_EXIF, LIGMA_XMP_NONE }, // 62
+  { "Exif.GPSInfo.GPSAltitudeRef",               "combo",  -1,  TAG_TYPE_EXIF, LIGMA_XMP_NONE }, // 63
 
   /* DICOM */
-  { "Xmp.DICOM.PatientName",                     "single", -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 64
-  { "Xmp.DICOM.PatientID",                       "single", -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 65
-  { "Xmp.DICOM.PatientDOB",                      "single", -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 66
-  { "Xmp.DICOM.PatientSex",                      "combo",  -1,  TAG_TYPE_XMP, GIMP_XMP_NONE  }, // 67
-  { "Xmp.DICOM.StudyID",                         "single", -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 68
-  { "Xmp.DICOM.StudyPhysician",                  "single", -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 69
-  { "Xmp.DICOM.StudyDateTime",                   "single", -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 70
-  { "Xmp.DICOM.StudyDescription",                "multi",  -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 71
-  { "Xmp.DICOM.SeriesNumber",                    "single", -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 72
-  { "Xmp.DICOM.SeriesModality",                  "single", -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 73
-  { "Xmp.DICOM.SeriesDateTime",                  "single", -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 74
-  { "Xmp.DICOM.SeriesDescription",               "multi",  -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 75
-  { "Xmp.DICOM.EquipmentInstitution",            "single", -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 76
-  { "Xmp.DICOM.EquipmentManufacturer",           "single", -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 77
+  { "Xmp.DICOM.PatientName",                     "single", -1,  TAG_TYPE_XMP, LIGMA_XMP_TEXT  }, // 64
+  { "Xmp.DICOM.PatientID",                       "single", -1,  TAG_TYPE_XMP, LIGMA_XMP_TEXT  }, // 65
+  { "Xmp.DICOM.PatientDOB",                      "single", -1,  TAG_TYPE_XMP, LIGMA_XMP_TEXT  }, // 66
+  { "Xmp.DICOM.PatientSex",                      "combo",  -1,  TAG_TYPE_XMP, LIGMA_XMP_NONE  }, // 67
+  { "Xmp.DICOM.StudyID",                         "single", -1,  TAG_TYPE_XMP, LIGMA_XMP_TEXT  }, // 68
+  { "Xmp.DICOM.StudyPhysician",                  "single", -1,  TAG_TYPE_XMP, LIGMA_XMP_TEXT  }, // 69
+  { "Xmp.DICOM.StudyDateTime",                   "single", -1,  TAG_TYPE_XMP, LIGMA_XMP_TEXT  }, // 70
+  { "Xmp.DICOM.StudyDescription",                "multi",  -1,  TAG_TYPE_XMP, LIGMA_XMP_TEXT  }, // 71
+  { "Xmp.DICOM.SeriesNumber",                    "single", -1,  TAG_TYPE_XMP, LIGMA_XMP_TEXT  }, // 72
+  { "Xmp.DICOM.SeriesModality",                  "single", -1,  TAG_TYPE_XMP, LIGMA_XMP_TEXT  }, // 73
+  { "Xmp.DICOM.SeriesDateTime",                  "single", -1,  TAG_TYPE_XMP, LIGMA_XMP_TEXT  }, // 74
+  { "Xmp.DICOM.SeriesDescription",               "multi",  -1,  TAG_TYPE_XMP, LIGMA_XMP_TEXT  }, // 75
+  { "Xmp.DICOM.EquipmentInstitution",            "single", -1,  TAG_TYPE_XMP, LIGMA_XMP_TEXT  }, // 76
+  { "Xmp.DICOM.EquipmentManufacturer",           "single", -1,  TAG_TYPE_XMP, LIGMA_XMP_TEXT  }, // 77
 
   /* IPTC */
-  { "Xmp.iptc.CiAdrExtadr",                      "multi",  -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 78
-  { "Xmp.iptc.CiAdrCity",                        "single", -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 79
-  { "Xmp.iptc.CiAdrRegion",                      "single", -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 80
-  { "Xmp.iptc.CiAdrPcode",                       "single", -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 81
-  { "Xmp.iptc.CiAdrCtry",                        "single", -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 82
-  { "Xmp.iptc.CiTelWork",                        "multi",  -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 83
-  { "Xmp.iptc.CiEmailWork",                      "multi",  -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }, // 84
-  { "Xmp.iptc.CiUrlWork",                        "multi",  -1,  TAG_TYPE_XMP, GIMP_XMP_TEXT  }  // 85
+  { "Xmp.iptc.CiAdrExtadr",                      "multi",  -1,  TAG_TYPE_XMP, LIGMA_XMP_TEXT  }, // 78
+  { "Xmp.iptc.CiAdrCity",                        "single", -1,  TAG_TYPE_XMP, LIGMA_XMP_TEXT  }, // 79
+  { "Xmp.iptc.CiAdrRegion",                      "single", -1,  TAG_TYPE_XMP, LIGMA_XMP_TEXT  }, // 80
+  { "Xmp.iptc.CiAdrPcode",                       "single", -1,  TAG_TYPE_XMP, LIGMA_XMP_TEXT  }, // 81
+  { "Xmp.iptc.CiAdrCtry",                        "single", -1,  TAG_TYPE_XMP, LIGMA_XMP_TEXT  }, // 82
+  { "Xmp.iptc.CiTelWork",                        "multi",  -1,  TAG_TYPE_XMP, LIGMA_XMP_TEXT  }, // 83
+  { "Xmp.iptc.CiEmailWork",                      "multi",  -1,  TAG_TYPE_XMP, LIGMA_XMP_TEXT  }, // 84
+  { "Xmp.iptc.CiUrlWork",                        "multi",  -1,  TAG_TYPE_XMP, LIGMA_XMP_TEXT  }  // 85
 
 };
 const gint n_default_metadata_tags = G_N_ELEMENTS (default_metadata_tags);
@@ -147,28 +147,28 @@ const gint n_default_metadata_tags = G_N_ELEMENTS (default_metadata_tags);
  */
 const metadata_tag equivalent_metadata_tags[] =
 {
-  { "Iptc.Application2.DateCreated",             "single", 10,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, //  0
-  { "Iptc.Application2.TransmissionReference",   "single", 12,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, //  1
-  { "Iptc.Application2.SpecialInstructions",     "single", 13,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, //  2
-  { "Iptc.Application2.Headline",                "single", 11,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, //  3
-  { "Iptc.Application2.Category",                "single", 56,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, //  4
-  { "Iptc.Application2.City",                    "single", 20,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, //  5
-  { "Iptc.Application2.ProvinceState",           "single", 21,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, //  6
-  { "Iptc.Application2.CountryName",             "single", 22,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, //  7
-  { "Iptc.Application2.Credit",                  "single", 24,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, //  8
-  { "Iptc.Application2.Source",                  "single", 25,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, //  9
-  { "Iptc.Application2.SuppCategory",            "multi",  57,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, // 10
-  { "Iptc.Application2.Urgency",                 "combo",  26,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, // 11
-  { "Iptc.Application2.SubLocation",             "single", 28,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, // 12
-  { "Iptc.Application2.Byline",                  "single",  1,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, // 13
-  { "Iptc.Application2.Caption",                 "single",  2,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, // 14
-  { "Iptc.Application2.Keywords",                "multi",   3,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, // 15
-  { "Iptc.Application2.ObjectName",              "single",  0,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, // 16
-  { "Iptc.Application2.Copyright",               "single",  4,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, // 17
-  { "Iptc.Application2.LocationName",            "multi",  16,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, // 18
-  { "Iptc.Application2.BylineTitle",             "multi",   5,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, // 19
-  { "Iptc.Application2.CountryCode",             "single", 17,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, // 20
-  { "Iptc.Application2.Writer",                  "multi",   6,  TAG_TYPE_IPTC, GIMP_XMP_NONE }, // 21
+  { "Iptc.Application2.DateCreated",             "single", 10,  TAG_TYPE_IPTC, LIGMA_XMP_NONE }, //  0
+  { "Iptc.Application2.TransmissionReference",   "single", 12,  TAG_TYPE_IPTC, LIGMA_XMP_NONE }, //  1
+  { "Iptc.Application2.SpecialInstructions",     "single", 13,  TAG_TYPE_IPTC, LIGMA_XMP_NONE }, //  2
+  { "Iptc.Application2.Headline",                "single", 11,  TAG_TYPE_IPTC, LIGMA_XMP_NONE }, //  3
+  { "Iptc.Application2.Category",                "single", 56,  TAG_TYPE_IPTC, LIGMA_XMP_NONE }, //  4
+  { "Iptc.Application2.City",                    "single", 20,  TAG_TYPE_IPTC, LIGMA_XMP_NONE }, //  5
+  { "Iptc.Application2.ProvinceState",           "single", 21,  TAG_TYPE_IPTC, LIGMA_XMP_NONE }, //  6
+  { "Iptc.Application2.CountryName",             "single", 22,  TAG_TYPE_IPTC, LIGMA_XMP_NONE }, //  7
+  { "Iptc.Application2.Credit",                  "single", 24,  TAG_TYPE_IPTC, LIGMA_XMP_NONE }, //  8
+  { "Iptc.Application2.Source",                  "single", 25,  TAG_TYPE_IPTC, LIGMA_XMP_NONE }, //  9
+  { "Iptc.Application2.SuppCategory",            "multi",  57,  TAG_TYPE_IPTC, LIGMA_XMP_NONE }, // 10
+  { "Iptc.Application2.Urgency",                 "combo",  26,  TAG_TYPE_IPTC, LIGMA_XMP_NONE }, // 11
+  { "Iptc.Application2.SubLocation",             "single", 28,  TAG_TYPE_IPTC, LIGMA_XMP_NONE }, // 12
+  { "Iptc.Application2.Byline",                  "single",  1,  TAG_TYPE_IPTC, LIGMA_XMP_NONE }, // 13
+  { "Iptc.Application2.Caption",                 "single",  2,  TAG_TYPE_IPTC, LIGMA_XMP_NONE }, // 14
+  { "Iptc.Application2.Keywords",                "multi",   3,  TAG_TYPE_IPTC, LIGMA_XMP_NONE }, // 15
+  { "Iptc.Application2.ObjectName",              "single",  0,  TAG_TYPE_IPTC, LIGMA_XMP_NONE }, // 16
+  { "Iptc.Application2.Copyright",               "single",  4,  TAG_TYPE_IPTC, LIGMA_XMP_NONE }, // 17
+  { "Iptc.Application2.LocationName",            "multi",  16,  TAG_TYPE_IPTC, LIGMA_XMP_NONE }, // 18
+  { "Iptc.Application2.BylineTitle",             "multi",   5,  TAG_TYPE_IPTC, LIGMA_XMP_NONE }, // 19
+  { "Iptc.Application2.CountryCode",             "single", 17,  TAG_TYPE_IPTC, LIGMA_XMP_NONE }, // 20
+  { "Iptc.Application2.Writer",                  "multi",   6,  TAG_TYPE_IPTC, LIGMA_XMP_NONE }, // 21
 };
 const gint n_equivalent_metadata_tags = G_N_ELEMENTS (equivalent_metadata_tags);
 

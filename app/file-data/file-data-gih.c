@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,35 +21,35 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpbase/gimpparasiteio.h"
-#include "libgimpcolor/gimpcolor.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmabase/ligmaparasiteio.h"
+#include "libligmacolor/ligmacolor.h"
 
 #include "core/core-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpbrushpipe.h"
-#include "core/gimpbrushpipe-load.h"
-#include "core/gimpbrush-private.h"
-#include "core/gimpdrawable.h"
-#include "core/gimpimage.h"
-#include "core/gimplayer-new.h"
-#include "core/gimpparamspecs.h"
-#include "core/gimptempbuf.h"
+#include "core/ligma.h"
+#include "core/ligmabrushpipe.h"
+#include "core/ligmabrushpipe-load.h"
+#include "core/ligmabrush-private.h"
+#include "core/ligmadrawable.h"
+#include "core/ligmaimage.h"
+#include "core/ligmalayer-new.h"
+#include "core/ligmaparamspecs.h"
+#include "core/ligmatempbuf.h"
 
-#include "pdb/gimpprocedure.h"
+#include "pdb/ligmaprocedure.h"
 
 #include "file-data-gbr.h"
 #include "file-data-gih.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 /*  local function prototypes  */
 
-static GimpImage     * file_gih_pipe_to_image (Gimp          *gimp,
-                                               GimpBrushPipe *pipe);
-static GimpBrushPipe * file_gih_image_to_pipe (GimpImage     *image,
+static LigmaImage     * file_gih_pipe_to_image (Ligma          *ligma,
+                                               LigmaBrushPipe *pipe);
+static LigmaBrushPipe * file_gih_image_to_pipe (LigmaImage     *image,
                                                const gchar   *name,
                                                gdouble        spacing,
                                                const gchar   *paramstring);
@@ -57,37 +57,37 @@ static GimpBrushPipe * file_gih_image_to_pipe (GimpImage     *image,
 
 /*  public functions  */
 
-GimpValueArray *
-file_gih_load_invoker (GimpProcedure         *procedure,
-                       Gimp                  *gimp,
-                       GimpContext           *context,
-                       GimpProgress          *progress,
-                       const GimpValueArray  *args,
+LigmaValueArray *
+file_gih_load_invoker (LigmaProcedure         *procedure,
+                       Ligma                  *ligma,
+                       LigmaContext           *context,
+                       LigmaProgress          *progress,
+                       const LigmaValueArray  *args,
                        GError               **error)
 {
-  GimpValueArray *return_vals;
-  GimpImage      *image = NULL;
+  LigmaValueArray *return_vals;
+  LigmaImage      *image = NULL;
   GFile          *file;
   GInputStream   *input;
   GError         *my_error = NULL;
 
-  gimp_set_busy (gimp);
+  ligma_set_busy (ligma);
 
-  file = g_value_get_object (gimp_value_array_index (args, 1));
+  file = g_value_get_object (ligma_value_array_index (args, 1));
 
   input = G_INPUT_STREAM (g_file_read (file, NULL, &my_error));
 
   if (input)
     {
-      GList *list = gimp_brush_pipe_load (context, file, input, error);
+      GList *list = ligma_brush_pipe_load (context, file, input, error);
 
       if (list)
         {
-          GimpBrushPipe *pipe = list->data;
+          LigmaBrushPipe *pipe = list->data;
 
           g_list_free (list);
 
-          image = file_gih_pipe_to_image (gimp, pipe);
+          image = file_gih_pipe_to_image (ligma, pipe);
           g_object_unref (pipe);
         }
 
@@ -97,60 +97,60 @@ file_gih_load_invoker (GimpProcedure         *procedure,
     {
       g_propagate_prefixed_error (error, my_error,
                                   _("Could not open '%s' for reading: "),
-                                  gimp_file_get_utf8_name (file));
+                                  ligma_file_get_utf8_name (file));
     }
 
-  return_vals = gimp_procedure_get_return_values (procedure, image != NULL,
+  return_vals = ligma_procedure_get_return_values (procedure, image != NULL,
                                                   error ? *error : NULL);
 
   if (image)
-    g_value_set_object (gimp_value_array_index (return_vals, 1), image);
+    g_value_set_object (ligma_value_array_index (return_vals, 1), image);
 
-  gimp_unset_busy (gimp);
+  ligma_unset_busy (ligma);
 
   return return_vals;
 }
 
-GimpValueArray *
-file_gih_save_invoker (GimpProcedure         *procedure,
-                       Gimp                  *gimp,
-                       GimpContext           *context,
-                       GimpProgress          *progress,
-                       const GimpValueArray  *args,
+LigmaValueArray *
+file_gih_save_invoker (LigmaProcedure         *procedure,
+                       Ligma                  *ligma,
+                       LigmaContext           *context,
+                       LigmaProgress          *progress,
+                       const LigmaValueArray  *args,
                        GError               **error)
 {
-  GimpValueArray *return_vals;
-  GimpImage      *image;
-  GimpBrushPipe  *pipe;
+  LigmaValueArray *return_vals;
+  LigmaImage      *image;
+  LigmaBrushPipe  *pipe;
   const gchar    *name;
   const gchar    *params;
   GFile          *file;
   gint            spacing;
   gboolean        success;
 
-  gimp_set_busy (gimp);
+  ligma_set_busy (ligma);
 
-  image   = g_value_get_object (gimp_value_array_index (args, 1));
+  image   = g_value_get_object (ligma_value_array_index (args, 1));
   /* XXX: drawable list is currently unused. GIH saving just uses the
    * whole layer list.
    */
-  file    = g_value_get_object (gimp_value_array_index (args, 4));
-  spacing = g_value_get_int    (gimp_value_array_index (args, 5));
-  name    = g_value_get_string (gimp_value_array_index (args, 6));
-  params  = g_value_get_string (gimp_value_array_index (args, 7));
+  file    = g_value_get_object (ligma_value_array_index (args, 4));
+  spacing = g_value_get_int    (ligma_value_array_index (args, 5));
+  name    = g_value_get_string (ligma_value_array_index (args, 6));
+  params  = g_value_get_string (ligma_value_array_index (args, 7));
 
   pipe = file_gih_image_to_pipe (image, name, spacing, params);
 
-  gimp_data_set_file (GIMP_DATA (pipe), file, TRUE, TRUE);
+  ligma_data_set_file (LIGMA_DATA (pipe), file, TRUE, TRUE);
 
-  success = gimp_data_save (GIMP_DATA (pipe), error);
+  success = ligma_data_save (LIGMA_DATA (pipe), error);
 
   g_object_unref (pipe);
 
-  return_vals = gimp_procedure_get_return_values (procedure, success,
+  return_vals = ligma_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
-  gimp_unset_busy (gimp);
+  ligma_unset_busy (ligma);
 
   return return_vals;
 }
@@ -158,53 +158,53 @@ file_gih_save_invoker (GimpProcedure         *procedure,
 
 /*  private functions  */
 
-static GimpImage *
-file_gih_pipe_to_image (Gimp          *gimp,
-                        GimpBrushPipe *pipe)
+static LigmaImage *
+file_gih_pipe_to_image (Ligma          *ligma,
+                        LigmaBrushPipe *pipe)
 {
-  GimpImage         *image;
+  LigmaImage         *image;
   const gchar       *name;
-  GimpImageBaseType  base_type;
-  GimpParasite      *parasite;
+  LigmaImageBaseType  base_type;
+  LigmaParasite      *parasite;
   gchar              spacing[8];
   gint               i;
 
-  if (gimp_brush_get_pixmap (pipe->current))
-    base_type = GIMP_RGB;
+  if (ligma_brush_get_pixmap (pipe->current))
+    base_type = LIGMA_RGB;
   else
-    base_type = GIMP_GRAY;
+    base_type = LIGMA_GRAY;
 
-  name = gimp_object_get_name (pipe);
+  name = ligma_object_get_name (pipe);
 
-  image = gimp_image_new (gimp, 1, 1, base_type,
-                          GIMP_PRECISION_U8_NON_LINEAR);
+  image = ligma_image_new (ligma, 1, 1, base_type,
+                          LIGMA_PRECISION_U8_NON_LINEAR);
 
-  parasite = gimp_parasite_new ("gimp-brush-pipe-name",
-                                GIMP_PARASITE_PERSISTENT,
+  parasite = ligma_parasite_new ("ligma-brush-pipe-name",
+                                LIGMA_PARASITE_PERSISTENT,
                                 strlen (name) + 1, name);
-  gimp_image_parasite_attach (image, parasite, FALSE);
-  gimp_parasite_free (parasite);
+  ligma_image_parasite_attach (image, parasite, FALSE);
+  ligma_parasite_free (parasite);
 
   g_snprintf (spacing, sizeof (spacing), "%d",
-              gimp_brush_get_spacing (GIMP_BRUSH (pipe)));
+              ligma_brush_get_spacing (LIGMA_BRUSH (pipe)));
 
-  parasite = gimp_parasite_new ("gimp-brush-pipe-spacing",
-                                GIMP_PARASITE_PERSISTENT,
+  parasite = ligma_parasite_new ("ligma-brush-pipe-spacing",
+                                LIGMA_PARASITE_PERSISTENT,
                                 strlen (spacing) + 1, spacing);
-  gimp_image_parasite_attach (image, parasite, FALSE);
-  gimp_parasite_free (parasite);
+  ligma_image_parasite_attach (image, parasite, FALSE);
+  ligma_parasite_free (parasite);
 
   for (i = 0; i < pipe->n_brushes; i++)
     {
-      GimpLayer *layer;
+      LigmaLayer *layer;
 
       layer = file_gbr_brush_to_layer (image, pipe->brushes[i]);
-      gimp_image_add_layer (image, layer, NULL, i, FALSE);
+      ligma_image_add_layer (image, layer, NULL, i, FALSE);
     }
 
   if (pipe->params)
     {
-      GimpPixPipeParams  params;
+      LigmaPixPipeParams  params;
       gchar             *paramstring;
 
       /* Since we do not (yet) load the pipe as described in the
@@ -215,40 +215,40 @@ file_gih_pipe_to_image (Gimp          *gimp,
        * described in the header" means) -- mitch
        */
 
-      gimp_pixpipe_params_init (&params);
-      gimp_pixpipe_params_parse (pipe->params, &params);
+      ligma_pixpipe_params_init (&params);
+      ligma_pixpipe_params_parse (pipe->params, &params);
 
-      params.cellwidth  = gimp_image_get_width  (image);
-      params.cellheight = gimp_image_get_height (image);
+      params.cellwidth  = ligma_image_get_width  (image);
+      params.cellheight = ligma_image_get_height (image);
       params.cols       = 1;
       params.rows       = 1;
 
-      paramstring = gimp_pixpipe_params_build (&params);
+      paramstring = ligma_pixpipe_params_build (&params);
       if (paramstring)
         {
-          parasite = gimp_parasite_new ("gimp-brush-pipe-parameters",
-                                        GIMP_PARASITE_PERSISTENT,
+          parasite = ligma_parasite_new ("ligma-brush-pipe-parameters",
+                                        LIGMA_PARASITE_PERSISTENT,
                                         strlen (paramstring) + 1,
                                         paramstring);
-          gimp_image_parasite_attach (image, parasite, FALSE);
-          gimp_parasite_free (parasite);
+          ligma_image_parasite_attach (image, parasite, FALSE);
+          ligma_parasite_free (parasite);
           g_free (paramstring);
         }
 
-      gimp_pixpipe_params_free (&params);
+      ligma_pixpipe_params_free (&params);
     }
 
   return image;
 }
 
-static GimpBrushPipe *
-file_gih_image_to_pipe (GimpImage   *image,
+static LigmaBrushPipe *
+file_gih_image_to_pipe (LigmaImage   *image,
                         const gchar *name,
                         gdouble      spacing,
                         const gchar *paramstring)
 {
-  GimpBrushPipe     *pipe;
-  GimpPixPipeParams  params;
+  LigmaBrushPipe     *pipe;
+  LigmaPixPipeParams  params;
   GList             *layers;
   GList             *list;
   GList             *brushes = NULL;
@@ -256,33 +256,33 @@ file_gih_image_to_pipe (GimpImage   *image,
   gint               image_height;
   gint               i;
 
-  pipe = g_object_new (GIMP_TYPE_BRUSH_PIPE,
+  pipe = g_object_new (LIGMA_TYPE_BRUSH_PIPE,
                        "name",      name,
-                       "mime-type", "image/x-gimp-gih",
+                       "mime-type", "image/x-ligma-gih",
                        "spacing",   spacing,
                        NULL);
 
-  gimp_pixpipe_params_init (&params);
-  gimp_pixpipe_params_parse (paramstring, &params);
+  ligma_pixpipe_params_init (&params);
+  ligma_pixpipe_params_parse (paramstring, &params);
 
-  image_width  = gimp_image_get_width  (image);
-  image_height = gimp_image_get_height (image);
+  image_width  = ligma_image_get_width  (image);
+  image_height = ligma_image_get_height (image);
 
-  layers = gimp_image_get_layer_iter (image);
+  layers = ligma_image_get_layer_iter (image);
 
   for (list = layers; list; list = g_list_next (list))
     {
-      GimpLayer *layer = list->data;
+      LigmaLayer *layer = list->data;
       gint       width;
       gint       height;
       gint       offset_x;
       gint       offset_y;
       gint       row;
 
-      width  = gimp_item_get_width  (GIMP_ITEM (layer));
-      height = gimp_item_get_height (GIMP_ITEM (layer));
+      width  = ligma_item_get_width  (LIGMA_ITEM (layer));
+      height = ligma_item_get_height (LIGMA_ITEM (layer));
 
-      gimp_item_get_offset (GIMP_ITEM (layer), &offset_x, &offset_y);
+      ligma_item_get_offset (LIGMA_ITEM (layer), &offset_x, &offset_y);
 
       /* Since we assume positive layer offsets we need to make sure this
        * is always the case or we will crash for grayscale layers.
@@ -290,14 +290,14 @@ file_gih_image_to_pipe (GimpImage   *image,
       if (offset_x < 0)
         {
           g_warning (_("Negative x offset: %d for layer %s corrected."),
-                     offset_x, gimp_object_get_name (layer));
+                     offset_x, ligma_object_get_name (layer));
           width += offset_x;
           offset_x = 0;
         }
       if (offset_y < 0)
         {
           g_warning (_("Negative y offset: %d for layer %s corrected."),
-                     offset_y, gimp_object_get_name (layer));
+                     offset_y, ligma_object_get_name (layer));
           height += offset_y;
           offset_y = 0;
         }
@@ -322,7 +322,7 @@ file_gih_image_to_pipe (GimpImage   *image,
 
           for (col = 0; col < params.cols; col++)
             {
-              GimpBrush *brush;
+              LigmaBrush *brush;
               gint       x, xnext;
               gint       thisx, thisw;
 
@@ -332,10 +332,10 @@ file_gih_image_to_pipe (GimpImage   *image,
               thisw = (xnext - offset_x) - thisx;
               thisw = MIN (thisw, width - thisx);
 
-              brush = file_gbr_drawable_to_brush (GIMP_DRAWABLE (layer),
+              brush = file_gbr_drawable_to_brush (LIGMA_DRAWABLE (layer),
                                                   GEGL_RECTANGLE (thisx, thisy,
                                                                   thisw, thish),
-                                                  gimp_object_get_name (layer),
+                                                  ligma_object_get_name (layer),
                                                   spacing);
 
               brushes = g_list_prepend (brushes, brush);
@@ -346,16 +346,16 @@ file_gih_image_to_pipe (GimpImage   *image,
   brushes = g_list_reverse (brushes);
 
   pipe->n_brushes = g_list_length (brushes);
-  pipe->brushes   = g_new0 (GimpBrush *, pipe->n_brushes);
+  pipe->brushes   = g_new0 (LigmaBrush *, pipe->n_brushes);
 
   for (list = brushes, i = 0; list; list = g_list_next (list), i++)
     pipe->brushes[i] = list->data;
 
   g_list_free (brushes);
 
-  gimp_pixpipe_params_free (&params);
+  ligma_pixpipe_params_free (&params);
 
-  gimp_brush_pipe_set_params (pipe, paramstring);
+  ligma_brush_pipe_set_params (pipe, paramstring);
 
   return pipe;
 }

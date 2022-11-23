@@ -1,15 +1,15 @@
-# 'gimp/po-tips
-# Slovenian translation of gimp-tips.
-# Copyright (C) 2007 THE GIMP'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the GIMP package.
+# 'ligma/po-tips
+# Slovenian translation of ligma-tips.
+# Copyright (C) 2007 THE LIGMA'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the LIGMA package.
 #
 # Nedeljko Grabant <nedeljkograbant@gmail.com>, 2007.
 # Martin Srebotnjak <miles@filmsi.net>, 2007, 2018.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gimp Tips\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: Ligma Tips\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2022-06-27 16:23+0000\n"
 "PO-Revision-Date: 2022-06-30 01:47+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
@@ -23,25 +23,25 @@ msgstr ""
 "X-Poedit-SourceCharset: iso-8859-1\n"
 "X-Generator: Poedit 3.1\n"
 
-#: data/tips/gimp-tips.xml.in:18
+#: data/tips/ligma-tips.xml.in:18
 msgid ""
-"You can get context-sensitive help for most of GIMP's features by pressing "
+"You can get context-sensitive help for most of LIGMA's features by pressing "
 "the F1 key at any time. This also works inside the menus."
 msgstr ""
-"Za večino funkcij GIMPa obstaja od konteksta odvisna pomoč, do katere lahko "
+"Za večino funkcij LIGMAa obstaja od konteksta odvisna pomoč, do katere lahko "
 "vedno dostopate s pritiskom na tipko F1. To deluje tudi znotraj menijev."
 
-#: data/tips/gimp-tips.xml.in:24
+#: data/tips/ligma-tips.xml.in:24
 msgid ""
-"GIMP uses layers to let you organize your image. Think of them as a stack of "
+"LIGMA uses layers to let you organize your image. Think of them as a stack of "
 "slides or filters, such that looking through them you see a composite of "
 "their contents."
 msgstr ""
-"GIMP uporablja plasti, s katerimi lažje organizirate slike. Predstavljate si "
+"LIGMA uporablja plasti, s katerimi lažje organizirate slike. Predstavljate si "
 "jih kot večje število prosojnic ali filtrov, zloženih drug na drugega, tako "
 "da s pogledom od zgoraj vidite sestavljeno vsebino cele slike."
 
-#: data/tips/gimp-tips.xml.in:31
+#: data/tips/ligma-tips.xml.in:31
 msgid ""
 "You can perform many layer operations by right-clicking on the text label of "
 "a layer in the Layers dialog."
@@ -49,19 +49,19 @@ msgstr ""
 "Številne operacije s plastmi lahko opravite z desnim klikom miške na ime "
 "plasti v pogovornem oknu Plasti."
 
-#: data/tips/gimp-tips.xml.in:37
+#: data/tips/ligma-tips.xml.in:37
 msgid ""
-"Saving an image uses XCF, GIMP's native file format (file extension <tt>."
+"Saving an image uses XCF, LIGMA's native file format (file extension <tt>."
 "xcf</tt>). This preserves the layers and many aspects of your work-in-"
 "progress, allowing to work on it again later. Once a project is completed, "
 "you can export it as JPEG, PNG, GIF, etc."
 msgstr ""
-"Slike shranjujete v zapisu XCF, ki je za GIMP domoroden (s končnico <tt>."
+"Slike shranjujete v zapisu XCF, ki je za LIGMA domoroden (s končnico <tt>."
 "xcf</tt>). Ta namreč omogoča shranjevanje vseh plasti in večine drugih "
 "nastavitev in sprememb. Ko je projekt zaključen, ga lahko izvozite v zapisih "
 "JPEG, PNG, GIF itn."
 
-#: data/tips/gimp-tips.xml.in:45
+#: data/tips/ligma-tips.xml.in:45
 msgid ""
 "Most plug-ins work on the current layer of the current image. In some cases, "
 "you will have to merge all layers (Image→Flatten Image) if you want the plug-"
@@ -71,7 +71,7 @@ msgstr ""
 "nekaterih primerih je potrebno vse plasti združiti v eno plast "
 "(Slika→Splošči sliko), preden lahko uporabimo vstavek na celi sliki."
 
-#: data/tips/gimp-tips.xml.in:52
+#: data/tips/ligma-tips.xml.in:52
 msgid ""
 "If a layer's name in the Layers dialog is displayed in <b>bold</b>, this "
 "layer doesn't have an alpha-channel. You can add an alpha-channel using "
@@ -81,7 +81,7 @@ msgstr ""
 "nima alfa-kanala. Alfa-kanal lahko dodate s pomočjo Plast→Prosojnost→Dodaj "
 "kanal alfa."
 
-#: data/tips/gimp-tips.xml.in:59
+#: data/tips/ligma-tips.xml.in:59
 msgid ""
 "Not all effects can be applied to all kinds of images. This is indicated by "
 "a grayed-out menu-entry. You may need to change the image mode to RGB "
@@ -93,7 +93,7 @@ msgstr ""
 "(Slika→Način→RGB), dodati kanal alfa (Plast→Prosojnost→Dodaj kanal alfa) ali "
 "sploščiti sliko (Slika→Splošči sliko)."
 
-#: data/tips/gimp-tips.xml.in:68
+#: data/tips/ligma-tips.xml.in:68
 msgid ""
 "You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes "
 "the window move, your window manager uses the <tt>Alt</tt> key already. Most "
@@ -106,9 +106,9 @@ msgstr ""
 "da prezrejo pritisnjeno <tt>izmenjalko</tt> ali da namesto nje uporabijo "
 "tipko <tt>Super</tt> (ali »tipko Windows«)."
 
-#: data/tips/gimp-tips.xml.in:82
+#: data/tips/ligma-tips.xml.in:82
 msgid ""
-"You can drag and drop many things in GIMP. For example, dragging a color "
+"You can drag and drop many things in LIGMA. For example, dragging a color "
 "from the toolbox or from a color palette and dropping it into an image will "
 "fill the current selection with that color."
 msgstr ""
@@ -116,7 +116,7 @@ msgstr ""
 "spusti, npr. z vlečenjem barve iz orodjarne ali barvne palete v sliko; "
 "trenutna slika ali izbrano področje se bo prebarvalo z izbrano barvo."
 
-#: data/tips/gimp-tips.xml.in:89
+#: data/tips/ligma-tips.xml.in:89
 msgid ""
 "You can use the middle mouse button to pan around the image (or optionally "
 "hold <tt>Spacebar</tt> while you move the mouse)."
@@ -124,7 +124,7 @@ msgstr ""
 "S srednjim gumbom miške lahko sukate po sliki (ali pa med premikanjem miške "
 "držite pritisnjeno <tt>preslednico</tt>)."
 
-#: data/tips/gimp-tips.xml.in:95
+#: data/tips/ligma-tips.xml.in:95
 msgid ""
 "Click and drag on a ruler to place a guide on an image. All dragged "
 "selections will snap to the guides. You can remove guides by dragging them "
@@ -134,7 +134,7 @@ msgstr ""
 "povlečeni izbori se bodo pripeli na vodila. Vodila odstranite z vlečenjem le-"
 "teh prek zunanjih robov slike z orodjem Premakni."
 
-#: data/tips/gimp-tips.xml.in:102
+#: data/tips/ligma-tips.xml.in:102
 msgid ""
 "You can drag a layer from the Layers dialog and drop it onto the toolbox. "
 "This will create a new image containing only that layer."
@@ -142,7 +142,7 @@ msgstr ""
 "Če povlečete plast iz okna Plasti in jo spustite na orodjarno, boste iz nje "
 "ustvarili novo sliko, ki vsebuje samo to plast."
 
-#: data/tips/gimp-tips.xml.in:108
+#: data/tips/ligma-tips.xml.in:108
 msgid ""
 "A floating selection must be anchored to a new layer or to the last active "
 "layer before doing other operations on the image. Click on the \"New Layer\" "
@@ -153,17 +153,17 @@ msgstr ""
 "preden izvedete druge operacije na sliki. Kliknite ikono »Nova Plast« oz. "
 "»Zasidraj plast« v pogovornem oknu Plasti ali pa za to uporabite menije."
 
-#: data/tips/gimp-tips.xml.in:116
+#: data/tips/ligma-tips.xml.in:116
 msgid ""
-"GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>."
+"LIGMA supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>."
 "bz2</tt>, if you have bzip2 installed) to the filename and your image will "
 "be saved compressed. Of course loading compressed images works too."
 msgstr ""
-"GIMP podpira sprotno stiskanje GZIP. Samo dodajte <tt>.gz</tt> (ali <tt>."
+"LIGMA podpira sprotno stiskanje GZIP. Samo dodajte <tt>.gz</tt> (ali <tt>."
 "bz2</tt>, če imate nameščen bzip2) k imenu datoteke in vaša slika bo "
 "shranjena stisnjena. Seveda deluje tudi nalaganje stisnjenih slik."
 
-#: data/tips/gimp-tips.xml.in:124
+#: data/tips/ligma-tips.xml.in:124
 msgid ""
 "Pressing and holding the <tt>Shift</tt> key before making a selection allows "
 "you to add to the current selection instead of replacing it. Using <tt>Ctrl</"
@@ -174,7 +174,7 @@ msgstr ""
 "namesto da ga nadomestite. Z uporabo <tt>krmilke</tt> pred začetkom "
 "izbiranja z miško od obstoječega izbora odštejete novi izbor."
 
-#: data/tips/gimp-tips.xml.in:132
+#: data/tips/ligma-tips.xml.in:132
 msgid ""
 "You can draw simple squares or circles using Edit→Stroke Selection. It "
 "strokes the edge of your current selection. More complex shapes can be drawn "
@@ -184,7 +184,7 @@ msgstr ""
 "oriše rob trenutnega izbora. Bolj zahtevne oblike lahko narišete z orodjem "
 "Pot ali z ukazom Filtri→Upodobi→Gfig."
 
-#: data/tips/gimp-tips.xml.in:139
+#: data/tips/ligma-tips.xml.in:139
 msgid ""
 "If you stroke a path (Edit→Stroke Path), the paint tools can be used with "
 "their current settings. You can use the Paintbrush in gradient mode or even "
@@ -194,7 +194,7 @@ msgstr ""
 "nastavitve izbranega risarskega orodja. Uporabite npr. slikarski čopič v "
 "načinu barvnega preliva, radirko ali orodje za razmazovanje."
 
-#: data/tips/gimp-tips.xml.in:146
+#: data/tips/ligma-tips.xml.in:146
 msgid ""
 "You can create and edit complex selections using the Path tool. The Paths "
 "dialog allows you to work on multiple paths and to convert them to "
@@ -203,7 +203,7 @@ msgstr ""
 "Zahtevnejše izbore naredimo in urejamo s pomočjo orodja Poti. Pogovorno okno "
 "Poti omogoča hkratno delo na večjem številu poti in pretvorbo le-teh v izbor."
 
-#: data/tips/gimp-tips.xml.in:153
+#: data/tips/ligma-tips.xml.in:153
 msgid ""
 "You can use the paint tools to change the selection. Click on the \"Quick "
 "Mask\" button at the bottom left of an image window. Change your selection "
@@ -215,7 +215,7 @@ msgstr ""
 "spreminjate izbor, s ponovnim klikom na gumb pa izbor spremenite nazaj v "
 "navaden izbor."
 
-#: data/tips/gimp-tips.xml.in:161
+#: data/tips/ligma-tips.xml.in:161
 msgid ""
 "You can save a selection to a channel (Select→Save to Channel) and then "
 "modify this channel with any paint tools. Using the buttons in the Channels "
@@ -226,12 +226,12 @@ msgstr ""
 "katerim koli orodjem za risanje. S pomočjo gumbov v pogovornem oknu Kanali "
 "lahko spreminjate vidnost novega kanala ali ga spremenite v izbor."
 
-#: data/tips/gimp-tips.xml.in:175
+#: data/tips/ligma-tips.xml.in:175
 msgid ""
 "After you enabled \"Dynamic Keyboard Shortcuts\" in the Preferences dialog, "
 "you can reassign shortcut keys. Do so by bringing up the menu, selecting a "
 "menu item, and pressing the desired key combination. If \"Save Keyboard "
-"Shortcuts\" is enabled, the key bindings are saved when you exit GIMP. You "
+"Shortcuts\" is enabled, the key bindings are saved when you exit LIGMA. You "
 "should probably disable \"Dynamic Keyboard Shortcuts\" afterwards, to "
 "prevent accidentally assigning/reassigning shortcuts."
 msgstr ""
@@ -239,10 +239,10 @@ msgstr ""
 "nastavitev, lahko tipke za bližnjice prerazporedite. Prikličite meni, "
 "izberite ukaz v njem, nato pritisnite želeno kombinacijo tipk. Če je »Shrani "
 "tipke za bližnjice ob izhodu« vključen, bodo nove kombinacije tipk shranjene "
-"ob izhodu iz aplikacije GIMP. Kasneje raje izključite »Dinamične tipke za "
+"ob izhodu iz aplikacije LIGMA. Kasneje raje izključite »Dinamične tipke za "
 "bližnjice«, da preprečite nenamerno dodeljevanje novih bližnjic."
 
-#: data/tips/gimp-tips.xml.in:186
+#: data/tips/ligma-tips.xml.in:186
 msgid ""
 "If your screen is too cluttered, you can press <tt>Tab</tt> in an image "
 "window to toggle the visibility of the toolbox and other dialogs."
@@ -251,7 +251,7 @@ msgstr ""
 "<tt>tabulatorko</tt>, da preklopite vidnost orodjarne in drugih pogovornih "
 "oken."
 
-#: data/tips/gimp-tips.xml.in:193
+#: data/tips/ligma-tips.xml.in:193
 msgid ""
 "<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers "
 "but that one. <tt>Shift</tt>-click again to show all layers."
@@ -259,7 +259,7 @@ msgstr ""
 "<tt>Dvigalka</tt>-klik ikone očesa v pogovornem oknu Plasti skrije vse druge "
 "plasti. S ponovnim <tt>dvigalka</tt>+klikom jih zopet vse pokaže."
 
-#: data/tips/gimp-tips.xml.in:199
+#: data/tips/ligma-tips.xml.in:199
 msgid ""
 "<tt>Ctrl</tt>-clicking on the layer mask's preview in the Layers dialog "
 "toggles the effect of the layer mask. <tt>Alt</tt>-clicking on the layer "
@@ -269,7 +269,7 @@ msgstr ""
 "preklopite učinek maske plasti. Z <tt>izmenjalko</tt>+klikom predogleda "
 "maske plasti v pogovornem oknu Plasti preklopite na neposreden pogled maske."
 
-#: data/tips/gimp-tips.xml.in:206
+#: data/tips/ligma-tips.xml.in:206
 msgid ""
 "You can use <tt>Ctrl</tt>-<tt>Tab</tt> to cycle through all layers in an "
 "image (if your window manager doesn't trap those keys...)."
@@ -277,7 +277,7 @@ msgstr ""
 "S kombinacijo tipk <tt>krmilka</tt>+<tt>tabulatorka</tt> lahko krožite po "
 "vseh plasteh slike (če upravitelj oken ne prestreže teh tipk ...)."
 
-#: data/tips/gimp-tips.xml.in:212
+#: data/tips/ligma-tips.xml.in:212
 msgid ""
 "<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background "
 "color instead of the foreground color. Similarly, <tt>Ctrl</tt>-clicking "
@@ -288,7 +288,7 @@ msgstr ""
 "ozadja namesto barve ospredja. Podobno <tt>krmilka+klik</tt> z orodjem "
 "kapalke namesto barve ospredja določi barvo ozadja."
 
-#: data/tips/gimp-tips.xml.in:220
+#: data/tips/ligma-tips.xml.in:220
 msgid ""
 "<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
 "degree angles."
@@ -296,7 +296,7 @@ msgstr ""
 "<tt>Krmilka</tt>+povlek z orodjem Zasukaj bo omejilo vrtenje na kote do 15 "
 "stopinj."
 
-#: data/tips/gimp-tips.xml.in:226
+#: data/tips/ligma-tips.xml.in:226
 msgid ""
 "If some of your scanned photos do not look colorful enough, you can easily "
 "improve their tonal range with the \"Auto\" button in the Levels tool "

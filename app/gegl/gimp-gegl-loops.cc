@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimp-gegl-loops.c
- * Copyright (C) 2012 Michael Natterer <mitch@gimp.org>
+ * ligma-gegl-loops.c
+ * Copyright (C) 2012 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,19 +30,19 @@
 extern "C"
 {
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmacolor/ligmacolor.h"
+#include "libligmamath/ligmamath.h"
 
-#include "gimp-gegl-types.h"
+#include "ligma-gegl-types.h"
 
-#include "gimp-babl.h"
-#include "gimp-gegl-loops.h"
-#include "gimp-gegl-loops-sse2.h"
+#include "ligma-babl.h"
+#include "ligma-gegl-loops.h"
+#include "ligma-gegl-loops-sse2.h"
 
-#include "core/gimp-atomic.h"
-#include "core/gimp-utils.h"
-#include "core/gimpprogress.h"
+#include "core/ligma-atomic.h"
+#include "core/ligma-utils.h"
+#include "core/ligmaprogress.h"
 
 
 #define PIXELS_PER_THREAD \
@@ -58,7 +58,7 @@ extern "C"
 
 
 void
-gimp_gegl_buffer_copy (GeglBuffer          *src_buffer,
+ligma_gegl_buffer_copy (GeglBuffer          *src_buffer,
                        const GeglRectangle *src_rect,
                        GeglAbyssPolicy      abyss_policy,
                        GeglBuffer          *dest_buffer,
@@ -141,7 +141,7 @@ gimp_gegl_buffer_copy (GeglBuffer          *src_buffer,
 }
 
 void
-gimp_gegl_clear (GeglBuffer          *buffer,
+ligma_gegl_clear (GeglBuffer          *buffer,
                  const GeglRectangle *rect)
 {
   const Babl *format;
@@ -193,14 +193,14 @@ gimp_gegl_clear (GeglBuffer          *buffer,
 }
 
 void
-gimp_gegl_convolve (GeglBuffer          *src_buffer,
+ligma_gegl_convolve (GeglBuffer          *src_buffer,
                     const GeglRectangle *src_rect,
                     GeglBuffer          *dest_buffer,
                     const GeglRectangle *dest_rect,
                     const gfloat        *kernel,
                     gint                 kernel_size,
                     gdouble              divisor,
-                    GimpConvolutionType  mode,
+                    LigmaConvolutionType  mode,
                     gboolean             alpha_weighting)
 {
   gfloat     *src;
@@ -221,26 +221,26 @@ gimp_gegl_convolve (GeglBuffer          *src_buffer,
   src_format = gegl_buffer_get_format (src_buffer);
 
   if (babl_format_is_palette (src_format))
-    src_format = gimp_babl_format (GIMP_RGB,
-                                   GIMP_PRECISION_FLOAT_LINEAR,
+    src_format = ligma_babl_format (LIGMA_RGB,
+                                   LIGMA_PRECISION_FLOAT_LINEAR,
                                    babl_format_has_alpha (src_format),
                                    babl_format_get_space (src_format));
   else
-    src_format = gimp_babl_format (gimp_babl_format_get_base_type (src_format),
-                                   GIMP_PRECISION_FLOAT_LINEAR,
+    src_format = ligma_babl_format (ligma_babl_format_get_base_type (src_format),
+                                   LIGMA_PRECISION_FLOAT_LINEAR,
                                    babl_format_has_alpha (src_format),
                                    babl_format_get_space (src_format));
 
   dest_format = gegl_buffer_get_format (dest_buffer);
 
   if (babl_format_is_palette (dest_format))
-    dest_format = gimp_babl_format (GIMP_RGB,
-                                    GIMP_PRECISION_FLOAT_LINEAR,
+    dest_format = ligma_babl_format (LIGMA_RGB,
+                                    LIGMA_PRECISION_FLOAT_LINEAR,
                                     babl_format_has_alpha (dest_format),
                                     babl_format_get_space (dest_format));
   else
-    dest_format = gimp_babl_format (gimp_babl_format_get_base_type (dest_format),
-                                    GIMP_PRECISION_FLOAT_LINEAR,
+    dest_format = ligma_babl_format (ligma_babl_format_get_base_type (dest_format),
+                                    LIGMA_PRECISION_FLOAT_LINEAR,
                                     babl_format_has_alpha (dest_format),
                                     babl_format_get_space (dest_format));
 
@@ -254,10 +254,10 @@ gimp_gegl_convolve (GeglBuffer          *src_buffer,
                    GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
   /*  If the mode is NEGATIVE_CONVOL, the offset should be 0.5  */
-  if (mode == GIMP_NEGATIVE_CONVOL)
+  if (mode == LIGMA_NEGATIVE_CONVOL)
     {
       offset = 0.5;
-      mode = GIMP_NORMAL_CONVOL;
+      mode = LIGMA_NORMAL_CONVOL;
     }
   else
     {
@@ -341,7 +341,7 @@ gimp_gegl_convolve (GeglBuffer          *src_buffer,
                         {
                           total[b] += offset;
 
-                          if (mode != GIMP_NORMAL_CONVOL && total[b] < 0.0)
+                          if (mode != LIGMA_NORMAL_CONVOL && total[b] < 0.0)
                             total[b] = - total[b];
 
                           *d++ = CLAMP (total[b], 0.0, 1.0);
@@ -373,7 +373,7 @@ gimp_gegl_convolve (GeglBuffer          *src_buffer,
                         {
                           total[b] = total[b] / divisor + offset;
 
-                          if (mode != GIMP_NORMAL_CONVOL && total[b] < 0.0)
+                          if (mode != LIGMA_NORMAL_CONVOL && total[b] < 0.0)
                             total[b] = - total[b];
 
                           *d++ = CLAMP (total[b], 0.0, 1.0);
@@ -400,15 +400,15 @@ odd_powf (gfloat x,
 }
 
 void
-gimp_gegl_dodgeburn (GeglBuffer          *src_buffer,
+ligma_gegl_dodgeburn (GeglBuffer          *src_buffer,
                      const GeglRectangle *src_rect,
                      GeglBuffer          *dest_buffer,
                      const GeglRectangle *dest_rect,
                      gdouble              exposure,
-                     GimpDodgeBurnType    type,
-                     GimpTransferMode     mode)
+                     LigmaDodgeBurnType    type,
+                     LigmaTransferMode     mode)
 {
-  if (type == GIMP_DODGE_BURN_TYPE_BURN)
+  if (type == LIGMA_DODGE_BURN_TYPE_BURN)
     exposure = -exposure;
 
   if (! src_rect)
@@ -437,7 +437,7 @@ gimp_gegl_dodgeburn (GeglBuffer          *src_buffer,
         {
           gfloat factor;
 
-        case GIMP_TRANSFER_HIGHLIGHTS:
+        case LIGMA_TRANSFER_HIGHLIGHTS:
           factor = 1.0 + exposure * (0.333333);
 
           while (gegl_buffer_iterator_next (iter))
@@ -457,7 +457,7 @@ gimp_gegl_dodgeburn (GeglBuffer          *src_buffer,
             }
           break;
 
-        case GIMP_TRANSFER_MIDTONES:
+        case LIGMA_TRANSFER_MIDTONES:
           if (exposure < 0)
             factor = 1.0 - exposure * (0.333333);
           else
@@ -480,7 +480,7 @@ gimp_gegl_dodgeburn (GeglBuffer          *src_buffer,
             }
           break;
 
-        case GIMP_TRANSFER_SHADOWS:
+        case LIGMA_TRANSFER_SHADOWS:
           if (exposure >= 0)
             factor = 0.333333 * exposure;
           else
@@ -533,11 +533,11 @@ gimp_gegl_dodgeburn (GeglBuffer          *src_buffer,
     });
 }
 
-/* helper function of gimp_gegl_smudge_with_paint_process()
+/* helper function of ligma_gegl_smudge_with_paint_process()
    src and dest can be the same address
  */
 static inline void
-gimp_gegl_smudge_with_paint_blend (const gfloat *src1,
+ligma_gegl_smudge_with_paint_blend (const gfloat *src1,
                                    gfloat        src1_rate,
                                    const gfloat *src2,
                                    gfloat        src2_rate,
@@ -572,9 +572,9 @@ gimp_gegl_smudge_with_paint_blend (const gfloat *src1,
   dest[3] = result_alpha;
 }
 
-/* helper function of gimp_gegl_smudge_with_paint() */
+/* helper function of ligma_gegl_smudge_with_paint() */
 static void
-gimp_gegl_smudge_with_paint_process (gfloat       *accum,
+ligma_gegl_smudge_with_paint_process (gfloat       *accum,
                                      const gfloat *canvas,
                                      gfloat       *paint,
                                      gint          count,
@@ -587,7 +587,7 @@ gimp_gegl_smudge_with_paint_process (gfloat       *accum,
   while (count--)
     {
       /* blend accum_buffer and canvas_buffer to accum_buffer */
-      gimp_gegl_smudge_with_paint_blend (accum, rate, canvas, 1 - rate,
+      ligma_gegl_smudge_with_paint_blend (accum, rate, canvas, 1 - rate,
                                          accum, no_erasing);
 
       /* blend accum_buffer and brush color/pixmap to paint_buffer */
@@ -599,7 +599,7 @@ gimp_gegl_smudge_with_paint_process (gfloat       *accum,
         {
           const gfloat *src1 = brush_color ? brush_color : paint;
 
-          gimp_gegl_smudge_with_paint_blend (src1, flow, accum, 1 - flow,
+          ligma_gegl_smudge_with_paint_blend (src1, flow, accum, 1 - flow,
                                              paint, no_erasing);
         }
 
@@ -617,11 +617,11 @@ gimp_gegl_smudge_with_paint_process (gfloat       *accum,
  *    Paint = flow*Paint + (1-flow)*Accum
  */
 void
-gimp_gegl_smudge_with_paint (GeglBuffer          *accum_buffer,
+ligma_gegl_smudge_with_paint (GeglBuffer          *accum_buffer,
                              const GeglRectangle *accum_rect,
                              GeglBuffer          *canvas_buffer,
                              const GeglRectangle *canvas_rect,
-                             const GimpRGB       *brush_color,
+                             const LigmaRGB       *brush_color,
                              GeglBuffer          *paint_buffer,
                              gboolean             no_erasing,
                              gdouble              flow,
@@ -633,8 +633,8 @@ gimp_gegl_smudge_with_paint (GeglBuffer          *accum_buffer,
                                              GEGL_ACCESS_WRITE :
                                              GEGL_ACCESS_READWRITE);
 #if COMPILE_SSE2_INTRINISICS
-  gboolean       sse2 = (gimp_cpu_accel_get_support () &
-                         GIMP_CPU_ACCEL_X86_SSE2);
+  gboolean       sse2 = (ligma_cpu_accel_get_support () &
+                         LIGMA_CPU_ACCEL_X86_SSE2);
 #endif
 
   if (! accum_rect)
@@ -692,7 +692,7 @@ gimp_gegl_smudge_with_paint (GeglBuffer          *accum_buffer,
                        (guintptr) (brush_color ? brush_color_float : paint) |
                        (guintptr) paint) % 16 == 0)
             {
-              gimp_gegl_smudge_with_paint_process_sse2 (accum, canvas, paint, count,
+              ligma_gegl_smudge_with_paint_process_sse2 (accum, canvas, paint, count,
                                                         brush_color ? brush_color_float :
                                                                       NULL,
                                                         brush_a,
@@ -701,7 +701,7 @@ gimp_gegl_smudge_with_paint (GeglBuffer          *accum_buffer,
           else
 #endif
             {
-              gimp_gegl_smudge_with_paint_process (accum, canvas, paint, count,
+              ligma_gegl_smudge_with_paint_process (accum, canvas, paint, count,
                                                    brush_color ? brush_color_float :
                                                                  NULL,
                                                    brush_a,
@@ -712,7 +712,7 @@ gimp_gegl_smudge_with_paint (GeglBuffer          *accum_buffer,
 }
 
 void
-gimp_gegl_apply_mask (GeglBuffer          *mask_buffer,
+ligma_gegl_apply_mask (GeglBuffer          *mask_buffer,
                       const GeglRectangle *mask_rect,
                       GeglBuffer          *dest_buffer,
                       const GeglRectangle *dest_rect,
@@ -758,7 +758,7 @@ gimp_gegl_apply_mask (GeglBuffer          *mask_buffer,
 }
 
 void
-gimp_gegl_combine_mask (GeglBuffer          *mask_buffer,
+ligma_gegl_combine_mask (GeglBuffer          *mask_buffer,
                         const GeglRectangle *mask_rect,
                         GeglBuffer          *dest_buffer,
                         const GeglRectangle *dest_rect,
@@ -804,7 +804,7 @@ gimp_gegl_combine_mask (GeglBuffer          *mask_buffer,
 }
 
 void
-gimp_gegl_combine_mask_weird (GeglBuffer          *mask_buffer,
+ligma_gegl_combine_mask_weird (GeglBuffer          *mask_buffer,
                               const GeglRectangle *mask_rect,
                               GeglBuffer          *dest_buffer,
                               const GeglRectangle *dest_rect,
@@ -865,7 +865,7 @@ gimp_gegl_combine_mask_weird (GeglBuffer          *mask_buffer,
 }
 
 void
-gimp_gegl_index_to_mask (GeglBuffer          *indexed_buffer,
+ligma_gegl_index_to_mask (GeglBuffer          *indexed_buffer,
                          const GeglRectangle *indexed_rect,
                          const Babl          *indexed_format,
                          GeglBuffer          *mask_buffer,
@@ -915,47 +915,47 @@ gimp_gegl_index_to_mask (GeglBuffer          *indexed_buffer,
 }
 
 static void
-gimp_gegl_convert_color_profile_progress (GimpProgress *progress,
+ligma_gegl_convert_color_profile_progress (LigmaProgress *progress,
                                           gdouble       value)
 {
   if (gegl_is_main_thread ())
-    gimp_progress_set_value (progress, value);
+    ligma_progress_set_value (progress, value);
 }
 
 void
-gimp_gegl_convert_color_profile (GeglBuffer               *src_buffer,
+ligma_gegl_convert_color_profile (GeglBuffer               *src_buffer,
                                  const GeglRectangle      *src_rect,
-                                 GimpColorProfile         *src_profile,
+                                 LigmaColorProfile         *src_profile,
                                  GeglBuffer               *dest_buffer,
                                  const GeglRectangle      *dest_rect,
-                                 GimpColorProfile         *dest_profile,
-                                 GimpColorRenderingIntent  intent,
+                                 LigmaColorProfile         *dest_profile,
+                                 LigmaColorRenderingIntent  intent,
                                  gboolean                  bpc,
-                                 GimpProgress             *progress)
+                                 LigmaProgress             *progress)
 {
-  GimpColorTransform *transform;
+  LigmaColorTransform *transform;
   guint               flags = 0;
   const Babl         *src_format;
   const Babl         *dest_format;
 
   g_return_if_fail (GEGL_IS_BUFFER (src_buffer));
-  g_return_if_fail (GIMP_IS_COLOR_PROFILE (src_profile));
+  g_return_if_fail (LIGMA_IS_COLOR_PROFILE (src_profile));
   g_return_if_fail (GEGL_IS_BUFFER (dest_buffer));
-  g_return_if_fail (GIMP_IS_COLOR_PROFILE (dest_profile));
-  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
+  g_return_if_fail (LIGMA_IS_COLOR_PROFILE (dest_profile));
+  g_return_if_fail (progress == NULL || LIGMA_IS_PROGRESS (progress));
 
   src_format  = gegl_buffer_get_format (src_buffer);
   dest_format = gegl_buffer_get_format (dest_buffer);
 
   if (bpc)
-    flags |= GIMP_COLOR_TRANSFORM_FLAGS_BLACK_POINT_COMPENSATION;
+    flags |= LIGMA_COLOR_TRANSFORM_FLAGS_BLACK_POINT_COMPENSATION;
 
-  flags |= GIMP_COLOR_TRANSFORM_FLAGS_NOOPTIMIZE;
+  flags |= LIGMA_COLOR_TRANSFORM_FLAGS_NOOPTIMIZE;
 
-  transform = gimp_color_transform_new (src_profile,  src_format,
+  transform = ligma_color_transform_new (src_profile,  src_format,
                                         dest_profile, dest_format,
                                         intent,
-                                        (GimpColorTransformFlags) flags);
+                                        (LigmaColorTransformFlags) flags);
 
   if (! src_rect)
     src_rect = gegl_buffer_get_extent (src_buffer);
@@ -969,11 +969,11 @@ gimp_gegl_convert_color_profile (GeglBuffer               *src_buffer,
         {
           g_signal_connect_swapped (
             transform, "progress",
-            G_CALLBACK (gimp_gegl_convert_color_profile_progress),
+            G_CALLBACK (ligma_gegl_convert_color_profile_progress),
             progress);
         }
 
-      GIMP_TIMER_START ();
+      LIGMA_TIMER_START ();
 
       gegl_parallel_distribute_area (
         src_rect, PIXELS_PER_THREAD,
@@ -981,27 +981,27 @@ gimp_gegl_convert_color_profile (GeglBuffer               *src_buffer,
         {
           SHIFTED_AREA (dest, src);
 
-          gimp_color_transform_process_buffer (transform,
+          ligma_color_transform_process_buffer (transform,
                                                src_buffer,  src_area,
                                                dest_buffer, dest_area);
         });
 
-      GIMP_TIMER_END ("converting buffer");
+      LIGMA_TIMER_END ("converting buffer");
 
       g_object_unref (transform);
     }
   else
     {
-      gimp_gegl_buffer_copy (src_buffer,  src_rect, GEGL_ABYSS_NONE,
+      ligma_gegl_buffer_copy (src_buffer,  src_rect, GEGL_ABYSS_NONE,
                              dest_buffer, dest_rect);
 
       if (progress)
-        gimp_progress_set_value (progress, 1.0);
+        ligma_progress_set_value (progress, 1.0);
     }
 }
 
 void
-gimp_gegl_average_color (GeglBuffer          *buffer,
+ligma_gegl_average_color (GeglBuffer          *buffer,
                          const GeglRectangle *rect,
                          gboolean             clip_to_buffer,
                          GeglAbyssPolicy      abyss_policy,
@@ -1073,7 +1073,7 @@ gimp_gegl_average_color (GeglBuffer          *buffer,
       memcpy (sum->color, color, sizeof (color));
       sum->n = n;
 
-      gimp_atomic_slist_push_head (&sums, sum);
+      ligma_atomic_slist_push_head (&sums, sum);
     });
 
   for (list = sums; list; list = g_slist_next (list))

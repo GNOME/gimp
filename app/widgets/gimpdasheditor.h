@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpdasheditor.h
- * Copyright (C) 2003 Simon Budig  <simon@gimp.org>
+ * ligmadasheditor.h
+ * Copyright (C) 2003 Simon Budig  <simon@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,25 +18,25 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DASH_EDITOR_H__
-#define __GIMP_DASH_EDITOR_H__
+#ifndef __LIGMA_DASH_EDITOR_H__
+#define __LIGMA_DASH_EDITOR_H__
 
 
-#define GIMP_TYPE_DASH_EDITOR            (gimp_dash_editor_get_type ())
-#define GIMP_DASH_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DASH_EDITOR, GimpDashEditor))
-#define GIMP_DASH_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DASH_EDITOR, GimpDashEditorClass))
-#define GIMP_IS_DASH_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DASH_EDITOR))
-#define GIMP_IS_DASH_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DASH_EDITOR))
-#define GIMP_DASH_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DASH_EDITOR, GimpDashEditorClass))
+#define LIGMA_TYPE_DASH_EDITOR            (ligma_dash_editor_get_type ())
+#define LIGMA_DASH_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_DASH_EDITOR, LigmaDashEditor))
+#define LIGMA_DASH_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_DASH_EDITOR, LigmaDashEditorClass))
+#define LIGMA_IS_DASH_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_DASH_EDITOR))
+#define LIGMA_IS_DASH_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_DASH_EDITOR))
+#define LIGMA_DASH_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_DASH_EDITOR, LigmaDashEditorClass))
 
 
-typedef struct _GimpDashEditorClass  GimpDashEditorClass;
+typedef struct _LigmaDashEditorClass  LigmaDashEditorClass;
 
-struct _GimpDashEditor
+struct _LigmaDashEditor
 {
   GtkDrawingArea     parent_instance;
 
-  GimpStrokeOptions *stroke_options;
+  LigmaStrokeOptions *stroke_options;
   gdouble            dash_length;
 
   /* GUI stuff */
@@ -53,18 +53,18 @@ struct _GimpDashEditor
   gint               edit_button_x0;
 };
 
-struct _GimpDashEditorClass
+struct _LigmaDashEditorClass
 {
   GtkDrawingAreaClass  parent_class;
 };
 
 
-GType       gimp_dash_editor_get_type    (void) G_GNUC_CONST;
+GType       ligma_dash_editor_get_type    (void) G_GNUC_CONST;
 
-GtkWidget * gimp_dash_editor_new         (GimpStrokeOptions *stroke_options);
+GtkWidget * ligma_dash_editor_new         (LigmaStrokeOptions *stroke_options);
 
-void        gimp_dash_editor_shift_left  (GimpDashEditor    *editor);
-void        gimp_dash_editor_shift_right (GimpDashEditor    *editor);
+void        ligma_dash_editor_shift_left  (LigmaDashEditor    *editor);
+void        ligma_dash_editor_shift_right (LigmaDashEditor    *editor);
 
 
-#endif /* __GIMP_DASH_EDITOR_H__ */
+#endif /* __LIGMA_DASH_EDITOR_H__ */

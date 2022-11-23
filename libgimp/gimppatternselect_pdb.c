@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimppatternselect_pdb.c
+ * ligmapatternselect_pdb.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,12 +24,12 @@
 
 #include "stamp-pdbgen.h"
 
-#include "gimp.h"
+#include "ligma.h"
 
 
 /**
- * SECTION: gimppatternselect
- * @title: gimppatternselect
+ * SECTION: ligmapatternselect
+ * @title: ligmapatternselect
  * @short_description: Functions providing a pattern selection dialog.
  *
  * Functions providing a pattern selection dialog.
@@ -37,46 +37,46 @@
 
 
 /**
- * gimp_patterns_popup:
+ * ligma_patterns_popup:
  * @pattern_callback: The callback PDB proc to call when pattern selection is made.
  * @popup_title: Title of the pattern selection dialog.
  * @initial_pattern: The name of the pattern to set as the first selected.
  *
- * Invokes the Gimp pattern selection.
+ * Invokes the Ligma pattern selection.
  *
  * This procedure opens the pattern selection dialog.
  *
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_patterns_popup (const gchar *pattern_callback,
+ligma_patterns_popup (const gchar *pattern_callback,
                      const gchar *popup_title,
                      const gchar *initial_pattern)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, pattern_callback,
                                           G_TYPE_STRING, popup_title,
                                           G_TYPE_STRING, initial_pattern,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-patterns-popup",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-patterns-popup",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_patterns_close_popup:
+ * ligma_patterns_close_popup:
  * @pattern_callback: The name of the callback registered for this pop-up.
  *
  * Close the pattern selection dialog.
@@ -86,30 +86,30 @@ gimp_patterns_popup (const gchar *pattern_callback,
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_patterns_close_popup (const gchar *pattern_callback)
+ligma_patterns_close_popup (const gchar *pattern_callback)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, pattern_callback,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-patterns-close-popup",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-patterns-close-popup",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }
 
 /**
- * gimp_patterns_set_popup:
+ * ligma_patterns_set_popup:
  * @pattern_callback: The name of the callback registered for this pop-up.
  * @pattern_name: The name of the pattern to set as selected.
  *
@@ -120,26 +120,26 @@ gimp_patterns_close_popup (const gchar *pattern_callback)
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_patterns_set_popup (const gchar *pattern_callback,
+ligma_patterns_set_popup (const gchar *pattern_callback,
                          const gchar *pattern_name)
 {
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
+  LigmaValueArray *args;
+  LigmaValueArray *return_vals;
   gboolean success = TRUE;
 
-  args = gimp_value_array_new_from_types (NULL,
+  args = ligma_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, pattern_callback,
                                           G_TYPE_STRING, pattern_name,
                                           G_TYPE_NONE);
 
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-patterns-set-popup",
+  return_vals = ligma_pdb_run_procedure_array (ligma_get_pdb (),
+                                              "ligma-patterns-set-popup",
                                               args);
-  gimp_value_array_unref (args);
+  ligma_value_array_unref (args);
 
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+  success = LIGMA_VALUES_GET_ENUM (return_vals, 0) == LIGMA_PDB_SUCCESS;
 
-  gimp_value_array_unref (return_vals);
+  ligma_value_array_unref (return_vals);
 
   return success;
 }

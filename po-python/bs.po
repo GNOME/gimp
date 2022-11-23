@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: bosnianuniversetranslation\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2013-01-27 21:39+0000\n"
 "PO-Revision-Date: 2015-02-05 00:25+0000\n"
 "Last-Translator: Izudin Vragić <ivragic1@etf.unsa.ba>\n"
@@ -18,382 +18,382 @@ msgstr ""
 "X-Launchpad-Export-Date: 2015-03-14 13:28+0000\n"
 "X-Generator: Launchpad (build 17389)\n"
 
-#: ../plug-ins/pygimp/gimpfu.py:394
+#: ../plug-ins/pyligma/ligmafu.py:394
 msgid "Missing exception information"
 msgstr "Nedostaju informacije o izuzetku"
 
-#: ../plug-ins/pygimp/gimpfu.py:403
+#: ../plug-ins/pyligma/ligmafu.py:403
 #, python-format
 msgid "An error occurred running %s"
 msgstr "Pojavila se greška pri korištenju %s"
 
-#: ../plug-ins/pygimp/gimpfu.py:414
+#: ../plug-ins/pyligma/ligmafu.py:414
 msgid "_More Information"
 msgstr "_Više Informacija"
 
-#: ../plug-ins/pygimp/gimpfu.py:526 ../plug-ins/pygimp/gimpfu.py:538
-#: ../plug-ins/pygimp/gimpfu.py:544
+#: ../plug-ins/pyligma/ligmafu.py:526 ../plug-ins/pyligma/ligmafu.py:538
+#: ../plug-ins/pyligma/ligmafu.py:544
 msgid "No"
 msgstr "Ne"
 
-#: ../plug-ins/pygimp/gimpfu.py:536 ../plug-ins/pygimp/gimpfu.py:544
+#: ../plug-ins/pyligma/ligmafu.py:536 ../plug-ins/pyligma/ligmafu.py:544
 msgid "Yes"
 msgstr "Da"
 
-#: ../plug-ins/pygimp/gimpfu.py:596 ../plug-ins/pygimp/gimpui.py:223
+#: ../plug-ins/pyligma/ligmafu.py:596 ../plug-ins/pyligma/ligmaui.py:223
 msgid "Python-Fu File Selection"
 msgstr "Python-Fu izbor datoteke"
 
-#: ../plug-ins/pygimp/gimpfu.py:607
+#: ../plug-ins/pyligma/ligmafu.py:607
 msgid "Python-Fu Folder Selection"
 msgstr "Python-Fu izbor direktorija"
 
-#: ../plug-ins/pygimp/gimpfu.py:696
+#: ../plug-ins/pyligma/ligmafu.py:696
 #, python-format
 msgid "Invalid input for '%s'"
 msgstr "Pogrešan ulaz za '%s'"
 
-#: ../plug-ins/pygimp/gimpui.py:176
+#: ../plug-ins/pyligma/ligmaui.py:176
 msgid "Python-Fu Color Selection"
 msgstr "Python-Fu Selekcija Boja"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:109
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:109
 msgid "Saving as colored XHTML"
 msgstr "Snimam kao obojeni XHTML"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:186
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:186
 msgid "Save as colored XHTML"
 msgstr "Snimi kao obojeni XHTML"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:191
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:191
 msgid "Colored XHTML"
 msgstr "Obojeni XHTML"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:198
 msgid "Character _source"
 msgstr "Karakter _izvor"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:199
 msgid "Source code"
 msgstr "Izvorni kod"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:200
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:200
 msgid "Text file"
 msgstr "Tekstualna datoteka"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:201
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:201
 msgid "Entry box"
 msgstr "Ulazna kutija"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:202
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:202
 msgid "_File to read or characters to use"
 msgstr "_Datoteka za čitanje ili karakter za korištenje"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:204
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:204
 msgid "Fo_nt size in pixels"
 msgstr "_Veličina fonta u pikselima"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:205
+#: ../plug-ins/pyligma/plug-ins/colorxhtml.py:205
 msgid "_Write a separate CSS file"
 msgstr "_Napiši odvojenu CSS datoteku"
 
-#: ../plug-ins/pygimp/plug-ins/gradients-save-as-css.py:96
+#: ../plug-ins/pyligma/plug-ins/gradients-save-as-css.py:96
 msgid "Gradient to use"
 msgstr "Gradijent za korištenje"
 
-#: ../plug-ins/pygimp/plug-ins/gradients-save-as-css.py:97
+#: ../plug-ins/pyligma/plug-ins/gradients-save-as-css.py:97
 msgid "File Name"
 msgstr "Naziv datoteke"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:56
+#: ../plug-ins/pyligma/plug-ins/foggify.py:56
 msgid "Add a layer of fog"
 msgstr "Dodaj magloviti sloj"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:61
+#: ../plug-ins/pyligma/plug-ins/foggify.py:61
 msgid "_Fog..."
 msgstr "_magla..."
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:66
+#: ../plug-ins/pyligma/plug-ins/foggify.py:66
 msgid "_Layer name"
 msgstr "_Ime sloja"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:66
+#: ../plug-ins/pyligma/plug-ins/foggify.py:66
 msgid "Clouds"
 msgstr "Oblaci"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:67
+#: ../plug-ins/pyligma/plug-ins/foggify.py:67
 msgid "_Fog color"
 msgstr "_Boja magle"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:68
+#: ../plug-ins/pyligma/plug-ins/foggify.py:68
 msgid "_Turbulence"
 msgstr "_Turbolencija"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:69
+#: ../plug-ins/pyligma/plug-ins/foggify.py:69
 msgid "Op_acity"
 msgstr "Prozirnost"
 
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:44
+#: ../plug-ins/pyligma/plug-ins/palette-offset.py:44
 msgid "Offset the colors in a palette"
 msgstr "Neutralizirati boje u paleti"
 
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:49
+#: ../plug-ins/pyligma/plug-ins/palette-offset.py:49
 msgid "_Offset Palette..."
 msgstr "_Neutralizirati paletu..."
 
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:52
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:309
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:59
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:81
+#: ../plug-ins/pyligma/plug-ins/palette-offset.py:52
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:309
+#: ../plug-ins/pyligma/plug-ins/palette-to-gradient.py:59
+#: ../plug-ins/pyligma/plug-ins/palette-to-gradient.py:81
 msgid "Palette"
 msgstr "Paleta"
 
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:53
+#: ../plug-ins/pyligma/plug-ins/palette-offset.py:53
 msgid "Off_set"
 msgstr "_Neutralizirati"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:22
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:22
 msgid "Red"
 msgstr "Crveno"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:22
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:22
 msgid "Green"
 msgstr "Zeleno"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:22
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:22
 msgid "Blue"
 msgstr "Plavo"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:23
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:23
 msgid "Luma (Y)"
 msgstr "Luma (Y)"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:24
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:24
 msgid "Hue"
 msgstr "Nijansa boje"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:24
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:24
 msgid "Saturation"
 msgstr "Zasićenje"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:24
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:24
 msgid "Value"
 msgstr "Vrijednost"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:25
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:25
 msgid "Saturation (HSL)"
 msgstr "Zasićenost (HSL)"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:25
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:25
 msgid "Lightness (HSL)"
 msgstr "Osvjetljenje (HSL)"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:26
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:26
 msgid "Index"
 msgstr "Indeks"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:27
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:27
 msgid "Random"
 msgstr "Slučajan"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:78
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:78
 msgid "Lightness (LAB)"
 msgstr "Osvjetljenje (LAB)"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:78
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:78
 msgid "A-color"
 msgstr "A-boja"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:78
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:78
 msgid "B-color"
 msgstr "B-boja"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:79
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:79
 msgid "Chroma (LCHab)"
 msgstr "Chroma (LCHab)"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:79
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:79
 msgid "Hue (LCHab)"
 msgstr "Boja(LCHab)"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:300
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:300
 msgid "Sort the colors in a palette"
 msgstr "Sortiraj boje u paleti"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:306
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:306
 msgid "_Sort Palette..."
 msgstr "_Sortiraj Paletu..."
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:310
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:310
 msgid "Se_lections"
 msgstr "_Selekcije"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:311
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:311
 msgid "All"
 msgstr "Sve"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:311
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:311
 msgid "Slice / Array"
 msgstr "Dio / Red"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:311
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:311
 msgid "Autoslice (fg->bg)"
 msgstr "Automatski podijeli(fg->bg)"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:311
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:311
 msgid "Partitioned"
 msgstr "Particionisan"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:312
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:312
 msgid "Slice _expression"
 msgstr "Djelimični_izraz"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:313
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:313
 msgid "Channel to _sort"
 msgstr "Kanal do _sortiranja"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:315
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:315
 msgid "_Quantization"
 msgstr "Kvantizacija"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:316
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:316
 msgid "_Ascending"
 msgstr "_Rastuće"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:317
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:317
 msgid "_Partitioning channel"
 msgstr "_Particirani kanal"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:319
+#: ../plug-ins/pyligma/plug-ins/palette-sort.py:319
 msgid "Partition q_uantization"
 msgstr "Parcijelna kvantizacija"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:52
+#: ../plug-ins/pyligma/plug-ins/palette-to-gradient.py:52
 msgid "Create a repeating gradient using colors from the palette"
 msgstr "Kreiraj ponavljajući gradijent korišteći boje iz palete"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:57
+#: ../plug-ins/pyligma/plug-ins/palette-to-gradient.py:57
 msgid "Palette to _Repeating Gradient"
 msgstr "Palete u _Ponavljajući Gradient"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:74
+#: ../plug-ins/pyligma/plug-ins/palette-to-gradient.py:74
 msgid "Create a gradient using colors from the palette"
 msgstr "Kreiraj gradijent korišteći boje iz palete"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:79
+#: ../plug-ins/pyligma/plug-ins/palette-to-gradient.py:79
 msgid "Palette to _Gradient"
 msgstr "Palete u _Gradijent"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:59
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:59
 msgid "Slice"
 msgstr "Dio"
 
 #. table snippet means a small piece of HTML code here
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:420
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:420
 msgid ""
 "Cuts an image along its guides, creates images and a HTML table snippet"
 msgstr ""
 "Isijecanjem slike duz svojih vodiča kreira slike i isječak HTML tablice"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:431
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:431
 msgid "_Slice..."
 msgstr "_Dio..."
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:436
 msgid "Path for HTML export"
 msgstr "Izlazni put za HTML"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:437
 msgid "Filename for export"
 msgstr "Izlazni naziv datoteke"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:438
 msgid "Image name prefix"
 msgstr "Prefiks imena slike"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:439
 msgid "Image format"
 msgstr "Format slike"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:440
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:440
 msgid "Separate image folder"
 msgstr "Odvojena datoteka slika"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:442
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:442
 msgid "Folder for image export"
 msgstr "Datoteka za izlazne slike"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:443
 msgid "Space between table elements"
 msgstr "Prostor između tabličnih elemenata"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:445
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:445
 msgid "Javascript for onmouseover and clicked"
 msgstr "Javascript za prelazak mišem i klik"
 
 #. table caps are table cells on the edge of the table
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:448
+#: ../plug-ins/pyligma/plug-ins/py-slice.py:448
 msgid "Skip animation for table caps"
 msgstr "Preskoči animacije za rubne čelije"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:56
+#: ../plug-ins/pyligma/plug-ins/python-console.py:56
 msgid "Python Console"
 msgstr "Python konzola"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:60
+#: ../plug-ins/pyligma/plug-ins/python-console.py:60
 msgid "_Browse..."
 msgstr "_Pretraži..."
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:138
+#: ../plug-ins/pyligma/plug-ins/python-console.py:138
 msgid "Python Procedure Browser"
 msgstr "Python  proceduralni pretraživač"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:167
+#: ../plug-ins/pyligma/plug-ins/python-console.py:167
 #, python-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Ne mogu da otvorim „%s“ radi upisa: %s"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:182
+#: ../plug-ins/pyligma/plug-ins/python-console.py:182
 #, python-format
 msgid "Could not write to '%s': %s"
 msgstr "Ne mogu pisati u '%s':%s"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:190
+#: ../plug-ins/pyligma/plug-ins/python-console.py:190
 msgid "Save Python-Fu Console Output"
 msgstr "Sačuvaj Python-Fu izlaz konzule"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:216
-msgid "Interactive GIMP Python interpreter"
-msgstr "Interaktivni GIMP Python interpreter"
+#: ../plug-ins/pyligma/plug-ins/python-console.py:216
+msgid "Interactive LIGMA Python interpreter"
+msgstr "Interaktivni LIGMA Python interpreter"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:221
+#: ../plug-ins/pyligma/plug-ins/python-console.py:221
 msgid "_Console"
 msgstr "_Konzola"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:60
+#: ../plug-ins/pyligma/plug-ins/shadow_bevel.py:60
 msgid "Add a drop shadow to a layer, and optionally bevel it"
 msgstr "Dodaj padajuću sjenu na sloj, opcionalno je iskosi"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:65
+#: ../plug-ins/pyligma/plug-ins/shadow_bevel.py:65
 msgid "_Drop Shadow and Bevel..."
 msgstr "_Padajuća sjena i nagib..."
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:70
+#: ../plug-ins/pyligma/plug-ins/shadow_bevel.py:70
 msgid "_Shadow blur"
 msgstr "_Zamagljenja sjena"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:71
+#: ../plug-ins/pyligma/plug-ins/shadow_bevel.py:71
 msgid "_Bevel"
 msgstr "_Nagib"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:72
+#: ../plug-ins/pyligma/plug-ins/shadow_bevel.py:72
 msgid "_Drop shadow"
 msgstr "_Padajuća sjena"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
+#: ../plug-ins/pyligma/plug-ins/shadow_bevel.py:73
 msgid "Drop shadow _X displacement"
 msgstr "Padajuća sjena _X pomjeranje"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:74
+#: ../plug-ins/pyligma/plug-ins/shadow_bevel.py:74
 msgid "Drop shadow _Y displacement"
 msgstr "Padajuća sjena _Y pomjeranje"

@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,41 +20,41 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "menus-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpcontext.h"
-#include "core/gimplist.h"
-#include "core/gimptoolinfo.h"
+#include "core/ligma.h"
+#include "core/ligmacontext.h"
+#include "core/ligmalist.h"
+#include "core/ligmatoolinfo.h"
 
-#include "widgets/gimphelp-ids.h"
-#include "widgets/gimpuimanager.h"
+#include "widgets/ligmahelp-ids.h"
+#include "widgets/ligmauimanager.h"
 
 #include "tool-options-menu.h"
 
 
 /*  local function prototypes  */
 
-static void   tool_options_menu_update         (GimpUIManager *manager,
+static void   tool_options_menu_update         (LigmaUIManager *manager,
                                                 gpointer       update_data,
                                                 const gchar   *ui_path);
-static void   tool_options_menu_update_after   (GimpUIManager *manager,
+static void   tool_options_menu_update_after   (LigmaUIManager *manager,
                                                 gpointer       update_data,
                                                 const gchar   *ui_path);
-static void   tool_options_menu_update_presets (GimpUIManager *manager,
+static void   tool_options_menu_update_presets (LigmaUIManager *manager,
                                                 guint          merge_id,
                                                 const gchar   *ui_path,
                                                 const gchar   *menu_path,
                                                 const gchar   *which_action,
-                                                GimpContainer *presets);
+                                                LigmaContainer *presets);
 
 
 /*  public functions  */
 
 void
-tool_options_menu_setup (GimpUIManager *manager,
+tool_options_menu_setup (LigmaUIManager *manager,
                          const gchar   *ui_path)
 {
   g_signal_connect (manager, "update",
@@ -69,7 +69,7 @@ tool_options_menu_setup (GimpUIManager *manager,
 /*  private functions  */
 
 static void
-tool_options_menu_update (GimpUIManager *manager,
+tool_options_menu_update (LigmaUIManager *manager,
                           gpointer       update_data,
                           const gchar   *ui_path)
 {
@@ -80,31 +80,31 @@ tool_options_menu_update (GimpUIManager *manager,
 
   if (merge_id)
     {
-      gimp_ui_manager_remove_ui (manager, merge_id);
+      ligma_ui_manager_remove_ui (manager, merge_id);
 
       g_object_set_data (G_OBJECT (manager), "tool-options-merge-id",
                          GINT_TO_POINTER (0));
 
-      gimp_ui_manager_ensure_update (manager);
+      ligma_ui_manager_ensure_update (manager);
     }
 }
 
 static void
-tool_options_menu_update_after (GimpUIManager *manager,
+tool_options_menu_update_after (LigmaUIManager *manager,
                                 gpointer       update_data,
                                 const gchar   *ui_path)
 {
-  GimpContext  *context;
-  GimpToolInfo *tool_info;
+  LigmaContext  *context;
+  LigmaToolInfo *tool_info;
   guint         merge_id;
 
-  context   = gimp_get_user_context (manager->gimp);
-  tool_info = gimp_context_get_tool (context);
+  context   = ligma_get_user_context (manager->ligma);
+  tool_info = ligma_context_get_tool (context);
 
   if (! tool_info->presets)
     return;
 
-  merge_id = gimp_ui_manager_new_merge_id (manager);
+  merge_id = ligma_ui_manager_new_merge_id (manager);
 
   g_object_set_data (G_OBJECT (manager), "tool-options-merge-id",
                      GUINT_TO_POINTER (merge_id));
@@ -125,21 +125,21 @@ tool_options_menu_update_after (GimpUIManager *manager,
                                     "Delete", "delete",
                                     tool_info->presets);
 
-  gimp_ui_manager_ensure_update (manager);
+  ligma_ui_manager_ensure_update (manager);
 }
 
 static void
-tool_options_menu_update_presets (GimpUIManager *manager,
+tool_options_menu_update_presets (LigmaUIManager *manager,
                                   guint          merge_id,
                                   const gchar   *ui_path,
                                   const gchar   *menu_path,
                                   const gchar   *which_action,
-                                  GimpContainer *presets)
+                                  LigmaContainer *presets)
 {
   gint n_children;
   gint i;
 
-  n_children = gimp_container_get_n_children (presets);
+  n_children = ligma_container_get_n_children (presets);
 
   for (i = 0; i < n_children; i++)
     {
@@ -150,7 +150,7 @@ tool_options_menu_update_presets (GimpUIManager *manager,
                                      which_action, i);
       path        = g_strdup_printf ("%s/%s", ui_path, menu_path);
 
-      gimp_ui_manager_add_ui (manager, merge_id,
+      ligma_ui_manager_add_ui (manager, merge_id,
                               path, action_name, action_name,
                               GTK_UI_MANAGER_MENUITEM,
                               FALSE);

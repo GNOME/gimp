@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimpbrushselect.h
+ * ligmabrushselect.h
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -18,17 +18,17 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#if !defined (__GIMP_H_INSIDE__) && !defined (GIMP_COMPILATION)
-#error "Only <libgimp/gimp.h> can be included directly."
+#if !defined (__LIGMA_H_INSIDE__) && !defined (LIGMA_COMPILATION)
+#error "Only <libligma/ligma.h> can be included directly."
 #endif
 
-#ifndef __GIMP_BRUSH_SELECT_H__
-#define __GIMP_BRUSH_SELECT_H__
+#ifndef __LIGMA_BRUSH_SELECT_H__
+#define __LIGMA_BRUSH_SELECT_H__
 
 G_BEGIN_DECLS
 
 /**
- * GimpRunBrushCallback:
+ * LigmaRunBrushCallback:
  * @brush_name: Name of the brush
  * @opacity: Opacity
  * @spacing: Spacing
@@ -40,10 +40,10 @@ G_BEGIN_DECLS
  * @dialog_closing: Dialog closing?
  * @user_data: (closure): user data
  */
-typedef void (* GimpRunBrushCallback)   (const gchar          *brush_name,
+typedef void (* LigmaRunBrushCallback)   (const gchar          *brush_name,
                                          gdouble               opacity,
                                          gint                  spacing,
-                                         GimpLayerMode         paint_mode,
+                                         LigmaLayerMode         paint_mode,
                                          gint                  width,
                                          gint                  height,
                                          gint                  mask_size,
@@ -52,17 +52,17 @@ typedef void (* GimpRunBrushCallback)   (const gchar          *brush_name,
                                          gpointer              user_data);
 
 
-const gchar * gimp_brush_select_new     (const gchar          *title,
+const gchar * ligma_brush_select_new     (const gchar          *title,
                                          const gchar          *brush_name,
                                          gdouble               opacity,
                                          gint                  spacing,
-                                         GimpLayerMode         paint_mode,
-                                         GimpRunBrushCallback  callback,
+                                         LigmaLayerMode         paint_mode,
+                                         LigmaRunBrushCallback  callback,
                                          gpointer              data,
                                          GDestroyNotify        data_destroy);
-void          gimp_brush_select_destroy (const gchar          *brush_callback);
+void          ligma_brush_select_destroy (const gchar          *brush_callback);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_BRUSH_SELECT_H__ */
+#endif /* __LIGMA_BRUSH_SELECT_H__ */

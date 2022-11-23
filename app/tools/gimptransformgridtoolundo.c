@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,13 +20,13 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libligmabase/ligmabase.h"
 
 #include "tools-types.h"
 
-#include "gimptoolcontrol.h"
-#include "gimptransformgridtool.h"
-#include "gimptransformgridtoolundo.h"
+#include "ligmatoolcontrol.h"
+#include "ligmatransformgridtool.h"
+#include "ligmatransformgridtoolundo.h"
 
 
 enum
@@ -36,69 +36,69 @@ enum
 };
 
 
-static void   gimp_transform_grid_tool_undo_constructed  (GObject             *object);
-static void   gimp_transform_grid_tool_undo_set_property (GObject             *object,
+static void   ligma_transform_grid_tool_undo_constructed  (GObject             *object);
+static void   ligma_transform_grid_tool_undo_set_property (GObject             *object,
                                                           guint                property_id,
                                                           const GValue        *value,
                                                           GParamSpec          *pspec);
-static void   gimp_transform_grid_tool_undo_get_property (GObject             *object,
+static void   ligma_transform_grid_tool_undo_get_property (GObject             *object,
                                                           guint                property_id,
                                                           GValue              *value,
                                                           GParamSpec          *pspec);
 
-static void   gimp_transform_grid_tool_undo_pop          (GimpUndo            *undo,
-                                                          GimpUndoMode         undo_mode,
-                                                          GimpUndoAccumulator *accum);
-static void   gimp_transform_grid_tool_undo_free         (GimpUndo            *undo,
-                                                          GimpUndoMode         undo_mode);
+static void   ligma_transform_grid_tool_undo_pop          (LigmaUndo            *undo,
+                                                          LigmaUndoMode         undo_mode,
+                                                          LigmaUndoAccumulator *accum);
+static void   ligma_transform_grid_tool_undo_free         (LigmaUndo            *undo,
+                                                          LigmaUndoMode         undo_mode);
 
 
-G_DEFINE_TYPE (GimpTransformGridToolUndo, gimp_transform_grid_tool_undo, GIMP_TYPE_UNDO)
+G_DEFINE_TYPE (LigmaTransformGridToolUndo, ligma_transform_grid_tool_undo, LIGMA_TYPE_UNDO)
 
-#define parent_class gimp_transform_grid_tool_undo_parent_class
+#define parent_class ligma_transform_grid_tool_undo_parent_class
 
 
 static void
-gimp_transform_grid_tool_undo_class_init (GimpTransformGridToolUndoClass *klass)
+ligma_transform_grid_tool_undo_class_init (LigmaTransformGridToolUndoClass *klass)
 {
   GObjectClass  *object_class = G_OBJECT_CLASS (klass);
-  GimpUndoClass *undo_class   = GIMP_UNDO_CLASS (klass);
+  LigmaUndoClass *undo_class   = LIGMA_UNDO_CLASS (klass);
 
-  object_class->constructed  = gimp_transform_grid_tool_undo_constructed;
-  object_class->set_property = gimp_transform_grid_tool_undo_set_property;
-  object_class->get_property = gimp_transform_grid_tool_undo_get_property;
+  object_class->constructed  = ligma_transform_grid_tool_undo_constructed;
+  object_class->set_property = ligma_transform_grid_tool_undo_set_property;
+  object_class->get_property = ligma_transform_grid_tool_undo_get_property;
 
-  undo_class->pop            = gimp_transform_grid_tool_undo_pop;
-  undo_class->free           = gimp_transform_grid_tool_undo_free;
+  undo_class->pop            = ligma_transform_grid_tool_undo_pop;
+  undo_class->free           = ligma_transform_grid_tool_undo_free;
 
   g_object_class_install_property (object_class, PROP_TRANSFORM_TOOL,
                                    g_param_spec_object ("transform-tool",
                                                         NULL, NULL,
-                                                        GIMP_TYPE_TRANSFORM_GRID_TOOL,
-                                                        GIMP_PARAM_READWRITE |
+                                                        LIGMA_TYPE_TRANSFORM_GRID_TOOL,
+                                                        LIGMA_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
-gimp_transform_grid_tool_undo_init (GimpTransformGridToolUndo *undo)
+ligma_transform_grid_tool_undo_init (LigmaTransformGridToolUndo *undo)
 {
 }
 
 static void
-gimp_transform_grid_tool_undo_constructed (GObject *object)
+ligma_transform_grid_tool_undo_constructed (GObject *object)
 {
-  GimpTransformGridToolUndo *tg_tool_undo = GIMP_TRANSFORM_GRID_TOOL_UNDO (object);
-  GimpTransformGridTool     *tg_tool;
+  LigmaTransformGridToolUndo *tg_tool_undo = LIGMA_TRANSFORM_GRID_TOOL_UNDO (object);
+  LigmaTransformGridTool     *tg_tool;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  gimp_assert (GIMP_IS_TRANSFORM_GRID_TOOL (tg_tool_undo->tg_tool));
+  ligma_assert (LIGMA_IS_TRANSFORM_GRID_TOOL (tg_tool_undo->tg_tool));
 
   tg_tool = tg_tool_undo->tg_tool;
 
-  memcpy (tg_tool_undo->trans_infos[GIMP_TRANSFORM_FORWARD],
+  memcpy (tg_tool_undo->trans_infos[LIGMA_TRANSFORM_FORWARD],
           tg_tool->init_trans_info, sizeof (TransInfo));
-  memcpy (tg_tool_undo->trans_infos[GIMP_TRANSFORM_BACKWARD],
+  memcpy (tg_tool_undo->trans_infos[LIGMA_TRANSFORM_BACKWARD],
           tg_tool->init_trans_info, sizeof (TransInfo));
 
 #if 0
@@ -111,12 +111,12 @@ gimp_transform_grid_tool_undo_constructed (GObject *object)
 }
 
 static void
-gimp_transform_grid_tool_undo_set_property (GObject      *object,
+ligma_transform_grid_tool_undo_set_property (GObject      *object,
                                             guint         property_id,
                                             const GValue *value,
                                             GParamSpec   *pspec)
 {
-  GimpTransformGridToolUndo *tg_tool_undo = GIMP_TRANSFORM_GRID_TOOL_UNDO (object);
+  LigmaTransformGridToolUndo *tg_tool_undo = LIGMA_TRANSFORM_GRID_TOOL_UNDO (object);
 
   switch (property_id)
     {
@@ -131,12 +131,12 @@ gimp_transform_grid_tool_undo_set_property (GObject      *object,
 }
 
 static void
-gimp_transform_grid_tool_undo_get_property (GObject    *object,
+ligma_transform_grid_tool_undo_get_property (GObject    *object,
                                             guint       property_id,
                                             GValue     *value,
                                             GParamSpec *pspec)
 {
-  GimpTransformGridToolUndo *tg_tool_undo = GIMP_TRANSFORM_GRID_TOOL_UNDO (object);
+  LigmaTransformGridToolUndo *tg_tool_undo = LIGMA_TRANSFORM_GRID_TOOL_UNDO (object);
 
   switch (property_id)
     {
@@ -151,17 +151,17 @@ gimp_transform_grid_tool_undo_get_property (GObject    *object,
 }
 
 static void
-gimp_transform_grid_tool_undo_pop (GimpUndo            *undo,
-                                   GimpUndoMode         undo_mode,
-                                   GimpUndoAccumulator *accum)
+ligma_transform_grid_tool_undo_pop (LigmaUndo            *undo,
+                                   LigmaUndoMode         undo_mode,
+                                   LigmaUndoAccumulator *accum)
 {
-  GimpTransformGridToolUndo *tg_tool_undo = GIMP_TRANSFORM_GRID_TOOL_UNDO (undo);
+  LigmaTransformGridToolUndo *tg_tool_undo = LIGMA_TRANSFORM_GRID_TOOL_UNDO (undo);
 
-  GIMP_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);
+  LIGMA_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);
 
   if (tg_tool_undo->tg_tool)
     {
-      GimpTransformGridTool *tg_tool;
+      LigmaTransformGridTool *tg_tool;
 #if 0
       TileManager           *temp;
 #endif
@@ -187,21 +187,21 @@ gimp_transform_grid_tool_undo_pop (GimpUndo            *undo,
 
 #if 0
       /*  If we're re-implementing the first transform_grid, reactivate tool  */
-      if (undo_mode == GIMP_UNDO_MODE_REDO && tg_tool->original)
+      if (undo_mode == LIGMA_UNDO_MODE_REDO && tg_tool->original)
         {
-          gimp_tool_control_activate (GIMP_TOOL (tg_tool)->control);
+          ligma_tool_control_activate (LIGMA_TOOL (tg_tool)->control);
 
-          gimp_draw_tool_resume (GIMP_DRAW_TOOL (tg_tool));
+          ligma_draw_tool_resume (LIGMA_DRAW_TOOL (tg_tool));
         }
 #endif
     }
  }
 
 static void
-gimp_transform_grid_tool_undo_free (GimpUndo     *undo,
-                                    GimpUndoMode  undo_mode)
+ligma_transform_grid_tool_undo_free (LigmaUndo     *undo,
+                                    LigmaUndoMode  undo_mode)
 {
-  GimpTransformGridToolUndo *tg_tool_undo = GIMP_TRANSFORM_GRID_TOOL_UNDO (undo);
+  LigmaTransformGridToolUndo *tg_tool_undo = LIGMA_TRANSFORM_GRID_TOOL_UNDO (undo);
 
   if (tg_tool_undo->tg_tool)
     {
@@ -218,5 +218,5 @@ gimp_transform_grid_tool_undo_free (GimpUndo     *undo,
     }
 #endif
 
-  GIMP_UNDO_CLASS (parent_class)->free (undo, undo_mode);
+  LIGMA_UNDO_CLASS (parent_class)->free (undo, undo_mode);
 }

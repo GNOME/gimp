@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcanvasboundary.c
- * Copyright (C) 2010 Michael Natterer <mitch@gimp.org>
+ * ligmacanvasboundary.c
+ * Copyright (C) 2010 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,18 +23,18 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
+#include "libligmabase/ligmabase.h"
+#include "libligmamath/ligmamath.h"
 
 #include "display-types.h"
 
-#include "core/gimp-cairo.h"
-#include "core/gimp-transform-utils.h"
-#include "core/gimpboundary.h"
-#include "core/gimpparamspecs.h"
+#include "core/ligma-cairo.h"
+#include "core/ligma-transform-utils.h"
+#include "core/ligmaboundary.h"
+#include "core/ligmaparamspecs.h"
 
-#include "gimpcanvasboundary.h"
-#include "gimpdisplayshell.h"
+#include "ligmacanvasboundary.h"
+#include "ligmadisplayshell.h"
 
 
 enum
@@ -47,88 +47,88 @@ enum
 };
 
 
-typedef struct _GimpCanvasBoundaryPrivate GimpCanvasBoundaryPrivate;
+typedef struct _LigmaCanvasBoundaryPrivate LigmaCanvasBoundaryPrivate;
 
-struct _GimpCanvasBoundaryPrivate
+struct _LigmaCanvasBoundaryPrivate
 {
-  GimpBoundSeg *segs;
+  LigmaBoundSeg *segs;
   gint          n_segs;
-  GimpMatrix3  *transform;
+  LigmaMatrix3  *transform;
   gdouble       offset_x;
   gdouble       offset_y;
 };
 
 #define GET_PRIVATE(boundary) \
-        ((GimpCanvasBoundaryPrivate *) gimp_canvas_boundary_get_instance_private ((GimpCanvasBoundary *) (boundary)))
+        ((LigmaCanvasBoundaryPrivate *) ligma_canvas_boundary_get_instance_private ((LigmaCanvasBoundary *) (boundary)))
 
 
 /*  local function prototypes  */
 
-static void             gimp_canvas_boundary_finalize     (GObject        *object);
-static void             gimp_canvas_boundary_set_property (GObject        *object,
+static void             ligma_canvas_boundary_finalize     (GObject        *object);
+static void             ligma_canvas_boundary_set_property (GObject        *object,
                                                            guint           property_id,
                                                            const GValue   *value,
                                                            GParamSpec     *pspec);
-static void             gimp_canvas_boundary_get_property (GObject        *object,
+static void             ligma_canvas_boundary_get_property (GObject        *object,
                                                            guint           property_id,
                                                            GValue         *value,
                                                            GParamSpec     *pspec);
-static void             gimp_canvas_boundary_draw         (GimpCanvasItem *item,
+static void             ligma_canvas_boundary_draw         (LigmaCanvasItem *item,
                                                            cairo_t        *cr);
-static cairo_region_t * gimp_canvas_boundary_get_extents  (GimpCanvasItem *item);
+static cairo_region_t * ligma_canvas_boundary_get_extents  (LigmaCanvasItem *item);
 
 
-G_DEFINE_TYPE_WITH_PRIVATE (GimpCanvasBoundary, gimp_canvas_boundary,
-                            GIMP_TYPE_CANVAS_ITEM)
+G_DEFINE_TYPE_WITH_PRIVATE (LigmaCanvasBoundary, ligma_canvas_boundary,
+                            LIGMA_TYPE_CANVAS_ITEM)
 
-#define parent_class gimp_canvas_boundary_parent_class
+#define parent_class ligma_canvas_boundary_parent_class
 
 
 static void
-gimp_canvas_boundary_class_init (GimpCanvasBoundaryClass *klass)
+ligma_canvas_boundary_class_init (LigmaCanvasBoundaryClass *klass)
 {
   GObjectClass        *object_class = G_OBJECT_CLASS (klass);
-  GimpCanvasItemClass *item_class   = GIMP_CANVAS_ITEM_CLASS (klass);
+  LigmaCanvasItemClass *item_class   = LIGMA_CANVAS_ITEM_CLASS (klass);
 
-  object_class->finalize     = gimp_canvas_boundary_finalize;
-  object_class->set_property = gimp_canvas_boundary_set_property;
-  object_class->get_property = gimp_canvas_boundary_get_property;
+  object_class->finalize     = ligma_canvas_boundary_finalize;
+  object_class->set_property = ligma_canvas_boundary_set_property;
+  object_class->get_property = ligma_canvas_boundary_get_property;
 
-  item_class->draw           = gimp_canvas_boundary_draw;
-  item_class->get_extents    = gimp_canvas_boundary_get_extents;
+  item_class->draw           = ligma_canvas_boundary_draw;
+  item_class->get_extents    = ligma_canvas_boundary_get_extents;
 
   g_object_class_install_property (object_class, PROP_SEGS,
-                                   gimp_param_spec_array ("segs", NULL, NULL,
-                                                          GIMP_PARAM_READWRITE));
+                                   ligma_param_spec_array ("segs", NULL, NULL,
+                                                          LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_TRANSFORM,
                                    g_param_spec_pointer ("transform", NULL, NULL,
-                                                         GIMP_PARAM_READWRITE));
+                                                         LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_OFFSET_X,
                                    g_param_spec_double ("offset-x", NULL, NULL,
-                                                        -GIMP_MAX_IMAGE_SIZE,
-                                                        GIMP_MAX_IMAGE_SIZE, 0,
-                                                        GIMP_PARAM_READWRITE));
+                                                        -LIGMA_MAX_IMAGE_SIZE,
+                                                        LIGMA_MAX_IMAGE_SIZE, 0,
+                                                        LIGMA_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_OFFSET_Y,
                                    g_param_spec_double ("offset-y", NULL, NULL,
-                                                        -GIMP_MAX_IMAGE_SIZE,
-                                                        GIMP_MAX_IMAGE_SIZE, 0,
-                                                        GIMP_PARAM_READWRITE));
+                                                        -LIGMA_MAX_IMAGE_SIZE,
+                                                        LIGMA_MAX_IMAGE_SIZE, 0,
+                                                        LIGMA_PARAM_READWRITE));
 }
 
 static void
-gimp_canvas_boundary_init (GimpCanvasBoundary *boundary)
+ligma_canvas_boundary_init (LigmaCanvasBoundary *boundary)
 {
-  gimp_canvas_item_set_line_cap (GIMP_CANVAS_ITEM (boundary),
+  ligma_canvas_item_set_line_cap (LIGMA_CANVAS_ITEM (boundary),
                                  CAIRO_LINE_CAP_SQUARE);
 }
 
 static void
-gimp_canvas_boundary_finalize (GObject *object)
+ligma_canvas_boundary_finalize (GObject *object)
 {
-  GimpCanvasBoundaryPrivate *private = GET_PRIVATE (object);
+  LigmaCanvasBoundaryPrivate *private = GET_PRIVATE (object);
 
   g_clear_pointer (&private->segs, g_free);
   private->n_segs = 0;
@@ -139,12 +139,12 @@ gimp_canvas_boundary_finalize (GObject *object)
 }
 
 static void
-gimp_canvas_boundary_set_property (GObject      *object,
+ligma_canvas_boundary_set_property (GObject      *object,
                                    guint         property_id,
                                    const GValue *value,
                                    GParamSpec   *pspec)
 {
-  GimpCanvasBoundaryPrivate *private = GET_PRIVATE (object);
+  LigmaCanvasBoundaryPrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
@@ -153,11 +153,11 @@ gimp_canvas_boundary_set_property (GObject      *object,
 
     case PROP_TRANSFORM:
       {
-        GimpMatrix3 *transform = g_value_get_pointer (value);
+        LigmaMatrix3 *transform = g_value_get_pointer (value);
         if (private->transform)
           g_free (private->transform);
         if (transform)
-          private->transform = g_memdup2 (transform, sizeof (GimpMatrix3));
+          private->transform = g_memdup2 (transform, sizeof (LigmaMatrix3));
         else
           private->transform = NULL;
       }
@@ -177,12 +177,12 @@ gimp_canvas_boundary_set_property (GObject      *object,
 }
 
 static void
-gimp_canvas_boundary_get_property (GObject    *object,
+ligma_canvas_boundary_get_property (GObject    *object,
                                    guint       property_id,
                                    GValue     *value,
                                    GParamSpec *pspec)
 {
-  GimpCanvasBoundaryPrivate *private = GET_PRIVATE (object);
+  LigmaCanvasBoundaryPrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
@@ -207,11 +207,11 @@ gimp_canvas_boundary_get_property (GObject    *object,
 }
 
 static void
-gimp_canvas_boundary_transform (GimpCanvasItem *item,
-                                GimpSegment    *segs,
+ligma_canvas_boundary_transform (LigmaCanvasItem *item,
+                                LigmaSegment    *segs,
                                 gint           *n_segs)
 {
-  GimpCanvasBoundaryPrivate *private = GET_PRIVATE (item);
+  LigmaCanvasBoundaryPrivate *private = GET_PRIVATE (item);
   gint                       i;
 
   if (private->transform)
@@ -220,23 +220,23 @@ gimp_canvas_boundary_transform (GimpCanvasItem *item,
 
       for (i = 0; i < private->n_segs; i++)
         {
-          GimpVector2 vertices[2];
-          GimpVector2 t_vertices[2];
+          LigmaVector2 vertices[2];
+          LigmaVector2 t_vertices[2];
           gint        n_t_vertices;
 
-          vertices[0] = (GimpVector2) { private->segs[i].x1, private->segs[i].y1 };
-          vertices[1] = (GimpVector2) { private->segs[i].x2, private->segs[i].y2 };
+          vertices[0] = (LigmaVector2) { private->segs[i].x1, private->segs[i].y1 };
+          vertices[1] = (LigmaVector2) { private->segs[i].x2, private->segs[i].y2 };
 
-          gimp_transform_polygon (private->transform, vertices, 2, FALSE,
+          ligma_transform_polygon (private->transform, vertices, 2, FALSE,
                                   t_vertices, &n_t_vertices);
 
           if (n_t_vertices == 2)
             {
-              gimp_canvas_item_transform_xy (item,
+              ligma_canvas_item_transform_xy (item,
                                              t_vertices[0].x + private->offset_x,
                                              t_vertices[0].y + private->offset_y,
                                              &segs[n].x1, &segs[n].y1);
-              gimp_canvas_item_transform_xy (item,
+              ligma_canvas_item_transform_xy (item,
                                              t_vertices[1].x + private->offset_x,
                                              t_vertices[1].y + private->offset_y,
                                              &segs[n].x2, &segs[n].y2);
@@ -251,12 +251,12 @@ gimp_canvas_boundary_transform (GimpCanvasItem *item,
     {
       for (i = 0; i < private->n_segs; i++)
         {
-          gimp_canvas_item_transform_xy (item,
+          ligma_canvas_item_transform_xy (item,
                                          private->segs[i].x1 + private->offset_x,
                                          private->segs[i].y1 + private->offset_y,
                                          &segs[i].x1,
                                          &segs[i].y1);
-          gimp_canvas_item_transform_xy (item,
+          ligma_canvas_item_transform_xy (item,
                                          private->segs[i].x2 + private->offset_x,
                                          private->segs[i].y2 + private->offset_y,
                                          &segs[i].x2,
@@ -288,37 +288,37 @@ gimp_canvas_boundary_transform (GimpCanvasItem *item,
 }
 
 static void
-gimp_canvas_boundary_draw (GimpCanvasItem *item,
+ligma_canvas_boundary_draw (LigmaCanvasItem *item,
                            cairo_t        *cr)
 {
-  GimpCanvasBoundaryPrivate *private = GET_PRIVATE (item);
-  GimpSegment               *segs;
+  LigmaCanvasBoundaryPrivate *private = GET_PRIVATE (item);
+  LigmaSegment               *segs;
   gint                       n_segs;
 
-  segs = g_new0 (GimpSegment, private->n_segs);
+  segs = g_new0 (LigmaSegment, private->n_segs);
 
-  gimp_canvas_boundary_transform (item, segs, &n_segs);
+  ligma_canvas_boundary_transform (item, segs, &n_segs);
 
-  gimp_cairo_segments (cr, segs, n_segs);
+  ligma_cairo_segments (cr, segs, n_segs);
 
-  _gimp_canvas_item_stroke (item, cr);
+  _ligma_canvas_item_stroke (item, cr);
 
   g_free (segs);
 }
 
 static cairo_region_t *
-gimp_canvas_boundary_get_extents (GimpCanvasItem *item)
+ligma_canvas_boundary_get_extents (LigmaCanvasItem *item)
 {
-  GimpCanvasBoundaryPrivate *private = GET_PRIVATE (item);
+  LigmaCanvasBoundaryPrivate *private = GET_PRIVATE (item);
   cairo_rectangle_int_t      rectangle;
-  GimpSegment               *segs;
+  LigmaSegment               *segs;
   gint                       n_segs;
   gint                       x1, y1, x2, y2;
   gint                       i;
 
-  segs = g_new0 (GimpSegment, private->n_segs);
+  segs = g_new0 (LigmaSegment, private->n_segs);
 
-  gimp_canvas_boundary_transform (item, segs, &n_segs);
+  ligma_canvas_boundary_transform (item, segs, &n_segs);
 
   if (n_segs == 0)
     {
@@ -355,20 +355,20 @@ gimp_canvas_boundary_get_extents (GimpCanvasItem *item)
   return cairo_region_create_rectangle (&rectangle);
 }
 
-GimpCanvasItem *
-gimp_canvas_boundary_new (GimpDisplayShell   *shell,
-                          const GimpBoundSeg *segs,
+LigmaCanvasItem *
+ligma_canvas_boundary_new (LigmaDisplayShell   *shell,
+                          const LigmaBoundSeg *segs,
                           gint                n_segs,
-                          GimpMatrix3        *transform,
+                          LigmaMatrix3        *transform,
                           gdouble             offset_x,
                           gdouble             offset_y)
 {
-  GimpCanvasItem            *item;
-  GimpCanvasBoundaryPrivate *private;
+  LigmaCanvasItem            *item;
+  LigmaCanvasBoundaryPrivate *private;
 
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
+  g_return_val_if_fail (LIGMA_IS_DISPLAY_SHELL (shell), NULL);
 
-  item = g_object_new (GIMP_TYPE_CANVAS_BOUNDARY,
+  item = g_object_new (LIGMA_TYPE_CANVAS_BOUNDARY,
                        "shell",     shell,
                        "transform", transform,
                        "offset-x",  offset_x,
@@ -377,7 +377,7 @@ gimp_canvas_boundary_new (GimpDisplayShell   *shell,
   private = GET_PRIVATE (item);
 
   /* puke */
-  private->segs   = g_memdup2 (segs, n_segs * sizeof (GimpBoundSeg));
+  private->segs   = g_memdup2 (segs, n_segs * sizeof (LigmaBoundSeg));
   private->n_segs = n_segs;
 
   return item;

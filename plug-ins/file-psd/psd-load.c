@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GIMP PSD Plug-in
+ * LIGMA PSD Plug-in
  * Copyright 2007 by John Marshall
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,8 +25,8 @@
 
 #include <glib/gstdio.h>
 #include <zlib.h>
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
 #include "psd.h"
 #include "psd-util.h"
@@ -34,7 +34,7 @@
 #include "psd-layer-res-load.h"
 #include "psd-load.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 #define COMP_MODE_SIZE sizeof(guint16)
@@ -61,39 +61,39 @@ static gint             read_merged_image_block    (PSDimage       *img_a,
                                                     GInputStream   *input,
                                                     GError        **error);
 
-static GimpImage *      create_gimp_image          (PSDimage       *img_a,
+static LigmaImage *      create_ligma_image          (PSDimage       *img_a,
                                                     GFile          *file);
 
-static gint             add_color_map              (GimpImage      *image,
+static gint             add_color_map              (LigmaImage      *image,
                                                     PSDimage       *img_a);
 
-static gint             add_image_resources        (GimpImage      *image,
+static gint             add_image_resources        (LigmaImage      *image,
                                                     PSDimage       *img_a,
                                                     GInputStream   *input,
                                                     gboolean       *resolution_loaded,
                                                     gboolean       *profile_loaded,
                                                     GError        **error);
 
-static gint             add_layers                 (GimpImage      *image,
+static gint             add_layers                 (LigmaImage      *image,
                                                     PSDimage       *img_a,
                                                     PSDlayer      **lyr_a,
                                                     GInputStream   *input,
                                                     GError        **error);
 
-static gint             add_merged_image           (GimpImage      *image,
+static gint             add_merged_image           (LigmaImage      *image,
                                                     PSDimage       *img_a,
                                                     GInputStream   *input,
                                                     GError        **error);
 
 /*  Local utility function prototypes  */
-static GimpLayer      * add_clipping_group         (GimpImage      *image,
-                                                    GimpLayer      *parent);
+static LigmaLayer      * add_clipping_group         (LigmaImage      *image,
+                                                    LigmaLayer      *parent);
 
 static gchar          * get_psd_color_mode_name    (PSDColorMode    mode);
 
-static void             psd_to_gimp_color_map      (guchar         *map256);
+static void             psd_to_ligma_color_map      (guchar         *map256);
 
-static GimpImageType    get_gimp_image_type        (GimpImageBaseType image_base_type,
+static LigmaImageType    get_ligma_image_type        (LigmaImageBaseType image_base_type,
                                                     gboolean          alpha);
 
 static void             free_lyr_a                 (PSDlayer      **lyr_a,
@@ -133,7 +133,7 @@ static const Babl*      get_mask_format            (PSDimage       *img_a);
 
 
 /* Main file load function */
-GimpImage *
+LigmaImage *
 load_image (GFile        *file,
             gboolean      merged_image_only,
             gboolean     *resolution_loaded,
@@ -143,7 +143,7 @@ load_image (GFile        *file,
   GInputStream  *input;
   PSDimage       img_a;
   PSDlayer     **lyr_a;
-  GimpImage     *image = NULL;
+  LigmaImage     *image = NULL;
   GError        *error = NULL;
 
   img_a.cmyk_transform = img_a.cmyk_transform_alpha = NULL;
@@ -157,22 +157,22 @@ load_image (GFile        *file,
       if (! error)
         g_set_error (load_error, G_FILE_ERROR, g_file_error_from_errno (errno),
                      _("Could not open '%s' for reading: %s"),
-                     gimp_file_get_utf8_name (file), g_strerror (errno));
+                     ligma_file_get_utf8_name (file), g_strerror (errno));
       else
         {
           g_set_error (load_error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("Could not open '%s' for reading: %s"),
-                       gimp_file_get_utf8_name (file), error->message);
+                       ligma_file_get_utf8_name (file), error->message);
           g_error_free (error);
         }
 
       return NULL;
     }
 
-  gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_file_get_utf8_name (file));
+  ligma_progress_init_printf (_("Opening '%s'"),
+                             ligma_file_get_utf8_name (file));
 
-  IFDBG(1) g_debug ("Open file %s", gimp_file_get_utf8_name (file));
+  IFDBG(1) g_debug ("Open file %s", ligma_file_get_utf8_name (file));
 
   img_a.merged_image_only = merged_image_only;
 
@@ -181,21 +181,21 @@ load_image (GFile        *file,
                     PSD_TELL(input));
   if (read_header_block (&img_a, input, &error) < 0)
     goto load_error;
-  gimp_progress_update (0.1);
+  ligma_progress_update (0.1);
 
   /* ----- Read the PSD file Color Mode block ----- */
   IFDBG(2) g_debug ("Read color mode block at offset %" G_GOFFSET_FORMAT,
                     PSD_TELL(input));
   if (read_color_mode_block (&img_a, input, &error) < 0)
     goto load_error;
-  gimp_progress_update (0.2);
+  ligma_progress_update (0.2);
 
   /* ----- Read the PSD file Image Resource block ----- */
   IFDBG(2) g_debug ("Read image resource block at offset %" G_GOFFSET_FORMAT,
                     PSD_TELL(input));
   if (read_image_resource_block (&img_a, input, &error) < 0)
     goto load_error;
-  gimp_progress_update (0.3);
+  ligma_progress_update (0.3);
 
   /* ----- Read the PSD file Layer & Mask block ----- */
   IFDBG(2) g_debug ("Read layer & mask block at offset %" G_GOFFSET_FORMAT,
@@ -222,27 +222,27 @@ load_image (GFile        *file,
           goto load_error;
         }
     }
-  gimp_progress_update (0.4);
+  ligma_progress_update (0.4);
 
   /* ----- Read the PSD file Merged Image Data block ----- */
   IFDBG(2) g_debug ("Read merged image and extra alpha channel block at offset %" G_GOFFSET_FORMAT,
                     PSD_TELL(input));
   if (read_merged_image_block (&img_a, input, &error) < 0)
     goto load_error;
-  gimp_progress_update (0.5);
+  ligma_progress_update (0.5);
 
-  /* ----- Create GIMP image ----- */
-  IFDBG(2) g_debug ("Create GIMP image");
-  image = create_gimp_image (&img_a, file);
+  /* ----- Create LIGMA image ----- */
+  IFDBG(2) g_debug ("Create LIGMA image");
+  image = create_ligma_image (&img_a, file);
   if (! image)
     goto load_error;
-  gimp_progress_update (0.6);
+  ligma_progress_update (0.6);
 
   /* ----- Add color map ----- */
   IFDBG(2) g_debug ("Add color map");
   if (add_color_map (image, &img_a) < 0)
     goto load_error;
-  gimp_progress_update (0.7);
+  ligma_progress_update (0.7);
 
   /* ----- Add image resources ----- */
   IFDBG(2) g_debug ("Add image resources");
@@ -250,26 +250,26 @@ load_image (GFile        *file,
                            resolution_loaded, profile_loaded,
                            &error) < 0)
     goto load_error;
-  gimp_progress_update (0.8);
+  ligma_progress_update (0.8);
 
   /* ----- Add layers -----*/
   IFDBG(2) g_debug ("Add layers");
   if (add_layers (image, &img_a, lyr_a, input, &error) < 0)
     goto load_error;
-  gimp_progress_update (0.9);
+  ligma_progress_update (0.9);
 
   /* ----- Add merged image data and extra alpha channels ----- */
   IFDBG(2) g_debug ("Add merged image data and extra alpha channels");
   if (add_merged_image (image, &img_a, input, &error) < 0)
     goto load_error;
-  gimp_progress_update (1.0);
+  ligma_progress_update (1.0);
 
-  IFDBG(2) g_debug ("Close file & return, image id: %d", gimp_image_get_id (image));
+  IFDBG(2) g_debug ("Close file & return, image id: %d", ligma_image_get_id (image));
   IFDBG(1) g_debug ("\n----------------------------------------"
                     "----------------------------------------\n");
 
-  gimp_image_clean_all (image);
-  gimp_image_undo_enable (image);
+  ligma_image_clean_all (image);
+  ligma_image_undo_enable (image);
   g_object_unref (input);
   return image;
 
@@ -284,7 +284,7 @@ load_image (GFile        *file,
 
   /* Delete partially loaded image */
   if (image)
-    gimp_image_delete (image);
+    ligma_image_delete (image);
 
   /* Close file if Open */
   g_object_unref (input);
@@ -349,7 +349,7 @@ read_header_block (PSDimage      *img_a,
       return -1;
     }
 
-  if (img_a->rows < 1 || img_a->rows > GIMP_MAX_IMAGE_SIZE)
+  if (img_a->rows < 1 || img_a->rows > LIGMA_MAX_IMAGE_SIZE)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                   _("Unsupported or invalid image height: %d"),
@@ -357,7 +357,7 @@ read_header_block (PSDimage      *img_a,
       return -1;
     }
 
-  if (img_a->columns < 1 || img_a->columns > GIMP_MAX_IMAGE_SIZE)
+  if (img_a->columns < 1 || img_a->columns > LIGMA_MAX_IMAGE_SIZE)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                   _("Unsupported or invalid image width: %d"),
@@ -480,7 +480,7 @@ read_color_mode_block (PSDimage      *img_a,
             }
           else
             {
-              psd_to_gimp_color_map (img_a->color_map);
+              psd_to_ligma_color_map (img_a->color_map);
               img_a->color_map_entries = 256;
             }
         }
@@ -711,7 +711,7 @@ read_layer_info (PSDimage      *img_a,
           if (! lyr_a[lidx]->layer_flags.irrelevant)
             {
               if (lyr_a[lidx]->bottom < lyr_a[lidx]->top ||
-                  lyr_a[lidx]->bottom - lyr_a[lidx]->top > GIMP_MAX_IMAGE_SIZE)
+                  lyr_a[lidx]->bottom - lyr_a[lidx]->top > LIGMA_MAX_IMAGE_SIZE)
                 {
                   g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                               _("Unsupported or invalid layer height: %d"),
@@ -720,7 +720,7 @@ read_layer_info (PSDimage      *img_a,
                   return NULL;
                 }
               if (lyr_a[lidx]->right < lyr_a[lidx]->left ||
-                  lyr_a[lidx]->right - lyr_a[lidx]->left > GIMP_MAX_IMAGE_SIZE)
+                  lyr_a[lidx]->right - lyr_a[lidx]->left > LIGMA_MAX_IMAGE_SIZE)
                 {
                   g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                               _("Unsupported or invalid layer width: %d"),
@@ -927,7 +927,7 @@ read_layer_info (PSDimage      *img_a,
                 {
                   /* sanity checks */
                   if (lyr_a[lidx]->layer_mask.bottom < lyr_a[lidx]->layer_mask.top ||
-                      lyr_a[lidx]->layer_mask.bottom - lyr_a[lidx]->layer_mask.top > GIMP_MAX_IMAGE_SIZE)
+                      lyr_a[lidx]->layer_mask.bottom - lyr_a[lidx]->layer_mask.top > LIGMA_MAX_IMAGE_SIZE)
                     {
                       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                                    _("Unsupported or invalid layer mask height: %d"),
@@ -936,7 +936,7 @@ read_layer_info (PSDimage      *img_a,
                       return NULL;
                     }
                   if (lyr_a[lidx]->layer_mask.right < lyr_a[lidx]->layer_mask.left ||
-                      lyr_a[lidx]->layer_mask.right - lyr_a[lidx]->layer_mask.left > GIMP_MAX_IMAGE_SIZE)
+                      lyr_a[lidx]->layer_mask.right - lyr_a[lidx]->layer_mask.left > LIGMA_MAX_IMAGE_SIZE)
                     {
                       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                                    _("Unsupported or invalid layer mask width: %d"),
@@ -1274,30 +1274,30 @@ read_merged_image_block (PSDimage      *img_a,
   return 0;
 }
 
-static GimpImage *
-create_gimp_image (PSDimage *img_a,
+static LigmaImage *
+create_ligma_image (PSDimage *img_a,
                    GFile    *file)
 {
-  GimpImage     *image = NULL;
-  GimpPrecision  precision;
+  LigmaImage     *image = NULL;
+  LigmaPrecision  precision;
 
   switch (img_a->color_mode)
     {
     case PSD_MULTICHANNEL:
     case PSD_GRAYSCALE:
     case PSD_DUOTONE:
-      img_a->base_type = GIMP_GRAY;
+      img_a->base_type = LIGMA_GRAY;
       break;
 
     case PSD_BITMAP:
     case PSD_INDEXED:
-      img_a->base_type = GIMP_INDEXED;
+      img_a->base_type = LIGMA_INDEXED;
       break;
 
     case PSD_LAB:
     case PSD_CMYK:
     case PSD_RGB:
-      img_a->base_type = GIMP_RGB;
+      img_a->base_type = LIGMA_RGB;
       break;
 
     default:
@@ -1310,22 +1310,22 @@ create_gimp_image (PSDimage *img_a,
     switch (img_a->bps)
       {
       case 32:
-        precision = GIMP_PRECISION_FLOAT_NON_LINEAR;
+        precision = LIGMA_PRECISION_FLOAT_NON_LINEAR;
         break;
 
       case 16:
         if (img_a->color_mode == PSD_CMYK)
-          precision = GIMP_PRECISION_FLOAT_NON_LINEAR;
+          precision = LIGMA_PRECISION_FLOAT_NON_LINEAR;
         else
-          precision = GIMP_PRECISION_U16_NON_LINEAR;
+          precision = LIGMA_PRECISION_U16_NON_LINEAR;
         break;
 
       case 8:
       case 1:
         if (img_a->color_mode == PSD_CMYK || img_a->color_mode == PSD_LAB)
-          precision = GIMP_PRECISION_FLOAT_NON_LINEAR;
+          precision = LIGMA_PRECISION_FLOAT_NON_LINEAR;
         else
-          precision = GIMP_PRECISION_U8_NON_LINEAR;
+          precision = LIGMA_PRECISION_U8_NON_LINEAR;
         break;
 
       default:
@@ -1335,37 +1335,37 @@ create_gimp_image (PSDimage *img_a,
         break;
       }
 
-  /* Create gimp image */
+  /* Create ligma image */
   IFDBG(2) g_debug ("Create image");
-  image = gimp_image_new_with_precision (img_a->columns, img_a->rows,
+  image = ligma_image_new_with_precision (img_a->columns, img_a->rows,
                                          img_a->base_type, precision);
-  gimp_image_set_file (image, file);
-  gimp_image_undo_disable (image);
+  ligma_image_set_file (image, file);
+  ligma_image_undo_disable (image);
 
   return image;
 }
 
 static gint
-add_color_map (GimpImage *image,
+add_color_map (LigmaImage *image,
                PSDimage  *img_a)
 {
-  GimpParasite *parasite;
+  LigmaParasite *parasite;
 
   if (img_a->color_map_len)
     {
       if (img_a->color_mode != PSD_DUOTONE)
         {
-          gimp_image_set_colormap (image, img_a->color_map,
+          ligma_image_set_colormap (image, img_a->color_map,
                                    img_a->color_map_entries);
         }
       else
         {
            /* Add parasite for Duotone color data */
           IFDBG(2) g_debug ("Add Duotone color data parasite");
-          parasite = gimp_parasite_new (PSD_PARASITE_DUOTONE_DATA, 0,
+          parasite = ligma_parasite_new (PSD_PARASITE_DUOTONE_DATA, 0,
                                         img_a->color_map_len, img_a->color_map);
-          gimp_image_attach_parasite (image, parasite);
-          gimp_parasite_free (parasite);
+          ligma_image_attach_parasite (image, parasite);
+          ligma_parasite_free (parasite);
         }
       g_free (img_a->color_map);
     }
@@ -1374,7 +1374,7 @@ add_color_map (GimpImage *image,
 }
 
 static gint
-add_image_resources (GimpImage     *image,
+add_image_resources (LigmaImage     *image,
                      PSDimage      *img_a,
                      GInputStream  *input,
                      gboolean      *resolution_loaded,
@@ -1438,14 +1438,14 @@ psd_convert_cmyk_to_srgb (PSDimage *img_a,
   const Babl *space       = NULL;
 
   if (img_a->cmyk_profile &&
-      gimp_color_profile_is_cmyk (img_a->cmyk_profile))
+      ligma_color_profile_is_cmyk (img_a->cmyk_profile))
     {
       /* If no CMYK profile attached, babl_format_with_space ()
        * will ignore the NULL space value and process the image
        * as if it were just using babl_format ()
        */
-      space = gimp_color_profile_get_space (img_a->cmyk_profile,
-                                            GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+      space = ligma_color_profile_get_space (img_a->cmyk_profile,
+                                            LIGMA_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
                                             error);
     }
 
@@ -1562,7 +1562,7 @@ free_lyr_chn (PSDchannel **lyr_chn, gint channel_count)
 }
 
 static gint
-add_layers (GimpImage     *image,
+add_layers (LigmaImage     *image,
             PSDimage      *img_a,
             PSDlayer     **lyr_a,
             GInputStream  *input,
@@ -1570,8 +1570,8 @@ add_layers (GimpImage     *image,
 {
   PSDchannel          **lyr_chn;
   GArray               *parent_group_stack;
-  GimpLayer            *parent_group = NULL;
-  GimpLayer            *clipping_group = NULL;
+  LigmaLayer            *parent_group = NULL;
+  LigmaLayer            *clipping_group = NULL;
   guint16               alpha_chn;
   guint16               user_mask_chn;
   guint16               layer_channels, base_channels;
@@ -1585,8 +1585,8 @@ add_layers (GimpImage     *image,
   gint32                lm_y;                  /* Layer mask y */
   gint32                lm_w;                  /* Layer mask width */
   gint32                lm_h;                  /* Layer mask height */
-  GimpLayer            *layer           = NULL;
-  GimpLayerMask        *mask            = NULL;
+  LigmaLayer            *layer           = NULL;
+  LigmaLayerMask        *mask            = NULL;
   GList                *selected_layers = NULL;
   gint                  lidx;                  /* Layer index */
   gint                  cidx;                  /* Channel index */
@@ -1597,7 +1597,7 @@ add_layers (GimpImage     *image,
   gboolean              empty_mask;
   gboolean              use_clipping_group;
   GeglBuffer           *buffer;
-  GimpImageType         image_type;
+  LigmaImageType         image_type;
   LayerModeInfo         mode_info;
 
 
@@ -1623,7 +1623,7 @@ add_layers (GimpImage     *image,
     {
       if (lyr_a[lidx]->clipping == 1)
         {
-          /* Photoshop handles layers with clipping differently than GIMP does.
+          /* Photoshop handles layers with clipping differently than LIGMA does.
            * To correctly show these layers we need to make a new group
            * starting with the first non-clipping layer and including all
            * the clipping layers above it.
@@ -1674,7 +1674,7 @@ add_layers (GimpImage     *image,
     }
 
   /* set the root of the group hierarchy */
-  parent_group_stack = g_array_new (FALSE, FALSE, sizeof (GimpLayer *));
+  parent_group_stack = g_array_new (FALSE, FALSE, sizeof (LigmaLayer *));
   g_array_append_val (parent_group_stack, parent_group);
 
   for (lidx = 0; lidx < img_a->num_layers; ++lidx)
@@ -1852,7 +1852,7 @@ add_layers (GimpImage     *image,
           l_w = img_a->columns;
           l_h = img_a->rows;
           if (parent_group_stack->len > 0)
-            parent_group = g_array_index (parent_group_stack, GimpLayer *,
+            parent_group = g_array_index (parent_group_stack, LigmaLayer *,
                                           parent_group_stack->len - 1);
           else
             parent_group = NULL; /* root */
@@ -1943,7 +1943,7 @@ add_layers (GimpImage     *image,
                    * assemble the layer structure in a single pass
                    */
                   IFDBG(2) g_debug ("Create placeholder group layer");
-                  layer = gimp_layer_group_new (image);
+                  layer = ligma_layer_group_new (image);
                   /* add this group layer as the new parent */
                   g_array_append_val (parent_group_stack, layer);
                 }
@@ -1951,9 +1951,9 @@ add_layers (GimpImage     *image,
                 {
                   if (parent_group_stack->len)
                     {
-                      layer = g_array_index (parent_group_stack, GimpLayer *,
+                      layer = g_array_index (parent_group_stack, LigmaLayer *,
                                              parent_group_stack->len - 1);
-                      IFDBG(2) g_debug ("End group layer id %d.", gimp_item_get_id (GIMP_ITEM (layer)));
+                      IFDBG(2) g_debug ("End group layer id %d.", ligma_item_get_id (LIGMA_ITEM (layer)));
                       /* since the layers are stored in reverse, the group
                        * layer start marker actually means we're done with
                        * that layer group
@@ -1961,10 +1961,10 @@ add_layers (GimpImage     *image,
                       g_array_remove_index (parent_group_stack,
                                             parent_group_stack->len - 1);
 
-                      gimp_drawable_get_offsets (GIMP_DRAWABLE (layer), &l_x, &l_y);
+                      ligma_drawable_get_offsets (LIGMA_DRAWABLE (layer), &l_x, &l_y);
 
-                      l_w = gimp_drawable_get_width  (GIMP_DRAWABLE (layer));
-                      l_h = gimp_drawable_get_height (GIMP_DRAWABLE (layer));
+                      l_w = ligma_drawable_get_width  (LIGMA_DRAWABLE (layer));
+                      l_h = ligma_drawable_get_height (LIGMA_DRAWABLE (layer));
                     }
                   else
                     {
@@ -1993,12 +1993,12 @@ add_layers (GimpImage     *image,
                   l_h = lyr_a[lidx]->bottom - lyr_a[lidx]->top;
                 }
 
-              image_type = get_gimp_image_type (img_a->base_type, TRUE);
+              image_type = get_ligma_image_type (img_a->base_type, TRUE);
               IFDBG(3) g_debug ("Layer type %d", image_type);
 
-              layer = gimp_layer_new (image, lyr_a[lidx]->name,
+              layer = ligma_layer_new (image, lyr_a[lidx]->name,
                                       l_w, l_h, image_type,
-                                      100, GIMP_LAYER_MODE_NORMAL);
+                                      100, LIGMA_LAYER_MODE_NORMAL);
             }
 
           if (layer != NULL)
@@ -2009,7 +2009,7 @@ add_layers (GimpImage     *image,
                * start marker.
                */
               if (lyr_a[lidx]->name)
-                gimp_item_set_name (GIMP_ITEM (layer), lyr_a[lidx]->name);
+                ligma_item_set_name (LIGMA_ITEM (layer), lyr_a[lidx]->name);
 
               /* Set the layer properties (skip this for layer group end
                * markers; we set their properties when processing the start
@@ -2018,19 +2018,19 @@ add_layers (GimpImage     *image,
               if (lyr_a[lidx]->group_type != 3)
                 {
                   /* Mode */
-                  psd_to_gimp_blend_mode (lyr_a[lidx], &mode_info);
-                  gimp_layer_set_mode (layer, mode_info.mode);
-                  gimp_layer_set_blend_space (layer, mode_info.blend_space);
-                  gimp_layer_set_composite_space (layer, mode_info.composite_space);
-                  gimp_layer_set_composite_mode (layer, mode_info.composite_mode);
+                  psd_to_ligma_blend_mode (lyr_a[lidx], &mode_info);
+                  ligma_layer_set_mode (layer, mode_info.mode);
+                  ligma_layer_set_blend_space (layer, mode_info.blend_space);
+                  ligma_layer_set_composite_space (layer, mode_info.composite_space);
+                  ligma_layer_set_composite_mode (layer, mode_info.composite_mode);
 
                   /* Opacity */
-                  gimp_layer_set_opacity (layer,
+                  ligma_layer_set_opacity (layer,
                                           lyr_a[lidx]->opacity * 100.0 / 255.0);
 
                   /* Flags */
-                  gimp_layer_set_lock_alpha  (layer, lyr_a[lidx]->layer_flags.trans_prot);
-                  gimp_item_set_visible (GIMP_ITEM (layer), lyr_a[lidx]->layer_flags.visible);
+                  ligma_layer_set_lock_alpha  (layer, lyr_a[lidx]->layer_flags.trans_prot);
+                  ligma_item_set_visible (LIGMA_ITEM (layer), lyr_a[lidx]->layer_flags.visible);
 #if 0
                   /* according to the spec, the 'irrelevant' flag indicates
                    * that the layer's "pixel data is irrelevant to the
@@ -2045,26 +2045,26 @@ add_layers (GimpImage     *image,
                   if (lyr_a[lidx]->layer_flags.irrelevant &&
                       lyr_a[lidx]->group_type == 0)
                     {
-                      gimp_item_set_visible (GIMP_ITEM (layer), FALSE);
+                      ligma_item_set_visible (LIGMA_ITEM (layer), FALSE);
                     }
 #endif
 
                   /* Position */
                   if (l_x != 0 || l_y != 0)
-                    gimp_layer_set_offsets (layer, l_x, l_y);
+                    ligma_layer_set_offsets (layer, l_x, l_y);
 
                   /* Color tag */
-                  gimp_item_set_color_tag (GIMP_ITEM (layer),
-                                           psd_to_gimp_layer_color_tag (lyr_a[lidx]->color_tag[0]));
+                  ligma_item_set_color_tag (LIGMA_ITEM (layer),
+                                           psd_to_ligma_layer_color_tag (lyr_a[lidx]->color_tag[0]));
 
                   /* Tattoo */
                   if (lyr_a[lidx]->id)
-                    gimp_item_set_tattoo (GIMP_ITEM (layer), lyr_a[lidx]->id);
+                    ligma_item_set_tattoo (LIGMA_ITEM (layer), lyr_a[lidx]->id);
 
                   /* For layer groups, expand or collapse the group */
                   if (lyr_a[lidx]->group_type != 0)
                     {
-                      gimp_item_set_expanded (GIMP_ITEM (layer),
+                      ligma_item_set_expanded (LIGMA_ITEM (layer),
                                               lyr_a[lidx]->group_type == 1);
                     }
                 }
@@ -2093,7 +2093,7 @@ add_layers (GimpImage     *image,
 
                   if (empty)
                     {
-                      gimp_drawable_fill (GIMP_DRAWABLE (layer), GIMP_FILL_TRANSPARENT);
+                      ligma_drawable_fill (LIGMA_DRAWABLE (layer), LIGMA_FILL_TRANSPARENT);
                     }
                   else
                     {
@@ -2103,7 +2103,7 @@ add_layers (GimpImage     *image,
                       if (bps == 0)
                         bps++;
 
-                      buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
+                      buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (layer));
 
                       iter = gegl_buffer_iterator_new (
                         buffer, NULL, 0, get_layer_format (img_a, alpha),
@@ -2194,13 +2194,13 @@ add_layers (GimpImage     *image,
                     {
                       IFDBG(3) g_debug ("Create empty mask");
                       if (lyr_a[lidx]->layer_mask.def_color == 255)
-                        mask = gimp_layer_create_mask (layer,
-                                                       GIMP_ADD_MASK_WHITE);
+                        mask = ligma_layer_create_mask (layer,
+                                                       LIGMA_ADD_MASK_WHITE);
                       else
-                        mask = gimp_layer_create_mask (layer,
-                                                       GIMP_ADD_MASK_BLACK);
-                      gimp_layer_add_mask (layer, mask);
-                      gimp_layer_set_apply_mask (layer,
+                        mask = ligma_layer_create_mask (layer,
+                                                       LIGMA_ADD_MASK_BLACK);
+                      ligma_layer_add_mask (layer, mask);
+                      ligma_layer_set_apply_mask (layer,
                                                  ! lyr_a[lidx]->layer_mask.mask_flags.disabled);
                     }
                   else
@@ -2228,19 +2228,19 @@ add_layers (GimpImage     *image,
                                             mask_rect.width, mask_rect.height);
 
                           if (lyr_a[lidx]->layer_mask.def_color == 255)
-                            mask = gimp_layer_create_mask (layer,
-                                                           GIMP_ADD_MASK_WHITE);
+                            mask = ligma_layer_create_mask (layer,
+                                                           LIGMA_ADD_MASK_WHITE);
                           else
-                            mask = gimp_layer_create_mask (layer,
-                                                           GIMP_ADD_MASK_BLACK);
+                            mask = ligma_layer_create_mask (layer,
+                                                           LIGMA_ADD_MASK_BLACK);
 
                           bps = img_a->bps / 8;
                           if (bps == 0)
                             bps++;
 
-                          IFDBG(3) g_debug ("New layer mask %d", gimp_item_get_id (GIMP_ITEM (mask)));
-                          gimp_layer_add_mask (layer, mask);
-                          buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (mask));
+                          IFDBG(3) g_debug ("New layer mask %d", ligma_item_get_id (LIGMA_ITEM (mask)));
+                          ligma_layer_add_mask (layer, mask);
+                          buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (mask));
                           gegl_buffer_set (buffer,
                                            &mask_rect,
                                            0, get_mask_format (img_a),
@@ -2249,7 +2249,7 @@ add_layers (GimpImage     *image,
                                              (mask_rect.x - lm_x)) * bps,
                                            lm_w * bps);
                           g_object_unref (buffer);
-                          gimp_layer_set_apply_mask (layer,
+                          ligma_layer_set_apply_mask (layer,
                                                      ! lyr_a[lidx]->layer_mask.mask_flags.disabled);
                         }
                       g_free (lyr_chn[user_mask_chn]->data);
@@ -2262,7 +2262,7 @@ add_layers (GimpImage     *image,
                   {
                     if (clipping_group)
                       {
-                        gimp_image_insert_layer (image, layer, clipping_group, 0);
+                        ligma_image_insert_layer (image, layer, clipping_group, 0);
 
                         if (lyr_a[lidx]->clipping_group_type == 2)
                           {
@@ -2272,7 +2272,7 @@ add_layers (GimpImage     *image,
                       }
                     else
                       {
-                        gimp_image_insert_layer (image, layer, parent_group, 0);
+                        ligma_image_insert_layer (image, layer, parent_group, 0);
                       }
                   }
             }
@@ -2287,14 +2287,14 @@ add_layers (GimpImage     *image,
   g_array_free (parent_group_stack, FALSE);
 
   /* Set the selected layers */
-  gimp_image_take_selected_layers (image, selected_layers);
+  ligma_image_take_selected_layers (image, selected_layers);
   g_list_free (img_a->layer_selection);
 
   return 0;
 }
 
 static gint
-add_merged_image (GimpImage     *image,
+add_merged_image (LigmaImage     *image,
                   PSDimage      *img_a,
                   GInputStream  *input,
                   GError       **error)
@@ -2310,8 +2310,8 @@ add_merged_image (GimpImage     *image,
   guint32              *rle_pack_len[MAX_CHANNELS];
   guint32               alpha_id;
   gint32                layer_size;
-  GimpLayer            *layer   = NULL;
-  GimpChannel          *channel = NULL;
+  LigmaLayer            *layer   = NULL;
+  LigmaChannel          *channel = NULL;
   gint16                alpha_opacity;
   gint                  cidx;                  /* Channel index */
   gint                  rowi;                  /* Row index */
@@ -2321,8 +2321,8 @@ add_merged_image (GimpImage     *image,
   gboolean              alpha_channel = FALSE;
   gboolean              original_mode_CMYK = FALSE;
   GeglBuffer           *buffer;
-  GimpImageType         image_type;
-  GimpRGB               alpha_rgb;
+  LigmaImageType         image_type;
+  LigmaRGB               alpha_rgb;
 
   total_channels = img_a->channels;
   extra_channels = 0;
@@ -2482,7 +2482,7 @@ add_merged_image (GimpImage     *image,
   if (img_a->merged_image_only ||
       img_a->num_layers == 0)            /* Merged image - Photoshop 2 style */
     {
-      image_type = get_gimp_image_type (img_a->base_type,
+      image_type = get_ligma_image_type (img_a->base_type,
                                         img_a->transparency || alpha_channel);
 
       layer_size = img_a->columns * img_a->rows;
@@ -2499,14 +2499,14 @@ add_merged_image (GimpImage     *image,
 
       /* Add background layer */
       IFDBG(2) g_debug ("Draw merged image");
-      layer = gimp_layer_new (image, _("Background"),
+      layer = ligma_layer_new (image, _("Background"),
                               img_a->columns, img_a->rows,
                               image_type,
                               100,
-                              gimp_image_get_default_new_layer_mode (image));
-      gimp_image_insert_layer (image, layer, NULL, 0);
+                              ligma_image_get_default_new_layer_mode (image));
+      ligma_image_insert_layer (image, layer, NULL, 0);
 
-      buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
+      buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (layer));
 
       if (img_a->color_mode == PSD_CMYK)
         {
@@ -2657,7 +2657,7 @@ add_merged_image (GimpImage     *image,
                 alpha_name = g_ptr_array_index (img_a->alpha_names, i + offset);
                 if (alpha_name)
                   g_free (alpha_name);
-                alpha_name = g_strdup (GIMP_IMAGE_QUICK_MASK_NAME);
+                alpha_name = g_strdup (LIGMA_IMAGE_QUICK_MASK_NAME);
                 alpha_visible = TRUE;
               }
           if (! alpha_name && img_a->alpha_names)
@@ -2675,27 +2675,27 @@ add_merged_image (GimpImage     *image,
           if (offset < img_a->alpha_display_count &&
               i + offset <= img_a->alpha_display_count)
             {
-              alpha_rgb = img_a->alpha_display_info[i + offset]->gimp_color;
+              alpha_rgb = img_a->alpha_display_info[i + offset]->ligma_color;
               alpha_opacity = img_a->alpha_display_info[i + offset]->opacity;
             }
           else
             {
-              gimp_rgba_set (&alpha_rgb, 1.0, 0.0, 0.0, 1.0);
+              ligma_rgba_set (&alpha_rgb, 1.0, 0.0, 0.0, 1.0);
               alpha_opacity = 50;
             }
 
           cidx = base_channels + i;
           pixels = g_realloc (pixels, chn_a[cidx].columns * chn_a[cidx].rows * bps);
           memcpy (pixels, chn_a[cidx].data, chn_a[cidx].columns * chn_a[cidx].rows * bps);
-          channel = gimp_channel_new (image, alpha_name,
+          channel = ligma_channel_new (image, alpha_name,
                                       chn_a[cidx].columns, chn_a[cidx].rows,
                                       alpha_opacity, &alpha_rgb);
-          gimp_image_insert_channel (image, channel, NULL, i);
+          ligma_image_insert_channel (image, channel, NULL, i);
           g_free (alpha_name);
-          buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (channel));
+          buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (channel));
           if (alpha_id)
-            gimp_item_set_tattoo (GIMP_ITEM (channel), alpha_id);
-          gimp_item_set_visible (GIMP_ITEM (channel), alpha_visible);
+            ligma_item_set_tattoo (LIGMA_ITEM (channel), alpha_id);
+          ligma_item_set_visible (LIGMA_ITEM (channel), alpha_visible);
           gegl_buffer_set (buffer,
                            GEGL_RECTANGLE (0, 0,
                                            gegl_buffer_get_width (buffer),
@@ -2721,31 +2721,31 @@ add_merged_image (GimpImage     *image,
         }
     }
 
-  /* FIXME gimp image tattoo state */
+  /* FIXME ligma image tattoo state */
 
   return 0;
 }
 
 
 /* Local utility functions */
-static GimpLayer *
-add_clipping_group (GimpImage  *image,
-                    GimpLayer  *parent)
+static LigmaLayer *
+add_clipping_group (LigmaImage  *image,
+                    LigmaLayer  *parent)
 {
-  GimpLayer * clipping_group = NULL;
+  LigmaLayer * clipping_group = NULL;
 
-  /* We need to create a group because GIMP handles clipping and
+  /* We need to create a group because LIGMA handles clipping and
    * composition mode in a different manner than PS. */
   IFDBG(2) g_debug ("Creating a layer group to handle PS transparency clipping correctly.");
 
-  clipping_group = gimp_layer_group_new (image);
+  clipping_group = ligma_layer_group_new (image);
 
-  gimp_item_set_name (GIMP_ITEM (clipping_group), "Group added by GIMP");
-  gimp_layer_set_blend_space (clipping_group, GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL);
-  gimp_layer_set_composite_space (clipping_group, GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL);
-  gimp_layer_set_composite_mode (clipping_group, GIMP_LAYER_COMPOSITE_UNION);
+  ligma_item_set_name (LIGMA_ITEM (clipping_group), "Group added by LIGMA");
+  ligma_layer_set_blend_space (clipping_group, LIGMA_LAYER_COLOR_SPACE_RGB_PERCEPTUAL);
+  ligma_layer_set_composite_space (clipping_group, LIGMA_LAYER_COLOR_SPACE_RGB_PERCEPTUAL);
+  ligma_layer_set_composite_mode (clipping_group, LIGMA_LAYER_COMPOSITE_UNION);
 
-  gimp_image_insert_layer (image, clipping_group, parent, 0);
+  ligma_image_insert_layer (image, clipping_group, parent, 0);
 
   return clipping_group;
 }
@@ -2779,7 +2779,7 @@ get_psd_color_mode_name (PSDColorMode mode)
 }
 
 static void
-psd_to_gimp_color_map (guchar *map256)
+psd_to_ligma_color_map (guchar *map256)
 {
   guchar *tmpmap;
   gint    i;
@@ -2797,24 +2797,24 @@ psd_to_gimp_color_map (guchar *map256)
   g_free (tmpmap);
 }
 
-static GimpImageType
-get_gimp_image_type (GimpImageBaseType image_base_type,
+static LigmaImageType
+get_ligma_image_type (LigmaImageBaseType image_base_type,
                      gboolean          alpha)
 {
-  GimpImageType image_type;
+  LigmaImageType image_type;
 
   switch (image_base_type)
     {
-    case GIMP_GRAY:
-      image_type = (alpha) ? GIMP_GRAYA_IMAGE : GIMP_GRAY_IMAGE;
+    case LIGMA_GRAY:
+      image_type = (alpha) ? LIGMA_GRAYA_IMAGE : LIGMA_GRAY_IMAGE;
       break;
 
-    case GIMP_INDEXED:
-      image_type = (alpha) ? GIMP_INDEXEDA_IMAGE : GIMP_INDEXED_IMAGE;
+    case LIGMA_INDEXED:
+      image_type = (alpha) ? LIGMA_INDEXEDA_IMAGE : LIGMA_INDEXED_IMAGE;
       break;
 
-    case GIMP_RGB:
-      image_type = (alpha) ? GIMP_RGBA_IMAGE : GIMP_RGB_IMAGE;
+    case LIGMA_RGB:
+      image_type = (alpha) ? LIGMA_RGBA_IMAGE : LIGMA_RGB_IMAGE;
       break;
 
     default:
@@ -2945,7 +2945,7 @@ read_channel_data (PSDchannel     *channel,
         }
     }
 
-  /* Convert channel data to GIMP format */
+  /* Convert channel data to LIGMA format */
   switch (bps)
     {
     case 32:
@@ -3114,9 +3114,9 @@ get_layer_format (PSDimage *img_a,
 {
   const Babl *format = NULL;
 
-  switch (get_gimp_image_type (img_a->base_type, alpha))
+  switch (get_ligma_image_type (img_a->base_type, alpha))
     {
-    case GIMP_GRAY_IMAGE:
+    case LIGMA_GRAY_IMAGE:
       switch (img_a->bps)
         {
         case 32:
@@ -3139,7 +3139,7 @@ get_layer_format (PSDimage *img_a,
         }
       break;
 
-    case GIMP_GRAYA_IMAGE:
+    case LIGMA_GRAYA_IMAGE:
       switch (img_a->bps)
         {
         case 32:
@@ -3161,7 +3161,7 @@ get_layer_format (PSDimage *img_a,
         }
       break;
 
-    case GIMP_RGB_IMAGE:
+    case LIGMA_RGB_IMAGE:
       switch (img_a->bps)
         {
         case 32:
@@ -3184,7 +3184,7 @@ get_layer_format (PSDimage *img_a,
         }
       break;
 
-    case GIMP_RGBA_IMAGE:
+    case LIGMA_RGBA_IMAGE:
       switch (img_a->bps)
         {
         case 32:
@@ -3232,7 +3232,7 @@ get_channel_format (PSDimage *img_a)
 
     case 8:
     case 1:
-      /* see gimp_image_get_channel_format() */
+      /* see ligma_image_get_channel_format() */
       format = babl_format ("Y' u8");
       break;
 
@@ -3278,13 +3278,13 @@ load_dialog (void)
   GtkWidget *vbox;
   gchar     *label_text;
 
-  dialog = gimp_dialog_new (_("PSD Compatibility Notice"),
+  dialog = ligma_dialog_new (_("PSD Compatibility Notice"),
                             "psd-compatibility-notice",
                             NULL, 0, NULL, NULL,
                             _("_OK"), GTK_RESPONSE_OK,
                             NULL);
 
-  gimp_window_set_transient (GTK_WINDOW (dialog));
+  ligma_window_set_transient (GTK_WINDOW (dialog));
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
@@ -3312,7 +3312,7 @@ load_dialog (void)
   gtk_widget_show (dialog);
 
   /* run the dialog */
-  gimp_dialog_run (GIMP_DIALOG (dialog));
+  ligma_dialog_run (LIGMA_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
 }

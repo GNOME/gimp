@@ -1,7 +1,7 @@
-/* LIBGIMP - The GIMP Library
+/* LIBLIGMA - The LIGMA Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
- * gimp-private.h
+ * ligma-private.h
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -18,15 +18,15 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PRIVATE_H__
-#define __GIMP_PRIVATE_H__
+#ifndef __LIGMA_PRIVATE_H__
+#define __LIGMA_PRIVATE_H__
 
 G_BEGIN_DECLS
 
 
-void   _gimp_config (GPConfig *config);
+void   _ligma_config (GPConfig *config);
 
 
 G_END_DECLS
 
-#endif /* __GIMP_PRIVATE_H__ */
+#endif /* __LIGMA_PRIVATE_H__ */

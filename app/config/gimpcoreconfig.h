@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * GimpCoreConfig class
- * Copyright (C) 2001  Sven Neumann <sven@gimp.org>
+ * LigmaCoreConfig class
+ * Copyright (C) 2001  Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,31 +18,31 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CORE_CONFIG_H__
-#define __GIMP_CORE_CONFIG_H__
+#ifndef __LIGMA_CORE_CONFIG_H__
+#define __LIGMA_CORE_CONFIG_H__
 
 #include "operations/operations-enums.h"
 #include "core/core-enums.h"
 
-#include "config/gimpgeglconfig.h"
+#include "config/ligmageglconfig.h"
 
 
-#define GIMP_TYPE_CORE_CONFIG            (gimp_core_config_get_type ())
-#define GIMP_CORE_CONFIG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CORE_CONFIG, GimpCoreConfig))
-#define GIMP_CORE_CONFIG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CORE_CONFIG, GimpCoreConfigClass))
-#define GIMP_IS_CORE_CONFIG(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CORE_CONFIG))
-#define GIMP_IS_CORE_CONFIG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CORE_CONFIG))
+#define LIGMA_TYPE_CORE_CONFIG            (ligma_core_config_get_type ())
+#define LIGMA_CORE_CONFIG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_CORE_CONFIG, LigmaCoreConfig))
+#define LIGMA_CORE_CONFIG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_CORE_CONFIG, LigmaCoreConfigClass))
+#define LIGMA_IS_CORE_CONFIG(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_CORE_CONFIG))
+#define LIGMA_IS_CORE_CONFIG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_CORE_CONFIG))
 
 
-typedef struct _GimpCoreConfigClass GimpCoreConfigClass;
+typedef struct _LigmaCoreConfigClass LigmaCoreConfigClass;
 
-struct _GimpCoreConfig
+struct _LigmaCoreConfig
 {
-  GimpGeglConfig          parent_instance;
+  LigmaGeglConfig          parent_instance;
 
   gchar                  *language;
   gchar                  *prev_language;
-  GimpInterpolationType   interpolation_type;
+  LigmaInterpolationType   interpolation_type;
   gint                    default_threshold;
   gchar                  *plug_in_path;
   gchar                  *module_path;
@@ -78,37 +78,37 @@ struct _GimpCoreConfig
   gboolean                global_palette;
   gboolean                global_gradient;
   gboolean                global_font;
-  GimpTemplate           *default_image;
-  GimpGrid               *default_grid;
+  LigmaTemplate           *default_image;
+  LigmaGrid               *default_grid;
   gint                    levels_of_undo;
   guint64                 undo_size;
-  GimpViewSize            undo_preview_size;
+  LigmaViewSize            undo_preview_size;
   gint                    filter_history_size;
   gchar                  *plug_in_rc_path;
   gboolean                layer_previews;
   gboolean                group_layer_previews;
-  GimpViewSize            layer_preview_size;
-  GimpThumbnailSize       thumbnail_size;
+  LigmaViewSize            layer_preview_size;
+  LigmaThumbnailSize       thumbnail_size;
   guint64                 thumbnail_filesize_limit;
-  GimpColorConfig        *color_management;
+  LigmaColorConfig        *color_management;
   gboolean                save_document_history;
-  GimpRGB                 quick_mask_color;
+  LigmaRGB                 quick_mask_color;
   gboolean                import_promote_float;
   gboolean                import_promote_dither;
   gboolean                import_add_alpha;
   gchar                  *import_raw_plug_in;
-  GimpExportFileType      export_file_type;
+  LigmaExportFileType      export_file_type;
   gboolean                export_color_profile;
   gboolean                export_comment;
   gboolean                export_thumbnail;
   gboolean                export_metadata_exif;
   gboolean                export_metadata_xmp;
   gboolean                export_metadata_iptc;
-  GimpDebugPolicy         debug_policy;
+  LigmaDebugPolicy         debug_policy;
 #ifdef G_OS_WIN32
-  GimpWin32PointerInputAPI win32_pointer_input_api;
+  LigmaWin32PointerInputAPI win32_pointer_input_api;
 #endif
-  GimpSelectMethod        items_select_method;
+  LigmaSelectMethod        items_select_method;
 
   gboolean                check_updates;
   gint64                  check_update_timestamp;
@@ -120,13 +120,13 @@ struct _GimpCoreConfig
   gchar                  *config_version;
 };
 
-struct _GimpCoreConfigClass
+struct _LigmaCoreConfigClass
 {
-  GimpGeglConfigClass  parent_class;
+  LigmaGeglConfigClass  parent_class;
 };
 
 
-GType  gimp_core_config_get_type (void) G_GNUC_CONST;
+GType  ligma_core_config_get_type (void) G_GNUC_CONST;
 
 
-#endif /* GIMP_CORE_CONFIG_H__ */
+#endif /* LIGMA_CORE_CONFIG_H__ */

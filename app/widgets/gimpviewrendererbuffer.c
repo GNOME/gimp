@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpviewrendererbuffer.c
- * Copyright (C) 2004-2006 Michael Natterer <mitch@gimp.org>
+ * ligmaviewrendererbuffer.c
+ * Copyright (C) 2004-2006 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,41 +23,41 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "core/gimptempbuf.h"
-#include "core/gimpviewable.h"
+#include "core/ligmatempbuf.h"
+#include "core/ligmaviewable.h"
 
-#include "gimpviewrendererbuffer.h"
+#include "ligmaviewrendererbuffer.h"
 
 
-static void   gimp_view_renderer_buffer_render (GimpViewRenderer *renderer,
+static void   ligma_view_renderer_buffer_render (LigmaViewRenderer *renderer,
                                                 GtkWidget        *widget);
 
 
-G_DEFINE_TYPE (GimpViewRendererBuffer, gimp_view_renderer_buffer,
-               GIMP_TYPE_VIEW_RENDERER)
+G_DEFINE_TYPE (LigmaViewRendererBuffer, ligma_view_renderer_buffer,
+               LIGMA_TYPE_VIEW_RENDERER)
 
-#define parent_class gimp_view_renderer_buffer_class_init
+#define parent_class ligma_view_renderer_buffer_class_init
 
 
 static void
-gimp_view_renderer_buffer_class_init (GimpViewRendererBufferClass *klass)
+ligma_view_renderer_buffer_class_init (LigmaViewRendererBufferClass *klass)
 {
-  GimpViewRendererClass *renderer_class = GIMP_VIEW_RENDERER_CLASS (klass);
+  LigmaViewRendererClass *renderer_class = LIGMA_VIEW_RENDERER_CLASS (klass);
 
-  renderer_class->render = gimp_view_renderer_buffer_render;
+  renderer_class->render = ligma_view_renderer_buffer_render;
 }
 
 static void
-gimp_view_renderer_buffer_init (GimpViewRendererBuffer *renderer)
+ligma_view_renderer_buffer_init (LigmaViewRendererBuffer *renderer)
 {
 }
 
 static void
-gimp_view_renderer_buffer_render (GimpViewRenderer *renderer,
+ligma_view_renderer_buffer_render (LigmaViewRenderer *renderer,
                                   GtkWidget        *widget)
 {
   gint         buffer_width;
@@ -65,11 +65,11 @@ gimp_view_renderer_buffer_render (GimpViewRenderer *renderer,
   gint         view_width;
   gint         view_height;
   gboolean     scaling_up;
-  GimpTempBuf *render_buf = NULL;
+  LigmaTempBuf *render_buf = NULL;
 
-  gimp_viewable_get_size (renderer->viewable, &buffer_width, &buffer_height);
+  ligma_viewable_get_size (renderer->viewable, &buffer_width, &buffer_height);
 
-  gimp_viewable_calc_preview_size (buffer_width,
+  ligma_viewable_calc_preview_size (buffer_width,
                                    buffer_height,
                                    renderer->width,
                                    renderer->height,
@@ -80,38 +80,38 @@ gimp_view_renderer_buffer_render (GimpViewRenderer *renderer,
 
   if (scaling_up)
     {
-      GimpTempBuf *temp_buf;
+      LigmaTempBuf *temp_buf;
 
-      temp_buf = gimp_viewable_get_new_preview (renderer->viewable,
+      temp_buf = ligma_viewable_get_new_preview (renderer->viewable,
                                                 renderer->context,
                                                 buffer_width, buffer_height);
 
       if (temp_buf)
         {
-          render_buf = gimp_temp_buf_scale (temp_buf, view_width, view_height);
+          render_buf = ligma_temp_buf_scale (temp_buf, view_width, view_height);
 
-          gimp_temp_buf_unref (temp_buf);
+          ligma_temp_buf_unref (temp_buf);
         }
     }
   else
     {
-      render_buf = gimp_viewable_get_new_preview (renderer->viewable,
+      render_buf = ligma_viewable_get_new_preview (renderer->viewable,
                                                   renderer->context,
                                                   view_width, view_height);
     }
 
   if (render_buf)
     {
-      gimp_view_renderer_render_temp_buf_simple (renderer, widget, render_buf);
+      ligma_view_renderer_render_temp_buf_simple (renderer, widget, render_buf);
 
-      gimp_temp_buf_unref (render_buf);
+      ligma_temp_buf_unref (render_buf);
     }
   else /* no preview available */
     {
       const gchar *icon_name;
 
-      icon_name = gimp_viewable_get_icon_name (renderer->viewable);
+      icon_name = ligma_viewable_get_icon_name (renderer->viewable);
 
-      gimp_view_renderer_render_icon (renderer, widget, icon_name);
+      ligma_view_renderer_render_icon (renderer, widget, icon_name);
     }
 }

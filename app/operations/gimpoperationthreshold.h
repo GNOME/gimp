@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpoperationthreshold.h
- * Copyright (C) 2007 Michael Natterer <mitch@gimp.org>
+ * ligmaoperationthreshold.h
+ * Copyright (C) 2007 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,40 +18,40 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_OPERATION_THRESHOLD_H__
-#define __GIMP_OPERATION_THRESHOLD_H__
+#ifndef __LIGMA_OPERATION_THRESHOLD_H__
+#define __LIGMA_OPERATION_THRESHOLD_H__
 
 
-#include "gimpoperationpointfilter.h"
+#include "ligmaoperationpointfilter.h"
 
 
-#define GIMP_TYPE_OPERATION_THRESHOLD            (gimp_operation_threshold_get_type ())
-#define GIMP_OPERATION_THRESHOLD(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OPERATION_THRESHOLD, GimpOperationThreshold))
-#define GIMP_OPERATION_THRESHOLD_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  GIMP_TYPE_OPERATION_THRESHOLD, GimpOperationThresholdClass))
-#define GIMP_IS_OPERATION_THRESHOLD(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_OPERATION_THRESHOLD))
-#define GIMP_IS_OPERATION_THRESHOLD_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  GIMP_TYPE_OPERATION_THRESHOLD))
-#define GIMP_OPERATION_THRESHOLD_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_OPERATION_THRESHOLD, GimpOperationThresholdClass))
+#define LIGMA_TYPE_OPERATION_THRESHOLD            (ligma_operation_threshold_get_type ())
+#define LIGMA_OPERATION_THRESHOLD(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_OPERATION_THRESHOLD, LigmaOperationThreshold))
+#define LIGMA_OPERATION_THRESHOLD_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  LIGMA_TYPE_OPERATION_THRESHOLD, LigmaOperationThresholdClass))
+#define LIGMA_IS_OPERATION_THRESHOLD(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_OPERATION_THRESHOLD))
+#define LIGMA_IS_OPERATION_THRESHOLD_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  LIGMA_TYPE_OPERATION_THRESHOLD))
+#define LIGMA_OPERATION_THRESHOLD_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  LIGMA_TYPE_OPERATION_THRESHOLD, LigmaOperationThresholdClass))
 
 
-typedef struct _GimpOperationThreshold      GimpOperationThreshold;
-typedef struct _GimpOperationThresholdClass GimpOperationThresholdClass;
+typedef struct _LigmaOperationThreshold      LigmaOperationThreshold;
+typedef struct _LigmaOperationThresholdClass LigmaOperationThresholdClass;
 
-struct _GimpOperationThreshold
+struct _LigmaOperationThreshold
 {
-  GimpOperationPointFilter  parent_instance;
+  LigmaOperationPointFilter  parent_instance;
 
-  GimpHistogramChannel      channel;
+  LigmaHistogramChannel      channel;
   gdouble                   low;
   gdouble                   high;
 };
 
-struct _GimpOperationThresholdClass
+struct _LigmaOperationThresholdClass
 {
-  GimpOperationPointFilterClass  parent_class;
+  LigmaOperationPointFilterClass  parent_class;
 };
 
 
-GType   gimp_operation_threshold_get_type (void) G_GNUC_CONST;
+GType   ligma_operation_threshold_get_type (void) G_GNUC_CONST;
 
 
-#endif /* __GIMP_OPERATION_THRESHOLD_H__ */
+#endif /* __LIGMA_OPERATION_THRESHOLD_H__ */

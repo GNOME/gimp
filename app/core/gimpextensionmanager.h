@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * gimpextensionmanager.h
- * Copyright (C) 2018 Jehan <jehan@gimp.org>
+ * ligmaextensionmanager.h
+ * Copyright (C) 2018 Jehan <jehan@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,68 +18,68 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_EXTENSION_MANAGER_H__
-#define __GIMP_EXTENSION_MANAGER_H__
+#ifndef __LIGMA_EXTENSION_MANAGER_H__
+#define __LIGMA_EXTENSION_MANAGER_H__
 
 
-#include "core/gimpobject.h"
+#include "core/ligmaobject.h"
 
 
-#define GIMP_TYPE_EXTENSION_MANAGER            (gimp_extension_manager_get_type ())
-#define GIMP_EXTENSION_MANAGER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_EXTENSION_MANAGER, GimpExtensionManager))
-#define GIMP_EXTENSION_MANAGER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_EXTENSION_MANAGER, GimpExtensionManagerClass))
-#define GIMP_IS_EXTENSION_MANAGER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_EXTENSION_MANAGER))
-#define GIMP_IS_EXTENSION_MANAGER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_EXTENSION_MANAGER))
-#define GIMP_EXTENSION_MANAGER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_EXTENSION_MANAGER, GimpExtensionManagerClass))
+#define LIGMA_TYPE_EXTENSION_MANAGER            (ligma_extension_manager_get_type ())
+#define LIGMA_EXTENSION_MANAGER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_EXTENSION_MANAGER, LigmaExtensionManager))
+#define LIGMA_EXTENSION_MANAGER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_EXTENSION_MANAGER, LigmaExtensionManagerClass))
+#define LIGMA_IS_EXTENSION_MANAGER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_EXTENSION_MANAGER))
+#define LIGMA_IS_EXTENSION_MANAGER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_EXTENSION_MANAGER))
+#define LIGMA_EXTENSION_MANAGER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_EXTENSION_MANAGER, LigmaExtensionManagerClass))
 
 
-typedef struct _GimpExtensionManagerClass   GimpExtensionManagerClass;
-typedef struct _GimpExtensionManagerPrivate GimpExtensionManagerPrivate;
+typedef struct _LigmaExtensionManagerClass   LigmaExtensionManagerClass;
+typedef struct _LigmaExtensionManagerPrivate LigmaExtensionManagerPrivate;
 
-struct _GimpExtensionManager
+struct _LigmaExtensionManager
 {
-  GimpObject                   parent_instance;
+  LigmaObject                   parent_instance;
 
-  GimpExtensionManagerPrivate *p;
+  LigmaExtensionManagerPrivate *p;
 };
 
-struct _GimpExtensionManagerClass
+struct _LigmaExtensionManagerClass
 {
-  GimpObjectClass      parent_class;
+  LigmaObjectClass      parent_class;
 
-  void              (* extension_installed) (GimpExtensionManager *manager,
-                                             GimpExtension        *extension,
+  void              (* extension_installed) (LigmaExtensionManager *manager,
+                                             LigmaExtension        *extension,
                                              gboolean              is_system_ext);
-  void              (* extension_removed)   (GimpExtensionManager *manager,
+  void              (* extension_removed)   (LigmaExtensionManager *manager,
                                              gchar                *extension_id);
 };
 
 
-GType                  gimp_extension_manager_get_type              (void) G_GNUC_CONST;
+GType                  ligma_extension_manager_get_type              (void) G_GNUC_CONST;
 
-GimpExtensionManager * gimp_extension_manager_new                   (Gimp                 *gimp);
+LigmaExtensionManager * ligma_extension_manager_new                   (Ligma                 *ligma);
 
-void                   gimp_extension_manager_initialize            (GimpExtensionManager *manager);
-void                   gimp_extension_manager_exit                  (GimpExtensionManager *manager);
+void                   ligma_extension_manager_initialize            (LigmaExtensionManager *manager);
+void                   ligma_extension_manager_exit                  (LigmaExtensionManager *manager);
 
-const GList          * gimp_extension_manager_get_system_extensions (GimpExtensionManager *manager);
-const GList          * gimp_extension_manager_get_user_extensions   (GimpExtensionManager *manager);
+const GList          * ligma_extension_manager_get_system_extensions (LigmaExtensionManager *manager);
+const GList          * ligma_extension_manager_get_user_extensions   (LigmaExtensionManager *manager);
 
-gboolean               gimp_extension_manager_is_running            (GimpExtensionManager *manager,
-                                                                     GimpExtension        *extension);
-gboolean               gimp_extension_manager_can_run               (GimpExtensionManager *manager,
-                                                                     GimpExtension        *extension);
-gboolean               gimp_extension_manager_is_removed            (GimpExtensionManager *manager,
-                                                                     GimpExtension        *extension);
+gboolean               ligma_extension_manager_is_running            (LigmaExtensionManager *manager,
+                                                                     LigmaExtension        *extension);
+gboolean               ligma_extension_manager_can_run               (LigmaExtensionManager *manager,
+                                                                     LigmaExtension        *extension);
+gboolean               ligma_extension_manager_is_removed            (LigmaExtensionManager *manager,
+                                                                     LigmaExtension        *extension);
 
-gboolean               gimp_extension_manager_install               (GimpExtensionManager *manager,
-                                                                     GimpExtension        *extension,
+gboolean               ligma_extension_manager_install               (LigmaExtensionManager *manager,
+                                                                     LigmaExtension        *extension,
                                                                      GError              **error);
-gboolean               gimp_extension_manager_remove                (GimpExtensionManager *manager,
-                                                                     GimpExtension        *extension,
+gboolean               ligma_extension_manager_remove                (LigmaExtensionManager *manager,
+                                                                     LigmaExtension        *extension,
                                                                      GError              **error);
-gboolean               gimp_extension_manager_undo_remove           (GimpExtensionManager *manager,
-                                                                     GimpExtension        *extension,
+gboolean               ligma_extension_manager_undo_remove           (LigmaExtensionManager *manager,
+                                                                     LigmaExtension        *extension,
                                                                      GError              **error);
 
-#endif  /* __GIMP_EXTENSION_MANAGER_H__ */
+#endif  /* __LIGMA_EXTENSION_MANAGER_H__ */

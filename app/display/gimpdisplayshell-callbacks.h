@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,32 +15,32 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_DISPLAY_SHELL_CALLBACKS_H__
-#define __GIMP_DISPLAY_SHELL_CALLBACKS_H__
+#ifndef __LIGMA_DISPLAY_SHELL_CALLBACKS_H__
+#define __LIGMA_DISPLAY_SHELL_CALLBACKS_H__
 
 
-void       gimp_display_shell_canvas_realize          (GtkWidget        *widget,
-                                                       GimpDisplayShell *shell);
-void       gimp_display_shell_canvas_size_allocate    (GtkWidget        *widget,
+void       ligma_display_shell_canvas_realize          (GtkWidget        *widget,
+                                                       LigmaDisplayShell *shell);
+void       ligma_display_shell_canvas_size_allocate    (GtkWidget        *widget,
                                                        GtkAllocation    *alloc,
-                                                       GimpDisplayShell *shell);
-gboolean   gimp_display_shell_canvas_draw             (GtkWidget        *widget,
+                                                       LigmaDisplayShell *shell);
+gboolean   ligma_display_shell_canvas_draw             (GtkWidget        *widget,
                                                        cairo_t          *cr,
-                                                       GimpDisplayShell *shell);
+                                                       LigmaDisplayShell *shell);
 
-gboolean   gimp_display_shell_origin_button_press     (GtkWidget        *widget,
+gboolean   ligma_display_shell_origin_button_press     (GtkWidget        *widget,
                                                        GdkEventButton   *bevent,
-                                                       GimpDisplayShell *shell);
+                                                       LigmaDisplayShell *shell);
 
-gboolean   gimp_display_shell_quick_mask_button_press (GtkWidget        *widget,
+gboolean   ligma_display_shell_quick_mask_button_press (GtkWidget        *widget,
                                                        GdkEventButton   *bevent,
-                                                       GimpDisplayShell *shell);
-void       gimp_display_shell_quick_mask_toggled      (GtkWidget        *widget,
-                                                       GimpDisplayShell *shell);
+                                                       LigmaDisplayShell *shell);
+void       ligma_display_shell_quick_mask_toggled      (GtkWidget        *widget,
+                                                       LigmaDisplayShell *shell);
 
-gboolean   gimp_display_shell_navigation_button_press (GtkWidget        *widget,
+gboolean   ligma_display_shell_navigation_button_press (GtkWidget        *widget,
                                                        GdkEventButton   *bevent,
-                                                       GimpDisplayShell *shell);
+                                                       LigmaDisplayShell *shell);
 
 
-#endif /* __GIMP_DISPLAY_SHELL_CALLBACKS_H__ */
+#endif /* __LIGMA_DISPLAY_SHELL_CALLBACKS_H__ */

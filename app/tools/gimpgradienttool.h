@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,40 +15,40 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef  __GIMP_GRADIENT_TOOL_H__
-#define  __GIMP_GRADIENT_TOOL_H__
+#ifndef  __LIGMA_GRADIENT_TOOL_H__
+#define  __LIGMA_GRADIENT_TOOL_H__
 
 
-#include "gimpdrawtool.h"
+#include "ligmadrawtool.h"
 
 
-#define GIMP_TYPE_GRADIENT_TOOL            (gimp_gradient_tool_get_type ())
-#define GIMP_GRADIENT_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_GRADIENT_TOOL, GimpGradientTool))
-#define GIMP_GRADIENT_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_GRADIENT_TOOL, GimpGradientToolClass))
-#define GIMP_IS_GRADIENT_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_GRADIENT_TOOL))
-#define GIMP_IS_GRADIENT_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_GRADIENT_TOOL))
-#define GIMP_GRADIENT_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_GRADIENT_TOOL, GimpGradientToolClass))
+#define LIGMA_TYPE_GRADIENT_TOOL            (ligma_gradient_tool_get_type ())
+#define LIGMA_GRADIENT_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_GRADIENT_TOOL, LigmaGradientTool))
+#define LIGMA_GRADIENT_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_GRADIENT_TOOL, LigmaGradientToolClass))
+#define LIGMA_IS_GRADIENT_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_GRADIENT_TOOL))
+#define LIGMA_IS_GRADIENT_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_GRADIENT_TOOL))
+#define LIGMA_GRADIENT_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_GRADIENT_TOOL, LigmaGradientToolClass))
 
-#define GIMP_GRADIENT_TOOL_GET_OPTIONS(t)  (GIMP_GRADIENT_OPTIONS (gimp_tool_get_options (GIMP_TOOL (t))))
+#define LIGMA_GRADIENT_TOOL_GET_OPTIONS(t)  (LIGMA_GRADIENT_OPTIONS (ligma_tool_get_options (LIGMA_TOOL (t))))
 
 
-typedef struct _GimpGradientTool      GimpGradientTool;
-typedef struct _GimpGradientToolClass GimpGradientToolClass;
+typedef struct _LigmaGradientTool      LigmaGradientTool;
+typedef struct _LigmaGradientToolClass LigmaGradientToolClass;
 
-struct _GimpGradientTool
+struct _LigmaGradientTool
 {
-  GimpDrawTool        parent_instance;
+  LigmaDrawTool        parent_instance;
 
-  GimpGradient       *gradient;
-  GimpGradient       *tentative_gradient;
+  LigmaGradient       *gradient;
+  LigmaGradient       *tentative_gradient;
 
   gdouble             start_x;    /*  starting x coord  */
   gdouble             start_y;    /*  starting y coord  */
   gdouble             end_x;      /*  ending x coord    */
   gdouble             end_y;      /*  ending y coord    */
 
-  GimpToolWidget     *widget;
-  GimpToolWidget     *grab_widget;
+  LigmaToolWidget     *widget;
+  LigmaToolWidget     *grab_widget;
 
   GeglNode           *graph;
   GeglNode           *render_node;
@@ -58,7 +58,7 @@ struct _GimpGradientTool
 #endif
   GeglNode           *dist_node;
   GeglBuffer         *dist_buffer;
-  GimpDrawableFilter *filter;
+  LigmaDrawableFilter *filter;
 
   /*  editor  */
 
@@ -70,7 +70,7 @@ struct _GimpGradientTool
 
   guint               flush_idle_id;
 
-  GimpToolGui        *gui;
+  LigmaToolGui        *gui;
   GtkWidget          *endpoint_editor;
   GtkWidget          *endpoint_se;
   GtkWidget          *endpoint_color_panel;
@@ -90,22 +90,22 @@ struct _GimpGradientTool
   GtkWidget          *midpoint_center_button;
 };
 
-struct _GimpGradientToolClass
+struct _LigmaGradientToolClass
 {
-  GimpDrawToolClass  parent_class;
+  LigmaDrawToolClass  parent_class;
 };
 
 
-void    gimp_gradient_tool_register               (GimpToolRegisterCallback  callback,
+void    ligma_gradient_tool_register               (LigmaToolRegisterCallback  callback,
                                                    gpointer                  data);
 
-GType   gimp_gradient_tool_get_type               (void) G_GNUC_CONST;
+GType   ligma_gradient_tool_get_type               (void) G_GNUC_CONST;
 
 
 /*  protected functions  */
 
-void    gimp_gradient_tool_set_tentative_gradient (GimpGradientTool         *gradient_tool,
-                                                   GimpGradient             *gradient);
+void    ligma_gradient_tool_set_tentative_gradient (LigmaGradientTool         *gradient_tool,
+                                                   LigmaGradient             *gradient);
 
 
-#endif  /*  __GIMP_GRADIENT_TOOL_H__  */
+#endif  /*  __LIGMA_GRADIENT_TOOL_H__  */

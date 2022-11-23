@@ -18,9 +18,9 @@
 
 #include "config.h"
 
-#include <libgimp/gimp.h>
+#include <libligma/ligma.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 #define PLUG_IN_PROC "plug-in-zealouscrop"
@@ -35,12 +35,12 @@ typedef struct _CropClass CropClass;
 
 struct _Crop
 {
-  GimpPlugIn      parent_instance;
+  LigmaPlugIn      parent_instance;
 };
 
 struct _CropClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 #define CROP_TYPE  (crop_get_type ())
@@ -48,36 +48,36 @@ struct _CropClass
 
 GType                   crop_get_type         (void) G_GNUC_CONST;
 
-static GList          * crop_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * crop_create_procedure (GimpPlugIn           *plug_in,
+static GList          * crop_query_procedures (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * crop_create_procedure (LigmaPlugIn           *plug_in,
                                                const gchar          *name);
 
-static GimpValueArray * crop_run              (GimpProcedure        *procedure,
-                                               GimpRunMode           run_mode,
-                                               GimpImage            *image,
+static LigmaValueArray * crop_run              (LigmaProcedure        *procedure,
+                                               LigmaRunMode           run_mode,
+                                               LigmaImage            *image,
                                                gint                  n_drawables,
-                                               GimpDrawable        **drawables,
-                                               const GimpValueArray *args,
+                                               LigmaDrawable        **drawables,
+                                               const LigmaValueArray *args,
                                                gpointer              run_data);
 
 static inline gboolean  colors_equal          (const gfloat         *col1,
                                                const gfloat         *col2,
                                                gint                  components,
                                                gboolean              has_alpha);
-static void             do_zcrop              (GimpDrawable         *drawable,
-                                               GimpImage            *image);
+static void             do_zcrop              (LigmaDrawable         *drawable,
+                                               LigmaImage            *image);
 
 
-G_DEFINE_TYPE (Crop, crop, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Crop, crop, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (CROP_TYPE)
+LIGMA_MAIN (CROP_TYPE)
 DEFINE_STD_SET_I18N
 
 
 static void
 crop_class_init (CropClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = crop_query_procedures;
   plug_in_class->create_procedure = crop_create_procedure;
@@ -90,36 +90,36 @@ crop_init (Crop *crop)
 }
 
 static GList *
-crop_query_procedures (GimpPlugIn *plug_in)
+crop_query_procedures (LigmaPlugIn *plug_in)
 {
   return g_list_append (NULL, g_strdup (PLUG_IN_PROC));
 }
 
-static GimpProcedure *
-crop_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+crop_create_procedure (LigmaPlugIn  *plug_in,
                        const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, PLUG_IN_PROC))
     {
-      procedure = gimp_image_procedure_new (plug_in, name,
-                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_image_procedure_new (plug_in, name,
+                                            LIGMA_PDB_PROC_TYPE_PLUGIN,
                                             crop_run, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "*");
-      gimp_procedure_set_sensitivity_mask (procedure,
-                                           GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
+      ligma_procedure_set_image_types (procedure, "*");
+      ligma_procedure_set_sensitivity_mask (procedure,
+                                           LIGMA_PROCEDURE_SENSITIVE_DRAWABLE);
 
-      gimp_procedure_set_menu_label (procedure, _("_Zealous Crop"));
-      gimp_procedure_add_menu_path (procedure, "<Image>/Image/Crop");
+      ligma_procedure_set_menu_label (procedure, _("_Zealous Crop"));
+      ligma_procedure_add_menu_path (procedure, "<Image>/Image/Crop");
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         _("Autocrop unused space from "
                                           "edges and middle"),
                                         NULL,
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Adam D. Moss",
                                       "Adam D. Moss",
                                       "1997");
@@ -128,31 +128,31 @@ crop_create_procedure (GimpPlugIn  *plug_in,
   return procedure;
 }
 
-static GimpValueArray *
-crop_run (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GimpImage            *image,
+static LigmaValueArray *
+crop_run (LigmaProcedure        *procedure,
+          LigmaRunMode           run_mode,
+          LigmaImage            *image,
           gint                  n_drawables,
-          GimpDrawable        **drawables,
-          const GimpValueArray *args,
+          LigmaDrawable        **drawables,
+          const LigmaValueArray *args,
           gpointer              run_data)
 {
-  GimpDrawable *drawable;
+  LigmaDrawable *drawable;
 
   gegl_init (NULL, NULL);
 
-  gimp_progress_init (_("Zealous cropping"));
+  ligma_progress_init (_("Zealous cropping"));
 
   if (n_drawables != 1)
     {
       GError *error = NULL;
 
-      g_set_error (&error, GIMP_PLUG_IN_ERROR, 0,
+      g_set_error (&error, LIGMA_PLUG_IN_ERROR, 0,
                    _("Procedure '%s' only works with one drawable."),
                    PLUG_IN_PROC);
 
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_CALLING_ERROR,
                                                error);
     }
   else
@@ -162,10 +162,10 @@ crop_run (GimpProcedure        *procedure,
 
   do_zcrop (drawable, image);
 
-  if (run_mode != GIMP_RUN_NONINTERACTIVE)
-    gimp_displays_flush ();
+  if (run_mode != LIGMA_RUN_NONINTERACTIVE)
+    ligma_displays_flush ();
 
-  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
+  return ligma_procedure_new_return_values (procedure, LIGMA_PDB_SUCCESS, NULL);
 }
 
 static inline gboolean
@@ -195,8 +195,8 @@ colors_equal (const gfloat   *col1,
 }
 
 static void
-do_zcrop (GimpDrawable *drawable,
-          GimpImage    *image)
+do_zcrop (LigmaDrawable *drawable,
+          LigmaImage    *image)
 {
   GeglBuffer   *drawable_buffer;
   GeglBuffer   *shadow_buffer;
@@ -208,15 +208,15 @@ do_zcrop (GimpDrawable *drawable,
   gint8        *killrows;
   gint8        *killcols;
   gint32        livingrows, livingcols, destrow, destcol;
-  GimpChannel  *selection_copy;
+  LigmaChannel  *selection_copy;
   gboolean      has_alpha;
 
-  drawable_buffer = gimp_drawable_get_buffer (drawable);
-  shadow_buffer   = gimp_drawable_get_shadow_buffer (drawable);
+  drawable_buffer = ligma_drawable_get_buffer (drawable);
+  shadow_buffer   = ligma_drawable_get_shadow_buffer (drawable);
 
   width  = gegl_buffer_get_width (drawable_buffer);
   height = gegl_buffer_get_height (drawable_buffer);
-  has_alpha = gimp_drawable_has_alpha (drawable);
+  has_alpha = ligma_drawable_has_alpha (drawable);
 
   if (has_alpha)
     format = babl_format ("R'G'B'A float");
@@ -252,7 +252,7 @@ do_zcrop (GimpDrawable *drawable,
         }
     }
 
-  gimp_progress_update (0.25);
+  ligma_progress_update (0.25);
 
   /* search which columns to remove */
 
@@ -276,7 +276,7 @@ do_zcrop (GimpDrawable *drawable,
         }
     }
 
-  gimp_progress_update (0.5);
+  ligma_progress_update (0.5);
 
   if ((livingcols == 0 || livingrows == 0) ||
       (livingcols == width && livingrows == height))
@@ -309,7 +309,7 @@ do_zcrop (GimpDrawable *drawable,
         }
     }
 
-  gimp_progress_update (0.75);
+  ligma_progress_update (0.75);
 
   /* restitute living columns */
 
@@ -328,24 +328,24 @@ do_zcrop (GimpDrawable *drawable,
         }
     }
 
-  gimp_progress_update (1.00);
+  ligma_progress_update (1.00);
 
-  gimp_image_undo_group_start (image);
+  ligma_image_undo_group_start (image);
 
-  selection_copy = GIMP_CHANNEL (gimp_selection_save (image));
-  gimp_selection_none (image);
+  selection_copy = LIGMA_CHANNEL (ligma_selection_save (image));
+  ligma_selection_none (image);
 
   gegl_buffer_flush (shadow_buffer);
-  gimp_drawable_merge_shadow (drawable, TRUE);
+  ligma_drawable_merge_shadow (drawable, TRUE);
   gegl_buffer_flush (drawable_buffer);
 
-  gimp_image_select_item (image, GIMP_CHANNEL_OP_REPLACE,
-                          GIMP_ITEM (selection_copy));
-  gimp_image_remove_channel (image, selection_copy);
+  ligma_image_select_item (image, LIGMA_CHANNEL_OP_REPLACE,
+                          LIGMA_ITEM (selection_copy));
+  ligma_image_remove_channel (image, selection_copy);
 
-  gimp_image_crop (image, livingcols, livingrows, 0, 0);
+  ligma_image_crop (image, livingcols, livingrows, 0, 0);
 
-  gimp_image_undo_group_end (image);
+  ligma_image_undo_group_end (image);
 
   g_object_unref (shadow_buffer);
   g_object_unref (drawable_buffer);

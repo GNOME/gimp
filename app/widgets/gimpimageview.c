@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpdocumentview.c
- * Copyright (C) 2001 Michael Natterer <mitch@gimp.org>
+ * ligmadocumentview.c
+ * Copyright (C) 2001 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,44 +23,44 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "widgets-types.h"
 
-#include "core/gimpcontainer.h"
-#include "core/gimpcontext.h"
-#include "core/gimpimage.h"
+#include "core/ligmacontainer.h"
+#include "core/ligmacontext.h"
+#include "core/ligmaimage.h"
 
-#include "gimpcontainerview.h"
-#include "gimpeditor.h"
-#include "gimpimageview.h"
-#include "gimpdnd.h"
-#include "gimpmenufactory.h"
-#include "gimpuimanager.h"
-#include "gimpviewrenderer.h"
+#include "ligmacontainerview.h"
+#include "ligmaeditor.h"
+#include "ligmaimageview.h"
+#include "ligmadnd.h"
+#include "ligmamenufactory.h"
+#include "ligmauimanager.h"
+#include "ligmaviewrenderer.h"
 
-#include "gimp-intl.h"
-
-
-static void   gimp_image_view_activate_item (GimpContainerEditor *editor,
-                                             GimpViewable        *viewable);
+#include "ligma-intl.h"
 
 
-G_DEFINE_TYPE (GimpImageView, gimp_image_view, GIMP_TYPE_CONTAINER_EDITOR)
+static void   ligma_image_view_activate_item (LigmaContainerEditor *editor,
+                                             LigmaViewable        *viewable);
 
-#define parent_class gimp_image_view_parent_class
+
+G_DEFINE_TYPE (LigmaImageView, ligma_image_view, LIGMA_TYPE_CONTAINER_EDITOR)
+
+#define parent_class ligma_image_view_parent_class
 
 
 static void
-gimp_image_view_class_init (GimpImageViewClass *klass)
+ligma_image_view_class_init (LigmaImageViewClass *klass)
 {
-  GimpContainerEditorClass *editor_class = GIMP_CONTAINER_EDITOR_CLASS (klass);
+  LigmaContainerEditorClass *editor_class = LIGMA_CONTAINER_EDITOR_CLASS (klass);
 
-  editor_class->activate_item = gimp_image_view_activate_item;
+  editor_class->activate_item = ligma_image_view_activate_item;
 }
 
 static void
-gimp_image_view_init (GimpImageView *view)
+ligma_image_view_init (LigmaImageView *view)
 {
   view->raise_button  = NULL;
   view->new_button    = NULL;
@@ -68,27 +68,27 @@ gimp_image_view_init (GimpImageView *view)
 }
 
 GtkWidget *
-gimp_image_view_new (GimpViewType     view_type,
-                     GimpContainer   *container,
-                     GimpContext     *context,
+ligma_image_view_new (LigmaViewType     view_type,
+                     LigmaContainer   *container,
+                     LigmaContext     *context,
                      gint             view_size,
                      gint             view_border_width,
-                     GimpMenuFactory *menu_factory)
+                     LigmaMenuFactory *menu_factory)
 {
-  GimpImageView       *image_view;
-  GimpContainerEditor *editor;
+  LigmaImageView       *image_view;
+  LigmaContainerEditor *editor;
 
-  g_return_val_if_fail (GIMP_IS_CONTAINER (container), NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTAINER (container), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (view_size > 0 &&
-                        view_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, NULL);
+                        view_size <= LIGMA_VIEWABLE_MAX_PREVIEW_SIZE, NULL);
   g_return_val_if_fail (view_border_width >= 0 &&
-                        view_border_width <= GIMP_VIEW_MAX_BORDER_WIDTH,
+                        view_border_width <= LIGMA_VIEW_MAX_BORDER_WIDTH,
                         NULL);
   g_return_val_if_fail (menu_factory == NULL ||
-                        GIMP_IS_MENU_FACTORY (menu_factory), NULL);
+                        LIGMA_IS_MENU_FACTORY (menu_factory), NULL);
 
-  image_view = g_object_new (GIMP_TYPE_IMAGE_VIEW,
+  image_view = g_object_new (LIGMA_TYPE_IMAGE_VIEW,
                              "view-type",         view_type,
                              "container",         container,
                              "context",           context,
@@ -99,60 +99,60 @@ gimp_image_view_new (GimpViewType     view_type,
                              "ui-path",           "/images-popup",
                              NULL);
 
-  editor = GIMP_CONTAINER_EDITOR (image_view);
+  editor = LIGMA_CONTAINER_EDITOR (image_view);
 
   image_view->raise_button =
-    gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "images",
+    ligma_editor_add_action_button (LIGMA_EDITOR (editor->view), "images",
                                    "images-raise-views", NULL);
 
   image_view->new_button =
-    gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "images",
+    ligma_editor_add_action_button (LIGMA_EDITOR (editor->view), "images",
                                    "images-new-view", NULL);
 
   image_view->delete_button =
-    gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "images",
+    ligma_editor_add_action_button (LIGMA_EDITOR (editor->view), "images",
                                    "images-delete", NULL);
 
-  if (view_type == GIMP_VIEW_TYPE_LIST)
+  if (view_type == LIGMA_VIEW_TYPE_LIST)
     {
       GtkWidget *dnd_widget;
 
-      dnd_widget = gimp_container_view_get_dnd_widget (editor->view);
+      dnd_widget = ligma_container_view_get_dnd_widget (editor->view);
 
-      gimp_dnd_xds_source_add (dnd_widget,
-                               (GimpDndDragViewableFunc) gimp_dnd_get_drag_viewable,
+      ligma_dnd_xds_source_add (dnd_widget,
+                               (LigmaDndDragViewableFunc) ligma_dnd_get_drag_viewable,
                                NULL);
     }
 
-  gimp_container_view_enable_dnd (editor->view,
+  ligma_container_view_enable_dnd (editor->view,
                                   GTK_BUTTON (image_view->raise_button),
-                                  GIMP_TYPE_IMAGE);
-  gimp_container_view_enable_dnd (editor->view,
+                                  LIGMA_TYPE_IMAGE);
+  ligma_container_view_enable_dnd (editor->view,
                                   GTK_BUTTON (image_view->new_button),
-                                  GIMP_TYPE_IMAGE);
-  gimp_container_view_enable_dnd (editor->view,
+                                  LIGMA_TYPE_IMAGE);
+  ligma_container_view_enable_dnd (editor->view,
                                   GTK_BUTTON (image_view->delete_button),
-                                  GIMP_TYPE_IMAGE);
+                                  LIGMA_TYPE_IMAGE);
 
-  gimp_ui_manager_update (gimp_editor_get_ui_manager (GIMP_EDITOR (editor->view)),
+  ligma_ui_manager_update (ligma_editor_get_ui_manager (LIGMA_EDITOR (editor->view)),
                           editor);
 
   return GTK_WIDGET (image_view);
 }
 
 static void
-gimp_image_view_activate_item (GimpContainerEditor *editor,
-                               GimpViewable        *viewable)
+ligma_image_view_activate_item (LigmaContainerEditor *editor,
+                               LigmaViewable        *viewable)
 {
-  GimpImageView *view = GIMP_IMAGE_VIEW (editor);
-  GimpContainer *container;
+  LigmaImageView *view = LIGMA_IMAGE_VIEW (editor);
+  LigmaContainer *container;
 
-  if (GIMP_CONTAINER_EDITOR_CLASS (parent_class)->activate_item)
-    GIMP_CONTAINER_EDITOR_CLASS (parent_class)->activate_item (editor, viewable);
+  if (LIGMA_CONTAINER_EDITOR_CLASS (parent_class)->activate_item)
+    LIGMA_CONTAINER_EDITOR_CLASS (parent_class)->activate_item (editor, viewable);
 
-  container = gimp_container_view_get_container (editor->view);
+  container = ligma_container_view_get_container (editor->view);
 
-  if (viewable && gimp_container_have (container, GIMP_OBJECT (viewable)))
+  if (viewable && ligma_container_have (container, LIGMA_OBJECT (viewable)))
     {
       gtk_button_clicked (GTK_BUTTON (view->raise_button));
     }

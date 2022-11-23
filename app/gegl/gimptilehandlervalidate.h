@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,30 +15,30 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TILE_HANDLER_VALIDATE_H__
-#define __GIMP_TILE_HANDLER_VALIDATE_H__
+#ifndef __LIGMA_TILE_HANDLER_VALIDATE_H__
+#define __LIGMA_TILE_HANDLER_VALIDATE_H__
 
 #include <gegl-buffer-backend.h>
 
 /***
- * GimpTileHandlerValidate is a GeglTileHandler that renders the
+ * LigmaTileHandlerValidate is a GeglTileHandler that renders the
  * projection.
  */
 
 G_BEGIN_DECLS
 
-#define GIMP_TYPE_TILE_HANDLER_VALIDATE            (gimp_tile_handler_validate_get_type ())
-#define GIMP_TILE_HANDLER_VALIDATE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TILE_HANDLER_VALIDATE, GimpTileHandlerValidate))
-#define GIMP_TILE_HANDLER_VALIDATE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  GIMP_TYPE_TILE_HANDLER_VALIDATE, GimpTileHandlerValidateClass))
-#define GIMP_IS_TILE_HANDLER_VALIDATE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_TILE_HANDLER_VALIDATE))
-#define GIMP_IS_TILE_HANDLER_VALIDATE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  GIMP_TYPE_TILE_HANDLER_VALIDATE))
-#define GIMP_TILE_HANDLER_VALIDATE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  GIMP_TYPE_TILE_HANDLER_VALIDATE, GimpTileHandlerValidateClass))
+#define LIGMA_TYPE_TILE_HANDLER_VALIDATE            (ligma_tile_handler_validate_get_type ())
+#define LIGMA_TILE_HANDLER_VALIDATE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_TILE_HANDLER_VALIDATE, LigmaTileHandlerValidate))
+#define LIGMA_TILE_HANDLER_VALIDATE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  LIGMA_TYPE_TILE_HANDLER_VALIDATE, LigmaTileHandlerValidateClass))
+#define LIGMA_IS_TILE_HANDLER_VALIDATE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_TILE_HANDLER_VALIDATE))
+#define LIGMA_IS_TILE_HANDLER_VALIDATE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  LIGMA_TYPE_TILE_HANDLER_VALIDATE))
+#define LIGMA_TILE_HANDLER_VALIDATE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj),  LIGMA_TYPE_TILE_HANDLER_VALIDATE, LigmaTileHandlerValidateClass))
 
 
-typedef struct _GimpTileHandlerValidate      GimpTileHandlerValidate;
-typedef struct _GimpTileHandlerValidateClass GimpTileHandlerValidateClass;
+typedef struct _LigmaTileHandlerValidate      LigmaTileHandlerValidate;
+typedef struct _LigmaTileHandlerValidateClass LigmaTileHandlerValidateClass;
 
-struct _GimpTileHandlerValidate
+struct _LigmaTileHandlerValidate
 {
   GeglTileHandler  parent_instance;
 
@@ -52,56 +52,56 @@ struct _GimpTileHandlerValidate
   gint             suspend_validate;
 };
 
-struct _GimpTileHandlerValidateClass
+struct _LigmaTileHandlerValidateClass
 {
   GeglTileHandlerClass  parent_class;
 
   /*  signals  */
-  void (* invalidated)     (GimpTileHandlerValidate *validate,
+  void (* invalidated)     (LigmaTileHandlerValidate *validate,
                             const GeglRectangle     *rect);
 
   /*  virtual functions  */
-  void (* begin_validate)  (GimpTileHandlerValidate *validate);
-  void (* end_validate)    (GimpTileHandlerValidate *validate);
-  void (* validate)        (GimpTileHandlerValidate *validate,
+  void (* begin_validate)  (LigmaTileHandlerValidate *validate);
+  void (* end_validate)    (LigmaTileHandlerValidate *validate);
+  void (* validate)        (LigmaTileHandlerValidate *validate,
                             const GeglRectangle     *rect,
                             const Babl              *format,
                             gpointer                 dest_buf,
                             gint                     dest_stride);
-  void (* validate_buffer) (GimpTileHandlerValidate *validate,
+  void (* validate_buffer) (LigmaTileHandlerValidate *validate,
                             const GeglRectangle     *rect,
                             GeglBuffer              *buffer);
 };
 
 
-GType                     gimp_tile_handler_validate_get_type          (void) G_GNUC_CONST;
+GType                     ligma_tile_handler_validate_get_type          (void) G_GNUC_CONST;
 
-GeglTileHandler         * gimp_tile_handler_validate_new               (GeglNode                *graph);
+GeglTileHandler         * ligma_tile_handler_validate_new               (GeglNode                *graph);
 
-void                      gimp_tile_handler_validate_assign            (GimpTileHandlerValidate *validate,
+void                      ligma_tile_handler_validate_assign            (LigmaTileHandlerValidate *validate,
                                                                         GeglBuffer              *buffer);
-void                      gimp_tile_handler_validate_unassign          (GimpTileHandlerValidate *validate,
+void                      ligma_tile_handler_validate_unassign          (LigmaTileHandlerValidate *validate,
                                                                         GeglBuffer              *buffer);
-GimpTileHandlerValidate * gimp_tile_handler_validate_get_assigned      (GeglBuffer              *buffer);
+LigmaTileHandlerValidate * ligma_tile_handler_validate_get_assigned      (GeglBuffer              *buffer);
 
-void                      gimp_tile_handler_validate_invalidate        (GimpTileHandlerValidate *validate,
+void                      ligma_tile_handler_validate_invalidate        (LigmaTileHandlerValidate *validate,
                                                                         const GeglRectangle     *rect);
-void                      gimp_tile_handler_validate_undo_invalidate   (GimpTileHandlerValidate *validate,
+void                      ligma_tile_handler_validate_undo_invalidate   (LigmaTileHandlerValidate *validate,
                                                                         const GeglRectangle     *rect);
 
-void                      gimp_tile_handler_validate_begin_validate    (GimpTileHandlerValidate *validate);
-void                      gimp_tile_handler_validate_end_validate      (GimpTileHandlerValidate *validate);
+void                      ligma_tile_handler_validate_begin_validate    (LigmaTileHandlerValidate *validate);
+void                      ligma_tile_handler_validate_end_validate      (LigmaTileHandlerValidate *validate);
 
-void                      gimp_tile_handler_validate_validate          (GimpTileHandlerValidate *validate,
+void                      ligma_tile_handler_validate_validate          (LigmaTileHandlerValidate *validate,
                                                                         GeglBuffer              *buffer,
                                                                         const GeglRectangle     *rect,
                                                                         gboolean                 intersect,
                                                                         gboolean                 chunked);
 
-gboolean                  gimp_tile_handler_validate_buffer_set_extent (GeglBuffer              *buffer,
+gboolean                  ligma_tile_handler_validate_buffer_set_extent (GeglBuffer              *buffer,
                                                                         const GeglRectangle     *extent);
 
-void                      gimp_tile_handler_validate_buffer_copy       (GeglBuffer              *src_buffer,
+void                      ligma_tile_handler_validate_buffer_copy       (GeglBuffer              *src_buffer,
                                                                         const GeglRectangle     *src_rect,
                                                                         GeglBuffer              *dst_buffer,
                                                                         const GeglRectangle     *dst_rect);
@@ -109,4 +109,4 @@ void                      gimp_tile_handler_validate_buffer_copy       (GeglBuff
 
 G_END_DECLS
 
-#endif /* __GIMP_TILE_HANDLER_VALIDATE_H__ */
+#endif /* __LIGMA_TILE_HANDLER_VALIDATE_H__ */

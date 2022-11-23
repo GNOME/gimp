@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimptemplateview.h
- * Copyright (C) 2003 Michael Natterer <mitch@gimp.org>
+ * ligmatemplateview.h
+ * Copyright (C) 2003 Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,26 +18,26 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_TEMPLATE_VIEW_H__
-#define __GIMP_TEMPLATE_VIEW_H__
+#ifndef __LIGMA_TEMPLATE_VIEW_H__
+#define __LIGMA_TEMPLATE_VIEW_H__
 
 
-#include "gimpcontainereditor.h"
+#include "ligmacontainereditor.h"
 
 
-#define GIMP_TYPE_TEMPLATE_VIEW            (gimp_template_view_get_type ())
-#define GIMP_TEMPLATE_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TEMPLATE_VIEW, GimpTemplateView))
-#define GIMP_TEMPLATE_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TEMPLATE_VIEW, GimpTemplateViewClass))
-#define GIMP_IS_TEMPLATE_VIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_TEMPLATE_VIEW))
-#define GIMP_IS_TEMPLATE_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_TEMPLATE_VIEW))
-#define GIMP_TEMPLATE_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_TEMPLATE_VIEW, GimpTemplateViewClass))
+#define LIGMA_TYPE_TEMPLATE_VIEW            (ligma_template_view_get_type ())
+#define LIGMA_TEMPLATE_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), LIGMA_TYPE_TEMPLATE_VIEW, LigmaTemplateView))
+#define LIGMA_TEMPLATE_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), LIGMA_TYPE_TEMPLATE_VIEW, LigmaTemplateViewClass))
+#define LIGMA_IS_TEMPLATE_VIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), LIGMA_TYPE_TEMPLATE_VIEW))
+#define LIGMA_IS_TEMPLATE_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), LIGMA_TYPE_TEMPLATE_VIEW))
+#define LIGMA_TEMPLATE_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), LIGMA_TYPE_TEMPLATE_VIEW, LigmaTemplateViewClass))
 
 
-typedef struct _GimpTemplateViewClass  GimpTemplateViewClass;
+typedef struct _LigmaTemplateViewClass  LigmaTemplateViewClass;
 
-struct _GimpTemplateView
+struct _LigmaTemplateView
 {
-  GimpContainerEditor  parent_instance;
+  LigmaContainerEditor  parent_instance;
 
   GtkWidget           *create_button;
   GtkWidget           *new_button;
@@ -46,20 +46,20 @@ struct _GimpTemplateView
   GtkWidget           *delete_button;
 };
 
-struct _GimpTemplateViewClass
+struct _LigmaTemplateViewClass
 {
-  GimpContainerEditorClass  parent_class;
+  LigmaContainerEditorClass  parent_class;
 };
 
 
-GType       gimp_template_view_get_type (void) G_GNUC_CONST;
+GType       ligma_template_view_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_template_view_new      (GimpViewType     view_type,
-                                         GimpContainer   *container,
-                                         GimpContext     *context,
+GtkWidget * ligma_template_view_new      (LigmaViewType     view_type,
+                                         LigmaContainer   *container,
+                                         LigmaContext     *context,
                                          gint             view_size,
                                          gint             view_border_width,
-                                         GimpMenuFactory *menu_factory);
+                                         LigmaMenuFactory *menu_factory);
 
 
-#endif  /*  __GIMP_TEMPLATE_VIEW_H__  */
+#endif  /*  __LIGMA_TEMPLATE_VIEW_H__  */

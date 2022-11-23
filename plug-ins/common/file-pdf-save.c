@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  *
  * file-pdf-save.c - PDF file exporter, based on the cairo PDF surface
  *
@@ -24,7 +24,7 @@
  *    the pdf file, and it can show a gui. This procedure works on a single
  *    image.
  * 2. file-pdf-save-defaults
- *    This procedures is the one that will be invoked by gimp's file-save,
+ *    This procedures is the one that will be invoked by ligma's file-save,
  *    when the pdf extension is chosen. If it's in RUN_INTERACTIVE, it will
  *    pop a user interface with more options, like file-pdf-save. If it's in
  *    RUN_NONINTERACTIVE, it will simply use the default values. Note that on
@@ -36,22 +36,22 @@
  *    paged pdf files. It will be located in File/Create/Multiple page PDF...
  *
  * It was suggested that file-pdf-save-multi will be removed from the UI as it
- * does not match the product vision (GIMP isn't a program for editing multiple
+ * does not match the product vision (LIGMA isn't a program for editing multiple
  * paged documents).
  */
 
 /* Known Issues (except for the coding style issues):
  * 1. Grayscale layers are inverted (although layer masks which are not grayscale,
  * are not inverted)
- * 2. Exporting some fonts doesn't work since gimp_text_layer_get_font Returns a
+ * 2. Exporting some fonts doesn't work since ligma_text_layer_get_font Returns a
  * font which is sometimes incompatible with pango_font_description_from_string
- * (gimp_text_layer_get_font sometimes returns suffixes such as "semi-expanded" to
- * the font's name although the GIMP's font selection dialog shows the don'ts name
- * normally - This should be checked again in GIMP 2.7)
- * 3. Indexed layers can't be optimized yet (Since gimp_histogram won't work on
+ * (ligma_text_layer_get_font sometimes returns suffixes such as "semi-expanded" to
+ * the font's name although the LIGMA's font selection dialog shows the don'ts name
+ * normally - This should be checked again in LIGMA 2.7)
+ * 3. Indexed layers can't be optimized yet (Since ligma_histogram won't work on
  * indexed layers)
  * 4. Rendering the pango layout requires multiplying the size in PANGO_SCALE. This
- * means I'll need to do some hacking on the markup returned from GIMP.
+ * means I'll need to do some hacking on the markup returned from LIGMA.
  * 5. When accessing the contents of layer groups is supported, we should do use it
  * (since this plugin should preserve layers).
  *
@@ -86,15 +86,15 @@
  *
  * August 21, 2009 | Barak Itkin <lightningismyname@gmail.com>
  *   Fixed a typo that prevented the plugin from compiling...
- *   A migration to the new GIMP 2.8 api, which includes:
- *   - Now using gimp_export_dialog_new
- *   - Using gimp_text_layer_get_hint_style (2.8) instead of the deprecated
- *     gimp_text_layer_get_hinting (2.6).
+ *   A migration to the new LIGMA 2.8 api, which includes:
+ *   - Now using ligma_export_dialog_new
+ *   - Using ligma_text_layer_get_hint_style (2.8) instead of the deprecated
+ *     ligma_text_layer_get_hinting (2.6).
  *
  * August 24, 2010 | Barak Itkin <lightningismyname@gmail.com>
- *   More migrations to the new GIMP 2.8 api:
- *   - Now using the GimpItem api
- *   - Using gimp_text_layer_get_markup where possible
+ *   More migrations to the new LIGMA 2.8 api:
+ *   - Now using the LigmaItem api
+ *   - Using ligma_text_layer_get_markup where possible
  *   - Fixed some compiler warnings
  *   Also merged the header and c file into one file, Updated some of the comments
  *   and documentation, and moved this into the main source repository.
@@ -108,38 +108,38 @@
 #include <cairo-pdf.h>
 #include <pango/pangocairo.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
 #define SAVE_PROC               "file-pdf-save"
 #define SAVE_MULTI_PROC         "file-pdf-save-multi"
 #define PLUG_IN_BINARY          "file-pdf-save"
-#define PLUG_IN_ROLE            "gimp-file-pdf-save"
+#define PLUG_IN_ROLE            "ligma-file-pdf-save"
 
 #define DATA_IMAGE_LIST         "file-pdf-data-multi-page"
 
-/* Gimp will crash before you reach this limitation :D */
+/* Ligma will crash before you reach this limitation :D */
 #define MAX_PAGE_COUNT           350
 #define MAX_FILE_NAME_LENGTH     350
 
 #define THUMB_WIDTH              90
 #define THUMB_HEIGHT             120
 
-#define GIMP_PLUGIN_PDF_SAVE_ERROR gimp_plugin_pdf_save_error_quark ()
+#define LIGMA_PLUGIN_PDF_SAVE_ERROR ligma_plugin_pdf_save_error_quark ()
 
 typedef enum
 {
-  GIMP_PLUGIN_PDF_SAVE_ERROR_FAILED
-} GimpPluginPDFError;
+  LIGMA_PLUGIN_PDF_SAVE_ERROR_FAILED
+} LigmaPluginPDFError;
 
-GQuark gimp_plugin_pdf_save_error_quark (void);
+GQuark ligma_plugin_pdf_save_error_quark (void);
 
 typedef struct
 {
-  GimpImage *images[MAX_PAGE_COUNT];
+  LigmaImage *images[MAX_PAGE_COUNT];
   guint32    image_count;
   gchar      file_name[MAX_FILE_NAME_LENGTH];
 } PdfMultiPage;
@@ -165,12 +165,12 @@ typedef struct _PdfClass PdfClass;
 
 struct _Pdf
 {
-  GimpPlugIn      parent_instance;
+  LigmaPlugIn      parent_instance;
 };
 
 struct _PdfClass
 {
-  GimpPlugInClass parent_class;
+  LigmaPlugInClass parent_class;
 };
 
 
@@ -179,37 +179,37 @@ struct _PdfClass
 
 GType                   pdf_get_type             (void) G_GNUC_CONST;
 
-static GList          * pdf_query_procedures     (GimpPlugIn           *plug_in);
-static GimpProcedure  * pdf_create_procedure     (GimpPlugIn           *plug_in,
+static GList          * pdf_query_procedures     (LigmaPlugIn           *plug_in);
+static LigmaProcedure  * pdf_create_procedure     (LigmaPlugIn           *plug_in,
                                                   const gchar          *name);
 
-static GimpValueArray * pdf_save                 (GimpProcedure        *procedure,
-                                                  GimpRunMode           run_mode,
-                                                  GimpImage            *image,
+static LigmaValueArray * pdf_save                 (LigmaProcedure        *procedure,
+                                                  LigmaRunMode           run_mode,
+                                                  LigmaImage            *image,
                                                   gint                  n_drawables,
-                                                  GimpDrawable        **drawables,
+                                                  LigmaDrawable        **drawables,
                                                   GFile                *file,
-                                                  const GimpValueArray *args,
+                                                  const LigmaValueArray *args,
                                                   gpointer              run_data);
-static GimpValueArray * pdf_save_multi           (GimpProcedure        *procedure,
-                                                  const GimpValueArray *args,
+static LigmaValueArray * pdf_save_multi           (LigmaProcedure        *procedure,
+                                                  const LigmaValueArray *args,
                                                   gpointer              run_data);
 
-static GimpPDBStatusType pdf_save_image          (GimpProcedure        *procedure,
-                                                  GimpProcedureConfig  *config,
+static LigmaPDBStatusType pdf_save_image          (LigmaProcedure        *procedure,
+                                                  LigmaProcedureConfig  *config,
                                                   gboolean              single_image,
                                                   gboolean              show_progress,
                                                   GError              **error);
 
-static void             init_image_list_defaults (GimpImage            *image);
+static void             init_image_list_defaults (LigmaImage            *image);
 
 static void             validate_image_list      (void);
 
-static gboolean         gui_single               (GimpProcedure        *procedure,
-                                                  GimpProcedureConfig  *config,
-                                                  GimpImage            *image);
-static gboolean         gui_multi                (GimpProcedure        *procedure,
-                                                  GimpProcedureConfig  *config);
+static gboolean         gui_single               (LigmaProcedure        *procedure,
+                                                  LigmaProcedureConfig  *config,
+                                                  LigmaImage            *image);
+static gboolean         gui_multi                (LigmaProcedure        *procedure,
+                                                  LigmaProcedureConfig  *config);
 
 static void             choose_file_call         (GtkWidget            *browse_button,
                                                   gpointer              file_entry);
@@ -227,22 +227,22 @@ static void             remove_call              (GtkTreeModel         *tree_mod
                                                   gpointer              user_data);
 static void             recount_pages            (void);
 
-static cairo_surface_t *get_cairo_surface        (GimpDrawable         *drawable,
+static cairo_surface_t *get_cairo_surface        (LigmaDrawable         *drawable,
                                                   gboolean              as_mask,
                                                   GError              **error);
 
-static GimpRGB          get_layer_color          (GimpLayer            *layer,
+static LigmaRGB          get_layer_color          (LigmaLayer            *layer,
                                                   gboolean             *single);
 
-static void             drawText                 (GimpLayer            *layer,
+static void             drawText                 (LigmaLayer            *layer,
                                                   gdouble               opacity,
                                                   cairo_t              *cr,
                                                   gdouble               x_res,
                                                   gdouble               y_res);
 
-static gboolean         draw_layer               (GimpLayer           **layers,
+static gboolean         draw_layer               (LigmaLayer           **layers,
                                                   gint                  n_layers,
-                                                  GimpProcedureConfig  *config,
+                                                  LigmaProcedureConfig  *config,
                                                   gint                  j,
                                                   cairo_t              *cr,
                                                   gdouble               x_res,
@@ -255,9 +255,9 @@ static gboolean         draw_layer               (GimpLayer           **layers,
                                                   GError              **error);
 
 
-G_DEFINE_TYPE (Pdf, pdf, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (Pdf, pdf, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (PDF_TYPE)
+LIGMA_MAIN (PDF_TYPE)
 DEFINE_STD_SET_I18N
 
 
@@ -269,12 +269,12 @@ static GtkWidget    *file_choose;
 static gchar        *file_name;
 
 
-G_DEFINE_QUARK (gimp-plugin-pdf-save-error-quark, gimp_plugin_pdf_save_error)
+G_DEFINE_QUARK (ligma-plugin-pdf-save-error-quark, ligma_plugin_pdf_save_error)
 
 static void
 pdf_class_init (PdfClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = pdf_query_procedures;
   plug_in_class->create_procedure = pdf_create_procedure;
@@ -287,7 +287,7 @@ pdf_init (Pdf *pdf)
 }
 
 static GList *
-pdf_query_procedures (GimpPlugIn *plug_in)
+pdf_query_procedures (LigmaPlugIn *plug_in)
 {
   GList *list = NULL;
 
@@ -297,23 +297,23 @@ pdf_query_procedures (GimpPlugIn *plug_in)
   return list;
 }
 
-static GimpProcedure *
-pdf_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+pdf_create_procedure (LigmaPlugIn  *plug_in,
                         const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
   if (! strcmp (name, SAVE_PROC))
     {
-      procedure = gimp_save_procedure_new (plug_in, name,
-                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_save_procedure_new (plug_in, name,
+                                           LIGMA_PDB_PROC_TYPE_PLUGIN,
                                            pdf_save, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "*");
+      ligma_procedure_set_image_types (procedure, "*");
 
-      gimp_procedure_set_menu_label (procedure, _("Portable Document Format"));
+      ligma_procedure_set_menu_label (procedure, _("Portable Document Format"));
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Save files in PDF format",
                                         "Saves files in Adobe's Portable "
                                         "Document Format. PDF is designed to "
@@ -321,56 +321,56 @@ pdf_create_procedure (GimpPlugIn  *plug_in,
                                         "different platforms, and is a "
                                         "distant cousin of PostScript.",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Barak Itkin, Lionel N., Jehan",
                                       "Copyright Barak Itkin, Lionel N., Jehan",
                                       "August 2009, 2017");
 
-      gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_format_name (LIGMA_FILE_PROCEDURE (procedure),
                                            _("PDF"));
-      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_mime_types (LIGMA_FILE_PROCEDURE (procedure),
                                           "application/pdf");
-      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+      ligma_file_procedure_set_extensions (LIGMA_FILE_PROCEDURE (procedure),
                                           "pdf");
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "vectorize",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "vectorize",
                              "Convert bitmaps to vector graphics where possible",
                              "Convert bitmaps to vector graphics where possible",
                              TRUE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "ignore-hidden",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "ignore-hidden",
                              "Omit hidden layers and layers with zero opacity",
                              "Non-visible layers will not be exported",
                              TRUE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "apply-masks",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "apply-masks",
                              "Apply layer masks",
                              "Apply layer masks before saving (Keeping the mask "
                              "will not change the output, only the PDF structure),",
                              TRUE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "layers-as-pages",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "layers-as-pages",
                              "Layers as pages",
                              "Layers as pages (bottom layers first).",
                              FALSE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "reverse-order",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "reverse-order",
                              "Reverse order",
                              "Reverse the pages order (top layers first).",
                              FALSE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "root-layers-only",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "root-layers-only",
                              "Root layers only",
                              "Only the root layers are considered pages",
                              TRUE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "convert-text-layers",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "convert-text-layers",
                              "Convert text layers to image",
                              "Convert text layers to raster graphics",
                              FALSE,
@@ -378,18 +378,18 @@ pdf_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, SAVE_MULTI_PROC))
     {
-      procedure = gimp_procedure_new (plug_in, name,
-                                      GIMP_PDB_PROC_TYPE_PLUGIN,
+      procedure = ligma_procedure_new (plug_in, name,
+                                      LIGMA_PDB_PROC_TYPE_PLUGIN,
                                       pdf_save_multi, NULL, NULL);
 
-      gimp_procedure_set_image_types (procedure, "*");
+      ligma_procedure_set_image_types (procedure, "*");
 
-      gimp_procedure_set_menu_label (procedure, _("_Create multipage PDF..."));
+      ligma_procedure_set_menu_label (procedure, _("_Create multipage PDF..."));
 #if 0
-      gimp_procedure_add_menu_path (procedure, "<Image>/File/Create/PDF");
+      ligma_procedure_add_menu_path (procedure, "<Image>/File/Create/PDF");
 #endif
 
-      gimp_procedure_set_documentation (procedure,
+      ligma_procedure_set_documentation (procedure,
                                         "Save files in PDF format",
                                         "Saves files in Adobe's Portable "
                                         "Document Format. PDF is designed to "
@@ -397,73 +397,73 @@ pdf_create_procedure (GimpPlugIn  *plug_in,
                                         "different platforms, and is a "
                                         "distant cousin of PostScript.",
                                         name);
-      gimp_procedure_set_attribution (procedure,
+      ligma_procedure_set_attribution (procedure,
                                       "Barak Itkin",
                                       "Copyright Barak Itkin",
                                       "August 2009");
 
-      GIMP_PROC_ARG_ENUM (procedure, "run-mode",
+      LIGMA_PROC_ARG_ENUM (procedure, "run-mode",
                           "Run mode",
                           "The run mode",
-                          GIMP_TYPE_RUN_MODE,
-                          GIMP_RUN_INTERACTIVE,
+                          LIGMA_TYPE_RUN_MODE,
+                          LIGMA_RUN_INTERACTIVE,
                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "count",
+      LIGMA_PROC_ARG_INT (procedure, "count",
                          "Count",
                          "The number of images entered (This will be the "
                          "number of pages).",
                          1, MAX_PAGE_COUNT, 1,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT32_ARRAY (procedure, "images",
+      LIGMA_PROC_ARG_INT32_ARRAY (procedure, "images",
                                  "Images",
                                  "Input image for each page (An image can "
                                  "appear more than once)",
                                  G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "vectorize",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "vectorize",
                              "Vectorize",
                              "Convert bitmaps to vector graphics where possible.",
                              TRUE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "ignore-hidden",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "ignore-hidden",
                              "Ignore hidden",
                              "Omit hidden layers and layers with zero opacity.",
                              TRUE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "apply-masks",
+      LIGMA_PROC_ARG_BOOLEAN (procedure, "apply-masks",
                              "Apply masks",
                              "Apply layer masks before saving (Keeping them "
                              "will not change the output),",
                              TRUE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_STRING (procedure, "uri",
+      LIGMA_PROC_ARG_STRING (procedure, "uri",
                             "URI",
                             "The URI of the file to save to",
                             NULL,
-                            GIMP_PARAM_READWRITE);
+                            LIGMA_PARAM_READWRITE);
     }
 
   return procedure;
 }
 
-static GimpValueArray *
-pdf_save (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GimpImage            *image,
+static LigmaValueArray *
+pdf_save (LigmaProcedure        *procedure,
+          LigmaRunMode           run_mode,
+          LigmaImage            *image,
           gint                  n_drawables,
-          GimpDrawable        **drawables,
+          LigmaDrawable        **drawables,
           GFile                *file,
-          const GimpValueArray *args,
+          const LigmaValueArray *args,
           gpointer              run_data)
 {
-  GimpProcedureConfig *config;
+  LigmaProcedureConfig *config;
   GError              *error          = NULL;
-  GimpPDBStatusType    status         = GIMP_PDB_SUCCESS;
+  LigmaPDBStatusType    status         = LIGMA_PDB_SUCCESS;
   gboolean             had_saved_list = FALSE;
 
   gegl_init (NULL, NULL);
@@ -471,20 +471,20 @@ pdf_save (GimpProcedure        *procedure,
   /* Initializing all the settings */
   multi_page.image_count = 0;
 
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_export (config, image, run_mode,
+  config = ligma_procedure_create_config (procedure);
+  ligma_procedure_config_begin_export (config, image, run_mode,
                                       args, "application/pdf");
   file_name = g_file_get_path (file);
 
   switch (run_mode)
     {
-    case GIMP_RUN_NONINTERACTIVE:
+    case LIGMA_RUN_NONINTERACTIVE:
       init_image_list_defaults (image);
       break;
 
-    case GIMP_RUN_INTERACTIVE:
+    case LIGMA_RUN_INTERACTIVE:
       /* Possibly retrieve data */
-      had_saved_list = gimp_get_data (DATA_IMAGE_LIST, &multi_page);
+      had_saved_list = ligma_get_data (DATA_IMAGE_LIST, &multi_page);
 
       if (had_saved_list && (file_name == NULL || strlen (file_name) == 0))
         {
@@ -494,51 +494,51 @@ pdf_save (GimpProcedure        *procedure,
       init_image_list_defaults (image);
       break;
 
-    case GIMP_RUN_WITH_LAST_VALS:
+    case LIGMA_RUN_WITH_LAST_VALS:
       init_image_list_defaults (image);
       break;
     }
 
   validate_image_list ();
 
-  if (run_mode == GIMP_RUN_INTERACTIVE)
+  if (run_mode == LIGMA_RUN_INTERACTIVE)
     {
       if (! gui_single (procedure, config, image))
-        status = GIMP_PDB_CANCEL;
+        status = LIGMA_PDB_CANCEL;
     }
 
-  if (status == GIMP_PDB_SUCCESS)
+  if (status == LIGMA_PDB_SUCCESS)
     status = pdf_save_image (procedure, config, TRUE,
-                             (run_mode != GIMP_RUN_NONINTERACTIVE),
+                             (run_mode != LIGMA_RUN_NONINTERACTIVE),
                              &error);
 
-  gimp_procedure_config_end_export (config, image, file, status);
+  ligma_procedure_config_end_export (config, image, file, status);
   g_object_unref (config);
 
-  return gimp_procedure_new_return_values (procedure, status, error);
+  return ligma_procedure_new_return_values (procedure, status, error);
 }
 
-static GimpValueArray *
-pdf_save_multi (GimpProcedure        *procedure,
-                const GimpValueArray *args,
+static LigmaValueArray *
+pdf_save_multi (LigmaProcedure        *procedure,
+                const LigmaValueArray *args,
                 gpointer              run_data)
 {
-  GimpProcedureConfig *config;
+  LigmaProcedureConfig *config;
   GError              *error  = NULL;
-  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
-  GimpRunMode          run_mode;
+  LigmaPDBStatusType    status = LIGMA_PDB_SUCCESS;
+  LigmaRunMode          run_mode;
   gchar               *uri;
   const gint32        *image_ids;
 
-  GimpImage   *image = NULL;
+  LigmaImage   *image = NULL;
   GFile       *file;
   gboolean     had_saved_list = FALSE;
 
   gegl_init (NULL, NULL);
 
-  run_mode = GIMP_VALUES_GET_ENUM (args, 0);
-  config = gimp_procedure_create_config (procedure);
-  gimp_procedure_config_begin_run (config, NULL, run_mode, args);
+  run_mode = LIGMA_VALUES_GET_ENUM (args, 0);
+  config = ligma_procedure_create_config (procedure);
+  ligma_procedure_config_begin_run (config, NULL, run_mode, args);
   g_object_get (config,
                 "uri",    &uri,
                 "count",  &multi_page.image_count,
@@ -553,15 +553,15 @@ pdf_save_multi (GimpProcedure        *procedure,
     {
       gint i;
 
-    case GIMP_RUN_NONINTERACTIVE:
+    case LIGMA_RUN_NONINTERACTIVE:
       if (image_ids)
         for (i = 0; i < multi_page.image_count; i++)
-          multi_page.images[i] = gimp_image_get_by_id (image_ids[i]);
+          multi_page.images[i] = ligma_image_get_by_id (image_ids[i]);
       break;
 
-    case GIMP_RUN_INTERACTIVE:
+    case LIGMA_RUN_INTERACTIVE:
       /* Possibly retrieve data */
-      had_saved_list = gimp_get_data (DATA_IMAGE_LIST, &multi_page);
+      had_saved_list = ligma_get_data (DATA_IMAGE_LIST, &multi_page);
 
       if (had_saved_list && (file_name == NULL || strlen (file_name) == 0))
         {
@@ -572,9 +572,9 @@ pdf_save_multi (GimpProcedure        *procedure,
         init_image_list_defaults (image);
       break;
 
-    case GIMP_RUN_WITH_LAST_VALS:
+    case LIGMA_RUN_WITH_LAST_VALS:
       /* Possibly retrieve data */
-      had_saved_list = gimp_get_data (DATA_IMAGE_LIST, &multi_page);
+      had_saved_list = ligma_get_data (DATA_IMAGE_LIST, &multi_page);
       if (had_saved_list)
         file_name = multi_page.file_name;
       break;
@@ -583,21 +583,21 @@ pdf_save_multi (GimpProcedure        *procedure,
   validate_image_list ();
 
   /* Starting the executions */
-  if (run_mode == GIMP_RUN_INTERACTIVE)
+  if (run_mode == LIGMA_RUN_INTERACTIVE)
     {
       if (! gui_multi (procedure, config))
-        status = GIMP_PDB_CANCEL;
+        status = LIGMA_PDB_CANCEL;
     }
 
-  if (status == GIMP_PDB_SUCCESS)
+  if (status == LIGMA_PDB_SUCCESS)
     status = pdf_save_image (procedure, config, FALSE,
-                             (run_mode != GIMP_RUN_NONINTERACTIVE),
+                             (run_mode != LIGMA_RUN_NONINTERACTIVE),
                              &error);
 
-  gimp_procedure_config_end_run (config, status);
+  ligma_procedure_config_end_run (config, status);
   g_object_unref (config);
 
-  return gimp_procedure_new_return_values (procedure, status, error);
+  return ligma_procedure_new_return_values (procedure, status, error);
 }
 
 static cairo_status_t
@@ -617,14 +617,14 @@ get_missing_fonts (GList *layers)
 
   for (iter = layers; iter; iter = iter->next)
     {
-      GimpLayer *layer = iter->data;
+      LigmaLayer *layer = iter->data;
 
-      if (gimp_item_is_group (GIMP_ITEM (layer)))
+      if (ligma_item_is_group (LIGMA_ITEM (layer)))
         {
           GList *child_missing_fonts;
           GList *iter2;
 
-          child_missing_fonts = get_missing_fonts (gimp_item_list_children (GIMP_ITEM (layer)));
+          child_missing_fonts = get_missing_fonts (ligma_item_list_children (LIGMA_ITEM (layer)));
           for (iter2 = child_missing_fonts; iter2; iter2 = iter2->next)
             {
               gchar *missing = iter2->data;
@@ -636,7 +636,7 @@ get_missing_fonts (GList *layers)
             }
           g_list_free (child_missing_fonts);
         }
-      else if (gimp_item_is_text_layer (GIMP_ITEM (layer)))
+      else if (ligma_item_is_text_layer (LIGMA_ITEM (layer)))
         {
           gchar                *font_family;
           PangoFontDescription *font_description;
@@ -648,7 +648,7 @@ get_missing_fonts (GList *layers)
           fontmap = pango_cairo_font_map_new_for_font_type (CAIRO_FONT_TYPE_FT);
           context = pango_font_map_create_context (fontmap);
 
-          font_family = gimp_text_layer_get_font (GIMP_TEXT_LAYER (layer));
+          font_family = ligma_text_layer_get_font (LIGMA_TEXT_LAYER (layer));
           font_description = pango_font_description_from_string (font_family);
 
           font = pango_font_map_load_font (fontmap, context, font_description);
@@ -677,16 +677,16 @@ get_missing_fonts (GList *layers)
   return missing_fonts;
 }
 
-static GimpPDBStatusType
-pdf_save_image (GimpProcedure        *procedure,
-                GimpProcedureConfig  *config,
+static LigmaPDBStatusType
+pdf_save_image (LigmaProcedure        *procedure,
+                LigmaProcedureConfig  *config,
                 gboolean              single_image,
                 gboolean              show_progress,
                 GError              **error)
 {
   cairo_surface_t        *pdf_file;
   cairo_t                *cr;
-  GimpExportCapabilities  capabilities;
+  LigmaExportCapabilities  capabilities;
   FILE                   *fp;
   gint                    i;
   gboolean                apply_masks;
@@ -702,9 +702,9 @@ pdf_save_image (GimpProcedure        *procedure,
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for writing: %s"),
-                   gimp_filename_to_utf8 (file_name), g_strerror (errno));
+                   ligma_filename_to_utf8 (file_name), g_strerror (errno));
 
-      return GIMP_PDB_EXECUTION_ERROR;
+      return LIGMA_PDB_EXECUTION_ERROR;
     }
 
   pdf_file = cairo_pdf_surface_create_for_stream (write_func, fp, 1, 1);
@@ -718,45 +718,45 @@ pdf_save_image (GimpProcedure        *procedure,
                      "selected location isn't read only!"),
                    cairo_status_to_string (cairo_surface_status (pdf_file)));
 
-      return GIMP_PDB_EXECUTION_ERROR;
+      return LIGMA_PDB_EXECUTION_ERROR;
     }
 
   cr = cairo_create (pdf_file);
 
-  capabilities = (GIMP_EXPORT_CAN_HANDLE_RGB    |
-                  GIMP_EXPORT_CAN_HANDLE_ALPHA  |
-                  GIMP_EXPORT_CAN_HANDLE_GRAY   |
-                  GIMP_EXPORT_CAN_HANDLE_LAYERS |
-                  GIMP_EXPORT_CAN_HANDLE_INDEXED);
+  capabilities = (LIGMA_EXPORT_CAN_HANDLE_RGB    |
+                  LIGMA_EXPORT_CAN_HANDLE_ALPHA  |
+                  LIGMA_EXPORT_CAN_HANDLE_GRAY   |
+                  LIGMA_EXPORT_CAN_HANDLE_LAYERS |
+                  LIGMA_EXPORT_CAN_HANDLE_INDEXED);
   /* This seems counter-intuitive, but not setting the mask capability
-   * will apply any layer mask upon gimp_export_image().
+   * will apply any layer mask upon ligma_export_image().
    */
   if (! apply_masks)
-    capabilities |= GIMP_EXPORT_CAN_HANDLE_LAYER_MASKS;
+    capabilities |= LIGMA_EXPORT_CAN_HANDLE_LAYER_MASKS;
 
   for (i = 0; i < multi_page.image_count; i++)
     {
-      GimpImage     *image = multi_page.images[i];
-      GimpLayer    **layers;
+      LigmaImage     *image = multi_page.images[i];
+      LigmaLayer    **layers;
       gint32         n_layers;
       gdouble        x_res, y_res;
       gdouble        x_scale, y_scale;
-      GimpDrawable **temp;
-      GimpDrawable **temp_out;
-      GimpItem     **drawables;
+      LigmaDrawable **temp;
+      LigmaDrawable **temp_out;
+      LigmaItem     **drawables;
       gint           n_drawables;
       gint           temp_size = 1;
       gint           j;
 
-      drawables = gimp_image_get_selected_drawables (image, &n_drawables);
+      drawables = ligma_image_get_selected_drawables (image, &n_drawables);
       if (n_drawables == 0)
         {
           g_free (drawables);
           continue;
         }
 
-      temp = g_new (GimpDrawable *, 1);
-      temp[0] = GIMP_DRAWABLE (drawables[0]);
+      temp = g_new (LigmaDrawable *, 1);
+      temp[0] = LIGMA_DRAWABLE (drawables[0]);
       g_free (drawables);
       temp_out = temp;
 
@@ -765,31 +765,31 @@ pdf_save_image (GimpProcedure        *procedure,
        */
       cairo_save (cr);
 
-      if (! (gimp_export_image (&image, &temp_size, &temp, NULL,
-                                capabilities) == GIMP_EXPORT_EXPORT))
+      if (! (ligma_export_image (&image, &temp_size, &temp, NULL,
+                                capabilities) == LIGMA_EXPORT_EXPORT))
         {
-          /* gimp_drawable_histogram() only works within the bounds of
+          /* ligma_drawable_histogram() only works within the bounds of
            * the selection, which is a problem (see issue #2431).
            * Instead of saving the selection, unselecting to later
            * reselect, let's just always work on a duplicate of the
            * image.
            */
-          image = gimp_image_duplicate (image);
+          image = ligma_image_duplicate (image);
         }
 
       if (temp != temp_out)
         g_free (temp_out);
       g_free (temp);
 
-      gimp_selection_none (image);
+      ligma_selection_none (image);
 
-      gimp_image_get_resolution (image, &x_res, &y_res);
+      ligma_image_get_resolution (image, &x_res, &y_res);
       x_scale = 72.0 / x_res;
       y_scale = 72.0 / y_res;
 
       cairo_pdf_surface_set_size (pdf_file,
-                                  gimp_image_get_width  (image) * x_scale,
-                                  gimp_image_get_height (image) * y_scale);
+                                  ligma_image_get_width  (image) * x_scale,
+                                  ligma_image_get_height (image) * y_scale);
 
       /* This way we set how many pixels are there in every inch.
        * It's very important for PangoCairo
@@ -805,20 +805,20 @@ pdf_save_image (GimpProcedure        *procedure,
        */
       cairo_scale (cr, x_scale, y_scale);
 
-      layers = gimp_image_get_layers (image, &n_layers);
+      layers = ligma_image_get_layers (image, &n_layers);
 
       /* Fill image with background color -
        * otherwise the output PDF will always show white for background,
        * and may display artifacts at transparency boundaries
        */
-      if (gimp_drawable_has_alpha (GIMP_DRAWABLE (layers[n_layers - 1])))
+      if (ligma_drawable_has_alpha (LIGMA_DRAWABLE (layers[n_layers - 1])))
         {
-          GimpRGB color;
+          LigmaRGB color;
 
           cairo_rectangle (cr, 0.0, 0.0,
-                           gimp_image_get_width  (image),
-                           gimp_image_get_height (image));
-          gimp_context_get_background (&color);
+                           ligma_image_get_width  (image),
+                           ligma_image_get_height (image));
+          ligma_context_get_background (&color);
           cairo_set_source_rgb (cr,
                                 color.r,
                                 color.g,
@@ -831,7 +831,7 @@ pdf_save_image (GimpProcedure        *procedure,
         {
           if (! draw_layer (layers, n_layers, config,
                             j, cr, x_res, y_res,
-                            gimp_procedure_get_name (procedure),
+                            ligma_procedure_get_name (procedure),
                             show_progress,
                             /* Progression is showed per image, and would restart at 0
                              * if you open several images.
@@ -846,11 +846,11 @@ pdf_save_image (GimpProcedure        *procedure,
               cairo_destroy (cr);
               fclose (fp);
 
-              return GIMP_PDB_EXECUTION_ERROR;
+              return LIGMA_PDB_EXECUTION_ERROR;
             }
         }
       if (show_progress)
-        gimp_progress_update (1.0);
+        ligma_progress_update (1.0);
 
       g_free (layers);
 
@@ -863,7 +863,7 @@ pdf_save_image (GimpProcedure        *procedure,
 
       cairo_restore (cr);
 
-      gimp_image_delete (image);
+      ligma_image_delete (image);
     }
 
   /* We are done with all the images - time to free the resources */
@@ -875,10 +875,10 @@ pdf_save_image (GimpProcedure        *procedure,
   if (! single_image)
     {
       g_strlcpy (multi_page.file_name, file_name, MAX_FILE_NAME_LENGTH);
-      gimp_set_data (DATA_IMAGE_LIST, &multi_page, sizeof (multi_page));
+      ligma_set_data (DATA_IMAGE_LIST, &multi_page, sizeof (multi_page));
     }
 
-  return GIMP_PDB_SUCCESS;
+  return LIGMA_PDB_SUCCESS;
 }
 
 /******************************************************/
@@ -887,7 +887,7 @@ pdf_save_image (GimpProcedure        *procedure,
 
 /* A function that initializes the image list to default values */
 static void
-init_image_list_defaults (GimpImage *image)
+init_image_list_defaults (LigmaImage *image)
 {
   if (image)
     {
@@ -911,7 +911,7 @@ validate_image_list (void)
 
   for (i = 0 ; i < MAX_PAGE_COUNT && i < multi_page.image_count ; i++)
     {
-      if (gimp_image_is_valid (multi_page.images[i]))
+      if (ligma_image_is_valid (multi_page.images[i]))
         {
           multi_page.images[valid] = multi_page.images[i];
           valid++;
@@ -929,9 +929,9 @@ validate_image_list (void)
 /* The main GUI function for saving single-paged PDFs */
 
 static gboolean
-gui_single (GimpProcedure       *procedure,
-            GimpProcedureConfig *config,
-            GimpImage           *image)
+gui_single (LigmaProcedure       *procedure,
+            LigmaProcedureConfig *config,
+            LigmaImage           *image)
 {
   GtkWidget *window;
   GtkWidget *widget;
@@ -940,13 +940,13 @@ gui_single (GimpProcedure       *procedure,
   gboolean   run;
   gint32     n_layers;
 
-  gimp_ui_init (PLUG_IN_BINARY);
+  ligma_ui_init (PLUG_IN_BINARY);
 
-  window = gimp_save_procedure_dialog_new (GIMP_SAVE_PROCEDURE (procedure),
-                                           GIMP_PROCEDURE_CONFIG (config),
+  window = ligma_save_procedure_dialog_new (LIGMA_SAVE_PROCEDURE (procedure),
+                                           LIGMA_PROCEDURE_CONFIG (config),
                                            image);
 
-  gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (window),
+  ligma_procedure_dialog_fill_box (LIGMA_PROCEDURE_DIALOG (window),
                                   "pages-box",
                                   "reverse-order", "root-layers-only", NULL);
   /* XXX the "layers-as-pages" checkbox label used to be changing,
@@ -954,16 +954,16 @@ gui_single (GimpProcedure       *procedure,
    * the value of "reverse-order". Should we want this? Or do it
    * differently, i.e. maybe with an additional label showing the order?
    */
-  widget = gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (window),
+  widget = ligma_procedure_dialog_fill_frame (LIGMA_PROCEDURE_DIALOG (window),
                                             "pages-frame", "layers-as-pages", FALSE,
                                             "pages-box");
-  g_free (gimp_image_get_layers (multi_page.images[0], &n_layers));
+  g_free (ligma_image_get_layers (multi_page.images[0], &n_layers));
   gtk_widget_set_sensitive (widget, n_layers > 1);
 
   /* Warning for missing fonts (non-embeddable with rasterization
    * possible).
    */
-  missing_fonts = get_missing_fonts (gimp_image_list_layers (multi_page.images[0]));
+  missing_fonts = get_missing_fonts (ligma_image_list_layers (multi_page.images[0]));
   if (missing_fonts != NULL)
     {
       GList *iter;
@@ -992,15 +992,15 @@ gui_single (GimpProcedure       *procedure,
                                 "or to install the missing fonts before exporting, "
                                 "otherwise your design may not look right."),
                               font_list);
-      /* TODO: we used to have a GtkImage showing a GIMP_ICON_WILBER_EEK
+      /* TODO: we used to have a GtkImage showing a LIGMA_ICON_WILBER_EEK
        * icon in GTK_ICON_SIZE_BUTTON size, next to the label, to make
        * the warning more obvious.
        */
-      widget = gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (window),
+      widget = ligma_procedure_dialog_get_label (LIGMA_PROCEDURE_DIALOG (window),
                                        "missing-fonts-label",
                                        text);
       gtk_label_set_line_wrap (GTK_LABEL (widget), TRUE);
-      gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (window),
+      ligma_procedure_dialog_fill_frame (LIGMA_PROCEDURE_DIALOG (window),
                                         "convert-text-layers-frame",
                                         "convert-text-layers", TRUE,
                                         "missing-fonts-label");
@@ -1020,10 +1020,10 @@ gui_single (GimpProcedure       *procedure,
   dialog_props = g_list_prepend (dialog_props, "vectorize");
   dialog_props = g_list_prepend (dialog_props, "apply-masks");
   dialog_props = g_list_prepend (dialog_props, "pages-frame");
-  gimp_procedure_dialog_fill_list (GIMP_PROCEDURE_DIALOG (window),
+  ligma_procedure_dialog_fill_list (LIGMA_PROCEDURE_DIALOG (window),
                                    dialog_props);
 
-  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (window));
+  run = ligma_procedure_dialog_run (LIGMA_PROCEDURE_DIALOG (window));
 
   gtk_widget_destroy (window);
 
@@ -1033,8 +1033,8 @@ gui_single (GimpProcedure       *procedure,
 /* The main GUI function for saving multi-paged PDFs */
 
 static gboolean
-gui_multi (GimpProcedure       *procedure,
-           GimpProcedureConfig *config)
+gui_multi (LigmaProcedure       *procedure,
+           LigmaProcedureConfig *config)
 {
   GtkWidget   *window;
   GtkWidget   *vbox;
@@ -1070,12 +1070,12 @@ gui_multi (GimpProcedure       *procedure,
                 "convert-text-layers", &convert_text,
                 NULL);
 
-  gimp_ui_init (PLUG_IN_BINARY);
+  ligma_ui_init (PLUG_IN_BINARY);
 
-  window = gimp_export_dialog_new ("PDF", PLUG_IN_ROLE, SAVE_MULTI_PROC);
+  window = ligma_export_dialog_new ("PDF", PLUG_IN_ROLE, SAVE_MULTI_PROC);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 10);
-  gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (window)),
+  gtk_box_pack_start (GTK_BOX (ligma_export_dialog_get_content_area (window)),
                       vbox, TRUE, TRUE, 0);
 
   gtk_container_set_border_width (GTK_CONTAINER (window), 12);
@@ -1129,7 +1129,7 @@ gui_multi (GimpProcedure       *procedure,
 
   h_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 5);
 
-  img_combo = gimp_image_combo_box_new (NULL, NULL, NULL);
+  img_combo = ligma_image_combo_box_new (NULL, NULL, NULL);
   gtk_box_pack_start (GTK_BOX (h_box), img_combo, FALSE, FALSE, 0);
 
   add_image = gtk_button_new_with_label (_("Add this image"));
@@ -1151,7 +1151,7 @@ gui_multi (GimpProcedure       *procedure,
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (apply_c),
                                 apply_masks);
   gtk_box_pack_end (GTK_BOX (vbox), apply_c, FALSE, FALSE, 0);
-  gimp_help_set_help_data (apply_c, _("Keeping the masks will not change the output"), NULL);
+  ligma_help_set_help_data (apply_c, _("Keeping the masks will not change the output"), NULL);
 
   gtk_widget_show_all (window);
 
@@ -1226,22 +1226,22 @@ create_model (void)
                               GDK_TYPE_PIXBUF,  /* THUMB */
                               G_TYPE_STRING,    /* PAGE_NUMBER */
                               G_TYPE_STRING,    /* IMAGE_NAME */
-                              GIMP_TYPE_IMAGE); /* IMAGE */
+                              LIGMA_TYPE_IMAGE); /* IMAGE */
 
   for (i = 0 ; i < multi_page.image_count && i < MAX_PAGE_COUNT ; i++)
     {
       GtkTreeIter  iter;
-      GimpImage   *image = multi_page.images[i];
+      LigmaImage   *image = multi_page.images[i];
       GdkPixbuf   *pixbuf;
 
-      pixbuf = gimp_image_get_thumbnail (image, THUMB_WIDTH, THUMB_HEIGHT,
-                                         GIMP_PIXBUF_SMALL_CHECKS);
+      pixbuf = ligma_image_get_thumbnail (image, THUMB_WIDTH, THUMB_HEIGHT,
+                                         LIGMA_PIXBUF_SMALL_CHECKS);
 
       gtk_list_store_append (model, &iter);
       gtk_list_store_set (model, &iter,
                           THUMB,       pixbuf,
                           PAGE_NUMBER, g_strdup_printf (_("Page %d"), i + 1),
-                          IMAGE_NAME,  gimp_image_get_name (image),
+                          IMAGE_NAME,  ligma_image_get_name (image),
                           IMAGE,       image,
                           -1);
 
@@ -1266,7 +1266,7 @@ get_image_list (void)
        valid;
        valid = gtk_tree_model_iter_next (model, &iter))
     {
-      GimpImage *image;
+      LigmaImage *image;
 
       gtk_tree_model_get (model, &iter,
                           IMAGE, &image,
@@ -1298,25 +1298,25 @@ add_image_call (GtkWidget *widget,
   GtkListStore *store;
   GtkTreeIter   iter;
   gint32        image_id;
-  GimpImage    *image;
+  LigmaImage    *image;
   GdkPixbuf    *pixbuf;
 
   dnd_remove = FALSE;
 
-  gimp_int_combo_box_get_active (img_combo, &image_id);
-  image = gimp_image_get_by_id (image_id);
+  ligma_int_combo_box_get_active (img_combo, &image_id);
+  image = ligma_image_get_by_id (image_id);
 
   store = GTK_LIST_STORE (model);
 
-  pixbuf = gimp_image_get_thumbnail (image, THUMB_WIDTH, THUMB_HEIGHT,
-                                     GIMP_PIXBUF_SMALL_CHECKS);
+  pixbuf = ligma_image_get_thumbnail (image, THUMB_WIDTH, THUMB_HEIGHT,
+                                     LIGMA_PIXBUF_SMALL_CHECKS);
 
   gtk_list_store_append (store, &iter);
   gtk_list_store_set (store, &iter,
                       PAGE_NUMBER, g_strdup_printf (_("Page %d"),
                                                     multi_page.image_count+1),
                       THUMB,       pixbuf,
-                      IMAGE_NAME,  gimp_image_get_name (image),
+                      IMAGE_NAME,  ligma_image_get_name (image),
                       IMAGE,       image,
                       -1);
 
@@ -1423,7 +1423,7 @@ recount_pages (void)
 /******************************************************/
 
 static cairo_surface_t *
-get_cairo_surface (GimpDrawable  *drawable,
+get_cairo_surface (LigmaDrawable  *drawable,
                    gboolean       as_mask,
                    GError       **error)
 {
@@ -1435,14 +1435,14 @@ get_cairo_surface (GimpDrawable  *drawable,
   gint             width;
   gint             height;
 
-  src_buffer = gimp_drawable_get_buffer (drawable);
+  src_buffer = ligma_drawable_get_buffer (drawable);
 
   width  = gegl_buffer_get_width  (src_buffer);
   height = gegl_buffer_get_height (src_buffer);
 
   if (as_mask)
     format = CAIRO_FORMAT_A8;
-  else if (gimp_drawable_has_alpha (drawable))
+  else if (ligma_drawable_has_alpha (drawable))
     format = CAIRO_FORMAT_ARGB32;
   else
     format = CAIRO_FORMAT_RGB24;
@@ -1456,14 +1456,14 @@ get_cairo_surface (GimpDrawable  *drawable,
         {
         case CAIRO_STATUS_INVALID_SIZE:
           g_set_error_literal (error,
-                               GIMP_PLUGIN_PDF_SAVE_ERROR,
-                               GIMP_PLUGIN_PDF_SAVE_ERROR_FAILED,
+                               LIGMA_PLUGIN_PDF_SAVE_ERROR,
+                               LIGMA_PLUGIN_PDF_SAVE_ERROR_FAILED,
                                _("Cannot handle the size (either width or height) of the image."));
           break;
         default:
           g_set_error (error,
-                       GIMP_PLUGIN_PDF_SAVE_ERROR,
-                       GIMP_PLUGIN_PDF_SAVE_ERROR_FAILED,
+                       LIGMA_PLUGIN_PDF_SAVE_ERROR,
+                       LIGMA_PLUGIN_PDF_SAVE_ERROR_FAILED,
                        "Cairo error: %s",
                        cairo_status_to_string (status));
           break;
@@ -1472,7 +1472,7 @@ get_cairo_surface (GimpDrawable  *drawable,
       return NULL;
     }
 
-  dest_buffer = gimp_cairo_surface_create_buffer (surface);
+  dest_buffer = ligma_cairo_surface_create_buffer (surface);
   if (as_mask)
     {
       /* src_buffer represents a mask in "Y u8", "Y u16", etc. formats.
@@ -1497,11 +1497,11 @@ get_cairo_surface (GimpDrawable  *drawable,
 /* A function to check if a drawable is single colored This allows to
  * convert bitmaps to vector where possible
  */
-static GimpRGB
-get_layer_color (GimpLayer *layer,
+static LigmaRGB
+get_layer_color (LigmaLayer *layer,
                  gboolean  *single)
 {
-  GimpRGB col;
+  LigmaRGB col;
   gdouble red, green, blue, alpha;
   gdouble dev, devSum;
   gdouble median, pixels, count, percentile;
@@ -1513,7 +1513,7 @@ get_layer_color (GimpLayer *layer,
   alpha = 0;
   dev = 0;
 
-  if (gimp_drawable_is_indexed (GIMP_DRAWABLE (layer)))
+  if (ligma_drawable_is_indexed (LIGMA_DRAWABLE (layer)))
     {
       /* FIXME: We can't do a proper histogram on indexed layers! */
       *single = FALSE;
@@ -1521,22 +1521,22 @@ get_layer_color (GimpLayer *layer,
       return col;
     }
 
-  if (gimp_drawable_get_bpp (GIMP_DRAWABLE (layer)) >= 3)
+  if (ligma_drawable_get_bpp (LIGMA_DRAWABLE (layer)) >= 3)
     {
       /* Are we in RGB mode? */
 
-      gimp_drawable_histogram (GIMP_DRAWABLE (layer),
-                               GIMP_HISTOGRAM_RED, 0.0, 1.0,
+      ligma_drawable_histogram (LIGMA_DRAWABLE (layer),
+                               LIGMA_HISTOGRAM_RED, 0.0, 1.0,
                                &red, &dev, &median, &pixels, &count, &percentile);
       devSum += dev;
 
-      gimp_drawable_histogram (GIMP_DRAWABLE (layer),
-                               GIMP_HISTOGRAM_GREEN, 0.0, 1.0,
+      ligma_drawable_histogram (LIGMA_DRAWABLE (layer),
+                               LIGMA_HISTOGRAM_GREEN, 0.0, 1.0,
                                &green, &dev, &median, &pixels, &count, &percentile);
       devSum += dev;
 
-      gimp_drawable_histogram (GIMP_DRAWABLE (layer),
-                               GIMP_HISTOGRAM_BLUE, 0.0, 1.0,
+      ligma_drawable_histogram (LIGMA_DRAWABLE (layer),
+                               LIGMA_HISTOGRAM_BLUE, 0.0, 1.0,
                                &blue, &dev, &median, &pixels, &count, &percentile);
       devSum += dev;
     }
@@ -1544,17 +1544,17 @@ get_layer_color (GimpLayer *layer,
     {
       /* We are in Grayscale mode (or Indexed) */
 
-      gimp_drawable_histogram (GIMP_DRAWABLE (layer),
-                               GIMP_HISTOGRAM_VALUE, 0.0, 1.0,
+      ligma_drawable_histogram (LIGMA_DRAWABLE (layer),
+                               LIGMA_HISTOGRAM_VALUE, 0.0, 1.0,
                                &red, &dev, &median, &pixels, &count, &percentile);
       devSum += dev;
       green = red;
       blue = red;
     }
 
-  if (gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
-    gimp_drawable_histogram (GIMP_DRAWABLE (layer),
-                             GIMP_HISTOGRAM_ALPHA, 0.0, 1.0,
+  if (ligma_drawable_has_alpha (LIGMA_DRAWABLE (layer)))
+    ligma_drawable_histogram (LIGMA_DRAWABLE (layer),
+                             LIGMA_HISTOGRAM_ALPHA, 0.0, 1.0,
                              &alpha, &dev, &median, &pixels, &count, &percentile);
   else
     alpha = 255;
@@ -1571,33 +1571,33 @@ get_layer_color (GimpLayer *layer,
 }
 
 /* A function that uses Pango to render the text to our cairo surface,
- * in the same way it was the user saw it inside gimp.
+ * in the same way it was the user saw it inside ligma.
  * Needs some work on choosing the font name better, and on hinting
  * (freetype and pango differences)
  */
 static void
-drawText (GimpLayer *layer,
+drawText (LigmaLayer *layer,
           gdouble    opacity,
           cairo_t   *cr,
           gdouble    x_res,
           gdouble    y_res)
 {
-  GimpImageType         type   = gimp_drawable_type (GIMP_DRAWABLE (layer));
-  gchar                *text   = gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer));
-  gchar                *markup = gimp_text_layer_get_markup (GIMP_TEXT_LAYER (layer));
+  LigmaImageType         type   = ligma_drawable_type (LIGMA_DRAWABLE (layer));
+  gchar                *text   = ligma_text_layer_get_text (LIGMA_TEXT_LAYER (layer));
+  gchar                *markup = ligma_text_layer_get_markup (LIGMA_TEXT_LAYER (layer));
   gchar                *font_family;
   gchar                *language;
   cairo_font_options_t *options;
   gint                  x;
   gint                  y;
-  GimpRGB               color;
-  GimpUnit              unit;
+  LigmaRGB               color;
+  LigmaUnit              unit;
   gdouble               size;
-  GimpTextHintStyle     hinting;
-  GimpTextJustification j;
+  LigmaTextHintStyle     hinting;
+  LigmaTextJustification j;
   gboolean              justify;
   PangoAlignment        align;
-  GimpTextDirection     dir;
+  LigmaTextDirection     dir;
   PangoLayout          *layout;
   PangoContext         *context;
   PangoFontDescription *font_description;
@@ -1615,44 +1615,44 @@ drawText (GimpLayer *layer,
   cairo_get_font_options (cr, options);
 
   /* Position */
-  gimp_drawable_get_offsets (GIMP_DRAWABLE (layer), &x, &y);
+  ligma_drawable_get_offsets (LIGMA_DRAWABLE (layer), &x, &y);
   cairo_translate (cr, x, y);
 
   /* Color */
   /* When dealing with a gray/indexed image, the viewed color of the text layer
    * can be different than the one kept in the memory */
-  if (type == GIMP_RGBA_IMAGE)
-    gimp_text_layer_get_color (GIMP_TEXT_LAYER (layer), &color);
+  if (type == LIGMA_RGBA_IMAGE)
+    ligma_text_layer_get_color (LIGMA_TEXT_LAYER (layer), &color);
   else
-    gimp_image_pick_color (gimp_item_get_image (GIMP_ITEM (layer)), 1,
-                           (const GimpItem**) &layer, x, y, FALSE, FALSE, 0,
+    ligma_image_pick_color (ligma_item_get_image (LIGMA_ITEM (layer)), 1,
+                           (const LigmaItem**) &layer, x, y, FALSE, FALSE, 0,
                            &color);
 
   cairo_set_source_rgba (cr, color.r, color.g, color.b, opacity);
 
   /* Hinting */
-  hinting = gimp_text_layer_get_hint_style (GIMP_TEXT_LAYER (layer));
+  hinting = ligma_text_layer_get_hint_style (LIGMA_TEXT_LAYER (layer));
   switch (hinting)
     {
-    case GIMP_TEXT_HINT_STYLE_NONE:
+    case LIGMA_TEXT_HINT_STYLE_NONE:
       cairo_font_options_set_hint_style (options, CAIRO_HINT_STYLE_NONE);
       break;
 
-    case GIMP_TEXT_HINT_STYLE_SLIGHT:
+    case LIGMA_TEXT_HINT_STYLE_SLIGHT:
       cairo_font_options_set_hint_style (options, CAIRO_HINT_STYLE_SLIGHT);
       break;
 
-    case GIMP_TEXT_HINT_STYLE_MEDIUM:
+    case LIGMA_TEXT_HINT_STYLE_MEDIUM:
       cairo_font_options_set_hint_style (options, CAIRO_HINT_STYLE_MEDIUM);
       break;
 
-    case GIMP_TEXT_HINT_STYLE_FULL:
+    case LIGMA_TEXT_HINT_STYLE_FULL:
       cairo_font_options_set_hint_style (options, CAIRO_HINT_STYLE_FULL);
       break;
     }
 
   /* Antialiasing */
-  if (gimp_text_layer_get_antialias (GIMP_TEXT_LAYER (layer)))
+  if (ligma_text_layer_get_antialias (LIGMA_TEXT_LAYER (layer)))
     cairo_font_options_set_antialias (options, CAIRO_ANTIALIAS_DEFAULT);
   else
     cairo_font_options_set_antialias (options, CAIRO_ANTIALIAS_NONE);
@@ -1670,47 +1670,47 @@ drawText (GimpLayer *layer,
   pango_cairo_context_set_font_options (context, options);
 
   /* Language */
-  language = gimp_text_layer_get_language (GIMP_TEXT_LAYER (layer));
+  language = ligma_text_layer_get_language (LIGMA_TEXT_LAYER (layer));
   if (language)
     pango_context_set_language (context,
                                 pango_language_from_string(language));
 
   /* Text Direction */
-  dir = gimp_text_layer_get_base_direction (GIMP_TEXT_LAYER (layer));
+  dir = ligma_text_layer_get_base_direction (LIGMA_TEXT_LAYER (layer));
 
   switch (dir)
     {
-    case GIMP_TEXT_DIRECTION_LTR:
+    case LIGMA_TEXT_DIRECTION_LTR:
       pango_context_set_base_dir (context, PANGO_DIRECTION_LTR);
       pango_context_set_gravity_hint (context, PANGO_GRAVITY_HINT_NATURAL);
       pango_context_set_base_gravity (context, PANGO_GRAVITY_SOUTH);
       break;
 
-    case GIMP_TEXT_DIRECTION_RTL:
+    case LIGMA_TEXT_DIRECTION_RTL:
       pango_context_set_base_dir (context, PANGO_DIRECTION_RTL);
       pango_context_set_gravity_hint (context, PANGO_GRAVITY_HINT_NATURAL);
       pango_context_set_base_gravity (context, PANGO_GRAVITY_SOUTH);
       break;
 
-    case GIMP_TEXT_DIRECTION_TTB_RTL:
+    case LIGMA_TEXT_DIRECTION_TTB_RTL:
       pango_context_set_base_dir (context, PANGO_DIRECTION_LTR);
       pango_context_set_gravity_hint (context, PANGO_GRAVITY_HINT_LINE);
       pango_context_set_base_gravity (context, PANGO_GRAVITY_EAST);
       break;
 
-    case GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT:
+    case LIGMA_TEXT_DIRECTION_TTB_RTL_UPRIGHT:
       pango_context_set_base_dir (context, PANGO_DIRECTION_LTR);
       pango_context_set_gravity_hint (context, PANGO_GRAVITY_HINT_STRONG);
       pango_context_set_base_gravity (context, PANGO_GRAVITY_EAST);
       break;
 
-    case GIMP_TEXT_DIRECTION_TTB_LTR:
+    case LIGMA_TEXT_DIRECTION_TTB_LTR:
       pango_context_set_base_dir (context, PANGO_DIRECTION_LTR);
       pango_context_set_gravity_hint (context, PANGO_GRAVITY_HINT_LINE);
       pango_context_set_base_gravity (context, PANGO_GRAVITY_WEST);
       break;
 
-    case GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT:
+    case LIGMA_TEXT_DIRECTION_TTB_LTR_UPRIGHT:
       pango_context_set_base_dir (context, PANGO_DIRECTION_LTR);
       pango_context_set_gravity_hint (context, PANGO_GRAVITY_HINT_STRONG);
       pango_context_set_base_gravity (context, PANGO_GRAVITY_WEST);
@@ -1724,16 +1724,16 @@ drawText (GimpLayer *layer,
   pango_layout_set_wrap (layout, PANGO_WRAP_WORD_CHAR);
 
   /* Font */
-  font_family = gimp_text_layer_get_font (GIMP_TEXT_LAYER (layer));
+  font_family = ligma_text_layer_get_font (LIGMA_TEXT_LAYER (layer));
 
-  /* We need to find a way to convert GIMP's returned font name to a
-   * normal Pango name... Hopefully GIMP 2.8 with Pango will fix it.
+  /* We need to find a way to convert LIGMA's returned font name to a
+   * normal Pango name... Hopefully LIGMA 2.8 with Pango will fix it.
    */
   font_description = pango_font_description_from_string (font_family);
 
   /* Font Size */
-  size = gimp_text_layer_get_font_size (GIMP_TEXT_LAYER (layer), &unit);
-  size = gimp_units_to_pixels (size, unit, y_res);
+  size = ligma_text_layer_get_font_size (LIGMA_TEXT_LAYER (layer), &unit);
+  size = ligma_units_to_pixels (size, unit, y_res);
   pango_font_description_set_absolute_size (font_description, size * PANGO_SCALE);
 
   pango_layout_set_font_description (layout, font_description);
@@ -1741,29 +1741,29 @@ drawText (GimpLayer *layer,
   /* Width */
   if (! PANGO_GRAVITY_IS_VERTICAL (pango_context_get_base_gravity (context)))
     pango_layout_set_width (layout,
-                            gimp_drawable_get_width (GIMP_DRAWABLE (layer)) *
+                            ligma_drawable_get_width (LIGMA_DRAWABLE (layer)) *
                             PANGO_SCALE);
   else
     pango_layout_set_width (layout,
-                            gimp_drawable_get_height (GIMP_DRAWABLE (layer)) *
+                            ligma_drawable_get_height (LIGMA_DRAWABLE (layer)) *
                             PANGO_SCALE);
 
   /* Justification, and Alignment */
   justify = FALSE;
-  j = gimp_text_layer_get_justification (GIMP_TEXT_LAYER (layer));
+  j = ligma_text_layer_get_justification (LIGMA_TEXT_LAYER (layer));
   align = PANGO_ALIGN_LEFT;
   switch (j)
     {
-    case GIMP_TEXT_JUSTIFY_LEFT:
+    case LIGMA_TEXT_JUSTIFY_LEFT:
       align = PANGO_ALIGN_LEFT;
       break;
-    case GIMP_TEXT_JUSTIFY_RIGHT:
+    case LIGMA_TEXT_JUSTIFY_RIGHT:
       align = PANGO_ALIGN_RIGHT;
       break;
-    case GIMP_TEXT_JUSTIFY_CENTER:
+    case LIGMA_TEXT_JUSTIFY_CENTER:
       align = PANGO_ALIGN_CENTER;
       break;
-    case GIMP_TEXT_JUSTIFY_FILL:
+    case LIGMA_TEXT_JUSTIFY_FILL:
       align = PANGO_ALIGN_LEFT;
       justify = TRUE;
       break;
@@ -1772,15 +1772,15 @@ drawText (GimpLayer *layer,
   pango_layout_set_justify (layout, justify);
 
   /* Indentation */
-  indent = gimp_text_layer_get_indent (GIMP_TEXT_LAYER (layer));
+  indent = ligma_text_layer_get_indent (LIGMA_TEXT_LAYER (layer));
   pango_layout_set_indent (layout, (int)(PANGO_SCALE * indent));
 
   /* Line Spacing */
-  line_spacing = gimp_text_layer_get_line_spacing (GIMP_TEXT_LAYER (layer));
+  line_spacing = ligma_text_layer_get_line_spacing (LIGMA_TEXT_LAYER (layer));
   pango_layout_set_spacing (layout, (int)(PANGO_SCALE * line_spacing));
 
   /* Letter Spacing */
-  letter_spacing = gimp_text_layer_get_letter_spacing (GIMP_TEXT_LAYER (layer));
+  letter_spacing = ligma_text_layer_get_letter_spacing (LIGMA_TEXT_LAYER (layer));
   letter_spacing_at = pango_attr_letter_spacing_new ((int)(PANGO_SCALE * letter_spacing));
   pango_attr_list_insert (attr_list, letter_spacing_at);
 
@@ -1794,17 +1794,17 @@ drawText (GimpLayer *layer,
   else /* If we can't find a markup, then it has just text */
     pango_layout_set_text (layout, text, -1);
 
-  if (dir == GIMP_TEXT_DIRECTION_TTB_RTL ||
-      dir == GIMP_TEXT_DIRECTION_TTB_RTL_UPRIGHT)
+  if (dir == LIGMA_TEXT_DIRECTION_TTB_RTL ||
+      dir == LIGMA_TEXT_DIRECTION_TTB_RTL_UPRIGHT)
     {
-      cairo_translate (cr, gimp_drawable_get_width (GIMP_DRAWABLE (layer)), 0);
+      cairo_translate (cr, ligma_drawable_get_width (LIGMA_DRAWABLE (layer)), 0);
       cairo_rotate (cr, G_PI_2);
     }
 
-  if (dir == GIMP_TEXT_DIRECTION_TTB_LTR ||
-      dir == GIMP_TEXT_DIRECTION_TTB_LTR_UPRIGHT)
+  if (dir == LIGMA_TEXT_DIRECTION_TTB_LTR ||
+      dir == LIGMA_TEXT_DIRECTION_TTB_LTR_UPRIGHT)
     {
-      cairo_translate (cr, 0, gimp_drawable_get_height (GIMP_DRAWABLE (layer)));
+      cairo_translate (cr, 0, ligma_drawable_get_height (LIGMA_DRAWABLE (layer)));
       cairo_rotate (cr, -G_PI_2);
     }
 
@@ -1825,9 +1825,9 @@ drawText (GimpLayer *layer,
 }
 
 static gboolean
-draw_layer (GimpLayer           **layers,
+draw_layer (LigmaLayer           **layers,
             gint                  n_layers,
-            GimpProcedureConfig  *config,
+            LigmaProcedureConfig  *config,
             gint                  j,
             cairo_t              *cr,
             gdouble               x_res,
@@ -1839,7 +1839,7 @@ draw_layer (GimpLayer           **layers,
             gint                  layer_level,
             GError              **error)
 {
-  GimpLayer *layer;
+  LigmaLayer *layer;
   gdouble    opacity;
   gboolean   vectorize;
   gboolean   ignore_hidden;
@@ -1862,21 +1862,21 @@ draw_layer (GimpLayer           **layers,
   else
     layer = layers [n_layers - j - 1];
 
-  opacity = gimp_layer_get_opacity (layer) / 100.0;
-  if ((! gimp_item_get_visible (GIMP_ITEM (layer)) || opacity == 0.0) &&
+  opacity = ligma_layer_get_opacity (layer) / 100.0;
+  if ((! ligma_item_get_visible (LIGMA_ITEM (layer)) || opacity == 0.0) &&
       ignore_hidden)
     return TRUE;
 
-  if (gimp_item_is_group (GIMP_ITEM (layer)))
+  if (ligma_item_is_group (LIGMA_ITEM (layer)))
     {
-      GimpItem **children;
+      LigmaItem **children;
       gint       children_num;
       gint       i;
 
-      children = gimp_item_get_children (GIMP_ITEM (layer), &children_num);
+      children = ligma_item_get_children (LIGMA_ITEM (layer), &children_num);
       for (i = 0; i < children_num; i++)
         {
-          if (! draw_layer ((GimpLayer **) children, children_num,
+          if (! draw_layer ((LigmaLayer **) children, children_num,
                             config, i,
                             cr, x_res, y_res, name,
                             show_progress,
@@ -1897,36 +1897,36 @@ draw_layer (GimpLayer           **layers,
   else
     {
       cairo_surface_t *mask_image = NULL;
-      GimpLayerMask   *mask       = NULL;
+      LigmaLayerMask   *mask       = NULL;
       gint             x, y;
 
       if (show_progress)
-        gimp_progress_update (progress_start);
+        ligma_progress_update (progress_start);
 
-      mask = gimp_layer_get_mask (layer);
+      mask = ligma_layer_get_mask (layer);
       if (mask)
         {
-          mask_image = get_cairo_surface (GIMP_DRAWABLE (mask), TRUE,
+          mask_image = get_cairo_surface (LIGMA_DRAWABLE (mask), TRUE,
                                           error);
 
           if (*error)
             return FALSE;
         }
 
-      gimp_drawable_get_offsets (GIMP_DRAWABLE (layer), &x, &y);
+      ligma_drawable_get_offsets (LIGMA_DRAWABLE (layer), &x, &y);
 
-      if (! gimp_item_is_text_layer (GIMP_ITEM (layer)) || convert_text)
+      if (! ligma_item_is_text_layer (LIGMA_ITEM (layer)) || convert_text)
         {
           /* For raster layers */
 
-          GimpRGB  layer_color;
+          LigmaRGB  layer_color;
           gboolean single_color = FALSE;
 
           layer_color = get_layer_color (layer, &single_color);
 
           cairo_rectangle (cr, x, y,
-                           gimp_drawable_get_width  (GIMP_DRAWABLE (layer)),
-                           gimp_drawable_get_height (GIMP_DRAWABLE (layer)));
+                           ligma_drawable_get_width  (LIGMA_DRAWABLE (layer)),
+                           ligma_drawable_get_height (LIGMA_DRAWABLE (layer)));
 
           if (vectorize && single_color)
             {
@@ -1944,7 +1944,7 @@ draw_layer (GimpLayer           **layers,
             {
               cairo_surface_t *layer_image;
 
-              layer_image = get_cairo_surface (GIMP_DRAWABLE (layer), FALSE,
+              layer_image = get_cairo_surface (LIGMA_DRAWABLE (layer), FALSE,
                                                error);
 
               if (*error)

@@ -4,8 +4,8 @@
 # Barak Itkin <lightningismyname@gmail.com>, 2010.
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp.HEAD\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"Project-Id-Version: ligma.HEAD\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/ligma/issues\n"
 "POT-Creation-Date: 2010-08-04 02:09+0300\n"
 "PO-Revision-Date: 2010-08-04 02:16+0300\n"
 "Last-Translator: Barak Itkin <lightningismyname@gmail.com>\n"
@@ -17,11 +17,11 @@ msgstr ""
 "X-Generator: Lokalize 1.0\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../data/tags/gimp-tags-default.xml.in.h:1
+#: ../data/tags/ligma-tags-default.xml.in.h:1
 msgid "fuzzy"
 msgstr "רך"
 
-#: ../data/tags/gimp-tags-default.xml.in.h:2
+#: ../data/tags/ligma-tags-default.xml.in.h:2
 msgid "round"
 msgstr "עגול"
 

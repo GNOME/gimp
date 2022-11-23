@@ -1,9 +1,9 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * gimppropgui-channel-mixer.c
- * Copyright (C) 2002-2014  Michael Natterer <mitch@gimp.org>
- *                          Sven Neumann <sven@gimp.org>
+ * ligmapropgui-channel-mixer.c
+ * Copyright (C) 2002-2014  Michael Natterer <mitch@ligma.org>
+ *                          Sven Neumann <sven@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,26 +24,26 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
+#include "libligmawidgets/ligmawidgets.h"
 
 #include "propgui-types.h"
 
-#include "core/gimpcontext.h"
+#include "core/ligmacontext.h"
 
-#include "gimppropgui.h"
-#include "gimppropgui-channel-mixer.h"
+#include "ligmapropgui.h"
+#include "ligmapropgui-channel-mixer.h"
 
-#include "gimp-intl.h"
+#include "ligma-intl.h"
 
 
 GtkWidget *
-_gimp_prop_gui_new_channel_mixer (GObject                  *config,
+_ligma_prop_gui_new_channel_mixer (GObject                  *config,
                                   GParamSpec              **param_specs,
                                   guint                     n_param_specs,
                                   GeglRectangle            *area,
-                                  GimpContext              *context,
-                                  GimpCreatePickerFunc      create_picker_func,
-                                  GimpCreateControllerFunc  create_controller_func,
+                                  LigmaContext              *context,
+                                  LigmaCreatePickerFunc      create_picker_func,
+                                  LigmaCreateControllerFunc  create_controller_func,
                                   gpointer                  creator)
 {
   GtkWidget   *main_vbox;
@@ -56,11 +56,11 @@ _gimp_prop_gui_new_channel_mixer (GObject                  *config,
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
   g_return_val_if_fail (param_specs != NULL, NULL);
   g_return_val_if_fail (n_param_specs > 0, NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (LIGMA_IS_CONTEXT (context), NULL);
 
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
 
-  frame = gimp_frame_new (_("Red channel"));
+  frame = ligma_frame_new (_("Red channel"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -68,20 +68,20 @@ _gimp_prop_gui_new_channel_mixer (GObject                  *config,
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  scale = gimp_prop_widget_new (config, "rr-gain",
+  scale = ligma_prop_widget_new (config, "rr-gain",
                                 area, context, NULL, NULL, NULL, &label);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
 
-  scale = gimp_prop_widget_new (config, "rg-gain",
+  scale = ligma_prop_widget_new (config, "rg-gain",
                                 area, context, NULL, NULL, NULL, &label);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
 
-  scale = gimp_prop_widget_new (config, "rb-gain",
+  scale = ligma_prop_widget_new (config, "rb-gain",
                                 area, context, NULL, NULL, NULL, &label);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
 
 
-  frame = gimp_frame_new (_("Green channel"));
+  frame = ligma_frame_new (_("Green channel"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -89,20 +89,20 @@ _gimp_prop_gui_new_channel_mixer (GObject                  *config,
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  scale = gimp_prop_widget_new (config, "gr-gain",
+  scale = ligma_prop_widget_new (config, "gr-gain",
                                 area, context, NULL, NULL, NULL, &label);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
 
-  scale = gimp_prop_widget_new (config, "gg-gain",
+  scale = ligma_prop_widget_new (config, "gg-gain",
                                 area, context, NULL, NULL, NULL, &label);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
 
-  scale = gimp_prop_widget_new (config, "gb-gain",
+  scale = ligma_prop_widget_new (config, "gb-gain",
                                 area, context, NULL, NULL, NULL, &label);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
 
 
-  frame = gimp_frame_new (_("Blue channel"));
+  frame = ligma_frame_new (_("Blue channel"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -110,20 +110,20 @@ _gimp_prop_gui_new_channel_mixer (GObject                  *config,
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  scale = gimp_prop_widget_new (config, "br-gain",
+  scale = ligma_prop_widget_new (config, "br-gain",
                                 area, context, NULL, NULL, NULL, &label);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
 
-  scale = gimp_prop_widget_new (config, "bg-gain",
+  scale = ligma_prop_widget_new (config, "bg-gain",
                                 area, context, NULL, NULL, NULL, &label);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
 
-  scale = gimp_prop_widget_new (config, "bb-gain",
+  scale = ligma_prop_widget_new (config, "bb-gain",
                                 area, context, NULL, NULL, NULL, &label);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
 
 
-  checkbox = gimp_prop_widget_new (config, "preserve-luminosity",
+  checkbox = ligma_prop_widget_new (config, "preserve-luminosity",
                                    area, context, NULL, NULL, NULL, &label);
   gtk_box_pack_start (GTK_BOX (main_vbox), checkbox, FALSE, FALSE, 0);
 

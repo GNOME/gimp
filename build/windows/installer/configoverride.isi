@@ -9,8 +9,8 @@
 #sub ProcessConfigFile
   #define FileName FindGetFileName(FindHandle)
 Source: "{code:GetExternalConfDir}\{#FileName}"; DestDir: "{app}\{#ConfigDir}"; Flags: external restartreplace; Check: CheckExternalConf('{#FileName}')
-  #if BaseDir != GIMP_DIR32
-Source: "{code:GetExternalConfDir}\{#FileName}"; DestDir: "{app}\32\{#ConfigDir}"; Components: gimp32on64; Flags: external restartreplace; Check: CheckExternalConf('{#FileName}')
+  #if BaseDir != LIGMA_DIR32
+Source: "{code:GetExternalConfDir}\{#FileName}"; DestDir: "{app}\32\{#ConfigDir}"; Components: ligma32on64; Flags: external restartreplace; Check: CheckExternalConf('{#FileName}')
   #endif
 #endsub
 
@@ -24,8 +24,8 @@ Source: "{code:GetExternalConfDir}\{#FileName}"; DestDir: "{app}\32\{#ConfigDir}
   #endif
 #endsub
 
-#define public BaseDir GIMP_DIR32
-#define public ConfigDir "etc\gimp\2.0"
+#define public BaseDir LIGMA_DIR32
+#define public ConfigDir "etc\ligma\2.0"
 #expr ProcessConfigDir
 
 #define public BaseDir DEPS_DIR32

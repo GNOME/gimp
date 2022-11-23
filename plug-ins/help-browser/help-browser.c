@@ -1,10 +1,10 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * The GIMP Help Browser
- * Copyright (C) 1999-2008 Sven Neumann <sven@gimp.org>
- *                         Michael Natterer <mitch@gimp.org>
- *                         Henrik Brix Andersen <brix@gimp.org>
+ * The LIGMA Help Browser
+ * Copyright (C) 1999-2008 Sven Neumann <sven@ligma.org>
+ *                         Michael Natterer <mitch@ligma.org>
+ *                         Henrik Brix Andersen <brix@ligma.org>
  *
  * Some code & ideas taken from the GNOME help browser.
  *
@@ -26,96 +26,96 @@
 
 #include <string.h>  /*  strlen, strcmp  */
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
-#include "plug-ins/help/gimphelp.h"
+#include "plug-ins/help/ligmahelp.h"
 
 #include "dialog.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 
 
-#define GIMP_HELP_BROWSER_EXT_PROC       "extension-gimp-help-browser"
-#define GIMP_HELP_BROWSER_TEMP_EXT_PROC  "extension-gimp-help-browser-temp"
+#define LIGMA_HELP_BROWSER_EXT_PROC       "extension-ligma-help-browser"
+#define LIGMA_HELP_BROWSER_TEMP_EXT_PROC  "extension-ligma-help-browser-temp"
 #define PLUG_IN_BINARY                   "help-browser"
-#define PLUG_IN_ROLE                     "gimp-help-browser"
+#define PLUG_IN_ROLE                     "ligma-help-browser"
 
 
-#define GIMP_TYPE_HELP_BROWSER (gimp_help_browser_get_type ())
-G_DECLARE_FINAL_TYPE (GimpHelpBrowser, gimp_help_browser,
-                      GIMP, HELP_BROWSER,
-                      GimpPlugIn)
+#define LIGMA_TYPE_HELP_BROWSER (ligma_help_browser_get_type ())
+G_DECLARE_FINAL_TYPE (LigmaHelpBrowser, ligma_help_browser,
+                      LIGMA, HELP_BROWSER,
+                      LigmaPlugIn)
 
-static GimpValueArray * help_browser_run              (GimpProcedure        *procedure,
-                                                       const GimpValueArray *args,
+static LigmaValueArray * help_browser_run              (LigmaProcedure        *procedure,
+                                                       const LigmaValueArray *args,
                                                        gpointer              run_data);
 
-static void             temp_proc_install             (GimpPlugIn           *plug_in);
-static GimpValueArray * temp_proc_run                 (GimpProcedure        *procedure,
-                                                       const GimpValueArray *args,
+static void             temp_proc_install             (LigmaPlugIn           *plug_in);
+static LigmaValueArray * temp_proc_run                 (LigmaProcedure        *procedure,
+                                                       const LigmaValueArray *args,
                                                        gpointer              run_data);
 
-static GimpHelpProgress * help_browser_progress_new   (void);
+static LigmaHelpProgress * help_browser_progress_new   (void);
 
-struct _GimpHelpBrowser
+struct _LigmaHelpBrowser
 {
-  GimpPlugIn parent_instance;
+  LigmaPlugIn parent_instance;
 
   GtkApplication *app;
-  GimpHelpBrowserDialog *window;
+  LigmaHelpBrowserDialog *window;
 };
 
-G_DEFINE_TYPE (GimpHelpBrowser, gimp_help_browser, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (LigmaHelpBrowser, ligma_help_browser, LIGMA_TYPE_PLUG_IN)
 
-GIMP_MAIN (GIMP_TYPE_HELP_BROWSER)
+LIGMA_MAIN (LIGMA_TYPE_HELP_BROWSER)
 DEFINE_STD_SET_I18N
 
 static GList *
-help_browser_query_procedures (GimpPlugIn *plug_in)
+help_browser_query_procedures (LigmaPlugIn *plug_in)
 {
-  return g_list_append (NULL, g_strdup (GIMP_HELP_BROWSER_EXT_PROC));
+  return g_list_append (NULL, g_strdup (LIGMA_HELP_BROWSER_EXT_PROC));
 }
 
-static GimpProcedure *
-help_browser_create_procedure (GimpPlugIn  *plug_in,
+static LigmaProcedure *
+help_browser_create_procedure (LigmaPlugIn  *plug_in,
                                const gchar *name)
 {
-  GimpProcedure *procedure = NULL;
+  LigmaProcedure *procedure = NULL;
 
-  if (! strcmp (name, GIMP_HELP_BROWSER_EXT_PROC))
+  if (! strcmp (name, LIGMA_HELP_BROWSER_EXT_PROC))
     {
-      procedure = gimp_procedure_new (plug_in, name,
-                                      GIMP_PDB_PROC_TYPE_EXTENSION,
+      procedure = ligma_procedure_new (plug_in, name,
+                                      LIGMA_PDB_PROC_TYPE_EXTENSION,
                                       help_browser_run, plug_in, NULL);
 
-      gimp_procedure_set_documentation (procedure,
-                                        "Browse the GIMP user manual",
+      ligma_procedure_set_documentation (procedure,
+                                        "Browse the LIGMA user manual",
                                         "A small and simple HTML browser "
-                                        "optimized for browsing the GIMP "
+                                        "optimized for browsing the LIGMA "
                                         "user manual.",
-                                        GIMP_HELP_BROWSER_EXT_PROC);
-      gimp_procedure_set_attribution (procedure,
-                                      "Sven Neumann <sven@gimp.org>, "
-                                      "Michael Natterer <mitch@gimp.org>"
-                                      "Henrik Brix Andersen <brix@gimp.org>",
+                                        LIGMA_HELP_BROWSER_EXT_PROC);
+      ligma_procedure_set_attribution (procedure,
+                                      "Sven Neumann <sven@ligma.org>, "
+                                      "Michael Natterer <mitch@ligma.org>"
+                                      "Henrik Brix Andersen <brix@ligma.org>",
                                       "Sven Neumann, Michael Natterer & "
                                       "Henrik Brix Andersen",
                                       "1999-2008");
 
-      GIMP_PROC_ARG_ENUM (procedure, "run-mode",
+      LIGMA_PROC_ARG_ENUM (procedure, "run-mode",
                           "Run mode",
                           "The run mode",
-                          GIMP_TYPE_RUN_MODE,
-                          GIMP_RUN_INTERACTIVE,
+                          LIGMA_TYPE_RUN_MODE,
+                          LIGMA_RUN_INTERACTIVE,
                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_STRV (procedure, "domain-names",
+      LIGMA_PROC_ARG_STRV (procedure, "domain-names",
                           "Domain names",
                           "Domain names",
                           G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_STRV (procedure, "domain-uris",
+      LIGMA_PROC_ARG_STRV (procedure, "domain-uris",
                           "Domain URIs",
                           "Domain URIs",
                           G_PARAM_READWRITE);
@@ -127,10 +127,10 @@ help_browser_create_procedure (GimpPlugIn  *plug_in,
 static void
 on_app_activate (GApplication *gapp, gpointer user_data)
 {
-  GimpHelpBrowser *browser = GIMP_HELP_BROWSER (user_data);
+  LigmaHelpBrowser *browser = LIGMA_HELP_BROWSER (user_data);
   GtkApplication *app = GTK_APPLICATION (gapp);
 
-  browser->window = gimp_help_browser_dialog_new (PLUG_IN_BINARY, gapp);
+  browser->window = ligma_help_browser_dialog_new (PLUG_IN_BINARY, gapp);
 
   gtk_application_set_accels_for_action (app, "win.back", (const char*[]) { "<alt>Left", NULL });
   gtk_application_set_accels_for_action (app, "win.forward", (const char*[]) { "<alt>Right", NULL });
@@ -146,25 +146,25 @@ on_app_activate (GApplication *gapp, gpointer user_data)
   gtk_application_set_accels_for_action (app, "win.show-index", (const char*[]) { "<control>I", NULL });
 }
 
-static GimpValueArray *
-help_browser_run (GimpProcedure        *procedure,
-                  const GimpValueArray *args,
+static LigmaValueArray *
+help_browser_run (LigmaProcedure        *procedure,
+                  const LigmaValueArray *args,
                   gpointer              user_data)
 {
-  GimpHelpBrowser *browser = GIMP_HELP_BROWSER (user_data);
+  LigmaHelpBrowser *browser = LIGMA_HELP_BROWSER (user_data);
 
-  if (! gimp_help_init (GIMP_VALUES_GET_STRV (args, 1),
-                        GIMP_VALUES_GET_STRV (args, 2)))
+  if (! ligma_help_init (LIGMA_VALUES_GET_STRV (args, 1),
+                        LIGMA_VALUES_GET_STRV (args, 2)))
     {
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_CALLING_ERROR,
+      return ligma_procedure_new_return_values (procedure,
+                                               LIGMA_PDB_CALLING_ERROR,
                                                NULL);
     }
 
-  temp_proc_install (gimp_procedure_get_plug_in (procedure));
+  temp_proc_install (ligma_procedure_get_plug_in (procedure));
 
-  gimp_procedure_extension_ready (procedure);
-  gimp_plug_in_extension_enable (gimp_procedure_get_plug_in (procedure));
+  ligma_procedure_extension_ready (procedure);
+  ligma_plug_in_extension_enable (ligma_procedure_get_plug_in (procedure));
 
   browser->app = gtk_application_new (NULL, G_APPLICATION_FLAGS_NONE);
   g_signal_connect (browser->app, "activate", G_CALLBACK (on_app_activate), browser);
@@ -173,55 +173,55 @@ help_browser_run (GimpProcedure        *procedure,
 
   g_clear_object (&browser->app);
 
-  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
+  return ligma_procedure_new_return_values (procedure, LIGMA_PDB_SUCCESS, NULL);
 }
 
 static void
-temp_proc_install (GimpPlugIn *plug_in)
+temp_proc_install (LigmaPlugIn *plug_in)
 {
-  GimpProcedure *procedure;
+  LigmaProcedure *procedure;
 
-  procedure = gimp_procedure_new (plug_in, GIMP_HELP_BROWSER_TEMP_EXT_PROC,
-                                  GIMP_PDB_PROC_TYPE_TEMPORARY,
+  procedure = ligma_procedure_new (plug_in, LIGMA_HELP_BROWSER_TEMP_EXT_PROC,
+                                  LIGMA_PDB_PROC_TYPE_TEMPORARY,
                                   temp_proc_run, plug_in, NULL);
 
-  gimp_procedure_set_documentation (procedure,
+  ligma_procedure_set_documentation (procedure,
                                     "DON'T USE THIS ONE",
                                     "(Temporary procedure)",
                                     NULL);
-  gimp_procedure_set_attribution (procedure,
-                                  "Sven Neumann <sven@gimp.org>, "
-                                  "Michael Natterer <mitch@gimp.org>"
-                                  "Henrik Brix Andersen <brix@gimp.org>",
+  ligma_procedure_set_attribution (procedure,
+                                  "Sven Neumann <sven@ligma.org>, "
+                                  "Michael Natterer <mitch@ligma.org>"
+                                  "Henrik Brix Andersen <brix@ligma.org>",
                                   "Sven Neumann, Michael Natterer & "
                                   "Henrik Brix Andersen",
                                   "1999-2008");
 
-  GIMP_PROC_ARG_STRING (procedure, "help-domain",
+  LIGMA_PROC_ARG_STRING (procedure, "help-domain",
                         "Help domain",
                         "Help domain to use",
                         NULL,
                         G_PARAM_READWRITE);
 
-  GIMP_PROC_ARG_STRING (procedure, "help-locales",
+  LIGMA_PROC_ARG_STRING (procedure, "help-locales",
                         "Help locales",
                         "Language to use",
                         NULL,
                         G_PARAM_READWRITE);
 
-  GIMP_PROC_ARG_STRING (procedure, "help-id",
+  LIGMA_PROC_ARG_STRING (procedure, "help-id",
                         "Help ID",
                         "Help ID to open",
                         NULL,
                         G_PARAM_READWRITE);
 
-  gimp_plug_in_add_temp_procedure (plug_in, procedure);
+  ligma_plug_in_add_temp_procedure (plug_in, procedure);
   g_object_unref (procedure);
 }
 
 typedef struct _IdleClosure
 {
-  GimpHelpBrowser *browser;
+  LigmaHelpBrowser *browser;
   char            *help_domain;
   char            *help_locales;
   char            *help_id;
@@ -242,36 +242,36 @@ static gboolean
 show_help_on_idle (gpointer user_data)
 {
   IdleClosure      *closure = user_data;
-  GimpHelpDomain   *domain;
-  GimpHelpProgress *progress = NULL;
-  GimpHelpLocale   *locale;
+  LigmaHelpDomain   *domain;
+  LigmaHelpProgress *progress = NULL;
+  LigmaHelpLocale   *locale;
   GList            *locales;
   char             *uri;
   gboolean          fatal_error;
 
   /* First get the URI to load */
-  domain = gimp_help_lookup_domain (closure->help_domain);
+  domain = ligma_help_lookup_domain (closure->help_domain);
   if (!domain)
     return G_SOURCE_REMOVE;
 
-  locales = gimp_help_parse_locales (closure->help_locales);
+  locales = ligma_help_parse_locales (closure->help_locales);
 
   if (! g_str_has_prefix (domain->help_uri, "file:"))
     progress = help_browser_progress_new ();
 
-  uri = gimp_help_domain_map (domain, locales, closure->help_id,
+  uri = ligma_help_domain_map (domain, locales, closure->help_id,
                               progress, &locale, &fatal_error);
 
   if (progress)
-    gimp_help_progress_free (progress);
+    ligma_help_progress_free (progress);
 
   g_list_free_full (locales, (GDestroyNotify) g_free);
 
   /* Now actually load it */
   if (uri)
     {
-      gimp_help_browser_dialog_make_index (closure->browser->window, domain, locale);
-      gimp_help_browser_dialog_load (closure->browser->window, uri);
+      ligma_help_browser_dialog_make_index (closure->browser->window, domain, locale);
+      ligma_help_browser_dialog_load (closure->browser->window, uri);
 
       g_free (uri);
     }
@@ -279,34 +279,34 @@ show_help_on_idle (gpointer user_data)
   return G_SOURCE_REMOVE;
 }
 
-static GimpValueArray *
-temp_proc_run (GimpProcedure        *procedure,
-               const GimpValueArray *args,
+static LigmaValueArray *
+temp_proc_run (LigmaProcedure        *procedure,
+               const LigmaValueArray *args,
                gpointer              user_data)
 {
-  GimpHelpBrowser *browser = GIMP_HELP_BROWSER (user_data);
+  LigmaHelpBrowser *browser = LIGMA_HELP_BROWSER (user_data);
   IdleClosure     *closure;
   const char      *str;
 
   closure = g_new0 (IdleClosure, 1);
   closure->browser = browser;
 
-  str = GIMP_VALUES_GET_STRING (args, 0);
-  closure->help_domain = g_strdup ((str && *str)? str : GIMP_HELP_DEFAULT_DOMAIN);
+  str = LIGMA_VALUES_GET_STRING (args, 0);
+  closure->help_domain = g_strdup ((str && *str)? str : LIGMA_HELP_DEFAULT_DOMAIN);
 
-  str = GIMP_VALUES_GET_STRING (args, 1);
+  str = LIGMA_VALUES_GET_STRING (args, 1);
   if (str && *str)
     closure->help_locales = g_strdup (str);
 
-  str = GIMP_VALUES_GET_STRING (args, 2);
-  closure->help_id = g_strdup ((str && *str)? str : GIMP_HELP_DEFAULT_ID);
+  str = LIGMA_VALUES_GET_STRING (args, 2);
+  closure->help_id = g_strdup ((str && *str)? str : LIGMA_HELP_DEFAULT_ID);
 
   /* Do this on idle, to make sure everything is initialized already */
   g_idle_add_full (G_PRIORITY_DEFAULT_IDLE,
                    show_help_on_idle,
                    closure, idle_closure_free);
 
-  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
+  return ligma_procedure_new_return_values (procedure, LIGMA_PDB_SUCCESS, NULL);
 }
 
 
@@ -315,39 +315,39 @@ help_browser_progress_start (const gchar *message,
                              gboolean     cancelable,
                              gpointer     user_data)
 {
-  gimp_progress_init (message);
+  ligma_progress_init (message);
 }
 
 static void
 help_browser_progress_update (gdouble  value,
                               gpointer user_data)
 {
-  gimp_progress_update (value);
+  ligma_progress_update (value);
 }
 
 static void
 help_browser_progress_end (gpointer user_data)
 {
-  gimp_progress_end ();
+  ligma_progress_end ();
 }
 
-static GimpHelpProgress *
+static LigmaHelpProgress *
 help_browser_progress_new (void)
 {
-  static const GimpHelpProgressVTable vtable =
+  static const LigmaHelpProgressVTable vtable =
   {
     help_browser_progress_start,
     help_browser_progress_end,
     help_browser_progress_update
   };
 
-  return gimp_help_progress_new (&vtable, NULL);
+  return ligma_help_progress_new (&vtable, NULL);
 }
 
 static void
-gimp_help_browser_class_init (GimpHelpBrowserClass *klass)
+ligma_help_browser_class_init (LigmaHelpBrowserClass *klass)
 {
-  GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  LigmaPlugInClass *plug_in_class = LIGMA_PLUG_IN_CLASS (klass);
 
   plug_in_class->query_procedures = help_browser_query_procedures;
   plug_in_class->create_procedure = help_browser_create_procedure;
@@ -355,6 +355,6 @@ gimp_help_browser_class_init (GimpHelpBrowserClass *klass)
 }
 
 static void
-gimp_help_browser_init (GimpHelpBrowser *help_browser)
+ligma_help_browser_init (LigmaHelpBrowser *help_browser)
 {
 }

@@ -1,7 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimp-parallel.h
+ * ligma-parallel.h
  * Copyright (C) 2018 Ell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,23 +18,23 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PARALLEL_H__
-#define __GIMP_PARALLEL_H__
+#ifndef __LIGMA_PARALLEL_H__
+#define __LIGMA_PARALLEL_H__
 
 
-void        gimp_parallel_init                       (Gimp             *gimp);
-void        gimp_parallel_exit                       (Gimp             *gimp);
+void        ligma_parallel_init                       (Ligma             *ligma);
+void        ligma_parallel_exit                       (Ligma             *ligma);
 
-GimpAsync * gimp_parallel_run_async                  (GimpRunAsyncFunc  func,
+LigmaAsync * ligma_parallel_run_async                  (LigmaRunAsyncFunc  func,
                                                       gpointer          user_data);
-GimpAsync * gimp_parallel_run_async_full             (gint              priority,
-                                                      GimpRunAsyncFunc  func,
+LigmaAsync * ligma_parallel_run_async_full             (gint              priority,
+                                                      LigmaRunAsyncFunc  func,
                                                       gpointer          user_data,
                                                       GDestroyNotify    user_data_destroy_func);
-GimpAsync * gimp_parallel_run_async_independent      (GimpRunAsyncFunc  func,
+LigmaAsync * ligma_parallel_run_async_independent      (LigmaRunAsyncFunc  func,
                                                       gpointer          user_data);
-GimpAsync * gimp_parallel_run_async_independent_full (gint              priority,
-                                                      GimpRunAsyncFunc  func,
+LigmaAsync * ligma_parallel_run_async_independent_full (gint              priority,
+                                                      LigmaRunAsyncFunc  func,
                                                       gpointer          user_data);
 
 
@@ -46,15 +46,15 @@ extern "C++"
 #include <new>
 
 template <class RunAsyncFunc>
-inline GimpAsync *
-gimp_parallel_run_async (RunAsyncFunc func)
+inline LigmaAsync *
+ligma_parallel_run_async (RunAsyncFunc func)
 {
   RunAsyncFunc *func_copy = g_new (RunAsyncFunc, 1);
 
   new (func_copy) RunAsyncFunc (func);
 
-  return gimp_parallel_run_async_full (0,
-                                       [] (GimpAsync *async,
+  return ligma_parallel_run_async_full (0,
+                                       [] (LigmaAsync *async,
                                            gpointer   user_data)
                                        {
                                          RunAsyncFunc *func_copy =
@@ -78,8 +78,8 @@ gimp_parallel_run_async (RunAsyncFunc func)
 
 template <class RunAsyncFunc,
           class DestroyFunc>
-inline GimpAsync *
-gimp_parallel_run_async_full (gint         priority,
+inline LigmaAsync *
+ligma_parallel_run_async_full (gint         priority,
                               RunAsyncFunc func,
                               DestroyFunc  destroy_func)
 {
@@ -93,8 +93,8 @@ gimp_parallel_run_async_full (gint         priority,
 
   new (funcs_copy) Funcs {func, destroy_func};
 
-  return gimp_parallel_run_async_full (priority,
-                                       [] (GimpAsync *async,
+  return ligma_parallel_run_async_full (priority,
+                                       [] (LigmaAsync *async,
                                            gpointer   user_data)
                                        {
                                          Funcs *funcs_copy =
@@ -119,16 +119,16 @@ gimp_parallel_run_async_full (gint         priority,
 }
 
 template <class RunAsyncFunc>
-inline GimpAsync *
-gimp_parallel_run_async_independent_full (gint         priority,
+inline LigmaAsync *
+ligma_parallel_run_async_independent_full (gint         priority,
                                           RunAsyncFunc func)
 {
   RunAsyncFunc *func_copy = g_new (RunAsyncFunc, 1);
 
   new (func_copy) RunAsyncFunc (func);
 
-  return gimp_parallel_run_async_independent_full (priority,
-                                                   [] (GimpAsync *async,
+  return ligma_parallel_run_async_independent_full (priority,
+                                                   [] (LigmaAsync *async,
                                                        gpointer   user_data)
                                                    {
                                                      RunAsyncFunc *func_copy =
@@ -143,10 +143,10 @@ gimp_parallel_run_async_independent_full (gint         priority,
 }
 
 template <class RunAsyncFunc>
-inline GimpAsync *
-gimp_parallel_run_async_independent (RunAsyncFunc func)
+inline LigmaAsync *
+ligma_parallel_run_async_independent (RunAsyncFunc func)
 {
-  return gimp_parallel_run_async_independent_full (0, func);
+  return ligma_parallel_run_async_independent_full (0, func);
 }
 
 }
@@ -154,4 +154,4 @@ gimp_parallel_run_async_independent (RunAsyncFunc func)
 #endif /* __cplusplus */
 
 
-#endif /* __GIMP_PARALLEL_H__ */
+#endif /* __LIGMA_PARALLEL_H__ */

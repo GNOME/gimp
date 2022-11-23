@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,22 +15,22 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef  __GIMP_BOUNDARY_H__
-#define  __GIMP_BOUNDARY_H__
+#ifndef  __LIGMA_BOUNDARY_H__
+#define  __LIGMA_BOUNDARY_H__
 
 
 /* half intensity for mask */
-#define GIMP_BOUNDARY_HALF_WAY 0.5
+#define LIGMA_BOUNDARY_HALF_WAY 0.5
 
 
 typedef enum
 {
-  GIMP_BOUNDARY_WITHIN_BOUNDS,
-  GIMP_BOUNDARY_IGNORE_BOUNDS
-} GimpBoundaryType;
+  LIGMA_BOUNDARY_WITHIN_BOUNDS,
+  LIGMA_BOUNDARY_IGNORE_BOUNDS
+} LigmaBoundaryType;
 
 
-struct _GimpBoundSeg
+struct _LigmaBoundSeg
 {
   gint   x1;
   gint   y1;
@@ -41,28 +41,28 @@ struct _GimpBoundSeg
 };
 
 
-GimpBoundSeg * gimp_boundary_find      (GeglBuffer          *buffer,
+LigmaBoundSeg * ligma_boundary_find      (GeglBuffer          *buffer,
                                         const GeglRectangle *region,
                                         const Babl          *format,
-                                        GimpBoundaryType     type,
+                                        LigmaBoundaryType     type,
                                         gint                 x1,
                                         gint                 y1,
                                         gint                 x2,
                                         gint                 y2,
                                         gfloat               threshold,
                                         gint                *num_segs);
-GimpBoundSeg * gimp_boundary_sort      (const GimpBoundSeg  *segs,
+LigmaBoundSeg * ligma_boundary_sort      (const LigmaBoundSeg  *segs,
                                         gint                 num_segs,
                                         gint                *num_groups);
-GimpBoundSeg * gimp_boundary_simplify  (GimpBoundSeg        *sorted_segs,
+LigmaBoundSeg * ligma_boundary_simplify  (LigmaBoundSeg        *sorted_segs,
                                         gint                 num_groups,
                                         gint                *num_segs);
 
 /* offsets in-place */
-void       gimp_boundary_offset        (GimpBoundSeg        *segs,
+void       ligma_boundary_offset        (LigmaBoundSeg        *segs,
                                         gint                 num_segs,
                                         gint                 off_x,
                                         gint                 off_y);
 
 
-#endif  /*  __GIMP_BOUNDARY_H__  */
+#endif  /*  __LIGMA_BOUNDARY_H__  */

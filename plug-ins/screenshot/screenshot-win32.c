@@ -1,9 +1,9 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * Screenshot plug-in
- * Copyright 1998-2007 Sven Neumann <sven@gimp.org>
- * Copyright 2003      Henrik Brix Andersen <brix@gimp.org>
+ * Copyright 1998-2007 Sven Neumann <sven@ligma.org>
+ * Copyright 2003      Henrik Brix Andersen <brix@ligma.org>
  * Copyright 2012      Simone Karin Lehmann - OS X patches
  * Copyright 2018      Gil Eliyahu <gileli121@gmail.com>
  *
@@ -41,14 +41,14 @@
 #define _WIN32_WINNT 0x0601
 #include <windows.h>
 
-#include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
+#include <libligma/ligma.h>
+#include <libligma/ligmaui.h>
 
 #include "screenshot.h"
 #include "screenshot-win32.h"
 #include "screenshot-win32-resource.h"
 
-#include "libgimp/stdplugins-intl.h"
+#include "libligma/stdplugins-intl.h"
 #include "screenshot-win32-magnification-api.h"
 #include "screenshot-win32-dwm-api.h"
 
@@ -81,10 +81,10 @@ static ICONINFO        iconInfo;
 static MAGIMAGEHEADER  returnedSrcheader;
 static int             rectScreensCount = 0;
 
-static GimpImage     **image;
+static LigmaImage     **image;
 static gboolean        capturePointer = FALSE;
 
-static void sendBMPToGimp                      (HBITMAP         hBMP,
+static void sendBMPToLigma                      (HBITMAP         hBMP,
                                                 HDC             hDC,
                                                 RECT            rect);
 static int      doWindowCapture                    (void);
@@ -138,7 +138,7 @@ typedef struct {
  * DIB sections are aligned on a LONG (four byte) boundary. Its pixel
  * data is in RGB (BGR actually) format, three bytes per pixel.
  *
- * GIMP uses no alignment for its pixel regions. The GIMP image we
+ * LIGMA uses no alignment for its pixel regions. The LIGMA image we
  * create is of type RGB, i.e. three bytes per pixel, too. Thus in
  * order to be able to quickly transfer all of the image at a time, we
  * must use a DIB section and pixel region the scanline width in
@@ -163,13 +163,13 @@ screenshot_win32_get_capabilities (void)
           SCREENSHOT_CAN_SHOOT_POINTER);
 }
 
-GimpPDBStatusType
+LigmaPDBStatusType
 screenshot_win32_shoot (ScreenshotValues  *shootvals,
                         GdkMonitor        *monitor,
-                        GimpImage        **_image,
+                        LigmaImage        **_image,
                         GError           **error)
 {
-  GimpPDBStatusType status = GIMP_PDB_EXECUTION_ERROR;
+  LigmaPDBStatusType status = LIGMA_PDB_EXECUTION_ERROR;
 
   /* leave "shootvals->monitor" alone until somebody patches the code
    * to be able to get a monitor's color profile
@@ -184,30 +184,30 @@ screenshot_win32_shoot (ScreenshotValues  *shootvals,
     {
       doCapture (0);
 
-      status = GIMP_PDB_SUCCESS;
+      status = LIGMA_PDB_SUCCESS;
     }
   else if (shootvals->shoot_type == SHOOT_WINDOW)
     {
-      status = 0 == doWindowCapture () ? GIMP_PDB_CANCEL : GIMP_PDB_SUCCESS;
+      status = 0 == doWindowCapture () ? LIGMA_PDB_CANCEL : LIGMA_PDB_SUCCESS;
     }
   else if (shootvals->shoot_type == SHOOT_REGION)
     {
       /* FIXME */
     }
 
-  if (status == GIMP_PDB_SUCCESS)
+  if (status == LIGMA_PDB_SUCCESS)
     {
-      GimpColorProfile *profile;
+      LigmaColorProfile *profile;
 
       /* XXX No idea if the "monitor" value is right at all, especially
        * considering above comment. Just make so that it at least
        * compiles!
        */
-      profile = gimp_monitor_get_color_profile (monitor);
+      profile = ligma_monitor_get_color_profile (monitor);
 
       if (profile)
         {
-          gimp_image_set_color_profile (*image, profile);
+          ligma_image_set_color_profile (*image, profile);
           g_object_unref (profile);
         }
     }
@@ -220,7 +220,7 @@ screenshot_win32_shoot (ScreenshotValues  *shootvals,
 
 
 /******************************************************************
- * GIMP format and transfer functions
+ * LIGMA format and transfer functions
  ******************************************************************/
 
 /*
@@ -230,7 +230,7 @@ screenshot_win32_shoot (ScreenshotValues  *shootvals,
  * interface for retrieving bitmap bits.  DIBSections have
  * RGB information as BGR instead.  So, we have to swap
  * the silly red and blue bytes before sending to the
- * GIMP.
+ * LIGMA.
  */
 static void
 flipRedAndBlueBytes (int width,
@@ -275,20 +275,20 @@ rgbaToRgbBytes (guchar *rgbBufp,
 }
 
 /*
- * sendBMPToGIMP
+ * sendBMPToLIGMA
  *
  * Take the captured data and send it across
- * to GIMP.
+ * to LIGMA.
  */
 static void
-sendBMPToGimp (HBITMAP hBMP,
+sendBMPToLigma (HBITMAP hBMP,
                HDC     hDC,
                RECT    rect)
 {
   int            width, height;
   int            imageType, layerType;
-  GimpImage     *new_image;
-  GimpLayer     *layer;
+  LigmaImage     *new_image;
+  LigmaLayer     *layer;
   GeglBuffer    *buffer;
   GeglRectangle *rectangle;
 
@@ -307,17 +307,17 @@ sendBMPToGimp (HBITMAP hBMP,
   flipRedAndBlueBytes (width, height);
 
   /* Set up the image and layer types */
-  imageType = GIMP_RGB;
-  layerType = GIMP_RGB_IMAGE;
+  imageType = LIGMA_RGB;
+  layerType = LIGMA_RGB_IMAGE;
 
-  /* Create the GIMP image and layers */
-  new_image = gimp_image_new (width, height, imageType);
-  layer = gimp_layer_new (new_image, _("Background"),
+  /* Create the LIGMA image and layers */
+  new_image = ligma_image_new (width, height, imageType);
+  layer = ligma_layer_new (new_image, _("Background"),
                           ROUND4 (width), height,
                           layerType,
                           100,
-                          gimp_image_get_default_new_layer_mode (new_image));
-  gimp_image_insert_layer (new_image, layer, NULL, 0);
+                          ligma_image_get_default_new_layer_mode (new_image));
+  ligma_image_insert_layer (new_image, layer, NULL, 0);
 
   /* make rectangle */
   rectangle = g_new (GeglRectangle, 1);
@@ -327,7 +327,7 @@ sendBMPToGimp (HBITMAP hBMP,
   rectangle->height = height;
 
   /* get the buffer */
-  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
+  buffer = ligma_drawable_get_buffer (LIGMA_DRAWABLE (layer));
 
   /* fill the buffer */
   gegl_buffer_set (buffer, rectangle, 0, NULL, (guchar *) capBytes,
@@ -339,8 +339,8 @@ sendBMPToGimp (HBITMAP hBMP,
   /* Now resize the layer down to the correct size if necessary. */
   if (width != ROUND4 (width))
     {
-      gimp_layer_resize (layer, width, height, 0, 0);
-      gimp_image_resize (new_image, width, height, 0, 0);
+      ligma_layer_resize (layer, width, height, 0, 0);
+      ligma_image_resize (new_image, width, height, 0, 0);
     }
 
   *image = new_image;
@@ -718,7 +718,7 @@ doCaptureBitBlt (HWND selectedHwnd,
 
   if (hbm == NULL) return FALSE;
 
-  sendBMPToGimp (hbm, hdcCompat, rect);
+  sendBMPToLigma (hbm, hdcCompat, rect);
 
   return TRUE;
 
@@ -840,8 +840,8 @@ doCaptureMagnificationAPI (HWND selectedHwnd,
       return FALSE;
     }
 
-  /* Send it to Gimp */
-  sendBMPToGimp (NULL, NULL, rect);
+  /* Send it to Ligma */
+  sendBMPToLigma (NULL, NULL, rect);
 
   DestroyWindow (hwndHost);
   MagUninitialize ();
@@ -1114,7 +1114,7 @@ dialogProc (HWND   hwndDlg,
   return FALSE;
 }
 
-///* Don't use the normal WinMain from gimp.h */
+///* Don't use the normal WinMain from ligma.h */
 //#define WinMain WinMain_no_thanks
 //MAIN()
 //#undef WinMain
@@ -1122,7 +1122,7 @@ dialogProc (HWND   hwndDlg,
 /*
  * WinMain
  *
- * The standard gimp plug-in WinMain won't quite cut it for
+ * The standard ligma plug-in WinMain won't quite cut it for
  * this plug-in.
  */
 //int APIENTRY
@@ -1143,10 +1143,10 @@ dialogProc (HWND   hwndDlg,
 //  hInst = hInstance;
 //
 //  /*
-//   * Now, call gimp_main... This is what the normal WinMain()
+//   * Now, call ligma_main... This is what the normal WinMain()
 //   * would do.
 //   */
-////  return gimp_main(&PLUG_IN_INFO, __argc, __argv);
+////  return ligma_main(&PLUG_IN_INFO, __argc, __argv);
 //}
 
 /*

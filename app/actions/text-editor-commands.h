@@ -1,4 +1,4 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,13 +19,13 @@
 #define __TEXT_EDITOR_COMMANDS_H__
 
 
-void   text_editor_load_cmd_callback      (GimpAction *action,
+void   text_editor_load_cmd_callback      (LigmaAction *action,
                                            GVariant   *value,
                                            gpointer    data);
-void   text_editor_clear_cmd_callback     (GimpAction *action,
+void   text_editor_clear_cmd_callback     (LigmaAction *action,
                                            GVariant   *value,
                                            gpointer    data);
-void   text_editor_direction_cmd_callback (GimpAction *action,
+void   text_editor_direction_cmd_callback (LigmaAction *action,
                                            GVariant   *value,
                                            gpointer    data);
 

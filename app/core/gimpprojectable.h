@@ -1,8 +1,8 @@
-/* GIMP - The GNU Image Manipulation Program
+/* LIGMA - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * gimpprojectable.h
- * Copyright (C) 2008  Michael Natterer <mitch@gimp.org>
+ * ligmaprojectable.h
+ * Copyright (C) 2008  Michael Natterer <mitch@ligma.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,67 +18,67 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PROJECTABLE_H__
-#define __GIMP_PROJECTABLE_H__
+#ifndef __LIGMA_PROJECTABLE_H__
+#define __LIGMA_PROJECTABLE_H__
 
 
-#define GIMP_TYPE_PROJECTABLE (gimp_projectable_get_type ())
-G_DECLARE_INTERFACE (GimpProjectable, gimp_projectable, GIMP, PROJECTABLE, GObject)
+#define LIGMA_TYPE_PROJECTABLE (ligma_projectable_get_type ())
+G_DECLARE_INTERFACE (LigmaProjectable, ligma_projectable, LIGMA, PROJECTABLE, GObject)
 
 
-struct _GimpProjectableInterface
+struct _LigmaProjectableInterface
 {
   GTypeInterface base_iface;
 
   /*  signals  */
-  void         (* invalidate)         (GimpProjectable *projectable,
+  void         (* invalidate)         (LigmaProjectable *projectable,
                                        gint             x,
                                        gint             y,
                                        gint             width,
                                        gint             height);
-  void         (* flush)              (GimpProjectable *projectable,
+  void         (* flush)              (LigmaProjectable *projectable,
                                        gboolean         invalidate_preview);
-  void         (* structure_changed)  (GimpProjectable *projectable);
-  void         (* bounds_changed)     (GimpProjectable *projectable,
+  void         (* structure_changed)  (LigmaProjectable *projectable);
+  void         (* bounds_changed)     (LigmaProjectable *projectable,
                                        gint             old_x,
                                        gint             old_y);
 
   /*  virtual functions  */
-  GimpImage  * (* get_image)          (GimpProjectable *projectable);
-  const Babl * (* get_format)         (GimpProjectable *projectable);
-  void         (* get_offset)         (GimpProjectable *projectable,
+  LigmaImage  * (* get_image)          (LigmaProjectable *projectable);
+  const Babl * (* get_format)         (LigmaProjectable *projectable);
+  void         (* get_offset)         (LigmaProjectable *projectable,
                                        gint            *x,
                                        gint            *y);
-  GeglRectangle (* get_bounding_box)  (GimpProjectable *projectable);
-  GeglNode   * (* get_graph)          (GimpProjectable *projectable);
-  void         (* begin_render)       (GimpProjectable *projectable);
-  void         (* end_render)         (GimpProjectable *projectable);
-  void         (* invalidate_preview) (GimpProjectable *projectable);
+  GeglRectangle (* get_bounding_box)  (LigmaProjectable *projectable);
+  GeglNode   * (* get_graph)          (LigmaProjectable *projectable);
+  void         (* begin_render)       (LigmaProjectable *projectable);
+  void         (* end_render)         (LigmaProjectable *projectable);
+  void         (* invalidate_preview) (LigmaProjectable *projectable);
 };
 
 
-void         gimp_projectable_invalidate         (GimpProjectable *projectable,
+void         ligma_projectable_invalidate         (LigmaProjectable *projectable,
                                                   gint             x,
                                                   gint             y,
                                                   gint             width,
                                                   gint             height);
-void         gimp_projectable_flush              (GimpProjectable *projectable,
+void         ligma_projectable_flush              (LigmaProjectable *projectable,
                                                   gboolean         preview_invalidated);
-void         gimp_projectable_structure_changed  (GimpProjectable *projectable);
-void         gimp_projectable_bounds_changed     (GimpProjectable *projectable,
+void         ligma_projectable_structure_changed  (LigmaProjectable *projectable);
+void         ligma_projectable_bounds_changed     (LigmaProjectable *projectable,
                                                   gint             old_x,
                                                   gint             old_y);
 
-GimpImage  * gimp_projectable_get_image          (GimpProjectable *projectable);
-const Babl * gimp_projectable_get_format         (GimpProjectable *projectable);
-void         gimp_projectable_get_offset         (GimpProjectable *projectable,
+LigmaImage  * ligma_projectable_get_image          (LigmaProjectable *projectable);
+const Babl * ligma_projectable_get_format         (LigmaProjectable *projectable);
+void         ligma_projectable_get_offset         (LigmaProjectable *projectable,
                                                   gint            *x,
                                                   gint            *y);
-GeglRectangle gimp_projectable_get_bounding_box  (GimpProjectable *projectable);
-GeglNode   * gimp_projectable_get_graph          (GimpProjectable *projectable);
-void         gimp_projectable_begin_render       (GimpProjectable *projectable);
-void         gimp_projectable_end_render         (GimpProjectable *projectable);
-void         gimp_projectable_invalidate_preview (GimpProjectable *projectable);
+GeglRectangle ligma_projectable_get_bounding_box  (LigmaProjectable *projectable);
+GeglNode   * ligma_projectable_get_graph          (LigmaProjectable *projectable);
+void         ligma_projectable_begin_render       (LigmaProjectable *projectable);
+void         ligma_projectable_end_render         (LigmaProjectable *projectable);
+void         ligma_projectable_invalidate_preview (LigmaProjectable *projectable);
 
 
-#endif  /* __GIMP_PROJECTABLE_H__ */
+#endif  /* __LIGMA_PROJECTABLE_H__ */
