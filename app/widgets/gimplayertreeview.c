@@ -1822,6 +1822,20 @@ gimp_layer_tree_view_update_highlight (GimpLayerTreeView *layer_view)
   gimp_button_set_suggested (layer_view->priv->anchor_button,
                              floating_sel != NULL,
                              default_relief);
+  if (floating_sel != NULL)
+    {
+      if (GIMP_IS_LAYER_MASK (gimp_layer_get_floating_sel_drawable (floating_sel)))
+        gtk_widget_set_tooltip_text (layer_view->priv->anchor_button,
+                                     C_("layers-action", "Anchor the floating mask"));
+      else
+        gtk_widget_set_tooltip_text (layer_view->priv->anchor_button,
+                                     C_("layers-action", "Anchor the floating layer"));
+    }
+  else
+    {
+      gtk_widget_set_tooltip_text (layer_view->priv->anchor_button,
+                                   C_("layers-action", "Anchor the floating layer or mask"));
+    }
 }
 
 

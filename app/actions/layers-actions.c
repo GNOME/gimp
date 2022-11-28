@@ -166,8 +166,8 @@ static const GimpActionEntry layers_actions[] =
     GIMP_HELP_LAYER_LOWER_TO_BOTTOM },
 
   { "layers-anchor", GIMP_ICON_LAYER_ANCHOR,
-    NC_("layers-action", "_Anchor Layer"), "<primary>H",
-    NC_("layers-action", "Anchor the floating layer"),
+    NC_("layers-action", "_Anchor Floating Layer or Mask"), "<primary>H",
+    NC_("layers-action", "Anchor the floating layer or mask"),
     layers_anchor_cmd_callback,
     GIMP_HELP_LAYER_ANCHOR },
 
