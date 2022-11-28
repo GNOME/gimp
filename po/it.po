@@ -40,7 +40,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-11-28 13:05+0100\n"
-"PO-Revision-Date: 2022-11-28 13:02+0100\n"
+"PO-Revision-Date: 2022-11-28 13:36+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@posteo.net>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -9009,12 +9009,12 @@ msgstr "_Recupera le preimpostazioni strumento"
 #: ../app/actions/tool-presets-actions.c:82
 msgctxt "tool-presets-action"
 msgid "Restore this tool preset"
-msgstr "Elimina queste preimpostazioni strumento"
+msgstr "Recupera queste preimpostazioni strumento"
 
 #: ../app/actions/tool-presets-actions.c:87
 msgctxt "tool-presets-action"
 msgid "_Delete Tool Preset"
-msgstr "Elimina la preimposta_zione strumento"
+msgstr "Elimina le preimposta_zioni strumento"
 
 #: ../app/actions/tool-presets-actions.c:88
 msgctxt "tool-presets-action"
@@ -9034,7 +9034,7 @@ msgstr "Aggiorna le preimpostazioni strumento"
 #: ../app/actions/tool-presets-actions.c:102
 msgctxt "tool-presets-action"
 msgid "_Edit Tool Preset..."
-msgstr "Modifica la pr_eimpostazione strumento..."
+msgstr "Modifica le pr_eimpostazioni strumento..."
 
 #: ../app/actions/tool-presets-actions.c:103
 msgctxt "tool-presets-action"
