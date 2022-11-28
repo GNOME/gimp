@@ -160,6 +160,8 @@ static void       gimp_layer_tree_view_link_popover_shown         (GtkPopover   
 static gboolean   gimp_layer_tree_view_search_key_release         (GtkWidget                  *widget,
                                                                    GdkEventKey                *event,
                                                                    GimpLayerTreeView          *view);
+static gboolean   gimp_layer_tree_view_start_interactive_search   (GtkTreeView                *tree_view,
+                                                                   GimpLayerTreeView          *layer_view);
 
 static void       gimp_layer_tree_view_new_link_exit              (GimpLayerTreeView          *view);
 static gboolean   gimp_layer_tree_view_new_link_clicked           (GimpLayerTreeView          *view);
@@ -480,6 +482,13 @@ gimp_layer_tree_view_constructed (GObject *object)
                     "key-release-event",
                     G_CALLBACK (gimp_layer_tree_view_search_key_release),
                     layer_view);
+
+  g_signal_connect (GIMP_CONTAINER_TREE_VIEW (layer_view)->view,
+                    "start-interactive-search",
+                    G_CALLBACK (gimp_layer_tree_view_start_interactive_search),
+                    layer_view);
+  gtk_tree_view_set_search_entry (GIMP_CONTAINER_TREE_VIEW (layer_view)->view,
+                                  GTK_ENTRY (layer_view->priv->link_search_entry));
 
   /* Link popover: existing links. */
   layer_view->priv->link_list = gtk_list_box_new ();
@@ -1458,6 +1467,16 @@ gimp_layer_tree_view_search_key_release (GtkWidget         *widget,
     }
 
   return TRUE;
+}
+
+static gboolean
+gimp_layer_tree_view_start_interactive_search (GtkTreeView       *tree_view,
+                                               GimpLayerTreeView *layer_view)
+{
+  gtk_widget_show (layer_view->priv->link_popover);
+  gtk_widget_grab_focus (layer_view->priv->link_search_entry);
+
+  return FALSE;
 }
 
 static void
