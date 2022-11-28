@@ -39,8 +39,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-10 09:36+0200\n"
-"PO-Revision-Date: 2022-10-10 09:36+0200\n"
+"POT-Creation-Date: 2022-11-28 13:05+0100\n"
+"PO-Revision-Date: 2022-11-28 13:02+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@posteo.net>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -332,7 +332,8 @@ msgstr "Controllo sull'area disegnabile del filtro Vignettatura"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:45
 msgid "New filters: Bloom, Focus Blur, Lens Blur, Variable Blur"
-msgstr "Nuovi filtri: Fiore, Sfocatura fuoco, Sfocatura lente, Sfocatura variabile"
+msgstr ""
+"Nuovi filtri: Fiore, Sfocatura fuoco, Sfocatura lente, Sfocatura variabile"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:46
 msgid "Over 30 bugfixes"
@@ -8870,7 +8871,7 @@ msgstr "Mo_difica le preimpostazioni strumento"
 #: ../app/actions/tool-options-actions.c:74
 msgctxt "tool-options-action"
 msgid "_Delete Tool Preset"
-msgstr "Elimina la preimposta_zione strumento"
+msgstr "Elimina le preimposta_zioni strumento"
 
 #: ../app/actions/tool-options-actions.c:78
 msgctxt "tool-options-action"
