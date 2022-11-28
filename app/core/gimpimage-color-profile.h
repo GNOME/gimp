@@ -118,12 +118,12 @@ GimpColorTransform * gimp_image_get_color_transform_to_srgb_double
 GimpColorTransform * gimp_image_get_color_transform_from_srgb_double
                                                        (GimpImage           *image);
 
-void                 gimp_image_color_profile_pixel_to_srgb
+void                 gimp_image_color_profile_pixel_to_rgb
                                                        (GimpImage           *image,
                                                         const Babl          *pixel_format,
                                                         gpointer             pixel,
                                                         GimpRGB             *color);
-void                 gimp_image_color_profile_srgb_to_pixel
+void                 gimp_image_color_profile_rgb_to_pixel
                                                        (GimpImage           *image,
                                                         const GimpRGB       *color,
                                                         const Babl          *pixel_format,

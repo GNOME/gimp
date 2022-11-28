@@ -47,11 +47,11 @@ struct _GimpPickableInterface
                                              const GeglRectangle *rect,
                                              const Babl          *format,
                                              gpointer             pixel);
-  void            (* pixel_to_srgb)         (GimpPickable        *pickable,
+  void            (* pixel_to_rgb)          (GimpPickable        *pickable,
                                              const Babl          *format,
                                              gpointer             pixel,
                                              GimpRGB             *color);
-  void            (* srgb_to_pixel)         (GimpPickable        *pickable,
+  void            (* rgb_to_pixel)          (GimpPickable        *pickable,
                                              const GimpRGB       *color,
                                              const Babl          *format,
                                              gpointer             pixel);
@@ -79,11 +79,11 @@ void            gimp_pickable_get_pixel_average     (GimpPickable        *pickab
                                                      const GeglRectangle *rect,
                                                      const Babl          *format,
                                                      gpointer             pixel);
-void            gimp_pickable_pixel_to_srgb         (GimpPickable        *pickable,
+void            gimp_pickable_pixel_to_rgb          (GimpPickable        *pickable,
                                                      const Babl          *format,
                                                      gpointer             pixel,
                                                      GimpRGB             *color);
-void            gimp_pickable_srgb_to_pixel         (GimpPickable        *pickable,
+void            gimp_pickable_rgb_to_pixel          (GimpPickable        *pickable,
                                                      const GimpRGB       *color,
                                                      const Babl          *format,
                                                      gpointer             pixel);

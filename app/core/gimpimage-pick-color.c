@@ -17,13 +17,16 @@
 
 #include "config.h"
 
+#include <cairo.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
+#include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
 
 #include "core-types.h"
 
+#include "gegl/gimp-babl.h"
 #include "gegl/gimp-gegl-loops.h"
 
 #include "gimp.h"
@@ -31,6 +34,7 @@
 #include "gimpcontainer.h"
 #include "gimpdrawable.h"
 #include "gimpimage.h"
+#include "gimpimage-color-profile.h"
 #include "gimpimage-new.h"
 #include "gimpimage-pick-color.h"
 #include "gimplayer.h"
@@ -145,8 +149,16 @@ gimp_image_pick_color (GimpImage   *image,
 
   if (show_all && sample_merged)
     {
-      const Babl *format    = babl_format ("RaGaBaA double");
-      gdouble     sample[4] = {};
+      GimpColorProfile *profile = gimp_image_get_color_profile (image);
+      const Babl *space         = NULL;
+      gdouble     sample[4]     = {};
+      const Babl *format;
+
+      if (profile)
+        space = gimp_color_profile_get_space (profile,
+                                              GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                              NULL);
+      format = babl_format_with_space ("RaGaBaA double", space);
 
       if (! result)
         memset (pixel, 0, babl_format_get_bytes_per_pixel (*sample_format));
@@ -165,7 +177,7 @@ gimp_image_pick_color (GimpImage   *image,
         }
 
       if (! result || sample_average)
-        gimp_pickable_pixel_to_srgb (pickable, format, sample, color);
+        gimp_pickable_pixel_to_rgb (pickable, format, sample, color);
 
       result = TRUE;
     }

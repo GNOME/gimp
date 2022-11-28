@@ -858,25 +858,27 @@ gimp_image_get_color_transform_from_srgb_double (GimpImage *image)
 }
 
 void
-gimp_image_color_profile_pixel_to_srgb (GimpImage  *image,
-                                        const Babl *pixel_format,
-                                        gpointer    pixel,
-                                        GimpRGB    *color)
+gimp_image_color_profile_pixel_to_rgb (GimpImage  *image,
+                                       const Babl *pixel_format,
+                                       gpointer    pixel,
+                                       GimpRGB    *color)
 {
-  GimpColorTransform *transform;
+  GimpColorProfile   *profile = NULL;
+  const Babl         *space   = NULL;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
-  transform = gimp_image_get_color_transform_to_srgb_double (image);
+  profile = gimp_image_get_color_profile (image);
 
-  if (transform)
+  if (profile)
+    space = gimp_color_profile_get_space (profile,
+                                          GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                          NULL);
+  if (profile)
     {
-      gimp_color_transform_process_pixels (transform,
-                                           pixel_format,
-                                           pixel,
-                                           babl_format ("R'G'B'A double"),
-                                           color,
-                                           1);
+      babl_process (babl_fish (pixel_format,
+                               babl_format_with_space ("R'G'B'A double", space)),
+                    pixel, color, 1);
     }
   else
     {
@@ -885,25 +887,28 @@ gimp_image_color_profile_pixel_to_srgb (GimpImage  *image,
 }
 
 void
-gimp_image_color_profile_srgb_to_pixel (GimpImage     *image,
-                                        const GimpRGB *color,
-                                        const Babl    *pixel_format,
-                                        gpointer       pixel)
+gimp_image_color_profile_rgb_to_pixel (GimpImage     *image,
+                                       const GimpRGB *color,
+                                       const Babl    *pixel_format,
+                                       gpointer       pixel)
 {
-  GimpColorTransform *transform;
+  GimpColorProfile   *profile = NULL;
+  const Babl         *space   = NULL;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
-  transform = gimp_image_get_color_transform_from_srgb_double (image);
+  profile = gimp_image_get_color_profile (image);
 
-  if (transform)
+  if (profile)
+    space = gimp_color_profile_get_space (profile,
+                                          GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                          NULL);
+
+  if (profile)
     {
-      gimp_color_transform_process_pixels (transform,
-                                           babl_format ("R'G'B'A double"),
-                                           color,
-                                           pixel_format,
-                                           pixel,
-                                           1);
+      babl_process (babl_fish (babl_format_with_space ("R'G'B'A double", space),
+                               pixel_format),
+                    color, pixel, 1);
     }
   else
     {
