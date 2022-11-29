@@ -10,6 +10,7 @@ license = "GPL-3.0-or-later"
 description = "GIMP UI library"
 dependencies = [
   'Babl-0.1',
+  'Gimp-3.0',
   'GLib-2.0',
   'GObject-2.0',
   'GdkPixbuf-2.0',
@@ -21,10 +22,17 @@ dependencies = [
 devhelp = true
 search_index = true
 
+  # These links are mostly used for the dependency lists in index page.
+
   [dependencies."Babl-0.1"]
-  name = "Babl"
+  name = "babl"
   description = "Pixel encoding and color space conversion engine"
   docs_url = "https://gegl.org/babl"
+
+  [dependencies."Gimp-3.0"]
+  name = "GIMP"
+  description = "GIMP Library"
+  docs_url = "https://developer.gimp.org/api/3.0/libgimp/"
 
   [dependencies."GLib-2.0"]
   name = "GLib"
@@ -42,12 +50,12 @@ search_index = true
   docs_url = "https://docs.gtk.org/gdk-pixbuf/"
 
   [dependencies."Gegl-0.4"]
-  name = "Gegl"
+  name = "GEGL"
   description = "Generic Graphics Library"
   docs_url = "https://gegl.org/"
 
   [dependencies."Gio-2.0"]
-  name = "Gio"
+  name = "GIO"
   description = "GObject interfaces and objects"
   docs_url = "https://developer.gnome.org/gio/stable"
 
@@ -106,4 +114,6 @@ content_images = [
   'images/string-combo-box.png',
   'images/unit-combo-box.png',
 ]
+# The urlmap is used as base links when an API docs refer to a type or
+# function from another library.
 urlmap_file = "urlmap.js"
