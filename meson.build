@@ -340,7 +340,13 @@ mscms             = platform_windows ? cc.find_library('mscms') : no_dep
 atk_minver        = '2.4.0'
 atk               = dependency('atk',                version: '>='+atk_minver)
 babl_minver       = '0.1.98'
-babl              = dependency('babl',               version: '>='+babl_minver)
+babl              = dependency('babl-0.1',           version: '>='+babl_minver, required: false)
+if not babl.found()
+  # babl changed its pkg-config name from 'babl' to 'babl-0.1' in version
+  # 0.1.100 (0.1.99 dev cycle more exactly). 'babl-0.1' is checked in priority
+  # because it would be a newer version.
+  babl            = dependency('babl',               version: '>='+babl_minver)
+endif
 cairo_minver      = '1.12.2'
 cairo             = dependency('cairo',              version: '>='+cairo_minver)
 
