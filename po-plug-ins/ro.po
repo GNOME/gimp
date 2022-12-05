@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plugins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-11-01 22:07+0000\n"
-"PO-Revision-Date: 2020-11-04 15:06+0200\n"
+"POT-Creation-Date: 2022-11-21 04:28+0000\n"
+"PO-Revision-Date: 2022-12-06 00:52+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Gnome Romanian Team <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
 "20)) ? 1 : 2);\n"
-"X-Generator: Poedit 2.4.1\n"
+"X-Generator: Poedit 3.1.1\n"
 
 #: ../plug-ins/common/align-layers.c:158
 msgid "Align all visible layers of the image"
@@ -49,12 +49,12 @@ msgstr "Aliniere straturi vizibile"
 #: ../plug-ins/common/depth-merge.c:621 ../plug-ins/common/despeckle.c:397
 #: ../plug-ins/common/destripe.c:468 ../plug-ins/common/edge-dog.c:306
 #: ../plug-ins/common/emboss.c:453 ../plug-ins/common/file-cel.c:951
-#: ../plug-ins/common/file-gif-save.c:1089 ../plug-ins/common/file-heif.c:1837
+#: ../plug-ins/common/file-gif-save.c:1112 ../plug-ins/common/file-heif.c:1908
 #: ../plug-ins/common/file-jp2-load.c:961
-#: ../plug-ins/common/file-pdf-load.c:698
-#: ../plug-ins/common/file-pdf-load.c:1264
-#: ../plug-ins/common/file-pdf-save.c:936 ../plug-ins/common/file-ps.c:3398
-#: ../plug-ins/common/file-raw-data.c:1835 ../plug-ins/common/file-svg.c:663
+#: ../plug-ins/common/file-pdf-load.c:702
+#: ../plug-ins/common/file-pdf-load.c:1282
+#: ../plug-ins/common/file-pdf-save.c:936 ../plug-ins/common/file-ps.c:3447
+#: ../plug-ins/common/file-raw-data.c:1816 ../plug-ins/common/file-svg.c:663
 #: ../plug-ins/common/file-wmf.c:515 ../plug-ins/common/film.c:1207
 #: ../plug-ins/common/filter-pack.c:1264 ../plug-ins/common/fractal-trace.c:711
 #: ../plug-ins/common/grid.c:677 ../plug-ins/common/hot.c:614
@@ -69,9 +69,9 @@ msgstr "Aliniere straturi vizibile"
 #: ../plug-ins/common/tile-small.c:364 ../plug-ins/common/unit-editor.c:209
 #: ../plug-ins/common/van-gogh-lic.c:650 ../plug-ins/common/warp.c:368
 #: ../plug-ins/common/wavelet-decompose.c:354 ../plug-ins/common/web-page.c:234
-#: ../plug-ins/file-dds/ddsread.c:1284 ../plug-ins/file-dds/ddswrite.c:1956
+#: ../plug-ins/file-dds/ddsread.c:1363 ../plug-ins/file-dds/ddswrite.c:1983
 #: ../plug-ins/file-fits/fits.c:1150 ../plug-ins/file-fli/fli-gimp.c:877
-#: ../plug-ins/file-tiff/file-tiff-load.c:1925 ../plug-ins/flame/flame.c:481
+#: ../plug-ins/file-tiff/file-tiff-load.c:2664 ../plug-ins/flame/flame.c:481
 #: ../plug-ins/flame/flame.c:657 ../plug-ins/flame/flame.c:979
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:566
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1641
@@ -97,11 +97,11 @@ msgstr "Aliniere straturi vizibile"
 #: ../plug-ins/lighting/lighting-ui.c:1162
 #: ../plug-ins/lighting/lighting-ui.c:1306
 #: ../plug-ins/map-object/map-object-ui.c:1333
-#: ../plug-ins/metadata/metadata-editor.c:547
-#: ../plug-ins/metadata/metadata-editor.c:765
-#: ../plug-ins/metadata/metadata-editor.c:5648
-#: ../plug-ins/metadata/metadata-editor.c:5683
-#: ../plug-ins/pagecurl/pagecurl.c:438 ../plug-ins/screenshot/screenshot.c:499
+#: ../plug-ins/metadata/metadata-editor.c:590
+#: ../plug-ins/metadata/metadata-editor.c:952
+#: ../plug-ins/metadata/metadata-editor.c:4626
+#: ../plug-ins/metadata/metadata-editor.c:4661
+#: ../plug-ins/pagecurl/pagecurl.c:438 ../plug-ins/screenshot/screenshot.c:491
 #: ../plug-ins/selection-to-path/selection-to-path.c:309
 msgid "_Cancel"
 msgstr "_Anulează"
@@ -114,8 +114,8 @@ msgstr "_Anulează"
 #: ../plug-ins/common/curve-bend.c:1295 ../plug-ins/common/decompose.c:814
 #: ../plug-ins/common/depth-merge.c:622 ../plug-ins/common/despeckle.c:398
 #: ../plug-ins/common/destripe.c:469 ../plug-ins/common/edge-dog.c:307
-#: ../plug-ins/common/emboss.c:454 ../plug-ins/common/file-heif.c:1838
-#: ../plug-ins/common/file-pdf-load.c:699 ../plug-ins/common/file-svg.c:664
+#: ../plug-ins/common/emboss.c:454 ../plug-ins/common/file-heif.c:1909
+#: ../plug-ins/common/file-pdf-load.c:703 ../plug-ins/common/file-svg.c:664
 #: ../plug-ins/common/file-wmf.c:516 ../plug-ins/common/film.c:1208
 #: ../plug-ins/common/filter-pack.c:1265 ../plug-ins/common/fractal-trace.c:712
 #: ../plug-ins/common/grid.c:678 ../plug-ins/common/hot.c:615
@@ -127,7 +127,7 @@ msgstr "_Anulează"
 #: ../plug-ins/common/tile.c:439 ../plug-ins/common/tile-small.c:365
 #: ../plug-ins/common/van-gogh-lic.c:651 ../plug-ins/common/warp.c:369
 #: ../plug-ins/common/wavelet-decompose.c:355
-#: ../plug-ins/file-dds/ddsread.c:1285 ../plug-ins/flame/flame.c:658
+#: ../plug-ins/file-dds/ddsread.c:1364 ../plug-ins/flame/flame.c:658
 #: ../plug-ins/flame/flame.c:980
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:567
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1147
@@ -243,7 +243,7 @@ msgstr ""
 
 #: ../plug-ins/common/animation-optimize.c:143
 msgid "Optimize (for _GIF)"
-msgstr "Optimizează (pentru _GIF)"
+msgstr "Optimizare (pentru _GIF)"
 
 #: ../plug-ins/common/animation-optimize.c:151
 msgid "Reduce file size where combining layers is possible"
@@ -252,7 +252,7 @@ msgstr ""
 
 #: ../plug-ins/common/animation-optimize.c:161
 msgid "_Optimize (Difference)"
-msgstr "_Optimizează (diferență)"
+msgstr "_Optimizare (diferență)"
 
 #: ../plug-ins/common/animation-optimize.c:169
 msgid "Remove optimization to make editing easier"
@@ -260,7 +260,7 @@ msgstr "Elimină optimizarea pentru a face editarea mai ușoară"
 
 #: ../plug-ins/common/animation-optimize.c:176
 msgid "_Unoptimize"
-msgstr "_De-optimizează"
+msgstr "_Dezoptimizare"
 
 #: ../plug-ins/common/animation-optimize.c:196
 msgid "_Remove Backdrop"
@@ -272,15 +272,15 @@ msgstr "Caută _fundalul de croma key"
 
 #: ../plug-ins/common/animation-optimize.c:444
 msgid "Unoptimizing animation"
-msgstr "Deoptimizare animație"
+msgstr "Dezoptimizare animație"
 
 #: ../plug-ins/common/animation-optimize.c:447
 msgid "Removing animation background"
-msgstr "Eliminare fundal animație"
+msgstr "Eliminare fundal de animație"
 
 #: ../plug-ins/common/animation-optimize.c:450
 msgid "Finding animation background"
-msgstr "Căutare animație de fundal"
+msgstr "Căutare fundal de animație"
 
 #: ../plug-ins/common/animation-optimize.c:454
 msgid "Optimizing animation"
@@ -304,19 +304,19 @@ msgstr "%.1f %%"
 
 #: ../plug-ins/common/animation-play.c:592
 msgid "Step _back"
-msgstr "_O secvență înapoi"
+msgstr "_Pas înapoi"
 
 #: ../plug-ins/common/animation-play.c:592
 msgid "Step back to previous frame"
-msgstr "O secvență înapoi la cadrul precedent"
+msgstr "Pas înapoi la cadrul precedent"
 
 #: ../plug-ins/common/animation-play.c:596
 msgid "_Step"
-msgstr "_Secvență"
+msgstr "Pa_s"
 
 #: ../plug-ins/common/animation-play.c:596
 msgid "Step to next frame"
-msgstr "Secvență la cadrul următor"
+msgstr "Pas la cadrul următor"
 
 #: ../plug-ins/common/animation-play.c:600
 msgid "Rewind the animation"
@@ -344,11 +344,11 @@ msgstr "Scade viteza animației"
 
 #: ../plug-ins/common/animation-play.c:632
 msgid "Reset speed"
-msgstr "Resetează viteza"
+msgstr "Restabilește viteza"
 
 #: ../plug-ins/common/animation-play.c:632
 msgid "Reset the speed of the animation"
-msgstr "Resetează viteza animației"
+msgstr "Restabilește viteza animației"
 
 #: ../plug-ins/common/animation-play.c:640
 #: ../plug-ins/common/animation-play.c:1364
@@ -390,12 +390,12 @@ msgstr "Viteză de redare"
 
 #. 2 styles of default frame disposals: cumulative layers and one frame per layer.
 #: ../plug-ins/common/animation-play.c:931
-#: ../plug-ins/common/file-gif-save.c:1298
+#: ../plug-ins/common/file-gif-save.c:1321
 msgid "Cumulative layers (combine)"
 msgstr "Straturi cumulative (combină)"
 
 #: ../plug-ins/common/animation-play.c:935
-#: ../plug-ins/common/file-gif-save.c:1300
+#: ../plug-ins/common/file-gif-save.c:1323
 msgid "One frame per layer (replace)"
 msgstr "Un cadru per strat (înlocuiește)"
 
@@ -452,25 +452,25 @@ msgstr "_Vertical"
 #.
 #: ../plug-ins/common/blinds.c:277 ../plug-ins/common/compose.c:1011
 #: ../plug-ins/common/decompose.c:598 ../plug-ins/common/file-cel.c:446
-#: ../plug-ins/common/file-cel.c:451 ../plug-ins/common/file-dicom.c:611
-#: ../plug-ins/common/file-gegl.c:428 ../plug-ins/common/file-gif-load.c:992
+#: ../plug-ins/common/file-cel.c:451 ../plug-ins/common/file-dicom.c:715
+#: ../plug-ins/common/file-gegl.c:438 ../plug-ins/common/file-gif-load.c:992
 #: ../plug-ins/common/file-jp2-load.c:1290 ../plug-ins/common/file-pcx.c:448
 #: ../plug-ins/common/file-pcx.c:456 ../plug-ins/common/file-pix.c:400
 #: ../plug-ins/common/file-png.c:1097 ../plug-ins/common/file-pnm.c:685
-#: ../plug-ins/common/file-raw-data.c:1394
-#: ../plug-ins/common/file-sunras.c:1049 ../plug-ins/common/file-tga.c:1108
+#: ../plug-ins/common/file-raw-data.c:1375
+#: ../plug-ins/common/file-sunras.c:1049 ../plug-ins/common/file-tga.c:1111
 #: ../plug-ins/common/file-xbm.c:910 ../plug-ins/common/film.c:690
 #: ../plug-ins/common/smooth-palette.c:259 ../plug-ins/common/tile.c:354
-#: ../plug-ins/file-bmp/bmp-load.c:734 ../plug-ins/file-exr/file-exr.c:267
-#: ../plug-ins/file-faxg3/faxg3.c:525 ../plug-ins/file-fits/fits.c:529
+#: ../plug-ins/file-bmp/bmp-load.c:737 ../plug-ins/file-exr/file-exr.c:267
+#: ../plug-ins/file-faxg3/faxg3.c:555 ../plug-ins/file-fits/fits.c:529
 #: ../plug-ins/file-jpeg/jpeg-load.c:240
 #: ../plug-ins/file-psd/psd-image-res-load.c:1043
-#: ../plug-ins/file-psd/psd-load.c:1960 ../plug-ins/file-sgi/sgi.c:416
-#: ../plug-ins/file-tiff/file-tiff-load.c:1049
+#: ../plug-ins/file-psd/psd-load.c:2067 ../plug-ins/file-sgi/sgi.c:416
+#: ../plug-ins/file-tiff/file-tiff-load.c:1544
 #: ../plug-ins/file-webp/file-webp-load.c:164
 #: ../plug-ins/gfig/gfig-dialog.c:1321 ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:245
-#: ../plug-ins/screenshot/screenshot-win32.c:310 ../plug-ins/twain/twain.c:646
+#: ../plug-ins/screenshot/screenshot-win32.c:315 ../plug-ins/twain/twain.c:646
 msgid "Background"
 msgstr "Fundal"
 
@@ -721,31 +721,31 @@ msgstr "Folosește valoarea inversă"
 
 #: ../plug-ins/common/cml-explorer.c:203
 msgid "With random power (0,10)"
-msgstr "Cu putere aleatoare (0,10)"
+msgstr "Cu un exponent aleatoriu (0,10)"
 
 #: ../plug-ins/common/cml-explorer.c:204
 msgid "With random power (0,1)"
-msgstr "Cu putere aleatoare (0,1)"
+msgstr "Cu un exponent aleatoriu (0,1)"
 
 #: ../plug-ins/common/cml-explorer.c:205
 msgid "With gradient power (0,1)"
-msgstr "Cu putere aleatoare (0,1)"
+msgstr "Cu un exponent în degrade (0,1)"
 
 #: ../plug-ins/common/cml-explorer.c:206
 msgid "Multiply rand. value (0,1)"
-msgstr "Înmulțit, valoare aleatoare (0,1)"
+msgstr "Valoare aleatorie multiplicată (0,1)"
 
 #: ../plug-ins/common/cml-explorer.c:207
 msgid "Multiply rand. value (0,2)"
-msgstr "Înmulțit, valoare aleatoare (0,2)"
+msgstr "Valoare aleatorie multiplicată (0,2)"
 
 #: ../plug-ins/common/cml-explorer.c:208
 msgid "Multiply gradient (0,1)"
-msgstr "Înmulțit, gradual (0,1)"
+msgstr "Degrade multiplicat (0,1)"
 
 #: ../plug-ins/common/cml-explorer.c:209
 msgid "With p and random (0,1)"
-msgstr "Cu p și aleator (0,1)"
+msgstr "Cu p și aleatoriu (0,1)"
 
 #: ../plug-ins/common/cml-explorer.c:223
 msgid "All black"
@@ -773,19 +773,19 @@ msgstr "Degrade continuu, fără spații goale"
 
 #: ../plug-ins/common/cml-explorer.c:229
 msgid "Random, ch. independent"
-msgstr "Aleator, independent de canal"
+msgstr "Aleatoriu, independent de canal"
 
 #: ../plug-ins/common/cml-explorer.c:230
 msgid "Random shared"
-msgstr "Aleator, partajat"
+msgstr "Aleatoriu, partajat"
 
 #: ../plug-ins/common/cml-explorer.c:231
 msgid "Randoms from seed"
-msgstr "Aleatoare din sămânță"
+msgstr "Aleatorii din sămânță"
 
 #: ../plug-ins/common/cml-explorer.c:232
 msgid "Randoms from seed (shared)"
-msgstr "Aleatoare din sămânță (partajat)"
+msgstr "Aleatorii din sămânță (partajat)"
 
 #: ../plug-ins/common/cml-explorer.c:300 ../plug-ins/common/cml-explorer.c:308
 #: ../plug-ins/common/decompose.c:179
@@ -837,14 +837,14 @@ msgstr "Sămânță fixă"
 
 #: ../plug-ins/common/cml-explorer.c:1294
 msgid "Random Seed"
-msgstr "Sămânță aleatoare"
+msgstr "Sămânță aleatorie"
 
 #. The Load button
 #: ../plug-ins/common/cml-explorer.c:1309
 #: ../plug-ins/common/cml-explorer.c:2160 ../plug-ins/common/curve-bend.c:1555
 #: ../plug-ins/common/curve-bend.c:2138 ../plug-ins/common/file-cel.c:952
 #: ../plug-ins/common/file-jp2-load.c:962
-#: ../plug-ins/common/file-raw-data.c:1836 ../plug-ins/common/qbist.c:721
+#: ../plug-ins/common/file-raw-data.c:1817 ../plug-ins/common/qbist.c:721
 #: ../plug-ins/common/qbist.c:885 ../plug-ins/common/sphere-designer.c:2210
 #: ../plug-ins/common/sphere-designer.c:2610 ../plug-ins/file-fits/fits.c:1151
 #: ../plug-ins/file-fli/fli-gimp.c:878 ../plug-ins/flame/flame.c:483
@@ -913,7 +913,7 @@ msgstr "Decalaj de pornire:"
 
 #: ../plug-ins/common/cml-explorer.c:1409
 msgid "Seed of Random (only for \"From Seed\" Modes)"
-msgstr "Sămânță de aleator (numai pentru modurile „Din sămânță”)"
+msgstr "Sămânță de aleatoriu (numai pentru modurile „Din sămânță”)"
 
 #: ../plug-ins/common/cml-explorer.c:1420
 msgid "Seed:"
@@ -1048,7 +1048,7 @@ msgstr "Graficul configurărilor curente"
 #: ../plug-ins/gfig/gfig-dialog.c:1394
 #: ../plug-ins/ifs-compose/ifs-compose.c:1165
 #: ../plug-ins/imagemap/imap_menu.c:156
-#: ../plug-ins/metadata/metadata-viewer.c:227
+#: ../plug-ins/metadata/metadata-viewer.c:260
 msgid "_Close"
 msgstr "Înc_hide"
 
@@ -1061,18 +1061,18 @@ msgid "Save CML Explorer Parameters"
 msgstr "Salvare parametri explorator CML"
 
 #: ../plug-ins/common/cml-explorer.c:2078 ../plug-ins/common/curve-bend.c:891
-#: ../plug-ins/common/file-dicom.c:1371 ../plug-ins/common/file-mng.c:648
+#: ../plug-ins/common/file-dicom.c:1524 ../plug-ins/common/file-mng.c:648
 #: ../plug-ins/common/file-mng.c:985 ../plug-ins/common/file-pcx.c:874
-#: ../plug-ins/common/file-pdf-save.c:480 ../plug-ins/common/file-png.c:1614
-#: ../plug-ins/common/file-raw-data.c:1192
-#: ../plug-ins/common/file-raw-data.c:1221 ../plug-ins/common/file-sunras.c:610
-#: ../plug-ins/common/file-tga.c:1219 ../plug-ins/common/file-xmc.c:1504
+#: ../plug-ins/common/file-pdf-save.c:480 ../plug-ins/common/file-png.c:1618
+#: ../plug-ins/common/file-raw-data.c:1173
+#: ../plug-ins/common/file-raw-data.c:1202 ../plug-ins/common/file-sunras.c:610
+#: ../plug-ins/common/file-tga.c:1222 ../plug-ins/common/file-xmc.c:1504
 #: ../plug-ins/common/sphere-designer.c:2121
-#: ../plug-ins/file-bmp/bmp-save.c:318 ../plug-ins/file-fits/fits.c:481
+#: ../plug-ins/file-bmp/bmp-save.c:327 ../plug-ins/file-fits/fits.c:481
 #: ../plug-ins/file-fli/fli-gimp.c:757 ../plug-ins/file-ico/ico-save.c:1087
-#: ../plug-ins/file-jpeg/jpeg-save.c:333 ../plug-ins/file-psd/psd-save.c:1726
-#: ../plug-ins/file-tiff/file-tiff-save.c:979
-#: ../plug-ins/file-tiff/file-tiff-save.c:1089 ../plug-ins/flame/flame.c:450
+#: ../plug-ins/file-jpeg/jpeg-save.c:333 ../plug-ins/file-psd/psd-save.c:1725
+#: ../plug-ins/file-tiff/file-tiff-save.c:970
+#: ../plug-ins/file-tiff/file-tiff-save.c:1072 ../plug-ins/flame/flame.c:450
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1548
 #: ../plug-ins/gfig/gfig.c:794 ../plug-ins/ifs-compose/ifs-compose.c:2390
 #: ../plug-ins/lighting/lighting-ui.c:1232
@@ -1092,18 +1092,18 @@ msgstr "Încărcare parametri explorator CML"
 
 #: ../plug-ins/common/cml-explorer.c:2251 ../plug-ins/common/curve-bend.c:944
 #: ../plug-ins/common/file-cel.c:300 ../plug-ins/common/file-cel.c:351
-#: ../plug-ins/common/file-cel.c:591 ../plug-ins/common/file-dicom.c:342
+#: ../plug-ins/common/file-cel.c:591 ../plug-ins/common/file-dicom.c:346
 #: ../plug-ins/common/file-gif-load.c:361 ../plug-ins/common/file-mng.c:1158
 #: ../plug-ins/common/file-pcx.c:378 ../plug-ins/common/file-png.c:941
-#: ../plug-ins/common/file-ps.c:1071 ../plug-ins/common/file-ps.c:3348
+#: ../plug-ins/common/file-ps.c:1075 ../plug-ins/common/file-ps.c:3397
 #: ../plug-ins/common/file-psp.c:2228 ../plug-ins/common/file-psp.c:2278
 #: ../plug-ins/common/file-raw-data.c:477
-#: ../plug-ins/common/file-raw-data.c:1303 ../plug-ins/common/file-sunras.c:436
+#: ../plug-ins/common/file-raw-data.c:1284 ../plug-ins/common/file-sunras.c:436
 #: ../plug-ins/common/file-svg.c:329 ../plug-ins/common/file-svg.c:647
 #: ../plug-ins/common/file-tga.c:446 ../plug-ins/common/file-xbm.c:747
 #: ../plug-ins/common/file-xmc.c:665 ../plug-ins/common/file-xmc.c:858
 #: ../plug-ins/common/file-xwd.c:455 ../plug-ins/common/sphere-designer.c:2010
-#: ../plug-ins/file-bmp/bmp-load.c:226 ../plug-ins/file-faxg3/faxg3.c:234
+#: ../plug-ins/file-bmp/bmp-load.c:226 ../plug-ins/file-faxg3/faxg3.c:236
 #: ../plug-ins/file-fits/fits.c:360 ../plug-ins/file-fli/fli-gimp.c:462
 #: ../plug-ins/file-fli/fli-gimp.c:501 ../plug-ins/file-ico/ico-load.c:672
 #: ../plug-ins/file-ico/ico-load.c:750 ../plug-ins/file-jpeg/jpeg-load.c:96
@@ -1256,7 +1256,7 @@ msgstr "Inversează ordinea"
 
 #: ../plug-ins/common/colormap-remap.c:517
 msgid "Reset Order"
-msgstr "Resetează ordinea"
+msgstr "Restabilește ordinea"
 
 # titlu pe bară
 #: ../plug-ins/common/colormap-remap.c:616
@@ -1274,7 +1274,7 @@ msgstr "Rearanjare hartă de culori"
 #: ../plug-ins/ifs-compose/ifs-compose.c:762
 #: ../plug-ins/selection-to-path/selection-to-path.c:308
 msgid "_Reset"
-msgstr "_Resetează"
+msgstr "_Restabilește"
 
 #: ../plug-ins/common/colormap-remap.c:720
 msgid ""
@@ -1388,7 +1388,7 @@ msgstr "Crominanță _roșu cr709:"
 #. * right type of raw data.
 #.
 #: ../plug-ins/common/compose.c:191 ../plug-ins/common/decompose.c:170
-#: ../plug-ins/common/file-raw-data.c:1939
+#: ../plug-ins/common/file-raw-data.c:1920
 msgid "RGB"
 msgstr "RGB"
 
@@ -1456,8 +1456,8 @@ msgid ""
 "You can only run 'Recompose' if the active image was originally produced by "
 "'Decompose'."
 msgstr ""
-"Puteți porni „Recompune” numai dacă imaginea activă a fost produsă la "
-"origine de comanda „Descompune”."
+"Puteți rula „Recompune” numai dacă imaginea activă a fost produsă la origine "
+"de comanda „Descompune”."
 
 #: ../plug-ins/common/compose.c:499
 msgid "Error scanning 'decompose-data' parasite: too few layers found"
@@ -1544,12 +1544,12 @@ msgid "Uniform"
 msgstr "Uniform"
 
 #: ../plug-ins/common/contrast-retinex.c:319
-#: ../plug-ins/metadata/metadata-tags.c:219
+#: ../plug-ins/metadata/metadata-tags.c:238
 msgid "Low"
 msgstr "Scăzut"
 
 #: ../plug-ins/common/contrast-retinex.c:320
-#: ../plug-ins/metadata/metadata-tags.c:219
+#: ../plug-ins/metadata/metadata-tags.c:238
 msgid "High"
 msgstr "Înalt"
 
@@ -1732,7 +1732,7 @@ msgstr "Interschimbă cele două curbe"
 
 #: ../plug-ins/common/curve-bend.c:1543
 msgid "Reset the active curve"
-msgstr "Resetează curba activă"
+msgstr "Restabilește curba activă"
 
 #: ../plug-ins/common/curve-bend.c:1560
 msgid "Load the curves from a file"
@@ -1967,7 +1967,7 @@ msgstr "Sursa 2:"
 msgid "O_verlap:"
 msgstr "S_uprapunere:"
 
-#: ../plug-ins/common/depth-merge.c:741 ../plug-ins/common/file-raw-data.c:1973
+#: ../plug-ins/common/depth-merge.c:741 ../plug-ins/common/file-raw-data.c:1954
 msgid "O_ffset:"
 msgstr "_Decalaj:"
 
@@ -2040,8 +2040,8 @@ msgid "Destripe"
 msgstr "Eliminare dungi"
 
 #: ../plug-ins/common/destripe.c:500 ../plug-ins/common/file-html-table.c:647
-#: ../plug-ins/common/file-ps.c:3473 ../plug-ins/common/file-ps.c:3678
-#: ../plug-ins/common/file-raw-data.c:1988
+#: ../plug-ins/common/file-ps.c:3522 ../plug-ins/common/file-ps.c:3727
+#: ../plug-ins/common/file-raw-data.c:1969
 #: ../plug-ins/common/smooth-palette.c:458 ../plug-ins/common/tile.c:465
 #: ../plug-ins/imagemap/imap_cmd_guides.c:163
 #: ../plug-ins/imagemap/imap_rectangle.c:399
@@ -2136,7 +2136,7 @@ msgstr "Artă ASCII"
 msgid "Text"
 msgstr "Text"
 
-#: ../plug-ins/common/file-aa.c:384 ../plug-ins/file-dds/ddswrite.c:2009
+#: ../plug-ins/common/file-aa.c:384 ../plug-ins/file-dds/ddswrite.c:2036
 msgid "_Format:"
 msgstr "_Format:"
 
@@ -2191,23 +2191,23 @@ msgstr "EOF sau eroare la citirea antetului de imagine"
 #.
 #. * Open the file for reading...
 #.
-#: ../plug-ins/common/file-cel.c:342 ../plug-ins/common/file-dicom.c:334
-#: ../plug-ins/common/file-gegl.c:312 ../plug-ins/common/file-gif-load.c:353
-#: ../plug-ins/common/file-heif.c:696 ../plug-ins/common/file-jp2-load.c:1077
-#: ../plug-ins/common/file-pcx.c:370 ../plug-ins/common/file-pdf-load.c:1035
+#: ../plug-ins/common/file-cel.c:342 ../plug-ins/common/file-dicom.c:338
+#: ../plug-ins/common/file-gegl.c:322 ../plug-ins/common/file-gif-load.c:353
+#: ../plug-ins/common/file-heif.c:703 ../plug-ins/common/file-jp2-load.c:1077
+#: ../plug-ins/common/file-pcx.c:370 ../plug-ins/common/file-pdf-load.c:1048
 #: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:933
-#: ../plug-ins/common/file-pnm.c:566 ../plug-ins/common/file-ps.c:1063
-#: ../plug-ins/common/file-raw-data.c:1296 ../plug-ins/common/file-sunras.c:429
+#: ../plug-ins/common/file-pnm.c:566 ../plug-ins/common/file-ps.c:1067
+#: ../plug-ins/common/file-raw-data.c:1277 ../plug-ins/common/file-sunras.c:429
 #: ../plug-ins/common/file-tga.c:438 ../plug-ins/common/file-wmf.c:1014
 #: ../plug-ins/common/file-xbm.c:740 ../plug-ins/common/file-xmc.c:655
 #: ../plug-ins/common/file-xpm.c:356 ../plug-ins/common/file-xwd.c:448
 #: ../plug-ins/file-bmp/bmp-load.c:218 ../plug-ins/file-exr/file-exr.c:183
-#: ../plug-ins/file-faxg3/faxg3.c:218 ../plug-ins/file-fli/fli-gimp.c:494
+#: ../plug-ins/file-faxg3/faxg3.c:220 ../plug-ins/file-fli/fli-gimp.c:494
 #: ../plug-ins/file-ico/ico-load.c:665 ../plug-ins/file-jpeg/jpeg-load.c:89
 #: ../plug-ins/file-psd/psd-load.c:135
 #: ../plug-ins/file-raw/file-darktable.c:399
 #: ../plug-ins/file-raw/file-rawtherapee.c:319 ../plug-ins/file-sgi/sgi.c:325
-#: ../plug-ins/file-tiff/file-tiff-load.c:179
+#: ../plug-ins/file-tiff/file-tiff-load.c:299
 #, c-format
 msgid "Opening '%s'"
 msgstr "Deschidere „%s”"
@@ -2245,7 +2245,7 @@ msgstr "EOF sau eroare la citirea datelor de imagine"
 #: ../plug-ins/common/file-cel.c:557
 #, c-format
 msgid "Unsupported bit depth (%d)!"
-msgstr "Adâncime de bit neacceptată (%d)!"
+msgstr "Adâncime de biți neacceptată (%d)!"
 
 #: ../plug-ins/common/file-cel.c:642 ../plug-ins/common/file-cel.c:654
 #, c-format
@@ -2273,7 +2273,6 @@ msgstr "„%s”: număr nelegal de culori: %u"
 msgid "'%s': EOF or error while reading palette data"
 msgstr "„%s”: EOF sau eroare la citirea datelor de paletă"
 
-# hm ? fiind fără puncte-puncte poate ar trebui altfel și fără „se”
 #. init the progress meter
 #.
 #. * Open the file and initialize the PNG write "engine"...
@@ -2282,20 +2281,21 @@ msgstr "„%s”: EOF sau eroare la citirea datelor de paletă"
 #.
 #. * Open the file for writing...
 #.
-#: ../plug-ins/common/file-cel.c:790 ../plug-ins/common/file-gif-save.c:865
-#: ../plug-ins/common/file-heif.c:1268 ../plug-ins/common/file-html-table.c:238
-#: ../plug-ins/common/file-pcx.c:761 ../plug-ins/common/file-pix.c:538
-#: ../plug-ins/common/file-png.c:1607 ../plug-ins/common/file-pnm.c:1249
-#: ../plug-ins/common/file-ps.c:1237 ../plug-ins/common/file-sunras.c:602
-#: ../plug-ins/common/file-tga.c:1213 ../plug-ins/common/file-xbm.c:1040
-#: ../plug-ins/common/file-xpm.c:674 ../plug-ins/common/file-xwd.c:652
-#: ../plug-ins/file-bmp/bmp-save.c:310 ../plug-ins/file-fits/fits.c:473
-#: ../plug-ins/file-fli/fli-gimp.c:725 ../plug-ins/file-ico/ico-save.c:1081
-#: ../plug-ins/file-jpeg/jpeg-save.c:290 ../plug-ins/file-psd/psd-save.c:1697
-#: ../plug-ins/file-sgi/sgi.c:584 ../plug-ins/file-tiff/file-tiff-save.c:969
+#: ../plug-ins/common/file-cel.c:790 ../plug-ins/common/file-gif-save.c:880
+#: ../plug-ins/common/file-html-table.c:238
+#: ../plug-ins/common/file-jpegxl.c:778 ../plug-ins/common/file-pcx.c:761
+#: ../plug-ins/common/file-pix.c:538 ../plug-ins/common/file-png.c:1611
+#: ../plug-ins/common/file-pnm.c:1249 ../plug-ins/common/file-ps.c:1278
+#: ../plug-ins/common/file-sunras.c:602 ../plug-ins/common/file-tga.c:1216
+#: ../plug-ins/common/file-xbm.c:1040 ../plug-ins/common/file-xpm.c:674
+#: ../plug-ins/common/file-xwd.c:652 ../plug-ins/file-bmp/bmp-save.c:319
+#: ../plug-ins/file-fits/fits.c:473 ../plug-ins/file-fli/fli-gimp.c:725
+#: ../plug-ins/file-ico/ico-save.c:1081 ../plug-ins/file-jpeg/jpeg-save.c:290
+#: ../plug-ins/file-psd/psd-save.c:1696 ../plug-ins/file-sgi/sgi.c:584
+#: ../plug-ins/file-tiff/file-tiff-save.c:956
 #, c-format
 msgid "Exporting '%s'"
-msgstr "Se exportă „%s”"
+msgstr "Export „%s”"
 
 #: ../plug-ins/common/file-csource.c:111
 msgid "C source code"
@@ -2307,7 +2307,7 @@ msgstr "Sursă C"
 
 #: ../plug-ins/common/file-csource.c:916
 msgid "_Prefixed name:"
-msgstr "Nume de _prefix:"
+msgstr "Nume _prefixat:"
 
 #: ../plug-ins/common/file-csource.c:925
 msgid "Co_mment:"
@@ -2361,18 +2361,16 @@ msgstr "arhivă xz"
 
 #: ../plug-ins/common/file-compressor.c:421
 msgid "No sensible file extension, saving as compressed XCF."
-msgstr "Nicio extensie de fișier rezonabilă, se va salva ca XCF comprimat."
+msgstr "Nicio extensie de fișier rezonabilă, se salvează ca XCF comprimat."
 
-# hm ? fiind fără puncte-puncte poate ar trebui altfel și fără „se”
 #: ../plug-ins/common/file-compressor.c:444
 #, c-format
 msgid "Compressing '%s'"
-msgstr "Se comprimă „%s”"
+msgstr "Comprimare „%s”"
 
 #: ../plug-ins/common/file-compressor.c:481
 msgid "No sensible file extension, attempting to load with file magic."
-msgstr ""
-"Nicio extensie rezonabilă, se va încerca încărcarea cu detecție magică."
+msgstr "Nicio extensie rezonabilă, se încearcă încărcarea cu detecție magică."
 
 #: ../plug-ins/common/file-desktop-link.c:83
 msgid "Desktop Link"
@@ -2383,24 +2381,34 @@ msgstr "Legătură desktop"
 msgid "Error loading desktop file '%s': %s"
 msgstr "Eroare la încărcarea fișierului desktop „%s”: %s"
 
-#: ../plug-ins/common/file-dicom.c:139
+#: ../plug-ins/common/file-dicom.c:141
 msgid "DICOM image"
 msgstr "Imagine DICOM"
 
-#: ../plug-ins/common/file-dicom.c:164
+#: ../plug-ins/common/file-dicom.c:166
 msgid "Digital Imaging and Communications in Medicine image"
 msgstr "Imagine Digital Imaging and Communications in Medicine"
 
-#: ../plug-ins/common/file-dicom.c:368
+#: ../plug-ins/common/file-dicom.c:372
 #, c-format
 msgid "'%s' is not a DICOM file."
 msgstr "„%s” nu este un fișier DICOM."
 
-#: ../plug-ins/common/file-dicom.c:1336
+#: ../plug-ins/common/file-dicom.c:545
+#, c-format
+msgid "Transfer syntax %s is not supported by GIMP."
+msgstr "Sintaxa de transfer %s nu este acceptată de GIMP."
+
+#: ../plug-ins/common/file-dicom.c:600
+#, c-format
+msgid "%s is not supported by GIMP in combination with samples per pixel: %d"
+msgstr "%s nu este acceptat de GIMP în combinație cu eșantioane per pixel: %d"
+
+#: ../plug-ins/common/file-dicom.c:1489
 msgid "Cannot save images with alpha channel."
 msgstr "Nu se pot salva imagini cu canal alfa."
 
-#: ../plug-ins/common/file-dicom.c:1355 ../plug-ins/common/file-ps.c:1232
+#: ../plug-ins/common/file-dicom.c:1508 ../plug-ins/common/file-ps.c:1273
 #: ../plug-ins/common/file-xwd.c:647 ../plug-ins/file-fits/fits.c:468
 #, c-format
 msgid "Cannot operate on unknown image types."
@@ -2424,15 +2432,15 @@ msgstr "_Descriere:"
 msgid "_Spacing:"
 msgstr "_Spațiere:"
 
-#: ../plug-ins/common/file-gegl.c:73
+#: ../plug-ins/common/file-gegl.c:77
 msgid "Radiance RGBE"
 msgstr "Radianță RGBE"
 
-#: ../plug-ins/common/file-gegl.c:87 ../plug-ins/file-exr/file-exr.c:86
+#: ../plug-ins/common/file-gegl.c:93 ../plug-ins/file-exr/file-exr.c:86
 msgid "OpenEXR image"
 msgstr "Imagine OpenEXR"
 
-#: ../plug-ins/common/file-gegl.c:336
+#: ../plug-ins/common/file-gegl.c:346
 #, c-format
 msgid "Could not open '%s'"
 msgstr "Nu s-a putut deschide „%s”"
@@ -2501,21 +2509,21 @@ msgstr ""
 "Formatul GIF acceptă comentarii numai în codare pe 7 biți ASCII. Nu a fost "
 "salvat niciun comentariu."
 
-#: ../plug-ins/common/file-gif-save.c:838
+#: ../plug-ins/common/file-gif-save.c:853
 msgid ""
 "Cannot export RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
 "Nu se pot exporta imagini color RGB. Convertiți mai întâi la culori indexate "
 "sau în tonuri de gri."
 
-#: ../plug-ins/common/file-gif-save.c:1035
+#: ../plug-ins/common/file-gif-save.c:1058
 msgid "Delay inserted to prevent evil CPU-sucking animation."
 msgstr ""
 "A fost inserată o întârziere pentru a preveni suprasolicitarea draconică a "
 "CPU-ului de către animație."
 
 # hm ? sau chenarele imaginii ?
-#: ../plug-ins/common/file-gif-save.c:1084
+#: ../plug-ins/common/file-gif-save.c:1107
 msgid ""
 "The image you are trying to export as a GIF contains layers which extend "
 "beyond the actual borders of the image."
@@ -2523,12 +2531,12 @@ msgstr ""
 "Imaginea pe care încercați să o exportați ca GIF conține straturi care se "
 "extind dincolo de marginile actuale ale imaginii."
 
-#: ../plug-ins/common/file-gif-save.c:1090
+#: ../plug-ins/common/file-gif-save.c:1113
 msgid "Cr_op"
 msgstr "Dec_upează"
 
 # hm ? sau chenarele imaginii ?
-#: ../plug-ins/common/file-gif-save.c:1101
+#: ../plug-ins/common/file-gif-save.c:1124
 msgid ""
 "The GIF file format does not allow this.  You may choose whether to crop all "
 "of the layers to the image borders, or cancel this export."
@@ -2537,11 +2545,11 @@ msgstr ""
 "straturile să fie decupate la marginile imaginii, sau să anulați acest "
 "export."
 
-#: ../plug-ins/common/file-gif-save.c:1235
+#: ../plug-ins/common/file-gif-save.c:1258
 msgid "GIF"
 msgstr "GIF"
 
-#: ../plug-ins/common/file-gif-save.c:1243
+#: ../plug-ins/common/file-gif-save.c:1266
 #, c-format
 msgid ""
 "Error loading UI file '%s':\n"
@@ -2550,11 +2558,11 @@ msgstr ""
 "Eroare la încărcarea fișierului UI „%s”:\n"
 "%s"
 
-#: ../plug-ins/common/file-gif-save.c:1296
+#: ../plug-ins/common/file-gif-save.c:1319
 msgid "I don't care"
 msgstr "Nu-mi pasă"
 
-#: ../plug-ins/common/file-gif-save.c:1317
+#: ../plug-ins/common/file-gif-save.c:1340
 msgid ""
 "You can only export as animation when the image has more than one layer. The "
 "image you are trying to export only has one layer."
@@ -2564,7 +2572,7 @@ msgstr ""
 
 # tip de fișier
 #. translators: the %d is *always* 240 here
-#: ../plug-ins/common/file-gif-save.c:2533
+#: ../plug-ins/common/file-gif-save.c:2556
 #, c-format
 msgid "The default comment is limited to %d characters."
 msgstr "Comentariul implicit este limitat la %d caractere."
@@ -2661,73 +2669,78 @@ msgstr "Exportă imagini AVIF"
 msgid "Save image in AV1 Image File Format (AVIF)"
 msgstr "Salvează imaginea în format de fișier AV1 (AVIF)"
 
-#: ../plug-ins/common/file-heif.c:734 ../plug-ins/common/file-heif.c:767
-#: ../plug-ins/common/file-heif.c:806 ../plug-ins/common/file-heif.c:872
+#: ../plug-ins/common/file-heif.c:742 ../plug-ins/common/file-heif.c:775
+#: ../plug-ins/common/file-heif.c:814 ../plug-ins/common/file-heif.c:880
 #, c-format
 msgid "Loading HEIF image failed: %s"
 msgstr "Încărcarea imaginii HEIF a eșuat: %s"
 
-#: ../plug-ins/common/file-heif.c:756
+#: ../plug-ins/common/file-heif.c:764
 msgid "Loading HEIF image failed: Input file contains no readable images"
 msgstr ""
 "Încărcarea imaginii HEIF a eșuat: fișierul de intrare nu conține imagini "
 "lizibile"
 
-#: ../plug-ins/common/file-heif.c:999
+#: ../plug-ins/common/file-heif.c:1007
 msgid "image content"
 msgstr "conținut de imagine"
 
-#: ../plug-ins/common/file-heif.c:1318 ../plug-ins/common/file-heif.c:1562
+#: ../plug-ins/common/file-heif.c:1328
+#, c-format
+msgid "Exporting '%s' using %s encoder"
+msgstr "Export „%s” folosind codorul %s"
+
+#: ../plug-ins/common/file-heif.c:1379 ../plug-ins/common/file-heif.c:1633
 #, c-format
 msgid "Encoding HEIF image failed: %s"
 msgstr "Codarea imaginii HEIF a eșuat: %s"
 
-#: ../plug-ins/common/file-heif.c:1599
+#: ../plug-ins/common/file-heif.c:1670
 #, c-format
 msgid "Writing HEIF image failed: %s"
 msgstr "Scrierea imaginii HEIF a eșuat: %s"
 
-#: ../plug-ins/common/file-heif.c:1688
+#: ../plug-ins/common/file-heif.c:1759
 msgid "primary"
 msgstr "primar"
 
-#: ../plug-ins/common/file-heif.c:1833
+#: ../plug-ins/common/file-heif.c:1904
 msgid "Load HEIF Image"
 msgstr "Încarcă o imagine HEIF"
 
 # hm ? titlu sau acțiune ?
-#: ../plug-ins/common/file-heif.c:1847
+#: ../plug-ins/common/file-heif.c:1918
 msgid "Select Image"
 msgstr "Selectare imagine"
 
-#: ../plug-ins/common/file-heif.c:2013
+#: ../plug-ins/common/file-heif.c:2084
 msgid "Nearly _lossless"
 msgstr "_Aproape fără pierderi"
 
-#: ../plug-ins/common/file-heif.c:2017 ../plug-ins/file-jpeg/jpeg-save.c:835
+#: ../plug-ins/common/file-heif.c:2088 ../plug-ins/file-jpeg/jpeg-save.c:835
 msgid "_Quality:"
 msgstr "_Calitate:"
 
-#: ../plug-ins/common/file-heif.c:2060
+#: ../plug-ins/common/file-heif.c:2131
 msgid "Bit depth:"
 msgstr "Adâncime de biți:"
 
-#: ../plug-ins/common/file-heif.c:2066
+#: ../plug-ins/common/file-heif.c:2137
 msgid "8 bit/channel"
 msgstr "8 biți/canal"
 
-#: ../plug-ins/common/file-heif.c:2067
+#: ../plug-ins/common/file-heif.c:2138
 msgid "10 bit/channel"
 msgstr "10 biți/canal"
 
-#: ../plug-ins/common/file-heif.c:2068
+#: ../plug-ins/common/file-heif.c:2139
 msgid "12 bit/channel"
 msgstr "12 biți/canal"
 
 #. Color profile
-#: ../plug-ins/common/file-heif.c:2077 ../plug-ins/file-jpeg/jpeg-save.c:974
-#: ../plug-ins/file-webp/file-webp-dialog.c:387
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:10
+#: ../plug-ins/common/file-heif.c:2148 ../plug-ins/file-jpeg/jpeg-save.c:974
+#: ../plug-ins/file-webp/file-webp-dialog.c:404
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:12
 msgid "Save color _profile"
 msgstr "Salvează _profilul de culoare"
 
@@ -2837,8 +2850,8 @@ msgid "The width for each table cell.  Can be a number or a percent."
 msgstr ""
 "Lățimea pentru fiecare celulă de tabel. Poate fi un număr sau un procent."
 
-#: ../plug-ins/common/file-html-table.c:663 ../plug-ins/common/file-ps.c:3486
-#: ../plug-ins/common/file-ps.c:3690 ../plug-ins/common/file-raw-data.c:2004
+#: ../plug-ins/common/file-html-table.c:663 ../plug-ins/common/file-ps.c:3535
+#: ../plug-ins/common/file-ps.c:3739 ../plug-ins/common/file-raw-data.c:1985
 #: ../plug-ins/common/film.c:945 ../plug-ins/common/smooth-palette.c:463
 #: ../plug-ins/common/tile.c:469 ../plug-ins/imagemap/imap_cmd_guides.c:173
 #: ../plug-ins/imagemap/imap_rectangle.c:406
@@ -2956,9 +2969,13 @@ msgstr "Nu s-a putut converti imaginea xvYCC JP2 din „%s” la RGB."
 msgid "Unsupported color space in JP2 image '%s'."
 msgstr "Spațiu de culoare neacceptat în imaginea JP2 „%s”."
 
+#: ../plug-ins/common/file-jpegxl.c:82 ../plug-ins/common/file-jpegxl.c:99
+msgid "JPEG XL image"
+msgstr "Imagine JPEG XL"
+
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
-#: ../plug-ins/common/file-mng.c:533 ../plug-ins/common/file-png.c:2341
+#: ../plug-ins/common/file-mng.c:533 ../plug-ins/common/file-png.c:2345
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr "Nu s-a putut salva transparența, se va salva opacitatea în loc."
 
@@ -2991,7 +3008,7 @@ msgid "Save creation _time"
 msgstr "Salvează _timpul de creare"
 
 #. Dialog init
-#: ../plug-ins/common/file-mng.c:1418 ../plug-ins/common/file-png.c:2399
+#: ../plug-ins/common/file-mng.c:1418 ../plug-ins/common/file-png.c:2403
 msgid "PNG"
 msgstr "PNG"
 
@@ -3017,7 +3034,7 @@ msgstr "Toate JNG"
 
 #: ../plug-ins/common/file-mng.c:1437
 msgid "Default chunks type:"
-msgstr "Tip implicit de porțiuni:"
+msgstr "Tip implicit de blocuri:"
 
 #: ../plug-ins/common/file-mng.c:1440
 msgid "Combine"
@@ -3061,7 +3078,7 @@ msgstr "Decalaj implicit de cadru:"
 
 #. label for 'ms' adjustment
 #: ../plug-ins/common/file-mng.c:1551
-#: ../plug-ins/file-webp/file-webp-dialog.c:350
+#: ../plug-ins/file-webp/file-webp-dialog.c:351
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:8
 msgid "milliseconds"
 msgstr "milisecunde"
@@ -3100,13 +3117,13 @@ msgstr "Nu s-a putut citi antetul din „%s”"
 msgid "'%s' is not a PCX file"
 msgstr "„%s” nu este un fișier PCX"
 
-#: ../plug-ins/common/file-pcx.c:413 ../plug-ins/file-bmp/bmp-load.c:723
+#: ../plug-ins/common/file-pcx.c:413 ../plug-ins/file-bmp/bmp-load.c:726
 #: ../plug-ins/file-psd/psd-load.c:315
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "Lățime neacceptată sau nevalidă de imagine: %d"
 
-#: ../plug-ins/common/file-pcx.c:419 ../plug-ins/file-bmp/bmp-load.c:729
+#: ../plug-ins/common/file-pcx.c:419 ../plug-ins/file-bmp/bmp-load.c:732
 #: ../plug-ins/file-psd/psd-load.c:307
 #, c-format
 msgid "Unsupported or invalid image height: %d"
@@ -3159,8 +3176,8 @@ msgid "Writing to file '%s' failed: %s"
 msgstr "Scrierea în fișierul „%s” a eșuat: %s"
 
 # hm ? netradus ?
-#: ../plug-ins/common/file-pdf-load.c:321
-#: ../plug-ins/common/file-pdf-load.c:340
+#: ../plug-ins/common/file-pdf-load.c:324
+#: ../plug-ins/common/file-pdf-load.c:343
 #: ../plug-ins/common/file-pdf-save.c:350
 #: ../plug-ins/common/file-pdf-save.c:367
 msgid "Portable Document Format"
@@ -3170,7 +3187,7 @@ msgstr "Portable Document Format"
 #. * second is out-of-range page number, third is
 #. * number of pages. Specify order as in English if needed.
 #.
-#: ../plug-ins/common/file-pdf-load.c:504
+#: ../plug-ins/common/file-pdf-load.c:507
 #, c-format
 msgid "PDF document '%1$s' has %3$d page. Page %2$d is out of range."
 msgid_plural "PDF document '%1$s' has %3$d pages. Page %2$d is out of range."
@@ -3184,66 +3201,71 @@ msgstr[2] ""
 "Documentul PDF „%1$s” are %3$d de pagini. Pagina %2$d este în afara "
 "intervalului."
 
-#: ../plug-ins/common/file-pdf-load.c:685
+#: ../plug-ins/common/file-pdf-load.c:689
 msgid "PDF is password protected, please input the password:"
 msgstr "Documentul PDF este protejat cu parolă; introduceți parola:"
 
-#: ../plug-ins/common/file-pdf-load.c:695
+#: ../plug-ins/common/file-pdf-load.c:699
 msgid "Encrypted PDF"
 msgstr "PDF criptat"
 
-#: ../plug-ins/common/file-pdf-load.c:722
+#: ../plug-ins/common/file-pdf-load.c:726
 msgid "Wrong password! Please input the right one:"
 msgstr "Parolă greșită! Introduceți-o pe cea corectă:"
 
-#: ../plug-ins/common/file-pdf-load.c:740
+#: ../plug-ins/common/file-pdf-load.c:744
 #, c-format
 msgid "Could not load '%s': %s"
 msgstr "Nu s-a putut încărca „%s”: %s"
 
-#: ../plug-ins/common/file-pdf-load.c:1069
+#: ../plug-ins/common/file-pdf-load.c:1085
 #, c-format
 msgid "%s-%s"
 msgstr "%s-%s"
 
-#: ../plug-ins/common/file-pdf-load.c:1071 ../plug-ins/common/file-ps.c:1156
+#: ../plug-ins/common/file-pdf-load.c:1087 ../plug-ins/common/file-ps.c:1197
 #, c-format
 msgid "%s-pages"
 msgstr "%s-pagini"
 
-#: ../plug-ins/common/file-pdf-load.c:1260
+#: ../plug-ins/common/file-pdf-load.c:1278
 msgid "Import from PDF"
 msgstr "Import din PDF"
 
-#: ../plug-ins/common/file-pdf-load.c:1265 ../plug-ins/common/file-ps.c:3399
-#: ../plug-ins/file-tiff/file-tiff-load.c:1926
-#: ../plug-ins/metadata/metadata-editor.c:5649
+#: ../plug-ins/common/file-pdf-load.c:1283 ../plug-ins/common/file-ps.c:3448
+#: ../plug-ins/file-tiff/file-tiff-load.c:2665
+#: ../plug-ins/metadata/metadata-editor.c:4627
 msgid "_Import"
 msgstr "_Importă"
 
-#: ../plug-ins/common/file-pdf-load.c:1298
+#: ../plug-ins/common/file-pdf-load.c:1316
 msgid "Error getting number of pages from the given PDF file."
 msgstr "Eroare la obținerea numărului de pagini din fișierul PDF dat."
 
-#: ../plug-ins/common/file-pdf-load.c:1344
+#. "Load in reverse order" toggle button
+#: ../plug-ins/common/file-pdf-load.c:1357
+msgid "Load in reverse order"
+msgstr "Încarcă în ordine inversă"
+
+#: ../plug-ins/common/file-pdf-load.c:1375
 msgid "_Width (pixels):"
 msgstr "_Lățime (pixeli):"
 
-#: ../plug-ins/common/file-pdf-load.c:1345
+#: ../plug-ins/common/file-pdf-load.c:1376
 msgid "_Height (pixels):"
 msgstr "Î_nălțime (pixeli):"
 
-#: ../plug-ins/common/file-pdf-load.c:1347
+#: ../plug-ins/common/file-pdf-load.c:1378
 msgid "_Resolution:"
 msgstr "_Rezoluție:"
 
 #. Antialiasing
-#: ../plug-ins/common/file-pdf-load.c:1358
+#: ../plug-ins/common/file-pdf-load.c:1389
 msgid "Use _Anti-aliasing"
 msgstr "Folosește _antialias"
 
-#: ../plug-ins/common/file-pdf-load.c:1636
-#: ../plug-ins/common/file-pdf-load.c:1637 ../plug-ins/common/file-svg.c:852
+#: ../plug-ins/common/file-pdf-load.c:1667
+#: ../plug-ins/common/file-pdf-load.c:1668 ../plug-ins/common/file-svg.c:852
 #: ../plug-ins/common/file-wmf.c:710 ../plug-ins/print/print-page-layout.c:305
 #, c-format
 msgid "pixels/%a"
@@ -3338,8 +3360,8 @@ msgstr "Straturi ca pagini (%s)"
 
 #: ../plug-ins/common/file-pdf-save.c:1099
 #: ../plug-ins/common/file-pdf-save.c:1167
-#: ../plug-ins/common/file-pdf-save.c:1265 ../plug-ins/common/file-ps.c:1892
-#: ../plug-ins/file-tiff/file-tiff-load.c:1051
+#: ../plug-ins/common/file-pdf-save.c:1265 ../plug-ins/common/file-ps.c:1941
+#: ../plug-ins/file-tiff/file-tiff-load.c:1546
 #, c-format
 msgid "Page %d"
 msgstr "Pagina %d"
@@ -3351,7 +3373,7 @@ msgstr ""
 "imagine!"
 
 #: ../plug-ins/common/file-pdf-save.c:1312
-#: ../plug-ins/print/print-draw-page.c:123
+#: ../plug-ins/print/print-draw-page.c:125
 msgid "Cannot handle the size (either width or height) of the image."
 msgstr ""
 "Nu se poate manipula dimensiunea (fie lățimea, fie înălțimea) imaginii."
@@ -3398,7 +3420,7 @@ msgstr "Model de culoare necunoscut în fișierul PNG „%s”."
 msgid "Could not create new image for '%s': %s"
 msgstr "Nu s-a putut crea o imagine nouă pentru „%s”: %s"
 
-#: ../plug-ins/common/file-png.c:1144
+#: ../plug-ins/common/file-png.c:1147
 msgid ""
 "The PNG file specifies an offset that caused the layer to be positioned "
 "outside the image."
@@ -3406,19 +3428,19 @@ msgstr ""
 "Fișierul PNG a specificat un decalaj care a determinat stratul să fie "
 "poziționat în afara imaginii."
 
-#: ../plug-ins/common/file-png.c:1404
+#: ../plug-ins/common/file-png.c:1408
 msgid "Apply PNG Offset"
 msgstr "Aplică decalajul PNG"
 
-#: ../plug-ins/common/file-png.c:1408
+#: ../plug-ins/common/file-png.c:1412
 msgid "Ignore PNG offset"
 msgstr "Ignoră decalajul PNG"
 
-#: ../plug-ins/common/file-png.c:1409
+#: ../plug-ins/common/file-png.c:1413
 msgid "Apply PNG offset to layer"
 msgstr "Aplică decalajul PNG la strat"
 
-#: ../plug-ins/common/file-png.c:1434
+#: ../plug-ins/common/file-png.c:1438
 #, c-format
 msgid ""
 "The PNG image you are importing specifies an offset of %d, %d. Do you want "
@@ -3428,31 +3450,31 @@ msgstr ""
 "fie aplicat acest decalaj la strat?"
 
 # a se vedea discuția despe struct de aici http://groups.google.com/group/diacritice/browse_thread/thread/d3bdbc53b15cc4ca
-#: ../plug-ins/common/file-png.c:1573
+#: ../plug-ins/common/file-png.c:1577
 #, c-format
 msgid "Error creating PNG write struct while exporting '%s'."
 msgstr "Eroare la crearea struct de scriere PNG în timpul exportării „%s”."
 
-#: ../plug-ins/common/file-png.c:1582
+#: ../plug-ins/common/file-png.c:1586
 #, c-format
 msgid "Error while exporting '%s'. Could not create PNG header info structure."
 msgstr ""
 "Eroare la exportarea „%s”. Nu s-a putut crea structura informațiilor din "
 "antetul PNG."
 
-#: ../plug-ins/common/file-png.c:1590
+#: ../plug-ins/common/file-png.c:1594
 #, c-format
 msgid "Error while exporting '%s'. Could not export image."
 msgstr "Eroare la exportarea „%s”. Nu s-a putut exporta imaginea."
 
-#: ../plug-ins/common/file-png.c:2416 ../plug-ins/common/file-raw-data.c:2131
-#: ../plug-ins/file-tiff/file-tiff-save.c:1166
+#: ../plug-ins/common/file-png.c:2420 ../plug-ins/common/file-raw-data.c:2112
+#: ../plug-ins/file-tiff/file-tiff-save.c:1167
 #, c-format
 msgid "Error loading UI file '%s': %s"
 msgstr "Eroare la încărcarea fișierului UI „%s”: %s"
 
-#: ../plug-ins/common/file-png.c:2417 ../plug-ins/common/file-raw-data.c:2132
-#: ../plug-ins/file-tiff/file-tiff-save.c:1167
+#: ../plug-ins/common/file-png.c:2421 ../plug-ins/common/file-raw-data.c:2113
+#: ../plug-ins/file-tiff/file-tiff-save.c:1168
 msgid "Unknown error"
 msgstr "Eroare necunoscută"
 
@@ -3542,131 +3564,140 @@ msgstr "_Raw"
 msgid "_ASCII"
 msgstr "_ASCII"
 
-#: ../plug-ins/common/file-ps.c:652 ../plug-ins/common/file-ps.c:719
+#: ../plug-ins/common/file-ps.c:654 ../plug-ins/common/file-ps.c:721
 msgid "PostScript document"
 msgstr "Document PostScript"
 
-#: ../plug-ins/common/file-ps.c:671 ../plug-ins/common/file-ps.c:736
+#: ../plug-ins/common/file-ps.c:673 ../plug-ins/common/file-ps.c:738
 msgid "Encapsulated PostScript image"
 msgstr "Imagine Encapsulated PostScript"
 
-#: ../plug-ins/common/file-ps.c:1081
+#: ../plug-ins/common/file-ps.c:1085
 #, c-format
 msgid "Could not interpret PostScript file '%s'"
 msgstr "Nu s-a putut interpreta fișierul PostScript „%s”"
 
-#: ../plug-ins/common/file-ps.c:1219
+#: ../plug-ins/common/file-ps.c:1173
+msgid "Rendered EPS"
+msgstr "EPS randat"
+
+#: ../plug-ins/common/file-ps.c:1260
 #, c-format
 msgid "PostScript export cannot handle images with alpha channels"
 msgstr "Exportul PostScript nu poate manipula imagini cu canale alfa"
 
-#: ../plug-ins/common/file-ps.c:3394
+#: ../plug-ins/common/file-ps.c:3443
 msgid "Import from PostScript"
 msgstr "Import din PostScript"
 
 #. Rendering
-#: ../plug-ins/common/file-ps.c:3438
+#: ../plug-ins/common/file-ps.c:3487
 msgid "Rendering"
 msgstr "Randare"
 
 #. Resolution
-#: ../plug-ins/common/file-ps.c:3457 ../plug-ins/common/file-svg.c:846
+#: ../plug-ins/common/file-ps.c:3506 ../plug-ins/common/file-svg.c:846
 #: ../plug-ins/common/file-wmf.c:704
 msgid "Resolution:"
 msgstr "Rezoluție:"
 
-#: ../plug-ins/common/file-ps.c:3499
+#: ../plug-ins/common/file-ps.c:3548
 msgid "Pages:"
 msgstr "Pagini:"
 
-#: ../plug-ins/common/file-ps.c:3506
+#: ../plug-ins/common/file-ps.c:3555
 msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
 msgstr "Pagini de încărcat (ex.: 1-4 sau 1,3,5-7)"
 
-#: ../plug-ins/common/file-ps.c:3511 ../plug-ins/common/sphere-designer.c:2657
+#: ../plug-ins/common/file-ps.c:3560 ../plug-ins/common/sphere-designer.c:2657
 msgid "Layers"
 msgstr "Straturi"
 
-#: ../plug-ins/common/file-ps.c:3514
+#: ../plug-ins/common/file-ps.c:3563
 msgid "Images"
 msgstr "Imagini"
 
-#: ../plug-ins/common/file-ps.c:3517
+#: ../plug-ins/common/file-ps.c:3566
 msgid "Open as"
 msgstr "Deschide ca"
 
-# hm ? pe baza discuției de aici http://groups.google.com/group/diacritice/browse_thread/thread/d10a79b3e6e6c9db
-#: ../plug-ins/common/file-ps.c:3521
+# pe baza discuției de aici
+# https://groups.google.com/g/diacritice/c/0Qp5s-bmyds
+# a explicațiilor de aici
+# https://thegimptutorials.com/how-to-open-eps-files/
+# și a precizărilor de aici
+# https://discourse.gnome.org/t/the-bounding-box-from-try-bounding-box-is-about-the-one-from-postscript/12559
+#: ../plug-ins/common/file-ps.c:3570
 msgid "Try Bounding Box"
-msgstr "Încearcă un dreptunghi circumscris (BoundingBox)"
+msgstr "Verifică existența spațiilor goale pe baza BoundingBox"
 
 #. Coloring
-#: ../plug-ins/common/file-ps.c:3534
+#: ../plug-ins/common/file-ps.c:3583
 msgid "Coloring"
 msgstr "Colorare"
 
-#: ../plug-ins/common/file-ps.c:3538
+#: ../plug-ins/common/file-ps.c:3587
 msgid "B/W"
 msgstr "Alb-negru"
 
-#: ../plug-ins/common/file-ps.c:3539 ../plug-ins/imagemap/imap_menu.c:228
+#: ../plug-ins/common/file-ps.c:3588 ../plug-ins/imagemap/imap_menu.c:228
 msgid "Gray"
 msgstr "Gri"
 
-#: ../plug-ins/common/file-ps.c:3540 ../plug-ins/common/file-xpm.c:485
+#: ../plug-ins/common/file-ps.c:3589 ../plug-ins/common/file-xpm.c:485
 #: ../plug-ins/gimpressionist/color.c:65
 #: ../plug-ins/gimpressionist/general.c:169
 #: ../plug-ins/imagemap/imap_menu.c:227
 msgid "Color"
 msgstr "Color"
 
-#: ../plug-ins/common/file-ps.c:3541
+#: ../plug-ins/common/file-ps.c:3590
 msgid "Automatic"
 msgstr "Automat"
 
-#: ../plug-ins/common/file-ps.c:3552
+#: ../plug-ins/common/file-ps.c:3601
 msgid "Text antialiasing"
 msgstr "Antialias asupra textului"
 
-#: ../plug-ins/common/file-ps.c:3556 ../plug-ins/common/file-ps.c:3568
+#: ../plug-ins/common/file-ps.c:3605 ../plug-ins/common/file-ps.c:3617
 msgctxt "antialiasing"
 msgid "None"
 msgstr "Fără"
 
-#: ../plug-ins/common/file-ps.c:3557 ../plug-ins/common/file-ps.c:3569
+#: ../plug-ins/common/file-ps.c:3606 ../plug-ins/common/file-ps.c:3618
 msgid "Weak"
 msgstr "Slab"
 
-#: ../plug-ins/common/file-ps.c:3558 ../plug-ins/common/file-ps.c:3570
+#: ../plug-ins/common/file-ps.c:3607 ../plug-ins/common/file-ps.c:3619
 msgid "Strong"
 msgstr "Puternic"
 
-#: ../plug-ins/common/file-ps.c:3564
+#: ../plug-ins/common/file-ps.c:3613
 msgid "Graphic antialiasing"
 msgstr "Antialias asupra graficii"
 
-#: ../plug-ins/common/file-ps.c:3642
+#: ../plug-ins/common/file-ps.c:3691
 msgid "PostScript"
 msgstr "PostScript"
 
 #. Image Size
-#: ../plug-ins/common/file-ps.c:3659
+#: ../plug-ins/common/file-ps.c:3708
 msgid "Image Size"
 msgstr "Dimensiune imagine"
 
-#: ../plug-ins/common/file-ps.c:3702
+#: ../plug-ins/common/file-ps.c:3751
 msgid "_X offset:"
 msgstr "Decalaj _X:"
 
-#: ../plug-ins/common/file-ps.c:3714
+#: ../plug-ins/common/file-ps.c:3763
 msgid "_Y offset:"
 msgstr "Decalaj _Y:"
 
-#: ../plug-ins/common/file-ps.c:3720
+#: ../plug-ins/common/file-ps.c:3769
 msgid "_Keep aspect ratio"
 msgstr "_Păstrează raportul de aspect"
 
-#: ../plug-ins/common/file-ps.c:3726
+#: ../plug-ins/common/file-ps.c:3775
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
@@ -3675,44 +3706,44 @@ msgstr ""
 "încăpea în dimensiunea dată fără a modifica raportul de aspect."
 
 #. Unit
-#: ../plug-ins/common/file-ps.c:3736
+#: ../plug-ins/common/file-ps.c:3785
 msgid "Unit"
 msgstr "Unitate"
 
-#: ../plug-ins/common/file-ps.c:3740
+#: ../plug-ins/common/file-ps.c:3789
 msgid "_Inch"
 msgstr "_Inch"
 
-#: ../plug-ins/common/file-ps.c:3741
+#: ../plug-ins/common/file-ps.c:3790
 msgid "_Millimeter"
 msgstr "_Milimetri"
 
 #. Rotation
-#: ../plug-ins/common/file-ps.c:3752
+#: ../plug-ins/common/file-ps.c:3801
 #: ../plug-ins/map-object/map-object-ui.c:1019
 msgid "Rotation"
 msgstr "Rotire"
 
 #. Format
-#: ../plug-ins/common/file-ps.c:3767
+#: ../plug-ins/common/file-ps.c:3816
 msgid "Output"
 msgstr "Ieșire"
 
-#: ../plug-ins/common/file-ps.c:3773
+#: ../plug-ins/common/file-ps.c:3822
 msgid "_PostScript level 2"
 msgstr "_PostScript nivel 2"
 
-#: ../plug-ins/common/file-ps.c:3782
+#: ../plug-ins/common/file-ps.c:3831
 msgid "_Encapsulated PostScript"
 msgstr "PostS_cript încapsulat"
 
 # apare în dialogul de export .ps
-#: ../plug-ins/common/file-ps.c:3791
+#: ../plug-ins/common/file-ps.c:3840
 msgid "P_review"
 msgstr "P_revizualizează"
 
 # apare în dialogul de export .ps
-#: ../plug-ins/common/file-ps.c:3815
+#: ../plug-ins/common/file-ps.c:3864
 msgid "Preview _size:"
 msgstr "Dimen_siunea previzualizării:"
 
@@ -3765,7 +3796,7 @@ msgstr "Eroare de căutare: %s"
 #: ../plug-ins/common/file-psp.c:848
 #, c-format
 msgid "Invalid general image attribute chunk size."
-msgstr "Dimensiunea porțiunii de atribut general al imaginii nu este validă."
+msgstr "Dimensiunea generală a blocului de atribute de imagine nu este validă."
 
 #: ../plug-ins/common/file-psp.c:870
 #, c-format
@@ -3785,12 +3816,12 @@ msgstr "Adâncime de biți neacceptată: %d"
 #: ../plug-ins/common/file-psp.c:975
 #, c-format
 msgid "Error reading creator keyword chunk"
-msgstr "Eroare la citirea unei porțiuni din cuvântul cheie al creatorului"
+msgstr "Eroare la citirea unui bloc din cuvântul cheie al creatorului"
 
 #: ../plug-ins/common/file-psp.c:981
 #, c-format
 msgid "Invalid keyword chunk header"
-msgstr "Antet nevalid al unei porțiuni din cuvântul cheie"
+msgstr "Antet nevalid al blocului de cuvinte cheie"
 
 #: ../plug-ins/common/file-psp.c:996 ../plug-ins/common/file-psp.c:1023
 #, c-format
@@ -3832,7 +3863,7 @@ msgstr "Sub-bloc de strat %s nevalid, ar trebui să fie LAYER"
 #: ../plug-ins/common/file-psp.c:1773 ../plug-ins/common/file-psp.c:1830
 #, c-format
 msgid "Error reading layer information chunk"
-msgstr "Eroare la citirea unei porțiuni din informațiile de strat"
+msgstr "Eroare la citirea unui bloc din informațiile de strat"
 
 #: ../plug-ins/common/file-psp.c:1872
 #, c-format
@@ -3852,18 +3883,17 @@ msgstr "Sub-bloc de strat %s nevalid, ar trebui să fie CHANNEL"
 #: ../plug-ins/common/file-psp.c:1994
 #, c-format
 msgid "Error reading channel information chunk"
-msgstr "Eroare la citirea unei porțiuni din informațiile de canal"
+msgstr "Eroare la citirea unui bloc din informațiile de canal"
 
 #: ../plug-ins/common/file-psp.c:2017
 #, c-format
 msgid "Invalid channel type %d in channel information chunk"
-msgstr "Tip %d nevalid de canal în porțiunea informațiilor de canal"
+msgstr "Tip nevalid de canal %d în blocul informațiilor de canal"
 
-# hm ?
 #: ../plug-ins/common/file-psp.c:2121 ../plug-ins/common/file-psp.c:2138
 #, c-format
 msgid "Error reading tube data chunk"
-msgstr "Eroare la citirea porțiunii datelor de tub"
+msgstr "Eroare la citirea blocului de date al tubului"
 
 #: ../plug-ins/common/file-psp.c:2239
 #, c-format
@@ -3907,7 +3937,7 @@ msgstr "Date de imagine RAW"
 
 # hm ? cine este digital ?
 #: ../plug-ins/common/file-raw-data.c:304
-#: ../plug-ins/common/file-raw-data.c:1884
+#: ../plug-ins/common/file-raw-data.c:1865
 msgid "Digital Elevation Model data"
 msgstr "Date de model de elevație digital"
 
@@ -3936,7 +3966,7 @@ msgstr ""
 "acceptate sunt: SRTM-1 și SRTM-3. Dacă cunoașteți varianta, rulați cu "
 "argumentul 1 sau 3."
 
-#: ../plug-ins/common/file-raw-data.c:1831
+#: ../plug-ins/common/file-raw-data.c:1812
 msgid "Load Image from Raw Data"
 msgstr "Încarcă imagina din date brute"
 
@@ -3945,16 +3975,16 @@ msgstr "Încarcă imagina din date brute"
 #. * used for 3D surface modeling or relief maps; so it must be
 #. * translated by the proper technical term in your language.
 #.
-#: ../plug-ins/common/file-raw-data.c:1880
+#: ../plug-ins/common/file-raw-data.c:1861
 msgid "Digital Elevation Model data (1 arc-second)"
 msgstr "Date de model de elevație digital (1 secundă de arc)"
 
 # hm ? cine este digital ?
-#: ../plug-ins/common/file-raw-data.c:1882
+#: ../plug-ins/common/file-raw-data.c:1863
 msgid "Digital Elevation Model data (3 arc-seconds)"
 msgstr "Date de model de elevație digital (3 secunde de arc)"
 
-#: ../plug-ins/common/file-raw-data.c:1888
+#: ../plug-ins/common/file-raw-data.c:1869
 msgid "Image"
 msgstr "Imagine"
 
@@ -3966,116 +3996,116 @@ msgstr "Imagine"
 #. * SRTM-3 data are sampled at three arc-seconds and contain 1201 lines and
 #. * 1201 samples with similar overlapping rows and columns."
 #.
-#: ../plug-ins/common/file-raw-data.c:1918
+#: ../plug-ins/common/file-raw-data.c:1899
 msgid "SRTM-1 (1 arc-second)"
 msgstr "SRTM-1 (1 secundă de arc)"
 
-#: ../plug-ins/common/file-raw-data.c:1919
+#: ../plug-ins/common/file-raw-data.c:1900
 msgid "SRTM-3 (3 arc-seconds)"
 msgstr "SRTM-3 (3 secunde de arc)"
 
-#: ../plug-ins/common/file-raw-data.c:1922
+#: ../plug-ins/common/file-raw-data.c:1903
 msgid "_Sample Spacing:"
 msgstr "Mostră de _spațiu:"
 
-#: ../plug-ins/common/file-raw-data.c:1940
+#: ../plug-ins/common/file-raw-data.c:1921
 msgid "RGB Alpha"
 msgstr "Alfa RGB"
 
-#: ../plug-ins/common/file-raw-data.c:1941
+#: ../plug-ins/common/file-raw-data.c:1922
 msgid "RGB565 Big Endian"
 msgstr "RGB565 Big Endian"
 
-#: ../plug-ins/common/file-raw-data.c:1942
+#: ../plug-ins/common/file-raw-data.c:1923
 msgid "RGB565 Little Endian"
 msgstr "RGB565 Little Endian"
 
-#: ../plug-ins/common/file-raw-data.c:1943
+#: ../plug-ins/common/file-raw-data.c:1924
 msgid "BGR565 Big Endian"
 msgstr "BGR565 Big Endian"
 
-#: ../plug-ins/common/file-raw-data.c:1944
+#: ../plug-ins/common/file-raw-data.c:1925
 msgid "BGR565 Little Endian"
 msgstr "BGR565 Little Endian"
 
-#: ../plug-ins/common/file-raw-data.c:1945
+#: ../plug-ins/common/file-raw-data.c:1926
 msgid "Planar RGB"
 msgstr "RGB planar"
 
-#: ../plug-ins/common/file-raw-data.c:1946
+#: ../plug-ins/common/file-raw-data.c:1927
 msgid "B&W 1 bit"
 msgstr "B&W 1 bit"
 
-#: ../plug-ins/common/file-raw-data.c:1947
+#: ../plug-ins/common/file-raw-data.c:1928
 msgid "Gray 2 bit"
 msgstr "Gri 2 biți"
 
-#: ../plug-ins/common/file-raw-data.c:1948
+#: ../plug-ins/common/file-raw-data.c:1929
 msgid "Gray 4 bit"
 msgstr "Gri 4 biți"
 
-#: ../plug-ins/common/file-raw-data.c:1949
+#: ../plug-ins/common/file-raw-data.c:1930
 msgid "Gray 8 bit"
 msgstr "Gri 8 biți"
 
-#: ../plug-ins/common/file-raw-data.c:1950
+#: ../plug-ins/common/file-raw-data.c:1931
 msgid "Indexed"
 msgstr "Indexat"
 
-#: ../plug-ins/common/file-raw-data.c:1951
+#: ../plug-ins/common/file-raw-data.c:1932
 msgid "Indexed Alpha"
 msgstr "Alfa indexat"
 
-#: ../plug-ins/common/file-raw-data.c:1952
+#: ../plug-ins/common/file-raw-data.c:1933
 msgid "Gray unsigned 16 bit Big Endian"
 msgstr "Gri 16 biți nesemnat Big Endian"
 
-#: ../plug-ins/common/file-raw-data.c:1953
+#: ../plug-ins/common/file-raw-data.c:1934
 msgid "Gray unsigned 16 bit Little Endian"
 msgstr "Gri 16 biți nesemnat Little Endian"
 
-#: ../plug-ins/common/file-raw-data.c:1954
+#: ../plug-ins/common/file-raw-data.c:1935
 msgid "Gray 16 bit Big Endian"
 msgstr "Gri 16 biți Big Endian"
 
-#: ../plug-ins/common/file-raw-data.c:1955
+#: ../plug-ins/common/file-raw-data.c:1936
 msgid "Gray 16 bit Little Endian"
 msgstr "Gri 16 biți Little Endian"
 
-#: ../plug-ins/common/file-raw-data.c:1960
+#: ../plug-ins/common/file-raw-data.c:1941
 msgid "Image _Type:"
 msgstr "_Tip de imagine:"
 
-#: ../plug-ins/common/file-raw-data.c:2021
+#: ../plug-ins/common/file-raw-data.c:2002
 msgid "Palette"
 msgstr "Paletă"
 
-#: ../plug-ins/common/file-raw-data.c:2031
+#: ../plug-ins/common/file-raw-data.c:2012
 msgid "R, G, B (normal)"
 msgstr "R, G, B (normal)"
 
-#: ../plug-ins/common/file-raw-data.c:2032
+#: ../plug-ins/common/file-raw-data.c:2013
 msgid "B, G, R, X (BMP style)"
 msgstr "B, G, R, X (stil BMP)"
 
-#: ../plug-ins/common/file-raw-data.c:2037
+#: ../plug-ins/common/file-raw-data.c:2018
 msgid "_Palette Type:"
 msgstr "Tip de _paletă:"
 
-#: ../plug-ins/common/file-raw-data.c:2048
+#: ../plug-ins/common/file-raw-data.c:2029
 msgid "Off_set:"
 msgstr "_Decalaj:"
 
-#: ../plug-ins/common/file-raw-data.c:2060
+#: ../plug-ins/common/file-raw-data.c:2041
 msgid "Select Palette File"
 msgstr "Selectați fișierul de paletă"
 
-#: ../plug-ins/common/file-raw-data.c:2066
+#: ../plug-ins/common/file-raw-data.c:2047
 msgid "Pal_ette File:"
 msgstr "Fiși_er de paletă:"
 
 #. Dialog init
-#: ../plug-ins/common/file-raw-data.c:2115
+#: ../plug-ins/common/file-raw-data.c:2096
 msgid "Raw Image"
 msgstr "Imagine brută"
 
@@ -4276,24 +4306,24 @@ msgstr "Nu se poate citi extensia din „%s”"
 msgid "Cannot read header from '%s'"
 msgstr "Nu se poate citi antetul din „%s”"
 
-#: ../plug-ins/common/file-tga.c:1428
+#: ../plug-ins/common/file-tga.c:1434
 msgid "TGA"
 msgstr "TGA"
 
 #. rle
-#: ../plug-ins/common/file-tga.c:1437 ../plug-ins/file-sgi/sgi.c:683
+#: ../plug-ins/common/file-tga.c:1443 ../plug-ins/file-sgi/sgi.c:683
 msgid "_RLE compression"
 msgstr "Comprimare _RLE"
 
-#: ../plug-ins/common/file-tga.c:1451
+#: ../plug-ins/common/file-tga.c:1457
 msgid "Or_igin:"
 msgstr "Or_igine:"
 
-#: ../plug-ins/common/file-tga.c:1455
+#: ../plug-ins/common/file-tga.c:1461
 msgid "Bottom left"
 msgstr "Stânga jos"
 
-#: ../plug-ins/common/file-tga.c:1456
+#: ../plug-ins/common/file-tga.c:1462
 msgid "Top left"
 msgstr "Stânga sus"
 
@@ -4441,7 +4471,7 @@ msgstr "Cadrul %d al „%s” este prea înalt pentru un cursor X."
 #: ../plug-ins/common/file-xmc.c:918
 #, c-format
 msgid "there is no image chunk in \"%s\"."
-msgstr "nu este nicio porțiune de imagine în „%s”."
+msgstr "nu există niciun bloc de imagine în „%s”."
 
 #: ../plug-ins/common/file-xmc.c:959
 #, c-format
@@ -4595,8 +4625,8 @@ msgstr "Comentariul este limitat la %d caractere."
 
 #. Begin displaying export progress
 #: ../plug-ins/common/file-xmc.c:1493
-#: ../plug-ins/file-webp/file-webp-save.c:180
-#: ../plug-ins/file-webp/file-webp-save.c:522
+#: ../plug-ins/file-webp/file-webp-save.c:182
+#: ../plug-ins/file-webp/file-webp-save.c:526
 #, c-format
 msgid "Saving '%s'"
 msgstr "Salvare „%s”"
@@ -4649,10 +4679,10 @@ msgid ""
 "export dialog, or your cursor may not appear in GNOME settings."
 msgstr ""
 "Cursorul a fost exportat cu succes, dar conține unul sau mai multe cadre a "
-"căror dimensiune nominală nu este acceptată de setările GNOME.\n"
+"căror dimensiune nominală nu este acceptată de configurările GNOME.\n"
 "Puteți satisface cerințele prin bifarea opțiunii „Înlocuiește dimensiunea "
 "tuturor cadrelor...” în dialogul de export, altfel cursorul ar putea să nu "
-"apară în setările GNOME."
+"apară în configurările GNOME."
 
 #: ../plug-ins/common/file-xmc.c:2036
 #, c-format
@@ -4896,7 +4926,7 @@ msgstr "Î_nălțime număr:"
 
 #: ../plug-ins/common/film.c:1184
 msgid "Re_set"
-msgstr "Re_setează"
+msgstr "Re_stabilește"
 
 #. These values are translated for the GUI but also used internally
 #. to figure out which button the user pushed, etc.
@@ -5419,10 +5449,10 @@ msgstr "Menține _canalele maxime"
 msgid "Ho_ld the minimal channels"
 msgstr "Menține cana_lele minime"
 
-# hm ? sau armatei elvețiene ?
+# hm ? sau briceagul armatei elvețiene ?
 #: ../plug-ins/common/nl-filter.c:123
 msgid "Nonlinear swiss army knife filter"
-msgstr "Briceagul elvețian al filtrelor nonlineare"
+msgstr "Briceagul elvețian al filtrelor neliniare"
 
 #: ../plug-ins/common/nl-filter.c:129
 msgid "_NL Filter..."
@@ -5746,11 +5776,11 @@ msgstr "Simulează strălucirea făcând părțile luminoase intense și difuze"
 
 #: ../plug-ins/common/softglow.c:139
 msgid "_Softglow (legacy)..."
-msgstr "_Strălucire delicată (versiune veche)..."
+msgstr "_Strălucire slabă (versiune veche)..."
 
 #: ../plug-ins/common/softglow.c:628
 msgid "Softglow"
-msgstr "Strălucire delicată"
+msgstr "Strălucire slabă"
 
 #: ../plug-ins/common/softglow.c:666
 msgid "_Glow radius:"
@@ -5817,11 +5847,12 @@ msgstr "Ajustează numărul vârfurilor"
 
 #: ../plug-ins/common/sparkle.c:420
 msgid "Spi_ke angle (-1: random):"
-msgstr "_Unghi vârfuri (-1: aleator):"
+msgstr "_Unghi vârfuri (-1: aleatoriu):"
 
 #: ../plug-ins/common/sparkle.c:423
 msgid "Adjust the spike angle (-1 causes a random angle to be chosen)"
-msgstr "Ajustează unghiul vârfului (-1 determină alegerea unui unghi aleator)"
+msgstr ""
+"Ajustează unghiul vârfului (-1 determină alegerea unui unghi aleatoriu)"
 
 #: ../plug-ins/common/sparkle.c:434
 msgid "Spik_e density:"
@@ -5841,19 +5872,19 @@ msgstr "Ajustează opacitatea vârfurilor"
 
 #: ../plug-ins/common/sparkle.c:460
 msgid "_Random hue:"
-msgstr "Nuanță aleatoa_re:"
+msgstr "Nuanță aleato_rie:"
 
 #: ../plug-ins/common/sparkle.c:463
 msgid "Adjust how much the hue should be changed randomly"
-msgstr "Ajustează cât de mult să fie modificată nuanța aleator"
+msgstr "Ajustează cât de mult să fie modificată nuanța aleatoriu"
 
 #: ../plug-ins/common/sparkle.c:473
 msgid "Rando_m saturation:"
-msgstr "_Saturație aleatoare:"
+msgstr "_Saturație aleatorie:"
 
 #: ../plug-ins/common/sparkle.c:476
 msgid "Adjust how much the saturation should be changed randomly"
-msgstr "Ajustează cât de mult să fie modificată saturația aleator"
+msgstr "Ajustează cât de mult să fie modificată saturația aleatoriu"
 
 #: ../plug-ins/common/sparkle.c:493
 msgid "_Preserve luminosity"
@@ -6731,43 +6762,43 @@ msgstr "Eroare la citirea antetului de fișier BMP din „%s”"
 msgid "Unsupported compression (%u) in BMP file from '%s'"
 msgstr "Comprimare neacceptată (%u) în fișierul BMP de la „%s”"
 
-#: ../plug-ins/file-bmp/bmp-load.c:675
+#: ../plug-ins/file-bmp/bmp-load.c:673
 msgid "Unrecognized or invalid BMP compression format."
 msgstr "Format de comprimare BMP nerecunoscut sau nevalid."
 
-#: ../plug-ins/file-bmp/bmp-load.c:717
+#: ../plug-ins/file-bmp/bmp-load.c:720
 msgid "Unsupported or invalid bitdepth."
 msgstr "Adâncime de bit neacceptată sau nevalidă."
 
-#: ../plug-ins/file-bmp/bmp-load.c:885 ../plug-ins/file-bmp/bmp-load.c:928
-#: ../plug-ins/file-bmp/bmp-load.c:982
+#: ../plug-ins/file-bmp/bmp-load.c:888 ../plug-ins/file-bmp/bmp-load.c:931
+#: ../plug-ins/file-bmp/bmp-load.c:985
 msgid "The bitmap ends unexpectedly."
 msgstr "Bitmapul s-a terminat neașteptat."
 
-#: ../plug-ins/file-bmp/bmp-save.c:182 ../plug-ins/file-bmp/bmp-save.c:215
+#: ../plug-ins/file-bmp/bmp-save.c:186 ../plug-ins/file-bmp/bmp-save.c:219
 msgid "Cannot export indexed image with transparency in BMP file format."
 msgstr "Nu se poate exporta o imagine indexată cu transparență în format BMP."
 
-#: ../plug-ins/file-bmp/bmp-save.c:184 ../plug-ins/file-bmp/bmp-save.c:217
+#: ../plug-ins/file-bmp/bmp-save.c:188 ../plug-ins/file-bmp/bmp-save.c:221
 msgid "Alpha channel will be ignored."
 msgstr "Canalul alfa va fi ignorat."
 
 # hm ? acronimul RLE este foarte cunoscut
 #. Run-Length Encoded
-#: ../plug-ins/file-bmp/bmp-save.c:916
+#: ../plug-ins/file-bmp/bmp-save.c:952
 msgid "_Run-Length Encoded"
 msgstr "Codare _Run-Length-Encoding"
 
 #. Compatibility Options
-#: ../plug-ins/file-bmp/bmp-save.c:929
+#: ../plug-ins/file-bmp/bmp-save.c:965
 msgid "Co_mpatibility Options"
 msgstr "_Opțiuni de compatibilitate"
 
-#: ../plug-ins/file-bmp/bmp-save.c:939
+#: ../plug-ins/file-bmp/bmp-save.c:975
 msgid "_Do not write color space information"
 msgstr "Nu scrie informațiile _despre spațiul de culoare"
 
-#: ../plug-ins/file-bmp/bmp-save.c:941
+#: ../plug-ins/file-bmp/bmp-save.c:977
 msgid ""
 "Some applications can not read BMP images that include color space "
 "information. GIMP writes color space information by default. Enabling this "
@@ -6780,113 +6811,119 @@ msgstr ""
 
 #. Advanced Options
 #. Advanced expander
-#: ../plug-ins/file-bmp/bmp-save.c:957 ../plug-ins/file-jpeg/jpeg-save.c:1014
-#: ../plug-ins/file-webp/file-webp-dialog.c:221
+#: ../plug-ins/file-bmp/bmp-save.c:993 ../plug-ins/file-jpeg/jpeg-save.c:1014
+#: ../plug-ins/file-webp/file-webp-dialog.c:222
 msgid "_Advanced Options"
 msgstr "Opțiuni _avansate"
 
-#: ../plug-ins/file-bmp/bmp-save.c:972
+#: ../plug-ins/file-bmp/bmp-save.c:1008
 msgid "16 bits"
 msgstr "16 biți"
 
-#: ../plug-ins/file-bmp/bmp-save.c:1008
+#: ../plug-ins/file-bmp/bmp-save.c:1044
 msgid "24 bits"
 msgstr "24 de biți"
 
-#: ../plug-ins/file-bmp/bmp-save.c:1025
+#: ../plug-ins/file-bmp/bmp-save.c:1061
 msgid "32 bits"
 msgstr "32 de biți"
 
-#: ../plug-ins/file-bmp/bmp.c:120 ../plug-ins/file-bmp/bmp.c:139
+#: ../plug-ins/file-bmp/bmp.c:132 ../plug-ins/file-bmp/bmp.c:151
+#: ../plug-ins/file-bmp/bmp.c:168
 msgid "Windows BMP image"
 msgstr "Imagine Windows BMP"
 
-#: ../plug-ins/file-dds/dds.c:139 ../plug-ins/file-dds/dds.c:158
+#: ../plug-ins/file-dds/dds.c:162 ../plug-ins/file-dds/dds.c:181
+#: ../plug-ins/file-dds/dds.c:200
 msgid "DDS image"
 msgstr "Imagine DDS"
 
-#: ../plug-ins/file-dds/dds.c:176
+#: ../plug-ins/file-dds/dds.c:217
 msgid "Decode YCoCg"
 msgstr "Decodare YCoCg"
 
-#: ../plug-ins/file-dds/dds.c:189
+#: ../plug-ins/file-dds/dds.c:230
 msgid "Decode YCoCg (scaled)"
 msgstr "Decodare YCoCg (scalat)"
 
-#: ../plug-ins/file-dds/dds.c:202
+#: ../plug-ins/file-dds/dds.c:243
 msgid "Decode Alpha exponent"
 msgstr "Decodare exponent Alfa"
 
-#: ../plug-ins/file-dds/ddsread.c:1282
+#: ../plug-ins/file-dds/ddsread.c:1361
 msgid "Load DDS"
 msgstr "Încarcă DDS"
 
-#: ../plug-ins/file-dds/ddsread.c:1301
+#: ../plug-ins/file-dds/ddsread.c:1380
 msgid "_Load mipmaps"
 msgstr "Î_ncarcă mipmaps"
 
-#: ../plug-ins/file-dds/ddsread.c:1308
+#: ../plug-ins/file-dds/ddsread.c:1387
 msgid "_Automatically decode YCoCg/AExp images when detected"
 msgstr "Decodează _automat imaginile YCoCg/AExp atunci când sunt detectate"
 
-#: ../plug-ins/file-dds/ddswrite.c:1954
+#: ../plug-ins/file-dds/ddswrite.c:1981
 msgid "Export as DDS"
 msgstr "Exportă ca DDS"
 
-#: ../plug-ins/file-dds/ddswrite.c:1957
-#: ../plug-ins/metadata/metadata-editor.c:5684
+#: ../plug-ins/file-dds/ddswrite.c:1984
+#: ../plug-ins/metadata/metadata-editor.c:4662
 msgid "_Export"
 msgstr "_Exportă"
 
-#: ../plug-ins/file-dds/ddswrite.c:1984
+#: ../plug-ins/file-dds/ddswrite.c:2011
 msgid "_Compression:"
 msgstr "_Comprimare:"
 
-#: ../plug-ins/file-dds/ddswrite.c:1994
+#: ../plug-ins/file-dds/ddswrite.c:2021
 msgid "Use _perceptual error metric"
 msgstr "Folosește metrica de eroare _perceptuală"
 
-#: ../plug-ins/file-dds/ddswrite.c:2023
+#: ../plug-ins/file-dds/ddswrite.c:2050
 msgid "_Save:"
 msgstr "_Salvează:"
 
-#: ../plug-ins/file-dds/ddswrite.c:2037
+#: ../plug-ins/file-dds/ddswrite.c:2062
+msgid "Flip the image _vertically on export"
+msgstr "Întoarce imaginea pe _verticală la export"
+
+#: ../plug-ins/file-dds/ddswrite.c:2075
 msgid "_Mipmaps:"
 msgstr "_Mipmaps:"
 
-#: ../plug-ins/file-dds/ddswrite.c:2060
+#: ../plug-ins/file-dds/ddswrite.c:2098
 msgid "Transparent index:"
 msgstr "Index transparent:"
 
-#: ../plug-ins/file-dds/ddswrite.c:2104
+#: ../plug-ins/file-dds/ddswrite.c:2142
 msgid "Mipmap Options"
 msgstr "Opțiuni mipmap"
 
-#: ../plug-ins/file-dds/ddswrite.c:2117
+#: ../plug-ins/file-dds/ddswrite.c:2155
 msgid "F_ilter:"
 msgstr "F_iltru:"
 
-#: ../plug-ins/file-dds/ddswrite.c:2130
+#: ../plug-ins/file-dds/ddswrite.c:2168
 msgid "_Wrap mode:"
 msgstr "_Mod de întoarcere de la capăt:"
 
-#: ../plug-ins/file-dds/ddswrite.c:2140
+#: ../plug-ins/file-dds/ddswrite.c:2178
 msgid "Appl_y gamma correction"
 msgstr "_Aplică corecție de gamma"
 
-#: ../plug-ins/file-dds/ddswrite.c:2154
+#: ../plug-ins/file-dds/ddswrite.c:2192
 msgid "Use s_RGB colorspace"
 msgstr "Folosește un spațiu de culoare s_RGB"
 
-#: ../plug-ins/file-dds/ddswrite.c:2173 ../plug-ins/flame/flame.c:1116
+#: ../plug-ins/file-dds/ddswrite.c:2211 ../plug-ins/flame/flame.c:1116
 msgid "_Gamma:"
 msgstr "_Gamma:"
 
-#: ../plug-ins/file-dds/ddswrite.c:2183
+#: ../plug-ins/file-dds/ddswrite.c:2221
 msgid "Preserve alpha _test coverage"
 msgstr "Prezervă acoperirea _testului alfa"
 
-#: ../plug-ins/file-dds/ddswrite.c:2202
+#: ../plug-ins/file-dds/ddswrite.c:2240
 msgid "_Alpha test threshold:"
 msgstr "Prag de test _alfa:"
 
@@ -6915,9 +6952,25 @@ msgstr "Eroare la interogarea tipului de imagine de la „%s”"
 msgid "Error reading pixel data from '%s'"
 msgstr "Eroare la citirea datelor de pixel din „%s”"
 
-#: ../plug-ins/file-faxg3/faxg3.c:104
+#: ../plug-ins/file-faxg3/faxg3.c:105
 msgid "G3 fax image"
 msgstr "Imagine fax G3"
+
+#: ../plug-ins/file-faxg3/faxg3.c:275 ../plug-ins/file-faxg3/faxg3.c:574
+#, c-format
+msgid "Could not create buffer to process image data."
+msgstr ""
+"Nu s-a putut crea tamponul de memorie pentru a procesa datele de imagine."
+
+#: ../plug-ins/file-faxg3/faxg3.c:540
+#, c-format
+msgid "Invalid image dimensions (%d x %d). Image may be corrupt."
+msgstr "Dimensiuni nevalide de imagine (%d x %d). Imaginea poate fi coruptă."
+
+#: ../plug-ins/file-faxg3/faxg3.c:550
+#, c-format
+msgid "Could not create image."
+msgstr "Nu s-a putut crea imaginea."
 
 #: ../plug-ins/file-fits/fits.c:166 ../plug-ins/file-fits/fits.c:186
 msgid "Flexible Image Transport System"
@@ -7053,7 +7106,7 @@ msgstr "Pictograma nr.%i"
 
 #: ../plug-ins/file-ico/ico-load.c:743 ../plug-ins/file-jpeg/jpeg-load.c:529
 #: ../plug-ins/file-psd/psd-thumb-load.c:74
-#: ../plug-ins/file-raw/file-darktable.c:494
+#: ../plug-ins/file-raw/file-darktable.c:502
 #: ../plug-ins/file-raw/file-rawtherapee.c:436
 #, c-format
 msgid "Opening thumbnail for '%s'"
@@ -7117,18 +7170,20 @@ msgstr "Salvează datele _EXIF"
 
 #. XMP metadata
 #: ../plug-ins/file-jpeg/jpeg-save.c:932
-#: ../plug-ins/file-webp/file-webp-dialog.c:377
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:7
+#: ../plug-ins/file-webp/file-webp-dialog.c:390
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:9
 msgid "Save _XMP data"
 msgstr "Salvează datele _XMP"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:946
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:8
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:10
 msgid "Save _IPTC data"
 msgstr "Salvează datele _IPTC"
 
+#. Save Thumbnail
 #: ../plug-ins/file-jpeg/jpeg-save.c:960
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:9
+#: ../plug-ins/file-webp/file-webp-dialog.c:414
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:11
 msgid "Save _thumbnail"
 msgstr "Salvează _miniatura"
 
@@ -7196,11 +7251,11 @@ msgstr "Metodă _DCT:"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:1212
 msgid "Fast Integer"
-msgstr "Întregi (rapidă)"
+msgstr "Număr întreg rapid"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:1213
 msgid "Integer"
-msgstr "Întregi"
+msgstr "Număr întreg"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:1214
 msgid "Floating-Point"
@@ -7208,7 +7263,7 @@ msgstr "În virgulă mobilă"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:1238
 #: ../plug-ins/ui/plug-in-file-png.ui.h:10
-#: ../plug-ins/ui/plug-in-file-raw.ui.h:6
+#: ../plug-ins/ui/plug-in-file-raw.ui.h:7
 #: ../plug-ins/print/print-page-layout.c:335
 msgid "_Load Defaults"
 msgstr "Încarcă va_lorile implicite"
@@ -7262,7 +7317,7 @@ msgid "Unsupported bit depth: %d"
 msgstr "Adâncime neacceptată de biți: %d"
 
 #: ../plug-ins/file-psd/psd-load.c:409 ../plug-ins/file-psd/psd-load.c:419
-#: ../plug-ins/file-psd/psd-load.c:630 ../plug-ins/file-psd/psd-load.c:852
+#: ../plug-ins/file-psd/psd-load.c:630 ../plug-ins/file-psd/psd-load.c:912
 #, c-format
 msgid "The file is corrupt!"
 msgstr "Fișierul este corupt!"
@@ -7287,36 +7342,41 @@ msgstr "Lățime de strat neacceptată sau nevalidă: %d"
 msgid "Unsupported or invalid layer size: %dx%d"
 msgstr "Dimensiune de strat neacceptată sau nevalidă: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:769
+#: ../plug-ins/file-psd/psd-load.c:668
+#, c-format
+msgid "Unsupported or invalid mask info size: %d"
+msgstr "Mărime neacceptată sau nevalidă a informațiilor despre mască: %d"
+
+#: ../plug-ins/file-psd/psd-load.c:837
 #, c-format
 msgid "Unsupported or invalid layer mask height: %d"
 msgstr "Înălțime de mască de strat, neacceptată sau nevalidă: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:777
+#: ../plug-ins/file-psd/psd-load.c:845
 #, c-format
 msgid "Unsupported or invalid layer mask width: %d"
 msgstr "Lățime de mască de strat, neacceptată sau nevalidă: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:786
+#: ../plug-ins/file-psd/psd-load.c:854
 #, c-format
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Dimensiune de mască de strat, neacceptată sau nevalidă: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:1417 ../plug-ins/file-psd/psd-load.c:1934
+#: ../plug-ins/file-psd/psd-load.c:1477 ../plug-ins/file-psd/psd-load.c:2040
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Mod de comprimare neacceptat: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:2065
+#: ../plug-ins/file-psd/psd-load.c:2187
 msgid "Extra"
 msgstr "Extra"
 
-#: ../plug-ins/file-psd/psd-load.c:2243
+#: ../plug-ins/file-psd/psd-load.c:2365
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Dimensiune de canal neacceptată sau nevalidă"
 
-#: ../plug-ins/file-psd/psd-load.c:2309
+#: ../plug-ins/file-psd/psd-load.c:2431
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Decomprimarea datelor a eșuat"
@@ -7326,7 +7386,7 @@ msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr ""
 "Eroare: nu se poate converti tipul de imagine de bază GIMP la modul PSD"
 
-#: ../plug-ins/file-psd/psd-save.c:1690
+#: ../plug-ins/file-psd/psd-save.c:1689
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images that are "
@@ -7335,7 +7395,7 @@ msgstr ""
 "Nu se poate exporta „%s”. Formatul de fișier PSD nu acceptă imagini care "
 "sunt mai late sau mai înalte de 30000 de pixeli."
 
-#: ../plug-ins/file-psd/psd-save.c:1711
+#: ../plug-ins/file-psd/psd-save.c:1710
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images with "
@@ -7525,17 +7585,40 @@ msgstr ""
 "RLE _agresiv\n"
 "(nu este acceptat de SGI)"
 
-#: ../plug-ins/file-tiff/file-tiff.c:140 ../plug-ins/file-tiff/file-tiff.c:162
-#: ../plug-ins/file-tiff/file-tiff.c:180
+#: ../plug-ins/file-tiff/file-tiff.c:165 ../plug-ins/file-tiff/file-tiff.c:187
+#: ../plug-ins/file-tiff/file-tiff.c:205 ../plug-ins/file-tiff/file-tiff.c:222
 msgid "TIFF image"
 msgstr "Imagine TIFF"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:198
+#: ../plug-ins/file-tiff/file-tiff-load.c:307
+#, c-format
+msgid "Not a TIFF image or image is corrupt."
+msgstr "Nu este o imagine TIFF sau imaginea este coruptă."
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:338
 #, c-format
 msgid "TIFF '%s' does not contain any directories"
 msgstr "TIFF-ul „%s” nu conține niciun director"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:268
+#: ../plug-ins/file-tiff/file-tiff-load.c:345
+#, c-format
+msgid ""
+"TIFF '%s' directory count by header failed though there seems to be %d page. "
+"Attempting to load the file with this assumption."
+msgid_plural ""
+"TIFF '%s' directory count by header failed though there seem to be %d pages. "
+"Attempting to load the file with this assumption."
+msgstr[0] ""
+"Numărarea directoarelor TIFF „%s” după antet a eșuat, deși pare să existe %d "
+"pagină. Se încearcă încărcarea fișierului cu această presupunere."
+msgstr[1] ""
+"Numărarea directoarelor TIFF „%s” după antet a eșuat, deși par să existe %d "
+"pagini. Se încearcă încărcarea fișierului cu această presupunere."
+msgstr[2] ""
+"Numărarea directoarelor TIFF „%s” după antet a eșuat, deși par să existe %d "
+"de pagini. Se încearcă încărcarea fișierului cu această presupunere."
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:476
 msgid "Extra channels with unspecified data."
 msgstr "Canale suplimentare cu date nespecificate."
 
@@ -7546,62 +7629,220 @@ msgstr "Canale suplimentare cu date nespecificate."
 #. * can be considered non-conformant.
 #. * Let's ask what to do with the channel.
 #.
-#: ../plug-ins/file-tiff/file-tiff-load.c:284
+#: ../plug-ins/file-tiff/file-tiff-load.c:488
 msgid "Non-conformant TIFF: extra channels without 'ExtraSamples' field."
-msgstr "TIFF neconform: canale suplimentare fără câmpul 'ExtraSamples'."
+msgstr "TIFF neconform: canale suplimentare fără câmpul „ExtraSamples”."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:346
+#: ../plug-ins/file-tiff/file-tiff-load.c:582
 #, c-format
 msgid "Couldn't read page %d of %d. Image might be corrupt.\n"
 msgstr "Nu s-a putut citi pagina %d din %d. Imaginea ar putea fi coruptă.\n"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:838
+#: ../plug-ins/file-tiff/file-tiff-load.c:611
+#, c-format
+msgid ""
+"This image has a linear color profile but it was not set on the first layer. "
+"The layers below layer # %d will be interpreted as non linear."
+msgstr ""
+"Această imagine are un profil de culoare liniar, dar care nu a fost stabilit "
+"pe primul strat. Straturile de sub stratul # %d vor fi interpretate ca "
+"neliniare."
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:619
+msgid ""
+"This image has multiple color profiles. We will use the first one. If this "
+"leads to incorrect results you should consider loading each layer as a "
+"separate image."
+msgstr ""
+"Această imagine are mai multe profiluri de culoare. Va fi folosit primul. "
+"Dacă acest lucru duce la rezultate incorecte, ar trebui să luați în "
+"considerare încărcarea fiecărui strat ca imagine separată."
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:631
+#, c-format
+msgid "Suspicious bit depth: %d for page %d. Image may be corrupt."
+msgstr ""
+"Adâncime de biți suspectă: %d pentru pagina %d. Imaginea poate fi coruptă."
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:705
+#, c-format
+msgid "Unsupported bit depth: %d for page %d."
+msgstr "Adâncime de biți neacceptată: %d pentru pagina %d."
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:720
+#, c-format
+msgid "Could not get image width from '%s'"
+msgstr "Nu s-a putut obține lățimea imaginii de la „%s”"
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:728
+#, c-format
+msgid "Could not get image length from '%s'"
+msgstr "Nu s-a putut obține lungimea imaginii de la „%s”"
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:736
+#, c-format
+msgid "Invalid image dimensions (%u x %u) for page %d. Image may be corrupt."
+msgstr ""
+"Dimensiuni nevalide de imagine (%u x %u) pentru pagina %d. Imaginea poate fi "
+"coruptă."
+
+# http://www.libtiff.org/support.html
+#: ../plug-ins/file-tiff/file-tiff-load.c:757
+#, c-format
+msgid ""
+"Could not get photometric from '%s'. Image is CCITT compressed, assuming min-"
+"is-white"
+msgstr ""
+"Nu s-a putut obține fotometria de la „%s”. Imaginea este comprimată CCITT, "
+"se presupune că minim este alb (Min-is-White)."
+
+# http://www.libtiff.org/support.html
+#: ../plug-ins/file-tiff/file-tiff-load.c:764
+#, c-format
+msgid "Could not get photometric from '%s'. Assuming min-is-black"
+msgstr ""
+"Nu s-a putut obține fotometria de la „%s”. Se presupune că minim este negru "
+"(Min-is-Black)."
+
+#. In non-interactive mode, we assume unassociated alpha if unspecified.
+#. * We don't output messages in interactive mode as the user
+#. * has already the ability to choose through a dialog.
+#: ../plug-ins/file-tiff/file-tiff-load.c:796
+#, c-format
+msgid ""
+"Alpha channel type not defined for %s. Assuming alpha is not premultiplied"
+msgstr ""
+"Tipul de canal alfa nu este definit pentru %s. Se presupune că alfa nu este "
+"premultiplicat."
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:821
+#, c-format
+msgid ""
+"Image '%s' does not conform to the TIFF specification: ExtraSamples field is "
+"not set while extra channels are present. Assuming the first extra channel "
+"is non-premultiplied alpha."
+msgstr ""
+"Imaginea „%s” nu este conformă cu specificația TIFF: câmpul ExtraSamples nu "
+"este stabilit în timp ce sunt prezente canale suplimentare. Se presupune că "
+"primul canal suplimentar este alfa nepremultiplicat."
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:1110
+#, c-format
+msgid "Invalid or unknown compression %u. Setting compression to none."
+msgstr "Compresie %u nevalidă sau necunoscută. Se stabilește fără compresie."
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:1168
+#, c-format
+msgid "Could not create a new image: %s"
+msgstr "Nu s-a putut crea o nouă imagine: %s"
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:1188
 #, c-format
 msgid "%s-%d-of-%d-pages"
 msgstr "%s-%d-din-%d-pagini"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1082
+#: ../plug-ins/file-tiff/file-tiff-load.c:1333
+#, c-format
+msgid "Unknown resolution unit type %d, assuming dpi"
+msgstr "Tip de unitate de rezoluție %d necunoscut, se presupune dpi"
+
+#. no res unit tag
+#. old AppleScan software produces these
+#: ../plug-ins/file-tiff/file-tiff-load.c:1343
+msgid "Warning: resolution specified without unit type, assuming dpi"
+msgstr ""
+"Avertisment: rezoluție specificată fără tip de unitate, se presupune dpi"
+
+#. xres but no yres
+#: ../plug-ins/file-tiff/file-tiff-load.c:1351
+msgid "Warning: no y resolution info, assuming same as x"
+msgstr ""
+"Avertisment: fără informații de rezoluție y, se presupune că este la fel ca x"
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:1368
+msgid "Invalid image resolution info, using default"
+msgstr ""
+"Informații nevalide privind rezoluția imaginii, se folosesc cele implicite"
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:1427
+#, c-format
+msgid "Could not get colormaps from '%s'"
+msgstr "Nu s-au putut obține hărțile de culori de la „%s”"
+
+#. Validate number of channels to the same maximum as we use for
+#. * Photoshop. A higher number most likely means a corrupt image
+#. * and can cause GIMP to become unresponsive and/or stuck.
+#. * See m2-d0f86ab189cbe900ec389ca6d7464713.tif from imagetestsuite
+#.
+#: ../plug-ins/file-tiff/file-tiff-load.c:1521
+#, c-format
+msgid "Suspicious number of extra channels: %d. Possibly corrupt image."
+msgstr "Număr suspect de canale suplimentare: %d. Posibil imagine coruptă."
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:1583
 msgid "TIFF Channel"
 msgstr "Canal TIFF"
 
+#: ../plug-ins/file-tiff/file-tiff-load.c:1721
+#, c-format
+msgid "No data could be read from TIFF '%s'. The file is probably corrupted."
+msgstr ""
+"Nu s-au putut citi date de la TIFF „%s”. Probabil că fișierul este corupt."
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:1792
+#, c-format
+msgid "%s: Unsupported image format, no RGBA loader available"
+msgstr ""
+"%s: format de imagine neacceptat, nu este disponibil niciun încărcător RGBA"
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:2104
+#: ../plug-ins/file-tiff/file-tiff-load.c:2301
+#, c-format
+msgid "Reading tile failed. Image may be corrupt at line %d."
+msgstr "Citirea dalei a eșuat. Imaginea poate fi coruptă la linia %d."
+
 #. Error reading scanline, stop loading
-#: ../plug-ins/file-tiff/file-tiff-load.c:1584
-#: ../plug-ins/file-tiff/file-tiff-load.c:1759
+#: ../plug-ins/file-tiff/file-tiff-load.c:2113
+#: ../plug-ins/file-tiff/file-tiff-load.c:2310
 #, c-format
 msgid "Reading scanline failed. Image may be corrupt at line %d."
 msgstr ""
 "Citirea liniei de scanare a eșuat. Este posibil ca imaginea să fie coruptă "
 "la linia %d."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1921
+#: ../plug-ins/file-tiff/file-tiff-load.c:2660
 msgid "Import from TIFF"
 msgstr "Importă din TIFF"
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:2681
+msgid "_Show reduced images"
+msgstr "Arată imaginile redu_se"
 
 #. Option to shrink the loaded image to its bounding box
 #. or keep as much empty space as possible.
 #. Note that there seems to be no way to keep the empty
 #. space on the right and bottom.
-#: ../plug-ins/file-tiff/file-tiff-load.c:1974
+#: ../plug-ins/file-tiff/file-tiff-load.c:2715
 msgid "_Keep empty space around imported layers"
 msgstr "_Păstrează un spațiu gol în jurul straturilor importate"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1991
+#: ../plug-ins/file-tiff/file-tiff-load.c:2732
 msgid "Process extra channel as:"
 msgstr "Procesează canalele suplimentare ca:"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1994
+#: ../plug-ins/file-tiff/file-tiff-load.c:2735
 msgid "_Non-premultiplied alpha"
 msgstr "Alfa _ne-premultiplicat"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1995
+#: ../plug-ins/file-tiff/file-tiff-load.c:2736
 msgid "Pre_multiplied alpha"
 msgstr "Alfa pre_multiplicat"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1996
+#: ../plug-ins/file-tiff/file-tiff-load.c:2737
 msgid "Channe_l"
 msgstr "Cana_l"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:596
+#: ../plug-ins/file-tiff/file-tiff-save.c:592
 msgid ""
 "Only monochrome pictures can be compressed with \"CCITT Group 4\" or \"CCITT "
 "Group 3\"."
@@ -7609,16 +7850,16 @@ msgstr ""
 "Numai pozele monocrome pot fi comprimate cu „CCITT Group 4” sau „CCITT Group "
 "3”."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:610
+#: ../plug-ins/file-tiff/file-tiff-save.c:606
 msgid "Indexed pictures cannot be compressed with \"JPEG\"."
 msgstr "Pozele indexate nu pot fi comprimate cu „JPEG”."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:746
+#: ../plug-ins/file-tiff/file-tiff-save.c:743
 #, c-format
 msgid "Failed a scanline write on row %d"
 msgstr "Scrierea unei linii de scanare pe rândul %d a eșuat"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:994
+#: ../plug-ins/file-tiff/file-tiff-save.c:985
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
@@ -7626,48 +7867,57 @@ msgstr ""
 "Formatul TIFF acceptă comentarii doar în codare\n"
 "ASCII pe 7 biți. Nu a fost salvat niciun comentariu."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1112
+#: ../plug-ins/file-tiff/file-tiff-save.c:1095
 #, c-format
 msgid "Writing pages with different bit depth is strange."
 msgstr "Scrierea paginilor cu diferite adâncimi de biți este ciudată."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1156
+#: ../plug-ins/file-tiff/file-tiff-save.c:1157
 msgid "TIFF"
 msgstr "TIFF"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1182
+#: ../plug-ins/file-tiff/file-tiff-save.c:1188
+msgid ""
+"<i>Warning: maximum TIFF file size exceeded.\n"
+" Retry as BigTIFF or cancel.</i>"
+msgstr ""
+"<i>Avertisment: dimensiunea maximă a fișierului TIFF a fost depășită.\n"
+" Reîncercați ca BigTIFF sau anulați.</i>"
+
+#: ../plug-ins/file-tiff/file-tiff-save.c:1199
 msgid "Compression"
 msgstr "Comprimare"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1186
+#: ../plug-ins/file-tiff/file-tiff-save.c:1203
 msgid "_None"
 msgstr "_Fără"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1187
+#: ../plug-ins/file-tiff/file-tiff-save.c:1204
 msgid "_LZW"
 msgstr "_LZW"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1188
+#: ../plug-ins/file-tiff/file-tiff-save.c:1205
 msgid "_Pack Bits"
 msgstr "_Pack Bits"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1189
+#: ../plug-ins/file-tiff/file-tiff-save.c:1206
 msgid "_Deflate"
 msgstr "_Deflate"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1190
+#: ../plug-ins/file-tiff/file-tiff-save.c:1207
 msgid "_JPEG"
 msgstr "_JPEG"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1191
+#: ../plug-ins/file-tiff/file-tiff-save.c:1208
 msgid "CCITT Group _3 fax"
 msgstr "CCITT Group _3 fax"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1192
+#: ../plug-ins/file-tiff/file-tiff-save.c:1209
 msgid "CCITT Group _4 fax"
 msgstr "CCITT Group _4 fax"
 
-#: ../plug-ins/file-webp/file-webp.c:101 ../plug-ins/file-webp/file-webp.c:122
+#: ../plug-ins/file-webp/file-webp.c:124 ../plug-ins/file-webp/file-webp.c:145
+#: ../plug-ins/file-webp/file-webp.c:163
 msgid "WebP image"
 msgstr "Imagine WebP"
 
@@ -7682,76 +7932,81 @@ msgid "(all frames are keyframes)"
 msgstr "(toate cadrele sunt cadre cheie)"
 
 #. Create the dialog
-#: ../plug-ins/file-webp/file-webp-dialog.c:108
+#: ../plug-ins/file-webp/file-webp-dialog.c:109
 msgid "WebP"
 msgstr "WebP"
 
 #. Create the lossless checkbox
-#: ../plug-ins/file-webp/file-webp-dialog.c:125
+#: ../plug-ins/file-webp/file-webp-dialog.c:126
 msgid "_Lossless"
 msgstr "_Fără pierderi"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:141
+#: ../plug-ins/file-webp/file-webp-dialog.c:142
 msgid "Image _quality:"
 msgstr "Calitate ima_gine:"
 
 # tooltip
-#: ../plug-ins/file-webp/file-webp-dialog.c:149
+#: ../plug-ins/file-webp/file-webp-dialog.c:150
 msgid "Image quality"
 msgstr "Calitatea imaginii"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:160
+#: ../plug-ins/file-webp/file-webp-dialog.c:161
 msgid "Alpha q_uality:"
 msgstr "Calitate al_fa:"
 
 # tooltip
-#: ../plug-ins/file-webp/file-webp-dialog.c:168
+#: ../plug-ins/file-webp/file-webp-dialog.c:169
 msgid "Alpha channel quality"
 msgstr "Calitatea canalului alfa"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:193
+#: ../plug-ins/file-webp/file-webp-dialog.c:194
 msgid "Source _type:"
 msgstr "_Tipul sursei:"
 
 # tooltip
-#: ../plug-ins/file-webp/file-webp-dialog.c:196
+#: ../plug-ins/file-webp/file-webp-dialog.c:197
 msgid "WebP encoder \"preset\""
-msgstr "„Presetul” codorului WebP"
+msgstr "„Prestabilirea” codorului WebP"
 
 #. Create the top-level animation checkbox expander
-#: ../plug-ins/file-webp/file-webp-dialog.c:228
+#: ../plug-ins/file-webp/file-webp-dialog.c:229
 msgid "As A_nimation"
 msgstr "Ca a_nimație"
 
 #. loop animation checkbox
-#: ../plug-ins/file-webp/file-webp-dialog.c:257
+#: ../plug-ins/file-webp/file-webp-dialog.c:258
 msgid "Loop _forever"
 msgstr "Buclă la nes_fârșit"
 
 #. label for 'max key-frame distance' adjustment
-#: ../plug-ins/file-webp/file-webp-dialog.c:274
+#: ../plug-ins/file-webp/file-webp-dialog.c:275
 msgid "Max distance between key-frames:"
 msgstr "Distanța maximă între cadre:"
 
 #. minimize-size checkbox
-#: ../plug-ins/file-webp/file-webp-dialog.c:309
+#: ../plug-ins/file-webp/file-webp-dialog.c:310
 msgid "_Minimize output size (slower)"
 msgstr "_Minimizează dimensiunea de ieșire (mai lent)"
 
 #. label for 'delay' adjustment
-#: ../plug-ins/file-webp/file-webp-dialog.c:332
+#: ../plug-ins/file-webp/file-webp-dialog.c:333
 msgid "Delay between frames where unspecified:"
 msgstr "Întârzierea între cadre nu a fost specificată:"
 
 #. Create the force-delay checkbox
-#: ../plug-ins/file-webp/file-webp-dialog.c:355
+#: ../plug-ins/file-webp/file-webp-dialog.c:356
 msgid "Use _delay entered above for all frames"
 msgstr "Folosește întârzierea introdusă mai sus pentru toate ca_drele"
 
 #. Save EXIF data
-#: ../plug-ins/file-webp/file-webp-dialog.c:367
+#: ../plug-ins/file-webp/file-webp-dialog.c:368
 msgid "_Save Exif data"
 msgstr "_Salvează datele EXIF"
+
+#. IPTC metadata
+#: ../plug-ins/file-webp/file-webp-dialog.c:378
+msgid "Save _IPTC"
+msgstr "Salvează metadatele _IPTC"
 
 #: ../plug-ins/file-webp/file-webp-load.c:107
 #, c-format
@@ -7794,45 +8049,47 @@ msgstr "Parametru NULL"
 msgid "invalid configuration"
 msgstr "configurare nevalidă"
 
-#: ../plug-ins/file-webp/file-webp-save.c:124
-msgid "bad image dimensions"
-msgstr "dimensiuni eronate de imagine"
+#. TRANSLATORS: widthxheight with UTF-8 encoded multiply sign.
+#: ../plug-ins/file-webp/file-webp-save.c:125
+#, c-format
+msgid "bad image dimensions (maximum: %d×%d)"
+msgstr "dimensiuni necorespunzătoare ale imaginii (maximum: %d×%d)"
 
-#: ../plug-ins/file-webp/file-webp-save.c:126
+#: ../plug-ins/file-webp/file-webp-save.c:128
 msgid "partition is bigger than 512K"
 msgstr "partiția este mai mare de 512KiB"
 
-#: ../plug-ins/file-webp/file-webp-save.c:128
+#: ../plug-ins/file-webp/file-webp-save.c:130
 msgid "partition is bigger than 16M"
 msgstr "partiția este mai mare de 16MiB"
 
-#: ../plug-ins/file-webp/file-webp-save.c:130
+#: ../plug-ins/file-webp/file-webp-save.c:132
 msgid "unable to flush bytes"
 msgstr "nu se pot goli baiții"
 
-#: ../plug-ins/file-webp/file-webp-save.c:132
+#: ../plug-ins/file-webp/file-webp-save.c:134
 msgid "file is larger than 4GiB"
 msgstr "fișierul este mai mare de 4GiB"
 
-#: ../plug-ins/file-webp/file-webp-save.c:134
+#: ../plug-ins/file-webp/file-webp-save.c:136
 msgid "user aborted encoding"
 msgstr "utilizatorul a anulat codarea"
 
-#: ../plug-ins/file-webp/file-webp-save.c:136
+#: ../plug-ins/file-webp/file-webp-save.c:138
 msgid "list terminator"
 msgstr "terminator de listă"
 
-#: ../plug-ins/file-webp/file-webp-save.c:138
+#: ../plug-ins/file-webp/file-webp-save.c:140
 msgid "unknown error"
 msgstr "eroare necunoscută"
 
-#: ../plug-ins/file-webp/file-webp-save.c:188
-#: ../plug-ins/file-webp/file-webp-save.c:530
+#: ../plug-ins/file-webp/file-webp-save.c:190
+#: ../plug-ins/file-webp/file-webp-save.c:534
 #, c-format
 msgid "Unable to open '%s' for writing: %s"
 msgstr "Nu s-a putut deschide „%s” pentru scriere: %s"
 
-#: ../plug-ins/file-webp/file-webp-save.c:271
+#: ../plug-ins/file-webp/file-webp-save.c:274
 #, c-format
 msgid "WebP error: '%s'"
 msgstr "Eroare WebP: „%s”"
@@ -7882,7 +8139,7 @@ msgstr "La fel"
 #: ../plug-ins/flame/flame.c:754 ../plug-ins/gimpressionist/orientation.c:163
 #: ../plug-ins/gimpressionist/size.c:166
 msgid "Random"
-msgstr "Aleator"
+msgstr "Aleatoriu"
 
 #: ../plug-ins/flame/flame.c:755 ../plug-ins/lighting/lighting-ui.c:855
 msgid "Linear"
@@ -8180,7 +8437,7 @@ msgstr "Încarcă un fractal din fișier"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:819
 msgid "Reset parameters to default values"
-msgstr "Resetează parametrii la valorile implicite"
+msgstr "Restabilește parametrii la valorile implicite"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:828
 msgid "Save active fractal to file"
@@ -8749,7 +9006,7 @@ msgstr "Tip grilă:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1496
 #: ../plug-ins/gradient-flare/gradient-flare.c:551
-#: ../plug-ins/metadata/metadata-tags.c:219
+#: ../plug-ins/metadata/metadata-tags.c:238
 msgid "Normal"
 msgstr "Normal"
 
@@ -8870,7 +9127,7 @@ msgid "Changes the gamma (brightness) of the selected brush"
 msgstr "Modifică gamma (luminozitatea) penelului selectat"
 
 #: ../plug-ins/gimpressionist/brush.c:595
-#: ../plug-ins/metadata/metadata-editor.c:570
+#: ../plug-ins/metadata/metadata-editor.c:613
 msgid "Select:"
 msgstr "Selectați:"
 
@@ -8922,7 +9179,7 @@ msgstr "_Zgomot de culoare:"
 
 #: ../plug-ins/gimpressionist/color.c:97
 msgid "Adds random noise to the color"
-msgstr "Adaugă zgomot aleator la culoare"
+msgstr "Adaugă zgomot aleatoriu la culoare"
 
 #: ../plug-ins/gimpressionist/general.c:133
 #: ../plug-ins/gradient-flare/gradient-flare.c:3608
@@ -9092,7 +9349,7 @@ msgstr "Distanța de la centrul imaginii determină direcția tușei"
 
 #: ../plug-ins/gimpressionist/orientation.c:164
 msgid "Selects a random direction of each stroke"
-msgstr "Selectează o direcție aleatoare pentru fiecare tușă"
+msgstr "Selectează o direcție aleatorie pentru fiecare tușă"
 
 #: ../plug-ins/gimpressionist/orientation.c:167
 #: ../plug-ins/gimpressionist/size.c:170
@@ -9283,7 +9540,7 @@ msgstr "Amplasare"
 
 #: ../plug-ins/gimpressionist/placement.c:76
 msgid "Randomly"
-msgstr "Aleator"
+msgstr "Aleatoriu"
 
 #: ../plug-ins/gimpressionist/placement.c:80
 msgid "Evenly distributed"
@@ -9291,7 +9548,7 @@ msgstr "Distribuit uniform"
 
 #: ../plug-ins/gimpressionist/placement.c:88
 msgid "Place strokes randomly around the image"
-msgstr "Amplasează tușe aleator de jur împrejurul imaginii"
+msgstr "Amplasează tușe aleatoriu de jur împrejurul imaginii"
 
 #: ../plug-ins/gimpressionist/placement.c:92
 msgid "The strokes are evenly distributed across the image"
@@ -9338,7 +9595,7 @@ msgstr "Configurări implicite GIMPresionist"
 # titlu pe tab
 #: ../plug-ins/gimpressionist/presets.c:1014
 msgid "_Presets"
-msgstr "_Presetări"
+msgstr "_Prestabiliri"
 
 #: ../plug-ins/gimpressionist/presets.c:1029
 msgid "Save Current..."
@@ -9350,15 +9607,15 @@ msgstr "Salvează configurările curente în fișierul specificat"
 
 #: ../plug-ins/gimpressionist/presets.c:1065
 msgid "Reads the selected Preset into memory"
-msgstr "Citește în memorie presetarea selectată"
+msgstr "Citește în memorie prestabilirea selectată"
 
 #: ../plug-ins/gimpressionist/presets.c:1071
 msgid "Deletes the selected Preset"
-msgstr "Șterge presetarea selectată"
+msgstr "Șterge prestabilirea selectată"
 
 #: ../plug-ins/gimpressionist/presets.c:1077
 msgid "Reread the folder of Presets"
-msgstr "Recitește dosarul presetărilor"
+msgstr "Recitește dosarul prestabilirilor"
 
 #: ../plug-ins/gimpressionist/preview.c:174
 #: ../plug-ins/gimpressionist/repaint.c:1197
@@ -9419,7 +9676,7 @@ msgstr "Distanța de la centrul imaginii determină mărimea tușei"
 
 #: ../plug-ins/gimpressionist/size.c:167
 msgid "Selects a random size for each stroke"
-msgstr "Selectează o mărime aleatoare pentru fiecare tușă"
+msgstr "Selectează o mărime aleatorie pentru fiecare tușă"
 
 #: ../plug-ins/gimpressionist/size.c:171
 msgid "Let the direction from the center determine the size of the stroke"
@@ -9566,12 +9823,12 @@ msgid "Save comme_nt"
 msgstr "Salvează come_ntariul"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:8
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:3
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:5
 msgid "Save color _values from transparent pixels"
 msgstr "Salvează _valorile de culoare din pixelii transparenți"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:11
-#: ../plug-ins/ui/plug-in-file-raw.ui.h:7
+#: ../plug-ins/ui/plug-in-file-raw.ui.h:8
 msgid "S_ave Defaults"
 msgstr "S_alvează ca valori implicite"
 
@@ -9648,32 +9905,56 @@ msgid "_Planar (RRR,GGG,BBB)"
 msgstr "_Planar (RRR,GGG,BBB)"
 
 #: ../plug-ins/ui/plug-in-file-raw.ui.h:4
+msgid "Palette Type"
+msgstr "Tip de paletă"
+
+#: ../plug-ins/ui/plug-in-file-raw.ui.h:5
 msgid "_R, G, B (normal)"
 msgstr "_R, G, B (normal)"
 
-#: ../plug-ins/ui/plug-in-file-raw.ui.h:5
+#: ../plug-ins/ui/plug-in-file-raw.ui.h:6
 msgid "_B, G, R, X (BMP style)"
 msgstr "_B, G, R, X (stil BMP)"
 
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:1
+msgid ""
+"Warning: maximum TIFF file size exceeded. Retry as BigTIFF or with a "
+"different compression algorithm, or cancel."
+msgstr ""
+"Avertisment: dimensiunea maximă a fișierului TIFF a fost depășită. "
+"Reîncercați ca BigTIFF sau cu un alt algoritm de compresie, sau anulați."
+
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:2
+msgid "Export in _BigTIFF variant file format"
+msgstr "Exportă în varianta de format de fișier _BigTIFF"
+
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:3
 msgid "Save _layers"
 msgstr "Salvează straturi_le"
 
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:2
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:4
 msgid "Cr_op layers to image bounds"
 msgstr "_Decupează straturile la limitele imaginii"
 
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:4
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:6
 msgid "Colors are not stored premultiplied by the associated alpha"
 msgstr "Culorile nu sunt stocate premultiplicat de către alfa asociat"
 
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:5
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:7
 msgid "<b>Comment</b>"
 msgstr "<b>Comentariu</b>"
 
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:6
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:8
 msgid "S_ave Exif data"
 msgstr "S_alvează datele EXIF"
+
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:13
+msgid "Save _GeoTIFF data"
+msgstr "Salvează ca date _GeoTIFF"
+
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:14
+msgid "Keep the GeoTIFF metadata if it was present on import"
+msgstr "Păstrează metadatele GeoTIFF dacă au fost prezente la import"
 
 #: ../plug-ins/ui/plug-in-metadata-editor.ui.h:1
 msgid "Document Title"
@@ -10390,7 +10671,7 @@ msgstr "Poligon"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:4016
 msgid "Random seed:"
-msgstr "Sămânță aleatoare:"
+msgstr "Sămânță aleatorie:"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:4030
 msgid "_Second Flares"
@@ -11435,11 +11716,11 @@ msgstr "Configurări pentru acest fișier de hartă"
 
 #: ../plug-ins/imagemap/imap_settings.c:92
 msgid "Filename:"
-msgstr "Nume fișier:"
+msgstr "Nume de fișier:"
 
 #: ../plug-ins/imagemap/imap_settings.c:95
 msgid "Image name:"
-msgstr "Nume imagine:"
+msgstr "Nume de imagine:"
 
 #: ../plug-ins/imagemap/imap_settings.c:96
 msgid "Select Image File"
@@ -11648,7 +11929,7 @@ msgstr "I_zolat"
 
 #: ../plug-ins/lighting/lighting-ui.c:587
 msgid "Lighting preset:"
-msgstr "Presetare de iluminare:"
+msgstr "Prestabilire de iluminare:"
 
 #: ../plug-ins/lighting/lighting-ui.c:633
 msgid "Material Properties"
@@ -11783,12 +12064,12 @@ msgstr ""
 # titlu pe bară
 #: ../plug-ins/lighting/lighting-ui.c:1158
 msgid "Save Lighting Preset"
-msgstr "Salvare presetare de iluminare"
+msgstr "Salvare prestabilire de iluminare"
 
 # titlu pe bară
 #: ../plug-ins/lighting/lighting-ui.c:1302
 msgid "Load Lighting Preset"
-msgstr "Încărcare presetare de iluminare"
+msgstr "Încărcare prestabilire de iluminare"
 
 #: ../plug-ins/map-object/map-object-apply.c:241
 #: ../plug-ins/map-object/map-object-apply.c:266
@@ -12060,277 +12341,337 @@ msgid "Update preview _live"
 msgstr "Actua_lizează previzualizarea în direct"
 
 # tooltip
-#: ../plug-ins/metadata/metadata-editor.c:408
+#: ../plug-ins/metadata/metadata-editor.c:439
 msgid "Edit metadata (IPTC, EXIF, XMP)"
 msgstr "Editează metadatele (EXIF, IPTC, XMP)"
 
-#: ../plug-ins/metadata/metadata-editor.c:416
+#: ../plug-ins/metadata/metadata-editor.c:447
 msgid "_Edit Metadata"
 msgstr "_Editare metadate"
 
-#: ../plug-ins/metadata/metadata-editor.c:539
+#: ../plug-ins/metadata/metadata-editor.c:571
+msgid "Error loading metadata-editor dialog."
+msgstr "Eroare la încărcarea dialogului editor de metadate."
+
+#: ../plug-ins/metadata/metadata-editor.c:582
 #, c-format
 msgid "Metadata Editor: %s"
 msgstr "Editor de metadate: %s"
 
-#: ../plug-ins/metadata/metadata-editor.c:548
+#: ../plug-ins/metadata/metadata-editor.c:591
 msgid "_Write Metadata"
-msgstr "_Scrie metadate"
+msgstr "_Scrie metadatele"
 
-#: ../plug-ins/metadata/metadata-editor.c:572
+#: ../plug-ins/metadata/metadata-editor.c:615
 msgid "Import metadata"
-msgstr "Importă metadatele"
+msgstr "Importă metadate"
 
-#: ../plug-ins/metadata/metadata-editor.c:574
+#: ../plug-ins/metadata/metadata-editor.c:617
 msgid "Export metadata"
 msgstr "Exportă metadatele"
 
-#: ../plug-ins/metadata/metadata-editor.c:762
+#: ../plug-ins/metadata/metadata-editor.c:921
+#, c-format
+msgid "Error loading calendar. %s"
+msgstr "Eroare la încărcarea calendarului. %s"
+
+#: ../plug-ins/metadata/metadata-editor.c:949
 msgid "Calendar Date:"
 msgstr "Dată calendar:"
 
-#: ../plug-ins/metadata/metadata-editor.c:766
+#: ../plug-ins/metadata/metadata-editor.c:953
 msgid "Set Date"
 msgstr "Stabilește data"
 
-#: ../plug-ins/metadata/metadata-editor.c:1620
+#: ../plug-ins/metadata/metadata-editor.c:1687
+msgid ""
+"Enter or edit GPS value here.\n"
+"Valid values consist of 1, 2 or 3 numbers (degrees, minutes, seconds), see "
+"the following examples:\n"
+"10deg 15' 20\", or 10° 15' 20\", or 10:15:20.45, or 10 15 20, or 10 15.30, "
+"or 10.45\n"
+"Delete all text to remove the current value."
+msgstr ""
+"Introduceți sau editați valoarea GPS aici.\n"
+"Valorile valide constau din 1, 2 sau 3 numere (grade, minute, secunde), "
+"vedeți următoarele exemple:\n"
+"10deg 15' 20\", sau 10° 15' 20\", sau 10:15:20.45, sau 10 15 20, sau 10 "
+"15.30 sau 10.45\n"
+"Ștergeți tot textul pentru a elimina valoarea curentă."
+
+#: ../plug-ins/metadata/metadata-editor.c:1693
+msgid ""
+"Enter or edit GPS altitude value here.\n"
+"A valid value consists of one number:\n"
+"e.g. 100, or 12.24\n"
+"Depending on the selected measurement type the value should be entered in "
+"meter (m) or feet (ft)\n"
+"Delete all text to remove the current value."
+msgstr ""
+"Introduceți sau editați valoarea altitudinii GPS aici.\n"
+"O valoare validă constă dintr-un număr:\n"
+"de exemplu, 100 sau 12.24\n"
+"În funcție de tipul de măsurare selectat, valoarea trebuie introdusă în "
+"metri (m) sau picioare (ft)\n"
+"Ștergeți tot textul pentru a elimina valoarea curentă."
+
+#: ../plug-ins/metadata/metadata-editor.c:1829
 msgid "Unrated"
 msgstr "Neevaluat"
 
+#: ../plug-ins/metadata/metadata-editor.c:3782
+#, c-format
+msgid "Failed to set metadata tag %s"
+msgstr "Stabilirea etichetei de metadate %s a eșuat"
+
 # titlu pe bară
-#: ../plug-ins/metadata/metadata-editor.c:5645
+#: ../plug-ins/metadata/metadata-editor.c:4623
 msgid "Import Metadata File"
 msgstr "Import fișier de metadate"
 
 # titlu pe bară
-#: ../plug-ins/metadata/metadata-editor.c:5680
+#: ../plug-ins/metadata/metadata-editor.c:4658
 msgid "Export Metadata File"
 msgstr "Export fișier de metadate"
 
-#: ../plug-ins/metadata/metadata-tags.c:163
+#: ../plug-ins/metadata/metadata-tags.c:180
+#: ../plug-ins/metadata/metadata-tags.c:194
+#: ../plug-ins/metadata/metadata-tags.c:254
+#: ../plug-ins/metadata/metadata-tags.c:271
+msgid "Select a value"
+msgstr "Selectați o valoare"
+
+#: ../plug-ins/metadata/metadata-tags.c:181
 msgid "Original digital capture of a real life scene"
 msgstr "Captura digitală originală a unei scene reale"
 
-#: ../plug-ins/metadata/metadata-tags.c:164
+#: ../plug-ins/metadata/metadata-tags.c:182
 msgid "Digitized from a negative on film"
 msgstr "Digitizat dintr-un material negativ pe film"
 
-#: ../plug-ins/metadata/metadata-tags.c:165
+#: ../plug-ins/metadata/metadata-tags.c:183
 msgid "Digitized from a positive on film"
 msgstr "Digitizat dintr-un material pozitiv pe film"
 
-#: ../plug-ins/metadata/metadata-tags.c:166
+#: ../plug-ins/metadata/metadata-tags.c:184
 msgid "Digitized from a print on non-transparent medium"
 msgstr "Digitizat dintr-un material tipărit pe mediu netransparent"
 
 # hm ?
-#: ../plug-ins/metadata/metadata-tags.c:167
+#: ../plug-ins/metadata/metadata-tags.c:185
 msgid "Created by software"
 msgstr "Creat de software"
 
-#: ../plug-ins/metadata/metadata-tags.c:176
-#: ../plug-ins/metadata/metadata-tags.c:188
-#: ../plug-ins/metadata/metadata-tags.c:219
+#: ../plug-ins/metadata/metadata-tags.c:195
+#: ../plug-ins/metadata/metadata-tags.c:207
+#: ../plug-ins/metadata/metadata-tags.c:238
 msgid "None"
 msgstr "Fără"
 
-#: ../plug-ins/metadata/metadata-tags.c:177
-#: ../plug-ins/metadata/metadata-tags.c:189
+#: ../plug-ins/metadata/metadata-tags.c:196
+#: ../plug-ins/metadata/metadata-tags.c:208
 msgid "Not Applicable"
 msgstr "Neaplicabil"
 
-#: ../plug-ins/metadata/metadata-tags.c:178
+#: ../plug-ins/metadata/metadata-tags.c:197
 msgid "Unlimited Model Releases"
 msgstr "Publicările nelimitate ale modelului"
 
-#: ../plug-ins/metadata/metadata-tags.c:179
+#: ../plug-ins/metadata/metadata-tags.c:198
 msgid "Limited or Incomplete Model Releases"
 msgstr "Publicările limitate sau incomplete ale modelului"
 
-#: ../plug-ins/metadata/metadata-tags.c:190
+#: ../plug-ins/metadata/metadata-tags.c:209
 msgid "Unlimited Property Releases"
 msgstr "Publicările nelimitate ale proprietății"
 
-#: ../plug-ins/metadata/metadata-tags.c:191
+#: ../plug-ins/metadata/metadata-tags.c:210
 msgid "Limited or Incomplete Property Releases"
 msgstr "Publicările limitate sau incomplete ale proprietății"
 
-#: ../plug-ins/metadata/metadata-tags.c:200
+#: ../plug-ins/metadata/metadata-tags.c:219
 msgid "Age Unknown"
 msgstr "Vârstă necunoscută"
 
-#: ../plug-ins/metadata/metadata-tags.c:201
+#: ../plug-ins/metadata/metadata-tags.c:220
 msgid "Age 25 or Over"
 msgstr "25 de ani sau mai mult"
 
-#: ../plug-ins/metadata/metadata-tags.c:202
+#: ../plug-ins/metadata/metadata-tags.c:221
 msgid "Age 24"
 msgstr "24 de ani"
 
-#: ../plug-ins/metadata/metadata-tags.c:203
+#: ../plug-ins/metadata/metadata-tags.c:222
 msgid "Age 23"
 msgstr "23 de ani"
 
-#: ../plug-ins/metadata/metadata-tags.c:204
+#: ../plug-ins/metadata/metadata-tags.c:223
 msgid "Age 22"
 msgstr "22 de ani"
 
-#: ../plug-ins/metadata/metadata-tags.c:205
+#: ../plug-ins/metadata/metadata-tags.c:224
 msgid "Age 21"
 msgstr "21 de ani"
 
-#: ../plug-ins/metadata/metadata-tags.c:206
+#: ../plug-ins/metadata/metadata-tags.c:225
 msgid "Age 20"
 msgstr "20 de ani"
 
-#: ../plug-ins/metadata/metadata-tags.c:207
+#: ../plug-ins/metadata/metadata-tags.c:226
 msgid "Age 19"
 msgstr "19 ani"
 
-#: ../plug-ins/metadata/metadata-tags.c:208
+#: ../plug-ins/metadata/metadata-tags.c:227
 msgid "Age 18"
 msgstr "18 ani"
 
-#: ../plug-ins/metadata/metadata-tags.c:209
+#: ../plug-ins/metadata/metadata-tags.c:228
 msgid "Age 17"
 msgstr "17 ani"
 
-#: ../plug-ins/metadata/metadata-tags.c:210
+#: ../plug-ins/metadata/metadata-tags.c:229
 msgid "Age 16"
 msgstr "16 ani"
 
-#: ../plug-ins/metadata/metadata-tags.c:211
+#: ../plug-ins/metadata/metadata-tags.c:230
 msgid "Age 15"
 msgstr "15 ani"
 
-#: ../plug-ins/metadata/metadata-tags.c:212
+#: ../plug-ins/metadata/metadata-tags.c:231
 msgid "Age 14 or Under"
 msgstr "14 ani sau mai puțin"
 
-#: ../plug-ins/metadata/metadata-tags.c:219
+#: ../plug-ins/metadata/metadata-tags.c:238
 msgid "2"
 msgstr "2"
 
-#: ../plug-ins/metadata/metadata-tags.c:219
+#: ../plug-ins/metadata/metadata-tags.c:238
 msgid "3"
 msgstr "3"
 
-#: ../plug-ins/metadata/metadata-tags.c:219
+#: ../plug-ins/metadata/metadata-tags.c:238
 msgid "4"
 msgstr "4"
 
-#: ../plug-ins/metadata/metadata-tags.c:219
+#: ../plug-ins/metadata/metadata-tags.c:238
 msgid "6"
 msgstr "6"
 
-#: ../plug-ins/metadata/metadata-tags.c:219
+#: ../plug-ins/metadata/metadata-tags.c:238
 msgid "7"
 msgstr "7"
 
 # hm ? ce gen ?
-#: ../plug-ins/metadata/metadata-tags.c:226
-#: ../plug-ins/metadata/metadata-tags.c:262
-#: ../plug-ins/metadata/metadata-tags.c:269
-#: ../plug-ins/metadata/metadata-tags.c:276
+#: ../plug-ins/metadata/metadata-tags.c:245
+#: ../plug-ins/metadata/metadata-tags.c:281
+#: ../plug-ins/metadata/metadata-tags.c:288
+#: ../plug-ins/metadata/metadata-tags.c:295
 msgid "Unknown"
 msgstr "Necunoscut"
 
 #. DO NOT SAVE
-#: ../plug-ins/metadata/metadata-tags.c:227
+#: ../plug-ins/metadata/metadata-tags.c:246
 msgid "Copyrighted"
 msgstr "Protejat prin drepturi de autor"
 
 #. TRUE
-#: ../plug-ins/metadata/metadata-tags.c:228
+#: ../plug-ins/metadata/metadata-tags.c:247
 msgid "Public Domain"
 msgstr "Domeniu public"
 
-#: ../plug-ins/metadata/metadata-tags.c:235
-#: ../plug-ins/metadata/metadata-tags.c:252
-msgid "Select a value"
-msgstr "Selectați o valoare"
-
-#: ../plug-ins/metadata/metadata-tags.c:236
+#: ../plug-ins/metadata/metadata-tags.c:255
 msgid "Work"
 msgstr "Serviciu"
 
 # hm ? sau mobil ?
-#: ../plug-ins/metadata/metadata-tags.c:237
+#: ../plug-ins/metadata/metadata-tags.c:256
 msgid "Cell"
 msgstr "Celular"
 
-#: ../plug-ins/metadata/metadata-tags.c:238
+#: ../plug-ins/metadata/metadata-tags.c:257
 msgid "Fax"
 msgstr "Fax"
 
-#: ../plug-ins/metadata/metadata-tags.c:239
+#: ../plug-ins/metadata/metadata-tags.c:258
 msgid "Home"
 msgstr "Acasă"
 
-#: ../plug-ins/metadata/metadata-tags.c:240
+#: ../plug-ins/metadata/metadata-tags.c:259
 msgid "Pager"
 msgstr "Pager"
 
-#: ../plug-ins/metadata/metadata-tags.c:253
+#: ../plug-ins/metadata/metadata-tags.c:272
 msgid "Male"
 msgstr "Masculin"
 
-#: ../plug-ins/metadata/metadata-tags.c:254
+#: ../plug-ins/metadata/metadata-tags.c:273
 msgid "Female"
 msgstr "Feminin"
 
-#: ../plug-ins/metadata/metadata-tags.c:255
+#: ../plug-ins/metadata/metadata-tags.c:274
 msgid "Other"
 msgstr "Altele"
 
-#: ../plug-ins/metadata/metadata-tags.c:262
-msgid "Above Sea Level"
+#: ../plug-ins/metadata/metadata-tags.c:281
+msgid "Above sea level"
 msgstr "Deasupra nivelului mării"
 
-#: ../plug-ins/metadata/metadata-tags.c:262
-msgid "Below Sea Level"
-msgstr "Sub nivelul mării"
+#: ../plug-ins/metadata/metadata-tags.c:281
+msgid "Below sea level"
+msgstr "Sub nivelului mării"
 
-#: ../plug-ins/metadata/metadata-tags.c:269
+#: ../plug-ins/metadata/metadata-tags.c:288
 msgid "North"
 msgstr "Nord"
 
-#: ../plug-ins/metadata/metadata-tags.c:269
+#: ../plug-ins/metadata/metadata-tags.c:288
 msgid "South"
 msgstr "Sud"
 
-#: ../plug-ins/metadata/metadata-tags.c:276
+#: ../plug-ins/metadata/metadata-tags.c:295
 msgid "East"
 msgstr "Est"
 
-#: ../plug-ins/metadata/metadata-tags.c:276
+#: ../plug-ins/metadata/metadata-tags.c:295
 msgid "West"
 msgstr "Vest"
 
-#: ../plug-ins/metadata/metadata-viewer.c:120
+#: ../plug-ins/metadata/metadata-viewer.c:140
 msgid "View metadata (Exif, IPTC, XMP)"
 msgstr "Vizualizează metadatele (Exif, IPTC, XMP)"
 
-#: ../plug-ins/metadata/metadata-viewer.c:127
+#: ../plug-ins/metadata/metadata-viewer.c:147
 msgid "_View Metadata"
 msgstr "_Vizualizează metadatele"
 
-#: ../plug-ins/metadata/metadata-viewer.c:220
+#: ../plug-ins/metadata/metadata-viewer.c:242
+msgid "Error loading metadata-viewer dialog."
+msgstr "Eroare la încărcarea dialogului vizualizator de metadate."
+
+#: ../plug-ins/metadata/metadata-viewer.c:253
 #, c-format
 msgid "Metadata Viewer: %s"
 msgstr "Vizualizator de metadate: %s"
 
 # imposibil de definit forma de plural
-#: ../plug-ins/metadata/metadata-viewer.c:360
+#: ../plug-ins/metadata/metadata-viewer.c:345
 #, c-format
 msgid "(%lu more character(s))"
-msgstr "(%lu caractere în plus)"
+msgstr "(încă %lu caractere)"
+
+#: ../plug-ins/metadata/metadata-viewer.c:554
+msgid " meter"
+msgstr " metri"
+
+#: ../plug-ins/metadata/metadata-viewer.c:555
+msgid " feet"
+msgstr " picioare"
 
 # imposibil de definit forma de plural
-#: ../plug-ins/metadata/metadata-viewer.c:392
+#: ../plug-ins/metadata/metadata-viewer.c:673
 #, c-format
 msgid "(%llu more byte(s))"
-msgstr "(%llu baiți în plus)"
+msgstr "(încă %llu baiți)"
 
 #: ../plug-ins/pagecurl/pagecurl.c:202
 msgid "Curl up one of the image corners"
@@ -12472,115 +12813,115 @@ msgstr "A apărut o eroare la încercarea de a tipări:"
 msgid "Printing"
 msgstr "Tipărire"
 
-#: ../plug-ins/screenshot/screenshot.c:128
+#: ../plug-ins/screenshot/screenshot.c:127
 msgid "Create an image from an area of the screen"
 msgstr "Creează o imagine dintr-o zonă a ecranului"
 
 # adaptare
-#: ../plug-ins/screenshot/screenshot.c:149
+#: ../plug-ins/screenshot/screenshot.c:148
 msgid "_Screenshot..."
 msgstr "O _captură de ecran..."
 
-#: ../plug-ins/screenshot/screenshot.c:495
+#: ../plug-ins/screenshot/screenshot.c:487
 #: ../plug-ins/screenshot/screenshot-x11.c:424
 msgid "Screenshot"
 msgstr "Captură de ecran"
 
-#: ../plug-ins/screenshot/screenshot.c:500
+#: ../plug-ins/screenshot/screenshot.c:492
 msgid "S_nap"
 msgstr "_Capturează"
 
 #. Area
-#: ../plug-ins/screenshot/screenshot.c:527
+#: ../plug-ins/screenshot/screenshot.c:519
 msgid "Area"
 msgstr "Zonă"
 
-#: ../plug-ins/screenshot/screenshot.c:539
+#: ../plug-ins/screenshot/screenshot.c:531
 msgid "Take a screenshot of a single _window"
 msgstr "Capturează o singură _fereastră"
 
-#: ../plug-ins/screenshot/screenshot.c:562
+#: ../plug-ins/screenshot/screenshot.c:554
 msgid "Include window _decoration"
 msgstr "Include _decorațiunile ferestrei"
 
-#: ../plug-ins/screenshot/screenshot.c:583
-#: ../plug-ins/screenshot/screenshot.c:628
+#: ../plug-ins/screenshot/screenshot.c:575
+#: ../plug-ins/screenshot/screenshot.c:620
 msgid "Include _mouse pointer"
 msgstr "Include indicatorul de _maus"
 
-#: ../plug-ins/screenshot/screenshot.c:605
+#: ../plug-ins/screenshot/screenshot.c:597
 msgid "Take a screenshot of the entire _screen"
 msgstr "Capturează întreg _ecranul"
 
-#: ../plug-ins/screenshot/screenshot.c:656
+#: ../plug-ins/screenshot/screenshot.c:648
 msgid "Select a _region to grab"
 msgstr "Selectează o _zonă de capturat"
 
-#: ../plug-ins/screenshot/screenshot.c:674
+#: ../plug-ins/screenshot/screenshot.c:666
 msgid "Delay"
 msgstr "Întârziere"
 
-#: ../plug-ins/screenshot/screenshot.c:694
+#: ../plug-ins/screenshot/screenshot.c:686
 msgid "Selection delay: "
 msgstr "Întârziere de selecție: "
 
 #. translators: this is the unit label of a spinbutton
-#: ../plug-ins/screenshot/screenshot.c:713
-#: ../plug-ins/screenshot/screenshot.c:777
+#: ../plug-ins/screenshot/screenshot.c:705
+#: ../plug-ins/screenshot/screenshot.c:769
 msgid "seconds"
 msgstr "secunde"
 
-#: ../plug-ins/screenshot/screenshot.c:727
+#: ../plug-ins/screenshot/screenshot.c:719
 msgid ""
 "After the delay, drag your mouse to select the region for the screenshot."
 msgstr "După întârziere, deplasați mausul pentru a selecta zona de capturat."
 
-#: ../plug-ins/screenshot/screenshot.c:731
+#: ../plug-ins/screenshot/screenshot.c:723
 msgid "Click in a window to snap it after delay."
 msgstr "Clic într-o fereastră pentru a o acroșa după întârziere."
 
-#: ../plug-ins/screenshot/screenshot.c:736
+#: ../plug-ins/screenshot/screenshot.c:728
 msgid "At the end of the delay, click in a window to snap it."
 msgstr ""
 "La sfârșitul întârzierii, dați clic într‑o fereastră pentru a o captura."
 
-#: ../plug-ins/screenshot/screenshot.c:757
+#: ../plug-ins/screenshot/screenshot.c:749
 msgid "Screenshot dela_y: "
 msgstr "Întâr_ziere pentru captura de ecran: "
 
-#: ../plug-ins/screenshot/screenshot.c:789
+#: ../plug-ins/screenshot/screenshot.c:781
 msgid "After the delay, the screenshot is taken."
 msgstr "După întârziere, captura de ecran este preluată automat."
 
-#: ../plug-ins/screenshot/screenshot.c:791
+#: ../plug-ins/screenshot/screenshot.c:783
 msgid "Once the region is selected, it will be captured after this delay."
 msgstr ""
 "Odată ce regiunea este selectată, aceasta va fi capturată după această "
 "întârziere."
 
-#: ../plug-ins/screenshot/screenshot.c:796
+#: ../plug-ins/screenshot/screenshot.c:788
 msgid "Once the window is selected, it will be captured after this delay."
 msgstr ""
 "Odată ce fereastra este selectată, aceasta va fi capturată după această "
 "întârziere."
 
-#: ../plug-ins/screenshot/screenshot.c:802
+#: ../plug-ins/screenshot/screenshot.c:794
 msgid "After the delay, the active window will be captured."
 msgstr "După întârziere, fereastra activă va fi capturată."
 
-#: ../plug-ins/screenshot/screenshot.c:809
+#: ../plug-ins/screenshot/screenshot.c:801
 msgid "Color Profile"
 msgstr "Profil de culoare"
 
-#: ../plug-ins/screenshot/screenshot.c:814
+#: ../plug-ins/screenshot/screenshot.c:806
 msgid "Tag image with _monitor profile"
 msgstr "Etichetează imaginea cu profilul _monitorului"
 
-#: ../plug-ins/screenshot/screenshot.c:818
+#: ../plug-ins/screenshot/screenshot.c:810
 msgid "Convert image to sR_GB"
 msgstr "Convertește imaginea la sR_GB"
 
-#: ../plug-ins/screenshot/screenshot-win32.c:297
+#: ../plug-ins/screenshot/screenshot-win32.c:302
 msgid "No data captured"
 msgstr "Nicio dată capturată"
 
