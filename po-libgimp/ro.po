@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2020-10-12 20:08+0000\n"
-"PO-Revision-Date: 2020-11-15 14:12+0200\n"
+"PO-Revision-Date: 2022-12-05 03:13+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Gnome Romanian Team <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
 "20)) ? 1 : 2);\n"
-"X-Generator: Poedit 2.4.1\n"
+"X-Generator: Poedit 3.1.1\n"
 
 #. procedure executed successfully
 #: ../libgimp/gimp.c:1265
@@ -130,7 +130,7 @@ msgid ""
 "(Do it manually to tune the result)"
 msgstr ""
 "Convertește la imagine indexată folosind configurările implicite\n"
-"(trebuie intervenit manual pentru ajustarea rezultatului)"
+"(efectuați manual pentru a ajusta rezultatul)"
 
 #: ../libgimp/gimpexport.c:395
 #, c-format
@@ -143,7 +143,8 @@ msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
-"Convertește la indexat folosind configurările implicite\n"
+"Convertește la imagine indexată folosind configurările implicite pentru "
+"bitmap\n"
 "(efectuați manual pentru a ajusta rezultatul)"
 
 #: ../libgimp/gimpexport.c:405
@@ -702,17 +703,17 @@ msgstr "Gri"
 #: ../libgimpbase/gimpbaseenums.c:413
 msgctxt "component-type"
 msgid "8-bit integer"
-msgstr "Întreg pe 8 biți"
+msgstr "Număr întreg pe 8 biți"
 
 #: ../libgimpbase/gimpbaseenums.c:414
 msgctxt "component-type"
 msgid "16-bit integer"
-msgstr "Întreg pe 16 biți"
+msgstr "Număr întreg pe 16 biți"
 
 #: ../libgimpbase/gimpbaseenums.c:415
 msgctxt "component-type"
 msgid "32-bit integer"
-msgstr "Întreg pe 32 de biți"
+msgstr "Număr întreg pe 32 de biți"
 
 #: ../libgimpbase/gimpbaseenums.c:416
 msgctxt "component-type"
@@ -1204,32 +1205,32 @@ msgstr "Procedură temporară"
 #: ../libgimpbase/gimpbaseenums.c:1467
 msgctxt "precision"
 msgid "8-bit linear integer"
-msgstr "Întreg liniar pe 8 biți"
+msgstr "Număr întreg liniar pe 8 biți"
 
 #: ../libgimpbase/gimpbaseenums.c:1468
 msgctxt "precision"
 msgid "8-bit gamma integer"
-msgstr "Întreg gamma pe 8 biți"
+msgstr "Număr întreg gamma pe 8 biți"
 
 #: ../libgimpbase/gimpbaseenums.c:1469
 msgctxt "precision"
 msgid "16-bit linear integer"
-msgstr "Întreg liniar pe 16 biți"
+msgstr "Număr întreg liniar pe 16 biți"
 
 #: ../libgimpbase/gimpbaseenums.c:1470
 msgctxt "precision"
 msgid "16-bit gamma integer"
-msgstr "Întreg gamma pe 16 biți"
+msgstr "Număr întreg gamma pe 16 biți"
 
 #: ../libgimpbase/gimpbaseenums.c:1471
 msgctxt "precision"
 msgid "32-bit linear integer"
-msgstr "Întreg liniar pe 32 de biți"
+msgstr "Număr întreg liniar pe 32 de biți"
 
 #: ../libgimpbase/gimpbaseenums.c:1472
 msgctxt "precision"
 msgid "32-bit gamma integer"
-msgstr "Întreg gamma pe 32 de biți"
+msgstr "Număr întreg gamma pe 32 de biți"
 
 #: ../libgimpbase/gimpbaseenums.c:1473
 msgctxt "precision"
@@ -1607,7 +1608,7 @@ msgstr "Afișor cu gestionare de culori"
 #: ../libgimpconfig/gimpconfigenums.c:26
 msgctxt "color-management-mode"
 msgid "Soft-proofing"
-msgstr "Simulare de tipărire (soft-proof)"
+msgstr "Simulare de tipărire (soft-proofing)"
 
 #: ../libgimpconfig/gimpconfigenums.c:57
 msgctxt "color-rendering-intent"
@@ -1682,9 +1683,10 @@ msgid ""
 "some other color space, including soft-proofing to a printer or other output "
 "device profile. "
 msgstr ""
-"Profilul de culoare de folosit pentru simularea de tipărire de la spațiul de "
-"culoare al imaginii către un alt spațiu de culoare, inclusiv simulare de "
-"tipărire către o imprimantă sau un alt profil de dispozitiv de ieșire. "
+"Profilul de culoare de folosit pentru simularea de tipărire (soft-proofing) "
+"de la spațiul de culoare al imaginii către un alt spațiu de culoare, "
+"inclusiv simulare de tipărire către o imprimantă sau un alt profil de "
+"dispozitiv de ieșire. "
 
 #: ../libgimpconfig/gimpcolorconfig.c:79
 msgid ""
@@ -1734,16 +1736,16 @@ msgstr ""
 msgid ""
 "When disabled, soft-proofing might be of better quality at the cost of speed."
 msgstr ""
-"Când opțiunea este dezactivată, simularea de tipărire ar putea fi de "
-"calitate mai bună în detrimentul vitezei."
+"Când opțiunea este dezactivată, simularea de tipărire (soft-proofing) ar "
+"putea fi de calitate mai bună în detrimentul vitezei."
 
 #: ../libgimpconfig/gimpcolorconfig.c:107
 msgid ""
 "When enabled, the soft-proofing will mark colors which can not be "
 "represented in the target color space."
 msgstr ""
-"Când opțiunea este activată, simularea de tipărire va marca culorile care nu "
-"pot fi reprezentate în spațiul de culoare țintă."
+"Când opțiunea este activată, simularea de tipărire (soft-proofing) va marca "
+"culorile care nu pot fi reprezentate în spațiul de culoare țintă."
 
 #: ../libgimpconfig/gimpcolorconfig.c:111
 msgid "The color to use for marking colors which are out of gamut."
@@ -1776,7 +1778,7 @@ msgstr "Folosește profilul din sistem al monitorului"
 
 #: ../libgimpconfig/gimpcolorconfig.c:242
 msgid "Simulation profile for soft-proofing"
-msgstr "Profilul de simulare pentru simularea de tipărire (soft-proof)"
+msgstr "Profilul de simulare pentru simularea de tipărire (soft-proofing)"
 
 #: ../libgimpconfig/gimpcolorconfig.c:249
 msgid "Display rendering intent"
@@ -1792,19 +1794,19 @@ msgstr "Optimizează transformările de culoare ale afișorului"
 
 #: ../libgimpconfig/gimpcolorconfig.c:271
 msgid "Soft-proofing rendering intent"
-msgstr "Intenția de randare pentru simularea de tipărire (soft-proof)"
+msgstr "Intenția de randare pentru simularea de tipărire (soft-proofing)"
 
 #: ../libgimpconfig/gimpcolorconfig.c:279
 msgid "Use black point compensation for soft-proofing"
 msgstr ""
 "Folosește compensarea punctului de negru pentru simularea de tipărire (soft-"
-"proof)"
+"proofing)"
 
 #: ../libgimpconfig/gimpcolorconfig.c:286
 msgid "Optimize soft-proofing color transformations"
 msgstr ""
 "Optimizează transformările de culoare pentru simularea de tipărire (soft-"
-"proof)"
+"proofing)"
 
 #: ../libgimpconfig/gimpcolorconfig.c:293
 msgid "Mark out of gamut colors"
