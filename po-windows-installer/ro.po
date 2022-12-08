@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp gimp-2-10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-08-22 21:28+0200\n"
-"PO-Revision-Date: 2020-05-13 11:38+0300\n"
+"POT-Creation-Date: 2022-11-24 22:00+0000\n"
+"PO-Revision-Date: 2022-12-07 01:45+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Romanian <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
 "20)) ? 1 : 2);;\n"
-"X-Generator: Poedit 2.3\n"
+"X-Generator: Poedit 3.1.1\n"
 
 #: build/windows/installer/lang/setup.isl.xml.in:7
 msgid "License Agreement"
@@ -98,7 +98,7 @@ msgid ""
 "have more control over what gets installed."
 msgstr ""
 "GIMP este acum gata pentru a fi instalat. Dați clic pe butonul 'Instalează' "
-"pentru a instala utilizând setările implicite, sau dați clic pe butonul "
+"pentru a instala utilizând configurările implicite, sau dați clic pe butonul "
 "'Personalizează' dacă doriți să aveți mai mult control asupra celor ce "
 "urmează a fi instalate."
 
@@ -139,9 +139,8 @@ msgid "Run-time libraries"
 msgstr "Biblioteci run-time"
 
 #: build/windows/installer/lang/setup.isl.xml.in:101
-#, fuzzy
 msgid "Run-time libraries used by GIMP, including GTK Run-time Environment"
-msgstr "Bibliotecile run-time utilizate de GIMP, inclusiv mediul run-time GTK+"
+msgstr "Bibliotecile run-time utilizate de GIMP, inclusiv mediul run-time GTK"
 
 #: build/windows/installer/lang/setup.isl.xml.in:105
 msgid "Debug symbols"
@@ -152,9 +151,8 @@ msgid "Include information to help with debugging GIMP"
 msgstr "Include informații care să vă ajute la depanarea GIMP"
 
 #: build/windows/installer/lang/setup.isl.xml.in:113
-#, fuzzy
 msgid "MS-Windows engine for GTK"
-msgstr "Motor MS-Windows pentru GTK+"
+msgstr "Motor MS-Windows pentru GTK"
 
 #: build/windows/installer/lang/setup.isl.xml.in:117
 msgid "Native Windows look for GIMP"
@@ -183,15 +181,13 @@ msgstr ""
 "Vă permite să utilizați plugin-uri GIMP scrise în limbajul de script Python."
 
 #: build/windows/installer/lang/setup.isl.xml.in:145
-#, fuzzy
 msgid "Lua scripting"
-msgstr "Scripturi Python"
+msgstr "Scripturi Lua"
 
 #: build/windows/installer/lang/setup.isl.xml.in:149
-#, fuzzy
 msgid "Allows you to use GIMP plugins written in Lua scripting language."
 msgstr ""
-"Vă permite să utilizați plugin-uri GIMP scrise în limbajul de script Python."
+"Vă permite să utilizați plugin-uri GIMP scrise în limbajul de script Lua."
 
 #: build/windows/installer/lang/setup.isl.xml.in:153
 msgid "MyPaint brushes"
