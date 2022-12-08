@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-10-25 21:27+0000\n"
-"PO-Revision-Date: 2020-11-04 14:43+0200\n"
+"POT-Creation-Date: 2022-11-24 22:00+0000\n"
+"PO-Revision-Date: 2022-12-07 01:17+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Gnome Romanian Team <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -18,81 +18,73 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
 "20)) ? 1 : 2;\n"
-"X-Generator: Poedit 2.4.1\n"
+"X-Generator: Poedit 3.1.1\n"
 
-#: ../plug-ins/script-fu/script-fu.c:138
+#: plug-ins/script-fu/script-fu.c:122
 msgid "Script-Fu _Console"
-msgstr "_Consolă Script-Fu"
+msgstr ""
 
-#: ../plug-ins/script-fu/script-fu.c:143
+#: plug-ins/script-fu/script-fu.c:127
 msgid "Interactive console for Script-Fu development"
 msgstr "Consolă interactivă pentru dezvoltare Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:190
-msgid "_Start Server..."
-msgstr "Pornește _serverul..."
-
-#: ../plug-ins/script-fu/script-fu.c:195
-msgid "Server for remote Script-Fu operation"
-msgstr "Server pentru operare Script-Fu de la distanță"
-
-#: ../plug-ins/script-fu/script-fu.c:394
+#: plug-ins/script-fu/script-fu.c:310
 msgid "_GIMP Online"
 msgstr "_GIMP Online"
 
-#: ../plug-ins/script-fu/script-fu.c:395
+#: plug-ins/script-fu/script-fu.c:311
 msgid "_User Manual"
 msgstr "Manual de _utilizare"
 
-#: ../plug-ins/script-fu/script-fu.c:398
+#: plug-ins/script-fu/script-fu.c:314
 msgid "_Script-Fu"
 msgstr "_Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:400
+#: plug-ins/script-fu/script-fu.c:316
 msgid "_Test"
 msgstr "_Test"
 
-#: ../plug-ins/script-fu/script-fu.c:403
+#: plug-ins/script-fu/script-fu.c:319
 msgid "_Buttons"
 msgstr "_Butoane"
 
-#: ../plug-ins/script-fu/script-fu.c:405
+#: plug-ins/script-fu/script-fu.c:321
 msgid "_Logos"
 msgstr "Sig_le"
 
-#: ../plug-ins/script-fu/script-fu.c:407
+#: plug-ins/script-fu/script-fu.c:323
 msgid "_Patterns"
 msgstr "_Modele"
 
-#: ../plug-ins/script-fu/script-fu.c:410
+#: plug-ins/script-fu/script-fu.c:326
 msgid "_Web Page Themes"
 msgstr "Teme pentru pagini _web"
 
-#: ../plug-ins/script-fu/script-fu.c:412
+#: plug-ins/script-fu/script-fu.c:328
 msgid "_Alien Glow"
 msgstr "Strălucire extr_aterestră"
 
-#: ../plug-ins/script-fu/script-fu.c:414
+#: plug-ins/script-fu/script-fu.c:330
 msgid "_Beveled Pattern"
 msgstr "Model _teșit"
 
-#: ../plug-ins/script-fu/script-fu.c:416
+#: plug-ins/script-fu/script-fu.c:332
 msgid "_Classic.Gimp.Org"
 msgstr "_Classic.Gimp.Org"
 
-#: ../plug-ins/script-fu/script-fu.c:419
+#: plug-ins/script-fu/script-fu.c:335
 msgid "Alpha to _Logo"
 msgstr "Alfa la sig_lă"
 
-#: ../plug-ins/script-fu/script-fu.c:425
+#: plug-ins/script-fu/script-fu.c:341
 msgid "_Refresh Scripts"
 msgstr "_Reîmprospătează scripturile"
 
-#: ../plug-ins/script-fu/script-fu.c:430
+#: plug-ins/script-fu/script-fu.c:346
 msgid "Re-read all available Script-Fu scripts"
 msgstr "Recitește toate scripturile Script-Fu disponibile"
 
-#: ../plug-ins/script-fu/script-fu.c:456
+#: plug-ins/script-fu/script-fu.c:372
 msgid ""
 "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
 "Please close all Script-Fu windows and try again."
@@ -101,161 +93,85 @@ msgstr ""
 "Script-Fu este deschisă. Închideți toate ferestele Script-Fu și încercați "
 "din nou."
 
-#: ../plug-ins/script-fu/script-fu-console.c:110
-#: ../plug-ins/script-fu/script-fu-console.c:177
+#: plug-ins/script-fu/script-fu-console.c:110
+#: plug-ins/script-fu/script-fu-console.c:177
 msgid "Script-Fu Console"
 msgstr "Consolă Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-console.c:115
-#: ../plug-ins/script-fu/script-fu-console.c:281
+#: plug-ins/script-fu/script-fu-console.c:115
+#: plug-ins/script-fu/script-fu-console.c:281
 msgid "_Save"
 msgstr "_Salvează"
 
-#: ../plug-ins/script-fu/script-fu-console.c:116
+#: plug-ins/script-fu/script-fu-console.c:116
 msgid "C_lear"
 msgstr "Go_lește"
 
-#: ../plug-ins/script-fu/script-fu-console.c:117
-#: ../plug-ins/script-fu/script-fu-console.c:359
+#: plug-ins/script-fu/script-fu-console.c:117
+#: plug-ins/script-fu/script-fu-console.c:359
 msgid "_Close"
 msgstr "Înc_hide"
 
-#: ../plug-ins/script-fu/script-fu-console.c:173
+#: plug-ins/script-fu/script-fu-console.c:173
 msgid "Welcome to TinyScheme"
 msgstr "Bun venit la TinyScheme"
 
-#: ../plug-ins/script-fu/script-fu-console.c:179
+#: plug-ins/script-fu/script-fu-console.c:179
 msgid "Interactive Scheme Development"
 msgstr "Dezvoltare interactivă de scheme"
 
-#: ../plug-ins/script-fu/script-fu-console.c:215
+#: plug-ins/script-fu/script-fu-console.c:215
 msgid "_Browse..."
 msgstr "_Răsfoiește..."
 
-#: ../plug-ins/script-fu/script-fu-console.c:276
+#: plug-ins/script-fu/script-fu-console.c:276
 msgid "Save Script-Fu Console Output"
 msgstr "Salvează ieșirea consolei Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-console.c:280
-#: ../plug-ins/script-fu/script-fu-interface.c:238
-#: ../plug-ins/script-fu/script-fu-server.c:834
+#: plug-ins/script-fu/script-fu-console.c:280
+#: plug-ins/script-fu/server/script-fu-server.c:884
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:236
 msgid "_Cancel"
 msgstr "_Anulează"
 
-#: ../plug-ins/script-fu/script-fu-console.c:325
+#: plug-ins/script-fu/script-fu-console.c:325
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Nu s-a putut deschide „%s” pentru scriere: %s"
 
-#: ../plug-ins/script-fu/script-fu-console.c:354
+#: plug-ins/script-fu/script-fu-console.c:354
 msgid "Script-Fu Procedure Browser"
 msgstr "Navigator de proceduri Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-console.c:358
+#: plug-ins/script-fu/script-fu-console.c:358
 msgid "_Apply"
 msgstr "_Aplică"
 
-#: ../plug-ins/script-fu/script-fu-eval.c:53
+#: plug-ins/script-fu/script-fu-eval.c:50
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "Modul de evaluare Script-Fu permite doar invocare non-interactivă"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:202
-msgid "Script-Fu cannot process two scripts at the same time."
-msgstr "Script-Fu nu poate procesa două scripturi în același timp."
-
-#: ../plug-ins/script-fu/script-fu-interface.c:204
-#, c-format
-msgid "You are already running the \"%s\" script."
-msgstr "Rulați deja scriptul „%s”."
-
-#: ../plug-ins/script-fu/script-fu-interface.c:230
-#, c-format
-msgid "Script-Fu: %s"
-msgstr "Script-Fu: %s"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:237
-msgid "_Reset"
-msgstr "_Resetează"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:239
-msgid "_OK"
-msgstr "_OK"
-
-#. we add a colon after the label;
-#. *  some languages want an extra space here
-#.
-#: ../plug-ins/script-fu/script-fu-interface.c:293
-#, c-format
-msgid "%s:"
-msgstr "%s:"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:343
-msgid "Script-Fu Color Selection"
-msgstr "Selecție de culoare Script-Fu"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:459
-msgid "Script-Fu File Selection"
-msgstr "Selecție de fișier Script-Fu"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:462
-msgid "Script-Fu Folder Selection"
-msgstr "Selecție de dosar Script-Fu"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:475
-msgid "Script-Fu Font Selection"
-msgstr "Selecție de font Script-Fu"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:483
-msgid "Script-Fu Palette Selection"
-msgstr "Selecție de paletă Script-Fu"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:492
-msgid "Script-Fu Pattern Selection"
-msgstr "Selecție de model Script-Fu"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:501
-msgid "Script-Fu Gradient Selection"
-msgstr "Selecție de degrade Script-Fu"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:510
-msgid "Script-Fu Brush Selection"
-msgstr "Selecție de penel Script-Fu"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:888
-#, c-format
-msgid "Error while executing %s:"
-msgstr "Eroare în timpul execuției %s:"
-
-#: ../plug-ins/script-fu/script-fu-scripts.c:148
-msgid "Too few arguments to 'script-fu-register' call"
-msgstr "Prea puține argumente către apelul „script-fu-register”"
-
-#: ../plug-ins/script-fu/script-fu-scripts.c:647
-#, c-format
-msgid "Error while loading %s:"
-msgstr "Eroare în timpul încărcării %s:"
-
-#: ../plug-ins/script-fu/script-fu-server.c:830
+#: plug-ins/script-fu/server/script-fu-server.c:880
 msgid "Script-Fu Server Options"
 msgstr "Opțiuni de server Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-server.c:835
+#: plug-ins/script-fu/server/script-fu-server.c:885
 msgid "_Start Server"
 msgstr "Pornește _serverul"
 
-#: ../plug-ins/script-fu/script-fu-server.c:868
+#: plug-ins/script-fu/server/script-fu-server.c:918
 msgid "Listen on IP:"
 msgstr "IP-ul de ascultare:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:875
+#: plug-ins/script-fu/server/script-fu-server.c:925
 msgid "Server port:"
 msgstr "Portul serverului:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:881
+#: plug-ins/script-fu/server/script-fu-server.c:931
 msgid "Server logfile:"
 msgstr "Fișierul de jurnal al serverului:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:894
+#: plug-ins/script-fu/server/script-fu-server.c:944
 msgid ""
 "Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
 "allow attackers to remotely execute arbitrary code on this machine."
@@ -264,80 +180,160 @@ msgstr ""
 "permite atacatorilor să execute de la distanță cod arbitrar pe această "
 "mașină."
 
+#: plug-ins/script-fu/server/script-fu-server-plugin.c:91
+msgid "_Start Server..."
+msgstr "Pornește _serverul..."
+
+#: plug-ins/script-fu/server/script-fu-server-plugin.c:96
+msgid "Server for remote Script-Fu operation"
+msgstr "Server pentru operare Script-Fu de la distanță"
+
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:202
+msgid "Script-Fu cannot process two scripts at the same time."
+msgstr "Script-Fu nu poate procesa două scripturi în același timp."
+
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:204
+#, c-format
+msgid "You are already running the \"%s\" script."
+msgstr "Rulați deja scriptul „%s”."
+
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:228
+#, c-format
+msgid "Script-Fu: %s"
+msgstr "Script-Fu: %s"
+
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:235
+msgid "_Reset"
+msgstr "_Resetează"
+
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:237
+msgid "_OK"
+msgstr "_OK"
+
+#. we add a colon after the label;
+#. *  some languages want an extra space here
+#.
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:291
+#, c-format
+msgid "%s:"
+msgstr "%s:"
+
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:341
+msgid "Script-Fu Color Selection"
+msgstr "Selecție de culoare Script-Fu"
+
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:468
+msgid "Script-Fu File Selection"
+msgstr "Selecție de fișier Script-Fu"
+
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:471
+msgid "Script-Fu Folder Selection"
+msgstr "Selecție de dosar Script-Fu"
+
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:484
+msgid "Script-Fu Font Selection"
+msgstr "Selecție de font Script-Fu"
+
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:492
+msgid "Script-Fu Palette Selection"
+msgstr "Selecție de paletă Script-Fu"
+
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:501
+msgid "Script-Fu Pattern Selection"
+msgstr "Selecție de model Script-Fu"
+
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:510
+msgid "Script-Fu Gradient Selection"
+msgstr "Selecție de degrade Script-Fu"
+
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:519
+msgid "Script-Fu Brush Selection"
+msgstr "Selecție de penel Script-Fu"
+
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:898
+#, c-format
+msgid "Error while executing %s:"
+msgstr "Eroare în timpul execuției %s:"
+
+#: plug-ins/script-fu/libscriptfu/script-fu-scripts.c:357
+#, c-format
+msgid "Error while loading %s:"
+msgstr "Eroare în timpul încărcării %s:"
+
 # apare ca nume de strat în lista de straturi
-#: ../plug-ins/script-fu/scripts/add-bevel.scm:76
+#: plug-ins/script-fu/scripts/add-bevel.scm:76
 msgid "Bumpmap"
 msgstr "Hartă de denivelări"
 
 # deliberat fără „adaugă” pentru consecvență în meniu
-#: ../plug-ins/script-fu/scripts/add-bevel.scm:189
+#: plug-ins/script-fu/scripts/add-bevel.scm:189
 msgid "Add B_evel..."
 msgstr "Chenar t_eșit..."
 
-#: ../plug-ins/script-fu/scripts/add-bevel.scm:190
+#: plug-ins/script-fu/scripts/add-bevel.scm:190
 msgid "Add a beveled border to an image"
 msgstr "Adaugă un chenar teșit la o imagine"
 
-#: ../plug-ins/script-fu/scripts/add-bevel.scm:197
+#: plug-ins/script-fu/scripts/add-bevel.scm:197
 msgid "Thickness"
 msgstr "Grosime"
 
-#: ../plug-ins/script-fu/scripts/add-bevel.scm:198
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:163
-#: ../plug-ins/script-fu/scripts/old-photo.scm:104
-#: ../plug-ins/script-fu/scripts/round-corners.scm:143
-#: ../plug-ins/script-fu/scripts/slide.scm:257
-#: ../plug-ins/script-fu/scripts/spinning-globe.scm:106
+#: plug-ins/script-fu/scripts/add-bevel.scm:198
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:163
+#: plug-ins/script-fu/scripts/old-photo.scm:104
+#: plug-ins/script-fu/scripts/round-corners.scm:145
+#: plug-ins/script-fu/scripts/slide.scm:257
+#: plug-ins/script-fu/scripts/spinning-globe.scm:107
 msgid "Work on copy"
 msgstr "Lucrează pe o copie"
 
-#: ../plug-ins/script-fu/scripts/add-bevel.scm:199
+#: plug-ins/script-fu/scripts/add-bevel.scm:199
 msgid "Keep bump layer"
 msgstr "Păstrează stratul de denivelări"
 
 # apare ca nume de strat în lista de straturi
-#: ../plug-ins/script-fu/scripts/addborder.scm:108
+#: plug-ins/script-fu/scripts/addborder.scm:108
 msgid "Border Layer"
 msgstr "Strat de chenar"
 
 # deliberat fără adaugă pentru consecvență în meniu
-#: ../plug-ins/script-fu/scripts/addborder.scm:162
+#: plug-ins/script-fu/scripts/addborder.scm:162
 msgid "Add _Border..."
 msgstr "C_henar..."
 
-#: ../plug-ins/script-fu/scripts/addborder.scm:163
+#: plug-ins/script-fu/scripts/addborder.scm:163
 msgid "Add a border around an image"
 msgstr "Adaugă un chenar în jurul unei imagini"
 
-#: ../plug-ins/script-fu/scripts/addborder.scm:170
+#: plug-ins/script-fu/scripts/addborder.scm:170
 msgid "Border X size"
 msgstr "Dimensiunea X a chenarului"
 
-#: ../plug-ins/script-fu/scripts/addborder.scm:171
+#: plug-ins/script-fu/scripts/addborder.scm:171
 msgid "Border Y size"
 msgstr "Dimensiunea Y a chenarului"
 
-#: ../plug-ins/script-fu/scripts/addborder.scm:172
+#: plug-ins/script-fu/scripts/addborder.scm:172
 msgid "Border color"
 msgstr "Culoarea chenarului"
 
-#: ../plug-ins/script-fu/scripts/addborder.scm:173
+#: plug-ins/script-fu/scripts/addborder.scm:173
 msgid "Delta value on color"
 msgstr "Valoarea delta aplicată la culoare"
 
-#: ../plug-ins/script-fu/scripts/blend-anim.scm:206
+#: plug-ins/script-fu/scripts/blend-anim.scm:206
 msgid "Frame"
 msgstr "Cadru"
 
-#: ../plug-ins/script-fu/scripts/blend-anim.scm:222
+#: plug-ins/script-fu/scripts/blend-anim.scm:222
 msgid "Blend Animation needs at least three source layers"
 msgstr "Animația de amestecare necesită cel puțin trei straturi sursă"
 
-#: ../plug-ins/script-fu/scripts/blend-anim.scm:228
+#: plug-ins/script-fu/scripts/blend-anim.scm:228
 msgid "_Blend..."
 msgstr "_Amestec..."
 
-#: ../plug-ins/script-fu/scripts/blend-anim.scm:229
+#: plug-ins/script-fu/scripts/blend-anim.scm:229
 msgid ""
 "Create intermediate layers to blend two or more layers over a background as "
 "an animation"
@@ -345,20 +341,20 @@ msgstr ""
 "Creează straturi intermediare pentru a amesteca două sau mai multe straturi "
 "peste un fundal ca o animație"
 
-#: ../plug-ins/script-fu/scripts/blend-anim.scm:236
+#: plug-ins/script-fu/scripts/blend-anim.scm:236
 msgid "Intermediate frames"
 msgstr "Cadre intermediare"
 
-#: ../plug-ins/script-fu/scripts/blend-anim.scm:237
+#: plug-ins/script-fu/scripts/blend-anim.scm:237
 msgid "Max. blur radius"
 msgstr "Raza maximă a neclarității"
 
-#: ../plug-ins/script-fu/scripts/blend-anim.scm:238
+#: plug-ins/script-fu/scripts/blend-anim.scm:238
 msgid "Looped"
 msgstr "Buclat"
 
 #. --- false form of "if-1"
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:217
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:217
 msgid ""
 "The Burn-In script needs two layers in total. A foreground layer with "
 "transparency and a background layer."
@@ -366,11 +362,11 @@ msgstr ""
 "Scriptul pentru arsură necesită în total două straturi: un strat de prim-"
 "plan cu transparență și un strat de fundal."
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:224
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:224
 msgid "B_urn-In..."
 msgstr "Ars_ură..."
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:225
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:225
 msgid ""
 "Create intermediate layers to produce an animated 'burn-in' transition "
 "between two layers"
@@ -378,124 +374,124 @@ msgstr ""
 "Creează straturi intermediare pentru a produce o tranziție de „arsură” "
 "animată între două straturi"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:232
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:232
 msgid "Glow color"
 msgstr "Culoarea strălucirii"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:233
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:233
 msgid "Fadeout"
 msgstr "Estompează pierdut"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:234
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:234
 msgid "Fadeout width"
 msgstr "Lățimea estompării pierdute"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:235
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:235
 msgid "Corona width"
 msgstr "Lățime coroană"
 
 # hm ?
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:236
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:236
 msgid "After glow"
 msgstr "După strălucire"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:237
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:237
 msgid "Add glowing"
 msgstr "Adaugă o strălucire"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:238
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:238
 msgid "Prepare for GIF"
 msgstr "Pregătește pentru GIF"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:239
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:239
 msgid "Speed (pixels/frame)"
 msgstr "Viteză (pixeli/cadru)"
 
 # apare ca nume de strat în lista de straturi
-#: ../plug-ins/script-fu/scripts/carve-it.scm:176
+#: plug-ins/script-fu/scripts/carve-it.scm:205
 msgid "Carved Surface"
 msgstr "Suprafață sculptată"
 
 # apare ca nume de strat în lista de straturi
-#: ../plug-ins/script-fu/scripts/carve-it.scm:177
+#: plug-ins/script-fu/scripts/carve-it.scm:206
 msgid "Bevel Shadow"
 msgstr "Umbră de teșitură"
 
 # apare ca nume de strat în lista de straturi
-#: ../plug-ins/script-fu/scripts/carve-it.scm:178
+#: plug-ins/script-fu/scripts/carve-it.scm:207
 msgid "Bevel Highlight"
 msgstr "Evidențiere de teșitură"
 
 # apare ca nume de strat în lista de straturi
-#: ../plug-ins/script-fu/scripts/carve-it.scm:179
+#: plug-ins/script-fu/scripts/carve-it.scm:208
 msgid "Cast Shadow"
 msgstr "Umbră aruncată"
 
 # apare ca nume de strat în lista de straturi
 # hm ? pare că a asta arată
-#: ../plug-ins/script-fu/scripts/carve-it.scm:180
+#: plug-ins/script-fu/scripts/carve-it.scm:209
 msgid "Inset"
 msgstr "Contracție"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:192
+#: plug-ins/script-fu/scripts/carve-it.scm:221
 msgid "Stencil C_arve..."
 msgstr "Ș_ablon de sculptură..."
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:193
+#: plug-ins/script-fu/scripts/carve-it.scm:222
 msgid ""
 "Use the specified drawable as a stencil to carve from the specified image."
 msgstr ""
 "Folosește obiectul grafic specificat ca șablon pentru a sculpta din imaginea "
 "specificată."
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:200
+#: plug-ins/script-fu/scripts/carve-it.scm:229
 msgid "Image to carve"
 msgstr "Imagine de sculptat"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm:201
+#: plug-ins/script-fu/scripts/carve-it.scm:230
 msgid "Carve white areas"
 msgstr "Sculptează zonele albe"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:93
+#: plug-ins/script-fu/scripts/chrome-it.scm:95
 msgid "Background"
 msgstr "Fundal"
 
 # apare ca nume de strat în lista de straturi
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:94
+#: plug-ins/script-fu/scripts/chrome-it.scm:96
 msgid "Layer 1"
 msgstr "Strat 1"
 
 # apare ca nume de strat în lista de straturi
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:95
+#: plug-ins/script-fu/scripts/chrome-it.scm:97
 msgid "Layer 2"
 msgstr "Strat 2"
 
 # apare ca nume de strat în lista de straturi
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:96
+#: plug-ins/script-fu/scripts/chrome-it.scm:98
 msgid "Layer 3"
 msgstr "Strat 3"
 
 # apare ca nume de strat în lista de straturi
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:97
+#: plug-ins/script-fu/scripts/chrome-it.scm:99
 msgid "Drop Shadow"
 msgstr "Umbră detașată"
 
 # apare ca nume de strat în lista de straturi
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:217
+#: plug-ins/script-fu/scripts/chrome-it.scm:226
 msgid "Chrome"
 msgstr "Crom"
 
 # apare ca nume de strat în lista de straturi
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:218
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:68
+#: plug-ins/script-fu/scripts/chrome-it.scm:227
+#: plug-ins/script-fu/scripts/xach-effect.scm:68
 msgid "Highlight"
 msgstr "Evidențiere"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:232
+#: plug-ins/script-fu/scripts/chrome-it.scm:241
 msgid "Stencil C_hrome..."
 msgstr "Șablon de c_rom..."
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:233
+#: plug-ins/script-fu/scripts/chrome-it.scm:242
 msgid ""
 "Add a chrome effect to the selected region (or alpha) using a specified "
 "(grayscale) stencil"
@@ -503,462 +499,462 @@ msgstr ""
 "Adaugă un efect de crom la regiunea (sau alfa) selectată folosind un șablon "
 "specificat (tonuri de gri)"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:240
+#: plug-ins/script-fu/scripts/chrome-it.scm:249
 msgid "Chrome saturation"
 msgstr "Saturația cromului"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:241
+#: plug-ins/script-fu/scripts/chrome-it.scm:250
 msgid "Chrome lightness"
 msgstr "Luminozitatea cromului"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:242
+#: plug-ins/script-fu/scripts/chrome-it.scm:251
 msgid "Chrome factor"
 msgstr "Factorul cromului"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:243
+#: plug-ins/script-fu/scripts/chrome-it.scm:252
 msgid "Environment map"
 msgstr "Harta mediului"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:246
+#: plug-ins/script-fu/scripts/chrome-it.scm:255
 msgid "Highlight balance"
 msgstr "Balansul evidențierii"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:247
+#: plug-ins/script-fu/scripts/chrome-it.scm:256
 msgid "Chrome balance"
 msgstr "Balansul cromului"
 
 # checkbox
-#: ../plug-ins/script-fu/scripts/chrome-it.scm:248
+#: plug-ins/script-fu/scripts/chrome-it.scm:257
 msgid "Chrome white areas"
 msgstr "Zone albe ale cromului"
 
 # numele stratului
-#: ../plug-ins/script-fu/scripts/circuit.scm:74
+#: plug-ins/script-fu/scripts/circuit.scm:74
 msgid "Effect layer"
 msgstr "Strat de efect"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm:127
+#: plug-ins/script-fu/scripts/circuit.scm:131
 msgid "_Circuit..."
 msgstr "_Circuit..."
 
-#: ../plug-ins/script-fu/scripts/circuit.scm:128
+#: plug-ins/script-fu/scripts/circuit.scm:132
 msgid ""
 "Fill the selected region (or alpha) with traces like those on a circuit board"
 msgstr ""
 "Umple regiunea (sau alfa) selectată cu trasee asemănătoare cu cele de pe "
 "circuitele imprimate"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm:135
+#: plug-ins/script-fu/scripts/circuit.scm:139
 msgid "Oilify mask size"
 msgstr "Dimensiunea măștii de uleiere"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm:136
+#: plug-ins/script-fu/scripts/circuit.scm:140
 msgid "Circuit seed"
 msgstr "Sămânța circuitului"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm:137
+#: plug-ins/script-fu/scripts/circuit.scm:141
 msgid "No background (only for separate layer)"
 msgstr "Fără fundal (numai pentru stratul separat)"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm:138
-#: ../plug-ins/script-fu/scripts/lava.scm:129
-#: ../plug-ins/script-fu/scripts/predator.scm:132
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:138
+#: plug-ins/script-fu/scripts/circuit.scm:142
+#: plug-ins/script-fu/scripts/lava.scm:141
+#: plug-ins/script-fu/scripts/predator.scm:138
+#: plug-ins/script-fu/scripts/xach-effect.scm:138
 msgid "Keep selection"
 msgstr "Păstrează selecția"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm:139
-#: ../plug-ins/script-fu/scripts/lava.scm:130
-#: ../plug-ins/script-fu/scripts/predator.scm:133
+#: plug-ins/script-fu/scripts/circuit.scm:143
+#: plug-ins/script-fu/scripts/lava.scm:142
+#: plug-ins/script-fu/scripts/predator.scm:139
 msgid "Separate layer"
 msgstr "Strat separat"
 
 # hm ? sau transformă în pânză ?
-#: ../plug-ins/script-fu/scripts/clothify.scm:52
+#: plug-ins/script-fu/scripts/clothify.scm:52
 msgid "_Clothify..."
 msgstr "Ț_esătură..."
 
-#: ../plug-ins/script-fu/scripts/clothify.scm:53
+#: plug-ins/script-fu/scripts/clothify.scm:53
 msgid "Add a cloth-like texture to the selected region (or alpha)"
 msgstr ""
 "Adaugă o textură asemănătoare cu o pânză la regiunea (sau alfa) selectată"
 
-#: ../plug-ins/script-fu/scripts/clothify.scm:60
+#: plug-ins/script-fu/scripts/clothify.scm:60
 msgid "Blur X"
 msgstr "Neclaritate X"
 
-#: ../plug-ins/script-fu/scripts/clothify.scm:61
+#: plug-ins/script-fu/scripts/clothify.scm:61
 msgid "Blur Y"
 msgstr "Neclaritate Y"
 
-#: ../plug-ins/script-fu/scripts/clothify.scm:62
+#: plug-ins/script-fu/scripts/clothify.scm:62
 msgid "Azimuth"
 msgstr "Azimut"
 
-#: ../plug-ins/script-fu/scripts/clothify.scm:63
+#: plug-ins/script-fu/scripts/clothify.scm:63
 msgid "Elevation"
 msgstr "Elevație"
 
-#: ../plug-ins/script-fu/scripts/clothify.scm:64
+#: plug-ins/script-fu/scripts/clothify.scm:64
 msgid "Depth"
 msgstr "Adâncime"
 
-#: ../plug-ins/script-fu/scripts/coffee.scm:36
+#: plug-ins/script-fu/scripts/coffee.scm:36
 msgid "Stain"
 msgstr "Pată"
 
-#: ../plug-ins/script-fu/scripts/coffee.scm:82
+#: plug-ins/script-fu/scripts/coffee.scm:82
 msgid "_Coffee Stain..."
 msgstr "Pată de _cafea..."
 
-#: ../plug-ins/script-fu/scripts/coffee.scm:83
+#: plug-ins/script-fu/scripts/coffee.scm:83
 msgid "Add realistic looking coffee stains to the image"
 msgstr "Adaugă la imagine un aspect realistic de pete de cafea"
 
-#: ../plug-ins/script-fu/scripts/coffee.scm:90
+#: plug-ins/script-fu/scripts/coffee.scm:90
 msgid "Stains"
 msgstr "Pete"
 
-#: ../plug-ins/script-fu/scripts/coffee.scm:91
+#: plug-ins/script-fu/scripts/coffee.scm:91
 msgid "Darken only"
 msgstr "Doar întunecare"
 
-#: ../plug-ins/script-fu/scripts/difference-clouds.scm:70
+#: plug-ins/script-fu/scripts/difference-clouds.scm:70
 msgid "_Difference Clouds..."
 msgstr "Nori de _diferență..."
 
-#: ../plug-ins/script-fu/scripts/difference-clouds.scm:71
+#: plug-ins/script-fu/scripts/difference-clouds.scm:71
 msgid "Solid noise applied with Difference layer mode"
 msgstr "Zgomot solid aplicat cu módul de strat Diferență"
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm:105
+#: plug-ins/script-fu/scripts/distress-selection.scm:105
 msgid "_Distort..."
 msgstr "_Distorsionare..."
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm:106
+#: plug-ins/script-fu/scripts/distress-selection.scm:106
 msgid "Distress the selection"
 msgstr "Perturbă selecția"
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm:113
+#: plug-ins/script-fu/scripts/distress-selection.scm:113
 msgid "_Threshold (bigger 1<-->254 smaller)"
 msgstr "_Prag (mai mare 1<-->254 mai mic)"
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm:114
+#: plug-ins/script-fu/scripts/distress-selection.scm:114
 msgid "_Spread"
 msgstr "Ră_spândire"
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm:115
+#: plug-ins/script-fu/scripts/distress-selection.scm:115
 msgid "_Granularity (1 is low)"
 msgstr "_Granularitate (1 este scăzut)"
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm:116
+#: plug-ins/script-fu/scripts/distress-selection.scm:116
 msgid "S_mooth"
 msgstr "_Netezire"
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm:117
+#: plug-ins/script-fu/scripts/distress-selection.scm:117
 msgid "Smooth hor_izontally"
 msgstr "Netezește pe or_izontală"
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm:118
+#: plug-ins/script-fu/scripts/distress-selection.scm:118
 msgid "Smooth _vertically"
 msgstr "Netezește pe _verticală"
 
-#: ../plug-ins/script-fu/scripts/drop-shadow.scm:170
+#: plug-ins/script-fu/scripts/drop-shadow.scm:170
 msgid "_Drop Shadow (legacy)..."
 msgstr "Umbră _detașată (versiune veche)..."
 
-#: ../plug-ins/script-fu/scripts/drop-shadow.scm:171
+#: plug-ins/script-fu/scripts/drop-shadow.scm:171
 msgid "Add a drop shadow to the selected region (or alpha)"
 msgstr "Adaugă o umbră detașată la regiunea (sau alfa) selectată"
 
-#: ../plug-ins/script-fu/scripts/drop-shadow.scm:178
+#: plug-ins/script-fu/scripts/drop-shadow.scm:178
 msgid "Offset X"
 msgstr "Decalaj X"
 
-#: ../plug-ins/script-fu/scripts/drop-shadow.scm:179
+#: plug-ins/script-fu/scripts/drop-shadow.scm:179
 msgid "Offset Y"
 msgstr "Decalaj Y"
 
-#: ../plug-ins/script-fu/scripts/drop-shadow.scm:180
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:209
-#: ../plug-ins/script-fu/scripts/round-corners.scm:141
+#: plug-ins/script-fu/scripts/drop-shadow.scm:180
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:208
+#: plug-ins/script-fu/scripts/round-corners.scm:143
 msgid "Blur radius"
 msgstr "Rază de neclaritate"
 
-#: ../plug-ins/script-fu/scripts/drop-shadow.scm:181
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:157
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:210
+#: plug-ins/script-fu/scripts/drop-shadow.scm:181
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:157
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:209
 msgid "Color"
 msgstr "Culoare"
 
-#: ../plug-ins/script-fu/scripts/drop-shadow.scm:182
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:211
+#: plug-ins/script-fu/scripts/drop-shadow.scm:182
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:210
 msgid "Opacity"
 msgstr "Opacitate"
 
-#: ../plug-ins/script-fu/scripts/drop-shadow.scm:183
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:213
+#: plug-ins/script-fu/scripts/drop-shadow.scm:183
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:212
 msgid "Allow resizing"
 msgstr "Permite redimensionarea"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:42
+#: plug-ins/script-fu/scripts/erase-rows.scm:42
 msgid "_Erase Every Nth Row..."
 msgstr "Șt_erge fiecare al n-lea rând..."
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:43
+#: plug-ins/script-fu/scripts/erase-rows.scm:43
 msgid "Erase every nth row or column"
 msgstr "Șterge fiecare al n-lea rând sau coloană"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:65
+#: plug-ins/script-fu/scripts/erase-rows.scm:50
+#: plug-ins/script-fu/scripts/erase-rows.scm:65
 msgid "Rows/cols"
 msgstr "Rânduri sau coloane"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:65
+#: plug-ins/script-fu/scripts/erase-rows.scm:50
+#: plug-ins/script-fu/scripts/erase-rows.scm:65
 msgid "Rows"
 msgstr "Rânduri"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:65
+#: plug-ins/script-fu/scripts/erase-rows.scm:50
+#: plug-ins/script-fu/scripts/erase-rows.scm:65
 msgid "Columns"
 msgstr "Coloane"
 
 # descriptiv despre ce se poate selecta
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:52
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:67
+#: plug-ins/script-fu/scripts/erase-rows.scm:52
+#: plug-ins/script-fu/scripts/erase-rows.scm:67
 msgid "Erase/fill"
 msgstr "Ștergere sau umplere"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:52
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:67
+#: plug-ins/script-fu/scripts/erase-rows.scm:52
+#: plug-ins/script-fu/scripts/erase-rows.scm:67
 msgid "Erase"
 msgstr "Șterge"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:52
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:67
+#: plug-ins/script-fu/scripts/erase-rows.scm:52
+#: plug-ins/script-fu/scripts/erase-rows.scm:67
 msgid "Fill with BG"
 msgstr "Umple cu culoarea de fundal"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:57
+#: plug-ins/script-fu/scripts/erase-rows.scm:57
 msgid "_Erase Every Other Row..."
 msgstr "Ș_tergere din două în două rânduri..."
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:58
+#: plug-ins/script-fu/scripts/erase-rows.scm:58
 msgid "Erase every other row or column"
 msgstr "Șterge din două în două rânduri sau coloane"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:66
+#: plug-ins/script-fu/scripts/erase-rows.scm:66
 msgid "Even/odd"
 msgstr "Pare sau impare"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:66
+#: plug-ins/script-fu/scripts/erase-rows.scm:66
 msgid "Even"
 msgstr "Pare"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:66
+#: plug-ins/script-fu/scripts/erase-rows.scm:66
 msgid "Odd"
 msgstr "Impare"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm:152
+#: plug-ins/script-fu/scripts/font-map.scm:161
 msgid "Render _Font Map..."
 msgstr "Randează harta de _font..."
 
-#: ../plug-ins/script-fu/scripts/font-map.scm:153
+#: plug-ins/script-fu/scripts/font-map.scm:162
 msgid ""
 "Create an image filled with previews of fonts matching a fontname filter"
 msgstr ""
 "Creează o imagine umplută cu previzualizări ale fonturilor care se potrivesc "
 "cu filtrul unui nume de font"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm:158
+#: plug-ins/script-fu/scripts/font-map.scm:167
 msgid "_Text"
 msgstr "_Text"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm:159
+#: plug-ins/script-fu/scripts/font-map.scm:168
 msgid "Use font _name as text"
 msgstr "Folosește ca text _numele fontului"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm:160
+#: plug-ins/script-fu/scripts/font-map.scm:169
 msgid "_Labels"
 msgstr "_Etichete"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm:161
+#: plug-ins/script-fu/scripts/font-map.scm:170
 msgid "_Filter (regexp)"
 msgstr "_Filtru (regexp)"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm:162
+#: plug-ins/script-fu/scripts/font-map.scm:171
 msgid "Font _size (pixels)"
 msgstr "Dimen_siunea fontului (pixeli)"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm:163
+#: plug-ins/script-fu/scripts/font-map.scm:172
 msgid "_Border (pixels)"
 msgstr "C_henar (pixeli)"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm:164
+#: plug-ins/script-fu/scripts/font-map.scm:173
 msgid "_Color scheme"
 msgstr "Schemă de _culori"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm:164
+#: plug-ins/script-fu/scripts/font-map.scm:173
 msgid "Black on white"
 msgstr "Negru pe alb"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm:164
+#: plug-ins/script-fu/scripts/font-map.scm:173
 msgid "Active colors"
 msgstr "Culori active"
 
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:149
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:149
 msgid "_Fuzzy Border..."
 msgstr "Chenar di_fuz..."
 
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:150
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:150
 msgid "Add a jagged, fuzzy border to an image"
 msgstr "Adaugă la o imagine un chenar zdrențuit și difuz"
 
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:158
-#: ../plug-ins/script-fu/scripts/old-photo.scm:98
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:158
+#: plug-ins/script-fu/scripts/old-photo.scm:98
 msgid "Border size"
 msgstr "Dimensiunea chenarului"
 
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:159
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:159
 msgid "Blur border"
 msgstr "Atenuează claritatea chenarului"
 
 # hm ? sau 1 este scăzut ?
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:160
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:160
 msgid "Granularity (1 is Low)"
 msgstr "Granularitate (1 este puțin)"
 
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:161
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:161
 msgid "Add shadow"
 msgstr "Adaugă o umbră"
 
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:162
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:162
 msgid "Shadow weight (%)"
 msgstr "Ponderea umbrei (%)"
 
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:164
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:164
 msgid "Flatten image"
 msgstr "Aplatizează imaginea"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:59
+#: plug-ins/script-fu/scripts/gimp-online.scm:59
 msgid "Using _Paths"
 msgstr "_Folosirea traseelor"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:60
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:73
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:86
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:99
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:112
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:125
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:138
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:151
+#: plug-ins/script-fu/scripts/gimp-online.scm:60
+#: plug-ins/script-fu/scripts/gimp-online.scm:73
+#: plug-ins/script-fu/scripts/gimp-online.scm:86
+#: plug-ins/script-fu/scripts/gimp-online.scm:99
+#: plug-ins/script-fu/scripts/gimp-online.scm:112
+#: plug-ins/script-fu/scripts/gimp-online.scm:125
+#: plug-ins/script-fu/scripts/gimp-online.scm:138
+#: plug-ins/script-fu/scripts/gimp-online.scm:151
 msgid "Bookmark to the user manual"
 msgstr "Semn de carte către manualul de utilizare"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:72
+#: plug-ins/script-fu/scripts/gimp-online.scm:72
 msgid "_Preparing your Images for the Web"
 msgstr "_Prepararea imaginilor pentru web"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:85
+#: plug-ins/script-fu/scripts/gimp-online.scm:85
 msgid "_Working with Digital Camera Photos"
 msgstr "_Lucrul cu camere foto digitale"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:98
+#: plug-ins/script-fu/scripts/gimp-online.scm:98
 msgid "Create, Open and Save _Files"
 msgstr "Crearea, deschiderea și salvarea _fișierelor"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:111
+#: plug-ins/script-fu/scripts/gimp-online.scm:111
 msgid "_Basic Concepts"
 msgstr "Concepte de _bază"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:124
+#: plug-ins/script-fu/scripts/gimp-online.scm:124
 msgid "How to Use _Dialogs"
 msgstr "Cum se utilizează _dialogurile"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:137
+#: plug-ins/script-fu/scripts/gimp-online.scm:137
 msgid "Drawing _Simple Objects"
 msgstr "Desenarea obiectelor _simple"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:150
+#: plug-ins/script-fu/scripts/gimp-online.scm:150
 msgid "Create and Use _Selections"
 msgstr "Crearea și utilizarea _selecțiilor"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:190
+#: plug-ins/script-fu/scripts/gimp-online.scm:190
 msgid "_Main Web Site"
 msgstr "Site-ul _web principal"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:191
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:204
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:256
+#: plug-ins/script-fu/scripts/gimp-online.scm:191
+#: plug-ins/script-fu/scripts/gimp-online.scm:204
+#: plug-ins/script-fu/scripts/gimp-online.scm:256
 msgid "Bookmark to the GIMP web site"
 msgstr "Semn de carte către site-ul web GIMP"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:203
+#: plug-ins/script-fu/scripts/gimp-online.scm:203
 msgid "_Developer Web Site"
 msgstr "Site-ul web pentru _dezvoltatori"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:216
+#: plug-ins/script-fu/scripts/gimp-online.scm:216
 msgid "_Roadmap"
 msgstr "Foaie de pa_rcurs"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:217
+#: plug-ins/script-fu/scripts/gimp-online.scm:217
 msgid "Bookmark to the roadmap of GIMP"
 msgstr "Semn de carte către foaia de parcurs GIMP"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:229
+#: plug-ins/script-fu/scripts/gimp-online.scm:229
 msgid "_Wiki"
 msgstr "_Wiki"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:230
+#: plug-ins/script-fu/scripts/gimp-online.scm:230
 msgid "Bookmark to the wiki of GIMP"
 msgstr "Semn de carte către wikiul GIMP"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:242
+#: plug-ins/script-fu/scripts/gimp-online.scm:242
 msgid "_Bug Reports and Feature Requests"
 msgstr "_Rapoarte de erori și solicitări de caracteristici"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:243
+#: plug-ins/script-fu/scripts/gimp-online.scm:243
 msgid "Bookmark to the bug tracker of GIMP"
 msgstr "Semn de carte către urmăritorul de erori GIMP"
 
-#: ../plug-ins/script-fu/scripts/gimp-online.scm:255
+#: plug-ins/script-fu/scripts/gimp-online.scm:255
 msgid "_User Manual Web Site"
 msgstr "Site-ul web al manualului de _utilizare"
 
-#: ../plug-ins/script-fu/scripts/gradient-example.scm:69
+#: plug-ins/script-fu/scripts/gradient-example.scm:69
 msgid "Custom _Gradient..."
 msgstr "De_grade personalizat..."
 
-#: ../plug-ins/script-fu/scripts/gradient-example.scm:70
+#: plug-ins/script-fu/scripts/gradient-example.scm:70
 msgid "Create an image filled with an example of the current gradient"
 msgstr "Creează o imagine umplută cu un exemplu al degradeului curent"
 
-#: ../plug-ins/script-fu/scripts/gradient-example.scm:75
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:70
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:140
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:196
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:265
+#: plug-ins/script-fu/scripts/gradient-example.scm:75
+#: plug-ins/script-fu/scripts/mkbrush.scm:70
+#: plug-ins/script-fu/scripts/mkbrush.scm:140
+#: plug-ins/script-fu/scripts/mkbrush.scm:196
+#: plug-ins/script-fu/scripts/mkbrush.scm:265
 msgid "Width"
 msgstr "Lățime"
 
-#: ../plug-ins/script-fu/scripts/gradient-example.scm:76
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:71
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:141
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:197
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:266
+#: plug-ins/script-fu/scripts/gradient-example.scm:76
+#: plug-ins/script-fu/scripts/mkbrush.scm:71
+#: plug-ins/script-fu/scripts/mkbrush.scm:141
+#: plug-ins/script-fu/scripts/mkbrush.scm:197
+#: plug-ins/script-fu/scripts/mkbrush.scm:266
 msgid "Height"
 msgstr "Înălțime"
 
-#: ../plug-ins/script-fu/scripts/gradient-example.scm:77
+#: plug-ins/script-fu/scripts/gradient-example.scm:77
 msgid "Gradient reverse"
 msgstr "Degrade invers"
 
-#: ../plug-ins/script-fu/scripts/grid-system.scm:84
+#: plug-ins/script-fu/scripts/grid-system.scm:84
 msgid "_Grid..."
 msgstr "_Grilă..."
 
-#: ../plug-ins/script-fu/scripts/grid-system.scm:85
+#: plug-ins/script-fu/scripts/grid-system.scm:85
 msgid ""
 "Draw a grid as specified by the lists of X and Y locations using the current "
 "brush"
@@ -966,106 +962,110 @@ msgstr ""
 "Desenează o grilă așa cum este specificat în listele locațiilor X și Y "
 "folosind penelul curent"
 
-#: ../plug-ins/script-fu/scripts/grid-system.scm:92
+#: plug-ins/script-fu/scripts/grid-system.scm:92
 msgid "X divisions"
 msgstr "Diviziuni X"
 
-#: ../plug-ins/script-fu/scripts/grid-system.scm:93
+#: plug-ins/script-fu/scripts/grid-system.scm:93
 msgid "Y divisions"
 msgstr "Diviziuni Y"
 
-#: ../plug-ins/script-fu/scripts/guides-from-selection.scm:32
+#: plug-ins/script-fu/scripts/guides-from-selection.scm:32
 msgid "New Guides from _Selection"
 msgstr "Ghidaje noi din _selecție"
 
-#: ../plug-ins/script-fu/scripts/guides-from-selection.scm:33
+#: plug-ins/script-fu/scripts/guides-from-selection.scm:33
 msgid "Create four guides around the bounding box of the current selection"
 msgstr ""
-"Creează patru ghidaje în jurul dreptunghiului circumscris al selecției "
-"curente"
+"Creează patru ghidaje în jurul casetei de încadrare a selecției curente"
 
-#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:27
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:27
 msgid "New Guide (by _Percent)..."
 msgstr "Ghidaj nou (în _procente)..."
 
-#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:28
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:28
 msgid "Add a guide at the position specified as a percentage of the image size"
 msgstr ""
 "Adaugă un ghidaj la poziția specificată ca procentaj din dimensiunea imaginii"
 
-#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:35
-#: ../plug-ins/script-fu/scripts/guides-new.scm:35
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:35
+#: plug-ins/script-fu/scripts/guides-new.scm:35
 msgid "_Direction"
 msgstr "_Direcție"
 
-#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:35
-#: ../plug-ins/script-fu/scripts/guides-new.scm:35
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:35
+#: plug-ins/script-fu/scripts/guides-new.scm:35
 msgid "Horizontal"
 msgstr "Orizontal"
 
-#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:36
-#: ../plug-ins/script-fu/scripts/guides-new.scm:35
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:36
+#: plug-ins/script-fu/scripts/guides-new.scm:35
 msgid "Vertical"
 msgstr "Vertical"
 
-#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:37
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:37
 msgid "_Position (in %)"
 msgstr "_Poziție (în %)"
 
-#: ../plug-ins/script-fu/scripts/guides-new.scm:27
+#: plug-ins/script-fu/scripts/guides-new.scm:27
 msgid "New _Guide..."
 msgstr "_Ghidaj nou..."
 
-#: ../plug-ins/script-fu/scripts/guides-new.scm:28
+#: plug-ins/script-fu/scripts/guides-new.scm:28
 msgid "Add a guide at the orientation and position specified (in pixels)"
 msgstr "Adaugă un ghidaj la orientarea și poziția specificată (în pixeli)"
 
-#: ../plug-ins/script-fu/scripts/guides-new.scm:36
+#: plug-ins/script-fu/scripts/guides-new.scm:36
 msgid "_Position"
 msgstr "_Poziție"
 
-#: ../plug-ins/script-fu/scripts/guides-remove-all.scm:19
+#: plug-ins/script-fu/scripts/guides-remove-all.scm:19
 msgid "_Remove all Guides"
 msgstr "_Elimină toate ghidajele"
 
-#: ../plug-ins/script-fu/scripts/guides-remove-all.scm:20
+#: plug-ins/script-fu/scripts/guides-remove-all.scm:20
 msgid "Remove all horizontal and vertical guides"
 msgstr "Elimină toate ghidajele orizontale și verticale"
 
-#: ../plug-ins/script-fu/scripts/lava.scm:117
+#. else
+#: plug-ins/script-fu/scripts/lava.scm:123
+msgid "Lava works with exactly one selected layer"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/lava.scm:129
 msgid "_Lava..."
 msgstr "_Lavă..."
 
-#: ../plug-ins/script-fu/scripts/lava.scm:118
+#: plug-ins/script-fu/scripts/lava.scm:130
 msgid "Fill the current selection with lava"
 msgstr "Umple selecția curentă cu lavă"
 
-#: ../plug-ins/script-fu/scripts/lava.scm:125
+#: plug-ins/script-fu/scripts/lava.scm:137
 msgid "Seed"
 msgstr "Sămânță"
 
-#: ../plug-ins/script-fu/scripts/lava.scm:126
+#: plug-ins/script-fu/scripts/lava.scm:138
 msgid "Size"
 msgstr "Dimensiune"
 
-#: ../plug-ins/script-fu/scripts/lava.scm:127
+#: plug-ins/script-fu/scripts/lava.scm:139
 msgid "Roughness"
 msgstr "Rugozitate"
 
-#: ../plug-ins/script-fu/scripts/lava.scm:128
+#: plug-ins/script-fu/scripts/lava.scm:140
 msgid "Gradient"
 msgstr "Degrade"
 
-#: ../plug-ins/script-fu/scripts/lava.scm:131
+#: plug-ins/script-fu/scripts/lava.scm:143
 msgid "Use current gradient"
 msgstr "Folosește degradeul curent"
 
 # hm ? presupun că este vorba despre nova ca stea
-#: ../plug-ins/script-fu/scripts/line-nova.scm:108
+#: plug-ins/script-fu/scripts/line-nova.scm:106
 msgid "Line _Nova..."
 msgstr "_Nova liniei..."
 
-#: ../plug-ins/script-fu/scripts/line-nova.scm:109
+#: plug-ins/script-fu/scripts/line-nova.scm:107
 msgid ""
 "Fill a layer with rays emanating outward from its center using the "
 "foreground color"
@@ -1073,101 +1073,101 @@ msgstr ""
 "Umple un strat cu raze care emană din centrul lui înspre exterior, folosind "
 "culoarea de prim-plan"
 
-#: ../plug-ins/script-fu/scripts/line-nova.scm:116
+#: plug-ins/script-fu/scripts/line-nova.scm:114
 msgid "Number of lines"
 msgstr "Numărul liniilor"
 
-#: ../plug-ins/script-fu/scripts/line-nova.scm:117
+#: plug-ins/script-fu/scripts/line-nova.scm:115
 msgid "Sharpness (degrees)"
 msgstr "Claritate (grade)"
 
-#: ../plug-ins/script-fu/scripts/line-nova.scm:118
+#: plug-ins/script-fu/scripts/line-nova.scm:116
 msgid "Offset radius"
 msgstr "Raza decalajului"
 
-#: ../plug-ins/script-fu/scripts/line-nova.scm:119
+#: plug-ins/script-fu/scripts/line-nova.scm:117
 msgid "Randomness"
 msgstr "Aleatoriu"
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:63
+#: plug-ins/script-fu/scripts/mkbrush.scm:63
 msgid "_Rectangular..."
 msgstr "D_reptunghiular..."
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:64
+#: plug-ins/script-fu/scripts/mkbrush.scm:64
 msgid "Create a rectangular brush"
 msgstr "Creează un penel dreptunghiular"
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:69
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:139
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:195
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:264
+#: plug-ins/script-fu/scripts/mkbrush.scm:69
+#: plug-ins/script-fu/scripts/mkbrush.scm:139
+#: plug-ins/script-fu/scripts/mkbrush.scm:195
+#: plug-ins/script-fu/scripts/mkbrush.scm:264
 msgid "Name"
 msgstr "Nume"
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:72
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:143
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:198
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:268
+#: plug-ins/script-fu/scripts/mkbrush.scm:72
+#: plug-ins/script-fu/scripts/mkbrush.scm:143
+#: plug-ins/script-fu/scripts/mkbrush.scm:198
+#: plug-ins/script-fu/scripts/mkbrush.scm:268
 msgid "Spacing"
 msgstr "Spațiere"
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:133
+#: plug-ins/script-fu/scripts/mkbrush.scm:133
 msgid "Re_ctangular, Feathered..."
 msgstr "Dreptung_hiular, estompat..."
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:134
+#: plug-ins/script-fu/scripts/mkbrush.scm:134
 msgid "Create a rectangular brush with feathered edges"
 msgstr "Creează un penel dreptunghiular cu margini estompate"
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:142
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:267
+#: plug-ins/script-fu/scripts/mkbrush.scm:142
+#: plug-ins/script-fu/scripts/mkbrush.scm:267
 msgid "Feathering"
 msgstr "Estompare"
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:189
+#: plug-ins/script-fu/scripts/mkbrush.scm:189
 msgid "_Elliptical..."
 msgstr "_Eliptic..."
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:190
+#: plug-ins/script-fu/scripts/mkbrush.scm:190
 msgid "Create an elliptical brush"
 msgstr "Creează un penel eliptic"
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:258
+#: plug-ins/script-fu/scripts/mkbrush.scm:258
 msgid "Elli_ptical, Feathered..."
 msgstr "Eli_ptic, estompat..."
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm:259
+#: plug-ins/script-fu/scripts/mkbrush.scm:259
 msgid "Create an elliptical brush with feathered edges"
 msgstr "Creează un penel eliptic cu margini estompate"
 
-#: ../plug-ins/script-fu/scripts/old-photo.scm:89
+#: plug-ins/script-fu/scripts/old-photo.scm:89
 msgid "_Old Photo..."
 msgstr "F_otografie veche..."
 
-#: ../plug-ins/script-fu/scripts/old-photo.scm:90
+#: plug-ins/script-fu/scripts/old-photo.scm:90
 msgid "Make an image look like an old photo"
 msgstr "Face ca imaginea să arate ca o fotografie veche"
 
-#: ../plug-ins/script-fu/scripts/old-photo.scm:97
+#: plug-ins/script-fu/scripts/old-photo.scm:97
 msgid "Defocus"
 msgstr "Defocalizează"
 
 #. since this plug-in uses the fuzzy-border plug-in, I used the
 #. values of the latter, with the exception of the initial value
 #. and the 'minimum' value.
-#: ../plug-ins/script-fu/scripts/old-photo.scm:102
+#: plug-ins/script-fu/scripts/old-photo.scm:102
 msgid "Sepia"
 msgstr "Sepia"
 
-#: ../plug-ins/script-fu/scripts/old-photo.scm:103
+#: plug-ins/script-fu/scripts/old-photo.scm:103
 msgid "Mottle"
 msgstr "Marmorat"
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:226
+#: plug-ins/script-fu/scripts/palette-export.scm:226
 msgid "Folder for the output file"
 msgstr "Dosar pentru fișierul de ieșire"
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:227
+#: plug-ins/script-fu/scripts/palette-export.scm:227
 msgid ""
 "The name of the file to create (if a file with this name already exist, it "
 "will be replaced)"
@@ -1175,12 +1175,12 @@ msgstr ""
 "Numele fișierului de creat (dacă există deja un fișier cu acest nume, acela "
 "va fi înlocuit)"
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:235
+#: plug-ins/script-fu/scripts/palette-export.scm:235
 msgid "The filename you entered is not a suitable name for a file."
 msgstr ""
 "Numele de fișier introdus nu este un nume adecvat pentru un nume de fișier."
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:237
+#: plug-ins/script-fu/scripts/palette-export.scm:237
 msgid ""
 "All characters in the name are either white-spaces or characters which can "
 "not appear in filenames."
@@ -1188,7 +1188,7 @@ msgstr ""
 "Toate caracterele în numele de fișier sunt fie spații albe, fie caractere "
 "care nu pot apărea în nume de fișiere."
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:265
+#: plug-ins/script-fu/scripts/palette-export.scm:265
 msgid ""
 "Export the active palette as a CSS stylesheet with the color entry name as "
 "their class name, and the color itself as the color attribute"
@@ -1196,15 +1196,15 @@ msgstr ""
 "Exportă paleta activă ca o listă de foaie de stil CSS, cu numele de culoare "
 "ca numele lor de clasă și cu culoarea în sine ca atribut de culoare"
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:291
+#: plug-ins/script-fu/scripts/palette-export.scm:291
 msgid "Export the active palette as a PHP dictionary (name => color)"
 msgstr "Exportă paleta activă ca dicționar PHP (nume => culoare)"
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:323
+#: plug-ins/script-fu/scripts/palette-export.scm:323
 msgid "Export the active palette as a Python dictionary (name: color)"
 msgstr "Exportă paleta activă ca dicționar Python (nume: culoare)"
 
-#: ../plug-ins/script-fu/scripts/palette-export.scm:352
+#: plug-ins/script-fu/scripts/palette-export.scm:352
 msgid ""
 "Write all the colors in a palette to a text file, one hexadecimal value per "
 "line (no names)"
@@ -1213,328 +1213,328 @@ msgstr ""
 "hexazecimală per linie (fără nume)"
 
 # hm ?
-#: ../plug-ins/script-fu/scripts/palette-export.scm:399
+#: plug-ins/script-fu/scripts/palette-export.scm:399
 msgid "Export the active palette as a java.util.Hashtable<String, Color>"
 msgstr "Exportă paleta activă ca java.util.Hashtable<String, Color>"
 
-#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:56
-#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:44
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:58
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:46
 msgid "There is no image data in the clipboard to paste."
 msgstr "Nu sunt date de imagine în clipboard pentru a fi lipite."
 
-#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:62
-msgid "New _Brush..."
-msgstr "_Penel nou..."
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:64
+msgid "Paste as New _Brush..."
+msgstr ""
 
-#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:63
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:65
 msgid "Paste the clipboard contents into a new brush"
 msgstr "Lipește conținutul clipboard-ului într-un penel nou"
 
-#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:68
-#: ../plug-ins/script-fu/scripts/select-to-brush.scm:141
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:70
+#: plug-ins/script-fu/scripts/select-to-brush.scm:145
 msgid "_Brush name"
 msgstr "_Nume de penel"
 
-#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:69
-#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:57
-#: ../plug-ins/script-fu/scripts/select-to-brush.scm:142
-#: ../plug-ins/script-fu/scripts/select-to-pattern.scm:102
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:71
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:59
+#: plug-ins/script-fu/scripts/select-to-brush.scm:146
+#: plug-ins/script-fu/scripts/select-to-pattern.scm:107
 msgid "_File name"
 msgstr "Nume de _fișier"
 
-#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:70
-#: ../plug-ins/script-fu/scripts/select-to-brush.scm:143
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:72
+#: plug-ins/script-fu/scripts/select-to-brush.scm:147
 msgid "_Spacing"
 msgstr "_Spațiere"
 
-#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:50
-msgid "New _Pattern..."
-msgstr "_Model nou..."
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:52
+msgid "Paste as New _Pattern..."
+msgstr ""
 
-#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:51
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:53
 msgid "Paste the clipboard contents into a new pattern"
 msgstr "Lipește conținutul clipboard-ului într-un model nou"
 
-#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:56
-#: ../plug-ins/script-fu/scripts/select-to-pattern.scm:101
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:58
+#: plug-ins/script-fu/scripts/select-to-pattern.scm:106
 msgid "_Pattern name"
 msgstr "_Nume de model"
 
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:198
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:197
 msgid "_Perspective..."
 msgstr "_Perspectivă..."
 
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:199
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:198
 msgid "Add a perspective shadow to the selected region (or alpha)"
 msgstr "Adaugă o umbră de perspectivă la regiunea (sau alfa) selectată"
 
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:206
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:205
 msgid "Angle"
 msgstr "Unghi"
 
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:207
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:206
 msgid "Relative distance of horizon"
 msgstr "Distanța relativă a orizontului"
 
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:208
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:207
 msgid "Relative length of shadow"
 msgstr "Lungimea relativă a umbrei"
 
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:212
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:211
 msgid "Interpolation"
 msgstr "Interpolare"
 
-#: ../plug-ins/script-fu/scripts/predator.scm:121
+#: plug-ins/script-fu/scripts/predator.scm:127
 msgid "_Predator..."
 msgstr "_Predator..."
 
-#: ../plug-ins/script-fu/scripts/predator.scm:122
+#: plug-ins/script-fu/scripts/predator.scm:128
 msgid "Add a 'Predator' effect to the selected region (or alpha)"
 msgstr "Adaugă un efect de tip „Predator” la regiunea (sau alfa) selectată"
 
-#: ../plug-ins/script-fu/scripts/predator.scm:129
+#: plug-ins/script-fu/scripts/predator.scm:135
 msgid "Edge amount"
 msgstr "Grosime margine"
 
-#: ../plug-ins/script-fu/scripts/predator.scm:130
+#: plug-ins/script-fu/scripts/predator.scm:136
 msgid "Pixelize"
 msgstr "Pixelează"
 
-#: ../plug-ins/script-fu/scripts/predator.scm:131
+#: plug-ins/script-fu/scripts/predator.scm:137
 msgid "Pixel amount"
 msgstr "Cantitate de pixeli"
 
-#: ../plug-ins/script-fu/scripts/reverse-layers.scm:42
+#: plug-ins/script-fu/scripts/reverse-layers.scm:42
 msgid "Reverse Layer _Order"
 msgstr "Inversează _ordinea straturilor"
 
-#: ../plug-ins/script-fu/scripts/reverse-layers.scm:43
+#: plug-ins/script-fu/scripts/reverse-layers.scm:43
 msgid "Reverse the order of layers in the image"
 msgstr "Inversează ordinea straturilor în imagine"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:69
+#: plug-ins/script-fu/scripts/ripply-anim.scm:69
 msgid "_Rippling..."
 msgstr "Ondula_re..."
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:70
+#: plug-ins/script-fu/scripts/ripply-anim.scm:70
 msgid ""
 "Create a multi-layer image by adding a ripple effect to the current layer"
 msgstr ""
 "Creează o imagine multistrat prin adăugarea unui efect de ondulare la "
 "stratul curent"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:77
+#: plug-ins/script-fu/scripts/ripply-anim.scm:77
 msgid "Rippling strength"
 msgstr "Intensitatea ondulării"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:78
-#: ../plug-ins/script-fu/scripts/waves-anim.scm:105
+#: plug-ins/script-fu/scripts/ripply-anim.scm:78
+#: plug-ins/script-fu/scripts/waves-anim.scm:105
 msgid "Number of frames"
 msgstr "Numărul cadrelor"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:79
+#: plug-ins/script-fu/scripts/ripply-anim.scm:79
 msgid "Edge behavior"
 msgstr "Comportamentul marginilor"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:79
+#: plug-ins/script-fu/scripts/ripply-anim.scm:79
 msgid "Wrap"
 msgstr "Întoarse la capăt"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:79
+#: plug-ins/script-fu/scripts/ripply-anim.scm:79
 msgid "Smear"
 msgstr "Mâzgălite"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm:79
+#: plug-ins/script-fu/scripts/ripply-anim.scm:79
 msgid "Black"
 msgstr "Negre"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:129
+#: plug-ins/script-fu/scripts/round-corners.scm:131
 msgid "_Round Corners..."
 msgstr "Colțuri _rotunjite..."
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:130
+#: plug-ins/script-fu/scripts/round-corners.scm:132
 msgid ""
 "Round the corners of an image and optionally add a drop-shadow and background"
 msgstr ""
 "Rotunjește colțurile unei imagini și adaugă opțional o umbră detașată și un "
 "fundal"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:137
+#: plug-ins/script-fu/scripts/round-corners.scm:139
 msgid "Edge radius"
 msgstr "Raza marginii"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:138
+#: plug-ins/script-fu/scripts/round-corners.scm:140
 msgid "Add drop-shadow"
 msgstr "Adaugă o umbră detașată"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:139
+#: plug-ins/script-fu/scripts/round-corners.scm:141
 msgid "Shadow X offset"
 msgstr "Decalajul X al umbrei"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:140
+#: plug-ins/script-fu/scripts/round-corners.scm:142
 msgid "Shadow Y offset"
 msgstr "Decalajul Y al umbrei"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:142
+#: plug-ins/script-fu/scripts/round-corners.scm:144
 msgid "Add background"
 msgstr "Adaugă un fundal"
 
-#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:53
+#: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:53
 msgid "Se_t Colormap..."
 msgstr "S_tabilește harta de culori..."
 
-#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:54
+#: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:54
 msgid "Change the colormap of an image to the colors in a specified palette."
 msgstr ""
 "Schimbă harta de culori a unei imagini la culorile dintr-o paletă "
 "specificată."
 
-#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:61
+#: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:61
 msgid "Palette"
 msgstr "Paletă"
 
-#: ../plug-ins/script-fu/scripts/selection-round.scm:139
+#: plug-ins/script-fu/scripts/selection-round.scm:139
 msgid "Rounded R_ectangle..."
 msgstr "Dr_eptunghi rotunjit..."
 
-#: ../plug-ins/script-fu/scripts/selection-round.scm:140
+#: plug-ins/script-fu/scripts/selection-round.scm:140
 msgid "Round the corners of the current selection"
 msgstr "Rotunjește colțurile selecției curente"
 
-#: ../plug-ins/script-fu/scripts/selection-round.scm:147
+#: plug-ins/script-fu/scripts/selection-round.scm:147
 msgid "R_adius (%)"
 msgstr "R_ază (%)"
 
-#: ../plug-ins/script-fu/scripts/selection-round.scm:148
+#: plug-ins/script-fu/scripts/selection-round.scm:148
 msgid "Co_ncave"
 msgstr "Co_ncav"
 
-#: ../plug-ins/script-fu/scripts/select-to-brush.scm:133
+#: plug-ins/script-fu/scripts/select-to-brush.scm:137
 msgid "To _Brush..."
 msgstr "La _penel..."
 
-#: ../plug-ins/script-fu/scripts/select-to-brush.scm:134
+#: plug-ins/script-fu/scripts/select-to-brush.scm:138
 msgid "Convert a selection to a brush"
 msgstr "Convertește o selecție într-un penel"
 
-#: ../plug-ins/script-fu/scripts/select-to-image.scm:81
+#: plug-ins/script-fu/scripts/select-to-image.scm:85
 msgid "To _Image"
 msgstr "La _imagine"
 
-#: ../plug-ins/script-fu/scripts/select-to-image.scm:82
+#: plug-ins/script-fu/scripts/select-to-image.scm:86
 msgid "Convert a selection to an image"
 msgstr "Convertește o selecție într-o imagine"
 
-#: ../plug-ins/script-fu/scripts/select-to-pattern.scm:93
+#: plug-ins/script-fu/scripts/select-to-pattern.scm:98
 msgid "To _Pattern..."
 msgstr "La _model..."
 
-#: ../plug-ins/script-fu/scripts/select-to-pattern.scm:94
+#: plug-ins/script-fu/scripts/select-to-pattern.scm:99
 msgid "Convert a selection to a pattern"
 msgstr "Convertește o selecție într-un model"
 
-#: ../plug-ins/script-fu/scripts/slide.scm:245
+#: plug-ins/script-fu/scripts/slide.scm:245
 msgid "_Slide..."
 msgstr "_Peliculă foto..."
 
-#: ../plug-ins/script-fu/scripts/slide.scm:246
+#: plug-ins/script-fu/scripts/slide.scm:246
 msgid "Add a slide-film like frame, sprocket holes, and labels to an image"
 msgstr ""
 "Adaugă la o imagine un cadru asemănător cu pelicula foto, cu perforații și "
 "inscripționări pe margine"
 
-#: ../plug-ins/script-fu/scripts/slide.scm:253
+#: plug-ins/script-fu/scripts/slide.scm:253
 msgid "Text"
 msgstr "Text"
 
-#: ../plug-ins/script-fu/scripts/slide.scm:254
+#: plug-ins/script-fu/scripts/slide.scm:254
 msgid "Number"
 msgstr "Număr"
 
-#: ../plug-ins/script-fu/scripts/slide.scm:255
+#: plug-ins/script-fu/scripts/slide.scm:255
 msgid "Font"
 msgstr "Font"
 
-#: ../plug-ins/script-fu/scripts/slide.scm:256
+#: plug-ins/script-fu/scripts/slide.scm:256
 msgid "Font color"
 msgstr "Culoarea fontului"
 
-#: ../plug-ins/script-fu/scripts/spinning-globe.scm:94
+#: plug-ins/script-fu/scripts/spinning-globe.scm:95
 msgid "_Spinning Globe..."
 msgstr "_Glob rotitor..."
 
-#: ../plug-ins/script-fu/scripts/spinning-globe.scm:95
+#: plug-ins/script-fu/scripts/spinning-globe.scm:96
 msgid "Create an animation by mapping the current image onto a spinning sphere"
 msgstr "Creează o animație prin maparea imaginii curente pe o sferă rotitoare"
 
-#: ../plug-ins/script-fu/scripts/spinning-globe.scm:102
+#: plug-ins/script-fu/scripts/spinning-globe.scm:103
 msgid "Frames"
 msgstr "Cadre"
 
-#: ../plug-ins/script-fu/scripts/spinning-globe.scm:103
+#: plug-ins/script-fu/scripts/spinning-globe.scm:104
 msgid "Turn from left to right"
 msgstr "Rotește de la stânga la dreapta"
 
-#: ../plug-ins/script-fu/scripts/spinning-globe.scm:104
+#: plug-ins/script-fu/scripts/spinning-globe.scm:105
 msgid "Transparent background"
 msgstr "Fundal transparent"
 
-#: ../plug-ins/script-fu/scripts/spinning-globe.scm:105
+#: plug-ins/script-fu/scripts/spinning-globe.scm:106
 msgid "Index to n colors (0 = remain RGB)"
 msgstr "Index pentru n culori (0 = rămâne RGB)"
 
-#: ../plug-ins/script-fu/scripts/test-sphere.scm:272
+#: plug-ins/script-fu/scripts/test-sphere.scm:272
 msgid "_Sphere..."
 msgstr "_Sferă..."
 
-#: ../plug-ins/script-fu/scripts/tileblur.scm:68
+#: plug-ins/script-fu/scripts/tileblur.scm:72
 msgid "_Tileable Blur..."
 msgstr "Neclari_tate mozaicabilă..."
 
 # hm ?
-#: ../plug-ins/script-fu/scripts/tileblur.scm:69
+#: plug-ins/script-fu/scripts/tileblur.scm:73
 msgid "Blur the edges of an image so the result tiles seamlessly"
 msgstr ""
 "Atenuează claritatea marginilor unei imagini astfel încât mozaicul rezultat "
 "să nu prezinte urme de racord"
 
-#: ../plug-ins/script-fu/scripts/tileblur.scm:76
+#: plug-ins/script-fu/scripts/tileblur.scm:80
 msgid "Radius"
 msgstr "Rază"
 
-#: ../plug-ins/script-fu/scripts/tileblur.scm:77
+#: plug-ins/script-fu/scripts/tileblur.scm:81
 msgid "Blur vertically"
 msgstr "Atenuează claritatea vertical"
 
-#: ../plug-ins/script-fu/scripts/tileblur.scm:78
+#: plug-ins/script-fu/scripts/tileblur.scm:82
 msgid "Blur horizontally"
 msgstr "Atenuează claritatea orizontal"
 
-#: ../plug-ins/script-fu/scripts/tileblur.scm:79
+#: plug-ins/script-fu/scripts/tileblur.scm:83
 msgid "Blur type"
 msgstr "Tipul neclarității"
 
-#: ../plug-ins/script-fu/scripts/tileblur.scm:79
+#: plug-ins/script-fu/scripts/tileblur.scm:83
 msgid "IIR"
 msgstr "IIR"
 
-#: ../plug-ins/script-fu/scripts/tileblur.scm:79
+#: plug-ins/script-fu/scripts/tileblur.scm:83
 msgid "RLE"
 msgstr "RLE"
 
-#: ../plug-ins/script-fu/scripts/unsharp-mask.scm:82
+#: plug-ins/script-fu/scripts/unsharp-mask.scm:88
 msgid "Mask size"
 msgstr "Dimensiunea măștii"
 
-#: ../plug-ins/script-fu/scripts/unsharp-mask.scm:83
+#: plug-ins/script-fu/scripts/unsharp-mask.scm:89
 msgid "Mask opacity"
 msgstr "Opacitatea măștii"
 
-#: ../plug-ins/script-fu/scripts/waves-anim.scm:95
+#: plug-ins/script-fu/scripts/waves-anim.scm:95
 msgid "_Waves..."
 msgstr "_Valuri..."
 
-#: ../plug-ins/script-fu/scripts/waves-anim.scm:96
+#: plug-ins/script-fu/scripts/waves-anim.scm:96
 msgid ""
 "Create a multi-layer image with an effect like a stone was thrown into the "
 "current image"
@@ -1542,23 +1542,23 @@ msgstr ""
 "Creează o imagine multistrat cu un efect asemănător al unei pietre aruncate "
 "în imaginea curentă"
 
-#: ../plug-ins/script-fu/scripts/waves-anim.scm:103
+#: plug-ins/script-fu/scripts/waves-anim.scm:103
 msgid "Amplitude"
 msgstr "Amplitudine"
 
-#: ../plug-ins/script-fu/scripts/waves-anim.scm:104
+#: plug-ins/script-fu/scripts/waves-anim.scm:104
 msgid "Wavelength"
 msgstr "Lungime de undă"
 
-#: ../plug-ins/script-fu/scripts/waves-anim.scm:106
+#: plug-ins/script-fu/scripts/waves-anim.scm:106
 msgid "Invert direction"
 msgstr "Inversează direcția"
 
-#: ../plug-ins/script-fu/scripts/weave.scm:397
+#: plug-ins/script-fu/scripts/weave.scm:418
 msgid "_Weave..."
 msgstr "Î_mpletitură..."
 
-#: ../plug-ins/script-fu/scripts/weave.scm:398
+#: plug-ins/script-fu/scripts/weave.scm:419
 msgid ""
 "Create a new layer filled with a weave effect to be used as an overlay or "
 "bump map"
@@ -1566,84 +1566,93 @@ msgstr ""
 "Creează un strat nou umplut cu un efect de împletitură pentru a fi folosit "
 "ca o suprapunere sau ca o hartă de denivelări"
 
-#: ../plug-ins/script-fu/scripts/weave.scm:405
+#: plug-ins/script-fu/scripts/weave.scm:426
 msgid "Ribbon width"
 msgstr "Lățimea panglicii"
 
-#: ../plug-ins/script-fu/scripts/weave.scm:406
+#: plug-ins/script-fu/scripts/weave.scm:427
 msgid "Ribbon spacing"
 msgstr "Spațierea panglicii"
 
-#: ../plug-ins/script-fu/scripts/weave.scm:407
+#: plug-ins/script-fu/scripts/weave.scm:428
 msgid "Shadow darkness"
 msgstr "Întunecimea umbrei"
 
-#: ../plug-ins/script-fu/scripts/weave.scm:408
+#: plug-ins/script-fu/scripts/weave.scm:429
 msgid "Shadow depth"
 msgstr "Adâncimea umbrei"
 
-#: ../plug-ins/script-fu/scripts/weave.scm:409
+#: plug-ins/script-fu/scripts/weave.scm:430
 msgid "Thread length"
 msgstr "Lungimea firului"
 
-#: ../plug-ins/script-fu/scripts/weave.scm:410
+#: plug-ins/script-fu/scripts/weave.scm:431
 msgid "Thread density"
 msgstr "Densitatea firului"
 
-#: ../plug-ins/script-fu/scripts/weave.scm:411
+#: plug-ins/script-fu/scripts/weave.scm:432
 msgid "Thread intensity"
 msgstr "Intensitatea firului"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:92
+#: plug-ins/script-fu/scripts/xach-effect.scm:92
 msgid "Shadow"
 msgstr "Umbră"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:121
+#: plug-ins/script-fu/scripts/xach-effect.scm:121
 msgid "_Xach-Effect..."
 msgstr "Efect _Xach..."
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:122
+#: plug-ins/script-fu/scripts/xach-effect.scm:122
 msgid "Add a subtle translucent 3D effect to the selected region (or alpha)"
 msgstr "Adaugă un efect 3D translucid subtil la regiunea (sau alfa) selectată"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:129
+#: plug-ins/script-fu/scripts/xach-effect.scm:129
 msgid "Highlight X offset"
 msgstr "Decalajul X al evidențierii"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:130
+#: plug-ins/script-fu/scripts/xach-effect.scm:130
 msgid "Highlight Y offset"
 msgstr "Decalajul Y al evidențierii"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:131
+#: plug-ins/script-fu/scripts/xach-effect.scm:131
 msgid "Highlight color"
 msgstr "Culoarea evidențierii"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:132
+#: plug-ins/script-fu/scripts/xach-effect.scm:132
 msgid "Highlight opacity"
 msgstr "Opacitatea evidențierii"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:133
+#: plug-ins/script-fu/scripts/xach-effect.scm:133
 msgid "Drop shadow color"
 msgstr "Culoarea umbrei detașate"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:134
+#: plug-ins/script-fu/scripts/xach-effect.scm:134
 msgid "Drop shadow opacity"
 msgstr "Opacitatea umbrei detașate"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:135
+#: plug-ins/script-fu/scripts/xach-effect.scm:135
 msgid "Drop shadow blur radius"
 msgstr "Raza de neclaritate a umbrei detașate"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:136
+#: plug-ins/script-fu/scripts/xach-effect.scm:136
 msgid "Drop shadow X offset"
 msgstr "Decalajul X al umbrei detașate"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm:137
+#: plug-ins/script-fu/scripts/xach-effect.scm:137
 msgid "Drop shadow Y offset"
 msgstr "Decalajul Y al umbrei detașate"
 
 #~ msgid "_Console"
 #~ msgstr "_Consolă"
+
+#~ msgid "Too few arguments to 'script-fu-register' call"
+#~ msgstr "Prea puține argumente către apelul „script-fu-register”"
+
+#~ msgid "New _Brush..."
+#~ msgstr "_Penel nou..."
+
+#~ msgid "New _Pattern..."
+#~ msgstr "_Model nou..."
 
 #~ msgid "Rendering Spyro"
 #~ msgstr "Randare Spirograf"
