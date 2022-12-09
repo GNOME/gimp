@@ -711,8 +711,11 @@ AC_SUBST(ISO_CODES_LOCALEDIR)
 # Checks for required libraries
 ###############################
 
-PKG_CHECK_MODULES(BABL, [babl >= babl_required_version],,
-                  [add_deps_error([babl >= babl_required_version])])
+PKG_CHECK_MODULES(BABL, [babl-0.1 >= babl_required_version],,
+                  [
+                   PKG_CHECK_MODULES(BABL, [babl >= babl_required_version],,
+                   [add_deps_error([babl-0.1 >= babl_required_version])])
+                  ])
 PKG_CHECK_MODULES(GEGL, gegl-gegl_major_minor_version >= gegl_required_version,,
                   [add_deps_error([gegl-gegl_major_minor_version >= gegl_required_version])])
 PKG_CHECK_MODULES(ATK, atk >= atk_required_version,,
