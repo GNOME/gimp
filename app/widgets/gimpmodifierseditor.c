@@ -650,8 +650,8 @@ gimp_modifiers_editor_search_clicked (GtkWidget           *button,
         }
       else
         {
-            /* TRANSLATORS: %d is a button number, %s is the device (e.g. a mouse) name. */
           if (gdk_device_get_name (editor->priv->device) != NULL)
+            /* TRANSLATORS: %d is a button number, %s is the device (e.g. a mouse) name. */
             title = g_strdup_printf (_("Select Action for button %d of %s"),
                                      editor->priv->button,
                                      gdk_device_get_name (editor->priv->device));
