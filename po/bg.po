@@ -127,12 +127,13 @@
 # color profile цветови профил
 # attributes настройки
 # swatch образци
+# reference object обект-указател
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2022-11-24 21:59+0000\n"
-"PO-Revision-Date: 2022-12-11 15:42+0200\n"
+"PO-Revision-Date: 2022-12-11 16:57+0200\n"
 "Last-Translator: Alexander Shopov <ash@kambanaria.org>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
 "Language: bg\n"
@@ -214,7 +215,6 @@ msgstr ""
 #. * Cf. bug 762282.
 #.
 #: app/about.h:39
-#, fuzzy
 msgid ""
 "GIMP is free software: you can redistribute it and/or modify it under the "
 "terms of the GNU General Public License as published by the Free Software "
@@ -230,7 +230,7 @@ msgid ""
 "GIMP. If not, see: https://www.gnu.org/licenses/"
 msgstr ""
 "GIMP е свободен софтуер. Можете да го разпространявате според условията на "
-"версия 2 или по-висока (по Ваш избор) на Общия публичен лиценз на GNU, който "
+"версия 3 или по-висока (по Ваш избор) на Общия публичен лиценз на GNU, който "
 "е публикуван от Фондацията за свободен софтуер.\n"
 "\n"
 "GIMP се разпространява с надеждата да е полезен, но БЕЗ НИКАКВА ГАРАНЦИЯ, "
@@ -11188,7 +11188,7 @@ msgstr ""
 
 #: app/config/gimpcoreconfig.c:811 app/dialogs/preferences-dialog.c:1954
 msgid "Pattern syntax for searching and selecting items:"
-msgstr ""
+msgstr "Синтаксис на шаблоните да търсене и избор на обекти:"
 
 #: app/config/gimpdialogconfig.c:316 app/core/gimplayer.c:435
 msgid "Layer"
@@ -12241,65 +12241,57 @@ msgstr "Селекция"
 #: app/core/core-enums.c:27
 msgctxt "align-reference-type"
 msgid "Picked reference object"
-msgstr ""
+msgstr "Избран обект-указател"
 
 #: app/core/core-enums.c:63
-#, fuzzy
 msgctxt "alignment-type"
 msgid "Align to the left"
-msgstr "Равняване горния край на целта"
+msgstr "Хоризонтално подравняване вляво"
 
 #: app/core/core-enums.c:64
-#, fuzzy
 msgctxt "alignment-type"
 msgid "Center horizontally"
-msgstr "Хоризонтално обръщане"
+msgstr "Хоризонтално подравняване в средата"
 
 #: app/core/core-enums.c:65
-#, fuzzy
 msgctxt "alignment-type"
 msgid "Align to the right"
-msgstr "Равняване горния край на целта"
+msgstr "Хоризонтално подравняване вдясно"
 
 #: app/core/core-enums.c:66
-#, fuzzy
 msgctxt "alignment-type"
 msgid "Align to the top"
-msgstr "Равняване центъра на целта"
+msgstr "Вертикално подравняване горе"
 
 #: app/core/core-enums.c:67
-#, fuzzy
 msgctxt "alignment-type"
 msgid "Center vertically"
-msgstr "Вертикално обръщане"
+msgstr "Вертикално подравнянане в средата"
 
 #: app/core/core-enums.c:68
-#, fuzzy
 msgctxt "alignment-type"
 msgid "Align to the bottom"
-msgstr "Равняване горния край на целта"
+msgstr "Вертикално подравняване долу"
 
 #: app/core/core-enums.c:69
 msgctxt "alignment-type"
 msgid "Distribute anchor points horizontally evenly"
-msgstr ""
+msgstr "Хоризонтално равномерно разпределяне на котвите"
 
 #: app/core/core-enums.c:70
 msgctxt "alignment-type"
 msgid "Distribute anchor points vertically evenly"
-msgstr ""
+msgstr "Вертикално равномерно разпределяне на котвите"
 
 #: app/core/core-enums.c:71
-#, fuzzy
 msgctxt "alignment-type"
 msgid "Distribute horizontally with even horizontal gaps"
-msgstr "Разпределяне хоризонталните центрове на целите"
+msgstr "Хоризонтално равномерно разпределяне на отстоянията"
 
 #: app/core/core-enums.c:72
-#, fuzzy
 msgctxt "alignment-type"
 msgid "Distribute vertically with even vertical gaps"
-msgstr "Разпределяне вертикалните центрове на целите"
+msgstr "Вертикално равномерно разпределяне на отстоянията"
 
 #: app/core/core-enums.c:101
 msgctxt "bucket-fill-mode"
@@ -14430,19 +14422,19 @@ msgid "Visibility locks were added in %s"
 msgstr "Заключването на видимостта добавено в %s"
 
 #: app/core/gimpimage.c:2971
-#, fuzzy, c-format
+#, c-format
 msgid "Multiple path selection was added in %s"
-msgstr "Селекцията за множество слоеве е добавена в %s"
+msgstr "Селекцията за множество пътеки е добавена в %s"
 
 #: app/core/gimpimage.c:2983
-#, fuzzy, c-format
+#, c-format
 msgid "Storing color tags in path was added in %s"
-msgstr "Поддръжката на изображения над 4GB е добавено в %s"
+msgstr "Запазването на етикети на цветовете в пътеките е добавено в %s"
 
 #: app/core/gimpimage.c:2990
-#, fuzzy, c-format
+#, c-format
 msgid "Storing locks in path was added in %s"
-msgstr "Заключването на местоположение на групи от слоеве е добавено в %s"
+msgstr "Запазването на заключването на пътеките е добавено в %s"
 
 #: app/core/gimpimage.c:3004
 #, c-format
@@ -14561,11 +14553,10 @@ msgid "Disable 'Use sRGB Profile'"
 msgstr "Изключване на „Ползване на профили за sRGB“"
 
 #: app/core/gimpimage-color-profile.c:201
-#, fuzzy, c-format
+#, c-format
 msgid "ICC profile validation failed: Parasite's name is not '%s'"
 msgstr ""
-"Неуспешна проверка на профил по ICC: името на изричното свойство не е „icc-"
-"profile“"
+"Неуспешна проверка на профил по ICC: името на изричното свойство не е „%s“"
 
 #: app/core/gimpimage-color-profile.c:216
 msgid ""
@@ -14580,9 +14571,8 @@ msgid "ICC profile validation failed: "
 msgstr "Неуспешна проверка на профил по ICC: "
 
 #: app/core/gimpimage-color-profile.c:277
-#, fuzzy
 msgid "Simulation ICC profile validation failed: "
-msgstr "Неуспешна проверка на профил по ICC: "
+msgstr "Неуспешна симулация на проверка на профил по ICC: "
 
 #: app/core/gimpimage-color-profile.c:547
 msgid ""
@@ -14992,12 +14982,10 @@ msgid "%s mask"
 msgstr "маска „%s“"
 
 #: app/core/gimplayer.c:787
-#, fuzzy
 msgid "Floating Mask"
-msgstr "Маска на селекция"
+msgstr "Плаваща маска"
 
 #: app/core/gimplayer.c:789
-#, fuzzy
 msgid "Floating Layer"
 msgstr "Плаващ слой"
 
@@ -15006,11 +14994,13 @@ msgstr "Плаващ слой"
 #. * be a layer name.
 #.
 #: app/core/gimplayer.c:794
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s\n"
 "(%s)"
-msgstr "%s (%s)"
+msgstr ""
+"%s\n"
+"(%s)"
 
 #: app/core/gimplayer.c:1939
 msgid "Unable to add a layer mask since the layer already has one."
@@ -15608,19 +15598,16 @@ msgid "Color profile"
 msgstr "Цветови профил"
 
 #: app/core/gimptemplate.c:228
-#, fuzzy
 msgid "Simulation profile"
-msgstr "_Профил на симулацията за печат:"
+msgstr "Профил на симулацията"
 
 #: app/core/gimptemplate.c:235
-#, fuzzy
 msgid "Simulation Rendering Intent"
-msgstr "_Показване на генерираният отстъп:"
+msgstr "Предназначение на изобразяванего чрез симулация"
 
 #: app/core/gimptemplate.c:243
-#, fuzzy
 msgid "Use Black Point Compensation for Simulation"
-msgstr "Натискане и влачене за създаване на нова селекция"
+msgstr "Компенсация на черната точка за симулацията"
 
 #: app/core/gimptemplate.c:250 app/tools/gimpbucketfilloptions.c:147
 msgid "Fill type"
@@ -15745,9 +15732,9 @@ msgstr "процента"
 #. * For instance: "2.10.18 (revision 2)"
 #.
 #: app/dialogs/about-dialog.c:126
-#, fuzzy, c-format
+#, c-format
 msgid "%s (revision %d)"
-msgstr "%s версия %s"
+msgstr "%s (ревизия %d)"
 
 #: app/dialogs/about-dialog.c:134
 msgid "About GIMP"
@@ -15762,39 +15749,45 @@ msgstr "Посещаване сайта на GIMP"
 #: app/dialogs/about-dialog.c:149
 msgid "translator-credits"
 msgstr ""
-"Виктор Дачев vdachev@gmail.com\n"
-"Ясен Праматаров yasen@lindeas.com\n"
+"Виктор Дачев <vdachev@gmail.com>&lt;<a href='mailto:vdachev@gmail."
+"com'>vdachev@gmail.com</a>&gt;\n"
+"Ясен Праматаров <yasen@lindeas.com>&lt;<a href='mailto:yasen@lindeas."
+"com'>yasen@lindeas.com</a>&gt;\n"
+"Александър Шопов &lt;<a href='mailto:ash@kambanaria.org'>ash@kambanaria.org</"
+"a>&gt;\n"
+"\n"
 "\n"
 "Проектът за превод на GNOME има нужда от подкрепа.\n"
-"Научете повече за нас на http://gnome.cult.bg\n"
-"Докладвайте за грешки на http://gnome.cult.bg/bugs"
+"Научете повече за нас на <a href='https://fsa-bg.org/project/gtp'>уеб сайта</"
+"a> ни.\n"
+"Докладвайте за грешки в превода в <a href='https://fsa-bg.org/project/gtp/"
+"newticket'>съответния раздел</a>."
 
 #: app/dialogs/about-dialog.c:341
-#, fuzzy
 msgid "Update available!"
-msgstr "Вече не е налично"
+msgstr "Има нова версия!"
 
 #. This is actually a new revision of current version.
 #: app/dialogs/about-dialog.c:371
 #, c-format
 msgid "Download GIMP %s revision %d (released on %s)\n"
-msgstr ""
+msgstr "Изтегляне на GIMP %s, ревизия %d (от дата %s)\n"
 
 #. Translators: <> tags are Pango markup. Please keep these
 #. * markups in your translation.
 #: app/dialogs/about-dialog.c:381
 #, c-format
 msgid "<u>Release comment</u>: <i>%s</i>"
-msgstr ""
+msgstr "<u>Бележки към версията</u>: <i>%s</i>"
 
 #: app/dialogs/about-dialog.c:386
 #, c-format
 msgid "Download GIMP %s (released on %s)\n"
-msgstr ""
+msgstr "Изтегляне на GIMP %s (от дата %s)\n"
 
 #: app/dialogs/about-dialog.c:411 app/dialogs/about-dialog.c:432
 msgid "Check for updates"
-msgstr ""
+msgstr "Проверка за нови версии"
 
 #. Translators: first string is the date in the locale's date
 #. * representation (e.g., 12/31/99), second is the time in the
@@ -15803,18 +15796,20 @@ msgstr ""
 #: app/dialogs/about-dialog.c:451
 #, c-format
 msgid "Last checked on %s at %s"
-msgstr ""
+msgstr "Последна проверка на %s в %s"
 
 #: app/dialogs/about-dialog.c:679
 msgid "GIMP is brought to you by"
 msgstr "GIMP е създаден от"
 
 #: app/dialogs/about-dialog.c:755
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "This is an unstable development release\n"
 "commit %s"
-msgstr "Това е нестабилна версия за разработчици."
+msgstr ""
+"Това е нестабилна версия за разработчици\n"
+"Подаване: %s"
 
 #: app/dialogs/action-search-dialog.c:69
 #, fuzzy
@@ -21108,9 +21103,8 @@ msgid "No brushes available for use with this tool."
 msgstr "Няма налични четки за този инструмент."
 
 #: app/paint/gimpbrushcore.c:390
-#, fuzzy
 msgid "No paint dynamics available for use with this tool."
-msgstr "Няма налични четки за този инструмент."
+msgstr "Няма налични динамики на рисуване за този инструмент."
 
 #: app/paint/gimpclone.c:90 app/tools/gimpclonetool.c:62
 msgid "Clone"
@@ -21217,14 +21211,12 @@ msgid "Ink Blob Angle"
 msgstr ""
 
 #: app/paint/gimpmybrushcore.c:104
-#, fuzzy
 msgid "Mybrush"
-msgstr "Спрей"
+msgstr "Четка от MyPaint"
 
 #: app/paint/gimpmybrushcore.c:157
-#, fuzzy
 msgid "No MyPaint brushes available for use with this tool."
-msgstr "Няма налични четки за този инструмент."
+msgstr "Няма налични четка от MyPaint за този инструмент."
 
 #: app/paint/gimpmybrushoptions.c:94
 #, fuzzy
@@ -21488,6 +21480,8 @@ msgstr "Първо задайте изображение-източник."
 #: app/paint/gimpsourcecore.c:158
 msgid "\"Registered\" alignment cannot paint on multiple drawables."
 msgstr ""
+"„Регистрираното“ подравняване не може да рисува върху повече от един рисуван "
+"обект."
 
 #: app/paint/gimpsourceoptions.c:102 app/tools/gimpcloneoptions-gui.c:301
 #: app/tools/gimphealtool.c:104
@@ -29832,7 +29826,7 @@ msgstr ""
 
 #: app-tools/gimp-debug-tool.c:87
 msgid "GIMP Crash Debug"
-msgstr ""
+msgstr "Прозорец при забиване на GIMP"
 
 #~ msgctxt "drawable-action"
 #~ msgid "Toggle Drawable _Visibility"
