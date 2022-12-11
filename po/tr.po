@@ -44,16 +44,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP UI translations gimp-2-10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-11-12 14:14+0000\n"
-"PO-Revision-Date: 2022-11-19 19:51+0300\n"
-"Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
+"POT-Creation-Date: 2022-11-21 04:27+0000\n"
+"PO-Revision-Date: 2022-12-11 15:29+0300\n"
+"Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.1.1\n"
 "X-POOTLE-MTIME: 1437505389.000000\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
@@ -114,6 +114,8 @@ msgid ""
 "GIMP continues strengthening its bases with this new version 2.10.32 fixing "
 "many bugs and improving format support. Notable changes:"
 msgstr ""
+"GIMP, yeni 2.10.32 sürümü ile hataları düzelterek ve biçim desteğini "
+"geliştirerek temellerini güçlendirmeye devam ediyor. Önemli değişiklikler:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:9
 msgid "8 and 16-bit CMYK(A) TIFF files import is now supported"
@@ -125,40 +127,46 @@ msgstr "BIGTIFF içe aktarma ve dışa aktarma artık destekleniyor"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:11
 msgid "JPEG XL files import is now supported"
-msgstr ""
+msgstr "JPEG XL dosyalarını içe aktarma artık destekleniyor"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
 msgid ""
 "DDS export has new \"Flip\" (useful for some game engine) and \"Visible "
 "layers\" options"
 msgstr ""
+"DDS dışa aktarmaya yeni \"Çevir\" (bazı oyun motorları için kullanışlı) ve "
+"\"Görünür katmanlar\" seçenekleri eklendi"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
 msgid "Other improved format supports: BMP, DICOM, EPS, RAW, TGA, WebP"
-msgstr ""
+msgstr "Diğer iyileştirilen biçim destekleri: BMP, DICOM, EPS, RAW, TGA, WebP"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
 msgid ""
 "The screenshot plug-in on Windows has now an option to capture the cursor"
 msgstr ""
+"Windows'taki ekran görüntüsü eklentisine imleç yakalama seçeneği eklendi"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
 msgid "Several usability improvements in official themes and icons"
 msgstr ""
+"Resmi temalarda ve simgelerde birçok kullanılabilirlik iyileştirmesi yapıldı"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:16
 msgid ""
 "New support for localized glyphs ('locl') in Text tool depending on the "
 "value of the \"Language\" tool option"
 msgstr ""
+"\"Dil\" aracı seçeneğinin değerine bağlı olarak Metin aracında "
+"yerelleştirilmiş glifler ('locl') için yeni destek"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:17
 msgid "More robust XCF import"
-msgstr ""
+msgstr "Daha kararlı XCF içe aktarma"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:18
 msgid "Several metadata handling improvements"
-msgstr ""
+msgstr "Birçok üst veri işleme iyileştirmesi"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:19
 msgid ""
@@ -166,96 +174,123 @@ msgid ""
 "evolutions, improves metadata support as well as support of several formats, "
 "such as PSD and AVIF."
 msgstr ""
+"GIMP 2.10.30, birçok hatayı düzeltir, arka uç uygulamalarını işletim sistemi "
+"gelişimini izleyecek biçimde günceller, üst veri desteğinin yanında PSD "
+"ve AVIF gibi birçok biçim desteğini iyileştirir."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:20
 msgid ""
 "GIMP 2.10.28 fixes a build issue of GIMP 2.10.26, where some theme data was "
 "not properly installed."
 msgstr ""
+"GIMP 2.10.28, bazı tema verilerinin düzgün yüklenmediği GIMP 2.10.26 "
+"sürümünün derleme sorununu düzeltir."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:21
 msgid ""
 "GIMP 2.10.26 is a bug fix release, containing dozens of fixes, both in core, "
 "scripts and plug-in code."
 msgstr ""
+"GIMP 2.10.26, çekirdek, betikler ve eklenti kodunda yüzlerce düzeltme içeren "
+"bir hata düzeltme sürümüdür."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:22
 msgid "GIMP 2.10.24 is again mostly a bug fix release. Notable changes:"
 msgstr ""
+"GIMP 2.10.24 büyük ölçüde bir hata düzeltme sürümüdür. Önemli değişiklikler:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:23
 msgid "GeoTIFF metadata support added"
-msgstr "GeoTIFF üstveri desteği eklendi"
+msgstr "GeoTIFF üst veri desteği eklendi"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:24
 msgid ""
 "PDF import now proposes an option to load layers in reverse orders and "
 "allows fractional pixel density"
 msgstr ""
+"PDF içe aktarma artık katmanları ters sırada yükleme seçeneği sunuyor ve "
+"kesirli piksel yoğunluğuna izin veriyor"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:25
 msgid ""
 "Raw image import updated to handle API changes in darktable 3.6 and over"
 msgstr ""
+"Darktable 3.6 ve sonrasındaki API değişikliklerini işlemek için ham görüntü "
+"içe aktarma güncellendi"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:26
 msgid ""
 "File format improved support: HEIF, PSP, TIFF, JPEG, PNG, PDF, DDS, BMP, PSD"
 msgstr ""
+"İyileştirilen dosya biçimi destekleri: HEIF, PSP, TIFF, JPEG, PNG, PDF, DDS, "
+"BMP, PSD"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:27
 msgid "Many fixes and improvements to the metadata viewer and editor"
-msgstr ""
+msgstr "Üst veri görüntüleyici ve düzenleyicide birçok düzeltme ve iyileştirme"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:28
 msgid "New Kabyle translation"
 msgstr "Yeni Kabyle çevirisi"
 
+# Snapping için yaslama çevirisi kullandığımız yerler de var.
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:29
 msgid "Off-canvas point snapping (to grid, guides, paths) made possible"
 msgstr ""
+"Tuval dışı nokta yakalama (ızgaraya, kılavuzlara, yollara) artık mümkün"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:30
 msgid "GIMP 2.10.22 is mainly a bug fix release. Notable changes:"
 msgstr ""
+"GIMP 2.10.22, genel olarak bir hata düzeltme sürümüdür. Önemli değişiklikler:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:31
 msgid ""
 "HEIF support improvements: optional exporting with high bit depth, AVIF "
 "importing and exporting"
 msgstr ""
+"HEIF desteği iyileştirmeleri: isteğe bağlı yüksek bit derinliğiyle dışa "
+"aktarma, AVIF içe ve dışa aktarma"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:32
 msgid "Multiple improvements in Corel PaintShop Pro support"
-msgstr ""
+msgstr "Corel PaintShop Pro desteğinde birçok iyileştirme"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:33
 msgid "\"Sample merged\" now available in GEGL operation tool options"
 msgstr ""
+"\"Birleştirilmiş örnek\" artık GEGL işlem aracı seçeneklerinden "
+"kullanılabilir"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:34
 msgid "\"Sample merged\" is now enabled by default for color picking"
 msgstr ""
+"\"Birleştirilmiş örnek\" renk seçimi için artık varsayılan olarak etkin"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:35
 msgid ""
 "The option enabling OpenCL support has been moved to the Playground tab in "
 "Preferences"
 msgstr ""
+"OpenCL desteğini etkinleştiren seçenek, Tercihler'deki Çalışma Alanı "
+"sekmesine taşındı"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:36
 msgid ""
 "Matting Levin is now the default engine of Foreground Select tool as it "
 "performs a lot better"
 msgstr ""
+"Matting Levin, çok daha iyi performans gösterdiği için artık Önalan Seçim "
+"aracının varsayılan motoru"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:37
 msgid "New progressive performance logs and dashboard updates"
-msgstr ""
+msgstr "Yeni aşamalı performans günlükleri ve pano güncellemeleri"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:38
 msgid "Verbose debug now shows Flatpak info when relevant"
 msgstr ""
+"Ayrıntılı hata ayıklama artık ilgili olduğunda Flatpak bilgilerini gösteriyor"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:39
 msgid "Various bug fixes"
@@ -272,26 +307,33 @@ msgstr ""
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:41
 msgid "Tool groups now expand on hover rather than click by default"
 msgstr ""
+"Araç grupları artık varsayılan olarak tıklama yerine fareyle üzerine "
+"gelindiğinde genişliyor"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:42
 msgid ""
 "Non-destructive cropping now available by cropping the canvas rather than "
 "actual pixels"
 msgstr ""
+"Yıkımsız kırpma artık gerçek pikseller yerine tuvali kırparak kullanılabilir"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:43
 msgid ""
 "Better PSD support: exporting of 16-bit files now available, reading/writing "
 "channels in the right order"
 msgstr ""
+"Daha iyi PSD desteği: 16 bitlik dosyaların dışa aktarımı artık mümkün, "
+"kanalları doğru sırada okuma/yazma"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:44
 msgid "On-canvas controls for the Vignette filter"
-msgstr ""
+msgstr "Örtü süzgeci için tuval üzerinde denetimler"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:45
 msgid "New filters: Bloom, Focus Blur, Lens Blur, Variable Blur"
 msgstr ""
+"Yeni süzgeçler: Bahar, Odak Bulanıklığı, Mercek Bulanıklığı, Değişken "
+"Bulanıklık"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:46
 msgid "Over 30 bugfixes"
@@ -302,6 +344,9 @@ msgid ""
 "GIMP 2.10.18 fixes some critical bugs, introduces naive support for CMYK PSD "
 "files, and adds a higher-contrast variation of the symbolic icon theme."
 msgstr ""
+"GIMP 2.10.18, bazı kritik hataları düzeltir, CMYK PSD dosyaları için saf "
+"destek sunar ve sembolik simge temasının daha yüksek karşıtlıklı bir "
+"çeşitini ekler."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:48
 msgid ""
@@ -309,38 +354,51 @@ msgid ""
 "transformations in 3D space, new release checker, and the usual amount of "
 "bug fixes. Notable improvements:"
 msgstr ""
+"GIMP 2.10.16, birkaç önemli kullanılabilirlik iyileştirmesi, 3B uzayda "
+"dönüşüm için yeni bir araç, yeni sürüm denetleyicisi ve olağan miktarda hata "
+"düzeltmesi sunar. Önemli iyileştirmeler:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:49
 msgid "Tools are now grouped in the toolbox by default"
-msgstr ""
+msgstr "Araçlar artık varsayılan olarak araç kutusunda gruplanıyor"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:50
 msgid "Sliders now use a compact style with improved user interaction"
 msgstr ""
+"Kaydırıcılar artık iyileştirilmiş kullanıcı etkileşimi ile sıkı stil "
+"kullanıyor"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:51
 msgid "Vastly improved user experience for the transformation preview"
-msgstr ""
+msgstr "Dönüşüm önizlemesi kullanıcı deneyimi büyük ölçüde iyileştirildi"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:52
 msgid "Dockable areas now highlighted when a dockable dialog is being dragged"
 msgstr ""
+"Rıhtımlanabilir alanlar artık rıhtımlanabilir iletişim kutusu sürüklenirken "
+"vurgulanıyor"
 
+# Pan için Dolaşmak çevirisi üstünde yeniden düşünülebilir.
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:53
 msgid "New 3D Transform tool to rotate and pan items"
-msgstr ""
+msgstr "Ögeleri döndürmek ve dolaşmak için yeni 3B Dönüşüm aracı"
 
+# Outline için Çerçeve çevirisi burada uymuyor.
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:54
 msgid "Much smoother brush outline motion on the canvas"
-msgstr ""
+msgstr "Tuval üzerinde çok daha yumuşak fırça çerçeve hareketi"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:55
 msgid "Consolidated user interface for merging down and anchoring layers"
 msgstr ""
+"Katmanları aşağı birleştirmek ve sabitlemek için birleştirilmiş kullanıcı "
+"arayüzü"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:56
 msgid "Update check to notify users that a new release/installer is available"
 msgstr ""
+"Kullanıcılara yeni sürümün/kurucunun varlığını bildirmek için güncelleme "
+"denetimi"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:57
 msgid ""
@@ -363,7 +421,7 @@ msgstr ""
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:59
 msgid "Filters: new \"Clipping\" option to allow layer resize when relevant"
 msgstr ""
-"Sügeçler: İlgili olduğunda katmanın yeniden boyutlandırılmasını sağlayan "
+"Süzgeçler: İlgili olduğunda katmanın yeniden boyutlandırılmasını sağlayan "
 "yeni \"Kırpma\" seçeneği"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:60
@@ -616,11 +674,11 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:102
 msgid "New \"Little Planet\" (gegl:stereographic-projection) filter"
-msgstr "Yeni \"Küçük Gezegen\" (gegl:stereographic-projection) filtresi"
+msgstr "Yeni \"Küçük Gezegen\" (gegl:stereographic-projection) süzgeci"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:103
 msgid "New \"Long Shadow\" filter"
-msgstr "Yeni \"Uzun Gölge\" süzgezi"
+msgstr "Yeni \"Uzun Gölge\" süzgeci"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:104
 msgid ""
@@ -648,8 +706,8 @@ msgstr ""
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:107
 msgid "File format filtering in Open/Save/Export dialogs made less confusing"
 msgstr ""
-"Aç / Kaydet / Dışa Aktar iletişim kutularındaki dosya tipi filtrelemesi daha "
-"az kafa karıştırıcı hale getirildi"
+"Aç / Kaydet / Dışa Aktar iletişim kutularındaki dosya tipi süzgeci daha az "
+"kafa karıştırıcı hale getirildi"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:108
 msgid "New language (having GIMP translated in 81 languages now): Marathi"
@@ -715,7 +773,7 @@ msgid ""
 "policy in stable micro releases."
 msgstr ""
 "Aynı zamanda, hem içe aktarma hem de dışa aktarma için HEIF formatının "
-"desteklenmesi için yeni bir eklentinin yanı sıra 2 yeni filtre: "
+"desteklenmesi için yeni bir eklentinin yanı sıra 2 yeni süzgeç: "
 "\"Küreselleştir\" ve \"Özyinelemeli Dönüştürme\" özelliklerini de "
 "içermektedir. Bunlar, kararlı küçük sürümlerde rahat özellikler "
 "politikamızın güzel örnekleridir."
@@ -779,7 +837,8 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:126
 msgid "Metadata viewing and editing for Exif, XMP, IPTC, and DICOM"
-msgstr "EXIF, XMP, IPTC ve DICOM için üstveri görüntüleme ve düzenleme desteği"
+msgstr ""
+"EXIF, XMP, IPTC ve DICOM için üst veri görüntüleme ve düzenleme desteği"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:127
 msgid "Basic HiDPI support: automatically or user-selected icon size"
@@ -834,7 +893,7 @@ msgid ""
 "Projection filter. The widget provides on-canvas interaction for 3D rotation "
 "(yaw, pitch, roll)."
 msgstr ""
-"Yeni GimpToolGyroscope tuval denetleyicisi, Panorama Gösterimi filtresi için "
+"Yeni GimpToolGyroscope tuval denetleyicisi, Panorama Gösterimi süzgeci için "
 "kullanımda. Gereç, 3D döndürme için tuval üzerinde etkileşim sağlıyor (yaw, "
 "pitch, roll)."
 
@@ -893,7 +952,7 @@ msgstr "Çeşitli platformlarda ekran görüntüsü ve renk seçimi iyileştiril
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:143
 msgid "Metadata defaults preferences now available"
-msgstr "Üstveri varsayılan tercihleri artık kullanılabilir"
+msgstr "Üst veri varsayılan tercihleri artık kullanılabilir"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:144
 msgid "Various GUI polishing"
@@ -939,7 +998,7 @@ msgstr "Kılavuz, kullanıcının yeğlediği dilde görüntülenebilir"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:153
 msgid "Improvements for the Wavelet Decompose filter"
-msgstr "Wavelet Ayrıştır filtresinde iyileştirmeler"
+msgstr "Wavelet Ayrıştır süzgecinde iyileştirmeler"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:154
 msgid "Improved compatibility with Photoshop .psd files"
@@ -5276,7 +5335,7 @@ msgstr "_Bayer Matris..."
 #: ../app/actions/filters-actions.c:193
 msgctxt "filters-action"
 msgid "_Bloom..."
-msgstr "_Filizlenme..."
+msgstr "_Bahar..."
 
 #: ../app/actions/filters-actions.c:198
 msgctxt "filters-action"
@@ -5619,7 +5678,7 @@ msgstr "_Seç..."
 #: ../app/actions/filters-actions.c:533
 msgctxt "filters-action"
 msgid "_RGB Noise..."
-msgstr "_RGB Gürültü Filtresi..."
+msgstr "_RGB Gürültüsü..."
 
 #: ../app/actions/filters-actions.c:538
 msgctxt "filters-action"
@@ -6419,7 +6478,7 @@ msgstr "_Kılavuzlar"
 #: ../app/actions/image-actions.c:68
 msgctxt "image-action"
 msgid "Meta_data"
-msgstr "Üs_tveri"
+msgstr "Üs_t Veri"
 
 #: ../app/actions/image-actions.c:70
 msgctxt "image-action"
@@ -7298,7 +7357,7 @@ msgstr "Katman Maske_si Ekle..."
 #: ../app/actions/layers-actions.c:264 ../app/actions/layers-actions.c:274
 msgctxt "layers-action"
 msgid "Add a mask that allows non-destructive editing of transparency"
-msgstr "Yıkıcı olmadan düzenlenebilen saydamlığa izin veren bir maske ekle"
+msgstr "Saydamlığın yıkımsız düzenlenmesine izin veren bir maske ekle"
 
 #: ../app/actions/layers-actions.c:279
 msgctxt "layers-action"
@@ -11281,15 +11340,15 @@ msgstr "Yardım sistemi tarafından kullanılacak tarayıcıyı ayarlar."
 
 #: ../app/config/gimprc-blurbs.h:195
 msgid "How many recent settings to keep around in filter tools."
-msgstr "Filtre araçlarında kaç tane son ayarın tutulacağını belirler."
+msgstr "Süzgeç araçlarında kaç tane son ayarın tutulacağını belirler."
 
 #: ../app/config/gimprc-blurbs.h:198
 msgid "Default to the last used settings in filter tools."
-msgstr "Filtre araçlarındaki son kullanılan ayarlara varsayılan."
+msgstr "Süzgeç araçlarındaki son kullanılan ayarlara varsayılan."
 
 #: ../app/config/gimprc-blurbs.h:201
 msgid "Show advanced color options in filter tools."
-msgstr "Filtre araçlarında gelişmiş renk seçeneklerini göster."
+msgstr "Süzgeç araçlarında gelişmiş renk seçeneklerini göster."
 
 #: ../app/config/gimprc-blurbs.h:204
 msgid "Sets the text to appear in image window status bars."
@@ -11337,21 +11396,21 @@ msgstr "Görüntünün renk profilini varsayılan olarak dışa aktar."
 #.
 #: ../app/config/gimprc-blurbs.h:233
 msgid "Export Exif metadata by default."
-msgstr "Exif üstverisini varsayılan olarak dışa aktar."
+msgstr "Exif üst verisini varsayılan olarak dışa aktar."
 
 #. Translators: tooltip for configuration option (checkbox).
 #. * It determines how file export plug-ins handle XMP by default.
 #.
 #: ../app/config/gimprc-blurbs.h:239
 msgid "Export XMP metadata by default."
-msgstr "XMP üstverisini varsayılan olarak dışa aktar."
+msgstr "XMP üst verisini varsayılan olarak dışa aktar."
 
 #. Translators: tooltip for configuration option (checkbox).
 #. * It determines how file export plug-ins handle IPTC by default.
 #.
 #: ../app/config/gimprc-blurbs.h:245
 msgid "Export IPTC metadata by default."
-msgstr "IPTC üstverisini varsayılan olarak dışa aktar."
+msgstr "IPTC üst verisini varsayılan olarak dışa aktar."
 
 #: ../app/config/gimprc-blurbs.h:248
 msgid "Try generating debug data for bug reporting when appropriate."
@@ -12820,7 +12879,7 @@ msgstr "Görüntü çözünürlüğü değiştirme"
 #: ../app/core/core-enums.c:1178
 msgctxt "undo-type"
 msgid "Change metadata"
-msgstr "Üstveriyi değiştir"
+msgstr "Üst veriyi değiştir"
 
 #: ../app/core/core-enums.c:1179
 msgctxt "undo-type"
@@ -14068,32 +14127,32 @@ msgstr " (içe aktarılmış)"
 #: ../app/core/gimpimage.c:2669
 #, c-format
 msgid "Layer mode '%s' was added in %s"
-msgstr "'%s' katman kipi %s içinde eklendi"
+msgstr "'%s' katman kipi %s ile eklendi"
 
 #: ../app/core/gimpimage.c:2684
 #, c-format
 msgid "Layer groups were added in %s"
-msgstr "Katman kümeleri %s içine eklendi"
+msgstr "Katman kümeleri %s ile eklendi"
 
 #: ../app/core/gimpimage.c:2691
 #, c-format
 msgid "Masks on layer groups were added in %s"
-msgstr "Katman kümelerindeki maskeler %s içine eklendi"
+msgstr "Katman kümelerindeki maskeler %s ile eklendi"
 
 #: ../app/core/gimpimage.c:2707
 #, c-format
 msgid "High bit-depth images were added in %s"
-msgstr "Yüksek bit derinlikli görüntüler %s içine eklendi"
+msgstr "Yüksek bit derinlikli görüntüler %s ile eklendi"
 
 #: ../app/core/gimpimage.c:2719
 #, c-format
 msgid "Internal zlib compression was added in %s"
-msgstr "Dahili zlib sıkıştırması %s içinde eklendi"
+msgstr "Dahili zlib sıkıştırması %s ile eklendi"
 
 #: ../app/core/gimpimage.c:2736
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
-msgstr "%s’de 4 GB’dan büyük görüntü dosyaları desteği eklendi"
+msgstr " 4 GB’dan büyük görüntü dosyaları desteği %s ile eklendi"
 
 #: ../app/core/gimpimage.c:2832
 msgctxt "undo-type"
@@ -15255,7 +15314,7 @@ msgstr "Dosya Adı"
 #: ../app/core/gimptoolgroup.c:265
 msgctxt "tool-item"
 msgid "Group"
-msgstr "Kümeler"
+msgstr "Küme"
 
 #: ../app/core/gimptoolpreset.c:149
 msgid "Apply stored FG/BG"
@@ -16701,7 +16760,7 @@ msgstr "_Görüntünün renk profilini varsayılan olarak dışa aktar"
 #: ../app/dialogs/preferences-dialog.c:1551
 msgid "Export _Exif metadata by default when available"
 msgstr ""
-"Kullanılabilir olduğunda, _EXIF üstverisini varsayılan olarak dışa aktar"
+"Kullanılabilir olduğunda, _EXIF üst verisini varsayılan olarak dışa aktar"
 
 #. Translators: label for
 #. * configuration option (checkbox).
@@ -16711,7 +16770,7 @@ msgstr ""
 #: ../app/dialogs/preferences-dialog.c:1559
 msgid "Export _XMP metadata by default when available"
 msgstr ""
-"Kullanılabilir olduğunda, _XMP üstverisini varsayılan olarak dışa aktar"
+"Kullanılabilir olduğunda, _XMP üst verisini varsayılan olarak dışa aktar"
 
 #. Translators: label for
 #. * configuration option (checkbox).
@@ -16721,11 +16780,11 @@ msgstr ""
 #: ../app/dialogs/preferences-dialog.c:1567
 msgid "Export _IPTC metadata by default when available"
 msgstr ""
-"Kullanılabilir olduğunda, _IPTC üstverisini varsayılan olarak dışa aktar"
+"Kullanılabilir olduğunda, _IPTC üst verisini varsayılan olarak dışa aktar"
 
 #: ../app/dialogs/preferences-dialog.c:1570
 msgid "Metadata can contain sensitive information."
-msgstr "Üstveri hassas bilgiler içerebilir."
+msgstr "Üst veri hassas bilgiler içerebilir."
 
 #. Export File Type
 #: ../app/dialogs/preferences-dialog.c:1574
@@ -27193,7 +27252,7 @@ msgstr ""
 
 #: ../app/widgets/gimpsavedialog.c:407
 msgid "Metadata won't be visible in GIMP older than version 2.10."
-msgstr "Üstveri, GIMP 2.10 öncesi sürümlerde görünür olmayacaktır."
+msgstr "Üst veri, GIMP 2.10 öncesi sürümlerde görünür olmayacaktır."
 
 #: ../app/widgets/gimpselectiondata.c:250
 #, c-format
