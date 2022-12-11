@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP libgimp gimp-2-10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-08-03 23:14+0000\n"
-"PO-Revision-Date: 2022-08-16 18:48+0300\n"
+"POT-Creation-Date: 2022-11-21 04:27+0000\n"
+"PO-Revision-Date: 2022-12-11 15:23+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -301,7 +301,7 @@ msgstr "Döndürüldü"
 
 #: ../libgimp/gimpimagemetadata.c:1133
 msgid "This image contains Exif orientation metadata."
-msgstr "Bu görüntü Exif yönelim üstverisi içerir."
+msgstr "Bu görüntü Exif yönelim üst verisi içerir."
 
 #: ../libgimp/gimpimagemetadata.c:1151
 msgid "Would you like to rotate the image?"
@@ -1480,12 +1480,12 @@ msgstr "En boy oranı ile kırp"
 #: ../libgimpbase/gimpmetadata.c:982
 #, c-format
 msgid "Can load metadata only from local files"
-msgstr "Üstveriler yalnızca yerel dosyalardan yüklenebilir"
+msgstr "Üst veriler yalnızca yerel dosyalardan yüklenebilir"
 
 #: ../libgimpbase/gimpmetadata.c:1038
 #, c-format
 msgid "Can save metadata only to local files"
-msgstr "Üstveriler yalnızca yerel dosyalara kaydedilebilir"
+msgstr "Üst veriler yalnızca yerel dosyalara kaydedilebilir"
 
 #: ../libgimpbase/gimpmetadata.c:1086
 #, c-format
@@ -2218,7 +2218,7 @@ msgstr "Seçilen klasörü listeden kaldır"
 msgid "Writable"
 msgstr "Yazılabilir"
 
-#: ../libgimpwidgets/gimppickbutton.c:113
+#: ../libgimpwidgets/gimppickbutton.c:120
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
