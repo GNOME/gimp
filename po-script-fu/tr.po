@@ -15,9 +15,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP script-fu master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-08-16 13:42+0000\n"
-"PO-Revision-Date: 2022-08-21 20:41+0300\n"
-"Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
+"POT-Creation-Date: 2022-11-22 14:38+0000\n"
+"PO-Revision-Date: 2022-12-10 23:53+0300\n"
+"Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
@@ -231,41 +231,41 @@ msgstr "%s:"
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu Renk Seçimi"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:460
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:468
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu Dosya Seçimi"
 
 # Folder: Komut satırında Dizin, Arayüzde Klasör
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:463
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:471
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu Dizin Seçimi"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:476
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:484
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu Yazı Tipi Seçimi"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:484
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:492
 msgid "Script-Fu Palette Selection"
 msgstr "Script-Fu Palet Seçimi"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:493
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:501
 msgid "Script-Fu Pattern Selection"
 msgstr "Script-Fu Desen Seçimi"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:502
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:510
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu Renk Geçişi Seçimi"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:511
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:519
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu Fırça Seçimi"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:890
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:898
 #, c-format
 msgid "Error while executing %s:"
 msgstr "%s yürütülürken hata:"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-scripts.c:358
+#: plug-ins/script-fu/libscriptfu/script-fu-scripts.c:357
 #, c-format
 msgid "Error while loading %s:"
 msgstr "%s yüklenirken hata:"
@@ -1208,8 +1208,8 @@ msgid "There is no image data in the clipboard to paste."
 msgstr "Panoda yapıştırılacak görüntü verisi yok."
 
 #: plug-ins/script-fu/scripts/paste-as-brush.scm:64
-msgid "New _Brush..."
-msgstr "Yeni _Fırça..."
+msgid "Paste as New _Brush..."
+msgstr "Yeni _Fırça Olarak Yapıştır..."
 
 #: plug-ins/script-fu/scripts/paste-as-brush.scm:65
 msgid "Paste the clipboard contents into a new brush"
@@ -1233,8 +1233,8 @@ msgid "_Spacing"
 msgstr "_Boşluk"
 
 #: plug-ins/script-fu/scripts/paste-as-pattern.scm:52
-msgid "New _Pattern..."
-msgstr "Yeni _Desen..."
+msgid "Paste as New _Pattern..."
+msgstr "Yeni _Desen Olarak Yapıştır..."
 
 #: plug-ins/script-fu/scripts/paste-as-pattern.scm:53
 msgid "Paste the clipboard contents into a new pattern"
