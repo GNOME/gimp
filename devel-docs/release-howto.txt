@@ -12,27 +12,15 @@
      releases if the appropriate tag was set (e.g. GNOME Software and
      Flathub have a "Recent Releases" category).
 
-     If a description is added, it may be featured in installers and
-     will be translatable (use <_p> or <_li> tags to make the strings
-     localizable). So it is better to prepare the description text as
-     early as possible.
+ ( ) Announce a string freeze on GNOME discourse with the `gimp` and `i18n`
+     tags:
+     https://discourse.gnome.org/new-topic?title=gimp-x-y%20branch%20string%20freeze%20until%20YYYY-MM-DD&category=Applications&tags=gimp,i18n
 
- ( ) Announce a string freeze on the GIMP Developer mailing list.
+     It serves as both an announcement to developers and translators.
 
-     Mention that a release is planned, what branch will be frozen, and
-     how long the string freeze is going to last. Plan for a couple of
-     weeks at least. No translatable strings must be touched during
-     this time. An example announcement message is:
-     https://mail.gnome.org/archives/gimp-developer-list/2016-October/msg00004.html
-
-     This rule is important for stable releases but can be more lax for
-     unstable releases.
-
- ( ) Announce the planned release on the GNOME I18N mailing list.
-
-     Let them know about the planned release, what branch it's based
-     on, and how many changes to expect. An example message is:
-     https://mail.gnome.org/archives/gnome-i18n/2016-October/msg00035.html
+     Mention: the planned release version, the frozen branch and the expected
+     release date (end of freeze). Plan for a couple of weeks at least. No
+     translatable strings must be touched during this time.
 
  ( ) Notify the maintainers of the official builds for Windows
      (irc:ender/@jernejs), macOS (irc:Samm/@samm-git and
@@ -254,21 +242,18 @@
          we publish with most mirrors lagging behind, many download
          errors will occur.
 
- ( ) When confident about the installers availability, if this is a
-     stable release, create a new package on the Microsoft Partner
+ ( ) If this is a stable release, create a new package on the Microsoft Partner
      Center so that GIMP becomes available on the Microsoft Store:
      https://partner.microsoft.com/en-us/dashboard/apps-and-games/overview
-
-     The URL to provide is the mirror URL, not the direct URL.
 
      Current people with admin access to this platform:
      irc:ender/@jernejs and irc:Jehan/@Jehan.
 
- ( ) Announce the release on gimp.org and send a release announcement to
-     the gimp-user and gimp-developer mailing lists.
+ ( ) Announce the release on gimp.org and send a release announcement to the
+     previously created Discourse thread.
 
-     [ ] Check out the gimp-web master branch and merge or cherry-pick
-         the changes you did in the testing branch.
+     [ ] Check out the gimp-web `master` branch and `merge` the `origin/testing`
+         branch.
 
      [ ] Push the changes, the web server should then update itself
          soon (it checks for updates every 15 minutes).
