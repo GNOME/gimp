@@ -6,6 +6,22 @@
 This is the unstable branch of GIMP.
 
 
+Overview of Changes from GIMP 2.99.14 to GIMP 2.99.16
+=====================================================
+
+Core:
+
+ - MacPorts support for macOS added (this is even now the official support as we
+   build our new packages with MacPorts).
+ - "Anchor" tooltip changing depending on whether we are floating over a layer
+   or layer mask.
+ - GIMP_TIMER_START|END are no-op on release builds.
+ - Ctrl-F overrided in our item dockables to trigger our item search popover
+   (multi-item selection, ability to use regexp or glob search by enabling these
+   in Preferences, etc.) rather than the default GTK selection popup for tree
+   views.
+
+
 Overview of Changes from GIMP 2.99.12 to GIMP 2.99.14
 =====================================================
 
