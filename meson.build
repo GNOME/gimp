@@ -51,6 +51,18 @@ gimp_api_version = '@0@.@1@'.format(api_version_major, api_version_minor)
 gimp_api_name = 'gimp-' + gimp_api_version
 
 
+# Libtool versioning
+gimp_interface_age = 15
+
+gimp_binary_age = 100 * gimp_app_version_minor + gimp_app_version_micro
+lt_current      = 100 * gimp_app_version_minor + gimp_app_version_micro - gimp_interface_age
+lt_revision     = gimp_interface_age
+lt_age          = gimp_binary_age - gimp_interface_age
+
+# libtool's -version-info transforms "current:revision:age" into "(current - age).age.revision".
+# Let's compute this ourselves.
+so_version = '@0@.@1@.@2@'.format(lt_current - lt_age, lt_age, lt_revision)
+
 
 gimp_command  = 'gimp-' + gimp_app_version
 
@@ -74,14 +86,6 @@ versionconfig.set('GIMP_MINOR_VERSION', gimp_app_version_minor)
 versionconfig.set('GIMP_MICRO_VERSION', gimp_app_version_micro)
 versionconfig.set('GIMP_VERSION',       gimp_version)
 versionconfig.set('GIMP_API_VERSION',   gimp_api_version)
-
-
-# Libtool versioning
-gimp_interface_age = 0
-lt_current = 0
-lt_revision = gimp_app_version_micro
-lt_age = 100*api_version_minor + 0
-so_version = '@0@.@1@.@2@'.format(lt_current, lt_age, lt_revision)
 
 
 ################################################################################
