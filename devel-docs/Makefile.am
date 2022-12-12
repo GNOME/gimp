@@ -11,9 +11,7 @@ EXTRA_DIST = \
 	README.md			\
 	contexts.txt			\
 	debug-plug-ins.txt		\
-	gitlab-milestones.txt		\
 	includes.txt			\
-	libtool-instructions.txt	\
 	parasites.txt			\
 	release-howto.txt		\
 	tagging.txt			\
