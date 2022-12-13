@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP windows installer master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-08-22 21:28+0200\n"
-"PO-Revision-Date: 2022-08-21 20:30+0300\n"
+"POT-Creation-Date: 2022-11-22 14:38+0000\n"
+"PO-Revision-Date: 2022-12-13 03:57+0300\n"
 "Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -52,7 +52,7 @@ msgid ""
 msgstr ""
 "Bu, GIMP'in bazı özelliklerinin bitmemiş veya kararsız olabileceği bir "
 "geliştirme sürümüdür.%nGIMP'in bu sürümü kararsız olabileceğinden günlük "
-"işlere yönelik değildir ve işinizi kaybedebilirsiniz.%nEğer herhangi bir "
+"işlere yönelik değildir ve işinizi yitirebilirsiniz.%nEğer herhangi bir "
 "sorunla karşılaşırsanız, geliştiricilere başvurmadan veya GIMP gitlab'e "
 "bildirmeden önce sorunun GIT'te çözülmediğinden emin olun:%n_https://gitlab."
 "gnome.org/GNOME/gimp/issues%n%nYine de kurulumu sürdürmek istiyor musunuz?"
@@ -96,8 +96,8 @@ msgid ""
 "using the default settings, or click the Customize button if you'd like to "
 "have more control over what gets installed."
 msgstr ""
-"GIMP kurulmaya hazır. Öntanımlı seçenekleri kullanarak kurmak için Kur "
-"düğmesine veya nelerin kurulacağıyla ilgili daha çok denetime sahip olmak "
+"GIMP kuruluma hazır. Öntanımlı seçenekleri kullanarak kurmak için Kur "
+"düğmesine veya nelerin kurulacağıyla ilgili daha çoğunu denetlemek "
 "istiyorsanız Özelleştir düğmesine tıklayın."
 
 #: build/windows/installer/lang/setup.isl.xml.in:64
@@ -164,7 +164,7 @@ msgstr "Eski eklentiler için destek"
 
 #: build/windows/installer/lang/setup.isl.xml.in:125
 msgid "Install libraries needed by old third-party plug-ins"
-msgstr "Eski üçüncü parti eklentilerin gereksindiği kütüphaneleri yükle"
+msgstr "Eski üçüncü taraf eklentilerin gereksindiği kütüphaneleri kur"
 
 #: build/windows/installer/lang/setup.isl.xml.in:129
 #: build/windows/installer/lang/setup.isl.xml.in:133
@@ -236,8 +236,8 @@ msgid ""
 "There was a problem updating GIMP's environment in %1. If you get any errors "
 "loading the plug-ins, try uninstalling and re-installing GIMP."
 msgstr ""
-"%1 içindeki GIMP ortamı güncellenirken hata. Eğer eklentileri yüklerken "
-"herhangi bir hata alırsanız, lütfen GIMP'i kaldırmayı ve yeniden yüklemeyi "
+"%1 içindeki GIMP ortamı güncellenirken hata oldu. Eğer eklentileri yüklerken "
+"herhangi bir hata alırsanız, lütfen GIMP'i kaldırmayı ve yeniden kurmayı "
 "deneyin."
 
 #: build/windows/installer/lang/setup.isl.xml.in:199
@@ -270,7 +270,7 @@ msgstr "Dosya eşleştirmelerini seç"
 
 #: build/windows/installer/lang/setup.isl.xml.in:229
 msgid "Extensions:"
-msgstr "Uzantılar:"
+msgstr "Eklentiler:"
 
 #: build/windows/installer/lang/setup.isl.xml.in:233
 msgid "Select the file types you wish to associate with GIMP"
@@ -315,7 +315,7 @@ msgid ""
 msgstr ""
 "GIMP %1, şu anda kurulu olan GIMP sürümünüz üzerine kurulamıyor ve eski "
 "sürümün kendiliğinden kaldırılması başarısız oldu.%n%nBu sürümü %2 içine "
-"kurmadan önce önceki GIMP sürümünü kendi başınıza kaldırın veya Özel "
+"kurmadan önce eski GIMP sürümünü kendiniz kaldırın veya Özel "
 "kurulumu ve başka kurulum klasörü seçin.%n%nKurulum şimdi çıkacak."
 
 # Folder: Komut satırında Dizin, Arayüzde Klasör
@@ -329,7 +329,7 @@ msgid ""
 msgstr ""
 "GIMP %1, şu anda kurulu olan GIMP sürümünüz üzerine kurulamıyor. Kurulum, "
 "eski sürümü nasıl kaldıracağını kendiliğinden saptayamıyor.%n%nBu sürümü %2 "
-"içine kurmadan önce tüm eklentileri ve önceki GIMP sürümünü kendi başınıza "
+"içine kurmadan önce tüm eklentileri ve önceki GIMP sürümünü kendiniz "
 "kaldırın veya Özel kurulumu ve başka kurulum klasörü seçin.%n%nKurulum şimdi "
 "çıkacak."
 
