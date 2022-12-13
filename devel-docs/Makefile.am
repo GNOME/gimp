@@ -13,7 +13,6 @@ EXTRA_DIST = \
 	debug-plug-ins.txt		\
 	includes.txt			\
 	parasites.txt			\
-	release-howto.txt		\
 	tagging.txt			\
 	ui-framework.txt		\
 	undo.txt

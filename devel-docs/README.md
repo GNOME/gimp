@@ -368,7 +368,7 @@ packages to be generated with the MR code as explained in
 
 Special pipelines happen when pushing git `tags`. These should be tested
 before a release to avoid unexpected release-time issues, as explained
-in [release-howto.txt](release-howto.txt).
+in [our release procedure](https://developer.gimp.org/core/maintainer/release/).
 
 ### Exception: macOS
 
