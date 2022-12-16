@@ -38,6 +38,7 @@
 
 #include "widgets/gimpcairo-wilber.h"
 
+#include "gimpgegltool.h"
 #include "gimptool.h"
 #include "gimptoolcontrol.h"
 #include "gimptransformgridtool.h"
@@ -771,8 +772,9 @@ tool_manager_tool_changed (GimpContext     *user_context,
 
   tool_manager_select_tool (tool_manager, new_tool);
 
-  /* Auto-activate any transform tools */
-  if (GIMP_IS_TRANSFORM_GRID_TOOL (new_tool))
+  /* Auto-activate any transform or GEGL operation tools */
+  if (GIMP_IS_TRANSFORM_GRID_TOOL (new_tool) ||
+      GIMP_IS_GEGL_TOOL (new_tool))
     {
       GimpDisplay *new_display;
 
@@ -938,8 +940,9 @@ tool_manager_image_changed (GimpContext     *context,
   tool_manager->image = image;
 
   /* Re-activate transform tools when switching images */
-  if (image &&
-      GIMP_IS_TRANSFORM_GRID_TOOL (tool_manager->active_tool))
+  if (image                                                    &&
+      (GIMP_IS_TRANSFORM_GRID_TOOL (tool_manager->active_tool) ||
+       GIMP_IS_GEGL_TOOL (tool_manager->active_tool)))
     {
       gimp_context_set_tool (context,
                              tool_manager->active_tool->tool_info);
@@ -960,8 +963,9 @@ tool_manager_selected_layers_changed (GimpImage       *image,
                                       GimpToolManager *tool_manager)
 {
   /* Re-activate transform tools when changing selected layers */
-  if (image &&
-      GIMP_IS_TRANSFORM_GRID_TOOL (tool_manager->active_tool))
+  if (image                                                    &&
+      (GIMP_IS_TRANSFORM_GRID_TOOL (tool_manager->active_tool) ||
+       GIMP_IS_GEGL_TOOL (tool_manager->active_tool)))
     {
       gimp_context_set_tool (tool_manager->gimp->user_context,
                              tool_manager->active_tool->tool_info);
