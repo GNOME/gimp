@@ -94,6 +94,8 @@ static void              tool_manager_image_changed             (GimpContext    
                                                                  GimpToolManager *tool_manager);
 static void              tool_manager_selected_layers_changed   (GimpImage       *image,
                                                                  GimpToolManager *tool_manager);
+static void              tool_manager_active_tool_deactivated   (GimpContext     *context,
+                                                                 GimpToolManager *tool_manager);
 
 static void              tool_manager_cast_spell                (GimpToolInfo    *tool_info);
 
@@ -741,23 +743,7 @@ tool_manager_tool_changed (GimpContext     *user_context,
 
   if (tool_manager->active_tool)
     {
-      GimpTool    *active_tool = tool_manager->active_tool;
-      GimpDisplay *display;
-
-      /*  NULL image returns any display (if there is any)  */
-      display = gimp_tool_has_image (active_tool, NULL);
-
-      /*  commit the old tool's operation before creating the new tool
-       *  because creating a tool might mess with the old tool's
-       *  options (old and new tool might be the same)
-       */
-      if (display)
-        tool_manager_control_active (user_context->gimp, GIMP_TOOL_ACTION_COMMIT,
-                                     display);
-
-      g_signal_handlers_disconnect_by_func (active_tool->tool_info,
-                                            tool_manager_tool_ancestry_changed,
-                                            tool_manager);
+      tool_manager_active_tool_deactivated (user_context, tool_manager);
     }
 
   g_signal_connect (tool_info, "ancestry-changed",
@@ -939,7 +925,7 @@ tool_manager_image_changed (GimpContext     *context,
 
   tool_manager->image = image;
 
-  /* Re-activate transform tools when switching images */
+  /* Turn off auto-activated tools when switching images */
   if (image                                                    &&
       (GIMP_IS_TRANSFORM_GRID_TOOL (tool_manager->active_tool) ||
        GIMP_IS_GEGL_TOOL (tool_manager->active_tool)))
@@ -947,9 +933,7 @@ tool_manager_image_changed (GimpContext     *context,
       gimp_context_set_tool (context,
                              tool_manager->active_tool->tool_info);
 
-      tool_manager_tool_changed (context,
-                                 gimp_context_get_tool (context),
-                                 tool_manager);
+      tool_manager_active_tool_deactivated (context, tool_manager);
     }
 
   if (image)
@@ -975,6 +959,28 @@ tool_manager_selected_layers_changed (GimpImage       *image,
                                    tool_manager->gimp->user_context),
                                  tool_manager);
     }
+}
+
+static void
+tool_manager_active_tool_deactivated (GimpContext     *context,
+                                      GimpToolManager *tool_manager)
+{
+  GimpDisplay *display;
+
+  display = gimp_tool_has_image (tool_manager->active_tool, NULL);
+
+  /*  NULL image returns any display (if there is any)  */
+  if (display)
+    tool_manager_control_active (context->gimp, GIMP_TOOL_ACTION_COMMIT,
+                                 display);
+
+  /*  commit the old tool's operation before creating the new tool
+   *  because creating a tool might mess with the old tool's
+   *  options (old and new tool might be the same)
+   */
+  g_signal_handlers_disconnect_by_func (tool_manager->active_tool->tool_info,
+                                        tool_manager_tool_ancestry_changed,
+                                        tool_manager);
 }
 
 static void
