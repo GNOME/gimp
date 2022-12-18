@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2022-11-12 21:36+0000\n"
-"PO-Revision-Date: 2022-12-17 18:06+0100\n"
+"PO-Revision-Date: 2022-12-18 18:06+0100\n"
 "Last-Translator: Jordi Mas i Hernàndez <jmas@softcatala.org>\n"
 "Language-Team: Catalan <gnome@lists.softcatala.org>\n"
 "Language: ca\n"
@@ -17542,16 +17542,14 @@ msgid "Modifiers"
 msgstr "Modificadors"
 
 #: app/dialogs/preferences-dialog.c:3064
-#, fuzzy
 msgid "_Reset Saved Modifiers Settings to Default Values"
 msgstr ""
-"Restableix la configuració dels modificadors desats als valors "
+"_Restableix la configuració dels modificadors desats als valors "
 "predeterminats"
 
 #: app/dialogs/preferences-dialog.c:3078
-#, fuzzy
 msgid "Snapping Behavior"
-msgstr "Comportament de l'ajust"
+msgstr "Comportament de l'ajustament"
 
 #: app/dialogs/preferences-dialog.c:3079
 msgid "Snapping"
@@ -22410,7 +22408,6 @@ msgid "Relative to"
 msgstr "Relatiu a"
 
 #: app/tools/gimpalignoptions.c:149
-#, fuzzy
 msgid "Reference object targets will be aligned on"
 msgstr "Els objectius dels objectes de referència s'alinearan en"
 
@@ -22431,11 +22428,8 @@ msgid "Selected paths will be aligned or distributed by the tool"
 msgstr "Els camins seleccionats s'alinearan o distribuiran per l'eina"
 
 #: app/tools/gimpalignoptions.c:168
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "Change the size of the layer content"
 msgid "Use extents of layer contents"
-msgstr "Canvia la mida del contingut de la capa"
+msgstr ""
 
 #: app/tools/gimpalignoptions.c:169
 msgid ""
@@ -22447,17 +22441,12 @@ msgstr ""
 
 #. Selected objects
 #: app/tools/gimpalignoptions.c:383
-#, fuzzy
-#| msgid "Pick Target"
 msgid "Targets"
-msgstr "Selecciona una destinació"
+msgstr "Destinacions"
 
 #: app/tools/gimpalignoptions.c:405
-#, fuzzy
-#| msgctxt "image-action"
-#| msgid "Set a color profile on the image"
 msgid "Set anchor point of targets"
-msgstr "Defineix un perfil de color a la imatge"
+msgstr ""
 
 #. TRANSLATORS: the %s strings are modifiers such as Shift, Alt or Cmd.
 #: app/tools/gimpalignoptions.c:424
@@ -22551,11 +22540,9 @@ msgstr[0] "1 guia s'alinearà o distribuirà"
 msgstr[1] "%d guies s'alinearan o es distribuiran"
 
 #: app/tools/gimpalignoptions.c:822
-#, fuzzy, c-format
-#| msgctxt "undo-type"
-#| msgid "Merge layers"
+#, c-format
 msgid "Reference layer: %s"
-msgstr "Fusiona les capes"
+msgstr "Capa de referència: %s"
 
 #: app/tools/gimpalignoptions.c:825
 #, c-format
@@ -22572,20 +22559,16 @@ msgid "Reference guide"
 msgstr "Guia de referència"
 
 #: app/tools/gimpaligntool.c:130
-#, fuzzy
-#| msgid "Distribute"
 msgid "Align and Distribute"
-msgstr "Distribueix"
+msgstr "Alinea i distribueix"
 
 #: app/tools/gimpaligntool.c:131
 msgid "Alignment Tool: Align or arrange layers and other objects"
 msgstr "Eina Alinea: alinea o organitza capes i altres elements"
 
 #: app/tools/gimpaligntool.c:132
-#, fuzzy
-#| msgid "Distribute"
 msgid "_Align and Distribute"
-msgstr "Distribueix"
+msgstr "_Alinea i distribueix"
 
 #: app/tools/gimpaligntool.c:524
 msgid "Arrange Objects"
