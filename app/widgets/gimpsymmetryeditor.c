@@ -105,12 +105,20 @@ gimp_symmetry_editor_init (GimpSymmetryEditor *editor)
   gtk_container_set_border_width (GTK_CONTAINER (editor->p->options_vbox), 2);
   gtk_container_add (GTK_CONTAINER (viewport), editor->p->options_vbox);
   gtk_widget_show (editor->p->options_vbox);
+
+  gimp_symmetry_editor_set_image (GIMP_IMAGE_EDITOR (editor), NULL);
 }
 
 static void
 gimp_symmetry_editor_set_image (GimpImageEditor *image_editor,
                                 GimpImage       *image)
 {
+  GtkListStore *store;
+  GtkTreeIter   iter;
+  GList        *syms;
+  GList        *sym_iter;
+  GimpSymmetry *symmetry;
+
   GimpSymmetryEditor *editor = GIMP_SYMMETRY_EDITOR (image_editor);
 
   if (image_editor->image)
@@ -129,57 +137,56 @@ gimp_symmetry_editor_set_image (GimpImageEditor *image_editor,
       editor->p->menu = NULL;
     }
 
-  if (image_editor->image)
+  store = gimp_int_store_new ();
+
+  /* The menu of available symmetries. */
+  syms = gimp_image_symmetry_list ();
+  for (sym_iter = syms; sym_iter; sym_iter = g_list_next (sym_iter))
     {
-      GtkListStore *store;
-      GtkTreeIter   iter;
-      GList        *syms;
-      GList        *sym_iter;
-      GimpSymmetry *symmetry;
+      GimpSymmetryClass *klass;
+      GType              type;
 
-      store = gimp_int_store_new ();
-
-      /* The menu of available symmetries. */
-      syms = gimp_image_symmetry_list ();
-      for (sym_iter = syms; sym_iter; sym_iter = g_list_next (sym_iter))
-        {
-          GimpSymmetryClass *klass;
-          GType              type;
-
-          type = (GType) sym_iter->data;
-          klass = g_type_class_ref (type);
-
-          gtk_list_store_prepend (store, &iter);
-          gtk_list_store_set (store, &iter,
-                              GIMP_INT_STORE_LABEL,
-                              klass->label,
-                              GIMP_INT_STORE_USER_DATA,
-                              sym_iter->data,
-                              -1);
-          g_type_class_unref (klass);
-        }
-      g_list_free (syms);
+      type = (GType) sym_iter->data;
+      klass = g_type_class_ref (type);
 
       gtk_list_store_prepend (store, &iter);
       gtk_list_store_set (store, &iter,
-                          GIMP_INT_STORE_LABEL, _("None"),
-                          GIMP_INT_STORE_USER_DATA, GIMP_TYPE_SYMMETRY,
+                          GIMP_INT_STORE_LABEL,
+                          klass->label,
+                          GIMP_INT_STORE_USER_DATA,
+                          sym_iter->data,
                           -1);
-      editor->p->menu =
-        gimp_prop_pointer_combo_box_new (G_OBJECT (image_editor->image),
-                                         "symmetry",
-                                         GIMP_INT_STORE (store));
-      g_object_unref (store);
+      g_type_class_unref (klass);
+    }
+  g_list_free (syms);
 
-      gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (editor->p->menu),
-                                    _("Symmetry"));
-      g_object_set (editor->p->menu, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
+  gtk_list_store_prepend (store, &iter);
+  gtk_list_store_set (store, &iter,
+                      GIMP_INT_STORE_LABEL, _("None"),
+                      GIMP_INT_STORE_USER_DATA, GIMP_TYPE_SYMMETRY,
+                      -1);
+  if (image_editor->image)
+    editor->p->menu =
+      gimp_prop_pointer_combo_box_new (G_OBJECT (image_editor->image),
+                                       "symmetry",
+                                       GIMP_INT_STORE (store));
+  else
+    editor->p->menu =
+      gimp_int_combo_box_new (_("None"), 0,
+                              NULL);
 
-      gtk_box_pack_start (GTK_BOX (editor), editor->p->menu,
-                          FALSE, FALSE, 0);
-      gtk_box_reorder_child (GTK_BOX (editor), editor->p->menu, 0);
-      gtk_widget_show (editor->p->menu);
+  g_object_unref (store);
 
+  gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (editor->p->menu),
+                                _("Symmetry"));
+  g_object_set (editor->p->menu, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
+
+  gtk_box_pack_start (GTK_BOX (editor), editor->p->menu,
+                      FALSE, FALSE, 0);
+  gtk_box_reorder_child (GTK_BOX (editor), editor->p->menu, 0);
+
+  if (image_editor->image)
+    {
       /* Connect to symmetry change. */
       g_signal_connect (image_editor->image, "notify::symmetry",
                         G_CALLBACK (gimp_symmetry_editor_symmetry_notify),
@@ -189,6 +196,12 @@ gimp_symmetry_editor_set_image (GimpImageEditor *image_editor,
       symmetry = gimp_image_get_active_symmetry (image_editor->image);
       gimp_symmetry_editor_set_options (editor, symmetry);
     }
+  else
+    {
+      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (editor->p->menu), 0);
+      gtk_widget_set_sensitive (editor->p->menu, FALSE);
+    }
+  gtk_widget_show (editor->p->menu);
 }
 
 static void
