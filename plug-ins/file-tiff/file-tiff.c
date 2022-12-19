@@ -275,9 +275,10 @@ tiff_load (GimpProcedure        *procedure,
 {
   GimpValueArray    *return_vals;
   GimpPDBStatusType  status;
-  GimpImage         *image             = NULL;
-  gboolean           resolution_loaded = FALSE;
-  gboolean           profile_loaded    = FALSE;
+  GimpImage         *image              = NULL;
+  gboolean           resolution_loaded  = FALSE;
+  gboolean           profile_loaded     = FALSE;
+  gboolean           ps_metadata_loaded = FALSE;
   GimpMetadata      *metadata;
   GError            *error = NULL;
 
@@ -289,6 +290,7 @@ tiff_load (GimpProcedure        *procedure,
   status = load_image (file, run_mode, &image,
                        &resolution_loaded,
                        &profile_loaded,
+                       &ps_metadata_loaded,
                        &error);
 
   if (!image)

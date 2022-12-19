@@ -47,6 +47,9 @@
 #include <errno.h>
 #include <string.h>
 
+#include <gio/gio.h>
+#include <glib/gstdio.h>
+
 #include <tiffio.h>
 
 #include <libgimp/gimp.h>
@@ -108,12 +111,6 @@ static void               load_separate    (TIFF              *tif,
                                             TiffColorMode      tiff_mode,
                                             gboolean           is_signed,
                                             gint               extra);
-static void               load_paths       (TIFF              *tif,
-                                            GimpImage         *image,
-                                            gint               width,
-                                            gint               height,
-                                            gint               offset_x,
-                                            gint               offset_y);
 
 static gboolean   is_non_conformant_tiff   (gushort            photomet,
                                             gushort            spp);
@@ -267,6 +264,7 @@ load_image (GFile        *file,
             GimpImage   **image,
             gboolean     *resolution_loaded,
             gboolean     *profile_loaded,
+            gboolean     *ps_metadata_loaded,
             GError      **error)
 {
   TIFF              *tif;
@@ -284,6 +282,9 @@ load_image (GFile        *file,
   const gchar       *extra_message      = NULL;
   gint               li;
   gint               selectable_pages;
+  gchar             *photoshop_data;
+  gint32             photoshop_len;
+  gboolean           is_cmyk            = FALSE;
 
   *image = NULL;
   gimp_progress_init_printf (_("Opening '%s'"),
@@ -1032,6 +1033,7 @@ load_image (GFile        *file,
            * attached profile, so we'll check for it and set up
            * space accordingly
            */
+          is_cmyk = TRUE;
           if (profile && gimp_color_profile_is_cmyk (profile))
             {
               space = gimp_color_profile_get_space (profile,
@@ -1499,12 +1501,6 @@ load_image (GFile        *file,
           gimp_image_set_colormap (*image, cmap, (1 << bps));
         }
 
-      if (pages.target != GIMP_PAGE_SELECTOR_TARGET_IMAGES)
-        load_paths (tif, *image, cols, rows,
-                    layer_offset_x_pixel, layer_offset_y_pixel);
-      else
-        load_paths (tif, *image, cols, rows, 0, 0);
-
       if (extra > 99)
         {
           /* Validate number of channels to the same maximum as we use for
@@ -1749,6 +1745,87 @@ load_image (GFile        *file,
       gimp_image_undo_enable (*image);
     }
 
+  /* Load Photoshop layer metadata */
+  if (TIFFGetField (tif, TIFFTAG_PHOTOSHOP, &photoshop_len, &photoshop_data))
+    {
+      FILE           *fp;
+      GFile          *temp_file   = NULL;
+      GimpValueArray *return_vals = NULL;
+
+      temp_file = gimp_temp_file ("tmp");
+      fp = g_fopen (g_file_peek_path (temp_file), "wb");
+
+      if (! fp)
+        {
+          g_message (_("Error trying to open temporary %s file '%s' "
+                       "for tiff metadata loading: %s"),
+                     "tmp", gimp_file_get_utf8_name (temp_file),
+                     g_strerror (errno));
+        }
+
+      fwrite (photoshop_data, sizeof (guchar), photoshop_len, fp);
+      fclose (fp);
+
+      return_vals =
+        gimp_pdb_run_procedure (gimp_get_pdb (),
+                                "file-psd-load-metadata",
+                                GIMP_TYPE_RUN_MODE, GIMP_RUN_NONINTERACTIVE,
+                                G_TYPE_FILE,        temp_file,
+                                G_TYPE_INT,         photoshop_len,
+                                GIMP_TYPE_IMAGE,   *image,
+                                G_TYPE_BOOLEAN,     FALSE,
+                                G_TYPE_NONE);
+
+      g_file_delete (temp_file, NULL, NULL);
+      g_object_unref (temp_file);
+      gimp_value_array_unref (return_vals);
+
+      *ps_metadata_loaded = TRUE;
+    }
+
+  if (TIFFGetField (tif, TIFFTAG_IMAGESOURCEDATA, &photoshop_len, &photoshop_data))
+    {
+      FILE           *fp;
+      GFile          *temp_file   = NULL;
+      GimpValueArray *return_vals = NULL;
+
+      /* Photoshop metadata starts with 'Adobe Photoshop Document Data Block'
+       * so we need to skip past that for the data. */
+      photoshop_data += 36;
+      photoshop_len  -= 36;
+
+      temp_file = gimp_temp_file ("tmp");
+      fp = g_fopen (g_file_peek_path (temp_file), "wb");
+
+      if (! fp)
+        {
+          g_message (_("Error trying to open temporary %s file '%s' "
+                       "for tiff metadata loading: %s"),
+                     "tmp", gimp_file_get_utf8_name (temp_file),
+                     g_strerror (errno));
+        }
+
+      fwrite (photoshop_data, sizeof (guchar), photoshop_len, fp);
+      fclose (fp);
+
+      return_vals =
+        gimp_pdb_run_procedure (gimp_get_pdb (),
+                                "file-psd-load-metadata",
+                                GIMP_TYPE_RUN_MODE, GIMP_RUN_NONINTERACTIVE,
+                                G_TYPE_FILE,        temp_file,
+                                G_TYPE_INT,         photoshop_len,
+                                GIMP_TYPE_IMAGE,   *image,
+                                G_TYPE_BOOLEAN,     TRUE,
+                                G_TYPE_BOOLEAN,     is_cmyk,
+                                G_TYPE_NONE);
+
+      g_file_delete (temp_file, NULL, NULL);
+      g_object_unref (temp_file);
+      gimp_value_array_unref (return_vals);
+
+      *ps_metadata_loaded = TRUE;
+    }
+
   g_free (pages.pages);
   TIFFClose (tif);
 
@@ -1829,203 +1906,6 @@ load_rgba (TIFF        *tif,
 
   g_free (buffer);
 }
-
-static void
-load_paths (TIFF      *tif,
-            GimpImage *image,
-            gint       width,
-            gint       height,
-            gint       offset_x,
-            gint       offset_y)
-{
-  gsize  n_bytes;
-  gchar *bytes;
-  gint   path_index;
-  gsize  pos;
-
-  if (! TIFFGetField (tif, TIFFTAG_PHOTOSHOP, &n_bytes, &bytes))
-    return;
-
-  path_index = 0;
-  pos        = 0;
-
-  while (pos < n_bytes)
-    {
-      guint16  id;
-      gsize    len;
-      gchar   *name;
-      guint32 *val32;
-      guint16 *val16;
-
-      if (n_bytes-pos < 7 ||
-          strncmp (bytes + pos, "8BIM", 4) != 0)
-        break;
-
-      pos += 4;
-
-      val16 = (guint16 *) (bytes + pos);
-      id = GUINT16_FROM_BE (*val16);
-      pos += 2;
-
-      /* g_printerr ("id: %x\n", id); */
-      len = (guchar) bytes[pos];
-
-      if (n_bytes - pos < len + 1)
-        break;   /* block not big enough */
-
-      /* do we have the UTF-marker? is it valid UTF-8?
-       * if so, we assume an utf-8 encoded name, otherwise we
-       * assume iso8859-1
-       */
-      name = bytes + pos + 1;
-      if (len >= 3 &&
-          name[0] == '\xEF' && name[1] == '\xBB' && name[2] == '\xBF' &&
-          g_utf8_validate (name, len, NULL))
-        {
-          name = g_strndup (name + 3, len - 3);
-        }
-      else
-        {
-          name = g_convert (name, len, "utf-8", "iso8859-1", NULL, NULL, NULL);
-        }
-
-      if (! name)
-        name = g_strdup ("(imported path)");
-
-      pos += len + 1;
-
-      if (pos % 2)  /* padding */
-        pos++;
-
-      if (n_bytes - pos < 4)
-        break;   /* block not big enough */
-
-      val32 = (guint32 *) (bytes + pos);
-      len = GUINT32_FROM_BE (*val32);
-      pos += 4;
-
-      if (n_bytes - pos < len)
-        break;   /* block not big enough */
-
-      if (id >= 2000 && id <= 2998)
-        {
-          /* path information */
-          guint16      type;
-          gint         rec = pos;
-          GimpVectors *vectors;
-          gdouble     *points          = NULL;
-          gint         expected_points = 0;
-          gint         pointcount      = 0;
-          gboolean     closed          = FALSE;
-
-          vectors = gimp_vectors_new (image, name);
-          gimp_image_insert_vectors (image, vectors, NULL, path_index);
-          path_index++;
-
-          while (rec < pos + len)
-            {
-              /* path records */
-              val16 = (guint16 *) (bytes + rec);
-              type = GUINT16_FROM_BE (*val16);
-
-              switch (type)
-                {
-                case 0:  /* new closed subpath */
-                case 3:  /* new open subpath */
-                  val16 = (guint16 *) (bytes + rec + 2);
-                  expected_points = GUINT16_FROM_BE (*val16);
-                  pointcount = 0;
-                  closed = (type == 0);
-
-                  if (n_bytes - rec < (expected_points + 1) * 26)
-                    {
-                      g_printerr ("not enough point records\n");
-                      rec = pos + len;
-                      continue;
-                    }
-
-                  if (points)
-                    g_free (points);
-                  points = g_new (gdouble, expected_points * 6);
-                  break;
-
-                case 1:  /* closed subpath bezier knot, linked */
-                case 2:  /* closed subpath bezier knot, unlinked */
-                case 4:  /* open subpath bezier knot, linked */
-                case 5:  /* open subpath bezier knot, unlinked */
-                  /* since we already know if the subpath is open
-                   * or closed and since we don't differentiate between
-                   * linked and unlinked, just treat all the same...  */
-
-                  if (pointcount < expected_points)
-                    {
-                      gint j;
-
-                      for (j = 0; j < 6; j++)
-                        {
-                          gdouble f;
-                          guint32 coord;
-
-                          const gint size = j % 2 ? width : height;
-                          const gint offset = j % 2 ? offset_x : offset_y;
-
-                          val32 = (guint32 *) (bytes + rec + 2 + j * 4);
-                          coord = GUINT32_FROM_BE (*val32);
-
-                          f = (double) ((gchar) ((coord >> 24) & 0xFF)) +
-                              (double) (coord & 0x00FFFFFF) /
-                              (double) 0xFFFFFF;
-
-                          /* coords are stored with vertical component
-                           * first, gimp expects the horizontal
-                           * component first. Sigh.
-                           */
-                          points[pointcount * 6 + (j ^ 1)] = f * size + offset;
-                        }
-
-                      pointcount++;
-
-                      if (pointcount == expected_points)
-                        {
-                          gimp_vectors_stroke_new_from_points (vectors,
-                                                               GIMP_VECTORS_STROKE_TYPE_BEZIER,
-                                                               pointcount * 6,
-                                                               points,
-                                                               closed);
-                        }
-                    }
-                  else
-                    {
-                      g_printerr ("Oops - unexpected point record\n");
-                    }
-
-                  break;
-
-                case 6:  /* path fill rule record */
-                case 7:  /* clipboard record (?) */
-                case 8:  /* initial fill rule record (?) */
-                  /* we cannot use this information */
-
-                default:
-                  break;
-                }
-
-              rec += 26;
-            }
-
-          if (points)
-            g_free (points);
-        }
-
-      pos += len;
-
-      if (pos % 2)  /* padding */
-        pos++;
-
-      g_free (name);
-    }
-}
-
 
 static void
 load_contiguous (TIFF         *tif,

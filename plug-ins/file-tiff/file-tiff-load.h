@@ -51,6 +51,7 @@ GimpPDBStatusType load_image  (GFile        *file,
                                GimpImage   **image,
                                gboolean     *resolution_loaded,
                                gboolean     *profile_loaded,
+                               gboolean     *ps_metadata_loaded,
                                GError      **error);
 
 
