@@ -35,6 +35,7 @@
 #define LOAD_MERGED_PROC                "file-psd-load-merged"
 #define LOAD_THUMB_PROC                 "file-psd-load-thumb"
 #define SAVE_PROC                       "file-psd-save"
+#define LOAD_METADATA_PROC              "file-psd-load-metadata"
 #define PLUG_IN_BINARY                  "file-psd"
 #define PLUG_IN_ROLE                    "gimp-file-psd"
 

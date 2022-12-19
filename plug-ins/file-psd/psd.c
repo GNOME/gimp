@@ -74,6 +74,11 @@ static GimpValueArray * psd_save             (GimpProcedure        *procedure,
                                               GFile                *file,
                                               const GimpValueArray *args,
                                               gpointer              run_data);
+static GimpValueArray * psd_load_metadata    (GimpProcedure        *procedure,
+                                              GimpRunMode           run_mode,
+                                              GFile                *file,
+                                              const GimpValueArray *args,
+                                              gpointer              run_data);
 
 
 G_DEFINE_TYPE (Psd, psd, GIMP_TYPE_PLUG_IN)
@@ -106,6 +111,7 @@ psd_query_procedures (GimpPlugIn *plug_in)
   list = g_list_append (list, g_strdup (LOAD_PROC));
   list = g_list_append (list, g_strdup (LOAD_MERGED_PROC));
   list = g_list_append (list, g_strdup (SAVE_PROC));
+  list = g_list_append (list, g_strdup (LOAD_METADATA_PROC));
 
   return list;
 }
@@ -255,6 +261,46 @@ psd_create_procedure (GimpPlugIn  *plug_in,
                              _("Export as _Duotone"),
                              _("Export as a Duotone PSD file if Duotone color space information "
                              "was attached to the image when originally imported."),
+                             FALSE,
+                             G_PARAM_READWRITE);
+    }
+  else if (! strcmp (name, LOAD_METADATA_PROC))
+    {
+      procedure = gimp_load_procedure_new (plug_in, name,
+                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+                                           psd_load_metadata, NULL, NULL);
+
+      gimp_procedure_set_documentation (procedure,
+                                        "Loads Photoshop-format metadata "
+                                        "from other file formats.",
+                                        "Loads Photoshop-format metadata "
+                                        "from other file formats.",
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "John Marshall",
+                                      "John Marshall",
+                                      "2007");
+      GIMP_PROC_ARG_INT (procedure, "size",
+                         "Metadata size",
+                         NULL,
+                         0, G_MAXINT, 0,
+                         G_PARAM_READWRITE);
+      gimp_procedure_add_argument (procedure,
+                                   gimp_param_spec_image ("image",
+                                                          "image",
+                                                          "The image",
+                                                          FALSE,
+                                                          GIMP_PARAM_READWRITE));
+      GIMP_PROC_ARG_BOOLEAN (procedure, "metadata-type",
+                             "Metadata type",
+                             "If the metadata contains image or "
+                             "layer PSD resources.",
+                             FALSE,
+                             G_PARAM_READWRITE);
+      GIMP_PROC_ARG_BOOLEAN (procedure, "cmyk",
+                             "CMYK",
+                             "If the layer metadata needs to be "
+                             "converted from CMYK colorspace.",
                              FALSE,
                              G_PARAM_READWRITE);
     }
@@ -452,4 +498,56 @@ psd_save (GimpProcedure        *procedure,
     }
 
   return gimp_procedure_new_return_values (procedure, status, error);
+}
+
+static GimpValueArray *
+psd_load_metadata (GimpProcedure        *procedure,
+                   GimpRunMode           run_mode,
+                   GFile                *file,
+                   const GimpValueArray *args,
+                   gpointer              run_data)
+{
+  GimpValueArray *return_vals;
+  GimpImage      *image;
+  gint            data_length;
+  PSDSupport      unsupported_features;
+  gboolean        is_layer = FALSE;
+  gboolean        is_cmyk  = FALSE;
+  GError         *error    = NULL;
+
+  gegl_init (NULL, NULL);
+
+  /* Retrieve image */
+  if (gimp_value_array_length (args) > 1)
+    {
+      data_length = g_value_get_int (gimp_value_array_index (args, 0));
+      image       = g_value_get_object (gimp_value_array_index (args, 1));
+    }
+  else
+    {
+      return gimp_procedure_new_return_values (procedure,
+                                               GIMP_PDB_EXECUTION_ERROR,
+                                               error);
+    }
+
+  if (gimp_value_array_length (args) > 2)
+    is_layer = g_value_get_boolean (gimp_value_array_index (args, 2));
+  if (gimp_value_array_length (args) > 3)
+    is_cmyk = g_value_get_boolean (gimp_value_array_index (args, 3));
+
+  image = load_image_metadata (file, data_length, image, is_layer, is_cmyk,
+                               &unsupported_features, &error);
+
+  if (! image)
+    return gimp_procedure_new_return_values (procedure,
+                                             GIMP_PDB_EXECUTION_ERROR,
+                                             error);
+
+  return_vals = gimp_procedure_new_return_values (procedure,
+                                                  GIMP_PDB_SUCCESS,
+                                                  NULL);
+
+  GIMP_VALUES_SET_IMAGE (return_vals, 1, image);
+
+  return return_vals;
 }

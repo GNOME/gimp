@@ -57,6 +57,10 @@ static PSDlayer **      read_layer_block           (PSDimage       *img_a,
                                                     GInputStream   *input,
                                                     GError        **error);
 
+static PSDlayer **      read_layer_info            (PSDimage       *img_a,
+                                                    GInputStream   *input,
+                                                    GError        **error);
+
 static gint             read_merged_image_block    (PSDimage       *img_a,
                                                     GInputStream   *input,
                                                     GError        **error);
@@ -205,6 +209,7 @@ load_image (GFile        *file,
   /* ----- Read the PSD file Layer & Mask block ----- */
   IFDBG(2) g_debug ("Read layer & mask block at offset %" G_GOFFSET_FORMAT,
                     PSD_TELL(input));
+  img_a.mask_layer_len = 0;
   lyr_a = read_layer_block (&img_a, input, &error);
 
   if (merged_image_only)
@@ -295,6 +300,137 @@ load_image (GFile        *file,
   g_object_unref (input);
 
   return NULL;
+}
+
+/* Loading metadata for external file formats */
+GimpImage * load_image_metadata (GFile        *file,
+                                 gint          data_length,
+                                 GimpImage    *image,
+                                 gboolean      for_layers,
+                                 gboolean      is_cmyk,
+                                 PSDSupport   *unsupported_features,
+                                 GError      **error)
+{
+  GInputStream   *input;
+  PSDimage        img_a;
+  gboolean        profile_loaded;
+  gboolean        resolution_loaded;
+
+  /* Convert metadata file to PSD format */
+  input = G_INPUT_STREAM (g_file_read (file, NULL, error));
+  if (! input)
+    {
+      g_object_unref (input);
+      return image;
+    }
+
+  /* Load metadata for external file format */
+  img_a.image_res_len     = data_length;
+  img_a.image_res_start   = 0;
+  img_a.version           = 1;
+  img_a.layer_selection   = NULL;
+  img_a.columns           = gimp_image_get_width (image);
+  img_a.rows              = gimp_image_get_height(image);
+  img_a.base_type         = gimp_image_get_base_type (image);
+  img_a.merged_image_only = FALSE;
+  img_a.alpha_names       = NULL;
+
+  initialize_unsupported (unsupported_features);
+  img_a.unsupported_features = unsupported_features;
+
+  if (! for_layers)
+    {
+      PSDimageres res_a;
+
+      while (PSD_TELL (input) < img_a.image_res_start + img_a.image_res_len)
+        {
+          if (get_image_resource_header (&res_a, input, error) < 0)
+            break;
+
+          if (res_a.data_start + res_a.data_len >
+              img_a.image_res_start + img_a.image_res_len)
+            {
+              IFDBG(1) g_debug ("Unexpected end of image resource data");
+              break;
+            }
+
+          if (load_image_resource (&res_a, image, &img_a, input,
+                                   &profile_loaded, &resolution_loaded,
+                                   error) < 0)
+            break;
+        }
+    }
+  else
+    {
+      PSDlayer  **lyr_a = NULL;
+      guint64     skip;
+      gchar       key[4];
+
+      /* Skip the first 8 bytes to get it in the correct
+       * format for the layer block */
+      if (! psd_read_len (input, &skip, img_a.version, error))
+        {
+          g_object_unref (input);
+          return image;
+        }
+      if (psd_read (input, &key, 4, error) < 4)
+        {
+          g_object_unref (input);
+          return image;
+        }
+
+      /* Setting up PSDImage structure */
+      if (memcmp (key, "Layr", 4) == 0)
+        {
+          img_a.bps = 8;
+        }
+      else if (memcmp (key, "Lr16", 4) == 0)
+        {
+          img_a.bps = 16;
+        }
+      else if (memcmp (key, "Lr32", 4) == 0)
+        {
+          img_a.bps = 32;
+        }
+      else
+        {
+          g_object_unref (input);
+          return image;
+        }
+
+      switch (gimp_image_get_base_type (image))
+        {
+          case GIMP_RGB:
+            img_a.color_mode = PSD_RGB;
+            break;
+
+          case GIMP_GRAY:
+            img_a.color_mode = PSD_GRAYSCALE;
+            break;
+
+          case GIMP_INDEXED:
+            img_a.color_mode = PSD_INDEXED;
+            break;
+        }
+      if (is_cmyk)
+        img_a.color_mode = PSD_CMYK;
+
+      /* Set layer block size from metadata */
+      img_a.mask_layer_len = data_length;
+      lyr_a = read_layer_block (&img_a, input, error);
+
+      if (! lyr_a)
+        {
+          g_object_unref (input);
+          return image;
+        }
+
+      add_layers (image, &img_a, lyr_a, input, error);
+    }
+
+  g_object_unref (input);
+
+  return image;
 }
 
 
@@ -1082,13 +1218,20 @@ read_layer_block (PSDimage      *img_a,
   guint64    block_end;
   gint       block_len_size = (img_a->version == 1 ? 4 : 8);
 
-  if (! psd_read_len (input, &block_len, img_a->version, error))
+  /* If layer data is being loaded for non-PSD files (like TIFF),
+   * then mask_layer_len will have its size preloaded */
+  if (img_a->mask_layer_len == 0)
     {
-      img_a->num_layers = -1;
-      return NULL;
+      if (! psd_read_len (input, &block_len, img_a->version, error))
+        {
+          img_a->num_layers = -1;
+          return NULL;
+        }
+      else
+        {
+          img_a->mask_layer_len = block_len;
+        }
     }
-  else
-    img_a->mask_layer_len = block_len;
 
   IFDBG(1) g_debug ("Layer and mask block size = %" G_GOFFSET_FORMAT, img_a->mask_layer_len);
 

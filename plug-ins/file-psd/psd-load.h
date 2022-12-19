@@ -29,6 +29,15 @@ GimpImage * load_image  (GFile        *file,
                          PSDSupport   *unsupported_features,
                          GError      **error);
 
+GimpImage * load_image_metadata
+                        (GFile        *file,
+                         gint          data_length,
+                         GimpImage    *image,
+                         gboolean      for_layers,
+                         gboolean      is_cmyk,
+                         PSDSupport   *unsupported_features,
+                         GError      **error);
+
 void        load_dialog (PSDSupport   *unsupported_features);
 
 
