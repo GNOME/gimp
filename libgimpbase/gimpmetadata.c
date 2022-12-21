@@ -1664,6 +1664,53 @@ gimp_metadata_copy_tag (GExiv2Metadata *src,
                         GExiv2Metadata *dest,
                         const gchar    *tag)
 {
+#if GEXIV2_CHECK_VERSION(0, 12, 2)
+  gchar  **values;
+  GError  *error = NULL;
+
+  values = gexiv2_metadata_try_get_tag_multiple (src, tag, &error);
+
+  if (error)
+    {
+      g_printerr ("%s: %s\n", G_STRFUNC, error->message);
+      g_clear_error (&error);
+      g_strfreev (values);
+    }
+  else if (values)
+    {
+      gexiv2_metadata_try_set_tag_multiple (dest, tag, (const gchar **) values, &error);
+      if (error)
+        {
+          g_warning ("%s: failed to set multiple metadata '%s': %s\n",
+                     G_STRFUNC, tag, error->message);
+          g_clear_error (&error);
+        }
+
+      g_strfreev (values);
+    }
+  else
+    {
+      gchar *value = gexiv2_metadata_try_get_tag_string (src, tag, &error);
+
+      if (value)
+        {
+          gexiv2_metadata_try_set_tag_string (dest, tag, value, &error);
+          if (error)
+            {
+              g_warning ("%s: failed to set metadata '%s': %s\n",
+                         G_STRFUNC, tag, error->message);
+              g_clear_error (&error);
+            }
+          g_free (value);
+        }
+      else if (error)
+        {
+          g_warning ("%s: failed to get metadata '%s': %s\n",
+                     G_STRFUNC, tag, error->message);
+          g_clear_error (&error);
+        }
+    }
+#else
   gchar **values = gexiv2_metadata_get_tag_multiple (src, tag);
 
   if (values)
@@ -1681,6 +1728,7 @@ gimp_metadata_copy_tag (GExiv2Metadata *src,
           g_free (value);
         }
     }
+#endif
 }
 
 static void
