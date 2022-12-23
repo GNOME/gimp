@@ -101,7 +101,11 @@ build-image-win64:
     - echo "FROM debian:testing" > Dockerfile
     - echo "RUN apt-get update" >> Dockerfile
     - echo "RUN apt-get install -y --no-install-recommends \\" >> Dockerfile
-    - echo "automake autopoint build-essential cmake cpio g++-mingw-w64-x86-64 gcc-mingw-w64-x86-64 gettext git libgdk-pixbuf2.0-dev libglib2.0-bin librsvg2-dev meson pkg-config python3 python3-distutils python3-docutils python3-pip rpm xsltproc" >> Dockerfile
+    # libjxl uses C++ features that require posix threads so we install
+    # specifically g++-mingw-w64-x86-64-posix and gcc-mingw-w64-x86-64-posix.
+    # Note that we can't install both the -posix and -win32 versions since
+    # update gcc-mingw-w64 (25).
+    - echo "automake autopoint build-essential cmake cpio g++-mingw-w64-x86-64-posix gcc-mingw-w64-x86-64-posix gettext git libgdk-pixbuf2.0-dev libglib2.0-bin librsvg2-dev meson pkg-config python3 python3-distutils python3-docutils python3-pip rpm xsltproc" >> Dockerfile
 
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:build-win64-latest --cache=true --cache-ttl=120h
 
@@ -505,9 +509,6 @@ deps-win64:
     - pip3 install zstandard
   script:
     - export PATH="`pwd`/.local/bin:$PATH"
-    # libjxl uses C++ features that require posix threads
-    - update-alternatives --set x86_64-w64-mingw32-g++ /usr/bin/x86_64-w64-mingw32-g++-posix
-    - update-alternatives --set x86_64-w64-mingw32-gcc /usr/bin/x86_64-w64-mingw32-gcc-posix
     - crossroad w64 gimp --run="build/windows/gitlab-ci/build-deps-crossroad.sh"
   artifacts:
     name: "${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}"
