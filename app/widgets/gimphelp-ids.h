@@ -740,20 +740,29 @@
 #define GIMP_HELP_HELP                            "gimp-help"
 #define GIMP_HELP_HELP_CONTEXT                    "gimp-help-context"
 
+/* Most of the colordisplay, colorselector and controller id's below are not
+   used since they are needed in /libgimpwidgets/ or /modules/ where this can't
+   be used. Instead the strings are used there directly.
+   We define them here anyway, to make gimp-help aware of them.
+ */
+#define GIMP_HELP_COLORDISPLAY_ACES_RRT           "gimp-colordisplay-aces-rrt"
+#define GIMP_HELP_COLORDISPLAY_CLIP               "gimp-colordisplay-clip"
 #define GIMP_HELP_COLORDISPLAY_COLORBLIND         "gimp-colordisplay-colorblind"
 #define GIMP_HELP_COLORDISPLAY_CONTRAST           "gimp-colordisplay-contrast"
 #define GIMP_HELP_COLORDISPLAY_GAMMA              "gimp-colordisplay-gamma"
-#define GIMP_HELP_COLORDISPLAY_GIMP               "gimp-colordisplay-gimp"
-#define GIMP_HELP_COLORDISPLAY_PROOF              "gimp-colordisplay-proof"
 
 #define GIMP_HELP_COLORSELECTOR_CMYK              "gimp-colorselector-cmyk"
+#define GIMP_HELP_COLORSELECTOR_GIMP              "gimp-colorselector-gimp"
+#define GIMP_HELP_COLORSELECTOR_NOTEBOOK          "gimp-colorselector-notebook"
+#define GIMP_HELP_COLORSELECTOR_PALETTE           "gimp-colorselector-palette"
+#define GIMP_HELP_COLORSELECTOR_SCALES            "gimp-colorselector-scales"
 #define GIMP_HELP_COLORSELECTOR_TRIANGLE          "gimp-colorselector-triangle"
-#define GIMP_HELP_COLORSELECTOR_WATER             "gimp-colorselector-water"
+#define GIMP_HELP_COLORSELECTOR_WATERCOLOR        "gimp-colorselector-watercolor"
 
 #define GIMP_HELP_CONTROLLER_KEYBOARD             "gimp-controller-keyboard"
+#define GIMP_HELP_CONTROLLER_DIRECTX_DIRECTINPUT  "gimp-controller-directx-directinput"
 #define GIMP_HELP_CONTROLLER_LINUX_INPUT          "gimp-controller-linux-input"
 #define GIMP_HELP_CONTROLLER_MIDI                 "gimp-controller-midi"
-#define GIMP_HELP_CONTROLLER_MOUSE                "gimp-controller-mouse"
 #define GIMP_HELP_CONTROLLER_WHEEL                "gimp-controller-wheel"
 
 #define GIMP_HELP_EXTENSIONS_DIALOG               "gimp-extensions-dialog"
