@@ -32,6 +32,7 @@
 #include "core/gimppalette.h"
 
 #include "gimpcolorselectorpalette.h"
+#include "gimphelp-ids.h"
 #include "gimppaletteview.h"
 #include "gimpviewrendererpalette.h"
 
@@ -57,7 +58,7 @@ gimp_color_selector_palette_class_init (GimpColorSelectorPaletteClass *klass)
   GimpColorSelectorClass *selector_class = GIMP_COLOR_SELECTOR_CLASS (klass);
 
   selector_class->name       = _("Palette");
-  selector_class->help_id    = "gimp-colorselector-palette";
+  selector_class->help_id    = GIMP_HELP_COLORSELECTOR_PALETTE;
   selector_class->icon_name  = GIMP_ICON_PALETTE;
   selector_class->set_color  = gimp_color_selector_palette_set_color;
   selector_class->set_config = gimp_color_selector_palette_set_config;
