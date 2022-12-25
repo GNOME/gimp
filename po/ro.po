@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2022-11-19 16:53+0000\n"
-"PO-Revision-Date: 2022-12-06 01:26+0200\n"
+"PO-Revision-Date: 2022-12-25 03:34+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Gnome Romanian Team <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
 "20)) ? 1 : 2);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2.2\n"
 
 # conform discuției de aici http://groups.google.com/group/diacritice/browse_thread/thread/84f8ecfd7b693426
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:1
@@ -500,8 +500,8 @@ msgstr ""
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:77
 msgid "Bucket Fill tool can now quickly color-pick with Ctrl+click"
 msgstr ""
-"Instrumentul Umplere cu găleata poate acum preleva rapid culoarea cu Ctrl"
-"+clic"
+"Instrumentul Umplere cu găleata poate acum preleva rapid culoarea cu "
+"Ctrl+clic"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:78
 msgid ""
@@ -667,7 +667,7 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:102
 msgid "New \"Little Planet\" (gegl:stereographic-projection) filter"
-msgstr "Filtru nou „Planetă mică” (gegl:stereographic-projection)."
+msgstr "Filtru nou „Planetă mică” (gegl:stereographic-projection)"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:103
 msgid "New \"Long Shadow\" filter"
@@ -821,7 +821,7 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:124
 msgid "Newly supported image formats: OpenEXR, RGBE, WebP, HGT…"
-msgstr "Formate de imagine recent acceptate: OpenEXR, RGBE, WebP, HGT..."
+msgstr "Formate de imagine recent acceptate: OpenEXR, RGBE, WebP, HGT…"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:125
 msgid ""
@@ -829,7 +829,7 @@ msgid ""
 "MyPaint brushes…"
 msgstr ""
 "Pictură digitală îmbunătățită: rotirea și întoarcerea canavalei, pictură cu "
-"simetrie, peneluri MyPaint..."
+"simetrie, peneluri MyPaint…"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:126
 msgid "Metadata viewing and editing for Exif, XMP, IPTC, and DICOM"
@@ -11358,8 +11358,8 @@ msgstr "Traseu"
 #: ../app/config/gimprc-blurbs.h:13
 msgid ""
 "When enabled, an image will become the active image when its image window "
-"receives the focus. This is useful for window managers using \"click to focus"
-"\"."
+"receives the focus. This is useful for window managers using \"click to "
+"focus\"."
 msgstr ""
 "Când opțiunea este activată, o imagine va deveni imaginea activă atunci când "
 "fereastra ei primește focalizarea. Această opțiune este utilă pentru "
@@ -11403,7 +11403,7 @@ msgstr "Marca temporală a ultimei verificări de actualizare."
 #: ../app/config/gimprc-blurbs.h:53
 msgid "How to handle embedded color profiles when opening a file."
 msgstr ""
-"Cum să fie tratate profilurile de culoare înglobate la deschiderea unui "
+"Cum să fie tratate profilurile de culoare încorporate la deschiderea unui "
 "fișier."
 
 #: ../app/config/gimprc-blurbs.h:56
@@ -12530,7 +12530,7 @@ msgstr "Întreabă ce este de făcut"
 #: ../app/core/core-enums.c:189
 msgctxt "color-profile-policy"
 msgid "Keep embedded profile"
-msgstr "Păstrează profilul înglobat"
+msgstr "Păstrează profilul încorporat"
 
 #: ../app/core/core-enums.c:190
 msgctxt "color-profile-policy"
@@ -15951,7 +15951,7 @@ msgstr "Păstrea_ză"
 #: ../app/dialogs/color-profile-import-dialog.c:122
 #, c-format
 msgid "The image '%s' has an embedded color profile"
-msgstr "Imaginea „%s” are un profil de culoare înglobat"
+msgstr "Imaginea „%s” are un profil de culoare încorporat"
 
 #: ../app/dialogs/color-profile-import-dialog.c:185
 msgid "_Don't ask me again"
@@ -21370,8 +21370,8 @@ msgstr ""
 #: ../app/pdb/gimpprocedure.c:765
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong value type for argument '%s' (#"
-"%d). Expected %s, got %s."
+"Procedure '%s' has been called with a wrong value type for argument "
+"'%s' (#%d). Expected %s, got %s."
 msgstr ""
 "Procedura „%s” a fost chemată cu un tip de valoare greșit pentru argumentul "
 "„%s” (#%d). Era prevăzut %s, a fost obținut %s."
@@ -22899,7 +22899,7 @@ msgstr ""
 #: ../app/tools/gimpcolorpickeroptions.c:190
 #, c-format
 msgid "Pick Target  (%s)"
-msgstr "Alegeți ținta  (%s)"
+msgstr "Alegere țintă  (%s)"
 
 #. the use_info_window toggle button
 #: ../app/tools/gimpcolorpickeroptions.c:199
