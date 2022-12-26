@@ -324,10 +324,11 @@ libgimp = library('gimp-'+ gimp_api_version,
   libgimp_sources,
   include_directories: rootInclude,
   dependencies: [
+    cairo,
+    gdk_pixbuf,
     gegl,
     gexiv2,
     drmingw,
-    gtk3,
   ],
   sources: [
     pdbgen
@@ -441,7 +442,6 @@ else
     'Gio-2.0',
     'GLib-2.0',
     'GObject-2.0',
-    'Gtk-3.0',
   ]
 
   gir_args = [
@@ -489,7 +489,7 @@ else
     symbol_prefix: [ 'gimp_ui', 'gimp' ],
     export_packages: 'gimp-ui-' + gimp_api_version,
     header: 'libgimp/gimpui.h',
-    includes: [ libgimp_gir_includes, libgimp_gir[0] ],
+    includes: [ libgimp_gir_includes, 'Gtk-3.0', libgimp_gir[0] ],
     extra_args: gir_args,
     include_directories: rootInclude,
     install: true,

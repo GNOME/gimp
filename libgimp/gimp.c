@@ -49,7 +49,7 @@
 #define WAIT_ANY -1
 #endif
 
-#include <gtk/gtk.h> /* need GDK_WINDOWING_FOO defines */
+#include <glib.h>
 
 #ifndef G_OS_WIN32
 #include "libgimpbase/gimpsignal.h"
@@ -66,10 +66,6 @@
 
 #ifdef HAVE_SYS_SELECT_H
 #include <sys/select.h>
-#endif
-
-#ifdef GDK_WINDOWING_QUARTZ
-#include <Cocoa/Cocoa.h>
 #endif
 
 #if defined(G_OS_WIN32) || defined(G_WITH_CYGWIN)
