@@ -92,7 +92,7 @@ do
   release_subject=`echo "$package_info" | grep Subject: |sed 's/^ *Subject: //'`
   if [ "$install" -eq -1 ]; then
     # In non-install mode, just list the whole release.
-    printf "%2d: %s [%s]\n" $release_number "$release_subject" "$release_date"
+    printf "%2d: %s [%s] - app-commit: %s\n" $release_number "$release_subject" "$release_date" "$release_commit"
   elif [ "$install" -eq "$release_number" ]; then
     install_commit=$release_commit
     break
