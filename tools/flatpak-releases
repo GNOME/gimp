@@ -22,6 +22,7 @@
 #   portability.
 
 install=-1
+show_runtime=0
 appid=org.gimp.GIMP
 remote='flathub'
 branch='stable'
@@ -38,6 +39,8 @@ do
     branch='master'
   elif [[ $var = '--system' ]]; then
     prefix='--system'
+  elif [[ $var = '--runtime' ]]; then
+    show_runtime=1
   elif [[ $var =~ ^- ]]; then
     echo "Usage: ./flathub-releases [--beta] [--system] [-X] [org.example.app]"
     echo
@@ -74,13 +77,28 @@ if [ "$got_info" -ne 0 ]; then
   # non-interactive case, it would just silently fail instead. So let's
   # make a second try on user-installed remote (totally arbitrary
   # choice).
-  package_info_cmd="flatpak remote-info --user $remote $appid"
+  user_system="--user"
+  package_info_cmd="flatpak remote-info $user_system $remote $appid"
   package_info=`$package_info_cmd 2>&1`
   got_info="$?"
 fi
 if [ "$got_info" -ne 0 ]; then
   echo "Flathub query failed with the following error: $package_info"
   exit 2
+elif [ "$show_runtime" -eq 1 ]; then
+  # With the special --runtime option, we list the associated runtime instead of
+  # the application.
+  runtime=`echo "$package_info" | grep Runtime: |sed 's/^ *Runtime: //'`
+  appid=$runtime
+  package_info_cmd="flatpak remote-info $user_system $remote $appid"
+
+  package_info=`$package_info_cmd 2>&1`
+  got_info="$?"
+
+  if [ "$got_info" -ne 0 ]; then
+    echo "Flathub query failed with the following error: $package_info"
+    exit 2
+  fi
 fi
 
 release_number=0
