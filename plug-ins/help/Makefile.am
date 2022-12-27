@@ -1,5 +1,12 @@
 ## Process this file with automake to produce Makefile.in
 
+if PLATFORM_OSX
+xobjective_c = "-xobjective-c"
+xobjective_cxx = "-xobjective-c++"
+xnone = "-xnone"
+framework_cocoa = -framework Cocoa
+endif
+
 libgimphelp = libgimphelp.a
 libgimp = $(top_builddir)/libgimp/libgimp-$(GIMP_API_VERSION).la
 libgimpconfig = $(top_builddir)/libgimpconfig/libgimpconfig-$(GIMP_API_VERSION).la
@@ -25,7 +32,16 @@ AM_CPPFLAGS = \
 	$(GDK_PIXBUF_CFLAGS)		\
 	-I$(includedir)
 
-AM_LDFLAGS = $(mwindows)
+AM_CFLAGS = \
+	$(xobjective_c)
+
+AM_CXXFLAGS = \
+	$(xobjective_cxx)
+
+AM_LDFLAGS = \
+	$(mwindows)		\
+	$(framework_cocoa)	\
+	$(xnone)
 
 noinst_LIBRARIES = libgimphelp.a
 

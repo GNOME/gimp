@@ -40,6 +40,9 @@
 #include "libgimp/stdplugins-intl.h"
 #endif
 
+#ifdef PLATFORM_OSX
+#include <Foundation/Foundation.h>
+#endif
 
 /*  local function prototypes  */
 
@@ -169,11 +172,18 @@ gimp_help_locale_parse (GimpHelpLocale    *locale,
                         GError           **error)
 {
   GMarkupParseContext *context;
-  GFile               *file;
-  GFileInputStream    *stream;
+  GFile               *file        = NULL;
   GCancellable        *cancellable = NULL;
   LocaleParser         parser      = { NULL, };
+#ifdef PLATFORM_OSX
+  NSURL               *fileURL;
+  NSString            *nsUri;
+  NSData              *data;
+  const gchar         *str;
+#else
+  GFileInputStream    *stream;
   goffset              size        = 0;
+#endif
   gboolean             success;
 
   g_return_val_if_fail (locale != NULL, FALSE);
@@ -207,10 +217,33 @@ gimp_help_locale_parse (GimpHelpLocale    *locale,
       _gimp_help_progress_start (progress, cancellable,
                                  _("Loading index from '%s'"), name);
 
-      g_object_unref (cancellable);
+      g_clear_object (&cancellable);
       g_free (name);
     }
 
+#ifdef PLATFORM_OSX
+  nsUri   = [NSString stringWithUTF8String: uri];
+  fileURL = [NSURL URLWithString: nsUri];
+  [nsUri release];
+
+  if (progress)
+    _gimp_help_progress_pulse (progress);
+
+  /* Load the data from the remote URL into the NSData object */
+  data = [NSData dataWithContentsOfURL:fileURL];
+  [fileURL release];
+
+  if (! data)
+    {
+      locale_set_error (error,
+                        _("Could not load data from '%s': %s"), file);
+      g_object_unref (file);
+      return FALSE;
+    }
+
+  if (progress)
+    _gimp_help_progress_pulse (progress);
+#else /* PLATFORM_OSX */
   if (progress)
     {
       GFileInfo *info = g_file_query_info (file,
@@ -240,6 +273,7 @@ gimp_help_locale_parse (GimpHelpLocale    *locale,
 
       return FALSE;
     }
+#endif /* ! PLATFORM_OSX */
 
   parser.file         = file;
   parser.value        = g_string_new (NULL);
@@ -249,15 +283,26 @@ gimp_help_locale_parse (GimpHelpLocale    *locale,
 
   context = g_markup_parse_context_new (&markup_parser, 0, &parser, NULL);
 
+#ifdef PLATFORM_OSX
+  str = (const char *)[data bytes];
+
+  if (! g_markup_parse_context_parse (context, str, [data length], error))
+    success = FALSE;
+  else
+    success = g_markup_parse_context_end_parse (context, error);
+
+  [data release];
+#else /* PLATFORM_OSX */
   success = locale_parser_parse (context, progress,
                                  G_INPUT_STREAM (stream), size,
                                  cancellable, error);
 
+  g_object_unref (stream);
+#endif /* ! PLATFORM_OSX */
   if (progress)
     _gimp_help_progress_finish (progress);
 
   g_markup_parse_context_free (context);
-  g_object_unref (stream);
 
   g_string_free (parser.value, TRUE);
   g_free (parser.id_attr_name);
