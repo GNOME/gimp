@@ -121,6 +121,12 @@ typedef struct PsdImageData
   GList             *lLayers;     /* List of PSD_Layer */
 } PSD_Image_Data;
 
+typedef struct PsdResourceOptions
+{
+  gboolean  cmyk;
+  gboolean  duotone;
+} PSD_Resource_Options;
+
 static PSD_Image_Data PSDImageData;
 
 /* Declare some local functions.
@@ -142,8 +148,8 @@ static void          save_color_mode_data (GOutputStream  *output,
 
 static void          save_resources       (GOutputStream  *output,
                                            GimpImage      *image,
-                                           gboolean        export_cmyk,
-                                           gboolean        export_duotone);
+                                           PSD_Resource_Options
+                                                          *options);
 
 static void          save_paths           (GOutputStream  *output,
                                            GimpImage      *image);
@@ -658,10 +664,9 @@ save_color_mode_data (GOutputStream  *output,
 }
 
 static void
-save_resources (GOutputStream  *output,
-                GimpImage      *image,
-                gboolean        export_cmyk,
-                gboolean        export_duotone)
+save_resources (GOutputStream        *output,
+                GimpImage            *image,
+                PSD_Resource_Options *options)
 {
   GList        *iter;
   gint          i;
@@ -695,7 +700,7 @@ save_resources (GOutputStream  *output,
 
 
   /* --------------- Write Channel names --------------- */
-  if (! export_cmyk)
+  if (! options->cmyk)
     {
       if (PSDImageData.nChannels > 0 ||
           gimp_drawable_has_alpha (GIMP_DRAWABLE (PSDImageData.merged_layer)))
@@ -942,10 +947,10 @@ save_resources (GOutputStream  *output,
   {
     GimpColorProfile *profile = NULL;
 
-    if (! export_duotone)
+    if (! options->duotone)
       profile = gimp_image_get_effective_color_profile (image);
 
-    if (export_cmyk)
+    if (options->cmyk)
       {
         profile = gimp_image_get_simulation_profile (image);
 
@@ -2038,23 +2043,22 @@ save_image (GFile      *file,
             GObject    *config,
             GError    **error)
 {
-  GOutputStream  *output;
-  GeglBuffer     *buffer;
-  GList          *iter;
-  GError         *local_error = NULL;
-  GimpParasite   *parasite    = NULL;
-  gboolean        config_cmyk;
-  gboolean        config_duotone;
+  GOutputStream        *output;
+  GeglBuffer           *buffer;
+  GList                *iter;
+  GError               *local_error = NULL;
+  GimpParasite         *parasite    = NULL;
+  PSD_Resource_Options  resource_options;
 
   g_object_get (config,
-                "cmyk",    &config_cmyk,
-                "duotone", &config_duotone,
+                "cmyk",    &resource_options.cmyk,
+                "duotone", &resource_options.duotone,
                 NULL);
 
   IFDBG(1) g_debug ("Function: save_image");
 
-  if (config_cmyk)
-    config_duotone = FALSE;
+  if (resource_options.cmyk)
+    resource_options.duotone = FALSE;
 
   if (gimp_image_get_width (image) > 30000 ||
       gimp_image_get_height (image) > 30000)
@@ -2077,13 +2081,13 @@ save_image (GFile      *file,
   if (parasite)
     {
       if (gimp_image_get_base_type (image) != GIMP_GRAY)
-        config_duotone = FALSE;
+        resource_options.duotone = FALSE;
 
       gimp_parasite_free (parasite);
     }
   else
     {
-      config_duotone = FALSE;
+      resource_options.duotone = FALSE;
     }
 
   get_image_data (image);
@@ -2137,20 +2141,20 @@ save_image (GFile      *file,
   IFDBG(1) g_debug ("\tFile '%s' has been opened",
                     gimp_file_get_utf8_name (file));
 
-  save_header (output, image, config_cmyk, config_duotone);
-  save_color_mode_data (output, image, config_duotone);
-  save_resources (output, image, config_cmyk, config_duotone);
+  save_header (output, image, resource_options.cmyk, resource_options.duotone);
+  save_color_mode_data (output, image, resource_options.duotone);
+  save_resources (output, image, &resource_options);
 
   /* PSD format does not support layers in indexed images */
 
   if (PSDImageData.baseType == GIMP_INDEXED)
     write_gint32 (output, 0, "layers info section length");
   else
-    save_layer_and_mask (output, image, config_cmyk);
+    save_layer_and_mask (output, image, resource_options.cmyk);
 
   /* If this is an indexed image, write now channel and layer info */
 
-  save_data (output, image, config_cmyk);
+  save_data (output, image, resource_options.cmyk);
 
   /* Delete merged image now */
 
