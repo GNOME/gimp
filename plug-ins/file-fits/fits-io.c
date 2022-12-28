@@ -594,7 +594,7 @@ fits_open (const gchar *filename,
 
   fp = g_fopen (filename, reading ? "rb" : "wb");
   if (fp == NULL)
-    FITS_RETURN ("fits_open: fopen() failed", NULL);
+    FITS_RETURN ("fits_open: g_fopen() failed", NULL);
 
   ff = fits_new_filestruct ();
   if (ff == NULL)

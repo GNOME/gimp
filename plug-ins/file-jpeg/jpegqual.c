@@ -44,6 +44,7 @@
 #include <setjmp.h>
 
 #include <glib.h>
+#include <glib/gstdio.h>
 
 #include <jpeglib.h>
 #include <jerror.h>
@@ -855,7 +856,7 @@ analyze_file (gchar *filename)
   gint                           num_quant_tables;
   GSList                        *source_list;
 
-  if ((f = fopen (filename, "rb")) == NULL)
+  if ((f = g_fopen (filename, "rb")) == NULL)
     {
       g_printerr ("Cannot open '%s'\n", filename);
       return FALSE;

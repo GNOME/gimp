@@ -50,6 +50,7 @@
 #endif
 
 #include <glib.h>
+#include <glib/gstdio.h>
 
 #ifndef G_OS_WIN32
 #include "libgimpbase/gimpsignal.h"
@@ -979,7 +980,7 @@ gimp_plugin_sigfatal_handler (PEXCEPTION_POINTERS pExceptionInfo)
       guchar  buffer[256];
       size_t  read_len;
 
-      stream = fopen (plug_in_backtrace_path, "r");
+      stream = g_fopen (plug_in_backtrace_path, "r");
       do
         {
           /* Just read and output directly the file content. */

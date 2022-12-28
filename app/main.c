@@ -32,6 +32,7 @@
 #include <locale.h>
 
 #include <gio/gio.h>
+#include <glib/gstdio.h>
 
 #ifdef G_OS_WIN32
 #include <io.h> /* get_osfhandle */
@@ -863,7 +864,7 @@ WinMain (struct HINSTANCE__ *hInstance,
 static void
 wait_console_window (void)
 {
-  FILE *console = fopen ("CONOUT$", "w");
+  FILE *console = g_fopen ("CONOUT$", "w");
 
   SetConsoleTitleW (g_utf8_to_utf16 (_("GIMP output. Type any character to close this window."), -1, NULL, NULL, NULL));
   fprintf (console, _("(Type any character to close this window)\n"));

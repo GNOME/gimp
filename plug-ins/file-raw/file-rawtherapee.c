@@ -378,7 +378,7 @@ load_thumbnail_image (GFile   *file,
   GimpImage *image            = NULL;
   GFile     *file_out         = gimp_temp_file ("jpg");
   GFile     *thumb_pp3_file   = gimp_temp_file ("pp3");
-  FILE      *thumb_pp3_f      = fopen (g_file_peek_path (thumb_pp3_file), "w");
+  FILE      *thumb_pp3_f      = g_fopen (g_file_peek_path (thumb_pp3_file), "w");
   gchar     *rawtherapee_stdout = NULL;
   const char *pp3_content =
     "[Version]\n"
