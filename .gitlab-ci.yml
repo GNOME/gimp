@@ -1,4 +1,4 @@
-image: debian:testing
+image: debian:stable
 
 stages:
   - dependencies
@@ -13,7 +13,7 @@ variables:
 
 ## GNU/Linux 64-bit CIs ##
 
-deps-debian/testing:
+deps-debian/stable:
   stage: dependencies
   cache:
     paths:
@@ -32,6 +32,7 @@ deps-debian/testing:
         autoconf
         automake
         build-essential
+        cmake
         git
         ffmpeg
         graphviz
@@ -63,6 +64,7 @@ deps-debian/testing:
     - apt-get install -y --reinstall ca-certificates
     - git clone --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/babl.git _babl
     - git clone --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/gegl.git _gegl
+    - git clone --depth=${GIT_DEPTH} -b v0.7.x --recursive --shallow-submodules https://github.com/libjxl/libjxl.git _libjxl
     - export PKG_CONFIG_PATH="${INSTALL_PREFIX}/lib/pkgconfig"
     - export PKG_CONFIG_PATH="${INSTALL_PREFIX}/lib/`gcc -print-multiarch`/pkgconfig/:$PKG_CONFIG_PATH"
     - export LD_LIBRARY_PATH="${INSTALL_PREFIX}/lib:${LD_LIBRARY_PATH}"
@@ -77,6 +79,14 @@ deps-debian/testing:
     - meson --prefix="${INSTALL_PREFIX}" _build
     - ninja -C _build
     - ninja -C _build install
+    # libjxl
+    - cd ../_libjxl
+    - mkdir build
+    - cd build
+    - cmake -G Ninja -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" -DBUILD_TESTING=OFF -DJPEGXL_ENABLE_BENCHMARK=OFF -DJPEGXL_ENABLE_COVERAGE=OFF -DJPEGXL_ENABLE_FUZZERS=OFF -DJPEGXL_ENABLE_SJPEG=OFF -DJPEGXL_WARNINGS_AS_ERRORS=OFF -DJPEGXL_ENABLE_SKCMS=ON -DJPEGXL_ENABLE_VIEWERS=OFF -DJPEGXL_ENABLE_PLUGINS=OFF -DJPEGXL_FORCE_SYSTEM_BROTLI=ON -DJPEGXL_ENABLE_DOXYGEN=OFF -DJPEGXL_ENABLE_MANPAGES=OFF -DJPEGXL_ENABLE_JNI=OFF -DJPEGXL_ENABLE_TCMALLOC=OFF -DJPEGXL_ENABLE_EXAMPLES=OFF -DJPEGXL_ENABLE_TOOLS=OFF ..
+    - ninja
+    - ninja install
+    - cd ..
     # Building pygtk2 as it is not available in Debian testing anymore.
     - cd ../build/gitlab-ci
     - wget https://cairographics.org/releases/py2cairo-1.10.0.tar.bz2
@@ -105,10 +115,10 @@ deps-debian/testing:
     - patch -p1 < ../pygtk-Drop-the-PangoFont-find_shaper-virtual-method.patch
     - ./configure --prefix="${INSTALL_PREFIX}" && make && make install
 
-.gimp-debian/testing-base:
+.gimp-debian/stable-base:
   stage: gimp
   dependencies:
-    - deps-debian/testing
+    - deps-debian/stable
   artifacts:
     expire_in: 1 week
     when: always
@@ -142,7 +152,6 @@ deps-debian/testing:
         libgudev-1.0-dev
         libheif-dev
         libjson-glib-dev
-        libjxl-dev
         liblcms2-dev
         liblzma-dev
         libmng-dev
@@ -173,10 +182,10 @@ deps-debian/testing:
     - export LD_LIBRARY_PATH="${INSTALL_PREFIX}/lib/`gcc -print-multiarch`:$LD_LIBRARY_PATH"
     - export XDG_DATA_DIRS="${INSTALL_PREFIX}/share:/usr/local/share:/usr/share"
     - export PATH="${INSTALL_PREFIX}/bin:$PATH"
-  needs: ["deps-debian/testing"]
+  needs: ["deps-debian/stable"]
 
-gimp-debian/testing-autotools:
-  extends: .gimp-debian/testing-base
+gimp-debian/stable-autotools:
+  extends: .gimp-debian/stable-base
   script:
     - mkdir _build
     - cd _build
@@ -186,8 +195,8 @@ gimp-debian/testing-autotools:
     - make -j "$(nproc)"
     - make check
 
-gimp-debian/testing-autotools-distcheck:
-  extends: .gimp-debian/testing-base
+gimp-debian/stable-autotools-distcheck:
+  extends: .gimp-debian/stable-base
   script:
     # Actual build.
     - mkdir _build
@@ -206,7 +215,7 @@ gimp-debian/testing-autotools-distcheck:
 sources:
   stage: distribution
   dependencies:
-    - gimp-debian/testing-autotools-distcheck
+    - gimp-debian/stable-autotools-distcheck
   artifacts:
     when: always
     expire_in: 2 days
@@ -216,4 +225,4 @@ sources:
   script:
     - mv _build/gimp-*.tar.* .
     - sha256sum gimp-*.tar.* > SHA256SUMS
-  needs: ["gimp-debian/testing-autotools-distcheck"]
+  needs: ["gimp-debian/stable-autotools-distcheck"]
