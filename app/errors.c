@@ -417,8 +417,16 @@ gimp_eek (const gchar *reason,
 #if defined (G_OS_WIN32) && ! defined (GIMP_CONSOLE_COMPILATION)
   /* g_on_error_* don't do anything reasonable on Win32. */
   if (! eek_handled && ! the_errors_gimp->no_interface)
-    MessageBox (NULL, g_strdup_printf ("%s: %s", reason, message),
-                full_prog_name, MB_OK|MB_ICONERROR);
+    {
+      char    *utf8  = g_strdup_printf ("%s: %s", reason, message);
+      wchar_t *utf16 = g_utf8_to_utf16 (utf8, -1, NULL, NULL, NULL);
+
+      MessageBoxW (NULL, utf16 ? utf16 : L"Generic error",
+                   L"GIMP", MB_OK | MB_ICONERROR);
+
+      g_free (utf16);
+      g_free (utf8);
+    }
 #endif
 
   /* Let's try to back-up all unsaved images!
