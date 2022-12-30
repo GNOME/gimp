@@ -112,7 +112,7 @@ BOOL LoadMagnificationLibrary(void)
 {
   if (magnificationLibrary) return TRUE;
 
-  magnificationLibrary = LoadLibrary("Magnification");
+  magnificationLibrary = LoadLibraryW(L"Magnification");
   if (!magnificationLibrary) return FALSE;
 
   MagInitialize = (MAGINITIALIZE)GetProcAddress(magnificationLibrary,"MagInitialize");

@@ -92,7 +92,7 @@ twainIsAvailable(void)
   }
 
   /* Attempt to load the library */
-  hDLL = LoadLibrary(TWAIN_DLL_NAME);
+  hDLL = LoadLibraryW (TWAIN_DLL_NAME_W);
   if (hDLL == NULL)
     return FALSE;
 

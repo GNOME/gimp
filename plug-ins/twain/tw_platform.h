@@ -25,6 +25,7 @@
 #include "twain.h"
 
 /* The DLL to be loaded for TWAIN support */
+#define TWAIN_DLL_NAME_W L"TWAIN_32.DLL"
 #define TWAIN_DLL_NAME "TWAIN_32.DLL"
 #define DEBUG_LOGFILE "c:\\twain.log"
 #define DUMP_FILE "C:\\TWAINCAP.BIN"

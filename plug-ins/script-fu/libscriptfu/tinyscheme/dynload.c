@@ -9,6 +9,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <glib/glib.h>
+
 #ifndef MAXPATHLEN
 # define MAXPATHLEN 1024
 #endif
@@ -44,8 +46,17 @@ typedef void (*FARPROC)();
  }
 
 static HMODULE dl_attach(const char *module) {
-  HMODULE dll = LoadLibrary(module);
-  if (!dll) display_w32_error_msg(module);
+  wchar_t *module_utf16 = g_utf8_to_utf16 (module, -1, NULL, NULL, NULL);
+  HMODULE  dll          = NULL;
+
+  if (!module_utf16)
+    return NULL;
+
+  dll = LoadLibraryW (module_utf16);
+  if (!dll)
+    display_w32_error_msg (module);
+
+  free (module_utf16);
   return dll;
 }
 

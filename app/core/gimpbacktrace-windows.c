@@ -285,7 +285,7 @@ gimp_backtrace_start (void)
       HMODULE hModule;
       DWORD   options;
 
-      hModule = LoadLibraryA ("mgwhelp.dll");
+      hModule = LoadLibraryW (L"mgwhelp.dll");
 
       #define INIT_PROC(name)                                    \
         G_STMT_START                                             \

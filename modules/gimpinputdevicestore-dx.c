@@ -216,7 +216,7 @@ gimp_input_device_store_init (GimpInputDeviceStore *store)
       return;
     }
 
-  if ((dinput8 = LoadLibrary ("dinput8.dll")) == NULL)
+  if ((dinput8 = LoadLibraryW (L"dinput8.dll")) == NULL)
     {
       g_set_error_literal (&store->error, GIMP_MODULE_ERROR, GIMP_MODULE_FAILED,
 			   "Could not load dinput8.dll");

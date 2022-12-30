@@ -61,7 +61,7 @@ LoadRequiredDwmFunctions (void)
 {
   if (dwmApi) return TRUE;
 
-  dwmApi = LoadLibrary ("dwmapi");
+  dwmApi = LoadLibraryW (L"dwmapi");
   if (! dwmApi) return FALSE;
 
   DwmGetWindowAttribute = (DWMGETWINDOWATTRIBUTE) GetProcAddress (dwmApi, "DwmGetWindowAttribute");

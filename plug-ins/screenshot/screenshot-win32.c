@@ -1207,7 +1207,7 @@ BOOL
 InitInstance (HINSTANCE hInstance,
               int       nCmdShow)
 {
-  HINSTANCE User32Library = LoadLibrary ("user32.dll");
+  HINSTANCE User32Library = LoadLibraryW (L"user32.dll");
 
   if (User32Library)
     {
