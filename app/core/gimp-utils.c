@@ -213,10 +213,10 @@ gimp_get_default_unit (void)
   DWORD measurement;
   int   ret;
 
-  ret = GetLocaleInfo(LOCALE_USER_DEFAULT,
-                      LOCALE_IMEASURE | LOCALE_RETURN_NUMBER,
-                      (LPTSTR)&measurement,
-                      sizeof(measurement) / sizeof(TCHAR) );
+  ret = GetLocaleInfoW (LOCALE_USER_DEFAULT,
+                        LOCALE_IMEASURE | LOCALE_RETURN_NUMBER,
+                        (LPWSTR) &measurement,
+                        sizeof (measurement) / sizeof (wchar_t));
 
   if (ret != 0) /* GetLocaleInfo succeeded */
     {
