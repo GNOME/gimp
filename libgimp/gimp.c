@@ -200,7 +200,7 @@ gimp_main (GType  plug_in_type,
     typedef BOOL (WINAPI *t_SetDllDirectoryA) (LPCSTR lpPathName);
     t_SetDllDirectoryA p_SetDllDirectoryA;
 
-    p_SetDllDirectoryA = (t_SetDllDirectoryA) GetProcAddress (GetModuleHandle ("kernel32.dll"),
+    p_SetDllDirectoryA = (t_SetDllDirectoryA) GetProcAddress (GetModuleHandleW (L"kernel32.dll"),
                                                               "SetDllDirectoryA");
     if (p_SetDllDirectoryA)
       (*p_SetDllDirectoryA) ("");
@@ -269,7 +269,7 @@ gimp_main (GType  plug_in_type,
     typedef BOOL (WINAPI *t_SetProcessDEPPolicy) (DWORD dwFlags);
     t_SetProcessDEPPolicy p_SetProcessDEPPolicy;
 
-    p_SetProcessDEPPolicy = GetProcAddress (GetModuleHandle ("kernel32.dll"),
+    p_SetProcessDEPPolicy = GetProcAddress (GetModuleHandleW (L"kernel32.dll"),
                                             "SetProcessDEPPolicy");
     if (p_SetProcessDEPPolicy)
       (*p_SetProcessDEPPolicy) (PROCESS_DEP_ENABLE|PROCESS_DEP_DISABLE_ATL_THUNK_EMULATION);
@@ -281,7 +281,7 @@ gimp_main (GType  plug_in_type,
     typedef HRESULT (WINAPI *t_SetCurrentProcessExplicitAppUserModelID) (PCWSTR lpPathName);
     t_SetCurrentProcessExplicitAppUserModelID p_SetCurrentProcessExplicitAppUserModelID;
 
-    p_SetCurrentProcessExplicitAppUserModelID = (t_SetCurrentProcessExplicitAppUserModelID) GetProcAddress (GetModuleHandle ("shell32.dll"),
+    p_SetCurrentProcessExplicitAppUserModelID = (t_SetCurrentProcessExplicitAppUserModelID) GetProcAddress (GetModuleHandleW (L"shell32.dll"),
                                                                                                             "SetCurrentProcessExplicitAppUserModelID");
     if (p_SetCurrentProcessExplicitAppUserModelID)
       (*p_SetCurrentProcessExplicitAppUserModelID) (L"gimp.GimpApplication");

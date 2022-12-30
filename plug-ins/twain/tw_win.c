@@ -346,9 +346,9 @@ twainMain (void)
   pTW_SESSION twSession = initializeTwain();
 
   /* Since we are not using our own WinMain anymore where we
-     could get hInst we get it here using GetModuleHandle. */
+     could get hInst we get it here using GetModuleHandleW. */
   if (!hInst)
-    hInst = GetModuleHandle(NULL);
+    hInst = GetModuleHandleW(NULL);
 
   /* Perform instance initialization */
   if (!InitApplication(hInst))

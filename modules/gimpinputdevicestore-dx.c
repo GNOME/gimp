@@ -204,9 +204,10 @@ gimp_input_device_store_init (GimpInputDeviceStore *store)
   gtk_list_store_set_column_types (GTK_LIST_STORE (store),
                                    G_N_ELEMENTS (types), types);
 
-  if (!GetModuleHandleEx (GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS,
-                          (LPCTSTR) &gimp_input_device_store_init,
-                          &thismodule))
+  if (!GetModuleHandleExW (GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS |
+                           GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT,
+                           (LPCTSTR) &gimp_input_device_store_init,
+                           &thismodule))
     return;
 
   if ((store->window = create_aux_window (store)) == NULL)

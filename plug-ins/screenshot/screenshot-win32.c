@@ -790,7 +790,7 @@ doCaptureMagnificationAPI (HWND selectedHwnd,
 
   /* Create the host window that will store the mag child window */
   hwndHost = CreateWindowEx (0x08000000 | 0x080000 | 0x80 | 0x20, APP_NAME, NULL, 0x80000000,
-                             0, 0, 0, 0, NULL, NULL, GetModuleHandle (NULL), NULL);
+                             0, 0, 0, 0, NULL, NULL, GetModuleHandleW (NULL), NULL);
 
   if (!hwndHost)
     {
@@ -808,7 +808,7 @@ doCaptureMagnificationAPI (HWND selectedHwnd,
   hwndMag = CreateWindow (WC_MAGNIFIER, TEXT ("MagnifierWindow"),
                           magStyles,
                           0, 0, round4Rect.right - round4Rect.left, round4Rect.bottom - round4Rect.top,
-                          hwndHost, NULL, GetModuleHandle (NULL), NULL);
+                          hwndHost, NULL, GetModuleHandleW (NULL), NULL);
 
   /* Set the callback function that will be called by the api to get the pixels */
   if (!MagSetImageScalingCallback (hwndMag, (MagImageScalingCallback)doCaptureMagnificationAPI_callback))

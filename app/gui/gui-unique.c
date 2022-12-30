@@ -221,7 +221,7 @@ gui_unique_win32_init (Gimp *gimp)
   /* register window class for proxy window */
   memset (&wc, 0, sizeof (wc));
 
-  wc.hInstance     = GetModuleHandle (NULL);
+  wc.hInstance     = GetModuleHandleW (NULL);
   wc.lpfnWndProc   = gui_unique_win32_message_handler;
   wc.lpszClassName = GIMP_UNIQUE_WIN32_WINDOW_CLASS;
 
