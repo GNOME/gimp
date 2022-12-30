@@ -338,39 +338,32 @@ gimp_plug_in_flush (GIOChannel *channel,
 static void
 gimp_plug_in_set_dll_directory (const gchar *path)
 {
+  LPWSTR       w_path;
   const gchar *install_dir;
   gchar       *bin_dir;
   LPWSTR       w_bin_dir;
   DWORD        BinaryType;
-  int          n;
 
+  w_path = NULL;
   w_bin_dir = NULL;
   install_dir = gimp_installation_directory ();
-  if (path                               &&
-      GetBinaryTypeA (path, &BinaryType) &&
+  if (path &&
+      (w_path = g_utf8_to_utf16 (path, -1, NULL, NULL, NULL)) &&
+      GetBinaryTypeW (w_path, &BinaryType) &&
       BinaryType == SCS_32BIT_BINARY)
     bin_dir = g_build_filename (install_dir, WIN32_32BIT_DLL_FOLDER, NULL);
   else
     bin_dir = g_build_filename (install_dir, "bin", NULL);
 
-  n = MultiByteToWideChar (CP_UTF8, MB_ERR_INVALID_CHARS,
-                           bin_dir, -1, NULL, 0);
-  if (n == 0)
-    goto out;
-
-  w_bin_dir = g_malloc_n (n + 1, sizeof (wchar_t));
-  n = MultiByteToWideChar (CP_UTF8, MB_ERR_INVALID_CHARS,
-                           bin_dir, -1,
-                           w_bin_dir, (n + 1) * sizeof (wchar_t));
-  if (n == 0)
-    goto out;
-
-  SetDllDirectoryW (w_bin_dir);
-
-out:
+  w_bin_dir = g_utf8_to_utf16 (bin_dir, -1, NULL, NULL, NULL);
   if (w_bin_dir)
-    g_free ((void*) w_bin_dir);
+    {
+      SetDllDirectoryW (w_bin_dir);
+      g_free (w_bin_dir);
+    }
+
   g_free (bin_dir);
+  g_free (w_path);
 }
 #endif
 
