@@ -608,16 +608,7 @@ main (int    argc,
 
 #ifdef G_OS_WIN32
   /* Reduce risks */
-  {
-    typedef BOOL (WINAPI *t_SetDllDirectoryA) (LPCSTR lpPathName);
-    t_SetDllDirectoryA p_SetDllDirectoryA;
-
-    p_SetDllDirectoryA =
-      (t_SetDllDirectoryA) GetProcAddress (GetModuleHandleW (L"kernel32.dll"),
-                                           "SetDllDirectoryA");
-    if (p_SetDllDirectoryA)
-      (*p_SetDllDirectoryA) ("");
-  }
+  SetDllDirectoryW (L"");
 
   /* On Windows, set DLL search path to $INSTALLDIR/bin so that .exe
      plug-ins in the plug-ins directory can find libgimp and file

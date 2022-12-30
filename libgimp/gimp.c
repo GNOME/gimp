@@ -196,15 +196,7 @@ gimp_main (GType  plug_in_type,
   gint i, j, k;
 
   /* Reduce risks */
-  {
-    typedef BOOL (WINAPI *t_SetDllDirectoryA) (LPCSTR lpPathName);
-    t_SetDllDirectoryA p_SetDllDirectoryA;
-
-    p_SetDllDirectoryA = (t_SetDllDirectoryA) GetProcAddress (GetModuleHandleW (L"kernel32.dll"),
-                                                              "SetDllDirectoryA");
-    if (p_SetDllDirectoryA)
-      (*p_SetDllDirectoryA) ("");
-  }
+  SetDllDirectoryW (L"");
 
   /* On Windows, set DLL search path to $INSTALLDIR/bin so that GEGL
    * file operations can find their respective file library DLLs (such
