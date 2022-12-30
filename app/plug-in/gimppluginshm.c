@@ -133,8 +133,9 @@ gimp_plug_in_shm_new (void)
 
   /* Use Win32 shared memory mechanisms for transferring tile data. */
   {
-    gint  pid;
-    gchar fileMapName[MAX_PATH];
+    gint     pid;
+    gchar    fileMapName[MAX_PATH];
+    wchar_t *w_fileMapName         = NULL;
 
     /* Our shared memory id will be our process ID */
     pid = GetCurrentProcessId ();
@@ -142,11 +143,16 @@ gimp_plug_in_shm_new (void)
     /* From the id, derive the file map name */
     g_snprintf (fileMapName, sizeof (fileMapName), "GIMP%d.SHM", pid);
 
+    w_fileMapName = g_utf8_to_utf16 (fileMapName, -1, NULL, NULL, NULL);
+
     /* Create the file mapping into paging space */
-    shm->shm_handle = CreateFileMapping (INVALID_HANDLE_VALUE, NULL,
-                                         PAGE_READWRITE, 0,
-                                         TILE_MAP_SIZE,
-                                         fileMapName);
+    shm->shm_handle = CreateFileMappingW (INVALID_HANDLE_VALUE, NULL,
+                                          PAGE_READWRITE, 0,
+                                          TILE_MAP_SIZE,
+                                          w_fileMapName);
+
+    g_free (w_fileMapName);
+    w_fileMapName = NULL;
 
     if (shm->shm_handle)
       {
