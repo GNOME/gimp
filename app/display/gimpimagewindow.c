@@ -990,9 +990,9 @@ gimp_image_window_set_aux_info (GimpSessionManaged *session_managed,
   gboolean                wait_with_right_docks = FALSE;
   gboolean                maximized             = FALSE;
 #ifdef G_OS_WIN32
-  STARTUPINFO             StartupInfo;
+  STARTUPINFOW            StartupInfo;
 
-  GetStartupInfo (&StartupInfo);
+  GetStartupInfoW (&StartupInfo);
 #endif
 
   g_return_if_fail (GIMP_IS_IMAGE_WINDOW (session_managed));
