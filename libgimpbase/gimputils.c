@@ -377,7 +377,6 @@ gimp_file_show_in_file_manager (GFile   *file,
   {
     gboolean ret;
     char *filename;
-    int n;
     LPWSTR w_filename = NULL;
     ITEMIDLIST *pidl = NULL;
 
@@ -385,7 +384,8 @@ gimp_file_show_in_file_manager (GFile   *file,
 
     /* Calling this function multiple times should do no harm, but it is
        easier to put this here as it needs linking against ole32. */
-    CoInitialize (NULL);
+    if (FAILED (CoInitialize (NULL)))
+      return ret;
 
     filename = g_file_get_path (file);
     if (!filename)
@@ -395,20 +395,8 @@ gimp_file_show_in_file_manager (GFile   *file,
         goto out;
       }
 
-    n = MultiByteToWideChar (CP_UTF8, MB_ERR_INVALID_CHARS,
-                             filename, -1, NULL, 0);
-    if (n == 0)
-      {
-        g_set_error_literal (error, G_FILE_ERROR, 0,
-                             _("Error converting UTF-8 filename to wide char"));
-        goto out;
-      }
-
-    w_filename = g_malloc_n (n + 1, sizeof (wchar_t));
-    n = MultiByteToWideChar (CP_UTF8, MB_ERR_INVALID_CHARS,
-                             filename, -1,
-                             w_filename, (n + 1) * sizeof (wchar_t));
-    if (n == 0)
+    w_filename = g_utf8_to_utf16 (filename, -1, NULL, NULL, NULL);
+    if (!w_filename)
       {
         g_set_error_literal (error, G_FILE_ERROR, 0,
                              _("Error converting UTF-8 filename to wide char"));
@@ -431,6 +419,8 @@ gimp_file_show_in_file_manager (GFile   *file,
       ILFree (pidl);
     g_free (w_filename);
     g_free (filename);
+
+    CoUninitialize ();
 
     return ret;
   }
