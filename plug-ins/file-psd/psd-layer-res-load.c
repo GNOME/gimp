@@ -147,6 +147,16 @@ static gint     load_resource_ladj    (const PSDlayerres     *res_a,
                                        GInputStream          *input,
                                        GError               **error);
 
+static gint     load_resource_lpla    (const PSDlayerres     *res_a,
+                                       PSDlayer              *lyr_a,
+                                       GInputStream          *input,
+                                       GError               **error);
+
+static gint     load_resource_llnk    (const PSDlayerres     *res_a,
+                                       PSDlayer              *lyr_a,
+                                       GInputStream          *input,
+                                       GError               **error);
+
 static gint     load_resource_lfil    (const PSDlayerres     *res_a,
                                        PSDlayer              *lyr_a,
                                        GInputStream          *input,
@@ -158,6 +168,11 @@ static gint     load_resource_lfx     (const PSDlayerres     *res_a,
                                        GError               **error);
 
 static gint     load_resource_ltyp    (const PSDlayerres     *res_a,
+                                       PSDlayer              *lyr_a,
+                                       GInputStream          *input,
+                                       GError               **error);
+
+static gint     load_resource_ltxt    (const PSDlayerres     *res_a,
                                        PSDlayer              *lyr_a,
                                        GInputStream          *input,
                                        GError               **error);
@@ -196,6 +211,33 @@ static gint     load_resource_lnsr    (const PSDlayerres     *res_a,
                                        PSDlayer              *lyr_a,
                                        GInputStream          *input,
                                        GError               **error);
+
+static gint     load_resource_cinf    (const PSDlayerres     *res_a,
+                                       PSDlayer              *lyr_a,
+                                       GInputStream          *input,
+                                       GError               **error);
+
+static gint     parse_text_info       (PSDlayer              *lyr_a,
+                                       guint32                len,
+                                       gchar                 *buf,
+                                       GError               **error);
+
+static gint     load_descriptor       (const PSDlayerres     *res_a,
+                                       PSDlayer              *lyr_a,
+                                       GInputStream          *input,
+                                       GError               **error);
+
+static gchar  * load_key              (GInputStream          *input,
+                                       GError               **error);
+
+static gint     load_type             (const PSDlayerres     *res_a,
+                                       PSDlayer              *lyr_a,
+                                       GInputStream          *input,
+                                       const gchar           *class_id,
+                                       const gchar           *key,
+                                       const gchar           *type,
+                                       GError               **error);
+
 
 /* Public Functions */
 
@@ -380,6 +422,9 @@ load_layer_resource (PSDlayerres   *res_a,
       load_resource_lfx (res_a, lyr_a, input, error);
     }
 
+  else if (memcmp (res_a->key, PSD_LFX_FX, 4) == 0)
+    load_resource_lrfx (res_a, lyr_a, input, error);
+
   else if (memcmp (res_a->key, PSD_LTYP_TYPE, 4) == 0
            || memcmp (res_a->key, PSD_LTYP_TYPE2, 4) == 0)
     {
@@ -391,6 +436,9 @@ load_layer_resource (PSDlayerres   *res_a,
 
       load_resource_ltyp (res_a, lyr_a, input, error);
     }
+
+  else if (memcmp (res_a->key, PSD_LOTH_TEXT_ENGINE, 4) == 0)
+    load_resource_ltxt (res_a, lyr_a, input, error);
 
   else if (memcmp (res_a->key, PSD_LPRP_UNICODE, 4) == 0)
     {
@@ -455,7 +503,7 @@ load_layer_resource (PSDlayerres   *res_a,
           lyr_a->unsupported_features->show_gui     = TRUE;
         }
 
-      load_resource_unknown (res_a, lyr_a, input, error);
+      load_resource_lpla (res_a, lyr_a, input, error);
     }
 
   else if (memcmp (res_a->key, PSD_LLL_LINKED_LAYER, 4) == 0
@@ -471,6 +519,15 @@ load_layer_resource (PSDlayerres   *res_a,
 
       load_resource_unknown (res_a, lyr_a, input, error);
     }
+
+  else if (memcmp (res_a->key, PSD_LLL_LINKED_LAYER,     4) == 0 ||
+           memcmp (res_a->key, PSD_LLL_LINKED_LAYER_2,   4) == 0 ||
+           memcmp (res_a->key, PSD_LLL_LINKED_LAYER_3,   4) == 0 ||
+           memcmp (res_a->key, PSD_LLL_LINKED_LAYER_EXT, 4) == 0)
+    load_resource_llnk (res_a, lyr_a, input, error);
+
+  else if (memcmp (res_a->key, PSD_LOTH_COMPOSITOR, 4) == 0)
+    load_resource_cinf (res_a, lyr_a, input, error);
 
   else
     {
@@ -517,6 +574,187 @@ load_resource_ladj (const PSDlayerres  *res_a,
 }
 
 static gint
+load_resource_lpla (const PSDlayerres  *res_a,
+                    PSDlayer           *lyr_a,
+                    GInputStream       *input,
+                    GError            **error)
+{
+  /* Load placed layer */
+  static gboolean   msg_flag = FALSE;
+  gchar             type[4];
+  guint32           version;
+  gchar            *uniqueID = NULL;
+
+  IFDBG(2) g_debug ("Process layer resource block %.4s: Placed layer", res_a->key);
+
+  if (psd_read (input, &type, 4, error) < 4 ||
+      psd_read (input, &version, 4, error) < 4)
+    {
+      psd_set_error (error);
+      return -1;
+    }
+  //type    = GUINT32_FROM_BE (type);
+  version = GUINT32_FROM_BE (version);
+  /* Expected
+   * for plLd: type: plcL, version: 3,
+   * for SoLd: type: soLD, version: 4 (according to docs, also seen: 13), hmmm seems we are reading this wrong, type: 4, version 13 (probably descriptor version)
+   * for SoLE, type: soLD, version: 4 or 5. */
+  //IFDBG(3) g_debug ("Placed layer type: (skipped reading), version: %u", version);
+  IFDBG(3) g_debug ("Placed layer type: %.4s, version: %u", type, version);
+
+  if (version == 3)
+    {
+      gint32 bread, bwritten;
+      guint32 page_num, total_pages;
+      guint32 anti_alias_policy;
+      guint32 placed_layer_type;
+
+      /* Read pascal string */
+      uniqueID = fread_pascal_string (&bread, &bwritten, 1, input, error);
+      if (! uniqueID)
+        {
+          psd_set_error (error);
+          return -1;
+        }
+      g_free (uniqueID);
+
+      if (psd_read (input, &page_num,    4, error) < 4 ||
+          psd_read (input, &total_pages, 4, error) < 4 ||
+          psd_read (input, &anti_alias_policy, 4, error) < 4 ||
+          psd_read (input, &placed_layer_type, 4, error) < 4)
+        {
+          g_free (uniqueID);
+          psd_set_error (error);
+          return -1;
+        }
+      page_num    = GUINT32_FROM_BE (page_num);
+      total_pages = GUINT32_FROM_BE (total_pages);
+      anti_alias_policy = GUINT32_FROM_BE (anti_alias_policy);
+      placed_layer_type = GUINT32_FROM_BE (placed_layer_type);
+      IFDBG(3) g_debug ("Page number: %u, total pages: %u, anti alias policy: %u, placed layer type: %u",
+                        page_num, total_pages, anti_alias_policy, placed_layer_type);
+    }
+  else if (version == 4)
+    {
+      guint32 descriptor_version;
+
+      if (psd_read (input, &descriptor_version, 4, error) < 4)
+        {
+          psd_set_error (error);
+          return -1;
+        }
+      descriptor_version = GUINT32_FROM_BE (descriptor_version);
+      IFDBG(3) g_debug ("Descriptor version: %u",
+                        descriptor_version);
+
+      if (load_descriptor (res_a, lyr_a, input, error) < 0)
+        return -1;
+    }
+  else if (version == 5)
+    {
+      if (load_descriptor (res_a, lyr_a, input, error) < 0)
+        return -1;
+    }
+
+  //lyr_a->drop = TRUE;
+  if (! msg_flag && CONVERSION_WARNINGS)
+    {
+      g_message ("Warning:\n"
+                 "The image file contains placed or smart object layers. "
+                 "These are not supported by the GIMP and will "
+                 "be dropped.");
+      msg_flag = TRUE;
+    }
+
+  return 0;
+}
+
+static gint
+load_resource_llnk (const PSDlayerres     *res_a,
+                    PSDlayer              *lyr_a,
+                    GInputStream          *input,
+                    GError               **error)
+{
+  guint64  data_size, data_offset;
+  gchar    lnk_type[4]; /* 'liFD' linked file data, 'liFE' linked file external or 'liFA' linked file alias */
+  guint32  ver;
+  gchar   *uniqueID;
+  gchar   *original_filename;
+  gchar    file_type[4];
+  gchar    file_creator[4];
+  guint64  data_len;
+  gboolean file_open_descriptor;
+  gint32   bread, bwritten;
+
+  gint     lnk_count = 6;
+  gint     li;
+
+  IFDBG(2) g_debug ("Process layer resource block %.4s: linked layer data", res_a->key);
+
+  // This really needs a count based on the number of placed layers we found..
+  // For testing we set it here to 6 for our test file...
+
+  for (li = 0; li < lnk_count; li++)
+    {
+      IFDBG(3) g_debug ("Linked data[%d], Offset: %" G_GOFFSET_FORMAT, li, PSD_TELL(input));
+      if (psd_read (input, &data_size, 8, error) < 8 ||
+          psd_read (input, &lnk_type, 4, error) < 4 ||
+          psd_read (input, &ver, 4, error) < 4)
+        {
+          psd_set_error (error);
+          return -1;
+        }
+
+      data_size = GUINT64_FROM_BE (data_size);
+      ver = GUINT32_FROM_BE (ver);
+      IFDBG(3) g_debug ("Data size: %" G_GSIZE_FORMAT ", link type: %.4s, version %u", data_size, lnk_type, ver);
+
+      uniqueID = fread_pascal_string (&bread, &bwritten, 1, input, error);
+      if (! uniqueID)
+        {
+          return -1;
+        }
+      g_free (uniqueID);
+      IFDBG(3) g_debug ("Unique ID: %s", uniqueID);
+
+      original_filename = fread_unicode_string (&bread, &bwritten, 1,
+                                                res_a->ibm_pc_format,
+                                                input, error);
+      if (! original_filename)
+        {
+          return -1;
+        }
+      IFDBG(3) g_debug ("Original filename: %s", original_filename);
+      g_free (original_filename);
+
+      if (psd_read (input, &file_type, 4, error) < 4 ||
+          psd_read (input, &file_creator, 4, error) < 4 ||
+          psd_read (input, &data_len, 8, error) < 8 ||
+          psd_read (input, &file_open_descriptor, 1, error) < 1)
+        {
+          psd_set_error (error);
+          return -1;
+        }
+      data_len = GUINT64_FROM_BE (data_len);
+      IFDBG(3) g_debug ("File type: %.4s, creator: %.4s, data length: %" G_GSIZE_FORMAT ", file open: %u",
+                        file_type, file_creator, data_len, (guchar) file_open_descriptor);
+      //data_len = (data_len + 3) / 4 * 4;
+      data_offset = (PSD_TELL(input) + data_len + 3) / 4 * 4;
+
+      IFDBG(3) g_debug ("File data offset: %" G_GOFFSET_FORMAT ", real end offset: %" G_GOFFSET_FORMAT,
+                        PSD_TELL(input), data_offset);
+
+      if (! psd_seek (input, data_offset, G_SEEK_SET, error))
+        {
+          psd_set_error (error);
+          return -1;
+        }
+    }
+
+  return 0;
+}
+
+static gint
 load_resource_lfil (const PSDlayerres  *res_a,
                     PSDlayer           *lyr_a,
                     GInputStream       *input,
@@ -537,6 +775,27 @@ load_resource_lfx (const PSDlayerres  *res_a,
 {
   /* Load layer effects */
 
+  if (memcmp (res_a->key, PSD_LFX_FX2, 4) == 0)
+    {
+      guint32 oe_version, desc_version;
+      gint32  res;
+
+      if (psd_read (input, &oe_version, 4, error) < 4 ||
+          psd_read (input, &desc_version, 4, error) < 4)
+        {
+          psd_set_error (error);
+          return -1;
+        }
+      oe_version   = GUINT32_FROM_BE (oe_version);
+      desc_version = GUINT32_FROM_BE (desc_version);
+
+      IFDBG(3) g_debug ("Objects based effects layer info: object effects version: %u, descriptor version: %u", oe_version, desc_version);
+
+      res = load_descriptor (res_a, lyr_a, input, error);
+      if (res < 0)
+        return res;
+    }
+
   IFDBG(2) g_debug ("Process layer resource block %.4s: Layer effects", res_a->key);
 
   return 0;
@@ -552,21 +811,28 @@ load_resource_ltyp (const PSDlayerres  *res_a,
   gint16            version        = 0;
   gint16            text_desc_vers = 0;
   gint32            desc_version   = 0;
-  gint32            read_len;
-  gint32            write_len;
-  guint64           t_xx = 0;
-  guint64           t_xy = 0;
-  guint64           t_yx = 0;
-  guint64           t_yy = 0;
-  guint64           t_tx = 0;
-  guint64           t_ty = 0;
-  gchar            *classID;
+  gint32            warp_version;
+  gint32            warp_desc_version;
+  /*gint32            read_len;
+  gint32            write_len;*/
+  gint64            transform[6];
+  gdouble           d_transform[6];
+  /*guint64           t_xx;
+  guint64           t_xy;
+  guint64           t_yx;
+  guint64           t_yy;
+  guint64           t_tx;
+  guint64           t_ty;
+  gchar            *classID;*/
+  gint              i, res;
 
   IFDBG(2) g_debug ("Process layer resource block %.4s: Type tool layer", res_a->key);
 
   /* New style type tool layers (ps6) */
   if (memcmp (res_a->key, PSD_LTYP_TYPE2, 4) == 0)
     {
+      lyr_a->text.info = NULL;
+      /*
       if (psd_read (input, &version, 2, error) < 2 ||
           psd_read (input, &t_xx,    8, error) < 8 ||
           psd_read (input, &t_xy,    8, error) < 8 ||
@@ -597,20 +863,156 @@ load_resource_ltyp (const PSDlayerres  *res_a,
       lyr_a->text.yy = t_yy >> 11;
       lyr_a->text.tx = t_tx >> 11;
       lyr_a->text.ty = t_ty >> 11;
+      */
 
-      IFDBG(2) g_debug ("Version: %d, Text desc. vers.: %d, Desc. vers.: %d",
+      if (psd_read (input, &version,      2, error) < 2 ||
+          psd_read (input, &transform[0], 8, error) < 8 ||
+          psd_read (input, &transform[1], 8, error) < 8 ||
+          psd_read (input, &transform[2], 8, error) < 8 ||
+          psd_read (input, &transform[3], 8, error) < 8 ||
+          psd_read (input, &transform[4], 8, error) < 8 ||
+          psd_read (input, &transform[5], 8, error) < 8 ||
+          psd_read (input, &text_desc_vers, 2, error) < 2 ||
+          psd_read (input, &desc_version,   4, error) < 4)
+        {
+          psd_set_error (error);
+          return -1;
+        }
+
+      version = GINT16_FROM_BE (version);
+      text_desc_vers = GINT16_FROM_BE (text_desc_vers);
+      desc_version = GINT32_FROM_BE (desc_version);
+
+      for (i = 0; i <= 5; i++)
+        {
+          gdouble *val;
+          guint64  tmp;
+
+          tmp = GUINT64_FROM_BE (transform[i]);
+          val = (gpointer) &tmp;
+          d_transform[i] = *val;
+
+          /*IFDBG(3) g_debug ("Double: %f", *val);*/
+        }
+      lyr_a->text.xx = d_transform[0];
+      lyr_a->text.xy = d_transform[1];
+      lyr_a->text.yx = d_transform[2];
+      lyr_a->text.yy = d_transform[3];
+      lyr_a->text.tx = d_transform[4];
+      lyr_a->text.ty = d_transform[5];
+
+      IFDBG(2) g_debug ("Version: %d, Text version: %d, Descriptor version: %d",
                         version, text_desc_vers, desc_version);
 
       IFDBG(2) g_debug ("Transform\n\txx: %f\n\txy: %f\n\tyx: %f"
                         "\n\tyy: %f\n\ttx: %f\n\tty: %f",
                         lyr_a->text.xx, lyr_a->text.xy, lyr_a->text.yx,
                         lyr_a->text.yy, lyr_a->text.tx, lyr_a->text.ty);
-
+/*
       classID = fread_unicode_string (&read_len, &write_len, 4,
                                       res_a->ibm_pc_format, input, error);
       IFDBG(2) g_debug ("Unicode name: %s", classID);
+*/
+      res = load_descriptor (res_a, lyr_a, input, error);
+      /*
+       * This descriptor seems to have a lot of text formatting etc related
+       * data in a format that is not described in the online specs...
+       * It seems that commands start with a slash followed by a command name,
+       * e.g. /Editor, /Text, /EngineDict, /Properties
+       */
+      if (res < 0)
+        return -1;
+
+      if (psd_read (input, &warp_version, 2, error) < 2 ||
+          psd_read (input, &warp_desc_version, 4, error) < 4)
+        {
+          psd_set_error (error);
+          return -1;
+        }
+
+      warp_version = GINT16_FROM_BE (warp_version);
+      warp_desc_version = GINT32_FROM_BE (warp_desc_version);
+      IFDBG(2) g_debug ("Warp version: %d, descriptor version: %d",
+                        warp_version, warp_desc_version);
+
+      res = load_descriptor (res_a, lyr_a, input, error);
+      if (res < 0)
+        return -1;
+/*
+      if (psd_read (input, &warp_version, 2, error) < 2 ||
+          psd_read (input, &warp_desc_version, 4, error) < 4)
+        {
+          psd_set_error (error);
+          return -1;
+        }
+*/
+      IFDBG(3) g_debug ("Offset after warp descriptor: %" G_GOFFSET_FORMAT, PSD_TELL(input));
+
+      /* Hmmm, looks like there only is room for 2 double values or 16 bytes here...
+         TODO It looks like psd-tools reads 4 ints here, that would fit... */
+      if (psd_read (input, &transform[0], 8, error) < 8 ||
+          psd_read (input, &transform[1], 8, error) < 8 ||
+          psd_read (input, &transform[2], 8, error) < 8 ||
+          psd_read (input, &transform[3], 8, error) < 8)
+        {
+          psd_set_error (error);
+          return -1;
+        }
+      for (i = 0; i <= 3; i++)
+        {
+          gdouble  *val;
+          guint64   tmp;
+
+          tmp = GUINT64_FROM_BE (transform[i]);
+          val = (gpointer) &tmp;
+          d_transform[i] = *val;
+          /*d_transform[i] = *(gdouble *) ((gpointer) &tmp);*/
+          g_printerr ("\ti=%d, value %f\n", i, *val);
+          /*d_transform[i] = *(gdouble *) &tmp;*/
+        }
+      IFDBG(2) g_debug ("Left: %f, Top: %f, Right: %f, Bottom: %f",
+                        d_transform[0], d_transform[1],
+                        d_transform[2], d_transform[3]);
+      IFDBG(3) g_debug ("End offset: %" G_GOFFSET_FORMAT, PSD_TELL(input));
     }
 
+  return 0;
+}
+
+static gint load_resource_ltxt (const PSDlayerres  *res_a,
+                                PSDlayer           *lyr_a,
+                                GInputStream       *input,
+                                GError            **error)
+{
+  guint32  res_len;
+  gchar   *buf;
+
+  IFDBG(2) g_debug ("Process layer resource block %.4s: Type tool layer", res_a->key);
+  IFDBG(3) g_debug ("Offset: %" G_GOFFSET_FORMAT, PSD_TELL(input));
+
+  /* TODO: Test if size of length here depends on it being PSD/PSB!
+   * If it does, it may be easier to use psd_read_len here! */
+/*
+  if (psd_read (input, &res_len, 4, error) < 4)
+    {
+      psd_set_error (error);
+      return -1;
+    }
+*/
+  //res_len = GUINT32_FROM_BE (res_len);
+  res_len = res_a->data_len;
+  IFDBG(3) g_debug ("TXT2 resource length: %u", res_len);
+
+  buf = g_malloc (res_len);
+  if (psd_read (input, buf, res_len, error) < res_len)
+    {
+      g_printerr ("Didn't read enough bytes!\n");
+      psd_set_error (error);
+      return -1;
+    }
+  IFDBG(3) g_debug ("Parse text info at offset: %" G_GOFFSET_FORMAT, PSD_TELL(input));
+  parse_text_info (lyr_a, res_len, buf, error);
+  g_free(buf);
   return 0;
 }
 
@@ -734,6 +1136,16 @@ load_resource_lsct (const PSDlayerres  *res_a,
   return 0;
 }
 
+/* Adobe uses fixed point ints which consist of 16-bit number and 16-bit fraction */
+/*
+static inline gfloat
+fixed_to_float (gint16 num, gint16 fract)
+{
+  return (gfloat) num + fract / 65535.0f;
+}
+*/
+#define FIXED_TO_FLOAT(num,fract) (gfloat) num + fract / 65535.0f
+
 static gint
 load_resource_lrfx (const PSDlayerres  *res_a,
                     PSDlayer           *lyr_a,
@@ -755,8 +1167,10 @@ load_resource_lrfx (const PSDlayerres  *res_a,
       psd_set_error (error);
       return -1;
     }
-
+  ls_a->version = GUINT16_TO_BE (ls_a->version);
   ls_a->count = GUINT16_TO_BE (ls_a->count);
+  IFDBG(3) g_debug ("Version %u, count %u", ls_a->version, ls_a->count);
+
   for (i = 0; i < ls_a->count; i++)
     {
       if (psd_read (input, &signature,  4, error) < 4 ||
@@ -766,6 +1180,7 @@ load_resource_lrfx (const PSDlayerres  *res_a,
           return -1;
         }
       effectname[4] = '\0';
+      IFDBG(3) g_debug ("Signature: %.4s, Effect name: %s", signature, effectname);
 
       /* Not sure if 8B64 is possible here but it won't hurt to check. */
       if (memcmp (signature, "8BIM", 4) != 0 &&
@@ -785,11 +1200,15 @@ load_resource_lrfx (const PSDlayerres  *res_a,
                   psd_set_error (error);
                   return -1;
                 }
+              IFDBG(3) g_debug ("cmnS (common state info) - size %u, version %u, visible: %u",
+                                GUINT32_TO_BE (ls_a->cmns.size), GUINT32_TO_BE (ls_a->cmns.ver),
+                                ls_a->cmns.visible );
             }
           else if (memcmp (effectname, "dsdw", 4) == 0
                    || memcmp (effectname, "isdw", 4) == 0)
             {
               PSDLayerStyleShadow shadow;
+              gint16  bl1, bl2, in1, in2, an1, an2, di1, di2;
 
               if (memcmp (effectname, "dsdw", 4) == 0)
                 shadow = ls_a->dsdw;
@@ -798,10 +1217,18 @@ load_resource_lrfx (const PSDlayerres  *res_a,
 
               if (psd_read (input, &shadow.size,        4, error) < 4 ||
                   psd_read (input, &shadow.ver,         4, error) < 4 ||
-                  psd_read (input, &shadow.blur,        4, error) < 4 ||
-                  psd_read (input, &shadow.intensity,   4, error) < 4 ||
-                  psd_read (input, &shadow.angle,       4, error) < 4 ||
-                  psd_read (input, &shadow.distance,    4, error) < 4 ||
+                  psd_read (input, &bl1,                2, error) < 2 ||
+                  psd_read (input, &bl2,                2, error) < 2 ||
+                  psd_read (input, &in1,                2, error) < 2 ||
+                  psd_read (input, &in2,                2, error) < 2 ||
+                  psd_read (input, &an1,                2, error) < 2 ||
+                  psd_read (input, &an2,                2, error) < 2 ||
+                  psd_read (input, &di1,                2, error) < 2 ||
+                  psd_read (input, &di2,                2, error) < 2 ||
+//                  psd_read (input, &shadow.blur,        4, error) < 4 ||
+//                  psd_read (input, &shadow.intensity,   4, error) < 4 ||
+//                  psd_read (input, &shadow.angle,       4, error) < 4 ||
+//                  psd_read (input, &shadow.distance,    4, error) < 4 ||
                   psd_read (input, &shadow.color[0],    2, error) < 2 ||
                   psd_read (input, &shadow.color[1],    2, error) < 2 ||
                   psd_read (input, &shadow.color[2],    2, error) < 2 ||
@@ -821,6 +1248,16 @@ load_resource_lrfx (const PSDlayerres  *res_a,
                   psd_set_error (error);
                   return -1;
                 }
+              shadow.blur      = FIXED_TO_FLOAT (GUINT16_TO_BE (bl1), GUINT16_TO_BE (bl2));
+              shadow.intensity = FIXED_TO_FLOAT (GUINT16_TO_BE (in1), GUINT16_TO_BE (in2));
+              shadow.angle     = FIXED_TO_FLOAT (GUINT16_TO_BE (an1), GUINT16_TO_BE (an2));
+              shadow.distance  = FIXED_TO_FLOAT (GUINT16_TO_BE (di1), GUINT16_TO_BE (di2));
+              IFDBG(3) g_debug ("%s - size %u, version %u, effect enabled: %u, blur (pixels): %f, intensity (pct): %f, angle (degrees): %f, distance (pixels): %f blendsig: %.4s, effect %.4s", effectname,
+                                GUINT32_TO_BE (shadow.size), GUINT32_TO_BE (shadow.ver),
+                                shadow.effecton,
+                                shadow.blur, shadow.intensity,
+                                shadow.angle, shadow.distance,
+                                shadow.blendsig, &shadow.effect );
             }
           else if (memcmp (effectname, "oglw", 4) == 0)
             {
@@ -844,6 +1281,10 @@ load_resource_lrfx (const PSDlayerres  *res_a,
                 }
 
               ls_a->oglw.size = GUINT32_TO_BE (ls_a->oglw.size);
+              IFDBG(3) g_debug ("oglw - size %u, version %u, effect enabled: %u, blendsig: %.4s, effect %.4s",
+                                ls_a->oglw.size, GUINT32_TO_BE (ls_a->oglw.ver),
+                                ls_a->oglw.effecton,
+                                ls_a->oglw.blendsig, &ls_a->oglw.effect );
               if (ls_a->oglw.size == 42)
                 {
                   if (psd_read (input, &ls_a->oglw.natcolor[0], 2, error) < 2 ||
@@ -878,6 +1319,10 @@ load_resource_lrfx (const PSDlayerres  *res_a,
                 }
 
               ls_a->iglw.size = GUINT32_TO_BE (ls_a->iglw.size);
+              IFDBG(3) g_debug ("iglw - size %u, version %u, effect enabled: %u, blendsig: %.4s, effect %.4s",
+                                ls_a->iglw.size, GUINT32_TO_BE (ls_a->iglw.ver),
+                                ls_a->iglw.effecton,
+                                ls_a->iglw.blendsig, &ls_a->iglw.effect );
               if (ls_a->iglw.size == 43)
                 {
                   if (psd_read (input, &ls_a->iglw.invert,      1, error) < 1 ||
@@ -925,6 +1370,11 @@ load_resource_lrfx (const PSDlayerres  *res_a,
                 }
 
               ls_a->bevl.size = GUINT32_TO_BE (ls_a->bevl.size);
+              IFDBG(3) g_debug ("bevl - size %u, version %u, effect enabled: %u, highlightsig: %.4s, highlighteffect %.4s, shadowsig: %.4s, shadoweffect %.4s",
+                                ls_a->bevl.size, GUINT32_TO_BE (ls_a->bevl.ver),
+                                ls_a->bevl.enabled,
+                                &ls_a->bevl.highlightsig, &ls_a->bevl.highlighteffect,
+                                &ls_a->bevl.shadowsig, &ls_a->bevl.shadoweffect );
               if (ls_a->bevl.size == 78)
                 {
                   if (psd_read (input, &ls_a->bevl.highlightnatcolor[0], 2, error) < 2 ||
@@ -969,6 +1419,10 @@ load_resource_lrfx (const PSDlayerres  *res_a,
                   psd_set_error (error);
                   return -1;
                 }
+              IFDBG(3) g_debug ("sofi - size %u, version %u, enabled %u, blendsig: %.4s, blend %.4s, opacity %u",
+                                GUINT32_TO_BE (ls_a->sofi.size), GUINT32_TO_BE (ls_a->sofi.ver),
+                                ls_a->sofi.enabled,
+                                blendsig, ls_a->sofi.blend, 100 * ls_a->sofi.opacity / 255 );
             }
           else
             {
@@ -1031,5 +1485,654 @@ load_resource_lnsr (const PSDlayerres  *res_a,
    * https://bugzilla.gnome.org/show_bug.cgi?id=753986#c4
    */
 
+  return 0;
+}
+
+static gint
+load_resource_cinf (const PSDlayerres  *res_a,
+                    PSDlayer           *lyr_a,
+                    GInputStream       *input,
+                    GError            **error)
+{
+  guint32 version;
+
+  IFDBG(2) g_debug ("Process layer resource block %.4s: Compositor Used (cinf)", res_a->key);
+
+  if (psd_read (input, &version, 4, error) < 4)
+    {
+      psd_set_error (error);
+      return -1;
+    }
+  version = GUINT32_FROM_BE (version);
+  IFDBG(3) g_debug ("Descriptor version (expecting 16): %u", version);
+
+  if (load_descriptor (res_a, lyr_a, input, error) < 0)
+    return -1;
+
+  return 0;
+}
+
+static gint parse_text_info (PSDlayer  *lyr_a,
+                             guint32    len,
+                             gchar     *buf,
+                             GError   **error)
+{
+  gint      lvl    = 0;
+  gint      ar_lvl = 0;
+  guint32   bufpos = 0;
+  guint32   cmdpos = 0;
+  guint32   val_len = 0;
+  guint32   val_pos = 0;
+  guint32   value_start_pos = 0;
+  /*gchar    *value;*/
+  gchar    *last_cmd = NULL;
+  gboolean  reading_command = FALSE;
+  gboolean  reading_value   = FALSE;
+  gboolean  reading_binary  = FALSE;
+  /*gboolean  read_utf16      = FALSE;*/
+
+  g_printerr ("parsing starts...\n");
+  while (bufpos < len)
+    {
+      const gint COMMAND_SIZE = 128; /* No idea what the real Photoshop maximum is. */
+      gchar token;
+      gchar command[COMMAND_SIZE+1];
+      gchar simple_value[COMMAND_SIZE+1];
+
+      token = buf[bufpos];
+
+      if (reading_binary)
+        {
+          gchar     nexttoken = ' ';
+          gboolean  endbinary = FALSE;
+
+          /* reading 16-bit values unless token == ) */
+          if (token == ')' && bufpos < len)
+            {
+              nexttoken = buf[bufpos+1];
+              //g_printerr ("bufpos: %u, token: %.2x\n", bufpos+1-value_start_pos, nexttoken);
+              if (nexttoken == ' '  ||
+                  nexttoken == 0x09 ||
+                  nexttoken == 0x0a)
+                endbinary = TRUE;
+            }
+
+          if (! endbinary)
+            {
+              bufpos++;
+              /*if (bufpos < len)
+                bufpos++;*/
+              continue;
+            }
+          else
+            {
+              /* ...nothing to do here */
+            }
+        }
+
+      switch (token)
+        {
+        case '(': /* start of binary value */
+          reading_binary = TRUE;
+          value_start_pos = bufpos + 1;
+          IFDBG(4) g_debug ("Binary value start");
+          break;
+        case ')': /* end of binary value */
+          reading_binary = FALSE;
+          /*read_utf16    = FALSE;*/
+          val_len = bufpos - value_start_pos;
+          /* TODO: Copy value to buffer and then use a separate function
+                   to parse that value... */
+          if (strcmp (last_cmd, "Name") == 0 ||
+              strcmp (last_cmd, "InternalName") == 0 ||
+              strcmp (last_cmd, "Text") == 0)
+            {
+              gchar  *name_utf16;
+              gchar  *name_utf8;
+              GError *error = NULL;
+              gsize   bw, br;
+
+              /* Get the name as UTF-8 from UTF-16 data. */
+              name_utf16 = g_malloc0 (val_len + 2);
+              memcpy (name_utf16, &buf[value_start_pos+2], val_len-2);
+              name_utf8 = g_convert (name_utf16, val_len, "utf-8", "utf-16BE", &br, &bw, &error);
+              //g_printerr ("utf8 length: %d, bytes read: %d, written: %d\n", strlen(name_utf8), br, bw);
+              if (error)
+                {
+                  g_printerr ("--> Error converting utf-16 to utf-8: %s", error->message);
+                  g_clear_error (&error);
+                }
+              IFDBG(2) g_debug ("Text value: '%s'", name_utf8);
+              g_free (name_utf16);
+              g_free (name_utf8);
+            }
+          IFDBG(4) g_debug ("Binary value end, value length: %u bytes", val_len);
+          break;
+        case '/': /* start of command */
+          reading_command = TRUE;
+          cmdpos = 0;
+          break;
+        case 'a'...'z':
+        case 'A'...'Z':
+        case '0'...'9':
+        case '-':
+        case '.':
+          if (reading_command)
+            {
+              if (token == '-' || token == '.')
+                {
+                  IFDBG(2) g_debug ("Unexpected token %c in command!", token);
+                }
+              else if (cmdpos < COMMAND_SIZE)
+                {
+                  command[cmdpos++] = token;
+                }
+              else
+                {
+                  g_printerr ("Warning: text command token too long!\n");
+                }
+            }
+          else if (! reading_binary)
+            {
+              if (! reading_value)
+                {
+                  reading_value = TRUE;
+                  val_pos = 0;
+                }
+              if (val_pos < COMMAND_SIZE)
+                {
+                  simple_value[val_pos++] = token;
+                }
+              else
+                {
+                  g_printerr ("Warning: text value token too long!\n");
+                }
+            }
+          break;
+        case ' ':
+        case 0x09: /* TAB character */
+        case 0x0a: /* newline character */
+          if (reading_command)
+            {
+              command[cmdpos] = '\0';
+              cmdpos = 0;
+              reading_command = FALSE;
+              g_free (last_cmd);
+              last_cmd = g_strdup ((const gchar *) &command);
+              IFDBG(2) g_debug ("Command: %s at level %d", command, lvl);
+            }
+          else if (reading_value)
+            {
+              simple_value[val_pos] = '\0';
+              val_pos = 0;
+              reading_value = FALSE;
+              IFDBG(2) g_debug ("Value: %s", simple_value);
+            }
+          break;
+        case '<': /* Increase level */
+          if (buf[bufpos+1] == '<') //TODO: test buffer overrun
+            {
+              lvl++;
+              bufpos++;
+            }
+          break;
+        case '>': /* Decrease level */
+          if (buf[bufpos+1] == '>') //TODO: test buffer overrun
+            {
+              lvl--;
+              bufpos++;
+            }
+          break;
+        case '[': /* begin array */
+          ar_lvl++;
+          IFDBG(2) g_debug ("Array start, level %d", ar_lvl);
+          break;
+        case ']': /* end array */
+          ar_lvl--;
+          IFDBG(2) g_debug ("Array end, level %d", ar_lvl);
+          break;
+        case (gchar) 0xfe: /* feff is UTF-16 BOM */
+          if (reading_command)
+            {
+              if (buf[bufpos+1] == (gchar) 0xff) //TODO: test buffer overrun
+                {
+                  bufpos++;
+                  IFDBG(2) g_debug ("Value is using UTF-16");
+                }
+            }
+          break;
+        default:
+          if (reading_command)
+            {
+              command[cmdpos] = '\0';
+              cmdpos = 0;
+              g_free (last_cmd);
+              last_cmd = g_strdup ((const gchar *) &command);
+              reading_command = FALSE;
+              IFDBG(2) g_debug ("--> Error: unexpected token! Command: %s at level %d", command, lvl);
+              g_warning ("Unexpected token. Command: %s", command);
+            }
+          else if (reading_value)
+            {
+              simple_value[val_pos] = '\0';
+              val_pos = 0;
+              reading_value = FALSE;
+              IFDBG(2) g_debug ("--> Error: unexpected token! Value: %s", simple_value);
+              g_warning ("Unexpected token value.");
+            }
+          break;
+        }
+      bufpos++;
+    }
+  g_free (last_cmd);
+  g_printerr ("parsing done...\n");
+
+  return bufpos;
+}
+
+static gint
+load_descriptor (const PSDlayerres  *res_a,
+                 PSDlayer           *lyr_a,
+                 GInputStream       *input,
+                 GError            **error)
+{
+  gchar   *uniqueID       = NULL;
+  gchar   *classID_string = NULL;
+  guint32  num_items;
+  gint32   bread, bwritten;
+  gint     i;
+
+  IFDBG(3) g_debug ("start load_descriptor - Offset: %" G_GOFFSET_FORMAT, PSD_TELL(input));
+  /* Read unicode string */
+  uniqueID = fread_unicode_string (&bread, &bwritten, 1, res_a->ibm_pc_format,
+                                   input, error);
+  if (! uniqueID)
+    {
+      psd_set_error (error);
+      return -1;
+    }
+  g_free (uniqueID);
+
+  IFDBG(3) g_debug ("Offset: %" G_GOFFSET_FORMAT, PSD_TELL(input));
+  classID_string = load_key (input, error);
+  IFDBG(3) g_debug ("Class ID: %s", classID_string);
+
+  IFDBG(3) g_debug ("Offset: %" G_GOFFSET_FORMAT, PSD_TELL(input));
+  if (psd_read (input, &num_items, 4, error) < 4)
+    {
+      psd_set_error (error);
+      g_free (classID_string);
+      return -1;
+    }
+  num_items = GUINT32_FROM_BE (num_items);
+  IFDBG(3) g_debug ("Number of items: %u", num_items);
+
+  for (i = 0; i < num_items; i++)
+    {
+      gchar *key;
+      gchar  type[4];
+      gint   res;
+
+      IFDBG(3) g_debug ("Offset: %" G_GOFFSET_FORMAT, PSD_TELL(input));
+
+      key = load_key (input, error);
+      if (! key)
+        {
+          g_free (classID_string);
+          return -1;
+        }
+      else if (psd_read (input, &type, 4, error) < 4)
+        {
+          psd_set_error (error);
+          g_free (classID_string);
+          return -1;
+        }
+      IFDBG(3) g_debug ("Item: %d, key: %s type: %.4s", i, key, type);
+
+      res = load_type (res_a, lyr_a, input, classID_string, key, type, error);
+      g_free (key);
+      if (res < 0)
+        return res;
+    }
+
+  g_free (classID_string);
+  g_printerr ("- return ok from load_descriptor\n");
+  return 0;
+}
+
+static gchar *
+load_key (GInputStream  *input,
+          GError       **error)
+{
+  guint32  len = 0;
+  gchar   *key;
+
+  if (psd_read (input, &len, 4, error) < 4)
+    {
+      psd_set_error (error);
+      return NULL;
+    }
+  len = GUINT32_FROM_BE (len);
+
+  if (len == 0)
+    {
+      /* pre-defined key is always 4 bytes */
+      len = 4;
+    }
+
+  /* We can't use fread_pascal_string since that expects a 1-byte length
+     instead of 4-bytes. */
+  key = g_malloc0 (len+1);
+  if (! key)
+    return NULL;
+
+  if (psd_read (input, key, len, error) < len)
+    {
+      psd_set_error (error);
+      g_free (key);
+      return NULL;
+    }
+  key [len] = '\0';
+
+  return key;
+}
+
+static gint
+load_type (const PSDlayerres  *res_a,
+           PSDlayer           *lyr_a,
+           GInputStream       *input,
+           const gchar        *class_id,
+           const gchar        *key,
+           const gchar        *type,
+           GError            **error)
+{
+  if (memcmp (type, "obj ", 4) == 0)
+    {
+      /* Reference structure*/
+      IFDBG(3) g_debug ("ob 'reference structure'");
+      g_message ("FIXME Type: %s", type);
+    }
+  else if (memcmp (type, "Objc", 4) == 0)
+    {
+      /* Descriptor structure*/
+      gint res;
+
+      IFDBG(3) g_debug ("Objc Descriptor begin");
+      res = load_descriptor (res_a, lyr_a, input, error);
+      IFDBG(3) g_debug ("Objc Descriptor end");
+      if (res < 0)
+        return res;
+    }
+  else if (memcmp (type, "VlLs", 4) == 0)
+    {
+      /* List */
+      gint32 list_items = 0;
+      gint32 li;
+
+      if (psd_read (input, &list_items, 4, error) < 4)
+        {
+          psd_set_error (error);
+          return -1;
+        }
+      list_items = GUINT32_FROM_BE (list_items);
+      IFDBG(3) g_debug ("Number of items in list: %i", list_items);
+
+      for (li = 0; li < list_items; li++)
+        {
+          gchar type[4];
+          gint  res;
+
+          if (psd_read (input, &type, 4, error) < 4)
+            {
+              psd_set_error (error);
+              return -1;
+            }
+          IFDBG(3) g_debug ("Item: %d, type: %.4s", li, type);
+
+          res = load_type (res_a, lyr_a, input, class_id, key, type, error);
+          if (res < 0)
+            return res;
+        }
+    }
+  else if (memcmp (type, "doub", 4) == 0)
+    {
+      /* Double */
+      gdouble  *val;
+      guint64   tmp = 0;
+
+      if (psd_read (input, &tmp, 8, error) < 8)
+        {
+          psd_set_error (error);
+          return -1;
+        }
+      tmp = GUINT64_FROM_BE (tmp);
+      val = (gpointer) &tmp;
+
+      IFDBG(3) g_debug ("double value: %f", *val);
+    }
+  else if (memcmp (type, "UntF", 4) == 0)
+    {
+      /* Unit float */
+      gchar    floatkey[4] = "";
+      gdouble  *val;
+      guint64   tmp = 0;
+
+      if (psd_read (input, &floatkey, 4, error) < 4)
+        {
+          psd_set_error (error);
+          return -1;
+        }
+      if (psd_read (input, &tmp, 8, error) < 8)
+        {
+          psd_set_error (error);
+          return -1;
+        }
+      tmp = GUINT64_FROM_BE (tmp);
+      val = (gpointer) &tmp;
+
+      IFDBG(3) g_debug ("Float: %.4s, value: %f", floatkey, *val);
+    }
+  else if (memcmp (type, "UnFl ", 4) == 0)
+    {
+      /* Undocumented: Unit Floats */
+      gchar   floatkey[4] = "";
+      guint32 count;
+      gint    i;
+
+      if (psd_read (input, &floatkey, 4, error) < 4)
+        {
+          psd_set_error (error);
+          return -1;
+        }
+      if (psd_read (input, &count, 4, error) < 4)
+        {
+          psd_set_error (error);
+          return -1;
+        }
+      count = GUINT32_FROM_BE (count);
+      IFDBG(3) g_debug ("Array[%u] of float of type: %.4s", count, floatkey);
+
+      for (i = 0; i < count; i++)
+        {
+          gdouble  *val;
+          guint64   tmp = 0;
+
+          if (psd_read (input, &tmp, 8, error) < 8)
+            {
+              psd_set_error (error);
+              return -1;
+            }
+          /* double needs to be converted from BE, but there is no direct
+           * reverse for doubles, so use guint64 which is also 64 bits. */
+          tmp = GUINT64_FROM_BE (tmp);
+          val = (gpointer) &tmp;
+
+          IFDBG(3) g_debug ("[%i] - value: %f", i, *val);
+        }
+    }
+  else if (memcmp (type, "TEXT", 4) == 0)
+    {
+      /* String */
+      gchar  *str;
+      gint32  bread, bwritten;
+
+      str = fread_unicode_string (&bread, &bwritten, 1, res_a->ibm_pc_format,
+                                  input, error);
+      if (! str)
+        {
+          psd_set_error (error);
+          return -1;
+        }
+      IFDBG(3) g_debug ("string value: %s (class id: '%s', key: '%s')", str, class_id, key);
+      if (strcmp (class_id, "TxLr") == 0 &&
+          strcmp (key, "Txt ") == 0)
+        {
+          /* Text of a text layer */
+          lyr_a->text.info = strdup (str);
+          g_printerr ("Saved text to layer record: '%s'\n", lyr_a->text.info);
+        }
+      g_free (str);
+    }
+  else if (memcmp (type, "enum", 4) == 0)
+    {
+      /* Enumerated descriptor */
+      gchar  *nameID, *valueID;
+
+      nameID  = load_key (input, error);
+      valueID = load_key (input, error);
+      IFDBG(3) g_debug ("Enum name: %s, value: %s",
+                        nameID, valueID);
+      g_free (nameID);
+      g_free (valueID);
+    }
+  else if (memcmp (type, "long", 4) == 0)
+    {
+      /* Integer */
+      gint32 psdlong = 0;
+
+      if (psd_read (input, &psdlong, 4, error) < 4)
+        {
+          psd_set_error (error);
+          return -1;
+        }
+      psdlong = GUINT32_FROM_BE (psdlong);
+      IFDBG(3) g_debug ("long value: %d", psdlong);
+    }
+  else if (memcmp (type, "comp", 4) == 0)
+    {
+      /* Large Integer */
+      gint64 psdlarge = 0;
+
+      if (psd_read (input, &psdlarge, 8, error) < 8)
+        {
+          psd_set_error (error);
+          return -1;
+        }
+      psdlarge = GUINT32_FROM_BE (psdlarge);
+      IFDBG(3) g_debug ("large value: %" G_GINT64_FORMAT, psdlarge);
+    }
+  else if (memcmp (type, "bool", 4) == 0)
+    {
+      /* Boolean */
+      gboolean val = FALSE;
+
+      if (psd_read (input, &val, 1, error) < 1)
+        {
+          psd_set_error (error);
+          return -1;
+        }
+      IFDBG(3) g_debug ("Boolean value: %u", (gboolean) val);
+    }
+  else if (memcmp (type, "GlbO", 4) == 0)
+    {
+      /* GlobalObject same as Descriptor */
+      IFDBG(3) g_debug ("GlbO GlobalObject same as Descriptor");
+      g_message ("FIXME Type: %s", type);
+    }
+  else if (memcmp (type, "type", 4) == 0)
+    {
+      /* Class */
+      IFDBG(3) g_debug ("type (Class)");
+      g_message ("FIXME Type: %s", type);
+    }
+  else if (memcmp (type, "GlbC", 4) == 0)
+    {
+      /* Class */
+      IFDBG(3) g_debug ("GlbC (global? Class)");
+      g_message ("FIXME Type: %s", type);
+    }
+  else if (memcmp (type, "alis", 4) == 0)
+    {
+      /* Alias */
+      IFDBG(3) g_debug ("alis (Alias)");
+      g_message ("FIXME Type: %s", type);
+    }
+  else if (memcmp (type, "tdta", 4) == 0)
+    {
+      /* Raw Data */
+      guint32  size = 0;
+      goffset  ofs;
+      gchar   *buf = NULL;
+
+      if (psd_read (input, &size, 4, error) < 4)
+        {
+          psd_set_error (error);
+          return -1;
+        }
+      size = GUINT32_FROM_BE (size);
+      ofs  = PSD_TELL(input) + size;
+
+      IFDBG(3) g_debug ("Size of tdta: %u, ending offset: %" G_GOFFSET_FORMAT, size, ofs);
+      buf = g_malloc (size);
+      if (psd_read (input, buf, size, error) < size)
+        {
+          g_printerr ("Didn't read enough bytes!\n");
+          psd_set_error (error);
+          return -1;
+        }
+      parse_text_info (lyr_a, size, buf, error);
+      g_free (buf);
+      if (! psd_seek (input, ofs, G_SEEK_SET, error))
+        {
+          psd_set_error (error);
+          return -1;
+        }
+    }
+  else if (memcmp (type, "ObAr", 4) == 0)
+    {
+      /* Undocumented: Object Array */
+      gint32  res;
+      guint32 count = 0;
+
+      if (psd_read (input, &count, 4, error) < 4)
+        {
+          psd_set_error (error);
+          return -1;
+        }
+      count = GUINT32_FROM_BE (count);
+
+      IFDBG(3) g_debug ("Descriptor version: %u", count);
+
+      IFDBG(3) g_debug ("Descriptor array begin");
+      res = load_descriptor (res_a, lyr_a, input, error);
+      IFDBG(3) g_debug ("Descriptor array end");
+      if (res < 0)
+        return res;
+    }
+  else if (memcmp (type, "Pth ", 4) == 0)
+    {
+      /* Undocumented: Path */
+      IFDBG(3) g_debug ("Pth (Path, undocumented)");
+      g_message ("FIXME Type: %s", type);
+    }
+  else
+    {
+      // unknown...
+      IFDBG(3) g_debug ("Unknown or undocumented type %s", type);
+      g_warning ("Unknown or undocumented type %s", type);
+      g_message ("FIXME Type: %s", type);
+      return -2;
+    }
+  g_printerr ("- return ok from load_type\n");
   return 0;
 }

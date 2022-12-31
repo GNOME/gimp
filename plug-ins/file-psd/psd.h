@@ -128,6 +128,8 @@
 #define PSD_LOTH_VECTOR_STROKE  "vscg"          /* Vector stroke data (PS13) */
 #define PSD_LOTH_ALIGN_RENDER   "sn2P"          /* Aligned rendering flag (?) */
 #define PSD_LOTH_USER_MASK      "LMsk"          /* User mask (?) */
+#define PSD_LOTH_COMPOSITOR     "cinf"          /* Compositor Used (Photoshop 2020) */
+
 
 /* Effects layer resource IDs */
 #define PSD_LFX_COMMON          "cmnS"          /* Effects layer - common state (PS5) */
