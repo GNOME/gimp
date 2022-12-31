@@ -107,14 +107,21 @@ _gimp_shm_open (gint shm_ID)
 
       /* Use Win32 shared memory mechanisms for transferring tile data. */
 
-      gchar fileMapName[128];
+      gchar    fileMapName[128];
+      wchar_t *w_fileMapName;
 
       /* From the id, derive the file map name */
       g_snprintf (fileMapName, sizeof (fileMapName), "GIMP%d.SHM", _shm_ID);
 
+      w_fileMapName = g_utf8_to_utf16 (fileMapName, -1, NULL, NULL, NULL);
+      if (!w_fileMapName)
+        g_error ("Cannot convert to UTF16");
+
       /* Open the file mapping */
-      _shm_handle = OpenFileMapping (FILE_MAP_ALL_ACCESS,
-                                     0, fileMapName);
+      _shm_handle = OpenFileMappingW (FILE_MAP_ALL_ACCESS, 0, w_fileMapName);
+
+      g_clear_pointer (&w_fileMapName, g_free);
+
       if (_shm_handle)
         {
           /* Map the shared memory into our address space for use */
