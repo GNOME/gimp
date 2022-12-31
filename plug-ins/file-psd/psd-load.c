@@ -817,6 +817,7 @@ read_layer_info (PSDimage      *img_a,
           /* Initialise record */
           lyr_a[lidx]->id = 0;
           lyr_a[lidx]->group_type = 0;
+          lyr_a[lidx]->text.info = NULL;
 
           if (psd_read (input, &lyr_a[lidx]->top,          4, error) < 4 ||
               psd_read (input, &lyr_a[lidx]->left,         4, error) < 4 ||
