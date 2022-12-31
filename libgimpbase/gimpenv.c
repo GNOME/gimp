@@ -87,9 +87,6 @@
 static gchar * gimp_env_get_dir   (const gchar *gimp_env_name,
                                    const gchar *compile_time_dir,
                                    const gchar *relative_subdir);
-#ifdef G_OS_WIN32
-static gchar * get_special_folder (gint         csidl);
-#endif
 
 
 const guint gimp_major_version = GIMP_MAJOR_VERSION;
@@ -163,6 +160,33 @@ gimp_env_init (gboolean plug_in)
         }
     }
 }
+
+#ifdef G_OS_WIN32
+
+static char *
+get_known_folder (REFKNOWNFOLDERID id)
+{
+  wchar_t *path_utf16 = NULL;
+  char    *path       = NULL;
+
+  if (SUCCEEDED (SHGetKnownFolderPath (id, KF_FLAG_DEFAULT, NULL, &path_utf16)))
+    path = g_utf16_to_utf8 (path_utf16, -1, NULL, NULL, NULL);
+
+  if (path_utf16)
+    CoTaskMemFree (path_utf16);
+
+  return path;
+}
+
+extern IMAGE_DOS_HEADER __ImageBase;
+
+static HMODULE
+this_module (void)
+{
+  return (HMODULE) &__ImageBase;
+}
+
+#endif
 
 /**
  * gimp_directory:
@@ -288,7 +312,7 @@ gimp_directory (void)
 
 #elif defined G_OS_WIN32
 
-      gchar *conf_dir = get_special_folder (CSIDL_APPDATA);
+      char *conf_dir = get_known_folder (&FOLDERID_RoamingAppData);
 
       gimp_dir = g_build_filename (conf_dir,
                                    GIMPDIR, GIMP_USER_VERSION, NULL);
@@ -307,40 +331,6 @@ gimp_directory (void)
 
   return gimp_dir;
 }
-
-#ifdef G_OS_WIN32
-
-/* Taken from glib 2.35 code. */
-static gchar *
-get_special_folder (int csidl)
-{
-  wchar_t      path[MAX_PATH+1];
-  HRESULT      hr;
-  LPITEMIDLIST pidl = NULL;
-  BOOL         b;
-  gchar       *retval = NULL;
-
-  hr = SHGetSpecialFolderLocation (NULL, csidl, &pidl);
-  if (hr == S_OK)
-    {
-      b = SHGetPathFromIDListW (pidl, path);
-      if (b)
-        retval = g_utf16_to_utf8 (path, -1, NULL, NULL, NULL);
-      CoTaskMemFree (pidl);
-    }
-
-  return retval;
-}
-
-extern IMAGE_DOS_HEADER __ImageBase;
-
-static HMODULE
-this_module (void)
-{
-  return (HMODULE) &__ImageBase;
-}
-
-#endif
 
 /**
  * gimp_installation_directory:
