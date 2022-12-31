@@ -332,28 +332,12 @@ get_special_folder (int csidl)
   return retval;
 }
 
-static HMODULE libgimpbase_dll = NULL;
+extern IMAGE_DOS_HEADER __ImageBase;
 
-/* Minimal DllMain that just stores the handle to this DLL */
-
-BOOL WINAPI /* Avoid silly "no previous prototype" gcc warning */
-DllMain (HINSTANCE hinstDLL,
-         DWORD     fdwReason,
-         LPVOID    lpvReserved);
-
-BOOL WINAPI
-DllMain (HINSTANCE hinstDLL,
-         DWORD     fdwReason,
-         LPVOID    lpvReserved)
+static HMODULE
+this_module (void)
 {
-  switch (fdwReason)
-    {
-    case DLL_PROCESS_ATTACH:
-      libgimpbase_dll = hinstDLL;
-      break;
-    }
-
-  return TRUE;
+  return (HMODULE) &__ImageBase;
 }
 
 #endif
@@ -389,7 +373,7 @@ gimp_installation_directory (void)
 
 #ifdef G_OS_WIN32
 
-  toplevel = g_win32_get_package_installation_directory_of_module (libgimpbase_dll);
+  toplevel = g_win32_get_package_installation_directory_of_module (this_module ());
   if (! toplevel)
     g_error ("g_win32_get_package_installation_directory_of_module() failed");
 
