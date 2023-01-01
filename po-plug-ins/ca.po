@@ -8,15 +8,15 @@
 # Quim Perez i Noguer <noguer@gmail.com>, 2005-2009.
 # Joaquim Perez Noguer <noguer@gmail.com>, 2009
 # Pau Iranzo <pau.iranzo@softcatala.org>, 2011.
-# Jordi Mas i Hernàndez, <jmas@softcatala.org>, 2018
+# Jordi Mas i Hernàndez, <jmas@softcatala.org>, 2018,2023
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-02-12 11:47+0000\n"
-"PO-Revision-Date: 2021-11-04 17:04+0100\n"
-"Last-Translator: maite guix <maite.guix@me.com>\n"
+"POT-Creation-Date: 2022-12-23 17:29+0000\n"
+"PO-Revision-Date: 2023-01-01 07:04+0100\n"
+"Last-Translator: Jordi Mas i Hernàndez, <jmas@softcatala.org>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
@@ -55,12 +55,12 @@ msgstr "Alinea les capes visibles"
 #: ../plug-ins/common/depth-merge.c:621 ../plug-ins/common/despeckle.c:397
 #: ../plug-ins/common/destripe.c:468 ../plug-ins/common/edge-dog.c:306
 #: ../plug-ins/common/emboss.c:453 ../plug-ins/common/file-cel.c:951
-#: ../plug-ins/common/file-gif-save.c:1112 ../plug-ins/common/file-heif.c:1898
+#: ../plug-ins/common/file-gif-save.c:1112 ../plug-ins/common/file-heif.c:1908
 #: ../plug-ins/common/file-jp2-load.c:961
 #: ../plug-ins/common/file-pdf-load.c:702
 #: ../plug-ins/common/file-pdf-load.c:1282
-#: ../plug-ins/common/file-pdf-save.c:936 ../plug-ins/common/file-ps.c:3399
-#: ../plug-ins/common/file-raw-data.c:1835 ../plug-ins/common/file-svg.c:663
+#: ../plug-ins/common/file-pdf-save.c:936 ../plug-ins/common/file-ps.c:3447
+#: ../plug-ins/common/file-raw-data.c:1816 ../plug-ins/common/file-svg.c:663
 #: ../plug-ins/common/file-wmf.c:515 ../plug-ins/common/film.c:1207
 #: ../plug-ins/common/filter-pack.c:1264
 #: ../plug-ins/common/fractal-trace.c:711 ../plug-ins/common/grid.c:677
@@ -76,9 +76,9 @@ msgstr "Alinea les capes visibles"
 #: ../plug-ins/common/van-gogh-lic.c:650 ../plug-ins/common/warp.c:368
 #: ../plug-ins/common/wavelet-decompose.c:354
 #: ../plug-ins/common/web-page.c:234 ../plug-ins/file-dds/ddsread.c:1363
-#: ../plug-ins/file-dds/ddswrite.c:1958 ../plug-ins/file-fits/fits.c:1150
+#: ../plug-ins/file-dds/ddswrite.c:1983 ../plug-ins/file-fits/fits.c:1150
 #: ../plug-ins/file-fli/fli-gimp.c:877
-#: ../plug-ins/file-tiff/file-tiff-load.c:2499 ../plug-ins/flame/flame.c:481
+#: ../plug-ins/file-tiff/file-tiff-load.c:2664 ../plug-ins/flame/flame.c:481
 #: ../plug-ins/flame/flame.c:657 ../plug-ins/flame/flame.c:979
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:566
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1641
@@ -122,7 +122,7 @@ msgstr "_Cancel·la"
 #: ../plug-ins/common/curve-bend.c:1295 ../plug-ins/common/decompose.c:814
 #: ../plug-ins/common/depth-merge.c:622 ../plug-ins/common/despeckle.c:398
 #: ../plug-ins/common/destripe.c:469 ../plug-ins/common/edge-dog.c:307
-#: ../plug-ins/common/emboss.c:454 ../plug-ins/common/file-heif.c:1899
+#: ../plug-ins/common/emboss.c:454 ../plug-ins/common/file-heif.c:1909
 #: ../plug-ins/common/file-pdf-load.c:703 ../plug-ins/common/file-svg.c:664
 #: ../plug-ins/common/file-wmf.c:516 ../plug-ins/common/film.c:1208
 #: ../plug-ins/common/filter-pack.c:1265
@@ -450,7 +450,7 @@ msgstr "_Vertical"
 #: ../plug-ins/common/file-jp2-load.c:1290 ../plug-ins/common/file-pcx.c:448
 #: ../plug-ins/common/file-pcx.c:456 ../plug-ins/common/file-pix.c:400
 #: ../plug-ins/common/file-png.c:1097 ../plug-ins/common/file-pnm.c:685
-#: ../plug-ins/common/file-raw-data.c:1394
+#: ../plug-ins/common/file-raw-data.c:1375
 #: ../plug-ins/common/file-sunras.c:1049 ../plug-ins/common/file-tga.c:1111
 #: ../plug-ins/common/file-xbm.c:910 ../plug-ins/common/film.c:690
 #: ../plug-ins/common/smooth-palette.c:259 ../plug-ins/common/tile.c:354
@@ -458,8 +458,8 @@ msgstr "_Vertical"
 #: ../plug-ins/file-faxg3/faxg3.c:555 ../plug-ins/file-fits/fits.c:529
 #: ../plug-ins/file-jpeg/jpeg-load.c:240
 #: ../plug-ins/file-psd/psd-image-res-load.c:1043
-#: ../plug-ins/file-psd/psd-load.c:2035 ../plug-ins/file-sgi/sgi.c:416
-#: ../plug-ins/file-tiff/file-tiff-load.c:1334
+#: ../plug-ins/file-psd/psd-load.c:2067 ../plug-ins/file-sgi/sgi.c:416
+#: ../plug-ins/file-tiff/file-tiff-load.c:1544
 #: ../plug-ins/file-webp/file-webp-load.c:164
 #: ../plug-ins/gfig/gfig-dialog.c:1321
 #: ../plug-ins/gimpressionist/general.c:139
@@ -835,7 +835,7 @@ msgstr "Llavor aleatòria"
 #: ../plug-ins/common/cml-explorer.c:2160 ../plug-ins/common/curve-bend.c:1555
 #: ../plug-ins/common/curve-bend.c:2138 ../plug-ins/common/file-cel.c:952
 #: ../plug-ins/common/file-jp2-load.c:962
-#: ../plug-ins/common/file-raw-data.c:1836 ../plug-ins/common/qbist.c:721
+#: ../plug-ins/common/file-raw-data.c:1817 ../plug-ins/common/qbist.c:721
 #: ../plug-ins/common/qbist.c:885 ../plug-ins/common/sphere-designer.c:2210
 #: ../plug-ins/common/sphere-designer.c:2610 ../plug-ins/file-fits/fits.c:1151
 #: ../plug-ins/file-fli/fli-gimp.c:878 ../plug-ins/flame/flame.c:483
@@ -1049,16 +1049,16 @@ msgstr "Desa els paràmetres de l'Explorador CML"
 #: ../plug-ins/common/file-dicom.c:1524 ../plug-ins/common/file-mng.c:648
 #: ../plug-ins/common/file-mng.c:985 ../plug-ins/common/file-pcx.c:874
 #: ../plug-ins/common/file-pdf-save.c:480 ../plug-ins/common/file-png.c:1618
-#: ../plug-ins/common/file-raw-data.c:1192
-#: ../plug-ins/common/file-raw-data.c:1221
+#: ../plug-ins/common/file-raw-data.c:1173
+#: ../plug-ins/common/file-raw-data.c:1202
 #: ../plug-ins/common/file-sunras.c:610 ../plug-ins/common/file-tga.c:1222
 #: ../plug-ins/common/file-xmc.c:1504
 #: ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-save.c:327 ../plug-ins/file-fits/fits.c:481
 #: ../plug-ins/file-fli/fli-gimp.c:757 ../plug-ins/file-ico/ico-save.c:1087
-#: ../plug-ins/file-jpeg/jpeg-save.c:333 ../plug-ins/file-psd/psd-save.c:1728
-#: ../plug-ins/file-tiff/file-tiff-save.c:965
-#: ../plug-ins/file-tiff/file-tiff-save.c:1067 ../plug-ins/flame/flame.c:450
+#: ../plug-ins/file-jpeg/jpeg-save.c:333 ../plug-ins/file-psd/psd-save.c:1725
+#: ../plug-ins/file-tiff/file-tiff-save.c:970
+#: ../plug-ins/file-tiff/file-tiff-save.c:1072 ../plug-ins/flame/flame.c:450
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1548
 #: ../plug-ins/gfig/gfig.c:794 ../plug-ins/ifs-compose/ifs-compose.c:2390
 #: ../plug-ins/lighting/lighting-ui.c:1232
@@ -1080,10 +1080,10 @@ msgstr "Carrega els paràmetres de l'explorador CML"
 #: ../plug-ins/common/file-cel.c:591 ../plug-ins/common/file-dicom.c:346
 #: ../plug-ins/common/file-gif-load.c:361 ../plug-ins/common/file-mng.c:1158
 #: ../plug-ins/common/file-pcx.c:378 ../plug-ins/common/file-png.c:941
-#: ../plug-ins/common/file-ps.c:1071 ../plug-ins/common/file-ps.c:3349
+#: ../plug-ins/common/file-ps.c:1075 ../plug-ins/common/file-ps.c:3397
 #: ../plug-ins/common/file-psp.c:2228 ../plug-ins/common/file-psp.c:2278
 #: ../plug-ins/common/file-raw-data.c:477
-#: ../plug-ins/common/file-raw-data.c:1303
+#: ../plug-ins/common/file-raw-data.c:1284
 #: ../plug-ins/common/file-sunras.c:436 ../plug-ins/common/file-svg.c:329
 #: ../plug-ins/common/file-svg.c:647 ../plug-ins/common/file-tga.c:446
 #: ../plug-ins/common/file-xbm.c:747 ../plug-ins/common/file-xmc.c:665
@@ -1367,7 +1367,7 @@ msgstr "Ve_rmellor cr709:"
 #. Generic case for any data. Let's leave choice to select the
 #. * right type of raw data.
 #: ../plug-ins/common/compose.c:191 ../plug-ins/common/decompose.c:170
-#: ../plug-ins/common/file-raw-data.c:1939
+#: ../plug-ins/common/file-raw-data.c:1920
 msgid "RGB"
 msgstr "RGB"
 
@@ -1942,7 +1942,7 @@ msgid "O_verlap:"
 msgstr "Su_perposa:"
 
 #: ../plug-ins/common/depth-merge.c:741
-#: ../plug-ins/common/file-raw-data.c:1973
+#: ../plug-ins/common/file-raw-data.c:1954
 msgid "O_ffset:"
 msgstr "_Desplaçament:"
 
@@ -2009,8 +2009,8 @@ msgid "Destripe"
 msgstr "Treu les bandes"
 
 #: ../plug-ins/common/destripe.c:500 ../plug-ins/common/file-html-table.c:647
-#: ../plug-ins/common/file-ps.c:3474 ../plug-ins/common/file-ps.c:3679
-#: ../plug-ins/common/file-raw-data.c:1988
+#: ../plug-ins/common/file-ps.c:3522 ../plug-ins/common/file-ps.c:3727
+#: ../plug-ins/common/file-raw-data.c:1969
 #: ../plug-ins/common/smooth-palette.c:458 ../plug-ins/common/tile.c:465
 #: ../plug-ins/imagemap/imap_cmd_guides.c:163
 #: ../plug-ins/imagemap/imap_rectangle.c:399
@@ -2100,7 +2100,7 @@ msgstr "Art ASCII"
 msgid "Text"
 msgstr "Text"
 
-#: ../plug-ins/common/file-aa.c:384 ../plug-ins/file-dds/ddswrite.c:2011
+#: ../plug-ins/common/file-aa.c:384 ../plug-ins/file-dds/ddswrite.c:2036
 msgid "_Format:"
 msgstr "_Format:"
 
@@ -2155,11 +2155,11 @@ msgstr ""
 #. * Open the file for reading...
 #: ../plug-ins/common/file-cel.c:342 ../plug-ins/common/file-dicom.c:338
 #: ../plug-ins/common/file-gegl.c:322 ../plug-ins/common/file-gif-load.c:353
-#: ../plug-ins/common/file-heif.c:697 ../plug-ins/common/file-jp2-load.c:1077
+#: ../plug-ins/common/file-heif.c:703 ../plug-ins/common/file-jp2-load.c:1077
 #: ../plug-ins/common/file-pcx.c:370 ../plug-ins/common/file-pdf-load.c:1048
 #: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:933
-#: ../plug-ins/common/file-pnm.c:566 ../plug-ins/common/file-ps.c:1063
-#: ../plug-ins/common/file-raw-data.c:1296
+#: ../plug-ins/common/file-pnm.c:566 ../plug-ins/common/file-ps.c:1067
+#: ../plug-ins/common/file-raw-data.c:1277
 #: ../plug-ins/common/file-sunras.c:429 ../plug-ins/common/file-tga.c:438
 #: ../plug-ins/common/file-wmf.c:1014 ../plug-ins/common/file-xbm.c:740
 #: ../plug-ins/common/file-xmc.c:655 ../plug-ins/common/file-xpm.c:356
@@ -2169,7 +2169,7 @@ msgstr ""
 #: ../plug-ins/file-jpeg/jpeg-load.c:89 ../plug-ins/file-psd/psd-load.c:135
 #: ../plug-ins/file-raw/file-darktable.c:399
 #: ../plug-ins/file-raw/file-rawtherapee.c:319 ../plug-ins/file-sgi/sgi.c:325
-#: ../plug-ins/file-tiff/file-tiff-load.c:259
+#: ../plug-ins/file-tiff/file-tiff-load.c:299
 #, c-format
 msgid "Opening '%s'"
 msgstr "S'està obrint «%s»"
@@ -2246,16 +2246,17 @@ msgstr ""
 #. Let's begin the progress
 #. * Open the file for writing...
 #: ../plug-ins/common/file-cel.c:790 ../plug-ins/common/file-gif-save.c:880
-#: ../plug-ins/common/file-html-table.c:238 ../plug-ins/common/file-pcx.c:761
+#: ../plug-ins/common/file-html-table.c:238
+#: ../plug-ins/common/file-jpegxl.c:778 ../plug-ins/common/file-pcx.c:761
 #: ../plug-ins/common/file-pix.c:538 ../plug-ins/common/file-png.c:1611
-#: ../plug-ins/common/file-pnm.c:1249 ../plug-ins/common/file-ps.c:1237
+#: ../plug-ins/common/file-pnm.c:1249 ../plug-ins/common/file-ps.c:1278
 #: ../plug-ins/common/file-sunras.c:602 ../plug-ins/common/file-tga.c:1216
 #: ../plug-ins/common/file-xbm.c:1040 ../plug-ins/common/file-xpm.c:674
 #: ../plug-ins/common/file-xwd.c:652 ../plug-ins/file-bmp/bmp-save.c:319
 #: ../plug-ins/file-fits/fits.c:473 ../plug-ins/file-fli/fli-gimp.c:725
 #: ../plug-ins/file-ico/ico-save.c:1081 ../plug-ins/file-jpeg/jpeg-save.c:290
-#: ../plug-ins/file-psd/psd-save.c:1699 ../plug-ins/file-sgi/sgi.c:584
-#: ../plug-ins/file-tiff/file-tiff-save.c:955
+#: ../plug-ins/file-psd/psd-save.c:1696 ../plug-ins/file-sgi/sgi.c:584
+#: ../plug-ins/file-tiff/file-tiff-save.c:956
 #, c-format
 msgid "Exporting '%s'"
 msgstr "Exportació «%s»"
@@ -2370,7 +2371,7 @@ msgstr "%s no és admès pel GIMP en combinació amb mostres per píxel: %d"
 msgid "Cannot save images with alpha channel."
 msgstr "No es poden desar imatges amb canal alfa."
 
-#: ../plug-ins/common/file-dicom.c:1508 ../plug-ins/common/file-ps.c:1232
+#: ../plug-ins/common/file-dicom.c:1508 ../plug-ins/common/file-ps.c:1273
 #: ../plug-ins/common/file-xwd.c:647 ../plug-ins/file-fits/fits.c:468
 #, c-format
 msgid "Cannot operate on unknown image types."
@@ -2624,77 +2625,77 @@ msgstr "Exporta imatges AVIF"
 msgid "Save image in AV1 Image File Format (AVIF)"
 msgstr "Deseu la imatge en format AV1 (AVIF)."
 
-#: ../plug-ins/common/file-heif.c:736 ../plug-ins/common/file-heif.c:769
-#: ../plug-ins/common/file-heif.c:808 ../plug-ins/common/file-heif.c:874
+#: ../plug-ins/common/file-heif.c:742 ../plug-ins/common/file-heif.c:775
+#: ../plug-ins/common/file-heif.c:814 ../plug-ins/common/file-heif.c:880
 #, c-format
 msgid "Loading HEIF image failed: %s"
 msgstr "S'ha produït un error en carrega la imatge HEIF: %s"
 
-#: ../plug-ins/common/file-heif.c:758
+#: ../plug-ins/common/file-heif.c:764
 msgid "Loading HEIF image failed: Input file contains no readable images"
 msgstr ""
 "S'ha produït un error en carrega la imatge HEIF: el fitxer d'entrada no "
 "conté imatges que es puguin llegir"
 
-#: ../plug-ins/common/file-heif.c:1001
+#: ../plug-ins/common/file-heif.c:1007
 msgid "image content"
 msgstr "contingut de la imatge"
 
-#: ../plug-ins/common/file-heif.c:1318
+#: ../plug-ins/common/file-heif.c:1328
 #, c-format
 msgid "Exporting '%s' using %s encoder"
 msgstr "S'està exportant «%s» amb el codificador %s"
 
-#: ../plug-ins/common/file-heif.c:1369 ../plug-ins/common/file-heif.c:1623
+#: ../plug-ins/common/file-heif.c:1379 ../plug-ins/common/file-heif.c:1633
 #, c-format
 msgid "Encoding HEIF image failed: %s"
 msgstr "S'ha produït un error en codificar la imatge HEIF: %s"
 
-#: ../plug-ins/common/file-heif.c:1660
+#: ../plug-ins/common/file-heif.c:1670
 #, c-format
 msgid "Writing HEIF image failed: %s"
 msgstr "S'ha produït un error en escriure la imatge HEIF: %s"
 
-#: ../plug-ins/common/file-heif.c:1749
+#: ../plug-ins/common/file-heif.c:1759
 msgid "primary"
 msgstr "primari"
 
-#: ../plug-ins/common/file-heif.c:1894
+#: ../plug-ins/common/file-heif.c:1904
 msgid "Load HEIF Image"
 msgstr "Carrega la imatge HEIF"
 
-#: ../plug-ins/common/file-heif.c:1908
+#: ../plug-ins/common/file-heif.c:1918
 msgid "Select Image"
 msgstr "Seleccioneu la imatge"
 
-#: ../plug-ins/common/file-heif.c:2074
+#: ../plug-ins/common/file-heif.c:2084
 msgid "Nearly _lossless"
 msgstr "_Gairebé sense pèrdues"
 
-#: ../plug-ins/common/file-heif.c:2078 ../plug-ins/file-jpeg/jpeg-save.c:835
+#: ../plug-ins/common/file-heif.c:2088 ../plug-ins/file-jpeg/jpeg-save.c:835
 msgid "_Quality:"
 msgstr "_Qualitat:"
 
-#: ../plug-ins/common/file-heif.c:2121
+#: ../plug-ins/common/file-heif.c:2131
 msgid "Bit depth:"
 msgstr "Profunditat de bits:"
 
-#: ../plug-ins/common/file-heif.c:2127
+#: ../plug-ins/common/file-heif.c:2137
 msgid "8 bit/channel"
 msgstr "8 bits/canal"
 
-#: ../plug-ins/common/file-heif.c:2128
+#: ../plug-ins/common/file-heif.c:2138
 msgid "10 bit/channel"
 msgstr "10 bits/canal"
 
-#: ../plug-ins/common/file-heif.c:2129
+#: ../plug-ins/common/file-heif.c:2139
 msgid "12 bit/channel"
 msgstr "12 bits/canal"
 
 #. Color profile
-#: ../plug-ins/common/file-heif.c:2138 ../plug-ins/file-jpeg/jpeg-save.c:974
-#: ../plug-ins/file-webp/file-webp-dialog.c:387
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:10
+#: ../plug-ins/common/file-heif.c:2148 ../plug-ins/file-jpeg/jpeg-save.c:974
+#: ../plug-ins/file-webp/file-webp-dialog.c:404
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:12
 msgid "Save color _profile"
 msgstr "Desa el _perfil de color"
 
@@ -2804,8 +2805,8 @@ msgid "The width for each table cell.  Can be a number or a percent."
 msgstr ""
 "Amplada de cada cel·la de la taula. Pot ser un nombre o un percentatge."
 
-#: ../plug-ins/common/file-html-table.c:663 ../plug-ins/common/file-ps.c:3487
-#: ../plug-ins/common/file-ps.c:3691 ../plug-ins/common/file-raw-data.c:2004
+#: ../plug-ins/common/file-html-table.c:663 ../plug-ins/common/file-ps.c:3535
+#: ../plug-ins/common/file-ps.c:3739 ../plug-ins/common/file-raw-data.c:1985
 #: ../plug-ins/common/film.c:945 ../plug-ins/common/smooth-palette.c:463
 #: ../plug-ins/common/tile.c:469 ../plug-ins/imagemap/imap_cmd_guides.c:173
 #: ../plug-ins/imagemap/imap_rectangle.c:406
@@ -2923,6 +2924,10 @@ msgstr "No es pot convertir la imatge  xvYCC JP2 en «%s» a RGB."
 msgid "Unsupported color space in JP2 image '%s'."
 msgstr "Espai de color no compatible en la imatge JP2 «%s»."
 
+#: ../plug-ins/common/file-jpegxl.c:82 ../plug-ins/common/file-jpegxl.c:99
+msgid "JPEG XL image"
+msgstr "Imatge JPEG XL"
+
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
 #: ../plug-ins/common/file-mng.c:533 ../plug-ins/common/file-png.c:2345
@@ -3029,7 +3034,7 @@ msgstr "Retard per defecte del fotograma:"
 
 #. label for 'ms' adjustment
 #: ../plug-ins/common/file-mng.c:1551
-#: ../plug-ins/file-webp/file-webp-dialog.c:350
+#: ../plug-ins/file-webp/file-webp-dialog.c:351
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:8
 msgid "milliseconds"
 msgstr "mil·lisegons"
@@ -3168,7 +3173,7 @@ msgstr "No s'ha pogut carregar «%s»: %s"
 msgid "%s-%s"
 msgstr "%s-%s"
 
-#: ../plug-ins/common/file-pdf-load.c:1087 ../plug-ins/common/file-ps.c:1156
+#: ../plug-ins/common/file-pdf-load.c:1087 ../plug-ins/common/file-ps.c:1197
 #, c-format
 msgid "%s-pages"
 msgstr "%s-pàgines"
@@ -3177,8 +3182,8 @@ msgstr "%s-pàgines"
 msgid "Import from PDF"
 msgstr "Importa d'un PDF"
 
-#: ../plug-ins/common/file-pdf-load.c:1283 ../plug-ins/common/file-ps.c:3400
-#: ../plug-ins/file-tiff/file-tiff-load.c:2500
+#: ../plug-ins/common/file-pdf-load.c:1283 ../plug-ins/common/file-ps.c:3448
+#: ../plug-ins/file-tiff/file-tiff-load.c:2665
 #: ../plug-ins/metadata/metadata-editor.c:4627
 msgid "_Import"
 msgstr "_Importa"
@@ -3302,8 +3307,8 @@ msgstr "Capes com pàgines  (%s)"
 
 #: ../plug-ins/common/file-pdf-save.c:1099
 #: ../plug-ins/common/file-pdf-save.c:1167
-#: ../plug-ins/common/file-pdf-save.c:1265 ../plug-ins/common/file-ps.c:1893
-#: ../plug-ins/file-tiff/file-tiff-load.c:1336
+#: ../plug-ins/common/file-pdf-save.c:1265 ../plug-ins/common/file-ps.c:1941
+#: ../plug-ins/file-tiff/file-tiff-load.c:1546
 #, c-format
 msgid "Page %d"
 msgstr "Pàgina %d"
@@ -3313,7 +3318,7 @@ msgid "Error! In order to save the file, at least one image should be added!"
 msgstr "Error: per tal de desar el fitxer, cal afegir com a mínim una imatge."
 
 #: ../plug-ins/common/file-pdf-save.c:1312
-#: ../plug-ins/print/print-draw-page.c:123
+#: ../plug-ins/print/print-draw-page.c:125
 msgid "Cannot handle the size (either width or height) of the image."
 msgstr "No es pot gestionar la mida (amplada o alçada) de la imatge."
 
@@ -3411,14 +3416,14 @@ msgstr ""
 "S'ha produït un error en l'exportació «%s». No s'ha pogut exportar la "
 "imatge."
 
-#: ../plug-ins/common/file-png.c:2420 ../plug-ins/common/file-raw-data.c:2131
-#: ../plug-ins/file-tiff/file-tiff-save.c:1160
+#: ../plug-ins/common/file-png.c:2420 ../plug-ins/common/file-raw-data.c:2112
+#: ../plug-ins/file-tiff/file-tiff-save.c:1167
 #, c-format
 msgid "Error loading UI file '%s': %s"
 msgstr "No s'ha pogut obrir el fitxer d'interfície d'usuari «%s»: %s"
 
-#: ../plug-ins/common/file-png.c:2421 ../plug-ins/common/file-raw-data.c:2132
-#: ../plug-ins/file-tiff/file-tiff-save.c:1161
+#: ../plug-ins/common/file-png.c:2421 ../plug-ins/common/file-raw-data.c:2113
+#: ../plug-ins/file-tiff/file-tiff-save.c:1168
 msgid "Unknown error"
 msgstr "Error desconegut"
 
@@ -3507,130 +3512,134 @@ msgstr "En b_rut"
 msgid "_ASCII"
 msgstr "_ASCII"
 
-#: ../plug-ins/common/file-ps.c:652 ../plug-ins/common/file-ps.c:719
+#: ../plug-ins/common/file-ps.c:654 ../plug-ins/common/file-ps.c:721
 msgid "PostScript document"
 msgstr "Document PostScript"
 
-#: ../plug-ins/common/file-ps.c:671 ../plug-ins/common/file-ps.c:736
+#: ../plug-ins/common/file-ps.c:673 ../plug-ins/common/file-ps.c:738
 msgid "Encapsulated PostScript image"
 msgstr "Imatge PostScript encapsulada"
 
-#: ../plug-ins/common/file-ps.c:1081
+#: ../plug-ins/common/file-ps.c:1085
 #, c-format
 msgid "Could not interpret PostScript file '%s'"
 msgstr "No s'ha pogut interpretar el fitxer PostScript «%s»"
 
-#: ../plug-ins/common/file-ps.c:1219
+#: ../plug-ins/common/file-ps.c:1173
+msgid "Rendered EPS"
+msgstr "EPS renderitzat"
+
+#: ../plug-ins/common/file-ps.c:1260
 #, c-format
 msgid "PostScript export cannot handle images with alpha channels"
 msgstr "L'exportació a PostScript no pot gestionar imatges amb canals alfa"
 
-#: ../plug-ins/common/file-ps.c:3395
+#: ../plug-ins/common/file-ps.c:3443
 msgid "Import from PostScript"
 msgstr "Importa des del PostScript"
 
 #. Rendering
-#: ../plug-ins/common/file-ps.c:3439
+#: ../plug-ins/common/file-ps.c:3487
 msgid "Rendering"
 msgstr "S'està generant la imatge"
 
 #. Resolution
-#: ../plug-ins/common/file-ps.c:3458 ../plug-ins/common/file-svg.c:846
+#: ../plug-ins/common/file-ps.c:3506 ../plug-ins/common/file-svg.c:846
 #: ../plug-ins/common/file-wmf.c:704
 msgid "Resolution:"
 msgstr "Resolució:"
 
-#: ../plug-ins/common/file-ps.c:3500
+#: ../plug-ins/common/file-ps.c:3548
 msgid "Pages:"
 msgstr "Pàgines:"
 
-#: ../plug-ins/common/file-ps.c:3507
+#: ../plug-ins/common/file-ps.c:3555
 msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
 msgstr "Pàgines a carregar (p. ex. 1-4 o 1,3,5-7)"
 
-#: ../plug-ins/common/file-ps.c:3512 ../plug-ins/common/sphere-designer.c:2657
+#: ../plug-ins/common/file-ps.c:3560 ../plug-ins/common/sphere-designer.c:2657
 msgid "Layers"
 msgstr "Capes"
 
-#: ../plug-ins/common/file-ps.c:3515
+#: ../plug-ins/common/file-ps.c:3563
 msgid "Images"
 msgstr "Imatges"
 
-#: ../plug-ins/common/file-ps.c:3518
+#: ../plug-ins/common/file-ps.c:3566
 msgid "Open as"
 msgstr "Obre com a"
 
-#: ../plug-ins/common/file-ps.c:3522
+#: ../plug-ins/common/file-ps.c:3570
 msgid "Try Bounding Box"
 msgstr "Intenta delimitar el quadre"
 
 #. Coloring
-#: ../plug-ins/common/file-ps.c:3535
+#: ../plug-ins/common/file-ps.c:3583
 msgid "Coloring"
 msgstr "S'està acolorint"
 
-#: ../plug-ins/common/file-ps.c:3539
+#: ../plug-ins/common/file-ps.c:3587
 msgid "B/W"
 msgstr "B/N"
 
-#: ../plug-ins/common/file-ps.c:3540 ../plug-ins/imagemap/imap_menu.c:228
+#: ../plug-ins/common/file-ps.c:3588 ../plug-ins/imagemap/imap_menu.c:228
 msgid "Gray"
 msgstr "Gris"
 
-#: ../plug-ins/common/file-ps.c:3541 ../plug-ins/common/file-xpm.c:485
+#: ../plug-ins/common/file-ps.c:3589 ../plug-ins/common/file-xpm.c:485
 #: ../plug-ins/gimpressionist/color.c:65
 #: ../plug-ins/gimpressionist/general.c:169
 #: ../plug-ins/imagemap/imap_menu.c:227
 msgid "Color"
 msgstr "Color"
 
-#: ../plug-ins/common/file-ps.c:3542
+#: ../plug-ins/common/file-ps.c:3590
 msgid "Automatic"
 msgstr "Automàtic"
 
-#: ../plug-ins/common/file-ps.c:3553
+#: ../plug-ins/common/file-ps.c:3601
 msgid "Text antialiasing"
 msgstr "Antialiàsing del text"
 
-#: ../plug-ins/common/file-ps.c:3557 ../plug-ins/common/file-ps.c:3569
+#: ../plug-ins/common/file-ps.c:3605 ../plug-ins/common/file-ps.c:3617
 msgctxt "antialiasing"
 msgid "None"
 msgstr "Cap"
 
-#: ../plug-ins/common/file-ps.c:3558 ../plug-ins/common/file-ps.c:3570
+#: ../plug-ins/common/file-ps.c:3606 ../plug-ins/common/file-ps.c:3618
 msgid "Weak"
 msgstr "Feble"
 
-#: ../plug-ins/common/file-ps.c:3559 ../plug-ins/common/file-ps.c:3571
+#: ../plug-ins/common/file-ps.c:3607 ../plug-ins/common/file-ps.c:3619
 msgid "Strong"
 msgstr "Fort"
 
-#: ../plug-ins/common/file-ps.c:3565
+#: ../plug-ins/common/file-ps.c:3613
 msgid "Graphic antialiasing"
 msgstr "Antialiàsing gràfic"
 
-#: ../plug-ins/common/file-ps.c:3643
+#: ../plug-ins/common/file-ps.c:3691
 msgid "PostScript"
 msgstr "PostScript"
 
 #. Image Size
-#: ../plug-ins/common/file-ps.c:3660
+#: ../plug-ins/common/file-ps.c:3708
 msgid "Image Size"
 msgstr "Mida de la imatge"
 
-#: ../plug-ins/common/file-ps.c:3703
+#: ../plug-ins/common/file-ps.c:3751
 msgid "_X offset:"
 msgstr "Desplaçament en _X:"
 
-#: ../plug-ins/common/file-ps.c:3715
+#: ../plug-ins/common/file-ps.c:3763
 msgid "_Y offset:"
 msgstr "Desplaçament en _Y:"
 
-#: ../plug-ins/common/file-ps.c:3721
+#: ../plug-ins/common/file-ps.c:3769
 msgid "_Keep aspect ratio"
 msgstr "_Conserva la relació d'aspecte"
 
-#: ../plug-ins/common/file-ps.c:3727
+#: ../plug-ins/common/file-ps.c:3775
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
@@ -3639,42 +3648,42 @@ msgstr ""
 "donada sense canviar la relació d'aspecte."
 
 #. Unit
-#: ../plug-ins/common/file-ps.c:3737
+#: ../plug-ins/common/file-ps.c:3785
 msgid "Unit"
 msgstr "Unitat"
 
-#: ../plug-ins/common/file-ps.c:3741
+#: ../plug-ins/common/file-ps.c:3789
 msgid "_Inch"
 msgstr "_Polzada"
 
-#: ../plug-ins/common/file-ps.c:3742
+#: ../plug-ins/common/file-ps.c:3790
 msgid "_Millimeter"
 msgstr "_Mil·límetre"
 
 #. Rotation
-#: ../plug-ins/common/file-ps.c:3753
+#: ../plug-ins/common/file-ps.c:3801
 #: ../plug-ins/map-object/map-object-ui.c:1019
 msgid "Rotation"
 msgstr "Rotació"
 
 #. Format
-#: ../plug-ins/common/file-ps.c:3768
+#: ../plug-ins/common/file-ps.c:3816
 msgid "Output"
 msgstr "Sortida"
 
-#: ../plug-ins/common/file-ps.c:3774
+#: ../plug-ins/common/file-ps.c:3822
 msgid "_PostScript level 2"
 msgstr "_PostScript nivell 2"
 
-#: ../plug-ins/common/file-ps.c:3783
+#: ../plug-ins/common/file-ps.c:3831
 msgid "_Encapsulated PostScript"
 msgstr "PostScript _encapsulat"
 
-#: ../plug-ins/common/file-ps.c:3792
+#: ../plug-ins/common/file-ps.c:3840
 msgid "P_review"
 msgstr "P_revisualitza"
 
-#: ../plug-ins/common/file-ps.c:3816
+#: ../plug-ins/common/file-ps.c:3864
 msgid "Preview _size:"
 msgstr "Mida de previ_sualització:"
 
@@ -3870,7 +3879,7 @@ msgid "Raw image data"
 msgstr "Dades d'imatge sense format"
 
 #: ../plug-ins/common/file-raw-data.c:304
-#: ../plug-ins/common/file-raw-data.c:1884
+#: ../plug-ins/common/file-raw-data.c:1865
 msgid "Digital Elevation Model data"
 msgstr "Dades del model d’elevació digital"
 
@@ -3900,22 +3909,22 @@ msgstr ""
 "HGT suportats són: SRTM-1 i SRTM-3. Si coneixeu la variant, executeu amb els"
 " arguments 1 o 3."
 
-#: ../plug-ins/common/file-raw-data.c:1831
+#: ../plug-ins/common/file-raw-data.c:1812
 msgid "Load Image from Raw Data"
 msgstr "Carrega una imatge des de dades sense format"
 
 #. Translators: Digital Elevation Model (DEM) is a technical term
 #. * used for 3D surface modeling or relief maps; so it must be
 #. * translated by the proper technical term in your language.
-#: ../plug-ins/common/file-raw-data.c:1880
+#: ../plug-ins/common/file-raw-data.c:1861
 msgid "Digital Elevation Model data (1 arc-second)"
 msgstr "Dades del model d’elevació digital (1 arc de segon)"
 
-#: ../plug-ins/common/file-raw-data.c:1882
+#: ../plug-ins/common/file-raw-data.c:1863
 msgid "Digital Elevation Model data (3 arc-seconds)"
 msgstr "Dades del model d’elevació digital (3 arcs de segon)"
 
-#: ../plug-ins/common/file-raw-data.c:1888
+#: ../plug-ins/common/file-raw-data.c:1869
 msgid "Image"
 msgstr "Imatge"
 
@@ -3927,116 +3936,116 @@ msgstr "Imatge"
 #. * [...]
 #. * SRTM-3 data are sampled at three arc-seconds and contain 1201 lines and
 #. * 1201 samples with similar overlapping rows and columns."
-#: ../plug-ins/common/file-raw-data.c:1918
+#: ../plug-ins/common/file-raw-data.c:1899
 msgid "SRTM-1 (1 arc-second)"
 msgstr "SRTM-1 (1 arc de segon)"
 
-#: ../plug-ins/common/file-raw-data.c:1919
+#: ../plug-ins/common/file-raw-data.c:1900
 msgid "SRTM-3 (3 arc-seconds)"
 msgstr "SRTM-3 (3 arcs de segon)"
 
-#: ../plug-ins/common/file-raw-data.c:1922
+#: ../plug-ins/common/file-raw-data.c:1903
 msgid "_Sample Spacing:"
 msgstr "_Mostra d'espaiat:"
 
-#: ../plug-ins/common/file-raw-data.c:1940
+#: ../plug-ins/common/file-raw-data.c:1921
 msgid "RGB Alpha"
 msgstr "RGB amb Alfa"
 
-#: ../plug-ins/common/file-raw-data.c:1941
+#: ../plug-ins/common/file-raw-data.c:1922
 msgid "RGB565 Big Endian"
 msgstr "RGB565 Gran-petit"
 
-#: ../plug-ins/common/file-raw-data.c:1942
+#: ../plug-ins/common/file-raw-data.c:1923
 msgid "RGB565 Little Endian"
 msgstr "RGB565 Petit-gran"
 
-#: ../plug-ins/common/file-raw-data.c:1943
+#: ../plug-ins/common/file-raw-data.c:1924
 msgid "BGR565 Big Endian"
 msgstr "BGR565 Gran-petit"
 
-#: ../plug-ins/common/file-raw-data.c:1944
+#: ../plug-ins/common/file-raw-data.c:1925
 msgid "BGR565 Little Endian"
 msgstr "BGR565 Petit-gran"
 
-#: ../plug-ins/common/file-raw-data.c:1945
+#: ../plug-ins/common/file-raw-data.c:1926
 msgid "Planar RGB"
 msgstr "RGB planar"
 
-#: ../plug-ins/common/file-raw-data.c:1946
+#: ../plug-ins/common/file-raw-data.c:1927
 msgid "B&W 1 bit"
 msgstr "B&W 1 bit"
 
-#: ../plug-ins/common/file-raw-data.c:1947
+#: ../plug-ins/common/file-raw-data.c:1928
 msgid "Gray 2 bit"
 msgstr "Gris 2 bits"
 
-#: ../plug-ins/common/file-raw-data.c:1948
+#: ../plug-ins/common/file-raw-data.c:1929
 msgid "Gray 4 bit"
 msgstr "Gris 4 bits"
 
-#: ../plug-ins/common/file-raw-data.c:1949
+#: ../plug-ins/common/file-raw-data.c:1930
 msgid "Gray 8 bit"
 msgstr "Gris 8 bits"
 
-#: ../plug-ins/common/file-raw-data.c:1950
+#: ../plug-ins/common/file-raw-data.c:1931
 msgid "Indexed"
 msgstr "Indexat"
 
-#: ../plug-ins/common/file-raw-data.c:1951
+#: ../plug-ins/common/file-raw-data.c:1932
 msgid "Indexed Alpha"
 msgstr "Indexat amb Alfa"
 
-#: ../plug-ins/common/file-raw-data.c:1952
+#: ../plug-ins/common/file-raw-data.c:1933
 msgid "Gray unsigned 16 bit Big Endian"
 msgstr "Gris sense signar Big Endian de 16 bits"
 
-#: ../plug-ins/common/file-raw-data.c:1953
+#: ../plug-ins/common/file-raw-data.c:1934
 msgid "Gray unsigned 16 bit Little Endian"
 msgstr "Gris sense signar Little Endian de 16 bits"
 
-#: ../plug-ins/common/file-raw-data.c:1954
+#: ../plug-ins/common/file-raw-data.c:1935
 msgid "Gray 16 bit Big Endian"
 msgstr "Gris Big Endian de 16 bits"
 
-#: ../plug-ins/common/file-raw-data.c:1955
+#: ../plug-ins/common/file-raw-data.c:1936
 msgid "Gray 16 bit Little Endian"
 msgstr "Gris Little Endian de 16 bits"
 
-#: ../plug-ins/common/file-raw-data.c:1960
+#: ../plug-ins/common/file-raw-data.c:1941
 msgid "Image _Type:"
 msgstr "_Tipus d'imatge:"
 
-#: ../plug-ins/common/file-raw-data.c:2021
+#: ../plug-ins/common/file-raw-data.c:2002
 msgid "Palette"
 msgstr "Paleta"
 
-#: ../plug-ins/common/file-raw-data.c:2031
+#: ../plug-ins/common/file-raw-data.c:2012
 msgid "R, G, B (normal)"
 msgstr "R, G, B (normal)"
 
-#: ../plug-ins/common/file-raw-data.c:2032
+#: ../plug-ins/common/file-raw-data.c:2013
 msgid "B, G, R, X (BMP style)"
 msgstr "B, G, R, X (estil BMP)"
 
-#: ../plug-ins/common/file-raw-data.c:2037
+#: ../plug-ins/common/file-raw-data.c:2018
 msgid "_Palette Type:"
 msgstr "Tipus de _paleta:"
 
-#: ../plug-ins/common/file-raw-data.c:2048
+#: ../plug-ins/common/file-raw-data.c:2029
 msgid "Off_set:"
 msgstr "De_splaçament:"
 
-#: ../plug-ins/common/file-raw-data.c:2060
+#: ../plug-ins/common/file-raw-data.c:2041
 msgid "Select Palette File"
 msgstr "Selecció del fitxer amb la paleta de colors"
 
-#: ../plug-ins/common/file-raw-data.c:2066
+#: ../plug-ins/common/file-raw-data.c:2047
 msgid "Pal_ette File:"
 msgstr "Fitxer de pal_eta de colors:"
 
 #. Dialog init
-#: ../plug-ins/common/file-raw-data.c:2115
+#: ../plug-ins/common/file-raw-data.c:2096
 msgid "Raw Image"
 msgstr "Imatge en cru"
 
@@ -4160,7 +4169,7 @@ msgstr "S'està component l'SVG"
 
 #: ../plug-ins/common/file-svg.c:349
 msgid "Rendered SVG"
-msgstr "S'ha compost l'SVG"
+msgstr "SVG renderitzat"
 
 #: ../plug-ins/common/file-svg.c:484 ../plug-ins/common/file-wmf.c:369
 #, c-format
@@ -4276,7 +4285,7 @@ msgstr "Compon un metafitxer del Windows"
 
 #: ../plug-ins/common/file-wmf.c:1028
 msgid "Rendered WMF"
-msgstr "S'ha compost el WMF"
+msgstr "WMF renderitzat"
 
 #: ../plug-ins/common/file-xbm.c:183 ../plug-ins/common/file-xbm.c:201
 msgid "X BitMap image"
@@ -4540,8 +4549,8 @@ msgstr "El comentari està limitat a %d caràcters."
 #  init the progress meter
 #  Set up progress display
 #: ../plug-ins/common/file-xmc.c:1493
-#: ../plug-ins/file-webp/file-webp-save.c:180
-#: ../plug-ins/file-webp/file-webp-save.c:522
+#: ../plug-ins/file-webp/file-webp-save.c:182
+#: ../plug-ins/file-webp/file-webp-save.c:526
 #, c-format
 msgid "Saving '%s'"
 msgstr "S'està desant «%s»"
@@ -6672,7 +6681,7 @@ msgstr ""
 #. Advanced Options
 #. Advanced expander
 #: ../plug-ins/file-bmp/bmp-save.c:993 ../plug-ins/file-jpeg/jpeg-save.c:1014
-#: ../plug-ins/file-webp/file-webp-dialog.c:221
+#: ../plug-ins/file-webp/file-webp-dialog.c:222
 msgid "_Advanced Options"
 msgstr "Opcions _avançades"
 
@@ -6693,19 +6702,20 @@ msgstr "32 bits"
 msgid "Windows BMP image"
 msgstr "Imatge BMP del Windows"
 
-#: ../plug-ins/file-dds/dds.c:139 ../plug-ins/file-dds/dds.c:158
+#: ../plug-ins/file-dds/dds.c:162 ../plug-ins/file-dds/dds.c:181
+#: ../plug-ins/file-dds/dds.c:200
 msgid "DDS image"
 msgstr "Imatge DDS"
 
-#: ../plug-ins/file-dds/dds.c:176
+#: ../plug-ins/file-dds/dds.c:217
 msgid "Decode YCoCg"
 msgstr "Descodifica YCoCg"
 
-#: ../plug-ins/file-dds/dds.c:189
+#: ../plug-ins/file-dds/dds.c:230
 msgid "Decode YCoCg (scaled)"
 msgstr "Descodifica  YCoCg (escalat)"
 
-#: ../plug-ins/file-dds/dds.c:202
+#: ../plug-ins/file-dds/dds.c:243
 msgid "Decode Alpha exponent"
 msgstr "Descodifica l'exponent alfa"
 
@@ -6721,64 +6731,68 @@ msgstr "Carrega e_ls mipmaps"
 msgid "_Automatically decode YCoCg/AExp images when detected"
 msgstr "Descodifiqueu _automàticament les imatges YCoCg/AExp quan es detectin"
 
-#: ../plug-ins/file-dds/ddswrite.c:1956
+#: ../plug-ins/file-dds/ddswrite.c:1981
 msgid "Export as DDS"
 msgstr "Exporta a DDS"
 
-#: ../plug-ins/file-dds/ddswrite.c:1959
+#: ../plug-ins/file-dds/ddswrite.c:1984
 #: ../plug-ins/metadata/metadata-editor.c:4662
 msgid "_Export"
 msgstr "_Exporta"
 
-#: ../plug-ins/file-dds/ddswrite.c:1986
+#: ../plug-ins/file-dds/ddswrite.c:2011
 msgid "_Compression:"
 msgstr "_Compressió:"
 
-#: ../plug-ins/file-dds/ddswrite.c:1996
+#: ../plug-ins/file-dds/ddswrite.c:2021
 msgid "Use _perceptual error metric"
 msgstr "Utilitzeu mètrica d'error _perceptiu"
 
-#: ../plug-ins/file-dds/ddswrite.c:2025
+#: ../plug-ins/file-dds/ddswrite.c:2050
 msgid "_Save:"
 msgstr "De_sa:"
 
-#: ../plug-ins/file-dds/ddswrite.c:2039
+#: ../plug-ins/file-dds/ddswrite.c:2062
+msgid "Flip the image _vertically on export"
+msgstr "I_nverteix la imatge verticalment en exportar"
+
+#: ../plug-ins/file-dds/ddswrite.c:2075
 msgid "_Mipmaps:"
 msgstr "_Mipmaps:"
 
-#: ../plug-ins/file-dds/ddswrite.c:2062
+#: ../plug-ins/file-dds/ddswrite.c:2098
 msgid "Transparent index:"
 msgstr "Index transparent:"
 
-#: ../plug-ins/file-dds/ddswrite.c:2106
+#: ../plug-ins/file-dds/ddswrite.c:2142
 msgid "Mipmap Options"
 msgstr "Opcions del Mipmap"
 
-#: ../plug-ins/file-dds/ddswrite.c:2119
+#: ../plug-ins/file-dds/ddswrite.c:2155
 msgid "F_ilter:"
 msgstr "F_iltre:"
 
-#: ../plug-ins/file-dds/ddswrite.c:2132
+#: ../plug-ins/file-dds/ddswrite.c:2168
 msgid "_Wrap mode:"
 msgstr "_Mode d'ajust:"
 
-#: ../plug-ins/file-dds/ddswrite.c:2142
+#: ../plug-ins/file-dds/ddswrite.c:2178
 msgid "Appl_y gamma correction"
 msgstr "_Aplica la correcció gamma"
 
-#: ../plug-ins/file-dds/ddswrite.c:2156
+#: ../plug-ins/file-dds/ddswrite.c:2192
 msgid "Use s_RGB colorspace"
 msgstr "Utilitzeu l'espai de colors s_RGB"
 
-#: ../plug-ins/file-dds/ddswrite.c:2175 ../plug-ins/flame/flame.c:1116
+#: ../plug-ins/file-dds/ddswrite.c:2211 ../plug-ins/flame/flame.c:1116
 msgid "_Gamma:"
 msgstr "_Gamma:"
 
-#: ../plug-ins/file-dds/ddswrite.c:2185
+#: ../plug-ins/file-dds/ddswrite.c:2221
 msgid "Preserve alpha _test coverage"
 msgstr "Conserva la cober_tura de la prova alfa"
 
-#: ../plug-ins/file-dds/ddswrite.c:2204
+#: ../plug-ins/file-dds/ddswrite.c:2240
 msgid "_Alpha test threshold:"
 msgstr "Llindar de la prova _alfa:"
 
@@ -7029,18 +7043,20 @@ msgstr "Desa les dades _Exif"
 
 #. XMP metadata
 #: ../plug-ins/file-jpeg/jpeg-save.c:932
-#: ../plug-ins/file-webp/file-webp-dialog.c:377
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:7
+#: ../plug-ins/file-webp/file-webp-dialog.c:390
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:9
 msgid "Save _XMP data"
 msgstr "Desa les dades _XMP"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:946
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:8
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:10
 msgid "Save _IPTC data"
 msgstr "Desa les dades _IPTC"
 
+#. Save Thumbnail
 #: ../plug-ins/file-jpeg/jpeg-save.c:960
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:9
+#: ../plug-ins/file-webp/file-webp-dialog.c:414
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:11
 msgid "Save _thumbnail"
 msgstr "Desa la minia_tura"
 
@@ -7219,21 +7235,21 @@ msgstr "L'amplada de la capa no és vàlida o no és compatible: %d"
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "L'amplada de la capa no és vàlida o no és compatible: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:1477 ../plug-ins/file-psd/psd-load.c:2008
+#: ../plug-ins/file-psd/psd-load.c:1477 ../plug-ins/file-psd/psd-load.c:2040
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Mode de compressió no compatible: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:2155
+#: ../plug-ins/file-psd/psd-load.c:2187
 msgid "Extra"
 msgstr "Extra"
 
-#: ../plug-ins/file-psd/psd-load.c:2333
+#: ../plug-ins/file-psd/psd-load.c:2365
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "La mida del canal no és vàlida o no és compatible"
 
-#: ../plug-ins/file-psd/psd-load.c:2399
+#: ../plug-ins/file-psd/psd-load.c:2431
 #, c-format
 msgid "Failed to decompress data"
 msgstr "No s'han pogut descomprimir les dades"
@@ -7243,7 +7259,7 @@ msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr ""
 "Error: no es pot convertir de tipus d'imatge base del GIMP al mode PSD"
 
-#: ../plug-ins/file-psd/psd-save.c:1692
+#: ../plug-ins/file-psd/psd-save.c:1689
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images that are"
@@ -7252,7 +7268,7 @@ msgstr ""
 "No s'ha pogut exportar «%s». El format de fitxer PSD no és compatible amb "
 "imatges de més de 30.000 píxels d'amplada o alçada."
 
-#: ../plug-ins/file-psd/psd-save.c:1713
+#: ../plug-ins/file-psd/psd-save.c:1710
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images with "
@@ -7441,22 +7457,22 @@ msgstr ""
 "RLE _agressiu\n"
 "(no funciona amb SGI)"
 
-#: ../plug-ins/file-tiff/file-tiff.c:141 ../plug-ins/file-tiff/file-tiff.c:163
-#: ../plug-ins/file-tiff/file-tiff.c:181
+#: ../plug-ins/file-tiff/file-tiff.c:165 ../plug-ins/file-tiff/file-tiff.c:187
+#: ../plug-ins/file-tiff/file-tiff.c:205 ../plug-ins/file-tiff/file-tiff.c:222
 msgid "TIFF image"
 msgstr "Imatge TIFF"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:267
+#: ../plug-ins/file-tiff/file-tiff-load.c:307
 #, c-format
 msgid "Not a TIFF image or image is corrupt."
 msgstr "No hi ha cap imatge TIFF o està corrompuda."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:298
+#: ../plug-ins/file-tiff/file-tiff-load.c:338
 #, c-format
 msgid "TIFF '%s' does not contain any directories"
 msgstr "La imatge TIFF «%s» no conté cap directori"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:305
+#: ../plug-ins/file-tiff/file-tiff-load.c:345
 #, c-format
 msgid ""
 "TIFF '%s' directory count by header failed though there seems to be %d page."
@@ -7471,7 +7487,7 @@ msgstr[1] ""
 "El recompte de directoris TIFF '%s' per capçalera ha fallat tot i que sembla que és la %d pàgina.\n"
 "Intentant carregar el fitxer amb aquest supòsit."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:429
+#: ../plug-ins/file-tiff/file-tiff-load.c:476
 msgid "Extra channels with unspecified data."
 msgstr "Canals addicionals amb dades no especificades."
 
@@ -7481,16 +7497,16 @@ msgstr "Canals addicionals amb dades no especificades."
 #. * must be present if there are extra samples". So the files
 #. * can be considered non-conformant.
 #. * Let's ask what to do with the channel.
-#: ../plug-ins/file-tiff/file-tiff-load.c:441
+#: ../plug-ins/file-tiff/file-tiff-load.c:488
 msgid "Non-conformant TIFF: extra channels without 'ExtraSamples' field."
 msgstr "TIFF no conforme: canals addicionals sense camp 'ExtraSamples'."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:522
+#: ../plug-ins/file-tiff/file-tiff-load.c:582
 #, c-format
 msgid "Couldn't read page %d of %d. Image might be corrupt.\n"
 msgstr "No s'ha pogut llegir la pàgina %d de %d. La imatge pot estar malmesa.\n"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:551
+#: ../plug-ins/file-tiff/file-tiff-load.c:611
 #, c-format
 msgid ""
 "This image has a linear color profile but it was not set on the first layer."
@@ -7500,7 +7516,7 @@ msgstr ""
 "primera capa. Les capes per sota de la capa # %d s’interpretaran com a no "
 "lineals."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:559
+#: ../plug-ins/file-tiff/file-tiff-load.c:619
 msgid ""
 "This image has multiple color profiles. We will use the first one. If this "
 "leads to incorrect results you should consider loading each layer as a "
@@ -7510,36 +7526,36 @@ msgstr ""
 " condueix a resultats incorrectes, hauríeu de considerar la possibilitat de "
 "carregar cada capa com una imatge independent."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:571
+#: ../plug-ins/file-tiff/file-tiff-load.c:631
 #, c-format
 msgid "Suspicious bit depth: %d for page %d. Image may be corrupt."
 msgstr ""
 "Profunditat de bits sospitosa: %d per a la pàgina %d. La imatge podria estar"
 " corrompuda."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:645
+#: ../plug-ins/file-tiff/file-tiff-load.c:705
 #, c-format
 msgid "Unsupported bit depth: %d for page %d."
 msgstr "Profunditat de bits no admesa: %d per a la pàgina %d."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:660
+#: ../plug-ins/file-tiff/file-tiff-load.c:720
 #, c-format
 msgid "Could not get image width from '%s'"
 msgstr "No s'ha pogut obtenir l'amplada de la imatge des de '%s'"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:668
+#: ../plug-ins/file-tiff/file-tiff-load.c:728
 #, c-format
 msgid "Could not get image length from '%s'"
 msgstr "No s'ha pogut obtenir la longitud de la imatge des de '%s'"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:676
+#: ../plug-ins/file-tiff/file-tiff-load.c:736
 #, c-format
 msgid "Invalid image dimensions (%u x %u) for page %d. Image may be corrupt."
 msgstr ""
 "Les dimensions de la imatge no són vàlides (%u x %u) per a la pàgina %d. La "
 "imatge pot estar malmesa."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:697
+#: ../plug-ins/file-tiff/file-tiff-load.c:757
 #, c-format
 msgid ""
 "Could not get photometric from '%s'. Image is CCITT compressed, assuming "
@@ -7548,7 +7564,7 @@ msgstr ""
 "No s'ha pogut obtenir la fotometria de «%s». La imatge es comprimeix en "
 "CCITT, suposant que el mínim sigui blanc"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:704
+#: ../plug-ins/file-tiff/file-tiff-load.c:764
 #, c-format
 msgid "Could not get photometric from '%s'. Assuming min-is-black"
 msgstr ""
@@ -7558,7 +7574,7 @@ msgstr ""
 #. In non-interactive mode, we assume unassociated alpha if unspecified.
 #. * We don't output messages in interactive mode as the user
 #. * has already the ability to choose through a dialog.
-#: ../plug-ins/file-tiff/file-tiff-load.c:736
+#: ../plug-ins/file-tiff/file-tiff-load.c:796
 #, c-format
 msgid ""
 "Alpha channel type not defined for %s. Assuming alpha is not premultiplied"
@@ -7566,7 +7582,7 @@ msgstr ""
 "El tipus de canal alfa no s'ha definit per a %s. Suposant que l’alfa no "
 "estigui premultiplicat"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:761
+#: ../plug-ins/file-tiff/file-tiff-load.c:821
 #, c-format
 msgid ""
 "Image '%s' does not conform to the TIFF specification: ExtraSamples field is"
@@ -7577,61 +7593,75 @@ msgstr ""
 "està definit mentre hi hagi canals addicionals. Suposant que el primer canal"
 " addicional sigui l'alfa no premultiplicat."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:994
+#: ../plug-ins/file-tiff/file-tiff-load.c:1110
 #, c-format
 msgid "Invalid or unknown compression %u. Setting compression to none."
 msgstr ""
 "Compressió %u no vàlida o desconeguda. Configurant per a cap compressió."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1052
+#: ../plug-ins/file-tiff/file-tiff-load.c:1168
 #, c-format
 msgid "Could not create a new image: %s"
 msgstr "No s'ha pogut crear una imatge nova: %s"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1072
+#: ../plug-ins/file-tiff/file-tiff-load.c:1188
 #, c-format
 msgid "%s-%d-of-%d-pages"
 msgstr "%s-%d-de-%d-pàgines"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1217
+#: ../plug-ins/file-tiff/file-tiff-load.c:1333
 #, c-format
 msgid "Unknown resolution unit type %d, assuming dpi"
 msgstr "Tipus d'unitat de resolució desconeguda %d, suposant el dpi"
 
 #. no res unit tag
 #. old AppleScan software produces these
-#: ../plug-ins/file-tiff/file-tiff-load.c:1227
+#: ../plug-ins/file-tiff/file-tiff-load.c:1343
 msgid "Warning: resolution specified without unit type, assuming dpi"
 msgstr "Avís: resolució especificada sense tipus d’unitat, suposant el dpi"
 
 #. xres but no yres
-#: ../plug-ins/file-tiff/file-tiff-load.c:1235
+#: ../plug-ins/file-tiff/file-tiff-load.c:1351
 msgid "Warning: no y resolution info, assuming same as x"
 msgstr "Avís: no hi ha informació de resolució y, assumint el mateix que x"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1294
+#: ../plug-ins/file-tiff/file-tiff-load.c:1368
+msgid "Invalid image resolution info, using default"
+msgstr "Informació de resolució d'imatge no vàlida, s'usa la predeterminada"
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:1427
 #, c-format
 msgid "Could not get colormaps from '%s'"
 msgstr "No s'han pogut obtenir mapes de colors des de '%s'"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1367
+#. Validate number of channels to the same maximum as we use for
+#. * Photoshop. A higher number most likely means a corrupt image
+#. * and can cause GIMP to become unresponsive and/or stuck.
+#. * See m2-d0f86ab189cbe900ec389ca6d7464713.tif from imagetestsuite
+#: ../plug-ins/file-tiff/file-tiff-load.c:1521
+#, c-format
+msgid "Suspicious number of extra channels: %d. Possibly corrupt image."
+msgstr ""
+"Nombre sospitós de canals addicionals: %d. Possiblement imatge malmesa."
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:1583
 msgid "TIFF Channel"
 msgstr "Canal TIFF"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1505
+#: ../plug-ins/file-tiff/file-tiff-load.c:1721
 #, c-format
 msgid "No data could be read from TIFF '%s'. The file is probably corrupted."
 msgstr ""
 "No es poden llegir dades del TIFF '%s'. El fitxer probablement està malmès."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1576
+#: ../plug-ins/file-tiff/file-tiff-load.c:1792
 #, c-format
 msgid "%s: Unsupported image format, no RGBA loader available"
 msgstr ""
 "%s: format d'imatge no compatible, no hi ha cap carregador RGBA disponible"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1888
-#: ../plug-ins/file-tiff/file-tiff-load.c:2085
+#: ../plug-ins/file-tiff/file-tiff-load.c:2104
+#: ../plug-ins/file-tiff/file-tiff-load.c:2301
 #, c-format
 msgid "Reading tile failed. Image may be corrupt at line %d."
 msgstr ""
@@ -7639,39 +7669,43 @@ msgstr ""
 "%d."
 
 #. Error reading scanline, stop loading
-#: ../plug-ins/file-tiff/file-tiff-load.c:1897
-#: ../plug-ins/file-tiff/file-tiff-load.c:2094
+#: ../plug-ins/file-tiff/file-tiff-load.c:2113
+#: ../plug-ins/file-tiff/file-tiff-load.c:2310
 #, c-format
 msgid "Reading scanline failed. Image may be corrupt at line %d."
 msgstr ""
 "Ha fallat la lectura de la línia d'escaneig. La imatge pot estar malmesa a "
 "la línia %d."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2495
+#: ../plug-ins/file-tiff/file-tiff-load.c:2660
 msgid "Import from TIFF"
 msgstr "Importa des d'un TIFF"
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:2681
+msgid "_Show reduced images"
+msgstr "_Mostra les imatges reduïdes"
 
 #. Option to shrink the loaded image to its bounding box
 #. or keep as much empty space as possible.
 #. Note that there seems to be no way to keep the empty
 #. space on the right and bottom.
-#: ../plug-ins/file-tiff/file-tiff-load.c:2552
+#: ../plug-ins/file-tiff/file-tiff-load.c:2715
 msgid "_Keep empty space around imported layers"
 msgstr "_Manté l'espai buit al voltant de les capes importades"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2569
+#: ../plug-ins/file-tiff/file-tiff-load.c:2732
 msgid "Process extra channel as:"
 msgstr "Processa un canal addicional com:"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2572
+#: ../plug-ins/file-tiff/file-tiff-load.c:2735
 msgid "_Non-premultiplied alpha"
 msgstr "Alfa _no premultiplicada"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2573
+#: ../plug-ins/file-tiff/file-tiff-load.c:2736
 msgid "Pre_multiplied alpha"
 msgstr "Alfa pre_multiplicada"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2574
+#: ../plug-ins/file-tiff/file-tiff-load.c:2737
 msgid "Channe_l"
 msgstr "Cana_ls"
 
@@ -7687,12 +7721,12 @@ msgstr ""
 msgid "Indexed pictures cannot be compressed with \"JPEG\"."
 msgstr "Les imatges indexades no es poden comprimir amb «JPEG»."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:742
+#: ../plug-ins/file-tiff/file-tiff-save.c:743
 #, c-format
 msgid "Failed a scanline write on row %d"
 msgstr "No s'ha pogut escriure la línia escanejada a la fila %d"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:980
+#: ../plug-ins/file-tiff/file-tiff-save.c:985
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
@@ -7700,48 +7734,57 @@ msgstr ""
 "El format TIFF només accepta comentaris en\n"
 "codificació ASCII de 7 bits. No es desarà cap comentari."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1090
+#: ../plug-ins/file-tiff/file-tiff-save.c:1095
 #, c-format
 msgid "Writing pages with different bit depth is strange."
 msgstr "És estrany escriure pàgines amb una profunditat de bits diferent."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1150
+#: ../plug-ins/file-tiff/file-tiff-save.c:1157
 msgid "TIFF"
 msgstr "TIFF"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1176
+#: ../plug-ins/file-tiff/file-tiff-save.c:1188
+msgid ""
+"<i>Warning: maximum TIFF file size exceeded.\n"
+" Retry as BigTIFF or cancel.</i>"
+msgstr ""
+"<i>Avís: s'ha excedit la mida màxima del fitxer TIFF.\n"
+" Reintenta com a BigTIFF o cancel·la.</i>"
+
+#: ../plug-ins/file-tiff/file-tiff-save.c:1199
 msgid "Compression"
 msgstr "Compressió"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1180
+#: ../plug-ins/file-tiff/file-tiff-save.c:1203
 msgid "_None"
 msgstr "_Cap"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1181
+#: ../plug-ins/file-tiff/file-tiff-save.c:1204
 msgid "_LZW"
 msgstr "_LZW"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1182
+#: ../plug-ins/file-tiff/file-tiff-save.c:1205
 msgid "_Pack Bits"
 msgstr "_Paquet de bits"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1183
+#: ../plug-ins/file-tiff/file-tiff-save.c:1206
 msgid "_Deflate"
 msgstr "_Desinfla"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1184
+#: ../plug-ins/file-tiff/file-tiff-save.c:1207
 msgid "_JPEG"
 msgstr "_JPEG"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1185
+#: ../plug-ins/file-tiff/file-tiff-save.c:1208
 msgid "CCITT Group _3 fax"
 msgstr "Fax CCITT grup _3"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1186
+#: ../plug-ins/file-tiff/file-tiff-save.c:1209
 msgid "CCITT Group _4 fax"
 msgstr "Fax CCITT grup _4"
 
-#: ../plug-ins/file-webp/file-webp.c:101 ../plug-ins/file-webp/file-webp.c:122
+#: ../plug-ins/file-webp/file-webp.c:124 ../plug-ins/file-webp/file-webp.c:145
+#: ../plug-ins/file-webp/file-webp.c:163
 msgid "WebP image"
 msgstr "Imatge WebP"
 
@@ -7754,73 +7797,78 @@ msgid "(all frames are keyframes)"
 msgstr "(tots els fotogrames són fotogrames clau)"
 
 #. Create the dialog
-#: ../plug-ins/file-webp/file-webp-dialog.c:108
+#: ../plug-ins/file-webp/file-webp-dialog.c:109
 msgid "WebP"
 msgstr "WebP"
 
 #. Create the lossless checkbox
-#: ../plug-ins/file-webp/file-webp-dialog.c:125
+#: ../plug-ins/file-webp/file-webp-dialog.c:126
 msgid "_Lossless"
 msgstr "_Sense pèrdues"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:141
+#: ../plug-ins/file-webp/file-webp-dialog.c:142
 msgid "Image _quality:"
 msgstr "_Qualitat d'imatge:"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:149
+#: ../plug-ins/file-webp/file-webp-dialog.c:150
 msgid "Image quality"
 msgstr "Qualitat d'imatge"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:160
+#: ../plug-ins/file-webp/file-webp-dialog.c:161
 msgid "Alpha q_uality:"
 msgstr "Q_ualitat alfa:"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:168
+#: ../plug-ins/file-webp/file-webp-dialog.c:169
 msgid "Alpha channel quality"
 msgstr "Qualitat del canal alfa"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:193
+#: ../plug-ins/file-webp/file-webp-dialog.c:194
 msgid "Source _type:"
 msgstr "_Tipus de font:"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:196
+#: ../plug-ins/file-webp/file-webp-dialog.c:197
 msgid "WebP encoder \"preset\""
 msgstr "WebP codificador «preestablert»"
 
 #. Create the top-level animation checkbox expander
-#: ../plug-ins/file-webp/file-webp-dialog.c:228
+#: ../plug-ins/file-webp/file-webp-dialog.c:229
 msgid "As A_nimation"
 msgstr "Com una _animació"
 
 #. loop animation checkbox
-#: ../plug-ins/file-webp/file-webp-dialog.c:257
+#: ../plug-ins/file-webp/file-webp-dialog.c:258
 msgid "Loop _forever"
 msgstr "_Bucle sense fi"
 
 #. label for 'max key-frame distance' adjustment
-#: ../plug-ins/file-webp/file-webp-dialog.c:274
+#: ../plug-ins/file-webp/file-webp-dialog.c:275
 msgid "Max distance between key-frames:"
 msgstr "Distància màxima entre els fotogrames clau:"
 
 #. minimize-size checkbox
-#: ../plug-ins/file-webp/file-webp-dialog.c:309
+#: ../plug-ins/file-webp/file-webp-dialog.c:310
 msgid "_Minimize output size (slower)"
 msgstr "_Minimitza la mida de sortida (més lent)"
 
 #. label for 'delay' adjustment
-#: ../plug-ins/file-webp/file-webp-dialog.c:332
+#: ../plug-ins/file-webp/file-webp-dialog.c:333
 msgid "Delay between frames where unspecified:"
 msgstr "Retard entre fotogrames no especificats:"
 
 #. Create the force-delay checkbox
-#: ../plug-ins/file-webp/file-webp-dialog.c:355
+#: ../plug-ins/file-webp/file-webp-dialog.c:356
 msgid "Use _delay entered above for all frames"
 msgstr "Utilitza el retar_d en tots els fotogrames"
 
 #. Save EXIF data
-#: ../plug-ins/file-webp/file-webp-dialog.c:367
+#: ../plug-ins/file-webp/file-webp-dialog.c:368
 msgid "_Save Exif data"
 msgstr "De_sa les dades Exif"
+
+#. IPTC metadata
+#: ../plug-ins/file-webp/file-webp-dialog.c:378
+msgid "Save _IPTC"
+msgstr "Desa _IPTC"
 
 #: ../plug-ins/file-webp/file-webp-load.c:107
 #, c-format
@@ -7866,45 +7914,47 @@ msgstr "Paràmetre nul"
 msgid "invalid configuration"
 msgstr "configuració invàlida"
 
-#: ../plug-ins/file-webp/file-webp-save.c:124
-msgid "bad image dimensions"
-msgstr "dimensions dolentes de la imatge"
+#. TRANSLATORS: widthxheight with UTF-8 encoded multiply sign.
+#: ../plug-ins/file-webp/file-webp-save.c:125
+#, c-format
+msgid "bad image dimensions (maximum: %d×%d)"
+msgstr "dimensions d'imatge incorrectes (màxim: %d×%d)"
 
-#: ../plug-ins/file-webp/file-webp-save.c:126
+#: ../plug-ins/file-webp/file-webp-save.c:128
 msgid "partition is bigger than 512K"
 msgstr "la partició és més gran de 512K"
 
-#: ../plug-ins/file-webp/file-webp-save.c:128
+#: ../plug-ins/file-webp/file-webp-save.c:130
 msgid "partition is bigger than 16M"
 msgstr "la partició és més gran de 16M"
 
-#: ../plug-ins/file-webp/file-webp-save.c:130
+#: ../plug-ins/file-webp/file-webp-save.c:132
 msgid "unable to flush bytes"
 msgstr "no es poden eliminar els bits"
 
-#: ../plug-ins/file-webp/file-webp-save.c:132
+#: ../plug-ins/file-webp/file-webp-save.c:134
 msgid "file is larger than 4GiB"
 msgstr "el fitxer és més gran que 4GiB"
 
-#: ../plug-ins/file-webp/file-webp-save.c:134
+#: ../plug-ins/file-webp/file-webp-save.c:136
 msgid "user aborted encoding"
 msgstr "codificació d'usuari avortada"
 
-#: ../plug-ins/file-webp/file-webp-save.c:136
+#: ../plug-ins/file-webp/file-webp-save.c:138
 msgid "list terminator"
 msgstr "llista finalitzada"
 
-#: ../plug-ins/file-webp/file-webp-save.c:138
+#: ../plug-ins/file-webp/file-webp-save.c:140
 msgid "unknown error"
 msgstr "error desconegut"
 
-#: ../plug-ins/file-webp/file-webp-save.c:188
-#: ../plug-ins/file-webp/file-webp-save.c:530
+#: ../plug-ins/file-webp/file-webp-save.c:190
+#: ../plug-ins/file-webp/file-webp-save.c:534
 #, c-format
 msgid "Unable to open '%s' for writing: %s"
 msgstr "No s'ha pogut obrir «%s» per a escriure-hi: %s"
 
-#: ../plug-ins/file-webp/file-webp-save.c:271
+#: ../plug-ins/file-webp/file-webp-save.c:274
 #, c-format
 msgid "WebP error: '%s'"
 msgstr "Error WebP: «%s»"
@@ -9637,7 +9687,7 @@ msgid "Save comme_nt"
 msgstr "De_sa el comentari"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:8
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:3
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:5
 msgid "Save color _values from transparent pixels"
 msgstr "Desa els valors dels _colors dels píxels transparents"
 
@@ -9731,30 +9781,42 @@ msgid "_B, G, R, X (BMP style)"
 msgstr "_B, G, R, X (estil BMP)"
 
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:1
+msgid ""
+"Warning: maximum TIFF file size exceeded. Retry as BigTIFF or with a "
+"different compression algorithm, or cancel."
+msgstr ""
+"Avís: s'ha excedit la mida màxima del fitxer TIFF. Reintenta com a BigTIFF o"
+" amb un algoritme de compressió diferent, o cancel·la."
+
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:2
+msgid "Export in _BigTIFF variant file format"
+msgstr "_Exporta en format de fitxer de variant BigTIFF"
+
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:3
 msgid "Save _layers"
 msgstr "_Desa les capes"
 
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:2
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:4
 msgid "Cr_op layers to image bounds"
 msgstr "_Escapça les capes als límits de la imatge"
 
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:4
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:6
 msgid "Colors are not stored premultiplied by the associated alpha"
 msgstr "Els colors no s’emmagatzemen premultiplicats per l’alfa associada"
 
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:5
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:7
 msgid "<b>Comment</b>"
 msgstr "<b>Comentari</b>"
 
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:6
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:8
 msgid "S_ave Exif data"
 msgstr "De_sa les dades Exif"
 
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:11
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:13
 msgid "Save _GeoTIFF data"
 msgstr "Desa les dades _GeoTIFF"
 
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:12
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:14
 msgid "Keep the GeoTIFF metadata if it was present on import"
 msgstr "Conserva les metadades GeoTIFF si hi eren en la importació"
 
@@ -12942,3 +13004,6 @@ msgstr "E_scàner/càmera..."
 #: ../plug-ins/twain/twain.c:505
 msgid "Transferring data from scanner/camera"
 msgstr "S'estan transferint dades de l'escàner/càmera"
+
+#~ msgid "bad image dimensions"
+#~ msgstr "dimensions dolentes de la imatge"
