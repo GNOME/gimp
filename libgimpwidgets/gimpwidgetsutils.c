@@ -625,17 +625,17 @@ gimp_monitor_get_color_profile (GdkMonitor *monitor)
   }
 #elif defined G_OS_WIN32
   {
-    GdkRectangle   monitor_geometry;
-    gint           scale_factor;
-    POINT          point;
-    gint           offsetx = GetSystemMetrics (SM_XVIRTUALSCREEN);
-    gint           offsety = GetSystemMetrics (SM_YVIRTUALSCREEN);
-    HMONITOR       monitor_handle;
-    MONITORINFOEX  info;
-    DISPLAY_DEVICE display_device;
+    GdkRectangle    monitor_geometry;
+    gint            scale_factor;
+    POINT           point;
+    gint            offsetx = GetSystemMetrics (SM_XVIRTUALSCREEN);
+    gint            offsety = GetSystemMetrics (SM_YVIRTUALSCREEN);
+    HMONITOR        monitor_handle;
+    MONITORINFOEXW  info;
+    DISPLAY_DEVICEW display_device;
 
-    info.cbSize       = sizeof (MONITORINFOEX);
-    display_device.cb = sizeof (DISPLAY_DEVICE);
+    info.cbSize       = sizeof (info);
+    display_device.cb = sizeof (display_device);
 
     /* If the first monitor is not set as the main monitor,
      * monitor_number(monitor) may not match the index used in
@@ -647,56 +647,61 @@ gimp_monitor_get_color_profile (GdkMonitor *monitor)
     point.y = monitor_geometry.y * scale_factor + offsety;
     monitor_handle = MonitorFromPoint (point, MONITOR_DEFAULTTONEAREST);
 
-    if (GetMonitorInfo (monitor_handle, (LPMONITORINFO)&info))
+    if (GetMonitorInfoW (monitor_handle, (LPMONITORINFO)&info))
       {
-        if (EnumDisplayDevices (info.szDevice, 0, &display_device, 0))
+        if (EnumDisplayDevicesW (info.szDevice, 0, &display_device, 0))
           {
-            gchar                        *device_key = g_convert (display_device.DeviceKey, -1, "UTF-16LE", "WINDOWS-1252", NULL, NULL, NULL);
-            gchar                        *filename   = NULL;
-            gchar                        *dir        = NULL;
-            gchar                        *fullpath   = NULL;
-            GFile                        *file;
-            DWORD                         len        = 0;
+            wchar_t                      *device_key = display_device.DeviceKey;
+            wchar_t                      *filename_utf16 = NULL;
+            char                         *filename       = NULL;
+            wchar_t                      *dir_utf16      = NULL;
+            char                         *dir            = NULL;
+            char                         *fullpath       = NULL;
+            GFile                        *file           = NULL;
+            DWORD                         len            = 0;
             gboolean                      per_user;
             WCS_PROFILE_MANAGEMENT_SCOPE  scope;
 
-            WcsGetUsePerUserProfiles ((LPWSTR)device_key, CLASS_MONITOR, &per_user);
-            scope = per_user ? WCS_PROFILE_MANAGEMENT_SCOPE_CURRENT_USER : WCS_PROFILE_MANAGEMENT_SCOPE_SYSTEM_WIDE;
+            WcsGetUsePerUserProfiles (device_key, CLASS_MONITOR, &per_user);
+            scope = per_user ? WCS_PROFILE_MANAGEMENT_SCOPE_CURRENT_USER :
+                               WCS_PROFILE_MANAGEMENT_SCOPE_SYSTEM_WIDE;
 
             if (WcsGetDefaultColorProfileSize (scope,
-                                               (LPWSTR)device_key,
+                                               device_key,
                                                CPT_ICC,
                                                CPST_NONE,
                                                0,
                                                &len))
               {
-                gchar *filename_utf16 = g_new (gchar, len);
+                filename_utf16 = (wchar_t*) g_malloc0 (len);
 
                 WcsGetDefaultColorProfile (scope,
-                                           (LPWSTR)device_key,
+                                           device_key,
                                            CPT_ICC,
                                            CPST_NONE,
                                            0,
                                            len,
-                                           (LPWSTR)filename_utf16);
-
-                /* filename_utf16 must be native endian */
-                filename = g_utf16_to_utf8 ((gunichar2 *)filename_utf16, -1, NULL, NULL, NULL);
-                g_free (filename_utf16);
+                                           filename_utf16);
               }
             else
               {
                 /* Due to a bug in Windows, the meanings of LCS_sRGB and
                  * LCS_WINDOWS_COLOR_SPACE are swapped.
                  */
-                GetStandardColorSpaceProfile (NULL, LCS_sRGB, NULL, &len);
-                filename = g_new (gchar, len);
-                GetStandardColorSpaceProfile (NULL, LCS_sRGB, filename, &len);
+                if (GetStandardColorSpaceProfileW (NULL, LCS_sRGB, NULL, &len) != 0 && len > 0)
+                  {
+                    filename_utf16 = (wchar_t*) g_malloc0 (len);
+                    GetStandardColorSpaceProfileW (NULL, LCS_sRGB, filename_utf16, &len);
+                  }
               }
 
-            GetColorDirectory (NULL, NULL, &len);
-            dir = g_new (gchar, len);
-            GetColorDirectory (NULL, dir, &len);
+            filename = g_utf16_to_utf8 (filename_utf16, -1, NULL, NULL, NULL);
+
+            GetColorDirectoryW (NULL, NULL, &len);
+            dir_utf16 = g_malloc0 (len);
+            GetColorDirectoryW (NULL, dir_utf16, &len);
+
+            dir = g_utf16_to_utf8 (dir_utf16, -1, NULL, NULL, NULL);
 
             fullpath = g_build_filename (dir, filename, NULL);
             file = g_file_new_for_path (fullpath);
@@ -706,7 +711,9 @@ gimp_monitor_get_color_profile (GdkMonitor *monitor)
 
             g_free (fullpath);
             g_free (dir);
+            g_free (dir_utf16);
             g_free (filename);
+            g_free (filename_utf16);
             g_free (device_key);
           }
       }
