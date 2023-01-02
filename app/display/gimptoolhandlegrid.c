@@ -548,10 +548,11 @@ gimp_tool_handle_grid_button_press (GimpToolWidget      *widget,
                                     GdkModifierType      state,
                                     GimpButtonPressType  press_type)
 {
-  GimpToolHandleGrid        *grid          = GIMP_TOOL_HANDLE_GRID (widget);
-  GimpToolHandleGridPrivate *private       = grid->private;
-  gint                       n_handles     = private->n_handles;
-  gint                       active_handle = private->handle - 1;
+  GimpToolHandleGrid        *grid           = GIMP_TOOL_HANDLE_GRID (widget);
+  GimpToolHandleGridPrivate *private        = grid->private;
+  gint                       n_handles      = private->n_handles;
+  gint                       active_handle  = private->handle - 1;
+  GimpCanvasItem            *dragged_handle = NULL;
 
   switch (private->handle_mode)
     {
@@ -591,9 +592,23 @@ gimp_tool_handle_grid_button_press (GimpToolWidget      *widget,
 
           g_object_notify (G_OBJECT (grid), "n-handles");
         }
+      else if (active_handle >= 0 &&
+               active_handle < 4)
+        {
+          /* existing handle is being dragged. don't set dragged_handle for
+           * newly-created handles, otherwise their snap offset will be wrong
+           */
+          dragged_handle = private->handles[private->handle];
+        }
       break;
 
     case GIMP_HANDLE_MODE_MOVE:
+      if (active_handle >= 0 &&
+          active_handle < 4)
+        {
+          /* existing handle is being dragged */
+          dragged_handle = private->handles[private->handle];
+        }
       /* check for valid position and calculating of OX0...OY3 is
        * done on button release
        */
@@ -625,6 +640,22 @@ gimp_tool_handle_grid_button_press (GimpToolWidget      *widget,
           g_object_notify (G_OBJECT (grid), "n-handles");
         }
       break;
+    }
+
+  /* ensure dragged handles snap to guides based on the handle center, not where
+   * the cursor grabbed them
+   */
+  if (dragged_handle)
+    {
+      gdouble x, y;
+
+      gimp_canvas_handle_get_position (dragged_handle,
+                                       &x,
+                                       &y);
+      gimp_tool_widget_set_snap_offsets (widget,
+                                         SIGNED_ROUND (x - coords->x),
+                                         SIGNED_ROUND (y - coords->y),
+                                         0, 0);
     }
 
   private->last_x = coords->x;
