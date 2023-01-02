@@ -493,7 +493,7 @@ ensure_mouse_hook (void)
 {
   if (!mouse_hook)
     {
-      mouse_hook = SetWindowsHookEx (WH_MOUSE_LL, mouse_procedure, this_module (), 0);
+      mouse_hook = SetWindowsHookExW (WH_MOUSE_LL, mouse_procedure, this_module (), 0);
       if (!mouse_hook)
         {
           g_warning ("SetWindowsHookEx failed with error code %u",
@@ -558,7 +558,7 @@ ensure_keyboard_hook (void)
 {
   if (!keyboard_hook)
     {
-      keyboard_hook = SetWindowsHookEx (WH_KEYBOARD_LL, keyboard_procedure, this_module (), 0);
+      keyboard_hook = SetWindowsHookExW (WH_KEYBOARD_LL, keyboard_procedure, this_module (), 0);
       if (!keyboard_hook)
         {
           g_warning ("SetWindowsHookEx failed with error code %u",
