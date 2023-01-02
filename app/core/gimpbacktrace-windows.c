@@ -633,6 +633,34 @@ gimp_backtrace_get_frame_address (GimpBacktrace *backtrace,
   return backtrace->threads[thread].frames[frame];
 }
 
+#define IN_MIDDLE_OF_UTF8_CODEPOINT(c) \
+((c & 0xc0) == 0x80)
+
+static void
+utf8_copy_sized (char       *dest,
+                 const char *src,
+                 size_t      size)
+{
+  if (size == 0)
+    return;
+
+  strncpy (dest, src, size);
+
+  if (dest[size - 1] != 0)
+    {
+      char *p = &dest[size - 1];
+
+      /* Checking for p > dest is not actually needed, but
+       * it's useful in case of malformed source string. */
+      while (IN_MIDDLE_OF_UTF8_CODEPOINT (*p) && G_LIKELY (p > dest))
+        *p-- = 0;
+
+      *p = 0;
+    }
+}
+
+#undef IN_MIDDLE_OF_UTF8_CODEPOINT
+
 gboolean
 gimp_backtrace_get_address_info (guintptr                  address,
                                  GimpBacktraceAddressInfo *info)
@@ -644,19 +672,25 @@ gimp_backtrace_get_address_info (guintptr                  address,
   IMAGEHLP_LINE64  line        = {};
   DWORD            line_offset = 0;
   gboolean         result      = FALSE;
+  wchar_t          buf[MAX_PATH];
+  DWORD            wchars_count;
 
   hProcess = GetCurrentProcess ();
   hModule  = (HMODULE) (guintptr) SymGetModuleBase64 (hProcess, address);
 
-  if (hModule && GetModuleFileNameExA (hProcess, hModule,
-                                       info->object_name,
-                                       sizeof (info->object_name)))
+  info->object_name[0] = '\0';
+  wchars_count = sizeof (buf) / sizeof (buf[0]);
+  if (hModule && GetModuleFileNameExW (hProcess, hModule, buf, wchars_count))
     {
-      result = TRUE;
-    }
-  else
-    {
-      info->object_name[0] = '\0';
+      char *object_name;
+
+      if ((object_name = g_utf16_to_utf8 (buf, -1, NULL, NULL, NULL)))
+        {
+          utf8_copy_sized (info->object_name, object_name, sizeof (info->object_name));
+
+          result = TRUE;
+          g_free (object_name);
+        }
     }
 
   symbol_info = g_malloc (sizeof (SYMBOL_INFO)       +
