@@ -4,13 +4,13 @@
 # Maxim Dziumanenko <dziumanenko@gmail.com>, 2004-2010.
 # Korostil Daniel <ted.korostiled@gmail.com>, 2011.
 # Olexandr Pylypchuk <pilipchukap@rambler.ru>, 2018.
-# Yuri Chornoivan <yurchor@ukr.net>, 2018, 2020, 2021, 2022.
+# Yuri Chornoivan <yurchor@ukr.net>, 2018, 2020, 2021, 2022, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-10-27 12:38+0000\n"
-"PO-Revision-Date: 2022-10-29 08:50+0300\n"
+"POT-Creation-Date: 2023-01-02 14:18+0000\n"
+"PO-Revision-Date: 2023-01-02 20:56+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -472,7 +472,7 @@ msgstr "_Вертикально"
 #: plug-ins/file-bmp/bmp-load.c:737 plug-ins/file-exr/file-exr.c:273
 #: plug-ins/file-faxg3/faxg3.c:575 plug-ins/file-fits/fits.c:556
 #: plug-ins/file-jpeg/jpeg-load.c:225
-#: plug-ins/file-psd/psd-image-res-load.c:1067
+#: plug-ins/file-psd/psd-image-res-load.c:1076
 #: plug-ins/file-psd/psd-load.c:2502 plug-ins/file-sgi/sgi.c:474
 #: plug-ins/file-tiff/file-tiff-load.c:1576
 #: plug-ins/file-webp/file-webp-load.c:166 plug-ins/gfig/gfig-dialog.c:1325
@@ -1015,9 +1015,9 @@ msgstr "Збереження параметрів CML Explorer"
 #: plug-ins/common/file-sunras.c:635 plug-ins/common/file-tga.c:1231
 #: plug-ins/common/file-xmc.c:1385 plug-ins/common/sphere-designer.c:2201
 #: plug-ins/file-bmp/bmp-save.c:340 plug-ins/file-fits/fits.c:513
-#: plug-ins/file-fli/fli-gimp.c:817 plug-ins/file-icns/file-icns-save.c:426
+#: plug-ins/file-fli/fli-gimp.c:817 plug-ins/file-icns/file-icns-save.c:428
 #: plug-ins/file-ico/ico-save.c:1332 plug-ins/file-ico/ico-save.c:1549
-#: plug-ins/file-jpeg/jpeg-save.c:317 plug-ins/file-psd/psd-save.c:2124
+#: plug-ins/file-jpeg/jpeg-save.c:317 plug-ins/file-psd/psd-save.c:2213
 #: plug-ins/file-tiff/file-tiff-save.c:1084
 #: plug-ins/file-tiff/file-tiff-save.c:1173 plug-ins/flame/flame.c:509
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1545
@@ -1057,7 +1057,7 @@ msgstr "Завантажити параметри CML Explorer"
 #: plug-ins/file-ico/ico-load.c:794 plug-ins/file-ico/ico-load.c:958
 #: plug-ins/file-jpeg/jpeg-load.c:96 plug-ins/file-jpeg/jpeg-load.c:555
 #: plug-ins/file-psd/psd-load.c:159 plug-ins/file-psd/psd-load.c:164
-#: plug-ins/file-psd/psd-save.c:2129 plug-ins/file-psd/psd-thumb-load.c:82
+#: plug-ins/file-psd/psd-save.c:2218 plug-ins/file-psd/psd-thumb-load.c:82
 #: plug-ins/file-psd/psd-thumb-load.c:87 plug-ins/flame/flame.c:478
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1862
 #: plug-ins/fractal-explorer/fractal-explorer.c:1038 plug-ins/gfig/gfig.c:476
@@ -2042,16 +2042,16 @@ msgstr "«%s»: Кінець файлу або помилка при читан�
 #. * Open the file for writing...
 #.
 #: plug-ins/common/file-cel.c:842 plug-ins/common/file-gif-save.c:913
-#: plug-ins/common/file-html-table.c:362 plug-ins/common/file-jpegxl.c:938
+#: plug-ins/common/file-html-table.c:362 plug-ins/common/file-jpegxl.c:1374
 #: plug-ins/common/file-pcx.c:793 plug-ins/common/file-pix.c:562
 #: plug-ins/common/file-png.c:1496 plug-ins/common/file-pnm.c:1336
 #: plug-ins/common/file-ps.c:1365 plug-ins/common/file-sunras.c:626
 #: plug-ins/common/file-tga.c:1223 plug-ins/common/file-xbm.c:1049
 #: plug-ins/common/file-xpm.c:701 plug-ins/common/file-xwd.c:675
 #: plug-ins/file-bmp/bmp-save.c:332 plug-ins/file-fits/fits.c:504
-#: plug-ins/file-fli/fli-gimp.c:784 plug-ins/file-icns/file-icns-save.c:610
+#: plug-ins/file-fli/fli-gimp.c:784 plug-ins/file-icns/file-icns-save.c:612
 #: plug-ins/file-ico/ico-save.c:1324 plug-ins/file-ico/ico-save.c:1533
-#: plug-ins/file-jpeg/jpeg-save.c:272 plug-ins/file-psd/psd-save.c:2070
+#: plug-ins/file-jpeg/jpeg-save.c:272 plug-ins/file-psd/psd-save.c:2159
 #: plug-ins/file-sgi/sgi.c:645 plug-ins/file-tiff/file-tiff-save.c:1074
 #, c-format
 msgid "Exporting '%s'"
@@ -2571,7 +2571,7 @@ msgstr "YUV420"
 msgid "Pixel format:"
 msgstr "Формат пікселів:"
 
-#: plug-ins/common/file-heif.c:2563 plug-ins/common/file-jpegxl.c:1456
+#: plug-ins/common/file-heif.c:2563 plug-ins/common/file-jpegxl.c:2020
 msgid "8 bit/channel"
 msgstr "8 біт/канал"
 
@@ -2849,31 +2849,31 @@ msgstr "Неможливо перетворити зображення xvYCC JP2
 msgid "Unsupported color space in JP2 image '%s'."
 msgstr "Невідомий колірний простір у зображенні JP2 «%s»."
 
-#: plug-ins/common/file-jpegxl.c:120 plug-ins/common/file-jpegxl.c:147
+#: plug-ins/common/file-jpegxl.c:139 plug-ins/common/file-jpegxl.c:166
 msgid "JPEG XL image"
 msgstr "Зображення JPEG XL"
 
-#: plug-ins/common/file-jpegxl.c:123 plug-ins/common/file-jpegxl.c:124
+#: plug-ins/common/file-jpegxl.c:142 plug-ins/common/file-jpegxl.c:143
 msgid "Loads files in the JPEG XL file format"
 msgstr "Завантажує файли у форматі JPEG XL"
 
-#: plug-ins/common/file-jpegxl.c:150 plug-ins/common/file-jpegxl.c:151
+#: plug-ins/common/file-jpegxl.c:169 plug-ins/common/file-jpegxl.c:170
 msgid "Saves files in the JPEG XL file format"
 msgstr "Зберігає файли у форматі JPEG XL"
 
-#: plug-ins/common/file-jpegxl.c:166 plug-ins/file-webp/file-webp.c:175
+#: plug-ins/common/file-jpegxl.c:185 plug-ins/file-webp/file-webp.c:175
 msgid "L_ossless"
 msgstr "_Без втрат"
 
-#: plug-ins/common/file-jpegxl.c:167
+#: plug-ins/common/file-jpegxl.c:186
 msgid "Use lossless compression"
 msgstr "Стискання без втрати якості"
 
-#: plug-ins/common/file-jpegxl.c:172
+#: plug-ins/common/file-jpegxl.c:191
 msgid "Co_mpression/maxError"
 msgstr "С_тиснення/Макс. похибка"
 
-#: plug-ins/common/file-jpegxl.c:173
+#: plug-ins/common/file-jpegxl.c:192
 msgid ""
 "Max. butteraugli distance, lower = higher quality. Range: 0 .. 15. 1.0 = "
 "visually lossless."
@@ -2881,85 +2881,100 @@ msgstr ""
 "Максимальна відстань butteraugli, менше значення = вища якість. Діапазон: "
 "0 .. 15. 1.0 = візуально без втрат."
 
-#: plug-ins/common/file-jpegxl.c:178
+#: plug-ins/common/file-jpegxl.c:197
 msgid "_Bit depth"
 msgstr "_Бітова глибина"
 
-#: plug-ins/common/file-jpegxl.c:179
+#: plug-ins/common/file-jpegxl.c:198
 msgid "Bit depth of exported image"
 msgstr "Бітова глибина кольорів експортованого зображення"
 
-#: plug-ins/common/file-jpegxl.c:184
+#: plug-ins/common/file-jpegxl.c:203
 msgid "Effort/S_peed"
 msgstr "Зусилля/_Швидкість"
 
-#: plug-ins/common/file-jpegxl.c:185
+#: plug-ins/common/file-jpegxl.c:204
 msgid "Encoder effort setting"
 msgstr "Параметр рівня стискання кодувальника"
 
-#: plug-ins/common/file-jpegxl.c:191
+#: plug-ins/common/file-jpegxl.c:210
 msgid "Save ori_ginal profile"
 msgstr "Зберегти _початковий профіль"
 
-#: plug-ins/common/file-jpegxl.c:192
+#: plug-ins/common/file-jpegxl.c:211
 msgid "Store ICC profile to exported JXL file"
 msgstr "Зберегти профіль ICC у експортованому файлі JXL"
 
-#: plug-ins/common/file-jpegxl.c:197
+#: plug-ins/common/file-jpegxl.c:222
 msgid "Save Exi_f"
 msgstr "Зберегти дані Exi_f"
 
-#: plug-ins/common/file-jpegxl.c:198
+#: plug-ins/common/file-jpegxl.c:223
 msgid "Toggle saving Exif data"
 msgstr "Увімкнути або вимкнути збереження даних Exif"
 
-#: plug-ins/common/file-jpegxl.c:203
+#: plug-ins/common/file-jpegxl.c:228
 msgid "Save _XMP"
 msgstr "Зберегти дані _XMP"
 
-#: plug-ins/common/file-jpegxl.c:204
+#: plug-ins/common/file-jpegxl.c:229
 msgid "Toggle saving XMP data"
 msgstr "Увімкнути або вимкнути збереження даних XMP"
 
-#: plug-ins/common/file-jpegxl.c:1442
+#: plug-ins/common/file-jpegxl.c:2006
 msgid "lightning (fastest)"
 msgstr "блискавиця (найшвидше)"
 
-#: plug-ins/common/file-jpegxl.c:1443
+#: plug-ins/common/file-jpegxl.c:2007
 msgid "thunder"
 msgstr "грім"
 
-#: plug-ins/common/file-jpegxl.c:1444
+#: plug-ins/common/file-jpegxl.c:2008
 msgid "falcon (faster)"
 msgstr "сокіл (швидко)"
 
-#: plug-ins/common/file-jpegxl.c:1445
+#: plug-ins/common/file-jpegxl.c:2009
 msgid "cheetah"
 msgstr "гепард"
 
-#: plug-ins/common/file-jpegxl.c:1446
+#: plug-ins/common/file-jpegxl.c:2010
 msgid "hare"
 msgstr "заєць"
 
-#: plug-ins/common/file-jpegxl.c:1447
+#: plug-ins/common/file-jpegxl.c:2011
 msgid "wombat"
 msgstr "вомбат"
 
-#: plug-ins/common/file-jpegxl.c:1448
+#: plug-ins/common/file-jpegxl.c:2012
 msgid "squirrel"
 msgstr "білка"
 
-#: plug-ins/common/file-jpegxl.c:1449
+#: plug-ins/common/file-jpegxl.c:2013
 msgid "kitten"
 msgstr "кошеня"
 
-#: plug-ins/common/file-jpegxl.c:1450
+#: plug-ins/common/file-jpegxl.c:2014
 msgid "tortoise (slower)"
 msgstr "черепаха (повільно)"
 
-#: plug-ins/common/file-jpegxl.c:1457
+#: plug-ins/common/file-jpegxl.c:2021
 msgid "16 bit/channel"
 msgstr "16 біт/канал"
+
+#: plug-ins/common/file-jpegxl.c:2029
+msgid "CMYK profile required for export"
+msgstr "Для експортування потрібен профіль CMYK"
+
+#: plug-ins/common/file-jpegxl.c:2036 plug-ins/file-jpeg/jpeg-save.c:898
+#: plug-ins/file-psd/psd-save.c:2455 plug-ins/file-tiff/file-tiff-save.c:1369
+msgid "Name of the color profile used for CMYK export."
+msgstr "Назва профілю кольорів, який використано для експортування CMYK."
+
+#: plug-ins/common/file-jpegxl.c:2055 plug-ins/file-jpeg/jpeg-save.c:909
+#: plug-ins/file-psd/psd-save.c:2466 plug-ins/file-tiff/file-tiff-save.c:1381
+#, c-format
+msgid "Profile: %s"
+msgstr "Профіль: %s"
 
 #: plug-ins/common/file-mng.c:254
 msgid "MNG animation"
@@ -7044,7 +7059,6 @@ msgstr ""
 "Дані не буде експортовано"
 
 #: plug-ins/file-icns/file-icns-save.c:292 plug-ins/file-icns/file-icns.c:175
-#| msgid "Select Image"
 msgid "Apple Icon Image"
 msgstr "Зображення піктограми Apple"
 
@@ -7062,33 +7076,31 @@ msgstr ""
 
 #. Don't show warning by default
 #: plug-ins/file-icns/file-icns-save.c:315
-#| msgid "_Export"
 msgid "Export Icons"
 msgstr "Експорт піктограм"
 
-#: plug-ins/file-icns/file-icns-save.c:522
+#: plug-ins/file-icns/file-icns-save.c:524
 #, c-format
-#| msgid "Error writing black. "
 msgid "Error writing icns: %s"
 msgstr "Помилка під час запису даних icns: %s"
 
-#: plug-ins/file-icns/file-icns-save.c:584
+#: plug-ins/file-icns/file-icns-save.c:586
 msgid ""
 "No valid sized layers. Only valid layer sizes are 16x12, 16x16, 18x18, "
 "24x24, 32x32, 36x36, 48x48,64x64, 128x128, 256x256, 512x512, or 1024x1024."
 msgstr ""
-"Немає шарів коректного розміру. Можна використовувати лише шари таких"
-" розмірів: 16x12, 16x16, 18x18, "
-"24x24, 32x32, 36x36, 48x48,64x64, 128x128, 256x256, 512x512 і 1024x1024."
+"Немає шарів коректного розміру. Можна використовувати лише шари таких "
+"розмірів: 16x12, 16x16, 18x18, 24x24, 32x32, 36x36, 48x48,64x64, 128x128, "
+"256x256, 512x512 і 1024x1024."
 
-#: plug-ins/file-icns/file-icns-save.c:602
+#: plug-ins/file-icns/file-icns-save.c:604
 msgid ""
 "Invalid layer size(s). Only valid layer sizes are 16x12, 16x16, 18x18, "
 "24x24, 32x32, 36x36, 48x48,64x64, 128x128, 256x256, 512x512, or 1024x1024."
 msgstr ""
-"Некоректні розміри шарів. Можна використовувати лише шари таких розмірів:"
-" 16x12, 16x16, 18x18, "
-"24x24, 32x32, 36x36, 48x48,64x64, 128x128, 256x256, 512x512 і 1024x1024."
+"Некоректні розміри шарів. Можна використовувати лише шари таких розмірів: "
+"16x12, 16x16, 18x18, 24x24, 32x32, 36x36, 48x48,64x64, 128x128, 256x256, "
+"512x512 і 1024x1024."
 
 #: plug-ins/file-icns/file-icns.c:131
 msgid "Icns"
@@ -7241,21 +7253,10 @@ msgstr "Розмір файлу: невідомо"
 msgid "Enable preview to obtain the file size."
 msgstr "Увімкніть перегляд, щоб бачити розмір файлу."
 
-#: plug-ins/file-jpeg/jpeg-save.c:891 plug-ins/file-psd/psd-save.c:2357
+#: plug-ins/file-jpeg/jpeg-save.c:891 plug-ins/file-psd/psd-save.c:2448
 #: plug-ins/file-tiff/file-tiff-save.c:1362
 msgid "No soft-proofing profile"
 msgstr "Немає профілю для проби кольорів"
-
-#: plug-ins/file-jpeg/jpeg-save.c:898 plug-ins/file-psd/psd-save.c:2364
-#: plug-ins/file-tiff/file-tiff-save.c:1369
-msgid "Name of the color profile used for CMYK export."
-msgstr "Назва профілю кольорів, який використано для експортування CMYK."
-
-#: plug-ins/file-jpeg/jpeg-save.c:909 plug-ins/file-psd/psd-save.c:2375
-#: plug-ins/file-tiff/file-tiff-save.c:1381
-#, c-format
-msgid "Profile: %s"
-msgstr "Профіль: %s"
 
 #. Subsampling
 #: plug-ins/file-jpeg/jpeg-save.c:940
@@ -7439,12 +7440,12 @@ msgstr ""
 "Дані двотонового простору кольорів було збережено,\n"
 "їх можна повторно застосувати при експортуванні."
 
-#: plug-ins/file-psd/psd-save.c:485
+#: plug-ins/file-psd/psd-save.c:502
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr ""
 "Помилка: Неможливо перетворити основний тип зображення GIMP на режим PSD"
 
-#: plug-ins/file-psd/psd-save.c:2063
+#: plug-ins/file-psd/psd-save.c:2152
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images that are "
@@ -7453,7 +7454,7 @@ msgstr ""
 "Не вдається експортувати «%s».  Файл формату PSD не підтримує зображення "
 "шириною чи висотою більше ніж 30000 точок."
 
-#: plug-ins/file-psd/psd-save.c:2104
+#: plug-ins/file-psd/psd-save.c:2193
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images with "
@@ -7462,17 +7463,25 @@ msgstr ""
 "Не вдається експортувати «%s». Файл формату PSD не підтримує зображення з "
 "шарами, ширина чи висота яких більша ніж 30000 точок."
 
-#: plug-ins/file-psd/psd-save.c:2353
+#: plug-ins/file-psd/psd-save.c:2444
 msgid "Export Image as PSD"
 msgstr "Експортувати зображення як PSD"
 
-#: plug-ins/file-psd/psd-save.c:2399
+#: plug-ins/file-psd/psd-save.c:2490
 msgid ""
 "Duotone color space information from the original\n"
 "imported image will be used."
 msgstr ""
 "Буде використано дані двотонового простору кольорів з\n"
 "початкового імпортованого зображення."
+
+#: plug-ins/file-psd/psd-save.c:2558
+msgid ""
+"PSD files can store up to 998 paths. \n"
+"The rest will be discarded."
+msgstr ""
+"У файлах PSD можна зберігати до 998 контурів. \n"
+"Решту контурів буде відкинуто."
 
 #: plug-ins/file-psd/psd-util.c:176
 msgid "Error reading data. Most likely unexpected end of file."
@@ -7491,6 +7500,62 @@ msgstr "Зображення Photoshop"
 #: plug-ins/file-psd/psd.c:154
 msgid "Photoshop image (merged)"
 msgstr "Зображення Photoshop (об'єднане)"
+
+#: plug-ins/file-psd/psd.c:228
+msgid "Assign a Clipping _Path"
+msgstr "Призначити _контур обрізання"
+
+#: plug-ins/file-psd/psd.c:229
+msgid "Select a path to be the clipping path"
+msgstr "Виберіть контур, який буде контуром обрізання"
+
+#: plug-ins/file-psd/psd.c:235
+msgid "Clipping Path _Name"
+msgstr "_Назва контура обрізання"
+
+#: plug-ins/file-psd/psd.c:236
+msgid ""
+"Clipping path name\n"
+"(ignored if no clipping path)"
+msgstr ""
+"Назва контура обрізання\n"
+"(буде проігноровано, якщо немає контура обрізання)"
+
+#: plug-ins/file-psd/psd.c:242
+msgid "Path _Flatness"
+msgstr "_Рівність контура"
+
+#: plug-ins/file-psd/psd.c:243
+msgid ""
+"Clipping path flatness in device pixels\n"
+"(ignored if no clipping path)"
+msgstr ""
+"Рівність контура обрізання у пікселях пристрою\n"
+"(буде проігноровано, якщо немає контура обрізання)"
+
+#: plug-ins/file-psd/psd.c:249
+#| msgid "Export Image as MNG"
+msgid "Export as _CMYK"
+msgstr "Експортувати як _CMYK"
+
+#: plug-ins/file-psd/psd.c:250
+msgid "Export a CMYK PSD image using the soft-proofing color profile"
+msgstr ""
+"Експортувати зображення PSD CMYK з використанням профілю кольорів із"
+" пробником"
+
+#: plug-ins/file-psd/psd.c:255
+#| msgid "Export Icons"
+msgid "Export as _Duotone"
+msgstr "Експортувати як _Duotone"
+
+#: plug-ins/file-psd/psd.c:256
+msgid ""
+"Export as a Duotone PSD file if Duotone color space information was attached "
+"to the image when originally imported."
+msgstr ""
+"Експортувати як файл Duotone PSD, якщо під час початкового імпортування до"
+" зображення було долучено дані простору кольорів Duotone."
 
 #: plug-ins/file-raw/file-raw-formats.h:46
 msgid "Raw Canon"
@@ -7907,7 +7972,6 @@ msgid "Import from TIFF"
 msgstr "Імпорт TIFF"
 
 #: plug-ins/file-tiff/file-tiff-load.c:2728
-#| msgid "Show image"
 msgid "_Show reduced images"
 msgstr "Показати з_меншені зображення"
 
