@@ -4,13 +4,13 @@
 # Korostil Daniel <ted.korostiled@gmail.com>, 2011, 2012.
 # Andriy Bandura <andriykopanytsia@gmail.com>, 2014.
 # Olexandr Pylypchuk <pilipchukap@rambler.ru>, 2016.
-# Yuri Chornoivan <yurchor@ukr.net>, 2018, 2020, 2021, 2022.
+# Yuri Chornoivan <yurchor@ukr.net>, 2018, 2020, 2021, 2022, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-11-12 21:36+0000\n"
-"PO-Revision-Date: 2022-11-14 00:59+0200\n"
+"POT-Creation-Date: 2023-01-02 14:16+0000\n"
+"PO-Revision-Date: 2023-01-02 20:50+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -260,11 +260,11 @@ msgstr "Показувати сторінку налаштувань із екс
 msgid "Show an image submenu with debug actions"
 msgstr "Показати підменю зображення із пунктами діагностики"
 
-#: app/main.c:736
+#: app/main.c:744
 msgid "[FILE|URI...]"
 msgstr "[ФАЙЛ|URI...]"
 
-#: app/main.c:764
+#: app/main.c:772
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -272,20 +272,20 @@ msgstr ""
 "GIMP не може ініціалізувати графічний інтерфейс.\n"
 "Перевірте правильність параметрів вашого графічного середовища."
 
-#: app/main.c:783
+#: app/main.c:791
 msgid "Another GIMP instance is already running."
 msgstr "Вже запущена інша копія GIMP"
 
-#: app/main.c:871
+#: app/main.c:879
 msgid "GIMP output. Type any character to close this window."
 msgstr "Вивід GIMP. Введіть будь-який символ для закриття цього вікна."
 
-#: app/main.c:872
+#: app/main.c:880
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Введіть будь-який символ для закриття цього вікна.)\n"
 
-#: app/main.c:889
+#: app/main.c:897
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "Вивід GIMP. Ви можете згорнути це вікно, але не закривати його."
 
@@ -1075,7 +1075,7 @@ msgstr[3] "Опустити канал додолу"
 
 #: app/actions/channels-commands.c:375 app/core/gimpimage-new.c:506
 #: app/display/gimpdisplayshell-dnd.c:683 app/widgets/gimpchanneltreeview.c:259
-#: app/widgets/gimplayertreeview.c:1042
+#: app/widgets/gimplayertreeview.c:1051
 #, c-format
 msgid "%s Channel Copy"
 msgstr "%s копія каналу"
@@ -2623,7 +2623,7 @@ msgstr "Введіть опис позначки"
 #: app/dialogs/file-open-dialog.c:269
 #: app/dialogs/file-open-location-dialog.c:217
 #: app/dialogs/file-open-location-dialog.c:233
-#: app/display/gimpdisplayshell-dnd.c:626 app/widgets/gimplayertreeview.c:1000
+#: app/display/gimpdisplayshell-dnd.c:626 app/widgets/gimplayertreeview.c:1009
 #: app/widgets/gimptoolbox.c:750 app/widgets/gimptoolbox-dnd.c:178
 #, c-format
 msgid ""
@@ -3690,8 +3690,6 @@ msgid "Create a new image from the content of the clipboard"
 msgstr "Створити нове зображення із вмісту буфера обміну"
 
 #: app/actions/edit-actions.c:129
-#| msgctxt "buffers-action"
-#| msgid "Paste Buffer as _New Image"
 msgctxt "edit-action"
 msgid "Paste as _New Image"
 msgstr "Вставити як _нове зображення"
@@ -3768,29 +3766,21 @@ msgid "Paste the content of the clipboard at its original position"
 msgstr "Вставити вміст буфера обміну на його початкове місце"
 
 #: app/actions/edit-actions.c:182
-#| msgctxt "buffers-action"
-#| msgid "Paste Buffer as New _Layer"
 msgctxt "edit-action"
 msgid "_Paste as Single Layer"
 msgstr "Вставити як окремий шар"
 
 #: app/actions/edit-actions.c:183
-#| msgctxt "edit-action"
-#| msgid "Paste the content of the clipboard"
 msgctxt "edit-action"
 msgid "Paste the content of the clipboard as a single layer"
 msgstr "Вставити вміст буфера обміну даними як окремий шар"
 
 #: app/actions/edit-actions.c:188
-#| msgctxt "buffers-action"
-#| msgid "Paste Buffer as New Layer in Place"
 msgctxt "edit-action"
 msgid "Paste as Single Layer In P_lace"
 msgstr "Вставити як окремий на міс_це"
 
 #: app/actions/edit-actions.c:190
-#| msgctxt "edit-action"
-#| msgid "Paste the content of the clipboard at its original position"
 msgctxt "edit-action"
 msgid ""
 "Paste the content of the clipboard at its original position as a single layer"
@@ -6449,14 +6439,18 @@ msgid "Move this layer to the bottom of the layer stack"
 msgstr "Зробити активний шар нижнім"
 
 #: app/actions/layers-actions.c:169
+#| msgctxt "layers-action"
+#| msgid "Anchor the floating layer"
 msgctxt "layers-action"
-msgid "_Anchor Layer"
-msgstr "_Прикріпити шар"
+msgid "_Anchor Floating Layer or Mask"
+msgstr "При_кріпити рухомий шар або маску"
 
-#: app/actions/layers-actions.c:170
+#: app/actions/layers-actions.c:170 app/widgets/gimplayertreeview.c:1856
+#| msgctxt "layers-action"
+#| msgid "Anchor the floating layer"
 msgctxt "layers-action"
-msgid "Anchor the floating layer"
-msgstr "Прикріпити рухомий шар"
+msgid "Anchor the floating layer or mask"
+msgstr "Прикріпити рухомий шар або маску"
 
 #: app/actions/layers-actions.c:175 app/actions/layers-actions.c:184
 msgctxt "layers-action"
@@ -7089,7 +7083,7 @@ msgid "Edit Layer Attributes"
 msgstr "Зміна ознак шару"
 
 #: app/actions/layers-commands.c:338 app/widgets/gimpdrawabletreeview.c:359
-#: app/widgets/gimplayertreeview.c:1129
+#: app/widgets/gimplayertreeview.c:1138
 msgid "New Layer"
 msgid_plural "New Layers"
 msgstr[0] "Нові шари"
@@ -7286,7 +7280,7 @@ msgid "Empty Selection"
 msgstr "Спорожнити позначене"
 
 #: app/actions/layers-commands.c:1784 app/actions/layers-commands.c:1828
-#: app/widgets/gimplayertreeview.c:1640
+#: app/widgets/gimplayertreeview.c:1659
 msgid "Set layers opacity"
 msgstr "Зміна непрозорості шарів"
 
@@ -13459,7 +13453,7 @@ msgstr "Колір тла"
 
 #: app/core/gimpcontext.c:683 app/core/gimpcontext.c:684
 #: app/operations/gimpoperationsettings.c:100 app/widgets/gimpbrushselect.c:176
-#: app/widgets/gimplayertreeview.c:321
+#: app/widgets/gimplayertreeview.c:323
 msgid "Opacity"
 msgstr "Непрозорість"
 
@@ -13492,7 +13486,7 @@ msgid "Gradient"
 msgstr "Градієнт"
 
 #: app/core/gimpcontext.c:735 app/core/gimpcontext.c:736
-#: app/widgets/gimpcolorselectorpalette.c:59
+#: app/widgets/gimpcolorselectorpalette.c:60
 msgid "Palette"
 msgstr "Палітра"
 
@@ -18603,12 +18597,12 @@ msgid "Drop color to layer"
 msgstr "Опустити колір на шар"
 
 #: app/display/gimpdisplayshell-dnd.c:576 app/widgets/gimpitemtreeview.c:1406
-#: app/widgets/gimplayertreeview.c:991
+#: app/widgets/gimplayertreeview.c:1000
 msgid "Drop layers"
 msgstr "Перемістити шари"
 
 #: app/display/gimpdisplayshell-dnd.c:719
-#: app/display/gimpdisplayshell-dnd.c:736 app/widgets/gimplayertreeview.c:1068
+#: app/display/gimpdisplayshell-dnd.c:736 app/widgets/gimplayertreeview.c:1077
 #: app/widgets/gimptoolbox-dnd.c:277
 msgid "Dropped Buffer"
 msgstr "Переміщений буфер"
@@ -20105,7 +20099,7 @@ msgstr "Перетворити кольори на градації сірого
 #: app/operations/gimpoperationsettings.c:92 app/tools/gimpfiltertool.c:1137
 #: app/tools/gimppaintoptions-gui.c:110 app/tools/gimppaintselectoptions.c:73
 #: app/tools/gimptransform3doptions.c:77 app/widgets/gimpdeviceinfo.c:173
-#: app/widgets/gimplayertreeview.c:306
+#: app/widgets/gimplayertreeview.c:308
 msgid "Mode"
 msgstr "Режим"
 
@@ -27585,78 +27579,90 @@ msgstr "Як у системі"
 msgid "Switch to another group of modes"
 msgstr "Перемкнутися на іншу групу режимів"
 
-#: app/widgets/gimplayertreeview.c:442
+#: app/widgets/gimplayertreeview.c:444
 msgid "Select layers by patterns and store layer sets"
 msgstr "Позначити шари за взірцями і зберегти набори шарів"
 
-#: app/widgets/gimplayertreeview.c:486
+#: app/widgets/gimplayertreeview.c:495
 msgid "No layer set stored"
 msgstr "Немає збережених наборів шарів"
 
-#: app/widgets/gimplayertreeview.c:508
+#: app/widgets/gimplayertreeview.c:517
 msgid "New layer set's name"
 msgstr "Назва нового набору шарів"
 
-#: app/widgets/gimplayertreeview.c:547 app/widgets/gimplayertreeview.c:550
+#: app/widgets/gimplayertreeview.c:556 app/widgets/gimplayertreeview.c:559
 msgid "Lock alpha channel"
 msgstr "Замкнути альфа-канал"
 
-#: app/widgets/gimplayertreeview.c:548
+#: app/widgets/gimplayertreeview.c:557
 msgid "Unlock alpha channel"
 msgstr "Розблокувати альфа-канал"
 
-#: app/widgets/gimplayertreeview.c:549
+#: app/widgets/gimplayertreeview.c:558
 msgid "Set Item Exclusive Alpha Channel lock"
 msgstr "Встановлення блокування виключного каналу прозорості запису"
 
-#: app/widgets/gimplayertreeview.c:1234
+#: app/widgets/gimplayertreeview.c:1243
 msgid "search"
 msgstr "пошук"
 
-#: app/widgets/gimplayertreeview.c:1235
+#: app/widgets/gimplayertreeview.c:1244
 msgid "glob"
 msgstr "замінник"
 
-#: app/widgets/gimplayertreeview.c:1235
+#: app/widgets/gimplayertreeview.c:1244
 msgid "regexp"
 msgstr "форм. вираз"
 
-#: app/widgets/gimplayertreeview.c:1339 app/widgets/gimplayertreeview.c:1352
+#: app/widgets/gimplayertreeview.c:1348 app/widgets/gimplayertreeview.c:1361
 msgid "Select layers by text search"
 msgstr "Позначення шарів за текстовим пошуком"
 
-#: app/widgets/gimplayertreeview.c:1341 app/widgets/gimplayertreeview.c:1354
+#: app/widgets/gimplayertreeview.c:1350 app/widgets/gimplayertreeview.c:1363
 msgid "Text search"
 msgstr "Текстовий пошук"
 
-#: app/widgets/gimplayertreeview.c:1358
+#: app/widgets/gimplayertreeview.c:1367
 msgid "Select layers by glob patterns"
 msgstr "Позначення шарів за взірцями із замінниками"
 
-#: app/widgets/gimplayertreeview.c:1360
+#: app/widgets/gimplayertreeview.c:1369
 msgid "Glob pattern search"
 msgstr "Пошук за взірцем із замінниками"
 
-#: app/widgets/gimplayertreeview.c:1364
+#: app/widgets/gimplayertreeview.c:1373
 msgid "Select layers by regular expressions"
 msgstr "Позначення шарів за формальними виразами"
 
-#: app/widgets/gimplayertreeview.c:1366
+#: app/widgets/gimplayertreeview.c:1375
 msgid "Regular Expression search"
 msgstr "Пошук за формальним виразом"
 
-#: app/widgets/gimplayertreeview.c:1430
+#: app/widgets/gimplayertreeview.c:1439
 #, c-format
 msgid "Invalid regular expression: %s\n"
 msgstr "Некоректний формальний вираз: %s\n"
 
-#: app/widgets/gimplayertreeview.c:1583
+#: app/widgets/gimplayertreeview.c:1602
 msgid "Set layers mode"
 msgstr "Встановити режим шарів"
 
+#: app/widgets/gimplayertreeview.c:1848
+#| msgctxt "layers-action"
+#| msgid "Anchor the floating layer"
+msgctxt "layers-action"
+msgid "Anchor the floating mask"
+msgstr "Прикріпити рухому маску"
+
+#: app/widgets/gimplayertreeview.c:1851
+msgctxt "layers-action"
+msgid "Anchor the floating layer"
+msgstr "Прикріпити рухомий шар"
+
 #. No channel. We cannot perform the add
 #. * mask action.
-#: app/widgets/gimplayertreeview.c:2079
+#: app/widgets/gimplayertreeview.c:2112
 msgid "No channels to create a layer mask from."
 msgstr "Немає каналів, з яких можна було б створити маску шару."
 
@@ -27702,6 +27708,7 @@ msgstr "Виберіть дію для кнопки %s %d %s"
 msgid "Editing modifiers for %s button %d"
 msgstr "Редагуємо модифікатори для кнопки %s %d"
 
+#. TRANSLATORS: %d is a button number, %s is the device (e.g. a mouse) name.
 #: app/widgets/gimpmodifierseditor.c:655
 #, c-format
 msgid "Select Action for button %d of %s"
@@ -28172,7 +28179,7 @@ msgstr ""
 "Активний градієнт.\n"
 "Клацніть, щоб відкрити діалогове вікно \"Градієнти\"."
 
-#: app/widgets/gimptoolbutton.c:550
+#: app/widgets/gimptoolbutton.c:542
 msgid "Also in group:"
 msgstr "Також у групі:"
 
@@ -28572,6 +28579,10 @@ msgstr ""
 #: app-tools/gimp-debug-tool.c:87
 msgid "GIMP Crash Debug"
 msgstr "Діагностика аварій GIMP"
+
+#~ msgctxt "layers-action"
+#~ msgid "_Anchor Layer"
+#~ msgstr "_Прикріпити шар"
 
 #~ msgctxt "edit-action"
 #~ msgid "_New Image"
