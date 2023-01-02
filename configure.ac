@@ -959,7 +959,7 @@ AC_MSG_RESULT([$with_win32_32bit_dll_folder])
 enable_drmingw="no"
 if test "x$platform_win32" = "xyes"; then
    # Check for Dr. Mingw
-   AC_CHECK_LIB(exchndl, ExcHndlSetLogFileNameA,
+   AC_CHECK_LIB(exchndl, ExcHndlSetLogFileNameW,
                 [
                  AC_DEFINE(HAVE_EXCHNDL, 1, [Define to 1 when Dr. MingW is available])
                  LIBS="-lexchndl $LIBS"
@@ -968,7 +968,7 @@ if test "x$platform_win32" = "xyes"; then
                 [enable_drmingw="no (ExcHndl library missing)"]
                )
 fi
-AM_CONDITIONAL(HAVE_EXCHNDL, test "x$ac_cv_lib_exchndl_ExcHndlSetLogFileNameA" = "xyes")
+AM_CONDITIONAL(HAVE_EXCHNDL, test "x$ac_cv_lib_exchndl_ExcHndlSetLogFileNameW" = "xyes")
 
 ###########################
 # Check for backtrace() API

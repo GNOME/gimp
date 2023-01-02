@@ -51,9 +51,12 @@ static void         gimp_sigfatal_handler (gint sig_num) G_GNUC_NORETURN;
 void
 gimp_init_signal_handlers (gchar **backtrace_file)
 {
-  time_t  t;
-  gchar  *filename;
-  gchar  *dir;
+  time_t   t;
+  gchar   *filename;
+  gchar   *dir;
+#if defined (G_OS_WIN32) && defined (HAVE_EXCHNDL)
+  wchar_t *backtrace_file_utf16;
+#endif
 
 #ifdef G_OS_WIN32
   /* This has to be the non-roaming directory (i.e., the local
@@ -92,7 +95,12 @@ gimp_init_signal_handlers (gchar **backtrace_file)
     g_prevExceptionFilter = SetUnhandledExceptionFilter (gimp_sigfatal_handler);
 
   ExcHndlInit ();
-  ExcHndlSetLogFileNameA (*backtrace_file);
+
+  if ((backtrace_file_utf16 = g_utf8_to_utf16 (*backtrace_file, -1, NULL, NULL, NULL)))
+    {
+      ExcHndlSetLogFileNameW (backtrace_file_utf16);
+      g_free (backtrace_file_utf16);
+    }
 
 #endif /* HAVE_EXCHNDL */
 

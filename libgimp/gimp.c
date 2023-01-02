@@ -224,9 +224,10 @@ gimp_main (GType  plug_in_type,
 #ifdef HAVE_EXCHNDL
   /* Use Dr. Mingw (dumps backtrace on crash) if it is available. */
   {
-    time_t  t;
-    gchar  *filename;
-    gchar  *dir;
+    time_t   t;
+    gchar   *filename;
+    gchar   *dir;
+    wchar_t *plug_in_backtrace_path_utf16;
 
     /* This has to be the non-roaming directory (i.e., the local
      * directory) as backtraces correspond to the binaries on this
@@ -252,7 +253,14 @@ gimp_main (GType  plug_in_type,
       _prevExceptionFilter = SetUnhandledExceptionFilter (gimp_plugin_sigfatal_handler);
 
     ExcHndlInit ();
-    ExcHndlSetLogFileNameA (plug_in_backtrace_path);
+
+    plug_in_backtrace_path_utf16 = g_utf8_to_utf16 (plug_in_backtrace_path,
+                                                    -1, NULL, NULL, NULL);
+    if (plug_in_backtrace_path_utf16)
+      {
+        ExcHndlSetLogFileNameW (plug_in_backtrace_path_utf16);
+        g_free (plug_in_backtrace_path_utf16);
+      }
   }
 #endif /* HAVE_EXCHNDL */
 

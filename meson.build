@@ -578,7 +578,7 @@ conf.set('HAVE_LIBUNWIND', libunwind.found())
 drmingw = no_dep
 if platform_windows
   exchndl = cc.find_library('exchndl', required: false)
-  exchndl_fn = cc.has_function('ExcHndlSetLogFileNameA', dependencies: exchndl)
+  exchndl_fn = cc.has_function('ExcHndlSetLogFileNameW', dependencies: exchndl)
   if exchndl.found() and exchndl_fn
     drmingw = declare_dependency(dependencies: exchndl)
   endif
