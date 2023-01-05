@@ -26,6 +26,8 @@ from random import randint
 import gi
 gi.require_version('Gimp', '3.0')
 from gi.repository import Gimp
+gi.require_version('GimpUi', '3.0')
+from gi.repository import GimpUi
 from gi.repository import GObject
 from gi.repository import GLib
 from gi.repository import Gio
@@ -195,6 +197,23 @@ def quantization_grain(channel, g):
         g = max(0.00001, GRAIN_SCALE[channel] / g)
     return g
 
+# Convenience feature to add options that are not yet in
+# GimpProcedureDialog
+def create_ui_row(dialog, label_text, offset, widget):
+    grid = Gtk.Grid()
+    grid.set_column_homogeneous(False)
+    grid.set_border_width(0)
+    grid.set_column_spacing(offset)
+    grid.set_row_spacing(10)
+    dialog.get_content_area().add(grid)
+    grid.show()
+
+    label = Gtk.Label.new_with_mnemonic(_(label_text))
+    grid.attach(label, 0, 0, 1, 1)
+    label.show()
+    grid.attach(widget, 1, 0, 1, 1)
+    widget.show()
+
 
 def palette_sort(palette, selection, slice_expr, channel1, ascending1,
                  channel2, ascending2, quantize, pchannel, pquantize):
@@ -323,25 +342,24 @@ def palette_sort(palette, selection, slice_expr, channel1, ascending1,
 
     return palette
 
-
 selections_option = [ _("All"), _("Slice / Array"), _("Autoslice (fg->bg)"), _("Partitioned") ]
 class PaletteSort (Gimp.PlugIn):
     ## Parameters ##
     __gproperties__ = {
         "run-mode": (Gimp.RunMode,
                      _("Run mode"),
-                     _("The run mode"),
-                     Gimp.RunMode.NONINTERACTIVE,
+                     "The run mode",
+                     Gimp.RunMode.INTERACTIVE,
                      GObject.ParamFlags.READWRITE),
         # TODO. originally was:   (PF_PALETTE, "palette",  _("Palette"), ""),
         # Should probably be of type Gimp.Palette .
         "palette": (str,
-                    _("Palette"),
+                    _("_Palette"),
                     _("Palette"),
                     "",
                     GObject.ParamFlags.READWRITE),
         "selections": (int,
-                       _("Se_lections"),
+                       _("Select_ions"),
                        str(selections_option),
                        0, 3, 0,
                        GObject.ParamFlags.READWRITE),
@@ -352,10 +370,8 @@ class PaletteSort (Gimp.PlugIn):
                        slice_expr_doc,
                        "",
                        GObject.ParamFlags.READWRITE),
-        # TODO: was (PF_OPTION,   "channel1",    _("Channel to _sort"), 3, AVAILABLE_CHANNELS),
-        # Not sure how to implement in gimp3.
         "channel1": (int,
-                     _("Channel to _sort"),
+                     _("Channel _to sort"),
                      "Channel to sort: " + str(AVAILABLE_CHANNELS),
                      0, len(AVAILABLE_CHANNELS), 3,
                      GObject.ParamFlags.READWRITE),
@@ -364,15 +380,13 @@ class PaletteSort (Gimp.PlugIn):
                        _("Ascending"),
                        True,
                        GObject.ParamFlags.READWRITE),
-        # TODO: was  (PF_OPTION,   "channel2",    _("Secondary Channel to s_ort"), 5,
-        #                           AVAILABLE_CHANNELS),
         "channel2": (int,
-                     _("Secondary Channel to s_ort"),
+                     _("Secondary C_hannel to sort"),
                      "Secondary Channel to sort: " + str(AVAILABLE_CHANNELS),
                      0, len(AVAILABLE_CHANNELS), 5,
                      GObject.ParamFlags.READWRITE),
         "ascending2": (bool,
-                       _("_Ascending"),
+                       _("Ascen_ding"),
                        _("Ascending"),
                        True,
                        GObject.ParamFlags.READWRITE),
@@ -381,7 +395,6 @@ class PaletteSort (Gimp.PlugIn):
                      _("Quantization"),
                      0.0, 1.0, 0.0,
                      GObject.ParamFlags.READWRITE),
-        # TODO: was (PF_OPTION,  "pchannel",    _("_Partitioning channel"), 3, AVAILABLE_CHANNELS),
         "pchannel": (int,
                      _("_Partitioning channel"),
                      "Partitioning channel: " + str(AVAILABLE_CHANNELS),
@@ -419,7 +432,7 @@ class PaletteSort (Gimp.PlugIn):
             # FIXME: Write humanly readable help -
             # See for reference: https://gitlab.gnome.org/GNOME/gimp/-/issues/4368#note_763460
             procedure.set_documentation(
-                _("Sort the colors in a palette"),
+                N_("Sort the colors in a palette"),
                 dedent("""\
                     palette_sort (palette, selection, slice_expr, channel,
                     channel2, quantize, ascending, pchannel, pquantize) -> new_palette
@@ -454,6 +467,9 @@ class PaletteSort (Gimp.PlugIn):
         return procedure
 
     def run(self, procedure, args, data):
+        config = procedure.create_config()
+        config.begin_run(None, Gimp.RunMode.INTERACTIVE, args)
+
         run_mode = args.index(0)
         palette = args.index(1)
         selection = args.index(2)
@@ -466,6 +482,55 @@ class PaletteSort (Gimp.PlugIn):
         pchannel = args.index(9)
         pquantize = args.index(10)
 
+        if run_mode == Gimp.RunMode.INTERACTIVE:
+            GimpUi.init('python-fu-palette-sort')
+            dialog = GimpUi.ProcedureDialog(procedure=procedure, config=config)
+
+            # Add palette button
+            prior_palette = None
+            if config.get_property ("palette") != None:
+                prior_palette = config.get_property ("palette")
+            button = GimpUi.PaletteSelectButton.new ("palette", prior_palette)
+            create_ui_row(dialog, "_Palette", 86, button)
+
+            #Connect config so reset works on custom widgets
+            def palette_reset (*args):
+                if len(args) >= 2:
+                    if args[1].name == "palette":
+                        button.set_palette(config.get_property("palette"))
+
+            config.connect("notify::palette", palette_reset)
+
+            dialog.get_int_combo("selections", GimpUi.IntStore.new (selections_option))
+            dialog.fill (["selections","slice-expr"])
+            dialog.get_int_combo("channel1", GimpUi.IntStore.new (AVAILABLE_CHANNELS))
+            dialog.fill (["channel1", "ascending1"])
+            dialog.get_int_combo("channel2", GimpUi.IntStore.new (AVAILABLE_CHANNELS))
+            dialog.fill (["channel2","ascending2", "quantize"])
+            dialog.get_int_combo("pchannel", GimpUi.IntStore.new (AVAILABLE_CHANNELS))
+            dialog.fill (["pchannel","pquantize"])
+
+            if not dialog.run():
+                dialog.destroy()
+                config.end_run(Gimp.PDBStatusType.CANCEL)
+                return procedure.new_return_values(Gimp.PDBStatusType.CANCEL, GLib.Error())
+            else:
+                palette = button.get_palette()
+                selection = config.get_property("selections")
+                slice_expr = config.get_property ("slice_expr")
+                channel1 = config.get_property("channel1")
+                ascending1 = config.get_property ("ascending1")
+                channel2 = config.get_property("channel2")
+                ascending2 = config.get_property ("ascending2")
+                quantize = config.get_property ("quantize")
+                pchannel = config.get_property("pchannel")
+                pquantize = config.get_property ("pquantize")
+
+                #Save configs for non-connected UI element
+                config.set_property ("palette", palette)
+
+                dialog.destroy()
+
         if palette == '' or palette is None:
             palette = Gimp.context_get_palette()
         (exists, num_colors) = Gimp.palette_get_info(palette)
@@ -474,13 +539,14 @@ class PaletteSort (Gimp.PlugIn):
             return procedure.new_return_values(Gimp.PDBStatusType.CALLING_ERROR,
                                                GLib.Error(error))
 
-        # TODO: Add UI
         try:
             new_palette = palette_sort(palette, selection, slice_expr, channel1, ascending1,
                                        channel2, ascending2, quantize, pchannel, pquantize)
         except ValueError as err:
             return procedure.new_return_values(Gimp.PDBStatusType.EXECUTION_ERROR,
                                                GLib.Error(str(err)))
+
+        config.end_run(Gimp.PDBStatusType.SUCCESS)
 
         return_val = procedure.new_return_values(Gimp.PDBStatusType.SUCCESS, GLib.Error())
         value = GObject.Value(GObject.TYPE_STRING, new_palette)
