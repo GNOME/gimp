@@ -494,6 +494,11 @@ deps-win64:
   variables:
     XDG_CACHE_HOME: "$CI_PROJECT_DIR/.cache/"
     XDG_DATA_HOME:  "$CI_PROJECT_DIR/.local/share/"
+    # Needed because by default, Debian has now changed
+    # "sysconfig.get_default_scheme()" from "posix_prefix" to "posix_local" which
+    # adds a local/ folder to the install prefix of setup.py. This environment
+    # variable overrides this behavior.
+    DEB_PYTHON_INSTALL_LAYOUT: "deb"
   cache:
     paths:
     - .cache/crossroad/
@@ -566,6 +571,7 @@ deps-win32:
   variables:
     XDG_CACHE_HOME: "$CI_PROJECT_DIR/.cache/"
     XDG_DATA_HOME:  "$CI_PROJECT_DIR/.local/share/"
+    DEB_PYTHON_INSTALL_LAYOUT: "deb"
   cache:
     paths:
     - .cache/crossroad/
