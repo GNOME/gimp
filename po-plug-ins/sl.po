@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2023-01-02 14:18+0000\n"
-"PO-Revision-Date: 2023-01-04 17:44+0100\n"
+"PO-Revision-Date: 2023-01-06 08:45+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -26,7 +26,7 @@ msgstr ""
 
 #: extensions/goat-exercises/goat-exercise-c.c:114
 msgid "Exercise in _C minor"
-msgstr "Povadi v _C-minoru"
+msgstr "Povadi v _C-minorju"
 
 #: extensions/goat-exercises/goat-exercise-c.c:120
 msgid "Exercise a goat in the C language"
@@ -7399,7 +7399,7 @@ msgid ""
 "and can be reapplied on export."
 msgstr ""
 "Slika bo uvožena kot sivinska.\n"
-"Shranjeni so podatki o barvnem prostoru duotone\n"
+"Podatki o barvnem prostoru duotone so shranjeni\n"
 "in se lahko ponovno uporabijo pri izvozu."
 
 #: plug-ins/file-psd/psd-save.c:502
@@ -7466,7 +7466,7 @@ msgstr "Dodali _pot obrezovanja"
 
 #: plug-ins/file-psd/psd.c:229
 msgid "Select a path to be the clipping path"
-msgstr "Izberite pot, ki bo uporabljena za izrezovanje"
+msgstr "Izberite pot, ki bo uporabljena za obrezovanje"
 
 #: plug-ins/file-psd/psd.c:235
 msgid "Clipping Path _Name"
@@ -7477,21 +7477,19 @@ msgid ""
 "Clipping path name\n"
 "(ignored if no clipping path)"
 msgstr ""
-"Ime poti izrezovanja\n"
-"(prezrto, če ni poti izrezovanja)"
+"Ime poti obrezovanja\n"
+"(prezrto, če ni poti obrezovanja)"
 
 #: plug-ins/file-psd/psd.c:242
-#, fuzzy
 msgid "Path _Flatness"
-msgstr "Splo_ščenost poti"
+msgstr "Plos_kost poti"
 
 #: plug-ins/file-psd/psd.c:243
-#, fuzzy
 msgid ""
 "Clipping path flatness in device pixels\n"
 "(ignored if no clipping path)"
 msgstr ""
-"Sploščenost poti izrezovanja v slikovnih točkah naprave\n"
+"Ploskost poti obrezovanja v slik. točkah naprave\n"
 "(prezrto, če ni poti izrezovanja)"
 
 #: plug-ins/file-psd/psd.c:249
@@ -7503,18 +7501,16 @@ msgid "Export a CMYK PSD image using the soft-proofing color profile"
 msgstr "Izvozite sliko PSD CMYK z uporabo barvnega profila preverjanja videza"
 
 #: plug-ins/file-psd/psd.c:255
-#, fuzzy
 msgid "Export as _Duotone"
-msgstr "Izvozi kot _dvotonalno"
+msgstr "Izvoz kot _dvotonalno (duotone)"
 
 #: plug-ins/file-psd/psd.c:256
-#, fuzzy
 msgid ""
 "Export as a Duotone PSD file if Duotone color space information was attached "
 "to the image when originally imported."
 msgstr ""
-"Izvozite kot datoteko PSD Duotone, če so bili podatki o barvnem prostoru "
-"Duotone priloženi sliki ob prvotnem uvozu."
+"Izvozite kot dvotonalno datoteko PSD (duotone), če so bili podatki o barvnem "
+"prostoru duotone priloženi sliki ob prvotnem uvozu."
 
 #: plug-ins/file-raw/file-raw-formats.h:46
 msgid "Raw Canon"
