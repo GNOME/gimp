@@ -5,15 +5,15 @@
 # Pedro Barreira <almufado@gmail.com>, 2010.
 # Pedro Albuquerque <palbuquerque73@gmail.com>, 2015.
 # Tiago Santos <tiagofsantos81@sapo.pt>, 2014-2017.
-# Hugo Carvalho <hugokarvalho@hotmail.com>, 2020, 2021, 2022.
+# Hugo Carvalho <hugokarvalho@hotmail.com>, 2020, 2021, 2022, 2023.
 # Sara Campos <lalocas@protonmail.com>, 2021, 2022.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-11-12 21:36+0000\n"
-"PO-Revision-Date: 2022-11-18 14:05+0000\n"
+"POT-Creation-Date: 2023-01-02 14:16+0000\n"
+"PO-Revision-Date: 2023-01-06 21:41+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Português <https://l10n.gnome.org/teams/pt/>\n"
 "Language: pt\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.2\n"
+"X-Generator: Poedit 3.2.2\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Language: pt_PT\n"
 "X-Source-Language: C\n"
@@ -266,11 +266,11 @@ msgstr "Mostrar uma página de preferências com funcionalidades experimentais"
 msgid "Show an image submenu with debug actions"
 msgstr "Mostrar um submenu de imagem com ações de depuração"
 
-#: app/main.c:736
+#: app/main.c:744
 msgid "[FILE|URI...]"
 msgstr "[FICHEIRO|URI…]"
 
-#: app/main.c:764
+#: app/main.c:772
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -278,20 +278,20 @@ msgstr ""
 "O GIMP não conseguiu iniciar a interface gráfica de utilizador.\n"
 "Certifique-se que o seu ambiente gráfico está configurado corretamente."
 
-#: app/main.c:783
+#: app/main.c:791
 msgid "Another GIMP instance is already running."
 msgstr "Já existe outra instância do GIMP em execução."
 
-#: app/main.c:871
+#: app/main.c:879
 msgid "GIMP output. Type any character to close this window."
 msgstr "Saída de dados do GIMP. Prima qualquer tecla para fechar esta janela."
 
-#: app/main.c:872
+#: app/main.c:880
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(prima qualquer tecla para fechar esta janela)\n"
 
-#: app/main.c:889
+#: app/main.c:897
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "Saída de dados do GIMP. Pode minimizar esta janela, mas não a feche."
 
@@ -1083,7 +1083,7 @@ msgstr[1] "Baixar canais para o fundo"
 
 #: app/actions/channels-commands.c:375 app/core/gimpimage-new.c:506
 #: app/display/gimpdisplayshell-dnd.c:683 app/widgets/gimpchanneltreeview.c:259
-#: app/widgets/gimplayertreeview.c:1042
+#: app/widgets/gimplayertreeview.c:1051
 #, c-format
 msgid "%s Channel Copy"
 msgstr "Cópia do canal %s"
@@ -2631,7 +2631,7 @@ msgstr "Introduza uma descrição para o marcador"
 #: app/dialogs/file-open-dialog.c:269
 #: app/dialogs/file-open-location-dialog.c:217
 #: app/dialogs/file-open-location-dialog.c:233
-#: app/display/gimpdisplayshell-dnd.c:626 app/widgets/gimplayertreeview.c:1000
+#: app/display/gimpdisplayshell-dnd.c:626 app/widgets/gimplayertreeview.c:1009
 #: app/widgets/gimptoolbox.c:750 app/widgets/gimptoolbox-dnd.c:178
 #, c-format
 msgid ""
@@ -6520,16 +6520,17 @@ msgctxt "layers-action"
 msgid "Move this layer to the bottom of the layer stack"
 msgstr "Move esta camada para o fundo da pilha de camadas"
 
+# “Anchor” não faz sentido neste contexto, aqui trata-se de, pura e simplesmente, uma fusão/união de 2 camadas. Uma “âncora” pressupõe um “anexo” tal como uma máscara está acorada/anexada a uma camada/imagem que pode ser desanexada/desancorada a qualquer momento, coisa que não se pode fazer aqui, após fazer esta ação.
 #: app/actions/layers-actions.c:169
 msgctxt "layers-action"
-msgid "_Anchor Layer"
-msgstr "_Ancorar camada"
+msgid "_Anchor Floating Layer or Mask"
+msgstr "Unir a camada ou máscara flutuante à camada abaixo desta"
 
 # “Anchor” não faz sentido neste contexto, aqui trata-se de, pura e simplesmente, uma fusão/união de 2 camadas. Uma “âncora” pressupõe um “anexo” tal como uma máscara está acorada/anexada a uma camada/imagem que pode ser desanexada/desancorada a qualquer momento, coisa que não se pode fazer aqui, após fazer esta ação.
-#: app/actions/layers-actions.c:170
+#: app/actions/layers-actions.c:170 app/widgets/gimplayertreeview.c:1856
 msgctxt "layers-action"
-msgid "Anchor the floating layer"
-msgstr "Unir a camada flutuante à camada abaixo desta"
+msgid "Anchor the floating layer or mask"
+msgstr "Unir a camada ou máscara flutuante à camada abaixo desta"
 
 #: app/actions/layers-actions.c:175 app/actions/layers-actions.c:184
 msgctxt "layers-action"
@@ -7171,7 +7172,7 @@ msgid "Edit Layer Attributes"
 msgstr "Editar definições da camada"
 
 #: app/actions/layers-commands.c:338 app/widgets/gimpdrawabletreeview.c:359
-#: app/widgets/gimplayertreeview.c:1129
+#: app/widgets/gimplayertreeview.c:1138
 msgid "New Layer"
 msgid_plural "New Layers"
 msgstr[0] "Nova camada"
@@ -7349,7 +7350,7 @@ msgid "Empty Selection"
 msgstr "Seleção vazia"
 
 #: app/actions/layers-commands.c:1784 app/actions/layers-commands.c:1828
-#: app/widgets/gimplayertreeview.c:1640
+#: app/widgets/gimplayertreeview.c:1659
 msgid "Set layers opacity"
 msgstr "Definir opacidade das camadas"
 
@@ -10759,8 +10760,8 @@ msgstr "Caminho"
 #: app/config/gimprc-blurbs.h:13
 msgid ""
 "When enabled, an image will become the active image when its image window "
-"receives the focus. This is useful for window managers using \"click to focus"
-"\"."
+"receives the focus. This is useful for window managers using \"click to "
+"focus\"."
 msgstr ""
 "Quando ativado, uma imagem torna-se a imagem ativa quando a sua janela de "
 "imagem recebe o foco. Isto é útil para gestores de janelas que usem \"clique "
@@ -11362,8 +11363,8 @@ msgid ""
 "toggled with the \"View->Show Sample Points\" command."
 msgstr ""
 "Quando ativado, os pontos de amostragem estão visíveis por predefinição. "
-"Pode também ser alternado com o comando \"Ver → Mostrar pontos de amostragem"
-"\"."
+"Pode também ser alternado com o comando \"Ver → Mostrar pontos de "
+"amostragem\"."
 
 #: app/config/gimprc-blurbs.h:474
 msgid "Show a tooltip when the pointer hovers over an item."
@@ -11640,8 +11641,8 @@ msgstr ""
 msgid ""
 "Sets the default 'Active group only' for the 'Merge Visible Layers' dialog."
 msgstr ""
-"Define “Apenas o grupo ativo\" predefinido no diálogo \"Unir camadas visíveis"
-"\"."
+"Define “Apenas o grupo ativo\" predefinido no diálogo \"Unir camadas "
+"visíveis\"."
 
 # O original em inglês devia ser "Discard invisible layers" e não "Discard invisible".
 #: app/config/gimprc-blurbs.h:638
@@ -13651,7 +13652,7 @@ msgstr "Cor de fundo"
 # Campo que aparece nas opções da ferramenta como Pincel, etc.
 #: app/core/gimpcontext.c:683 app/core/gimpcontext.c:684
 #: app/operations/gimpoperationsettings.c:100 app/widgets/gimpbrushselect.c:176
-#: app/widgets/gimplayertreeview.c:321
+#: app/widgets/gimplayertreeview.c:323
 msgid "Opacity"
 msgstr "Opacidade"
 
@@ -13684,7 +13685,7 @@ msgid "Gradient"
 msgstr "Gradiente"
 
 #: app/core/gimpcontext.c:735 app/core/gimpcontext.c:736
-#: app/widgets/gimpcolorselectorpalette.c:59
+#: app/widgets/gimpcolorselectorpalette.c:60
 msgid "Palette"
 msgstr "Paleta"
 
@@ -18843,12 +18844,12 @@ msgid "Drop color to layer"
 msgstr "Largada cor na camada"
 
 #: app/display/gimpdisplayshell-dnd.c:576 app/widgets/gimpitemtreeview.c:1406
-#: app/widgets/gimplayertreeview.c:991
+#: app/widgets/gimplayertreeview.c:1000
 msgid "Drop layers"
 msgstr "Camadas largadas"
 
 #: app/display/gimpdisplayshell-dnd.c:719
-#: app/display/gimpdisplayshell-dnd.c:736 app/widgets/gimplayertreeview.c:1068
+#: app/display/gimpdisplayshell-dnd.c:736 app/widgets/gimplayertreeview.c:1077
 #: app/widgets/gimptoolbox-dnd.c:277
 msgid "Dropped Buffer"
 msgstr "Cópia largada (da lista de cópias)"
@@ -20361,7 +20362,7 @@ msgstr "Transforma cores em tons de cinzento"
 #: app/operations/gimpoperationsettings.c:92 app/tools/gimpfiltertool.c:1137
 #: app/tools/gimppaintoptions-gui.c:110 app/tools/gimppaintselectoptions.c:73
 #: app/tools/gimptransform3doptions.c:77 app/widgets/gimpdeviceinfo.c:173
-#: app/widgets/gimplayertreeview.c:306
+#: app/widgets/gimplayertreeview.c:308
 msgid "Mode"
 msgstr "Modo"
 
@@ -21330,8 +21331,8 @@ msgstr ""
 #: app/pdb/gimpprocedure.c:860
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong value type for argument '%s' (#"
-"%d). Expected %s, got %s."
+"Procedure '%s' has been called with a wrong value type for argument "
+"'%s' (#%d). Expected %s, got %s."
 msgstr ""
 "O procedimento '%s' foi chamado com um valor de tipo incorreto para o "
 "argumento '%s' (n°%d). Esperado %s, obtido %s."
@@ -27902,78 +27903,90 @@ msgstr ""
 "profundidade de cor de 8 bits, levando a mais perda de informação nas "
 "operações de cores do que no atual"
 
-#: app/widgets/gimplayertreeview.c:442
+#: app/widgets/gimplayertreeview.c:444
 msgid "Select layers by patterns and store layer sets"
 msgstr "Selecionar camadas por padrões e armazenar conjuntos de camadas"
 
-#: app/widgets/gimplayertreeview.c:486
+#: app/widgets/gimplayertreeview.c:495
 msgid "No layer set stored"
 msgstr "Nenhuma definição de camada armazenada"
 
-#: app/widgets/gimplayertreeview.c:508
+#: app/widgets/gimplayertreeview.c:517
 msgid "New layer set's name"
 msgstr "Nome do novo conjunto de camadas"
 
-#: app/widgets/gimplayertreeview.c:547 app/widgets/gimplayertreeview.c:550
+#: app/widgets/gimplayertreeview.c:556 app/widgets/gimplayertreeview.c:559
 msgid "Lock alpha channel"
 msgstr "Bloquear canal alfa"
 
-#: app/widgets/gimplayertreeview.c:548
+#: app/widgets/gimplayertreeview.c:557
 msgid "Unlock alpha channel"
 msgstr "Desbloquear canal alfa"
 
-#: app/widgets/gimplayertreeview.c:549
+#: app/widgets/gimplayertreeview.c:558
 msgid "Set Item Exclusive Alpha Channel lock"
 msgstr "Definir bloqueio exclusivo do canal alfa do item"
 
-#: app/widgets/gimplayertreeview.c:1234
+#: app/widgets/gimplayertreeview.c:1243
 msgid "search"
 msgstr "procurar"
 
-#: app/widgets/gimplayertreeview.c:1235
+#: app/widgets/gimplayertreeview.c:1244
 msgid "glob"
 msgstr "glob"
 
-#: app/widgets/gimplayertreeview.c:1235
+#: app/widgets/gimplayertreeview.c:1244
 msgid "regexp"
 msgstr "regexp"
 
-#: app/widgets/gimplayertreeview.c:1339 app/widgets/gimplayertreeview.c:1352
+#: app/widgets/gimplayertreeview.c:1348 app/widgets/gimplayertreeview.c:1361
 msgid "Select layers by text search"
 msgstr "Selecionar camadas por pesquisa de texto"
 
-#: app/widgets/gimplayertreeview.c:1341 app/widgets/gimplayertreeview.c:1354
+#: app/widgets/gimplayertreeview.c:1350 app/widgets/gimplayertreeview.c:1363
 msgid "Text search"
 msgstr "Pesquisa de texto"
 
-#: app/widgets/gimplayertreeview.c:1358
+#: app/widgets/gimplayertreeview.c:1367
 msgid "Select layers by glob patterns"
 msgstr "Definir camadas por padrão glob"
 
-#: app/widgets/gimplayertreeview.c:1360
+#: app/widgets/gimplayertreeview.c:1369
 msgid "Glob pattern search"
 msgstr "Pesquisa padrão glob"
 
-#: app/widgets/gimplayertreeview.c:1364
+#: app/widgets/gimplayertreeview.c:1373
 msgid "Select layers by regular expressions"
 msgstr "Selecionar camadas por expressões regulares"
 
-#: app/widgets/gimplayertreeview.c:1366
+#: app/widgets/gimplayertreeview.c:1375
 msgid "Regular Expression search"
 msgstr "Pesquisa de expressão regular"
 
-#: app/widgets/gimplayertreeview.c:1430
+#: app/widgets/gimplayertreeview.c:1439
 #, c-format
 msgid "Invalid regular expression: %s\n"
 msgstr "Expressão regular inválida: %s\n"
 
-#: app/widgets/gimplayertreeview.c:1583
+#: app/widgets/gimplayertreeview.c:1602
 msgid "Set layers mode"
 msgstr "Definir modo das camadas"
 
+# “Anchor” não faz sentido neste contexto, aqui trata-se de, pura e simplesmente, uma fusão/união de 2 camadas. Uma “âncora” pressupõe um “anexo” tal como uma máscara está acorada/anexada a uma camada/imagem que pode ser desanexada/desancorada a qualquer momento, coisa que não se pode fazer aqui, após fazer esta ação.
+#: app/widgets/gimplayertreeview.c:1848
+msgctxt "layers-action"
+msgid "Anchor the floating mask"
+msgstr "Unir a máscara flutuante à camada abaixo desta"
+
+# “Anchor” não faz sentido neste contexto, aqui trata-se de, pura e simplesmente, uma fusão/união de 2 camadas. Uma “âncora” pressupõe um “anexo” tal como uma máscara está acorada/anexada a uma camada/imagem que pode ser desanexada/desancorada a qualquer momento, coisa que não se pode fazer aqui, após fazer esta ação.
+#: app/widgets/gimplayertreeview.c:1851
+msgctxt "layers-action"
+msgid "Anchor the floating layer"
+msgstr "Unir a camada flutuante à camada abaixo desta"
+
 #. No channel. We cannot perform the add
 #. * mask action.
-#: app/widgets/gimplayertreeview.c:2079
+#: app/widgets/gimplayertreeview.c:2112
 msgid "No channels to create a layer mask from."
 msgstr "Sem canais onde criar uma máscara na camada."
 
@@ -28017,6 +28030,7 @@ msgstr "Selecionar ação para %s botão %d de %s"
 msgid "Editing modifiers for %s button %d"
 msgstr "A editar modificadores para %s botão %d"
 
+#. TRANSLATORS: %d is a button number, %s is the device (e.g. a mouse) name.
 #: app/widgets/gimpmodifierseditor.c:655
 #, c-format
 msgid "Select Action for button %d of %s"
@@ -28495,7 +28509,7 @@ msgstr ""
 "O gradiente ativo.\n"
 "[Clique] para abrir o painel com a lista de gradientes."
 
-#: app/widgets/gimptoolbutton.c:550
+#: app/widgets/gimptoolbutton.c:542
 msgid "Also in group:"
 msgstr "Outras ferramentas neste grupo:"
 
@@ -28903,6 +28917,10 @@ msgstr "Erro ao escrever XCF: BPC não suportado ao escrever o pixel: %d"
 #: app-tools/gimp-debug-tool.c:87
 msgid "GIMP Crash Debug"
 msgstr "Depuração de falha de sistema do GIMP"
+
+#~ msgctxt "layers-action"
+#~ msgid "_Anchor Layer"
+#~ msgstr "_Ancorar camada"
 
 #~ msgctxt "edit-action"
 #~ msgid "_New Image"
