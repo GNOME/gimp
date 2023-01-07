@@ -371,7 +371,7 @@ gio               = dependency('gio-2.0')
 gio_specific_name = platform_windows ? 'gio-windows-2.0' : 'gio-unix-2.0'
 gio_specific      = dependency(gio_specific_name)
 
-glib_minver       = '2.68.0'
+glib_minver       = '2.70.0'
 glib              = dependency('glib-2.0',           version: '>='+glib_minver)
 
 conf.set('G_DISABLE_DEPRECATED', glib.version().version_compare('>=2.57'))
