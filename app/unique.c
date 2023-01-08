@@ -48,6 +48,8 @@ gimp_unique_open (const gchar **filenames,
 {
 #ifdef G_OS_WIN32
   return gimp_unique_win32_open (filenames, as_new);
+#elif defined (PLATFORM_OSX)
+  return FALSE;
 #else
   return gimp_unique_dbus_open (filenames, as_new);
 #endif
@@ -59,6 +61,8 @@ gimp_unique_batch_run (const gchar  *batch_interpreter,
 {
 #ifdef G_OS_WIN32
   g_printerr ("Batch commands cannot be run in existing instance in Win32.\n");
+  return FALSE;
+#elif defined (PLATFORM_OSX)
   return FALSE;
 #else
   return gimp_unique_dbus_batch_run (batch_interpreter,
