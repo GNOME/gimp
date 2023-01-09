@@ -251,7 +251,7 @@ gimp_image_arrange_objects (GimpImage         *image,
             }
 
           /* Compute the offset for the reference (for alignment). */
-          compute_offset (reference, use_ref_x_offset, reference_x, reference_y, FALSE);
+          compute_offset (reference, use_ref_x_offset, reference_x, reference_y, align_contents);
           z0 = GPOINTER_TO_INT (g_object_get_data (reference, "align-offset"));
         }
 

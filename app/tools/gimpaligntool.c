@@ -35,6 +35,8 @@
 #include "core/gimpimage-pick-item.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimplayer.h"
+#include "core/gimppickable.h"
+#include "core/gimppickable-auto-shrink.h"
 
 #include "vectors/gimpvectors.h"
 
@@ -184,6 +186,9 @@ gimp_align_tool_constructed (GObject *object)
                            G_CALLBACK (gimp_align_tool_align),
                            align_tool, G_CONNECT_SWAPPED);
   g_signal_connect_object (options, "notify::align-reference",
+                           G_CALLBACK (gimp_align_tool_redraw),
+                           align_tool, G_CONNECT_SWAPPED);
+  g_signal_connect_object (options, "notify::align-contents",
                            G_CALLBACK (gimp_align_tool_redraw),
                            align_tool, G_CONNECT_SWAPPED);
   g_signal_connect_object (gimp_get_user_context (GIMP_CONTEXT (options)->gimp),
@@ -626,6 +631,22 @@ gimp_align_tool_draw (GimpDrawTool *draw_tool)
       gimp_item_get_offset (item, &off_x, &off_y);
       x += off_x;
       y += off_y;
+
+      if (gimp_align_options_align_contents (options))
+        {
+          gint shrunk_x;
+          gint shrunk_y;
+
+          if (gimp_pickable_auto_shrink (GIMP_PICKABLE (reference),
+                                         0, 0,
+                                         gimp_item_get_width  (GIMP_ITEM (reference)),
+                                         gimp_item_get_height (GIMP_ITEM (reference)),
+                                         &shrunk_x, &shrunk_y, &w, &h) == GIMP_AUTO_SHRINK_SHRINK)
+            {
+              x += shrunk_x;
+              y += shrunk_y;
+            }
+        }
 
       gimp_draw_tool_add_handle (draw_tool, GIMP_HANDLE_FILLED_SQUARE,
                                  x, y,
