@@ -104,7 +104,7 @@ gimp_image_arrange_objects (GimpImage         *image,
         {
           for (iter2 = list; iter2; iter2 = iter2->next)
             {
-              if (GIMP_IS_ITEM (iter->data) &&
+              if (GIMP_IS_ITEM (iter2->data) &&
                   gimp_viewable_is_ancestor (iter2->data, iter->data))
                 break;
             }
