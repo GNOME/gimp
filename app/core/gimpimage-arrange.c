@@ -36,7 +36,6 @@
 #include "gimp-intl.h"
 
 
-static GList * sort_by_offset  (GList             *list);
 static void    compute_offsets (GList             *list,
                                 gboolean           use_x_offset,
                                 gdouble            align_x,
@@ -89,10 +88,31 @@ gimp_image_arrange_objects (GimpImage         *image,
   gboolean do_x             = FALSE;
   gboolean do_y             = FALSE;
   gint     z0               = 0;
-  GList   *object_list;
+  GList   *object_list      = NULL;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (G_IS_OBJECT (reference) || reference == NULL);
+
+  /* Create the base list, removing any item which has one of its ancestor also
+   * in the list (in such case, we only rearrange the ancestor item.
+   */
+  for (GList *iter = list; iter; iter = iter->next)
+    {
+      GList *iter2 = NULL;
+
+      if (GIMP_IS_ITEM (iter->data))
+        {
+          for (iter2 = list; iter2; iter2 = iter2->next)
+            {
+              if (GIMP_IS_ITEM (iter->data) &&
+                  gimp_viewable_is_ancestor (iter2->data, iter->data))
+                break;
+            }
+        }
+
+      if (iter2 == NULL)
+        object_list = g_list_prepend (object_list, iter->data);
+    }
 
   /* get offsets used for sorting */
   switch (reference_alignment)
@@ -118,7 +138,7 @@ gimp_image_arrange_objects (GimpImage         *image,
 
       /* order horizontally for horizontal arrangement */
     case GIMP_ARRANGE_HFILL:
-      if (g_list_length (list) <= 2)
+      if (g_list_length (object_list) <= 2)
         return;
       use_obj_x_offset = TRUE;
       use_ref_x_offset = TRUE;
@@ -143,7 +163,7 @@ gimp_image_arrange_objects (GimpImage         *image,
 
       /* order vertically for vertical arrangement */
     case GIMP_ARRANGE_VFILL:
-      if (g_list_length (list) <= 2)
+      if (g_list_length (object_list) <= 2)
         return;
       do_y = TRUE;
       break;
@@ -152,7 +172,7 @@ gimp_image_arrange_objects (GimpImage         *image,
       use_obj_x_offset = TRUE;
       do_x             = TRUE;
     case GIMP_DISTRIBUTE_EVEN_VERTICAL_GAP:
-      if (g_list_length (list) <= 2)
+      if (g_list_length (object_list) <= 2)
         return;
 
       if (! do_x)
@@ -166,13 +186,13 @@ gimp_image_arrange_objects (GimpImage         *image,
       g_return_if_reached ();
     }
   /* get offsets used for sorting */
-  compute_offsets (list, use_obj_x_offset, align_x, align_y, align_contents);
+  compute_offsets (object_list, use_obj_x_offset, align_x, align_y, align_contents);
 
-  /* Sort. */
-  object_list = sort_by_offset (list);
+  /* Sort by offset. */
+  object_list = g_list_sort (object_list, offset_compare);
 
   /* now get offsets used for aligning */
-  compute_offsets (list, use_obj_x_offset, align_x, align_y, align_contents);
+  compute_offsets (object_list, use_obj_x_offset, align_x, align_y, align_contents);
 
   if (object_list)
     {
@@ -317,14 +337,6 @@ gimp_image_arrange_objects (GimpImage         *image,
     }
 
   g_list_free (object_list);
-}
-
-static GList *
-sort_by_offset (GList *list)
-{
-  return g_list_sort (g_list_copy (list),
-                      offset_compare);
-
 }
 
 static gint
