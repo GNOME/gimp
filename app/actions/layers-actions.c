@@ -212,13 +212,13 @@ static const GimpActionEntry layers_actions[] =
 
   { "layers-text-discard", GIMP_ICON_TOOL_TEXT,
     NC_("layers-action", "_Discard Text Information"), NULL,
-    NC_("layers-action", "Turn this text layer into a normal layer"),
+    NC_("layers-action", "Turn these text layers into normal layers"),
     layers_text_discard_cmd_callback,
     GIMP_HELP_LAYER_TEXT_DISCARD },
 
   { "layers-text-to-vectors", GIMP_ICON_TOOL_TEXT,
     NC_("layers-action", "Text to _Path"), NULL,
-    NC_("layers-action", "Create a path from this text layer"),
+    NC_("layers-action", "Create paths from text layers"),
     layers_text_to_vectors_cmd_callback,
     GIMP_HELP_LAYER_TEXT_TO_PATH },
 
@@ -793,6 +793,7 @@ layers_actions_update (GimpActionGroup *group,
 
   gint           n_selected_layers  = 0;
   gint           n_layers           = 0;
+  gint           n_text_layers      = 0;
 
   if (image)
     {
@@ -916,19 +917,8 @@ layers_actions_update (GimpActionGroup *group,
           else
             have_no_alpha = TRUE;
 
-          if (have_masks && have_no_masks            &&
-              have_groups && have_no_groups          &&
-              have_writable && ! all_writable        &&
-              ! all_movable                          &&
-              ! all_masks_shown                      &&
-              ! all_masks_disabled                   &&
-              ! lock_alpha && can_lock_alpha         &&
-              ! prev_mode && ! next_mode             &&
-              have_prev && have_next                 &&
-              bs_mutable && cs_mutable && cm_mutable &&
-              ! all_visible && ! all_next_visible    &&
-              have_alpha && have_no_alpha)
-            break;
+          if (GIMP_IS_TEXT_LAYER (iter->data))
+            n_text_layers++;
         }
 
       if (n_selected_layers == 1)
@@ -1044,8 +1034,8 @@ layers_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("layers-merge-layers",      n_selected_layers > 0 && !fs && !ac);
   SET_SENSITIVE ("layers-flatten-image",     !fs && !ac);
 
-  SET_VISIBLE   ("layers-text-discard",       text_layer && !ac);
-  SET_VISIBLE   ("layers-text-to-vectors",    text_layer && !ac);
+  SET_VISIBLE   ("layers-text-discard",       n_text_layers > 0 && !ac);
+  SET_VISIBLE   ("layers-text-to-vectors",    n_text_layers > 0 && !ac);
   SET_VISIBLE   ("layers-text-along-vectors", text_layer && !ac);
 
   SET_SENSITIVE ("layers-resize",          n_selected_layers == 1 && all_writable && all_movable && !ac);

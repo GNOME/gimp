@@ -982,11 +982,16 @@ layers_text_discard_cmd_callback (GimpAction *action,
                                   gpointer    data)
 {
   GimpImage *image;
-  GimpLayer *layer;
-  return_if_no_layer (image, layer, data);
+  GList     *layers;
+  GList     *iter;
+  return_if_no_layers (image, layers, data);
 
-  if (GIMP_IS_TEXT_LAYER (layer))
-    gimp_text_layer_discard (GIMP_TEXT_LAYER (layer));
+  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TEXT,
+                               _("Discard Text Information"));
+  for (iter = layers; iter; iter = iter->next)
+    if (GIMP_IS_TEXT_LAYER (iter->data))
+      gimp_text_layer_discard (GIMP_TEXT_LAYER (iter->data));
+  gimp_image_undo_group_end (image);
 }
 
 void
@@ -995,23 +1000,33 @@ layers_text_to_vectors_cmd_callback (GimpAction *action,
                                      gpointer    data)
 {
   GimpImage *image;
-  GimpLayer *layer;
-  return_if_no_layer (image, layer, data);
+  GList     *layers;
+  GList     *iter;
+  return_if_no_layers (image, layers, data);
 
-  if (GIMP_IS_TEXT_LAYER (layer))
+  /* TODO: have the proper undo group. */
+  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_VECTORS_IMPORT,
+                               _("Add Paths"));
+  for (iter = layers; iter; iter = iter->next)
     {
-      GimpVectors *vectors;
-      gint         x, y;
+      GimpLayer *layer = iter->data;
 
-      vectors = gimp_text_vectors_new (image, GIMP_TEXT_LAYER (layer)->text);
+      if (GIMP_IS_TEXT_LAYER (layer))
+        {
+          GimpVectors *vectors;
+          gint         x, y;
 
-      gimp_item_get_offset (GIMP_ITEM (layer), &x, &y);
-      gimp_item_translate (GIMP_ITEM (vectors), x, y, FALSE);
+          vectors = gimp_text_vectors_new (image, GIMP_TEXT_LAYER (layer)->text);
 
-      gimp_image_add_vectors (image, vectors,
-                              GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
-      gimp_image_flush (image);
+          gimp_item_get_offset (GIMP_ITEM (layer), &x, &y);
+          gimp_item_translate (GIMP_ITEM (vectors), x, y, FALSE);
+
+          gimp_image_add_vectors (image, vectors,
+                                  GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
+          gimp_image_flush (image);
+        }
     }
+  gimp_image_undo_group_end (image);
 }
 
 void
@@ -1020,11 +1035,18 @@ layers_text_along_vectors_cmd_callback (GimpAction *action,
                                         gpointer    data)
 {
   GimpImage   *image;
+  GList       *layers;
+  GList       *paths;
   GimpLayer   *layer;
   GimpVectors *vectors;
-  return_if_no_layer (image, layer, data);
-  return_if_no_vectors (image, vectors, data);
+  return_if_no_layers (image, layers, data);
+  return_if_no_vectors_list (image, paths, data);
 
+  if (g_list_length (layers) != 1 || g_list_length (paths) != 1)
+    return;
+
+  layer   = layers->data;
+  vectors = paths->data;
   if (GIMP_IS_TEXT_LAYER (layer))
     {
       gdouble      box_width;
