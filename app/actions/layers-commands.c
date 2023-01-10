@@ -2017,13 +2017,13 @@ layers_composite_mode_cmd_callback (GimpAction *action,
 void
 layers_visible_cmd_callback (GimpAction *action,
                              GVariant   *value,
-                             gpointer   data)
+                             gpointer    data)
 {
   GimpImage *image;
-  GimpLayer *layer;
-  return_if_no_layer (image, layer, data);
+  GList     *layers;
+  return_if_no_layers (image, layers, data);
 
-  items_visible_cmd_callback (action, value, image, GIMP_ITEM (layer));
+  items_visible_cmd_callback (action, value, image, layers);
 }
 
 void

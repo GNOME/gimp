@@ -65,24 +65,62 @@ void
 items_visible_cmd_callback (GimpAction *action,
                             GVariant   *value,
                             GimpImage  *image,
-                            GimpItem   *item)
+                            GList      *items)
 {
-  gboolean visible = g_variant_get_boolean (value);
+  GimpUndo *undo;
+  gboolean  push_undo = TRUE;
+  GList    *start     = NULL;
+  GList    *iter;
+  gboolean  visible   = g_variant_get_boolean (value);
+  gint      n_items   = 0;
 
-  if (visible != gimp_item_get_visible (item))
+  for (iter = items; iter; iter = iter->next)
     {
-      GimpUndo *undo;
-      gboolean  push_undo = TRUE;
+      if (visible && gimp_item_get_visible (iter->data))
+        {
+          /* If any of the items are already visible, we don't
+           * toggle the selection visibility.
+           */
+          return;
+        }
+    }
 
+  for (iter = items; iter; iter = iter->next)
+    if (visible != gimp_item_get_visible (iter->data))
+      {
+        if (start == NULL)
+          start = iter;
+        n_items++;
+      }
+
+  if (n_items == 0)
+    {
+      return;
+    }
+  else if (n_items == 1)
+    {
       undo = gimp_image_undo_can_compress (image, GIMP_TYPE_ITEM_UNDO,
                                            GIMP_UNDO_ITEM_VISIBILITY);
 
-      if (undo && GIMP_ITEM_UNDO (undo)->item == item)
+      if (undo && GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (start->data))
         push_undo = FALSE;
-
-      gimp_item_set_visible (item, visible, push_undo);
-      gimp_image_flush (image);
     }
+  else
+    {
+      /* TODO: undo groups cannot be compressed so far. */
+      gimp_image_undo_group_start (image,
+                                   GIMP_UNDO_GROUP_ITEM_VISIBILITY,
+                                   "Item visibility");
+    }
+
+  for (iter = start; iter; iter = iter->next)
+    if (visible != gimp_item_get_visible (iter->data))
+      gimp_item_set_visible (iter->data, visible, push_undo);
+
+  if (n_items != 1)
+    gimp_image_undo_group_end (image);
+
+  gimp_image_flush (image);
 }
 
 void

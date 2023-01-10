@@ -721,11 +721,11 @@ vectors_visible_cmd_callback (GimpAction *action,
                               GVariant   *value,
                               gpointer    data)
 {
-  GimpImage   *image;
-  GimpVectors *vectors;
-  return_if_no_vectors (image, vectors, data);
+  GimpImage *image;
+  GList     *vectors;
+  return_if_no_vectors_list (image, vectors, data);
 
-  items_visible_cmd_callback (action, value, image, GIMP_ITEM (vectors));
+  items_visible_cmd_callback (action, value, image, vectors);
 }
 
 void
