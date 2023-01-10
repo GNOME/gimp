@@ -185,12 +185,15 @@ layers_edit_cmd_callback (GimpAction *action,
                           gpointer    data)
 {
   GimpImage *image;
-  GimpLayer *layer;
+  GList     *layers;
   GtkWidget *widget;
-  return_if_no_layer (image, layer, data);
+  return_if_no_layers (image, layers, data);
   return_if_no_widget (widget, data);
 
-  if (gimp_item_is_text_layer (GIMP_ITEM (layer)))
+  if (g_list_length (layers) != 1)
+    return;
+
+  if (gimp_item_is_text_layer (GIMP_ITEM (layers->data)))
     {
       layers_edit_text_cmd_callback (action, value, data);
     }
@@ -207,11 +210,16 @@ layers_edit_text_cmd_callback (GimpAction *action,
 {
   GimpImage *image;
   GimpLayer *layer;
+  GList     *layers;
   GtkWidget *widget;
   GimpTool  *active_tool;
-  return_if_no_layer (image, layer, data);
+  return_if_no_layers (image, layers, data);
   return_if_no_widget (widget, data);
 
+  if (g_list_length (layers) != 1)
+    return;
+
+  layer = layers->data;
   g_return_if_fail (gimp_item_is_text_layer (GIMP_ITEM (layer)));
 
   active_tool = tool_manager_get_active (image->gimp);
@@ -247,10 +255,16 @@ layers_edit_attributes_cmd_callback (GimpAction *action,
 {
   GimpImage *image;
   GimpLayer *layer;
+  GList     *layers;
   GtkWidget *widget;
   GtkWidget *dialog;
-  return_if_no_layer (image, layer, data);
+  return_if_no_layers (image, layers, data);
   return_if_no_widget (widget, data);
+
+  if (g_list_length (layers) != 1)
+    return;
+
+  layer = layers->data;
 
 #define EDIT_DIALOG_KEY "gimp-layer-edit-attributes-dialog"
 
