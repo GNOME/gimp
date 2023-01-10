@@ -113,10 +113,13 @@ vectors_edit_cmd_callback (GimpAction *action,
                            GVariant   *value,
                            gpointer    data)
 {
-  GimpImage   *image;
-  GimpVectors *vectors;
-  GimpTool    *active_tool;
-  return_if_no_vectors (image, vectors, data);
+  GimpImage *image;
+  GList     *vectors;
+  GimpTool  *active_tool;
+  return_if_no_vectors_list (image, vectors, data);
+
+  if (g_list_length (vectors) != 1)
+    return;
 
   active_tool = tool_manager_get_active (image->gimp);
 
@@ -133,7 +136,7 @@ vectors_edit_cmd_callback (GimpAction *action,
     }
 
   if (GIMP_IS_VECTOR_TOOL (active_tool))
-    gimp_vector_tool_set_vectors (GIMP_VECTOR_TOOL (active_tool), vectors);
+    gimp_vector_tool_set_vectors (GIMP_VECTOR_TOOL (active_tool), vectors->data);
 }
 
 void
@@ -142,11 +145,17 @@ vectors_edit_attributes_cmd_callback (GimpAction *action,
                                       gpointer    data)
 {
   GimpImage   *image;
+  GList       *paths;
   GimpVectors *vectors;
   GtkWidget   *widget;
   GtkWidget   *dialog;
-  return_if_no_vectors (image, vectors, data);
+  return_if_no_vectors_list (image, paths, data);
   return_if_no_widget (widget, data);
+
+  if (g_list_length (paths) != 1)
+    return;
+
+  vectors = paths->data;
 
 #define EDIT_DIALOG_KEY "gimp-vectors-edit-attributes-dialog"
 
@@ -395,21 +404,41 @@ vectors_duplicate_cmd_callback (GimpAction *action,
                                 GVariant   *value,
                                 gpointer    data)
 {
-  GimpImage   *image;
-  GimpVectors *vectors;
-  GimpVectors *new_vectors;
-  return_if_no_vectors (image, vectors, data);
+  GimpImage *image;
+  GList     *paths;
+  GList     *new_paths = NULL;
+  GList     *iter;
+  return_if_no_vectors_list (image, paths, data);
 
-  new_vectors = GIMP_VECTORS (gimp_item_duplicate (GIMP_ITEM (vectors),
-                                                   G_TYPE_FROM_INSTANCE (vectors)));
-  /*  use the actual parent here, not GIMP_IMAGE_ACTIVE_PARENT because
-   *  the latter would add a duplicated group inside itself instead of
-   *  above it
-   */
-  gimp_image_add_vectors (image, new_vectors,
-                          gimp_vectors_get_parent (vectors), -1,
-                          TRUE);
-  gimp_image_flush (image);
+  paths = g_list_copy (paths);
+  paths = g_list_reverse (paths);
+
+  /* TODO: proper undo group. */
+  gimp_image_undo_group_start (image,
+                               GIMP_UNDO_GROUP_VECTORS_IMPORT,
+                               _("Duplicate Paths"));
+  for (iter = paths; iter; iter = iter->next)
+    {
+      GimpVectors *new_vectors;
+
+      new_vectors = GIMP_VECTORS (gimp_item_duplicate (iter->data,
+                                                       G_TYPE_FROM_INSTANCE (iter->data)));
+      /*  use the actual parent here, not GIMP_IMAGE_ACTIVE_PARENT because
+       *  the latter would add a duplicated group inside itself instead of
+       *  above it
+       */
+      gimp_image_add_vectors (image, new_vectors,
+                              gimp_vectors_get_parent (iter->data), -1,
+                              TRUE);
+      new_paths = g_list_prepend (new_paths, new_vectors);
+    }
+  if (new_paths)
+    {
+      gimp_image_set_selected_vectors (image, new_paths);
+      gimp_image_flush (image);
+    }
+  gimp_image_undo_group_end (image);
+  g_list_free (paths);
 }
 
 void
@@ -417,12 +446,22 @@ vectors_delete_cmd_callback (GimpAction *action,
                              GVariant   *value,
                              gpointer    data)
 {
-  GimpImage   *image;
-  GimpVectors *vectors;
-  return_if_no_vectors (image, vectors, data);
+  GimpImage *image;
+  GList     *paths;
+  return_if_no_vectors_list (image, paths, data);
 
-  gimp_image_remove_vectors (image, vectors, TRUE, NULL);
+  paths = g_list_copy (paths);
+  /* TODO: proper undo group. */
+  gimp_image_undo_group_start (image,
+                               GIMP_UNDO_GROUP_VECTORS_IMPORT,
+                               _("Remove Paths"));
+
+  for (GList *iter = paths; iter; iter = iter->next)
+    gimp_image_remove_vectors (image, iter->data, TRUE, NULL);
+
+  gimp_image_undo_group_end (image);
   gimp_image_flush (image);
+  g_list_free (paths);
 }
 
 void
@@ -431,10 +470,10 @@ vectors_merge_visible_cmd_callback (GimpAction *action,
                                     gpointer    data)
 {
   GimpImage   *image;
-  GimpVectors *vectors;
+  GList       *vectors;
   GtkWidget   *widget;
   GError      *error = NULL;
-  return_if_no_vectors (image, vectors, data);
+  return_if_no_vectors_list (image, vectors, data);
   return_if_no_widget (widget, data);
 
   if (! gimp_image_merge_visible_vectors (image, &error))

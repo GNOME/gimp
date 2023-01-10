@@ -75,8 +75,8 @@ static const GimpActionEntry vectors_actions[] =
     GIMP_HELP_PATH_NEW },
 
   { "vectors-duplicate", GIMP_ICON_OBJECT_DUPLICATE,
-    NC_("vectors-action", "D_uplicate Path"), NULL,
-    NC_("vectors-action", "Duplicate this path"),
+    NC_("vectors-action", "D_uplicate Paths"), NULL,
+    NC_("vectors-action", "Duplicate these paths"),
     vectors_duplicate_cmd_callback,
     GIMP_HELP_PATH_DUPLICATE },
 
@@ -424,7 +424,7 @@ vectors_actions_update (GimpActionGroup *group,
 
   SET_SENSITIVE ("vectors-new",             image);
   SET_SENSITIVE ("vectors-new-last-values", image);
-  SET_SENSITIVE ("vectors-duplicate",       n_selected_vectors == 1);
+  SET_SENSITIVE ("vectors-duplicate",       n_selected_vectors > 0);
   SET_SENSITIVE ("vectors-delete",          n_selected_vectors > 0);
   SET_SENSITIVE ("vectors-merge-visible",   n_vectors > 1);
 
