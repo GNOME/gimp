@@ -26,7 +26,7 @@ void   items_visible_cmd_callback          (GimpAction   *action,
 void   items_lock_content_cmd_callback     (GimpAction   *action,
                                             GVariant     *value,
                                             GimpImage    *image,
-                                            GimpItem     *item);
+                                            GList        *items);
 void   items_lock_position_cmd_callback    (GimpAction   *action,
                                             GVariant     *value,
                                             GimpImage    *image,

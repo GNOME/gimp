@@ -127,24 +127,47 @@ void
 items_lock_content_cmd_callback (GimpAction *action,
                                  GVariant   *value,
                                  GimpImage  *image,
-                                 GimpItem   *item)
+                                 GList      *items)
 {
-  gboolean locked = g_variant_get_boolean (value);
+  GList    *locked_items = NULL;
+  GList    *iter;
+  gchar    *undo_label;
+  gboolean  locked       = g_variant_get_boolean (value);
 
-  if (locked != gimp_item_get_lock_content (item))
-    {
-      GimpUndo *undo;
-      gboolean  push_undo = TRUE;
+  for (iter = items; iter; iter = iter->next)
+    if (gimp_item_can_lock_content (iter->data))
+      {
+        if (! locked && ! gimp_item_get_lock_content (iter->data))
+          {
+            /* When unlocking, we expect all selected items to be locked. */
+            g_list_free (locked_items);
+            return;
+          }
+        else if (locked != gimp_item_get_lock_content (iter->data))
+          {
+            locked_items = g_list_prepend (locked_items, iter->data);
+          }
+      }
 
-      undo = gimp_image_undo_can_compress (image, GIMP_TYPE_ITEM_UNDO,
-                                           GIMP_UNDO_ITEM_LOCK_CONTENT);
+  if (! locked_items)
+    return;
 
-      if (undo && GIMP_ITEM_UNDO (undo)->item == item)
-        push_undo = FALSE;
+  if (locked)
+    undo_label = _("Lock content");
+  else
+    undo_label = _("Unlock content");
 
-      gimp_item_set_lock_content (item, locked, push_undo);
-      gimp_image_flush (image);
-    }
+  gimp_image_undo_group_start (image,
+                               GIMP_UNDO_GROUP_ITEM_LOCK_CONTENTS,
+                               undo_label);
+
+  for (iter = locked_items; iter; iter = iter->next)
+    gimp_item_set_lock_content (iter->data, locked, TRUE);
+
+  gimp_image_flush (image);
+  gimp_image_undo_group_end (image);
+
+  g_list_free (locked_items);
 }
 
 void

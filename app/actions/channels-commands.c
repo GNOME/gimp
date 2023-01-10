@@ -501,11 +501,11 @@ channels_lock_content_cmd_callback (GimpAction *action,
                                     GVariant   *value,
                                     gpointer    data)
 {
-  GimpImage   *image;
-  GimpChannel *channel;
-  return_if_no_channel (image, channel, data);
+  GimpImage *image;
+  GList     *channels;
+  return_if_no_channels (image, channels, data);
 
-  items_lock_content_cmd_callback (action, value, image, GIMP_ITEM (channel));
+  items_lock_content_cmd_callback (action, value, image, channels);
 }
 
 void
