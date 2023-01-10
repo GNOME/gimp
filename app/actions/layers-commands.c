@@ -2045,46 +2045,9 @@ layers_lock_position_cmd_callback (GimpAction *action,
 {
   GimpImage *image;
   GList     *layers;
-  GList     *iter;
-  GList     *locked_layers = NULL;
-  gboolean   locked        = g_variant_get_boolean (value);
-  gchar     *undo_label;
   return_if_no_layers (image, layers, data);
 
-  for (iter = layers; iter; iter = iter->next)
-    if (gimp_item_can_lock_position (iter->data))
-      {
-        if (! locked && ! gimp_item_get_lock_position (iter->data))
-          {
-           /* When unlocking, we expect all selected layers to be locked. */
-            g_list_free (locked_layers);
-            return;
-          }
-        else if (locked != gimp_item_get_lock_position (iter->data))
-          {
-            locked_layers = g_list_prepend (locked_layers, iter->data);
-          }
-      }
-
-  if (! locked_layers)
-    return;
-
-  if (locked)
-    undo_label = _("Lock position");
-  else
-    undo_label = _("Unlock position");
-
-  gimp_image_undo_group_start (image,
-                               GIMP_UNDO_GROUP_ITEM_LOCK_POSITION,
-                               undo_label);
-
-  for (iter = locked_layers; iter; iter = iter->next)
-    gimp_item_set_lock_position (iter->data, locked, TRUE);
-
-  gimp_image_flush (image);
-  gimp_image_undo_group_end (image);
-
-  g_list_free (locked_layers);
+  items_lock_position_cmd_callback (action, value, image, layers);
 }
 
 void

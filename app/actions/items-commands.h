@@ -30,7 +30,7 @@ void   items_lock_content_cmd_callback     (GimpAction   *action,
 void   items_lock_position_cmd_callback    (GimpAction   *action,
                                             GVariant     *value,
                                             GimpImage    *image,
-                                            GimpItem     *item);
+                                            GList        *items);
 
 void   items_color_tag_cmd_callback        (GimpAction   *action,
                                             GimpImage    *image,

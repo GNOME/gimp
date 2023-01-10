@@ -745,11 +745,11 @@ vectors_lock_position_cmd_callback (GimpAction *action,
                                     GVariant   *value,
                                     gpointer    data)
 {
-  GimpImage   *image;
-  GimpVectors *vectors;
-  return_if_no_vectors (image, vectors, data);
+  GimpImage *image;
+  GList     *vectors;
+  return_if_no_vectors_list (image, vectors, data);
 
-  items_lock_position_cmd_callback (action, value, image, GIMP_ITEM (vectors));
+  items_lock_position_cmd_callback (action, value, image, vectors);
 }
 
 void
