@@ -455,14 +455,26 @@ vectors_to_selection_cmd_callback (GimpAction *action,
                                    gpointer    data)
 {
   GimpImage      *image;
-  GimpVectors    *vectors;
+  GList          *vectors;
+  GList          *iter;
   GimpChannelOps  operation;
-  return_if_no_vectors (image, vectors, data);
+  return_if_no_vectors_list (image, vectors, data);
+
+  gimp_image_undo_group_start (image,
+                               GIMP_UNDO_GROUP_DRAWABLE_MOD,
+                               _("Paths to selection"));
 
   operation = (GimpChannelOps) g_variant_get_int32 (value);
 
-  gimp_item_to_selection (GIMP_ITEM (vectors), operation,
-                          TRUE, FALSE, 0, 0);
+  for (iter = vectors; iter; iter = iter->next)
+    {
+      gimp_item_to_selection (iter->data, operation, TRUE, FALSE, 0, 0);
+
+      if (operation == GIMP_CHANNEL_OP_REPLACE && iter == vectors)
+        operation = GIMP_CHANNEL_OP_ADD;
+    }
+
+  gimp_image_undo_group_end (image);
   gimp_image_flush (image);
 }
 

@@ -241,32 +241,32 @@ static const GimpEnumActionEntry vectors_color_tag_actions[] =
 static const GimpEnumActionEntry vectors_to_selection_actions[] =
 {
   { "vectors-selection-replace", GIMP_ICON_SELECTION_REPLACE,
-    NC_("vectors-action", "Path to Sele_ction"), NULL,
+    NC_("vectors-action", "Paths to Sele_ction"), NULL,
     NC_("vectors-action", "Path to selection"),
     GIMP_CHANNEL_OP_REPLACE, FALSE,
     GIMP_HELP_PATH_SELECTION_REPLACE },
 
   { "vectors-selection-from-vectors", GIMP_ICON_SELECTION_REPLACE,
-    NC_("vectors-action", "Fr_om Path"), "<shift>V",
-    NC_("vectors-action", "Replace selection with path"),
+    NC_("vectors-action", "Selection Fr_om Paths"), "<shift>V",
+    NC_("vectors-action", "Replace selection with paths"),
     GIMP_CHANNEL_OP_REPLACE, FALSE,
     GIMP_HELP_PATH_SELECTION_REPLACE },
 
   { "vectors-selection-add", GIMP_ICON_SELECTION_ADD,
-    NC_("vectors-action", "_Add to Selection"), NULL,
-    NC_("vectors-action", "Add path to selection"),
+    NC_("vectors-action", "_Add Paths to Selection"), NULL,
+    NC_("vectors-action", "Add paths to selection"),
     GIMP_CHANNEL_OP_ADD, FALSE,
     GIMP_HELP_PATH_SELECTION_ADD },
 
   { "vectors-selection-subtract", GIMP_ICON_SELECTION_SUBTRACT,
-    NC_("vectors-action", "_Subtract from Selection"), NULL,
-    NC_("vectors-action", "Subtract path from selection"),
+    NC_("vectors-action", "_Subtract Paths from Selection"), NULL,
+    NC_("vectors-action", "Subtract paths from selection"),
     GIMP_CHANNEL_OP_SUBTRACT, FALSE,
     GIMP_HELP_PATH_SELECTION_SUBTRACT },
 
   { "vectors-selection-intersect", GIMP_ICON_SELECTION_INTERSECT,
-    NC_("vectors-action", "_Intersect with Selection"), NULL,
-    NC_("vectors-action", "Intersect path with selection"),
+    NC_("vectors-action", "_Intersect Paths with Selection"), NULL,
+    NC_("vectors-action", "Intersect paths with selection"),
     GIMP_CHANNEL_OP_INTERSECT, FALSE,
     GIMP_HELP_PATH_SELECTION_INTERSECT }
 };
@@ -454,11 +454,11 @@ vectors_actions_update (GimpActionGroup *group,
                                                           dr_writable &&
                                                           !dr_children);
 
-  SET_SENSITIVE ("vectors-selection-replace",      n_selected_vectors == 1);
-  SET_SENSITIVE ("vectors-selection-from-vectors", n_selected_vectors == 1);
-  SET_SENSITIVE ("vectors-selection-add",          n_selected_vectors == 1);
-  SET_SENSITIVE ("vectors-selection-subtract",     n_selected_vectors == 1);
-  SET_SENSITIVE ("vectors-selection-intersect",    n_selected_vectors == 1);
+  SET_SENSITIVE ("vectors-selection-replace",      n_selected_vectors > 0);
+  SET_SENSITIVE ("vectors-selection-from-vectors", n_selected_vectors > 0);
+  SET_SENSITIVE ("vectors-selection-add",          n_selected_vectors > 0);
+  SET_SENSITIVE ("vectors-selection-subtract",     n_selected_vectors > 0);
+  SET_SENSITIVE ("vectors-selection-intersect",    n_selected_vectors > 0);
 
   SET_SENSITIVE ("vectors-select-top",       n_selected_vectors > 0 && have_prev);
   SET_SENSITIVE ("vectors-select-bottom",    n_selected_vectors > 0 && have_next);

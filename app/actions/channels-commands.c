@@ -474,11 +474,23 @@ channels_to_selection_cmd_callback (GimpAction *action,
     }
   else
     {
-      GimpChannel *channel;
-      return_if_no_channel (image, channel, data);
+      GList *channels;
+      GList *iter;
+      return_if_no_channels (image, channels, data);
 
-      gimp_item_to_selection (GIMP_ITEM (channel),
-                              op, TRUE, FALSE, 0.0, 0.0);
+      gimp_image_undo_group_start (image,
+                                   GIMP_UNDO_GROUP_DRAWABLE_MOD,
+                                   _("Channels to selection"));
+
+      for (iter = channels; iter; iter = iter->next)
+        {
+          gimp_item_to_selection (iter->data, op, TRUE, FALSE, 0.0, 0.0);
+
+          if (op == GIMP_CHANNEL_OP_REPLACE && iter == channels)
+            op = GIMP_CHANNEL_OP_ADD;
+        }
+
+      gimp_image_undo_group_end (image);
     }
 
   gimp_image_flush (image);

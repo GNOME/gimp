@@ -188,26 +188,26 @@ static const GimpEnumActionEntry channels_color_tag_actions[] =
 static const GimpEnumActionEntry channels_to_selection_actions[] =
 {
   { "channels-selection-replace", GIMP_ICON_SELECTION_REPLACE,
-    NC_("channels-action", "Channel to Sele_ction"), NULL,
-    NC_("channels-action", "Replace the selection with this channel"),
+    NC_("channels-action", "Channels to Sele_ction"), NULL,
+    NC_("channels-action", "Replace the selection with selected channels"),
     GIMP_CHANNEL_OP_REPLACE, FALSE,
     GIMP_HELP_CHANNEL_SELECTION_REPLACE },
 
   { "channels-selection-add", GIMP_ICON_SELECTION_ADD,
-    NC_("channels-action", "_Add to Selection"), NULL,
-    NC_("channels-action", "Add this channel to the current selection"),
+    NC_("channels-action", "_Add Channels to Selection"), NULL,
+    NC_("channels-action", "Add selected channels to the current selection"),
     GIMP_CHANNEL_OP_ADD, FALSE,
     GIMP_HELP_CHANNEL_SELECTION_ADD },
 
   { "channels-selection-subtract", GIMP_ICON_SELECTION_SUBTRACT,
-    NC_("channels-action", "_Subtract from Selection"), NULL,
-    NC_("channels-action", "Subtract this channel from the current selection"),
+    NC_("channels-action", "_Subtract Channels from Selection"), NULL,
+    NC_("channels-action", "Subtract selected channels from the current selection"),
     GIMP_CHANNEL_OP_SUBTRACT, FALSE,
     GIMP_HELP_CHANNEL_SELECTION_SUBTRACT },
 
   { "channels-selection-intersect", GIMP_ICON_SELECTION_INTERSECT,
-    NC_("channels-action", "_Intersect with Selection"), NULL,
-    NC_("channels-action", "Intersect this channel with the current selection"),
+    NC_("channels-action", "_Intersect Channels with Selection"), NULL,
+    NC_("channels-action", "Intersect selected channels with the current selection and each other"),
     GIMP_CHANNEL_OP_INTERSECT, FALSE,
     GIMP_HELP_CHANNEL_SELECTION_INTERSECT }
 };
@@ -337,10 +337,10 @@ channels_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("channels-lower",           !fs && n_selected_channels > 0 && have_next);
   SET_SENSITIVE ("channels-lower-to-bottom", !fs && n_selected_channels > 0 && have_next);
 
-  SET_SENSITIVE ("channels-selection-replace",   !fs && (n_selected_channels == 1 || component));
-  SET_SENSITIVE ("channels-selection-add",       !fs && (n_selected_channels == 1 || component));
-  SET_SENSITIVE ("channels-selection-subtract",  !fs && (n_selected_channels == 1 || component));
-  SET_SENSITIVE ("channels-selection-intersect", !fs && (n_selected_channels == 1 || component));
+  SET_SENSITIVE ("channels-selection-replace",   !fs && (n_selected_channels > 0 || component));
+  SET_SENSITIVE ("channels-selection-add",       !fs && (n_selected_channels > 0 || component));
+  SET_SENSITIVE ("channels-selection-subtract",  !fs && (n_selected_channels > 0 || component));
+  SET_SENSITIVE ("channels-selection-intersect", !fs && (n_selected_channels > 0 || component));
 
   SET_SENSITIVE ("channels-select-top",      !fs && n_channels > 0 && (n_selected_channels == 0 || have_prev));
   SET_SENSITIVE ("channels-select-bottom",   !fs && n_channels > 0 && (n_selected_channels == 0 || have_next));
