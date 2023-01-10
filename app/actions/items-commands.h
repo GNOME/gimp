@@ -34,7 +34,7 @@ void   items_lock_position_cmd_callback    (GimpAction   *action,
 
 void   items_color_tag_cmd_callback        (GimpAction   *action,
                                             GimpImage    *image,
-                                            GimpItem     *item,
+                                            GList        *items,
                                             GimpColorTag  color_tag);
 
 void   items_fill_cmd_callback             (GimpAction   *action,

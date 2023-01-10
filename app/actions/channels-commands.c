@@ -526,14 +526,13 @@ channels_color_tag_cmd_callback (GimpAction *action,
                                  gpointer    data)
 {
   GimpImage    *image;
-  GimpChannel  *channel;
+  GList        *channels;
   GimpColorTag  color_tag;
-  return_if_no_channel (image, channel, data);
+  return_if_no_channels (image, channels, data);
 
   color_tag = (GimpColorTag) g_variant_get_int32 (value);
 
-  items_color_tag_cmd_callback (action, image, GIMP_ITEM (channel),
-                                color_tag);
+  items_color_tag_cmd_callback (action, image, channels, color_tag);
 }
 
 void

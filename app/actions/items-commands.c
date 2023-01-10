@@ -220,23 +220,37 @@ items_lock_position_cmd_callback (GimpAction *action,
 void
 items_color_tag_cmd_callback (GimpAction   *action,
                               GimpImage    *image,
-                              GimpItem     *item,
+                              GList        *items,
                               GimpColorTag  color_tag)
 {
-  if (color_tag != gimp_item_get_color_tag (item))
-    {
-      GimpUndo *undo;
-      gboolean  push_undo = TRUE;
+  GimpUndo *undo;
+  gboolean  push_undo = TRUE;
+  GList    *iter;
 
+  if (g_list_length (items) == 1)
+    {
       undo = gimp_image_undo_can_compress (image, GIMP_TYPE_ITEM_UNDO,
                                            GIMP_UNDO_ITEM_COLOR_TAG);
 
-      if (undo && GIMP_ITEM_UNDO (undo)->item == item)
+      if (undo && GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (items->data))
         push_undo = FALSE;
-
-      gimp_item_set_color_tag (item, color_tag, push_undo);
-      gimp_image_flush (image);
     }
+  else
+    {
+      /* TODO: undo groups cannot be compressed so far. */
+      gimp_image_undo_group_start (image,
+                                   GIMP_UNDO_GROUP_ITEM_PROPERTIES,
+                                   "Item color tag");
+    }
+
+  for (iter = items; iter; iter = iter->next)
+    if (color_tag != gimp_item_get_color_tag (iter->data))
+      gimp_item_set_color_tag (iter->data, color_tag, push_undo);
+
+  if (g_list_length (items) == 1)
+    gimp_image_undo_group_end (image);
+
+  gimp_image_flush (image);
 }
 
 void

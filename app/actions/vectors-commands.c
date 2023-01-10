@@ -758,14 +758,13 @@ vectors_color_tag_cmd_callback (GimpAction *action,
                                 gpointer    data)
 {
   GimpImage    *image;
-  GimpVectors  *vectors;
+  GList        *vectors;
   GimpColorTag  color_tag;
-  return_if_no_vectors (image, vectors, data);
+  return_if_no_vectors_list (image, vectors, data);
 
   color_tag = (GimpColorTag) g_variant_get_int32 (value);
 
-  items_color_tag_cmd_callback (action, image, GIMP_ITEM (vectors),
-                                color_tag);
+  items_color_tag_cmd_callback (action, image, vectors, color_tag);
 }
 
 
