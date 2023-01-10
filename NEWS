@@ -20,6 +20,46 @@ Core:
    (multi-item selection, ability to use regexp or glob search by enabling these
    in Preferences, etc.) rather than the default GTK selection popup for tree
    views.
+ - Color scales widget settings regarding RGB 0..255/0..100 and LCh/HSV choices
+   are now stored across sessions.
+
+Tools:
+
+  - GEGL Operation: auto-activate when enabled.
+  - Transform tools and GEGL operation don't auto-activate when opening a new
+    image or changing the active image.
+  - Align tool: "use extents of layer contents" also applies to the alignment
+    reference (not only the target objects).
+
+Plug-ins:
+
+  - JPEG-XL:
+    * Initial support for CMYK/A JPEGXL export: Key and Alpha data is saved in
+      extra channels, and the simulation profile is saved as well.
+      Per the specification developers, the format does not support 'naive' CMYK
+      conversion, so a profile is required for export. The option will be
+      disabled if not set.
+  - Script-fu:
+    * Byte support: add a new type 'byte' to be able to handle binary data while
+      still retaining the utf8 char and string behavior.
+  - PSD:
+    * PSD clipping paths: import and export support.
+  - help:
+    * macOS: https support now working fine for help files (bypassing
+      lack of support in GIO for macOS platform).
+  - DDS:
+    * OpenMP support enabled when available on the build machine.
+
+Build:
+
+  - meson: make sure libgimp does not depend on GTK+.
+  - GLib requirement bumped to version 2.70 as minimum.
+
+Debugging:
+
+  - New --runtime option to `flatpak-releases` debugging script (a dev tool
+    allowing for instance to bisect issues through flatpak builds). This option
+    allows to list the runtime builds (additionally to the main GIMP flatpaks).
 
 
 Overview of Changes from GIMP 2.99.12 to GIMP 2.99.14
