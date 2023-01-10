@@ -95,6 +95,8 @@ GtkListStore * gimp_int_store_new             (const gchar   *first_label,
 GtkListStore * gimp_int_store_new_valist      (const gchar   *first_label,
                                                gint           first_value,
                                                va_list        values);
+GtkListStore * gimp_int_store_new_array       (gint           n_values,
+                                               const gchar   *labels[]);
 
 gboolean       gimp_int_store_lookup_by_value (GtkTreeModel  *model,
                                                gint           value,

@@ -293,7 +293,7 @@ gimp_int_store_new (const gchar *first_label,
 }
 
 /**
- * gimp_int_store_new_valist:
+ * gimp_int_store_new_valist: (skip)
  * @first_label: the label of the first item
  * @first_value: the value of the first item
  * @values:      a va_list with more values
@@ -327,6 +327,47 @@ gimp_int_store_new_valist (const gchar *first_label,
                           GIMP_INT_STORE_VALUE, value,
                           GIMP_INT_STORE_LABEL, label,
                           -1);
+    }
+
+  return store;
+}
+
+/**
+ * gimp_int_store_new_array: (rename-to gimp_int_store_new)
+ * @n_values: the number of values
+ * @labels: (array length=n_values): an array of labels
+ *
+ * A variant of gimp_int_store_new() that takes an array of labels.
+ * The array indices are used as values.
+ *
+ * Returns: a new #GtkListStore.
+ *
+ * Since: 3.0
+ **/
+GtkListStore *
+gimp_int_store_new_array (gint         n_values,
+                          const gchar *labels[])
+{
+  GtkListStore *store;
+  gint          i;
+
+  g_return_val_if_fail (n_values >= 0, NULL);
+  g_return_val_if_fail (labels != NULL || n_values == 0, NULL);
+
+  store = g_object_new (GIMP_TYPE_INT_STORE, NULL);
+
+  for (i = 0; i < n_values; i++)
+    {
+      GtkTreeIter  iter;
+
+      if (labels[i])
+        {
+          gtk_list_store_append (store, &iter);
+          gtk_list_store_set (store, &iter,
+                              GIMP_INT_STORE_VALUE, i,
+                              GIMP_INT_STORE_LABEL, gettext (labels[i]),
+                              -1);
+        }
     }
 
   return store;

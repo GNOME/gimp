@@ -241,6 +241,7 @@ EXPORTS
 	gimp_int_store_lookup_by_user_data
 	gimp_int_store_lookup_by_value
 	gimp_int_store_new
+	gimp_int_store_new_array
 	gimp_int_store_new_valist
 	gimp_label_color_get_color_widget
 	gimp_label_color_get_type
