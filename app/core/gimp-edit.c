@@ -191,8 +191,10 @@ gimp_edit_copy (GimpImage     *image,
        * It allows us to save the whole layer with all pixels as stored,
        * not the rendered version of it.
        */
-      GimpImage   *clip_image;
-      GimpChannel *clip_selection;
+      GimpImage     *clip_image;
+      GimpChannel   *clip_selection;
+      GeglRectangle  selection_bounds;
+      gboolean       has_selection = FALSE;
 
       clip_image = gimp_image_new_from_drawables (image->gimp, drawables, TRUE, TRUE);
       gimp_container_remove (image->gimp->images, GIMP_OBJECT (clip_image));
@@ -202,15 +204,27 @@ gimp_edit_copy (GimpImage     *image,
       clip_selection = gimp_image_get_mask (clip_image);
       if (! gimp_channel_is_empty (clip_selection))
         {
-          GList         *all_items;
-          GeglRectangle  selection_bounds;
-
           gimp_item_bounds (GIMP_ITEM (clip_selection),
                             &selection_bounds.x, &selection_bounds.y,
                             &selection_bounds.width, &selection_bounds.height);
 
           /* Invert the selection. */
           gimp_channel_invert (clip_selection, FALSE);
+
+          /* Empty selection work the same as full selection for the
+           * gimp_drawable_edit_*() APIs. So as a special case, we check again
+           * after inverting the selection (if the inverted selection is empty,
+           * it meant we were in "all" selection case).
+           * Otherwise we were ending up clearing everything with
+           * gimp_drawable_edit_clear() on the inverted "all" selection.
+           */
+          has_selection = (! gimp_channel_is_empty (clip_selection));
+        }
+
+      if (has_selection)
+        {
+          GList *all_items;
+
           all_items = gimp_image_get_layer_list (clip_image);
 
           for (iter = all_items; iter; iter = g_list_next (iter))
