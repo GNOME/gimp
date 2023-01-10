@@ -95,14 +95,19 @@ channels_edit_attributes_cmd_callback (GimpAction *action,
 {
   GimpImage   *image;
   GimpChannel *channel;
+  GList       *channels;
   GtkWidget   *widget;
   GtkWidget   *dialog;
-  return_if_no_channel (image, channel, data);
+  return_if_no_channels (image, channels, data);
   return_if_no_widget (widget, data);
 
 #define EDIT_DIALOG_KEY "gimp-channel-edit-attributes-dialog"
 
-  dialog = dialogs_get_dialog (G_OBJECT (channel), EDIT_DIALOG_KEY);
+  if (g_list_length (channels) != 1)
+    return;
+
+  channel = channels->data;
+  dialog  = dialogs_get_dialog (G_OBJECT (channel), EDIT_DIALOG_KEY);
 
   if (! dialog)
     {
