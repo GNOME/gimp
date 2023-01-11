@@ -1073,12 +1073,12 @@ gimp_init_i18n (void)
 
   setlocale (LC_ALL, "");
 
-  bindtextdomain (GETTEXT_PACKAGE"-libgimp", gimp_locale_directory ());
+  gimp_bind_text_domain (GETTEXT_PACKAGE"-libgimp", gimp_locale_directory ());
 #ifdef HAVE_BIND_TEXTDOMAIN_CODESET
   bind_textdomain_codeset (GETTEXT_PACKAGE"-libgimp", "UTF-8");
 #endif
 
-  bindtextdomain (GETTEXT_PACKAGE, gimp_locale_directory ());
+  gimp_bind_text_domain (GETTEXT_PACKAGE, gimp_locale_directory ());
 #ifdef HAVE_BIND_TEXTDOMAIN_CODESET
   bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 #endif

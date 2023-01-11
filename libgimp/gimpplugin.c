@@ -1016,7 +1016,7 @@ _gimp_plug_in_create_procedure (GimpPlugIn  *plug_in,
 
   if (_gimp_plug_in_set_i18n (plug_in, procedure_name, &gettext_domain, &catalog_dir))
     {
-      bindtextdomain (gettext_domain, catalog_dir);
+      gimp_bind_text_domain (gettext_domain, catalog_dir);
 #ifdef HAVE_BIND_TEXTDOMAIN_CODESET
       bind_textdomain_codeset (gettext_domain, "UTF-8");
 #endif
@@ -1346,7 +1346,7 @@ gimp_plug_in_proc_run_internal (GimpPlugIn    *plug_in,
   if (_gimp_plug_in_set_i18n (plug_in, gimp_procedure_get_name (procedure),
                               &gettext_domain, &catalog_dir))
     {
-      bindtextdomain (gettext_domain, catalog_dir);
+      gimp_bind_text_domain (gettext_domain, catalog_dir);
 #ifdef HAVE_BIND_TEXTDOMAIN_CODESET
       bind_textdomain_codeset (gettext_domain, "UTF-8");
 #endif

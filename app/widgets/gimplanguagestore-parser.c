@@ -374,9 +374,9 @@ iso_codes_parser_init (void)
 
 #ifdef G_OS_WIN32
   /*  on Win32, assume iso-codes is installed in the same location as GIMP  */
-  bindtextdomain ("iso_639", gimp_locale_directory ());
+  gimp_bind_text_domain ("iso_639", gimp_locale_directory ());
 #else
-  bindtextdomain ("iso_639", ISO_CODES_LOCALEDIR);
+  gimp_bind_text_domain ("iso_639", ISO_CODES_LOCALEDIR);
 #endif
 
   bind_textdomain_codeset ("iso_639", "UTF-8");

@@ -514,12 +514,13 @@ gimp_data_directory (void)
  * from the executable's full filename is used.
  *
  * The returned string is owned by GIMP and must not be modified or
- * freed. The returned string is in the encoding used for filenames by
- * the C library, which isn't necessarily UTF-8. (On Windows, unlike
- * the other similar functions here, the return value from this
- * function is in the system codepage, never in UTF-8. It can thus be
- * passed directly to the bindtextdomain() function from libintl which
- * does not handle UTF-8.)
+ * freed. The returned string encoding depends on the system where GIMP
+ * is running: on UNIX it's in the encoding used for filenames by
+ * the C library (which isn't necessarily UTF-8); on Windows it's UTF-8.
+ *
+ * On UNIX the returned string can be passed directly to the bindtextdomain()
+ * function from libintl; on Windows the returned string can be converted to
+ * UTF-16 and passed to the wbindtextdomain() function from libintl.
  *
  * Returns: The top directory for GIMP locale files.
  */
@@ -536,18 +537,6 @@ gimp_locale_directory (void)
 
       gimp_locale_dir = gimp_env_get_dir ("GIMP3_LOCALEDIR", LOCALEDIR, tmp);
       g_free (tmp);
-
-#ifdef G_OS_WIN32
-      /* FIXME: g_win32_locale_filename_from_utf8() can actually return
-       * NULL (we had actual cases of this). Not sure exactly what
-       * gimp_locale_directory() should do when this happens. Anyway
-       * that's really broken, and something should be done some day
-       * about this!
-       */
-      tmp = g_win32_locale_filename_from_utf8 (gimp_locale_dir);
-      g_free (gimp_locale_dir);
-      gimp_locale_dir = tmp;
-#endif
     }
 
   return gimp_locale_dir;

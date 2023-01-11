@@ -487,7 +487,7 @@ gimp_main (GType  plug_in_type,
   /*  initialize i18n support  */
   setlocale (LC_ALL, "");
 
-  bindtextdomain (GETTEXT_PACKAGE"-libgimp", gimp_locale_directory ());
+  gimp_bind_text_domain (GETTEXT_PACKAGE"-libgimp", gimp_locale_directory ());
 #ifdef HAVE_BIND_TEXTDOMAIN_CODESET
   bind_textdomain_codeset (GETTEXT_PACKAGE"-libgimp", "UTF-8");
 #endif
