@@ -267,6 +267,14 @@ struct _GimpToolRectanglePrivate
   GimpCanvasItem         *creating_corners[4];
   GimpCanvasItem         *handles[GIMP_N_TOOL_RECTANGLE_FUNCTIONS];
   GimpCanvasItem         *highlight_handles[GIMP_N_TOOL_RECTANGLE_FUNCTIONS];
+
+  /* Flags to prevent temporary changes to the Expand from center and Fixed
+     options for the rectangle select tool, ellipse select tool and the crop
+     tool due to use of the modifier keys becoming latched See issue #7954 and
+     MR !779. */
+  gboolean                fixed_center_copy;
+  gboolean                fixed_rule_active_copy;
+  gboolean                modifier_toggle_allowed;
 };
 
 
@@ -704,6 +712,7 @@ gimp_tool_rectangle_init (GimpToolRectangle *rectangle)
 
   rectangle->private->function = GIMP_TOOL_RECTANGLE_CREATING;
   rectangle->private->is_first = TRUE;
+  rectangle->private->modifier_toggle_allowed = FALSE;
 }
 
 static void
@@ -1406,6 +1415,14 @@ gimp_tool_rectangle_button_press (GimpToolWidget      *widget,
   gdouble                   snapped_x, snapped_y;
   gint                      snap_x, snap_y;
 
+  /* prevent the latching of toggled modifiers (Ctrl and Shift) when the
+     selection is cancelled whilst one or both of these modifiers are
+     being pressed  (see issue #7954 and MR !779) */
+  private->fixed_center_copy = private->fixed_center;
+  private->fixed_rule_active_copy = private->fixed_rule_active;
+  private->modifier_toggle_allowed = TRUE;
+
+
   /* save existing shape in case of cancellation */
   private->saved_x1 = private->x1;
   private->saved_y1 = private->y1;
@@ -1496,6 +1513,17 @@ gimp_tool_rectangle_button_release (GimpToolWidget        *widget,
   private->rect_adjusting = FALSE;
 
   gimp_tool_widget_set_snap_offsets (widget, 0, 0, 0, 0);
+
+ /* prevent the latching of toggled modifiers (Ctrl and Shift) when the
+    selection is cancelled whilst one or both of these modifiers are
+    being pressed  (see issue #7954 and MR !779) */
+  private->modifier_toggle_allowed = FALSE;
+  g_object_set (rectangle,
+                "fixed-center", private->fixed_center_copy,
+                NULL);
+  g_object_set (rectangle,
+                "fixed-rule-active", private->fixed_rule_active_copy,
+                NULL);
 
   switch (release_type)
     {
@@ -1863,10 +1891,10 @@ gimp_tool_rectangle_motion_modifier (GimpToolWidget  *widget,
                                        gimp_tool_rectangle_options_notify,
                                        rectangle);
 #endif
-
-      g_object_set (rectangle,
-                    "fixed-rule-active", ! private->fixed_rule_active,
-                    NULL);
+      if (private->modifier_toggle_allowed)
+        g_object_set (rectangle,
+                      "fixed-rule-active", ! private->fixed_rule_active,
+                      NULL);
 
 #if 0
       g_signal_handlers_unblock_by_func (options,
@@ -1895,9 +1923,10 @@ gimp_tool_rectangle_motion_modifier (GimpToolWidget  *widget,
 
   if (key == gimp_get_toggle_behavior_mask ())
     {
-      g_object_set (rectangle,
-                    "fixed-center", ! private->fixed_center,
-                    NULL);
+      if (private->modifier_toggle_allowed)
+        g_object_set (rectangle,
+                      "fixed-center", ! private->fixed_center,
+                      NULL);
 
       if (private->fixed_center)
         {
