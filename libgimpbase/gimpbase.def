@@ -7,6 +7,7 @@ EXPORTS
 	gimp_array_new
 	gimp_base_compat_enums_init
 	gimp_base_init
+	gimp_bind_text_domain
 	gimp_brush_generated_shape_get_type
 	gimp_cache_directory
 	gimp_canonicalize_identifier

@@ -88,6 +88,8 @@ void                  gimp_range_estimate_settings   (gdouble            lower,
                                                       gdouble           *page,
                                                       gint              *digits);
 
+void                  gimp_bind_text_domain          (const gchar       *domain_name,
+                                                      const gchar       *dir_name);
 
 G_END_DECLS
 

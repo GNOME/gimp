@@ -1623,6 +1623,38 @@ gimp_range_estimate_settings (gdouble  lower,
     }
 }
 
+/**
+ * gimp_bind_text_domain:
+ * @domain_name: a gettext domain name
+ * @dir_name:    path of the catalog directory
+ *
+ * This function wraps bindtextdomain on UNIX and wbintextdomain on Windows.
+ * @dir_name is expected to be in the encoding used by the C library on UNIX
+ * and UTF-8 on Windows.
+ *
+ * Since: 3.0
+ **/
+void
+gimp_bind_text_domain (const gchar *domain_name,
+                       const gchar *dir_name)
+{
+#if defined (_WIN32) && !defined (__CYGWIN__)
+  wchar_t *dir_name_utf16 = g_utf8_to_utf16 (dir_name, -1, NULL, NULL, NULL);
+
+  if G_UNLIKELY (!dir_name_utf16)
+    {
+      g_printerr ("[%s] Cannot translate the catalog directory to UTF-16\n", __func__);
+    }
+  else
+    {
+      wbindtextdomain (domain_name, dir_name_utf16);
+      g_free (dir_name_utf16);
+    }
+#else
+  bindtextdomain (domain_name, dir_name);
+#endif
+}
+
 
 /* Private functions. */
 
