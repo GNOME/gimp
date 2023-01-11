@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: GIMP script-fu\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2022-11-22 14:38+0000\n"
-"PO-Revision-Date: 2022-12-27 18:53+0100\n"
+"PO-Revision-Date: 2023-01-10 19:33+0100\n"
 "Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -71,7 +71,7 @@ msgstr "_Websidetemaer"
 
 #: plug-ins/script-fu/script-fu.c:328
 msgid "_Alien Glow"
-msgstr "_Udenjordisk glød"
+msgstr "_Udenjordisk skær"
 
 #: plug-ins/script-fu/script-fu.c:330
 msgid "_Beveled Pattern"
@@ -377,8 +377,8 @@ msgid ""
 "Create intermediate layers to produce an animated 'burn-in' transition "
 "between two layers"
 msgstr ""
-"Lav et mellemliggende lag for at lave en animeret “burn-in”-overgang "
-"mellem to lag"
+"Lav et mellemliggende lag for at lave en animeret “burn-in”-overgang mellem "
+"to lag"
 
 # Ok, men det kunne nok også skrives "Glødfarve"
 #: plug-ins/script-fu/scripts/burn-in-anim.scm:232
@@ -399,11 +399,11 @@ msgstr "Koronabredde"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm:236
 msgid "After glow"
-msgstr "Efterglød"
+msgstr "Efterskær"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm:237
 msgid "Add glowing"
-msgstr "Tilføj glød"
+msgstr "Tilføj skær"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm:238
 msgid "Prepare for GIF"
