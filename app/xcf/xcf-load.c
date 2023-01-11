@@ -3594,7 +3594,11 @@ xcf_load_old_paths (XcfInfo   *info,
                                                      last_selected_row));
 
   if (active_vectors)
-    gimp_image_set_active_vectors (image, active_vectors);
+    {
+      GList *list = g_list_prepend (NULL, active_vectors);
+      gimp_image_set_selected_vectors (image, list);
+      g_list_free (list);
+    }
 
   return TRUE;
 }
@@ -3741,7 +3745,11 @@ xcf_load_old_vectors (XcfInfo   *info,
                                                      active_index));
 
   if (active_vectors)
-    gimp_image_set_active_vectors (image, active_vectors);
+    {
+      GList *list = g_list_prepend (NULL, active_vectors);
+      gimp_image_set_selected_vectors (image, list);
+      g_list_free (list);
+    }
 
 #ifdef GIMP_XCF_PATH_DEBUG
   g_printerr ("xcf_load_old_vectors: loaded %d bytes\n", info->cp - base);

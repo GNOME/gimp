@@ -471,7 +471,12 @@ gimp_vector_tool_path_changed (GimpToolWidget *path,
           gimp_vector_tool_set_vectors (vector_tool, vectors);
 
           if (vectors)
-            gimp_image_set_active_vectors (image, vectors);
+            {
+              GList *list = g_list_prepend (NULL, vectors);
+
+              gimp_image_set_selected_vectors (image, list);
+              g_list_free (list);
+            }
         }
     }
 

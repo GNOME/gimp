@@ -4680,99 +4680,6 @@ gimp_image_get_vectors_list (GimpImage *image)
 
 /*  active drawable, layer, channel, vectors  */
 
-GimpLayer *
-gimp_image_get_active_layer (GimpImage *image)
-{
-  GList *layers;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-
-  layers = gimp_image_get_selected_layers (image);
-  if (g_list_length (layers) == 1)
-    return layers->data;
-  else
-    return NULL;
-}
-
-GimpChannel *
-gimp_image_get_active_channel (GimpImage *image)
-{
-  GimpImagePrivate *private;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-
-  private = GIMP_IMAGE_GET_PRIVATE (image);
-
-  return GIMP_CHANNEL (gimp_item_tree_get_active_item (private->channels));
-}
-
-GimpVectors *
-gimp_image_get_active_vectors (GimpImage *image)
-{
-  GimpImagePrivate *private;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-
-  private = GIMP_IMAGE_GET_PRIVATE (image);
-
-  return GIMP_VECTORS (gimp_item_tree_get_active_item (private->vectors));
-}
-
-GimpLayer *
-gimp_image_set_active_layer (GimpImage *image,
-                             GimpLayer *layer)
-{
-  GList     *layers = NULL;
-  GimpLayer *active_layer;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (layer == NULL || GIMP_IS_LAYER (layer), NULL);
-  g_return_val_if_fail (layer == NULL ||
-                        (gimp_item_is_attached (GIMP_ITEM (layer)) &&
-                         gimp_item_get_image (GIMP_ITEM (layer)) == image),
-                        NULL);
-  if (layer)
-    layers = g_list_prepend (NULL, layer);
-
-  gimp_image_set_selected_layers (image, layers);
-  g_list_free (layers);
-
-  layers = gimp_image_get_selected_layers (image);
-  active_layer = g_list_length (layers) == 1 ? layers->data : NULL;
-
-  return active_layer;
-}
-
-GimpChannel *
-gimp_image_set_active_channel (GimpImage   *image,
-                               GimpChannel *channel)
-{
-  GimpChannel *active_channel;
-  GList       *channels = NULL;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (channel == NULL || GIMP_IS_CHANNEL (channel), NULL);
-  g_return_val_if_fail (channel == NULL ||
-                        (gimp_item_is_attached (GIMP_ITEM (channel)) &&
-                         gimp_item_get_image (GIMP_ITEM (channel)) == image),
-                        NULL);
-
-  /*  Not if there is a floating selection  */
-  if (channel && gimp_image_get_floating_selection (image))
-    return NULL;
-
-  if (channel)
-    channels = g_list_prepend (NULL, channel);
-
-  gimp_image_set_selected_channels (image, channels);
-  g_list_free (channels);
-
-  channels = gimp_image_get_selected_channels (image);
-  active_channel = g_list_length (channels) == 1 ? channels->data : NULL;
-
-  return active_channel;
-}
-
 void
 gimp_image_unset_selected_channels (GimpImage *image)
 {
@@ -4792,31 +4699,6 @@ gimp_image_unset_selected_channels (GimpImage *image)
       if (private->layer_stack)
         gimp_image_set_selected_layers (image, private->layer_stack->data);
     }
-}
-
-GimpVectors *
-gimp_image_set_active_vectors (GimpImage   *image,
-                               GimpVectors *vectors)
-{
-  GList       *all_vectors = NULL;
-  GimpVectors *active_vectors;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (vectors == NULL || GIMP_IS_VECTORS (vectors), NULL);
-  g_return_val_if_fail (vectors == NULL ||
-                        (gimp_item_is_attached (GIMP_ITEM (vectors)) &&
-                         gimp_item_get_image (GIMP_ITEM (vectors)) == image),
-                        NULL);
-  if (vectors)
-    all_vectors = g_list_prepend (NULL, vectors);
-
-  gimp_image_set_selected_vectors (image, all_vectors);
-  g_list_free (all_vectors);
-
-  all_vectors = gimp_image_get_selected_vectors (image);
-  active_vectors = (g_list_length (all_vectors) == 1 ? all_vectors->data : NULL);
-
-  return active_vectors;
 }
 
 /**
@@ -6038,6 +5920,7 @@ gimp_image_add_vectors (GimpImage   *image,
                         gboolean     push_undo)
 {
   GimpImagePrivate *private;
+  GList            *list = NULL;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
 
@@ -6059,7 +5942,12 @@ gimp_image_add_vectors (GimpImage   *image,
   gimp_item_tree_add_item (private->vectors, GIMP_ITEM (vectors),
                            GIMP_ITEM (parent), position);
 
-  gimp_image_set_active_vectors (image, vectors);
+  if (vectors != NULL)
+    list = g_list_prepend (NULL, vectors);
+
+  gimp_image_set_selected_vectors (image, list);
+
+  g_list_free (list);
 
   return TRUE;
 }

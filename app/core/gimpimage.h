@@ -372,17 +372,7 @@ GList         * gimp_image_get_layer_list        (GimpImage          *image);
 GList         * gimp_image_get_channel_list      (GimpImage          *image);
 GList         * gimp_image_get_vectors_list      (GimpImage          *image);
 
-GimpLayer     * gimp_image_get_active_layer      (GimpImage          *image);
-GimpChannel   * gimp_image_get_active_channel    (GimpImage          *image);
-GimpVectors   * gimp_image_get_active_vectors    (GimpImage          *image);
-
-GimpLayer     * gimp_image_set_active_layer      (GimpImage          *image,
-                                                  GimpLayer          *layer);
-GimpChannel   * gimp_image_set_active_channel    (GimpImage          *image,
-                                                  GimpChannel        *channel);
 void          gimp_image_unset_selected_channels (GimpImage          *image);
-GimpVectors   * gimp_image_set_active_vectors    (GimpImage          *image,
-                                                  GimpVectors        *vectors);
 
 gboolean        gimp_image_is_selected_drawable  (GimpImage          *image,
                                                   GimpDrawable       *drawable);
