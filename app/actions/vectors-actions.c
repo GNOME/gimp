@@ -128,14 +128,14 @@ static const GimpActionEntry vectors_actions[] =
     GIMP_HELP_PATH_FILL },
 
   { "vectors-stroke", GIMP_ICON_PATH_STROKE,
-    NC_("vectors-action", "Stro_ke Path..."), NULL,
-    NC_("vectors-action", "Paint along the path"),
+    NC_("vectors-action", "Stro_ke Paths..."), NULL,
+    NC_("vectors-action", "Paint along the paths"),
     vectors_stroke_cmd_callback,
     GIMP_HELP_PATH_STROKE },
 
   { "vectors-stroke-last-values", GIMP_ICON_PATH_STROKE,
-    NC_("vectors-action", "Stro_ke Path"), NULL,
-    NC_("vectors-action", "Paint along the path with last values"),
+    NC_("vectors-action", "Stro_ke Paths"), NULL,
+    NC_("vectors-action", "Paint along the paths with last values"),
     vectors_stroke_last_vals_cmd_callback,
     GIMP_HELP_PATH_STROKE },
 
@@ -447,10 +447,10 @@ vectors_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("vectors-fill-last-values",              n_selected_vectors > 0 &&
                                                           dr_writable &&
                                                           !dr_children);
-  SET_SENSITIVE ("vectors-stroke",                        n_selected_vectors == 1 &&
+  SET_SENSITIVE ("vectors-stroke",                        n_selected_vectors > 0 &&
                                                           dr_writable &&
                                                           !dr_children);
-  SET_SENSITIVE ("vectors-stroke-last-values",            n_selected_vectors == 1 &&
+  SET_SENSITIVE ("vectors-stroke-last-values",            n_selected_vectors > 0 &&
                                                           dr_writable &&
                                                           !dr_children);
 

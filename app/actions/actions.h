@@ -109,12 +109,6 @@ void               action_message          (GimpDisplay          *display,
   if (! channels) \
     return
 
-#define return_if_no_vectors(image,vectors,data) \
-  return_if_no_image (image,data); \
-  vectors = gimp_image_get_active_vectors (image); \
-  if (! vectors) \
-    return
-
 #define return_if_no_vectors_list(image,list,data) \
   return_if_no_image (image,data); \
   list = gimp_image_get_selected_vectors (image); \

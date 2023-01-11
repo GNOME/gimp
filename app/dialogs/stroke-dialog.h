@@ -22,14 +22,14 @@
 
 
 typedef void (* GimpStrokeCallback) (GtkWidget         *dialog,
-                                     GimpItem          *item,
+                                     GList             *items,
                                      GList             *drawables,
                                      GimpContext       *context,
                                      GimpStrokeOptions *options,
                                      gpointer           user_data);
 
 
-GtkWidget * stroke_dialog_new (GimpItem           *item,
+GtkWidget * stroke_dialog_new (GList              *items,
                                GList              *drawables,
                                GimpContext        *context,
                                const gchar        *title,

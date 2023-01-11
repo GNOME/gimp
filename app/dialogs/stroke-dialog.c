@@ -51,7 +51,7 @@ typedef struct _StrokeDialog StrokeDialog;
 
 struct _StrokeDialog
 {
-  GimpItem           *item;
+  GList              *items;
   GList              *drawables;
   GimpContext        *context;
   GimpStrokeOptions  *options;
@@ -73,7 +73,7 @@ static void  stroke_dialog_response (GtkWidget    *dialog,
 /*  public function  */
 
 GtkWidget *
-stroke_dialog_new (GimpItem           *item,
+stroke_dialog_new (GList              *items,
                    GList              *drawables,
                    GimpContext        *context,
                    const gchar        *title,
@@ -94,7 +94,7 @@ stroke_dialog_new (GimpItem           *item,
   GSList       *group;
   GtkWidget    *frame;
 
-  g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
+  g_return_val_if_fail (items, NULL);
   g_return_val_if_fail (drawables, NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (icon_name != NULL, NULL);
@@ -102,11 +102,11 @@ stroke_dialog_new (GimpItem           *item,
   g_return_val_if_fail (parent == NULL || GTK_IS_WIDGET (parent), NULL);
   g_return_val_if_fail (callback != NULL, NULL);
 
-  image = gimp_item_get_image (item);
+  image = gimp_item_get_image (items->data);
 
   private = g_slice_new0 (StrokeDialog);
 
-  private->item      = item;
+  private->items     = g_list_copy (items);
   private->drawables = g_list_copy (drawables);
   private->context   = context;
   private->options   = gimp_stroke_options_new (context->gimp, context, TRUE);
@@ -116,7 +116,7 @@ stroke_dialog_new (GimpItem           *item,
   gimp_config_sync (G_OBJECT (options),
                     G_OBJECT (private->options), 0);
 
-  dialog = gimp_viewable_dialog_new (g_list_prepend (NULL, item), context,
+  dialog = gimp_viewable_dialog_new (g_list_copy (items), context,
                                      title, "gimp-stroke-options",
                                      icon_name,
                                      _("Choose Stroke Style"),
@@ -256,6 +256,7 @@ stroke_dialog_free (StrokeDialog *private)
 {
   g_object_unref (private->options);
   g_list_free (private->drawables);
+  g_list_free (private->items);
 
   g_slice_free (StrokeDialog, private);
 }
@@ -281,7 +282,7 @@ stroke_dialog_response (GtkWidget    *dialog,
 
     case GTK_RESPONSE_OK:
       private->callback (dialog,
-                         private->item,
+                         private->items,
                          private->drawables,
                          private->context,
                          private->options,

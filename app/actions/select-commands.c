@@ -466,12 +466,12 @@ select_fill_last_vals_cmd_callback (GimpAction *action,
                                     gpointer    data)
 {
   GimpImage *image;
+  GList     *selection;
   return_if_no_image (image, data);
 
-  items_fill_last_vals_cmd_callback (action,
-                                     image,
-                                     GIMP_ITEM (gimp_image_get_mask (image)),
-                                     data);
+  selection = g_list_prepend (NULL, gimp_image_get_mask (image)),
+  items_fill_last_vals_cmd_callback (action, image, selection, data);
+  g_list_free (selection);
 }
 
 void
@@ -480,15 +480,16 @@ select_stroke_cmd_callback (GimpAction *action,
                             gpointer    data)
 {
   GimpImage *image;
+  GList     *selection;
   return_if_no_image (image, data);
 
-  items_stroke_cmd_callback (action,
-                             image, GIMP_ITEM (gimp_image_get_mask (image)),
-                             "gimp-selection-stroke-dialog",
+  selection = g_list_prepend (NULL, gimp_image_get_mask (image)),
+  items_stroke_cmd_callback (action, image, selection,
                              _("Stroke Selection"),
                              GIMP_ICON_SELECTION_STROKE,
                              GIMP_HELP_SELECTION_STROKE,
                              data);
+  g_list_free (selection);
 }
 
 void
@@ -497,12 +498,12 @@ select_stroke_last_vals_cmd_callback (GimpAction *action,
                                       gpointer    data)
 {
   GimpImage *image;
+  GList     *selection;
   return_if_no_image (image, data);
 
-  items_stroke_last_vals_cmd_callback (action,
-                                       image,
-                                       GIMP_ITEM (gimp_image_get_mask (image)),
-                                       data);
+  selection = g_list_prepend (NULL, gimp_image_get_mask (image)),
+  items_stroke_last_vals_cmd_callback (action, image, selection, data);
+  g_list_free (selection);
 }
 
 

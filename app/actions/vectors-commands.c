@@ -604,13 +604,11 @@ vectors_stroke_cmd_callback (GimpAction *action,
                              GVariant   *value,
                              gpointer    data)
 {
-  GimpImage   *image;
-  GimpVectors *vectors;
-  return_if_no_vectors (image, vectors, data);
+  GimpImage *image;
+  GList     *vectors;
+  return_if_no_vectors_list (image, vectors, data);
 
-  items_stroke_cmd_callback (action,
-                             image, GIMP_ITEM (vectors),
-                             "gimp-vectors-stroke-dialog",
+  items_stroke_cmd_callback (action, image, vectors,
                              _("Stroke Path"),
                              GIMP_ICON_PATH_STROKE,
                              GIMP_HELP_PATH_STROKE,
@@ -622,13 +620,11 @@ vectors_stroke_last_vals_cmd_callback (GimpAction *action,
                                        GVariant   *value,
                                        gpointer    data)
 {
-  GimpImage   *image;
-  GimpVectors *vectors;
-  return_if_no_vectors (image, vectors, data);
+  GimpImage *image;
+  GList     *vectors;
+  return_if_no_vectors_list (image, vectors, data);
 
-  items_stroke_last_vals_cmd_callback (action,
-                                       image, GIMP_ITEM (vectors),
-                                       data);
+  items_stroke_last_vals_cmd_callback (action, image, vectors, data);
 }
 
 void

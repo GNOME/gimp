@@ -52,7 +52,7 @@ static void   items_fill_callback   (GtkWidget         *dialog,
                                      GimpFillOptions   *options,
                                      gpointer           user_data);
 static void   items_stroke_callback (GtkWidget         *dialog,
-                                     GimpItem          *item,
+                                     GList             *items,
                                      GList             *drawables,
                                      GimpContext       *context,
                                      GimpStrokeOptions *options,
@@ -338,8 +338,7 @@ items_fill_last_vals_cmd_callback (GimpAction *action,
 void
 items_stroke_cmd_callback (GimpAction  *action,
                            GimpImage   *image,
-                           GimpItem    *item,
-                           const gchar *dialog_key,
+                           GList       *items,
                            const gchar *dialog_title,
                            const gchar *dialog_icon_name,
                            const gchar *dialog_help_id,
@@ -360,25 +359,17 @@ items_stroke_cmd_callback (GimpAction  *action,
       return;
     }
 
-  dialog = dialogs_get_dialog (G_OBJECT (item), dialog_key);
 
-  if (! dialog)
-    {
-      GimpDialogConfig *config = GIMP_DIALOG_CONFIG (image->gimp->config);
-
-      dialog = stroke_dialog_new (item,
-                                  drawables,
-                                  action_data_get_context (data),
-                                  dialog_title,
-                                  dialog_icon_name,
-                                  dialog_help_id,
-                                  widget,
-                                  config->stroke_options,
-                                  items_stroke_callback,
-                                  NULL);
-
-      dialogs_attach_dialog (G_OBJECT (item), dialog_key, dialog);
-    }
+  dialog = stroke_dialog_new (items,
+                              drawables,
+                              action_data_get_context (data),
+                              dialog_title,
+                              dialog_icon_name,
+                              dialog_help_id,
+                              widget,
+                              GIMP_DIALOG_CONFIG (image->gimp->config)->stroke_options,
+                              items_stroke_callback,
+                              NULL);
 
   gtk_window_present (GTK_WINDOW (dialog));
   g_list_free (drawables);
@@ -387,7 +378,7 @@ items_stroke_cmd_callback (GimpAction  *action,
 void
 items_stroke_last_vals_cmd_callback (GimpAction *action,
                                      GimpImage  *image,
-                                     GimpItem   *item,
+                                     GList      *items,
                                      gpointer    data)
 {
   GList            *drawables;
@@ -408,20 +399,24 @@ items_stroke_last_vals_cmd_callback (GimpAction *action,
 
   config = GIMP_DIALOG_CONFIG (image->gimp->config);
 
-  if (! gimp_item_stroke (item, drawables,
-                          action_data_get_context (data),
-                          config->stroke_options, NULL,
-                          TRUE, NULL, &error))
-    {
-      gimp_message_literal (image->gimp, G_OBJECT (widget),
-                            GIMP_MESSAGE_WARNING, error->message);
-      g_clear_error (&error);
-    }
-  else
-    {
-      gimp_image_flush (image);
-    }
+  gimp_image_undo_group_start (image,
+                               GIMP_UNDO_GROUP_DRAWABLE_MOD,
+                               "Stroke");
 
+  for (GList *iter = items; iter; iter = iter->next)
+    if (! gimp_item_stroke (iter->data, drawables,
+                            action_data_get_context (data),
+                            config->stroke_options, NULL,
+                            TRUE, NULL, &error))
+      {
+        gimp_message_literal (image->gimp, G_OBJECT (widget),
+                              GIMP_MESSAGE_WARNING, error->message);
+        g_clear_error (&error);
+        break;
+      }
+
+  gimp_image_undo_group_end (image);
+  gimp_image_flush (image);
   g_list_free (drawables);
 }
 
@@ -467,31 +462,37 @@ items_fill_callback (GtkWidget       *dialog,
 
 static void
 items_stroke_callback (GtkWidget         *dialog,
-                       GimpItem          *item,
+                       GList             *items,
                        GList             *drawables,
                        GimpContext       *context,
                        GimpStrokeOptions *options,
                        gpointer           data)
 {
   GimpDialogConfig *config = GIMP_DIALOG_CONFIG (context->gimp->config);
-  GimpImage        *image  = gimp_item_get_image (item);
+  GimpImage        *image  = gimp_item_get_image (items->data);
   GError           *error  = NULL;
 
   gimp_config_sync (G_OBJECT (options),
                     G_OBJECT (config->stroke_options), 0);
 
-  if (! gimp_item_stroke (item, drawables, context, options, NULL,
-                          TRUE, NULL, &error))
-    {
-      gimp_message_literal (context->gimp,
-                            G_OBJECT (dialog),
-                            GIMP_MESSAGE_WARNING,
-                            error ? error->message : "NULL");
+  gimp_image_undo_group_start (image,
+                               GIMP_UNDO_GROUP_DRAWABLE_MOD,
+                               "Stroke");
 
-      g_clear_error (&error);
-      return;
-    }
+  for (GList *iter = items; iter; iter = iter->next)
+    if (! gimp_item_stroke (iter->data, drawables, context, options, NULL,
+                            TRUE, NULL, &error))
+      {
+        gimp_message_literal (context->gimp,
+                              G_OBJECT (dialog),
+                              GIMP_MESSAGE_WARNING,
+                              error ? error->message : "NULL");
 
+        g_clear_error (&error);
+        break;
+      }
+
+  gimp_image_undo_group_end (image);
   gimp_image_flush (image);
 
   gtk_widget_destroy (dialog);
