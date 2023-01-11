@@ -46,7 +46,7 @@
 /*  local function prototypes  */
 
 static void   items_fill_callback   (GtkWidget         *dialog,
-                                     GimpItem          *item,
+                                     GList             *items,
                                      GList             *drawables,
                                      GimpContext       *context,
                                      GimpFillOptions   *options,
@@ -256,8 +256,7 @@ items_color_tag_cmd_callback (GimpAction   *action,
 void
 items_fill_cmd_callback (GimpAction  *action,
                          GimpImage   *image,
-                         GimpItem    *item,
-                         const gchar *dialog_key,
+                         GList       *items,
                          const gchar *dialog_title,
                          const gchar *dialog_icon_name,
                          const gchar *dialog_help_id,
@@ -274,29 +273,20 @@ items_fill_cmd_callback (GimpAction  *action,
     {
       gimp_message_literal (image->gimp,
                             G_OBJECT (widget), GIMP_MESSAGE_WARNING,
-                            _("There are no selected layers or channels to fill."));
+                            _("There are no selected items to fill."));
       return;
     }
 
-  dialog = dialogs_get_dialog (G_OBJECT (item), dialog_key);
-
-  if (! dialog)
-    {
-      GimpDialogConfig *config = GIMP_DIALOG_CONFIG (image->gimp->config);
-
-      dialog = fill_dialog_new (item,
-                                drawables,
-                                action_data_get_context (data),
-                                dialog_title,
-                                dialog_icon_name,
-                                dialog_help_id,
-                                widget,
-                                config->fill_options,
-                                items_fill_callback,
-                                NULL);
-
-      dialogs_attach_dialog (G_OBJECT (item), dialog_key, dialog);
-    }
+  dialog = fill_dialog_new (items,
+                            drawables,
+                            action_data_get_context (data),
+                            dialog_title,
+                            dialog_icon_name,
+                            dialog_help_id,
+                            widget,
+                            GIMP_DIALOG_CONFIG (image->gimp->config)->fill_options,
+                            items_fill_callback,
+                            NULL);
 
   gtk_window_present (GTK_WINDOW (dialog));
   g_list_free (drawables);
@@ -435,30 +425,36 @@ items_stroke_last_vals_cmd_callback (GimpAction *action,
 
 static void
 items_fill_callback (GtkWidget       *dialog,
-                     GimpItem        *item,
+                     GList           *items,
                      GList           *drawables,
                      GimpContext     *context,
                      GimpFillOptions *options,
                      gpointer         user_data)
 {
   GimpDialogConfig *config = GIMP_DIALOG_CONFIG (context->gimp->config);
-  GimpImage        *image  = gimp_item_get_image (item);
+  GimpImage        *image  = gimp_item_get_image (items->data);
   GError           *error  = NULL;
 
   gimp_config_sync (G_OBJECT (options),
                     G_OBJECT (config->fill_options), 0);
 
-  if (! gimp_item_fill (item, drawables, options, TRUE, NULL, &error))
-    {
-      gimp_message_literal (context->gimp,
-                            G_OBJECT (dialog),
-                            GIMP_MESSAGE_WARNING,
-                            error ? error->message : "NULL");
+  gimp_image_undo_group_start (image,
+                               GIMP_UNDO_GROUP_DRAWABLE_MOD,
+                               "Fill");
 
-      g_clear_error (&error);
-      return;
-    }
+  for (GList *iter = items; iter; iter = iter->next)
+    if (! gimp_item_fill (iter->data, drawables, options, TRUE, NULL, &error))
+      {
+        gimp_message_literal (context->gimp,
+                              G_OBJECT (dialog),
+                              GIMP_MESSAGE_WARNING,
+                              error ? error->message : "NULL");
 
+        g_clear_error (&error);
+        break;
+      }
+
+  gimp_image_undo_group_end (image);
   gimp_image_flush (image);
 
   gtk_widget_destroy (dialog);

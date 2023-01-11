@@ -46,7 +46,7 @@ typedef struct _FillDialog FillDialog;
 
 struct _FillDialog
 {
-  GimpItem         *item;
+  GList            *items;
   GList            *drawables;
   GimpContext      *context;
   GimpFillOptions  *options;
@@ -66,7 +66,7 @@ static void  fill_dialog_response (GtkWidget  *dialog,
 /*  public function  */
 
 GtkWidget *
-fill_dialog_new (GimpItem         *item,
+fill_dialog_new (GList            *items,
                  GList            *drawables,
                  GimpContext      *context,
                  const gchar      *title,
@@ -82,7 +82,7 @@ fill_dialog_new (GimpItem         *item,
   GtkWidget  *main_vbox;
   GtkWidget  *fill_editor;
 
-  g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
+  g_return_val_if_fail (items, NULL);
   g_return_val_if_fail (drawables, NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (GIMP_IS_FILL_OPTIONS (options), NULL);
@@ -93,7 +93,7 @@ fill_dialog_new (GimpItem         *item,
 
   private = g_slice_new0 (FillDialog);
 
-  private->item      = item;
+  private->items     = g_list_copy (items);
   private->drawables = g_list_copy (drawables);
   private->context   = context;
   private->options   = gimp_fill_options_new (context->gimp, context, TRUE);
@@ -103,7 +103,7 @@ fill_dialog_new (GimpItem         *item,
   gimp_config_sync (G_OBJECT (options),
                     G_OBJECT (private->options), 0);
 
-  dialog = gimp_viewable_dialog_new (g_list_prepend (NULL, item), context,
+  dialog = gimp_viewable_dialog_new (g_list_copy (items), context,
                                      title, "gimp-fill-options",
                                      icon_name,
                                      _("Choose Fill Style"),
@@ -153,6 +153,7 @@ fill_dialog_free (FillDialog *private)
 {
   g_object_unref (private->options);
   g_list_free (private->drawables);
+  g_list_free (private->items);
 
   g_slice_free (FillDialog, private);
 }
@@ -170,7 +171,7 @@ fill_dialog_response (GtkWidget  *dialog,
 
     case GTK_RESPONSE_OK:
       private->callback (dialog,
-                         private->item,
+                         private->items,
                          private->drawables,
                          private->context,
                          private->options,

@@ -447,15 +447,17 @@ select_fill_cmd_callback (GimpAction *action,
                           gpointer    data)
 {
   GimpImage *image;
+  GList     *selection;
   return_if_no_image (image, data);
 
+  selection = g_list_prepend (NULL, gimp_image_get_mask (image)),
   items_fill_cmd_callback (action,
-                           image, GIMP_ITEM (gimp_image_get_mask (image)),
-                           "gimp-selection-fill-dialog",
+                           image, selection,
                            _("Fill Selection Outline"),
                            GIMP_ICON_TOOL_BUCKET_FILL,
                            GIMP_HELP_SELECTION_FILL,
                            data);
+  g_list_free (selection);
 }
 
 void

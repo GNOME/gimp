@@ -116,8 +116,8 @@ static const GimpActionEntry vectors_actions[] =
     GIMP_HELP_PATH_LOWER_TO_BOTTOM },
 
   { "vectors-fill", GIMP_ICON_TOOL_BUCKET_FILL,
-    NC_("vectors-action", "Fill Pat_h..."), NULL,
-    NC_("vectors-action", "Fill the path"),
+    NC_("vectors-action", "Fill Pat_hs..."), NULL,
+    NC_("vectors-action", "Fill the paths"),
     vectors_fill_cmd_callback,
     GIMP_HELP_PATH_FILL },
 
@@ -441,7 +441,7 @@ vectors_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("vectors-selection-to-vectors",          image && !mask_empty);
   SET_SENSITIVE ("vectors-selection-to-vectors-short",    image && !mask_empty);
   SET_SENSITIVE ("vectors-selection-to-vectors-advanced", image && !mask_empty);
-  SET_SENSITIVE ("vectors-fill",                          n_selected_vectors == 1 &&
+  SET_SENSITIVE ("vectors-fill",                          n_selected_vectors > 0 &&
                                                           dr_writable &&
                                                           !dr_children);
   SET_SENSITIVE ("vectors-fill-last-values",              n_selected_vectors == 1 &&
