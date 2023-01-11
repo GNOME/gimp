@@ -122,8 +122,8 @@ static const GimpActionEntry vectors_actions[] =
     GIMP_HELP_PATH_FILL },
 
   { "vectors-fill-last-values", GIMP_ICON_TOOL_BUCKET_FILL,
-    NC_("vectors-action", "Fill Path"), NULL,
-    NC_("vectors-action", "Fill the path with last values"),
+    NC_("vectors-action", "Fill Paths"), NULL,
+    NC_("vectors-action", "Fill the paths with last values"),
     vectors_fill_last_vals_cmd_callback,
     GIMP_HELP_PATH_FILL },
 
@@ -444,7 +444,7 @@ vectors_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("vectors-fill",                          n_selected_vectors > 0 &&
                                                           dr_writable &&
                                                           !dr_children);
-  SET_SENSITIVE ("vectors-fill-last-values",              n_selected_vectors == 1 &&
+  SET_SENSITIVE ("vectors-fill-last-values",              n_selected_vectors > 0 &&
                                                           dr_writable &&
                                                           !dr_children);
   SET_SENSITIVE ("vectors-stroke",                        n_selected_vectors == 1 &&

@@ -295,7 +295,7 @@ items_fill_cmd_callback (GimpAction  *action,
 void
 items_fill_last_vals_cmd_callback (GimpAction *action,
                                    GimpImage  *image,
-                                   GimpItem   *item,
+                                   GList      *items,
                                    gpointer    data)
 {
   GList            *drawables;
@@ -316,17 +316,22 @@ items_fill_last_vals_cmd_callback (GimpAction *action,
 
   config = GIMP_DIALOG_CONFIG (image->gimp->config);
 
-  if (! gimp_item_fill (item, drawables,
-                        config->fill_options, TRUE, NULL, &error))
-    {
-      gimp_message_literal (image->gimp, G_OBJECT (widget),
-                            GIMP_MESSAGE_WARNING, error->message);
-      g_clear_error (&error);
-    }
-  else
-    {
-      gimp_image_flush (image);
-    }
+  gimp_image_undo_group_start (image,
+                               GIMP_UNDO_GROUP_DRAWABLE_MOD,
+                               "Fill");
+
+  for (GList *iter = items; iter; iter = iter->next)
+    if (! gimp_item_fill (iter->data, drawables,
+                          config->fill_options, TRUE, NULL, &error))
+      {
+        gimp_message_literal (image->gimp, G_OBJECT (widget),
+                              GIMP_MESSAGE_WARNING, error->message);
+        g_clear_error (&error);
+        break;
+      }
+
+  gimp_image_undo_group_end (image);
+  gimp_image_flush (image);
   g_list_free (drawables);
 }
 

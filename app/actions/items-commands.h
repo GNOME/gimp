@@ -46,7 +46,7 @@ void   items_fill_cmd_callback             (GimpAction   *action,
                                             gpointer      data);
 void   items_fill_last_vals_cmd_callback   (GimpAction   *action,
                                             GimpImage    *image,
-                                            GimpItem     *item,
+                                            GList        *items,
                                             gpointer      data);
 
 void   items_stroke_cmd_callback           (GimpAction   *action,
