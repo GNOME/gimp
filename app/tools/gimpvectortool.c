@@ -132,7 +132,7 @@ static void     gimp_vector_tool_to_selection_extended
 static void     gimp_vector_tool_fill_vectors    (GimpVectorTool        *vector_tool,
                                                   GtkWidget             *button);
 static void     gimp_vector_tool_fill_callback   (GtkWidget             *dialog,
-                                                  GimpItem              *item,
+                                                  GList                 *items,
                                                   GList                 *drawables,
                                                   GimpContext           *context,
                                                   GimpFillOptions       *options,
@@ -141,7 +141,7 @@ static void     gimp_vector_tool_fill_callback   (GtkWidget             *dialog,
 static void     gimp_vector_tool_stroke_vectors  (GimpVectorTool        *vector_tool,
                                                   GtkWidget             *button);
 static void     gimp_vector_tool_stroke_callback (GtkWidget             *dialog,
-                                                  GimpItem              *item,
+                                                  GList                 *items,
                                                   GList                 *drawables,
                                                   GimpContext           *context,
                                                   GimpStrokeOptions     *options,
@@ -724,6 +724,7 @@ gimp_vector_tool_fill_vectors (GimpVectorTool *vector_tool,
   GimpDialogConfig *config;
   GimpImage        *image;
   GList            *drawables;
+  GList            *vectors_list = NULL;
   GtkWidget        *dialog;
 
   if (! vector_tool->vectors)
@@ -743,8 +744,8 @@ gimp_vector_tool_fill_vectors (GimpVectorTool *vector_tool,
       return;
     }
 
-  dialog = fill_dialog_new (GIMP_ITEM (vector_tool->vectors),
-                            drawables,
+  vectors_list = g_list_prepend (NULL, vector_tool->vectors);
+  dialog = fill_dialog_new (vectors_list, drawables,
                             GIMP_CONTEXT (GIMP_TOOL_GET_OPTIONS (vector_tool)),
                             _("Fill Path"),
                             GIMP_ICON_TOOL_BUCKET_FILL,
@@ -754,39 +755,44 @@ gimp_vector_tool_fill_vectors (GimpVectorTool *vector_tool,
                             gimp_vector_tool_fill_callback,
                             vector_tool);
   gtk_widget_show (dialog);
-
+  g_list_free (vectors_list);
   g_list_free (drawables);
 }
 
 static void
 gimp_vector_tool_fill_callback (GtkWidget       *dialog,
-                                GimpItem        *item,
+                                GList           *items,
                                 GList           *drawables,
                                 GimpContext     *context,
                                 GimpFillOptions *options,
                                 gpointer         data)
 {
   GimpDialogConfig *config = GIMP_DIALOG_CONFIG (context->gimp->config);
-  GimpImage        *image  = gimp_item_get_image (item);
+  GimpImage        *image  = gimp_item_get_image (items->data);
   GError           *error  = NULL;
 
   gimp_config_sync (G_OBJECT (options),
                     G_OBJECT (config->fill_options), 0);
 
-  if (! gimp_item_fill (item, drawables, options,
-                        TRUE, NULL, &error))
-    {
-      gimp_message_literal (context->gimp,
-                            G_OBJECT (dialog),
-                            GIMP_MESSAGE_WARNING,
-                            error ? error->message : "NULL");
+  gimp_image_undo_group_start (image,
+                               GIMP_UNDO_GROUP_DRAWABLE_MOD,
+                               "Fill");
 
-      g_clear_error (&error);
-      return;
-    }
+  for (GList *iter = items; iter; iter = iter->next)
+    if (! gimp_item_fill (iter->data, drawables, options,
+                          TRUE, NULL, &error))
+      {
+        gimp_message_literal (context->gimp,
+                              G_OBJECT (dialog),
+                              GIMP_MESSAGE_WARNING,
+                              error ? error->message : "NULL");
 
+        g_clear_error (&error);
+        break;
+      }
+
+  gimp_image_undo_group_end (image);
   gimp_image_flush (image);
-
   gtk_widget_destroy (dialog);
 }
 
@@ -798,6 +804,7 @@ gimp_vector_tool_stroke_vectors (GimpVectorTool *vector_tool,
   GimpDialogConfig *config;
   GimpImage        *image;
   GList            *drawables;
+  GList            *vectors_list = NULL;
   GtkWidget        *dialog;
 
   if (! vector_tool->vectors)
@@ -817,8 +824,8 @@ gimp_vector_tool_stroke_vectors (GimpVectorTool *vector_tool,
       return;
     }
 
-  dialog = stroke_dialog_new (GIMP_ITEM (vector_tool->vectors),
-                              drawables,
+  vectors_list = g_list_prepend (NULL, vector_tool->vectors);
+  dialog = stroke_dialog_new (vectors_list, drawables,
                               GIMP_CONTEXT (GIMP_TOOL_GET_OPTIONS (vector_tool)),
                               _("Stroke Path"),
                               GIMP_ICON_PATH_STROKE,
@@ -828,37 +835,43 @@ gimp_vector_tool_stroke_vectors (GimpVectorTool *vector_tool,
                               gimp_vector_tool_stroke_callback,
                               vector_tool);
   gtk_widget_show (dialog);
+  g_list_free (vectors_list);
   g_list_free (drawables);
 }
 
 static void
 gimp_vector_tool_stroke_callback (GtkWidget         *dialog,
-                                  GimpItem          *item,
+                                  GList             *items,
                                   GList             *drawables,
                                   GimpContext       *context,
                                   GimpStrokeOptions *options,
                                   gpointer           data)
 {
   GimpDialogConfig *config = GIMP_DIALOG_CONFIG (context->gimp->config);
-  GimpImage        *image  = gimp_item_get_image (item);
+  GimpImage        *image  = gimp_item_get_image (items->data);
   GError           *error  = NULL;
 
   gimp_config_sync (G_OBJECT (options),
                     G_OBJECT (config->stroke_options), 0);
 
-  if (! gimp_item_stroke (item, drawables, context, options, NULL,
-                          TRUE, NULL, &error))
-    {
-      gimp_message_literal (context->gimp,
-                            G_OBJECT (dialog),
-                            GIMP_MESSAGE_WARNING,
-                            error ? error->message : "NULL");
+  gimp_image_undo_group_start (image,
+                               GIMP_UNDO_GROUP_DRAWABLE_MOD,
+                               "Stroke");
 
-      g_clear_error (&error);
-      return;
-    }
+  for (GList *iter = items; iter; iter = iter->next)
+    if (! gimp_item_stroke (iter->data, drawables, context, options, NULL,
+                            TRUE, NULL, &error))
+      {
+        gimp_message_literal (context->gimp,
+                              G_OBJECT (dialog),
+                              GIMP_MESSAGE_WARNING,
+                              error ? error->message : "NULL");
 
+        g_clear_error (&error);
+        break;
+      }
+
+  gimp_image_undo_group_end (image);
   gimp_image_flush (image);
-
   gtk_widget_destroy (dialog);
 }
