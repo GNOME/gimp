@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-01-02 14:16+0000\n"
-"PO-Revision-Date: 2023-01-06 21:41+0000\n"
+"POT-Creation-Date: 2023-01-12 11:54+0000\n"
+"PO-Revision-Date: 2023-01-12 14:30+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Português <https://l10n.gnome.org/teams/pt/>\n"
 "Language: pt\n"
@@ -951,43 +951,43 @@ msgstr "Etiqueta de cor do canal: definir como cinzento"
 
 #: app/actions/channels-actions.c:191
 msgctxt "channels-action"
-msgid "Channel to Sele_ction"
-msgstr "_Canal para seleção"
+msgid "Channels to Sele_ction"
+msgstr "_Canais para seleção"
 
 #: app/actions/channels-actions.c:192
 msgctxt "channels-action"
-msgid "Replace the selection with this channel"
-msgstr "Substituir a seleção por este canal"
+msgid "Replace the selection with selected channels"
+msgstr "Substituir a seleção por estes canais"
 
 #: app/actions/channels-actions.c:197
 msgctxt "channels-action"
-msgid "_Add to Selection"
-msgstr "_Adicionar à seleção"
+msgid "_Add Channels to Selection"
+msgstr "_Adicionar canais para seleção"
 
 #: app/actions/channels-actions.c:198
 msgctxt "channels-action"
-msgid "Add this channel to the current selection"
-msgstr "Adicionar este canal à seleção atual"
+msgid "Add selected channels to the current selection"
+msgstr "Adicionar estes canais à seleção atual"
 
 #: app/actions/channels-actions.c:203
 msgctxt "channels-action"
-msgid "_Subtract from Selection"
-msgstr "_Subtrair da seleção"
+msgid "_Subtract Channels from Selection"
+msgstr "_Subtrair canais da seleção"
 
 #: app/actions/channels-actions.c:204
 msgctxt "channels-action"
-msgid "Subtract this channel from the current selection"
-msgstr "Subtrair este canal da seleção atual"
+msgid "Subtract selected channels from the current selection"
+msgstr "Subtrair estes canais da seleção atual"
 
 #: app/actions/channels-actions.c:209
 msgctxt "channels-action"
-msgid "_Intersect with Selection"
-msgstr "_Intersetar com a seleção"
+msgid "_Intersect Channels with Selection"
+msgstr "_Intersetar canais com a seleção"
 
 #: app/actions/channels-actions.c:210
 msgctxt "channels-action"
-msgid "Intersect this channel with the current selection"
-msgstr "Intersetar este canal com a seleção atual"
+msgid "Intersect selected channels with the current selection and each other"
+msgstr "Intersetar estes canais com a seleção atual e entre si"
 
 #: app/actions/channels-actions.c:218
 msgctxt "channels-action"
@@ -1029,74 +1029,78 @@ msgctxt "channels-action"
 msgid "Select the channels below the selected channels"
 msgstr "Selecionar os canais abaixo dos atuais"
 
-#: app/actions/channels-commands.c:114 app/actions/channels-commands.c:671
+#: app/actions/channels-commands.c:119 app/actions/channels-commands.c:687
 msgid "Channel Attributes"
 msgstr "Definições do canal"
 
-#: app/actions/channels-commands.c:117
+#: app/actions/channels-commands.c:122
 msgid "Edit Channel Attributes"
 msgstr "Editar definições do canal"
 
-#: app/actions/channels-commands.c:119
+#: app/actions/channels-commands.c:124
 msgid "Edit Channel Color"
 msgstr "Editar cor do canal"
 
-#: app/actions/channels-commands.c:120 app/actions/channels-commands.c:165
+#: app/actions/channels-commands.c:125 app/actions/channels-commands.c:170
 msgid "_Fill opacity:"
 msgstr "Opacidade do pr_eenchimento:"
 
-#: app/actions/channels-commands.c:159 app/widgets/gimpchanneltreeview.c:328
+#: app/actions/channels-commands.c:164 app/widgets/gimpchanneltreeview.c:328
 msgid "New Channel"
 msgstr "Novo canal"
 
-#: app/actions/channels-commands.c:162
+#: app/actions/channels-commands.c:167
 msgid "Create a New Channel"
 msgstr "Criar um novo canal"
 
-#: app/actions/channels-commands.c:164
+#: app/actions/channels-commands.c:169
 msgid "New Channel Color"
 msgstr "Cor do novo canal"
 
-#: app/actions/channels-commands.c:231
+#: app/actions/channels-commands.c:236
 msgid "Raise Channel"
 msgid_plural "Raise Channels"
 msgstr[0] "Elevar canal"
 msgstr[1] "Elevar canais"
 
-#: app/actions/channels-commands.c:266
+#: app/actions/channels-commands.c:271
 msgid "Raise Channel to Top"
 msgid_plural "Raise Channels to Top"
 msgstr[0] "Elevar canal para o topo"
 msgstr[1] "Elevar canais para o topo"
 
-#: app/actions/channels-commands.c:303
+#: app/actions/channels-commands.c:308
 msgid "Lower Channel"
 msgid_plural "Lower Channels"
 msgstr[0] "Baixar canal"
 msgstr[1] "Baixar canais"
 
-#: app/actions/channels-commands.c:340
+#: app/actions/channels-commands.c:345
 msgid "Lower Channel to Bottom"
 msgid_plural "Lower Channels to Bottom"
 msgstr[0] "Baixar canal para o fundo"
 msgstr[1] "Baixar canais para o fundo"
 
-#: app/actions/channels-commands.c:375 app/core/gimpimage-new.c:506
+#: app/actions/channels-commands.c:380 app/core/gimpimage-new.c:506
 #: app/display/gimpdisplayshell-dnd.c:683 app/widgets/gimpchanneltreeview.c:259
 #: app/widgets/gimplayertreeview.c:1051
 #, c-format
 msgid "%s Channel Copy"
 msgstr "Cópia do canal %s"
 
-#: app/actions/channels-commands.c:396
+#: app/actions/channels-commands.c:401
 msgid "Duplicate channels"
 msgstr "Duplicar canais"
 
-#: app/actions/channels-commands.c:439
+#: app/actions/channels-commands.c:444
 #, c-format
 msgctxt "undo-type"
 msgid "Remove %d Channels"
 msgstr "Remover %d canais"
+
+#: app/actions/channels-commands.c:488
+msgid "Channels to selection"
+msgstr "Canais para seleção"
 
 #: app/actions/colormap-actions.c:45
 msgctxt "colormap-action"
@@ -6221,7 +6225,7 @@ msgstr "Inverter"
 msgid "Rotating"
 msgstr "Rodar"
 
-#: app/actions/image-commands.c:880 app/actions/layers-commands.c:1207
+#: app/actions/image-commands.c:880 app/actions/layers-commands.c:1243
 msgid "Cannot crop because the current selection is empty."
 msgstr "Não foi possível recortar porque a região selecionada está vazia."
 
@@ -6271,7 +6275,7 @@ msgid "Scale Image"
 msgstr "Alterar tamanho da imagem"
 
 #. Scaling
-#: app/actions/image-commands.c:1528 app/actions/layers-commands.c:2506
+#: app/actions/image-commands.c:1528 app/actions/layers-commands.c:2465
 #: app/dialogs/preferences-dialog.c:1792 app/pdb/image-transform-cmds.c:124
 #: app/pdb/item-transform-cmds.c:595 app/pdb/layer-cmds.c:411
 #: app/tools/gimpscaletool.c:122
@@ -6314,13 +6318,32 @@ msgctxt "images-action"
 msgid "Delete this image"
 msgstr "Eliminar esta imagem"
 
-#: app/actions/items-commands.c:180 app/actions/items-commands.c:226
-#: app/tools/gimpvectortool.c:742
+#: app/actions/items-commands.c:156 app/widgets/gimpitemtreeview.c:531
+msgid "Lock content"
+msgstr "Bloquear conteúdo"
+
+#: app/actions/items-commands.c:158 app/widgets/gimpitemtreeview.c:532
+msgid "Unlock content"
+msgstr "Desbloquear conteúdo"
+
+#: app/actions/items-commands.c:203 app/widgets/gimpitemtreeview.c:547
+msgid "Lock position"
+msgstr "Bloquear posição"
+
+#: app/actions/items-commands.c:205 app/widgets/gimpitemtreeview.c:548
+msgid "Unlock position"
+msgstr "Desbloquear posição"
+
+#: app/actions/items-commands.c:276
+msgid "There are no selected items to fill."
+msgstr "Não há itens selecionados para preencher."
+
+#: app/actions/items-commands.c:313 app/tools/gimpvectortool.c:748
 msgid "There are no selected layers or channels to fill."
 msgstr "Não existe nenhuma camada ou canal selecionados para preencher."
 
-#: app/actions/items-commands.c:267 app/actions/items-commands.c:313
-#: app/tools/gimpvectortool.c:816
+#: app/actions/items-commands.c:358 app/actions/items-commands.c:396
+#: app/tools/gimpvectortool.c:828
 msgid "There are no selected layers or channels to stroke to."
 msgstr "Não existe nenhuma camada ou canal selecionados para traçar."
 
@@ -6419,7 +6442,7 @@ msgctxt "layers-action"
 msgid "Edit the layer's name"
 msgstr "Editar o nome da camada"
 
-#: app/actions/layers-actions.c:107 app/actions/layers-actions.c:1011
+#: app/actions/layers-actions.c:107 app/actions/layers-actions.c:1001
 msgctxt "layers-action"
 msgid "_New Layer..."
 msgstr "_Nova camada..."
@@ -6429,7 +6452,7 @@ msgctxt "layers-action"
 msgid "Create a new layer and add it to the image"
 msgstr "Adiciona uma nova camada à imagem"
 
-#: app/actions/layers-actions.c:113 app/actions/layers-actions.c:1012
+#: app/actions/layers-actions.c:113 app/actions/layers-actions.c:1002
 msgctxt "layers-action"
 msgid "_New Layer"
 msgstr "_Nova camada"
@@ -6592,8 +6615,8 @@ msgstr "_Descartar informação de texto"
 
 #: app/actions/layers-actions.c:215
 msgctxt "layers-action"
-msgid "Turn this text layer into a normal layer"
-msgstr "Transforma a camada de texto numa camada normal de píxeis"
+msgid "Turn these text layers into normal layers"
+msgstr "Transforma estas camadas de texto em camadas normais"
 
 #: app/actions/layers-actions.c:220
 msgctxt "layers-action"
@@ -6602,8 +6625,8 @@ msgstr "Texto para _caminho"
 
 #: app/actions/layers-actions.c:221
 msgctxt "layers-action"
-msgid "Create a path from this text layer"
-msgstr "Cria um caminho a partir desta camada de texto"
+msgid "Create paths from text layers"
+msgstr "Criar caminhos a partir de camadas de texto"
 
 #: app/actions/layers-actions.c:226
 msgctxt "layers-action"
@@ -7158,109 +7181,117 @@ msgstr "Atalho: "
 msgid "-Click on thumbnail in Layers dockable"
 msgstr "-[Clique] na miniatura da doca de camadas"
 
-#: app/actions/layers-actions.c:1006 app/actions/layers-actions.c:1007
+#: app/actions/layers-actions.c:996 app/actions/layers-actions.c:997
 msgctxt "layers-action"
 msgid "To _New Layer"
 msgstr "Para _nova camada"
 
-#: app/actions/layers-commands.c:267 app/actions/layers-commands.c:2351
+#: app/actions/layers-commands.c:281 app/actions/layers-commands.c:2310
 msgid "Layer Attributes"
 msgstr "Definições da camada"
 
-#: app/actions/layers-commands.c:270
+#: app/actions/layers-commands.c:284
 msgid "Edit Layer Attributes"
 msgstr "Editar definições da camada"
 
-#: app/actions/layers-commands.c:338 app/widgets/gimpdrawabletreeview.c:359
+#: app/actions/layers-commands.c:352 app/widgets/gimpdrawabletreeview.c:359
 #: app/widgets/gimplayertreeview.c:1138
 msgid "New Layer"
 msgid_plural "New Layers"
 msgstr[0] "Nova camada"
 msgstr[1] "Novas camadas"
 
-#: app/actions/layers-commands.c:339
+#: app/actions/layers-commands.c:353
 #, c-format
 msgid "Create a New Layer"
 msgid_plural "Create %d New Layers"
 msgstr[0] "Criar uma nova camada"
 msgstr[1] "Criar %d novas camadas"
 
-#: app/actions/layers-commands.c:423 app/actions/layers-commands.c:2240
+#: app/actions/layers-commands.c:437 app/actions/layers-commands.c:2199
 msgid "New layer"
 msgid_plural "New layers"
 msgstr[0] "Nova camada"
 msgstr[1] "Novas camadas"
 
-#: app/actions/layers-commands.c:502
+#: app/actions/layers-commands.c:516
 msgid "Visible"
 msgstr "Visível"
 
-#: app/actions/layers-commands.c:531
+#: app/actions/layers-commands.c:545
 msgid "New layer group"
 msgid_plural "New layer groups"
 msgstr[0] "Novo grupo de camadas"
 msgstr[1] "Novos _grupos de camadas"
 
-#: app/actions/layers-commands.c:644
+#: app/actions/layers-commands.c:658
 msgid "Raise Layer"
 msgid_plural "Raise Layers"
 msgstr[0] "Elevar camada"
 msgstr[1] "Elevar camada"
 
-#: app/actions/layers-commands.c:678
+#: app/actions/layers-commands.c:692
 msgid "Raise Layer to Top"
 msgid_plural "Raise Layers to Top"
 msgstr[0] "Elevar camada para o topo"
 msgstr[1] "Elevar camadas para o topo"
 
-#: app/actions/layers-commands.c:715
+#: app/actions/layers-commands.c:729
 msgid "Lower Layer"
 msgid_plural "Lower Layers"
 msgstr[0] "Descer camada"
 msgstr[1] "Descer camadas"
 
-#: app/actions/layers-commands.c:752
+#: app/actions/layers-commands.c:766
 msgid "Lower Layer to Bottom"
 msgid_plural "Lower Layers to Bottom"
 msgstr[0] "Descer camada para o fundo"
 msgstr[1] "Descer camadas para o fundo"
 
-#: app/actions/layers-commands.c:779
+#: app/actions/layers-commands.c:793
 msgid "Duplicate layers"
 msgstr "Duplicar camadas"
 
-#: app/actions/layers-commands.c:889
+#: app/actions/layers-commands.c:903
 #, c-format
 msgctxt "undo-type"
 msgid "Merge %d Layer Groups"
 msgstr "Unir %d grupos de camadas"
 
-#: app/actions/layers-commands.c:949
+#: app/actions/layers-commands.c:963
 #, c-format
 msgctxt "undo-type"
 msgid "Remove %d Layers"
 msgstr "Remover %d camadas"
 
-#: app/actions/layers-commands.c:1095
+#: app/actions/layers-commands.c:990 app/text/gimptextlayer.c:581
+msgid "Discard Text Information"
+msgstr "Descartar informação de texto"
+
+#: app/actions/layers-commands.c:1009
+msgid "Add Paths"
+msgstr "Adicionar caminhos"
+
+#: app/actions/layers-commands.c:1131
 msgid "Set Layer Boundary Size"
 msgstr "Definir tamanho do limite da camada"
 
-#: app/actions/layers-commands.c:1125
+#: app/actions/layers-commands.c:1161
 msgid "Layers to Image Size"
 msgstr "Camadas no tamanho da imagem"
 
-#: app/actions/layers-commands.c:1173
+#: app/actions/layers-commands.c:1209
 msgid "Scale Layer"
 msgstr "Alterar tamanho da camada"
 
-#: app/actions/layers-commands.c:1212
+#: app/actions/layers-commands.c:1248
 #, c-format
 msgid "Crop Layer to Selection"
 msgid_plural "Crop %d Layers to Selection"
 msgstr[0] "Recortar camada pela seleção"
 msgstr[1] "Recortar %d camadas pela seleção"
 
-#: app/actions/layers-commands.c:1277
+#: app/actions/layers-commands.c:1313
 msgid ""
 "Cannot crop because none of the selected layers have content or they are "
 "already cropped to their content."
@@ -7268,125 +7299,109 @@ msgstr ""
 "Não foi possível recortar porque nenhuma das camadas selecionadas tem "
 "conteúdo ou já estão recortadas pelo seu conteúdo."
 
-#: app/actions/layers-commands.c:1283
+#: app/actions/layers-commands.c:1319
 #, c-format
 msgid "Crop Layer to Content"
 msgid_plural "Crop %d Layers to Content"
 msgstr[0] "Recortar camada pelo conteúdo"
 msgstr[1] "Recortar %d camadas pelo conteúdo"
 
-#: app/actions/layers-commands.c:1420 app/actions/layers-commands.c:2441
+#: app/actions/layers-commands.c:1456 app/actions/layers-commands.c:2400
 msgid "Add Layer Masks"
 msgstr "Adicionar máscara à camada"
 
-#: app/actions/layers-commands.c:1472
+#: app/actions/layers-commands.c:1508
 msgid "Apply Layer Masks"
 msgstr "Aplicar máscara à camada"
 
-#: app/actions/layers-commands.c:1476
+#: app/actions/layers-commands.c:1512
 msgid "Delete Layer Masks"
 msgstr "Eliminar máscara da camada"
 
-#: app/actions/layers-commands.c:1563
+#: app/actions/layers-commands.c:1599
 msgid "Show Layer Masks"
 msgstr "Mostrar máscara da camada"
 
 # Cada camada só pode ter 1 máscara, por isso não pode estar no plural como a string original. No entanto este comando pode ser aplicado a mais do que 1 camada selecionada (não existe uma mensagem diferente para 1 camada e outra para mais do que 1 camada selecionada). Aplica-se o mesmo às outras strings: Adicionar, Aplicar, Eliminar e Mostrar a máscara da camada.
-#: app/actions/layers-commands.c:1610
+#: app/actions/layers-commands.c:1646
 msgid "Disable Layer Masks"
 msgstr "Desativar máscara da camada"
 
-#: app/actions/layers-commands.c:1649
+#: app/actions/layers-commands.c:1685
 msgctxt "undo-type"
 msgid "Masks to Selection"
 msgstr "Máscaras à seleção"
 
-#: app/actions/layers-commands.c:1653
+#: app/actions/layers-commands.c:1689
 msgctxt "undo-type"
 msgid "Add Masks to Selection"
 msgstr "Adicionar máscaras à seleção"
 
-#: app/actions/layers-commands.c:1657
+#: app/actions/layers-commands.c:1693
 msgctxt "undo-type"
 msgid "Subtract Masks from Selection"
 msgstr "Subtrair máscaras da seleção"
 
-#: app/actions/layers-commands.c:1661
+#: app/actions/layers-commands.c:1697
 msgctxt "undo-type"
 msgid "Intersect Masks with Selection"
 msgstr "Intersetar máscaras com a seleção"
 
-#: app/actions/layers-commands.c:1682
+#: app/actions/layers-commands.c:1718
 msgid "Add Alpha Channel"
 msgstr "Adicionar canal alfa"
 
-#: app/actions/layers-commands.c:1703
+#: app/actions/layers-commands.c:1739
 msgid "Remove Alpha Channel"
 msgstr "Remover canal alfa"
 
-#: app/actions/layers-commands.c:1731 app/core/gimpchannel-select.c:433
+#: app/actions/layers-commands.c:1767 app/core/gimpchannel-select.c:433
 #: app/core/gimplayer.c:443
 msgctxt "undo-type"
 msgid "Alpha to Selection"
 msgstr "Canal alfa para a seleção"
 
-#: app/actions/layers-commands.c:1735 app/core/gimpchannel-select.c:427
+#: app/actions/layers-commands.c:1771 app/core/gimpchannel-select.c:427
 msgctxt "undo-type"
 msgid "Add Alpha to Selection"
 msgstr "Adicionar canal alfa à seleção"
 
-#: app/actions/layers-commands.c:1739 app/core/gimpchannel-select.c:430
+#: app/actions/layers-commands.c:1775 app/core/gimpchannel-select.c:430
 msgctxt "undo-type"
 msgid "Subtract Alpha from Selection"
 msgstr "Subtrair canal alfa da seleção"
 
-#: app/actions/layers-commands.c:1743 app/core/gimpchannel-select.c:436
+#: app/actions/layers-commands.c:1779 app/core/gimpchannel-select.c:436
 msgctxt "undo-type"
 msgid "Intersect Alpha with Selection"
 msgstr "Intersetar canal alfa com a seleção"
 
-#: app/actions/layers-commands.c:1754
+#: app/actions/layers-commands.c:1790
 msgid "Empty Selection"
 msgstr "Seleção vazia"
 
-#: app/actions/layers-commands.c:1784 app/actions/layers-commands.c:1828
+#: app/actions/layers-commands.c:1820 app/actions/layers-commands.c:1864
 #: app/widgets/gimplayertreeview.c:1659
 msgid "Set layers opacity"
 msgstr "Definir opacidade das camadas"
 
-#: app/actions/layers-commands.c:1898
+#: app/actions/layers-commands.c:1934
 msgid "Set layers' blend space"
 msgstr "Definir espaço de mistura da camada"
 
-#: app/actions/layers-commands.c:1951
+#: app/actions/layers-commands.c:1987
 msgid "Set layers' composite space"
 msgstr "Definir espaço de combinação da camada"
 
-#: app/actions/layers-commands.c:2004
+#: app/actions/layers-commands.c:2040
 msgid "Set layers' composite mode"
 msgstr "Definir modo de combinação da camada"
 
-#: app/actions/layers-commands.c:2061 app/widgets/gimpitemtreeview.c:531
-msgid "Lock content"
-msgstr "Bloquear conteúdo"
-
-#: app/actions/layers-commands.c:2063 app/widgets/gimpitemtreeview.c:532
-msgid "Unlock content"
-msgstr "Desbloquear conteúdo"
-
-#: app/actions/layers-commands.c:2110 app/widgets/gimpitemtreeview.c:547
-msgid "Lock position"
-msgstr "Bloquear posição"
-
-#: app/actions/layers-commands.c:2112 app/widgets/gimpitemtreeview.c:548
-msgid "Unlock position"
-msgstr "Desbloquear posição"
-
-#: app/actions/layers-commands.c:2162
+#: app/actions/layers-commands.c:2124
 msgid "Lock alpha channels"
 msgstr "Bloquear canais alfa"
 
-#: app/actions/layers-commands.c:2162
+#: app/actions/layers-commands.c:2124
 msgid "Unlock alpha channels"
 msgstr "Desbloquear canais alfa"
 
@@ -8044,11 +8059,11 @@ msgstr ""
 "Quando contornar, agir como se as áreas selecionadas continuassem fora da "
 "imagem."
 
-#: app/actions/select-commands.c:455
+#: app/actions/select-commands.c:456
 msgid "Fill Selection Outline"
 msgstr "Preenche o contorno da seleção"
 
-#: app/actions/select-commands.c:486
+#: app/actions/select-commands.c:488
 msgid "Stroke Selection"
 msgstr "Traçar seleção"
 
@@ -9080,13 +9095,13 @@ msgstr "Criar um novo caminho com os últimos valores usados"
 
 #: app/actions/vectors-actions.c:78
 msgctxt "vectors-action"
-msgid "D_uplicate Path"
-msgstr "D_uplicar caminho"
+msgid "D_uplicate Paths"
+msgstr "D_uplicar caminhos"
 
 #: app/actions/vectors-actions.c:79
 msgctxt "vectors-action"
-msgid "Duplicate this path"
-msgstr "Duplicar este caminho"
+msgid "Duplicate these paths"
+msgstr "Duplicar estes caminhos"
 
 #: app/actions/vectors-actions.c:84
 msgctxt "vectors-action"
@@ -9145,43 +9160,43 @@ msgstr "Mover este caminho para o fundo da lista"
 
 #: app/actions/vectors-actions.c:119
 msgctxt "vectors-action"
-msgid "Fill Pat_h..."
-msgstr "_Preencher caminho…"
+msgid "Fill Pat_hs..."
+msgstr "_Preencher caminhos…"
 
 #: app/actions/vectors-actions.c:120
 msgctxt "vectors-action"
-msgid "Fill the path"
-msgstr "Preenche o caminho"
+msgid "Fill the paths"
+msgstr "Preenche os caminhos"
 
 #: app/actions/vectors-actions.c:125
 msgctxt "vectors-action"
-msgid "Fill Path"
-msgstr "Preencher caminho"
+msgid "Fill Paths"
+msgstr "Preencher caminhos"
 
 #: app/actions/vectors-actions.c:126
 msgctxt "vectors-action"
-msgid "Fill the path with last values"
-msgstr "Preenche o caminho utilizando os últimos valores"
+msgid "Fill the paths with last values"
+msgstr "Preenche os caminhos com os últimos valores"
 
 #: app/actions/vectors-actions.c:131
 msgctxt "vectors-action"
-msgid "Stro_ke Path..."
-msgstr "_Traçar caminho…"
+msgid "Stro_ke Paths..."
+msgstr "_Traçar caminhos…"
 
 #: app/actions/vectors-actions.c:132
 msgctxt "vectors-action"
-msgid "Paint along the path"
-msgstr "Pintar ao longo do caminho"
+msgid "Paint along the paths"
+msgstr "Pintar ao longo dos caminhos"
 
 #: app/actions/vectors-actions.c:137
 msgctxt "vectors-action"
-msgid "Stro_ke Path"
-msgstr "_Traçar caminho"
+msgid "Stro_ke Paths"
+msgstr "_Traçar caminhos"
 
 #: app/actions/vectors-actions.c:138
 msgctxt "vectors-action"
-msgid "Paint along the path with last values"
-msgstr "Pintar ao longo do caminho usando os últimos valores"
+msgid "Paint along the paths with last values"
+msgstr "Pintar ao longo dos caminhos com os últimos valores"
 
 #: app/actions/vectors-actions.c:143
 msgctxt "vectors-action"
@@ -9310,8 +9325,8 @@ msgstr "Etiqueta de cor do caminho: definir como cinzento"
 
 #: app/actions/vectors-actions.c:244
 msgctxt "vectors-action"
-msgid "Path to Sele_ction"
-msgstr "_Caminho para seleção"
+msgid "Paths to Sele_ction"
+msgstr "_Caminhos para seleção"
 
 #: app/actions/vectors-actions.c:245
 msgctxt "vectors-action"
@@ -9320,44 +9335,44 @@ msgstr "Caminho para seleção"
 
 #: app/actions/vectors-actions.c:250
 msgctxt "vectors-action"
-msgid "Fr_om Path"
-msgstr "_De um caminho vetorial"
+msgid "Selection Fr_om Paths"
+msgstr "Seleção a partir dos caminhos"
 
 # String original em inglês é enganadora e confusa
 #: app/actions/vectors-actions.c:251
 msgctxt "vectors-action"
-msgid "Replace selection with path"
-msgstr "Selecionar a área de um caminho vetorial selecionado se existir"
+msgid "Replace selection with paths"
+msgstr "Substituir a seleção por caminhos"
 
 #: app/actions/vectors-actions.c:256
 msgctxt "vectors-action"
-msgid "_Add to Selection"
-msgstr "_Adicionar à seleção"
+msgid "_Add Paths to Selection"
+msgstr "_Adicionar caminhos à seleção"
 
 #: app/actions/vectors-actions.c:257
 msgctxt "vectors-action"
-msgid "Add path to selection"
-msgstr "Adicionar o caminho à seleção"
+msgid "Add paths to selection"
+msgstr "Adicionar caminhos à seleção"
 
 #: app/actions/vectors-actions.c:262
 msgctxt "vectors-action"
-msgid "_Subtract from Selection"
-msgstr "_Subtrair da seleção"
+msgid "_Subtract Paths from Selection"
+msgstr "_Subtrair caminhos da seleção"
 
 #: app/actions/vectors-actions.c:263
 msgctxt "vectors-action"
-msgid "Subtract path from selection"
-msgstr "Subtrair o caminho à seleção"
+msgid "Subtract paths from selection"
+msgstr "Subtrair caminhos da seleção"
 
 #: app/actions/vectors-actions.c:268
 msgctxt "vectors-action"
-msgid "_Intersect with Selection"
-msgstr "_Intersetar com a seleção"
+msgid "_Intersect Paths with Selection"
+msgstr "_Intersetar caminhos com a seleção"
 
 #: app/actions/vectors-actions.c:269
 msgctxt "vectors-action"
-msgid "Intersect path with selection"
-msgstr "Intersetar o caminho com a seleção"
+msgid "Intersect paths with selection"
+msgstr "Intersetar caminhos com a seleção"
 
 #: app/actions/vectors-actions.c:277
 msgctxt "vectors-action"
@@ -9425,53 +9440,65 @@ msgctxt "vectors-action"
 msgid "Select the vector below the current path"
 msgstr "Selecionar caminho abaixo do caminho atual"
 
-#: app/actions/vectors-commands.c:162 app/actions/vectors-commands.c:827
+#: app/actions/vectors-commands.c:171 app/actions/vectors-commands.c:869
 msgid "Path Attributes"
 msgstr "Definições do caminho"
 
-#: app/actions/vectors-commands.c:165
+#: app/actions/vectors-commands.c:174
 msgid "Edit Path Attributes"
 msgstr "Editar definições do caminho"
 
-#: app/actions/vectors-commands.c:203
+#: app/actions/vectors-commands.c:212
 msgid "New Path"
 msgstr "Novo caminho"
 
-#: app/actions/vectors-commands.c:206
+#: app/actions/vectors-commands.c:215
 msgid "Create a New Path"
 msgstr "Criar um novo caminho"
 
-#: app/actions/vectors-commands.c:264
+#: app/actions/vectors-commands.c:273
 msgid "Raise Path"
 msgid_plural "Raise Paths"
 msgstr[0] "Elevar caminho"
 msgstr[1] "Elevar caminhos"
 
-#: app/actions/vectors-commands.c:300
+#: app/actions/vectors-commands.c:309
 msgid "Raise Path to Top"
 msgid_plural "Raise Paths to Top"
 msgstr[0] "Elevar caminho para o topo"
 msgstr[1] "Elevar caminhos para o topo"
 
-#: app/actions/vectors-commands.c:340
+#: app/actions/vectors-commands.c:349
 msgid "Lower Path"
 msgid_plural "Lower Paths"
 msgstr[0] "Baixar caminho"
 msgstr[1] "Baixar caminhos"
 
-#: app/actions/vectors-commands.c:380
+#: app/actions/vectors-commands.c:389
 msgid "Lower Path to Bottom"
 msgid_plural "Lower Paths to Bottom"
 msgstr[0] "Baixar caminho para o fundo"
 msgstr[1] "Baixar caminhos para o fundo"
 
-#: app/actions/vectors-commands.c:535 app/tools/gimpvectoroptions.c:201
-#: app/tools/gimpvectortool.c:749
+#: app/actions/vectors-commands.c:419
+msgid "Duplicate Paths"
+msgstr "D_uplicar caminhos"
+
+#: app/actions/vectors-commands.c:457
+msgid "Remove Paths"
+msgstr "Remover caminhos"
+
+#: app/actions/vectors-commands.c:504
+msgid "Paths to selection"
+msgstr "Caminhos para seleção"
+
+#: app/actions/vectors-commands.c:584 app/tools/gimpvectoroptions.c:201
+#: app/tools/gimpvectortool.c:755
 msgid "Fill Path"
 msgstr "Preencher caminho"
 
-#: app/actions/vectors-commands.c:567 app/tools/gimpvectoroptions.c:209
-#: app/tools/gimpvectortool.c:823
+#: app/actions/vectors-commands.c:612 app/tools/gimpvectoroptions.c:209
+#: app/tools/gimpvectortool.c:835
 msgid "Stroke Path"
 msgstr "Traçar caminho"
 
@@ -12647,12 +12674,12 @@ msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr "Ancorar seleção flutuante"
 
-#: app/core/core-enums.c:1298 app/core/gimp-edit.c:722
+#: app/core/core-enums.c:1298 app/core/gimp-edit.c:736
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "Colar"
 
-#: app/core/core-enums.c:1299 app/core/gimp-edit.c:1051
+#: app/core/core-enums.c:1299 app/core/gimp-edit.c:1065
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "Cortar"
@@ -13044,11 +13071,11 @@ msgid_plural "Cut %d Layers"
 msgstr[0] "Cortar camada"
 msgstr[1] "Cortar %d camadas"
 
-#: app/core/gimp-edit.c:492 app/core/gimpimage-new.c:553
+#: app/core/gimp-edit.c:506 app/core/gimpimage-new.c:553
 msgid "Pasted Layer"
 msgstr "Camada colada"
 
-#: app/core/gimp-edit.c:1068
+#: app/core/gimp-edit.c:1082
 msgid "Global Buffer"
 msgstr "Cópia principal"
 
@@ -13831,7 +13858,7 @@ msgctxt "undo-type"
 msgid "Offset Drawable"
 msgstr "Desviar desenho"
 
-#: app/core/gimpdrawable-stroke.c:111 app/paint/gimppaintcore-stroke.c:347
+#: app/core/gimpdrawable-stroke.c:111 app/paint/gimppaintcore-stroke.c:335
 #: app/vectors/gimpvectors.c:698
 msgid "Not enough points to stroke"
 msgstr "Sem pontos suficientes para traçar"
@@ -14194,42 +14221,42 @@ msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Remover parasita da imagem"
 
-#: app/core/gimpimage.c:5348
+#: app/core/gimpimage.c:5230
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Adicionar camada"
 
-#: app/core/gimpimage.c:5392 app/core/gimpimage.c:5423
+#: app/core/gimpimage.c:5274 app/core/gimpimage.c:5305
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Remover camada"
 
-#: app/core/gimpimage.c:5417
+#: app/core/gimpimage.c:5299
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Remover seleção flutuante"
 
-#: app/core/gimpimage.c:5941
+#: app/core/gimpimage.c:5823
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Adicionar canal"
 
-#: app/core/gimpimage.c:5971 app/core/gimpimage.c:5996
+#: app/core/gimpimage.c:5853 app/core/gimpimage.c:5878
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Remover canal"
 
-#: app/core/gimpimage.c:6055
+#: app/core/gimpimage.c:5938
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Adicionar caminho"
 
-#: app/core/gimpimage.c:6085 app/core/gimpimage.c:6093
+#: app/core/gimpimage.c:5973 app/core/gimpimage.c:5981
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Remover caminho"
 
-#: app/core/gimpimage-arrange.c:240
+#: app/core/gimpimage-arrange.c:260
 msgctxt "undo-type"
 msgid "Arrange Objects"
 msgstr "Distribuir objetos"
@@ -19090,33 +19117,33 @@ msgstr "[%s] para um eixo restringido"
 msgid "%s to zoom"
 msgstr "[%s] para ampliar"
 
-#: app/display/gimptoolhandlegrid.c:865
+#: app/display/gimptoolhandlegrid.c:896
 #: app/display/gimptooltransformgrid.c:1832
 msgid "Click-Drag to move"
 msgstr "[Clique] + [arrastar] para mover"
 
-#: app/display/gimptoolhandlegrid.c:868
+#: app/display/gimptoolhandlegrid.c:899
 msgid "Click-Drag to rotate and scale"
 msgstr "[Clique] + [arrastar] para rodar e alterar o tamanho"
 
-#: app/display/gimptoolhandlegrid.c:871
+#: app/display/gimptoolhandlegrid.c:902
 msgid "Click-Drag to shear and scale"
 msgstr "[Clique] + [arrastar] para inclinar e alterar o tamanho"
 
-#: app/display/gimptoolhandlegrid.c:874
+#: app/display/gimptoolhandlegrid.c:905
 #: app/display/gimptooltransformgrid.c:1820
 msgid "Click-Drag to change perspective"
 msgstr "[Clique] + [arrastar] para alterar a perspectiva"
 
-#: app/display/gimptoolhandlegrid.c:885
+#: app/display/gimptoolhandlegrid.c:916
 msgid "Click to add a handle"
 msgstr "[Clique] para adicionar uma alça"
 
-#: app/display/gimptoolhandlegrid.c:891
+#: app/display/gimptoolhandlegrid.c:922
 msgid "Click-Drag to move this handle"
 msgstr "[Clique] + [arrastar] para mover esta alça"
 
-#: app/display/gimptoolhandlegrid.c:896
+#: app/display/gimptoolhandlegrid.c:927
 msgid "Click-Drag to remove this handle"
 msgstr "[Clique] + [arrastar] para remover esta alça"
 
@@ -19350,12 +19377,12 @@ msgstr ""
 "[Clique] + [arrastar] adiciona um segmento livre, [Clique] adiciona um "
 "segmento poligonal"
 
-#: app/display/gimptoolrectangle.c:567 app/display/gimptoolrectangle.c:875
+#: app/display/gimptoolrectangle.c:575 app/display/gimptoolrectangle.c:884
 #: app/tools/gimprectangleselecttool.c:638
 msgid "Rectangle: "
 msgstr "Retângulo: "
 
-#: app/display/gimptoolrectangle.c:2139
+#: app/display/gimptoolrectangle.c:2168
 msgid "Position: "
 msgstr "Posição: "
 
@@ -22474,10 +22501,6 @@ msgstr "Rodar camada de texto"
 msgid "Transform Text Layer"
 msgstr "Transformar camada de texto"
 
-#: app/text/gimptextlayer.c:581
-msgid "Discard Text Information"
-msgstr "Descartar informação de texto"
-
 #: app/text/gimptextlayer.c:716
 msgid "Due to lack of any fonts, text functionality is not available."
 msgstr ""
@@ -22687,41 +22710,41 @@ msgstr "Caminho de referência: %s"
 msgid "Reference guide"
 msgstr "Guia de referência"
 
-#: app/tools/gimpaligntool.c:130
+#: app/tools/gimpaligntool.c:132
 msgid "Align and Distribute"
 msgstr "Alinhar e Distribuir"
 
-#: app/tools/gimpaligntool.c:131
+#: app/tools/gimpaligntool.c:133
 msgid "Alignment Tool: Align or arrange layers and other objects"
 msgstr "Ferramenta Alinhar: alinha e distribui camadas e outros objetos"
 
-#: app/tools/gimpaligntool.c:132
+#: app/tools/gimpaligntool.c:134
 msgid "_Align and Distribute"
 msgstr "_Alinhar e Distribuir"
 
-#: app/tools/gimpaligntool.c:524
+#: app/tools/gimpaligntool.c:529
 msgid "Arrange Objects"
 msgstr "Organizar objectos"
 
-#: app/tools/gimpaligntool.c:555
+#: app/tools/gimpaligntool.c:560
 msgid "Click on a layer, path or guide, or Click-Drag to pick a reference"
 msgstr ""
 "Clique numa camada, caminho ou guia, ou Clicar-Arrastar para escolher uma "
 "referência"
 
-#: app/tools/gimpaligntool.c:559
+#: app/tools/gimpaligntool.c:564
 msgid "Click to pick this layer as reference"
 msgstr "Clique para escolher esta camada como referência"
 
-#: app/tools/gimpaligntool.c:562
+#: app/tools/gimpaligntool.c:567
 msgid "Click to pick this guide as reference"
 msgstr "Clique para escolher este guia como referência"
 
-#: app/tools/gimpaligntool.c:567
+#: app/tools/gimpaligntool.c:572
 msgid "Click to pick this path as reference"
 msgstr "Clique para escolher este caminho como referência"
 
-#: app/tools/gimpaligntool.c:574
+#: app/tools/gimpaligntool.c:579
 msgid ""
 "Click on a guide to add it to objects to align, click anywhere else to "
 "unselect all guides"
@@ -22729,11 +22752,11 @@ msgstr ""
 "Clique num guia para adicioná-lo aos objetos a alinhar, clique em qualquer "
 "outro lugar para desseleccionar todos os guias"
 
-#: app/tools/gimpaligntool.c:578
+#: app/tools/gimpaligntool.c:583
 msgid "Click to select this guide for alignment"
 msgstr "Clique para selecionar este guia para alinhamento"
 
-#: app/tools/gimpaligntool.c:583
+#: app/tools/gimpaligntool.c:588
 msgid "Click to add this guide to the list of objects to align"
 msgstr "Clique para adicionar este guia à lista de objetos para alinhar"
 
@@ -28917,6 +28940,34 @@ msgstr "Erro ao escrever XCF: BPC não suportado ao escrever o pixel: %d"
 #: app-tools/gimp-debug-tool.c:87
 msgid "GIMP Crash Debug"
 msgstr "Depuração de falha de sistema do GIMP"
+
+#~ msgctxt "channels-action"
+#~ msgid "_Add to Selection"
+#~ msgstr "_Adicionar à seleção"
+
+#~ msgctxt "channels-action"
+#~ msgid "_Subtract from Selection"
+#~ msgstr "_Subtrair da seleção"
+
+#~ msgctxt "channels-action"
+#~ msgid "_Intersect with Selection"
+#~ msgstr "_Intersetar com a seleção"
+
+#~ msgctxt "vectors-action"
+#~ msgid "Fr_om Path"
+#~ msgstr "_De um caminho vetorial"
+
+#~ msgctxt "vectors-action"
+#~ msgid "_Add to Selection"
+#~ msgstr "_Adicionar à seleção"
+
+#~ msgctxt "vectors-action"
+#~ msgid "_Subtract from Selection"
+#~ msgstr "_Subtrair da seleção"
+
+#~ msgctxt "vectors-action"
+#~ msgid "_Intersect with Selection"
+#~ msgstr "_Intersetar com a seleção"
 
 #~ msgctxt "layers-action"
 #~ msgid "_Anchor Layer"
