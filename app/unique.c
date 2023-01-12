@@ -49,6 +49,13 @@ gimp_unique_open (const gchar **filenames,
 #ifdef G_OS_WIN32
   return gimp_unique_win32_open (filenames, as_new);
 #elif defined (PLATFORM_OSX)
+  /* Opening files through "Open with" from other software is likely handled
+   * instead by gui_unique_quartz_init() by gtkosx signal handling.
+   *
+   * Opening files through command lines will always create new process, because
+   * dbus is usually not installed by default on macOS (and when it is, it may
+   * not work properly). See !808 and #8997.
+   */
   return FALSE;
 #else
   return gimp_unique_dbus_open (filenames, as_new);
@@ -63,6 +70,10 @@ gimp_unique_batch_run (const gchar  *batch_interpreter,
   g_printerr ("Batch commands cannot be run in existing instance in Win32.\n");
   return FALSE;
 #elif defined (PLATFORM_OSX)
+  /* Running batch commands through command lines will always run in the new
+   * process, because dbus is usually not installed by default on macOS (and
+   * when it is, it may not work properly). See !808 and #8997.
+   */
   return FALSE;
 #else
   return gimp_unique_dbus_batch_run (batch_interpreter,
