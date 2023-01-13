@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-01-02 14:18+0000\n"
-"PO-Revision-Date: 2023-01-06 08:45+0100\n"
+"POT-Creation-Date: 2023-01-12 11:56+0000\n"
+"PO-Revision-Date: 2023-01-13 23:54+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -1061,7 +1061,7 @@ msgstr "Naloži parametre raziskovalca MZP"
 #: plug-ins/file-psd/psd-thumb-load.c:87 plug-ins/flame/flame.c:478
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1862
 #: plug-ins/fractal-explorer/fractal-explorer.c:1038 plug-ins/gfig/gfig.c:476
-#: plug-ins/help/gimphelplocale.c:222 plug-ins/help/gimphelplocale.c:238
+#: plug-ins/help/gimphelplocale.c:255 plug-ins/help/gimphelplocale.c:271
 #: plug-ins/lighting/lighting-ui.c:1377
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -10701,12 +10701,17 @@ msgstr "Morda vam manjka ogrodje GIO in morate namestiti GVFS?"
 msgid "Help ID '%s' unknown"
 msgstr "ID pomoči »%s« ni znan"
 
-#: plug-ins/help/gimphelplocale.c:208
+#: plug-ins/help/gimphelplocale.c:218
 #, c-format
 msgid "Loading index from '%s'"
 msgstr "Nalaganje kazala z »%s«"
 
-#: plug-ins/help/gimphelplocale.c:266
+#: plug-ins/help/gimphelplocale.c:239
+#, c-format
+msgid "Could not load data from '%s': %s"
+msgstr "Podatkov iz »%s« ni mogoče naložiti: %s"
+
+#: plug-ins/help/gimphelplocale.c:311
 #, c-format
 msgid ""
 "Parse error in '%s':\n"
