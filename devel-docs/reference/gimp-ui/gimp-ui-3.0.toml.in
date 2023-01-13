@@ -30,7 +30,7 @@ search_index = true
   docs_url = "https://gegl.org/babl"
 
   [dependencies."Gimp-3.0"]
-  name = "GIMP"
+  name = "Gimp"
   description = "GIMP Library"
   docs_url = "https://developer.gimp.org/api/3.0/libgimp/"
 
@@ -55,17 +55,17 @@ search_index = true
   docs_url = "https://gegl.org/"
 
   [dependencies."Gio-2.0"]
-  name = "GIO"
+  name = "Gio"
   description = "GObject interfaces and objects"
   docs_url = "https://developer.gnome.org/gio/stable"
 
   [dependencies."Gtk-3.0"]
-  name = "GTK"
+  name = "Gtk"
   description = "The GTK toolkit"
   docs_url = "https://developer.gnome.org/gtk3/stable"
 
   [dependencies."cairo-1.0"]
-  name = "Cairo"
+  name = "cairo"
   description = "A 2D graphics library with support for multiple output devices"
   docs_url = "https://www.cairographics.org/manual/"
 
