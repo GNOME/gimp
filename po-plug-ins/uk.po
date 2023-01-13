@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-01-02 14:18+0000\n"
-"PO-Revision-Date: 2023-01-02 20:56+0200\n"
+"POT-Creation-Date: 2023-01-12 11:56+0000\n"
+"PO-Revision-Date: 2023-01-13 17:06+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -1061,7 +1061,7 @@ msgstr "Завантажити параметри CML Explorer"
 #: plug-ins/file-psd/psd-thumb-load.c:87 plug-ins/flame/flame.c:478
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1862
 #: plug-ins/fractal-explorer/fractal-explorer.c:1038 plug-ins/gfig/gfig.c:476
-#: plug-ins/help/gimphelplocale.c:222 plug-ins/help/gimphelplocale.c:238
+#: plug-ins/help/gimphelplocale.c:255 plug-ins/help/gimphelplocale.c:271
 #: plug-ins/lighting/lighting-ui.c:1377
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -7534,18 +7534,16 @@ msgstr ""
 "(буде проігноровано, якщо немає контура обрізання)"
 
 #: plug-ins/file-psd/psd.c:249
-#| msgid "Export Image as MNG"
 msgid "Export as _CMYK"
 msgstr "Експортувати як _CMYK"
 
 #: plug-ins/file-psd/psd.c:250
 msgid "Export a CMYK PSD image using the soft-proofing color profile"
 msgstr ""
-"Експортувати зображення PSD CMYK з використанням профілю кольорів із"
-" пробником"
+"Експортувати зображення PSD CMYK з використанням профілю кольорів із "
+"пробником"
 
 #: plug-ins/file-psd/psd.c:255
-#| msgid "Export Icons"
 msgid "Export as _Duotone"
 msgstr "Експортувати як _Duotone"
 
@@ -7554,8 +7552,8 @@ msgid ""
 "Export as a Duotone PSD file if Duotone color space information was attached "
 "to the image when originally imported."
 msgstr ""
-"Експортувати як файл Duotone PSD, якщо під час початкового імпортування до"
-" зображення було долучено дані простору кольорів Duotone."
+"Експортувати як файл Duotone PSD, якщо під час початкового імпортування до "
+"зображення було долучено дані простору кольорів Duotone."
 
 #: plug-ins/file-raw/file-raw-formats.h:46
 msgid "Raw Canon"
@@ -10758,12 +10756,18 @@ msgstr "Можливо, не вистачає механізму GIO, і тре�
 msgid "Help ID '%s' unknown"
 msgstr "Невідомий ID у системі довідки - «%s»"
 
-#: plug-ins/help/gimphelplocale.c:208
+#: plug-ins/help/gimphelplocale.c:218
 #, c-format
 msgid "Loading index from '%s'"
 msgstr "Завантажується зміст з «%s»"
 
-#: plug-ins/help/gimphelplocale.c:266
+#: plug-ins/help/gimphelplocale.c:239
+#, c-format
+#| msgid "Could not load '%s': %s"
+msgid "Could not load data from '%s': %s"
+msgstr "Не вдалось завантажити дані з «%s»: %s"
+
+#: plug-ins/help/gimphelplocale.c:311
 #, c-format
 msgid ""
 "Parse error in '%s':\n"
