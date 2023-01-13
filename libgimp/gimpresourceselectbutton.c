@@ -501,16 +501,18 @@ gimp_resource_select_button_set_property (GObject      *object,
       break;
 
     case PROP_RESOURCE:
-      /* Do not use the exported method set_resource.
-       * That is internal and less safe
-       * because it is agnostic of NULL values passed,
-       * and does not unref any existing value.
-       */
-      GimpResource * specific_value;
+      {
+        /* Do not use the exported method set_resource.
+         * That is internal and less safe
+         * because it is agnostic of NULL values passed,
+         * and does not unref any existing value.
+         */
+        GimpResource *specific_value;
 
-      specific_value = g_value_get_object (gvalue);
-      g_assert (specific_value != NULL);
-      priv->resource = specific_value;
+        specific_value = g_value_get_object (gvalue);
+        g_assert (specific_value != NULL);
+        priv->resource = specific_value;
+      }
       break;
 
     default:
