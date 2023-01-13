@@ -52,12 +52,12 @@ search_index = true
   docs_url = "https://developer.gnome.org/gio/stable"
 
   [dependencies."Gtk-3.0"]
-  name = "GTK"
+  name = "Gtk"
   description = "The GTK toolkit"
   docs_url = "https://developer.gnome.org/gtk3/stable"
 
   [dependencies."cairo-1.0"]
-  name = "Cairo"
+  name = "cairo"
   description = "A 2D graphics library with support for multiple output devices"
   docs_url = "https://www.cairographics.org/manual/"
 
