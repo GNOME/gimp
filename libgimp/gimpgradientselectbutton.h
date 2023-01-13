@@ -36,11 +36,6 @@ G_DECLARE_FINAL_TYPE (GimpGradientSelectButton,
                       GRADIENT_SELECT_BUTTON,
                       GimpResourceSelectButton)
 
-struct _GimpGradientSelectButtonClass
-{
-  GimpResourceSelectButtonClass  parent_class;
-};
-
 GtkWidget   * gimp_gradient_select_button_new          (const gchar        *title,
                                                         GimpResource       *gradient);
 

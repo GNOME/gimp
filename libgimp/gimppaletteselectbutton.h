@@ -39,14 +39,6 @@ G_DECLARE_FINAL_TYPE (GimpPaletteSelectButton,
                       GimpResourceSelectButton)
 
 
-struct _GimpPaletteSelectButtonClass
-{
-  GimpResourceSelectButtonClass  parent_class;
-
-  /* _set signal is not defined.  Use resource_set signal from superclass */
-};
-
-
 GtkWidget   * gimp_palette_select_button_new      (const gchar          *title,
                                                    GimpResource         *resource);
 
