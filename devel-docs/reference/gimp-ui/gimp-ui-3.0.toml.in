@@ -25,7 +25,7 @@ search_index = true
   # These links are mostly used for the dependency lists in index page.
 
   [dependencies."Babl-0.1"]
-  name = "babl"
+  name = "Babl"
   description = "Pixel encoding and color space conversion engine"
   docs_url = "https://gegl.org/babl"
 
@@ -50,7 +50,7 @@ search_index = true
   docs_url = "https://docs.gtk.org/gdk-pixbuf/"
 
   [dependencies."Gegl-0.4"]
-  name = "GEGL"
+  name = "Gegl"
   description = "Generic Graphics Library"
   docs_url = "https://gegl.org/"
 
