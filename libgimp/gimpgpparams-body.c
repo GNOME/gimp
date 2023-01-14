@@ -530,20 +530,20 @@ get_resource_by_id (gpointer gimp,
                     GType    gtype,
                     gchar   *id)
 {
+  GObject *resource = NULL;
+  GError  *error    = NULL;
+
+  g_return_val_if_fail (id != NULL, NULL);
+
 #ifdef LIBGIMP_COMPILATION
   /* Return a new proxy instance, not any instance already existing.
    * Primarily for class's new() and duplicate() methods,
    * and for procedure args of a resource type.
    */
-  GObject *resource = g_object_new (gtype, NULL);
-
+  resource = g_object_new (gtype, NULL);
   g_object_set (resource, "id", id, NULL);
   g_debug ("libgimp:get_resource_by_id");
-  return resource;
 #else
-  GError  *error = NULL;
-  GObject *resource = NULL;
-
   if (gtype == GIMP_TYPE_BRUSH)
     resource = (GObject*) gimp_pdb_get_brush (gimp, id, GIMP_PDB_DATA_ACCESS_READ, &error);
   else if (gtype == GIMP_TYPE_FONT)
@@ -558,9 +558,13 @@ get_resource_by_id (gpointer gimp,
     g_warning ("%s unsupported type: %s", G_STRFUNC, g_type_name (gtype));
 
   if (error != NULL)
-    g_warning ("A plugin is trying to use a resource %s that is no longer installed.", g_type_name (gtype) );
-  return resource;
+    g_warning ("A plugin is trying to use resource '%s' (of type %s) that is no longer installed: %s",
+               id, g_type_name (gtype), error->message);
 #endif
+
+  g_clear_error (&error);
+
+  return resource;
 }
 
 /* Return a resource's ID.
@@ -735,8 +739,12 @@ gimp_gp_param_to_value (gpointer        gimp,
     }
   else if (GIMP_VALUE_HOLDS_RESOURCE (value))
     {
-      gpointer resource;  /* when compiled in app, use generic pointer. */
-      resource = get_resource_by_id (gimp, G_VALUE_TYPE (value),  param->data.d_string);
+      /* when compiled in app, use generic pointer. */
+      gpointer resource = NULL;
+
+      if (param->data.d_string != NULL)
+        resource = get_resource_by_id (gimp, G_VALUE_TYPE (value),  param->data.d_string);
+
       g_value_set_object (value, resource);
     }
   else if (G_VALUE_HOLDS_PARAM (value))
@@ -1068,7 +1076,8 @@ gimp_value_to_gp_param (const GValue *value,
 
       if (resource != NULL)
         {
-          gchar * resource_id = get_resource_id (resource);
+          gchar *resource_id = get_resource_id (resource);
+
           /* resource_id can be NULL if resource is invalid. */
           if (full_copy)
             param->data.d_string = g_strdup (resource_id);
