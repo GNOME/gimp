@@ -16,9 +16,13 @@
 import gi
 gi.require_version('Gimp', '3.0')
 from gi.repository import Gimp
+gi.require_version('GimpUi', '3.0')
+from gi.repository import GimpUi
 from gi.repository import GObject
 from gi.repository import GLib
 from gi.repository import Gio
+gi.require_version('Gtk', '3.0')
+from gi.repository import Gtk
 import sys
 
 def N_(message): return message
@@ -53,14 +57,36 @@ def make_gradient(palette, num_segments, num_colors):
     return gradient
 
 def run(procedure, args, data):
+    config = procedure.create_config()
+    config.begin_run(None, Gimp.RunMode.INTERACTIVE, args)
+
     # Get the parameters
-    palette = None
-    if args.length() > 1:
-        palette = args.index(1)
-    if palette is None:
+    run_mode = args.index(0)
+    palette = args.index(1)
+
+    if run_mode == Gimp.RunMode.INTERACTIVE:
+        GimpUi.init(procedure.get_name())
+        dialog = GimpUi.ProcedureDialog(procedure=procedure, config=config)
+
+        # Add palette button
+        dialog.fill (["palette"])
+
+        if not dialog.run():
+            dialog.destroy()
+            config.end_run(Gimp.PDBStatusType.CANCEL)
+            return procedure.new_return_values(Gimp.PDBStatusType.CANCEL, GLib.Error())
+        else:
+            palette = config.get_property("palette")
+
+            dialog.destroy()
+
+    if palette is None or not palette.is_valid():
+        if palette is not None:
+          sys.stderr.write(f'Invalid palette id: {palette.get_id()}\n')
+          sys.stderr.write('This should not happen. Please report to GIMP project.\n')
+          sys.stderr.write('Falling back to context palette instead.\n')
         palette = Gimp.context_get_palette()
 
-    assert palette.is_valid()
     num_colors = palette.get_color_count()
 
     if procedure.get_name() == 'python-fu-palette-to-gradient':
@@ -69,6 +95,7 @@ def run(procedure, args, data):
         num_segments = num_colors
     gradient = make_gradient(palette, num_segments, num_colors)
 
+    config.end_run(Gimp.PDBStatusType.SUCCESS)
     # XXX: for the error parameter, we want to return None.
     # Unfortunately even though the argument is (nullable), pygobject
     # looks like it may have a bug. So workaround is to just set a
