@@ -400,7 +400,7 @@
 #define GIMP_HELP_FILTER_LINEAR_SINUSOID          "gimp-filter-linear-sinusoid"
 #define GIMP_HELP_FILTER_LITTLE_PLANET            "gimp-filter-little-planet"
 #define GIMP_HELP_FILTER_LONG_SHADOW              "gimp-filter-long-shadow"
-#define GIMP_HELP_FILTER_MANTIUK_2006             "gimp-filter-manituk-2006"
+#define GIMP_HELP_FILTER_MANTIUK_2006             "gimp-filter-mantiuk-2006"
 #define GIMP_HELP_FILTER_MAZE                     "gimp-filter-maze"
 #define GIMP_HELP_FILTER_MEAN_CURVATURE_BLUR      "gimp-filter-mean-curvature-blur"
 #define GIMP_HELP_FILTER_MEDIAN_BLUR              "gimp-filter-median-blur"
@@ -698,7 +698,6 @@
 #define GIMP_HELP_DOCK_IMAGE_MENU                 "gimp-dock-image-menu"
 #define GIMP_HELP_DOCK_AUTO_BUTTON                "gimp-dock-auto-button"
 #define GIMP_HELP_DOCK_CHANGE_SCREEN              "gimp-dock-change-screen"
-#define GIMP_HELP_DOCK_SEPARATOR                  "gimp-dock-separator"
 
 #define GIMP_HELP_DOCK_TAB_ADD                    "gimp-dock-tab-add"
 #define GIMP_HELP_DOCK_TAB_CLOSE                  "gimp-dock-tab-close"
@@ -717,7 +716,6 @@
 #define GIMP_HELP_DEVICE_STATUS_DIALOG            "gimp-device-status-dialog"
 #define GIMP_HELP_DISPLAY_FILTER_DIALOG           "gimp-display-filter-dialog"
 #define GIMP_HELP_HISTOGRAM_DIALOG                "gimp-histogram-dialog"
-#define GIMP_HELP_INFO_DIALOG                     "gimp-info-dialog"
 #define GIMP_HELP_MODULE_DIALOG                   "gimp-module-dialog"
 #define GIMP_HELP_NAVIGATION_DIALOG               "gimp-navigation-dialog"
 #define GIMP_HELP_SYMMETRY_DIALOG                 "gimp-symmetry-dialog"
@@ -728,7 +726,6 @@
 
 #define GIMP_HELP_EXPORT_DIALOG                   "gimp-export-dialog"
 #define GIMP_HELP_EXPORT_CONFIRM_DIALOG           "gimp-export-confirm-dialog"
-#define GIMP_HELP_UNIT_DIALOG                     "gimp-unit-dialog"
 
 #define GIMP_HELP_WINDOWS_SHOW_DOCK               "gimp-windows-show-dock"
 #define GIMP_HELP_WINDOWS_HIDE_DOCKS              "gimp-windows-hide-docks"
