@@ -30,6 +30,8 @@ from gi.repository import GimpUi
 from gi.repository import GObject
 from gi.repository import GLib
 from gi.repository import Gio
+gi.require_version('Gtk', '3.0')
+from gi.repository import Gtk
 import time
 import sys
 
@@ -68,31 +70,87 @@ def gradient_css_save(procedure, args, data):
     gradient = args.index(1)
     file = args.index(2)
 
+    config = procedure.create_config()
+    config.begin_run(None, Gimp.RunMode.INTERACTIVE, args)
+
     if runmode == Gimp.RunMode.INTERACTIVE:
-        # Interactive mode works on active gradient.
-        gradient = Gimp.context_get_gradient()
+        GimpUi.init('python-fu-gradient-save-as-css')
+        dialog = GimpUi.ProcedureDialog(procedure=procedure, config=config)
 
-        # Pop-up a file chooser for target file.
-        gi.require_version('Gtk', '3.0')
-        from gi.repository import Gtk
+        # Add gradient button
+        dialog.fill (["gradient"])
 
-        GimpUi.init ("gradients-save-as-css.py")
+        # UI for the file parameter
+        # from histogram-export.py
+        vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL,
+                       homogeneous=False, spacing=10)
+        dialog.get_content_area().add(vbox)
+        vbox.show()
+
+        grid = Gtk.Grid()
+        grid.set_column_homogeneous(False)
+        grid.set_border_width(10)
+        grid.set_column_spacing(10)
+        grid.set_row_spacing(10)
+        vbox.add(grid)
+        grid.show()
+
+        def choose_file(widget):
+            if file_chooser_dialog.run() == Gtk.ResponseType.OK:
+                if file_chooser_dialog.get_file() is not None:
+                    config.set_property("file", file_chooser_dialog.get_file())
+                    file_entry.set_text(file_chooser_dialog.get_file().get_path())
+            file_chooser_dialog.hide()
+
+        file_chooser_button = Gtk.Button.new_with_mnemonic(label=_("_File..."))
+        grid.attach(file_chooser_button, 0, 0, 1, 1)
+        file_chooser_button.show()
+        file_chooser_button.connect("clicked", choose_file)
+
+        file_entry = Gtk.Entry.new()
+        grid.attach(file_entry, 1, 0, 1, 1)
+        file_entry.set_width_chars(40)
+        file_entry.set_placeholder_text(_("Choose CSS file..."))
+        if config.get_property ("file") != None:
+            file = config.get_property("file")
+        if file is not None:
+            file_entry.set_text(file.get_path())
+        file_entry.show()
 
         use_header_bar = Gtk.Settings.get_default().get_property("gtk-dialogs-use-header")
-        dialog = Gtk.FileChooserDialog(use_header_bar=use_header_bar,
-                                       title=_("CSS file..."),
-                                       action=Gtk.FileChooserAction.SAVE)
-        dialog.add_button("_Cancel", Gtk.ResponseType.CANCEL)
-        dialog.add_button("_OK", Gtk.ResponseType.OK)
-        dialog.show()
-        if dialog.run() == Gtk.ResponseType.OK:
-            file = dialog.get_file()
+        file_chooser_dialog = Gtk.FileChooserDialog(use_header_bar=use_header_bar,
+                                                    title=_("Save as CSS file..."),
+                                                    action=Gtk.FileChooserAction.SAVE)
+        file_chooser_dialog.add_button("_Cancel", Gtk.ResponseType.CANCEL)
+        file_chooser_dialog.add_button("_OK", Gtk.ResponseType.OK)
+
+        #Connect config so reset works on custom widget
+        def gradient_reset (*args):
+            if len(args) >= 2:
+                if config.get_property("file") is not None and config.get_property("file").get_path() != file_entry.get_text():
+                    file_entry.set_text(config.get_property("file").get_path())
+                else:
+                    file_entry.set_text("")
+
+        config.connect("notify::gradient", gradient_reset)
+        config.connect("notify::file", gradient_reset)
+
+        if not dialog.run():
+            dialog.destroy()
+            config.end_run(Gimp.PDBStatusType.CANCEL)
+            return procedure.new_return_values(Gimp.PDBStatusType.CANCEL, GLib.Error())
         else:
-            return procedure.new_return_values(Gimp.PDBStatusType.CANCEL,
-                                               GLib.Error())
+            gradient = config.get_property("gradient")
+            file = Gio.file_new_for_path(file_entry.get_text())
+
+            #Save configs for non-connected UI element
+            config.set_property ("file", file)
+
+            dialog.destroy()
 
     if file is None:
         error = 'No file given'
+        config.end_run(Gimp.PDBStatusType.CALLING_ERROR)
         return procedure.new_return_values(Gimp.PDBStatusType.CALLING_ERROR,
                                            GLib.Error(error))
 
@@ -129,8 +187,10 @@ def gradient_css_save(procedure, args, data):
                                           flags=Gio.FileCreateFlags.REPLACE_DESTINATION,
                                           cancellable=None)
     if success:
+        config.end_run(Gimp.PDBStatusType.SUCCESS)
         return procedure.new_return_values(Gimp.PDBStatusType.SUCCESS, GLib.Error())
     else:
+        config.end_run(Gimp.PDBStatusType.EXECUTION_ERROR)
         return procedure.new_return_values(Gimp.PDBStatusType.EXECUTION_ERROR,
                                            GLib.Error('File saving failed: {}'.format(file.get_path())))
 
@@ -143,10 +203,10 @@ class GradientsSaveAsCSS (Gimp.PlugIn):
                      Gimp.RunMode.NONINTERACTIVE,
                      GObject.ParamFlags.READWRITE),
         "gradient": (Gimp.Gradient,
-                     _("Gradient to use"), "",
+                     _("_Gradient to use"), "",
                      GObject.ParamFlags.READWRITE),
         "file": (Gio.File,
-                 _("File"), None,
+                 _("_File"), None,
                  GObject.ParamFlags.READWRITE),
     }
 
@@ -158,12 +218,10 @@ class GradientsSaveAsCSS (Gimp.PlugIn):
         return [ 'gradient-save-as-css' ]
 
     def do_create_procedure(self, name):
-        procedure = None
+        procedure = Gimp.Procedure.new(self, name,
+                                       Gimp.PDBProcType.PLUGIN,
+                                       gradient_css_save, None)
         if name == 'gradient-save-as-css':
-            procedure = Gimp.Procedure.new(self, name,
-                                           Gimp.PDBProcType.PLUGIN,
-                                           gradient_css_save, None)
-            procedure.set_image_types("*")
             procedure.set_documentation (_("Creates a new palette from a given gradient"),
                                          _("Creates a new palette from a given gradient"),
                                          name)
