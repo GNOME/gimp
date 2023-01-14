@@ -1,0 +1,1565 @@
+# Georgian translation for gimp.
+# Copyright (C) 2023 gimp's COPYRIGHT HOLDER
+# This file is distributed under the same license as the gimp package.
+# Ekaterine Papava <papava.e@gtu.ge>, 2023.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp master\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"POT-Creation-Date: 2023-01-14 06:20+0000\n"
+"PO-Revision-Date: 2023-01-14 15:38+0100\n"
+"Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
+"Language-Team: Georgian <ka@li.org>\n"
+"Language: ka\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.2.2\n"
+
+#: plug-ins/script-fu/script-fu.c:122
+msgid "Script-Fu _Console"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu.c:127
+msgid "Interactive console for Script-Fu development"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu.c:310
+msgid "_GIMP Online"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu.c:311
+msgid "_User Manual"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu.c:314
+msgid "_Script-Fu"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu.c:316
+msgid "_Test"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu.c:319
+msgid "_Buttons"
+msgstr "_ღილაკები"
+
+#: plug-ins/script-fu/script-fu.c:321
+msgid "_Logos"
+msgstr "_ლოგოები"
+
+#: plug-ins/script-fu/script-fu.c:323
+msgid "_Patterns"
+msgstr "_შაბლონები"
+
+#: plug-ins/script-fu/script-fu.c:326
+msgid "_Web Page Themes"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu.c:328
+msgid "_Alien Glow"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu.c:330
+msgid "_Beveled Pattern"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu.c:332
+msgid "_Classic.Gimp.Org"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu.c:335
+msgid "Alpha to _Logo"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu.c:341
+msgid "_Refresh Scripts"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu.c:346
+msgid "Re-read all available Script-Fu scripts"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu.c:372
+msgid ""
+"You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
+"Please close all Script-Fu windows and try again."
+msgstr ""
+
+#: plug-ins/script-fu/script-fu-console.c:110
+#: plug-ins/script-fu/script-fu-console.c:177
+msgid "Script-Fu Console"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu-console.c:115
+#: plug-ins/script-fu/script-fu-console.c:281
+msgid "_Save"
+msgstr "_შენახვა"
+
+#: plug-ins/script-fu/script-fu-console.c:116
+msgid "C_lear"
+msgstr "_გასუფთავება"
+
+#: plug-ins/script-fu/script-fu-console.c:117
+#: plug-ins/script-fu/script-fu-console.c:359
+msgid "_Close"
+msgstr "და_კეტვა"
+
+#: plug-ins/script-fu/script-fu-console.c:173
+msgid "Welcome to TinyScheme"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu-console.c:179
+msgid "Interactive Scheme Development"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu-console.c:215
+msgid "_Browse..."
+msgstr "_დათვალიერება..."
+
+#: plug-ins/script-fu/script-fu-console.c:276
+msgid "Save Script-Fu Console Output"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu-console.c:280
+#: plug-ins/script-fu/server/script-fu-server.c:884
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:236
+msgid "_Cancel"
+msgstr "გაუქმება"
+
+#: plug-ins/script-fu/script-fu-console.c:325
+#, c-format
+msgid "Could not open '%s' for writing: %s"
+msgstr "შეცდომა '%s'-ში ჩაწერისას: %s"
+
+#: plug-ins/script-fu/script-fu-console.c:354
+msgid "Script-Fu Procedure Browser"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu-console.c:358
+msgid "_Apply"
+msgstr "_მორგება"
+
+#: plug-ins/script-fu/script-fu-eval.c:50
+msgid "Script-Fu evaluation mode only allows non-interactive invocation"
+msgstr ""
+
+#: plug-ins/script-fu/server/script-fu-server.c:880
+msgid "Script-Fu Server Options"
+msgstr ""
+
+#: plug-ins/script-fu/server/script-fu-server.c:885
+msgid "_Start Server"
+msgstr ""
+
+#: plug-ins/script-fu/server/script-fu-server.c:918
+msgid "Listen on IP:"
+msgstr ""
+
+#: plug-ins/script-fu/server/script-fu-server.c:925
+msgid "Server port:"
+msgstr "სერვერის პორტი:"
+
+#: plug-ins/script-fu/server/script-fu-server.c:931
+msgid "Server logfile:"
+msgstr ""
+
+#: plug-ins/script-fu/server/script-fu-server.c:944
+msgid ""
+"Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
+"allow attackers to remotely execute arbitrary code on this machine."
+msgstr ""
+
+#: plug-ins/script-fu/server/script-fu-server-plugin.c:91
+msgid "_Start Server..."
+msgstr ""
+
+#: plug-ins/script-fu/server/script-fu-server-plugin.c:96
+msgid "Server for remote Script-Fu operation"
+msgstr ""
+
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:202
+msgid "Script-Fu cannot process two scripts at the same time."
+msgstr ""
+
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:204
+#, c-format
+msgid "You are already running the \"%s\" script."
+msgstr ""
+
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:228
+#, c-format
+msgid "Script-Fu: %s"
+msgstr "Script-Fu: %s"
+
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:235
+msgid "_Reset"
+msgstr "_განულება"
+
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:237
+msgid "_OK"
+msgstr "კარგი"
+
+#. we add a colon after the label;
+#. *  some languages want an extra space here
+#.
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:291
+#, c-format
+msgid "%s:"
+msgstr "%s:"
+
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:341
+msgid "Script-Fu Color Selection"
+msgstr ""
+
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:468
+msgid "Script-Fu File Selection"
+msgstr ""
+
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:471
+msgid "Script-Fu Folder Selection"
+msgstr ""
+
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:484
+msgid "Script-Fu Font Selection"
+msgstr ""
+
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:492
+msgid "Script-Fu Palette Selection"
+msgstr ""
+
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:501
+msgid "Script-Fu Pattern Selection"
+msgstr ""
+
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:510
+msgid "Script-Fu Gradient Selection"
+msgstr ""
+
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:519
+msgid "Script-Fu Brush Selection"
+msgstr ""
+
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:898
+#, c-format
+msgid "Error while executing %s:"
+msgstr ""
+
+#: plug-ins/script-fu/libscriptfu/script-fu-scripts.c:357
+#, c-format
+msgid "Error while loading %s:"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/add-bevel.scm:76
+msgid "Bumpmap"
+msgstr "რელიეფური"
+
+#: plug-ins/script-fu/scripts/add-bevel.scm:189
+msgid "Add B_evel..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/add-bevel.scm:190
+msgid "Add a beveled border to an image"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/add-bevel.scm:197
+msgid "Thickness"
+msgstr "სისქე"
+
+#: plug-ins/script-fu/scripts/add-bevel.scm:198
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:163
+#: plug-ins/script-fu/scripts/old-photo.scm:104
+#: plug-ins/script-fu/scripts/round-corners.scm:145
+#: plug-ins/script-fu/scripts/slide.scm:257
+#: plug-ins/script-fu/scripts/spinning-globe.scm:107
+msgid "Work on copy"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/add-bevel.scm:199
+msgid "Keep bump layer"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/addborder.scm:108
+msgid "Border Layer"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/addborder.scm:162
+msgid "Add _Border..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/addborder.scm:163
+msgid "Add a border around an image"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/addborder.scm:170
+msgid "Border X size"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/addborder.scm:171
+msgid "Border Y size"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/addborder.scm:172
+msgid "Border color"
+msgstr "საზღვრის ფერი"
+
+#: plug-ins/script-fu/scripts/addborder.scm:173
+msgid "Delta value on color"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/blend-anim.scm:206
+msgid "Frame"
+msgstr "კადრი"
+
+#: plug-ins/script-fu/scripts/blend-anim.scm:222
+msgid "Blend Animation needs at least three source layers"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/blend-anim.scm:228
+msgid "_Blend..."
+msgstr "_შერევა..."
+
+#: plug-ins/script-fu/scripts/blend-anim.scm:229
+msgid ""
+"Create intermediate layers to blend two or more layers over a background as "
+"an animation"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/blend-anim.scm:236
+msgid "Intermediate frames"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/blend-anim.scm:237
+msgid "Max. blur radius"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/blend-anim.scm:238
+msgid "Looped"
+msgstr ""
+
+#. --- false form of "if-1"
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:217
+msgid ""
+"The Burn-In script needs two layers in total. A foreground layer with "
+"transparency and a background layer."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:224
+msgid "B_urn-In..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:225
+msgid ""
+"Create intermediate layers to produce an animated 'burn-in' transition "
+"between two layers"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:232
+msgid "Glow color"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:233
+msgid "Fadeout"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:234
+msgid "Fadeout width"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:235
+msgid "Corona width"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:236
+msgid "After glow"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:237
+msgid "Add glowing"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:238
+msgid "Prepare for GIF"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm:239
+msgid "Speed (pixels/frame)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/carve-it.scm:205
+msgid "Carved Surface"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/carve-it.scm:206
+msgid "Bevel Shadow"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/carve-it.scm:207
+msgid "Bevel Highlight"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/carve-it.scm:208
+msgid "Cast Shadow"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/carve-it.scm:209
+msgid "Inset"
+msgstr "ჩასმა"
+
+#: plug-ins/script-fu/scripts/carve-it.scm:221
+msgid "Stencil C_arve..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/carve-it.scm:222
+msgid ""
+"Use the specified drawable as a stencil to carve from the specified image."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/carve-it.scm:229
+msgid "Image to carve"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/carve-it.scm:230
+msgid "Carve white areas"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/chrome-it.scm:95
+msgid "Background"
+msgstr "ფონი"
+
+#: plug-ins/script-fu/scripts/chrome-it.scm:96
+msgid "Layer 1"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/chrome-it.scm:97
+msgid "Layer 2"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/chrome-it.scm:98
+msgid "Layer 3"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/chrome-it.scm:99
+msgid "Drop Shadow"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/chrome-it.scm:226
+msgid "Chrome"
+msgstr "ქრომი"
+
+#: plug-ins/script-fu/scripts/chrome-it.scm:227
+#: plug-ins/script-fu/scripts/xach-effect.scm:68
+msgid "Highlight"
+msgstr "მოუნიშნავის გაბუნდოვნება"
+
+#: plug-ins/script-fu/scripts/chrome-it.scm:241
+msgid "Stencil C_hrome..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/chrome-it.scm:242
+msgid ""
+"Add a chrome effect to the selected region (or alpha) using a specified "
+"(grayscale) stencil"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/chrome-it.scm:249
+msgid "Chrome saturation"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/chrome-it.scm:250
+msgid "Chrome lightness"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/chrome-it.scm:251
+msgid "Chrome factor"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/chrome-it.scm:252
+msgid "Environment map"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/chrome-it.scm:255
+msgid "Highlight balance"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/chrome-it.scm:256
+msgid "Chrome balance"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/chrome-it.scm:257
+msgid "Chrome white areas"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/circuit.scm:74
+msgid "Effect layer"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/circuit.scm:131
+msgid "_Circuit..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/circuit.scm:132
+msgid ""
+"Fill the selected region (or alpha) with traces like those on a circuit board"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/circuit.scm:139
+msgid "Oilify mask size"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/circuit.scm:140
+msgid "Circuit seed"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/circuit.scm:141
+msgid "No background (only for separate layer)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/circuit.scm:142
+#: plug-ins/script-fu/scripts/lava.scm:141
+#: plug-ins/script-fu/scripts/predator.scm:138
+#: plug-ins/script-fu/scripts/xach-effect.scm:138
+msgid "Keep selection"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/circuit.scm:143
+#: plug-ins/script-fu/scripts/lava.scm:142
+#: plug-ins/script-fu/scripts/predator.scm:139
+msgid "Separate layer"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/clothify.scm:52
+msgid "_Clothify..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/clothify.scm:53
+msgid "Add a cloth-like texture to the selected region (or alpha)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/clothify.scm:60
+msgid "Blur X"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/clothify.scm:61
+msgid "Blur Y"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/clothify.scm:62
+msgid "Azimuth"
+msgstr "აზიმუტი"
+
+#: plug-ins/script-fu/scripts/clothify.scm:63
+msgid "Elevation"
+msgstr "სიმაღლე ზღვის დონიდან"
+
+#: plug-ins/script-fu/scripts/clothify.scm:64
+msgid "Depth"
+msgstr "სიღრმე"
+
+#: plug-ins/script-fu/scripts/coffee.scm:36
+msgid "Stain"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/coffee.scm:82
+msgid "_Coffee Stain..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/coffee.scm:83
+msgid "Add realistic looking coffee stains to the image"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/coffee.scm:90
+msgid "Stains"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/coffee.scm:91
+msgid "Darken only"
+msgstr "მხოლოდ გამუქება"
+
+#: plug-ins/script-fu/scripts/difference-clouds.scm:70
+msgid "_Difference Clouds..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/difference-clouds.scm:71
+msgid "Solid noise applied with Difference layer mode"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/distress-selection.scm:105
+msgid "_Distort..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/distress-selection.scm:106
+msgid "Distress the selection"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/distress-selection.scm:113
+msgid "_Threshold (bigger 1<-->254 smaller)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/distress-selection.scm:114
+msgid "_Spread"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/distress-selection.scm:115
+msgid "_Granularity (1 is low)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/distress-selection.scm:116
+msgid "S_mooth"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/distress-selection.scm:117
+msgid "Smooth hor_izontally"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/distress-selection.scm:118
+msgid "Smooth _vertically"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm:170
+msgid "_Drop Shadow (legacy)..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm:171
+msgid "Add a drop shadow to the selected region (or alpha)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm:178
+msgid "Offset X"
+msgstr "გადაწევა X-ით"
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm:179
+msgid "Offset Y"
+msgstr "გადაწევა Y-ით"
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm:180
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:208
+#: plug-ins/script-fu/scripts/round-corners.scm:143
+msgid "Blur radius"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm:181
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:157
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:209
+msgid "Color"
+msgstr "ფერი"
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm:182
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:210
+msgid "Opacity"
+msgstr "_გაუმჭირვალობა"
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm:183
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:212
+msgid "Allow resizing"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/erase-rows.scm:42
+msgid "_Erase Every Nth Row..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/erase-rows.scm:43
+msgid "Erase every nth row or column"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/erase-rows.scm:50
+#: plug-ins/script-fu/scripts/erase-rows.scm:65
+msgid "Rows/cols"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/erase-rows.scm:50
+#: plug-ins/script-fu/scripts/erase-rows.scm:65
+msgid "Rows"
+msgstr "სტრიქონები"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm:50
+#: plug-ins/script-fu/scripts/erase-rows.scm:65
+msgid "Columns"
+msgstr "სვეტები"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm:52
+#: plug-ins/script-fu/scripts/erase-rows.scm:67
+msgid "Erase/fill"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/erase-rows.scm:52
+#: plug-ins/script-fu/scripts/erase-rows.scm:67
+msgid "Erase"
+msgstr "წაშლა"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm:52
+#: plug-ins/script-fu/scripts/erase-rows.scm:67
+msgid "Fill with BG"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/erase-rows.scm:57
+msgid "_Erase Every Other Row..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/erase-rows.scm:58
+msgid "Erase every other row or column"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/erase-rows.scm:66
+msgid "Even/odd"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/erase-rows.scm:66
+msgid "Even"
+msgstr "ლუწი"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm:66
+msgid "Odd"
+msgstr "კენტი"
+
+#: plug-ins/script-fu/scripts/font-map.scm:161
+msgid "Render _Font Map..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/font-map.scm:162
+msgid ""
+"Create an image filled with previews of fonts matching a fontname filter"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/font-map.scm:167
+msgid "_Text"
+msgstr "_ტექსტი"
+
+#: plug-ins/script-fu/scripts/font-map.scm:168
+msgid "Use font _name as text"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/font-map.scm:169
+msgid "_Labels"
+msgstr "_ჭდეები"
+
+#: plug-ins/script-fu/scripts/font-map.scm:170
+msgid "_Filter (regexp)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/font-map.scm:171
+msgid "Font _size (pixels)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/font-map.scm:172
+msgid "_Border (pixels)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/font-map.scm:173
+msgid "_Color scheme"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/font-map.scm:173
+msgid "Black on white"
+msgstr "შავი თეთრ ფონზე"
+
+#: plug-ins/script-fu/scripts/font-map.scm:173
+msgid "Active colors"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:149
+msgid "_Fuzzy Border..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:150
+msgid "Add a jagged, fuzzy border to an image"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:158
+#: plug-ins/script-fu/scripts/old-photo.scm:98
+msgid "Border size"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:159
+msgid "Blur border"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:160
+msgid "Granularity (1 is Low)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:161
+msgid "Add shadow"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:162
+msgid "Shadow weight (%)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/fuzzyborder.scm:164
+msgid "Flatten image"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/gimp-online.scm:59
+msgid "Using _Paths"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/gimp-online.scm:60
+#: plug-ins/script-fu/scripts/gimp-online.scm:73
+#: plug-ins/script-fu/scripts/gimp-online.scm:86
+#: plug-ins/script-fu/scripts/gimp-online.scm:99
+#: plug-ins/script-fu/scripts/gimp-online.scm:112
+#: plug-ins/script-fu/scripts/gimp-online.scm:125
+#: plug-ins/script-fu/scripts/gimp-online.scm:138
+#: plug-ins/script-fu/scripts/gimp-online.scm:151
+msgid "Bookmark to the user manual"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/gimp-online.scm:72
+msgid "_Preparing your Images for the Web"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/gimp-online.scm:85
+msgid "_Working with Digital Camera Photos"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/gimp-online.scm:98
+msgid "Create, Open and Save _Files"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/gimp-online.scm:111
+msgid "_Basic Concepts"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/gimp-online.scm:124
+msgid "How to Use _Dialogs"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/gimp-online.scm:137
+msgid "Drawing _Simple Objects"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/gimp-online.scm:150
+msgid "Create and Use _Selections"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/gimp-online.scm:190
+msgid "_Main Web Site"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/gimp-online.scm:191
+#: plug-ins/script-fu/scripts/gimp-online.scm:204
+#: plug-ins/script-fu/scripts/gimp-online.scm:256
+msgid "Bookmark to the GIMP web site"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/gimp-online.scm:203
+msgid "_Developer Web Site"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/gimp-online.scm:216
+msgid "_Roadmap"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/gimp-online.scm:217
+msgid "Bookmark to the roadmap of GIMP"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/gimp-online.scm:229
+msgid "_Wiki"
+msgstr "_ვიკი"
+
+#: plug-ins/script-fu/scripts/gimp-online.scm:230
+msgid "Bookmark to the wiki of GIMP"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/gimp-online.scm:242
+msgid "_Bug Reports and Feature Requests"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/gimp-online.scm:243
+msgid "Bookmark to the bug tracker of GIMP"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/gimp-online.scm:255
+msgid "_User Manual Web Site"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/gradient-example.scm:69
+msgid "Custom _Gradient..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/gradient-example.scm:70
+msgid "Create an image filled with an example of the current gradient"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/gradient-example.scm:75
+#: plug-ins/script-fu/scripts/mkbrush.scm:70
+#: plug-ins/script-fu/scripts/mkbrush.scm:140
+#: plug-ins/script-fu/scripts/mkbrush.scm:196
+#: plug-ins/script-fu/scripts/mkbrush.scm:265
+msgid "Width"
+msgstr "სიგანე"
+
+#: plug-ins/script-fu/scripts/gradient-example.scm:76
+#: plug-ins/script-fu/scripts/mkbrush.scm:71
+#: plug-ins/script-fu/scripts/mkbrush.scm:141
+#: plug-ins/script-fu/scripts/mkbrush.scm:197
+#: plug-ins/script-fu/scripts/mkbrush.scm:266
+msgid "Height"
+msgstr "სიმაღლე"
+
+#: plug-ins/script-fu/scripts/gradient-example.scm:77
+msgid "Gradient reverse"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/grid-system.scm:84
+msgid "_Grid..."
+msgstr "_ბადე..."
+
+#: plug-ins/script-fu/scripts/grid-system.scm:85
+msgid ""
+"Draw a grid as specified by the lists of X and Y locations using the current "
+"brush"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/grid-system.scm:92
+msgid "X divisions"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/grid-system.scm:93
+msgid "Y divisions"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/guides-from-selection.scm:32
+msgid "New Guides from _Selection"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/guides-from-selection.scm:33
+msgid "Create four guides around the bounding box of the current selection"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:27
+msgid "New Guide (by _Percent)..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:28
+msgid "Add a guide at the position specified as a percentage of the image size"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:35
+#: plug-ins/script-fu/scripts/guides-new.scm:35
+msgid "_Direction"
+msgstr "_მიმართულება"
+
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:35
+#: plug-ins/script-fu/scripts/guides-new.scm:35
+msgid "Horizontal"
+msgstr "ჰორიზონტალური"
+
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:36
+#: plug-ins/script-fu/scripts/guides-new.scm:35
+msgid "Vertical"
+msgstr "ვერტიკალური"
+
+#: plug-ins/script-fu/scripts/guides-new-percent.scm:37
+msgid "_Position (in %)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/guides-new.scm:27
+msgid "New _Guide..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/guides-new.scm:28
+msgid "Add a guide at the orientation and position specified (in pixels)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/guides-new.scm:36
+msgid "_Position"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/guides-remove-all.scm:19
+msgid "_Remove all Guides"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/guides-remove-all.scm:20
+msgid "Remove all horizontal and vertical guides"
+msgstr ""
+
+#. else
+#: plug-ins/script-fu/scripts/lava.scm:123
+msgid "Lava works with exactly one selected layer"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/lava.scm:129
+msgid "_Lava..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/lava.scm:130
+msgid "Fill the current selection with lava"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/lava.scm:137
+msgid "Seed"
+msgstr "თესლი"
+
+#: plug-ins/script-fu/scripts/lava.scm:138
+msgid "Size"
+msgstr "ზომა"
+
+#: plug-ins/script-fu/scripts/lava.scm:139
+msgid "Roughness"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/lava.scm:140
+msgid "Gradient"
+msgstr "გრადაცია"
+
+#: plug-ins/script-fu/scripts/lava.scm:143
+msgid "Use current gradient"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/line-nova.scm:106
+msgid "Line _Nova..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/line-nova.scm:107
+msgid ""
+"Fill a layer with rays emanating outward from its center using the "
+"foreground color"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/line-nova.scm:114
+msgid "Number of lines"
+msgstr "ხაზების რაოდენობა"
+
+#: plug-ins/script-fu/scripts/line-nova.scm:115
+msgid "Sharpness (degrees)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/line-nova.scm:116
+msgid "Offset radius"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/line-nova.scm:117
+msgid "Randomness"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/mkbrush.scm:63
+msgid "_Rectangular..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/mkbrush.scm:64
+msgid "Create a rectangular brush"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/mkbrush.scm:69
+#: plug-ins/script-fu/scripts/mkbrush.scm:139
+#: plug-ins/script-fu/scripts/mkbrush.scm:195
+#: plug-ins/script-fu/scripts/mkbrush.scm:264
+msgid "Name"
+msgstr "სახელი"
+
+#: plug-ins/script-fu/scripts/mkbrush.scm:72
+#: plug-ins/script-fu/scripts/mkbrush.scm:143
+#: plug-ins/script-fu/scripts/mkbrush.scm:198
+#: plug-ins/script-fu/scripts/mkbrush.scm:268
+msgid "Spacing"
+msgstr "დაშორება"
+
+#: plug-ins/script-fu/scripts/mkbrush.scm:133
+msgid "Re_ctangular, Feathered..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/mkbrush.scm:134
+msgid "Create a rectangular brush with feathered edges"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/mkbrush.scm:142
+#: plug-ins/script-fu/scripts/mkbrush.scm:267
+msgid "Feathering"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/mkbrush.scm:189
+msgid "_Elliptical..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/mkbrush.scm:190
+msgid "Create an elliptical brush"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/mkbrush.scm:258
+msgid "Elli_ptical, Feathered..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/mkbrush.scm:259
+msgid "Create an elliptical brush with feathered edges"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/old-photo.scm:89
+msgid "_Old Photo..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/old-photo.scm:90
+msgid "Make an image look like an old photo"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/old-photo.scm:97
+msgid "Defocus"
+msgstr ""
+
+#. since this plug-in uses the fuzzy-border plug-in, I used the
+#. values of the latter, with the exception of the initial value
+#. and the 'minimum' value.
+#: plug-ins/script-fu/scripts/old-photo.scm:102
+msgid "Sepia"
+msgstr "სეპია"
+
+#: plug-ins/script-fu/scripts/old-photo.scm:103
+msgid "Mottle"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/palette-export.scm:226
+msgid "Folder for the output file"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/palette-export.scm:227
+msgid ""
+"The name of the file to create (if a file with this name already exist, it "
+"will be replaced)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/palette-export.scm:235
+msgid "The filename you entered is not a suitable name for a file."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/palette-export.scm:237
+msgid ""
+"All characters in the name are either white-spaces or characters which can "
+"not appear in filenames."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/palette-export.scm:265
+msgid ""
+"Export the active palette as a CSS stylesheet with the color entry name as "
+"their class name, and the color itself as the color attribute"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/palette-export.scm:291
+msgid "Export the active palette as a PHP dictionary (name => color)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/palette-export.scm:323
+msgid "Export the active palette as a Python dictionary (name: color)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/palette-export.scm:352
+msgid ""
+"Write all the colors in a palette to a text file, one hexadecimal value per "
+"line (no names)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/palette-export.scm:399
+msgid "Export the active palette as a java.util.Hashtable<String, Color>"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:58
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:46
+msgid "There is no image data in the clipboard to paste."
+msgstr "გაცვლის ბაფერი ცარიელია."
+
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:64
+msgid "Paste as New _Brush..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:65
+msgid "Paste the clipboard contents into a new brush"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:70
+#: plug-ins/script-fu/scripts/select-to-brush.scm:145
+msgid "_Brush name"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:71
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:59
+#: plug-ins/script-fu/scripts/select-to-brush.scm:146
+#: plug-ins/script-fu/scripts/select-to-pattern.scm:107
+msgid "_File name"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/paste-as-brush.scm:72
+#: plug-ins/script-fu/scripts/select-to-brush.scm:147
+msgid "_Spacing"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:52
+msgid "Paste as New _Pattern..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:53
+msgid "Paste the clipboard contents into a new pattern"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/paste-as-pattern.scm:58
+#: plug-ins/script-fu/scripts/select-to-pattern.scm:106
+msgid "_Pattern name"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:197
+msgid "_Perspective..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:198
+msgid "Add a perspective shadow to the selected region (or alpha)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:205
+msgid "Angle"
+msgstr "კუთხე"
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:206
+msgid "Relative distance of horizon"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:207
+msgid "Relative length of shadow"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm:211
+msgid "Interpolation"
+msgstr "ინტერპოლაცია"
+
+#: plug-ins/script-fu/scripts/predator.scm:127
+msgid "_Predator..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/predator.scm:128
+msgid "Add a 'Predator' effect to the selected region (or alpha)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/predator.scm:135
+msgid "Edge amount"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/predator.scm:136
+msgid "Pixelize"
+msgstr "პიქსელიზაცია"
+
+#: plug-ins/script-fu/scripts/predator.scm:137
+msgid "Pixel amount"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/reverse-layers.scm:42
+msgid "Reverse Layer _Order"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/reverse-layers.scm:43
+msgid "Reverse the order of layers in the image"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm:69
+msgid "_Rippling..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm:70
+msgid ""
+"Create a multi-layer image by adding a ripple effect to the current layer"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm:77
+msgid "Rippling strength"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm:78
+#: plug-ins/script-fu/scripts/waves-anim.scm:105
+msgid "Number of frames"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm:79
+msgid "Edge behavior"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm:79
+msgid "Wrap"
+msgstr "შემოხვევა"
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm:79
+msgid "Smear"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm:79
+msgid "Black"
+msgstr "შავი"
+
+#: plug-ins/script-fu/scripts/round-corners.scm:131
+msgid "_Round Corners..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/round-corners.scm:132
+msgid ""
+"Round the corners of an image and optionally add a drop-shadow and background"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/round-corners.scm:139
+msgid "Edge radius"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/round-corners.scm:140
+msgid "Add drop-shadow"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/round-corners.scm:141
+msgid "Shadow X offset"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/round-corners.scm:142
+msgid "Shadow Y offset"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/round-corners.scm:144
+msgid "Add background"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:53
+msgid "Se_t Colormap..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:54
+msgid "Change the colormap of an image to the colors in a specified palette."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/script-fu-set-cmap.scm:61
+msgid "Palette"
+msgstr "პალიტრა"
+
+#: plug-ins/script-fu/scripts/selection-round.scm:139
+msgid "Rounded R_ectangle..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/selection-round.scm:140
+msgid "Round the corners of the current selection"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/selection-round.scm:147
+msgid "R_adius (%)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/selection-round.scm:148
+msgid "Co_ncave"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/select-to-brush.scm:137
+msgid "To _Brush..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/select-to-brush.scm:138
+msgid "Convert a selection to a brush"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/select-to-image.scm:85
+msgid "To _Image"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/select-to-image.scm:86
+msgid "Convert a selection to an image"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/select-to-pattern.scm:98
+msgid "To _Pattern..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/select-to-pattern.scm:99
+msgid "Convert a selection to a pattern"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/slide.scm:245
+msgid "_Slide..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/slide.scm:246
+msgid "Add a slide-film like frame, sprocket holes, and labels to an image"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/slide.scm:253
+msgid "Text"
+msgstr "ტექსტი"
+
+#: plug-ins/script-fu/scripts/slide.scm:254
+msgid "Number"
+msgstr "რიცხვი"
+
+#: plug-ins/script-fu/scripts/slide.scm:255
+msgid "Font"
+msgstr "ფონტი"
+
+#: plug-ins/script-fu/scripts/slide.scm:256
+msgid "Font color"
+msgstr "ფონტის ფერი"
+
+#: plug-ins/script-fu/scripts/spinning-globe.scm:95
+msgid "_Spinning Globe..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spinning-globe.scm:96
+msgid "Create an animation by mapping the current image onto a spinning sphere"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spinning-globe.scm:103
+msgid "Frames"
+msgstr "კადრები"
+
+#: plug-ins/script-fu/scripts/spinning-globe.scm:104
+msgid "Turn from left to right"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spinning-globe.scm:105
+msgid "Transparent background"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spinning-globe.scm:106
+msgid "Index to n colors (0 = remain RGB)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/test-sphere.scm:272
+msgid "_Sphere..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/tileblur.scm:72
+msgid "_Tileable Blur..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/tileblur.scm:73
+msgid "Blur the edges of an image so the result tiles seamlessly"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/tileblur.scm:80
+msgid "Radius"
+msgstr "რადიუსი"
+
+#: plug-ins/script-fu/scripts/tileblur.scm:81
+msgid "Blur vertically"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/tileblur.scm:82
+msgid "Blur horizontally"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/tileblur.scm:83
+msgid "Blur type"
+msgstr "ბუნდოვნების ტიპი"
+
+#: plug-ins/script-fu/scripts/tileblur.scm:83
+msgid "IIR"
+msgstr "IIR"
+
+#: plug-ins/script-fu/scripts/tileblur.scm:83
+msgid "RLE"
+msgstr "RLE"
+
+#: plug-ins/script-fu/scripts/unsharp-mask.scm:88
+msgid "Mask size"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/unsharp-mask.scm:89
+msgid "Mask opacity"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/waves-anim.scm:95
+msgid "_Waves..."
+msgstr "_ტალღები..."
+
+#: plug-ins/script-fu/scripts/waves-anim.scm:96
+msgid ""
+"Create a multi-layer image with an effect like a stone was thrown into the "
+"current image"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/waves-anim.scm:103
+msgid "Amplitude"
+msgstr "ამპლიტუდა"
+
+#: plug-ins/script-fu/scripts/waves-anim.scm:104
+msgid "Wavelength"
+msgstr "ტალღის სიგრძე"
+
+#: plug-ins/script-fu/scripts/waves-anim.scm:106
+msgid "Invert direction"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/weave.scm:418
+msgid "_Weave..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/weave.scm:419
+msgid ""
+"Create a new layer filled with a weave effect to be used as an overlay or "
+"bump map"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/weave.scm:426
+msgid "Ribbon width"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/weave.scm:427
+msgid "Ribbon spacing"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/weave.scm:428
+msgid "Shadow darkness"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/weave.scm:429
+msgid "Shadow depth"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/weave.scm:430
+msgid "Thread length"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/weave.scm:431
+msgid "Thread density"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/weave.scm:432
+msgid "Thread intensity"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/xach-effect.scm:92
+msgid "Shadow"
+msgstr "ჩრდილი"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm:121
+msgid "_Xach-Effect..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/xach-effect.scm:122
+msgid "Add a subtle translucent 3D effect to the selected region (or alpha)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/xach-effect.scm:129
+msgid "Highlight X offset"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/xach-effect.scm:130
+msgid "Highlight Y offset"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/xach-effect.scm:131
+msgid "Highlight color"
+msgstr "ფერის გამოკვეთა"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm:132
+msgid "Highlight opacity"
+msgstr "გაბუნდოვნების გაუმჭვირვალობა"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm:133
+msgid "Drop shadow color"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/xach-effect.scm:134
+msgid "Drop shadow opacity"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/xach-effect.scm:135
+msgid "Drop shadow blur radius"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/xach-effect.scm:136
+msgid "Drop shadow X offset"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/xach-effect.scm:137
+msgid "Drop shadow Y offset"
+msgstr ""
