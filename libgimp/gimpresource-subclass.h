@@ -1,4 +1,3 @@
-
 /* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
@@ -38,21 +37,11 @@ G_BEGIN_DECLS
 #define GIMP_TYPE_BRUSH (gimp_brush_get_type ())
 G_DECLARE_FINAL_TYPE (GimpBrush, gimp_brush, GIMP, BRUSH, GimpResource)
 
-struct _GimpBrush
-{
-  GimpResource parent_instance;
-};
-
 gboolean  gimp_brush_is_valid (GimpBrush *self);
 
 
 #define GIMP_TYPE_FONT (gimp_font_get_type ())
 G_DECLARE_FINAL_TYPE (GimpFont, gimp_font, GIMP, FONT, GimpResource)
-
-struct _GimpFont
-{
-  GimpResource parent_instance;
-};
 
 gboolean  gimp_font_is_valid (GimpFont *self);
 
@@ -60,32 +49,17 @@ gboolean  gimp_font_is_valid (GimpFont *self);
 #define GIMP_TYPE_GRADIENT (gimp_gradient_get_type ())
 G_DECLARE_FINAL_TYPE (GimpGradient, gimp_gradient, GIMP, GRADIENT, GimpResource)
 
-struct _GimpGradient
-{
-  GimpResource parent_instance;
-};
-
 gboolean  gimp_gradient_is_valid (GimpGradient *self);
 
 
 #define GIMP_TYPE_PALETTE (gimp_palette_get_type ())
 G_DECLARE_FINAL_TYPE (GimpPalette, gimp_palette, GIMP, PALETTE, GimpResource)
 
-struct _GimpPalette
-{
-  GimpResource parent_instance;
-};
-
 gboolean  gimp_palette_is_valid (GimpPalette *self);
 
 
 #define GIMP_TYPE_PATTERN (gimp_pattern_get_type ())
 G_DECLARE_FINAL_TYPE (GimpPattern, gimp_pattern, GIMP, PATTERN, GimpResource)
-
-struct _GimpPattern
-{
-  GimpResource parent_instance;
-};
 
 gboolean  gimp_pattern_is_valid (GimpPattern *self);
 

@@ -95,6 +95,7 @@
  * When there is no underlying resource of that id (name) in core,
  * the brush is invalid.
  */
+
 enum
 {
   PROP_0,
@@ -103,38 +104,38 @@ enum
 };
 
 /* Private structure definition. */
-typedef struct {
+typedef struct
+{
   char *id;
 } GimpResourcePrivate;
 
-static void gimp_resource_finalize     (GObject      *object);
+static void     gimp_resource_finalize           (GObject      *object);
 
-static void gimp_resource_set_property (GObject      *object,
-                                        guint         property_id,
-                                        const GValue *value,
-                                        GParamSpec   *pspec);
-static void gimp_resource_get_property (GObject      *object,
-                                        guint         property_id,
-                                        GValue       *value,
-                                        GParamSpec   *pspec);
-
+static void     gimp_resource_set_property       (GObject      *object,
+                                                  guint         property_id,
+                                                  const GValue *value,
+                                                  GParamSpec   *pspec);
+static void     gimp_resource_get_property       (GObject      *object,
+                                                  guint         property_id,
+                                                  GValue       *value,
+                                                  GParamSpec   *pspec);
 
 /* Implementation of the GimpConfigInterface */
 static void     gimp_resource_config_iface_init (GimpConfigInterface *iface);
 
-static gboolean gimp_resource_serialize   (GimpConfig       *config,
-                                           GimpConfigWriter *writer,
-                                           gpointer          data);
-static gboolean gimp_resource_deserialize (GimpConfig       *config,
-                                           GScanner         *scanner,
-                                           gint              nest_level,
-                                           gpointer          data);
+static gboolean gimp_resource_serialize          (GimpConfig       *config,
+                                                  GimpConfigWriter *writer,
+                                                  gpointer          data);
+static gboolean gimp_resource_deserialize        (GimpConfig       *config,
+                                                  GScanner         *scanner,
+                                                  gint              nest_level,
+                                                  gpointer          data);
 
 /* The class type is both deriveable (has private) AND implements interface. */
 G_DEFINE_ABSTRACT_TYPE_WITH_CODE (GimpResource, gimp_resource, G_TYPE_OBJECT,
                                   G_ADD_PRIVATE (GimpResource)
                                   G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
-                                                gimp_resource_config_iface_init))
+                                                         gimp_resource_config_iface_init))
 
 #define parent_class gimp_resource_parent_class
 
@@ -340,5 +341,6 @@ gimp_resource_deserialize (GimpConfig *config,
       g_debug ("resource deserialize: %s", id);
       priv->id = id;
     }
-return TRUE;
+
+  return TRUE;
 }

@@ -1,4 +1,3 @@
-
 /* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
@@ -60,6 +59,11 @@
 
 /* Brush */
 
+struct _GimpBrush
+{
+  GimpResource parent_instance;
+};
+
 G_DEFINE_TYPE (GimpBrush, gimp_brush, GIMP_TYPE_RESOURCE);
 
 static void gimp_brush_class_init (GimpBrushClass *klass) {}
@@ -91,6 +95,11 @@ gimp_brush_is_valid (GimpBrush *self)
 
 
 /* Font */
+
+struct _GimpFont
+{
+  GimpResource parent_instance;
+};
 
 G_DEFINE_TYPE (GimpFont, gimp_font, GIMP_TYPE_RESOURCE);
 
@@ -124,6 +133,11 @@ gimp_font_is_valid (GimpFont *self)
 
 /* Gradient */
 
+struct _GimpGradient
+{
+  GimpResource parent_instance;
+};
+
 G_DEFINE_TYPE (GimpGradient, gimp_gradient, GIMP_TYPE_RESOURCE);
 
 static void gimp_gradient_class_init (GimpGradientClass *klass) {}
@@ -156,6 +170,11 @@ gimp_gradient_is_valid (GimpGradient *self)
 
 /* Palette */
 
+struct _GimpPalette
+{
+  GimpResource parent_instance;
+};
+
 G_DEFINE_TYPE (GimpPalette, gimp_palette, GIMP_TYPE_RESOURCE);
 
 static void gimp_palette_class_init (GimpPaletteClass *klass) {}
@@ -187,6 +206,11 @@ gimp_palette_is_valid (GimpPalette *self)
 
 
 /* Pattern */
+
+struct _GimpPattern
+{
+  GimpResource parent_instance;
+};
 
 G_DEFINE_TYPE (GimpPattern, gimp_pattern, GIMP_TYPE_RESOURCE);
 

@@ -39,8 +39,8 @@ G_DECLARE_FINAL_TYPE (GimpBrushSelectButton,
                       GimpResourceSelectButton)
 
 
-GtkWidget   * gimp_brush_select_button_new      (const gchar          *title,
-                                                 GimpResource         *resource);
+GtkWidget   * gimp_brush_select_button_new       (const gchar           *title,
+                                                  GimpResource          *resource);
 
 /* FUTURE eliminate.  Use superclass method get_resource */
 GimpBrush   * gimp_brush_select_button_get_brush (GimpBrushSelectButton *self);

@@ -39,11 +39,11 @@ G_DECLARE_FINAL_TYPE (GimpPaletteSelectButton,
                       GimpResourceSelectButton)
 
 
-GtkWidget   * gimp_palette_select_button_new      (const gchar          *title,
-                                                   GimpResource         *resource);
+GtkWidget   * gimp_palette_select_button_new         (const gchar             *title,
+                                                      GimpResource            *resource);
 
 /* FUTURE eliminate.  Use superclass method get_resource */
-GimpPalette  *gimp_palette_select_button_get_palette (GimpPaletteSelectButton *self);
+GimpPalette * gimp_palette_select_button_get_palette (GimpPaletteSelectButton *self);
 void          gimp_palette_select_button_set_palette (GimpPaletteSelectButton *self,
                                                       GimpPalette             *palette);
 

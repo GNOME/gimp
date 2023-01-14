@@ -48,7 +48,7 @@ HELP
         code => <<'CODE'
 {
   palette = (GimpPalette*) gimp_data_factory_data_new (gimp->palette_factory,
-                                               context, name);
+                                                       context, name);
 }
 CODE
     );

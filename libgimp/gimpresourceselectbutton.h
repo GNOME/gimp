@@ -28,7 +28,7 @@ G_BEGIN_DECLS
 /* Inherits GtkBox
  * Inheritable by e.g. GimpBrushSelectButton.
  */
-#define GIMP_TYPE_RESOURCE_SELECT_BUTTON gimp_resource_select_button_get_type ()
+#define GIMP_TYPE_RESOURCE_SELECT_BUTTON (gimp_resource_select_button_get_type ())
 G_DECLARE_DERIVABLE_TYPE (GimpResourceSelectButton, gimp_resource_select_button, GIMP, RESOURCE_SELECT_BUTTON, GtkBox)
 
 struct _GimpResourceSelectButtonClass

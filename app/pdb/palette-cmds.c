@@ -64,7 +64,7 @@ palette_new_invoker (GimpProcedure         *procedure,
   if (success)
     {
       palette = (GimpPalette*) gimp_data_factory_data_new (gimp->palette_factory,
-                                                   context, name);
+                                                           context, name);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,

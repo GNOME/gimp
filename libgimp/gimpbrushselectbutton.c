@@ -174,7 +174,7 @@ gimp_brush_select_button_init (GimpBrushSelectButton *self)
  */
 GtkWidget *
 gimp_brush_select_button_new (const gchar  *title,
-                             GimpResource *resource)
+                              GimpResource *resource)
 {
   GtkWidget *self;
 
@@ -262,7 +262,7 @@ gimp_brush_select_button_get_brush (GimpBrushSelectButton *self)
  */
 void
 gimp_brush_select_button_set_brush (GimpBrushSelectButton *self,
-                                  GimpBrush             *brush)
+                                    GimpBrush             *brush)
 {
   g_return_if_fail (GIMP_IS_BRUSH_SELECT_BUTTON (self));
 
@@ -339,7 +339,7 @@ gimp_brush_select_button_create_interior (GimpBrushSelectButton *self)
 static void
 gimp_brush_select_button_embed_interior (GimpBrushSelectButton *self)
 {
-  GtkWidget   *interior;
+  GtkWidget *interior;
 
   g_debug ("%s", G_STRFUNC);
 

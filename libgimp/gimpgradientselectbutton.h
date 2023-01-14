@@ -36,12 +36,12 @@ G_DECLARE_FINAL_TYPE (GimpGradientSelectButton,
                       GRADIENT_SELECT_BUTTON,
                       GimpResourceSelectButton)
 
-GtkWidget   * gimp_gradient_select_button_new          (const gchar        *title,
-                                                        GimpResource       *gradient);
+GtkWidget    * gimp_gradient_select_button_new          (const gchar              *title,
+                                                         GimpResource             *gradient);
 
-GimpGradient *gimp_gradient_select_button_get_gradient (GimpGradientSelectButton *self);
-void          gimp_gradient_select_button_set_gradient (GimpGradientSelectButton *self,
-                                                        GimpGradient             *gradient);
+GimpGradient * gimp_gradient_select_button_get_gradient (GimpGradientSelectButton *self);
+void           gimp_gradient_select_button_set_gradient (GimpGradientSelectButton *self,
+                                                         GimpGradient             *gradient);
 
 
 G_END_DECLS
