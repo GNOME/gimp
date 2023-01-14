@@ -77,9 +77,7 @@ def process_args(brush, font, gradient, palette, pattern):
     print("pattern id is:", id)
     Gimp.message(id)
 
-
     return
-
 
 
 def test_dialog(procedure, run_mode, image, n_drawables, drawables, args, data):
@@ -107,13 +105,11 @@ def test_dialog(procedure, run_mode, image, n_drawables, drawables, args, data):
     pattern = config.get_property('pattern')
 
     Gimp.context_push()
-    image.undo_group_start()
 
     process_args(brush, font, gradient, palette, pattern)
 
     Gimp.displays_flush()
 
-    image.undo_group_end()
     Gimp.context_pop()
 
     config.end_run(Gimp.PDBStatusType.SUCCESS)
@@ -121,29 +117,25 @@ def test_dialog(procedure, run_mode, image, n_drawables, drawables, args, data):
     return procedure.new_return_values(Gimp.PDBStatusType.SUCCESS, GLib.Error())
 
 
-
 class TestDialogPlugin (Gimp.PlugIn):
     ## Parameters ##
-    __gproperties__ = {
-
-    }
     # See comments about this in foggify.py, from which we borrowed
 
-    brush = GObject.Property(type =Gimp.Brush,
-                             nick ="Brush",
-                             blurb="Brush")
-    font = GObject.Property(type =Gimp.Font,
-                            nick ="Font",
-                            blurb="Font")
-    gradient = GObject.Property(type =Gimp.Gradient,
-                                nick ="Gradient",
-                                blurb="Gradient")
-    palette = GObject.Property(type =Gimp.Palette,
-                               nick ="Palette",
-                               blurb="Palette")
-    pattern = GObject.Property(type =Gimp.Pattern,
-                               nick ="Pattern",
-                               blurb="Pattern")
+    brush    = GObject.Property(type  = Gimp.Brush,
+                                nick  = "_Brush",
+                                blurb = "Brush")
+    font     = GObject.Property(type  = Gimp.Font,
+                                nick  = "_Font",
+                                blurb = "Font")
+    gradient = GObject.Property(type  = Gimp.Gradient,
+                                nick  = "_Gradient",
+                                blurb = "Gradient")
+    palette  = GObject.Property(type  = Gimp.Palette,
+                                nick  = "_Palette",
+                                blurb = "Palette")
+    pattern  = GObject.Property(type  = Gimp.Pattern,
+                                nick  = "Pa_ttern",
+                                blurb = "Pattern")
 
     # FUTURE all other Gimp classes that have GimpParamSpecs
 
@@ -158,9 +150,7 @@ class TestDialogPlugin (Gimp.PlugIn):
         procedure = Gimp.ImageProcedure.new(self, name,
                                             Gimp.PDBProcType.PLUGIN,
                                             test_dialog, None)
-        procedure.set_image_types("*");
-        procedure.set_sensitivity_mask (Gimp.ProcedureSensitivityMask.DRAWABLE |
-                                        Gimp.ProcedureSensitivityMask.DRAWABLES)
+        procedure.set_sensitivity_mask (Gimp.ProcedureSensitivityMask.NO_IMAGE)
         procedure.set_documentation ("Test dialog",
                                      "Test dialog",
                                      name)
