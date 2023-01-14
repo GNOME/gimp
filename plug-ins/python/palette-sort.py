@@ -197,23 +197,6 @@ def quantization_grain(channel, g):
         g = max(0.00001, GRAIN_SCALE[channel] / g)
     return g
 
-# Convenience feature to add options that are not yet in
-# GimpProcedureDialog
-def create_ui_row(dialog, label_text, offset, widget):
-    grid = Gtk.Grid()
-    grid.set_column_homogeneous(False)
-    grid.set_border_width(0)
-    grid.set_column_spacing(offset)
-    grid.set_row_spacing(10)
-    dialog.get_content_area().add(grid)
-    grid.show()
-
-    label = Gtk.Label.new_with_mnemonic(_(label_text))
-    grid.attach(label, 0, 0, 1, 1)
-    label.show()
-    grid.attach(widget, 1, 0, 1, 1)
-    widget.show()
-
 
 def palette_sort(palette, selection, slice_expr, channel1, ascending1,
                  channel2, ascending2, quantize, pchannel, pquantize):
@@ -363,7 +346,6 @@ class PaletteSort (Gimp.PlugIn):
                      "The run mode",
                      Gimp.RunMode.INTERACTIVE,
                      GObject.ParamFlags.READWRITE),
-        # Originally:   (PF_PALETTE, "palette",  _("Palette"), ""),
         "palette": (Gimp.Palette,
                     _("_Palette"),
                     _("Palette"),
@@ -478,7 +460,11 @@ class PaletteSort (Gimp.PlugIn):
         pchannel = args.index(9)
         pquantize = args.index(10)
 
-        if palette is None:
+        if palette is None or not palette.is_valid():
+            if palette is not None:
+              sys.stderr.write(f'Invalid palette id: {palette.get_id()}\n')
+              sys.stderr.write('This should not happen. Please report to GIMP project.\n')
+              sys.stderr.write('Falling back to context palette instead.\n')
             palette = Gimp.context_get_palette()
 
         if not palette.is_valid():
@@ -491,21 +477,7 @@ class PaletteSort (Gimp.PlugIn):
             GimpUi.init('python-fu-palette-sort')
             dialog = GimpUi.ProcedureDialog(procedure=procedure, config=config)
 
-            # Add palette button
-            prior_palette = None
-            if config.get_property ("palette") != None:
-                prior_palette = config.get_property ("palette")
-            button = GimpUi.PaletteSelectButton.new ("palette", prior_palette)
-            create_ui_row(dialog, "_Palette", 86, button)
-
-            #Connect config so reset works on custom widgets
-            def palette_reset (*args):
-                if len(args) >= 2:
-                    if args[1].name == "palette":
-                        button.set_palette(config.get_property("palette"))
-
-            config.connect("notify::palette", palette_reset)
-
+            dialog.fill (["palette"])
             dialog.get_int_combo("selections", GimpUi.IntStore.new (selections_option))
             dialog.fill (["selections","slice-expr"])
             dialog.get_int_combo("channel1", GimpUi.IntStore.new (AVAILABLE_CHANNELS))
@@ -520,7 +492,7 @@ class PaletteSort (Gimp.PlugIn):
                 config.end_run(Gimp.PDBStatusType.CANCEL)
                 return procedure.new_return_values(Gimp.PDBStatusType.CANCEL, GLib.Error())
             else:
-                palette = button.get_palette()
+                palette = config.get_property("palette")
                 selection = config.get_property("selections")
                 slice_expr = config.get_property ("slice_expr")
                 channel1 = config.get_property("channel1")
@@ -530,9 +502,6 @@ class PaletteSort (Gimp.PlugIn):
                 quantize = config.get_property ("quantize")
                 pchannel = config.get_property("pchannel")
                 pquantize = config.get_property ("pquantize")
-
-                #Save configs for non-connected UI element
-                config.set_property ("palette", palette)
 
                 dialog.destroy()
 
