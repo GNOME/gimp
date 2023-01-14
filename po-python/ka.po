@@ -1,93 +1,93 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Ekaterine Papava <papava.e@gtu.ge>, 2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-07-28 07:43+0000\n"
-"PO-Revision-Date: 2022-07-28 09:47+0200\n"
-"Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
+"POT-Creation-Date: 2023-01-14 06:20+0000\n"
+"PO-Revision-Date: 2023-01-14 15:34+0100\n"
+"Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: \n"
 "Language: ka\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2.2\n"
 
-#: plug-ins/python/colorxhtml.py:89
+#: plug-ins/python/colorxhtml.py:91
 msgid "Save as colored HTML text..."
 msgstr ""
 
-#: plug-ins/python/colorxhtml.py:94
+#: plug-ins/python/colorxhtml.py:96
 msgid "Read characters from file..."
 msgstr ""
 
-#: plug-ins/python/colorxhtml.py:113
+#: plug-ins/python/colorxhtml.py:115
 msgid "Characters"
 msgstr "სიმბოლოები"
 
-#: plug-ins/python/colorxhtml.py:114
+#: plug-ins/python/colorxhtml.py:116
 msgid "Characters that will be used as colored pixels. "
 msgstr ""
 
-#: plug-ins/python/colorxhtml.py:123
+#: plug-ins/python/colorxhtml.py:125
 msgid "Characters or file location"
 msgstr ""
 
-#: plug-ins/python/colorxhtml.py:129
+#: plug-ins/python/colorxhtml.py:131
 msgid "Read characters from file"
 msgstr ""
 
-#: plug-ins/python/colorxhtml.py:132
+#: plug-ins/python/colorxhtml.py:134
 msgid ""
 "If set, the Characters text entry will be used as a file name, from which "
 "the characters will be read. Otherwise, the characters in the text entry "
 "will be used to render the image."
 msgstr ""
 
-#: plug-ins/python/colorxhtml.py:138
+#: plug-ins/python/colorxhtml.py:140
 msgid "Choose file"
-msgstr ""
+msgstr "ფაილის არჩევა"
 
-#: plug-ins/python/colorxhtml.py:145
+#: plug-ins/python/colorxhtml.py:147
 msgid "Font Size(px)"
-msgstr ""
+msgstr "ფონტის ზომა(პიქსელებში)"
 
-#: plug-ins/python/colorxhtml.py:157
+#: plug-ins/python/colorxhtml.py:159
 msgid "Write separate CSS file"
-msgstr ""
+msgstr "ცალკე CSS ფაილის ჩაწერა"
 
-#: plug-ins/python/colorxhtml.py:210
+#: plug-ins/python/colorxhtml.py:215
 msgid "Saving as colored XHTML"
-msgstr ""
+msgstr "ფერადი XHTML ფაილად ჩაწერა"
 
-#: plug-ins/python/colorxhtml.py:279 plug-ins/python/colorxhtml.py:280
+#: plug-ins/python/colorxhtml.py:284 plug-ins/python/colorxhtml.py:285
 msgid "_Read characters from file, if true, or use text entry"
 msgstr ""
 
-#: plug-ins/python/colorxhtml.py:284 plug-ins/python/colorxhtml.py:285
+#: plug-ins/python/colorxhtml.py:289 plug-ins/python/colorxhtml.py:290
 msgid "_File to read or characters to use"
 msgstr ""
 
-#: plug-ins/python/colorxhtml.py:289 plug-ins/python/colorxhtml.py:290
+#: plug-ins/python/colorxhtml.py:294 plug-ins/python/colorxhtml.py:295
 msgid "Fo_nt size in pixels"
 msgstr "_ფონტის ზომა პიქსელებში"
 
-#: plug-ins/python/colorxhtml.py:294 plug-ins/python/colorxhtml.py:295
+#: plug-ins/python/colorxhtml.py:299 plug-ins/python/colorxhtml.py:300
 msgid "_Write a separate CSS file"
 msgstr "_ცალკე CSS ფაილის ჩაწერა"
 
-#: plug-ins/python/colorxhtml.py:315
+#: plug-ins/python/colorxhtml.py:320
 msgid "Save as colored HTML text"
 msgstr ""
 
-#: plug-ins/python/colorxhtml.py:318
+#: plug-ins/python/colorxhtml.py:323
 msgid "Colored HTML text"
-msgstr ""
+msgstr "ფერადი HTML ტექსტი"
 
 #: plug-ins/python/foggify.py:104
 msgid "Layer _name"
@@ -137,36 +137,32 @@ msgstr ""
 msgid "_Fog..."
 msgstr "_ნისლი..."
 
-#: plug-ins/python/gradients-save-as-css.py:81
+#: plug-ins/python/gradients-save-as-css.py:83
 msgid "CSS file..."
 msgstr "CSS ფაილი..."
 
-#: plug-ins/python/gradients-save-as-css.py:139
-#: plug-ins/python/palette-sort.py:332
+#: plug-ins/python/gradients-save-as-css.py:141
+#: plug-ins/python/palette-sort.py:350
 #: plug-ins/python/python-console/python-console.py:336
 msgid "Run mode"
 msgstr "გაშვების რეჟიმი"
 
-#: plug-ins/python/gradients-save-as-css.py:140
-#: plug-ins/python/palette-sort.py:333
+#: plug-ins/python/gradients-save-as-css.py:142
 #: plug-ins/python/python-console/python-console.py:336
 msgid "The run mode"
 msgstr "გაშვების რეჟიმი"
 
-#: plug-ins/python/gradients-save-as-css.py:144
+#: plug-ins/python/gradients-save-as-css.py:146
 msgid "Gradient to use"
 msgstr "გამოსაყენებელი გრადიენტი"
 
-#: plug-ins/python/gradients-save-as-css.py:147
+#: plug-ins/python/gradients-save-as-css.py:149
 msgid "File"
 msgstr "ფაილი"
 
-#: plug-ins/python/gradients-save-as-css.py:165
+#: plug-ins/python/gradients-save-as-css.py:167
+#: plug-ins/python/gradients-save-as-css.py:168
 msgid "Creates a new palette from a given gradient"
-msgstr ""
-
-#: plug-ins/python/gradients-save-as-css.py:166
-msgid "palette_from_gradient (gradient, number, segment_colors) -> None"
 msgstr ""
 
 #: plug-ins/python/histogram-export.py:92
@@ -187,7 +183,7 @@ msgstr ""
 
 #: plug-ins/python/histogram-export.py:169
 msgid "Directory not found."
-msgstr ""
+msgstr "საქაღალდე ვერ ვიპოვე."
 
 #: plug-ins/python/histogram-export.py:203
 msgid "Histogram Export..."
@@ -245,8 +241,8 @@ msgid "_Export histogram..."
 msgstr ""
 
 #: plug-ins/python/palette-offset.py:46 plug-ins/python/palette-offset.py:47
-#: plug-ins/python/palette-sort.py:339 plug-ins/python/palette-sort.py:340
-#: plug-ins/python/palette-sort.py:398 plug-ins/python/palette-sort.py:399
+#: plug-ins/python/palette-sort.py:358 plug-ins/python/palette-sort.py:411
+#: plug-ins/python/palette-sort.py:412
 #: plug-ins/python/palette-to-gradient.py:103
 msgid "Palette"
 msgstr "პალიტრა"
@@ -280,135 +276,143 @@ msgstr ""
 msgid "Offset Palette..."
 msgstr ""
 
-#: plug-ins/python/palette-sort.py:40
+#: plug-ins/python/palette-sort.py:42
 msgid "Red"
 msgstr "წითელი"
 
-#: plug-ins/python/palette-sort.py:40
+#: plug-ins/python/palette-sort.py:42
 msgid "Green"
 msgstr "მწვანე"
 
-#: plug-ins/python/palette-sort.py:40
+#: plug-ins/python/palette-sort.py:42
 msgid "Blue"
 msgstr "ლურჯი"
 
-#: plug-ins/python/palette-sort.py:41
+#: plug-ins/python/palette-sort.py:43
 msgid "Luma (Y)"
 msgstr ""
 
-#: plug-ins/python/palette-sort.py:42
+#: plug-ins/python/palette-sort.py:44
 msgid "Hue"
 msgstr "ტონი"
 
-#: plug-ins/python/palette-sort.py:42
+#: plug-ins/python/palette-sort.py:44
 msgid "Saturation"
 msgstr "გაჯერებულობა"
 
-#: plug-ins/python/palette-sort.py:42
+#: plug-ins/python/palette-sort.py:44
 msgid "Value"
 msgstr "მნიშვნელობა"
 
-#: plug-ins/python/palette-sort.py:43
+#: plug-ins/python/palette-sort.py:45
 msgid "Saturation (HSL)"
 msgstr ""
 
-#: plug-ins/python/palette-sort.py:43
+#: plug-ins/python/palette-sort.py:45
 msgid "Lightness (HSL)"
 msgstr "განათება (HSL)"
 
-#: plug-ins/python/palette-sort.py:44
+#: plug-ins/python/palette-sort.py:46
 msgid "Index"
 msgstr "ინდექსი"
 
-#: plug-ins/python/palette-sort.py:45
+#: plug-ins/python/palette-sort.py:47
 msgid "Random"
 msgstr "შემთხვევით"
 
-#: plug-ins/python/palette-sort.py:90
+#: plug-ins/python/palette-sort.py:92
 msgid "Lightness (LAB)"
 msgstr ""
 
-#: plug-ins/python/palette-sort.py:91
+#: plug-ins/python/palette-sort.py:93
 msgid "A-color"
 msgstr ""
 
-#: plug-ins/python/palette-sort.py:91
+#: plug-ins/python/palette-sort.py:93
 msgid "B-color"
 msgstr ""
 
-#: plug-ins/python/palette-sort.py:92
+#: plug-ins/python/palette-sort.py:94
 msgid "Chroma (LCHab)"
 msgstr ""
 
-#: plug-ins/python/palette-sort.py:93
+#: plug-ins/python/palette-sort.py:95
 msgid "Hue (LCHab)"
 msgstr ""
 
-#: plug-ins/python/palette-sort.py:327
+#: plug-ins/python/palette-sort.py:345
 msgid "All"
 msgstr "ყველა"
 
-#: plug-ins/python/palette-sort.py:327
+#: plug-ins/python/palette-sort.py:345
 msgid "Slice / Array"
 msgstr ""
 
-#: plug-ins/python/palette-sort.py:327
+#: plug-ins/python/palette-sort.py:345
 msgid "Autoslice (fg->bg)"
 msgstr ""
 
-#: plug-ins/python/palette-sort.py:327
+#: plug-ins/python/palette-sort.py:345
 msgid "Partitioned"
 msgstr ""
 
-#: plug-ins/python/palette-sort.py:344
-msgid "Se_lections"
-msgstr ""
+#: plug-ins/python/palette-sort.py:357
+msgid "_Palette"
+msgstr "პალიტრა"
 
-#: plug-ins/python/palette-sort.py:351
+#: plug-ins/python/palette-sort.py:362
+msgid "Select_ions"
+msgstr "მონიშნული"
+
+#: plug-ins/python/palette-sort.py:369
 msgid "Slice _expression"
 msgstr ""
 
-#: plug-ins/python/palette-sort.py:358
-msgid "Channel to _sort"
+#: plug-ins/python/palette-sort.py:374
+msgid "Channel _to sort"
 msgstr ""
 
-#: plug-ins/python/palette-sort.py:363 plug-ins/python/palette-sort.py:375
+#: plug-ins/python/palette-sort.py:379
 msgid "_Ascending"
 msgstr "აღმავალი"
 
-#: plug-ins/python/palette-sort.py:364 plug-ins/python/palette-sort.py:376
+#: plug-ins/python/palette-sort.py:380 plug-ins/python/palette-sort.py:390
 msgid "Ascending"
 msgstr "ზრდის მიხედვით"
 
-#: plug-ins/python/palette-sort.py:370
-msgid "Secondary Channel to s_ort"
+#: plug-ins/python/palette-sort.py:384
+msgid "Secondary C_hannel to sort"
 msgstr ""
 
-#: plug-ins/python/palette-sort.py:380
+#: plug-ins/python/palette-sort.py:389
+msgid "Ascen_ding"
+msgstr "ზრდის მიხედვით"
+
+#: plug-ins/python/palette-sort.py:394
 msgid "_Quantization"
 msgstr ""
 
-#: plug-ins/python/palette-sort.py:381
+#: plug-ins/python/palette-sort.py:395
 msgid "Quantization"
-msgstr ""
+msgstr "ქვანტიზაცია"
 
-#: plug-ins/python/palette-sort.py:386
+#: plug-ins/python/palette-sort.py:399
 msgid "_Partitioning channel"
 msgstr ""
 
-#: plug-ins/python/palette-sort.py:391
+#: plug-ins/python/palette-sort.py:404
 msgid "Partition q_uantization"
 msgstr ""
 
-#: plug-ins/python/palette-sort.py:392
+#: plug-ins/python/palette-sort.py:405
 msgid "Partition quantization"
 msgstr ""
 
-#: plug-ins/python/palette-sort.py:417
+#: plug-ins/python/palette-sort.py:430
 msgid "_Sort Palette..."
 msgstr ""
 
-#: plug-ins/python/palette-sort.py:422
+#: plug-ins/python/palette-sort.py:435
 msgid "Sort the colors in a palette"
 msgstr ""
 
