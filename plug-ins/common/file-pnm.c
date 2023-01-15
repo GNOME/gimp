@@ -167,6 +167,9 @@ static gint             save_image           (GFile                *file,
 static gboolean         save_dialog          (GimpProcedure        *procedure,
                                               GObject              *config);
 
+static void             process_pam_header   (PNMScanner           *scan,
+                                              PNMInfo              *info);
+
 static void             pnm_load_ascii       (PNMScanner           *scan,
                                               PNMInfo              *info,
                                               GeglBuffer           *buffer);
@@ -205,11 +208,15 @@ static void         pnmscanner_createbuffer  (PNMScanner           *s,
                                               gint                  bufsize);
 static void         pnmscanner_getchar       (PNMScanner           *s);
 static void         pnmscanner_eatwhitespace (PNMScanner           *s);
+static void         pnmscanner_eatinnerspace (PNMScanner           *s);
 static void         pnmscanner_gettoken      (PNMScanner           *s,
                                               gchar                *buf,
                                               gint                  bufsize);
 static void         pnmscanner_getsmalltoken (PNMScanner           *s,
                                               gchar                *buf);
+static void         pnmscanner_getheaderline (PNMScanner           *s,
+                                              gchar                *buf,
+                                              gint                  bufsize);
 
 #define pnmscanner_eof(s)   ((s)->eof)
 #define pnmscanner_input(s) ((s)->input)
@@ -235,15 +242,16 @@ static const struct
   PNMLoaderFunc loader;
 } pnm_types[] =
 {
-  { '1', 0, 1,   1, pnm_load_ascii  },  /* ASCII PBM             */
-  { '2', 1, 1, 255, pnm_load_ascii  },  /* ASCII PGM             */
-  { '3', 3, 1, 255, pnm_load_ascii  },  /* ASCII PPM             */
-  { '4', 0, 0,   1, pnm_load_rawpbm },  /* RAW   PBM             */
-  { '5', 1, 0, 255, pnm_load_raw    },  /* RAW   PGM             */
-  { '6', 3, 0, 255, pnm_load_raw    },  /* RAW   PPM             */
-  { 'F', 3, 0,   0, pnm_load_rawpfm },  /* RAW   PFM (color)     */
-  { 'f', 1, 0,   0, pnm_load_rawpfm },  /* RAW   PFM (grayscale) */
-  {  0 , 0, 0,   0, NULL}
+  { '1', 0, 1,     1, pnm_load_ascii  },  /* ASCII PBM             */
+  { '2', 1, 1,   255, pnm_load_ascii  },  /* ASCII PGM             */
+  { '3', 3, 1,   255, pnm_load_ascii  },  /* ASCII PPM             */
+  { '4', 0, 0,     1, pnm_load_rawpbm },  /* RAW   PBM             */
+  { '5', 1, 0,   255, pnm_load_raw    },  /* RAW   PGM             */
+  { '6', 3, 0,   255, pnm_load_raw    },  /* RAW   PPM             */
+  { '7', 4, 0, 65535, pnm_load_raw    },  /* RAW   PAM             */
+  { 'F', 3, 0,     0, pnm_load_rawpfm },  /* RAW   PFM (color)     */
+  { 'f', 1, 0,     0, pnm_load_rawpfm },  /* RAW   PFM (grayscale) */
+  {  0 , 0, 0,     0, NULL}
 };
 
 
@@ -306,11 +314,11 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
                                           "image/x-portable-anymap");
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
-                                          "pnm,ppm,pgm,pbm,pfm");
+                                          "pnm,ppm,pgm,pbm,pfm,pam");
       gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
                                       "0,string,P1,0,string,P2,0,string,P3,"
                                       "0,string,P4,0,string,P5,0,string,P6,"
-                                      "0,string,PF,0,string,Pf");
+                                      "0,string,P7,0,string,PF,0,string,Pf");
     }
   else if (! strcmp (name, PNM_SAVE_PROC))
     {
@@ -639,8 +647,10 @@ load_image (GFile   *file,
   char             buf[BUFLEN + 4];  /* buffer for random things like scanning */
   PNMInfo         *pnminfo;
   PNMScanner      *volatile scan;
-  int             ctr;
-  GimpPrecision   precision;
+  gint             ctr;
+  GimpPrecision    precision;
+  gboolean         is_pam    = FALSE;
+  GimpImageType    layer_type;
 
   gimp_progress_init_printf (_("Opening '%s'"),
                              g_file_get_parse_name (file));
@@ -688,6 +698,9 @@ load_image (GFile   *file,
         pnminfo->float_format = g_ascii_tolower (pnm_types[ctr].name) == 'f';
         pnminfo->maxval       = pnm_types[ctr].maxval;
         pnminfo->loader       = pnm_types[ctr].loader;
+
+        if (pnm_types[ctr].name == '7')
+          is_pam = TRUE;
       }
 
   if (! pnminfo->loader)
@@ -696,23 +709,31 @@ load_image (GFile   *file,
       longjmp (pnminfo->jmpbuf, 1);
     }
 
-  pnmscanner_gettoken (scan, buf, BUFLEN);
-  CHECK_FOR_ERROR (pnmscanner_eof (scan), pnminfo->jmpbuf,
-                   _("Premature end of file."));
-  pnminfo->xres = g_ascii_isdigit(*buf) ? atoi (buf) : 0;
-  CHECK_FOR_ERROR (pnminfo->xres <= 0, pnminfo->jmpbuf,
-                   _("Invalid X resolution."));
-  CHECK_FOR_ERROR (pnminfo->xres > GIMP_MAX_IMAGE_SIZE, pnminfo->jmpbuf,
-                   _("Image width is larger than GIMP can handle."));
+  if (is_pam)
+    {
+      process_pam_header (scan, pnminfo);
+    }
+  else
+    {
+      pnmscanner_gettoken (scan, buf, BUFLEN);
+      CHECK_FOR_ERROR (pnmscanner_eof (scan), pnminfo->jmpbuf,
+                       _("Premature end of file."));
+      pnminfo->xres = g_ascii_isdigit(*buf) ? atoi (buf) : 0;
+      CHECK_FOR_ERROR (pnminfo->xres <= 0, pnminfo->jmpbuf,
+                       _("Invalid X resolution."));
+      CHECK_FOR_ERROR (pnminfo->xres > GIMP_MAX_IMAGE_SIZE, pnminfo->jmpbuf,
+                       _("Image width is larger than GIMP can handle."));
 
-  pnmscanner_gettoken (scan, buf, BUFLEN);
-  CHECK_FOR_ERROR (pnmscanner_eof (scan), pnminfo->jmpbuf,
-                   _("Premature end of file."));
-  pnminfo->yres = g_ascii_isdigit (*buf) ? atoi (buf) : 0;
-  CHECK_FOR_ERROR (pnminfo->yres <= 0, pnminfo->jmpbuf,
-                   _("Invalid Y resolution."));
-  CHECK_FOR_ERROR (pnminfo->yres > GIMP_MAX_IMAGE_SIZE, pnminfo->jmpbuf,
-                   _("Image height is larger than GIMP can handle."));
+      pnmscanner_gettoken (scan, buf, BUFLEN);
+      CHECK_FOR_ERROR (pnmscanner_eof (scan), pnminfo->jmpbuf,
+                       _("Premature end of file."));
+      pnminfo->yres = g_ascii_isdigit (*buf) ? atoi (buf) : 0;
+      CHECK_FOR_ERROR (pnminfo->yres <= 0, pnminfo->jmpbuf,
+                       _("Invalid Y resolution."));
+      CHECK_FOR_ERROR (pnminfo->yres > GIMP_MAX_IMAGE_SIZE, pnminfo->jmpbuf,
+                       _("Image height is larger than GIMP can handle."));
+
+    }
 
   if (pnminfo->float_format)
     {
@@ -731,13 +752,17 @@ load_image (GFile   *file,
     }
   else if (pnminfo->np != 0)         /* pbm's don't have a maxval field */
     {
-      pnmscanner_gettoken (scan, buf, BUFLEN);
-      CHECK_FOR_ERROR (pnmscanner_eof (scan), pnminfo->jmpbuf,
-                       _("Premature end of file."));
+      if (! is_pam)
+        {
+          pnmscanner_gettoken (scan, buf, BUFLEN);
+          CHECK_FOR_ERROR (pnmscanner_eof (scan), pnminfo->jmpbuf,
+                           _("Premature end of file."));
 
-      pnminfo->maxval = g_ascii_isdigit (*buf) ? atoi (buf) : 0;
-      CHECK_FOR_ERROR (((pnminfo->maxval<=0) || (pnminfo->maxval>65535)),
+          pnminfo->maxval = g_ascii_isdigit (*buf) ? atoi (buf) : 0;
+        }
+      CHECK_FOR_ERROR (((pnminfo->maxval <= 0) || (pnminfo->maxval > 65535)),
                        pnminfo->jmpbuf, _("Unsupported maximum value."));
+
       if (pnminfo->maxval < 256)
         {
           precision = GIMP_PRECISION_U8_NON_LINEAR;
@@ -761,11 +786,28 @@ load_image (GFile   *file,
 
   gimp_image_set_file (image, file);
 
+  switch (pnminfo->np)
+    {
+      case 0:
+      case 1:
+        layer_type = GIMP_GRAY_IMAGE;
+        break;
+      case 2:
+        layer_type = GIMP_GRAYA_IMAGE;
+        break;
+      case 3:
+        layer_type = GIMP_RGB_IMAGE;
+        break;
+      case 4:
+        layer_type = GIMP_RGBA_IMAGE;
+        break;
+      default:
+        layer_type = GIMP_GRAY_IMAGE;
+    }
+
   layer = gimp_layer_new (image, _("Background"),
                           pnminfo->xres, pnminfo->yres,
-                          (pnminfo->np >= 3 ?
-                           GIMP_RGB_IMAGE : GIMP_GRAY_IMAGE),
-                          100,
+                          layer_type, 100,
                           gimp_image_get_default_new_layer_mode (image));
   gimp_image_insert_layer (image, layer, NULL, 0);
 
@@ -781,6 +823,81 @@ load_image (GFile   *file,
   g_object_unref (input);
 
   return image;
+}
+
+/* Code referenced from Jörg Walter */
+static void
+process_pam_header (PNMScanner *scan,
+                    PNMInfo    *pnminfo)
+{
+  char     buf[BUFLEN + 4];
+  gboolean is_unsupported_tupltype = FALSE;
+
+  while (!scan->eof)
+    {
+      pnmscanner_getheaderline (scan, buf, BUFLEN);
+      if (! strcmp (buf, "WIDTH"))
+        {
+          pnmscanner_gettoken (scan, buf, BUFLEN);
+          pnminfo->xres = g_ascii_isdigit (*buf) ? atoi (buf) : 0;
+        }
+      else if (! strcmp (buf, "HEIGHT"))
+        {
+          pnmscanner_gettoken (scan, buf, BUFLEN);
+          pnminfo->yres = g_ascii_isdigit (*buf) ? atoi (buf):0;
+        }
+      else if (! strcmp (buf,"DEPTH"))
+        {
+          pnmscanner_gettoken (scan, buf, BUFLEN);
+          pnminfo->np = g_ascii_isdigit (*buf) ? atoi (buf) : 0;
+        }
+      else if (! strcmp (buf,"MAXVAL"))
+        {
+          pnmscanner_gettoken (scan, buf, BUFLEN);
+          pnminfo->maxval = g_ascii_isdigit (*buf) ? atoi (buf) : 0;
+        }
+      else if (! strcmp (buf, "TUPLTYPE"))
+        {
+          pnmscanner_gettoken (scan, buf, BUFLEN);
+
+          /* PAM files may have custom tupltypes;
+           * however, these are the only 'officially' defined
+           * ones */
+          if (strcmp (buf, "BLACKANDWHITE")       &&
+              strcmp (buf, "BLACKANDWHITE_ALPHA") &&
+              strcmp (buf, "GRAYSCALE")           &&
+              strcmp (buf, "GRAYSCALE_ALPHA")     &&
+              strcmp (buf, "RGB")                 &&
+              strcmp (buf, "RGB_ALPHA"))
+            {
+              is_unsupported_tupltype = TRUE;
+            }
+        }
+      else if (! strcmp (buf, "ENDHDR"))
+        {
+          break;
+        }
+      else
+        {
+          /* skip unknown headers but recognize xv's thumbnail format */
+          CHECK_FOR_ERROR (g_ascii_isdigit (*buf), pnminfo->jmpbuf,
+                           _("PAM: Unsupported inofficial PNM variant."));
+        }
+    }
+    CHECK_FOR_ERROR (pnmscanner_eof (scan), pnminfo->jmpbuf,
+                     _("PAM: Premature end of file."));
+    CHECK_FOR_ERROR (pnminfo->xres > GIMP_MAX_IMAGE_SIZE, pnminfo->jmpbuf,
+                     _("Image width is larger than GIMP can handle."));
+    CHECK_FOR_ERROR (pnminfo->xres <= 0, pnminfo->jmpbuf,
+                     _("PAM: Invalid X resolution."));
+    CHECK_FOR_ERROR (pnminfo->yres <= 0, pnminfo->jmpbuf,
+                     _("PAM: Invalid Y resolution."));
+    CHECK_FOR_ERROR ((pnminfo->maxval <= 0), pnminfo->jmpbuf,
+                     _("PAM: Invalid maximum value."));
+    CHECK_FOR_ERROR ((pnminfo->np <= 0), pnminfo->jmpbuf,
+                     _("PAM: Invalid depth."));
+    CHECK_FOR_ERROR (is_unsupported_tupltype, pnminfo->jmpbuf,
+                     _("PAM: Unsupported tupltype."));
 }
 
 static void
@@ -1911,4 +2028,34 @@ pnmscanner_eatwhitespace (PNMScanner *s)
           break;
         }
     }
+}
+
+/* Code referenced from Jörg Walter */
+/* pnmscanner_eatinnerspace ---
+ *    Eats up spaces and tabs from PAM header input and returns when done or eof.
+ */
+static void
+pnmscanner_eatinnerspace (PNMScanner *s)
+{
+  while (! (s->eof) && (s->cur == ' ' || s->cur == '\t'))
+    pnmscanner_getchar (s);
+}
+
+/* Code referenced from Jörg Walter */
+/* pnmscanner_getheaderline ---
+ *    Gets the next header line (next token occurring at the start of a line)
+ */
+static void
+pnmscanner_getheaderline (PNMScanner *s,
+                          gchar      *buf,
+                          gint        bufsize)
+{
+  pnmscanner_eatinnerspace (s);
+  while (! (s->eof) && s->cur != '\n')
+    {
+      pnmscanner_gettoken (s, buf, bufsize);
+      pnmscanner_eatinnerspace (s);
+    }
+
+  pnmscanner_gettoken (s, buf, bufsize);
 }
