@@ -44,6 +44,7 @@
 #define PBM_SAVE_PROC  "file-pbm-save"
 #define PGM_SAVE_PROC  "file-pgm-save"
 #define PPM_SAVE_PROC  "file-ppm-save"
+#define PAM_SAVE_PROC  "file-pam-save"
 #define PFM_SAVE_PROC  "file-pfm-save"
 #define PLUG_IN_BINARY "file-pnm"
 #define PLUG_IN_ROLE   "gimp-file-pnm"
@@ -58,6 +59,7 @@ typedef enum
   FILE_TYPE_PBM,
   FILE_TYPE_PGM,
   FILE_TYPE_PPM,
+  FILE_TYPE_PAM,
   FILE_TYPE_PFM
 } FileType;
 
@@ -108,6 +110,7 @@ struct _PNMRowInfo
   guchar        *red;           /* Colormap red                */
   guchar        *grn;           /* Colormap green              */
   guchar        *blu;           /* Colormap blue               */
+  guchar        *alpha;         /* Colormap alpha (PAM only)   */
   gboolean       zero_is_black; /* index zero is black (PBM only) */
 };
 
@@ -183,6 +186,16 @@ static void             pnm_load_rawpfm      (PNMScanner           *scan,
                                               PNMInfo              *info,
                                               GeglBuffer           *buffer);
 
+static void         create_pam_header        (const gchar         **header_string,
+                                              PNMRowInfo           *rowinfo,
+                                              PNMSaverowFunc       *saverow,
+                                              GimpImageType         drawable_type,
+                                              GeglBuffer           *buffer,
+                                              const Babl          **format,
+                                              gint                 *rowbufsize,
+                                              gint                 *np,
+                                              gchar                *comment);
+
 static gboolean     pnmsaverow_ascii         (PNMRowInfo           *ri,
                                               guchar               *data,
                                               GError              **error);
@@ -242,16 +255,16 @@ static const struct
   PNMLoaderFunc loader;
 } pnm_types[] =
 {
-  { '1', 0, 1,     1, pnm_load_ascii  },  /* ASCII PBM             */
-  { '2', 1, 1,   255, pnm_load_ascii  },  /* ASCII PGM             */
-  { '3', 3, 1,   255, pnm_load_ascii  },  /* ASCII PPM             */
-  { '4', 0, 0,     1, pnm_load_rawpbm },  /* RAW   PBM             */
-  { '5', 1, 0,   255, pnm_load_raw    },  /* RAW   PGM             */
-  { '6', 3, 0,   255, pnm_load_raw    },  /* RAW   PPM             */
+  { '1', 0, 1, 1,     pnm_load_ascii  },  /* ASCII PBM             */
+  { '2', 1, 1, 255,   pnm_load_ascii  },  /* ASCII PGM             */
+  { '3', 3, 1, 255,   pnm_load_ascii  },  /* ASCII PPM             */
+  { '4', 0, 0, 1,     pnm_load_rawpbm },  /* RAW   PBM             */
+  { '5', 1, 0, 255,   pnm_load_raw    },  /* RAW   PGM             */
+  { '6', 3, 0, 255,   pnm_load_raw    },  /* RAW   PPM             */
   { '7', 4, 0, 65535, pnm_load_raw    },  /* RAW   PAM             */
-  { 'F', 3, 0,     0, pnm_load_rawpfm },  /* RAW   PFM (color)     */
-  { 'f', 1, 0,     0, pnm_load_rawpfm },  /* RAW   PFM (grayscale) */
-  {  0 , 0, 0,     0, NULL}
+  { 'F', 3, 0, 0,     pnm_load_rawpfm },  /* RAW   PFM (color)     */
+  { 'f', 1, 0, 0,     pnm_load_rawpfm },  /* RAW   PFM (grayscale) */
+  {  0 , 0, 0, 0,     NULL            }
 };
 
 
@@ -280,6 +293,7 @@ pnm_query_procedures (GimpPlugIn *plug_in)
   list = g_list_append (list, g_strdup (PBM_SAVE_PROC));
   list = g_list_append (list, g_strdup (PGM_SAVE_PROC));
   list = g_list_append (list, g_strdup (PPM_SAVE_PROC));
+  list = g_list_append (list, g_strdup (PAM_SAVE_PROC));
   list = g_list_append (list, g_strdup (PFM_SAVE_PROC));
 
   return list;
@@ -460,6 +474,35 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
                              TRUE,
                              G_PARAM_READWRITE);
     }
+  else if (! strcmp (name, PAM_SAVE_PROC))
+    {
+      procedure = gimp_save_procedure_new (plug_in, name,
+                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+                                           pnm_save,
+                                           GINT_TO_POINTER (FILE_TYPE_PAM),
+                                           NULL);
+
+      gimp_procedure_set_image_types (procedure, "RGB*, GRAY*, INDEXED*");
+
+      gimp_procedure_set_menu_label (procedure, _("PAM image"));
+
+      gimp_procedure_set_documentation (procedure,
+                                        "Exports files in the PAM file format",
+                                        "PPM export handles RGB images "
+                                        "with or without transparency.",
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Jörg Walter",
+                                      "Jörg Walter",
+                                      "2009");
+
+      gimp_file_procedure_set_handles_remote (GIMP_FILE_PROCEDURE (procedure),
+                                              TRUE);
+      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+                                          "image/x-portable-arbitrarymap");
+      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+                                          "pam");
+    }
   else if (! strcmp (name, PFM_SAVE_PROC))
     {
       procedure = gimp_save_procedure_new (plug_in, name,
@@ -579,6 +622,15 @@ pnm_save (GimpProcedure        *procedure,
                                       GIMP_EXPORT_CAN_HANDLE_INDEXED);
           break;
 
+        case FILE_TYPE_PAM:
+          format_name = "PAM";
+          export = gimp_export_image (&image, &n_drawables, &drawables, "PAM",
+                                      GIMP_EXPORT_CAN_HANDLE_RGB   |
+                                      GIMP_EXPORT_CAN_HANDLE_GRAY  |
+                                      GIMP_EXPORT_CAN_HANDLE_ALPHA |
+                                      GIMP_EXPORT_CAN_HANDLE_INDEXED);
+          break;
+
         case FILE_TYPE_PFM:
           format_name = "PFM";
           export = gimp_export_image (&image, &n_drawables, &drawables, "PFM",
@@ -609,6 +661,7 @@ pnm_save (GimpProcedure        *procedure,
     }
 
   if (file_type != FILE_TYPE_PFM &&
+      file_type != FILE_TYPE_PAM &&
       run_mode  == GIMP_RUN_INTERACTIVE)
     {
       if (! save_dialog (procedure, G_OBJECT (config)))
@@ -788,25 +841,28 @@ load_image (GFile   *file,
 
   switch (pnminfo->np)
     {
-      case 0:
-      case 1:
-        layer_type = GIMP_GRAY_IMAGE;
-        break;
-      case 2:
-        layer_type = GIMP_GRAYA_IMAGE;
-        break;
-      case 3:
-        layer_type = GIMP_RGB_IMAGE;
-        break;
-      case 4:
-        layer_type = GIMP_RGBA_IMAGE;
-        break;
-      default:
-        layer_type = GIMP_GRAY_IMAGE;
+    case 0:
+    case 1:
+      layer_type = GIMP_GRAY_IMAGE;
+      break;
+
+    case 2:
+      layer_type = GIMP_GRAYA_IMAGE;
+      break;
+
+    case 3:
+      layer_type = GIMP_RGB_IMAGE;
+      break;
+
+    case 4:
+      layer_type = GIMP_RGBA_IMAGE;
+      break;
+
+    default:
+      layer_type = GIMP_GRAY_IMAGE;
     }
 
-  layer = gimp_layer_new (image, _("Background"),
-                          pnminfo->xres, pnminfo->yres,
+  layer = gimp_layer_new (image, _("Background"), pnminfo->xres, pnminfo->yres,
                           layer_type, 100,
                           gimp_image_get_default_new_layer_mode (image));
   gimp_image_insert_layer (image, layer, NULL, 0);
@@ -833,7 +889,7 @@ process_pam_header (PNMScanner *scan,
   char     buf[BUFLEN + 4];
   gboolean is_unsupported_tupltype = FALSE;
 
-  while (!scan->eof)
+  while (! scan->eof)
     {
       pnmscanner_getheaderline (scan, buf, BUFLEN);
       if (! strcmp (buf, "WIDTH"))
@@ -844,14 +900,14 @@ process_pam_header (PNMScanner *scan,
       else if (! strcmp (buf, "HEIGHT"))
         {
           pnmscanner_gettoken (scan, buf, BUFLEN);
-          pnminfo->yres = g_ascii_isdigit (*buf) ? atoi (buf):0;
+          pnminfo->yres = g_ascii_isdigit (*buf) ? atoi (buf) : 0;
         }
-      else if (! strcmp (buf,"DEPTH"))
+      else if (! strcmp (buf, "DEPTH"))
         {
           pnmscanner_gettoken (scan, buf, BUFLEN);
           pnminfo->np = g_ascii_isdigit (*buf) ? atoi (buf) : 0;
         }
-      else if (! strcmp (buf,"MAXVAL"))
+      else if (! strcmp (buf, "MAXVAL"))
         {
           pnmscanner_gettoken (scan, buf, BUFLEN);
           pnminfo->maxval = g_ascii_isdigit (*buf) ? atoi (buf) : 0;
@@ -1246,6 +1302,111 @@ output_write (GOutputStream *output,
   return g_output_stream_write_all (output, buffer, count, NULL, NULL, error);
 }
 
+static void
+create_pam_header (const gchar   **header_string,
+                   PNMRowInfo     *rowinfo,
+                   PNMSaverowFunc *saverow,
+                   GimpImageType   drawable_type,
+                   GeglBuffer     *buffer,
+                   const Babl    **format,
+                   gint           *rowbufsize,
+                   gint           *np,
+                   gchar          *comment)
+{
+  gint   maxval   = 255;
+  gint   xres     = gegl_buffer_get_width (buffer);
+  gint   yres     = gegl_buffer_get_height (buffer);
+  gchar *tupltype = NULL;
+
+  comment = g_strdup_printf("# Created by GIMP version %s PNM plug-in",
+                            GIMP_VERSION);
+  *saverow = pnmsaverow_raw;
+
+  if (rowinfo->bpc == 2)
+    maxval = 65535;
+
+  switch (drawable_type)
+    {
+    case GIMP_GRAY_IMAGE:
+      tupltype = "GRAYSCALE";
+      *np      = 1;
+      if (rowinfo->bpc == 1)
+        {
+          *format     = babl_format ("Y' u8");
+          *rowbufsize = xres;
+        }
+      else
+        {
+          *format     = babl_format ("Y' u16");
+          *rowbufsize = xres * 2;
+        }
+      break;
+
+    case GIMP_GRAYA_IMAGE:
+      tupltype = "GRAYSCALE_ALPHA";
+      *np      = 2;
+      if (rowinfo->bpc == 1)
+        {
+          *format     = babl_format ("Y'A u8");
+          *rowbufsize = xres * 2;
+        }
+      else
+        {
+          *format     = babl_format ("Y'A u16");
+          *rowbufsize = xres * 4;
+        }
+      break;
+
+    case GIMP_RGB_IMAGE:
+      tupltype = "RGB";
+      *np      = 3;
+      if (rowinfo->bpc == 1)
+        {
+          *format     = babl_format ("R'G'B' u8");
+          *rowbufsize = xres * 3;
+        }
+      else
+        {
+          *format     = babl_format ("R'G'B' u16");
+          *rowbufsize = xres * 6;
+        }
+      break;
+
+    case GIMP_RGBA_IMAGE:
+      tupltype = "RGB_ALPHA";
+      *np      = 4;
+      if (rowinfo->bpc == 1)
+        {
+          *format     = babl_format ("R'G'B'A u8");
+          *rowbufsize = xres * 4;
+        }
+      else
+        {
+          *format     = babl_format ("R'G'B'A u16");
+          *rowbufsize = xres * 8;
+        }
+      break;
+
+    case GIMP_INDEXED_IMAGE:
+      tupltype    = "RGB";
+      *np         = 3;
+      *format     = babl_format ("R'G'B' u8");
+      *rowbufsize = xres * 3;
+      break;
+
+    case GIMP_INDEXEDA_IMAGE:
+      tupltype    = "RGB_ALPHA";
+      *np         = 4;
+      *format     = babl_format ("R'G'B'A u8");
+      *rowbufsize = xres * 4;
+      break;
+    }
+
+  *header_string = g_strdup_printf ("P7\n%s\nWIDTH %d\nHEIGHT %d\nDEPTH %d\n"
+                                    "MAXVAL %d\nTUPLTYPE %s\nENDHDR\n",
+                                    comment, xres, yres, *np, maxval, tupltype);
+}
+
 /* Writes out mono raw rows */
 static gboolean
 pnmsaverow_raw_pbm (PNMRowInfo    *ri,
@@ -1349,16 +1510,28 @@ pnmsaverow_raw_indexed (PNMRowInfo    *ri,
                         GError       **error)
 {
   gint   i;
-  gchar *rbcur = ri->rowbuf;
+  gint   offset = 3;
+  gchar *rbcur  = ri->rowbuf;
+
+  if (ri->alpha)
+    offset = 4;
 
   for (i = 0; i < ri->xres; i++)
     {
       *(rbcur++) = ri->red[*data];
       *(rbcur++) = ri->grn[*data];
-      *(rbcur++) = ri->blu[*(data++)];
+      if (! ri->alpha)
+        {
+          *(rbcur++) = ri->blu[*(data++)];
+        }
+      else
+        {
+          *(rbcur++) = ri->blu[*(data)];
+          *(rbcur++) = ri->alpha[*(data++)];
+        }
     }
 
-  return output_write (ri->output, ri->rowbuf, ri->xres * 3, error);
+  return output_write (ri->output, ri->rowbuf, ri->xres * offset, error);
 }
 
 /* Writes out RGB and grayscale ascii rows */
@@ -1422,7 +1595,7 @@ save_image (GFile         *file,
   gboolean       status = FALSE;
   GOutputStream *output = NULL;
   GeglBuffer    *buffer = NULL;
-  const Babl    *format;
+  const Babl    *format = NULL;
   const gchar   *header_string = NULL;
   GimpImageType  drawable_type;
   PNMRowInfo     rowinfo;
@@ -1430,6 +1603,7 @@ save_image (GFile         *file,
   guchar         red[256];
   guchar         grn[256];
   guchar         blu[256];
+  guchar         alpha[256]; /* PAM only */
   gchar          buf[BUFLEN];
   gint           np = 0;
   gint           xres, yres;
@@ -1438,13 +1612,14 @@ save_image (GFile         *file,
   gchar         *comment    = NULL;
   gboolean       config_raw = TRUE;
 
-  if (file_type != FILE_TYPE_PFM)
+  if (file_type != FILE_TYPE_PFM && file_type != FILE_TYPE_PAM)
     g_object_get (config,
                   "raw", &config_raw,
                   NULL);
 
-  /*  Make sure we're not saving an image with an alpha channel  */
-  if (gimp_drawable_has_alpha (drawable))
+  /*  Make sure we're not saving an image with an alpha channel
+   *  unless we're exporting a PAM file  */
+  if (file_type != FILE_TYPE_PAM && gimp_drawable_has_alpha (drawable))
     {
       g_message (_("Cannot export images with alpha channel."));
       goto out;
@@ -1480,7 +1655,12 @@ save_image (GFile         *file,
     }
 
   /* write out magic number */
-  if (file_type != FILE_TYPE_PFM && ! config_raw)
+  if (file_type == FILE_TYPE_PAM)
+    {
+      create_pam_header (&header_string, &rowinfo, &saverow, drawable_type,
+                         buffer, &format, &rowbufsize, &np, comment);
+    }
+  else if (file_type != FILE_TYPE_PFM && ! config_raw)
     {
       if (file_type == FILE_TYPE_PBM)
         {
@@ -1627,7 +1807,8 @@ save_image (GFile         *file,
 
   rowinfo.zero_is_black = FALSE;
 
-  if (drawable_type == GIMP_INDEXED_IMAGE)
+  if (drawable_type == GIMP_INDEXED_IMAGE ||
+      drawable_type == GIMP_INDEXEDA_IMAGE)
     {
       guchar *cmap;
       gint    num_colors;
@@ -1669,17 +1850,23 @@ save_image (GFile         *file,
               red[i] = *c++;
               grn[i] = *c++;
               blu[i] = *c++;
+              if (drawable_type == GIMP_INDEXEDA_IMAGE)
+                alpha[i] = 255;
             }
 
           rowinfo.red = red;
           rowinfo.grn = grn;
           rowinfo.blu = blu;
+          if (drawable_type == GIMP_INDEXEDA_IMAGE)
+            rowinfo.alpha = alpha;
+          else
+            rowinfo.alpha = NULL;
         }
 
       g_free (cmap);
     }
 
-  if (file_type != FILE_TYPE_PFM)
+  if (file_type != FILE_TYPE_PFM && file_type != FILE_TYPE_PAM)
     {
       /* write out comment string */
       comment = g_strdup_printf("# Created by GIMP version %s PNM plug-in\n",
@@ -1705,8 +1892,9 @@ save_image (GFile         *file,
                   G_BYTE_ORDER == G_BIG_ENDIAN ? "1.0" : "-1.0");
     }
 
-  if (! output_write (output, buf, strlen (buf), error))
-    goto out;
+  if (file_type != FILE_TYPE_PAM)
+    if (! output_write (output, buf, strlen (buf), error))
+      goto out;
 
   if (file_type != FILE_TYPE_PFM)
     {
