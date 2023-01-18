@@ -128,6 +128,7 @@ static void            gimp_dock_window_style_updated             (GtkWidget    
 static gboolean        gimp_dock_window_delete_event              (GtkWidget                  *widget,
                                                                    GdkEventAny                *event);
 static GList         * gimp_dock_window_get_docks                 (GimpDockContainer          *dock_container);
+static GList         * gimp_dock_window_get_docks_self            (GimpDockWindow             *self);
 static GimpDialogFactory * gimp_dock_window_get_dialog_factory    (GimpDockContainer          *dock_container);
 static GimpUIManager * gimp_dock_window_get_ui_manager            (GimpDockContainer          *dock_container);
 static void            gimp_dock_window_add_dock_from_session     (GimpDockContainer          *dock_container,
@@ -486,6 +487,11 @@ gimp_dock_window_dispose (GObject *object)
 
   g_clear_object (&dock_window->p->dialog_factory);
 
+  /* Null our reference, that update_title callback dereferences.
+   * Gtk will dispose the widget but doesn't know of our reference.
+   */
+  dock_window->p->dock_columns = NULL;
+
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
@@ -691,12 +697,33 @@ gimp_dock_window_delete_event (GtkWidget   *widget,
   return FALSE;
 }
 
+/* Returns list of docks from self.
+ * Delegate to self's dock_columns, when it exists.
+ *
+ * Returns NULL when self has no dock_columns,
+ * which can happen during destroy.
+ *
+ * A returned non-null list is owned by self's dock_columns
+ * and need not be freed.
+ */
+static GList *
+gimp_dock_window_get_docks_self (GimpDockWindow *self)
+{
+  if (self->p->dock_columns)
+    return gimp_dock_columns_get_docks (self->p->dock_columns);
+  else
+    return NULL;
+}
+
+/* Implementation of GimpDockContainer interface method get_docks
+ * Transfers ownership of list to caller.
+ */
 static GList *
 gimp_dock_window_get_docks (GimpDockContainer *dock_container)
 {
   GimpDockWindow *dock_window = GIMP_DOCK_WINDOW (dock_container);
 
-  return g_list_copy (gimp_dock_columns_get_docks (dock_window->p->dock_columns));
+  return g_list_copy (gimp_dock_window_get_docks_self (dock_window));
 }
 
 static GimpDialogFactory *
@@ -819,7 +846,7 @@ gimp_dock_window_should_add_to_recent (GimpDockWindow *dock_window)
   GList    *docks;
   gboolean  should_add = TRUE;
 
-  docks = gimp_dock_container_get_docks (GIMP_DOCK_CONTAINER (dock_window));
+  docks = gimp_dock_window_get_docks_self (dock_window);
 
   if (! docks)
     {
@@ -840,8 +867,6 @@ gimp_dock_window_should_add_to_recent (GimpDockWindow *dock_window)
           should_add = FALSE;
         }
     }
-
-  g_list_free (docks);
 
   return should_add;
 }
@@ -895,7 +920,7 @@ gimp_dock_window_get_description (GimpDockWindow *dock_window,
   GList   *docks         = NULL;
   GList   *iter          = NULL;
 
-  docks = gimp_dock_container_get_docks (GIMP_DOCK_CONTAINER (dock_window));
+  docks = gimp_dock_window_get_docks_self (dock_window);
 
   for (iter = docks;
        iter;
@@ -908,8 +933,6 @@ gimp_dock_window_get_description (GimpDockWindow *dock_window,
       if (g_list_next (iter))
         g_string_append (complete_desc, GIMP_DOCK_COLUMN_SEPARATOR);
     }
-
-  g_list_free (docks);
 
   return g_string_free (complete_desc, FALSE /*free_segment*/);
 }
@@ -1221,7 +1244,7 @@ gimp_dock_window_has_toolbox (GimpDockWindow *dock_window)
 
   g_return_val_if_fail (GIMP_IS_DOCK_WINDOW (dock_window), FALSE);
 
-  for (iter = gimp_dock_columns_get_docks (dock_window->p->dock_columns);
+  for (iter = gimp_dock_window_get_docks_self (dock_window);
        iter;
        iter = g_list_next (iter))
     {
