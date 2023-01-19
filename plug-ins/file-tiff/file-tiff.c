@@ -334,10 +334,10 @@ run (const gchar      *name,
       tsvals.save_thumbnail = (metadata_flags & GIMP_METADATA_SAVE_THUMBNAIL) != 0;
       tsvals.save_profile   = (metadata_flags & GIMP_METADATA_SAVE_COLOR_PROFILE) != 0;
       tsvals.save_geotiff   = TRUE;
-#ifdef TIFF_VERSION_BIG
-      tsvals.bigtiff        = param[7].data.d_int32;
-#else
       tsvals.bigtiff        = FALSE;
+#ifdef TIFF_VERSION_BIG
+      if (nparams >= 8)
+        tsvals.bigtiff      = param[7].data.d_int32;
 #endif
 
       parasite = gimp_image_get_parasite (orig_image, "gimp-comment");
