@@ -151,11 +151,17 @@ static void          save_color_mode_data (FILE          *fd,
 static void          save_resources       (FILE          *fd,
                                            gint32         image_id);
 
+static void          save_paths           (FILE          *fd,
+                                           gint32         image_id);
+
 static void          save_layer_and_mask  (FILE          *fd,
                                            gint32         image_id);
 
 static void          save_data            (FILE          *fd,
                                            gint32         image_id);
+
+static void          double_to_psd_fixed  (gdouble        value,
+                                           gchar         *target);
 
 static void          xfwrite              (FILE          *fd,
                                            gconstpointer  buf,
@@ -801,6 +807,9 @@ save_resources (FILE   *fd,
       IFDBG printf ("\tTotal length of 0x0400 resource: %d\n", (int) sizeof (gint16));
     }
 
+  /* --------------- Write paths ------------------- */
+  save_paths (fd, image_id);
+
   /* --------------- Write resolution data ------------------- */
   {
     gdouble  xres = 0, yres = 0;
@@ -976,6 +985,167 @@ get_compress_channel_data (guchar  *channel_data,
 
   /*  return((len + channel_rows * sizeof (gint16)) + sizeof (gint16));*/
   return len;
+}
+
+/* Ported /from plug-ins/file-tiff/file-tiff-save.c */
+static void
+double_to_psd_fixed (gdouble  value,
+                     gchar   *target)
+{
+  gdouble in, frac;
+  gint    i, f;
+
+  frac = modf (value, &in);
+  if (frac < 0)
+    {
+      in -= 1;
+      frac += 1;
+    }
+
+  i = (gint) CLAMP (in, -16, 15);
+  f = CLAMP ((gint) (frac * 0xFFFFFF), 0, 0xFFFFFF);
+
+  target[0] = i & 0xFF;
+  target[1] = (f >> 16) & 0xFF;
+  target[2] = (f >>  8) & 0xFF;
+  target[3] = f & 0xFF;
+}
+
+/* Ported from /plug-ins/file-tiff/file-tiff-save.c */
+static void
+save_paths (FILE   *fd,
+            gint32  image_id)
+{
+  gshort  id     = 0x07D0; /* Photoshop paths have IDs >= 2000 */
+  gdouble width  = gimp_image_width (image_id);
+  gdouble height = gimp_image_height (image_id);
+  gint    num_vectors;
+  gint   *vectors;
+  gint    v;
+  gint    num_strokes;
+  gint   *strokes;
+  gint    s;
+
+  vectors = gimp_image_get_vectors (image_id, &num_vectors);
+
+  if (num_vectors <= 0)
+    return;
+
+  /* Only up to 997 paths supported */
+  for (v = 0; v < MIN (num_vectors, 1000); v++)
+    {
+      GString *data;
+      gchar   *name, *nameend;
+      gsize    len;
+      gint     lenpos;
+      gchar    pointrecord[26] = { 0, };
+      gchar   *tmpname;
+      GError  *err = NULL;
+
+      data = g_string_new ("8BIM");
+      g_string_append_c (data, id / 256);
+      g_string_append_c (data, id % 256);
+
+      /*
+       * - use iso8859-1 if possible
+       * - otherwise use UTF-8, prepended with \xef\xbb\xbf (Byte-Order-Mark)
+       */
+      name = gimp_item_get_name (vectors[v]);
+      tmpname = g_convert (name, -1, "iso8859-1", "utf-8", NULL, &len, &err);
+
+      if (tmpname && err == NULL)
+        {
+          g_string_append_c (data, MIN (len, 255));
+          g_string_append_len (data, tmpname, MIN (len, 255));
+          g_free (tmpname);
+        }
+      else
+        {
+          /* conversion failed, we fall back to UTF-8 */
+          len = g_utf8_strlen (name, 255 - 3);  /* need three marker-bytes */
+
+          nameend = g_utf8_offset_to_pointer (name, len);
+          len = nameend - name; /* in bytes */
+          g_assert (len + 3 <= 255);
+
+          g_string_append_c (data, len + 3);
+          g_string_append_len (data, "\xEF\xBB\xBF", 3); /* Unicode 0xfeff */
+          g_string_append_len (data, name, len);
+
+          if (tmpname)
+            g_free (tmpname);
+        }
+
+      if (data->len % 2)  /* padding to even size */
+        g_string_append_c (data, 0);
+      g_free (name);
+
+      lenpos = data->len;
+      g_string_append_len (data, "\0\0\0\0", 4); /* will be filled in later */
+      len = data->len; /* to calculate the data size later */
+
+      pointrecord[1] = 6;  /* fill rule record */
+      g_string_append_len (data, pointrecord, 26);
+
+      strokes = gimp_vectors_get_strokes (vectors[v], &num_strokes);
+
+      for (s = 0; s < num_strokes; s++)
+        {
+          GimpVectorsStrokeType type;
+          gdouble  *points;
+          gint      num_points;
+          gboolean  closed;
+          gint      p = 0;
+
+          type = gimp_vectors_stroke_get_points (vectors[v], strokes[s],
+                                                 &num_points, &points, &closed);
+
+          if (type != GIMP_VECTORS_STROKE_TYPE_BEZIER ||
+              num_points > 65535 ||
+              num_points % 6)
+            {
+              g_printerr ("psd-save: unsupported stroke type: "
+                          "%d (%d points)\n", type, num_points);
+              continue;
+            }
+
+          memset (pointrecord, 0, 26);
+          pointrecord[1] = closed ? 0 : 3;
+          pointrecord[2] = (num_points / 6) / 256;
+          pointrecord[3] = (num_points / 6) % 256;
+          g_string_append_len (data, pointrecord, 26);
+
+          for (p = 0; p < num_points; p += 6)
+            {
+              pointrecord[1] = closed ? 2 : 5;
+
+              double_to_psd_fixed (points[p+1] / height, pointrecord + 2);
+              double_to_psd_fixed (points[p+0] / width,  pointrecord + 6);
+              double_to_psd_fixed (points[p+3] / height, pointrecord + 10);
+              double_to_psd_fixed (points[p+2] / width,  pointrecord + 14);
+              double_to_psd_fixed (points[p+5] / height, pointrecord + 18);
+              double_to_psd_fixed (points[p+4] / width,  pointrecord + 22);
+
+              g_string_append_len (data, pointrecord, 26);
+            }
+        }
+
+      g_free (strokes);
+
+      /* fix up the length */
+
+      len = data->len - len;
+      data->str[lenpos + 0] = (len & 0xFF000000) >> 24;
+      data->str[lenpos + 1] = (len & 0x00FF0000) >> 16;
+      data->str[lenpos + 2] = (len & 0x0000FF00) >>  8;
+      data->str[lenpos + 3] = (len & 0x000000FF) >>  0;
+
+      xfwrite (fd, data->str, data->len, "path resources data");
+      g_string_free (data, TRUE);
+      id += 0x01;
+    }
+
+  g_free (vectors);
 }
 
 static void
