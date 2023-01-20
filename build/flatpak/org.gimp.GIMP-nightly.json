@@ -62,8 +62,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://github.com/Exiv2/exiv2/releases/download/v0.27.5/exiv2-0.27.5-Source.tar.gz",
-                            "sha256": "35a58618ab236a901ca4928b0ad8b31007ebdc0386d904409d825024e45ea6e2",
+                            "url": "https://github.com/Exiv2/exiv2/releases/download/v0.27.6/exiv2-0.27.6-Source.tar.gz",
+                            "sha256": "4c192483a1125dc59a3d70b30d30d32edace9e14adf52802d2f853abf72db8a6",
                             "x-checker-data": {
                                 "type": "anitya",
                                 "project-id": 769,
@@ -615,8 +615,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/strukturag/libheif/releases/download/v1.13.0/libheif-1.13.0.tar.gz",
-                    "sha256": "c20ae01bace39e89298f6352f1ff4a54b415b33b9743902da798e8a1e51d7ca1",
+                    "url": "https://github.com/strukturag/libheif/releases/download/v1.14.2/libheif-1.14.2.tar.gz",
+                    "sha256": "d016905e247d6952cd7ee4f9b90957350b6a6caa466bc76fdfe6eb302b6d088c",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 64439,
@@ -634,6 +634,7 @@
                 "-DJPEGXL_ENABLE_DOXYGEN=OFF",
                 "-DJPEGXL_ENABLE_EXAMPLES=OFF",
                 "-DJPEGXL_ENABLE_JNI=OFF",
+                "-DJPEGXL_ENABLE_JPEGLI_LIBJPEG=OFF",
                 "-DJPEGXL_ENABLE_MANPAGES=OFF",
                 "-DJPEGXL_ENABLE_PLUGINS=OFF",
                 "-DJPEGXL_ENABLE_SJPEG=OFF",
@@ -671,8 +672,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/libjxl/libjxl/archive/refs/tags/v0.7.0.tar.gz",
-                    "sha256": "3114bba1fabb36f6f4adc2632717209aa6f84077bc4e93b420e0d63fa0455c5e"
+                    "url": "https://github.com/libjxl/libjxl/archive/refs/tags/v0.8.0.tar.gz",
+                    "sha256": "6b4c140c1738acbed6b7d22858e0526373f0e9938e3f6c0a6b8943189195aad1"
                 }
             ]
         },
