@@ -55,6 +55,9 @@
 /*  spacing between the icon and the statusbar label             */
 #define ICON_SPACING                      2
 
+/*  width/height of the statusbar icon rect                      */
+#define ICON_SIZE                        16
+
 /*  timeout (in milliseconds) for temporary statusbar messages   */
 #define MESSAGE_TIMEOUT                8000
 
@@ -1342,7 +1345,7 @@ gimp_statusbar_label_expose (GtkWidget      *widget,
       /*  the rectangle width is negative when rendering right-to-left  */
       x += PANGO_PIXELS (rect.x) + (rect.width < 0 ?
                                     PANGO_PIXELS (rect.width) : 0);
-      y += PANGO_PIXELS (rect.y);
+      y += PANGO_PIXELS (rect.y / ICON_SIZE);
 
       gdk_cairo_set_source_pixbuf (cr, statusbar->icon, x, y);
       cairo_paint (cr);
@@ -1734,7 +1737,7 @@ gimp_statusbar_load_icon (GimpStatusbar *statusbar,
   if (icon)
     return g_object_ref (icon);
 
-  icon = gimp_widget_load_icon (statusbar->label, icon_name, 16);
+  icon = gimp_widget_load_icon (statusbar->label, icon_name, ICON_SIZE);
 
   /* this is not optimal but so what */
   if (g_hash_table_size (statusbar->icon_hash) > 16)
