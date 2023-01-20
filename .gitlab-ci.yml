@@ -882,7 +882,6 @@ win64-nightly:
     - mkdir -p ${GIMP_DISTRIB}
     - cp -fr ${GIMP_PREFIX}/etc ${GIMP_DISTRIB}
     - cp -fr ${GIMP_PREFIX}/include ${GIMP_DISTRIB}
-    - cp -fr ${GIMP_PREFIX}/ssl ${GIMP_DISTRIB}
     - cp -fr ${GIMP_PREFIX}/share ${GIMP_DISTRIB}
 
     # Package executables.
