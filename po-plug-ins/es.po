@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-01-02 14:18+0000\n"
-"PO-Revision-Date: 2023-01-09 00:34+0100\n"
+"POT-Creation-Date: 2023-01-14 06:19+0000\n"
+"PO-Revision-Date: 2023-01-20 18:52+0100\n"
 "Last-Translator: Rodrigo Lledó Milanca <rodhos92@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -1080,7 +1080,7 @@ msgstr "Cargar los parámetros del Examinador CML"
 #: plug-ins/file-psd/psd-thumb-load.c:87 plug-ins/flame/flame.c:478
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1862
 #: plug-ins/fractal-explorer/fractal-explorer.c:1038 plug-ins/gfig/gfig.c:476
-#: plug-ins/help/gimphelplocale.c:222 plug-ins/help/gimphelplocale.c:238
+#: plug-ins/help/gimphelplocale.c:255 plug-ins/help/gimphelplocale.c:271
 #: plug-ins/lighting/lighting-ui.c:1377
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -10828,12 +10828,17 @@ msgstr "¿Quizá le faltan los «backends» de GIO y necesita instalar GVFS?"
 msgid "Help ID '%s' unknown"
 msgstr "El ID de la ayuda «%s» es desconocido"
 
-#: plug-ins/help/gimphelplocale.c:208
+#: plug-ins/help/gimphelplocale.c:218
 #, c-format
 msgid "Loading index from '%s'"
 msgstr "Cargando el índice desde «%s»"
 
-#: plug-ins/help/gimphelplocale.c:266
+#: plug-ins/help/gimphelplocale.c:239
+#, c-format
+msgid "Could not load data from '%s': %s"
+msgstr "No se han podido cargar los datos de «%s»: %s"
+
+#: plug-ins/help/gimphelplocale.c:311
 #, c-format
 msgid ""
 "Parse error in '%s':\n"
