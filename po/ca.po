@@ -10,14 +10,14 @@
 # Quim Perez i Noguer <noguer@gmail.com>, 2008, 2009, 2011.
 # Albert F. <lakonfrariadelavila@gmail.com>, 2012, 2013.
 # Eulàlia Pagès i Morales <eulaliapages@gmail.com>, 2015-2017
-# Jordi Mas i Hernàndez <jmas@softcatala.org>, 2015-2022
+# Jordi Mas i Hernàndez <jmas@softcatala.org>, 2015-2023
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2022-11-12 21:36+0000\n"
-"PO-Revision-Date: 2022-12-21 18:06+0100\n"
+"PO-Revision-Date: 2023-01-21 18:06+0100\n"
 "Last-Translator: Jordi Mas i Hernàndez <jmas@softcatala.org>\n"
 "Language-Team: Catalan <gnome@lists.softcatala.org>\n"
 "Language: ca\n"
@@ -15340,7 +15340,7 @@ msgstr ""
 " Jordi Jover, jordijn@softcatala.org, 2002\n"
 " Albert F. <lakonfrariadelavila@gmail.com>, 2012, 2013\n"
 " Eulàlia Pagès i Morales <eulaliapages@gmail.com>, 2015-2020\n"
-" Jordi Mas i Hernàndez <jmas@softcatala.org>, 2015-2022\n"
+" Jordi Mas i Hernàndez <jmas@softcatala.org>, 2015-2023\n"
 " Carles Ferrando Garcia <carles.ferrando@gmail.com>, 2019"
 
 #: app/dialogs/about-dialog.c:341
@@ -22428,8 +22428,9 @@ msgid "Selected paths will be aligned or distributed by the tool"
 msgstr "Els camins seleccionats s'alinearan o distribuiran per l'eina"
 
 #: app/tools/gimpalignoptions.c:168
+#, fuzzy
 msgid "Use extents of layer contents"
-msgstr ""
+msgstr "Utilitza l'extensió del contingut de la capa"
 
 #: app/tools/gimpalignoptions.c:169
 msgid ""
@@ -22445,14 +22446,15 @@ msgid "Targets"
 msgstr "Destinacions"
 
 #: app/tools/gimpalignoptions.c:405
+#, fuzzy
 msgid "Set anchor point of targets"
-msgstr ""
+msgstr "Estableix el punt d'ancoratge dels objectius"
 
 #. TRANSLATORS: the %s strings are modifiers such as Shift, Alt or Cmd.
 #: app/tools/gimpalignoptions.c:424
-#, fuzzy, c-format
+#, c-format
 msgid "%s-pick target guides (%s-%s to add more)"
-msgstr "%s guies per alinear o distribuir (%s-%s per a més)"
+msgstr "%s-escull guia l'objectiu (%s-%s per a més)"
 
 #. Align frame
 #: app/tools/gimpalignoptions.c:441
@@ -22464,7 +22466,6 @@ msgid "Select the reference object"
 msgstr "Selecciona l'objecte de referència"
 
 #: app/tools/gimpalignoptions.c:483
-#, fuzzy
 msgid "Align anchor points of targets on left edge of reference"
 msgstr ""
 "Alinea els punts d'ancoratge dels objectius a la vora esquerra de la "
@@ -22472,32 +22473,28 @@ msgstr ""
 
 #: app/tools/gimpalignoptions.c:487
 #, fuzzy
-#| msgid "Transform in the local frame of reference"
 msgid "Align anchor points of targets on vertical middle of reference"
-msgstr "Transforma en el marc de referència local"
+msgstr ""
+"Alinea els punts d'ancoratge dels objectius al mig vertical de la referència"
 
 #: app/tools/gimpalignoptions.c:491
-#, fuzzy
 msgid "Align anchor points of targets on right edge of reference"
 msgstr ""
 "Alinea els punts d'ancoratge dels objectius a la vora dreta de la referència"
 
 #: app/tools/gimpalignoptions.c:500
-#, fuzzy
 msgid "Align anchor points of targets on top edge of reference"
 msgstr ""
 "Alinea els punts d'ancoratge dels objectius a la vora superior de la "
 "referència"
 
 #: app/tools/gimpalignoptions.c:504
-#, fuzzy
 msgid "Align anchor points of targets on horizontal middle of reference"
 msgstr ""
 "Alinea els punts d'ancoratge dels objectius al mig horitzontal de la "
 "referència"
 
 #: app/tools/gimpalignoptions.c:508
-#, fuzzy
 msgid "Align anchor points of targets on bottom of reference"
 msgstr ""
 "Alinea els punts d'ancoratge dels objectius a la part inferior de la "
@@ -22510,30 +22507,29 @@ msgstr "Distribueix"
 
 #: app/tools/gimpalignoptions.c:526
 #, fuzzy
-#| msgid "Distribute targets evenly in the horizontal"
 msgid "Distribute anchor points of targets evenly in the horizontal"
-msgstr "Distribueix els destins regularment a l'horitzontal"
+msgstr ""
+"Distribueix uniformement els punts d'ancoratge dels objectius a "
+"l'horitzontal"
 
 #: app/tools/gimpalignoptions.c:529
 #, fuzzy
-#| msgid "Distribute horizontal centers of targets"
 msgid "Distribute horizontally with even horizontal gaps"
-msgstr "Distribueix horitzontalment els centres"
+msgstr "Distribueix horitzontalment amb espais horitzontals parells"
 
 #: app/tools/gimpalignoptions.c:538
 #, fuzzy
-#| msgid "Distribute targets evenly in the vertical"
 msgid "Distribute anchor points of targets evenly in the vertical"
-msgstr "Distribueix els destins regularment a la vertical"
+msgstr ""
+"Distribueix uniformement els punts d'ancoratge dels objectius a la vertical"
 
 #: app/tools/gimpalignoptions.c:541
 #, fuzzy
-#| msgid "Distribute vertical centers of targets"
 msgid "Distribute vertically with even vertical gaps"
-msgstr "Distribueix verticalment els centres"
+msgstr "Distribueix verticalment amb buits verticals parells"
 
 #: app/tools/gimpalignoptions.c:796
-#, fuzzy, c-format
+#, c-format
 msgid "1 guide will be aligned or distributed"
 msgid_plural "%d guides will be aligned or distributed"
 msgstr[0] "1 guia s'alinearà o distribuirà"
@@ -22575,52 +22571,39 @@ msgid "Arrange Objects"
 msgstr "Organitza els objectes"
 
 #: app/tools/gimpaligntool.c:555
-#, fuzzy
-#| msgid ""
-#| "Click on a layer, path or guide, or Click-Drag to pick several layers"
 msgid "Click on a layer, path or guide, or Click-Drag to pick a reference"
 msgstr ""
-"Feu clic en la capa, al camí o a la guia o feu clic i arrossega per a agafar"
-" diverses capes"
+"Feu clic en la capa, al camí o a la guia o feu clic i arrossega per a "
+"escollir una referència"
 
 #: app/tools/gimpaligntool.c:559
-#, fuzzy
-#| msgid "Click to pick this layer as first item"
 msgid "Click to pick this layer as reference"
-msgstr "Feu clic en aquesta capa com a primer element"
+msgstr "Feu clic per a seleccionar aquesta capa com a referència"
 
 #: app/tools/gimpaligntool.c:562
-#, fuzzy
-#| msgid "Click to pick this guide as first item"
 msgid "Click to pick this guide as reference"
-msgstr "Feu clic en aquesta guia com a primer element"
+msgstr "Feu clic per a seleccionar aquesta guia com a referència"
 
 #: app/tools/gimpaligntool.c:567
-#, fuzzy
-#| msgid "Click to pick this path as first item"
 msgid "Click to pick this path as reference"
-msgstr "Feu clic en aquest camí com a primer element"
+msgstr "Feu clic per a seleccionar aquest camí com a referència"
 
 #: app/tools/gimpaligntool.c:574
-#, fuzzy
 msgid ""
 "Click on a guide to add it to objects to align, click anywhere else to "
 "unselect all guides"
 msgstr ""
-"Feu clic sobre una guia per afegir-la als objectes per alinear-la, feu clic "
-"a qualsevol altre lloc per a desseleccionar totes les guies"
+"Feu clic sobre una guia per afegir-la als objectes per a alinear-la, feu "
+"clic a qualsevol altre lloc per a desseleccionar totes les guies"
 
 #: app/tools/gimpaligntool.c:578
-#, fuzzy
-#| msgid "Click to add this guide to the list"
 msgid "Click to select this guide for alignment"
-msgstr "Feu clic en aquesta guia per a afegir-la a la llista"
+msgstr "Feu clic per a seleccionar aquesta guia per a l'alineació"
 
 #: app/tools/gimpaligntool.c:583
-#, fuzzy
-#| msgid "Click to add this guide to the list"
 msgid "Click to add this guide to the list of objects to align"
-msgstr "Feu clic en aquesta guia per a afegir-la a la llista"
+msgstr ""
+"Feu clic en aquesta guia per a afegir-la a la llista d'objectes a alinear"
 
 #: app/tools/gimpbrightnesscontrasttool.c:96
 msgid "Brightness-Contrast"
@@ -23326,8 +23309,6 @@ msgid "There are no paths to move."
 msgstr "No hi ha camins per a moure."
 
 #: app/tools/gimpeditselectiontool.c:1090
-#, fuzzy
-#| msgid "The selected path's position is locked."
 msgid "A selected path's position is locked."
 msgstr "La posició del camí seleccionat està blocada."
 
@@ -23341,10 +23322,8 @@ msgid "The selected layer's position is locked."
 msgstr "La posició de la capa seleccionada està bloquejada."
 
 #: app/tools/gimpeditselectiontool.c:1128
-#, fuzzy
-#| msgid "A selected layer's position is locked."
 msgid "A selected channel's position is locked."
-msgstr "Una posició de la capa seleccionada està bloquejada."
+msgstr "La posició d'un canal seleccionat està bloquejada."
 
 #: app/tools/gimpeditselectiontool.c:1150 app/tools/gimpmovetool.c:366
 msgid "A selected layer's position is locked."
@@ -25009,27 +24988,21 @@ msgid "Use an external editor window for text entry"
 msgstr "Utilitza una finestra d'un editor extern per a escriure el text"
 
 #: app/tools/gimptextoptions.c:291
-#, fuzzy
 msgid "Outline width"
 msgstr "Amplada del contorn"
 
 #: app/tools/gimptextoptions.c:292
-#, fuzzy
-#| msgid "Adjust line spacing"
 msgid "Adjust outline width"
-msgstr "Ajusta l'interlineat"
+msgstr "Ajusta l'amplada del contorn"
 
 #: app/tools/gimptextoptions.c:299
-#, fuzzy
-#| msgid "Line width"
 msgid "Outline width unit"
-msgstr "Amplada de la línia"
+msgstr "Unitat d'amplada del contorn"
 
 #: app/tools/gimptextoptions.c:314
 #, fuzzy
-#| msgid "Miter limit"
 msgid "Outline miter limit"
-msgstr "Límit de mesura"
+msgstr "Límit del contorn del ratolí"
 
 #: app/tools/gimptextoptions.c:822
 msgid "Hinting:"
@@ -25044,10 +25017,8 @@ msgid "Style:"
 msgstr "Estil"
 
 #: app/tools/gimptextoptions.c:843
-#, fuzzy
-#| msgid "Other Options"
 msgid "Outline Options"
-msgstr "Altres opcions"
+msgstr "Opcions del contorn"
 
 #: app/tools/gimptextoptions.c:864
 msgid "Justify:"
@@ -27865,22 +27836,20 @@ msgstr "S'estan editant els modificadors per al botó %d"
 #. TRANSLATORS: first %s is modifier keys, %d is button
 #. * number, last %s is an input device (e.g. a mouse) name.
 #: app/widgets/gimpmodifierseditor.c:643
-#, fuzzy, c-format
-#| msgid "Select Action for Event '%s'"
+#, c-format, fuzzy
 msgid "Select Action for %s button %d of %s"
-msgstr "Selecciona una acció per a l'esdeveniment «%s»"
+msgstr "Seleccioneu una acció per al botó %s %d de %s"
 
 #. TRANSLATORS: %s is modifiers key, %d is a button number.
 #: app/widgets/gimpmodifierseditor.c:648
-#, fuzzy, c-format
+#, c-format
 msgid "Editing modifiers for %s button %d"
 msgstr "S'estan editant els modificadors per al botó %s %d"
 
 #: app/widgets/gimpmodifierseditor.c:655
-#, fuzzy, c-format
-#| msgid "Select Action for Event '%s'"
+#, c-format
 msgid "Select Action for button %d of %s"
-msgstr "Selecciona una acció per a l'esdeveniment «%s»"
+msgstr "Selecciona una acció per al botó %d de %s"
 
 #: app/widgets/gimpopendialog.c:89
 msgid "Automatically Detected"
