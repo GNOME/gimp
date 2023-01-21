@@ -113,7 +113,9 @@ resize_dialog_new (GimpViewable       *viewable,
   GtkWidget     *dialog;
   GtkWidget     *main_vbox;
   GtkWidget     *vbox;
-  GtkWidget     *abox;
+  GtkWidget     *center_hbox;
+  GtkWidget     *center_left_vbox;
+  GtkWidget     *center_right_vbox;
   GtkWidget     *frame;
   GtkWidget     *button;
   GtkWidget     *spinbutton;
@@ -209,8 +211,27 @@ resize_dialog_new (GimpViewable       *viewable,
                       main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
+  /* For space gain, organize the main widgets in both vertical and
+   * horizontal layout.
+   * The size and offset fields are on the center left, while the
+   * preview and the "Center" button are on center right.
+   */
+  center_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
+  gtk_box_pack_start (GTK_BOX (main_vbox), center_hbox, FALSE, FALSE, 0);
+  gtk_widget_show (center_hbox);
+
+  center_left_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
+  gtk_box_pack_start (GTK_BOX (center_hbox), center_left_vbox, FALSE, FALSE, 0);
+  gtk_widget_show (center_left_vbox);
+
+  center_right_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
+  gtk_box_pack_start (GTK_BOX (center_hbox), center_right_vbox, FALSE, FALSE, 0);
+  gtk_widget_show (center_right_vbox);
+
+  /* size select frame */
+
   frame = gimp_frame_new (size_title);
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (center_left_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   gimp_image_get_resolution (image, &xres, &yres);
@@ -228,7 +249,7 @@ resize_dialog_new (GimpViewable       *viewable,
   gtk_widget_show (private->box);
 
   frame = gimp_frame_new (_("Offset"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (center_left_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
@@ -274,21 +295,9 @@ resize_dialog_new (GimpViewable       *viewable,
                     G_CALLBACK (offset_update),
                     private);
 
-  button = gtk_button_new_with_mnemonic (_("C_enter"));
-  gtk_table_attach_defaults (GTK_TABLE (entry), button, 4, 5, 1, 2);
-  gtk_widget_show (button);
-
-  g_signal_connect (button, "clicked",
-                    G_CALLBACK (offset_center_clicked),
-                    private);
-
-  abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-  gtk_box_pack_start (GTK_BOX (vbox), abox, FALSE, FALSE, 0);
-  gtk_widget_show (abox);
-
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_container_add (GTK_CONTAINER (abox), frame);
+  gtk_box_pack_start (GTK_BOX (center_right_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   private->area = gimp_offset_area_new (width, height);
@@ -308,6 +317,15 @@ resize_dialog_new (GimpViewable       *viewable,
 
   g_signal_connect (private->box, "notify",
                     G_CALLBACK (size_notify),
+                    private);
+
+  /* Button to center the image on canvas just below the preview. */
+  button = gtk_button_new_with_mnemonic (_("C_enter"));
+  gtk_box_pack_start (GTK_BOX (center_right_vbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (offset_center_clicked),
                     private);
 
   frame = gimp_frame_new (layers_title);
