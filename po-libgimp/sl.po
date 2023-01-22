@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gimp - libgimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-01-12 11:56+0000\n"
-"PO-Revision-Date: 2023-01-13 23:52+0100\n"
+"POT-Creation-Date: 2023-01-21 08:09+0000\n"
+"PO-Revision-Date: 2023-01-22 18:27+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -23,11 +23,7 @@ msgstr ""
 "X-Poedit-SourceCharset: iso-8859-1\n"
 "X-Generator: Poedit 3.2.2\n"
 
-#: libgimp/gimpbrushselectbutton.c:178
-msgid "Brush Selection"
-msgstr "Izbor čopiča"
-
-#: libgimp/gimpbrushselectbutton.c:887 libgimp/gimppatternselectbutton.c:674
+#: libgimp/gimpbrushselectbutton.c:325 libgimp/gimppatternselectbutton.c:335
 msgid "_Browse..."
 msgstr "Pre_brskaj ..."
 
@@ -232,14 +228,6 @@ msgstr ""
 msgid "Export Image as %s"
 msgstr "Izvozi sliko kot %s"
 
-#: libgimp/gimpfontselectbutton.c:137
-msgid "Font Selection"
-msgstr "Izbor pisave"
-
-#: libgimp/gimpgradientselectbutton.c:155
-msgid "Gradient Selection"
-msgstr "Izbor preliva"
-
 #: libgimp/gimpimagemetadata.c:306
 msgid "Background"
 msgstr "Ozadje"
@@ -247,14 +235,6 @@ msgstr "Ozadje"
 #: libgimp/gimpimagemetadata-save.c:654 modules/controller-midi.c:426
 msgid "GIMP"
 msgstr "GIMP"
-
-#: libgimp/gimppaletteselectbutton.c:136
-msgid "Palette Selection"
-msgstr "Izbor palete"
-
-#: libgimp/gimppatternselectbutton.c:165
-msgid "Pattern Selection"
-msgstr "Izbor vzorca"
 
 #. procedure executed successfully
 #: libgimp/gimppdb.c:552
@@ -454,11 +434,31 @@ msgstr "_Shrani nastavitve"
 msgid "Store current settings for later reuse"
 msgstr "Shrani trenutne nastavitve za kasnejšo rabo"
 
-#: libgimp/gimpproceduredialog.c:1964
+#: libgimp/gimpproceduredialog.c:732
+msgid "Brush Chooser"
+msgstr "Izbirnik čopičev"
+
+#: libgimp/gimpproceduredialog.c:736
+msgid "Font Chooser"
+msgstr "Izbirnik pisav"
+
+#: libgimp/gimpproceduredialog.c:740
+msgid "Gradient Chooser"
+msgstr "Izbirnik prelivov"
+
+#: libgimp/gimpproceduredialog.c:744
+msgid "Palette Chooser"
+msgstr "Izbirnik palet"
+
+#: libgimp/gimpproceduredialog.c:748
+msgid "Pattern Chooser"
+msgstr "Izbirnik vzorcev"
+
+#: libgimp/gimpproceduredialog.c:1986
 msgid "Reset to _Initial Values"
 msgstr "Ponastavi na _začetne vrednosti"
 
-#: libgimp/gimpproceduredialog.c:1973
+#: libgimp/gimpproceduredialog.c:1995
 msgid "Reset to _Factory Defaults"
 msgstr "Ponastavi na _tovarniške vrednosti"
 
