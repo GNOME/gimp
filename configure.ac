@@ -1242,7 +1242,7 @@ elif test "x$shmtype" = "xsysv"; then
     no_sys_shm=yes)
 
   if test "$ac_cv_header_sys_shm_h" = "yes"; then
-    AC_MSG_CHECKING(whether shmctl IPC_RMID allowes subsequent attaches)
+    AC_MSG_CHECKING(whether shmctl IPC_RMID allows subsequent attaches)
     AC_RUN_IFELSE(
       [AC_LANG_SOURCE([[
 	#include <sys/types.h>

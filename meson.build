@@ -1367,7 +1367,8 @@ if shmem_choice == 'sysv'
     shmdt(shmaddr);
     return 0;
   }
-  ''').returncode() == 0
+  ''',
+  name: 'shmctl IPC_RMID allows subsequent attaches').returncode() == 0
   conf.set('IPC_RMID_DEFERRED_RELEASE', check_ip_rmid_deferred_release)
   conf.set('USE_SYSV_SHM', true)
 elif shmem_choice == 'posix'
