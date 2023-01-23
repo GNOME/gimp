@@ -1484,3 +1484,20 @@ gimp_spin_scale_get_constrain_drag (GimpSpinScale *scale)
 
   return GET_PRIVATE (scale)->constrain_drag;
 }
+
+/**
+ * gimp_spin_scale_get_mnemonic_keyval:
+ * @scale: the #GimpSpinScale.
+ *
+ * If @scale has been set with a mnemonic key in its label text, this function
+ * returns the keyval used for the mnemonic accelerator.
+ *
+ * Returns: the keyval usable for accelerators, or [const@Gdk.KEY_VoidSymbol].
+ */
+const guint
+gimp_spin_scale_get_mnemonic_keyval (GimpSpinScale *scale)
+{
+  g_return_val_if_fail (GIMP_IS_SPIN_SCALE (scale), GDK_KEY_VoidSymbol);
+
+  return GET_PRIVATE (scale)->mnemonic_keyval;
+}

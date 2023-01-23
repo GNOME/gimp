@@ -52,32 +52,33 @@ struct _GimpSpinScaleClass
 };
 
 
-GType         gimp_spin_scale_get_type           (void) G_GNUC_CONST;
+GType         gimp_spin_scale_get_type            (void) G_GNUC_CONST;
 
-GtkWidget   * gimp_spin_scale_new                (GtkAdjustment *adjustment,
-                                                  const gchar   *label,
-                                                  gint           digits);
+GtkWidget   * gimp_spin_scale_new                 (GtkAdjustment *adjustment,
+                                                   const gchar   *label,
+                                                   gint           digits);
 
-void          gimp_spin_scale_set_label          (GimpSpinScale *scale,
-                                                  const gchar   *label);
-const gchar * gimp_spin_scale_get_label          (GimpSpinScale *scale);
+void          gimp_spin_scale_set_label           (GimpSpinScale *scale,
+                                                   const gchar   *label);
+const gchar * gimp_spin_scale_get_label           (GimpSpinScale *scale);
 
-void          gimp_spin_scale_set_scale_limits   (GimpSpinScale *scale,
-                                                  gdouble        lower,
-                                                  gdouble        upper);
-void          gimp_spin_scale_unset_scale_limits (GimpSpinScale *scale);
-gboolean      gimp_spin_scale_get_scale_limits   (GimpSpinScale *scale,
-                                                  gdouble       *lower,
-                                                  gdouble       *upper);
+void          gimp_spin_scale_set_scale_limits    (GimpSpinScale *scale,
+                                                   gdouble        lower,
+                                                   gdouble        upper);
+void          gimp_spin_scale_unset_scale_limits  (GimpSpinScale *scale);
+gboolean      gimp_spin_scale_get_scale_limits    (GimpSpinScale *scale,
+                                                   gdouble       *lower,
+                                                   gdouble       *upper);
 
-void          gimp_spin_scale_set_gamma          (GimpSpinScale *scale,
-                                                  gdouble        gamma);
-gdouble       gimp_spin_scale_get_gamma          (GimpSpinScale *scale);
+void          gimp_spin_scale_set_gamma           (GimpSpinScale *scale,
+                                                   gdouble        gamma);
+gdouble       gimp_spin_scale_get_gamma           (GimpSpinScale *scale);
 
-void          gimp_spin_scale_set_constrain_drag (GimpSpinScale *scale,
-                                                  gboolean       constrain);
-gboolean      gimp_spin_scale_get_constrain_drag (GimpSpinScale *scale);
+void          gimp_spin_scale_set_constrain_drag  (GimpSpinScale *scale,
+                                                   gboolean       constrain);
+gboolean      gimp_spin_scale_get_constrain_drag  (GimpSpinScale *scale);
 
+const guint   gimp_spin_scale_get_mnemonic_keyval (GimpSpinScale *scale);
 
 G_END_DECLS
 

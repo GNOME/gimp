@@ -454,6 +454,7 @@ EXPORTS
         gimp_spin_scale_get_constrain_drag
         gimp_spin_scale_get_gamma
         gimp_spin_scale_get_label
+	gimp_spin_scale_get_mnemonic_keyval
         gimp_spin_scale_get_scale_limits
         gimp_spin_scale_get_type
         gimp_spin_scale_new

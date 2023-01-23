@@ -2106,9 +2106,12 @@ gimp_procedure_dialog_check_mnemonic (GimpProcedureDialog *dialog,
       g_list_free (labels);
     }
 
-  if (label                                                          &&
-      (mnemonic = gtk_label_get_mnemonic_keyval (GTK_LABEL (label))) &&
-      mnemonic != GDK_KEY_VoidSymbol)
+  if (label)
+    mnemonic = gtk_label_get_mnemonic_keyval (GTK_LABEL (label));
+  else if (GIMP_IS_SPIN_SCALE (widget))
+    mnemonic = gimp_spin_scale_get_mnemonic_keyval (GIMP_SPIN_SCALE (widget));
+
+  if (mnemonic != GDK_KEY_VoidSymbol)
     {
       duplicate = g_hash_table_lookup (dialog->priv->core_mnemonics, GINT_TO_POINTER (mnemonic));
       if (duplicate && g_strcmp0 (duplicate, id ? id : core_id) != 0)
