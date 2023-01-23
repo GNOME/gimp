@@ -865,7 +865,7 @@ if have_heif
   endif
 endif
 
-have_vala = add_languages('vala', required: get_option('vala-plugins'))
+have_vala = add_languages('vala', required: get_option('vala-plugins'), native: false)
 if have_vala
   babl = declare_dependency(
     dependencies: [
