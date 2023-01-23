@@ -1355,17 +1355,17 @@ if shmem_choice == 'sysv'
   int main() {
     int id = shmget(IPC_PRIVATE, 4, IPC_CREAT | 0600);
     if (id == -1)
-      exit(2);
+      return 2;
 
     char *shmaddr = shmat(id, 0, 0);
     shmctl(id, IPC_RMID, 0);
     if ((char*) shmat(id, 0, 0) == (char*) -1) {
       shmdt(shmaddr);
-      exit(1);
+      return 1;
     }
     shmdt(shmaddr);
     shmdt(shmaddr);
-    exit(0);
+    return 0;
   }
   ''').returncode() == 0
   conf.set('IPC_RMID_DEFERRED_RELEASE', check_ip_rmid_deferred_release)
