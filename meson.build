@@ -795,13 +795,6 @@ if have_heif
   dependencies: [ libheif ],
   name: 'export HEIC').returncode() == 0
 
-  if can_import_heic
-    MIMEtypes += [
-      'image/heif',
-      'image/heic',
-    ]
-  endif
-
   can_import_avif = cc.run('''
   #include <libheif/heif.h>
   int main() {
@@ -844,14 +837,19 @@ if have_heif
   dependencies: [ libheif ],
   name: 'export AVIF').returncode() == 0
 
-  if can_import_avif
-    MIMEtypes += [
-      'image/avif'
-    ]
-  endif
-
   if not can_import_heic and not can_import_avif
     have_heif = false
+  endif
+
+  if have_heif
+    # Listing support for both HEIC and AVIF if we build with HEIF support,
+    # because codecs can be added at any time later and we won't be able to edit
+    # the desktop file once it's installed. See discussion in #9080.
+    MIMEtypes += [
+      'image/heif',
+      'image/heic',
+      'image/avif'
+    ]
   endif
 
   if have_heif and (libheif.version().version_compare('==1.5.0') or libheif.version().version_compare('==1.5.1'))
