@@ -752,8 +752,49 @@ have_heif = libheif.found()
 libheif_warning=''
 if have_heif
   have_heif = true
-  can_import_heic = (libheif.get_variable(pkgconfig: 'builtin_h265_decoder') == 'yes')
-  can_export_heic = (libheif.get_variable(pkgconfig: 'builtin_h265_encoder') == 'yes')
+
+  can_import_heic = cc.run('''
+  #include <libheif/heif.h>
+  int main() {
+    int success;
+    #if LIBHEIF_HAVE_VERSION(1,13,0)
+    heif_init (NULL);
+    #endif
+    success = heif_have_decoder_for_format (heif_compression_HEVC);
+    #if LIBHEIF_HAVE_VERSION(1,13,0)
+    heif_deinit ();
+    #endif
+
+    if (success)
+      return 0;
+    else
+      return 1;
+  }
+  ''',
+  dependencies: [ libheif ],
+  name: 'import HEIC').returncode() == 0
+
+  can_export_heic = cc.run('''
+  #include <libheif/heif.h>
+  int main() {
+    int success;
+    #if LIBHEIF_HAVE_VERSION(1,13,0)
+    heif_init (NULL);
+    #endif
+    success = heif_have_encoder_for_format (heif_compression_HEVC);
+    #if LIBHEIF_HAVE_VERSION(1,13,0)
+    heif_deinit ();
+    #endif
+
+    if (success)
+      return 0;
+    else
+      return 1;
+  }
+  ''',
+  dependencies: [ libheif ],
+  name: 'export HEIC').returncode() == 0
+
   if can_import_heic
     MIMEtypes += [
       'image/heif',
@@ -761,8 +802,48 @@ if have_heif
     ]
   endif
 
-  can_import_avif = (libheif.get_variable(pkgconfig: 'builtin_avif_decoder') == 'yes')
-  can_export_avif = (libheif.get_variable(pkgconfig: 'builtin_avif_encoder') == 'yes')
+  can_import_avif = cc.run('''
+  #include <libheif/heif.h>
+  int main() {
+    int success;
+    #if LIBHEIF_HAVE_VERSION(1,13,0)
+    heif_init (NULL);
+    #endif
+    success = heif_have_decoder_for_format (heif_compression_AV1);
+    #if LIBHEIF_HAVE_VERSION(1,13,0)
+    heif_deinit ();
+    #endif
+
+    if (success)
+      return 0;
+    else
+      return 1;
+  }
+  ''',
+  dependencies: [ libheif ],
+  name: 'import AVIF').returncode() == 0
+
+  can_export_avif = cc.run('''
+  #include <libheif/heif.h>
+  int main() {
+    int success;
+    #if LIBHEIF_HAVE_VERSION(1,13,0)
+    heif_init (NULL);
+    #endif
+    success = heif_have_encoder_for_format (heif_compression_AV1);
+    #if LIBHEIF_HAVE_VERSION(1,13,0)
+    heif_deinit ();
+    #endif
+
+    if (success)
+      return 0;
+    else
+      return 1;
+  }
+  ''',
+  dependencies: [ libheif ],
+  name: 'export AVIF').returncode() == 0
+
   if can_import_avif
     MIMEtypes += [
       'image/avif'
