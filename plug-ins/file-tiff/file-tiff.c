@@ -208,7 +208,7 @@ tiff_create_procedure (GimpPlugIn  *plug_in,
                                           "tif,tiff");
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "bigtiff",
-                             "Export in BigTIFF variant file format",
+                             "Export in _BigTIFF variant file format",
                              "The BigTIFF variant file format uses 64-bit offsets, "
                              "hence supporting over 4GiB files and bigger",
                              FALSE,
@@ -230,7 +230,7 @@ tiff_create_procedure (GimpPlugIn  *plug_in,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "cmyk",
-                             "Export as _CMYK",
+                             "Export as CMY_K",
                              "Create a CMYK TIFF image using the soft-proofing color profile",
                              FALSE,
                              G_PARAM_READWRITE);

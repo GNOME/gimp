@@ -272,7 +272,7 @@ png_create_procedure (GimpPlugIn  *plug_in,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "optimize-palette",
-                             _("Optimize for smallest possible palette size"),
+                             _("_Optimize for smallest possible palette size"),
                              _("When checked, save as 1, 2, 4, or 8-bit depending"
                                " on number of colors used. When unchecked, always"
                                " save as 8-bit"),
