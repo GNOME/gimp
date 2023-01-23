@@ -102,13 +102,15 @@
   * New stuff temporarily until I can get them sorted out *
 
   * Placed Layer *
- PSD_LPL_PLACE_LAYER      "plLd"        -       * Placed layer (?) *
+ PSD_LPL_PLACE_LAYER      "PlLd"        -       * Placed layer (?) (based on PSD files, not specification) *
  PSD_LPL_PLACE_LAYER_NEW  "SoLd"        -       * Placed layer (PS10) *
+ PSD_SMART_OBJECT_LAYER   "SoLE"        -       * Smart Object Layer (CC2015) *
 
  * Linked Layer *
  PSD_LLL_LINKED_LAYER     "lnkD"        -       * Linked layer (?) *
  PSD_LLL_LINKED_LAYER_2   "lnk2"        -       * Linked layer 2nd key *
  PSD_LLL_LINKED_LAYER_3   "lnk3"        -       * Linked layer 3rd key *
+ PSD_LLL_LINKED_LAYER_EXT "lnkE"        -       * Linked layer external *
 
  * Merged Transparency *
  PSD_LMT_MERGE_TRANS      "Mtrn"        -       * Merged transparency save flag (?) *
@@ -298,45 +300,142 @@ load_layer_resource (PSDlayerres   *res_a,
       || memcmp (res_a->key, PSD_LADJ_THRESHOLD, 4) == 0
       || memcmp (res_a->key, PSD_LADJ_INVERT, 4) == 0
       || memcmp (res_a->key, PSD_LADJ_POSTERIZE, 4) == 0)
-    load_resource_ladj (res_a, lyr_a, input, error);
+    {
+      if (lyr_a)
+        {
+          lyr_a->unsupported_features->adjustment_layer = TRUE;
+          lyr_a->unsupported_features->show_gui         = TRUE;
+        }
+
+      load_resource_ladj (res_a, lyr_a, input, error);
+    }
 
   else if (memcmp (res_a->key, PSD_LFIL_SOLID, 4) == 0
            || memcmp (res_a->key, PSD_LFIL_PATTERN, 4) == 0
            || memcmp (res_a->key, PSD_LFIL_GRADIENT, 4) == 0)
-    load_resource_lfil (res_a, lyr_a, input, error);
+    {
+      if (lyr_a)
+        {
+          lyr_a->unsupported_features->fill_layer = TRUE;
+          lyr_a->unsupported_features->show_gui   = TRUE;
+        }
+
+      load_resource_lfil (res_a, lyr_a, input, error);
+    }
 
   else if (memcmp (res_a->key, PSD_LFX_FX, 4) == 0
            || memcmp (res_a->key, PSD_LFX_FX2, 4) == 0)
-    load_resource_lfx (res_a, lyr_a, input, error);
+    {
+      if (lyr_a)
+        {
+          lyr_a->unsupported_features->layer_effect = TRUE;
+          lyr_a->unsupported_features->show_gui     = TRUE;
+        }
+
+      load_resource_lfx (res_a, lyr_a, input, error);
+    }
 
   else if (memcmp (res_a->key, PSD_LTYP_TYPE, 4) == 0
            || memcmp (res_a->key, PSD_LTYP_TYPE2, 4) == 0)
-    load_resource_ltyp (res_a, lyr_a, input, error);
+    {
+      if (lyr_a)
+        {
+          lyr_a->unsupported_features->text_layer = TRUE;
+          lyr_a->unsupported_features->show_gui   = TRUE;
+        }
+
+      load_resource_ltyp (res_a, lyr_a, input, error);
+    }
 
   else if (memcmp (res_a->key, PSD_LPRP_UNICODE, 4) == 0)
-    load_resource_luni (res_a, lyr_a, input, error);
+    {
+      load_resource_luni (res_a, lyr_a, input, error);
+    }
 
   else if (memcmp (res_a->key, PSD_LPRP_ID, 4) == 0)
-    load_resource_lyid (res_a, lyr_a, input, error);
+    {
+      load_resource_lyid (res_a, lyr_a, input, error);
+    }
 
   else if (memcmp (res_a->key, PSD_LPRP_COLOR, 4) == 0)
-    load_resource_lclr (res_a, lyr_a, input, error);
+    {
+      load_resource_lclr (res_a, lyr_a, input, error);
+    }
 
   else if (memcmp (res_a->key, PSD_LOTH_SECTION, 4) == 0
            || memcmp (res_a->key, PSD_LOTH_SECTION2, 4) == 0) /* bug #789981 */
-    load_resource_lsct (res_a, lyr_a, input, error);
+    {
+      load_resource_lsct (res_a, lyr_a, input, error);
+    }
 
   else if (memcmp (res_a->key, PSD_LFX_FX, 4) == 0)
-    load_resource_lrfx (res_a, lyr_a, input, error);
+    {
+      load_resource_lrfx (res_a, lyr_a, input, error);
+    }
 
   else if (memcmp (res_a->key, PSD_LPRP_VERSION, 4) == 0)
-    load_resource_lyvr (res_a, lyr_a, input, error);
+    {
+      load_resource_lyvr (res_a, lyr_a, input, error);
+    }
 
   else if (memcmp (res_a->key, PSD_LPRP_SOURCE, 4) == 0)
-    load_resource_lnsr (res_a, lyr_a, input, error);
+    {
+      load_resource_lnsr (res_a, lyr_a, input, error);
+    }
+
+  else if (memcmp (res_a->key, PSD_LOTH_VECTOR_STROKE, 4) == 0)
+    {
+      if (lyr_a)
+        {
+          lyr_a->unsupported_features->stroke   = TRUE;
+          lyr_a->unsupported_features->show_gui = TRUE;
+        }
+
+      load_resource_unknown (res_a, lyr_a, input, error);
+    }
+
+  else if (memcmp (res_a->key, PSD_LMSK_VMASK, 4) == 0)
+    {
+      if (lyr_a)
+        {
+          lyr_a->unsupported_features->vector_mask = TRUE;
+          lyr_a->unsupported_features->show_gui    = TRUE;
+        }
+
+      load_resource_unknown (res_a, lyr_a, input, error);
+    }
+
+  else if (memcmp (res_a->key, PSD_SMART_OBJECT_LAYER, 4) == 0
+           || memcmp (res_a->key, PSD_LPL_PLACE_LAYER, 4) == 0
+           || memcmp (res_a->key, PSD_LPL_PLACE_LAYER_NEW, 4) == 0)
+    {
+      if (lyr_a)
+        {
+          lyr_a->unsupported_features->smart_object = TRUE;
+          lyr_a->unsupported_features->show_gui     = TRUE;
+        }
+
+      load_resource_unknown (res_a, lyr_a, input, error);
+    }
+
+  else if (memcmp (res_a->key, PSD_LLL_LINKED_LAYER, 4) == 0
+           || memcmp (res_a->key, PSD_LLL_LINKED_LAYER_2, 4) == 0
+           || memcmp (res_a->key, PSD_LLL_LINKED_LAYER_3, 4) == 0
+           || memcmp (res_a->key, PSD_LLL_LINKED_LAYER_EXT, 4) == 0)
+    {
+      if (lyr_a)
+        {
+          lyr_a->unsupported_features->linked_layer = TRUE;
+          lyr_a->unsupported_features->show_gui     = TRUE;
+        }
+
+      load_resource_unknown (res_a, lyr_a, input, error);
+    }
 
   else
-    load_resource_unknown (res_a, lyr_a, input, error);
+    {
+      load_resource_unknown (res_a, lyr_a, input, error);
+    }
 
   if (error && *error)
     return -1;

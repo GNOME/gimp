@@ -137,13 +137,15 @@
 #define PSD_LFX_BEVEL           "bevl"          /* Effects layer - bevel (PS5) */
 
 /* Placed Layer */
-#define PSD_LPL_PLACE_LAYER     "plLd"          /* Placed layer (?) */
+#define PSD_LPL_PLACE_LAYER     "PlLd"          /* Placed layer (?) (based on PSD files, not specification) */
 #define PSD_LPL_PLACE_LAYER_NEW "SoLd"          /* Placed layer (PS10) */
+#define PSD_SMART_OBJECT_LAYER  "SoLE"          /* Smart Object Layer (CC2015) */
 
 /* Linked Layer */
-#define PSD_LLL_LINKED_LAYER    "lnkD"          /* Linked layer (?) */
-#define PSD_LLL_LINKED_LAYER_2  "lnk2"          /* Linked layer 2nd key */
-#define PSD_LLL_LINKED_LAYER_3  "lnk3"          /* Linked layer 3rd key */
+#define PSD_LLL_LINKED_LAYER     "lnkD"         /* Linked layer (?) */
+#define PSD_LLL_LINKED_LAYER_2   "lnk2"         /* Linked layer 2nd key */
+#define PSD_LLL_LINKED_LAYER_3   "lnk3"         /* Linked layer 3rd key */
+#define PSD_LLL_LINKED_LAYER_EXT "lnkE"         /* Linked layer external */
 
 /* Merged Transparency */
 #define PSD_LMT_MERGE_TRANS     "Mtrn"          /* Merged transparency save flag (?) */
@@ -577,6 +579,23 @@ typedef struct
   gchar                 *info; /* Text information */
 } PSDText;
 
+/* Partially or Unsupported Features */
+typedef struct
+{
+  gboolean show_gui;
+  gboolean duotone_mode;
+
+  gboolean adjustment_layer;
+  gboolean fill_layer;
+  gboolean text_layer;
+  gboolean linked_layer;
+  gboolean vector_mask;
+  gboolean smart_object;
+  gboolean stroke;
+  gboolean layer_effect;
+  gboolean layer_comp;
+} PSDSupport;
+
 /* PSD Layer data structure */
 typedef struct
 {
@@ -604,6 +623,8 @@ typedef struct
   guint32               id;                     /* Layer ID (Tattoo) */
   guchar                group_type;             /* 0 -> not a group; 1 -> open folder; 2 -> closed folder; 3 -> end of group */
   guint16               color_tag[4];           /* 4 * 16 bit color components */
+
+  PSDSupport           *unsupported_features;
 } PSDlayer;
 
 /* PSD Channel data structure */
@@ -685,6 +706,8 @@ typedef struct
   GimpColorProfile     *cmyk_profile;
   gpointer              cmyk_transform;
   gpointer              cmyk_transform_alpha;
+
+  PSDSupport           *unsupported_features;
 } PSDimage;
 
 /* Public functions */

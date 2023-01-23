@@ -26,9 +26,10 @@ GimpImage * load_image  (GFile        *file,
                          gboolean      merged_image_only,
                          gboolean     *resolution_loaded,
                          gboolean     *profile_loaded,
+                         PSDSupport   *unsupported_features,
                          GError      **error);
 
-void        load_dialog (void);
+void        load_dialog (PSDSupport   *unsupported_features);
 
 
 #endif /* __PSD_LOAD_H__ */

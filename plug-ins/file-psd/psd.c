@@ -276,6 +276,7 @@ psd_load (GimpProcedure        *procedure,
   GimpMetadata   *metadata;
   GimpParasite   *parasite = NULL;
   GError         *error = NULL;
+  PSDSupport      unsupported_features;
 
   gegl_init (NULL, NULL);
 
@@ -294,6 +295,7 @@ psd_load (GimpProcedure        *procedure,
                               LOAD_MERGED_PROC) == 0,
                       &resolution_loaded,
                       &profile_loaded,
+                      &unsupported_features,
                       &error);
 
   if (! image)
@@ -306,10 +308,14 @@ psd_load (GimpProcedure        *procedure,
     {
       parasite = gimp_image_get_parasite (image, PSD_PARASITE_DUOTONE_DATA);
       if (parasite)
-        {
-          load_dialog ();
-          gimp_parasite_free (parasite);
-        }
+        unsupported_features.duotone_mode = TRUE;
+
+      if (unsupported_features.duotone_mode ||
+          unsupported_features.show_gui)
+        load_dialog (&unsupported_features);
+
+      if (parasite)
+        gimp_parasite_free (parasite);
     }
 
   metadata = gimp_image_metadata_load_prepare (image, "image/x-psd",

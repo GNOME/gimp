@@ -131,6 +131,7 @@ static const Babl*      get_layer_format           (PSDimage       *img_a,
 static const Babl*      get_channel_format         (PSDimage       *img_a);
 static const Babl*      get_mask_format            (PSDimage       *img_a);
 
+static void             initialize_unsupported     (PSDSupport     *supported_features);
 
 /* Main file load function */
 GimpImage *
@@ -138,6 +139,7 @@ load_image (GFile        *file,
             gboolean      merged_image_only,
             gboolean     *resolution_loaded,
             gboolean     *profile_loaded,
+            PSDSupport   *unsupported_features,
             GError      **load_error)
 {
   GInputStream  *input;
@@ -148,6 +150,9 @@ load_image (GFile        *file,
 
   img_a.cmyk_transform = img_a.cmyk_transform_alpha = NULL;
   img_a.cmyk_profile = NULL;
+
+  initialize_unsupported (unsupported_features);
+  img_a.unsupported_features = unsupported_features;
 
   /* ----- Open PSD file ----- */
 
@@ -1030,6 +1035,8 @@ read_layer_info (PSDimage      *img_a,
                   return NULL;
                 }
 
+              lyr_a[lidx]->unsupported_features = img_a->unsupported_features;
+
               if (load_layer_resource (&res_a, lyr_a[lidx], input, error) < 0)
                 {
                   free_lyr_a (lyr_a, img_a->num_layers);
@@ -1620,6 +1627,8 @@ add_layers (GimpImage     *image,
   gidx = -1;
   for (lidx = 0; lidx < img_a->num_layers; ++lidx)
     {
+      lyr_a[lidx]->unsupported_features = img_a->unsupported_features;
+
       if (lyr_a[lidx]->clipping == 1)
         {
           /* Photoshop handles layers with clipping differently than GIMP does.
@@ -3269,44 +3278,145 @@ get_mask_format (PSDimage *img_a)
   return format;
 }
 
+static void
+initialize_unsupported (PSDSupport *unsupported_features)
+{
+  unsupported_features->show_gui         = FALSE;
+  unsupported_features->duotone_mode     = FALSE;
+
+  unsupported_features->adjustment_layer = FALSE;
+  unsupported_features->fill_layer       = FALSE;
+  unsupported_features->text_layer       = FALSE;
+  unsupported_features->linked_layer     = FALSE;
+  unsupported_features->vector_mask      = FALSE;
+  unsupported_features->smart_object     = FALSE;
+  unsupported_features->stroke           = FALSE;
+  unsupported_features->layer_effect     = FALSE;
+  unsupported_features->layer_comp       = FALSE;
+}
+
 void
-load_dialog (void)
+load_dialog (PSDSupport *unsupported_features)
 {
   GtkWidget *dialog;
   GtkWidget *label;
   GtkWidget *vbox;
-  gchar     *label_text;
 
-  dialog = gimp_dialog_new (_("PSD Compatibility Notice"),
-                            "psd-compatibility-notice",
+  dialog = gimp_dialog_new (_("Import PSD"),
+                            "import-psd",
                             NULL, 0, NULL, NULL,
                             _("_OK"), GTK_RESPONSE_OK,
                             NULL);
 
   gimp_window_set_transient (GTK_WINDOW (dialog));
 
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
   /* Duotone import notification */
-  label_text = g_strdup_printf ("<b>%s</b>\n%s", _("Duotone Import"),
-                                _("Image will be imported as Grayscale.\n"
-                                "Duotone color space data has been saved\n"
-                                "and can be reapplied on export."));
-  label = gtk_label_new (NULL);
-  gtk_label_set_markup (GTK_LABEL (label), label_text);
+  if (unsupported_features->duotone_mode)
+    {
+      gchar *label_text;
 
-  gtk_label_set_selectable (GTK_LABEL (label), TRUE);
-  gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
-  gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-  gtk_label_set_yalign (GTK_LABEL (label), 0.0);
-  gtk_box_pack_start (GTK_BOX (vbox), label, TRUE, TRUE, 0);
-  gtk_widget_show (label);
+      label_text = g_strdup_printf ("<b>%s</b>\n%s", _("Duotone Import"),
+                                    _("Image will be imported as Grayscale.\n"
+                                      "Duotone color space data has been saved\n"
+                                      "and can be reapplied on export."));
+      label = gtk_label_new (NULL);
+      gtk_label_set_markup (GTK_LABEL (label), label_text);
 
-  g_free (label_text);
+      gtk_label_set_selectable (GTK_LABEL (label), TRUE);
+      gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
+      gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+      gtk_label_set_yalign (GTK_LABEL (label), 0.0);
+      gtk_box_pack_start (GTK_BOX (vbox), label, TRUE, TRUE, 0);
+      gtk_widget_show (label);
+
+      g_free (label_text);
+    }
+
+  if (unsupported_features->show_gui)
+    {
+      GtkWidget *scrolled_window;
+      GtkWidget *title_label;
+      gchar     *message = "";
+      gchar     *title   = g_strdup_printf ("<b>%s</b>\n%s\n",
+                                            _("Compatibility Notice"),
+                                            _("This PSD file contains features "
+                                              "that\n are not yet fully supported "
+                                              "in GIMP:"));
+
+      title_label = gtk_label_new (NULL);
+      gtk_label_set_markup (GTK_LABEL (title_label), title);
+      gtk_label_set_justify (GTK_LABEL (title_label), GTK_JUSTIFY_LEFT);
+      gtk_label_set_line_wrap (GTK_LABEL (title_label), TRUE);
+      gtk_label_set_yalign (GTK_LABEL (title_label), 0.0);
+      gtk_box_pack_start (GTK_BOX (vbox), title_label, FALSE, FALSE, 0);
+      gtk_widget_show (title_label);
+
+      if (unsupported_features->adjustment_layer)
+        message = g_strdup_printf ("%s\n\xE2\x80\xA2 %s", message,
+                                   _("Adjustment layers are not yet "
+                                     "supported and will be dropped."));
+      if (unsupported_features->fill_layer)
+        message = g_strdup_printf ("%s\n\xE2\x80\xA2 %s", message,
+                                   _("Fill layers are partially "
+                                     "supported and will be converted "
+                                     "to raster layers."));
+      if (unsupported_features->text_layer)
+        message = g_strdup_printf ("%s\n\xE2\x80\xA2 %s", message,
+                                   _("Text layers are partially "
+                                     "supported and will be converted "
+                                     "to raster layers."));
+      if (unsupported_features->linked_layer)
+        message = g_strdup_printf ("%s\n\xE2\x80\xA2 %s", message,
+                                   _("Linked layers are  are not yet "
+                                     "supported and will be dropped."));
+      if (unsupported_features->vector_mask)
+        message = g_strdup_printf ("%s\n\xE2\x80\xA2 %s", message,
+                                   _("Vector masks are partially "
+                                     "supported and will be converted "
+                                     "to raster layers."));
+      if (unsupported_features->stroke)
+        message = g_strdup_printf ("%s\n\xE2\x80\xA2 %s", message,
+                                   _("Vector strokes are not yet "
+                                     "supported and will be dropped."));
+      if (unsupported_features->layer_effect)
+        message = g_strdup_printf ("%s\n\xE2\x80\xA2 %s", message,
+                                   _("Layer effects are not yet "
+                                     "supported and will be dropped."));
+      if (unsupported_features->smart_object)
+        message = g_strdup_printf ("%s\n\xE2\x80\xA2 %s", message,
+                                   _("Smart objects are not yet "
+                                     "supported and will be dropped."));
+      if (unsupported_features->layer_comp)
+        message = g_strdup_printf ("%s\n\xE2\x80\xA2 %s", message,
+                                   _("Layer comps are not yet "
+                                     "supported and will be dropped."));
+
+      scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+      gtk_widget_set_size_request (scrolled_window, -1, 100);
+      gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window), GTK_SHADOW_OUT);
+      gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
+                                      GTK_POLICY_NEVER,
+                                      GTK_POLICY_AUTOMATIC);
+      gtk_box_pack_start (GTK_BOX (vbox), scrolled_window, TRUE, TRUE, 0);
+      gtk_widget_show (scrolled_window);
+
+      label = gtk_label_new (NULL);
+      gtk_label_set_markup (GTK_LABEL (label), message);
+      gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
+      gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+      gtk_label_set_yalign (GTK_LABEL (label), 0.0);
+      gtk_container_add (GTK_CONTAINER (scrolled_window), label);
+      gtk_widget_show (label);
+
+      g_free (title);
+      g_free (message);
+    }
 
   gtk_widget_show (dialog);
 

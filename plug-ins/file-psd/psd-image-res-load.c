@@ -419,6 +419,12 @@ load_image_resource (PSDimageres  *res_a,
             load_resource_2999 (res_a, image, input, error);
             break;
 
+          case PSD_LAYER_COMPS:
+            img_a->unsupported_features->layer_comp = TRUE;
+            img_a->unsupported_features->show_gui = TRUE;
+            load_resource_unknown (res_a, image, input, error);
+            break;
+
           default:
             if (res_a->id >= 2000 &&
                 res_a->id <  2999)
