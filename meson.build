@@ -753,89 +753,97 @@ libheif_warning=''
 if have_heif
   have_heif = true
 
-  can_import_heic = cc.run('''
-  #include <libheif/heif.h>
-  int main() {
-    int success;
-    #if LIBHEIF_HAVE_VERSION(1,13,0)
-    heif_init (NULL);
-    #endif
-    success = heif_have_decoder_for_format (heif_compression_HEVC);
-    #if LIBHEIF_HAVE_VERSION(1,13,0)
-    heif_deinit ();
-    #endif
+  if meson.can_run_host_binaries()
+    can_import_heic = cc.run('''
+    #include <libheif/heif.h>
+    int main() {
+      int success;
+      #if LIBHEIF_HAVE_VERSION(1,13,0)
+      heif_init (NULL);
+      #endif
+      success = heif_have_decoder_for_format (heif_compression_HEVC);
+      #if LIBHEIF_HAVE_VERSION(1,13,0)
+      heif_deinit ();
+      #endif
 
-    if (success)
-      return 0;
-    else
-      return 1;
-  }
-  ''',
-  dependencies: [ libheif ],
-  name: 'import HEIC').returncode() == 0
+      if (success)
+        return 0;
+      else
+        return 1;
+    }
+    ''',
+    dependencies: [ libheif ],
+    name: 'import HEIC').returncode() == 0
 
-  can_export_heic = cc.run('''
-  #include <libheif/heif.h>
-  int main() {
-    int success;
-    #if LIBHEIF_HAVE_VERSION(1,13,0)
-    heif_init (NULL);
-    #endif
-    success = heif_have_encoder_for_format (heif_compression_HEVC);
-    #if LIBHEIF_HAVE_VERSION(1,13,0)
-    heif_deinit ();
-    #endif
+    can_export_heic = cc.run('''
+    #include <libheif/heif.h>
+    int main() {
+      int success;
+      #if LIBHEIF_HAVE_VERSION(1,13,0)
+      heif_init (NULL);
+      #endif
+      success = heif_have_encoder_for_format (heif_compression_HEVC);
+      #if LIBHEIF_HAVE_VERSION(1,13,0)
+      heif_deinit ();
+      #endif
 
-    if (success)
-      return 0;
-    else
-      return 1;
-  }
-  ''',
-  dependencies: [ libheif ],
-  name: 'export HEIC').returncode() == 0
+      if (success)
+        return 0;
+      else
+        return 1;
+    }
+    ''',
+    dependencies: [ libheif ],
+    name: 'export HEIC').returncode() == 0
 
-  can_import_avif = cc.run('''
-  #include <libheif/heif.h>
-  int main() {
-    int success;
-    #if LIBHEIF_HAVE_VERSION(1,13,0)
-    heif_init (NULL);
-    #endif
-    success = heif_have_decoder_for_format (heif_compression_AV1);
-    #if LIBHEIF_HAVE_VERSION(1,13,0)
-    heif_deinit ();
-    #endif
+    can_import_avif = cc.run('''
+    #include <libheif/heif.h>
+    int main() {
+      int success;
+      #if LIBHEIF_HAVE_VERSION(1,13,0)
+      heif_init (NULL);
+      #endif
+      success = heif_have_decoder_for_format (heif_compression_AV1);
+      #if LIBHEIF_HAVE_VERSION(1,13,0)
+      heif_deinit ();
+      #endif
 
-    if (success)
-      return 0;
-    else
-      return 1;
-  }
-  ''',
-  dependencies: [ libheif ],
-  name: 'import AVIF').returncode() == 0
+      if (success)
+        return 0;
+      else
+        return 1;
+    }
+    ''',
+    dependencies: [ libheif ],
+    name: 'import AVIF').returncode() == 0
 
-  can_export_avif = cc.run('''
-  #include <libheif/heif.h>
-  int main() {
-    int success;
-    #if LIBHEIF_HAVE_VERSION(1,13,0)
-    heif_init (NULL);
-    #endif
-    success = heif_have_encoder_for_format (heif_compression_AV1);
-    #if LIBHEIF_HAVE_VERSION(1,13,0)
-    heif_deinit ();
-    #endif
+    can_export_avif = cc.run('''
+    #include <libheif/heif.h>
+    int main() {
+      int success;
+      #if LIBHEIF_HAVE_VERSION(1,13,0)
+      heif_init (NULL);
+      #endif
+      success = heif_have_encoder_for_format (heif_compression_AV1);
+      #if LIBHEIF_HAVE_VERSION(1,13,0)
+      heif_deinit ();
+      #endif
 
-    if (success)
-      return 0;
-    else
-      return 1;
-  }
-  ''',
-  dependencies: [ libheif ],
-  name: 'export AVIF').returncode() == 0
+      if (success)
+        return 0;
+      else
+        return 1;
+    }
+    ''',
+    dependencies: [ libheif ],
+    name: 'export AVIF').returncode() == 0
+  else
+    # When cross-compiling and we can't run our test binaries.
+    can_import_heic = true
+    can_export_heic = true
+    can_import_avif = true
+    can_export_avif = true
+  endif
 
   if not can_import_heic and not can_import_avif
     have_heif = false
