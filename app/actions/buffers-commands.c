@@ -123,7 +123,8 @@ buffers_paste_as_new_image_cmd_callback (GimpAction *action,
       GimpImage *new_image;
 
       new_image = gimp_edit_paste_as_new_image (context->gimp,
-                                                GIMP_OBJECT (buffer));
+                                                GIMP_OBJECT (buffer),
+                                                context);
       gimp_create_display (context->gimp, new_image,
                            GIMP_UNIT_PIXEL, 1.0,
                            G_OBJECT (gimp_widget_get_monitor (widget)));

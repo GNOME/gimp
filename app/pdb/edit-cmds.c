@@ -325,7 +325,7 @@ edit_paste_as_new_image_invoker (GimpProcedure         *procedure,
 
   if (paste)
     {
-      image = gimp_edit_paste_as_new_image (gimp, paste);
+      image = gimp_edit_paste_as_new_image (gimp, paste, context);
 
       if (! image)
         success = FALSE;
@@ -641,7 +641,7 @@ edit_named_paste_as_new_image_invoker (GimpProcedure         *procedure,
 
       if (buffer)
         {
-          image = gimp_edit_paste_as_new_image (gimp, GIMP_OBJECT (buffer));
+          image = gimp_edit_paste_as_new_image (gimp, GIMP_OBJECT (buffer), context);
 
           if (! image)
             success = FALSE;

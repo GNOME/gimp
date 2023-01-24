@@ -332,7 +332,7 @@ HELP
 
   if (paste)
     {
-      image = gimp_edit_paste_as_new_image (gimp, paste);
+      image = gimp_edit_paste_as_new_image (gimp, paste, context);
 
       if (! image)
         success = FALSE;
@@ -660,7 +660,7 @@ HELP
 
   if (buffer)
     {
-      image = gimp_edit_paste_as_new_image (gimp, GIMP_OBJECT (buffer));
+      image = gimp_edit_paste_as_new_image (gimp, GIMP_OBJECT (buffer), context);
 
       if (! image)
         success = FALSE;

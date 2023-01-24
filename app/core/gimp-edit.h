@@ -42,7 +42,8 @@ GList       * gimp_edit_paste              (GimpImage       *image,
                                             gint             viewport_width,
                                             gint             viewport_height);
 GimpImage   * gimp_edit_paste_as_new_image (Gimp            *gimp,
-                                            GimpObject      *paste);
+                                            GimpObject      *paste,
+                                            GimpContext     *context);
 
 const gchar * gimp_edit_named_cut          (GimpImage       *image,
                                             const gchar     *name,

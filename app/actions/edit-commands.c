@@ -426,7 +426,8 @@ edit_paste_as_new_image_cmd_callback (GimpAction *action,
 
   if (paste)
     {
-      image = gimp_edit_paste_as_new_image (gimp, paste);
+      image = gimp_edit_paste_as_new_image (gimp, paste,
+                                            action_data_get_context (data));
       g_object_unref (paste);
     }
 
