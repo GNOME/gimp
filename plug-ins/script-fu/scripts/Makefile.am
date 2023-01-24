@@ -39,7 +39,6 @@ scripts = \
 	paste-as-brush.scm		\
 	paste-as-pattern.scm		\
 	perspective-shadow.scm		\
-	predator.scm			\
 	reverse-layers.scm		\
 	ripply-anim.scm			\
 	round-corners.scm \

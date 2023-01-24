@@ -34,7 +34,6 @@ scripts = [
   'paste-as-pattern.scm',
   'perspective-shadow.scm',
   'plug-in-compat.init',
-  'predator.scm',
   'reverse-layers.scm',
   'ripply-anim.scm',
   'round-corners.scm',
