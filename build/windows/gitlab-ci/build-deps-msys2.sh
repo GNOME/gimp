@@ -58,14 +58,14 @@ git clone --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/gegl.git _gegl
 
 mkdir _babl/_build
 cd _babl/_build
-meson -Dprefix="${GIMP_PREFIX}" -Dwith-docs=false \
+meson setup -Dprefix="${GIMP_PREFIX}" -Dwith-docs=false \
       ${BABL_OPTIONS} ..
 ninja
 ninja install
 
 mkdir ../../_gegl/_build
 cd ../../_gegl/_build
-meson -Dprefix="${GIMP_PREFIX}" -Ddocs=false \
+meson setup -Dprefix="${GIMP_PREFIX}" -Ddocs=false \
       -Dcairo=enabled -Dumfpack=enabled \
       -Dopenexr=enabled -Dworkshop=true \
       ${GEGL_OPTIONS} ..
