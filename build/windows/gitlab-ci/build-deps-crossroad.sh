@@ -5,7 +5,7 @@ mkdir _deps && cd _deps
 
 crossroad install lcms2 && \
 git clone --depth 1 https://gitlab.gnome.org/GNOME/babl.git && cd babl && \
-crossroad meson _build/ -Denable-gir=false -Dlibdir=lib && \
+crossroad meson setup _build/ -Denable-gir=false -Dlibdir=lib && \
 ninja -C _build install || exit 1
 cd ..
 
@@ -13,7 +13,7 @@ cd ..
 
 crossroad install cairo graphviz json-glib && \
 git clone --depth 1 https://gitlab.gnome.org/GNOME/gegl.git && cd gegl && \
-crossroad meson _build/ -Dintrospection=false -Dsdl2=disabled -Dlibdir=lib && \
+crossroad meson setup _build/ -Dintrospection=false -Dsdl2=disabled -Dlibdir=lib && \
 ninja -C _build install || exit 1
 cd ..
 

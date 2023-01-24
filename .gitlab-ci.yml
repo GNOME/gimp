@@ -170,11 +170,11 @@ deps-debian:
     - export XDG_DATA_DIRS="${INSTALL_PREFIX}/share:/usr/local/share:/usr/share"
   script:
     - cd _babl
-    - meson -Dprefix="${INSTALL_PREFIX}" _build
+    - meson setup -Dprefix="${INSTALL_PREFIX}" _build
     - ninja -C _build
     - ninja -C _build install
     - cd ../_gegl
-    - meson --prefix="${INSTALL_PREFIX}" _build
+    - meson setup --prefix="${INSTALL_PREFIX}" _build
     - ninja -C _build
     - ninja -C _build install
   needs: ["build-image"]
@@ -240,7 +240,7 @@ gimp-meson-debian:
     - if: '$GIMP_CI_SOURCES != null'
   extends: .gimp-debian-base
   script:
-    - meson _build
+    - meson setup _build
       --prefix="${INSTALL_PREFIX}"
       -Dg-ir-doc=true -Dgi-docgen=enabled
     - ninja -C _build
@@ -267,7 +267,7 @@ gimp-clang-debian:
     - mkdir -p "$APT_CACHE"
     - apt-get install -y --no-install-recommends -o dir::cache::archives="$APT_CACHE"
         clang libomp-dev
-    - meson _build
+    - meson setup _build
       --prefix="${INSTALL_PREFIX}"
     - ninja -C _build
     - ninja -C _build test
@@ -278,7 +278,7 @@ gimp-meson-raster-icons:
     - if: '$GIMP_CI_RASTER_ICONS != null'
   extends: .gimp-debian-base
   script:
-    - meson _build
+    - meson setup _build
        --prefix="${INSTALL_PREFIX}"
        -Dvector-icons=false
     - ninja -C _build
@@ -546,7 +546,7 @@ gimp-win64:
   script:
     - export PATH="`pwd`/.local/bin:$PATH"
     - mkdir _build && cd _build
-    - echo 'crossroad meson ..
+    - echo 'crossroad meson setup ..
               -Dgi-docgen=disabled && ninja && ninja install &&
             cp -fr $CROSSROAD_PREFIX/ ../gimp-prefix/
             ' |
@@ -612,7 +612,7 @@ gimp-win32:
   script:
     - export PATH="`pwd`/.local/bin:$PATH"
     - mkdir _build && cd _build
-    - echo 'crossroad meson ..
+    - echo 'crossroad meson setup ..
               -Dwmf=disabled  -Dmng=disabled -Dgi_docgen=false && ninja && ninja install &&
             cp -fr $CROSSROAD_PREFIX/ ../gimp-prefix/
             ' |
