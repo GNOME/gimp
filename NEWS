@@ -22,6 +22,14 @@ Core:
    views.
  - Color scales widget settings regarding RGB 0..255/0..100 and LCh/HSV choices
    are now stored across sessions.
+ - All code is now multi-item aware (even though it might mean specififically
+   forbidding using some features on multiple items).
+ - DBus is now explicitly disabled on macOS.
+ - Better support of non-ASCII characters in paths on Windows and other fixes
+   for Windows: API un-deprecation, unicode variants of functions…
+ - Copy|Cut-Paste code reworked further.
+ - Action "Crop to Selection" renamed to "Resize Layers to Selection".
+ - Action "Crop to Content" renamed to "Crop Layers to Content".
 
 Tools:
 
@@ -49,11 +57,34 @@ Plug-ins:
       lack of support in GIO for macOS platform).
   - DDS:
     * OpenMP support enabled when available on the build machine.
+  - All Python 3 plug-ins whose Python 2 variants used to have a GUI now also
+    have one.
+  - Script "Predator" removed.
+
+API:
+
+  - Changes in libgimpwidgets:
+    * New functions:
+      + gimp_int_store_new_array(): variant of gimp_int_store_new() which will
+        work in bindings.
+      + gimp_spin_scale_get_mnemonic_keyval()
+  - Changes in libgimp:
+    * New classes:
+      + GimpResource
+      + GimpBrush
+      + GimpFont
+      + GimpGradient
+      + GimpPalette
+      + GimpPattern
+  - Changes in libgimpbase:
+    * New functions:
+      + gimp_bind_text_domain()
 
 Build:
 
   - meson: make sure libgimp does not depend on GTK+.
   - GLib requirement bumped to version 2.70 as minimum.
+  - Improved C99 compatibility of IPC_RMID check.
 
 Debugging:
 
