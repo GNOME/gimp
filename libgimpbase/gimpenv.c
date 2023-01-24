@@ -522,7 +522,7 @@ gimp_data_directory (void)
  * function from libintl; on Windows the returned string can be converted to
  * UTF-16 and passed to the wbindtextdomain() function from libintl.
  *
- * Returns: The top directory for GIMP locale files.
+ * Returns: (type filename): The top directory for GIMP locale files.
  */
 const gchar *
 gimp_locale_directory (void)
