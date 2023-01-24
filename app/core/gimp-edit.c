@@ -67,63 +67,22 @@ gimp_edit_cut (GimpImage     *image,
                GError       **error)
 {
   GList    *iter;
-  gboolean  cut_layers = FALSE;
+  gboolean  layers_only = TRUE;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  if (gimp_channel_is_empty (gimp_image_get_mask (image)))
+  for (iter = drawables; iter; iter = iter->next)
+    if (! GIMP_IS_LAYER (iter->data))
+      {
+        layers_only = FALSE;
+        break;
+      }
+
+  if (layers_only)
     {
-      cut_layers = TRUE;
-
-      for (iter = drawables; iter; iter = iter->next)
-        if (! GIMP_IS_LAYER (iter->data))
-          {
-            cut_layers = FALSE;
-            break;
-          }
-    }
-
-  if (cut_layers)
-    {
-      GList     *remove = NULL;
-      GimpImage *clip_image;
-      gchar     *undo_label;
-
-      /* Let's work on a copy because we will edit the list to remove
-       * layers whose ancestor is also cut.
-       */
-      drawables = g_list_copy (drawables);
-      for (iter = drawables; iter; iter = iter->next)
-        {
-          GList *iter2;
-
-          for (iter2 = drawables; iter2; iter2 = iter2->next)
-            {
-              if (iter2 == iter)
-                continue;
-
-              if (gimp_viewable_is_ancestor (iter2->data, iter->data))
-                {
-                  /* When cutting a layer group, all its children come
-                   * with anyway.
-                   */
-                  remove = g_list_prepend (remove, iter);
-                  break;
-                }
-            }
-        }
-      for (iter = remove; iter; iter = iter->next)
-        drawables = g_list_delete_link (drawables, iter->data);
-
-      g_list_free (remove);
-
-      /* Now copy all layers into the clipboard image. */
-      clip_image = gimp_image_new_from_drawables (image->gimp, drawables, FALSE, TRUE);
-      gimp_container_remove (image->gimp->images, GIMP_OBJECT (clip_image));
-      gimp_set_clipboard_image (image->gimp, clip_image);
-      g_object_unref (clip_image);
+      gchar *undo_label;
 
       undo_label = g_strdup_printf (ngettext ("Cut Layer", "Cut %d Layers",
                                               g_list_length (drawables)),
@@ -132,13 +91,63 @@ gimp_edit_cut (GimpImage     *image,
                                    undo_label);
       g_free (undo_label);
 
-      /* Remove layers from source image. */
-      for (iter = drawables; iter; iter = iter->next)
-        gimp_image_remove_layer (image, GIMP_LAYER (iter->data),
-                                 TRUE, NULL);
+      if (gimp_channel_is_empty (gimp_image_get_mask (image)))
+        {
+          GList     *remove = NULL;
+          GimpImage *clip_image;
+
+          /* Let's work on a copy because we will edit the list to remove
+           * layers whose ancestor is also cut.
+           */
+          drawables = g_list_copy (drawables);
+          for (iter = drawables; iter; iter = iter->next)
+            {
+              GList *iter2;
+
+              for (iter2 = drawables; iter2; iter2 = iter2->next)
+                {
+                  if (iter2 == iter)
+                    continue;
+
+                  if (gimp_viewable_is_ancestor (iter2->data, iter->data))
+                    {
+                      /* When cutting a layer group, all its children come
+                       * with anyway.
+                       */
+                      remove = g_list_prepend (remove, iter);
+                      break;
+                    }
+                }
+            }
+          for (iter = remove; iter; iter = iter->next)
+            drawables = g_list_delete_link (drawables, iter->data);
+
+          g_list_free (remove);
+
+          /* Now copy all layers into the clipboard image. */
+          clip_image = gimp_image_new_from_drawables (image->gimp, drawables, FALSE, TRUE);
+          gimp_container_remove (image->gimp->images, GIMP_OBJECT (clip_image));
+          gimp_set_clipboard_image (image->gimp, clip_image);
+          g_object_unref (clip_image);
+
+          /* Remove layers from source image. */
+          for (iter = drawables; iter; iter = iter->next)
+            gimp_image_remove_layer (image, GIMP_LAYER (iter->data),
+                                     TRUE, NULL);
+
+          g_list_free (drawables);
+        }
+      else
+        {
+          /* With selection, a cut is similar to a copy followed by a clear. */
+          gimp_edit_copy (image, drawables, context, error);
+
+          for (iter = drawables; iter; iter = iter->next)
+            if (! GIMP_IS_GROUP_LAYER (iter->data))
+              gimp_drawable_edit_clear (GIMP_DRAWABLE (iter->data), context);
+        }
 
       gimp_image_undo_group_end (image);
-      g_list_free (drawables);
 
       return GIMP_OBJECT (gimp_get_clipboard_image (image->gimp));
     }
