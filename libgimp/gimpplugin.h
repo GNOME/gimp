@@ -134,8 +134,8 @@ struct _GimpPlugInClass
    * @gettext_domain: (out) (nullable): Gettext domain. If %NULL, it
    *                  defaults to the plug-in name as determined by the
    *                  directory the binary is called from.
-   * @catalog_dir:    (out) (nullable): relative path to a subdirectory
-   *                  of the plug-in folder containing the compiled
+   * @catalog_dir:    (out) (nullable) (type utf8): relative path to a
+   *                  subdirectory of the plug-in folder containing the compiled
    *                  Gettext message catalogs. If %NULL, it defaults to
    *                  "locale/".
    *
@@ -157,12 +157,12 @@ struct _GimpPlugInClass
    * simply set the method to %NULL, or possibly implement this method
    * to do something useful for your usage while returning %FALSE.
    *
-   * If you wish to tweak the @gettext_domain or the @localedir, return
-   * %TRUE and allocate appropriate @gettext_domain and/or @localedir
+   * If you wish to tweak the @gettext_domain or the @catalog_dir, return
+   * %TRUE and allocate appropriate @gettext_domain and/or @catalog_dir
    * (these use the default if set %NULL).
    *
-   * Note that @localedir must be a relative path, subdirectory of the
-   * directory of `gimp_get_progname()`.
+   * Note that @catalog_dir must be a relative path, encoded as UTF-8,
+   * subdirectory of the directory of `gimp_get_progname()`.
    * The domain names "gimp30-std-plug-ins", "gimp30-script-fu" and
    * "gimp30-python" are reserved and can only be used with a %NULL
    * @catalog_dir. These will use the translation catalogs installed for

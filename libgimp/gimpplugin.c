@@ -898,15 +898,17 @@ _gimp_plug_in_set_i18n (GimpPlugIn   *plug_in,
     }
   else
     {
+      gchar *utf8_catalog_dir = NULL;
+
       use_gettext = GIMP_PLUG_IN_GET_CLASS (plug_in)->set_i18n (plug_in,
                                                                 procedure_name,
                                                                 gettext_domain,
-                                                                catalog_dir);
+                                                                &utf8_catalog_dir);
       if (use_gettext)
         {
           gboolean reserved = FALSE;
 
-          if (! (*gettext_domain))
+          if (*gettext_domain == NULL)
             {
               *gettext_domain = g_strdup (plug_in->priv->translation_domain_name);
             }
@@ -919,15 +921,32 @@ _gimp_plug_in_set_i18n (GimpPlugIn   *plug_in,
                * set by the lib itself; devs must set NULL). See docs of
                * set_i18n() method.
                */
-              if (*catalog_dir)
-                {
-                  g_printerr ("[%s] Do not set a catalog directory with set_i18n() with reserved domain: %s\n",
-                              procedure_name, *gettext_domain);
-                  g_clear_pointer (catalog_dir, g_free);
-                }
+              if (utf8_catalog_dir != NULL)
+                g_printerr ("[%s] Do not set a catalog directory with set_i18n() with reserved domain: %s\n",
+                            procedure_name, *gettext_domain);
 
               *catalog_dir = g_strdup (gimp_locale_directory ());
               reserved = TRUE;
+            }
+
+          if (utf8_catalog_dir != NULL && *catalog_dir == NULL)
+            {
+              GError *error = NULL;
+
+              /* The passed-on catalog directory is in UTF-8 because this is
+               * usually hardcoded (in which case it's easier to request a
+               * specific encoding, chosen at development time, rather than the
+               * "OS encoding", depending on runtime).
+               * But now we want to transform it to the encoding used for
+               * filenames by GLib.
+               */
+              *catalog_dir = g_filename_from_utf8 (utf8_catalog_dir, -1, NULL, NULL, &error);
+
+              if (*catalog_dir == NULL)
+                g_printerr ("[%s] provided catalog directory is not proper UTF-8: %s\n",
+                            procedure_name, error ? error->message : "(N/A)");
+
+              g_clear_error (&error);
             }
 
           if (*catalog_dir && ! reserved)
@@ -982,6 +1001,8 @@ _gimp_plug_in_set_i18n (GimpPlugIn   *plug_in,
               *catalog_dir = g_file_get_path (plug_in->priv->translation_domain_path);
             }
         }
+
+      g_clear_pointer (&utf8_catalog_dir, g_free);
     }
 
   if (use_gettext && ! g_file_test (*catalog_dir, G_FILE_TEST_IS_DIR))
