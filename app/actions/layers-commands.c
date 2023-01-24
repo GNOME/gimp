@@ -1075,11 +1075,16 @@ layers_link_discard_cmd_callback (GimpAction *action,
                                   gpointer    data)
 {
   GimpImage *image;
-  GimpLayer *layer;
-  return_if_no_layer (image, layer, data);
+  GList     *layers;
+  GList     *iter;
+  return_if_no_layers (image, layers, data);
 
-  if (GIMP_IS_LINK_LAYER (layer))
-    gimp_link_layer_discard (GIMP_LINK_LAYER (layer));
+  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_PROPERTIES,
+                               _("Discard Links"));
+  for (iter = layers; iter; iter = iter->next)
+    if (GIMP_IS_LINK_LAYER (iter->data))
+      gimp_link_layer_discard (GIMP_LINK_LAYER (iter->data));
+  gimp_image_undo_group_end (image);
 }
 
 void
@@ -1088,11 +1093,16 @@ layers_link_monitor_cmd_callback (GimpAction *action,
                                   gpointer    data)
 {
   GimpImage *image;
-  GimpLayer *layer;
-  return_if_no_layer (image, layer, data);
+  GList     *layers;
+  GList     *iter;
+  return_if_no_layers (image, layers, data);
 
-  if (GIMP_IS_LINK_LAYER (layer))
-    gimp_link_layer_monitor (GIMP_LINK_LAYER (layer));
+  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_PROPERTIES,
+                               _("Monitor Links"));
+  for (iter = layers; iter; iter = iter->next)
+    if (GIMP_IS_LINK_LAYER (iter->data))
+      gimp_link_layer_monitor (GIMP_LINK_LAYER (iter->data));
+  gimp_image_undo_group_end (image);
 }
 
 void
