@@ -1,5 +1,5 @@
 # libgimp's Portuguese Translation
-# Copyright © 2002, 2004, 2010 gimp
+# Copyright © 2002-2023 gimp
 # Distributed under the same licence as the gimp package
 # Duarte Loreto <happyguy_pt@hotmail.com>, 2002, 2004.
 # Fernando Correia <fcorreia.mail@gmail.com>, 2010.
@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.6\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-01-12 11:56+0000\n"
-"PO-Revision-Date: 2023-01-12 14:15+0000\n"
+"POT-Creation-Date: 2023-01-24 20:14+0000\n"
+"PO-Revision-Date: 2023-01-25 12:09+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Português <https://l10n.gnome.org/teams/pt/>\n"
 "Language: pt\n"
@@ -26,11 +26,7 @@ msgstr ""
 "X-Language: pt_PT\n"
 "X-Source-Language: C\n"
 
-#: libgimp/gimpbrushselectbutton.c:178
-msgid "Brush Selection"
-msgstr "Seleção de pincel"
-
-#: libgimp/gimpbrushselectbutton.c:887 libgimp/gimppatternselectbutton.c:674
+#: libgimp/gimpbrushselectbutton.c:325 libgimp/gimppatternselectbutton.c:335
 msgid "_Browse..."
 msgstr "_Explorar..."
 
@@ -242,14 +238,6 @@ msgstr ""
 msgid "Export Image as %s"
 msgstr "Exportar a imagem como %s"
 
-#: libgimp/gimpfontselectbutton.c:137
-msgid "Font Selection"
-msgstr "Seleção de tipo de letra"
-
-#: libgimp/gimpgradientselectbutton.c:155
-msgid "Gradient Selection"
-msgstr "Seleção de gradiente"
-
 #: libgimp/gimpimagemetadata.c:306
 msgid "Background"
 msgstr "Fundo"
@@ -257,14 +245,6 @@ msgstr "Fundo"
 #: libgimp/gimpimagemetadata-save.c:654 modules/controller-midi.c:426
 msgid "GIMP"
 msgstr "GIMP"
-
-#: libgimp/gimppaletteselectbutton.c:136
-msgid "Palette Selection"
-msgstr "Seleção de paleta"
-
-#: libgimp/gimppatternselectbutton.c:165
-msgid "Pattern Selection"
-msgstr "Seleção de textura"
 
 #. procedure executed successfully
 #: libgimp/gimppdb.c:552
@@ -463,11 +443,31 @@ msgstr "_Guardar definições"
 msgid "Store current settings for later reuse"
 msgstr "Armazenar as definições atuais para usar mais tarde"
 
-#: libgimp/gimpproceduredialog.c:1964
+#: libgimp/gimpproceduredialog.c:732
+msgid "Brush Chooser"
+msgstr "Seletor de pincel"
+
+#: libgimp/gimpproceduredialog.c:736
+msgid "Font Chooser"
+msgstr "Seletor de tipo de letra"
+
+#: libgimp/gimpproceduredialog.c:740
+msgid "Gradient Chooser"
+msgstr "Seletor de gradiente"
+
+#: libgimp/gimpproceduredialog.c:744
+msgid "Palette Chooser"
+msgstr "Seletor de paleta"
+
+#: libgimp/gimpproceduredialog.c:748
+msgid "Pattern Chooser"
+msgstr "Seletor de padrão"
+
+#: libgimp/gimpproceduredialog.c:1986
 msgid "Reset to _Initial Values"
 msgstr "Repor definições _iniciais"
 
-#: libgimp/gimpproceduredialog.c:1973
+#: libgimp/gimpproceduredialog.c:1995
 msgid "Reset to _Factory Defaults"
 msgstr "Repor definições de _fábrica"
 
@@ -1587,26 +1587,26 @@ msgstr "(expressão UTF-8 inválida)"
 msgid "File path is NULL"
 msgstr "Caminho do ficheiro é NULL"
 
-#: libgimpbase/gimputils.c:403 libgimpbase/gimputils.c:414
+#: libgimpbase/gimputils.c:402
 msgid "Error converting UTF-8 filename to wide char"
 msgstr ""
 "Erro ao converter nome do ficheiro em UTF-8 para caracteres alargados (mais "
 "de 8 bits)"
 
-#: libgimpbase/gimputils.c:422
+#: libgimpbase/gimputils.c:410
 msgid "ILCreateFromPath() failed"
 msgstr "ILCreateFromPath() falhou"
 
-#: libgimpbase/gimputils.c:459
+#: libgimpbase/gimputils.c:449
 #, c-format
 msgid "Cannot convert '%s' into a valid NSURL."
 msgstr "Não é possível converter \"%s\" num NSURL válido."
 
-#: libgimpbase/gimputils.c:487
+#: libgimpbase/gimputils.c:477
 msgid "Connecting to org.freedesktop.FileManager1 failed: "
 msgstr "A conexão a org.freedesktop.FileManager1 falhou: "
 
-#: libgimpbase/gimputils.c:511
+#: libgimpbase/gimputils.c:501
 msgid "Calling ShowItems failed: "
 msgstr "Chamada a “ShowItems” falhou: "
 
@@ -2995,6 +2995,21 @@ msgstr "Ciclos de contraste"
 #: modules/display-filter-high-contrast.c:128
 msgid "Contrast"
 msgstr "Contraste"
+
+#~ msgid "Brush Selection"
+#~ msgstr "Seleção de pincel"
+
+#~ msgid "Font Selection"
+#~ msgstr "Seleção de tipo de letra"
+
+#~ msgid "Gradient Selection"
+#~ msgstr "Seleção de gradiente"
+
+#~ msgid "Palette Selection"
+#~ msgstr "Seleção de paleta"
+
+#~ msgid "Pattern Selection"
+#~ msgstr "Seleção de textura"
 
 #, c-format
 #~ msgid "Conversion of the filename to system codepage failed."
