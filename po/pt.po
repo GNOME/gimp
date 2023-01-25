@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-01-12 11:54+0000\n"
-"PO-Revision-Date: 2023-01-12 14:30+0000\n"
+"POT-Creation-Date: 2023-01-24 20:12+0000\n"
+"PO-Revision-Date: 2023-01-25 12:01+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Português <https://l10n.gnome.org/teams/pt/>\n"
 "Language: pt\n"
@@ -160,117 +160,117 @@ msgstr "%s versão %s"
 msgid "using %s version %s (compiled against version %s)"
 msgstr "a usar %s versão %s (compilada sobre a versão %s)"
 
-#: app/main.c:166
+#: app/main.c:167
 msgid "Show version information and exit"
 msgstr "Mostrar informação da versão e sair"
 
-#: app/main.c:171
+#: app/main.c:172
 msgid "Show license information and exit"
 msgstr "Mostrar informação da licença e sair"
 
-#: app/main.c:176
+#: app/main.c:177
 msgid "Be more verbose"
 msgstr "Ser mais verboso"
 
-#: app/main.c:181
+#: app/main.c:182
 msgid "Start a new GIMP instance"
 msgstr "Inicia uma nova instância do GIMP"
 
-#: app/main.c:186
+#: app/main.c:187
 msgid "Open images as new"
 msgstr "Abrir imagens como novas"
 
-#: app/main.c:191
+#: app/main.c:192
 msgid "Run without a user interface"
 msgstr "Executar sem interface gráfica de utilizador"
 
-#: app/main.c:196
+#: app/main.c:197
 msgid "Do not load brushes, gradients, patterns, ..."
 msgstr "Não carregar pincéis, gradientes, texturas…"
 
-#: app/main.c:201
+#: app/main.c:202
 msgid "Do not load any fonts"
 msgstr "Não carregar nenhum tipo de letra"
 
-#: app/main.c:206
+#: app/main.c:207
 msgid "Do not show a splash screen"
 msgstr "Não mostrar a janela de arranque"
 
-#: app/main.c:211
+#: app/main.c:212
 msgid "Do not use shared memory between GIMP and plug-ins"
 msgstr "Não usar memória partilhada entre o GIMP e os complementos"
 
-#: app/main.c:216
+#: app/main.c:217
 msgid "Do not use special CPU acceleration functions"
 msgstr "Não usar funções especiais de aceleração da CPU"
 
-#: app/main.c:221
+#: app/main.c:222
 msgid "Use an alternate sessionrc file"
 msgstr "Usar um ficheiro “sessionrc” alternativo"
 
-#: app/main.c:226
+#: app/main.c:227
 msgid "Use an alternate user gimprc file"
 msgstr "Usar um ficheiro “gimprc” alternativo de utilizador"
 
-#: app/main.c:231
+#: app/main.c:232
 msgid "Use an alternate system gimprc file"
 msgstr "Usar um ficheiro “gimprc” alternativo de sistema"
 
-#: app/main.c:236
+#: app/main.c:237
 msgid "Batch command to run (can be used multiple times)"
 msgstr "Comando de lote a executar (pode ser usado múltiplas vezes)"
 
-#: app/main.c:241
+#: app/main.c:242
 msgid "The procedure to process batch commands with"
 msgstr "O procedimento com que processar comandos de lote"
 
-#: app/main.c:246
+#: app/main.c:247
 msgid "Quit immediately after performing requested actions"
 msgstr "Sair imediatamente após a realização das ações solicitadas"
 
-#: app/main.c:251
+#: app/main.c:252
 msgid "Send messages to console instead of using a dialog"
 msgstr "Enviar mensagens para a consola em vez de usar um diálogo"
 
 #. don't translate the mode names (off|on|warn)
-#: app/main.c:257
+#: app/main.c:258
 msgid "PDB compatibility mode (off|on|warn)"
 msgstr "Modo de compatibilidade PDB (off|on|warn)"
 
 #. don't translate the mode names (never|query|always)
-#: app/main.c:263
+#: app/main.c:264
 msgid "Debug in case of a crash (never|query|always)"
 msgstr "Depurar no caso de falha de sistema (never|query|always)"
 
-#: app/main.c:268
+#: app/main.c:269
 msgid "Enable non-fatal debugging signal handlers"
 msgstr "Ativa gestores de sinais de depuração não fatais"
 
-#: app/main.c:273
+#: app/main.c:274
 msgid "Make all warnings fatal"
 msgstr "Torna todos os avisos em erros fatais"
 
-#: app/main.c:278
+#: app/main.c:279
 msgid "Output a gimprc file with default settings"
 msgstr "Gerar um ficheiro “gimprc” com definições predefinidas"
 
-#: app/main.c:294
+#: app/main.c:295
 msgid "Output a sorted list of deprecated procedures in the PDB"
 msgstr "Mostrar uma lista ordenada de procedimentos abandonados no PDB"
 
-#: app/main.c:299
+#: app/main.c:300
 msgid "Show a preferences page with experimental features"
 msgstr "Mostrar uma página de preferências com funcionalidades experimentais"
 
-#: app/main.c:304
+#: app/main.c:305
 msgid "Show an image submenu with debug actions"
 msgstr "Mostrar um submenu de imagem com ações de depuração"
 
-#: app/main.c:744
+#: app/main.c:725
 msgid "[FILE|URI...]"
 msgstr "[FICHEIRO|URI…]"
 
-#: app/main.c:772
+#: app/main.c:753
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -278,20 +278,20 @@ msgstr ""
 "O GIMP não conseguiu iniciar a interface gráfica de utilizador.\n"
 "Certifique-se que o seu ambiente gráfico está configurado corretamente."
 
-#: app/main.c:791
+#: app/main.c:772
 msgid "Another GIMP instance is already running."
 msgstr "Já existe outra instância do GIMP em execução."
 
-#: app/main.c:879
+#: app/main.c:860
 msgid "GIMP output. Type any character to close this window."
 msgstr "Saída de dados do GIMP. Prima qualquer tecla para fechar esta janela."
 
-#: app/main.c:880
+#: app/main.c:861
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(prima qualquer tecla para fechar esta janela)\n"
 
-#: app/main.c:897
+#: app/main.c:878
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "Saída de dados do GIMP. Pode minimizar esta janela, mas não a feche."
 
@@ -3945,61 +3945,61 @@ msgstr "Camada copiada para a área de transferência."
 msgid "Copied pixels to the clipboard."
 msgstr "Pixéis copiados para a área de transferência."
 
-#: app/actions/edit-commands.c:442 app/actions/edit-commands.c:731
+#: app/actions/edit-commands.c:443 app/actions/edit-commands.c:732
 #: app/tools/gimpseamlessclonetool.c:303
 msgid "There is no image data in the clipboard to paste."
 msgstr "Não há dados de imagem na área de transferência para colar."
 
-#: app/actions/edit-commands.c:458
+#: app/actions/edit-commands.c:459
 msgid "Cut Named"
 msgstr "Cortar para a lista de cópias"
 
-#: app/actions/edit-commands.c:461 app/actions/edit-commands.c:483
-#: app/actions/edit-commands.c:505
+#: app/actions/edit-commands.c:462 app/actions/edit-commands.c:484
+#: app/actions/edit-commands.c:506
 msgid "Enter a name for this buffer"
 msgstr "Introduza um nome para esta cópia na lista de cópias"
 
-#: app/actions/edit-commands.c:480
+#: app/actions/edit-commands.c:481
 msgid "Copy Named"
 msgstr "Copiar para a lista de cópias"
 
-#: app/actions/edit-commands.c:502
+#: app/actions/edit-commands.c:503
 msgid "Copy Visible Named"
 msgstr "Cópia Visível Nomeada"
 
-#: app/actions/edit-commands.c:550
+#: app/actions/edit-commands.c:551
 msgid "Clear"
 msgstr "Limpar"
 
-#: app/actions/edit-commands.c:623
+#: app/actions/edit-commands.c:624
 msgid "A selected layer's alpha channel is locked."
 msgstr "O canal alfa de uma camada selecionada está bloqueado."
 
-#: app/actions/edit-commands.c:689
+#: app/actions/edit-commands.c:690
 msgid ""
 "Pasted as new layer because the target is not a single layer or layer mask."
 msgstr ""
 "Colado como nova camada porque o alvo não é uma única camada ou máscara de "
 "camada."
 
-#: app/actions/edit-commands.c:696
+#: app/actions/edit-commands.c:697
 msgid "Pasted as new layer because the target is a layer group."
 msgstr "Colado como nova camada porque o alvo é um grupo de camadas."
 
-#: app/actions/edit-commands.c:703
+#: app/actions/edit-commands.c:704
 msgid "Pasted as new layer because the target's pixels are locked."
 msgstr "Colado como nova camada porque os pixéis do alvo estão bloqueados."
 
-#: app/actions/edit-commands.c:748
+#: app/actions/edit-commands.c:749
 msgid "There are no selected layers or channels to cut from."
 msgstr "Não existe nenhuma camada ou canal selecionados de onde cortar."
 
-#: app/actions/edit-commands.c:753 app/actions/edit-commands.c:786
-#: app/actions/edit-commands.c:811
+#: app/actions/edit-commands.c:754 app/actions/edit-commands.c:787
+#: app/actions/edit-commands.c:812
 msgid "(Unnamed Buffer)"
 msgstr "(cópia sem nome na lista de cópias)"
 
-#: app/actions/edit-commands.c:781
+#: app/actions/edit-commands.c:782
 msgid "There are no selected layers or channels to copy from."
 msgstr "Não existe nenhuma camada ou canal selecionados de onde copiar."
 
@@ -6670,18 +6670,18 @@ msgstr "Altera o tamanho dos conteúdos da camada"
 
 #: app/actions/layers-actions.c:250
 msgctxt "layers-action"
-msgid "_Crop to Selection"
-msgstr "_Recortar pela seleção"
+msgid "_Resize Layers to Selection"
+msgstr "_Redimensiona camadas pela seleção"
 
 #: app/actions/layers-actions.c:251
 msgctxt "layers-action"
-msgid "Crop the layers to the extents of the selection"
-msgstr "Recortar a camada pelos limites da seleção"
+msgid "Resize the layers to the extents of the selection"
+msgstr "Redimensiona as camadas da imagem para o tamanho da seleção"
 
 #: app/actions/layers-actions.c:256
 msgctxt "layers-action"
-msgid "Crop to C_ontent"
-msgstr "_Recortar pelo conteúdo"
+msgid "Crop Layers to C_ontent"
+msgstr "Recorta camadas pelo conteúdo"
 
 #: app/actions/layers-actions.c:257
 msgctxt "layers-action"
@@ -12674,12 +12674,12 @@ msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr "Ancorar seleção flutuante"
 
-#: app/core/core-enums.c:1298 app/core/gimp-edit.c:736
+#: app/core/core-enums.c:1298 app/core/gimp-edit.c:764
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "Colar"
 
-#: app/core/core-enums.c:1299 app/core/gimp-edit.c:1065
+#: app/core/core-enums.c:1299 app/core/gimp-edit.c:1116
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "Cortar"
@@ -13064,18 +13064,18 @@ msgstr "Histórico de cores recentes"
 msgid "Updating tag cache"
 msgstr "A atualizar a cache de etiquetas"
 
-#: app/core/gimp-edit.c:127
+#: app/core/gimp-edit.c:87
 #, c-format
 msgid "Cut Layer"
 msgid_plural "Cut %d Layers"
 msgstr[0] "Cortar camada"
 msgstr[1] "Cortar %d camadas"
 
-#: app/core/gimp-edit.c:506 app/core/gimpimage-new.c:553
+#: app/core/gimp-edit.c:534 app/core/gimpimage-new.c:553
 msgid "Pasted Layer"
 msgstr "Camada colada"
 
-#: app/core/gimp-edit.c:1082
+#: app/core/gimp-edit.c:1133
 msgid "Global Buffer"
 msgstr "Cópia principal"
 
@@ -28940,6 +28940,18 @@ msgstr "Erro ao escrever XCF: BPC não suportado ao escrever o pixel: %d"
 #: app-tools/gimp-debug-tool.c:87
 msgid "GIMP Crash Debug"
 msgstr "Depuração de falha de sistema do GIMP"
+
+#~ msgctxt "layers-action"
+#~ msgid "_Crop to Selection"
+#~ msgstr "_Recortar pela seleção"
+
+#~ msgctxt "layers-action"
+#~ msgid "Crop the layers to the extents of the selection"
+#~ msgstr "Recortar a camada pelos limites da seleção"
+
+#~ msgctxt "layers-action"
+#~ msgid "Crop to C_ontent"
+#~ msgstr "_Recortar pelo conteúdo"
 
 #~ msgctxt "channels-action"
 #~ msgid "_Add to Selection"
