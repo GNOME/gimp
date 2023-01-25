@@ -1,13 +1,15 @@
 # Georgian translation of gimp.
 # This file is distributed under the same license as the gimp package.
 # George Machitidze  გიორგი მაჩითიძე  <giomac@gmail.com>
+# Ekaterine Papava <papava.e@gtu.ge>, 2023
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: ka\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-01-14 06:17+0000\n"
-"PO-Revision-Date: 2023-01-14 15:32+0100\n"
-"Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
+"POT-Creation-Date: 2023-01-24 20:12+0000\n"
+"PO-Revision-Date: 2023-01-25 07:47+0100\n"
+"Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: \n"
 "Language: ka\n"
 "MIME-Version: 1.0\n"
@@ -123,136 +125,136 @@ msgstr "%s ვერსია %s"
 msgid "using %s version %s (compiled against version %s)"
 msgstr "გამოიყენება %s ვერსია %s (დაკომპილებულია ვერსიით %s)"
 
-#: app/main.c:166
+#: app/main.c:167
 msgid "Show version information and exit"
 msgstr "ვერსიის ჩვენება და გასვლა"
 
-#: app/main.c:171
+#: app/main.c:172
 msgid "Show license information and exit"
 msgstr "ლიცენზიის ჩვენება და გასვლა"
 
-#: app/main.c:176
+#: app/main.c:177
 msgid "Be more verbose"
 msgstr "უფრო მეტის ჩვენება"
 
-#: app/main.c:181
+#: app/main.c:182
 msgid "Start a new GIMP instance"
 msgstr "ახალი GIMP-ის გაშვება"
 
-#: app/main.c:186
+#: app/main.c:187
 msgid "Open images as new"
 msgstr "გამოსახულების თავიდან გახსნა"
 
-#: app/main.c:191
+#: app/main.c:192
 msgid "Run without a user interface"
 msgstr "გაუშვი სამომხმარებლო ინტერფეისის გარეშე"
 
-#: app/main.c:196
+#: app/main.c:197
 msgid "Do not load brushes, gradients, patterns, ..."
 msgstr "არ ჩატვირთო ფუნჯები, გრადიენტები, ..."
 
-#: app/main.c:201
+#: app/main.c:202
 msgid "Do not load any fonts"
 msgstr "არ ჩატვირთო ფონტები"
 
-#: app/main.c:206
+#: app/main.c:207
 msgid "Do not show a splash screen"
 msgstr "არ აჩვენო მისასალმებელი ფანჯარა"
 
-#: app/main.c:211
+#: app/main.c:212
 msgid "Do not use shared memory between GIMP and plug-ins"
 msgstr "GIMP-სა და მის დამატებებს შორის ზიარი მეხსიერების არ გამოყენება"
 
-#: app/main.c:216
+#: app/main.c:217
 msgid "Do not use special CPU acceleration functions"
 msgstr "CPU აჩქარების სპეციალური ფუნქციების არ-გამოყენება"
 
-#: app/main.c:221
+#: app/main.c:222
 msgid "Use an alternate sessionrc file"
 msgstr "ალტერნატიული sessionrc ფაილის გამოყენება"
 
-#: app/main.c:226
+#: app/main.c:227
 msgid "Use an alternate user gimprc file"
 msgstr "ალტერნატიული მომხმარებლის gimprc ფაილის გამოყენება"
 
-#: app/main.c:231
+#: app/main.c:232
 msgid "Use an alternate system gimprc file"
 msgstr "ალტერნატიული სისტემური sessionrc ფაილის გამოყენება"
 
-#: app/main.c:236
+#: app/main.c:237
 msgid "Batch command to run (can be used multiple times)"
 msgstr ""
 
-#: app/main.c:241
+#: app/main.c:242
 msgid "The procedure to process batch commands with"
 msgstr ""
 
-#: app/main.c:246
+#: app/main.c:247
 msgid "Quit immediately after performing requested actions"
 msgstr "მოთხოვნილი მოთხოვნების შესრულების შემდეგ დაუყოვნებლივი გამოსვლა"
 
-#: app/main.c:251
+#: app/main.c:252
 msgid "Send messages to console instead of using a dialog"
 msgstr "შეტყობინებების ფანჯარაში ჩვენების მაგიერ კონსოლზე გაგზავნა"
 
 #. don't translate the mode names (off|on|warn)
-#: app/main.c:257
+#: app/main.c:258
 msgid "PDB compatibility mode (off|on|warn)"
 msgstr "PDB-სთან თავსებადობის რეჟიმი (off|on|warn)"
 
 #. don't translate the mode names (never|query|always)
-#: app/main.c:263
+#: app/main.c:264
 msgid "Debug in case of a crash (never|query|always)"
 msgstr "გამართვა ავარიის შემთხვევაში (არასდროს|მკითხე|ყოველთვის)"
 
-#: app/main.c:268
+#: app/main.c:269
 msgid "Enable non-fatal debugging signal handlers"
 msgstr ""
 
-#: app/main.c:273
+#: app/main.c:274
 msgid "Make all warnings fatal"
 msgstr "ყველა გაფრთხილების ფატალურად გამოცხადება"
 
-#: app/main.c:278
+#: app/main.c:279
 msgid "Output a gimprc file with default settings"
 msgstr "გამოტანილი იქნება gimprc ფაილი ნაგულისხმები პარამეტრებით"
 
-#: app/main.c:294
+#: app/main.c:295
 msgid "Output a sorted list of deprecated procedures in the PDB"
 msgstr ""
 
-#: app/main.c:299
+#: app/main.c:300
 msgid "Show a preferences page with experimental features"
 msgstr "მორგების ფანჯარაში ექსპერიმენტალური თვისებების ჩვენება"
 
-#: app/main.c:304
+#: app/main.c:305
 msgid "Show an image submenu with debug actions"
 msgstr "გამოსახულების ქვემენიუს გამართვის ქმედებებით ჩვენება"
 
-#: app/main.c:744
+#: app/main.c:725
 msgid "[FILE|URI...]"
 msgstr "[FILE|URI...]"
 
-#: app/main.c:772
+#: app/main.c:753
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
 msgstr ""
 
-#: app/main.c:791
+#: app/main.c:772
 msgid "Another GIMP instance is already running."
 msgstr "GIMP-ის კიდევ ერთი ასლი უკვე გაშვებულია."
 
-#: app/main.c:879
+#: app/main.c:860
 msgid "GIMP output. Type any character to close this window."
 msgstr "GIMP-ის გამოტანა. ფანჯრის დასახურად დააწექით ნებისმიერ კლავიშას."
 
-#: app/main.c:880
+#: app/main.c:861
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(ფანჯრის დასახურად დააჭირეთ ნებისმიერ კლავიშას)\n"
 
-#: app/main.c:897
+#: app/main.c:878
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr ""
 "GIMP-ის გამოტანა. თქვენ შეგიძლიათ ჩაკეცოთ ფანჯარა, მაგრამ არა მისი დახურვა."
@@ -3834,59 +3836,59 @@ msgstr "ფენა დაკოპირდა გაცვლის ბაფ
 msgid "Copied pixels to the clipboard."
 msgstr "პიქსელები დაკოპირდნენ გაცვლის ბაფერში."
 
-#: app/actions/edit-commands.c:442 app/actions/edit-commands.c:731
+#: app/actions/edit-commands.c:443 app/actions/edit-commands.c:732
 #: app/tools/gimpseamlessclonetool.c:303
 msgid "There is no image data in the clipboard to paste."
 msgstr "გაცვლის ბაფერი ცარიელია."
 
-#: app/actions/edit-commands.c:458
+#: app/actions/edit-commands.c:459
 msgid "Cut Named"
 msgstr "დასახელებულების ამოჭრა"
 
-#: app/actions/edit-commands.c:461 app/actions/edit-commands.c:483
-#: app/actions/edit-commands.c:505
+#: app/actions/edit-commands.c:462 app/actions/edit-commands.c:484
+#: app/actions/edit-commands.c:506
 msgid "Enter a name for this buffer"
 msgstr "შეიყვანეთ სახელი ამ ბაფერისდათვის"
 
-#: app/actions/edit-commands.c:480
+#: app/actions/edit-commands.c:481
 msgid "Copy Named"
 msgstr "დასახელებულების კოპირება"
 
-#: app/actions/edit-commands.c:502
+#: app/actions/edit-commands.c:503
 msgid "Copy Visible Named"
 msgstr "სიიდან ხილულების კოპირება"
 
-#: app/actions/edit-commands.c:550
+#: app/actions/edit-commands.c:551
 msgid "Clear"
 msgstr "გაწმენდა"
 
-#: app/actions/edit-commands.c:623
+#: app/actions/edit-commands.c:624
 msgid "A selected layer's alpha channel is locked."
 msgstr "მონიშნული ფენის ალფა არხი დაბლოკილია."
 
-#: app/actions/edit-commands.c:689
+#: app/actions/edit-commands.c:690
 msgid ""
 "Pasted as new layer because the target is not a single layer or layer mask."
 msgstr ""
 
-#: app/actions/edit-commands.c:696
+#: app/actions/edit-commands.c:697
 msgid "Pasted as new layer because the target is a layer group."
 msgstr ""
 
-#: app/actions/edit-commands.c:703
+#: app/actions/edit-commands.c:704
 msgid "Pasted as new layer because the target's pixels are locked."
 msgstr ""
 
-#: app/actions/edit-commands.c:748
+#: app/actions/edit-commands.c:749
 msgid "There are no selected layers or channels to cut from."
 msgstr "ამოსაკვეთად მზა მონიშნული ფენები ან არხები არ არსებობს."
 
-#: app/actions/edit-commands.c:753 app/actions/edit-commands.c:786
-#: app/actions/edit-commands.c:811
+#: app/actions/edit-commands.c:754 app/actions/edit-commands.c:787
+#: app/actions/edit-commands.c:812
 msgid "(Unnamed Buffer)"
 msgstr "(უსახელო ბაფერი)"
 
-#: app/actions/edit-commands.c:781
+#: app/actions/edit-commands.c:782
 msgid "There are no selected layers or channels to copy from."
 msgstr "იქ არ არის აქტიური ფენა, საიდანაც შეიძლება კოპირება."
 
@@ -6509,18 +6511,18 @@ msgstr "ფენის შემცველობის ზომის გა
 
 #: app/actions/layers-actions.c:250
 msgctxt "layers-action"
-msgid "_Crop to Selection"
-msgstr "_მონიშნულის _ამოჭრა"
+msgid "_Resize Layers to Selection"
+msgstr "_ფენების მონიშნულში ჩატევა"
 
 #: app/actions/layers-actions.c:251
 msgctxt "layers-action"
-msgid "Crop the layers to the extents of the selection"
-msgstr "ფენებიდან მონიშნულის ამოჭრა"
+msgid "Resize the layers to the extents of the selection"
+msgstr "ფენების ზომის მონიშნულზე დამთხვევა"
 
 #: app/actions/layers-actions.c:256
 msgctxt "layers-action"
-msgid "Crop to C_ontent"
-msgstr "შემცველობის ამოჭრა"
+msgid "Crop Layers to C_ontent"
+msgstr "ფენების _შემცველობაზე ამოჭრა"
 
 #: app/actions/layers-actions.c:257
 msgctxt "layers-action"
@@ -12226,12 +12228,12 @@ msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr "მცურავი მონიშნულის დამაგრება"
 
-#: app/core/core-enums.c:1298 app/core/gimp-edit.c:736
+#: app/core/core-enums.c:1298 app/core/gimp-edit.c:764
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "ჩასმა"
 
-#: app/core/core-enums.c:1299 app/core/gimp-edit.c:1065
+#: app/core/core-enums.c:1299 app/core/gimp-edit.c:1116
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "ამოჭრა"
@@ -12615,17 +12617,17 @@ msgstr "ფერების ისტორია"
 msgid "Updating tag cache"
 msgstr "ჭდეების ქეშის განახლება"
 
-#: app/core/gimp-edit.c:127
+#: app/core/gimp-edit.c:87
 #, c-format
 msgid "Cut Layer"
 msgid_plural "Cut %d Layers"
 msgstr[0] "%d ფენის ამოჭრა"
 
-#: app/core/gimp-edit.c:506 app/core/gimpimage-new.c:553
+#: app/core/gimp-edit.c:534 app/core/gimpimage-new.c:553
 msgid "Pasted Layer"
 msgstr "ჩასმული ფენა"
 
-#: app/core/gimp-edit.c:1082
+#: app/core/gimp-edit.c:1133
 msgid "Global Buffer"
 msgstr "გლობალური ბაფერი"
 
@@ -27972,6 +27974,18 @@ msgstr "შეცდომა XCF-ის ჩაწერისას: პიქ�
 #: app-tools/gimp-debug-tool.c:87
 msgid "GIMP Crash Debug"
 msgstr "GIMP-ის ავარიის გამოკვლევა"
+
+#~ msgctxt "layers-action"
+#~ msgid "_Crop to Selection"
+#~ msgstr "_მონიშნულის _ამოჭრა"
+
+#~ msgctxt "layers-action"
+#~ msgid "Crop the layers to the extents of the selection"
+#~ msgstr "ფენებიდან მონიშნულის ამოჭრა"
+
+#~ msgctxt "layers-action"
+#~ msgid "Crop to C_ontent"
+#~ msgstr "შემცველობის ამოჭრა"
 
 #~ msgctxt "channels-action"
 #~ msgid "_Add to Selection"
