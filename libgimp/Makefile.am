@@ -146,9 +146,9 @@ libgimpui_sources = \
 
 libgimpui_built_sources = \
 	gimpuimarshal.c			\
-	gimpuimarshal.h     \
-	gimppropchooser.c   \
-	gimppropchooser.h
+	gimpuimarshal.h			\
+	gimppropchooser-private.c	\
+	gimppropchooser-private.h
 
 libgimpui_extra_sources = gimpuimarshal.list
 

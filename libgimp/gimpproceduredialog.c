@@ -26,6 +26,8 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
+#include "libgimp/gimppropchooser-private.h"
+
 #include "gimp.h"
 #include "gimpui.h"
 

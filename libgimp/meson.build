@@ -282,7 +282,7 @@ libgimpui_sources_introspectable = [
 libgimpui_sources = [
   libgimpui_sources_introspectable,
   gimpuimarshal,
-  'gimppropchooser.c',
+  'gimppropchooser-private.c',
 ]
 
 libgimpui_headers_introspectable = [

@@ -44,7 +44,6 @@
 #include <libgimp/gimpproceduredialog.h>
 #include <libgimp/gimpprocview.h>
 #include <libgimp/gimpprogressbar.h>
-#include <libgimp/gimppropchooser.h>
 #include <libgimp/gimppropchooserfactory.h>
 #include <libgimp/gimpsaveproceduredialog.h>
 #include <libgimp/gimpzoompreview.h>
