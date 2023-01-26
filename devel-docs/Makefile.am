@@ -2,9 +2,7 @@
 
 SUBDIRS = \
 	g-ir-docs	\
-	reference	\
-	\
-	performance-logs
+	reference
 
 EXTRA_DIST = \
 	HACKING.md			\

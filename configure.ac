@@ -3156,7 +3156,6 @@ devel-docs/g-ir-docs/Makefile
 devel-docs/reference/Makefile
 devel-docs/reference/gimp-ui/Makefile
 devel-docs/reference/gimp/Makefile
-devel-docs/performance-logs/Makefile
 docs/Makefile
 menus/Makefile
 cursors/Makefile
