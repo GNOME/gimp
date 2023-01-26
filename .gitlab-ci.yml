@@ -1,3 +1,6 @@
+include:
+  - template: Jobs/Container-Scanning.gitlab-ci.yml
+
 image: debian:stable
 
 stages:
