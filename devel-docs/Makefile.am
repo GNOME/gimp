@@ -8,7 +8,6 @@ EXTRA_DIST = \
 	HACKING.md			\
 	README.md			\
 	contexts.txt			\
-	debug-plug-ins.txt		\
 	includes.txt			\
 	parasites.txt			\
 	tagging.txt			\
