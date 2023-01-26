@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-01-12 11:54+0000\n"
-"PO-Revision-Date: 2023-01-14 00:01+0100\n"
+"POT-Creation-Date: 2023-01-25 17:39+0000\n"
+"PO-Revision-Date: 2023-01-26 18:58+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -154,117 +154,117 @@ msgstr "%s različice %s"
 msgid "using %s version %s (compiled against version %s)"
 msgstr "uporablja %s različice %s (prevedeno z različico %s)"
 
-#: app/main.c:166
+#: app/main.c:167
 msgid "Show version information and exit"
 msgstr "Pokaži podatke o različici in končaj z delom"
 
-#: app/main.c:171
+#: app/main.c:172
 msgid "Show license information and exit"
 msgstr "Pokaži licenčne podatke in končaj z delom"
 
-#: app/main.c:176
+#: app/main.c:177
 msgid "Be more verbose"
 msgstr "Bolj opisno"
 
-#: app/main.c:181
+#: app/main.c:182
 msgid "Start a new GIMP instance"
 msgstr "Zaženi še en program GIMP"
 
-#: app/main.c:186
+#: app/main.c:187
 msgid "Open images as new"
 msgstr "Odpri slike kot nove"
 
-#: app/main.c:191
+#: app/main.c:192
 msgid "Run without a user interface"
 msgstr "Zaženi brez uporabniškega vmesnika"
 
-#: app/main.c:196
+#: app/main.c:197
 msgid "Do not load brushes, gradients, patterns, ..."
 msgstr "Ne naloži čopičev, prelivov, palet, vzorcev, ..."
 
-#: app/main.c:201
+#: app/main.c:202
 msgid "Do not load any fonts"
 msgstr "Ne naloži pisav"
 
-#: app/main.c:206
+#: app/main.c:207
 msgid "Do not show a splash screen"
 msgstr "Ne pokaži zagonskega okna"
 
-#: app/main.c:211
+#: app/main.c:212
 msgid "Do not use shared memory between GIMP and plug-ins"
 msgstr "Ne uporabljaj deljenega pomnilnika med GIMP-om in vstavki"
 
-#: app/main.c:216
+#: app/main.c:217
 msgid "Do not use special CPU acceleration functions"
 msgstr "Ne uporabi posebnih funkcij pospeševanja CPE"
 
-#: app/main.c:221
+#: app/main.c:222
 msgid "Use an alternate sessionrc file"
 msgstr "Uporabi nadomestno datoteko sessionrc"
 
-#: app/main.c:226
+#: app/main.c:227
 msgid "Use an alternate user gimprc file"
 msgstr "Uporabi nadomestno uporabniško datoteko gimprc"
 
-#: app/main.c:231
+#: app/main.c:232
 msgid "Use an alternate system gimprc file"
 msgstr "Uporabi nadomestno sistemsko datoteko gimprc"
 
-#: app/main.c:236
+#: app/main.c:237
 msgid "Batch command to run (can be used multiple times)"
 msgstr "Paketni ukaz (lahko uporabljen večkrat)"
 
-#: app/main.c:241
+#: app/main.c:242
 msgid "The procedure to process batch commands with"
 msgstr "Procedura, ki naj obdela paketne ukaze"
 
-#: app/main.c:246
+#: app/main.c:247
 msgid "Quit immediately after performing requested actions"
 msgstr "Takoj po opravljenih zahtevanih dejanjih zapri program"
 
-#: app/main.c:251
+#: app/main.c:252
 msgid "Send messages to console instead of using a dialog"
 msgstr "Izpiši sporočila v konzoli namesto v pogovornih oknih"
 
 #. don't translate the mode names (off|on|warn)
-#: app/main.c:257
+#: app/main.c:258
 msgid "PDB compatibility mode (off|on|warn)"
 msgstr "Način združljivosti PDB (off|on|warn)"
 
 #. don't translate the mode names (never|query|always)
-#: app/main.c:263
+#: app/main.c:264
 msgid "Debug in case of a crash (never|query|always)"
 msgstr "Razhrošči v primeru sesutja (never|query|always)"
 
-#: app/main.c:268
+#: app/main.c:269
 msgid "Enable non-fatal debugging signal handlers"
 msgstr "Omogoči obdelavo neusodnih razhroščevalnih signalov"
 
-#: app/main.c:273
+#: app/main.c:274
 msgid "Make all warnings fatal"
 msgstr "Vsa opozorila naj bodo usodna"
 
-#: app/main.c:278
+#: app/main.c:279
 msgid "Output a gimprc file with default settings"
 msgstr "Izvozi datoteko gimprc s privzetimi nastavitvami"
 
-#: app/main.c:294
+#: app/main.c:295
 msgid "Output a sorted list of deprecated procedures in the PDB"
 msgstr "Izpiši razvrščen seznam zastarelih procedur v PDB"
 
-#: app/main.c:299
+#: app/main.c:300
 msgid "Show a preferences page with experimental features"
 msgstr "Pokaži stran nastavitev s poskusnimi funkcionalnostmi"
 
-#: app/main.c:304
+#: app/main.c:305
 msgid "Show an image submenu with debug actions"
 msgstr "Pokaži podmeni slike z dejanji razhroščevanja"
 
-#: app/main.c:744
+#: app/main.c:725
 msgid "[FILE|URI...]"
 msgstr "[DATOTEKA|URI...]"
 
-#: app/main.c:772
+#: app/main.c:753
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -272,20 +272,20 @@ msgstr ""
 "GIMP ne more inicializirati grafičnega uporabniškega vmesnika.\n"
 "Prepričajte se, da obstaja prava nastavitev za vaše zaslonsko okolje."
 
-#: app/main.c:791
+#: app/main.c:772
 msgid "Another GIMP instance is already running."
 msgstr "GIMP je že zagnan."
 
-#: app/main.c:879
+#: app/main.c:860
 msgid "GIMP output. Type any character to close this window."
 msgstr "Izhod GIMP. Pritisnite kateri koli znak, da se okno zapre."
 
-#: app/main.c:880
+#: app/main.c:861
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Pritisnite katero koli tipko, da zaprete to okno)\n"
 
-#: app/main.c:897
+#: app/main.c:878
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "Izhod programa GIMP. To okno lahko pomanjšate, vendar ga ne zapirajte."
 
@@ -3894,60 +3894,60 @@ msgstr "Plast kopirana na odložišče."
 msgid "Copied pixels to the clipboard."
 msgstr "Slikovne točke kopirane na odložišče."
 
-#: app/actions/edit-commands.c:442 app/actions/edit-commands.c:731
+#: app/actions/edit-commands.c:443 app/actions/edit-commands.c:732
 #: app/tools/gimpseamlessclonetool.c:303
 msgid "There is no image data in the clipboard to paste."
 msgstr "Na odložišču ni nikakršnih slikovnih podatkov za lepljenje."
 
-#: app/actions/edit-commands.c:458
+#: app/actions/edit-commands.c:459
 msgid "Cut Named"
 msgstr "Kopiraj imenovano"
 
-#: app/actions/edit-commands.c:461 app/actions/edit-commands.c:483
-#: app/actions/edit-commands.c:505
+#: app/actions/edit-commands.c:462 app/actions/edit-commands.c:484
+#: app/actions/edit-commands.c:506
 msgid "Enter a name for this buffer"
 msgstr "Vnesite ime za ta medpomnilnik"
 
-#: app/actions/edit-commands.c:480
+#: app/actions/edit-commands.c:481
 msgid "Copy Named"
 msgstr "Kopiraj imenovano"
 
-#: app/actions/edit-commands.c:502
+#: app/actions/edit-commands.c:503
 msgid "Copy Visible Named"
 msgstr "Kopiraj vidno v imenovano"
 
-#: app/actions/edit-commands.c:550
+#: app/actions/edit-commands.c:551
 msgid "Clear"
 msgstr "Počisti"
 
-#: app/actions/edit-commands.c:623
+#: app/actions/edit-commands.c:624
 msgid "A selected layer's alpha channel is locked."
 msgstr "Kanal alfa izbrane plasti je zaklenjen."
 
-#: app/actions/edit-commands.c:689
+#: app/actions/edit-commands.c:690
 msgid ""
 "Pasted as new layer because the target is not a single layer or layer mask."
 msgstr ""
 "Prilepljeno kot nova plast, ker cilj ni posamična plast ali maska plasti."
 
-#: app/actions/edit-commands.c:696
+#: app/actions/edit-commands.c:697
 msgid "Pasted as new layer because the target is a layer group."
 msgstr "Prilepljeno kot nova plast, ker je cilj skupina plasti."
 
-#: app/actions/edit-commands.c:703
+#: app/actions/edit-commands.c:704
 msgid "Pasted as new layer because the target's pixels are locked."
 msgstr "Prilepljeno kot nova plast, ker so slikovne točke cilja zaklenjene."
 
-#: app/actions/edit-commands.c:748
+#: app/actions/edit-commands.c:749
 msgid "There are no selected layers or channels to cut from."
 msgstr "Ni izbrane plasti ali kanala, da bi z njih izrezali."
 
-#: app/actions/edit-commands.c:753 app/actions/edit-commands.c:786
-#: app/actions/edit-commands.c:811
+#: app/actions/edit-commands.c:754 app/actions/edit-commands.c:787
+#: app/actions/edit-commands.c:812
 msgid "(Unnamed Buffer)"
 msgstr "(neimenovan medpomnilnik)"
 
-#: app/actions/edit-commands.c:781
+#: app/actions/edit-commands.c:782
 msgid "There are no selected layers or channels to copy from."
 msgstr "Ni izbrane plasti ali kanala, da bi z njih kopirali."
 
@@ -6577,18 +6577,18 @@ msgstr "Spremeni velikost vsebine plasti"
 
 #: app/actions/layers-actions.c:250
 msgctxt "layers-action"
-msgid "_Crop to Selection"
-msgstr "_Obreži v izbor"
+msgid "_Resize Layers to Selection"
+msgstr "_Spremeni velikost plasti na vsebino"
 
 #: app/actions/layers-actions.c:251
 msgctxt "layers-action"
-msgid "Crop the layers to the extents of the selection"
-msgstr "Obreži plasti do velikosti izbora"
+msgid "Resize the layers to the extents of the selection"
+msgstr "Spremeni velikost plasti na mere izbora"
 
 #: app/actions/layers-actions.c:256
 msgctxt "layers-action"
-msgid "Crop to C_ontent"
-msgstr "Obreži na vse_bino"
+msgid "Crop Layers to C_ontent"
+msgstr "Obreži plasti na _vsebino"
 
 #: app/actions/layers-actions.c:257
 msgctxt "layers-action"
@@ -12450,12 +12450,12 @@ msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr "Zasidraj plavajoči izbor"
 
-#: app/core/core-enums.c:1298 app/core/gimp-edit.c:736
+#: app/core/core-enums.c:1298 app/core/gimp-edit.c:764
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "Prilepi"
 
-#: app/core/core-enums.c:1299 app/core/gimp-edit.c:1065
+#: app/core/core-enums.c:1299 app/core/gimp-edit.c:1116
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "Izreži"
@@ -12843,7 +12843,7 @@ msgstr "Zgodovina barv"
 msgid "Updating tag cache"
 msgstr "Posodabljanje medpomnilnika značk"
 
-#: app/core/gimp-edit.c:127
+#: app/core/gimp-edit.c:87
 #, c-format
 msgid "Cut Layer"
 msgid_plural "Cut %d Layers"
@@ -12852,11 +12852,11 @@ msgstr[1] "Izreži %d plast"
 msgstr[2] "Izreži %d plasti"
 msgstr[3] "Izreži %d plasti"
 
-#: app/core/gimp-edit.c:506 app/core/gimpimage-new.c:553
+#: app/core/gimp-edit.c:534 app/core/gimpimage-new.c:553
 msgid "Pasted Layer"
 msgstr "Prilepljena plast"
 
-#: app/core/gimp-edit.c:1082
+#: app/core/gimp-edit.c:1133
 msgid "Global Buffer"
 msgstr "Splošni medpomnilnik"
 
