@@ -375,6 +375,13 @@ pdf_create_procedure (GimpPlugIn  *plug_in,
                              "Convert text layers to raster graphics",
                              FALSE,
                              G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_BOOLEAN (procedure, "fill-background-color",
+                             _("_Fill transparent areas with background color"),
+                             _("Fill transparent areas with background color if "
+                             "layer has an alpha channel"),
+                             TRUE,
+                             G_PARAM_READWRITE);
     }
   else if (! strcmp (name, SAVE_MULTI_PROC))
     {
@@ -438,6 +445,13 @@ pdf_create_procedure (GimpPlugIn  *plug_in,
                              "Apply masks",
                              "Apply layer masks before saving (Keeping them "
                              "will not change the output),",
+                             TRUE,
+                             G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_BOOLEAN (procedure, "fill-background-color",
+                             _("_Fill transparent areas with background color"),
+                             _("Fill transparent areas with background color if "
+                             "layer has an alpha channel"),
                              TRUE,
                              G_PARAM_READWRITE);
 
@@ -691,10 +705,12 @@ pdf_save_image (GimpProcedure        *procedure,
   gint                    i;
   gboolean                apply_masks;
   gboolean                layers_as_pages;
+  gboolean                fill_background_color;
 
   g_object_get (config,
-                "apply-masks",     &apply_masks,
-                "layers-as-pages", &layers_as_pages,
+                "apply-masks",           &apply_masks,
+                "layers-as-pages",       &layers_as_pages,
+                "fill-background-color", &fill_background_color,
                 NULL);
 
   fp = g_fopen (file_name, "wb");
@@ -807,11 +823,11 @@ pdf_save_image (GimpProcedure        *procedure,
 
       layers = gimp_image_get_layers (image, &n_layers);
 
-      /* Fill image with background color -
-       * otherwise the output PDF will always show white for background,
-       * and may display artifacts at transparency boundaries
+      /* Fill image with background color if transparent and
+       * user chose that option.
        */
-      if (gimp_drawable_has_alpha (GIMP_DRAWABLE (layers[n_layers - 1])))
+      if (gimp_drawable_has_alpha (GIMP_DRAWABLE (layers[n_layers - 1])) &&
+          fill_background_color)
         {
           GimpRGB color;
 
@@ -1016,6 +1032,7 @@ gui_single (GimpProcedure       *procedure,
       dialog_props = g_list_prepend (dialog_props, "convert-text-layers");
     }
 
+  dialog_props = g_list_prepend (dialog_props, "fill-background-color");
   dialog_props = g_list_prepend (dialog_props, "ignore-hidden");
   dialog_props = g_list_prepend (dialog_props, "vectorize");
   dialog_props = g_list_prepend (dialog_props, "apply-masks");
@@ -1044,6 +1061,7 @@ gui_multi (GimpProcedure       *procedure,
   GtkWidget   *file_hbox;
   GtkWidget   *vectorize_c;
   GtkWidget   *ignore_hidden_c;
+  GtkWidget   *fill_background_c;
   GtkWidget   *apply_c;
   GtkWidget   *scroll;
   GtkWidget   *page_view;
@@ -1056,18 +1074,20 @@ gui_multi (GimpProcedure       *procedure,
   const gchar *temp;
   gboolean     vectorize;
   gboolean     ignore_hidden;
+  gboolean     fill_background_color;
   gboolean     apply_masks;
   gboolean     layers_as_pages;
   gboolean     reverse_order;
   gboolean     convert_text;
 
   g_object_get (config,
-                "vectorize",           &vectorize,
-                "ignore-hidden",       &ignore_hidden,
-                "apply-masks",         &apply_masks,
-                "layers-as-pages",     &layers_as_pages,
-                "reverse-order",       &reverse_order,
-                "convert-text-layers", &convert_text,
+                "vectorize",             &vectorize,
+                "ignore-hidden",         &ignore_hidden,
+                "fill-background-color", &fill_background_color,
+                "apply-masks",           &apply_masks,
+                "layers-as-pages",       &layers_as_pages,
+                "reverse-order",         &reverse_order,
+                "convert-text-layers",   &convert_text,
                 NULL);
 
   gimp_ui_init (PLUG_IN_BINARY);
@@ -1141,6 +1161,11 @@ gui_multi (GimpProcedure       *procedure,
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (ignore_hidden_c),
                                 ignore_hidden);
   gtk_box_pack_end (GTK_BOX (vbox), ignore_hidden_c, FALSE, FALSE, 0);
+
+  fill_background_c = gtk_check_button_new_with_mnemonic (_("_Fill transparent areas with background color"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (fill_background_c),
+                                fill_background_color);
+  gtk_box_pack_end (GTK_BOX (vbox), fill_background_c, FALSE, FALSE, 0);
 
   vectorize_c = gtk_check_button_new_with_mnemonic (_("Convert _bitmaps to vector graphics where possible"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (vectorize_c),
