@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-01-12 11:56+0000\n"
-"PO-Revision-Date: 2023-01-13 16:55+0200\n"
+"POT-Creation-Date: 2023-01-25 17:39+0000\n"
+"PO-Revision-Date: 2023-01-27 16:39+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -20,11 +20,7 @@ msgstr ""
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Lokalize 20.12.0\n"
 
-#: libgimp/gimpbrushselectbutton.c:178
-msgid "Brush Selection"
-msgstr "Вибір пензля"
-
-#: libgimp/gimpbrushselectbutton.c:887 libgimp/gimppatternselectbutton.c:674
+#: libgimp/gimpbrushselectbutton.c:325 libgimp/gimppatternselectbutton.c:335
 msgid "_Browse..."
 msgstr "Ви_брати…"
 
@@ -229,14 +225,6 @@ msgstr ""
 msgid "Export Image as %s"
 msgstr "Експортувати зображення як %s"
 
-#: libgimp/gimpfontselectbutton.c:137
-msgid "Font Selection"
-msgstr "Вибір шрифту"
-
-#: libgimp/gimpgradientselectbutton.c:155
-msgid "Gradient Selection"
-msgstr "Вибір градієнта"
-
 #: libgimp/gimpimagemetadata.c:306
 msgid "Background"
 msgstr "Тло"
@@ -244,14 +232,6 @@ msgstr "Тло"
 #: libgimp/gimpimagemetadata-save.c:654 modules/controller-midi.c:426
 msgid "GIMP"
 msgstr "GIMP"
-
-#: libgimp/gimppaletteselectbutton.c:136
-msgid "Palette Selection"
-msgstr "Вибір палітри"
-
-#: libgimp/gimppatternselectbutton.c:165
-msgid "Pattern Selection"
-msgstr "Вибір текстури"
 
 #. procedure executed successfully
 #: libgimp/gimppdb.c:552
@@ -452,11 +432,33 @@ msgid "Store current settings for later reuse"
 msgstr ""
 "Зберегти поточні значення параметрів для подальшого повторного використання"
 
-#: libgimp/gimpproceduredialog.c:1964
+#: libgimp/gimpproceduredialog.c:732
+msgid "Brush Chooser"
+msgstr "Вибір пензля"
+
+#: libgimp/gimpproceduredialog.c:736
+msgid "Font Chooser"
+msgstr "Вибір шрифту"
+
+#: libgimp/gimpproceduredialog.c:740
+msgid "Gradient Chooser"
+msgstr "Вибір градієнта"
+
+#: libgimp/gimpproceduredialog.c:744
+msgid "Palette Chooser"
+msgstr "Вибір палітри"
+
+#: libgimp/gimpproceduredialog.c:748
+#| msgctxt "clone-type"
+#| msgid "Pattern"
+msgid "Pattern Chooser"
+msgstr "Вибір текстури"
+
+#: libgimp/gimpproceduredialog.c:1986
 msgid "Reset to _Initial Values"
 msgstr "Повернути до по_чаткових значень"
 
-#: libgimp/gimpproceduredialog.c:1973
+#: libgimp/gimpproceduredialog.c:1995
 msgid "Reset to _Factory Defaults"
 msgstr "Повернути до стандартних _початкових значень"
 
@@ -1575,24 +1577,24 @@ msgstr "(неправильний рядок UTF-8)"
 msgid "File path is NULL"
 msgstr "Шлях до файлу порожній"
 
-#: libgimpbase/gimputils.c:403 libgimpbase/gimputils.c:414
+#: libgimpbase/gimputils.c:402
 msgid "Error converting UTF-8 filename to wide char"
 msgstr "Помилка перетворення назви файлу з UTF-8 в широкі символи"
 
-#: libgimpbase/gimputils.c:422
+#: libgimpbase/gimputils.c:410
 msgid "ILCreateFromPath() failed"
 msgstr "Невдача ILCreateFromPath()"
 
-#: libgimpbase/gimputils.c:459
+#: libgimpbase/gimputils.c:449
 #, c-format
 msgid "Cannot convert '%s' into a valid NSURL."
 msgstr "Не вдалося перетворити «%s» на коректний NSURL."
 
-#: libgimpbase/gimputils.c:487
+#: libgimpbase/gimputils.c:477
 msgid "Connecting to org.freedesktop.FileManager1 failed: "
 msgstr "Не вдалось з'єднатися з org.freedesktop.FileManager1: "
 
-#: libgimpbase/gimputils.c:511
+#: libgimpbase/gimputils.c:501
 msgid "Calling ShowItems failed: "
 msgstr "Невдалий виклик ShowItems: "
 
@@ -1788,15 +1790,15 @@ msgstr ""
 msgid ""
 "When enabled, set the color scales to display 0...255 instead of percentages"
 msgstr ""
-"Якщо увімкнено, встановити для показу шкал кольорів значення 0...255 замість"
-" відсотків"
+"Якщо увімкнено, встановити для показу шкал кольорів значення 0...255 замість "
+"відсотків"
 
 #: libgimpconfig/gimpcolorconfig.c:118
 msgid ""
 "When enabled, set the color scales to display HSV blend mode instead of LCh"
 msgstr ""
-"Якщо увімкнено, встановити для показу шкал кольорів режим злиття HSV замість"
-" LCh"
+"Якщо увімкнено, встановити для показу шкал кольорів режим злиття HSV замість "
+"LCh"
 
 #: libgimpconfig/gimpcolorconfig.c:222
 msgid "Mode of operation"
@@ -2983,6 +2985,21 @@ msgstr "Цикли контрастності"
 #: modules/display-filter-high-contrast.c:128
 msgid "Contrast"
 msgstr "Контрастність"
+
+#~ msgid "Brush Selection"
+#~ msgstr "Вибір пензля"
+
+#~ msgid "Font Selection"
+#~ msgstr "Вибір шрифту"
+
+#~ msgid "Gradient Selection"
+#~ msgstr "Вибір градієнта"
+
+#~ msgid "Palette Selection"
+#~ msgstr "Вибір палітри"
+
+#~ msgid "Pattern Selection"
+#~ msgstr "Вибір текстури"
 
 #, c-format
 #~ msgid "Conversion of the filename to system codepage failed."
