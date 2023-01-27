@@ -67,24 +67,28 @@ typedef struct
   gint x, y;
 } CursorOffset;
 
-
-typedef struct _Play      Play;
-typedef struct _PlayClass PlayClass;
-
-struct _Play
+struct _GimpPlay
 {
   GimpPlugIn      parent_instance;
+
+  GtkApplication *app;
+
+  GtkWidget      *play_button;
+  GtkWidget      *step_back_button;
+  GtkWidget      *step_button;
+  GtkWidget      *rewind_button;
+
+  GtkBuilder     *builder;
 };
 
-struct _PlayClass
-{
-  GimpPlugInClass parent_class;
-};
 
-#define PLAY_TYPE  (play_get_type ())
-#define PLAY (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), PLAY_TYPE, Play))
+#define GIMP_TYPE_PLAY (gimp_play_get_type ())
+G_DECLARE_FINAL_TYPE (GimpPlay, gimp_play, GIMP, PLAY, GimpPlugIn)
+
 
 GType                   play_get_type         (void) G_GNUC_CONST;
+
+static void             gimp_play_finalize    (GObject              *object);
 
 static GList          * play_query_procedures (GimpPlugIn           *plug_in);
 static GimpProcedure  * play_create_procedure (GimpPlugIn           *plug_in,
@@ -98,8 +102,12 @@ static GimpValueArray * play_run              (GimpProcedure        *procedure,
                                                const GimpValueArray *args,
                                                gpointer              run_data);
 
-static void        initialize                (void);
-static void        build_dialog              (gchar           *imagename);
+static void        initialize                (GimpPlay        *play);
+static void        on_app_activate           (GApplication    *gapp,
+                                              gpointer         user_data);
+
+static GtkWidget * build_dialog              (GimpPlay        *play,
+                                              gchar           *imagename);
 static void        refresh_dialog            (gchar           *imagename);
 
 static void        da_size_callback          (GtkWidget       *widget,
@@ -112,15 +120,43 @@ static void        sda_size_callback         (GtkWidget       *widget,
                                               GtkAllocation   *allocation,
                                               gpointer         data);
 
-static void        window_destroy            (GtkWidget       *widget);
-static void        play_callback             (GtkToggleAction *action);
-static void        step_back_callback        (GtkAction       *action);
-static void        step_callback             (GtkAction       *action);
-static void        refresh_callback          (GtkAction       *action);
-static void        rewind_callback           (GtkAction       *action);
-static void        speed_up_callback         (GtkAction       *action);
-static void        speed_down_callback       (GtkAction       *action);
-static void        speed_reset_callback      (GtkAction       *action);
+static void        window_destroy            (GtkWidget       *widget,
+                                              GimpPlay        *play);
+static void        step_back_action          (GSimpleAction   *action,
+                                              GVariant        *parameter,
+                                              gpointer         user_data);
+
+static void        play_change_state         (GSimpleAction  *action,
+                                              GVariant       *new_state,
+                                              gpointer        user_data);
+static void        detach_change_state       (GSimpleAction  *action,
+                                              GVariant       *new_state,
+                                              gpointer        user_data);
+
+static void        step_action               (GSimpleAction   *action,
+                                              GVariant        *parameter,
+                                              gpointer         user_data);
+static void        rewind_action             (GSimpleAction   *action,
+                                              GVariant        *parameter,
+                                              gpointer         user_data);
+static void        refresh_action            (GSimpleAction   *action,
+                                              GVariant        *parameter,
+                                              gpointer         user_data);
+static void        help_action               (GSimpleAction   *action,
+                                              GVariant        *parameter,
+                                              gpointer         user_data);
+static void        close_action              (GSimpleAction   *action,
+                                              GVariant        *parameter,
+                                              gpointer         user_data);
+static void        speed_up_action           (GSimpleAction   *action,
+                                              GVariant        *parameter,
+                                              gpointer         user_data);
+static void        speed_down_action         (GSimpleAction   *action,
+                                              GVariant        *parameter,
+                                              gpointer         user_data);
+static void        speed_reset_action        (GSimpleAction   *action,
+                                              GVariant        *parameter,
+                                              gpointer         user_data);
 static void        framecombo_changed        (GtkWidget       *combo,
                                               gpointer         data);
 static void        speedcombo_changed        (GtkWidget       *combo,
@@ -138,7 +174,7 @@ static gboolean    repaint_da                (GtkWidget       *darea,
                                               cairo_t         *cr,
                                               gpointer         data);
 
-static void        init_frames               (void);
+static void        init_frames               (GimpPlay        *play);
 static void        render_frame              (gint32           whichframe);
 static void        show_frame                (void);
 static void        update_combobox           (void);
@@ -158,17 +194,24 @@ static gboolean    is_ms_tag                 (const gchar     *str,
                                               gint            *duration,
                                               gint            *taglength);
 
+static GtkWidget * add_tool_button           (GtkWidget       *toolbar,
+                                              const char      *action,
+                                              const char      *icon,
+                                              const char      *label,
+                                              const char      *tooltip);
+static void        add_tool_separator        (GtkWidget       *toolbar,
+                                              gboolean         expand);
 
-G_DEFINE_TYPE (Play, play, GIMP_TYPE_PLUG_IN)
 
-GIMP_MAIN (PLAY_TYPE)
+G_DEFINE_TYPE (GimpPlay, gimp_play, GIMP_TYPE_PLUG_IN)
+
+GIMP_MAIN (GIMP_TYPE_PLAY)
 DEFINE_STD_SET_I18N
 
 
 /* Global widgets'n'stuff */
 static GtkWidget         *window                    = NULL;
 static GdkWindow         *root_win                  = NULL;
-static GtkUIManager      *ui_manager                = NULL;
 static GtkWidget         *progress;
 static GtkWidget         *speedcombo                = NULL;
 static GtkWidget         *fpscombo                  = NULL;
@@ -200,6 +243,27 @@ static guint              timer                     = 0;
 static gboolean           detached                  = FALSE;
 static gdouble            scale, shape_scale;
 
+static const GActionEntry ACTIONS[] =
+{
+  { "play", NULL, NULL, "false", play_change_state },
+  { "detach", NULL, NULL, "false", detach_change_state },
+
+  { "step-back", step_back_action },
+  { "step", step_action },
+  { "rewind", rewind_action },
+
+  { "refresh", refresh_action },
+
+  { "help", help_action },
+
+  { "close", close_action },
+  { "quit", close_action },
+
+  { "speed-up", speed_up_action },
+  { "speed-down", speed_down_action },
+  { "speed-reset", speed_reset_action },
+};
+
 /* Default settings. */
 static AnimationSettings settings =
 {
@@ -212,9 +276,12 @@ static GimpImage *frames_image = NULL;
 
 
 static void
-play_class_init (PlayClass *klass)
+gimp_play_class_init (GimpPlayClass *klass)
 {
   GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  GObjectClass    *object_class  = G_OBJECT_CLASS (klass);
+
+  object_class->finalize          = gimp_play_finalize;
 
   plug_in_class->query_procedures = play_query_procedures;
   plug_in_class->create_procedure = play_create_procedure;
@@ -222,8 +289,18 @@ play_class_init (PlayClass *klass)
 }
 
 static void
-play_init (Play *play)
+gimp_play_init (GimpPlay *play)
 {
+}
+
+static void
+gimp_play_finalize (GObject *object)
+{
+  GimpPlay *play = GIMP_PLAY (object);
+
+  G_OBJECT_CLASS (gimp_play_parent_class)->finalize (object);
+
+  g_object_unref (play->builder);
 }
 
 static GList *
@@ -277,14 +354,75 @@ play_run (GimpProcedure        *procedure,
           const GimpValueArray *args,
           gpointer              run_data)
 {
+  GimpPlay *play;
+
+  play = GIMP_PLAY (gimp_procedure_get_plug_in (procedure));
+  play->app = gtk_application_new (NULL, G_APPLICATION_FLAGS_NONE);
+
+  play->builder = gtk_builder_new_from_string (
+      "<interface>"
+        "<menu id=\"anim-play-popup\">"
+          "<section>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Start playback</attribute>"
+              "<attribute name=\"action\">win.play</attribute>"
+            "</item>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Step back to previous frame</attribute>"
+              "<attribute name=\"action\">win.step-back</attribute>"
+            "</item>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Step to next frame</attribute>"
+              "<attribute name=\"action\">win.step</attribute>"
+            "</item>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Rewind the animation</attribute>"
+              "<attribute name=\"action\">win.rewind</attribute>"
+            "</item>"
+          "</section>"
+          "<section>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Increase the speed of the animation</attribute>"
+              "<attribute name=\"action\">win.speed-down</attribute>"
+            "</item>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Decrease the speed of the animation</attribute>"
+              "<attribute name=\"action\">win.speed-up</attribute>"
+            "</item>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Reset the speed of the animation</attribute>"
+              "<attribute name=\"action\">win.speed-reset</attribute>"
+            "</item>"
+          "</section>"
+          "<section>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Detach the animation from the dialog window</attribute>"
+              "<attribute name=\"action\">win.detach</attribute>"
+            "</item>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Reload the image</attribute>"
+              "<attribute name=\"action\">win.refresh</attribute>"
+            "</item>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Quit</attribute>"
+              "<attribute name=\"action\">win.close</attribute>"
+            "</item>"
+          "</section>"
+        "</menu>"
+      "</interface>",
+      -1);
+
   gegl_init (NULL, NULL);
 
   image = _image;
 
   gimp_get_data (PLUG_IN_PROC, &settings);
 
-  initialize ();
-  gtk_main ();
+  g_signal_connect (play->app, "activate", G_CALLBACK (on_app_activate), play);
+
+  g_application_run (G_APPLICATION (play->app), 0, NULL);
+
+  g_clear_object (&play->app);
 
   gimp_set_data (PLUG_IN_PROC, &settings, sizeof (settings));
 
@@ -299,11 +437,16 @@ play_run (GimpProcedure        *procedure,
 
 static gboolean
 popup_menu (GtkWidget      *widget,
-            GdkEventButton *event)
+            GdkEventButton *event,
+            GimpPlay       *play)
 {
-  GtkWidget *menu = gtk_ui_manager_get_widget (ui_manager, "/anim-play-popup");
+  GtkWidget  *menu;
+  GMenuModel *model;
 
-  gtk_menu_set_screen (GTK_MENU (menu), gtk_widget_get_screen (widget));
+  model = G_MENU_MODEL (gtk_builder_get_object (play->builder, "anim-play-popup"));
+  menu = gtk_menu_new_from_model (model);
+
+  gtk_menu_attach_to_widget (GTK_MENU (menu), window, NULL);
   gtk_menu_popup_at_pointer (GTK_MENU (menu), (GdkEvent *) event);
 
   return TRUE;
@@ -311,10 +454,11 @@ popup_menu (GtkWidget      *widget,
 
 static gboolean
 button_press (GtkWidget      *widget,
-              GdkEventButton *event)
+              GdkEventButton *event,
+              GimpPlay       *play)
 {
   if (gdk_event_triggers_context_menu ((GdkEvent *) event))
-    return popup_menu (widget, event);
+    return popup_menu (widget, event, play);
 
   return FALSE;
 }
@@ -418,9 +562,10 @@ sda_size_callback (GtkWidget     *widget,
 
 static gboolean
 shape_pressed (GtkWidget      *widget,
-               GdkEventButton *event)
+               GdkEventButton *event,
+               GimpPlay       *play)
 {
-  if (button_press (widget, event))
+  if (button_press (widget, event, play))
     return TRUE;
 
   /* ignore double and triple click */
@@ -492,8 +637,7 @@ repaint_da (GtkWidget *darea,
 {
   cairo_pattern_t *check;
   GimpRGB          light = *(gimp_check_custom_color1 ());
-  GimpRGB          dark  = *(gimp_check_custom_color2 ());;
-  guchar           l, d;
+  GimpRGB          dark  = *(gimp_check_custom_color2 ());
 
   gimp_checks_get_colors (gimp_check_type (), &light, &dark);
 
@@ -526,201 +670,6 @@ repaint_sda (GtkWidget *darea,
   cairo_paint (cr);
 
   return FALSE;
-}
-
-static void
-close_callback (GtkAction *action,
-                gpointer   data)
-{
-  gtk_widget_destroy (GTK_WIDGET (data));
-}
-
-static void
-help_callback (GtkAction *action,
-               gpointer   data)
-{
-  gimp_standard_help_func (PLUG_IN_PROC, data);
-}
-
-
-static void
-detach_callback (GtkToggleAction *action)
-{
-  gboolean active = gtk_toggle_action_get_active (action);
-
-  if (active == detached)
-    {
-      g_warning ("detached state and toggle action got out of sync");
-      return;
-    }
-
-  detached = active;
-
-  if (detached)
-    {
-      gint x, y;
-
-      /* Create a total-alpha buffer merely for the not-shaped
-         drawing area to now display. */
-
-      gtk_window_set_screen (GTK_WINDOW (shape_window),
-                             gtk_widget_get_screen (drawing_area));
-
-      gtk_widget_show (shape_window);
-
-      if (! gtk_widget_get_realized (drawing_area))
-        gtk_widget_realize (drawing_area);
-
-      if (! gtk_widget_get_realized (shape_window))
-        gtk_widget_realize (shape_window);
-
-      gdk_window_get_origin (gtk_widget_get_window (drawing_area), &x, &y);
-
-      gtk_window_move (GTK_WINDOW (shape_window), x + 6, y + 6);
-
-      gtk_widget_queue_draw (drawing_area);
-    }
-  else
-    gtk_widget_hide (shape_window);
-
-  render_frame (frame_number);
-}
-
-static GtkUIManager *
-ui_manager_new (GtkWidget *window)
-{
-  static GtkActionEntry actions[] =
-  {
-    { "step-back", "media-skip-backward",
-      N_("Step _back"), "d", N_("Step back to previous frame"),
-      G_CALLBACK (step_back_callback) },
-
-    { "step", "media-skip-forward",
-      N_("_Step"), "f", N_("Step to next frame"),
-      G_CALLBACK (step_callback) },
-
-    { "rewind", "media-seek-backward",
-      NULL, NULL, N_("Rewind the animation"),
-      G_CALLBACK (rewind_callback) },
-
-    { "refresh", GIMP_ICON_VIEW_REFRESH,
-      NULL, "<control>R", N_("Reload the image"),
-      G_CALLBACK (refresh_callback) },
-
-    { "help", "help-browser",
-      NULL, NULL, NULL,
-      G_CALLBACK (help_callback) },
-
-    { "close", "window-close",
-      NULL, "<control>W", NULL,
-      G_CALLBACK (close_callback)
-    },
-    {
-      "quit", "application-quit",
-      NULL, "<control>Q", NULL,
-      G_CALLBACK (close_callback)
-    },
-    {
-      "speed-up", NULL,
-      N_("Faster"), "<control>L", N_("Increase the speed of the animation"),
-      G_CALLBACK (speed_up_callback)
-    },
-    {
-      "speed-down", NULL,
-      N_("Slower"), "<control>J", N_("Decrease the speed of the animation"),
-      G_CALLBACK (speed_down_callback)
-    },
-    {
-      "speed-reset", NULL,
-      N_("Reset speed"), "<control>K", N_("Reset the speed of the animation"),
-      G_CALLBACK (speed_reset_callback)
-    }
-  };
-
-  static GtkToggleActionEntry toggle_actions[] =
-  {
-    { "play", "media-playback-start",
-      NULL, "space", N_("Start playback"),
-      G_CALLBACK (play_callback), FALSE },
-
-    { "detach", GIMP_ICON_DETACH,
-      N_("Detach"), NULL,
-      N_("Detach the animation from the dialog window"),
-      G_CALLBACK (detach_callback), FALSE }
-  };
-
-  GtkUIManager   *ui_manager = gtk_ui_manager_new ();
-  GtkActionGroup *group      = gtk_action_group_new ("Actions");
-  GError         *error      = NULL;
-
-  gtk_action_group_set_translation_domain (group, NULL);
-
-  gtk_action_group_add_actions (group,
-                                actions,
-                                G_N_ELEMENTS (actions),
-                                window);
-  gtk_action_group_add_toggle_actions (group,
-                                       toggle_actions,
-                                       G_N_ELEMENTS (toggle_actions),
-                                       NULL);
-
-  gtk_window_add_accel_group (GTK_WINDOW (window),
-                              gtk_ui_manager_get_accel_group (ui_manager));
-  gtk_accel_group_lock (gtk_ui_manager_get_accel_group (ui_manager));
-
-  gtk_ui_manager_insert_action_group (ui_manager, group, -1);
-  g_object_unref (group);
-
-  gtk_ui_manager_add_ui_from_string (ui_manager,
-                                     "<ui>"
-                                     "  <toolbar name=\"anim-play-toolbar\">"
-                                     "    <toolitem action=\"play\" />"
-                                     "    <toolitem action=\"step-back\" />"
-                                     "    <toolitem action=\"step\" />"
-                                     "    <toolitem action=\"rewind\" />"
-                                     "    <separator />"
-                                     "    <toolitem action=\"detach\" />"
-                                     "    <toolitem action=\"refresh\" />"
-                                     "    <separator name=\"space\" />"
-                                     "    <toolitem action=\"help\" />"
-                                     "  </toolbar>"
-                                     "  <accelerator action=\"close\" />"
-                                     "  <accelerator action=\"quit\" />"
-                                     "</ui>",
-                                     -1, &error);
-
-  if (error)
-    {
-      g_warning ("error parsing ui: %s", error->message);
-      g_clear_error (&error);
-    }
-
-  gtk_ui_manager_add_ui_from_string (ui_manager,
-                                     "<ui>"
-                                     "  <popup name=\"anim-play-popup\">"
-                                     "    <menuitem action=\"play\" />"
-                                     "    <menuitem action=\"step-back\" />"
-                                     "    <menuitem action=\"step\" />"
-                                     "    <menuitem action=\"rewind\" />"
-                                     "    <separator />"
-                                     "    <menuitem action=\"speed-down\" />"
-                                     "    <menuitem action=\"speed-up\" />"
-                                     "    <menuitem action=\"speed-reset\" />"
-                                     "    <separator />"
-                                     "    <menuitem action=\"detach\" />"
-                                     "    <menuitem action=\"refresh\" />"
-                                     "    <menuitem action=\"close\" />"
-                                     "  </popup>"
-                                     "</ui>",
-                                     -1, &error);
-
-  if (error)
-    {
-      g_warning ("error parsing ui: %s", error->message);
-      g_clear_error (&error);
-    }
-
-  return ui_manager;
 }
 
 static void
@@ -771,51 +720,64 @@ refresh_dialog (gchar *imagename)
     }
 }
 
-static void
-build_dialog (gchar *imagename)
+static GtkWidget *
+build_dialog (GimpPlay *play,
+              gchar    *imagename)
 {
-  GtkWidget   *toolbar;
-  GtkWidget   *frame;
-  GtkWidget   *viewport;
-  GtkWidget   *main_vbox;
-  GtkWidget   *vbox;
-  GtkWidget   *hbox;
-  GtkWidget   *abox;
-  GtkToolItem *item;
-  GtkAction   *action;
-  GdkVisual   *rgba;
-  gint         index;
-  gchar       *text;
+  GtkWidget *toolbar;
+  GtkWidget *frame;
+  GtkWidget *viewport;
+  GtkWidget *main_vbox;
+  GtkWidget *vbox;
+  GtkWidget *hbox;
+  GtkWidget *abox;
+  GdkVisual *rgba;
+  GAction   *action;
+  gint       index;
+  gchar     *text;
 
   gimp_ui_init (PLUG_IN_BINARY);
 
-  window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+  window = gtk_application_window_new (play->app);
   gtk_window_set_role (GTK_WINDOW (window), "animation-playback");
 
   g_signal_connect (window, "destroy",
                     G_CALLBACK (window_destroy),
-                    NULL);
+                    play);
   g_signal_connect (window, "popup-menu",
                     G_CALLBACK (popup_menu),
-                    NULL);
+                    play);
+
+  g_action_map_add_action_entries (G_ACTION_MAP (window),
+                                   ACTIONS, G_N_ELEMENTS (ACTIONS),
+                                   play);
 
   gimp_help_connect (window, gimp_standard_help_func, PLUG_IN_PROC, NULL, NULL);
-
-  ui_manager = ui_manager_new (window);
 
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_container_add (GTK_CONTAINER (window), main_vbox);
   gtk_widget_show (main_vbox);
 
-  toolbar = gtk_ui_manager_get_widget (ui_manager, "/anim-play-toolbar");
+  toolbar = gtk_toolbar_new ();
+  play->play_button = add_tool_button (toolbar, "win.play", "media-playback-start",
+                                       NULL, _("Start playback"));
+  play->step_back_button = add_tool_button (toolbar, "win.step-back", "media-skip-backward",
+                                            _("Step _back"), _("Step back to previous frame"));
+  play->step_button = add_tool_button (toolbar, "win.step", "media-skip-forward",
+                                       _("_Step"), _("Step to next frame"));
+  play->rewind_button = add_tool_button (toolbar, "win.rewind", "media-seek-backward",
+                                         NULL, _("Rewind the animation"));
+  add_tool_separator (toolbar, FALSE);
+  add_tool_button (toolbar, "win.detach", GIMP_ICON_DETACH,
+                   _("Detach"), _("Detach the animation from the dialog window"));
+  add_tool_button (toolbar, "win.refresh", GIMP_ICON_VIEW_REFRESH,
+                   NULL, _("Reload the image"));
+  add_tool_separator (toolbar, TRUE);
+  add_tool_button (toolbar, "win.help", "help-browser",
+                   NULL, NULL);
+
   gtk_box_pack_start (GTK_BOX (main_vbox), toolbar, FALSE, FALSE, 0);
   gtk_widget_show (toolbar);
-
-  item =
-    GTK_TOOL_ITEM (gtk_ui_manager_get_widget (ui_manager,
-                                              "/anim-play-toolbar/space"));
-  gtk_separator_tool_item_set_draw (GTK_SEPARATOR_TOOL_ITEM (item), FALSE);
-  gtk_tool_item_set_expand (item, TRUE);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_box_pack_start (GTK_BOX (main_vbox), vbox, TRUE, TRUE, 0);
@@ -852,7 +814,7 @@ build_dialog (gchar *imagename)
                     NULL);
   g_signal_connect (drawing_area, "button-press-event",
                     G_CALLBACK (button_press),
-                    NULL);
+                    play);
 
   /* Lower option bar. */
 
@@ -931,9 +893,8 @@ build_dialog (gchar *imagename)
 
   gimp_help_set_help_data (speedcombo, _("Playback speed"), NULL);
 
-  action = gtk_ui_manager_get_action (ui_manager,
-                                      "/anim-play-popup/speed-reset");
-  gtk_action_set_sensitive (action, FALSE);
+  action = g_action_map_lookup_action (G_ACTION_MAP (window), "speed-reset");
+  g_simple_action_set_enabled (G_SIMPLE_ACTION (action), FALSE);
 
   /* Set up the frame disposal combo. */
   frame_disposal_combo = gtk_combo_box_text_new ();
@@ -956,7 +917,7 @@ build_dialog (gchar *imagename)
 
   g_signal_connect (frame_disposal_combo, "changed",
                     G_CALLBACK (framecombo_changed),
-                    NULL);
+                    play);
 
   gtk_box_pack_end (GTK_BOX (hbox), frame_disposal_combo, FALSE, FALSE, 0);
   gtk_widget_show (frame_disposal_combo);
@@ -985,7 +946,7 @@ build_dialog (gchar *imagename)
                     NULL);
   g_signal_connect (shape_window, "button-press-event",
                     G_CALLBACK (shape_pressed),
-                    NULL);
+                    play);
   g_signal_connect (shape_window, "button-release-event",
                     G_CALLBACK (shape_released),
                     NULL);
@@ -1011,10 +972,12 @@ build_dialog (gchar *imagename)
   gtk_widget_set_size_request (shape_window, width, height);
 
   root_win = gdk_get_default_root_window ();
+
+  return window;
 }
 
 static void
-init_frames (void)
+init_frames (GimpPlay *play)
 {
   /* Frames are associated to an unused image. */
   gint          i;
@@ -1022,7 +985,6 @@ init_frames (void)
   GimpLayer    *previous_frame;
   GimpLayer    *new_layer;
   gboolean      animated;
-  GtkAction    *action;
   gint          duration = 0;
   DisposeType   disposal = settings.default_frame_disposal;
   gchar        *layer_name;
@@ -1042,7 +1004,7 @@ init_frames (void)
   if (! frames || ! frame_durations)
     {
       gimp_message (_("Memory could not be allocated to the frame container."));
-      gtk_main_quit ();
+      gtk_widget_destroy (GTK_WIDGET (window));
       gimp_quit ();
       return;
     }
@@ -1089,21 +1051,10 @@ init_frames (void)
 
   /* Update the UI. */
   animated = total_frames >= 2;
-  action = gtk_ui_manager_get_action (ui_manager,
-                                      "/ui/anim-play-toolbar/play");
-  gtk_action_set_sensitive (action, animated);
-
-  action = gtk_ui_manager_get_action (ui_manager,
-                                      "/ui/anim-play-toolbar/step-back");
-  gtk_action_set_sensitive (action, animated);
-
-  action = gtk_ui_manager_get_action (ui_manager,
-                                      "/ui/anim-play-toolbar/step");
-  gtk_action_set_sensitive (action, animated);
-
-  action = gtk_ui_manager_get_action (ui_manager,
-                                      "/ui/anim-play-toolbar/rewind");
-  gtk_action_set_sensitive (action, animated);
+  gtk_widget_set_sensitive (play->play_button, animated);
+  gtk_widget_set_sensitive (play->step_back_button, animated);
+  gtk_widget_set_sensitive (play->step_button, animated);
+  gtk_widget_set_sensitive (play->rewind_button, animated);
 
   /* Keep the same frame number, unless it is now invalid. */
   if (frame_number >= total_frames)
@@ -1111,7 +1062,7 @@ init_frames (void)
 }
 
 static void
-initialize (void)
+initialize (GimpPlay *play)
 {
   /* Freeing existing data after a refresh. */
   g_list_free (layers);
@@ -1120,7 +1071,8 @@ initialize (void)
   if (! gimp_image_is_valid (image))
     {
       gimp_message (_("Invalid image. Did you close it?"));
-      gtk_main_quit ();
+      if (window)
+        gtk_widget_destroy (GTK_WIDGET (window));
       return;
     }
 
@@ -1131,12 +1083,36 @@ initialize (void)
   layers = g_list_reverse (layers);
 
   if (!window)
-    build_dialog (gimp_image_get_name (image));
+    build_dialog (play, gimp_image_get_name (image));
   refresh_dialog (gimp_image_get_name (image));
 
-  init_frames ();
+  init_frames (play);
   render_frame (frame_number);
   show_frame ();
+}
+
+static void
+on_app_activate (GApplication *gapp,
+                 gpointer      user_data)
+{
+  GimpPlay       *play = GIMP_PLAY (user_data);
+  GtkApplication *app  = GTK_APPLICATION (gapp);
+
+  initialize (play);
+
+  gtk_application_set_accels_for_action (app, "win.play", (const char*[]) { "space", NULL });
+  gtk_application_set_accels_for_action (app, "win.detach", (const char*[]) { NULL });
+
+  gtk_application_set_accels_for_action (app, "win.step-back", (const char*[]) { "d", NULL });
+  gtk_application_set_accels_for_action (app, "win.step", (const char*[]) { "f", NULL });
+  gtk_application_set_accels_for_action (app, "win.rewind", (const char*[]) { NULL });
+  gtk_application_set_accels_for_action (app, "win.refresh", (const char*[]) { "<control>R", NULL });
+  gtk_application_set_accels_for_action (app, "win.help", (const char*[]) {  NULL });
+  gtk_application_set_accels_for_action (app, "win.close", (const char*[]) { "<control>W", NULL });
+  gtk_application_set_accels_for_action (app, "win.quit", (const char*[]) { "<control>Q", NULL });
+  gtk_application_set_accels_for_action (app, "win.speed-up", (const char*[]) { "<control>L", NULL });
+  gtk_application_set_accels_for_action (app, "win.speed-down", (const char*[]) { "<control>J", NULL });
+  gtk_application_set_accels_for_action (app, "win.speed-reset", (const char*[]) { "<control>K", NULL });
 }
 
 /* Rendering Functions */
@@ -1245,7 +1221,8 @@ do_step (void)
 /*  Callbacks  */
 
 static void
-window_destroy (GtkWidget *widget)
+window_destroy (GtkWidget *widget,
+                GimpPlay  *play)
 {
   if (playing)
     remove_timer ();
@@ -1253,7 +1230,7 @@ window_destroy (GtkWidget *widget)
   if (shape_window)
     gtk_widget_destroy (GTK_WIDGET (shape_window));
 
-  gtk_main_quit ();
+  gtk_widget_destroy (GTK_WIDGET (window));
 }
 
 
@@ -1273,33 +1250,6 @@ advance_frame_callback (gpointer data)
   show_frame ();
 
   return FALSE;
-}
-
-
-static void
-play_callback (GtkToggleAction *action)
-{
-  if (playing)
-    remove_timer ();
-
-  playing = gtk_toggle_action_get_active (action);
-
-  if (playing)
-    {
-      timer = g_timeout_add ((gdouble) frame_durations[frame_number] *
-                             get_duration_factor (settings.duration_index),
-                             advance_frame_callback, NULL);
-
-      gtk_action_set_icon_name (GTK_ACTION (action), "media-playback-pause");
-    }
-  else
-    {
-      gtk_action_set_icon_name (GTK_ACTION (action), "media-playback-start");
-    }
-
-  g_object_set (action,
-                "tooltip", playing ? _("Stop playback") : _("Start playback"),
-                NULL);
 }
 
 static gdouble
@@ -1389,94 +1339,215 @@ get_scale (gint index)
 }
 
 static void
-step_back_callback (GtkAction *action)
+step_back_action (GSimpleAction *action,
+                  GVariant      *parameter,
+                  gpointer       user_data)
 {
   if (playing)
-    gtk_action_activate (gtk_ui_manager_get_action (ui_manager,
-                                                    "/anim-play-toolbar/play"));
+    g_action_group_activate_action (G_ACTION_GROUP (window),
+                                    "play", NULL);
   do_back_step();
   show_frame();
 }
 
 static void
-step_callback (GtkAction *action)
+play_change_state (GSimpleAction *action,
+                   GVariant      *new_state,
+                   gpointer       user_data)
+{
+  GtkToolButton *play_button;
+  GtkWidget     *tool_icon;
+
+  if (playing)
+    remove_timer ();
+
+  playing = g_variant_get_boolean (new_state);
+  g_simple_action_set_state (action, new_state);
+
+  play_button = GTK_TOOL_BUTTON (GIMP_PLAY (user_data)->play_button);
+  tool_icon   = gtk_tool_button_get_icon_widget (play_button);
+  if (playing)
+    {
+      timer = g_timeout_add ((gdouble) frame_durations[frame_number] *
+                             get_duration_factor (settings.duration_index),
+                             advance_frame_callback, NULL);
+
+      gtk_image_set_from_icon_name (GTK_IMAGE (tool_icon),
+                                    "media-playback-pause",
+                                    GTK_ICON_SIZE_BUTTON);
+    }
+  else
+    {
+      gtk_image_set_from_icon_name (GTK_IMAGE (tool_icon),
+                                    "media-playback-start",
+                                    GTK_ICON_SIZE_BUTTON);
+    }
+
+  gtk_tool_item_set_tooltip_text (GTK_TOOL_ITEM (play_button),
+                                  playing ? _("Stop playback") : _("Start playback"));
+}
+
+static void
+detach_change_state (GSimpleAction *action,
+                     GVariant      *new_state,
+                     gpointer       user_data)
+{
+  gboolean active = g_variant_get_boolean (new_state);
+
+  if (active == detached)
+    {
+      g_warning ("detached state and toggle action got out of sync");
+      return;
+    }
+
+  g_simple_action_set_state (action, new_state);
+  detached = active;
+
+  if (detached)
+    {
+      gint x, y;
+
+      /* Create a total-alpha buffer merely for the not-shaped
+         drawing area to now display. */
+
+      gtk_window_set_screen (GTK_WINDOW (shape_window),
+                             gtk_widget_get_screen (drawing_area));
+
+      gtk_widget_show (shape_window);
+
+      if (! gtk_widget_get_realized (drawing_area))
+        gtk_widget_realize (drawing_area);
+
+      if (! gtk_widget_get_realized (shape_window))
+        gtk_widget_realize (shape_window);
+
+      gdk_window_get_origin (gtk_widget_get_window (drawing_area), &x, &y);
+
+      gtk_window_move (GTK_WINDOW (shape_window), x + 6, y + 6);
+
+      gtk_widget_queue_draw (drawing_area);
+    }
+  else
+    gtk_widget_hide (shape_window);
+
+  render_frame (frame_number);
+}
+
+static void
+step_action (GSimpleAction *action,
+             GVariant      *parameter,
+             gpointer       user_data)
 {
   if (playing)
-    gtk_action_activate (gtk_ui_manager_get_action (ui_manager,
-                                                    "/anim-play-toolbar/play"));
+    g_action_group_activate_action (G_ACTION_GROUP (window),
+                                    "play", NULL);
   do_step();
   show_frame();
 }
 
 static void
-refresh_callback (GtkAction *action)
-{
-  initialize ();
-}
-
-static void
-rewind_callback (GtkAction *action)
+rewind_action (GSimpleAction *action,
+               GVariant      *parameter,
+               gpointer       user_data)
 {
   if (playing)
-    gtk_action_activate (gtk_ui_manager_get_action (ui_manager,
-                                                    "/anim-play-toolbar/play"));
+    g_action_group_activate_action (G_ACTION_GROUP (window),
+                                    "play", NULL);
   frame_number = 0;
   render_frame (frame_number);
   show_frame ();
 }
 
 static void
-speed_up_callback (GtkAction *action)
+refresh_action (GSimpleAction *action,
+                GVariant      *parameter,
+                gpointer       user_data)
 {
+  initialize (GIMP_PLAY (user_data));
+}
+
+static void
+close_action (GSimpleAction *action,
+              GVariant      *parameter,
+              gpointer       user_data)
+{
+  gtk_widget_destroy (GTK_WIDGET (window));
+}
+
+static void
+help_action (GSimpleAction *action,
+             GVariant      *parameter,
+             gpointer       user_data)
+{
+  gimp_standard_help_func (PLUG_IN_PROC, window);
+}
+
+static void
+speed_up_action (GSimpleAction *saction,
+                 GVariant      *parameter,
+                 gpointer       user_data)
+{
+  GAction *action;
+
   if (settings.duration_index > 0)
     --settings.duration_index;
 
-  gtk_action_set_sensitive (action, settings.duration_index > 0);
+  action = g_action_map_lookup_action (G_ACTION_MAP (window), "speed-up");
+  g_simple_action_set_enabled (G_SIMPLE_ACTION (action),
+                               settings.duration_index > 0);
 
-  action = gtk_ui_manager_get_action (ui_manager,
-                                      "/anim-play-popup/speed-reset");
-  gtk_action_set_sensitive (action, settings.duration_index != 3);
 
-  action = gtk_ui_manager_get_action (ui_manager,
-                                      "/anim-play-popup/speed-down");
-  gtk_action_set_sensitive (action, TRUE);
+  action = g_action_map_lookup_action (G_ACTION_MAP (window), "speed-reset");
+  g_simple_action_set_enabled (G_SIMPLE_ACTION (action),
+                               settings.duration_index != 3);
+
+  action = g_action_map_lookup_action (G_ACTION_MAP (window), "speed-down");
+  g_simple_action_set_enabled (G_SIMPLE_ACTION (action), TRUE);
 
   update_combobox ();
 }
 
 static void
-speed_down_callback (GtkAction *action)
+speed_down_action (GSimpleAction *saction,
+                   GVariant      *parameter,
+                   gpointer       user_data)
 {
+  GAction *action;
+
   if (settings.duration_index < 6)
     ++settings.duration_index;
 
-  gtk_action_set_sensitive (action, settings.duration_index < 6);
+  action = g_action_map_lookup_action (G_ACTION_MAP (window), "speed-down");
+  g_simple_action_set_enabled (G_SIMPLE_ACTION (action),
+                               settings.duration_index < 6);
 
-  action = gtk_ui_manager_get_action (ui_manager,
-                                      "/anim-play-popup/speed-reset");
-  gtk_action_set_sensitive (action, settings.duration_index != 3);
+  action = g_action_map_lookup_action (G_ACTION_MAP (window), "speed-reset");
+  g_simple_action_set_enabled (G_SIMPLE_ACTION (action),
+                               settings.duration_index != 3);
 
-  action = gtk_ui_manager_get_action (ui_manager,
-                                      "/anim-play-popup/speed-up");
-  gtk_action_set_sensitive (action, TRUE);
+  action = g_action_map_lookup_action (G_ACTION_MAP (window), "speed-up");
+  g_simple_action_set_enabled (G_SIMPLE_ACTION (action), TRUE);
 
   update_combobox ();
 }
 
 static void
-speed_reset_callback (GtkAction *action)
+speed_reset_action (GSimpleAction *saction,
+                    GVariant      *parameter,
+                    gpointer       user_data)
 {
+  GAction *action;
+
   settings.duration_index = 3;
 
-  gtk_action_set_sensitive (action, FALSE);
+  action = g_action_map_lookup_action (G_ACTION_MAP (window), "speed-reset");
+  g_simple_action_set_enabled (G_SIMPLE_ACTION (action), FALSE);
 
-  action = gtk_ui_manager_get_action (ui_manager,
-                                      "/anim-play-popup/speed-down");
-  gtk_action_set_sensitive (action, TRUE);
+  action = g_action_map_lookup_action (G_ACTION_MAP (window), "speed-down");
+  g_simple_action_set_enabled (G_SIMPLE_ACTION (action), TRUE);
 
-  action = gtk_ui_manager_get_action (ui_manager,
-                                      "/anim-play-popup/speed-up");
-  gtk_action_set_sensitive (action, TRUE);
+  action = g_action_map_lookup_action (G_ACTION_MAP (window), "speed-up");
+  g_simple_action_set_enabled (G_SIMPLE_ACTION (action), TRUE);
 
   update_combobox ();
 }
@@ -1487,7 +1558,7 @@ framecombo_changed (GtkWidget *combo,
 {
   settings.default_frame_disposal =
     gtk_combo_box_get_active (GTK_COMBO_BOX (combo));
-  init_frames ();
+  init_frames (GIMP_PLAY (data));
   render_frame (frame_number);
 }
 
@@ -1495,21 +1566,21 @@ static void
 speedcombo_changed (GtkWidget *combo,
                     gpointer   data)
 {
-  GtkAction * action;
+  GAction *action;
 
   settings.duration_index = gtk_combo_box_get_active (GTK_COMBO_BOX (combo));
 
-  action = gtk_ui_manager_get_action (ui_manager,
-                                      "/anim-play-popup/speed-reset");
-  gtk_action_set_sensitive (action, settings.duration_index != 3);
+  action = g_action_map_lookup_action (G_ACTION_MAP (window), "speed-reset");
+  g_simple_action_set_enabled (G_SIMPLE_ACTION (action),
+                               settings.duration_index != 3);
 
-  action = gtk_ui_manager_get_action (ui_manager,
-                                      "/anim-play-popup/speed-down");
-  gtk_action_set_sensitive (action, settings.duration_index < 6);
+  action = g_action_map_lookup_action (G_ACTION_MAP (window), "speed-down");
+  g_simple_action_set_enabled (G_SIMPLE_ACTION (action),
+                               settings.duration_index < 6);
 
-  action = gtk_ui_manager_get_action (ui_manager,
-                                      "/anim-play-popup/speed-up");
-  gtk_action_set_sensitive (action, settings.duration_index > 0);
+  action = g_action_map_lookup_action (G_ACTION_MAP (window), "speed-up");
+  g_simple_action_set_enabled (G_SIMPLE_ACTION (action),
+                               settings.duration_index > 0);
 }
 
 static void
@@ -1706,3 +1777,37 @@ parse_disposal_tag (const gchar *str)
   return settings.default_frame_disposal;
 }
 
+static GtkWidget *
+add_tool_button (GtkWidget  *toolbar,
+                 const char *action,
+                 const char *icon,
+                 const char *label,
+                 const char *tooltip)
+{
+  GtkWidget   *tool_icon;
+  GtkToolItem *tool_button;
+
+  tool_icon = gtk_image_new_from_icon_name (icon, GTK_ICON_SIZE_BUTTON);
+  gtk_widget_show (GTK_WIDGET (tool_icon));
+  tool_button = gtk_tool_button_new (tool_icon, label);
+  gtk_widget_show (GTK_WIDGET (tool_button));
+  gtk_tool_item_set_tooltip_text (tool_button, tooltip);
+  gtk_actionable_set_detailed_action_name (GTK_ACTIONABLE (tool_button), action);
+
+  gtk_toolbar_insert (GTK_TOOLBAR (toolbar), tool_button, -1);
+
+  return GTK_WIDGET (tool_button);
+}
+
+static void
+add_tool_separator (GtkWidget *toolbar,
+                    gboolean   expand)
+{
+  GtkToolItem *item;
+
+  item = gtk_separator_tool_item_new ();
+  gtk_toolbar_insert (GTK_TOOLBAR (toolbar), item, -1);
+  gtk_separator_tool_item_set_draw (GTK_SEPARATOR_TOOL_ITEM (item), FALSE);
+  gtk_tool_item_set_expand (item, expand);
+  gtk_widget_show (GTK_WIDGET (item));
+}
