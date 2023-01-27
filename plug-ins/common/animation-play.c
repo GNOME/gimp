@@ -291,6 +291,7 @@ gimp_play_class_init (GimpPlayClass *klass)
 static void
 gimp_play_init (GimpPlay *play)
 {
+  play->builder = NULL;
 }
 
 static void
@@ -300,7 +301,7 @@ gimp_play_finalize (GObject *object)
 
   G_OBJECT_CLASS (gimp_play_parent_class)->finalize (object);
 
-  g_object_unref (play->builder);
+  g_clear_object (&play->builder);
 }
 
 static GList *
