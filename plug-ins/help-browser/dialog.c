@@ -249,12 +249,12 @@ gimp_help_browser_dialog_class_init (GimpHelpBrowserDialogClass *klass)
 static void
 gimp_help_browser_dialog_init (GimpHelpBrowserDialog *self)
 {
-  GtkWindow   *window = GTK_WINDOW (self);
-  GtkWidget   *vbox;
-  GtkWidget   *toolbar;
-  GtkBuilder  *builder;
-  GtkToolItem *item;
-  GtkWidget   *main_vbox;
+  GtkWindow      *window = GTK_WINDOW (self);
+  GtkWidget      *vbox;
+  GtkWidget      *toolbar;
+  GtkBuilder     *builder;
+  GtkToolItem    *item;
+  GtkWidget      *main_vbox;
   WebKitSettings *settings;
 
   /*  the dialog window  */
@@ -473,7 +473,8 @@ gimp_help_browser_dialog_finalize (GObject *object)
 /* Public functions. */
 
 GimpHelpBrowserDialog *
-gimp_help_browser_dialog_new (const gchar *plug_in_binary, GApplication *app)
+gimp_help_browser_dialog_new (const gchar  *plug_in_binary,
+                              GApplication *app)
 {
   GimpHelpBrowserDialog *window;
   DialogData             data = { 720, 560, 240, TRUE, 1.0 };
@@ -570,9 +571,9 @@ step_action (GSimpleAction *action,
              GVariant      *parameter,
              gpointer       user_data)
 {
-  GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
-  gint steps;
-  WebKitBackForwardList *back_fw_list;
+  GimpHelpBrowserDialog     *self = GIMP_HELP_BROWSER_DIALOG (user_data);
+  gint                       steps;
+  WebKitBackForwardList     *back_fw_list;
   WebKitBackForwardListItem *back_fw_list_item;
 
   g_return_if_fail (parameter);
@@ -717,7 +718,7 @@ copy_selection_action (GSimpleAction *action,
                        gpointer       user_data)
 {
   GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
-  WebKitEditorState *editor_state;
+  WebKitEditorState     *editor_state;
 
   editor_state = webkit_web_view_get_editor_state (WEBKIT_WEB_VIEW (self->webview));
   if (webkit_editor_state_is_copy_available (editor_state))
@@ -733,7 +734,7 @@ show_index_change_state (GSimpleAction *action,
                          gpointer       user_data)
 {
   GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
-  gboolean show_index;
+  gboolean               show_index;
 
   show_index = g_variant_get_boolean (new_state);
   g_warning ("NEW STATE %s", show_index? "true" : "false");
@@ -747,7 +748,7 @@ zoom_in_action (GSimpleAction *action,
                 gpointer       user_data)
 {
   GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
-  double zoom_level;
+  double                 zoom_level;
 
   zoom_level = webkit_web_view_get_zoom_level (WEBKIT_WEB_VIEW (self->webview));
   if (zoom_level < 10.0)
@@ -760,7 +761,7 @@ zoom_out_action (GSimpleAction *action,
                  gpointer       user_data)
 {
   GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
-  double zoom_level;
+  double                 zoom_level;
 
   zoom_level = webkit_web_view_get_zoom_level (WEBKIT_WEB_VIEW (self->webview));
   if (zoom_level > 0.1)
@@ -773,7 +774,7 @@ load_uri_action (GSimpleAction *action,
                  gpointer       user_data)
 {
   GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
-  const char *uri;
+  const char            *uri;
 
   uri = g_variant_get_string (parameter, NULL);
   gimp_help_browser_dialog_load (self, uri);
@@ -1023,7 +1024,7 @@ search_close_clicked (GtkWidget *button,
                       gpointer   user_data)
 {
   GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
-  WebKitFindController *find_controller =
+  WebKitFindController  *find_controller =
     webkit_web_view_get_find_controller (WEBKIT_WEB_VIEW (self->webview));
 
   gtk_widget_hide (self->searchbar);
@@ -1046,7 +1047,7 @@ search_entry_key_press (GtkWidget   *search_entry,
                         gpointer     user_data)
 {
   GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
-  WebKitFindController *find_controller;
+  WebKitFindController  *find_controller;
 
   find_controller = webkit_web_view_get_find_controller (WEBKIT_WEB_VIEW (self->webview));
   switch (event->keyval)
@@ -1071,7 +1072,7 @@ dialog_unmap (GtkWidget *window,
               gpointer   user_data)
 {
   GimpHelpBrowserDialog *self = GIMP_HELP_BROWSER_DIALOG (user_data);
-  DialogData data;
+  DialogData             data;
 
   gtk_window_get_size (GTK_WINDOW (window), &data.width, &data.height);
 
@@ -1210,7 +1211,7 @@ add_tool_button (GtkWidget  *toolbar,
                  const char *label,
                  const char *tooltip)
 {
-  GtkWidget *tool_icon;
+  GtkWidget   *tool_icon;
   GtkToolItem *tool_button;
 
   tool_icon = gtk_image_new_from_icon_name (icon, GTK_ICON_SIZE_BUTTON);
@@ -1374,12 +1375,12 @@ help_item_compare (gconstpointer a,
 
 static void
 add_child (GimpHelpBrowserDialog *self,
-           GtkTreeStore   *store,
-           GimpHelpDomain *domain,
-           GimpHelpLocale *locale,
-           GtkTreeIter    *parent,
-           GimpHelpItem   *item,
-           int             depth)
+           GtkTreeStore          *store,
+           GimpHelpDomain        *domain,
+           GimpHelpLocale        *locale,
+           GtkTreeIter           *parent,
+           GimpHelpItem          *item,
+           int                    depth)
 {
   GtkTreeIter iter;
   char       *uri;

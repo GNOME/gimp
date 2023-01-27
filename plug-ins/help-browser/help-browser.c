@@ -62,7 +62,7 @@ struct _GimpHelpBrowser
 {
   GimpPlugIn parent_instance;
 
-  GtkApplication *app;
+  GtkApplication        *app;
   GimpHelpBrowserDialog *window;
 };
 
@@ -125,10 +125,11 @@ help_browser_create_procedure (GimpPlugIn  *plug_in,
 }
 
 static void
-on_app_activate (GApplication *gapp, gpointer user_data)
+on_app_activate (GApplication *gapp,
+                 gpointer      user_data)
 {
   GimpHelpBrowser *browser = GIMP_HELP_BROWSER (user_data);
-  GtkApplication *app = GTK_APPLICATION (gapp);
+  GtkApplication  *app     = GTK_APPLICATION (gapp);
 
   browser->window = gimp_help_browser_dialog_new (PLUG_IN_BINARY, gapp);
 
