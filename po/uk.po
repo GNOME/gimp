@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-01-12 11:54+0000\n"
-"PO-Revision-Date: 2023-01-13 17:04+0200\n"
+"POT-Creation-Date: 2023-01-25 17:39+0000\n"
+"PO-Revision-Date: 2023-01-27 16:44+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -154,117 +154,117 @@ msgstr "%s версії %s"
 msgid "using %s version %s (compiled against version %s)"
 msgstr "використовує %s версії %s (зібрано з версією %s)"
 
-#: app/main.c:166
+#: app/main.c:167
 msgid "Show version information and exit"
 msgstr "Показати номер версії та вийти"
 
-#: app/main.c:171
+#: app/main.c:172
 msgid "Show license information and exit"
 msgstr "Показати ліцензійні умови та вийти"
 
-#: app/main.c:176
+#: app/main.c:177
 msgid "Be more verbose"
 msgstr "Виводити докладнішу інформацію"
 
-#: app/main.c:181
+#: app/main.c:182
 msgid "Start a new GIMP instance"
 msgstr "Запустити нову копію GIMP"
 
-#: app/main.c:186
+#: app/main.c:187
 msgid "Open images as new"
 msgstr "Відкрити зображення як нові"
 
-#: app/main.c:191
+#: app/main.c:192
 msgid "Run without a user interface"
 msgstr "Запустити без інтерфейсу користувача"
 
-#: app/main.c:196
+#: app/main.c:197
 msgid "Do not load brushes, gradients, patterns, ..."
 msgstr "Не завантажувати пензлі, градієнти, палітри, текстури..."
 
-#: app/main.c:201
+#: app/main.c:202
 msgid "Do not load any fonts"
 msgstr "Не завантажувати шрифти"
 
-#: app/main.c:206
+#: app/main.c:207
 msgid "Do not show a splash screen"
 msgstr "Не показувати вікно вітання "
 
-#: app/main.c:211
+#: app/main.c:212
 msgid "Do not use shared memory between GIMP and plug-ins"
 msgstr "Не використовувати спільну пам'ять між GIMP та додатками"
 
-#: app/main.c:216
+#: app/main.c:217
 msgid "Do not use special CPU acceleration functions"
 msgstr "Не використовувати прискоренні команди центрального процесора"
 
-#: app/main.c:221
+#: app/main.c:222
 msgid "Use an alternate sessionrc file"
 msgstr "Використовувати альтернативний файл sessionrc"
 
-#: app/main.c:226
+#: app/main.c:227
 msgid "Use an alternate user gimprc file"
 msgstr "Використовувати альтернативний файл gimprc користувача"
 
-#: app/main.c:231
+#: app/main.c:232
 msgid "Use an alternate system gimprc file"
 msgstr "Використовувати альтернативний системний файл gimprc"
 
-#: app/main.c:236
+#: app/main.c:237
 msgid "Batch command to run (can be used multiple times)"
 msgstr "Команда для пакетної обробки (можна використовувати неодноразово)"
 
-#: app/main.c:241
+#: app/main.c:242
 msgid "The procedure to process batch commands with"
 msgstr "Процедура для запуску команди пакетної обробки"
 
-#: app/main.c:246
+#: app/main.c:247
 msgid "Quit immediately after performing requested actions"
 msgstr "Після виконання потрібних дій негайно завершити роботу"
 
-#: app/main.c:251
+#: app/main.c:252
 msgid "Send messages to console instead of using a dialog"
 msgstr "Показувати попередження на консолі замість діалогових вікон"
 
 #. don't translate the mode names (off|on|warn)
-#: app/main.c:257
+#: app/main.c:258
 msgid "PDB compatibility mode (off|on|warn)"
 msgstr "Режим сумісності з PDB (off|on|warn)"
 
 #. don't translate the mode names (never|query|always)
-#: app/main.c:263
+#: app/main.c:264
 msgid "Debug in case of a crash (never|query|always)"
 msgstr "Налагодження при аварійному завершенні програми (never|query|always)"
 
-#: app/main.c:268
+#: app/main.c:269
 msgid "Enable non-fatal debugging signal handlers"
 msgstr "Дозволити налагодження обробників сигналів для некритичних сигналів"
 
-#: app/main.c:273
+#: app/main.c:274
 msgid "Make all warnings fatal"
 msgstr "Вважати всі попередження критичними"
 
-#: app/main.c:278
+#: app/main.c:279
 msgid "Output a gimprc file with default settings"
 msgstr "Показати файл gimprc з типовими параметрами"
 
-#: app/main.c:294
+#: app/main.c:295
 msgid "Output a sorted list of deprecated procedures in the PDB"
 msgstr "Показати впорядкований список застарілих процедур у PDB"
 
-#: app/main.c:299
+#: app/main.c:300
 msgid "Show a preferences page with experimental features"
 msgstr "Показувати сторінку налаштувань із експериментальними функціями"
 
-#: app/main.c:304
+#: app/main.c:305
 msgid "Show an image submenu with debug actions"
 msgstr "Показати підменю зображення із пунктами діагностики"
 
-#: app/main.c:744
+#: app/main.c:725
 msgid "[FILE|URI...]"
 msgstr "[ФАЙЛ|URI...]"
 
-#: app/main.c:772
+#: app/main.c:753
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -272,20 +272,20 @@ msgstr ""
 "GIMP не може ініціалізувати графічний інтерфейс.\n"
 "Перевірте правильність параметрів вашого графічного середовища."
 
-#: app/main.c:791
+#: app/main.c:772
 msgid "Another GIMP instance is already running."
 msgstr "Вже запущена інша копія GIMP"
 
-#: app/main.c:879
+#: app/main.c:860
 msgid "GIMP output. Type any character to close this window."
 msgstr "Вивід GIMP. Введіть будь-який символ для закриття цього вікна."
 
-#: app/main.c:880
+#: app/main.c:861
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Введіть будь-який символ для закриття цього вікна.)\n"
 
-#: app/main.c:897
+#: app/main.c:878
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "Вивід GIMP. Ви можете згорнути це вікно, але не закривати його."
 
@@ -934,57 +934,41 @@ msgid "Channel Color Tag: Set to Gray"
 msgstr "Кольорова мітка каналу: встановити сіру"
 
 #: app/actions/channels-actions.c:191
-#| msgctxt "channels-action"
-#| msgid "Channel to Sele_ction"
 msgctxt "channels-action"
 msgid "Channels to Sele_ction"
 msgstr "Канали → Позна_чене"
 
 #: app/actions/channels-actions.c:192
-#| msgctxt "channels-action"
-#| msgid "Replace the selection with this channel"
 msgctxt "channels-action"
 msgid "Replace the selection with selected channels"
 msgstr "Замірити позначене позначеними каналами"
 
 #: app/actions/channels-actions.c:197
-#| msgctxt "undo-type"
-#| msgid "Channel to Selection"
 msgctxt "channels-action"
 msgid "_Add Channels to Selection"
 msgstr "Д_одати канали до позначеного"
 
 #: app/actions/channels-actions.c:198
-#| msgctxt "channels-action"
-#| msgid "Add this channel to the current selection"
 msgctxt "channels-action"
 msgid "Add selected channels to the current selection"
 msgstr "Додати позначені канали до позначеної ділянки"
 
 #: app/actions/channels-actions.c:203
-#| msgctxt "layers-action"
-#| msgid "_Subtract Masks from Selection"
 msgctxt "channels-action"
 msgid "_Subtract Channels from Selection"
 msgstr "_Відняти канали від позначеного"
 
 #: app/actions/channels-actions.c:204
-#| msgctxt "channels-action"
-#| msgid "Subtract this channel from the current selection"
 msgctxt "channels-action"
 msgid "Subtract selected channels from the current selection"
 msgstr "Відняти позначені канали від позначеної ділянки"
 
 #: app/actions/channels-actions.c:209
-#| msgctxt "layers-action"
-#| msgid "_Intersect Masks with Selection"
 msgctxt "channels-action"
 msgid "_Intersect Channels with Selection"
 msgstr "_Перетнути канали з позначеним"
 
 #: app/actions/channels-actions.c:210
-#| msgctxt "channels-action"
-#| msgid "Intersect this channel with the current selection"
 msgctxt "channels-action"
 msgid "Intersect selected channels with the current selection and each other"
 msgstr "Перетнути позначені канали з поточним позначеним і один з одним"
@@ -1107,8 +1091,6 @@ msgid "Remove %d Channels"
 msgstr "Вилучити %d каналів"
 
 #: app/actions/channels-commands.c:488
-#| msgctxt "undo-type"
-#| msgid "Channel to Selection"
 msgid "Channels to selection"
 msgstr "Канали до позначеного"
 
@@ -3913,60 +3895,60 @@ msgstr "Шар скопійовано в буфер обміну."
 msgid "Copied pixels to the clipboard."
 msgstr "Пікселі скопійовано в буфер обміну."
 
-#: app/actions/edit-commands.c:442 app/actions/edit-commands.c:731
+#: app/actions/edit-commands.c:443 app/actions/edit-commands.c:732
 #: app/tools/gimpseamlessclonetool.c:303
 msgid "There is no image data in the clipboard to paste."
 msgstr "У буфері обміну нічого немає."
 
-#: app/actions/edit-commands.c:458
+#: app/actions/edit-commands.c:459
 msgid "Cut Named"
 msgstr "Вирізання в буфер з назвою"
 
-#: app/actions/edit-commands.c:461 app/actions/edit-commands.c:483
-#: app/actions/edit-commands.c:505
+#: app/actions/edit-commands.c:462 app/actions/edit-commands.c:484
+#: app/actions/edit-commands.c:506
 msgid "Enter a name for this buffer"
 msgstr "Введіть назву цього буфера"
 
-#: app/actions/edit-commands.c:480
+#: app/actions/edit-commands.c:481
 msgid "Copy Named"
 msgstr "Копіювання з буфера з назвою"
 
-#: app/actions/edit-commands.c:502
+#: app/actions/edit-commands.c:503
 msgid "Copy Visible Named"
 msgstr "Копіювати видиме з назвою"
 
-#: app/actions/edit-commands.c:550
+#: app/actions/edit-commands.c:551
 msgid "Clear"
 msgstr "Очистити"
 
-#: app/actions/edit-commands.c:623
+#: app/actions/edit-commands.c:624
 msgid "A selected layer's alpha channel is locked."
 msgstr "Канал прозорості позначеного шару заблоковано."
 
-#: app/actions/edit-commands.c:689
+#: app/actions/edit-commands.c:690
 msgid ""
 "Pasted as new layer because the target is not a single layer or layer mask."
 msgstr ""
 "Вставлено як новий шар, оскільки ціль не є окремим шаром або маскою шарів."
 
-#: app/actions/edit-commands.c:696
+#: app/actions/edit-commands.c:697
 msgid "Pasted as new layer because the target is a layer group."
 msgstr "Вставлено як новий шар, тому що ціль є групою шарів."
 
-#: app/actions/edit-commands.c:703
+#: app/actions/edit-commands.c:704
 msgid "Pasted as new layer because the target's pixels are locked."
 msgstr "Вставлено як новий шар, бо цільові пікселі заблоковано."
 
-#: app/actions/edit-commands.c:748
+#: app/actions/edit-commands.c:749
 msgid "There are no selected layers or channels to cut from."
 msgstr "Немає позначених шарів або каналів для вирізання."
 
-#: app/actions/edit-commands.c:753 app/actions/edit-commands.c:786
-#: app/actions/edit-commands.c:811
+#: app/actions/edit-commands.c:754 app/actions/edit-commands.c:787
+#: app/actions/edit-commands.c:812
 msgid "(Unnamed Buffer)"
 msgstr "(Буфер без назви)"
 
-#: app/actions/edit-commands.c:781
+#: app/actions/edit-commands.c:782
 msgid "There are no selected layers or channels to copy from."
 msgstr "Немає позначених шарів або каналів для копіювання."
 
@@ -6272,7 +6254,6 @@ msgid "Unlock position"
 msgstr "Розблокувати позицію"
 
 #: app/actions/items-commands.c:276
-#| msgid "There are no selected layers to crop."
 msgid "There are no selected items to fill."
 msgstr "Немає позначених елементів для заповнення."
 
@@ -6546,8 +6527,6 @@ msgid "_Discard Text Information"
 msgstr "Ви_лучити текстову інформацію"
 
 #: app/actions/layers-actions.c:215
-#| msgctxt "layers-action"
-#| msgid "Turn this text layer into a normal layer"
 msgctxt "layers-action"
 msgid "Turn these text layers into normal layers"
 msgstr "Перетворити ці текстові шари на звичайні шари"
@@ -6558,8 +6537,6 @@ msgid "Text to _Path"
 msgstr "Текст на _контур"
 
 #: app/actions/layers-actions.c:221
-#| msgctxt "layers-action"
-#| msgid "Create a path from this text layer"
 msgctxt "layers-action"
 msgid "Create paths from text layers"
 msgstr "Створити контури з текстових шарів"
@@ -6605,19 +6582,25 @@ msgid "Change the size of the layer content"
 msgstr "Зміна розміру вмісту шару"
 
 #: app/actions/layers-actions.c:250
+#| msgid "Crop Layer to Selection"
+#| msgid_plural "Crop %d Layers to Selection"
 msgctxt "layers-action"
-msgid "_Crop to Selection"
-msgstr "_Кадрувати у позначене"
+msgid "_Resize Layers to Selection"
+msgstr "_Підігнати розмір шарів за позначеним"
 
 #: app/actions/layers-actions.c:251
+#| msgctxt "image-action"
+#| msgid "Resize the image to the extents of the selection"
 msgctxt "layers-action"
-msgid "Crop the layers to the extents of the selection"
-msgstr "Кадрувати шари до розмірів позначеного"
+msgid "Resize the layers to the extents of the selection"
+msgstr "Змінити розмір шарів до розмірів позначеного"
 
 #: app/actions/layers-actions.c:256
+#| msgid "Crop Layer to Content"
+#| msgid_plural "Crop %d Layers to Content"
 msgctxt "layers-action"
-msgid "Crop to C_ontent"
-msgstr "Обітнути до _вмісту"
+msgid "Crop Layers to C_ontent"
+msgstr "Обітнути шари до _вмісту"
 
 #: app/actions/layers-actions.c:257
 msgctxt "layers-action"
@@ -7215,8 +7198,6 @@ msgid "Discard Text Information"
 msgstr "Відкинути текстову інформацію"
 
 #: app/actions/layers-commands.c:1009
-#| msgctxt "undo-type"
-#| msgid "Add Path"
 msgid "Add Paths"
 msgstr "Додати контури"
 
@@ -9025,15 +9006,11 @@ msgid "Create a new path with last used values"
 msgstr "Створити новий контур з попередніми параметрами"
 
 #: app/actions/vectors-actions.c:78
-#| msgctxt "vectors-action"
-#| msgid "D_uplicate Path"
 msgctxt "vectors-action"
 msgid "D_uplicate Paths"
 msgstr "Д_ублювати контури"
 
 #: app/actions/vectors-actions.c:79
-#| msgctxt "vectors-action"
-#| msgid "Duplicate this path"
 msgctxt "vectors-action"
 msgid "Duplicate these paths"
 msgstr "Дублювати ці контури"
@@ -9094,57 +9071,41 @@ msgid "Lower this path to the bottom"
 msgstr "Опускання контуру додолу"
 
 #: app/actions/vectors-actions.c:119
-#| msgctxt "vectors-action"
-#| msgid "Fill Pat_h..."
 msgctxt "vectors-action"
 msgid "Fill Pat_hs..."
 msgstr "Заповнити ко_нтури…"
 
 #: app/actions/vectors-actions.c:120
-#| msgctxt "vectors-action"
-#| msgid "Fill the path"
 msgctxt "vectors-action"
 msgid "Fill the paths"
 msgstr "Заповнити контури"
 
 #: app/actions/vectors-actions.c:125
-#| msgctxt "vectors-action"
-#| msgid "Fill Path"
 msgctxt "vectors-action"
 msgid "Fill Paths"
 msgstr "Заповнити контури"
 
 #: app/actions/vectors-actions.c:126
-#| msgctxt "vectors-action"
-#| msgid "Fill the path with last values"
 msgctxt "vectors-action"
 msgid "Fill the paths with last values"
 msgstr "Заповнити контури з попередніми значеннями"
 
 #: app/actions/vectors-actions.c:131
-#| msgctxt "vectors-action"
-#| msgid "Stro_ke Path..."
 msgctxt "vectors-action"
 msgid "Stro_ke Paths..."
 msgstr "Обвести за конту_рами…"
 
 #: app/actions/vectors-actions.c:132
-#| msgctxt "vectors-action"
-#| msgid "Paint along the path"
 msgctxt "vectors-action"
 msgid "Paint along the paths"
 msgstr "Обвести контури вказаним чином"
 
 #: app/actions/vectors-actions.c:137
-#| msgctxt "vectors-action"
-#| msgid "Stro_ke Path"
 msgctxt "vectors-action"
 msgid "Stro_ke Paths"
 msgstr "Обвести за конту_рами"
 
 #: app/actions/vectors-actions.c:138
-#| msgctxt "vectors-action"
-#| msgid "Paint along the path with last values"
 msgctxt "vectors-action"
 msgid "Paint along the paths with last values"
 msgstr "Обвести контури з параметрами як минулого разу"
@@ -9275,8 +9236,6 @@ msgid "Path Color Tag: Set to Gray"
 msgstr "Кольорова мітка контура: встановити сірий"
 
 #: app/actions/vectors-actions.c:244
-#| msgctxt "vectors-action"
-#| msgid "Path to Sele_ction"
 msgctxt "vectors-action"
 msgid "Paths to Sele_ction"
 msgstr "Контури → Виді_лена область"
@@ -9287,56 +9246,41 @@ msgid "Path to selection"
 msgstr "Контур → Позначене"
 
 #: app/actions/vectors-actions.c:250
-#| msgid "Selection from Path"
 msgctxt "vectors-action"
 msgid "Selection Fr_om Paths"
 msgstr "Ви_бір з контурів"
 
 #: app/actions/vectors-actions.c:251
-#| msgctxt "vectors-action"
-#| msgid "Replace selection with path"
 msgctxt "vectors-action"
 msgid "Replace selection with paths"
 msgstr "Замінити позначене контурами"
 
 #: app/actions/vectors-actions.c:256
-#| msgctxt "layers-action"
-#| msgid "_Add Masks to Selection"
 msgctxt "vectors-action"
 msgid "_Add Paths to Selection"
 msgstr "_Додати контури до позначеного"
 
 #: app/actions/vectors-actions.c:257
-#| msgctxt "vectors-action"
-#| msgid "Add path to selection"
 msgctxt "vectors-action"
 msgid "Add paths to selection"
 msgstr "Додати контури до позначеного"
 
 #: app/actions/vectors-actions.c:262
-#| msgctxt "layers-action"
-#| msgid "_Subtract Masks from Selection"
 msgctxt "vectors-action"
 msgid "_Subtract Paths from Selection"
 msgstr "_Відняти контури від позначеного"
 
 #: app/actions/vectors-actions.c:263
-#| msgctxt "vectors-action"
-#| msgid "Subtract path from selection"
 msgctxt "vectors-action"
 msgid "Subtract paths from selection"
 msgstr "Відняти контури від позначеного"
 
 #: app/actions/vectors-actions.c:268
-#| msgctxt "layers-action"
-#| msgid "_Intersect Masks with Selection"
 msgctxt "vectors-action"
 msgid "_Intersect Paths with Selection"
 msgstr "_Перетнути контури з позначеним"
 
 #: app/actions/vectors-actions.c:269
-#| msgctxt "vectors-action"
-#| msgid "Intersect path with selection"
 msgctxt "vectors-action"
 msgid "Intersect paths with selection"
 msgstr "Перетнути контури з позначеним"
@@ -9455,20 +9399,14 @@ msgstr[2] "Опустити контури додолу"
 msgstr[3] "Опустити контур додолу"
 
 #: app/actions/vectors-commands.c:419
-#| msgctxt "vectors-action"
-#| msgid "D_uplicate Path"
 msgid "Duplicate Paths"
 msgstr "Дублювати контури"
 
 #: app/actions/vectors-commands.c:457
-#| msgctxt "undo-type"
-#| msgid "Remove Path"
 msgid "Remove Paths"
 msgstr "Вилучити контури"
 
 #: app/actions/vectors-commands.c:504
-#| msgctxt "vectors-action"
-#| msgid "Path to selection"
 msgid "Paths to selection"
 msgstr "Контури → Позначене"
 
@@ -12554,12 +12492,12 @@ msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr "Прикріплення рухомого вибору"
 
-#: app/core/core-enums.c:1298 app/core/gimp-edit.c:736
+#: app/core/core-enums.c:1298 app/core/gimp-edit.c:764
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "Вставити"
 
-#: app/core/core-enums.c:1299 app/core/gimp-edit.c:1065
+#: app/core/core-enums.c:1299 app/core/gimp-edit.c:1116
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "Вирізати"
@@ -12948,7 +12886,7 @@ msgstr "Історія кольору"
 msgid "Updating tag cache"
 msgstr "Оновлюється кеш позначок"
 
-#: app/core/gimp-edit.c:127
+#: app/core/gimp-edit.c:87
 #, c-format
 msgid "Cut Layer"
 msgid_plural "Cut %d Layers"
@@ -12957,11 +12895,11 @@ msgstr[1] "Вирізати %d шари"
 msgstr[2] "Вирізати %d шарів"
 msgstr[3] "Вирізати шар"
 
-#: app/core/gimp-edit.c:506 app/core/gimpimage-new.c:553
+#: app/core/gimp-edit.c:534 app/core/gimpimage-new.c:553
 msgid "Pasted Layer"
 msgstr "Вставлений шар"
 
-#: app/core/gimp-edit.c:1082
+#: app/core/gimp-edit.c:1133
 msgid "Global Buffer"
 msgstr "Глобальний буфер"
 
@@ -28664,6 +28602,18 @@ msgstr ""
 #: app-tools/gimp-debug-tool.c:87
 msgid "GIMP Crash Debug"
 msgstr "Діагностика аварій GIMP"
+
+#~ msgctxt "layers-action"
+#~ msgid "_Crop to Selection"
+#~ msgstr "_Кадрувати у позначене"
+
+#~ msgctxt "layers-action"
+#~ msgid "Crop the layers to the extents of the selection"
+#~ msgstr "Кадрувати шари до розмірів позначеного"
+
+#~ msgctxt "layers-action"
+#~ msgid "Crop to C_ontent"
+#~ msgstr "Обітнути до _вмісту"
 
 #~ msgctxt "channels-action"
 #~ msgid "_Add to Selection"
