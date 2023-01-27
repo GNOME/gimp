@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-01-12 11:56+0000\n"
-"PO-Revision-Date: 2023-01-13 17:06+0200\n"
+"POT-Creation-Date: 2023-01-25 17:40+0000\n"
+"PO-Revision-Date: 2023-01-27 17:11+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -76,7 +76,7 @@ msgstr "Потренувати козу (Сі)"
 #: plug-ins/common/file-pdf-load.c:655 plug-ins/common/file-pdf-load.c:1065
 #: plug-ins/common/file-pdf-save.c:1093 plug-ins/common/file-ps.c:3588
 #: plug-ins/common/file-svg.c:774 plug-ins/common/file-wmf.c:546
-#: plug-ins/common/film.c:1315 plug-ins/common/grid.c:761
+#: plug-ins/common/film.c:1324 plug-ins/common/grid.c:761
 #: plug-ins/common/hot.c:679 plug-ins/common/jigsaw.c:2498
 #: plug-ins/common/mail.c:568 plug-ins/common/nl-filter.c:1126
 #: plug-ins/common/qbist.c:848 plug-ins/common/qbist.c:890
@@ -88,13 +88,13 @@ msgstr "Потренувати козу (Сі)"
 #: plug-ins/common/wavelet-decompose.c:409 plug-ins/common/web-page.c:278
 #: plug-ins/file-tiff/file-tiff-load.c:2711 plug-ins/flame/flame.c:540
 #: plug-ins/flame/flame.c:716 plug-ins/flame/flame.c:1033
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:566
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1638
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1676
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:561
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1631
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1669
 #: plug-ins/fractal-explorer/fractal-explorer.c:875
 #: plug-ins/fractal-explorer/fractal-explorer.c:1269
-#: plug-ins/gfig/gfig-dialog.c:296 plug-ins/gfig/gfig-dialog.c:646
-#: plug-ins/gfig/gfig-dialog.c:695 plug-ins/gimpressionist/brush.c:270
+#: plug-ins/gfig/gfig-dialog.c:296 plug-ins/gfig/gfig-dialog.c:648
+#: plug-ins/gfig/gfig-dialog.c:697 plug-ins/gimpressionist/brush.c:270
 #: plug-ins/gimpressionist/gimpressionist.c:142
 #: plug-ins/gimpressionist/orientmap.c:528
 #: plug-ins/gimpressionist/presets.c:642 plug-ins/gimpressionist/sizemap.c:401
@@ -172,7 +172,7 @@ msgstr "Потренувати козу (Javascript)"
 #: plug-ins/common/curve-bend.c:1222 plug-ins/common/depth-merge.c:734
 #: plug-ins/common/destripe.c:485 plug-ins/common/file-heif.c:2355
 #: plug-ins/common/file-pdf-load.c:656 plug-ins/common/file-svg.c:775
-#: plug-ins/common/file-wmf.c:547 plug-ins/common/film.c:1316
+#: plug-ins/common/file-wmf.c:547 plug-ins/common/film.c:1325
 #: plug-ins/common/grid.c:762 plug-ins/common/hot.c:680
 #: plug-ins/common/jigsaw.c:2499 plug-ins/common/nl-filter.c:1127
 #: plug-ins/common/qbist.c:945 plug-ins/common/smooth-palette.c:512
@@ -182,7 +182,7 @@ msgstr "Потренувати козу (Javascript)"
 #: plug-ins/common/warp.c:491 plug-ins/common/wavelet-decompose.c:410
 #: plug-ins/file-psd/psd-load.c:3284 plug-ins/flame/flame.c:717
 #: plug-ins/flame/flame.c:1034
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:567
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:562
 #: plug-ins/fractal-explorer/fractal-explorer.c:1270
 #: plug-ins/gimpressionist/gimpressionist.c:143
 #: plug-ins/gimpressionist/orientmap.c:529
@@ -446,12 +446,12 @@ msgid "Orientation"
 msgstr "Орієнтація"
 
 #: plug-ins/common/blinds.c:336 plug-ins/common/tile-small.c:511
-#: plug-ins/pagecurl/pagecurl.c:622
+#: plug-ins/pagecurl/pagecurl.c:586
 msgid "_Horizontal"
 msgstr "Г_оризонтально"
 
 #: plug-ins/common/blinds.c:339 plug-ins/common/tile-small.c:521
-#: plug-ins/pagecurl/pagecurl.c:621
+#: plug-ins/pagecurl/pagecurl.c:585
 msgid "_Vertical"
 msgstr "_Вертикально"
 
@@ -467,7 +467,7 @@ msgstr "_Вертикально"
 #: plug-ins/common/file-png.c:950 plug-ins/common/file-pnm.c:764
 #: plug-ins/common/file-raw-data.c:1837 plug-ins/common/file-sunras.c:1081
 #: plug-ins/common/file-tga.c:1110 plug-ins/common/file-wbmp.c:270
-#: plug-ins/common/file-xbm.c:910 plug-ins/common/film.c:804
+#: plug-ins/common/file-xbm.c:910 plug-ins/common/film.c:812
 #: plug-ins/common/smooth-palette.c:332 plug-ins/common/tile.c:405
 #: plug-ins/file-bmp/bmp-load.c:737 plug-ins/file-exr/file-exr.c:273
 #: plug-ins/file-faxg3/faxg3.c:575 plug-ins/file-fits/fits.c:556
@@ -475,7 +475,7 @@ msgstr "_Вертикально"
 #: plug-ins/file-psd/psd-image-res-load.c:1076
 #: plug-ins/file-psd/psd-load.c:2502 plug-ins/file-sgi/sgi.c:474
 #: plug-ins/file-tiff/file-tiff-load.c:1576
-#: plug-ins/file-webp/file-webp-load.c:166 plug-ins/gfig/gfig-dialog.c:1325
+#: plug-ins/file-webp/file-webp-load.c:166 plug-ins/gfig/gfig-dialog.c:1327
 #: plug-ins/gimpressionist/general.c:139
 #: plug-ins/map-object/map-object-apply.c:245
 #: plug-ins/screenshot/screenshot-win32.c:315 plug-ins/twain/twain.c:661
@@ -518,7 +518,7 @@ msgstr "_Товщина:"
 
 #. Number of Colors frame
 #: plug-ins/common/border-average.c:494
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:911
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:906
 msgid "Number of Colors"
 msgstr "Кількість кольорів"
 
@@ -809,9 +809,9 @@ msgstr "База випадковості"
 #: plug-ins/common/sphere-designer.c:2290
 #: plug-ins/common/sphere-designer.c:2681 plug-ins/flame/flame.c:542
 #: plug-ins/flame/flame.c:1104
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:806
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1639
-#: plug-ins/gfig/gfig-dialog.c:647 plug-ins/ifs-compose/ifs-compose.c:807
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:801
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1632
+#: plug-ins/gfig/gfig-dialog.c:649 plug-ins/ifs-compose/ifs-compose.c:807
 #: plug-ins/ifs-compose/ifs-compose.c:2601 plug-ins/imagemap/imap_browse.c:81
 #: plug-ins/imagemap/imap_file.c:72 plug-ins/lighting/lighting-ui.c:608
 #: plug-ins/lighting/lighting-ui.c:1308
@@ -825,9 +825,9 @@ msgstr "_Відкрити"
 #: plug-ins/common/qbist.c:1040 plug-ins/common/sphere-designer.c:2290
 #: plug-ins/common/sphere-designer.c:2689 plug-ins/flame/flame.c:542
 #: plug-ins/flame/flame.c:1112
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:823
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1677
-#: plug-ins/gfig/gfig-dialog.c:696 plug-ins/gimpressionist/brush.c:271
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:818
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1670
+#: plug-ins/gfig/gfig-dialog.c:698 plug-ins/gimpressionist/brush.c:271
 #: plug-ins/ifs-compose/ifs-compose.c:808
 #: plug-ins/ifs-compose/ifs-compose.c:2564 plug-ins/imagemap/imap_file.c:125
 #: plug-ins/lighting/lighting-ui.c:601 plug-ins/lighting/lighting-ui.c:1164
@@ -993,8 +993,8 @@ msgstr "Графік поточних параметрів"
 #: plug-ins/common/cml-explorer.c:1983 plug-ins/common/plugin-browser.c:560
 #: plug-ins/common/procedure-browser.c:168
 #: plug-ins/common/sample-colorize.c:1415 plug-ins/gfig/gfig-dialog.c:297
-#: plug-ins/gfig/gfig-dialog.c:887 plug-ins/gfig/gfig-dialog.c:1253
-#: plug-ins/gfig/gfig-dialog.c:1397 plug-ins/ifs-compose/ifs-compose.c:1212
+#: plug-ins/gfig/gfig-dialog.c:889 plug-ins/gfig/gfig-dialog.c:1255
+#: plug-ins/gfig/gfig-dialog.c:1399 plug-ins/ifs-compose/ifs-compose.c:1212
 #: plug-ins/imagemap/imap_menu.c:156 plug-ins/metadata/metadata-viewer.c:287
 msgid "_Close"
 msgstr "З_акрити"
@@ -1020,7 +1020,7 @@ msgstr "Збереження параметрів CML Explorer"
 #: plug-ins/file-jpeg/jpeg-save.c:317 plug-ins/file-psd/psd-save.c:2213
 #: plug-ins/file-tiff/file-tiff-save.c:1084
 #: plug-ins/file-tiff/file-tiff-save.c:1173 plug-ins/flame/flame.c:509
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1545
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1538
 #: plug-ins/gfig/gfig.c:846 plug-ins/ifs-compose/ifs-compose.c:2423
 #: plug-ins/lighting/lighting-ui.c:1233
 #, c-format
@@ -1059,7 +1059,7 @@ msgstr "Завантажити параметри CML Explorer"
 #: plug-ins/file-psd/psd-load.c:159 plug-ins/file-psd/psd-load.c:164
 #: plug-ins/file-psd/psd-save.c:2218 plug-ins/file-psd/psd-thumb-load.c:82
 #: plug-ins/file-psd/psd-thumb-load.c:87 plug-ins/flame/flame.c:478
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1862
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1855
 #: plug-ins/fractal-explorer/fractal-explorer.c:1038 plug-ins/gfig/gfig.c:476
 #: plug-ins/help/gimphelplocale.c:255 plug-ins/help/gimphelplocale.c:271
 #: plug-ins/lighting/lighting-ui.c:1377
@@ -1140,7 +1140,7 @@ msgstr "Перебудувати мапу кольорів"
 #: plug-ins/common/colormap-remap.c:665 plug-ins/common/curve-bend.c:1464
 #: plug-ins/common/sample-colorize.c:1413
 #: plug-ins/common/sphere-designer.c:2631 plug-ins/common/tile-small.c:531
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:814
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:809
 #: plug-ins/gimpressionist/preview.c:182 plug-ins/ifs-compose/ifs-compose.c:809
 #: plug-ins/selection-to-path/selection-to-path.c:412
 msgid "_Reset"
@@ -1504,7 +1504,7 @@ msgid "Automatic pre_view"
 msgstr "_Автоматичний перегляд"
 
 #. Options area, bottom of column
-#: plug-ins/common/curve-bend.c:1300 plug-ins/gfig/gfig-dialog.c:1250
+#: plug-ins/common/curve-bend.c:1300 plug-ins/gfig/gfig-dialog.c:1252
 msgid "Options"
 msgstr "Параметри"
 
@@ -1702,19 +1702,19 @@ msgstr "redness-cr709"
 
 #. Redmode radio frame
 #: plug-ins/common/decompose.c:196
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:990
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:985
 msgid "Red"
 msgstr "Червоний"
 
 #. Greenmode radio frame
 #: plug-ins/common/decompose.c:197
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1031
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1026
 msgid "Green"
 msgstr "Зелений"
 
 #. Bluemode radio frame
 #: plug-ins/common/decompose.c:198
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1072
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1067
 msgid "Blue"
 msgstr "Синій"
 
@@ -1747,7 +1747,7 @@ msgid "Yellow"
 msgstr "Жовтий"
 
 #: plug-ins/common/decompose.c:215 plug-ins/common/warp.c:617
-#: plug-ins/flame/flame.c:1223 plug-ins/gfig/gfig-dialog.c:1493
+#: plug-ins/flame/flame.c:1223 plug-ins/gfig/gfig-dialog.c:1495
 msgid "Black"
 msgstr "Чорний"
 
@@ -2738,7 +2738,7 @@ msgid "_Border:"
 msgstr "_Рамка:"
 
 #: plug-ins/common/file-html-table.c:718 plug-ins/common/file-ps.c:3676
-#: plug-ins/common/file-ps.c:3874 plug-ins/common/film.c:1059
+#: plug-ins/common/file-ps.c:3874 plug-ins/common/film.c:1067
 #: plug-ins/common/smooth-palette.c:536 plug-ins/common/tile.c:523
 #: plug-ins/imagemap/imap_cmd_guides.c:173
 #: plug-ins/imagemap/imap_rectangle.c:405
@@ -3411,8 +3411,9 @@ msgid "Preserve color of completely transparent pixels"
 msgstr "Зберігати колір повністю прозорих пікселів"
 
 #: plug-ins/common/file-png.c:275
-msgid "Optimize for smallest possible palette size"
-msgstr "Оптимізувати для найменшого можливого розміру палітри"
+#| msgid "Optimize for smallest possible palette size"
+msgid "_Optimize for smallest possible palette size"
+msgstr "_Оптимізувати для найменшого можливого розміру палітри"
 
 #: plug-ins/common/file-png.c:276
 msgid ""
@@ -4934,127 +4935,127 @@ msgstr "Помилка при експортуванні «%s»: "
 msgid "XWD-file %s is corrupt."
 msgstr "Файл XWD %s пошкоджений."
 
-#: plug-ins/common/film.c:235
+#: plug-ins/common/film.c:241
 msgid "_Filmstrip..."
 msgstr "_Фотоплівка..."
 
-#: plug-ins/common/film.c:239
+#: plug-ins/common/film.c:245
 msgid "Combine several images on a film strip"
 msgstr "Об'єднати декілька зображень у одне на зразок фотоплівки"
 
-#: plug-ins/common/film.c:381
+#: plug-ins/common/film.c:384
 msgid "Composing images"
 msgstr "Збирання зображень"
 
-#: plug-ins/common/film.c:930
+#: plug-ins/common/film.c:938
 msgid "Available images:"
 msgstr "Доступні:"
 
-#: plug-ins/common/film.c:931
+#: plug-ins/common/film.c:939
 msgid "On film:"
 msgstr "На плівку:"
 
-#: plug-ins/common/film.c:982 plug-ins/common/unit-editor.c:436
+#: plug-ins/common/film.c:990 plug-ins/common/unit-editor.c:436
 msgid "_Add"
 msgstr "_Додати"
 
-#: plug-ins/common/film.c:982 plug-ins/imagemap/imap_polygon.c:529
+#: plug-ins/common/film.c:990 plug-ins/imagemap/imap_polygon.c:529
 msgid "_Remove"
 msgstr "В_идалити"
 
 #. Create selection
-#: plug-ins/common/film.c:1018 plug-ins/imagemap/imap_selection.c:338
+#: plug-ins/common/film.c:1026 plug-ins/imagemap/imap_selection.c:338
 #: plug-ins/selection-to-path/selection-to-path.c:540
 msgid "Selection"
 msgstr "Вибір"
 
 #. Film height/color
-#: plug-ins/common/film.c:1029 plug-ins/common/film.c:1311
+#: plug-ins/common/film.c:1037 plug-ins/common/film.c:1320
 msgid "Filmstrip"
 msgstr "Фотоплівка"
 
 #. Keep maximum image height
-#: plug-ins/common/film.c:1038
+#: plug-ins/common/film.c:1046
 msgid "_Fit height to images"
 msgstr "_Розтягувати до висоти зображення"
 
 #. Film color
-#: plug-ins/common/film.c:1080
+#: plug-ins/common/film.c:1088
 msgid "Select Film Color"
 msgstr "Вибір кольору плівки"
 
-#: plug-ins/common/film.c:1085 plug-ins/common/film.c:1141
+#: plug-ins/common/film.c:1093 plug-ins/common/film.c:1150
 msgid "Co_lor:"
 msgstr "_Колір:"
 
 #. Film numbering: Startindex/Font/color
-#: plug-ins/common/film.c:1097
+#: plug-ins/common/film.c:1105
 msgid "Numbering"
 msgstr "Нумерація"
 
-#: plug-ins/common/film.c:1118
+#: plug-ins/common/film.c:1126
 msgid "Start _index:"
 msgstr "Рахувати _від:"
 
-#: plug-ins/common/film.c:1131
+#: plug-ins/common/film.c:1140
 msgid "_Font:"
 msgstr "_Шрифт:"
 
 #. Numbering color
-#: plug-ins/common/film.c:1136
+#: plug-ins/common/film.c:1145
 msgid "Select Number Color"
 msgstr "Вибір кольору номерів"
 
-#: plug-ins/common/film.c:1154
+#: plug-ins/common/film.c:1163
 msgid "At _bottom"
 msgstr "З_низу"
 
-#: plug-ins/common/film.c:1155
+#: plug-ins/common/film.c:1164
 msgid "At _top"
 msgstr "Зв_ерху"
 
 #. ** The right frame keeps the image selection **
-#: plug-ins/common/film.c:1168
+#: plug-ins/common/film.c:1177
 msgid "Image Selection"
 msgstr "Вибір зображення"
 
-#: plug-ins/common/film.c:1201
+#: plug-ins/common/film.c:1210
 msgid "All Values are Fractions of the Strip Height"
 msgstr "Всі значення є долями висоти плівки"
 
-#: plug-ins/common/film.c:1204
+#: plug-ins/common/film.c:1213
 msgid "Ad_vanced"
 msgstr "Д_одатково"
 
-#: plug-ins/common/film.c:1220
+#: plug-ins/common/film.c:1229
 msgid "Image _height:"
 msgstr "_Висота зображення:"
 
-#: plug-ins/common/film.c:1229
+#: plug-ins/common/film.c:1238
 msgid "Image spac_ing:"
 msgstr "_Інтервал між зображеннями:"
 
-#: plug-ins/common/film.c:1241
+#: plug-ins/common/film.c:1250
 msgid "_Hole offset:"
 msgstr "_Зсув отворів:"
 
-#: plug-ins/common/film.c:1250
+#: plug-ins/common/film.c:1259
 msgid "Ho_le width:"
 msgstr "_Ширина отворів:"
 
-#: plug-ins/common/film.c:1259
+#: plug-ins/common/film.c:1268
 msgid "Hol_e height:"
 msgstr "Висота _отворів:"
 
-#: plug-ins/common/film.c:1268
+#: plug-ins/common/film.c:1277
 msgid "Hole sp_acing:"
 msgstr "І_нтервал між отворами:"
 
-#: plug-ins/common/film.c:1280
+#: plug-ins/common/film.c:1289
 msgid "_Number height:"
 msgstr "Висота _чисел:"
 
-#: plug-ins/common/film.c:1292
+#: plug-ins/common/film.c:1301
 msgid "Re_set"
 msgstr "_Скинути"
 
@@ -5094,7 +5095,7 @@ msgstr "Малює сітку на зображенні"
 msgid "Drawing grid"
 msgstr "Малювання сітки"
 
-#: plug-ins/common/grid.c:757 plug-ins/gfig/gfig-dialog.c:1394
+#: plug-ins/common/grid.c:757 plug-ins/gfig/gfig-dialog.c:1396
 #: plug-ins/imagemap/imap_menu.c:223
 msgid "Grid"
 msgstr "Сітка"
@@ -5465,8 +5466,8 @@ msgid "Pattern"
 msgstr "Текстура"
 
 #: plug-ins/common/qbist.c:1024
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:688
-#: plug-ins/gfig/gfig-dialog.c:893 plug-ins/ifs-compose/ifs-compose.c:1082
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:683
+#: plug-ins/gfig/gfig-dialog.c:895 plug-ins/ifs-compose/ifs-compose.c:1082
 #: plug-ins/imagemap/imap_menu.c:162
 msgid "_Undo"
 msgstr "В_ернути"
@@ -5561,11 +5562,11 @@ msgstr "_Використовувати субкольори"
 msgid "S_mooth samples"
 msgstr "З_гладжувати кольори зразка"
 
-#: plug-ins/common/sample-colorize.c:2662
+#: plug-ins/common/sample-colorize.c:2661
 msgid "Sample analyze"
 msgstr "Аналіз зразка"
 
-#: plug-ins/common/sample-colorize.c:3062
+#: plug-ins/common/sample-colorize.c:3061
 msgid "Remap colorized"
 msgstr "Фарбування за зразком"
 
@@ -6240,7 +6241,7 @@ msgid "Step size:"
 msgstr "Розмір кроку:"
 
 #: plug-ins/common/warp.c:543
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:767
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:762
 #: plug-ins/ifs-compose/ifs-compose.c:1243
 msgid "Iterations:"
 msgstr "Число повторів:"
@@ -8338,7 +8339,7 @@ msgstr "Вихор"
 msgid "Horseshoe"
 msgstr "Підкова"
 
-#: plug-ins/flame/flame.c:815 plug-ins/gfig/gfig-dialog.c:1475
+#: plug-ins/flame/flame.c:815 plug-ins/gfig/gfig-dialog.c:1477
 msgid "Polar"
 msgstr "Полярність"
 
@@ -8371,7 +8372,7 @@ msgid "Ex"
 msgstr "Колишнє"
 
 #: plug-ins/flame/flame.c:824
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:847
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:842
 msgid "Julia"
 msgstr "Джулія"
 
@@ -8396,9 +8397,9 @@ msgid "Power"
 msgstr "Енергія"
 
 #: plug-ins/flame/flame.c:830
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:996
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1037
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1078
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:991
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1032
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1073
 msgid "Cosine"
 msgstr "Косинус"
 
@@ -8503,7 +8504,7 @@ msgstr "_X:"
 msgid "_Y:"
 msgstr "_Y:"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:546
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:541
 #: plug-ins/gfig/gfig-dialog.c:280 plug-ins/gimpressionist/utils.c:139
 #: plug-ins/gradient-flare/gradient-flare.c:998
 #, c-format
@@ -8518,229 +8519,229 @@ msgstr ""
 "(%s «%s»)\n"
 "до файлу %s."
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:562
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:557
 msgid "Fractal Explorer"
 msgstr "Дослідник фракталів"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:635
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:630
 msgid "Re_altime preview"
 msgstr "_Автоматичне оновлення"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:643
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:638
 msgid "If enabled the preview will be redrawn automatically"
 msgstr "Якщо увімкнено, перегляд буде оновлюватися автоматично"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:646
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:641
 msgid "R_edraw preview"
 msgstr "_Оновити перегляд"
 
 #. Zoom Options
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:654
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:649
 msgid "Zoom"
 msgstr "Масштаб"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:667
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:662
 #: plug-ins/imagemap/imap_menu.c:197
 msgid "Zoom _In"
 msgstr "З_більшити"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:675
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:670
 #: plug-ins/imagemap/imap_menu.c:198
 msgid "Zoom _Out"
 msgstr "З_меншити"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:692
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:687
 msgid "Undo last zoom change"
 msgstr "Скасувати останню зміну масштабу"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:698
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:693
 #: plug-ins/ifs-compose/ifs-compose.c:1086 plug-ins/imagemap/imap_menu.c:164
 msgid "_Redo"
 msgstr "_Повернути"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:702
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:697
 msgid "Redo last zoom change"
 msgstr "Повернути останню зміну масштабу"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:719
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:714
 msgid "_Parameters"
 msgstr "П_араметри"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:722
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:717
 msgid "Fractal Parameters"
 msgstr "Параметри фрактала"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:731
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:726
 #: plug-ins/map-object/map-object-ui.c:1078
 msgid "Left:"
 msgstr "Ліва сторона:"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:740
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:735
 #: plug-ins/map-object/map-object-ui.c:1078
 msgid "Right:"
 msgstr "Права сторона:"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:749
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:744
 #: plug-ins/map-object/map-object-ui.c:1077
 msgid "Top:"
 msgstr "Верх:"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:758
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:753
 #: plug-ins/map-object/map-object-ui.c:1077
 msgid "Bottom:"
 msgstr "Низ:"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:769
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:764
 msgid ""
 "The higher the number of iterations, the more details will be calculated"
 msgstr "Чим більше число повторів, тим більше подробиць буде обчислено"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:779
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:774
 msgid "CX:"
 msgstr "CX:"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:782
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:793
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:777
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:788
 msgid "Changes aspect of fractal"
 msgstr "Змінює аспект фрактала"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:790
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:785
 msgid "CY:"
 msgstr "CY:"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:812
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:807
 msgid "Load a fractal from file"
 msgstr "Завантажити фрактал з файлу"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:820
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:815
 msgid "Reset parameters to default values"
 msgstr "Скинути параметри до типових значень"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:829
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:824
 msgid "Save active fractal to file"
 msgstr "Зберегти активний фрактал у файл"
 
 #. Fractal type toggle box
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:832
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:827
 msgid "Fractal Type"
 msgstr "Тип фрактала"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:845
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:840
 msgid "Mandelbrot"
 msgstr "Мандельброт"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:849
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:844
 msgid "Barnsley 1"
 msgstr "Барнслі 1"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:851
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:846
 msgid "Barnsley 2"
 msgstr "Барнслі 2"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:853
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:848
 msgid "Barnsley 3"
 msgstr "Барнслі 3"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:855
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:850
 msgid "Spider"
 msgstr "Спіраль"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:857
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:852
 msgid "Man'o'war"
 msgstr "Man'o'war"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:859
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:854
 msgid "Lambda"
 msgstr "Лямбда"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:861
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:856
 msgid "Sierpinski"
 msgstr "Серпінський"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:907
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:902
 msgid "Co_lors"
 msgstr "К_ольори"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:920
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:915
 msgid "Number of colors:"
 msgstr "Кількість кольорів:"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:922
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:917
 msgid "Change the number of colors in the mapping"
 msgstr "Змінити кількість кольорів у відбитті"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:931
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:926
 msgid "Use loglog smoothing"
 msgstr "Використовувати згладжування \"log log\""
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:937
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:932
 msgid "Use log log smoothing to eliminate \"banding\" in the result"
 msgstr ""
 "Щоб уникнути розділення зображення на смуги, використовуйте параметр "
 "«Згладжування»"
 
 #. Color Density frame
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:942
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:937
 msgid "Color Density"
 msgstr "Щільність кольору"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:951
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:946
 msgid "Red:"
 msgstr "Червоний:"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:953
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:948
 msgid "Change the intensity of the red channel"
 msgstr "Зміна інтенсивності червоного каналу"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:961
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:956
 msgid "Green:"
 msgstr "Зелений:"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:963
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:958
 msgid "Change the intensity of the green channel"
 msgstr "Зміна інтенсивності зеленого каналу"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:971
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:966
 msgid "Blue:"
 msgstr "Синій:"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:973
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:968
 msgid "Change the intensity of the blue channel"
 msgstr "Зміна інтенсивності синього каналу"
 
 #. Color Function frame
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:981
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:976
 msgid "Color Function"
 msgstr "Функція кольору"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:994
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1035
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1076
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:989
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1030
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1071
 msgid "Sine"
 msgstr "Синус"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:998
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1039
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1080
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:993
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1034
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1075
 msgctxt "color-function"
 msgid "None"
 msgstr "Немає"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1003
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1044
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1085
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:998
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1039
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1080
 msgid "Use sine-function for this color component"
 msgstr "Використовувати синусоїдну функцію для цієї складової кольору."
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1006
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1047
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1088
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1001
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1042
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1083
 msgid "Use cosine-function for this color component"
 msgstr "Використовувати косинусоїдну функцію для цієї складової кольору."
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1009
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1050
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1091
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1004
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1045
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1086
 msgid ""
 "Use linear mapping instead of any trigonometrical function for this color "
 "channel"
@@ -8748,30 +8749,30 @@ msgstr ""
 "Використовувати лінійне відбиття замість будь-якої тригонометричної функції "
 "для цього каналу кольору"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1018
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1059
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1100
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1013
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1054
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1095
 msgid "Inversion"
 msgstr "Інверсія"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1026
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1067
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1108
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1021
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1062
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1103
 msgid ""
 "If you enable this option higher color values will be swapped with lower "
 "ones and vice versa"
 msgstr "Більш яскраві кольори замінювати на менш яскраві та навпаки"
 
 #. Colormode toggle box
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1113
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1108
 msgid "Color Mode"
 msgstr "Режим кольору"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1122
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1117
 msgid "As specified above"
 msgstr "Як вказано вище"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1134
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1129
 msgid ""
 "Create a color-map with the options you specified above (color density/"
 "function). The result is visible in the preview image"
@@ -8779,42 +8780,42 @@ msgstr ""
 "Створити відбиття кольорів із вказаними вище параметрами (щільність кольорів/"
 "функція). Результат демонструється у вікні перегляду."
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1144
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1139
 msgid "Apply active gradient to final image"
 msgstr "Застосувати активний градієнт"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1156
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1151
 msgid "Create a color-map using a gradient from the gradient editor"
 msgstr ""
 "Створити відбиття кольорів використовуючи градієнт з редактора градієнтів"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1167
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1162
 msgid "FractalExplorer Gradient"
 msgstr "Градієнт дослідника фракталів"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1197
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1192
 msgid "_Fractals"
 msgstr "_Фрактали"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1559
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1552
 #, c-format
 msgid "Could not write '%s': %s"
 msgstr "Не вдається записати у файл «%s»: %s"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1634
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1627
 msgid "Load Fractal Parameters"
 msgstr "Завантаження параметрів фрактала"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1672
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1665
 msgid "Save Fractal Parameters"
 msgstr "Збереження параметрів фрактала"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1870
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1863
 #, c-format
 msgid "'%s' is not a FractalExplorer file"
 msgstr "«%s» не є файлом дослідника фракталів"
 
-#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1877
+#: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1870
 #, c-format
 msgid "'%s' is corrupt. Line %d Option section incorrect"
 msgstr "Файл «%s» пошкоджений. Рядок %d розділу параметрів неправильний"
@@ -8901,243 +8902,243 @@ msgid "Gfig"
 msgstr "Gfig"
 
 #. Tool options notebook
-#: plug-ins/gfig/gfig-dialog.c:342
+#: plug-ins/gfig/gfig-dialog.c:344
 msgid "Tool Options"
 msgstr "Параметри інструменту"
 
-#: plug-ins/gfig/gfig-dialog.c:359
+#: plug-ins/gfig/gfig-dialog.c:361
 msgid "_Stroke"
 msgstr "_Обвести"
 
 #. Fill frame on right side
-#: plug-ins/gfig/gfig-dialog.c:406
+#: plug-ins/gfig/gfig-dialog.c:407
 msgid "Fill"
 msgstr "Заповнення"
 
-#: plug-ins/gfig/gfig-dialog.c:420
+#: plug-ins/gfig/gfig-dialog.c:421
 msgid "No fill"
 msgstr "Немає"
 
-#: plug-ins/gfig/gfig-dialog.c:421
+#: plug-ins/gfig/gfig-dialog.c:422
 msgid "Color fill"
 msgstr "Колір"
 
-#: plug-ins/gfig/gfig-dialog.c:422
+#: plug-ins/gfig/gfig-dialog.c:423
 msgid "Pattern fill"
 msgstr "Текстура"
 
-#: plug-ins/gfig/gfig-dialog.c:423
+#: plug-ins/gfig/gfig-dialog.c:424
 msgid "Shape gradient"
 msgstr "Градієнт за формою"
 
-#: plug-ins/gfig/gfig-dialog.c:424
+#: plug-ins/gfig/gfig-dialog.c:425
 msgid "Vertical gradient"
 msgstr "Вертикальний градієнти"
 
-#: plug-ins/gfig/gfig-dialog.c:425
+#: plug-ins/gfig/gfig-dialog.c:426
 msgid "Horizontal gradient"
 msgstr "Горизонтальний градієнт"
 
 #. "show image" checkbutton at bottom of style frame
-#: plug-ins/gfig/gfig-dialog.c:485
+#: plug-ins/gfig/gfig-dialog.c:488
 msgid "Show image"
 msgstr "Показати зображення"
 
 #. "snap to grid" checkbutton at bottom of style frame
-#: plug-ins/gfig/gfig-dialog.c:498
+#: plug-ins/gfig/gfig-dialog.c:501
 msgctxt "checkbutton"
 msgid "Snap to grid"
 msgstr "Прилипати до сітки"
 
 #. "show grid" checkbutton at bottom of style frame
-#: plug-ins/gfig/gfig-dialog.c:507
+#: plug-ins/gfig/gfig-dialog.c:510
 msgid "Show grid"
 msgstr "Показати сітку"
 
-#: plug-ins/gfig/gfig-dialog.c:642
+#: plug-ins/gfig/gfig-dialog.c:644
 msgid "Load Gfig Object Collection"
 msgstr "Завантаження набору об'єктів Gfig"
 
-#: plug-ins/gfig/gfig-dialog.c:691
+#: plug-ins/gfig/gfig-dialog.c:693
 msgid "Save Gfig Drawing"
 msgstr "Збереження малюнку Gfig"
 
-#: plug-ins/gfig/gfig-dialog.c:855
+#: plug-ins/gfig/gfig-dialog.c:857
 msgid "First Gfig"
 msgstr "Перший Gfig"
 
-#: plug-ins/gfig/gfig-dialog.c:879 plug-ins/imagemap/imap_menu.c:148
+#: plug-ins/gfig/gfig-dialog.c:881 plug-ins/imagemap/imap_menu.c:148
 msgid "_Open..."
 msgstr "_Відкрити…"
 
-#: plug-ins/gfig/gfig-dialog.c:883 plug-ins/imagemap/imap_menu.c:151
+#: plug-ins/gfig/gfig-dialog.c:885 plug-ins/imagemap/imap_menu.c:151
 msgid "_Save..."
 msgstr "З_берегти…"
 
-#: plug-ins/gfig/gfig-dialog.c:897
+#: plug-ins/gfig/gfig-dialog.c:899
 msgid "_Clear"
 msgstr "О_чистити"
 
-#: plug-ins/gfig/gfig-dialog.c:901 plug-ins/imagemap/imap_menu.c:223
+#: plug-ins/gfig/gfig-dialog.c:903 plug-ins/imagemap/imap_menu.c:223
 msgid "_Grid"
 msgstr "С_ітка"
 
-#: plug-ins/gfig/gfig-dialog.c:905
+#: plug-ins/gfig/gfig-dialog.c:907
 msgid "_Preferences..."
 msgstr "_Параметри..."
 
-#: plug-ins/gfig/gfig-dialog.c:909
+#: plug-ins/gfig/gfig-dialog.c:911
 msgid "_Raise"
 msgstr "_Підняти"
 
-#: plug-ins/gfig/gfig-dialog.c:909
+#: plug-ins/gfig/gfig-dialog.c:911
 msgid "Raise selected object"
 msgstr "Підняти вибрані об'єкти"
 
-#: plug-ins/gfig/gfig-dialog.c:913
+#: plug-ins/gfig/gfig-dialog.c:915
 msgid "_Lower"
 msgstr "Н_ижньої"
 
-#: plug-ins/gfig/gfig-dialog.c:913
+#: plug-ins/gfig/gfig-dialog.c:915
 msgid "Lower selected object"
 msgstr "Опустити вибрані об'єкти"
 
-#: plug-ins/gfig/gfig-dialog.c:917
+#: plug-ins/gfig/gfig-dialog.c:919
 msgid "Raise to _top"
 msgstr "_Підняти вгору"
 
-#: plug-ins/gfig/gfig-dialog.c:917
+#: plug-ins/gfig/gfig-dialog.c:919
 msgid "Raise selected object to top"
 msgstr "Підняти вибрані об'єкти на передній план"
 
-#: plug-ins/gfig/gfig-dialog.c:921
+#: plug-ins/gfig/gfig-dialog.c:923
 msgid "Lower to _bottom"
 msgstr "_Опустити вниз"
 
-#: plug-ins/gfig/gfig-dialog.c:921
+#: plug-ins/gfig/gfig-dialog.c:923
 msgid "Lower selected object to bottom"
 msgstr "Опустити вибрані об'єкт до самого низу"
 
-#: plug-ins/gfig/gfig-dialog.c:925
+#: plug-ins/gfig/gfig-dialog.c:927
 msgid "_Previous"
 msgstr "_Попереднє"
 
-#: plug-ins/gfig/gfig-dialog.c:925
+#: plug-ins/gfig/gfig-dialog.c:927
 msgid "Show previous object"
 msgstr "Показати попередній об'єкт"
 
-#: plug-ins/gfig/gfig-dialog.c:929
+#: plug-ins/gfig/gfig-dialog.c:931
 msgid "_Next"
 msgstr "_Наступне"
 
-#: plug-ins/gfig/gfig-dialog.c:929
+#: plug-ins/gfig/gfig-dialog.c:931
 msgid "Show next object"
 msgstr "Показати наступний об'єкт"
 
-#: plug-ins/gfig/gfig-dialog.c:933
+#: plug-ins/gfig/gfig-dialog.c:935
 msgid "Show _all"
 msgstr "Показати _всі"
 
-#: plug-ins/gfig/gfig-dialog.c:933
+#: plug-ins/gfig/gfig-dialog.c:935
 msgid "Show all objects"
 msgstr "Показати всі об'єкти"
 
-#: plug-ins/gfig/gfig-dialog.c:939
+#: plug-ins/gfig/gfig-dialog.c:941
 msgid "Create line"
 msgstr "Створити лінію"
 
-#: plug-ins/gfig/gfig-dialog.c:942
+#: plug-ins/gfig/gfig-dialog.c:944
 msgid "Create rectangle"
 msgstr "Створити прямокутник"
 
-#: plug-ins/gfig/gfig-dialog.c:945
+#: plug-ins/gfig/gfig-dialog.c:947
 msgid "Create circle"
 msgstr "Створити коло"
 
-#: plug-ins/gfig/gfig-dialog.c:948
+#: plug-ins/gfig/gfig-dialog.c:950
 msgid "Create ellipse"
 msgstr "Створити еліпс"
 
-#: plug-ins/gfig/gfig-dialog.c:951
+#: plug-ins/gfig/gfig-dialog.c:953
 msgid "Create arc"
 msgstr "Створити дугу"
 
-#: plug-ins/gfig/gfig-dialog.c:954
+#: plug-ins/gfig/gfig-dialog.c:956
 msgid "Create reg polygon"
 msgstr "Створити правильний багатокутник"
 
-#: plug-ins/gfig/gfig-dialog.c:957
+#: plug-ins/gfig/gfig-dialog.c:959
 msgid "Create star"
 msgstr "Створити зірку"
 
-#: plug-ins/gfig/gfig-dialog.c:960
+#: plug-ins/gfig/gfig-dialog.c:962
 msgid "Create spiral"
 msgstr "Створити спіраль"
 
-#: plug-ins/gfig/gfig-dialog.c:963
+#: plug-ins/gfig/gfig-dialog.c:965
 msgid "Create bezier curve. Shift + Button ends object creation."
 msgstr "Створити криву Безьє. Shift + Кнопка миші завершує створення об'єкта."
 
-#: plug-ins/gfig/gfig-dialog.c:967
+#: plug-ins/gfig/gfig-dialog.c:969
 msgid "Move an object"
 msgstr "Перемістити об'єкт"
 
-#: plug-ins/gfig/gfig-dialog.c:970
+#: plug-ins/gfig/gfig-dialog.c:972
 msgid "Move a single point"
 msgstr "Перемістити одну точку"
 
-#: plug-ins/gfig/gfig-dialog.c:973
+#: plug-ins/gfig/gfig-dialog.c:975
 msgid "Copy an object"
 msgstr "Копіювати об'єкт"
 
-#: plug-ins/gfig/gfig-dialog.c:976
+#: plug-ins/gfig/gfig-dialog.c:978
 msgid "Delete an object"
 msgstr "Видалити об'єкт"
 
-#: plug-ins/gfig/gfig-dialog.c:979
+#: plug-ins/gfig/gfig-dialog.c:981
 msgid "Select an object"
 msgstr "Вибрати об'єкт"
 
-#: plug-ins/gfig/gfig-dialog.c:1061
+#: plug-ins/gfig/gfig-dialog.c:1063
 msgid "This tool has no options"
 msgstr "Цей інструмент не має параметрів"
 
 #. Put buttons in
-#: plug-ins/gfig/gfig-dialog.c:1272
+#: plug-ins/gfig/gfig-dialog.c:1274
 msgid "Show position"
 msgstr "Показати позицію"
 
-#: plug-ins/gfig/gfig-dialog.c:1284
+#: plug-ins/gfig/gfig-dialog.c:1286
 msgid "Show control points"
 msgstr "Показати контрольні точки"
 
-#: plug-ins/gfig/gfig-dialog.c:1300
+#: plug-ins/gfig/gfig-dialog.c:1302
 msgid "Antialiasing"
 msgstr "Згладжування"
 
-#: plug-ins/gfig/gfig-dialog.c:1317
+#: plug-ins/gfig/gfig-dialog.c:1319
 msgid "Max undo:"
 msgstr "Макс. кількість скасувань:"
 
-#: plug-ins/gfig/gfig-dialog.c:1324 plug-ins/gimpressionist/general.c:184
+#: plug-ins/gfig/gfig-dialog.c:1326 plug-ins/gimpressionist/general.c:184
 msgid "Transparent"
 msgstr "Прозорий"
 
-#: plug-ins/gfig/gfig-dialog.c:1326
+#: plug-ins/gfig/gfig-dialog.c:1328
 msgid "Foreground"
 msgstr "Передній план"
 
-#: plug-ins/gfig/gfig-dialog.c:1327 plug-ins/gfig/gfig-dialog.c:1494
+#: plug-ins/gfig/gfig-dialog.c:1329 plug-ins/gfig/gfig-dialog.c:1496
 msgid "White"
 msgstr "Білий"
 
-#: plug-ins/gfig/gfig-dialog.c:1328 plug-ins/imagemap/imap_cmd_copy.c:53
+#: plug-ins/gfig/gfig-dialog.c:1330 plug-ins/imagemap/imap_cmd_copy.c:53
 #: plug-ins/imagemap/imap_cmd_copy_object.c:54
 #: plug-ins/imagemap/imap_menu.c:168
 msgid "Copy"
 msgstr "Копіювати"
 
-#: plug-ins/gfig/gfig-dialog.c:1337
+#: plug-ins/gfig/gfig-dialog.c:1339
 msgid ""
 "Layer background type. Copy causes the previous layer to be copied before "
 "the draw is performed."
@@ -9145,81 +9146,81 @@ msgstr ""
 "Тип тла шару. \"Копіювати\" призведе до копіювання попереднього шару перед "
 "виконанням малювання."
 
-#: plug-ins/gfig/gfig-dialog.c:1343
+#: plug-ins/gfig/gfig-dialog.c:1345
 msgid "Background:"
 msgstr "Тло:"
 
-#: plug-ins/gfig/gfig-dialog.c:1346
+#: plug-ins/gfig/gfig-dialog.c:1348
 msgid "Feather"
 msgstr "Перо"
 
-#: plug-ins/gfig/gfig-dialog.c:1368
+#: plug-ins/gfig/gfig-dialog.c:1370
 msgid "Radius:"
 msgstr "Радіус:"
 
-#: plug-ins/gfig/gfig-dialog.c:1425
+#: plug-ins/gfig/gfig-dialog.c:1427
 msgid "Grid spacing:"
 msgstr "Розмір комірки:"
 
-#: plug-ins/gfig/gfig-dialog.c:1441
+#: plug-ins/gfig/gfig-dialog.c:1443
 msgid "Polar grid sectors desired:"
 msgstr "Сектори полярної сітки:"
 
-#: plug-ins/gfig/gfig-dialog.c:1458
+#: plug-ins/gfig/gfig-dialog.c:1460
 msgid "Polar grid radius interval:"
 msgstr "Інтервал радіусів пол. сітки:"
 
-#: plug-ins/gfig/gfig-dialog.c:1474 plug-ins/imagemap/imap_menu.c:234
+#: plug-ins/gfig/gfig-dialog.c:1476 plug-ins/imagemap/imap_menu.c:234
 msgid "Rectangle"
 msgstr "Прямокутник"
 
-#: plug-ins/gfig/gfig-dialog.c:1476
+#: plug-ins/gfig/gfig-dialog.c:1478
 msgid "Isometric"
 msgstr "Ізометрична"
 
-#: plug-ins/gfig/gfig-dialog.c:1485
+#: plug-ins/gfig/gfig-dialog.c:1487
 msgid "Grid type:"
 msgstr "Тип сітки:"
 
-#: plug-ins/gfig/gfig-dialog.c:1492
+#: plug-ins/gfig/gfig-dialog.c:1494
 #: plug-ins/gradient-flare/gradient-flare.c:749
 #: plug-ins/metadata/metadata-tags.c:238
 msgid "Normal"
 msgstr "Звичайна"
 
-#: plug-ins/gfig/gfig-dialog.c:1495
+#: plug-ins/gfig/gfig-dialog.c:1497
 msgid "Grey"
 msgstr "Сірий"
 
-#: plug-ins/gfig/gfig-dialog.c:1496
+#: plug-ins/gfig/gfig-dialog.c:1498
 msgid "Darker"
 msgstr "Темніше"
 
-#: plug-ins/gfig/gfig-dialog.c:1497
+#: plug-ins/gfig/gfig-dialog.c:1499
 msgid "Lighter"
 msgstr "Світліше"
 
-#: plug-ins/gfig/gfig-dialog.c:1498
+#: plug-ins/gfig/gfig-dialog.c:1500
 msgid "Very dark"
 msgstr "Дуже темний"
 
-#: plug-ins/gfig/gfig-dialog.c:1507
+#: plug-ins/gfig/gfig-dialog.c:1509
 msgid "Grid color:"
 msgstr "Колір сітки:"
 
-#: plug-ins/gfig/gfig-dialog.c:1726
+#: plug-ins/gfig/gfig-dialog.c:1728
 msgid "Sides:"
 msgstr "Сторони:"
 
-#: plug-ins/gfig/gfig-dialog.c:1735
+#: plug-ins/gfig/gfig-dialog.c:1737
 msgid "Right"
 msgstr "Справа"
 
-#: plug-ins/gfig/gfig-dialog.c:1736
+#: plug-ins/gfig/gfig-dialog.c:1738
 msgid "Left"
 msgstr "Зліва"
 
-#: plug-ins/gfig/gfig-dialog.c:1746 plug-ins/gimpressionist/orientation.c:140
+#: plug-ins/gfig/gfig-dialog.c:1748 plug-ins/gimpressionist/orientation.c:140
 msgid "Orientation:"
 msgstr "Орієнтація:"
 
@@ -10763,7 +10764,6 @@ msgstr "Завантажується зміст з «%s»"
 
 #: plug-ins/help/gimphelplocale.c:239
 #, c-format
-#| msgid "Could not load '%s': %s"
 msgid "Could not load data from '%s': %s"
 msgstr "Не вдалось завантажити дані з «%s»: %s"
 
@@ -12586,55 +12586,55 @@ msgstr "Завернути один з кутів зображення"
 msgid "Pagecurl Effect"
 msgstr "Ефект загнутої сторінки"
 
-#: plug-ins/pagecurl/pagecurl.c:550
+#: plug-ins/pagecurl/pagecurl.c:514
 msgid "Curl Location"
 msgstr "Позиція загину"
 
-#: plug-ins/pagecurl/pagecurl.c:570
+#: plug-ins/pagecurl/pagecurl.c:534
 msgid "Lower right"
 msgstr "Знизу праворуч"
 
-#: plug-ins/pagecurl/pagecurl.c:571
+#: plug-ins/pagecurl/pagecurl.c:535
 msgid "Lower left"
 msgstr "Знизу ліворуч"
 
-#: plug-ins/pagecurl/pagecurl.c:572
+#: plug-ins/pagecurl/pagecurl.c:536
 msgid "Upper left"
 msgstr "Вгорі ліворуч"
 
-#: plug-ins/pagecurl/pagecurl.c:573
+#: plug-ins/pagecurl/pagecurl.c:537
 msgid "Upper right"
 msgstr "Вгорі праворуч"
 
-#: plug-ins/pagecurl/pagecurl.c:609
+#: plug-ins/pagecurl/pagecurl.c:573
 msgid "Curl Orientation"
 msgstr "Орієнтація загину"
 
-#: plug-ins/pagecurl/pagecurl.c:653
+#: plug-ins/pagecurl/pagecurl.c:617
 msgid "_Shade under curl"
 msgstr "_Тінь під загином"
 
-#: plug-ins/pagecurl/pagecurl.c:666
+#: plug-ins/pagecurl/pagecurl.c:630
 msgid "Current gradient (reversed)"
 msgstr "Обраний градієнт (реверсивний)"
 
-#: plug-ins/pagecurl/pagecurl.c:671
+#: plug-ins/pagecurl/pagecurl.c:635
 msgid "Current gradient"
 msgstr "Обраний градієнт"
 
-#: plug-ins/pagecurl/pagecurl.c:676
+#: plug-ins/pagecurl/pagecurl.c:640
 msgid "Foreground / background colors"
 msgstr "Передній план та тло"
 
-#: plug-ins/pagecurl/pagecurl.c:688
+#: plug-ins/pagecurl/pagecurl.c:652
 msgid "_Opacity:"
 msgstr "_Непрозорість:"
 
-#: plug-ins/pagecurl/pagecurl.c:796
+#: plug-ins/pagecurl/pagecurl.c:760
 msgid "Curl Layer"
 msgstr "Шар загину"
 
-#: plug-ins/pagecurl/pagecurl.c:1060
+#: plug-ins/pagecurl/pagecurl.c:1024
 msgid "Page Curl"
 msgstr "Згин сторінки"
 
