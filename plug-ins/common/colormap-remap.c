@@ -239,17 +239,17 @@ remap_create_procedure (GimpPlugIn  *plug_in,
                                       "Mukund Sivaraman <muks@mukund.org>",
                                       "June 2006");
 
-      GIMP_PROC_ARG_UCHAR (procedure, "index1",
-                           "Index 1",
-                           "First index in the colormap",
-                           0, 255, 0,
-                           G_PARAM_READWRITE);
+      GIMP_PROC_ARG_INT (procedure, "index1",
+                         "Index 1",
+                         "First index in the colormap",
+                         0, 255, 0,
+                         G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_UCHAR (procedure, "index2",
-                           "Index 2",
-                           "Second (other) index in the colormap",
-                           0, 255, 0,
-                           G_PARAM_READWRITE);
+      GIMP_PROC_ARG_INT (procedure, "index2",
+                         "Index 2",
+                         "Second (other) index in the colormap",
+                         0, 255, 0,
+                         G_PARAM_READWRITE);
     }
 
   return procedure;
@@ -367,8 +367,8 @@ remap_run (GimpProcedure        *procedure,
   else if (strcmp (gimp_procedure_get_name (procedure),
                    PLUG_IN_PROC_SWAP) == 0)
     {
-      guchar index1 = GIMP_VALUES_GET_UCHAR (args, 0);
-      guchar index2 = GIMP_VALUES_GET_UCHAR (args, 1);
+      gint   index1 = GIMP_VALUES_GET_INT (args, 0);
+      gint   index2 = GIMP_VALUES_GET_INT (args, 1);
       guchar tmp;
       gint   n_cols;
 
