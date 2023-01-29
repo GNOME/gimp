@@ -23,6 +23,7 @@
 #include <gtk/gtk.h>
 
 #include "gimpui.h"
+#include "gimppropchooser-private.h"
 
 /* PropChooser
  * A GtkWidget, more specifically a GtkButtonWidget.
