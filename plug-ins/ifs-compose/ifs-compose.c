@@ -176,24 +176,29 @@ typedef struct
 } IfsComposeInterface;
 
 
-typedef struct _Ifs      Ifs;
-typedef struct _IfsClass IfsClass;
-
-struct _Ifs
+struct _GimpIfs
 {
   GimpPlugIn parent_instance;
+
+  GtkApplication *app;
+  GtkWidget      *dialog;
+  GimpDrawable   *drawable;
+  gint            response_id;
+
+  GtkWidget      *delete_button;
+  GtkWidget      *undo_button;
+  GtkWidget      *redo_button;
+
+  GtkBuilder     *builder;
 };
 
-struct _IfsClass
-{
-  GimpPlugInClass parent_class;
-};
 
-
-#define IFS_TYPE  (ifs_get_type ())
-#define IFS (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), IFS_TYPE, Ifs))
+#define GIMP_TYPE_IFS (gimp_ifs_get_type ())
+G_DECLARE_FINAL_TYPE (GimpIfs, gimp_ifs, GIMP, IFS, GimpPlugIn)
 
 GType                   ifs_get_type         (void) G_GNUC_CONST;
+
+static void             gimp_ifs_finalize    (GObject              *object);
 
 static GList          * ifs_query_procedures (GimpPlugIn           *plug_in);
 static GimpProcedure  * ifs_create_procedure (GimpPlugIn           *plug_in,
@@ -208,13 +213,16 @@ static GimpValueArray * ifs_run              (GimpProcedure        *procedure,
                                               gpointer              run_data);
 
 /*  user interface functions  */
-static gint           ifs_compose_dialog          (GimpDrawable *drawable);
-static void           ifs_options_dialog          (GtkWidget     *parent);
+static void           on_app_activate             (GApplication *gapp,
+                                                   gpointer      user_data);
+static gint           ifs_compose_dialog          (GimpIfs      *ifs,
+                                                   GimpDrawable *drawable);
+static void           ifs_options_dialog          (void);
 static GtkWidget    * ifs_compose_trans_page      (void);
 static GtkWidget    * ifs_compose_color_page      (void);
-static GtkUIManager * design_op_menu_create       (GtkWidget    *window);
 static void           design_op_actions_update    (void);
-static void           design_area_create          (GtkWidget    *window,
+static void           design_area_create          (GimpIfs      *ifs,
+                                                   GtkWidget    *window,
                                                    gint          design_width,
                                                    gint          design_height);
 
@@ -225,11 +233,13 @@ static void design_area_realize             (GtkWidget         *widget);
 static gint design_area_draw                (GtkWidget         *widget,
                                              cairo_t           *cr);
 static gint design_area_button_press        (GtkWidget         *widget,
-                                             GdkEventButton    *event);
+                                             GdkEventButton    *event,
+                                             GimpIfs           *ifs);
 static gint design_area_button_release      (GtkWidget         *widget,
                                              GdkEventButton    *event);
-static void design_area_select_all_callback (GtkWidget         *widget,
-                                             gpointer           data);
+static void design_area_select_all_action   (GSimpleAction     *action,
+                                             GVariant          *parameter,
+                                             gpointer           user_data);
 static void design_area_size_allocate       (GtkWidget         *widget,
                                              GtkAllocation     *allocation);
 static gint design_area_motion              (GtkWidget         *widget,
@@ -238,14 +248,19 @@ static void design_area_redraw              (void);
 
 /* Undo ring functions */
 static void undo_begin    (void);
-static void undo_update   (gint element);
-static void undo_exchange (gint el);
-static void undo          (void);
-static void redo          (void);
+static void undo_update   (gint             element);
+static void undo_exchange (gint             el);
+static void undo_action   (GSimpleAction   *action,
+                           GVariant        *parameter,
+                           gpointer         user_data);
+static void redo_action   (GSimpleAction   *action,
+                           GVariant        *parameter,
+                           gpointer         user_data);
 
-static void recompute_center              (gboolean   save_undo);
-static void recompute_center_cb           (GtkWidget *widget,
-                                           gpointer   data);
+static void recompute_center              (gboolean       save_undo);
+static void recompute_center_action       (GSimpleAction *action,
+                                           GVariant      *parameter,
+                                           gpointer       user_data);
 
 static void ifs_compose                   (GimpDrawable *drawable);
 
@@ -270,37 +285,51 @@ static void value_pair_update             (ValuePair *value_pair);
 static void value_pair_scale_callback     (GtkAdjustment *adjustment,
                                            ValuePair *value_pair);
 
-static void design_op_update_callback     (GtkRadioAction *action,
-                                           GtkRadioAction *current,
-                                           gpointer        data);
 static void flip_check_button_callback    (GtkWidget *widget, gpointer data);
 static gint preview_idle_render           (gpointer   data);
 
+static void transform_change_state        (GSimpleAction   *action,
+                                           GVariant        *new_state,
+                                           gpointer         user_data);
 static void ifs_compose_preview           (void);
 static void ifs_compose_set_defaults      (void);
-static void ifs_compose_new_callback      (GtkAction *action,
-                                           gpointer   data);
-static void ifs_compose_delete_callback   (GtkAction *action,
-                                           gpointer   data);
-static void ifs_compose_options_callback  (GtkAction *action,
-                                           gpointer   data);
-static void ifs_compose_load              (GtkWidget *parent);
-static void ifs_compose_save              (GtkWidget *parent);
-static void ifs_compose_response          (GtkWidget *widget,
-                                           gint       response_id,
-                                           gpointer   data);
+static void ifs_compose_new_action        (GSimpleAction   *action,
+                                           GVariant        *parameter,
+                                           gpointer         user_data);
+static void ifs_compose_delete_action     (GSimpleAction   *action,
+                                           GVariant        *parameter,
+                                           gpointer         user_data);
+static void ifs_compose_options_action    (GSimpleAction   *action,
+                                           GVariant        *parameter,
+                                           gpointer         user_data);
+static void ifs_compose_load              (void);
+static void ifs_compose_save              (void);
+static void ifs_compose_response          (GtkWidget       *widget,
+                                           gint             response_id);
+
+/* GAction helper methods */
+static void        window_destroy         (GtkWidget       *widget,
+                                           GimpIfs         *ifs);
+
+static GtkWidget * add_tool_button        (GtkWidget       *toolbar,
+                                           const char      *action,
+                                           const char      *icon,
+                                           const char      *label,
+                                           const char      *tooltip);
+static void        add_tool_separator     (GtkWidget       *toolbar,
+                                           gboolean         expand);
 
 
-G_DEFINE_TYPE (Ifs, ifs, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (GimpIfs, gimp_ifs, GIMP_TYPE_PLUG_IN)
 
-GIMP_MAIN (IFS_TYPE)
+GIMP_MAIN (GIMP_TYPE_IFS)
 DEFINE_STD_SET_I18N
 
 
 static IfsDialog        *ifsD       = NULL;
 static IfsOptionsDialog *ifsOptD    = NULL;
 static IfsDesignArea    *ifsDesign  = NULL;
-
+static GimpIfs          *ifs        = NULL;
 
 static AffElement **elements = NULL;
 static gint        *element_selected = NULL;
@@ -331,11 +360,28 @@ static IfsComposeInterface ifscint =
   FALSE,   /* run          */
 };
 
+static const GActionEntry ACTIONS[] =
+{
+  { "new", ifs_compose_new_action },
+  { "delete", ifs_compose_delete_action },
+  { "undo", undo_action },
+  { "redo", redo_action },
+  { "select-all", design_area_select_all_action },
+  { "center", recompute_center_action },
+  { "options", ifs_compose_options_action },
+
+  /* RadioButtons - only the default state is shown here. */
+  { "transform", transform_change_state, "s", "'move'", NULL },
+};
+
 
 static void
-ifs_class_init (IfsClass *klass)
+gimp_ifs_class_init (GimpIfsClass *klass)
 {
   GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
+  GObjectClass    *object_class  = G_OBJECT_CLASS (klass);
+
+  object_class->finalize          = gimp_ifs_finalize;
 
   plug_in_class->query_procedures = ifs_query_procedures;
   plug_in_class->create_procedure = ifs_create_procedure;
@@ -343,8 +389,16 @@ ifs_class_init (IfsClass *klass)
 }
 
 static void
-ifs_init (Ifs *ifs)
+gimp_ifs_init (GimpIfs *ifs_init)
 {
+}
+
+static void
+gimp_ifs_finalize (GObject *object)
+{
+  G_OBJECT_CLASS (gimp_ifs_parent_class)->finalize (object);
+
+  g_clear_object (&ifs->builder);
 }
 
 static GList *
@@ -407,6 +461,65 @@ ifs_run (GimpProcedure        *procedure,
   GimpParasite *parasite = NULL;
   gboolean      found_parasite = FALSE;
 
+  ifs = GIMP_IFS (gimp_procedure_get_plug_in (procedure));
+  ifs->app = gtk_application_new (NULL, G_APPLICATION_FLAGS_NONE);
+
+  ifs->builder = gtk_builder_new_from_string (
+      "<interface>"
+        "<menu id=\"ifs-compose-menu\">"
+          "<section>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Move</attribute>"
+              "<attribute name=\"action\">app.transform</attribute>"
+              "<attribute name=\"target\">move</attribute>"
+            "</item>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Rotate</attribute>"
+              "<attribute name=\"action\">app.transform</attribute>"
+              "<attribute name=\"target\">rotate</attribute>"
+            "</item>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Stretch</attribute>"
+              "<attribute name=\"action\">app.transform</attribute>"
+              "<attribute name=\"target\">stretch</attribute>"
+            "</item>"
+          "</section>"
+          "<section>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">New</attribute>"
+              "<attribute name=\"action\">app.new</attribute>"
+            "</item>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Delete</attribute>"
+              "<attribute name=\"action\">app.delete</attribute>"
+            "</item>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Undo</attribute>"
+              "<attribute name=\"action\">app.undo</attribute>"
+            "</item>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Redo</attribute>"
+              "<attribute name=\"action\">app.redo</attribute>"
+            "</item>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Select All</attribute>"
+              "<attribute name=\"action\">app.select-all</attribute>"
+            "</item>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Recompute Center</attribute>"
+              "<attribute name=\"action\">app.center</attribute>"
+            "</item>"
+          "</section>"
+          "<section>"
+            "<item>"
+              "<attribute name=\"label\" translatable=\"yes\">Render Options</attribute>"
+              "<attribute name=\"action\">app.options</attribute>"
+            "</item>"
+          "</section>"
+        "</menu>"
+      "</interface>",
+      -1);
+
   gegl_init (NULL, NULL);
 
   if (n_drawables != 1)
@@ -463,8 +576,14 @@ ifs_run (GimpProcedure        *procedure,
       /* after ifsvals_parse_string, need to set up naming */
       count_for_naming = ifsvals.num_elements;
 
+      ifs->drawable = drawable;
+
       /*  First acquire information with a dialog  */
-      if (! ifs_compose_dialog (drawable))
+      g_signal_connect (ifs->app, "activate", G_CALLBACK (on_app_activate), ifs);
+      g_application_run (G_APPLICATION (ifs->app), 0, NULL);
+      g_clear_object (&ifs->app);
+
+      if (! ifscint.run)
         return gimp_procedure_new_return_values (procedure,
                                                  GIMP_PDB_CANCEL,
                                                  NULL);
@@ -759,10 +878,32 @@ ifs_compose_color_page (void)
   return vbox;
 }
 
-static gint
-ifs_compose_dialog (GimpDrawable *drawable)
+static void
+on_app_activate (GApplication *gapp,
+                 gpointer      user_data)
 {
-  GtkWidget *dialog;
+  GimpIfs        *ifs = GIMP_IFS (user_data);
+
+  ifs_compose_dialog (ifs, ifs->drawable);
+
+  gtk_application_set_accels_for_action (ifs->app, "app.transform::move", (const char*[]) { "M", NULL });
+  gtk_application_set_accels_for_action (ifs->app, "app.transform::rotate", (const char*[]) { "R", NULL });
+  gtk_application_set_accels_for_action (ifs->app, "app.transform::stretch", (const char*[]) { "S", NULL });
+
+  gtk_application_set_accels_for_action (ifs->app, "app.new", (const char*[]) { "<control>N", NULL });
+  gtk_application_set_accels_for_action (ifs->app, "app.delete", (const char*[]) { "<control>D", NULL });
+  gtk_application_set_accels_for_action (ifs->app, "app.undo", (const char*[]) { "<control>Z", NULL });
+  gtk_application_set_accels_for_action (ifs->app, "app.redo", (const char*[]) { "<control>Y", NULL });
+  gtk_application_set_accels_for_action (ifs->app, "app.select-all", (const char*[]) { "<control>A", NULL });
+  gtk_application_set_accels_for_action (ifs->app, "app.center", (const char*[]) {"<control>C", NULL });
+
+  gtk_application_set_accels_for_action (ifs->app, "app.options", (const char*[]) { NULL });
+}
+
+static gint
+ifs_compose_dialog (GimpIfs      *ifs,
+                    GimpDrawable *drawable)
+{
   GtkWidget *label;
   GtkWidget *vbox;
   GtkWidget *hbox;
@@ -800,19 +941,19 @@ ifs_compose_dialog (GimpDrawable *drawable)
 
   gimp_ui_init (PLUG_IN_BINARY);
 
-  dialog = gimp_dialog_new (_("IFS Fractal"), PLUG_IN_ROLE,
-                            NULL, 0,
-                            gimp_standard_help_func, PLUG_IN_PROC,
+  ifs->dialog = gimp_dialog_new (_("IFS Fractal"), PLUG_IN_ROLE,
+                                 NULL, 0,
+                                 gimp_standard_help_func, PLUG_IN_PROC,
 
-                            _("_Open"),   RESPONSE_OPEN,
-                            _("_Save"),   RESPONSE_SAVE,
-                            _("_Reset"),  RESPONSE_RESET,
-                            _("_Cancel"), GTK_RESPONSE_CANCEL,
-                            _("_OK"),     GTK_RESPONSE_OK,
+                                 _("_Open"),   RESPONSE_OPEN,
+                                 _("_Save"),   RESPONSE_SAVE,
+                                 _("_Reset"),  RESPONSE_RESET,
+                                 _("_Cancel"), GTK_RESPONSE_CANCEL,
+                                 _("_OK"),     GTK_RESPONSE_OK,
 
-                            NULL);
+                                 NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+  gimp_dialog_set_alternative_button_order (GTK_DIALOG (ifs->dialog),
                                            RESPONSE_OPEN,
                                            RESPONSE_SAVE,
                                            RESPONSE_RESET,
@@ -820,30 +961,55 @@ ifs_compose_dialog (GimpDrawable *drawable)
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  gimp_window_set_transient (GTK_WINDOW (dialog));
+  gtk_window_set_application (GTK_WINDOW (ifs->dialog), ifs->app);
+  gimp_window_set_transient (GTK_WINDOW (ifs->dialog));
 
-  g_object_add_weak_pointer (G_OBJECT (dialog), (gpointer) &dialog);
+  g_object_add_weak_pointer (G_OBJECT (ifs->dialog), (gpointer) &ifs->dialog);
 
-  g_signal_connect (dialog, "response",
+  g_signal_connect (ifs->dialog, "response",
                     G_CALLBACK (ifs_compose_response),
                     NULL);
-  g_signal_connect (dialog, "destroy",
-                    G_CALLBACK (gtk_main_quit),
+  g_signal_connect (GTK_WINDOW (ifs->dialog), "destroy",
+                    G_CALLBACK (window_destroy),
                     NULL);
 
-  design_area_create (dialog, design_width, design_height);
-
-  toolbar = gtk_ui_manager_get_widget (ifsDesign->ui_manager,
-                                       "/ifs-compose-toolbar");
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                      toolbar, FALSE, FALSE, 0);
-  gtk_widget_show (toolbar);
+  g_action_map_add_action_entries (G_ACTION_MAP (ifs->app),
+                                   ACTIONS, G_N_ELEMENTS (ACTIONS),
+                                   ifs);
 
   /*  The main vbox */
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (ifs->dialog))),
                       main_vbox, TRUE, TRUE, 0);
+
+  toolbar = gtk_toolbar_new ();
+  add_tool_button (toolbar, "app.transform::move", GIMP_ICON_TOOL_MOVE,
+                   NULL, _("Move"));
+  add_tool_button (toolbar, "app.transform::rotate", GIMP_ICON_TOOL_ROTATE,
+                   NULL, _("Rotate"));
+  add_tool_button (toolbar, "app.transform::stretch", GIMP_ICON_TOOL_PERSPECTIVE,
+                   NULL, _("Stretch"));
+  add_tool_separator (toolbar, FALSE);
+  add_tool_button (toolbar, "app.new", GIMP_ICON_DOCUMENT_NEW,
+                   NULL, _("New"));
+  ifs->delete_button = add_tool_button (toolbar, "app.delete", GIMP_ICON_EDIT_DELETE,
+                       NULL, _("Delete"));
+  ifs->undo_button = add_tool_button (toolbar, "app.undo", GIMP_ICON_EDIT_UNDO,
+                       NULL, _("Undo"));
+  ifs->redo_button = add_tool_button (toolbar, "app.redo", GIMP_ICON_EDIT_REDO,
+                       NULL, _("Redo"));
+  add_tool_button (toolbar, "app.select-all", GIMP_ICON_SELECTION_ALL,
+                   NULL, _("Select All"));
+  add_tool_button (toolbar, "app.center", GIMP_ICON_CENTER,
+                   NULL, _("Recompute Center"));
+  add_tool_separator (toolbar, FALSE);
+  add_tool_button (toolbar, "app.options", GIMP_ICON_PREFERENCES_SYSTEM,
+                   NULL, _("Render Options"));
+  gtk_box_pack_start (GTK_BOX (main_vbox), toolbar, FALSE, FALSE, 0);
+  gtk_widget_show (toolbar);
+
+  design_area_create (ifs, ifs->dialog, design_width, design_height);
 
   /*  The design area */
 
@@ -1001,29 +1167,16 @@ ifs_compose_dialog (GimpDrawable *drawable)
       ifsD->selected_orig = g_new (AffElement, ifsvals.num_elements);
     }
 
-  gtk_widget_show (dialog);
+  gtk_widget_show (GTK_WIDGET (ifs->dialog));
 
   ifs_compose_preview ();
-
-  gtk_main ();
-
-  g_object_unref (ifsDesign->ui_manager);
-
-  if (dialog)
-    gtk_widget_destroy (dialog);
-
-  if (ifsOptD)
-    gtk_widget_destroy (ifsOptD->dialog);
-
-  gdk_display_flush (gdk_display_get_default ());
-
-  g_free (ifsD);
 
   return ifscint.run;
 }
 
 static void
-design_area_create (GtkWidget *window,
+design_area_create (GimpIfs   *ifs,
+                    GtkWidget *window,
                     gint       design_width,
                     gint       design_height)
 {
@@ -1042,7 +1195,7 @@ design_area_create (GtkWidget *window,
                     NULL);
   g_signal_connect (ifsDesign->area, "button-press-event",
                     G_CALLBACK (design_area_button_press),
-                    NULL);
+                    ifs);
   g_signal_connect (ifsDesign->area, "button-release-event",
                     G_CALLBACK (design_area_button_release),
                     NULL);
@@ -1059,143 +1212,29 @@ design_area_create (GtkWidget *window,
                          GDK_POINTER_MOTION_MASK |
                          GDK_POINTER_MOTION_HINT_MASK);
 
-  ifsDesign->ui_manager = design_op_menu_create (window);
   design_op_actions_update ();
-}
-
-static GtkUIManager *
-design_op_menu_create (GtkWidget *window)
-{
-  static GtkActionEntry actions[] =
-  {
-    { "ifs-compose-menu", NULL, "IFS Fractal Menu" },
-
-    { "new", GIMP_ICON_DOCUMENT_NEW,
-      N_("_New"), "<primary>N", NULL,
-      G_CALLBACK (ifs_compose_new_callback) },
-
-    { "delete", GIMP_ICON_EDIT_DELETE,
-      N_("_Delete"), "<primary>D", NULL,
-      G_CALLBACK (ifs_compose_delete_callback) },
-
-    { "undo", GIMP_ICON_EDIT_UNDO,
-      N_("_Undo"), "<primary>Z", NULL,
-      G_CALLBACK (undo) },
-
-    { "redo", GIMP_ICON_EDIT_REDO,
-      N_("_Redo"), "<primary>Y", NULL,
-      G_CALLBACK (redo) },
-
-    { "select-all", GIMP_ICON_SELECTION_ALL,
-      N_("Select _All"), "<primary>A", NULL,
-      G_CALLBACK (design_area_select_all_callback) },
-
-    { "center", GIMP_ICON_CENTER,
-      N_("Re_center"), "<primary>C", N_("Recompute Center"),
-      G_CALLBACK (recompute_center_cb) },
-
-    { "options", GIMP_ICON_PREFERENCES_SYSTEM,
-      N_("Render Options"), NULL, NULL,
-      G_CALLBACK (ifs_compose_options_callback) }
-  };
-  static GtkRadioActionEntry radio_actions[] =
-  {
-    { "move", GIMP_ICON_TOOL_MOVE,
-      N_("Move"), "M", NULL, OP_TRANSLATE },
-
-    { "rotate", GIMP_ICON_TOOL_ROTATE,
-      N_("Rotate"), "R", N_("Rotate / Scale"), OP_ROTATE },
-
-    { "stretch", GIMP_ICON_TOOL_PERSPECTIVE,
-      N_("Stretch"), "S", NULL, OP_STRETCH }
-  };
-
-  GtkUIManager   *ui_manager = gtk_ui_manager_new ();
-  GtkActionGroup *group      = gtk_action_group_new ("Actions");
-
-  gtk_action_group_set_translation_domain (group, NULL);
-
-  gtk_action_group_add_actions (group,
-                                actions,
-                                G_N_ELEMENTS (actions),
-                                window);
-  gtk_action_group_add_radio_actions (group,
-                                      radio_actions,
-                                      G_N_ELEMENTS (radio_actions),
-                                      ifsDesign->op,
-                                      G_CALLBACK (design_op_update_callback),
-                                      window);
-
-  gtk_window_add_accel_group (GTK_WINDOW (window),
-                              gtk_ui_manager_get_accel_group (ui_manager));
-  gtk_accel_group_lock (gtk_ui_manager_get_accel_group (ui_manager));
-
-  gtk_ui_manager_insert_action_group (ui_manager, group, -1);
-  g_object_unref (group);
-
-  gtk_ui_manager_add_ui_from_string (ui_manager,
-                                     "<ui>"
-                                     "  <menubar name=\"dummy-menubar\">"
-                                     "    <menu action=\"ifs-compose-menu\">"
-                                     "      <menuitem action=\"move\" />"
-                                     "      <menuitem action=\"rotate\" />"
-                                     "      <menuitem action=\"stretch\" />"
-                                     "      <separator />"
-                                     "      <menuitem action=\"new\" />"
-                                     "      <menuitem action=\"delete\" />"
-                                     "      <menuitem action=\"undo\" />"
-                                     "      <menuitem action=\"redo\" />"
-                                     "      <menuitem action=\"select-all\" />"
-                                     "      <menuitem action=\"center\" />"
-                                     "      <separator />"
-                                     "      <menuitem action=\"options\" />"
-                                     "    </menu>"
-                                     "  </menubar>"
-                                     "</ui>",
-                                     -1, NULL);
-
-  gtk_ui_manager_add_ui_from_string (ui_manager,
-                                     "<ui>"
-                                     "  <toolbar name=\"ifs-compose-toolbar\">"
-                                     "    <toolitem action=\"move\" />"
-                                     "    <toolitem action=\"rotate\" />"
-                                     "    <toolitem action=\"stretch\" />"
-                                     "    <separator />"
-                                     "    <toolitem action=\"new\" />"
-                                     "    <toolitem action=\"delete\" />"
-                                     "    <toolitem action=\"undo\" />"
-                                     "    <toolitem action=\"redo\" />"
-                                     "    <toolitem action=\"select-all\" />"
-                                     "    <toolitem action=\"center\" />"
-                                     "    <separator />"
-                                     "    <toolitem action=\"options\" />"
-                                     "  </toolbar>"
-                                     "</ui>",
-                                     -1, NULL);
-
-  return ui_manager;
 }
 
 static void
 design_op_actions_update (void)
 {
-  GtkAction *act;
+  GAction *action;
 
-  act = gtk_ui_manager_get_action (ifsDesign->ui_manager,
-                                   "/ui/dummy-menubar/ifs-compose-menu/undo");
-  gtk_action_set_sensitive (act, undo_cur >= 0);
+  action = g_action_map_lookup_action (G_ACTION_MAP (ifs->app), "undo");
+  g_simple_action_set_enabled (G_SIMPLE_ACTION (action),
+                               undo_cur >= 0);
 
-  act = gtk_ui_manager_get_action (ifsDesign->ui_manager,
-                                   "/ui/dummy-menubar/ifs-compose-menu/redo");
-  gtk_action_set_sensitive (act, undo_cur != undo_num - 1);
+  action = g_action_map_lookup_action (G_ACTION_MAP (ifs->app), "redo");
+  g_simple_action_set_enabled (G_SIMPLE_ACTION (action),
+                               undo_cur != undo_num - 1);
 
-  act = gtk_ui_manager_get_action (ifsDesign->ui_manager,
-                                   "/ui/dummy-menubar/ifs-compose-menu/delete");
-  gtk_action_set_sensitive (act, ifsvals.num_elements > 2);
+  action = g_action_map_lookup_action (G_ACTION_MAP (ifs->app), "delete");
+  g_simple_action_set_enabled (G_SIMPLE_ACTION (action),
+                              ifsvals.num_elements > 2);
 }
 
 static void
-ifs_options_dialog (GtkWidget *parent)
+ifs_options_dialog (void)
 {
   if (!ifsOptD)
     {
@@ -1206,7 +1245,7 @@ ifs_options_dialog (GtkWidget *parent)
 
       ifsOptD->dialog =
         gimp_dialog_new (_("IFS Fractal Render Options"), PLUG_IN_ROLE,
-                         parent, 0,
+                         NULL, 0,
                          gimp_standard_help_func, PLUG_IN_PROC,
 
                          _("_Close"), GTK_RESPONSE_CLOSE,
@@ -1608,7 +1647,8 @@ design_area_size_allocate (GtkWidget     *widget,
 
 static gint
 design_area_button_press (GtkWidget      *widget,
-                          GdkEventButton *event)
+                          GdkEventButton *event,
+                          GimpIfs        *ifs)
 {
   GtkAllocation allocation;
   gint          i;
@@ -1616,19 +1656,18 @@ design_area_button_press (GtkWidget      *widget,
 
   gtk_widget_get_allocation (ifsDesign->area, &allocation);
 
-  gtk_widget_grab_focus (widget);
-
   if (gdk_event_triggers_context_menu ((GdkEvent *) event))
     {
-      GtkWidget *menu =
-        gtk_ui_manager_get_widget (ifsDesign->ui_manager,
-                                   "/dummy-menubar/ifs-compose-menu");
+      GtkWidget  *menu;
+      GMenuModel *model;
+
+      model = G_MENU_MODEL (gtk_builder_get_object (ifs->builder, "ifs-compose-menu"));
+      menu = gtk_menu_new_from_model (model);
 
       if (GTK_IS_MENU_ITEM (menu))
         menu = gtk_menu_item_get_submenu (GTK_MENU_ITEM (menu));
 
-      gtk_menu_set_screen (GTK_MENU (menu), gtk_widget_get_screen (widget));
-
+      gtk_menu_attach_to_widget (GTK_MENU (menu), GTK_WIDGET (ifsDesign->area), NULL);
       gtk_menu_popup_at_pointer (GTK_MENU (menu), (GdkEvent *) event);
 
       return FALSE;
@@ -1934,7 +1973,9 @@ undo_exchange (gint el)
 }
 
 static void
-undo (void)
+undo_action (GSimpleAction *action,
+             GVariant      *parameter,
+             gpointer       user_data)
 {
   if (undo_cur >= 0)
     {
@@ -1946,7 +1987,9 @@ undo (void)
 }
 
 static void
-redo (void)
+redo_action (GSimpleAction *action,
+             GVariant      *parameter,
+             gpointer       user_data)
 {
   if (undo_cur != undo_num - 1)
     {
@@ -1958,8 +2001,9 @@ redo (void)
 }
 
 static void
-design_area_select_all_callback (GtkWidget *widget,
-                                 gpointer   data)
+design_area_select_all_action (GSimpleAction *action,
+                               GVariant      *parameter,
+                               gpointer       user_data)
 {
   gint i;
 
@@ -2032,7 +2076,8 @@ color_map_create (const gchar *name,
   gtk_container_add (GTK_CONTAINER (frame), color_map->orig_preview);
   gtk_widget_show (color_map->orig_preview);
 
-  arrow = gtk_arrow_new (GTK_ARROW_RIGHT, GTK_SHADOW_IN);
+  arrow = gtk_image_new_from_icon_name ("pan-end-symbolic",
+                                        GTK_ICON_SIZE_SMALL_TOOLBAR);
   gtk_box_pack_start (GTK_BOX (color_map->hbox), arrow, FALSE, FALSE, 0);
   gtk_widget_show (arrow);
 
@@ -2225,20 +2270,9 @@ value_pair_scale_callback (GtkAdjustment *adjustment,
 }
 
 static void
-design_op_update_callback (GtkRadioAction *action,
-                           GtkRadioAction *current,
-                           gpointer        data)
-{
-  ifsDesign->op = gtk_radio_action_get_current_value (action);
-
-  /* cursor switch */
-  if (gtk_widget_get_realized (ifsDesign->area))
-    design_area_realize (ifsDesign->area);
-}
-
-static void
-recompute_center_cb (GtkWidget *widget,
-                     gpointer   data)
+recompute_center_action (GSimpleAction *action,
+                         GVariant      *parameter,
+                         gpointer       user_data)
 {
   recompute_center (TRUE);
 }
@@ -2549,7 +2583,7 @@ ifsfile_load_response (GtkWidget *dialog,
 }
 
 static void
-ifs_compose_save (GtkWidget *parent)
+ifs_compose_save (void)
 {
   static GtkWidget *dialog = NULL;
 
@@ -2557,7 +2591,7 @@ ifs_compose_save (GtkWidget *parent)
     {
       dialog =
         gtk_file_chooser_dialog_new (_("Save as IFS Fractal file"),
-                                     GTK_WINDOW (parent),
+                                     NULL,
                                      GTK_FILE_CHOOSER_ACTION_SAVE,
 
                                      _("_Cancel"), GTK_RESPONSE_CANCEL,
@@ -2586,7 +2620,7 @@ ifs_compose_save (GtkWidget *parent)
 }
 
 static void
-ifs_compose_load (GtkWidget *parent)
+ifs_compose_load (void)
 {
   static GtkWidget *dialog = NULL;
 
@@ -2594,7 +2628,7 @@ ifs_compose_load (GtkWidget *parent)
     {
       dialog =
         gtk_file_chooser_dialog_new (_("Open IFS Fractal file"),
-                                     GTK_WINDOW (parent),
+                                     NULL,
                                      GTK_FILE_CHOOSER_ACTION_OPEN,
 
                                      _("_Cancel"), GTK_RESPONSE_CANCEL,
@@ -2621,8 +2655,9 @@ ifs_compose_load (GtkWidget *parent)
 }
 
 static void
-ifs_compose_new_callback (GtkAction *action,
-                          gpointer   data)
+ifs_compose_new_action (GSimpleAction *action,
+                        GVariant      *parameter,
+                        gpointer       user_data)
 {
   GtkAllocation  allocation;
   GimpRGB        color;
@@ -2665,8 +2700,9 @@ ifs_compose_new_callback (GtkAction *action,
 }
 
 static void
-ifs_compose_delete_callback (GtkAction *action,
-                             gpointer   data)
+ifs_compose_delete_action (GSimpleAction *action,
+                           GVariant      *parameter,
+                           gpointer       user_data)
 {
   gint i;
   gint new_current;
@@ -2705,10 +2741,11 @@ ifs_compose_delete_callback (GtkAction *action,
 }
 
 static void
-ifs_compose_options_callback (GtkAction *action,
-                              gpointer   data)
+ifs_compose_options_action (GSimpleAction *action,
+                            GVariant      *parameter,
+                            gpointer       user_data)
 {
-  ifs_options_dialog (GTK_WIDGET (data));
+  ifs_options_dialog ();
 }
 
 static gint
@@ -2749,6 +2786,30 @@ preview_idle_render (gpointer data)
   return (ifsD->preview_iterations != 0);
 }
 
+static void transform_change_state (GSimpleAction *action,
+                                    GVariant      *new_state,
+                                    gpointer       user_data)
+{
+  gchar *str;
+
+  str = g_strdup_printf ("%s",  g_variant_get_string (new_state, NULL));
+
+  if (! strcmp (str, "move"))
+    ifsDesign->op = OP_TRANSLATE;
+  else if (! strcmp (str, "rotate"))
+    ifsDesign->op = OP_ROTATE;
+  else if (! strcmp (str, "stretch"))
+    ifsDesign->op = OP_STRETCH;
+
+  g_free (str);
+
+  g_simple_action_set_state (action, new_state);
+
+  /* cursor switch */
+  if (gtk_widget_get_realized (ifsDesign->area))
+    design_area_realize (ifsDesign->area);
+}
+
 static void
 ifs_compose_preview (void)
 {
@@ -2784,17 +2845,16 @@ ifs_compose_preview (void)
 
 static void
 ifs_compose_response (GtkWidget *widget,
-                      gint       response_id,
-                      gpointer   data)
+                      gint       response_id)
 {
   switch (response_id)
     {
     case RESPONSE_OPEN:
-      ifs_compose_load (widget);
+      ifs_compose_load ();
       break;
 
     case RESPONSE_SAVE:
-      ifs_compose_save (widget);
+      ifs_compose_save ();
       break;
 
     case RESPONSE_RESET:
@@ -2826,7 +2886,54 @@ ifs_compose_response (GtkWidget *widget,
       ifscint.run = TRUE;
 
     default:
-      gtk_widget_destroy (widget);
+      gtk_application_remove_window (ifs->app, GTK_WINDOW (ifs->dialog));
       break;
     }
+}
+
+static void
+window_destroy (GtkWidget *widget,
+                GimpIfs   *ifs)
+{
+  if (ifsOptD)
+    gtk_widget_destroy (ifsOptD->dialog);
+
+  g_free (ifsD);
+
+  gtk_application_remove_window (ifs->app, GTK_WINDOW (ifs->dialog));
+}
+
+static GtkWidget *
+add_tool_button (GtkWidget  *toolbar,
+                 const char *action,
+                 const char *icon,
+                 const char *label,
+                 const char *tooltip)
+{
+  GtkWidget   *tool_icon;
+  GtkToolItem *tool_button;
+
+  tool_icon = gtk_image_new_from_icon_name (icon, GTK_ICON_SIZE_BUTTON);
+  gtk_widget_show (GTK_WIDGET (tool_icon));
+  tool_button = gtk_tool_button_new (tool_icon, label);
+  gtk_widget_show (GTK_WIDGET (tool_button));
+  gtk_tool_item_set_tooltip_text (tool_button, tooltip);
+  gtk_actionable_set_detailed_action_name (GTK_ACTIONABLE (tool_button), action);
+
+  gtk_toolbar_insert (GTK_TOOLBAR (toolbar), tool_button, -1);
+
+  return GTK_WIDGET (tool_button);
+}
+
+static void
+add_tool_separator (GtkWidget *toolbar,
+                    gboolean   expand)
+{
+  GtkToolItem *item;
+
+  item = gtk_separator_tool_item_new ();
+  gtk_toolbar_insert (GTK_TOOLBAR (toolbar), item, -1);
+  gtk_separator_tool_item_set_draw (GTK_SEPARATOR_TOOL_ITEM (item), FALSE);
+  gtk_tool_item_set_expand (item, expand);
+  gtk_widget_show (GTK_WIDGET (item));
 }
