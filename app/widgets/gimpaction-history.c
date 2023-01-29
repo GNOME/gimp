@@ -34,7 +34,6 @@
 
 #include "core/gimp.h"
 
-#include "gimpuimanager.h"
 #include "gimpaction.h"
 #include "gimpaction-history.h"
 
@@ -280,7 +279,6 @@ gimp_action_history_search (Gimp                *gimp,
                             const gchar         *keyword)
 {
   GimpGuiConfig *config;
-  GimpUIManager *manager;
   GList         *actions;
   GList         *result = NULL;
   gint           i;
@@ -289,23 +287,23 @@ gimp_action_history_search (Gimp                *gimp,
   g_return_val_if_fail (match_func != NULL, NULL);
 
   config  = GIMP_GUI_CONFIG (gimp->config);
-  manager = gimp_ui_managers_from_name ("<Image>")->data;
 
   for (actions = history.items->head, i = 0;
        actions && i < config->action_history_size;
        actions = g_list_next (actions), i++)
     {
-      GimpActionHistoryItem *item   = actions->data;
-      GimpAction            *action;
+      GimpActionHistoryItem *item = actions->data;
+      GAction               *action;
 
-      action = gimp_ui_manager_find_action (manager, NULL, item->action_name);
+      action = g_action_map_lookup_action (G_ACTION_MAP (gimp->app), item->action_name);
       if (action == NULL)
         continue;
 
-      if (! gimp_action_is_visible (action))
+      g_return_val_if_fail (GIMP_IS_ACTION (action), NULL);
+      if (! gimp_action_is_visible (GIMP_ACTION (action)))
         continue;
 
-      if (match_func (action, keyword, NULL, gimp))
+      if (match_func (GIMP_ACTION (action), keyword, NULL, gimp))
         result = g_list_prepend (result, g_object_ref (action));
     }
 

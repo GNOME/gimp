@@ -40,7 +40,6 @@
 #include "widgets/gimpaction-history.h"
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpsearchpopup.h"
-#include "widgets/gimpuimanager.h"
 
 #include "action-search-dialog.h"
 
@@ -79,15 +78,14 @@ action_search_history_and_actions (GimpSearchPopup *popup,
                                    const gchar     *keyword,
                                    gpointer         data)
 {
-  GimpUIManager *manager;
-  GList         *list;
-  GList         *history_actions = NULL;
-  Gimp          *gimp;
+  gchar **actions;
+  GList  *list;
+  GList  *history_actions = NULL;
+  Gimp   *gimp;
 
   g_return_if_fail (GIMP_IS_GIMP (data));
 
   gimp = GIMP (data);
-  manager = gimp_ui_managers_from_name ("<Image>")->data;
 
   if (g_strcmp0 (keyword, "") == 0)
     return;
@@ -102,63 +100,45 @@ action_search_history_and_actions (GimpSearchPopup *popup,
                                   gimp_action_is_sensitive (list->data, NULL) ? 0 : ACTION_SECTION_INACTIVE);
 
   /* 1. Then other matching actions. */
-  for (list = gimp_ui_manager_get_action_groups (manager);
-       list;
-       list = g_list_next (list))
+  actions = g_action_group_list_actions (G_ACTION_GROUP (gimp->app));
+
+  for (gint i = 0; actions[i] != NULL; i++)
     {
-      GList           *list2;
-      GimpActionGroup *group   = list->data;
-      GList           *actions = NULL;
+      GAction *action;
+      gint     section;
 
-      actions = gimp_action_group_list_actions (group);
-      actions = g_list_sort (actions, (GCompareFunc) gimp_action_name_compare);
+      /* The action search dialog doesn't show any non-historized
+       * actions, with a few exceptions. See the difference between
+       * gimp_action_history_is_blacklisted_action() and
+       * gimp_action_history_is_excluded_action().
+       */
+      if (gimp_action_history_is_blacklisted_action (actions[i]))
+        continue;
 
-      for (list2 = actions; list2; list2 = g_list_next (list2))
+      action = g_action_map_lookup_action (G_ACTION_MAP (gimp->app), actions[i]);
+
+      g_return_if_fail (GIMP_IS_ACTION (action));
+
+      if (! gimp_action_is_visible (GIMP_ACTION (action)))
+        continue;
+
+      if (action_search_match_keyword (GIMP_ACTION (action), keyword, &section, gimp))
         {
-          const gchar *name;
-          GimpAction  *action       = list2->data;
-          gboolean     is_redundant = FALSE;
-          gint         section;
+          GList *redundant;
 
-          name = gimp_action_get_name (action);
-
-          /* The action search dialog doesn't show any non-historized
-           * actions, with a few exceptions.  See the difference between
-           * gimp_action_history_is_blacklisted_action() and
-           * gimp_action_history_is_excluded_action().
+          /* A matching action. Check if we have not already added
+           * it as an history action.
            */
-          if (gimp_action_history_is_blacklisted_action (name))
-            continue;
+          for (redundant = history_actions; redundant; redundant = g_list_next (redundant))
+            if (strcmp (gimp_action_get_name (redundant->data), actions[i]) == 0)
+              break;
 
-          if (! gimp_action_is_visible (action))
-            continue;
-
-          if (action_search_match_keyword (action, keyword, &section, gimp))
-            {
-              GList *list3;
-
-              /* A matching action. Check if we have not already added
-               * it as an history action.
-               */
-              for (list3 = history_actions; list3; list3 = g_list_next (list3))
-                {
-                  if (strcmp (gimp_action_get_name (list3->data),
-                              name) == 0)
-                    {
-                      is_redundant = TRUE;
-                      break;
-                    }
-                }
-
-              if (! is_redundant)
-                {
-                  gimp_search_popup_add_result (popup, action, section);
-                }
-            }
+          if (redundant == NULL)
+            gimp_search_popup_add_result (popup, GIMP_ACTION (action), section);
         }
+    }
 
-      g_list_free (actions);
-   }
+  g_strfreev (actions);
 
   g_list_free_full (history_actions, (GDestroyNotify) g_object_unref);
 }
