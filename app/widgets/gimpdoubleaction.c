@@ -38,19 +38,25 @@ enum
 };
 
 
-static void   gimp_double_action_set_property (GObject      *object,
-                                               guint         prop_id,
-                                               const GValue *value,
-                                               GParamSpec   *pspec);
-static void   gimp_double_action_get_property (GObject      *object,
-                                               guint         prop_id,
-                                               GValue       *value,
-                                               GParamSpec   *pspec);
+static void   gimp_double_action_g_action_iface_init (GActionInterface *iface);
 
-static void   gimp_double_action_activate     (GtkAction    *action);
+static void   gimp_double_action_set_property        (GObject          *object,
+                                                      guint             prop_id,
+                                                      const GValue     *value,
+                                                      GParamSpec       *pspec);
+static void   gimp_double_action_get_property        (GObject          *object,
+                                                      guint             prop_id,
+                                                      GValue           *value,
+                                                      GParamSpec       *pspec);
+
+static void   gimp_double_action_activate            (GtkAction        *action);
+
+static void   gimp_double_action_g_activate          (GAction          *action,
+                                                      GVariant         *parameter);
 
 
-G_DEFINE_TYPE (GimpDoubleAction, gimp_double_action, GIMP_TYPE_ACTION_IMPL)
+G_DEFINE_TYPE_WITH_CODE (GimpDoubleAction, gimp_double_action, GIMP_TYPE_ACTION_IMPL,
+                         G_IMPLEMENT_INTERFACE (G_TYPE_ACTION, gimp_double_action_g_action_iface_init))
 
 #define parent_class gimp_double_action_parent_class
 
@@ -77,6 +83,12 @@ gimp_double_action_class_init (GimpDoubleActionClass *klass)
 static void
 gimp_double_action_init (GimpDoubleAction *action)
 {
+}
+
+static void
+gimp_double_action_g_action_iface_init (GActionInterface *iface)
+{
+  iface->activate = gimp_double_action_g_activate;
 }
 
 static void
@@ -142,6 +154,18 @@ gimp_double_action_new (const gchar *name,
 
 static void
 gimp_double_action_activate (GtkAction *action)
+{
+  GimpDoubleAction *double_action = GIMP_DOUBLE_ACTION (action);
+
+  gimp_action_emit_activate (GIMP_ACTION (action),
+                             g_variant_new_double (double_action->value));
+
+  gimp_action_history_action_activated (GIMP_ACTION (action));
+}
+
+static void
+gimp_double_action_g_activate (GAction  *action,
+                               GVariant *parameter)
 {
   GimpDoubleAction *double_action = GIMP_DOUBLE_ACTION (action);
 

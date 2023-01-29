@@ -42,23 +42,28 @@ enum
 };
 
 
-static void   gimp_procedure_action_finalize      (GObject      *object);
-static void   gimp_procedure_action_set_property  (GObject      *object,
-                                                   guint         prop_id,
-                                                   const GValue *value,
-                                                   GParamSpec   *pspec);
-static void   gimp_procedure_action_get_property  (GObject      *object,
-                                                   guint         prop_id,
-                                                   GValue       *value,
-                                                   GParamSpec   *pspec);
+static void   gimp_procedure_action_g_action_iface_init (GActionInterface *iface);
 
-static void   gimp_procedure_action_activate      (GtkAction    *action);
-static void   gimp_procedure_action_connect_proxy (GtkAction    *action,
-                                                   GtkWidget    *proxy);
+static void   gimp_procedure_action_finalize            (GObject          *object);
+static void   gimp_procedure_action_set_property        (GObject          *object,
+                                                         guint             prop_id,
+                                                         const GValue     *value,
+                                                         GParamSpec       *pspec);
+static void   gimp_procedure_action_get_property        (GObject          *object,
+                                                         guint             prop_id,
+                                                         GValue           *value,
+                                                         GParamSpec       *pspec);
+
+static void   gimp_procedure_action_activate            (GtkAction        *action);
+static void   gimp_procedure_action_connect_proxy       (GtkAction        *action,
+                                                         GtkWidget        *proxy);
+
+static void   gimp_procedure_action_g_activate          (GAction          *action,
+                                                         GVariant         *parameter);
 
 
-G_DEFINE_TYPE (GimpProcedureAction, gimp_procedure_action,
-               GIMP_TYPE_ACTION_IMPL)
+G_DEFINE_TYPE_WITH_CODE (GimpProcedureAction, gimp_procedure_action, GIMP_TYPE_ACTION_IMPL,
+                         G_IMPLEMENT_INTERFACE (G_TYPE_ACTION, gimp_procedure_action_g_action_iface_init))
 
 #define parent_class gimp_procedure_action_parent_class
 
@@ -81,6 +86,12 @@ gimp_procedure_action_class_init (GimpProcedureActionClass *klass)
                                                         NULL, NULL,
                                                         GIMP_TYPE_PROCEDURE,
                                                         GIMP_PARAM_READWRITE));
+}
+
+static void
+gimp_procedure_action_g_action_iface_init (GActionInterface *iface)
+{
+  iface->activate = gimp_procedure_action_g_activate;
 }
 
 static void
@@ -199,6 +210,27 @@ gimp_procedure_action_connect_proxy (GtkAction *action,
           gimp_menu_item_set_image (GTK_MENU_ITEM (proxy), image);
           g_object_unref (pixbuf);
         }
+    }
+}
+
+static void
+gimp_procedure_action_g_activate (GAction  *action,
+                                  GVariant *parameter)
+{
+  GimpProcedureAction *procedure_action = GIMP_PROCEDURE_ACTION (action);
+
+  /* Not all actions have procedures associated with them, for example
+   * unused "filters-recent-[N]" actions, so check for NULL before we
+   * invoke the action
+   */
+  if (procedure_action->procedure)
+    {
+      gsize hack = GPOINTER_TO_SIZE (procedure_action->procedure);
+
+      gimp_action_emit_activate (GIMP_ACTION (action),
+                                 g_variant_new_uint64 (hack));
+
+      gimp_action_history_action_activated (GIMP_ACTION (action));
     }
 }
 

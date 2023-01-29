@@ -38,20 +38,26 @@ enum
 };
 
 
-static void   gimp_string_action_finalize     (GObject      *object);
-static void   gimp_string_action_set_property (GObject      *object,
-                                               guint         prop_id,
-                                               const GValue *value,
-                                               GParamSpec   *pspec);
-static void   gimp_string_action_get_property (GObject      *object,
-                                               guint         prop_id,
-                                               GValue       *value,
-                                               GParamSpec   *pspec);
+static void   gimp_string_action_g_action_iface_init (GActionInterface *iface);
 
-static void   gimp_string_action_activate     (GtkAction    *action);
+static void   gimp_string_action_finalize            (GObject          *object);
+static void   gimp_string_action_set_property        (GObject          *object,
+                                                      guint             prop_id,
+                                                      const GValue     *value,
+                                                      GParamSpec       *pspec);
+static void   gimp_string_action_get_property        (GObject          *object,
+                                                      guint             prop_id,
+                                                      GValue           *value,
+                                                      GParamSpec       *pspec);
+
+static void   gimp_string_action_activate            (GtkAction        *action);
+
+static void   gimp_string_action_g_activate          (GimpAction       *action,
+                                                      GVariant         *parameter);
 
 
-G_DEFINE_TYPE (GimpStringAction, gimp_string_action, GIMP_TYPE_ACTION_IMPL)
+G_DEFINE_TYPE_WITH_CODE (GimpStringAction, gimp_string_action, GIMP_TYPE_ACTION_IMPL,
+                         G_IMPLEMENT_INTERFACE (G_TYPE_ACTION, gimp_string_action_g_action_iface_init))
 
 #define parent_class gimp_string_action_parent_class
 
@@ -73,6 +79,12 @@ gimp_string_action_class_init (GimpStringActionClass *klass)
                                                         NULL, NULL,
                                                         NULL,
                                                         GIMP_PARAM_READWRITE));
+}
+
+static void
+gimp_string_action_g_action_iface_init (GActionInterface *iface)
+{
+  iface->activate = gimp_string_action_g_activate;
 }
 
 static void
@@ -154,6 +166,18 @@ gimp_string_action_new (const gchar *name,
 
 static void
 gimp_string_action_activate (GtkAction *action)
+{
+  GimpStringAction *string_action = GIMP_STRING_ACTION (action);
+
+  gimp_action_emit_activate (GIMP_ACTION (action),
+                             g_variant_new_string (string_action->value));
+
+  gimp_action_history_action_activated (GIMP_ACTION (action));
+}
+
+static void
+gimp_string_action_g_activate (GimpAction *action,
+                               GVariant   *parameter)
 {
   GimpStringAction *string_action = GIMP_STRING_ACTION (action);
 

@@ -39,19 +39,24 @@ enum
 };
 
 
-static void   gimp_enum_action_set_property (GObject      *object,
-                                             guint         prop_id,
-                                             const GValue *value,
-                                             GParamSpec   *pspec);
-static void   gimp_enum_action_get_property (GObject      *object,
-                                             guint         prop_id,
-                                             GValue       *value,
-                                             GParamSpec   *pspec);
+static void   gimp_enum_action_g_action_iface_init (GActionInterface *iface);
 
-static void   gimp_enum_action_activate     (GtkAction    *action);
+static void   gimp_enum_action_set_property        (GObject          *object,
+                                                    guint             prop_id,
+                                                    const GValue     *value,
+                                                    GParamSpec       *pspec);
+static void   gimp_enum_action_get_property        (GObject          *object,
+                                                    guint             prop_id,
+                                                    GValue           *value,
+                                                    GParamSpec       *pspec);
+
+static void   gimp_enum_action_activate            (GtkAction        *action);
+static void   gimp_enum_action_g_activate          (GAction          *action,
+                                                    GVariant         *parameter);
 
 
-G_DEFINE_TYPE (GimpEnumAction, gimp_enum_action, GIMP_TYPE_ACTION_IMPL)
+G_DEFINE_TYPE_WITH_CODE (GimpEnumAction, gimp_enum_action, GIMP_TYPE_ACTION_IMPL,
+                         G_IMPLEMENT_INTERFACE (G_TYPE_ACTION, gimp_enum_action_g_action_iface_init))
 
 #define parent_class gimp_enum_action_parent_class
 
@@ -78,6 +83,12 @@ gimp_enum_action_class_init (GimpEnumActionClass *klass)
                                                          NULL, NULL,
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
+}
+
+static void
+gimp_enum_action_g_action_iface_init (GActionInterface *iface)
+{
+  iface->activate = gimp_enum_action_g_activate;
 }
 
 static void
@@ -156,6 +167,18 @@ gimp_enum_action_new (const gchar *name,
 
 static void
 gimp_enum_action_activate (GtkAction *action)
+{
+  GimpEnumAction *enum_action = GIMP_ENUM_ACTION (action);
+
+  gimp_action_emit_activate (GIMP_ACTION (enum_action),
+                             g_variant_new_int32 (enum_action->value));
+
+  gimp_action_history_action_activated (GIMP_ACTION (action));
+}
+
+static void
+gimp_enum_action_g_activate (GAction  *action,
+                             GVariant *parameter)
 {
   GimpEnumAction *enum_action = GIMP_ENUM_ACTION (action);
 
