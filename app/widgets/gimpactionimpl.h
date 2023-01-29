@@ -29,25 +29,32 @@
 #define GIMP_IS_ACTION_IMPL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((obj), GIMP_TYPE_ACTION_IMPL))
 #define GIMP_ACTION_IMPL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), GIMP_TYPE_ACTION_IMPL, GimpActionImplClass))
 
-typedef struct _GimpActionImpl      GimpActionImpl;
-typedef struct _GimpActionImplClass GimpActionImplClass;
+typedef struct _GimpActionImpl        GimpActionImpl;
+typedef struct _GimpActionImplClass   GimpActionImplClass;
+typedef struct _GimpActionImplPrivate GimpActionImplPrivate;
 
 struct _GimpActionImpl
 {
-  GtkAction           parent_instance;
+  GtkAction              parent_instance;
 
-  GimpContext        *context;
+  GimpContext           *context;
 
-  gchar              *disable_reason;
-  GimpRGB            *color;
-  GimpViewable       *viewable;
-  PangoEllipsizeMode  ellipsize;
-  gint                max_width_chars;
+  gchar                 *disable_reason;
+  GimpRGB               *color;
+  GimpViewable          *viewable;
+  PangoEllipsizeMode     ellipsize;
+  gint                   max_width_chars;
+
+  GimpActionImplPrivate *priv;
 };
 
 struct _GimpActionImplClass
 {
-  GtkActionClass parent_class;
+  GtkActionClass    parent_class;
+
+  /*  signals  */
+  void           (* change_state) (GimpActionImpl *impl,
+                                   GVariant       *value);
 };
 
 GType         gimp_action_impl_get_type       (void) G_GNUC_CONST;
