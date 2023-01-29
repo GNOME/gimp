@@ -36,6 +36,8 @@ struct _Gimp
 {
   GimpObject              parent_instance;
 
+  GApplication           *app;
+
   GimpCoreConfig         *config;
   GimpCoreConfig         *edit_config; /* don't use this one, it's just
                                         * for the preferences dialog

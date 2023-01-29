@@ -247,6 +247,8 @@ app_run (const gchar         *full_prog_name,
   app = gimp_console_app_new (gimp, quit, as_new, filenames, batch_interpreter, batch_commands);
 #endif
 
+  gimp->app = app;
+
   gimp_cpu_accel_set_use (use_cpu_accel);
 
   /*  Check if the user's gimp_directory exists */
