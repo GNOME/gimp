@@ -31,12 +31,15 @@
 #define GIMP_RADIO_ACTION_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), GIMP_TYPE_RADIO_ACTION, GimpRadioActionClass))
 
 
-typedef struct _GimpRadioAction      GimpRadioAction;
-typedef struct _GimpRadioActionClass GimpRadioActionClass;
+typedef struct _GimpRadioAction        GimpRadioAction;
+typedef struct _GimpRadioActionClass   GimpRadioActionClass;
+typedef struct _GimpRadioActionPrivate GimpRadioActionPrivate;
 
 struct _GimpRadioAction
 {
-  GtkRadioAction  parent_instance;
+  GtkRadioAction          parent_instance;
+
+  GimpRadioActionPrivate *priv;
 };
 
 struct _GimpRadioActionClass

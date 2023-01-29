@@ -31,12 +31,15 @@
 #define GIMP_TOGGLE_ACTION_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), GIMP_TYPE_TOGGLE_ACTION, GimpToggleActionClass))
 
 
-typedef struct _GimpToggleAction      GimpToggleAction;
-typedef struct _GimpToggleActionClass GimpToggleActionClass;
+typedef struct _GimpToggleAction        GimpToggleAction;
+typedef struct _GimpToggleActionClass   GimpToggleActionClass;
+typedef struct _GimpToggleActionPrivate GimpToggleActionPrivate;
 
 struct _GimpToggleAction
 {
-  GtkToggleAction  parent_instance;
+  GtkToggleAction          parent_instance;
+
+  GimpToggleActionPrivate *priv;
 };
 
 struct _GimpToggleActionClass
