@@ -247,7 +247,7 @@ items_color_tag_cmd_callback (GimpAction   *action,
     if (color_tag != gimp_item_get_color_tag (iter->data))
       gimp_item_set_color_tag (iter->data, color_tag, push_undo);
 
-  if (g_list_length (items) == 1)
+  if (g_list_length (items) != 1)
     gimp_image_undo_group_end (image);
 
   gimp_image_flush (image);
