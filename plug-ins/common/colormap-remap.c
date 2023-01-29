@@ -269,7 +269,7 @@ remap_run (GimpProcedure        *procedure,
   GimpRemap *remap = GIMP_REMAP (run_data);
 
   remap = GIMP_REMAP (gimp_procedure_get_plug_in (procedure));
-  remap->app = gtk_application_new (NULL, G_APPLICATION_DEFAULT_FLAGS);
+  remap->app = gtk_application_new (NULL, G_APPLICATION_FLAGS_NONE);
   remap->image = image;
 
   remap->builder = gtk_builder_new_from_string (
