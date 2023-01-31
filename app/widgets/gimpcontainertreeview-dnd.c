@@ -97,6 +97,7 @@ gimp_container_tree_view_drop_status (GimpContainerTreeView    *tree_view,
       break;
     }
 
+  gtk_tree_view_convert_widget_to_bin_window_coords (tree_view->view, x, y, &x, &y);
   if (gtk_tree_view_get_path_at_pos (tree_view->view, x, y,
                                      &drop_path, NULL, NULL, NULL))
     {

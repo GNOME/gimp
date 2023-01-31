@@ -350,6 +350,12 @@ gimp_item_tree_view_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
+  gtk_tree_view_set_headers_visible (tree_view->view, TRUE);
+
+  gtk_widget_style_get (GTK_WIDGET (item_view),
+                        "button-icon-size", &icon_size,
+                        NULL);
+
   gimp_container_tree_view_connect_name_edited (tree_view,
                                                 G_CALLBACK (gimp_item_tree_view_name_edited),
                                                 item_view);
@@ -363,6 +369,10 @@ gimp_item_tree_view_constructed (GObject *object)
                     item_view);
 
   column = gtk_tree_view_column_new ();
+  image = gtk_image_new_from_icon_name (GIMP_ICON_VISIBLE, icon_size);
+  gtk_tree_view_column_set_widget (column, image);
+  gtk_tree_view_column_set_alignment (column, 0.5);
+  gtk_widget_show (image);
   gtk_tree_view_insert_column (tree_view->view, column, 0);
 
   item_view->priv->eye_cell = gimp_cell_renderer_toggle_new (GIMP_ICON_VISIBLE);
@@ -389,6 +399,10 @@ gimp_item_tree_view_constructed (GObject *object)
                     item_view);
 
   column = gtk_tree_view_column_new ();
+  image = gtk_image_new_from_icon_name (GIMP_ICON_LINKED, icon_size);
+  gtk_tree_view_column_set_widget (column, image);
+  gtk_tree_view_column_set_alignment (column, 0.5);
+  gtk_widget_show (image);
   gtk_tree_view_insert_column (tree_view->view, column, 1);
 
   item_view->priv->chain_cell = gimp_cell_renderer_toggle_new (GIMP_ICON_LINKED);
@@ -476,10 +490,6 @@ gimp_item_tree_view_constructed (GObject *object)
   gimp_help_set_help_data (item_view->priv->lock_content_toggle,
                            item_view_class->lock_content_tooltip,
                            item_view_class->lock_content_help_id);
-
-  gtk_widget_style_get (GTK_WIDGET (item_view),
-                        "button-icon-size", &icon_size,
-                        NULL);
 
   image = gtk_image_new_from_icon_name (item_view_class->lock_content_icon_name,
                                         icon_size);
