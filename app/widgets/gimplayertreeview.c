@@ -63,6 +63,7 @@
 #include "gimphelp-ids.h"
 #include "gimplayermodebox.h"
 #include "gimplayertreeview.h"
+#include "gimptoggleaction.h"
 #include "gimpuimanager.h"
 #include "gimpviewrenderer.h"
 #include "gimpwidgets-utils.h"
@@ -1781,14 +1782,16 @@ static void
 gimp_layer_tree_view_update_menu (GimpLayerTreeView *layer_view,
                                   GList             *layers)
 {
-  GimpUIManager   *ui_manager = gimp_editor_get_ui_manager (GIMP_EDITOR (layer_view));
-  GimpActionGroup *group;
-  GList           *iter;
-  gboolean         have_masks         = FALSE;
-  gboolean         all_masks_shown    = TRUE;
-  gboolean         all_masks_disabled = TRUE;
+  GimpContext *context;
+  Gimp        *gimp;
+  GAction     *action;
+  GList       *iter;
+  gboolean     have_masks         = FALSE;
+  gboolean     all_masks_shown    = TRUE;
+  gboolean     all_masks_disabled = TRUE;
 
-  group = gimp_ui_manager_get_action_group (ui_manager, "layers");
+  context = gimp_container_view_get_context (GIMP_CONTAINER_VIEW (layer_view));
+  gimp    = context->gimp;
 
   for (iter = layers; iter; iter = iter->next)
     {
@@ -1802,16 +1805,26 @@ gimp_layer_tree_view_update_menu (GimpLayerTreeView *layer_view,
         }
     }
 
-  gimp_action_group_set_action_active (group, "layers-mask-show",
-                                       have_masks && all_masks_shown);
-  gimp_action_group_set_action_active (group, "layers-mask-disable",
-                                       have_masks && all_masks_disabled);
+  action = g_action_map_lookup_action (G_ACTION_MAP (gimp->app),
+                                       "layers-mask-show");
+  g_return_if_fail (GIMP_IS_TOGGLE_ACTION (action));
+  gimp_toggle_action_set_active (GIMP_TOGGLE_ACTION (action),
+                                 have_masks && all_masks_shown);
+
+  action = g_action_map_lookup_action (G_ACTION_MAP (gimp->app),
+                                       "layers-mask-disable");
+  g_return_if_fail (GIMP_IS_TOGGLE_ACTION (action));
+  gimp_toggle_action_set_active (GIMP_TOGGLE_ACTION (action),
+                                 have_masks && all_masks_disabled);
 
   /* Only one layer mask at a time can be edited. */
-  gimp_action_group_set_action_active (group, "layers-mask-edit",
-                                       g_list_length (layers) == 1 &&
-                                       gimp_layer_get_mask (layers->data) &&
-                                       gimp_layer_get_edit_mask (layers->data));
+  action = g_action_map_lookup_action (G_ACTION_MAP (gimp->app),
+                                       "layers-mask-edit");
+  g_return_if_fail (GIMP_IS_TOGGLE_ACTION (action));
+  gimp_toggle_action_set_active (GIMP_TOGGLE_ACTION (action),
+                                 g_list_length (layers) == 1 &&
+                                 gimp_layer_get_mask (layers->data) &&
+                                 gimp_layer_get_edit_mask (layers->data));
 }
 
 static void
@@ -2046,12 +2059,7 @@ gimp_layer_tree_view_layer_clicked (GimpCellRendererViewable *cell,
 
   if (gtk_tree_model_get_iter (tree_view->model, &iter, path))
     {
-      GimpUIManager    *ui_manager;
-      GimpActionGroup  *group;
       GimpViewRenderer *renderer;
-
-      ui_manager = gimp_editor_get_ui_manager (GIMP_EDITOR (tree_view));
-      group      = gimp_ui_manager_get_action_group (ui_manager, "layers");
 
       gtk_tree_model_get (tree_view->model, &iter,
                           GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
@@ -2153,8 +2161,19 @@ gimp_layer_tree_view_layer_clicked (GimpCellRendererViewable *cell,
               /* Simple clicks (without modifiers) activate the layer */
 
               if (mask)
-                gimp_action_group_set_action_active (group,
-                                                     "layers-mask-edit", FALSE);
+                {
+                  GimpContext *context;
+                  Gimp        *gimp;
+                  GAction     *action;
+
+                  context = gimp_container_view_get_context (GIMP_CONTAINER_VIEW (layer_view));
+                  gimp    = context->gimp;
+                  action  = g_action_map_lookup_action (G_ACTION_MAP (gimp->app),
+                                                        "layers-mask-edit");
+                  g_return_if_fail (GIMP_IS_TOGGLE_ACTION (action));
+                  gimp_toggle_action_set_active (GIMP_TOGGLE_ACTION (action),
+                                                 FALSE);
+                }
             }
 
           g_object_unref (renderer);
@@ -2179,11 +2198,6 @@ gimp_layer_tree_view_mask_clicked (GimpCellRendererViewable *cell,
   if (gtk_tree_model_get_iter (tree_view->model, &iter, path))
     {
       GimpViewRenderer *renderer;
-      GimpUIManager    *ui_manager;
-      GimpActionGroup  *group;
-
-      ui_manager = gimp_editor_get_ui_manager (GIMP_EDITOR (tree_view));
-      group      = gimp_ui_manager_get_action_group (ui_manager, "layers");
 
       gtk_tree_model_get (tree_view->model, &iter,
                           GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
@@ -2215,9 +2229,19 @@ gimp_layer_tree_view_mask_clicked (GimpCellRendererViewable *cell,
             }
           else if (! gimp_layer_get_edit_mask (layer))
             {
+              GimpContext *context;
+              Gimp        *gimp;
+              GAction     *action;
+
+              context = gimp_container_view_get_context (GIMP_CONTAINER_VIEW (layer_view));
+              gimp    = context->gimp;
+              action  = g_action_map_lookup_action (G_ACTION_MAP (gimp->app),
+                                                    "layers-mask-edit");
+              g_return_if_fail (GIMP_IS_TOGGLE_ACTION (action));
+
               /* Simple click selects the mask for edition. */
-              gimp_action_group_set_action_active (group,
-                                                   "layers-mask-edit", TRUE);
+              gimp_toggle_action_set_active (GIMP_TOGGLE_ACTION (action),
+                                             TRUE);
             }
 
           g_object_unref (renderer);
