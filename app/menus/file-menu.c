@@ -103,16 +103,15 @@ file_menu_open_recent_query_tooltip (GtkWidget  *widget,
                                      GtkTooltip *tooltip,
                                      GimpAction *action)
 {
-  GimpActionImpl *impl = GIMP_ACTION_IMPL (action);
-  gchar          *text;
+  gchar *text;
 
   text = gtk_widget_get_tooltip_text (widget);
   gtk_tooltip_set_text (tooltip, text);
   g_free (text);
 
   gtk_tooltip_set_icon (tooltip,
-                        gimp_viewable_get_pixbuf (impl->viewable,
-                                                  impl->context,
+                        gimp_viewable_get_pixbuf (gimp_action_get_viewable (action),
+                                                  gimp_action_get_context (action),
                                                   GIMP_THUMB_SIZE_NORMAL,
                                                   GIMP_THUMB_SIZE_NORMAL));
 

@@ -408,16 +408,18 @@ windows_menu_display_query_tooltip (GtkWidget  *widget,
                                     GtkTooltip *tooltip,
                                     GimpAction *action)
 {
-  GimpActionImpl *impl  = GIMP_ACTION_IMPL (action);
-  GimpImage      *image = GIMP_IMAGE (impl->viewable);
-  gchar          *text;
-  gdouble         xres;
-  gdouble         yres;
-  gint            width;
-  gint            height;
+  GimpViewable *viewable = gimp_action_get_viewable (action);
+  GimpImage    *image;
+  gchar        *text;
+  gdouble       xres;
+  gdouble       yres;
+  gint          width;
+  gint          height;
 
-  if (! image)
+  if (! viewable)
     return FALSE;
+
+  image = GIMP_IMAGE (viewable);
 
   text = gtk_widget_get_tooltip_text (widget);
   gtk_tooltip_set_text (tooltip, text);
@@ -432,8 +434,8 @@ windows_menu_display_query_tooltip (GtkWidget  *widget,
                                    &width, &height, NULL);
 
   gtk_tooltip_set_icon (tooltip,
-                        gimp_viewable_get_pixbuf (impl->viewable,
-                                                  impl->context,
+                        gimp_viewable_get_pixbuf (viewable,
+                                                  gimp_action_get_context (action),
                                                   width, height));
 
   return TRUE;

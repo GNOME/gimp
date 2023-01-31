@@ -23,11 +23,22 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
+#include "libgimpcolor/gimpcolor.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
 
+#include "config/gimpcoreconfig.h"
+
+#include "core/gimp.h"
+#include "core/gimpcontext.h"
+#include "core/gimpimagefile.h"  /* eek */
+
 #include "gimpaction.h"
+#include "gimpview.h"
+#include "gimpviewrenderer.h"
+#include "gimpwidgets-utils.h"
 
 
 enum
@@ -43,7 +54,14 @@ typedef struct _GimpActionPrivate GimpActionPrivate;
 
 struct _GimpActionPrivate
 {
-  gchar *disable_reason;
+  GimpContext           *context;
+
+  gchar                 *disable_reason;
+
+  GimpRGB               *color;
+  GimpViewable          *viewable;
+  PangoEllipsizeMode     ellipsize;
+  gint                   max_width_chars;
 };
 
 
@@ -51,8 +69,6 @@ static GimpActionPrivate *
               gimp_action_get_private       (GimpAction        *action);
 static void   gimp_action_private_finalize  (GimpActionPrivate *priv);
 
-static void   gimp_action_set_proxy_tooltip (GimpAction        *action,
-                                             GtkWidget         *proxy);
 static void   gimp_action_label_notify      (GimpAction        *action,
                                              const GParamSpec  *pspec,
                                              gpointer           data);
@@ -69,6 +85,8 @@ static guint action_signals[LAST_SIGNAL];
 static void
 gimp_action_default_init (GimpActionInterface *iface)
 {
+  GimpRGB black;
+
   action_signals[ACTIVATE] =
     g_signal_new ("gimp-activate",
                   G_TYPE_FROM_INTERFACE (iface),
@@ -86,12 +104,48 @@ gimp_action_default_init (GimpActionInterface *iface)
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   G_TYPE_VARIANT);
+
+  g_object_interface_install_property (iface,
+                                       g_param_spec_object ("context",
+                                                            NULL, NULL,
+                                                            GIMP_TYPE_CONTEXT,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_rgba_set (&black, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
+  g_object_interface_install_property (iface,
+                                       gimp_param_spec_rgb ("color",
+                                                            NULL, NULL,
+                                                            TRUE, &black,
+                                                            GIMP_PARAM_READWRITE));
+  g_object_interface_install_property (iface,
+                                       g_param_spec_object ("viewable",
+                                                            NULL, NULL,
+                                                            GIMP_TYPE_VIEWABLE,
+                                                            GIMP_PARAM_READWRITE));
+
+  g_object_interface_install_property (iface,
+                                       g_param_spec_enum ("ellipsize",
+                                                          NULL, NULL,
+                                                          PANGO_TYPE_ELLIPSIZE_MODE,
+                                                          PANGO_ELLIPSIZE_NONE,
+                                                          GIMP_PARAM_READWRITE));
+  g_object_interface_install_property (iface,
+                                       g_param_spec_int ("max-width-chars",
+                                                         NULL, NULL,
+                                                         -1, G_MAXINT, -1,
+                                                         GIMP_PARAM_READWRITE));
 }
 
 void
 gimp_action_init (GimpAction *action)
 {
+  GimpActionPrivate *priv;
+
   g_return_if_fail (GIMP_IS_ACTION (action));
+
+  priv = GET_PRIVATE (action);
+
+  priv->ellipsize       = PANGO_ELLIPSIZE_NONE;
+  priv->max_width_chars = -1;
 
   g_signal_connect (action, "notify::label",
                     G_CALLBACK (gimp_action_label_notify),
@@ -135,14 +189,38 @@ gimp_action_emit_change_state (GimpAction *action,
 }
 
 void
-gimp_action_set_proxy (GimpAction *action,
-                       GtkWidget  *proxy)
+gimp_action_set_proxy_tooltip (GimpAction *action,
+                               GtkWidget  *proxy)
 {
+  const gchar *tooltip;
+  const gchar *reason         = NULL;
+  gchar       *escaped_reason = NULL;
+  gchar       *markup;
+
   g_return_if_fail (GIMP_IS_ACTION (action));
   g_return_if_fail (GTK_IS_WIDGET (proxy));
 
-  gimp_action_set_proxy_tooltip (action, proxy);
+  tooltip = gimp_action_get_tooltip (action);
+
+  gimp_action_get_sensitive (action, &reason);
+  if (reason)
+    escaped_reason = g_markup_escape_text (reason, -1);
+
+  markup = g_strdup_printf ("%s%s"                                   /* Action tooltip  */
+                            "<i><span weight='light'>%s</span></i>", /* Inactive reason */
+                            tooltip,
+                            escaped_reason && tooltip ? "\n" : "",
+                            escaped_reason ? escaped_reason : "");
+
+  if (tooltip || escaped_reason)
+    gimp_help_set_help_data_with_markup (proxy, markup,
+                                         g_object_get_qdata (G_OBJECT (proxy),
+                                                             GIMP_HELP_ID));
+
+  g_free (escaped_reason);
+  g_free (markup);
 }
+
 
 const gchar *
 gimp_action_get_name (GimpAction *action)
@@ -414,8 +492,233 @@ gimp_action_is_gui_blacklisted (const gchar *action_name)
   return FALSE;
 }
 
+GimpViewable *
+gimp_action_get_viewable (GimpAction *action)
+{
+  g_return_val_if_fail (GIMP_IS_ACTION (action), NULL);
 
-/*  private functions  */
+  return GET_PRIVATE (action)->viewable;
+}
+
+GimpContext *
+gimp_action_get_context (GimpAction *action)
+{
+  g_return_val_if_fail (GIMP_IS_ACTION (action), NULL);
+
+  return GET_PRIVATE (action)->context;
+}
+
+
+/* Protected functions. */
+
+/**
+ * gimp_action_install_properties:
+ * @klass: the class structure for a type deriving from #GObject
+ *
+ * Installs the necessary properties for a class implementing
+ * #GimpAction. Please call this function in the *_class_init()
+ * function of the child class.
+ **/
+void
+gimp_action_install_properties (GObjectClass *klass)
+{
+  g_object_class_override_property (klass, GIMP_ACTION_PROP_CONTEXT,         "context");
+  g_object_class_override_property (klass, GIMP_ACTION_PROP_COLOR,           "color");
+  g_object_class_override_property (klass, GIMP_ACTION_PROP_VIEWABLE,        "viewable");
+
+  g_object_class_override_property (klass, GIMP_ACTION_PROP_ELLIPSIZE,       "ellipsize");
+  g_object_class_override_property (klass, GIMP_ACTION_PROP_MAX_WIDTH_CHARS, "max-width-chars");
+}
+
+void
+gimp_action_get_property (GObject    *object,
+                          guint       property_id,
+                          GValue     *value,
+                          GParamSpec *pspec)
+{
+  GimpActionPrivate *priv;
+
+  priv = GET_PRIVATE (object);
+
+  switch (property_id)
+    {
+    case GIMP_ACTION_PROP_CONTEXT:
+      g_value_set_object (value, priv->context);
+      break;
+    case GIMP_ACTION_PROP_COLOR:
+      g_value_set_boxed (value, priv->color);
+      break;
+    case GIMP_ACTION_PROP_VIEWABLE:
+      g_value_set_object (value, priv->viewable);
+      break;
+    case GIMP_ACTION_PROP_ELLIPSIZE:
+      g_value_set_enum (value, priv->ellipsize);
+      break;
+    case GIMP_ACTION_PROP_MAX_WIDTH_CHARS:
+      g_value_set_int (value, priv->max_width_chars);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+void
+gimp_action_set_property (GObject      *object,
+                          guint         property_id,
+                          const GValue *value,
+                          GParamSpec   *pspec)
+{
+  GimpActionPrivate *priv;
+  gboolean           set_proxy = FALSE;
+
+  priv = GET_PRIVATE (object);
+
+  switch (property_id)
+    {
+    case GIMP_ACTION_PROP_CONTEXT:
+      g_set_object (&priv->context, g_value_get_object (value));
+      break;
+    case GIMP_ACTION_PROP_COLOR:
+      g_clear_pointer (&priv->color, g_free);
+      priv->color = g_value_dup_boxed (value);
+      set_proxy = TRUE;
+      break;
+    case GIMP_ACTION_PROP_VIEWABLE:
+      g_set_object (&priv->viewable, g_value_get_object (value));
+      set_proxy = TRUE;
+      break;
+    case GIMP_ACTION_PROP_ELLIPSIZE:
+      priv->ellipsize = g_value_get_enum (value);
+      set_proxy = TRUE;
+      break;
+    case GIMP_ACTION_PROP_MAX_WIDTH_CHARS:
+      priv->max_width_chars = g_value_get_int (value);
+      set_proxy = TRUE;
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+
+  if (set_proxy)
+    {
+      GSList *list;
+
+      for (list = gimp_action_get_proxies (GIMP_ACTION (object));
+           list;
+           list = g_slist_next (list))
+        {
+          gimp_action_set_proxy (GIMP_ACTION (object), list->data);
+        }
+    }
+}
+
+void
+gimp_action_set_proxy (GimpAction *action,
+                       GtkWidget  *proxy)
+{
+  GimpActionPrivate *priv = GET_PRIVATE (action);
+
+  if (! GTK_IS_MENU_ITEM (proxy))
+    return;
+
+  if (priv->color)
+    {
+      GtkWidget *area;
+
+      area = gimp_menu_item_get_image (GTK_MENU_ITEM (proxy));
+
+      if (GIMP_IS_COLOR_AREA (area))
+        {
+          gimp_color_area_set_color (GIMP_COLOR_AREA (area), priv->color);
+        }
+      else
+        {
+          gint width, height;
+
+          area = gimp_color_area_new (priv->color,
+                                      GIMP_COLOR_AREA_SMALL_CHECKS, 0);
+          gimp_color_area_set_draw_border (GIMP_COLOR_AREA (area), TRUE);
+
+          if (priv->context)
+            gimp_color_area_set_color_config (GIMP_COLOR_AREA (area),
+                                              priv->context->gimp->config->color_management);
+
+          gtk_icon_size_lookup (GTK_ICON_SIZE_MENU, &width, &height);
+          gtk_widget_set_size_request (area, width, height);
+          gimp_menu_item_set_image (GTK_MENU_ITEM (proxy), area);
+          gtk_widget_show (area);
+        }
+    }
+  else if (priv->viewable)
+    {
+      GtkWidget *view;
+
+      view = gimp_menu_item_get_image (GTK_MENU_ITEM (proxy));
+
+      if (GIMP_IS_VIEW (view) &&
+          g_type_is_a (G_TYPE_FROM_INSTANCE (priv->viewable),
+                       GIMP_VIEW (view)->renderer->viewable_type))
+        {
+          gimp_view_set_viewable (GIMP_VIEW (view), priv->viewable);
+        }
+      else
+        {
+          GtkIconSize size;
+          gint        width, height;
+          gint        border_width;
+
+          if (GIMP_IS_IMAGEFILE (priv->viewable))
+            {
+              size         = GTK_ICON_SIZE_LARGE_TOOLBAR;
+              border_width = 0;
+            }
+          else
+            {
+              size         = GTK_ICON_SIZE_MENU;
+              border_width = 1;
+            }
+
+          gtk_icon_size_lookup (size, &width, &height);
+          view = gimp_view_new_full (priv->context, priv->viewable,
+                                     width, height, border_width,
+                                     FALSE, FALSE, FALSE);
+          gimp_menu_item_set_image (GTK_MENU_ITEM (proxy), view);
+          gtk_widget_show (view);
+        }
+    }
+  else
+    {
+      GtkWidget *image;
+
+      image = gimp_menu_item_get_image (GTK_MENU_ITEM (proxy));
+
+      if (GIMP_IS_VIEW (image) || GIMP_IS_COLOR_AREA (image))
+        {
+          gimp_menu_item_set_image (GTK_MENU_ITEM (proxy), NULL);
+          g_object_notify (G_OBJECT (action), "icon-name");
+        }
+    }
+
+  {
+    GtkWidget *child = gtk_bin_get_child (GTK_BIN (proxy));
+
+    if (GTK_IS_BOX (child))
+      child = g_object_get_data (G_OBJECT (proxy), "gimp-menu-item-label");
+
+    if (GTK_IS_LABEL (child))
+      {
+        GtkLabel *label = GTK_LABEL (child);
+
+        gtk_label_set_ellipsize (label, priv->ellipsize);
+        gtk_label_set_max_width_chars (label, priv->max_width_chars);
+      }
+  }
+}
+
+
+/*  Private functions  */
 
 static GimpActionPrivate *
 gimp_action_get_private (GimpAction *action)
@@ -445,38 +748,11 @@ static void
 gimp_action_private_finalize (GimpActionPrivate *priv)
 {
   g_clear_pointer (&priv->disable_reason, g_free);
+  g_clear_object  (&priv->context);
+  g_clear_pointer (&priv->color, g_free);
+  g_clear_object  (&priv->viewable);
 
   g_slice_free (GimpActionPrivate, priv);
-}
-
-static void
-gimp_action_set_proxy_tooltip (GimpAction *action,
-                               GtkWidget  *proxy)
-{
-  const gchar *tooltip;
-  const gchar *reason         = NULL;
-  gchar       *escaped_reason = NULL;
-  gchar       *markup;
-
-  tooltip = gimp_action_get_tooltip (action);
-
-  gimp_action_get_sensitive (action, &reason);
-  if (reason)
-    escaped_reason = g_markup_escape_text (reason, -1);
-
-  markup = g_strdup_printf ("%s%s"                                   /* Action tooltip  */
-                            "<i><span weight='light'>%s</span></i>", /* Inactive reason */
-                            tooltip,
-                            escaped_reason && tooltip ? "\n" : "",
-                            escaped_reason ? escaped_reason : "");
-
-  if (tooltip || escaped_reason)
-    gimp_help_set_help_data_with_markup (proxy, markup,
-                                         g_object_get_qdata (G_OBJECT (proxy),
-                                                             GIMP_HELP_ID));
-
-  g_free (escaped_reason);
-  g_free (markup);
 }
 
 static void

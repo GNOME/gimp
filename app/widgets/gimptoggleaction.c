@@ -37,7 +37,7 @@
 enum
 {
   PROP_0,
-  PROP_ENABLED,
+  PROP_ENABLED = GIMP_ACTION_PROP_LAST + 1,
   PROP_PARAMETER_TYPE,
   PROP_STATE_TYPE,
   PROP_STATE
@@ -106,6 +106,8 @@ gimp_toggle_action_class_init (GimpToggleActionClass *klass)
   action_class->connect_proxy = gimp_toggle_action_connect_proxy;
 
   toggle_class->toggled       = gimp_toggle_action_toggled;
+
+  gimp_action_install_properties (object_class);
 
   /**
    * GimpToggleAction:enabled:
@@ -207,7 +209,7 @@ gimp_toggle_action_get_property (GObject    *object,
       break;
 
     default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+      gimp_action_get_property (object, prop_id, value, pspec);
       break;
     }
 }
@@ -249,7 +251,7 @@ gimp_toggle_action_set_property (GObject      *object,
       break;
 
     default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+      gimp_action_set_property (object, prop_id, value, pspec);
       break;
     }
 }
@@ -336,7 +338,7 @@ gimp_toggle_action_connect_proxy (GtkAction *action,
 {
   GTK_ACTION_CLASS (parent_class)->connect_proxy (action, proxy);
 
-  gimp_action_set_proxy (GIMP_ACTION (action), proxy);
+  gimp_action_set_proxy_tooltip (GIMP_ACTION (action), proxy);
 }
 
 static void

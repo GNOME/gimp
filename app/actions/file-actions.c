@@ -366,7 +366,7 @@ file_actions_last_opened_update (GimpContainer   *container,
           GimpImagefile *imagefile = (GimpImagefile *)
             gimp_container_get_child_by_index (container, i);
 
-          if (GIMP_ACTION_IMPL (action)->viewable != (GimpViewable *) imagefile)
+          if (gimp_action_get_viewable (action) != (GimpViewable *) imagefile)
             {
               GFile       *file;
               const gchar *name;

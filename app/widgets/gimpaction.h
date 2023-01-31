@@ -28,6 +28,18 @@
 #define GIMP_ACTION_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE((obj), GIMP_TYPE_ACTION, GimpActionInterface))
 
 
+enum
+{
+  GIMP_ACTION_PROP_0,
+  GIMP_ACTION_PROP_CONTEXT,
+  GIMP_ACTION_PROP_COLOR,
+  GIMP_ACTION_PROP_VIEWABLE,
+  GIMP_ACTION_PROP_ELLIPSIZE,
+  GIMP_ACTION_PROP_MAX_WIDTH_CHARS,
+
+  GIMP_ACTION_PROP_LAST = GIMP_ACTION_PROP_MAX_WIDTH_CHARS,
+};
+
 typedef struct _GimpActionInterface GimpActionInterface;
 
 struct _GimpActionInterface
@@ -51,7 +63,7 @@ void          gimp_action_emit_activate       (GimpAction    *action,
 void          gimp_action_emit_change_state   (GimpAction    *action,
                                                GVariant      *value);
 
-void          gimp_action_set_proxy           (GimpAction    *action,
+void          gimp_action_set_proxy_tooltip   (GimpAction    *action,
                                                GtkWidget     *proxy);
 
 const gchar * gimp_action_get_name            (GimpAction    *action);
@@ -107,6 +119,25 @@ gint          gimp_action_name_compare        (GimpAction    *action1,
                                                GimpAction    *action2);
 
 gboolean      gimp_action_is_gui_blacklisted  (const gchar   *action_name);
+
+GimpContext  * gimp_action_get_context        (GimpAction    *action);
+GimpViewable * gimp_action_get_viewable       (GimpAction    *action);
+
+
+/* Protected functions. */
+
+void          gimp_action_install_properties  (GObjectClass  *klass);
+void          gimp_action_get_property        (GObject       *object,
+                                               guint          property_id,
+                                               GValue        *value,
+                                               GParamSpec    *pspec);
+void          gimp_action_set_property        (GObject       *object,
+                                               guint          property_id,
+                                               const GValue  *value,
+                                               GParamSpec    *pspec);
+
+void          gimp_action_set_proxy           (GimpAction    *action,
+                                               GtkWidget     *proxy);
 
 
 #endif  /* __GIMP_ACTION_H__ */

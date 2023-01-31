@@ -37,7 +37,7 @@
 enum
 {
   PROP_0,
-  PROP_ENABLED,
+  PROP_ENABLED = GIMP_ACTION_PROP_LAST + 1,
   PROP_PARAMETER_TYPE,
   PROP_STATE_TYPE,
   PROP_STATE
@@ -109,6 +109,8 @@ gimp_radio_action_class_init (GimpRadioActionClass *klass)
   action_class->connect_proxy = gimp_radio_action_connect_proxy;
 
   radio_class->changed        = gimp_radio_action_changed;
+
+  gimp_action_install_properties (object_class);
 
   /**
    * GimpRadioAction:enabled:
@@ -211,7 +213,7 @@ gimp_radio_action_get_property (GObject    *object,
       break;
 
     default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+      gimp_action_get_property (object, prop_id, value, pspec);
       break;
     }
 }
@@ -253,7 +255,7 @@ gimp_radio_action_set_property (GObject      *object,
       break;
 
     default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+      gimp_action_set_property (object, prop_id, value, pspec);
       break;
     }
 }
@@ -356,7 +358,7 @@ gimp_radio_action_connect_proxy (GtkAction *action,
 {
   GTK_ACTION_CLASS (parent_class)->connect_proxy (action, proxy);
 
-  gimp_action_set_proxy (GIMP_ACTION (action), proxy);
+  gimp_action_set_proxy_tooltip (GIMP_ACTION (action), proxy);
 }
 
 static void

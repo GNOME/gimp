@@ -37,13 +37,6 @@ struct _GimpActionImpl
 {
   GtkAction              parent_instance;
 
-  GimpContext           *context;
-
-  GimpRGB               *color;
-  GimpViewable          *viewable;
-  PangoEllipsizeMode     ellipsize;
-  gint                   max_width_chars;
-
   GimpActionImplPrivate *priv;
 };
 
