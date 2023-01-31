@@ -53,7 +53,6 @@ struct _GimpGuiConfig
   gboolean             restore_session;
   gboolean             restore_monitor;
   gboolean             save_tool_options;
-  gboolean             can_change_accels;
   gboolean             save_accels;
   gboolean             restore_accels;
   gint                 last_opened_size;
@@ -92,6 +91,11 @@ struct _GimpGuiConfig
   gboolean             show_tabs;
   GimpPosition         tabs_position;
   gint                 last_tip_shown;
+
+  /* Currently ignored snce "gtk-can-change-accels" settings got deprecated in
+   * GTK+ 3.10.
+   */
+  gboolean             can_change_accels;
 };
 
 struct _GimpGuiConfigClass

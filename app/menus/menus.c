@@ -44,7 +44,6 @@
 
 /*  local function prototypes  */
 
-static void   menus_can_change_accels (GimpGuiConfig   *config);
 static void   menus_remove_accels     (gpointer         data,
                                        const gchar     *accel_path,
                                        guint            accel_key,
@@ -74,11 +73,6 @@ menus_init (Gimp              *gimp,
 
   /* We need to make sure the property is installed before using it */
   g_type_class_ref (GTK_TYPE_MENU);
-
-  menus_can_change_accels (GIMP_GUI_CONFIG (gimp->config));
-
-  g_signal_connect (gimp->config, "notify::can-change-accels",
-                    G_CALLBACK (menus_can_change_accels), NULL);
 
   global_menu_factory = gimp_menu_factory_new (gimp, action_factory);
 
@@ -413,10 +407,6 @@ menus_exit (Gimp *gimp)
 
   g_object_unref (global_menu_factory);
   global_menu_factory = NULL;
-
-  g_signal_handlers_disconnect_by_func (gimp->config,
-                                        menus_can_change_accels,
-                                        NULL);
 }
 
 void
@@ -515,14 +505,6 @@ menus_remove (Gimp *gimp)
 
 
 /*  private functions  */
-
-static void
-menus_can_change_accels (GimpGuiConfig *config)
-{
-  g_object_set (gtk_settings_get_for_screen (gdk_screen_get_default ()),
-                "gtk-can-change-accels", config->can_change_accels,
-                NULL);
-}
 
 static void
 menus_remove_accels (gpointer        data,

@@ -1958,10 +1958,6 @@ prefs_dialog_new (Gimp       *gimp,
   vbox2 = prefs_frame_new (_("Keyboard Shortcuts"),
                            GTK_CONTAINER (vbox), FALSE);
 
-  prefs_check_button_add (object, "can-change-accels",
-                          _("_Use dynamic keyboard shortcuts"),
-                          GTK_BOX (vbox2));
-
   button = prefs_button_add (GIMP_ICON_PREFERENCES_SYSTEM,
                              _("Configure _Keyboard Shortcuts..."),
                              GTK_BOX (vbox2));

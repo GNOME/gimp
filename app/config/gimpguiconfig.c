@@ -217,6 +217,15 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                             TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
 
+  /* XXX: this is now ignored and unsed because we were relying on
+   * "gtk-can-change-accels" property of GtkSettings which is deprecated and
+   * ignored since GTK+ 3.10.
+   *
+   * Keeping the property around as a reminder of the regression in GIMP 3.
+   * Maybe we can reimplement this with custom code if there are requests. If we
+   * end up deciding to completely getting rid of the property, we must add
+   * update rules in gimp-user-install.c for the gimprc parsing not to break.
+   */
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_CAN_CHANGE_ACCELS,
                             "can-change-accels",
                             "Can change accelerators",
