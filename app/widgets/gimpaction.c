@@ -37,15 +37,28 @@ enum
   LAST_SIGNAL
 };
 
+#define GET_PRIVATE(obj) (gimp_action_get_private ((GimpAction *) (obj)))
 
-static void   gimp_action_set_proxy_tooltip (GimpAction       *action,
-                                             GtkWidget        *proxy);
-static void   gimp_action_label_notify      (GimpAction       *action,
-                                             const GParamSpec *pspec,
-                                             gpointer          data);
-static void   gimp_action_tooltip_notify    (GimpAction       *action,
-                                             const GParamSpec *pspec,
-                                             gpointer          data);
+typedef struct _GimpActionPrivate GimpActionPrivate;
+
+struct _GimpActionPrivate
+{
+  gchar *disable_reason;
+};
+
+
+static GimpActionPrivate *
+              gimp_action_get_private       (GimpAction        *action);
+static void   gimp_action_private_finalize  (GimpActionPrivate *priv);
+
+static void   gimp_action_set_proxy_tooltip (GimpAction        *action,
+                                             GtkWidget         *proxy);
+static void   gimp_action_label_notify      (GimpAction        *action,
+                                             const GParamSpec  *pspec,
+                                             gpointer           data);
+static void   gimp_action_tooltip_notify    (GimpAction        *action,
+                                             const GParamSpec  *pspec,
+                                             gpointer           data);
 
 
 G_DEFINE_INTERFACE (GimpAction, gimp_action, GTK_TYPE_ACTION)
@@ -232,11 +245,13 @@ gimp_action_set_sensitive (GimpAction  *action,
                            gboolean     sensitive,
                            const gchar *reason)
 {
+  GimpActionPrivate *priv = GET_PRIVATE (action);
+
   gtk_action_set_sensitive ((GtkAction *) action, sensitive);
 
-  if (GIMP_ACTION_GET_INTERFACE (action)->set_disable_reason)
-    GIMP_ACTION_GET_INTERFACE (action)->set_disable_reason (action,
-                                                            ! sensitive ? reason : NULL);
+  g_clear_pointer (&priv->disable_reason, g_free);
+  if (reason && ! sensitive)
+    priv->disable_reason = g_strdup (reason);
 }
 
 gboolean
@@ -249,9 +264,12 @@ gimp_action_get_sensitive (GimpAction   *action,
 
   if (reason)
     {
+      GimpActionPrivate *priv = GET_PRIVATE (action);
+
       *reason = NULL;
-      if (! sensitive && GIMP_ACTION_GET_INTERFACE (action)->get_disable_reason)
-        *reason = GIMP_ACTION_GET_INTERFACE (action)->get_disable_reason (action);
+
+      if (! sensitive && priv->disable_reason != NULL)
+        *reason = (const gchar *) priv->disable_reason;
     }
 
   return sensitive;
@@ -267,9 +285,12 @@ gimp_action_is_sensitive (GimpAction   *action,
 
   if (reason)
     {
+      GimpActionPrivate *priv = GET_PRIVATE (action);
+
       *reason = NULL;
-      if (! sensitive && GIMP_ACTION_GET_INTERFACE (action)->get_disable_reason)
-        *reason = GIMP_ACTION_GET_INTERFACE (action)->get_disable_reason (action);
+
+      if (! sensitive && priv->disable_reason != NULL)
+        *reason = (const gchar *) priv->disable_reason;
     }
 
   return sensitive;
@@ -395,6 +416,38 @@ gimp_action_is_gui_blacklisted (const gchar *action_name)
 
 
 /*  private functions  */
+
+static GimpActionPrivate *
+gimp_action_get_private (GimpAction *action)
+{
+  GimpActionPrivate *priv;
+  static GQuark      private_key = 0;
+
+  g_return_val_if_fail (GIMP_IS_ACTION (action), NULL);
+
+  if (! private_key)
+    private_key = g_quark_from_static_string ("gimp-action-priv");
+
+  priv = g_object_get_qdata ((GObject *) action, private_key);
+
+  if (! priv)
+    {
+      priv = g_slice_new0 (GimpActionPrivate);
+
+      g_object_set_qdata_full ((GObject *) action, private_key, priv,
+                               (GDestroyNotify) gimp_action_private_finalize);
+    }
+
+  return priv;
+}
+
+static void
+gimp_action_private_finalize (GimpActionPrivate *priv)
+{
+  g_clear_pointer (&priv->disable_reason, g_free);
+
+  g_slice_free (GimpActionPrivate, priv);
+}
 
 static void
 gimp_action_set_proxy_tooltip (GimpAction *action,

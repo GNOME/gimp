@@ -39,7 +39,6 @@ struct _GimpActionImpl
 
   GimpContext           *context;
 
-  gchar                 *disable_reason;
   GimpRGB               *color;
   GimpViewable          *viewable;
   PangoEllipsizeMode     ellipsize;

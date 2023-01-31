@@ -39,11 +39,6 @@ struct _GimpActionInterface
                                         GVariant    *value);
   void          (* change_state)       (GimpAction  *action,
                                         GVariant    *value);
-
-  /* Virtual methods */
-  void          (* set_disable_reason) (GimpAction  *action,
-                                        const gchar *reason);
-  const gchar * (* get_disable_reason) (GimpAction  *action);
 };
 
 
