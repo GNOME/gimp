@@ -363,7 +363,8 @@ gimp_action_is_gui_blacklisted (const gchar *action_name)
       "tools-curves",
       "tools-levels",
       "tools-offset",
-      "tools-threshold"
+      "tools-threshold",
+      "layers-mask-add-button"
     };
 
   gint i;
