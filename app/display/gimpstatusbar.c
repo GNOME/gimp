@@ -38,7 +38,7 @@
 #include "core/gimpimage-color-profile.h"
 #include "core/gimpprogress.h"
 
-#include "widgets/gimpuimanager.h"
+#include "widgets/gimpaction.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimpdisplay.h"
@@ -2151,10 +2151,12 @@ gimp_statusbar_rotate_pressed (GtkWidget     *event_box,
                                GdkEvent      *event,
                                GimpStatusbar *statusbar)
 {
-  GimpImageWindow *window = gimp_display_shell_get_window (statusbar->shell);
-  GimpUIManager   *manager = gimp_image_window_get_ui_manager (window);
+  GAction *action;
 
-  gimp_ui_manager_activate_action (manager, "view", "view-rotate-other");
+  action = g_action_map_lookup_action (G_ACTION_MAP (statusbar->gimp->app),
+                                       "view-rotate-other");
+  gimp_action_activate (GIMP_ACTION (action));
+
   return FALSE;
 }
 
@@ -2163,10 +2165,11 @@ gimp_statusbar_horiz_flip_pressed (GtkWidget     *event_box,
                                    GdkEvent      *event,
                                    GimpStatusbar *statusbar)
 {
-  GimpImageWindow *window = gimp_display_shell_get_window (statusbar->shell);
-  GimpUIManager   *manager = gimp_image_window_get_ui_manager (window);
+  GAction *action;
 
-  gimp_ui_manager_activate_action (manager, "view", "view-flip-horizontally");
+  action = g_action_map_lookup_action (G_ACTION_MAP (statusbar->gimp->app),
+                                       "view-flip-horizontally");
+  gimp_action_activate (GIMP_ACTION (action));
 
   return FALSE;
 }
@@ -2176,10 +2179,11 @@ gimp_statusbar_vert_flip_pressed (GtkWidget     *event_box,
                                   GdkEvent      *event,
                                   GimpStatusbar *statusbar)
 {
-  GimpImageWindow *window = gimp_display_shell_get_window (statusbar->shell);
-  GimpUIManager   *manager = gimp_image_window_get_ui_manager (window);
+  GAction *action;
 
-  gimp_ui_manager_activate_action (manager, "view", "view-flip-vertically");
+  action = g_action_map_lookup_action (G_ACTION_MAP (statusbar->gimp->app),
+                                       "view-flip-vertically");
+  gimp_action_activate (GIMP_ACTION (action));
 
   return FALSE;
 }
