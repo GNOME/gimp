@@ -47,7 +47,6 @@
 #include "gimpdock.h"
 #include "gimptoolbox.h"
 #include "gimptoolbutton.h"
-#include "gimpuimanager.h"
 #include "gimpwidgets-utils.h"
 #include "gimpwindowstrategy.h"
 
@@ -140,6 +139,9 @@ static void         gimp_tool_button_tool_reorder        (GimpContainer       *c
 static void         gimp_tool_button_icon_size_notify    (GtkToolPalette      *palette,
                                                           const GParamSpec    *pspec,
                                                           GimpToolButton      *tool_button);
+
+static void         gimp_tool_button_menu_item_activate  (GtkMenuItem         *menu_item,
+                                                          GimpAction          *action);
 
 static gboolean     gimp_tool_button_menu_leave_notify   (GtkMenu             *menu,
                                                           GdkEventCrossing    *event,
@@ -409,24 +411,17 @@ gimp_tool_button_query_tooltip_add_tool (GimpToolButton *tool_button,
                                          const gchar    *label_str,
                                          GtkIconSize     icon_size)
 {
-  GimpUIManager *ui_manager;
-  GimpAction    *action = NULL;
-  GtkWidget     *label;
-  GtkWidget     *image;
+  Gimp        *gimp;
+  GimpAction  *action = NULL;
+  GtkWidget   *label;
+  GtkWidget   *image;
+  gchar       *name;
 
-  ui_manager = gimp_dock_get_ui_manager (
-    GIMP_DOCK (tool_button->priv->toolbox));
+  gimp = gimp_toolbox_get_context (tool_button->priv->toolbox)->gimp;
+  name = gimp_tool_info_get_action_name (tool_info);
 
-  if (ui_manager)
-    {
-      gchar *name;
-
-      name = gimp_tool_info_get_action_name (tool_info);
-
-      action = gimp_ui_manager_find_action (ui_manager, "tools", name);
-
-      g_free (name);
-    }
+  action = GIMP_ACTION (g_action_map_lookup_action (G_ACTION_MAP (gimp->app), name));
+  g_free (name);
 
   image = gtk_image_new_from_icon_name (
     gimp_viewable_get_icon_name (GIMP_VIEWABLE (tool_info)),
@@ -805,6 +800,13 @@ gimp_tool_button_icon_size_notify (GtkToolPalette   *palette,
   gimp_tool_button_update (tool_button);
 }
 
+static void
+gimp_tool_button_menu_item_activate (GtkMenuItem *menu_item,
+                                     GimpAction  *action)
+{
+  gimp_action_activate (action);
+}
+
 static gboolean
 gimp_tool_button_menu_leave_notify (GtkMenu          *menu,
                                     GdkEventCrossing *event,
@@ -934,16 +936,12 @@ gimp_tool_button_add_menu_item (GimpToolButton *tool_button,
                                 GimpToolInfo   *tool_info,
                                 gint            index)
 {
-  GimpUIManager *ui_manager;
-  GimpAction    *action;
-  GtkWidget     *item;
-  GtkWidget     *hbox;
-  GtkWidget     *image;
-  GtkWidget     *label;
-  GtkIconSize    icon_size = GTK_ICON_SIZE_MENU;
-
-  ui_manager = gimp_dock_get_ui_manager (
-    GIMP_DOCK (tool_button->priv->toolbox));
+  GimpAction  *action;
+  GtkWidget   *item;
+  GtkWidget   *hbox;
+  GtkWidget   *image;
+  GtkWidget   *label;
+  GtkIconSize  icon_size = GTK_ICON_SIZE_MENU;
 
   action = gimp_tool_button_get_action (tool_button, tool_info);
 
@@ -955,8 +953,9 @@ gimp_tool_button_add_menu_item (GimpToolButton *tool_button,
 
   item = gtk_menu_item_new ();
   gtk_menu_shell_insert (GTK_MENU_SHELL (tool_button->priv->menu), item, index);
-  gtk_activatable_set_related_action (GTK_ACTIVATABLE (item),
-                                      GTK_ACTION (action));
+  g_signal_connect (item, "activate",
+                    G_CALLBACK (gimp_tool_button_menu_item_activate),
+                    action);
   gimp_help_set_help_data (item, tool_info->tooltip, tool_info->help_id);
 
   g_object_bind_property (tool_info, "visible",
@@ -984,15 +983,24 @@ gimp_tool_button_add_menu_item (GimpToolButton *tool_button,
 
   if (action)
     {
-      gtk_accel_label_set_accel_closure (GTK_ACCEL_LABEL (label),
-                                         gimp_action_get_accel_closure (
-                                           action));
+      label = gimp_accel_label_new (action);
+      gtk_label_set_xalign (GTK_LABEL (label), 1.0);
+      gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
+      gtk_widget_show (label);
 
+      /* TODO: while porting to GAction, this part seems useless, as the toolbox
+       * is perfectly working. But maybe I'm missing something. So leaving this
+       * here for further investigation.
+       * We probably want to check what gimp_ui_manager_connect_proxy() does
+       * exactly.
+       */
+#if 0
       if (ui_manager)
         {
           g_signal_emit_by_name (ui_manager, "connect-proxy",
                                  action, item);
         }
+#endif
     }
 
   g_hash_table_insert (tool_button->priv->menu_items, tool_info, item);
@@ -1025,11 +1033,7 @@ gimp_tool_button_reconstruct_menu (GimpToolButton *tool_button)
 
   if (GIMP_IS_TOOL_GROUP (tool_button->priv->tool_item))
     {
-      GimpUIManager *ui_manager;
       GimpContainer *children;
-
-      ui_manager = gimp_dock_get_ui_manager (
-        GIMP_DOCK (tool_button->priv->toolbox));
 
       children = gimp_viewable_get_children (
         GIMP_VIEWABLE (tool_button->priv->tool_item));
@@ -1042,12 +1046,18 @@ gimp_tool_button_reconstruct_menu (GimpToolButton *tool_button)
                         G_CALLBACK (gimp_tool_button_menu_leave_notify),
                         tool_button);
 
+      /* TODO: while porting to GAction, this part seems useless, as the toolbox
+       * is perfectly working. But maybe I'm missing something. So leaving this
+       * here for further investigation.
+       */
+#if 0
       if (ui_manager)
         {
           gtk_menu_set_accel_group (
             GTK_MENU (tool_button->priv->menu),
             gimp_ui_manager_get_accel_group (ui_manager));
         }
+#endif
 
       tool_button->priv->menu_items = g_hash_table_new (g_direct_hash,
                                                         g_direct_equal);
@@ -1104,19 +1114,19 @@ static GimpAction *
 gimp_tool_button_get_action (GimpToolButton *tool_button,
                              GimpToolInfo   *tool_info)
 {
-  GimpUIManager *ui_manager;
-  GimpAction    *action = NULL;
+  GimpAction *action = NULL;
 
-  ui_manager = gimp_dock_get_ui_manager (
-    GIMP_DOCK (tool_button->priv->toolbox));
-
-  if (ui_manager && tool_info)
+  if (tool_info)
     {
-      gchar *name;
+      GimpContext *context;
+      Gimp        *gimp;
+      gchar       *name;
 
-      name = gimp_tool_info_get_action_name (tool_info);
+      context = gimp_toolbox_get_context (tool_button->priv->toolbox);
+      gimp    = context->gimp;
+      name    = gimp_tool_info_get_action_name (tool_info);
 
-      action = gimp_ui_manager_find_action (ui_manager, "tools", name);
+      action = GIMP_ACTION (g_action_map_lookup_action (G_ACTION_MAP (gimp->app), name));
 
       g_free (name);
     }
