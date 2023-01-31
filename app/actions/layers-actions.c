@@ -276,7 +276,7 @@ static const GimpActionEntry layers_actions[] =
     GIMP_HELP_LAYER_MASK_ADD },
 
   { "layers-mask-add-last-values", GIMP_ICON_LAYER_MASK,
-    NC_("layers-action", "Add La_yer Masks"), NULL,
+    NC_("layers-action", "Add La_yer Masks with Last Values"), NULL,
     NC_("layers-action",
         "Add mask to selected layers with last used values"),
     layers_mask_add_last_vals_cmd_callback,
