@@ -39,6 +39,7 @@
 #include "display/gimpdisplayshell.h"
 #include "display/gimpimagewindow.h"
 
+#include "widgets/gimpaction.h"
 #include "widgets/gimpcellrendererbutton.h"
 #include "widgets/gimpcontainertreestore.h"
 #include "widgets/gimpcontainertreeview.h"
@@ -47,7 +48,6 @@
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpmessagebox.h"
 #include "widgets/gimpmessagedialog.h"
-#include "widgets/gimpuimanager.h"
 #include "widgets/gimpviewrenderer.h"
 #include "widgets/gimpwidgets-utils.h"
 
@@ -550,9 +550,7 @@ quit_close_all_dialog_save_clicked (GtkCellRenderer *cell,
 
               if (window)
                 {
-                  GimpUIManager *manager;
-
-                  manager = gimp_image_window_get_ui_manager (window);
+                  GAction *action;
 
                   gimp_display_shell_present (shell);
                   /* Make sure the quit dialog kept keyboard focus when
@@ -560,15 +558,13 @@ quit_close_all_dialog_save_clicked (GtkCellRenderer *cell,
                   gtk_window_present (GTK_WINDOW (private->dialog));
 
                   if (state & GDK_SHIFT_MASK)
-                    {
-                      gimp_ui_manager_activate_action (manager, "file",
-                                                       "file-save-as");
-                    }
+                    action = g_action_map_lookup_action (G_ACTION_MAP (private->gimp->app),
+                                                         "file-save-as");
                   else
-                    {
-                      gimp_ui_manager_activate_action (manager, "file",
-                                                       "file-save");
-                    }
+                    action = g_action_map_lookup_action (G_ACTION_MAP (private->gimp->app),
+                                                         "file-save");
+                  g_return_if_fail (GIMP_IS_ACTION (action));
+                  gimp_action_activate (GIMP_ACTION (action));
                 }
 
               break;
