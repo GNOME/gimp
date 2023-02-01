@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-01-25 17:40+0000\n"
-"PO-Revision-Date: 2023-01-26 18:56+0100\n"
+"POT-Creation-Date: 2023-02-01 16:47+0000\n"
+"PO-Revision-Date: 2023-02-01 21:16+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -70,7 +70,7 @@ msgstr "Povadi kozo (C)"
 #: plug-ins/common/border-average.c:432 plug-ins/common/busy-dialog.c:279
 #: plug-ins/common/checkerboard.c:495 plug-ins/common/cml-explorer.c:1348
 #: plug-ins/common/cml-explorer.c:2114 plug-ins/common/cml-explorer.c:2247
-#: plug-ins/common/colormap-remap.c:666 plug-ins/common/compose.c:1183
+#: plug-ins/common/colormap-remap.c:706 plug-ins/common/compose.c:1183
 #: plug-ins/common/contrast-retinex.c:351 plug-ins/common/curve-bend.c:1221
 #: plug-ins/common/curve-bend.c:1995 plug-ins/common/curve-bend.c:2030
 #: plug-ins/common/depth-merge.c:733 plug-ins/common/destripe.c:484
@@ -170,7 +170,7 @@ msgstr "Povadi kozo (JavaScript)"
 #: extensions/goat-exercises/goat-exercise-py3.py:79
 #: plug-ins/common/align-layers.c:672 plug-ins/common/blinds.c:302
 #: plug-ins/common/border-average.c:433 plug-ins/common/checkerboard.c:496
-#: plug-ins/common/cml-explorer.c:1349 plug-ins/common/colormap-remap.c:667
+#: plug-ins/common/cml-explorer.c:1349 plug-ins/common/colormap-remap.c:707
 #: plug-ins/common/compose.c:1184 plug-ins/common/contrast-retinex.c:352
 #: plug-ins/common/curve-bend.c:1222 plug-ins/common/depth-merge.c:734
 #: plug-ins/common/destripe.c:485 plug-ins/common/file-heif.c:2355
@@ -466,7 +466,7 @@ msgstr "_Navpične"
 #: plug-ins/common/file-gegl.c:468 plug-ins/common/file-gif-load.c:1036
 #: plug-ins/common/file-jp2-load.c:1313 plug-ins/common/file-pcx.c:480
 #: plug-ins/common/file-pcx.c:488 plug-ins/common/file-pix.c:424
-#: plug-ins/common/file-png.c:950 plug-ins/common/file-pnm.c:764
+#: plug-ins/common/file-png.c:950 plug-ins/common/file-pnm.c:865
 #: plug-ins/common/file-raw-data.c:1837 plug-ins/common/file-sunras.c:1081
 #: plug-ins/common/file-tga.c:1110 plug-ins/common/file-wbmp.c:270
 #: plug-ins/common/file-xbm.c:910 plug-ins/common/film.c:812
@@ -1086,59 +1086,39 @@ msgstr ""
 msgid "Error: failed to load parameters"
 msgstr "Napaka: parametrov ni mogoče naložiti"
 
-#: plug-ins/common/colormap-remap.c:135
+#: plug-ins/common/colormap-remap.c:186
 msgid "R_earrange Colormap..."
 msgstr "Pr_erazporedi barve ..."
 
-#: plug-ins/common/colormap-remap.c:141
+#: plug-ins/common/colormap-remap.c:192
 msgid "Rearrange the colormap"
 msgstr "Prerazporedi barve"
 
-#: plug-ins/common/colormap-remap.c:175
+#: plug-ins/common/colormap-remap.c:226
 msgid "_Swap Colors"
 msgstr "_Zamenjaj barvi"
 
-#: plug-ins/common/colormap-remap.c:179
+#: plug-ins/common/colormap-remap.c:230
 msgid "Swap two colors in the colormap"
 msgstr "Zamenja dve barvi v katalogu barv"
 
-#: plug-ins/common/colormap-remap.c:335 plug-ins/common/colormap-remap.c:346
-#: plug-ins/common/colormap-remap.c:357
+#: plug-ins/common/colormap-remap.c:425 plug-ins/common/colormap-remap.c:436
+#: plug-ins/common/colormap-remap.c:447
 msgid "Invalid remap array was passed to remap function"
 msgstr ""
 "Funkciji ponovne preslikave je bila podana neveljavna matrika ponovne "
 "preslikave"
 
-#: plug-ins/common/colormap-remap.c:381
+#: plug-ins/common/colormap-remap.c:471
 msgid "Rearranging the colormap"
 msgstr "Prerazporejanje barv v katalogu ..."
 
-#: plug-ins/common/colormap-remap.c:549
-msgid "Sort on Hue"
-msgstr "Razvrsti po obarvanosti"
-
-#: plug-ins/common/colormap-remap.c:553
-msgid "Sort on Saturation"
-msgstr "Razvrsti po nasičenosti"
-
-#: plug-ins/common/colormap-remap.c:557
-msgid "Sort on Value"
-msgstr "Razvrsti po vrednosti"
-
-#: plug-ins/common/colormap-remap.c:561
-msgid "Reverse Order"
-msgstr "Preobrni vrstni red"
-
-#: plug-ins/common/colormap-remap.c:565
-msgid "Reset Order"
-msgstr "Ponastavi vrstni red"
-
-#: plug-ins/common/colormap-remap.c:661
+#: plug-ins/common/colormap-remap.c:701
 msgid "Rearrange Colormap"
 msgstr "Prerazporedi katalog barv"
 
 #. The Reset button
-#: plug-ins/common/colormap-remap.c:665 plug-ins/common/curve-bend.c:1464
+#: plug-ins/common/colormap-remap.c:705 plug-ins/common/curve-bend.c:1464
 #: plug-ins/common/sample-colorize.c:1413
 #: plug-ins/common/sphere-designer.c:2631 plug-ins/common/tile-small.c:531
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:809
@@ -1147,7 +1127,7 @@ msgstr "Prerazporedi katalog barv"
 msgid "_Reset"
 msgstr "_Ponastavi"
 
-#: plug-ins/common/colormap-remap.c:765
+#: plug-ins/common/colormap-remap.c:807
 msgid ""
 "Drag and drop colors to rearrange the colormap.  The numbers shown are the "
 "original indices.  Right-click for a menu with sort options."
@@ -1155,6 +1135,10 @@ msgstr ""
 "Povlecite in spustite barve, da spremenite razpored kataloga barv.  "
 "Prikazane številke so izvirni indeksi.  Desno kliknite za meni z možnostmi "
 "razvrščanja."
+
+#: plug-ins/common/colormap-remap.c:845
+msgid "Rearrange Colors"
+msgstr "Prerazporedi barve"
 
 #. Decompositions availables.
 #. * All the following values have to be kept in sync with those of decompose.c
@@ -1958,7 +1942,7 @@ msgstr "EOF ali napaka pri branju zaglavja slike"
 #: plug-ins/common/file-heif.c:879 plug-ins/common/file-jp2-load.c:1085
 #: plug-ins/common/file-pcx.c:402 plug-ins/common/file-pdf-load.c:820
 #: plug-ins/common/file-pix.c:381 plug-ins/common/file-png.c:665
-#: plug-ins/common/file-pnm.c:645 plug-ins/common/file-ps.c:1140
+#: plug-ins/common/file-pnm.c:708 plug-ins/common/file-ps.c:1140
 #: plug-ins/common/file-raw-data.c:1665 plug-ins/common/file-sunras.c:447
 #: plug-ins/common/file-tga.c:437 plug-ins/common/file-wbmp.c:176
 #: plug-ins/common/file-wmf.c:1026 plug-ins/common/file-xbm.c:739
@@ -2040,7 +2024,7 @@ msgstr "»%s«: EOF ali napaka pri branju podatkov palete"
 #: plug-ins/common/file-cel.c:842 plug-ins/common/file-gif-save.c:913
 #: plug-ins/common/file-html-table.c:362 plug-ins/common/file-jpegxl.c:1374
 #: plug-ins/common/file-pcx.c:793 plug-ins/common/file-pix.c:562
-#: plug-ins/common/file-png.c:1496 plug-ins/common/file-pnm.c:1336
+#: plug-ins/common/file-png.c:1496 plug-ins/common/file-pnm.c:1628
 #: plug-ins/common/file-ps.c:1365 plug-ins/common/file-sunras.c:626
 #: plug-ins/common/file-tga.c:1223 plug-ins/common/file-xbm.c:1049
 #: plug-ins/common/file-xpm.c:701 plug-ins/common/file-xwd.c:675
@@ -3130,7 +3114,7 @@ msgstr "Dimenzije slike so prevelike: širina %d x višina %d"
 msgid "Unusual PCX flavour, giving up"
 msgstr "Nenavadna vrsta PCX, sledi prekinitev"
 
-#: plug-ins/common/file-pcx.c:859 plug-ins/common/file-pnm.c:1332
+#: plug-ins/common/file-pcx.c:859 plug-ins/common/file-pnm.c:1624
 msgid "Cannot export images with alpha channel."
 msgstr "Slik ni mogoče izvoziti s kanalom alfa."
 
@@ -3527,92 +3511,124 @@ msgstr "RGBA, 16 b/kanal"
 msgid "16 bpc GRAYA"
 msgstr "GRAYA, 16 b/kanal"
 
-#: plug-ins/common/file-pnm.c:292
+#: plug-ins/common/file-pnm.c:314
 msgid "PNM Image"
 msgstr "Slika PNM"
 
-#: plug-ins/common/file-pnm.c:325
+#: plug-ins/common/file-pnm.c:347
 msgid "PNM image"
 msgstr "Slika PNM"
 
-#: plug-ins/common/file-pnm.c:360
+#: plug-ins/common/file-pnm.c:382
 msgid "PBM image"
 msgstr "Slika PBM"
 
-#: plug-ins/common/file-pnm.c:395
+#: plug-ins/common/file-pnm.c:417
 msgid "PGM image"
 msgstr "Slika PGM"
 
-#: plug-ins/common/file-pnm.c:430
+#: plug-ins/common/file-pnm.c:452
 msgid "PPM image"
 msgstr "Slika PPM"
 
-#: plug-ins/common/file-pnm.c:465
+#: plug-ins/common/file-pnm.c:487
+msgid "PAM image"
+msgstr "Slika PAM"
+
+#: plug-ins/common/file-pnm.c:516
 msgid "PFM image"
 msgstr "Slika PFM"
 
-#: plug-ins/common/file-pnm.c:595
+#: plug-ins/common/file-pnm.c:655
 #, c-format
 msgid "%s format does not support multiple layers."
 msgstr "Zapis %s ne podpira več plasti."
 
-#: plug-ins/common/file-pnm.c:678 plug-ins/common/file-pnm.c:701
-#: plug-ins/common/file-pnm.c:710 plug-ins/common/file-pnm.c:723
-#: plug-ins/common/file-pnm.c:736 plug-ins/common/file-pnm.c:839
-#: plug-ins/common/file-pnm.c:934 plug-ins/common/file-pnm.c:1019
-#: plug-ins/common/file-pnm.c:1080
+#: plug-ins/common/file-pnm.c:741 plug-ins/common/file-pnm.c:773
+#: plug-ins/common/file-pnm.c:782 plug-ins/common/file-pnm.c:797
+#: plug-ins/common/file-pnm.c:812 plug-ins/common/file-pnm.c:1012
+#: plug-ins/common/file-pnm.c:1107 plug-ins/common/file-pnm.c:1192
+#: plug-ins/common/file-pnm.c:1253
 msgid "Premature end of file."
 msgstr "Predčasen konec datoteke."
 
-#: plug-ins/common/file-pnm.c:680
+#: plug-ins/common/file-pnm.c:743
 msgid "Invalid file."
 msgstr "Neveljavna datoteka."
 
-#: plug-ins/common/file-pnm.c:695
+#: plug-ins/common/file-pnm.c:761
 msgid "File not in a supported format."
 msgstr "Datoteka ni v podprtem zapisu."
 
-#: plug-ins/common/file-pnm.c:704
+#: plug-ins/common/file-pnm.c:776
 msgid "Invalid X resolution."
 msgstr "Neveljavna ločljivost po osi X."
 
-#: plug-ins/common/file-pnm.c:706
+#: plug-ins/common/file-pnm.c:778 plug-ins/common/file-pnm.c:946
 msgid "Image width is larger than GIMP can handle."
 msgstr "Širina slike presega zmožnosti GIMP-a."
 
-#: plug-ins/common/file-pnm.c:713
+#: plug-ins/common/file-pnm.c:785
 msgid "Invalid Y resolution."
 msgstr "Neveljavna ločljivost po osi Y."
 
-#: plug-ins/common/file-pnm.c:715
+#: plug-ins/common/file-pnm.c:787
 msgid "Image height is larger than GIMP can handle."
 msgstr "Višina slike presega zmožnosti GIMP-a."
 
-#: plug-ins/common/file-pnm.c:727
+#: plug-ins/common/file-pnm.c:801
 msgid "Bogus scale factor."
 msgstr "Nepodprt faktor spremembe merila."
 
-#: plug-ins/common/file-pnm.c:729
+#: plug-ins/common/file-pnm.c:803
 msgid "Unsupported scale factor."
 msgstr "Nepodprt faktor spremembe merila."
 
-#: plug-ins/common/file-pnm.c:740
+#: plug-ins/common/file-pnm.c:817
 msgid "Unsupported maximum value."
 msgstr "Nepodprta največja vrednost."
 
-#: plug-ins/common/file-pnm.c:1712
+#: plug-ins/common/file-pnm.c:940
+msgid "PAM: Unsupported inofficial PNM variant."
+msgstr "PAM: Nepodprta neuradna inačica PNM."
+
+#: plug-ins/common/file-pnm.c:944
+msgid "PAM: Premature end of file."
+msgstr "PAM: Predčasen konec datoteke."
+
+#: plug-ins/common/file-pnm.c:948
+msgid "PAM: Invalid X resolution."
+msgstr "PAM: Neveljavna ločljivost po osi X."
+
+#: plug-ins/common/file-pnm.c:950
+msgid "PAM: Invalid Y resolution."
+msgstr "PAM: Neveljavna ločljivost po osi Y."
+
+#: plug-ins/common/file-pnm.c:952
+msgid "PAM: Invalid maximum value."
+msgstr "PAM: Neveljavna največja vrednost."
+
+#: plug-ins/common/file-pnm.c:954
+msgid "PAM: Invalid depth."
+msgstr "PAM: Neveljavna globina."
+
+#: plug-ins/common/file-pnm.c:956
+msgid "PAM: Unsupported tupltype."
+msgstr "PAM: Nepodprta vrsta tupltype."
+
+#: plug-ins/common/file-pnm.c:2017
 msgid "Export Image as PNM"
 msgstr "Izvozi sliko kot PNM"
 
-#: plug-ins/common/file-pnm.c:1716
+#: plug-ins/common/file-pnm.c:2021
 msgid "Data formatting"
 msgstr "Oblikovanje podatkov"
 
-#: plug-ins/common/file-pnm.c:1717
+#: plug-ins/common/file-pnm.c:2022
 msgid "_Raw"
 msgstr "_surovo"
 
-#: plug-ins/common/file-pnm.c:1718
+#: plug-ins/common/file-pnm.c:2023
 msgid "_ASCII"
 msgstr "_ASCII"
 
@@ -5123,7 +5139,7 @@ msgstr "Razreži sliko v podslike z uporabo vodil"
 msgid "Guillotine"
 msgstr "Giljotina"
 
-#: plug-ins/common/guillotine.c:266 plug-ins/help-browser/dialog.c:891
+#: plug-ins/common/guillotine.c:266 plug-ins/help-browser/dialog.c:892
 msgid "Untitled"
 msgstr "Neimenovano"
 
@@ -10622,7 +10638,7 @@ msgid "_Second Flares"
 msgstr "_Sekundarni odbleski"
 
 #. the dialog window
-#: plug-ins/help-browser/dialog.c:261 plug-ins/help-browser/dialog.c:892
+#: plug-ins/help-browser/dialog.c:261 plug-ins/help-browser/dialog.c:893
 msgid "GIMP Help Browser"
 msgstr "Brskalnik pomoči GIMP"
 
@@ -10650,21 +10666,21 @@ msgstr "Pojdi na kazalo"
 msgid "Visit the GIMP documentation website"
 msgstr "Obišči spletno stran dokumentacije GIMP"
 
-#: plug-ins/help-browser/dialog.c:1235
+#: plug-ins/help-browser/dialog.c:1236
 msgid "Find:"
 msgstr "Išči:"
 
-#: plug-ins/help-browser/dialog.c:1251
+#: plug-ins/help-browser/dialog.c:1252
 msgctxt "search"
 msgid "_Previous"
 msgstr "Na_zaj"
 
-#: plug-ins/help-browser/dialog.c:1260
+#: plug-ins/help-browser/dialog.c:1261
 msgctxt "search"
 msgid "_Next"
 msgstr "_Naprej"
 
-#: plug-ins/help-browser/dialog.c:1269
+#: plug-ins/help-browser/dialog.c:1270
 msgctxt "search"
 msgid "_Close"
 msgstr "Z_apri"
