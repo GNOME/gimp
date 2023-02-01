@@ -1128,8 +1128,10 @@ save_layer_and_mask (FILE   *fd,
       IFDBG printf ("\t\tOpacity: %u\n", layerOpacity);
       write_gchar (fd, layerOpacity, "Opacity");
 
-      /* Apparently this field is not used in GIMP */
-      write_gchar (fd, 0, "Clipping");
+      if (gimp_layer_get_composite_mode (PSDImageData.lLayers[i].id) == GIMP_LAYER_COMPOSITE_CLIP_TO_BACKDROP)
+        write_gchar (fd, 1, "Clipping");
+      else
+        write_gchar (fd, 0, "Clipping");
 
       flags = 0;
       if (gimp_layer_get_lock_alpha (PSDImageData.lLayers[i].id)) flags |= 1;

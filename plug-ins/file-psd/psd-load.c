@@ -85,6 +85,9 @@ static gint             add_merged_image           (gint32        image_id,
                                                     GError      **error);
 
 /*  Local utility function prototypes  */
+static gint32           add_clipping_group         (gint32        image_id,
+                                                    gint32        parent_id);
+
 static gchar          * get_psd_color_mode_name    (PSDColorMode  mode);
 
 static void             psd_to_gimp_color_map      (guchar       *map256);
@@ -1265,7 +1268,8 @@ add_layers (gint32     image_id,
 {
   PSDchannel          **lyr_chn;
   GArray               *parent_group_stack;
-  gint32                parent_group_id = -1;
+  gint32                parent_group_id   = -1;
+  gint32                clipping_group_id = -1;
   guint16               alpha_chn;
   guint16               user_mask_chn;
   guint16               layer_channels, base_channels;
@@ -1285,11 +1289,13 @@ add_layers (gint32     image_id,
   gint32                active_layer_id = -1;
   gint                  lidx;                  /* Layer index */
   gint                  cidx;                  /* Channel index */
+  gint                  gidx;                  /* Clipping group start index */
   gint                  rowi;                  /* Row index */
   gboolean              alpha;
   gboolean              user_mask;
   gboolean              empty;
   gboolean              empty_mask;
+  gboolean              use_clipping_group;
   GeglBuffer           *buffer;
   GimpImageType         image_type;
   LayerModeInfo         mode_info;
@@ -1310,13 +1316,70 @@ add_layers (gint32     image_id,
       return -1;
     }
 
+  IFDBG(3) g_debug ("Pre process layers...");
+  use_clipping_group = FALSE;
+  gidx = -1;
+  for (lidx = 0; lidx < img_a->num_layers; ++lidx)
+    {
+      if (lyr_a[lidx]->clipping == 1)
+        {
+          /* Photoshop handles layers with clipping differently than GIMP does.
+           * To correctly show these layers we need to make a new group
+           * starting with the first non-clipping layer and including all
+           * the clipping layers above it.
+           */
+          if (lidx > 0)
+            {
+              if (gidx == -1)
+                {
+                  use_clipping_group = TRUE;
+
+                  /* Looking at the results we should ignore layer groups */
+                  if (lyr_a[lidx-1]->group_type == 0)
+                    gidx = lidx - 1;
+                  else
+                    gidx = lidx;
+
+                  lyr_a[gidx]->clipping_group_type = 1; /* start clipping group */
+                  IFDBG(3) g_debug ("Layer: %s - start of clipping group", lyr_a[gidx]->name);
+                }
+              else if (lidx + 1 == img_a->num_layers && use_clipping_group)
+                {
+                  /* end clipping group at the top of the layer stack */
+                  lyr_a[lidx]->clipping_group_type = 2; /* end clipping group */
+                  IFDBG(3) g_debug ("Layer: %s - end of clipping group", lyr_a[lidx]->name);
+
+                  use_clipping_group = FALSE;
+                  gidx = -1;
+                }
+              else
+                {
+                  lyr_a[lidx]->clipping_group_type = 0;
+                }
+            }
+        }
+      else if (use_clipping_group)
+        {
+          /* end clipping group */
+          lyr_a[lidx-1]->clipping_group_type = 2;
+          IFDBG(3) g_debug ("Layer: %s - end of clipping group", lyr_a[lidx-1]->name);
+
+          use_clipping_group = FALSE;
+          gidx = -1;
+        }
+      else
+        {
+          lyr_a[lidx]->clipping_group_type = 0;
+        }
+    }
+
   /* set the root of the group hierarchy */
   parent_group_stack = g_array_new (FALSE, FALSE, sizeof (gint32));
   g_array_append_val (parent_group_stack, parent_group_id);
 
   for (lidx = 0; lidx < img_a->num_layers; ++lidx)
     {
-      IFDBG(2) g_debug ("Process Layer No %d.", lidx);
+      IFDBG(2) g_debug ("Process Layer No %d (%s).", lidx, lyr_a[lidx]->name);
 
       if (lyr_a[lidx]->drop)
         {
@@ -1556,6 +1619,9 @@ add_layers (gint32     image_id,
               base_channels++;
             }
 
+          IFDBG(4) g_debug ("Create the layer (group type: %d, clipping group type: %d)",
+                            lyr_a[lidx]->group_type, lyr_a[lidx]->clipping_group_type);
+
           /* Create the layer */
           if (lyr_a[lidx]->group_type != 0)
             {
@@ -1597,6 +1663,12 @@ add_layers (gint32     image_id,
             }
           else
             {
+
+              if (lyr_a[lidx]->clipping_group_type == 1)
+                {
+                  clipping_group_id = add_clipping_group (image_id, parent_group_id);
+                }
+
               if (empty)
                 {
                   IFDBG(2) g_debug ("Create blank layer");
@@ -1634,7 +1706,7 @@ add_layers (gint32     image_id,
               if (lyr_a[lidx]->group_type != 3)
                 {
                   /* Mode */
-                  psd_to_gimp_blend_mode (lyr_a[lidx]->blend_mode, &mode_info);
+                  psd_to_gimp_blend_mode (lyr_a[lidx], &mode_info);
                   gimp_layer_set_mode (layer_id, mode_info.mode);
                   gimp_layer_set_blend_space (layer_id, mode_info.blend_space);
                   gimp_layer_set_composite_space (layer_id, mode_info.composite_space);
@@ -1855,7 +1927,21 @@ add_layers (gint32     image_id,
                 if (lyr_a[lidx]->group_type == 0 || /* normal layer */
                     lyr_a[lidx]->group_type == 3    /* group layer end marker */)
                   {
-                    gimp_image_insert_layer (image_id, layer_id, parent_group_id, 0);
+                     if (clipping_group_id != -1)
+                      {
+                        gimp_image_insert_layer (image_id, layer_id, clipping_group_id, 0);
+
+                        if (lyr_a[lidx]->clipping_group_type == 2)
+                          {
+                            /* End of our clipping group. */
+                            clipping_group_id = -1;
+                          }
+                      }
+                    else
+                      {
+                        gimp_image_insert_layer (image_id, layer_id, parent_group_id, 0);
+                      }
+
                   }
             }
 
@@ -2247,6 +2333,28 @@ add_merged_image (gint32     image_id,
 
 
 /* Local utility functions */
+static gint32
+add_clipping_group (gint32 image_id,
+                    gint32 parent_id)
+{
+  gint32 clipping_group_id = -1;
+
+  /* We need to create a group because GIMP handles clipping and
+   * composition mode in a different manner than PS. */
+  IFDBG(2) g_debug ("Creating a layer group to handle PS transparency clipping correctly.");
+
+  clipping_group_id = gimp_layer_group_new (image_id);
+
+  gimp_item_set_name (clipping_group_id, "Group added by GIMP");
+  gimp_layer_set_blend_space (clipping_group_id, GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL);
+  gimp_layer_set_composite_space (clipping_group_id, GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL);
+  gimp_layer_set_composite_mode (clipping_group_id, GIMP_LAYER_COMPOSITE_UNION);
+
+  gimp_image_insert_layer (image_id, clipping_group_id, parent_id, 0);
+
+  return clipping_group_id;
+}
+
 static gchar *
 get_psd_color_mode_name (PSDColorMode mode)
 {

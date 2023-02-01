@@ -718,7 +718,7 @@ encode_packbits (const gchar *src,
 }
 
 void
-psd_to_gimp_blend_mode (const gchar   *psd_mode,
+psd_to_gimp_blend_mode (PSDlayer      *psd_layer,
                         LayerModeInfo *mode_info)
 {
   gint i;
@@ -729,11 +729,14 @@ psd_to_gimp_blend_mode (const gchar   *psd_mode,
    */
   mode_info->blend_space     = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL;
   mode_info->composite_space = GIMP_LAYER_COLOR_SPACE_RGB_PERCEPTUAL;
-  mode_info->composite_mode  = GIMP_LAYER_COMPOSITE_UNION;
+ if (psd_layer->clipping == 1)
+    mode_info->composite_mode  = GIMP_LAYER_COMPOSITE_CLIP_TO_BACKDROP;
+  else
+    mode_info->composite_mode  = GIMP_LAYER_COMPOSITE_UNION;
 
   for (i = 0; i < G_N_ELEMENTS (layer_mode_map); i++)
     {
-      if (g_ascii_strncasecmp (psd_mode, layer_mode_map[i].psd_mode, 4) == 0)
+      if (g_ascii_strncasecmp (psd_layer->blend_mode, layer_mode_map[i].psd_mode, 4) == 0)
         {
           if (! layer_mode_map[i].exact && CONVERSION_WARNINGS)
             {
@@ -750,7 +753,7 @@ psd_to_gimp_blend_mode (const gchar   *psd_mode,
 
   if (CONVERSION_WARNINGS)
     {
-      gchar *mode_name = g_strndup (psd_mode, 4);
+      gchar *mode_name = g_strndup (psd_layer->blend_mode, 4);
       g_message ("Unsupported blend mode: %s. Mode reverts to normal",
                  mode_name);
       g_free (mode_name);
@@ -786,7 +789,8 @@ gimp_to_psd_blend_mode (const LayerModeInfo *mode_info)
     }
 
   if (mode_info->composite_mode != GIMP_LAYER_COMPOSITE_AUTO &&
-      mode_info->composite_mode != GIMP_LAYER_COMPOSITE_UNION)
+      mode_info->composite_mode != GIMP_LAYER_COMPOSITE_UNION &&
+      mode_info->composite_mode != GIMP_LAYER_COMPOSITE_CLIP_TO_BACKDROP)
     {
       if (CONVERSION_WARNINGS)
         g_message ("Unsupported composite mode: %s. "
@@ -902,7 +906,7 @@ gimp_to_psd_layer_color_tag (GimpColorTag layer_color_tag)
       if (CONVERSION_WARNINGS)
         g_message ("Photoshop doesn't support GIMP layer color tag: %i. Photoshop layer color tag set to none.",
                    layer_color_tag);
-        color_tag = 0;
+      color_tag = 0;
     }
 
   return color_tag;

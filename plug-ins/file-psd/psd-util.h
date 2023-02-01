@@ -75,7 +75,7 @@ gchar                 * encode_packbits        (const gchar         *src,
                                                 guint32              unpacked_len,
                                                 guint16             *packed_len);
 
-void                    psd_to_gimp_blend_mode (const gchar          *psd_mode,
+void                    psd_to_gimp_blend_mode (PSDlayer             *psd_layer,
                                                 LayerModeInfo        *mode_info);
 
 const gchar *           gimp_to_psd_blend_mode (const LayerModeInfo  *mode_info);
