@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp gimp-2-10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-11-21 04:28+0000\n"
-"PO-Revision-Date: 2022-12-23 18:33+0100\n"
+"POT-Creation-Date: 2023-01-25 17:38+0000\n"
+"PO-Revision-Date: 2023-02-01 17:20+0100\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <ka@li.org>\n"
 "Language: ka\n"
@@ -47,19 +47,19 @@ msgstr ""
 
 #: ../plug-ins/script-fu/script-fu.c:312
 msgid "_Test"
-msgstr ""
+msgstr "_ტესტი"
 
 #: ../plug-ins/script-fu/script-fu.c:315
 msgid "_Buttons"
-msgstr ""
+msgstr "_ღილაკები"
 
 #: ../plug-ins/script-fu/script-fu.c:317
 msgid "_Logos"
-msgstr ""
+msgstr "_ლოგოები"
 
 #: ../plug-ins/script-fu/script-fu.c:319
 msgid "_Patterns"
-msgstr ""
+msgstr "_შაბლონები"
 
 #: ../plug-ins/script-fu/script-fu.c:322
 msgid "_Web Page Themes"
@@ -103,7 +103,7 @@ msgstr ""
 #: ../plug-ins/script-fu/script-fu-console.c:132
 #: ../plug-ins/script-fu/script-fu-console.c:293
 msgid "_Save"
-msgstr ""
+msgstr "_შენახვა"
 
 #: ../plug-ins/script-fu/script-fu-console.c:133
 msgid "C_lear"
@@ -165,7 +165,7 @@ msgstr ""
 #: ../plug-ins/script-fu/script-fu-interface.c:230
 #, c-format
 msgid "Script-Fu: %s"
-msgstr ""
+msgstr "Script-Fu: %s"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:237
 msgid "_Reset"
@@ -181,7 +181,7 @@ msgstr "_კარგი"
 #: ../plug-ins/script-fu/script-fu-interface.c:293
 #, c-format
 msgid "%s:"
-msgstr ""
+msgstr "%s:"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:343
 msgid "Script-Fu Color Selection"
@@ -257,7 +257,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm:76
 msgid "Bumpmap"
-msgstr ""
+msgstr "რელიეფური"
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm:189
 msgid "Add B_evel..."
@@ -323,7 +323,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm:228
 msgid "_Blend..."
-msgstr ""
+msgstr "_შერევა..."
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm:229
 msgid ""
@@ -435,15 +435,15 @@ msgstr "ფონი"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm:94
 msgid "Layer 1"
-msgstr ""
+msgstr "ფენა 1"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm:95
 msgid "Layer 2"
-msgstr ""
+msgstr "ფენა 2"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm:96
 msgid "Layer 3"
-msgstr ""
+msgstr "ფენა 3"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm:97
 msgid "Drop Shadow"
@@ -738,7 +738,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:160
 msgid "_Labels"
-msgstr ""
+msgstr "_ჭდეები"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:161
 msgid "_Filter (regexp)"
@@ -864,7 +864,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:229
 msgid "_Wiki"
-msgstr ""
+msgstr "_ვიკი"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:230
 msgid "Bookmark to the wiki of GIMP"
@@ -947,7 +947,7 @@ msgstr ""
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:35
 #: ../plug-ins/script-fu/scripts/guides-new.scm:35
 msgid "_Direction"
-msgstr ""
+msgstr "_მიმართულება"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:35
 #: ../plug-ins/script-fu/scripts/guides-new.scm:35
@@ -997,7 +997,7 @@ msgstr "თესლი"
 
 #: ../plug-ins/script-fu/scripts/lava.scm:126
 msgid "Size"
-msgstr ""
+msgstr "ზომა"
 
 #: ../plug-ins/script-fu/scripts/lava.scm:127
 msgid "Roughness"
@@ -1051,7 +1051,7 @@ msgstr ""
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:195
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:264
 msgid "Name"
-msgstr ""
+msgstr "სახელი"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:72
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:143
@@ -1376,11 +1376,11 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/slide.scm:253
 msgid "Text"
-msgstr ""
+msgstr "ტექსტი"
 
 #: ../plug-ins/script-fu/scripts/slide.scm:254
 msgid "Number"
-msgstr ""
+msgstr "რიცხვი"
 
 #: ../plug-ins/script-fu/scripts/slide.scm:255
 msgid "Font"
@@ -1408,7 +1408,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm:104
 msgid "Transparent background"
-msgstr ""
+msgstr "გამჭვირვალე ფონი"
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm:105
 msgid "Index to n colors (0 = remain RGB)"
@@ -1428,7 +1428,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:323
 msgid "Type"
-msgstr ""
+msgstr "ტიპი"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:323
 msgid "Spyrograph"
