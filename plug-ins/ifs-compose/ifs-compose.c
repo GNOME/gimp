@@ -389,13 +389,16 @@ gimp_ifs_class_init (GimpIfsClass *klass)
 }
 
 static void
-gimp_ifs_init (GimpIfs *ifs_init)
+gimp_ifs_init (GimpIfs *ifs)
 {
+  ifs->builder = NULL;
 }
 
 static void
 gimp_ifs_finalize (GObject *object)
 {
+  GimpIfs *ifs = GIMP_IFS (object);
+
   G_OBJECT_CLASS (gimp_ifs_parent_class)->finalize (object);
 
   g_clear_object (&ifs->builder);
