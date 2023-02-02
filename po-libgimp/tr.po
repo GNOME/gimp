@@ -1,7 +1,7 @@
 # Turkish translation for GIMP
 #
 # Copyright (C) 2001 Free Software Foundation, Inc.
-# Copyright (C) 2002-2022 gimp's COPYRIGHT HOLDER
+# Copyright (C) 2002-2023 gimp's COPYRIGHT HOLDER
 # This file is distributed under the same license as the gimp package.
 #
 # Fatih Demir <kabalak@gtranslator>, 2001.
@@ -9,15 +9,15 @@
 # Bu tercüme Ubuntu Türkiye Çeviri Ekibi tarafından tamamlanmıştır, 2010.
 # Muhammet Kara <muhammetk@gmail.com>, 2012, 2014.
 # Simge Sezgin <simgesezgin88@gmail.com>, 2015.
-# Sabri Ünal <libreajans@gmail.com>, 2019, 2022.
-# Emin Tufan Çetin <etcetin@gmail.com>, 2019, 2022.
+# Sabri Ünal <libreajans@gmail.com>, 2019, 2022, 2023.
+# Emin Tufan Çetin <etcetin@gmail.com>, 2019, 2022, 2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP libgimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-08-18 19:44+0000\n"
-"PO-Revision-Date: 2022-08-21 20:38+0300\n"
+"POT-Creation-Date: 2023-02-01 14:44+0000\n"
+"PO-Revision-Date: 2023-02-02 15:28+0300\n"
 "Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -25,16 +25,12 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.0.1\n"
 "X-Launchpad-Export-Date: 2010-10-09 17:28+0000\n"
 "X-POOTLE-MTIME: 1436650713.000000\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
-#: libgimp/gimpbrushselectbutton.c:178
-msgid "Brush Selection"
-msgstr "Fırça Seçimi"
-
-#: libgimp/gimpbrushselectbutton.c:887 libgimp/gimppatternselectbutton.c:674
+#: libgimp/gimpbrushselectbutton.c:325 libgimp/gimppatternselectbutton.c:335
 msgid "_Browse..."
 msgstr "_Gözat..."
 
@@ -56,7 +52,8 @@ msgstr "%s eklentisi katmanın konumlarını, boyutunu ya da matlığını kulla
 #: libgimp/gimpexport.c:350 libgimp/gimpexport.c:359
 #, c-format
 msgid "%s plug-in can only handle layers as animation frames"
-msgstr "%s eklentisi katmanları yalnızca canlandırma karesi olarak kullanabilir"
+msgstr ""
+"%s eklentisi katmanları yalnızca canlandırma karesi olarak kullanabilir"
 
 #: libgimp/gimpexport.c:351 libgimp/gimpexport.c:360
 msgid "Save as Animation"
@@ -174,7 +171,7 @@ msgid "Confirm Save"
 msgstr "Kaydetmeyi Onayla"
 
 #: libgimp/gimpexport.c:546 libgimp/gimpexport.c:628 libgimp/gimpexport.c:1199
-#: libgimp/gimpproceduredialog.c:303 libgimpwidgets/gimpcolorbutton.c:553
+#: libgimp/gimpproceduredialog.c:305 libgimpwidgets/gimpcolorbutton.c:553
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:173
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:183
 #: libgimpwidgets/gimpfileentry.c:466 libgimpwidgets/gimpquerybox.c:274
@@ -196,7 +193,7 @@ msgid "_Ignore"
 msgstr "_Yoksay"
 
 #: libgimp/gimpexport.c:629 libgimp/gimpexport.c:1200
-#: libgimp/gimpproceduredialog.c:275
+#: libgimp/gimpproceduredialog.c:277
 msgid "_Export"
 msgstr "_Dışa Aktar"
 
@@ -235,18 +232,10 @@ msgstr ""
 
 #. TRANSLATORS: the %s parameter is an image format name (ex: PNG).
 #. TRANSLATORS: %s will be a format name, e.g. "PNG" or "JPEG".
-#: libgimp/gimpexport.c:1193 libgimp/gimpsaveproceduredialog.c:388
+#: libgimp/gimpexport.c:1193 libgimp/gimpsaveproceduredialog.c:397
 #, c-format
 msgid "Export Image as %s"
 msgstr "Görüntüyü %s Olarak Dışa Aktar"
-
-#: libgimp/gimpfontselectbutton.c:137
-msgid "Font Selection"
-msgstr "Yazı Tipi Seçimi"
-
-#: libgimp/gimpgradientselectbutton.c:155
-msgid "Gradient Selection"
-msgstr "Renk Geçişi Seçimi"
 
 #: libgimp/gimpimagemetadata.c:306
 msgid "Background"
@@ -255,14 +244,6 @@ msgstr "Artalan"
 #: libgimp/gimpimagemetadata-save.c:654 modules/controller-midi.c:426
 msgid "GIMP"
 msgstr "GIMP"
-
-#: libgimp/gimppaletteselectbutton.c:136
-msgid "Palette Selection"
-msgstr "Palet Seçimi"
-
-#: libgimp/gimppatternselectbutton.c:165
-msgid "Pattern Selection"
-msgstr "Desen Seçimi"
 
 #. procedure executed successfully
 #: libgimp/gimppdb.c:552
@@ -370,12 +351,12 @@ msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
 msgstr[0] "%d yordam sorgulamanız ile eşleşiyor"
 
-#: libgimp/gimpprocedure.c:1906
+#: libgimp/gimpprocedure.c:1917
 #, c-format
 msgid "Procedure '%s' returned no return values"
 msgstr "'%s' yordamı dönüş değeri döndürmedi"
 
-#: libgimp/gimpprocedure.c:1997
+#: libgimp/gimpprocedure.c:2008
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
@@ -384,7 +365,7 @@ msgstr ""
 "'%s' yordamı, '%s' dönüş değeri için yanlış bir değer türünü döndürdü (#%d). "
 "%s istendi, %s alındı."
 
-#: libgimp/gimpprocedure.c:2009
+#: libgimp/gimpprocedure.c:2020
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong value type for argument '%s' (#"
@@ -393,7 +374,7 @@ msgstr ""
 "'%s' yordamı, '%s' bağımsız değişkeni için yanlış bir değer türü ile "
 "çağrıldı (#%d). %s istendi, %s alındı."
 
-#: libgimp/gimpprocedure.c:2044
+#: libgimp/gimpprocedure.c:2055
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
@@ -402,7 +383,7 @@ msgstr ""
 "'%s' yordamı, '%s' e, '%s' dönüş değeri olarak dönüştü (#%d, %s türü). Bu "
 "değer, istenenin dışındadır."
 
-#: libgimp/gimpprocedure.c:2058
+#: libgimp/gimpprocedure.c:2069
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
@@ -411,13 +392,13 @@ msgstr ""
 "'%s' yordamı, '%s' ile, '%s' bağımsız değişkeni için çağrıldı (#%d,%s türü). "
 "Bu değer istenenin dışındadır."
 
-#: libgimp/gimpprocedure.c:2102
+#: libgimp/gimpprocedure.c:2113
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr ""
 "'%s' yordamı, '%s' bağımsız değişkeni için geçersiz UTF-8 dizgisi döndürdü."
 
-#: libgimp/gimpprocedure.c:2112
+#: libgimp/gimpprocedure.c:2123
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
@@ -426,43 +407,63 @@ msgstr ""
 "'%s' yordamı, '%s' bağımsız değişkeni için geçersiz UTF-8 dizgisiyle "
 "çağrıldı."
 
-#: libgimp/gimpproceduredialog.c:273
+#: libgimp/gimpproceduredialog.c:275
 #: libgimpwidgets/gimpcolorprofilechooserdialog.c:184
 msgid "_Open"
 msgstr "_Aç"
 
-#: libgimp/gimpproceduredialog.c:277 libgimpwidgets/gimpcolorbutton.c:554
+#: libgimp/gimpproceduredialog.c:279 libgimpwidgets/gimpcolorbutton.c:554
 #: libgimpwidgets/gimpfileentry.c:467 libgimpwidgets/gimpquerybox.c:274
 #: libgimpwidgets/gimpquerybox.c:337 libgimpwidgets/gimpquerybox.c:403
 #: libgimpwidgets/gimpquerybox.c:479
 msgid "_OK"
 msgstr "_Tamam"
 
-#: libgimp/gimpproceduredialog.c:285 libgimpwidgets/gimpcolorbutton.c:552
+#: libgimp/gimpproceduredialog.c:287 libgimpwidgets/gimpcolorbutton.c:552
 msgid "_Reset"
 msgstr "_Sıfırla"
 
-#: libgimp/gimpproceduredialog.c:337
+#: libgimp/gimpproceduredialog.c:339
 msgid "_Load Saved Settings"
 msgstr "Kaydedilmiş Ayarları _Yükle"
 
-#: libgimp/gimpproceduredialog.c:338
+#: libgimp/gimpproceduredialog.c:340
 msgid "Load settings saved with \"Save Settings\" button"
 msgstr "\"Ayarları Kaydet\" düğmesiyle kaydedilen ayarları yükle"
 
-#: libgimp/gimpproceduredialog.c:350
+#: libgimp/gimpproceduredialog.c:352
 msgid "_Save Settings"
 msgstr "Ayarları _Kaydet"
 
-#: libgimp/gimpproceduredialog.c:351
+#: libgimp/gimpproceduredialog.c:353
 msgid "Store current settings for later reuse"
 msgstr "Geçerli ayarları daha sonra yeniden kullanmak için depola"
 
-#: libgimp/gimpproceduredialog.c:1964
+#: libgimp/gimpproceduredialog.c:734
+msgid "Brush Chooser"
+msgstr "Fırça Seçici"
+
+#: libgimp/gimpproceduredialog.c:738
+msgid "Font Chooser"
+msgstr "Yazı Tipi Seçici"
+
+#: libgimp/gimpproceduredialog.c:742
+msgid "Gradient Chooser"
+msgstr "Renk Geçişi Seçici"
+
+#: libgimp/gimpproceduredialog.c:746
+msgid "Palette Chooser"
+msgstr "Palet Seçici"
+
+#: libgimp/gimpproceduredialog.c:750
+msgid "Pattern Chooser"
+msgstr "Desen Seçici"
+
+#: libgimp/gimpproceduredialog.c:1988
 msgid "Reset to _Initial Values"
 msgstr "_Başlangıç Değerlerine Sıfırla"
 
-#: libgimp/gimpproceduredialog.c:1973
+#: libgimp/gimpproceduredialog.c:1997
 msgid "Reset to _Factory Defaults"
 msgstr "_Fabrika Öntanımlılarına Sıfırla"
 
@@ -1587,24 +1588,24 @@ msgstr "(geçersiz UTF-8 satırı)"
 msgid "File path is NULL"
 msgstr "Dosya yolu BOŞ"
 
-#: libgimpbase/gimputils.c:403 libgimpbase/gimputils.c:414
+#: libgimpbase/gimputils.c:402
 msgid "Error converting UTF-8 filename to wide char"
 msgstr "UTF-8 dosya adı büyük karaktere dönüştürülürken hata"
 
-#: libgimpbase/gimputils.c:422
+#: libgimpbase/gimputils.c:410
 msgid "ILCreateFromPath() failed"
 msgstr "ILCreateFromPath() başarısız oldu"
 
-#: libgimpbase/gimputils.c:459
+#: libgimpbase/gimputils.c:449
 #, c-format
 msgid "Cannot convert '%s' into a valid NSURL."
 msgstr "'%s' geçerli bir NSURL değerine dönüştürülemiyor."
 
-#: libgimpbase/gimputils.c:487
+#: libgimpbase/gimputils.c:477
 msgid "Connecting to org.freedesktop.FileManager1 failed: "
 msgstr "Ne yazık ki org.freedesktop.FileManager1 bağlantısı başarısız oldu: "
 
-#: libgimpbase/gimputils.c:511
+#: libgimpbase/gimputils.c:501
 msgid "Calling ShowItems failed: "
 msgstr "ShowItems çağırma işlemi başarısız oldu: "
 
@@ -1790,77 +1791,99 @@ msgstr ""
 msgid "The color to use for marking colors which are out of gamut."
 msgstr "Takımın dışındaki renkleri işaretlemek için kullanılacak renk."
 
-#: libgimpconfig/gimpcolorconfig.c:210
+#: libgimpconfig/gimpcolorconfig.c:114
+msgid ""
+"When enabled, set the color scales to display 0...255 instead of percentages"
+msgstr ""
+"Etkinleştirildiğinde, renk ölçeklerini yüzde yerine 0...255 gösterecek "
+"biçimde ayarlar"
+
+#: libgimpconfig/gimpcolorconfig.c:118
+msgid ""
+"When enabled, set the color scales to display HSV blend mode instead of LCh"
+msgstr ""
+"Etkinleştirildiğinde, renk ölçeklerini LCh yerine HSV harmanlama kipini "
+"gösterecek biçimde ayarlar"
+
+#: libgimpconfig/gimpcolorconfig.c:222
 msgid "Mode of operation"
 msgstr "İşlem kipi"
 
-#: libgimpconfig/gimpcolorconfig.c:218
+#: libgimpconfig/gimpcolorconfig.c:230
 msgid "Preferred RGB profile"
 msgstr "Yeğlenen GRB profili"
 
-#: libgimpconfig/gimpcolorconfig.c:225
+#: libgimpconfig/gimpcolorconfig.c:237
 msgid "Preferred grayscale profile"
 msgstr "Yeğlenen gri tonlamalı profil"
 
-#: libgimpconfig/gimpcolorconfig.c:232
+#: libgimpconfig/gimpcolorconfig.c:244
 msgid "CMYK profile"
 msgstr "CMYK profili"
 
-#: libgimpconfig/gimpcolorconfig.c:239
+#: libgimpconfig/gimpcolorconfig.c:251
 msgid "Monitor profile"
 msgstr "Ekran profili"
 
-#: libgimpconfig/gimpcolorconfig.c:246
+#: libgimpconfig/gimpcolorconfig.c:258
 msgid "Use the system monitor profile"
 msgstr "Sistem ekran profilini kullan"
 
-#: libgimpconfig/gimpcolorconfig.c:253
+#: libgimpconfig/gimpcolorconfig.c:265
 msgid "Simulation profile for soft-proofing"
 msgstr "Ekran provası için benzetim profili"
 
-#: libgimpconfig/gimpcolorconfig.c:260
+#: libgimpconfig/gimpcolorconfig.c:272
 msgid "Display rendering intent"
 msgstr "Ekran görselleştirme amacı"
 
-#: libgimpconfig/gimpcolorconfig.c:268
+#: libgimpconfig/gimpcolorconfig.c:280
 msgid "Use black point compensation for the display"
 msgstr "Ekran için siyah nokta dengelemesi kullan"
 
-#: libgimpconfig/gimpcolorconfig.c:275
+#: libgimpconfig/gimpcolorconfig.c:287
 msgid "Optimize display color transformations"
 msgstr "Ekran rengi dönüşümlerini eniyile"
 
-#: libgimpconfig/gimpcolorconfig.c:282
+#: libgimpconfig/gimpcolorconfig.c:294
 msgid "Soft-proofing rendering intent"
 msgstr "Ekran provası görselleştirme amacı"
 
-#: libgimpconfig/gimpcolorconfig.c:290
+#: libgimpconfig/gimpcolorconfig.c:302
 msgid "Use black point compensation for soft-proofing"
 msgstr "Ekran provası için siyah nokta dengelemesi kullan"
 
-#: libgimpconfig/gimpcolorconfig.c:297
+#: libgimpconfig/gimpcolorconfig.c:309
 msgid "Optimize soft-proofing color transformations"
 msgstr "Ekran provası renk dönüşümlerini eniyile"
 
-#: libgimpconfig/gimpcolorconfig.c:304
+#: libgimpconfig/gimpcolorconfig.c:316
 msgid "Mark out of gamut colors"
 msgstr "Dizi renklerinin dışındakileri işaretle"
 
-#: libgimpconfig/gimpcolorconfig.c:311
+#: libgimpconfig/gimpcolorconfig.c:323
 msgid "Out of gamut warning color"
 msgstr "Dizi dışı uyarı rengi"
 
-#: libgimpconfig/gimpcolorconfig.c:661 libgimpconfig/gimpcolorconfig.c:854
+#: libgimpconfig/gimpcolorconfig.c:331
+msgid "Show RGB 0..255 scales"
+msgstr "RGB 0..255 ölçeklerini göster"
+
+#: libgimpconfig/gimpcolorconfig.c:338
+msgid "Show HSV instead of LCH"
+msgstr "LCH yerine HSV göster"
+
+#: libgimpconfig/gimpcolorconfig.c:699 libgimpconfig/gimpcolorconfig.c:892
 #, c-format
 msgid "Color profile '%s' is not for RGB color space."
 msgstr "'%s' renk profili RGB renk uzayı için değildir."
 
-#: libgimpconfig/gimpcolorconfig.c:705 libgimpconfig/gimpcolorconfig.c:904
+#: libgimpconfig/gimpcolorconfig.c:743 libgimpconfig/gimpcolorconfig.c:942
 #, c-format
 msgid "Color profile '%s' is not for GRAY color space."
 msgstr "'%s' renk profili GRİ renk uzayı için değildir."
 
-#: libgimpconfig/gimpcolorconfig.c:749 libgimpconfig/gimpcolorconfig.c:954
+#: libgimpconfig/gimpcolorconfig.c:787 libgimpconfig/gimpcolorconfig.c:992
 #, c-format
 msgid "Color profile '%s' is not for CMYK color space."
 msgstr "'%s' renk profili CMYK renk uzayı için değildir."
@@ -2057,23 +2080,23 @@ msgstr "Üretici: "
 msgid "Copyright: "
 msgstr "Telif Hakkı: "
 
-#: libgimpwidgets/gimpcolorscales.c:205
+#: libgimpwidgets/gimpcolorscales.c:210
 msgid "Scales"
 msgstr "Ölçekler"
 
-#: libgimpwidgets/gimpcolorscales.c:434
+#: libgimpwidgets/gimpcolorscales.c:441
 msgid "0..100"
 msgstr "0..100"
 
-#: libgimpwidgets/gimpcolorscales.c:436
+#: libgimpwidgets/gimpcolorscales.c:443
 msgid "0..255"
 msgstr "0..255"
 
-#: libgimpwidgets/gimpcolorscales.c:457
+#: libgimpwidgets/gimpcolorscales.c:464
 msgid "LCh"
 msgstr "LCh"
 
-#: libgimpwidgets/gimpcolorscales.c:459
+#: libgimpwidgets/gimpcolorscales.c:466
 msgid "HSV"
 msgstr "HSV"
 
@@ -2205,7 +2228,7 @@ msgstr "Seçilen klasörü listeden kaldır"
 msgid "Writable"
 msgstr "Yazılabilir"
 
-#: libgimpwidgets/gimppickbutton.c:120
+#: libgimpwidgets/gimppickbutton.c:123
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
