@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-02-01 16:47+0000\n"
-"PO-Revision-Date: 2023-02-01 21:16+0100\n"
+"POT-Creation-Date: 2023-02-01 20:28+0000\n"
+"PO-Revision-Date: 2023-02-02 23:19+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -50,7 +50,7 @@ msgstr "Povadi kozo v jeziku C"
 #: plug-ins/fractal-explorer/fractal-explorer.c:399 plug-ins/gfig/gfig.c:212
 #: plug-ins/gimpressionist/gimp.c:178
 #: plug-ins/gradient-flare/gradient-flare.c:935
-#: plug-ins/ifs-compose/ifs-compose.c:417 plug-ins/imagemap/imap_main.c:200
+#: plug-ins/ifs-compose/ifs-compose.c:530 plug-ins/imagemap/imap_main.c:200
 #: plug-ins/lighting/lighting-main.c:404
 #: plug-ins/map-object/map-object-main.c:496 plug-ins/pagecurl/pagecurl.c:302
 #, c-format
@@ -104,9 +104,9 @@ msgstr "Povadi kozo (C)"
 #: plug-ins/gradient-flare/gradient-flare.c:2517
 #: plug-ins/gradient-flare/gradient-flare.c:3367
 #: plug-ins/gradient-flare/gradient-flare.c:3479
-#: plug-ins/ifs-compose/ifs-compose.c:810
-#: plug-ins/ifs-compose/ifs-compose.c:2563
-#: plug-ins/ifs-compose/ifs-compose.c:2600 plug-ins/imagemap/imap_browse.c:80
+#: plug-ins/ifs-compose/ifs-compose.c:951
+#: plug-ins/ifs-compose/ifs-compose.c:2597
+#: plug-ins/ifs-compose/ifs-compose.c:2634 plug-ins/imagemap/imap_browse.c:80
 #: plug-ins/imagemap/imap_default_dialog.c:106 plug-ins/imagemap/imap_file.c:71
 #: plug-ins/imagemap/imap_file.c:124 plug-ins/lighting/lighting-ui.c:1038
 #: plug-ins/lighting/lighting-ui.c:1163 plug-ins/lighting/lighting-ui.c:1307
@@ -192,7 +192,7 @@ msgstr "Povadi kozo (JavaScript)"
 #: plug-ins/gimpressionist/presets.c:643 plug-ins/gimpressionist/sizemap.c:402
 #: plug-ins/gradient-flare/gradient-flare.c:2518
 #: plug-ins/gradient-flare/gradient-flare.c:3480
-#: plug-ins/ifs-compose/ifs-compose.c:811
+#: plug-ins/ifs-compose/ifs-compose.c:952
 #: plug-ins/imagemap/imap_default_dialog.c:109
 #: plug-ins/lighting/lighting-ui.c:1039
 #: plug-ins/map-object/map-object-ui.c:1318 plug-ins/pagecurl/pagecurl.c:497
@@ -811,8 +811,8 @@ msgstr "Naključno zrno"
 #: plug-ins/flame/flame.c:1104
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:801
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1632
-#: plug-ins/gfig/gfig-dialog.c:649 plug-ins/ifs-compose/ifs-compose.c:807
-#: plug-ins/ifs-compose/ifs-compose.c:2601 plug-ins/imagemap/imap_browse.c:81
+#: plug-ins/gfig/gfig-dialog.c:649 plug-ins/ifs-compose/ifs-compose.c:948
+#: plug-ins/ifs-compose/ifs-compose.c:2635 plug-ins/imagemap/imap_browse.c:81
 #: plug-ins/imagemap/imap_file.c:72 plug-ins/lighting/lighting-ui.c:608
 #: plug-ins/lighting/lighting-ui.c:1308
 msgid "_Open"
@@ -828,8 +828,8 @@ msgstr "_Odpri"
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:818
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1670
 #: plug-ins/gfig/gfig-dialog.c:698 plug-ins/gimpressionist/brush.c:271
-#: plug-ins/ifs-compose/ifs-compose.c:808
-#: plug-ins/ifs-compose/ifs-compose.c:2564 plug-ins/imagemap/imap_file.c:125
+#: plug-ins/ifs-compose/ifs-compose.c:949
+#: plug-ins/ifs-compose/ifs-compose.c:2598 plug-ins/imagemap/imap_file.c:125
 #: plug-ins/lighting/lighting-ui.c:601 plug-ins/lighting/lighting-ui.c:1164
 msgid "_Save"
 msgstr "_Shrani"
@@ -994,7 +994,7 @@ msgstr "Graf trenutnih nastavitev"
 #: plug-ins/common/procedure-browser.c:168
 #: plug-ins/common/sample-colorize.c:1415 plug-ins/gfig/gfig-dialog.c:297
 #: plug-ins/gfig/gfig-dialog.c:889 plug-ins/gfig/gfig-dialog.c:1255
-#: plug-ins/gfig/gfig-dialog.c:1399 plug-ins/ifs-compose/ifs-compose.c:1212
+#: plug-ins/gfig/gfig-dialog.c:1399 plug-ins/ifs-compose/ifs-compose.c:1251
 #: plug-ins/imagemap/imap_menu.c:156 plug-ins/metadata/metadata-viewer.c:287
 msgid "_Close"
 msgstr "Z_apri"
@@ -1021,7 +1021,7 @@ msgstr "Shrani parametre raziskovalca MZP"
 #: plug-ins/file-tiff/file-tiff-save.c:1084
 #: plug-ins/file-tiff/file-tiff-save.c:1173 plug-ins/flame/flame.c:509
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1538
-#: plug-ins/gfig/gfig.c:846 plug-ins/ifs-compose/ifs-compose.c:2423
+#: plug-ins/gfig/gfig.c:846 plug-ins/ifs-compose/ifs-compose.c:2457
 #: plug-ins/lighting/lighting-ui.c:1233
 #, c-format
 msgid "Could not open '%s' for writing: %s"
@@ -1122,7 +1122,7 @@ msgstr "Prerazporedi katalog barv"
 #: plug-ins/common/sample-colorize.c:1413
 #: plug-ins/common/sphere-designer.c:2631 plug-ins/common/tile-small.c:531
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:809
-#: plug-ins/gimpressionist/preview.c:182 plug-ins/ifs-compose/ifs-compose.c:809
+#: plug-ins/gimpressionist/preview.c:182 plug-ins/ifs-compose/ifs-compose.c:950
 #: plug-ins/selection-to-path/selection-to-path.c:412
 msgid "_Reset"
 msgstr "_Ponastavi"
@@ -5451,8 +5451,7 @@ msgstr "Vzorec"
 
 #: plug-ins/common/qbist.c:1024
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:683
-#: plug-ins/gfig/gfig-dialog.c:895 plug-ins/ifs-compose/ifs-compose.c:1082
-#: plug-ins/imagemap/imap_menu.c:162
+#: plug-ins/gfig/gfig-dialog.c:895 plug-ins/imagemap/imap_menu.c:162
 msgid "_Undo"
 msgstr "_Razveljavi"
 
@@ -5791,7 +5790,6 @@ msgstr "Oblikovalec krogle"
 
 #: plug-ins/common/sphere-designer.c:2739
 #: plug-ins/gradient-flare/gradient-flare.c:3081
-#: plug-ins/ifs-compose/ifs-compose.c:1074
 msgid "_New"
 msgstr "_Nov"
 
@@ -5805,7 +5803,7 @@ msgstr "Po_dvoji"
 #: plug-ins/gimpressionist/presets.c:1067
 #: plug-ins/gradient-flare/gradient-flare.c:3084
 #: plug-ins/gradient-flare/gradient-flare.c:3367
-#: plug-ins/ifs-compose/ifs-compose.c:1078 plug-ins/imagemap/imap_menu.c:172
+#: plug-ins/imagemap/imap_menu.c:172
 msgid "_Delete"
 msgstr "I_zbriši"
 
@@ -5837,7 +5835,7 @@ msgstr "Pogovorno okno izbire barve"
 
 #. Scale
 #: plug-ins/common/sphere-designer.c:2833 plug-ins/gimpressionist/paper.c:191
-#: plug-ins/ifs-compose/ifs-compose.c:587
+#: plug-ins/ifs-compose/ifs-compose.c:706
 msgid "Scale:"
 msgstr "Merilo:"
 
@@ -5945,7 +5943,7 @@ msgstr "Majhni tlakovci"
 
 #. Area for buttons etc
 #. Flip
-#: plug-ins/common/tile-small.c:498 plug-ins/ifs-compose/ifs-compose.c:643
+#: plug-ins/common/tile-small.c:498 plug-ins/ifs-compose/ifs-compose.c:762
 msgid "Flip"
 msgstr "Prezrcali"
 
@@ -6224,7 +6222,7 @@ msgstr "Velikost koraka:"
 
 #: plug-ins/common/warp.c:543
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:762
-#: plug-ins/ifs-compose/ifs-compose.c:1243
+#: plug-ins/ifs-compose/ifs-compose.c:1282
 msgid "Iterations:"
 msgstr "Ponovitve:"
 
@@ -6298,7 +6296,7 @@ msgid "Vector mag:"
 msgstr "Mag. vektor:"
 
 #. Angle
-#: plug-ins/common/warp.c:808 plug-ins/ifs-compose/ifs-compose.c:601
+#: plug-ins/common/warp.c:808 plug-ins/ifs-compose/ifs-compose.c:720
 msgid "Angle:"
 msgstr "Kot:"
 
@@ -8513,7 +8511,7 @@ msgid "Undo last zoom change"
 msgstr "Razveljavi zadnjo spremembo povečave"
 
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:693
-#: plug-ins/ifs-compose/ifs-compose.c:1086 plug-ins/imagemap/imap_menu.c:164
+#: plug-ins/imagemap/imap_menu.c:164
 msgid "_Redo"
 msgstr "_Ponovno uveljavi"
 
@@ -10736,16 +10734,16 @@ msgstr ""
 "Napaka razčlenjevanja v »%s«:\n"
 "%s"
 
-#: plug-ins/ifs-compose/ifs-compose.c:372
+#: plug-ins/ifs-compose/ifs-compose.c:426
 msgid "_IFS Fractal..."
 msgstr "Fraktal _IFS ..."
 
-#: plug-ins/ifs-compose/ifs-compose.c:378
+#: plug-ins/ifs-compose/ifs-compose.c:432
 msgid "Create an Iterated Function System (IFS) fractal"
 msgstr "Ustvari fraktal IFS (iterirani sistem funkcij)"
 
 #. X
-#: plug-ins/ifs-compose/ifs-compose.c:559 plug-ins/lighting/lighting-ui.c:546
+#: plug-ins/ifs-compose/ifs-compose.c:678 plug-ins/lighting/lighting-ui.c:546
 #: plug-ins/map-object/map-object-ui.c:663
 #: plug-ins/map-object/map-object-ui.c:717
 #: plug-ins/map-object/map-object-ui.c:977
@@ -10754,7 +10752,7 @@ msgid "X:"
 msgstr "X:"
 
 #. Y
-#: plug-ins/ifs-compose/ifs-compose.c:573 plug-ins/lighting/lighting-ui.c:561
+#: plug-ins/ifs-compose/ifs-compose.c:692 plug-ins/lighting/lighting-ui.c:561
 #: plug-ins/map-object/map-object-ui.c:677
 #: plug-ins/map-object/map-object-ui.c:730
 #: plug-ins/map-object/map-object-ui.c:989
@@ -10764,147 +10762,157 @@ msgid "Y:"
 msgstr "Y:"
 
 #. Asym
-#: plug-ins/ifs-compose/ifs-compose.c:615
+#: plug-ins/ifs-compose/ifs-compose.c:734
 msgid "Asymmetry:"
 msgstr "Asimetričnost:"
 
 #. Shear
-#: plug-ins/ifs-compose/ifs-compose.c:629
+#: plug-ins/ifs-compose/ifs-compose.c:748
 msgid "Shear:"
 msgstr "Nagni:"
 
 #. Simple color control section
-#: plug-ins/ifs-compose/ifs-compose.c:674
+#: plug-ins/ifs-compose/ifs-compose.c:793
 msgid "Simple"
 msgstr "Enostavno"
 
-#: plug-ins/ifs-compose/ifs-compose.c:683
+#: plug-ins/ifs-compose/ifs-compose.c:802
 msgid "IFS Fractal: Target"
 msgstr "Fraktal IFS: cilj"
 
-#: plug-ins/ifs-compose/ifs-compose.c:689
+#: plug-ins/ifs-compose/ifs-compose.c:808
 msgid "Scale hue by:"
 msgstr "Spremeni merilo obarvanosti za:"
 
-#: plug-ins/ifs-compose/ifs-compose.c:704
+#: plug-ins/ifs-compose/ifs-compose.c:823
 msgid "Scale value by:"
 msgstr "Spremeni merilo vrednosti za:"
 
 #. Full color control section
-#: plug-ins/ifs-compose/ifs-compose.c:721
+#: plug-ins/ifs-compose/ifs-compose.c:840
 msgid "Full"
 msgstr "Polno"
 
-#: plug-ins/ifs-compose/ifs-compose.c:729
+#: plug-ins/ifs-compose/ifs-compose.c:848
 msgid "IFS Fractal: Red"
 msgstr "Fraktal IFS: rdeča"
 
-#: plug-ins/ifs-compose/ifs-compose.c:737
+#: plug-ins/ifs-compose/ifs-compose.c:856
 msgid "IFS Fractal: Green"
 msgstr "Fraktal IFS: zelena"
 
-#: plug-ins/ifs-compose/ifs-compose.c:745
+#: plug-ins/ifs-compose/ifs-compose.c:864
 msgid "IFS Fractal: Blue"
 msgstr "Fraktal IFS: modra"
 
-#: plug-ins/ifs-compose/ifs-compose.c:753
+#: plug-ins/ifs-compose/ifs-compose.c:872
 msgid "IFS Fractal: Black"
 msgstr "Fraktal IFS: črna"
 
-#: plug-ins/ifs-compose/ifs-compose.c:803
+#: plug-ins/ifs-compose/ifs-compose.c:944
 msgid "IFS Fractal"
 msgstr "Fraktal IFS"
 
-#: plug-ins/ifs-compose/ifs-compose.c:901
-msgid "Spatial Transformation"
-msgstr "Prostorska transformacija"
-
-#: plug-ins/ifs-compose/ifs-compose.c:907
-msgid "Color Transformation"
-msgstr "Barvna transformacija"
-
-#: plug-ins/ifs-compose/ifs-compose.c:917
-msgid "Relative probability:"
-msgstr "Relativna verjetnost:"
-
-#: plug-ins/ifs-compose/ifs-compose.c:1090 plug-ins/imagemap/imap_menu.c:174
-msgid "Select _All"
-msgstr "Izberi _vse"
-
-#: plug-ins/ifs-compose/ifs-compose.c:1094
-msgid "Re_center"
-msgstr "Ponovno poravnaj na _sredino"
-
-#: plug-ins/ifs-compose/ifs-compose.c:1094
-msgid "Recompute Center"
-msgstr "Ponovno izračunaj središče"
-
-#: plug-ins/ifs-compose/ifs-compose.c:1098
-msgid "Render Options"
-msgstr "Možnosti upodabljanja"
-
-#: plug-ins/ifs-compose/ifs-compose.c:1104 plug-ins/imagemap/imap_cmd_move.c:85
+#: plug-ins/ifs-compose/ifs-compose.c:988 plug-ins/imagemap/imap_cmd_move.c:85
 #: plug-ins/imagemap/imap_cmd_object_move.c:56
 msgid "Move"
 msgstr "Premakni"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1107
+#: plug-ins/ifs-compose/ifs-compose.c:990
 msgid "Rotate"
 msgstr "Zasukaj"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1107
-msgid "Rotate / Scale"
-msgstr "Zasukaj / Spremeni merilo"
-
-#: plug-ins/ifs-compose/ifs-compose.c:1110
+#: plug-ins/ifs-compose/ifs-compose.c:992
 msgid "Stretch"
 msgstr "Raztegni"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1208
+#: plug-ins/ifs-compose/ifs-compose.c:995
+msgid "New"
+msgstr "Novo"
+
+#: plug-ins/ifs-compose/ifs-compose.c:997
+#: plug-ins/imagemap/imap_cmd_delete.c:56 plug-ins/imagemap/imap_menu.c:172
+msgid "Delete"
+msgstr "Izbriši"
+
+#: plug-ins/ifs-compose/ifs-compose.c:999 plug-ins/imagemap/imap_menu.c:162
+msgid "Undo"
+msgstr "Razveljavi"
+
+#: plug-ins/ifs-compose/ifs-compose.c:1001 plug-ins/imagemap/imap_menu.c:164
+msgid "Redo"
+msgstr "Ponovi"
+
+#: plug-ins/ifs-compose/ifs-compose.c:1003
+#: plug-ins/imagemap/imap_cmd_select_all.c:50
+msgid "Select All"
+msgstr "Izberi vse"
+
+#: plug-ins/ifs-compose/ifs-compose.c:1005
+msgid "Recompute Center"
+msgstr "Ponovno izračunaj središče"
+
+#: plug-ins/ifs-compose/ifs-compose.c:1008
+msgid "Render Options"
+msgstr "Možnosti upodabljanja"
+
+#: plug-ins/ifs-compose/ifs-compose.c:1067
+msgid "Spatial Transformation"
+msgstr "Prostorska transformacija"
+
+#: plug-ins/ifs-compose/ifs-compose.c:1073
+msgid "Color Transformation"
+msgstr "Barvna transformacija"
+
+#: plug-ins/ifs-compose/ifs-compose.c:1083
+msgid "Relative probability:"
+msgstr "Relativna verjetnost:"
+
+#: plug-ins/ifs-compose/ifs-compose.c:1247
 msgid "IFS Fractal Render Options"
 msgstr "Možnosti upodabljanja fraktalov IFS"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1230
+#: plug-ins/ifs-compose/ifs-compose.c:1269
 msgid "Max. memory:"
 msgstr "Največja velikost spomina:"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1258
+#: plug-ins/ifs-compose/ifs-compose.c:1297
 msgid "Subdivide:"
 msgstr "Podrazdeli:"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1272
+#: plug-ins/ifs-compose/ifs-compose.c:1311
 msgid "Spot radius:"
 msgstr "Radij točke:"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1345
+#: plug-ins/ifs-compose/ifs-compose.c:1384
 #, c-format
 msgid "Rendering IFS (%d/%d)"
 msgstr "Upodabljanje IFS (%d/%d)"
 
-#: plug-ins/ifs-compose/ifs-compose.c:1497
+#: plug-ins/ifs-compose/ifs-compose.c:1536
 #, c-format
 msgid "Transformation %s"
 msgstr "Transformacija %s"
 
-#: plug-ins/ifs-compose/ifs-compose.c:2428
+#: plug-ins/ifs-compose/ifs-compose.c:2462
 msgid "Save failed"
 msgstr "Shranjevanje neuspešno"
 
-#: plug-ins/ifs-compose/ifs-compose.c:2511
-#: plug-ins/ifs-compose/ifs-compose.c:2524
+#: plug-ins/ifs-compose/ifs-compose.c:2545
+#: plug-ins/ifs-compose/ifs-compose.c:2558
 msgid "Open failed"
 msgstr "Odpiranje neuspešno"
 
-#: plug-ins/ifs-compose/ifs-compose.c:2519
+#: plug-ins/ifs-compose/ifs-compose.c:2553
 #, c-format
 msgid "File '%s' doesn't seem to be an IFS Fractal file."
 msgstr "Datoteka »%s« najbrž ni fraktalska datoteka IFS."
 
-#: plug-ins/ifs-compose/ifs-compose.c:2559
+#: plug-ins/ifs-compose/ifs-compose.c:2593
 msgid "Save as IFS Fractal file"
 msgstr "Shrani kot datoteko fraktala IFS"
 
-#: plug-ins/ifs-compose/ifs-compose.c:2596
+#: plug-ins/ifs-compose/ifs-compose.c:2630
 msgid "Open IFS Fractal file"
 msgstr "Odpri datoteko fraktala IFS"
 
@@ -10955,10 +10963,6 @@ msgstr "Ustvari"
 #: plug-ins/imagemap/imap_cmd_cut_object.c:50 plug-ins/imagemap/imap_menu.c:166
 msgid "Cut"
 msgstr "Izreži"
-
-#: plug-ins/imagemap/imap_cmd_delete.c:56 plug-ins/imagemap/imap_menu.c:172
-msgid "Delete"
-msgstr "Izbriši"
 
 #: plug-ins/imagemap/imap_cmd_delete_point.c:60
 #: plug-ins/imagemap/imap_menu.c:193
@@ -11106,10 +11110,6 @@ msgstr "Prilepi"
 #: plug-ins/imagemap/imap_cmd_select.c:52
 msgid "Select"
 msgstr "Izberi"
-
-#: plug-ins/imagemap/imap_cmd_select_all.c:50
-msgid "Select All"
-msgstr "Izberi vse"
 
 #: plug-ins/imagemap/imap_cmd_select_next.c:50
 msgid "Select Next"
@@ -11357,14 +11357,6 @@ msgstr "Shrani _kot ..."
 msgid "_Quit"
 msgstr "_Izhod"
 
-#: plug-ins/imagemap/imap_menu.c:162
-msgid "Undo"
-msgstr "Razveljavi"
-
-#: plug-ins/imagemap/imap_menu.c:164
-msgid "Redo"
-msgstr "Ponovi"
-
 #: plug-ins/imagemap/imap_menu.c:166
 msgid "Cu_t"
 msgstr "_Izreži"
@@ -11372,6 +11364,10 @@ msgstr "_Izreži"
 #: plug-ins/imagemap/imap_menu.c:170
 msgid "_Paste"
 msgstr "P_rilepi"
+
+#: plug-ins/imagemap/imap_menu.c:174
+msgid "Select _All"
+msgstr "Izberi _vse"
 
 #: plug-ins/imagemap/imap_menu.c:176
 msgid "D_eselect All"
