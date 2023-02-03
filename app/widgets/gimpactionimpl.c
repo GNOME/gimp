@@ -57,6 +57,7 @@ struct _GimpActionImplPrivate
 
 static void   gimp_action_g_action_iface_init     (GActionInterface    *iface);
 
+void          gimp_action_impl_constructed        (GObject             *object);
 static void   gimp_action_impl_finalize           (GObject             *object);
 static void   gimp_action_impl_set_property       (GObject             *object,
                                                    guint                prop_id,
@@ -116,6 +117,7 @@ gimp_action_impl_class_init (GimpActionImplClass *klass)
                   G_TYPE_NONE, 1,
                   G_TYPE_VARIANT);
 
+  object_class->constructed   = gimp_action_impl_constructed;
   object_class->finalize      = gimp_action_impl_finalize;
   object_class->set_property  = gimp_action_impl_set_property;
   object_class->get_property  = gimp_action_impl_get_property;
@@ -199,6 +201,14 @@ gimp_action_impl_init (GimpActionImpl *impl)
   impl->priv->state_set_already = FALSE;
 
   gimp_action_init (GIMP_ACTION (impl));
+}
+
+void
+gimp_action_impl_constructed (GObject *object)
+{
+  G_OBJECT_CLASS (parent_class)->constructed (object);
+
+  gimp_action_constructed (object);
 }
 
 static void
@@ -384,7 +394,8 @@ gimp_action_impl_new (const gchar *name,
                       const gchar *label,
                       const gchar *tooltip,
                       const gchar *icon_name,
-                      const gchar *help_id)
+                      const gchar *help_id,
+                      GimpContext *context)
 {
   GimpAction *action;
 
@@ -393,6 +404,7 @@ gimp_action_impl_new (const gchar *name,
                          "label",     label,
                          "tooltip",   tooltip,
                          "icon-name", icon_name,
+                         "context",   context,
                          NULL);
 
   gimp_action_set_help_id (action, help_id);

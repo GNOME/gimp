@@ -53,6 +53,7 @@ struct _GimpToggleActionPrivate
 
 static void   gimp_toggle_action_g_action_iface_init (GActionInterface *iface);
 
+static void   gimp_toggle_action_constructed         (GObject          *object);
 static void   gimp_toggle_action_get_property        (GObject          *object,
                                                       guint             prop_id,
                                                       GValue           *value,
@@ -100,6 +101,7 @@ gimp_toggle_action_class_init (GimpToggleActionClass *klass)
   GtkActionClass       *action_class = GTK_ACTION_CLASS (klass);
   GtkToggleActionClass *toggle_class = GTK_TOGGLE_ACTION_CLASS (klass);
 
+  object_class->constructed   = gimp_toggle_action_constructed;
   object_class->get_property  = gimp_toggle_action_get_property;
   object_class->set_property  = gimp_toggle_action_set_property;
 
@@ -183,6 +185,14 @@ gimp_toggle_action_init (GimpToggleAction *action)
   action->priv->state_set_already = FALSE;
 
   gimp_action_init (GIMP_ACTION (action));
+}
+
+void
+gimp_toggle_action_constructed (GObject *object)
+{
+  G_OBJECT_CLASS (parent_class)->constructed (object);
+
+  gimp_action_constructed (object);
 }
 
 static void
@@ -371,7 +381,8 @@ gimp_toggle_action_new (const gchar *name,
                         const gchar *label,
                         const gchar *tooltip,
                         const gchar *icon_name,
-                        const gchar *help_id)
+                        const gchar *help_id,
+                        GimpContext *context)
 {
   GtkToggleAction *action;
 
@@ -380,6 +391,7 @@ gimp_toggle_action_new (const gchar *name,
                          "label",     label,
                          "tooltip",   tooltip,
                          "icon-name", icon_name,
+                         "context",   context,
                          NULL);
 
   gimp_action_set_help_id (GIMP_ACTION (action), help_id);

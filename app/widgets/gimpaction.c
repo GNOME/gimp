@@ -109,7 +109,8 @@ gimp_action_default_init (GimpActionInterface *iface)
                                        g_param_spec_object ("context",
                                                             NULL, NULL,
                                                             GIMP_TYPE_CONTEXT,
-                                                            GIMP_PARAM_READWRITE));
+                                                            GIMP_PARAM_READWRITE |
+                                                            G_PARAM_CONSTRUCT_ONLY));
   gimp_rgba_set (&black, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
   g_object_interface_install_property (iface,
                                        gimp_param_spec_rgb ("color",
@@ -528,6 +529,14 @@ gimp_action_install_properties (GObjectClass *klass)
 
   g_object_class_override_property (klass, GIMP_ACTION_PROP_ELLIPSIZE,       "ellipsize");
   g_object_class_override_property (klass, GIMP_ACTION_PROP_MAX_WIDTH_CHARS, "max-width-chars");
+}
+
+void
+gimp_action_constructed (GObject *object)
+{
+  GimpActionPrivate *priv = GET_PRIVATE (object);
+
+  g_return_if_fail (priv->context != NULL);
 }
 
 void

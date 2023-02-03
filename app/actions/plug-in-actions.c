@@ -314,9 +314,10 @@ static void
 plug_in_actions_build_path (GimpActionGroup *group,
                             const gchar     *path_translated)
 {
-  GHashTable *path_table;
-  gchar      *copy_translated;
-  gchar      *p2;
+  GimpContext *context = gimp_get_user_context (group->gimp);
+  GHashTable  *path_table;
+  gchar       *copy_translated;
+  gchar       *p2;
 
   path_table = g_object_get_data (G_OBJECT (group), "plug-in-path-table");
 
@@ -346,7 +347,7 @@ plug_in_actions_build_path (GimpActionGroup *group,
                copy_translated, label);
 #endif
 
-      action = gimp_action_impl_new (copy_translated, label, NULL, NULL, NULL);
+      action = gimp_action_impl_new (copy_translated, label, NULL, NULL, NULL, context);
       gimp_action_group_add_action (group, action);
       g_object_unref (action);
 

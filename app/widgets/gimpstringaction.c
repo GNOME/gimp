@@ -147,7 +147,8 @@ gimp_string_action_new (const gchar *name,
                         const gchar *tooltip,
                         const gchar *icon_name,
                         const gchar *help_id,
-                        const gchar *value)
+                        const gchar *value,
+                        GimpContext *context)
 {
   GimpStringAction *action;
 
@@ -157,6 +158,7 @@ gimp_string_action_new (const gchar *name,
                          "tooltip",   tooltip,
                          "icon-name", icon_name,
                          "value",     value,
+                         "context",   context,
                          NULL);
 
   gimp_action_set_help_id (GIMP_ACTION (action), help_id);

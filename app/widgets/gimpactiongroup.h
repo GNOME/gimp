@@ -237,9 +237,6 @@ void          gimp_action_group_set_action_tooltip    (GimpActionGroup *group,
                                                        const gchar     *tooltip);
 const gchar * gimp_action_group_get_action_tooltip    (GimpActionGroup *group,
                                                        const gchar     *action_name);
-void          gimp_action_group_set_action_context    (GimpActionGroup *group,
-                                                       const gchar     *action_name,
-                                                       GimpContext     *context);
 void          gimp_action_group_set_action_color      (GimpActionGroup *group,
                                                        const gchar     *action_name,
                                                        const GimpRGB   *color,

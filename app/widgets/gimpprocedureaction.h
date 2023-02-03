@@ -55,7 +55,8 @@ GimpProcedureAction * gimp_procedure_action_new      (const gchar   *name,
                                                       const gchar   *tooltip,
                                                       const gchar   *icon_name,
                                                       const gchar   *help_id,
-                                                      GimpProcedure *procedure);
+                                                      GimpProcedure *procedure,
+                                                      GimpContext   *context);
 
 
 #endif  /* __GIMP_PROCEDURE_ACTION_H__ */

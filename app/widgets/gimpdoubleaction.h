@@ -55,7 +55,8 @@ GimpDoubleAction * gimp_double_action_new      (const gchar *name,
                                                 const gchar *tooltip,
                                                 const gchar *icon_name,
                                                 const gchar *help_id,
-                                                gdouble      value);
+                                                gdouble      value,
+                                                GimpContext *context);
 
 
 #endif  /* __GIMP_DOUBLE_ACTION_H__ */

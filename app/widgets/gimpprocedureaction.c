@@ -243,7 +243,8 @@ gimp_procedure_action_new (const gchar   *name,
                            const gchar   *tooltip,
                            const gchar   *icon_name,
                            const gchar   *help_id,
-                           GimpProcedure *procedure)
+                           GimpProcedure *procedure,
+                           GimpContext   *context)
 {
   GimpProcedureAction *action;
 
@@ -253,6 +254,7 @@ gimp_procedure_action_new (const gchar   *name,
                          "tooltip",    tooltip,
                          "icon-name",  icon_name,
                          "procedure",  procedure,
+                         "context",    context,
                          NULL);
 
   gimp_action_set_help_id (GIMP_ACTION (action), help_id);

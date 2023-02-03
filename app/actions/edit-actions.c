@@ -256,10 +256,6 @@ edit_actions_setup (GimpActionGroup *group)
   gimp_action_set_accel_path (action,
                               "<Actions>/edit/edit-paste-as-new-image");
 
-  gimp_action_group_set_action_context (group, "edit-fill-fg", context);
-  gimp_action_group_set_action_context (group, "edit-fill-bg", context);
-  gimp_action_group_set_action_context (group, "edit-fill-pattern", context);
-
   g_signal_connect_object (context, "foreground-changed",
                            G_CALLBACK (edit_actions_foreground_changed),
                            group, 0);

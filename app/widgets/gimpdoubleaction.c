@@ -135,7 +135,8 @@ gimp_double_action_new (const gchar *name,
                         const gchar *tooltip,
                         const gchar *icon_name,
                         const gchar *help_id,
-                        gdouble      value)
+                        gdouble      value,
+                        GimpContext *context)
 {
   GimpDoubleAction *action;
 
@@ -145,6 +146,7 @@ gimp_double_action_new (const gchar *name,
                          "tooltip",   tooltip,
                          "icon-name", icon_name,
                          "value",     value,
+                         "context",   context,
                          NULL);
 
   gimp_action_set_help_id (GIMP_ACTION (action), help_id);

@@ -147,7 +147,8 @@ gimp_enum_action_new (const gchar *name,
                       const gchar *icon_name,
                       const gchar *help_id,
                       gint         value,
-                      gboolean     value_variable)
+                      gboolean     value_variable,
+                      GimpContext *context)
 {
   GimpEnumAction *action;
 
@@ -158,6 +159,7 @@ gimp_enum_action_new (const gchar *name,
                          "icon-name",      icon_name,
                          "value",          value,
                          "value-variable", value_variable,
+                         "context",        context,
                          NULL);
 
   gimp_action_set_help_id (GIMP_ACTION (action), help_id);

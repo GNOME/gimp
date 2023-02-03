@@ -54,7 +54,8 @@ GtkToggleAction * gimp_toggle_action_new       (const gchar *name,
                                                 const gchar *label,
                                                 const gchar *tooltip,
                                                 const gchar *icon_name,
-                                                const gchar *help_id);
+                                                const gchar *help_id,
+                                                GimpContext *context);
 
 void              gimp_toggle_action_set_active (GimpToggleAction *action,
                                                  gboolean          active);

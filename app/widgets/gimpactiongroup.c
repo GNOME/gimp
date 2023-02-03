@@ -404,7 +404,8 @@ gimp_action_group_add_actions (GimpActionGroup       *group,
                                const GimpActionEntry *entries,
                                guint                  n_entries)
 {
-  gint i;
+  GimpContext *context = gimp_get_user_context (group->gimp);
+  gint         i;
 
   g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
 
@@ -433,7 +434,7 @@ gimp_action_group_add_actions (GimpActionGroup       *group,
 
       action = gimp_action_impl_new (entries[i].name, label, tooltip,
                                      entries[i].icon_name,
-                                     entries[i].help_id);
+                                     entries[i].help_id, context);
 
       if (entries[i].callback)
         g_signal_connect (action, "gimp-activate",
@@ -454,7 +455,8 @@ gimp_action_group_add_toggle_actions (GimpActionGroup             *group,
                                       const GimpToggleActionEntry *entries,
                                       guint                        n_entries)
 {
-  gint i;
+  GimpContext *context = gimp_get_user_context (group->gimp);
+  gint         i;
 
   g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
 
@@ -483,7 +485,7 @@ gimp_action_group_add_toggle_actions (GimpActionGroup             *group,
 
       action = gimp_toggle_action_new (entries[i].name, label, tooltip,
                                        entries[i].icon_name,
-                                       entries[i].help_id);
+                                       entries[i].help_id, context);
 
       gimp_toggle_action_set_active (GIMP_TOGGLE_ACTION (action),
                                      entries[i].is_active);
@@ -511,6 +513,7 @@ gimp_action_group_add_radio_actions (GimpActionGroup            *group,
                                      GimpActionCallback          callback)
 {
   GtkRadioAction *first_action = NULL;
+  GimpContext    *context      = gimp_get_user_context (group->gimp);
   gint            i;
 
   g_return_val_if_fail (GIMP_IS_ACTION_GROUP (group), NULL);
@@ -541,7 +544,7 @@ gimp_action_group_add_radio_actions (GimpActionGroup            *group,
       action = gimp_radio_action_new (entries[i].name, label, tooltip,
                                       entries[i].icon_name,
                                       entries[i].help_id,
-                                      entries[i].value);
+                                      entries[i].value, context);
 
       if (i == 0)
         first_action = action;
@@ -574,7 +577,8 @@ gimp_action_group_add_enum_actions (GimpActionGroup           *group,
                                     guint                      n_entries,
                                     GimpActionCallback         callback)
 {
-  gint i;
+  GimpContext *context = gimp_get_user_context (group->gimp);
+  gint         i;
 
   g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
 
@@ -605,7 +609,8 @@ gimp_action_group_add_enum_actions (GimpActionGroup           *group,
                                      entries[i].icon_name,
                                      entries[i].help_id,
                                      entries[i].value,
-                                     entries[i].value_variable);
+                                     entries[i].value_variable,
+                                     context);
 
       if (callback)
         g_signal_connect (action, "gimp-activate",
@@ -627,7 +632,8 @@ gimp_action_group_add_string_actions (GimpActionGroup             *group,
                                       guint                        n_entries,
                                       GimpActionCallback           callback)
 {
-  gint i;
+  GimpContext *context = gimp_get_user_context (group->gimp);
+  gint         i;
 
   g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
 
@@ -657,7 +663,7 @@ gimp_action_group_add_string_actions (GimpActionGroup             *group,
       action = gimp_string_action_new (entries[i].name, label, tooltip,
                                        entries[i].icon_name,
                                        entries[i].help_id,
-                                       entries[i].value);
+                                       entries[i].value, context);
 
       if (callback)
         g_signal_connect (action, "gimp-activate",
@@ -679,7 +685,8 @@ gimp_action_group_add_double_actions (GimpActionGroup             *group,
                                       guint                        n_entries,
                                       GimpActionCallback           callback)
 {
-  gint i;
+  GimpContext *context = gimp_get_user_context (group->gimp);
+  gint         i;
 
   g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
 
@@ -709,7 +716,7 @@ gimp_action_group_add_double_actions (GimpActionGroup             *group,
       action = gimp_double_action_new (entries[i].name, label, tooltip,
                                        entries[i].icon_name,
                                        entries[i].help_id,
-                                       entries[i].value);
+                                       entries[i].value, context);
 
       if (callback)
         g_signal_connect (action, "gimp-activate",
@@ -730,7 +737,8 @@ gimp_action_group_add_procedure_actions (GimpActionGroup                *group,
                                          guint                           n_entries,
                                          GimpActionCallback              callback)
 {
-  gint i;
+  GimpContext *context = gimp_get_user_context (group->gimp);
+  gint         i;
 
   g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
 
@@ -758,7 +766,8 @@ gimp_action_group_add_procedure_actions (GimpActionGroup                *group,
                                           entries[i].tooltip,
                                           entries[i].icon_name,
                                           entries[i].help_id,
-                                          entries[i].procedure);
+                                          entries[i].procedure,
+                                          context);
 
       if (callback)
         g_signal_connect (action, "gimp-activate",
@@ -992,38 +1001,6 @@ gimp_action_group_get_action_tooltip (GimpActionGroup     *group,
     }
 
   return gimp_action_get_tooltip (action);
-}
-
-void
-gimp_action_group_set_action_context (GimpActionGroup *group,
-                                      const gchar     *action_name,
-                                      GimpContext     *context)
-{
-  GimpAction *action;
-
-  g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
-  g_return_if_fail (action_name != NULL);
-  g_return_if_fail (context == NULL || GIMP_IS_CONTEXT (context));
-
-  action = gimp_action_group_get_action (group, action_name);
-
-  if (! action)
-    {
-      g_warning ("%s: Unable to set context of action "
-                 "which doesn't exist: %s",
-                 G_STRFUNC, action_name);
-      return;
-    }
-
-  if (! GIMP_IS_ACTION (action))
-    {
-      g_warning ("%s: Unable to set \"context\" of action "
-                 "which is not a GimpAction: %s",
-                 G_STRFUNC, action_name);
-      return;
-    }
-
-  g_object_set (action, "context", context, NULL);
 }
 
 void

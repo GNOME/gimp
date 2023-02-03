@@ -57,7 +57,8 @@ GimpEnumAction * gimp_enum_action_new      (const gchar *name,
                                             const gchar *icon_name,
                                             const gchar *help_id,
                                             gint         value,
-                                            gboolean     value_variable);
+                                            gboolean     value_variable,
+                                            GimpContext *context);
 
 
 #endif  /* __GIMP_ENUM_ACTION_H__ */

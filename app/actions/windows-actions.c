@@ -404,7 +404,6 @@ windows_actions_image_notify (GimpDisplay      *display,
                     "label",    title,
                     "tooltip",  gimp_image_get_display_path (image),
                     "viewable", image,
-                    "context",  gimp_get_user_context (group->gimp),
                     NULL);
 
       g_free (title);
