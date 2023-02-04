@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2023-01-14 06:17+0000\n"
-"PO-Revision-Date: 2023-01-20 18:45+0100\n"
+"POT-Creation-Date: 2023-02-01 20:27+0000\n"
+"PO-Revision-Date: 2023-02-04 04:20+0100\n"
 "Last-Translator: Rodrigo Lledó Milanca <rodhos92@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
 "Language: es_ES\n"
@@ -162,118 +162,118 @@ msgstr "%s versión %s"
 msgid "using %s version %s (compiled against version %s)"
 msgstr "utilizando %s versión %s (compilado contra la versión %s)"
 
-#: app/main.c:166
+#: app/main.c:167
 msgid "Show version information and exit"
 msgstr "Mostrar información de la versión y salir"
 
-#: app/main.c:171
+#: app/main.c:172
 msgid "Show license information and exit"
 msgstr "Mostrar información de la licencia y salir"
 
-#: app/main.c:176
+#: app/main.c:177
 msgid "Be more verbose"
 msgstr "Ser más detallado"
 
-#: app/main.c:181
+#: app/main.c:182
 msgid "Start a new GIMP instance"
 msgstr "Iniciar una instancia de GIMP nueva"
 
-#: app/main.c:186
+#: app/main.c:187
 msgid "Open images as new"
 msgstr "Abrir imágenes como nuevas"
 
-#: app/main.c:191
+#: app/main.c:192
 msgid "Run without a user interface"
 msgstr "Ejecutar sin una interfaz de usuario"
 
-#: app/main.c:196
+#: app/main.c:197
 msgid "Do not load brushes, gradients, patterns, ..."
 msgstr "No cargar pinceles, degradados, patrones…"
 
-#: app/main.c:201
+#: app/main.c:202
 msgid "Do not load any fonts"
 msgstr "No cargar ninguna tipografía"
 
-#: app/main.c:206
+#: app/main.c:207
 msgid "Do not show a splash screen"
 msgstr "No mostrar una pantalla de arranque"
 
-#: app/main.c:211
+#: app/main.c:212
 msgid "Do not use shared memory between GIMP and plug-ins"
 msgstr "No usar memoria compartida entre GIMP y los complementos"
 
-#: app/main.c:216
+#: app/main.c:217
 msgid "Do not use special CPU acceleration functions"
 msgstr "No utilizar las funciones de aceleración especiales de la CPU"
 
-#: app/main.c:221
+#: app/main.c:222
 msgid "Use an alternate sessionrc file"
 msgstr "Usar un archivo «sessionrc» alternativo"
 
-#: app/main.c:226
+#: app/main.c:227
 msgid "Use an alternate user gimprc file"
 msgstr "Usar un archivo de usuario «gimprc» alternativo"
 
-#: app/main.c:231
+#: app/main.c:232
 msgid "Use an alternate system gimprc file"
 msgstr "Usar un archivo de sistema «gimprc» alternativo"
 
-#: app/main.c:236
+#: app/main.c:237
 msgid "Batch command to run (can be used multiple times)"
 msgstr "Instrucción por lotes que ejecutar (puede usarse varias veces)"
 
-#: app/main.c:241
+#: app/main.c:242
 msgid "The procedure to process batch commands with"
 msgstr "El procedimiento con el que se procesarán las instrucciones en lotes"
 
-#: app/main.c:246
+#: app/main.c:247
 msgid "Quit immediately after performing requested actions"
 msgstr "Salir inmediatamente después de realizar las acciones solicitadas"
 
-#: app/main.c:251
+#: app/main.c:252
 msgid "Send messages to console instead of using a dialog"
 msgstr "Enviar las advertencias a la consola en vez de usar un diálogo"
 
 #. don't translate the mode names (off|on|warn)
-#: app/main.c:257
+#: app/main.c:258
 msgid "PDB compatibility mode (off|on|warn)"
 msgstr "Modo de compatibilidad PDB (off|on|warn)"
 
 #. don't translate the mode names (never|query|always)
-#: app/main.c:263
+#: app/main.c:264
 msgid "Debug in case of a crash (never|query|always)"
 msgstr "Depurar en caso de error (never|query|always)"
 
-#: app/main.c:268
+#: app/main.c:269
 msgid "Enable non-fatal debugging signal handlers"
 msgstr "Activar los manejadores de señales no fatales de depuración"
 
-#: app/main.c:273
+#: app/main.c:274
 msgid "Make all warnings fatal"
 msgstr "Hacer todas las advertencias fatales"
 
-#: app/main.c:278
+#: app/main.c:279
 msgid "Output a gimprc file with default settings"
 msgstr "Generar un archivo gimprc con la configuración predeterminada"
 
-#: app/main.c:294
+#: app/main.c:295
 msgid "Output a sorted list of deprecated procedures in the PDB"
 msgstr ""
 "Generar una lista ordenada de los procedimientos obsoletos dentro del PDB"
 
-#: app/main.c:299
+#: app/main.c:300
 msgid "Show a preferences page with experimental features"
 msgstr "Mostrar una página de preferencias con características experimentales"
 
-#: app/main.c:304
+#: app/main.c:305
 msgid "Show an image submenu with debug actions"
 msgstr "Mostrar un submenú de imagen con acciones de depurado"
 
-#: app/main.c:744
+#: app/main.c:725
 msgid "[FILE|URI...]"
 msgstr "[ARCHIVO|URI…]"
 
-#: app/main.c:772
+#: app/main.c:753
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -281,20 +281,20 @@ msgstr ""
 "GIMP no ha podido inicializar la interfaz gráfica de usuario.\n"
 "Asegúrese de que la configuración de su pantalla sea adecuada."
 
-#: app/main.c:791
+#: app/main.c:772
 msgid "Another GIMP instance is already running."
 msgstr "Ya se está ejecutando otra instancia de GIMP."
 
-#: app/main.c:879
+#: app/main.c:860
 msgid "GIMP output. Type any character to close this window."
 msgstr "Salida de GIMP. Teclee un carácter cualquiera para cerrar esta ventana."
 
-#: app/main.c:880
+#: app/main.c:861
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Teclee un carácter cualquiera para cerrar esta ventana)\n"
 
-#: app/main.c:897
+#: app/main.c:878
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "Salida de GIMP. Puede minimizar esta ventana, pero no la cierre."
 
@@ -3904,62 +3904,62 @@ msgstr "Capa copiada al portapapeles."
 msgid "Copied pixels to the clipboard."
 msgstr "Píxeles copiados al portapapeles."
 
-#: app/actions/edit-commands.c:442 app/actions/edit-commands.c:731
+#: app/actions/edit-commands.c:443 app/actions/edit-commands.c:732
 #: app/tools/gimpseamlessclonetool.c:303
 msgid "There is no image data in the clipboard to paste."
 msgstr "No hay datos de imágenes para pegar en el portapapeles."
 
-#: app/actions/edit-commands.c:458
+#: app/actions/edit-commands.c:459
 msgid "Cut Named"
 msgstr "Cortar (con nombre)"
 
-#: app/actions/edit-commands.c:461 app/actions/edit-commands.c:483
-#: app/actions/edit-commands.c:505
+#: app/actions/edit-commands.c:462 app/actions/edit-commands.c:484
+#: app/actions/edit-commands.c:506
 msgid "Enter a name for this buffer"
 msgstr "Ponga un nombre a este búfer"
 
-#: app/actions/edit-commands.c:480
+#: app/actions/edit-commands.c:481
 msgid "Copy Named"
 msgstr "Copiar (con nombre)"
 
-#: app/actions/edit-commands.c:502
+#: app/actions/edit-commands.c:503
 msgid "Copy Visible Named"
 msgstr "Copiar visible con nombre"
 
-#: app/actions/edit-commands.c:550
+#: app/actions/edit-commands.c:551
 msgid "Clear"
 msgstr "Limpiar"
 
-#: app/actions/edit-commands.c:623
+#: app/actions/edit-commands.c:624
 msgid "A selected layer's alpha channel is locked."
 msgstr "Un canal alfa de la capa seleccionada está bloqueado."
 
-#: app/actions/edit-commands.c:689
+#: app/actions/edit-commands.c:690
 msgid ""
 "Pasted as new layer because the target is not a single layer or layer mask."
 msgstr ""
 "Pegado como una capa nueva porque el objetivo no es una capa única o una "
 "máscara de capa."
 
-#: app/actions/edit-commands.c:696
+#: app/actions/edit-commands.c:697
 msgid "Pasted as new layer because the target is a layer group."
 msgstr "Pegado como una capa nueva porque el objetivo es un grupo de capas."
 
-#: app/actions/edit-commands.c:703
+#: app/actions/edit-commands.c:704
 msgid "Pasted as new layer because the target's pixels are locked."
 msgstr ""
 "Pegado como una capa nueva porque los píxeles del objetivo están bloqueados."
 
-#: app/actions/edit-commands.c:748
+#: app/actions/edit-commands.c:749
 msgid "There are no selected layers or channels to cut from."
 msgstr "No hay capas o canales seleccionados desde donde cortar."
 
-#: app/actions/edit-commands.c:753 app/actions/edit-commands.c:786
-#: app/actions/edit-commands.c:811
+#: app/actions/edit-commands.c:754 app/actions/edit-commands.c:787
+#: app/actions/edit-commands.c:812
 msgid "(Unnamed Buffer)"
 msgstr "(Búfer sin nombre)"
 
-#: app/actions/edit-commands.c:781
+#: app/actions/edit-commands.c:782
 msgid "There are no selected layers or channels to copy from."
 msgstr "No hay capas o canales seleccionados desde donde copiar."
 
@@ -6602,18 +6602,18 @@ msgstr "Cambiar el tamaño del contenido de la capa"
 
 #: app/actions/layers-actions.c:250
 msgctxt "layers-action"
-msgid "_Crop to Selection"
-msgstr "Re_cortar a la selección"
+msgid "_Resize Layers to Selection"
+msgstr "_Redimensionar capas a la selección"
 
 #: app/actions/layers-actions.c:251
 msgctxt "layers-action"
-msgid "Crop the layers to the extents of the selection"
-msgstr "Recortar las capas a las dimensiones de la selección"
+msgid "Resize the layers to the extents of the selection"
+msgstr "Cambia el tamaño de las capas a las dimensiones de la selección"
 
 #: app/actions/layers-actions.c:256
 msgctxt "layers-action"
-msgid "Crop to C_ontent"
-msgstr "Recortar al _contenido"
+msgid "Crop Layers to C_ontent"
+msgstr "Recortar capas al c_ontenido"
 
 #: app/actions/layers-actions.c:257
 msgctxt "layers-action"
@@ -12566,12 +12566,12 @@ msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr "Anclar la selección flotante"
 
-#: app/core/core-enums.c:1298 app/core/gimp-edit.c:736
+#: app/core/core-enums.c:1298 app/core/gimp-edit.c:764
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "Pegar"
 
-#: app/core/core-enums.c:1299 app/core/gimp-edit.c:1065
+#: app/core/core-enums.c:1299 app/core/gimp-edit.c:1116
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "Cortar"
@@ -12960,18 +12960,18 @@ msgstr "Histórico de color"
 msgid "Updating tag cache"
 msgstr "Actualizar la caché de etiquetas"
 
-#: app/core/gimp-edit.c:127
+#: app/core/gimp-edit.c:87
 #, c-format
 msgid "Cut Layer"
 msgid_plural "Cut %d Layers"
 msgstr[0] "Cortar capa"
 msgstr[1] "Cortar %d capas"
 
-#: app/core/gimp-edit.c:506 app/core/gimpimage-new.c:553
+#: app/core/gimp-edit.c:534 app/core/gimpimage-new.c:553
 msgid "Pasted Layer"
 msgstr "Capa pegada"
 
-#: app/core/gimp-edit.c:1082
+#: app/core/gimp-edit.c:1133
 msgid "Global Buffer"
 msgstr "Búfer global"
 
@@ -28724,6 +28724,18 @@ msgstr "Error al escribir el XCF: BPC no soportado al escribir el píxel: %d"
 #: app-tools/gimp-debug-tool.c:87
 msgid "GIMP Crash Debug"
 msgstr "Depurar error grave de GIMP"
+
+#~ msgctxt "layers-action"
+#~ msgid "_Crop to Selection"
+#~ msgstr "Re_cortar a la selección"
+
+#~ msgctxt "layers-action"
+#~ msgid "Crop the layers to the extents of the selection"
+#~ msgstr "Recortar las capas a las dimensiones de la selección"
+
+#~ msgctxt "layers-action"
+#~ msgid "Crop to C_ontent"
+#~ msgstr "Recortar al _contenido"
 
 #~ msgctxt "channels-action"
 #~ msgid "_Add to Selection"
