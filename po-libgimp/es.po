@@ -18,17 +18,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-09-06 16:38+0000\n"
-"PO-Revision-Date: 2020-09-07 09:16+0200\n"
-"Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
+"POT-Creation-Date: 2023-02-04 03:39+0000\n"
+"PO-Revision-Date: 2023-02-04 04:42+0100\n"
+"Last-Translator: Rodrigo Lledó Milanca <rodhos92@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
 "Language: es_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"\n"
-"X-Generator: Gtranslator 3.36.0\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #. procedure executed successfully
 #: ../libgimp/gimp.c:1265
@@ -191,8 +190,6 @@ msgstr ""
 "El complemento %s necesita recortar las capas a los límites de la imagen"
 
 #: ../libgimp/gimpexport.c:445
-#| msgctxt "page-selector-target"
-#| msgid "Layers"
 msgid "Crop Layers"
 msgstr "Recortar capas"
 
@@ -277,44 +274,44 @@ msgstr "Selección de tipografía"
 msgid "Gradient Selection"
 msgstr "Selección de degradado"
 
-#: ../libgimp/gimpimagemetadata.c:514
+#: ../libgimp/gimpimagemetadata.c:671
 msgid "GIMP 2.10"
 msgstr "GIMP 2.10"
 
-#: ../libgimp/gimpimagemetadata.c:703
+#: ../libgimp/gimpimagemetadata.c:862
 msgid "Background"
 msgstr "Fondo"
 
-#: ../libgimp/gimpimagemetadata.c:892
+#: ../libgimp/gimpimagemetadata.c:1051
 #, c-format
 msgid "Rotate %s?"
 msgstr "¿Rotar %s?"
 
-#: ../libgimp/gimpimagemetadata.c:898
+#: ../libgimp/gimpimagemetadata.c:1057
 msgid "_Keep Original"
 msgstr "_Mantener original"
 
-#: ../libgimp/gimpimagemetadata.c:899 ../libgimpwidgets/gimpicons.c:271
+#: ../libgimp/gimpimagemetadata.c:1058 ../libgimpwidgets/gimpicons.c:271
 msgid "_Rotate"
 msgstr "_Rotar"
 
-#: ../libgimp/gimpimagemetadata.c:940
+#: ../libgimp/gimpimagemetadata.c:1099
 msgid "Original"
 msgstr "Original"
 
-#: ../libgimp/gimpimagemetadata.c:956
+#: ../libgimp/gimpimagemetadata.c:1115
 msgid "Rotated"
 msgstr "Rotada"
 
-#: ../libgimp/gimpimagemetadata.c:974
+#: ../libgimp/gimpimagemetadata.c:1133
 msgid "This image contains Exif orientation metadata."
 msgstr "Esta imagen contiene metadatos Exif de orientación."
 
-#: ../libgimp/gimpimagemetadata.c:992
+#: ../libgimp/gimpimagemetadata.c:1151
 msgid "Would you like to rotate the image?"
 msgstr "¿Quiere rotar la imagen?"
 
-#: ../libgimp/gimpimagemetadata.c:1004
+#: ../libgimp/gimpimagemetadata.c:1163
 msgid "_Don't ask me again"
 msgstr "_No volver a preguntar"
 
@@ -1482,38 +1479,32 @@ msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "Recortar con aspecto"
 
-#: ../libgimpbase/gimpmetadata.c:878
+#: ../libgimpbase/gimpmetadata.c:982
 #, c-format
 msgid "Can load metadata only from local files"
 msgstr "Sólo se pueden cargar metadatos de archivos locales"
 
-#: ../libgimpbase/gimpmetadata.c:892 ../libgimpbase/gimpmetadata.c:962
-#, c-format
-msgid "Conversion of the filename to system codepage failed."
-msgstr ""
-"Falló la conversión del nombre del archivo a códigos de página del sistema."
-
-#: ../libgimpbase/gimpmetadata.c:949
+#: ../libgimpbase/gimpmetadata.c:1038
 #, c-format
 msgid "Can save metadata only to local files"
 msgstr "Sólo se pueden guardar metadatos de archivos locales"
 
-#: ../libgimpbase/gimpmetadata.c:1011
+#: ../libgimpbase/gimpmetadata.c:1086
 #, c-format
 msgid "Invalid Exif data size."
 msgstr "Tamaño de los datos Exif no válido."
 
-#: ../libgimpbase/gimpmetadata.c:1040
+#: ../libgimpbase/gimpmetadata.c:1115
 #, c-format
 msgid "Parsing Exif data failed."
 msgstr "Falló al analizar los datos Exif."
 
-#: ../libgimpbase/gimpmetadata.c:1090
+#: ../libgimpbase/gimpmetadata.c:1165
 #, c-format
 msgid "Parsing IPTC data failed."
 msgstr "Falló al analizar los datos IPTC."
 
-#: ../libgimpbase/gimpmetadata.c:1138
+#: ../libgimpbase/gimpmetadata.c:1213
 #, c-format
 msgid "Parsing XMP data failed."
 msgstr "Falló al analizar los datos XMP."
@@ -1731,80 +1722,102 @@ msgstr ""
 msgid "The color to use for marking colors which are out of gamut."
 msgstr "El color que usar para marcar los colores que están fuera del gamut."
 
-#: ../libgimpconfig/gimpcolorconfig.c:198
+#: ../libgimpconfig/gimpcolorconfig.c:114
+msgid ""
+"When enabled, set the color scales to display 0...255 instead of percentages"
+msgstr ""
+"Cuando se activa, configura las escalas de color para que muestren 0...255 "
+"en lugar de porcentajes"
+
+#: ../libgimpconfig/gimpcolorconfig.c:118
+msgid ""
+"When enabled, set the color scales to display HSV blend mode instead of LCh"
+msgstr ""
+"Cuando se activa, configura las escalas de color para mostrar el modo de "
+"mezcla HSV en lugar de LCh"
+
+#: ../libgimpconfig/gimpcolorconfig.c:210
 msgid "Mode of operation"
 msgstr "Modo de funcionamiento"
 
-#: ../libgimpconfig/gimpcolorconfig.c:206
+#: ../libgimpconfig/gimpcolorconfig.c:218
 msgid "Preferred RGB profile"
 msgstr "Perfil RGB favorito"
 
-#: ../libgimpconfig/gimpcolorconfig.c:213
+#: ../libgimpconfig/gimpcolorconfig.c:225
 msgid "Preferred grayscale profile"
 msgstr "Perfil de escala de grises favorito"
 
-#: ../libgimpconfig/gimpcolorconfig.c:220
+#: ../libgimpconfig/gimpcolorconfig.c:232
 msgid "CMYK profile"
 msgstr "Perfil CMYK"
 
-#: ../libgimpconfig/gimpcolorconfig.c:227
+#: ../libgimpconfig/gimpcolorconfig.c:239
 msgid "Monitor profile"
 msgstr "Perfil del monitor"
 
-#: ../libgimpconfig/gimpcolorconfig.c:234
+#: ../libgimpconfig/gimpcolorconfig.c:246
 msgid "Use the system monitor profile"
 msgstr "Usar el perfil del monitor del sistema"
 
-#: ../libgimpconfig/gimpcolorconfig.c:242
+#: ../libgimpconfig/gimpcolorconfig.c:254
 msgid "Simulation profile for soft-proofing"
 msgstr "Perfil de simulación para pseudoprueba"
 
-#: ../libgimpconfig/gimpcolorconfig.c:249
+#: ../libgimpconfig/gimpcolorconfig.c:261
 msgid "Display rendering intent"
 msgstr "Mostrar prueba de renderizado"
 
-#: ../libgimpconfig/gimpcolorconfig.c:257
+#: ../libgimpconfig/gimpcolorconfig.c:269
 msgid "Use black point compensation for the display"
 msgstr "Usar compensación de punto negro para la pantalla"
 
-#: ../libgimpconfig/gimpcolorconfig.c:264
+#: ../libgimpconfig/gimpcolorconfig.c:276
 msgid "Optimize display color transformations"
 msgstr "Optimizar las transformaciones de color en pantalla"
 
-#: ../libgimpconfig/gimpcolorconfig.c:271
+#: ../libgimpconfig/gimpcolorconfig.c:283
 msgid "Soft-proofing rendering intent"
 msgstr "Prueba de renderizado de pseudoprueba"
 
-#: ../libgimpconfig/gimpcolorconfig.c:279
+#: ../libgimpconfig/gimpcolorconfig.c:291
 msgid "Use black point compensation for soft-proofing"
 msgstr "Utilizar la compensación de punto negro para la pseudoprueba"
 
-#: ../libgimpconfig/gimpcolorconfig.c:286
+#: ../libgimpconfig/gimpcolorconfig.c:298
 msgid "Optimize soft-proofing color transformations"
 msgstr "Optimizar las transformaciones de color de pseudoprueba"
 
-#: ../libgimpconfig/gimpcolorconfig.c:293
+#: ../libgimpconfig/gimpcolorconfig.c:305
 msgid "Mark out of gamut colors"
 msgstr "Marca de colores de gama"
 
-#: ../libgimpconfig/gimpcolorconfig.c:300
+#: ../libgimpconfig/gimpcolorconfig.c:312
 msgid "Out of gamut warning color"
 msgstr "Falta de color de aviso de gama"
 
-#: ../libgimpconfig/gimpcolorconfig.c:657
-#: ../libgimpconfig/gimpcolorconfig.c:841
+#: ../libgimpconfig/gimpcolorconfig.c:320
+msgid "Show RGB 0..255 scales"
+msgstr "Mostrar escalas RGB 0..255"
+
+#: ../libgimpconfig/gimpcolorconfig.c:327
+msgid "Show HSV instead of LCH"
+msgstr "Mostrar HSV en lugar de LCH"
+
+#: ../libgimpconfig/gimpcolorconfig.c:695
+#: ../libgimpconfig/gimpcolorconfig.c:879
 #, c-format
 msgid "Color profile '%s' is not for RGB color space."
 msgstr "El perfil de color «%s» no es para el espacio de color RGB."
 
-#: ../libgimpconfig/gimpcolorconfig.c:699
-#: ../libgimpconfig/gimpcolorconfig.c:891
+#: ../libgimpconfig/gimpcolorconfig.c:737
+#: ../libgimpconfig/gimpcolorconfig.c:929
 #, c-format
 msgid "Color profile '%s' is not for GRAY color space."
 msgstr "El perfil de color «%s» no es para el espacio de color gris."
 
-#: ../libgimpconfig/gimpcolorconfig.c:741
-#: ../libgimpconfig/gimpcolorconfig.c:941
+#: ../libgimpconfig/gimpcolorconfig.c:779
+#: ../libgimpconfig/gimpcolorconfig.c:979
 #, c-format
 msgid "Color profile '%s' is not for CMYK color space."
 msgstr "El perfil de color «%s» no es para el espacio de color CMYK."
@@ -2017,23 +2030,23 @@ msgstr "Fabricante:"
 msgid "Copyright: "
 msgstr "Copyright: "
 
-#: ../libgimpwidgets/gimpcolorscales.c:205
+#: ../libgimpwidgets/gimpcolorscales.c:206
 msgid "Scales"
 msgstr "Escalas"
 
-#: ../libgimpwidgets/gimpcolorscales.c:437
+#: ../libgimpwidgets/gimpcolorscales.c:445
 msgid "0..100"
 msgstr "0..100"
 
-#: ../libgimpwidgets/gimpcolorscales.c:439
+#: ../libgimpwidgets/gimpcolorscales.c:447
 msgid "0..255"
 msgstr "0..255"
 
-#: ../libgimpwidgets/gimpcolorscales.c:460
+#: ../libgimpwidgets/gimpcolorscales.c:468
 msgid "LCh"
 msgstr "LCh"
 
-#: ../libgimpwidgets/gimpcolorscales.c:462
+#: ../libgimpwidgets/gimpcolorscales.c:470
 msgid "HSV"
 msgstr "HSV"
 
@@ -2156,17 +2169,14 @@ msgid "_Shear"
 msgstr "_Cizallar"
 
 #: ../libgimpwidgets/gimpmemsizeentry.c:256
-#| msgid "Kilobytes"
 msgid "Kibibyte"
 msgstr "Kibibyte"
 
 #: ../libgimpwidgets/gimpmemsizeentry.c:257
-#| msgid "Megabytes"
 msgid "Mebibyte"
 msgstr "Mebibyte"
 
 #: ../libgimpwidgets/gimpmemsizeentry.c:258
-#| msgid "Gigabytes"
 msgid "Gibibyte"
 msgstr "Gibibyte"
 
@@ -2227,7 +2237,7 @@ msgstr "Quitar de la lista la carpeta seleccionada"
 msgid "Writable"
 msgstr "Editable"
 
-#: ../libgimpwidgets/gimppickbutton.c:112
+#: ../libgimpwidgets/gimppickbutton.c:120
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
@@ -2995,6 +3005,12 @@ msgstr "Ciclos de contraste"
 #: ../modules/display-filter-high-contrast.c:128
 msgid "Contrast"
 msgstr "Contraste"
+
+#, c-format
+#~ msgid "Conversion of the filename to system codepage failed."
+#~ msgstr ""
+#~ "Falló la conversión del nombre del archivo a códigos de página del "
+#~ "sistema."
 
 #~ msgctxt "select-criterion"
 #~ msgid "Hue (HSV)"
