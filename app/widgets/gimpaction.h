@@ -47,10 +47,12 @@ struct _GimpActionInterface
   GTypeInterface base_interface;
 
   /* Signals */
-  void          (* activate)           (GimpAction  *action,
-                                        GVariant    *value);
-  void          (* change_state)       (GimpAction  *action,
-                                        GVariant    *value);
+  void          (* activate)           (GimpAction   *action,
+                                        GVariant     *value);
+  void          (* change_state)       (GimpAction   *action,
+                                        GVariant     *value);
+  void          (* accels_changed)     (GimpAction   *action,
+                                        const gchar **accels);
 };
 
 
@@ -114,6 +116,7 @@ void          gimp_action_connect_accelerator (GimpAction    *action);
 void          gimp_action_set_accels          (GimpAction    *action,
                                                const gchar  **accels);
 gchar **      gimp_action_get_accels          (GimpAction    *action);
+gchar **      gimp_action_get_display_accels  (GimpAction    *action);
 
 GSList      * gimp_action_get_proxies         (GimpAction    *action);
 

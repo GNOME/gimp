@@ -45,6 +45,7 @@ enum
 {
   ACTIVATE,
   CHANGE_STATE,
+  ACCELS_CHANGED,
   LAST_SIGNAL
 };
 
@@ -104,6 +105,15 @@ gimp_action_default_init (GimpActionInterface *iface)
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 1,
                   G_TYPE_VARIANT);
+
+  action_signals[ACCELS_CHANGED] =
+    g_signal_new ("accels-changed",
+                  G_TYPE_FROM_INTERFACE (iface),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpActionInterface, accels_changed),
+                  NULL, NULL, NULL,
+                  G_TYPE_NONE, 1,
+                  G_TYPE_STRV);
 
   g_object_interface_install_property (iface,
                                        g_param_spec_object ("context",
@@ -407,6 +417,19 @@ gimp_action_connect_accelerator (GimpAction  *action)
   gtk_action_connect_accelerator ((GtkAction *) action);
 }
 
+/**
+ * gimp_action_set_accels:
+ * @action: a #GimpAction
+ * @accels: accelerators in the format understood by gtk_accelerator_parse().
+ *          The first accelerator is the main one.
+ *
+ * Set the accelerators to be associated with the given @action.
+ *
+ * Note that the #GimpAction API will emit the signal "accels-changed" whereas
+ * GtkApplication has no signal (that we could find) to connect to. It means we
+ * must always change accelerators with this function.
+ * Never use gtk_application_set_accels_for_action() directly!
+ */
 void
 gimp_action_set_accels (GimpAction   *action,
                         const gchar **accels)
@@ -426,6 +449,8 @@ gimp_action_set_accels (GimpAction   *action,
                                          detailed_action_name,
                                          accels);
   g_free (detailed_action_name);
+
+  g_signal_emit (action, action_signals[ACCELS_CHANGED], 0, accels);
 }
 
 /**
@@ -456,6 +481,47 @@ gimp_action_get_accels (GimpAction *action)
   accels = gtk_application_get_accels_for_action (GTK_APPLICATION (context->gimp->app),
                                                   detailed_action_name);
   g_free (detailed_action_name);
+
+  return accels;
+}
+
+/**
+ * gimp_action_get_display_accels:
+ * @action: a #GimpAction
+ *
+ * Gets the accelerators that are currently associated with the given @action,
+ * in a format which can be presented to people on the GUI.
+ *
+ * Returns: (transfer full): accelerators for @action, as a %NULL-terminated
+ *          array. Free with g_strfreev() when no longer needed
+ */
+gchar **
+gimp_action_get_display_accels (GimpAction *action)
+{
+  gchar **accels;
+  gint    i;
+
+  g_return_val_if_fail (GIMP_IS_ACTION (action), NULL);
+
+  accels = gimp_action_get_accels (action);
+
+  for (i = 0; accels[i] != NULL; i++)
+    {
+      guint           accel_key = 0;
+      GdkModifierType accel_mods = 0;
+
+      gtk_accelerator_parse (accels[i], &accel_key, &accel_mods);
+
+      if (accel_key != 0 || accel_mods != 0)
+        {
+          gchar *accel;
+
+          accel = gtk_accelerator_get_label (accel_key, accel_mods);
+
+          g_free (accels[i]);
+          accels[i] = accel;
+        }
+    }
 
   return accels;
 }

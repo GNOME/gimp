@@ -46,23 +46,17 @@ struct _GimpAccelLabelPrivate
 
 /*  local function prototypes  */
 
-static void   gimp_accel_label_dispose       (GObject             *object);
-static void   gimp_accel_label_set_property  (GObject             *object,
-                                              guint                property_id,
-                                              const GValue        *value,
-                                              GParamSpec          *pspec);
-static void   gimp_accel_label_get_property  (GObject             *object,
-                                              guint                property_id,
-                                              GValue              *value,
-                                              GParamSpec          *pspec);
+static void   gimp_accel_label_dispose      (GObject             *object);
+static void   gimp_accel_label_set_property (GObject             *object,
+                                             guint                property_id,
+                                             const GValue        *value,
+                                             GParamSpec          *pspec);
+static void   gimp_accel_label_get_property (GObject             *object,
+                                             guint                property_id,
+                                             GValue              *value,
+                                             GParamSpec          *pspec);
 
-static void   gimp_accel_label_accel_changed (GtkAccelGroup       *accel_group,
-                                              guint                keyval,
-                                              GdkModifierType      modifier,
-                                              GClosure            *accel_closure,
-                                              GimpAccelLabel      *accel_label);
-
-static void   gimp_accel_label_update        (GimpAccelLabel      *accel_label);
+static void   gimp_accel_label_update       (GimpAccelLabel      *accel_label);
 
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpAccelLabel, gimp_accel_label, GTK_TYPE_LABEL)
@@ -145,66 +139,21 @@ gimp_accel_label_get_property (GObject    *object,
 }
 
 static void
-gimp_accel_label_accel_changed (GtkAccelGroup   *accel_group,
-                                guint            keyval,
-                                GdkModifierType  modifier,
-                                GClosure        *accel_closure,
-                                GimpAccelLabel  *accel_label)
-{
-  if (accel_closure ==
-      gimp_action_get_accel_closure (accel_label->priv->action))
-    {
-      gimp_accel_label_update (accel_label);
-    }
-}
-
-static gboolean
-gimp_accel_label_update_accel_find_func (GtkAccelKey *key,
-                                         GClosure    *closure,
-                                         gpointer     data)
-{
-  return (GClosure *) data == closure;
-}
-
-static void
 gimp_accel_label_update (GimpAccelLabel *accel_label)
 {
-  GClosure      *accel_closure;
-  GtkAccelGroup *accel_group;
-  GtkAccelKey   *accel_key;
+  gchar **accels;
 
   gtk_label_set_label (GTK_LABEL (accel_label), NULL);
 
   if (! accel_label->priv->action)
     return;
 
-  accel_closure = gimp_action_get_accel_closure (accel_label->priv->action);
+  accels = gimp_action_get_display_accels (accel_label->priv->action);
 
-  if (! accel_closure)
-    return;
+  if (accels && accels[0])
+    gtk_label_set_label (GTK_LABEL (accel_label), accels[0]);
 
-  accel_group = gtk_accel_group_from_accel_closure (accel_closure);
-
-  if (! accel_group)
-    return;
-
-  accel_key = gtk_accel_group_find (accel_group,
-                                    gimp_accel_label_update_accel_find_func,
-                                    accel_closure);
-
-  if (accel_key            &&
-      accel_key->accel_key &&
-      (accel_key->accel_flags & GTK_ACCEL_VISIBLE))
-    {
-      gchar *label;
-
-      label = gtk_accelerator_get_label (accel_key->accel_key,
-                                         accel_key->accel_mods);
-
-      gtk_label_set_label (GTK_LABEL (accel_label), label);
-
-      g_free (label);
-    }
+  g_strfreev (accels);
 }
 
 
@@ -230,45 +179,16 @@ gimp_accel_label_set_action (GimpAccelLabel *accel_label,
   if (action != accel_label->priv->action)
     {
       if (accel_label->priv->action)
-        {
-          GClosure *accel_closure;
-
-          accel_closure = gimp_action_get_accel_closure (
-            accel_label->priv->action);
-
-          if (accel_closure)
-            {
-              GtkAccelGroup *accel_group;
-
-              accel_group = gtk_accel_group_from_accel_closure (accel_closure);
-
-              g_signal_handlers_disconnect_by_func (
-                accel_group,
-                gimp_accel_label_accel_changed,
-                accel_label);
-            }
-        }
+        g_signal_handlers_disconnect_by_func (accel_label->priv->action,
+                                              gimp_accel_label_update,
+                                              accel_label);
 
       g_set_object (&accel_label->priv->action, action);
 
       if (accel_label->priv->action)
-        {
-          GClosure *accel_closure;
-
-          accel_closure = gimp_action_get_accel_closure (
-            accel_label->priv->action);
-
-          if (accel_closure)
-            {
-              GtkAccelGroup *accel_group;
-
-              accel_group = gtk_accel_group_from_accel_closure (accel_closure);
-
-              g_signal_connect (accel_group, "accel-changed",
-                                G_CALLBACK (gimp_accel_label_accel_changed),
-                                accel_label);
-            }
-        }
+        g_signal_connect_swapped (action, "accels-changed",
+                                  G_CALLBACK (gimp_accel_label_update),
+                                  accel_label);
 
       gimp_accel_label_update (accel_label);
 
