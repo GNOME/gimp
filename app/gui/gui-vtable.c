@@ -320,7 +320,7 @@ gui_get_display_name (Gimp     *gimp,
 
   *monitor_number = get_monitor_number (GDK_MONITOR (*monitor));
 
-  return gdk_screen_make_display_name (gdk_display_get_default_screen (gdk_display));
+  return g_strdup (gdk_display_get_name (gdk_display));
 }
 
 static guint32
