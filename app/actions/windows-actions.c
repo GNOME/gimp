@@ -394,7 +394,11 @@ windows_actions_image_notify (GimpDisplay      *display,
       display_name = gimp_image_get_display_name (image);
       escaped = gimp_escape_uline (display_name);
 
-      title = g_strdup_printf ("%s-%d.%d", escaped,
+      /* TRANSLATORS: label for an action allowing to show (i.e. raise the image
+       * tab or window above others) specific images or views of image. The part
+       * between quotes is the image name and other view identifiers.
+       */
+      title = g_strdup_printf (_("Show \"%s-%d.%d\""), escaped,
                                gimp_image_get_id (image),
                                gimp_display_get_instance (display));
       g_free (escaped);
