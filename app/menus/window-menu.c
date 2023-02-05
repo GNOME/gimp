@@ -27,6 +27,7 @@
 #include "core/gimp.h"
 
 #include "widgets/gimpuimanager.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "window-menu.h"
 
@@ -90,11 +91,10 @@ window_menu_display_opened (GdkDisplayManager *disp_manager,
   const gchar *group_name;
   const gchar *ui_path;
   const gchar *display_name;
+  gchar       *action_name;
   gchar       *action_path;
   gchar       *merge_key;
   guint        merge_id;
-  gint         n_screens;
-  gint         i;
 
   group_name = g_object_get_data (G_OBJECT (manager),
                                   "move-to-screen-group-name");
@@ -115,29 +115,16 @@ window_menu_display_opened (GdkDisplayManager *disp_manager,
 
   g_free (merge_key);
 
-  n_screens = gdk_display_get_n_screens (display);
+  action_name = g_strdup_printf ("%s-move-to-screen-%s",
+                                 group_name, display_name);
+  gimp_make_valid_action_name (action_name);
 
-  for (i = 0; i < n_screens; i++)
-    {
-      GdkScreen *screen;
-      gchar     *screen_name;
-      gchar     *action_name;
+  gimp_ui_manager_add_ui (manager, merge_id,
+                          action_path, action_name, action_name,
+                          GTK_UI_MANAGER_MENUITEM,
+                          FALSE);
 
-      screen = gdk_display_get_screen (display, i);
-
-      screen_name = gdk_screen_make_display_name (screen);
-      action_name = g_strdup_printf ("%s-move-to-screen-%s",
-                                     group_name, screen_name);
-      g_free (screen_name);
-
-      gimp_ui_manager_add_ui (manager, merge_id,
-                              action_path, action_name, action_name,
-                              GTK_UI_MANAGER_MENUITEM,
-                              FALSE);
-
-      g_free (action_name);
-    }
-
+  g_free (action_name);
   g_free (action_path);
 
   g_signal_connect_object (display, "closed",

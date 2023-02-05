@@ -2340,6 +2340,25 @@ gimp_widget_flush_expose (void)
     g_main_context_iteration (NULL, FALSE);
 }
 
+void
+gimp_make_valid_action_name (gchar *action_name)
+{
+  /* g_action_name_is_valid() says: "action_name is valid if it consists only of
+   * alphanumeric characters, plus ‘-‘ and ‘.’. The empty string is not a valid
+   * action name."
+   */
+  for (gint i = 0; action_name[i] != '\0'; i++)
+    {
+      if (action_name[i] == '-' || action_name[i] == '.'   ||
+          (action_name[i] >= 'a' && action_name[i] <= 'z') ||
+          (action_name[i] >= 'A' && action_name[i] <= 'Z') ||
+          (action_name[i] >= '0' && action_name[i] <= '9'))
+        continue;
+
+      action_name[i] = '-';
+    }
+}
+
 
 /*  private functions  */
 
